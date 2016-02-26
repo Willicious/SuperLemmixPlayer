@@ -1,4 +1,9 @@
 *.~*
 *.dcu
 *.exe
+*.zip
+*.arc
+*.rc
+lemdata.res
+lemsounds.res
 !LemResourceBuilder.exe
