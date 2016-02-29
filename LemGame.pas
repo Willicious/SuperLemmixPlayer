@@ -5325,7 +5325,7 @@ begin
        end;
       // 128 + n (continuous objects, staticobjects, steel, oneway wall)
       DOM_EXIT:
-      if ((fGameParams.SysDat.Options3 and 16) = 0) or not (L.LemAction in [baFalling, baSplatting]) then
+      if not (L.LemAction in [baFalling, baSplatting]) then
       begin
         Inf := ObjectInfos[LemObjectIDBelow];
         if not LemIsZombie then
@@ -5351,7 +5351,7 @@ begin
         end;
       end;
       DOM_LOCKEXIT:
-      if ((fGameParams.SysDat.Options3 and 16) = 0) or not (L.LemAction in [baFalling, baSplatting]) then
+      if not (L.LemAction in [baFalling, baSplatting]) then
         if not LemIsZombie then
         begin
           //if LemAction <> baFalling then

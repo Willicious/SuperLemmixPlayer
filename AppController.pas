@@ -159,7 +159,6 @@ var
   i: Integer;
   OpenDlg: TOpenDialog;
   DoSingleLevel: Boolean;
-  OverrideDirectDrop: Boolean;
   fMainDatExtractor : TMainDatExtractor;
 begin
   inherited;
@@ -200,9 +199,6 @@ begin
                                          Halt(0);
                                        end;
         //nxc_BC: OverrideDirectDrop := false;
-        else OverrideDirectDrop := true;
-        //nxc_VersionError: ShowMessage('WARNING: ' + ExtractFileName(GameFile) + ' may not be compatible with this version of NeoLemmix.' + #13 +
-        //                              'NeoLemmix will attempt to play it, but be aware there may be problems.');
       end;
     end else begin
       // If it's not an NXP file, treat it as a LVL file. This may not always be the case (eg. could be an NXP file with a wrong
@@ -342,8 +338,8 @@ begin
 
   if fGameParams.SysDat.Options3 and 8 <> 0 then TBaseDosLevelSystem(fGameParams.Style.LevelSystem).UnlockAllLevels;
 
-  if OverrideDirectDrop then
-    fGameParams.SysDat.Options3 := fGameParams.SysDat.Options3 or 16;
+  //if OverrideDirectDrop then
+  //  fGameParams.SysDat.Options3 := fGameParams.SysDat.Options3 or 16;
 
   fGameParams.UsePercentages := 0;  // percentage option has been disabled but not yet removed from code
 
