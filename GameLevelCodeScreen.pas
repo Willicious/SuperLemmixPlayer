@@ -174,7 +174,6 @@ begin
 
     if Result then
     begin
-      GameParams.Rickrolled := false;
       GameParams.ShownText := false;
       Txt := Format(SCodeForLevel_sd, [GameParams.Info.dSectionName, GameParams.Info.dLevel + 1]);
       DrawPurpleTextCentered(ScreenImg.Bitmap, Txt, YPositions[2], BackBuffer);

@@ -2038,7 +2038,7 @@ begin
   fStartupMusicAfterEntry := True;
 
   fSoundOpts := fGameParams.SoundOptions;
-  fUseGradientBridges := moGradientBridges in fGameParams.MiscOptions;
+  fUseGradientBridges := true;
 
   fRenderer := fGameParams.Renderer; // set ref
   fTargetBitmap := fGameParams.TargetBitmap;
@@ -2096,7 +2096,7 @@ begin
   ExplodeMaskBmp.DrawMode := dmCustom;
   ExplodeMaskBmp.OnPixelCombine := CombineMaskPixels;
 
-  if not fGameParams.NoAdjustBomberMask then
+  {if not fGameParams.NoAdjustBomberMask then
   begin
     with ExplodeMaskBmp do
     begin
@@ -2104,12 +2104,9 @@ begin
         for x := 7 downto 0 do
         begin
           PixelS[15-x, y] := PixelS[x, y];
-          {PixelS[x+1, y] := PixelS[x, y];}
         end;
-      {for y := 0 to 21 do
-        PixelS[0, y] := 0;}
     end;
-  end;
+  end;}
 
   if (fGameParams.Level.Info.GimmickSet and $40000) <> 0 then
   begin
@@ -2786,205 +2783,7 @@ end;
 function TLemmingGame.CheckGimmick(GType: Integer): Boolean;
 begin
   Result := False;
-  if GType = GIM_ANY then
-    begin
-      if ((Gimmick shr 8) = $42) then Result := True;
-      if Gimmick = $FFFF then Result := True;
-      if GimmickSet and $3FFFFFFF <> 0 then Result := True;
-      if GimmickSet2 <> 0 then Result := True;
-      if GimmickSet3 <> 0 then Result := True;
-    end;
-  if GType = GIM_FRENZY then
-    begin
-    if Gimmick = $4201 then Result := True;
-    if Gimmick = $4202 then Result := True;
-    if Gimmick = $4209 then Result := True;
-    if Gimmick = $420E then Result := True;
-    if (GimmickSet and 2) <> 0 then Result := True;
-    end;
-  if GType = GIM_REVERSE then
-    begin
-    if moChallengeMode in fGameParams.MiscOptions then Result := True;
-    if Gimmick = $4203 then Result := True;
-    if (GimmickSet and 4) <> 0 then Result := True;
-    end;
-  if GType = GIM_KAROSHI then // Code for Karoshi also exists elsewhere
-    begin
-    if Gimmick = $4204 then Result := True;
-    if Gimmick = $4209 then Result := True;
-    if (GimmickSet and 8) <> 0 then Result := True;
-    end;
-  if GType = GIM_UNALTERABLE then
-    begin
-    if Gimmick = $4205 then Result := True;
-    if Gimmick = $4209 then Result := True;
-    if (GimmickSet and 16) <> 0 then Result := True;
-    end;
-  if GType = GIM_OVERFLOW then
-    begin
-    if moChallengeMode in fGameParams.MiscOptions then Result := True;
-    if Gimmick = $4206 then Result := True;
-    if (GimmickSet and 32) <> 0 then Result := True;
-    end;
-  if GType = GIM_NOGRAVITY then
-    begin
-    if Gimmick = $4207 then Result := True;
-    if Gimmick = $4210 then Result := True;
-    if (GimmickSet and 64) <> 0 then Result := True;
-    end;
-  if GType = GIM_HARDWORK then
-    begin
-    if Gimmick = $4208 then Result := True;
-    if Gimmick = $4210 then Result := True;
-    if (GimmickSet and 128) <> 0 then Result := True;
-    end;
-  if GType = GIM_SUPERLEMMING then  // Code for SuperLemming also exists elsewhere
-    begin
-    if Gimmick = $4201 then Result := True;
-    if Gimmick = $420A then Result := True;
-    if Gimmick = $4209 then Result := True;
-    if Gimmick = $FFFF then Result := True;
-    if (GimmickSet and 1) <> 0 then Result := True;
-    end;
-  if GType = GIM_BACKWARDS then
-    begin
-    if Gimmick = $420B then Result := True;
-    if (GimmickSet and 256) <> 0 then Result := True;
-    end;
-  if GType = GIM_LAZY then
-    begin
-    if Gimmick = $420C then Result := True;
-    if Gimmick = $420F then Result := True;
-    if (GimmickSet and 512) <> 0 then Result := True;
-    end;
-  if GType = GIM_EXHAUSTION then
-    begin
-    if Gimmick = $420D then Result := True;
-    if Gimmick = $420E then Result := True;
-    if Gimmick = $420F then Result := True;
-    if (GimmickSet and 1024) <> 0 then Result := True;
-    end;
-  if GType = GIM_SURVIVOR then
-    begin
-    if Gimmick = $4211 then Result := True;
-    if (GimmickSet and 2048) <> 0 then Result := True;
-    end;
-  if GType = GIM_INVINCIBLE then
-    begin
-    if Gimmick = $4212 then Result := True;
-    if (GimmickSet and 4096) <> 0 then Result := True;
-    end;
-  if GType = GIM_ONESKILL then
-    begin
-    if Gimmick = $4213 then Result := True;
-    if (GimmickSet and 8192) <> 0 then Result := True;
-    end;
-  if GType = GIM_INVERTSTEEL then
-    begin
-    if (GimmickSet and 16384) <> 0 then Result := True;
-    end;
-  if GType = GIM_SOLIDFLOOR then
-    begin
-    if ((GimmickSet and 32768) <> 0) and not ((GimmickSet and $800000) <> 0)
-    or (CheckGimmick(GIM_NOGRAVITY) and not (CheckGimmick(GIM_DEADLYSIDES))) then Result := True;
-    // Wrap Vertical and Solid Floor are incompatible, so Solid Floor doesn't trigger if Wrap Vertical is also set
-    // Likewise, lemmings shouldn't be able to fall out the bottom in a No Gravity level
-    end;
-  if GType = GIM_NONPERMANENT then
-    begin
-    if (GimmickSet and 65536) <> 0 then Result := True;
-    end;
-  if GType = GIM_DISOBEDIENT then
-    begin
-    if (GimmickSet and $20000) <> 0 then Result := True;
-    end;
-  if GType = GIM_NUCLEAR then
-    begin
-    if (GimmickSet and $40000) <> 0 then Result := True;
-    end;
-  if GType = GIM_TURNAROUND then
-    begin
-    if (GimmickSet and $80000) <> 0 then Result := True;
-    end;
-  if GType = GIM_OTHERSKILL then
-    begin
-    if (GimmickSet and $100000) <> 0 then Result := True;
-    end;
-  if GType = GIM_ASSIGNALL then
-    begin
-    if (GimmickSet and $200000) <> 0 then Result := True;
-    end;
-  if GType = GIM_WRAP_HOR then
-    begin
-    if (GimmickSet and $400000) <> 0 then Result := True;
-    end;
-  if GType = GIM_WRAP_VER then
-    begin
-    if (GimmickSet and $800000) <> 0 then Result := True;
-    end;
-  if GType = GIM_RISING_WATER then
-    begin
-    if (GimmickSet and $1000000) <> 0 then Result := True;
-    end;
-  // Timer gimmick is coded elsewhere (Rendering unit)
-  if GType = GIM_ZOMBIES then
-    begin
-    if (GimmickSet and $4000000) <> 0 then Result := True;
-    end;
-  if GType = GIM_OLDZOMBIES then
-    begin
-    if ((GimmickSet and $8000000) <> 0) and CheckGimmick(GIM_ZOMBIES) then Result := True;
-    end;
-  if GType = GIM_DEADLYSIDES then
-    begin
-    if ((GimmickSet and $10000000) <> 0) then Result := True;
-    end;
-  if GType = GIM_INVERTFALL then
-    begin
-    if ((GimmickSet and $20000000) <> 0) then Result := True;
-    end;
-  if GType = GIM_CHEAPOMODE then
-    begin
-    if (GimmickSet and $40000000) <> 0 then Result := True;
-    end;
-  // Rickroll gimmick is coded elsewhere (Preview screen)
-
-
-  // Gimmick Flags 2
-  if GType = GIM_CLONEASSIGN then
-    begin
-    if ((GimmickSet2 and $1) <> 0) then Result := True;
-    end;
-
-  if GType = GIM_INSTANTPICKUP then
-    begin
-    if ((GimmickSet2 and $2) <> 0) then Result := True;
-    end;
-
-  if GType = GIM_DEATHZOMBIE then
-    begin
-    if ((GimmickSet2 and $4) <> 0) then Result := True;
-    end;
-
-  if GType = GIM_PERMANENTBLOCK then
-    begin
-    if ((GimmickSet2 and $8) <> 0) then Result := True;
-    end;
-
-  if GType = GIM_RRFLUC then
-    begin
-    if ((GimmickSet2 and $10) <> 0) then Result := true;
-    end;
-
-  if GType = GIM_GHOSTS then
-    begin
-    if ((GimmickSet2 and $20) <> 0) then Result := True;
-    end;
-
-  if GType = GIM_DEATHGHOST then
-    begin
-    if ((GimmickSet2 and $40) <> 0) and not (CheckGimmick(GIM_ZOMBIES) and CheckGimmick(GIM_DEATHZOMBIE)) then Result := True;
-    end;
+  // gimmick removal
 end;
 
 procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; oid: Byte);
@@ -4974,17 +4773,8 @@ procedure TLemmingGame.UpdateLemmingsIn(Num, Max: Integer);
 var
   i: Integer;
 begin
-  if (fGameParams.UsePercentages = 2) and ((Level.Info.SkillTypes and 1) <> 0) then
-  begin
-    Max := Max + Level.Info.ClonerCount;
-    for i := 0 to ObjectInfos.Count-1 do
-      if (ObjectInfos[i].MetaObj.TriggerEffect = 14) and (ObjectInfos[i].Obj.Skill = 15) then Max := Max + 1;
-  end;
-  {if fGameParams.ShowNeeded then} Num := Num - Level.Info.RescueCount;
-  if fGameParams.UsePercentages <> 0 then
-    InfoPainter.SetInfoLemmingsIn(Num, Max, CheckRescueBlink)
-    else
-    InfoPainter.SetInfoLemmingsIn(Num, 0, CheckRescueBlink);
+  Num := Num - Level.Info.RescueCount;
+  InfoPainter.SetInfoLemmingsIn(Num, 0, CheckRescueBlink);
 end;
 
 procedure TLemmingGame.CheckForInteractiveObjects(L: TLemming; HandleAllObjects: Boolean = true);
@@ -5798,9 +5588,6 @@ var
   Drawn: Boolean;
 begin
 
-  if not (moShowParticles in fGameParams.MiscOptions) then
-    Exit;
-
   Drawn := False;
 
   with L do
@@ -5857,9 +5644,6 @@ var
 const
   Colors: array[0..2] of TColor32 = (clYellow32, clRed32, clBlue32);
 begin
-
-  if not (moShowParticles in fGameParams.MiscOptions) then
-    Exit;
                                     
   Drawn := False;
 
@@ -5886,18 +5670,6 @@ begin
     end;
 
   fExplodingGraphics := Drawn;
-
-  (*
-  with L do
-  begin
-    for i := 0 to 12 do
-    begin
-      X := LemX + i * 2;
-      Y := LemY - LemParticleFrame - i * 3;
-      fTargetBitmap.FillRectS(X, Y, X + 1, Y + 1, Colors[i mod 3]{clYellow32});
-    end;
-  end;
-  *)
 
 end;
 
@@ -8364,8 +8136,7 @@ begin
         LemParticleX := LemX;
         LemParticleY := LemY;
       end;
-      if (moShowParticles in fGameParams.MiscOptions) then
-        fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
+      fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
       end else Transition(L, baWalking);
     end;
   end;
@@ -8437,8 +8208,7 @@ begin
         LemParticleTimer := PARTICLE_FRAMECOUNT;
         LemParticleX := LemX;
         LemParticleY := LemY;
-        if (moShowParticles in fGameParams.MiscOptions) then
-          fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
+        fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
       end else Transition(L, baWalking);
 
       LemExploded := True;
@@ -10050,13 +9820,6 @@ begin
     gToRescue           := Level.Info.RescueCount;
     gRescued            := LemmingsIn;
     gLemCap             := Level.Info.LemmingsCount;
-    if (fGameParams.UsePercentages = 2) and ((Level.Info.SkillTypes and $1) <> 0) then
-    begin
-     gLemCap            := gLemCap + Level.Info.ClonerCount;
-     for i := 0 to Level.InteractiveObjects.Count-1 do
-       if Graph.MetaObjects[Level.InteractiveObjects[i].Identifier].TriggerEffect = 14 then
-         if Level.InteractiveObjects[i].Skill = 15 then Inc(gLemCap);
-    end;
     gSecretGoto         := fSecretGoto;
 
     gGotTalisman        := fTalismanReceived;
@@ -10574,12 +10337,9 @@ end;
 
 function TLemmingGame.CheckRescueBlink: Boolean;
 begin
+  // must delete this function eventually
   Result := false;
-  if not (fGameParams.RescueBlink) then Exit;
-  if (((LemmingsIn < Level.Info.RescueCount) and not fGameParams.AltRescueBlink)
-  or ((LemmingsIn >= Level.Info.RescueCount) and fGameParams.AltRescueBlink))
-  and (CurrentIteration mod 17 > 8) {and (CurrentIteration mod 34 < 27)} then
-    Result := true;
+  Exit;
 end;
 
 function TLemmingGame.CheckTimerBlink: Boolean;
@@ -11088,9 +10848,6 @@ begin
       Include(H.ReplayOpt, rpoLevelComplete);
     if not (
        (fGameParams.ChallengeMode or fGameParams.TimerMode)
-       or (fGameParams.ForceGimmick <> 0)
-       or (fGameParams.ForceGimmick2 <> 0)
-       or (fGameParams.ForceGimmick3 <> 0)
        or (fGameParams.ForceSkillset <> 0)
        ) then
       Include(H.ReplayOpt, rpoNoModes);
@@ -11317,10 +11074,6 @@ begin
       else ads('>> Replay saved at: ' + i2s(abs(fGame.Minutes + 1)) + ':' + LeadZeroStr((60 - fGame.Seconds) mod 60, 2));
     ads('>> Lemmings saved:  ' + i2s(fGame.LemmingsIn));
   end else ads('Timer mode: Disabled');
-  if (fGame.fGameParams.ForceGimmick <> 0) or (fGame.fGameParams.ForceGimmick2 <> 0) or (fGame.fGameParams.ForceGimmick3 <> 0) then
-    ads('Forced gimmick: ' + IntToHex(fGame.fGameParams.ForceGimmick, 8) + ':' + IntToHex(fGame.fGameParams.ForceGimmick2, 8) + ':' + IntToHex(fGame.fGameParams.ForceGimmick3, 8))
-  else
-    ads('Forced gimmick: Disabled');
   ads('------------------------------------------');
   ads('');
 

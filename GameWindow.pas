@@ -486,7 +486,6 @@ begin
 
         if func.Action = lka_Skill then
         begin
-          if GameParams.FixedKeys then
             case func.Modifier of
               0: SetSelectedSkill(spbWalker, True);
               1: SetSelectedSkill(spbClimber, True);
@@ -505,17 +504,6 @@ begin
               14: SetSelectedSkill(spbDigger, True);
               15: SetSelectedSkill(spbCloner, True);
             end
-          else
-            case func.Modifier of
-              1: SetSelectedSkill(fActiveSkills[0], True);
-              3: SetSelectedSkill(fActiveSkills[1], True);
-              6: SetSelectedSkill(fActiveSkills[2], True);
-              8: SetSelectedSkill(fActiveSkills[3], True);
-              10: SetSelectedSkill(fActiveSkills[4], True);
-              12: SetSelectedSkill(fActiveSkills[5], True);
-              13: SetSelectedSkill(fActiveSkills[6], True);
-              14: SetSelectedSkill(fActiveSkills[7], True);
-            end;
         end;
 
         case func.Action of
@@ -888,12 +876,7 @@ begin
   // set timers
   IdealFrameTimeMSFast := 10;
   IdealScrollTimeMS := 60;
-
-  // check superlemming
-  if fGame.Level.Info.fSuperlem then
-    IdealFrameTimeMS := 20
-  else
-    IdealFrameTimeMS := 60;
+  IdealFrameTimeMS := 60;
 
   Img.Width := 320 * Sca;
   Img.Height := 160 * Sca;
