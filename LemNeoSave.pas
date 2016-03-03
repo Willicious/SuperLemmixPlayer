@@ -112,12 +112,7 @@ begin
   fSaveData.Config.BackgroundColor[0] := i shr 16;
   fSaveData.Config.BackgroundColor[1] := (i shr 8) mod 256;
   fSaveData.Config.BackgroundColor[2] := i mod 256;
-  fSaveData.Config.PercentOption := 0;
-  fSaveData.Config.ForceGimmick := 0;
-  fSaveData.Config.ForceGimmick2 := 0;
-  fSaveData.Config.ForceGimmick3 := 0;
   fSaveData.Config.ForceSkillset := p.ForceSkillset;
-  fSaveData.Config.SteelOption := 0;
   fSaveData.Config.TestOption := p.fTestScreens;
   fSaveData.Config.SoundOption := Byte(p.SoundOptions);
   fSaveData.Config.PackName := '                                ';

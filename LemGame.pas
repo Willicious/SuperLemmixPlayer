@@ -647,10 +647,6 @@ type
     UsedMinerCount             : Integer;
     UsedDiggerCount            : Integer;
     UsedClonerCount            : Integer;
-    Gimmick                    : Integer;
-    GimmickSet                 : LongWord;
-    GimmickSet2                : LongWord;
-    GimmickSet3                : LongWord;
     UserSetNuking              : Boolean;
     ExploderAssignInProgress   : Boolean;
     Index_LemmingToBeNuked     : Integer;
@@ -748,7 +744,6 @@ type
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineMinimapWorldPixels(F: TColor32; var B: TColor32; M: TColor32);
-    function CheckGimmick(GType: Integer): Boolean;
   { internal methods }
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer; Redo: Integer = 0);
     procedure ApplyExplosionMask(L: TLemming; Redo: Integer = 0);
@@ -812,7 +807,6 @@ type
     procedure SaveMap(L: TLemming);
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
-    procedure SetGhostField(L: TLemming);
     procedure SpawnLemming;
     procedure Transition(L: TLemming; aAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
@@ -1032,47 +1026,6 @@ const
   DOM_BACKGROUND       = DOM_OFFSET + 30;
   DOM_TRAPONCE         = DOM_OFFSET + 31;
 
-  // gimmick values. these do NOT always correspond to the order in the gimmick flags!
-  // these numbers are just used as constants to identify them
-  GIM_ANY              = 0;
-  GIM_FRENZY           = 1;
-  GIM_REVERSE          = 2;
-  GIM_KAROSHI          = 3;
-  GIM_UNALTERABLE      = 4;
-  GIM_OVERFLOW         = 5;
-  GIM_NOGRAVITY        = 6;
-  GIM_HARDWORK         = 7;
-  GIM_SUPERLEMMING     = 8;
-  GIM_BACKWARDS        = 9;
-  GIM_LAZY             = 10;
-  GIM_EXHAUSTION       = 11;
-  GIM_SURVIVOR         = 12;
-  GIM_INVINCIBLE       = 13;
-  GIM_ONESKILL         = 14;
-  GIM_INVERTSTEEL      = 15;
-  GIM_SOLIDFLOOR       = 16;
-  GIM_NONPERMANENT     = 17;
-  GIM_DISOBEDIENT      = 18;
-  GIM_NUCLEAR          = 19;
-  GIM_TURNAROUND       = 20;
-  GIM_OTHERSKILL       = 21;
-  GIM_ASSIGNALL        = 22;
-  GIM_WRAP_HOR         = 23;
-  GIM_WRAP_VER         = 24;
-  GIM_RISING_WATER     = 25;
-  GIM_ZOMBIES          = 26;
-  GIM_OLDZOMBIES       = 27;
-  GIM_DEADLYSIDES      = 28;
-  GIM_GHOSTS           = 29;
-  GIM_CHEAPOMODE       = 30;
-  GIM_DEATHGHOST       = 31;
-  GIM_INVERTFALL       = 32;
-  GIM_CLONEASSIGN      = 33;
-  GIM_INSTANTPICKUP    = 34;
-  GIM_DEATHZOMBIE      = 35;
-  GIM_PERMANENTBLOCK   = 36;
-  GIM_RRFLUC           = 37; 
-
   // removal modes
   RM_NEUTRAL           = 0;
   RM_SAVE              = 1;
@@ -1108,9 +1061,6 @@ const
   SCS_NOT100           = 1500;
   SCS_FAIL             = 10000;
   SCS_NOTSAVED         = 100;
-
-  FRENZY_MUSIC         = 'frenzy';
-  GIMMICK_MUSIC        = 'gimmick';
 
   HEAD_MIN_Y = -7;
   //LEMMING_MIN_X = 0;
@@ -1758,7 +1708,6 @@ var
   FoundIssue: Boolean;
   UsedSkillLems: Integer;
 begin
-  //if fGameParams.LookForLVLFiles or (StrToIntDef('0x' + fGameParams.ForceGimmick, 0) <> 0) then Exit; // no talismans if gimmick-forcing or using LookForLVLFiles
   for i := 0 to fTalismans.Count-1 do
   begin
     if fGameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Continue;
@@ -2096,54 +2045,6 @@ begin
   ExplodeMaskBmp.DrawMode := dmCustom;
   ExplodeMaskBmp.OnPixelCombine := CombineMaskPixels;
 
-  {if not fGameParams.NoAdjustBomberMask then
-  begin
-    with ExplodeMaskBmp do
-    begin
-      for y := 21 downto 0 do
-        for x := 7 downto 0 do
-        begin
-          PixelS[15-x, y] := PixelS[x, y];
-        end;
-    end;
-  end;}
-
-  if (fGameParams.Level.Info.GimmickSet and $40000) <> 0 then
-  begin
-    with ExplodeMaskBmp do
-    begin
-      Width := 48;//Width * 3;
-      Height := 66;//Height * 3;
-      for y := 65 downto 0 do
-        for x := 23 downto 0 do
-        begin
-          PixelS[x, y] := Ani.ExplosionMaskBitmap.PixelS[x div 3, y div 3];
-          PixelS[47-x, y] := Ani.ExplosionMaskBitmap.PixelS[x div 3, y div 3];
-        end;
-    end;
-    Bmp := TBitmap32.Create;
-    Bmp.Assign(ExplodeMaskBmp);
-    for y := 0 to 65 do
-      for x := 0 to 23 do
-      begin
-        i := 0;
-        with ExplodeMaskBmp do
-        begin
-          if (PixelS[x+1,y+1]) <> 0 then Inc(i);
-          if (PixelS[x+1,y-1]) <> 0 then Inc(i);
-          if (PixelS[x-1,y+1]) <> 0 then Inc(i);
-          if (PixelS[x-1,y-1]) <> 0 then Inc(i);
-        end;
-        if i >= 2 then
-        begin
-          Bmp.PixelS[x, y] := $FFFFFFFF;
-          Bmp.PixelS[47-x, y] := $FFFFFFFF;
-        end;
-      end;
-    ExplodeMaskBmp.Assign(Bmp);
-    Bmp.Free;
-  end;
-
   fHighlightLemmingID := -1;
 
   BashMasks := Ani.BashMasksBitmap;
@@ -2172,18 +2073,6 @@ begin
         Bmp.OnPixelCombine := CombineBuilderPixels
       else
         Bmp.OnPixelCombine := CombineLemmingPixels;
-      if (i = Explosion) and ((fGameParams.Level.Info.GimmickSet and $40000) <> 0) then
-      With Bmp do
-      begin
-        Bmp2 := TBitmap32.Create;
-        Bmp2.Assign(Bmp);
-        Width := 64;//Width * 3;
-        Height := 64;//Height * 3;
-        for y := Height-1 downto 0 do
-          for x := Width-1 downto 0 do
-            PixelS[x, y] := Bmp2.PixelS[x div 2, y div 2];
-        Bmp2.Free;
-      end;
     end;
 
   StoneLemBmp := Ani.LemmingAnimations.Items[STONED];
@@ -2192,13 +2081,6 @@ begin
 
   World.SetSize(Level.Info.Width, Level.Info.Height);
   SteelWorld.SetSize(Level.Info.Width, Level.Info.Height);
-
-  //if StrToInt('x' + fGameParams.ForceGimmick) <> 0 then Level.Info.SuperLemming := StrToInt('x' + fGameParams.ForceGimmick);
-
-  Gimmick := Level.Info.SuperLemming;
-  GimmickSet := Level.Info.GimmickSet;
-  GimmickSet2 := Level.Info.GimmickSet2;
-  GimmickSet3 := Level.Info.GimmickSet3;
 
   MusicSys := fGameParams.Style.MusicSystem;
   MusicFileName := GetMusicFileName;
@@ -2447,8 +2329,6 @@ begin
     UsedMinerCount := 0;
     UsedDiggerCount := 0;
     UsedClonerCount := 0;
-
-    Gimmick            := SuperLemming ;
   end;
 
   LowestReleaseRate := CurrReleaseRate;
@@ -2572,10 +2452,7 @@ begin
   SteelWorld.Assign(World);
   SpawnLemming; // instantly-spawning lemmings (object type 13)
 
-  if CheckGimmick(GIM_CHEAPOMODE) then
-    fFallLimit := MAX_LONGFALLDISTANCE
-    else
-    fFallLimit := MAX_FALLDISTANCE;
+  fFallLimit := MAX_FALLDISTANCE;
 
   fTalismanReceived := false;
 
@@ -2611,14 +2488,12 @@ begin
       if (ObjectInfos[i].Obj.TarLev and 16) <> 0 then LemIsMechanic := true;
       if (ObjectInfos[i].Obj.TarLev and 32) <> 0 then
       begin
-        if not CheckGimmick(GIM_NOGRAVITY) then
-          while (LemY <= LEMMING_MAX_Y + World.Height) and (HasPixelAt(LemX, LemY) = false) do
-            Inc(LemY);
+        while (LemY <= LEMMING_MAX_Y + World.Height) and (HasPixelAt(LemX, LemY) = false) do
+          Inc(LemY);
         Transition(NewLemming, baBlocking);
       end;
-      if ((ObjectInfos[i].Obj.TarLev and 64) <> 0) and CheckGimmick(GIM_ZOMBIES) then RemoveLemming(NewLemming, RM_ZOMBIE);
-      if ((ObjectInfos[i].Obj.TarLev and 128) <> 0) and CheckGimmick(GIM_GHOSTS) then RemoveLemming(NewLemming, RM_GHOST);
-      if NewLemming.LemIsZombie or NewLemming.LemIsGhost then Dec(SpawnedDead);
+      if (ObjectInfos[i].Obj.TarLev and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
+      if NewLemming.LemIsZombie then Dec(SpawnedDead);
       LemObjectInFront := DOM_NONE;
       LemObjectBelow := DOM_NONE;
       LemObjectIDBelow := DOM_NOOBJECT;
@@ -2733,38 +2608,14 @@ function TLemmingGame.HasPixelAt(X, Y: Integer; SwimTest: Boolean = false): Bool
   The function returns True when the value at (x, y) is terrain
 -------------------------------------------------------------------------------}
 begin
-  {if Y < 0 then
-    begin
-    Result := true;
-    exit;
-    end;}
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X >= World.Width then X := X - World.Width;
-    if X < 0 then X := X + World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y >= World.Height then Y := Y - World.Height;
-    if Y < 0 then Y := Y + World.Height;
-  end;
 
   with World do
   begin
-    if CheckGimmick(GIM_DEADLYSIDES) then
-    begin
-      Result := (Y < 0);
-      if CheckGimmick(GIM_SOLIDFLOOR) and (Y >= World.Height) then Result := true;
-      if not ((X >= 0) and (X < Width)) then Exit;
-    end else
-      Result := not ((X >= 0) and (Y >= 0) and (X < Width));
+    Result := not ((X >= 0) and (Y >= 0) and (X < Width));
     if Result = false then Result := (Y < Height) and (Pixel[X, Y] and ALPHA_TERRAIN <> 0);
-    if (CheckGimmick(GIM_SOLIDFLOOR) or SwimTest) and (Y >= Height) then Result := true;
+    if SwimTest and (Y >= Height) then Result := true;
   end;
 
-//  with World do
-  //  Result := (X >= 0) and (Y >= 0) and (X < Width) and (Y < Height)
-    //          and (Pixel[X, Y] and COLOR_MASK <> 0);
 end;
 
 function TLemmingGame.HasPixelAt_ClipY(X, Y, minY: Integer; SwimTest: Boolean = false): Boolean;
@@ -2780,12 +2631,6 @@ begin
     fTargetBitmap.PixelS[x, y] := Renderer.BackgroundColor;
 end;
 
-function TLemmingGame.CheckGimmick(GType: Integer): Boolean;
-begin
-  Result := False;
-  // gimmick removal
-end;
-
 procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; oid: Byte);
 var
   Inf, Inf2: TInteractiveObjectInfo;
@@ -2797,35 +2642,12 @@ begin
   Inf := ObjectInfos[oid];
   Inf2 := ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)];
 
+  // Need to tidy this up and let the object itself implement finding the target point
+
   if Inf.Obj.DrawingFlags and 8 <> 0 then TurnAround(L);
 
-  if Inf2.MetaObj.TriggerEffect = 12 then
-  begin
     dpx := Inf2.MetaObj.TriggerLeft;
     dpy := Inf2.MetaObj.TriggerTop;
-  end else begin
-    dpx := Inf2.MetaObj.TriggerPointX;
-    dpy := Inf2.MetaObj.TriggerPointY;
-  end;
-
-  if CheckGimmick(GIM_CHEAPOMODE) or (Inf2.MetaObj.TriggerEffect <> 12) then
-  begin
-
-    tlx := 0;
-    tly := 0;
-    if Inf.Obj.DrawingFlags and 8 <> 0 then
-      tlx := Inf.MetaObj.TriggerWidth - tlx - 1;
-
-    if Inf2.Obj.DrawingFlags and 2 <> 0 then
-      tly := tly + Inf2.Obj.Top + (Inf2.MetaObj.Height - 1) - (dpy)
-    else
-      tly := tly + Inf2.Obj.Top + dpy;
-    if Inf2.Obj.DrawingFlags and 64 <> 0 then
-      tlx := tlx + Inf2.Obj.Left + (Inf2.MetaObj.Width - 1) - (dpx)
-    else
-      tlx := tlx + Inf2.Obj.Left + dpx;
-
-  end else begin
 
     if Inf.Obj.DrawingFlags and 2 <> 0 then
       tly := Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop) - (Inf.MetaObj.TriggerHeight - 1)
@@ -2851,7 +2673,6 @@ begin
     else
       tlx := tlx + Inf2.Obj.Left + Inf2.MetaObj.TriggerLeft;
 
-  end;
 
   LemX := tlx;
   LemY := tly;
@@ -2865,13 +2686,10 @@ var
   t: Byte;
 begin
         Result := oid;
-
-        if ObjectInfos[oid].MetaObj.TriggerEffect = 29 then Exit;
-
-        if CheckGimmick(GIM_CHEAPOMODE) then oid := ObjectInfos.Count-1;
+        
         for t := oid+1 to oid+ObjectInfos.Count do
         begin
-          if (ObjectInfos[t mod ObjectInfos.Count].MetaObj.TriggerEffect in [12, 28])
+          if (ObjectInfos[t mod ObjectInfos.Count].MetaObj.TriggerEffect = 12)
           and (ObjectInfos[t mod ObjectInfos.Count].Obj.IsFake = false)
           and (ObjectInfos[t mod ObjectInfos.Count].Obj.Skill = sval)
           and (t mod ObjectInfos.Count <> Result) then
@@ -2885,16 +2703,6 @@ end;
 function TLemmingGame.ReadObjectMap(X, Y: Integer; Advance: Boolean = true): Word;
 // original dos objectmap has a resolution of 4
 begin
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
 
   // the "and not 3" ensures rounding down when
   // operand is negative (eg. -0.25 -> -1)
@@ -2925,26 +2733,6 @@ var
   ObjID: Word;
 begin
 
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
-
-  if CheckGimmick(GIM_DEADLYSIDES) then
-  begin
-    if (X < 0) or (X >= World.Width) or (((Y <= 8) or ((Y >= World.Height) and not CheckGimmick(GIM_SOLIDFLOOR))) and not CheckGimmick(GIM_WRAP_VER)) then
-    begin
-      Result := DOM_FIRE;
-      Exit;
-    end;
-  end;
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
@@ -2962,8 +2750,6 @@ begin
     end else
       Result := DOM_NONE; // whoops, important
   end;
-
-  if Result = DOM_TWOWAYTELE then Result := DOM_TELEPORT;   // so kludgy, but it works very well
 end;
 
 function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
@@ -2971,17 +2757,6 @@ function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
 begin
   // the "and not 3" ensures rounding down when
   // operand is negative (eg. -0.25 -> -1)
-
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
 
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
@@ -3001,17 +2776,6 @@ begin
   // the "and not 3" ensures rounding down when
   // operand is negative (eg. -0.25 -> -1)
 
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
@@ -3030,17 +2794,6 @@ begin
   // the "and not 3" ensures rounding down when
   // operand is negative (eg. -0.25 -> -1)
 
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
@@ -3051,15 +2804,9 @@ begin
     else
       Result := DOM_NONE; // whoops, important
 
-    if not (CheckGimmick(GIM_WRAP_HOR) or CheckGimmick(GIM_DEADLYSIDES)) then
-    begin
-      if X < OBJMAPADD then Result := DOM_STEEL;
-      if X >= World.Width + OBJMAPADD then Result := DOM_STEEL;
-    end;
-
-    if (Y < OBJMAPADD) and not (CheckGimmick(GIM_WRAP_VER) or CheckGimmick(GIM_DEADLYSIDES)) then Result := DOM_STEEL;
-
-    if (Y >= World.Height + OBJMAPADD) and CheckGimmick(GIM_SOLIDFLOOR) then Result := DOM_STEEL;
+    if X < OBJMAPADD then Result := DOM_STEEL;
+    if X >= World.Width + OBJMAPADD then Result := DOM_STEEL;
+    if (Y < OBJMAPADD) then Result := DOM_STEEL;
   end;
 
 end;
@@ -3069,17 +2816,6 @@ function TLemmingGame.ReadWaterMap(X, Y: Integer): Byte;
 begin
   // the "and not 3" ensures rounding down when
   // operand is negative (eg. -0.25 -> -1)
-
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
 
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
@@ -3101,17 +2837,6 @@ procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aValue: Byte);
   //x1, y1: Integer;
 begin
 
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
@@ -3127,16 +2852,6 @@ procedure TLemmingGame.WriteZombieMap(X, Y: Integer; aValue: Byte);
 //var
 //  x1, y1: Integer;
 begin
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
   with ZombieMap do
@@ -3151,16 +2866,6 @@ procedure TLemmingGame.WriteWaterMap(X, Y: Integer; aValue: Byte);
 //var
 //  x1, y1: Integer;
 begin
-  if CheckGimmick(GIM_WRAP_HOR) then
-  begin
-    if X < 0 then X := X + World.Width;
-    if X >= World.Width then X := X - World.Width;
-  end;
-  if CheckGimmick(GIM_WRAP_VER) then
-  begin
-    if Y < 0 then Y := Y + World.Height;
-    if Y >= World.Height then Y := Y - World.Height;
-  end;
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
   with WaterMap do
@@ -3211,24 +2916,9 @@ begin
 end;
 
 procedure TLemmingGame.SaveMap(L: TLemming);
-{var
-  X, Y, Q: Integer;
-  Offset: Integer;}
+
 begin
-  {Q := 0;
-  if L.LemRTL then Offset := -1
-  else Offset := 0;
-  with L do
-  begin
-    for X := LemX - 5 to LemX + 6 do
-    for Y := LemY - 6 to LemY + 4 do
-    begin
-      LemSavedMap[Q] := ReadBlockerMap(X+Offset, Y);
-      Inc(Q);
-    end;
-    LemSavedMapX := LemX+Offset;
-    LemSavedMapY := LemY;
-  end;}
+
 end;
 
 procedure TLemmingGame.RestoreMap(L: TLemming);
@@ -3237,18 +2927,6 @@ procedure TLemmingGame.RestoreMap(L: TLemming);
 var
   i: Integer;
 begin
-  {Q := 0;
-  with L do
-  begin
-    for X := LemSavedMapX - 5 to LemSavedMapX + 6 do
-    for Y := LemSavedMapY - 6 to LemSavedMapY + 4 do
-    begin
-      WriteBlockerMap(X, Y, LemSavedMap[Q]);
-      Inc(Q);
-    end;
-    LemSavedMapX := 0;
-    LemSavedMapY := 0;
-  end;}
   BlockerMap.Clear(0);
   for i := 0 to LemmingList.Count-1 do
     if (LemmingList[i].LemIsBlocking > 0) and not LemmingList[i].LemRemoved then SetBlockerField(LemmingList[i]);
@@ -3290,24 +2968,6 @@ begin
       WriteZombieMap(X, Y, 1);
     for Y := LemY - 6 to LemY + 4 do
       WriteZombieMap(LemX + (LemDX * 6), Y, 1);
-  end;
-end;
-
-procedure TLemmingGame.SetGhostField(L: TLemming);
-var
-  X, Y: Integer;
-  o: Integer;
-begin
-  with L do
-  begin
-    if LemDx < 0 then o := -1
-    else o := 0;
-    for X := ((LemX - 8) + o) to ((LemX) + o) do
-      for Y := LemY - 10 to LemY + 6 do
-        WriteZombieMap(X, Y, 2);
-    for X := ((LemX + 1) + o) to ((LemX + 9) + o) do
-      for Y := LemY - 10 to LemY + 6 do
-        WriteZombieMap(X, Y, 4);
   end;
 end;
 
@@ -3357,14 +3017,8 @@ begin
       RestoreMap(L);
     end;
 
-    if (not ((HasPixelAt(LemX, LemY)) or (CheckGimmick(GIM_NOGRAVITY))))
+    if (not HasPixelAt(LemX, LemY))
     and (aAction = baWalking) then aAction := baFalling;
-
-    if LemBecomeBlocker and (aAction = baWalking) and CheckGimmick(GIM_PERMANENTBLOCK) then
-      aAction := baBlocking;
-
-    {if (((HasPixelAt(LemX, LemY-1)) or (CheckGimmick(GIM_NOGRAVITY))))
-    and (aAction = baFalling) then aAction := baWalking;}
 
     if (LemAction = aAction) and not DoTurn then
       Exit;
@@ -3381,55 +3035,29 @@ begin
     FrameTopDy  := -LMA.FootY; // ccexplore compatible
     FrameLeftDx := -LMA.FootX; // ccexplore compatible
 
-    if (AnimationIndices[aAction, false] = AnimationIndices[aAction, true]) and (LemRTL = true) and (LemAction <> baDigging) then
-      LemRTLAdjust := True
-      else
-      LemRTLAdjust := False;  //usually needs a position adjust in non-directional animations but digger is exception                                                                                         
-
-    // transition
-    if CheckGimmick(GIM_SURVIVOR) and (aAction = baExploding) then LemOldFallen := LemFallen;
     if (aAction = baFalling) then
-      begin
-      {if (HasPixelAt(LemX, LemY)) or (CheckGimmick(GIM_NOGRAVITY)) then
-      begin
-        Transition(L, baWalking);
-        Exit;
-      end; }
+    begin
       LemFallen := -2;
       if LemAction in [baWalking] then LemFallen := 0;
       if LemAction in [baBashing] then LemFallen := -1;
       if LemAction in [baMining, baDigging] then LemFallen := -3;
-      if CheckGimmick(GIM_SURVIVOR) and (LemAction = baExploding) then LemFallen := LemOldFallen;
-      end;
+    end;
+
     if (LemOldFallen <> 0) and not (LemAction in [baFalling, baGliding, baFloating, baExploding]) then
       LemOldFallen := 0;
-    {if CheckGimmick(GIM_SURVIVOR) and (LemAction = baExploding) and (aAction = baFalling) then
-    begin
-      LemFallen := LemOldFallen;
-      LemOldFallen := 0;
-    end else begin
-      if not (aAction = baExploding) then LemOldFallen := 0;
-    end;}
+
     if LemAction = aAction then
       Exit;
+
     if ((LemAction = baClimbing) and (aAction <> baHoisting)) then
       if LemY > LemClimbStartY then LemY := LemClimbStartY;
+
     if not (aAction in [baFalling, baFloating]) then LemFloated := 0;
     LemAction := aAction;
     LemFrame := 0;
     LemClimbed := 0;
     LemEndOfAnimation := False;
     LemNumberOfBricksLeft := 0;
-
-    // Remove permanent skills if nonpermanent gimmick
-    if CheckGimmick(GIM_NONPERMANENT) then
-    begin
-      if LemAction = baClimbing then LemIsClimber := false;
-      if LemAction = baSwimming then LemIsSwimmer := false;
-      if LemAction = baFloating then LemIsFloater := false;
-      if LemAction = baGliding then LemIsGlider := false;
-      if LemAction = baFixing then LemIsMechanic := false;
-    end;
 
     // some things to do when entering state
     case LemAction of
@@ -3451,8 +3079,6 @@ begin
           LemIsBlocking := 1;
           SaveMap(L);
           SetBlockerField(L);
-          if CheckGimmick(GIM_PERMANENTBLOCK) then
-            LemBecomeBlocker := true;
         end;
       baExiting    :
         begin
@@ -3470,10 +3096,7 @@ begin
       baBuilding   : LemNumberOfBricksLeft := 12;
       baPlatforming: LemNumberOfBricksLeft := 12;
       baStacking   : LemNumberOfBricksLeft := 8;
-      //baDrowning   : CueSoundEffect(SFX_DROWNING);
-      //baVaporizing : CueSoundEffect(SFX_VAPORIZING);
-      baOhnoing    : {if (not UserSetNuking)
-                     or (CheckGimmick(GIM_SURVIVOR)) then} CueSoundEffect(SFX_OHNO);
+      baOhnoing    : CueSoundEffect(SFX_OHNO);
       baStoning    : CueSoundEffect(SFX_OHNO);
       baExploding  : begin
                        if fHighlightLemming = L then fHighlightLemming := nil;
@@ -3532,97 +3155,19 @@ begin
   if Lemming2 = nil then Lemming2 := Lemming1;
   if Assigned(Method) then
   begin
-    if CheckGimmick(GIM_DISOBEDIENT) and not fCheckWhichLemmingOnly then
-    begin
-      WhichLemming := nil;
-      fCheckWhichLemmingOnly := true;
-      {Result := }Method(Lemming1, Lemming2);
-      {if Result then
-      begin}
-      if not (WhichLemming = nil) then
-      begin
-        if not (WhichLemming.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baShrugging, baSwimming, baGliding, baFixing]) then
-        begin
-          Proceed := false;
-          if (WhichLemming.LemAction in [baWalking, baDigging, baBuilding, baBashing, baMining, baBlocking, baPlatforming, baStacking])
-          and not (WhichLemming.LemIsZombie) then
-          begin
-            Transition(WhichLemming, baShrugging);
-            RecordSkillAssignment(WhichLemming, aSkill);
-            if not fFreezeSkillCount then OnAssignSkill(WhichLemming, aSkill);
-          end;
-        end;
-      end;
-      {end else
-        Proceed := false;}
-      fCheckWhichLemmingOnly := false;
-    end;
     if Lemming2.LemIsZombie then Lemming2 := Lemming1;
     if Lemming1.LemIsZombie then Lemming1 := Lemming2;
     if Lemming1.LemIsZombie and Lemming2.LemIsZombie then Proceed := false;
     if Proceed then Result := Method(Lemming1, Lemming2);
     if Result then
-    begin
       CueSoundEffect(SFX_ASSIGN_SKILL);
-      if CheckGimmick(GIM_RRFLUC) then
-      begin
-        if CurrReleaseRate = 99 then
-          InstReleaseRate := -99
-        else
-          InstReleaseRate := 99;
-        AdjustReleaseRate(InstReleaseRate);
-      end;
-    end;
   end;
 end;
 
 procedure TLemmingGame.OnAssignSkill(Lemming1: TLemming; aSkill: TBasicLemmingAction);
-var
-  i: Integer;
 begin
-  if CheckGimmick(GIM_TURNAROUND) then TurnAround(Lemming1);
-  if CheckGimmick(GIM_OTHERSKILL) then
-  begin
-    UpdateSkillCount(aSkill, true);
-    UpdateSkillCount(baWalking);
-    UpdateSkillCount(baClimbing);
-    UpdateSkillCount(baSwimming);
-    UpdateSkillCount(baFloating);
-    UpdateSkillCount(baGliding);
-    UpdateSkillCount(baFixing);
-    UpdateSkillCount(baExploding);
-    UpdateSkillCount(baStoning);
-    UpdateSkillCount(baBlocking);
-    UpdateSkillCount(baPlatforming);
-    UpdateSkillCount(baBuilding);
-    UpdateSkillCount(baStacking);
-    UpdateSkillCount(baBashing);
-    UpdateSkillCount(baMining);
-    UpdateSkillCount(baDigging);
-    UpdateSkillCount(baCloning);
-    UpdateSkillCount(aSkill, true);
-  end;
-  if CheckGimmick(GIM_ASSIGNALL) and (aSkill <> baCloning) then
-  begin
-    fFreezeSkillCount := true;
-    for i := 0 to (LemmingList.Count - 1) do
-      if (LemmingList[i] <> Lemming1) and not (LemmingList[i].LemRemoved or LemmingList[i].LemTeleporting) then
-      begin
-        if not (CheckGimmick(GIM_ONESKILL) and (LemmingList[i].LemUsedSkillCount > 0)) then
-        begin
-          if AssignSkill(LemmingList[i], LemmingList[i], aSkill) and CheckGimmick(GIM_TURNAROUND) then
-            TurnAround(LemmingList[i]);
-        end;
-      end;
-    fFreezeSkillCount := false;
-  end;
-  if CheckGimmick(GIM_CLONEASSIGN)
-  and not (aSkill in [baExploding, baStoning, baBlocking, baDigging, baCloning]) then
-  begin
-    fFreezeSkillCount := true;
-    AssignCloner(Lemming1, nil);
-    fFreezeSkillCount := false;
-  end;
+  // This function only was used for gimmicks, but it might be useful so let's leave it
+  // here as an empty function just in case.
 end;
 
 
@@ -3633,9 +3178,6 @@ const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding, baStacking, baBashing, baMining, baDigging];
 begin
   Result := False;
-
-  {if (CurrWalkerCount = 0) and (CheckGimmick(GIM_OVERFLOW)) and (not (CheckGimmick(GIM_REVERSE))) then
-    CurrWalkerCount := 100;}
 
   if not CheckSkillAvailable(baToWalking) then
     Exit
@@ -3653,13 +3195,6 @@ begin
       begin
         SelectedLemming.LemBecomeBlocker := false;
         Transition(SelectedLemming, baToWalking);
-        {if not CheckGimmick(GIM_REVERSE) then
-          begin
-          if (currWalkerCount <> 200) then Dec(CurrWalkerCount);
-          end
-        else
-          Inc(CurrWalkerCount);
-        InfoPainter.DrawSkillCount(spbWalker, CurrWalkerCount);}
         UpdateSkillCount(baToWalking);
         Result := True;
         RecordSkillAssignment(SelectedLemming, baToWalking);
@@ -3697,15 +3232,16 @@ begin
       WhichLemming := SelectedLemming
     else
       begin
-//        Transition(SelectedLemming, baToWalking);
         NewL := TLemming.Create;
         NewL.Assign(SelectedLemming);
         NewL.LemIndex := LemmingList.Count;
         LemmingList.Add(NewL);
         TurnAround(NewL);
         Inc(LemmingsCloned);
-        if ((not NewL.LemIsZombie) or CheckGimmick(GIM_OLDZOMBIES)) and (not NewL.LemIsGhost) then Inc(LemmingsOut)
-        else Inc(LemmingsRemoved);
+        if not NewL.LemIsZombie then
+          Inc(LemmingsOut)
+        else
+          Inc(LemmingsRemoved);
         UpdateSkillCount(baCloning);
         Result := True;
         RecordSkillAssignment(SelectedLemming, baCloning);
@@ -3714,8 +3250,7 @@ begin
           OnAssignSkill(SelectedLemming, baCloning);
           GameResultRec.gScore := GameResultRec.gScore - SCS_CLONER;
         end;
-        //if CheckGimmick(GIM_ONESKILL) then
-          NewL.LemUsedSkillCount := 1{SelectedLemming.LemUsedSkillCount};
+        NewL.LemUsedSkillCount := 1;
         NewL.LemIsClone := true;
       end;
 
@@ -3737,8 +3272,6 @@ begin
       begin
         Lemming1.LemIsClimber := True;
         UpdateSkillCount(baClimbing);
-        { TODO : double check if this bug emulation is safe }
-        // @Optional Game Mechanics
         if dgoAssignClimberShruggerActionBug in Options then
           if (Lemming1.LemAction = baShrugging) then
             Lemming1.LemAction := baWalking;
@@ -3961,8 +3494,7 @@ const
 begin
   Result := False;
 
-  if not CheckSkillAvailable(baPlatforming)
-  {or ((Lemming1.LemY + Lemming1.FrameTopdy < HEAD_MIN_Y) and not CheckGimmick(GIM_WRAP_VER))} then
+  if not CheckSkillAvailable(baPlatforming) then
     Exit;
 
   if (Lemming1.LemAction in ActionSet) and LemCanPlatform(Lemming1) then
@@ -4010,7 +3542,7 @@ begin
   Result := False;
 
   if not CheckSkillAvailable(baBuilding)
-  or ((Lemming1.LemY <= 1) and not CheckGimmick(GIM_WRAP_VER)) then
+  or (Lemming1.LemY <= 1) then
     Exit;
 
   if (Lemming1.LemAction in ActionSet) then
@@ -4057,11 +3589,10 @@ const
 begin
   Result := False;
 
-  if not CheckSkillAvailable(baStacking)
-  {or ((Lemming1.LemY + Lemming1.FrameTopdy < HEAD_MIN_Y) and not CheckGimmick(GIM_WRAP_VER))} then
+  if not CheckSkillAvailable(baStacking) then
     Exit;
 
-  if (Lemming1.LemAction in ActionSet) {and HasPixelAt(Lemming1.LemX+Lemming1.LemDx, Lemming1.LemY)} then
+  if (Lemming1.LemAction in ActionSet) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
@@ -4079,7 +3610,7 @@ begin
         end;
       end;
   end
-  else if (Lemming2 <> nil) and (Lemming2.LemAction in ActionSet) {and HasPixelAt(Lemming2.LemX+Lemming2.LemDx, Lemming2.LemY)} then
+  else if (Lemming2 <> nil) and (Lemming2.LemAction in ActionSet) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming2
@@ -4494,15 +4025,10 @@ begin
             and (ReadSpecialMap(X, Y) = DOM_NONE) then WriteSpecialMap(X, Y, DOM_STEEL);
           end;
           if ReadSpecialMap(X, Y) = DOM_EXIT then WriteSpecialMap(X, Y, DOM_NONE);
-          if CheckGimmick(GIM_INVERTSTEEL) then
-          begin
-            if ReadSpecialMap(X, Y) = DOM_STEEL then WriteSpecialMap(X, Y, DOM_NONE)
-            else if ReadSpecialMap(X, Y) = DOM_NONE then WriteSpecialMap(X, Y, DOM_STEEL);
-          end;
           if (ReadSpecialMap(X, Y) = DOM_STEEL) and (World.Pixel[X, Y] and ALPHA_TERRAIN = 0) then WriteSpecialMap(X, Y, DOM_NONE);
           if (ReadSpecialMap(X, Y) = DOM_STEEL) then World.PixelS[X, Y] := World.PixelS[X, Y] and not ALPHA_ONEWAY;
           if (ReadSpecialMap(X, Y) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) and (World.Pixel[X, Y] and ALPHA_ONEWAY = 0) then WriteSpecialMap(X, Y, DOM_NONE);
-          if (moDebugSteel in fGameParams.MiscOptions) then
+          if fGameParams.DebugSteel then
           begin
             if ReadSpecialMap(X, Y) <> DOM_STEEL then
               if SteelWorld.Pixel[X, Y] and ALPHA_TERRAIN = 0 then
@@ -4517,8 +4043,6 @@ begin
         end;
       fTargetBitmap.Assign(World);
     end;
-
-    //if fGameParams.DebugSteel then Renderer.BackgroundColor := $00FF00FF;
 end;
 
 function TLemmingGame.PrioritizedHitTest(out Lemming1, Lemming2: TLemming;
@@ -4555,7 +4079,6 @@ begin
     begin
       if LemRemoved or LemTeleporting
       or ((fSelectDx <> 0) and (fSelectDx <> LemDx))
-      or (CheckGimmick(GIM_ONESKILL) and (LemUsedSkillCount > 0))
       or ((ShiftButtonHeldDown and CheckRightMouseButton) and (LemUsedSkillCount > 0))
       or ((RightMouseButtonHeldDown and CheckRightMouseButton) and (LemAction <> baWalking)) then
         Continue;
@@ -4650,45 +4173,6 @@ begin
         DoAtAll := true;
         DoPrioritize := (LemAction in PrioActions);
         //Continue;
-      end;
-
-      if CheckGimmick(GIM_WRAP_HOR) and not DoAtAll then //don't duplicate effort
-      begin
-        if x < 0 then x := x + World.Width
-        else if x + 12 >= World.Width then x := x - World.Width;
-        if (x <= CP.X) and (CP.X <= x + 12) and (y <= CP.Y) and (CP.Y <= y + 12) then
-        begin
-          Inc(Result);
-          DoAtAll := true;
-          DoPrioritize := (LemAction in PrioActions);
-          //Continue;
-        end;
-      end;
-
-      if CheckGimmick(GIM_WRAP_VER) and not DoAtAll then
-      begin
-        if y < 0 then y := y + World.Height
-        else if y + 12 >= World.Height then y := y - World.Height;
-        if (x <= CP.X) and (CP.X <= x + 12) and (y <= CP.Y) and (CP.Y <= y + 12) then
-        begin
-          Inc(Result);
-          DoAtAll := true;
-          DoPrioritize := (LemAction in PrioActions);
-          //Continue;
-        end;
-
-        if CheckGimmick(GIM_WRAP_HOR) and not DoAtAll then
-        begin
-          if x < World.Width div 2 then x := x + World.Width
-          else if x + 12 >= World.Width div 2 then x := x - World.Width;
-          if (x <= CP.X) and (CP.X <= x + 12) and (y <= CP.Y) and (CP.Y <= y + 12) then
-          begin
-            Inc(Result);
-            DoAtAll := true;
-            DoPrioritize := (LemAction in PrioActions);
-            //Continue;
-          end;
-        end;
       end;
 
       if DoAtAll then
@@ -4800,22 +4284,6 @@ begin
     LemSpecialBelow := ReadSpecialMap(LemX, LemY);
     LemObjectInFront := ReadSpecialMap((LemX + 4 * LemDx), LemY - 5);
     BlockCheck := ReadBlockerMap(LemX, LemY);
-    GhostCheck := ReadZombieMap(LemX, LemY) and 6;
-
-    if (not LemIsGhost) and (GhostCheck <> 6) and not (BlockCheck in [DOM_FORCELEFT, DOM_FORCERIGHT]) then
-    begin
-      if (GhostCheck and 2) <> 0 then BlockCheck := DOM_FORCELEFT;
-      if (GhostCheck and 4) <> 0 then BlockCheck := DOM_FORCERIGHT;
-    end;
-
-    if LemIsGhost then
-    begin
-      LemObjectBelow := DOM_NONE;
-      LemObjectIDBelow := DOM_NOOBJECT;
-      BlockCheck := DOM_NONE;
-      //GhostCheck := 0;
-      //if LemObjectInFront <> DOM_STEEL then LemObjectInFront := DOM_NONE;
-    end;
 
     if (not LemObjectBelow in [DOM_TRAP, DOM_TRAPONCE]) and (LemInTrap = 1) then LemInTrap := 0;
 
@@ -4846,7 +4314,7 @@ begin
             Transition(L, baFixing);
           end;
         end else
-        if ((not CheckGimmick(GIM_INVINCIBLE)) and HandleAllObjects) and (LemInTrap = 0) then
+        if HandleAllObjects and (LemInTrap = 0) then
         begin
           Inf := ObjectInfos[LemObjectIDBelow];
           if not Inf.Triggered then
@@ -4889,7 +4357,7 @@ begin
             Transition(L, baFixing);
           end;
         end else
-        if ((not CheckGimmick(GIM_INVINCIBLE)) and HandleAllObjects) and (LemInTrap = 0) then
+        if HandleAllObjects and (LemInTrap = 0) then
         begin
           Inf := ObjectInfos[LemObjectIDBelow];
           if not (Inf.Triggered or (Inf.CurrentFrame = 0)) then
@@ -4963,118 +4431,22 @@ begin
          begin
            Inf.Triggered := True;
            Inf.ZombieMode := L.LemIsZombie;
-           //Inc(Inf.CurrentFrame);
            CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
            LemTeleporting := True;
            Inf.TeleLem := L.LemIndex;
            Inf.TwoWayReceive := false;
            ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)].HoldActive := True;
-           //if Inf.Obj.DrawingFlags and 8 <> 0 then TurnAround(L);
-           //if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
-           //  begin
-           //  Inf.CurrentFrame := 0;
-           //  Inf.ZombieMode := false;
-           //  Inf.Triggered := False;
-
-             {if not CheckGimmick(GIM_CHEAPOMODE) then
-             begin
-
-             if Inf.Obj.DrawingFlags and 2 <> 0 then
-               tly := Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop) - (Inf.MetaObj.TriggerHeight - 1)
-               else
-               tly := Inf.Obj.Top + Inf.MetaObj.TriggerTop;
-             if Inf.Obj.DrawingFlags and 64 <> 0 then
-               tlx := Inf.Obj.Left + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft) - (Inf.MetaObj.TriggerWidth - 1)
-               else
-               tlx := Inf.Obj.Left + Inf.MetaObj.TriggerLeft;
-             tlx := LemX - tlx;
-             tly := LemY - tly;
-             if Inf.Obj.DrawingFlags and 8 <> 0 then
-               tlx := Inf.MetaObj.TriggerWidth - tlx - 1;
-             Inf := ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)];
-             if Inf.Obj.DrawingFlags and 2 <> 0 then
-               tly := tly + Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop) - (Inf.MetaObj.TriggerHeight - 1)
-               else
-               tly := tly + Inf.Obj.Top + Inf.MetaObj.TriggerTop;
-             if Inf.Obj.DrawingFlags and 64 <> 0 then
-               tlx := tlx + Inf.Obj.Left + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft) - (Inf.MetaObj.TriggerWidth - 1)
-               else
-               tlx := tlx + Inf.Obj.Left + Inf.MetaObj.TriggerLeft;
-
-             end else begin
-
-             {if Inf.Obj.DrawingFlags and 2 <> 0 then
-               tly := Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop)
-               else
-               tly := Inf.Obj.Top + Inf.MetaObj.TriggerTop;
-             if Inf.Obj.DrawingFlags and 64 <> 0 then
-               tlx := Inf.Obj.Left + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft)
-               else
-               tlx := Inf.Obj.Left + Inf.MetaObj.TriggerLeft;}
-             {tlx := 0; //LemX - tlx;
-             tly := 0; //LemY - tly;
-             if Inf.Obj.DrawingFlags and 8 <> 0 then
-               tlx := Inf.MetaObj.TriggerWidth - tlx - 1;
-             Inf := ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)];
-             if Inf.Obj.DrawingFlags and 2 <> 0 then
-               tly := tly + Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop)
-               else
-               tly := tly + Inf.Obj.Top + Inf.MetaObj.TriggerTop;
-             if Inf.Obj.DrawingFlags and 64 <> 0 then
-               tlx := tlx + Inf.Obj.Left + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft)
-               else
-               tlx := tlx + Inf.Obj.Left + Inf.MetaObj.TriggerLeft;
-
-             end;
-
-             LemX := tlx;
-             LemY := tly;}
-             //MoveLemToReceivePoint(L, LemObjectIDBelow);
-             //Inf.TeleLem := L.LemIndex;
-             //Inf.TwoWayReceive := true;
-             //ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)].Triggered := True;
-             //end;
          end;
        end;
      DOM_PICKUP:
-       if HandleAllObjects and ((not L.LemIsZombie) or CheckGimmick(GIM_OLDZOMBIES)) then
+       if HandleAllObjects and (not L.LemIsZombie) then
        begin
          Inf := ObjectInfos[LemObjectIDBelow];
          if Inf.CurrentFrame <> 0 then
          begin
            Inf.CurrentFrame := 0;
            CueSoundEffect(SFX_PICKUP);
-           if CheckGimmick(GIM_INSTANTPICKUP) then
-           begin
-             fFreezeSkillCount := true;
-             fFreezeRecording := true;
-             case Inf.Obj.Skill of
-               0: AutoAssignSkill := baClimbing;
-               1: AutoAssignSkill := baFloating; //if AssignSkill(L, nil, baFloating) = false then UpdateSkillCount(baFloating, true);
-               2: AutoAssignSkill := baExploding; //if AssignSkill(L, nil, baExploding) = false then UpdateSkillCount(baExploding, true);
-               3: AutoAssignSkill := baBlocking; //if AssignSkill(L, nil, baBlocking) = false then UpdateSkillCount(baBlocking, true);
-               4: AutoAssignSkill := baBuilding; //if AssignSkill(L, nil, baBuilding) = false then UpdateSkillCount(baBuilding, true);
-               5: AutoAssignSkill := baBashing; //if AssignSkill(L, nil, baBashing) = false then UpdateSkillCount(baBashing, true);
-               6: AutoAssignSkill := baMining; //if AssignSkill(L, nil, baMining) = false then UpdateSkillCount(baMining, true);
-               7: AutoAssignSkill := baDigging; //if AssignSkill(L, nil, baDigging) = false then UpdateSkillCount(baDigging, true);
-               8: AutoAssignSkill := baToWalking; //if AssignSkill(L, nil, baToWalking) = false then UpdateSkillCount(baToWalking, true);
-               9: AutoAssignSkill := baSwimming; //if AssignSkill(L, nil, baSwimming) = false then UpdateSkillCount(baSwimming, true);
-               10: AutoAssignSkill := baGliding; //if AssignSkill(L, nil, baGliding) = false then UpdateSkillCount(baGliding, true);
-               11: AutoAssignSkill := baFixing; //if AssignSkill(L, nil, baFixing) = false then UpdateSkillCount(baFixing, true);
-               12: AutoAssignSkill := baStoning; //if AssignSkill(L, nil, baStoning) = false then UpdateSkillCount(baStoning, true);
-               13: AutoAssignSkill := baPlatforming; //if AssignSkill(L, nil, baPlatforming) = false then UpdateSkillCount(baPlatforming, true);
-               14: AutoAssignSkill := baStacking; //if AssignSkill(L, nil, baStacking) = false then UpdateSkillCount(baStacking, true);
-               15: AutoAssignSkill := baCloning; //if AssignSkill(L, nil, baCloning) = false then UpdateSkillCount(baCloning, true);
-               else raise Exception.Create('Pickup skill refers to invalid skill!');
-             end;
-             DoneAutoAssign := AssignSkill(L, nil, AutoAssignSkill);
-             fFreezeRecording := false;
-             fFreezeSkillCount := false;
-             if not DoneAutoAssign then UpdateSkillCount(AutoAssignSkill, true);
-             if DoneAutoAssign and (AutoAssignSkill in [baExploding, baStoning]) then
-               UpdateExplosionTimer(L);
-           end else
-             case Inf.Obj.Skill of
+           case Inf.Obj.Skill of
                0 : UpdateSkillCount(baClimbing, true);
                1 : UpdateSkillCount(baFloating, true);
                2 : UpdateSkillCount(baExploding, true);
@@ -5091,11 +4463,11 @@ begin
                13 : UpdateSkillCount(baPlatforming, true);
                14 : UpdateSkillCount(baStacking, true);
                15 : UpdateSkillCount(baCloning, true);
-             end;
+           end;
          end;
        end;
      DOM_BUTTON:
-       if HandleAllObjects and ((not L.LemIsZombie) or CheckGimmick(GIM_OLDZOMBIES)) then
+       if HandleAllObjects and (not L.LemIsZombie) then
        begin
          Inf := ObjectInfos[LemObjectIDBelow];
          if (Inf.CurrentFrame = 1) and not (Inf.Triggered) then
@@ -5113,51 +4485,33 @@ begin
            end;
          end;
        end;
-      // 128 + n (continuous objects, staticobjects, steel, oneway wall)
+
+
       DOM_EXIT:
       if not (L.LemAction in [baFalling, baSplatting]) then
       begin
-        Inf := ObjectInfos[LemObjectIDBelow];
         if not LemIsZombie then
         begin
-
-          if Inf.MetaObj.AnimationType in [0, 2] then
-          begin
-            Transition(L, baExiting);
-            CueSoundEffect(SFX_YIPPEE);
-          end else begin
-            if not Inf.Triggered then
-            begin
-              RemoveLemming(L, RM_SAVE);
-              Inf.Triggered := True;
-              Inf.ZombieMode := L.LemIsZombie;
-              if Inf.MetaObj.SoundEffect = 0 then
-                CueSoundEffect(SFX_YIPPEE)
-              else
-                CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-              if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
-            end;
-          end;
+          Transition(L, baExiting);
+          CueSoundEffect(SFX_YIPPEE);
         end;
       end;
       DOM_LOCKEXIT:
       if not (L.LemAction in [baFalling, baSplatting]) then
         if not LemIsZombie then
         begin
-          //if LemAction <> baFalling then
-          //begin
           if ButtonsRemain = 0 then
-            begin
+          begin
             Transition(L, baExiting);
             CueSoundEffect(SFX_YIPPEE);
-            end;
-          //end;
+          end;
         end;
       DOM_RADIATION:
         begin
           if (L.LemExplosionTimer = 0) and not (L.LemAction in [baOhnoing, baStoning]) then
           begin
            L.LemExplosionTimer := 143;
+           L.LemTimerToStone := false;
           end;
         end;
       DOM_SLOWFREEZE:
@@ -5169,12 +4523,10 @@ begin
           end;
         end;
       DOM_FORCELEFT:
-        if (((LemDx > 0) and (not CheckGimmick(GIM_BACKWARDS))) or
-           ((LemDx > 0) and ((CheckGimmick(GIM_BACKWARDS)) and (LemAction <> baWalking))) or
-           ((LemDx < 0) and ((CheckGimmick(GIM_BACKWARDS)) and (LemAction = baWalking))))
-           and HandleAllObjects
-           and not (LemAction in [baClimbing, baHoisting]) then
-          begin
+        if (LemDx > 0)
+        and HandleAllObjects
+        and not (LemAction in [baClimbing, baHoisting]) then
+        begin
           dy := 0;
           NewY := LemY;
           while (dy <= 8) and (HasPixelAt_ClipY(LemX-1, NewY + 1, -dy - 1) = TRUE) do
@@ -5184,14 +4536,12 @@ begin
           end;
           if dy < 9 then
             TurnAround(L);
-          end;
+        end;
       DOM_FORCERIGHT:
-        if (((LemDx < 0) and (not CheckGimmick(GIM_BACKWARDS))) or
-           ((LemDx < 0) and ((CheckGimmick(GIM_BACKWARDS)) and (LemAction <> baWalking))) or
-           ((LemDx > 0) and ((CheckGimmick(GIM_BACKWARDS)) and (LemAction = baWalking))))
-           and HandleAllObjects
-           and not (LemAction in [baClimbing, baHoisting]) then
-          begin
+        if (LemDx < 0)
+        and HandleAllObjects
+        and not (LemAction in [baClimbing, baHoisting]) then
+        begin
           dy := 0;
           NewY := LemY;
           while (dy <= 8) and (HasPixelAt_ClipY(LemX+1, NewY + 1, -dy - 1) = TRUE) do
@@ -5201,21 +4551,11 @@ begin
           end;
           if dy < 9 then
             TurnAround(L);
-          end;
+        end;
       DOM_FIRE:
-        if not CheckGimmick(GIM_INVINCIBLE) then
         begin
           Transition(L, baVaporizing);
           CueSoundEffect(SFX_VAPORIZING);
-        end;
-      DOM_SECRET:
-        if not L.LemIsZombie then
-        begin
-          Inf := ObjectInfos[LemObjectIDBelow];
-          LevSecretGoto := (Inf.Obj.Skill * 256) + Inf.Obj.TarLev;
-          fSecretGoto := LevSecretGoto;
-          DoTalismanCheck(true);
-          Finish;
         end;
       DOM_FLIPPER:
         if HandleAllObjects then
@@ -5226,10 +4566,8 @@ begin
             if (Inf.CurrentFrame = 1) xor (LemDX < 0) then TurnAround(L);
             if (Inf.CurrentFrame = 1) then
             begin
-              //Inf.Obj.DrawingFlags := Inf.Obj.DrawingFlags and not 8;
               Inf.CurrentFrame := 0;
             end else begin
-              //Inf.Obj.DrawingFlags := Inf.Obj.DrawingFlags or 8;
               Inf.CurrentFrame := 1;
             end;
             LemInFlipper := LemObjectIDBelow;
@@ -5241,7 +4579,7 @@ begin
 
     if (ReadWaterMap(LemX, LemY) = DOM_WATER) and not LemIsGhost then
     begin
-      if (LemY > World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+      if (LemY > World.Height) then
         if ReadWaterMap(LemX, World.Height-1) = DOM_WATER then LemY := World.Height-1;
       if LemY < World.Height then
       begin
@@ -5254,7 +4592,7 @@ begin
             CueSoundEffect(SFX_SWIMMING);
           end;
         end else begin
-          if not (CheckGimmick(GIM_INVINCIBLE) or (L.LemAction in [baSwimming, baExploding, baStoneFinish, baVaporizing, baExiting, baSplatting])) then
+          if not (L.LemAction in [baSwimming, baExploding, baStoneFinish, baVaporizing, baExiting, baSplatting]) then
           begin
             Transition(L, baDrowning);
             CueSoundEffect(SFX_DROWNING);
@@ -5265,10 +4603,8 @@ begin
 
     case BlockCheck of   
       DOM_FORCELEFT:
-        if (((LemDx > 0) and (not CheckGimmick(GIM_BACKWARDS))) or
-           ((LemDx > 0) and ((CheckGimmick(GIM_BACKWARDS)) and (LemAction <> baWalking))) or
-           ((LemDx < 0) and ((CheckGimmick(GIM_BACKWARDS)) and (LemAction = baWalking))))
-           and not (LemAction in [baClimbing, baHoisting])then
+        if (LemDx > 0)
+        and not (LemAction in [baClimbing, baHoisting])then
         begin
           dy := 0;
           NewY := LemY;
@@ -5281,10 +4617,8 @@ begin
             TurnAround(L);
         end;
       DOM_FORCERIGHT:
-        if (((LemDx < 0) and (not CheckGimmick(GIM_BACKWARDS))) or
-           ((LemDx < 0) and ((CheckGimmick(GIM_BACKWARDS)) and (LemAction <> baWalking))) or
-           ((LemDx > 0) and ((CheckGimmick(GIM_BACKWARDS)) and (LemAction = baWalking))))
-           and not (LemAction in [baClimbing, baHoisting]) then
+        if (LemDx < 0)
+        and not (LemAction in [baClimbing, baHoisting]) then
         begin
           dy := 0;
           NewY := LemY;
@@ -5314,37 +4648,7 @@ begin
   if not HyperSpeed then
     StoneLemBmp.DrawTo(fTargetBitmap, L.LemX - 8, L.LemY -10);
 
-if CheckGimmick(GIM_INVERTSTEEL) then
-begin
-  for X1 := L.LemX - 8 to L.LemX + 7 do
-  for Y1 := L.LemY - 14 to L.LemY + 7 do
-  begin
-    if (X1 >= 0) and (Y1 >= 0)
-    and (X1 < World.Width) and (Y1 < World.Height) then
-      if World[X1, Y1] <> SteelWorld[X1, Y1] then
-        WriteSpecialMap(X1, Y1, DOM_STEEL);
-  end;
-end;
-
   if L.LemDx = 1 then Dec(L.LemX);
-
-  if CheckGimmick(GIM_WRAP_HOR) and (Redo <> 1) then
-  begin
-    L.LemX := L.LemX - World.Width;
-    ApplyStoneLemming(L, 1);
-    L.LemX := L.LemX + (World.Width * 2);
-    ApplyStoneLemming(L, 1);
-    L.LemX := L.LemX - World.Width;
-  end;
-
-  if CheckGimmick(GIM_WRAP_VER) and (Redo = 0) then
-  begin
-    L.LemY := L.LemY - World.Height;
-    ApplyStoneLemming(L, 2);
-    L.LemY := L.LemY + (World.Height * 2);
-    ApplyStoneLemming(L, 2);
-    L.LemY := L.LemY - World.Height;
-  end;
 
   if redo = 0 then
   begin
@@ -5365,14 +4669,8 @@ begin
 
   if not L.LemRTL then L.LemX := L.LemX + 1;
 
-  if CheckGimmick(GIM_NUCLEAR) then
-  begin
-    px := L.LemX - 24;
-    py := L.LemY - 36;
-  end else begin
-    px := L.LemX - 8;
-    py := L.LemY - 14;
-  end;
+  px := L.LemX - 8;
+  py := L.LemY - 14;
 
   ExplodeMaskBmp.DrawTo(World, px, py);
   if not HyperSpeed then
@@ -5396,25 +4694,6 @@ begin
   end;
 
   if not L.LemRTL then L.LemX := L.LemX - 1;
-
-
-  if CheckGimmick(GIM_WRAP_HOR) and (Redo <> 1) then
-  begin
-    L.LemX := L.LemX - World.Width;
-    ApplyExplosionMask(L, 1);
-    L.LemX := L.LemX + (World.Width * 2);
-    ApplyExplosionMask(L, 1);
-    L.LemX := L.LemX - World.Width;
-  end;
-
-  if CheckGimmick(GIM_WRAP_VER) and (Redo = 0) then
-  begin
-    L.LemY := L.LemY - World.Height;
-    ApplyExplosionMask(L, 2);
-    L.LemY := L.LemY + (World.Height * 2);
-    ApplyExplosionMask(L, 2);
-    L.LemY := L.LemY - World.Height;
-  end;
 
   if redo = 0 then
   begin
@@ -5456,9 +4735,6 @@ begin
   begin
     if ReadSpecialMap(X1, Y1) = DOM_STEEL then
     begin
-      {T := SteelWorld.Pixel[X1, Y1];
-      World.SetPixelTS(X1, Y1, T);
-      fTargetBitmap.SetPixelTS(X1, Y1, T);}
       World[X1, Y1] := SteelWorld[X1, Y1];
       fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
     end;
@@ -5473,24 +4749,6 @@ begin
     if (World[X1, Y1] <> SteelWorld[X1, Y1])
     and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
       WriteSpecialMap(X1, Y1, DOM_NONE);
-  end;
-
-  if CheckGimmick(GIM_WRAP_HOR) and (Redo <> 1) then
-  begin
-    L.LemX := L.LemX - World.Width;
-    ApplyBashingMask(L, MaskFrame, 1);
-    L.LemX := L.LemX + (World.Width * 2);
-    ApplyBashingMask(L, MaskFrame, 1);
-    L.LemX := L.LemX - World.Width;
-  end;
-
-  if CheckGimmick(GIM_WRAP_VER) and (Redo = 0) then
-  begin
-    L.LemY := L.LemY - World.Height;
-    ApplyBashingMask(L, MaskFrame, 2);
-    L.LemY := L.LemY + (World.Height * 2);
-    ApplyBashingMask(L, MaskFrame, 2);
-    L.LemY := L.LemY - World.Height;
   end;
 
   if redo = 0 then
@@ -5556,18 +4814,6 @@ begin
     if (World[X1, Y1] <> SteelWorld[X1, Y1])
     and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
       WriteSpecialMap(X1, Y1, DOM_NONE);
-  end;
-
-  if CheckGimmick(GIM_WRAP_HOR) and (Redo <> 1) then
-  begin
-    ApplyMinerMask(L, MaskFrame, X - World.Width, Y, 1);
-    ApplyMinerMask(L, MaskFrame, X + World.Width, Y, 1);
-  end;
-
-  if CheckGimmick(GIM_WRAP_VER) and (Redo = 0) then
-  begin
-    ApplyMinerMask(L, MaskFrame, X, Y - World.Height, 2);
-    ApplyMinerMask(L, MaskFrame, X, Y + World.Height, 2);
   end;
 
   if redo = 0 then
@@ -5859,56 +5105,6 @@ begin
           // important to intersect the rects!
           if IntersectRect(TempRect, DstRect, World.BoundsRect) then
             World.DrawTo(fTargetBitmap, TempRect, TempRect);
-          if CheckGimmick(GIM_WRAP_HOR) then
-          begin
-            if DstRect.Left < 0 then
-            begin
-              DstRect.Left := DstRect.Left + World.Width;
-              DstRect.Right := DstRect.Right + World.Width;
-              if IntersectRect(TempRect, DstRect, World.BoundsRect) then
-                World.DrawTo(fTargetBitmap, TempRect, TempRect);
-            end else if DstRect.Right > World.Width then
-            begin
-              DstRect.Left := DstRect.Left - World.Width;
-              DstRect.Right := DstRect.Right - World.Width;
-              if IntersectRect(TempRect, DstRect, World.BoundsRect) then
-                World.DrawTo(fTargetBitmap, TempRect, TempRect);
-            end;
-          end;
-          if CheckGimmick(GIM_WRAP_VER) then
-          begin
-            if DstRect.Top < 0 then
-            begin
-              DstRect.Top := DstRect.Top + World.Height;
-              DstRect.Bottom := DstRect.Bottom + World.Height;
-              if IntersectRect(TempRect, DstRect, World.BoundsRect) then
-                World.DrawTo(fTargetBitmap, TempRect, TempRect);
-            end else if DstRect.Bottom > World.Height then
-            begin
-              DstRect.Top := DstRect.Top - World.Height;
-              DstRect.Bottom := DstRect.Bottom - World.Height;
-              if IntersectRect(TempRect, DstRect, World.BoundsRect) then
-                World.DrawTo(fTargetBitmap, TempRect, TempRect);
-            end;
-
-            if CheckGimmick(GIM_WRAP_HOR) then
-          begin
-            if DstRect.Left < 0 then
-            begin
-              DstRect.Left := DstRect.Left + World.Width;
-              DstRect.Right := DstRect.Right + World.Width;
-              if IntersectRect(TempRect, DstRect, World.BoundsRect) then
-                World.DrawTo(fTargetBitmap, TempRect, TempRect);
-            end else if DstRect.Right > World.Width then
-            begin
-              DstRect.Left := DstRect.Left - World.Width;
-              DstRect.Right := DstRect.Right - World.Width;
-              if IntersectRect(TempRect, DstRect, World.BoundsRect) then
-                World.DrawTo(fTargetBitmap, TempRect, TempRect);
-            end;
-          end;
-
-          end;
         end;
         // @particles (erase) if lem is removed
         if LemParticleTimer > 0 then
@@ -5954,8 +5150,8 @@ begin
         begin
           //if LemRTLAdjust then LemX := LemX - 1;
           fCurrentlyDrawnLemming := CurrentLemming;
-          SrcRect := GetFrameBounds(CheckGimmick(GIM_NUCLEAR));
-          DstRect := GetLocationBounds(CheckGimmick(GIM_NUCLEAR));
+          SrcRect := GetFrameBounds;
+          DstRect := GetLocationBounds;
           LemEraseRect := DstRect;
 
           fMinimapBuffer.PixelS[(LemX div 16) + Xo, LemY div 8] :=
@@ -5976,99 +5172,11 @@ begin
           if not LemHighlightReplay then
           begin
             LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-            if CheckGimmick(GIM_WRAP_HOR) then
-            begin
-              if (DstRect.Right >= World.Width) then
-              begin
-                DstRect.Left := DstRect.Left - World.Width;
-                DstRect.Right := DstRect.Right - World.Width;
-                LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-              end else if (DstRect.Left < 0) then
-              begin
-                DstRect.Left := DstRect.Left + World.Width;
-                DstRect.Right := DstRect.Right + World.Width;
-                LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-              end;
-            end;
-            if CheckGimmick(GIM_WRAP_VER) then
-            begin
-              if (DstRect.Bottom >= World.Height) then
-              begin
-                DstRect.Top := DstRect.Top - World.Height;
-                DstRect.Bottom := DstRect.Bottom - World.Height;
-                LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-              end else if (DstRect.Top < 0) then
-              begin
-                DstRect.Top := DstRect.Top + World.Height;
-                DstRect.Bottom := DstRect.Bottom + World.Height;
-                LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-              end;
-
-              if CheckGimmick(GIM_WRAP_HOR) then
-              begin
-                if (DstRect.Right >= World.Width) then
-                begin
-                  DstRect.Left := DstRect.Left - World.Width;
-                  DstRect.Right := DstRect.Right - World.Width;
-                  LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-                end else if (DstRect.Left < 0) then
-                begin
-                  DstRect.Left := DstRect.Left + World.Width;
-                  DstRect.Right := DstRect.Right + World.Width;
-                  LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-                end;
-              end;
-
-            end;
           end else begin
             // replay assign job highlight fotoflash effect
             OldCombine := LAB.OnPixelCombine;
             LAB.OnPixelCombine := CombineLemmingHighlight;
             LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-            if CheckGimmick(GIM_WRAP_HOR) then
-            begin
-              if (DstRect.Right >= World.Width) then
-              begin
-                DstRect.Left := DstRect.Left - World.Width;
-                DstRect.Right := DstRect.Right - World.Width;
-                LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-              end else if (DstRect.Left < 0) then
-              begin
-                DstRect.Left := DstRect.Left + World.Width;
-                DstRect.Right := DstRect.Right + World.Width;
-                LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-              end;
-            end;
-            if CheckGimmick(GIM_WRAP_VER) then
-            begin
-              if (DstRect.Bottom >= World.Height) then
-              begin
-                DstRect.Top := DstRect.Top - World.Height;
-                DstRect.Bottom := DstRect.Bottom - World.Height;
-                LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-              end else if (DstRect.Top < 0) then
-              begin
-                DstRect.Top := DstRect.Top + World.Height;
-                DstRect.Bottom := DstRect.Bottom + World.Height;
-                LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-              end;
-
-              if CheckGimmick(GIM_WRAP_HOR) then
-              begin
-                if (DstRect.Right >= World.Width) then
-                begin
-                  DstRect.Left := DstRect.Left - World.Width;
-                  DstRect.Right := DstRect.Right - World.Width;
-                  LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-                end else if (DstRect.Left < 0) then
-                begin
-                  DstRect.Left := DstRect.Left + World.Width;
-                  DstRect.Right := DstRect.Right + World.Width;
-                  LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-                end;
-              end;
-
-            end;
             LAB.OnPixelCombine := OldCombine;
             LemHighlightReplay := False;
           end;
@@ -6113,51 +5221,6 @@ begin
             if LemDx = -1 then RectMove(DigRect, -1, 0);
 
             TempBmp.DrawTo(fTargetBitmap, DigRect);
-
-            if CheckGimmick(GIM_WRAP_HOR) then
-            begin
-              if (DigRect.Right >= World.Width) then
-              begin
-                DigRect.Left := DigRect.Left - World.Width;
-                DigRect.Right := DigRect.Right - World.Width;
-                TempBmp.DrawTo(fTargetBitmap, DigRect);
-              end else if (DigRect.Left < 0) then
-              begin
-                DigRect.Left := DigRect.Left + World.Width;
-                DigRect.Right := DigRect.Right + World.Width;
-                TempBmp.DrawTo(fTargetBitmap, DigRect);
-              end;
-            end;
-            if CheckGimmick(GIM_WRAP_VER) then
-            begin
-              if (DigRect.Bottom >= World.Height) then
-              begin
-                DigRect.Top := DigRect.Top - World.Height;
-                DigRect.Bottom := DigRect.Bottom - World.Height;
-                TempBmp.DrawTo(fTargetBitmap, DigRect);
-              end else if (DigRect.Top < 0) then
-              begin
-                DigRect.Top := DigRect.Top + World.Height;
-                DigRect.Bottom := DigRect.Bottom + World.Height;
-                TempBmp.DrawTo(fTargetBitmap, DigRect);
-              end;
-
-              if CheckGimmick(GIM_WRAP_HOR) then
-              begin
-                if (DigRect.Right >= World.Width) then
-                begin
-                  DigRect.Left := DigRect.Left - World.Width;
-                  DigRect.Right := DigRect.Right - World.Width;
-                  TempBmp.DrawTo(fTargetBitmap, DigRect);
-                end else if (DigRect.Left < 0) then
-                begin
-                  DigRect.Left := DigRect.Left + World.Width;
-                  DigRect.Right := DigRect.Right + World.Width;
-                  TempBmp.DrawTo(fTargetBitmap, DigRect);
-                end;
-              end;
-
-            end;
 
             TempBmp.Free;
 
@@ -6226,26 +5289,14 @@ begin
     C := C or ALPHA_TERRAIN;
     y := LemY - 1 + o;
 
-    if CheckGimmick(GIM_WRAP_VER) then
-    begin
-      if y < 0 then y := y + World.Height
-      else if y >= World.Height then y := y - World.Height;
-    end;
-
 //    C := BrickPixelColor or ALPHA_TERRAIN;
 
 
     repeat
-      if CheckGimmick(GIM_WRAP_HOR) then
-      begin
-        if x < 0 then x := x + World.Width
-        else if x >= World.Width then x := x - World.Width;
-      end;
       if World.PixelS[x, y] and ALPHA_TERRAIN = 0 then
       begin
         World.PixelS[x, y] := C;
         if not fHyperSpeed then fTargetBitmap.PixelS[x, y] := C;
-        if CheckGimmick(GIM_INVERTSTEEL) then WriteSpecialMap(x, y, DOM_STEEL);
       end;
       Inc(NumPixelsFilled);
       Inc(X);
@@ -6284,28 +5335,15 @@ begin
     if LemStackLow then Inc(o);
     Y := LemY - 9 + o;
 
-
-    if CheckGimmick(GIM_WRAP_VER) then
-    begin
-      if y < 0 then y := y + World.Height
-      else if y >= World.Height then y := y - World.Height;
-    end;
-
 //    C := BrickPixelColor or ALPHA_TERRAIN;
 
 
 
     repeat
-      if CheckGimmick(GIM_WRAP_HOR) then
-      begin
-        if x < 0 then x := x + World.Width
-        else if x >= World.Width then x := x - World.Width;
-      end;
       if World.PixelS[x, y] and ALPHA_TERRAIN = 0 then
       begin
         World.PixelS[x, y] := C;
         if not fHyperSpeed then fTargetBitmap.PixelS[x, y] := C;
-        if CheckGimmick(GIM_INVERTSTEEL) then WriteSpecialMap(x, y, DOM_STEEL);
       end;
       Inc(NumPixelsFilled);
       Inc(X);
@@ -6331,31 +5369,17 @@ begin
     n := 1;
     x := LemX - 4;
 
-    if CheckGimmick(GIM_WRAP_VER) then
-    begin
-      if Y < 0 then Y := Y + World.Height;
-      if Y >= World.Height then Y := Y - World.Height;
-    end;
-
     yy := Y;
 
     if (yy < 0) then yy := 0;
 
     while (n <= 9) do
     begin
-      if CheckGimmick(GIM_WRAP_HOR) then
-      begin
-        if x < 0 then x := x + World.Width;
-        if x >= World.Width then x := x - World.Width;
-      end;
       if (HasPixelAt(x,yy) = TRUE) and (ReadSpecialMap(x, yy) <> DOM_STEEL) then
       begin
-        if not CheckGimmick(GIM_UNALTERABLE) then
-        begin
-          RemovePixelAt(x,yy);
-          if ReadSpecialMap(x, yy) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
+        RemovePixelAt(x,yy);
+        if ReadSpecialMap(x, yy) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
             WriteSpecialMap(x, yy, DOM_NONE);
-        end;
         if (n > 1) and (n < 9) then
         Result := TRUE;
       end;
@@ -6396,8 +5420,6 @@ begin
     // next frame (except floating and digging which are handled differently)
     if not (LemAction in [baFloating, baDigging]) then
     begin
-      if not ((CheckGimmick(GIM_BACKWARDS)) and (LemAction = baWalking)) then
-      begin
         if (LemFrame < LemMaxFrame) then
         begin
           LemEndOfAnimation := False;
@@ -6408,47 +5430,15 @@ begin
           if LemAnimationType = lat_Loop then
            LemFrame := 0;
         end;
-      end else
-        if (LemFrame > 0) then
-        begin
-          LemEndOfAnimation := False;
-          Dec(LemFrame);
-        end
-        else begin
-          LemEndOfAnimation := True;
-          if LemAnimationType = lat_Loop then
-           LemFrame := 7;
-        end;
-      end;
+    end;
 
   end; // with
 
   Method := LemmingMethods[L.LemAction];
   Result := Method(L);
 
-  with L do
-  begin
-    if CheckGimmick(GIM_WRAP_HOR) then
-    begin
-      if LemX < 0 then LemX := LemX + World.Width;
-      if LemX >= World.Width then LemX := LemX - World.Width;
-    end;
-    if CheckGimmick(GIM_WRAP_VER) then
-    begin
-      if LemY < 0 then
-      begin
-        LemY := LemY + World.Height;
-        LemClimbStartY := LemClimbStartY + World.Height;
-      end;
-      if LemY >= World.Height then LemY := LemY - World.Height;
-    end;
-  end;
-
-  if L.LemIsZombie and CheckGimmick(GIM_ZOMBIES) then
+  if L.LemIsZombie then
     SetZombieField(L);
-
-  //if (L.LemIsGhost and CheckGimmick(GIM_GHOSTS)) then
-  //  SetGhostField(L);
 
 end;
 
@@ -6460,20 +5450,13 @@ begin
 
   with L do
   begin
-    if CheckGimmick(GIM_BACKWARDS) then
-      Dec(LemX, LemDx)
-      else
-      Inc(LemX, LemDx);
+    Inc(LemX, LemDx);
 
-    {if (LemX >= LEMMING_MIN_X) and (LemX <= LEMMING_MAX_X) then
-    begin}
-      if (HasPixelAt_ClipY(LemX, LemY, 0) = TRUE) or (CheckGimmick(GIM_NOGRAVITY))
-      or ((HasPixelAt_ClipY(LemX, LemY-1, 0) = TRUE) and CheckGimmick(GIM_CHEAPOMODE)) then
+      if (HasPixelAt_ClipY(LemX, LemY, 0) = TRUE) then
       begin
         // walk, jump, climb, or turn around
         dy := 0;
         NewY := LemY;
-        //if CheckGimmick(GIM_CHEAPOMODE) then Dec(NewY);
         while (dy <= 6) and (HasPixelAt_ClipY(LemX, NewY - 1, -dy - 1) = TRUE) do
         begin
           Inc(dy);
@@ -6483,67 +5466,40 @@ begin
         if dy > 6 then
         begin
           if (LemIsClimber) then
-            begin
-            if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
-            Transition(L, baClimbing);
-            end
-          else
-          begin
-            if CheckGimmick(GIM_NOGRAVITY) then
-            begin
-              dy := 0;
-              while (dy < 4) do
-              begin
-                Inc(dy);
-                if HasPixelAt(LemX, LemY + dy - 1) = FALSE then
-                begin
-                  LemY := LemY + dy;
-                  Result := true;
-                  exit;
-                end;
-              end;
-            end;
+            Transition(L, baClimbing)
+          else begin
 
             TurnAround(L);
-
-            if CheckGimmick(GIM_BACKWARDS) then
-              Dec(LemX, LemDx)
-              else
-              Inc(LemX, LemDx);
+            Inc(LemX, LemDx);
 
             if HasPixelAt(LemX, LemY) = FALSE then
             begin
+              dy := 1;
+              while dy <= 3 do
+              begin
+                Inc(LemY);
+                if HasPixelAt_ClipY(LemX, LemY, dy) = TRUE then
+                  Break;
+                Inc(Dy);
+              end;
 
-      if not CheckGimmick(GIM_NOGRAVITY) then
-        begin
-        dy := 1;
-        while dy <= 3 do
-        begin
-          Inc(LemY);
-          if HasPixelAt_ClipY(LemX, LemY, dy) = TRUE then
-            Break;
-          Inc(Dy);
-        end;
-
-        if dy > 3 then
-        begin
-          // in this case, lemming becomes a faller
-          Inc(LemY);
-          Transition(L, baFalling);
-        end;
-        end;
-
-        if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
-        begin
-          RemoveLemming(L, RM_NEUTRAL);
-          Exit;
-        end
-        else begin
-          Result := True;
-          Exit;
-        end;
-
+              if dy > 3 then
+              begin
+                // in this case, lemming becomes a faller
+                Inc(LemY);
+                Transition(L, baFalling);
+              end;
             end;
+
+            if (LemY > LEMMING_MAX_Y + World.Height) then
+            begin
+              RemoveLemming(L, RM_NEUTRAL);
+              Exit;
+            end else begin
+              Result := True;
+              Exit;
+            end;
+
           end;
           Result := True;
           Exit;
@@ -6551,7 +5507,6 @@ begin
         else begin
           if dy >= 3 then
           begin
-            if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
             Transition(L, baJumping);
             NewY := LemY - 2;
           end;
@@ -6563,8 +5518,6 @@ begin
       end
       else begin // no pixel at feet
         // walk or fall downwards
-        if not CheckGimmick(GIM_NOGRAVITY) then
-        begin
         dy := 1;
         while dy <= 3 do
         begin
@@ -6580,31 +5533,18 @@ begin
           Inc(LemY);
           Transition(L, baFalling);
         end;
-        end;
 
-        if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+        if (LemY > LEMMING_MAX_Y + World.Height) then
         begin
           RemoveLemming(L, RM_NEUTRAL);
           Exit;
-        end
-        else begin
+        end else begin
           Result := True;
           Exit;
         end;
 
       end;
-
-    {end
-    else begin
-      TurnAround(L);
-      if CheckGimmick(GIM_BACKWARDS) then
-        Dec(LemX, LemDx)
-        else
-        Inc(LemX, LemDx);
-      Result := True;
-      Exit;
-    end;}
-  end; // with L
+  end;
 
 end;
 
@@ -6620,16 +5560,11 @@ begin
   with L do
   begin
     LocalLemObjectBelow := ReadWaterMap(LemX, LemY);
-    if CheckGimmick(GIM_BACKWARDS) then
-      Dec(LemX, LemDx)
-      else
-      Inc(LemX, LemDx);
+    Inc(LemX, LemDx);
 
     if (ReadWaterMap(LemX, LemY-2) = DOM_WATER)
     and (not (HasPixelAt(LemX, LemY-2))) then dec(LemY);
 
-    {if (LemX >= LEMMING_MIN_X) and (LemX <= LEMMING_MAX_X) then
-    begin}
       if (LocalLemObjectBelow = DOM_WATER) then
       begin
         // walk, jump, climb, or turn around
@@ -6657,7 +5592,6 @@ begin
                 exit;
               end;
             end;
-            if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
             Transition(L, baClimbing);
           end
           else begin
@@ -6674,10 +5608,7 @@ begin
               end;
             end;
             TurnAround(L);
-            if CheckGimmick(GIM_BACKWARDS) then
-              Dec(LemX, LemDx)
-              else
-              Inc(LemX, LemDx);
+            Inc(LemX, LemDx);
           end;
           Result := True;
           Exit;
@@ -6685,7 +5616,6 @@ begin
         else begin
           if dy >= 3 then
           begin
-            if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
             Transition(L, baJumping);
             NewY := LemY - 2;
           end else
@@ -6695,46 +5625,26 @@ begin
           Result := True;
           Exit;
         end
-      end
-      else begin // no water at feet
+      end else begin // no water at feet
         // walk or fall downwards
-        if not CheckGimmick(GIM_NOGRAVITY) then
-        begin
-        dy := 1;
-        while dy <= 3 do
-        begin
-          Inc(LemY);
-          if HasPixelAt_ClipY(LemX, LemY, dy) = TRUE then
-            Break;
-          Inc(Dy);
-        end;
+          dy := 1;
+          while dy <= 3 do
+          begin
+            Inc(LemY);
+            if HasPixelAt_ClipY(LemX, LemY, dy) = TRUE then
+              Break;
+            Inc(Dy);
+          end;
 
-        if dy > 3 then
-        begin
-          // in this case, lemming becomes a faller
-          Inc(LemY);
-          Transition(L, baFalling);
-        end
-        else
-          Transition(L, baWalking);
-
-        end else begin
-          Result := True;
-          Exit;
-        end;
-
+          if dy > 3 then
+          begin
+            // in this case, lemming becomes a faller
+            Inc(LemY);
+            Transition(L, baFalling);
+          end else
+            Transition(L, baWalking);
       end;
 
-    {end
-    else begin
-      {TurnAround(L);
-      if CheckGimmick(GIM_BACKWARDS) then
-        Dec(LemX, LemDx)
-        else
-        Inc(LemX, LemDx);
-      Result := True;
-      Exit;
-    end;}
   end; // with L
 
 end;
@@ -6744,7 +5654,6 @@ end;
 function TLemmingGame.HandleJumping(L: TLemming): Boolean;
 var
   dy: Integer;
-  //NewY: Integer;
 begin
   Result := True;
   with L do
@@ -6759,51 +5668,18 @@ begin
 
     if (dy < 2) and not HasPixelAt(LemX, LemY-1) then
     begin
-      if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
       Transition(L, baWalking);
     end else if ((LemJumped = 4) and HasPixelAt(LemX, LemY-1) and HasPixelAt(LemX, LemY-2)) or ((LemJumped >= 5) and HasPixelAt(LemX, LemY-1)) then
     begin
-      //TurnAround(L);
       Dec(LemX, LemDx);
       Transition(L, baFalling, true);
     end;
-
-
-
-    {dy := 0;
-    while (dy < 2) and (HasPixelAt_ClipY(LemX, LemY - 1, -dy - 1) = TRUE) do
-    begin
-      Inc(Dy);
-      Dec(LemY);
-    end;
-
-    if dy < 2 then
-      begin
-      if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
-      Transition(L, baWalking);
-      end;
-
-    dy := 0;
-    NewY := LemY;
-    while (dy <= 6) and (HasPixelAt_ClipY(LemX, NewY - 1, -dy - 1) = TRUE) do
-    begin
-      Inc(dy);
-      Dec(NewY);
-    end;
-
-    if dy = 7 then
-    begin
-      if not CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
-      Transition(L, baFalling);
-    end;
-
-    CheckForLevelTopBoundary(L);
-    Result := True;}
   end;
 end;
 
 function TLemmingGame.HandleDigging(L: TLemming): Boolean;
 // returns FALSE if there are no terrain pixels to remove (??? did I write this?)
+// More to the point - should it still do so in NeoLemmix?
 var
   Y: Integer;
 begin
@@ -6814,53 +5690,30 @@ begin
 
     if LemIsNewDigger then
     begin
-      if not CheckGimmick(GIM_UNALTERABLE) then
-      begin
-      //DigOneRow(L, LemY - 2);
       DigOneRow(L, LemY - 1);
-      end;
       LemIsNewDigger := FALSE;
-    end
-    else begin
+    end else begin
       Inc(lemFrame);
       if (lemFrame >= 16) then
-        begin
         lemFrame := lemFrame - 16;
-        if CheckGimmick(GIM_LAZY) then
-          begin
-            if CheckGimmick(GIM_NOGRAVITY) then
-              begin
-              if not CheckGimmick(GIM_HARDWORK) then Transition(L, baWalking);
-              end
-              else
-              Transition(L, baFalling);
-              end;
-          end;
-      end;
+    end;
 
     if LemFrame in [0, 8] then
     begin
       y := lemy;
       Inc(lemY);
 
-      if (lemy > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+      if (lemy > LEMMING_MAX_Y + World.Height) then
       begin
-        { TODO : Probably a small bug here: We should call RemoveLemming! }
-        //lemRemoved := TRUE;
-        //Result := FALSE;
         RemoveLemming(L, RM_NEUTRAL);
         Exit;
       end;
 
       if (DigOneRow(L, y) = FALSE) then
-        begin
-        if CheckGimmick(GIM_NOGRAVITY) then
-          begin
-          if not CheckGimmick(GIM_HARDWORK) then Transition(L, baWalking);
-          end
-        else
-          Transition(L, baFalling);
-        end;
+      begin
+        Transition(L, baFalling);
+      end;
+
       if (ReadSpecialMap(LemX,lemy) = DOM_STEEL) then
       begin
         CueSoundEffect(SFX_HITS_STEEL);
@@ -6868,11 +5721,9 @@ begin
       end;
 
       Result := TRUE;
-    end
-    else begin
+    end else begin
       Result := FALSE
     end;
-
   end;
 end;
 
@@ -6905,19 +5756,9 @@ begin
 
         if FoundClip then
         begin
-          LemY := LemY - LemFrame + 2;
-          if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
-          if not CheckGimmick(GIM_NOGRAVITY) then
-          begin
-            LemY := LemY + 1;
-            Transition(L, baFalling, TRUE)
-          end else
-            Transition(L, baWalking, TRUE);
-
-          if CheckGimmick(GIM_BACKWARDS) then
-            Dec(LemX, LemDx)
-          else
-            Inc(LemX, LemDx);
+          LemY := LemY - LemFrame + 3;
+          Transition(L, baFalling, TRUE);
+          Inc(LemX, LemDx);
           Result := True;
           Exit;
         end else if (HasPixelAt_ClipY(LemX, LemY - 7 - LemFrame, 0) = FALSE) then
@@ -6934,7 +5775,7 @@ begin
     else begin
       Dec(LemY);
       Inc(LemClimbed);
-      // check for overhang or level top boundary
+
       FoundClip := HasPixelAt_ClipY(LemX - LemDx, LemY - 7, -8);
 
       if LemFrame = 7 then
@@ -6943,23 +5784,13 @@ begin
       FoundClip := FoundClip
         or ((LemClimbed = 1) and HasPixelAt_ClipY(LemX - LemDx, LemY - 6, -8))
         or ((ReadObjectMapType(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0)) or ((ReadObjectMapType(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0))
-        or ((ReadBlockerMap(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0)) or ((ReadBlockerMap(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0))
-        or ((CheckGimmick(GIM_EXHAUSTION)) and (LemClimbed >= fFallLimit));
+        or ((ReadBlockerMap(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0)) or ((ReadBlockerMap(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0));
 
       if FoundClip then
       begin
-        if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
-        if not CheckGimmick(GIM_NOGRAVITY) then
-          begin
-          LemY := LemY + 1;
-          Transition(L, baFalling, TRUE);
-          end
-        else
-          Transition(L, baWalking, TRUE);
-        if CheckGimmick(GIM_BACKWARDS) then
-          Dec(LemX, LemDx)
-          else
-          Inc(LemX, LemDx);
+        LemY := LemY + 1;
+        Transition(L, baFalling, TRUE);
+        Inc(LemX, LemDx);
       end;
       Result := True;
       Exit;
@@ -6972,14 +5803,7 @@ function TLemmingGame.HandleDrowning(L: TLemming): Boolean;
 begin
   Result := False;
   with L do
-  begin
-    // here the use of HasPixelAt rather than HasPixelAt_ClipY
-    // is correct
-
     if LemEndOfAnimation then RemoveLemming(L, RM_KILL);
-    //else if HasPixelAt(LemX + 8 * LemDx, LemY) = FALSE then
-      //Inc(LemX, LemDx);
-  end;
 end;
 
 function TLemmingGame.HandleFixing(L: TLemming): Boolean;
@@ -6990,8 +5814,8 @@ begin
     Dec(LemMechanicFrames);
     if LemMechanicFrames <= 0 then
       Transition(L, baWalking)
-      else
-      if LemFrame mod 8 = 0 then CueSoundEffect(SFX_FIXING);
+    else if LemFrame mod 8 = 0 then
+      CueSoundEffect(SFX_FIXING);
   end;
 end;
 
@@ -7006,17 +5830,13 @@ begin
       CheckForLevelTopBoundary(L);
       Result := True;
       Exit;
-    end
-    else if (LemEndOfAnimation) then // LemFrame = 7
+    end else if (LemEndOfAnimation) then
     begin
-      if CheckGimmick(GIM_BACKWARDS) then TurnAround(L);
       Transition(L, baWalking);
       CheckForLevelTopBoundary(L);
       Result := True;
       Exit;
     end
-//    else
-  //    Result := False;
   end;
 end;
 
@@ -7059,25 +5879,15 @@ begin
       CueSoundEffect(SFX_BUILDER_WARNING);
 
     // lay brick
-    if (LemFrame = 9)
-    {or ( (LemFrame = 10) and (LemNumberOfBricksLeft = 9) )} then
+    if (LemFrame = 9) then
     begin
       LemCouldPlatform := LemCanPlatform(L);
-      if not CheckGimmick(GIM_UNALTERABLE) then
       LayBrick(L, 1);
-      //Result := False;
-      if CheckGimmick(GIM_HARDWORK) then
-        LemNumberOfBricksLeft := 11;
-      if (CheckGimmick(GIM_LAZY)) and (LemNumberOfBricksLeft > 4) then
-        LemNumberOfBricksLeft := 4;
       Exit;
     end
     else if (LemFrame = 15) and not (LemCouldPlatform) then
     begin
       Transition(L, baWalking, TRUE);
-      if (CheckGimmick(GIM_UNALTERABLE)) then Transition(L, baShrugging);
-      if CheckGimmick(GIM_BACKWARDS) and HasPixelAt(LemX, LemY-1) and not HasPixelAt(LemX + LemDx, LemY - 1) then
-          Inc(LemX, LemDx);
       CheckForLevelTopBoundary(L);
       Result := True;
       Exit;
@@ -7086,18 +5896,11 @@ begin
     begin
 
       Inc(LemX, LemDx);
-      if {(LemX <= LEMMING_MIN_X) or (LemX > LEMMING_MAX_X)
-      or} (((HasPixelAt_ClipY(LemX+LemDx, LemY - 1, -1) = TRUE)
+      if (((HasPixelAt_ClipY(LemX+LemDx, LemY - 1, -1) = TRUE)
       or (HasPixelAt_ClipY(LemX+LemDx, LemY - 2, -1) = TRUE))
-      and ((LemNumberOfBricksLeft > 1) or (LemFrame = 15)))
-      {or (not LemCanPlatform(L))} then
+      and ((LemNumberOfBricksLeft > 1) or (LemFrame = 15))) then
       begin
-        //TurnAround(L);
         Transition(L, baWalking, TRUE);  // turn around as well
-        //Inc(LemX, LemDx);
-        if (CheckGimmick(GIM_UNALTERABLE)) then Transition(L, baShrugging);
-        if CheckGimmick(GIM_BACKWARDS) and HasPixelAt(LemX, LemY-1) and not HasPixelAt(LemX + LemDx, LemY - 1) then
-          Inc(LemX, LemDx);
         CheckForLevelTopBoundary(L);
         Result := True;
         Exit;
@@ -7107,16 +5910,12 @@ begin
       begin
 
       Inc(LemX, LemDx);
-      if {(LemX <= LEMMING_MIN_X) or (LemX > LEMMING_MAX_X)
-      or} (((HasPixelAt_ClipY(LemX+LemDx, LemY - 1, -1) = TRUE)
+      if (((HasPixelAt_ClipY(LemX+LemDx, LemY - 1, -1) = TRUE)
       or (HasPixelAt_ClipY(LemX+LemDx, LemY - 2, -1) = TRUE))) then
       begin
         if (LemNumberOfBricksLeft > 1) then
         begin
           Transition(L, baWalking, TRUE);  // turn around as well
-          if (CheckGimmick(GIM_UNALTERABLE)) then Transition(L, baShrugging);
-          if CheckGimmick(GIM_BACKWARDS) and HasPixelAt(LemX, LemY-1) and not HasPixelAt(LemX + LemDx, LemY - 1) then
-            Inc(LemX, LemDx);
           CheckForLevelTopBoundary(L);
           Result := True;
           Exit;
@@ -7148,8 +5947,6 @@ end;
 
 
 function TLemmingGame.HandleBuilding(L: TLemming): Boolean;
-//var
-//  tcheck : Integer;
 begin
   Result := False;
 
@@ -7160,53 +5957,33 @@ begin
       CueSoundEffect(SFX_BUILDER_WARNING);
 
     // lay brick
-    if (LemFrame = 9)
-    {or ( (LemFrame = 10) and (LemNumberOfBricksLeft = 9) )} then
+    if (LemFrame = 9) then
     begin
-      if not CheckGimmick(GIM_UNALTERABLE) then
       LayBrick(L);
-      //Result := False;
-      if CheckGimmick(GIM_HARDWORK) then
-        LemNumberOfBricksLeft := 11;
-      if (CheckGimmick(GIM_LAZY)) and (LemNumberOfBricksLeft > 4) then
-        LemNumberOfBricksLeft := 4;
       Exit;
     end
     else if (LemFrame = 0) then
     begin
 
       Dec(LemY);
-      {if not HasPixelAt_ClipY(LemX + LemDx, LemY - 1, -1) then} Inc(LemX, LemDx);
-      if {(LemX <= LEMMING_MIN_X) or (LemX > LEMMING_MAX_X)
-      or} (HasPixelAt_ClipY(LemX, LemY - 1, -1) = TRUE)
+      Inc(LemX, LemDx);
+      if (HasPixelAt_ClipY(LemX, LemY - 1, -1) = TRUE)
       or (HasPixelAt_ClipY(LemX, LemY - 2, -1) = TRUE)
-      {or (HasPixelAt_ClipY(LemX, LemY - 3, -1) = TRUE)} 
-      {or (HasPixelAt_ClipY(LemX + LemDx, LemY - 1, -1) = TRUE)}
-      or ((HasPixelAt_ClipY(LemX + LemDx, LemY - 9, -9) = TRUE) and (LemNumberOfBricksLeft > 1))
-      {or ((HasPixelAt_ClipY(LemX + LemDx + LemDx, LemY - 9, -9) = TRUE) and (LemNumberOfBricksLeft > 1))} then
+      or ((HasPixelAt_ClipY(LemX + LemDx, LemY - 9, -9) = TRUE) and (LemNumberOfBricksLeft > 1)) then
       begin
-        //TurnAround(L);
         Transition(L, baWalking, TRUE);  // turn around as well
-        //Inc(LemX, LemDx);
-        if (CheckGimmick(GIM_UNALTERABLE)) then Transition(L, baShrugging);
-        if CheckGimmick(GIM_BACKWARDS) and HasPixelAt(LemX, LemY-1) and not HasPixelAt(LemX + LemDx, LemY - 1) then
-          Inc(LemX, LemDx);
         CheckForLevelTopBoundary(L);
         Result := True;
         Exit;
       end;
 
       Inc(LemX, LemDx);
-      if (HasPixelAt_ClipY(LemX, LemY - 1, -1) = TRUE) {or (HasPixelAt_ClipY(LemX + LemDx, LemY - 1, -1) = TRUE)}
+      if (HasPixelAt_ClipY(LemX, LemY - 1, -1) = TRUE)
       or (HasPixelAt_ClipY(LemX, LemY - 2, -1) = TRUE)
       or (HasPixelAt_ClipY(LemX, LemY - 3, -1) = TRUE)
       or ((HasPixelAt_ClipY(LemX + LemDx, LemY - 3, -1) = TRUE) and (LemNumberOfBricksLeft > 0)) then
       begin
-        //TurnAround(L);
         Transition(L, baWalking, TRUE);  // turn around as well
-        if (CheckGimmick(GIM_UNALTERABLE)) then Transition(L, baShrugging);
-        if CheckGimmick(GIM_BACKWARDS) and HasPixelAt(LemX, LemY-1) and not HasPixelAt(LemX + LemDx, LemY - 1) then
-          Inc(LemX, LemDx);
         CheckForLevelTopBoundary(L);
         Result := True;
         Exit;
@@ -7221,32 +5998,13 @@ begin
         Exit;
       end;
 
-      if (HasPixelAt_ClipY(LemX + LemDx, LemY - 9, -9) = TRUE)
-      {or (HasPixelAt_ClipY(LemX + LemDx + LemDx, LemY - 9, -9) = TRUE)}
-      {or (LemX <= LEMMING_MIN_X)
-      or (LemX > LEMMING_MAX_X)} then
+      if (HasPixelAt_ClipY(LemX + LemDx, LemY - 9, -9) = TRUE) then
       begin
-        //TurnAround(L);
         Transition(L, baWalking, TRUE);  // turn around as well
-        //Inc(LemX, LemDx);
-        if (CheckGimmick(GIM_UNALTERABLE)) then Transition(L, baShrugging);
-        if CheckGimmick(GIM_BACKWARDS) and HasPixelAt(LemX, LemY-1) and not HasPixelAt(LemX + LemDx, LemY - 1) then
-          Inc(LemX, LemDx);
         CheckForLevelTopBoundary(L);
         Result := True;
         Exit;
       end;
-
-      {-------------------------------------------------------------------------------
-        if builder too high he becomes a walker. will *not* turn around
-        although it seems he should, but the CheckForLevelTop fails because
-        of a changed FrameTopDy
-      -------------------------------------------------------------------------------}
-      {if (LemY + FrameTopDy < HEAD_MIN_Y) and not CheckGimmick(GIM_WRAP_VER) then
-      begin
-        Transition(L, baWalking);
-        CheckForLevelTopBoundary(L);
-      end;}
 
       Result := True;
       Exit;
@@ -7262,48 +6020,32 @@ end;
 
 function TLemmingGame.HandleStacking(L: TLemming): Boolean;
 var
-  //tcheck : Integer;
   oy: Integer;
 begin
-  //Result := False;
-
   with L do
   begin
     // sound
     if (LemFrame = 0) then
-      begin
-      if (LemNumberOfBricksLeft <= 3) or CheckGimmick(GIM_LAZY) then CueSoundEffect(SFX_BUILDER_WARNING);
-      //LemFrame := 0
-      end;
+    begin
+      if (LemNumberOfBricksLeft <= 3) then CueSoundEffect(SFX_BUILDER_WARNING);
+    end;
 
     // lay brick
     if (LemFrame = 7) then
     begin
-      if not CheckGimmick(GIM_UNALTERABLE) then
-      if CheckGimmick(GIM_LAZY) and (LemNumberOfBricksLeft < 3) then
-        LayStackBrick(L, LemNumberOfBricksLeft + 5)
-        else
-        LayStackBrick(L, LemNumberOfBricksLeft);
+      LayStackBrick(L, LemNumberOfBricksLeft);
       Inc(LemFrame);
-      //Result := False;
     end;
 
     if (LemFrame = 0) then
     begin
-      {if CheckGimmick(GIM_HARDWORK) then
-        LemNumberOfBricksLeft := 11;}
-      if (CheckGimmick(GIM_LAZY)) and (LemNumberOfBricksLeft > 3) then
-        LemNumberOfBricksLeft := 3;
 
       oy := LemY - 10 + LemNumberOfBricksLeft;
 
       if LemStackLow then Inc(oy);
 
-      if CheckGimmick(GIM_LAZY) and (LemNumberOfBricksLeft < 3) then oy := oy + 5;
-
       if (HasPixelAt(LemX+LemDx, oy)) then
       begin
-        //TurnAround(L);
         Transition(L, baWalking, true);
         CheckForLevelTopBoundary(L);
         Result := True;
@@ -7350,13 +6092,6 @@ begin
     begin
       Inc(LemX, LemDx);
 
-      {if (LemX < LEMMING_MIN_X) or (LemX > LEMMING_MAX_X) then
-      begin
-        // outside leftside or outside rightside?
-        //TurnAround(L);
-        Transition(L, baWalking, TRUE);  // turn around as well
-      end;}
-
         // check 3 pixels above the new position
         if (HasPixelAt(LemX, LemY)) then
         begin
@@ -7364,35 +6099,32 @@ begin
         while (dy <= 3) do
         begin
           if (HasPixelAt(LemX, LemY - dy)) and not (HasPixelAt(LemX, LemY - dy - 1)) then
-            begin
+          begin
             LemY := LemY - dy;
             break;
-            end
-            else if (dy = 3) and (not CheckGimmick(GIM_UNALTERABLE)) and (HasPixelAt(LemX, LemY - dy)) then
-            begin
+          end else if (dy = 3) and (HasPixelAt(LemX, LemY - dy)) then
+          begin
             if (ReadSpecialMap(LemX, LemY - dy - 1) = DOM_STEEL)
-            or ({(not LemIsGhost) and}
-            ((ReadSpecialMap(LemX, LemY - dy - 1) = DOM_ONEWAYDOWN)
+            or (((ReadSpecialMap(LemX, LemY - dy - 1) = DOM_ONEWAYDOWN)
             or ((ReadSpecialMap(LemX, LemY - dy - 1) = DOM_ONEWAYLEFT) and (lemdx = 1))
             or ((ReadSpecialMap(LemX, LemY - dy - 1) = DOM_ONEWAYRIGHT) and (lemdx = -1)))) then
               Transition(L, baWalking, TRUE)
-              else
+            else
               Dec(LemX, lemdx);
             exit;
-            end;
+          end;
           Inc(dy);
         end;
         end;
         // check 3 pixels below the new position
         dy := 0;
-        if not CheckGimmick(GIM_NOGRAVITY) then
-          begin
+
             while (dy < 3) and (HasPixelAt_ClipY(LemX, LemY, dy) = FALSE) do
             begin
               Inc(dy);
               Inc(LemY);
             end;
-          end;
+
 
         if dy = 3 then
           begin
@@ -7446,7 +6178,6 @@ begin
       if (2 <= index) and (index <= 5) then
       begin
         // frame 2..5 and 18..21 or used for masking
-        if not CheckGimmick(GIM_UNALTERABLE) then
         ApplyBashingMask(L, index - 2);
 
         // special treatment frame 5 (see txt)
@@ -7458,25 +6189,17 @@ begin
           fs := false;
           fa := false;
 
-          if (CheckGimmick(GIM_UNALTERABLE)) then
-            begin
-              Dec(x, LemDx * 8);
-              n := -8;
-            end;
-
           // here the use of HasPixelAt rather than HasPixelAt_ClipY
           // is correct
           while (n < 7)
             and ((HasPixelAt(x,y) = FALSE)
                  or (ReadSpecialMap(x, y) = DOM_STEEL)
-                 or ( {(not LemIsGhost)
-                 and} (((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (LemDx = 1))
+                 or (  (((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (LemDx = 1))
                  or ((ReadSpecialMap(x, y) = DOM_ONEWAYRIGHT) and (LemDx = -1))
                  or (ReadSpecialMap(x, y) = DOM_ONEWAYDOWN))))
             and ((HasPixelAt(x,y+1) = FALSE)
                  or (ReadSpecialMap(x, y+1) = DOM_STEEL)
-                 or ( {(not LemIsGhost)
-                 and} (((ReadSpecialMap(x, y+1) = DOM_ONEWAYLEFT) and (LemDx = 1))
+                 or (  (((ReadSpecialMap(x, y+1) = DOM_ONEWAYLEFT) and (LemDx = 1))
                  or ((ReadSpecialMap(x, y+1) = DOM_ONEWAYRIGHT) and (LemDx = -1))
                  or (ReadSpecialMap(x, y+1) = DOM_ONEWAYDOWN)))) do
           begin
@@ -7492,19 +6215,13 @@ begin
 
             n := 0;
             x := LemX + lemdx * 8;
-            if (CheckGimmick(GIM_UNALTERABLE)) then
-            begin
-              Dec(x, LemDx * 8);
-              n := -8;
-            end;
 
             fa := false;
             Inc(y, 2);
 
             while (n < 7)
             and ((HasPixelAt(x,y) = FALSE) or (ReadSpecialMap(x, y) = DOM_STEEL)
-                 or ( {(not LemIsGhost)
-                 and} (((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (LemDx = 1))
+                 or (  (((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (LemDx = 1))
                  or ((ReadSpecialMap(x, y) = DOM_ONEWAYRIGHT) and (LemDx = -1))
                  or (ReadSpecialMap(x, y) = DOM_ONEWAYDOWN)))) do
           begin
@@ -7518,14 +6235,14 @@ begin
           end;
 
 
-          if ((n = 7) and (not CheckGimmick(GIM_HARDWORK))) or (CheckGimmick(GIM_LAZY)) then
-            begin
+          if (n = 7) then
+          begin
             if fs then CueSoundEffect(SFX_HITS_STEEL);
             if HasPixelAt(LemX, LemY) then
               Transition(L, baWalking, fa)
-              else
+            else
               Transition(L, baFalling, fa);
-            end;
+          end;
         end;
       end;
       //Result := FALSE;
@@ -7547,37 +6264,18 @@ begin
 
     if LemFrame = 1 then
     begin
-      if not CheckGimmick(GIM_UNALTERABLE) then
       ApplyMinerMask(L, 0, LemX + lemdx - 8, LemY + 1 - 13);
       Exit;
-    end
-    else if lemFrame = 2 then
+    end else if lemFrame = 2 then
     begin
-      if not CheckGimmick(GIM_UNALTERABLE) then
       ApplyMinerMask(L, 1, LemX + lemdx - 8, LemY + 2 - 13);
       Exit;
-
-      //
-      Inc(LemY);
-      if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
-      begin
-        RemoveLemming(L, RM_NEUTRAL);
-        Exit;
-      end
-      else begin
-        Result := True;
-        Exit;
-      end;
-      //
-    end
-    else if LemFrame in [3, 15] then
+    end else if LemFrame in [3, 15] then
     begin
 
-
-
       Inc(LemY);
 
-      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) and (lemFrame = 3) and (not CheckGimmick(GIM_UNALTERABLE)) and (not CheckGimmick(GIM_NOGRAVITY)) then
+      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) and (lemFrame = 3) then
         begin
         if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
           CueSoundEffect(SFX_HITS_STEEL);
@@ -7601,7 +6299,7 @@ begin
         Exit;
       end;}
 
-      if (HasPixelAt_ClipY(LemX, LemY, 0) = FALSE) and (HasPixelAt_ClipY(LemX, LemY + 1, 0) = FALSE) and (not CheckGimmick(GIM_NOGRAVITY)) then
+      if (HasPixelAt_ClipY(LemX, LemY, 0) = FALSE) and (HasPixelAt_ClipY(LemX, LemY + 1, 0) = FALSE) then
       begin
         Inc(LemY);
         Transition(L, baFalling);
@@ -7610,13 +6308,12 @@ begin
         Exit;
       end;
 
-      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) and (not CheckGimmick(GIM_UNALTERABLE)) then
+      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) then
         begin
         if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
           CueSoundEffect(SFX_HITS_STEEL);
         if (ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL)
-        or ({(not LemIsGhost)
-        and} (((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
+        or ( (((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
         or ((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYRIGHT) and (LemDx < 0)))) then
         begin
           if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then Dec(LemY);
@@ -7627,41 +6324,23 @@ begin
         end;
 
       Inc(LemX, lemdx);
-      {if (LemX < LEMMING_MIN_X) or (LemX > LEMMING_MAX_X) then
-      begin
-        Transition(L, baWalking, TRUE);  // turn around as well
-        //TurnAround(L);
-        Result := True;
-        Exit;
-      end;}
 
-      //if (lemFrame = 3) then
-      //begin
-        //Inc(LemY);
-        if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+        if (LemY > LEMMING_MAX_Y + World.Height) then
         begin
           RemoveLemming(L, RM_NEUTRAL);
           Result := False;
           Exit;
         end;
-      //end;
 
       if (HasPixelAt_ClipY(LemX, LemY, 0) = FALSE) then
       begin
-        if CheckGimmick(GIM_NOGRAVITY) then
-          begin
-          if not CheckGimmick(GIM_HARDWORK) then Transition(L, baWalking);
-          end
-        else
-          begin
-          Inc(LemY);
-          Transition(L, baFalling);
-          end;
+        Inc(LemY);
+        Transition(L, baFalling);
         Result := True;
         Exit;
       end;
 
-      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) and (not CheckGimmick(GIM_UNALTERABLE)) then
+      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) then
         begin
         if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
           CueSoundEffect(SFX_HITS_STEEL);
@@ -7686,20 +6365,12 @@ begin
       end;
 
         if (belowObj = DOM_STEEL)
-        or ({(not LemIsGhost)
-        and} (( (belowObj = DOM_ONEWAYLEFT) and (LemDx <> -1) )
+        or ( (( (belowObj = DOM_ONEWAYLEFT) and (LemDx <> -1) )
         or ( (belowObj = DOM_ONEWAYRIGHT) and (LemDx <> 1) ))) then // complete check
           begin
             if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then Dec(LemY);
           Transition(L, baWalking, TRUE);  // turn around as well
           end;
-
-      if CheckGimmick(GIM_LAZY) then
-        begin
-        Transition(L, baWalking);
-        Result := True;
-        Exit;
-        end;
 
       Result := True;
       Exit;
@@ -7708,7 +6379,7 @@ begin
     else if (lemFrame = 0) then
     begin
       //Inc(LemY);
-      if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+      if (LemY > LEMMING_MAX_Y + World.Height) then
       begin
         RemoveLemming(L, RM_NEUTRAL);
         Exit;
@@ -7730,23 +6401,15 @@ var
 begin
   Result := False;
 
-  if CheckGimmick(GIM_NOGRAVITY) then
-    begin
-          Transition(L, baWalking);
-          Result := True;
-          Exit;
-    end;
-
   with L do
   begin
 
-    if (LemTrueFallen > 16) and LemIsFloater and ((not CheckGimmick(GIM_EXHAUSTION)) or (LemFloated = 0)) then
+    if (LemTrueFallen > 16) and LemIsFloater then
     begin
       Transition(L, baFloating);
       Result := True;
       Exit;
-    end
-    else if (LemTrueFallen > 6) and LemIsGlider and ((not CheckGimmick(GIM_EXHAUSTION)) or (LemFloated = 0)) then
+    end else if (LemTrueFallen > 6) and LemIsGlider then
     begin
       Transition(L, baGliding);
       Result := True;
@@ -7757,8 +6420,6 @@ begin
       if LemObjectBelow = DOM_UPDRAFT then
       begin
         dy := 1;
-        //Dec(LemFallen, 2);
-        //if LemFallen < 0 then LemFallen := 0;
       end;
       while (dy < 3) and (HasPixelAt_ClipY(LemX,LemY,dy) = FALSE) do
       begin
@@ -7769,7 +6430,7 @@ begin
         else
           Inc(LemFallen);
         Inc(LemTrueFallen);
-        if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+        if (LemY > LEMMING_MAX_Y + World.Height) then
         begin
           RemoveLemming(L, RM_NEUTRAL); //LemRemoved := TRUE;
           //Result := False;
@@ -7784,23 +6445,13 @@ begin
         Exit;
       end
       else begin
-        if (((LemFallen > fFallLimit) and not CheckGimmick(GIM_INVERTFALL)) or ((LemFallen <= fFallLimit) and CheckGimmick(GIM_INVERTFALL)))
-         and not CheckGimmick(GIM_INVINCIBLE)
-         and not ((LemObjectBelow = DOM_UPDRAFT) or (LemObjectBelow = DOM_NOSPLAT) or ((ReadWaterMap(LemX, LemY) = DOM_WATER) and not LemIsGhost)) then
+        if (LemFallen > fFallLimit)
+        and not ((LemObjectBelow = DOM_UPDRAFT) or (LemObjectBelow = DOM_NOSPLAT)) then
         begin
           Transition(L, baSplatting);
-          { ccexplore:
-          However, the "return true" after call lemming.SetToSplattering()
-          is actually correct.  It is in fact the bug in DOS Lemmings that
-          I believe enables the "direct drop to exit":
-          by returning TRUE, it gives a chance for lemming.CheckForInteractiveObjects()
-          to be called immediately afterwards, which ultimately results in the
-          lemming's action turning from SPLATTERING to EXITING.
-          }
           Result := True;
           Exit;
-        end
-        else begin
+        end else begin
           LemFloated := 0;
           if LemObjectBelow = DOM_SPLAT then
             Transition(L, baSplatting)
@@ -7822,13 +6473,6 @@ var
 begin
   with L do
   begin
-
-  if CheckGimmick(GIM_NOGRAVITY) then
-    begin
-          Transition(L, baWalking);
-          Result := True;
-          Exit;
-    end;
 
     LemFrame := FloatParametersTable[LemFloatParametersTableIndex].AnimationFrameIndex;
     dy := FloatParametersTable[LemFloatParametersTableIndex].dy;
@@ -7854,14 +6498,7 @@ begin
           Transition(L, baWalking);
           Result := True;
           Exit;
-        end else if ((CheckGimmick(GIM_EXHAUSTION)) and (LemFloated >= 45)) then
-          begin
-          //Result := True;
-          Transition(L, baFalling);
-          LemFloated := 1;
-          LemFallen := trunc(fFallLimit / 3);
-          end
-        else begin
+        end else begin
           Inc(LemY);
           Dec(dy);
           Inc(minY);
@@ -7870,7 +6507,7 @@ begin
       end; // while
     end;
 
-    if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+    if (LemY > LEMMING_MAX_Y + World.Height) then
     begin
       RemoveLemming(L, RM_NEUTRAL);
       Result := False;
@@ -7892,13 +6529,6 @@ begin
   Result := false;
   with L do
   begin
-
-  if CheckGimmick(GIM_NOGRAVITY) then
-    begin
-          Transition(L, baWalking);
-          Result := True;
-          Exit;
-    end;
 
     LemFrame := FloatParametersTable[LemFloatParametersTableIndex].AnimationFrameIndex;
     dy := FloatParametersTable[LemFloatParametersTableIndex].dy;
@@ -7940,14 +6570,7 @@ begin
           Transition(L, baWalking);
           Result := True;
           Exit;
-        end else if ((CheckGimmick(GIM_EXHAUSTION)) and (LemFloated >= 45)) then
-          begin
-          Result := True;
-          Transition(L, baFalling);
-          LemFloated := 1;
-          LemFallen := trunc(fFallLimit / 3);
-          end
-        else begin
+        end else begin
           Inc(LemY);
           Dec(dy);
           Inc(minY);
@@ -8000,7 +6623,7 @@ begin
 
     //end;
 
-    if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+    if (LemY > LEMMING_MAX_Y + World.Height) then
     begin
       RemoveLemming(L, RM_NEUTRAL);
       Result := False;
@@ -8042,8 +6665,7 @@ begin
   Result := False;
   with L do
   begin
-    if (HasPixelAt_ClipY(LemX, LemY, 0) = FALSE) and (not CheckGimmick(GIM_NOGRAVITY))
-    or ((LemIsBlocking > 170) and (CheckGimmick(GIM_EXHAUSTION))) then
+    if HasPixelAt_ClipY(LemX, LemY, 0) = FALSE then
     begin
       Transition(L, baWalking);
       LemIsBlocking := 0;
@@ -8081,8 +6703,6 @@ begin
     else begin
       dy := 0;
 
-      if not CheckGimmick(GIM_NOGRAVITY) then
-      begin
       while (dy < 3) and (HasPixelAt_ClipY(LemX, LemY, dy) = FALSE) do
       begin
         Inc(dy);
@@ -8093,14 +6713,12 @@ begin
           RestoreMap(L);
           end;
       end;
-      end;
 
-      if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+      if (LemY > LEMMING_MAX_Y + World.Height) then
       begin
         RemoveLemming(L, RM_NEUTRAL);
         Exit;
-      end
-      else
+      end else
         Result := True;
     end;
   end; // with
@@ -8119,25 +6737,13 @@ begin
         LemIsBlocking := 0;
         RestoreMap(L);
       end;
-      //if not (ReadWaterMap(LemX, LemY) in [DOM_WATER]) then
-      //begin
-      if not CheckGimmick(GIM_UNALTERABLE) then
-        ApplyExplosionMask(L);
-        //CreateParticles(L);
-      //end;
-      if not(CheckGimmick(GIM_SURVIVOR) or CheckGimmick(GIM_INVINCIBLE)) then
-      begin
+      ApplyExplosionMask(L);
       RemoveLemming(L, RM_KILL);
-      if not (( (LemIsZombie = false) and (CheckGimmick(GIM_DEATHZOMBIE)))
-           or ( (LemIsGhost = false) and (CheckGimmick(GIM_DEATHGHOST)))) then
-      begin
-        LemExploded := True;
-        LemParticleTimer := PARTICLE_FRAMECOUNT;
-        LemParticleX := LemX;
-        LemParticleY := LemY;
-      end;
+      LemExploded := True;
+      LemParticleTimer := PARTICLE_FRAMECOUNT;
+      LemParticleX := LemX;
+      LemParticleY := LemY;
       fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
-      end else Transition(L, baWalking);
     end;
   end;
 end;
@@ -8158,8 +6764,6 @@ begin
     else begin
       dy := 0;
 
-      if not CheckGimmick(GIM_NOGRAVITY) then
-      begin
       while (dy < 3) and (HasPixelAt_ClipY(LemX, LemY, dy) = FALSE) do
       begin
         Inc(dy);
@@ -8170,14 +6774,12 @@ begin
           RestoreMap(L);
           end;
       end;
-      end;
 
-      if (LemY > LEMMING_MAX_Y + World.Height) and not CheckGimmick(GIM_WRAP_VER) then
+      if (LemY > LEMMING_MAX_Y + World.Height) then
       begin
         RemoveLemming(L, RM_NEUTRAL);
         Exit;
-      end
-      else
+      end else
         Result := True;
     end;
   end; // with
@@ -8198,50 +6800,24 @@ begin
         RestoreMap(L);
       end;
 
-      if not CheckGimmick(GIM_UNALTERABLE) then
-        ApplyStoneLemming(L);
+      ApplyStoneLemming(L);
 
-      if not CheckGimmick(GIM_INVINCIBLE) then
-      begin
-        RemoveLemming(L, RM_KILL);
-        LemExploded := True;
-        LemParticleTimer := PARTICLE_FRAMECOUNT;
-        LemParticleX := LemX;
-        LemParticleY := LemY;
-        fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
-      end else Transition(L, baWalking);
+
+      RemoveLemming(L, RM_KILL);
+      LemExploded := True;
+      LemParticleTimer := PARTICLE_FRAMECOUNT;
+      LemParticleX := LemX;
+      LemParticleY := LemY;
+      fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
 
       LemExploded := True;
-      //LemParticleTimer := PARTICLE_FRAMECOUNT;
-      //if (moShowParticles in fGameParams.MiscOptions) then
-      //  fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
-      //end else Transition(L, baWalking);
     end;
   end;
 end;
 
 
 function TLemmingGame.CheckForLevelTopBoundary(L: TLemming; LocalFrameTopDy: Integer = 0): Boolean;
-//var
-//  dy: Integer;
 begin
-
-  {with L do
-  begin
-    Result := False;
-    if LocalFrameTopDy = 0 then
-      dy := FrameTopDy
-    else
-      dy := LocalFrameTopDy;
-    if (LemY + dy < HEAD_MIN_Y)  and not CheckGimmick(GIM_WRAP_VER) then
-    begin
-      Result := True;
-      LemY := HEAD_MIN_Y - 2 - dy;
-      if LemAction <> baGliding then TurnAround(L);
-      if LemAction = baJumping then
-        Transition(L, baWalking);
-    end;
-  end;}
 
   Result := false;
 
@@ -8252,72 +6828,32 @@ procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0);
 
 begin
 
-  if (CheckGimmick(GIM_ZOMBIES) and CheckGimmick(GIM_DEATHZOMBIE)) and (RemMode = RM_KILL) and not (L.LemIsZombie) and not (L.LemIsGhost) then
-  begin
-    if L.LemInTrap > 1 then L.LemRemoved := true;
-    RemMode := RM_ZOMBIE;
-    Transition(L, baWalking);
-    if CheckGimmick(GIM_KAROSHI) and not CheckGimmick(GIM_OLDZOMBIES) then
-    begin
-      Inc(LemmingsIn);
-      GameResultRec.gScore := GameResultRec.gScore - TimeScoreAdjust;
-      GameResultRec.gLastRescueIteration := fCurrentIteration;
-      TimeScoreAdjust := 0;
-    end;
-  end;
-
   if L.LemIsZombie and (RemMode = RM_ZOMBIE) then Exit;
-  if L.LemIsGhost and (RemMode = RM_GHOST) then Exit;
   if L.LemRemoved and (L.LemInTrap <= 1) then Exit;
 
-  {if ((not L.LemIsZombie) and ((RemMode = RM_ZOMBIE) or (not (CheckGimmick(GIM_KAROSHI) and CheckGimmick(GIM_OLDZOMBIES)))))
-  or ((L.LemIsZombie) and ((RemMode <> RM_ZOMBIE) and (CheckGimmick(GIM_KAROSHI) and CheckGimmick(GIM_OLDZOMBIES))))
-  then}
-
-  if ((L.LemIsZombie and (RemMode <> RM_ZOMBIE) and (CheckGimmick(GIM_KAROSHI) and CheckGimmick(GIM_OLDZOMBIES)))
-  or ((not L.LemIsZombie) and (RemMode = RM_ZOMBIE) and (not (CheckGimmick(GIM_KAROSHI) and CheckGimmick(GIM_OLDZOMBIES))))
-  or ((not L.LemIsZombie) and (RemMode <> RM_ZOMBIE))
-  or (RemMode = RM_GHOST))
-  and (not L.LemIsGhost)
-  then
+  if not L.LemIsZombie then
   begin
     Inc(LemmingsRemoved);
-    if (fHighlightLemming = L) and not (RemMode = RM_GHOST) then fHighlightLemming := nil;
+    if (fHighlightLemming = L) then fHighlightLemming := nil;
     Dec(LemmingsOut);
   end;
 
-    if RemMode = RM_ZOMBIE then
-      L.LemIsZombie := true
-    else if RemMode = RM_GHOST then
-      L.LemIsGhost := true
-    else
-      L.LemRemoved := True;
+  if RemMode = RM_ZOMBIE then
+    L.LemIsZombie := true
+  else
+    L.LemRemoved := True;
 
   case RemMode of
-    RM_KILL : begin
-                if CheckGimmick(GIM_KAROSHI) and ((not L.LemIsZombie) or CheckGimmick(GIM_OLDZOMBIES)) and (not L.LemIsGhost) then
-                begin
-                  Inc(LemmingsIn);
-                  GameResultRec.gScore := GameResultRec.gScore - TimeScoreAdjust;
-                  GameResultRec.gLastRescueIteration := fCurrentIteration;
-                  TimeScoreAdjust := 0;
-                end;
-                if CheckGimmick(GIM_DEATHGHOST) and CheckGimmick(GIM_GHOSTS) and not L.LemIsGhost and not L.LemIsZombie then
-                begin
-                  L.LemIsGhost := true;
-                  if L.LemInTrap = 0 then L.LemRemoved := false;
-                  Transition(L, baWalking);
-                end else
-                  L.LemInTrap := 0;
-              end;
+    RM_KILL : L.LemInTrap := 0;
     RM_SAVE : begin
-                if not CheckGimmick(GIM_KAROSHI) and ((not L.LemIsZombie) or CheckGimmick(GIM_OLDZOMBIES)) then
+                if not L.LemIsZombie then // it should never be if this has triggered, but just in case
                 begin
                   Inc(LemmingsIn);
                   GameResultRec.gScore := GameResultRec.gScore - TimeScoreAdjust;
                   GameResultRec.gLastRescueIteration := fCurrentIteration;
                   TimeScoreAdjust := 0;
-                end;
+                end else
+                  raise Exception.Create('Zombie removed with RM_SAVE removal type!');
               end;
     RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT);
   end;
@@ -8396,9 +6932,6 @@ begin
   // force update if raw explosion pixels drawn
   if fExplodingGraphics and (not HyperSpeed) then
     fTargetBitmap.Changed;
-
-  if CheckGimmick(GIM_RISING_WATER) then
-    ApplyWaterRise;
 
   CheckForPlaySoundEffect;
 end;
@@ -8891,19 +7424,6 @@ begin
   case Value of
     spbFaster:
       begin
-        if CheckGimmick(GIM_RRFLUC) and MakeActive then
-        begin
-          CueSoundEffect(SFX_OHNO);
-          Exit;
-        end;
-        {if fSpeedingUpReleaseRate <> MakeActive then
-        case MakeActive of
-          False: RecordReleaseRate(raf_StopChangingRR);
-          True: case RightClick of
-                  False: RecordReleaseRate(raf_StartIncreaseRR);
-                  //True: RecordReleaseRate(raf_RR99);
-                  end;
-        end;}
         fSpeedingUpReleaseRate := MakeActive;
         if MakeActive then
           fSlowingDownReleaseRate := False;
@@ -8911,19 +7431,6 @@ begin
       end;
     spbSlower:
       begin
-        if CheckGimmick(GIM_RRFLUC) and MakeActive then
-        begin
-          CueSoundEffect(SFX_OHNO);
-          Exit;
-        end;
-        {if fSlowingDownReleaseRate <> MakeActive then
-        case MakeActive of
-          False: RecordReleaseRate(raf_StopChangingRR);
-          True: case RightClick of
-                  False: RecordReleaseRate(raf_StartDecreaseRR);
-                  //True: RecordReleaseRate(raf_RRmin);
-                  end;
-        end;}
         fSlowingDownReleaseRate := MakeActive;
         if MakeActive then
           fSpeedingUpReleaseRate := False;
@@ -9112,9 +7619,7 @@ begin
     spbPause:
       //if not fHyperSpeed then
       begin
-        if not CheckGimmick(GIM_FRENZY) then
-          begin
-          case Paused of
+        case Paused of
           False:
             begin
               // NOPAUSE GOES HERE //
@@ -9129,23 +7634,13 @@ begin
               FastForward := False;
               RecordEndPause;
             end;
-          end;
-          end else CueSoundEffect(SFX_OHNO);
+        end;
       end;
     spbNuke:
       begin
-        if not CheckGimmick(GIM_KAROSHI) then
-        begin
         UserSetNuking := True;
-        // next line of code is NUKE GLITCH
-        // changing MaxNumLemmings also allows IN % to be calculated
-        // and displayed in-game using the glitch calculation,
-        // just like the actual game
-        //MaxNumLemmings := LemmingsReleased;
-
         ExploderAssignInProgress := True;
         RecordNuke;
-        end;
       end;
   end;
 end;
@@ -9210,9 +7705,8 @@ begin
           if (ObjectInfos[ix].Obj.TarLev and 4) <> 0 then LemIsFloater := true
           else if (ObjectInfos[ix].Obj.TarLev and 8) <> 0 then LemIsGlider := true;
           if (ObjectInfos[ix].Obj.TarLev and 16) <> 0 then LemIsMechanic := true;
-          if ((ObjectInfos[ix].Obj.TarLev and 64) <> 0) and CheckGimmick(GIM_ZOMBIES) then RemoveLemming(NewLemming, RM_ZOMBIE);
-          if ((ObjectInfos[ix].Obj.TarLev and 128) <> 0) and CheckGimmick(GIM_GHOSTS) then RemoveLemming(NewLemming, RM_GHOST);
-          if NewLemming.LemIsZombie or NewLemming.LemIsGhost then Dec(SpawnedDead);
+          if ((ObjectInfos[ix].Obj.TarLev and 64) <> 0) then RemoveLemming(NewLemming, RM_ZOMBIE);
+          if NewLemming.LemIsZombie then Dec(SpawnedDead);
           if LemIndex = fHighlightLemmingID then fHighlightLemming := NewLemming;
         end;
         Inc(LemmingsReleased);
@@ -9687,7 +8181,7 @@ begin
       begin
         SetSelectedSkill(spbFaster, False);
         SetSelectedSkill(spbSlower, False);
-        if (R.ReleaseRate <> CurrReleaseRate) and not CheckGimmick(GIM_RRFLUC) then
+        if (R.ReleaseRate <> CurrReleaseRate) then
           if R.ReleaseRate > 0 then
             //fRRPending := R.ReleaseRate;
             AdjustReleaseRate(R.ReleaseRate - currReleaseRate);
@@ -9744,14 +8238,6 @@ begin
 
   ZombieMap.Clear(0);
 
-  if CheckGimmick(GIM_GHOSTS) then
-    for i := 0 to LemmingList.Count-1 do
-    begin
-      CurrentLemming := LemmingList.List^[i];
-      if CurrentLemming.LemRemoved then Continue;
-      if CurrentLemming.LemIsGhost then SetGhostField(CurrentLemming);
-    end;
-
   for i := 0 to LemmingList.Count - 1 do
   begin
     CurrentLemming := LemmingList.List^[i];
@@ -9787,7 +8273,6 @@ begin
 
   end;
 
-  if CheckGimmick(GIM_ZOMBIES) then
     for i := 0 to LemmingList.Count - 1 do
     begin
       CurrentLemming := LemmingList.List^[i];
@@ -9796,9 +8281,8 @@ begin
         // Zombies //
         if (ReadZombieMap(LemX, LemY) and 1 <> 0)
         and (LemAction <> baExiting)
-        and not CheckGimmick(GIM_INVINCIBLE)
-        and not CurrentLemming.LemIsZombie
-        and not CurrentLemming.LemIsGhost then RemoveLemming(CurrentLemming, RM_ZOMBIE);
+        and not CurrentLemming.LemIsZombie then
+          RemoveLemming(CurrentLemming, RM_ZOMBIE);
       end;
     end;
 
@@ -10041,78 +8525,21 @@ begin
       Inc(Inf.CurrentFrame);
     if (Inf.MetaObj.TriggerEffect = 11) or ((Inf.MetaObj.TriggerEffect = 28) and (Inf.TwoWayReceive = false)) then
         begin
-        if ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
-        or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
-        begin
-        L := LemmingList.List^[Inf.TeleLem];
-        xi := FindReceiver(i, Inf.Obj.Skill);
-        if xi <> i then
-        begin
-
-          {if not CheckGimmick(GIM_CHEAPOMODE) then
+          if ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
+          or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
           begin
-
-             if Inf.Obj.DrawingFlags and 2 <> 0 then
-               tly := Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop) - (Inf.MetaObj.TriggerHeight - 1)
-               else
-               tly := Inf.Obj.Top + Inf.MetaObj.TriggerTop;
-             if Inf.Obj.DrawingFlags and 64 <> 0 then
-               tlx := Inf.Obj.Left + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft) - (Inf.MetaObj.TriggerWidth - 1)
-               else
-               tlx := Inf.Obj.Left + Inf.MetaObj.TriggerLeft;
-             tlx := L.LemX - tlx;
-             tly := L.LemY - tly;
-             if Inf.Obj.DrawingFlags and 8 <> 0 then
-               tlx := Inf.MetaObj.TriggerWidth - tlx - 1;
-             Inf2 := ObjectInfos[xi];
-             if Inf2.Obj.DrawingFlags and 2 <> 0 then
-               tly := tly + Inf2.Obj.Top + (Inf2.MetaObj.Height - 1) - (Inf2.MetaObj.TriggerTop) - (Inf2.MetaObj.TriggerHeight - 1)
-               else
-               tly := tly + Inf2.Obj.Top + Inf2.MetaObj.TriggerTop;
-             if Inf2.Obj.DrawingFlags and 64 <> 0 then
-               tlx := tlx + Inf2.Obj.Left + (Inf2.MetaObj.Width - 1) - (Inf2.MetaObj.TriggerLeft) - (Inf2.MetaObj.TriggerWidth - 1)
-               else
-               tlx := tlx + Inf2.Obj.Left + Inf2.MetaObj.TriggerLeft;
-
-          end else begin
-
-             {if Inf.Obj.DrawingFlags and 2 <> 0 then
-               tly := Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop)
-               else
-               tly := Inf.Obj.Top + Inf.MetaObj.TriggerTop;
-             if Inf.Obj.DrawingFlags and 64 <> 0 then
-               tlx := Inf.Obj.Left + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft)
-               else
-               tlx := Inf.Obj.Left + Inf.MetaObj.TriggerLeft;}
-             {tlx := 0; //L.LemX - tlx;
-             tly := 0; //L.LemY - tly;
-             if Inf.Obj.DrawingFlags and 8 <> 0 then
-               tlx := Inf.MetaObj.TriggerWidth - tlx - 1;
-             Inf2 := ObjectInfos[xi];
-             if Inf2.Obj.DrawingFlags and 2 <> 0 then
-               tly := tly + Inf2.Obj.Top + (Inf2.MetaObj.Height - 1) - (Inf2.MetaObj.TriggerTop)
-               else
-               tly := tly + Inf2.Obj.Top + Inf2.MetaObj.TriggerTop;
-             if Inf2.Obj.DrawingFlags and 64 <> 0 then
-               tlx := tlx + Inf2.Obj.Left + (Inf2.MetaObj.Width - 1) - (Inf2.MetaObj.TriggerLeft)
-               else
-               tlx := tlx + Inf2.Obj.Left + Inf2.MetaObj.TriggerLeft;
-
+            L := LemmingList.List^[Inf.TeleLem];
+            xi := FindReceiver(i, Inf.Obj.Skill);
+            if xi <> i then
+            begin
+              MoveLemToReceivePoint(L, i);
+              Inf2 := ObjectInfos[xi];
+              Inf2.TeleLem := Inf.TeleLem;
+              Inf2.Triggered := True;
+              Inf2.ZombieMode := Inf.ZombieMode;
+              Inf2.TwoWayReceive := true;
+            end;
           end;
-
-             L.LemX := tlx;
-             L.LemY := tly;}
-
-        //L.LemX := ObjectInfos[xi].Obj.Left + ObjectInfos[xi].MetaObj.TriggerLeft + (L.LemX - Inf.Obj.Left - Inf.MetaObj.TriggerLeft);
-        //L.LemY := ObjectInfos[xi].Obj.Top + ObjectInfos[xi].MetaObj.TriggerTop + (L.LemY - Inf.Obj.Top - Inf.MetaObj.TriggerTop);
-        MoveLemToReceivePoint(L, i);
-        Inf2 := ObjectInfos[xi];
-        Inf2.TeleLem := Inf.TeleLem;
-        Inf2.Triggered := True;
-        Inf2.ZombieMode := Inf.ZombieMode;
-        Inf2.TwoWayReceive := true;
-        end;
-        end;
         end;
     if (Inf.MetaObj.TriggerEffect = 12) or ((Inf.MetaObj.TriggerEffect = 28) and (Inf.TwoWayReceive = true)) then
     begin
@@ -10122,7 +8549,6 @@ begin
         L := LemmingList.List^[Inf.TeleLem];
         L.LemTeleporting := false;
         HandleLemming(L);
-        //Transition(LemmingList[Inf.TeleLem], baWalking);
       end;
     end;
     If Inf.MetaObj.TriggerEffect = 29 then
@@ -10381,10 +8807,7 @@ begin
     else Exit;
   end;
 
-  if sc > 99 then Result := true;
-  if CheckGimmick(GIM_OVERFLOW) then Result := true;
-  if CheckGimmick(GIM_REVERSE) and (sc < 99) then Result := true;
-  if (sc > 0) and not CheckGimmick(GIM_REVERSE) then Result := true;
+  if sc > 0 then Result := true;
 
   CheckButton := ActionToSkillPanelButton[aAction];
   for i := 0 to 7 do
@@ -10422,21 +8845,15 @@ begin
 
   if sc^ > 99 then Exit;
 
-  if Rev xor CheckGimmick(GIM_REVERSE) then // Because both combined should act as normal
+  if Rev then
     Inc(sc^)
-    else
+  else
     Dec(sc^);
 
   if not Rev then Inc(sc2^);
 
-  if CheckGimmick(GIM_OVERFLOW) then
-  begin
-    if sc^ < 0 then sc^ := 99;
-    if sc^ > 99 then sc^ := 0;
-  end else begin
-    if sc^ < 0 then sc^ := 0;
-    if sc^ > 99 then sc^ := 99;
-  end;
+  if sc^ < 0 then sc^ := 0;
+  if sc^ > 99 then sc^ := 99;
 
   case aAction of
     baToWalking  : InfoPainter.DrawSkillCount(spbWalker, sc^);
