@@ -32,9 +32,6 @@ type
     gDone               : Integer;
     gTimeIsUp           : Boolean;
     gSecretGoto         : Integer;
-    gScore              : Integer;
-    gRRUpPenalty        : Boolean;
-    gRRDownPenalty      : Boolean;
     gLastRescueIteration: Integer;
     gGotTalisman        : Boolean;
   end;

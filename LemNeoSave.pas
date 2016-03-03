@@ -38,8 +38,6 @@ type
     procedure SetLemmingRecord(aSection, aLevel, aValue: Integer);
     function GetTimeRecord(aSection, aLevel: Integer): Integer;
     procedure SetTimeRecord(aSection, aLevel, aValue: Integer);
-    function GetScoreRecord(aSection, aLevel: Integer): Integer;
-    procedure SetScoreRecord(aSection, aLevel, aValue: Integer);
     procedure SaveFile(aPointer: Pointer);
     procedure LoadFile(aPointer: Pointer);
     procedure SetTalismans(aValue: TTalismans);
@@ -225,19 +223,6 @@ var
 begin
   p := @fSaveData.RecordTable[aSection][aLevel].BestTime;
   if (aValue < p^) or (p^ = 0) then p^ := aValue;
-end;
-
-function TNeoSave.GetScoreRecord(aSection, aLevel: Integer): Integer;
-begin
-  Result := fSaveData.RecordTable[aSection][aLevel].BestScore;
-end;
-
-procedure TNeoSave.SetScoreRecord(aSection, aLevel, aValue: Integer);
-var
-  p : ^word;
-begin
-  p := @fSaveData.RecordTable[aSection][aLevel].BestScore;
-  if aValue > p^ then p^ := aValue;
 end;
 
 procedure TNeoSave.SaveFile(aPointer: Pointer);

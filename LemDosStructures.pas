@@ -13,7 +13,7 @@ type
   TNeoRecordsTableEntry = packed record
     BestTime    : LongWord;
     BestSave    : Word;
-    BestScore   : Word;
+    Removed2    : Word;
     Reserved    : array[0..21] of Byte;
     Zeroed      : Word;
   end;

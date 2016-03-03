@@ -140,7 +140,6 @@ var
   i: Integer;
   STarget: string;
   SDone: string;
-  SScore: string;
   H: string;
 
     procedure Add(const S: string);
@@ -202,14 +201,13 @@ var
 
 var
   NextInfo, FinalInfo: TDosGamePlayInfoRec;
-  NextAvail, Congrats, NewHighScore: Boolean;
+  NextAvail: Boolean;
   x: byte;
 begin
 
   Result := '';
   with GameParams, GameResult do
   begin
-    NewHighScore := false;
     if GameParams.OneLevelMode then
     begin
      gSuccess := false;
@@ -228,7 +226,6 @@ begin
 
     NextAvail := GetNext(NextInfo);
     Style.LevelSystem.FindFinalLevel(FinalInfo);
-    Congrats := false;
 
     if (gSuccess and not gCheated)
     and (gSecretGoto = -1)
@@ -239,29 +236,13 @@ begin
     and (ForceSkillset = 0) then
     with SaveSystem, Info do
     begin
-      if CheckCompleted(dSection, dLevel)
-      and (GetScoreRecord(dSection, dLevel) < gScore) then
-        NewHighScore := true;
       CompleteLevel(dSection, dLevel);
       if NextAvail then UnlockLevel(NextInfo.dSection, NextInfo.dLevel);
       SetLemmingRecord(dSection, dLevel, gRescued);
       SetTimeRecord(dSection, dLevel, gLastRescueIteration);
-      SetScoreRecord(dSection, dLevel, gScore);
     end;
 
-    // all levels finished
-    if Congrats then      // if Congrats then
-    begin
-      for x := 0 to 17 do
-      begin
-        Add(BuildText(SysDat.Congrats[x]));
-      end;
-      LF(1);
-      SScore := i2s(gScore);
-      Add(Format(SLevelScore, [SScore]));
-    end
-    // default
-    else if gSecretGoto <> -1 then
+    if gSecretGoto <> -1 then
     begin
       GameParams.ShownText := false;
       Add(SSecret);
@@ -276,8 +257,6 @@ begin
         STarget := PadL(i2s(gToRescue), 4);
         SDone := PadL(i2s(gRescued), 4);
       end;
-
-      SScore := i2s(gScore);
 
       // top text
       if gGotTalisman then
@@ -308,14 +287,7 @@ begin
           if gDone >= 100 then
             Add(BuildText(SysDat.KResult[2][0]) + #13 + BuildText(SysDat.KResult[2][1]));
         end;
-      LF(2);
-
-      if NewHighScore then
-        Add(Format(SLevelHighScore, [SScore]))
-        else
-        Add(Format(SLevelScore, [SScore]));
-
-      LF(3);
+      LF(6); // gap 2 + score space 1 + gap 3
 
       if not GameParams.OneLevelMode then
       begin
@@ -346,8 +318,8 @@ begin
 
     // bottom text
 
-    // check final screen
-    if Congrats or (gCheated and not gSuccess) then
+    // different texts in different situations
+    if (gCheated and not gSuccess) then
     begin
       Add(SPressMouseToContinue)
     end
