@@ -137,7 +137,6 @@ type
     LemIsGlider                   : Boolean;
     LemIsMechanic                 : Boolean;
     LemIsZombie                   : Boolean;
-    LemIsGhost                    : Boolean;
     LemCouldPlatform              : Boolean;
     LemInFlipper                  : Integer;
     LemIsBlocking                 : Integer; // not always exactly in sync with the action
@@ -1238,7 +1237,6 @@ begin
   LemIsGlider := Source.LemIsGlider;
   LemIsMechanic := Source.LemIsMechanic;
   LemIsZombie := Source.LemIsZombie;
-  LemIsGhost := Source.LemIsGhost;
   LemCouldPlatform := Source.LemCouldPlatform;
   LemInFlipper := Source.LemInFlipper;
   LemIsBlocking := Source.LemIsBlocking;
@@ -4100,7 +4098,7 @@ begin
                         or (L.LemIsClimber) then CanPrioritize := false;
             spbSwimmer: if (L.LemAction in [{baDrowning,} baSplatting, baExiting, baVaporizing, // we don't want to deprioritize drowners
                                             baOhnoing, baExploding, baStoning, baStoneFinish])  // for assigning the Swimmer skill!
-                        or (L.LemIsSwimmer or L.LemIsGhost) then CanPrioritize := false;
+                        or (L.LemIsSwimmer) then CanPrioritize := false;
             spbUmbrella: if (L.LemAction in [baDrowning, baSplatting, baExiting, baVaporizing,
                                              baOhnoing, baExploding, baStoning, baStoneFinish])
                          or (L.LemIsFloater or L.LemIsGlider) then CanPrioritize := false;
@@ -4109,7 +4107,7 @@ begin
                        or (L.LemIsFloater or L.LemIsGlider) then CanPrioritize := false;
             spbMechanic: if (L.LemAction in [baDrowning, baSplatting, baExiting, baVaporizing,
                                              baOhnoing, baExploding, baStoning, baStoneFinish])
-                         or (L.LemIsMechanic or L.LemIsGhost) then CanPrioritize := false;
+                         or (L.LemIsMechanic) then CanPrioritize := false;
             spbExplode: if (L.LemAction in [baDrowning, baSplatting, baExiting, baVaporizing,
                                             baOhnoing, baExploding, baStoning, baStoneFinish])
                         then CanPrioritize := false;
@@ -4577,7 +4575,7 @@ begin
 
     if LemObjectBelow <> DOM_FLIPPER then LemInFlipper := DOM_NOOBJECT;
 
-    if (ReadWaterMap(LemX, LemY) = DOM_WATER) and not LemIsGhost then
+    if (ReadWaterMap(LemX, LemY) = DOM_WATER) then
     begin
       if (LemY > World.Height) then
         if ReadWaterMap(LemX, World.Height-1) = DOM_WATER then LemY := World.Height-1;
@@ -4738,8 +4736,7 @@ begin
       World[X1, Y1] := SteelWorld[X1, Y1];
       fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
     end;
-    if {(not L.LemIsGhost) and}
-       (((ReadSpecialMap(X1, Y1) = DOM_ONEWAYLEFT) and (L.LemDX > 0)) or
+    if (((ReadSpecialMap(X1, Y1) = DOM_ONEWAYLEFT) and (L.LemDX > 0)) or
        ((ReadSpecialMap(X1, Y1) = DOM_ONEWAYRIGHT) and (L.LemDX < 0)) or
        (ReadSpecialMap(X1, Y1) = DOM_ONEWAYDOWN)) then
     begin
@@ -4798,15 +4795,11 @@ begin
   begin
     if ReadSpecialMap(X1, Y1) = DOM_STEEL then
     begin
-      {T := SteelWorld.Pixel[X1, Y1];
-      World.SetPixelTS(X1, Y1, T);
-      fTargetBitmap.SetPixelTS(X1, Y1, T);}
       World[X1, Y1] := SteelWorld[X1, Y1];
       fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
     end;
-    if  {(not L.LemIsGhost)
-    and} (((ReadSpecialMap(X1, Y1) = DOM_ONEWAYLEFT) and (L.LemDX > 0))
-    or ((ReadSpecialMap(X1, Y1) = DOM_ONEWAYRIGHT) and (L.LemDX < 0))) then
+    if ((ReadSpecialMap(X1, Y1) = DOM_ONEWAYLEFT) and (L.LemDX > 0))
+    or ((ReadSpecialMap(X1, Y1) = DOM_ONEWAYRIGHT) and (L.LemDX < 0)) then
     begin
       World[X1, Y1] := SteelWorld[X1, Y1];
       fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
@@ -4854,32 +4847,11 @@ begin
           Y := LemParticleY + Y;
           fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
           Drawn := True;
-          (*
-          DstRect := Rect(X, Y, X + 1, Y + 1);
-          if IntersectRect(DstRect, DstRect, World.BoundsRect) then
-            World.DrawTo(fTargetBitmap, DstRect, DstRect);
-          *)
         end;
       end;
     end;
 
   fExplodingGraphics := Drawn;
-
-
-  (*
-  with L do
-  begin
-    for i := 0 to 12 do
-    begin
-      X := LemX + i * 2;
-      Y := LemY - LemParticleFrame - i * 3;
-      DstRect := Rect(X, Y, X + 1, Y + 1);
-      // important to intersect the rects!
-      if IntersectRect(DstRect, DstRect, World.BoundsRect) then
-        World.DrawTo(fTargetBitmap, DstRect, DstRect);
-    end;
-  end;
-  *)
 end;
 
 procedure TLemmingGame.DrawParticles(L: TLemming);
@@ -4938,22 +4910,10 @@ const
     Result := 0;
     if Iter = 0 then Exit;
     Result := ((LV * Iter * 2) div 17);
-    {for li := Iter-1 downto 0 do
-      Result := Result - GetDistanceFactor(LV, li);}
   end;
 begin
 
 
-
-(*  // we have to erase first
-  // erase entries
-  for i := 0 to Entries.Count - 1 do
-  begin
-    Inf := Entries.List^[i];
-    Renderer.EraseObject(fTargetBitmap, Inf.Obj, World);
-  end;
-*)
-  // erase other objects
   if (not HyperSpeed) then
     for i := 0 to ObjectInfos.Count - 1 do
     begin
@@ -5034,16 +4994,6 @@ begin
   if HyperSpeed then
     Exit;
 
-(*  // entrances
-  // only on terrain
-  for i := 0 to Entries.Count - 1 do
-  begin
-    Inf := Entries.List^[i];
-    if odf_OnlyOnTerrain and Inf.Obj.DrawingFlags <> 0 then
-      Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
-  end;
-*)
-
   // other objects
   // only on terrain
   for i := 0 to ObjectInfos.Count - 1 do
@@ -5056,16 +5006,6 @@ begin
       Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
   end;
 
-
-(*  // entrances
-  // rest
-  for i := 0 to Entries.Count - 1 do
-  begin
-    Inf := Entries.List^[i];
-    if odf_OnlyOnTerrain and Inf.Obj.DrawingFlags = 0 then
-      Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
-  end;
-*)
   // other objects
   // rest
   for i := 0 to ObjectInfos.Count - 1 do
@@ -5160,14 +5100,7 @@ begin
           OldCombineZ := LAB.OnPixelCombine;
 
           if LemIsZombie then
-            LAB.OnPixelCombine := CombineLemmingPixelsZombie
-          else if LemIsGhost then
-          begin
-            if LemAction in [baBuilding, baPlatforming, baStacking] then
-              LAB.OnPixelCombine := CombineBuilderPixelsGhost
-            else
-              LAB.OnPixelCombine := CombineLemmingPixelsGhost;
-          end;
+            LAB.OnPixelCombine := CombineLemmingPixelsZombie;
 
           if not LemHighlightReplay then
           begin
@@ -6137,8 +6070,6 @@ begin
           // check steel or one way digging
           FrontObj := ReadSpecialMap(LemX + LemDx * 3, LemY - 5);
 
-          //if LemIsGhost and (FrontObj <> DOM_STEEL) then FrontObj := DOM_NONE;
-
           // NEED TO IMPROVE CODE HERE //
           if (FrontObj = DOM_STEEL) then
             CueSoundEffect(SFX_HITS_STEEL);
@@ -6154,7 +6085,6 @@ begin
 
           FrontObj := ReadSpecialMap(LemX + LemDx * 4, LemY - 4);
           if FrontObj <> ReadSpecialMap(LemX + LemDx * 5, LemY - 5) then FrontObj := 0;
-          //if LemIsGhost and (FrontObj <> DOM_STEEL) then FrontObj := DOM_NONE;
 
           // NEED TO IMPROVE CODE HERE //
           if (FrontObj = DOM_STEEL) then
@@ -6280,8 +6210,7 @@ begin
         if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
           CueSoundEffect(SFX_HITS_STEEL);
         if (ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL)
-        or  ({(not LemIsGhost)
-        and} (((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
+        or  ((((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
         or ((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYRIGHT) and (LemDx < 0)))) then
         begin
           if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then Dec(LemY);
@@ -6345,8 +6274,7 @@ begin
         if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
           CueSoundEffect(SFX_HITS_STEEL);
         if (ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL)
-        or ({(not LemIsGhost)
-        and} (((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
+        or ((((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
         or ((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYRIGHT) and (LemDx < 0)))) then
         begin
           if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then Dec(LemY);
@@ -7090,7 +7018,7 @@ begin
     S := LemmingActionStrings[Lemming1.lemAction];
     // get highlight text
 
-    if (Lemming1.LemIsZombie or Lemming1.LemIsGhost)
+    if (Lemming1.LemIsZombie)
     and (Lemming1.LemIsClimber or Lemming1.LemIsFloater or Lemming1.LemIsGlider
          or Lemming1.LemIsSwimmer or Lemming1.LemIsMechanic)
       then fAltOverride := true
@@ -7106,7 +7034,6 @@ begin
       if Lemming1.LemIsGlider then S[3] := 'G';
       if Lemming1.LemIsMechanic then S[4] := 'D';
       if Lemming1.LemIsZombie then S[5] := 'Z';
-      if Lemming1.LemIsGhost then S[5] := 'G';
     end else begin
       i := 0;
       if Lemming1.LemIsClimber then inc(i);
@@ -7131,7 +7058,6 @@ begin
       end;
 
       if Lemming1.LemIsZombie then S := SZombie;
-      if Lemming1.LemIsGhost then S := SGhost;
     end;
 
     {if i > 1 then
