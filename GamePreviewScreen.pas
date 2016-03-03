@@ -47,7 +47,7 @@ uses LemGraphicSet, {LemDosGraphicSet, LemLevel,} FBaseDosForm;
 
 procedure TGamePreviewScreen.ShowRecords;
 var
-  maxlem, mintime, maxscore: Integer;
+  maxlem, mintime: Integer;
   beaten: Boolean;
   mins, secs, frms: Integer;
   outstring: String;
@@ -57,7 +57,6 @@ begin
   begin
     maxlem := GetLemmingRecord(GameParams.Info.dSection, GameParams.Info.dLevel);
     mintime := GetTimeRecord(GameParams.Info.dSection, GameParams.Info.dLevel);
-    maxscore := GetScoreRecord(GameParams.Info.dSection, GameParams.Info.dLevel);
     beaten := CheckCompleted(GameParams.Info.dSection, GameParams.Info.dLevel);
     frms := mintime mod 17;
     secs := (mintime div 17) mod 60;
@@ -67,8 +66,7 @@ begin
     if beaten then
       outstring := outstring + 'Completed: Yes' + #13 +
                  'Most Lemmings Saved: ' + i2s(maxlem) + #13 +
-                 'Best Time: ' + i2s(mins) + ':' + LeadZeroStr(secs, 2) + ' + ' + i2s(frms) + ' frames' + #13 +
-                 'Best Score: ' + i2s(maxscore)
+                 'Best Time: ' + i2s(mins) + ':' + LeadZeroStr(secs, 2) + ' + ' + i2s(frms) + ' frames'
     else
       outstring := outstring + 'Completed: No';
 

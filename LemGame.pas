@@ -462,7 +462,6 @@ type
       LemmingsRemoved: Integer;
       NextLemmingCountdown: Integer;
       DelayEndFrames: Integer;
-      TimeScoreAdjust: Integer;
       Minutes: Integer;
       Seconds: Integer;
       EntriesOpened: Boolean;
@@ -1032,35 +1031,6 @@ const
   RM_ZOMBIE            = 3;
   RM_GHOST             = 4;
 
-  // scoring values
-  SCS_MAX              = 50000;
-  SCS_MIN              = 100;
-
-  SCS_RR_INC           = 100;
-  SCS_RR_DEC           = 200;
-  SCS_PERFRAME         = 2; //2
-  SCS_PERFRAME_SAVED   = 1; //1
-  SCS_WALKER           = 10;
-  SCS_CLIMBER          = 25;
-  SCS_SWIMMER          = 35;
-  SCS_FLOATER          = 20;
-  SCS_GLIDER           = 55;
-  SCS_MECHANIC         = 40;
-  SCS_BOMBER           = 20;
-  SCS_STONER           = 15;
-  SCS_BLOCKER          = 25;
-  SCS_PLATFORMER       = 90;
-  SCS_BUILDER          = 120;
-  SCS_STACKER          = 45;
-  SCS_BASHER           = 50;
-  SCS_MINER            = 50;
-  SCS_DIGGER           = 50;
-  SCS_CLONER           = 200;
-  SCS_TRAP             = 150;
-  SCS_NOT100           = 1500;
-  SCS_FAIL             = 10000;
-  SCS_NOTSAVED         = 100;
-
   HEAD_MIN_Y = -7;
   //LEMMING_MIN_X = 0;
   //LEMMING_MAX_X = 1647;
@@ -1491,7 +1461,6 @@ begin
   aState.LemmingsRemoved := LemmingsRemoved;
   aState.NextLemmingCountdown := NextLemmingCountdown;
   aState.DelayEndFrames := DelayEndFrames;
-  aState.TimeScoreAdjust := TimeScoreAdjust;
   aState.Minutes := Minutes;
   aState.Seconds := Seconds;
   aState.EntriesOpened := EntriesOpened;
@@ -1602,7 +1571,6 @@ begin
   LemmingsRemoved := aState.LemmingsRemoved;
   NextLemmingCountdown := aState.NextLemmingCountdown;
   DelayEndFrames := aState.DelayEndFrames;
-  TimeScoreAdjust := aState.TimeScoreAdjust;
   Minutes := aState.Minutes;
   Seconds := aState.Seconds;
   EntriesOpened := aState.EntriesOpened;
@@ -2228,8 +2196,6 @@ begin
   FillChar(GameResultRec, SizeOf(GameResultRec), 0);
   GameResultRec.gCount  := Level.Info.LemmingsCount;
   GameResultRec.gToRescue := Level.Info.RescueCount;
-  GameResultRec.gScore := SCS_MAX;
-  TimeScoreAdjust := 0;
 
 
   fReplayIndex := 0;
@@ -3199,7 +3165,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(SelectedLemming, baToWalking);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_WALKER;
         end;
       end;
 
@@ -3246,7 +3211,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(SelectedLemming, baCloning);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_CLONER;
         end;
         NewL.LemUsedSkillCount := 1;
         NewL.LemIsClone := true;
@@ -3277,7 +3241,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baClimbing);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_CLIMBER;
         end;
         RecordSkillAssignment(Lemming1, baClimbing);
       end;
@@ -3304,7 +3267,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baSwimming);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_SWIMMER;
         end;
         RecordSkillAssignment(Lemming1, baSwimming);
       end;
@@ -3332,7 +3294,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baFloating);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_FLOATER;
         end;
       end;
   end
@@ -3358,7 +3319,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baGliding);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_GLIDER;
         end;
       end;
   end
@@ -3384,7 +3344,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baFixing);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_MECHANIC;
         end;
         RecordSkillAssignment(Lemming1, baFixing);
       end;
@@ -3419,7 +3378,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baExploding);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_BOMBER;
         end;
       end;
   end
@@ -3454,7 +3412,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baStoning);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_STONER;
         end;
       end;
   end;
@@ -3479,7 +3436,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baBlocking);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_BLOCKER;
         end;
       end;
   end;
@@ -3508,7 +3464,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baPlatforming);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_PLATFORMER;
         end;
       end;
   end
@@ -3525,7 +3480,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming2, baPlatforming);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_PLATFORMER;
         end;
       end;
   end;
@@ -3556,7 +3510,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baBuilding);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_BUILDER;
         end;
       end;
   end
@@ -3573,7 +3526,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming2, baBuilding);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_BUILDER;
         end;
       end;
   end;
@@ -3604,7 +3556,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baStacking);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_stackER;
         end;
       end;
   end
@@ -3622,7 +3573,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(Lemming1, baStacking);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_STACKER;
         end;
       end;
   end;
@@ -3671,7 +3621,6 @@ begin
         if not fFreezeSkillCount then
         begin
           OnAssignSkill(SelectedLemming, baBashing);
-          GameResultRec.gScore := GameResultRec.gScore - SCS_BASHER;
         end;
       end;
   end;
@@ -3719,7 +3668,6 @@ begin
           if not fFreezeSkillCount then
           begin
             OnAssignSkill(SelectedLemming, baMining);
-            GameResultRec.gScore := GameResultRec.gScore - SCS_MINER;
           end;
         end;
     end;
@@ -3746,7 +3694,6 @@ begin
       if not fFreezeSkillCount then
       begin
         OnAssignSkill(Lemming1, baDigging);
-        GameResultRec.gScore := GameResultRec.gScore - SCS_DIGGER;
       end;
     end
   end
@@ -3762,7 +3709,6 @@ begin
       if not fFreezeSkillCount then
       begin
         OnAssignSkill(Lemming2, baDigging);
-        GameResultRec.gScore := GameResultRec.gScore - SCS_DIGGER;
       end;
     end
   end;
@@ -4317,7 +4263,6 @@ begin
           Inf := ObjectInfos[LemObjectIDBelow];
           if not Inf.Triggered then
           begin
-            GameResultRec.gScore := GameResultRec.gScore - SCS_TRAP;
             // trigger
             Inf.Triggered := True;
             Inf.ZombieMode := L.LemIsZombie;
@@ -4360,7 +4305,6 @@ begin
           Inf := ObjectInfos[LemObjectIDBelow];
           if not (Inf.Triggered or (Inf.CurrentFrame = 0)) then
           begin
-            GameResultRec.gScore := GameResultRec.gScore - SCS_TRAP;
             // trigger
             Inf.Triggered := True;
             Inf.ZombieMode := L.LemIsZombie;
@@ -6777,9 +6721,7 @@ begin
                 if not L.LemIsZombie then // it should never be if this has triggered, but just in case
                 begin
                   Inc(LemmingsIn);
-                  GameResultRec.gScore := GameResultRec.gScore - TimeScoreAdjust;
                   GameResultRec.gLastRescueIteration := fCurrentIteration;
-                  TimeScoreAdjust := 0;
                 end else
                   raise Exception.Create('Zombie removed with RM_SAVE removal type!');
               end;
@@ -6903,11 +6845,6 @@ begin
 
   if fParticleFinishTimer > 0 then
     Dec(fParticleFinishTimer);
-
-  if LemmingsIn = 0 then
-    TimeScoreAdjust := TimeScoreAdjust + SCS_PERFRAME
-  else
-    TimeScoreAdjust := TimeScoreAdjust + SCS_PERFRAME_SAVED;
 
   if fClockFrame = 17 then
   begin
@@ -7787,8 +7724,6 @@ begin
   if N <> currReleaseRate then
   begin
     currReleaseRate := N;
-    if currReleaseRate > LastReleaseRate then GameResultRec.gRRUpPenalty := true;
-    if currReleaseRate < LastReleaseRate then GameResultRec.gRRDownPenalty := true;
     LastReleaseRate := N;
     InfoPainter.DrawSkillCount(spbFaster, currReleaseRate);
   end;
@@ -8256,13 +8191,6 @@ begin
     GameResult          := gRescued >= gToRescue;
     gSuccess            := GameResult;
     gCheated            := fGameCheated;
-
-    gScore := gScore - ((gCount - gRescued) * SCS_NOTSAVED);
-
-    if not gSuccess then gScore := gScore - SCS_FAIL;
-    if (gSuccess) and (gDone < 100) then gScore := gScore - SCS_NOT100;
-    if gScore < SCS_MIN then gScore := SCS_MIN;
-    if gRescued = 0 then gScore := SCS_MIN;
 
     if (gSecretGoto >= 0) then   // old secret level code
     begin

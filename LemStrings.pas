@@ -241,11 +241,6 @@ resourcestring
     'Superb! You rescued every lemmings on' + #13 +
     'that level. Can you do it again....';
 
-  SLevelScore =
-    'Your score is: %s';
-
-  SLevelHighScore =
-    'New high score!: %s';
 
   SCongratulationOrig =
     #13 + #13 +
