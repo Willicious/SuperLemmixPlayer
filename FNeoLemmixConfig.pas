@@ -235,6 +235,11 @@ begin
        end;
   end;
 
+  //// Page 2 (Online Options) ////
+  // Checkboxes
+  fGameParams.EnableOnline := cbEnableOnline.Checked;
+  fGameParams.CheckUpdates := cbUpdateCheck.Checked;
+
   //// Page 3 (Game Options) ////
   // Checkboxes
   fGameParams.LookForLVLFiles := cbLookForLVL.Checked;
