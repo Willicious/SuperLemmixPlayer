@@ -213,7 +213,6 @@ type
     fLevelPack           : String;
     fExternalPrefix      : String;
     fForceSkillset       : Word;
-    fBgColor             : String;
     fLevelOverride       : Integer;
 
     fTestMode : Boolean;
@@ -273,7 +272,6 @@ type
 
     property Hotkeys: TLemmixHotkeyManager read fHotkeys;
   published
-    property BackgroundColor: String read fBgColor write fBgColor;
   end;
 
 
@@ -377,7 +375,6 @@ begin
   fLevelPack := 'LEVELPAK.DAT';
   fExternalPrefix := '';
   fForceSkillset := 0;
-  fBgColor := '000000';
   fDumpMode := false;
   fTestScreens := 0;
   fShownText := false;

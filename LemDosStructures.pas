@@ -23,7 +23,7 @@ type
 
   TNeoConfigRecord = packed record
     ToggleOptions   : LongWord;
-    BackgroundColor : array[0..2] of Byte;
+    Removed1        : array[0..2] of Byte;
     PercentOption   : Byte;
     Removed3        : LongWord;
     ForceSkillset   : Word;
