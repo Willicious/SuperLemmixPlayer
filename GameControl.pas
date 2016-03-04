@@ -259,7 +259,6 @@ type             (*
     fForceGimmick2       : LongWord;
     fForceGimmick3       : LongWord;
     fForceSkillset       : Word;
-    fBgColor             : String;
     fLevelOverride       : Integer;
     fPercentOption       : Integer;
 
@@ -333,7 +332,6 @@ type             (*
 
     property Hotkeys: TLemmixHotkeyManager read fHotkeys;
   published
-    property BackgroundColor: String read fBgColor write fBgColor;
   end;
 
 
@@ -440,7 +438,6 @@ begin
   fExternalPrefix := '';
   fForceGimmick := 0;
   fForceSkillset := 0;
-  fBgColor := '000000';
   fSteelOverride := 0;
   fPercentOption := -1;
   fDumpMode := false;

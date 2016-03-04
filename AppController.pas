@@ -302,11 +302,10 @@ begin
 
   Application.Title := fGameParams.MainForm.Caption;
 
-  // Background color parameters are sometimes stored as hex string, sometimes as numeric value.
-  // This is a relic from when player-individual INI files were used.
-  fGameParams.Renderer.BackgroundColor := s2i('x' + fGameParams.BackgroundColor) and $FFFFFF;
-  fGameParams.BackgroundColor := IntToHex(fGameParams.Renderer.BackgroundColor, 6);
-  if fGameParams.DebugSteel then fGameParams.Renderer.BackgroundColor := $FF00FF;
+  // Background color is not supported as a user option anymore. I intend to support it in the
+  // future as a graphic set option. So let's just make it inaccessible for now rather than fully
+  // removing it.
+  fGameParams.Renderer.BackgroundColor := $000000;
 
   fGameParams.Style.LevelSystem.SetSaveSystem(@fGameParams.SaveSystem);
 

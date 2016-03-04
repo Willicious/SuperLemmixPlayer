@@ -36,7 +36,6 @@ type
     procedure DrawChar(aCursorPos: Integer; aBlink: Boolean = False);
     procedure DrawMessage(const S: string);
     procedure UpdateCheatMessage;
-    function CheckBackgroundColor: Boolean;
   protected
   public
     constructor Create(aOwner: TComponent); override;
@@ -117,35 +116,6 @@ begin
   if (CC <> '') then Result := CompareText(S, LowerCase(CC)) = 0;
 end;
 
-function TGameLevelCodeScreen.CheckBackgroundColor: Boolean;
-var
-  s: String;
-begin
-  Result := false;
-  s := stringreplace(LowerCase(LevelCode), '.', '', [rfReplaceAll]);
-  if s = 'bgclear' then
-  begin
-    GameParams.BackgroundColor := '000000';
-    GameParams.Renderer.BackgroundColor := 0;
-    if GameParams.CheatCodesEnabled then
-    begin
-      Result := true;
-      DrawMessage('Background Set');
-    end;
-    Exit;
-  end;
-  if not GameParams.CheatCodesEnabled then Exit;
-  if (LeftStr(s, 2) <> 'bg') or (Length(s) <> 8) then exit;
-  s := '0x' + RightStr(s, 6);
-  if StrToIntDef(s, -1) = -1 then Exit
-    else begin
-    GameParams.BackgroundColor := RightStr(s, 6);
-    GameParams.Renderer.BackgroundColor := StrToInt(s);
-    DrawMessage('Background Set');
-    Result := true;
-  end;
-end;
-
 function TGameLevelCodeScreen.CheckLevelCode: Boolean;
 var
 //  i: Integer;
@@ -182,7 +152,7 @@ begin
       Exit;
     end
     else
-      if not CheckBackgroundColor then
+      //if not CheckBackgroundColor then
       begin
       DrawPurpleTextCentered(ScreenImg.Bitmap, SIncorrectCode, {XPos, }YPositions[2], BackBuffer);
       DrawMessage(SIncorrectCode);

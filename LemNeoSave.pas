@@ -101,32 +101,8 @@ begin
 end;
 
 procedure TNeoSave.UpdateConfig(aPointer: Pointer);
-var
-  p : ^TDOSGameParams;
-  //g : TDOSGameParams;
-  i : integer;
 begin
-  p := aPointer;
-  //g := p^;
-  fSaveData.Config.ToggleOptions := LongWord(p.MiscOptions);
-  i := StrToInt('0x' + p.BackgroundColor);
-  fSaveData.Config.BackgroundColor[0] := i shr 16;
-  fSaveData.Config.BackgroundColor[1] := (i shr 8) mod 256;
-  fSaveData.Config.BackgroundColor[2] := i mod 256;
-  fSaveData.Config.PercentOption := p.UsePercentages;
-  fSaveData.Config.ForceGimmick := p.ForceGimmick;
-  fSaveData.Config.ForceGimmick2 := p.ForceGimmick2;
-  fSaveData.Config.ForceGimmick3 := p.ForceGimmick3;
-  fSaveData.Config.ForceSkillset := p.ForceSkillset;
-  fSaveData.Config.SteelOption := p.SteelOverride;
-  fSaveData.Config.TestOption := p.fTestScreens;
-  fSaveData.Config.SoundOption := Byte(p.SoundOptions);
-  fSaveData.Config.PackName := '                                ';
-  StrPLCopy(fSaveData.Config.PackName, p.fLevelPack, Length(p.fLevelPack));
-  fSaveData.Config.PrefixName := '                ';
-  StrPLCopy(fSaveData.Config.PrefixName, p.fExternalPrefix, Length(p.fExternalPrefix));
-  for i := 0 to SizeOf(fSaveData.Config.Reserved)-1 do
-    fSaveData.Config.Reserved[i] := 0;
+  // No longer needed
 end;
 
 procedure TNeoSave.LoadConfig(aPointer: Pointer);
@@ -140,8 +116,8 @@ begin
   with fSaveData.Config do
   begin
     p.MiscOptions := TMiscOptions(ToggleOptions);
-    i := (BackgroundColor[0] shl 16) + (BackgroundColor[1] shl 8) + (BackgroundColor[2]);
-    p.BackgroundColor := IntToHex(i, 6);
+    //i := (BackgroundColor[0] shl 16) + (BackgroundColor[1] shl 8) + (BackgroundColor[2]);
+    //p.BackgroundColor := IntToHex(i, 6);
     p.UsePercentages := PercentOption;
     p.ForceGimmick := ForceGimmick;
     p.ForceGimmick2 := ForceGimmick2;

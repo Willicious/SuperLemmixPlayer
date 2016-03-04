@@ -4665,7 +4665,6 @@ begin
       fTargetBitmap.Assign(World);
     end;
 
-    //if fGameParams.DebugSteel then Renderer.BackgroundColor := $00FF00FF;
 end;
 
 function TLemmingGame.PrioritizedHitTest(out Lemming1, Lemming2: TLemming;
