@@ -73,7 +73,7 @@ var
 const
   // Lowest version numbers that are compatible
   Min_MainVer = 1;    // 1.bb-c
-  Min_SubVer = 40;    // a.37-c
+  Min_SubVer = 44;    // a.37-c
   Min_MinorVer = 1;   // a.bb-A
 
   function GetTargetAsString(aMain, aSub, aMinor: Integer): String;
@@ -116,11 +116,12 @@ begin
     or ((MainVer = Min_MainVer) and (SubVer < Min_SubVer))
     or ((MainVer = Min_MainVer) and (SubVer = Min_SubVer) and (MinorVer < Min_MinorVer))
     then begin
-      if SubVer < 43 then
+      if SubVer < 44 then
       begin
-        ShowMessage('This pack has not been updated to be fully compatible with NeoLemmix V1.43n. Issues' + #13 +
-                    'may occur such as reversion to default graphics or missing / incorrect music. However,' + #13 +
-                    'the pack should be playable.');
+        ShowMessage('This pack has not been updated to be fully compatible with NeoLemmix V1.44n+. Please note' + #13 +
+                    'that certain features were removed as of V1.44n, and as such, if this pack relied on those' + #13 +
+                    'features, it may not work properly. It is recommended that you contact the author or look' + #13 +
+                    'on the Lemmings Forums for an updated version of this pack.');
         Result := nxc_VersionError;
       end else begin
         // Fallback if there's no specific message. Should never happen but just in case.
