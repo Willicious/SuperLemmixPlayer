@@ -3226,7 +3226,7 @@ begin
 
   if CheckSkillAvailable(baClimbing)
   and not Lemming1.LemIsClimber
-  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baDrowning, baVaporizing, baSplatting, baExiting]) then
+  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning, baVaporizing, baSplatting, baExiting]) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
@@ -3249,7 +3249,7 @@ begin
 
   if CheckSkillAvailable(baSwimming)
   and not Lemming1.LemIsSwimmer
-  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, {baDrowning,} baVaporizing, baSplatting, baExiting]) then
+  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baStoneFinish, {baDrowning,} baVaporizing, baSplatting, baExiting]) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
@@ -3276,7 +3276,7 @@ begin
 
   if CheckSkillAvailable(baFloating)
   and not (Lemming1.LemIsFloater or Lemming1.LemIsGlider)
-  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baDrowning, baVaporizing, baSplatting, baExiting]) then
+  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning, baVaporizing, baSplatting, baExiting]) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
@@ -3301,7 +3301,7 @@ begin
 
   if CheckSkillAvailable(baGliding)
   and not (Lemming1.LemIsFloater or Lemming1.LemIsGlider)
-  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baDrowning, baVaporizing, baSplatting, baExiting]) then
+  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning, baVaporizing, baSplatting, baExiting]) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
@@ -3327,7 +3327,7 @@ begin
 
   if CheckSkillAvailable(baFixing)
   and not Lemming1.LemIsMechanic
-  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baDrowning, baVaporizing, baSplatting, baExiting]) then
+  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning, baVaporizing, baSplatting, baExiting]) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
@@ -3353,18 +3353,13 @@ begin
   Result := False;
 
   if CheckSkillAvailable(baExploding)
-  and not (lemming1.lemAction in [baOhnoing, baStoning, baDrowning, baExploding, baVaporizing, baSplatting, baExiting]) then
+  and not (lemming1.lemAction in [baOhnoing, baStoning, baDrowning, baExploding, baStoneFinish, baVaporizing, baSplatting, baExiting]) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
     else
       begin
-        //if fGameParams.SysDat.Options and 16 = 0 then
-        mbt := 1;
-        //  else
-        //  mbt := 79;
-        if (mbt > 1) and (Lemming1.LemExplosionTimer > 0) then Exit;
-        Lemming1.LemExplosionTimer := mbt;
+        Lemming1.LemExplosionTimer := 1;
 
         Lemming1.LemTimerToStone := false;
         UpdateSkillCount(baExploding);
@@ -3386,22 +3381,16 @@ begin
   Result := False;
 
   if CheckSkillAvailable(baStoning)
-  and (not (lemming1.lemAction in [baOhnoing, baStoning, baDrowning, baExploding, baVaporizing, baSplatting, baExiting])) then
+  and (not (lemming1.lemAction in [baOhnoing, baStoning, baStoneFinish, baDrowning, baExploding, baVaporizing, baSplatting, baExiting])) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
     else
       begin
-        //if fGameParams.SysDat.Options and 16 = 0 then
-        mbt := 1;
-        //  else
-        //  mbt := 79;
-        if (mbt > 1) and (Lemming1.LemExplosionTimer > 0) then Exit;
-        Lemming1.LemExplosionTimer := mbt;
+        Lemming1.LemExplosionTimer := 1;
 
         Lemming1.LemTimerToStone := true;
         UpdateSkillCount(baStoning);
-
         Result := True;
         RecordSkillAssignment(Lemming1, baStoning);
         if not fFreezeSkillCount then
