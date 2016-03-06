@@ -3234,14 +3234,9 @@ begin
       begin
         Lemming1.LemIsClimber := True;
         UpdateSkillCount(baClimbing);
-        if dgoAssignClimberShruggerActionBug in Options then
-          if (Lemming1.LemAction = baShrugging) then
-            Lemming1.LemAction := baWalking;
         Result := True;
         if not fFreezeSkillCount then
-        begin
           OnAssignSkill(Lemming1, baClimbing);
-        end;
         RecordSkillAssignment(Lemming1, baClimbing);
       end;
   end
