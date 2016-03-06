@@ -9648,9 +9648,8 @@ begin
   RecIteration := CurrentIteration;
 
   NewRec := False;
-  if Paused then
+  if Paused and (Recorder.List.Count > 0) then
   begin
-    Assert(Recorder.List.Count > 0);
     // get last record
     R := Recorder.List.List^[Recorder.List.Count - 1];
 
