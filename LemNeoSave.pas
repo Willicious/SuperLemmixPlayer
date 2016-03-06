@@ -116,14 +116,7 @@ begin
   with fSaveData.Config do
   begin
     p.MiscOptions := TMiscOptions(ToggleOptions);
-    //i := (BackgroundColor[0] shl 16) + (BackgroundColor[1] shl 8) + (BackgroundColor[2]);
-    //p.BackgroundColor := IntToHex(i, 6);
-    p.UsePercentages := PercentOption;
-    p.ForceGimmick := ForceGimmick;
-    p.ForceGimmick2 := ForceGimmick2;
-    p.ForceGimmick3 := ForceGimmick3;
     p.ForceSkillset := ForceSkillset;
-    p.SteelOverride := SteelOption;
     p.fTestScreens := TestOption;
     p.SoundOptions := TGameSoundOptions(SoundOption);
     p.fLevelPack := Trim(PackName);

@@ -327,20 +327,10 @@ begin
     fGameParams.DebugSteel := false;
     fGameParams.ChallengeMode := false;
     fGameParams.TimerMode := false;
-    fGameParams.GimmickMusic := true;
-    fGameParams.ForceGimmick := 0;
-    fGameParams.ForceGimmick2 := 0;
-    fGameParams.ForceGimmick3 := 0;
     fGameParams.ForceSkillset := 0;
   end;
-  if fGameParams.SysDat.Options2 and 32 <> 0 then fGameParams.NoAdjustBomberMask := true;
 
   if fGameParams.SysDat.Options3 and 8 <> 0 then TBaseDosLevelSystem(fGameParams.Style.LevelSystem).UnlockAllLevels;
-
-  //if OverrideDirectDrop then
-  //  fGameParams.SysDat.Options3 := fGameParams.SysDat.Options3 or 16;
-
-  fGameParams.UsePercentages := 0;  // percentage option has been disabled but not yet removed from code
 
   if fGameParams.fTestMode then
   begin
@@ -350,18 +340,9 @@ begin
     // saving of settings works now...)
     fGameParams.ChallengeMode := false;
     fGameParams.TimerMode := false;
-    fGameParams.ForceGimmick := 0;
-    fGameParams.ForceGimmick2 := 0;
-    fGameParams.ForceGimmick3 := 0;
     fGameParams.ForceSkillset := 0;
     fGameParams.DebugSteel := false;
-    fGameParams.SteelOverride := 0;
   end;
-
-  fGameParams.ShowParticles := true; // These options have been removed, so for now just force-enable them.
-  fGameParams.GimmickMusic := true;  // Once I get around to de-kludging GameControl.pas I'll remove them altogether.
-
-  //if fGameParams.ChallengeMode and (fGameParams.UsePercentages = 2) then fGameParams.UsePercentages := 1;
 
   fGameParams.WhichLevel := wlLastUnlocked;
 

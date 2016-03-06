@@ -16,7 +16,7 @@ uses
 type
   TGamePreviewScreen = class(TGameBaseScreen)
   private
-    fRickrolling : Boolean;
+    //fRickrolling : Boolean;
     fCanDump: Boolean;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -28,7 +28,7 @@ type
     procedure NextLevel;
     procedure PreviousLevel;
     procedure ShowRecords;
-    procedure SimulateSpawn;
+    //procedure SimulateSpawn;
   protected
   public
     constructor Create(aOwner: TComponent); override;
@@ -44,67 +44,6 @@ implementation
 uses LemGraphicSet, {LemDosGraphicSet, LemLevel,} FBaseDosForm;
 
 { TGamePreviewScreen }
-
-procedure TGamePreviewScreen.SimulateSpawn;
-var
-  i: Integer;
-  IgnoreLemmings: Integer;
-  LemsSpawned: Integer;
-  CheckZombies: Boolean;
-  CheckGhosts: Boolean;
-  CompareVal: Byte;
-
-  procedure FindNextWindow;
-  begin
-    if Length(GameParams.Level.Info.WindowOrder) = 0 then
-    begin
-      repeat
-        i := i + 1;
-        if i = GameParams.Level.InteractiveObjects.Count then i := 0;
-      until GameParams.GraphicSet.MetaObjects[GameParams.Level.InteractiveObjects[i].Identifier].TriggerEffect = 23;
-    end else begin
-      i := LemsSpawned mod Length(GameParams.Level.Info.WindowOrder);
-    end;
-  end;
-
-begin
-  // A full blown simulation of lemming spawning is the only way to
-  // check how many Zombies and Ghosts the level has.
-  GameParams.Level.Info.ZombieGhostCount := 0;
-  IgnoreLemmings := 0;
-  LemsSpawned := 0;
-
-  // Trigger effect 13: Preplaced lemming
-  // Trigger effect 23: Window
-
-  with GameParams.Level do
-  begin
-    CheckZombies := (Info.GimmickSet and $4000000) <> 0;
-    CheckGhosts := (Info.GimmickSet2 and $20) <> 0;
-
-    if not (CheckZombies or CheckGhosts) then Exit;
-
-    CompareVal := 0;
-    if CheckZombies then CompareVal := CompareVal + 64;
-    if CheckGhosts then CompareVal := CompareVal + 128;
-
-    for i := 0 to InteractiveObjects.Count-1 do
-    begin
-      if GameParams.GraphicSet.MetaObjects[InteractiveObjects[i].Identifier].TriggerEffect <> 13 then Continue;
-      LemsSpawned := LemsSpawned + 1; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
-      if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
-    end;
-
-    i := -1;
-    while LemsSpawned < Info.LemmingsCount do
-    begin
-      FindNextWindow;
-      if GameParams.GraphicSet.MetaObjects[InteractiveObjects[i].Identifier].TriggerEffect <> 23 then Continue;
-      LemsSpawned := LemsSpawned + 1;
-      if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
-    end;
-  end;
-end;
 
 procedure TGamePreviewScreen.ShowRecords;
 var
@@ -155,7 +94,6 @@ begin
   if FindInfo.dLevel <> GameParams.Info.dLevel then
   begin
     GameParams.ShownText := false;
-    GameParams.Rickrolled := false;
     GameParams.WhichLevel := wlNextUnlocked;
     CloseScreen(gstPreview);
   end;
@@ -170,7 +108,6 @@ begin
   if FindInfo.dLevel <> GameParams.Info.dLevel then
   begin
     GameParams.ShownText := false;
-    GameParams.Rickrolled := false;
     GameParams.WhichLevel := wlPreviousUnlocked;
     CloseScreen(gstPreview);
   end;
@@ -191,8 +128,6 @@ begin
     if aGraphicSet.MetaObjects[aLevel.InteractiveObjects[i].Identifier].TriggerEffect = 13 then Inc(MinCount);
   end;
   if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;
-
-  SimulateSpawn; // to check for ghosts and zombies
 end;
 
 procedure TGamePreviewScreen.BuildScreen;
@@ -403,27 +338,12 @@ end;
 
 destructor TGamePreviewScreen.Destroy;
 begin
-
   inherited;
 end;
 
 procedure TGamePreviewScreen.VGASpecPrep;
-var
-  Inf: TRenderInfoRec;
-  W: TBitmap32;
-  Mainpal: TArrayOfColor32;
 begin
-
-    with GameParams.Info do
-    if fRickrolling and (not GameParams.OneLevelMode) then
-    begin
-      TBaseDosLevelSystem(GameParams.Style.LevelSystem).ResetOddtableHistory;
-      GameParams.Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, GameParams.Level);
-      Include(GameParams.MiscOptions, moRickrolled);
-    end;
-
   if GameParams.Level.Info.GraphicSetEx > 0 then BuildScreenInvis;
-
 end;
 
 procedure TGamePreviewScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -479,26 +399,8 @@ begin
 //  with GameParams.Level.Info do
   begin
 
-    if GameParams.UsePercentages <> 0 then
-      begin
-      tcount := GameParams.Level.Info.LemmingsCount;
-      if (GameParams.UsePercentages = 2) and ((GameParams.Level.Info.SkillTypes and $1) <> 0) then
-      begin
-        tcount := tcount + GameParams.Level.Info.ClonerCount;
-        for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
-          with GameParams.Level.InteractiveObjects[i] do
-            if (GameParams.GraphicSet.MetaObjects[Identifier].TriggerEffect = 14)
-            and (Skill = 15) then tcount := tcount + 1;
-      end;
-      tperc := Percentage(tcount,
-                                GameParams.Level.Info.RescueCount);
-      if GameParams.Level.Info.DisplayPercent <> 0 then tperc := GameParams.Level.Info.DisplayPercent;
-      Perc := i2s(tperc) + '%';
-      end else
-      begin
       Perc := i2s(GameParams.Level.Info.RescueCount) + ' Lemming';
       if GameParams.Level.Info.RescueCount <> 1 then Perc := Perc + 's';
-      end;
 
       TL := i2s(GameParams.Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(GameParams.Level.Info.TimeLimit mod 60,2);
       if GameParams.Level.Info.TimeLimit > 5999 then TL := '(Infinite)'; //99:59
@@ -539,42 +441,8 @@ begin
                  GameParams.Level.Info.Author
                ]);
 
-         if (GameParams.ForceGimmick <> 0) or (GameParams.ForceGimmick2 <> 0) or (GameParams.ForceGimmick3 <> 0) then
-         begin
-           GameParams.Level.Info.SuperLemming := 0;
-           GameParams.Level.Info.GimmickSet := (GameParams.Level.Info.GimmickSet and $C0000000)
-                                            or (GameParams.ForceGimmick and $3FFFFFFF);
-           GameParams.Level.Info.GimmickSet2 := GameParams.ForceGimmick2;
-           GameParams.Level.Info.GimmickSet3 := GameParams.ForceGimmick3;
-           GameParams.Level.Info.fKaroshi := GameParams.Level.Info.GimmickSet and 8 <> 0;
-           GameParams.Level.Info.fSuperlem := GameParams.Level.Info.GimmickSet and 1 <> 0;
-         end;
-
     if GameParams.ForceSkillset <> 0 then
       GameParams.Level.Info.SkillTypes := GameParams.ForceSkillset;
-
-    if (GameParams.Level.Info.SuperLemming = $4204) or (GameParams.Level.Info.SuperLemming = $4209) or GameParams.Level.Info.fKaroshi then
-      if Trim(GameParams.Level.Info.Author) = '' then
-        Result := Format(KPreviewString,
-                [GameParams.Info.dLevel + 1, // humans read 1-based
-                 Trim(GameParams.Level.Info.Title),
-                 GameParams.Level.Info.LemmingsCount,
-                 Perc,
-                 GameParams.Level.Info.ReleaseRate,
-                 TL,
-                 GameParams.Info.dSectionName
-               ])
-        else
-          Result := Format(KPreviewStringAuth,
-                [GameParams.Info.dLevel + 1, // humans read 1-based
-                 Trim(GameParams.Level.Info.Title),
-                 GameParams.Level.Info.LemmingsCount,
-                 Perc,
-                 GameParams.Level.Info.ReleaseRate,
-                 TL,
-                 GameParams.Info.dSectionName,
-                 GameParams.Level.Info.Author
-               ]);
   end;
 end;
 
@@ -600,47 +468,17 @@ begin
       wlLastUnlocked: Style.LevelSystem.FindLastUnlockedLevel(Info);
     end;
 
-    (*
-    if not GameResult.gValid then
-    begin
-      if not Info.dValid then
-        Style.LevelSystem.FindFirstLevel(Info)
-      else
-        Style.LevelSystem.FindLevel(Info) // used to fill sectionname
-    end
-    else if GameResult.gSuccess then
-    begin
-      Style.LevelSystem.FindNextLevel(Info);
-    end;
-    ClearGameResult;
-      *)
-
-    fRickrolling := false;
-
     if not GameParams.OneLevelMode then
     begin
       TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := '';
 
-    try
-      TBaseDosLevelSystem(Style.LevelSystem).ResetOddtableHistory;
-      Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);
-    except
-      //on E: Exception do
-      //begin
-      //  ShowMessage(E.Message);
-        fCanDump := false;
-        Exit;
-      //end;
-    end;
-
-    if ((GameParams.Level.Info.GimmickSet and $80000000) <> 0)
-    and (not (moRickrolled in GameParams.MiscOptions))
-    and (not (GameParams.SaveSystem.CheckCompleted(dSection, dLevel))) then
-    begin
-      TBaseDosLevelSystem(Style.LevelSystem).ResetOddtableHistory;
-      Style.LevelSystem.LoadSingleLevel(dPack, GameParams.Level.Info.BnsRank, GameParams.Level.Info.BnsLevel, Level);
-      fRickrolling := true;
-    end;
+      try
+        TBaseDosLevelSystem(Style.LevelSystem).ResetOddtableHistory;
+        Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);
+      except
+          fCanDump := false;
+          Exit;
+      end;
 
     end else begin
 
@@ -653,8 +491,6 @@ begin
     WhichLevel := wlSame;
 
     fLevelOverride := (Params.Level.Info.PostSecretRank shl 8) + Params.Level.Info.PostSecretLevel;
-
-//    Style.LevelSystem.LoadSingleLevel(0, 3, 1, Level);
 
   end;
 end;

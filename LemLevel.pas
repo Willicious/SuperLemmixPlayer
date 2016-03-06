@@ -80,8 +80,6 @@ type
     fLevelID        : LongWord;
   protected
   public
-    fSuperlem         : Boolean;
-    fKaroshi          : Boolean;
     fOddtarget        : Integer;
     WindowOrder       : array of word;
     constructor Create;

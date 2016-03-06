@@ -230,9 +230,6 @@ begin
     if (gSuccess and not gCheated)
     and (gSecretGoto = -1)
     and not (ChallengeMode or TimerMode)
-    and (ForceGimmick = 0)
-    and (ForceGimmick2 = 0)
-    and (ForceGimmick3 = 0)
     and (ForceSkillset = 0) then
     with SaveSystem, Info do
     begin
@@ -249,14 +246,8 @@ begin
     end
     else begin
       // init some local strings
-      if UsePercentages <> 0 then
-      begin
-        STarget := PadL(i2s(gTarget) + '%', 4);
-        SDone := PadL(i2s(gDone) + '%', 4);
-      end else begin
         STarget := PadL(i2s(gToRescue), 4);
         SDone := PadL(i2s(gRescued), 4);
-      end;
 
       // top text
       if gGotTalisman then
@@ -268,25 +259,13 @@ begin
 
       LF(1);
 
-      if (GameParams.Level.Info.SuperLemming <> $4204) and (GameParams.Level.Info.SuperLemming <> $4209) and (GameParams.Level.Info.fKaroshi = false) then
-        Add(Format(SYouRescuedYouNeeded_ss, [SDone, STarget]))
-      else
-        Add(Format(KYouRescuedYouNeeded_ss, [SDone, STarget]));
+      Add(Format(SYouRescuedYouNeeded_ss, [SDone, STarget]));
 
       LF(1);
 
       i := GetResultIndex;
-      if (GameParams.Level.Info.SuperLemming <> $4204) and (GameParams.Level.Info.SuperLemming <> $4209) and (GameParams.Level.Info.fKaroshi = false) then
-         Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]))
-      else
-        begin
-          if gToRescue > gRescued then
-            Add(BuildText(SysDat.KResult[0][0]) + #13 + BuildText(SysDat.KResult[0][1]));
-          if (gToRescue <= gRescued) and (gDone <> 100) then
-            Add(BuildText(SysDat.KResult[1][0]) + #13 + BuildText(SysDat.KResult[1][1]));
-          if gDone >= 100 then
-            Add(BuildText(SysDat.KResult[2][0]) + #13 + BuildText(SysDat.KResult[2][1]));
-        end;
+      Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]));
+
       LF(6); // gap 2 + score space 1 + gap 3
 
       if not GameParams.OneLevelMode then
@@ -296,7 +275,6 @@ begin
 
       if gSuccess then
       begin
-        GameParams.Rickrolled := false;
         H := Style.LevelSystem.GetLevelCode(NextInfo);
           // NextInfo.dSectionName + i2s(NextInfo.dLevel + 1);
         Add(Format(SYourAccessCode_ds, [NextInfo.dLevel + 1, H]));

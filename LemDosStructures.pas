@@ -25,13 +25,13 @@ type
     ToggleOptions   : LongWord;
     Removed1        : array[0..2] of Byte;
     PercentOption   : Byte;
-    ForceGimmick    : LongWord;
+    Removed3        : LongWord;
     ForceSkillset   : Word;
-    SteelOption     : Byte;
+    Removed4        : Byte;
     TestOption      : Byte;
     SoundOption     : Byte;
-    ForceGimmick2   : LongWord;
-    ForceGimmick3   : Longword;
+    Removed7        : LongWord;
+    Removed8        : Longword;
     Reserved        : array[0..6] of Byte;
     PackName        : array[0..31] of Char;
     PrefixName      : array[0..15] of Char;

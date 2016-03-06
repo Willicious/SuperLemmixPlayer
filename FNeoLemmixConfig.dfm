@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 433
+  ClientHeight = 417
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,8 +22,8 @@ object FormNXConfig: TFormNXConfig
     Left = 0
     Top = 0
     Width = 273
-    Height = 393
-    ActivePage = TabSheet3
+    Height = 377
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Global Options'
@@ -57,7 +57,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 72
         Width = 249
-        Height = 73
+        Height = 57
         Caption = 'Input Options'
         TabOrder = 1
         object cbOneClickHighlight: TCheckBox
@@ -69,37 +69,28 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbFixedKeys: TCheckBox
-          Left = 16
-          Top = 32
-          Width = 137
-          Height = 17
-          Caption = 'Use Fixed Skill Hotkeys'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
         object btnHotkeys: TButton
-          Left = 160
+          Left = 176
           Top = 18
-          Width = 73
+          Width = 57
           Height = 25
           Caption = 'Hotkeys'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = btnHotkeysClick
         end
         object cbIgnoreReplaySelection: TCheckBox
           Left = 16
-          Top = 48
-          Width = 177
+          Top = 32
+          Width = 161
           Height = 17
           Caption = 'Ignore Replay Skill Selection'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = OptionChanged
         end
       end
       object GroupBox3: TGroupBox
         Left = 8
-        Top = 152
+        Top = 136
         Width = 249
         Height = 97
         Caption = 'Interface Options'
@@ -155,7 +146,7 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox4: TGroupBox
         Left = 8
-        Top = 256
+        Top = 240
         Width = 249
         Height = 97
         Caption = 'Replay Options'
@@ -272,107 +263,13 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
       end
-      object GroupBox6: TGroupBox
+      object GroupBox7: TGroupBox
         Left = 8
         Top = 112
         Width = 249
         Height = 97
-        Caption = 'Forced Gimmicks'
-        TabOrder = 1
-        object Label3: TLabel
-          Left = 16
-          Top = 16
-          Width = 76
-          Height = 13
-          Caption = 'Select Gimmick:'
-        end
-        object cbGimmickList: TComboBox
-          Left = 96
-          Top = 14
-          Width = 145
-          Height = 21
-          Style = csDropDownList
-          ItemHeight = 13
-          ItemIndex = 0
-          TabOrder = 0
-          Text = 'SuperLemming'
-          OnChange = cbGimmickListChange
-          Items.Strings = (
-            'SuperLemming'
-            'Frenzy'
-            'Reverse Skill Counts'
-            'Karoshi'
-            'Unalterable Terrain'
-            'Skill Count Overflow'
-            'No Gravity'
-            'Hardworkers'
-            'Backwards Walkers'
-            'Lazy Lemmings'
-            'Exhaustion'
-            'Non-Fatal Bombers'
-            'Invincibility'
-            'One Skill Per Lemming'
-            'Steel Inversion'
-            'Solid Level Bottom'
-            'Single-Use Permanents'
-            'Disobedience'
-            'Nuclear Bombers'
-            'Turnaround On Assign'
-            'Countdown Other Skills'
-            'Assign To All'
-            'Horizontal Wrap'
-            'Vertical Wrap'
-            'Rising Water'
-            'Clock Gimmick'
-            'Zombies'
-            'Classic Zombies'
-            'Deadly Sides'
-            'Invert Fall Fatality'
-            'Cheapo Mode'
-            'Bait-and-Switch'
-            'Clone On Assign'
-            'Instant Pickup Skills'
-            'Zombies On Death'
-            'Permanent Blockers'
-            'Release Rate Fluctuation'
-            'Ghosts'
-            'Ghosts On Death')
-        end
-        object cbEnableGimmick: TCheckBox
-          Left = 32
-          Top = 40
-          Width = 177
-          Height = 17
-          Caption = 'Enable This Gimmick'
-          TabOrder = 1
-          OnClick = cbEnableGimmickClick
-        end
-        object btnCheckGimmicks: TButton
-          Left = 32
-          Top = 64
-          Width = 89
-          Height = 25
-          Caption = 'Check Gimmicks'
-          TabOrder = 2
-          OnClick = btnCheckGimmicksClick
-        end
-        object btnClearGimmick: TButton
-          Left = 128
-          Top = 64
-          Width = 89
-          Height = 25
-          Caption = 'Clear Gimmicks'
-          TabOrder = 3
-          OnClick = btnClearGimmickClick
-        end
-      end
-      object GroupBox7: TGroupBox
-        Left = 8
-        Top = 216
-        Width = 249
-        Height = 97
         Caption = 'Forced Skillset'
-        TabOrder = 2
+        TabOrder = 1
         object Label4: TLabel
           Left = 16
           Top = 16
@@ -441,7 +338,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 400
+    Top = 384
     Width = 65
     Height = 25
     Caption = 'OK'
@@ -450,7 +347,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 104
-    Top = 400
+    Top = 384
     Width = 65
     Height = 25
     Caption = 'Cancel'
@@ -459,7 +356,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 184
-    Top = 400
+    Top = 384
     Width = 65
     Height = 25
     Caption = 'Apply'

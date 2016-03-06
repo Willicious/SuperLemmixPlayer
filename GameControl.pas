@@ -73,29 +73,29 @@ type
 
 type
   TMiscOption = (
-    moGradientBridges,  // 0
-    moFastForward,      // 1
-    moSaveState,        // 2
-    moHyperJumps,       // 3
+    moRemoved0,  // 0
+    moRemoved1,      // 1
+    moRemoved2,        // 2
+    moRemoved3,       // 3
     moCheatCodes,       // 4
-    moShowParticles,    // 5
+    moRemoved5,    // 5
     moLookForLVLFiles,  // 6
     moDebugSteel,
     moChallengeMode,
     moTimerMode,
-    moGimmickMusic, //10
-    moRickrolled,
-    moNoAdjustBomberMask,
+    moRemoved10, //10
+    moRemoved11,
+    moRemoved12,
     moAutoReplayNames,
     moLemmingBlink,
     moTimerBlink,
     moAutoReplaySave,
-    moRescueBlink,
+    moRemoved17,
     moClickHighlight,
-    moAltRescueBlink,
-    moFixedKeys, //20
-    moShowNeeded,
-    moDisableFade,
+    moRemoved19,
+    moRemoved20, //20
+    moRemoved21,
+    moRemoved22,
     moAlwaysTimestamp,
     moConfirmOverwrite,
     moExplicitCancel,
@@ -110,32 +110,14 @@ type
 
 const
   DEF_MISCOPTIONS = [
-    moGradientBridges,
-    moFastForward,
-    moSaveState,
-    moHyperJumps,
-//    moCheatCodes,
-    moShowParticles,
-    moGimmickMusic,
     moAutoReplayNames,
     moTimerBlink,
-    moFixedKeys,
-    moDisableFade,
     moAlwaysTimestamp,
     moClickHighlight,
     moEnableOnline
-//    moLookForLVLFiles
-//    moUseSystemCursor
   ];
 
-type             (*
-  TOptionsRec = packed record
-    oSignature   : array[0..2] of Char; // LOF LemmingsOptions File
-    oVersion     : Byte; // version of this record
-    oRecordSize  : Integer;
-    oOptions     : TMiscOptions; // 32 bits
-    oSoundOptions: TGameSoundOptions; // 8 bits
-  end;         *)
+type
 
   TDosGameParams = class(TPersistent)
   private
@@ -143,15 +125,12 @@ type             (*
     fTalismans : TTalismans;
     fTalismanPage: Integer;
     fDirectory    : string;
-    fSteelOverride: Integer;
     fDumpMode : Boolean;
     fShownText: Boolean;
     fSaveSystem : TNeoSave;
     fOneLevelMode: Boolean;
     fDoneUpdateCheck: Boolean;
     fZoomLevel: Integer;
-    {fWindowX: Integer;
-    fWindowY: Integer;}
     fMainForm: TForm; // link to the FMain form
 
     function GetCheatCodesEnabled: Boolean;
@@ -160,28 +139,14 @@ type             (*
     function GetSoundEnabled: Boolean;
     procedure SetMusicEnabled(Value: Boolean);
     procedure SetSoundEnabled(Value: Boolean);
-    function GetShowParticles: Boolean;
-    procedure SetShowParticles(const Value: Boolean);
     function GetLookForLVLFiles: Boolean;
     procedure SetLookForLVLFiles(Value: Boolean);
     function GetDebugSteel: Boolean;
     procedure SetDebugSteel(Value: Boolean);
-    function GetGimmickMusic: Boolean;
-    procedure SetGimmickMusic(Value: Boolean);
     function GetChallengeMode: Boolean;
     procedure SetChallengeMode(Value: Boolean);
     function GetTimerMode: Boolean;
     procedure SetTimerMode(Value: Boolean);
-//    function GetUsePercentages: Boolean;
-//    procedure SetUsePercentages(Value: Boolean);
-    function GetSteelOverride: Integer;
-    procedure SetSteelOverride(Value: Integer);
-    //function GetUseSystemCursor: Boolean;
-    //procedure SetUseSystemCursor(const Value: Boolean);
-    function GetRickrolled: Boolean;
-    procedure SetRickrolled(Value: Boolean);
-    function GetNoAdjustBomberMask: Boolean;
-    procedure SetNoAdjustBomberMask(Value: Boolean);
     function GetAutoReplayNames: Boolean;
     procedure SetAutoReplayNames(Value: Boolean);
     function GetLemmingBlink: Boolean;
@@ -190,16 +155,8 @@ type             (*
     procedure SetTimerBlink(Value: Boolean);
     function GetAutoReplaySave: Boolean;
     procedure SetAutoReplaySave(Value: Boolean);
-    function GetRescueBlink: Boolean;
-    procedure SetRescueBlink(Value: Boolean);
-    function GetAltRescueBlink: Boolean;
-    procedure SetAltRescueBlink(Value: Boolean);
     function GetClickHighlight: Boolean;
     procedure SetClickHighlight(Value: Boolean);
-    function GetFixedKeys: Boolean;
-    procedure SetFixedKeys(Value: Boolean);
-    function GetShowNeeded: Boolean;
-    procedure SetShowNeeded(Value: Boolean);
     function GetAlwaysTimestamp: Boolean;
     procedure SetAlwaysTimestamp(Value: Boolean);
     function GetConfirmOverwrite: Boolean;
@@ -255,12 +212,8 @@ type             (*
     fZoomFactor          : Integer;
     fLevelPack           : String;
     fExternalPrefix      : String;
-    fForceGimmick        : LongWord;
-    fForceGimmick2       : LongWord;
-    fForceGimmick3       : LongWord;
     fForceSkillset       : Word;
     fLevelOverride       : Integer;
-    fPercentOption       : Integer;
 
     fTestMode : Boolean;
     fTestGroundFile : String;
@@ -284,17 +237,10 @@ type             (*
     property CheatCodesEnabled: Boolean read GetCheatCodesEnabled write SetCheatCodesEnabled;
     property LookForLVLFiles: Boolean read GetLookForLVLFiles write SetLookForLVLFiles;
     property DebugSteel: Boolean read GetDebugSteel write SetDebugSteel;
-    property GimmickMusic: Boolean read GetGimmickMusic write SetGimmickMusic;
     property ChallengeMode: Boolean read GetChallengeMode write SetChallengeMode;
     property TimerMode: Boolean read GetTimerMode write SetTimerMode;
-    property ForceGimmick: LongWord read fForceGimmick write fForceGimmick;
-    property ForceGimmick2: LongWord read fForceGimmick2 write fForceGimmick2;
-    property ForceGimmick3: LongWord read fForceGimmick3 write fForceGimmick3;
     property ForceSkillset: Word read fForceSkillset write fForceSkillset;
-    property Rickrolled: Boolean read GetRickrolled write SetRickrolled;
-    property NoAdjustBomberMask: Boolean read GetNoAdjustBomberMask write SetNoAdjustBomberMask;
     property Directory: string read fDirectory write fDirectory;
-    property SteelOverride: Integer read GetSteelOverride write SetSteelOverride;
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property QuickTestMode: Integer read fTestScreens write fTestScreens;
     property MusicEnabled: Boolean read GetMusicEnabled write SetMusicEnabled;
@@ -302,16 +248,10 @@ type             (*
     property ClickHighlight: Boolean read GetClickHighlight write SetClickHighlight;
     property AutoReplayNames: Boolean read GetAutoReplayNames write SetAutoReplayNames;
     property AutoSaveReplay: Boolean read GetAutoReplaySave write SetAutoReplaySave;
-    property ShowParticles: Boolean read GetShowParticles write SetShowParticles;
     property LemmingBlink: Boolean read GetLemmingBlink write SetLemmingBlink;
-    property RescueBlink: Boolean read GetRescueBlink write SetRescueBlink;
-    property AltRescueBlink: Boolean read GetAltRescueBlink write SetAltRescueBlink;
     property TimerBlink: Boolean read GetTimerBlink write SetTimerBlink;
-    property UsePercentages: Integer read fPercentOption write fPercentOption;
     property ShownText: boolean read fShownText write fShownText;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
-    property FixedKeys: boolean read GetFixedKeys write SetFixedKeys;
-    property ShowNeeded: boolean read GetShowNeeded write SetShowNeeded;
     property AlwaysTimestamp: boolean read GetAlwaysTimestamp write SetAlwaysTimestamp;
     property ConfirmOverwrite: boolean read GetConfirmOverwrite write SetConfirmOverwrite;
     property ExplicitCancel: boolean read GetExplicitCancel write SetExplicitCancel;
@@ -363,7 +303,6 @@ begin
   SaveBoolean('MusicEnabled', MusicEnabled);
   SaveBoolean('SoundEnabled', SoundEnabled);
   SaveBoolean('ClickHighlight', ClickHighlight);
-  SaveBoolean('FixedSkillKeys', FixedKeys);
   SaveBoolean('IgnoreReplaySelection', IgnoreReplaySelection);
   SaveBoolean('AutoReplayNames', AutoReplayNames);
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
@@ -409,7 +348,6 @@ begin
   AutoSaveReplay := LoadBoolean('AutoSaveReplay');
   LemmingBlink := LoadBoolean('LemmingCountBlink');
   TimerBlink := LoadBoolean('TimerBlink');
-  FixedKeys := LoadBoolean('FixedSkillKeys');
   AlwaysTimestamp := LoadBoolean('AlwaysTimestampReplays');
   ConfirmOverwrite := LoadBoolean('ConfirmReplayOverwrite');
   ExplicitCancel := LoadBoolean('ExplicitReplayCancel');
@@ -436,10 +374,7 @@ begin
   MiscOptions := DEF_MISCOPTIONS;
   fLevelPack := 'LEVELPAK.DAT';
   fExternalPrefix := '';
-  fForceGimmick := 0;
   fForceSkillset := 0;
-  fSteelOverride := 0;
-  fPercentOption := -1;
   fDumpMode := false;
   fTestScreens := 0;
   fShownText := false;
@@ -493,11 +428,6 @@ begin
   Result := gsoMusic in SoundOptions;
 end;
 
-function TDosGameParams.GetShowParticles: Boolean;
-begin
-  Result := moShowParticles in MiscOptions;
-end;
-
 function TDosGameParams.GetSoundEnabled: Boolean;
 begin
   Result := gsoSound in SoundOptions;
@@ -518,29 +448,9 @@ begin
   Result := moChallengeMode in MiscOptions;
 end;
 
-function TDosGameParams.GetGimmickMusic: Boolean;
-begin
-  Result := moGimmickMusic in MiscOptions;
-end;
-
-function TDosGameParams.GetRickrolled: Boolean;
-begin
-  Result := moRickrolled in MiscOptions;
-end;
-
 function TDosGameParams.GetTimerMode: Boolean;
 begin
   Result := moTimerMode in MiscOptions;
-end;
-
-function TDosGameParams.GetSteelOverride: Integer;
-begin
-  Result := fSteelOverride;
-end;
-
-function TDosGameParams.GetNoAdjustBomberMask: Boolean;
-begin
-  Result := moNoAdjustBomberMask in MiscOptions;
 end;
 
 function TDosGameParams.GetAutoReplayNames: Boolean;
@@ -563,29 +473,9 @@ begin
   Result := moTimerBlink in MiscOptions;
 end;
 
-function TDosGameParams.GetRescueBlink: Boolean;
-begin
-  Result := moRescueBlink in MiscOptions;
-end;
-
-function TDosGameParams.GetAltRescueBlink: Boolean;
-begin
-  Result := moAltRescueBlink in MiscOptions;
-end;
-
 function TDosGameParams.GetClickHighlight: Boolean;
 begin
   Result := moClickHighlight in MiscOptions;
-end;
-
-function TDosGameParams.GetFixedKeys: Boolean;
-begin
-  Result := moFixedKeys in MiscOptions;
-end;
-
-function TDosGameParams.GetShowNeeded: Boolean;
-begin
-  Result := moShowNeeded in MiscOptions;
 end;
 
 function TDosGameParams.GetAlwaysTimestamp: Boolean;
@@ -603,14 +493,6 @@ begin
   Result := moExplicitCancel in MiscOptions;
 end;
 
-procedure TDosGameParams.SetNoAdjustBomberMask(Value: Boolean);
-begin
-  case Value of
-    False: Exclude(MiscOptions, moNoAdjustBomberMask);
-    True:  Include(MiscOptions, moNoAdjustBomberMask);
-  end;
-end;
-
 procedure TDosGameParams.SetLemmingBlink(Value: Boolean);
 begin
   case Value of
@@ -624,22 +506,6 @@ begin
   case Value of
     False: Exclude(MiscOptions, moTimerBlink);
     True:  Include(MiscOptions, moTimerBlink);
-  end;
-end;
-
-procedure TDosGameParams.SetRescueBlink(Value: Boolean);
-begin
-  case Value of
-    False: Exclude(MiscOptions, moRescueBlink);
-    True:  Include(MiscOptions, moRescueBlink);
-  end;
-end;
-
-procedure TDosGameParams.SetAltRescueBlink(Value: Boolean);
-begin
-  case Value of
-    False: Exclude(MiscOptions, moAltRescueBlink);
-    True:  Include(MiscOptions, moAltRescueBlink);
   end;
 end;
 
@@ -667,32 +533,11 @@ begin
   end;
 end;
 
-procedure TDosGameParams.SetSteelOverride(Value: Integer);
-begin
-  fSteelOverride := Value;
-end;
-
-procedure TDosGameParams.SetRickrolled(Value: Boolean);
-begin
-  case Value of
-    False: Exclude(MiscOptions, moRickrolled);
-    True:  Include(MiscOptions, moRickrolled);
-  end;
-end;
-
 procedure TDosGameParams.SetMusicEnabled(Value: Boolean);
 begin
   case Value of
     False: Exclude(SoundOptions, gsoMusic);
     True:  Include(SoundOptions, gsoMusic);
-  end;
-end;
-
-procedure TDosGameParams.SetShowParticles(const Value: Boolean);
-begin
-  case Value of
-    False: Exclude(MiscOptions, moShowParticles);
-    True:  Include(MiscOptions, moShowParticles);
   end;
 end;
 
@@ -728,14 +573,6 @@ begin
   end;
 end;
 
-procedure TDosGameParams.SetGimmickMusic(Value: Boolean);
-begin
-  case Value of
-    False: Exclude(MiscOptions, moGimmickMusic);
-    True:  Include(MiscOptions, moGimmickMusic);
-  end;
-end;
-
 procedure TDosGameParams.SetChallengeMode(Value: Boolean);
 begin
   case Value of
@@ -749,22 +586,6 @@ begin
   case Value of
     False: Exclude(MiscOptions, moClickHighlight);
     True:  Include(MiscOptions, moClickHighlight);
-  end;
-end;
-
-procedure TDosGameParams.SetFixedKeys(Value: Boolean);
-begin
-  case Value of
-    False: Exclude(MiscOptions, moFixedKeys);
-    True:  Include(MiscOptions, moFixedKeys);
-  end;
-end;
-
-procedure TDosGameParams.SetShowNeeded(Value: Boolean);
-begin
-  case Value of
-    False: Exclude(MiscOptions, moShowNeeded);
-    True:  Include(MiscOptions, moShowNeeded);
   end;
 end;
 
@@ -843,17 +664,6 @@ begin
     True:  Include(MiscOptions, moCheckUpdates);
   end;
 end;
-
-{function TDosGameParams.GetUseSystemCursor: Boolean;
-begin
-//  Result := moUseSystemCursor in MiscOptions;
-  Result := false;
-end;}
-
-{procedure TDosGameParams.SetUseSystemCursor(const Value: Boolean);
-begin
-
-end;}
 
 end.
 

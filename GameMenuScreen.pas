@@ -516,7 +516,6 @@ var
 
     procedure Change;
     begin
-      GameParams.Rickrolled := false;
       GameParams.ShownText := false;
       with GameParams.Info do
       begin

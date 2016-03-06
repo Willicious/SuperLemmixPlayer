@@ -19,7 +19,6 @@ type
     btnApply: TButton;
     GroupBox2: TGroupBox;
     cbOneClickHighlight: TCheckBox;
-    cbFixedKeys: TCheckBox;
     btnHotkeys: TButton;
     GroupBox3: TGroupBox;
     cbLemmingBlink: TCheckBox;
@@ -36,12 +35,6 @@ type
     cbSteelDebug: TCheckBox;
     cbChallengeMode: TCheckBox;
     cbTimerMode: TCheckBox;
-    GroupBox6: TGroupBox;
-    Label3: TLabel;
-    cbGimmickList: TComboBox;
-    cbEnableGimmick: TCheckBox;
-    btnCheckGimmicks: TButton;
-    btnClearGimmick: TButton;
     GroupBox7: TGroupBox;
     Label4: TLabel;
     cbSkillList: TComboBox;
@@ -57,10 +50,6 @@ type
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
-    procedure cbEnableGimmickClick(Sender: TObject);
-    procedure cbGimmickListChange(Sender: TObject);
-    procedure btnClearGimmickClick(Sender: TObject);
-    procedure btnCheckGimmicksClick(Sender: TObject);
     procedure cbSkillListChange(Sender: TObject);
     procedure cbForceSkillClick(Sender: TObject);
     procedure btnClearSkillClick(Sender: TObject);
@@ -69,9 +58,6 @@ type
     procedure cbEnableOnlineClick(Sender: TObject);
   private
     fGameParams: TDosGameParams;
-    fForceGimmick1: LongWord;
-    fForceGimmick2: LongWord;
-    fForceGimmick3: LongWord;
     fForceSkillset: Word;
     procedure SetFromParams;
     procedure SaveToParams;
@@ -108,9 +94,6 @@ var
   i: Integer;
 begin
   //// Variables ////
-  fForceGimmick1 := fGameParams.ForceGimmick;
-  fForceGimmick2 := fGameParams.ForceGimmick2;
-  fForceGimmick3 := fGameParams.ForceGimmick3;
   fForceSkillset := fGameParams.ForceSkillset;
 
   //// Page 1 (Global Options) ////
@@ -118,7 +101,6 @@ begin
   cbMusic.Checked := fGameParams.MusicEnabled;
   cbSound.Checked := fGameParams.SoundEnabled;
   cbOneClickHighlight.Checked := fGameParams.ClickHighlight;
-  cbFixedKeys.Checked := fGameParams.FixedKeys;
   cbIgnoreReplaySelection.Checked := fGameParams.IgnoreReplaySelection;
   cbLemmingBlink.Checked := fGameParams.LemmingBlink;
   cbTimerBlink.Checked := fGameParams.TimerBlink;
@@ -162,16 +144,8 @@ begin
   cbChallengeMode.Checked := fGameParams.ChallengeMode and cbChallengeMode.Enabled;
   cbTimerMode.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
   cbTimerMode.Checked := fGameParams.TimerMode and cbTimerMode.Enabled;
-  cbEnableGimmick.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
-  cbEnableGimmick.Checked := ((fForceGimmick1 and 1) <> 0) and cbEnableGimmick.Enabled; // set based on first gimmick in list
   cbForceSkill.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
   cbForceSkill.Checked := ((fForceSkillset and $8000) <> 0) and cbForceSkill.Enabled; // set based on first skill in list (highest bit)
-
-  // Gimmick dropdown / etc
-  cbGimmickList.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
-  btnCheckGimmicks.Enabled := ((fGameParams.SysDat.Options and 32) <> 0) and
-                              ((fForceGimmick1 <> 0) or (fForceGimmick2 <> 0) or (fForceGimmick3 <> 0));
-  btnClearGimmick.Enabled := btnCheckGimmicks.Enabled;
 
   // Skillset dropdown / etc
   cbSkillList.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
@@ -188,9 +162,6 @@ end;
 procedure TFormNXConfig.SaveToParams;
 begin
   //// Variables ////
-  fGameParams.ForceGimmick := fForceGimmick1;
-  fGameParams.ForceGimmick2 := fForceGimmick2;
-  fGameParams.ForceGimmick3 := fForceGimmick3;
   fGameParams.ForceSkillset := fForceSkillset;
 
   //// Page 1 (Global Options) ////
@@ -198,7 +169,6 @@ begin
   fGameParams.MusicEnabled := cbMusic.Checked;
   fGameParams.SoundEnabled := cbSound.Checked;
   fGameParams.ClickHighlight := cbOneClickHighlight.Checked;
-  fGameParams.FixedKeys := cbFixedKeys.Checked;
   fGameParams.IgnoreReplaySelection := cbIgnoreReplaySelection.Checked;
   fGameParams.LemmingBlink := cbLemmingBlink.Checked;
   fGameParams.TimerBlink := cbTimerBlink.Checked;
@@ -259,88 +229,6 @@ begin
   HotkeyForm.HotkeyManager := fGameParams.Hotkeys;
   HotkeyForm.ShowModal;
   HotkeyForm.Free;
-end;
-
-procedure TFormNXConfig.cbEnableGimmickClick(Sender: TObject);
-var
-  pGimmickFlags: PLongWord;
-  ChangeFlag: LongWord;
-begin
-  // Using pointery stuff to simplify handling the split into three
-  // different variables.
-  case cbGimmickList.ItemIndex of
-    0..31: pGimmickFlags := @fForceGimmick1;
-    32..63: pGimmickFlags := @fForceGimmick2;
-    64..95: pGimmickFlags := @fForceGimmick3;
-  end;
-  ChangeFlag := 1 shl (cbGimmickList.ItemIndex mod 32);
-
-  if cbEnableGimmick.Checked then
-    pGimmickFlags^ := pGimmickFlags^ or ChangeFlag
-  else
-    pGimmickFlags^ := pGimmickFlags^ and not ChangeFlag;
-
-  btnCheckGimmicks.Enabled := ((fForceGimmick1 <> 0) or (fForceGimmick2 <> 0) or (fForceGimmick3 <> 0));
-  btnClearGimmick.Enabled := btnCheckGimmicks.Enabled;
-
-  OptionChanged(Sender);
-end;
-
-procedure TFormNXConfig.cbGimmickListChange(Sender: TObject);
-var
-  pGimmickFlags: PLongWord;
-  ChangeFlag: LongWord;
-begin
-  // Using pointery stuff to simplify handling the split into three
-  // different variables.
-  case cbGimmickList.ItemIndex of
-    0..31: pGimmickFlags := @fForceGimmick1;
-    32..63: pGimmickFlags := @fForceGimmick2;
-    64..95: pGimmickFlags := @fForceGimmick3;
-  end;
-  ChangeFlag := 1 shl (cbGimmickList.ItemIndex mod 32);
-
-  cbEnableGimmick.Checked := (pGimmickFlags^ and ChangeFlag) <> 0;
-end;
-
-procedure TFormNXConfig.btnClearGimmickClick(Sender: TObject);
-begin
-  fForceGimmick1 := 0;
-  fForceGimmick2 := 0;
-  fForceGimmick3 := 0;
-  cbEnableGimmick.Checked := false;
-  btnCheckGimmicks.Enabled := false;
-  btnClearGimmick.Enabled := false;
-
-  OptionChanged(Sender);
-end;
-
-procedure TFormNXConfig.btnCheckGimmicksClick(Sender: TObject);
-var
-  pGimmickFlags: PLongWord;
-  ChangeFlag: LongWord;
-  i: Integer;
-  S: String;
-begin
-  S := '';
-
-  // Using pointery stuff to simplify handling the split into three
-  // different variables.
-  for i := 0 to cbGimmickList.Items.Count-1 do
-  begin
-    case i of
-      0..31: pGimmickFlags := @fForceGimmick1;
-      32..63: pGimmickFlags := @fForceGimmick2;
-      64..95: pGimmickFlags := @fForceGimmick3;
-    end;
-    ChangeFlag := 1 shl (i mod 32);
-
-    if (pGimmickFlags^ and ChangeFlag) <> 0 then
-      S := S + '- ' + cbGimmickList.Items[i] + #13;
-  end;
-
-  S := 'Forced Gimmicks:' + #13 + #13 + S;
-  ShowMessage(S);
 end;
 
 procedure TFormNXConfig.cbSkillListChange(Sender: TObject);

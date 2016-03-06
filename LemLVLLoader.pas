@@ -412,8 +412,6 @@ begin
         SuperLemming     := 0;
 
         GimmickSet := Buf.Gimmick;
-        fSuperlem := (GimmickSet and 1 <> 0);
-        fKaroshi := (GimmickSet and 8 <> 0);
 
         Title            := Buf.LevelName;
         Author           := Buf.LevelAuthor;
@@ -967,8 +965,6 @@ begin
         GimmickSet := Buf.Gimmick;
         GimmickSet2 := 0;
         GimmickSet3 := 0;
-        fSuperlem := (GimmickSet and 1 <> 0);
-        fKaroshi := (GimmickSet and 8 <> 0);
 
       Title            := Buf.LevelName;
       Author           := Buf.LevelAuthor;
