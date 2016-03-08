@@ -66,14 +66,13 @@ const
 
 procedure TGamePostviewScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
-  if (GameParams.AutoSaveReplay) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then GlobalGame.Save(true);
   inherited CloseScreen(aNextScreen);
 end;
 
 procedure TGamePostviewScreen.PrepareGameParams(Params: TDosGameParams);
 begin
   inherited;
-
+  if (GameParams.AutoSaveReplay) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then GlobalGame.Save(true);
 end;
 
 procedure TGamePostviewScreen.BuildScreen;
