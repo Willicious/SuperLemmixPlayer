@@ -449,8 +449,10 @@ function TBaseDosLevelSystem.FindLastUnlockedLevel(var Rec: TDosGamePlayInfoRec)
 var
   L: TStringList;
   i: Integer;
+  FoundLevel: Boolean;
 begin
   Result := True;
+  FoundLevel := false;
   L := TStringList.Create;
   try
     GetSections(L);
@@ -466,7 +468,11 @@ begin
         if SaveSystem.CheckUnlocked(dSection, i)  then
         begin
           dLevel := i;
-          if not SaveSystem.CheckCompleted(dSection, i) then Break;
+          if not SaveSystem.CheckCompleted(dSection, i) then
+          begin
+            FoundLevel := true;
+            Break;
+          end;
         end;
       end;
       dSectionName   := L[dSection]; //#EL watch out for the record-string-mem-leak
@@ -474,6 +480,8 @@ begin
   finally
     L.Free;
   end;
+
+  if not FoundLevel then Rec.dLevel := 0; // go to first level if all available levels are completed
 end;
 
 function TBaseDosLevelSystem.FindNextUnlockedLevel(var Rec: TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean;
