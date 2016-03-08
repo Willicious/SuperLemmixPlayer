@@ -347,10 +347,8 @@ begin
     VK_ESCAPE: begin
                  if GameParams.fTestMode then
                    CloseScreen(gstExit)
-                 else begin
-                   GlobalGame.Recorder.Clear;
+                 else
                    CloseScreen(gstMenu);
-                 end;
                end;
     VK_RETURN: begin
                  CloseScreen(gstPreview);
@@ -379,10 +377,8 @@ begin
   begin
     if GameParams.fTestMode then
       CloseScreen(gstExit)
-    else begin
-      GlobalGame.Recorder.Clear;
+    else
       CloseScreen(gstMenu);
-    end;
   end;
 end;
 

@@ -16,7 +16,7 @@ uses
   UFastStrings,
   UMisc, Dialogs,
   LemCore, LemTypes, LemStrings, LemDosStructures, LemRendering, LemLevel, LemDosStyle,
-  LemDosGraphicSet, LemNeoGraphicSet,
+  LemDosGraphicSet, LemNeoGraphicSet, LemGame,
   GameControl, GameBaseScreen, GamePreviewScreen, GameLevelCodeScreen;
 
 type
@@ -620,6 +620,8 @@ begin
   CreditList.Text := CreditList.Text + SCredits;
   SetNextCredit;
 
+  if Assigned(GlobalGame) then
+    GlobalGame.Recorder.Clear;
 end;
 
 function TGameMenuScreen.BuildText(intxt: Array of char): String;
