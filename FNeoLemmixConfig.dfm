@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 417
+  ClientHeight = 433
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object FormNXConfig: TFormNXConfig
     Left = 0
     Top = 0
     Width = 273
-    Height = 377
+    Height = 393
     ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -148,12 +148,12 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 240
         Width = 249
-        Height = 97
+        Height = 113
         Caption = 'Replay Options'
         TabOrder = 3
         object Label2: TLabel
           Left = 16
-          Top = 48
+          Top = 64
           Width = 154
           Height = 13
           Caption = 'Manually-Saved Replay Naming:'
@@ -169,7 +169,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbReplayNaming: TComboBox
           Left = 32
-          Top = 64
+          Top = 80
           Width = 177
           Height = 21
           Style = csDropDownList
@@ -192,6 +192,14 @@ object FormNXConfig: TFormNXConfig
           Caption = 'Only Cancel Replay On Cancel Key'
           TabOrder = 2
           OnClick = OptionChanged
+        end
+        object cbNoAutoReplay: TCheckBox
+          Left = 16
+          Top = 48
+          Width = 225
+          Height = 17
+          Caption = 'Don'#39't Replay After Backwards Frameskips'
+          TabOrder = 3
         end
       end
     end
@@ -338,7 +346,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 384
+    Top = 400
     Width = 65
     Height = 25
     Caption = 'OK'
@@ -347,7 +355,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 104
-    Top = 384
+    Top = 400
     Width = 65
     Height = 25
     Caption = 'Cancel'
@@ -356,7 +364,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 184
-    Top = 384
+    Top = 400
     Width = 65
     Height = 25
     Caption = 'Apply'
