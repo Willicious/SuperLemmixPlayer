@@ -2360,6 +2360,12 @@ begin
     ObjectInfos.Add(Inf);
   end;
 
+  // can't fix it in the previous loop tidily, so this will fix the locked exit
+  // displaying as locked when it isn't issue on levels with no buttons
+  for i := 0 to ObjectInfos.Count-1 do
+    if (ObjectInfos[i].MetaObj.TriggerEffect = 15) and (ButtonsRemain = 0) then
+      ObjectInfos[i].CurrentFrame := 0;
+
   ApplyLevelEntryOrder;
   InitializeBrickColors(Graph.BrickColor);
   InitializeObjectMap;
