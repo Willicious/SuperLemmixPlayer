@@ -118,10 +118,10 @@ begin
     then begin
       if SubVer < 44 then
       begin
-        ShowMessage('This pack has not been updated to be fully compatible with NeoLemmix V1.44n+. Please note' + #13 +
-                    'that certain features were removed as of V1.44n, and as such, if this pack relied on those' + #13 +
-                    'features, it may not work properly. It is recommended that you contact the author or look' + #13 +
-                    'on the Lemmings Forums for an updated version of this pack.');
+        //ShowMessage('This pack has not been updated to be fully compatible with NeoLemmix V1.44n+. Please note' + #13 +
+        //            'that certain features were removed as of V1.44n, and as such, if this pack relied on those' + #13 +
+        //            'features, it may not work properly. It is recommended that you contact the author or look' + #13 +
+        //            'on the Lemmings Forums for an updated version of this pack.');
         Result := nxc_VersionError;
       end else begin
         // Fallback if there's no specific message. Should never happen but just in case.

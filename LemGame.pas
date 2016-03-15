@@ -7058,8 +7058,11 @@ begin
   Result := False;
   OldHighlightLemming := fHighlightLemming;
   if PrioritizedHitTest(Lemming1, Lemming2, CursorPoint) > 0 then
-    fHighlightLemming := Lemming1
-    else
+  begin
+    fHighlightLemming := Lemming1;
+    if fHighlightLemming.LemIsZombie then fHighlightLemming := Lemming2;
+    if fHighlightLemming.LemIsZombie then fHighlightLemming := nil;
+  end else
     fHighlightLemming := nil;
 
   if fHighlightLemming <> OldHighlightLemming then
@@ -7077,7 +7080,7 @@ begin
       if OldHighlightLemming <> nil then
       begin
         EraseLemmings; //so the old highlight marker if any disappears
-        DrawAnimatedObjects;
+        DrawAnimatedObjects; // not sure why this one. Might be to fix graphical glitches, I guess?
       end;
       DrawLemmings;  // so the highlight marker shows up
     end;
