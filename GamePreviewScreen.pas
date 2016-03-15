@@ -28,7 +28,7 @@ type
     procedure NextLevel;
     procedure PreviousLevel;
     procedure ShowRecords;
-    //procedure SimulateSpawn;
+    procedure SimulateSpawn;
   protected
   public
     constructor Create(aOwner: TComponent); override;
@@ -44,6 +44,61 @@ implementation
 uses LemGraphicSet, {LemDosGraphicSet, LemLevel,} FBaseDosForm;
 
 { TGamePreviewScreen }
+
+procedure TGamePreviewScreen.SimulateSpawn;
+var
+  i: Integer;
+  IgnoreLemmings: Integer;
+  LemsSpawned: Integer;
+  CompareVal: Byte;
+
+  procedure FindNextWindow;
+  begin
+    if Length(GameParams.Level.Info.WindowOrder) = 0 then
+    begin
+      repeat
+        i := i + 1;
+        if i = GameParams.Level.InteractiveObjects.Count then i := 0;
+      until GameParams.GraphicSet.MetaObjects[GameParams.Level.InteractiveObjects[i].Identifier].TriggerEffect = 23;
+    end else begin
+      i := LemsSpawned mod Length(GameParams.Level.Info.WindowOrder);
+    end;
+  end;
+
+begin
+  // A full blown simulation of lemming spawning is the only way to
+  // check how many Zombies and Ghosts the level has.
+  GameParams.Level.Info.ZombieGhostCount := 0;
+  IgnoreLemmings := 0;
+  LemsSpawned := 0;
+
+  // Trigger effect 13: Preplaced lemming
+  // Trigger effect 23: Window
+
+  with GameParams.Level do
+  begin
+
+    CompareVal := 64;
+    //if CheckZombies then CompareVal := CompareVal + 64;
+    //if CheckGhosts then CompareVal := CompareVal + 128;
+
+    for i := 0 to InteractiveObjects.Count-1 do
+    begin
+      if GameParams.GraphicSet.MetaObjects[InteractiveObjects[i].Identifier].TriggerEffect <> 13 then Continue;
+      LemsSpawned := LemsSpawned + 1; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
+      if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
+    end;
+
+    i := -1;
+    while LemsSpawned < Info.LemmingsCount do
+    begin
+      FindNextWindow;
+      if GameParams.GraphicSet.MetaObjects[InteractiveObjects[i].Identifier].TriggerEffect <> 23 then Continue;
+      LemsSpawned := LemsSpawned + 1;
+      if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
+    end;
+  end;
+end;
 
 procedure TGamePreviewScreen.ShowRecords;
 var
@@ -128,6 +183,8 @@ begin
     if aGraphicSet.MetaObjects[aLevel.InteractiveObjects[i].Identifier].TriggerEffect = 13 then Inc(MinCount);
   end;
   if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;
+
+  SimulateSpawn;
 end;
 
 procedure TGamePreviewScreen.BuildScreen;
