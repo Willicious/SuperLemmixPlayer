@@ -119,8 +119,6 @@ begin
     p.ForceSkillset := ForceSkillset;
     p.fTestScreens := TestOption;
     p.SoundOptions := TGameSoundOptions(SoundOption);
-    p.fLevelPack := Trim(PackName);
-    p.fExternalPrefix := Trim(PrefixName);
   end;
 end;
 

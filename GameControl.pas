@@ -217,8 +217,6 @@ type
     MiscOptions         : TMiscOptions;
 
     fZoomFactor          : Integer;
-    fLevelPack           : String;
-    fExternalPrefix      : String;
     fForceSkillset       : Word;
     fLevelOverride       : Integer;
 
@@ -381,8 +379,6 @@ begin
   inherited Create;
 
   MiscOptions := DEF_MISCOPTIONS;
-  fLevelPack := 'LEVELPAK.DAT';
-  fExternalPrefix := '';
   fForceSkillset := 0;
   fDumpMode := false;
   fTestScreens := 0;
