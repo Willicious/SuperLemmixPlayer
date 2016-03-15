@@ -251,10 +251,15 @@ var
   UseSaveState: Integer;
   i: Integer;
 begin
-  if aTargetIteration < 0 then Exit;
+  //if aTargetIteration < 0 then Exit;
   CanPlay := False;
   CurrentlyPaused := Game.Paused;
-  UseSaveState := fSaveList.FindNearestState(aTargetIteration);
+  if aTargetIteration > 0 then
+    UseSaveState := fSaveList.FindNearestState(aTargetIteration)
+  else if fSaveList.Count = 0 then
+    UseSaveState := -1
+  else
+    UseSaveState := 0;
   for i := UseSaveState downto -1 do
     if i >= 0 then
     begin
