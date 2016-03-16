@@ -8467,8 +8467,8 @@ begin
   fSoundOpts := Value;
   if not (gsoMusic in fSoundOpts) then
     SoundMgr.StopMusic(0)
-  else
-    SoundMgr.PlayMusic(0)
+  else if not fStartupMusicAfterEntry then
+    SoundMgr.PlayMusic(0);
 end;
 
 procedure TLemmingGame.Finish;
