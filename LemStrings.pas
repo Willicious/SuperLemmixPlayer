@@ -573,18 +573,6 @@ resourcestring
     'Lemmings Plus Omega coming soon!';
 
 
-
-  SSecret =
-    #13 + #13 +
-    '!! SECRET LEVEL !!' +
-    #13 + #13 + #13 + #13 + #13 +
-    'Congratulations! You have found' + #13 +
-    'a secret level!' + #13 +
-    #13 + #13 +
-    #13 + #13 +
-    #13 + #13;
-
-
   SYourAccessCode_ds =
     'Your Password for Level %d' + #13 +
     'is %s';

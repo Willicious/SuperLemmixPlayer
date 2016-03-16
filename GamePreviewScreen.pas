@@ -518,7 +518,7 @@ begin
       wlFirst: Style.LevelSystem.FindFirstLevel(Info);
       wlFirstSection: Style.LevelSystem.FindFirstLevel(Info);
       wlLevelCode: Style.LevelSystem.FindLevel(Info);
-      wlNext: Style.LevelSystem.FindNextLevel(Info, GameResult.gSecretGoto, fLevelOverride);
+      wlNext: Style.LevelSystem.FindNextLevel(Info);
       wlSame: Style.LevelSystem.FindLevel(Info);
       wlNextUnlocked: Style.LevelSystem.FindNextUnlockedLevel(Info, Params.CheatCodesEnabled);
       wlPreviousUnlocked: Style.LevelSystem.FindPreviousUnlockedLevel(Info, Params.CheatCodesEnabled);
@@ -546,8 +546,6 @@ begin
     end;
 
     WhichLevel := wlSame;
-
-    fLevelOverride := (Params.Level.Info.PostSecretRank shl 8) + Params.Level.Info.PostSecretLevel;
 
   end;
 end;

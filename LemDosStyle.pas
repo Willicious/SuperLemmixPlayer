@@ -87,14 +87,13 @@ type
     procedure GetEntry(aSection, aLevel: Integer; var aFileName: string; var aFileIndex: Integer);
     function GetLevelPackPrefix: String;
     function GetLevelCount(aSection: Integer): Integer; virtual; //override;
-    function GetSecretLevelCount(aSection: Integer): Integer; virtual; //override;
     function GetSectionCount: Integer; virtual;
     procedure DumpAllLevels;
     procedure InitSave;
 
     //For the time being it is not needed to virtualize this into a higher class.
     function FindFirstLevel(var Rec: TDosGamePlayInfoRec): Boolean; override;
-    function FindNextLevel(var Rec : TDosGamePlayInfoRec; Secret: Integer = -1; Overrider: Integer = -1): Boolean; override;
+    function FindNextLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindFinalLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindLastUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
@@ -118,8 +117,6 @@ type
     SysDat : TSysDatRec;
     procedure LoadSystemInfo();
     procedure GetSections(aSectionNames: TStrings); override;
-    //function GetLevelCount(aSection: Integer): Integer; override;
-    function GetSecretLevelCount(aSection: Integer): Integer; override;
     function GetRankName(aSection: Byte): String;
   end;
 
@@ -297,7 +294,7 @@ var
   i: Integer;
 begin
   for i := 0 to (fDefaultSectionCount - 1) do
-    if GetLevelCount(i) > GetSecretLevelCount(i) then SaveSystem.UnlockLevel(i, 0);
+    SaveSystem.UnlockLevel(i, 0);
 end;
 
 procedure TBaseDosLevelSystem.UnlockAllLevels;
@@ -306,7 +303,7 @@ var
 begin
   for i := 0 to GetSectionCount-1 do
     for i2 := 0 to GetLevelCount(i)-1 do
-      if i2 < (GetLevelCount(i) - GetSecretLevelCount(i)) then SaveSystem.UnlockLevel(i, i2);
+      SaveSystem.UnlockLevel(i, i2);
 end;
 
 procedure TBaseDosLevelSystem.DumpAllLevels;
@@ -396,10 +393,7 @@ begin
 
       if (L >= 1) and (L <= GetLevelCount(i)) then
       begin
-      if (((SysDat.Options and $4 <> 0) or (L <= GetLevelCount(i) - GetSecretLevelCount(i))) and
-         CheatsEnabled) or
-         SaveSystem.CheckUnlocked(i, L-1)
-          then
+      if SaveSystem.CheckUnlocked(i, L-1) then
       begin
         with Rec do
         begin
@@ -605,8 +599,7 @@ begin
       dPack          := 0;
       //if dSection >= 0
       dSection       := fDefaultSectionCount - 1;
-      while GetLevelCount(dSection) <= GetSecretLevelCount(dSection) do Dec(dSection);
-      dLevel         := GetLevelCount(dSection) - 1 - GetSecretLevelCount(dSection);
+      dLevel         := GetLevelCount(dSection) - 1;
       //dSectionName   := L[dSection]; //#EL watch out for the record-string-mem-leak
     end;
   finally
@@ -614,53 +607,17 @@ begin
   end;
 end;
 
-function TBaseDosLevelSystem.FindNextLevel(var Rec: TDosGamePlayInfoRec; Secret: Integer = -1; Overrider: Integer = -1): Boolean;
+function TBaseDosLevelSystem.FindNextLevel(var Rec: TDosGamePlayInfoRec): Boolean;
 var
   L: TStringList;
   STe1, STe2: Byte;
   KT: TDosGamePlayInfoRec;
 begin
-  Result := (Rec.dLevel < GetLevelCount(Rec.dSection) - GetSecretLevelCount(Rec.dSection)) or (Rec.dSection < fDefaultSectionCount - 1);
+  Result := (Rec.dLevel < GetLevelCount(Rec.dSection)) or (Rec.dSection < fDefaultSectionCount - 1);
 
   Rec.dValid := False;
   //if not Result then
   //  Exit;
-
-
-  if (Rec.dLevel >= GetLevelCount(Rec.dSection) - GetSecretLevelCount(Rec.dSection)) and (Secret = -1) then
-    begin
-      Secret := Overrider;
-      STe1 := Secret shr 8;
-      STe2 := Secret mod 256;
-      //if STe1 = 0 then STe1 := Rec.dSection + 1;
-      //if STe2 = 0 then STe2 := GetLevelCount(Rec.dSection) - GetSecretLevelCount(Rec.dSection) + 1;
-      //Dec(STe1);
-      //Dec(STe2);
-      Rec.dSection := STe1;
-      Rec.dLevel := STe2;
-      Rec.dValid := True;
-      L := TStringList.Create;
-      GetSections(L);
-      Rec.dSectionName := L[Rec.dSection];
-      Rec.dValid := True;
-    end
-    else if Secret <> -1 then
-    begin
-      STe1 := trunc(Secret / 256);
-      STe2 := Secret mod 256;
-      if STe1 = 0 then STe1 := Rec.dSection + 1;
-      if STe2 = 0 then STe2 := GetLevelCount(Rec.dSection) - GetSecretLevelCount(Rec.dSection) + 1;
-      Dec(STe1);
-      Dec(STe2);
-      Rec.dSection := STe1;
-      Rec.dLevel := STe2;
-      Rec.dValid := True;
-      L := TStringList.Create;
-      GetSections(L);
-      Rec.dSectionName := L[Rec.dSection];
-    end
-    else begin
-
 
   L := TStringList.Create;
   try
@@ -677,7 +634,7 @@ begin
         dSection := 0;
       end else begin
         Inc(dLevel); // this can lead to a overflow so...
-        if dLevel >= GetLevelCount(dSection)-GetSecretLevelCount(dSection)  then
+        if dLevel >= GetLevelCount(dSection) then
         begin
           dLevel := 0;
           Inc(dSection); // this can lead to a overflow so...
@@ -687,20 +644,9 @@ begin
       end;
       dSectionName   := L[dSection];
 
-      {if dSection = 5 then
-      begin
-        if dLevel = 1 then
-          begin
-          dSection := 0;
-          dLevel := 0;
-          dSectionName := L[dSection];
-          end;
-      end;}
-      //#EL watch out for the record-string-mem-leak
     end;
   finally
     L.Free;
-  end;
   end;
 end;
 
@@ -754,11 +700,6 @@ begin
     Fsl.Free;
     Dcr.Free;
   end;
-end;
-
-function TBaseDosLevelSystem.GetSecretLevelCount(aSection: Integer): Integer;
-begin
-  Result := 0;
 end;
 
 function TBaseDosLevelSystem.GetSectionCount: Integer;
@@ -954,11 +895,6 @@ end;
 function TDosFlexiMusicSystem.GetMusicFileName(aPack, aSection, aLevel: Integer): string;
 begin
   Result := 'track_' + LeadZeroStr((aLevel mod MusicCount) + 1, 2);
-end;
-
-function TDosFlexiLevelSystem.GetSecretLevelCount(aSection: Integer): Integer;
-begin
-  Result := SysDat.SecretLevelCounts[aSection]; //RankLevels[aSection].SLvlCount;
 end;
 
 procedure TDosFlexiLevelSystem.GetSections(aSectionNames: TStrings);

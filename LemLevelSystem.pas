@@ -164,7 +164,7 @@ type
 
 
     function FindFirstLevel(var Rec: TDosGamePlayInfoRec): Boolean; virtual; abstract;
-    function FindNextLevel(var Rec : TDosGamePlayInfoRec; Secret: Integer = -1; Overrider: Integer = -1): Boolean; virtual; abstract;
+    function FindNextLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindFinalLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindLastUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
@@ -174,9 +174,6 @@ type
     function GetLevelCode(const Rec : TDosGamePlayInfoRec): string; virtual; abstract;
     function FindLevelCode(const aCode: string; var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindCheatCode(const aCode: string; var Rec : TDosGamePlayInfoRec; CheatsEnabled: Boolean = true): Boolean; virtual; abstract;
-
-    {function GetLevelCount(aSection: Integer): Integer; virtual; abstract;
-    function GetSecretLevelCount(aSection: Integer): Integer; virtual; abstract;}
 
     property LevelPacks: TLevelPacks read fLevelPacks;
     property LevelPackCount: Integer read GetLevelPackCount;

@@ -572,8 +572,6 @@ begin
                Info.GimmickSet2 := Buf2.GimmickFlags2;
                Info.GimmickSet3 := Buf2.GimmickFlags3;
                Info.MusicFile := Trim(Buf2.MusicName);
-               Info.PostSecretRank := Buf2.SecRedirectRank;
-               Info.PostSecretLevel := Buf2.SecRedirectLevel;
                Info.BnsRank := Buf2.BnsRedirectRank;
                Info.BnsLevel := Buf2.BnsRedirectLevel;
                Info.ClockStart := Buf2.ClockGimStart;
@@ -608,8 +606,6 @@ begin
         end;
         GimmickSet2 := 0;
         GimmickSet3 := 0;
-        PostSecretRank := Buf.RefSection;
-        PostSecretLevel := Buf.RefLevel;
         BnsRank := Buf.RefSection;
         BnsLevel := Buf.RefLevel;
         ClockStart := Buf.VgaspecX * 15;
@@ -1397,8 +1393,8 @@ begin
     Buf2.GimmickFlags3 := Info.GimmickSet3;
     k := LowerCase(LeftStr(Info.MusicFile, 16));
     Move(k[1], Buf2.MusicName, Length(k));
-    Buf2.SecRedirectRank := Info.PostSecretRank;
-    Buf2.SecRedirectLevel := Info.PostSecretLevel;
+    Buf2.SecRedirectRank := 0;
+    Buf2.SecRedirectLevel := 0;
     Buf2.BnsRedirectRank := Info.BnsRank;
     Buf2.BnsRedirectLevel := Info.BnsLevel;
     Buf2.ClockGimStart := Info.ClockStart;

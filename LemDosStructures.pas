@@ -342,7 +342,7 @@ TSysDatRec = packed record
 	          SecondLine                 : array[0..31] of Char;
             RankNames                  : array[0..14] of array[0..15] of Char;
             RankCount                  : Byte;
-            SecretLevelCounts          : array[0..14] of Byte;
+            Removed                    : array[0..14] of Byte;
             TrackCount                 : Byte;
             CodeSeed                   : Byte;
             CheatCode                  : array[0..9] of Char;

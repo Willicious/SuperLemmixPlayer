@@ -256,7 +256,7 @@ type
   TReplayOption = (
     rpoLevelComplete,
     rpoNoModes,
-    rpoSecret,
+    rpoB2,
     rpoB3,
     rpoB4,
     rpoB5,
@@ -653,8 +653,6 @@ type
     BrickPixelColors           : array[0..11] of TColor32; // gradient steps
     fGameFinished              : Boolean;
     fGameCheated               : Boolean;
-    fSecretGoto                : Integer;
-    LevSecretGoto              : Integer;
     NextLemmingCountDown       : Integer;
     fDrawLemmingPixel          : Boolean;
     fFastForward               : Boolean;
@@ -732,7 +730,7 @@ type
     procedure UpdateOneSkillCount(aSkill: TSkillPanelButton);
     procedure UpdateAllSkillCounts;
   { pixel combine eventhandlers }
-    procedure DoTalismanCheck(SecretTrigger: Boolean = false);
+    procedure DoTalismanCheck;
     procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
@@ -1009,7 +1007,7 @@ const
   DOM_LEMMING          = DOM_OFFSET + 13;
   DOM_PICKUP           = DOM_OFFSET + 14;
   DOM_LOCKEXIT         = DOM_OFFSET + 15;
-  DOM_SECRET           = DOM_OFFSET + 16;
+  //DOM_SECRET           = DOM_OFFSET + 16;
   DOM_BUTTON           = DOM_OFFSET + 17;
   DOM_RADIATION        = DOM_OFFSET + 18;
   DOM_ONEWAYDOWN       = DOM_OFFSET + 19;
@@ -1669,7 +1667,7 @@ begin
   UpdateAllSkillCounts;
 end;
 
-procedure TLemmingGame.DoTalismanCheck(SecretTrigger: Boolean = false);
+procedure TLemmingGame.DoTalismanCheck;
 var
   i, i2: Integer;
   ts: Integer;
@@ -1681,8 +1679,7 @@ begin
     if fGameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Continue;
     with fTalismans[i] do
     begin
-      if not SecretTrigger then
-        if ((LemmingsIn < SaveRequirement) or ((SaveRequirement = 0) and (LemmingsIn < fGameParams.Level.Info.RescueCount))) then Continue;
+      if ((LemmingsIn < SaveRequirement) or ((SaveRequirement = 0) and (LemmingsIn < fGameParams.Level.Info.RescueCount))) then Continue;
 
       if ((CurrentIteration > TimeLimit) and (TimeLimit <> 0)) or ((TimeLimit = 0) and (CurrentIteration > Level.Info.TimeLimit * 17)) then Continue;
       if LowestReleaseRate < RRMin then Continue;
@@ -1712,8 +1709,6 @@ begin
 
       if (ts > TotalSkillLimit) and (TotalSkillLimit <> -1) then Continue;
 
-      if SecretTrigger and not (tmFindSecret in MiscOptions) then Continue;
-
       FoundIssue := false;
       if tmOneSkill in MiscOptions then
         for i2 := 0 to LemmingList.Count-1 do
@@ -1739,8 +1734,7 @@ end;
 
 function TLemmingGame.Checkpass: Boolean;
 begin
-  Result := (fGameCheated or (LemmingsIn >= Level.Info.RescueCount))
-            and (fSecretGoto = -1);
+  Result := (fGameCheated or (LemmingsIn >= Level.Info.RescueCount));
 end;
 
 function TLemmingGame.GetLevelWidth: Integer;
@@ -2161,8 +2155,6 @@ begin
   //Inc(fStartCalls); // this is used for music, we do not want to restart music each start
   fGameFinished := False;
   fGameCheated := False;
-  fSecretGoto := -1;
-  LevSecretGoto := -1;
   LemmingsReleased := 0;
   LemmingsCloned := 0;
   fHighlightLemming := nil;
@@ -3878,7 +3870,6 @@ begin
           V := Eff + DOM_OFFSET;
         if not (V in [DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND]) then
         begin
-//        if V = DOM_SECRET then LevSecretGoto := (Skill * 256) + TarLev;
           y1 := Top;
           x1 := Left;
           if (DrawingFlags and odf_Flip) <> 0 then
@@ -8159,7 +8150,6 @@ begin
     gToRescue           := Level.Info.RescueCount;
     gRescued            := LemmingsIn;
     gLemCap             := Level.Info.LemmingsCount;
-    gSecretGoto         := fSecretGoto;
 
     gGotTalisman        := fTalismanReceived;
 
@@ -8186,12 +8176,6 @@ begin
     gSuccess            := GameResult;
     gCheated            := fGameCheated;
 
-    if (gSecretGoto >= 0) then   // old secret level code
-    begin
-      gSuccess := True;
-      gDone := 100;
-      gRescued := gCount;
-    end;
   end;
 end;
 
@@ -9121,8 +9105,6 @@ begin
        or (fGameParams.ForceSkillset <> 0)
        ) then
       Include(H.ReplayOpt, rpoNoModes);
-    if fSecretGoto <> -1 then
-      Include(H.ReplayOpt, rpoSecret);
   end;
 
   H.ReplayTime := fGame.GameResultRec.gLastRescueIteration;

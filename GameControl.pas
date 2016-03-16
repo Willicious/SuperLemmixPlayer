@@ -31,7 +31,6 @@ type
     gTarget             : Integer;
     gDone               : Integer;
     gTimeIsUp           : Boolean;
-    gSecretGoto         : Integer;
     gLastRescueIteration: Integer;
     gGotTalisman        : Boolean;
   end;

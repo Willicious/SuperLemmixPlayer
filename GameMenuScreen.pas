@@ -534,36 +534,22 @@ begin
         if CurrentSection > 0 then
         begin
           SetSection(CurrentSection - 1);
-          with TBaseDosLevelSystem(GameParams.Style.LevelSystem) do
-            while ((GetLevelCount(CurrentSection) <= GetSecretLevelCount(CurrentSection))
-            and ((GameParams.CheatCodesEnabled = false) or ((GameParams.SysDat.Options and 4) = 0)))
-            and (GameParams.SaveSystem.CheckUnlockedRank(CurrentSection) = false) do
-              SetSection(CurrentSection - 1);
           Change;
-        end
-        else
+        end else
           Exit;
       end;
     True:
       begin
         if CurrentSection = LastSection then Exit;
-        for i := (CurrentSection + 1) to LastSection do
-          with TBaseDosLevelSystem(GameParams.Style.LevelSystem) do
 
-            if ((GetLevelCount(i) > GetSecretLevelCount(i))
-            or ((GameParams.CheatCodesEnabled) and ((GameParams.SysDat.Options and 4) = 1)))
-            or GameParams.SaveSystem.CheckUnlockedRank(i) then
-            begin
-              SetSection(i);
-              Change;
-              Exit;
-            end;
+        with TBaseDosLevelSystem(GameParams.Style.LevelSystem) do
+        begin
+          i := CurrentSection + 1;
+          SetSection(i);
+          Change;
+          Exit;
+        end;
 
-
-        {with TBaseDosLevelSystem(GameParams.Style.LevelSystem) do
-          if GetLevelCount(CurrentSection + 1) <= GetSecretLevelCount(CurrentSection + 1) then Exit;
-        SetSection(CurrentSection + 1);
-        Change;}
       end;
   end;
 end;
@@ -602,7 +588,7 @@ begin
     end;
     if (WhichLevel = wlNext) then
     begin
-      Style.LevelSystem.FindNextLevel(Info, GameResult.gSecretGoto, fLevelOverride);
+      Style.LevelSystem.FindNextLevel(Info);
       WhichLevel := wlSame;
     end;
   end;

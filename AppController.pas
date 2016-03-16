@@ -349,13 +349,6 @@ begin
 
   TBaseDosLevelSystem(fGameParams.Style.LevelSystem).InitSave;
 
-  // In case the pack has been updated to unlock secret levels via talismans, that the player may already
-  // have, but did not unlock said levels in previous versions.
-  with fGameParams do
-    for i := 0 to Talismans.Count-1 do
-      if (SaveSystem.CheckTalisman(Talismans[i].Signature)) and (tmUnlockLevel in Talismans[i].MiscOptions) then
-        SaveSystem.UnlockLevel(Talismans[i].UnlockRank, Talismans[i].UnlockLevel);
-
   fGameParams.GraphicSet.OnlineEnabled := fGameParams.EnableOnline;
 
   if not fLoadSuccess then

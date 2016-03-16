@@ -194,7 +194,7 @@ var
       with GameParams do
       begin
         NextInfo := Info;
-        Result := Style.LevelSystem.FindNextLevel(NextInfo, GameResult.gSecretGoto, fLevelOverride);
+        Result := Style.LevelSystem.FindNextLevel(NextInfo);
       end;
     end;
 
@@ -227,7 +227,6 @@ begin
     Style.LevelSystem.FindFinalLevel(FinalInfo);
 
     if (gSuccess and not gCheated)
-    and (gSecretGoto = -1)
     and not (ChallengeMode or TimerMode)
     and (ForceSkillset = 0) then
     with SaveSystem, Info do
@@ -238,12 +237,7 @@ begin
       SetTimeRecord(dSection, dLevel, gLastRescueIteration);
     end;
 
-    if gSecretGoto <> -1 then
-    begin
-      GameParams.ShownText := false;
-      Add(SSecret);
-    end
-    else begin
+
       // init some local strings
         STarget := PadL(i2s(gToRescue), 4);
         SDone := PadL(i2s(gRescued), 4);
@@ -288,7 +282,7 @@ begin
       end else LF(5);
       end else LF(5);
 
-    end;
+
 
     // force bottomtext to a fixed position
     LF(18 - CountChars(#13, Result));

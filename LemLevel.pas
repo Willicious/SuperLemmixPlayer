@@ -67,9 +67,6 @@ type
     fVgaspecX       : Integer;
     fVgaspecY       : Integer;
 
-    fPostSecretRank : Integer;
-    fPostSecretLevel: Integer;
-
     fBnsRank        : Integer;
     fBnsLevel       : Integer;
 
@@ -136,9 +133,6 @@ type
     property VgaspecFile    : String read fVgaspecFile write fVgaspecFile;
     property GraphicSetName : String read fGraphicSetName write fGraphicSetName;
     property MusicFile      : String read fMusicFile write fMusicFile;
-
-    property PostSecretRank : Integer read fPostSecretRank write fPostSecretRank;
-    property PostSecretLevel : Integer read fPostSecretLevel write fPostSecretLevel;
 
     property BnsRank: Integer read fBnsRank write fBnsRank;
     property BnsLevel: Integer read fBnsLevel write fBnsLevel;
