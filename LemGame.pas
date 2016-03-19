@@ -835,6 +835,12 @@ type
     function HandleHoisting(L: TLemming): Boolean;
     function HandleBuilding(L: TLemming): Boolean;
     function HandleBashing(L: TLemming): Boolean;
+      function FindGroundPixel(x, y: Integer): Integer;
+      function BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
+      function BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
+      procedure BasherTurn(L: TLemming; SteelSound: Boolean);
+      function HasSteelAt(x, y: Integer): Boolean;
+      function HasIndestructibleAt(x, y, Direction: Integer): Boolean;
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
@@ -3002,8 +3008,7 @@ begin
     if (aAction = baFalling) then
     begin
       LemFallen := -2;
-      if LemAction in [baWalking] then LemFallen := 0;
-      if LemAction in [baBashing] then LemFallen := -1;
+      if LemAction in [baWalking, baBashing] then LemFallen := 0;
       if LemAction in [baMining, baDigging] then LemFallen := -3;
     end;
 
@@ -4563,8 +4568,7 @@ end;
 
 procedure TLemmingGame.ApplyStoneLemming(L: TLemming; Redo: Integer = 0);
 var
-  {X, Y,} X1, Y1: Integer;
-  //T: TColor32;
+  X1, Y1: Integer;
 begin
 
   if L.LemDx = 1 then Inc(L.LemX);
@@ -5936,178 +5940,201 @@ end;
 
 function TLemmingGame.HandleBashing(L: TLemming): Boolean;
 var
-  n, x, y, dy{, x1, y1}, Index: Integer;
-  fs, fa: Boolean;
-  FrontObj: Byte;
+  LemDy, n: Integer;
+  ContinueWork: Boolean;
+
 begin
-  Result := False;
+  Result := True;
 
-  with L do
+  if L.LemFrame >= 16 then
+    Dec(L.LemFrame, 16);
+
+  // Remove terrain
+  if (L.LemFrame in [2, 3, 4, 5]) then
+    ApplyBashingMask(L, L.LemFrame - 2);
+
+
+  // Check for enough terrain to continue working
+  if L.LemFrame = 5 then
   begin
-    index := lemFrame;
-    if index >= 16 then
-      Dec(index, 16);
-
-    if (11 <= index) and (index <= 15) then
+    ContinueWork := False;
+    For n := 8 to 14 do
     begin
-      Inc(LemX, LemDx);
-
-        // check 3 pixels above the new position
-        if (HasPixelAt(LemX, LemY)) then
-        begin
-        dy := 0;
-        while (dy <= 3) do
-        begin
-          if (HasPixelAt(LemX, LemY - dy)) and not (HasPixelAt(LemX, LemY - dy - 1)) then
-          begin
-            LemY := LemY - dy;
-            break;
-          end else if (dy = 3) and (HasPixelAt(LemX, LemY - dy)) then
-          begin
-            if (ReadSpecialMap(LemX, LemY - dy - 1) = DOM_STEEL)
-            or (((ReadSpecialMap(LemX, LemY - dy - 1) = DOM_ONEWAYDOWN)
-            or ((ReadSpecialMap(LemX, LemY - dy - 1) = DOM_ONEWAYLEFT) and (lemdx = 1))
-            or ((ReadSpecialMap(LemX, LemY - dy - 1) = DOM_ONEWAYRIGHT) and (lemdx = -1)))) then
-              Transition(L, baWalking, TRUE)
-            else
-              Dec(LemX, lemdx);
-            exit;
-          end;
-          Inc(dy);
-        end;
-        end;
-        // check 3 pixels below the new position
-        dy := 0;
-
-            while (dy < 3) and (HasPixelAt_ClipY(LemX, LemY, dy) = FALSE) do
-            begin
-              Inc(dy);
-              Inc(LemY);
-            end;
-
-
-        if dy = 3 then
-          begin
-          if HasPixelAt_ClipY(LemX, LemY, dy) then
-            Transition(L, baWalking)
-            else
-            Transition(L, baFalling);
-          end
-        else begin
-          // check steel or one way digging
-          FrontObj := ReadSpecialMap(LemX + LemDx * 3, LemY - 5);
-
-          // NEED TO IMPROVE CODE HERE //
-          if (FrontObj = DOM_STEEL) then
-            CueSoundEffect(SFX_HITS_STEEL);
-
-          if (FrontObj = DOM_STEEL)
-          or (FrontObj = DOM_ONEWAYDOWN)
-          or ( (FrontObj = DOM_ONEWAYLEFT) and (LemDx <> -1) )
-          or ( (FrontObj = DOM_ONEWAYRIGHT) and (LemDx <> 1) ) then
-          begin
-            //TurnAround(L);
-            Transition(L, baWalking, TRUE);  // turn around as well
-          end;
-
-          FrontObj := ReadSpecialMap(LemX + LemDx * 4, LemY - 4);
-          if FrontObj <> ReadSpecialMap(LemX + LemDx * 5, LemY - 5) then FrontObj := 0;
-
-          // NEED TO IMPROVE CODE HERE //
-          if (FrontObj = DOM_STEEL) then
-            CueSoundEffect(SFX_HITS_STEEL);
-
-          if (FrontObj = DOM_STEEL)
-          or (FrontObj = DOM_ONEWAYDOWN)
-          or ( (FrontObj = DOM_ONEWAYLEFT) and (LemDx <> -1) )
-          or ( (FrontObj = DOM_ONEWAYRIGHT) and (LemDx <> 1) ) then
-          begin
-            //TurnAround(L);
-            Transition(L, baWalking, TRUE);  // turn around as well
-          end;
-        end;
-        
-      Result := True;
-      Exit;
-    end
-    else begin
-
-      if (2 <= index) and (index <= 5) then
-      begin
-        // frame 2..5 and 18..21 or used for masking
-        ApplyBashingMask(L, index - 2);
-
-        // special treatment frame 5 (see txt)
-        if (LemFrame = 5) or (LemFrame = 21) then
-        begin
-          n := 0;
-          x := LemX + lemdx * 8;
-          y := LemY - 6;
-          fs := false;
-          fa := false;
-
-          // here the use of HasPixelAt rather than HasPixelAt_ClipY
-          // is correct
-          while (n < 7)
-            and ((HasPixelAt(x,y) = FALSE)
-                 or (ReadSpecialMap(x, y) = DOM_STEEL)
-                 or (  (((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (LemDx = 1))
-                 or ((ReadSpecialMap(x, y) = DOM_ONEWAYRIGHT) and (LemDx = -1))
-                 or (ReadSpecialMap(x, y) = DOM_ONEWAYDOWN))))
-            and ((HasPixelAt(x,y+1) = FALSE)
-                 or (ReadSpecialMap(x, y+1) = DOM_STEEL)
-                 or (  (((ReadSpecialMap(x, y+1) = DOM_ONEWAYLEFT) and (LemDx = 1))
-                 or ((ReadSpecialMap(x, y+1) = DOM_ONEWAYRIGHT) and (LemDx = -1))
-                 or (ReadSpecialMap(x, y+1) = DOM_ONEWAYDOWN)))) do
-          begin
-            if (HasPixelAt(x, y)) or (HasPixelAt(x, y+1)) then fa := true;
-            Inc(n);
-            Inc(x, LemDx);
-          end;
-
-          if ((n = 7) and fa) then
-
-
-          begin
-
-            n := 0;
-            x := LemX + lemdx * 8;
-
-            fa := false;
-            Inc(y, 2);
-
-            while (n < 7)
-            and ((HasPixelAt(x,y) = FALSE) or (ReadSpecialMap(x, y) = DOM_STEEL)
-                 or (  (((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (LemDx = 1))
-                 or ((ReadSpecialMap(x, y) = DOM_ONEWAYRIGHT) and (LemDx = -1))
-                 or (ReadSpecialMap(x, y) = DOM_ONEWAYDOWN)))) do
-          begin
-            if (ReadSpecialMap(x, y) = DOM_STEEL) or (ReadSpecialMap(x, y+3) = DOM_STEEL) then fs := true;
-            if (HasPixelAt(x, y)) or (HasPixelAt(x, y+3)) then fa := true;
-            Inc(n);
-            Inc(x, LemDx);
-          end;
-
-
-          end;
-
-
-          if (n = 7) then
-          begin
-            if fs then CueSoundEffect(SFX_HITS_STEEL);
-            if HasPixelAt(LemX, LemY) then
-              Transition(L, baWalking, fa)
-            else
-              Transition(L, baFalling, fa);
-          end;
-        end;
-      end;
-      //Result := FALSE;
-
+      If (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
+           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx)
+         ) then ContinueWork := True;
+      If HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 5) then ContinueWork := True;
     end;
 
-  end; // with
+    if ContinueWork = False then
+    begin
+      if HasPixelAt(L.LemX, L.LemY) then
+        Transition(L, baWalking)
+      else
+        Transition(L, baFalling);
+    end;
+  end;
+
+
+  if (L.LemFrame in [11, 12, 13, 14, 15]) then
+  begin
+    Inc(L.LemX, L.LemDx);
+
+    // Getting new LemY position
+    LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+    // Moving in new position, if no steel there
+    If LemDy = 4 then
+    begin
+      // Transition to faller, when falling down more than 3 pixels
+      Inc(L.LemY, LemDy);
+      Transition(L, baFalling);
+    end
+
+    else if LemDy = 3 then
+    begin
+      // Move three pixels down and transition to walker
+      Inc(L.LemY, LemDy);
+      Transition(L, baWalking);
+    end
+
+    else if LemDy in [0, 1, 2] then
+    begin
+      // Move no, one or two pixels down, if there no steel
+      if BasherIndestructibleCheck(L.LemX, L.LemY + LemDy, L.LemDx) then
+        BasherTurn(L, HasSteelAt(L.LemX, L.LemY + LemDy - 4))
+      else
+        Inc(L.LemY, LemDy)
+    end
+
+    else if (LemDy = -1) or (LemDy = -2) then
+    begin
+      // Move one or two pixels up, if there is no steel and not too much terrain
+      if BasherIndestructibleCheck(L.LemX, L.LemY + LemDy, L.LemDx) then
+        BasherTurn(L, HasSteelAt(L.LemX, L.LemY + LemDy - 4))
+      else if BasherStepUpCheck(L.LemX, L.LemY, L.LemDx, LemDy) = False then
+      begin
+        if BasherIndestructibleCheck(L.LemX + L.LemDx, L.LemY + 2, L.LemDx) then
+          BasherTurn(L,    HasSteelAt(L.LemX + L.LemDx, L.LemY + LemDy)
+                        or HasSteelAt(L.LemX + L.LemDx, L.LemY + LemDy + 1))
+        else
+          //stall basher
+          Dec(L.LemX, L.LemDx);
+      end
+      else
+        Inc(L.LemY, LemDy); // Lem may move up
+    end
+
+    else if LemDy < -2 then
+    begin
+      // Either stall or turn if there is steel
+      if BasherIndestructibleCheck(L.LemX, L.LemY, L.LemDx) then
+        BasherTurn(L,(    HasSteelAt(L.LemX, L.LemY - 3)
+                       or HasSteelAt(L.LemX, L.LemY - 4)
+                       or HasSteelAt(L.LemX, L.LemY - 5)
+                     ))
+      else
+        Dec(L.LemX, L.LemDx);
+    end;
+  end;
 end;
+
+function TLemmingGame.FindGroundPixel(x, y: Integer): Integer;
+begin
+  // Find the new ground pixel
+  // If Result = 4, then at least 4 pixels are air below (X, Y)
+  // If Result = -7, then at least 7 pixels are terrain above (X, Y)
+  Result := 0;
+  if HasPixelAt(x, y) then
+  begin
+    while HasPixelAt(x, y + Result - 1) and (Result > -7) do
+      Dec(Result);
+  end
+  else
+  begin
+    Inc(Result);
+    while (not HasPixelAt(x, y + Result)) and (Result < 4) do
+      Inc(Result);
+  end;
+end;
+
+
+function TLemmingGame.BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
+begin
+  // check for indestructible terrain 3, 4 and 5 pixels above (x, y)
+  Result := (    (HasIndestructibleAt(x, y - 3, Direction))
+              or (HasIndestructibleAt(x, y - 4, Direction))
+              or (HasIndestructibleAt(x, y - 5, Direction))
+            );
+end;
+
+function TLemmingGame.BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
+begin
+  Result := True;
+
+  if Step = -1 then
+  begin
+    if (     (not HasPixelAt(x + Direction, y + Step - 1))
+         and HasPixelAt(x + Direction, y + Step)
+         and HasPixelAt(x + 2*Direction, y + Step)
+         and HasPixelAt(x + 2*Direction, y + Step - 1)
+         and HasPixelAt(x + 2*Direction, y + Step - 2)
+       ) then Result := False;
+    if (     (not HasPixelAt(x + Direction, y + Step - 2))
+         and HasPixelAt(x + Direction, y + Step)
+         and HasPixelAt(x + Direction, y + Step - 1)
+         and HasPixelAt(x + 2*Direction, y + Step - 1)
+         and HasPixelAt(x + 2*Direction, y + Step - 2)
+       ) then Result := False;
+    if (     HasPixelAt(x + Direction, y + Step - 2)
+         and HasPixelAt(x + Direction, y + Step - 1)
+         and HasPixelAt(x + Direction, y + Step)
+       ) then Result := False;
+  end
+  else if Step = -2 then
+  begin
+    if (     (not HasPixelAt(x + Direction, y + Step))
+         and HasPixelAt(x + Direction, y + Step + 1)
+         and HasPixelAt(x + 2*Direction, y + Step + 1)
+         and HasPixelAt(x + 2*Direction, y + Step)
+         and HasPixelAt(x + 2*Direction, y + Step - 1)
+       ) then Result := False;
+    if (     (not HasPixelAt(x + Direction, y + Step - 1))
+         and HasPixelAt(x + Direction, y + Step)
+         and HasPixelAt(x + 2*Direction, y + Step)
+         and HasPixelAt(x + 2*Direction, y + Step - 1)
+       ) then Result := False;
+    if (     HasPixelAt(x + Direction, y + Step - 1)
+         and HasPixelAt(x + Direction, y + Step)
+       ) then Result := False;
+  end;
+end;
+
+
+procedure TLemmingGame.BasherTurn(L: TLemming; SteelSound: Boolean);
+begin
+  // Turns basher around an transitions to walker
+  Dec(L.LemX, L.LemDx);
+  Transition(L, baWalking, True);
+  if SteelSound then CueSoundEffect(SFX_HITS_STEEL);
+end;
+
+function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer): Boolean;
+begin
+  // check for indestructible terrain at position (x, y)
+  Result := (    ( ReadSpecialMap(x, y) = DOM_STEEL)
+              or ( ReadSpecialMap(x, y) = DOM_ONEWAYDOWN)
+              or ((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (Direction = 1))
+              or ((ReadSpecialMap(x, y) = DOM_ONEWAYRIGHT) and (Direction = -1))
+            );
+end;
+
+function TLemmingGame.HasSteelAt(x, y: Integer): Boolean;
+begin
+  // check for steel at position (x, y)
+  Result := (ReadSpecialMap(x, y) = DOM_STEEL);
+end;
+
 
 function TLemmingGame.HandleMining(L: TLemming): Boolean;
 var
