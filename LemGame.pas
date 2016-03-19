@@ -840,7 +840,8 @@ type
       function BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
       procedure BasherTurn(L: TLemming; SteelSound: Boolean);
       function HasSteelAt(x, y: Integer): Boolean;
-      function HasIndestructibleAt(x, y, Direction: Integer): Boolean;
+      function HasIndestructibleAt(x, y, Direction: Integer;
+                                     Skill: TBasicLemmingAction): Boolean;
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
@@ -5940,28 +5941,28 @@ end;
 
 function TLemmingGame.HandleBashing(L: TLemming): Boolean;
 var
-  LemDy, n: Integer;
+  LemDy, AdjustedFrame, n: Integer;
   ContinueWork: Boolean;
 
 begin
   Result := True;
 
-  if L.LemFrame >= 16 then
-    Dec(L.LemFrame, 16);
+  // The basher graphics have a cycle length of 32
+  // However the mechanics have only a cycle of 16
+  AdjustedFrame := L.LemFrame mod 16;
 
   // Remove terrain
-  if (L.LemFrame in [2, 3, 4, 5]) then
-    ApplyBashingMask(L, L.LemFrame - 2);
-
+  if AdjustedFrame in [2, 3, 4, 5] then
+    ApplyBashingMask(L, AdjustedFrame - 2);
 
   // Check for enough terrain to continue working
-  if L.LemFrame = 5 then
+  if AdjustedFrame = 5 then
   begin
     ContinueWork := False;
     For n := 8 to 14 do
     begin
       If (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
-           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx)
+           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx, baBashing)
          ) then ContinueWork := True;
       If HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 5) then ContinueWork := True;
     end;
@@ -5976,7 +5977,7 @@ begin
   end;
 
 
-  if (L.LemFrame in [11, 12, 13, 14, 15]) then
+  if AdjustedFrame in [11, 12, 13, 14, 15] then
   begin
     Inc(L.LemX, L.LemDx);
 
@@ -6062,9 +6063,9 @@ end;
 function TLemmingGame.BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
 begin
   // check for indestructible terrain 3, 4 and 5 pixels above (x, y)
-  Result := (    (HasIndestructibleAt(x, y - 3, Direction))
-              or (HasIndestructibleAt(x, y - 4, Direction))
-              or (HasIndestructibleAt(x, y - 5, Direction))
+  Result := (    (HasIndestructibleAt(x, y - 3, Direction, baBashing))
+              or (HasIndestructibleAt(x, y - 4, Direction, baBashing))
+              or (HasIndestructibleAt(x, y - 5, Direction, baBashing))
             );
 end;
 
@@ -6119,13 +6120,14 @@ begin
   if SteelSound then CueSoundEffect(SFX_HITS_STEEL);
 end;
 
-function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer): Boolean;
+function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
+                                          Skill: TBasicLemmingAction): Boolean;
 begin
-  // check for indestructible terrain at position (x, y)
+  // check for indestructible terrain at position (x, y), depending on skill.
   Result := (    ( ReadSpecialMap(x, y) = DOM_STEEL)
-              or ( ReadSpecialMap(x, y) = DOM_ONEWAYDOWN)
-              or ((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (Direction = 1))
-              or ((ReadSpecialMap(x, y) = DOM_ONEWAYRIGHT) and (Direction = -1))
+              or ((ReadSpecialMap(x, y) = DOM_ONEWAYDOWN) and (Skill = baBashing))
+              or ((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (Direction = 1) and (Skill in [baBashing, baMining]))
+              or ((ReadSpecialMap(x, y) = DOM_ONEWAYRIGHT) and (Direction = -1) and (Skill in [baBashing, baMining]))
             );
 end;
 
