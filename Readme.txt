@@ -7,7 +7,10 @@ Compiling NeoLemmix has only been tested under Delphi 7. You will need to
 install the Graphics32 library into Delphi (or extract it to a subfolder
 here, then add that subfolder to the Search path).
 
-Graphics32 is included in graphics32-1-9-1-fixes-r2148.zip
+Graphics32 can be downloaded here:
+  https://sourceforge.net/projects/graphics32/files/latest/download?source=files
+Installation instructions:
+  http://graphics32.org/documentation/Docs/Installation.htm
 
 Note that you need to compile the required resource files first! To do this
 the easy way - just run LemResourceBuilder and click each button once. If
