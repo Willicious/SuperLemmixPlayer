@@ -7,12 +7,8 @@ unit FMain;
   prevent seeing the desktop when changing forms.
 -------------------------------------------------------------------------------}
 
-{ DONE : releaserate adjusting }
 { DONE : better animated objects drawing }
-{ DONE : make levelcode screen type-able }
-{ DONE : mouse scrolling and minimap click }
 { DONE : perfect level logic GUI }
-{ DONE : enable saving, replaying from postviewscreen }
 
 { TODO: make use of tbitmap32.drawto(dst, x, y, srcrect) }
 { TODO: make sure sounds en music can be set off before the bassmod is loaded }
@@ -20,7 +16,6 @@ unit FMain;
 { TODO : maybe create palette class? }
 { TODO : Strip UTools }
 { TODO : Remove refs to kernel, when making opensource }
-{ TODO : add levelcode system, randomize codesystem }
 
 interface
 
