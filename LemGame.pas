@@ -861,16 +861,17 @@ type
 
   { interaction }
     function AssignSkill(Lemming1, Lemming2: TLemming; aSkill: TBasicLemmingAction): Boolean; // key method
+    function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 
     function AssignWalker(Lemming1, Lemming2: TLemming): Boolean;
-    function AssignClimber(Lemming1, Lemming2: TLemming): Boolean;
+    function AssignClimber(L, L2: TLemming): Boolean;
     function AssignSwimmer(Lemming1, Lemming2: TLemming): Boolean;
-    function AssignFloater(Lemming1, Lemming2: TLemming): Boolean;
+    function AssignFloater(L, L2: TLemming): Boolean;
     function AssignGlider(Lemming1, Lemming2: TLemming): Boolean;
     function AssignMechanic(Lemming1, Lemming2: TLemming): Boolean;
     function AssignBomber(Lemming1, Lemming2: TLemming): Boolean;
     function AssignStoner(Lemming1, Lemming2: TLemming): Boolean;
-    function AssignBlocker(Lemming1, Lemming2: TLemming): Boolean;
+    function AssignBlocker(L, L2: TLemming): Boolean;
     function AssignPlatformer(Lemming1, Lemming2: TLemming): Boolean;
     function AssignBuilder(Lemming1, Lemming2: TLemming): Boolean;
     function AssignStacker(Lemming1, Lemming2: TLemming): Boolean;
@@ -3135,6 +3136,35 @@ begin
   // here as an empty function just in case.
 end;
 
+function TLemmingGame.DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
+begin
+  // This function does NOT apply to the Cloner!
+
+  Result := False;
+
+  // We check first, whether the skill is available at all
+  if not CheckSkillAvailable(NewSkill) then Exit;
+
+  // Have to ask namida what fCheckWhichLemmingOnly actually does!!
+  if fCheckWhichLemmingOnly then WhichLemming := L
+  else
+  begin
+    UpdateSkillCount(NewSkill);
+    // Special behavior of permament skills.
+    if (NewSkill = baClimbing) then L.LemIsClimber := True
+    else if (NewSkill = baFloating) then L.LemIsFloater := True
+    else Transition(L, NewSkill);
+    RecordSkillAssignment(L, NewSkill);
+    Result := True;
+
+
+    // OnAssignSkill currently does nothing. So unless this changes,
+    // the following line stays as a comment:
+    // if not fFreezeSkillCount then OnAssignSkill(L, NewSkill);
+  end;
+end;
+
+
 
 function TLemmingGame.AssignWalker(Lemming1, Lemming2: TLemming): Boolean;
 var
@@ -3154,20 +3184,22 @@ begin
     Exit;
 
 
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := SelectedLemming
-    else
-      begin
-        SelectedLemming.LemBecomeBlocker := false;
-        Transition(SelectedLemming, baToWalking);
-        UpdateSkillCount(baToWalking);
-        Result := True;
-        RecordSkillAssignment(SelectedLemming, baToWalking);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(SelectedLemming, baToWalking);
-        end;
-      end;
+  if (fCheckWhichLemmingOnly) then
+    WhichLemming := SelectedLemming
+  else
+  begin
+    SelectedLemming.LemBecomeBlocker := false;
+    Transition(SelectedLemming, baToWalking);
+    UpdateSkillCount(baToWalking);
+    Result := True;
+    RecordSkillAssignment(SelectedLemming, baToWalking);
+    {
+    if not fFreezeSkillCount then
+    begin
+      OnAssignSkill(SelectedLemming, baToWalking);
+    end;
+    }
+  end;
 
 end;
 
@@ -3177,8 +3209,9 @@ var
   SelectedLemming: TLemming;
   NewL: TLemming;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baBashing, baMining, baDigging,
-               baJumping, baFalling, baFloating, baSwimming, baGliding, baFixing];
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baMining, baDigging, baJumping, baFalling, baFloating,
+               baSwimming, baGliding, baFixing];
 begin
   Result := False;
 
@@ -3192,55 +3225,44 @@ begin
     Exit;
 
 
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := SelectedLemming
+  if (fCheckWhichLemmingOnly) then
+    WhichLemming := SelectedLemming
+  else
+  begin
+    NewL := TLemming.Create;
+    NewL.Assign(SelectedLemming);
+    NewL.LemIndex := LemmingList.Count;
+    LemmingList.Add(NewL);
+    TurnAround(NewL);
+    Inc(LemmingsCloned);
+    if not NewL.LemIsZombie then
+      Inc(LemmingsOut)
     else
-      begin
-        NewL := TLemming.Create;
-        NewL.Assign(SelectedLemming);
-        NewL.LemIndex := LemmingList.Count;
-        LemmingList.Add(NewL);
-        TurnAround(NewL);
-        Inc(LemmingsCloned);
-        if not NewL.LemIsZombie then
-          Inc(LemmingsOut)
-        else
-          Inc(LemmingsRemoved);
-        UpdateSkillCount(baCloning);
-        Result := True;
-        RecordSkillAssignment(SelectedLemming, baCloning);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(SelectedLemming, baCloning);
-        end;
-        NewL.LemUsedSkillCount := 1;
-        NewL.LemIsClone := true;
-      end;
+      Inc(LemmingsRemoved);
+    UpdateSkillCount(baCloning);
+    Result := True;
+    RecordSkillAssignment(SelectedLemming, baCloning);
+    if not fFreezeSkillCount then
+    begin
+      OnAssignSkill(SelectedLemming, baCloning);
+    end;
+    NewL.LemUsedSkillCount := 1;
+    NewL.LemIsClone := true;
+  end;
 
 end;
 
 
 
-function TLemmingGame.AssignClimber(Lemming1, Lemming2: TLemming): Boolean;
+function TLemmingGame.AssignClimber(L, L2: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+               baVaporizing, baSplatting, baExiting];
 begin
   Result := False;
 
-  if CheckSkillAvailable(baClimbing)
-  and not Lemming1.LemIsClimber
-  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning, baVaporizing, baSplatting, baExiting]) then
-  begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := Lemming1
-    else
-      begin
-        Lemming1.LemIsClimber := True;
-        UpdateSkillCount(baClimbing);
-        Result := True;
-        if not fFreezeSkillCount then
-          OnAssignSkill(Lemming1, baClimbing);
-        RecordSkillAssignment(Lemming1, baClimbing);
-      end;
-  end
+  if not (L.LemIsClimber or (L.LemAction in ActionSet)) then
+    Result := DoSkillAssignment(L, baClimbing);
 end;
 
 
@@ -3271,28 +3293,15 @@ end;
 
 
 
-function TLemmingGame.AssignFloater(Lemming1, Lemming2: TLemming): Boolean;
+function TLemmingGame.AssignFloater(L, L2: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+               baVaporizing, baSplatting, baExiting];
 begin
   Result := False;
 
-  if CheckSkillAvailable(baFloating)
-  and not (Lemming1.LemIsFloater or Lemming1.LemIsGlider)
-  and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning, baVaporizing, baSplatting, baExiting]) then
-  begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := Lemming1
-    else
-      begin
-        Lemming1.LemIsFloater := True;
-        UpdateSkillCount(baFloating);
-        Result := True;
-        RecordSkillAssignment(Lemming1, baFloating);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming1, baFloating);
-        end;
-      end;
-  end
+  if not (L.LemIsFloater or L.LemIsGlider or (L.LemAction in ActionSet)) then
+    Result := DoSkillAssignment(L, baFloating);
 end;
 
 
@@ -3397,28 +3406,15 @@ begin
   end;
 end;
 
-function TLemmingGame.AssignBlocker(Lemming1, Lemming2: TLemming): Boolean;
+function TLemmingGame.AssignBlocker(L, L2: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baMining, baDigging];
 begin
   Result := False;
 
-  if CheckSkillAvailable(baBlocking)
-  and (lemming1.LemAction in [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baBashing, baMining, baDigging])
-  and (CheckForOverlappingField(Lemming1) = FALSE) then
-  begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := Lemming1
-    else
-      begin
-        UpdateSkillCount(baBlocking);
-        Transition(Lemming1, baBlocking);
-        Result := True;
-        RecordSkillAssignment(Lemming1, baBlocking);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming1, baBlocking);
-        end;
-      end;
-  end;
+  If (L.LemAction in ActionSet) and not CheckForOverlappingField(L) then
+      Result := DoSkillAssignment(L, baBlocking);
 end;
 
 
@@ -3469,7 +3465,8 @@ end;
 
 function TLemmingGame.AssignBuilder(Lemming1, Lemming2: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baBashing, baMining, baDigging];
+  ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baBashing,
+               baMining, baDigging];
 begin
   Result := False;
 
@@ -5266,16 +5263,16 @@ begin
     // next frame (except floating and digging which are handled differently)
     if not (LemAction in [baFloating, baDigging]) then
     begin
-        if (LemFrame < LemMaxFrame) then
-        begin
-          LemEndOfAnimation := False;
-          Inc(LemFrame);
-        end
-        else begin
-          LemEndOfAnimation := True;
-          if LemAnimationType = lat_Loop then
-           LemFrame := 0;
-        end;
+      if (LemFrame < LemMaxFrame) then
+      begin
+        LemEndOfAnimation := False;
+        Inc(LemFrame);
+      end
+      else
+      begin
+        LemEndOfAnimation := True;
+        if LemAnimationType = lat_Loop then LemFrame := 0;
+      end;
     end;
 
   end; // with
