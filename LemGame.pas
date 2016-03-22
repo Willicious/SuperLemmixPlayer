@@ -5290,94 +5290,56 @@ end;
 
 function TLemmingGame.HandleWalking(L: TLemming): Boolean;
 var
-  dy, NewY: Integer;
+  LemDy: Integer;
 begin
   Result := True;
-
   Inc(L.LemX, L.LemDx);
+  LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-  if HasPixelAt(L.LemX, L.LemY) then
+  if (LemDy < -6) then
   begin
-    // walk, jump, climb, or turn around
-    dy := 0;
-    NewY := L.LemY;
-    while (dy <= 6) and HasPixelAt(L.LemX, NewY - 1) do
+    // climb or turn
+    if L.LemIsClimber then
+      Transition(L, baClimbing)
+    else
     begin
-      Inc(dy);
-      Dec(NewY);
+      TurnAround(L);
+      Inc(L.LemX, L.LemDx);
     end;
-
-    if dy > 6 then
-    begin
-      if L.LemIsClimber then
-        Transition(L, baClimbing)
-      else begin
-
-        TurnAround(L);
-        Inc(L.LemX, L.LemDx);
-
-        if not HasPixelAt(L.LemX, L.LemY) then
-        begin
-          dy := 1;
-          while dy <= 3 do
-          begin
-            Inc(L.LemY);
-            if HasPixelAt(L.LemX, L.LemY) then Break;
-            Inc(dy);
-          end;
-
-          if dy > 3 then
-          begin
-            // in this case, lemming becomes a faller
-            Inc(L.LemY);
-            Transition(L, baFalling);
-          end;
-        end;
-
-        if L.LemY > LEMMING_MAX_Y + World.Height then
-        begin
-          RemoveLemming(L, RM_NEUTRAL);
-          Result := False;
-        end;
-
-      end;
-    end
-    else begin
-      if dy >= 3 then
-      begin
-        Transition(L, baJumping);
-        NewY := L.LemY - 2;
-      end;
-      L.LemY := NewY;
-      CheckForLevelTopBoundary(L);
-    end
   end
-  else
-  begin // no pixel at feet
-    // walk or fall downwards
-    dy := 1;
-    while dy <= 3 do
-    begin
-      Inc(L.LemY);
-      if HasPixelAt(L.LemX, L.LemY) then Break;
-      Inc(Dy);
-    end;
-
-    if dy > 3 then
-    begin
-      // in this case, lemming becomes a faller
-      Inc(L.LemY);
-      Transition(L, baFalling);
-    end;
-
-    if L.LemY > LEMMING_MAX_Y + World.Height then
-    begin
-      RemoveLemming(L, RM_NEUTRAL);
-      Result := False;
-    end;
-
+  else if (LemDy < -2) then
+  begin
+    // turn into jumper
+    Transition(L, baJumping);
+    Inc(L.LemY, -2);
+    CheckForLevelTopBoundary(L);
+  end
+  else if (LemDy < 1) then
+  begin
+    // walk forward
+    Inc(L.LemY, LemDy);
+    CheckForLevelTopBoundary(L);
   end;
 
+  // Get new ground pixel again in case the Lem has turned
+  LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+  If (LemDy > 3) then
+  begin
+    // Transition to faller
+    Inc(L.LemY, 4);
+    Transition(L, baFalling);
+  end
+  else if (LemDy > 0) then
+    // walk forward
+    Inc(L.LemY, LemDy);
+
+  // Has the lem fallen out of the level?
+  if L.LemY > LEMMING_MAX_Y + World.Height then
+  begin
+    RemoveLemming(L, RM_NEUTRAL);
+    Result := False;
+  end;
 end;
 
 
