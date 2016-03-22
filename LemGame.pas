@@ -768,7 +768,7 @@ type
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
     function HasPixelAt(X, Y: Integer; SwimTest: Boolean = false): Boolean;
-    function HasPixelAt_ClipY(X, Y, minY: Integer; SwimTest: Boolean = false): Boolean;
+    //function HasPixelAt_ClipY(X, Y, minY: Integer; SwimTest: Boolean = false): Boolean;
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeMiniMap;
@@ -822,6 +822,12 @@ type
 
 
   { lemming actions }
+    function FindGroundPixel(x, y: Integer): Integer;
+    function HasSteelAt(x, y: Integer): Boolean;
+    function HasIndestructibleAt(x, y, Direction: Integer;
+                                     Skill: TBasicLemmingAction): Boolean;
+
+
     function HandleLemming(L: TLemming): Boolean;
     function HandleWalking(L: TLemming): Boolean;
     function HandleJumping(L: TLemming): Boolean;
@@ -831,13 +837,9 @@ type
     function HandleHoisting(L: TLemming): Boolean;
     function HandleBuilding(L: TLemming): Boolean;
     function HandleBashing(L: TLemming): Boolean;
-      function FindGroundPixel(x, y: Integer): Integer;
-      function BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
-      function BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
-      procedure BasherTurn(L: TLemming; SteelSound: Boolean);
-      function HasSteelAt(x, y: Integer): Boolean;
-      function HasIndestructibleAt(x, y, Direction: Integer;
-                                     Skill: TBasicLemmingAction): Boolean;
+      //function BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
+      //function BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
+      //procedure BasherTurn(L: TLemming; SteelSound: Boolean);
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
@@ -2583,11 +2585,13 @@ begin
 
 end;
 
+{
 function TLemmingGame.HasPixelAt_ClipY(X, Y, minY: Integer; SwimTest: Boolean = false): Boolean;
 begin
   Result := HasPixelAt(X, Y, SwimTest);
   // need to remove this function; NeoLemmix doesn't ever clip Y in solidity tests
 end;
+}
 
 procedure TLemmingGame.RemovePixelAt(X, Y: Integer);
 begin
@@ -4439,7 +4443,7 @@ begin
         begin
           dy := 0;
           NewY := LemY;
-          while (dy <= 8) and (HasPixelAt_ClipY(LemX-1, NewY + 1, -dy - 1) = TRUE) do
+          while (dy <= 8) and HasPixelAt(LemX-1, NewY + 1) do
           begin
             Inc(dy);
             Dec(NewY);
@@ -4454,7 +4458,7 @@ begin
         begin
           dy := 0;
           NewY := LemY;
-          while (dy <= 8) and (HasPixelAt_ClipY(LemX+1, NewY + 1, -dy - 1) = TRUE) do
+          while (dy <= 8) and HasPixelAt(LemX+1, NewY + 1) do
           begin
             Inc(dy);
             Dec(NewY);
@@ -4518,7 +4522,7 @@ begin
         begin
           dy := 0;
           NewY := LemY;
-          while (dy <= 8) and (HasPixelAt_ClipY(LemX-1, NewY + 1, -dy - 1) = TRUE) do
+          while (dy <= 8) and HasPixelAt(LemX - 1, NewY + 1) do
           begin
             Inc(dy);
             Dec(NewY);
@@ -4532,7 +4536,7 @@ begin
         begin
           dy := 0;
           NewY := LemY;
-          while (dy <= 8) and (HasPixelAt_ClipY(LemX+1, NewY + 1, -dy - 1) = TRUE) do
+          while (dy <= 8) and HasPixelAt(LemX + 1, NewY + 1) do
           begin
             Inc(dy);
             Dec(NewY);
@@ -5398,7 +5402,7 @@ begin
         // walk, jump, climb, or turn around
         dy := 0;
         NewY := LemY;
-        while (dy <= 6) and (HasPixelAt_ClipY(LemX, NewY - 1, -dy - 1) = TRUE) do
+        while (dy <= 6) and HasPixelAt(LemX, NewY - 1) do
         begin
           Inc(dy);
           Dec(NewY);
@@ -5459,8 +5463,7 @@ begin
           while dy <= 3 do
           begin
             Inc(LemY);
-            if HasPixelAt_ClipY(LemX, LemY, dy) = TRUE then
-              Break;
+            if HasPixelAt(LemX, LemY) then Break;
             Inc(Dy);
           end;
 
@@ -5589,7 +5592,7 @@ begin
           Inc(LemX, LemDx);
           Result := True;
           Exit;
-        end else if (HasPixelAt_ClipY(LemX, LemY - 7 - LemFrame, 0) = FALSE) then
+        end else if not HasPixelAt(LemX, LemY - 7 - LemFrame) then
         begin
           LemY := LemY - LemFrame + 2;
           LemClimbed := 0;
@@ -5604,13 +5607,13 @@ begin
       Dec(LemY);
       Inc(LemClimbed);
 
-      FoundClip := HasPixelAt_ClipY(LemX - LemDx, LemY - 7, -8);
+      FoundClip := HasPixelAt(LemX - LemDx, LemY - 7);
 
       if LemFrame = 7 then
         FoundClip := FoundClip and HasPixelAt(LemX, LemY - 7);
 
       FoundClip := FoundClip
-        or ((LemClimbed = 1) and HasPixelAt_ClipY(LemX - LemDx, LemY - 6, -8))
+        or ((LemClimbed = 1) and HasPixelAt(LemX - LemDx, LemY - 6))
         or ((ReadObjectMapType(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0)) or ((ReadObjectMapType(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0))
         or ((ReadBlockerMap(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0)) or ((ReadBlockerMap(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0));
 
@@ -5724,9 +5727,9 @@ begin
     begin
 
       Inc(LemX, LemDx);
-      if (((HasPixelAt_ClipY(LemX+LemDx, LemY - 1, -1) = TRUE)
-      or (HasPixelAt_ClipY(LemX+LemDx, LemY - 2, -1) = TRUE))
-      and ((LemNumberOfBricksLeft > 1) or (LemFrame = 15))) then
+      if (     (HasPixelAt(LemX+LemDx, LemY - 1) or HasPixelAt(LemX+LemDx, LemY - 2))
+           and ((LemNumberOfBricksLeft > 1) or (LemFrame = 15))
+         ) then
       begin
         Transition(L, baWalking, TRUE);  // turn around as well
         CheckForLevelTopBoundary(L);
@@ -5738,8 +5741,7 @@ begin
       begin
 
       Inc(LemX, LemDx);
-      if (((HasPixelAt_ClipY(LemX+LemDx, LemY - 1, -1) = TRUE)
-      or (HasPixelAt_ClipY(LemX+LemDx, LemY - 2, -1) = TRUE))) then
+      if (HasPixelAt(LemX+LemDx, LemY - 1) or HasPixelAt(LemX+LemDx, LemY - 2)) then
       begin
         if (LemNumberOfBricksLeft > 1) then
         begin
@@ -5747,7 +5749,7 @@ begin
           CheckForLevelTopBoundary(L);
           Result := True;
           Exit;
-        end else if HasPixelAt_ClipY(LemX, LemY - 1, -1) then
+        end else if HasPixelAt(LemX, LemY - 1) then
           Dec(LemX, LemDx);
       end;
 
@@ -5795,9 +5797,10 @@ begin
 
       Dec(LemY);
       Inc(LemX, LemDx);
-      if (HasPixelAt_ClipY(LemX, LemY - 1, -1) = TRUE)
-      or (HasPixelAt_ClipY(LemX, LemY - 2, -1) = TRUE)
-      or ((HasPixelAt_ClipY(LemX + LemDx, LemY - 9, -9) = TRUE) and (LemNumberOfBricksLeft > 1)) then
+      if (     HasPixelAt(LemX, LemY - 1)
+           or  HasPixelAt(LemX, LemY - 2)
+           or (HasPixelAt(LemX + LemDx, LemY - 9) and (LemNumberOfBricksLeft > 1))
+         ) then
       begin
         Transition(L, baWalking, TRUE);  // turn around as well
         CheckForLevelTopBoundary(L);
@@ -5806,10 +5809,11 @@ begin
       end;
 
       Inc(LemX, LemDx);
-      if (HasPixelAt_ClipY(LemX, LemY - 1, -1) = TRUE)
-      or (HasPixelAt_ClipY(LemX, LemY - 2, -1) = TRUE)
-      or (HasPixelAt_ClipY(LemX, LemY - 3, -1) = TRUE)
-      or ((HasPixelAt_ClipY(LemX + LemDx, LemY - 3, -1) = TRUE) and (LemNumberOfBricksLeft > 0)) then
+      if (     HasPixelAt(LemX, LemY - 1)
+           or  HasPixelAt(LemX, LemY - 2)
+           or  HasPixelAt(LemX, LemY - 3)
+           or (HasPixelAt(LemX + LemDx, LemY - 3) and (LemNumberOfBricksLeft > 0))
+         ) then
       begin
         Transition(L, baWalking, TRUE);  // turn around as well
         CheckForLevelTopBoundary(L);
@@ -5818,7 +5822,7 @@ begin
       end;
 
       Dec(LemNumberOfBricksLeft);
-      if (LemNumberOfBricksLeft = 0) then
+      if LemNumberOfBricksLeft = 0 then
       begin
         Transition(L, baShrugging);
         CheckForLevelTopBoundary(L);
@@ -5826,7 +5830,7 @@ begin
         Exit;
       end;
 
-      if (HasPixelAt_ClipY(LemX + LemDx, LemY - 9, -9) = TRUE) then
+      if HasPixelAt(LemX + LemDx, LemY - 9) then
       begin
         Transition(L, baWalking, TRUE);  // turn around as well
         CheckForLevelTopBoundary(L);
@@ -5906,6 +5910,65 @@ function TLemmingGame.HandleBashing(L: TLemming): Boolean;
 var
   LemDy, AdjustedFrame, n: Integer;
   ContinueWork: Boolean;
+
+  function BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
+  begin
+    // check for indestructible terrain 3, 4 and 5 pixels above (x, y)
+    Result := (    (HasIndestructibleAt(x, y - 3, Direction, baBashing))
+                or (HasIndestructibleAt(x, y - 4, Direction, baBashing))
+                or (HasIndestructibleAt(x, y - 5, Direction, baBashing))
+              );
+  end;
+
+  procedure BasherTurn(L: TLemming; SteelSound: Boolean);
+  begin
+    // Turns basher around an transitions to walker
+    Dec(L.LemX, L.LemDx);
+    Transition(L, baWalking, True);
+    if SteelSound then CueSoundEffect(SFX_HITS_STEEL);
+  end;
+
+  function BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
+  begin
+    Result := True;
+
+    if Step = -1 then
+    begin
+      if (     (not HasPixelAt(x + Direction, y + Step - 1))
+           and HasPixelAt(x + Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step - 1)
+           and HasPixelAt(x + 2*Direction, y + Step - 2)
+         ) then Result := False;
+      if (     (not HasPixelAt(x + Direction, y + Step - 2))
+           and HasPixelAt(x + Direction, y + Step)
+           and HasPixelAt(x + Direction, y + Step - 1)
+           and HasPixelAt(x + 2*Direction, y + Step - 1)
+           and HasPixelAt(x + 2*Direction, y + Step - 2)
+         ) then Result := False;
+      if (     HasPixelAt(x + Direction, y + Step - 2)
+           and HasPixelAt(x + Direction, y + Step - 1)
+           and HasPixelAt(x + Direction, y + Step)
+         ) then Result := False;
+    end
+    else if Step = -2 then
+    begin
+      if (     (not HasPixelAt(x + Direction, y + Step))
+           and HasPixelAt(x + Direction, y + Step + 1)
+           and HasPixelAt(x + 2*Direction, y + Step + 1)
+           and HasPixelAt(x + 2*Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step - 1)
+         ) then Result := False;
+      if (     (not HasPixelAt(x + Direction, y + Step - 1))
+           and HasPixelAt(x + Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step - 1)
+         ) then Result := False;
+      if (     HasPixelAt(x + Direction, y + Step - 1)
+           and HasPixelAt(x + Direction, y + Step)
+         ) then Result := False;
+    end;
+  end;
 
 begin
   Result := True;
@@ -6019,66 +6082,6 @@ begin
 end;
 
 
-function TLemmingGame.BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
-begin
-  // check for indestructible terrain 3, 4 and 5 pixels above (x, y)
-  Result := (    (HasIndestructibleAt(x, y - 3, Direction, baBashing))
-              or (HasIndestructibleAt(x, y - 4, Direction, baBashing))
-              or (HasIndestructibleAt(x, y - 5, Direction, baBashing))
-            );
-end;
-
-function TLemmingGame.BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
-begin
-  Result := True;
-
-  if Step = -1 then
-  begin
-    if (     (not HasPixelAt(x + Direction, y + Step - 1))
-         and HasPixelAt(x + Direction, y + Step)
-         and HasPixelAt(x + 2*Direction, y + Step)
-         and HasPixelAt(x + 2*Direction, y + Step - 1)
-         and HasPixelAt(x + 2*Direction, y + Step - 2)
-       ) then Result := False;
-    if (     (not HasPixelAt(x + Direction, y + Step - 2))
-         and HasPixelAt(x + Direction, y + Step)
-         and HasPixelAt(x + Direction, y + Step - 1)
-         and HasPixelAt(x + 2*Direction, y + Step - 1)
-         and HasPixelAt(x + 2*Direction, y + Step - 2)
-       ) then Result := False;
-    if (     HasPixelAt(x + Direction, y + Step - 2)
-         and HasPixelAt(x + Direction, y + Step - 1)
-         and HasPixelAt(x + Direction, y + Step)
-       ) then Result := False;
-  end
-  else if Step = -2 then
-  begin
-    if (     (not HasPixelAt(x + Direction, y + Step))
-         and HasPixelAt(x + Direction, y + Step + 1)
-         and HasPixelAt(x + 2*Direction, y + Step + 1)
-         and HasPixelAt(x + 2*Direction, y + Step)
-         and HasPixelAt(x + 2*Direction, y + Step - 1)
-       ) then Result := False;
-    if (     (not HasPixelAt(x + Direction, y + Step - 1))
-         and HasPixelAt(x + Direction, y + Step)
-         and HasPixelAt(x + 2*Direction, y + Step)
-         and HasPixelAt(x + 2*Direction, y + Step - 1)
-       ) then Result := False;
-    if (     HasPixelAt(x + Direction, y + Step - 1)
-         and HasPixelAt(x + Direction, y + Step)
-       ) then Result := False;
-  end;
-end;
-
-
-procedure TLemmingGame.BasherTurn(L: TLemming; SteelSound: Boolean);
-begin
-  // Turns basher around an transitions to walker
-  Dec(L.LemX, L.LemDx);
-  Transition(L, baWalking, True);
-  if SteelSound then CueSoundEffect(SFX_HITS_STEEL);
-end;
-
 function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
                                           Skill: TBasicLemmingAction): Boolean;
 begin
@@ -6120,7 +6123,7 @@ begin
 
       Inc(LemY);
 
-      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) and (lemFrame = 3) then
+      if HasPixelAt(LemX+LemDx, LemY-2) and (LemFrame = 3) then
         begin
         if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
           CueSoundEffect(SFX_HITS_STEEL);
@@ -6143,7 +6146,7 @@ begin
         Exit;
       end;}
 
-      if (HasPixelAt_ClipY(LemX, LemY, 0) = FALSE) and (HasPixelAt_ClipY(LemX, LemY + 1, 0) = FALSE) then
+      if not HasPixelAt(LemX, LemY) and not HasPixelAt(LemX, LemY + 1) then
       begin
         Inc(LemY);
         Transition(L, baFalling);
@@ -6152,7 +6155,7 @@ begin
         Exit;
       end;
 
-      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) then
+      if HasPixelAt(LemX + LemDx, LemY - 2) then
         begin
         if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
           CueSoundEffect(SFX_HITS_STEEL);
@@ -6176,7 +6179,7 @@ begin
           Exit;
         end;
 
-      if (HasPixelAt_ClipY(LemX, LemY, 0) = FALSE) then
+      if not HasPixelAt(LemX, LemY) then
       begin
         Inc(LemY);
         Transition(L, baFalling);
@@ -6184,7 +6187,7 @@ begin
         Exit;
       end;
 
-      if (HasPixelAt_ClipY(LemX+LemDx, LemY-2, 0)) then
+      if HasPixelAt(LemX+LemDx, LemY-2) then
         begin
         if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
           CueSoundEffect(SFX_HITS_STEEL);
@@ -6264,7 +6267,7 @@ begin
       begin
         dy := 1;
       end;
-      while (dy < 3) and (HasPixelAt_ClipY(LemX,LemY,dy) = FALSE) do
+      while (dy < 3) and not HasPixelAt(LemX, LemY) do
       begin
         Inc(Dy);
         Inc(LemY);
@@ -6312,7 +6315,7 @@ end;
 
 function TLemmingGame.HandleFloating(L: TLemming): Boolean;
 var
-  dy, minY: Integer;
+  dy: Integer;
 begin
   with L do
   begin
@@ -6332,10 +6335,9 @@ begin
       Inc(LemFloated);
       end
     else begin
-      minY := 0;
       while (dy > 0) do
       begin
-        if (HasPixelAt_ClipY(LemX, LemY, minY) = TRUE) then
+        if HasPixelAt(LemX, LemY) then
         begin
           LemFloated := 0;
           Transition(L, baWalking);
@@ -6344,7 +6346,6 @@ begin
         end else begin
           Inc(LemY);
           Dec(dy);
-          Inc(minY);
           Inc(LemFloated, 2);
         end;
       end; // while
@@ -6367,7 +6368,7 @@ end;
 
 function TLemmingGame.HandleGliding(L: TLemming): Boolean;
 var
-  dy, minY: Integer;
+  dy: Integer;
 begin
   Result := false;
   with L do
@@ -6400,14 +6401,12 @@ begin
       end
     else begin
 
-      if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then
+      if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY - 1) then
         dy := 0;
 
-      minY := 0;
       while (dy > 0) do
       begin
-        if (HasPixelAt_ClipY(LemX, LemY, minY))
-        and not (HasPixelAt_ClipY(LemX, LemY-1, minY)) then
+        if HasPixelAt(LemX, LemY) and not HasPixelAt(LemX, LemY - 1) then
         begin
           LemFloated := 0;
           Transition(L, baWalking);
@@ -6416,7 +6415,6 @@ begin
         end else begin
           Inc(LemY);
           Dec(dy);
-          Inc(minY);
           Inc(LemFloated);
         end;
       end; // while
@@ -6548,7 +6546,7 @@ begin
     else begin
       dy := 0;
 
-      while (dy < 3) and (HasPixelAt_ClipY(LemX, LemY, dy) = FALSE) do
+      while (dy < 3) and not HasPixelAt(LemX, LemY) do
       begin
         Inc(dy);
         Inc(LemY);
@@ -6609,7 +6607,7 @@ begin
     else begin
       dy := 0;
 
-      while (dy < 3) and (HasPixelAt_ClipY(LemX, LemY, dy) = FALSE) do
+      while (dy < 3) and not HasPixelAt(LemX, LemY) do
       begin
         Inc(dy);
         Inc(LemY);
