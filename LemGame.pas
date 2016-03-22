@@ -2652,19 +2652,20 @@ function TLemmingGame.FindReceiver(oid: Byte; sval: Byte): Byte;
 var
   t: Byte;
 begin
-        Result := oid;
-        
-        for t := oid+1 to oid+ObjectInfos.Count do
-        begin
-          if (ObjectInfos[t mod ObjectInfos.Count].MetaObj.TriggerEffect = 12)
-          and (ObjectInfos[t mod ObjectInfos.Count].Obj.IsFake = false)
-          and (ObjectInfos[t mod ObjectInfos.Count].Obj.Skill = sval)
-          and (t mod ObjectInfos.Count <> Result) then
-          begin
-            Result := t mod ObjectInfos.Count;
-            break;
-          end;
-        end;
+  Result := oid;
+
+  for t := oid+1 to oid+ObjectInfos.Count do
+  begin
+    if (     (ObjectInfos[t mod ObjectInfos.Count].MetaObj.TriggerEffect = 12)
+         and (ObjectInfos[t mod ObjectInfos.Count].Obj.IsFake = false)
+         and (ObjectInfos[t mod ObjectInfos.Count].Obj.Skill = sval)
+         and (t mod ObjectInfos.Count <> Result)
+       ) then
+    begin
+      Result := t mod ObjectInfos.Count;
+      break;
+    end;
+  end;
 end;
 
 function TLemmingGame.ReadObjectMap(X, Y: Integer; Advance: Boolean = true): Word;
@@ -3420,32 +3421,32 @@ begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
     else
+    begin
+      Transition(Lemming1, baPlatforming);
+      UpdateSkillCount(baPlatforming);
+      Result := True;
+      RecordSkillAssignment(Lemming1, baPlatforming);
+      if not fFreezeSkillCount then
       begin
-        Transition(Lemming1, baPlatforming);
-        UpdateSkillCount(baPlatforming);
-        Result := True;
-        RecordSkillAssignment(Lemming1, baPlatforming);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming1, baPlatforming);
-        end;
+        OnAssignSkill(Lemming1, baPlatforming);
       end;
+    end;
   end
   else if (Lemming2 <> nil) and (Lemming2.LemAction in ActionSet) and LemCanPlatform(Lemming2) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming2
     else
+    begin
+      Transition(Lemming2, baPlatforming);
+      UpdateSkillCount(baPlatforming);
+      Result := True;
+      RecordSkillAssignment(Lemming2, baPlatforming);
+      if not fFreezeSkillCount then
       begin
-        Transition(Lemming2, baPlatforming);
-        UpdateSkillCount(baPlatforming);
-        Result := True;
-        RecordSkillAssignment(Lemming2, baPlatforming);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming2, baPlatforming);
-        end;
+        OnAssignSkill(Lemming2, baPlatforming);
       end;
+    end;
   end;
 
 end;
@@ -3590,41 +3591,6 @@ begin
     Result := DoSkillAssignment(L, baDigging)
   else if Assigned(L2) and (not (L2.LemSpecialBelow = DOM_STEEL)) and (L2.LemAction in ActionSet) then
     Result := DoSkillAssignment(L2, baDigging);
-
-  {
-  if (lemming1.LemSpecialBelow = DOM_STEEL) then
-    Exit
-  else if (lemming1.lemAction in ActionSet) then
-  begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := lemming1
-    else begin
-      Transition(lemming1, baDigging);
-      UpdateSkillCount(baDigging);
-      Result := True;
-      RecordSkillAssignment(Lemming1, baDigging);
-      if not fFreezeSkillCount then
-      begin
-        OnAssignSkill(Lemming1, baDigging);
-      end;
-    end
-  end
-  else if Assigned(lemming2) and (not (lemming2.LemSpecialBelow = DOM_STEEL)) and (lemming2.lemAction in [baWALKING, baSHRUGGING, baPlatforming, baBUILDING, baStacking, baBASHING, baMINING]) then
-  begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := lemming2
-    else begin
-      Transition(lemming2, baDigging);
-      UpdateSkillCount(baDigging);
-      Result := True;
-      RecordSkillAssignment(Lemming2, baDigging);
-      if not fFreezeSkillCount then
-      begin
-        OnAssignSkill(Lemming2, baDigging);
-      end;
-    end
-  end; }
-
 end;
 
 
@@ -5418,9 +5384,9 @@ begin
       DigOneRow(L, LemY - 1);
       LemIsNewDigger := FALSE;
     end else begin
-      Inc(lemFrame);
-      if (lemFrame >= 16) then
-        lemFrame := lemFrame - 16;
+      Inc(LemFrame);
+      if (LemFrame >= 16) then
+        LemFrame := LemFrame - 16;
     end;
 
     if LemFrame in [0, 8] then
@@ -5439,7 +5405,7 @@ begin
         Transition(L, baFalling);
       end;
 
-      if (ReadSpecialMap(LemX,lemy) = DOM_STEEL) then
+      if (ReadSpecialMap(LemX, LemY) = DOM_STEEL) then
       begin
         CueSoundEffect(SFX_HITS_STEEL);
         Transition(L, baWalking);
@@ -5451,6 +5417,7 @@ begin
     end;
   end;
 end;
+
 
 function TLemmingGame.HandleClimbing(L: TLemming): Boolean;
 var
@@ -5989,151 +5956,105 @@ end;
 
 function TLemmingGame.HasSteelAt(x, y: Integer): Boolean;
 begin
-  // check for steel at position (x, y)
   Result := (ReadSpecialMap(x, y) = DOM_STEEL);
 end;
 
 
 function TLemmingGame.HandleMining(L: TLemming): Boolean;
-var
-  BelowObj: Byte;
-  //Bug: Boolean;
 begin
-  Result := False;
+  Result := True;
 
-  with L do
+  if L.LemFrame in [1, 2] then
+    ApplyMinerMask(L, L.LemFrame - 1, L.LemX + L.LemDx - 8, L.LemY + L.LemFrame - 13)
+
+
+  else if L.LemFrame in [3, 15] then
   begin
+    Inc(L.LemY);
 
-    if LemFrame = 1 then
+    if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) and (L.LemFrame = 3) then
     begin
-      ApplyMinerMask(L, 0, LemX + lemdx - 8, LemY + 1 - 13);
-      Exit;
-    end else if lemFrame = 2 then
-    begin
-      ApplyMinerMask(L, 1, LemX + lemdx - 8, LemY + 2 - 13);
-      Exit;
-    end else if LemFrame in [3, 15] then
-    begin
-
-      Inc(LemY);
-
-      if HasPixelAt(LemX+LemDx, LemY-2) and (LemFrame = 3) then
-        begin
-        if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
-          CueSoundEffect(SFX_HITS_STEEL);
-        if (ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL)
-        or  ((((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
-        or ((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYRIGHT) and (LemDx < 0)))) then
-        begin
-          if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then Dec(LemY);
-          Transition(L, baWalking, TRUE);
-          Result := True;
-          Exit;
-        end;
-        end;
-
-      Inc(LemX, LemDx);
-      {if (LemX < LEMMING_MIN_X) or (LemX > LEMMING_MAX_X) then
+      if HasIndestructibleAt(L.LemX + L.LemDx, L.LemY - 2, L.LemDx, baMining) then
       begin
-        Transition(L, baWalking, TRUE); // turn around as well
-        Result := True;
-        Exit;
-      end;}
-
-      if not HasPixelAt(LemX, LemY) and not HasPixelAt(LemX, LemY + 1) then
-      begin
-        Inc(LemY);
-        Transition(L, baFalling);
-        L.LemFallen := L.LemFallen + 1;
-        Result := True;
-        Exit;
-      end;
-
-      if HasPixelAt(LemX + LemDx, LemY - 2) then
-        begin
-        if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
-          CueSoundEffect(SFX_HITS_STEEL);
-        if (ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL)
-        or ( (((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
-        or ((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYRIGHT) and (LemDx < 0)))) then
-        begin
-          if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then Dec(LemY);
+        if HasSteelAt(L.LemX + L.LemDx, L.LemY-2) then CueSoundEffect(SFX_HITS_STEEL);
+        if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
         Transition(L, baWalking, TRUE);
-        Result := True;
-        Exit;
-        end;
-        end;
-
-      Inc(LemX, lemdx);
-
-        if (LemY > LEMMING_MAX_Y + World.Height) then
-        begin
-          RemoveLemming(L, RM_NEUTRAL);
-          Result := False;
-          Exit;
-        end;
-
-      if not HasPixelAt(LemX, LemY) then
-      begin
-        Inc(LemY);
-        Transition(L, baFalling);
-        Result := True;
         Exit;
       end;
+    end;
 
-      if HasPixelAt(LemX+LemDx, LemY-2) then
-        begin
-        if ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL then
-          CueSoundEffect(SFX_HITS_STEEL);
-        if (ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_STEEL)
-        or ((((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYLEFT) and (LemDx > 0))
-        or ((ReadSpecialMap(LemX+LemDx, LemY-2) = DOM_ONEWAYRIGHT) and (LemDx < 0)))) then
-        begin
-          if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then Dec(LemY);
-        Transition(L, baWalking, TRUE);
-        Result := True;
-        Exit;
-        end;
-        end;
+    Inc(L.LemX, L.LemDx);
 
-
-
-      belowObj := ReadSpecialMap(LemX, LemY);
-      if (belowObj = DOM_STEEL) then
-      begin
-        CueSoundEffect(SFX_HITS_STEEL);
-      end;
-
-        if (belowObj = DOM_STEEL)
-        or ( (( (belowObj = DOM_ONEWAYLEFT) and (LemDx <> -1) )
-        or ( (belowObj = DOM_ONEWAYRIGHT) and (LemDx <> 1) ))) then // complete check
-          begin
-            if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY-1) then Dec(LemY);
-          Transition(L, baWalking, TRUE);  // turn around as well
-          end;
-
-      Result := True;
-      Exit;
-    end
-
-    else if (lemFrame = 0) then
+    if not HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY + 1) then
     begin
-      //Inc(LemY);
-      if (LemY > LEMMING_MAX_Y + World.Height) then
+      Inc(L.LemY);
+      Transition(L, baFalling);
+      L.LemFallen := L.LemFallen + 1;
+      Exit;
+    end;
+
+    if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) then
+    begin
+      if HasIndestructibleAt(L.LemX + L.LemDx, L.LemY - 2, L.LemDx, baMining) then
       begin
-        RemoveLemming(L, RM_NEUTRAL);
-        Exit;
-      end
-      else begin
-        Result := True;
+        if HasSteelAt(L.LemX + L.LemDx, L.LemY - 2) then CueSoundEffect(SFX_HITS_STEEL);
+        if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY - 1) then Dec(L.LemY);
+        Transition(L, baWalking, TRUE);
         Exit;
       end;
-    end
-    else
-      Result := False
+    end;
 
-  end; // with
+    Inc(L.LemX, L.LemDx);
+
+    if (L.LemY > LEMMING_MAX_Y + World.Height) then
+    begin
+      RemoveLemming(L, RM_NEUTRAL);
+      Result := False;
+      Exit;
+    end;
+
+    if not HasPixelAt(L.LemX, L.LemY) then
+    begin
+      Inc(L.LemY);
+      Transition(L, baFalling);
+      Exit;
+    end;
+
+    if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) then
+    begin
+      if HasIndestructibleAt(L.LemX + L.LemDx, L.LemY - 2, L.LemDx, baMining) then
+      begin
+        if HasSteelAt(L.LemX + L.LemDx, L.LemY - 2) then CueSoundEffect(SFX_HITS_STEEL);
+        if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
+        Transition(L, baWalking, TRUE);
+        Exit;
+      end;
+    end;
+
+    if HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining) then
+    begin
+      if HasSteelAt(L.LemX, L.LemY) then CueSoundEffect(SFX_HITS_STEEL);
+      if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY - 1) then Dec(L.LemY);
+      Transition(L, baWalking, TRUE);
+    end;
+  end
+
+  else if (L.LemFrame = 0) then
+  begin
+    if (L.LemY > LEMMING_MAX_Y + World.Height) then
+    begin
+      RemoveLemming(L, RM_NEUTRAL);
+      Result := False;
+      Exit;
+    end;
+  end
+
+  else // In other frames, do not check for traps
+    Result := False
+
 end;
+
+
 
 function TLemmingGame.HandleFalling(L: TLemming): Boolean;
 var
