@@ -581,7 +581,6 @@ type
     LemmingsIn                 : integer; // number of lemmings that made it to heaven
     LemmingsRemoved            : Integer; // number of lemmings removed
     DelayEndFrames             : Integer;
-    TimeScoreAdjust            : Integer;
     fCursorPoint               : TPoint;
     fRightMouseButtonHeldDown  : Boolean;
     fShiftButtonHeldDown       : Boolean;
@@ -735,8 +734,6 @@ type
     procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemmingPixelsGhost(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineBuilderPixelsGhost(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
@@ -823,7 +820,6 @@ type
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Rev: Boolean = false);
 
-    procedure ApplyWaterRise;
 
   { lemming actions }
     function HandleLemming(L: TLemming): Boolean;
@@ -1445,7 +1441,6 @@ end;
 procedure TLemmingGame.CreateSavedState(aState: TLemmingGameSavedState);
 var
   i: Integer;
-  CheckItem: TReplayItem;
 begin
   // Simple stuff
   aState.SelectedSkill := fSelectedSkill;
@@ -1942,13 +1937,12 @@ var
   //Inf: TRenderInfoRec;
   Ani: TBaseDosAnimationSet;
   i: Integer;
-  Bmp, Bmp2: TBitmap32;
+  Bmp: TBitmap32;
   LowPal, HiPal, Pal: TArrayOfColor32;
   MusicSys: TBaseMusicSystem;
   //LemBlack: TColor32;
   S: TStream;
   MusicFileName: String;
-  x, y: Integer;
 begin
   fGameParams := aParams;
   fXmasPal := fGameParams.SysDat.Options2 and 2 <> 0;
@@ -2494,7 +2488,7 @@ begin
   if F <> 0 then B := F;
 end;
 
-procedure TLemmingGame.CombineLemmingPixelsGhost(F: TColor32; var B: TColor32; M: TColor32);
+{procedure TLemmingGame.CombineLemmingPixelsGhost(F: TColor32; var B: TColor32; M: TColor32);
 var
   n, r, g, bl: byte; //bl because b is already in use here
 begin
@@ -2507,9 +2501,9 @@ begin
     F := (F and $FF000000) + (n shl 16) + (n shl 8) + n;
     B := F;
   end;
-end;
+end;}
 
-procedure TLemmingGame.CombineBuilderPixelsGhost(F: TColor32; var B: TColor32; M: TColor32);
+{procedure TLemmingGame.CombineBuilderPixelsGhost(F: TColor32; var B: TColor32; M: TColor32);
 var
   n, r, g, bl: byte; //bl because b is already in use here
 begin
@@ -2528,7 +2522,7 @@ begin
     F := (F and $FF000000) + (n shl 16) + (n shl 8) + n;
     B := F;
   end;
-end;
+end;}
 
 procedure TLemmingGame.CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
 {-------------------------------------------------------------------------------
@@ -2605,7 +2599,7 @@ end;
 procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; oid: Byte);
 var
   Inf, Inf2: TInteractiveObjectInfo;
-  dpx, dpy, tlx, tly: Integer;
+  tlx, tly: Integer;
 begin
 
 with L do
@@ -2616,9 +2610,6 @@ begin
   // Need to tidy this up and let the object itself implement finding the target point
 
   if Inf.Obj.DrawingFlags and 8 <> 0 then TurnAround(L);
-
-    dpx := Inf2.MetaObj.TriggerLeft;
-    dpy := Inf2.MetaObj.TriggerTop;
 
     if Inf.Obj.DrawingFlags and 2 <> 0 then
       tly := Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop) - (Inf.MetaObj.TriggerHeight - 1)
@@ -3353,8 +3344,6 @@ end;
 
 
 function TLemmingGame.AssignBomber(Lemming1, Lemming2: TLemming): Boolean;
-var
-  mbt: Integer;
 begin
   Result := False;
 
@@ -3380,9 +3369,6 @@ begin
 end;
 
 function TLemmingGame.AssignStoner(Lemming1, Lemming2: TLemming): Boolean;
-var
-  //InstantStone : Boolean;
-  mbt: Integer;
 begin
   Result := False;
 
@@ -3649,17 +3635,17 @@ begin
       if (fCheckWhichLemmingOnly) then
         WhichLemming := SelectedLemming
       else
+      begin
+        Dec(LemY);
+        Transition(SelectedLemming, baMining);
+        UpdateSkillCount(baMining);
+        Result := True;
+        RecordSkillAssignment(SelectedLemming, baMining);
+        if not fFreezeSkillCount then
         begin
-          Dec(LemY);
-          Transition(SelectedLemming, baMining);
-          UpdateSkillCount(baMining);
-          Result := True;
-          RecordSkillAssignment(SelectedLemming, baMining);
-          if not fFreezeSkillCount then
-          begin
-            OnAssignSkill(SelectedLemming, baMining);
-          end;
+          OnAssignSkill(SelectedLemming, baMining);
         end;
+      end;
     end;
 
   end;
@@ -4187,8 +4173,6 @@ begin
 end;
 
 procedure TLemmingGame.UpdateLemmingsIn(Num, Max: Integer);
-var
-  i: Integer;
 begin
   Num := Num - Level.Info.RescueCount;
   InfoPainter.SetInfoLemmingsIn(Num, 0, CheckRescueBlink);
@@ -4196,16 +4180,11 @@ end;
 
 procedure TLemmingGame.CheckForInteractiveObjects(L: TLemming; HandleAllObjects: Boolean = true);
 var
-//  Dst: TRect;
   Inf: TInteractiveObjectInfo;
   BlockCheck: Byte;
-  GhostCheck: Byte;
   ni, dy, NewY: Integer;
   mx, my: Integer;
   minmx, minmy: Integer;
-  //tlx, tly: Integer;
-  DoneAutoAssign: Boolean;
-  AutoAssignSkill: TBasicLemmingAction;
 begin
   with L do
   begin
@@ -4568,8 +4547,6 @@ end;
 
 
 procedure TLemmingGame.ApplyStoneLemming(L: TLemming; Redo: Integer = 0);
-var
-  X1, Y1: Integer;
 begin
 
   if L.LemDx = 1 then Inc(L.LemX);
@@ -5311,104 +5288,90 @@ function TLemmingGame.HandleWalking(L: TLemming): Boolean;
 var
   dy, NewY: Integer;
 begin
-  Result := False;
+  Result := True;
 
-  with L do
+  Inc(L.LemX, L.LemDx);
+
+  if HasPixelAt(L.LemX, L.LemY) then
   begin
-    Inc(LemX, LemDx);
+    // walk, jump, climb, or turn around
+    dy := 0;
+    NewY := L.LemY;
+    while (dy <= 6) and HasPixelAt(L.LemX, NewY - 1) do
+    begin
+      Inc(dy);
+      Dec(NewY);
+    end;
 
-      if (HasPixelAt_ClipY(LemX, LemY, 0) = TRUE) then
-      begin
-        // walk, jump, climb, or turn around
-        dy := 0;
-        NewY := LemY;
-        while (dy <= 6) and (HasPixelAt_ClipY(LemX, NewY - 1, -dy - 1) = TRUE) do
+    if dy > 6 then
+    begin
+      if L.LemIsClimber then
+        Transition(L, baClimbing)
+      else begin
+
+        TurnAround(L);
+        Inc(L.LemX, L.LemDx);
+
+        if not HasPixelAt(L.LemX, L.LemY) then
         begin
-          Inc(dy);
-          Dec(NewY);
-        end;
-
-        if dy > 6 then
-        begin
-          if (LemIsClimber) then
-            Transition(L, baClimbing)
-          else begin
-
-            TurnAround(L);
-            Inc(LemX, LemDx);
-
-            if HasPixelAt(LemX, LemY) = FALSE then
-            begin
-              dy := 1;
-              while dy <= 3 do
-              begin
-                Inc(LemY);
-                if HasPixelAt_ClipY(LemX, LemY, dy) = TRUE then
-                  Break;
-                Inc(Dy);
-              end;
-
-              if dy > 3 then
-              begin
-                // in this case, lemming becomes a faller
-                Inc(LemY);
-                Transition(L, baFalling);
-              end;
-            end;
-
-            if (LemY > LEMMING_MAX_Y + World.Height) then
-            begin
-              RemoveLemming(L, RM_NEUTRAL);
-              Exit;
-            end else begin
-              Result := True;
-              Exit;
-            end;
-
-          end;
-          Result := True;
-          Exit;
-        end
-        else begin
-          if dy >= 3 then
+          dy := 1;
+          while dy <= 3 do
           begin
-            Transition(L, baJumping);
-            NewY := LemY - 2;
+            Inc(L.LemY);
+            if HasPixelAt(L.LemX, L.LemY) then Break;
+            Inc(dy);
           end;
-          LemY := NewY;
-          CheckForLevelTopBoundary(L);
-          Result := True;
-          Exit;
-        end
-      end
-      else begin // no pixel at feet
-        // walk or fall downwards
-        dy := 1;
-        while dy <= 3 do
-        begin
-          Inc(LemY);
-          if HasPixelAt_ClipY(LemX, LemY, dy) = TRUE then
-            Break;
-          Inc(Dy);
+
+          if dy > 3 then
+          begin
+            // in this case, lemming becomes a faller
+            Inc(L.LemY);
+            Transition(L, baFalling);
+          end;
         end;
 
-        if dy > 3 then
-        begin
-          // in this case, lemming becomes a faller
-          Inc(LemY);
-          Transition(L, baFalling);
-        end;
-
-        if (LemY > LEMMING_MAX_Y + World.Height) then
+        if L.LemY > LEMMING_MAX_Y + World.Height then
         begin
           RemoveLemming(L, RM_NEUTRAL);
-          Exit;
-        end else begin
-          Result := True;
-          Exit;
+          Result := False;
         end;
 
       end;
+    end
+    else begin
+      if dy >= 3 then
+      begin
+        Transition(L, baJumping);
+        NewY := L.LemY - 2;
+      end;
+      L.LemY := NewY;
+      CheckForLevelTopBoundary(L);
+    end
+  end
+  else
+  begin // no pixel at feet
+    // walk or fall downwards
+    dy := 1;
+    while dy <= 3 do
+    begin
+      Inc(L.LemY);
+      if HasPixelAt(L.LemX, L.LemY) then Break;
+      Inc(Dy);
+    end;
+
+    if dy > 3 then
+    begin
+      // in this case, lemming becomes a faller
+      Inc(L.LemY);
+      Transition(L, baFalling);
+    end;
+
+    if L.LemY > LEMMING_MAX_Y + World.Height then
+    begin
+      RemoveLemming(L, RM_NEUTRAL);
+      Result := False;
+    end;
+
   end;
 
 end;
@@ -5976,25 +5939,21 @@ begin
     end;
   end;
 
-
+  // Basher movement
   if AdjustedFrame in [11, 12, 13, 14, 15] then
   begin
     Inc(L.LemX, L.LemDx);
 
-    // Getting new LemY position
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-    // Moving in new position, if no steel there
     If LemDy = 4 then
     begin
-      // Transition to faller, when falling down more than 3 pixels
       Inc(L.LemY, LemDy);
       Transition(L, baFalling);
     end
 
     else if LemDy = 3 then
     begin
-      // Move three pixels down and transition to walker
       Inc(L.LemY, LemDy);
       Transition(L, baWalking);
     end
@@ -6546,17 +6505,19 @@ end;
 
 function TLemmingGame.HandleBlocking(L: TLemming): Boolean;
 begin
-  Result := False;
-  with L do
+  if not HasPixelAt(L.LemX, L.LemY) then
   begin
-    if HasPixelAt_ClipY(LemX, LemY, 0) = FALSE then
-    begin
-      Transition(L, baWalking);
-      LemIsBlocking := 0;
-      RestoreMap(L);
-    end else
-      Inc(LemIsBlocking);
-  end;
+    Transition(L, baWalking);
+    L.LemIsBlocking := 0;
+    RestoreMap(L);
+  end
+  else
+    //Why do we do this??
+    //The only thing ever checked is L.LemIsBlocking > 0!
+    Inc(L.LemIsBlocking);
+
+  // Do not check traps for blocker
+  Result := False;
 end;
 
 function TLemmingGame.HandleShrugging(L: TLemming): Boolean;
@@ -6818,9 +6779,9 @@ begin
   CheckForPlaySoundEffect;
 end;
 
-procedure TLemmingGame.ApplyWaterRise;
+{procedure TLemmingGame.ApplyWaterRise;
 var
-  i, x{, y} : integer;
+  i, x : integer;
   //O : TInteractiveObject;
   //MO : TMetaObject;
   Inf : TInteractiveObjectInfo;
@@ -6843,7 +6804,7 @@ begin
           WriteObjectMap(Inf.Obj.Left + x, Inf.Obj.Top + Inf.MetaObj.TriggerTop, i);
     end;
   end;
-end;
+end;  }
 
 procedure TLemmingGame.IncrementIteration;
 var
@@ -8171,7 +8132,6 @@ procedure TLemmingGame.SetGameResult;
 -------------------------------------------------------------------------------}
 var
   gLemCap : Integer;
-  i: Integer;
 begin
   with GameResultRec do
   begin
@@ -8886,11 +8846,9 @@ end;
 
 procedure TRecorder.LoadFromStream(S: TStream; IgnoreProblems: Boolean = false);
 var
-//  i: Integer;
   H: TReplayFileHeaderRec;
   R: TReplayRec;
   It: TReplayItem;
-  Iter, RR, Parity: Integer;
   ErrorID: Integer;
   ErrorStr: String;
   HasCheck: Boolean;
@@ -9004,8 +8962,6 @@ begin
     end;
   end;
 
-
-  Parity := 0;
   List.Clear;
   List.Capacity := H.ReplayRecordCount;
   S.Seek(H.FirstRecordPos, soFromBeginning);
@@ -9037,9 +8993,6 @@ begin
       Inc(Parity)
     else if R.ActionFlags = raf_Endpause then
       Dec(Parity);}
-
-    RR := R.Releaserate;
-    Iter := R.Iteration;
 
     // add fake paused record if unpaired startpuase
     // this happens when this file is saved in paused mode!
