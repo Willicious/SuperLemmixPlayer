@@ -869,15 +869,15 @@ type
     function AssignFloater(L, L2: TLemming): Boolean;
     function AssignGlider(Lemming1, Lemming2: TLemming): Boolean;
     function AssignMechanic(Lemming1, Lemming2: TLemming): Boolean;
-    function AssignBomber(Lemming1, Lemming2: TLemming): Boolean;
+    function AssignBomber(L, L2: TLemming): Boolean;
     function AssignStoner(Lemming1, Lemming2: TLemming): Boolean;
     function AssignBlocker(L, L2: TLemming): Boolean;
     function AssignPlatformer(Lemming1, Lemming2: TLemming): Boolean;
-    function AssignBuilder(Lemming1, Lemming2: TLemming): Boolean;
+    function AssignBuilder(L, L2: TLemming): Boolean;
     function AssignStacker(Lemming1, Lemming2: TLemming): Boolean;
-    function AssignBasher(Lemming1, Lemming2: TLemming): Boolean;
-    function AssignMiner(Lemming1, Lemming2: TLemming): Boolean;
-    function AssignDigger(Lemming1, Lemming2: TLemming): Boolean;
+    function AssignBasher(L, L2: TLemming): Boolean;
+    function AssignMiner(L, L2: TLemming): Boolean;
+    function AssignDigger(L, L2: TLemming): Boolean;
     function AssignCloner(Lemming1, Lemming2: TLemming): Boolean;
 
     procedure OnAssignSkill(Lemming1: TLemming; aSkill: TBasicLemmingAction);
@@ -3139,7 +3139,6 @@ end;
 function TLemmingGame.DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 begin
   // This function does NOT apply to the Cloner!
-
   Result := False;
 
   // We check first, whether the skill is available at all
@@ -3153,6 +3152,11 @@ begin
     // Special behavior of permament skills.
     if (NewSkill = baClimbing) then L.LemIsClimber := True
     else if (NewSkill = baFloating) then L.LemIsFloater := True
+    else if (NewSkill = baExploding) then
+    begin
+      L.LemExplosionTimer := 1;
+      L.LemTimerToStone := False;
+    end
     else Transition(L, NewSkill);
     RecordSkillAssignment(L, NewSkill);
     Result := True;
@@ -3334,7 +3338,6 @@ function TLemmingGame.AssignMechanic(Lemming1, Lemming2: TLemming): Boolean;
 begin
   Result := False;
 
-
   if CheckSkillAvailable(baFixing)
   and not Lemming1.LemIsMechanic
   and not (Lemming1.LemAction in [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning, baVaporizing, baSplatting, baExiting]) then
@@ -3342,43 +3345,29 @@ begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
     else
+    begin
+      Lemming1.LemIsMechanic := True;
+      UpdateSkillCount(baFixing);
+      Result := True;
+      if not fFreezeSkillCount then
       begin
-        Lemming1.LemIsMechanic := True;
-        UpdateSkillCount(baFixing);
-        Result := True;
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming1, baFixing);
-        end;
-        RecordSkillAssignment(Lemming1, baFixing);
+        OnAssignSkill(Lemming1, baFixing);
       end;
+      RecordSkillAssignment(Lemming1, baFixing);
+    end;
   end
 end;
 
 
-function TLemmingGame.AssignBomber(Lemming1, Lemming2: TLemming): Boolean;
+function TLemmingGame.AssignBomber(L, L2: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baDrowning, baExploding, baStoneFinish,
+               baVaporizing, baSplatting, baExiting];
 begin
   Result := False;
 
-  if CheckSkillAvailable(baExploding)
-  and not (lemming1.lemAction in [baOhnoing, baStoning, baDrowning, baExploding, baStoneFinish, baVaporizing, baSplatting, baExiting]) then
-  begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := Lemming1
-    else
-      begin
-        Lemming1.LemExplosionTimer := 1;
-
-        Lemming1.LemTimerToStone := false;
-        UpdateSkillCount(baExploding);
-        Result := True;
-        RecordSkillAssignment(Lemming1, baExploding);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming1, baExploding);
-        end;
-      end;
-  end
+  If not (L.LemAction in ActionSet) then
+     Result := DoSkillAssignment(L, baExploding);
 end;
 
 function TLemmingGame.AssignStoner(Lemming1, Lemming2: TLemming): Boolean;
@@ -3391,18 +3380,17 @@ begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := Lemming1
     else
+    begin
+      Lemming1.LemExplosionTimer := 1;
+      Lemming1.LemTimerToStone := true;
+      UpdateSkillCount(baStoning);
+      Result := True;
+      RecordSkillAssignment(Lemming1, baStoning);
+      if not fFreezeSkillCount then
       begin
-        Lemming1.LemExplosionTimer := 1;
-
-        Lemming1.LemTimerToStone := true;
-        UpdateSkillCount(baStoning);
-        Result := True;
-        RecordSkillAssignment(Lemming1, baStoning);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming1, baStoning);
-        end;
+        OnAssignSkill(Lemming1, baStoning);
       end;
+    end;
   end;
 end;
 
@@ -3463,54 +3451,24 @@ begin
 end;
 
 
-function TLemmingGame.AssignBuilder(Lemming1, Lemming2: TLemming): Boolean;
+function TLemmingGame.AssignBuilder(L, L2: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baBashing,
                baMining, baDigging];
 begin
   Result := False;
 
-  if not CheckSkillAvailable(baBuilding)
-  or (Lemming1.LemY <= 1) then
-    Exit;
+  // Do not assign builders at top border
+  if (L.LemY <= 1) then Exit;
 
-  if (Lemming1.LemAction in ActionSet) then
-  begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := Lemming1
-    else
-      begin
-        Transition(Lemming1, baBuilding);
-        UpdateSkillCount(baBuilding);
-        Result := True;
-        RecordSkillAssignment(Lemming1, baBuilding);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming1, baBuilding);
-        end;
-      end;
-  end
-  else if (Lemming2 <> nil) and (Lemming2.LemAction in ActionSet) then
-  begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := Lemming2
-    else
-      begin
-        Transition(Lemming2, baBuilding);
-        UpdateSkillCount(baBuilding);
-        Result := True;
-        RecordSkillAssignment(Lemming2, baBuilding);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(Lemming2, baBuilding);
-        end;
-      end;
-  end;
-
+  if (L.LemAction in ActionSet) then
+    Result := DoSkillAssignment(L, baBuilding)
+  else if (L2 <> nil) and (L2.LemAction in ActionSet) then
+    Result := DoSkillAssignment(L2, baBuilding);
 end;
 
 
-function TLemmingGame.Assignstacker(Lemming1, Lemming2: TLemming): Boolean;
+function TLemmingGame.AssignStacker(Lemming1, Lemming2: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baBashing, baMining, baDigging];
 begin
@@ -3558,108 +3516,85 @@ end;
 
 
 
-function TLemmingGame.AssignBasher(Lemming1, Lemming2: TLemming): Boolean;
+function TLemmingGame.AssignBasher(L, L2: TLemming): Boolean;
 var
   SelectedLemming: TLemming;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baMining, baDigging];
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baMining, baDigging];
 begin
   Result := False;
 
-  // selectedLemming := nil; not needed, this var is not used
-  if not CheckSkillAvailable(baBashing) then
-    Exit
-  else if Lemming1.LemAction in ActionSet then
-    SelectedLemming := Lemming1
-  else if (Lemming2 <> nil) and (Lemming2.LemAction in ActionSet) then
-    SelectedLemming := Lemming2
+  if L.LemAction in ActionSet then
+    SelectedLemming := L
+  else if (L2 <> nil) and (L2.LemAction in ActionSet) then
+    SelectedLemming := L2
   else
     Exit;
 
   if (SelectedLemming.LemObjectInFront = DOM_STEEL) then
   begin
-    if (not fCheckWhichLemmingOnly) then
-      CueSoundEffect(SFX_HITS_STEEL);
+    if (not fCheckWhichLemmingOnly) then CueSoundEffect(SFX_HITS_STEEL);
     Exit;
   end
   else if ((SelectedLemming.LemObjectInFront = DOM_ONEWAYLEFT) and (SelectedLemming.LemDx <> -1)) or
           ((SelectedLemming.LemObjectInFront = DOM_ONEWAYRIGHT) and (SelectedLemming.LemDx <> 1)) or
           (SelectedLemming.LemObjectInFront = DOM_ONEWAYDOWN) then
     Exit
-  else begin
-    if (fCheckWhichLemmingOnly) then
-      WhichLemming := SelectedLemming
-    else
-      begin
-        Transition(SelectedLemming, baBashing);
-        UpdateSkillCount(baBashing);
-        Result := True;
-        RecordSkillAssignment(SelectedLemming, baBashing);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(SelectedLemming, baBashing);
-        end;
-      end;
-  end;
+  else
+    Result := DoSkillAssignment(SelectedLemming, baBashing);
 end;
 
-function TLemmingGame.AssignMiner(Lemming1, Lemming2: TLemming): Boolean;
+
+function TLemmingGame.AssignMiner(L, L2: TLemming): Boolean;
 var
   SelectedLemming: TLemming;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking, baBashing, baDigging];
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baDigging];
 begin
   Result := False;
 
-  if not CheckSkillAvailable(baMining) then
-    Exit
-  else if lemming1.LemAction in ActionSet then
-    SelectedLemming := Lemming1
-  else if Assigned(Lemming2) and (lemming2.LemAction in ActionSet) then
-    SelectedLemming := Lemming2
+  if L.LemAction in ActionSet then
+    SelectedLemming := L
+  else if Assigned(L2) and (L2.LemAction in ActionSet) then
+    SelectedLemming := L2
   else
     Exit;
 
-  with SelectedLemming do
+  if (SelectedLemming.LemSpecialBelow = DOM_STEEL) then
   begin
+    if (not fCheckWhichLemmingOnly) then CueSoundEffect(SFX_HITS_STEEL);
+    Exit;
+  end
+  else if (    ((SelectedLemming.LemObjectInFront = DOM_ONEWAYLEFT) and (SelectedLemming.LemDx <> -1))
+            or ((SelectedLemming.LemObjectInFront = DOM_ONEWAYRIGHT) and (SelectedLemming.LemDx <> 1))) then
+    Exit
+  else
+    Result := DoSkillAssignment(SelectedLemming, baMining);
 
-    if (LemSpecialBelow = DOM_STEEL) then
-    begin
-      if (not fCheckWhichLemmingOnly) then
-        CueSoundEffect(SFX_HITS_STEEL);
-      Exit;
-    end
-    else if ((LemobjectInFront = DOM_ONEWAYLEFT) and (LemDx <> -1))
-    or ((LemobjectInFront = DOM_ONEWAYRIGHT) and (LemDx <> 1)) then
-      Exit
-    else begin
-      if (fCheckWhichLemmingOnly) then
-        WhichLemming := SelectedLemming
-      else
-      begin
-        Dec(LemY);
-        Transition(SelectedLemming, baMining);
-        UpdateSkillCount(baMining);
-        Result := True;
-        RecordSkillAssignment(SelectedLemming, baMining);
-        if not fFreezeSkillCount then
-        begin
-          OnAssignSkill(SelectedLemming, baMining);
-        end;
-      end;
-    end;
-
-  end;
+  if Result then Dec(SelectedLemming.LemY)
 end;
 
-function TLemmingGame.AssignDigger(Lemming1, Lemming2: TLemming): Boolean;
+
+function TLemmingGame.AssignDigger(L, L2: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baMining];
 begin
   Result := False;
 
-  if not CheckSkillAvailable(baDigging)
-  or (lemming1.LemSpecialBelow = DOM_STEEL) then
+  if (L.LemSpecialBelow = DOM_STEEL) then
     Exit
-  else if (lemming1.lemAction in [baWALKING, baSHRUGGING, baPlatforming, baBUILDING, baStacking, baBASHING, baMINING]) then
+  else if (L.LemAction in ActionSet) then
+    Result := DoSkillAssignment(L, baDigging)
+  else if Assigned(L2) and (not (L2.LemSpecialBelow = DOM_STEEL)) and (L2.LemAction in ActionSet) then
+    Result := DoSkillAssignment(L2, baDigging);
+
+  {
+  if (lemming1.LemSpecialBelow = DOM_STEEL) then
+    Exit
+  else if (lemming1.lemAction in ActionSet) then
   begin
     if (fCheckWhichLemmingOnly) then
       WhichLemming := lemming1
@@ -3688,7 +3623,7 @@ begin
         OnAssignSkill(Lemming2, baDigging);
       end;
     end
-  end;
+  end; }
 
 end;
 
