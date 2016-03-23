@@ -10,6 +10,8 @@
   • Note that a lot of routines start with "Result := False". I removed
     redundant code, so if you see just an "Exit" call then it is always
     to be interpreted as "Return False".
+    Nepster: This is no longer true in rewritten code. Here the default is
+    to return True.
 
   • Transition() method: It has a default parameter. So if you see a
     call to Transition() with three parameters and the last one is TRUE, it means
@@ -124,10 +126,6 @@ type
     LemBorn                       : Integer;        // game iteration the lemming is created
   { byte sized fields }
     LemAction                     : TBasicLemmingAction; // current action of the lemming
-    LemObjectBelow                : Byte;  // = ReadObjectMapType(LemX, LemY)
-    LemObjectIDBelow              : Word;  // = ReadObjectMap(LemX, LemY)
-    LemSpecialBelow               : Byte;  // = ReadSpecialMap(LemX, LemY) not needed any more!!
-    LemObjectInFront              : Byte;  // = ReadSpecialMap(LemX + 4 * LemDx, LemY - 5) not needed any more!!
     LemRemoved                    : Boolean; // the lemming is not in the level anymore
     LemTeleporting                : Boolean;
     LemEndOfAnimation             : Boolean;
@@ -1153,14 +1151,10 @@ begin
             'FloatParamTableIndex=' + i2s(LemFloatParametersTableIndex) + ', ' +
             'NumberOfBricksLeft=' + i2s(LemNumberOfBricksLeft) + ', ' +
             'Born=' + i2s(LemBorn) + ', ' +
-            'ObjBelow=' + i2s(LemObjectBelow) + ', ' +
-            'ObjInFront=' + i2s(LemObjectInFront) + ', ' +
             'IsNewDigger=' + BoolStrings[LemIsNewDigger] + ', ' +
             'IsBlocking=' + i2s(LemIsBlocking) + ', ' +
             'CanClimb=' + BoolStrings[LemIsClimber] + ', ' +
             'CanFloat=' + BoolStrings[LemIsFloater];
-
-// LemSavedMap, LemObjectBelow, LemObjectInFront
 end;
 
 procedure TLemming.Assign(Source: TLemming);
@@ -1197,10 +1191,6 @@ begin
   LemBorn := Source.LemBorn;
 
   LemAction := Source.LemAction;
-  LemObjectBelow := Source.LemObjectBelow;
-  LemObjectIDBelow := Source.LemObjectIDBelow;
-  LemSpecialBelow := Source.LemSpecialBelow;
-  LemObjectInFront := Source.LemObjectInFront;
   LemRemoved := Source.LemRemoved;
   LemTeleporting := Source.LemTeleporting;
   LemEndOfAnimation := Source.LemEndOfAnimation;
@@ -2459,9 +2449,6 @@ begin
       end;
       if (ObjectInfos[i].Obj.TarLev and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
       if NewLemming.LemIsZombie then Dec(SpawnedDead);
-      LemObjectInFront := DOM_NONE;
-      LemObjectBelow := DOM_NONE;
-      LemObjectIDBelow := DOM_NOOBJECT;
       LemInFlipper := -1;
       LemParticleTimer := -1;
       LemUsedSkillCount := 0;
@@ -2608,7 +2595,7 @@ with L do
 begin
 
   Inf := ObjectInfos[oid];
-  Inf2 := ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)];
+  Inf2 := ObjectInfos[FindReceiver(ReadObjectMap(L.LemX, L.LemY), ObjectInfos[ReadObjectMap(L.LemX, L.LemY)].Obj.Skill)];
 
   // Need to tidy this up and let the object itself implement finding the target point
 
@@ -4076,6 +4063,8 @@ end;
 
 procedure TLemmingGame.CheckForInteractiveObjects(L: TLemming; HandleAllObjects: Boolean = true);
 var
+  LemObjectBelow: Byte;
+  LemObjectIDBelow: Word;
   Inf: TInteractiveObjectInfo;
   BlockCheck: Byte;
   ni, dy, NewY: Integer;
@@ -4089,8 +4078,6 @@ begin
 
     LemObjectIDBelow := ReadObjectMap(LemX, LemY);
     LemObjectBelow := ReadObjectMapType(LemX, LemY);
-    // LemSpecialBelow := ReadSpecialMap(LemX, LemY);    // not needed any more
-    // LemObjectInFront := ReadSpecialMap((LemX + 4 * LemDx), LemY - 5);  // not needed any more
     BlockCheck := ReadBlockerMap(LemX, LemY);
 
     if (not LemObjectBelow in [DOM_TRAP, DOM_TRAPONCE]) and (LemInTrap = 1) then LemInTrap := 0;
@@ -5239,19 +5226,19 @@ end;
 function TLemmingGame.HandleSwimming(L: TLemming): Boolean;
 var
   dy, NewY: Integer;
-  LocalLemObjectBelow: Byte;
+  LemObjectBelow: Byte;
 begin
   Result := False;
 
   with L do
   begin
-    LocalLemObjectBelow := ReadWaterMap(LemX, LemY);
+    LemObjectBelow := ReadWaterMap(LemX, LemY);
     Inc(LemX, LemDx);
 
     if (ReadWaterMap(LemX, LemY-2) = DOM_WATER)
     and (not (HasPixelAt(LemX, LemY-2))) then dec(LemY);
 
-      if (LocalLemObjectBelow = DOM_WATER) then
+      if (LemObjectBelow = DOM_WATER) then
       begin
         // walk, jump, climb, or turn around
         dy := 0;
@@ -6051,7 +6038,7 @@ begin
     end
     else begin
       dy := 0;
-      if LemObjectBelow = DOM_UPDRAFT then
+      if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then
       begin
         dy := 1;
       end;
@@ -6059,7 +6046,7 @@ begin
       begin
         Inc(Dy);
         Inc(LemY);
-        if (LemObjectBelow = DOM_UPDRAFT) then
+        if (ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT) then
           LemFallen := 0
         else
           Inc(LemFallen);
@@ -6080,14 +6067,14 @@ begin
       end
       else begin
         if (LemFallen > fFallLimit)
-        and not ((LemObjectBelow = DOM_UPDRAFT) or (LemObjectBelow = DOM_NOSPLAT)) then
+        and not (ReadObjectMapType(L.LemX, L.LemY) in [DOM_UPDRAFT, DOM_NOSPLAT]) then
         begin
           Transition(L, baSplatting);
           Result := True;
           Exit;
         end else begin
           LemFloated := 0;
-          if LemObjectBelow = DOM_SPLAT then
+          if ReadObjectMapType(L.LemX, L.LemY) = DOM_SPLAT then
             Transition(L, baSplatting)
           else
             Transition(L, baWalking);
@@ -6111,7 +6098,7 @@ begin
     LemFrame := FloatParametersTable[LemFloatParametersTableIndex].AnimationFrameIndex;
     dy := FloatParametersTable[LemFloatParametersTableIndex].dy;
 
-    if LemObjectBelow = DOM_UPDRAFT then Dec(dy);
+    if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then Dec(dy);
 
     Inc(LemFloatParametersTableIndex);
     if LemFloatParametersTableIndex >= 16 then
@@ -6167,7 +6154,7 @@ begin
 
     if (LemFloatParametersTableIndex >= 8) and (dy > 1) then Dec(dy);
 
-    if LemObjectBelow = DOM_UPDRAFT then
+    if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then
     begin
       Dec(dy);
       if (LemFloatParametersTableIndex >= 8)
@@ -7317,11 +7304,6 @@ begin
           if (ObjectInfos[ix].Obj.DrawingFlags and 8) <> 0 then
             TurnAround(NewLemming);
 
-          // these must be initialized to nothing
-          LemObjectInFront := DOM_NONE;
-          LemObjectBelow := DOM_NONE;
-          LemObjectIDBelow := 0;
-
           LemUsedSkillCount := 0;
           LemIsClone := false;
 
@@ -7399,11 +7381,6 @@ begin
       LemX := CursorPoint.X;
       LemY := CursorPoint.Y;
       LemDX := 1;
-
-      // these must be initialized to nothing
-      LemObjectInFront := DOM_NONE;
-      LemObjectBelow := DOM_NONE;
-      LemObjectIDBelow := 0;
     end;
     Inc(LemmingsReleased);
     Inc(LemmingsOut);
