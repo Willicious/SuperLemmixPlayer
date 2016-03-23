@@ -124,10 +124,10 @@ type
     LemBorn                       : Integer;        // game iteration the lemming is created
   { byte sized fields }
     LemAction                     : TBasicLemmingAction; // current action of the lemming
-    LemObjectBelow                : Byte;
-    LemObjectIDBelow              : Word;
-    LemSpecialBelow               : Byte;
-    LemObjectInFront              : Byte;
+    LemObjectBelow                : Byte;  // = ReadObjectMapType(LemX, LemY)
+    LemObjectIDBelow              : Word;  // = ReadObjectMap(LemX, LemY)
+    LemSpecialBelow               : Byte;  // = ReadSpecialMap(LemX, LemY) not needed any more!!
+    LemObjectInFront              : Byte;  // = ReadSpecialMap(LemX + 4 * LemDx, LemY - 5) not needed any more!!
     LemRemoved                    : Boolean; // the lemming is not in the level anymore
     LemTeleporting                : Boolean;
     LemEndOfAnimation             : Boolean;
@@ -837,9 +837,6 @@ type
     function HandleHoisting(L: TLemming): Boolean;
     function HandleBuilding(L: TLemming): Boolean;
     function HandleBashing(L: TLemming): Boolean;
-      //function BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
-      //function BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
-      //procedure BasherTurn(L: TLemming; SteelSound: Boolean);
     function HandleMining(L: TLemming): Boolean;
     function HandleFalling(L: TLemming): Boolean;
     function HandleFloating(L: TLemming): Boolean;
@@ -2609,6 +2606,7 @@ begin
 
 with L do
 begin
+
   Inf := ObjectInfos[oid];
   Inf2 := ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)];
 
@@ -3519,7 +3517,7 @@ end;
 
 function TLemmingGame.AssignBasher(L, L2: TLemming): Boolean;
 var
-  SelectedLemming: TLemming;
+  SelL: TLemming;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baMining, baDigging];
@@ -3527,23 +3525,16 @@ begin
   Result := False;
 
   if L.LemAction in ActionSet then
-    SelectedLemming := L
+    SelL := L
   else if (L2 <> nil) and (L2.LemAction in ActionSet) then
-    SelectedLemming := L2
+    SelL := L2
   else
     Exit;
 
-  if (SelectedLemming.LemObjectInFront = DOM_STEEL) then
-  begin
+  If not HasIndestructibleAt(SelL.LemX + 4 * SelL.LemDx, SelL.LemY - 5, SelL.LemDx, baBashing) then
+    Result := DoSkillAssignment(SelL, baBashing)
+  else if HasSteelAt(SelL.LemX + 4 * SelL.LemDx, SelL.LemY - 5) then
     if (not fCheckWhichLemmingOnly) then CueSoundEffect(SFX_HITS_STEEL);
-    Exit;
-  end
-  else if ((SelectedLemming.LemObjectInFront = DOM_ONEWAYLEFT) and (SelectedLemming.LemDx <> -1)) or
-          ((SelectedLemming.LemObjectInFront = DOM_ONEWAYRIGHT) and (SelectedLemming.LemDx <> 1)) or
-          (SelectedLemming.LemObjectInFront = DOM_ONEWAYDOWN) then
-    Exit
-  else
-    Result := DoSkillAssignment(SelectedLemming, baBashing);
 end;
 
 
@@ -3563,13 +3554,16 @@ begin
   else
     Exit;
 
-  if (SelectedLemming.LemSpecialBelow = DOM_STEEL) then
+
+
+  if HasSteelAt(L.LemX, L.LemY) then
   begin
     if (not fCheckWhichLemmingOnly) then CueSoundEffect(SFX_HITS_STEEL);
     Exit;
   end
-  else if (    ((SelectedLemming.LemObjectInFront = DOM_ONEWAYLEFT) and (SelectedLemming.LemDx <> -1))
-            or ((SelectedLemming.LemObjectInFront = DOM_ONEWAYRIGHT) and (SelectedLemming.LemDx <> 1))) then
+
+  else if (    ((ReadSpecialMap(SelectedLemming.LemX + 4 * SelectedLemming.LemDx, SelectedLemming.LemY - 5) = DOM_ONEWAYLEFT) and (SelectedLemming.LemDx <> -1))
+            or ((ReadSpecialMap(SelectedLemming.LemX + 4 * SelectedLemming.LemDx, SelectedLemming.LemY - 5) = DOM_ONEWAYRIGHT) and (SelectedLemming.LemDx <> 1))) then
     Exit
   else
     Result := DoSkillAssignment(SelectedLemming, baMining);
@@ -3585,11 +3579,11 @@ const
 begin
   Result := False;
 
-  if (L.LemSpecialBelow = DOM_STEEL) then
+  if HasSteelAt(L.LemX, L.LemY) then
     Exit
   else if (L.LemAction in ActionSet) then
     Result := DoSkillAssignment(L, baDigging)
-  else if Assigned(L2) and (not (L2.LemSpecialBelow = DOM_STEEL)) and (L2.LemAction in ActionSet) then
+  else if Assigned(L2) and (not HasSteelAt(L2.LemX, L2.LemY)) and (L2.LemAction in ActionSet) then
     Result := DoSkillAssignment(L2, baDigging);
 end;
 
@@ -4095,8 +4089,8 @@ begin
 
     LemObjectIDBelow := ReadObjectMap(LemX, LemY);
     LemObjectBelow := ReadObjectMapType(LemX, LemY);
-    LemSpecialBelow := ReadSpecialMap(LemX, LemY);
-    LemObjectInFront := ReadSpecialMap((LemX + 4 * LemDx), LemY - 5);
+    // LemSpecialBelow := ReadSpecialMap(LemX, LemY);    // not needed any more
+    // LemObjectInFront := ReadSpecialMap((LemX + 4 * LemDx), LemY - 5);  // not needed any more
     BlockCheck := ReadBlockerMap(LemX, LemY);
 
     if (not LemObjectBelow in [DOM_TRAP, DOM_TRAPONCE]) and (LemInTrap = 1) then LemInTrap := 0;
