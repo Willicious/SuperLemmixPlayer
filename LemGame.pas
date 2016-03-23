@@ -606,7 +606,7 @@ type
     DosEntryTable              : array of Integer; // table for entrance release order
     fSlowingDownReleaseRate    : Boolean;
     fSpeedingUpReleaseRate     : Boolean;
-    fPaused             : Boolean;
+    fPaused                    : Boolean;
     MaxNumLemmings             : Integer;
     LowestReleaseRate          : Integer;
     HighestReleaseRate         : Integer;
@@ -5960,7 +5960,16 @@ begin
 end;
 
 
+
 function TLemmingGame.HandleMining(L: TLemming): Boolean;
+  procedure MinerTurn(L: TLemming; X, Y: Integer);
+  begin
+    if HasSteelAt(X, Y) then CueSoundEffect(SFX_HITS_STEEL);
+    // Independently of (X, Y) this check is always made at Lem position
+    if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
+    Transition(L, baWalking, TRUE);
+  end;
+
 begin
   Result := True;
 
@@ -5970,87 +5979,57 @@ begin
 
   else if L.LemFrame in [3, 15] then
   begin
+    Inc(L.LemX, 2*L.LemDx);
     Inc(L.LemY);
 
-    if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) and (L.LemFrame = 3) then
-    begin
-      if HasIndestructibleAt(L.LemX + L.LemDx, L.LemY - 2, L.LemDx, baMining) then
-      begin
-        if HasSteelAt(L.LemX + L.LemDx, L.LemY-2) then CueSoundEffect(SFX_HITS_STEEL);
-        if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
-        Transition(L, baWalking, TRUE);
-        Exit;
-      end;
-    end;
+    // Note that all if-checks are relative to the end position!
 
-    Inc(L.LemX, L.LemDx);
-
-    if not HasPixelAt(L.LemX, L.LemY) and not HasPixelAt(L.LemX, L.LemY + 1) then
+    // This first check is only relevant during the very first cycle.
+    // Otherwise the pixel was already checked in frame 15 of the previous cycle
+    If (L.LemFrame = 3) and HasIndestructibleAt(L.LemX - L.LemDx, L.LemY - 2, L.LemDx, baMining) then
     begin
+      Dec(L.LemX, 2*L.LemDx);
+      MinerTurn(L, L.LemX + L.LemDx, L.LemY - 2);
+    end
+
+    // Do we really want the to check the second HasPixel during frame 3 ????
+    else if     not HasPixelAt(L.LemX - L.LemDx, L.LemY)
+            and not HasPixelAt(L.LemX - L.LemDx, L.LemY + 1) then
+    begin
+      Dec(L.LemX, L.LemDx);
       Inc(L.LemY);
       Transition(L, baFalling);
       L.LemFallen := L.LemFallen + 1;
-      Exit;
-    end;
+    end
 
-    if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) then
+    else if HasIndestructibleAt(L.LemX, L.LemY - 2, L.LemDx, baMining) then
     begin
-      if HasIndestructibleAt(L.LemX + L.LemDx, L.LemY - 2, L.LemDx, baMining) then
-      begin
-        if HasSteelAt(L.LemX + L.LemDx, L.LemY - 2) then CueSoundEffect(SFX_HITS_STEEL);
-        if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY - 1) then Dec(L.LemY);
-        Transition(L, baWalking, TRUE);
-        Exit;
-      end;
-    end;
+      Dec(L.LemX, L.LemDx);
+      MinerTurn(L, L.LemX + L.LemDx, L.LemY - 2);
+    end
 
-    Inc(L.LemX, L.LemDx);
-
-    if (L.LemY > LEMMING_MAX_Y + World.Height) then
+    else if (L.LemY > LEMMING_MAX_Y + World.Height) then
     begin
       RemoveLemming(L, RM_NEUTRAL);
       Result := False;
-      Exit;
-    end;
+    end
 
-    if not HasPixelAt(L.LemX, L.LemY) then
+    else if not HasPixelAt(L.LemX, L.LemY) then
     begin
       Inc(L.LemY);
       Transition(L, baFalling);
-      Exit;
-    end;
+    end
 
-    if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) then
-    begin
-      if HasIndestructibleAt(L.LemX + L.LemDx, L.LemY - 2, L.LemDx, baMining) then
-      begin
-        if HasSteelAt(L.LemX + L.LemDx, L.LemY - 2) then CueSoundEffect(SFX_HITS_STEEL);
-        if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
-        Transition(L, baWalking, TRUE);
-        Exit;
-      end;
-    end;
+    else if HasIndestructibleAt(L.LemX + L.LemDx, L.LemY - 2, L.LemDx, baMining) then
+      MinerTurn(L, L.LemX + L.LemDx, L.LemY - 2)
 
-    if HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining) then
-    begin
-      if HasSteelAt(L.LemX, L.LemY) then CueSoundEffect(SFX_HITS_STEEL);
-      if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY - 1) then Dec(L.LemY);
-      Transition(L, baWalking, TRUE);
-    end;
+    else if HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining) then
+      MinerTurn(L, L.LemX, L.LemY);
   end
 
-  else if (L.LemFrame = 0) then
-  begin
-    if (L.LemY > LEMMING_MAX_Y + World.Height) then
-    begin
-      RemoveLemming(L, RM_NEUTRAL);
-      Result := False;
-      Exit;
-    end;
-  end
-
-  else // In other frames, do not check for traps
-    Result := False
+  else if not (L.LemFrame = 0) then
+    // In frames 4-14, do not check for traps
+    Result := False;
 
 end;
 
