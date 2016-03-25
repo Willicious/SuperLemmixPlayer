@@ -754,7 +754,7 @@ type
     procedure CheckReleaseLemming;
     procedure CheckUpdateNuking;
     procedure CueSoundEffect(aSoundId: Integer);
-    function DigOneRow(L: TLemming; Y: Integer): Boolean;
+    function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
     procedure DrawLemmings;
@@ -4915,49 +4915,29 @@ begin
 end;
 
 
-function TLemmingGame.DigOneRow(L: TLemming; Y: Integer): Boolean;
+function TLemmingGame.DigOneRow(PosX, PosY: Integer): Boolean;
+// The central pixel of the removed row lies at (PosX, PosY)
 var
-  yy, N, X: Integer;
-  //mX, mY: Integer;
+  n: Integer;
 begin
-  Result := FALSE;
+  Result := False;
 
-  with L do
+  Assert(PosY >=0, 'Digging at negative Y-coordinate');
+
+  For n := -4 to 4 do
   begin
-
-    n := 1;
-    x := LemX - 4;
-
-    yy := Y;
-
-    if (yy < 0) then yy := 0;
-
-    while (n <= 9) do
+    if (HasPixelAt(PosX + n, PosY) = TRUE) and (ReadSpecialMap(PosX + n, PosY) <> DOM_STEEL) then
     begin
-      if (HasPixelAt(x,yy) = TRUE) and (ReadSpecialMap(x, yy) <> DOM_STEEL) then
-      begin
-        RemovePixelAt(x,yy);
-        if ReadSpecialMap(x, yy) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
-            WriteSpecialMap(x, yy, DOM_NONE);
-        if (n > 1) and (n < 9) then
-        Result := TRUE;
-      end;
-      inc(n);
-      inc(x);
-    end;// while
+      RemovePixelAt(PosX + n, PosY);
+      if (n > -4) and (n < 4) then Result := True;
+    end;
 
-    SteelWorld.Assign(World);
-
+    if ReadSpecialMap(PosX + n, PosY) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
+      WriteSpecialMap(PosX + n, PosY, DOM_NONE);
   end;
 
-  // fake draw mask in minimap
-  {mX := L.LemX div 16;
-  mY := L.LemY div 8;
-  MiniMap.PixelS[mX, mY] := Renderer.BackgroundColor;}
-
+  SteelWorld.Assign(World);  // What has Digging to do with STEEL!!!???
   InitializeMinimap;
-
-
 end;
 
 function TLemmingGame.HandleLemming(L: TLemming): Boolean;
@@ -5188,7 +5168,7 @@ begin
 
     if LemIsNewDigger then
     begin
-      DigOneRow(L, LemY - 1);
+      DigOneRow(LemX, LemY - 1);
       LemIsNewDigger := FALSE;
     end else begin
       Inc(LemFrame);
@@ -5207,7 +5187,7 @@ begin
         Exit;
       end;
 
-      if (DigOneRow(L, y) = FALSE) then
+      if (DigOneRow(LemX, Y) = FALSE) then
       begin
         Transition(L, baFalling);
       end;
