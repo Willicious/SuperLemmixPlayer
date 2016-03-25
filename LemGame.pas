@@ -764,8 +764,7 @@ type
     procedure EraseParticles(L: TLemming);
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
-    function HasPixelAt(X, Y: Integer; SwimTest: Boolean = false): Boolean;
-    //function HasPixelAt_ClipY(X, Y, minY: Integer; SwimTest: Boolean = false): Boolean;
+    function HasPixelAt(X, Y: Integer): Boolean;
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeMiniMap;
@@ -2553,29 +2552,20 @@ begin
     else B := Renderer.BackgroundColor;
 end;
 
-function TLemmingGame.HasPixelAt(X, Y: Integer; SwimTest: Boolean = false): Boolean;
+
+function TLemmingGame.HasPixelAt(X, Y: Integer): Boolean;
 {-------------------------------------------------------------------------------
   Read value from world.
   The function returns True when the value at (x, y) is terrain
 -------------------------------------------------------------------------------}
 begin
-
   with World do
   begin
     Result := not ((X >= 0) and (Y >= 0) and (X < Width));
-    if Result = false then Result := (Y < Height) and (Pixel[X, Y] and ALPHA_TERRAIN <> 0);
-    if SwimTest and (Y >= Height) then Result := true;
+    if Result = False then Result := (Y < Height) and (Pixel[X, Y] and ALPHA_TERRAIN <> 0);
   end;
-
 end;
 
-{
-function TLemmingGame.HasPixelAt_ClipY(X, Y, minY: Integer; SwimTest: Boolean = false): Boolean;
-begin
-  Result := HasPixelAt(X, Y, SwimTest);
-  // need to remove this function; NeoLemmix doesn't ever clip Y in solidity tests
-end;
-}
 
 procedure TLemmingGame.RemovePixelAt(X, Y: Integer);
 begin
