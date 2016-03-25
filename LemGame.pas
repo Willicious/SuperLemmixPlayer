@@ -5032,98 +5032,96 @@ end;
 
 function TLemmingGame.HandleSwimming(L: TLemming): Boolean;
 var
-  dy, NewY: Integer;
-  LemObjectBelow: Byte;
-begin
-  Result := False;
+  LemDy: Integer;
+  OldLemObjectBelow: Byte;
 
-  with L do
+  function LemDive(L: TLemming): Integer;
+    // Returns 0 if the lem may not dive down
+    // Otherwise return the amount of pixels the lem dives
+  var
+    DiveDepth: Integer;
   begin
-    LemObjectBelow := ReadWaterMap(LemX, LemY);
-    Inc(LemX, LemDx);
+    if L.LemIsClimber then DiveDepth := 3
+    else DiveDepth := 4;
 
-    if (ReadWaterMap(LemX, LemY-2) = DOM_WATER)
-    and (not (HasPixelAt(LemX, LemY-2))) then dec(LemY);
+    Result := 1;
+    while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= DiveDepth) do
+    begin
+      Inc(Result);
+      If L.LemY + Result >= World.Height then Result := DiveDepth + 1; // End while loop!
+    end;
 
-      if (LemObjectBelow = DOM_WATER) then
+    if Result > DiveDepth then Result := 0; // too much terrain to dive
+    // Here is a condition missing, that the water trigger area has to extend to the new position!!!
+    // if not (ReadWaterMap(L.LemX, L.LemY + Result) = DOM_WATER) then Result := 0; // not enough water to dive
+  end;
+
+begin
+  Result := True;
+
+  OldLemObjectBelow := ReadWaterMap(L.LemX, L.LemY);
+
+  Inc(L.LemX, L.LemDx);
+
+  // This really should check at height L.LemY - 1!!!
+  // Moreover this should be moved into the If-case as another "else if"
+  if     (ReadWaterMap(L.LemX, L.LemY - 2) = DOM_WATER)
+     and not HasPixelAt(L.LemX, L.LemY - 2) then
+    Dec(L.LemY);
+
+  // Having this check at the previous position is nonsense:
+  // It allows swimmers to jump over 1-pixel gaps!
+  // (and has other weird consequences, too)
+  if OldLemObjectBelow = DOM_WATER then
+  begin
+    // This is not completely the same as in V1.43. There a check
+    // for the pixel (L.LemX, L.LemY) is omitted.
+    LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+    if LemDy < -6 then
+    begin
+      if LemDive(L) > 0 then
       begin
-        // walk, jump, climb, or turn around
-        dy := 0;
-        NewY := LemY;
-        while (dy <= 6) and HasPixelAt(LemX, NewY - 1) do
-        begin
-          Inc(dy);
-          Dec(NewY);
-        end;
+        // Dive below the terrain
+        Inc(L.LemY, LemDive(L));
+        if not (ReadWaterMap(L.LemX, L.LemY) = DOM_WATER) then Transition(L, baFalling);
+        Result := False;
+      end
+      else if L.LemIsClimber then
+        Transition(L, baClimbing)
+      else
+      begin
+        TurnAround(L);
+        Inc(L.LemX, L.LemDx); // Move lemming back - shouldn't do that if we change to MoveLem!!!
+      end
+    end
 
-        if dy > 6 then
-        begin
-          if (LemIsClimber) then
-          begin
-            dy := 0;
-            while (dy < 3) do
-            begin
-              Inc(dy);
-              if HasPixelAt(LemX, LemY + dy, true) = FALSE then // special treatment in the swimmer pixel test
-              begin
-                LemY := LemY + dy;
-                Result := ReadWaterMap(LemX, LemY) = DOM_WATER;
-                if Result = false then Transition(L, baFalling);
-                exit;
-              end;
-            end;
-            Transition(L, baClimbing);
-          end
-          else begin
-            dy := 0;
-            while (dy < 4) do
-            begin
-              Inc(dy);
-              if HasPixelAt(LemX, LemY + dy - 1, true) = FALSE then // special treatment here too
-              begin
-                LemY := LemY + dy;
-                Result := ReadWaterMap(LemX, LemY) = DOM_WATER;
-                if Result = false then Transition(L, baFalling);
-                exit;
-              end;
-            end;
-            TurnAround(L);
-            Inc(LemX, LemDx);
-          end;
-          Result := True;
-          Exit;
-        end
-        else begin
-          if dy >= 3 then
-          begin
-            Transition(L, baJumping);
-            NewY := LemY - 2;
-          end else
-            if dy >= 1 then Transition(L, baWalking);
-          LemY := NewY;
-          Result := True;
-          Exit;
-        end
-      end else begin // no water at feet
-        // walk or fall downwards
-          dy := 1;
-          while dy <= 3 do
-          begin
-            Inc(LemY);
-            if HasPixelAt(LemX, LemY) then Break;
-            Inc(Dy);
-          end;
+    else if LemDy <= -3 then
+    begin
+      Transition(L, baJumping);
+      Dec(L.LemY, 2);
+    end
 
-          if dy > 3 then
-          begin
-            // in this case, lemming becomes a faller
-            Inc(LemY);
-            Transition(L, baFalling);
-          end else
-            Transition(L, baWalking);
-      end;
+    else if LemDy <= -1 then
+    begin
+      Transition(L, baWalking);
+      Inc(L.LemY, LemDy);
+    end
+  end
 
-  end; // with L
+  else // if no water on previous(!!) position
+  begin
+    LemDy := FindGroundPixel(L.LemX, L.LemY);
+    If LemDy = 4 then
+    begin
+      Inc(L.LemY);
+      Transition(L, baFalling);
+    end
+    else
+      Transition(L, baWalking);
+
+    Result := False;
+  end;
 
 end;
 
