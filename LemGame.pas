@@ -771,8 +771,8 @@ type
     procedure InitializeMiniMap;
     procedure InitializeObjectMap;
     procedure InitializeBlockerMap;
-    procedure LayBrick(L: TLemming; o: Integer = 0);
-    procedure LayStackBrick(L: TLemming; o: Integer);
+    procedure LayBrick(L: TLemming);
+    procedure LayStackBrick(L: TLemming);
     function PrioritizedHitTest(out Lemming1, Lemming2: TLemming;
                                 MousePos: TPoint;
                                 CheckRightMouseButton: Boolean = True): Integer;
@@ -4852,96 +4852,66 @@ begin
 
 end;
 
-procedure TLemmingGame.LayBrick(L: TLemming; O: Integer = 0);
+procedure TLemmingGame.LayBrick(L: TLemming);
 {-------------------------------------------------------------------------------
   bricks are in the lemming area so will automatically be copied to the screen
   during drawlemmings
 -------------------------------------------------------------------------------}
 var
-  i, x, y: Integer;
-  NumPixelsFilled: Integer;
-  C: TColor32;
+  BrickPosY, n: Integer;
+  BrickColor: TColor32;
 begin
-  NumPixelsFilled := 0;
+  Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
+            'Number bricks out of bounds');
 
-  with L do
+  BrickColor := BrickPixelColors[12 - L.LemNumberOfBricksLeft] or ALPHA_TERRAIN;
+
+  If L.LemAction = baBuilding then BrickPosY := L.LemY - 1
+  else BrickPosY := L.LemY; // for platformers
+
+  for n := 0 to 5 do
   begin
-    if (LemDx = 1) then
-      x := LemX
-    else
-      x := LemX - 5;
-
-    i := 12 - L.LemNumberOfBricksLeft;
-    if i < 0 then i := 0;
-    if i > 11 then i := 11;
-    C := BrickPixelColors[i];
-    C := C or ALPHA_TERRAIN;
-    y := LemY - 1 + o;
-
-//    C := BrickPixelColor or ALPHA_TERRAIN;
-
-
-    repeat
-      if World.PixelS[x, y] and ALPHA_TERRAIN = 0 then
-      begin
-        World.PixelS[x, y] := C;
-        if not fHyperSpeed then fTargetBitmap.PixelS[x, y] := C;
-      end;
-      Inc(NumPixelsFilled);
-      Inc(X);
-    until NumPixelsFilled = 6;
+    if World.PixelS[L.LemX + n*L.LemDx, BrickPosY] and ALPHA_TERRAIN = 0 then
+    begin
+      World.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
+      if not fHyperSpeed then
+        fTargetBitmap.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
+    end;
   end;
 
-  SteelWorld.Assign(World);
+  SteelWorld.Assign(World);  //What has LayBrick to do with STEEL!!!???
   InitializeMinimap;
-
 end;
 
-procedure TLemmingGame.LayStackBrick(L: TLemming; O: Integer);
+procedure TLemmingGame.LayStackBrick(L: TLemming);
 {-------------------------------------------------------------------------------
   bricks are in the lemming area so will automatically be copied to the screen
   during drawlemmings
 -------------------------------------------------------------------------------}
 var
-  i, x, y: Integer;
-  NumPixelsFilled: Integer;
-  C: TColor32;
+  BrickPosY, n: Integer;
+  BrickColor: TColor32;
 begin
-  NumPixelsFilled := 0;
+  Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
+            'Number stacker bricks out of bounds');
 
-  with L do
+  BrickColor := BrickPixelColors[12 - L.LemNumberOfBricksLeft] or ALPHA_TERRAIN;
+
+  BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
+  if L.LemStackLow then Inc(BrickPosY);
+
+  for n := 1 to 3 do
   begin
-    if (LemDx = 1) then
-      x := LemX+1
-    else
-      x := LemX - 3;
-
-    i := 12 - L.LemNumberOfBricksLeft;
-    if i < 0 then i := 0;
-    if i > 11 then i := 11;
-    C := BrickPixelColors[i];
-    C := C or ALPHA_TERRAIN;
-    if LemStackLow then Inc(o);
-    Y := LemY - 9 + o;
-
-//    C := BrickPixelColor or ALPHA_TERRAIN;
-
-
-
-    repeat
-      if World.PixelS[x, y] and ALPHA_TERRAIN = 0 then
-      begin
-        World.PixelS[x, y] := C;
-        if not fHyperSpeed then fTargetBitmap.PixelS[x, y] := C;
-      end;
-      Inc(NumPixelsFilled);
-      Inc(X);
-    until NumPixelsFilled = 3;
+    if World.PixelS[L.LemX + n*L.LemDx, BrickPosY] and ALPHA_TERRAIN = 0 then
+    begin
+      World.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
+      if not fHyperSpeed then
+        fTargetBitmap.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
+    end;
   end;
 
-  SteelWorld.Assign(World);
+  SteelWorld.Assign(World);  //What has LayStackBrick to do with STEEL!!!???
   InitializeMinimap;
-
 end;
 
 
@@ -5415,7 +5385,7 @@ begin
   if L.LemFrame = 9 then
   begin
     L.LemCouldPlatform := LemCanPlatform(L);
-    LayBrick(L, 1);
+    LayBrick(L);
     Result := False;
   end
 
@@ -5523,7 +5493,7 @@ begin
 
   if L.LemFrame = 7 then
   begin
-    LayStackBrick(L, L.LemNumberOfBricksLeft);
+    LayStackBrick(L);
     // LemFrame = 8 has to be skipped!
     // Stored content has 9 frames, but only 8 are used!!
     Inc(L.LemFrame);
