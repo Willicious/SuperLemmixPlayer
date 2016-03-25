@@ -747,7 +747,6 @@ type
     procedure CheckAdjustReleaseRate;
     procedure CheckForGameFinished;
     procedure CheckForInteractiveObjects(L: TLemming; HandleAllObjects: Boolean = true);
-    function CheckForLevelTopBoundary(L: TLemming; LocalFrameTopDy: Integer = 0): Boolean;
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForPlaySoundEffect;
     procedure CheckForReplayAction(RRCheck: Boolean);
@@ -5056,13 +5055,11 @@ begin
     // turn into jumper
     Transition(L, baJumping);
     Inc(L.LemY, -2);
-    CheckForLevelTopBoundary(L);
   end
   else if (LemDy < 1) then
   begin
     // walk forward
     Inc(L.LemY, LemDy);
-    CheckForLevelTopBoundary(L);
   end;
 
   // Get new ground pixel again in case the Lem has turned
@@ -5159,7 +5156,6 @@ begin
           end else
             if dy >= 1 then Transition(L, baWalking);
           LemY := NewY;
-          CheckForLevelTopBoundary(L);
           Result := True;
           Exit;
         end
@@ -5361,9 +5357,7 @@ begin
   else if L.LemEndOfAnimation then
     Transition(L, baWalking)
   else
-    Result := False;
-
-  CheckForLevelTopBoundary(L);
+    Result := False;  // Why explicitely NOT check for traps here???
 end;
 
 function TLemmingGame.LemCanPlatform(L: TLemming): Boolean;
@@ -5435,16 +5429,12 @@ begin
   else if L.LemFrame = 15 then
   begin
     if not L.LemCouldPlatform then
-    begin
-      Transition(L, baWalking, TRUE);
-      CheckForLevelTopBoundary(L);  // Seems useless here????
-    end
+      Transition(L, baWalking, TRUE)
 
     else if PlatformerTerrainCheck(L.LemX + 2*L.LemDx, L.LemY) then
     begin
       Inc(L.LemX, L.LemDx);
       Transition(L, baWalking, TRUE);  // turn around as well
-      CheckForLevelTopBoundary(L);  // Seems useless here????
     end
 
     else
@@ -5458,7 +5448,6 @@ begin
     begin
       Inc(L.LemX, L.LemDx);
       Transition(L, baWalking, True);  // turn around as well
-      CheckForLevelTopBoundary(L);  // Seems useless here????
     end
 
     else if     PlatformerTerrainCheck(L.LemX + 3*L.LemDx, L.LemY)
@@ -5466,7 +5455,6 @@ begin
     begin
       Inc(L.LemX, 2*L.LemDx);
       Transition(L, baWalking, True);  // turn around as well
-      CheckForLevelTopBoundary(L);   // Seems useless here????
     end
 
     else
@@ -5480,7 +5468,6 @@ begin
           Dec(L.LemX, L.LemDx);
 
         Transition(L, baShrugging);
-        CheckForLevelTopBoundary(L);  // This is most certainly useless
       end;
     end;
   end
@@ -5490,75 +5477,43 @@ end;
 
 function TLemmingGame.HandleBuilding(L: TLemming): Boolean;
 begin
-  Result := False;
+  Result := True;
 
-  with L do
+  if L.LemFrame = 9 then
+    LayBrick(L)
+
+  else if (L.LemFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
+    CueSoundEffect(SFX_BUILDER_WARNING)
+
+  else if L.LemFrame = 0 then
   begin
-    // sound
-    if (LemFrame = 10) and (LemNumberOfBricksLeft <= 3) then
-      CueSoundEffect(SFX_BUILDER_WARNING);
+    Dec(L.LemNumberOfBricksLeft);
 
-    // lay brick
-    if (LemFrame = 9) then
+    Dec(L.LemY);
+    Inc(L.LemX, L.LemDx);
+
+    if (     HasPixelAt(L.LemX, L.LemY - 1)
+         or  HasPixelAt(L.LemX, L.LemY - 2)
+         or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
+       ) then
+      Transition(L, baWalking, TRUE)  // turn around as well
+
+    else
     begin
-      LayBrick(L);
-      Exit;
-    end
-    else if (LemFrame = 0) then
-    begin
+      Inc(L.LemX, L.LemDx);
 
-      Dec(LemY);
-      Inc(LemX, LemDx);
-      if (     HasPixelAt(LemX, LemY - 1)
-           or  HasPixelAt(LemX, LemY - 2)
-           or (HasPixelAt(LemX + LemDx, LemY - 9) and (LemNumberOfBricksLeft > 1))
+      if (     HasPixelAt(L.LemX, L.LemY - 1)
+           or  HasPixelAt(L.LemX, L.LemY - 2)
+           or  HasPixelAt(L.LemX, L.LemY - 3)
+           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 3) and (L.LemNumberOfBricksLeft > -1)) // Does this do anything at all???
+           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
          ) then
-      begin
-        Transition(L, baWalking, TRUE);  // turn around as well
-        CheckForLevelTopBoundary(L);
-        Result := True;
-        Exit;
-      end;
+         Transition(L, baWalking, TRUE)  // turn around as well
 
-      Inc(LemX, LemDx);
-      if (     HasPixelAt(LemX, LemY - 1)
-           or  HasPixelAt(LemX, LemY - 2)
-           or  HasPixelAt(LemX, LemY - 3)
-           or (HasPixelAt(LemX + LemDx, LemY - 3) and (LemNumberOfBricksLeft > 0))
-         ) then
-      begin
-        Transition(L, baWalking, TRUE);  // turn around as well
-        CheckForLevelTopBoundary(L);
-        Result := True;
-        Exit;
-      end;
-
-      Dec(LemNumberOfBricksLeft);
-      if LemNumberOfBricksLeft = 0 then
-      begin
-        Transition(L, baShrugging);
-        CheckForLevelTopBoundary(L);
-        Result := True;
-        Exit;
-      end;
-
-      if HasPixelAt(LemX + LemDx, LemY - 9) then
-      begin
-        Transition(L, baWalking, TRUE);  // turn around as well
-        CheckForLevelTopBoundary(L);
-        Result := True;
-        Exit;
-      end;
-
-      Result := True;
-      Exit;
-    end
-    else begin
-      Result := True;
-      Exit;
+       else if L.LemNumberOfBricksLeft = 0 then
+         Transition(L, baShrugging);
     end;
-
-  end; // with L
+  end;
 end;
 
 
@@ -5591,7 +5546,6 @@ begin
       if (HasPixelAt(LemX+LemDx, oy)) then
       begin
         Transition(L, baWalking, true);
-        CheckForLevelTopBoundary(L);
         Result := True;
         Exit;
       end;
@@ -5600,7 +5554,6 @@ begin
       if (LemNumberOfBricksLeft = 0) then
       begin
         Transition(L, baShrugging);
-        CheckForLevelTopBoundary(L);
         Result := True;
         Exit;
       end;
@@ -6039,11 +5992,10 @@ begin
     Inc(LemX, LemDx);
 
     if (dy < 0) then
-      begin
+    begin
       Inc(LemY, dy);
       Inc(LemFloated);
-      CheckForLevelTopBoundary(L);
-      end
+    end
     else begin
 
       if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY - 1) then
@@ -6304,16 +6256,7 @@ begin
 end;
 
 
-function TLemmingGame.CheckForLevelTopBoundary(L: TLemming; LocalFrameTopDy: Integer = 0): Boolean;
-begin
-
-  Result := false;
-
-end;
-
-
 procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0);
-
 begin
 
   if L.LemIsZombie and (RemMode = RM_ZOMBIE) then Exit;
