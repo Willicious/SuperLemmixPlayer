@@ -5380,105 +5380,122 @@ end;
 
 function TLemmingGame.LemCanPlatform(L: TLemming): Boolean;
 var
-  x, x2: Integer;
-  c2: Boolean;
+  n: Integer;
 begin
-  with L do
+  Result := False;
+  // Next brick must add at least one pixel
+  for n := 0 to 5 do
+    Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
+
+  // Lem may not hit terrain where the previous brick was already placed.
+  Result := Result and not HasPixelAt(L.LemX + L.LemDx, L.LemY - 1);
+  Result := Result and not HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 1);
+
+  // Now comes the weird exception rule at left boundary of level!
+  // Depending on the lem direction, we may ignore the checks at LemY - 1
+  // See forum discussion ?????????????????????
+  if L.LemDx = 1 then
   begin
-    x := LemX;
-    if LemDX < 0 then Dec(x, 5);
-    Result := false;
-    c2 := true;
-    for x2 := x to x+5 do
-      if not HasPixelAt(x2, LemY) then
-      begin
-        if x2 < 3 then c2 := false;
-        Result := true;
-      end;
-    if LemDX < 0 then Inc(x, 2);
-    if c2 and Result then
-      for x2 := x+1 to x+2 do
-        if HasPixelAt(x2, LemY-1) {and HasPixelAt(x2, LemY-2)} then
-          Result := false;
+    if    ((L.LemX     < 3) and not HasPixelAt(L.LemX    , L.LemY))
+       or ((L.LemX + 1 < 3) and not HasPixelAt(L.LemX + 1, L.LemY))
+       or ((L.LemX + 2 < 3) and not HasPixelAt(L.LemX + 2, L.LemY)) then
+    begin
+      Result := False;
+      for n := 0 to 5 do
+        Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
+    end;
+  end
+  else
+  begin
+    if    ((L.LemX     < 8) and not HasPixelAt(L.LemX    , L.LemY))
+       or ((L.LemX + 1 < 8) and not HasPixelAt(L.LemX + 1, L.LemY))
+       or ((L.LemX + 2 < 8) and not HasPixelAt(L.LemX + 2, L.LemY))
+       or ((L.LemX + 3 < 8) and not HasPixelAt(L.LemX + 3, L.LemY))
+       or ((L.LemX + 4 < 8) and not HasPixelAt(L.LemX + 4, L.LemY))
+       or ((L.LemX + 5 < 8) and not HasPixelAt(L.LemX + 5, L.LemY)) then
+    begin
+      Result := False;
+      for n := 0 to 5 do
+        Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
+    end;
   end;
 end;
 
 
 function TLemmingGame.HandlePlatforming(L: TLemming): Boolean;
-//var
-//  tcheck : Integer;
-begin
-  Result := False;
-
-  with L do
+  function PlatformerTerrainCheck(X, Y: Integer): Boolean;
   begin
-    // sound
-    if (LemFrame = 10) and (LemNumberOfBricksLeft <= 3) then
-      CueSoundEffect(SFX_BUILDER_WARNING);
+    Result := HasPixelAt(X, Y - 1) or HasPixelAt(X, Y - 2);
+  end;
 
-    // lay brick
-    if (LemFrame = 9) then
-    begin
-      LemCouldPlatform := LemCanPlatform(L);
-      LayBrick(L, 1);
-      Exit;
-    end
-    else if (LemFrame = 15) and not (LemCouldPlatform) then
+begin
+  Result := True;
+
+  if L.LemFrame = 9 then
+  begin
+    L.LemCouldPlatform := LemCanPlatform(L);
+    LayBrick(L, 1);
+    Result := False;
+  end
+
+  else if (L.LemFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
+  begin
+    CueSoundEffect(SFX_BUILDER_WARNING);
+    Result := False
+  end
+
+  else if L.LemFrame = 15 then
+  begin
+    if not L.LemCouldPlatform then
     begin
       Transition(L, baWalking, TRUE);
-      CheckForLevelTopBoundary(L);
-      Result := True;
-      Exit;
+      CheckForLevelTopBoundary(L);  // Seems useless here????
     end
-    else if (LemFrame = 0) or (LemFrame = 15) then
+
+    else if PlatformerTerrainCheck(L.LemX + 2*L.LemDx, L.LemY) then
     begin
-
-      Inc(LemX, LemDx);
-      if (     (HasPixelAt(LemX+LemDx, LemY - 1) or HasPixelAt(LemX+LemDx, LemY - 2))
-           and ((LemNumberOfBricksLeft > 1) or (LemFrame = 15))
-         ) then
-      begin
-        Transition(L, baWalking, TRUE);  // turn around as well
-        CheckForLevelTopBoundary(L);
-        Result := True;
-        Exit;
-      end;
-
-      if LemFrame = 0 then
-      begin
-
-      Inc(LemX, LemDx);
-      if (HasPixelAt(LemX+LemDx, LemY - 1) or HasPixelAt(LemX+LemDx, LemY - 2)) then
-      begin
-        if (LemNumberOfBricksLeft > 1) then
-        begin
-          Transition(L, baWalking, TRUE);  // turn around as well
-          CheckForLevelTopBoundary(L);
-          Result := True;
-          Exit;
-        end else if HasPixelAt(LemX, LemY - 1) then
-          Dec(LemX, LemDx);
-      end;
-
-      Dec(LemNumberOfBricksLeft);
-      if (LemNumberOfBricksLeft = 0) then
-      begin
-        Transition(L, baShrugging);
-        CheckForLevelTopBoundary(L);
-        Result := True;
-        Exit;
-      end;
-      end;
-
-      Result := True;
-      Exit;
+      Inc(L.LemX, L.LemDx);
+      Transition(L, baWalking, TRUE);  // turn around as well
+      CheckForLevelTopBoundary(L);  // Seems useless here????
     end
-    else begin
-      Result := True;
-      Exit;
-    end;
 
-  end; // with L
+    else
+      Inc(L.LemX, L.LemDx);
+  end
+
+  else if L.LemFrame = 0 then
+  begin
+    if      PlatformerTerrainCheck(L.LemX + 2*L.LemDx, L.LemY)
+        and (L.LemNumberOfBricksLeft > 1) then
+    begin
+      Inc(L.LemX, L.LemDx);
+      Transition(L, baWalking, True);  // turn around as well
+      CheckForLevelTopBoundary(L);  // Seems useless here????
+    end
+
+    else if     PlatformerTerrainCheck(L.LemX + 3*L.LemDx, L.LemY)
+            and (L.LemNumberOfBricksLeft > 1) then
+    begin
+      Inc(L.LemX, 2*L.LemDx);
+      Transition(L, baWalking, True);  // turn around as well
+      CheckForLevelTopBoundary(L);   // Seems useless here????
+    end
+
+    else
+    begin
+      Inc(L.LemX, 2*L.LemDx);
+      Dec(L.LemNumberOfBricksLeft); // Why are we doing this here, instead at the beginning of frame 15??
+      if L.LemNumberOfBricksLeft = 0 then
+      begin
+        // stalling if there are pixels in the way:
+        if PlatformerTerrainCheck(L.LemX + L.LemDx, L.LemY) and HasPixelAt(L.LemX, L.LemY - 1) then
+          Dec(L.LemX, L.LemDx);
+
+        Transition(L, baShrugging);
+        CheckForLevelTopBoundary(L);  // This is most certainly useless
+      end;
+    end;
+  end
 end;
 
 
