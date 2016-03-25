@@ -5041,7 +5041,6 @@ begin
 
   if (LemDy < -6) then
   begin
-    // climb or turn
     if L.LemIsClimber then
       Transition(L, baClimbing)
     else
@@ -5052,15 +5051,11 @@ begin
   end
   else if (LemDy < -2) then
   begin
-    // turn into jumper
     Transition(L, baJumping);
     Inc(L.LemY, -2);
   end
   else if (LemDy < 1) then
-  begin
-    // walk forward
     Inc(L.LemY, LemDy);
-  end;
 
   // Get new ground pixel again in case the Lem has turned
   LemDy := FindGroundPixel(L.LemX, L.LemY);
@@ -5333,11 +5328,13 @@ begin
   end;
 end;
 
+
 function TLemmingGame.HandleDrowning(L: TLemming): Boolean;
 begin
   Result := False;
   if L.LemEndOfAnimation then RemoveLemming(L, RM_KILL);
 end;
+
 
 function TLemmingGame.HandleFixing(L: TLemming): Boolean;
 begin
@@ -5349,6 +5346,7 @@ begin
     CueSoundEffect(SFX_FIXING);
 end;
 
+
 function TLemmingGame.HandleHoisting(L: TLemming): Boolean;
 begin
   Result := True;
@@ -5359,6 +5357,7 @@ begin
   else
     Result := False;  // Why explicitely NOT check for traps here???
 end;
+
 
 function TLemmingGame.LemCanPlatform(L: TLemming): Boolean;
 var
@@ -5443,15 +5442,13 @@ begin
 
   else if L.LemFrame = 0 then
   begin
-    if      PlatformerTerrainCheck(L.LemX + 2*L.LemDx, L.LemY)
-        and (L.LemNumberOfBricksLeft > 1) then
+    if PlatformerTerrainCheck(L.LemX + 2*L.LemDx, L.LemY) and (L.LemNumberOfBricksLeft > 1) then
     begin
       Inc(L.LemX, L.LemDx);
       Transition(L, baWalking, True);  // turn around as well
     end
 
-    else if     PlatformerTerrainCheck(L.LemX + 3*L.LemDx, L.LemY)
-            and (L.LemNumberOfBricksLeft > 1) then
+    else if PlatformerTerrainCheck(L.LemX + 3*L.LemDx, L.LemY) and (L.LemNumberOfBricksLeft > 1) then
     begin
       Inc(L.LemX, 2*L.LemDx);
       Transition(L, baWalking, True);  // turn around as well
@@ -5464,6 +5461,7 @@ begin
       if L.LemNumberOfBricksLeft = 0 then
       begin
         // stalling if there are pixels in the way:
+        // Actually, why do the PlatformerTerrainCheck here???
         if PlatformerTerrainCheck(L.LemX + L.LemDx, L.LemY) and HasPixelAt(L.LemX, L.LemY - 1) then
           Dec(L.LemX, L.LemDx);
 
@@ -5519,54 +5517,35 @@ end;
 
 function TLemmingGame.HandleStacking(L: TLemming): Boolean;
 var
-  oy: Integer;
+  TopStackPosY: Integer;
 begin
-  with L do
+  Result := True;
+
+  if L.LemFrame = 7 then
   begin
-    // sound
-    if (LemFrame = 0) then
-    begin
-      if (LemNumberOfBricksLeft <= 3) then CueSoundEffect(SFX_BUILDER_WARNING);
-    end;
+    LayStackBrick(L, L.LemNumberOfBricksLeft);
+    // LemFrame = 8 has to be skipped!
+    // Stored content has 9 frames, but only 8 are used!!
+    Inc(L.LemFrame);
+    Result := False;
+  end
 
-    // lay brick
-    if (LemFrame = 7) then
-    begin
-      LayStackBrick(L, LemNumberOfBricksLeft);
-      Inc(LemFrame);
-    end;
+  else if L.LemFrame = 0 then
+  begin
+    Dec(L.LemNumberOfBricksLeft);
 
-    if (LemFrame = 0) then
-    begin
+    // sound on last three bricks
+    if L.LemNumberOfBricksLeft < 3 then CueSoundEffect(SFX_BUILDER_WARNING);
 
-      oy := LemY - 10 + LemNumberOfBricksLeft;
+    TopStackPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
+    if L.LemStackLow then Inc(TopStackPosY);
 
-      if LemStackLow then Inc(oy);
+    if HasPixelAt(L.LemX + L.LemDx, TopStackPosY) then
+      Transition(L, baWalking, True) // Even on the last brick !!!???
+    else if L.LemNumberOfBricksLeft = 0 then
+      Transition(L, baShrugging);
 
-      if (HasPixelAt(LemX+LemDx, oy)) then
-      begin
-        Transition(L, baWalking, true);
-        Result := True;
-        Exit;
-      end;
-
-      Dec(LemNumberOfBricksLeft);
-      if (LemNumberOfBricksLeft = 0) then
-      begin
-        Transition(L, baShrugging);
-        Result := True;
-        Exit;
-      end;
-
-      Result := True;
-      Exit;
-    end
-    else begin
-      Result := True;
-      Exit;
-    end;
-
-  end; // with L
+  end;
 end;
 
 
