@@ -5340,42 +5340,30 @@ end;
 function TLemmingGame.HandleDrowning(L: TLemming): Boolean;
 begin
   Result := False;
-  with L do
-    if LemEndOfAnimation then RemoveLemming(L, RM_KILL);
+  if L.LemEndOfAnimation then RemoveLemming(L, RM_KILL);
 end;
 
 function TLemmingGame.HandleFixing(L: TLemming): Boolean;
 begin
   Result := False;
-  with L do
-  begin
-    Dec(LemMechanicFrames);
-    if LemMechanicFrames <= 0 then
-      Transition(L, baWalking)
-    else if LemFrame mod 8 = 0 then
-      CueSoundEffect(SFX_FIXING);
-  end;
+  Dec(L.LemMechanicFrames);
+  if L.LemMechanicFrames <= 0 then
+    Transition(L, baWalking)
+  else if L.LemFrame mod 8 = 0 then
+    CueSoundEffect(SFX_FIXING);
 end;
 
 function TLemmingGame.HandleHoisting(L: TLemming): Boolean;
 begin
-  Result := False;
-  with L do
-  begin
-    if LemFrame <= 4 then
-    begin
-      Dec(LemY, 2);
-      CheckForLevelTopBoundary(L);
-      Result := True;
-      Exit;
-    end else if (LemEndOfAnimation) then
-    begin
-      Transition(L, baWalking);
-      CheckForLevelTopBoundary(L);
-      Result := True;
-      Exit;
-    end
-  end;
+  Result := True;
+  if L.LemFrame <= 4 then
+    Dec(L.LemY, 2)
+  else if L.LemEndOfAnimation then
+    Transition(L, baWalking)
+  else
+    Result := False;
+
+  CheckForLevelTopBoundary(L);
 end;
 
 function TLemmingGame.LemCanPlatform(L: TLemming): Boolean;
