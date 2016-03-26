@@ -105,7 +105,6 @@ type
     LemJumped                     : Integer; // number of pixels the lem jumped
     LemFallen                     : Integer; // number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // total number of fallen pixels
-    LemClimbed                    : Integer;
     LemFirstClimb                 : Boolean;
     LemExplosionTimer             : Integer; // 79 downto 0
     LemMechanicFrames             : Integer;
@@ -1163,7 +1162,6 @@ begin
   LemJumped := Source.LemJumped;
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
-  LemClimbed := Source.LemClimbed;
   LemFirstClimb := Source.LemFirstClimb;
   LemExplosionTimer := Source.LemExplosionTimer;
   LemMechanicFrames := Source.LemMechanicFrames;
@@ -2974,7 +2972,6 @@ begin
 
     LemAction := aAction;
     LemFrame := 0;
-    LemClimbed := 0;
     LemEndOfAnimation := False;
     LemNumberOfBricksLeft := 0;
 
@@ -5162,15 +5159,15 @@ begin
       //if (HasPixelAt_ClipY(LemX, LemY - 7 - LemFrame, 0) = FALSE) then
       begin
         FoundClip := (HasPixelAt(LemX - LemDx, LemY - 6 - Lemframe))
-                  or (HasPixelAt(LemX - LemDx, LemY - 5 - Lemframe) and ((LemClimbed > 0){ or (LemFrame > 0)}));
+                  or (HasPixelAt(LemX - LemDx, LemY - 5 - Lemframe) and (not LemFirstClimb));
 
-        if (LemClimbed = 0) and (LemFrame = 0) then
-          FoundClip := false;
+        if LemFirstClimb and (LemFrame = 0) then
+          FoundClip := false;        // Does this even occur???
 
-        if (LemClimbed = 0) and (LemFrame = 3) then
+        if LemFirstClimb and (LemFrame = 3) then
           FoundClip := FoundClip or (HasPixelAt(LemX - LemDx, LemY - 4 - LemFrame));
 
-        if (LemClimbed > 0) and (LemFrame = 0) then
+        if (not LemFirstClimb) and (LemFrame = 0) then
           FoundClip := FoundClip and HasPixelAt(LemX - LemDx, LemY - 7);
 
 
@@ -5184,31 +5181,34 @@ begin
         end else if not HasPixelAt(LemX, LemY - 7 - LemFrame) then
         begin
           LemY := LemY - LemFrame + 2;
-          LemClimbed := 0;
           Transition(L, baHoisting);
         end;
 
       end;
-
-      // Remove LemFirstClimb on frame 3 of first cycle
-      If LemFirstClimb and (LemFrame = 3) then LemfirstClimb := False;
 
       Result := True;
       Exit;
     end
     else begin
       Dec(LemY);
-      Inc(LemClimbed);
 
       FoundClip := HasPixelAt(LemX - LemDx, LemY - 7);
 
       if LemFrame = 7 then
         FoundClip := FoundClip and HasPixelAt(LemX, LemY - 7);
 
+      if (LemFrame = 4) and LemFirstClimb then
+      begin
+        FoundClip := FoundClip or HasPixelAt(LemX - LemDx, LemY - 6);
+        // Remove LemFirstClimb on frame 4 of first cycle
+        LemFirstClimb := False;
+      end;
+
       FoundClip := FoundClip
-        or ((LemClimbed = 1) and HasPixelAt(LemX - LemDx, LemY - 6))
-        or ((ReadObjectMapType(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0)) or ((ReadObjectMapType(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0))
-        or ((ReadBlockerMap(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0)) or ((ReadBlockerMap(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0));
+        or ((ReadObjectMapType(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0))
+        or ((ReadObjectMapType(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0))
+        or ((ReadBlockerMap(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0))
+        or ((ReadBlockerMap(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0));
 
       if FoundClip then
       begin
