@@ -5738,78 +5738,58 @@ begin
 end;
 
 
-
 function TLemmingGame.HandleFalling(L: TLemming): Boolean;
 var
-  dy: Integer;
+  CurrFallDist: Integer;
+  MaxFallDist: Integer;
 begin
-  Result := False;
+  Result := True;
 
-  with L do
+  if L.LemIsFloater and (L.LemTrueFallen > 16) then
+    // Depending on updrafts, this happens on the 6th-8th frame
+    Transition(L, baFloating)
+
+  else if L.LemIsGlider and (L.LemTrueFallen > 6) then
+    // This always happens on the 4th frame
+    Transition(L, baGliding)
+
+  else
   begin
+    CurrFallDist := 0;
+    MaxFallDist := 3;
+    if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then MaxFallDist := 2;
 
-    if (LemTrueFallen > 16) and LemIsFloater then
+    // Move lem until hitting ground
+    while (CurrFallDist < MaxFallDist) and not HasPixelAt(L.LemX, L.LemY) do
     begin
-      Transition(L, baFloating);
-      Result := True;
-      Exit;
-    end else if (LemTrueFallen > 6) and LemIsGlider then
-    begin
-      Transition(L, baGliding);
-      Result := True;
-      Exit;
-    end
-    else begin
-      dy := 0;
-      if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then
-      begin
-        dy := 1;
-      end;
-      while (dy < 3) and not HasPixelAt(LemX, LemY) do
-      begin
-        Inc(Dy);
-        Inc(LemY);
-        if (ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT) then
-          LemFallen := 0
-        else
-          Inc(LemFallen);
-        Inc(LemTrueFallen);
-        if (LemY > LEMMING_MAX_Y + World.Height) then
-        begin
-          RemoveLemming(L, RM_NEUTRAL); //LemRemoved := TRUE;
-          //Result := False;
-          Exit;
-        end;
-      end;// while
+      Inc(L.LemY);
+      Inc(CurrFallDist);
+      Inc(L.LemFallen);
+      Inc(L.LemTrueFallen);
+      if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then L.LemFallen := 0;
+    end;
 
-      if (dy = 3) then
-      begin
-        //Inc(LemFallen, 3);
-        Result := True;
-        Exit;
-      end
-      else begin
-        if (LemFallen > fFallLimit)
-        and not (ReadObjectMapType(L.LemX, L.LemY) in [DOM_UPDRAFT, DOM_NOSPLAT]) then
-        begin
-          Transition(L, baSplatting);
-          Result := True;
-          Exit;
-        end else begin
-          LemFloated := 0;
-          if ReadObjectMapType(L.LemX, L.LemY) = DOM_SPLAT then
-            Transition(L, baSplatting)
-          else
-            Transition(L, baWalking);
-          Result := True;
-          Exit;
-        end;
-      end;
+    if (L.LemY > LEMMING_MAX_Y + World.Height) then
+    begin
+      RemoveLemming(L, RM_NEUTRAL);
+      Result := False;
     end
 
-  end; // with
-
+    else if CurrFallDist < MaxFallDist then
+    begin
+      // Object checks at hitting ground
+      if ReadObjectMapType(L.LemX, L.LemY) = DOM_SPLAT then
+        Transition(L, baSplatting)
+      else if ReadObjectMapType(L.LemX, L.LemY) = DOM_NOSPLAT then
+        Transition(L, baWalking)
+      else if L.LemFallen > fFallLimit then
+        Transition(L, baSplatting)
+      else
+        Transition(L, baWalking);
+    end;
+  end;
 end;
+
 
 function TLemmingGame.HandleFloating(L: TLemming): Boolean;
 var
