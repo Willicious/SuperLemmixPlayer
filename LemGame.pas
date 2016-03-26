@@ -1,5 +1,5 @@
 {$include lem_directives.inc}
-         
+
 {-------------------------------------------------------------------------------
   Some source code notes:
 
@@ -19,7 +19,7 @@
     places where this happens.
 -------------------------------------------------------------------------------}
 
-unit LemGame;                                    
+unit LemGame;
 
 interface
 
@@ -105,9 +105,7 @@ type
     LemJumped                     : Integer; // number of pixels the lem jumped
     LemFallen                     : Integer; // number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // total number of fallen pixels
-    LemOldFallen                  : Integer;
     LemClimbed                    : Integer;
-    LemClimbStartY                : Integer;
     LemFirstClimb                 : Boolean;
     LemExplosionTimer             : Integer; // 79 downto 0
     LemMechanicFrames             : Integer;
@@ -793,7 +791,6 @@ type
     procedure ReplaySkillAssignment(aReplayItem: TReplayItem);
     procedure ReplaySkillSelection(aReplayItem: TReplayItem);
     procedure RestoreMap(L: TLemming);
-    // procedure SaveMap(L: TLemming);   //empty precedure!
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
     procedure SpawnLemming;
@@ -1166,9 +1163,7 @@ begin
   LemJumped := Source.LemJumped;
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
-  LemOldFallen := Source.LemOldFallen;
   LemClimbed := Source.LemClimbed;
-  LemClimbStartY := Source.LemClimbStartY;
   LemFirstClimb := Source.LemFirstClimb;
   LemExplosionTimer := Source.LemExplosionTimer;
   LemMechanicFrames := Source.LemMechanicFrames;
@@ -2852,13 +2847,6 @@ begin
 
 end;
 
-{
-procedure TLemmingGame.SaveMap(L: TLemming);
-
-begin
-
-end;
-}
 
 procedure TLemmingGame.RestoreMap(L: TLemming);
 {var
@@ -2981,14 +2969,8 @@ begin
       if LemAction in [baMining, baDigging] then LemFallen := -3;
     end;
 
-    if (LemOldFallen <> 0) and not (LemAction in [baFalling, baGliding, baFloating, baExploding]) then
-      LemOldFallen := 0;
-
     if LemAction = aAction then
       Exit;
-
-    if ((LemAction = baClimbing) and (aAction <> baHoisting)) then
-      if LemY > LemClimbStartY then LemY := LemClimbStartY;
 
     LemAction := aAction;
     LemFrame := 0;
@@ -3001,20 +2983,15 @@ begin
       baJumping:
         LemJumped := 0;
       baClimbing:
-        begin
-          LemClimbStartY := LemY;
-          LemFirstClimb := true;
-        end;
+        LemFirstClimb := true;
       baSplatting:
         begin
           LemExplosionTimer := 0;
-          //LemDX := 0;
           CueSoundEffect(SFX_SPLAT)
         end;
       baBlocking:
         begin
           LemIsBlocking := 1;
-          // SaveMap(L);    // empty procedure
           SetBlockerField(L);
         end;
       baExiting    :
@@ -5200,11 +5177,10 @@ begin
 
         if FoundClip then
         begin
-          LemY := LemY - LemFrame + 3;
+          // Don't fall below original position on hitting terrain in first cycle
+          if not LemFirstClimb then LemY := LemY - LemFrame + 3;
           Transition(L, baFalling, TRUE);
           Inc(LemX, LemDx);
-          Result := True;
-          Exit;
         end else if not HasPixelAt(LemX, LemY - 7 - LemFrame) then
         begin
           LemY := LemY - LemFrame + 2;
@@ -5213,6 +5189,10 @@ begin
         end;
 
       end;
+
+      // Remove LemFirstClimb on frame 3 of first cycle
+      If LemFirstClimb and (LemFrame = 3) then LemfirstClimb := False;
+
       Result := True;
       Exit;
     end
