@@ -105,7 +105,6 @@ type
     LemJumped                     : Integer; // number of pixels the lem jumped
     LemFallen                     : Integer; // number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // total number of fallen pixels
-    LemFirstClimb                 : Boolean;
     LemExplosionTimer             : Integer; // 79 downto 0
     LemMechanicFrames             : Integer;
     LMA                           : TMetaLemmingAnimation; // ref to Lemming Meta Animation
@@ -134,8 +133,8 @@ type
     LemCouldPlatform              : Boolean; // placed brick during this cycle
     LemInFlipper                  : Integer;
     LemIsBlocking                 : Integer; // not always exactly in sync with the action
-    LemBecomeBlocker              : Boolean;
     LemIsNewDigger                : Boolean; // new digger removes one more row
+    LemIsNewClimbing              : Boolean; // new climbing lem in first 4 frames
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
     LemUsedSkillCount             : Integer; // number of skills assigned to this lem
@@ -1162,7 +1161,7 @@ begin
   LemJumped := Source.LemJumped;
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
-  LemFirstClimb := Source.LemFirstClimb;
+  LemIsNewClimbing := Source.LemIsNewClimbing;
   LemExplosionTimer := Source.LemExplosionTimer;
   LemMechanicFrames := Source.LemMechanicFrames;
   LMA := Source.LMA;
@@ -1190,7 +1189,6 @@ begin
   LemCouldPlatform := Source.LemCouldPlatform;
   LemInFlipper := Source.LemInFlipper;
   LemIsBlocking := Source.LemIsBlocking;
-  LemBecomeBlocker := Source.LemBecomeBlocker;
   LemIsNewDigger := Source.LemIsNewDigger;
   LemHighlightReplay := Source.LemHighlightReplay;
   LemExploded := Source.LemExploded;
@@ -2980,7 +2978,7 @@ begin
       baJumping:
         LemJumped := 0;
       baClimbing:
-        LemFirstClimb := true;
+        LemIsNewClimbing := true;
       baSplatting:
         begin
           LemExplosionTimer := 0;
@@ -3095,8 +3093,6 @@ begin
   else
   begin
     UpdateSkillCount(NewSkill);
-    // Not sure if we even need LemBecomeBlocker???  So just in case...
-    If (Newskill = baToWalking) then L.LemBecomeBlocker := False;
     // Get starting position for stacker
     If Newskill = baStacking then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
     // Special behavior of permament skills.
@@ -4203,8 +4199,7 @@ begin
         if L.LemIsSwimmer then
         begin
           if not (L.LemAction in [baSwimming, baClimbing, baHoisting, baOhnoing, baExploding, baStoning, baStoneFinish, baVaporizing, baExiting, baSplatting]) then
-          begin               
-            LemBecomeBlocker := false;
+          begin
             Transition(L, baSwimming);
             CueSoundEffect(SFX_SWIMMING);
           end;
@@ -5159,15 +5154,15 @@ begin
       //if (HasPixelAt_ClipY(LemX, LemY - 7 - LemFrame, 0) = FALSE) then
       begin
         FoundClip := (HasPixelAt(LemX - LemDx, LemY - 6 - Lemframe))
-                  or (HasPixelAt(LemX - LemDx, LemY - 5 - Lemframe) and (not LemFirstClimb));
+                  or (HasPixelAt(LemX - LemDx, LemY - 5 - Lemframe) and (not LemIsNewClimbing));
 
-        if LemFirstClimb and (LemFrame = 0) then
+        if LemIsNewClimbing and (LemFrame = 0) then
           FoundClip := false;        // Does this even occur???
 
-        if LemFirstClimb and (LemFrame = 3) then
+        if LemIsNewClimbing and (LemFrame = 3) then
           FoundClip := FoundClip or (HasPixelAt(LemX - LemDx, LemY - 4 - LemFrame));
 
-        if (not LemFirstClimb) and (LemFrame = 0) then
+        if (not LemIsNewClimbing) and (LemFrame = 0) then
           FoundClip := FoundClip and HasPixelAt(LemX - LemDx, LemY - 7);
 
 
@@ -5175,7 +5170,7 @@ begin
         if FoundClip then
         begin
           // Don't fall below original position on hitting terrain in first cycle
-          if not LemFirstClimb then LemY := LemY - LemFrame + 3;
+          if not LemIsNewClimbing then LemY := LemY - LemFrame + 3;
           Transition(L, baFalling, TRUE);
           Inc(LemX, LemDx);
         end else if not HasPixelAt(LemX, LemY - 7 - LemFrame) then
@@ -5197,11 +5192,11 @@ begin
       if LemFrame = 7 then
         FoundClip := FoundClip and HasPixelAt(LemX, LemY - 7);
 
-      if (LemFrame = 4) and LemFirstClimb then
+      if (LemFrame = 4) and LemIsNewClimbing then
       begin
         FoundClip := FoundClip or HasPixelAt(LemX - LemDx, LemY - 6);
-        // Remove LemFirstClimb on frame 4 of first cycle
-        LemFirstClimb := False;
+        // Remove LemIsNewClimbing on frame 4 of first cycle
+        LemIsNewClimbing := False;
       end;
 
       FoundClip := FoundClip
