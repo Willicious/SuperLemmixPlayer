@@ -96,55 +96,55 @@ type
   { misc sized }
     LemEraseRect                  : TRect; // the rectangle of the last drawaction (can include space for countdown digits)
   { integer sized fields }
-    LemIndex                      : Integer;        // index in the lemminglist
-    LemX                          : Integer;        // the "main" foot x position
-    LemY                          : Integer;        // the "main" foot y position
-    LemParticleX                  : Integer;        // lemming position when particles triggered
+    LemIndex                      : Integer; // index in the lemminglist
+    LemX                          : Integer; // the "main" foot x position
+    LemY                          : Integer; // the "main" foot y position
+    LemParticleX                  : Integer; // lemming position when particles triggered
     LemParticleY                  : Integer;
-    LemDX                         : Integer;        // x speed (1 if left to right, -1 if right to left)
-    LemJumped                     : Integer;
-    LemFallen                     : Integer;        // number of pixels a faller has fallen
-    LemTrueFallen                 : Integer;
+    LemDX                         : Integer; // x speed (1 if left to right, -1 if right to left)
+    LemJumped                     : Integer; // number of pixels the lem jumped
+    LemFallen                     : Integer; // number of fallen pixels after last updraft
+    LemTrueFallen                 : Integer; // total number of fallen pixels
     LemOldFallen                  : Integer;
     LemClimbed                    : Integer;
     LemClimbStartY                : Integer;
     LemFirstClimb                 : Boolean;
-    LemExplosionTimer             : Integer;        // 79 downto 0
+    LemExplosionTimer             : Integer; // 79 downto 0
     LemMechanicFrames             : Integer;
     LMA                           : TMetaLemmingAnimation; // ref to Lemming Meta Animation
     LAB                           : TBitmap32;      // ref to Lemming Animation Bitmap
-    LemFrame                      : Integer;        // current animationframe
-    LemMaxFrame                   : Integer;        // copy from LMA
-    LemAnimationType              : Integer;        // copy from LMA
-    LemParticleTimer              : Integer;        // @particles, 52 downto 0, after explosion
-    LemParticleFrame              : Integer;        // the "frame" of the particle drawing algorithm
-    FrameTopDy                    : Integer;        // = -LMA.FootY (ccexplore compatible)
-    FrameLeftDx                   : Integer;        // = -LMA.FootX (ccexplore compatible)
-    LemFloatParametersTableIndex  : Integer;        // index for floaters
-    LemNumberOfBricksLeft         : Integer;        // for builder
-    LemBorn                       : Integer;        // game iteration the lemming is created
+    LemFrame                      : Integer; // current animationframe
+    LemMaxFrame                   : Integer; // copy from LMA
+    LemAnimationType              : Integer; // copy from LMA
+    LemParticleTimer              : Integer; // @particles, 52 downto 0, after explosion
+    LemParticleFrame              : Integer; // the "frame" of the particle drawing algorithm
+    FrameTopDy                    : Integer; // = -LMA.FootY (ccexplore compatible)
+    FrameLeftDx                   : Integer; // = -LMA.FootX (ccexplore compatible)
+    LemFloatParametersTableIndex  : Integer; // index for floaters
+    LemNumberOfBricksLeft         : Integer; // for builder, platformer, stacker
   { byte sized fields }
     LemAction                     : TBasicLemmingAction; // current action of the lemming
     LemRemoved                    : Boolean; // the lemming is not in the level anymore
     LemTeleporting                : Boolean;
-    LemEndOfAnimation             : Boolean;
+    LemEndOfAnimation             : Boolean; // got to the end of non-looping animation
+                                             // equal to (LemFrame > LemMaxFrame)
     LemIsClimber                  : Boolean;
     LemIsSwimmer                  : Boolean;
     LemIsFloater                  : Boolean;
     LemIsGlider                   : Boolean;
     LemIsMechanic                 : Boolean;
     LemIsZombie                   : Boolean;
-    LemCouldPlatform              : Boolean;
+    LemCouldPlatform              : Boolean; // placed brick during this cycle
     LemInFlipper                  : Integer;
     LemIsBlocking                 : Integer; // not always exactly in sync with the action
     LemBecomeBlocker              : Boolean;
-    LemIsNewDigger                : Boolean;
+    LemIsNewDigger                : Boolean; // new digger removes one more row
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
-    LemUsedSkillCount             : Integer;
+    LemUsedSkillCount             : Integer; // number of skills assigned to this lem
     LemIsClone                    : Boolean;
     LemTimerToStone               : Boolean;
-    LemStackLow                   : Boolean;
+    LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemRTLAdjust                  : Boolean;
     LemInTrap                     : Integer;
 
@@ -1147,7 +1147,6 @@ begin
             'FrameTopDy=' + i2s(FrameTopDy) + ', ' +
             'FloatParamTableIndex=' + i2s(LemFloatParametersTableIndex) + ', ' +
             'NumberOfBricksLeft=' + i2s(LemNumberOfBricksLeft) + ', ' +
-            'Born=' + i2s(LemBorn) + ', ' +
             'IsNewDigger=' + BoolStrings[LemIsNewDigger] + ', ' +
             'IsBlocking=' + i2s(LemIsBlocking) + ', ' +
             'CanClimb=' + BoolStrings[LemIsClimber] + ', ' +
@@ -1184,7 +1183,6 @@ begin
   FrameLeftDx := Source.FrameLeftDx;
   LemFloatParametersTableIndex := Source.LemFloatParametersTableIndex;
   LemNumberOfBricksLeft := Source.LemNumberOfBricksLeft;
-  LemBorn := Source.LemBorn;
 
   LemAction := Source.LemAction;
   LemRemoved := Source.LemRemoved;
@@ -2425,7 +2423,6 @@ begin
     with NewLemming do
     begin
       LemIndex := LemmingList.Add(NewLemming);
-      LemBorn := CurrentIteration;
       Transition(NewLemming, baFalling);
       LemY := ObjectInfos[i].Obj.Top + ObjectInfos[i].MetaObj.TriggerTop;
       LemX := ObjectInfos[i].Obj.Left + ObjectInfos[i].MetaObj.TriggerLeft;
@@ -6963,7 +6960,6 @@ begin
         with NewLemming do
         begin
           LemIndex := LemmingList.Add(NewLemming);
-          LemBorn := CurrentIteration;
           Transition(NewLemming, baFalling);
           LemX := ObjectInfos[ix].Obj.Left;
           LemY := ObjectInfos[ix].Obj.Top;
@@ -7051,9 +7047,7 @@ begin
     with NewLemming do
     begin
       LemIndex := LemmingList.Add(NewLemming);
-      LemBorn := CurrentIteration;
       Transition(NewLemming, baFalling);
-//      Transition(NewLemming, baJumping);
       LemX := CursorPoint.X;
       LemY := CursorPoint.Y;
       LemDX := 1;
