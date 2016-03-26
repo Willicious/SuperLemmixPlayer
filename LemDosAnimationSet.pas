@@ -204,8 +204,8 @@ begin
 
   Lem($0000, 'Rwalker'            ,   8, 16, 10,  19,   8,  10,   lat_Loop); // 0
   Lem($0D5C, 'Lwalker'            ,   8, 16, 10,  19,   9,  10,   lat_Loop);
-  Lem($0BE0, 'Rjumper'            ,   1, 16, 10,  19,   8,  10,   lat_Once);
-  Lem($193C, 'Ljumper'            ,   1, 16, 10,  19,   9,  10,   lat_Once);
+  Lem($0BE0, 'Rjumper'            ,   1, 16, 10,  19,   8,  10,   lat_Loop);
+  Lem($193C, 'Ljumper'            ,   1, 16, 10,  19,   9,  10,   lat_Loop);
   Lem($1AB8, 'Rdigger'            ,  16, 16, 14,  19,   8,  12,   lat_Loop);
   Lem($1AB8, 'Ldigger'            ,  16, 16, 14,  19,   9,  12,   lat_Loop);
   Lem($3BF8, 'Rclimber'           ,   8, 16, 12,  19,   8,  12,   lat_Loop);

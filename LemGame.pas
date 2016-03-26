@@ -794,7 +794,7 @@ type
     procedure ReplaySkillAssignment(aReplayItem: TReplayItem);
     procedure ReplaySkillSelection(aReplayItem: TReplayItem);
     procedure RestoreMap(L: TLemming);
-    procedure SaveMap(L: TLemming);
+    // procedure SaveMap(L: TLemming);   //empty precedure!
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
     procedure SpawnLemming;
@@ -2857,11 +2857,13 @@ begin
 
 end;
 
+{
 procedure TLemmingGame.SaveMap(L: TLemming);
 
 begin
 
 end;
+}
 
 procedure TLemmingGame.RestoreMap(L: TLemming);
 {var
@@ -3018,7 +3020,7 @@ begin
       baBlocking:
         begin
           LemIsBlocking := 1;
-          SaveMap(L);
+          // SaveMap(L);    // empty procedure
           SetBlockerField(L);
         end;
       baExiting    :
@@ -3127,7 +3129,7 @@ begin
     UpdateSkillCount(NewSkill);
     // Not sure if we even need LemBecomeBlocker???  So just in case...
     If (Newskill = baToWalking) then L.LemBecomeBlocker := False;
-    // What is LemStackLow good for?????
+    // Get starting position for stacker
     If Newskill = baStacking then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
     // Special behavior of permament skills.
     if (NewSkill = baClimbing) then L.LemIsClimber := True
@@ -4939,37 +4941,23 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
   o Call specialized action-method
   o Do *not* call this method for a removed lemming
 -------------------------------------------------------------------------------}
-var
-  Method: TLemmingMethod;
 begin
-  //Result := False;
-
-  with L do
+  // next frame (except floating and digging which are handled differently)
+  if not (L.LemAction in [baFloating, baDigging]) then
   begin
-    // next frame (except floating and digging which are handled differently)
-    if not (LemAction in [baFloating, baDigging]) then
+    Inc(L.LemFrame);
+    if L.LemFrame > L.LemMaxFrame then
     begin
-      if (LemFrame < LemMaxFrame) then
-      begin
-        LemEndOfAnimation := False;
-        Inc(LemFrame);
-      end
-      else
-      begin
-        LemEndOfAnimation := True;
-        if LemAnimationType = lat_Loop then LemFrame := 0;
-      end;
+      L.LemFrame := 0;
+      if L.LemAnimationType = lat_Once then L.LemEndOfAnimation := True;
     end;
+  end;
 
-  end; // with
+  Result := LemmingMethods[L.LemAction](L);
 
-  Method := LemmingMethods[L.LemAction];
-  Result := Method(L);
-
-  if L.LemIsZombie then
-    SetZombieField(L);
-
+  if L.LemIsZombie then SetZombieField(L);
 end;
+
 
 function TLemmingGame.HandleWalking(L: TLemming): Boolean;
 var
@@ -5288,10 +5276,10 @@ end;
 function TLemmingGame.HandleHoisting(L: TLemming): Boolean;
 begin
   Result := True;
-  if L.LemFrame <= 4 then
-    Dec(L.LemY, 2)
-  else if L.LemEndOfAnimation then
+  if L.LemEndOfAnimation then
     Transition(L, baWalking)
+  else if L.LemFrame <= 4 then
+    Dec(L.LemY, 2)
   else
     Result := False;  // Why explicitely NOT check for traps here???
 end;
