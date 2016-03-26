@@ -4943,7 +4943,7 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 -------------------------------------------------------------------------------}
 begin
   // next frame (except floating and digging which are handled differently)
-  if not (L.LemAction in [baFloating, baDigging]) then
+  if not (L.LemAction in [baFloating{, baDigging}]) then
   begin
     Inc(L.LemFrame);
     if L.LemFrame > L.LemMaxFrame then
@@ -5134,51 +5134,46 @@ end;
 function TLemmingGame.HandleDigging(L: TLemming): Boolean;
 // returns FALSE if there are no terrain pixels to remove (??? did I write this?)
 // More to the point - should it still do so in NeoLemmix?
+// Nepster: It no longer does the above
 var
-  Y: Integer;
+  ContinueWork: Boolean;
 begin
-  Result := False;
+  Result := True;
 
-  with L do
+  if L.LemIsNewDigger then
   begin
-
-    if LemIsNewDigger then
-    begin
-      DigOneRow(LemX, LemY - 1);
-      LemIsNewDigger := FALSE;
-    end else begin
-      Inc(LemFrame);
-      if (LemFrame >= 16) then
-        LemFrame := LemFrame - 16;
-    end;
-
-    if LemFrame in [0, 8] then
-    begin
-      y := lemy;
-      Inc(lemY);
-
-      if (lemy > LEMMING_MAX_Y + World.Height) then
-      begin
-        RemoveLemming(L, RM_NEUTRAL);
-        Exit;
-      end;
-
-      if (DigOneRow(LemX, Y) = FALSE) then
-      begin
-        Transition(L, baFalling);
-      end;
-
-      if (ReadSpecialMap(LemX, LemY) = DOM_STEEL) then
-      begin
-        CueSoundEffect(SFX_HITS_STEEL);
-        Transition(L, baWalking);
-      end;
-
-      Result := TRUE;
-    end else begin
-      Result := FALSE
-    end;
+    L.LemIsNewDigger := False;
+    DigOneRow(L.LemX, L.LemY - 1);
+    // The first digger cycle is one frame longer!
+    // So we need to artificially cancel the very first frame advancement.
+    Dec(L.LemFrame);
   end;
+
+  if L.LemFrame in [0, 8] then
+  begin
+    Inc(L.LemY);
+
+    ContinueWork := DigOneRow(L.LemX, L.LemY - 1);
+
+    if (L.LemY > LEMMING_MAX_Y + World.Height) then
+    begin
+      RemoveLemming(L, RM_NEUTRAL);
+      Result := False;
+    end
+
+    else if HasSteelAt(L.LemX, L.LemY) then
+    begin
+      CueSoundEffect(SFX_HITS_STEEL);
+      Transition(L, baWalking);
+    end
+
+    else if not ContinueWork then
+      Transition(L, baFalling);
+
+  end
+
+  else // frames 1-7, 9-15
+    Result := False; // should be removed
 end;
 
 
