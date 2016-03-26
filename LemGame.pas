@@ -1,5 +1,5 @@
 {$include lem_directives.inc}
-
+         
 {-------------------------------------------------------------------------------
   Some source code notes:
 
@@ -106,7 +106,6 @@ type
     LemFallen                     : Integer;        // number of pixels a faller has fallen
     LemTrueFallen                 : Integer;
     LemOldFallen                  : Integer;
-    LemFloated                    : Integer;
     LemClimbed                    : Integer;
     LemClimbStartY                : Integer;
     LemFirstClimb                 : Boolean;
@@ -1169,7 +1168,6 @@ begin
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
   LemOldFallen := Source.LemOldFallen;
-  LemFloated := Source.LemFloated;
   LemClimbed := Source.LemClimbed;
   LemClimbStartY := Source.LemClimbStartY;
   LemFirstClimb := Source.LemFirstClimb;
@@ -2995,7 +2993,6 @@ begin
     if ((LemAction = baClimbing) and (aAction <> baHoisting)) then
       if LemY > LemClimbStartY then LemY := LemClimbStartY;
 
-    if not (aAction in [baFalling, baFloating]) then LemFloated := 0;
     LemAction := aAction;
     LemFrame := 0;
     LemClimbed := 0;
@@ -5808,23 +5805,18 @@ begin
       LemFloatParametersTableIndex := 8;
 
     if (dy <= 0) then
-      begin
-      Inc(LemY, dy);
-      Inc(LemFloated);
-      end
+      Inc(LemY, dy)
     else begin
       while (dy > 0) do
       begin
         if HasPixelAt(LemX, LemY) then
         begin
-          LemFloated := 0;
           Transition(L, baWalking);
           Result := True;
           Exit;
         end else begin
           Inc(LemY);
           Dec(dy);
-          Inc(LemFloated, 2);
         end;
       end; // while
     end;
@@ -5872,10 +5864,7 @@ begin
     Inc(LemX, LemDx);
 
     if (dy < 0) then
-    begin
-      Inc(LemY, dy);
-      Inc(LemFloated);
-    end
+      Inc(LemY, dy)
     else begin
 
       if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY - 1) then
@@ -5885,14 +5874,12 @@ begin
       begin
         if HasPixelAt(LemX, LemY) and not HasPixelAt(LemX, LemY - 1) then
         begin
-          LemFloated := 0;
           Transition(L, baWalking);
           Result := True;
           Exit;
         end else begin
           Inc(LemY);
           Dec(dy);
-          Inc(LemFloated);
         end;
       end; // while
     end;
@@ -5905,7 +5892,6 @@ begin
         if not HasPixelAt(LemX{ + LemDx}, LemY - dy) then
         begin
           Dec(LemY, (dy-1));
-          LemFloated := 0;
           Transition(L, baWalking);
           Result := true;
           Exit;
@@ -5927,15 +5913,12 @@ begin
       while dy < 4 do
         if HasPixelAt(LemX + LemDx, LemY + dy) then
           Inc(dy)
-          else
+        else
           Exit;
 
       if HasPixelAt(LemX, LemY) then
-      begin
-          LemFloated := 0;
-          Transition(L, baWalking);
-          //Result := true;
-      end else
+        Transition(L, baWalking)
+      else
         Inc(LemY);
     end;
 
