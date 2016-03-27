@@ -132,12 +132,12 @@ type
     LemIsZombie                   : Boolean;
     LemCouldPlatform              : Boolean; // placed brick during this cycle
     LemInFlipper                  : Integer;
-    LemIsBlocking                 : Integer; // not always exactly in sync with the action
+    LemHasBlockerField            : Boolean; // for blockers, even during ohno
     LemIsNewDigger                : Boolean; // new digger removes one more row
     LemIsNewClimbing              : Boolean; // new climbing lem in first 4 frames
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
-    LemUsedSkillCount             : Integer; // number of skills assigned to this lem
+    LemUsedSkillCount             : Integer; // number of skills assigned to this lem, used for talisman
     LemIsClone                    : Boolean; // only used in one Talisman count
     LemTimerToStone               : Boolean;
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
@@ -787,7 +787,7 @@ type
     procedure RemovePixelAt(X, Y: Integer);
     procedure ReplaySkillAssignment(aReplayItem: TReplayItem);
     procedure ReplaySkillSelection(aReplayItem: TReplayItem);
-    procedure RestoreMap(L: TLemming);
+    procedure RestoreMap;
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
     procedure SpawnLemming;
@@ -1140,7 +1140,7 @@ begin
             'FloatParamTableIndex=' + i2s(LemFloatParametersTableIndex) + ', ' +
             'NumberOfBricksLeft=' + i2s(LemNumberOfBricksLeft) + ', ' +
             'IsNewDigger=' + BoolStrings[LemIsNewDigger] + ', ' +
-            'IsBlocking=' + i2s(LemIsBlocking) + ', ' +
+            'HasBlockerField:' + BoolStrings[LemHasBlockerField] + ', ' +
             'CanClimb=' + BoolStrings[LemIsClimber] + ', ' +
             'CanFloat=' + BoolStrings[LemIsFloater];
 end;
@@ -1185,8 +1185,9 @@ begin
   LemIsZombie := Source.LemIsZombie;
   LemCouldPlatform := Source.LemCouldPlatform;
   LemInFlipper := Source.LemInFlipper;
-  LemIsBlocking := Source.LemIsBlocking;
+  LemHasBlockerField := Source.LemHasBlockerField;
   LemIsNewDigger := Source.LemIsNewDigger;
+  LemIsNewClimbing := Source.LemIsNewClimbing;
   LemHighlightReplay := Source.LemHighlightReplay;
   LemExploded := Source.LemExploded;
   LemUsedSkillCount := Source.LemUsedSkillCount;
@@ -2815,15 +2816,14 @@ begin
 end;
 
 
-procedure TLemmingGame.RestoreMap(L: TLemming);
-{var
-  X, Y, Q: Integer;}
+procedure TLemmingGame.RestoreMap;
 var
   i: Integer;
 begin
   BlockerMap.Clear(0);
   for i := 0 to LemmingList.Count-1 do
-    if (LemmingList[i].LemIsBlocking > 0) and not LemmingList[i].LemRemoved then SetBlockerField(LemmingList[i]);
+    if LemmingList[i].LemHasBlockerField and not LemmingList[i].LemRemoved then
+      SetBlockerField(LemmingList[i]);
 end;
 
 procedure TLemmingGame.SetBlockerField(L: TLemming);
@@ -2897,18 +2897,12 @@ begin
         LemY := LemY - 1;
       if LemAction = baWalking then DoTurn := true;
       aAction := baWalking;
-      if LemIsBlocking > 0 then
-      begin
-        LemIsBlocking := 0;
-        RestoreMap(L);
-      end;
     end;
 
-    if {(aAction = baShrugging) and }(LemIsBlocking > 0)
-    and not (aAction in [baBlocking, baOhNoing, baStoning]) then
+    if L.LemHasBlockerField and not (aAction in [{baBlocking, }baOhNoing, baStoning]) then
     begin
-      LemIsBlocking := 0;
-      RestoreMap(L);
+      LemHasBlockerField := False;
+      RestoreMap;
     end;
 
     if (not HasPixelAt(LemX, LemY)) and (aAction = baWalking) then
@@ -2939,6 +2933,9 @@ begin
     if LemAction = aAction then
       Exit;
 
+
+
+
     LemAction := aAction;
     LemFrame := 0;
     LemEndOfAnimation := False;
@@ -2957,7 +2954,7 @@ begin
         end;
       baBlocking:
         begin
-          LemIsBlocking := 1;
+          L.LemHasBlockerField := True;
           SetBlockerField(L);
         end;
       baExiting    :
@@ -3065,7 +3062,7 @@ begin
   begin
     UpdateSkillCount(NewSkill);
     // Get starting position for stacker
-    If Newskill = baStacking then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
+    if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
     // Special behavior of permament skills.
     if (NewSkill = baClimbing) then L.LemIsClimber := True
     else if (NewSkill = baFloating) then L.LemIsFloater := True
@@ -5893,17 +5890,7 @@ end;
 
 function TLemmingGame.HandleBlocking(L: TLemming): Boolean;
 begin
-  if not HasPixelAt(L.LemX, L.LemY) then
-  begin
-    Transition(L, baWalking);
-    L.LemIsBlocking := 0;
-    RestoreMap(L);
-  end
-  else
-    //Why do we do this??
-    //The only thing ever checked is L.LemIsBlocking > 0!
-    Inc(L.LemIsBlocking);
-
+  if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
   // Do never check traps for blocker
   Result := False;
 end;
@@ -5931,6 +5918,8 @@ begin
     if LemEndOfAnimation then
     begin
       Transition(L, baExploding);
+      LemHasBlockerField := False; // remove blocker field
+      RestoreMap;
       Exit;
     end
     else begin
@@ -5940,11 +5929,8 @@ begin
       begin
         Inc(dy);
         Inc(LemY);
-        if LemIsBlocking > 0 then
-          begin
-          LemIsBlocking := 0;
-          RestoreMap(L);
-          end;
+        L.LemHasBlockerField := False;
+        RestoreMap;
       end;
 
       if (LemY > LEMMING_MAX_Y + World.Height) then
@@ -5965,11 +5951,6 @@ begin
   begin
     if LemEndOfAnimation then
     begin
-      if LemIsBlocking > 0 then
-      begin
-        LemIsBlocking := 0;
-        RestoreMap(L);
-      end;
       ApplyExplosionMask(L);
       RemoveLemming(L, RM_KILL);
       LemExploded := True;
@@ -5992,6 +5973,8 @@ begin
     if LemEndOfAnimation then
     begin
       Transition(L, baStoneFinish);
+      L.LemHasBlockerField := False; // remove blocker field
+      RestoreMap;
       Exit;
     end
     else begin
@@ -6001,11 +5984,8 @@ begin
       begin
         Inc(dy);
         Inc(LemY);
-        if LemIsBlocking > 0 then
-          begin
-          LemIsBlocking := 0;
-          RestoreMap(L);
-          end;
+        L.LemHasBlockerField := False;
+        RestoreMap;
       end;
 
       if (LemY > LEMMING_MAX_Y + World.Height) then
@@ -6027,14 +6007,7 @@ begin
   begin
     if LemEndOfAnimation then
     begin
-      if LemIsBlocking > 0 then
-      begin
-        LemIsBlocking := 0;
-        RestoreMap(L);
-      end;
-
       ApplyStoneLemming(L);
-
 
       RemoveLemming(L, RM_KILL);
       LemExploded := True;
