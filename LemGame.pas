@@ -880,7 +880,6 @@ type
     fAssignEnabled                    : Boolean;
     InstReleaseRate            : Integer;
     fActiveSkills              : array[0..7] of TSkillPanelButton;
-    fInfiniteTime               : Boolean;
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
   { iteration }
@@ -2133,8 +2132,6 @@ begin
   TimePlay := Level.Info.TimeLimit;
   if (TimePlay > 5999) or (moTimerMode in fGameParams.MiscOptions) then
     TimePlay := 0; // infinite time
-
-  fInfiniteTime := False; // If True then nothing counts at all!!!
 
   ButtonsRemain := 0;
 //  Style := Level.Style;
@@ -6204,7 +6201,7 @@ begin
   if fClockFrame = 17 then
   begin
     fClockFrame := 0;
-    if (TimePlay > -5999) and not fInfiniteTime then Dec(TimePlay);
+    if TimePlay > -5999 then Dec(TimePlay);
   end
   else if fClockFrame = 1 then
     if InfoPainter <> nil then UpdateTimeLimit;

@@ -973,9 +973,8 @@ begin
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
   if Blinking then
     S := '  '
-    else
+  else
     S := PadL(i2s(Num), 2);
-  if Game.fInfiniteTime then S := ' -';
   Move(S[1], fNewDrawStr[36], 2);
 end;
 
@@ -987,9 +986,8 @@ begin
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
   if Blinking then
     S := '  '
-    else
+  else
     S := LeadZeroStr(Num, 2);
-  if Game.fInfiniteTime then S := '--';
   Move(S[1], fNewDrawStr[39], 2);
 end;
 
