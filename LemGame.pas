@@ -138,7 +138,7 @@ type
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
     LemUsedSkillCount             : Integer; // number of skills assigned to this lem
-    LemIsClone                    : Boolean;
+    LemIsClone                    : Boolean; // only used in one Talisman count
     LemTimerToStone               : Boolean;
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemRTLAdjust                  : Boolean;
@@ -455,8 +455,7 @@ type
       LemmingsRemoved: Integer;
       NextLemmingCountdown: Integer;
       DelayEndFrames: Integer;
-      Minutes: Integer;
-      Seconds: Integer;
+      TimePlay: Integer;
       EntriesOpened: Boolean;
       ObjectInfos: TInteractiveObjectInfoList;
       LowestReleaseRate: Integer;
@@ -579,8 +578,8 @@ type
     fShiftButtonHeldDown       : Boolean;
     fAltButtonHeldDown         : Boolean;
     fCtrlButtonHeldDown        : Boolean;
-    Minutes                    : Integer; // minutes left
-    Seconds                    : Integer; // seconds left
+    TimePlay                   : Integer; // positive when time limit
+                                          // negative when just counting time used
     fPlaying                   : Boolean; // game in active playing mode?
     EntriesOpened              : Boolean;
     LemmingMethods             : TLemmingMethodArray; // a method for each basic lemming state
@@ -976,7 +975,6 @@ const
   LEMMIX_REPLAY_VERSION    = 105;
   MAX_REPLAY_RECORDS       = 32768;
   MAX_FALLDISTANCE         = 62;
-  MAX_LONGFALLDISTANCE     = 75;
 
   BOMBER_TIME = 1;
 
@@ -1367,18 +1365,15 @@ begin
 end;
 
 procedure TLemmingGame.UpdateTimeLimit;
+var
+  TimeMinutes, TimeSeconds: Integer;
 begin
-  if (Minutes >= 0) and (Seconds >= 0) then
-  begin
-    InfoPainter.SetInfoMinutes(Minutes, CheckTimerBlink);
-    InfoPainter.SetInfoSeconds(Seconds, CheckTimerBlink);
-  end else begin
-    if Seconds > 0 then
-      InfoPainter.SetInfoMinutes(abs(Minutes + 1), CheckTimerBlink)
-    else
-      InfoPainter.SetInfoMinutes(abs(Minutes), CheckTimerBlink);
-    InfoPainter.SetInfoSeconds((60 - Seconds) mod 60, CheckTimerBlink);
-  end;
+  // Keep TimeSeconds and TimeMinues as separate variables!
+  // Otherwise weird visual glitches occur when framestepping 10 seconds
+  TimeMinutes := abs(TimePlay) div 60;
+  TimeSeconds := abs(TimePlay) mod 60;
+  InfoPainter.SetInfoMinutes(TimeMinutes, CheckTimerBlink);
+  InfoPainter.SetInfoSeconds(TimeSeconds, CheckTimerBlink);
 end;
 
 procedure TLemmingGame.UpdateOneSkillCount(aSkill: TSkillPanelButton);
@@ -1438,8 +1433,7 @@ begin
   aState.LemmingsRemoved := LemmingsRemoved;
   aState.NextLemmingCountdown := NextLemmingCountdown;
   aState.DelayEndFrames := DelayEndFrames;
-  aState.Minutes := Minutes;
-  aState.Seconds := Seconds;
+  aState.TimePlay := TimePlay;
   aState.EntriesOpened := EntriesOpened;
   aState.LowestReleaseRate := LowestReleaseRate;
   aState.HighestReleaseRate := HighestReleaseRate;
@@ -1548,8 +1542,7 @@ begin
   LemmingsRemoved := aState.LemmingsRemoved;
   NextLemmingCountdown := aState.NextLemmingCountdown;
   DelayEndFrames := aState.DelayEndFrames;
-  Minutes := aState.Minutes;
-  Seconds := aState.Seconds;
+  TimePlay := aState.TimePlay;
   EntriesOpened := aState.EntriesOpened;
   LowestReleaseRate := aState.LowestReleaseRate;
   HighestReleaseRate := aState.HighestReleaseRate;
@@ -2137,21 +2130,12 @@ begin
 //  fTargetBitmap := Renderer.LevelBitmap;
   //World.Assign(fTargetBitmap);
   World.OuterColor := 0;
-  Minutes := Level.Info.TimeLimit div 60;
-  Seconds := Level.Info.TimeLimit mod 60;
-  if Minutes > 99 then
-  begin
-    Minutes := 99;
-    Seconds := 59;
-    fInfiniteTime := true;
-  end else
-    fInfiniteTime := false;
-  if (moTimerMode in fGameParams.MiscOptions) or (fGameParams.Level.Info.TimeLimit > 5999) then
-  begin
-    Minutes := 0;
-    Seconds := 0;
-    fInfiniteTime := false;
-  end;
+  TimePlay := Level.Info.TimeLimit;
+  if (TimePlay > 5999) or (moTimerMode in fGameParams.MiscOptions) then
+    TimePlay := 0; // infinite time
+
+  fInfiniteTime := False; // If True then nothing counts at all!!!
+
   ButtonsRemain := 0;
 //  Style := Level.Style;
 //  Graph := Level.Graph;
@@ -2350,17 +2334,7 @@ begin
 
   with InfoPainter do
   begin
-    if (Minutes >= 0) and (Seconds >= 0) then
-    begin
-      SetInfoMinutes(Minutes, CheckTimerBlink);
-      SetInfoSeconds(Seconds, CheckTimerBlink);
-    end else begin
-      if Seconds > 0 then
-        SetInfoMinutes(abs(Minutes + 1), CheckTimerBlink)
-      else
-        SetInfoMinutes(abs(Minutes), CheckTimerBlink);
-      SetInfoSeconds((60 - Seconds) mod 60, CheckTimerBlink);
-    end;
+    UpdateTimeLimit;
     SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
     SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
     UpdateLemmingsIn(0, 1);
@@ -3447,7 +3421,7 @@ begin
   if fGameFinished then
     Exit;
 
-  if (Minutes <= 0) and (Seconds <= 0) and not ((moTimerMode in fGameParams.MiscOptions) or (fGameParams.Level.Info.TimeLimit > 5999)) then
+  if (TimePlay <= 0) and not ((moTimerMode in fGameParams.MiscOptions) or (fGameParams.Level.Info.TimeLimit > 5999)) then
   begin
     fGameFinished := True;
     GameResultRec.gTimeIsUp := True;
@@ -4791,18 +4765,8 @@ begin
     InfoPainter.SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
     UpdateLemmingsIn(LemmingsIn, MaxNumLemmings);
     InfoPainter.SetReplayMark(Replaying);
-    if (Minutes >= 0) and (Seconds >= 0) then
-    begin
-      InfoPainter.SetInfoMinutes(Minutes, CheckTimerBlink);
-      InfoPainter.SetInfoSeconds(Seconds, CheckTimerBlink);
-    end else begin
-      if Seconds > 0 then
-        InfoPainter.SetInfoMinutes(abs(Minutes + 1), CheckTimerBlink)
-      else
-        InfoPainter.SetInfoMinutes(abs(Minutes), CheckTimerBlink);
-      InfoPainter.SetInfoSeconds((60 - Seconds) mod 60, CheckTimerBlink);
-    end;
-    //InfoPainter.DrawMinimap(fMinimapBuffer)
+
+    UpdateTimeLimit;
   end;
 
 end;
@@ -5921,10 +5885,7 @@ end;
 function TLemmingGame.HandleExiting(L: TLemming): Boolean;
 begin
   Result := False;
-  with L do
-  begin
-    if LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
-  end;
+  if L.LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
 end;
 
 function TLemmingGame.HandleVaporizing(L: TLemming): Boolean;
@@ -5946,7 +5907,7 @@ begin
     //The only thing ever checked is L.LemIsBlocking > 0!
     Inc(L.LemIsBlocking);
 
-  // Do not check traps for blocker
+  // Do never check traps for blocker
   Result := False;
 end;
 
@@ -6243,28 +6204,10 @@ begin
   if fClockFrame = 17 then
   begin
     fClockFrame := 0;
-    if not fInfiniteTime then Dec(Seconds);
-    if Seconds < 0 then
-    begin
-      Dec(Minutes);
-      Seconds := 59;
-    end;
+    if (TimePlay > -5999) and not fInfiniteTime then Dec(TimePlay);
   end
   else if fClockFrame = 1 then
-    if InfoPainter <> nil then
-    begin
-      if (Minutes >= 0) and (Seconds >= 0) then
-    begin
-      InfoPainter.SetInfoMinutes(Minutes, CheckTimerBlink);
-      InfoPainter.SetInfoSeconds(Seconds, CheckTimerBlink);
-    end else begin
-      if Seconds > 0 then
-        InfoPainter.SetInfoMinutes(abs(Minutes + 1), CheckTimerBlink)
-      else
-        InfoPainter.SetInfoMinutes(abs(Minutes), CheckTimerBlink);
-      InfoPainter.SetInfoSeconds((60 - Seconds) mod 60, CheckTimerBlink);
-    end;
-    end;
+    if InfoPainter <> nil then UpdateTimeLimit;
 
   // hard coded dos frame numbers
   case CurrentIteration of
@@ -8007,8 +7950,7 @@ begin
   Result := false;
   if not (fGameParams.TimerBlink) then Exit; 
   if ((fGameParams.TimerMode) or (fGameParams.Level.Info.TimeLimit > 5999)) then Exit;
-  if (Minutes = 0) and (Seconds < 30)
-  and (CurrentIteration mod 17 > 8) {and (CurrentIteration mod 34 < 27)} then
+  if (TimePlay < 30) and (TimePlay >= 0) and (CurrentIteration mod 17 > 8) then
     Result := true;
 end;
 
@@ -8711,9 +8653,11 @@ begin
   if moTimerMode in fGame.fGameParams.MiscOptions then
   begin
     ads('Timer mode: Enabled');
-    if fGame.Minutes = 0 then
+    if (fGame.TimePlay < 60) and (fGame.TimePlay >= 0) then // Nepster: Surely suboptimal; I need better understanding of moTimerMode first!!!
+    // if fGame.Minutes = 0 then
       ads('>> Replay saved at: 0:00')
-      else ads('>> Replay saved at: ' + i2s(abs(fGame.Minutes + 1)) + ':' + LeadZeroStr((60 - fGame.Seconds) mod 60, 2));
+    else ads('>> Replay saved at: ' + i2s(abs(fGame.TimePlay + 60) div 60) + ':' + LeadZeroStr((-fGame.TimePlay) mod 60, 2)); // Nepster: Computed values are idiotic, but who cares when the replay file is a binary blob???
+    // else ads('>> Replay saved at: ' + i2s(abs(fGame.Minutes + 1)) + ':' + LeadZeroStr((60 - fGame.Seconds) mod 60, 2));
     ads('>> Lemmings saved:  ' + i2s(fGame.LemmingsIn));
   end else ads('Timer mode: Disabled');
   ads('------------------------------------------');
