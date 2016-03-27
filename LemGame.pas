@@ -791,7 +791,7 @@ type
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
     procedure SpawnLemming;
-    procedure Transition(L: TLemming; aAction: TBasicLemmingAction; DoTurn: Boolean = False);
+    procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
     procedure UpdateInteractiveObjects;
@@ -2879,129 +2879,97 @@ begin
 end;
 
 
-procedure TLemmingGame.Transition(L: TLemming; aAction: TBasicLemmingAction; DoTurn: Boolean = False);
+procedure TLemmingGame.Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
 {-------------------------------------------------------------------------------
   Handling of a transition and/or turnaround
 -------------------------------------------------------------------------------}
 var
   i: Integer;
 begin
+  if DoTurn then TurnAround(L);
 
-  with L do
+  if L.LemHasBlockerField and not (NewAction in [baOhNoing, baStoning]) then
   begin
-    // check if any change
+    L.LemHasBlockerField := False;
+    RestoreMap;
+  end;
 
-    if (aAction = baToWalking) then
-    begin
-      if (LemAction = baBuilding) and HasPixelAt(LemX, LemY-1) and not HasPixelAt(LemX + LemDx, LemY) then
-        LemY := LemY - 1;
-      if LemAction = baWalking then DoTurn := true;
-      aAction := baWalking;
-    end;
+  // Should have been checked before in all cases, but just to be sure...
+  if (not HasPixelAt(L.LemX, L.LemY)) and (NewAction = baWalking) then
+    NewAction := baFalling;
 
-    if L.LemHasBlockerField and not (aAction in [{baBlocking, }baOhNoing, baStoning]) then
-    begin
-      LemHasBlockerField := False;
-      RestoreMap;
-    end;
+  // Should not happen, except for assigning walkers to walkers
+  if L.LemAction = NewAction then Exit;
 
-    if (not HasPixelAt(LemX, LemY)) and (aAction = baWalking) then
-      aAction := baFalling;
+  // Set initial fall heights according to previous skill
+  if (NewAction = baFalling) then
+  begin
+    L.LemFallen := 1;
+    if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3;
+    if L.LemAction in [baMining, baDigging] then L.LemFallen := 0;
+    L.LemTrueFallen := L.LemFallen;
+  end;
 
-    if (LemAction = aAction) and not DoTurn then
-      Exit;
+  // Change Action
+  L.LemAction := NewAction;
+  L.LemFrame := 0;
+  L.LemEndOfAnimation := False;
+  L.LemNumberOfBricksLeft := 0;
 
-    if DoTurn then
-      LemDx := -LemDx;
+  // New animation
+  i := AnimationIndices[NewAction, L.LemRTL];
+  L.LMA := Style.AnimationSet.MetaLemmingAnimations[i];
+  L.LAB := Style.AnimationSet.LemmingAnimations.List^[i];
+  L.LemMaxFrame := L.LMA.FrameCount - 1;
+  L.LemAnimationType := L.LMA.AnimationType;
+  L.FrameTopDy  := -L.LMA.FootY; // ccexplore compatible
+  L.FrameLeftDx := -L.LMA.FootX; // ccexplore compatible
 
-    // *always* new animation
-    i := AnimationIndices[aAction, LemRTL]; // watch out: here use the aAction parameter!
-    LMA := Style.AnimationSet.MetaLemmingAnimations[i];
-    LAB := Style.AnimationSet.LemmingAnimations.List^[i];
-    LemMaxFrame := LMA.FrameCount - 1;
-    LemAnimationType := LMA.AnimationType;
-    FrameTopDy  := -LMA.FootY; // ccexplore compatible
-    FrameLeftDx := -LMA.FootX; // ccexplore compatible
+  // some things to do when entering state
+  case L.LemAction of
+    baJumping    : L.LemJumped := 0;
+    baClimbing   : L.LemIsNewClimbing := True;
+    baSplatting  : begin
+                     L.LemExplosionTimer := 0;
+                     CueSoundEffect(SFX_SPLAT)
+                   end;
+    baBlocking   : begin
+                     L.LemHasBlockerField := True;
+                     SetBlockerField(L);
+                   end;
+    baExiting    : begin
+                     L.LemExplosionTimer := 0;
+                     CueSoundEffect(SFX_YIPPEE);
+                   end;
+    baDigging    : L.LemIsNewDigger := True;
+    baBuilding   : L.LemNumberOfBricksLeft := 12;
+    baPlatforming: L.LemNumberOfBricksLeft := 12;
+    baStacking   : L.LemNumberOfBricksLeft := 8;
+    baOhnoing    : CueSoundEffect(SFX_OHNO);
+    baStoning    : CueSoundEffect(SFX_OHNO);
+    baExploding  : begin
+                     if fHighlightLemming = L then fHighlightLemming := nil;
+                     CueSoundEffect(SFX_EXPLOSION);
+                   end;
+    baStoneFinish: begin
+                     if fHighlightLemming = L then fHighlightLemming := nil;
+                     CueSoundEffect(SFX_EXPLOSION);
+                   end;
+    baFloating   : L.LemFloatParametersTableIndex := 0;
+    baGliding    : L.LemFloatParametersTableIndex := 0;
+    baSwimming   : begin // If possible, float up 4 pixels when starting
+                     i := 0;
+                     while (i < 4) and (ReadWaterMap(L.LemX, L.LemY - i - 1) = DOM_WATER)
+                                   and not HasPixelAt(L.LemX, L.LemY - i - 1) do Inc(i);
+                     Dec(L.LemY, i);
+                   end;
+    baFixing     : L.LemMechanicFrames := 42;
 
-    if (aAction = baFalling) then
-    begin
-      LemFallen := -2;
-      if LemAction in [baWalking, baBashing] then LemFallen := 0;
-      if LemAction in [baMining, baDigging] then LemFallen := -3;
-    end;
-
-    if LemAction = aAction then
-      Exit;
-
-
-
-
-    LemAction := aAction;
-    LemFrame := 0;
-    LemEndOfAnimation := False;
-    LemNumberOfBricksLeft := 0;
-
-    // some things to do when entering state
-    case LemAction of
-      baJumping:
-        LemJumped := 0;
-      baClimbing:
-        LemIsNewClimbing := true;
-      baSplatting:
-        begin
-          LemExplosionTimer := 0;
-          CueSoundEffect(SFX_SPLAT)
-        end;
-      baBlocking:
-        begin
-          L.LemHasBlockerField := True;
-          SetBlockerField(L);
-        end;
-      baExiting    :
-        begin
-        LemExplosionTimer := 0;
-        CueSoundEffect(SFX_YIPPEE);
-        end;
-      baDigging    : LemIsNewDigger := True;
-      baFalling    :
-        begin
-          // @Optional Game Mechanic
-          if dgoFallerStartsWith3 in Options then
-            Inc(LemFallen, 3);
-          LemTrueFallen := LemFallen;
-        end;
-      baBuilding   : LemNumberOfBricksLeft := 12;
-      baPlatforming: LemNumberOfBricksLeft := 12;
-      baStacking   : LemNumberOfBricksLeft := 8;
-      baOhnoing    : CueSoundEffect(SFX_OHNO);
-      baStoning    : CueSoundEffect(SFX_OHNO);
-      baExploding  : begin
-                       if fHighlightLemming = L then fHighlightLemming := nil;
-                       CueSoundEffect(SFX_EXPLOSION);
-                     end;
-      baStoneFinish: begin
-                       if fHighlightLemming = L then fHighlightLemming := nil;
-                       CueSoundEffect(SFX_EXPLOSION);
-                     end;
-      baFloating   : LemFloatParametersTableIndex := 0;
-      baGliding    : LemFloatParametersTableIndex := 0;
-      baSwimming   : for i := 1 to 4 do
-                     begin
-                       if (ReadWaterMap(LemX, LemY-1) = DOM_WATER)
-                       and (not (HasPixelAt(LemX, LemY-1))) then
-                         Dec(LemY)
-                         else
-                         break;
-                     end;
-      baFixing     : LemMechanicFrames := 42;
-
-    end;
   end;
 end;
 
 procedure TLemmingGame.TurnAround(L: TLemming);
-// we assume that the mirrored animations at least have the same
-// framecount
+// we assume that the mirrored animations at least have the same framecount
 var
   i: Integer;
 begin
@@ -3056,6 +3024,9 @@ begin
   // We check first, whether the skill is available at all
   if not CheckSkillAvailable(NewSkill) then Exit;
 
+  //Swith from baToWalking to baWalking
+  If NewSkill = baToWalking then NewSkill := baWalking;
+
   // Have to ask namida what fCheckWhichLemmingOnly actually does!!
   if fCheckWhichLemmingOnly then WhichLemming := L
   else
@@ -3063,6 +3034,15 @@ begin
     UpdateSkillCount(NewSkill);
     // Get starting position for stacker
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
+    // Do something very weird on assigning walkers to builders
+    // Needs to be removed!!!
+    if     (NewSkill = baWalking) and (L.LemAction = baBuilding)
+       and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
+      L.LemY := L.LemY - 1;
+    // Turn around walking lem, if assigned a walker
+    if (NewSkill = baWalking) and (L.LemAction = baWalking) then
+      TurnAround(L);
+
     // Special behavior of permament skills.
     if (NewSkill = baClimbing) then L.LemIsClimber := True
     else if (NewSkill = baFloating) then L.LemIsFloater := True
@@ -3104,7 +3084,7 @@ const
                baStacking, baBashing, baMining, baDigging];
 begin
   if (L.LemAction in ActionSet) then
-    Result := DoSkillAssignment(L, baToWalking)
+    Result := DoSkillAssignment(L, baToWalking) // needs baToWalking instead of baWalking to properly check for available skills.
   else if (L2 <> nil) and (L2.LemAction in ActionSet) then
     Result := DoSkillAssignment(L2, baToWalking)
   else
@@ -4911,12 +4891,10 @@ begin
 
   If (LemDy > 3) then
   begin
-    // Transition to faller
     Inc(L.LemY, 4);
     Transition(L, baFalling);
   end
   else if (LemDy > 0) then
-    // walk forward
     Inc(L.LemY, LemDy);
 
   // Has the lem fallen out of the level?
@@ -5047,7 +5025,7 @@ begin
     end else if ((LemJumped = 4) and HasPixelAt(LemX, LemY-1) and HasPixelAt(LemX, LemY-2)) or ((LemJumped >= 5) and HasPixelAt(LemX, LemY-1)) then
     begin
       Dec(LemX, LemDx);
-      Transition(L, baFalling, true);
+      Transition(L, baFalling, true); // turn around as well
     end;
   end;
 end;
@@ -5129,7 +5107,7 @@ begin
         begin
           // Don't fall below original position on hitting terrain in first cycle
           if not LemIsNewClimbing then LemY := LemY - LemFrame + 3;
-          Transition(L, baFalling, TRUE);
+          Transition(L, baFalling, True); // turn around as well
           Inc(LemX, LemDx);
         end else if not HasPixelAt(LemX, LemY - 7 - LemFrame) then
         begin
@@ -5166,7 +5144,7 @@ begin
       if FoundClip then
       begin
         LemY := LemY + 1;
-        Transition(L, baFalling, TRUE);
+        Transition(L, baFalling, True); // turn around as well
         Inc(LemX, LemDx);
       end;
       Result := True;
@@ -5276,12 +5254,12 @@ begin
   else if L.LemFrame = 15 then
   begin
     if not L.LemCouldPlatform then
-      Transition(L, baWalking, TRUE)
+      Transition(L, baWalking, True) // turn around as well
 
     else if PlatformerTerrainCheck(L.LemX + 2*L.LemDx, L.LemY) then
     begin
       Inc(L.LemX, L.LemDx);
-      Transition(L, baWalking, TRUE);  // turn around as well
+      Transition(L, baWalking, True);  // turn around as well
     end
 
     else
@@ -5342,7 +5320,7 @@ begin
          or  HasPixelAt(L.LemX, L.LemY - 2)
          or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
        ) then
-      Transition(L, baWalking, TRUE)  // turn around as well
+      Transition(L, baWalking, True)  // turn around as well
 
     else
     begin
@@ -5354,7 +5332,7 @@ begin
            or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 3) and (L.LemNumberOfBricksLeft > -1)) // Does this do anything at all???
            or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
          ) then
-         Transition(L, baWalking, TRUE)  // turn around as well
+         Transition(L, baWalking, True)  // turn around as well
 
        else if L.LemNumberOfBricksLeft = 0 then
          Transition(L, baShrugging);
@@ -5389,7 +5367,7 @@ begin
     if L.LemStackLow then Inc(TopStackPosY);
 
     if HasPixelAt(L.LemX + L.LemDx, TopStackPosY) then
-      Transition(L, baWalking, True) // Even on the last brick !!!???
+      Transition(L, baWalking, True) // Even on the last brick !!!???  // turn around as well
     else if L.LemNumberOfBricksLeft = 0 then
       Transition(L, baShrugging);
 
@@ -5416,7 +5394,7 @@ var
   begin
     // Turns basher around an transitions to walker
     Dec(L.LemX, L.LemDx);
-    Transition(L, baWalking, True);
+    Transition(L, baWalking, True); // turn around as well
     if SteelSound then CueSoundEffect(SFX_HITS_STEEL);
   end;
 
@@ -5598,7 +5576,7 @@ function TLemmingGame.HandleMining(L: TLemming): Boolean;
     if HasSteelAt(X, Y) then CueSoundEffect(SFX_HITS_STEEL);
     // Independently of (X, Y) this check is always made at Lem position
     if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
-    Transition(L, baWalking, TRUE);
+    Transition(L, baWalking, True);  // turn around as well
   end;
 
 begin
