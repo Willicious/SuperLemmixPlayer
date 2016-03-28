@@ -1016,7 +1016,7 @@ const
   RM_SAVE              = 1;
   RM_KILL              = 2;
   RM_ZOMBIE            = 3;
-  RM_GHOST             = 4;
+  // RM_GHOST             = 4;
 
   HEAD_MIN_Y = -7;
   //LEMMING_MIN_X = 0;
@@ -1155,7 +1155,6 @@ begin
   LemJumped := Source.LemJumped;
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
-  LemIsNewClimbing := Source.LemIsNewClimbing;
   LemExplosionTimer := Source.LemExplosionTimer;
   LemMechanicFrames := Source.LemMechanicFrames;
   LMA := Source.LMA;
@@ -2885,6 +2884,9 @@ var
 begin
   if DoTurn then TurnAround(L);
 
+  //Swith from baToWalking to baWalking
+  if NewAction = baToWalking then NewAction := baWalking;
+
   if L.LemHasBlockerField and not (NewAction in [baOhNoing, baStoning]) then
   begin
     L.LemHasBlockerField := False;
@@ -3021,9 +3023,6 @@ begin
   // We check first, whether the skill is available at all
   if not CheckSkillAvailable(NewSkill) then Exit;
 
-  //Swith from baToWalking to baWalking
-  If NewSkill = baToWalking then NewSkill := baWalking;
-
   // Have to ask namida what fCheckWhichLemmingOnly actually does!!
   if fCheckWhichLemmingOnly then WhichLemming := L
   else
@@ -3033,11 +3032,11 @@ begin
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
     // Do something very weird on assigning walkers to builders
     // Needs to be removed!!!
-    if     (NewSkill = baWalking) and (L.LemAction = baBuilding)
+    if     (NewSkill = baToWalking) and (L.LemAction = baBuilding)
        and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
       L.LemY := L.LemY - 1;
     // Turn around walking lem, if assigned a walker
-    if (NewSkill = baWalking) and (L.LemAction = baWalking) then
+    if (NewSkill = baToWalking) and (L.LemAction = baWalking) then
       TurnAround(L);
 
     // Special behavior of permament skills.
