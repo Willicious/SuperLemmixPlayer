@@ -777,8 +777,6 @@ type
     function ReadSpecialMap(X, Y: Integer): Byte;
     function ReadWaterMap(X, Y: Integer): Byte;
     function ReadZombieMap(X, Y: Integer): Byte;
-    procedure RecordStartPause;
-    procedure RecordEndPause;
     procedure RecordNuke;
     procedure RecordReleaseRate(aActionFlag: Byte);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
@@ -3123,8 +3121,8 @@ begin
     NewL.LemIsClone := true;
     NewL.LemUsedSkillCount := 1;
     if not NewL.LemIsZombie then
-      Inc(LemmingsOut)  // Not sure how this can ever happen???
-    else
+      Inc(LemmingsOut)
+    else   // Nepster: Not sure how this can ever happen???
       Inc(LemmingsRemoved);
   end
 end;
@@ -6768,24 +6766,9 @@ begin
         RecordSkillSelection(Value);
       end;
     spbPause:
-      //if not fHyperSpeed then
       begin
-        case Paused of
-          False:
-            begin
-              // NOPAUSE GOES HERE //
-              Paused := True;
-              FastForward := False;
-              RecordStartPause;
-              //HyperSpeedEnd;
-            end;
-          True:
-            begin
-              Paused := False;
-              FastForward := False;
-              RecordEndPause;
-            end;
-        end;
+        Paused := not Paused;
+        FastForward := False;
       end;
     spbNuke:
       begin
@@ -7004,76 +6987,6 @@ begin
   end;
 end;
 
-procedure TLemmingGame.RecordStartPause;
-{-------------------------------------------------------------------------------
-  Records the start of a pause session.
-  Just in case: when the previous record is raf_Pausing or raf_StartPause
-  we do *not* record it.
--------------------------------------------------------------------------------}
-
-// NeoLemmix: We do not record this at all.
-
-{    function PrevOk: Boolean;
-    var
-      R: TReplayItem;
-    begin
-      Result := True;
-      with fRecorder.List do
-      begin
-        if Count = 0 then
-          Exit;
-        R := TReplayItem(List^[Count - 1]);
-        Result := R.ActionFlags and (raf_Pausing or raf_StartPause) = 0;
-      end;
-    end;
-
-var
-  R: TReplayItem;}
-begin
-  {if not fPlaying or fReplaying or not PrevOk then
-    Exit;
-  R := fRecorder.Add;
-  R.Iteration := CurrentIteration;
-  R.ActionFlags := raf_StartPause;
-  R.ReleaseRate := currReleaseRate;}
-end;
-
-procedure TLemmingGame.RecordEndPause;
-{-------------------------------------------------------------------------------
-  Recording the end of a pause.
-  Just in case: this is only allowed if there is a startpause-counterpart.
-  if there is a previous record then this previous record has to
-  have a flag raf_Pausing or raf_StartPause.
-  In all other cases EndPause is *not* recorded.
--------------------------------------------------------------------------------}
-
-// NeoLemmix: We do not record this at all.
-
-{    function PrevOk: Boolean;
-    var
-      R: TReplayItem;
-    begin
-      Result := False;
-      with fRecorder.List do
-      begin
-        if Count = 0 then
-          Exit;
-        R := TReplayItem(List^[Count - 1]);
-        Result := R.ActionFlags and (raf_Pausing or raf_StartPause) <> 0;
-      end;
-    end;
-
-var
-  R: TReplayItem;}
-
-begin
-  {if not fPlaying or fReplaying or not PrevOk then
-    Exit;
-  R := fRecorder.Add;
-  R.Iteration := CurrentIteration;
-  R.ActionFlags := raf_EndPause;
-  R.ReleaseRate := currReleaseRate;}
-end;
 
 procedure TLemmingGame.RecordNuke;
 {-------------------------------------------------------------------------------
