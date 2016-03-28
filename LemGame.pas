@@ -977,40 +977,39 @@ const
 
 const
   // values for the (4 pixel resolution) Dos Object Map (for triggereffects)
-  DOM_OFFSET           = 0; //192; // is this really needed anymore? probably not.
   DOM_NOOBJECT         = 65535;
-  DOM_NONE             = DOM_OFFSET + 0;
-  DOM_EXIT             = DOM_OFFSET + 1;
-  DOM_FORCELEFT        = DOM_OFFSET + 2; // left arm of blocker
-  DOM_FORCERIGHT       = DOM_OFFSET + 3; // right arm of blocker
-  DOM_TRAP             = DOM_OFFSET + 4; // triggered trap
-  DOM_WATER            = DOM_OFFSET + 5; // causes drowning
-  DOM_FIRE             = DOM_OFFSET + 6; // causes vaporizing
-  DOM_ONEWAYLEFT       = DOM_OFFSET + 7;
-  DOM_ONEWAYRIGHT      = DOM_OFFSET + 8;
-  DOM_STEEL            = DOM_OFFSET + 9;
-  DOM_BLOCKER          = DOM_OFFSET + 10; // the middle part of blocker
-  DOM_TELEPORT         = DOM_OFFSET + 11;
-  DOM_RECEIVER         = DOM_OFFSET + 12;
-  DOM_LEMMING          = DOM_OFFSET + 13;
-  DOM_PICKUP           = DOM_OFFSET + 14;
-  DOM_LOCKEXIT         = DOM_OFFSET + 15;
-  //DOM_SECRET           = DOM_OFFSET + 16;
-  DOM_BUTTON           = DOM_OFFSET + 17;
-  DOM_RADIATION        = DOM_OFFSET + 18;
-  DOM_ONEWAYDOWN       = DOM_OFFSET + 19;
-  DOM_UPDRAFT          = DOM_OFFSET + 20;
-  DOM_FLIPPER          = DOM_OFFSET + 21;
-  DOM_SLOWFREEZE       = DOM_OFFSET + 22;
-  DOM_WINDOW           = DOM_OFFSET + 23;
-  DOM_ANIMATION        = DOM_OFFSET + 24;
-  DOM_HINT             = DOM_OFFSET + 25;
-  DOM_NOSPLAT          = DOM_OFFSET + 26;
-  DOM_SPLAT            = DOM_OFFSET + 27;
-  DOM_TWOWAYTELE       = DOM_OFFSET + 28;
-  DOM_SINGLETELE       = DOM_OFFSET + 29;
-  DOM_BACKGROUND       = DOM_OFFSET + 30;
-  DOM_TRAPONCE         = DOM_OFFSET + 31;
+  DOM_NONE             = 0;
+  DOM_EXIT             = 1;
+  DOM_FORCELEFT        = 2; // left arm of blocker
+  DOM_FORCERIGHT       = 3; // right arm of blocker
+  DOM_TRAP             = 4; // triggered trap
+  DOM_WATER            = 5; // causes drowning
+  DOM_FIRE             = 6; // causes vaporizing
+  DOM_ONEWAYLEFT       = 7;
+  DOM_ONEWAYRIGHT      = 8;
+  DOM_STEEL            = 9;
+  DOM_BLOCKER          = 10; // the middle part of blocker
+  DOM_TELEPORT         = 11;
+  DOM_RECEIVER         = 12;
+  DOM_LEMMING          = 13;
+  DOM_PICKUP           = 14;
+  DOM_LOCKEXIT         = 15;
+  //DOM_SECRET           = 16;
+  DOM_BUTTON           = 17;
+  DOM_RADIATION        = 18;
+  DOM_ONEWAYDOWN       = 19;
+  DOM_UPDRAFT          = 20;
+  DOM_FLIPPER          = 21;
+  DOM_SLOWFREEZE       = 22;
+  DOM_WINDOW           = 23;
+  DOM_ANIMATION        = 24;
+  DOM_HINT             = 25;
+  DOM_NOSPLAT          = 26;
+  DOM_SPLAT            = 27;
+  DOM_TWOWAYTELE       = 28;
+  DOM_SINGLETELE       = 29;
+  DOM_BACKGROUND       = 30;
+  DOM_TRAPONCE         = 31;
 
   // removal modes
   RM_NEUTRAL           = 0;
@@ -2644,7 +2643,7 @@ begin
       if ObjID = DOM_NOOBJECT then
         Result := DOM_NONE
         else
-        Result := ObjectInfos[ObjID].MetaObj.TriggerEffect + DOM_OFFSET;
+        Result := ObjectInfos[ObjID].MetaObj.TriggerEffect;
     end else
       Result := DOM_NONE; // whoops, important
   end;
@@ -3508,7 +3507,7 @@ begin
         else if Eff = 17 then
           V := i + 96
         else}
-          V := Eff + DOM_OFFSET;
+          V := Eff;
         if not (V in [DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND]) then
         begin
           y1 := Top;
@@ -6126,7 +6125,7 @@ begin
       Inf.Obj.Top := Inf.Obj.Top - 1;
       Inf.Obj.OffsetY := Inf.Obj.OffsetY - 1;
       for x := Inf.MetaObj.TriggerLeft to (Inf.MetaObj.TriggerLeft + Inf.MetaObj.TriggerWidth - 1) do
-        if Inf.MetaObj.TriggerEffect + DOM_OFFSET = DOM_WATER then
+        if Inf.MetaObj.TriggerEffect = DOM_WATER then
           WriteWaterMap(Inf.Obj.Left + x, Inf.Obj.Top + Inf.MetaObj.TriggerTop, DOM_WATER)
           else
           WriteObjectMap(Inf.Obj.Left + x, Inf.Obj.Top + Inf.MetaObj.TriggerTop, i);
