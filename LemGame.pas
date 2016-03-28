@@ -6585,186 +6585,6 @@ begin
           fSpeedingUpReleaseRate := False;
         if RightClick and fSlowingDownReleaseRate then InstReleaseRate := -1;
       end;
-    spbWalker:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := spbWalker;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-        {if RightClick and (fHighlightLemming <> nil) then
-          AssignSkill(fHighlightLemming, fHighlightLemming, SkillPanelButtonToAction[fSelectedSkill]);}
-      end;
-    spbClimber:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := spbClimber;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-        {if RightClick and (fHighlightLemming <> nil) then
-          AssignSkill(fHighlightLemming, fHighlightLemming, SkillPanelButtonToAction[fSelectedSkill]);}
-      end;
-    spbSwimmer:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(Value, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbUmbrella:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbGlider:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbMechanic:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbExplode:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbStoner:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbBlocker:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbPlatformer:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbBuilder:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbStacker:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbBasher:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbMiner:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbDigger:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
-    spbCloner:
-      begin
-        if fSelectedSkill = Value then
-          Exit;
-        if not CheckSkillInSet(Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);
-        CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
-      end;
     spbPause:
       begin
         Paused := not Paused;
@@ -6775,6 +6595,16 @@ begin
         UserSetNuking := True;
         ExploderAssignInProgress := True;
         RecordNuke;
+      end;
+    spbNone: ; // Do Nothing
+    else // all skill buttons
+      begin
+        if (not CheckSkillInSet(Value)) or (fSelectedSkill = Value) then Exit;
+        InfoPainter.DrawButtonSelector(fSelectedSkill, False);  // unselect old skill
+        fSelectedSkill := Value;
+        InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
+        CueSoundEffect(SFX_SKILLBUTTON);
+        RecordSkillSelection(Value);
       end;
   end;
 end;
