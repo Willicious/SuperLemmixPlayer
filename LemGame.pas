@@ -130,7 +130,7 @@ type
     LemIsGlider                   : Boolean;
     LemIsMechanic                 : Boolean;
     LemIsZombie                   : Boolean;
-    LemCouldPlatform              : Boolean; // placed brick during this cycle
+    LemPlacedBrick                : Boolean; // placed useful brick during this cycle (plaformer and stacker)
     LemInFlipper                  : Integer;
     LemHasBlockerField            : Boolean; // for blockers, even during ohno
     LemIsNewDigger                : Boolean; // new digger removes one more row
@@ -765,7 +765,7 @@ type
     procedure InitializeObjectMap;
     procedure InitializeBlockerMap;
     procedure LayBrick(L: TLemming);
-    procedure LayStackBrick(L: TLemming);
+    function LayStackBrick(L: TLemming): Boolean;
     function PrioritizedHitTest(out Lemming1, Lemming2: TLemming;
                                 MousePos: TPoint;
                                 CheckRightMouseButton: Boolean = True): Integer;
@@ -1180,7 +1180,7 @@ begin
   LemIsGlider := Source.LemIsGlider;
   LemIsMechanic := Source.LemIsMechanic;
   LemIsZombie := Source.LemIsZombie;
-  LemCouldPlatform := Source.LemCouldPlatform;
+  LemPlacedBrick := Source.LemPlacedBrick;
   LemInFlipper := Source.LemInFlipper;
   LemHasBlockerField := Source.LemHasBlockerField;
   LemIsNewDigger := Source.LemIsNewDigger;
@@ -4802,7 +4802,7 @@ begin
   InitializeMinimap;
 end;
 
-procedure TLemmingGame.LayStackBrick(L: TLemming);
+function TLemmingGame.LayStackBrick(L: TLemming): Boolean;
 {-------------------------------------------------------------------------------
   bricks are in the lemming area so will automatically be copied to the screen
   during drawlemmings
@@ -4819,6 +4819,8 @@ begin
   BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
   if L.LemStackLow then Inc(BrickPosY);
 
+  Result := False;
+
   for n := 1 to 3 do
   begin
     if World.PixelS[L.LemX + n*L.LemDx, BrickPosY] and ALPHA_TERRAIN = 0 then
@@ -4826,6 +4828,7 @@ begin
       World.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
       if not fHyperSpeed then
         fTargetBitmap.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
+      Result := True;
     end;
   end;
 
@@ -5272,7 +5275,7 @@ begin
 
   if L.LemFrame = 9 then
   begin
-    L.LemCouldPlatform := LemCanPlatform(L);
+    L.LemPlacedBrick := LemCanPlatform(L);
     LayBrick(L);
   end
 
@@ -5281,7 +5284,7 @@ begin
 
   else if L.LemFrame = 15 then
   begin
-    if not L.LemCouldPlatform then
+    if not L.LemPlacedBrick then
       Transition(L, baWalking, True) // turn around as well
 
     else if PlatformerTerrainCheck(L.LemX + 2*L.LemDx, L.LemY) then
@@ -5406,7 +5409,7 @@ begin
 
   if L.LemFrame = 7 then
   begin
-    LayStackBrick(L);
+    L.LemPlacedBrick := LayStackBrick(L);
     // LemFrame = 8 has to be skipped!
     // Stored content has 9 frames, but only 8 are used!!
     Inc(L.LemFrame);
@@ -5419,10 +5422,11 @@ begin
     // sound on last three bricks
     if L.LemNumberOfBricksLeft < 3 then CueSoundEffect(SFX_BUILDER_WARNING);
 
-    TopStackPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
+    (*TopStackPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
     if L.LemStackLow then Inc(TopStackPosY);
 
-    if HasPixelAt(L.LemX + L.LemDx, TopStackPosY) then
+    if HasPixelAt(L.LemX + L.LemDx, TopStackPosY) then    *)
+    if not L.LemPlacedBrick then
       Transition(L, baWalking, True) // Even on the last brick !!!???  // turn around as well
     else if L.LemNumberOfBricksLeft = 0 then
       Transition(L, baShrugging);
