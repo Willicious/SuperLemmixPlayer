@@ -5148,7 +5148,12 @@ begin
           Inc(LemX, LemDx);
         end else if not HasPixelAt(LemX, LemY - 7 - LemFrame) then
         begin
-          LemY := LemY - LemFrame + 2;
+          // if-case prevents too deep bombing, see http://www.lemmingsforums.net/index.php?topic=2620.0
+          if not (LemIsNewClimbing and (LemFrame = 1)) then
+          begin
+            LemY := LemY - LemFrame + 2;
+            LemIsNewClimbing := False;
+          end;
           Transition(L, baHoisting);
         end;
 
@@ -5215,6 +5220,9 @@ begin
   Result := True;
   if L.LemEndOfAnimation then
     Transition(L, baWalking)
+  // special case due to http://www.lemmingsforums.net/index.php?topic=2620.0
+  else if (L.LemFrame = 1) and L.LemIsNewClimbing then
+    Dec(L.LemY, 1)
   else if L.LemFrame <= 4 then
     Dec(L.LemY, 2);
 end;
@@ -5402,8 +5410,8 @@ end;
 
 
 function TLemmingGame.HandleStacking(L: TLemming): Boolean;
-var
-  TopStackPosY: Integer;
+(*var
+  TopStackPosY: Integer;*)
 begin
   Result := True;
 
