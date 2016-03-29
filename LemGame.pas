@@ -1687,8 +1687,8 @@ begin
         for i2 := 0 to LemmingList.Count-1 do
           with LemmingList[i2] do
           begin
-            if (LemUsedSkillCount > 0) and not LemIsClone then Inc(UsedSkillLems);
-            if (LemUsedSkillCount > 1) and LemIsClone then Inc(UsedSkillLems);
+            if (LemUsedSkillCount > 0) (*and not LemIsClone then Inc(UsedSkillLems);
+            if (LemUsedSkillCount > 1) and LemIsClone*) then Inc(UsedSkillLems);
           end;
       if UsedSkillLems > 1 then Continue;
 
@@ -2878,6 +2878,7 @@ end;
 procedure TLemmingGame.Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
 {-------------------------------------------------------------------------------
   Handling of a transition and/or turnaround
+  
 -------------------------------------------------------------------------------}
 var
   i: Integer;
@@ -2982,7 +2983,10 @@ begin
     LemAnimationType := LMA.AnimationType;
     FrameTopDy  := -LMA.FootY; // ccexplore compatible
     FrameLeftDx := -LMA.FootX; // ccexplore compatible
+    // Required for turned builders not to walk into air
     if (LemAction = baBuilding) and (LemFrame >= 9) then LayBrick(L);
+    // See http://www.lemmingsforums.net/index.php?topic=2530.0
+    if (LemAction = baPlatforming) and (LemFrame >= 9) then LayBrick(L);
   end;
 end;
 
@@ -3028,6 +3032,8 @@ begin
   else
   begin
     UpdateSkillCount(NewSkill);
+    RecordSkillAssignment(L, NewSkill);
+
     // Get starting position for stacker
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
     // Do something very weird on assigning walkers to builders
@@ -3062,7 +3068,6 @@ begin
     else if (NewSkill = baCloning) then Inc(LemmingsCloned) // Creation of new Lem see AssignCloner
     else Transition(L, NewSkill);
 
-    RecordSkillAssignment(L, NewSkill);
     Result := True;
 
 
@@ -3117,7 +3122,7 @@ begin
     LemmingList.Add(NewL);
     TurnAround(NewL);
     NewL.LemIsClone := true;
-    NewL.LemUsedSkillCount := 1;
+    NewL.LemUsedSkillCount := 0; // was origianlly 1!
     if not NewL.LemIsZombie then
       Inc(LemmingsOut)
     else   // Nepster: Not sure how this can ever happen???
@@ -3294,7 +3299,7 @@ end;
 
 function TLemmingGame.AssignMiner(L, L2: TLemming): Boolean;
 var
-  SelectedLemming: TLemming;
+  SelL: TLemming;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baDigging];
@@ -3302,24 +3307,24 @@ begin
   Result := False;
 
   if L.LemAction in ActionSet then
-    SelectedLemming := L
+    SelL := L
   else if Assigned(L2) and (L2.LemAction in ActionSet) then
-    SelectedLemming := L2
+    SelL := L2
   else
     Exit;
 
   // Needs some improvement, once the forum has decided on this issue
-  if HasSteelAt(L.LemX, L.LemY) then
-  begin
+  if not HasIndestructibleAt(SelL.LemX, SelL.LemY, SelL.LemDx, baMining) then
+    Result := DoSkillAssignment(SelL, baMining)
+  else if HasSteelAt(SelL.LemX, SelL.LemY) then
     if (not fCheckWhichLemmingOnly) then CueSoundEffect(SFX_HITS_STEEL);
-    Exit;
-  end
 
+  (*
   else if (    ((ReadSpecialMap(SelectedLemming.LemX + 4 * SelectedLemming.LemDx, SelectedLemming.LemY - 5) = DOM_ONEWAYLEFT) and (SelectedLemming.LemDx <> -1))
             or ((ReadSpecialMap(SelectedLemming.LemX + 4 * SelectedLemming.LemDx, SelectedLemming.LemY - 5) = DOM_ONEWAYRIGHT) and (SelectedLemming.LemDx <> 1))) then
     Exit
   else
-    Result := DoSkillAssignment(SelectedLemming, baMining);
+    Result := DoSkillAssignment(SelectedLemming, baMining);  *)
 end;
 
 
@@ -4906,7 +4911,6 @@ end;
 function TLemmingGame.HandleSwimming(L: TLemming): Boolean;
 var
   LemDy: Integer;
-  OldLemObjectBelow: Byte;
 
   function LemDive(L: TLemming): Integer;
     // Returns 0 if the lem may not dive down
@@ -4921,43 +4925,38 @@ var
     while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= DiveDepth) do
     begin
       Inc(Result);
-      If L.LemY + Result >= World.Height then Result := DiveDepth + 1; // End while loop!
+      if L.LemY + Result >= World.Height then Result := DiveDepth + 1; // End while loop!
     end;
 
+    // do not dive, when there is no more water
+    if not (ReadWaterMap(L.LemX, L.LemY + Result) = DOM_WATER) then Result := 0;
+
     if Result > DiveDepth then Result := 0; // too much terrain to dive
-    // Here is a condition missing, that the water trigger area has to extend to the new position!!!
-    // if not (ReadWaterMap(L.LemX, L.LemY + Result) = DOM_WATER) then Result := 0; // not enough water to dive
   end;
 
 begin
   Result := True;
 
-  OldLemObjectBelow := ReadWaterMap(L.LemX, L.LemY);
-
   Inc(L.LemX, L.LemDx);
 
-  // This really should check at height L.LemY - 1!!!
-  // Moreover this should be moved into the If-case as another "else if"
-  if     (ReadWaterMap(L.LemX, L.LemY - 2) = DOM_WATER)
-     and not HasPixelAt(L.LemX, L.LemY - 2) then
-    Dec(L.LemY);
-
-  // Having this check at the previous position is nonsense:
-  // It allows swimmers to jump over 1-pixel gaps!
-  // (and has other weird consequences, too)
-  if OldLemObjectBelow = DOM_WATER then
+  if (ReadWaterMap(L.LemX, L.LemY) = DOM_WATER) or HasPixelAt(L.LemX, L.LemY) then // original check only ReadWaterMap(L.LemX - L.LemDx, L.LemY)
   begin
     // This is not completely the same as in V1.43. There a check
     // for the pixel (L.LemX, L.LemY) is omitted.
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-    if LemDy < -6 then
+    // Rise if there is water above the lemming
+    if (LemDy >= -1) and (ReadWaterMap(L.LemX, L.LemY - 1) = DOM_WATER)
+                     and not HasPixelAt(L.LemX, L.LemY - 1) then   // original check at -2!
+      Dec(L.LemY)
+
+    else if LemDy < -6 then
     begin
       if LemDive(L) > 0 then
       begin
         // Dive below the terrain
         Inc(L.LemY, LemDive(L));
-        if not (ReadWaterMap(L.LemX, L.LemY) = DOM_WATER) then Transition(L, baFalling);
+        if not (ReadWaterMap(L.LemX, L.LemY) = DOM_WATER) then Transition(L, baFalling); // should never happen any more!
         Result := False;
       end
       else if L.LemIsClimber then
@@ -4979,19 +4978,22 @@ begin
     begin
       Transition(L, baWalking);
       Inc(L.LemY, LemDy);
-    end
+    end;
   end
 
-  else // if no water on previous(!!) position
+  else // if no water or terrain on current position
   begin
     LemDy := FindGroundPixel(L.LemX, L.LemY);
-    If LemDy = 4 then
+    If LemDy > 1 then
     begin
       Inc(L.LemY);
       Transition(L, baFalling);
     end
-    else
+    else // if LemDy = 0 or 1
+    begin
+      Inc(L.LemY, LemDy);
       Transition(L, baWalking);
+    end;
 
     Result := False;
   end;
@@ -5194,9 +5196,9 @@ begin
   Result := Result and not HasPixelAt(L.LemX + L.LemDx, L.LemY - 1);
   Result := Result and not HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 1);
 
-  // Now comes the weird exception rule at left boundary of level!
+  (*// Now comes the weird exception rule at left boundary of level!
   // Depending on the lem direction, we may ignore the checks at LemY - 1
-  // See forum discussion ?????????????????????
+  // See http://www.lemmingsforums.net/index.php?topic=2533.0
   if L.LemDx = 1 then
   begin
     if    ((L.LemX     < 3) and not HasPixelAt(L.LemX    , L.LemY))
@@ -5221,7 +5223,7 @@ begin
       for n := 0 to 5 do
         Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
     end;
-  end;
+  end;    *)
 end;
 
 
@@ -5898,6 +5900,7 @@ begin
     end
     else begin
       dy := 0;
+      If ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then dy := 1;
 
       while (dy < 3) and not HasPixelAt(LemX, LemY) do
       begin
