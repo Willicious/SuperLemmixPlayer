@@ -5318,6 +5318,35 @@ begin
   begin
     Dec(L.LemNumberOfBricksLeft);
 
+    if HasPixelAt(L.LemX + L.LemDx, L.LemY - 2) then
+      Transition(L, baWalking, True)  // turn around as well
+
+    else if (     HasPixelAt(L.LemX + L.LemDx, L.LemY - 3)
+              or  HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 2)
+              or (HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 10) and (L.LemNumberOfBricksLeft > 0))
+            ) then
+    begin
+      Dec(L.LemY);
+      Inc(L.LemX, L.LemDx);
+      Transition(L, baWalking, True)  // turn around as well
+    end
+
+    else
+    begin
+      Dec(L.LemY);
+      Inc(L.LemX, 2*L.LemDx);
+
+      if (     HasPixelAt(L.LemX, L.LemY - 2)
+           or  HasPixelAt(L.LemX, L.LemY - 3)
+           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
+         ) then
+         Transition(L, baWalking, True)  // turn around as well
+
+      else if L.LemNumberOfBricksLeft = 0 then
+         Transition(L, baShrugging);
+    end;
+
+    (*
     Dec(L.LemY);
     Inc(L.LemX, L.LemDx);
 
@@ -5334,14 +5363,14 @@ begin
       if (     HasPixelAt(L.LemX, L.LemY - 1)
            or  HasPixelAt(L.LemX, L.LemY - 2)
            or  HasPixelAt(L.LemX, L.LemY - 3)
-           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 3) and (L.LemNumberOfBricksLeft > -1)) // Does this do anything at all???
+           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 3) and (L.LemNumberOfBricksLeft > -1))  // Does this do anything at all???
            or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
          ) then
          Transition(L, baWalking, True)  // turn around as well
 
        else if L.LemNumberOfBricksLeft = 0 then
          Transition(L, baShrugging);
-    end;
+    end;               *)
   end;
 end;
 
