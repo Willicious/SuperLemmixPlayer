@@ -5573,7 +5573,8 @@ function TLemmingGame.HandleMining(L: TLemming): Boolean;
   begin
     if HasSteelAt(X, Y) then CueSoundEffect(SFX_HITS_STEEL);
     // Independently of (X, Y) this check is always made at Lem position
-    if HasPixelAt(L.LemX, L.LemY) and HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
+    // no longer check at Lem position, due to http://www.lemmingsforums.net/index.php?topic=2547.0
+    if (*HasPixelAt(L.LemX, L.LemY) and*) HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
     Transition(L, baWalking, True);  // turn around as well
   end;
 
@@ -5591,16 +5592,25 @@ begin
 
     // Note that all if-checks are relative to the end position!
 
+    // Lem cannot go down, so turn; see http://www.lemmingsforums.net/index.php?topic=2547.0
+    if     HasIndestructibleAt(L.LemX - L.LemDx, L.LemY - 1, L.LemDx, baMining)
+       and HasIndestructibleAt(L.LemX, L.LemY - 1, L.LemDx, baMining) then
+    begin
+      Dec(L.LemX, 2*L.LemDx);
+      MinerTurn(L, L.LemX + 2*L.LemDx, L.LemY - 1);
+    end
+
     // This first check is only relevant during the very first cycle.
     // Otherwise the pixel was already checked in frame 15 of the previous cycle
-    If (L.LemFrame = 3) and HasIndestructibleAt(L.LemX - L.LemDx, L.LemY - 2, L.LemDx, baMining) then
+    else if (L.LemFrame = 3) and HasIndestructibleAt(L.LemX - L.LemDx, L.LemY - 2, L.LemDx, baMining) then
     begin
       Dec(L.LemX, 2*L.LemDx);
       MinerTurn(L, L.LemX + L.LemDx, L.LemY - 2);
     end
 
     // Do we really want the to check the second HasPixel during frame 3 ????
-    else if     not HasPixelAt(L.LemX - L.LemDx, L.LemY)
+    else if     not HasPixelAt(L.LemX - L.LemDx, L.LemY - 1) // Lem can walk over it
+            and not HasPixelAt(L.LemX - L.LemDx, L.LemY)
             and not HasPixelAt(L.LemX - L.LemDx, L.LemY + 1) then
     begin
       Dec(L.LemX, L.LemDx);
