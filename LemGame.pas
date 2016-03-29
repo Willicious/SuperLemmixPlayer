@@ -734,7 +734,7 @@ type
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer; Redo: Integer = 0);
     procedure ApplyExplosionMask(L: TLemming; Redo: Integer = 0);
     procedure ApplyStoneLemming(L: TLemming; Redo: Integer = 0);
-    procedure ApplyMinerMask(L: TLemming; MaskFrame, X, Y: Integer; Redo: Integer = 0);
+    procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure ApplyAutoSteel;
     procedure ApplyLevelEntryOrder;
     function CalculateNextLemmingCountdown: Integer;
@@ -2987,6 +2987,12 @@ begin
     if (LemAction = baBuilding) and (LemFrame >= 9) then LayBrick(L);
     // See http://www.lemmingsforums.net/index.php?topic=2530.0
     if (LemAction = baPlatforming) and (LemFrame >= 9) then LayBrick(L);
+    // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
+    if (LemAction = baMining) then
+      if LemFrame = 2 then
+        ApplyMinerMask(L, 1, 0, 0)
+      else if (LemFrame >= 3) and (LemFrame < 15) then
+        ApplyMinerMask(L, 1, -2*L.LemDx, -1);
   end;
 end;
 
@@ -4329,16 +4335,19 @@ begin
 
 end;
 
-procedure TLemmingGame.ApplyMinerMask(L: TLemming; MaskFrame, X, Y: Integer; Redo: Integer = 0);
-// x,y is topleft
+procedure TLemmingGame.ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
+// The miner mask is usually centered at the feet of L
+// AdjustX, AdjustY lets one adjust the position of the miner mask relative to this
 var
   Bmp: TBitmap32;
+  MaskX, MaskY: Integer;
   S, D: TRect;
-//  C: TColor32;
-  //iX, iY,
-  {aX, aY,} X1, Y1: Integer;
+  X1, Y1: Integer;
 begin
   Assert((MaskFrame >=0) and (MaskFrame <= 1), 'miner mask error');
+
+  MaskX := L.LemX + L.LemDx - 8 + AdjustX;
+  MaskY := L.LemY + MaskFrame - 12 + AdjustY;
 
   if not L.LemRTL then
     Bmp := MineMasks
@@ -4346,16 +4355,12 @@ begin
     Bmp := MineMasksRTL;
 
   S := CalcFrameRect(Bmp, 2, MaskFrame);
-//  D := S;
-//  ZeroTopLeftRect(D);
-//  RectMove(D, X, Y);
 
-  D.Left := X;
-  D.Top := Y;
-  D.Right := X + RectWidth(S) - 1; // whoops: -1 is important to avoid stretching
-  D.Bottom := Y + RectHeight(S) - 1; // whoops: -1 is important to avoid stretching
+  D.Left := MaskX;
+  D.Top := MaskY;
+  D.Right := MaskX + RectWidth(S) - 1; // whoops: -1 is important to avoid stretching
+  D.Bottom := MaskY + RectHeight(S) - 1; // whoops: -1 is important to avoid stretching
 
-//  deb([rectwidth(d), rectwidth(s)]);
   Assert(CheckRectCopy(D, S), 'miner rect error');
 
   Bmp.DrawTo(World, D, S);
@@ -4382,11 +4387,11 @@ begin
       WriteSpecialMap(X1, Y1, DOM_NONE);
   end;
 
-  if redo = 0 then
+  (*if redo = 0 then
   begin
     SteelWorld.Assign(World);
     InitializeMinimap;
-  end;
+  end;  *)
 
 end;
 
@@ -5625,7 +5630,8 @@ begin
   Result := True;
 
   if L.LemFrame in [1, 2] then
-    ApplyMinerMask(L, L.LemFrame - 1, L.LemX + L.LemDx - 8, L.LemY + L.LemFrame - 13)
+    ApplyMinerMask(L, L.LemFrame - 1, 0, 0)
+    // ApplyMinerMask(L, L.LemFrame - 1, L.LemX + L.LemDx - 8, L.LemY + L.LemFrame - 13)
 
 
   else if L.LemFrame in [3, 15] then
