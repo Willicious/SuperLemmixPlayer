@@ -3971,6 +3971,10 @@ begin
            CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
            LemTeleporting := True;
            Inf.TeleLem := L.LemIndex;
+           // Make sure to remove the blocker field!
+           L.LemHasBlockerField := False;
+           RestoreMap;
+
 
            {if Inf.Obj.DrawingFlags and 8 <> 0 then TurnAround(L);
 
@@ -4003,6 +4007,9 @@ begin
            LemTeleporting := True;
            Inf.TeleLem := L.LemIndex;
            Inf.TwoWayReceive := false;
+           // Make sure to remove the blocker field!
+           L.LemHasBlockerField := False;
+           RestoreMap;
            ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)].HoldActive := True;
          end;
        end;
