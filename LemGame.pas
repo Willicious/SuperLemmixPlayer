@@ -3887,6 +3887,9 @@ begin
             Inf.Triggered := True;
             Inf.ZombieMode := L.LemIsZombie;
             LemInTrap := Inf.MetaObj.AnimationFrameCount;
+            // Make sure to remove the blocker field!
+            L.LemHasBlockerField := False;
+            RestoreMap;
             //Inc(Inf.CurrentFrame);
             //if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
             //begin
@@ -3929,6 +3932,9 @@ begin
             Inf.Triggered := True;
             Inf.ZombieMode := L.LemIsZombie;
             LemInTrap := Inf.MetaObj.AnimationFrameCount;
+            // Make sure to remove the blocker field!
+            L.LemHasBlockerField := False;
+            RestoreMap;
             //Inc(Inf.CurrentFrame);
             //if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
             //begin
@@ -4956,8 +4962,8 @@ begin
       begin
         // Dive below the terrain
         Inc(L.LemY, LemDive(L));
-        if not (ReadWaterMap(L.LemX, L.LemY) = DOM_WATER) then Transition(L, baFalling); // should never happen any more!
-        Result := False;
+        (* if not (ReadWaterMap(L.LemX, L.LemY) = DOM_WATER) then Transition(L, baFalling); // should never happen any more!
+         Result := False; *)
       end
       else if L.LemIsClimber then
         Transition(L, baClimbing)
@@ -4995,7 +5001,7 @@ begin
       Transition(L, baWalking);
     end;
 
-    Result := False;
+    (*Result := False;*)
   end;
 
 end;
@@ -5067,10 +5073,10 @@ begin
     else if not ContinueWork then
       Transition(L, baFalling);
 
-  end
+  end;
 
-  else // frames 1-7, 9-15
-    Result := False; // should be removed
+  (* else // frames 1-7, 9-15
+    Result := False;*) // should be removed
 end;
 
 
@@ -5078,6 +5084,7 @@ function TLemmingGame.HandleClimbing(L: TLemming): Boolean;
 var
   FoundClip: Boolean;
 begin
+  Result := True;
 
   with L do
   begin
@@ -5177,9 +5184,9 @@ begin
   if L.LemEndOfAnimation then
     Transition(L, baWalking)
   else if L.LemFrame <= 4 then
-    Dec(L.LemY, 2)
-  else
-    Result := False;  // Why explicitely NOT check for traps here???
+    Dec(L.LemY, 2);
+  (*else
+    Result := False; *) // Why explicitely NOT check for traps here???
 end;
 
 
@@ -5240,13 +5247,13 @@ begin
   begin
     L.LemCouldPlatform := LemCanPlatform(L);
     LayBrick(L);
-    Result := False;
+    (*Result := False;*)
   end
 
   else if (L.LemFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
   begin
     CueSoundEffect(SFX_BUILDER_WARNING);
-    Result := False
+    (*Result := False*)
   end
 
   else if L.LemFrame = 15 then
@@ -5286,7 +5293,7 @@ begin
       begin
         // stalling if there are pixels in the way:
         // Actually, why do the PlatformerTerrainCheck here???
-        if PlatformerTerrainCheck(L.LemX + L.LemDx, L.LemY) and HasPixelAt(L.LemX, L.LemY - 1) then
+        if (*PlatformerTerrainCheck(L.LemX + L.LemDx, L.LemY) and*) HasPixelAt(L.LemX, L.LemY - 1) then
           Dec(L.LemX, L.LemDx);
 
         Transition(L, baShrugging);
@@ -5351,7 +5358,7 @@ begin
     // LemFrame = 8 has to be skipped!
     // Stored content has 9 frames, but only 8 are used!!
     Inc(L.LemFrame);
-    Result := False;
+    (*Result := False;*)
   end
 
   else if L.LemFrame = 0 then
@@ -5642,12 +5649,12 @@ begin
 
     else if HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining) then
       MinerTurn(L, L.LemX, L.LemY);
-  end
+  end;
 
-  else if not (L.LemFrame = 0) then
+  (*else if not (L.LemFrame = 0) then
     // In frames 4-14, do not check for traps
     Result := False;
-
+   *)
 end;
 
 
@@ -5708,6 +5715,8 @@ function TLemmingGame.HandleFloating(L: TLemming): Boolean;
 var
   dy: Integer;
 begin
+  Result := True;
+
   with L do
   begin
 
@@ -5756,7 +5765,7 @@ function TLemmingGame.HandleGliding(L: TLemming): Boolean;
 var
   dy: Integer;
 begin
-  Result := false;
+  Result := True;
   with L do
   begin
 
@@ -5883,7 +5892,7 @@ end;
 
 function TLemmingGame.HandleShrugging(L: TLemming): Boolean;
 begin
-  Result := False;
+  Result := True;
   with L do
   begin
     if LemEndOfAnimation then
@@ -5898,7 +5907,7 @@ function TLemmingGame.HandleOhNoing(L: TLemming): Boolean;
 var
   dy: Integer;
 begin
-  Result := False;
+  Result := True;
   with L do
   begin
     if LemEndOfAnimation then
@@ -5906,6 +5915,7 @@ begin
       Transition(L, baExploding);
       LemHasBlockerField := False; // remove blocker field
       RestoreMap;
+      Result := False;
       Exit;
     end
     else begin
@@ -5923,6 +5933,7 @@ begin
       if (LemY > LEMMING_MAX_Y + World.Height) then
       begin
         RemoveLemming(L, RM_NEUTRAL);
+        Result := False;
         Exit;
       end else
         Result := True;
@@ -5954,7 +5965,7 @@ function TLemmingGame.HandleStoneOhNoing(L: TLemming): Boolean;
 var
   dy: Integer;
 begin
-  Result := False;
+  Result := True;
   with L do
   begin
     if LemEndOfAnimation then
@@ -5962,6 +5973,7 @@ begin
       Transition(L, baStoneFinish);
       L.LemHasBlockerField := False; // remove blocker field
       RestoreMap;
+      Result := False;
       Exit;
     end
     else begin
@@ -5978,6 +5990,7 @@ begin
       if (LemY > LEMMING_MAX_Y + World.Height) then
       begin
         RemoveLemming(L, RM_NEUTRAL);
+        Result := False;
         Exit;
       end else
         Result := True;
@@ -6118,7 +6131,7 @@ begin
   CheckForPlaySoundEffect;
 end;
 
-{procedure TLemmingGame.ApplyWaterRise;
+(* procedure TLemmingGame.ApplyWaterRise;
 var
   i, x : integer;
   //O : TInteractiveObject;
@@ -6143,7 +6156,7 @@ begin
           WriteObjectMap(Inf.Obj.Left + x, Inf.Obj.Top + Inf.MetaObj.TriggerTop, i);
     end;
   end;
-end;  }
+end;  *)
 
 procedure TLemmingGame.IncrementIteration;
 var
@@ -7182,6 +7195,7 @@ procedure TLemmingGame.SetGameResult;
   We will not, I repeat *NOT* simulate the original Nuke-error.
 
   (ccexplore: sorry, code added to implement the nuke error by popular demand)
+  (Nepster: sorry, namida removed the code long ago again by popular demand)
 -------------------------------------------------------------------------------}
 var
   gLemCap : Integer;
