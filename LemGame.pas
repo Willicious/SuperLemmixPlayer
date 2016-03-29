@@ -816,6 +816,7 @@ type
 
 
     function HandleLemming(L: TLemming): Boolean;
+      function CheckLevelBoundaries(L: TLemming) : Boolean;
     function HandleWalking(L: TLemming): Boolean;
     function HandleJumping(L: TLemming): Boolean;
     function HandleDigging(L: TLemming): Boolean;
@@ -2513,11 +2514,17 @@ function TLemmingGame.HasPixelAt(X, Y: Integer): Boolean;
   The function returns True when the value at (x, y) is terrain
 -------------------------------------------------------------------------------}
 begin
+  Result := (Y < 0);
+  If Result = False then
+    Result := (Y < World.Height) and (X >= 0) and (X < World.Width)
+                   and (World.Pixel[X, Y] and ALPHA_TERRAIN <> 0);
+
+  (*// Code for solid sides!
   with World do
   begin
     Result := not ((X >= 0) and (Y >= 0) and (X < Width));
     if Result = False then Result := (Y < Height) and (Pixel[X, Y] and ALPHA_TERRAIN <> 0);
-  end;
+  end;  *)
 end;
 
 
@@ -2700,8 +2707,8 @@ begin
     else
       Result := DOM_NONE; // whoops, important
 
-    if X < OBJMAPADD then Result := DOM_STEEL;
-    if X >= World.Width + OBJMAPADD then Result := DOM_STEEL;
+    if X < OBJMAPADD then Result := DOM_NONE; // Old version: DOM_STEEL;
+    if X >= World.Width + OBJMAPADD then Result := DOM_NONE; // Old version: DOM_STEEL;
     if (Y < OBJMAPADD) then Result := DOM_STEEL;
   end;
 
@@ -3042,8 +3049,8 @@ begin
 
     // Get starting position for stacker
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
-    // Do something very weird on assigning walkers to builders
-    // Needs to be removed!!!
+    // Important! If a builder just placed a brick and part of the previous brick
+    // got removed, he should not fall if turned into a walker!
     if     (NewSkill = baToWalking) and (L.LemAction = baBuilding)
        and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
       L.LemY := L.LemY - 1;
@@ -3128,7 +3135,7 @@ begin
     LemmingList.Add(NewL);
     TurnAround(NewL);
     NewL.LemIsClone := true;
-    NewL.LemUsedSkillCount := 0; // was origianlly 1!
+    NewL.LemUsedSkillCount := 0;
     if not NewL.LemIsZombie then
       Inc(LemmingsOut)
     else   // Nepster: Not sure how this can ever happen???
@@ -4873,9 +4880,30 @@ begin
     end;
   end;
 
+  // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
+  // Check whether Lem is still on screen
+  Result := CheckLevelBoundaries(L);
 
   if L.LemIsZombie then SetZombieField(L);
+end;
+
+function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
+// Check for both sides and the bottom
+begin
+  Result := True;
+  // Bottom
+  if L.LemY > LEMMING_MAX_Y + World.Height then
+  begin
+    RemoveLemming(L, RM_NEUTRAL);
+    Result := False;
+  end;
+  // Sides
+  if (L.LemX < 0) or (L.LemX >= World.Width) then
+  begin
+    RemoveLemming(L, RM_NEUTRAL);
+    Result := False;
+  end;
 end;
 
 
@@ -4916,12 +4944,12 @@ begin
   else if (LemDy > 0) then
     Inc(L.LemY, LemDy);
 
-  // Has the lem fallen out of the level?
+  (*// Has the lem fallen out of the level?
   if L.LemY > LEMMING_MAX_Y + World.Height then
   begin
     RemoveLemming(L, RM_NEUTRAL);
     Result := False;
-  end;
+  end;   *)
 end;
 
 
@@ -4971,12 +4999,7 @@ begin
     else if LemDy < -6 then
     begin
       if LemDive(L) > 0 then
-      begin
-        // Dive below the terrain
-        Inc(L.LemY, LemDive(L));
-        (* if not (ReadWaterMap(L.LemX, L.LemY) = DOM_WATER) then Transition(L, baFalling); // should never happen any more!
-         Result := False; *)
-      end
+        Inc(L.LemY, LemDive(L)) // Dive below the terrain
       else if L.LemIsClimber then
         Transition(L, baClimbing)
       else
@@ -5012,8 +5035,6 @@ begin
       Inc(L.LemY, LemDy);
       Transition(L, baWalking);
     end;
-
-    (*Result := False;*)
   end;
 
 end;
@@ -5070,13 +5091,13 @@ begin
 
     ContinueWork := DigOneRow(L.LemX, L.LemY - 1);
 
-    if (L.LemY > LEMMING_MAX_Y + World.Height) then
+    (*if (L.LemY > LEMMING_MAX_Y + World.Height) then
     begin
       RemoveLemming(L, RM_NEUTRAL);
       Result := False;
     end
 
-    else if HasSteelAt(L.LemX, L.LemY) then
+    else*) if HasSteelAt(L.LemX, L.LemY) then
     begin
       CueSoundEffect(SFX_HITS_STEEL);
       Transition(L, baWalking);
@@ -5084,11 +5105,7 @@ begin
 
     else if not ContinueWork then
       Transition(L, baFalling);
-
   end;
-
-  (* else // frames 1-7, 9-15
-    Result := False;*) // should be removed
 end;
 
 
@@ -5197,8 +5214,6 @@ begin
     Transition(L, baWalking)
   else if L.LemFrame <= 4 then
     Dec(L.LemY, 2);
-  (*else
-    Result := False; *) // Why explicitely NOT check for traps here???
 end;
 
 
@@ -5259,14 +5274,10 @@ begin
   begin
     L.LemCouldPlatform := LemCanPlatform(L);
     LayBrick(L);
-    (*Result := False;*)
   end
 
   else if (L.LemFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
-  begin
-    CueSoundEffect(SFX_BUILDER_WARNING);
-    (*Result := False*)
-  end
+    CueSoundEffect(SFX_BUILDER_WARNING)
 
   else if L.LemFrame = 15 then
   begin
@@ -5399,7 +5410,6 @@ begin
     // LemFrame = 8 has to be skipped!
     // Stored content has 9 frames, but only 8 are used!!
     Inc(L.LemFrame);
-    (*Result := False;*)
   end
 
   else if L.LemFrame = 0 then
@@ -5674,11 +5684,11 @@ begin
       MinerTurn(L, L.LemX + L.LemDx, L.LemY - 2);
     end
 
-    else if (L.LemY > LEMMING_MAX_Y + World.Height) then
+    (*else if (L.LemY > LEMMING_MAX_Y + World.Height) then
     begin
       RemoveLemming(L, RM_NEUTRAL);
       Result := False;
-    end
+    end*)
 
     else if not HasPixelAt(L.LemX, L.LemY) then
     begin
@@ -5731,13 +5741,13 @@ begin
       if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then L.LemFallen := 0;
     end;
 
-    if (L.LemY > LEMMING_MAX_Y + World.Height) then
+    (*if (L.LemY > LEMMING_MAX_Y + World.Height) then
     begin
       RemoveLemming(L, RM_NEUTRAL);
       Result := False;
     end
 
-    else if CurrFallDist < MaxFallDist then
+    else*) if CurrFallDist < MaxFallDist then
     begin
       // Object checks at hitting ground
       if ReadObjectMapType(L.LemX, L.LemY) = DOM_SPLAT then
@@ -5891,13 +5901,13 @@ begin
 
     //end;
 
-    if (LemY > LEMMING_MAX_Y + World.Height) then
+    (*if (LemY > LEMMING_MAX_Y + World.Height) then
     begin
       RemoveLemming(L, RM_NEUTRAL);
       Result := False;
       Exit;
     end
-    else
+    else*)
       Result := True;
 
   end; // with
@@ -5972,12 +5982,12 @@ begin
         RestoreMap;
       end;
 
-      if (LemY > LEMMING_MAX_Y + World.Height) then
+      (*if (LemY > LEMMING_MAX_Y + World.Height) then
       begin
         RemoveLemming(L, RM_NEUTRAL);
         Result := False;
         Exit;
-      end else
+      end else*)
         Result := True;
     end;
   end; // with
@@ -6029,12 +6039,12 @@ begin
         RestoreMap;
       end;
 
-      if (LemY > LEMMING_MAX_Y + World.Height) then
+      (*if (LemY > LEMMING_MAX_Y + World.Height) then
       begin
         RemoveLemming(L, RM_NEUTRAL);
         Result := False;
         Exit;
-      end else
+      end else*)
         Result := True;
     end;
   end; // with
