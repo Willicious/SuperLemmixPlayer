@@ -4684,15 +4684,16 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 -------------------------------------------------------------------------------}
 begin
   // next frame (except floating and digging which are handled differently)
-  if not (L.LemAction in [baFloating{, baDigging}]) then
-  begin
+  (*if not (L.LemAction in [baFloating{, baDigging}]) then
+  begin      *)
     Inc(L.LemFrame);
     if L.LemFrame > L.LemMaxFrame then
     begin
       L.LemFrame := 0;
+      if L.LemAction in [baFloating] then L.LemFrame := 9; // Floater and Glider start cycle at frame 9!
       if L.LemAnimationType = lat_Once then L.LemEndOfAnimation := True;
     end;
-  end;
+  (*end; *)
 
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
@@ -5142,32 +5143,6 @@ begin
       else if L.LemNumberOfBricksLeft = 0 then
          Transition(L, baShrugging);
     end;
-
-    (*
-    Dec(L.LemY);
-    Inc(L.LemX, L.LemDx);
-
-    if (     HasPixelAt(L.LemX, L.LemY - 1)
-         or  HasPixelAt(L.LemX, L.LemY - 2)
-         or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
-       ) then
-      Transition(L, baWalking, True)  // turn around as well
-
-    else
-    begin
-      Inc(L.LemX, L.LemDx);
-
-      if (     HasPixelAt(L.LemX, L.LemY - 1)
-           or  HasPixelAt(L.LemX, L.LemY - 2)
-           or  HasPixelAt(L.LemX, L.LemY - 3)
-           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 3) and (L.LemNumberOfBricksLeft > -1))  // Does this do anything at all???
-           or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
-         ) then
-         Transition(L, baWalking, True)  // turn around as well
-
-       else if L.LemNumberOfBricksLeft = 0 then
-         Transition(L, baShrugging);
-    end;               *)
   end;
 end;
 
@@ -5179,9 +5154,9 @@ begin
   if L.LemFrame = 7 then
   begin
     L.LemPlacedBrick := LayStackBrick(L);
-    // LemFrame = 8 has to be skipped!
+    (*// LemFrame = 8 has to be skipped!
     // Stored content has 9 frames, but only 8 are used!!
-    Inc(L.LemFrame);
+    Inc(L.LemFrame);      NO LONGER NEEDED *)
   end
 
   else if L.LemFrame = 0 then
@@ -5515,49 +5490,25 @@ end;
 
 function TLemmingGame.HandleFloating(L: TLemming): Boolean;
 var
+  MaxFallDist: Integer;
   dy: Integer;
+const
+  FloaterFallTable: array[1..17] of Integer =
+    (3, 3, 3, 3, -1, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2);
 begin
   Result := True;
 
-  with L do
+  MaxFallDist := FloaterFallTable[L.LemFrame];
+  if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then Dec(MaxFallDist);
+
+  if MaxFallDist > MaxIntValue([FindGroundPixel(L.LemX, L.LemY), 0]) then
   begin
-
-    LemFrame := FloatParametersTable[LemFloatParametersTableIndex].AnimationFrameIndex;
-    dy := FloatParametersTable[LemFloatParametersTableIndex].dy;
-
-    if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then Dec(dy);
-
-    Inc(LemFloatParametersTableIndex);
-    if LemFloatParametersTableIndex >= 16 then
-      LemFloatParametersTableIndex := 8;
-
-    if (dy <= 0) then
-      Inc(LemY, dy)
-    else begin
-      while (dy > 0) do
-      begin
-        if HasPixelAt(LemX, LemY) then
-        begin
-          Transition(L, baWalking);
-          Result := True;
-          Exit;
-        end else begin
-          Inc(LemY);
-          Dec(dy);
-        end;
-      end; // while
-    end;
-
-    if (LemY > LEMMING_MAX_Y + World.Height) then
-    begin
-      RemoveLemming(L, RM_NEUTRAL);
-      Result := False;
-      Exit;
-    end
-    else
-      Result := True;
-
-  end; // with
+    // Lem has found solid terrain
+    Inc(L.LemY, MaxIntValue([FindGroundPixel(L.LemX, L.LemY), 0]));
+    Transition(L, baWalking);
+  end
+  else
+    Inc(L.LemY, MaxFallDist);
 end;
 
 

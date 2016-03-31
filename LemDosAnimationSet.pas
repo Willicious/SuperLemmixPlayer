@@ -248,8 +248,8 @@ begin
   Lem($2C562, 'Lglider'           ,   8, 16, 16,  19,   9,  16,   lat_Loop);
   Lem($2D862, 'Rdisarmer'         ,  16, 16, 14,  19,   8,  12,   lat_Loop);
   Lem($2D862, 'Ldisarmer'         ,  16, 16, 14,  19,   9,  12,   lat_Loop);
-  Lem($8CB8, 'Rstacker'           ,   9, 16, 13,  19,   8,  13,   lat_Loop); // MAIN.DAT doesn't have seperate anims for builder and
-  Lem($AB98, 'Lstacker'           ,   9, 16, 13,  19,   9,  13,   lat_Loop); // stacker; only PNG files support this
+  Lem($8CB8, 'Rstacker_V2'        ,   8, 16, 13,  19,   8,  13,   lat_Loop); // MAIN.DAT doesn't have seperate anims for builder and
+  Lem($AB98, 'Lstacker_V2'        ,   8, 16, 13,  19,   9,  13,   lat_Loop); // stacker; only PNG files support this
   Lem($29900, 'pass'              ,   1, 16, 11,  19,   8,  10,   lat_Once);   // Stoner terrain image; this is loaded among masks
 
   if fMetaLemmingAnimations.Count <> 49 then
