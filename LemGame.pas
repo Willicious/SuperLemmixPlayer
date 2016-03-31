@@ -45,44 +45,14 @@ type
   TParticleTable = packed array[0..50] of TParticleArray;
 
 const
-  ParticleColorIndices: array[0..15] of Byte = (
-    4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2
-  );
+  ParticleColorIndices: array[0..15] of Byte =
+    (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
 
 type
   tFloatParameterRec = record
     Dy: Integer;
     AnimationFrameIndex: Integer;
   end;
-
-const
-  {-------------------------------------------------------------------------------
-    So what's this: A table which describes what to do when floating.
-    The floaters animation has 8 frames: 0..3 is opening the umbrella
-    and 4..7 is the actual floating.
-    This table "fakes" 16 frames of floating and what should happen with
-    the Y-position of the lemming each frame. Frame zero is missing, because that's
-    automatically frame zero.
-    Additionally: after 15 go back to 8
-  -------------------------------------------------------------------------------}
-  FloatParametersTable: array[0..15] of TFloatParameterRec = (
-    (Dy:     3; AnimationFrameIndex:   1),
-    (Dy:     3; AnimationFrameIndex:   2),
-    (Dy:     3; AnimationFrameIndex:   3),
-    (Dy:     3; AnimationFrameIndex:   5),
-    (Dy:    -1; AnimationFrameIndex:   5),
-    (Dy:     0; AnimationFrameIndex:   5),
-    (Dy:     1; AnimationFrameIndex:   5),
-    (Dy:     1; AnimationFrameIndex:   5),
-    (Dy:     2; AnimationFrameIndex:   5),
-    (Dy:     2; AnimationFrameIndex:   6),
-    (Dy:     2; AnimationFrameIndex:   7),
-    (Dy:     2; AnimationFrameIndex:   7),
-    (Dy:     2; AnimationFrameIndex:   6),
-    (Dy:     2; AnimationFrameIndex:   5),
-    (Dy:     2; AnimationFrameIndex:   4),
-    (Dy:     2; AnimationFrameIndex:   4)
-  );
 
 type
   TLemming = class
@@ -4683,22 +4653,20 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
   o Do *not* call this method for a removed lemming
 -------------------------------------------------------------------------------}
 begin
-  // next frame (except floating and digging which are handled differently)
-  (*if not (L.LemAction in [baFloating{, baDigging}]) then
-  begin      *)
-    Inc(L.LemFrame);
-    if L.LemFrame > L.LemMaxFrame then
-    begin
-      L.LemFrame := 0;
-      if L.LemAction in [baFloating] then L.LemFrame := 9; // Floater and Glider start cycle at frame 9!
-      if L.LemAnimationType = lat_Once then L.LemEndOfAnimation := True;
-    end;
-  (*end; *)
+  Inc(L.LemFrame);
+
+  if L.LemFrame > L.LemMaxFrame then
+  begin
+    L.LemFrame := 0;
+    // Floater and Glider start cycle at frame 9!
+    if L.LemAction in [baFloating, baGliding] then L.LemFrame := 9;
+    if L.LemAnimationType = lat_Once then L.LemEndOfAnimation := True;
+  end;
 
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
   // Check whether Lem is still on screen
-  Result := CheckLevelBoundaries(L);
+  Result := Result and CheckLevelBoundaries(L);
 
   if L.LemIsZombie then SetZombieField(L);
 end;
@@ -5152,12 +5120,7 @@ begin
   Result := True;
 
   if L.LemFrame = 7 then
-  begin
-    L.LemPlacedBrick := LayStackBrick(L);
-    (*// LemFrame = 8 has to be skipped!
-    // Stored content has 9 frames, but only 8 are used!!
-    Inc(L.LemFrame);      NO LONGER NEEDED *)
-  end
+    L.LemPlacedBrick := LayStackBrick(L)
 
   else if L.LemFrame = 0 then
   begin
@@ -5170,7 +5133,6 @@ begin
       Transition(L, baWalking, True) // Even on the last brick???  // turn around as well
     else if L.LemNumberOfBricksLeft = 0 then
       Transition(L, baShrugging);
-
   end;
 end;
 
@@ -5491,7 +5453,6 @@ end;
 function TLemmingGame.HandleFloating(L: TLemming): Boolean;
 var
   MaxFallDist: Integer;
-  dy: Integer;
 const
   FloaterFallTable: array[1..17] of Integer =
     (3, 3, 3, 3, -1, 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2);
@@ -5512,43 +5473,38 @@ begin
 end;
 
 
-
-
 function TLemmingGame.HandleGliding(L: TLemming): Boolean;
 var
+  MaxFallDist: Integer;
   dy: Integer;
+const
+  GliderFallTable: array[1..17] of Integer =
+    (3, 3, 3, 3, -1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 begin
   Result := True;
   with L do
   begin
-
-    LemFrame := FloatParametersTable[LemFloatParametersTableIndex].AnimationFrameIndex;
-    dy := FloatParametersTable[LemFloatParametersTableIndex].dy;
-
-    if (LemFloatParametersTableIndex >= 8) and (dy > 1) then Dec(dy);
+    MaxFallDist := GliderFallTable[L.LemFrame];
 
     if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then
     begin
-      Dec(dy);
-      if (LemFloatParametersTableIndex >= 8)
-      and (LemFloatParametersTableIndex mod 2 = 0)
-      and not (HasPixelAt(LemX+LemDx, LemY+dy-1)) then Dec(dy);
+      Dec(MaxFallDist);
+      // Rise a pixel every second frame
+      if (L.LemFrame >= 9) and (L.LemFrame mod 2 = 1)
+         and not (HasPixelAt(L.LemX + L.LemDx, L.LemY + MaxFallDist - 1)) then
+        Dec(MaxFallDist);
     end;
 
-    Inc(LemFloatParametersTableIndex);
-    if LemFloatParametersTableIndex >= 16 then
-      LemFloatParametersTableIndex := 8;
+    Inc(L.LemX, L.LemDx);
 
-    Inc(LemX, LemDx);
-
-    if (dy < 0) then
-      Inc(LemY, dy)
+    if (MaxFallDist < 0) then
+      Inc(LemY, MaxFallDist)
     else begin
 
       if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY - 1) then
-        dy := 0;
+        MaxFallDist := 0;
 
-      while (dy > 0) do
+      while (MaxFallDist > 0) do
       begin
         if HasPixelAt(LemX, LemY) and not HasPixelAt(LemX, LemY - 1) then
         begin
@@ -5557,13 +5513,12 @@ begin
           Exit;
         end else begin
           Inc(LemY);
-          Dec(dy);
+          Dec(MaxFallDist);
         end;
       end; // while
     end;
 
-    if (HasPixelAt(LemX, LemY))
-    and (HasPixelAt(LemX, LemY - 1)) then
+    if (HasPixelAt(LemX, LemY)) and (HasPixelAt(LemX, LemY - 1)) then
     begin
       dy := 1;
       while dy < 6 do
@@ -5575,6 +5530,7 @@ begin
           Exit;
         end else
           Inc(dy);
+
       dy := 1;
       while dy < 4 do
         if not HasPixelAt(LemX, LemY + dy) then
