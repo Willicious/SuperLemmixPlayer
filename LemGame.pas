@@ -1017,7 +1017,6 @@ const
   RM_SAVE              = 1;
   RM_KILL              = 2;
   RM_ZOMBIE            = 3;
-  // RM_GHOST             = 4;
 
   HEAD_MIN_Y = -7;
   //LEMMING_MIN_X = 0;
@@ -2064,7 +2063,6 @@ var
   MO: TMetaObject;
   Inf: TInteractiveObjectInfo;
   numEntries:integer;
-//  Bmp: TBitmap32;
 const
   OID_EXIT                  = 0;
   OID_ENTRY                 = 1;
@@ -2106,8 +2104,6 @@ begin
             World.PixelS[i, i2] := World.PixelS[i, i2] and not ALPHA_ONEWAY;
     end;
 
-  //fTargetBitmap.Assign(World);
-
   // hyperspeed things
   fTargetIteration := 0;
   fHyperSpeedCounter := 0;
@@ -2124,21 +2120,14 @@ begin
   LemmingsReleased := 0;
   LemmingsCloned := 0;
   fHighlightLemming := nil;
-//  fTargetBitmap := Renderer.LevelBitmap;
-  //World.Assign(fTargetBitmap);
   World.OuterColor := 0;
   TimePlay := Level.Info.TimeLimit;
   if (TimePlay > 5999) or (moTimerMode in fGameParams.MiscOptions) then
     TimePlay := 0; // infinite time
 
   ButtonsRemain := 0;
-//  Style := Level.Style;
-//  Graph := Level.Graph;
 
-  //if Style is TDosOrigStyle then
-  //  Options := DOSORIG_GAMEOPTIONS
-  //else
-    Options := DOSOHNO_GAMEOPTIONS;
+  Options := DOSOHNO_GAMEOPTIONS;
 
   SkillButtonsDisabledWhenPaused := False;
 
@@ -2195,9 +2184,6 @@ begin
     fReplaying := false;
   end else
     fReplaying := true;
-
-  //fReplaying := aReplay;
-  // fReplayedLemmingIndex := -1;
 
   fExplodingGraphics := False;
 
@@ -2291,10 +2277,6 @@ begin
 
 
 
-(*    // add to the right list (entries or other objects)
-    if O.Identifier = OID_ENTRY then     //lemcore
-      Entries.Add(Inf)
-    else*)
     if ((MO.TriggerEffect = 23)) and (O.IsFake = false) and (O.Left + MO.Width >= 0) then
     begin
       SetLength(dosEntryTable, numEntries + 1);
@@ -2303,7 +2285,6 @@ begin
     end;
 
     if MO.TriggerEffect = 17 then Inc(ButtonsRemain);
-    //if MO.TriggerEffect = 14 then O.Skill := O.Skill mod 8;
     ObjectInfos.Add(Inf);
   end;
 
@@ -2428,41 +2409,6 @@ begin
   if F <> 0 then B := F;
 end;
 
-{procedure TLemmingGame.CombineLemmingPixelsGhost(F: TColor32; var B: TColor32; M: TColor32);
-var
-  n, r, g, bl: byte; //bl because b is already in use here
-begin
-  r := f shr 16;
-  g := f shr 8;
-  bl := f;
-  n := ((r * 5) + (g * 6) + (bl * 4) + (255 * 5)) div 20;
-  if F <> 0 then
-  begin
-    F := (F and $FF000000) + (n shl 16) + (n shl 8) + n;
-    B := F;
-  end;
-end;}
-
-{procedure TLemmingGame.CombineBuilderPixelsGhost(F: TColor32; var B: TColor32; M: TColor32);
-var
-  n, r, g, bl: byte; //bl because b is already in use here
-begin
-  if F = BrickPixelColor then
-  begin
-    B := BrickPixelColors[12 - fCurrentlyDrawnLemming.LemNumberOfBricksLeft];
-    Exit;
-  end;
-
-  r := f shr 16;
-  g := f shr 8;
-  bl := f;
-  n := ((r * 5) + (g * 6) + (bl * 4) + (255 * 5)) div 20;
-  if F <> 0 then
-  begin
-    F := (F and $FF000000) + (n shl 16) + (n shl 8) + n;
-    B := F;
-  end;
-end;}
 
 procedure TLemmingGame.CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
 {-------------------------------------------------------------------------------
@@ -2484,7 +2430,6 @@ procedure TLemmingGame.CombineLemmingHighlight(F: TColor32; var B: TColor32; M: 
 begin
   // photoflash
   if F <> 0 then B := clBlack32 else B := clWhite32;
-//  if F <> 0 then B := clYellow32;
 end;
 
 
@@ -2606,9 +2551,6 @@ end;
 function TLemmingGame.ReadObjectMap(X, Y: Integer; Advance: Boolean = true): Word;
 // original dos objectmap has a resolution of 4
 begin
-
-  // the "and not 3" ensures rounding down when
-  // operand is negative (eg. -0.25 -> -1)
   if not Advance then
   begin
     ShowMessage('Advance check failed. Please report.');
@@ -2658,9 +2600,6 @@ end;
 function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
 // original dos objectmap has a resolution of 4
 begin
-  // the "and not 3" ensures rounding down when
-  // operand is negative (eg. -0.25 -> -1)
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
@@ -2676,9 +2615,6 @@ end;
 function TLemmingGame.ReadZombieMap(X, Y: Integer): Byte;
 // original dos objectmap has a resolution of 4
 begin
-  // the "and not 3" ensures rounding down when
-  // operand is negative (eg. -0.25 -> -1)
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
@@ -2694,9 +2630,6 @@ end;
 function TLemmingGame.ReadSpecialMap(X, Y: Integer): Byte;
 // original dos objectmap has a resolution of 4
 begin
-  // the "and not 3" ensures rounding down when
-  // operand is negative (eg. -0.25 -> -1)
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
@@ -2717,9 +2650,6 @@ end;
 function TLemmingGame.ReadWaterMap(X, Y: Integer): Byte;
 // original dos objectmap has a resolution of 4
 begin
-  // the "and not 3" ensures rounding down when
-  // operand is negative (eg. -0.25 -> -1)
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
@@ -2736,8 +2666,6 @@ end;
 
 
 procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aValue: Byte);
-//var
-  //x1, y1: Integer;
 begin
 
   Inc(X, OBJMAPADD);
@@ -2752,8 +2680,6 @@ begin
 end;
 
 procedure TLemmingGame.WriteZombieMap(X, Y: Integer; aValue: Byte);
-//var
-//  x1, y1: Integer;
 begin
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
@@ -2766,8 +2692,6 @@ begin
 end;
 
 procedure TLemmingGame.WriteWaterMap(X, Y: Integer; aValue: Byte);
-//var
-//  x1, y1: Integer;
 begin
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
@@ -2781,8 +2705,6 @@ end;
 
 
 procedure TLemmingGame.WriteSpecialMap(X, Y: Integer; aValue: Byte);
-//var
-//  x1, y1: Integer;
 begin
 
   Inc(X, OBJMAPADD);
@@ -2798,8 +2720,6 @@ end;
 
 
 procedure TLemmingGame.WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = false);
-//var
-//  x1, y1: Integer;
 begin
 
   Inc(X, OBJMAPADD);
@@ -2885,7 +2805,6 @@ end;
 procedure TLemmingGame.Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
 {-------------------------------------------------------------------------------
   Handling of a transition and/or turnaround
-  
 -------------------------------------------------------------------------------}
 var
   i: Integer;
@@ -2901,7 +2820,7 @@ begin
     RestoreMap;
   end;
 
-  // Should have been checked before in all cases, but just to be sure...
+  // Should already be correct usually, but just to be sure...
   if (not HasPixelAt(L.LemX, L.LemY)) and (NewAction = baWalking) then
     NewAction := baFalling;
 
@@ -3083,7 +3002,6 @@ begin
 
     Result := True;
 
-
     // OnAssignSkill currently does nothing. So unless this changes,
     // the following line stays as a comment:
     // if not fFreezeSkillCount then OnAssignSkill(L, NewSkill);
@@ -3161,7 +3079,6 @@ function TLemmingGame.AssignSwimmer(L, L2: TLemming): Boolean;
 const
   ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baVaporizing,
                baSplatting, baExiting];   // Does NOT contain baDrowning!
-
 begin
   Result := False;
 
@@ -3326,18 +3243,10 @@ begin
   else
     Exit;
 
-  // Needs some improvement, once the forum has decided on this issue
   if not HasIndestructibleAt(SelL.LemX, SelL.LemY, SelL.LemDx, baMining) then
     Result := DoSkillAssignment(SelL, baMining)
   else if HasSteelAt(SelL.LemX, SelL.LemY) then
     if (not fCheckWhichLemmingOnly) then CueSoundEffect(SFX_HITS_STEEL);
-
-  (*
-  else if (    ((ReadSpecialMap(SelectedLemming.LemX + 4 * SelectedLemming.LemDx, SelectedLemming.LemY - 5) = DOM_ONEWAYLEFT) and (SelectedLemming.LemDx <> -1))
-            or ((ReadSpecialMap(SelectedLemming.LemX + 4 * SelectedLemming.LemDx, SelectedLemming.LemY - 5) = DOM_ONEWAYRIGHT) and (SelectedLemming.LemDx <> 1))) then
-    Exit
-  else
-    Result := DoSkillAssignment(SelectedLemming, baMining);  *)
 end;
 
 
@@ -3363,7 +3272,6 @@ begin
   with L do
   begin
     Dec(LemExplosionTimer);
-    //deb([lemexplosiontimer, lemdigit]);
     if LemExplosionTimer > 0 then
       Exit
     else begin
@@ -3371,16 +3279,14 @@ begin
       begin
         if LemTimerToStone then
           Transition(L, baStoneFinish)
-          else
+        else
           Transition(L, baExploding);
-        //call CueSoundEffect(EXPLOSION)
       end
       else begin
         if LemTimerToStone then
           Transition(L, baStoning)
-          else
+        else
           Transition(L, baOhnoing);
-        //call CueSoundEffect(OHNO)
       end;
       Result := True;
     end;
@@ -3388,24 +3294,7 @@ begin
 end;
 
 procedure TLemmingGame.CheckForGameFinished;
-
-    (*
-    procedure doevent;
-    begin
-
-      fTargetIteration := 0;
-      fHyperSpeedCounter := 0;
-      if HyperSpeed then
-        fLeavingHyperSpeed := True;
-
-      SoundMgr.StopMusic(0);
-
-      if assigned(fonfinish) then
-        fonfinish(self);
-    end; *)
-
 begin
-
   if fGameFinished then
     Exit;
 
@@ -3461,7 +3350,6 @@ begin
     SetLength(DosEntryTable, eid+1);
     DosEntryTable[eid] := oid;
     Inc(eid);
-    //DosEntryTable[32] := eid;
   end;
 end;
 
@@ -3483,7 +3371,6 @@ var
   Inf : TInteractiveObjectInfo;
   S: TSteel;
   Eff, V: Byte;
-  //MaxO: Integer;
 begin
 
   ObjectMap.SetSize((Level.Info.Width + (OBJMAPOFFSET * 2)) * 2, (Level.Info.Height + (OBJMAPOFFSET * 2))); //1647, 175
@@ -3498,32 +3385,15 @@ begin
   with ObjectInfos do
   begin
 
-{    // @Optional Game Mechanic
-    if dgoDisableObjectsAfter15 in fOptions
-    then MaxO := Min(Count - 1, 15)
-    else MaxO := Count - 1;
-}
-
-
     for i := 0 to {MaxO}Count - 1 do
     begin
       Inf := List^[i];
       with Inf, Obj, MetaObj do
-      // @Optional Game Mechanic
       if (not (TriggerEffect = 0)) and (not (Obj.IsFake)) then
       begin
         // 0..127   = triggered trap index ()
         // 128..255 = triggereffect (128 is DOM_NONE)
         Eff := TriggerEffect;
-        {if Eff = ote_TriggeredTrap then //TEX_TRIGGEREDTRAP then
-          V := i
-        else if Eff = 11 then
-          V := i + 32
-        else if Eff = 14 then
-          V := i + 64
-        else if Eff = 17 then
-          V := i + 96
-        else}
           V := Eff;
         if not (V in [DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND]) then
         begin
@@ -3558,7 +3428,6 @@ begin
             end;
           end;
         end;
-      //end;
     end; // for i
 
   end;
@@ -3653,8 +3522,6 @@ begin
   Lemming1 := nil;
   Lemming2 := nil;
   CP := MousePos;
-
-  //if fHitTestAutoFail then exit;
 
   for i := 0 to LemmingList.Count - 1 do
   begin
@@ -3756,7 +3623,6 @@ begin
         Inc(Result);
         DoAtAll := true;
         DoPrioritize := (LemAction in PrioActions);
-        //Continue;
       end;
 
       if DoAtAll then
@@ -3799,7 +3665,6 @@ var
   OldMode: TDrawMode;
   SrcRect, DstRect: TRect;
 begin
-  //Minimap.SetSize(DOS_MINIMAP_WIDTH, DOS_MINIMAP_HEIGHT);
   Minimap.SetSize(World.Width div 16, World.Height div 8);
   Minimap.Clear(0);
   OldCombine := World.OnPixelCombine;
@@ -3866,8 +3731,6 @@ begin
 
     case LemObjectBelow of
       // DOM_NONE = 128 = nothing
-     // DOM_NONE:
-      //  Exit;
       // 0..127 triggered objects
       DOM_TRAP:
         if (LemIsMechanic) and (not (LemAction in [baClimbing, baHoisting, baSwimming])) and HasPixelAt(LemX, LemY) and HandleAllObjects then
@@ -3903,12 +3766,6 @@ begin
             // Make sure to remove the blocker field!
             L.LemHasBlockerField := False;
             RestoreMap;
-            //Inc(Inf.CurrentFrame);
-            //if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
-            //begin
-            //  Inf.CurrentFrame := 0;
-            //  Inf.ZombieMode := false;
-            //end;
             RemoveLemming(L, RM_KILL);
             CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
             if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
@@ -3948,12 +3805,6 @@ begin
             // Make sure to remove the blocker field!
             L.LemHasBlockerField := False;
             RestoreMap;
-            //Inc(Inf.CurrentFrame);
-            //if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
-            //begin
-            //  Inf.CurrentFrame := 0;
-            //  Inf.ZombieMode := false;
-            //end;
             RemoveLemming(L, RM_KILL);
             CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
             if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
@@ -3966,9 +3817,6 @@ begin
           if not Inf.Triggered then
           begin
             Inf.Triggered := True;
-            //Inc(Inf.CurrentFrame);
-            //if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
-            //  Inf.CurrentFrame := 0;
             CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
           end;
         end;
@@ -3987,24 +3835,7 @@ begin
            // Make sure to remove the blocker field!
            L.LemHasBlockerField := False;
            RestoreMap;
-
-
-           {if Inf.Obj.DrawingFlags and 8 <> 0 then TurnAround(L);
-
-           if Inf.Obj.DrawingFlags and 2 <> 0 then
-               tly := Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerPointY)
-               else
-               tly := Inf.Obj.Top + Inf.MetaObj.TriggerPointY;
-           if Inf.Obj.DrawingFlags and 64 <> 0 then
-               tlx := Inf.Obj.Left + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerPointX)
-               else
-               tlx := Inf.Obj.Left + Inf.MetaObj.TriggerPointX;
-
-           LemX := tlx;
-           LemY := tly;}
-
            MoveLemToReceivePoint(L, LemObjectIDBelow);
-
          end;
        end;
      DOM_TELEPORT:
@@ -4245,12 +4076,10 @@ end;
 
 procedure TLemmingGame.ApplyExplosionMask(L: TLemming; Redo: Integer = 0);
 var
-  {X, Y,} X1, Y1: Integer;
+  X1, Y1: Integer;
   Px, Py: Integer;
-  //T: TColor32;
 begin
   // dos explosion mask 16 x 22
-
   if not L.LemRTL then L.LemX := L.LemX + 1;
 
   px := L.LemX - 8;
@@ -4293,7 +4122,6 @@ var
   S, D: TRect;
   {X, Y,} X1, Y1: Integer;
 begin
-
   // dos bashing mask = 16 x 10
 
   if not L.LemRTL then
@@ -4393,13 +4221,6 @@ begin
     and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
       WriteSpecialMap(X1, Y1, DOM_NONE);
   end;
-
-  (*if redo = 0 then
-  begin
-    SteelWorld.Assign(World);
-    InitializeMinimap;
-  end;  *)
-
 end;
 
 procedure TLemmingGame.EraseParticles(L: TLemming);
@@ -4408,7 +4229,6 @@ procedure TLemmingGame.EraseParticles(L: TLemming);
 -------------------------------------------------------------------------------}
 var
   i, X, Y: Integer;
-  //DstRect: TRect;
   Drawn: Boolean;
 begin
 
@@ -4442,7 +4262,6 @@ end;
 procedure TLemmingGame.DrawParticles(L: TLemming);
 var
   i, X, Y: Integer;
-  //DstRect: TRect;
   Drawn: Boolean;
 const
   Colors: array[0..2] of TColor32 = (clYellow32, clRed32, clBlue32);
@@ -4481,16 +4300,11 @@ procedure TLemmingGame.DrawAnimatedObjects;
 var
   i: Integer;
   Inf : TInteractiveObjectInfo;
-
   f, mx, my: Integer;
-  //Cnt: Integer;
-//  R: TRect;
 const
   RESET_FRAME = 17;
 
   function GetDistanceFactor(LV: Integer; Iter: Integer): Integer;
-//  var
-//    li: Integer;
   begin
     Result := 0;
     if Iter = 0 then Exit;
@@ -4673,7 +4487,6 @@ begin
       begin
         if not (LemRemoved or LemTeleporting) then
         begin
-          //if LemRTLAdjust then LemX := LemX - 1;
           fCurrentlyDrawnLemming := CurrentLemming;
           SrcRect := GetFrameBounds;
           DstRect := GetLocationBounds;
@@ -4743,8 +4556,6 @@ begin
             TempBmp.Free;
 
           end;
-
-          //if LemRTLAdjust then LemX := LemX + 1;
 
           LAB.OnPixelCombine := OldCombineZ;
 
@@ -4946,13 +4757,6 @@ begin
   end
   else if (LemDy > 0) then
     Inc(L.LemY, LemDy);
-
-  (*// Has the lem fallen out of the level?
-  if L.LemY > LEMMING_MAX_Y + World.Height then
-  begin
-    RemoveLemming(L, RM_NEUTRAL);
-    Result := False;
-  end;   *)
 end;
 
 
@@ -5071,9 +4875,6 @@ begin
 end;
 
 function TLemmingGame.HandleDigging(L: TLemming): Boolean;
-// returns FALSE if there are no terrain pixels to remove (??? did I write this?)
-// More to the point - should it still do so in NeoLemmix?
-// Nepster: It no longer does the above
 var
   ContinueWork: Boolean;
 begin
@@ -5094,13 +4895,7 @@ begin
 
     ContinueWork := DigOneRow(L.LemX, L.LemY - 1);
 
-    (*if (L.LemY > LEMMING_MAX_Y + World.Height) then
-    begin
-      RemoveLemming(L, RM_NEUTRAL);
-      Result := False;
-    end
-
-    else*) if HasSteelAt(L.LemX, L.LemY) then
+    if HasSteelAt(L.LemX, L.LemY) then
     begin
       CueSoundEffect(SFX_HITS_STEEL);
       Transition(L, baWalking);
@@ -5240,35 +5035,6 @@ begin
   // Lem may not hit terrain where the previous brick was already placed.
   Result := Result and not HasPixelAt(L.LemX + L.LemDx, L.LemY - 1);
   Result := Result and not HasPixelAt(L.LemX + 2*L.LemDx, L.LemY - 1);
-
-  (*// Now comes the weird exception rule at left boundary of level!
-  // Depending on the lem direction, we may ignore the checks at LemY - 1
-  // See http://www.lemmingsforums.net/index.php?topic=2533.0
-  if L.LemDx = 1 then
-  begin
-    if    ((L.LemX     < 3) and not HasPixelAt(L.LemX    , L.LemY))
-       or ((L.LemX + 1 < 3) and not HasPixelAt(L.LemX + 1, L.LemY))
-       or ((L.LemX + 2 < 3) and not HasPixelAt(L.LemX + 2, L.LemY)) then
-    begin
-      Result := False;
-      for n := 0 to 5 do
-        Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
-    end;
-  end
-  else
-  begin
-    if    ((L.LemX     < 8) and not HasPixelAt(L.LemX    , L.LemY))
-       or ((L.LemX + 1 < 8) and not HasPixelAt(L.LemX + 1, L.LemY))
-       or ((L.LemX + 2 < 8) and not HasPixelAt(L.LemX + 2, L.LemY))
-       or ((L.LemX + 3 < 8) and not HasPixelAt(L.LemX + 3, L.LemY))
-       or ((L.LemX + 4 < 8) and not HasPixelAt(L.LemX + 4, L.LemY))
-       or ((L.LemX + 5 < 8) and not HasPixelAt(L.LemX + 5, L.LemY)) then
-    begin
-      Result := False;
-      for n := 0 to 5 do
-        Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
-    end;
-  end;    *)
 end;
 
 
@@ -5326,10 +5092,7 @@ begin
       if L.LemNumberOfBricksLeft = 0 then
       begin
         // stalling if there are pixels in the way:
-        // Actually, why do the PlatformerTerrainCheck here???
-        if (*PlatformerTerrainCheck(L.LemX + L.LemDx, L.LemY) and*) HasPixelAt(L.LemX, L.LemY - 1) then
-          Dec(L.LemX, L.LemDx);
-
+        if HasPixelAt(L.LemX, L.LemY - 1) then Dec(L.LemX, L.LemDx);
         Transition(L, baShrugging);
       end;
     end;
@@ -5410,8 +5173,6 @@ end;
 
 
 function TLemmingGame.HandleStacking(L: TLemming): Boolean;
-(*var
-  TopStackPosY: Integer;*)
 begin
   Result := True;
 
@@ -5430,12 +5191,8 @@ begin
     // sound on last three bricks
     if L.LemNumberOfBricksLeft < 3 then CueSoundEffect(SFX_BUILDER_WARNING);
 
-    (*TopStackPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
-    if L.LemStackLow then Inc(TopStackPosY);
-
-    if HasPixelAt(L.LemX + L.LemDx, TopStackPosY) then    *)
     if not L.LemPlacedBrick then
-      Transition(L, baWalking, True) // Even on the last brick !!!???  // turn around as well
+      Transition(L, baWalking, True) // Even on the last brick???  // turn around as well
     else if L.LemNumberOfBricksLeft = 0 then
       Transition(L, baShrugging);
 
@@ -5643,8 +5400,8 @@ function TLemmingGame.HandleMining(L: TLemming): Boolean;
   begin
     if HasSteelAt(X, Y) then CueSoundEffect(SFX_HITS_STEEL);
     // Independently of (X, Y) this check is always made at Lem position
-    // no longer check at Lem position, due to http://www.lemmingsforums.net/index.php?topic=2547.0
-    if (*HasPixelAt(L.LemX, L.LemY) and*) HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
+    // No longer check at Lem position, due to http://www.lemmingsforums.net/index.php?topic=2547.0
+    if HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
     Transition(L, baWalking, True);  // turn around as well
   end;
 
@@ -5653,8 +5410,6 @@ begin
 
   if L.LemFrame in [1, 2] then
     ApplyMinerMask(L, L.LemFrame - 1, 0, 0)
-    // ApplyMinerMask(L, L.LemFrame - 1, L.LemX + L.LemDx - 8, L.LemY + L.LemFrame - 13)
-
 
   else if L.LemFrame in [3, 15] then
   begin
@@ -5696,12 +5451,6 @@ begin
       MinerTurn(L, L.LemX + L.LemDx, L.LemY - 2);
     end
 
-    (*else if (L.LemY > LEMMING_MAX_Y + World.Height) then
-    begin
-      RemoveLemming(L, RM_NEUTRAL);
-      Result := False;
-    end*)
-
     else if not HasPixelAt(L.LemX, L.LemY) then
     begin
       Inc(L.LemY);
@@ -5714,11 +5463,6 @@ begin
     else if HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining) then
       MinerTurn(L, L.LemX, L.LemY);
   end;
-
-  (*else if not (L.LemFrame = 0) then
-    // In frames 4-14, do not check for traps
-    Result := False;
-   *)
 end;
 
 
@@ -5753,13 +5497,7 @@ begin
       if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then L.LemFallen := 0;
     end;
 
-    (*if (L.LemY > LEMMING_MAX_Y + World.Height) then
-    begin
-      RemoveLemming(L, RM_NEUTRAL);
-      Result := False;
-    end
-
-    else*) if CurrFallDist < MaxFallDist then
+    if CurrFallDist < MaxFallDist then
     begin
       // Object checks at hitting ground
       if ReadObjectMapType(L.LemX, L.LemY) = DOM_SPLAT then
@@ -5878,7 +5616,7 @@ begin
     begin
       dy := 1;
       while dy < 6 do
-        if not HasPixelAt(LemX{ + LemDx}, LemY - dy) then
+        if not HasPixelAt(LemX, LemY - dy) then
         begin
           Dec(LemY, (dy-1));
           Transition(L, baWalking);
@@ -5911,16 +5649,7 @@ begin
         Inc(LemY);
     end;
 
-    //end;
-
-    (*if (LemY > LEMMING_MAX_Y + World.Height) then
-    begin
-      RemoveLemming(L, RM_NEUTRAL);
-      Result := False;
-      Exit;
-    end
-    else*)
-      Result := True;
+    Result := True;
 
   end; // with
 end;
@@ -5994,13 +5723,7 @@ begin
         RestoreMap;
       end;
 
-      (*if (LemY > LEMMING_MAX_Y + World.Height) then
-      begin
-        RemoveLemming(L, RM_NEUTRAL);
-        Result := False;
-        Exit;
-      end else*)
-        Result := True;
+      Result := True;
     end;
   end; // with
 
@@ -6051,13 +5774,7 @@ begin
         RestoreMap;
       end;
 
-      (*if (LemY > LEMMING_MAX_Y + World.Height) then
-      begin
-        RemoveLemming(L, RM_NEUTRAL);
-        Result := False;
-        Exit;
-      end else*)
-        Result := True;
+      Result := True;
     end;
   end; // with
 
@@ -6195,38 +5912,12 @@ begin
   CheckForPlaySoundEffect;
 end;
 
-(* procedure TLemmingGame.ApplyWaterRise;
-var
-  i, x : integer;
-  //O : TInteractiveObject;
-  //MO : TMetaObject;
-  Inf : TInteractiveObjectInfo;
-begin
-  for i := 0 to Level.InteractiveObjects.Count - 1 do
-  begin
-    Inf := ObjectInfos[i];
-    //O := Level.InteractiveObjects[i];
-    //MO := Graph.MetaObjects[O.Identifier];
-    if (Inf.Obj.TarLev = 0) or not (Inf.MetaObj.TriggerEffect in [5, 6]) then Continue;
-    if fCurrentIteration mod Inf.Obj.TarLev = 0 then
-    begin
-      Renderer.DrawObjectBottomLine(World, Inf.Obj, Inf.CurrentFrame);
-      Inf.Obj.Top := Inf.Obj.Top - 1;
-      Inf.Obj.OffsetY := Inf.Obj.OffsetY - 1;
-      for x := Inf.MetaObj.TriggerLeft to (Inf.MetaObj.TriggerLeft + Inf.MetaObj.TriggerWidth - 1) do
-        if Inf.MetaObj.TriggerEffect = DOM_WATER then
-          WriteWaterMap(Inf.Obj.Left + x, Inf.Obj.Top + Inf.MetaObj.TriggerTop, DOM_WATER)
-          else
-          WriteObjectMap(Inf.Obj.Left + x, Inf.Obj.Top + Inf.MetaObj.TriggerTop, i);
-    end;
-  end;
-end;  *)
 
 procedure TLemmingGame.IncrementIteration;
 var
   i: Integer;
 const
-  OID_ENTRY                 = 1;
+  OID_ENTRY = 1;
 begin
   Inc(fCurrentIteration);
   Inc(fClockFrame);
@@ -6319,7 +6010,6 @@ var
   fAltOverride: Boolean;
 begin
   if Autofail then fHitTestAutoFail := true;
-  //if fHitTestAutoFail <> 0 then CursorPoint := Point(-50, -50);
   HitCount := PrioritizedHitTest(Lemming1, Lemming2, CursorPoint);
   if (HitCount > 0) and (Lemming1 <> nil) and not fHitTestAutofail then
   begin
@@ -6368,48 +6058,14 @@ begin
       if Lemming1.LemIsZombie then S := SZombie;
     end;
 
-    {if i > 1 then
-    begin
-      S := S + ' ';
-      //S := SAthlete;
-
-      if Lemming1.LemIsClimber then
-        S := S + 'C'
-      else
-        S := S + '-';
-
-      if Lemming1.LemIsSwimmer then
-        S := S + 'S'
-      else
-        S := S + '-';
-
-      if Lemming1.LemIsFloater then
-        S := S + 'F'
-      else if Lemming1.LemIsGlider then
-        S := S + 'G'
-      else
-        S := S + '-';
-
-      if Lemming1.LemIsMechanic then
-        S := S + 'D'
-      else
-        S := S + '-';
-
-    end;}
-
     InfoPainter.SetInfoCursorLemming(S, HitCount);
     DrawDebugString(Lemming1);
     fCurrentCursor := 2;
   end
   else begin
-    {if Replaying then
-      InfoPainter.SetInfoCursorLemming('-REPLAY-', 0)
-    else}
-      InfoPainter.SetInfoCursorLemming('', 0);
+    InfoPainter.SetInfoCursorLemming('', 0);
     fCurrentCursor := 1;
   end;
-  //if fHitTestAutoFail = 2 then fHitTestAutoFail := 0;
-  //fHitTestAutofail := Autofail;
 end;
 
 function TLemmingGame.ProcessSkillAssignment: Boolean;
@@ -6424,9 +6080,6 @@ begin
   Assert(Sel <> baNone);
   if PrioritizedHitTest(Lemming1, Lemming2, CursorPoint) > 0 then
   begin
-    //if Lemming1 = nil then
-    //  Lemming1 := LastNPLemming;   // right-click bug emulation
-
     if Lemming1 <> nil then
     begin
       fCheckWhichLemmingOnly := False;
@@ -6438,7 +6091,6 @@ end;
 
 function TLemmingGame.ProcessHighlightAssignment: Boolean;
 var
-  //Sel: TBasicLemmingAction;
   Lemming1, Lemming2, OldHighlightLemming: TLemming;
   i: Integer;
 begin
@@ -6478,11 +6130,8 @@ end;
 
 procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplayItem);
 var
-  L{, Lemming1, Lemming2}: TLemming;
-  //ReplayMousePos: TPoint;
-//  Res: Boolean;
+  L: TLemming;
   ass: TBasicLemmingAction;
-  //Proceed: Boolean;
 begin
   if fAssignedSkillThisFrame then Exit;
   with aReplayItem do
@@ -6501,85 +6150,20 @@ begin
     assert(assignedskill < 19);
     ass := TBasicLemmingAction(assignedskill{ - 1});
 
-//    assert(ass in AssignableSkills);
     if not (ass in AssignableSkills) then
       raise exception.create(i2s(integer(ass)) + ' ' + i2s(currentiteration));
 
     if ass in AssignableSkills then
     begin
-      //Mouse.CursorPos := Point(Screen.Width div 2, Screen.Height div 2);
-//      TestMouseOnLemming(L);
-      {Res := }
-
       // for antiques but nice
       if (ActionToSkillPanelButton[ass] <> fSelectedSkill) and not fGameParams.IgnoreReplaySelection then
         SetSelectedSkill(ActionToSkillPanelButton[ass], True);
-
-      {ReplayMousePos.X := CursorX;
-      ReplayMousePos.Y := CursorY;
-
-      fSelectDx := fSelectDir;
-
-      if (fSelectDx < -1) or (fSelectDx > 1) then fSelectDx := 0;}
-
-      {if PrioritizedHitTest(Lemming1, Lemming2, ReplayMousePos, False) > 0 then
-      begin
-
-        if Lemming1 <> nil then
-          begin
-
-            Proceed := true;
-            if Proceed then
-            begin
-              fCheckWhichLemmingOnly := True;
-              WhichLemming := nil;
-              AssignSkill(Lemming1, Lemming2, ass);
-              fCheckWhichLemmingOnly := False;
-              if (WhichLemming = L) then
-                AssignSkill(Lemming1, Lemming2, ass)
-              else if (Lemming2 = L) then
-                AssignSkill(Lemming2, Lemming2, ass);
-              fAssignEnabled := false;
-            end;
-            
-          end;
-      end;
-
-
-
-      fSelectDx := 0;}
-
-//      AssignSkill(L, nil, ass);
-//      if UseReplayPhotoFlashEffect then
 
       if AssignSkill(L, nil, ass) then fAssignedSkillThisFrame := true;
 
       if not HyperSpeed then
         L.LemHighlightReplay := True;
-{      if fReplayedLemmingIndex = -1 then
-        fReplayedLemmingIndex := LemmingIndex; }
-//      if
-      {if (LemmingX > 0) and (LemmingY > 0) then
-      begin
-        if (LemmingX <> l.lemx) or (LemmingY <> l.lemy) then
-        begin
-          infopainter.SetInfoCursorLemming('invalid', 0);
-          RegainControl;
-//          ShowMessage('invalid replay, replay ended');
-        end;}
-
-      //  Assert(LemmingX=l.lemx, 'replay x error' + ','+i2s(lemmingX) + ','+i2s(l.LemX));
-        //Assert(LemmingY=l.lemy, 'replay y error' + ','+i2s(LemmingY) + ','+i2s(l.Lemy));
-      {end
-      else begin
-        LemmingX := L.lemX;
-        LemmingY := L.LemY;
-      end;}
-//      Mouse.
-//      Assert(Res, 'replay error 1');
-//      if xxx<>lemx then deb(['err', xxx,LemX])
     end;
-
   end;
 end;
 
@@ -6607,24 +6191,7 @@ begin
     rsb_cloner: bs := spbCloner;
     else bs := spbNone;
     end;
-  {bs := tSkillPanelButton(areplayitem.selectedbutton); // convert
-    if bs in [
-    spbClimber,
-    spbUmbrella,
-    spbExplode,
-    spbBlocker,
-    spbBuilder,
-    spbBasher,
-    spbMiner,
-    spbDigger,
-    spbWalker,
-    spbSwimmer,
-    spbGlider,
-    spbStoner,
-    spbPlatformer,
-    spbStacker] then}
   setselectedskill(bs, true);
-//  case aReplayItem
 end;
 
 function TLemmingGame.GetSelectedSkill: Integer;
@@ -6700,10 +6267,7 @@ end;
 procedure TLemmingGame.CheckReleaseLemming;
 var
   NewLemming: TLemming;
-//  MustCreate: Boolean;
-//  Entry: TInteractiveObject;
   ix, EntranceIndex: Integer;
-//  L:
 begin
 
   if not EntriesOpened then
@@ -6760,9 +6324,6 @@ begin
       end;
     end;
   end;
-
-  //if NextLemmingCountdown < 0 then NextLemmingCountdown := NextLemmingCountdown + CalculateNextLemmingCountdown;
-
 end;
 
 procedure TLemmingGame.CheckUpdateNuking;
@@ -6778,7 +6339,7 @@ begin
     and (LemmingList[Index_LemmingToBeNuked].LemRemoved) do
       Inc(Index_LemmingToBeNuked);
 
-    if (Index_LemmingToBeNuked > LemmingsReleased + LemmingsCloned - 1) then // added - 1
+    if (Index_LemmingToBeNuked > LemmingsReleased + LemmingsCloned - 1) then
       ExploderAssignInProgress := FALSE
     else begin
       CurrentLemming := LemmingList[Index_LemmingToBeNuked];
@@ -6858,7 +6419,7 @@ begin
   if HyperSpeed or not Playing or not (gsoSound in fSoundOpts) then
     Exit;
 
-  if {(fSoundToPlay = SFX_ASSIGN_SKILL) or} (aSoundId < 0) then
+  if (aSoundId < 0) then
     Exit;
 
   for i := 0 to Length(fSoundToPlay)-1 do
@@ -6876,6 +6437,7 @@ begin
   if Assigned(fOnDebugLemming) then
     fOnDebugLemming(L);
 end;
+
 (*
 procedure TLemmingGame.DrawError(const S: string; aCode: Integer);
 {-------------------------------------------------------------------------------
@@ -6918,10 +6480,6 @@ begin
   R := fRecorder.Add;
   R.Iteration := CurrentIteration;
   R.ActionFlags := R.ActionFlags or raf_Nuke;
-  // Just in case: nuking is normally not possible when pausing.
-  // but it does no harm setting the raf_Pause flag
-  //if Paused then
-  //  R.ActionFlags := R.ActionFlags or raf_Pausing;
   R.ReleaseRate := currReleaseRate;
 end;
 
@@ -6956,8 +6514,7 @@ begin
 
     // some records are not safe to overwrite
     // we must begin a new one then
-    if {(R.ActionFlags and raf_StartPause <> 0) or}
-       (R.Iteration <> RecIteration) or
+    if (R.Iteration <> RecIteration) or
        (R.ActionFlags and raf_SkillAssignment <> 0) then
     begin
       R := Recorder.add;
@@ -6975,14 +6532,9 @@ begin
 
   { TODO : Just use the "or" statement }
   if NewRec then
-  begin
-    R.ActionFlags := aActionFlag;
-  end
-  else begin
+    R.ActionFlags := aActionFlag
+  else
     R.ActionFlags := R.ActionFlags or aActionFlag;
-    //if Paused then
-    //  R.ActionFlags := R.ActionFlags or raf_Pausing;
-  end;
 
 end;
 
@@ -7003,10 +6555,6 @@ begin
   R.Iteration := CurrentIteration;
   R.ActionFlags := raf_SkillAssignment;
 
-  // this is possible in debugmode but don't know if I keep it that way
-  //if Paused then
-  //  R.ActionFlags := R.ActionFlags or raf_Pausing;
-
   R.LemmingIndex := L.LemIndex;
   R.ReleaseRate := CurrReleaseRate;
   R.AssignedSkill := Byte(aSkill){ + 1}; // the byte is "compatible" for now
@@ -7024,46 +6572,21 @@ var
 begin
 //  Assert(aSkill)
   if not fPlaying then Exit;
-  if fReplaying then
-    Exit;
-  assert(askill in [    spbClimber,
-    spbUmbrella, spbExplode, spbBlocker, spbBuilder, spbBasher,
-    spbMiner, spbDigger, spbWalker, spbSwimmer, spbGlider, spbMechanic,
-    spbStoner, spbPlatformer, spbStacker, spbCloner]);
-//  if ReplayList.Count = 0 then
+  if fReplaying then Exit;
 
-  (*NewRec := False;
-  if Paused then
-  begin
-    Assert(Recorder.List.Count > 0);
-    R := Recorder.List.List^[Recorder.List.Count - 1];
+  assert(askill in [spbClimber, spbUmbrella, spbExplode, spbBlocker, spbBuilder,
+                    spbBasher, spbMiner, spbDigger, spbWalker, spbSwimmer,
+                    spbGlider, spbMechanic, spbStoner, spbPlatformer,
+                    spbStacker, spbCloner]);
 
-    // some records are not safe to overwrite
-    // we must begin a new one then
-    if {(R.ActionFlags and raf_StartPause <> 0) or}
-       (R.Iteration <> CurrentIteration) or
-       (R.ActionFlags and raf_SkillAssignment <> 0) then
-    begin
-      R := Recorder.Add;
-      NewRec := True;
-    end;
-
-
-   // if R.Iteration = CurrentIteration then
-     // if R.ActionFlags and raf}
-  end
-  else begin*)
-    R := Recorder.Add;
-    NewRec := True;
-  //end;
+  R := Recorder.Add;
+  NewRec := True;
 
   R.Iteration := CurrentIteration;
   if NewRec then
     R.ActionFlags := raf_SkillSelection
   else
     R.ActionFlags := R.ActionFlags or raf_SkillSelection;
-
-  //if Paused then R.ActionFlags := R.ActionFlags or raf_Pausing;
 
   R.ReleaseRate := CurrReleaseRate;
 
@@ -7099,7 +6622,6 @@ var
   R: TReplayItem;
   Last: Integer;
   PrevReplayIndex: Integer;
-  //RRChange: Boolean;
 begin
   if not fReplaying then
     Exit;
@@ -7107,13 +6629,6 @@ begin
   Last := fRecorder.List.Count - 1;
 
   fReplayCommanding := True;
-
-{  if CurrentIteration > 2366 then
-  begin
-  fReplayCommanding := True;
-
-  end;
-}
 
   PrevReplayIndex := fReplayIndex;
 
@@ -7142,7 +6657,6 @@ begin
 
     if RRCheck then
     begin
-      //RRChange := false;
       if raf_stopchangingRR and r.actionflags <> 0 then
       begin
         SetSelectedSkill(spbFaster, False);
@@ -7151,21 +6665,17 @@ begin
           if R.ReleaseRate > 0 then
             //fRRPending := R.ReleaseRate;
             AdjustReleaseRate(R.ReleaseRate - currReleaseRate);
-        //RRChange := true;
       end
       else if raf_startincreaserr and r.actionflags <> 0 then
       begin
         SetSelectedSkill(spbFaster, True);
         //fRRPending := 100;
-        //RRChange := true;
       end else if raf_startdecreaserr and r.actionflags <> 0 then
       begin
         SetSelectedSkill(spbSlower, True);
         //fRRPending := -1;
-        //RRChange := true;
       end;
 
-      //if RRChange then CheckAdjustReleaseRate;
     end;
 
     // check for changes (error)
@@ -7233,8 +6743,7 @@ begin
       if CountDownReachedZero then
         Continue;
       HandleInteractiveObjects := HandleLemming(CurrentLemming);
-      //if HandleInteractiveObjects then
-        CheckForInteractiveObjects(CurrentLemming, HandleInteractiveObjects);
+      CheckForInteractiveObjects(CurrentLemming, HandleInteractiveObjects);
     end;
 
   end;
@@ -7315,66 +6824,10 @@ procedure TLemmingGame.RegainControl;
 {-------------------------------------------------------------------------------
   This is a very important routine. It jumps from replay into usercontrol.
 -------------------------------------------------------------------------------}
-//var
-  //LastBeforeBeginPause: Integer;
-
-    {function FindBeforePause: Integer; //=findbeginpause
-    var
-      R: TReplayItem;
-    begin
-
-      Result := fReplayIndex;
-
-      if fReplayIndex >= Recorder.List.Count then
-      begin
-        Result := Recorder.List.Count - 1;
-        Exit;
-      end;
-
-
-      while Result >= 0 do
-      begin
-        R := Recorder.List.List^[Result];
-        if R.ActionFlags and (raf_Pausing or raf_EndPause or raf_StartPause) = 0 then
-          Break;
-        Dec(Result);
-      end;
-    end;}
-
-    (*
-    function FindPoint: Integer; //=findbeginpause
-    var
-      R: TReplayItem;
-    begin
-
-      Result := fReplayIndex;
-
-      if fReplayIndex >= Recorder.List.Count then
-      begin
-        Result := Recorder.List.Count - 1;
-        Exit;
-      end;
-
-
-      while Result >= 0 do
-      begin
-        R := Recorder.List.List^[Result];
-        if R.ActionFlags and (raf_Pausing or raf_EndPause{ or raf_StartPause}) = 0 then
-          Break;
-        Dec(Result);
-      end;
-    end;*)
-
-
 begin
   if fReplaying then
   begin
-    //cuesoundeffect()
-    // there is a bug here when regaining...
     fReplaying := False;
-
-    //LastBeforeBeginPause := FindBeforePause;
-    //fRecorder.Truncate(Max(LastBeforeBeginPause, 0));
 
     // Don't erase the current frame.
     fReplayIndex := 0;
@@ -7385,12 +6838,6 @@ begin
     end;
 
     fRecorder.Truncate(fReplayIndex);
-
-    // special case: if the game is paused
-    // and the control is regained we have to insert a
-    // startpause record.
-    //if Paused then
-    //  RecordStartPause;
 
     fReplayIndex := 0;//Recorder.List.Count - 1;
   end;
@@ -7413,7 +6860,6 @@ begin
     fPauseOnHyperSpeedExit := True
   else
     fPauseOnHyperSpeedExit := False;
-//  fSoundToPlay := -1;
 end;
 
 procedure TLemmingGame.HyperSpeedEnd;
@@ -7430,7 +6876,6 @@ begin
         CancelReplayAfterSkip := false;
       end;
       RefreshAllPanelInfo;
-      //fHyperSpeed := False;
     end;
   end;
 end;
@@ -7446,34 +6891,11 @@ procedure TLemmingGame.UpdateInteractiveObjects;
 -------------------------------------------------------------------------------}
 var
   Inf, Inf2: TInteractiveObjectInfo;
-  i, {t,} xi: Integer;
-  //tlx, tly: Integer;
+  i, xi: Integer;
   L: TLemming;
 const
-  OID_ENTRY                 = 1;
+  OID_ENTRY = 1;
 begin
-(*  // moving entrances?
-  if not fEntranceAnimationCompleted
-  and (CurrentIteration >= 35) then
-  begin
-    for i := 0 to Entries.Count - 1 do
-    begin
-      Inf := Entries.List^[i];
-      if Inf.Triggered then
-      begin
-        Inc(Inf.CurrentFrame);
-        if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
-        begin
-          Inf.CurrentFrame := 0;
-          Inf.Triggered := False;
-          fEntranceAnimationCompleted := True;
-        end;
-      end;
-    end;
-  end;
-*)
-  // other objects
-//  with ObjectInfos do
   for i := ObjectInfos.Count - 1 downto 0 do
   begin
     Inf := ObjectInfos.List^[i];
@@ -7534,19 +6956,6 @@ end;
 
 procedure TLemmingGame.CheckAdjustReleaseRate;
 begin
-//exit;
-  {if fRRPending = -1 then
-    SetSelectedSkill(spbSlower, True)
-  else if fRRPending = 100 then
-    SetSelectedSkill(spbFaster, True)
-  else if fRRPending <> 0 then
-  begin
-    SetSelectedSkill(spbFaster, False);
-    SetSelectedSkill(spbSlower, False);
-    AdjustReleaseRate(fRRPending - CurrReleaseRate);
-  end;
-  fRRPending := 0;}
-
   if SpeedingUpReleaseRate then
   begin
     //if not (Replaying and Paused) then
@@ -7586,7 +6995,7 @@ end;
 
 procedure TLemmingGame.Cheat;
 begin
-  fGameCheated := True;      // IN-LEVEL CHEAT // just uncomment these two lines to reverse
+  fGameCheated := True;   // IN-LEVEL CHEAT // just uncomment these two lines to reverse
   SetGameResult;
   Finish;
 end;
@@ -7665,7 +7074,7 @@ var
       Result := 2
     else if fGameParams.ConfirmOverwrite and FileExists(GetInitialSavePath + SaveNameLrb) then
       Result := 1;
-    // Don't need to hande AlwaysTimestamp here; it's handled in GetReplayFileName above.
+    // Don't need to handle AlwaysTimestamp here; it's handled in GetReplayFileName above.
   end;
 
 begin
@@ -7866,9 +7275,6 @@ begin
     Exit;
 
   P := @BrickPixelColor;
-//  with P^ do
-    //deb([r,g,b]);
-//  deb(['---------']);
 
   with p^ do
   begin
@@ -7887,7 +7293,6 @@ begin
       if ag < 252 then inc(ag,4);
       if ab < 252 then inc(ab,4);
       r:=ar; g:=ag; b:=ab;
-  //    deb([r,g,b]);
     end;
   end;
 
@@ -7912,7 +7317,6 @@ begin
       if ag > 3 then dec(ag,4);
       if ab > 3 then dec(ab,4);
       r:=ar; g:=ag; b:=ab;
-//      deb([r,g,b]);
     end;
   end;
 
@@ -8018,32 +7422,11 @@ begin
   if H.HeaderSize <> SizeOf(TReplayFileHeaderRec) then
     ErrorID := ErrorID or $4;
 
-  {if H.Mechanics - [dgoObsolete] <> fGame.Options - [dgoObsolete] then
-  begin
-    MessageDlg('Invalid replay signature.',mtCustom, [mbOK], 0);
-    Exit;
-  end;}
-
   if H.FirstRecordPos < H.HeaderSize then
     ErrorID := ErrorID or $8;
 
   if H.ReplayRecordSize <> SizeOf(TReplayFileHeaderRec) then
     ErrorID := ErrorID or $10;
-
-
-  // we added this silent conversion in replay version 2, Lemmix 0.0.8.0
-(*  if H.Version = 1 then
-  begin
-    H.Version := LEMMIX_REPLAY_VERSION;
-    Include(H.Mechanics, dgoMinerOneWayRightBug);
-    S.Seek(0, soFromBeginning);
-    S.Write(H, H.HeaderSize);
-  end; *)
-{  if H.Version = 1 then
-    ShowMessage('This replay file contains obsolete mechanics, please upgrade it');
- }
-
-
 
   if H.Version <> LEMMIX_REPLAY_VERSION then
     ErrorID := ErrorID or $20;
@@ -8119,24 +7502,6 @@ begin
     It.CursorY := R.CursorY;
     It.fSelectDir := R.SelectDir;
 
-    {if R.ActionFlags = raf_StartPause then
-      Inc(Parity)
-    else if R.ActionFlags = raf_Endpause then
-      Dec(Parity);}
-
-    // add fake paused record if unpaired startpuase
-    // this happens when this file is saved in paused mode!
-    {if List.Count = H.ReplayRecordCount then
-      if Parity = 1 then
-//      if R.ActionFlags = raf_StartPause then
-      begin
-        It := Add;
-        It.Iteration := Iter;
-        It.ReleaseRate := RR;
-        It.ActionFlags := raf_EndPause;
-        Break;
-      end;}
-
     if List.Count >= H.ReplayRecordCount then
       Break;
   end;
@@ -8160,37 +7525,9 @@ var
   H: TReplayFileHeaderRec;
   R: TReplayRec;
   It: TReplayItem;
-//  RecCount: Integer;
-  //Parity: Integer;
-
-  (*
-    // a little #$% selfprotection against an isolated startpause when saving
-    function GetRecordableCount: Integer;
-    var
-      It: TReplayItem;
-      Ix: Integer;
-    begin
-//      with fRecorder do
-      begin
-        Ix := List.Count - 1;
-        Result := List.Count;
-        while Ix >= 0 do
-        begin
-          It := List.List^[ix];
-          if It.ActionFlags and raf_StartPause = 0 then
-            Break;
-          Dec(Result);
-          Dec(Ix);
-        end;
-
-      end;
-    end;
-*)
-
 begin
 
   FillChar(H, SizeOf(TReplayFileHeaderRec), 0);
-//  Parity := 0;
 
   H.Signature := 'NEO';
   H.Version := LEMMIX_REPLAY_VERSION;
@@ -8224,16 +7561,6 @@ begin
 
   H.ReplayLevelID := fGame.fGameParams.Level.Info.LevelID;
 
-
-  // bad programming
-  {
-  if fGameMechanics.Paused then
-  begin
-    Inc(H.ReplayRecordCount);
-    parity := 1;
-  end;
-  }
-
   FillChar(H.Reserved, SizeOf(H.Reserved), 0);
 
   S.WriteBuffer(H, SizeOf(TReplayFileHeaderRec));
@@ -8241,18 +7568,6 @@ begin
   for i := 0 to List.Count - 1 do
   begin
     It := List.List^[i];
-
-    (*
-    if It.ActionFlags = raf_Startpause then
-      Inc(Parity)
-    else if It.ActionFlags = raf_EndPause then
-      Dec(Parity);
-
-    if Parity > 1 then
-      raise Exception.Create('too much start pauses');
-
-    if Parity < - 1 then
-      raise Exception.Create('too much end pauses'); *)
 
     R.Check := 'R';
     R.Iteration := It.fIteration;
@@ -8267,25 +7582,8 @@ begin
     R.CursorY := It.CursorY;
     R.SelectDir := It.SelectDir;
 
-    //It.WriteToRec(R);
     S.WriteBuffer(R, SizeOf(TReplayRec));
   end;
-   (*
-
-  //windlg(
-  // this is the case when saving in paused mode, we add a pause record
-  // to the stream
-  if Parity = 1 then
-  begin
-    R.Check := 'R';
-    R.Iteration := fGameMechanics.CurrentIteration;
-    R.ActionFlags := raf_EndPause;
-    S.WriteBuffer(R, SizeOf(TReplayRec));
-  end;
-//  else if Parity <> 0 then
-  //  raise Exception.Create('invalid save');
-  *)
-
 end;
 
 procedure TRecorder.SaveToTxt(const aFileName: string);
@@ -8434,10 +7732,8 @@ begin
   begin
     ads('Timer mode: Enabled');
     if (fGame.TimePlay < 60) and (fGame.TimePlay >= 0) then // Nepster: Surely suboptimal; I need better understanding of moTimerMode first!!!
-    // if fGame.Minutes = 0 then
       ads('>> Replay saved at: 0:00')
     else ads('>> Replay saved at: ' + i2s(abs(fGame.TimePlay + 60) div 60) + ':' + LeadZeroStr((-fGame.TimePlay) mod 60, 2)); // Nepster: Computed values are idiotic, but who cares when the replay file is a binary blob???
-    // else ads('>> Replay saved at: ' + i2s(abs(fGame.Minutes + 1)) + ':' + LeadZeroStr((60 - fGame.Seconds) mod 60, 2));
     ads('>> Lemmings saved:  ' + i2s(fGame.LemmingsIn));
   end else ads('Timer mode: Disabled');
   ads('------------------------------------------');
@@ -8452,7 +7748,6 @@ begin
     ads(
         lz(i, 4) + '  ' +
         lz(it.iteration, 6) + '  ' +
-        //padr(bs(it.ActionFlags and raf_pausing <> 0), 7) + ' ' +
         padr(actionstr(it.actionflags), 12) + '  ' +
         padr(skillstrings[it.assignedskill], 8) + '  ' +
         padr(selstrings[it.selectedbutton], 8) + '  ' +
@@ -8478,7 +7773,6 @@ end;
 
 procedure TRecorder.LoadFromOldTxt(const aFileName: string);
 (*
-
 19, rrStartIncrease, 1
 19, rrStop, 85
 19, rrStartIncrease, 85
@@ -8500,12 +7794,9 @@ procedure TRecorder.LoadFromOldTxt(const aFileName: string);
 412, rrStartIncrease, 1
 412, rrStop, 99
 518, raSkillAssignment, baBlocking, 1
-
 *)
 
-
 (*
-
   TRecordedAction = (
     raNone,
     raSkillAssignment,
@@ -8518,8 +7809,6 @@ procedure TRecorder.LoadFromOldTxt(const aFileName: string);
     rrStartIncrease,
     rrStartDecrease
   );
-
-
 *)
 var
   L: TStringList;
@@ -8611,16 +7900,10 @@ begin
         It.LemmingIndex :=LIX;
         It.ReleaseRate  := RR;
       end;
-
-
-
     end;
   finally
     l.free;
   end;
-
-
 end;
-
 
 end.
