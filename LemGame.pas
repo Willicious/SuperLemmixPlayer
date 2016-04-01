@@ -5475,94 +5475,83 @@ end;
 
 function TLemmingGame.HandleGliding(L: TLemming): Boolean;
 var
-  MaxFallDist: Integer;
-  dy: Integer;
+  MaxFallDist, GroundDist: Integer;
+  LemDy: Integer;
+
+  // Special behavior in 1-pxiel wide shafts: Move one pixel down even when turning
+  procedure CheckOnePixelShaft(L: TLemming);
+  begin
+    if     HasPixelAt(L.LemX + L.LemDx, L.LemY + 1)
+       and HasPixelAt(L.LemX + L.LemDx, L.LemY + 2)
+       and HasPixelAt(L.LemX + L.LemDx, L.LemY + 3) then
+    begin
+      if HasPixelAt(L.LemX, L.LemY) then
+        Transition(L, baWalking)
+      else
+        Inc(L.LemY);
+    end;
+  end;
 const
   GliderFallTable: array[1..17] of Integer =
     (3, 3, 3, 3, -1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 begin
   Result := True;
-  with L do
+  MaxFallDist := GliderFallTable[L.LemFrame];
+
+  if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then
   begin
-    MaxFallDist := GliderFallTable[L.LemFrame];
-
-    if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then
-    begin
+    Dec(MaxFallDist);
+    // Rise a pixel every second frame
+    if (L.LemFrame >= 9) and (L.LemFrame mod 2 = 1)
+       and (not HasPixelAt(L.LemX + L.LemDx, L.LemY + MaxFallDist - 1)) then
       Dec(MaxFallDist);
-      // Rise a pixel every second frame
-      if (L.LemFrame >= 9) and (L.LemFrame mod 2 = 1)
-         and not (HasPixelAt(L.LemX + L.LemDx, L.LemY + MaxFallDist - 1)) then
-        Dec(MaxFallDist);
-    end;
+  end;
 
-    Inc(L.LemX, L.LemDx);
+  Inc(L.LemX, L.LemDx);
 
-    if (MaxFallDist < 0) then
-      Inc(LemY, MaxFallDist)
-    else begin
+  // Do upwards movement right away
+  if MaxFallDist < 0 then Inc(L.LemY, MaxFallDist);
 
-      if HasPixelAt(LemX, LemY) and HasPixelAt(LemX, LemY - 1) then
-        MaxFallDist := 0;
+  GroundDist := FindGroundPixel(L.LemX, L.LemY);
 
-      while (MaxFallDist > 0) do
-      begin
-        if HasPixelAt(LemX, LemY) and not HasPixelAt(LemX, LemY - 1) then
-        begin
-          Transition(L, baWalking);
-          Result := True;
-          Exit;
-        end else begin
-          Inc(LemY);
-          Dec(MaxFallDist);
-        end;
-      end; // while
-    end;
+  if GroundDist < -4 then // pushed down or turn around
+  begin
+    // Search for free pixels below
+    LemDy := 0;
+    repeat
+      Inc(LemDy);
+    until (LemDy > 3) or (not HasPixelAt(L.LemX, L.LemY + LemDy));
 
-    if (HasPixelAt(LemX, LemY)) and (HasPixelAt(LemX, LemY - 1)) then
+    if LemDy > 3 then
     begin
-      dy := 1;
-      while dy < 6 do
-        if not HasPixelAt(LemX, LemY - dy) then
-        begin
-          Dec(LemY, (dy-1));
-          Transition(L, baWalking);
-          Result := true;
-          Exit;
-        end else
-          Inc(dy);
-
-      dy := 1;
-      while dy < 4 do
-        if not HasPixelAt(LemX, LemY + dy) then
-        begin
-          Inc(LemY, dy);
-          Result := true;
-          Exit;
-        end else
-          Inc(dy);
-      Dec(LemX, LemDx);
+      // move back and turn around
+      Dec(L.LemX, L.LemDx);
       TurnAround(L);
+      CheckOnePixelShaft(L);
+    end
+    else
+      Inc(L.LemY, LemDy); // move down
+  end
 
-      dy := 1;
-      while dy < 4 do
-        if HasPixelAt(LemX + LemDx, LemY + dy) then
-          Inc(dy)
-        else
-          Exit;
+  else if GroundDist < 0 then // Move 1 to 4 pixels up
+  begin
+    Inc(L.LemY, GroundDist);
+    Transition(L, baWalking);
+  end
 
-      if HasPixelAt(LemX, LemY) then
-        Transition(L, baWalking)
-      else
-        Inc(LemY);
-    end;
-
-    Result := True;
-
-  end; // with
+  else if MaxFallDist > 0 then // no pixel above current location; not checked if one has moved upwards
+  begin // same algorithm as for faller!
+    if MaxFallDist > GroundDist then
+    begin
+      // Lem has found solid terrain
+      Assert(GroundDist >= 0, 'glider GroundDist negative');
+      Inc(L.LemY, GroundDist);
+      Transition(L, baWalking);
+    end
+    else
+      Inc(L.LemY, MaxFallDist);
+  end;
 end;
-
-
-
 
 
 function TLemmingGame.HandleSplatting(L: TLemming): Boolean;
