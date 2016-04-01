@@ -808,8 +808,6 @@ type
     function HandlePlatforming(L: TLemming): Boolean;
       function LemCanPlatform(L: TLemming): Boolean;
     function HandleStacking(L: TLemming): Boolean;
-    function HandleStoneOhNoing(L: TLemming): Boolean;
-    function HandleStoneFinish(L: TLemming): Boolean;
     function HandleSwimming(L: TLemming): Boolean;
     function HandleGliding(L: TLemming): Boolean;
     function HandleFixing(L: TLemming): Boolean;
@@ -1729,8 +1727,8 @@ begin
   LemmingMethods[baToWalking]  := HandleWalking; //should never happen anyway
   LemmingMethods[baPlatforming] := HandlePlatforming;
   LemmingMethods[baStacking]   := HandleStacking;
-  LemmingMethods[baStoning]    := HandleStoneOhNoing;
-  LemmingMethods[baStoneFinish] := HandleStoneFinish;
+  LemmingMethods[baStoning]    := HandleOhNoing; // same behavior!
+  LemmingMethods[baStoneFinish] := HandleExploding; // same behavior, except applied mask!
   LemmingMethods[baSwimming]   := HandleSwimming;
   LemmingMethods[baGliding]    := HandleGliding;
   LemmingMethods[baFixing]     := HandleFixing;
@@ -5491,6 +5489,7 @@ var
         Inc(L.LemY);
     end;
   end;
+
 const
   GliderFallTable: array[1..17] of Integer =
     (3, 3, 3, 3, -1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
@@ -5582,120 +5581,50 @@ end;
 function TLemmingGame.HandleShrugging(L: TLemming): Boolean;
 begin
   Result := True;
-  with L do
-  begin
-    if LemEndOfAnimation then
-    begin
-      Transition(L, baWalking);
-      Result := True;
-    end
-  end;
+  if L.LemEndOfAnimation then Transition(L, baWalking);
 end;
 
 function TLemmingGame.HandleOhNoing(L: TLemming): Boolean;
-var
-  dy: Integer;
 begin
   Result := True;
-  with L do
+  if L.LemEndOfAnimation then
   begin
-    if LemEndOfAnimation then
-    begin
-      Transition(L, baExploding);
-      LemHasBlockerField := False; // remove blocker field
-      RestoreMap;
-      Result := False;
-      Exit;
-    end
-    else begin
-      dy := 0;
-      If ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then dy := 1;
-
-      while (dy < 3) and not HasPixelAt(LemX, LemY) do
-      begin
-        Inc(dy);
-        Inc(LemY);
-        L.LemHasBlockerField := False;
-        RestoreMap;
-      end;
-
-      Result := True;
-    end;
-  end; // with
-
+    if L.LemAction = baOhNoing then
+      Transition(L, baExploding)
+    else // if L.LemAction = baStoning then
+      Transition(L, baStoneFinish);
+    L.LemHasBlockerField := False; // remove blocker field
+    RestoreMap;
+    Result := False;
+  end
+  else if not HasPixelAt(L.LemX, L.LemY) then
+  begin
+    L.LemHasBlockerField := False; // remove blocker field
+    RestoreMap;
+    // let lemming fall
+    if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then
+      Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 2]))
+    else
+      Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 3]));
+  end;
 end;
+
 
 function TLemmingGame.HandleExploding(L: TLemming): Boolean;
 begin
   Result := False;
-  with L do
-  begin
-    if LemEndOfAnimation then
-    begin
-      ApplyExplosionMask(L);
-      RemoveLemming(L, RM_KILL);
-      LemExploded := True;
-      LemParticleTimer := PARTICLE_FRAMECOUNT;
-      LemParticleX := LemX;
-      LemParticleY := LemY;
-      fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
-    end;
-  end;
-end;
 
+  if L.LemAction = baExploding then
+    ApplyExplosionMask(L)
+  else // if L.LemAction = baStoneFinish
+    ApplyStoneLemming(L);
 
-function TLemmingGame.HandleStoneOhNoing(L: TLemming): Boolean;
-var
-  dy: Integer;
-begin
-  Result := True;
-  with L do
-  begin
-    if LemEndOfAnimation then
-    begin
-      Transition(L, baStoneFinish);
-      L.LemHasBlockerField := False; // remove blocker field
-      RestoreMap;
-      Result := False;
-      Exit;
-    end
-    else begin
-      dy := 0;
-
-      while (dy < 3) and not HasPixelAt(LemX, LemY) do
-      begin
-        Inc(dy);
-        Inc(LemY);
-        L.LemHasBlockerField := False;
-        RestoreMap;
-      end;
-
-      Result := True;
-    end;
-  end; // with
-
-end;
-
-
-function TLemmingGame.HandleStoneFinish(L: TLemming): Boolean;
-begin
-  Result := False;
-  with L do
-  begin
-    if LemEndOfAnimation then
-    begin
-      ApplyStoneLemming(L);
-
-      RemoveLemming(L, RM_KILL);
-      LemExploded := True;
-      LemParticleTimer := PARTICLE_FRAMECOUNT;
-      LemParticleX := LemX;
-      LemParticleY := LemY;
-      fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
-
-      LemExploded := True;
-    end;
-  end;
+  RemoveLemming(L, RM_KILL);
+  L.LemExploded := True;
+  L.LemParticleTimer := PARTICLE_FRAMECOUNT;
+  L.LemParticleX := L.LemX;
+  L.LemParticleY := L.LemY;
+  fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
 end;
 
 
