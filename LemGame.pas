@@ -684,9 +684,7 @@ type
     fOnFinish                  : TNotifyEvent;
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
   { update skill panel functions }
-    procedure UpdateLemmingsHatch;
-    procedure UpdateLemmingsAlive;
-    procedure UpdateLemmingsSaved;
+    procedure UpdateLemmingCounts;
     procedure UpdateTimeLimit;
     procedure UpdateOneSkillCount(aSkill: TSkillPanelButton);
     procedure UpdateAllSkillCounts;
@@ -1311,19 +1309,14 @@ begin
 end;
 
 { TLemmingGame }
-
-procedure TLemmingGame.UpdateLemmingsHatch;
+procedure TLemmingGame.UpdateLemmingCounts;
 begin
+  // Set Lemmings in Hatch, Lemmings Alive and Lemmings Saved
+  // Lemmings in Hatch (nevermind that it is called LemmingsAlive!)
   InfoPainter.SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
-end;
-
-procedure TLemmingGame.UpdateLemmingsAlive;
-begin
+  // Lemmings alive (nevermind that it is called LemmingsOut!)
   InfoPainter.SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
-end;
-
-procedure TLemmingGame.UpdateLemmingsSaved;
-begin
+  // Lemmings saved
   InfoPainter.SetInfoLemmingsIn(LemmingsIn - Level.Info.RescueCount, 0, CheckRescueBlink);
 end;
 
@@ -1593,9 +1586,7 @@ end;
 procedure TLemmingGame.RefreshAllPanelInfo;
 begin
   InfoPainter.DrawButtonSelector(fSelectedSkill, true);
-  UpdateLemmingsHatch;
-  UpdateLemmingsAlive;
-  UpdateLemmingsSaved;
+  UpdateLemmingCounts;
   UpdateTimeLimit;
   UpdateAllSkillCounts;
 end;
@@ -2278,9 +2269,7 @@ begin
   with InfoPainter do
   begin
     UpdateTimeLimit;
-    SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
-    SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
-    UpdateLemmingsSaved;
+    UpdateLemmingCounts;
     SetReplayMark(Replaying);
     SetTimeLimit(Level.Info.TimeLimit < 6000);
   end;
@@ -4533,11 +4522,8 @@ begin
 
   if InfoPainter <> nil then
   begin
-    InfoPainter.SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
-    InfoPainter.SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
-    UpdateLemmingsSaved;
+    UpdateLemmingCounts;
     InfoPainter.SetReplayMark(Replaying);
-
     UpdateTimeLimit;
   end;
 
@@ -5656,50 +5642,8 @@ begin
 
   DoTalismanCheck;
 
-  {
-  if L.LemIsZombie and (RemMode = RM_ZOMBIE) then Exit;
-  if L.LemRemoved and (L.LemInTrap <= 1) then Exit;
-
-  if not L.LemIsZombie then
-  begin
-    Inc(LemmingsRemoved);
-    Dec(LemmingsOut);
-    if (fHighlightLemming = L) then fHighlightLemming := nil;
-  end;
-
-  if RemMode = RM_ZOMBIE then
-    L.LemIsZombie := true
-  else
-    L.LemRemoved := True;
-
-  case RemMode of
-    RM_KILL : L.LemInTrap := 0;
-    RM_SAVE : begin
-                Assert(not L.LemIsZombie, 'Zombie removed with RM_SAVE removal type!')
-                Inc(LemmingsIn);
-                GameResultRec.gLastRescueIteration := fCurrentIteration;
-                (*
-                if not L.LemIsZombie then // it should never be if this has triggered, but just in case
-                begin
-                  Inc(LemmingsIn);
-                  GameResultRec.gLastRescueIteration := fCurrentIteration;
-                end else
-                  raise Exception.Create('Zombie removed with RM_SAVE removal type!');       *)
-              end;
-    RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT);
-  end;
-
-  DoTalismanCheck;      }
-
-  UpdateLemmingsHatch;
-  (*InfoPainter.SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false); *)
-
-  UpdateLemmingsAlive;
-  (*InfoPainter.SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);*)
-
+  UpdateLemmingCounts;
   InfoPainter.SetReplayMark(Replaying);
-
-  UpdateLemmingsSaved;
 end;
 
 
