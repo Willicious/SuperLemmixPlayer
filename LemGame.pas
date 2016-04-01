@@ -687,7 +687,6 @@ type
     procedure UpdateLemmingsHatch;
     procedure UpdateLemmingsAlive;
     procedure UpdateLemmingsSaved;
-    procedure UpdateLemmingsIn(Num, Max: Integer);
     procedure UpdateTimeLimit;
     procedure UpdateOneSkillCount(aSkill: TSkillPanelButton);
     procedure UpdateAllSkillCounts;
@@ -1326,13 +1325,6 @@ end;
 procedure TLemmingGame.UpdateLemmingsSaved;
 begin
   InfoPainter.SetInfoLemmingsIn(LemmingsIn - Level.Info.RescueCount, 0, CheckRescueBlink);
-  (* UpdateLemmingsIn(LemmingsIn, 0); *)
-end;
-
-procedure TLemmingGame.UpdateLemmingsIn(Num, Max: Integer);
-begin
-  Num := Num - Level.Info.RescueCount;
-  InfoPainter.SetInfoLemmingsIn(Num, 0, CheckRescueBlink);
 end;
 
 procedure TLemmingGame.UpdateTimeLimit;
@@ -2288,7 +2280,7 @@ begin
     UpdateTimeLimit;
     SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
     SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
-    UpdateLemmingsIn(0, 1);
+    UpdateLemmingsSaved;
     SetReplayMark(Replaying);
     SetTimeLimit(Level.Info.TimeLimit < 6000);
   end;
@@ -4543,7 +4535,7 @@ begin
   begin
     InfoPainter.SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
     InfoPainter.SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
-    UpdateLemmingsIn(LemmingsIn, MaxNumLemmings);
+    UpdateLemmingsSaved;
     InfoPainter.SetReplayMark(Replaying);
 
     UpdateTimeLimit;
@@ -5708,7 +5700,6 @@ begin
   InfoPainter.SetReplayMark(Replaying);
 
   UpdateLemmingsSaved;
-  (*UpdateLemmingsIn(LemmingsIn, MaxNumLemmings);*)
 end;
 
 
