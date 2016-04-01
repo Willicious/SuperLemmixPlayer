@@ -687,6 +687,7 @@ type
     procedure UpdateLemmingsHatch;
     procedure UpdateLemmingsAlive;
     procedure UpdateLemmingsSaved;
+    procedure UpdateLemmingsIn(Num, Max: Integer);
     procedure UpdateTimeLimit;
     procedure UpdateOneSkillCount(aSkill: TSkillPanelButton);
     procedure UpdateAllSkillCounts;
@@ -763,7 +764,6 @@ type
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
     procedure UpdateInteractiveObjects;
-    procedure UpdateLemmingsIn(Num, Max: Integer);
     procedure WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = False);
     procedure WriteBlockerMap(X, Y: Integer; aValue: Byte);
     procedure WriteSpecialMap(X, Y: Integer; aValue: Byte);
@@ -1325,7 +1325,14 @@ end;
 
 procedure TLemmingGame.UpdateLemmingsSaved;
 begin
-  UpdateLemmingsIn(LemmingsIn, 0);
+  InfoPainter.SetInfoLemmingsIn(LemmingsIn - Level.Info.RescueCount, 0, CheckRescueBlink);
+  (* UpdateLemmingsIn(LemmingsIn, 0); *)
+end;
+
+procedure TLemmingGame.UpdateLemmingsIn(Num, Max: Integer);
+begin
+  Num := Num - Level.Info.RescueCount;
+  InfoPainter.SetInfoLemmingsIn(Num, 0, CheckRescueBlink);
 end;
 
 procedure TLemmingGame.UpdateTimeLimit;
@@ -3670,12 +3677,6 @@ begin
   end;
 end;
 
-procedure TLemmingGame.UpdateLemmingsIn(Num, Max: Integer);
-begin
-  Num := Num - Level.Info.RescueCount;
-  InfoPainter.SetInfoLemmingsIn(Num, 0, CheckRescueBlink);
-end;
-
 procedure TLemmingGame.CheckForInteractiveObjects(L: TLemming; HandleAllObjects: Boolean = true);
 var
   LemObjectBelow: Byte;
@@ -5630,15 +5631,48 @@ end;
 
 procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0);
 begin
+  if L.LemIsZombie then
+  begin
+    Assert(RemMode <> RM_SAVE, 'Zombie removed with RM_SAVE removal type!');
+    Assert(RemMode <> RM_ZOMBIE, 'Zombie removed with RM_ZOMBIE removal type!');
+    L.LemRemoved := True;
+    if RemMode = RM_KILL then L.LemInTrap := 0;
+  end
 
+  else // usual lemming
+  begin
+    if L.LemRemoved and (L.LemInTrap <= 1) then Exit; // We really should catch this elsewhere, but for now it may stay...
+
+    Inc(LemmingsRemoved);
+    Dec(LemmingsOut);
+    if (fHighlightLemming = L) then fHighlightLemming := nil;
+    L.LemRemoved := True;
+
+    case RemMode of
+    RM_KILL : L.LemInTrap := 0;
+    RM_SAVE : begin
+                Inc(LemmingsIn);
+                GameResultRec.gLastRescueIteration := fCurrentIteration;
+              end;
+    RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT);
+    RM_ZOMBIE: begin
+                 L.LemIsZombie := True;
+                 L.LemRemoved := True;
+               end;
+    end;           
+  end;
+
+  DoTalismanCheck;
+
+  {
   if L.LemIsZombie and (RemMode = RM_ZOMBIE) then Exit;
   if L.LemRemoved and (L.LemInTrap <= 1) then Exit;
 
   if not L.LemIsZombie then
   begin
     Inc(LemmingsRemoved);
-    if (fHighlightLemming = L) then fHighlightLemming := nil;
     Dec(LemmingsOut);
+    if (fHighlightLemming = L) then fHighlightLemming := nil;
   end;
 
   if RemMode = RM_ZOMBIE then
@@ -5649,23 +5683,34 @@ begin
   case RemMode of
     RM_KILL : L.LemInTrap := 0;
     RM_SAVE : begin
+                Assert(not L.LemIsZombie, 'Zombie removed with RM_SAVE removal type!')
+                Inc(LemmingsIn);
+                GameResultRec.gLastRescueIteration := fCurrentIteration;
+                (*
                 if not L.LemIsZombie then // it should never be if this has triggered, but just in case
                 begin
                   Inc(LemmingsIn);
                   GameResultRec.gLastRescueIteration := fCurrentIteration;
                 end else
-                  raise Exception.Create('Zombie removed with RM_SAVE removal type!');
+                  raise Exception.Create('Zombie removed with RM_SAVE removal type!');       *)
               end;
     RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT);
   end;
 
-  DoTalismanCheck;
+  DoTalismanCheck;      }
 
-  InfoPainter.SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
-  InfoPainter.SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
+  UpdateLemmingsHatch;
+  (*InfoPainter.SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false); *)
+
+  UpdateLemmingsAlive;
+  (*InfoPainter.SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);*)
+
   InfoPainter.SetReplayMark(Replaying);
-  UpdateLemmingsIn(LemmingsIn, MaxNumLemmings);
+
+  UpdateLemmingsSaved;
+  (*UpdateLemmingsIn(LemmingsIn, MaxNumLemmings);*)
 end;
+
 
 procedure TLemmingGame.UpdateLemmings;
 {-------------------------------------------------------------------------------
