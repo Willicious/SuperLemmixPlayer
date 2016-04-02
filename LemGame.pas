@@ -704,9 +704,9 @@ type
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineMinimapWorldPixels(F: TColor32; var B: TColor32; M: TColor32);
   { internal methods }
-    procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer; Redo: Integer = 0);
-    procedure ApplyExplosionMask(L: TLemming; Redo: Integer = 0);
-    procedure ApplyStoneLemming(L: TLemming; Redo: Integer = 0);
+    procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
+    procedure ApplyExplosionMask(L: TLemming);
+    procedure ApplyStoneLemming(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure ApplyAutoSteel;
     procedure ApplyLevelEntryOrder;
@@ -2859,13 +2859,13 @@ begin
                    end;
     baFloating   : L.LemFloatParametersTableIndex := 0;
     baGliding    : L.LemFloatParametersTableIndex := 0;
-    baSwimming   : ;(*begin // If possible, float up 4 pixels when starting
+    baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
                      while (i < 4) and (ReadWaterMap(L.LemX, L.LemY - i - 1) = DOM_WATER)
                                    and not HasPixelAt(L.LemX, L.LemY - i - 1) do
                        Inc(i);
                      Dec(L.LemY, i);
-                   end; *)
+                   end;
     baFixing     : L.LemMechanicFrames := 42;
 
   end;
@@ -2890,12 +2890,6 @@ begin
     if (LemAction = baBuilding) and (LemFrame >= 9) then LayBrick(L);
     // See http://www.lemmingsforums.net/index.php?topic=2530.0
     if (LemAction = baPlatforming) and (LemFrame >= 9) then LayBrick(L);
-    // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
-    if (LemAction = baMining) then
-      if LemFrame = 2 then
-        ApplyMinerMask(L, 1, 0, 0)
-      else if (LemFrame >= 3) and (LemFrame < 15) then
-        ApplyMinerMask(L, 1, -2*L.LemDx, -1);
   end;
 end;
 
@@ -3031,6 +3025,16 @@ begin
     TurnAround(NewL);
     NewL.LemIsClone := true;
     NewL.LemUsedSkillCount := 0;
+
+    // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
+    if (NewL.LemAction = baMining) then
+    begin
+      if NewL.LemFrame = 2 then
+        ApplyMinerMask(NewL, 1, 0, 0)
+      else if (NewL.LemFrame >= 3) and (NewL.LemFrame < 15) then
+        ApplyMinerMask(NewL, 1, -2*NewL.LemDx, -1);
+    end;
+
     if not NewL.LemIsZombie then
       Inc(LemmingsOut)
     else   // Nepster: Not sure how this can ever happen???
@@ -4135,7 +4139,7 @@ end;
 
 
 
-procedure TLemmingGame.ApplyStoneLemming(L: TLemming; Redo: Integer = 0);
+procedure TLemmingGame.ApplyStoneLemming(L: TLemming);
 begin
 
   if L.LemDx = 1 then Inc(L.LemX);
@@ -4146,16 +4150,13 @@ begin
 
   if L.LemDx = 1 then Dec(L.LemX);
 
-  if redo = 0 then
-  begin
-    SteelWorld.Assign(World);
-    InitializeMinimap;
-  end;
+ (* SteelWorld.Assign(World);*)
+  InitializeMinimap;
 
 end;
 
 
-procedure TLemmingGame.ApplyExplosionMask(L: TLemming; Redo: Integer = 0);
+procedure TLemmingGame.ApplyExplosionMask(L: TLemming);
 var
   X1, Y1: Integer;
   Px, Py: Integer;
@@ -4189,15 +4190,12 @@ begin
 
   if not L.LemRTL then L.LemX := L.LemX - 1;
 
-  if redo = 0 then
-  begin
-    SteelWorld.Assign(World);
-    InitializeMinimap;
-  end;
+  (*SteelWorld.Assign(World);*)
+  InitializeMinimap;
 
 end;
 
-procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer; Redo: Integer = 0);
+procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);
 var
   Bmp: TBitmap32;
   S, D: TRect;
@@ -4243,11 +4241,8 @@ begin
       WriteSpecialMap(X1, Y1, DOM_NONE);
   end;
 
-  if redo = 0 then
-  begin
-    SteelWorld.Assign(World);
-    InitializeMinimap;
-  end;
+  (* SteelWorld.Assign(World); *)
+  InitializeMinimap;
 
 end;
 
@@ -4302,6 +4297,8 @@ begin
     and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
       WriteSpecialMap(X1, Y1, DOM_NONE);
   end;
+
+  InitializeMinimap;
 end;
 
 procedure TLemmingGame.EraseParticles(L: TLemming);
@@ -4687,7 +4684,7 @@ begin
     end;
   end;
 
-  SteelWorld.Assign(World);  //What has LayBrick to do with STEEL!!!???
+  (* SteelWorld.Assign(World);  //What has LayBrick to do with STEEL!!!???*)
   InitializeMinimap;
 end;
 
@@ -4721,7 +4718,7 @@ begin
     end;
   end;
 
-  SteelWorld.Assign(World);  //What has LayStackBrick to do with STEEL!!!???
+  (*SteelWorld.Assign(World);  //What has LayStackBrick to do with STEEL!!!???*)
   InitializeMinimap;
 end;
 
@@ -4747,7 +4744,7 @@ begin
       WriteSpecialMap(PosX + n, PosY, DOM_NONE);
   end;
 
-  SteelWorld.Assign(World);  // What has Digging to do with STEEL!!!???
+  (*SteelWorld.Assign(World);  // What has Digging to do with STEEL!!!???  *)
   InitializeMinimap;
 end;
 
