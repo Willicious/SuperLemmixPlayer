@@ -715,7 +715,7 @@ type
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming);
-      procedure ChangeObjectType(ObjectID: Word; NewObjType: Byte);
+      procedure RemoveObjectID(ObjectID: Word);
       function HandleTrap(L: TLemming; ObjectID: Word): Boolean;
       function HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
       function HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
@@ -944,7 +944,7 @@ type
   GlobalGame is initialized by the mainform.
 -------------------------------------------------------------------------------}
 var
-  GlobalGame: TLemmingGame; 
+  GlobalGame: TLemmingGame;
 
 implementation
 
@@ -2267,9 +2267,10 @@ begin
 
   // can't fix it in the previous loop tidily, so this will fix the locked exit
   // displaying as locked when it isn't issue on levels with no buttons
-  for i := 0 to ObjectInfos.Count-1 do
-    if (ObjectInfos[i].MetaObj.TriggerEffect = 15) and (ButtonsRemain = 0) then
-      ObjectInfos[i].CurrentFrame := 0;
+  if ButtonsRemain = 0 then
+    for i := 0 to ObjectInfos.Count-1 do
+      if (ObjectInfos[i].MetaObj.TriggerEffect = DOM_LOCKEXIT) then
+        ObjectInfos[i].CurrentFrame := 0;
 
   ApplyLevelEntryOrder;
   InitializeBrickColors(Graph.BrickColor);
@@ -2501,7 +2502,7 @@ begin
 
 end;
 
-end; 
+end;
 
 function TLemmingGame.FindReceiver(oid: Byte; sval: Byte): Byte;
 var
@@ -3822,7 +3823,7 @@ begin
 end;
 
 
-procedure TLemmingGame.ChangeObjectType(ObjectID: Word; NewObjType: Byte);
+procedure TLemmingGame.RemoveObjectID(ObjectID: Word);
 // We replace the trigger area of one type with another type NewObjType
 var
   Inf: TInteractiveObjectInfo;
@@ -3840,8 +3841,8 @@ begin
     minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
 
   for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
-  for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
-    if ReadObjectMap(mx, my) = ObjectID then WriteObjectMap(mx, my, NewObjType);
+    for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
+      if ReadObjectMap(mx, my) = ObjectID then WriteObjectMap(mx, my, DOM_NOOBJECT);
 end;
 
 
@@ -3858,7 +3859,7 @@ begin
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
   begin
-    ChangeObjectType(ObjectID, DOM_NONE);
+    RemoveObjectID(ObjectID);
     Transition(L, baFixing);
   end
 
@@ -3891,7 +3892,7 @@ begin
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
   begin
-    ChangeObjectType(ObjectID, DOM_NONE);
+    RemoveObjectID(ObjectID);
     Transition(L, baFixing);
   end
   else if (L.LemInTrap = 0) and not (Inf.CurrentFrame = 0) then
@@ -4020,9 +4021,8 @@ begin
     begin
       CueSoundEffect(SFX_ENTRANCE);
       for n := 0 to (ObjectInfos.Count - 1) do
-      begin
-        if ObjectInfos[n].MetaObj.TriggerEffect = 15 then ObjectInfos[n].Triggered := true;
-      end;
+        if ObjectInfos[n].MetaObj.TriggerEffect = DOM_LOCKEXIT then
+          ObjectInfos[n].Triggered := True;
     end;
   end;
 end;
@@ -4053,22 +4053,22 @@ begin
 end;
 
 function TLemmingGame.HandleForceField(L: TLemming; Direction: Integer): Boolean;
-var
-  dy, NewY: Integer;
+(*var
+  dy, NewY: Integer; *)
 begin
   Result := False;
   if (L.LemDx = -Direction) and not (L.LemAction in [baClimbing, baHoisting]) then
   begin
     Result := True;
 
-    dy := 0;
+    (*dy := 0;
     NewY := L.LemY;
     while (dy <= 8) and HasPixelAt(L.LemX + Direction, NewY + 1) do
     begin
       Inc(dy);
       Dec(NewY);
     end;
-    if dy < 9 then TurnAround(L);
+    if dy < 9 then *) TurnAround(L);
   end;
 end;
 
@@ -4104,13 +4104,15 @@ begin
 end;
 
 function TLemmingGame.HandleWaterDrown(L: TLemming): Boolean;
+const
+  ActionSet = [baSwimming, baExploding, baStoneFinish, baVaporizing, baExiting, baSplatting];
 begin
   Result := False;
   if not L.LemIsSwimmer then
   begin
     Result := True;
 
-    if not (L.LemAction in [baSwimming, baExploding, baStoneFinish, baVaporizing, baExiting, baSplatting]) then
+    if not (L.LemAction in ActionSet) then
     begin
       Transition(L, baDrowning);
       CueSoundEffect(SFX_DROWNING);
@@ -4119,9 +4121,12 @@ begin
 end;
 
 function TLemmingGame.HandleWaterSwim(L: TLemming): Boolean;
+const
+  ActionSet = [baSwimming, baClimbing, baHoisting, baOhnoing, baExploding,
+                baStoning, baStoneFinish, baVaporizing, baExiting, baSplatting];
 begin
   Result := True;
-  if L.LemIsSwimmer and not (L.LemAction in [baSwimming, baClimbing, baHoisting, baOhnoing, baExploding, baStoning, baStoneFinish, baVaporizing, baExiting, baSplatting]) then
+  if L.LemIsSwimmer and not (L.LemAction in ActionSet) then
   begin
     Transition(L, baSwimming);
     CueSoundEffect(SFX_SWIMMING);
