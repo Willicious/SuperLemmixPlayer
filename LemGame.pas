@@ -113,6 +113,11 @@ type
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemRTLAdjust                  : Boolean;
     LemInTrap                     : Integer;
+    // The next three values are only needed to determine intermediate trigger area checks
+    // They are set in HandleLemming
+    LemXOld                       : Integer; // position of previous frame
+    LemYOld                       : Integer;
+    LemActionOld                  : TBasicLemmingAction; // action in previous frame
 
     procedure Assign(Source: TLemming);
   { properties }
@@ -708,7 +713,23 @@ type
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckAdjustReleaseRate;
     procedure CheckForGameFinished;
-    procedure CheckForInteractiveObjects(L: TLemming; HandleAllObjects: Boolean = true);
+    // The next few procedures are for checking the behavior of lems in trigger areas!
+    procedure CheckTriggerArea(L: TLemming);
+      function HandleTrap(L: TLemming; ObjectID: Word): Boolean;
+      function HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
+      function HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
+      function HandleTelepSingle(L: TLemming; ObjectID: Word): Boolean;
+      function HandleTeleport(L: TLemming; ObjectID: Word): Boolean;
+      function HandlePickup(L: TLemming; ObjectID: Word): Boolean;
+      function HandleButton(L: TLemming; ObjectID: Word): Boolean;
+      function HandleExit(L: TLemming; IsLocked: Boolean): Boolean;
+      function HandleRadiation(L: TLemming; Stoning: Boolean): Boolean;
+      function HandleForceField(L: TLemming; Direction: Integer): Boolean;
+      function HandleFire(L: TLemming): Boolean;
+      function HandleFlipper(L: TLemming; ObjectID: Word): Boolean;
+      function HandleWaterDrown(L: TLemming): Boolean;
+      function HandleWaterSwim(L: TLemming): Boolean;
+
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForPlaySoundEffect;
     procedure CheckForReplayAction(RRCheck: Boolean);
@@ -2836,12 +2857,13 @@ begin
                    end;
     baFloating   : L.LemFloatParametersTableIndex := 0;
     baGliding    : L.LemFloatParametersTableIndex := 0;
-    baSwimming   : begin // If possible, float up 4 pixels when starting
+    baSwimming   : ;(*begin // If possible, float up 4 pixels when starting
                      i := 0;
                      while (i < 4) and (ReadWaterMap(L.LemX, L.LemY - i - 1) = DOM_WATER)
-                                   and not HasPixelAt(L.LemX, L.LemY - i - 1) do Inc(i);
+                                   and not HasPixelAt(L.LemX, L.LemY - i - 1) do
+                       Inc(i);
                      Dec(L.LemY, i);
-                   end;
+                   end; *)
     baFixing     : L.LemMechanicFrames := 42;
 
   end;
@@ -3655,350 +3677,464 @@ begin
   end;
 end;
 
-procedure TLemmingGame.CheckForInteractiveObjects(L: TLemming; HandleAllObjects: Boolean = true);
+
+
+procedure TLemmingGame.CheckTriggerArea(L: TLemming);
+// For intermediate pixels, we call the trigger function according to trigger area
+// This function is a big mess! The intermediate checks are made according to:
+// http://www.lemmingsforums.net/index.php?topic=2604.7
 var
-  LemObjectBelow: Byte;
+  // List of positions where to check
+  CheckPosX, CheckPosY: array[0..10] of Integer;
+  CurrPosX, CurrPosY: Integer;
+  n: Integer;
   LemObjectIDBelow: Word;
+  AbortChecks: Boolean;
+
+  procedure SaveCheckPos;
+  begin
+    CheckPosX[n] := CurrPosX;
+    CheckPosY[n] := CurrPosY;
+    Inc(n);
+  end;
+begin
+  // special treatment for blockers: Check only for (locked) exit
+  // TODO !!!
+
+  n := 0;
+  CurrPosX := L.LemXOld;
+  CurrPosY := L.LemYOld;
+  // no movement
+  if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
+    SaveCheckPos
+
+  // special treatment of miners!
+  else if L.LemActionOld = baMining then
+  begin
+    // First move one pixel down, if Y-coordinate changed
+    if L.LemYOld < L.LemY then
+    begin
+      Inc(CurrPosY);
+      SaveCheckPos;
+    end;
+    // Next move horizontally
+    while CurrPosX <> L.LemX do
+    begin
+      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
+      SaveCheckPos;
+    end;
+    // Finally move again vertically (if lemming is now a faller)
+    if CurrPosY < L.LemY then
+    begin
+      Inc(CurrPosY);
+      SaveCheckPos;
+    end;
+  end
+
+  // lem moves up or is faller; exception is made for builders!
+  else if ((L.LemY < L.LemYOld) or (L.LemAction = baFalling)) and not (L.LemActionOld = baBuilding) then
+  begin
+    // horizontal movement
+    while CurrPosX <> L.LemX do
+    begin
+      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
+      SaveCheckPos;
+    end;
+    // vertical movement
+    while CurrPosY <> L.LemY do
+    begin
+      Inc(CurrPosY, sign(L.LemY - L.LemYOld)); // the sign should always be positive, but just to be sure...
+      SaveCheckPos;
+    end;
+  end
+
+  // lem moves down (or straight) and is no faller; alternatively lem is a builder!
+  else
+  begin
+    // vertical movement
+    while CurrPosY <> L.LemY do
+    begin
+      Inc(CurrPosY, sign(L.LemY - L.LemYOld)); // the sign should always be positive, but just to be sure...
+      SaveCheckPos;
+    end;
+    // horizontal movement
+    while CurrPosX <> L.LemX do
+    begin
+      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
+      SaveCheckPos;
+    end;
+  end;
+
+  // Now move through the values in CheckPosX/Y and check for trigger areas
+  n := -1;
+  AbortChecks := False;
+  repeat
+    Inc(n);
+    // Check for interactive objects
+    (*CheckForInteractiveObjects(L, (L.LemAction <> baBlocking)); *)
+    LemObjectIDBelow := ReadObjectMap(CheckPosX[n], CheckPosY[n]);
+    case ReadObjectMapType(CheckPosX[n], CheckPosY[n]) of
+      DOM_TRAP: AbortChecks := HandleTrap(L, LemObjectIDBelow);
+      DOM_TRAPONCE: AbortChecks := HandleTrapOnce(L, LemObjectIDBelow);
+      DOM_ANIMATION: AbortChecks := HandleObjAnimation(L, LemObjectIDBelow);
+      DOM_SINGLETELE: AbortChecks := HandleTelepSingle(L, LemObjectIDBelow);
+      DOM_TELEPORT: AbortChecks := HandleTeleport(L, LemObjectIDBelow);
+      DOM_PICKUP: AbortChecks := HandlePickup(L, LemObjectIDBelow);
+      DOM_BUTTON: AbortChecks := HandleButton(L, LemObjectIDBelow);
+      DOM_EXIT: AbortChecks := HandleExit(L, False);
+      DOM_LOCKEXIT: AbortChecks := HandleExit(L, True);
+      DOM_RADIATION: AbortChecks := HandleRadiation(L, False);
+      DOM_SLOWFREEZE: AbortChecks := HandleRadiation(L, True);
+      DOM_FORCELEFT: AbortChecks := HandleForceField(L, -1);
+      DOM_FORCERIGHT: AbortChecks := HandleForceField(L, 1);
+      DOM_FIRE: AbortChecks := HandleFire(L);
+      DOM_FLIPPER: AbortChecks := HandleFlipper(L, LemObjectIDBelow);
+    end;
+
+    // Check for water only at final position
+    if ReadWaterMap(CheckPosX[n], CheckPosY[n]) = DOM_WATER then
+      // Check only for drowning here!
+      AbortChecks := HandleWaterDrown(L) or AbortChecks;
+
+    // If the lem was required stop, move him there!
+    if AbortChecks then
+    begin
+      L.LemX := CheckPosX[n];
+      L.LemY := CheckPosY[n];
+    end;
+    // Set L.LemInTrap correctly
+    if (not ReadObjectMapType(CheckPosX[n], CheckPosY[n]) in [DOM_TRAP, DOM_TRAPONCE]) and (L.LemInTrap = 1) then L.LemInTrap := 0;
+    // Set L.LemInFlipper correctly
+    if ReadObjectMapType(CheckPosX[n], CheckPosY[n]) <> DOM_FLIPPER then L.LemInFlipper := DOM_NOOBJECT;
+  until ([CheckPosX[n], CheckPosY[n]] = [L.LemX, L.LemY]) or AbortChecks;
+
+  // Check for water to transition to swimmer only at final position
+  if ReadWaterMap(L.LemX, L.LemY) = DOM_WATER then HandleWaterSwim(L);
+
+  // Check for blocker fields
+  case ReadBlockerMap(CheckPosX[n], CheckPosY[n]) of
+    DOM_FORCELEFT: HandleForceField(L, -1);
+    DOM_FORCERIGHT: HandleForceField(L, 1);
+  end;
+end;
+
+function TLemmingGame.HandleTrap(L: TLemming; ObjectID: Word): Boolean;
+var
   Inf: TInteractiveObjectInfo;
-  BlockCheck: Byte;
-  ni, dy, NewY: Integer;
   mx, my: Integer;
   minmx, minmy: Integer;
 begin
-  with L do
+  Result := True;
+
+  Inf := ObjectInfos[ObjectID];
+  // Exit function, if trap is working
+  if Inf.Triggered then Exit;
+
+  if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
+     and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
   begin
+    minmx := (Inf.Obj.Left + Inf.MetaObj.TriggerLeft);
+    minmy := (Inf.Obj.Top + Inf.MetaObj.TriggerTop);
 
-    if (not HandleAllObjects) and (LemAction <> baBlocking) then Exit;
+    if Inf.Obj.DrawingFlags and odf_Flip <> 0 then
+      minmx := minmx + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft * 2) - (Inf.MetaObj.TriggerWidth - 1);
 
-    LemObjectIDBelow := ReadObjectMap(LemX, LemY);
-    LemObjectBelow := ReadObjectMapType(LemX, LemY);
-    BlockCheck := ReadBlockerMap(LemX, LemY);
+    if Inf.Obj.DrawingFlags and odf_UpsideDown <> 0 then
+      minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
 
-    if (not LemObjectBelow in [DOM_TRAP, DOM_TRAPONCE]) and (LemInTrap = 1) then LemInTrap := 0;
+    for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
+    for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
+      if ReadObjectMap(mx, my) = ObjectID then
+        WriteObjectMap(mx, my, DOM_NOOBJECT);
 
-    case LemObjectBelow of
-      // DOM_NONE = 128 = nothing
-      // 0..127 triggered objects
-      DOM_TRAP:
-        if (LemIsMechanic) and (not (LemAction in [baClimbing, baHoisting, baSwimming])) and HasPixelAt(LemX, LemY) and HandleAllObjects then
-        begin
-          Inf := ObjectInfos[LemObjectIDBelow];
-          if not Inf.Triggered then
-          begin
-            minmx := (Inf.Obj.Left + Inf.MetaObj.TriggerLeft);
-            minmy := (Inf.Obj.Top + Inf.MetaObj.TriggerTop);
+    Transition(L, baFixing);
+  end
 
-            if Inf.Obj.DrawingFlags and odf_Flip <> 0 then
-              minmx := minmx + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft * 2) - (Inf.MetaObj.TriggerWidth - 1);
-
-            if Inf.Obj.DrawingFlags and odf_UpsideDown <> 0 then
-              minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
-
-            for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
-              for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
-                if ReadObjectMap(mx, my) = LemObjectIDBelow then
-                  WriteObjectMap(mx, my, DOM_NOOBJECT);
-            Transition(L, baFixing);
-          end;
-        end else
-        if HandleAllObjects and (LemInTrap = 0) then
-        begin
-          Inf := ObjectInfos[LemObjectIDBelow];
-          if not Inf.Triggered then
-          begin
-            // trigger
-            Inf.Triggered := True;
-            Inf.ZombieMode := L.LemIsZombie;
-            LemInTrap := Inf.MetaObj.AnimationFrameCount;
-            // Make sure to remove the blocker field!
-            L.LemHasBlockerField := False;
-            RestoreMap;
-            RemoveLemming(L, RM_KILL);
-            CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-            if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
-          end;
-        end;
-     DOM_TRAPONCE:
-        if (LemIsMechanic) and (not (LemAction in [baClimbing, baHoisting, baSwimming])) and HasPixelAt(LemX, LemY) and HandleAllObjects then
-        begin
-          Inf := ObjectInfos[LemObjectIDBelow];
-          if not Inf.Triggered then
-          begin
-            minmx := (Inf.Obj.Left + Inf.MetaObj.TriggerLeft);
-            minmy := (Inf.Obj.Top + Inf.MetaObj.TriggerTop);
-
-            if Inf.Obj.DrawingFlags and odf_Flip <> 0 then
-              minmx := minmx + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft * 2) - (Inf.MetaObj.TriggerWidth - 1);
-
-            if Inf.Obj.DrawingFlags and odf_UpsideDown <> 0 then
-              minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
-
-            for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
-              for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
-                if ReadObjectMap(mx, my) = LemObjectIDBelow then
-                  WriteObjectMap(mx, my, DOM_NOOBJECT);
-            Transition(L, baFixing);
-          end;
-        end else
-        if HandleAllObjects and (LemInTrap = 0) then
-        begin
-          Inf := ObjectInfos[LemObjectIDBelow];
-          if not (Inf.Triggered or (Inf.CurrentFrame = 0)) then
-          begin
-            // trigger
-            Inf.Triggered := True;
-            Inf.ZombieMode := L.LemIsZombie;
-            LemInTrap := Inf.MetaObj.AnimationFrameCount;
-            // Make sure to remove the blocker field!
-            L.LemHasBlockerField := False;
-            RestoreMap;
-            RemoveLemming(L, RM_KILL);
-            CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-            if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
-          end;
-        end;
-     DOM_ANIMATION:
-       if HandleAllObjects then
-        begin
-          Inf := ObjectInfos[LemObjectIDBelow];
-          if not Inf.Triggered then
-          begin
-            Inf.Triggered := True;
-            CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-          end;
-        end;
-     DOM_SINGLETELE:
-       if HandleAllObjects then
-       begin
-         Inf := ObjectInfos[LemObjectIDBelow];
-         if (not Inf.Triggered) then
-         begin
-           Inf.Triggered := True;
-           Inf.ZombieMode := L.LemIsZombie;
-           //Inc(Inf.CurrentFrame);
-           CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-           LemTeleporting := True;
-           Inf.TeleLem := L.LemIndex;
-           // Make sure to remove the blocker field!
-           L.LemHasBlockerField := False;
-           RestoreMap;
-           MoveLemToReceivePoint(L, LemObjectIDBelow);
-         end;
-       end;
-     DOM_TELEPORT:
-       if (not (FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill) = (LemObjectIDBelow))) and HandleAllObjects then
-       begin
-         Inf := ObjectInfos[LemObjectIDBelow];
-         if (not Inf.Triggered) and (not (ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)].Triggered
-                                     or ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)].HoldActive) ) then
-         begin
-           Inf.Triggered := True;
-           Inf.ZombieMode := L.LemIsZombie;
-           CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-           LemTeleporting := True;
-           Inf.TeleLem := L.LemIndex;
-           Inf.TwoWayReceive := false;
-           // Make sure to remove the blocker field!
-           L.LemHasBlockerField := False;
-           RestoreMap;
-           ObjectInfos[FindReceiver(LemObjectIDBelow, ObjectInfos[LemObjectIDBelow].Obj.Skill)].HoldActive := True;
-         end;
-       end;
-     DOM_PICKUP:
-       if HandleAllObjects and (not L.LemIsZombie) then
-       begin
-         Inf := ObjectInfos[LemObjectIDBelow];
-         if Inf.CurrentFrame <> 0 then
-         begin
-           Inf.CurrentFrame := 0;
-           CueSoundEffect(SFX_PICKUP);
-           case Inf.Obj.Skill of
-               0 : UpdateSkillCount(baClimbing, true);
-               1 : UpdateSkillCount(baFloating, true);
-               2 : UpdateSkillCount(baExploding, true);
-               3 : UpdateSkillCount(baBlocking, true);
-               4 : UpdateSkillCount(baBuilding, true);
-               5 : UpdateSkillCount(baBashing, true);
-               6 : UpdateSkillCount(baMining, true);
-               7 : UpdateSkillCount(baDigging, true);
-               8 : UpdateSkillCount(baToWalking, true);
-               9 : UpdateSkillCount(baSwimming, true);
-               10 : UpdateSkillCount(baGliding, true);
-               11 : UpdateSkillCount(baFixing, true);
-               12 : UpdateSkillCount(baStoning, true);
-               13 : UpdateSkillCount(baPlatforming, true);
-               14 : UpdateSkillCount(baStacking, true);
-               15 : UpdateSkillCount(baCloning, true);
-           end;
-         end;
-       end;
-     DOM_BUTTON:
-       if HandleAllObjects and (not L.LemIsZombie) then
-       begin
-         Inf := ObjectInfos[LemObjectIDBelow];
-         if (Inf.CurrentFrame = 1) and not (Inf.Triggered) then
-         begin
-           CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-           Inf.Triggered := true;
-           Dec(ButtonsRemain);
-           if ButtonsRemain = 0 then
-           begin
-             CueSoundEffect(SFX_ENTRANCE);
-             for ni := 0 to (ObjectInfos.Count - 1) do
-             begin
-               if ObjectInfos[ni].MetaObj.TriggerEffect = 15 then ObjectInfos[ni].Triggered := true;
-             end;
-           end;
-         end;
-       end;
-
-
-      DOM_EXIT:
-      if not (L.LemAction in [baFalling, baSplatting]) then
-      begin
-        if not LemIsZombie then
-        begin
-          Transition(L, baExiting);
-          CueSoundEffect(SFX_YIPPEE);
-        end;
-      end;
-      DOM_LOCKEXIT:
-      if not (L.LemAction in [baFalling, baSplatting]) then
-        if not LemIsZombie then
-        begin
-          if ButtonsRemain = 0 then
-          begin
-            Transition(L, baExiting);
-            CueSoundEffect(SFX_YIPPEE);
-          end;
-        end;
-      DOM_RADIATION:
-        begin
-          if (L.LemExplosionTimer = 0) and not (L.LemAction in [baOhnoing, baStoning]) then
-          begin
-           L.LemExplosionTimer := 143;
-           L.LemTimerToStone := false;
-          end;
-        end;
-      DOM_SLOWFREEZE:
-        begin
-          if (L.LemExplosionTimer = 0) and not (L.LemAction in [baOhnoing, baStoning]) then
-          begin
-            L.LemExplosionTimer := 143;
-            L.LemTimerToStone := true;
-          end;
-        end;
-      DOM_FORCELEFT:
-        if (LemDx > 0)
-        and HandleAllObjects
-        and not (LemAction in [baClimbing, baHoisting]) then
-        begin
-          dy := 0;
-          NewY := LemY;
-          while (dy <= 8) and HasPixelAt(LemX-1, NewY + 1) do
-          begin
-            Inc(dy);
-            Dec(NewY);
-          end;
-          if dy < 9 then
-            TurnAround(L);
-        end;
-      DOM_FORCERIGHT:
-        if (LemDx < 0)
-        and HandleAllObjects
-        and not (LemAction in [baClimbing, baHoisting]) then
-        begin
-          dy := 0;
-          NewY := LemY;
-          while (dy <= 8) and HasPixelAt(LemX+1, NewY + 1) do
-          begin
-            Inc(dy);
-            Dec(NewY);
-          end;
-          if dy < 9 then
-            TurnAround(L);
-        end;
-      DOM_FIRE:
-        begin
-          Transition(L, baVaporizing);
-          CueSoundEffect(SFX_VAPORIZING);
-        end;
-      DOM_FLIPPER:
-        if HandleAllObjects then
-        begin
-          if not (LemInFlipper = LemObjectIDBelow) then
-          begin
-            Inf := ObjectInfos[LemObjectIDBelow];
-            if (Inf.CurrentFrame = 1) xor (LemDX < 0) then TurnAround(L);
-            if (Inf.CurrentFrame = 1) then
-            begin
-              Inf.CurrentFrame := 0;
-            end else begin
-              Inf.CurrentFrame := 1;
-            end;
-            LemInFlipper := LemObjectIDBelow;
-          end;
-        end;
-    end;
-
-    if LemObjectBelow <> DOM_FLIPPER then LemInFlipper := DOM_NOOBJECT;
-
-    if (ReadWaterMap(LemX, LemY) = DOM_WATER) then
-    begin
-      if (LemY > World.Height) then
-        if ReadWaterMap(LemX, World.Height-1) = DOM_WATER then LemY := World.Height-1;
-      if LemY < World.Height then
-      begin
-        if L.LemIsSwimmer then
-        begin
-          if not (L.LemAction in [baSwimming, baClimbing, baHoisting, baOhnoing, baExploding, baStoning, baStoneFinish, baVaporizing, baExiting, baSplatting]) then
-          begin
-            Transition(L, baSwimming);
-            CueSoundEffect(SFX_SWIMMING);
-          end;
-        end else begin
-          if not (L.LemAction in [baSwimming, baExploding, baStoneFinish, baVaporizing, baExiting, baSplatting]) then
-          begin
-            Transition(L, baDrowning);
-            CueSoundEffect(SFX_DROWNING);
-          end;
-        end;
-      end;
-    end;
-
-    case BlockCheck of   
-      DOM_FORCELEFT:
-        if (LemDx > 0)
-        and not (LemAction in [baClimbing, baHoisting])then
-        begin
-          dy := 0;
-          NewY := LemY;
-          while (dy <= 8) and HasPixelAt(LemX - 1, NewY + 1) do
-          begin
-            Inc(dy);
-            Dec(NewY);
-          end;
-          if dy < 9 then
-            TurnAround(L);
-        end;
-      DOM_FORCERIGHT:
-        if (LemDx < 0)
-        and not (LemAction in [baClimbing, baHoisting]) then
-        begin
-          dy := 0;
-          NewY := LemY;
-          while (dy <= 8) and HasPixelAt(LemX + 1, NewY + 1) do
-          begin
-            Inc(dy);
-            Dec(NewY);
-          end;
-          if dy < 9 then
-            TurnAround(L);
-        end;
-      end;
+  else if L.LemInTrap = 0 then
+  begin
+    // trigger
+    Inf.Triggered := True;
+    Inf.ZombieMode := L.LemIsZombie;
+    L.LemInTrap := Inf.MetaObj.AnimationFrameCount;
+    // Make sure to remove the blocker field!
+    L.LemHasBlockerField := False;
+    RestoreMap;
+    RemoveLemming(L, RM_KILL);
+    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+    if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then
+      DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
   end;
-
 end;
+
+function TLemmingGame.HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
+var
+  Inf: TInteractiveObjectInfo;
+  mx, my: Integer;
+  minmx, minmy: Integer;
+begin
+  Result := True;
+
+  Inf := ObjectInfos[ObjectID];
+  // Exit function, if trap is working
+  if Inf.Triggered then Exit;
+
+  if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
+     and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
+  begin
+    minmx := (Inf.Obj.Left + Inf.MetaObj.TriggerLeft);
+    minmy := (Inf.Obj.Top + Inf.MetaObj.TriggerTop);
+
+    if Inf.Obj.DrawingFlags and odf_Flip <> 0 then
+      minmx := minmx + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft * 2) - (Inf.MetaObj.TriggerWidth - 1);
+
+    if Inf.Obj.DrawingFlags and odf_UpsideDown <> 0 then
+      minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
+
+    for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
+    for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
+      if ReadObjectMap(mx, my) = ObjectID then
+        WriteObjectMap(mx, my, DOM_NOOBJECT);
+
+    Transition(L, baFixing);
+  end
+  else if L.LemInTrap = 0 then
+  begin
+    if not (Inf.CurrentFrame = 0) then
+    begin
+      // trigger
+      Inf.Triggered := True;
+      Inf.ZombieMode := L.LemIsZombie;
+      L.LemInTrap := Inf.MetaObj.AnimationFrameCount;
+      // Make sure to remove the blocker field!
+      L.LemHasBlockerField := False;
+      RestoreMap;
+      RemoveLemming(L, RM_KILL);
+      CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+      if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then
+        DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
+    end;
+  end;
+end;
+
+function TLemmingGame.HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
+var
+  Inf: TInteractiveObjectInfo;
+begin
+  Result := False;
+
+  Inf := ObjectInfos[ObjectID];
+  if not Inf.Triggered then
+  begin
+    Inf.Triggered := True;
+    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+  end;
+end;
+
+function TLemmingGame.HandleTelepSingle(L: TLemming; ObjectID: Word): Boolean;
+var
+  Inf: TInteractiveObjectInfo;
+begin
+  Result := True;
+
+  Inf := ObjectInfos[ObjectID];
+  if not Inf.Triggered then
+  begin
+    Inf.Triggered := True;
+    Inf.ZombieMode := L.LemIsZombie;
+    //Inc(Inf.CurrentFrame);
+    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+    L.LemTeleporting := True;
+    Inf.TeleLem := L.LemIndex;
+    // Make sure to remove the blocker field!
+    L.LemHasBlockerField := False;
+    RestoreMap;
+    MoveLemToReceivePoint(L, ObjectID);
+  end;
+end;
+
+function TLemmingGame.HandleTeleport(L: TLemming; ObjectID: Word): Boolean;
+var
+  Inf: TInteractiveObjectInfo;
+begin
+  Result := True;
+
+  Inf := ObjectInfos[ObjectID];
+  if     not (FindReceiver(ObjectID, Inf.Obj.Skill) = ObjectID)
+     and not Inf.Triggered
+     and not (    ObjectInfos[FindReceiver(ObjectID, Inf.Obj.Skill)].Triggered
+               or ObjectInfos[FindReceiver(ObjectID, Inf.Obj.Skill)].HoldActive) then
+  begin
+    Inf.Triggered := True;
+    Inf.ZombieMode := L.LemIsZombie;
+    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+    L.LemTeleporting := True;
+    Inf.TeleLem := L.LemIndex;
+    Inf.TwoWayReceive := false;
+    // Make sure to remove the blocker field!
+    L.LemHasBlockerField := False;
+    RestoreMap;
+    ObjectInfos[FindReceiver(ObjectID, Inf.Obj.Skill)].HoldActive := True;
+  end;
+end;
+
+function TLemmingGame.HandlePickup(L: TLemming; ObjectID: Word): Boolean;
+var
+  Inf: TInteractiveObjectInfo;
+begin
+  Result := False;
+
+  Inf := ObjectInfos[ObjectID];
+  if (not L.LemIsZombie) and (Inf.CurrentFrame <> 0) then
+  begin
+    Inf.CurrentFrame := 0;
+    CueSoundEffect(SFX_PICKUP);
+    case Inf.Obj.Skill of
+      0 : UpdateSkillCount(baClimbing, true);
+      1 : UpdateSkillCount(baFloating, true);
+      2 : UpdateSkillCount(baExploding, true);
+      3 : UpdateSkillCount(baBlocking, true);
+      4 : UpdateSkillCount(baBuilding, true);
+      5 : UpdateSkillCount(baBashing, true);
+      6 : UpdateSkillCount(baMining, true);
+      7 : UpdateSkillCount(baDigging, true);
+      8 : UpdateSkillCount(baToWalking, true);
+      9 : UpdateSkillCount(baSwimming, true);
+      10 : UpdateSkillCount(baGliding, true);
+      11 : UpdateSkillCount(baFixing, true);
+      12 : UpdateSkillCount(baStoning, true);
+      13 : UpdateSkillCount(baPlatforming, true);
+      14 : UpdateSkillCount(baStacking, true);
+      15 : UpdateSkillCount(baCloning, true);
+    end;
+  end;
+end;
+
+
+function TLemmingGame.HandleButton(L: TLemming; ObjectID: Word): Boolean;
+var
+  Inf: TInteractiveObjectInfo;
+  n: Integer;
+begin
+  Result := False;
+
+  Inf := ObjectInfos[ObjectID];
+  if (not L.LemIsZombie) and (Inf.CurrentFrame = 1) and (not Inf.Triggered) then
+  begin
+    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+    Inf.Triggered := True;
+    Dec(ButtonsRemain);
+    if ButtonsRemain = 0 then
+    begin
+      CueSoundEffect(SFX_ENTRANCE);
+      for n := 0 to (ObjectInfos.Count - 1) do
+      begin
+        if ObjectInfos[n].MetaObj.TriggerEffect = 15 then ObjectInfos[n].Triggered := true;
+      end;
+    end;
+  end;
+end;
+
+function TLemmingGame.HandleExit(L: TLemming; IsLocked: Boolean): Boolean;
+begin
+  Result := True;
+
+  if not (L.LemIsZombie or (L.LemAction in [baFalling, baSplatting])) then
+  begin
+    if (ButtonsRemain = 0) or (not IsLocked) then
+    begin
+      Transition(L, baExiting);
+      CueSoundEffect(SFX_YIPPEE);
+    end;
+  end;
+end;
+
+function TLemmingGame.HandleRadiation(L: TLemming; Stoning: Boolean): Boolean;
+begin
+  Result := False;
+
+  if (L.LemExplosionTimer = 0) and not (L.LemAction in [baOhnoing, baStoning]) then
+  begin
+    L.LemExplosionTimer := 143;
+    L.LemTimerToStone := Stoning;
+  end;
+end;
+
+function TLemmingGame.HandleForceField(L: TLemming; Direction: Integer): Boolean;
+var
+  dy, NewY: Integer;
+begin
+  Result := False;
+  if (L.LemDx = -Direction) and not (L.LemAction in [baClimbing, baHoisting]) then
+  begin
+    Result := True;
+
+    dy := 0;
+    NewY := L.LemY;
+    while (dy <= 8) and HasPixelAt(L.LemX + Direction, NewY + 1) do
+    begin
+      Inc(dy);
+      Dec(NewY);
+    end;
+    if dy < 9 then TurnAround(L);
+  end;
+end;
+
+function TLemmingGame.HandleFire(L: TLemming): Boolean;
+begin
+  Result := True;
+
+  Transition(L, baVaporizing);
+  CueSoundEffect(SFX_VAPORIZING);
+end;
+
+function TLemmingGame.HandleFlipper(L: TLemming; ObjectID: Word): Boolean;
+var
+  Inf: TInteractiveObjectInfo;
+begin
+  Result := False;
+
+  Inf := ObjectInfos[ObjectID];
+  if not (L.LemInFlipper = ObjectID) then
+  begin
+    L.LemInFlipper := ObjectID;
+    if (Inf.CurrentFrame = 1) xor (L.LemDX < 0) then
+    begin
+      TurnAround(L);
+      Result := True;
+    end;
+
+    if (Inf.CurrentFrame = 1) then
+      Inf.CurrentFrame := 0
+    else
+      Inf.CurrentFrame := 1;
+  end;
+end;
+
+function TLemmingGame.HandleWaterDrown(L: TLemming): Boolean;
+begin
+  Result := False;
+  if not L.LemIsSwimmer then
+  begin
+    Result := True;
+
+    if not (L.LemAction in [baSwimming, baExploding, baStoneFinish, baVaporizing, baExiting, baSplatting]) then
+    begin
+      Transition(L, baDrowning);
+      CueSoundEffect(SFX_DROWNING);
+    end;
+  end;
+end;
+
+function TLemmingGame.HandleWaterSwim(L: TLemming): Boolean;
+begin
+  Result := True;
+  if L.LemIsSwimmer and not (L.LemAction in [baSwimming, baClimbing, baHoisting, baOhnoing, baExploding, baStoning, baStoneFinish, baVaporizing, baExiting, baSplatting]) then
+  begin
+    Transition(L, baSwimming);
+    CueSoundEffect(SFX_SWIMMING);
+  end;
+end;
+
 
 
 procedure TLemmingGame.ApplyStoneLemming(L: TLemming; Redo: Integer = 0);
@@ -4627,6 +4763,11 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
   o Do *not* call this method for a removed lemming
 -------------------------------------------------------------------------------}
 begin
+  // Remember old position and action for CheckTriggerArea
+  L.LemXOld := L.LemX;
+  L.LemYOld := L.LemY;
+  L.LemActionOld := L.LemAction;
+
   Inc(L.LemFrame);
 
   if L.LemFrame > L.LemMaxFrame then
@@ -4639,8 +4780,6 @@ begin
 
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
-  // Check whether Lem is still on screen
-  Result := Result and CheckLevelBoundaries(L);
 
   if L.LemIsZombie then SetZombieField(L);
 end;
@@ -5632,7 +5771,7 @@ begin
     RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT);
     RM_ZOMBIE: begin
                  L.LemIsZombie := True;
-                 L.LemRemoved := True;
+                 L.LemRemoved := False;
                end;
     end;           
   end;
@@ -6544,8 +6683,15 @@ begin
         CountDownReachedZero := UpdateExplosionTimer(CurrentLemming);
       if CountDownReachedZero then
         Continue;
+
+      // HERE COMES THE MAIN THREE LINES !!!
+      // Let lemmings move
       HandleInteractiveObjects := HandleLemming(CurrentLemming);
-      CheckForInteractiveObjects(CurrentLemming, HandleInteractiveObjects);
+      // Check whether the lem is still on screen
+      HandleInteractiveObjects := CheckLevelBoundaries(CurrentLemming) and HandleInteractiveObjects;
+      // Check whether the lem has moved over trigger areas
+      if HandleInteractiveObjects then CheckTriggerArea(CurrentLemming);
+      // CheckForInteractiveObjects(CurrentLemming, HandleInteractiveObjects);
     end;
 
   end;
