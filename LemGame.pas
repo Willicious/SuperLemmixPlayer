@@ -3699,7 +3699,12 @@ var
   end;
 begin
   // special treatment for blockers: Check only for (locked) exit
-  // TODO !!!
+  if L.LemAction = baBlocking then
+  begin
+    if ReadObjectMapType(L.LemX, L.LemY) in [DOM_EXIT, DOM_LOCKEXIT] then
+      HandleExit(L, ReadObjectMapType(L.LemX, L.LemY) = DOM_LOCKEXIT);
+    Exit;
+  end;
 
   n := 0;
   CurrPosX := L.LemXOld;
@@ -5688,9 +5693,8 @@ end;
 
 function TLemmingGame.HandleBlocking(L: TLemming): Boolean;
 begin
+  Result := True;
   if not HasPixelAt(L.LemX, L.LemY) then Transition(L, baFalling);
-  // Do never check traps for blocker
-  Result := False;
 end;
 
 function TLemmingGame.HandleShrugging(L: TLemming): Boolean;
