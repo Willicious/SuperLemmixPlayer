@@ -3681,22 +3681,81 @@ end;
 
 procedure TLemmingGame.CheckTriggerArea(L: TLemming);
 // For intermediate pixels, we call the trigger function according to trigger area
-// This function is a big mess! The intermediate checks are made according to:
-// http://www.lemmingsforums.net/index.php?topic=2604.7
 var
-  // List of positions where to check
-  CheckPosX, CheckPosY: array[0..10] of Integer;
-  CurrPosX, CurrPosY: Integer;
-  n: Integer;
-  LemObjectIDBelow: Word;
+  CheckPosX, CheckPosY: array[0..10] of Integer; // List of positions where to check
+  i: Integer;
+  ObjectID: Word;
+  ObjectType: Byte;
   AbortChecks: Boolean;
 
-  procedure SaveCheckPos;
+  procedure GetObjectCheckPositions(L: TLemming);
+  // This function is a big mess! The intermediate checks are made according to:
+  // http://www.lemmingsforums.net/index.php?topic=2604.7
+  var
+    CurrPosX, CurrPosY: Integer;
+    n: Integer;
+
+    procedure SaveCheckPos;
+    begin
+      CheckPosX[n] := CurrPosX;
+      CheckPosY[n] := CurrPosY;
+      Inc(n);
+    end;
+
+    procedure MoveHoizontal;
+    begin
+      while CurrPosX <> L.LemX do
+      begin
+        Inc(CurrPosX, sign(L.LemX - L.LemXOld));
+        SaveCheckPos;
+      end;
+    end;
+
+    procedure MoveVertical;
+    begin
+      while CurrPosY <> L.LemY do
+      begin
+        Inc(CurrPosY, sign(L.LemY - L.LemYOld));
+        SaveCheckPos;
+      end;
+    end;
+
   begin
-    CheckPosX[n] := CurrPosX;
-    CheckPosY[n] := CurrPosY;
-    Inc(n);
+    n := 0;
+    CurrPosX := L.LemXOld;
+    CurrPosY := L.LemYOld;
+    // no movement
+    if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
+      SaveCheckPos
+
+    // special treatment of miners!
+    else if L.LemActionOld = baMining then
+    begin
+      // First move one pixel down, if Y-coordinate changed
+      if L.LemYOld < L.LemY then
+      begin
+        Inc(CurrPosY);
+        SaveCheckPos;
+      end;
+      MoveHoizontal;
+      MoveVertical;
+    end
+
+    // lem moves up or is faller; exception is made for builders!
+    else if ((L.LemY < L.LemYOld) or (L.LemAction = baFalling)) and not (L.LemActionOld = baBuilding) then
+    begin
+      MoveHoizontal;
+      MoveVertical;
+    end
+
+    // lem moves down (or straight) and is no faller; alternatively lem is a builder!
+    else
+    begin
+      MoveVertical;
+      MoveHoizontal;
+    end;
   end;
+
 begin
   // special treatment for blockers: Check only for (locked) exit
   if L.LemAction = baBlocking then
@@ -3706,86 +3765,25 @@ begin
     Exit;
   end;
 
-  n := 0;
-  CurrPosX := L.LemXOld;
-  CurrPosY := L.LemYOld;
-  // no movement
-  if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
-    SaveCheckPos
-
-  // special treatment of miners!
-  else if L.LemActionOld = baMining then
-  begin
-    // First move one pixel down, if Y-coordinate changed
-    if L.LemYOld < L.LemY then
-    begin
-      Inc(CurrPosY);
-      SaveCheckPos;
-    end;
-    // Next move horizontally
-    while CurrPosX <> L.LemX do
-    begin
-      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
-      SaveCheckPos;
-    end;
-    // Finally move again vertically (if lemming is now a faller)
-    if CurrPosY < L.LemY then
-    begin
-      Inc(CurrPosY);
-      SaveCheckPos;
-    end;
-  end
-
-  // lem moves up or is faller; exception is made for builders!
-  else if ((L.LemY < L.LemYOld) or (L.LemAction = baFalling)) and not (L.LemActionOld = baBuilding) then
-  begin
-    // horizontal movement
-    while CurrPosX <> L.LemX do
-    begin
-      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
-      SaveCheckPos;
-    end;
-    // vertical movement
-    while CurrPosY <> L.LemY do
-    begin
-      Inc(CurrPosY, sign(L.LemY - L.LemYOld)); // the sign should always be positive, but just to be sure...
-      SaveCheckPos;
-    end;
-  end
-
-  // lem moves down (or straight) and is no faller; alternatively lem is a builder!
-  else
-  begin
-    // vertical movement
-    while CurrPosY <> L.LemY do
-    begin
-      Inc(CurrPosY, sign(L.LemY - L.LemYOld)); // the sign should always be positive, but just to be sure...
-      SaveCheckPos;
-    end;
-    // horizontal movement
-    while CurrPosX <> L.LemX do
-    begin
-      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
-      SaveCheckPos;
-    end;
-  end;
+  // Get positions to check for trigger areas
+  GetObjectCheckPositions(L);
 
   // Now move through the values in CheckPosX/Y and check for trigger areas
-  n := -1;
+  i := -1;
   AbortChecks := False;
   repeat
-    Inc(n);
+    Inc(i);
     // Check for interactive objects
-    (*CheckForInteractiveObjects(L, (L.LemAction <> baBlocking)); *)
-    LemObjectIDBelow := ReadObjectMap(CheckPosX[n], CheckPosY[n]);
-    case ReadObjectMapType(CheckPosX[n], CheckPosY[n]) of
-      DOM_TRAP: AbortChecks := HandleTrap(L, LemObjectIDBelow);
-      DOM_TRAPONCE: AbortChecks := HandleTrapOnce(L, LemObjectIDBelow);
-      DOM_ANIMATION: AbortChecks := HandleObjAnimation(L, LemObjectIDBelow);
-      DOM_SINGLETELE: AbortChecks := HandleTelepSingle(L, LemObjectIDBelow);
-      DOM_TELEPORT: AbortChecks := HandleTeleport(L, LemObjectIDBelow);
-      DOM_PICKUP: AbortChecks := HandlePickup(L, LemObjectIDBelow);
-      DOM_BUTTON: AbortChecks := HandleButton(L, LemObjectIDBelow);
+    ObjectID := ReadObjectMap(CheckPosX[i], CheckPosY[i]);
+    ObjectType := ReadObjectMapType(CheckPosX[i], CheckPosY[i]);
+    case ObjectType of
+      DOM_TRAP: AbortChecks := HandleTrap(L, ObjectID);
+      DOM_TRAPONCE: AbortChecks := HandleTrapOnce(L, ObjectID);
+      DOM_ANIMATION: AbortChecks := HandleObjAnimation(L, ObjectID);
+      DOM_SINGLETELE: AbortChecks := HandleTelepSingle(L, ObjectID);
+      DOM_TELEPORT: AbortChecks := HandleTeleport(L, ObjectID);
+      DOM_PICKUP: AbortChecks := HandlePickup(L, ObjectID);
+      DOM_BUTTON: AbortChecks := HandleButton(L, ObjectID);
       DOM_EXIT: AbortChecks := HandleExit(L, False);
       DOM_LOCKEXIT: AbortChecks := HandleExit(L, True);
       DOM_RADIATION: AbortChecks := HandleRadiation(L, False);
@@ -3793,35 +3791,35 @@ begin
       DOM_FORCELEFT: AbortChecks := HandleForceField(L, -1);
       DOM_FORCERIGHT: AbortChecks := HandleForceField(L, 1);
       DOM_FIRE: AbortChecks := HandleFire(L);
-      DOM_FLIPPER: AbortChecks := HandleFlipper(L, LemObjectIDBelow);
+      DOM_FLIPPER: AbortChecks := HandleFlipper(L, ObjectID);
     end;
 
-    // Check for water only at final position
-    if ReadWaterMap(CheckPosX[n], CheckPosY[n]) = DOM_WATER then
-      // Check only for drowning here!
+    // Check only for drowning here!
+    if ReadWaterMap(CheckPosX[i], CheckPosY[i]) = DOM_WATER then
       AbortChecks := HandleWaterDrown(L) or AbortChecks;
 
     // If the lem was required stop, move him there!
     if AbortChecks then
     begin
-      L.LemX := CheckPosX[n];
-      L.LemY := CheckPosY[n];
+      L.LemX := CheckPosX[i];
+      L.LemY := CheckPosY[i];
     end;
     // Set L.LemInTrap correctly
-    if (not ReadObjectMapType(CheckPosX[n], CheckPosY[n]) in [DOM_TRAP, DOM_TRAPONCE]) and (L.LemInTrap = 1) then L.LemInTrap := 0;
+    if (not ObjectType in [DOM_TRAP, DOM_TRAPONCE]) and (L.LemInTrap = 1) then L.LemInTrap := 0;
     // Set L.LemInFlipper correctly
-    if ReadObjectMapType(CheckPosX[n], CheckPosY[n]) <> DOM_FLIPPER then L.LemInFlipper := DOM_NOOBJECT;
-  until ([CheckPosX[n], CheckPosY[n]] = [L.LemX, L.LemY]) or AbortChecks;
+    if ObjectType <> DOM_FLIPPER then L.LemInFlipper := DOM_NOOBJECT;
+  until ([CheckPosX[i], CheckPosY[i]] = [L.LemX, L.LemY]) (*or AbortChecks*);
 
   // Check for water to transition to swimmer only at final position
   if ReadWaterMap(L.LemX, L.LemY) = DOM_WATER then HandleWaterSwim(L);
 
   // Check for blocker fields
-  case ReadBlockerMap(CheckPosX[n], CheckPosY[n]) of
+  case ReadBlockerMap(L.LemX, L.LemY) of
     DOM_FORCELEFT: HandleForceField(L, -1);
     DOM_FORCERIGHT: HandleForceField(L, 1);
   end;
 end;
+
 
 function TLemmingGame.HandleTrap(L: TLemming; ObjectID: Word): Boolean;
 var
@@ -3832,7 +3830,7 @@ begin
   Result := True;
 
   Inf := ObjectInfos[ObjectID];
-  // Exit function, if trap is working
+  // Exit function, if trap is currently at work
   if Inf.Triggered then Exit;
 
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
