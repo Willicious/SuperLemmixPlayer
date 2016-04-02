@@ -111,9 +111,9 @@ type
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawMinimap(Map: TBitmap32);
     procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
-    procedure SetInfoLemmingsAlive(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoLemmingsOut(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoLemmingsIn(Num, Max: Integer; Blinking: Boolean = false);
+    procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
+    procedure SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
+    procedure SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
     procedure SetReplayMark(Status: Boolean);
@@ -879,24 +879,6 @@ begin
   end;
 end;
 
-procedure TSkillPanelToolbar.SetInfoLemmingsAlive(Num: Integer; Blinking: Boolean = false);
-var
-  S: string;
-begin
-  if Num < 0 then Num := 0;
-  if Blinking then  // probably will never blink, but let's have the option there for futureproofing
-    S := '    '
-  else begin
-    S := i2s(Num);
-    if Length(S) < 4 then
-    begin
-      S := PadR(S, 3);
-      S := PadL(S, 4);
-    end;
-  end;
-  Move(S[1], fNewDrawStr[18], 4);
-end;
-
 procedure TSkillPanelToolbar.SetReplayMark(Status: Boolean);
 var
   S: String;
@@ -919,48 +901,55 @@ begin
   Move(S[1], fNewDrawStr[35], 1);
 end;
 
-procedure TSkillPanelToolbar.SetInfoLemmingsOut(Num: Integer; Blinking: Boolean = false);
+
+procedure TSkillPanelToolbar.SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
+var
+  S: string;
+begin
+  Assert(Num >= 0, 'Negative number of lemmings in hatch displayed');
+  S := i2s(Num);
+  if Length(S) < 4 then
+  begin
+    S := PadR(S, 3);
+    S := PadL(S, 4);
+  end;
+  if Blinking then S := '    ';  // probably will never blink, but let's have the option there for futureproofing
+  Move(S[1], fNewDrawStr[18], 4);
+end;
+
+
+procedure TSkillPanelToolbar.SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
 var
   S: string;
 begin
   // stringspositions cursor,out,in,time = 1,15,24,32
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
-  if Num < 0 then Num := 0;
-  if Blinking then
-    S := '    '
-  else begin
-    S := i2s(Num);
-    if Length(S) < 4 then
-    begin
-      S := PadR(S, 3);
-      S := PadL(S, 4);
-    end;
+  // Nepster: The two lines above are outdated and wrong!!
+  Assert(Num >= 0, 'Negative number of alive lemmings displayed');
+  S := i2s(Num);
+  if Length(S) < 4 then
+  begin
+    S := PadR(S, 3);
+    S := PadL(S, 4);
   end;
+  if Blinking then S := '    ';
   Move(S[1], fNewDrawStr[24], 4);
 end;
 
-procedure TSkillPanelToolbar.SetInfoLemmingsIn(Num, Max: Integer; Blinking: Boolean = false);
+procedure TSkillPanelToolbar.SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
 var
   S: string;
   i: Integer;
 begin
   // stringspositions cursor,out,in,time = 1,15,24,32
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
-  { TODO : percentage }
-  {if Max > 0 then
-  begin
-    if Num < 0 then
-      i := ((Num * -100) div Max) * -1
-    else
-      i := (Num * 100) div Max;
-    S := PadL(i2s((Num * 100) div Max) + '%', 4)
-  end else}
+  // Nepster: The two lines above are outdated and wrong!!
   S := i2s(Num);
-    if Length(S) < 4 then
-    begin
-      S := PadR(S, 3);
-      S := PadL(S, 4);
-    end;
+  if Length(S) < 4 then
+  begin
+    S := PadR(S, 3);
+    S := PadL(S, 4);
+  end;
   if Blinking then S := '    ';
   Move(S[1], fNewDrawStr[30], 4);
 end;
@@ -971,6 +960,7 @@ var
 begin
   // stringspositions cursor,out,in,time = 1,15,24,32
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
+  // Nepster: The two lines above are outdated and wrong!!
   if Blinking then
     S := '  '
   else
@@ -984,6 +974,7 @@ var
 begin
   // stringspositions cursor,out,in,time = 1,15,24,32
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
+  // Nepster: The two lines above are outdated and wrong!!
   if Blinking then
     S := '  '
   else

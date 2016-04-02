@@ -1312,12 +1312,9 @@ end;
 procedure TLemmingGame.UpdateLemmingCounts;
 begin
   // Set Lemmings in Hatch, Lemmings Alive and Lemmings Saved
-  // Lemmings in Hatch (nevermind that it is called LemmingsAlive!)
-  InfoPainter.SetInfoLemmingsAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
-  // Lemmings alive (nevermind that it is called LemmingsOut!)
-  InfoPainter.SetInfoLemmingsOut((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
-  // Lemmings saved
-  InfoPainter.SetInfoLemmingsIn(LemmingsIn - Level.Info.RescueCount, 0, CheckRescueBlink);
+  InfoPainter.SetInfoLemHatch((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
+  InfoPainter.SetInfoLemAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
+  InfoPainter.SetInfoLemIn(LemmingsIn - Level.Info.RescueCount, CheckRescueBlink);
 end;
 
 procedure TLemmingGame.UpdateTimeLimit;

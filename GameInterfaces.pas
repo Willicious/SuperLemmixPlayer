@@ -19,9 +19,9 @@ type
     procedure DrawButtonSelector(aButton: TSkillPanelButton; SelectorOn: Boolean);
     procedure DrawMinimap(Map: TBitmap32);
     procedure SetInfoCursorLemming(const Lem: string; HitCount: Integer);
-    procedure SetInfoLemmingsAlive(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoLemmingsOut(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoLemmingsIn(Num, Max: Integer; Blinking: Boolean = false);
+    procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
+    procedure SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
+    procedure SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
     procedure SetReplayMark(Status: Boolean);
