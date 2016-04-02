@@ -715,6 +715,7 @@ type
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming);
+      procedure ChangeObjectType(ObjectID: Word; NewObjType: Byte);
       function HandleTrap(L: TLemming; ObjectID: Word): Boolean;
       function HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
       function HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
@@ -3821,11 +3822,32 @@ begin
 end;
 
 
-function TLemmingGame.HandleTrap(L: TLemming; ObjectID: Word): Boolean;
+procedure TLemmingGame.ChangeObjectType(ObjectID: Word; NewObjType: Byte);
+// We replace the trigger area of one type with another type NewObjType
 var
   Inf: TInteractiveObjectInfo;
   mx, my: Integer;
   minmx, minmy: Integer;
+begin
+  Inf := ObjectInfos[ObjectID];
+  minmx := (Inf.Obj.Left + Inf.MetaObj.TriggerLeft);
+  minmy := (Inf.Obj.Top + Inf.MetaObj.TriggerTop);
+
+  if Inf.Obj.DrawingFlags and odf_Flip <> 0 then
+    minmx := minmx + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft * 2) - (Inf.MetaObj.TriggerWidth - 1);
+
+  if Inf.Obj.DrawingFlags and odf_UpsideDown <> 0 then
+    minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
+
+  for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
+  for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
+    if ReadObjectMap(mx, my) = ObjectID then WriteObjectMap(mx, my, NewObjType);
+end;
+
+
+function TLemmingGame.HandleTrap(L: TLemming; ObjectID: Word): Boolean;
+var
+  Inf: TInteractiveObjectInfo;
 begin
   Result := True;
 
@@ -3836,20 +3858,7 @@ begin
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
   begin
-    minmx := (Inf.Obj.Left + Inf.MetaObj.TriggerLeft);
-    minmy := (Inf.Obj.Top + Inf.MetaObj.TriggerTop);
-
-    if Inf.Obj.DrawingFlags and odf_Flip <> 0 then
-      minmx := minmx + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft * 2) - (Inf.MetaObj.TriggerWidth - 1);
-
-    if Inf.Obj.DrawingFlags and odf_UpsideDown <> 0 then
-      minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
-
-    for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
-    for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
-      if ReadObjectMap(mx, my) = ObjectID then
-        WriteObjectMap(mx, my, DOM_NOOBJECT);
-
+    ChangeObjectType(ObjectID, DOM_NONE);
     Transition(L, baFixing);
   end
 
@@ -3872,8 +3881,6 @@ end;
 function TLemmingGame.HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
 var
   Inf: TInteractiveObjectInfo;
-  mx, my: Integer;
-  minmx, minmy: Integer;
 begin
   Result := True;
 
@@ -3884,38 +3891,22 @@ begin
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
   begin
-    minmx := (Inf.Obj.Left + Inf.MetaObj.TriggerLeft);
-    minmy := (Inf.Obj.Top + Inf.MetaObj.TriggerTop);
-
-    if Inf.Obj.DrawingFlags and odf_Flip <> 0 then
-      minmx := minmx + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft * 2) - (Inf.MetaObj.TriggerWidth - 1);
-
-    if Inf.Obj.DrawingFlags and odf_UpsideDown <> 0 then
-      minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
-
-    for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
-    for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
-      if ReadObjectMap(mx, my) = ObjectID then
-        WriteObjectMap(mx, my, DOM_NOOBJECT);
-
+    ChangeObjectType(ObjectID, DOM_NONE);
     Transition(L, baFixing);
   end
-  else if L.LemInTrap = 0 then
+  else if (L.LemInTrap = 0) and not (Inf.CurrentFrame = 0) then
   begin
-    if not (Inf.CurrentFrame = 0) then
-    begin
-      // trigger
-      Inf.Triggered := True;
-      Inf.ZombieMode := L.LemIsZombie;
-      L.LemInTrap := Inf.MetaObj.AnimationFrameCount;
-      // Make sure to remove the blocker field!
-      L.LemHasBlockerField := False;
-      RestoreMap;
-      RemoveLemming(L, RM_KILL);
-      CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-      if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then
-        DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
-    end;
+    // trigger
+    Inf.Triggered := True;
+    Inf.ZombieMode := L.LemIsZombie;
+    L.LemInTrap := Inf.MetaObj.AnimationFrameCount;
+    // Make sure to remove the blocker field!
+    L.LemHasBlockerField := False;
+    RestoreMap;
+    RemoveLemming(L, RM_KILL);
+    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+    if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then
+      DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
   end;
 end;
 
@@ -3944,7 +3935,6 @@ begin
   begin
     Inf.Triggered := True;
     Inf.ZombieMode := L.LemIsZombie;
-    //Inc(Inf.CurrentFrame);
     CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
     L.LemTeleporting := True;
     Inf.TeleLem := L.LemIndex;
@@ -4041,7 +4031,7 @@ function TLemmingGame.HandleExit(L: TLemming; IsLocked: Boolean): Boolean;
 begin
   Result := True;
 
-  if not (L.LemIsZombie or (L.LemAction in [baFalling, baSplatting])) then
+  if (not L.LemIsZombie) and not (L.LemAction in [baFalling, baSplatting]) then
   begin
     if (ButtonsRemain = 0) or (not IsLocked) then
     begin
