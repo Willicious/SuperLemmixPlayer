@@ -3023,6 +3023,8 @@ begin
   // Create new Lem
   if Result then
   begin
+    Assert(not L.LemIsZombie, 'cloner assigned to zombie');
+
     NewL := TLemming.Create;
     NewL.Assign(SelectedLemming);
     NewL.LemIndex := LemmingList.Count;
@@ -3030,6 +3032,12 @@ begin
     TurnAround(NewL);
     NewL.LemIsClone := true;
     NewL.LemUsedSkillCount := 0;
+    Inc(LemmingsOut);
+    (*
+    if not NewL.LemIsZombie then
+      Inc(LemmingsOut)
+    else   // Nepster: Not sure how this can ever happen???
+      Inc(LemmingsRemoved); *)
 
     // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
     if (NewL.LemAction = baMining) then
@@ -3039,12 +3047,7 @@ begin
       else if (NewL.LemFrame >= 3) and (NewL.LemFrame < 15) then
         ApplyMinerMask(NewL, 1, -2*NewL.LemDx, -1);
     end;
-
-    if not NewL.LemIsZombie then
-      Inc(LemmingsOut)
-    else   // Nepster: Not sure how this can ever happen???
-      Inc(LemmingsRemoved);
-  end
+  end;
 end;
 
 
@@ -3255,29 +3258,27 @@ end;
 function TLemmingGame.UpdateExplosionTimer(L: TLemming): Boolean;
 begin
   Result := False;
-  with L do
+
+  Dec(L.LemExplosionTimer);
+  if L.LemExplosionTimer = 0 then
   begin
-    Dec(LemExplosionTimer);
-    if LemExplosionTimer > 0 then
-      Exit
-    else begin
-      if LemAction in [baVaporizing, baDrowning, baFloating, baGliding, baFalling, baSwimming] then
-      begin
-        if LemTimerToStone then
-          Transition(L, baStoneFinish)
-        else
-          Transition(L, baExploding);
+    if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding, baFalling, baSwimming] then
+    begin
+      if L.LemTimerToStone then
+        Transition(L, baStoneFinish)
+      else
+        Transition(L, baExploding);
       end
-      else begin
-        if LemTimerToStone then
-          Transition(L, baStoning)
-        else
-          Transition(L, baOhnoing);
-      end;
-      Result := True;
+    else begin
+      if L.LemTimerToStone then
+        Transition(L, baStoning)
+      else
+        Transition(L, baOhnoing);
     end;
+    Result := True;
   end;
 end;
+
 
 procedure TLemmingGame.CheckForGameFinished;
 begin
@@ -5217,6 +5218,7 @@ begin
 
       if (     HasPixelAt(L.LemX, L.LemY - 2)
            or  HasPixelAt(L.LemX, L.LemY - 3)
+           or  HasPixelAt(L.LemX + L.LemDx, L.LemY - 3)
            or (HasPixelAt(L.LemX + L.LemDx, L.LemY - 9) and (L.LemNumberOfBricksLeft > 0))
          ) then
          Transition(L, baWalking, True)  // turn around as well
@@ -6683,14 +6685,13 @@ begin
       if CountDownReachedZero then
         Continue;
 
-      // HERE COMES THE MAIN THREE LINES !!!
+      // HERE COME THE MAIN THREE LINES !!!
       // Let lemmings move
       HandleInteractiveObjects := HandleLemming(CurrentLemming);
       // Check whether the lem is still on screen
       HandleInteractiveObjects := CheckLevelBoundaries(CurrentLemming) and HandleInteractiveObjects;
       // Check whether the lem has moved over trigger areas
       if HandleInteractiveObjects then CheckTriggerArea(CurrentLemming);
-      // CheckForInteractiveObjects(CurrentLemming, HandleInteractiveObjects);
     end;
 
   end;
