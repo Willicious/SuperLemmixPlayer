@@ -704,7 +704,7 @@ type
                                 CheckRightMouseButton: Boolean = True): Integer;
     function FindReceiver(oid: Byte; sval: Byte): Byte;
     procedure MoveLemToReceivePoint(L: TLemming; oid: Byte);
-    function ReadObjectMap(X, Y: Integer; Advance: Boolean = True): Word;
+    function ReadObjectMap(X, Y: Integer): Word;
     function ReadObjectMapType(X, Y: Integer): Byte;
     function ReadBlockerMap(X, Y: Integer): Byte;
     function ReadSpecialMap(X, Y: Integer): Byte;
@@ -1504,11 +1504,9 @@ end;
 procedure TLemmingGame.DoTalismanCheck;
 var
   i, i2, j: Integer;
-  ts: Integer;
   TotalSkillUsed: Integer;
   FoundIssue: Boolean;
   UsedSkillLems: Integer;
-  LoopSkill: TBasicLemmingAction;
   GetTalisman: Boolean;
 begin
   for i := 0 to fTalismans.Count-1 do
@@ -1915,7 +1913,7 @@ procedure TLemmingGame.Start(aReplay: Boolean = False);
   (i.e: renderer.levelbitmap, level, infopainter)
 -------------------------------------------------------------------------------}
 var
-  i,i2,i3:integer;
+  i, i2, i3: Integer;
   O: TInteractiveObject;
   MO: TMetaObject;
   Inf: TInteractiveObjectInfo;
@@ -2071,8 +2069,8 @@ begin
     CurrSkillCount[baFixing]       := MechanicCount;
     CurrSkillCount[baCloning]      := ClonerCount;
     // Initialize used skills
-    for LoopSkill := baNone to baCloning do
-      UsedSkillCount[LoopSkill] := 0;
+    for i := 1 to 15 do
+      UsedSkillCount[ActionListArray[i]] := 0;
   end;
 
   LowestReleaseRate := CurrReleaseRate;
@@ -2391,17 +2389,9 @@ begin
   end;
 end;
 
-function TLemmingGame.ReadObjectMap(X, Y: Integer; Advance: Boolean = true): Word;
+function TLemmingGame.ReadObjectMap(X, Y: Integer): Word;
 // original dos objectmap has a resolution of 4
 begin
-  if not Advance then
-  begin
-    ShowMessage('Advance check failed. Please report.');
-    x := x * 4;
-    y := y * 4;
-    // this should NEVER be triggered these days
-  end;
-
   Inc(X, OBJMAPADD);
   Inc(Y, OBJMAPADD);
 
