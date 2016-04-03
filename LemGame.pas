@@ -108,7 +108,6 @@ type
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
     LemUsedSkillCount             : Integer; // number of skills assigned to this lem, used for talisman
-    LemIsClone                    : Boolean; // only used in one Talisman count
     LemTimerToStone               : Boolean;
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemRTLAdjust                  : Boolean;
@@ -1179,7 +1178,6 @@ begin
   LemHighlightReplay := Source.LemHighlightReplay;
   LemExploded := Source.LemExploded;
   LemUsedSkillCount := Source.LemUsedSkillCount;
-  LemIsClone := Source.LemIsClone;
   LemTimerToStone := Source.LemTimerToStone;
   LemStackLow := Source.LemStackLow;
   LemRTLAdjust := Source.LemRTLAdjust;
@@ -1661,17 +1659,14 @@ begin
       if tmOneSkill in MiscOptions then
         for i2 := 0 to LemmingList.Count-1 do
           with LemmingList[i2] do
-           if (LemUsedSkillCount > 1) {and not LemIsClone} then FoundIssue := true;
+           if (LemUsedSkillCount > 1) then FoundIssue := true;
       if FoundIssue then Continue;
 
       UsedSkillLems := 0;
       if tmOneLemming in MiscOptions then
         for i2 := 0 to LemmingList.Count-1 do
           with LemmingList[i2] do
-          begin
-            if (LemUsedSkillCount > 0) (*and not LemIsClone then Inc(UsedSkillLems);
-            if (LemUsedSkillCount > 1) and LemIsClone*) then Inc(UsedSkillLems);
-          end;
+            if (LemUsedSkillCount > 0) then Inc(UsedSkillLems);
       if UsedSkillLems > 1 then Continue;
 
       fGameParams.SaveSystem.GetTalisman(Signature);
@@ -2367,7 +2362,6 @@ begin
       LemInFlipper := -1;
       LemParticleTimer := -1;
       LemUsedSkillCount := 0;
-      LemIsClone := false;
       if LemIndex = fHighlightLemmingID then fHighlightLemming := NewLemming;
     end;
     Inc(LemmingsReleased);
@@ -3030,7 +3024,6 @@ begin
     NewL.LemIndex := LemmingList.Count;
     LemmingList.Add(NewL);
     TurnAround(NewL);
-    NewL.LemIsClone := true;
     NewL.LemUsedSkillCount := 0;
     Inc(LemmingsOut);
     (*
@@ -6250,7 +6243,6 @@ begin
             TurnAround(NewLemming);
 
           LemUsedSkillCount := 0;
-          LemIsClone := false;
 
           if (ObjectInfos[ix].Obj.TarLev and 1) <> 0 then LemIsClimber := true;
           if (ObjectInfos[ix].Obj.TarLev and 2) <> 0 then LemIsSwimmer := true;
