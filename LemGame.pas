@@ -57,8 +57,8 @@ type
 type
   TLemming = class
   private
-    function GetLocationBounds(Nuclear: Boolean = false): TRect; // rect in world
-    function GetFrameBounds(Nuclear: Boolean = false): TRect; // rect from animation bitmap
+    function GetLocationBounds: TRect; // rect in world
+    function GetFrameBounds: TRect; // rect from animation bitmap
     function GetCountDownDigitBounds: TRect; // countdown
     function GetLemRTL: Boolean; // direction rtl?
     function GetLemHint: string;
@@ -732,7 +732,6 @@ type
     procedure WriteZombieMap(X, Y: Integer; aValue: Byte);
 
     function CheckLemmingBlink: Boolean;
-    function CheckRescueBlink: Boolean;
     function CheckTimerBlink: Boolean;
 
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
@@ -989,7 +988,7 @@ end;
 
 
 
-function TLemming.GetFrameBounds(Nuclear: Boolean = false): TRect;
+function TLemming.GetFrameBounds: TRect;
 begin
   Assert(LAB <> nil, 'getframebounds error');
   with Result do
@@ -998,15 +997,10 @@ begin
     Top := LemFrame * LMA.Height;
     Right := LMA.Width;
     Bottom := Top + LMA.Height;
-    if (LemAction in [baExploding]) and Nuclear then
-    begin
-      Right := Right + 32;
-      Bottom := Bottom + 32;
-    end;
   end;
 end;
 
-function TLemming.GetLocationBounds(Nuclear: Boolean = false): TRect;
+function TLemming.GetLocationBounds: TRect;
 begin
   Assert(LMA <> nil, 'meta animation error');
   with Result do
@@ -1030,13 +1024,7 @@ begin
       Inc(Left);
       Inc(Right);
     end;
-    if (LemAction in [baExploding]) and Nuclear then
-    begin
-      Left := Left - 16;
-      Top := Top - 16;
-      Right := Right + 16;
-      Bottom := Bottom + 16;
-    end;        // Easier to do here than a seperate anim just for nukers
+
     if (LemAction = baMining) then
       begin
         if LemRTL then
@@ -1048,10 +1036,10 @@ begin
           Inc(Right);
         end;
         if (LemFrame < 15) then
-          begin
+        begin
           Inc(Top);
           Inc(Bottom);
-          end;
+        end;
       end;  // Seems to be glitchy if the animations themself are altered
   end;
 end;
@@ -1290,7 +1278,7 @@ begin
   // Set Lemmings in Hatch, Lemmings Alive and Lemmings Saved
   InfoPainter.SetInfoLemHatch((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
   InfoPainter.SetInfoLemAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
-  InfoPainter.SetInfoLemIn(LemmingsIn - Level.Info.RescueCount, CheckRescueBlink);
+  InfoPainter.SetInfoLemIn(LemmingsIn - Level.Info.RescueCount, False);
 end;
 
 procedure TLemmingGame.UpdateTimeLimit;
@@ -1313,9 +1301,6 @@ begin
     InfoPainter.DrawSkillCount(spbFaster, CurrReleaseRate)
   else if aSkill in [spbWalker..spbCloner] then
     InfoPainter.DrawSkillCount(aSkill, CurrSkillCount[SkillPanelButtonToAction[aSkill]]);
-  (*else
-    InfoPainter.DrawSkillCount(aSkill, CurrSkillCount[SkillPanelButtonToAction[aSkill]]);
-  end; *)
 end;
 
 procedure TLemmingGame.UpdateAllSkillCounts;
@@ -1358,7 +1343,7 @@ begin
   aState.CurrReleaseRate := CurrReleaseRate;
   aState.LastReleaseRate := LastReleaseRate;
 
-  for i := 1 to 15 do
+  for i := 0 to 15 do
   begin
     aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
     aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
@@ -1442,7 +1427,7 @@ begin
   CurrReleaseRate := aState.CurrReleaseRate;
   LastReleaseRate := aState.LastReleaseRate;
 
-  for i := 1 to 15 do
+  for i := 0 to 15 do
   begin
     CurrSkillCount[ActionListArray[i]] := aState.CurrSkillCount[ActionListArray[i]];
     UsedSkillCount[ActionListArray[i]] := aState.UsedSkillCount[ActionListArray[i]];
@@ -2070,7 +2055,7 @@ begin
     CurrSkillCount[baFixing]       := MechanicCount;
     CurrSkillCount[baCloning]      := ClonerCount;
     // Initialize used skills
-    for i := 1 to 15 do
+    for i := 0 to 15 do
       UsedSkillCount[ActionListArray[i]] := 0;
   end;
 
@@ -6911,13 +6896,6 @@ begin
      < Level.Info.RescueCount)
   and (CurrentIteration mod 17 > 8) {and (CurrentIteration mod 34 < 27)} then
     Result := true;
-end;
-
-function TLemmingGame.CheckRescueBlink: Boolean;
-begin
-  // must delete this function eventually
-  Result := false;
-  Exit;
 end;
 
 function TLemmingGame.CheckTimerBlink: Boolean;
