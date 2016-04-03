@@ -1029,6 +1029,11 @@ begin
     Top := LemY + FrameTopDy - 12;
     Right := Left + 8;
     Bottom := Top + 8;
+    if LemDx = 1 then
+    begin
+      Left := Left - 1;
+      Right := Right - 1;
+    end;
   end;
 end;
 
