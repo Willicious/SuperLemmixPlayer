@@ -954,7 +954,9 @@ const
   PARTICLE_FRAMECOUNT = 52;
   PARTICLE_FINISH_FRAMECOUNT = 52;
 
-const  // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
+const
+  // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
+  // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
   ActionListArray: array[0..15] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
@@ -5935,24 +5937,24 @@ var
 begin
   if fGameParams.IgnoreReplaySelection then Exit;
   case areplayitem.selectedbutton of
-    rsb_walker: bs := spbWalker;
-    rsb_climber: bs := spbClimber;
-    rsb_swimmer: bs := spbSwimmer;
-    rsb_umbrella: bs := spbUmbrella;
-    rsb_glider: bs := spbGlider;
-    rsb_mechanic: bs := spbMechanic;
-    rsb_explode: bs := spbExplode;
-    rsb_stoner: bs := spbStoner;
-    rsb_stopper: bs := spbBlocker;
+    rsb_walker:     bs := spbWalker;
+    rsb_climber:    bs := spbClimber;
+    rsb_swimmer:    bs := spbSwimmer;
+    rsb_umbrella:   bs := spbUmbrella;
+    rsb_glider:     bs := spbGlider;
+    rsb_mechanic:   bs := spbMechanic;
+    rsb_explode:    bs := spbExplode;
+    rsb_stoner:     bs := spbStoner;
+    rsb_stopper:    bs := spbBlocker;
     rsb_platformer: bs := spbPlatformer;
-    rsb_builder: bs := spbBuilder;
-    rsb_stacker: bs := spbStacker;
-    rsb_basher: bs := spbBasher;
-    rsb_miner: bs := spbMiner;
-    rsb_digger: bs := spbDigger;
-    rsb_cloner: bs := spbCloner;
-    else bs := spbNone;
-    end;
+    rsb_builder:    bs := spbBuilder;
+    rsb_stacker:    bs := spbStacker;
+    rsb_basher:     bs := spbBasher;
+    rsb_miner:      bs := spbMiner;
+    rsb_digger:     bs := spbDigger;
+    rsb_cloner:     bs := spbCloner;
+  else              bs := spbNone;
+  end;
   setselectedskill(bs, true);
 end;
 
@@ -6096,19 +6098,20 @@ begin
   begin
 
     // find first following non removed lemming
-    while (Index_LemmingToBeNuked <{=} LemmingsReleased + LemmingsCloned)
-    and (LemmingList[Index_LemmingToBeNuked].LemRemoved) do
+    while     (Index_LemmingToBeNuked < LemmingsReleased + LemmingsCloned)
+          and (LemmingList[Index_LemmingToBeNuked].LemRemoved) do
       Inc(Index_LemmingToBeNuked);
 
     if (Index_LemmingToBeNuked > LemmingsReleased + LemmingsCloned - 1) then
       ExploderAssignInProgress := FALSE
-    else begin
+    else
+    begin
       CurrentLemming := LemmingList[Index_LemmingToBeNuked];
       with CurrentLemming do
       begin
-        if (LemExplosionTimer = 0)
-        and not (LemAction in [baSplatting, baExploding])
-        and not LemIsZombie then
+        if     (LemExplosionTimer = 0)
+           and not (LemAction in [baSplatting, baExploding])
+           and not LemIsZombie then
           LemExplosionTimer := 79;
       end;
       Inc(Index_LemmingToBeNuked);
@@ -6331,11 +6334,10 @@ var
   R: TReplayItem;
   NewRec: Boolean;
 begin
-//  Assert(aSkill)
   if not fPlaying then Exit;
   if fReplaying then Exit;
 
-  assert(askill in [spbClimber, spbUmbrella, spbExplode, spbBlocker, spbBuilder,
+  Assert(aSkill in [spbClimber, spbUmbrella, spbExplode, spbBlocker, spbBuilder,
                     spbBasher, spbMiner, spbDigger, spbWalker, spbSwimmer,
                     spbGlider, spbMechanic, spbStoner, spbPlatformer,
                     spbStacker, spbCloner]);
@@ -6353,22 +6355,22 @@ begin
 
   { TODO : make a table for this }
   case aSkill of
-    spbWalker:r.SelectedButton := rsb_Walker;
-    spbClimber:r.SelectedButton := rsb_Climber;
-    spbSwimmer:r.SelectedButton := rsb_Swimmer;
-    spbUmbrella:r.SelectedButton := rsb_Umbrella;
-    spbGlider:r.SelectedButton := rsb_Glider;
-    spbMechanic:r.SelectedButton := rsb_Mechanic;
-    spbExplode:r.SelectedButton := rsb_Explode;
-    spbStoner:r.SelectedButton := rsb_Stoner;
-    spbBlocker:r.SelectedButton := rsb_Stopper;
-    spbPlatformer:r.SelectedButton := rsb_Platformer;
-    spbBuilder:r.SelectedButton := rsb_Builder;
-    spbStacker:r.SelectedButton := rsb_Stacker;
-    spbBasher:r.SelectedButton := rsb_Basher;
-    spbMiner:r.SelectedButton := rsb_Miner;
-    spbDigger:r.SelectedButton := rsb_Digger;
-    spbCloner:r.Selectedbutton := rsb_Cloner;
+    spbWalker:     r.SelectedButton := rsb_Walker;
+    spbClimber:    r.SelectedButton := rsb_Climber;
+    spbSwimmer:    r.SelectedButton := rsb_Swimmer;
+    spbUmbrella:   r.SelectedButton := rsb_Umbrella;
+    spbGlider:     r.SelectedButton := rsb_Glider;
+    spbMechanic:   r.SelectedButton := rsb_Mechanic;
+    spbExplode:    r.SelectedButton := rsb_Explode;
+    spbStoner:     r.SelectedButton := rsb_Stoner;
+    spbBlocker:    r.SelectedButton := rsb_Stopper;
+    spbPlatformer: r.SelectedButton := rsb_Platformer;
+    spbBuilder:    r.SelectedButton := rsb_Builder;
+    spbStacker:    r.SelectedButton := rsb_Stacker;
+    spbBasher:     r.SelectedButton := rsb_Basher;
+    spbMiner:      r.SelectedButton := rsb_Miner;
+    spbDigger:     r.SelectedButton := rsb_Digger;
+    spbCloner:     r.Selectedbutton := rsb_Cloner;
   // make sure of nothing else
   end;
 end;
@@ -6670,34 +6672,36 @@ begin
     if (Inf.Triggered or (Inf.MetaObj.AnimationType = oat_Continuous)) and (Inf.MetaObj.TriggerEffect <> 14) then
       Inc(Inf.CurrentFrame);
     if (Inf.MetaObj.TriggerEffect = 11) or ((Inf.MetaObj.TriggerEffect = 28) and (Inf.TwoWayReceive = false)) then
+    begin
+      if    ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
+         or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
+      begin
+        L := LemmingList.List^[Inf.TeleLem];
+        xi := FindReceiver(i, Inf.Obj.Skill);
+        if xi <> i then
         begin
-          if ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
-          or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
-          begin
-            L := LemmingList.List^[Inf.TeleLem];
-            xi := FindReceiver(i, Inf.Obj.Skill);
-            if xi <> i then
-            begin
-              MoveLemToReceivePoint(L, i);
-              Inf2 := ObjectInfos[xi];
-              Inf2.TeleLem := Inf.TeleLem;
-              Inf2.Triggered := True;
-              Inf2.ZombieMode := Inf.ZombieMode;
-              Inf2.TwoWayReceive := true;
-            end;
-          end;
+          MoveLemToReceivePoint(L, i);
+          Inf2 := ObjectInfos[xi];
+          Inf2.TeleLem := Inf.TeleLem;
+          Inf2.Triggered := True;
+          Inf2.ZombieMode := Inf.ZombieMode;
+          Inf2.TwoWayReceive := true;
         end;
+      end;
+    end;
+
     if (Inf.MetaObj.TriggerEffect = 12) or ((Inf.MetaObj.TriggerEffect = 28) and (Inf.TwoWayReceive = true)) then
     begin
-      if ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
-      or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
+      if    ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
+         or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
       begin
         L := LemmingList.List^[Inf.TeleLem];
         L.LemTeleporting := false;
         HandleLemming(L);
       end;
     end;
-    If Inf.MetaObj.TriggerEffect = 29 then
+
+    if Inf.MetaObj.TriggerEffect = 29 then
     begin
       if ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
       or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
@@ -6888,9 +6892,7 @@ begin
   for i := 0 to ObjectInfos.Count-1 do
     if (ObjectInfos[i].MetaObj.TriggerEffect = 14) and (ObjectInfos[i].Obj.Skill = 15) then pcc := pcc + 1;
 
-  (*if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) +
-      ((Level.Info.SkillTypes and 1) * CurrClonerCount) + pcc
-     < Level.Info.RescueCount) *)
+
   if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) +
       ((Level.Info.SkillTypes and 1) * CurrSkillCount[baCloning]) + pcc
      < Level.Info.RescueCount)
@@ -6955,28 +6957,7 @@ begin
   if sc^ < 0 then sc^ := 0;
   if sc^ > 99 then sc^ := 99;
 
-
   InfoPainter.DrawSkillCount(ActionToSkillPanelButton[aAction], sc^);
-
- (* case aAction of
-    baToWalking  : InfoPainter.DrawSkillCount(spbWalker, sc^);
-    baClimbing   : InfoPainter.DrawSkillCount(spbClimber, sc^);
-    baSwimming   : InfoPainter.DrawSkillCount(spbSwimmer, sc^);
-    baFloating   : InfoPainter.DrawSkillCount(spbUmbrella, sc^);
-    baGliding    : InfoPainter.DrawSkillCount(spbGlider, sc^);
-    baFixing     : InfoPainter.DrawSkillCount(spbMechanic, sc^);
-    baExploding  : InfoPainter.DrawSkillCount(spbExplode, sc^);
-    baStoning    : InfoPainter.DrawSkillCount(spbStoner, sc^);
-    baBlocking   : InfoPainter.DrawSkillCount(spbBlocker, sc^);
-    baPlatforming: InfoPainter.DrawSkillCount(spbPlatformer, sc^);
-    baBuilding   : InfoPainter.DrawSkillCount(spbBuilder, sc^);
-    baStacking   : InfoPainter.DrawSkillCount(spbStacker, sc^);
-    baBashing    : InfoPainter.DrawSkillCount(spbBasher, sc^);
-    baMining     : InfoPainter.DrawSkillCount(spbMiner, sc^);
-    baDigging    : InfoPainter.DrawSkillCount(spbDigger, sc^);
-    baCloning    : InfoPainter.DrawSkillCount(spbCloner, sc^);
-  end;   *)
-
 end;
 
 procedure TLemmingGame.SaveGameplayImage(Filename: String);
