@@ -3649,10 +3649,9 @@ begin
       DOM_LOCKEXIT: AbortChecks := HandleExit(L, True);
       DOM_RADIATION: AbortChecks := HandleRadiation(L, False);
       DOM_SLOWFREEZE: AbortChecks := HandleRadiation(L, True);
-      DOM_FORCELEFT: AbortChecks := HandleForceField(L, -1);
-      DOM_FORCERIGHT: AbortChecks := HandleForceField(L, 1);
       DOM_FIRE: AbortChecks := HandleFire(L);
       DOM_FLIPPER: AbortChecks := HandleFlipper(L, ObjectID);
+    //DOM_FORCERIGHT, DOM_FORCELEFT: Only do this at the end of the movement!
     end;
 
     // Check only for drowning here!
@@ -3674,8 +3673,8 @@ begin
   // Check for water to transition to swimmer only at final position
   if ReadWaterMap(L.LemX, L.LemY) = DOM_WATER then HandleWaterSwim(L);
 
-  // Check for blocker fields
-  case ReadBlockerMap(L.LemX, L.LemY) of
+  // Check for blocker fields and force-fields
+  case (ReadBlockerMap(L.LemX, L.LemY) or ReadObjectMapType(L.LemX, L.LemY)) of
     DOM_FORCELEFT: HandleForceField(L, -1);
     DOM_FORCERIGHT: HandleForceField(L, 1);
   end;
