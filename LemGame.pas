@@ -436,38 +436,10 @@ type
       HighestReleaseRate: Integer;
       CurrReleaseRate: Integer;
       LastReleaseRate: Integer;
-      CurrWalkerCount            : Integer;
-      CurrClimberCount           : Integer;
-      CurrSwimmerCount           : Integer;
-      CurrFloaterCount           : Integer;
-      CurrGliderCount            : Integer;
-      CurrMechanicCount          : Integer;
-      CurrBomberCount            : Integer;
-      CurrStonerCount            : Integer;
-      CurrBlockerCount           : Integer;
-      CurrPlatformerCount        : Integer;
-      CurrBuilderCount           : Integer;
-      CurrStackerCount           : Integer;
-      CurrBasherCount            : Integer;
-      CurrMinerCount             : Integer;
-      CurrDiggerCount            : Integer;
-      CurrClonerCount            : Integer;
-      UsedWalkerCount            : Integer;
-      UsedClimberCount           : Integer;
-      UsedSwimmerCount           : Integer;
-      UsedFloaterCount           : Integer;
-      UsedGliderCount            : Integer;
-      UsedMechanicCount          : Integer;
-      UsedBomberCount            : Integer;
-      UsedStonerCount            : Integer;
-      UsedBlockerCount           : Integer;
-      UsedPlatformerCount        : Integer;
-      UsedBuilderCount           : Integer;
-      UsedStackerCount           : Integer;
-      UsedBasherCount            : Integer;
-      UsedMinerCount             : Integer;
-      UsedDiggerCount            : Integer;
-      UsedClonerCount            : Integer;
+
+      CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
+      UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
+
       UserSetNuking: Boolean;
       Index_LemmingToBeNuked: Integer;
       LastRecordedRR: Integer;
@@ -578,38 +550,10 @@ type
     HighestReleaseRate         : Integer;
     CurrReleaseRate            : Integer;
     LastReleaseRate            : Integer;
-    CurrWalkerCount            : Integer;
-    CurrClimberCount           : Integer;
-    CurrSwimmerCount           : Integer;
-    CurrFloaterCount           : Integer;
-    CurrGliderCount            : Integer;
-    CurrMechanicCount          : Integer;
-    CurrBomberCount            : Integer;
-    CurrStonerCount            : Integer;
-    CurrBlockerCount           : Integer;
-    CurrPlatformerCount        : Integer;
-    CurrBuilderCount           : Integer;
-    CurrStackerCount           : Integer;
-    CurrBasherCount            : Integer;
-    CurrMinerCount             : Integer;
-    CurrDiggerCount            : Integer;
-    CurrClonerCount            : Integer;
-    UsedWalkerCount            : Integer;
-    UsedClimberCount           : Integer;
-    UsedSwimmerCount           : Integer;
-    UsedFloaterCount           : Integer;
-    UsedGliderCount            : Integer;
-    UsedMechanicCount          : Integer;
-    UsedBomberCount            : Integer;
-    UsedStonerCount            : Integer;
-    UsedBlockerCount           : Integer;
-    UsedPlatformerCount        : Integer;
-    UsedBuilderCount           : Integer;
-    UsedStackerCount           : Integer;
-    UsedBasherCount            : Integer;
-    UsedMinerCount             : Integer;
-    UsedDiggerCount            : Integer;
-    UsedClonerCount            : Integer;
+
+    CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
+    UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
+
     UserSetNuking              : Boolean;
     ExploderAssignInProgress   : Boolean;
     Index_LemmingToBeNuked     : Integer;
@@ -1012,6 +956,14 @@ const
   PARTICLE_FRAMECOUNT = 52;
   PARTICLE_FINISH_FRAMECOUNT = 52;
 
+const  // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
+  ActionListArray: array[0..15] of TBasicLemmingAction =
+            (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
+             baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
+             baStacking, baBashing, baMining, baDigging, baCloning);
+
+
+
 function CheckRectCopy(const A, B: TRect): Boolean;
 begin
   Result := (RectWidth(A) = RectWidth(B))
@@ -1357,24 +1309,10 @@ end;
 procedure TLemmingGame.UpdateOneSkillCount(aSkill: TSkillPanelButton);
 begin
   case aSkill of
-    spbWalker: InfoPainter.DrawSkillCount(spbWalker, CurrWalkerCount);
-    spbClimber: InfoPainter.DrawSkillCount(spbClimber, CurrClimberCount);
-    spbSwimmer: InfoPainter.DrawSkillCount(spbSwimmer, CurrSwimmerCount);
-    spbUmbrella: InfoPainter.DrawSkillCount(spbUmbrella, CurrFloaterCount);
-    spbGlider: InfoPainter.DrawSkillCount(spbGlider, CurrGliderCount);
-    spbMechanic: InfoPainter.DrawSkillCount(spbMechanic, CurrMechanicCount);
-    spbExplode: InfoPainter.DrawSkillCount(spbExplode, CurrBomberCount);
-    spbStoner: InfoPainter.DrawSkillCount(spbStoner, CurrStonerCount);
-    spbBlocker: InfoPainter.DrawSkillCount(spbBlocker, CurrBlockerCount);
-    spbPlatformer: InfoPainter.DrawSkillCount(spbPlatformer, CurrPlatformerCount);
-    spbBuilder: InfoPainter.DrawSkillCount(spbBuilder, CurrBuilderCount);
-    spbStacker: InfoPainter.DrawSkillCount(spbStacker, CurrStackerCount);
-    spbBasher: InfoPainter.DrawSkillCount(spbBasher, CurrBasherCount);
-    spbMiner: InfoPainter.DrawSkillCount(spbMiner, CurrMinerCount);
-    spbDigger: InfoPainter.DrawSkillCount(spbDigger, CurrDiggerCount);
-    spbCloner: InfoPainter.DrawSkillCount(spbCloner, CurrClonerCount);
     spbSlower: InfoPainter.DrawSkillCount(spbSlower, Level.Info.ReleaseRate);
     spbFaster: InfoPainter.DrawSkillCount(spbFaster, CurrReleaseRate);
+  else
+    InfoPainter.DrawSkillCount(aSkill, CurrSkillCount[SkillPanelButtonToAction[aSkill]]);
   end;
 end;
 
@@ -1417,38 +1355,13 @@ begin
   aState.HighestReleaseRate := HighestReleaseRate;
   aState.CurrReleaseRate := CurrReleaseRate;
   aState.LastReleaseRate := LastReleaseRate;
-  aState.CurrWalkerCount := CurrWalkerCount;
-  aState.UsedWalkerCount := UsedWalkerCount;
-  aState.CurrClimberCount := CurrClimberCount;
-  aState.UsedClimberCount := UsedClimberCount;
-  aState.CurrSwimmerCount := CurrSwimmerCount;
-  aState.UsedSwimmerCount := UsedSwimmerCount;
-  aState.CurrFloaterCount := CurrFloaterCount;
-  aState.UsedFloaterCount := UsedFloaterCount;
-  aState.CurrGliderCount := CurrGliderCount;
-  aState.UsedGliderCount := UsedGliderCount;
-  aState.CurrMechanicCount := CurrMechanicCount;
-  aState.UsedMechanicCount := UsedMechanicCount;
-  aState.CurrBomberCount := CurrBomberCount;
-  aState.UsedBomberCount := UsedBomberCount;
-  aState.CurrStonerCount := CurrStonerCount;
-  aState.UsedStonerCount := UsedStonerCount;
-  aState.CurrBlockerCount := CurrBlockerCount;
-  aState.UsedBlockerCount := UsedBlockerCount;
-  aState.CurrPlatformerCount := CurrPlatformerCount;
-  aState.UsedPlatformerCount := UsedPlatformerCount;
-  aState.CurrBuilderCount := CurrBuilderCount;
-  aState.UsedBuilderCount := UsedBuilderCount;
-  aState.CurrStackerCount := CurrStackerCount;
-  aState.UsedStackerCount := UsedStackerCount;
-  aState.CurrBasherCount := CurrBasherCount;
-  aState.UsedBasherCount := UsedBasherCount;
-  aState.CurrMinerCount := CurrMinerCount;
-  aState.UsedMinerCount := UsedMinerCount;
-  aState.CurrDiggerCount := CurrDiggerCount;
-  aState.UsedDiggerCount := UsedDiggerCount;
-  aState.CurrClonerCount := CurrClonerCount;
-  aState.UsedClonerCount := UsedClonerCount;
+
+  for i := 1 to 15 do
+  begin
+    aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
+    aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
+  end;
+
   aState.UserSetNuking := UserSetNuking;
   aState.Index_LemmingToBeNuked := Index_LemmingToBeNuked;
   aState.LastRecordedRR := fLastRecordedRR;
@@ -1526,38 +1439,13 @@ begin
   HighestReleaseRate := aState.HighestReleaseRate;
   CurrReleaseRate := aState.CurrReleaseRate;
   LastReleaseRate := aState.LastReleaseRate;
-  CurrWalkerCount := aState.CurrWalkerCount;
-  UsedWalkerCount := aState.UsedWalkerCount;
-  CurrClimberCount := aState.CurrClimberCount;
-  UsedClimberCount := aState.UsedClimberCount;
-  CurrSwimmerCount := aState.CurrSwimmerCount;
-  UsedSwimmerCount := aState.UsedSwimmerCount;
-  CurrFloaterCount := aState.CurrFloaterCount;
-  UsedFloaterCount := aState.UsedFloaterCount;
-  CurrGliderCount := aState.CurrGliderCount;
-  UsedGliderCount := aState.UsedGliderCount;
-  CurrMechanicCount := aState.CurrMechanicCount;
-  UsedMechanicCount := aState.UsedMechanicCount;
-  CurrBomberCount := aState.CurrBomberCount;
-  UsedBomberCount := aState.UsedBomberCount;
-  CurrStonerCount := aState.CurrStonerCount;
-  UsedStonerCount := aState.UsedStonerCount;
-  CurrBlockerCount := aState.CurrBlockerCount;
-  UsedBlockerCount := aState.UsedBlockerCount;
-  CurrPlatformerCount := aState.CurrPlatformerCount;
-  UsedPlatformerCount := aState.UsedPlatformerCount;
-  CurrBuilderCount := aState.CurrBuilderCount;
-  UsedBuilderCount := aState.UsedBuilderCount;
-  CurrStackerCount := aState.CurrStackerCount;
-  UsedStackerCount := aState.UsedStackerCount;
-  CurrBasherCount := aState.CurrBasherCount;
-  UsedBasherCount := aState.UsedBasherCount;
-  CurrMinerCount := aState.CurrMinerCount;
-  UsedMinerCount := aState.UsedMinerCount;
-  CurrDiggerCount := aState.CurrDiggerCount;
-  UsedDiggerCount := aState.UsedDiggerCount;
-  CurrClonerCount := aState.CurrClonerCount;
-  UsedClonerCount := aState.UsedClonerCount;
+
+  for i := 1 to 15 do
+  begin
+    aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
+    aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
+  end;
+
   UserSetNuking := aState.UserSetNuking;
   Index_LemmingToBeNuked := aState.Index_LemmingToBeNuked;
   fLastRecordedRR := aState.LastRecordedRR;
@@ -1615,62 +1503,54 @@ end;
 
 procedure TLemmingGame.DoTalismanCheck;
 var
-  i, i2: Integer;
+  i, i2, j: Integer;
   ts: Integer;
+  TotalSkillUsed: Integer;
   FoundIssue: Boolean;
   UsedSkillLems: Integer;
+  LoopSkill: TBasicLemmingAction;
+  GetTalisman: Boolean;
 begin
   for i := 0 to fTalismans.Count-1 do
   begin
     if fGameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Continue;
     with fTalismans[i] do
     begin
-      if ((LemmingsIn < SaveRequirement) or ((SaveRequirement = 0) and (LemmingsIn < fGameParams.Level.Info.RescueCount))) then Continue;
+      GetTalisman := True;
+      if ((LemmingsIn < SaveRequirement) or ((SaveRequirement = 0) and (LemmingsIn < fGameParams.Level.Info.RescueCount))) then GetTalisman := False;
 
-      if ((CurrentIteration > TimeLimit) and (TimeLimit <> 0)) or ((TimeLimit = 0) and (CurrentIteration > Level.Info.TimeLimit * 17)) then Continue;
-      if LowestReleaseRate < RRMin then Continue;
-      if HighestReleaseRate > RRMax then Continue;
+      if ((CurrentIteration > TimeLimit) and (TimeLimit <> 0)) or ((TimeLimit = 0) and (CurrentIteration > Level.Info.TimeLimit * 17)) then GetTalisman := False;
+      if LowestReleaseRate < RRMin then GetTalisman := False;
+      if HighestReleaseRate > RRMax then GetTalisman := False;
 
-      if (UsedWalkerCount > SkillLimit[0]) and (SkillLimit[0] <> -1) then Continue;
-      if (UsedClimberCount > SkillLimit[1]) and (SkillLimit[1] <> -1) then Continue;
-      if (UsedSwimmerCount > SkillLimit[2]) and (SkillLimit[2] <> -1) then Continue;
-      if (UsedFloaterCount > SkillLimit[3]) and (SkillLimit[3] <> -1) then Continue;
-      if (UsedGliderCount > SkillLimit[4]) and (SkillLimit[4] <> -1) then Continue;
-      if (UsedMechanicCount > SkillLimit[5]) and (SkillLimit[5] <> -1) then Continue;
-      if (UsedBomberCount > SkillLimit[6]) and (SkillLimit[6] <> -1) then Continue;
-      if (UsedStonerCount > SkillLimit[7]) and (SkillLimit[7] <> -1) then Continue;
-      if (UsedBlockerCount > SkillLimit[8]) and (SkillLimit[8] <> -1) then Continue;
-      if (UsedPlatformerCount > SkillLimit[9]) and (SkillLimit[9] <> -1) then Continue;
-      if (UsedBuilderCount > SkillLimit[10]) and (SkillLimit[10] <> -1) then Continue;
-      if (UsedStackerCount > SkillLimit[11]) and (SkillLimit[11] <> -1) then Continue;
-      if (UsedBasherCount > SkillLimit[12]) and (SkillLimit[12] <> -1) then Continue;
-      if (UsedMinerCount > SkillLimit[13]) and (SkillLimit[13] <> -1) then Continue;
-      if (UsedDiggerCount > SkillLimit[14]) and (SkillLimit[14] <> -1) then Continue;
-      if (UsedClonerCount > SkillLimit[15]) and (SkillLimit[15] <> -1) then Continue;
+      TotalSkillUsed := 0;
+      for j := 0 to 15 do
+      begin
+        if (UsedSkillCount[ActionListArray[j]] > SkillLimit[j]) and (SkillLimit[j] <> -1) then GetTalisman := False;
+        TotalSkillUsed := TotalSkillUsed + UsedSkillCount[ActionListArray[j]];
+      end;
 
-      ts := UsedWalkerCount + UsedClimberCount + UsedSwimmerCount + UsedFloaterCount
-          + UsedGliderCount + UsedMechanicCount + UsedBomberCount + UsedStonerCount
-          + UsedBlockerCount + UsedPlatformerCount + UsedBuilderCount + UsedStackerCount
-          + UsedBasherCount + UsedMinerCount + UsedDiggerCount + UsedClonerCount;
-
-      if (ts > TotalSkillLimit) and (TotalSkillLimit <> -1) then Continue;
+      if (TotalSkillUsed > TotalSkillLimit) and (TotalSkillLimit <> -1) then GetTalisman := False;
 
       FoundIssue := false;
       if tmOneSkill in MiscOptions then
         for i2 := 0 to LemmingList.Count-1 do
           with LemmingList[i2] do
            if (LemUsedSkillCount > 1) then FoundIssue := true;
-      if FoundIssue then Continue;
+      if FoundIssue then GetTalisman := False;
 
       UsedSkillLems := 0;
       if tmOneLemming in MiscOptions then
         for i2 := 0 to LemmingList.Count-1 do
           with LemmingList[i2] do
             if (LemUsedSkillCount > 0) then Inc(UsedSkillLems);
-      if UsedSkillLems > 1 then Continue;
+      if UsedSkillLems > 1 then GetTalisman := False;
 
-      fGameParams.SaveSystem.GetTalisman(Signature);
-      if TalismanType <> 0 then fTalismanReceived := true;
+      if GetTalisman then
+      begin
+        fGameParams.SaveSystem.GetTalisman(Signature);
+        if TalismanType <> 0 then fTalismanReceived := True;
+      end;
     end;
   end;
 end;
@@ -2040,6 +1920,7 @@ var
   MO: TMetaObject;
   Inf: TInteractiveObjectInfo;
   numEntries:integer;
+  LoopSkill: TBasicLemmingAction;
 const
   OID_EXIT                  = 0;
   OID_ENTRY                 = 1;
@@ -2171,40 +2052,27 @@ begin
 
     currReleaseRate    := ReleaseRate  ;
     lastReleaseRate    := ReleaseRate  ;
-    currClimberCount   := ClimberCount ;
-    currFloaterCount   := FloaterCount ;
-    currBomberCount    := BomberCount  ;
-    currBlockerCount   := BlockerCount ;
-    currBuilderCount   := BuilderCount ;
-    currBasherCount    := BasherCount  ;
-    currMinerCount     := MinerCount   ;
-    currDiggerCount    := DiggerCount  ;
 
-    currWalkerCount := WalkerCount;
-    currSwimmerCount := SwimmerCount;
-    currGliderCount := GliderCount;
-    currMechanicCount := MechanicCount;
-    currStonerCount := StonerCount;
-    currPlatformerCount := PlatformerCount;
-    currStackerCount := StackerCount;
-    currClonerCount := ClonerCount;
-
-    UsedWalkerCount := 0;
-    UsedClimberCount := 0;
-    UsedSwimmerCount := 0;
-    UsedFloaterCount := 0;
-    UsedGliderCount := 0;
-    UsedMechanicCount := 0;
-    UsedBomberCount := 0;
-    UsedStonerCount := 0;
-    UsedBlockerCount := 0;
-    UsedPlatformerCount := 0;
-    UsedBuilderCount := 0;
-    UsedStackerCount := 0;
-    UsedBasherCount := 0;
-    UsedMinerCount := 0;
-    UsedDiggerCount := 0;
-    UsedClonerCount := 0;
+    // Set available skills
+    CurrSkillCount[baDigging]      := DiggerCount;
+    CurrSkillCount[baClimbing]     := ClimberCount;
+    CurrSkillCount[baBuilding]     := BuilderCount;
+    CurrSkillCount[baBashing]      := BasherCount;
+    CurrSkillCount[baMining]       := MinerCount;
+    CurrSkillCount[baFloating]     := FloaterCount;
+    CurrSkillCount[baBlocking]     := BlockerCount;
+    CurrSkillCount[baExploding]    := BomberCount;
+    CurrSkillCount[baToWalking]    := WalkerCount;
+    CurrSkillCount[baPlatforming]  := PlatformerCount;
+    CurrSkillCount[baStacking]     := StackerCount;
+    CurrSkillCount[baStoning]      := StonerCount;
+    CurrSkillCount[baSwimming]     := SwimmerCount;
+    CurrSkillCount[baGliding]      := GliderCount;
+    CurrSkillCount[baFixing]       := MechanicCount;
+    CurrSkillCount[baCloning]      := ClonerCount;
+    // Initialize used skills
+    for LoopSkill := baNone to baCloning do
+      UsedSkillCount[LoopSkill] := 0;
   end;
 
   LowestReleaseRate := CurrReleaseRate;
@@ -2726,8 +2594,19 @@ end;
 
 procedure TLemmingGame.SetBlockerField(L: TLemming);
 var
-  X, Y: Integer;
+  X, Y, Step: Integer;
 begin
+  X := L.LemX - 6;
+  if L.LemDx = 1 then Inc(X);
+
+  for Step := 0 to 11 do
+    for Y := L.LemY - 6 to L.LemY + 4 do
+      case Step of
+        0..3: WriteBlockerMap(X + Step, Y, DOM_FORCELEFT);
+        4..7: WriteBlockerMap(X + Step, Y, DOM_BLOCKER);
+        8..11: WriteBlockerMap(X + Step, Y, DOM_FORCERIGHT);
+      end;
+(*
   with L do
   begin
     for X := LemX - 5 to LemX - 3 do
@@ -2746,7 +2625,7 @@ begin
       else
         WriteBlockerMap(LemX+6, Y, DOM_FORCERIGHT);
 
-  end;
+  end;                                                *)
 end;
 
 procedure TLemmingGame.SetZombieField(L: TLemming);
@@ -4072,6 +3951,15 @@ begin
       Dec(NewY);
     end;
     if dy < 9 then *) TurnAround(L);
+
+    // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
+    if L.LemAction = baMining then
+    begin
+      if L.LemFrame = 2 then
+        ApplyMinerMask(L, 1, 0, 0)
+      else if (L.LemFrame >= 3) and (L.LemFrame < 15) then
+        ApplyMinerMask(L, 1, -2*L.LemDx, -1);
+    end;
   end;
 end;
 
@@ -7060,8 +6948,12 @@ begin
   if (fGameParams.ChallengeMode) and ((Level.Info.SkillTypes and 1) <> 0) then Exit;
   for i := 0 to ObjectInfos.Count-1 do
     if (ObjectInfos[i].MetaObj.TriggerEffect = 14) and (ObjectInfos[i].Obj.Skill = 15) then pcc := pcc + 1;
-  if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) +
+
+  (*if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) +
       ((Level.Info.SkillTypes and 1) * CurrClonerCount) + pcc
+     < Level.Info.RescueCount) *)
+  if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) +
+      ((Level.Info.SkillTypes and 1) * CurrSkillCount[baCloning]) + pcc
      < Level.Info.RescueCount)
   and (CurrentIteration mod 17 > 8) {and (CurrentIteration mod 34 < 27)} then
     Result := true;
@@ -7092,25 +6984,9 @@ begin
   Result := fFreezeSkillCount;
   if fFreezeSkillCount then Exit;
 
-  case aAction of
-    baToWalking  : sc := CurrWalkerCount;
-    baClimbing   : sc := CurrClimberCount;
-    baSwimming   : sc := CurrSwimmerCount;
-    baFloating   : sc := CurrFloaterCount;
-    baGliding    : sc := CurrGliderCount;
-    baFixing     : sc := CurrMechanicCount;
-    baExploding  : sc := CurrBomberCount;
-    baStoning    : sc := CurrStonerCount;
-    baBlocking   : sc := CurrBlockerCount;
-    baPlatforming: sc := CurrPlatformerCount;
-    baBuilding   : sc := CurrBuilderCount;
-    baStacking   : sc := CurrStackerCount;
-    baBashing    : sc := CurrBasherCount;
-    baMining     : sc := CurrMinerCount;
-    baDigging    : sc := CurrDiggerCount;
-    baCloning    : sc := CurrClonerCount;
-    else Exit;
-  end;
+  Assert(aAction in AssignableSkills, 'CheckSkillAvailable for not assignable skill');
+
+  sc := CurrSkillCount[aAction];
 
   if sc > 0 then Result := true;
 
@@ -7122,31 +6998,18 @@ begin
 
 end;
 
+
 procedure TLemmingGame.UpdateSkillCount(aAction: TBasicLemmingAction; Rev : Boolean = false);
 var
   sc, sc2: ^Integer;
 begin
   if Rev and fGameParams.ChallengeMode then Exit;
   if fFreezeSkillCount then Exit;
-  case aAction of
-    baToWalking  : begin sc := @CurrWalkerCount; sc2 := @UsedWalkerCount; end;
-    baClimbing   : begin sc := @CurrClimberCount; sc2 := @UsedClimberCount; end;
-    baSwimming   : begin sc := @CurrSwimmerCount; sc2 := @UsedSwimmerCount; end;
-    baFloating   : begin sc := @CurrFloaterCount; sc2 := @UsedFloaterCount; end;
-    baGliding    : begin sc := @CurrGliderCount; sc2 := @UsedGliderCount; end;
-    baFixing     : begin sc := @CurrMechanicCount; sc2 := @UsedMechanicCount; end;
-    baExploding  : begin sc := @CurrBomberCount; sc2 := @UsedBomberCount; end;
-    baStoning    : begin sc := @CurrStonerCount; sc2 := @UsedStonerCount; end;
-    baBlocking   : begin sc := @CurrBlockerCount; sc2 := @UsedBlockerCount; end;
-    baPlatforming: begin sc := @CurrPlatformerCount; sc2 := @UsedPlatformerCount; end;
-    baBuilding   : begin sc := @CurrBuilderCount; sc2 := @UsedBuilderCount; end;
-    baStacking   : begin sc := @CurrStackerCount; sc2 := @UsedStackerCount; end;
-    baBashing    : begin sc := @CurrBasherCount; sc2 := @UsedBasherCount; end;
-    baMining     : begin sc := @CurrMinerCount; sc2 := @UsedMinerCount; end;
-    baDigging    : begin sc := @CurrDiggerCount; sc2 := @UsedDiggerCount; end;
-    baCloning    : begin sc := @CurrClonerCount; sc2 := @UsedClonerCount; end;
-    else Exit;
-  end;
+
+  Assert(aAction in AssignableSkills, 'UpdateSkillCount for not assignable skill');
+
+  sc := @CurrSkillCount[aAction];
+  sc2 := @UsedSkillCount[aAction];
 
   if sc^ > 99 then Exit;
 
@@ -7160,7 +7023,10 @@ begin
   if sc^ < 0 then sc^ := 0;
   if sc^ > 99 then sc^ := 99;
 
-  case aAction of
+
+  InfoPainter.DrawSkillCount(ActionToSkillPanelButton[aAction], sc^);
+
+ (* case aAction of
     baToWalking  : InfoPainter.DrawSkillCount(spbWalker, sc^);
     baClimbing   : InfoPainter.DrawSkillCount(spbClimber, sc^);
     baSwimming   : InfoPainter.DrawSkillCount(spbSwimmer, sc^);
@@ -7177,7 +7043,7 @@ begin
     baMining     : InfoPainter.DrawSkillCount(spbMiner, sc^);
     baDigging    : InfoPainter.DrawSkillCount(spbDigger, sc^);
     baCloning    : InfoPainter.DrawSkillCount(spbCloner, sc^);
-  end;
+  end;   *)
 
 end;
 
@@ -7651,22 +7517,22 @@ begin
   if moChallengeMode in fGame.fGameParams.MiscOptions then
   begin
     ads('Challenge mode: Enabled');
-    if fGame.Level.Info.SkillTypes and $8000 <> 0 then ads('>> Walkers used:     ' + i2s(fGame.UsedWalkerCount));
-    if fGame.Level.Info.SkillTypes and $4000 <> 0 then ads('>> Climbers used:    ' + i2s(fGame.UsedClimberCount));
-    if fGame.Level.Info.SkillTypes and $2000 <> 0 then ads('>> Swimmers used:    ' + i2s(fGame.UsedSwimmerCount));
-    if fGame.Level.Info.SkillTypes and $1000 <> 0 then ads('>> Floaters used:    ' + i2s(fGame.UsedFloaterCount));
-    if fGame.Level.Info.SkillTypes and $0800 <> 0 then ads('>> Gliders used:     ' + i2s(fGame.UsedGliderCount));
-    if fGame.Level.Info.SkillTypes and $0400 <> 0 then ads('>> Disarmers used:   ' + i2s(fGame.UsedMechanicCount));
-    if fGame.Level.Info.SkillTypes and $0200 <> 0 then ads('>> Bombers used:     ' + i2s(fGame.UsedBomberCount));
-    if fGame.Level.Info.SkillTypes and $0100 <> 0 then ads('>> Stoners used:     ' + i2s(fGame.UsedStonerCount));
-    if fGame.Level.Info.SkillTypes and $0080 <> 0 then ads('>> Blockers used:    ' + i2s(fGame.UsedBlockerCount));
-    if fGame.Level.Info.SkillTypes and $0040 <> 0 then ads('>> Platformers used: ' + i2s(fGame.UsedPlatformerCount));
-    if fGame.Level.Info.SkillTypes and $0020 <> 0 then ads('>> Builders used:    ' + i2s(fGame.UsedBuilderCount));
-    if fGame.Level.Info.SkillTypes and $0010 <> 0 then ads('>> Stackers used:    ' + i2s(fGame.UsedStackerCount));
-    if fGame.Level.Info.SkillTypes and $0008 <> 0 then ads('>> Bashers used:     ' + i2s(fGame.UsedBasherCount));
-    if fGame.Level.Info.SkillTypes and $0004 <> 0 then ads('>> Miners used:      ' + i2s(fGame.UsedMinerCount));
-    if fGame.Level.Info.SkillTypes and $0002 <> 0 then ads('>> Diggers used:     ' + i2s(fGame.UsedDiggerCount));
-    if fGame.Level.Info.SkillTypes and $0001 <> 0 then ads('>> Cloners used:     ' + i2s(fGame.UsedClonerCount));
+    if fGame.Level.Info.SkillTypes and $8000 <> 0 then ads('>> Walkers used:     ' + i2s(fGame.UsedSkillCount[baToWalking]));
+    if fGame.Level.Info.SkillTypes and $4000 <> 0 then ads('>> Climbers used:    ' + i2s(fGame.UsedSkillCount[baClimbing]));
+    if fGame.Level.Info.SkillTypes and $2000 <> 0 then ads('>> Swimmers used:    ' + i2s(fGame.UsedSkillCount[baSwimming]));
+    if fGame.Level.Info.SkillTypes and $1000 <> 0 then ads('>> Floaters used:    ' + i2s(fGame.UsedSkillCount[baFloating]));
+    if fGame.Level.Info.SkillTypes and $0800 <> 0 then ads('>> Gliders used:     ' + i2s(fGame.UsedSkillCount[baGliding]));
+    if fGame.Level.Info.SkillTypes and $0400 <> 0 then ads('>> Disarmers used:   ' + i2s(fGame.UsedSkillCount[baFixing]));
+    if fGame.Level.Info.SkillTypes and $0200 <> 0 then ads('>> Bombers used:     ' + i2s(fGame.UsedSkillCount[baExploding]));
+    if fGame.Level.Info.SkillTypes and $0100 <> 0 then ads('>> Stoners used:     ' + i2s(fGame.UsedSkillCount[baStoning]));
+    if fGame.Level.Info.SkillTypes and $0080 <> 0 then ads('>> Blockers used:    ' + i2s(fGame.UsedSkillCount[baBlocking]));
+    if fGame.Level.Info.SkillTypes and $0040 <> 0 then ads('>> Platformers used: ' + i2s(fGame.UsedSkillCount[baPlatforming]));
+    if fGame.Level.Info.SkillTypes and $0020 <> 0 then ads('>> Builders used:    ' + i2s(fGame.UsedSkillCount[baBuilding]));
+    if fGame.Level.Info.SkillTypes and $0010 <> 0 then ads('>> Stackers used:    ' + i2s(fGame.UsedSkillCount[baStacking]));
+    if fGame.Level.Info.SkillTypes and $0008 <> 0 then ads('>> Bashers used:     ' + i2s(fGame.UsedSkillCount[baBashing]));
+    if fGame.Level.Info.SkillTypes and $0004 <> 0 then ads('>> Miners used:      ' + i2s(fGame.UsedSkillCount[baMining]));
+    if fGame.Level.Info.SkillTypes and $0002 <> 0 then ads('>> Diggers used:     ' + i2s(fGame.UsedSkillCount[baDigging]));
+    if fGame.Level.Info.SkillTypes and $0001 <> 0 then ads('>> Cloners used:     ' + i2s(fGame.UsedSkillCount[baCloning]));
   end else ads('Challenge mode: Disabled');
   if moTimerMode in fGame.fGameParams.MiscOptions then
   begin
