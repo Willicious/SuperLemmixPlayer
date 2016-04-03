@@ -437,8 +437,8 @@ type
       CurrReleaseRate: Integer;
       LastReleaseRate: Integer;
 
-      CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
-      UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
+      CurrSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
+      UsedSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
 
       UserSetNuking: Boolean;
       Index_LemmingToBeNuked: Integer;
@@ -686,7 +686,6 @@ type
     procedure DrawDebugString(L: TLemming);
     procedure DrawLemmings;
     procedure DrawParticles(L: TLemming);
-    procedure DrawStatics;
     procedure EraseLemmings;
     procedure EraseParticles(L: TLemming);
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
@@ -1308,12 +1307,15 @@ end;
 
 procedure TLemmingGame.UpdateOneSkillCount(aSkill: TSkillPanelButton);
 begin
-  case aSkill of
-    spbSlower: InfoPainter.DrawSkillCount(spbSlower, Level.Info.ReleaseRate);
-    spbFaster: InfoPainter.DrawSkillCount(spbFaster, CurrReleaseRate);
-  else
+  if aSkill = spbSlower then
+    InfoPainter.DrawSkillCount(spbSlower, Level.Info.ReleaseRate)
+  else if aSkill = spbFaster then
+    InfoPainter.DrawSkillCount(spbFaster, CurrReleaseRate)
+  else if aSkill in [spbWalker..spbCloner] then
     InfoPainter.DrawSkillCount(aSkill, CurrSkillCount[SkillPanelButtonToAction[aSkill]]);
-  end;
+  (*else
+    InfoPainter.DrawSkillCount(aSkill, CurrSkillCount[SkillPanelButtonToAction[aSkill]]);
+  end; *)
 end;
 
 procedure TLemmingGame.UpdateAllSkillCounts;
@@ -1442,8 +1444,8 @@ begin
 
   for i := 1 to 15 do
   begin
-    aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
-    aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
+    CurrSkillCount[ActionListArray[i]] := aState.CurrSkillCount[ActionListArray[i]];
+    UsedSkillCount[ActionListArray[i]] := aState.UsedSkillCount[ActionListArray[i]];
   end;
 
   UserSetNuking := aState.UserSetNuking;
@@ -1918,7 +1920,6 @@ var
   MO: TMetaObject;
   Inf: TInteractiveObjectInfo;
   numEntries:integer;
-  LoopSkill: TBasicLemmingAction;
 const
   OID_EXIT                  = 0;
   OID_ENTRY                 = 1;
@@ -2178,8 +2179,7 @@ begin
   end;
   SetSelectedSkill(TSkillPanelButton(i2), True); // default
 
-
-  DrawStatics;
+  UpdateAllSkillCounts;
 
   SteelWorld.Assign(World);
   SpawnLemming; // instantly-spawning lemmings (object type 13)
@@ -3696,7 +3696,7 @@ end;
 
 
 procedure TLemmingGame.RemoveObjectID(ObjectID: Word);
-// We replace the trigger area of one type with another type NewObjType
+// We disconnect the trigger area from the ObjectID
 var
   Inf: TInteractiveObjectInfo;
   mx, my: Integer;
@@ -4017,19 +4017,17 @@ end;
 
 
 procedure TLemmingGame.ApplyStoneLemming(L: TLemming);
+var
+  X: Integer;
 begin
+  X := L.LemX;
+  if L.LemDx = 1 then Inc(X);
 
-  if L.LemDx = 1 then Inc(L.LemX);
-
-  StoneLemBmp.DrawTo(World, L.LemX - 8, L.LemY -10);
+  StoneLemBmp.DrawTo(World, X - 8, L.LemY -10);
   if not HyperSpeed then
-    StoneLemBmp.DrawTo(fTargetBitmap, L.LemX - 8, L.LemY -10);
+    StoneLemBmp.DrawTo(fTargetBitmap, X - 8, L.LemY -10);
 
-  if L.LemDx = 1 then Dec(L.LemX);
-
- (* SteelWorld.Assign(World);*)
   InitializeMinimap;
-
 end;
 
 
@@ -4067,16 +4065,14 @@ begin
 
   if not L.LemRTL then L.LemX := L.LemX - 1;
 
-  (*SteelWorld.Assign(World);*)
   InitializeMinimap;
-
 end;
 
 procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);
 var
   Bmp: TBitmap32;
   S, D: TRect;
-  {X, Y,} X1, Y1: Integer;
+  X1, Y1: Integer;
 begin
   // dos bashing mask = 16 x 10
 
@@ -4118,9 +4114,7 @@ begin
       WriteSpecialMap(X1, Y1, DOM_NONE);
   end;
 
-  (* SteelWorld.Assign(World); *)
   InitializeMinimap;
-
 end;
 
 procedure TLemmingGame.ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
@@ -4266,7 +4260,6 @@ const
     Result := ((LV * Iter * 2) div 17);
   end;
 begin
-
 
   if (not HyperSpeed) then
     for i := 0 to ObjectInfos.Count - 1 do
@@ -5311,9 +5304,9 @@ begin
             );
 end;
 
-function TLemmingGame.HasSteelAt(x, y: Integer): Boolean;
+function TLemmingGame.HasSteelAt(X, Y: Integer): Boolean;
 begin
-  Result := (ReadSpecialMap(x, y) = DOM_STEEL);
+  Result := (ReadSpecialMap(X, Y) = DOM_STEEL);
 end;
 
 
@@ -5784,35 +5777,6 @@ begin
 
 end;
 
-procedure TLemmingGame.DrawStatics;
-begin
-  if InfoPainter = nil then
-    Exit;
-
-
-  with InfoPainter, Level.Info do
-  begin
-
-    DrawSkillCount(spbSlower, ReleaseRate);
-    DrawSkillCount(spbFaster, ReleaseRate);
-    DrawSkillCount(spbClimber, ClimberCount);
-    DrawSkillCount(spbUmbrella, FloaterCount);
-    DrawSkillCount(spbExplode, BomberCount);
-    DrawSkillCount(spbBlocker, BlockerCount);
-    DrawSkillCount(spbBuilder, BuilderCount);
-    DrawSkillCount(spbBasher, BasherCount);
-    DrawSkillCount(spbMiner, MinerCount);
-    DrawSkillCount(spbDigger, DiggerCount);
-    DrawSkillCount(spbWalker, WalkerCount);
-    DrawSkillCount(spbSwimmer, SwimmerCount);
-    DrawSkillCount(spbGlider, GliderCount);
-    DrawSkillCount(spbMechanic, MechanicCount);
-    DrawSkillCount(spbStoner, StonerCount);
-    DrawSkillCount(spbPlatformer, PlatformerCount);
-    DrawSkillCount(spbStacker, StackerCount);
-    DrawSkillCount(spbCloner, ClonerCount);
-  end;
-end;
 
 procedure TLemmingGame.HitTest(Autofail: Boolean = false);
 var
