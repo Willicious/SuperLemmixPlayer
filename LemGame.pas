@@ -2651,7 +2651,7 @@ begin
     RestoreMap;
   end;
 
-  // Should already be correct usually, but just to be sure...
+  // Transition to faller instead walker, if no pixel below lemming
   if (not HasPixelAt(L.LemX, L.LemY)) and (NewAction = baWalking) then
     NewAction := baFalling;
 
@@ -3674,10 +3674,16 @@ begin
   if ReadWaterMap(L.LemX, L.LemY) = DOM_WATER then HandleWaterSwim(L);
 
   // Check for blocker fields and force-fields
-  case (ReadBlockerMap(L.LemX, L.LemY) or ReadObjectMapType(L.LemX, L.LemY)) of
+  // There should be a more compact code!!!
+  case ReadObjectMapType(L.LemX, L.LemY) of
     DOM_FORCELEFT: HandleForceField(L, -1);
     DOM_FORCERIGHT: HandleForceField(L, 1);
   end;
+  case ReadBlockerMap(L.LemX, L.LemY) of
+    DOM_FORCELEFT: HandleForceField(L, -1);
+    DOM_FORCERIGHT: HandleForceField(L, 1);
+  end;
+
 end;
 
 
@@ -3915,7 +3921,7 @@ function TLemmingGame.HandleForceField(L: TLemming; Direction: Integer): Boolean
   dy, NewY: Integer; *)
 begin
   Result := False;
-  if (L.LemDx = -Direction) and not (L.LemAction in [baClimbing, baHoisting]) then
+  if (L.LemDx = -Direction) and not (L.LemAction = baHoisting) then
   begin
     Result := True;
 
@@ -3935,6 +3941,12 @@ begin
         ApplyMinerMask(L, 1, 0, 0)
       else if (L.LemFrame >= 3) and (L.LemFrame < 15) then
         ApplyMinerMask(L, 1, -2*L.LemDx, -1);
+    end
+    else if L.LemAction = baClimbing then
+    begin
+      Inc(L.LemX, L.LemDx); // Move out of the wall
+      if not L.LemIsNewClimbing then Inc(L.LemY); // Don't move below original position
+      Transition(L, baWalking);
     end;
   end;
 end;
@@ -4841,86 +4853,56 @@ end;
 
 
 function TLemmingGame.HandleClimbing(L: TLemming): Boolean;
+// Be very careful when changing the terrain/hoister checks for climbers!
+// See http://www.lemmingsforums.net/index.php?topic=2506.0 first!
 var
   FoundClip: Boolean;
 begin
   Result := True;
 
-  with L do
+  if L.LemFrame <= 3 then
   begin
+    FoundClip := (HasPixelAt(L.LemX - L.LemDx, L.LemY - 6 - L.LemFrame))
+              or (HasPixelAt(L.LemX - L.LemDx, L.LemY - 5 - L.LemFrame) and (not L.LemIsNewClimbing));
 
-    if (LemFrame <= 3) then
+    if L.LemFrame = 0 then // first triggered after 8 frames!
+      FoundClip := FoundClip and HasPixelAt(L.LemX - L.LemDx, L.LemY - 7);
+
+    if FoundClip then
     begin
-      // check if we approached the top
-      //if (HasPixelAt_ClipY(LemX, LemY - 7 - LemFrame, 0) = FALSE) then
-      begin
-        FoundClip := (HasPixelAt(LemX - LemDx, LemY - 6 - Lemframe))
-                  or (HasPixelAt(LemX - LemDx, LemY - 5 - Lemframe) and (not LemIsNewClimbing));
-
-        if LemIsNewClimbing and (LemFrame = 0) then
-          FoundClip := false;        // Does this even occur???
-
-        if LemIsNewClimbing and (LemFrame = 3) then
-          FoundClip := FoundClip or (HasPixelAt(LemX - LemDx, LemY - 4 - LemFrame));
-
-        if (not LemIsNewClimbing) and (LemFrame = 0) then
-          FoundClip := FoundClip and HasPixelAt(LemX - LemDx, LemY - 7);
-
-
-
-        if FoundClip then
-        begin
-          // Don't fall below original position on hitting terrain in first cycle
-          if not LemIsNewClimbing then LemY := LemY - LemFrame + 3;
-          Transition(L, baFalling, True); // turn around as well
-          Inc(LemX, LemDx);
-        end else if not HasPixelAt(LemX, LemY - 7 - LemFrame) then
-        begin
-          // if-case prevents too deep bombing, see http://www.lemmingsforums.net/index.php?topic=2620.0
-          if not (LemIsNewClimbing and (LemFrame = 1)) then
-          begin
-            LemY := LemY - LemFrame + 2;
-            LemIsNewClimbing := False;
-          end;
-          Transition(L, baHoisting);
-        end;
-
-      end;
-
-      Result := True;
-      Exit;
+      // Don't fall below original position on hitting terrain in first cycle
+      if not L.LemIsNewClimbing then L.LemY := L.LemY - L.LemFrame + 3;
+      Dec(L.LemX, L.LemDx);
+      Transition(L, baFalling, True); // turn around as well
     end
-    else begin
-      Dec(LemY);
-
-      FoundClip := HasPixelAt(LemX - LemDx, LemY - 7);
-
-      if LemFrame = 7 then
-        FoundClip := FoundClip and HasPixelAt(LemX, LemY - 7);
-
-      if (LemFrame = 4) and LemIsNewClimbing then
+    else if not HasPixelAt(L.LemX, L.LemY - 7 - L.LemFrame) then
+    begin
+      // if-case prevents too deep bombing, see http://www.lemmingsforums.net/index.php?topic=2620.0
+      if not (L.LemIsNewClimbing and (L.LemFrame = 1)) then
       begin
-        FoundClip := FoundClip or HasPixelAt(LemX - LemDx, LemY - 6);
-        // Remove LemIsNewClimbing on frame 4 of first cycle
-        LemIsNewClimbing := False;
+        L.LemY := L.LemY - L.LemFrame + 2;
+        L.LemIsNewClimbing := False;
       end;
-
-      FoundClip := FoundClip
-        or ((ReadObjectMapType(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0))
-        or ((ReadObjectMapType(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0))
-        or ((ReadBlockerMap(LemX, LemY) = DOM_FORCELEFT) and (LemDx > 0))
-        or ((ReadBlockerMap(LemX, LemY) = DOM_FORCERIGHT) and (LemDx < 0));
-
-      if FoundClip then
-      begin
-        LemY := LemY + 1;
-        Transition(L, baFalling, True); // turn around as well
-        Inc(LemX, LemDx);
-      end;
-      Result := True;
-      Exit;
+      Transition(L, baHoisting);
     end;
+  end
 
+  else
+  begin
+    Dec(L.LemY);
+    L.LemIsNewClimbing := False;
+
+    FoundClip := HasPixelAt(L.LemX - L.LemDx, L.LemY - 7);
+
+    if L.LemFrame = 7 then
+      FoundClip := FoundClip and HasPixelAt(L.LemX, L.LemY - 7);
+
+    if FoundClip then
+    begin
+      Inc(L.LemY);
+      Dec(L.LemX, L.LemDx);
+      Transition(L, baFalling, True); // turn around as well
+    end;
   end;
 end;
 
