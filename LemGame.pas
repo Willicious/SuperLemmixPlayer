@@ -110,7 +110,6 @@ type
     LemTimerToStone               : Boolean;
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemRTLAdjust                  : Boolean;
-    LemInTrap                     : Integer;
     // The next three values are only needed to determine intermediate trigger area checks
     // They are set in HandleLemming
     LemXOld                       : Integer; // position of previous frame
@@ -1119,7 +1118,6 @@ begin
   LemTimerToStone := Source.LemTimerToStone;
   LemStackLow := Source.LemStackLow;
   LemRTLAdjust := Source.LemRTLAdjust;
-  LemInTrap := Source.LemInTrap;
 end;
 
 { TLemmingList }
@@ -3660,8 +3658,6 @@ begin
       L.LemX := CheckPosX[i];
       L.LemY := CheckPosY[i];
     end;
-    // Set L.LemInTrap correctly
-    if (not ObjectType in [DOM_TRAP, DOM_TRAPONCE]) and (L.LemInTrap = 1) then L.LemInTrap := 0;
     // Set L.LemInFlipper correctly
     if ObjectType <> DOM_FLIPPER then L.LemInFlipper := DOM_NOOBJECT;
   until ([CheckPosX[i], CheckPosY[i]] = [L.LemX, L.LemY]) (*or AbortChecks*);
@@ -3723,12 +3719,11 @@ begin
     Transition(L, baFixing);
   end
 
-  else if L.LemInTrap = 0 then
+  else
   begin
     // trigger
     Inf.Triggered := True;
     Inf.ZombieMode := L.LemIsZombie;
-    L.LemInTrap := Inf.MetaObj.AnimationFrameCount;
     // Make sure to remove the blocker field!
     L.LemHasBlockerField := False;
     RestoreMap;
@@ -3755,12 +3750,11 @@ begin
     RemoveObjectID(ObjectID);
     Transition(L, baFixing);
   end
-  else if (L.LemInTrap = 0) and not (Inf.CurrentFrame = 0) then
+  else if not (Inf.CurrentFrame = 0) then
   begin
     // trigger
     Inf.Triggered := True;
     Inf.ZombieMode := L.LemIsZombie;
-    L.LemInTrap := Inf.MetaObj.AnimationFrameCount;
     // Make sure to remove the blocker field!
     L.LemHasBlockerField := False;
     RestoreMap;
@@ -5583,20 +5577,16 @@ begin
     Assert(RemMode <> RM_SAVE, 'Zombie removed with RM_SAVE removal type!');
     Assert(RemMode <> RM_ZOMBIE, 'Zombie removed with RM_ZOMBIE removal type!');
     L.LemRemoved := True;
-    if RemMode = RM_KILL then L.LemInTrap := 0;
   end
 
   else // usual lemming
   begin
-    if L.LemRemoved and (L.LemInTrap <= 1) then Exit; // We really should catch this elsewhere, but for now it may stay...
-
     Inc(LemmingsRemoved);
     Dec(LemmingsOut);
     if (fHighlightLemming = L) then fHighlightLemming := nil;
     L.LemRemoved := True;
 
     case RemMode of
-    RM_KILL : L.LemInTrap := 0;
     RM_SAVE : begin
                 Inc(LemmingsIn);
                 GameResultRec.gLastRescueIteration := fCurrentIteration;
@@ -6475,11 +6465,7 @@ begin
           //EraseParticles(CurrentLemming);
           Dec(LemParticleTimer);
         end;
-      if LemInTrap > 1 then
-      begin
-        Dec(LemInTrap);
-        if LemInTrap = 1 then LemRemoved := false;
-      end;
+
       if LemRemoved or LemTeleporting then
         Continue;
       if LemExplosionTimer <> 0 then
@@ -6491,25 +6477,29 @@ begin
       // Let lemmings move
       HandleInteractiveObjects := HandleLemming(CurrentLemming);
       // Check whether the lem is still on screen
-      HandleInteractiveObjects := CheckLevelBoundaries(CurrentLemming) and HandleInteractiveObjects;
+      if HandleInteractiveObjects then
+        HandleInteractiveObjects := CheckLevelBoundaries(CurrentLemming);
       // Check whether the lem has moved over trigger areas
-      if HandleInteractiveObjects then CheckTriggerArea(CurrentLemming);
+      if HandleInteractiveObjects then
+        CheckTriggerArea(CurrentLemming);
     end;
 
   end;
 
-    for i := 0 to LemmingList.Count - 1 do
+  // Check for lemmings meeting zombies
+  // Need to do this in separate loop, because the ZombieMap gets only set during HandleLemming!
+  for i := 0 to LemmingList.Count - 1 do
+  begin
+    CurrentLemming := LemmingList.List^[i];
+    with CurrentLemming do
     begin
-      CurrentLemming := LemmingList.List^[i];
-      with CurrentLemming do
-      begin
-        // Zombies //
-        if (ReadZombieMap(LemX, LemY) and 1 <> 0)
-        and (LemAction <> baExiting)
-        and not CurrentLemming.LemIsZombie then
-          RemoveLemming(CurrentLemming, RM_ZOMBIE);
-      end;
+      // Zombies //
+      if     (ReadZombieMap(LemX, LemY) and 1 <> 0)
+         and (LemAction <> baExiting)
+         and not CurrentLemming.LemIsZombie then
+        RemoveLemming(CurrentLemming, RM_ZOMBIE);
     end;
+  end;
 
 end;
 
