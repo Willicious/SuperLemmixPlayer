@@ -86,7 +86,6 @@ type
     LemParticleFrame              : Integer; // the "frame" of the particle drawing algorithm
     FrameTopDy                    : Integer; // = -LMA.FootY (ccexplore compatible)
     FrameLeftDx                   : Integer; // = -LMA.FootX (ccexplore compatible)
-    LemFloatParametersTableIndex  : Integer; // index for floaters
     LemNumberOfBricksLeft         : Integer; // for builder, platformer, stacker
   { byte sized fields }
     LemAction                     : TBasicLemmingAction; // current action of the lemming
@@ -1066,7 +1065,6 @@ begin
             'MaxFrame=' + i2s(LemMaxFrame) + ', ' +
             'FrameLeftDx=' + i2s(FrameLeftDx) + ', ' +
             'FrameTopDy=' + i2s(FrameTopDy) + ', ' +
-            'FloatParamTableIndex=' + i2s(LemFloatParametersTableIndex) + ', ' +
             'NumberOfBricksLeft=' + i2s(LemNumberOfBricksLeft) + ', ' +
             'IsNewDigger=' + BoolStrings[LemIsNewDigger] + ', ' +
             'HasBlockerField:' + BoolStrings[LemHasBlockerField] + ', ' +
@@ -1098,7 +1096,6 @@ begin
   LemParticleFrame := Source.LemParticleFrame;
   FrameTopDy := Source.FrameTopDy;
   FrameLeftDx := Source.FrameLeftDx;
-  LemFloatParametersTableIndex := Source.LemFloatParametersTableIndex;
   LemNumberOfBricksLeft := Source.LemNumberOfBricksLeft;
 
   LemAction := Source.LemAction;
@@ -2713,8 +2710,6 @@ begin
                      if fHighlightLemming = L then fHighlightLemming := nil;
                      CueSoundEffect(SFX_EXPLOSION);
                    end;
-    baFloating   : L.LemFloatParametersTableIndex := 0;
-    baGliding    : L.LemFloatParametersTableIndex := 0;
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
                      while (i < 4) and (ReadWaterMap(L.LemX, L.LemY - i - 1) = DOM_WATER)
