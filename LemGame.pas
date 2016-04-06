@@ -2737,10 +2737,6 @@ begin
     LemAnimationType := LMA.AnimationType;
     FrameTopDy  := -LMA.FootY; // ccexplore compatible
     FrameLeftDx := -LMA.FootX; // ccexplore compatible
-    // Required for turned builders not to walk into air
-    if (LemAction = baBuilding) and (LemFrame >= 9) then LayBrick(L);
-    // See http://www.lemmingsforums.net/index.php?topic=2530.0
-    if (LemAction = baPlatforming) and (LemFrame >= 9) then LayBrick(L);
   end;
 end;
 
@@ -2885,13 +2881,17 @@ begin
       Inc(LemmingsRemoved); *)
 
     // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
-    if (NewL.LemAction = baMining) then
+    if NewL.LemAction = baMining then
     begin
       if NewL.LemFrame = 2 then
         ApplyMinerMask(NewL, 1, 0, 0)
       else if (NewL.LemFrame >= 3) and (NewL.LemFrame < 15) then
         ApplyMinerMask(NewL, 1, -2*NewL.LemDx, -1);
-    end;
+    end
+    // Required for turned builders not to walk into air
+    // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
+    else if (NewL.LemAction in [baBuilding, baPlatforming]) and (NewL.LemFrame >= 9) then
+      LayBrick(NewL);
   end;
 end;
 
@@ -3938,6 +3938,10 @@ begin
       else if (L.LemFrame >= 3) and (L.LemFrame < 15) then
         ApplyMinerMask(L, 1, -2*L.LemDx, -1);
     end
+    // Required for turned builders not to walk into air
+    // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
+    else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemFrame >= 9) then
+      LayBrick(L)
     else if L.LemAction = baClimbing then
     begin
       Inc(L.LemX, L.LemDx); // Move out of the wall
