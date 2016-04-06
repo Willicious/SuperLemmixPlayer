@@ -76,7 +76,7 @@ type
     moRemoved1,      // 1
     moRemoved2,        // 2
     moRemoved3,       // 3
-    moCheatCodes,       // 4
+    moRemoved4,       // 4
     moRemoved5,    // 5
     moLookForLVLFiles,  // 6
     moDebugSteel,
@@ -139,44 +139,6 @@ type
     function GetSoundFlag(aFlag: TGameSoundOption): Boolean;
     procedure SetSoundFlag(aFlag: TGameSoundOption; aValue: Boolean);
 
-    {function GetCheatCodesEnabled: Boolean;
-    procedure SetCheatCodesEnabled(Value: Boolean);
-    function GetMusicEnabled: Boolean;
-    function GetSoundEnabled: Boolean;
-    procedure SetMusicEnabled(Value: Boolean);
-    procedure SetSoundEnabled(Value: Boolean);
-    function GetLookForLVLFiles: Boolean;
-    procedure SetLookForLVLFiles(Value: Boolean);
-    function GetDebugSteel: Boolean;
-    procedure SetDebugSteel(Value: Boolean);
-    function GetChallengeMode: Boolean;
-    procedure SetChallengeMode(Value: Boolean);
-    function GetTimerMode: Boolean;
-    procedure SetTimerMode(Value: Boolean);
-    function GetAutoReplayNames: Boolean;
-    procedure SetAutoReplayNames(Value: Boolean);
-    function GetLemmingBlink: Boolean;
-    procedure SetLemmingBlink(Value: Boolean);
-    function GetTimerBlink: Boolean;
-    procedure SetTimerBlink(Value: Boolean);
-    function GetAutoReplaySave: Boolean;
-    procedure SetAutoReplaySave(Value: Boolean);
-    function GetClickHighlight: Boolean;
-    procedure SetClickHighlight(Value: Boolean);
-    function GetAlwaysTimestamp: Boolean;
-    procedure SetAlwaysTimestamp(Value: Boolean);
-    function GetConfirmOverwrite: Boolean;
-    procedure SetConfirmOverwrite(Value: Boolean);
-    function GetExplicitCancel: Boolean;
-    procedure SetExplicitCancel(Value: Boolean);
-    function GetWhiteOutZero: Boolean;
-    procedure SetWhiteOutZero(Value: Boolean);
-    function GetIgnoreReplaySelection: Boolean;
-    procedure SetIgnoreReplaySelection(Value: Boolean);
-    function GetEnableOnline: Boolean;
-    procedure SetEnableOnline(Value: Boolean);
-    function GetCheckUpdates: Boolean;
-    procedure SetCheckUpdates(Value: Boolean);}
   public
     // this is initialized by appcontroller
     MainDatFile  : string;
@@ -242,7 +204,6 @@ type
     property MusicEnabled: Boolean Index gsoMusic read GetSoundFlag write SetSoundFlag;
     property SoundEnabled: Boolean Index gsoSound read GetSoundFlag write SetSoundFlag;
 
-    property CheatCodesEnabled: Boolean Index moCheatCodes read GetOptionFlag write SetOptionFlag;
     property LookForLVLFiles: Boolean Index moLookForLVLFiles read GetOptionFlag write SetOptionFlag;
     property DebugSteel: Boolean Index moDebugSteel read GetOptionFlag write SetOptionFlag;
     property ChallengeMode: Boolean Index moChallengeMode read GetOptionFlag write SetOptionFlag;

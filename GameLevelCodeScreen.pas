@@ -32,7 +32,6 @@ type
     procedure Form_Close(Sender: TObject; var Action: TCloseAction );
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
     function CheckLevelCode: Boolean;
-    function CheckCheatCode: Boolean;
     procedure DrawChar(aCursorPos: Integer; aBlink: Boolean = False);
     procedure DrawMessage(const S: string);
     procedure UpdateCheatMessage;
@@ -99,23 +98,6 @@ begin
   end;
 end;
 
-function TGameLevelCodeScreen.CheckCheatCode: Boolean;
-var
-  S, tstr, CC: string;
-  x: byte;
-begin
-  S := stringreplace(LowerCase(LevelCode), '.', '', [rfReplaceAll]);
-  for x := 0 to 9 do
-  begin
-    if (tstr <> '') or (GameParams.SysDat.CheatCode[x] <> ' ') then
-    begin
-      tstr := tstr + GameParams.SysDat.CheatCode[x];
-      if GameParams.SysDat.CheatCode[x] <> ' ' then CC := tstr;
-    end;
-  end;
-  if (CC <> '') then Result := CompareText(S, LowerCase(CC)) = 0;
-end;
-
 function TGameLevelCodeScreen.CheckLevelCode: Boolean;
 var
 //  i: Integer;
@@ -140,7 +122,7 @@ begin
 
     if not Result then
       //if GameParams.CheatCodesEnabled then       // HERE TO DISABLE INSTANT LEVEL CODES 1 // if GameParams.CheatCodesEnabled then
-        Result := Sys.FindCheatCode(LevelCode, GameParams.Info, GameParams.CheatCodesEnabled);
+        Result := Sys.FindCheatCode(LevelCode, GameParams.Info);
 
     if Result then
     begin
@@ -227,12 +209,7 @@ begin
 
   LastCheatMessage := '';
 
-  if (moCheatCodes in Gameparams.MiscOptions) then
-    StringToDisplay := 'Cheat Enabled'
-  else if (GameParams.SysDat.Options3 and 8 <> 0) then
-    StringToDisplay := 'All Levels Unlocked'
-  else
-    Exit;
+  StringToDisplay := 'All Levels Unlocked';
 
   LastCheatMessage := StringToDisplay;
 
@@ -258,14 +235,6 @@ begin
       VK_ESCAPE: CloseScreen(gstMenu);
       VK_RETURN:
         begin
-          if CheckCheatCode then        // HERE TO DISABLE INSTANT LEVEL CODES 2 // if CheckCheatCode then
-          begin
-            // toggle cheat
-            GameParams.CheatCodesEnabled := not(GameParams.CheatCodesEnabled);//True;
-            UpdateCheatMessage;
-//            DrawMessage('cheatmode enabled');
-            Exit;
-          end;
           if not ValidLevelCode then
           begin
             ValidLevelCode := CheckLevelCode;

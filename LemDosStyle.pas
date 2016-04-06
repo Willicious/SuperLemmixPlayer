@@ -99,7 +99,6 @@ type
     function FindLastUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindNextUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
     function FindPreviousUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
-    procedure UnlockAllLevels;
     procedure ResetOddtableHistory;
 
 
@@ -290,20 +289,8 @@ begin
 end;
 
 procedure TBaseDosLevelSystem.InitSave;
-var
-  i: Integer;
 begin
-  for i := 0 to (fDefaultSectionCount - 1) do
-    SaveSystem.UnlockLevel(i, 0);
-end;
-
-procedure TBaseDosLevelSystem.UnlockAllLevels;
-var
-  i, i2: Integer;
-begin
-  for i := 0 to GetSectionCount-1 do
-    for i2 := 0 to GetLevelCount(i)-1 do
-      SaveSystem.UnlockLevel(i, i2);
+  // doesn't seem to need to do anything anymore
 end;
 
 procedure TBaseDosLevelSystem.DumpAllLevels;
@@ -393,8 +380,6 @@ begin
 
       if (L >= 1) and (L <= GetLevelCount(i)) then
       begin
-      if SaveSystem.CheckUnlocked(i, L-1) then
-      begin
         with Rec do
         begin
           dValid := True;
@@ -405,7 +390,6 @@ begin
         end;
         Result := True;
         Exit;
-      end;
       end;
     end else
       Comp := Comp2;
@@ -459,14 +443,11 @@ begin
       dLevel         := 0;
       for i := 0 to GetLevelCount(dSection) - 1 do
       begin
-        if SaveSystem.CheckUnlocked(dSection, i)  then
+        dLevel := i;
+        if not SaveSystem.CheckCompleted(dSection, i) then
         begin
-          dLevel := i;
-          if not SaveSystem.CheckCompleted(dSection, i) then
-          begin
-            FoundLevel := true;
-            Break;
-          end;
+          FoundLevel := true;
+          Break;
         end;
       end;
       dSectionName   := L[dSection]; //#EL watch out for the record-string-mem-leak
@@ -494,10 +475,9 @@ begin
       dPack          := 0;
       odLevel := dLevel;
       i := dLevel - 1;
-      //for i := (GetLevelCount(dSection) - 1) downto (dLevel + 1) do
       while i <> odLevel do
       begin
-        if SaveSystem.CheckUnlocked(dSection, i) or (CheatMode) then dLevel := i;
+        dLevel := i;
         dec(i);
         if i < 0 then i := GetLevelCount(dSection) - 1;
       end;
@@ -522,14 +502,11 @@ begin
     begin
       dValid         := True;
       dPack          := 0;
-      //if dSection >= 0
-      //dSection       := 0;
       odLevel := dLevel;
       i := dLevel + 1;
-      //for i := 0 to dLevel - 1 do
       while i <> odLevel do
       begin
-        if SaveSystem.CheckUnlocked(dSection, i) or CheatMode  then dLevel := i;
+        dLevel := i;
         inc(i);
         if i >= GetLevelCount(dSection) then i := 0;
       end;
