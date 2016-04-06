@@ -69,8 +69,6 @@ type
     LemIndex                      : Integer; // index in the lemminglist
     LemX                          : Integer; // the "main" foot x position
     LemY                          : Integer; // the "main" foot y position
-    LemParticleX                  : Integer; // lemming position when particles triggered
-    LemParticleY                  : Integer;
     LemDX                         : Integer; // x speed (1 if left to right, -1 if right to left)
     LemJumped                     : Integer; // number of pixels the lem jumped
     LemFallen                     : Integer; // number of fallen pixels after last updraft
@@ -1079,8 +1077,6 @@ begin
   LemX := Source.LemX;
   LemY := Source.LemY;
   LemDX := Source.LemDX;
-  LemParticleX := Source.LemParticleX;
-  LemParticleY := Source.LemParticleY;
   LemJumped := Source.LemJumped;
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
@@ -4178,19 +4174,14 @@ begin
   with L do
     if LemParticleFrame <= 50 then
     begin
-      if LemParticleFrame = 0 then
-      begin
-        LemParticleX := LemX;
-        LemParticleY := LemY;
-      end;
       for i := 0 to 79 do
       begin
         X := fParticles[LemParticleFrame][i].DX;
         Y := fParticles[LemParticleFrame][i].DY;
         if (X <> -128) and (Y <> -128) then
         begin
-          X := LemParticleX + X;
-          Y := LemParticleY + Y;
+          X := L.LemX + X;
+          Y := L.LemY + Y;
           fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
           Drawn := True;
         end;
@@ -4213,19 +4204,14 @@ begin
   with L do
     if LemParticleFrame <= 50 then
     begin
-      if LemParticleFrame = 0 then
-      begin
-        LemParticleX := LemX;
-        LemParticleY := LemY;
-      end;
       for i := 0 to 79 do
       begin
         X := fParticles[LemParticleFrame][i].DX;
         Y := fParticles[LemParticleFrame][i].DY;
         if (X <> -128) and (Y <> -128) then
         begin
-          X := LemParticleX + X;
-          Y := LemParticleY + Y;
+          X := L.LemX + X;
+          Y := L.LemY + Y;
           Drawn := True;
           fTargetBitmap.PixelS[X, Y] := fParticleColors[i mod 16]//Colors[i mod 3]
         end;
@@ -5564,8 +5550,6 @@ begin
   RemoveLemming(L, RM_KILL);
   L.LemExploded := True;
   L.LemParticleTimer := PARTICLE_FRAMECOUNT;
-  L.LemParticleX := L.LemX;
-  L.LemParticleY := L.LemY;
   fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
 end;
 
@@ -6454,20 +6438,20 @@ begin
 
     with CurrentLemming do
     begin
-      CountDownReachedZero := False;
+
       // @particles
       if LemParticleTimer > 0 then
       begin
         Dec(LemParticleTimer);
         Inc(LemParticleFrame);
-      end else if LemParticleTimer = 0 then
-        begin
-          //EraseParticles(CurrentLemming);
-          Dec(LemParticleTimer);
-        end;
+      end
+      else if LemParticleTimer = 0 then
+        Dec(LemParticleTimer);
 
       if LemRemoved or LemTeleporting then
         Continue;
+
+      CountDownReachedZero := False;
       if LemExplosionTimer <> 0 then
         CountDownReachedZero := UpdateExplosionTimer(CurrentLemming);
       if CountDownReachedZero then
