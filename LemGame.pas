@@ -1480,6 +1480,9 @@ begin
   fReplaying := true;
   fReplayIndex := fRecorder.FindIndexForFrame(fCurrentIteration);
   InfoPainter.SetReplayMark(true);
+
+  // And, update the minimap. Probably easier to redo this from scratch.
+  InitializeMiniMap;
 end;
 
 procedure TLemmingGame.RefreshAllPanelInfo;
