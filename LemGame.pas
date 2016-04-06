@@ -2625,14 +2625,12 @@ end;
 function TLemmingGame.CheckForOverlappingField(L: TLemming): Boolean;
 const
   BytesToCheck = [DOM_FORCELEFT, DOM_BLOCKER, DOM_FORCERIGHT];
-var
-  X, Y: Integer;
 begin
-  Result := false;
-  with L do
-    for X := LemX - 5 to LemX + 5 do
-    for Y := LemY - 6 to LemY + 4 do
-      Result := Result or (ReadBlockerMap(X, Y) in BytesToCheck)
+  // Check only the vertices of the new blocker field
+  Result :=    (ReadBlockerMap(L.LemX - 5, L.LemY - 6) in BytesToCheck)
+            or (ReadBlockerMap(L.LemX + 5, L.LemY - 6) in BytesToCheck)
+            or (ReadBlockerMap(L.LemX - 5, L.LemY + 4) in BytesToCheck)
+            or (ReadBlockerMap(L.LemX + 5, L.LemY + 4) in BytesToCheck);
 end;
 
 
