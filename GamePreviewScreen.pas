@@ -27,6 +27,8 @@ type
     procedure CheckLemmingCount(aLevel: TLevel; aGraphicSet: TBaseDosGraphicSet);
     procedure NextLevel;
     procedure PreviousLevel;
+    procedure NextRank;
+    procedure PreviousRank;
     procedure ShowRecords;
     procedure SimulateSpawn;
   protected
@@ -166,6 +168,34 @@ begin
     GameParams.WhichLevel := wlPreviousUnlocked;
     CloseScreen(gstPreview);
   end;
+end;
+
+procedure TGamePreviewScreen.NextRank;
+var
+  FindInfo: TDosGamePlayInfoRec;
+begin
+  FindInfo := GameParams.Info;
+  if FindInfo.dSection = TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetSectionCount-1 then Exit;
+  FindInfo.dSection := FindInfo.dSection + 1;
+  GameParams.Style.LevelSystem.FindLastUnlockedLevel(FindInfo);
+  GameParams.ShownText := false;
+  GameParams.WhichLevel := wlLastUnlocked;
+  GameParams.Info := FindInfo;
+  CloseScreen(gstPreview);
+end;
+
+procedure TGamePreviewScreen.PreviousRank;
+var
+  FindInfo: TDosGamePlayInfoRec;
+begin
+  FindInfo := GameParams.Info;
+  if FindInfo.dSection = 0 then Exit;
+  FindInfo.dSection := FindInfo.dSection - 1;
+  GameParams.Style.LevelSystem.FindLastUnlockedLevel(FindInfo);
+  GameParams.ShownText := false;
+  GameParams.WhichLevel := wlLastUnlocked;
+  GameParams.Info := FindInfo;
+  CloseScreen(gstPreview);
 end;
 
 procedure TGamePreviewScreen.CheckLemmingCount(aLevel: TLevel; aGraphicSet: TBaseDosGraphicSet);
@@ -418,6 +448,8 @@ begin
           $52: ShowRecords;
     VK_LEFT: PreviousLevel;
     VK_RIGHT: NextLevel;
+    VK_UP: PreviousRank;
+    VK_DOWN: NextRank;
   end;
 end;
 
