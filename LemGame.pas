@@ -5563,7 +5563,7 @@ begin
     L.LemRemoved := True;
   end
 
-  else // usual lemming
+  else if not L.LemRemoved then // usual and living lemming
   begin
     Inc(LemmingsRemoved);
     Dec(LemmingsOut);
