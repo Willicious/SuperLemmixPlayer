@@ -535,7 +535,7 @@ begin
                             GotoSaveState(fSaveStateFrame);
                             if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                           end;
-          lka_Cheat: if GameParams.CheatCodesEnabled or ((GameParams.SysDat.Options3 and 8) <> 0) then Game.Cheat;
+          lka_Cheat: Game.Cheat;
           lka_FastForward: if not Paused then FastForward := not FastForward;
           lka_SaveImage: SaveShot;
           lka_LoadReplay: LoadReplay;

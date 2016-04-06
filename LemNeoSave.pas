@@ -29,9 +29,6 @@ type
     constructor Create;
     destructor Destroy; override;
     procedure Clear;
-    procedure UnlockLevel(aSection, aLevel: Integer);
-    function CheckUnlocked(aSection, aLevel: Integer): Boolean;
-    function CheckUnlockedRank(aSection: Integer): Boolean;
     procedure CompleteLevel(aSection, aLevel: Integer);
     function CheckCompleted(aSection, aLevel: Integer): Boolean;
     procedure UpdateConfig(aPointer: Pointer);
@@ -120,34 +117,6 @@ begin
     p.fTestScreens := TestOption;
     p.SoundOptions := TGameSoundOptions(SoundOption);
   end;
-end;
-
-procedure TNeoSave.UnlockLevel(aSection, aLevel: Integer);
-var
-  p : ^byte;
-  b : byte;
-begin
-  p := @fSaveData.UnlockTable[aSection][aLevel div 8];
-  b := p^;
-  b := b or (1 shl (aLevel mod 8));
-  p^ := b;
-end;
-
-function TNeoSave.CheckUnlocked(aSection, aLevel: Integer): Boolean;
-var
-  b: byte;
-begin
-  b := fSaveData.UnlockTable[aSection][aLevel div 8];
-  Result := b and (1 shl (aLevel mod 8)) <> 0;
-end;
-
-function TNeoSave.CheckUnlockedRank(aSection: Integer): Boolean;
-var
-  i: Integer;
-begin
-  Result := false;
-  for i := 0 to 31 do
-    if fSaveData.UnlockTable[aSection][i] <> 0 then Result := true;
 end;
 
 procedure TNeoSave.CompleteLevel(aSection, aLevel: Integer);
@@ -292,15 +261,11 @@ var
     for R := 0 to 14 do
       for L := 0 to 254 do
       begin
-        if not (CheckUnlocked(R, L) or CheckCompleted(R, L)) then Continue;
+        if not CheckCompleted(R, L) then Continue;
         SL.Add('[L' + LeadZeroStr(R+1, 2) + LeadZeroStr(L+1, 2) + ']');
-        if CheckCompleted(R, L) then
-        begin
-          SL.Add('Completed');
-          SL.Add('MostLemmingsSaved=' + IntToStr(GetLemmingRecord(R, L)));
-          SL.Add('FastestTime=' + FramesToTime(GetTimeRecord(R, L)));
-        end else
-          SL.Add('Unlocked');
+        SL.Add('Completed');
+        SL.Add('MostLemmingsSaved=' + IntToStr(GetLemmingRecord(R, L)));
+        SL.Add('FastestTime=' + FramesToTime(GetTimeRecord(R, L)));
         SL.Add('');
       end;
   end;
@@ -574,13 +539,8 @@ var
       Line := trim(LowerCase(SL[CurrentLine]));
       Inc(CurrentLine);
 
-      if Line = 'unlocked' then
-        UnlockLevel(RankID, LevelID);
       if Line = 'completed' then
-      begin
-        UnlockLevel(RankID, LevelID);
         CompleteLevel(RankID, LevelID);
-      end;
       if GetKey(Line) = 'mostlemmingssaved' then
         SetLemmingRecord(RankID, LevelID, StrToIntDef(GetValue(Line), 0));
       if GetKey(Line) = 'fastesttime' then
@@ -816,11 +776,7 @@ var
 begin
   for i := 0 to Length(fTalismanData)-1 do
     if fTalismanData[i].TalSignature = aSig then
-    begin
       fTalismanData[i].Acheived := 1;
-      for i2 := 0 to fTalismans.Count-1 do
-        if (fTalismans[i2].Signature = aSig) and (tmUnlockLevel in fTalismans[i].MiscOptions) then UnlockLevel(fTalismans[i].UnlockRank, fTalismans[i].UnlockLevel);
-    end;
 end;
 
 end.

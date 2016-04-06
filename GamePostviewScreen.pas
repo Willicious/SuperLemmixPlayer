@@ -232,7 +232,6 @@ begin
     with SaveSystem, Info do
     begin
       CompleteLevel(dSection, dLevel);
-      if NextAvail then UnlockLevel(NextInfo.dSection, NextInfo.dLevel);
       SetLemmingRecord(dSection, dLevel, gRescued);
       SetTimeRecord(dSection, dLevel, gLastRescueIteration);
     end;

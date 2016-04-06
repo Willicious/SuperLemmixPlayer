@@ -331,8 +331,6 @@ begin
     fGameParams.ForceSkillset := 0;
   end;
 
-  if fGameParams.SysDat.Options3 and 8 <> 0 then TBaseDosLevelSystem(fGameParams.Style.LevelSystem).UnlockAllLevels;
-
   if fGameParams.fTestMode then
   begin
     // These options should never be enabled when using testplay mode.

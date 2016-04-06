@@ -145,7 +145,7 @@ var
   FindInfo: TDosGamePlayInfoRec;
 begin
   FindInfo := GameParams.Info;
-  GameParams.Style.LevelSystem.FindNextUnlockedLevel(FindInfo, GameParams.CheatCodesEnabled);
+  GameParams.Style.LevelSystem.FindNextUnlockedLevel(FindInfo);
   if FindInfo.dLevel <> GameParams.Info.dLevel then
   begin
     GameParams.ShownText := false;
@@ -159,7 +159,7 @@ var
   FindInfo: TDosGamePlayInfoRec;
 begin
   FindInfo := GameParams.Info;
-  GameParams.Style.LevelSystem.FindPreviousUnlockedLevel(FindInfo, GameParams.CheatCodesEnabled);
+  GameParams.Style.LevelSystem.FindPreviousUnlockedLevel(FindInfo);
   if FindInfo.dLevel <> GameParams.Info.dLevel then
   begin
     GameParams.ShownText := false;
@@ -246,9 +246,6 @@ begin
       CheckLemmingCount(Level, Graphicset);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
-
-    with GameParams.Info do
-      GameParams.SaveSystem.UnlockLevel(dSection, dLevel);
 
     Temp := TBitmap32.Create;
     W := TBitmap32.Create;
@@ -520,8 +517,8 @@ begin
       wlLevelCode: Style.LevelSystem.FindLevel(Info);
       wlNext: Style.LevelSystem.FindNextLevel(Info);
       wlSame: Style.LevelSystem.FindLevel(Info);
-      wlNextUnlocked: Style.LevelSystem.FindNextUnlockedLevel(Info, Params.CheatCodesEnabled);
-      wlPreviousUnlocked: Style.LevelSystem.FindPreviousUnlockedLevel(Info, Params.CheatCodesEnabled);
+      wlNextUnlocked: Style.LevelSystem.FindNextUnlockedLevel(Info);
+      wlPreviousUnlocked: Style.LevelSystem.FindPreviousUnlockedLevel(Info);
       wlLastUnlocked: Style.LevelSystem.FindLastUnlockedLevel(Info);
     end;
 
