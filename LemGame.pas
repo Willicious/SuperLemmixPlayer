@@ -673,6 +673,7 @@ type
     procedure CheckForPlaySoundEffect;
     procedure CheckForReplayAction(RRCheck: Boolean);
     procedure CheckLemmings;
+    function CheckLemTeleporting(L: TLemming): Boolean;
     procedure CheckReleaseLemming;
     procedure CheckUpdateNuking;
     procedure CueSoundEffect(aSoundId: Integer);
@@ -2092,7 +2093,7 @@ begin
         Inf.CurrentFrame := 0;
 
     Inf.ZombieMode := false;
-
+    Inf.TeleLem := -1; // Set to a value no lemming has (hopefully!) 
 
 
     if ((MO.TriggerEffect = 23)) and (O.IsFake = false) and (O.Left + MO.Width >= 0) then
@@ -4402,7 +4403,6 @@ begin
     end;
   end;
 
-  (* SteelWorld.Assign(World);  //What has LayBrick to do with STEEL!!!???*)
   InitializeMinimap;
 end;
 
@@ -4436,7 +4436,6 @@ begin
     end;
   end;
 
-  (*SteelWorld.Assign(World);  //What has LayStackBrick to do with STEEL!!!???*)
   InitializeMinimap;
 end;
 
@@ -4462,7 +4461,6 @@ begin
       WriteSpecialMap(PosX + n, PosY, DOM_NONE);
   end;
 
-  (*SteelWorld.Assign(World);  // What has Digging to do with STEEL!!!???  *)
   InitializeMinimap;
 end;
 
@@ -6296,8 +6294,7 @@ procedure TLemmingGame.CheckLemmings;
 var
   i: Integer;
   CurrentLemming: TLemming;
-  HandleInteractiveObjects: Boolean;
-  CountDownReachedZero: Boolean;
+  HandleInteractiveObjects: Boolean; // wrong name: This just remembers whether we should stop checking more of the lemming
 begin
 
   ZombieMap.Clear(0);
@@ -6308,23 +6305,26 @@ begin
 
     with CurrentLemming do
     begin
-
+      HandleInteractiveObjects := True;
       // @particles
       if LemParticleTimer >= 0 then
         Dec(LemParticleTimer);
 
-      if LemRemoved or LemTeleporting then
+      if LemRemoved {or LemTeleporting} then
         Continue;
 
-      CountDownReachedZero := False;
-      if LemExplosionTimer <> 0 then
-        CountDownReachedZero := UpdateExplosionTimer(CurrentLemming);
-      if CountDownReachedZero then
-        Continue;
+      // Put lemming out of receiver if teleporting is finished.
+      if LemTeleporting then
+        HandleInteractiveObjects := CheckLemTeleporting(CurrentLemming);
+
+      // Explosion-Countdown
+      if HandleInteractiveObjects and (LemExplosionTimer <> 0) then
+        HandleInteractiveObjects := not UpdateExplosionTimer(CurrentLemming);
 
       // HERE COME THE MAIN THREE LINES !!!
       // Let lemmings move
-      HandleInteractiveObjects := HandleLemming(CurrentLemming);
+      if HandleInteractiveObjects then
+        HandleInteractiveObjects := HandleLemming(CurrentLemming);
       // Check whether the lem is still on screen
       if HandleInteractiveObjects then
         HandleInteractiveObjects := CheckLevelBoundaries(CurrentLemming);
@@ -6351,6 +6351,41 @@ begin
   end;
 
 end;
+
+
+function TLemmingGame.CheckLemTeleporting(L: TLemming): Boolean;
+// This function checks, whether a lemming appears out of a receiver
+var
+  ObjInfo: TInteractiveObjectInfo;
+  ObjID: Integer;
+begin
+  Result := False;
+
+  Assert(L.LemTeleporting = True, 'CheckLemTeleporting called for non-teleporting lemming');
+
+  // Search for Teleporter, the lemming is in
+  ObjID := -1;
+  repeat
+    Inc(ObjID);
+    ObjInfo := ObjectInfos.List^[ObjID];
+  until (L.LemIndex = ObjInfo.TeleLem) or (ObjID > ObjectInfos.Count - 1);
+
+  Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
+
+  if     (ObjInfo.MetaObj.TriggerEffect = DOM_RECEIVER)
+     or ((ObjInfo.MetaObj.TriggerEffect = DOM_TWOWAYTELE) and (ObjInfo.TwoWayReceive = True))
+     or  (ObjInfo.MetaObj.TriggerEffect = DOM_SINGLETELE) then
+  begin
+    if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.MetaObj.AnimationFrameCount) and (ObjInfo.MetaObj.TriggerNext = 0))
+       or ((ObjInfo.CurrentFrame + 1 = ObjInfo.MetaObj.TriggerNext) and (ObjInfo.MetaObj.TriggerNext <> 0)) then
+    begin
+      L.LemTeleporting := False; // Let lemming reappear
+      ObjInfo.TeleLem := -1;
+      Result := True;
+    end;
+  end;
+end;
+
 
 procedure TLemmingGame.SetGameResult;
 {-------------------------------------------------------------------------------
@@ -6491,6 +6526,7 @@ begin
 
     if (Inf.Triggered or (Inf.MetaObj.AnimationType = oat_Continuous)) and (Inf.MetaObj.TriggerEffect <> 14) then
       Inc(Inf.CurrentFrame);
+
     if (Inf.MetaObj.TriggerEffect = 11) or ((Inf.MetaObj.TriggerEffect = 28) and (Inf.TwoWayReceive = false)) then
     begin
       if    ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
@@ -6506,31 +6542,12 @@ begin
           Inf2.Triggered := True;
           Inf2.ZombieMode := Inf.ZombieMode;
           Inf2.TwoWayReceive := true;
+          // Reset TeleLem for Teleporter
+          Inf.TeleLem := -1;
         end;
       end;
     end;
 
-    if (Inf.MetaObj.TriggerEffect = 12) or ((Inf.MetaObj.TriggerEffect = 28) and (Inf.TwoWayReceive = true)) then
-    begin
-      if    ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
-         or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
-      begin
-        L := LemmingList.List^[Inf.TeleLem];
-        L.LemTeleporting := false;
-        HandleLemming(L);
-      end;
-    end;
-
-    if Inf.MetaObj.TriggerEffect = 29 then
-    begin
-      if ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
-      or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
-      begin
-        L := LemmingList.List^[Inf.TeleLem];
-        L.LemTeleporting := false;
-        HandleLemming(L);
-      end;
-    end;
     if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
     begin
       Inf.CurrentFrame := 0;
