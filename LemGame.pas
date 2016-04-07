@@ -680,9 +680,8 @@ type
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
     procedure DrawLemmings;
-    procedure DrawParticles(L: TLemming);
+    procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
     procedure EraseLemmings;
-    procedure EraseParticles(L: TLemming);
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
     function HasPixelAt(X, Y: Integer): Boolean;
@@ -4158,64 +4157,29 @@ begin
   InitializeMinimap;
 end;
 
-procedure TLemmingGame.EraseParticles(L: TLemming);
-{-------------------------------------------------------------------------------
-  Erase the previously drawn particles of an exploded lemming
--------------------------------------------------------------------------------}
+
+procedure TLemmingGame.DrawParticles(L: TLemming; DoErase: Boolean);
+// if DoErase = False, then draw the explosion particles,
+// if DoErase = True, then erase them.
 var
   i, X, Y: Integer;
-  Drawn: Boolean;
 begin
-
-  Drawn := False;
-
-  with L do
-    if LemParticleTimer > 1 then
+  for i := 0 to 79 do
+  begin
+    X := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DX;
+    Y := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DY;
+    if (X <> -128) and (Y <> -128) then
     begin
-      for i := 0 to 79 do
-      begin
-        X := fParticles[PARTICLE_FRAMECOUNT - LemParticleTimer][i].DX;
-        Y := fParticles[PARTICLE_FRAMECOUNT - LemParticleTimer][i].DY;
-        if (X <> -128) and (Y <> -128) then
-        begin
-          X := L.LemX + X;
-          Y := L.LemY + Y;
-          fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
-          Drawn := True;
-        end;
-      end;
+      X := L.LemX + X;
+      Y := L.LemY + Y;
+      if DoErase then
+        fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y]
+      else
+        fTargetBitmap.PixelS[X, Y] := fParticleColors[i mod 16];
     end;
+  end;
 
-  fExplodingGraphics := Drawn;
-end;
-
-procedure TLemmingGame.DrawParticles(L: TLemming);
-var
-  i, X, Y: Integer;
-  Drawn: Boolean;
-begin
-                                    
-  Drawn := False;
-
-  with L do
-    if LemParticleTimer > 1 then
-    begin
-      for i := 0 to 79 do
-      begin
-        X := fParticles[PARTICLE_FRAMECOUNT - LemParticleTimer][i].DX;
-        Y := fParticles[PARTICLE_FRAMECOUNT - LemParticleTimer][i].DY;
-        if (X <> -128) and (Y <> -128) then
-        begin
-          X := L.LemX + X;
-          Y := L.LemY + Y;
-          Drawn := True;
-          fTargetBitmap.PixelS[X, Y] := fParticleColors[i mod 16]
-        end;
-      end;
-    end;
-
-  fExplodingGraphics := Drawn;
-
+  fExplodingGraphics := True;
 end;
 
 
@@ -4367,11 +4331,10 @@ begin
           if IntersectRect(TempRect, DstRect, World.BoundsRect) then
             World.DrawTo(fTargetBitmap, TempRect, TempRect);
         end;
+        
         // @particles (erase) if lem is removed
-        if LemParticleTimer > 0 then
-        begin
-          EraseParticles(CurrentLemming);
-        end;
+        if LemParticleTimer > 1 then
+          DrawParticles(CurrentLemming, True);
       end;
     end;
 end;
@@ -4482,10 +4445,10 @@ begin
           LAB.OnPixelCombine := OldCombineZ;
 
         end; // not LemmingRemoved
-        // @particles, check explosiondrawing if the lemming is dead
-        if LemParticleTimer > 1 then begin
-          DrawParticles(CurrentLemming);
-        end;
+
+        if LemParticleTimer > 1 then
+          DrawParticles(CurrentLemming, False);
+
       end; // with CurrentLemming
 
     end; // for i...
