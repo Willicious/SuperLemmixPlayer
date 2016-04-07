@@ -81,7 +81,6 @@ type
     LemMaxFrame                   : Integer; // copy from LMA
     LemAnimationType              : Integer; // copy from LMA
     LemParticleTimer              : Integer; // @particles, 52 downto 0, after explosion
-    LemParticleFrame              : Integer; // the "frame" of the particle drawing algorithm
     FrameTopDy                    : Integer; // = -LMA.FootY (ccexplore compatible)
     FrameLeftDx                   : Integer; // = -LMA.FootX (ccexplore compatible)
     LemNumberOfBricksLeft         : Integer; // for builder, platformer, stacker
@@ -1088,7 +1087,6 @@ begin
   LemMaxFrame := Source.LemMaxFrame;
   LemAnimationType := Source.LemAnimationType;
   LemParticleTimer := Source.LemParticleTimer;
-  LemParticleFrame := Source.LemParticleFrame;
   FrameTopDy := Source.FrameTopDy;
   FrameLeftDx := Source.FrameLeftDx;
   LemNumberOfBricksLeft := Source.LemNumberOfBricksLeft;
@@ -4172,12 +4170,12 @@ begin
   Drawn := False;
 
   with L do
-    if LemParticleFrame <= 50 then
+    if LemParticleTimer > 1 then
     begin
       for i := 0 to 79 do
       begin
-        X := fParticles[LemParticleFrame][i].DX;
-        Y := fParticles[LemParticleFrame][i].DY;
+        X := fParticles[PARTICLE_FRAMECOUNT - LemParticleTimer][i].DX;
+        Y := fParticles[PARTICLE_FRAMECOUNT - LemParticleTimer][i].DY;
         if (X <> -128) and (Y <> -128) then
         begin
           X := L.LemX + X;
@@ -4195,25 +4193,23 @@ procedure TLemmingGame.DrawParticles(L: TLemming);
 var
   i, X, Y: Integer;
   Drawn: Boolean;
-const
-  Colors: array[0..2] of TColor32 = (clYellow32, clRed32, clBlue32);
 begin
                                     
   Drawn := False;
 
   with L do
-    if LemParticleFrame <= 50 then
+    if LemParticleTimer > 1 then
     begin
       for i := 0 to 79 do
       begin
-        X := fParticles[LemParticleFrame][i].DX;
-        Y := fParticles[LemParticleFrame][i].DY;
+        X := fParticles[PARTICLE_FRAMECOUNT - LemParticleTimer][i].DX;
+        Y := fParticles[PARTICLE_FRAMECOUNT - LemParticleTimer][i].DY;
         if (X <> -128) and (Y <> -128) then
         begin
           X := L.LemX + X;
           Y := L.LemY + Y;
           Drawn := True;
-          fTargetBitmap.PixelS[X, Y] := fParticleColors[i mod 16]//Colors[i mod 3]
+          fTargetBitmap.PixelS[X, Y] := fParticleColors[i mod 16]
         end;
       end;
     end;
@@ -6440,12 +6436,7 @@ begin
     begin
 
       // @particles
-      if LemParticleTimer > 0 then
-      begin
-        Dec(LemParticleTimer);
-        Inc(LemParticleFrame);
-      end
-      else if LemParticleTimer = 0 then
+      if LemParticleTimer >= 0 then
         Dec(LemParticleTimer);
 
       if LemRemoved or LemTeleporting then
