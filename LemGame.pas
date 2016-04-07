@@ -888,10 +888,6 @@ uses
   LemDosStyle;
 
 const
-  OBJMAPOFFSET = 16;
-  OBJMAPADD = OBJMAPOFFSET;
-
-const
   LEMMIX_REPLAY_VERSION    = 105;
   MAX_REPLAY_RECORDS       = 32768;
   MAX_FALLDISTANCE         = 62;
@@ -2367,186 +2363,101 @@ begin
   end;
 end;
 
+
 function TLemmingGame.ReadObjectMap(X, Y: Integer): Word;
-// original dos objectmap has a resolution of 4
 begin
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-
-  x := x * 2;
-
-  with ObjectMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      Result := (ObjectMap.Bits^[X + Y * Width] shl 8) + ObjectMap.Bits^[X + 1 + Y * Width]
-    else
-      Result := DOM_NOOBJECT; // whoops, important
-  end;
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    Result := (ObjectMap.Value[2*X, Y] shl 8) + ObjectMap.Value[2*X + 1, Y]
+  else
+    Result := DOM_NOOBJECT; // whoops, important
 end;
 
 function TLemmingGame.ReadObjectMapType(X, Y: Integer): Byte;
 var
   ObjID: Word;
 begin
-
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-
-  x := x * 2;
-
-  with ObjectMap do
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
   begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-    begin
-      ObjID := (ObjectMap.Bits^[X + Y * Width] shl 8) + ObjectMap.Bits^[X + 1 + Y * Width];
-      if ObjID = DOM_NOOBJECT then
-        Result := DOM_NONE
-        else
-        Result := ObjectInfos[ObjID].MetaObj.TriggerEffect;
-    end else
-      Result := DOM_NONE; // whoops, important
-  end;
+    ObjID := ReadObjectMap(X, Y);
+    if ObjID = DOM_NOOBJECT then
+      Result := DOM_NONE
+    else
+      Result := ObjectInfos[ObjID].MetaObj.TriggerEffect;
+  end
+  else
+    Result := DOM_NONE; // whoops, important
 end;
 
 function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
 // original dos objectmap has a resolution of 4
 begin
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-
-  with BlockerMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      Result := BlockerMap.Bits^[X + Y * Width]
-    else
-      Result := DOM_NONE; // whoops, important
-  end;
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    Result := BlockerMap.Value[X, Y]
+  else
+    Result := DOM_NONE; // whoops, important
 end;
 
 function TLemmingGame.ReadZombieMap(X, Y: Integer): Byte;
-// original dos objectmap has a resolution of 4
 begin
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-
-  with ZombieMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      Result := ZombieMap.Bits^[X + Y * Width]
-    else
-      Result := DOM_NONE; // whoops, important
-  end;
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    Result := ZombieMap.Value[X, Y]
+  else
+    Result := DOM_NONE; // whoops, important
 end;
 
 function TLemmingGame.ReadSpecialMap(X, Y: Integer): Byte;
-// original dos objectmap has a resolution of 4
 begin
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    Result := SpecialMap.Value[X, Y]
+  else
+    Result := DOM_NONE; // whoops, important
 
-  with SpecialMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      Result := SpecialMap.Bits^[X + Y * Width]
-    else
-      Result := DOM_NONE; // whoops, important
-
-    if X < OBJMAPADD then Result := DOM_NONE; // Old version: DOM_STEEL;
-    if X >= World.Width + OBJMAPADD then Result := DOM_NONE; // Old version: DOM_STEEL;
-    if (Y < OBJMAPADD) then Result := DOM_STEEL;
-  end;
-
+  if X < 0 then Result := DOM_NONE; // Old version: DOM_STEEL;
+  if X >= World.Width then Result := DOM_NONE; // Old version: DOM_STEEL;
+  if Y < 0 then Result := DOM_STEEL;
 end;
 
 function TLemmingGame.ReadWaterMap(X, Y: Integer): Byte;
-// original dos objectmap has a resolution of 4
 begin
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-
-  with WaterMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      Result := Bits^[X + Y * Width]
-    else
-      Result := DOM_NONE; // whoops, important
-  end;
-
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    Result := WaterMap.Value[X, Y]
+  else
+    Result := DOM_NONE; // whoops, important
 end;
-
-
 
 procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aValue: Byte);
 begin
-
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-
-  with BlockerMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      BlockerMap.Bits^[X + Y * Width] := aValue;
-  end;
-
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    BlockerMap.Value[X, Y] := aValue;
 end;
 
 procedure TLemmingGame.WriteZombieMap(X, Y: Integer; aValue: Byte);
 begin
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-  with ZombieMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      ZombieMap.Bits^[X + Y * Width] := ZombieMap.Bits^[X + Y * Width] or aValue;
-  end;
-
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    ZombieMap.Value[X, Y] := ZombieMap.Value[X, Y] or aValue
 end;
 
 procedure TLemmingGame.WriteWaterMap(X, Y: Integer; aValue: Byte);
 begin
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-  with WaterMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      WaterMap.Bits^[X + Y * Width] := aValue;
-  end;
-
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    WaterMap.Value[X, Y] := aValue;
 end;
 
 
 procedure TLemmingGame.WriteSpecialMap(X, Y: Integer; aValue: Byte);
 begin
-
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-
-  with SpecialMap do
-  begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-      SpecialMap.Bits^[X + Y * Width] := aValue;
-  end;
-
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+    SpecialMap.Value[X, Y] := aValue;
 end;
 
 
 procedure TLemmingGame.WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = false);
 begin
-
-  Inc(X, OBJMAPADD);
-  Inc(Y, OBJMAPADD);
-
-  x := x * 2;
-
-  with ObjectMap do
+  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
   begin
-    if (X >= 0) and (X < Width) and (Y >= 0) and (Y < Height) then
-    begin
-      ObjectMap.Bits^[X + Y * Width] := aValue div 256;
-      ObjectMap.Bits^[X + 1 + Y * Width] := aValue mod 256;
-    end;
+    ObjectMap.Value[2*X, Y] := aValue div 256;
+    ObjectMap.Value[2*X + 1, Y] := aValue mod 256;
   end;
-
 end;
 
 
@@ -3154,10 +3065,10 @@ end;
 
 procedure TLemmingGame.InitializeBlockerMap; //ZombieMap too
 begin
-  BlockerMap.SetSize((Level.Info.Width + (OBJMAPOFFSET * 2)), (Level.Info.Height + (OBJMAPOFFSET * 2)));
+  BlockerMap.SetSize(Level.Info.Width, Level.Info.Height);
   BlockerMap.Clear(DOM_NONE);
 
-  ZombieMap.SetSize((Level.Info.Width + (OBJMAPOFFSET * 2)), (Level.Info.Height + (OBJMAPOFFSET * 2)));
+  ZombieMap.SetSize(Level.Info.Width, Level.Info.Height);
   ZombieMap.Clear(0);
 end;
 
@@ -3196,19 +3107,19 @@ var
   Eff, V: Byte;
 begin
 
-  ObjectMap.SetSize((Level.Info.Width + (OBJMAPOFFSET * 2)) * 2, (Level.Info.Height + (OBJMAPOFFSET * 2))); //1647, 175
+  ObjectMap.SetSize(2*Level.Info.Width, Level.Info.Height);
   ObjectMap.Clear(255);
 
-  SpecialMap.SetSize((Level.Info.Width + (OBJMAPOFFSET * 2)), (Level.Info.Height + (OBJMAPOFFSET * 2)));
+  SpecialMap.SetSize(Level.Info.Width, Level.Info.Height);
   SpecialMap.Clear(DOM_NONE);
 
-  WaterMap.SetSize((Level.Info.Width + (OBJMAPOFFSET * 2)), (Level.Info.Height + (OBJMAPOFFSET * 2)));
+  WaterMap.SetSize(Level.Info.Width, Level.Info.Height);
   WaterMap.Clear(DOM_NONE);
 
   with ObjectInfos do
   begin
 
-    for i := 0 to {MaxO}Count - 1 do
+    for i := 0 to Count - 1 do
     begin
       Inf := List^[i];
       with Inf, Obj, MetaObj do
