@@ -3775,11 +3775,13 @@ function TLemmingGame.HandleTrap(L: TLemming; ObjectID: Word): Boolean;
 var
   Inf: TInteractiveObjectInfo;
 begin
-  Result := True;
+  Result := False;
 
   Inf := ObjectInfos[ObjectID];
   // Exit function, if trap is currently at work
   if Inf.Triggered then Exit;
+
+  Result := True;
 
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
@@ -3807,11 +3809,13 @@ function TLemmingGame.HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
 var
   Inf: TInteractiveObjectInfo;
 begin
-  Result := True;
+  Result := False;
 
   Inf := ObjectInfos[ObjectID];
   // Exit function, if trap is working
   if Inf.Triggered then Exit;
+
+  Result := True;
 
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
