@@ -654,6 +654,8 @@ type
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming);
       procedure RemoveObjectID(ObjectID: Word);
+      function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
+
       function HandleTrap(L: TLemming; ObjectID: Word): Boolean;
       function HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
       function HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
@@ -3572,17 +3574,46 @@ begin
 
   // Check for blocker fields and force-fields
   // There should be a more compact code!!!
-  case ReadObjectMapType(L.LemX, L.LemY) of
-    DOM_FORCELEFT: HandleForceField(L, -1);
-    DOM_FORCERIGHT: HandleForceField(L, 1);
-  end;
-  case ReadBlockerMap(L.LemX, L.LemY) of
-    DOM_FORCELEFT: HandleForceField(L, -1);
-    DOM_FORCERIGHT: HandleForceField(L, 1);
-  end;
-
+  if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
+    HandleForceField(L, -1)
+  else if HasTriggerAt(L.LemX, L.LemY, trForceRight) then
+    HandleForceField(L, 1);
 end;
 
+function TLemmingGame.HasTriggerAt(X, Y: Integer;TriggerType: TTriggerTypes): Boolean;
+// Checks whether the trigger area TriggerType occurs at position (X, Y)
+begin
+  Result := False;
+
+  case TriggerType of
+    trExit:       Result :=     (ReadObjectMapType(X, Y) = DOM_EXIT)
+                            or ((ReadObjectMapType(X, Y) = DOM_LOCKEXIT) and (ButtonsRemain = 0));
+    trForceLeft:  Result :=     (ReadObjectMapType(X, Y) = DOM_FORCELEFT)
+                            or ((ReadBlockerMap(X, Y) = DOM_FORCELEFT) and not (ReadObjectMapType(X, Y) = DOM_FORCERIGHT));
+    trForceRight: Result :=     (ReadObjectMapType(X, Y) = DOM_FORCERIGHT)
+                            or ((ReadBlockerMap(X, Y) = DOM_FORCERIGHT) and not (ReadObjectMapType(X, Y) = DOM_FORCELEFT));
+    trTrap:       Result :=     (ReadObjectMapType(X, Y) = DOM_TRAP)
+                            or  (ReadObjectMapType(X, Y) = DOM_TRAPONCE);
+    trWater:      Result :=     (ReadWaterMap(X, Y) = DOM_WATER);
+    trFire:       Result :=     (ReadObjectMapType(X, Y) = DOM_FIRE);
+    trOWLeft:     Result :=     (ReadSpecialMap(X, Y) = DOM_ONEWAYLEFT);
+    trOWRight:    Result :=     (ReadSpecialMap(X, Y) = DOM_ONEWAYRIGHT);
+    trOWDown:     Result :=     (ReadSpecialMap(X, Y) = DOM_ONEWAYDOWN);
+    trSteel:      Result :=     (ReadSpecialMap(X, Y) = DOM_STEEL);
+    trBlockMiddle:Result :=     (ReadObjectMapType(X, Y) = DOM_BLOCKER);
+    trTeleport:   Result :=     (ReadObjectMapType(X, Y) = DOM_SINGLETELE)
+                            or  (ReadObjectMapType(X, Y) = DOM_TELEPORT);
+    trPickup:     Result :=     (ReadObjectMapType(X, Y) = DOM_PICKUP);
+    trButton:     Result :=     (ReadObjectMapType(X, Y) = DOM_BUTTON);
+    trRadiation:  Result :=     (ReadObjectMapType(X, Y) = DOM_RADIATION);
+    trSlowfreeze: Result :=     (ReadObjectMapType(X, Y) = DOM_SLOWFREEZE);
+    trUpdraft:    Result :=     (ReadObjectMapType(X, Y) = DOM_UPDRAFT);
+    trFlipper:    Result :=     (ReadObjectMapType(X, Y) = DOM_FLIPPER);
+    trSplat:      Result :=     (ReadObjectMapType(X, Y) = DOM_SPLAT);
+    trNoSplat:    Result :=     (ReadObjectMapType(X, Y) = DOM_NOSPLAT);
+    trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
+  end;
+end;
 
 procedure TLemmingGame.RemoveObjectID(ObjectID: Word);
 // We disconnect the trigger area from the ObjectID

@@ -117,6 +117,32 @@ type
     spbNuke
   );
 
+
+  TTriggerTypes = (
+    trExit,       // as well for locked exits, once all buttons are pressed
+    trForceLeft,  // as well for blockers
+    trForceRight, // as well for blockers
+    trTrap,       // for triggered and one-time traps
+    trWater,
+    trFire,
+    trOWLeft,
+    trOWRight,
+    trOWDown,
+    trSteel,
+    trBlockMiddle,
+    trTeleport,
+    trPickup,
+    trButton,
+    trRadiation,
+    trSlowfreeze,
+    trUpdraft,
+    trFlipper,
+    trSplat,
+    trNoSplat,
+    trZombie
+  );
+
+
 const
   AssignableSkills = [
     baDigging,
