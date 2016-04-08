@@ -655,6 +655,7 @@ type
     procedure CheckTriggerArea(L: TLemming);
       procedure RemoveObjectID(ObjectID: Word);
       function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
+      function FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
       function HandleTrap(L: TLemming; ObjectID: Word): Boolean;
       function HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
@@ -692,6 +693,7 @@ type
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeMiniMap;
     procedure InitializeObjectMap;
+      function GetOneObjectTriggerArea(ObjectID: Word): TRect;
     procedure InitializeBlockerMap;
     procedure LayBrick(L: TLemming);
     function LayStackBrick(L: TLemming): Boolean;
@@ -2525,14 +2527,12 @@ begin
 end;
 
 function TLemmingGame.CheckForOverlappingField(L: TLemming): Boolean;
-const
-  BytesToCheck = [DOM_FORCELEFT, DOM_BLOCKER, DOM_FORCERIGHT];
 begin
   // Check only the vertices of the new blocker field
-  Result :=    (ReadBlockerMap(L.LemX - 5, L.LemY - 6) in BytesToCheck)
-            or (ReadBlockerMap(L.LemX + 5, L.LemY - 6) in BytesToCheck)
-            or (ReadBlockerMap(L.LemX - 5, L.LemY + 4) in BytesToCheck)
-            or (ReadBlockerMap(L.LemX + 5, L.LemY + 4) in BytesToCheck);
+  Result :=    HasTriggerAt(L.LemX - 5, L.LemY - 6, trBlocker)
+            or HasTriggerAt(L.LemX + 5, L.LemY - 6, trBlocker)
+            or HasTriggerAt(L.LemX - 5, L.LemY + 4, trBlocker)
+            or HasTriggerAt(L.LemX + 5, L.LemY + 4, trBlocker);
 end;
 
 
@@ -2617,7 +2617,9 @@ begin
                    end;
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
-                     while (i < 4) and (ReadWaterMap(L.LemX, L.LemY - i - 1) = DOM_WATER)
+                     (*while (i < 4) and (ReadWaterMap(L.LemX, L.LemY - i - 1) = DOM_WATER)
+                                   and not HasPixelAt(L.LemX, L.LemY - i - 1) do*)
+                     while (i < 4) and HasTriggerAt(L.LemX, L.LemY - i - 1, trWater)
                                    and not HasPixelAt(L.LemX, L.LemY - i - 1) do
                        Inc(i);
                      Dec(L.LemY, i);
@@ -3102,12 +3104,16 @@ procedure TLemmingGame.InitializeObjectMap;
   doesn't let you scroll to anywhere near x=1647
   (I think the max visible x range is like 1580 or something).
 
+  Nepster: The maps now have the very same size as the level itself.
+
 -------------------------------------------------------------------------------}
 var
-  x, y, x1, y1, i: Integer;
+  x, y, x1, y1: Integer;
+  i: Integer;
   Inf : TInteractiveObjectInfo;
   S: TSteel;
   Eff, V: Byte;
+  (*TriggerRect: TRect;*)
 begin
 
   ObjectMap.SetSize(2*Level.Info.Width, Level.Info.Height);
@@ -3134,6 +3140,11 @@ begin
           V := Eff;
         if not (V in [DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND]) then
         begin
+          (*TriggerRect := GetOneObjectTriggerArea(i);
+
+          for Y := TriggerRect.Top to TriggerRect.Bottom do
+          for X := TriggerRect.Left to TriggerRect.Right do *)
+
           y1 := Top;
           x1 := Left;
           if (DrawingFlags and odf_Flip) <> 0 then
@@ -3193,6 +3204,38 @@ begin
   end;
   end;
 end;
+
+function TLemmingGame.GetOneObjectTriggerArea(ObjectID: Word): TRect;
+// Note that the trigger area is only the inside of the TRect,
+// which by definition does not include the right and bottom line!
+var
+  X, Y: Integer;
+begin
+  with ObjectInfos[ObjectID] do
+  begin
+    Y := Obj.Top; // of whole object
+    X := Obj.Left;
+
+    if (Obj.DrawingFlags and odf_Flip) <> 0 then
+      X := X + (MetaObj.Width - 1) - MetaObj.TriggerLeft - (MetaObj.TriggerWidth - 1)
+    else
+      X := X + MetaObj.TriggerLeft;
+
+    if (Obj.DrawingFlags and odf_UpsideDown) <> 0 then
+    begin
+      Y := Y + (MetaObj.Height - 1) - MetaObj.TriggerTop - (MetaObj.TriggerHeight - 1);
+      if not (MetaObj.TriggerEffect in [{7, 8, 9, 19}DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
+        Y := Y + 9;
+    end else                     
+      Y := Y + MetaObj.TriggerTop;
+
+    Result.Top := Y;
+    Result.Bottom := Y + MetaObj.TriggerHeight {- 1};
+    Result.Left := X;
+    Result.Right := X + MetaObj.TriggerWidth {- 1};
+  end;
+end;
+
 
 procedure TLemmingGame.ApplyAutoSteel;
 var
@@ -3447,7 +3490,6 @@ var
   CheckPosX, CheckPosY: array[0..10] of Integer; // List of positions where to check
   i: Integer;
   ObjectID: Word;
-  ObjectType: Byte;
   AbortChecks: Boolean;
 
   procedure GetObjectCheckPositions(L: TLemming);
@@ -3522,8 +3564,7 @@ begin
   // special treatment for blockers: Check only for (locked) exit
   if L.LemAction = baBlocking then
   begin
-    if ReadObjectMapType(L.LemX, L.LemY) in [DOM_EXIT, DOM_LOCKEXIT] then
-      HandleExit(L, ReadObjectMapType(L.LemX, L.LemY) = DOM_LOCKEXIT);
+    if HasTriggerAt(L.LemX, L.LemY, trExit) then HandleExit(L, False);
     Exit;
   end;
 
@@ -3536,27 +3577,61 @@ begin
   repeat
     Inc(i);
     // Check for interactive objects
-    ObjectID := ReadObjectMap(CheckPosX[i], CheckPosY[i]);
-    ObjectType := ReadObjectMapType(CheckPosX[i], CheckPosY[i]);
-    case ObjectType of
-      DOM_TRAP: AbortChecks := HandleTrap(L, ObjectID);
-      DOM_TRAPONCE: AbortChecks := HandleTrapOnce(L, ObjectID);
-      DOM_ANIMATION: AbortChecks := HandleObjAnimation(L, ObjectID);
-      DOM_SINGLETELE: AbortChecks := HandleTelepSingle(L, ObjectID);
-      DOM_TELEPORT: AbortChecks := HandleTeleport(L, ObjectID);
-      DOM_PICKUP: AbortChecks := HandlePickup(L, ObjectID);
-      DOM_BUTTON: AbortChecks := HandleButton(L, ObjectID);
-      DOM_EXIT: AbortChecks := HandleExit(L, False);
-      DOM_LOCKEXIT: AbortChecks := HandleExit(L, True);
-      DOM_RADIATION: AbortChecks := HandleRadiation(L, False);
-      DOM_SLOWFREEZE: AbortChecks := HandleRadiation(L, True);
-      DOM_FIRE: AbortChecks := HandleFire(L);
-      DOM_FLIPPER: AbortChecks := HandleFlipper(L, ObjectID);
-    //DOM_FORCERIGHT, DOM_FORCELEFT: Only do this at the end of the movement!
-    end;
+    //ObjectID := ReadObjectMap(CheckPosX[i], CheckPosY[i]);
 
+    if HasTriggerAt(CheckPosX[i], CheckPosY[i], trTrap) then
+    begin
+      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trTrap);
+      if ObjectID <> 65535 then
+        if ObjectInfos[ObjectID].MetaObj.TriggerEffect = DOM_TRAP then
+          AbortChecks := HandleTrap(L, ObjectID)
+        else
+          AbortChecks := HandleTrapOnce(L, ObjectID);
+    end
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trAnimation) then
+    begin
+      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trAnimation);
+      if ObjectID <> 65535 then
+        AbortChecks := HandleObjAnimation(L, ObjectID);
+    end
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trTeleport) then
+    begin
+      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trTeleport);
+      if ObjectID <> 65535 then
+        if ObjectInfos[ObjectID].MetaObj.TriggerEffect = DOM_SINGLETELE then
+          AbortChecks := HandleTelepSingle(L, ObjectID)
+        else
+          AbortChecks := HandleTeleport(L, ObjectID);
+    end
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trPickup) then
+    begin
+      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trPickup);
+      if ObjectID <> 65535 then
+        AbortChecks := HandlePickup(L, ObjectID)
+    end
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trButton) then
+    begin
+      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trButton);
+      if ObjectID <> 65535 then
+        AbortChecks := HandleButton(L, ObjectID)
+    end
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trExit) then
+      AbortChecks := HandleExit(L, False)
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trRadiation) then
+      AbortChecks := HandleRadiation(L, False)
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trSlowfreeze) then
+      AbortChecks := HandleRadiation(L, True)
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trFire) then
+      AbortChecks := HandleFire(L)
+    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trFlipper) then
+    begin
+      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trFlipper);
+      if ObjectID <> 65535 then
+        AbortChecks := HandleFlipper(L, ObjectID);
+    end;
+    
     // Check only for drowning here!
-    if ReadWaterMap(CheckPosX[i], CheckPosY[i]) = DOM_WATER then
+    if HasTriggerAt(CheckPosX[i], CheckPosY[i], trWater) then
       AbortChecks := HandleWaterDrown(L) or AbortChecks;
 
     // If the lem was required stop, move him there!
@@ -3565,22 +3640,24 @@ begin
       L.LemX := CheckPosX[i];
       L.LemY := CheckPosY[i];
     end;
+
     // Set L.LemInFlipper correctly
-    if ObjectType <> DOM_FLIPPER then L.LemInFlipper := DOM_NOOBJECT;
-  until ([CheckPosX[i], CheckPosY[i]] = [L.LemX, L.LemY]) (*or AbortChecks*);
+    if not HasTriggerAt(CheckPosX[i], CheckPosY[i], trFlipper) then
+      L.LemInFlipper := DOM_NOOBJECT;
+  until [CheckPosX[i], CheckPosY[i]] = [L.LemX, L.LemY] (*or AbortChecks*);
 
   // Check for water to transition to swimmer only at final position
-  if ReadWaterMap(L.LemX, L.LemY) = DOM_WATER then HandleWaterSwim(L);
+  if HasTriggerAt(L.LemX, L.LemY, trWater) then
+    HandleWaterSwim(L);
 
   // Check for blocker fields and force-fields
-  // There should be a more compact code!!!
   if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
     HandleForceField(L, -1)
   else if HasTriggerAt(L.LemX, L.LemY, trForceRight) then
     HandleForceField(L, 1);
 end;
 
-function TLemmingGame.HasTriggerAt(X, Y: Integer;TriggerType: TTriggerTypes): Boolean;
+function TLemmingGame.HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
 // Checks whether the trigger area TriggerType occurs at position (X, Y)
 begin
   Result := False;
@@ -3600,7 +3677,9 @@ begin
     trOWRight:    Result :=     (ReadSpecialMap(X, Y) = DOM_ONEWAYRIGHT);
     trOWDown:     Result :=     (ReadSpecialMap(X, Y) = DOM_ONEWAYDOWN);
     trSteel:      Result :=     (ReadSpecialMap(X, Y) = DOM_STEEL);
-    trBlockMiddle:Result :=     (ReadObjectMapType(X, Y) = DOM_BLOCKER);
+    trBlocker:    Result :=     (ReadBlockerMap(X, Y) = DOM_BLOCKER)
+                            or  (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
+                            or  (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
     trTeleport:   Result :=     (ReadObjectMapType(X, Y) = DOM_SINGLETELE)
                             or  (ReadObjectMapType(X, Y) = DOM_TELEPORT);
     trPickup:     Result :=     (ReadObjectMapType(X, Y) = DOM_PICKUP);
@@ -3612,8 +3691,62 @@ begin
     trSplat:      Result :=     (ReadObjectMapType(X, Y) = DOM_SPLAT);
     trNoSplat:    Result :=     (ReadObjectMapType(X, Y) = DOM_NOSPLAT);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
+    trAnimation:  Result :=     (ReadObjectMapType(X, Y) = DOM_ANIMATION);
   end;
 end;
+
+function TLemmingGame.FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
+// finds a suitable object that has the correct trigger type and is not currently active.
+var
+  ObjectID, ReceiverID: Word;
+  ObjectFound: Boolean;
+  TriggerRect: TRect;
+begin
+  // Because ObjectTypeToTrigger defaults to trZombie, looking for this trigger type is nonsense!
+  Assert(TriggerType <> trZombie, 'FindObjectId called for trZombie');
+
+  ObjectID := ObjectInfos.Count;
+  ObjectFound := False;
+  repeat
+    Dec(ObjectID);
+    // Check correct TriggerType
+    if (ObjectTypeToTrigger[ObjectInfos[ObjectID].MetaObj.TriggerEffect] = TriggerType)
+       and not ObjectInfos[ObjectID].Obj.IsFake then
+    begin
+      // Check trigger areas for this object
+      TriggerRect := GetOneObjectTriggerArea(ObjectID);
+      if PtInRect(TriggerRect, Point(X, Y)) then
+        ObjectFound := True;
+    end;
+    // Additional checks for locked exit
+    if (ObjectInfos[ObjectID].MetaObj.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
+      ObjectFound := False;
+    // Additional checks for triggered traps, triggered animations, teleporters
+    if ObjectInfos[ObjectID].Triggered then
+      ObjectFound := False;
+    // ignore already used buttons, one-shot traps and pick-up skills
+    if     (ObjectInfos[ObjectID].MetaObj.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
+       and (ObjectInfos[ObjectID].CurrentFrame = 0) then  // F*** other objects have always CurrentFrame = 0, so the first check is needed!
+      ObjectFound := False;
+    // Additional check, that the corresponding receiver is inactive
+    if ObjectInfos[ObjectID].MetaObj.TriggerEffect = DOM_TELEPORT then
+    begin
+      ReceiverID := FindReceiver(ObjectID, ObjectInfos[ObjectID].Obj.Skill);
+      if    (ReceiverID = ObjectID)
+         or (ObjectInfos[ReceiverID].Triggered
+         or ObjectInfos[ReceiverID].HoldActive) then
+        ObjectFound := False;
+    end;
+  until ObjectFound or (ObjectID = 0);
+
+  if ObjectFound then
+    Result := ObjectID
+  else
+    Result := 65535;
+end;
+
+
+
 
 procedure TLemmingGame.RemoveObjectID(ObjectID: Word);
 // We disconnect the trigger area from the ObjectID
@@ -3823,11 +3956,11 @@ begin
 
   if (not L.LemIsZombie) and not (L.LemAction in [baFalling, baSplatting]) then
   begin
-    if (ButtonsRemain = 0) or (not IsLocked) then
-    begin
+   (* if (ButtonsRemain = 0) or (not IsLocked) then
+    begin *)
       Transition(L, baExiting);
       CueSoundEffect(SFX_YIPPEE);
-    end;
+   (* end;  *)
   end;
 end;
 
@@ -4482,7 +4615,7 @@ begin
 
   For n := -4 to 4 do
   begin
-    if (HasPixelAt(PosX + n, PosY) = TRUE) and (ReadSpecialMap(PosX + n, PosY) <> DOM_STEEL) then
+    if HasPixelAt(PosX + n, PosY) and not HasTriggerAt(PosX + n, PosY, trSteel) then
     begin
       RemovePixelAt(PosX + n, PosY);
       if (n > -4) and (n < 4) then Result := True;
@@ -4606,7 +4739,8 @@ var
     end;
 
     // do not dive, when there is no more water
-    if not (ReadWaterMap(L.LemX, L.LemY + Result) = DOM_WATER) then Result := 0;
+    //if not (ReadWaterMap(L.LemX, L.LemY + Result) = DOM_WATER) then Result := 0;
+    if not HasTriggerAt(L.LemX, L.LemY + Result, trWater) then Result := 0;
 
     if Result > DiveDepth then Result := 0; // too much terrain to dive
   end;
@@ -4616,14 +4750,14 @@ begin
 
   Inc(L.LemX, L.LemDx);
 
-  if (ReadWaterMap(L.LemX, L.LemY) = DOM_WATER) or HasPixelAt(L.LemX, L.LemY) then // original check only ReadWaterMap(L.LemX - L.LemDx, L.LemY)
+  if {(ReadWaterMap(L.LemX, L.LemY) = DOM_WATER)} HasTriggerAt(L.LemX, L.LemY, trWater) or HasPixelAt(L.LemX, L.LemY) then // original check only ReadWaterMap(L.LemX - L.LemDx, L.LemY)
   begin
     // This is not completely the same as in V1.43. There a check
     // for the pixel (L.LemX, L.LemY) is omitted.
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
     // Rise if there is water above the lemming
-    if (LemDy >= -1) and (ReadWaterMap(L.LemX, L.LemY - 1) = DOM_WATER)
+    if (LemDy >= -1) and HasTriggerAt(L.LemX, L.LemY -1, trWater) {(ReadWaterMap(L.LemX, L.LemY - 1) = DOM_WATER)}
                      and not HasPixelAt(L.LemX, L.LemY - 1) then   // original check at -2!
       Dec(L.LemY)
 
@@ -4636,7 +4770,7 @@ begin
       else
       begin
         TurnAround(L);
-        Inc(L.LemX, L.LemDx); // Move lemming back - shouldn't do that if we change to MoveLem!!!
+        Inc(L.LemX, L.LemDx); // Move lemming back
       end
     end
 

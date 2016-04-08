@@ -129,7 +129,7 @@ type
     trOWRight,
     trOWDown,
     trSteel,
-    trBlockMiddle,
+    trBlocker,    // total blocker area!
     trTeleport,
     trPickup,
     trButton,
@@ -139,7 +139,8 @@ type
     trFlipper,
     trSplat,
     trNoSplat,
-    trZombie
+    trZombie,
+    trAnimation
   );
 
 
@@ -219,6 +220,45 @@ const
     baNone, //RR+
     baNone, //Pause
     baNone  //Nuke
+  );
+
+const
+  // All objects that don't have trigger areas got mapped to trZombie
+  // This only works as long as there are no object types that create Zombie fields!!!
+  ObjectTypeToTrigger: array[-1..31] of TTriggerTypes = (
+    trZombie,                 // no-object
+    trZombie,                 // no trigger area
+    trExit,                   // exit
+    trForceLeft,              // force-field left
+    trForceRight,             // force-field right
+    trTrap,                   // triggered trap
+    trWater,                  // water
+    trFire,                   // continuous trap
+    trOWLeft,                 // OWW left
+    trOWRight,                // OWW right
+    trSteel,                  // steel
+    trZombie,                 // blocker (there is no blocker OBJECT!!)
+    trTeleport,               // teleporter
+    trZombie,                 // receiver
+    trZombie,                 // preplaced lemming
+    trPickup,                 // pickup skill
+    trExit,                   // locked exit
+    trZombie,                 // secret level trigger
+    trButton,                 // button
+    trRadiation,              // radiation
+    trOWDown,                 // OWW down
+    trUpdraft,                // updraft
+    trFlipper,                // flipper
+    trSlowfreeze,             // slowfreeze
+    trZombie,                 // hatch
+    trAnimation,              // triggered animation
+    trZombie,                 // hint
+    trNoSplat,                // no-splat
+    trSplat,                  // splat
+    trTeleport,               // 2-way teleporter
+    trTeleport,               // single teleporter
+    trZombie,                 // background
+    trTrap                    // once trap
   );
 
 implementation
