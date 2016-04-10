@@ -60,7 +60,6 @@ type
     function GetLocationBounds: TRect; // rect in world
     function GetFrameBounds: TRect; // rect from animation bitmap
     function GetCountDownDigitBounds: TRect; // countdown
-    function GetLemRTL: Boolean; // direction rtl?
     function GetLemHint: string;
   public
   { misc sized }
@@ -115,7 +114,6 @@ type
 
     procedure Assign(Source: TLemming);
   { properties }
-    property LemRTL: Boolean read GetLemRTL; // direction rtl?
     property LemHint: string read GetLemHint;
   end;
 
@@ -1016,35 +1014,31 @@ begin
     //  Dec(Left);
     //  Dec(Right);
     //end;
-    if (LemAction in [baDigging, baFixing]) and LemRTL then
+    if (LemAction in [baDigging, baFixing]) and (LemDx = -1) then
     begin
       Inc(Left);
       Inc(Right);
     end;
 
-    if (LemAction = baMining) then
+    if LemAction = baMining then
+    begin
+      if LemDx = -1 then
       begin
-        if LemRTL then
-        begin
-          Dec(Left);
-          Dec(Right);
-        end else begin
-          Inc(Left);
-          Inc(Right);
-        end;
-        if (LemFrame < 15) then
-        begin
-          Inc(Top);
-          Inc(Bottom);
-        end;
-      end;  // Seems to be glitchy if the animations themself are altered
+        Dec(Left);
+        Dec(Right);
+      end else begin
+        Inc(Left);
+        Inc(Right);
+      end;
+      if (LemFrame < 15) then
+      begin
+        Inc(Top);
+        Inc(Bottom);
+      end;
+    end;  // Seems to be glitchy if the animations themself are altered
   end;
 end;
 
-function TLemming.GetLemRTL: Boolean;
-begin
-  Result := LemDx < 0;
-end;
 
 function TLemming.GetLemHint: string;
 const
@@ -2577,7 +2571,7 @@ begin
   L.LemNumberOfBricksLeft := 0;
 
   // New animation
-  i := AnimationIndices[NewAction, L.LemRTL];
+  i := AnimationIndices[NewAction, (L.LemDx = -1)];
   L.LMA := Style.AnimationSet.MetaLemmingAnimations[i];
   L.LAB := Style.AnimationSet.LemmingAnimations.List^[i];
   L.LemMaxFrame := L.LMA.FrameCount - 1;
@@ -2637,7 +2631,7 @@ begin
   with L do
   begin
     LemDX := -LemDX;
-    i := AnimationIndices[LemAction, LemRTL];
+    i := AnimationIndices[LemAction, (LemDx = -1)];
     LMA := Style.AnimationSet.MetaLemmingAnimations[i];
     LAB := Style.AnimationSet.LemmingAnimations[i];
     LemMaxFrame := LMA.FrameCount - 1;
@@ -4046,21 +4040,18 @@ end;
 procedure TLemmingGame.ApplyExplosionMask(L: TLemming);
 var
   X1, Y1: Integer;
-  Px, Py: Integer;
+  PosX, PosY: Integer;
 begin
-  // dos explosion mask 16 x 22
-  if not L.LemRTL then L.LemX := L.LemX + 1;
+  PosX := L.LemX;
+  if L.LemDx = 1 then Inc(PosX);
+  PosY := L.LemY;
 
-  px := L.LemX - 8;
-  py := L.LemY - 14;
-
-  ExplodeMaskBmp.DrawTo(World, px, py);
+  ExplodeMaskBmp.DrawTo(World, PosX - 8, PosY - 14);
   if not HyperSpeed then
-    ExplodeMaskBmp.DrawTo(fTargetBitmap, px, py);
+    ExplodeMaskBmp.DrawTo(fTargetBitmap, PosX - 8, PosY - 14);
 
-
-  for X1 := L.LemX - 24 to L.LemX + 23 do
-  for Y1 := L.LemY - 36 to L.LemY + 35 do
+  for X1 := PosX - 24 to PosX + 23 do
+  for Y1 := PosY - 36 to PosY + 35 do
   begin
     if (X1 >= 0) and (X1 < World.Width) and (Y1 >= 0) and (Y1 < World.Height) then
     begin
@@ -4069,13 +4060,12 @@ begin
         World[X1, Y1] := SteelWorld[X1, Y1];
         fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
       end;
+
       if (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN])
          and (World[X1, Y1] <> SteelWorld[X1, Y1]) then
         WriteSpecialMap(X1, Y1, DOM_NONE);
     end;
   end;
-
-  if not L.LemRTL then L.LemX := L.LemX - 1;
 
   InitializeMinimap;
 end;
@@ -4088,7 +4078,7 @@ var
 begin
   // dos bashing mask = 16 x 10
 
-  if not L.LemRTL then
+  if L.LemDx = 1 then
     Bmp := BashMasks
   else
     Bmp := BashMasksRTL;
@@ -4107,24 +4097,17 @@ begin
 
   for X1 := D.Left to D.Right do
   for Y1 := D.Top to D.Bottom do
-  if (X1 >= 0) and (X1 < World.Width) and (Y1 >= 0) and (Y1 < World.Height) then
-  begin
-    if ReadSpecialMap(X1, Y1) = DOM_STEEL then
+    if (X1 >= 0) and (X1 < World.Width) and (Y1 >= 0) and (Y1 < World.Height) then
     begin
-      World[X1, Y1] := SteelWorld[X1, Y1];
-      fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
+      if HasIndestructibleAt(X1, Y1, L.LemDx, baBashing) then
+      begin
+        World[X1, Y1] := SteelWorld[X1, Y1];
+        fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
+      end;
+      if (World[X1, Y1] <> SteelWorld[X1, Y1])
+         and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
+        WriteSpecialMap(X1, Y1, DOM_NONE);
     end;
-    if (((ReadSpecialMap(X1, Y1) = DOM_ONEWAYLEFT) and (L.LemDX > 0)) or
-       ((ReadSpecialMap(X1, Y1) = DOM_ONEWAYRIGHT) and (L.LemDX < 0)) or
-       (ReadSpecialMap(X1, Y1) = DOM_ONEWAYDOWN)) then
-    begin
-      World[X1, Y1] := SteelWorld[X1, Y1];
-      fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
-    end;
-    if (World[X1, Y1] <> SteelWorld[X1, Y1])
-    and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
-      WriteSpecialMap(X1, Y1, DOM_NONE);
-  end;
 
   InitializeMinimap;
 end;
@@ -4143,7 +4126,7 @@ begin
   MaskX := L.LemX + L.LemDx - 8 + AdjustX;
   MaskY := L.LemY + MaskFrame - 12 + AdjustY;
 
-  if not L.LemRTL then
+  if L.LemDx = 1 then
     Bmp := MineMasks
   else
     Bmp := MineMasksRTL;
@@ -4163,23 +4146,17 @@ begin
 
   for X1 := D.Left to D.Right do
   for Y1 := D.Top to D.Bottom do
-  if (X1 >= 0) and (X1 < World.Width) and (Y1 >= 0) and (Y1 < World.Height) then
-  begin
-    if ReadSpecialMap(X1, Y1) = DOM_STEEL then
+    if (X1 >= 0) and (X1 < World.Width) and (Y1 >= 0) and (Y1 < World.Height) then
     begin
-      World[X1, Y1] := SteelWorld[X1, Y1];
-      fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
+      if HasIndestructibleAt(X1, Y1, L.LemDx, baMining) then
+      begin
+        World[X1, Y1] := SteelWorld[X1, Y1];
+        fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
+      end;
+      if (World[X1, Y1] <> SteelWorld[X1, Y1])
+      and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
+        WriteSpecialMap(X1, Y1, DOM_NONE);
     end;
-    if ((ReadSpecialMap(X1, Y1) = DOM_ONEWAYLEFT) and (L.LemDX > 0))
-    or ((ReadSpecialMap(X1, Y1) = DOM_ONEWAYRIGHT) and (L.LemDX < 0)) then
-    begin
-      World[X1, Y1] := SteelWorld[X1, Y1];
-      fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
-    end;
-    if (World[X1, Y1] <> SteelWorld[X1, Y1])
-    and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
-      WriteSpecialMap(X1, Y1, DOM_NONE);
-  end;
 
   InitializeMinimap;
 end;
