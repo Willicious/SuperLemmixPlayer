@@ -3132,15 +3132,15 @@ begin
       begin
         if (V in [DOM_STEEL, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
         begin
-          if (V = DOM_STEEL) or (World.PixelS[x, y] and ALPHA_ONEWAY <> 0) then
-            WriteSpecialMap(x, y, V)
+          if (V = DOM_STEEL) or (World.PixelS[X, Y] and ALPHA_ONEWAY <> 0) then
+            WriteSpecialMap(X, Y, V)
         end
         else if V = DOM_WATER then
-          WriteWaterMap(x, y, V)
+          WriteWaterMap(X, Y, V)
         else if V = DOM_BLOCKER then
-          WriteBlockerMap(x, y, V)
+          WriteBlockerMap(X, Y, V)
         else
-          WriteObjectMap(x, y, i); // traps --> object_id
+          WriteObjectMap(X, Y, i); // traps --> object_id
       end;
     end;
   end; // for i
@@ -3237,15 +3237,14 @@ begin
 
       if fGameParams.DebugSteel and (ReadSpecialMap(X, Y) <> DOM_STEEL) then
       begin
-        (*if ReadSpecialMap(X, Y) <> DOM_STEEL then*)
-          if SteelWorld.Pixel[X, Y] and ALPHA_TERRAIN = 0 then
-          begin
-            World.Pixel[X, Y] := $00FF00FF;
-            SteelWorld.Pixel[X, Y] := $00FF00FF;
-          end else begin
-            World.Pixel[X, Y] := $01FFFFFF;
-            SteelWorld.Pixel[X, Y] := $01FFFFFF;
-          end;
+        if SteelWorld.Pixel[X, Y] and ALPHA_TERRAIN = 0 then
+        begin
+          World.Pixel[X, Y] := $00FF00FF;
+          SteelWorld.Pixel[X, Y] := $00FF00FF;
+        end else begin
+          World.Pixel[X, Y] := $01FFFFFF;
+          SteelWorld.Pixel[X, Y] := $01FFFFFF;
+        end;
       end;
     end;
     fTargetBitmap.Assign(World);
@@ -3551,7 +3550,6 @@ begin
   repeat
     Inc(i);
     // Check for interactive objects
-    //ObjectID := ReadObjectMap(CheckPosX[i], CheckPosY[i]);
 
     if HasTriggerAt(CheckPosX[i], CheckPosY[i], trTrap) then
     begin
@@ -3749,12 +3747,6 @@ function TLemmingGame.HandleTrap(L: TLemming; ObjectID: Word): Boolean;
 var
   Inf: TInteractiveObjectInfo;
 begin
-  Result := False;
-
-  Inf := ObjectInfos[ObjectID];
-  // Exit function, if trap is currently at work
-  if Inf.Triggered then Exit;
-
   Result := True;
 
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
@@ -3763,9 +3755,9 @@ begin
     RemoveObjectID(ObjectID);
     Transition(L, baFixing);
   end
-
   else
   begin
+    Inf := ObjectInfos[ObjectID];
     // trigger
     Inf.Triggered := True;
     Inf.ZombieMode := L.LemIsZombie;
@@ -3783,12 +3775,6 @@ function TLemmingGame.HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
 var
   Inf: TInteractiveObjectInfo;
 begin
-  Result := False;
-
-  Inf := ObjectInfos[ObjectID];
-  // Exit function, if trap is working
-  if Inf.Triggered then Exit;
-
   Result := True;
 
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
@@ -3797,8 +3783,9 @@ begin
     RemoveObjectID(ObjectID);
     Transition(L, baFixing);
   end
-  else if not (Inf.CurrentFrame = 0) then
+  else
   begin
+    Inf := ObjectInfos[ObjectID];
     // trigger
     Inf.Triggered := True;
     Inf.ZombieMode := L.LemIsZombie;
@@ -3817,13 +3804,9 @@ var
   Inf: TInteractiveObjectInfo;
 begin
   Result := False;
-
   Inf := ObjectInfos[ObjectID];
-  if not Inf.Triggered then
-  begin
-    Inf.Triggered := True;
-    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-  end;
+  Inf.Triggered := True;
+  CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
 end;
 
 function TLemmingGame.HandleTelepSingle(L: TLemming; ObjectID: Word): Boolean;
@@ -3833,18 +3816,16 @@ begin
   Result := True;
 
   Inf := ObjectInfos[ObjectID];
-  if not Inf.Triggered then
-  begin
-    Inf.Triggered := True;
-    Inf.ZombieMode := L.LemIsZombie;
-    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-    L.LemTeleporting := True;
-    Inf.TeleLem := L.LemIndex;
-    // Make sure to remove the blocker field!
-    L.LemHasBlockerField := False;
-    RestoreMap;
-    MoveLemToReceivePoint(L, ObjectID);
-  end;
+
+  Inf.Triggered := True;
+  Inf.ZombieMode := L.LemIsZombie;
+  CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+  L.LemTeleporting := True;
+  Inf.TeleLem := L.LemIndex;
+  // Make sure to remove the blocker field!
+  L.LemHasBlockerField := False;
+  RestoreMap;
+  MoveLemToReceivePoint(L, ObjectID);
 end;
 
 function TLemmingGame.HandleTeleport(L: TLemming; ObjectID: Word): Boolean;
@@ -3854,22 +3835,17 @@ begin
   Result := True;
 
   Inf := ObjectInfos[ObjectID];
-  if     not (FindReceiver(ObjectID, Inf.Obj.Skill) = ObjectID)
-     and not Inf.Triggered
-     and not (    ObjectInfos[FindReceiver(ObjectID, Inf.Obj.Skill)].Triggered
-               or ObjectInfos[FindReceiver(ObjectID, Inf.Obj.Skill)].HoldActive) then
-  begin
-    Inf.Triggered := True;
-    Inf.ZombieMode := L.LemIsZombie;
-    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
-    L.LemTeleporting := True;
-    Inf.TeleLem := L.LemIndex;
-    Inf.TwoWayReceive := false;
-    // Make sure to remove the blocker field!
-    L.LemHasBlockerField := False;
-    RestoreMap;
-    ObjectInfos[FindReceiver(ObjectID, Inf.Obj.Skill)].HoldActive := True;
-  end;
+
+  Inf.Triggered := True;
+  Inf.ZombieMode := L.LemIsZombie;
+  CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+  L.LemTeleporting := True;
+  Inf.TeleLem := L.LemIndex;
+  Inf.TwoWayReceive := false;
+  // Make sure to remove the blocker field!
+  L.LemHasBlockerField := False;
+  RestoreMap;
+  ObjectInfos[FindReceiver(ObjectID, Inf.Obj.Skill)].HoldActive := True;
 end;
 
 function TLemmingGame.HandlePickup(L: TLemming; ObjectID: Word): Boolean;
@@ -3878,9 +3854,9 @@ var
 begin
   Result := False;
 
-  Inf := ObjectInfos[ObjectID];
-  if (not L.LemIsZombie) and (Inf.CurrentFrame <> 0) then
+  if not L.LemIsZombie then
   begin
+    Inf := ObjectInfos[ObjectID];
     Inf.CurrentFrame := 0;
     CueSoundEffect(SFX_PICKUP);
     case Inf.Obj.Skill of
@@ -3912,12 +3888,13 @@ var
 begin
   Result := False;
 
-  Inf := ObjectInfos[ObjectID];
-  if (not L.LemIsZombie) and (Inf.CurrentFrame = 1) and (not Inf.Triggered) then
+  if not L.LemIsZombie then
   begin
+    Inf := ObjectInfos[ObjectID];
     CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
     Inf.Triggered := True;
     Dec(ButtonsRemain);
+
     if ButtonsRemain = 0 then
     begin
       CueSoundEffect(SFX_ENTRANCE);
@@ -3930,15 +3907,13 @@ end;
 
 function TLemmingGame.HandleExit(L: TLemming; IsLocked: Boolean): Boolean;
 begin
-  Result := True;
+  Result := False; // only see exit trigger area, if it actually used
 
   if (not L.LemIsZombie) and not (L.LemAction in [baFalling, baSplatting]) then
   begin
-   (* if (ButtonsRemain = 0) or (not IsLocked) then
-    begin *)
-      Transition(L, baExiting);
-      CueSoundEffect(SFX_YIPPEE);
-   (* end;  *)
+    Result := True;
+    Transition(L, baExiting);
+    CueSoundEffect(SFX_YIPPEE);
   end;
 end;
 
@@ -3969,7 +3944,8 @@ begin
       Inc(dy);
       Dec(NewY);
     end;
-    if dy < 9 then *) TurnAround(L);
+    if dy < 9 then *)
+    TurnAround(L);
 
     // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
     if L.LemAction = baMining then
@@ -4016,10 +3992,7 @@ begin
       Result := True;
     end;
 
-    if (Inf.CurrentFrame = 1) then
-      Inf.CurrentFrame := 0
-    else
-      Inf.CurrentFrame := 1;
+    Inf.CurrentFrame := 1 - Inf.CurrentFrame // swap the possible values 0 and 1
   end;
 end;
 
