@@ -4193,13 +4193,12 @@ var
   Inf : TInteractiveObjectInfo;
   f, mx, my: Integer;
 const
-  RESET_FRAME = 17;
+  AnimObjMov: array[0..15] of Integer =
+    (0, 1, 2, 2, 2, 2, 2, 1, 0, -1, -2, -2, -2, -2, -2, -1);
 
   function GetDistanceFactor(LV: Integer; Iter: Integer): Integer;
   begin
-    Result := 0;
-    if Iter = 0 then Exit;
-    Result := ((LV * Iter * 2) div 17);
+    Result := ((2 * LV * (Iter + 1)) div 17) - ((2 * LV * Iter) div 17)
   end;
 begin
 
@@ -4207,7 +4206,8 @@ begin
     for i := 0 to ObjectInfos.Count - 1 do
     begin
       Inf := ObjectInfos.List^[i];
-      if (Inf.MetaObj.TriggerEffect <> 13) and (Inf.MetaObj.TriggerEffect <> 16) then Renderer.EraseObject(fTargetBitmap, Inf.Obj, World);
+      if (Inf.MetaObj.TriggerEffect <> 13) then
+        Renderer.EraseObject(fTargetBitmap, Inf.Obj, World);
     end;
 
   for i := 0 to ObjectInfos.Count-1 do
@@ -4216,67 +4216,30 @@ begin
     if (Inf.MetaObj.TriggerEffect = 30) and (Inf.Obj.TarLev <> 0) then
     begin
       // moving background objects yay!
-      // 0 =  0:-2
-      // 1 =  1:-2
-      // 2 =  2:-2
-      // 3 =  2:-1
-      // 4 =  2: 0
-      // etc
+      // Nepster: So much code for something that is only distracting? Really??
+      // Ok, reduced it from 41 lines to 15
+      mx := AnimObjMov[Inf.Obj.Skill];
+      my := AnimObjMov[(Inf.Obj.Skill + 12) mod 16];
+      f := GetDistanceFactor(Inf.Obj.TarLev, CurrentIteration);
 
-      mx := 0;
-      my := 0;
+      Inf.Obj.Left := Inf.Obj.Left + ((mx * f) div 2);
+      Inf.Obj.Top := Inf.Obj.Top + ((my * f) div 2);
+      Inf.Obj.OffsetX := Inf.Obj.OffsetX + ((mx * f) div 2);
+      Inf.Obj.OffsetY := Inf.Obj.OffsetY + ((my * f) div 2);
 
-      if Inf.Obj.Skill in [14, 13, 12, 11, 10] then mx := -2;
-      if Inf.Obj.Skill in [15, 9] then mx := -1;
-      if Inf.Obj.Skill in [1, 7] then mx := 1;
-      if Inf.Obj.Skill in [2, 3, 4, 5, 6] then mx := 2;
+      // Check level borders:
+      // Don't need f any more, so we can store arbitrary values in it
+      // The additional "+f" are necessary! Delphi's definition of mod for negative numbers is totally absurd!
+      // The following code works only if the coordinates are not too negative, so Asserts are added
+      f := Level.Info.Width + Inf.MetaObj.Width;
+      Assert(Inf.Obj.Left + Inf.MetaObj.Width + f >= 0, 'Animation Object too far left');
+      Inf.Obj.Left := ((Inf.Obj.Left + Inf.MetaObj.Width + f) mod f) - Inf.MetaObj.Width;
+      Inf.Obj.OffsetX := ((Inf.Obj.OffsetX + Inf.MetaObj.Width + f) mod f) - Inf.MetaObj.Width;
 
-      if Inf.Obj.Skill in [14, 15, 0, 1, 2] then my := -2;
-      if Inf.Obj.Skill in [13, 3] then my := -1;
-      if Inf.Obj.Skill in [11, 5] then my := 1;
-      if Inf.Obj.Skill in [10, 9, 8, 7, 6] then my := 2;
-
-      // L value = pixels moved per 17 frames (in directions marked by mx or my of 2)
-
-      if (CurrentIteration mod RESET_FRAME) = 0 then Inf.TotalFactor := 0;
-
-      f := GetDistanceFactor(Inf.Obj.TarLev, (CurrentIteration mod RESET_FRAME)+1) - Inf.TotalFactor;
-      Inf.TotalFactor := Inf.TotalFactor + f;
-
-      mx := (mx * f) div 2;
-      my := (my * f) div 2;
-
-      Inf.Obj.Left := Inf.Obj.Left + mx;
-      Inf.Obj.Top := Inf.Obj.Top + my;
-      Inf.Obj.OffsetX := Inf.Obj.OffsetX + mx;
-      Inf.Obj.OffsetY := Inf.Obj.OffsetY + my;
-
-      with Inf.Obj do
-      begin
-        while Left < 0 - Inf.MetaObj.Width do
-        begin
-          Left := Left + (Level.Info.Width + Inf.MetaObj.Width);
-          OffsetX := OffsetX + (Level.Info.Width + Inf.MetaObj.Width);
-        end;
-
-        while Left >= Level.Info.Width do
-        begin
-          Left := Left - (Level.Info.Width + Inf.MetaObj.Width);
-          OffsetX := OffsetX - (Level.Info.Width + Inf.MetaObj.Width);
-        end;
-
-        while Top < 0 - Inf.MetaObj.Height do
-        begin
-          Top := Top + (Level.Info.Height + Inf.MetaObj.Height);
-          OffsetY := OffsetY + (Level.Info.Height + Inf.MetaObj.Height);
-        end;
-
-        while Top >= Level.Info.Height do
-        begin
-          Top := Top - (Level.Info.Height + Inf.MetaObj.Height);
-          OffsetY := OffsetY - (Level.Info.Height + Inf.MetaObj.Height);
-        end;
-      end;
+      f := Level.Info.Height + Inf.MetaObj.Height;
+      Assert(Inf.Obj.Top + Inf.MetaObj.Height + f >= 0, 'Animation Object too far above');
+      Inf.Obj.Top := ((Inf.Obj.Top + Inf.MetaObj.Height + f) mod f) - Inf.MetaObj.Height;
+      Inf.Obj.OffsetY := ((Inf.Obj.OffsetY + Inf.MetaObj.Height + f) mod f) - Inf.MetaObj.Height;
     end;
   end;
 
@@ -4284,28 +4247,14 @@ begin
     Exit;
 
   // other objects
-  // only on terrain
   for i := 0 to ObjectInfos.Count - 1 do
   begin
     Inf := ObjectInfos.List^[i];
     Inf.Obj.DrawAsZombie := Inf.ZombieMode;
 
-    if odf_OnlyOnTerrain and Inf.Obj.DrawingFlags <> 0 then
-      if (Inf.MetaObj.TriggerEffect <> 13) and (Inf.MetaObj.TriggerEffect <> 16) then
+    if Inf.MetaObj.TriggerEffect <> 13 then
       Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
   end;
-
-  // other objects
-  // rest
-  for i := 0 to ObjectInfos.Count - 1 do
-  begin
-    Inf := ObjectInfos.List^[i];
-    Inf.Obj.DrawAsZombie := Inf.ZombieMode;
-    if odf_OnlyOnTerrain and Inf.Obj.DrawingFlags = 0 then
-      if (Inf.MetaObj.TriggerEffect <> 13) and (Inf.MetaObj.TriggerEffect <> 16) then
-      Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
-  end;
-
 end;
 
 procedure TLemmingGame.EraseLemmings;
