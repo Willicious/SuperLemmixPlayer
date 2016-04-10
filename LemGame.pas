@@ -2781,11 +2781,6 @@ begin
     TurnAround(NewL);
     NewL.LemUsedSkillCount := 0;
     Inc(LemmingsOut);
-    (*
-    if not NewL.LemIsZombie then
-      Inc(LemmingsOut)
-    else   // Nepster: Not sure how this can ever happen???
-      Inc(LemmingsRemoved); *)
 
     // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
     if NewL.LemAction = baMining then
@@ -3108,12 +3103,11 @@ procedure TLemmingGame.InitializeObjectMap;
 
 -------------------------------------------------------------------------------}
 var
-  x, y, x1, y1: Integer;
+  x, y: Integer;
   i: Integer;
-  Inf : TInteractiveObjectInfo;
   S: TSteel;
-  Eff, V: Byte;
-  (*TriggerRect: TRect;*)
+  V: Byte;
+  TriggerRect: TRect;
 begin
 
   ObjectMap.SetSize(2*Level.Info.Width, Level.Info.Height);
@@ -3125,83 +3119,55 @@ begin
   WaterMap.SetSize(Level.Info.Width, Level.Info.Height);
   WaterMap.Clear(DOM_NONE);
 
-  with ObjectInfos do
+  for i := 0 to ObjectInfos.Count - 1 do
   begin
-
-    for i := 0 to Count - 1 do
+    V := ObjectInfos[i].MetaObj.TriggerEffect;
+    if not (V in [DOM_NONE, DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND])
+       and not ObjectInfos[i].Obj.IsFake then
     begin
-      Inf := List^[i];
-      with Inf, Obj, MetaObj do
-      if (not (TriggerEffect = 0)) and (not (Obj.IsFake)) then
+      TriggerRect := GetOneObjectTriggerArea(i);
+
+      for Y := TriggerRect.Top to TriggerRect.Bottom - 1 do
+      for X := TriggerRect.Left to TriggerRect.Right - 1 do
       begin
-        // 0..127   = triggered trap index ()
-        // 128..255 = triggereffect (128 is DOM_NONE)
-        Eff := TriggerEffect;
-          V := Eff;
-        if not (V in [DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND]) then
+        if (V in [DOM_STEEL, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
         begin
-          (*TriggerRect := GetOneObjectTriggerArea(i);
+          if (V = DOM_STEEL) or (World.PixelS[x, y] and ALPHA_ONEWAY <> 0) then
+            WriteSpecialMap(x, y, V)
+        end
+        else if V = DOM_WATER then
+          WriteWaterMap(x, y, V)
+        else if V = DOM_BLOCKER then
+          WriteBlockerMap(x, y, V)
+        else
+          WriteObjectMap(x, y, i); // traps --> object_id
+      end;
+    end;
+  end; // for i
 
-          for Y := TriggerRect.Top to TriggerRect.Bottom do
-          for X := TriggerRect.Left to TriggerRect.Right do *)
-
-          y1 := Top;
-          x1 := Left;
-          if (DrawingFlags and odf_Flip) <> 0 then
-            x1 := x1 + (Width - 1) - TriggerLeft - (TriggerWidth - 1)
-          else
-            x1 := x1 + TriggerLeft;
-          if (DrawingFlags and odf_UpsideDown) <> 0 then
-          begin
-            y1 := y1 + (Height - 1) - TriggerTop - (TriggerHeight - 1);
-            if not (TriggerEffect in [7, 8, 9, 19]) then y1 := y1 + 9;
-          end else
-            y1 := y1 + TriggerTop;
-
-          for y := y1 to y1 + TriggerHeight - 1 do
-            for x := x1 to x1 + TriggerWidth - 1 do
-            begin
-              if (V in [DOM_STEEL, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
-              begin
-                if (V = DOM_STEEL) or (World.PixelS[x, y] and ALPHA_ONEWAY <> 0) then
-                WriteSpecialMap(x, y, V);
-              end else if (V in [DOM_WATER]) then
-              begin
-                WriteWaterMap(x, y, V);
-              end else if (V in [DOM_BLOCKER]) then
-                WriteBlockerMap(x, y, V)
-              else begin
-                WriteObjectMap(x, y, i); // traps --> object_id
-              end;
-            end;
-          end;
-        end;
-    end; // for i
-
-  end;
 
   // map steel
   if ((Level.Info.LevelOptions and 4) = 0)
-  and (fGameParams.SysDat.Options and 64 = 0) then
+     and (fGameParams.SysDat.Options and 64 = 0) then
   begin
-  with Level.Steels, HackedList do
-  begin
-    for i := 0 to Count - 1 do
+    with Level.Steels, HackedList do
     begin
-      S := List^[i];
-      with S do
-        for y := Top to Top + Height - 1 do //SteelY to SteelY + SteelHeight - 1 do
+      for i := 0 to Count - 1 do
+      begin
+        S := List^[i];
+        with S do
+          for y := Top to Top + Height - 1 do //SteelY to SteelY + SteelHeight - 1 do
           for x := Left to Left + Width - 1 do //SteelX to SteelX + SteelWidth - 1 do
             case S.fType of
               0: WriteSpecialMap(x, y, DOM_STEEL);
-              1: WriteSpecialMap(x, y, DOM_EXIT);
+              // 1: WriteSpecialMap(x, y, DOM_EXIT);  // no longer needed
               2: WriteSpecialMap(x, y, DOM_ONEWAYLEFT);
               3: WriteSpecialMap(x, y, DOM_ONEWAYRIGHT);
               4: WriteSpecialMap(x, y, DOM_ONEWAYDOWN);
             end;
 
+      end;
     end;
-  end;
   end;
 end;
 
@@ -3224,15 +3190,15 @@ begin
     if (Obj.DrawingFlags and odf_UpsideDown) <> 0 then
     begin
       Y := Y + (MetaObj.Height - 1) - MetaObj.TriggerTop - (MetaObj.TriggerHeight - 1);
-      if not (MetaObj.TriggerEffect in [{7, 8, 9, 19}DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
+      if not (MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
         Y := Y + 9;
     end else                     
       Y := Y + MetaObj.TriggerTop;
 
     Result.Top := Y;
-    Result.Bottom := Y + MetaObj.TriggerHeight {- 1};
+    Result.Bottom := Y + MetaObj.TriggerHeight;
     Result.Left := X;
-    Result.Right := X + MetaObj.TriggerWidth {- 1};
+    Result.Right := X + MetaObj.TriggerWidth;
   end;
 end;
 
@@ -3246,36 +3212,44 @@ begin
           (fGameParams.SysDat.Options and 64 <> 0)) and
           (fGameParams.GraphicSet.AutoSteelEnabled);
 
-    with SteelWorld do
+  with SteelWorld do
+  begin
+    for x := 0 to (Width-1) do
+    for y := 0 to (Height-1) do
     begin
-      for x := 0 to (width-1) do
-        for y := 0 to (height-1) do
-        begin
-          if DoAutoSteel then
+      if DoAutoSteel then
+      begin
+        if (X >= 0) and (Y >= 0) and (X < Width) and (Y < Height)
+                    and (Pixel[X, Y] and ALPHA_STEEL <> 0)
+                    and (ReadSpecialMap(X, Y) = DOM_NONE) then
+          WriteSpecialMap(X, Y, DOM_STEEL);
+      end;
+
+      if (ReadSpecialMap(X, Y) = DOM_STEEL) and (World.Pixel[X, Y] and ALPHA_TERRAIN = 0) then
+        WriteSpecialMap(X, Y, DOM_NONE);
+
+      if (ReadSpecialMap(X, Y) = DOM_STEEL) then
+        World.PixelS[X, Y] := World.PixelS[X, Y] and not ALPHA_ONEWAY;
+
+      if     (ReadSpecialMap(X, Y) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN])
+         and (World.Pixel[X, Y] and ALPHA_ONEWAY = 0) then
+        WriteSpecialMap(X, Y, DOM_NONE);
+
+      if fGameParams.DebugSteel and (ReadSpecialMap(X, Y) <> DOM_STEEL) then
+      begin
+        (*if ReadSpecialMap(X, Y) <> DOM_STEEL then*)
+          if SteelWorld.Pixel[X, Y] and ALPHA_TERRAIN = 0 then
           begin
-            if (X >= 0) and (Y >= 0) and (X < Width) and (Y < Height)
-            and (Pixel[X, Y] and ALPHA_STEEL <> 0)
-            and (ReadSpecialMap(X, Y) = DOM_NONE) then WriteSpecialMap(X, Y, DOM_STEEL);
+            World.Pixel[X, Y] := $00FF00FF;
+            SteelWorld.Pixel[X, Y] := $00FF00FF;
+          end else begin
+            World.Pixel[X, Y] := $01FFFFFF;
+            SteelWorld.Pixel[X, Y] := $01FFFFFF;
           end;
-          if ReadSpecialMap(X, Y) = DOM_EXIT then WriteSpecialMap(X, Y, DOM_NONE);
-          if (ReadSpecialMap(X, Y) = DOM_STEEL) and (World.Pixel[X, Y] and ALPHA_TERRAIN = 0) then WriteSpecialMap(X, Y, DOM_NONE);
-          if (ReadSpecialMap(X, Y) = DOM_STEEL) then World.PixelS[X, Y] := World.PixelS[X, Y] and not ALPHA_ONEWAY;
-          if (ReadSpecialMap(X, Y) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) and (World.Pixel[X, Y] and ALPHA_ONEWAY = 0) then WriteSpecialMap(X, Y, DOM_NONE);
-          if fGameParams.DebugSteel then
-          begin
-            if ReadSpecialMap(X, Y) <> DOM_STEEL then
-              if SteelWorld.Pixel[X, Y] and ALPHA_TERRAIN = 0 then
-              begin
-                World.Pixel[X, Y] := $00FF00FF;
-                SteelWorld.Pixel[X, Y] := $00FF00FF;
-              end else begin
-                World.Pixel[X, Y] := $01FFFFFF;
-                SteelWorld.Pixel[X, Y] := $01FFFFFF;
-              end;
-          end;
-        end;
-      fTargetBitmap.Assign(World);
+      end;
     end;
+    fTargetBitmap.Assign(World);
+  end;
 end;
 
 function TLemmingGame.PrioritizedHitTest(out Lemming1, Lemming2: TLemming;
