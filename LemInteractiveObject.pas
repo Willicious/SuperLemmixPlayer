@@ -25,8 +25,8 @@ type
     fFake: Boolean;
     fSkill: Byte;
     fTarLev: Byte;
-    fOffsetX: Integer;
-    fOffsetY: Integer;
+    // fOffsetX: Integer;
+    // fOffsetY: Integer;
     fLastDrawX: Integer;
     fLastDrawY: Integer;
     fDrawAsZombie: Boolean;
@@ -37,8 +37,8 @@ type
     property IsFake: Boolean read fFake write fFake;
     property Skill : Byte read fSkill write fSkill;
     property TarLev : Byte read fTarLev write fTarLev;
-    property OffsetX : Integer read fOffsetX write fOffsetX;
-    property OffsetY : Integer read fOffsetY write fOffsetY;
+    // property OffsetX : Integer read fOffsetX write fOffsetX;
+    // property OffsetY : Integer read fOffsetY write fOffsetY;
     property LastDrawX: Integer read fLastDrawX write fLastDrawX;
     property LastDrawY: Integer read fLastDrawY write fLastDrawY;
     property DrawAsZombie: Boolean read fDrawAsZombie write fDrawAsZombie;

@@ -3,10 +3,10 @@
 program NeoLemmix;
 
 uses
-  (*UDebug,*)
   LemRes,
   Forms,
-  FMain in 'FMain.pas' {MainForm};
+  FMain in 'FMain.pas' {MainForm},
+  LemObjects in 'LemObjects.pas';
 
 {$R *.res}
 

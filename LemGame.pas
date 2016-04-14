@@ -35,6 +35,7 @@ uses
   LemMetaObject, LemInteractiveObject, LemSteel, LemLevel, LemStyle,
   LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet, LemRendering, LemDosAnimationSet,
   LemMusicSystem, LemDosMainDat,
+  LemObjects,
   GameInterfaces, GameControl, GameSound;
 
 type
@@ -126,40 +127,6 @@ type
     procedure Insert(Index: Integer; Item: TLemming);
     property Items[Index: Integer]: TLemming read GetItem; default;
     property List; // for fast access
-  end;
-
-  // internal object used by game
-  TInteractiveObjectInfo = class
-  private
-    function GetBounds: TRect;
-  public
-    MetaObj        : TMetaObject;
-    Obj            : TInteractiveObject;
-    CurrentFrame   : Integer;
-    Triggered      : Boolean;
-    TeleLem        : Integer;
-    HoldActive     : Boolean;
-    ZombieMode     : Boolean;
-    TwoWayReceive  : Boolean;
-    OffsetX        : Integer; // these are NOT used directly from TInteractiveObjectInfo
-    OffsetY        : Integer; // They're only used to back it up in save states!
-    Left           : Integer; // Same here
-    Top            : Integer; // And here
-    TotalFactor    : Integer; //faster way to handle the movement
-    //SoundIndex     : Integer; // cached soundindex
-    property Bounds: TRect read GetBounds;
-  end;
-
-  // internal list, used by game
-  TInteractiveObjectInfoList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TInteractiveObjectInfo;
-  protected
-  public
-    function Add(Item: TInteractiveObjectInfo): Integer;
-    procedure Insert(Index: Integer; Item: TInteractiveObjectInfo);
-    property Items[Index: Integer]: TInteractiveObjectInfo read GetItem; default;
-  published
   end;
 
 
@@ -1125,33 +1092,7 @@ begin
   inherited Insert(Index, Item);
 end;
 
-{ TInteractiveObjectInfo }
 
-function TInteractiveObjectInfo.GetBounds: TRect;
-begin
-  Result.Left := Obj.Left;
-  Result.Top := Obj.Top;
-  Result.Right := Result.Left + MetaObj.Height;
-  Result.Bottom := Result.Top + MetaObj.Width;
-end;
-
-
-{ TObjectAnimationInfoList }
-
-function TInteractiveObjectInfoList.Add(Item: TInteractiveObjectInfo): Integer;
-begin
-  Result := inherited Add(Item);
-end;
-
-function TInteractiveObjectInfoList.GetItem(Index: Integer): TInteractiveObjectInfo;
-begin
-  Result := inherited Get(Index);
-end;
-
-procedure TInteractiveObjectInfoList.Insert(Index: Integer; Item: TInteractiveObjectInfo);
-begin
-  inherited Insert(Index, Item);
-end;
 
 { TLemmingGameSavedState }
 
@@ -1359,9 +1300,9 @@ begin
     aState.ObjectInfos[i].HoldActive := ObjectInfos[i].HoldActive;
     aState.ObjectInfos[i].ZombieMode := ObjectInfos[i].ZombieMode;
     aState.ObjectInfos[i].TwoWayReceive := ObjectInfos[i].TwoWayReceive;
-    aState.ObjectInfos[i].TotalFactor := ObjectInfos[i].TotalFactor;
-    aState.ObjectInfos[i].OffsetX := ObjectInfos[i].Obj.OffsetX;
-    aState.ObjectInfos[i].OffsetY := ObjectInfos[i].Obj.OffsetY;
+    // aState.ObjectInfos[i].TotalFactor := ObjectInfos[i].TotalFactor;
+    // aState.ObjectInfos[i].OffsetX := ObjectInfos[i].Obj.OffsetX;
+    // aState.ObjectInfos[i].OffsetY := ObjectInfos[i].Obj.OffsetY;
     aState.ObjectInfos[i].Left := ObjectInfos[i].Obj.Left;
     aState.ObjectInfos[i].Top := ObjectInfos[i].Obj.Top;
   end;
@@ -1446,9 +1387,9 @@ begin
     ObjectInfos[i].HoldActive := aState.ObjectInfos[i].HoldActive;
     ObjectInfos[i].ZombieMode := aState.ObjectInfos[i].ZombieMode;
     ObjectInfos[i].TwoWayReceive := aState.ObjectInfos[i].TwoWayReceive;
-    ObjectInfos[i].TotalFactor := aState.ObjectInfos[i].TotalFactor;
-    ObjectInfos[i].Obj.OffsetX := aState.ObjectInfos[i].OffsetX;
-    ObjectInfos[i].Obj.OffsetY := aState.ObjectInfos[i].OffsetY;
+    // ObjectInfos[i].TotalFactor := aState.ObjectInfos[i].TotalFactor;
+    // ObjectInfos[i].Obj.OffsetX := aState.ObjectInfos[i].OffsetX;
+    // ObjectInfos[i].Obj.OffsetY := aState.ObjectInfos[i].OffsetY;
     ObjectInfos[i].Obj.Left := aState.ObjectInfos[i].Left;
     ObjectInfos[i].Obj.Top := aState.ObjectInfos[i].Top;
   end;
@@ -2067,13 +2008,13 @@ begin
     Inf.Obj := O;
     Inf.MetaObj := MO;
 
-    Inf.Obj.Left := Inf.Obj.Left - Inf.Obj.OffsetX;
+    (*Inf.Obj.Left := Inf.Obj.Left - Inf.Obj.OffsetX;
     Inf.Obj.Top := Inf.Obj.Top - Inf.Obj.OffsetY;
 
     Inf.Obj.OffsetX := 0;
-    Inf.Obj.OffsetY := 0;
+    Inf.Obj.OffsetY := 0; *)
 
-    Inf.TotalFactor := 0;
+    // Inf.TotalFactor := 0;
 
     if Inf.MetaObj.RandomStartFrame then
       Inf.CurrentFrame := ((((Abs(Inf.Obj.Left) + 1) * (Abs(Inf.Obj.Top) + 1)) + ((Inf.Obj.Skill + 1) * (Inf.Obj.TarLev + 1))) + i) mod Inf.MetaObj.AnimationFrameCount
@@ -4224,8 +4165,8 @@ begin
 
       Inf.Obj.Left := Inf.Obj.Left + ((mx * f) div 2);
       Inf.Obj.Top := Inf.Obj.Top + ((my * f) div 2);
-      Inf.Obj.OffsetX := Inf.Obj.OffsetX + ((mx * f) div 2);
-      Inf.Obj.OffsetY := Inf.Obj.OffsetY + ((my * f) div 2);
+      // Inf.Obj.OffsetX := Inf.Obj.OffsetX + ((mx * f) div 2);
+      // Inf.Obj.OffsetY := Inf.Obj.OffsetY + ((my * f) div 2);
 
       // Check level borders:
       // Don't need f any more, so we can store arbitrary values in it
@@ -4234,12 +4175,12 @@ begin
       f := Level.Info.Width + Inf.MetaObj.Width;
       Assert(Inf.Obj.Left + Inf.MetaObj.Width + f >= 0, 'Animation Object too far left');
       Inf.Obj.Left := ((Inf.Obj.Left + Inf.MetaObj.Width + f) mod f) - Inf.MetaObj.Width;
-      Inf.Obj.OffsetX := ((Inf.Obj.OffsetX + Inf.MetaObj.Width + f) mod f) - Inf.MetaObj.Width;
+      // Inf.Obj.OffsetX := ((Inf.Obj.OffsetX + Inf.MetaObj.Width + f) mod f) - Inf.MetaObj.Width;
 
       f := Level.Info.Height + Inf.MetaObj.Height;
       Assert(Inf.Obj.Top + Inf.MetaObj.Height + f >= 0, 'Animation Object too far above');
       Inf.Obj.Top := ((Inf.Obj.Top + Inf.MetaObj.Height + f) mod f) - Inf.MetaObj.Height;
-      Inf.Obj.OffsetY := ((Inf.Obj.OffsetY + Inf.MetaObj.Height + f) mod f) - Inf.MetaObj.Height;
+      // Inf.Obj.OffsetY := ((Inf.Obj.OffsetY + Inf.MetaObj.Height + f) mod f) - Inf.MetaObj.Height;
     end;
   end;
 
@@ -4627,14 +4568,14 @@ begin
 
   Inc(L.LemX, L.LemDx);
 
-  if {(ReadWaterMap(L.LemX, L.LemY) = DOM_WATER)} HasTriggerAt(L.LemX, L.LemY, trWater) or HasPixelAt(L.LemX, L.LemY) then // original check only ReadWaterMap(L.LemX - L.LemDx, L.LemY)
+  if HasTriggerAt(L.LemX, L.LemY, trWater) or HasPixelAt(L.LemX, L.LemY) then // original check only ReadWaterMap(L.LemX - L.LemDx, L.LemY)
   begin
     // This is not completely the same as in V1.43. There a check
     // for the pixel (L.LemX, L.LemY) is omitted.
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
     // Rise if there is water above the lemming
-    if (LemDy >= -1) and HasTriggerAt(L.LemX, L.LemY -1, trWater) {(ReadWaterMap(L.LemX, L.LemY - 1) = DOM_WATER)}
+    if (LemDy >= -1) and HasTriggerAt(L.LemX, L.LemY -1, trWater)
                      and not HasPixelAt(L.LemX, L.LemY - 1) then   // original check at -2!
       Dec(L.LemY)
 
@@ -5056,10 +4997,10 @@ begin
     ContinueWork := False;
     For n := 8 to 14 do
     begin
-      If (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
+      if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
            and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx, baBashing)
          ) then ContinueWork := True;
-      If HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 5) then ContinueWork := True;
+      if HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 5) then ContinueWork := True;
     end;
 
     if ContinueWork = False then

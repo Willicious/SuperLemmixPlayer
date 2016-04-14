@@ -498,8 +498,8 @@ begin
                Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
              Obj.Skill := O.SValue mod 16;
 
-             Obj.OffsetX := 0;
-             Obj.OffsetY := 0;
+             // Obj.OffsetX := 0;
+             // Obj.OffsetY := 0;
              Obj.LastDrawX := Obj.Left;
              Obj.LastDrawY := Obj.Top;
              Obj.DrawAsZombie := false;
@@ -814,8 +814,8 @@ begin
       {if (O.Modifier and $10) <> 0 then Obj.IsFake := true;}
       if (O.ObjectID <> 1) and (i >= 16) then Obj.IsFake := true;
 
-      Obj.OffsetX := 0;
-      Obj.OffsetY := 0;
+      // Obj.OffsetX := 0;
+      // Obj.OffsetY := 0;
       Obj.LastDrawX := Obj.Left;
       Obj.LastDrawY := Obj.Top;
       Obj.DrawAsZombie := false;
@@ -1089,8 +1089,8 @@ begin
         Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
       Obj.Skill := O.SValue mod 16;
 
-      Obj.OffsetX := 0;
-      Obj.OffsetY := 0;
+      // Obj.OffsetX := 0;
+      // Obj.OffsetY := 0;
       Obj.LastDrawX := Obj.Left;
       Obj.LastDrawY := Obj.Top;
       Obj.DrawAsZombie := false;
