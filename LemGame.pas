@@ -658,7 +658,6 @@ type
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeMiniMap;
     procedure InitializeObjectMap;
-      function GetOneObjectTriggerArea(ObjectID: Word): TRect;
     procedure InitializeBlockerMap;
     procedure LayBrick(L: TLemming);
     function LayStackBrick(L: TLemming): Boolean;
@@ -1300,9 +1299,6 @@ begin
     aState.ObjectInfos[i].HoldActive := ObjectInfos[i].HoldActive;
     aState.ObjectInfos[i].ZombieMode := ObjectInfos[i].ZombieMode;
     aState.ObjectInfos[i].TwoWayReceive := ObjectInfos[i].TwoWayReceive;
-    // aState.ObjectInfos[i].TotalFactor := ObjectInfos[i].TotalFactor;
-    // aState.ObjectInfos[i].OffsetX := ObjectInfos[i].Obj.OffsetX;
-    // aState.ObjectInfos[i].OffsetY := ObjectInfos[i].Obj.OffsetY;
     aState.ObjectInfos[i].Left := ObjectInfos[i].Obj.Left;
     aState.ObjectInfos[i].Top := ObjectInfos[i].Obj.Top;
   end;
@@ -1387,9 +1383,6 @@ begin
     ObjectInfos[i].HoldActive := aState.ObjectInfos[i].HoldActive;
     ObjectInfos[i].ZombieMode := aState.ObjectInfos[i].ZombieMode;
     ObjectInfos[i].TwoWayReceive := aState.ObjectInfos[i].TwoWayReceive;
-    // ObjectInfos[i].TotalFactor := aState.ObjectInfos[i].TotalFactor;
-    // ObjectInfos[i].Obj.OffsetX := aState.ObjectInfos[i].OffsetX;
-    // ObjectInfos[i].Obj.OffsetY := aState.ObjectInfos[i].OffsetY;
     ObjectInfos[i].Obj.Left := aState.ObjectInfos[i].Left;
     ObjectInfos[i].Obj.Top := aState.ObjectInfos[i].Top;
   end;
@@ -2007,14 +2000,6 @@ begin
     Inf := TInteractiveObjectInfo.Create;
     Inf.Obj := O;
     Inf.MetaObj := MO;
-
-    (*Inf.Obj.Left := Inf.Obj.Left - Inf.Obj.OffsetX;
-    Inf.Obj.Top := Inf.Obj.Top - Inf.Obj.OffsetY;
-
-    Inf.Obj.OffsetX := 0;
-    Inf.Obj.OffsetY := 0; *)
-
-    // Inf.TotalFactor := 0;
 
     if Inf.MetaObj.RandomStartFrame then
       Inf.CurrentFrame := ((((Abs(Inf.Obj.Left) + 1) * (Abs(Inf.Obj.Top) + 1)) + ((Inf.Obj.Skill + 1) * (Inf.Obj.TarLev + 1))) + i) mod Inf.MetaObj.AnimationFrameCount
@@ -3042,7 +3027,6 @@ var
   i: Integer;
   S: TSteel;
   V: Byte;
-  TriggerRect: TRect;
 begin
 
   ObjectMap.SetSize(2*Level.Info.Width, Level.Info.Height);
@@ -3060,10 +3044,8 @@ begin
     if not (V in [DOM_NONE, DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND])
        and not ObjectInfos[i].Obj.IsFake then
     begin
-      TriggerRect := GetOneObjectTriggerArea(i);
-
-      for Y := TriggerRect.Top to TriggerRect.Bottom - 1 do
-      for X := TriggerRect.Left to TriggerRect.Right - 1 do
+      for Y := ObjectInfos[i].TriggerRect.Top to ObjectInfos[i].TriggerRect.Bottom - 1 do
+      for X := ObjectInfos[i].TriggerRect.Left to ObjectInfos[i].TriggerRect.Right - 1 do
       begin
         if (V in [DOM_STEEL, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
         begin
@@ -3103,37 +3085,6 @@ begin
 
       end;
     end;
-  end;
-end;
-
-function TLemmingGame.GetOneObjectTriggerArea(ObjectID: Word): TRect;
-// Note that the trigger area is only the inside of the TRect,
-// which by definition does not include the right and bottom line!
-var
-  X, Y: Integer;
-begin
-  with ObjectInfos[ObjectID] do
-  begin
-    Y := Obj.Top; // of whole object
-    X := Obj.Left;
-
-    if (Obj.DrawingFlags and odf_Flip) <> 0 then
-      X := X + (MetaObj.Width - 1) - MetaObj.TriggerLeft - (MetaObj.TriggerWidth - 1)
-    else
-      X := X + MetaObj.TriggerLeft;
-
-    if (Obj.DrawingFlags and odf_UpsideDown) <> 0 then
-    begin
-      Y := Y + (MetaObj.Height - 1) - MetaObj.TriggerTop - (MetaObj.TriggerHeight - 1);
-      if not (MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
-        Y := Y + 9;
-    end else                     
-      Y := Y + MetaObj.TriggerTop;
-
-    Result.Top := Y;
-    Result.Bottom := Y + MetaObj.TriggerHeight;
-    Result.Left := X;
-    Result.Right := X + MetaObj.TriggerWidth;
   end;
 end;
 
@@ -3607,7 +3558,6 @@ function TLemmingGame.FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): W
 var
   ObjectID, ReceiverID: Word;
   ObjectFound: Boolean;
-  TriggerRect: TRect;
 begin
   // Because ObjectTypeToTrigger defaults to trZombie, looking for this trigger type is nonsense!
   Assert(TriggerType <> trZombie, 'FindObjectId called for trZombie');
@@ -3621,8 +3571,7 @@ begin
        and not ObjectInfos[ObjectID].Obj.IsFake then
     begin
       // Check trigger areas for this object
-      TriggerRect := GetOneObjectTriggerArea(ObjectID);
-      if PtInRect(TriggerRect, Point(X, Y)) then
+      if PtInRect(ObjectInfos[ObjectID].TriggerRect, Point(X, Y)) then
         ObjectFound := True;
     end;
     // Additional checks for locked exit
@@ -4158,15 +4107,13 @@ begin
     begin
       // moving background objects yay!
       // Nepster: So much code for something that is only distracting? Really??
-      // Ok, reduced it from 41 lines to 15
+      // Ok, reduced it from 41 lines to 11
       mx := AnimObjMov[Inf.Obj.Skill];
       my := AnimObjMov[(Inf.Obj.Skill + 12) mod 16];
       f := GetDistanceFactor(Inf.Obj.TarLev, CurrentIteration);
 
       Inf.Obj.Left := Inf.Obj.Left + ((mx * f) div 2);
       Inf.Obj.Top := Inf.Obj.Top + ((my * f) div 2);
-      // Inf.Obj.OffsetX := Inf.Obj.OffsetX + ((mx * f) div 2);
-      // Inf.Obj.OffsetY := Inf.Obj.OffsetY + ((my * f) div 2);
 
       // Check level borders:
       // Don't need f any more, so we can store arbitrary values in it
@@ -4175,12 +4122,10 @@ begin
       f := Level.Info.Width + Inf.MetaObj.Width;
       Assert(Inf.Obj.Left + Inf.MetaObj.Width + f >= 0, 'Animation Object too far left');
       Inf.Obj.Left := ((Inf.Obj.Left + Inf.MetaObj.Width + f) mod f) - Inf.MetaObj.Width;
-      // Inf.Obj.OffsetX := ((Inf.Obj.OffsetX + Inf.MetaObj.Width + f) mod f) - Inf.MetaObj.Width;
 
       f := Level.Info.Height + Inf.MetaObj.Height;
       Assert(Inf.Obj.Top + Inf.MetaObj.Height + f >= 0, 'Animation Object too far above');
       Inf.Obj.Top := ((Inf.Obj.Top + Inf.MetaObj.Height + f) mod f) - Inf.MetaObj.Height;
-      // Inf.Obj.OffsetY := ((Inf.Obj.OffsetY + Inf.MetaObj.Height + f) mod f) - Inf.MetaObj.Height;
     end;
   end;
 

@@ -10,7 +10,7 @@ type
   // internal object used by game
   TInteractiveObjectInfo = class
   private
-    function GetBounds: TRect;
+    function GetTriggerRect(): TRect;
   public
     MetaObj        : TMetaObject;
     Obj            : TInteractiveObject;
@@ -20,13 +20,10 @@ type
     HoldActive     : Boolean;
     ZombieMode     : Boolean;
     TwoWayReceive  : Boolean;
-    // OffsetX        : Integer;
-    // OffsetY        : Integer;
     Left           : Integer; // these are NOT used directly from TInteractiveObjectInfo
     Top            : Integer; // They're only used to back it up in save states!
-    // TotalFactor    : Integer; //faster way to handle the movement
-    //SoundIndex     : Integer; // cached soundindex
-    property Bounds: TRect read GetBounds;
+
+    property TriggerRect: TRect read GetTriggerRect;
   end;
 
   // internal list, used by game
@@ -41,19 +38,74 @@ type
   published
   end;
 
+const
+  DOM_NOOBJECT         = 65535;
+  DOM_NONE             = 0;
+  DOM_EXIT             = 1;
+  DOM_FORCELEFT        = 2; // left arm of blocker
+  DOM_FORCERIGHT       = 3; // right arm of blocker
+  DOM_TRAP             = 4; // triggered trap
+  DOM_WATER            = 5; // causes drowning
+  DOM_FIRE             = 6; // causes vaporizing
+  DOM_ONEWAYLEFT       = 7;
+  DOM_ONEWAYRIGHT      = 8;
+  DOM_STEEL            = 9;
+  DOM_BLOCKER          = 10; // the middle part of blocker
+  DOM_TELEPORT         = 11;
+  DOM_RECEIVER         = 12;
+  DOM_LEMMING          = 13;
+  DOM_PICKUP           = 14;
+  DOM_LOCKEXIT         = 15;
+  //DOM_SECRET           = 16;
+  DOM_BUTTON           = 17;
+  DOM_RADIATION        = 18;
+  DOM_ONEWAYDOWN       = 19;
+  DOM_UPDRAFT          = 20;
+  DOM_FLIPPER          = 21;
+  DOM_SLOWFREEZE       = 22;
+  DOM_WINDOW           = 23;
+  DOM_ANIMATION        = 24;
+  DOM_HINT             = 25;
+  DOM_NOSPLAT          = 26;
+  DOM_SPLAT            = 27;
+  DOM_TWOWAYTELE       = 28;
+  DOM_SINGLETELE       = 29;
+  DOM_BACKGROUND       = 30;
+  DOM_TRAPONCE         = 31;
+
 
 implementation
 
 
 { TInteractiveObjectInfo }
-
-function TInteractiveObjectInfo.GetBounds: TRect;
+function TInteractiveObjectInfo.GetTriggerRect(): TRect;
+// Note that the trigger area is only the inside of the TRect,
+// which by definition does not include the right and bottom line!
+var
+  X, Y: Integer;
 begin
-  Result.Left := Obj.Left;
-  Result.Top := Obj.Top;
-  Result.Right := Result.Left + MetaObj.Height;
-  Result.Bottom := Result.Top + MetaObj.Width;
+  Y := Obj.Top; // of whole object
+  X := Obj.Left;
+
+  if (Obj.DrawingFlags and odf_Flip) <> 0 then
+    X := X + (MetaObj.Width - 1) - MetaObj.TriggerLeft - (MetaObj.TriggerWidth - 1)
+  else
+    X := X + MetaObj.TriggerLeft;
+
+  if (Obj.DrawingFlags and odf_UpsideDown) <> 0 then
+  begin
+    Y := Y + (MetaObj.Height - 1) - MetaObj.TriggerTop - (MetaObj.TriggerHeight - 1);
+    if not (MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
+      Y := Y + 9;
+  end else
+    Y := Y + MetaObj.TriggerTop;
+
+  Result.Top := Y;
+  Result.Bottom := Y + MetaObj.TriggerHeight;
+  Result.Left := X;
+  Result.Right := X + MetaObj.TriggerWidth;
 end;
+
 
 
 { TObjectAnimationInfoList }
