@@ -3,29 +3,43 @@ unit LemObjects;
 interface
 
 uses
-  Windows, {Classes,} Contnrs, {SysUtils, Math, Forms, Dialogs,    }
+  Windows, {Classes,} Contnrs, {SysUtils, Math, Forms, Dialogs,}
   LemMetaObject, LemInteractiveObject;
 
 type
   // internal object used by game
   TInteractiveObjectInfo = class
   private
+    sTop            : Integer;
+    sLeft           : Integer;
+    sHeight         : Integer;
+    sWidth          : Integer;
+    sTriggerRect    : TRect;
+
     function GetTriggerRect(): TRect;
+
+
   public
     MetaObj        : TMetaObject;
     Obj            : TInteractiveObject;
+
     CurrentFrame   : Integer;
     Triggered      : Boolean;
     TeleLem        : Integer; // saves which lemming is currently teleported
     HoldActive     : Boolean;
     ZombieMode     : Boolean;
     TwoWayReceive  : Boolean;
-    Left           : Integer; // these are NOT used directly from TInteractiveObjectInfo
-    Top            : Integer; // They're only used to back it up in save states!
 
-    property TriggerRect: TRect read GetTriggerRect;
+    constructor Create(ObjParam: TInteractiveObject; MetaObjParam: TMetaObject);
+
+    property TriggerRect: TRect read sTriggerRect;
+    property Top: Integer read sTop write sTop;
+    property Left: Integer read sLeft write sLeft;
+    property Width: Integer read sWidth;
+    property Height: Integer read sHeight;
   end;
 
+type
   // internal list, used by game
   TInteractiveObjectInfoList = class(TObjectList)
   private
@@ -76,8 +90,47 @@ const
 
 implementation
 
-
 { TInteractiveObjectInfo }
+constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject;
+                                          MetaObjParam: TMetaObject);
+begin
+  Obj := ObjParam;
+  MetaObj := MetaObjParam; // fGameParams.GraphicSet.MetaObjects[ObjParam.Identifier];
+
+  // Set basic stuff
+  sTop := Obj.Top;
+  sLeft := Obj.Left;
+  sHeight := MetaObj.Height;
+  sWidth := MetaObj.Width;
+  sTriggerRect := GetTriggerRect;
+
+  // Set CurrentFrame
+  if MetaObj.RandomStartFrame then
+    CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1){ + i}) mod MetaObj.AnimationFrameCount
+  else if MetaObj.TriggerEffect = DOM_PICKUP then
+    CurrentFrame := ObjParam.Skill + 1
+  else if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
+    CurrentFrame := 1
+  else
+    CurrentFrame := MetaObj.PreviewFrameIndex;
+
+  if (MetaObj.TriggerEffect = DOM_FLIPPER) then
+    if ((ObjParam.DrawingFlags and odf_FlipLem) <> 0) then
+      CurrentFrame := 1
+    else
+      CurrentFrame := 0;
+
+  // Set other stuff
+  Triggered := False;
+  TeleLem := -1; // Set to a value no lemming has (hopefully!)
+
+  HoldActive := False;
+  ZombieMode := False;
+  TwoWayReceive := False;
+
+end;
+
+
 function TInteractiveObjectInfo.GetTriggerRect(): TRect;
 // Note that the trigger area is only the inside of the TRect,
 // which by definition does not include the right and bottom line!

@@ -1290,7 +1290,7 @@ begin
   aState.ObjectInfos.Clear;
   for i := 0 to ObjectInfos.Count-1 do
   begin
-    aState.ObjectInfos.Add(TInteractiveObjectInfo.Create);
+    aState.ObjectInfos.Add(TInteractiveObjectInfo.Create(ObjectInfos[i].Obj, ObjectInfos[i].MetaObj));
     aState.ObjectInfos[i].MetaObj := ObjectInfos[i].MetaObj;
     aState.ObjectInfos[i].Obj := ObjectInfos[i].Obj;
     aState.ObjectInfos[i].CurrentFrame := ObjectInfos[i].CurrentFrame;
@@ -1299,8 +1299,6 @@ begin
     aState.ObjectInfos[i].HoldActive := ObjectInfos[i].HoldActive;
     aState.ObjectInfos[i].ZombieMode := ObjectInfos[i].ZombieMode;
     aState.ObjectInfos[i].TwoWayReceive := ObjectInfos[i].TwoWayReceive;
-    aState.ObjectInfos[i].Left := ObjectInfos[i].Obj.Left;
-    aState.ObjectInfos[i].Top := ObjectInfos[i].Obj.Top;
   end;
 end;
 
@@ -1374,7 +1372,6 @@ begin
   //ObjectInfos.Clear;
   for i := 0 to ObjectInfos.Count-1 do
   begin
-    //ObjectInfos.Add(TInteractiveObjectInfo.Create);
     ObjectInfos[i].MetaObj := aState.ObjectInfos[i].MetaObj;
     ObjectInfos[i].Obj := aState.ObjectInfos[i].Obj;
     ObjectInfos[i].CurrentFrame := aState.ObjectInfos[i].CurrentFrame;
@@ -1383,8 +1380,6 @@ begin
     ObjectInfos[i].HoldActive := aState.ObjectInfos[i].HoldActive;
     ObjectInfos[i].ZombieMode := aState.ObjectInfos[i].ZombieMode;
     ObjectInfos[i].TwoWayReceive := aState.ObjectInfos[i].TwoWayReceive;
-    ObjectInfos[i].Obj.Left := aState.ObjectInfos[i].Left;
-    ObjectInfos[i].Obj.Top := aState.ObjectInfos[i].Top;
   end;
 
   // When loading, we must update the info panel. But if we're just using the state
@@ -1823,8 +1818,6 @@ procedure TLemmingGame.Start(aReplay: Boolean = False);
 -------------------------------------------------------------------------------}
 var
   i, i2, i3: Integer;
-  O: TInteractiveObject;
-  MO: TMetaObject;
   Inf: TInteractiveObjectInfo;
   numEntries:integer;
 const
@@ -1889,8 +1882,6 @@ begin
   if (TimePlay > 5999) or (moTimerMode in fGameParams.MiscOptions) then
     TimePlay := 0; // infinite time
 
-  ButtonsRemain := 0;
-
   Options := DOSOHNO_GAMEOPTIONS;
 
   SkillButtonsDisabledWhenPaused := False;
@@ -1920,14 +1911,7 @@ begin
   ObjectInfos.Clear;
   Entries.Clear;
 
-  // below not accurate emulation, but not likely to find levels out there
-  // with 0 entrances.
-  // We'll use -1 to represent "no entrance".
-  {for i := 0 to 31 do
-  begin
-    DosEntryTable[i] := -1;
-  end;
-  DosEntryTable[i] := 0;}
+
   SetLength(DosEntryTable, 0);
 
   fSlowingDownReleaseRate := False;
@@ -1990,45 +1974,29 @@ begin
 
   ObjectInfos.Clear;
   numEntries := 0;
+  ButtonsRemain := 0;
 
   with Level do
   for i := 0 to InteractiveObjects.Count - 1 do
   begin
-    O := InteractiveObjects[i];
-    MO := Graph.MetaObjects[O.Identifier];
+    Inf := TInteractiveObjectInfo.Create(InteractiveObjects[i],
+                       Graph.MetaObjects[InteractiveObjects[i].Identifier] );
 
-    Inf := TInteractiveObjectInfo.Create;
-    Inf.Obj := O;
-    Inf.MetaObj := MO;
+    ObjectInfos.Add(Inf);
 
-    if Inf.MetaObj.RandomStartFrame then
-      Inf.CurrentFrame := ((((Abs(Inf.Obj.Left) + 1) * (Abs(Inf.Obj.Top) + 1)) + ((Inf.Obj.Skill + 1) * (Inf.Obj.TarLev + 1))) + i) mod Inf.MetaObj.AnimationFrameCount
-    else if MO.TriggerEffect = 14 then
-      Inf.CurrentFrame := O.Skill + 1
-    else if MO.TriggerEffect in [15, 17, 23, 31] then
-      Inf.CurrentFrame := 1
-    else
-      Inf.CurrentFrame := MO.PreviewFrameIndex;
-
-    if (MO.TriggerEffect = 21) then
-      if ((O.DrawingFlags and odf_FlipLem) <> 0) then
-        Inf.CurrentFrame := 1
-      else
-        Inf.CurrentFrame := 0;
-
-    Inf.ZombieMode := false;
-    Inf.TeleLem := -1; // Set to a value no lemming has (hopefully!) 
-
-
-    if ((MO.TriggerEffect = 23)) and (O.IsFake = false) and (O.Left + MO.Width >= 0) then
+    // Update number of hatches
+    if     (Inf.MetaObj.TriggerEffect = DOM_WINDOW)
+       and (not Inf.Obj.IsFake)
+       and (Inf.Obj.Left + Inf.MetaObj.Width >= 0) then
     begin
       SetLength(dosEntryTable, numEntries + 1);
       dosentrytable[numEntries] := i;
-      numEntries := numEntries + 1;
+      Inc(numEntries);
     end;
 
-    if MO.TriggerEffect = 17 then Inc(ButtonsRemain);
-    ObjectInfos.Add(Inf);
+    // Update number of buttons
+    if (Inf.MetaObj.TriggerEffect = 17) and (not Inf.Obj.IsFake) then
+      Inc(ButtonsRemain);
   end;
 
   // can't fix it in the previous loop tidily, so this will fix the locked exit
@@ -2106,8 +2074,9 @@ begin
     begin
       LemIndex := LemmingList.Add(NewLemming);
       Transition(NewLemming, baFalling);
-      LemY := ObjectInfos[i].Obj.Top + ObjectInfos[i].MetaObj.TriggerTop;
-      LemX := ObjectInfos[i].Obj.Left + ObjectInfos[i].MetaObj.TriggerLeft;
+      LemX := ObjectInfos[i].TriggerRect.Left;
+      LemY := ObjectInfos[i].TriggerRect.Top;
+
       LemDX := 1;
       if (ObjectInfos[i].Obj.DrawingFlags and 8) <> 0 then
         TurnAround(NewLemming);
@@ -2223,50 +2192,27 @@ end;
 procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; oid: Byte);
 var
   Inf, Inf2: TInteractiveObjectInfo;
-  tlx, tly: Integer;
 begin
-
-with L do
-begin
-
   Inf := ObjectInfos[oid];
+  // NEED BETTER FIND_RECEIVER!!
   Inf2 := ObjectInfos[FindReceiver(ReadObjectMap(L.LemX, L.LemY), ObjectInfos[ReadObjectMap(L.LemX, L.LemY)].Obj.Skill)];
-
-  // Need to tidy this up and let the object itself implement finding the target point
 
   if Inf.Obj.DrawingFlags and 8 <> 0 then TurnAround(L);
 
-    if Inf.Obj.DrawingFlags and 2 <> 0 then
-      tly := Inf.Obj.Top + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop) - (Inf.MetaObj.TriggerHeight - 1)
-    else
-      tly := Inf.Obj.Top + Inf.MetaObj.TriggerTop;
-    if Inf.Obj.DrawingFlags and 64 <> 0 then
-      tlx := Inf.Obj.Left + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft) - (Inf.MetaObj.TriggerWidth - 1)
-    else
-      tlx := Inf.Obj.Left + Inf.MetaObj.TriggerLeft;
+  // Mirror trigger area, if Upside-Down Flag is valid for exactly one object
+  if (Inf.Obj.DrawingFlags and 2 <> 0) xor (Inf2.Obj.DrawingFlags and 2 <> 0) then
+    L.LemY := Inf2.TriggerRect.Bottom - (L.LemY - Inf.TriggerRect.Top)
+  else
+    L.LemY := Inf2.TriggerRect.Top + (L.LemY - Inf.TriggerRect.Top);
 
-    tlx := LemX - tlx;
-    tly := LemY - tly;
-
-    if Inf.Obj.DrawingFlags and 8 <> 0 then
-      tlx := Inf.MetaObj.TriggerWidth - tlx - 1;
-
-    if Inf2.Obj.DrawingFlags and 2 <> 0 then
-      tly := tly + Inf2.Obj.Top + (Inf2.MetaObj.Height - 1) - (Inf2.MetaObj.TriggerTop) - (Inf2.MetaObj.TriggerHeight - 1)
-    else
-      tly := tly + Inf2.Obj.Top + Inf2.MetaObj.TriggerTop;
-    if Inf2.Obj.DrawingFlags and 64 <> 0 then
-      tlx := tlx + Inf2.Obj.Left + (Inf2.MetaObj.Width - 1) - (Inf2.MetaObj.TriggerLeft) - (Inf2.MetaObj.TriggerWidth - 1)
-    else
-      tlx := tlx + Inf2.Obj.Left + Inf2.MetaObj.TriggerLeft;
-
-
-  LemX := tlx;
-  LemY := tly;
-
+  // Mirror trigger area, if FlipLem Flag is valid for exactly one object
+  // The Flip Flag is already taken care of when computing trigger areas.
+  if (Inf.Obj.DrawingFlags and 8 <> 0) xor (Inf2.Obj.DrawingFlags and 8 <> 0) then
+    L.LemX := Inf2.TriggerRect.Right - (L.LemX - Inf.TriggerRect.Left)
+  else
+    L.LemX := Inf2.TriggerRect.Left + (L.LemX - Inf.TriggerRect.Left);
 end;
 
-end;
 
 function TLemmingGame.FindReceiver(oid: Byte; sval: Byte): Byte;
 var
@@ -2537,8 +2483,6 @@ begin
                    end;
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
-                     (*while (i < 4) and (ReadWaterMap(L.LemX, L.LemY - i - 1) = DOM_WATER)
-                                   and not HasPixelAt(L.LemX, L.LemY - i - 1) do*)
                      while (i < 4) and HasTriggerAt(L.LemX, L.LemY - i - 1, trWater)
                                    and not HasPixelAt(L.LemX, L.LemY - i - 1) do
                        Inc(i);
