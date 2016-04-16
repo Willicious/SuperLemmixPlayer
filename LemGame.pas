@@ -864,8 +864,9 @@ const
   BOMBER_TIME = 1;
 
 const
-  // values for the (4 pixel resolution) Dos Object Map (for triggereffects)
-  DOM_NOOBJECT         = 65535;
+  // Values for DOM_TRIGGERTYPE are defined in LemObjects.pas!
+  // Here only for refence.
+(*DOM_NOOBJECT         = 65535;
   DOM_NONE             = 0;
   DOM_EXIT             = 1;
   DOM_FORCELEFT        = 2; // left arm of blocker
@@ -882,7 +883,7 @@ const
   DOM_LEMMING          = 13;
   DOM_PICKUP           = 14;
   DOM_LOCKEXIT         = 15;
-  //DOM_SECRET           = 16;
+  DOM_SECRET           = 16; // no longer used!!
   DOM_BUTTON           = 17;
   DOM_RADIATION        = 18;
   DOM_ONEWAYDOWN       = 19;
@@ -897,7 +898,7 @@ const
   DOM_TWOWAYTELE       = 28;
   DOM_SINGLETELE       = 29;
   DOM_BACKGROUND       = 30;
-  DOM_TRAPONCE         = 31;
+  DOM_TRAPONCE         = 31;  *)
 
   // removal modes
   RM_NEUTRAL           = 0;
@@ -1278,7 +1279,7 @@ begin
   aState.Index_LemmingToBeNuked := Index_LemmingToBeNuked;
   aState.LastRecordedRR := fLastRecordedRR;
 
-  // Lemmings. Thank fuck for their Assign method.
+  // Lemmings.
   aState.LemmingList.Clear;
   for i := 0 to LemmingList.Count-1 do
   begin
@@ -1286,19 +1287,12 @@ begin
     aState.LemmingList[i].Assign(LemmingList[i]);
   end;
 
-  // Objects. This doesn't have an Assign so have to do it manually. (Or write one...)
+  // Objects.
   aState.ObjectInfos.Clear;
   for i := 0 to ObjectInfos.Count-1 do
   begin
-    aState.ObjectInfos.Add(TInteractiveObjectInfo.Create(ObjectInfos[i].Obj, ObjectInfos[i].MetaObj));
-    aState.ObjectInfos[i].MetaObj := ObjectInfos[i].MetaObj;
-    aState.ObjectInfos[i].Obj := ObjectInfos[i].Obj;
-    aState.ObjectInfos[i].CurrentFrame := ObjectInfos[i].CurrentFrame;
-    aState.ObjectInfos[i].Triggered := ObjectInfos[i].Triggered;
-    aState.ObjectInfos[i].TeleLem := ObjectInfos[i].TeleLem;
-    aState.ObjectInfos[i].HoldActive := ObjectInfos[i].HoldActive;
-    aState.ObjectInfos[i].ZombieMode := ObjectInfos[i].ZombieMode;
-    aState.ObjectInfos[i].TwoWayReceive := ObjectInfos[i].TwoWayReceive;
+    aState.ObjectInfos.Add(TInteractiveObjectInfo.Create);
+    ObjectInfos[i].AssignTo(aState.ObjectInfos[i]);
   end;
 end;
 
@@ -1357,7 +1351,7 @@ begin
   Index_LemmingToBeNuked := aState.Index_LemmingToBeNuked;
   fLastRecordedRR := aState.LastRecordedRR;
 
-  // Lemmings. Thank fuck for their Assign method.
+  // Lemmings.
   LemmingList.Clear;
   for i := 0 to aState.LemmingList.Count-1 do
   begin
@@ -1368,18 +1362,10 @@ begin
       fHighlightLemming := LemmingList[i];
   end;
 
-  // Objects. This doesn't have an Assign so have to do it manually. (Or write one...)
-  //ObjectInfos.Clear;
+  // Objects
   for i := 0 to ObjectInfos.Count-1 do
   begin
-    ObjectInfos[i].MetaObj := aState.ObjectInfos[i].MetaObj;
-    ObjectInfos[i].Obj := aState.ObjectInfos[i].Obj;
-    ObjectInfos[i].CurrentFrame := aState.ObjectInfos[i].CurrentFrame;
-    ObjectInfos[i].Triggered := aState.ObjectInfos[i].Triggered;
-    ObjectInfos[i].TeleLem := aState.ObjectInfos[i].TeleLem;
-    ObjectInfos[i].HoldActive := aState.ObjectInfos[i].HoldActive;
-    ObjectInfos[i].ZombieMode := aState.ObjectInfos[i].ZombieMode;
-    ObjectInfos[i].TwoWayReceive := aState.ObjectInfos[i].TwoWayReceive;
+    aState.ObjectInfos[i].AssignTo(ObjectInfos[i]);
   end;
 
   // When loading, we must update the info panel. But if we're just using the state
@@ -1459,7 +1445,7 @@ end;
 
 function TLemmingGame.Checkpass: Boolean;
 begin
-  Result := (fGameCheated or (LemmingsIn >= Level.Info.RescueCount));
+  Result := fGameCheated or (LemmingsIn >= Level.Info.RescueCount);
 end;
 
 function TLemmingGame.GetLevelWidth: Integer;
@@ -1829,24 +1815,24 @@ begin
   Playing := False;
 
   if moChallengeMode in fGameParams.MiscOptions then
-    begin
-    fGameParams.Level.Info.ClimberCount   := 0 ;
-    fGameParams.Level.Info.FloaterCount   := 0 ;
-    fGameParams.Level.Info.BomberCount    := 0 ;
-    fGameParams.Level.Info.BlockerCount   := 0 ;
-    fGameParams.Level.Info.BuilderCount   := 0 ;
-    fGameParams.Level.Info.BasherCount    := 0 ;
-    fGameParams.Level.Info.MinerCount     := 0 ;
-    fGameParams.Level.Info.DiggerCount    := 0 ;
-    fGameParams.Level.Info.WalkerCount := 0;
-    fGameParams.Level.Info.SwimmerCount := 0;
-    fGameParams.Level.Info.GliderCount := 0;
-    fGameParams.Level.Info.MechanicCount := 0;
-    fGameParams.Level.Info.StonerCount := 0;
+  begin
+    fGameParams.Level.Info.ClimberCount    := 0;
+    fGameParams.Level.Info.FloaterCount    := 0;
+    fGameParams.Level.Info.BomberCount     := 0;
+    fGameParams.Level.Info.BlockerCount    := 0;
+    fGameParams.Level.Info.BuilderCount    := 0;
+    fGameParams.Level.Info.BasherCount     := 0;
+    fGameParams.Level.Info.MinerCount      := 0;
+    fGameParams.Level.Info.DiggerCount     := 0;
+    fGameParams.Level.Info.WalkerCount     := 0;
+    fGameParams.Level.Info.SwimmerCount    := 0;
+    fGameParams.Level.Info.GliderCount     := 0;
+    fGameParams.Level.Info.MechanicCount   := 0;
+    fGameParams.Level.Info.StonerCount     := 0;
     fGameParams.Level.Info.PlatformerCount := 0;
-    fGameParams.Level.Info.StackerCount := 0;
-    fGameParams.Level.Info.ClonerCount := 0;
-    end;
+    fGameParams.Level.Info.StackerCount    := 0;
+    fGameParams.Level.Info.ClonerCount     := 0;
+  end;
 
   fRenderer.RenderWorld(World, False, (moDebugSteel in fGameParams.MiscOptions));
 
@@ -1985,9 +1971,9 @@ begin
     ObjectInfos.Add(Inf);
 
     // Update number of hatches
-    if     (Inf.MetaObj.TriggerEffect = DOM_WINDOW)
-       and (not Inf.Obj.IsFake)
-       and (Inf.Obj.Left + Inf.MetaObj.Width >= 0) then
+    if     (Inf.TriggerEffect = DOM_WINDOW)
+       and (not Inf.IsDisabled)
+       and (Inf.Left + Inf.Width >= 0) then   // WHY CHECK ONLY THE LEFT EDGE???
     begin
       SetLength(dosEntryTable, numEntries + 1);
       dosentrytable[numEntries] := i;
@@ -1995,7 +1981,7 @@ begin
     end;
 
     // Update number of buttons
-    if (Inf.MetaObj.TriggerEffect = 17) and (not Inf.Obj.IsFake) then
+    if (Inf.TriggerEffect = DOM_BUTTON) and not Inf.IsDisabled then
       Inc(ButtonsRemain);
   end;
 
@@ -2003,7 +1989,7 @@ begin
   // displaying as locked when it isn't issue on levels with no buttons
   if ButtonsRemain = 0 then
     for i := 0 to ObjectInfos.Count-1 do
-      if (ObjectInfos[i].MetaObj.TriggerEffect = DOM_LOCKEXIT) then
+      if (ObjectInfos[i].TriggerEffect = DOM_LOCKEXIT) then
         ObjectInfos[i].CurrentFrame := 0;
 
   ApplyLevelEntryOrder;
@@ -2061,49 +2047,55 @@ end;
 procedure TLemmingGame.SpawnLemming;
 var
   NewLemming : TLemming;
-  i, c: Integer;
+  TrigEffect: Integer;
+  i: Integer;
 begin
 
-for i := 0 to ObjectInfos.Count - 1 do
-begin
-  c := ObjectInfos[i].MetaObj.TriggerEffect;
-  if (c = 13) and (ObjectInfos[i].Obj.IsFake = false) then
+  for i := 0 to ObjectInfos.Count - 1 do
   begin
-    NewLemming := TLemming.Create;
-    with NewLemming do
+    TrigEffect := ObjectInfos[i].TriggerEffect;
+    if (TrigEffect = DOM_LEMMING) and not ObjectInfos[i].IsDisabled then
     begin
-      LemIndex := LemmingList.Add(NewLemming);
-      Transition(NewLemming, baFalling);
-      LemX := ObjectInfos[i].TriggerRect.Left;
-      LemY := ObjectInfos[i].TriggerRect.Top;
-
-      LemDX := 1;
-      if (ObjectInfos[i].Obj.DrawingFlags and 8) <> 0 then
-        TurnAround(NewLemming);
-      if (ObjectInfos[i].Obj.TarLev and 1) <> 0 then LemIsClimber := true;
-      if (ObjectInfos[i].Obj.TarLev and 2) <> 0 then LemIsSwimmer := true;
-      if (ObjectInfos[i].Obj.TarLev and 4) <> 0 then LemIsFloater := true
-      else if (ObjectInfos[i].Obj.TarLev and 8) <> 0 then LemIsGlider := true;
-      if (ObjectInfos[i].Obj.TarLev and 16) <> 0 then LemIsMechanic := true;
-      if (ObjectInfos[i].Obj.TarLev and 32) <> 0 then
+      NewLemming := TLemming.Create;
+      with NewLemming do
       begin
-        while (LemY <= LEMMING_MAX_Y + World.Height) and (HasPixelAt(LemX, LemY) = false) do
-          Inc(LemY);
-        Transition(NewLemming, baBlocking);
+        LemIndex := LemmingList.Add(NewLemming);
+        Transition(NewLemming, baFalling);
+        LemX := ObjectInfos[i].TriggerRect.Left;
+        LemY := ObjectInfos[i].TriggerRect.Top;
+
+        LemDX := 1;
+        if (ObjectInfos[i].Obj.DrawingFlags and 8) <> 0 then
+          TurnAround(NewLemming);
+        if (ObjectInfos[i].Obj.TarLev and 1) <> 0 then LemIsClimber := true;
+        if (ObjectInfos[i].Obj.TarLev and 2) <> 0 then LemIsSwimmer := true;
+        if (ObjectInfos[i].Obj.TarLev and 4) <> 0 then LemIsFloater := true
+        else if (ObjectInfos[i].Obj.TarLev and 8) <> 0 then LemIsGlider := true;
+        if (ObjectInfos[i].Obj.TarLev and 16) <> 0 then LemIsMechanic := true;
+        if (ObjectInfos[i].Obj.TarLev and 32) <> 0 then
+        begin
+          while (LemY <= LEMMING_MAX_Y + World.Height) and (HasPixelAt(LemX, LemY) = false) do
+            Inc(LemY);
+          Transition(NewLemming, baBlocking);
+        end;
+        if (ObjectInfos[i].Obj.TarLev and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
+        if NewLemming.LemIsZombie then Dec(SpawnedDead);
+        LemInFlipper := -1;
+        LemParticleTimer := -1;
+        LemUsedSkillCount := 0;
+        if LemIndex = fHighlightLemmingID then fHighlightLemming := NewLemming;
       end;
-      if (ObjectInfos[i].Obj.TarLev and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
-      if NewLemming.LemIsZombie then Dec(SpawnedDead);
-      LemInFlipper := -1;
-      LemParticleTimer := -1;
-      LemUsedSkillCount := 0;
-      if LemIndex = fHighlightLemmingID then fHighlightLemming := NewLemming;
-    end;
-    Inc(LemmingsReleased);
-    Inc(LemmingsOut);
-  end else if (c = 14) then ObjectInfos[i].CurrentFrame := ObjectInfos[i].Obj.Skill + 1
-      else if ((c = 15) and (ButtonsRemain > 0)) or (c = 17) or (c = 31) then ObjectInfos[i].CurrentFrame := 1
-      else if (c = 21) and (ObjectInfos[i].Obj.DrawingFlags and 8 <> 0) then ObjectInfos[i].CurrentFrame := 1;
-end;
+      Inc(LemmingsReleased);
+      Inc(LemmingsOut);
+    end
+    else if (TrigEffect = DOM_PICKUP) then
+      ObjectInfos[i].CurrentFrame := ObjectInfos[i].Obj.Skill + 1
+    else if    ((TrigEffect = DOM_LOCKEXIT) and (ButtonsRemain > 0))
+            or (TrigEffect = DOM_BUTTON) or (TrigEffect = DOM_TRAPONCE) then
+      ObjectInfos[i].CurrentFrame := 1
+    else if (TrigEffect = DOM_FLIPPER) and (ObjectInfos[i].Obj.DrawingFlags and 8 <> 0) then
+      ObjectInfos[i].CurrentFrame := 1;
+  end;
 end;
 
 procedure TLemmingGame.CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
@@ -2222,8 +2214,8 @@ begin
 
   for t := oid+1 to oid+ObjectInfos.Count do
   begin
-    if (     (ObjectInfos[t mod ObjectInfos.Count].MetaObj.TriggerEffect = DOM_RECEIVER)
-         and (ObjectInfos[t mod ObjectInfos.Count].Obj.IsFake = false)
+    if (     (ObjectInfos[t mod ObjectInfos.Count].TriggerEffect = DOM_RECEIVER)
+         and (not ObjectInfos[t mod ObjectInfos.Count].IsDisabled)
          and (ObjectInfos[t mod ObjectInfos.Count].Obj.Skill = sval)
          and (t mod ObjectInfos.Count <> Result)
        ) then
@@ -2253,7 +2245,7 @@ begin
     if ObjID = DOM_NOOBJECT then
       Result := DOM_NONE
     else
-      Result := ObjectInfos[ObjID].MetaObj.TriggerEffect;
+      Result := ObjectInfos[ObjID].TriggerEffect;
   end
   else
     Result := DOM_NONE; // whoops, important
@@ -2943,7 +2935,7 @@ begin
   for i := 0 to Length(Level.Info.WindowOrder)-1 do
   begin
     oid := Level.Info.WindowOrder[i];
-    if (ObjectInfos[oid].MetaObj.TriggerEffect <> 23) or (ObjectInfos[oid].Obj.IsFake) then Continue;
+    if (ObjectInfos[oid].TriggerEffect <> DOM_WINDOW) or (ObjectInfos[oid].IsDisabled) then Continue;
     SetLength(DosEntryTable, eid+1);
     DosEntryTable[eid] := oid;
     Inc(eid);
@@ -2983,9 +2975,9 @@ begin
 
   for i := 0 to ObjectInfos.Count - 1 do
   begin
-    V := ObjectInfos[i].MetaObj.TriggerEffect;
+    V := ObjectInfos[i].TriggerEffect;
     if not (V in [DOM_NONE, DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND])
-       and not ObjectInfos[i].Obj.IsFake then
+       and not ObjectInfos[i].IsDisabled then
     begin
       for Y := ObjectInfos[i].TriggerRect.Top to ObjectInfos[i].TriggerRect.Bottom - 1 do
       for X := ObjectInfos[i].TriggerRect.Left to ObjectInfos[i].TriggerRect.Right - 1 do
@@ -3101,6 +3093,7 @@ begin
   Result := 0;
   PrioritizedLemming := nil;
   NonPrioritizedLemming := nil;
+  LowestPriorityLemming := nil;
   Lemming1 := nil;
   Lemming2 := nil;
   CP := MousePos;
@@ -3384,7 +3377,7 @@ begin
     begin
       ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trTrap);
       if ObjectID <> 65535 then
-        if ObjectInfos[ObjectID].MetaObj.TriggerEffect = DOM_TRAP then
+        if ObjectInfos[ObjectID].TriggerEffect = DOM_TRAP then
           AbortChecks := HandleTrap(L, ObjectID)
         else
           AbortChecks := HandleTrapOnce(L, ObjectID);
@@ -3399,7 +3392,7 @@ begin
     begin
       ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trTeleport);
       if ObjectID <> 65535 then
-        if ObjectInfos[ObjectID].MetaObj.TriggerEffect = DOM_SINGLETELE then
+        if ObjectInfos[ObjectID].TriggerEffect = DOM_SINGLETELE then
           AbortChecks := HandleTelepSingle(L, ObjectID)
         else
           AbortChecks := HandleTeleport(L, ObjectID);
@@ -3510,25 +3503,25 @@ begin
   repeat
     Dec(ObjectID);
     // Check correct TriggerType
-    if (ObjectTypeToTrigger[ObjectInfos[ObjectID].MetaObj.TriggerEffect] = TriggerType)
-       and not ObjectInfos[ObjectID].Obj.IsFake then
+    if (ObjectTypeToTrigger[ObjectInfos[ObjectID].TriggerEffect] = TriggerType)
+       and not ObjectInfos[ObjectID].IsDisabled then
     begin
       // Check trigger areas for this object
       if PtInRect(ObjectInfos[ObjectID].TriggerRect, Point(X, Y)) then
         ObjectFound := True;
     end;
     // Additional checks for locked exit
-    if (ObjectInfos[ObjectID].MetaObj.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
+    if (ObjectInfos[ObjectID].TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
       ObjectFound := False;
     // Additional checks for triggered traps, triggered animations, teleporters
     if ObjectInfos[ObjectID].Triggered then
       ObjectFound := False;
     // ignore already used buttons, one-shot traps and pick-up skills
-    if     (ObjectInfos[ObjectID].MetaObj.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
-       and (ObjectInfos[ObjectID].CurrentFrame = 0) then  // F*** other objects have always CurrentFrame = 0, so the first check is needed!
+    if     (ObjectInfos[ObjectID].TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
+       and (ObjectInfos[ObjectID].CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
       ObjectFound := False;
     // Additional check, that the corresponding receiver is inactive
-    if ObjectInfos[ObjectID].MetaObj.TriggerEffect = DOM_TELEPORT then
+    if ObjectInfos[ObjectID].TriggerEffect = DOM_TELEPORT then
     begin
       ReceiverID := FindReceiver(ObjectID, ObjectInfos[ObjectID].Obj.Skill);
       if    (ReceiverID = ObjectID)
@@ -3717,7 +3710,7 @@ begin
     begin
       CueSoundEffect(SFX_ENTRANCE);
       for n := 0 to (ObjectInfos.Count - 1) do
-        if ObjectInfos[n].MetaObj.TriggerEffect = DOM_LOCKEXIT then
+        if ObjectInfos[n].TriggerEffect = DOM_LOCKEXIT then
           ObjectInfos[n].Triggered := True;
     end;
   end;
@@ -4029,15 +4022,15 @@ begin
   if (not HyperSpeed) then
     for i := 0 to ObjectInfos.Count - 1 do
     begin
-      Inf := ObjectInfos.List^[i];
-      if (Inf.MetaObj.TriggerEffect <> DOM_LEMMING) then
+      Inf := ObjectInfos[i];
+      if (Inf.TriggerEffect <> DOM_LEMMING) then
         Renderer.EraseObject(fTargetBitmap, Inf.Obj, World);
     end;
 
   for i := 0 to ObjectInfos.Count-1 do
   begin
-    Inf := ObjectInfos.List^[i];
-    if (Inf.MetaObj.TriggerEffect = DOM_BACKGROUND) and (Inf.Obj.TarLev <> 0) then
+    Inf := ObjectInfos[i];
+    if (Inf.TriggerEffect = DOM_BACKGROUND) and (Inf.Obj.TarLev <> 0) then
     begin
       // moving background objects yay!
       // Nepster: So much code for something that is only distracting? Really??
@@ -4070,10 +4063,10 @@ begin
   // other objects
   for i := 0 to ObjectInfos.Count - 1 do
   begin
-    Inf := ObjectInfos.List^[i];
+    Inf := ObjectInfos[i];
     Inf.Obj.DrawAsZombie := Inf.ZombieMode;
 
-    if Inf.MetaObj.TriggerEffect <> DOM_LEMMING then
+    if Inf.TriggerEffect <> DOM_LEMMING then
       Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
   end;
 end;
@@ -4152,7 +4145,7 @@ begin
           LemEraseRect := DstRect;
 
           fMinimapBuffer.PixelS[(LemX div 16) + Xo, LemY div 8] :=
-            Color32(0, 255{176}, 000);
+            Color32(0, 255, 000);
 
           OldCombineZ := LAB.OnPixelCombine;
 
@@ -5423,7 +5416,7 @@ begin
       begin
         EntriesOpened := False;
         for i := 0 to ObjectInfos.Count - 1 do
-          if ObjectInfos[i].MetaObj.TriggerEffect = DOM_WINDOW then
+          if ObjectInfos[i].TriggerEffect = DOM_WINDOW then
           begin
             ObjectInfos[i].Triggered := True;
             ObjectInfos[i].CurrentFrame := 1;
@@ -5598,7 +5591,7 @@ begin
     L := LemmingList.List^[LemmingIndex];
     assert(assignedskill > 0);
     assert(assignedskill < 19);
-    ass := TBasicLemmingAction(assignedskill{ - 1});
+    ass := TBasicLemmingAction(assignedskill);
 
     if not (ass in AssignableSkills) then
       raise exception.create(i2s(integer(ass)) + ' ' + i2s(currentiteration));
@@ -6165,7 +6158,7 @@ begin
       if LemParticleTimer >= 0 then
         Dec(LemParticleTimer);
 
-      if LemRemoved {or LemTeleporting} then
+      if LemRemoved then
         Continue;
 
       // Put lemming out of receiver if teleporting is finished.
@@ -6222,14 +6215,14 @@ begin
   ObjID := -1;
   repeat
     Inc(ObjID);
-    ObjInfo := ObjectInfos.List^[ObjID];
+    ObjInfo := ObjectInfos[ObjID];
   until (L.LemIndex = ObjInfo.TeleLem) or (ObjID > ObjectInfos.Count - 1);
 
   Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
 
-  if     (ObjInfo.MetaObj.TriggerEffect = DOM_RECEIVER)
-     or ((ObjInfo.MetaObj.TriggerEffect = DOM_TWOWAYTELE) and (ObjInfo.TwoWayReceive = True))
-     or  (ObjInfo.MetaObj.TriggerEffect = DOM_SINGLETELE) then
+  if     (ObjInfo.TriggerEffect = DOM_RECEIVER)
+     or ((ObjInfo.TriggerEffect = DOM_TWOWAYTELE) and (ObjInfo.TwoWayReceive = True))
+     or  (ObjInfo.TriggerEffect = DOM_SINGLETELE) then
   begin
     if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.MetaObj.AnimationFrameCount) and (ObjInfo.MetaObj.TriggerNext = 0))
        or ((ObjInfo.CurrentFrame + 1 = ObjInfo.MetaObj.TriggerNext) and (ObjInfo.MetaObj.TriggerNext <> 0)) then
@@ -6377,14 +6370,14 @@ const
 begin
   for i := ObjectInfos.Count - 1 downto 0 do
   begin
-    Inf := ObjectInfos.List^[i];
+    Inf := ObjectInfos[i];
 
     if     (Inf.Triggered or (Inf.MetaObj.AnimationType = oat_Continuous))
-       and (Inf.MetaObj.TriggerEffect <> DOM_PICKUP) then
+       and (Inf.TriggerEffect <> DOM_PICKUP) then
       Inc(Inf.CurrentFrame);
 
-    if     (Inf.MetaObj.TriggerEffect = DOM_TELEPORT)
-       or ((Inf.MetaObj.TriggerEffect = DOM_TWOWAYTELE) and (Inf.TwoWayReceive = false)) then
+    if     (Inf.TriggerEffect = DOM_TELEPORT)
+       or ((Inf.TriggerEffect = DOM_TWOWAYTELE) and (Inf.TwoWayReceive = false)) then
     begin
       if    ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
          or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
@@ -6411,7 +6404,7 @@ begin
       Inf.Triggered := False;
       Inf.HoldActive := False;
       Inf.ZombieMode := False;
-      if (Inf.Obj.Identifier = OID_ENTRY) then
+      if Inf.TriggerEffect = DOM_WINDOW then
         fEntranceAnimationCompleted := True;
     end;
 
@@ -6584,13 +6577,13 @@ begin
   if not (fGameParams.LemmingBlink) then Exit;
   if (fGameParams.ChallengeMode) and ((Level.Info.SkillTypes and 1) <> 0) then Exit;
   for i := 0 to ObjectInfos.Count-1 do
-    if (ObjectInfos[i].MetaObj.TriggerEffect = 14) and (ObjectInfos[i].Obj.Skill = 15) then pcc := pcc + 1;
+    if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].Obj.Skill = 15) then pcc := pcc + 1;
 
 
   if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) +
       ((Level.Info.SkillTypes and 1) * CurrSkillCount[baCloning]) + pcc
      < Level.Info.RescueCount)
-  and (CurrentIteration mod 17 > 8) {and (CurrentIteration mod 34 < 27)} then
+  and (CurrentIteration mod 17 > 8) then
     Result := true;
 end;
 
@@ -6783,7 +6776,7 @@ procedure TRecorder.LoadFromFile(const aFileName: string; IgnoreProblems: Boolea
 var
   F: TFileStream;
 begin
-  F := TFileStream.Create(aFileName, fmOpenRead{Write}); // needed for silent conversion
+  F := TFileStream.Create(aFileName, fmOpenRead); // needed for silent conversion
   try
     LoadFromStream(F, IgnoreProblems);
   finally

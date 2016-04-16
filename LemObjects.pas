@@ -15,6 +15,8 @@ type
     sHeight         : Integer;
     sWidth          : Integer;
     sTriggerRect    : TRect;
+    sTriggerEffect  : Integer;
+    sIsDisabled     : Boolean;
 
     function GetTriggerRect(): TRect;
 
@@ -30,13 +32,17 @@ type
     ZombieMode     : Boolean;
     TwoWayReceive  : Boolean;
 
-    constructor Create(ObjParam: TInteractiveObject; MetaObjParam: TMetaObject);
+    constructor Create(ObjParam: TInteractiveObject; MetaObjParam: TMetaObject); Overload;
 
     property TriggerRect: TRect read sTriggerRect;
     property Top: Integer read sTop write sTop;
     property Left: Integer read sLeft write sLeft;
     property Width: Integer read sWidth;
     property Height: Integer read sHeight;
+    property TriggerEffect: Integer read sTriggerEffect;
+    property IsDisabled: Boolean read sIsDisabled write sIsDisabled;
+
+    procedure AssignTo(NewObj: TInteractiveObjectInfo);
   end;
 
 type
@@ -87,8 +93,8 @@ const
   DOM_BACKGROUND       = 30;
   DOM_TRAPONCE         = 31;
 
-
 implementation
+
 
 { TInteractiveObjectInfo }
 constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject;
@@ -114,6 +120,12 @@ begin
   sHeight := MetaObj.Height;
   sWidth := MetaObj.Width;
   sTriggerRect := GetTriggerRect;
+  sIsDisabled := Obj.IsFake;
+  // Save TriggerEffect, only if object is active
+  if not sIsDisabled then
+    sTriggerEffect := MetaObj.TriggerEffect
+  else
+    sTriggerEffect := DOM_NONE;
 
   // Set CurrentFrame
   if MetaObj.RandomStartFrame then
@@ -168,6 +180,25 @@ begin
   Result.Bottom := Y + MetaObj.TriggerHeight;
   Result.Left := X;
   Result.Right := X + MetaObj.TriggerWidth;
+end;
+
+procedure TInteractiveObjectInfo.AssignTo(NewObj: TInteractiveObjectInfo);
+begin
+  NewObj.sTop := sTop;
+  NewObj.sLeft := sLeft;
+  NewObj.sHeight := sHeight;
+  NewObj.sWidth := sWidth;
+  NewObj.sTriggerRect := sTriggerRect;
+  NewObj.sTriggerEffect := sTriggerEffect;
+  NewObj.sIsDisabled := sIsDisabled;
+  NewObj.MetaObj := MetaObj;
+  NewObj.Obj := Obj;
+  NewObj.CurrentFrame := CurrentFrame;
+  NewObj.Triggered := Triggered;
+  NewObj.TeleLem := TeleLem;
+  NewObj.HoldActive := HoldActive;
+  NewObj.ZombieMode := ZombieMode;
+  NewObj.TwoWayReceive := TwoWayReceive;
 end;
 
 
