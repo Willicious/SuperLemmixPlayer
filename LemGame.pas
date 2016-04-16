@@ -2201,14 +2201,14 @@ begin
 
   // Mirror trigger area, if Upside-Down Flag is valid for exactly one object
   if (Inf.Obj.DrawingFlags and 2 <> 0) xor (Inf2.Obj.DrawingFlags and 2 <> 0) then
-    L.LemY := Inf2.TriggerRect.Bottom - (L.LemY - Inf.TriggerRect.Top)
+    L.LemY := (Inf2.TriggerRect.Bottom - 1) - (L.LemY - Inf.TriggerRect.Top)
   else
     L.LemY := Inf2.TriggerRect.Top + (L.LemY - Inf.TriggerRect.Top);
 
   // Mirror trigger area, if FlipLem Flag is valid for exactly one object
   // The Flip Flag is already taken care of when computing trigger areas.
   if (Inf.Obj.DrawingFlags and 8 <> 0) xor (Inf2.Obj.DrawingFlags and 8 <> 0) then
-    L.LemX := Inf2.TriggerRect.Right - (L.LemX - Inf.TriggerRect.Left)
+    L.LemX := (Inf2.TriggerRect.Right - 1) - (L.LemX - Inf.TriggerRect.Left)
   else
     L.LemX := Inf2.TriggerRect.Left + (L.LemX - Inf.TriggerRect.Left);
 end;
@@ -2222,7 +2222,7 @@ begin
 
   for t := oid+1 to oid+ObjectInfos.Count do
   begin
-    if (     (ObjectInfos[t mod ObjectInfos.Count].MetaObj.TriggerEffect = 12)
+    if (     (ObjectInfos[t mod ObjectInfos.Count].MetaObj.TriggerEffect = DOM_RECEIVER)
          and (ObjectInfos[t mod ObjectInfos.Count].Obj.IsFake = false)
          and (ObjectInfos[t mod ObjectInfos.Count].Obj.Skill = sval)
          and (t mod ObjectInfos.Count <> Result)
@@ -2260,7 +2260,6 @@ begin
 end;
 
 function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
-// original dos objectmap has a resolution of 4
 begin
   if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
     Result := BlockerMap.Value[X, Y]
@@ -3553,21 +3552,12 @@ procedure TLemmingGame.RemoveObjectID(ObjectID: Word);
 var
   Inf: TInteractiveObjectInfo;
   mx, my: Integer;
-  minmx, minmy: Integer;
 begin
   Inf := ObjectInfos[ObjectID];
-  minmx := (Inf.Obj.Left + Inf.MetaObj.TriggerLeft);
-  minmy := (Inf.Obj.Top + Inf.MetaObj.TriggerTop);
 
-  if Inf.Obj.DrawingFlags and odf_Flip <> 0 then
-    minmx := minmx + (Inf.MetaObj.Width - 1) - (Inf.MetaObj.TriggerLeft * 2) - (Inf.MetaObj.TriggerWidth - 1);
-
-  if Inf.Obj.DrawingFlags and odf_UpsideDown <> 0 then
-    minmy := minmy + (Inf.MetaObj.Height - 1) - (Inf.MetaObj.TriggerTop * 2) - (Inf.MetaObj.TriggerHeight - 1) + 9;
-
-  for mx := minmx to (minmx + Inf.MetaObj.TriggerWidth - 1) do
-    for my := minmy to (minmy + Inf.MetaObj.TriggerHeight - 1) do
-      if ReadObjectMap(mx, my) = ObjectID then WriteObjectMap(mx, my, DOM_NOOBJECT);
+  for mx := Inf.TriggerRect.Left to Inf.TriggerRect.Right - 1 do
+  for my := Inf.TriggerRect.Top to Inf.TriggerRect.Left - 1 do
+    if ReadObjectMap(mx, my) = ObjectID then WriteObjectMap(mx, my, DOM_NOOBJECT);
 end;
 
 
@@ -4040,36 +4030,37 @@ begin
     for i := 0 to ObjectInfos.Count - 1 do
     begin
       Inf := ObjectInfos.List^[i];
-      if (Inf.MetaObj.TriggerEffect <> 13) then
+      if (Inf.MetaObj.TriggerEffect <> DOM_LEMMING) then
         Renderer.EraseObject(fTargetBitmap, Inf.Obj, World);
     end;
 
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos.List^[i];
-    if (Inf.MetaObj.TriggerEffect = 30) and (Inf.Obj.TarLev <> 0) then
+    if (Inf.MetaObj.TriggerEffect = DOM_BACKGROUND) and (Inf.Obj.TarLev <> 0) then
     begin
       // moving background objects yay!
       // Nepster: So much code for something that is only distracting? Really??
       // Ok, reduced it from 41 lines to 11
+      // Inf.Skill is misused for storing direction vector!!!
       mx := AnimObjMov[Inf.Obj.Skill];
       my := AnimObjMov[(Inf.Obj.Skill + 12) mod 16];
       f := GetDistanceFactor(Inf.Obj.TarLev, CurrentIteration);
 
-      Inf.Obj.Left := Inf.Obj.Left + ((mx * f) div 2);
-      Inf.Obj.Top := Inf.Obj.Top + ((my * f) div 2);
+      Inf.Left := Inf.Left + ((mx * f) div 2);
+      Inf.Top := Inf.Top + ((my * f) div 2);
 
       // Check level borders:
       // Don't need f any more, so we can store arbitrary values in it
       // The additional "+f" are necessary! Delphi's definition of mod for negative numbers is totally absurd!
       // The following code works only if the coordinates are not too negative, so Asserts are added
-      f := Level.Info.Width + Inf.MetaObj.Width;
-      Assert(Inf.Obj.Left + Inf.MetaObj.Width + f >= 0, 'Animation Object too far left');
-      Inf.Obj.Left := ((Inf.Obj.Left + Inf.MetaObj.Width + f) mod f) - Inf.MetaObj.Width;
+      f := Level.Info.Width + Inf.Width;
+      Assert(Inf.Left + Inf.Width + f >= 0, 'Animation Object too far left');
+      Inf.Left := ((Inf.Left + Inf.Width + f) mod f) - Inf.Width;
 
-      f := Level.Info.Height + Inf.MetaObj.Height;
-      Assert(Inf.Obj.Top + Inf.MetaObj.Height + f >= 0, 'Animation Object too far above');
-      Inf.Obj.Top := ((Inf.Obj.Top + Inf.MetaObj.Height + f) mod f) - Inf.MetaObj.Height;
+      f := Level.Info.Height + Inf.Height;
+      Assert(Inf.Top + Inf.Height + f >= 0, 'Animation Object too far above');
+      Inf.Top := ((Inf.Top + Inf.Height + f) mod f) - Inf.Height;
     end;
   end;
 
@@ -4082,7 +4073,7 @@ begin
     Inf := ObjectInfos.List^[i];
     Inf.Obj.DrawAsZombie := Inf.ZombieMode;
 
-    if Inf.MetaObj.TriggerEffect <> 13 then
+    if Inf.MetaObj.TriggerEffect <> DOM_LEMMING then
       Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
   end;
 end;
@@ -5432,7 +5423,7 @@ begin
       begin
         EntriesOpened := False;
         for i := 0 to ObjectInfos.Count - 1 do
-          if ObjectInfos[i].MetaObj.TriggerEffect = 23 then
+          if ObjectInfos[i].MetaObj.TriggerEffect = DOM_WINDOW then
           begin
             ObjectInfos[i].Triggered := True;
             ObjectInfos[i].CurrentFrame := 1;
@@ -5751,17 +5742,9 @@ begin
         begin
           LemIndex := LemmingList.Add(NewLemming);
           Transition(NewLemming, baFalling);
-          LemX := ObjectInfos[ix].Obj.Left;
-          LemY := ObjectInfos[ix].Obj.Top;
-          if ((ObjectInfos[ix].MetaObj.TriggerTop = -4) or (ObjectInfos[ix].MetaObj.TriggerTop = 0)) and
-             (ObjectInfos[ix].MetaObj.TriggerLeft = 0) then
-          begin
-            LemX := LemX + 24;
-            LemY := LemY + 13;
-          end else begin
-            LemX := LemX + ObjectInfos[ix].MetaObj.TriggerLeft;
-            LemY := LemY + ObjectInfos[ix].MetaObj.TriggerTop;
-          end;
+
+          LemX := ObjectInfos[ix].TriggerRect.Left;
+          LemY := ObjectInfos[ix].TriggerRect.Top;
           LemDX := 1;
           if (ObjectInfos[ix].Obj.DrawingFlags and 8) <> 0 then
             TurnAround(NewLemming);
@@ -6396,10 +6379,12 @@ begin
   begin
     Inf := ObjectInfos.List^[i];
 
-    if (Inf.Triggered or (Inf.MetaObj.AnimationType = oat_Continuous)) and (Inf.MetaObj.TriggerEffect <> 14) then
+    if     (Inf.Triggered or (Inf.MetaObj.AnimationType = oat_Continuous))
+       and (Inf.MetaObj.TriggerEffect <> DOM_PICKUP) then
       Inc(Inf.CurrentFrame);
 
-    if (Inf.MetaObj.TriggerEffect = 11) or ((Inf.MetaObj.TriggerEffect = 28) and (Inf.TwoWayReceive = false)) then
+    if     (Inf.MetaObj.TriggerEffect = DOM_TELEPORT)
+       or ((Inf.MetaObj.TriggerEffect = DOM_TWOWAYTELE) and (Inf.TwoWayReceive = false)) then
     begin
       if    ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
          or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then

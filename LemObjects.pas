@@ -97,6 +97,17 @@ begin
   Obj := ObjParam;
   MetaObj := MetaObjParam; // fGameParams.GraphicSet.MetaObjects[ObjParam.Identifier];
 
+  // Legacy code for old hatches, that haven't set a proper trigger area
+  if      (MetaObjParam.TriggerEffect = DOM_WINDOW)
+     and ((MetaObjParam.TriggerTop = -4) or (MetaObjParam.TriggerTop = 0))
+     and  (MetaObjParam.TriggerLeft = 0) then
+  begin
+    MetaObjParam.TriggerTop := 24;
+    MetaObjParam.TriggerLeft := 13;
+    MetaObjParam.TriggerHeight := 1;
+    MetaObjParam.TriggerWidth := 1;
+  end;
+
   // Set basic stuff
   sTop := Obj.Top;
   sLeft := Obj.Left;
