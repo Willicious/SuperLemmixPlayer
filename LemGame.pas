@@ -73,7 +73,7 @@ type
     LemJumped                     : Integer; // number of pixels the lem jumped
     LemFallen                     : Integer; // number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // total number of fallen pixels
-    LemExplosionTimer             : Integer; // 79 downto 0
+    LemExplosionTimer             : Integer; // 84 (before 79) downto 0
     LemMechanicFrames             : Integer;
     LMA                           : TMetaLemmingAnimation; // ref to Lemming Meta Animation
     LAB                           : TBitmap32;      // ref to Lemming Animation Bitmap
@@ -3734,7 +3734,7 @@ begin
 
   if (L.LemExplosionTimer = 0) and not (L.LemAction in [baOhnoing, baStoning]) then
   begin
-    L.LemExplosionTimer := 143;
+    L.LemExplosionTimer := 152;
     L.LemTimerToStone := Stoning;
   end;
 end;
@@ -4174,17 +4174,7 @@ begin
             LemEraseRect.Top := DigRect.Top;
             Assert(CheckRectCopy(SrcRect, DigRect), 'digit rect copy');
 
-            case LemExplosionTimer of
-              113..128 : Digit := 8;
-              97..112 : Digit := 7;
-              81..96  : Digit := 6;
-              65..80  : Digit := 5;
-              49..64  : Digit := 4;
-              33..48  : Digit := 3;
-              17..32  : Digit := 2;
-              00..16  : Digit := 1;
-            else Digit := 9;
-            end;
+            Digit := (LemExplosionTimer div 17) + 1;
 
             TempBmp := TBitmap32.Create;
             TempBmp.SetSize(8, 8);
@@ -5783,7 +5773,7 @@ begin
         if     (LemExplosionTimer = 0)
            and not (LemAction in [baSplatting, baExploding])
            and not LemIsZombie then
-          LemExplosionTimer := 79;
+          LemExplosionTimer := 84;
       end;
       Inc(Index_LemmingToBeNuked);
 
