@@ -20,10 +20,18 @@ type
     sIsDisabled     : Boolean;
     sReceiverId     : Integer;
 
-    function GetTriggerRect(): TRect;
+    function GetTriggerRect: TRect;
     procedure SetIsDisabled(Value: Boolean);
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
+    function GetSkillType: Integer;
+    function GetSoundEffect: Integer;
+    function GetIsOnlyOnTerrain: Boolean;
+    function GetIsUpsideDown: Boolean;
+    function GetIsNoOverwrite: Boolean;
+    function GetIsFlipPhysics: Boolean;
+    function GetIsInvisible: Boolean;
+    function GetIsFlipImage: Boolean;
 
   public
     MetaObj        : TMetaObject;
@@ -46,8 +54,20 @@ type
     property TriggerEffect: Integer read sTriggerEffect;
     property IsDisabled: Boolean read sIsDisabled write SetIsDisabled;
     property ReceiverId: Integer read sReceiverId;
+    property SkillType: Integer read GetSkillType;
+    property IsOnlyOnTerrain: Boolean read GetIsOnlyOnTerrain;  // ... and 1
+    property IsUpsideDown: Boolean read GetIsUpsideDown;        // ... and 2
+    property IsNoOverwrite: Boolean read GetIsNoOverwrite;      // ... and 4
+    property IsFlipPhysics: Boolean read GetIsFlipPhysics;      // ... and 8
+    property IsInvisible: Boolean read GetIsInvisible;          // ... and 32
+    property IsFlipImage: Boolean read GetIsFlipImage;          // ... and 64
+
+    property SoundEffect: Integer read GetSoundEffect;
 
     procedure AssignTo(NewObj: TInteractiveObjectInfo);
+
+    // true = X-movement, false = Y-movement
+    function Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
   end;
 
 type
@@ -156,7 +176,9 @@ begin
   TwoWayReceive := False;
 
   // Remove TriggerEffect if object disabled
-  if sIsDisabled then sTriggerEffect := DOM_NONE;
+  // If it is a preplaced lemming, we unfortunately have to keep it (or this lemming will be drawn)
+  if sIsDisabled and not (TriggerEffect = DOM_LEMMING) then
+    sTriggerEffect := DOM_NONE;
 
 end;
 
@@ -170,12 +192,12 @@ begin
   Y := Obj.Top; // of whole object
   X := Obj.Left;
 
-  if (Obj.DrawingFlags and odf_Flip) <> 0 then
+  if IsFlipImage then
     X := X + (MetaObj.Width - 1) - MetaObj.TriggerLeft - (MetaObj.TriggerWidth - 1)
   else
     X := X + MetaObj.TriggerLeft;
 
-  if (Obj.DrawingFlags and odf_UpsideDown) <> 0 then
+  if IsUpsideDown then
   begin
     Y := Y + (MetaObj.Height - 1) - MetaObj.TriggerTop - (MetaObj.TriggerHeight - 1);
     if not (MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
@@ -207,6 +229,68 @@ procedure TInteractiveObjectInfo.SetTop(Value: Integer);
 begin
   sTop := Value;
   Obj.Top := Value;
+end;
+
+function TInteractiveObjectInfo.GetSkillType: Integer;
+begin
+  Assert(TriggerEffect = DOM_PICKUP, 'Object.SkillType called for non-PickUp skill');
+  Result := Obj.Skill;
+end;
+
+function TInteractiveObjectInfo.GetSoundEffect: Integer;
+begin
+  Result := MetaObj.SoundEffect;
+end;
+
+function TInteractiveObjectInfo.GetIsOnlyOnTerrain: Boolean;
+begin
+  Result := ((Obj.DrawingFlags and 1) <> 0);
+end;
+
+function TInteractiveObjectInfo.GetIsUpsideDown: Boolean;
+begin
+  Result := ((Obj.DrawingFlags and 2) <> 0);
+end;
+
+function TInteractiveObjectInfo.GetIsNoOverwrite: Boolean;
+begin
+  Result := ((Obj.DrawingFlags and 4) <> 0);
+end;
+
+function TInteractiveObjectInfo.GetIsFlipPhysics: Boolean;
+begin
+  Result := ((Obj.DrawingFlags and 8) <> 0);
+end;
+
+function TInteractiveObjectInfo.GetIsInvisible: Boolean;
+begin
+  Result := ((Obj.DrawingFlags and 32) <> 0);
+end;
+
+function TInteractiveObjectInfo.GetIsFlipImage: Boolean;
+begin
+  Result := ((Obj.DrawingFlags and 64) <> 0);
+end;
+
+
+function TInteractiveObjectInfo.Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
+var
+  f: Integer;
+const
+  AnimObjMov: array[0..15] of Integer =
+    (0, 1, 2, 2, 2, 2, 2, 1, 0, -1, -2, -2, -2, -2, -2, -1);
+
+  function GetDistanceFactor(Speed: Integer; Iter: Integer): Integer;
+  begin
+    Result := ((2 * Speed * (Iter + 1)) div 17) - ((2 * Speed * Iter) div 17)
+  end;
+begin
+  f := GetDistanceFactor(Obj.TarLev, CurrentIteration);
+
+  if Direction then
+    Result := (AnimObjMov[Obj.Skill] * f) div 2
+  else
+    Result := (AnimObjMov[(Obj.Skill + 12) mod 16] * f) div 2;
 end;
 
 procedure TInteractiveObjectInfo.AssignTo(NewObj: TInteractiveObjectInfo);

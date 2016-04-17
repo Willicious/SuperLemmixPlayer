@@ -12,9 +12,9 @@ const
   odf_OnlyOnTerrain = 1; // bit 0
   odf_UpsideDown    = 2; // bit 1
   odf_NoOverwrite   = 4; // bit 2
-  odf_FlipLem       = 8;             // Better name: odf_FlipImage
+  odf_FlipLem       = 8;
   odf_Invisible     = 32;
-  odf_Flip          = 64;
+  odf_Flip          = 64;            // Better name: odf_FlipImage
 
 type
   TInteractiveObjectClass = class of TInteractiveObject;

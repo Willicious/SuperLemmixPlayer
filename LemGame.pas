@@ -681,7 +681,7 @@ type
     procedure RestoreMap;
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
-    procedure SpawnLemming;
+    procedure AddPreplacedLemming;
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
@@ -2040,7 +2040,7 @@ begin
   UpdateAllSkillCounts;
 
   SteelWorld.Assign(World);
-  SpawnLemming; // instantly-spawning lemmings (object type 13)
+  AddPreplacedLemming; // instantly-spawning lemmings (object type 13)
 
   fFallLimit := MAX_FALLDISTANCE;
 
@@ -2049,7 +2049,7 @@ begin
   Playing := True;
 end;
 
-procedure TLemmingGame.SpawnLemming;
+procedure TLemmingGame.AddPreplacedLemming;
 var
   NewLemming : TLemming;
   TrigEffect: Integer;
@@ -2070,8 +2070,7 @@ begin
         LemY := ObjectInfos[i].TriggerRect.Top;
 
         LemDX := 1;
-        if (ObjectInfos[i].Obj.DrawingFlags and 8) <> 0 then
-          TurnAround(NewLemming);
+        if ObjectInfos[i].IsFlipPhysics then TurnAround(NewLemming);
         if (ObjectInfos[i].Obj.TarLev and 1) <> 0 then LemIsClimber := true;
         if (ObjectInfos[i].Obj.TarLev and 2) <> 0 then LemIsSwimmer := true;
         if (ObjectInfos[i].Obj.TarLev and 4) <> 0 then LemIsFloater := true
@@ -2092,14 +2091,7 @@ begin
       end;
       Inc(LemmingsReleased);
       Inc(LemmingsOut);
-    end
-    else if (TrigEffect = DOM_PICKUP) then
-      ObjectInfos[i].CurrentFrame := ObjectInfos[i].Obj.Skill + 1
-    else if    ((TrigEffect = DOM_LOCKEXIT) and (ButtonsRemain > 0))
-            or (TrigEffect = DOM_BUTTON) or (TrigEffect = DOM_TRAPONCE) then
-      ObjectInfos[i].CurrentFrame := 1
-    else if (TrigEffect = DOM_FLIPPER) and (ObjectInfos[i].Obj.DrawingFlags and 8 <> 0) then
-      ObjectInfos[i].CurrentFrame := 1;
+    end;
   end;
 end;
 
@@ -2194,17 +2186,17 @@ begin
   Assert(Inf.ReceiverId <> 65535, 'Telerporter used without receiver');
   Inf2 := ObjectInfos[Inf.ReceiverId];
 
-  if Inf.Obj.DrawingFlags and 8 <> 0 then TurnAround(L);
+  if Inf.IsFlipPhysics then TurnAround(L);
 
   // Mirror trigger area, if Upside-Down Flag is valid for exactly one object
-  if (Inf.Obj.DrawingFlags and 2 <> 0) xor (Inf2.Obj.DrawingFlags and 2 <> 0) then
+  if Inf.IsUpsideDown xor Inf2.IsUpsideDown then
     L.LemY := (Inf2.TriggerRect.Bottom - 1) - (L.LemY - Inf.TriggerRect.Top)
   else
     L.LemY := Inf2.TriggerRect.Top + (L.LemY - Inf.TriggerRect.Top);
 
   // Mirror trigger area, if FlipLem Flag is valid for exactly one object
-  // The Flip Flag is already taken care of when computing trigger areas.
-  if (Inf.Obj.DrawingFlags and 8 <> 0) xor (Inf2.Obj.DrawingFlags and 8 <> 0) then
+  // The FlipImage Flag is already taken care of when computing trigger areas.
+  if Inf.IsFlipPhysics xor Inf2.IsFlipPhysics then
     L.LemX := (Inf2.TriggerRect.Right - 1) - (L.LemX - Inf.TriggerRect.Left)
   else
     L.LemX := Inf2.TriggerRect.Left + (L.LemX - Inf.TriggerRect.Left);
@@ -2933,7 +2925,7 @@ begin
   for i := 0 to Length(Level.Info.WindowOrder)-1 do
   begin
     oid := Level.Info.WindowOrder[i];
-    if (ObjectInfos[oid].TriggerEffect <> DOM_WINDOW) or (ObjectInfos[oid].IsDisabled) then Continue;
+    if not (ObjectInfos[oid].TriggerEffect = DOM_WINDOW) then Continue;
     SetLength(DosEntryTable, eid+1);
     DosEntryTable[eid] := oid;
     Inc(eid);
@@ -2974,8 +2966,7 @@ begin
   for i := 0 to ObjectInfos.Count - 1 do
   begin
     V := ObjectInfos[i].TriggerEffect;
-    if not (V in [DOM_NONE, DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND])
-       and not ObjectInfos[i].IsDisabled then
+    if not (V in [DOM_NONE, DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND]) then
     begin
       for Y := ObjectInfos[i].TriggerRect.Top to ObjectInfos[i].TriggerRect.Bottom - 1 do
       for X := ObjectInfos[i].TriggerRect.Left to ObjectInfos[i].TriggerRect.Right - 1 do
@@ -3504,7 +3495,7 @@ begin
     Inf := ObjectInfos[ObjectID];
     // Check correct TriggerType
     if (ObjectTypeToTrigger[Inf.TriggerEffect] = TriggerType)
-       and not Inf.IsDisabled then
+       and not Inf.IsDisabled then   // shouldn't be necessary, but to be sure, it stays here
     begin
       // Check trigger areas for this object
       if PtInRect(Inf.TriggerRect, Point(X, Y)) then
@@ -3557,7 +3548,7 @@ begin
     L.LemHasBlockerField := False;
     RestoreMap;
     RemoveLemming(L, RM_KILL);
-    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
     if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then
       DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
   end;
@@ -3586,7 +3577,7 @@ begin
     L.LemHasBlockerField := False;
     RestoreMap;
     RemoveLemming(L, RM_KILL);
-    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
     if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then
       DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
   end;
@@ -3599,7 +3590,7 @@ begin
   Result := False;
   Inf := ObjectInfos[ObjectID];
   Inf.Triggered := True;
-  CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
 end;
 
 function TLemmingGame.HandleTelepSingle(L: TLemming; ObjectID: Word): Boolean;
@@ -3612,7 +3603,7 @@ begin
 
   Inf.Triggered := True;
   Inf.ZombieMode := L.LemIsZombie;
-  CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
   L.LemTeleporting := True;
   Inf.TeleLem := L.LemIndex;
   // Make sure to remove the blocker field!
@@ -3631,7 +3622,7 @@ begin
 
   Inf.Triggered := True;
   Inf.ZombieMode := L.LemIsZombie;
-  CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
   L.LemTeleporting := True;
   Inf.TeleLem := L.LemIndex;
   Inf.TwoWayReceive := false;
@@ -3653,7 +3644,7 @@ begin
     Inf := ObjectInfos[ObjectID];
     Inf.CurrentFrame := 0;
     CueSoundEffect(SFX_PICKUP);
-    case Inf.Obj.Skill of
+    case Inf.SkillType of
       0 : UpdateSkillCount(baClimbing, true);
       1 : UpdateSkillCount(baFloating, true);
       2 : UpdateSkillCount(baExploding, true);
@@ -3685,7 +3676,7 @@ begin
   if not L.LemIsZombie then
   begin
     Inf := ObjectInfos[ObjectID];
-    CueSoundEffect(GetTrapSoundIndex(Inf.MetaObj.SoundEffect));
+    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
     Inf.Triggered := True;
     Dec(ButtonsRemain);
 
@@ -3989,17 +3980,8 @@ end;
 
 procedure TLemmingGame.DrawAnimatedObjects;
 var
-  i: Integer;
+  i, f: Integer;
   Inf : TInteractiveObjectInfo;
-  f, mx, my: Integer;
-const
-  AnimObjMov: array[0..15] of Integer =
-    (0, 1, 2, 2, 2, 2, 2, 1, 0, -1, -2, -2, -2, -2, -2, -1);
-
-  function GetDistanceFactor(LV: Integer; Iter: Integer): Integer;
-  begin
-    Result := ((2 * LV * (Iter + 1)) div 17) - ((2 * LV * Iter) div 17)
-  end;
 begin
 
   if (not HyperSpeed) then
@@ -4013,18 +3995,10 @@ begin
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos[i];
-    if (Inf.TriggerEffect = DOM_BACKGROUND) and (Inf.Obj.TarLev <> 0) then
+    if Inf.TriggerEffect = DOM_BACKGROUND then
     begin
-      // moving background objects yay!
-      // Nepster: So much code for something that is only distracting? Really??
-      // Ok, reduced it from 41 lines to 11
-      // Inf.Skill is misused for storing direction vector!!!
-      mx := AnimObjMov[Inf.Obj.Skill];
-      my := AnimObjMov[(Inf.Obj.Skill + 12) mod 16];
-      f := GetDistanceFactor(Inf.Obj.TarLev, CurrentIteration);
-
-      Inf.Left := Inf.Left + ((mx * f) div 2);
-      Inf.Top := Inf.Top + ((my * f) div 2);
+      Inf.Left := Inf.Left + Inf.Movement(True, CurrentIteration); // x-movement
+      Inf.Top := Inf.Top + Inf.Movement(False, CurrentIteration); // y-movement
 
       // Check level borders:
       // Don't need f any more, so we can store arbitrary values in it
@@ -5713,8 +5687,7 @@ begin
           LemX := ObjectInfos[ix].TriggerRect.Left;
           LemY := ObjectInfos[ix].TriggerRect.Top;
           LemDX := 1;
-          if (ObjectInfos[ix].Obj.DrawingFlags and 8) <> 0 then
-            TurnAround(NewLemming);
+          if ObjectInfos[ix].IsFlipPhysics then TurnAround(NewLemming);
 
           LemUsedSkillCount := 0;
 
@@ -6545,7 +6518,7 @@ begin
   if not (fGameParams.LemmingBlink) then Exit;
   if (fGameParams.ChallengeMode) and ((Level.Info.SkillTypes and 1) <> 0) then Exit;
   for i := 0 to ObjectInfos.Count-1 do
-    if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].Obj.Skill = 15) then pcc := pcc + 1;
+    if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].SkillType = 15) then pcc := pcc + 1;
 
 
   if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) +
