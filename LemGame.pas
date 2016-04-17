@@ -2548,14 +2548,28 @@ begin
 
     // Get starting position for stacker
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
+
     // Important! If a builder just placed a brick and part of the previous brick
     // got removed, he should not fall if turned into a walker!
     if     (NewSkill = baToWalking) and (L.LemAction = baBuilding)
        and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
       L.LemY := L.LemY - 1;
+
     // Turn around walking lem, if assigned a walker
     if (NewSkill = baToWalking) and (L.LemAction = baWalking) then
+    begin
       TurnAround(L);
+
+      // Special treatment if in one-way-field facing the wrong direction
+      // see http://www.lemmingsforums.net/index.php?topic=2640.0
+      if    (HasTriggerAt(L.LemX, L.LemY, trForceRight) and (L.LemDx = -1))
+         or (HasTriggerAt(L.LemX, L.LemY, trForceLeft) and (L.LemDx = 1)) then
+      begin
+        // Go one back to cancel the Inc(L.LemX, L.LemDx) in HandleWalking
+        // unless the Lem will fall down (which is handles already in Transition)
+        if HasPixelAt(L.LemX, L.LemY) then Dec(L.LemX, L.LemDx);
+      end;
+    end;
 
     // Special behavior of permament skills.
     if (NewSkill = baClimbing) then L.LemIsClimber := True
@@ -4364,6 +4378,7 @@ var
   LemDy: Integer;
 begin
   Result := True;
+
   Inc(L.LemX, L.LemDx);
   LemDy := FindGroundPixel(L.LemX, L.LemY);
 
@@ -4388,7 +4403,7 @@ begin
   // Get new ground pixel again in case the Lem has turned
   LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-  If (LemDy > 3) then
+  if (LemDy > 3) then
   begin
     Inc(L.LemY, 4);
     Transition(L, baFalling);
