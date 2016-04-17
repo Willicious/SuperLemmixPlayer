@@ -4,6 +4,7 @@ interface
 
 uses
   Windows, {Classes,} Contnrs, {SysUtils, Math, Forms, Dialogs,}
+  GameControl, // For reading MetaObj infos when creating objects
   LemMetaObject, LemInteractiveObject;
 
 type
@@ -14,12 +15,15 @@ type
     sLeft           : Integer;
     sHeight         : Integer;
     sWidth          : Integer;
-    sTriggerRect    : TRect;
+    sTriggerRect    : TRect;  // We assume that trigger areas will never move!!!
     sTriggerEffect  : Integer;
     sIsDisabled     : Boolean;
+    sReceiverId     : Integer;
 
     function GetTriggerRect(): TRect;
-
+    procedure SetIsDisabled(Value: Boolean);
+    procedure SetLeft(Value: Integer);
+    procedure SetTop(Value: Integer);
 
   public
     MetaObj        : TMetaObject;
@@ -32,15 +36,16 @@ type
     ZombieMode     : Boolean;
     TwoWayReceive  : Boolean;
 
-    constructor Create(ObjParam: TInteractiveObject; MetaObjParam: TMetaObject); Overload;
+    constructor Create(ObjParam: TInteractiveObject; aGameParams: TDosGameParams); Overload;
 
     property TriggerRect: TRect read sTriggerRect;
-    property Top: Integer read sTop write sTop;
-    property Left: Integer read sLeft write sLeft;
+    property Top: Integer read sTop write SetTop;
+    property Left: Integer read sLeft write SetLeft;
     property Width: Integer read sWidth;
     property Height: Integer read sHeight;
     property TriggerEffect: Integer read sTriggerEffect;
-    property IsDisabled: Boolean read sIsDisabled write sIsDisabled;
+    property IsDisabled: Boolean read sIsDisabled write SetIsDisabled;
+    property ReceiverId: Integer read sReceiverId;
 
     procedure AssignTo(NewObj: TInteractiveObjectInfo);
   end;
@@ -54,6 +59,7 @@ type
   public
     function Add(Item: TInteractiveObjectInfo): Integer;
     procedure Insert(Index: Integer; Item: TInteractiveObjectInfo);
+    procedure FindReceiverID;
     property Items[Index: Integer]: TInteractiveObjectInfo read GetItem; default;
   published
   end;
@@ -98,20 +104,21 @@ implementation
 
 { TInteractiveObjectInfo }
 constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject;
-                                          MetaObjParam: TMetaObject);
+                                          aGameParams: TDosGameParams);
 begin
   Obj := ObjParam;
-  MetaObj := MetaObjParam; // fGameParams.GraphicSet.MetaObjects[ObjParam.Identifier];
+  // Get pointer to MetaObject information
+  MetaObj := aGameParams.GraphicSet.MetaObjects[ObjParam.Identifier];
 
   // Legacy code for old hatches, that haven't set a proper trigger area
-  if      (MetaObjParam.TriggerEffect = DOM_WINDOW)
-     and ((MetaObjParam.TriggerTop = -4) or (MetaObjParam.TriggerTop = 0))
-     and  (MetaObjParam.TriggerLeft = 0) then
+  if      (MetaObj.TriggerEffect = DOM_WINDOW)
+     and ((MetaObj.TriggerTop = -4) or (MetaObj.TriggerTop = 0))
+     and  (MetaObj.TriggerLeft = 0) then
   begin
-    MetaObjParam.TriggerTop := 24;
-    MetaObjParam.TriggerLeft := 13;
-    MetaObjParam.TriggerHeight := 1;
-    MetaObjParam.TriggerWidth := 1;
+    MetaObj.TriggerTop := 24;
+    MetaObj.TriggerLeft := 13;
+    MetaObj.TriggerHeight := 1;
+    MetaObj.TriggerWidth := 1;
   end;
 
   // Set basic stuff
@@ -121,24 +128,21 @@ begin
   sWidth := MetaObj.Width;
   sTriggerRect := GetTriggerRect;
   sIsDisabled := Obj.IsFake;
-  // Save TriggerEffect, only if object is active
-  if not sIsDisabled then
-    sTriggerEffect := MetaObj.TriggerEffect
-  else
-    sTriggerEffect := DOM_NONE;
+  sTriggerEffect := MetaObj.TriggerEffect;
+  sReceiverId := 65535;
 
   // Set CurrentFrame
   if MetaObj.RandomStartFrame then
     CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1){ + i}) mod MetaObj.AnimationFrameCount
   else if MetaObj.TriggerEffect = DOM_PICKUP then
-    CurrentFrame := ObjParam.Skill + 1
+    CurrentFrame := Obj.Skill + 1
   else if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
     CurrentFrame := 1
   else
     CurrentFrame := MetaObj.PreviewFrameIndex;
 
   if (MetaObj.TriggerEffect = DOM_FLIPPER) then
-    if ((ObjParam.DrawingFlags and odf_FlipLem) <> 0) then
+    if ((Obj.DrawingFlags and odf_FlipLem) <> 0) then
       CurrentFrame := 1
     else
       CurrentFrame := 0;
@@ -150,6 +154,9 @@ begin
   HoldActive := False;
   ZombieMode := False;
   TwoWayReceive := False;
+
+  // Remove TriggerEffect if object disabled
+  if sIsDisabled then sTriggerEffect := DOM_NONE;
 
 end;
 
@@ -180,6 +187,26 @@ begin
   Result.Bottom := Y + MetaObj.TriggerHeight;
   Result.Left := X;
   Result.Right := X + MetaObj.TriggerWidth;
+end;
+
+procedure TInteractiveObjectInfo.SetIsDisabled(Value: Boolean);
+begin
+  Assert(Value = True, 'Changing object from Disabled to Enabled impossible');
+
+  sIsDisabled := False;
+  sTriggerEffect := DOM_NONE;
+end;
+
+procedure TInteractiveObjectInfo.SetLeft(Value: Integer);
+begin
+  sLeft := Value;
+  Obj.Left := Value;
+end;
+
+procedure TInteractiveObjectInfo.SetTop(Value: Integer);
+begin
+  sTop := Value;
+  Obj.Top := Value;
 end;
 
 procedure TInteractiveObjectInfo.AssignTo(NewObj: TInteractiveObjectInfo);
@@ -218,6 +245,34 @@ end;
 procedure TInteractiveObjectInfoList.Insert(Index: Integer; Item: TInteractiveObjectInfo);
 begin
   inherited Insert(Index, Item);
+end;
+
+procedure TInteractiveObjectInfoList.FindReceiverID;
+var
+  i, TestId: Integer;
+  Inf, TestInf: TInteractiveObjectInfo;
+begin
+  for i := 0 to Count - 1 do
+  begin
+    Inf := List^[i];
+    if Inf.TriggerEffect = DOM_TELEPORT then
+    begin
+      // Find receiver for this teleporter with index i
+      for TestId := i+1 to i + Count do
+      begin
+        TestInf := List^[TestId mod Count];
+        if     (TestInf.TriggerEffect = DOM_RECEIVER)
+           and (TestInf.Obj.Skill = Inf.Obj.Skill) then break;
+      end;
+
+      TestID := TestID mod Count;
+      // If TestID = i then there is no receiver and we disable the teleporter
+      if i = TestID then
+        Inf.IsDisabled := True
+      else
+        Inf.sReceiverId := TestID;
+    end; // end test whether object is teleporter
+  end; // next i
 end;
 
 

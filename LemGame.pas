@@ -618,7 +618,6 @@ type
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming);
-      procedure RemoveObjectID(ObjectID: Word);
       function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
       function FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
@@ -664,7 +663,6 @@ type
     function PrioritizedHitTest(out Lemming1, Lemming2: TLemming;
                                 MousePos: TPoint;
                                 CheckRightMouseButton: Boolean = True): Integer;
-    function FindReceiver(oid: Byte; sval: Byte): Byte;
     procedure MoveLemToReceivePoint(L: TLemming; oid: Byte);
     function ReadObjectMap(X, Y: Integer): Word;
     function ReadObjectMapType(X, Y: Integer): Byte;
@@ -1965,15 +1963,19 @@ begin
   with Level do
   for i := 0 to InteractiveObjects.Count - 1 do
   begin
-    Inf := TInteractiveObjectInfo.Create(InteractiveObjects[i],
-                       Graph.MetaObjects[InteractiveObjects[i].Identifier] );
+    Inf := TInteractiveObjectInfo.Create(InteractiveObjects[i], fGameParams);
 
     ObjectInfos.Add(Inf);
 
+    // Check whether trigger area intersects the level area
+    if    (Inf.TriggerRect.Top > World.Height)
+       or (Inf.TriggerRect.Bottom < 0)
+       or (Inf.TriggerRect.Right < 0)
+       or (Inf.TriggerRect.Left > World.Width) then
+      Inf.IsDisabled := True;
+
     // Update number of hatches
-    if     (Inf.TriggerEffect = DOM_WINDOW)
-       and (not Inf.IsDisabled)
-       and (Inf.Left + Inf.Width >= 0) then   // WHY CHECK ONLY THE LEFT EDGE???
+    if Inf.TriggerEffect = DOM_WINDOW then
     begin
       SetLength(dosEntryTable, numEntries + 1);
       dosentrytable[numEntries] := i;
@@ -1981,9 +1983,12 @@ begin
     end;
 
     // Update number of buttons
-    if (Inf.TriggerEffect = DOM_BUTTON) and not Inf.IsDisabled then
+    if Inf.TriggerEffect = DOM_BUTTON then
       Inc(ButtonsRemain);
   end;
+
+  // Get ReceiverID for all Teleporters
+  ObjectInfos.FindReceiverID;
 
   // can't fix it in the previous loop tidily, so this will fix the locked exit
   // displaying as locked when it isn't issue on levels with no buttons
@@ -2186,8 +2191,8 @@ var
   Inf, Inf2: TInteractiveObjectInfo;
 begin
   Inf := ObjectInfos[oid];
-  // NEED BETTER FIND_RECEIVER!!
-  Inf2 := ObjectInfos[FindReceiver(ReadObjectMap(L.LemX, L.LemY), ObjectInfos[ReadObjectMap(L.LemX, L.LemY)].Obj.Skill)];
+  Assert(Inf.ReceiverId <> 65535, 'Telerporter used without receiver');
+  Inf2 := ObjectInfos[Inf.ReceiverId];
 
   if Inf.Obj.DrawingFlags and 8 <> 0 then TurnAround(L);
 
@@ -2203,27 +2208,6 @@ begin
     L.LemX := (Inf2.TriggerRect.Right - 1) - (L.LemX - Inf.TriggerRect.Left)
   else
     L.LemX := Inf2.TriggerRect.Left + (L.LemX - Inf.TriggerRect.Left);
-end;
-
-
-function TLemmingGame.FindReceiver(oid: Byte; sval: Byte): Byte;
-var
-  t: Byte;
-begin
-  Result := oid;
-
-  for t := oid+1 to oid+ObjectInfos.Count do
-  begin
-    if (     (ObjectInfos[t mod ObjectInfos.Count].TriggerEffect = DOM_RECEIVER)
-         and (not ObjectInfos[t mod ObjectInfos.Count].IsDisabled)
-         and (ObjectInfos[t mod ObjectInfos.Count].Obj.Skill = sval)
-         and (t mod ObjectInfos.Count <> Result)
-       ) then
-    begin
-      Result := t mod ObjectInfos.Count;
-      break;
-    end;
-  end;
 end;
 
 
@@ -3506,8 +3490,9 @@ end;
 function TLemmingGame.FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 // finds a suitable object that has the correct trigger type and is not currently active.
 var
-  ObjectID, ReceiverID: Word;
+  ObjectID: Word;
   ObjectFound: Boolean;
+  Inf: TInteractiveObjectInfo;
 begin
   // Because ObjectTypeToTrigger defaults to trZombie, looking for this trigger type is nonsense!
   Assert(TriggerType <> trZombie, 'FindObjectId called for trZombie');
@@ -3516,55 +3501,37 @@ begin
   ObjectFound := False;
   repeat
     Dec(ObjectID);
+    Inf := ObjectInfos[ObjectID];
     // Check correct TriggerType
-    if (ObjectTypeToTrigger[ObjectInfos[ObjectID].TriggerEffect] = TriggerType)
-       and not ObjectInfos[ObjectID].IsDisabled then
+    if (ObjectTypeToTrigger[Inf.TriggerEffect] = TriggerType)
+       and not Inf.IsDisabled then
     begin
       // Check trigger areas for this object
-      if PtInRect(ObjectInfos[ObjectID].TriggerRect, Point(X, Y)) then
+      if PtInRect(Inf.TriggerRect, Point(X, Y)) then
         ObjectFound := True;
     end;
+
     // Additional checks for locked exit
-    if (ObjectInfos[ObjectID].TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
+    if (Inf.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
       ObjectFound := False;
     // Additional checks for triggered traps, triggered animations, teleporters
-    if ObjectInfos[ObjectID].Triggered then
+    if Inf.Triggered then
       ObjectFound := False;
     // ignore already used buttons, one-shot traps and pick-up skills
-    if     (ObjectInfos[ObjectID].TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
-       and (ObjectInfos[ObjectID].CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
+    if     (Inf.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
+       and (Inf.CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
       ObjectFound := False;
     // Additional check, that the corresponding receiver is inactive
-    if ObjectInfos[ObjectID].TriggerEffect = DOM_TELEPORT then
-    begin
-      ReceiverID := FindReceiver(ObjectID, ObjectInfos[ObjectID].Obj.Skill);
-      if    (ReceiverID = ObjectID)
-         or (ObjectInfos[ReceiverID].Triggered
-         or ObjectInfos[ReceiverID].HoldActive) then
-        ObjectFound := False;
-    end;
+    if     (Inf.TriggerEffect = DOM_TELEPORT)
+       and (ObjectInfos[Inf.ReceiverId].Triggered or ObjectInfos[Inf.ReceiverId].HoldActive) then
+      ObjectFound := False;
+
   until ObjectFound or (ObjectID = 0);
 
   if ObjectFound then
     Result := ObjectID
   else
     Result := 65535;
-end;
-
-
-
-
-procedure TLemmingGame.RemoveObjectID(ObjectID: Word);
-// We disconnect the trigger area from the ObjectID
-var
-  Inf: TInteractiveObjectInfo;
-  mx, my: Integer;
-begin
-  Inf := ObjectInfos[ObjectID];
-
-  for mx := Inf.TriggerRect.Left to Inf.TriggerRect.Right - 1 do
-  for my := Inf.TriggerRect.Top to Inf.TriggerRect.Left - 1 do
-    if ReadObjectMap(mx, my) = ObjectID then WriteObjectMap(mx, my, DOM_NOOBJECT);
 end;
 
 
@@ -3577,7 +3544,7 @@ begin
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
   begin
-    RemoveObjectID(ObjectID);
+    ObjectInfos[ObjectID].IsDisabled := True;
     Transition(L, baFixing);
   end
   else
@@ -3605,13 +3572,14 @@ begin
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
   begin
-    RemoveObjectID(ObjectID);
+    ObjectInfos[ObjectID].IsDisabled := True;
     Transition(L, baFixing);
   end
   else
   begin
     Inf := ObjectInfos[ObjectID];
     // trigger
+    Inf.IsDisabled := True;
     Inf.Triggered := True;
     Inf.ZombieMode := L.LemIsZombie;
     // Make sure to remove the blocker field!
@@ -3670,7 +3638,8 @@ begin
   // Make sure to remove the blocker field!
   L.LemHasBlockerField := False;
   RestoreMap;
-  ObjectInfos[FindReceiver(ObjectID, Inf.Obj.Skill)].HoldActive := True;
+
+  ObjectInfos[Inf.ReceiverID].HoldActive := True;
 end;
 
 function TLemmingGame.HandlePickup(L: TLemming; ObjectID: Word): Boolean;
@@ -6368,8 +6337,7 @@ procedure TLemmingGame.UpdateInteractiveObjects;
 -------------------------------------------------------------------------------}
 var
   Inf, Inf2: TInteractiveObjectInfo;
-  i, xi: Integer;
-  L: TLemming;
+  i: Integer;
 const
   OID_ENTRY = 1;
 begin
@@ -6387,19 +6355,14 @@ begin
       if    ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
          or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
       begin
-        L := LemmingList.List^[Inf.TeleLem];
-        xi := FindReceiver(i, Inf.Obj.Skill);
-        if xi <> i then
-        begin
-          MoveLemToReceivePoint(L, i);
-          Inf2 := ObjectInfos[xi];
-          Inf2.TeleLem := Inf.TeleLem;
-          Inf2.Triggered := True;
-          Inf2.ZombieMode := Inf.ZombieMode;
-          Inf2.TwoWayReceive := true;
-          // Reset TeleLem for Teleporter
-          Inf.TeleLem := -1;
-        end;
+        MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
+        Inf2 := ObjectInfos[Inf.ReceiverId];
+        Inf2.TeleLem := Inf.TeleLem;
+        Inf2.Triggered := True;
+        Inf2.ZombieMode := Inf.ZombieMode;
+        Inf2.TwoWayReceive := true;
+        // Reset TeleLem for Teleporter
+        Inf.TeleLem := -1;
       end;
     end;
 
