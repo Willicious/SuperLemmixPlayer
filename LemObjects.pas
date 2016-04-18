@@ -19,11 +19,13 @@ type
     sTriggerEffect  : Integer;
     sIsDisabled     : Boolean;
     sReceiverId     : Integer;
+    sZombieMode     : Boolean;
 
     function GetTriggerRect: TRect;
     procedure SetIsDisabled(Value: Boolean);
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
+    procedure SetZombieMode(Value: Boolean);
     function GetSkillType: Integer;
     function GetSoundEffect: Integer;
     function GetIsOnlyOnTerrain: Boolean;
@@ -32,6 +34,9 @@ type
     function GetIsFlipPhysics: Boolean;
     function GetIsInvisible: Boolean;
     function GetIsFlipImage: Boolean;
+    function GetAnimationFrameCount: Integer;
+    function GetPreassignedSkills: Integer;
+
 
   public
     MetaObj        : TMetaObject;
@@ -41,7 +46,7 @@ type
     Triggered      : Boolean;
     TeleLem        : Integer; // saves which lemming is currently teleported
     HoldActive     : Boolean;
-    ZombieMode     : Boolean;
+
     TwoWayReceive  : Boolean;
 
     constructor Create(ObjParam: TInteractiveObject; aGameParams: TDosGameParams); Overload;
@@ -61,8 +66,10 @@ type
     property IsFlipPhysics: Boolean read GetIsFlipPhysics;      // ... and 8
     property IsInvisible: Boolean read GetIsInvisible;          // ... and 32
     property IsFlipImage: Boolean read GetIsFlipImage;          // ... and 64
-
+    property AnimationFrameCount: Integer read GetAnimationFrameCount;
     property SoundEffect: Integer read GetSoundEffect;
+    property PreassignedSkills: Integer read GetPreassignedSkills;
+    property ZombieMode: Boolean read sZombieMode write SetZombieMode;
 
     procedure AssignTo(NewObj: TInteractiveObjectInfo);
 
@@ -231,6 +238,12 @@ begin
   Obj.Top := Value;
 end;
 
+procedure TInteractiveObjectInfo.SetZombieMode(Value: Boolean);
+begin
+  sZombieMode := Value;
+  Obj.DrawAsZombie := Value;
+end;
+
 function TInteractiveObjectInfo.GetSkillType: Integer;
 begin
   Assert(TriggerEffect = DOM_PICKUP, 'Object.SkillType called for non-PickUp skill');
@@ -272,6 +285,17 @@ begin
   Result := ((Obj.DrawingFlags and 64) <> 0);
 end;
 
+function TInteractiveObjectInfo.GetAnimationFrameCount: Integer;
+begin
+  Result := MetaObj.AnimationFrameCount;
+end;
+
+function TInteractiveObjectInfo.GetPreassignedSkills: Integer;
+begin
+  // Only call this function for hatches and preplaces lemmings
+  Assert(TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
+  Result := Obj.TarLev; // Yes, "TargetLevel" stores this info!
+end;
 
 function TInteractiveObjectInfo.Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
 var

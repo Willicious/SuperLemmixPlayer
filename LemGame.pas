@@ -106,7 +106,6 @@ type
     LemUsedSkillCount             : Integer; // number of skills assigned to this lem, used for talisman
     LemTimerToStone               : Boolean;
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
-    LemRTLAdjust                  : Boolean;
     // The next three values are only needed to determine intermediate trigger area checks
     // They are set in HandleLemming
     LemXOld                       : Integer; // position of previous frame
@@ -859,8 +858,6 @@ const
   MAX_REPLAY_RECORDS       = 32768;
   MAX_FALLDISTANCE         = 62;
 
-  BOMBER_TIME = 1;
-
 const
   // Values for DOM_TRIGGERTYPE are defined in LemObjects.pas!
   // Here only for refence.
@@ -969,16 +966,11 @@ begin
     Top := LemY - LMA.FootY;
     Right := Left + LMA.Width;
     Bottom := Top + LMA.Height;
-    {if (LemDX = -1) and (LemAction in [baWalking, baBuilding, baPlatforming, baStacking]) then
+    (*if (LemDX = -1) and (LemAction in [baWalking, baBuilding, baPlatforming, baStacking]) then
       begin
       Dec(Left);
       Dec(Right);
-      end;}
-    //if LemRTLAdjust then
-    //begin
-    //  Dec(Left);
-    //  Dec(Right);
-    //end;
+      end;*)
     if (LemAction in [baDigging, baFixing]) and (LemDx = -1) then
     begin
       Inc(Left);
@@ -1070,7 +1062,6 @@ begin
   LemUsedSkillCount := Source.LemUsedSkillCount;
   LemTimerToStone := Source.LemTimerToStone;
   LemStackLow := Source.LemStackLow;
-  LemRTLAdjust := Source.LemRTLAdjust;
 end;
 
 { TLemmingList }
@@ -1804,9 +1795,6 @@ var
   i, i2, i3: Integer;
   Inf: TInteractiveObjectInfo;
   numEntries:integer;
-const
-  OID_EXIT                  = 0;
-  OID_ENTRY                 = 1;
 begin
   Assert(InfoPainter <> nil);
 
@@ -2071,18 +2059,19 @@ begin
 
         LemDX := 1;
         if ObjectInfos[i].IsFlipPhysics then TurnAround(NewLemming);
-        if (ObjectInfos[i].Obj.TarLev and 1) <> 0 then LemIsClimber := true;
-        if (ObjectInfos[i].Obj.TarLev and 2) <> 0 then LemIsSwimmer := true;
-        if (ObjectInfos[i].Obj.TarLev and 4) <> 0 then LemIsFloater := true
-        else if (ObjectInfos[i].Obj.TarLev and 8) <> 0 then LemIsGlider := true;
-        if (ObjectInfos[i].Obj.TarLev and 16) <> 0 then LemIsMechanic := true;
-        if (ObjectInfos[i].Obj.TarLev and 32) <> 0 then
+
+        if (ObjectInfos[i].PreAssignedSkills and 1) <> 0 then LemIsClimber := true;
+        if (ObjectInfos[i].PreAssignedSkills and 2) <> 0 then LemIsSwimmer := true;
+        if (ObjectInfos[i].PreAssignedSkills and 4) <> 0 then LemIsFloater := true
+        else if (ObjectInfos[i].PreAssignedSkills and 8) <> 0 then LemIsGlider := true;
+        if (ObjectInfos[i].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
+        if (ObjectInfos[i].PreAssignedSkills and 32) <> 0 then
         begin
           while (LemY <= LEMMING_MAX_Y + World.Height) and (HasPixelAt(LemX, LemY) = false) do
             Inc(LemY);
           Transition(NewLemming, baBlocking);
         end;
-        if (ObjectInfos[i].Obj.TarLev and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
+        if (ObjectInfos[i].PreAssignedSkills and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
         if NewLemming.LemIsZombie then Dec(SpawnedDead);
         LemInFlipper := -1;
         LemParticleTimer := -1;
@@ -3549,8 +3538,7 @@ begin
     RestoreMap;
     RemoveLemming(L, RM_KILL);
     CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
-    if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then
-      DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
+    DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
   end;
 end;
 
@@ -3578,8 +3566,7 @@ begin
     RestoreMap;
     RemoveLemming(L, RM_KILL);
     CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
-    if DelayEndFrames < Inf.MetaObj.AnimationFrameCount then
-      DelayEndFrames := Inf.MetaObj.AnimationFrameCount;
+    DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
   end;
 end;
 
@@ -4021,8 +4008,6 @@ begin
   for i := 0 to ObjectInfos.Count - 1 do
   begin
     Inf := ObjectInfos[i];
-    Inf.Obj.DrawAsZombie := Inf.ZombieMode;
-
     if Inf.TriggerEffect <> DOM_LEMMING then
       Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
   end;
@@ -5691,12 +5676,12 @@ begin
 
           LemUsedSkillCount := 0;
 
-          if (ObjectInfos[ix].Obj.TarLev and 1) <> 0 then LemIsClimber := true;
-          if (ObjectInfos[ix].Obj.TarLev and 2) <> 0 then LemIsSwimmer := true;
-          if (ObjectInfos[ix].Obj.TarLev and 4) <> 0 then LemIsFloater := true
-          else if (ObjectInfos[ix].Obj.TarLev and 8) <> 0 then LemIsGlider := true;
-          if (ObjectInfos[ix].Obj.TarLev and 16) <> 0 then LemIsMechanic := true;
-          if ((ObjectInfos[ix].Obj.TarLev and 64) <> 0) then RemoveLemming(NewLemming, RM_ZOMBIE);
+          if (ObjectInfos[ix].PreAssignedSkills and 1) <> 0 then LemIsClimber := true;
+          if (ObjectInfos[ix].PreAssignedSkills and 2) <> 0 then LemIsSwimmer := true;
+          if (ObjectInfos[ix].PreAssignedSkills and 4) <> 0 then LemIsFloater := true
+          else if (ObjectInfos[ix].PreAssignedSkills and 8) <> 0 then LemIsGlider := true;
+          if (ObjectInfos[ix].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
+          if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
           if NewLemming.LemIsZombie then Dec(SpawnedDead);
           if LemIndex = fHighlightLemmingID then fHighlightLemming := NewLemming;
         end;
@@ -6171,7 +6156,7 @@ begin
      or ((ObjInfo.TriggerEffect = DOM_TWOWAYTELE) and (ObjInfo.TwoWayReceive = True))
      or  (ObjInfo.TriggerEffect = DOM_SINGLETELE) then
   begin
-    if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.MetaObj.AnimationFrameCount) and (ObjInfo.MetaObj.TriggerNext = 0))
+    if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) and (ObjInfo.MetaObj.TriggerNext = 0))
        or ((ObjInfo.CurrentFrame + 1 = ObjInfo.MetaObj.TriggerNext) and (ObjInfo.MetaObj.TriggerNext <> 0)) then
     begin
       L.LemTeleporting := False; // Let lemming reappear
@@ -6325,7 +6310,7 @@ begin
     if     (Inf.TriggerEffect = DOM_TELEPORT)
        or ((Inf.TriggerEffect = DOM_TWOWAYTELE) and (Inf.TwoWayReceive = false)) then
     begin
-      if    ((Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
+      if    ((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
          or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
       begin
         MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
@@ -6339,7 +6324,7 @@ begin
       end;
     end;
 
-    if Inf.CurrentFrame >= Inf.MetaObj.AnimationFrameCount then
+    if Inf.CurrentFrame >= Inf.AnimationFrameCount then
     begin
       Inf.CurrentFrame := 0;
       Inf.Triggered := False;
