@@ -601,6 +601,7 @@ type
     procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
@@ -2093,6 +2094,15 @@ procedure TLemmingGame.CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; 
 begin
   if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
     F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
+  if F <> 0 then B := F;
+end;
+
+procedure TLemmingGame.CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[2]) and $FFFFFF) then
+    F := DosVgaColorToColor32(DosInLevelPalette[1])
+  else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
+    F := DosVgaColorToColor32(DosInLevelPalette[2]);
   if F <> 0 then B := F;
 end;
 
@@ -4091,8 +4101,13 @@ begin
 
           OldCombineZ := LAB.OnPixelCombine;
 
+          // Change color for zombies or lems with permanent skills
           if LemIsZombie then
-            LAB.OnPixelCombine := CombineLemmingPixelsZombie;
+            LAB.OnPixelCombine := CombineLemmingPixelsZombie
+          else if    LemIsClimber or LemIsFloater or LemIsGlider
+                  or LemIsSwimmer or LemIsMechanic then
+            LAB.OnPixelCombine := CombineLemmingPixelsAthlete;
+
 
           if not LemHighlightReplay then
           begin
