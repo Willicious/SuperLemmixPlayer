@@ -24,15 +24,14 @@ interface
 
 uses
   Dialogs,
-  Classes, Contnrs,
+  Classes, Contnrs, Math,
   GR32, GR32_LowLevel,
   UMisc,
   SysUtils,
   LemDosBmp, LemDosStructures,
   LemTypes,
-  LemMetaObject,
   LemTerrain,
-  LemInteractiveObject,
+  LemObjects, LemInteractiveObject,   LemMetaObject,
   LemSteel,
   LemDosAnimationSet,
   LemGraphicSet,
@@ -147,7 +146,8 @@ type
 
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
     procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer;
-      aOriginal: TBitmap32 = nil);
+      aOriginal: TBitmap32 = nil); Overload;
+    procedure DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo; aOriginal: TBitmap32 = nil); Overload;
     procedure DrawObjectBottomLine(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer;
       aOriginal: TBitmap32 = nil);
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
@@ -732,6 +732,49 @@ begin
   O.LastDrawX := O.Left;
   O.LastDrawY := O.Top;
 end;
+
+procedure TRenderer.DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo; aOriginal: TBitmap32 = nil);
+var
+  SrcRect, DstRect, R: TRect;
+  Item: TObjectAnimation;
+  Src: TBitmap32;
+  DrawFrame: Integer;
+begin
+  Assert(ObjectRenderList[Gadget.Obj.Identifier] is TObjectAnimation);
+  Item := TObjectAnimation(ObjectRenderList[Gadget.Obj.Identifier]);
+
+  if Gadget.IsInvisible then Exit;
+  if Gadget.TriggerEffect = DOM_HINT then Exit;
+
+  DrawFrame := MinIntValue([Gadget.CurrentFrame, Gadget.AnimationFrameCount - 1]);
+
+  Src := TBitmap32.Create;
+
+  if Gadget.IsUpsideDown then Src.Assign(Item.Inverted)
+  else Src.Assign(Item.Original);
+
+  if Gadget.IsFlipImage then Src.FlipHorz;   
+
+  PrepareObjectBitmap(Src, Gadget.Obj.DrawingFlags, Gadget.ZombieMode);
+
+  SrcRect := Item.CalcFrameRect(DrawFrame);
+  DstRect := SrcRect;
+  DstRect := ZeroTopLeftRect(DstRect);
+  OffsetRect(DstRect, Gadget.Left, Gadget.Top);
+
+  if aOriginal <> nil then
+  begin
+    IntersectRect(R, DstRect, aOriginal.BoundsRect); // oops important!
+    aOriginal.DrawTo(Dst, R, R);
+  end;
+  Src.DrawTo(Dst, DstRect, SrcRect);
+  Src.Free;
+
+  Gadget.Obj.LastDrawX := Gadget.Left;
+  Gadget.Obj.LastDrawY := Gadget.Top;
+end;
+
+
 
 procedure TRenderer.DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
 var

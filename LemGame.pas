@@ -773,6 +773,7 @@ type
   { iteration }
     procedure PrepareParams(aParams: TDosGameParams);
     procedure Start(aReplay: Boolean = False);
+      procedure SetObjectInfos;
     procedure UpdateLemmings;
 
   { callable }
@@ -1945,23 +1946,16 @@ begin
 
   NextLemmingCountDown := 20;
 
-  ObjectInfos.Clear;
   numEntries := 0;
   ButtonsRemain := 0;
 
+
+  SetObjectInfos;
+
   with Level do
-  for i := 0 to InteractiveObjects.Count - 1 do
+  for i := 0 to ObjectInfos.Count - 1 do
   begin
-    Inf := TInteractiveObjectInfo.Create(InteractiveObjects[i], fGameParams);
-
-    ObjectInfos.Add(Inf);
-
-    // Check whether trigger area intersects the level area
-    if    (Inf.TriggerRect.Top > World.Height)
-       or (Inf.TriggerRect.Bottom < 0)
-       or (Inf.TriggerRect.Right < 0)
-       or (Inf.TriggerRect.Left > World.Width) then
-      Inf.IsDisabled := True;
+    Inf := ObjectInfos[i];
 
     // Update number of hatches
     if Inf.TriggerEffect = DOM_WINDOW then
@@ -1975,9 +1969,6 @@ begin
     if Inf.TriggerEffect = DOM_BUTTON then
       Inc(ButtonsRemain);
   end;
-
-  // Get ReceiverID for all Teleporters
-  ObjectInfos.FindReceiverID;
 
   // can't fix it in the previous loop tidily, so this will fix the locked exit
   // displaying as locked when it isn't issue on levels with no buttons
@@ -2037,6 +2028,36 @@ begin
 
   Playing := True;
 end;
+
+procedure TLemmingGame.SetObjectInfos;
+var
+  i: Integer;
+  Inf: TInteractiveObjectInfo;
+  MetaInfo: TMetaObject;
+begin
+  ObjectInfos.Clear;
+
+  for i := 0 to Level.InteractiveObjects.Count - 1 do
+  begin
+    MetaInfo := Graph.MetaObjects[Level.InteractiveObjects[i].Identifier];
+    Inf := TInteractiveObjectInfo.Create(Level.InteractiveObjects[i], MetaInfo);
+
+    ObjectInfos.Add(Inf);
+
+    // Check whether trigger area intersects the level area
+    if    (Inf.TriggerRect.Top > Level.Info.Height)
+       or (Inf.TriggerRect.Bottom < 0)
+       or (Inf.TriggerRect.Right < 0)
+       or (Inf.TriggerRect.Left > Level.Info.Width) then
+      Inf.IsDisabled := True;
+  end;
+
+  // Get ReceiverID for all Teleporters
+  ObjectInfos.FindReceiverID;
+end;
+
+
+
 
 procedure TLemmingGame.AddPreplacedLemming;
 var
@@ -4019,7 +4040,7 @@ begin
   begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect <> DOM_LEMMING then
-      Renderer.DrawObject(fTargetBitmap, Inf.Obj, Inf.CurrentFrame, nil{World});
+      Renderer.DrawObject(fTargetBitmap, Inf);
   end;
 end;
 
