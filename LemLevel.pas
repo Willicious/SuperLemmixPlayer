@@ -70,10 +70,6 @@ type
     fBnsRank        : Integer;
     fBnsLevel       : Integer;
 
-    fClockStart     : Integer;
-    fClockEnd       : Integer;
-    fClockPieces    : Integer;
-
     fLevelID        : LongWord;
   protected
   public
@@ -136,10 +132,6 @@ type
 
     property BnsRank: Integer read fBnsRank write fBnsRank;
     property BnsLevel: Integer read fBnsLevel write fBnsLevel;
-
-    property ClockStart: Integer read fClockStart write fClockStart;
-    property ClockEnd: Integer read fClockEnd write fClockEnd;
-    property ClockPieces: Integer read fClockPieces write fClockPieces;
 
     property LevelID: LongWord read fLevelID write fLevelID;
   end;

@@ -886,47 +886,18 @@ var
   Ter: TTerrain;
   Bmp: TBitmap32;
   Obj: TInteractiveObject;
-//  Bmp: TBitmap32;
-//  Item : TObjectBitmapItem;
   MO: TMetaObject;
   Stl: TSteel;
-//  tid: Integer;
   fi: Integer;
   mtn: Integer;
   TZ: Boolean;
   OWL, OWR, OWD, DoOWW: Integer;
   x, y: Integer;
-
-  function CheckTimeGimmick: Boolean;
-  var
-    DT: TDateTime;
-    x, lx, hx, h, m: Integer;
-    s: String;
-  begin
-    Result := false;
-    if (Inf.Level.Info.GimmickSet and $2000000 = 0) then Exit;
-    DT := Time;
-    DateTimeToString(s, 'h', DT);
-    h := StrToInt(s);
-    DateTimeToString(s, 'n', DT);
-    m := StrToInt(s);
-    x := (h * 60) + (m);
-    lx := Inf.Level.Info.ClockStart mod (96 * 15);
-    hx := Inf.Level.Info.ClockEnd mod (96 * 15);
-    if lx > hx then
-      Result := ((x >= lx) or (x <= hx))
-      else
-      Result := ((x >= lx) and (x <= hx));
-  end;
-
 begin
-//  windlg([bit32str(alpha_terrain), bit32str(alpha_object)]);
-  //windlg([alpha_terrain shr 24, alpha_object shr 24]);
-
   World.Clear(fBgColor);
 
-  if inf.level=nil then exit;
-  if inf.graphicset=nil then exit;
+  if Inf.level=nil then exit;
+  if Inf.graphicset=nil then exit;
 
   with Inf do
   begin
@@ -938,7 +909,6 @@ begin
     end;
 
     mtn := Level.Terrains.HackedList.Count - 1;
-    if CheckTimeGimmick then mtn := mtn - Level.Info.ClockPieces;
 
     with Level.Terrains.HackedList do
       for i := 0 to mtn do
