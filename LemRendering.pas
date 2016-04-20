@@ -144,9 +144,8 @@ type
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
-    procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer;
-      aOriginal: TBitmap32 = nil); Overload;
-    procedure DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo; aOriginal: TBitmap32 = nil); Overload;
+    procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer); Overload;
+    procedure DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo); Overload;
     procedure DrawObjectBottomLine(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer;
       aOriginal: TBitmap32 = nil);
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
@@ -524,14 +523,15 @@ begin
     Bmp.DrawMode := dmCustom;
     if Zombie then
       Bmp.OnPixelCombine := CombineObjectNoOverwriteZombie
-      else
+    else
       Bmp.OnPixelCombine := CombineObjectNoOverwrite;
   end
-  else begin
+  else
+  begin
     Bmp.DrawMode := dmCustom;
     if Zombie then
       Bmp.OnPixelCombine := CombineObjectDefaultZombie
-      else
+    else
       Bmp.OnPixelCombine := CombineObjectDefault;
   end;
 end;
@@ -655,7 +655,7 @@ begin
   Src.Free;
 end;
 
-procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer; aOriginal: TBitmap32 = nil);
+procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
 {-------------------------------------------------------------------------------
   Draws a interactive object
   • Dst = the targetbitmap
@@ -701,11 +701,6 @@ begin
   DstRect := ZeroTopLeftRect(DstRect);
   OffsetRect(DstRect, O.Left, O.Top);
 
-  if aOriginal <> nil then
-  begin
-    IntersectRect(R, DstRect, aOriginal.BoundsRect); // oops important!
-    aOriginal.DrawTo(Dst, R, R);
-  end;
   Src.DrawTo(Dst, DstRect, SrcRect);
   Src.Free;
 
@@ -713,7 +708,7 @@ begin
   O.LastDrawY := O.Top;
 end;
 
-procedure TRenderer.DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo; aOriginal: TBitmap32 = nil);
+procedure TRenderer.DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo);
 var
   SrcRect, DstRect, R: TRect;
   Item: TObjectAnimation;
@@ -738,15 +733,9 @@ begin
   PrepareObjectBitmap(Src, Gadget.Obj.DrawingFlags, Gadget.ZombieMode);
 
   SrcRect := Item.CalcFrameRect(DrawFrame);
-  // DstRect := SrcRect;
   DstRect := ZeroTopLeftRect(SrcRect);
   OffsetRect(DstRect, Gadget.Left, Gadget.Top);
 
-  if aOriginal <> nil then
-  begin
-    IntersectRect(R, DstRect, aOriginal.BoundsRect); // oops important!
-    aOriginal.DrawTo(Dst, R, R);
-  end;
   Src.DrawTo(Dst, DstRect, SrcRect);
   Src.Free;
 
@@ -881,6 +870,7 @@ begin
 end;
 
 procedure TRenderer.RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
+// DoObjects is only true if RenderWorld is called from the Preview Screen!
 var
   i: Integer;
   Ter: TTerrain;
@@ -896,8 +886,8 @@ var
 begin
   World.Clear(fBgColor);
 
-  if Inf.level=nil then exit;
-  if Inf.graphicset=nil then exit;
+  if Inf.Level = nil then Exit;
+  if Inf.GraphicSet = nil then Exit;
 
   with Inf do
   begin
@@ -908,10 +898,10 @@ begin
       DrawSpecialBitmap(World, Inf.GraphicSet.SpecialBitmaps, (Inf.Level.Info.LevelOptions and $80 = 0));
     end;
 
-    mtn := Level.Terrains.HackedList.Count - 1;
+    // mtn := Level.Terrains.HackedList.Count - 1;
 
     with Level.Terrains.HackedList do
-      for i := 0 to mtn do
+      for i := 0 to Level.Terrains.HackedList.Count - 1 do
       begin
         Ter := List^[i];
         if (((SOX = false) or ((Ter.DrawingFlags and tdf_Erase) <> 0))
