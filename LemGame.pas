@@ -4035,13 +4035,8 @@ begin
   if HyperSpeed then
     Exit;
 
-  // other objects
-  for i := 0 to ObjectInfos.Count - 1 do
-  begin
-    Inf := ObjectInfos[i];
-    if Inf.TriggerEffect <> DOM_LEMMING then
-      Renderer.DrawObject(fTargetBitmap, Inf);
-  end;
+  // Main stuff comes here!!!
+  Renderer.DrawAllObjects(fTargetBitmap, ObjectInfos);
 end;
 
 procedure TLemmingGame.EraseLemmings;

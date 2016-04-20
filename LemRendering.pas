@@ -146,6 +146,8 @@ type
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
     procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer); Overload;
     procedure DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo); Overload;
+    procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
+
     procedure DrawObjectBottomLine(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer;
       aOriginal: TBitmap32 = nil);
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
@@ -664,7 +666,7 @@ procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: In
     is copied to Dst to restore
 -------------------------------------------------------------------------------}
 var
-  SrcRect, DstRect, R: TRect;
+  SrcRect, DstRect: TRect;
   Item: TObjectAnimation;// TDrawItem;
   Src: TBitmap32;
   MO: TMetaObject;
@@ -741,6 +743,50 @@ begin
 
   Gadget.Obj.LastDrawX := Gadget.Left;
   Gadget.Obj.LastDrawY := Gadget.Top;
+end;
+
+procedure TRenderer.DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
+var
+  SrcRect, DstRect: TRect;
+  Inf: TInteractiveObjectInfo;
+  Item: TObjectAnimation;
+  Src: TBitmap32;
+  DrawFrame, i: Integer;
+begin
+  Src := TBitmap32.Create;
+
+  for i := 0 to ObjectInfos.Count - 1 do
+  begin
+    Inf := ObjectInfos[i];
+    if Inf.TriggerEffect <> DOM_LEMMING then
+    begin
+      Assert(ObjectRenderList[Inf.Obj.Identifier] is TObjectAnimation);
+      Item := TObjectAnimation(ObjectRenderList[Inf.Obj.Identifier]);
+
+      if Inf.IsInvisible then Exit;
+      if Inf.TriggerEffect = DOM_HINT then Exit;
+
+      DrawFrame := MinIntValue([Inf.CurrentFrame, Inf.AnimationFrameCount - 1]);
+
+      if Inf.IsUpsideDown then Src.Assign(Item.Inverted)
+      else Src.Assign(Item.Original);
+
+      if Inf.IsFlipImage then Src.FlipHorz;
+
+      PrepareObjectBitmap(Src, Inf.Obj.DrawingFlags, Inf.ZombieMode);
+
+      SrcRect := Item.CalcFrameRect(DrawFrame);
+      DstRect := ZeroTopLeftRect(SrcRect);
+      OffsetRect(DstRect, Inf.Left, Inf.Top);
+
+      Src.DrawTo(Dst, DstRect, SrcRect);
+
+      Inf.Obj.LastDrawX := Inf.Left;
+      Inf.Obj.LastDrawY := Inf.Top;
+    end;
+  end;
+
+  Src.Free;
 end;
 
 
