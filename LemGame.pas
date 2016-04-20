@@ -602,6 +602,7 @@ type
     procedure CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
@@ -2114,7 +2115,8 @@ end;
 procedure TLemmingGame.CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
+    F := DosVgaColorToColor32(DosInLevelPalette[6]);
+    // F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
   if F <> 0 then B := F;
 end;
 
@@ -2124,6 +2126,19 @@ begin
     F := DosVgaColorToColor32(DosInLevelPalette[1])
   else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
     F := DosVgaColorToColor32(DosInLevelPalette[2]);
+  if F <> 0 then B := F;
+end;
+
+procedure TLemmingGame.CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[2]) and $FFFFFF) then
+    F := DosVgaColorToColor32(DosInLevelPalette[1])
+  else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
+    F := DosVgaColorToColor32(DosInLevelPalette[2])
+  else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
+    F := DosVgaColorToColor32(DosInLevelPalette[6]);
+    // F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
+
   if F <> 0 then B := F;
 end;
 
@@ -4080,7 +4095,7 @@ var
   CurrentLemming: TLemming;
   SrcRect, DstRect, DigRect: TRect;
   Digit: Integer;
-  OldCombine, OldCombineZ: TPixelCombineEvent;
+  OldCombine: TPixelCombineEvent;
   Xo : Integer;
   TempBmp : TBitmap32;
 begin
@@ -4097,6 +4112,8 @@ begin
     Xo := 0;
     fMinimapBuffer.Assign(Minimap);
   end;
+
+  OldCombine := nil;
 
   with LemmingList do
     for iLemming := 0 to Count - 1 do
@@ -4115,25 +4132,30 @@ begin
           fMinimapBuffer.PixelS[(LemX div 16) + Xo, LemY div 8] :=
             Color32(0, 255, 000);
 
-          OldCombineZ := LAB.OnPixelCombine;
-
           // Change color for zombies or lems with permanent skills
-          if LemIsZombie then
-            LAB.OnPixelCombine := CombineLemmingPixelsZombie
-          else if    LemIsClimber or LemIsFloater or LemIsGlider
-                  or LemIsSwimmer or LemIsMechanic then
-            LAB.OnPixelCombine := CombineLemmingPixelsAthlete;
-
+          if    LemIsClimber or LemIsFloater or LemIsGlider
+             or LemIsSwimmer or LemIsMechanic then
+          begin
+            OldCombine := LAB.OnPixelCombine;
+            if LemisZombie then
+              LAB.OnPixelCombine := CombineLemmingPixelsZombieAthlete
+            else
+              LAB.OnPixelCombine := CombineLemmingPixelsAthlete;
+          end
+          else if LemIsZombie then
+          begin
+            OldCombine := LAB.OnPixelCombine;
+            LAB.OnPixelCombine := CombineLemmingPixelsZombie;
+          end;
 
           if not LemHighlightReplay then
           begin
             LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
           end else begin
             // replay assign job highlight fotoflash effect
-            OldCombine := LAB.OnPixelCombine;
+            if not Assigned(OldCombine) then OldCombine := LAB.OnPixelCombine;
             LAB.OnPixelCombine := CombineLemmingHighlight;
             LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-            LAB.OnPixelCombine := OldCombine;
             LemHighlightReplay := False;
           end;
 
@@ -4172,8 +4194,11 @@ begin
 
           end;
 
-          LAB.OnPixelCombine := OldCombineZ;
-
+          if Assigned(OldCombine) then
+          begin
+            LAB.OnPixelCombine := OldCombine;
+            OldCombine := nil; // clear for next lemming
+          end;
         end; // not LemmingRemoved
 
         if LemParticleTimer > 1 then
