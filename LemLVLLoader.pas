@@ -14,8 +14,7 @@ uses
   LemInteractiveObject,
   LemSteel,
   LemDosStructures,
-  LemLevel,
-  LemLevelLoad;
+  LemLevel;
 
 type
   TStyleName = class
@@ -70,16 +69,16 @@ type
   published
   end;
 
-  TLVLLoader = class(TLevelLoader)
+  TLVLLoader = class
   private
     class procedure UpgradeFormat(var Buf: TNeoLVLRec);
   protected
   public
-    class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0); override;
+    class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
     class procedure LoadTradLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
     class procedure LoadNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
     class procedure LoadNewNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
-    class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream); override;
+    class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream);
   end;
 
 implementation

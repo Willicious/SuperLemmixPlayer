@@ -302,7 +302,8 @@ var
   aFileIndex: Integer;
   OldLookForLvls: Boolean;
   SoftOddMode: Boolean;
-
+  FilePath: String;
+  FileStream: TFileStream;
   //i: integer;
   //fHasSteel : Boolean;
 begin
@@ -326,7 +327,18 @@ try
       aInfo.DosLevelPackFileName := aFilename;
       aInfo.DosLevelPackIndex := aFileIndex;
       LoadSingleLevel(aFileIndex, dS, dL, aLevel, SoftOddMode);
-      TLVLLoader.SaveLevelToFile(aLevel, ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\' + LeadZeroStr(dS + 1, 2) + LeadZeroStr(dL + 1, 2) + '.lvl');
+      // TLVLLoader.SaveLevelToFile(aLevel, ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\' + LeadZeroStr(dS + 1, 2) + LeadZeroStr(dL + 1, 2) + '.lvl');
+
+      FilePath :=   ExtractFilePath(ParamStr(0)) + 'Dump\'
+                  + ChangeFileExt(ExtractFileName(GameFile), '')
+                  + '\' + LeadZeroStr(dS + 1, 2) + LeadZeroStr(dL + 1, 2) + '.lvl';
+      FileStream := TFileStream.Create(FilePath, fmCreate);
+      try
+        TLVLLoader.StoreLevelInStream(aLevel, FileStream);
+      finally
+        FileStream.Free;
+      end;
+
     end;
 except
 end;

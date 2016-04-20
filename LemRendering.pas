@@ -108,7 +108,6 @@ type
     ObjectRenderList   : TDrawList; // list to accelerate object drawing
     Inf                : TRenderInfoRec;
     fXmasPal : Boolean;
-    //Prepared: Boolean;
 
     fWorld: TBitmap32;
 
@@ -155,17 +154,8 @@ type
       aOriginal: TBitmap32 = nil);
     procedure DrawSpecialBitmap(Dst: TBitmap32; Spec: TBitmaps; Inv: Boolean = false);
 
-    procedure RenderMinimap(Dst, World: TBitmap32; aColor: TColor32);
-
-    procedure DrawObjects(Dst: TBitmap32);
-
-//    procedure Restore(Original, Target)
-    procedure RenderAnimatedObject(O: TInteractiveObject; aFrame: Integer);
-
     function HasPixelAt(X, Y: Integer): Boolean;
 
-//    procedure DrawMask(Dst: TBitmap32; Mask: TBitmap32; X, Y: Integer);
-// drawmask to: world, targetbitmap, minimap
 
     procedure RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
 
@@ -559,27 +549,17 @@ begin
   IsNoOneWay := (UDf and tdf_NoOneWay <> 0);
   if (T.DrawingFlags and tdf_Invert = 0) and (T.DrawingFlags and tdf_Flip = 0) and (T.DrawingFlags and tdf_Rotate = 0) then
   begin
-    {if ((SteelOnly = false) or (IsSteel))
-    or ((T.DrawingFlags and tdf_NoOverwrite) = 0) then}
-    begin
-      {if not ((SteelOnly = false) or (IsSteel) then
-        UDf := tdf_Erase;}
-      PrepareTerrainBitmap(Src, UDf, SteelOnly, IsSteel, IsNoOneWay);
-      Src.DrawTo(Dst, T.Left, T.Top);
-    end;
-  end else begin
-    {if ((SteelOnly = false) or (IsSteel)
-    or ((T.DrawingFlags and tdf_NoOverwrite) = 0) then}
-    begin
-      TempBitmap.Assign(Src);
-      if (T.DrawingFlags and tdf_Rotate <> 0) then TempBitmap.Rotate90;
-      if (T.DrawingFlags and tdf_Invert <> 0) then TempBitmap.FlipVert;
-      if (T.DrawingFlags and tdf_Flip <> 0) then TempBitmap.FlipHorz;
-      {if not ((SteelOnly = false) or (IsSteel) then
-        UDf := tdf_Erase;}
-      PrepareTerrainBitmap(TempBitmap, UDf, SteelOnly, IsSteel, IsNoOneWay);
-      TempBitmap.DrawTo(Dst, T.Left, T.Top);
-    end;
+    PrepareTerrainBitmap(Src, UDf, SteelOnly, IsSteel, IsNoOneWay);
+    Src.DrawTo(Dst, T.Left, T.Top);
+  end
+  else
+  begin
+    TempBitmap.Assign(Src);
+    if (T.DrawingFlags and tdf_Rotate <> 0) then TempBitmap.Rotate90;
+    if (T.DrawingFlags and tdf_Invert <> 0) then TempBitmap.FlipVert;
+    if (T.DrawingFlags and tdf_Flip <> 0) then TempBitmap.FlipHorz;
+    PrepareTerrainBitmap(TempBitmap, UDf, SteelOnly, IsSteel, IsNoOneWay);
+    TempBitmap.DrawTo(Dst, T.Left, T.Top);
   end;
 end;
 
@@ -758,8 +738,8 @@ begin
   PrepareObjectBitmap(Src, Gadget.Obj.DrawingFlags, Gadget.ZombieMode);
 
   SrcRect := Item.CalcFrameRect(DrawFrame);
-  DstRect := SrcRect;
-  DstRect := ZeroTopLeftRect(DstRect);
+  // DstRect := SrcRect;
+  DstRect := ZeroTopLeftRect(SrcRect);
   OffsetRect(DstRect, Gadget.Left, Gadget.Top);
 
   if aOriginal <> nil then
@@ -1076,10 +1056,6 @@ begin
       end;
 
     end;
-
-
-
-
   end;
 end;
 
@@ -1104,18 +1080,9 @@ begin
       MO := MetaObjects[i];
       Bmp := ObjectBitmaps.List^[i];
 
-      //ReplaceColor(Bmp, 0, clBlue32);
-
       Item := TObjectAnimation.Create(Bmp, MO.AnimationFrameCount, MO.Width, MO.Height);
       ObjectRenderList.Add(Item);
 
-//      Item.Normal.SetSizes(MO.AnimationFrameCount, MO.Width, MO.Height);
-//      Item.Inverted.SetSizes(MO.AnimationFrameCount, MO.Width, MO.Height);
-  //    Item.Normal.Assign(Bmp);
-    //  Item.Inverted.Assign(Bmp);
-
-
-      //Item.Inverted.FlipVertFrames;
     end;
 
   fXmasPal := XmasPal;
@@ -1167,52 +1134,6 @@ end;
 function TRenderer.HasPixelAt(X, Y: Integer): Boolean;
 begin
   Result := fWorld.PixelS[X, Y] and ALPHA_TERRAIN = 0;
-end;
-
-procedure TRenderer.RenderAnimatedObject(O: TInteractiveObject; aFrame: Integer);
-begin
-//  windlg('renderobject')
-end;
-
-procedure TRenderer.DrawObjects;
-begin
-{
-    with Level.InteractiveObjects.HackedList do
-    begin
-
-      for i := 0 to Count - 1 do
-      begin
-        Obj := List^[i];
-        MO := Inf.GraphicSet.MetaObjects[obj.identifier];
-        if odf_OnlyOnTerrain and Obj.DrawingFlags <> 0 then
-          DrawObject(World, Obj, MO.PreviewFrameIndex);
-      end;
-
-      for i := 0 to Count - 1 do
-      begin
-        Obj := List^[i];
-        MO := Inf.GraphicSet.MetaObjects[obj.identifier];
-        if odf_OnlyOnTerrain and Obj.DrawingFlags = 0 then
-          DrawObject(World, Obj, MO.PreviewFrameIndex);
-      end;
-
-    end;
- }
-end;
-
-procedure TRenderer.RenderMinimap(Dst, World: TBitmap32; aColor: TColor32);
-//var
-  //dx, dy, sx, sy: Integer;
-begin
-  (*
-  sx := 0;
-  sy := 0;
-  dy := 0;
-  dx := 0;
-  repeat
-    Inc(sx);
-    if sx >
-  until False; *)
 end;
 
 end.
