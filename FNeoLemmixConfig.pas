@@ -42,7 +42,7 @@ type
     btnCheckSkills: TButton;
     btnClearSkill: TButton;
     cbExplicitCancel: TCheckBox;
-    cbWhiteOut: TCheckBox;
+    cbBlackOut: TCheckBox;
     cbIgnoreReplaySelection: TCheckBox;
     TabSheet3: TTabSheet;
     cbEnableOnline: TCheckBox;
@@ -105,7 +105,7 @@ begin
   cbIgnoreReplaySelection.Checked := fGameParams.IgnoreReplaySelection;
   cbLemmingBlink.Checked := fGameParams.LemmingBlink;
   cbTimerBlink.Checked := fGameParams.TimerBlink;
-  cbWhiteOut.Checked := fGameParams.WhiteOutZero;
+  cbBlackOut.Checked := fGameParams.BlackOutZero;
   cbAutoSaveReplay.Checked := fGameParams.AutoSaveReplay;
   cbExplicitCancel.Checked := fGameParams.ExplicitCancel;
   cbNoAutoReplay.Checked := fGameParams.NoAutoReplayMode;
@@ -174,7 +174,7 @@ begin
   fGameParams.IgnoreReplaySelection := cbIgnoreReplaySelection.Checked;
   fGameParams.LemmingBlink := cbLemmingBlink.Checked;
   fGameParams.TimerBlink := cbTimerBlink.Checked;
-  fGameParams.WhiteOutZero := cbWhiteOut.Checked;
+  fGameParams.BlackOutZero := cbBlackOut.Checked;
   fGameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
   fGameParams.ExplicitCancel := cbExplicitCancel.Checked;
   fGameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;

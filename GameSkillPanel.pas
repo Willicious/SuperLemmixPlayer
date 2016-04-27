@@ -447,7 +447,7 @@ begin
   BtnIdx := (fButtonRects[aButton].Left - 1) div 16;
 
   // White out if applicable
-  if (aoNumber = 0) and (TGameWindow(Parent).GameParams.WhiteOutZero) then
+  (*if (aoNumber = 0) and (TGameWindow(Parent).GameParams.WhiteOutZero) then
   begin
     fSkillWhiteout.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
     {DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 9, 17 + 8);
@@ -455,8 +455,9 @@ begin
     with DstRect do
       fImg.Bitmap.FillRect(Left, Top, Right, Bottom, c);}
     Exit;
-  end else
-    fSkillUnwhite.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
+  end else*)
+  fSkillUnwhite.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
+  if (aoNumber = 0) and (TGameWindow(Parent).GameParams.BlackOutZero) then Exit;
 
   // Draw infinite symbol if, well, infinite.
   if (aoNumber > 99) then

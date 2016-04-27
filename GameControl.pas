@@ -98,7 +98,7 @@ type
     moAlwaysTimestamp,
     moConfirmOverwrite,
     moExplicitCancel,
-    moWhiteOutZero,
+    moBlackOutZero,
     moIgnoreReplaySelection,
     moEnableOnline,
     moCheckUpdates,
@@ -216,7 +216,7 @@ type
     property AlwaysTimestamp: boolean Index moAlwaysTimestamp read GetOptionFlag write SetOptionFlag;
     property ConfirmOverwrite: boolean Index moConfirmOverwrite read GetOptionFlag write SetOptionFlag;
     property ExplicitCancel: boolean Index moExplicitCancel read GetOptionFlag write SetOptionFlag;
-    property WhiteOutZero: boolean Index moWhiteOutZero read GetOptionFlag write SetOptionFlag;
+    property BlackOutZero: boolean Index moBlackOutZero read GetOptionFlag write SetOptionFlag;
     property IgnoreReplaySelection: boolean Index moIgnoreReplaySelection read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
@@ -280,7 +280,7 @@ begin
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('LemmingCountBlink', LemmingBlink);
   SaveBoolean('TimerBlink', TimerBlink);
-  SaveBoolean('WhiteOutZero', WhiteOutZero);
+  SaveBoolean('BlackOutZero', BlackOutZero);
   SaveBoolean('EnableOnline', EnableOnline);
   SaveBoolean('UpdateCheck', CheckUpdates);
 
@@ -321,7 +321,7 @@ begin
   ConfirmOverwrite := LoadBoolean('ConfirmReplayOverwrite');
   ExplicitCancel := LoadBoolean('ExplicitReplayCancel');
   NoAutoReplayMode := LoadBoolean('NoAutoReplay');
-  WhiteOutZero := LoadBoolean('WhiteOutZero');
+  BlackOutZero := LoadBoolean('BlackOutZero');
   IgnoreReplaySelection := LoadBoolean('IgnoreReplaySelection');
   EnableOnline := LoadBoolean('EnableOnline');
   CheckUpdates := LoadBoolean('UpdateCheck');
@@ -330,6 +330,9 @@ begin
 
   if StrToIntDef(SL.Values['LastVersion'], 0) < 1421 then
     EnableOnline := true;
+
+  if StrToIntDef(SL.Values['LastVersion'], 0) < 1441 then
+    BlackOutZero := true;
 
   SL.Free;
 end;
