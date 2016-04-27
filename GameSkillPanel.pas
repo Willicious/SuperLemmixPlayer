@@ -63,7 +63,7 @@ type
     fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
     fCurrentScreenOffset : Integer;
 
-    fCenterDigits: Boolean;
+    (*fCenterDigits: Boolean;*)
 
     fHighlitSkill: TSkillPanelButton;
     fSkillCounts: Array[0..20] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
@@ -205,7 +205,7 @@ begin
 
   Assert(length(fnewdrawstr) = 40, 'length error infostring');
 
-  fCenterDigits := false;
+  (*fCenterDigits := false;*)
 
   fHighlitSkill := spbNone;
 
@@ -252,7 +252,7 @@ end;
 
 procedure TSkillPanelToolbar.ActivateCenterDigits;
 begin
-  fCenterDigits := true;
+  (*fCenterDigits := true;*)
 end;
 
 procedure TSkillPanelToolbar.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -479,11 +479,11 @@ begin
   // left
   DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 4, 17 + 8);
   SrcRect := Rect(0, 0, 4, 8);
-  if (not fCenterDigits) or (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 1 is left
+  if (*(not fCenterDigits) or*) (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 1 is left
 
   // right
   RectMove(DstRect, 2, 0);
-  if (fCenterDigits = false) or (aoNumber >= 10) then RectMove(DstRect, 2, 0);
+  if (*(fCenterDigits = false) or*) (aoNumber >= 10) then RectMove(DstRect, 2, 0);
   SrcRect := Rect(4, 0, 8, 8);
   fSkillFont[R, 0].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 0 is right
 
