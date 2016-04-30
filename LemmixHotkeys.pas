@@ -209,28 +209,34 @@ var
   function InterpretSecondary(s: String): Integer;
   begin
     s := LowerCase(s);
-    try
-      // a lot of secondaries will be actually numeric
-      Result := StrToInt(s);
-    except
-      Result := 0;
-      if s = 'walker' then Result := 0;
-      if s = 'climber' then Result := 1;
-      if s = 'swimmer' then Result := 2;
-      if s = 'floater' then Result := 3;
-      if s = 'glider' then Result := 4;
-      if s = 'disarmer' then Result := 5;
-      if s = 'mechanic' then Result := 5; // in case someone accidentally uses the old name
-      if s = 'bomber' then Result := 6;
-      if s = 'stoner' then Result := 7;
-      if s = 'blocker' then Result := 8;
-      if s = 'platformer' then Result := 9;
-      if s = 'builder' then Result := 10;
-      if s = 'stacker' then Result := 11;
-      if s = 'basher' then Result := 12;
-      if s = 'miner' then Result := 13;
-      if s = 'digger' then Result := 14;
-      if s = 'cloner' then Result := 15;
+
+    Result := 0;
+    if s = 'walker' then Result := 0
+    else if s = 'climber' then Result := 1
+    else if s = 'swimmer' then Result := 2
+    else if s = 'floater' then Result := 3
+    else if s = 'glider' then Result := 4
+    else if s = 'disarmer' then Result := 5
+    else if s = 'mechanic' then Result := 5 // in case someone accidentally uses the old name
+    else if s = 'bomber' then Result := 6
+    else if s = 'stoner' then Result := 7
+    else if s = 'blocker' then Result := 8
+    else if s = 'platformer' then Result := 9
+    else if s = 'builder' then Result := 10
+    else if s = 'stacker' then Result := 11
+    else if s = 'basher' then Result := 12
+    else if s = 'miner' then Result := 13
+    else if s = 'digger' then Result := 14
+    else if s = 'cloner' then Result := 15
+    else if s = '' then Result := 0
+    else
+    begin
+      try
+        // a lot of secondaries will be actually numeric
+        Result := StrToInt(s);
+      except
+        Result := 0;
+      end;
     end;
   end;
 begin
