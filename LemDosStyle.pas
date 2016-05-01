@@ -14,7 +14,8 @@ uses
   LemDosMainDat,
   LemStyle, LemLevelSystem, LemMusicSystem,
   LemNeoEncryption,
-  LemNeoSave;
+  LemNeoSave,
+  UZip; // For checking whether files actually exist
 
 const
   DosMiniMapCorners: TRect = (
@@ -189,17 +190,23 @@ var
   DoMedeKlinker: Boolean;
   TempStream: TMemoryStream;
   SL: TStringList;
+  Arc: TArchive; // for checking whether files actually exist
 begin
-  TempStream := CreateDataStream('codes.txt', ldtText);
-  if TempStream <> nil then
+  Arc := TArchive.Create;
+  if Arc.CheckIfFileExists('codes.txt') then
   begin
-    SL := TStringList.Create;
-    SL.LoadFromStream(TempStream);
-    TempStream.Free;
-    Result := UpperCase(SL.Values[LeadZeroStr(aSection+1, 2) + LeadZeroStr(aLevel+1, 2)]);
-    SL.Free;
-    if Result <> '' then Exit;
+    TempStream := CreateDataStream('codes.txt', ldtText);
+    if TempStream <> nil then
+    begin
+      SL := TStringList.Create;
+      SL.LoadFromStream(TempStream);
+      TempStream.Free;
+      Result := UpperCase(SL.Values[LeadZeroStr(aSection+1, 2) + LeadZeroStr(aLevel+1, 2)]);
+      SL.Free;
+      if Result <> '' then Exit;
+    end;
   end;
+  Arc.Free;
 
   // never change this
   LemRandseed := (aLevel div 99) * 1000000 + aRandseed * 10000 + (aSection + 1) * 100 + ((aLevel mod 99) + 1);

@@ -19,7 +19,8 @@ uses
   LemCore, LemTypes, LemLevel, LemDosStyle, LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet,
   LemDosStructures,
   LemNeoEncryption, LemNeoSave, TalisData,
-  LemLevelSystem, LemRendering;
+  LemLevelSystem, LemRendering,
+  UZip; // only for checking whether some files actually exist
 
 type
   TGameResultsRec = record
@@ -341,6 +342,7 @@ end;
 constructor TDosGameParams.Create;
 var
   TempStream: TMemoryStream; //for loading talisman data
+  Arc: TArchive; // for checking whether talisman.dat exists
 begin
   inherited Create;
 
@@ -361,15 +363,21 @@ begin
   fTalismans := TTalismans.Create;
 
 
-  try
-    TempStream := CreateDataStream('talisman.dat', ldtLemmings);
-    fTalismans.LoadFromStream(TempStream);
-    TempStream.Free;
-  except
-    // Silent fail. It's okay - and in fact common - for this file to be missing.
-  end;
+  Arc := TArchive.Create;
+  if Arc.CheckIfFileExists('talisman.dat') then
+  begin
 
-  fTalismans.SortTalismans;
+    try
+      TempStream := CreateDataStream('talisman.dat', ldtLemmings);
+      fTalismans.LoadFromStream(TempStream);
+      TempStream.Free;
+    except
+      // Silent fail. It's okay - and in fact common - for this file to be missing.
+    end;
+
+    fTalismans.SortTalismans;
+  end;
+  Arc.Free;
 
   fSaveSystem.SetTalismans(fTalismans);
 

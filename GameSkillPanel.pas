@@ -21,7 +21,8 @@ uses
   LemDosGraphicSet,
   LemNeoGraphicSet,
   GameInterfaces,
-  LemGame;
+  LemGame,
+  UZip; // For checking whether files actually exist
 
   {-------------------------------------------------------------------------------
     maybe this must be handled by lemgame (just bitmap writing)
@@ -638,6 +639,7 @@ var
   MainExtractor: TMainDatExtractor;
   TempBmp: TBitmap32;
   SrcRect: TRect;
+  Arc: TArchive; // for checking whether files actually exist
 const
   SKILL_NAMES: array[0..15] of string = (
                  'walker',
@@ -775,13 +777,31 @@ begin
 
     TempBmp.Free;
 
+
   try
+    Arc := TArchive.Create;
+    if Arc.CheckIfFileExists('skill_count_unwhite.png') then
+      MainExtractor.ExtractBitmapByName(fSkillUnwhite, 'skill_count_unwhite.png', LemmixPal[7])
+    else
+      // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
+      // might throw an exception sometimes. Handle it by auto-generating one.
+      MakeUnwhiteImage;
+    Arc.Free;
+  except
+    // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
+    // might throw an exception sometimes. Handle it by auto-generating one.
+    MakeUnwhiteImage;
+    Arc.Free;
+  end;
+
+  (* try
     MainExtractor.ExtractBitmapByName(fSkillUnwhite, 'skill_count_unwhite.png', LemmixPal[7]);
   except
     // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
     // might throw an exception sometimes. Handle it by auto-generating one.
     MakeUnwhiteImage;
-  end;
+  end; *)
+
   fSkillUnwhite.DrawMode := dmBlend;
   fSkillUnwhite.CombineMode := cmMerge;
 
