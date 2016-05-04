@@ -1401,41 +1401,44 @@ begin
     if fGameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Continue;
     with fTalismans[i] do
     begin
-      GetTalisman := True;
-      if ((LemmingsIn < SaveRequirement) or ((SaveRequirement = 0) and (LemmingsIn < fGameParams.Level.Info.RescueCount))) then GetTalisman := False;
 
-      if ((CurrentIteration > TimeLimit) and (TimeLimit <> 0)) or ((TimeLimit = 0) and (CurrentIteration > Level.Info.TimeLimit * 17)) then GetTalisman := False;
-      if LowestReleaseRate < RRMin then GetTalisman := False;
-      if HighestReleaseRate > RRMax then GetTalisman := False;
+      if    (LemmingsIn < SaveRequirement)
+         or ((SaveRequirement = 0) and (LemmingsIn < fGameParams.Level.Info.RescueCount)) then Continue;
+
+      if    ((TimeLimit <> 0) and (CurrentIteration > TimeLimit))
+         or ((TimeLimit = 0) and (CurrentIteration > Level.Info.TimeLimit * 17)) then Continue;
+      if LowestReleaseRate < RRMin then Continue;
+      if HighestReleaseRate > RRMax then Continue;
 
       TotalSkillUsed := 0;
+      GetTalisman := True;
       for j := 0 to 15 do
       begin
         if (UsedSkillCount[ActionListArray[j]] > SkillLimit[j]) and (SkillLimit[j] <> -1) then GetTalisman := False;
         TotalSkillUsed := TotalSkillUsed + UsedSkillCount[ActionListArray[j]];
       end;
+      if not GetTalisman then Continue;
 
-      if (TotalSkillUsed > TotalSkillLimit) and (TotalSkillLimit <> -1) then GetTalisman := False;
+      if (TotalSkillUsed > TotalSkillLimit) and (TotalSkillLimit <> -1) then Continue;
 
       FoundIssue := false;
       if tmOneSkill in MiscOptions then
         for i2 := 0 to LemmingList.Count-1 do
           with LemmingList[i2] do
            if (LemUsedSkillCount > 1) then FoundIssue := true;
-      if FoundIssue then GetTalisman := False;
+      if FoundIssue then Continue;
 
       UsedSkillLems := 0;
       if tmOneLemming in MiscOptions then
         for i2 := 0 to LemmingList.Count-1 do
           with LemmingList[i2] do
             if (LemUsedSkillCount > 0) then Inc(UsedSkillLems);
-      if UsedSkillLems > 1 then GetTalisman := False;
+      if UsedSkillLems > 1 then Continue;
 
-      if GetTalisman then
-      begin
-        fGameParams.SaveSystem.GetTalisman(Signature);
-        if TalismanType <> 0 then fTalismanReceived := True;
-      end;
+      // Award Talisman
+      fGameParams.SaveSystem.GetTalisman(Signature);
+      if TalismanType <> 0 then fTalismanReceived := True;
+
     end;
   end;
 end;
