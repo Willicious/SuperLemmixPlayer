@@ -423,6 +423,10 @@ type
   TLemmingMethodArray = array[TBasicLemmingAction] of TLemmingMethod;
   TSkillMethod = function (Lemming1, Lemming2: TLemming): Boolean of object;
   TSkillMethodArray = array[TBasicLemmingAction] of TSkillMethod;
+
+  TNewSkillMethod = function (L: TLemming): Boolean of object;
+  TNewSkillMethodArray = array[TBasicLemmingAction] of TNewSkillMethod;
+
   TLemmingEvent = procedure (L: TLemming) of object;
 
   TLemmingGame = class(TComponent)
@@ -489,6 +493,7 @@ type
     EntriesOpened              : Boolean;
     LemmingMethods             : TLemmingMethodArray; // a method for each basic lemming state
     SkillMethods               : TSkillMethodArray; // a method for assigning jobs (including dummies)
+    NewSkillMethods            : TNewSkillMethodArray; // The replacement of SkillMethods
     fCheckWhichLemmingOnly     : Boolean; // use during replays only, to signal the AssignSkill methods
                                           // to only indicate which Lemming gets the assignment, without
                                           // actually doing the assignment
@@ -735,6 +740,13 @@ type
     function HandleFixing(L: TLemming): Boolean;
 
   { interaction }
+    function AssignNewSkill(Skill: TBasicLemmingAction): Boolean;
+    procedure GenerateClonedLem(L: TLemming);
+    procedure GetPriorityLemming(out PriorityLem: TLemming;
+                                  NewSkill: TBasicLemmingAction;
+                                  MousePos: TPoint);
+
+
     function AssignSkill(Lemming1, Lemming2: TLemming; aSkill: TBasicLemmingAction): Boolean; // key method
     function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 
@@ -754,6 +766,23 @@ type
     function AssignMiner(L, L2: TLemming): Boolean;
     function AssignDigger(L, L2: TLemming): Boolean;
     function AssignCloner(L, L2: TLemming): Boolean;
+
+    function MayAssignWalker(L: TLemming): Boolean;
+    function MayAssignClimber(L: TLemming): Boolean;
+    function MayAssignFloaterGlider(L: TLemming): Boolean;
+    // function MayAssignGlider(L: TLemming): Boolean;
+    function MayAssignSwimmer(L: TLemming): Boolean;
+    function MayAssignMechanic(L: TLemming): Boolean;
+    function MayAssignBlocker(L: TLemming): Boolean;
+    function MayAssignExploderStoner(L: TLemming): Boolean;
+    //function MayAssignStoner(L: TLemming): Boolean;
+    function MayAssignBuilder(L: TLemming): Boolean;
+    function MayAssignPlatformer(L: TLemming): Boolean;
+    function MayAssignStacker(L: TLemming): Boolean;
+    function MayAssignBasher(L: TLemming): Boolean;
+    function MayAssignMiner(L: TLemming): Boolean;
+    function MayAssignDigger(L: TLemming): Boolean;
+    function MayAssignCloner(L: TLemming): Boolean;
 
     // procedure OnAssignSkill(Lemming1: TLemming; aSkill: TBasicLemmingAction);
 
@@ -1529,6 +1558,35 @@ begin
   SkillMethods[baGliding]      := AssignGlider;
   SkillMethods[baFixing]       := AssignMechanic;
   SkillMethods[baCloning]      := AssignCloner;
+
+  NewSkillMethods[baNone]         := nil;
+  NewSkillMethods[baWalking]      := nil;
+  NewSkillMethods[baJumping]      := nil;
+  NewSkillMethods[baDigging]      := MayAssignDigger;
+  NewSkillMethods[baClimbing]     := MayAssignClimber;
+  NewSkillMethods[baDrowning]     := nil;
+  NewSkillMethods[baHoisting]     := nil;
+  NewSkillMethods[baBuilding]     := MayAssignBuilder;
+  NewSkillMethods[baBashing]      := MayAssignBasher;
+  NewSkillMethods[baMining]       := MayAssignMiner;
+  NewSkillMethods[baFalling]      := nil;
+  NewSkillMethods[baFloating]     := MayAssignFloaterGlider;
+  NewSkillMethods[baSplatting]    := nil;
+  NewSkillMethods[baExiting]      := nil;
+  NewSkillMethods[baVaporizing]   := nil;
+  NewSkillMethods[baBlocking]     := MayAssignBlocker;
+  NewSkillMethods[baShrugging]    := nil;
+  NewSkillMethods[baOhnoing]      := nil;
+  NewSkillMethods[baExploding]    := MayAssignExploderStoner;
+  NewSkillMethods[baToWalking]    := MayAssignWalker;
+  NewSkillMethods[baPlatforming]  := MayAssignPlatformer;
+  NewSkillMethods[baStacking]     := MayAssignStacker;
+  NewSkillMethods[baStoning]      := MayAssignExploderStoner;
+  NewSkillMethods[baSwimming]     := MayAssignSwimmer;
+  NewSkillMethods[baGliding]      := MayAssignFloaterGlider;
+  NewSkillMethods[baFixing]       := MayAssignMechanic;
+  NewSkillMethods[baCloning]      := MayAssignCloner;
+
 
   fFallLimit := MAX_FALLDISTANCE;
 
@@ -3249,6 +3307,292 @@ begin
     Lemming1 := PrioritizedLemming;
 
   Lemming2 := NonPrioritizedLemming;
+end;
+
+
+
+function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction): Boolean;
+var
+  L: TLemming;
+begin
+  GetPriorityLemming(L, Skill, CursorPoint);
+
+  if not Assigned(L) then Exit;
+
+  Result := DoSkillAssignment(L, Skill);
+
+  if Result then CueSoundEffect(SFX_ASSIGN_SKILL);
+
+  // Generating cloned lemming if needed
+  if (Skill = baCloning) and Result then
+    GenerateClonedLem(L);
+end;
+
+procedure TLemmingGame.GenerateClonedLem(L: TLemming);
+var
+  NewL: TLemming;
+begin
+  Assert(not L.LemIsZombie, 'cloner assigned to zombie');
+
+  NewL := TLemming.Create;
+  NewL.Assign(L);
+  NewL.LemIndex := LemmingList.Count;
+  LemmingList.Add(NewL);
+  TurnAround(NewL);
+  NewL.LemUsedSkillCount := 0;
+  Inc(LemmingsOut);
+
+  // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
+  if NewL.LemAction = baMining then
+  begin
+    if NewL.LemFrame = 2 then
+      ApplyMinerMask(NewL, 1, 0, 0)
+    else if (NewL.LemFrame >= 3) and (NewL.LemFrame < 15) then
+      ApplyMinerMask(NewL, 1, -2*NewL.LemDx, -1);
+  end
+  // Required for turned builders not to walk into air
+  // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
+  else if (NewL.LemAction in [baBuilding, baPlatforming]) and (NewL.LemFrame >= 9) then
+    LayBrick(NewL);
+end;
+
+
+procedure TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
+                                          NewSkill: TBasicLemmingAction;
+                                          MousePos: TPoint);
+type
+  PrioClass = (Perm, NonPerm, Walk, Fall, Expl, Shrug, Drown);
+  TPrioClassArr = array[0..6] of PrioClass;
+var
+  i, CurPrioClass: Integer;
+  CurValue: Integer;
+  L: TLemming;
+  PriorityClassOrder: TPrioClassArr;
+  LemIsInClass: Boolean;
+  // NewSkillMethods: TNewSkillMethodArray;
+
+  function LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
+  var
+    X, Y: Integer;
+  begin
+    X := L.LemX + L.FrameLeftDx;
+    Y := L.LemY + L.FrameTopDy;
+    Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
+  end;
+
+  function GetPriorityClassOrder(NewSkill: TBasicLemmingAction): TPrioClassArr;
+  const
+    WalkerOrder : TPrioClassArr = (NonPerm, Perm, Expl, Walk, Shrug, Fall, Drown);
+    FloatOrder : TPrioClassArr = (Fall, Perm, NonPerm, Shrug, Expl, Walk, Drown);
+    ClimbOrder : TPrioClassArr = (Perm, NonPerm, Shrug, Expl, Walk, Fall, Drown);
+    SwimOrder : TPrioClassArr = (Drown, Fall, Perm, NonPerm, Shrug, Walk, Expl);
+    ExplOrder : TPrioClassArr = (Fall, NonPerm, Shrug, Walk, Perm, Expl, Drown);
+    BlockOrder : TPrioClassArr = (Shrug, NonPerm, Expl, Walk, Perm, Fall, Drown);
+    BuildOrder : TPrioClassArr = (Shrug, NonPerm, Perm, Walk, Expl, Fall, Drown);
+    BashOrder : TPrioClassArr = (Shrug, NonPerm, Perm, Expl, Walk, Fall, Drown);
+    CloneOrder : TPrioClassArr = (NonPerm, Perm, Expl, Walk, Shrug, Fall, Drown);
+  begin
+    case NewSkill of
+      baToWalking   : Result := WalkerOrder;
+      baGliding     : Result := FloatOrder;
+      baFloating    : Result := FloatOrder;
+      baClimbing    : Result := ClimbOrder;
+      baFixing      : Result := ClimbOrder;
+      baSwimming    : Result := SwimOrder;
+      baExploding   : Result := ExplOrder;
+      baStoning     : Result := ExplOrder;
+      baBlocking    : Result := BlockOrder;
+      baBuilding    : Result := BuildOrder;
+      baPlatforming : Result := BuildOrder;
+      baStacking    : Result := BuildOrder;
+      baBashing     : Result := BashOrder;
+      baMining      : Result := BashOrder;
+      baDigging     : Result := BashOrder;
+      baCloning     : Result := CloneOrder
+    else // should never happen
+      Result := WalkerOrder;
+    end;
+  end;
+
+  function IsLemInPriorityClass(L: TLemming; PriorityClass: PrioClass): Boolean;
+  begin
+    Result := True;
+    case PriorityClass of
+      Perm    : Result :=     (L.LemIsClimber or L.LemIsSwimmer or L.LemIsFloater
+                                    or L.LemIsGlider or L.LemIsMechanic)
+                          and (L.LemExplosionTimer = 0);
+      NonPerm : Result :=     (L.LemAction in [baClimbing, baBashing, baMining, baDigging,
+                                               baBuilding, baPlatforming, baStacking, baBlocking])
+                          and (L.LemExplosionTimer = 0);
+      Walk    : Result :=     (L.LemAction in [baWalking, baJumping])
+                          and (L.LemExplosionTimer = 0);
+      Fall    : Result :=     (L.LemAction in [baFalling, baFloating, baGliding])
+                          and (L.LemExplosionTimer = 0);
+      Expl    : Result := (L.LemExplosionTimer > 0);
+      Shrug   : Result := (L.LemAction = baShrugging) and (L.LemExplosionTimer = 0);
+      Drown   : Result := (L.LemAction = baDrowning) and (L.LemExplosionTimer = 0);
+    end;
+  end;
+
+  (*procedure SetSkillMethods(NewSkillMethods: TNewSkillMethodArray);
+  begin
+
+  end;*)
+
+begin
+  PriorityLem := nil;
+  CurValue := 7;
+
+  PriorityClassOrder := GetPriorityClassOrder(NewSkill);
+  // SetSkillMethods(NewSkillMethods);
+
+  for i := 0 to (LemmingList.Count - 1) do
+  begin
+    L := LemmingList.List^[i];
+
+    // Does Lemming exist
+    if L.LemRemoved or L.LemIsZombie or L.LemTeleporting then Continue;
+    // Does Lemming is inside cursor
+    if not LemIsInCursor(L, MousePos) then Continue;
+    // Directional select
+    if (fSelectDx <> 0) and (fSelectDx <> L.LemDx) then Continue;
+    // Select unassigned lemming
+    if ShiftButtonHeldDown and (L.LemUsedSkillCount > 0) then Continue;
+    // Select only walkers
+    if RightMouseButtonHeldDown and (L.LemAction <> baWalking) then Continue;
+
+    // Is lemming is a sufficiently high priority class
+    CurPrioClass := 0;
+    repeat
+      LemIsInClass := IsLemInPriorityClass(L, PriorityClassOrder[CurPrioClass]);
+      Inc(CurPrioClass);
+    until (CurPrioClass >= CurValue) or LemIsInClass;
+    if not LemIsInClass then Continue;
+
+    // Can this lemmings actually receive the skill
+    // if not NewSkillMethods[NewSkill](L) then Continue;
+    if not MayAssignDigger(L) then Continue;
+
+    // New top priority lemming found
+    PriorityLem := L;
+    CurValue := CurPrioClass;
+  end;
+end;
+
+function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
+               baStacking, baBashing, baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet);
+end;
+
+function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+               baVaporizing, baSplatting, baExiting];
+begin
+  Result := (L.LemAction in ActionSet) and not L.LemIsClimber;
+end;
+
+function TLemmingGame.MayAssignFloaterGlider(L: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+               baVaporizing, baSplatting, baExiting];
+begin
+  Result := (L.LemAction in ActionSet) and not (L.LemIsFloater or L.LemIsGlider);
+end;
+
+function TLemmingGame.MayAssignSwimmer(L: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baVaporizing,
+               baSplatting, baExiting];   // Does NOT contain baDrowning!
+begin
+  Result := (L.LemAction in ActionSet) and not L.LemIsSwimmer;
+end;
+
+function TLemmingGame.MayAssignMechanic(L: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+               baVaporizing, baSplatting, baExiting];
+begin
+  Result := (L.LemAction in ActionSet) and not L.LemIsMechanic;
+end;
+
+function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
+end;
+
+function TLemmingGame.MayAssignExploderStoner(L: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baDrowning, baExploding, baStoneFinish,
+               baVaporizing, baSplatting, baExiting];
+begin
+  Result := not (L.LemAction in ActionSet);
+end;
+
+
+function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baBashing,
+               baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet) and not (L.LemY <= 1);
+end;
+
+function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baBashing,
+               baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet) and LemCanPlatform(L);
+end;
+
+function TLemmingGame.MayAssignStacker(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baBashing,
+               baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet);
+end;
+
+function TLemmingGame.MayAssignBasher(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet)
+            and not HasIndestructibleAt(L.LemX + 4 * L.LemDx, L.LemY - 5, L.LemDx, baBashing);
+end;
+
+function TLemmingGame.MayAssignMiner(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baDigging];
+begin
+  Result := (L.LemAction in ActionSet)
+            and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining)
+end;
+
+function TLemmingGame.MayAssignDigger(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baMining];
+begin
+  Result := (L.LemAction in ActionSet) and not HasSteelAt(L.LemX, L.LemY);
+end;
+
+function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baMining, baDigging, baJumping, baFalling, baFloating,
+               baSwimming, baGliding, baFixing];
+begin
+  Result := (L.LemAction in ActionSet);
 end;
 
 
@@ -5507,10 +5851,16 @@ var
 begin
   Result := False;
   if fAssignedSkillThisFrame then Exit;
+
   // convert buttontype to skilltype
   Sel := SkillPanelButtonToAction[fSelectedSkill];
   Assert(Sel <> baNone);
-  if PrioritizedHitTest(Lemming1, Lemming2, CursorPoint) > 0 then
+
+  Result := AssignNewSkill(Sel);
+
+  fCheckWhichLemmingOnly := False;
+  if Result then fAssignedSkillThisFrame := True;
+  (* if PrioritizedHitTest(Lemming1, Lemming2, CursorPoint) > 0 then
   begin
     if Lemming1 <> nil then
     begin
@@ -5518,7 +5868,7 @@ begin
       Result := AssignSkill(Lemming1, Lemming2, Sel);
       if Result then fAssignedSkillThisFrame := true;
     end;
-  end;
+  end; *)
 end;
 
 function TLemmingGame.ProcessHighlightAssignment: Boolean;
