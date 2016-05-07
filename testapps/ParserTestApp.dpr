@@ -1,6 +1,7 @@
 program ParserTestApp;
 
 uses
+  SharedGlobals,
   Forms,
   ParserTest in 'ParserTest.pas' {Form1};
 

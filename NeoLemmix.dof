@@ -96,7 +96,7 @@ PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=kernel;kernel\zlib;kernel\pngdelphi
 Packages=vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;CLXIB;ibxpress;VCLIB;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP
-Conditionals=exp;
+Conditionals=exp;profile_parser;
 DebugSourceDirs=
 UsePackages=0
 [Parameters]
@@ -134,21 +134,20 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
-[Excluded Packages]
-c:\program files (x86)\borland\delphi7\Bin\dclite70.bpl=Borland Integrated Translation Environment
 [HistoryLists\hlConditionals]
-Count=11
-Item0=exp;
-Item1=exp;test_alpha
-Item2=exp;test_new_config
-Item3=exp;test_mapmouse
-Item4=exp;test_zoom
-Item5=test_zoom
-Item6=testfeature
-Item7=universal;flexi;testmode;secrets;extmusic;clonepercent;
-Item8=universal;flexi;testmode;external;uselevelname;secrets;extmusic;clonepercent;
-Item9=universal;cust;testmode;external;uselevelname;secrets;extmusic;clonepercent;
-Item10=lpc2;lemplus;neoonly;nolookforlvls;extmusic;noextramodes;
+Count=12
+Item0=exp;profile_parser;
+Item1=exp;
+Item2=exp;test_alpha
+Item3=exp;test_new_config
+Item4=exp;test_mapmouse
+Item5=exp;test_zoom
+Item6=test_zoom
+Item7=testfeature
+Item8=universal;flexi;testmode;secrets;extmusic;clonepercent;
+Item9=universal;flexi;testmode;external;uselevelname;secrets;extmusic;clonepercent;
+Item10=universal;cust;testmode;external;uselevelname;secrets;extmusic;clonepercent;
+Item11=lpc2;lemplus;neoonly;nolookforlvls;extmusic;noextramodes;
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;

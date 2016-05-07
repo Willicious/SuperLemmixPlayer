@@ -46,6 +46,7 @@ of a line.
 interface
 
 uses
+  {$ifdef profile_parser}Dialogs, Windows, SharedGlobals,{$endif}
   Classes, SysUtils, StrUtils;
 
 type
@@ -107,7 +108,9 @@ procedure RemoveFluff(aStringList: TStrings);
 var
   i, i2: Integer;
   OldStr, NewStr: String;
-  StringMode, JustHadSpace, SkipNext, FirstCharOfLine: Boolean;
+  StringMode, JustHadSpace, FirstCharOfLine: Boolean;
+
+  {$ifdef profile_parser}Ticks, InitialCount: Cardinal;{$endif}
 
   function NextLine: String;
   begin
@@ -118,6 +121,8 @@ var
   end;
 
 begin
+  {$ifdef profile_parser}Ticks := GetTickCount();
+  InitialCount := aStringList.Count;{$endif}
 
   // First step - strip out fluff spacing
   StringMode := false;
@@ -126,7 +131,6 @@ begin
     OldStr := aStringList[i];
     NewStr := '';
     JustHadSpace := true; // start of line pretty much behaves the same way as far as tidyup is concerned
-    SkipNext := false;
     FirstCharOfLine := false;
     for i2 := 1 to Length(OldStr) do
     begin
@@ -170,7 +174,7 @@ begin
   i := 0;
   while i < aStringList.Count-1 do // -1 is correct - we never need to combine on the last line!
   begin
-    if aStringList[i+1][1] = '~' then
+    if (Length(aStringList[i+1]) <> 0) and (aStringList[i+1][1] = '~') then
     begin
       NewStr := aStringList[i+1];
       Delete(NewStr, 1, 1);
@@ -189,6 +193,10 @@ begin
     else
       Inc(i);
   end;
+
+  {$ifdef profile_parser}
+  ProfilingList.Add('LemNeoParser.pas RemoveFluff on ' + IntToStr(InitialCount) + ' lines: ' + IntToStr(GetTickCount() - Ticks));
+  {$endif}
 
 end;
 

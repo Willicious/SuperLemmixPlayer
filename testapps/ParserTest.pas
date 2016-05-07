@@ -26,9 +26,28 @@ implementation
 {$R *.dfm}
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+  SL: TStringList;
+  i: Integer;
 begin
-  RemoveFluff(Memo1.Lines);
-  Memo1.Update;
+  SL := TStringList.Create;
+  try
+    ShowMessage('assign');
+    SL.Assign(Memo1.Lines);
+    ShowMessage('rf');
+    RemoveFluff(SL);
+    ShowMessage('clear');
+    Memo1.Clear;
+    ShowMessage('recopy');
+    //for i := 0 to SL.Count-1 do
+    //  Memo1.Lines.Add(SL[i]);
+    Memo1.Lines.Assign(SL);
+    ShowMessage('update');
+    Memo1.Update;
+  finally
+    ShowMessage('free');
+    SL.Free;
+  end;
 end;
 
 end.
