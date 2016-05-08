@@ -4975,18 +4975,46 @@ var
   MaxFallDist, GroundDist: Integer;
   LemDy: Integer;
 
+  // Check for turning around
+  function DoTurnAround(L: TLemming; MoveForwardFirst: Boolean): Boolean;
+  var
+    Dy: Integer;
+    CurLemX: Integer; // Adapted X-coordinate of Lemming
+  begin
+    CurLemX := L.LemX;
+    if MoveForwardFirst then Inc(CurLemX, L.LemDx);
+
+    // Search for free pixels below
+    Dy := 0;
+    repeat
+      // bug-fix for http://www.lemmingsforums.net/index.php?topic=2693
+      if HasPixelAt(CurLemX, L.LemY + Dy) and HasPixelAt(CurLemX - L.LemDx, L.LemY + Dy) then
+      begin
+        // Abort computation and let lemming turn around
+        Result := True;
+        Exit;
+      end;
+      Inc(Dy);
+    until (Dy > 3) or (not HasPixelAt(CurLemX, L.LemY + Dy));
+
+    if Dy > 3 then Result := True
+    else Result := False;
+  end;
+
   // Special behavior in 1-pxiel wide shafts: Move one pixel down even when turning
   procedure CheckOnePixelShaft(L: TLemming);
   begin
-    if     HasPixelAt(L.LemX + L.LemDx, L.LemY + 1)
-       and HasPixelAt(L.LemX + L.LemDx, L.LemY + 2)
-       and HasPixelAt(L.LemX + L.LemDx, L.LemY + 3) then
+    if    ((FindGroundPixel(L.LemX + L.LemDx, L.LemY) < -4) and DoTurnAround(L, True))
+       or (     HasPixelAt(L.LemX + L.LemDx, L.LemY + 1)
+            and HasPixelAt(L.LemX + L.LemDx, L.LemY + 2)
+            and HasPixelAt(L.LemX + L.LemDx, L.LemY + 3)) then
     begin
       if HasPixelAt(L.LemX, L.LemY) then
         Transition(L, baWalking)
       else
         Inc(L.LemY);
     end;
+
   end;
 
 const
@@ -5014,13 +5042,7 @@ begin
 
   if GroundDist < -4 then // pushed down or turn around
   begin
-    // Search for free pixels below
-    LemDy := 0;
-    repeat
-      Inc(LemDy);
-    until (LemDy > 3) or (not HasPixelAt(L.LemX, L.LemY + LemDy));
-
-    if LemDy > 3 then
+    if DoTurnAround(L, false) then
     begin
       // move back and turn around
       Dec(L.LemX, L.LemDx);
@@ -5028,7 +5050,14 @@ begin
       CheckOnePixelShaft(L);
     end
     else
-      Inc(L.LemY, LemDy); // move down
+    begin
+      // move down
+      LemDy := 0;
+      repeat
+        Inc(LemDy);
+      until not HasPixelAt(L.LemX, L.LemY + LemDy);
+      Inc(L.LemY, LemDy);
+    end
   end
 
   else if GroundDist < 0 then // Move 1 to 4 pixels up
@@ -5300,7 +5329,7 @@ var
 begin
   if Autofail then fHitTestAutoFail := true;
   HitCount := GetPriorityLemming(L, baNone, CursorPoint);
-  if (HitCount > 0) and not fHitTestAutofail then
+  if (HitCount > 0) and Assigned(L) and not fHitTestAutofail then
   begin
     S := LemmingActionStrings[L.LemAction];
     // get highlight text
