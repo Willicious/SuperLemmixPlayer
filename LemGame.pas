@@ -500,6 +500,8 @@ type
     fFreezeRecording           : Boolean;
     WhichLemming               : TLemming; // see above
     LastNPLemming              : TLemming; // for emulation of right-click bug
+    fLemWithShadow             : TLemming; // needed for DrawShadowBridge to erase previous shadow
+    fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
     Entries                    : TInteractiveObjectInfoList; // list of entrances (NOT USED ANYMORE)
     DosEntryTable              : array of Integer; // table for entrance release order
@@ -652,6 +654,9 @@ type
     procedure DrawDebugString(L: TLemming);
     procedure DrawLemmings;
     procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
+    procedure CheckForNewShadow;
+    procedure DrawShadowBridge;
+    procedure EraseShadowBridge;
     procedure EraseLemmings;
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
@@ -4076,6 +4081,131 @@ begin
 
 end;
 
+procedure TLemmingGame.CheckForNewShadow;
+var
+  L: TLemming;
+begin
+  // Check whether we have to redraw the Shadow (if lem or skill changed)
+  GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
+  if (not (fLemWithShadow = L)) or (not (fLemWithShadowButton = fSelectedSkill)) then
+  begin
+    if Assigned(fLemWithShadow) then // false if coming from UpdateLemming
+    begin
+      // erase existing ShadowBridge
+      EraseShadowBridge;
+      // Force redrawing
+      fTargetBitmap.Changed;
+    end;
+    // Draw the new ShadowBridge
+    DrawShadowBridge;
+  end;
+end;
+
+procedure TLemmingGame.DrawShadowBridge;
+var
+  L: TLemming;
+  i, j: Integer;
+  AdaptY: Integer;
+  IsShadowAdded: Boolean;
+
+  procedure AddGrayPixel(X, Y: Integer);
+  begin
+    if not HasPixelAt(X, Y) then
+    begin
+      if (fTargetBitmap.PixelS[X, Y] = DosVgaColorToColor32(DosInLevelPalette[0])) then // DosVgaColorToColor32(DosInLevelPalette[0]) = pure black
+        fTargetBitmap.PixelS[X, Y] := $00202020; // some kind of dark gray
+    end;
+  end;
+
+begin
+  IsShadowAdded := False;
+
+  GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
+  if not Assigned(L) then Exit;
+
+  case fSelectedSkill of
+    spbPlatformer:
+      begin
+        for i := 0 to 38 do // Yes, platforms are 39 pixels long!
+          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY);
+
+        IsShadowAdded := True;
+      end;
+    spbBuilder:
+      begin
+        for j := 1 to 12 do
+        for i := 2*j - 3 to 2*j + 3 do
+          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
+
+        IsShadowAdded := True;
+      end;
+    spbStacker:
+      begin
+        // get starting height for stacker
+        AdaptY := 0;
+        if HasPixelAt(L.LemX + L.LemDx, L.LemY) then AdaptY := 1;
+
+        for j := AdaptY to AdaptY + 7 do
+        for i := 0 to 3 do
+          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
+
+        IsShadowAdded := True;
+      end;
+  end;
+
+  if IsShadowAdded then
+  begin
+    fTargetBitmap.Changed;
+    fLemWithShadow := L;
+    fLemWithShadowButton := fSelectedSkill;
+  end;
+end;
+
+procedure TLemmingGame.EraseShadowBridge;
+var
+  L: TLemming;
+  i, j: Integer;
+  AdaptY: Integer;
+
+  procedure RemoveGrayPixel(X, Y: Integer);
+  begin
+    if fTargetBitmap.PixelS[X, Y] = $00202020 then
+      fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
+  end;
+
+begin
+  L := fLemWithShadow;
+  if not Assigned(L) then Exit;
+
+  case fLemWithShadowButton of
+    spbPlatformer:
+      begin
+        for i := 0 to 38 do // Yes, platforms are 39 pixels long!
+          RemoveGrayPixel(L.LemX + i*L.LemDx, L.LemY);
+      end;
+    spbBuilder:
+      begin
+        for j := 1 to 12 do
+        for i := 2*j - 3 to 2*j + 3 do
+          RemoveGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
+      end;
+    spbStacker:
+      begin
+        // get starting height for stacker
+        AdaptY := 0;
+        if HasPixelAt(L.LemX + L.LemDx, L.LemY) then AdaptY := 1;
+
+        for j := AdaptY to AdaptY + 7 do
+        for i := 0 to 3 do
+          RemoveGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
+      end;
+  end;
+
+  fLemWithShadow := nil;
+end;
+
+
+
 procedure TLemmingGame.LayBrick(L: TLemming);
 {-------------------------------------------------------------------------------
   bricks are in the lemming area so will automatically be copied to the screen
@@ -5227,6 +5357,8 @@ begin
   // just as a warning: do *not* mess around with the order here
   IncrementIteration;
   EraseLemmings;
+  EraseShadowBridge; // erase existing ShadowBridge
+  // {if Assigned(fLemWithShadow) then} DrawShadowBridge(true); // erase existing ShadowBridge
   CheckReleaseLemming;
   CheckLemmings;
   CheckUpdateNuking;
@@ -5245,6 +5377,7 @@ begin
   end;
 
   DrawAnimatedObjects;
+
   DrawLemmings;
 
   CheckForReplayAction(false);
@@ -5252,7 +5385,7 @@ begin
   if fReplaying and (fReplayIndex = fRecorder.Count) then
     RegainControl;
 
-  // force update if raw explosion pixels drawn
+  // force update if raw explosion pixels drawn (or shadowstuff)
   if fExplodingGraphics and (not HyperSpeed) then
     fTargetBitmap.Changed;
 
@@ -5327,6 +5460,8 @@ var
   i: integer;
   fAltOverride: Boolean;
 begin
+  CheckForNewShadow;
+
   if Autofail then fHitTestAutoFail := true;
   HitCount := GetPriorityLemming(L, baNone, CursorPoint);
   if (HitCount > 0) and Assigned(L) and not fHitTestAutofail then
@@ -5398,7 +5533,11 @@ begin
   Result := AssignNewSkill(Sel);
 
   fCheckWhichLemmingOnly := False;
-  if Result then fAssignedSkillThisFrame := True;
+  if Result then
+  begin
+    fAssignedSkillThisFrame := True;
+    CheckForNewShadow;
+  end;
 end;
 
 function TLemmingGame.ProcessHighlightAssignment: Boolean;
@@ -5584,6 +5723,7 @@ begin
         InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
         CueSoundEffect(SFX_SKILLBUTTON);
         RecordSkillSelection(Value);
+        CheckForNewShadow;
       end;
   end;
 end;
