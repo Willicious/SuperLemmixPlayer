@@ -502,6 +502,7 @@ type
     LastNPLemming              : TLemming; // for emulation of right-click bug
     fLemWithShadow             : TLemming; // needed for DrawShadowBridge to erase previous shadow
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
+    fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
     Entries                    : TInteractiveObjectInfoList; // list of entrances (NOT USED ANYMORE)
     DosEntryTable              : array of Integer; // table for entrance release order
@@ -4084,11 +4085,13 @@ procedure TLemmingGame.CheckForNewShadow;
 var
   L: TLemming;
 begin
+  if fHyperSpeed then Exit;
+
   // Check whether we have to redraw the Shadow (if lem or skill changed)
   GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
-  if (not (fLemWithShadow = L)) or (not (fLemWithShadowButton = fSelectedSkill)) then
+  if (not fExistShadow) or (not (fLemWithShadow = L)) or (not (fLemWithShadowButton = fSelectedSkill)) then
   begin
-    if Assigned(fLemWithShadow) then // false if coming from UpdateLemming
+    if fExistShadow then // false if coming from UpdateLemming
     begin
       // erase existing ShadowBridge
       DrawShadowBridge(true);
@@ -4103,6 +4106,7 @@ end;
 procedure TLemmingGame.DrawShadowBridge(DoErase: Boolean = False);
 var
   L: TLemming;
+  CurX, CurY, CurDx: Integer;
   i, j: Integer;
   AdaptY: Integer;
   IsShadowAdded: Boolean;
@@ -4123,58 +4127,69 @@ var
   end;
 
 begin
-  IsShadowAdded := False;
+  try
+    IsShadowAdded := False;
 
-  if DoErase then
-  begin
-    L := fLemWithShadow;
-    SkillButton := fLemWithShadowButton
-  end else begin
-    GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
-    SkillButton := fSelectedSkill
-  end;
+    if DoErase then
+    begin
+      L := fLemWithShadow;
+      SkillButton := fLemWithShadowButton
+    end else begin
+      GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
+      SkillButton := fSelectedSkill
+    end;
 
-  if not Assigned(L) then Exit;
+    if not Assigned(L) then Exit;
 
-  case SkillButton of
-    spbPlatformer:
-      begin
-        for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY, DoErase);
+    // Save values here to migitate race condition problems at least somewhat
+    CurX := L.LemX;
+    CurY := L.LemY;
+    CurDx := L.LemDx;
+    if DoErase then fExistShadow := False;
 
-        IsShadowAdded := True;
-      end;
-    spbBuilder:
-      begin
-        for j := 1 to 12 do
-        for i := 2*j - 3 to 2*j + 3 do
-          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
+    case SkillButton of
+      spbPlatformer:
+        begin
+          for i := 0 to 38 do // Yes, platforms are 39 pixels long!
+            AddGrayPixel(CurX + i*CurDx, CurY, DoErase);
 
-        IsShadowAdded := True;
-      end;
-    spbStacker:
-      begin
-        // get starting height for stacker
-        AdaptY := 0;
-        if HasPixelAt(L.LemX + L.LemDx, L.LemY) then AdaptY := 1;
+          IsShadowAdded := True;
+        end;
+      spbBuilder:
+        begin
+          for j := 1 to 12 do
+          for i := 2*j - 3 to 2*j + 3 do
+            AddGrayPixel(CurX + i*CurDx, CurY - j, DoErase);
 
-        for j := AdaptY to AdaptY + 7 do
-        for i := 0 to 3 do
-          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
+          IsShadowAdded := True;
+        end;
+      spbStacker:
+        begin
+          // get starting height for stacker
+          AdaptY := 0;
+          if HasPixelAt(CurX + CurDx, CurY) then AdaptY := 1;
 
-        IsShadowAdded := True;
-      end;
-  end;
+          for j := AdaptY to AdaptY + 7 do
+          for i := 0 to 3 do
+            AddGrayPixel(CurX + i*CurDx, CurY - j, DoErase);
 
-  if DoErase then
-  begin
+          IsShadowAdded := True;
+        end;
+    end;
+
+    if IsShadowAdded and not DoErase then
+    begin
+      fTargetBitmap.Changed;
+      fLemWithShadow := L;
+      fLemWithShadowButton := fSelectedSkill;
+      fExistShadow := True;
+    end;
+
+  except
+    // Reset existing shadows
     fLemWithShadow := nil;
-  end
-  else if IsShadowAdded then
-  begin
-    fTargetBitmap.Changed;
-    fLemWithShadow := L;
     fLemWithShadowButton := fSelectedSkill;
+    fExistShadow := False;
   end;
 end;
 
@@ -5328,7 +5343,7 @@ begin
   CheckForReplayAction(true);
 
   // erase existing ShadowBridge
-  if Assigned(fLemWithShadow) then
+  if fExistShadow then
   begin
     DrawShadowBridge(true);
     fExplodingGraphics := True; // Redraw everything later on
