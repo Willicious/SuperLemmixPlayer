@@ -655,8 +655,7 @@ type
     procedure DrawLemmings;
     procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
     procedure CheckForNewShadow;
-    procedure DrawShadowBridge;
-    procedure EraseShadowBridge;
+    procedure DrawShadowBridge(DoErase: Boolean = False);
     procedure EraseLemmings;
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
@@ -4092,7 +4091,7 @@ begin
     if Assigned(fLemWithShadow) then // false if coming from UpdateLemming
     begin
       // erase existing ShadowBridge
-      EraseShadowBridge;
+      DrawShadowBridge(true);
       // Force redrawing
       fTargetBitmap.Changed;
     end;
@@ -4101,16 +4100,22 @@ begin
   end;
 end;
 
-procedure TLemmingGame.DrawShadowBridge;
+procedure TLemmingGame.DrawShadowBridge(DoErase: Boolean = False);
 var
   L: TLemming;
   i, j: Integer;
   AdaptY: Integer;
   IsShadowAdded: Boolean;
+  SkillButton: TSkillPanelButton;
 
   procedure AddGrayPixel(X, Y: Integer);
   begin
-    if not HasPixelAt(X, Y) then
+    if DoErase then
+    begin
+      if fTargetBitmap.PixelS[X, Y] = $00202020 then
+        fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
+    end
+    else if not HasPixelAt(X, Y) then
     begin
       if (fTargetBitmap.PixelS[X, Y] = DosVgaColorToColor32(DosInLevelPalette[0])) then // DosVgaColorToColor32(DosInLevelPalette[0]) = pure black
         fTargetBitmap.PixelS[X, Y] := $00202020; // some kind of dark gray
@@ -4120,10 +4125,18 @@ var
 begin
   IsShadowAdded := False;
 
-  GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
+  if DoErase then
+  begin
+    L := fLemWithShadow;
+    SkillButton := fLemWithShadowButton
+  end else begin
+    GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
+    SkillButton := fSelectedSkill
+  end;
+
   if not Assigned(L) then Exit;
 
-  case fSelectedSkill of
+  case SkillButton of
     spbPlatformer:
       begin
         for i := 0 to 38 do // Yes, platforms are 39 pixels long!
@@ -4153,57 +4166,17 @@ begin
       end;
   end;
 
-  if IsShadowAdded then
+  if DoErase then
+  begin
+    fLemWithShadow := nil;
+  end
+  else if IsShadowAdded then
   begin
     fTargetBitmap.Changed;
     fLemWithShadow := L;
     fLemWithShadowButton := fSelectedSkill;
   end;
 end;
-
-procedure TLemmingGame.EraseShadowBridge;
-var
-  L: TLemming;
-  i, j: Integer;
-  AdaptY: Integer;
-
-  procedure RemoveGrayPixel(X, Y: Integer);
-  begin
-    if fTargetBitmap.PixelS[X, Y] = $00202020 then
-      fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
-  end;
-
-begin
-  L := fLemWithShadow;
-  if not Assigned(L) then Exit;
-
-  case fLemWithShadowButton of
-    spbPlatformer:
-      begin
-        for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-          RemoveGrayPixel(L.LemX + i*L.LemDx, L.LemY);
-      end;
-    spbBuilder:
-      begin
-        for j := 1 to 12 do
-        for i := 2*j - 3 to 2*j + 3 do
-          RemoveGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
-      end;
-    spbStacker:
-      begin
-        // get starting height for stacker
-        AdaptY := 0;
-        if HasPixelAt(L.LemX + L.LemDx, L.LemY) then AdaptY := 1;
-
-        for j := AdaptY to AdaptY + 7 do
-        for i := 0 to 3 do
-          RemoveGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
-      end;
-  end;
-
-  fLemWithShadow := nil;
-end;
-
 
 
 procedure TLemmingGame.LayBrick(L: TLemming);
@@ -5357,8 +5330,7 @@ begin
   // just as a warning: do *not* mess around with the order here
   IncrementIteration;
   EraseLemmings;
-  EraseShadowBridge; // erase existing ShadowBridge
-  // {if Assigned(fLemWithShadow) then} DrawShadowBridge(true); // erase existing ShadowBridge
+  DrawShadowBridge(true); // erase existing ShadowBridge
   CheckReleaseLemming;
   CheckLemmings;
   CheckUpdateNuking;
