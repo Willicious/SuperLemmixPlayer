@@ -4108,9 +4108,9 @@ var
   IsShadowAdded: Boolean;
   SkillButton: TSkillPanelButton;
 
-  procedure AddGrayPixel(X, Y: Integer);
+  procedure AddGrayPixel(X, Y: Integer; Erase: Boolean);
   begin
-    if DoErase then
+    if Erase then
     begin
       if fTargetBitmap.PixelS[X, Y] = $00202020 then
         fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
@@ -4140,7 +4140,7 @@ begin
     spbPlatformer:
       begin
         for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY);
+          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY, DoErase);
 
         IsShadowAdded := True;
       end;
@@ -4148,7 +4148,7 @@ begin
       begin
         for j := 1 to 12 do
         for i := 2*j - 3 to 2*j + 3 do
-          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
+          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
 
         IsShadowAdded := True;
       end;
@@ -4160,7 +4160,7 @@ begin
 
         for j := AdaptY to AdaptY + 7 do
         for i := 0 to 3 do
-          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
+          AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
 
         IsShadowAdded := True;
       end;
@@ -5327,10 +5327,16 @@ begin
 
   CheckForReplayAction(true);
 
+  // erase existing ShadowBridge
+  if Assigned(fLemWithShadow) then
+  begin
+    DrawShadowBridge(true);
+    fExplodingGraphics := True; // Redraw everything later on
+  end;
+
   // just as a warning: do *not* mess around with the order here
   IncrementIteration;
   EraseLemmings;
-  DrawShadowBridge(true); // erase existing ShadowBridge
   CheckReleaseLemming;
   CheckLemmings;
   CheckUpdateNuking;
