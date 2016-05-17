@@ -763,8 +763,8 @@ begin
       Assert(ObjectRenderList[Inf.Obj.Identifier] is TObjectAnimation);
       Item := TObjectAnimation(ObjectRenderList[Inf.Obj.Identifier]);
 
-      if Inf.IsInvisible then Exit;
-      if Inf.TriggerEffect = DOM_HINT then Exit;
+      if Inf.IsInvisible then Continue;
+      if Inf.TriggerEffect = DOM_HINT then Continue;
 
       DrawFrame := MinIntValue([Inf.CurrentFrame, Inf.AnimationFrameCount - 1]);
 
