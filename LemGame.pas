@@ -1762,7 +1762,6 @@ begin
   if (MusicSys <> nil) and (MusicFileName <> '') then
     try
       SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
-      raise Exception.Create('blah');
     except
       SoundMgr.Musics.Clear;
       Level.Info.MusicFile := '';
