@@ -1760,9 +1760,17 @@ begin
   MusicSys := fGameParams.Style.MusicSystem;
   MusicFileName := GetMusicFileName;
   if (MusicSys <> nil) and (MusicFileName <> '') then
-    try
-      SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
-    except
+  begin
+    if FileExists(ChangeFileExt(GameFile, '_Music.dat')) then
+    begin
+      try
+        SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
+      except
+        // silent fail, just play no music
+      end;
+    end
+    else
+    begin
       SoundMgr.Musics.Clear;
       Level.Info.MusicFile := '';
       try
@@ -1772,6 +1780,7 @@ begin
         // silent fail, just play no music
       end;
     end;
+  end;
 
   S := CreateDataStream('explode.dat', ldtParticles);
   S.Seek(0, soFromBeginning);
