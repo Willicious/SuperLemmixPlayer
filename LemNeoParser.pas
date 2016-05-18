@@ -143,7 +143,7 @@ begin
   {$ifdef profile_parser}StartTickCount := GetTickCount;{$endif}
   for i := fStringList.Count-1 downto 0 do
     if (Trim(fStringList[i]) = '')
-    or (fStringList[i][1] = '#') then
+    or (Trim(fStringList[i])[1] = '#') then
       fStringList.Delete(i)
     else
       for i2 := 1 to Length(fStringList[i]) do
