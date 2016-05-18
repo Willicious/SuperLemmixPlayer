@@ -145,6 +145,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    function FindMetaObject(O: TInteractiveObject): TMetaObject;
+
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
@@ -357,6 +359,14 @@ begin
 end;
 
 { TRenderer }
+
+function TRenderer.FindMetaObject(O: TInteractiveObject): TMetaObject;
+var
+  GS: TBaseGraphicSet;
+begin
+  GS := FindGraphicSet(O.GS);
+  Result := GS.MetaObjects[StrToIntDef(O.Piece, 0)];
+end;
 
 function TRenderer.FindGraphicSet(aName: String): TBaseGraphicSet;
 var
