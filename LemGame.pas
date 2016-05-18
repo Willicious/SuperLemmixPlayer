@@ -742,7 +742,7 @@ type
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False): Boolean;
     procedure GenerateClonedLem(L: TLemming);
     function GetPriorityLemming(out PriorityLem: TLemming;
-                                  NewSkill: TBasicLemmingAction;
+                                  NewSkillOrig: TBasicLemmingAction;
                                   MousePos: TPoint;
                                   IsHighlight: Boolean = False): Integer;
     function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
@@ -2876,7 +2876,7 @@ end;
 
 
 function TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
-                                          NewSkill: TBasicLemmingAction;
+                                          NewSkillOrig: TBasicLemmingAction;
                                           MousePos: TPoint;
                                           IsHighlight: Boolean = False): Integer;
 type
@@ -2884,11 +2884,15 @@ type
   TPriorityBoxArr = array[0..6] of TPriorityBox;
 var
   i, CurPriorityBox: Integer;
+  // CurValue = 1, 2, 3, 4, 5, 6, 7: Lem is assignable and in one PriorityBox
+  // CurValue = 8: Lem is unassignable, but no zombie
+  // CurValue = 9: Lem is zombie
   CurValue: Integer;
   L: TLemming;
   PriorityBoxOrder: TPriorityBoxArr;
   LemIsInBox: Boolean;
   NumLemInCursor: Integer;
+  NewSkill: TBasicLemmingAction;
 
   function LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
   var
@@ -2929,7 +2933,7 @@ var
       baMining      : Result := BashOrder;
       baDigging     : Result := BashOrder;
       baCloning     : Result := CloneOrder;
-      baNone        : Result := HighlightOrder
+      baNone        : Result := HighlightOrder // should never happen
     else // should never happen
       Result := WalkerOrder;
     end;
@@ -2958,7 +2962,11 @@ var
 begin
   PriorityLem := nil;
   NumLemInCursor := 0;
-  CurValue := 7;
+  CurValue := 10;
+  if NewSkillOrig = baNone then
+    NewSkill := SkillPanelButtonToAction[fSelectedSkill]
+  else
+    NewSkill := NewSkillOrig;
 
   PriorityBoxOrder := GetPriorityBoxOrder(NewSkill);
 
@@ -2970,8 +2978,8 @@ begin
     if IsHighlight and not (L = fHighlightLemming) then Continue;
     // Does Lemming exist
     if L.LemRemoved or L.LemTeleporting then Continue;
-    // Is the Lemming a Zombie (remove unless we want just count Lems)
-    if L.LemIsZombie and (Assigned(PriorityLem) or not (NewSkill = baNone)) then Continue;
+    // Is the Lemming a Zombie (remove unless we haven't yet had any lem under the cursor)
+    if L.LemIsZombie and Assigned(PriorityLem) then Continue;
     // Is Lemming inside cursor (only check if we are not using Hightlightning!)
     if (not LemIsInCursor(L, MousePos)) and (not IsHighlight) then Continue;
     // Directional select
@@ -2981,27 +2989,32 @@ begin
     // Select only walkers
     if RightMouseButtonHeldDown and (L.LemAction <> baWalking) then Continue;
 
-    // Increase number of lemmings in cursor
-    Inc(NumLemInCursor);
+    // Increase number of lemmings in cursor (if not a zombie)
+    if not L.LemIsZombie then Inc(NumLemInCursor);
 
-    // Is lemming is a sufficiently high priority class
+    // Determine priority class of current lemming
     CurPriorityBox := 0;
     repeat
       LemIsInBox := IsLemInPriorityBox(L, PriorityBoxOrder[CurPriorityBox]);
       Inc(CurPriorityBox);
-    until (CurPriorityBox >= CurValue) or LemIsInBox;
-    if not LemIsInBox then Continue;
+    until (CurPriorityBox >= MinIntValue([CurValue, 7])) or LemIsInBox;
+
+    // Can this lemmings actually receive the skill?
+    if not NewSkillMethods[NewSkill](L) then CurPriorityBox := 8;
+
     // Deprioritize zombie even when just counting lemmings
-    if L.LemIsZombie then CurPriorityBox := 7;
+    if L.LemIsZombie then CurPriorityBox := 9;
 
-    // Can this lemmings actually receive the skill
-    if not (NewSkill = baNone) then
-      if not NewSkillMethods[NewSkill](L) then Continue;
-
-    // New top priority lemming found
-    PriorityLem := L;
-    CurValue := CurPriorityBox;
+    if CurPriorityBox < CurValue then
+    begin
+      // New top priority lemming found
+      PriorityLem := L;
+      CurValue := CurPriorityBox;
+    end;
   end;
+
+  //  Delete PriorityLem if too low-priority and we with to assign a skill
+  if (CurValue > 6) and not (NewSkillOrig = baNone) then PriorityLem := nil;
 
   Result := NumLemInCursor;
 end;
@@ -5466,7 +5479,7 @@ begin
 
   if Autofail then fHitTestAutoFail := true;
   HitCount := GetPriorityLemming(L, baNone, CursorPoint);
-  if (HitCount > 0) and Assigned(L) and not fHitTestAutofail then
+  if Assigned(L) and not fHitTestAutofail then
   begin
     S := LemmingActionStrings[L.LemAction];
     // get highlight text
