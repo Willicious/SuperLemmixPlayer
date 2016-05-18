@@ -274,7 +274,7 @@ begin
       Inf.Level:=Level;
       Lw := Level.Info.Width;
       Lh := Level.Info.Height;
-      Inf.GraphicSet := Graphicset;
+      //Inf.GraphicSet := Graphicset;
       CheckLemmingCount(Level, Graphicset);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
@@ -400,7 +400,7 @@ begin
         ReadData;
       end;
       Inf.Level:=Level;
-      Inf.GraphicSet := Graphicset;
+      //Inf.GraphicSet := Graphicset;
       CheckLemmingCount(Level, Graphicset);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;

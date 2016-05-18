@@ -212,8 +212,6 @@ begin
         repeat
           Line := Parser.NextLine;
 
-          // SET is not yet supported
-
           if Line.Keyword = 'SET' then
             O.GS := Lowercase(Line.Value);
 

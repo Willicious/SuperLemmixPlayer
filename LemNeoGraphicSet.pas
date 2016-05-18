@@ -18,7 +18,7 @@ uses
   LemDosCmp,
   LemDosMisc,
   LemNeoOnline,
-  LemNeoEncryption, Dialogs;
+  LemNeoEncryption, Dialogs, Contnrs;
 
 const
   dtSecMarker = $FF;
@@ -113,6 +113,16 @@ type
       property OnlineEnabled: Boolean read fOnlineEnabled write fOnlineEnabled;
     published
       property GraphicSetFile: string read fFile write SetGraphicFile;
+  end;
+
+  TNeoLemmixGraphicSets = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TBaseNeoGraphicSet;
+    public
+      function Add(Item: TBaseNeoGraphicSet): Integer; overload;
+      function Add: TBaseNeoGraphicSet; overload;
+      property Items[Index: Integer]: TBaseNeoGraphicSet read GetItem; default;
+      property List;
   end;
 
 implementation
@@ -564,6 +574,27 @@ begin
   Result := TempBMP;
 end;
 
+///////////////////////////
+// TNeoLemmixGraphicSets //
+///////////////////////////
 
+function TNeoLemmixGraphicSets.Add(Item: TBaseNeoGraphicSet): Integer;
+begin
+  // Adds an existing TBaseNeoGraphicSet to the list.
+  Result := inherited Add(Item);
+end;
+
+function TNeoLemmixGraphicSets.Add: TBaseNeoGraphicSet;
+begin
+  // Creates a new TBaseNeoGraphicSet, adds it, and returns it.
+  Result := TBaseNeoGraphicSet.Create;
+  inherited Add(Result);
+end;
+
+function TNeoLemmixGraphicSets.GetItem(Index: Integer): TBaseNeoGraphicSet;
+begin
+  // Gets a TBaseNeoGraphicSet from the list.
+  Result := inherited Get(Index);
+end;
 
 end.
