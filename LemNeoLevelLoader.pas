@@ -36,6 +36,8 @@ var
 
 begin
   aLevel.ClearLevel;
+  aLevel.Info.TimeLimit := 6000; // Default should be infinite, not 1 second
+  aLevel.Info.LevelOptions := $02;
   O := nil;
   T := nil;
   S := nil;
