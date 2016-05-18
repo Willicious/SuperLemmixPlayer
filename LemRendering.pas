@@ -117,8 +117,6 @@ type
 
     fBgColor : TColor32;
 
-    function FindGraphicSet(aName: String): TBaseGraphicSet;
-
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainDefaultNoOneWay(F: TColor32; var B: TColor32; M: TColor32);
@@ -146,6 +144,7 @@ type
     destructor Destroy; override;
 
     function FindMetaObject(O: TInteractiveObject): TMetaObject;
+    function FindGraphicSet(aName: String): TBaseGraphicSet;
 
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
@@ -382,6 +381,7 @@ begin
 
   GS := fGraphicSets.Add;
   GS.GraphicSetName := aName;
+  GS.OnlineEnabled := true; // until we have a way to pass to here whether it is or not, just always set it to true
   GS.GraphicSetFile := aName + '.dat';
   GS.ReadMetaData;
   GS.ReadData;

@@ -11,7 +11,7 @@ uses
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
   LemCore, LemStrings, LemDosStructures, LemRendering, LemLevelSystem, LemLevel, LemDosGraphicSet, LemNeoGraphicSet, LemDosStyle,
-  LemTypes, GameControl, GameBaseScreen, GameWindow;
+  LemTypes, LemMetaObject, GameControl, GameBaseScreen, GameWindow;
 
 type
   TGamePreviewScreen = class(TGameBaseScreen)
@@ -24,7 +24,7 @@ type
     procedure VGASpecPrep;
     procedure SaveLevelImage;
     function GetScreenText: string;
-    procedure CheckLemmingCount(aLevel: TLevel; aGraphicSet: TBaseDosGraphicSet);
+    procedure CheckLemmingCount(aLevel: TLevel);
     procedure NextLevel;
     procedure PreviousLevel;
     procedure NextRank;
@@ -61,7 +61,7 @@ var
       repeat
         i := i + 1;
         if i = GameParams.Level.InteractiveObjects.Count then i := 0;
-      until GameParams.GraphicSet.MetaObjects[StrToIntDef(GameParams.Level.InteractiveObjects[i].Piece, 0)].TriggerEffect = 23;
+      until GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 23;
     end else begin
       i := LemsSpawned mod Length(GameParams.Level.Info.WindowOrder);
     end;
@@ -86,7 +86,7 @@ begin
 
     for i := 0 to InteractiveObjects.Count-1 do
     begin
-      if GameParams.GraphicSet.MetaObjects[StrToIntDef(InteractiveObjects[i].Piece, 0)].TriggerEffect <> 13 then Continue;
+      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 13 then Continue;
       LemsSpawned := LemsSpawned + 1; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
       if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
@@ -95,7 +95,7 @@ begin
     while LemsSpawned < Info.LemmingsCount do
     begin
       FindNextWindow;
-      if GameParams.GraphicSet.MetaObjects[StrToIntDef(InteractiveObjects[i].Piece, 0)].TriggerEffect <> 23 then Continue;
+      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 23 then Continue;
       LemsSpawned := LemsSpawned + 1;
       if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
@@ -198,21 +198,22 @@ begin
   CloseScreen(gstPreview);
 end;
 
-procedure TGamePreviewScreen.CheckLemmingCount(aLevel: TLevel; aGraphicSet: TBaseDosGraphicSet);
+procedure TGamePreviewScreen.CheckLemmingCount(aLevel: TLevel);
 var
   i: Integer;
   MinCount : Integer;
   FoundWindow : Boolean;
   PieceID: Integer;
+  MO: TMetaObject;
 begin
   MinCount := 0;
   FoundWindow := false;
   for i := 0 to aLevel.InteractiveObjects.Count - 1 do
   begin
     //if aLevel.InteractiveObjects[i].Identifier = 1 then FoundWindow := true;
-    PieceID := StrToIntDef(aLevel.InteractiveObjects[i].Piece, 0);
-    if aGraphicSet.MetaObjects[PieceID].TriggerEffect = 23 then FoundWindow := true;
-    if aGraphicSet.MetaObjects[PieceID].TriggerEffect = 13 then Inc(MinCount);
+    MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]);
+    if MO.TriggerEffect = 23 then FoundWindow := true;
+    if MO.TriggerEffect = 13 then Inc(MinCount);
   end;
   if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;
 
@@ -241,41 +242,11 @@ begin
     // prepare the renderer, this is a little bit shaky (wrong place)
     with GameParams do
     begin
-      with GraphicSet do
-      begin
-        ClearMetaData;
-        ClearData;
-        GraphicSetId := Level.Info.GraphicSet mod 256;
-        GraphicSetIdExt := Level.Info.GraphicSetEx;
-
-        epf := '';
-
-        GraphicSetFile := GameParams.Directory + Level.Info.GraphicSetName + '.dat';
-
-        if (GameParams.fTestMode) and not (GameParams.fTestGroundFile = '*') then
-          GraphicSetFile := GameParams.fTestGroundFile;
-
-        if GraphicSetIdExt = 0 then
-          begin
-          GraphicExtFile := '';
-          end
-        else
-          begin
-          GraphicExtFile := GameParams.Directory + epf + Level.Info.VgaspecFile;
-          if not FileExists(GraphicExtFile) then GraphicExtFile := GameParams.Directory + Level.Info.VgaspecFile;
-
-          if GameParams.fTestMode and not (GameParams.fTestVgaspecFile = '*') then GraphicExtFile := GameParams.fTestVgaspecFile;
-
-          end;
-
-        ReadMetaData;
-        ReadData;
-      end;
       Inf.Level:=Level;
       Lw := Level.Info.Width;
       Lh := Level.Info.Height;
       //Inf.GraphicSet := Graphicset;
-      CheckLemmingCount(Level, Graphicset);
+      CheckLemmingCount(Level);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
 
@@ -368,40 +339,9 @@ begin
     // prepare the renderer, this is a little bit shaky (wrong place)
     with GameParams do
     begin
-      with GraphicSet do
-      begin
-        ClearMetaData;
-        ClearData;
-        GraphicSetId := Level.Info.GraphicSet mod 256;
-        GraphicSetIdExt := Level.Info.GraphicSetEx;
-
-        epf := '';
-
-        GraphicSetFile := GameParams.Directory + Level.Info.GraphicSetName + '.dat';
-
-
-        if GameParams.fTestMode and not (GameParams.fTestGroundFile = '*') then
-          GraphicSetFile := GameParams.fTestGroundFile;
-
-
-        if GraphicSetIdExt = 0 then
-          begin
-          GraphicExtFile := '';
-          end
-        else
-          begin
-          GraphicExtFile := GameParams.Directory + epf + Level.Info.VgaspecFile;
-          if not FileExists(GraphicExtFile) then GraphicExtFile := GameParams.Directory + Level.Info.VgaspecFile;
-
-          if GameParams.fTestMode and not (GameParams.fTestVgaspecFile = '*') then GraphicExtFile := GameParams.fTestVgaspecFile;
-
-          end;
-        ReadMetaData;
-        ReadData;
-      end;
       Inf.Level:=Level;
       //Inf.GraphicSet := Graphicset;
-      CheckLemmingCount(Level, Graphicset);
+      CheckLemmingCount(Level);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
 
@@ -429,7 +369,7 @@ end;
 
 procedure TGamePreviewScreen.VGASpecPrep;
 begin
-  if GameParams.Level.Info.GraphicSetEx > 0 then BuildScreenInvis;
+  //if GameParams.Level.Info.GraphicSetEx > 0 then BuildScreenInvis;
 end;
 
 procedure TGamePreviewScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

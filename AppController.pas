@@ -230,7 +230,7 @@ begin
 
 
   fGameParams.Style := AutoCreateStyle(fGameParams.Directory, fGameParams.SysDat);
-  fGameParams.GraphicSet := TBaseNeoGraphicSet.Create;
+  //fGameParams.GraphicSet := TBaseNeoGraphicSet.Create;
   fGameParams.NextScreen := gstMenu;
 
   if ParamStr(1) = 'testmode' then
@@ -347,7 +347,7 @@ begin
 
   TBaseDosLevelSystem(fGameParams.Style.LevelSystem).InitSave;
 
-  fGameParams.GraphicSet.OnlineEnabled := fGameParams.EnableOnline;
+  //fGameParams.GraphicSet.OnlineEnabled := fGameParams.EnableOnline;
 
   if not fLoadSuccess then
     fGameParams.NextScreen := gstExit;
@@ -367,7 +367,7 @@ begin
   fGameParams.Renderer.Free;
   fGameParams.Level.Free;
   fGameParams.Style.Free;
-  fGameParams.GraphicSet.Free;
+  //fGameParams.GraphicSet.Free;
   fGameParams.Free;
   inherited;
 end;

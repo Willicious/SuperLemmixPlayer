@@ -151,7 +151,7 @@ type
 
     Level        : TLevel;
     Style        : TBaseDosLemmingStyle;
-    GraphicSet   : TBaseNeoGraphicSet;
+    //GraphicSet   : TBaseNeoGraphicSet;
     Renderer     : TRenderer;
 
     LevelString : String;

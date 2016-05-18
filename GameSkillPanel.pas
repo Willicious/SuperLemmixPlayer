@@ -21,6 +21,7 @@ uses
   LemDosGraphicSet,
   LemNeoGraphicSet,
   GameInterfaces,
+  GameControl,
   LemGame,
   UZip; // For checking whether files actually exist
 
@@ -41,6 +42,7 @@ type
   private
     fStyle         : TBaseDosLemmingStyle;
     fGraph         : TBaseDosGraphicSet;
+    fParams        : TDosGameParams;
 
     fImg           : TImage32;
     //fButtonHighlightLayer: TPositionedLayer;
@@ -122,6 +124,7 @@ type
 
     procedure ActivateCenterDigits;
     procedure SetCurrentScreenOffset(X: Integer);
+    property GameParams: TDosGameParams read fParams write fParams;    
     property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle;
@@ -448,17 +451,8 @@ begin
   BtnIdx := (fButtonRects[aButton].Left - 1) div 16;
 
   // White out if applicable
-  (*if (aoNumber = 0) and (TGameWindow(Parent).GameParams.WhiteOutZero) then
-  begin
-    fSkillWhiteout.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
-    {DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 9, 17 + 8);
-    c:=Color32(60*4, 52*4, 52*4);
-    with DstRect do
-      fImg.Bitmap.FillRect(Left, Top, Right, Bottom, c);}
-    Exit;
-  end else*)
   fSkillUnwhite.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
-  if (aoNumber = 0) and (TGameWindow(Parent).GameParams.BlackOutZero) then Exit;
+  if (aoNumber = 0) and (GameParams.BlackOutZero) then Exit;
 
   // Draw infinite symbol if, well, infinite.
   if (aoNumber > 99) then
@@ -549,11 +543,11 @@ begin
     if PtInRectEx(R^, P) then
     begin
 
-      if (Game.Replaying and TGameWindow(Parent).GameParams.ExplicitCancel) and not (i = spbPause) then
+      if (Game.Replaying and GameParams.ExplicitCancel) and not (i = spbPause) then
         Exit;
 
       if not (i in [spbSlower, spbFaster]) then
-        if (Button <> mbLeft) and not (TGameWindow(Parent).GameParams.ClickHighlight) then Exit;
+        if (Button <> mbLeft) and not (GameParams.ClickHighlight) then Exit;
 
       Exec := true;
       //if Exec then
@@ -563,13 +557,13 @@ begin
       if Exec then
       begin
         if (i <> spbPause) and
-        ( ((not TGameWindow(Parent).GameParams.IgnoreReplaySelection) or (i in [spbSlower, spbFaster, spbNuke]))
-        or TGameWindow(Parent).GameParams.Hotkeys.CheckForKey(lka_Highlight)) then
+        ( ((not GameParams.IgnoreReplaySelection) or (i in [spbSlower, spbFaster, spbNuke]))
+        or GameParams.Hotkeys.CheckForKey(lka_Highlight)) then
           Game.RegainControl;
         if i in [spbSlower, spbFaster] then
           Game.SetSelectedSkill(i, True, (Button = mbRight))
         else
-          Game.SetSelectedSkill(i, True, TGameWindow(Parent).GameParams.Hotkeys.CheckForKey(lka_Highlight));
+          Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
       end;
       Exit;
     end;
@@ -1014,7 +1008,7 @@ procedure TSkillPanelToolbar.SetStyleAndGraph(const Value: TBaseDosLemmingStyle;
 begin
   fImg.BeginUpdate;
   fStyle := Value;
-  fGraph := aGraph;
+  fGraph := TBaseDosGraphicSet(GameParams.Renderer.FindGraphicSet(GameParams.Level.Info.GraphicSetName));
   if fStyle <> nil then
   begin
     ReadBitmapFromStyle;

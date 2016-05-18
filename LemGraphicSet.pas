@@ -22,7 +22,7 @@ type
     fLemmingSprites  : string;
     fMetaObjects     : TMetaObjects;
     fMetaTerrains    : TMetaTerrains;
-    fTerrainBitmaps  : TBitmaps;
+    fTerrainBitmaps  : TBitmaps;            
     fObjectBitmaps   : TBitmaps;
     fSpecialBitmaps   : TBitmaps;
     procedure SetMetaObjects(Value: TMetaObjects); virtual;

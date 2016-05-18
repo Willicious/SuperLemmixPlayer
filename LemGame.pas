@@ -1668,7 +1668,7 @@ begin
   fTargetBitmap := fGameParams.TargetBitmap;
   Level := fGameParams.Level;
   Style := fGameParams.Style;
-  Graph := fGameParams.GraphicSet;
+  //Graph := fGameParams.GraphicSet;
 
   {-------------------------------------------------------------------------------
     Initialize the palette of AnimationSet.
@@ -1778,7 +1778,7 @@ begin
   S.Read(fParticles, S.Size);
   S.Free;
 
-  with fGameParams.GraphicSet do
+  with TBaseNeoGraphicSet(fGameParams.Renderer.FindGraphicSet(Level.Info.GraphicSetName)) do
     for i := 0 to 255 do
       if CustSounds[i].Size <> 0 then
       begin
@@ -2695,8 +2695,7 @@ var
   DoAutoSteel : Boolean;
 begin
   DoAutoSteel := (((Level.Info.LevelOptions and 2) = 2) or
-          (fGameParams.SysDat.Options and 64 <> 0)) and
-          (fGameParams.GraphicSet.AutoSteelEnabled);
+          (fGameParams.SysDat.Options and 64 <> 0));
 
   with SteelWorld do
   begin

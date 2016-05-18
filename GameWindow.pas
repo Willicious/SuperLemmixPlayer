@@ -913,9 +913,10 @@ begin
   else
     MouseClipRect := Rect(ClientToScreen(Point(0, 0)), ClientToScreen(Point(Img.Width, Img.Height + SkillPanel.Height)));
 
-  SkillPanel.SetStyleAndGraph(Gameparams.Style, GameParams.GraphicSet, Sca);
+  SkillPanel.SetStyleAndGraph(Gameparams.Style, nil, Sca);
 
   SkillPanel.Level := GameParams.Level;
+  SkillPanel.GameParams := GameParams;
   SkillPanel.SetSkillIcons;
 
   MinScroll := -(GameParams.Level.Info.Width - 320);
