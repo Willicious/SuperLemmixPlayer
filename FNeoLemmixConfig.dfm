@@ -134,12 +134,12 @@ object FormNXConfig: TFormNXConfig
           Items.Strings = (
             'Fullscreen')
         end
-        object cbWhiteOut: TCheckBox
+        object cbBlackOut: TCheckBox
           Left = 16
           Top = 48
           Width = 153
           Height = 17
-          Caption = 'White-Out Zero Skill Count'
+          Caption = 'Black-Out Zero Skill Count'
           TabOrder = 3
           OnClick = OptionChanged
         end

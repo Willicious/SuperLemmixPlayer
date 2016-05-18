@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, {Classes,} Contnrs, {SysUtils, Math, Forms, Dialogs,}
-  GameControl, // For reading MetaObj infos when creating objects
+  {GameControl, // For reading MetaObj infos when creating objects}
   LemMetaObject, LemInteractiveObject;
 
 type
@@ -49,7 +49,7 @@ type
 
     TwoWayReceive  : Boolean;
 
-    constructor Create(ObjParam: TInteractiveObject; aGameParams: TDosGameParams); Overload;
+    constructor Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject); Overload;
 
     property TriggerRect: TRect read sTriggerRect;
     property Top: Integer read sTop write SetTop;
@@ -130,12 +130,10 @@ implementation
 
 
 { TInteractiveObjectInfo }
-constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject;
-                                          aGameParams: TDosGameParams);
+constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject);
 begin
   Obj := ObjParam;
-  // Get pointer to MetaObject information
-  MetaObj := aGameParams.GraphicSet.MetaObjects[ObjParam.Identifier];
+  MetaObj := MetaParam;
 
   // Legacy code for old hatches, that haven't set a proper trigger area
   if      (MetaObj.TriggerEffect = DOM_WINDOW)
@@ -173,6 +171,14 @@ begin
       CurrentFrame := 1
     else
       CurrentFrame := 0;
+
+  // Set OWW to Only-On-Terrain and remove No-Overwrite
+  if MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
+  begin
+    Obj.DrawingFlags := Obj.DrawingFlags and not 4; // odf_NoOverwrite
+    Obj.DrawingFlags := Obj.DrawingFlags or 1; // odf_OnlyOnTerrain
+  end;
+
 
   // Set other stuff
   Triggered := False;

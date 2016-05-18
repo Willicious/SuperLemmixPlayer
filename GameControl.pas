@@ -19,7 +19,8 @@ uses
   LemCore, LemTypes, LemLevel, LemDosStyle, LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet,
   LemDosStructures,
   LemNeoEncryption, LemNeoSave, TalisData,
-  LemLevelSystem, LemRendering;
+  LemLevelSystem, LemRendering,
+  UZip; // only for checking whether some files actually exist
 
 type
   TGameResultsRec = record
@@ -98,7 +99,7 @@ type
     moAlwaysTimestamp,
     moConfirmOverwrite,
     moExplicitCancel,
-    moWhiteOutZero,
+    moBlackOutZero,
     moIgnoreReplaySelection,
     moEnableOnline,
     moCheckUpdates,
@@ -216,7 +217,7 @@ type
     property AlwaysTimestamp: boolean Index moAlwaysTimestamp read GetOptionFlag write SetOptionFlag;
     property ConfirmOverwrite: boolean Index moConfirmOverwrite read GetOptionFlag write SetOptionFlag;
     property ExplicitCancel: boolean Index moExplicitCancel read GetOptionFlag write SetOptionFlag;
-    property WhiteOutZero: boolean Index moWhiteOutZero read GetOptionFlag write SetOptionFlag;
+    property BlackOutZero: boolean Index moBlackOutZero read GetOptionFlag write SetOptionFlag;
     property IgnoreReplaySelection: boolean Index moIgnoreReplaySelection read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
@@ -280,7 +281,7 @@ begin
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('LemmingCountBlink', LemmingBlink);
   SaveBoolean('TimerBlink', TimerBlink);
-  SaveBoolean('WhiteOutZero', WhiteOutZero);
+  SaveBoolean('BlackOutZero', BlackOutZero);
   SaveBoolean('EnableOnline', EnableOnline);
   SaveBoolean('UpdateCheck', CheckUpdates);
 
@@ -321,7 +322,7 @@ begin
   ConfirmOverwrite := LoadBoolean('ConfirmReplayOverwrite');
   ExplicitCancel := LoadBoolean('ExplicitReplayCancel');
   NoAutoReplayMode := LoadBoolean('NoAutoReplay');
-  WhiteOutZero := LoadBoolean('WhiteOutZero');
+  BlackOutZero := LoadBoolean('BlackOutZero');
   IgnoreReplaySelection := LoadBoolean('IgnoreReplaySelection');
   EnableOnline := LoadBoolean('EnableOnline');
   CheckUpdates := LoadBoolean('UpdateCheck');
@@ -331,6 +332,9 @@ begin
   if StrToIntDef(SL.Values['LastVersion'], 0) < 1421 then
     EnableOnline := true;
 
+  if StrToIntDef(SL.Values['LastVersion'], 0) < 1441 then
+    BlackOutZero := true;
+
   SL.Free;
 end;
 
@@ -338,6 +342,7 @@ end;
 constructor TDosGameParams.Create;
 var
   TempStream: TMemoryStream; //for loading talisman data
+  Arc: TArchive; // for checking whether talisman.dat exists
 begin
   inherited Create;
 
@@ -358,15 +363,21 @@ begin
   fTalismans := TTalismans.Create;
 
 
-  try
-    TempStream := CreateDataStream('talisman.dat', ldtLemmings);
-    fTalismans.LoadFromStream(TempStream);
-    TempStream.Free;
-  except
-    // Silent fail. It's okay - and in fact common - for this file to be missing.
-  end;
+  Arc := TArchive.Create;
+  if Arc.CheckIfFileExists('talisman.dat') then
+  begin
 
-  fTalismans.SortTalismans;
+    try
+      TempStream := CreateDataStream('talisman.dat', ldtLemmings);
+      fTalismans.LoadFromStream(TempStream);
+      TempStream.Free;
+    except
+      // Silent fail. It's okay - and in fact common - for this file to be missing.
+    end;
+
+    fTalismans.SortTalismans;
+  end;
+  Arc.Free;
 
   fSaveSystem.SetTalismans(fTalismans);
 

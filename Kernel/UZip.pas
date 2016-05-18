@@ -434,7 +434,8 @@ type
     procedure SaveLogFile;
     procedure ClearWarnings;
   {}
-    function GetTotalFileBytes(aIndexList: TIntegerList = nil; Compressed: Boolean = False): Int64; 
+    function GetTotalFileBytes(aIndexList: TIntegerList = nil; Compressed: Boolean = False): Int64;
+    function CheckIfFileExists(aName: String): Boolean;
 
     property FileName: string read FFileName;
     property Size: integer read GetSize;
@@ -1973,6 +1974,21 @@ begin
           Inc(Result, ArchiveList.ArchiveObjects[aIndexList[i]].ArcSize);
     end
   end;
+end;
+
+function TArchive.CheckIfFileExists(aName: String): Boolean;
+// Addition by namida. Check if a file exists without actually trying to extract it.
+var
+  i: Integer;
+begin
+  Result := false;
+  aName := LowerCase(aName);
+  for i := 0 to ArchiveList.Count-1 do
+    if LowerCase(ArchiveList[i]) = aName then
+    begin
+      Result := true;
+      Exit;
+    end;
 end;
 
 {$HINTS ON}

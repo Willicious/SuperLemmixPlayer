@@ -21,7 +21,8 @@ uses
   LemDosGraphicSet,
   LemNeoGraphicSet,
   GameInterfaces,
-  LemGame;
+  LemGame,
+  UZip; // For checking whether files actually exist
 
   {-------------------------------------------------------------------------------
     maybe this must be handled by lemgame (just bitmap writing)
@@ -63,7 +64,7 @@ type
     fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
     fCurrentScreenOffset : Integer;
 
-    fCenterDigits: Boolean;
+    (*fCenterDigits: Boolean;*)
 
     fHighlitSkill: TSkillPanelButton;
     fSkillCounts: Array[0..20] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
@@ -205,7 +206,7 @@ begin
 
   Assert(length(fnewdrawstr) = 40, 'length error infostring');
 
-  fCenterDigits := false;
+  (*fCenterDigits := false;*)
 
   fHighlitSkill := spbNone;
 
@@ -252,7 +253,7 @@ end;
 
 procedure TSkillPanelToolbar.ActivateCenterDigits;
 begin
-  fCenterDigits := true;
+  (*fCenterDigits := true;*)
 end;
 
 procedure TSkillPanelToolbar.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -447,7 +448,7 @@ begin
   BtnIdx := (fButtonRects[aButton].Left - 1) div 16;
 
   // White out if applicable
-  if (aoNumber = 0) and (TGameWindow(Parent).GameParams.WhiteOutZero) then
+  (*if (aoNumber = 0) and (TGameWindow(Parent).GameParams.WhiteOutZero) then
   begin
     fSkillWhiteout.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
     {DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 9, 17 + 8);
@@ -455,8 +456,9 @@ begin
     with DstRect do
       fImg.Bitmap.FillRect(Left, Top, Right, Bottom, c);}
     Exit;
-  end else
-    fSkillUnwhite.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
+  end else*)
+  fSkillUnwhite.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
+  if (aoNumber = 0) and (TGameWindow(Parent).GameParams.BlackOutZero) then Exit;
 
   // Draw infinite symbol if, well, infinite.
   if (aoNumber > 99) then
@@ -478,11 +480,11 @@ begin
   // left
   DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 4, 17 + 8);
   SrcRect := Rect(0, 0, 4, 8);
-  if (not fCenterDigits) or (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 1 is left
+  if (*(not fCenterDigits) or*) (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 1 is left
 
   // right
   RectMove(DstRect, 2, 0);
-  if (fCenterDigits = false) or (aoNumber >= 10) then RectMove(DstRect, 2, 0);
+  if (*(fCenterDigits = false) or*) (aoNumber >= 10) then RectMove(DstRect, 2, 0);
   SrcRect := Rect(4, 0, 8, 8);
   fSkillFont[R, 0].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 0 is right
 
@@ -637,6 +639,7 @@ var
   MainExtractor: TMainDatExtractor;
   TempBmp: TBitmap32;
   SrcRect: TRect;
+  Arc: TArchive; // for checking whether files actually exist
 const
   SKILL_NAMES: array[0..15] of string = (
                  'walker',
@@ -774,13 +777,31 @@ begin
 
     TempBmp.Free;
 
+
   try
+    Arc := TArchive.Create;
+    if Arc.CheckIfFileExists('skill_count_unwhite.png') then
+      MainExtractor.ExtractBitmapByName(fSkillUnwhite, 'skill_count_unwhite.png', LemmixPal[7])
+    else
+      // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
+      // might throw an exception sometimes. Handle it by auto-generating one.
+      MakeUnwhiteImage;
+    Arc.Free;
+  except
+    // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
+    // might throw an exception sometimes. Handle it by auto-generating one.
+    MakeUnwhiteImage;
+    Arc.Free;
+  end;
+
+  (* try
     MainExtractor.ExtractBitmapByName(fSkillUnwhite, 'skill_count_unwhite.png', LemmixPal[7]);
   except
     // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
     // might throw an exception sometimes. Handle it by auto-generating one.
     MakeUnwhiteImage;
-  end;
+  end; *)
+
   fSkillUnwhite.DrawMode := dmBlend;
   fSkillUnwhite.CombineMode := cmMerge;
 

@@ -16,7 +16,7 @@ uses
   function NumericalVersionToStringVersion(Main, Sub, Minor: Integer): String;
 
 const
-  PVersion = '1.44n';
+  PVersion = 'Exp 1.44n-C2';
 
   // Current version number
   Cur_MainVer = 1;
@@ -26,7 +26,7 @@ const
   // Do not forget to update consts in TAppController.CheckCompatibility if minimum compatible version has changed!
 
   SVersion =
-   'Player V' + PVersion;
+   'Player ' + PVersion;
 
   SPFirstText = '';
 

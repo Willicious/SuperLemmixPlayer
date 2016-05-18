@@ -96,7 +96,7 @@ PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=kernel;kernel\zlib;kernel\pngdelphi
 Packages=vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;CLXIB;ibxpress;VCLIB;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP
-Conditionals=exp;profile_parser;
+Conditionals=exp;
 DebugSourceDirs=
 UsePackages=0
 [Parameters]
@@ -136,8 +136,8 @@ ProductVersion=1.0.0.0
 Comments=
 [HistoryLists\hlConditionals]
 Count=12
-Item0=exp;profile_parser;
-Item1=exp;
+Item0=exp;
+Item1=exp;profile_parser;
 Item2=exp;test_alpha
 Item3=exp;test_new_config
 Item4=exp;test_mapmouse

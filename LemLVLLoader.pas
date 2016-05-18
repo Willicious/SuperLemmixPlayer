@@ -6,6 +6,7 @@ interface
 uses
   Classes, SysUtils, StrUtils,
   //Dialogs, Controls,
+  LemNeoLevelLoader,
   Dialogs,
   UMisc,
   Math,
@@ -14,8 +15,7 @@ uses
   LemInteractiveObject,
   LemSteel,
   LemDosStructures,
-  LemLevel,
-  LemLevelLoad;
+  LemLevel;
 
 type
   TStyleName = class
@@ -70,16 +70,16 @@ type
   published
   end;
 
-  TLVLLoader = class(TLevelLoader)
+  TLVLLoader = class
   private
     class procedure UpgradeFormat(var Buf: TNeoLVLRec);
   protected
   public
-    class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0); override;
+    class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
     class procedure LoadTradLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
     class procedure LoadNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
     class procedure LoadNewNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
-    class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream); override;
+    class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream);
   end;
 
 implementation
@@ -270,7 +270,11 @@ begin
   case b of
     0: LoadTradLevelFromStream(aStream, TempLevel);
   1..3: LoadNeoLevelFromStream(aStream, TempLevel);
-    else LoadNewNeoLevelFromStream(aStream, TempLevel);
+    4: LoadNewNeoLevelFromStream(aStream, TempLevel);
+    else begin
+      TNeoLevelLoader.LoadLevelFromStream(aStream, aLevel);
+      Exit;
+    end;
   end;
 
   // easiest way to avoid issues with older level formats is to save as a new level then re-load that
@@ -572,13 +576,6 @@ begin
                Info.MusicFile := Trim(Buf2.MusicName);
                Info.BnsRank := Buf2.BnsRedirectRank;
                Info.BnsLevel := Buf2.BnsRedirectLevel;
-               Info.ClockStart := Buf2.ClockGimStart;
-               Info.ClockEnd := Buf2.ClockGimEnd;
-               Info.ClockPieces := Buf2.ClockGimPieces;
-
-               {if (LeftStr(Info.MusicFile, 6) = 'track_')
-               and (StrToIntDef(Trim(MidStr(Info.MusicFile, 7, 3)), -1) = Buf.MusicNumber) then
-                 Info.MusicFile := '?';} // this auto-fix caused more problems than it fixed
              end;
            end;
         else Break;
@@ -606,12 +603,6 @@ begin
         GimmickSet3 := 0;
         BnsRank := Buf.RefSection;
         BnsLevel := Buf.RefLevel;
-        ClockStart := Buf.VgaspecX * 15;
-        ClockEnd := Buf.VgaspecY * 15;
-        if InteractiveObjects.Count >= 1 then
-          ClockPieces := InteractiveObjects[0].TarLev
-        else
-          ClockPieces := 0;
       end;
 
     if (OddLoad = 2) and (Info.LevelOptions and $10 <> 0) then
@@ -1391,9 +1382,6 @@ begin
     Buf2.SecRedirectLevel := 0;
     Buf2.BnsRedirectRank := Info.BnsRank;
     Buf2.BnsRedirectLevel := Info.BnsLevel;
-    Buf2.ClockGimStart := Info.ClockStart;
-    Buf2.ClockGimEnd := Info.ClockEnd;
-    Buf2.ClockGimPieces := Info.ClockPieces;
     aStream.Write(Buf2, SizeOf(Buf2));
 
     //aStream.WriteBuffer(Buf, NEO_LVL_SIZE);

@@ -5,20 +5,341 @@ interface
 uses
   LemNeoParser,
   LemTerrain, LemInteractiveObject, LemSteel,
-  LemLevelLoad, LemLevel, LemStrings,
+  LemLevel, LemStrings,
   Classes, SysUtils;
 
 type
-  TNeoLevelLoader = class(TLevelLoader)
+  TNeoLevelLoader = class
     public
-      class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0); override;
-      class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream); override;
+      class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+      class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream);
   end;
 
 implementation
 
 class procedure TNeoLevelLoader.LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+var
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+  O: TInteractiveObject;
+  T: TTerrain;
+  S: TSteel;
+  VgaspecMode: Boolean;
+
+  function NewPiece: Boolean;
+  begin
+    Result := false;
+    if Line.Keyword = 'OBJECT' then Result := true;
+    if Line.Keyword = 'TERRAIN' then Result := true;
+    if Line.Keyword = 'AREA' then Result := true;
+    if Line.Keyword = '' then Result := true; // Detect end of file as well
+  end;
+
 begin
+  aLevel.ClearLevel;
+  O := nil;
+  T := nil;
+  S := nil;
+  Parser := TNeoLemmixParser.Create;
+  try
+    Parser.LoadFromStream(aStream);
+
+    // Stage 1. Anything that comes before an OBJECT, TERRAIN or AREA definition
+    repeat
+      Line := Parser.NextLine;
+
+      with aLevel.Info do
+      begin
+        // There are a lot of keywords we can encounter here.
+
+        if Line.Keyword = 'TITLE' then
+          Title := Line.Value;
+
+        if Line.Keyword = 'AUTHOR' then
+          Author := Line.Value;
+
+        if Line.Keyword = 'MUSIC' then
+          MusicFile := Line.Value;
+
+        if Line.Keyword = 'ID' then
+          LevelID := StrToIntDef('x' + Line.Value, 0);
+
+        if Line.Keyword = 'WIDTH' then
+          Width := Line.Numeric;
+
+        if Line.Keyword = 'HEIGHT' then
+          Height := Line.Numeric;
+
+        if Line.Keyword = 'START_X' then
+          ScreenPosition := Line.Numeric;
+
+        if Line.Keyword = 'START_Y' then
+          ScreenYPosition := Line.Numeric;
+
+        if Line.Keyword = 'THEME' then
+          GraphicSetName := Line.Value;
+
+        if Line.Keyword = 'LEMMINGS' then
+          LemmingsCount := Line.Numeric;
+
+        if Line.Keyword = 'REQUIREMENT' then
+          RescueCount := Line.Numeric;
+
+        if Line.Keyword = 'TIME_LIMIT' then
+          TimeLimit := Line.Numeric;
+
+        if Line.Keyword = 'MIN_RR' then
+          ReleaseRate := Line.Numeric;
+
+        // MAX_RR support needs to be implemented in-game first
+
+        if Line.Keyword = 'AUTOSTEEL' then
+          if Uppercase(Line.Value) = 'OFF' then
+            LevelOptions := LevelOptions and not $0A
+          else if Uppercase(Line.Value) = 'SIMPLE' then
+            LevelOptions := LevelOptions or $0A
+          else if Uppercase(Line.Value) = 'ON' then
+            LevelOptions := (LevelOptions or $02) and not $08;
+
+        if Line.Keyword = 'WALKER' then
+        begin
+          SkillTypes := SkillTypes or $8000;
+          WalkerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'CLIMBER' then
+        begin
+          SkillTypes := SkillTypes or $4000;
+          ClimberCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'SWIMMER' then
+        begin
+          SkillTypes := SkillTypes or $2000;
+          SwimmerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'FLOATER' then
+        begin
+          SkillTypes := SkillTypes or $1000;
+          FloaterCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'GLIDER' then
+        begin
+          SkillTypes := SkillTypes or $0800;
+          GliderCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'DISARMER' then
+        begin
+          SkillTypes := SkillTypes or $0400;
+          MechanicCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'BOMBER' then
+        begin
+          SkillTypes := SkillTypes or $0200;
+          BomberCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'STONER' then
+        begin
+          SkillTypes := SkillTypes or $0100;
+          StonerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'BLOCKER' then
+        begin
+          SkillTypes := SkillTypes or $0080;
+          BlockerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'PLATFORMER' then
+        begin
+          SkillTypes := SkillTypes or $0040;
+          PlatformerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'BUILDER' then
+        begin
+          SkillTypes := SkillTypes or $0020;
+          BuilderCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'STACKER' then
+        begin
+          SkillTypes := SkillTypes or $0010;
+          StackerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'BASHER' then
+        begin
+          SkillTypes := SkillTypes or $0008;
+          BasherCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'MINER' then
+        begin
+          SkillTypes := SkillTypes or $0004;
+          MinerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'DIGGER' then
+        begin
+          SkillTypes := SkillTypes or $0002;
+          DiggerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'CLONER' then
+        begin
+          SkillTypes := SkillTypes or $0001;
+          ClonerCount := Line.Numeric;
+        end;
+
+        if Line.Keyword = 'SPAWN' then
+        begin
+          SetLength(WindowOrder, Length(WindowOrder)+1);
+          WindowOrder[Length(WindowOrder)-1] := Line.Numeric;
+        end;
+      end;
+
+    until (NewPiece) or (Line.Keyword = '');
+
+    repeat
+      if Line.Keyword = 'OBJECT' then
+      begin
+        O := aLevel.InteractiveObjects.Add;
+        repeat
+          Line := Parser.NextLine;
+
+          // SET is not yet supported
+
+          if Line.Keyword = 'PIECE' then
+            O.Identifier := Line.Numeric; // Need to replace this later
+
+          if Line.Keyword = 'X' then
+            O.Left := Line.Numeric;
+
+          if Line.Keyword = 'Y' then
+            O.Top := Line.Numeric;
+
+          if Line.Keyword = 'L' then
+            O.TarLev := Line.Numeric;
+
+          if Line.Keyword = 'S' then
+            O.Skill := Line.Numeric;
+
+          if Line.Keyword = 'NO_OVERWRITE' then
+            O.DrawingFlags := O.DrawingFlags or odf_NoOverwrite;
+
+          if Line.Keyword = 'ONLY_ON_TERRAIN' then
+            O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
+
+          if Line.Keyword = 'FLIP_HORIZONTAL' then
+            O.DrawingFlags := O.DrawingFlags or odf_Flip;
+
+          if Line.Keyword = 'FLIP_VERTICAL' then
+            O.DrawingFlags := O.DrawingFlags or odf_UpsideDown;
+
+          if Line.Keyword = 'FACE_LEFT' then
+            O.DrawingFlags := O.DrawingFlags or odf_FlipLem;
+
+          if Line.Keyword = 'FAKE' then
+            O.IsFake := true;
+
+          if Line.Keyword = 'INVISIBLE' then
+            O.DrawingFlags := O.DrawingFlags or odf_Invisible;
+
+        until NewPiece;
+      end;
+
+      if Line.Keyword = 'TERRAIN' then
+      begin
+        VgaspecMode := false;
+        T := aLevel.Terrains.Add;
+        T.DrawingFlags := tdf_NoOneWay;
+        repeat
+          Line := Parser.NextLine;
+
+          if Line.Keyword = 'SET' then
+            if Uppercase(Line.Value) = 'SPECIAL' then
+            begin
+              VgaspecMode := true;
+              aLevel.Terrains.Delete(aLevel.Terrains.Count-1);
+            end;
+
+          if Line.Keyword = 'PIECE' then
+            if VgaspecMode then
+              aLevel.Info.VgaspecFile := Line.Value
+            else
+              T.Identifier := Line.Numeric;
+
+          if Line.Keyword = 'X' then
+            if VgaspecMode then
+              aLevel.Info.VgaspecX := Line.Numeric
+            else
+              T.Left := Line.Numeric;
+
+          if Line.Keyword = 'Y' then
+            if VgaspecMode then
+              aLevel.Info.VgaspecY := Line.Numeric
+            else
+              T.Top := Line.Numeric;
+
+          if VgaspecMode then Continue; // Others will cause a crash when handling a VGASPEC
+
+          if Line.Keyword = 'NO_OVERWRITE' then
+            T.DrawingFlags := T.DrawingFlags or tdf_NoOverwrite;
+
+          if Line.Keyword = 'ERASE' then
+            T.DrawingFlags := T.DrawingFlags or tdf_Erase;
+
+          if Line.Keyword = 'ROTATE' then
+            T.DrawingFlags := T.DrawingFlags or tdf_Rotate;
+
+          if Line.Keyword = 'FLIP_HORIZONTAL' then
+            T.DrawingFlags := T.DrawingFlags or tdf_Flip;
+
+          if Line.Keyword = 'FLIP_VERTICAL' then
+            T.DrawingFlags := T.DrawingFlags or tdf_Invert;
+
+          if Line.Keyword = 'ONE_WAY' then
+            T.DrawingFlags := T.DrawingFlags and not tdf_NoOneWay;
+
+        until NewPiece;
+      end;
+
+      if Line.Keyword = 'AREA' then
+      begin
+        S := aLevel.Steels.Add;
+        repeat
+          Line := Parser.NextLine;
+
+          if Line.Keyword = 'NEGATIVE_STEEL' then S.fType := 1;
+          if Line.Keyword = 'ONE_WAY_LEFT' then S.fType := 2;
+          if Line.Keyword = 'ONE_WAY_RIGHT' then S.fType := 3;
+          if Line.Keyword = 'ONE_WAY_DOWN' then S.fType := 4;
+
+          if Line.Keyword = 'X' then
+            S.Left := Line.Numeric;
+
+          if Line.Keyword = 'Y' then
+            S.Top := Line.Numeric;
+
+          if Line.Keyword = 'W' then
+            S.Width := Line.Numeric;
+
+          if Line.Keyword = 'H' then
+            S.Height := Line.Numeric;
+
+        until NewPiece;
+      end;
+
+    until Line.Keyword = '';
+  finally
+    Parser.Free;
+  end;
 end;
 
 class procedure TNeoLevelLoader.StoreLevelInStream(aLevel: TLevel; aStream: TStream);
@@ -36,11 +357,6 @@ var
 begin
   SL := TStringList.Create;
   try
-    {Buf.ReleaseRate   := ReleaseRate;
-      Buf.LemmingsCount := LemmingsCount;
-      Buf.RescueCount   := RescueCount;
-      Buf.TimeLimit     := TimeLimit;
-      Buf.Skillset      := SkillTypes;}
     Add('# NeoLemmix Level');
     Add('# Dumped from NeoLemmix Player V' + PVersion);
     Add;
@@ -180,7 +496,7 @@ begin
       end;
 
       // Steels
-      if Steels.Count > 0 then
+      if (Steels.Count > 0) and ((Info.LevelOptions and $04) = 0) then
       begin
         Add('# Steel areas');
         for i := 0 to Steels.Count-1 do
@@ -199,8 +515,8 @@ begin
           Add('  Y ' + IntToStr(S.Top));
           Add('  W ' + IntToStr(S.Width));
           Add('  H ' + IntToStr(S.Height));
+          Add;
         end;
-        Add;
       end;
     end;
 
