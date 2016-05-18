@@ -61,7 +61,7 @@ var
       repeat
         i := i + 1;
         if i = GameParams.Level.InteractiveObjects.Count then i := 0;
-      until GameParams.GraphicSet.MetaObjects[GameParams.Level.InteractiveObjects[i].Identifier].TriggerEffect = 23;
+      until GameParams.GraphicSet.MetaObjects[StrToIntDef(GameParams.Level.InteractiveObjects[i].Piece, 0)].TriggerEffect = 23;
     end else begin
       i := LemsSpawned mod Length(GameParams.Level.Info.WindowOrder);
     end;
@@ -86,7 +86,7 @@ begin
 
     for i := 0 to InteractiveObjects.Count-1 do
     begin
-      if GameParams.GraphicSet.MetaObjects[InteractiveObjects[i].Identifier].TriggerEffect <> 13 then Continue;
+      if GameParams.GraphicSet.MetaObjects[StrToIntDef(InteractiveObjects[i].Piece, 0)].TriggerEffect <> 13 then Continue;
       LemsSpawned := LemsSpawned + 1; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
       if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
@@ -95,7 +95,7 @@ begin
     while LemsSpawned < Info.LemmingsCount do
     begin
       FindNextWindow;
-      if GameParams.GraphicSet.MetaObjects[InteractiveObjects[i].Identifier].TriggerEffect <> 23 then Continue;
+      if GameParams.GraphicSet.MetaObjects[StrToIntDef(InteractiveObjects[i].Piece, 0)].TriggerEffect <> 23 then Continue;
       LemsSpawned := LemsSpawned + 1;
       if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
@@ -203,14 +203,16 @@ var
   i: Integer;
   MinCount : Integer;
   FoundWindow : Boolean;
+  PieceID: Integer;
 begin
   MinCount := 0;
   FoundWindow := false;
   for i := 0 to aLevel.InteractiveObjects.Count - 1 do
   begin
     //if aLevel.InteractiveObjects[i].Identifier = 1 then FoundWindow := true;
-    if aGraphicSet.MetaObjects[aLevel.InteractiveObjects[i].Identifier].TriggerEffect = 23 then FoundWindow := true;
-    if aGraphicSet.MetaObjects[aLevel.InteractiveObjects[i].Identifier].TriggerEffect = 13 then Inc(MinCount);
+    PieceID := StrToIntDef(aLevel.InteractiveObjects[i].Piece, 0);
+    if aGraphicSet.MetaObjects[PieceID].TriggerEffect = 23 then FoundWindow := true;
+    if aGraphicSet.MetaObjects[PieceID].TriggerEffect = 13 then Inc(MinCount);
   end;
   if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;
 

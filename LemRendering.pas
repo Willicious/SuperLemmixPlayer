@@ -544,10 +544,12 @@ var
   UDf: Byte;
   IsSteel: Boolean;
   IsNoOneWay: Boolean;
+  PieceID: Integer;
 begin
-  Src := Inf.GraphicSet.TerrainBitmaps.List^[T.Identifier];
+  PieceID := StrToIntDef(T.Piece, 0);
+  Src := Inf.GraphicSet.TerrainBitmaps.List^[PieceID];
   UDf := T.DrawingFlags;
-  IsSteel := ((Inf.GraphicSet.MetaTerrains[T.Identifier].Unknown and $01) = 1);
+  IsSteel := ((Inf.GraphicSet.MetaTerrains[PieceID].Unknown and $01) = 1);
   IsNoOneWay := (UDf and tdf_NoOneWay <> 0);
   if (T.DrawingFlags and tdf_Invert = 0) and (T.DrawingFlags and tdf_Flip = 0) and (T.DrawingFlags and tdf_Rotate = 0) then
   begin
@@ -613,10 +615,12 @@ var
   Item: TObjectAnimation;// TDrawItem;
   Src: TBitmap32;
   MO: TMetaObject;
+  PieceID: Integer;
 begin
-  Assert(ObjectRenderList[O.Identifier] is TObjectAnimation);
-  Item := TObjectAnimation(ObjectRenderList[O.Identifier]);
-  MO := Inf.GraphicSet.MetaObjects[o.identifier];
+  PieceID := StrToIntDef(O.Piece, 0);
+  Assert(ObjectRenderList[PieceID] is TObjectAnimation);
+  Item := TObjectAnimation(ObjectRenderList[PieceID]);
+  MO := Inf.GraphicSet.MetaObjects[PieceID];
   //ObjectBitmapItems.List^[O.Identifier];
 
   if aFrame > MO.AnimationFrameCount-1 then aFrame := MO.AnimationFrameCount-1; // just in case
@@ -670,10 +674,12 @@ var
   Item: TObjectAnimation;// TDrawItem;
   Src: TBitmap32;
   MO: TMetaObject;
+  PieceID: Integer;
 begin
-  Assert(ObjectRenderList[O.Identifier] is TObjectAnimation);
-  Item := TObjectAnimation(ObjectRenderList[O.Identifier]);
-  MO := Inf.GraphicSet.MetaObjects[o.identifier];
+  PieceID := StrToIntDef(O.Piece, 0);
+  Assert(ObjectRenderList[PieceID] is TObjectAnimation);
+  Item := TObjectAnimation(ObjectRenderList[PieceID]);
+  MO := Inf.GraphicSet.MetaObjects[PieceID];
   //ObjectBitmapItems.List^[O.Identifier];
 
   if O.DrawingFlags and odf_Invisible <> 0 then Exit;
@@ -716,9 +722,11 @@ var
   Item: TObjectAnimation;
   Src: TBitmap32;
   DrawFrame: Integer;
+  PieceID: Integer;
 begin
-  Assert(ObjectRenderList[Gadget.Obj.Identifier] is TObjectAnimation);
-  Item := TObjectAnimation(ObjectRenderList[Gadget.Obj.Identifier]);
+  PieceID := StrToIntDef(Gadget.Obj.Piece, 0);
+  Assert(ObjectRenderList[PieceID] is TObjectAnimation);
+  Item := TObjectAnimation(ObjectRenderList[PieceID]);
 
   if Gadget.IsInvisible then Exit;
   if Gadget.TriggerEffect = DOM_HINT then Exit;
@@ -752,6 +760,7 @@ var
   Item: TObjectAnimation;
   Src: TBitmap32;
   DrawFrame, i: Integer;
+  PieceID: Integer;
 begin
   Src := TBitmap32.Create;
 
@@ -760,8 +769,9 @@ begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect <> DOM_LEMMING then
     begin
-      Assert(ObjectRenderList[Inf.Obj.Identifier] is TObjectAnimation);
-      Item := TObjectAnimation(ObjectRenderList[Inf.Obj.Identifier]);
+      PieceID := StrToIntDef(Inf.Obj.Piece, 0);
+      Assert(ObjectRenderList[PieceID] is TObjectAnimation);
+      Item := TObjectAnimation(ObjectRenderList[PieceID]);
 
       if Inf.IsInvisible then Continue;
       if Inf.TriggerEffect = DOM_HINT then Continue;
@@ -802,7 +812,7 @@ begin
   if O.IsFake then exit;
   tx := O.Left;
   ty := O.Top;
-  MO := Inf.GraphicSet.MetaObjects[o.identifier];
+  MO := Inf.GraphicSet.MetaObjects[StrToIntDef(O.Piece, 0)];
   tx := tx + MO.TriggerLeft;
   ty := ty + MO.TriggerTop;
 
@@ -880,12 +890,14 @@ var
   SrcRect, DstRect, R: TRect;
   Item: TObjectAnimation;// TDrawItem;
   //Src: TBitmap32;
+  PieceID: Integer;
 begin
   if aOriginal = nil then
     Exit;
 
-  Assert(ObjectRenderList[O.Identifier] is TObjectAnimation);
-  Item := TObjectAnimation(ObjectRenderList[O.Identifier]);
+  PieceID := StrToIntDef(O.Piece, 0);
+  Assert(ObjectRenderList[PieceID] is TObjectAnimation);
+  Item := TObjectAnimation(ObjectRenderList[PieceID]);
   //ObjectBitmapItems.List^[O.Identifier];
 
   SrcRect := Item.CalcFrameRect(0);
@@ -951,7 +963,7 @@ begin
       begin
         Ter := List^[i];
         if (((SOX = false) or ((Ter.DrawingFlags and tdf_Erase) <> 0))
-        or ((Inf.GraphicSet.MetaTerrains[Ter.Identifier].Unknown and $01) <> 0)) then
+        or ((Inf.GraphicSet.MetaTerrains[StrToIntDef(Ter.Piece, 0)].Unknown and $01) <> 0)) then
           DrawTerrain(World, Ter, SteelOnly);
       end;
 
@@ -1019,7 +1031,7 @@ begin
       for i := 0 to Count - 1 do
       begin
         Obj := List^[i];
-        MO := Inf.GraphicSet.MetaObjects[obj.identifier];
+        MO := Inf.GraphicSet.MetaObjects[StrToIntDef(obj.Piece, 0)];
         if (Obj.DrawingFlags and odf_Invisible <> 0) or (MO.TriggerEffect in [13, 16]) then Continue;
         fi := MO.PreviewFrameIndex;
         if MO.TriggerEffect in [7, 8, 19] then
@@ -1037,7 +1049,7 @@ begin
       for i := 0 to Count - 1 do
       begin
         Obj := List^[i];
-        MO := Inf.GraphicSet.MetaObjects[obj.identifier];
+        MO := Inf.GraphicSet.MetaObjects[StrToIntDef(obj.Piece, 0)];
         if (Obj.DrawingFlags and odf_Invisible <> 0) or (MO.TriggerEffect in [13, 16]) then Continue;
         fi := MO.PreviewFrameIndex;
         if MO.TriggerEffect in [15, 17] then
@@ -1050,7 +1062,7 @@ begin
       for i := 0 to Count - 1 do
       begin
         Obj := List^[i];
-        MO := Inf.GraphicSet.MetaObjects[obj.identifier];
+        MO := Inf.GraphicSet.MetaObjects[StrToIntDef(Obj.Piece, 0)];
 
         if MO.TriggerEffect = 13 then
         begin

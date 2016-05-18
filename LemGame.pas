@@ -2051,7 +2051,7 @@ begin
 
   for i := 0 to Level.InteractiveObjects.Count - 1 do
   begin
-    MetaInfo := Graph.MetaObjects[Level.InteractiveObjects[i].Identifier];
+    MetaInfo := Graph.MetaObjects[StrToIntDef(Level.InteractiveObjects[i].Piece, 0)];
     Inf := TInteractiveObjectInfo.Create(Level.InteractiveObjects[i], MetaInfo);
 
     ObjectInfos.Add(Inf);

@@ -24,7 +24,6 @@ var
   O: TInteractiveObject;
   T: TTerrain;
   S: TSteel;
-  VgaspecMode: Boolean;
 
   function NewPiece: Boolean;
   begin
@@ -215,8 +214,11 @@ begin
 
           // SET is not yet supported
 
+          if Line.Keyword = 'SET' then
+            O.GS := Lowercase(Line.Value);
+
           if Line.Keyword = 'PIECE' then
-            O.Identifier := Line.Numeric; // Need to replace this later
+            O.Piece := Lowercase(Line.Value);
 
           if Line.Keyword = 'X' then
             O.Left := Line.Numeric;
@@ -256,38 +258,22 @@ begin
 
       if Line.Keyword = 'TERRAIN' then
       begin
-        VgaspecMode := false;
         T := aLevel.Terrains.Add;
         T.DrawingFlags := tdf_NoOneWay;
         repeat
           Line := Parser.NextLine;
 
           if Line.Keyword = 'SET' then
-            if Uppercase(Line.Value) = 'SPECIAL' then
-            begin
-              VgaspecMode := true;
-              aLevel.Terrains.Delete(aLevel.Terrains.Count-1);
-            end;
+            T.GS := Lowercase(Line.Value);
 
           if Line.Keyword = 'PIECE' then
-            if VgaspecMode then
-              aLevel.Info.VgaspecFile := Line.Value
-            else
-              T.Identifier := Line.Numeric;
+            T.Piece := Lowercase(Line.Value);
 
           if Line.Keyword = 'X' then
-            if VgaspecMode then
-              aLevel.Info.VgaspecX := Line.Numeric
-            else
-              T.Left := Line.Numeric;
+            T.Left := Line.Numeric;
 
           if Line.Keyword = 'Y' then
-            if VgaspecMode then
-              aLevel.Info.VgaspecY := Line.Numeric
-            else
-              T.Top := Line.Numeric;
-
-          if VgaspecMode then Continue; // Others will cause a crash when handling a VGASPEC
+            T.Top := Line.Numeric;
 
           if Line.Keyword = 'NO_OVERWRITE' then
             T.DrawingFlags := T.DrawingFlags or tdf_NoOverwrite;
@@ -429,8 +415,8 @@ begin
       begin
         O := InteractiveObjects[i];
         Add(' OBJECT');
-        Add('  SET ' + Info.GraphicSetName);
-        Add('  PIECE ' + IntToStr(O.Identifier));
+        Add('  SET ' + O.GS);
+        Add('  PIECE ' + O.Piece);
         Add('  X ' + IntToStr(O.Left));
         Add('  Y ' + IntToStr(O.Top));
         if O.TarLev <> 0 then Add('  L ' + IntToStr(O.TarLev));
@@ -470,8 +456,8 @@ begin
       begin
         T := Terrains[i];
         Add(' TERRAIN');
-        Add('  SET ' + Info.GraphicSetName);
-        Add('  PIECE ' + IntToStr(T.Identifier));
+        Add('  SET ' + T.GS);
+        Add('  PIECE ' + T.Piece);
         Add('  X ' + IntToStr(T.Left));
         Add('  Y ' + IntToStr(T.Top));
         if T.DrawingFlags and tdf_NoOverwrite <> 0 then

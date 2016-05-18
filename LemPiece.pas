@@ -27,11 +27,13 @@ type
   TIdentifiedPiece = class(TPiece)
   private
   protected
-    fIdentifier: Integer;
+    fSet: String;
+    fPiece: String;
   public
     procedure Assign(Source: TPersistent); override;
   published
-    property Identifier: Integer read fIdentifier write fIdentifier;
+    property GS: String read fSet write fSet; // "Set" is a reserved keyword :(
+    property Piece: String read fPiece write fPiece;
   end;
 
 type
@@ -87,7 +89,8 @@ begin
   if Source is TIdentifiedPiece then
   begin
     inherited Assign(Source);
-    Identifier := IP.Identifier;
+    GS := IP.GS;
+    Piece := IP.Piece;
   end
   else inherited Assign(Source);
 end;
