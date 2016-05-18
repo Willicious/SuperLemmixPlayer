@@ -9,6 +9,7 @@ uses
   GR32,
   SharedGlobals,
   Dialogs, Controls,
+  LemNeoLevelLoader, // FOR TESTING! //
   LemTypes, LemLevel, LemLVLLoader, LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet,
   LemMetaAnimation, LemAnimationSet, LemDosCmp, LemDosStructures, LemDosAnimationSet,
   LemDosMainDat,
@@ -326,7 +327,9 @@ try
       aInfo.DosLevelPackFileName := aFilename;
       aInfo.DosLevelPackIndex := aFileIndex;
       LoadSingleLevel(aFileIndex, dS, dL, aLevel, SoftOddMode);
-      TLVLLoader.SaveLevelToFile(aLevel, ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\' + LeadZeroStr(dS + 1, 2) + LeadZeroStr(dL + 1, 2) + '.lvl');
+
+
+      TNeoLevelLoader.SaveLevelToFile(aLevel, ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\' + LeadZeroStr(dS + 1, 2) + LeadZeroStr(dL + 1, 2) + '.nxlv');
     end;
 except
 end;

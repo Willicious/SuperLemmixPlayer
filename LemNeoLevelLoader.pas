@@ -17,6 +17,10 @@ type
 
 implementation
 
+class procedure TNeoLevelLoader.LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+begin
+end;
+
 class procedure TNeoLevelLoader.StoreLevelInStream(aLevel: TLevel; aStream: TStream);
 var
   SL: TStringList;
@@ -37,7 +41,7 @@ begin
       Buf.RescueCount   := RescueCount;
       Buf.TimeLimit     := TimeLimit;
       Buf.Skillset      := SkillTypes;}
-    Add('# NeoLemmix Level')
+    Add('# NeoLemmix Level');
     Add('# Dumped from NeoLemmix Player V' + PVersion);
     Add;
 
@@ -47,16 +51,16 @@ begin
       Add('# Level info');
       Add(' TITLE ' + Title);
       Add(' AUTHOR ' + Author);
-      if MusicName <> '' then
-        Add(' MUSIC ' + MusicName);
+      if MusicFile <> '' then
+        Add(' MUSIC ' + MusicFile);
       Add(' ID ' + IntToHex(LevelID, 8));
       Add;
 
       Add('# Level dimensions');
-      Add(' WIDTH ' + Width);
-      Add(' HEIGHT ' + Height);
-      Add(' START_X ' + ScreenPosition);
-      Add(' START_Y ' + ScreenYPosition);
+      Add(' WIDTH ' + IntToStr(Width));
+      Add(' HEIGHT ' + IntToStr(Height));
+      Add(' START_X ' + IntToStr(ScreenPosition));
+      Add(' START_Y ' + IntToStr(ScreenYPosition));
       Add(' THEME ' + GraphicSetName);
       Add;
 
@@ -79,7 +83,7 @@ begin
       if (SkillTypes and $2000 <> 0) then Add('    SWIMMER ' + IntToStr(SwimmerCount));
       if (SkillTypes and $1000 <> 0) then Add('    FLOATER ' + IntToStr(FloaterCount));
       if (SkillTypes and $0800 <> 0) then Add('     GLIDER ' + IntToStr(GliderCount));
-      if (SkillTypes and $0400 <> 0) then Add('   DISARMER ' + IntToStr(DisarmerCount));
+      if (SkillTypes and $0400 <> 0) then Add('   DISARMER ' + IntToStr(MechanicCount));
       if (SkillTypes and $0200 <> 0) then Add('     BOMBER ' + IntToStr(BomberCount));
       if (SkillTypes and $0100 <> 0) then Add('     STONER ' + IntToStr(StonerCount));
       if (SkillTypes and $0080 <> 0) then Add('    BLOCKER ' + IntToStr(BlockerCount));
@@ -140,7 +144,7 @@ begin
       begin
         Add(' TERRAIN');
         Add('  SET SPECIAL');
-        Add('  PIECE ' + VgaspecFile);
+        Add('  PIECE ' + Info.VgaspecFile);
         Add('  X ' + IntToStr(Info.VgaspecX));
         Add('  Y ' + IntToStr(Info.VgaspecY));
         Add;
@@ -199,6 +203,8 @@ begin
         Add;
       end;
     end;
+
+    SL.SaveToStream(aStream);
   finally
     SL.Free;
   end;
