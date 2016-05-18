@@ -4128,18 +4128,22 @@ end;
 procedure TLemmingGame.DrawShadowBridge(DoErase: Boolean = False);
 var
   L: TLemming;
-  CurX, CurY, CurDx: Integer;
   i, j: Integer;
   AdaptY: Integer;
   IsShadowAdded: Boolean;
   SkillButton: TSkillPanelButton;
 
-  procedure AddGrayPixel(X, Y: Integer; Erase: Boolean);
+  procedure AddGrayPixel(X, Y: Integer; Erase: Boolean; DrawAtTerrain: Boolean = False);
   begin
     if Erase then
     begin
       if fTargetBitmap.PixelS[X, Y] = $00202020 then
         fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
+    end
+    else if DrawAtTerrain then
+    begin
+      if HasPixelAt(X, Y) and not HasSteelAt(X, Y) then
+        fTargetBitmap.PixelS[X, Y] := $00202020; // some kind of dark gray
     end
     else if not HasPixelAt(X, Y) then
     begin
@@ -4164,36 +4168,108 @@ begin
     if not Assigned(L) then Exit;
 
     // Save values here to migitate race condition problems at least somewhat
-    CurX := L.LemX;
-    CurY := L.LemY;
-    CurDx := L.LemDx;
     if DoErase then fExistShadow := False;
 
     case SkillButton of
       spbPlatformer:
         begin
           for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-            AddGrayPixel(CurX + i*CurDx, CurY, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY, DoErase);
 
           IsShadowAdded := True;
         end;
+
       spbBuilder:
         begin
           for j := 1 to 12 do
           for i := 2*j - 3 to 2*j + 3 do
-            AddGrayPixel(CurX + i*CurDx, CurY - j, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
 
           IsShadowAdded := True;
         end;
+
       spbStacker:
         begin
           // get starting height for stacker
           AdaptY := 0;
-          if HasPixelAt(CurX + CurDx, CurY) then AdaptY := 1;
+          if HasPixelAt(L.LemX + L.LemDx, L.LemY) then AdaptY := 1;
 
           for j := AdaptY to AdaptY + 7 do
           for i := 0 to 3 do
-            AddGrayPixel(CurX + i*CurDx, CurY - j, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
+
+          IsShadowAdded := True;
+        end;
+
+      spbDigger:
+        begin
+          j := 0;
+          while (   HasPixelAt(L.LemX - 3, L.LemY + j) or HasPixelAt(L.LemX - 2, L.LemY + j)
+                 or HasPixelAt(L.LemX - 1, L.LemY + j) or HasPixelAt(L.LemX, L.LemY + j)
+                 or HasPixelAt(L.LemX + 1, L.LemY + j) or HasPixelAt(L.LemX + 2, L.LemY + j)
+                 or HasPixelAt(L.LemX + 3, L.LemY + j))
+                and not HasSteelAt(L.LemX, L.LemY + j) do
+          begin
+            AddGrayPixel(L.LemX - 4, L.LemY + j, DoErase, True);
+            AddGrayPixel(L.LemX + 4, L.LemY + j, DoErase, True);
+            Inc(j);
+          end;
+
+          IsShadowAdded := True;
+        end;
+
+      spbMiner:
+        begin
+          i := 0;
+          j := 0;
+          repeat
+            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j - 1, DoErase, True);
+            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j, DoErase, True);
+            AddGrayPixel(L.LemX + (i+2)*L.LemDx, L.LemY + j, DoErase, True);
+            inc(i, 2);
+            Inc(j);
+          until    not HasPixelAt(L.LemX + (i-1)*L.LemDx, L.LemY + j)
+                or not HasPixelAt(L.LemX + i*L.LemDx, L.LemY + j)
+                or HasIndestructibleAt(L.LemX + (i-1)*L.LemDx, L.LemY + j - 1, L.LemDx, baMining)
+                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY + j - 1, L.LemDx, baMining);
+
+          IsShadowAdded := True;
+        end;
+
+      spbBasher:
+        begin
+          i := 3;
+          repeat
+            for j := 0 to 4 do
+            begin
+              AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, DoErase, True);
+              // AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 9, DoErase, True);
+              Inc(i);
+              if i = 5 then break; // skip first two pixels to draw
+            end;
+          until    (FindGroundPixel(L.LemX + (i-1)*L.LemDx, L.LemY) > 2)
+                or (FindGroundPixel(L.LemX + (i-2)*L.LemDx, L.LemY) > 2)
+                or (FindGroundPixel(L.LemX + (i-3)*L.LemDx, L.LemY) > 2)
+                or (FindGroundPixel(L.LemX + (i-4)*L.LemDx, L.LemY) > 2)
+                or (FindGroundPixel(L.LemX + (i-5)*L.LemDx, L.LemY) > 2)
+                or (not (   HasPixelAt(L.LemX + (i+2)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+3)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+4)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+5)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+6)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+7)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+8)*L.LemDx, L.LemY - 5)))
+                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
+                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
+                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing);
+
+          // end always with three additional pixels
+          for j := 0 to 2 do
+          begin
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, DoErase, True);
+            // AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 9, DoErase, True);
+            Inc(i);
+          end;
 
           IsShadowAdded := True;
         end;
