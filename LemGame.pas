@@ -742,7 +742,7 @@ type
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False): Boolean;
     procedure GenerateClonedLem(L: TLemming);
     function GetPriorityLemming(out PriorityLem: TLemming;
-                                  NewSkill: TBasicLemmingAction;
+                                  NewSkillOrig: TBasicLemmingAction;
                                   MousePos: TPoint;
                                   IsHighlight: Boolean = False): Integer;
     function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
@@ -1761,9 +1761,17 @@ begin
   MusicSys := fGameParams.Style.MusicSystem;
   MusicFileName := GetMusicFileName;
   if (MusicSys <> nil) and (MusicFileName <> '') then
-    try
-      SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
-    except
+  begin
+    if FileExists(ChangeFileExt(GameFile, '_Music.dat')) then
+    begin
+      try
+        SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
+      except
+        // silent fail, just play no music
+      end;
+    end
+  else
+    begin
       SoundMgr.Musics.Clear;
       Level.Info.MusicFile := '';
       try
@@ -1773,6 +1781,7 @@ begin
         // silent fail, just play no music
       end;
     end;
+  end;
 
   S := CreateDataStream('explode.dat', ldtParticles);
   S.Seek(0, soFromBeginning);
@@ -2867,7 +2876,7 @@ end;
 
 
 function TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
-                                          NewSkill: TBasicLemmingAction;
+                                          NewSkillOrig: TBasicLemmingAction;
                                           MousePos: TPoint;
                                           IsHighlight: Boolean = False): Integer;
 type
@@ -2875,11 +2884,15 @@ type
   TPriorityBoxArr = array[0..6] of TPriorityBox;
 var
   i, CurPriorityBox: Integer;
+  // CurValue = 1, 2, 3, 4, 5, 6, 7: Lem is assignable and in one PriorityBox
+  // CurValue = 8: Lem is unassignable, but no zombie
+  // CurValue = 9: Lem is zombie
   CurValue: Integer;
   L: TLemming;
   PriorityBoxOrder: TPriorityBoxArr;
   LemIsInBox: Boolean;
   NumLemInCursor: Integer;
+  NewSkill: TBasicLemmingAction;
 
   function LemIsInCursor(L: TLemming; MousePos: TPoint): Boolean;
   var
@@ -2920,7 +2933,7 @@ var
       baMining      : Result := BashOrder;
       baDigging     : Result := BashOrder;
       baCloning     : Result := CloneOrder;
-      baNone        : Result := HighlightOrder
+      baNone        : Result := HighlightOrder // should never happen
     else // should never happen
       Result := WalkerOrder;
     end;
@@ -2949,7 +2962,11 @@ var
 begin
   PriorityLem := nil;
   NumLemInCursor := 0;
-  CurValue := 7;
+  CurValue := 10;
+  if NewSkillOrig = baNone then
+    NewSkill := SkillPanelButtonToAction[fSelectedSkill]
+  else
+    NewSkill := NewSkillOrig;
 
   PriorityBoxOrder := GetPriorityBoxOrder(NewSkill);
 
@@ -2961,8 +2978,8 @@ begin
     if IsHighlight and not (L = fHighlightLemming) then Continue;
     // Does Lemming exist
     if L.LemRemoved or L.LemTeleporting then Continue;
-    // Is the Lemming a Zombie (remove unless we want just count Lems)
-    if L.LemIsZombie and (Assigned(PriorityLem) or not (NewSkill = baNone)) then Continue;
+    // Is the Lemming a Zombie (remove unless we haven't yet had any lem under the cursor)
+    if L.LemIsZombie and Assigned(PriorityLem) then Continue;
     // Is Lemming inside cursor (only check if we are not using Hightlightning!)
     if (not LemIsInCursor(L, MousePos)) and (not IsHighlight) then Continue;
     // Directional select
@@ -2972,27 +2989,32 @@ begin
     // Select only walkers
     if RightMouseButtonHeldDown and (L.LemAction <> baWalking) then Continue;
 
-    // Increase number of lemmings in cursor
-    Inc(NumLemInCursor);
+    // Increase number of lemmings in cursor (if not a zombie)
+    if not L.LemIsZombie then Inc(NumLemInCursor);
 
-    // Is lemming is a sufficiently high priority class
+    // Determine priority class of current lemming
     CurPriorityBox := 0;
     repeat
       LemIsInBox := IsLemInPriorityBox(L, PriorityBoxOrder[CurPriorityBox]);
       Inc(CurPriorityBox);
-    until (CurPriorityBox >= CurValue) or LemIsInBox;
-    if not LemIsInBox then Continue;
+    until (CurPriorityBox >= MinIntValue([CurValue, 7])) or LemIsInBox;
+
+    // Can this lemmings actually receive the skill?
+    if not NewSkillMethods[NewSkill](L) then CurPriorityBox := 8;
+
     // Deprioritize zombie even when just counting lemmings
-    if L.LemIsZombie then CurPriorityBox := 7;
+    if L.LemIsZombie then CurPriorityBox := 9;
 
-    // Can this lemmings actually receive the skill
-    if not (NewSkill = baNone) then
-      if not NewSkillMethods[NewSkill](L) then Continue;
-
-    // New top priority lemming found
-    PriorityLem := L;
-    CurValue := CurPriorityBox;
+    if CurPriorityBox < CurValue then
+    begin
+      // New top priority lemming found
+      PriorityLem := L;
+      CurValue := CurPriorityBox;
+    end;
   end;
+
+  //  Delete PriorityLem if too low-priority and we with to assign a skill
+  if (CurValue > 6) and not (NewSkillOrig = baNone) then PriorityLem := nil;
 
   Result := NumLemInCursor;
 end;
@@ -4106,18 +4128,22 @@ end;
 procedure TLemmingGame.DrawShadowBridge(DoErase: Boolean = False);
 var
   L: TLemming;
-  CurX, CurY, CurDx: Integer;
   i, j: Integer;
   AdaptY: Integer;
   IsShadowAdded: Boolean;
   SkillButton: TSkillPanelButton;
 
-  procedure AddGrayPixel(X, Y: Integer; Erase: Boolean);
+  procedure AddGrayPixel(X, Y: Integer; Erase: Boolean; DrawAtTerrain: Boolean = False);
   begin
     if Erase then
     begin
       if fTargetBitmap.PixelS[X, Y] = $00202020 then
         fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
+    end
+    else if DrawAtTerrain then
+    begin
+      if HasPixelAt(X, Y) and not HasSteelAt(X, Y) then
+        fTargetBitmap.PixelS[X, Y] := $00202020; // some kind of dark gray
     end
     else if not HasPixelAt(X, Y) then
     begin
@@ -4142,36 +4168,108 @@ begin
     if not Assigned(L) then Exit;
 
     // Save values here to migitate race condition problems at least somewhat
-    CurX := L.LemX;
-    CurY := L.LemY;
-    CurDx := L.LemDx;
     if DoErase then fExistShadow := False;
 
     case SkillButton of
       spbPlatformer:
         begin
           for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-            AddGrayPixel(CurX + i*CurDx, CurY, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY, DoErase);
 
           IsShadowAdded := True;
         end;
+
       spbBuilder:
         begin
           for j := 1 to 12 do
           for i := 2*j - 3 to 2*j + 3 do
-            AddGrayPixel(CurX + i*CurDx, CurY - j, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
 
           IsShadowAdded := True;
         end;
+
       spbStacker:
         begin
           // get starting height for stacker
           AdaptY := 0;
-          if HasPixelAt(CurX + CurDx, CurY) then AdaptY := 1;
+          if HasPixelAt(L.LemX + L.LemDx, L.LemY) then AdaptY := 1;
 
           for j := AdaptY to AdaptY + 7 do
           for i := 0 to 3 do
-            AddGrayPixel(CurX + i*CurDx, CurY - j, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
+
+          IsShadowAdded := True;
+        end;
+
+      spbDigger:
+        begin
+          j := 0;
+          while (   HasPixelAt(L.LemX - 3, L.LemY + j) or HasPixelAt(L.LemX - 2, L.LemY + j)
+                 or HasPixelAt(L.LemX - 1, L.LemY + j) or HasPixelAt(L.LemX, L.LemY + j)
+                 or HasPixelAt(L.LemX + 1, L.LemY + j) or HasPixelAt(L.LemX + 2, L.LemY + j)
+                 or HasPixelAt(L.LemX + 3, L.LemY + j))
+                and not HasSteelAt(L.LemX, L.LemY + j) do
+          begin
+            AddGrayPixel(L.LemX - 4, L.LemY + j, DoErase, True);
+            AddGrayPixel(L.LemX + 4, L.LemY + j, DoErase, True);
+            Inc(j);
+          end;
+
+          IsShadowAdded := True;
+        end;
+
+      spbMiner:
+        begin
+          i := 0;
+          j := 0;
+          repeat
+            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j - 1, DoErase, True);
+            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j, DoErase, True);
+            AddGrayPixel(L.LemX + (i+2)*L.LemDx, L.LemY + j, DoErase, True);
+            inc(i, 2);
+            Inc(j);
+          until    not HasPixelAt(L.LemX + (i-1)*L.LemDx, L.LemY + j)
+                or not HasPixelAt(L.LemX + i*L.LemDx, L.LemY + j)
+                or HasIndestructibleAt(L.LemX + (i-1)*L.LemDx, L.LemY + j - 1, L.LemDx, baMining)
+                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY + j - 1, L.LemDx, baMining);
+
+          IsShadowAdded := True;
+        end;
+
+      spbBasher:
+        begin
+          i := 3;
+          repeat
+            for j := 0 to 4 do
+            begin
+              AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, DoErase, True);
+              // AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 9, DoErase, True);
+              Inc(i);
+              if i = 5 then break; // skip first two pixels to draw
+            end;
+          until    (FindGroundPixel(L.LemX + (i-1)*L.LemDx, L.LemY) > 2)
+                or (FindGroundPixel(L.LemX + (i-2)*L.LemDx, L.LemY) > 2)
+                or (FindGroundPixel(L.LemX + (i-3)*L.LemDx, L.LemY) > 2)
+                or (FindGroundPixel(L.LemX + (i-4)*L.LemDx, L.LemY) > 2)
+                or (FindGroundPixel(L.LemX + (i-5)*L.LemDx, L.LemY) > 2)
+                or (not (   HasPixelAt(L.LemX + (i+2)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+3)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+4)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+5)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+6)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+7)*L.LemDx, L.LemY - 5)
+                         or HasPixelAt(L.LemX + (i+8)*L.LemDx, L.LemY - 5)))
+                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
+                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
+                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing);
+
+          // end always with three additional pixels
+          for j := 0 to 2 do
+          begin
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, DoErase, True);
+            // AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 9, DoErase, True);
+            Inc(i);
+          end;
 
           IsShadowAdded := True;
         end;
@@ -5457,7 +5555,7 @@ begin
 
   if Autofail then fHitTestAutoFail := true;
   HitCount := GetPriorityLemming(L, baNone, CursorPoint);
-  if (HitCount > 0) and Assigned(L) and not fHitTestAutofail then
+  if Assigned(L) and not fHitTestAutofail then
   begin
     S := LemmingActionStrings[L.LemAction];
     // get highlight text
