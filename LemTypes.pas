@@ -355,8 +355,8 @@ begin
                       begin
                         if not (MusicFileInArchive or IsSingleLevelMode) then Arc.OpenArchive(GameFile, amOpen);
                         if not MusicFileInArchive then Arc.OpenResource(HINSTANCE, 'lemdata', 'archive');
-                        if MusicFileInArchive then // Sets aFilename to the one that actually exists.
-                          Arc.ExtractFile(aFilename, Result);
+                        MusicFileInArchive; // Sets aFilename to the one that actually exists.
+                        Arc.ExtractFile(aFilename, Result);
                       end else begin
                         Result.LoadFromFile(AppPath + 'music/' + FindInMusicFolder);
                       end;

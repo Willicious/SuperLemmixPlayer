@@ -1761,23 +1761,17 @@ begin
   MusicFileName := GetMusicFileName;
   if (MusicSys <> nil) and (MusicFileName <> '') then
   begin
-    if FileExists(ChangeFileExt(GameFile, '_Music.dat')) then
-    begin
+    try
+      SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
+    except
       try
-        SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
-      except
-        // silent fail, just play no music
-      end;
-    end
-    else
-    begin
-      SoundMgr.Musics.Clear;
-      Level.Info.MusicFile := '';
-      try
+        SoundMgr.Musics.Clear;
+        Level.Info.MusicFile := '';
         MusicFileName := GetMusicFileName;
         SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
       except
         // silent fail, just play no music
+        // actually this shouldn't result in raising an exception at all, but to be safe... 
       end;
     end;
   end;
