@@ -459,7 +459,7 @@ type
     fInfoPainter               : IGameToolbar; // ref to interface to enable this component to draw to skillpanel
     fLevel                     : TLevel; // ref to gameparams.level
     Style                      : TBaseLemmingStyle; // ref to gameparams.style
-    Graph                      : TBaseDosGraphicSet; // ref to gameparams.graph
+    Graph                      : TBaseDosGraphicSet; // Gets primary graphic set via renderer
     CntDownBmp                 : TBitmap32; // ref to style.animationset.countdowndigits
     HighlightBmp               : TBitmap32;
     ExplodeMaskBmp             : TBitmap32; // ref to style.animationset.explosionmask
@@ -1656,6 +1656,7 @@ var
   S: TStream;
   MusicFileName: String;
 begin
+
   fGameParams := aParams;
   fXmasPal := fGameParams.SysDat.Options2 and 2 <> 0;
 
@@ -1668,7 +1669,7 @@ begin
   fTargetBitmap := fGameParams.TargetBitmap;
   Level := fGameParams.Level;
   Style := fGameParams.Style;
-  //Graph := fGameParams.GraphicSet;
+  Graph := TBaseDosGraphicSet(fGameParams.Renderer.FindGraphicSet(Level.Info.GraphicSetName));
 
   {-------------------------------------------------------------------------------
     Initialize the palette of AnimationSet.

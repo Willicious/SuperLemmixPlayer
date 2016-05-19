@@ -7,7 +7,7 @@ interface
 uses
   Classes,
   LemDosStructures,
-  LemLevel, LemGraphicSet, LemAnimationSet, LemLevelSystem, LemMusicSystem;
+  LemLevel, LemAnimationSet, LemLevelSystem, LemMusicSystem;
 
 
 type
@@ -28,7 +28,6 @@ type
     SysDat : TSysDatRec;
     constructor Create;
     destructor Destroy; override;
-    function CreateGraphicSet: TBaseGraphicSet; virtual;
     property AnimationSet: TBaseAnimationSet read fAnimationSet;
     property LevelSystem: TBaseLevelSystem read fLevelSystem;
     property MusicSystem: TBaseMusicSystem read fMusicSystem;
@@ -48,11 +47,6 @@ begin
   fAnimationSet := DoCreateAnimationSet;
   fLevelSystem := DoCreateLevelSystem;
   fMusicSystem := DoCreateMusicSystem;
-end;
-
-function TBaseLemmingStyle.CreateGraphicSet: TBaseGraphicSet;
-begin
-  Result := nil;
 end;
 
 destructor TBaseLemmingStyle.Destroy;

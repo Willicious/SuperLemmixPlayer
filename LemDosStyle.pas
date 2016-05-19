@@ -10,7 +10,7 @@ uses
   SharedGlobals,
   Dialogs, Controls,
   LemNeoLevelLoader, // FOR TESTING! //
-  LemTypes, LemLevel, LemLVLLoader, LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet,
+  LemTypes, LemLevel, LemLVLLoader,
   LemMetaAnimation, LemAnimationSet, LemDosCmp, LemDosStructures, LemDosAnimationSet,
   LemDosMainDat,
   LemStyle, LemLevelSystem, LemMusicSystem,
@@ -46,7 +46,6 @@ type
   protected
     function DoCreateAnimationSet: TBaseAnimationSet; override;
   public
-    function CreateGraphicSet: TBaseGraphicSet; override;
     procedure LoadSystemDat;
     property AnimationSet: TBaseDosAnimationSet read GetAnimationSet; // get it typed
   published
@@ -256,11 +255,6 @@ begin
   SysDatFile.Seek(0, soFromBeginning);
   SysDatFile.ReadBuffer(SysDat, SYSDAT_SIZE);
   SysDatFile.Free;
-end;
-
-function TBaseDosLemmingStyle.CreateGraphicSet: TBaseGraphicSet;
-begin
-  Result := TBaseDosGraphicSet.Create;
 end;
 
 function TBaseDosLemmingStyle.DoCreateAnimationSet: TBaseAnimationSet;

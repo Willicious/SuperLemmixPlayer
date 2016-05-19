@@ -210,7 +210,6 @@ var
   begin
     s := LowerCase(s);
 
-    Result := 0;
     if s = 'walker' then Result := 0
     else if s = 'climber' then Result := 1
     else if s = 'swimmer' then Result := 2

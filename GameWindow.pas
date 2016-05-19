@@ -9,7 +9,7 @@ uses
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls,
   GR32, GR32_Image, GR32_Layers,
   UMisc, UTools,
-  LemCore, LemLevel, LemDosStyle, LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet, LemRendering,
+  LemCore, LemLevel, LemDosStyle, LemRendering,
   LemGame,
   GameControl, GameSkillPanel, GameBaseScreen;
 
@@ -913,10 +913,10 @@ begin
   else
     MouseClipRect := Rect(ClientToScreen(Point(0, 0)), ClientToScreen(Point(Img.Width, Img.Height + SkillPanel.Height)));
 
+  SkillPanel.GameParams := GameParams;
   SkillPanel.SetStyleAndGraph(Gameparams.Style, nil, Sca);
 
   SkillPanel.Level := GameParams.Level;
-  SkillPanel.GameParams := GameParams;
   SkillPanel.SetSkillIcons;
 
   MinScroll := -(GameParams.Level.Info.Width - 320);
@@ -932,6 +932,8 @@ begin
   ApplyMouseTrap;
 
   if ((Params.SysDat.Options2 and $4) <> 0) then SkillPanel.ActivateCenterDigits;
+
+  ShowMessage('super-ok');
 
 end;
 

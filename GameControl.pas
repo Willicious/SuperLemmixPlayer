@@ -16,7 +16,7 @@ uses
   GR32, GR32_Image,
   UTools,
   LemStrings,
-  LemCore, LemTypes, LemLevel, LemDosStyle, LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet,
+  LemCore, LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,
   LemNeoEncryption, LemNeoSave, TalisData,
   LemLevelSystem, LemRendering,
@@ -151,7 +151,6 @@ type
 
     Level        : TLevel;
     Style        : TBaseDosLemmingStyle;
-    //GraphicSet   : TBaseNeoGraphicSet;
     Renderer     : TRenderer;
 
     LevelString : String;

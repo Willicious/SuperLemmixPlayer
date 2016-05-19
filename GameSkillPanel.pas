@@ -19,7 +19,6 @@ uses
   LemLevel,
   LemDosStyle,
   LemDosGraphicSet,
-  LemNeoGraphicSet,
   GameInterfaces,
   GameControl,
   LemGame,

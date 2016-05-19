@@ -15,8 +15,7 @@ uses
   GR32, GR32_Image, GR32_Layers,
   UFastStrings,
   UMisc, Dialogs,
-  LemCore, LemTypes, LemStrings, LemDosStructures, LemRendering, LemLevel, LemDosStyle,
-  LemDosGraphicSet, LemNeoGraphicSet, LemGame,
+  LemCore, LemTypes, LemStrings, LemDosStructures, LemRendering, LemLevel, LemDosStyle, LemGame,
   GameControl, GameBaseScreen, GamePreviewScreen, GameLevelCodeScreen;
 
 type

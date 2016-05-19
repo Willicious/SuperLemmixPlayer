@@ -159,7 +159,6 @@ end;
 procedure TBaseNeoGraphicSet.ObtainGraphicSet(aName: String);
 var
   SL: TStringList;
-  i: integer; //debug
 begin
   // Is it passed with or without path / extension / etc? Not sure, so let's clear them just in case.
   aName := ExtractFileName(aName);

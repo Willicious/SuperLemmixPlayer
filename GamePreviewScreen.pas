@@ -10,8 +10,8 @@ uses
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
-  LemCore, LemStrings, LemDosStructures, LemRendering, LemLevelSystem, LemLevel, LemDosGraphicSet, LemNeoGraphicSet, LemDosStyle,
-  LemTypes, LemMetaObject, GameControl, GameBaseScreen, GameWindow;
+  LemCore, LemStrings, LemDosStructures, LemRendering, LemLevelSystem, LemLevel,
+  LemDosStyle, LemTypes, LemMetaObject, GameControl, GameBaseScreen, GameWindow;
 
 type
   TGamePreviewScreen = class(TGameBaseScreen)
@@ -43,7 +43,7 @@ type
 
 implementation
 
-uses LemGraphicSet, {LemDosGraphicSet, LemLevel,} FBaseDosForm;
+uses FBaseDosForm;
 
 { TGamePreviewScreen }
 
@@ -245,7 +245,6 @@ begin
       Inf.Level:=Level;
       Lw := Level.Info.Width;
       Lh := Level.Info.Height;
-      //Inf.GraphicSet := Graphicset;
       CheckLemmingCount(Level);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
@@ -340,7 +339,6 @@ begin
     with GameParams do
     begin
       Inf.Level:=Level;
-      //Inf.GraphicSet := Graphicset;
       CheckLemmingCount(Level);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
@@ -369,7 +367,6 @@ end;
 
 procedure TGamePreviewScreen.VGASpecPrep;
 begin
-  //if GameParams.Level.Info.GraphicSetEx > 0 then BuildScreenInvis;
 end;
 
 procedure TGamePreviewScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
