@@ -8,6 +8,7 @@ uses
   GR32,
   UMisc,
   GameSound,
+  LemRenderHelpers,
   LemTypes,
   LemMetaObject,
   LemMetaTerrain,

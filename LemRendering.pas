@@ -28,6 +28,7 @@ uses
   GR32, GR32_LowLevel,
   UMisc,
   SysUtils,
+  LemRenderHelpers,
   LemDosBmp, LemDosStructures,
   LemTypes,
   LemTerrain,
@@ -39,58 +40,6 @@ uses
 
   // we could maybe use the alpha channel for rendering, ok thats working!
   // create gamerenderlist in order of rendering
-
-type
-  TDrawItem = class
-  private
-  protected
-    fOriginal: TBitmap32; // reference
-  public
-    constructor Create(aOriginal: TBitmap32);
-    destructor Destroy; override;
-    property Original: TBitmap32 read fOriginal;
-  end;
-
-  TDrawList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TDrawItem;
-  protected
-  public
-    function Add(Item: TDrawItem): Integer;
-    procedure Insert(Index: Integer; Item: TDrawItem);
-    property Items[Index: Integer]: TDrawItem read GetItem; default;
-  published
-  end;
-
-  TAnimation = class(TDrawItem)
-  private
-    procedure Check;
-    procedure CheckFrame(Bmp: TBitmap32);
-  protected
-    fFrameHeight: Integer;
-    fFrameCount: Integer;
-    fFrameWidth: Integer;
-  public
-    constructor Create(aOriginal: TBitmap32; aFrameCount, aFrameWidth, aFrameHeight: Integer);
-    function CalcFrameRect(aFrameIndex: Integer): TRect;
-    function CalcTop(aFrameIndex: Integer): Integer;
-    procedure InsertFrame(Bmp: TBitmap32; aFrameIndex: Integer);
-    procedure GetFrame(Bmp: TBitmap32; aFrameIndex: Integer);
-    property FrameCount: Integer read fFrameCount default 1;
-    property FrameWidth: Integer read fFrameWidth;
-    property FrameHeight: Integer read fFrameHeight;
-  end;
-
-  TObjectAnimation = class(TAnimation)
-  private
-  protected
-    fInverted: TBitmap32; // copy of original
-    procedure Flip;
-  public
-    constructor Create(aOriginal: TBitmap32; aFrameCount, aFrameWidth, aFrameHeight: Integer);
-    destructor Destroy; override;
-    property Inverted: TBitmap32 read fInverted;
-  end;
 
 
 type
@@ -105,7 +54,6 @@ type
   TRenderer = class
   private
     TempBitmap         : TBitmap32;
-    ObjectRenderList   : TDrawList; // list to accelerate object drawing
     Inf                : TRenderInfoRec;
     fXmasPal : Boolean;
 
@@ -188,174 +136,7 @@ implementation
 uses
   UTools;
 
-{ TDrawItem }
 
-constructor TDrawItem.Create(aOriginal: TBitmap32);
-begin
-  inherited Create;
-  fOriginal := aOriginal;
-end;
-
-destructor TDrawItem.Destroy;
-begin
-  inherited Destroy;
-end;
-
-{ TDrawList }
-
-function TDrawList.Add(Item: TDrawItem): Integer;
-begin
-  Result := inherited Add(Item);
-end;
-
-function TDrawList.GetItem(Index: Integer): TDrawItem;
-begin
-  Result := inherited Get(Index);
-end;
-
-procedure TDrawList.Insert(Index: Integer; Item: TDrawItem);
-begin
-  inherited Insert(Index, Item);
-end;
-
-{ TAnimation }
-
-function TAnimation.CalcFrameRect(aFrameIndex: Integer): TRect;
-begin
-  with Result do
-  begin
-    Left := 0;
-    Top := aFrameIndex * fFrameHeight;
-    Right := Left + fFrameWidth;
-    Bottom := Top + fFrameHeight;
-  end;
-end;
-
-function TAnimation.CalcTop(aFrameIndex: Integer): Integer;
-begin
-  Result := aFrameIndex * fFrameHeight;
-end;
-
-procedure TAnimation.Check;
-begin
-  Assert(fFrameCount <> 0);
-  Assert(Original.Width = fFrameWidth);
-  Assert(fFrameHeight * fFrameCount = Original.Height);
-end;
-
-procedure TAnimation.CheckFrame(Bmp: TBitmap32);
-begin
-  Assert(Bmp.Width = Original.Width);
-  Assert(Bmp.Height * fFrameCount = Original.Height);
-end;
-
-constructor TAnimation.Create(aOriginal: TBitmap32; aFrameCount, aFrameWidth, aFrameHeight: Integer);
-begin
-  inherited Create(aOriginal);
-  fFrameCount := aFrameCount;
-  fFrameWidth := aFrameWidth;
-  fFrameHeight := aFrameHeight;
-  Check;
-end;
-
-procedure TAnimation.GetFrame(Bmp: TBitmap32; aFrameIndex: Integer);
-// unsafe
-var
-  Y, W: Integer;
-  SrcP, DstP: PColor32;
-begin
-  Check;
-  Bmp.SetSize(fFrameWidth, fFrameHeight);
-  DstP := Bmp.PixelPtr[0, 0];
-  SrcP := Original.PixelPtr[0, CalcTop(aFrameIndex)];
-  W := fFrameWidth;
-  for Y := 0 to fFrameHeight - 1 do
-    begin
-      MoveLongWord(SrcP^, DstP^, W);
-      Inc(SrcP, W);
-      Inc(DstP, W);
-    end;
-end;
-
-procedure TAnimation.InsertFrame(Bmp: TBitmap32; aFrameIndex: Integer);
-// unsafe
-var
-  Y, W: Integer;
-  SrcP, DstP: PColor32;
-begin
-  Check;
-  CheckFrame(Bmp);
-
-  SrcP := Bmp.PixelPtr[0, 0];
-  DstP := Original.PixelPtr[0, CalcTop(aFrameIndex)];
-  W := fFrameWidth;
-
-  for Y := 0 to fFrameHeight - 1 do
-    begin
-      MoveLongWord(SrcP^, DstP^, W);
-      Inc(SrcP, W);
-      Inc(DstP, W);
-    end;
-end;
-
-{ TObjectAnimation }
-
-constructor TObjectAnimation.Create(aOriginal: TBitmap32; aFrameCount,
-  aFrameWidth, aFrameHeight: Integer);
-begin
-  inherited;
-  fInverted := TBitmap32.Create;
-  fInverted.Assign(aOriginal);
-  Flip;
-end;
-
-destructor TObjectAnimation.Destroy;
-begin
-  fInverted.Free;
-  inherited;
-end;
-
-procedure TObjectAnimation.Flip;
-//unsafe, can be optimized by making a algorithm
-var
-  Temp: TBitmap32;
-  i: Integer;
-
-      procedure Ins(aFrameIndex: Integer);
-      var
-        Y, W: Integer;
-        SrcP, DstP: PColor32;
-      begin
-//        Check;
-        //CheckFrame(TEBmp);
-
-        SrcP := Temp.PixelPtr[0, 0];
-        DstP := Inverted.PixelPtr[0, CalcTop(aFrameIndex)];
-        W := fFrameWidth;
-
-        for Y := 0 to fFrameHeight - 1 do
-          begin
-            MoveLongWord(SrcP^, DstP^, W);
-            Inc(SrcP, W);
-            Inc(DstP, W);
-          end;
-      end;
-
-begin
-  if fFrameCount = 0 then
-    Exit;
-  Temp := TBitmap32.Create;
-  try
-    for i := 0 to fFrameCount - 1 do
-    begin
-      GetFrame(Temp, i);
-      Temp.FlipVert;
-      Ins(i);
-    end;
-  finally
-    Temp.Free;
-  end;
-end;
 
 { TRenderer }
 
@@ -371,6 +152,10 @@ function TRenderer.FindGraphicSet(aName: String): TBaseGraphicSet;
 var
   i: Integer;
   GS: TBaseNeoGraphicSet;
+
+  MO: TMetaObject;
+  Bmp: TBitmap32;
+  Item: TObjectAnimation;
 begin
   for i := 0 to fGraphicSets.Count-1 do
     if Lowercase(aName) = Lowercase(fGraphicSets[i].GraphicSetName) then
@@ -385,6 +170,17 @@ begin
   GS.GraphicSetFile := aName + '.dat';
   GS.ReadMetaData;
   GS.ReadData;
+
+    with GS do
+    for i := 0 to ObjectBitmaps.Count - 1 do
+    begin
+      MO := MetaObjects[i];
+      Bmp := ObjectBitmaps.List^[i];
+
+      Item := TObjectAnimation.Create(Bmp, MO.AnimationFrameCount, MO.Width, MO.Height);
+      ObjectRenderList.Add(Item);
+
+    end;
 
   Result := GS;
 end;
@@ -657,8 +453,8 @@ var
 begin
   PieceID := StrToIntDef(O.Piece, 0);
   GS := FindGraphicSet(O.GS);
-  Assert(ObjectRenderList[PieceID] is TObjectAnimation);
-  Item := TObjectAnimation(ObjectRenderList[PieceID]);
+  Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
+  Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
   MO := GS.MetaObjects[PieceID];
   //ObjectBitmapItems.List^[O.Identifier];
 
@@ -718,8 +514,8 @@ var
 begin
   PieceID := StrToIntDef(O.Piece, 0);
   GS := FindGraphicSet(O.GS);
-  Assert(ObjectRenderList[PieceID] is TObjectAnimation);
-  Item := TObjectAnimation(ObjectRenderList[PieceID]);
+  Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
+  Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
   MO := GS.MetaObjects[PieceID];
   //ObjectBitmapItems.List^[O.Identifier];
 
@@ -764,10 +560,12 @@ var
   Src: TBitmap32;
   DrawFrame: Integer;
   PieceID: Integer;
+  GS: TBaseGraphicSet;
 begin
+  GS := FindGraphicSet(Gadget.Obj.GS);
   PieceID := StrToIntDef(Gadget.Obj.Piece, 0);
-  Assert(ObjectRenderList[PieceID] is TObjectAnimation);
-  Item := TObjectAnimation(ObjectRenderList[PieceID]);
+  Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
+  Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
 
   if Gadget.IsInvisible then Exit;
   if Gadget.TriggerEffect = DOM_HINT then Exit;
@@ -802,6 +600,7 @@ var
   Src: TBitmap32;
   DrawFrame, i: Integer;
   PieceID: Integer;
+  GS: TBaseGraphicSet;
 begin
   Src := TBitmap32.Create;
 
@@ -810,9 +609,10 @@ begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect <> DOM_LEMMING then
     begin
+      GS := FindGraphicSet(Inf.Obj.GS);
       PieceID := StrToIntDef(Inf.Obj.Piece, 0);
-      Assert(ObjectRenderList[PieceID] is TObjectAnimation);
-      Item := TObjectAnimation(ObjectRenderList[PieceID]);
+      Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
+      Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
 
       if Inf.IsInvisible then Continue;
       if Inf.TriggerEffect = DOM_HINT then Continue;
@@ -934,13 +734,15 @@ var
   Item: TObjectAnimation;// TDrawItem;
   //Src: TBitmap32;
   PieceID: Integer;
+  GS: TBaseGraphicSet;
 begin
   if aOriginal = nil then
     Exit;
 
   PieceID := StrToIntDef(O.Piece, 0);
-  Assert(ObjectRenderList[PieceID] is TObjectAnimation);
-  Item := TObjectAnimation(ObjectRenderList[PieceID]);
+  GS := FindGraphicSet(O.GS);
+  Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
+  Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
   //ObjectBitmapItems.List^[O.Identifier];
 
   SrcRect := Item.CalcFrameRect(0);
@@ -957,7 +759,6 @@ constructor TRenderer.Create;
 begin
   inherited Create;
   TempBitmap := TBitmap32.Create;
-  ObjectRenderList := TDrawList.Create;
   fGraphicSets := TNeoLemmixGraphicSets.Create(true);
   //fAni := TBaseDosAnimationSet.Create;
   fBgColor := $00000000;
@@ -966,7 +767,6 @@ end;
 destructor TRenderer.Destroy;
 begin
   TempBitmap.Free;
-  ObjectRenderList.Free;
   fGraphicSets.Free;
   if fAni <> nil then fAni.Free;
   inherited Destroy;
@@ -1144,20 +944,8 @@ begin
   Inf := Info;
 
   // create cache to draw from
-  ObjectRenderList.Clear;
 
   GS := FindGraphicSet(Inf.Level.Info.GraphicSetName);
-
-  with Inf, GS do
-    for i := 0 to ObjectBitmaps.Count - 1 do
-    begin
-      MO := MetaObjects[i];
-      Bmp := ObjectBitmaps.List^[i];
-
-      Item := TObjectAnimation.Create(Bmp, MO.AnimationFrameCount, MO.Width, MO.Height);
-      ObjectRenderList.Add(Item);
-
-    end;
 
   fXmasPal := XmasPal;
 

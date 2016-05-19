@@ -6,6 +6,7 @@ interface
 uses
   Classes,
   GR32,
+  LemRenderHelpers,
   LemTypes,
   LemMetaObject,
   LemMetaTerrain;
@@ -37,6 +38,7 @@ type
     procedure DoClearMetaData; dynamic;
     procedure DoClearData; dynamic;
   public
+    ObjectRenderList   : TDrawList; // list to accelerate object drawing
     constructor Create; virtual;
     destructor Destroy; override;
     procedure ReadMetaData(XmasPal: Boolean = false);
@@ -86,6 +88,7 @@ begin
   fTerrainBitmaps := TBitmaps.Create;
   fObjectBitmaps := TBitmaps.Create;
   fSpecialBitmaps := TBitmaps.Create;
+  ObjectRenderList := TDrawList.Create;
 end;
 
 destructor TBaseGraphicSet.Destroy;
@@ -95,6 +98,7 @@ begin
   fTerrainBitmaps.Free;
   fObjectBitmaps.Free;
   fSpecialBitmaps.Free;
+  ObjectRenderList.Free;
   inherited Destroy;
 end;
 
@@ -108,6 +112,7 @@ begin
   fTerrainBitmaps.Clear;
   fObjectBitmaps.Clear;
   fSpecialBitmaps.Clear;
+  ObjectRenderList.Clear;
 end;
 
 procedure TBaseGraphicSet.DoClearMetaData;

@@ -933,8 +933,6 @@ begin
 
   if ((Params.SysDat.Options2 and $4) <> 0) then SkillPanel.ActivateCenterDigits;
 
-  ShowMessage('super-ok');
-
 end;
 
 procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
