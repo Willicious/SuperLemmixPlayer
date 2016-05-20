@@ -223,33 +223,9 @@ begin
 
   if (aMaskColor <> $00000000) then
   try
-    (* if    (aName = 'lemming_walker.png')
-       or (aName = 'lemming_jumper.png')
-       or (aName = 'lemming_climber.png')
-       or (aName = 'lemming_drowner.png')
-       or (aName = 'lemming_hoister.png')
-       or (aName = 'lemming_faller.png')
-       or (aName = 'lemming_floater_V2.png')
-       or (aName = 'lemming_splatter.png')
-       or (aName = 'lemming_exiter.png')
-       or (aName = 'lemming_burner.png')
-       or (aName = 'lemming_blocker.png')
-       or (aName = 'lemming_shrugger.png')
-       or (aName = 'lemming_ohnoer.png')
-       or (aName = 'lemming_bomber.png')
-       or (aName = 'lemming_stoner.png')
-       or (aName = 'lemming_swimmer.png')
-       or (aName = 'lemming_glider_V2.png')
-       or (aName = 'lemming_disarmer.png')
-       or (aName = 'lemming_stacker_V2.png') then
-       // Do nothing, to not raise an exception, because we expect that except *)
-    if    (aName = 'lemming_digger.png')
-       or (aName = 'lemming_builder.png')
-       or (aName = 'lemming_basher.png')
-       or (aName = 'lemming_miner.png')
-       or (aName = 'lemming_platformer.png') then
+    LoadImageStream := CreateDataStream(ChangeFileExt(aName, '_mask.png'), ldtLemmings);
+    if LoadImageStream <> nil then
     begin
-      LoadImageStream := CreateDataStream(ChangeFileExt(aName, '_mask.png'), ldtLemmings);
       MaskBMP := TPngInterface.LoadPngStream(LoadImageStream);
       PrepareMaskImage;
       MaskBMP.DrawMode := dmBlend;
