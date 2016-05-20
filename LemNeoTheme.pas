@@ -7,6 +7,7 @@ unit LemNeoTheme;
 interface
 
 uses
+  Dialogs,
   LemNeoParser,
   GR32, LemTypes, LemStrings,
   StrUtils, Classes, SysUtils;
@@ -74,11 +75,11 @@ var
 begin
   Clear;
   SetCurrentDir(AppPath + SFStyles + '\' + aSet + '\');
-  if not FileExists('theme.nxmi') then Exit;
+  if not FileExists('theme.nxtm') then Exit;
 
   Parser := TNeoLemmixParser.Create;
   try
-    Parser.LoadFromFile('theme.nxmi');
+    Parser.LoadFromFile('theme.nxtm');
     repeat
       Line := Parser.NextLine;
 

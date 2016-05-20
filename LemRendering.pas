@@ -865,6 +865,8 @@ begin
 
   Inf := Info;
 
+  fPieceManager.Tidy;
+
   // create cache to draw from
 
   fXmasPal := XmasPal;
@@ -880,10 +882,11 @@ begin
   end;
   //LowPal[7] := Graph.BrickColor; // copy the brickcolor
   SetLength(Pal, 16);
-  for i := 0 to 7 do
+  for i := 0 to 6 do
     Pal[i] := LowPal[i];
+  Pal[7] := fTheme.MaskColor;
   for i := 8 to 15 do
-    Pal[i] := 0;
+    Pal[i] := fTheme.ParticleColors[i-8];
 
   if fAni <> nil then fAni.Free;
   fAni := TBaseDosAnimationSet.Create;
