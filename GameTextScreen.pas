@@ -182,35 +182,32 @@ begin
   // fn := ExtractFilePath(ParamStr(0)) + fn + LeadZeroStr(GameParams.Info.dSection + 1, 2) + LeadZeroStr(GameParams.Info.dLevel + 1, 2) + '.txt';
   fn := fn + LeadZeroStr(GameParams.Info.dSection + 1, 2) + LeadZeroStr(GameParams.Info.dLevel + 1, 2) + '.txt';
 
-  Arc := TArchive.Create;
-  if Arc.CheckIfFileExists(fn) then
+  fn := ExtractFilePath(ParamStr(0)) + fn;
+
+  TextFileStream := CreateDataStream(fn, ldtText);
+  if TextFileStream = nil then Exit;
+
+  while (TextFileStream.Read(b, 1) <> 0) and (lfc < 18) do
   begin
-    fn := ExtractFilePath(ParamStr(0)) + fn;
-
-    TextFileStream := CreateDataStream(fn, ldtText);
-    if TextFileStream = nil then Exit;
-
-    while (TextFileStream.Read(b, 1) <> 0) and (lfc < 18) do
-    begin
-      if (b = 10) then LF(1);
-      {begin
-        Add(ts);
-        ts := '';
-      end;}
-      if (b >= 32) and (b <= 126) then Result := Result + Chr(b); //ts := ts + Chr(b);
-    end;
-
-    while lfc < 18 do
-    begin
-      if lfc mod 2 = 1 then LF(1)
-      else PreLF(1);
-    end;
-
-    LF(1);
-    Add(SPressMouseToContinue);
-
-    TextFileStream.Free;
+    if (b = 10) then LF(1);
+    {begin
+      Add(ts);
+      ts := '';
+    end;}
+    if (b >= 32) and (b <= 126) then Result := Result + Chr(b); //ts := ts + Chr(b);
   end;
+
+  while lfc < 18 do
+  begin
+    if lfc mod 2 = 1 then LF(1)
+    else PreLF(1);
+  end;
+
+  LF(1);
+  Add(SPressMouseToContinue);
+
+  TextFileStream.Free;
+
   Arc.Free;
 end;
 procedure TGameTextScreen.Form_KeyDown(Sender: TObject; var Key: Word;

@@ -297,7 +297,10 @@ begin
         ldtSound: begin
                     Result := TMemoryStream.Create;
                     Arc.OpenResource(HINSTANCE, 'lemsounds', 'archive');
-                    Arc.ExtractFile(aFilename, Result);
+                    if FileInArchive then
+                      Arc.ExtractFile(aFilename, Result)
+                    else
+                      FreeAndNil(Result);
                   end;
         ldtParticles: begin
                         Arc.OpenResource(HINSTANCE, 'lemparticles', 'archive');
@@ -309,7 +312,10 @@ begin
                        // in the NXP first, then in lemdata if the NXP comes up blank.
                        if not IsSingleLevelMode then Arc.OpenArchive(GameFile, amOpen);
                        if not FileInArchive then Arc.OpenResource(HINSTANCE, 'lemdata', 'archive');
-                       Arc.ExtractFile(aFilename, Result);
+                       if FileInArchive then
+                         Arc.ExtractFile(aFilename, Result)
+                       else
+                         FreeAndNil(Result);
                      end;
         ldtStyle: begin
                     // ldtStyle is used for graphic sets. This is similar to ldtLemmings, but also
@@ -319,8 +325,10 @@ begin
                     if FileInArchive then
                       Arc.ExtractFile(aFilename, Result)
                     else begin
-                      if not FileExists(AppPath + 'styles/' + aFilename) then Fail;
-                      Result.LoadFromFile(AppPath + 'styles/' + aFilename);
+                      if not FileExists(AppPath + 'styles/' + aFilename) then
+                        FreeAndNil(Result)
+                      else
+                        Result.LoadFromFile(AppPath + 'styles/' + aFilename);
                     end;
                   end;
         ldtText: begin
@@ -328,7 +336,10 @@ begin
                    // but that's why it's loaded via ldtLemmings). So it only checks the NXP.
                    if IsSingleLevelMode then Fail;
                    Arc.OpenArchive(GameFile, amOpen);
-                   Arc.ExtractFile(aFilename, Result);
+                   if FileInArchive then
+                     Arc.ExtractFile(aFilename, Result)
+                   else
+                     FreeAndNil(Result);
                  end;
         ldtMusic: begin
                     // ldtMusic is the most complicated one. We search in several places until we find it.
@@ -356,13 +367,16 @@ begin
                         if not (MusicFileInArchive or IsSingleLevelMode) then Arc.OpenArchive(GameFile, amOpen);
                         if not MusicFileInArchive then Arc.OpenResource(HINSTANCE, 'lemdata', 'archive');
                         MusicFileInArchive; // Sets aFilename to the one that actually exists.
-                        Arc.ExtractFile(aFilename, Result);
+                        if FileInArchive then
+                          Arc.ExtractFile(aFilename, Result)
+                        else
+                          FreeAndNil(Result);
                       end else begin
                         Result.LoadFromFile(AppPath + 'music/' + FindInMusicFolder);
                       end;
                   end;
       end;
-      Result.Position := 0;
+      if Result <> nil then Result.Position := 0;
     except
       Result.Free;
       Result := nil;

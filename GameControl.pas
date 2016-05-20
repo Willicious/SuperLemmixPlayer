@@ -365,12 +365,11 @@ begin
 
   Arc := TArchive.Create;
 
-  try
-    TempStream := CreateDataStream('talisman.dat', ldtLemmings);
+  TempStream := CreateDataStream('talisman.dat', ldtLemmings);
+  if TempStream <> nil then
+  begin
     fTalismans.LoadFromStream(TempStream);
     TempStream.Free;
-  except
-    // Silent fail. It's okay - and in fact common - for this file to be missing.
   end;
 
   fTalismans.SortTalismans;
