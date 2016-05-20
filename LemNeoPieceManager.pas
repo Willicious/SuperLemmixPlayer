@@ -7,6 +7,7 @@ unit LemNeoPieceManager;
 interface
 
 uses
+  Dialogs,
   LemNeoParser, PngInterface,
   LemMetaTerrain, LemMetaObject, LemRenderHelpers, LemTypes, GR32, LemStrings,
   Classes, SysUtils;
@@ -143,7 +144,7 @@ end;
 function TNeoPieceManager.FindTerrainIndexByIdentifier(Identifier: String): Integer;
 begin
   Identifier := Lowercase(Identifier);
-  for Result := 0 to TerrainCount do
+  for Result := 0 to TerrainCount-1 do
     if fTerrains[Result].Identifier = Identifier then Exit;
 
   // if it's not found
@@ -153,7 +154,7 @@ end;
 function TNeoPieceManager.FindObjectIndexByIdentifier(Identifier: String): Integer;
 begin
   Identifier := Lowercase(Identifier);
-  for Result := 0 to ObjectCount do
+  for Result := 0 to ObjectCount-1 do
     if fObjects[Result].Identifier = Identifier then Exit;
 
   // if it's not found
@@ -177,6 +178,9 @@ begin
 
   T := fTerrains.Add;
   BMP := TBitmap32.Create;
+
+  T.GS := TerrainLabel.GS;
+  T.Piece := TerrainLabel.Piece;
 
   // If the metainfo file exists, load and process it.
   if FileExists(TerrainLabel.Piece + '.nxtp') then
@@ -238,6 +242,7 @@ var
   end;
 
 begin
+  ShowMessage('obtaining object ' + Identifier);
   ObjectLabel := SplitIdentifier(Identifier);
   SetCurrentDir(AppPath + SFStyles + '\' + ObjectLabel.GS + '\');
 
@@ -247,6 +252,9 @@ begin
   BMP := TBitmap32.Create;
 
   TPngInterface.LoadPngFile(ObjectLabel.Piece + '.png', BMP);
+
+  O.GS := ObjectLabel.GS;
+  O.Piece := ObjectLabel.Piece;
 
   // We always need the parser for an object.
   Parser := TNeoLemmixParser.Create;
@@ -319,7 +327,11 @@ begin
   end;
 
   fObjectImages.Add(TObjectAnimation.Create(BMP, O.AnimationFrameCount, O.Width, O.Height));
+
+  BMP.SaveToFile(O.GS + O.Piece + '.bmp');
   BMP.Free;
+
+  ShowMessage('obtained');
 end;
 
 // Functions to get piece records (which contain pointers to both the metainfo and the images)

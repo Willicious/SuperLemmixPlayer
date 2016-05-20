@@ -61,7 +61,7 @@ var
       repeat
         i := i + 1;
         if i = GameParams.Level.InteractiveObjects.Count then i := 0;
-      until GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 23;
+      until GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).Meta.TriggerEffect = 23;
     end else begin
       i := LemsSpawned mod Length(GameParams.Level.Info.WindowOrder);
     end;
@@ -86,7 +86,7 @@ begin
 
     for i := 0 to InteractiveObjects.Count-1 do
     begin
-      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 13 then Continue;
+      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).Meta.TriggerEffect <> 13 then Continue;
       LemsSpawned := LemsSpawned + 1; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
       if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
@@ -95,7 +95,7 @@ begin
     while LemsSpawned < Info.LemmingsCount do
     begin
       FindNextWindow;
-      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 23 then Continue;
+      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).Meta.TriggerEffect <> 23 then Continue;
       LemsSpawned := LemsSpawned + 1;
       if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
@@ -211,7 +211,7 @@ begin
   for i := 0 to aLevel.InteractiveObjects.Count - 1 do
   begin
     //if aLevel.InteractiveObjects[i].Identifier = 1 then FoundWindow := true;
-    MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]);
+    MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]).Meta;
     if MO.TriggerEffect = 23 then FoundWindow := true;
     if MO.TriggerEffect = 13 then Inc(MinCount);
   end;

@@ -914,7 +914,7 @@ begin
     MouseClipRect := Rect(ClientToScreen(Point(0, 0)), ClientToScreen(Point(Img.Width, Img.Height + SkillPanel.Height)));
 
   SkillPanel.GameParams := GameParams;
-  SkillPanel.SetStyleAndGraph(Gameparams.Style, nil, Sca);
+  SkillPanel.SetStyleAndGraph(Gameparams.Style, Sca);
 
   SkillPanel.Level := GameParams.Level;
   SkillPanel.SetSkillIcons;

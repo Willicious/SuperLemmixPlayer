@@ -28,14 +28,13 @@ uses
   GR32, GR32_LowLevel,
   UMisc,
   SysUtils,
-  LemRenderHelpers, LemNeoPieceManager,
+  LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
   LemDosBmp, LemDosStructures,
   LemTypes,
   LemTerrain,
   LemObjects, LemInteractiveObject,   LemMetaObject,
   LemSteel,
   LemDosAnimationSet,
-  LemGraphicSet, LemNeoGraphicSet,
   LemLevel;
 
   // we could maybe use the alpha channel for rendering, ok thats working!
@@ -45,10 +44,8 @@ uses
 type
   // temp solution
   TRenderInfoRec = record
-//    World        : TBitmap32; // the actual bitmap
     TargetBitmap : TBitmap32; // the visual bitmap
     Level        : TLevel;
-    (*GraphicSet   : TBaseGraphicSet;*)
   end;
 
   TRenderer = class
@@ -57,7 +54,9 @@ type
     Inf                : TRenderInfoRec;
     fXmasPal : Boolean;
 
-    fGraphicSets: TNeoLemmixGraphicSets;
+    fTheme: TNeoTheme;
+
+    fPieceManager: TNeoPieceManager;
 
     fWorld: TBitmap32;
 
@@ -91,8 +90,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    function FindMetaObject(O: TInteractiveObject): TMetaObject;
-    function FindGraphicSet(aName: String): TBaseGraphicSet;
+    function FindMetaObject(O: TInteractiveObject): TObjectRecord;
+    function FindMetaTerrain(T: TTerrain): TTerrainRecord;
 
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
@@ -101,8 +100,6 @@ type
     procedure DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo); Overload;
     procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
 
-    procedure DrawObjectBottomLine(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer;
-      aOriginal: TBitmap32 = nil);
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
     procedure EraseObject(Dst: TBitmap32; O: TInteractiveObject;
       aOriginal: TBitmap32 = nil);
@@ -116,6 +113,8 @@ type
     procedure Highlight(World: TBitmap32; M: TColor32);
 
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
+
+    property Theme: TNeoTheme read fTheme;
   end;
 
 const
@@ -140,31 +139,36 @@ uses
 
 { TRenderer }
 
-function TRenderer.FindMetaObject(O: TInteractiveObject): TMetaObject;
+function TRenderer.FindMetaObject(O: TInteractiveObject): TObjectRecord;
 var
-  GS: TBaseGraphicSet;
+  FindLabel: String;
 begin
-  GS := FindGraphicSet(O.GS);
-  Result := GS.MetaObjects[StrToIntDef(O.Piece, 0)];
+  FindLabel := O.GS + ':' + O.Piece;
+  Result := fPieceManager.Objects[FindLabel];
 end;
 
-function TRenderer.FindGraphicSet(aName: String): TBaseGraphicSet;
+function TRenderer.FindMetaTerrain(T: TTerrain): TTerrainRecord;
 var
-  i: Integer;
-  GS: TBaseNeoGraphicSet;
+  FindLabel: String;
+begin
+  FindLabel := T.GS + ':' + T.Piece;
+  Result := fPieceManager.Terrains[FindLabel];
+end;
 
+(*function TRenderer.FindGraphicSet(aName: String): TBaseGraphicSet;
+var
+  GS: TBaseNeoGraphicSet;
+  i: Integer;
   MO: TMetaObject;
   Bmp: TBitmap32;
-  Item: TObjectAnimation;
+  Item: TDrawItem;
 begin
-  for i := 0 to fGraphicSets.Count-1 do
-    if Lowercase(aName) = Lowercase(fGraphicSets[i].GraphicSetName) then
-    begin
-      Result := fGraphicSets[i];
-      Exit;
-    end;
+  if fTempGS.GraphicSetName = aName then
+  begin
+    Result := fTempGS;
+    Exit;
+  end;
 
-  GS := fGraphicSets.Add;
   GS.GraphicSetName := aName;
   GS.OnlineEnabled := true; // until we have a way to pass to here whether it is or not, just always set it to true
   GS.GraphicSetFile := aName + '.dat';
@@ -182,8 +186,9 @@ begin
 
     end;
 
+  fTempGS := GS;
   Result := GS;
-end;
+end;*)
 
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
@@ -375,14 +380,15 @@ var
   UDf: Byte;
   IsSteel: Boolean;
   IsNoOneWay: Boolean;
-  PieceID: Integer;
-  GS: TBaseGraphicSet;
+
+  TRec: TTerrainRecord;
 begin
-  PieceID := StrToIntDef(T.Piece, 0);
-  GS := FindGraphicSet(T.GS);
-  Src := GS.TerrainBitmaps.List^[PieceID];
+
+  TRec := FindMetaTerrain(T);
+  Src := TRec.Image;
+
   UDf := T.DrawingFlags;
-  IsSteel := ((GS.MetaTerrains[PieceID].Unknown and $01) = 1);
+  IsSteel := ((TRec.Meta.Unknown and $01) = 1);
   IsNoOneWay := (UDf and tdf_NoOneWay <> 0);
   if (T.DrawingFlags and tdf_Invert = 0) and (T.DrawingFlags and tdf_Flip = 0) and (T.DrawingFlags and tdf_Rotate = 0) then
   begin
@@ -442,60 +448,6 @@ begin
   Spec[2].DrawTo(Dst, Inf.Level.Info.VgaspecX, Inf.Level.Info.VgaspecY);
 end;
 
-procedure TRenderer.DrawObjectBottomLine(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer; aOriginal: TBitmap32 = nil);
-var
-  SrcRect, DstRect, R: TRect;
-  Item: TObjectAnimation;// TDrawItem;
-  Src: TBitmap32;
-  MO: TMetaObject;
-  PieceID: Integer;
-  GS: TBaseGraphicSet;
-begin
-  PieceID := StrToIntDef(O.Piece, 0);
-  GS := FindGraphicSet(O.GS);
-  Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
-  Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
-  MO := GS.MetaObjects[PieceID];
-  //ObjectBitmapItems.List^[O.Identifier];
-
-  if aFrame > MO.AnimationFrameCount-1 then aFrame := MO.AnimationFrameCount-1; // just in case
-
-  if O.DrawingFlags and odf_Invisible <> 0 then Exit;
-
-  Src := TBitmap32.Create;
-
-  if odf_UpsideDown and O.DrawingFlags = 0
-  then Src.Assign(Item.Original)
-  else Src.Assign(Item.Inverted);
-
-  if odf_Flip and O.DrawingFlags <> 0
-  then Src.FlipHorz;
-
-  if MO.TriggerEffect in [7, 8, 19] then
-  begin
-    O.DrawingFlags := O.DrawingFlags and not odf_NoOverwrite;
-    O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
-  end;
-
-  PrepareObjectBitmap(Src, O.DrawingFlags);
-
-  SrcRect := Item.CalcFrameRect(aFrame);
-  DstRect := SrcRect;
-  DstRect := ZeroTopLeftRect(DstRect);
-  OffsetRect(DstRect, O.Left, O.Top);
-
-  SrcRect.Top := SrcRect.Bottom - 1;
-  DstRect.Top := DstRect.Bottom - 1;
-
-  if aOriginal <> nil then
-  begin
-    IntersectRect(R, DstRect, aOriginal.BoundsRect); // oops important!
-    aOriginal.DrawTo(Dst, R, R);
-  end;
-  Src.DrawTo(Dst, DstRect, SrcRect);
-  Src.Free;
-end;
-
 procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
 {-------------------------------------------------------------------------------
   Draws a interactive object
@@ -509,15 +461,13 @@ var
   Item: TObjectAnimation;// TDrawItem;
   Src: TBitmap32;
   MO: TMetaObject;
-  PieceID: Integer;
-  GS: TBaseGraphicSet;
+
+  ORec: TObjectRecord;
 begin
-  PieceID := StrToIntDef(O.Piece, 0);
-  GS := FindGraphicSet(O.GS);
-  Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
-  Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
-  MO := GS.MetaObjects[PieceID];
-  //ObjectBitmapItems.List^[O.Identifier];
+
+  ORec := FindMetaObject(O);
+  MO := ORec.Meta;
+  Item := TObjectAnimation(ORec.Image);
 
   if O.DrawingFlags and odf_Invisible <> 0 then Exit;
   if MO.TriggerEffect = 25 then Exit;
@@ -559,13 +509,8 @@ var
   Item: TObjectAnimation;
   Src: TBitmap32;
   DrawFrame: Integer;
-  PieceID: Integer;
-  GS: TBaseGraphicSet;
 begin
-  GS := FindGraphicSet(Gadget.Obj.GS);
-  PieceID := StrToIntDef(Gadget.Obj.Piece, 0);
-  Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
-  Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
+  Item := TObjectAnimation(FindMetaObject(Gadget.Obj).Image);
 
   if Gadget.IsInvisible then Exit;
   if Gadget.TriggerEffect = DOM_HINT then Exit;
@@ -599,8 +544,6 @@ var
   Item: TObjectAnimation;
   Src: TBitmap32;
   DrawFrame, i: Integer;
-  PieceID: Integer;
-  GS: TBaseGraphicSet;
 begin
   Src := TBitmap32.Create;
 
@@ -609,10 +552,8 @@ begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect <> DOM_LEMMING then
     begin
-      GS := FindGraphicSet(Inf.Obj.GS);
-      PieceID := StrToIntDef(Inf.Obj.Piece, 0);
-      Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
-      Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
+
+      Item := TObjectAnimation(FindMetaObject(Inf.Obj).Image);
 
       if Inf.IsInvisible then Continue;
       if Inf.TriggerEffect = DOM_HINT then Continue;
@@ -649,13 +590,11 @@ var
   a: Integer;
   MO: TMetaObject;
   TempRect: TRect;
-  GS: TBaseGraphicSet;
 begin
-  GS := FindGraphicSet(O.GS);
   if O.IsFake then exit;
   tx := O.Left;
   ty := O.Top;
-  MO := GS.MetaObjects[StrToIntDef(O.Piece, 0)];
+  MO := FindMetaObject(O).Meta;
   tx := tx + MO.TriggerLeft;
   ty := ty + MO.TriggerTop;
 
@@ -733,16 +672,11 @@ var
   SrcRect, DstRect, R: TRect;
   Item: TObjectAnimation;// TDrawItem;
   //Src: TBitmap32;
-  PieceID: Integer;
-  GS: TBaseGraphicSet;
 begin
   if aOriginal = nil then
     Exit;
 
-  PieceID := StrToIntDef(O.Piece, 0);
-  GS := FindGraphicSet(O.GS);
-  Assert(GS.ObjectRenderList[PieceID] is TObjectAnimation);
-  Item := TObjectAnimation(GS.ObjectRenderList[PieceID]);
+  Item := TObjectAnimation(FindMetaObject(O).Image);
   //ObjectBitmapItems.List^[O.Identifier];
 
   SrcRect := Item.CalcFrameRect(0);
@@ -759,7 +693,8 @@ constructor TRenderer.Create;
 begin
   inherited Create;
   TempBitmap := TBitmap32.Create;
-  fGraphicSets := TNeoLemmixGraphicSets.Create(true);
+  fPieceManager := TNeoPieceManager.Create;
+  fTheme := TNeoTheme.Create;
   //fAni := TBaseDosAnimationSet.Create;
   fBgColor := $00000000;
 end;
@@ -767,7 +702,8 @@ end;
 destructor TRenderer.Destroy;
 begin
   TempBitmap.Free;
-  fGraphicSets.Free;
+  fPieceManager.Free;
+  fTheme.Free;
   if fAni <> nil then fAni.Free;
   inherited Destroy;
 end;
@@ -786,23 +722,16 @@ var
   TZ: Boolean;
   OWL, OWR, OWD, DoOWW: Integer;
   x, y: Integer;
-  GS: TBaseGraphicSet;
 begin
+  fBgColor := Theme.BackgroundColor and $FFFFFF;
+  fPieceManager.Tidy;
+
   World.Clear(fBgColor);
 
-  GS := FindGraphicSet(Inf.Level.Info.GraphicSetName);
-
   if Inf.Level = nil then Exit;
-  //if Inf.GraphicSet = nil then Exit;
 
   with Inf do
   begin
-
-    if GS.GraphicSetIdExt > 0 then
-    begin
-      //Bmp := Inf.GraphicSet.SpecialBitmaps[0];
-      DrawSpecialBitmap(World, GS.SpecialBitmaps, (Inf.Level.Info.LevelOptions and $80 = 0));
-    end;
 
     // mtn := Level.Terrains.HackedList.Count - 1;
 
@@ -810,15 +739,14 @@ begin
       for i := 0 to Level.Terrains.HackedList.Count - 1 do
       begin
         Ter := List^[i];
-        GS := FindGraphicSet(Ter.GS);
         if (((SOX = false) or ((Ter.DrawingFlags and tdf_Erase) <> 0))
-        or ((GS.MetaTerrains[StrToIntDef(Ter.Piece, 0)].Unknown and $01) <> 0)) then
+        or ((FindMetaTerrain(Ter).Meta.Unknown and $01) <> 0)) then
           DrawTerrain(World, Ter, SteelOnly);
       end;
 
 
     // Find the one way objects
-    GS := FindGraphicSet(Inf.Level.Info.GraphicSetName);
+    (*GS := FindGraphicSet(Inf.Level.Info.GraphicSetName);
     with GS.MetaObjects.HackedList do
     begin
       OWL := -1;
@@ -869,7 +797,8 @@ begin
         end;
 
       end;
-    end;
+    end;*)
+    // This code removed for now due to incompatibility with new graphic set handling
 
 
     if DoObjects then
@@ -881,8 +810,7 @@ begin
       for i := 0 to Count - 1 do
       begin
         Obj := List^[i];
-        GS := FindGraphicSet(Obj.GS);
-        MO := GS.MetaObjects[StrToIntDef(obj.Piece, 0)];
+        MO := FindMetaObject(Obj).Meta;
         if (Obj.DrawingFlags and odf_Invisible <> 0) or (MO.TriggerEffect in [13, 16]) then Continue;
         fi := MO.PreviewFrameIndex;
         if MO.TriggerEffect in [7, 8, 19] then
@@ -900,8 +828,7 @@ begin
       for i := 0 to Count - 1 do
       begin
         Obj := List^[i];
-        GS := FindGraphicSet(Obj.GS);
-        MO := GS.MetaObjects[StrToIntDef(obj.Piece, 0)];
+        MO := FindMetaObject(Obj).Meta;
         if (Obj.DrawingFlags and odf_Invisible <> 0) or (MO.TriggerEffect in [13, 16]) then Continue;
         fi := MO.PreviewFrameIndex;
         if MO.TriggerEffect in [15, 17] then
@@ -914,8 +841,7 @@ begin
       for i := 0 to Count - 1 do
       begin
         Obj := List^[i];
-        GS := FindGraphicSet(Obj.GS);
-        MO := GS.MetaObjects[StrToIntDef(Obj.Piece, 0)];
+        MO := FindMetaObject(Obj).Meta;
 
         if MO.TriggerEffect = 13 then
         begin
@@ -937,7 +863,6 @@ var
   Bmp: TBitmap32;
   MO: TMetaObject;
   LowPal, {HiPal,} Pal: TArrayOfColor32;
-  GS: TBaseGraphicSet;
 //  R: TRect;
 begin
 
@@ -945,9 +870,9 @@ begin
 
   // create cache to draw from
 
-  GS := FindGraphicSet(Inf.Level.Info.GraphicSetName);
-
   fXmasPal := XmasPal;
+
+  fTheme.Load(Info.Level.Info.GraphicSetName);
 
   LowPal := DosPaletteToArrayOfColor32(DosInLevelPalette);
   if fXmasPal then

@@ -33,7 +33,7 @@ uses
   GR32, GR32_OrdinalMaps, GR32_Layers,
   LemCore, LemTypes, LemDosBmp, LemDosStructures, LemStrings, LemMetaAnimation,
   LemMetaObject, LemInteractiveObject, LemSteel, LemLevel, LemStyle,
-  LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet, LemRendering, LemDosAnimationSet,
+  LemRendering, LemDosAnimationSet,
   LemMusicSystem, LemDosMainDat,
   LemObjects,
   GameInterfaces, GameControl, GameSound;
@@ -459,7 +459,6 @@ type
     fInfoPainter               : IGameToolbar; // ref to interface to enable this component to draw to skillpanel
     fLevel                     : TLevel; // ref to gameparams.level
     Style                      : TBaseLemmingStyle; // ref to gameparams.style
-    Graph                      : TBaseDosGraphicSet; // Gets primary graphic set via renderer
     CntDownBmp                 : TBitmap32; // ref to style.animationset.countdowndigits
     HighlightBmp               : TBitmap32;
     ExplodeMaskBmp             : TBitmap32; // ref to style.animationset.explosionmask
@@ -1669,7 +1668,6 @@ begin
   fTargetBitmap := fGameParams.TargetBitmap;
   Level := fGameParams.Level;
   Style := fGameParams.Style;
-  Graph := TBaseDosGraphicSet(fGameParams.Renderer.FindGraphicSet(Level.Info.GraphicSetName));
 
   {-------------------------------------------------------------------------------
     Initialize the palette of AnimationSet.
@@ -1686,13 +1684,14 @@ begin
   end;
   SetLength(HiPal, 8);
   for i := 0 to 7 do
-    HiPal[i] := Graph.Palette[i+8];
-  LowPal[7] := Graph.BrickColor; // copy the brickcolor
+    HiPal[i] := Renderer.Theme.ParticleColors[i];
+  LowPal[7] := Renderer.Theme.MaskColor; // copy the brickcolor
   SetLength(Pal, 16);
   for i := 0 to 7 do
     Pal[i] := LowPal[i];
   for i := 8 to 15 do
     Pal[i] := HiPal[i - 8];
+
   Ani := Style.AnimationSet as TBaseDosAnimationSet;
   Ani.AnimationPalette := Copy(Pal);
   Ani.ClearData;
@@ -1701,7 +1700,7 @@ begin
   else if (fGameParams.SysDat.Options3 and 64) <> 0 then
     Ani.LemmingPrefix := 'xlemming'
   else
-    Ani.LemmingPrefix := Graph.LemmingSprites;
+    Ani.LemmingPrefix := Renderer.Theme.Lemmings;
   Ani.ReadData;
 
   // initialize explosion particle colors
@@ -1781,17 +1780,6 @@ begin
   S.Seek(0, soFromBeginning);
   S.Read(fParticles, S.Size);
   S.Free;
-
-  with TBaseNeoGraphicSet(fGameParams.Renderer.FindGraphicSet(Level.Info.GraphicSetName)) do
-    for i := 0 to 255 do
-      if CustSounds[i].Size <> 0 then
-      begin
-        if SFX_CUSTOM[i] <> 0 then
-        begin
-          SoundMgr.FreeSound(SFX_CUSTOM[i]);
-        end;
-        SFX_CUSTOM[i] := SoundMgr.AddSoundFromStream(CustSounds[i]);
-      end;
 
   fTalismans.Clear;
 
@@ -1994,7 +1982,7 @@ begin
         ObjectInfos[i].CurrentFrame := 0;
 
   ApplyLevelEntryOrder;
-  InitializeBrickColors(Graph.BrickColor);
+  InitializeBrickColors(Renderer.Theme.MaskColor);
   InitializeObjectMap;
   InitializeBlockerMap;
   InitializeMiniMap;
@@ -2055,7 +2043,7 @@ begin
 
   for i := 0 to Level.InteractiveObjects.Count - 1 do
   begin
-    MetaInfo := fRenderer.FindMetaObject(Level.InteractiveObjects[i]);
+    MetaInfo := fRenderer.FindMetaObject(Level.InteractiveObjects[i]).Meta;
     Inf := TInteractiveObjectInfo.Create(Level.InteractiveObjects[i], MetaInfo);
 
     ObjectInfos.Add(Inf);

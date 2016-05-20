@@ -160,7 +160,7 @@ var
       AdjLemCount := GameParams.Level.Info.LemmingsCount;
       if (GameParams.Level.Info.SkillTypes and 1) <> 0 then AdjLemCount := AdjLemCount + GameParams.Level.Info.ClonerCount;
       for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
-        if GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 14 then
+        if GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).Meta.TriggerEffect = 14 then
           if GameParams.Level.InteractiveObjects[i].Skill = 15 then Inc(AdjLemCount);
       with GameParams.GameResult do
       begin

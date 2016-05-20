@@ -76,10 +76,6 @@ const
 
 implementation
 
-uses
-  LemNeoGraphicSet;
-
-
 function DosPaletteEntryToColor32(Red, Green, Blue: Byte): TColor32;
 begin
   with TColor32Entry(Result) do
@@ -538,7 +534,6 @@ var
   Pal: TArrayOfColor32;
   PalInfo: TDosVgaSpecPaletteHeader;
   normsize: Boolean;
-  NeoGS: TBaseNeoGraphicSet;
 
 
     procedure LogPal;
@@ -574,7 +569,7 @@ begin
 
     if S.Position <> S.Size then // definite marker of a new-format graphic set
     begin
-      NeoGS := TBaseNeoGraphicSet.Create;
+      {NeoGS := TBaseNeoGraphicSet.Create;
       NeoGS.GraphicSetFile := '*'; //give it any value, so it doesn't try to default to old-format
       NeoGS.LoadFromStream(S);
       NeoGS.ReadMetaData;
@@ -600,7 +595,7 @@ begin
         TempBitmap.Assign(aBitmaps[0]);
       aBitmaps.Add(TempBitmap);
 
-      NeoGS.Free;
+      NeoGS.Free;}
     end else begin
 
     PMem := TMemoryStream.Create;

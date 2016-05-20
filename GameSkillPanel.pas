@@ -18,7 +18,6 @@ uses
   LemCore,
   LemLevel,
   LemDosStyle,
-  LemDosGraphicSet,
   GameInterfaces,
   GameControl,
   LemGame,
@@ -40,7 +39,6 @@ type
   TSkillPanelToolbar = class(TCustomControl, IGameToolbar)
   private
     fStyle         : TBaseDosLemmingStyle;
-    fGraph         : TBaseDosGraphicSet;
     fParams        : TDosGameParams;
 
     fImg           : TImage32;
@@ -126,8 +124,7 @@ type
     property GameParams: TDosGameParams read fParams write fParams;    
     property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
   published
-    procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle;
-      const aGraph: TBaseDosGraphicSet; aScale: Integer);
+    procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
 
     property Level: TLevel read fLevel write SetLevel;
     property Game: TLemmingGame read fGame write SetGame;
@@ -695,16 +692,14 @@ begin
   end;
   SetLength(HiPal, 8);
   for i := 0 to 7 do
-    HiPal[i] := fGraph.Palette[i+8];
+    HiPal[i] := GameParams.Renderer.Theme.ParticleColors[i];
 
   {TODO: how o how is the palette constructed?????????}
   Assert(Length(HiPal) = 8, 'hipal error');
   SetLength(LemmixPal, 16);
   for i := 8 to 15 do
     LemmixPal[i] := HiPal[i - 8];
-  LemmixPal[7] := LemmixPal[8];
-
-  if (fGraph.GraphicSetIdExt <> 0) and not fGraph.FullColorVgaspec then LemmixPal[7] := $FF8000D4;
+  LemmixPal[7] := GameParams.Renderer.Theme.MaskColor;
 
   SetButtonRects;
   MainExtractor := TMainDatExtractor.Create;
@@ -1002,12 +997,10 @@ begin
 end;
 
 procedure TSkillPanelToolbar.SetStyleAndGraph(const Value: TBaseDosLemmingStyle;
-      const aGraph: TBaseDosGraphicSet;
       aScale: Integer);
 begin
   fImg.BeginUpdate;
   fStyle := Value;
-  fGraph := TBaseDosGraphicSet(GameParams.Renderer.FindGraphicSet(GameParams.Level.Info.GraphicSetName));
   if fStyle <> nil then
   begin
     ReadBitmapFromStyle;
