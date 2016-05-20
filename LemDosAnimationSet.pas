@@ -222,8 +222,8 @@ begin
   Lem($157C8, 'Lminer'            ,  24, 16, 13,  19,   7,  13,   lat_Loop);
   Lem($18618, 'Rfaller'           ,   4, 16, 10,  19,   7,  10,   lat_Loop);
   Lem($18C08, 'Lfaller'           ,   4, 16, 10,  19,   9,  10,   lat_Loop);
-  Lem($191F8, 'Rfloater_V2'       ,  17, 16, 16,  19,   7,  16,   lat_Loop);
-  Lem($1A4F8, 'Lfloater_V2'       ,  17, 16, 16,  19,   9,  16,   lat_Loop);
+  Lem($191F8, 'Rfloater'       ,  17, 16, 16,  19,   7,  16,   lat_Loop);
+  Lem($1A4F8, 'Lfloater'       ,  17, 16, 16,  19,   9,  16,   lat_Loop);
   Lem($1B7F8, 'Rsplatter'         ,  16, 16, 10,  19,   7,  10,   lat_Once);
   Lem($1B7F8, 'Lsplatter'         ,  16, 16, 10,  19,   8,  10,   lat_Once);
   Lem($1CFB8, 'Rexiter'           ,   8, 16, 13,  19,   6,  13,   lat_Once);
@@ -244,12 +244,12 @@ begin
   Lem($28F80, 'Lstoner'           ,   1, 32, 32,  19,  16,  25,   lat_Once); //30
   Lem($29AA2, 'Rswimmer'          ,   8, 16, 10,  19,   8,   8,   lat_Loop);
   Lem($2A682, 'Lswimmer'          ,   8, 16, 10,  19,   7,   8,   lat_Loop);
-  Lem($2B262, 'Rglider_V2'        ,  17, 16, 16,  19,   7,  16,   lat_Loop);
-  Lem($2C562, 'Lglider_V2'        ,  17, 16, 16,  19,   9,  16,   lat_Loop);
+  Lem($2B262, 'Rglider'        ,  17, 16, 16,  19,   7,  16,   lat_Loop);
+  Lem($2C562, 'Lglider'        ,  17, 16, 16,  19,   9,  16,   lat_Loop);
   Lem($2D862, 'Rdisarmer'         ,  16, 16, 14,  19,   8,  12,   lat_Loop);
   Lem($2D862, 'Ldisarmer'         ,  16, 16, 14,  19,   9,  12,   lat_Loop);
-  Lem($8CB8, 'Rstacker_V2'        ,   8, 16, 13,  19,   8,  13,   lat_Loop); // MAIN.DAT doesn't have seperate anims for builder and
-  Lem($AB98, 'Lstacker_V2'        ,   8, 16, 13,  19,   9,  13,   lat_Loop); // stacker; only PNG files support this
+  Lem($8CB8, 'Rstacker'        ,   8, 16, 13,  19,   8,  13,   lat_Loop); // MAIN.DAT doesn't have seperate anims for builder and
+  Lem($AB98, 'Lstacker'        ,   8, 16, 13,  19,   9,  13,   lat_Loop); // stacker; only PNG files support this
   Lem($29900, 'pass'              ,   1, 16, 11,  19,   8,  10,   lat_Once);   // Stoner terrain image; this is loaded among masks
 
   if fMetaLemmingAnimations.Count <> 49 then
