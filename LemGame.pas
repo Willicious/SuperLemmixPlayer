@@ -3363,7 +3363,7 @@ begin
 
   // Check for blocker fields and force-fields
   // but not for miners removing terrain, see http://www.lemmingsforums.net/index.php?topic=2710.0
-  if (not (L.LemAction = baMining)) and (not (L.LemFrame in [1, 2])) then
+  if (L.LemAction <> baMining) or not (L.LemFrame in [1, 2]) then
   begin
     if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
       HandleForceField(L, -1)
