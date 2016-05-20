@@ -4,20 +4,26 @@ unit LemMetaTerrain;
 interface
 
 uses
-  Classes,
+  Classes, SysUtils,
   UTools;
 
 type
  TMetaTerrain = class(TCollectionItem)
   private
+    fGS    : String;
+    fPiece  : String;
     fWidth          : Integer;
     fHeight         : Integer;
     fImageLocation  : Integer; // DOS history: data location of image in vgagr??.dat
     fUnknown        : Integer;
+    function GetIdentifier: String;
   protected
   public
     procedure Assign(Source: TPersistent); override;
   published
+    property Identifier : String read GetIdentifier;
+    property GS     : String read fGS write fGS;
+    property Piece  : String read fPiece write fPiece;
     property Width         : Integer read fWidth write fWidth;
     property Height        : Integer read fHeight write fHeight;
     property ImageLocation : Integer read fImageLocation write fImageLocation;
@@ -52,6 +58,11 @@ begin
     fUnknown := T.fUnknown;
   end
   else inherited Assign(Source);
+end;
+
+function TMetaTerrain.GetIdentifier: String;
+begin
+  Result := LowerCase(fGS + ':' + fPiece);
 end;
 
 { TMetaTerrains }

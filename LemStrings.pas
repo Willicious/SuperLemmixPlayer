@@ -32,6 +32,9 @@ const
 
   SCheatCode = '';
 
+  // Important paths
+  SFStyles = 'styles';
+
 resourcestring
   SProgramName = 'NeoLemmix Player';
   SDummyString = '';

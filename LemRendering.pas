@@ -28,7 +28,7 @@ uses
   GR32, GR32_LowLevel,
   UMisc,
   SysUtils,
-  LemRenderHelpers,
+  LemRenderHelpers, LemNeoPieceManager,
   LemDosBmp, LemDosStructures,
   LemTypes,
   LemTerrain,

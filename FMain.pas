@@ -20,7 +20,6 @@ unit FMain;
 interface
 
 uses
-  //LemNeoRendering, //DEBUG just for testing compiling of it 
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs,  StdCtrls,
   FBaseDosForm,

@@ -5,7 +5,7 @@ unit LemMetaObject;
 interface
 
 uses
-  Classes,
+  Classes, SysUtils,
   UTools;
 
 const
@@ -59,6 +59,8 @@ type
   TMetaObject = class(TCollectionItem)
   private
   protected
+    fGS    : String;
+    fPiece  : String;
     fAnimationType                : Integer; // oat_xxxx
     fStartAnimationFrameIndex     : Integer; // frame with which the animation starts?
     fAnimationFrameCount          : Integer; // number of animations
@@ -80,9 +82,13 @@ type
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : Integer; // ose_xxxx what sound to play
     fRandomStartFrame             : Boolean;
+    function GetIdentifier: String;
   public
     procedure Assign(Source: TPersistent); override;
   published
+    property Identifier : String read GetIdentifier;
+    property GS     : String read fGS write fGS;
+    property Piece  : String read fPiece write fPiece;
     property AnimationType            : Integer read fAnimationType write fAnimationType;
     property StartAnimationFrameIndex : Integer read fStartAnimationFrameIndex write fStartAnimationFrameIndex;
     property AnimationFrameCount      : Integer read fAnimationFrameCount write fAnimationFrameCount;
@@ -144,6 +150,11 @@ begin
     fSoundEffect                  := M.fSoundEffect;
   end
   else inherited Assign(Source);
+end;
+
+function TMetaObject.GetIdentifier: String;
+begin
+  Result := LowerCase(fGS + ':' + fPiece);
 end;
 
 { TMetaObjects }
