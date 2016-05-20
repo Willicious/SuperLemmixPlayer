@@ -458,7 +458,6 @@ procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: In
 -------------------------------------------------------------------------------}
 var
   SrcRect, DstRect: TRect;
-  Item: TObjectAnimation;// TDrawItem;
   Src: TBitmap32;
   MO: TMetaObject;
 
@@ -467,7 +466,6 @@ begin
 
   ORec := FindMetaObject(O);
   MO := ORec.Meta;
-  Item := TObjectAnimation(ORec.Image);
 
   if O.DrawingFlags and odf_Invisible <> 0 then Exit;
   if MO.TriggerEffect = 25 then Exit;
@@ -475,13 +473,13 @@ begin
   if aFrame > MO.AnimationFrameCount-1 then aFrame := MO.AnimationFrameCount-1; // for this one, it actually can matter sometimes
 
   Src := TBitmap32.Create;
+  Src.Assign(ORec.Image[aFrame]);
 
-  if odf_UpsideDown and O.DrawingFlags = 0
-  then Src.Assign(Item.Original)
-  else Src.Assign(Item.Inverted);
+  if odf_UpsideDown and O.DrawingFlags <> 0 then
+    Src.FlipVert;
 
-  if odf_Flip and O.DrawingFlags <> 0
-  then Src.FlipHorz;
+  if odf_Flip and O.DrawingFlags <> 0 then
+    Src.FlipHorz;
 
   if MO.TriggerEffect in [7, 8, 19] then
   begin
@@ -491,12 +489,11 @@ begin
 
   PrepareObjectBitmap(Src, O.DrawingFlags, O.DrawAsZombie);
 
-  SrcRect := Item.CalcFrameRect(aFrame);
-  DstRect := SrcRect;
+  DstRect := Src.BoundsRect;
   DstRect := ZeroTopLeftRect(DstRect);
   OffsetRect(DstRect, O.Left, O.Top);
 
-  Src.DrawTo(Dst, DstRect, SrcRect);
+  Src.DrawTo(Dst, DstRect);
   Src.Free;
 
   O.LastDrawX := O.Left;
@@ -506,11 +503,9 @@ end;
 procedure TRenderer.DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo);
 var
   SrcRect, DstRect, R: TRect;
-  Item: TObjectAnimation;
   Src: TBitmap32;
   DrawFrame: Integer;
 begin
-  Item := TObjectAnimation(FindMetaObject(Gadget.Obj).Image);
 
   if Gadget.IsInvisible then Exit;
   if Gadget.TriggerEffect = DOM_HINT then Exit;
@@ -518,19 +513,21 @@ begin
   DrawFrame := MinIntValue([Gadget.CurrentFrame, Gadget.AnimationFrameCount - 1]);
 
   Src := TBitmap32.Create;
+  Src.Assign(FindMetaObject(Gadget.Obj).Image[DrawFrame]);
 
-  if Gadget.IsUpsideDown then Src.Assign(Item.Inverted)
-  else Src.Assign(Item.Original);
+  if Gadget.IsUpsideDown then
+    Src.FlipVert;
 
-  if Gadget.IsFlipImage then Src.FlipHorz;   
+  if Gadget.IsFlipImage then
+    Src.FlipHorz;
 
   PrepareObjectBitmap(Src, Gadget.Obj.DrawingFlags, Gadget.ZombieMode);
 
-  SrcRect := Item.CalcFrameRect(DrawFrame);
+  SrcRect := Src.BoundsRect;
   DstRect := ZeroTopLeftRect(SrcRect);
   OffsetRect(DstRect, Gadget.Left, Gadget.Top);
 
-  Src.DrawTo(Dst, DstRect, SrcRect);
+  Src.DrawTo(Dst, DstRect);
   Src.Free;
 
   Gadget.Obj.LastDrawX := Gadget.Left;
@@ -541,7 +538,6 @@ procedure TRenderer.DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObje
 var
   SrcRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
-  Item: TObjectAnimation;
   Src: TBitmap32;
   DrawFrame, i: Integer;
 begin
@@ -553,21 +549,22 @@ begin
     if Inf.TriggerEffect <> DOM_LEMMING then
     begin
 
-      Item := TObjectAnimation(FindMetaObject(Inf.Obj).Image);
-
       if Inf.IsInvisible then Continue;
       if Inf.TriggerEffect = DOM_HINT then Continue;
 
       DrawFrame := MinIntValue([Inf.CurrentFrame, Inf.AnimationFrameCount - 1]);
 
-      if Inf.IsUpsideDown then Src.Assign(Item.Inverted)
-      else Src.Assign(Item.Original);
+      Src.Assign(FindMetaObject(Inf.Obj).Image[DrawFrame]);
 
-      if Inf.IsFlipImage then Src.FlipHorz;
+      if Inf.IsUpsideDown then
+        Src.FlipVert;
+
+      if Inf.IsFlipImage then
+        Src.FlipHorz;
 
       PrepareObjectBitmap(Src, Inf.Obj.DrawingFlags, Inf.ZombieMode);
 
-      SrcRect := Item.CalcFrameRect(DrawFrame);
+      SrcRect := Src.BoundsRect;
       DstRect := ZeroTopLeftRect(SrcRect);
       OffsetRect(DstRect, Inf.Left, Inf.Top);
 
@@ -724,7 +721,6 @@ var
   x, y: Integer;
 begin
   fBgColor := Theme.BackgroundColor and $FFFFFF;
-  fPieceManager.Tidy;
 
   World.Clear(fBgColor);
 
@@ -854,6 +850,7 @@ begin
 
     end;
   end;
+
 end;
 
 procedure TRenderer.PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);

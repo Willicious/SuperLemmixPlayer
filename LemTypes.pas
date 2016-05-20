@@ -76,9 +76,19 @@ type
   public
     function Add(Item: TBitmap32): Integer;
     procedure Insert(Index: Integer; Item: TBitmap32);
+    procedure Generate(Src: TBitmap32; Frames: Integer);
     property Items[Index: Integer]: TBitmap32 read GetItem; default;
     property List;
   published
+  end;
+
+  TBitmapses = class(TObjectList) // very creative naming here
+    private
+      function GetItem(Index: Integer): TBitmaps;
+    public
+      function Add: TBitmaps;
+      property Items[Index: Integer]: TBitmaps read GetItem; default;
+      property List;
   end;
 
   TBasicWrapper = class(TComponent)
@@ -562,6 +572,42 @@ end;
 procedure TBitmaps.Insert(Index: Integer; Item: TBitmap32);
 begin
   inherited Insert(Index, Item);
+end;
+
+procedure TBitmaps.Generate(Src: TBitmap32; Frames: Integer);
+var
+  BMP: TBitmap32;
+  i: Integer;
+  w, h: Integer;
+begin
+  Clear;
+  w := Src.Width;
+  h := Src.Height div Frames;
+  for i := 0 to Frames do
+  begin
+    BMP := TBitmap32.Create;
+    Add(BMP);
+    BMP.SetSize(w, h);
+    BMP.Clear(0);
+    Src.DrawTo(BMP, Rect(0, 0, w, h), Rect(0, h*i, w, (h+1)*i));
+  end;
+end;
+
+////////////////
+// TBitmapses //
+////////////////
+
+function TBitmapses.Add: TBitmaps;
+begin
+  // Creates a new TBitmaps, adds it, and returns it.
+  Result := TBitmaps.Create;
+  inherited Add(Result);
+end;
+
+function TBitmapses.GetItem(Index: Integer): TBitmaps;
+begin
+  // Gets a TBitmaps from the list.
+  Result := inherited Get(Index);
 end;
 
 end.

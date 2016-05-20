@@ -1314,7 +1314,7 @@ begin
 
       T.XPos := Ter.Left;
       T.YPos := Ter.Top;
-      T.TerrainID := StrToIntDef(MidStr(Ter.Piece, 2, Length(Ter.Piece)), 0);
+      T.TerrainID := StrToIntDef(MidStr(MidStr(Ter.Piece, 2, Length(Ter.Piece)), 2, Length(Ter.Piece)), 0);
 
       T.TerrainFlags := $80;
 

@@ -9,7 +9,7 @@ interface
 uses
   Dialogs,
   LemNeoParser, PngInterface,
-  LemMetaTerrain, LemMetaObject, LemRenderHelpers, LemTypes, GR32, LemStrings,
+  LemMetaTerrain, LemMetaObject, LemTypes, GR32, LemStrings,
   Classes, SysUtils;
 
 type
@@ -26,7 +26,7 @@ type
 
   TObjectRecord = record
     Meta: TMetaObject;
-    Image: TDrawItem;
+    Image: TBitmaps;
   end;
 
   TNeoPieceManager = class
@@ -34,7 +34,7 @@ type
       fTerrains: TMetaTerrains;
       fObjects: TMetaObjects;
       fTerrainImages: TBitmaps;
-      fObjectImages: TDrawList;
+      fObjectImages: TBitmapses;
 
       function GetTerrainCount: Integer;
       function GetObjectCount: Integer;
@@ -49,7 +49,7 @@ type
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TMetaObject;
       function GetTerrainBitmap(Identifier: String): TBitmap32;
-      function GetObjectBitmaps(Identifier: String): TDrawItem;
+      function GetObjectBitmaps(Identifier: String): TBitmaps;
 
       property TerrainCount: Integer read GetTerrainCount;
       property ObjectCount: Integer read GetObjectCount;
@@ -64,7 +64,7 @@ type
       property MetaTerrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property MetaObjects[Identifier: String]: TMetaObject read GetMetaObject;
       property TerrainBitmaps[Identifier: String]: TBitmap32 read GetTerrainBitmap;
-      property ObjectBitmaps[Identifier: String]: TDrawItem read GetObjectBitmaps;
+      property ObjectBitmaps[Identifier: String]: TBitmaps read GetObjectBitmaps;
   end;
 
   function SplitIdentifier(Identifier: String): TLabelRecord;
@@ -105,7 +105,7 @@ begin
   fTerrains := TMetaTerrains.Create;
   fObjects := TMetaObjects.Create;
   fTerrainImages := TBitmaps.Create(true);
-  fObjectImages := TDrawList.Create(true);
+  fObjectImages := TBitmapses.Create(true);
 end;
 
 destructor TNeoPieceManager.Destroy;
@@ -211,6 +211,7 @@ var
   Line: TParserLine;
   O: TMetaObject;
   BMP: TBitmap32;
+  BMPs: TBitmaps;
 
   procedure ShiftRect(var aRect: TRect; dX, dY: Integer);
   begin
@@ -242,7 +243,6 @@ var
   end;
 
 begin
-  ShowMessage('obtaining object ' + Identifier);
   ObjectLabel := SplitIdentifier(Identifier);
   SetCurrentDir(AppPath + SFStyles + '\' + ObjectLabel.GS + '\');
 
@@ -326,12 +326,13 @@ begin
     Parser.Free;
   end;
 
-  fObjectImages.Add(TObjectAnimation.Create(BMP, O.AnimationFrameCount, O.Width, O.Height));
+  O.Width := BMP.Width;
+  O.Height := BMP.Height div O.AnimationFrameCount;
 
-  BMP.SaveToFile(O.GS + O.Piece + '.bmp');
+  with fObjectImages.Add do
+    Generate(BMP, O.AnimationFrameCount);
+
   BMP.Free;
-
-  ShowMessage('obtained');
 end;
 
 // Functions to get piece records (which contain pointers to both the metainfo and the images)
@@ -371,7 +372,7 @@ begin
   Result := GetTerrain(Identifier).Image;
 end;
 
-function TNeoPieceManager.GetObjectBitmaps(Identifier: String): TDrawItem;
+function TNeoPieceManager.GetObjectBitmaps(Identifier: String): TBitmaps;
 begin
   Result := GetObject(Identifier).Image;
 end;
