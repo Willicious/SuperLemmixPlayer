@@ -4,7 +4,7 @@
 *.zip
 *.arc
 *.rc
-lemdata.res
+!lemdata.res
 lemsounds.res
 !LemResourceBuilder.exe
 Data/lemdata_Original.RES
