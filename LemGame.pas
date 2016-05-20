@@ -2913,16 +2913,16 @@ var
 
   function GetPriorityBoxOrder(NewSkill: TBasicLemmingAction): TPriorityBoxArr;
   const
-    WalkerOrder : TPriorityBoxArr = (NonPerm, Perm, Expl, Walk, Shrug, Fall, Drown);
+    WalkerOrder : TPriorityBoxArr = (NonPerm, Perm, Expl, Shrug, Walk, Fall, Drown);
     FloatOrder : TPriorityBoxArr = (Fall, Perm, NonPerm, Shrug, Expl, Walk, Drown);
-    ClimbOrder : TPriorityBoxArr = (Perm, NonPerm, Shrug, Expl, Walk, Fall, Drown);
+    ClimbOrder : TPriorityBoxArr = (Perm, NonPerm, Shrug, Expl, Fall, Walk, Drown);
     SwimOrder : TPriorityBoxArr = (Drown, Fall, Perm, NonPerm, Shrug, Walk, Expl);
-    ExplOrder : TPriorityBoxArr = (Fall, NonPerm, Shrug, Walk, Perm, Expl, Drown);
-    BlockOrder : TPriorityBoxArr = (Shrug, NonPerm, Expl, Walk, Perm, Fall, Drown);
-    BuildOrder : TPriorityBoxArr = (Shrug, NonPerm, Perm, Walk, Expl, Fall, Drown);
+    ExplOrder : TPriorityBoxArr = (Fall, NonPerm, Shrug, Perm, Expl, Walk, Drown);
+    BlockOrder : TPriorityBoxArr = (Shrug, NonPerm, Expl, Perm, Walk, Fall, Drown);
+    BuildOrder : TPriorityBoxArr = (Shrug, NonPerm, Perm, Expl, Walk, Fall, Drown);
     BashOrder : TPriorityBoxArr = (Shrug, NonPerm, Perm, Expl, Walk, Fall, Drown);
-    CloneOrder : TPriorityBoxArr = (NonPerm, Perm, Expl, Walk, Shrug, Fall, Drown);
-    HighlightOrder : TPriorityBoxArr = (Perm, NonPerm, Shrug, Walk, Fall, Expl, Drown);
+    CloneOrder : TPriorityBoxArr = (NonPerm, Perm, Expl, Shrug, Fall, Walk, Drown);
+    HighlightOrder : TPriorityBoxArr = (Perm, NonPerm, Shrug, Fall, Expl, Walk, Drown);
   begin
     case NewSkill of
       baToWalking   : Result := WalkerOrder;
