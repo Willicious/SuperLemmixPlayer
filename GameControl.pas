@@ -363,19 +363,17 @@ begin
 
 
   Arc := TArchive.Create;
-  if Arc.CheckIfFileExists('talisman.dat') then
-  begin
 
-    try
-      TempStream := CreateDataStream('talisman.dat', ldtLemmings);
-      fTalismans.LoadFromStream(TempStream);
-      TempStream.Free;
-    except
-      // Silent fail. It's okay - and in fact common - for this file to be missing.
-    end;
-
-    fTalismans.SortTalismans;
+  try
+    TempStream := CreateDataStream('talisman.dat', ldtLemmings);
+    fTalismans.LoadFromStream(TempStream);
+    TempStream.Free;
+  except
+    // Silent fail. It's okay - and in fact common - for this file to be missing.
   end;
+
+  fTalismans.SortTalismans;
+
   Arc.Free;
 
   fSaveSystem.SetTalismans(fTalismans);
