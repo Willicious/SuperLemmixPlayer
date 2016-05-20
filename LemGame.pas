@@ -49,6 +49,8 @@ const
   ParticleColorIndices: array[0..15] of Byte =
     (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
 
+  AlwaysAnimateObjects = [0, 1, 2, 3, 5, 6, 7, 8, 18, 19, 20, 22, 25, 26, 27, 30];
+
 type
   tFloatParameterRec = record
     Dy: Integer;
@@ -6464,7 +6466,7 @@ begin
   begin
     Inf := ObjectInfos[i];
 
-    if     (Inf.Triggered or (Inf.MetaObj.AnimationType = oat_Continuous))
+    if     (Inf.Triggered or (Inf.MetaObj.TriggerEffect in AlwaysAnimateObjects))
        and (Inf.TriggerEffect <> DOM_PICKUP) then
       Inc(Inf.CurrentFrame);
 

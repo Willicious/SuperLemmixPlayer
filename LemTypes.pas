@@ -583,13 +583,14 @@ begin
   Clear;
   w := Src.Width;
   h := Src.Height div Frames;
-  for i := 0 to Frames do
+  for i := 0 to Frames-1 do
   begin
     BMP := TBitmap32.Create;
     Add(BMP);
     BMP.SetSize(w, h);
     BMP.Clear(0);
-    Src.DrawTo(BMP, Rect(0, 0, w, h), Rect(0, h*i, w, (h+1)*i));
+    Src.DrawTo(BMP, Rect(0, 0, w, h), Rect(0, h*i, w, (i+1)*h));
+    BMP.SaveToFile('f' + IntToStr(i) + '.bmp');
   end;
 end;
 

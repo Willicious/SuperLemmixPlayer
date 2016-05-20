@@ -667,16 +667,16 @@ procedure TRenderer.EraseObject(Dst: TBitmap32; O: TInteractiveObject; aOriginal
 -------------------------------------------------------------------------------}
 var
   SrcRect, DstRect, R: TRect;
-  Item: TObjectAnimation;// TDrawItem;
+  MO: TMetaObject;
   //Src: TBitmap32;
 begin
   if aOriginal = nil then
     Exit;
 
-  Item := TObjectAnimation(FindMetaObject(O).Image);
+  MO := FindMetaObject(O).Meta;
   //ObjectBitmapItems.List^[O.Identifier];
 
-  SrcRect := Item.CalcFrameRect(0);
+  SrcRect := Rect(0, 0, MO.Width, MO.Height);
   DstRect := SrcRect;
   DstRect := ZeroTopLeftRect(DstRect);
   OffsetRect(DstRect, O.LastDrawX, O.LastDrawY);
