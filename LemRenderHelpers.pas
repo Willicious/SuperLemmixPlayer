@@ -6,11 +6,37 @@ unit LemRenderHelpers;
 interface
 
 uses
+  LemTypes,
   UMisc,
-  GR32, GR32_LowLevel,
+  GR32, GR32_LowLevel, GR32_Resamplers,
   Contnrs, Classes, SysUtils;
 
 type
+
+  TRenderLayer = (rlBackground,
+                  rlBackgroundObjects,
+                  rlObjectsLow,
+                  rlTerrain,
+                  rlObjectsHigh,
+                  rlLemmings);
+
+  TRenderBitmaps = class(TBitmaps)
+  private
+    fWidth: Integer;
+    fHeight: Integer;
+    function GetItem(Index: TRenderLayer): TBitmap32;
+  protected
+  public
+    constructor Create;
+    procedure Prepare(aWidth, aHeight: Integer);
+    procedure CombineTo(aDst: TBitmap32);
+    property Items[Index: TRenderLayer]: TBitmap32 read GetItem; default;
+    property List;
+    property Width: Integer read fWidth;
+    property Height: Integer read fHeight;
+  published
+  end;
+
   TDrawItem = class
   private
   protected
@@ -234,6 +260,52 @@ begin
   finally
     Temp.Free;
   end;
+end;
+
+{ TRenderBitmaps }
+
+constructor TRenderBitmaps.Create;
+var
+  i: TRenderLayer;
+  BMP: TBitmap32;
+begin
+  inherited Create(true);
+  for i := Low(TRenderLayer) to High(TRenderLayer) do
+  begin
+    BMP := TBitmap32.Create;
+    BMP.DrawMode := dmBlend;
+    BMP.CombineMode := cmMerge;
+    TLinearResampler.Create(BMP);
+    Add(BMP);
+  end;
+end;
+
+function TRenderBitmaps.GetItem(Index: TRenderLayer): TBitmap32;
+begin
+  Result := inherited Get(Integer(Index));
+end;
+
+procedure TRenderBitmaps.Prepare(aWidth, aHeight: Integer);
+var
+  i: TRenderLayer;
+begin
+  fWidth := aWidth;
+  fHeight := aHeight;
+  for i := Low(TRenderLayer) to High(TRenderLayer) do
+  begin
+    Items[i].SetSize(Width, Height);
+    Items[i].Clear($00000000);
+  end;
+end;
+
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32);
+var
+  i: TRenderLayer;
+begin
+  aDst.Clear;
+  //aDst.SetSize(Width, Height); //not sure if we really want to do this
+  for i := Low(TRenderLayer) to High(TRenderLayer) do
+    Items[i].DrawTo(aDst, aDst.BoundsRect);
 end;
 
 end.

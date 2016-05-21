@@ -25,7 +25,7 @@ interface
 uses
   Dialogs,
   Classes, Contnrs, Math,
-  GR32, GR32_LowLevel,
+  GR32, GR32_LowLevel, GR32_Blend,
   UMisc,
   SysUtils,
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
@@ -50,6 +50,9 @@ type
 
   TRenderer = class
   private
+    fPhysicsMap: TBitmap32;
+    fLayers: TRenderBitmaps;
+
     TempBitmap         : TBitmap32;
     Inf                : TRenderInfoRec;
     fXmasPal : Boolean;
@@ -66,22 +69,13 @@ type
 
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainDefaultNoOneWay(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainNoOverwriteNoOneWay(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainDefaultSteel(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainNoOverwriteSteel(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineObjectDefault(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineObjectNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineObjectDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineObjectNoOverwriteZombie(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
+
     procedure CombineLemFrame(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemFrameZombie(F: TColor32; var B: TColor32; M: TColor32);
-
-    procedure CombineSpecTerrainSteel(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineSpecTerrainOWW(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineSpecTerrainOWWInvert(F: TColor32; var B: TColor32; M: TColor32);
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte; SteelOnly: Boolean = false; IsSteel: Boolean = false; IsNoOneWay: Boolean = false);
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
@@ -194,116 +188,30 @@ procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColo
 begin
   if F <> 0 then
   begin
-    //B := F ;
-    B := B and not COLOR_MASK; // erase color
-    B := B and not ALPHA_STEEL;
-    B := B or ALPHA_TERRAIN or ALPHA_ONEWAY; // put terrain bit
-    B := B or (F and COLOR_MASK) // copy color
+    MergeMemEx(F, B, $FF);
   end;
-end;
-
-procedure TRenderer.CombineSpecTerrainSteel(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F and $FF000000) <> 0 then
-    B := B or ALPHA_STEEL;
-end;
-
-procedure TRenderer.CombineSpecTerrainOWW(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F and $FF000000) <> 0 then
-    B := B or ALPHA_ONEWAY;
-end;
-
-procedure TRenderer.CombineSpecTerrainOWWInvert(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if ((F and $FF000000) = 0) and ((B and ALPHA_TERRAIN) <> 0) then
-    B := B or ALPHA_ONEWAY;
 end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F <> 0) and (B and ALPHA_TERRAIN = 0) then
   begin
-    //B := F;
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_TERRAIN or ALPHA_ONEWAY; // put terrain bit
-    B := B or (F and COLOR_MASK) // copy color
+    MergeMemEx(B, F, $FF);
+    B := F;
   end;
 end;
-
-procedure TRenderer.CombineTerrainDefaultNoOneWay(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then
-  begin
-    //B := F ;
-    B := B and not COLOR_MASK; // erase color
-    B := B and not ALPHA_STEEL;
-    B := B or ALPHA_TERRAIN; // put terrain bit
-    B := B or (F and COLOR_MASK); // copy color
-    B := B and not ALPHA_ONEWAY;
-  end;
-end;
-
-procedure TRenderer.CombineTerrainNoOverwriteNoOneWay(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F <> 0) and (B and ALPHA_TERRAIN = 0) then
-  begin
-    //B := F;
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_TERRAIN; // put terrain bit
-    B := B or (F and COLOR_MASK); // copy color
-    B := B and not ALPHA_ONEWAY;
-  end;
-end;
-
-procedure TRenderer.CombineTerrainDefaultSteel(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then
-  begin
-    //B := F ;
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_TERRAIN or ALPHA_STEEL; // put terrain bit
-    B := B or (F and COLOR_MASK); // copy color
-    B := B and not ALPHA_ONEWAY;
-  end;
-end;
-
-procedure TRenderer.CombineTerrainNoOverwriteSteel(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F <> 0) and (B and ALPHA_TERRAIN = 0) then
-  begin
-    //B := F;
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_TERRAIN or ALPHA_STEEL; // put terrain bit
-    B := B or (F and COLOR_MASK) // copy color
-  end;
-end;
-
 
 procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then
-    B := fBgColor;
+    B := 0;
 end;
 
 procedure TRenderer.CombineObjectDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then
   begin
-    //B := F;
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_OBJECT; // put object bit
-    B := B or (F and COLOR_MASK) // copy color
-  end;
-end;
-
-procedure TRenderer.CombineObjectNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F <> 0) and (B and ALPHA_MASK = 0) then
-  begin
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_OBJECT; // put object bit
-    B := B or (F and COLOR_MASK) // copy color
+    MergeMemEx(F, B, $FF);
   end;
 end;
 
@@ -311,27 +219,9 @@ procedure TRenderer.CombineObjectDefaultZombie(F: TColor32; var B: TColor32; M: 
 begin
   if F <> 0 then
   begin
-
     if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
     F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
-    //B := F;
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_OBJECT; // put object bit
-    B := B or (F and COLOR_MASK) // copy color
-  end;
-end;
-
-procedure TRenderer.CombineObjectNoOverwriteZombie(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F <> 0) and (B and ALPHA_MASK = 0) then
-  begin
-
-    if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
-    
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_OBJECT; // put object bit
-    B := B or (F and COLOR_MASK) // copy color
+    MergeMemEx(F, B, $FF);
   end;
 end;
 
@@ -339,10 +229,7 @@ procedure TRenderer.CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: 
 begin
   if (F <> 0) and (B and ALPHA_TERRAIN <> 0) and (B and ALPHA_ONEWAY <> 0) then
   begin
-    //B := F;
-    B := B and not COLOR_MASK; // erase color
-    B := B or ALPHA_OBJECT; // put object bit
-    B := B or (F and COLOR_MASK) // copy color
+    MergeMemEx(F, B, $FF);
   end;
 end;
 
@@ -355,17 +242,7 @@ begin
   begin
     Bmp.DrawMode := dmCustom;
       Bmp.OnPixelCombine := CombineObjectOnlyOnTerrain;
-  end
-  else if DrawingFlags and odf_NoOverwrite <> 0 then
-  begin
-    Bmp.DrawMode := dmCustom;
-    if Zombie then
-      Bmp.OnPixelCombine := CombineObjectNoOverwriteZombie
-    else
-      Bmp.OnPixelCombine := CombineObjectNoOverwrite;
-  end
-  else
-  begin
+  end else begin
     Bmp.DrawMode := dmCustom;
     if Zombie then
       Bmp.OnPixelCombine := CombineObjectDefaultZombie
@@ -412,40 +289,19 @@ begin
   begin
     Bmp.DrawMode := dmCustom;
     Bmp.OnPixelCombine := CombineTerrainNoOverwrite;
-    if IsNoOneWay then Bmp.OnPixelCombine := CombineTerrainNoOverwriteNoOneWay;
-    if IsSteel then Bmp.OnPixelCombine := CombineTerrainNoOverwriteSteel;
-  end
-  else if DrawingFlags and tdf_Erase <> 0 then
+  end else if DrawingFlags and tdf_Erase <> 0 then
   begin
     Bmp.DrawMode := dmCustom;
     Bmp.OnPixelCombine := CombineTerrainErase;
-  end
-  else begin
+  end else begin
     Bmp.DrawMode := dmCustom;
     Bmp.OnPixelCombine := CombineTerrainDefault;
-    if IsNoOneWay then Bmp.OnPixelCombine := CombineTerrainDefaultNoOneWay;
-    if IsSteel then Bmp.OnPixelCombine := CombineTerrainDefaultSteel;
   end;
 end;
 
 procedure TRenderer.DrawSpecialBitmap(Dst: TBitmap32; Spec: TBitmaps; Inv: Boolean = false);
 begin
-  Spec[0].DrawMode := dmCustom;
-  Spec[0].OnPixelCombine := CombineTerrainDefaultNoOneWay;
-  Spec[0].DrawTo(Dst, Inf.Level.Info.VgaspecX, Inf.Level.Info.VgaspecY);
-  if Spec.Count = 1 then exit;
 
-  Spec[1].DrawMode := dmCustom;
-  Spec[1].OnPixelCombine := CombineSpecTerrainSteel;
-  Spec[1].DrawTo(Dst, Inf.Level.Info.VgaspecX, Inf.Level.Info.VgaspecY);
-  if Spec.Count = 2 then exit;
-
-  Spec[2].DrawMode := dmCustom;
-  if Inv then
-    Spec[2].OnPixelCombine := CombineSpecTerrainOWWInvert
-  else
-    Spec[2].OnPixelCombine := CombineSpecTerrainOWW;
-  Spec[2].DrawTo(Dst, Inf.Level.Info.VgaspecX, Inf.Level.Info.VgaspecY);
 end;
 
 procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
@@ -692,7 +548,8 @@ begin
   TempBitmap := TBitmap32.Create;
   fPieceManager := TNeoPieceManager.Create;
   fTheme := TNeoTheme.Create;
-  //fAni := TBaseDosAnimationSet.Create;
+  fLayers := TRenderBitmaps.Create;
+  fPhysicsMap := TBitmap32.Create;
   fBgColor := $00000000;
 end;
 
@@ -701,6 +558,8 @@ begin
   TempBitmap.Free;
   fPieceManager.Free;
   fTheme.Free;
+  fLayers.Free;
+  fPhysicsMap.Free;
   if fAni <> nil then fAni.Free;
   inherited Destroy;
 end;
@@ -709,24 +568,97 @@ procedure TRenderer.RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly:
 // DoObjects is only true if RenderWorld is called from the Preview Screen!
 var
   i: Integer;
-  Ter: TTerrain;
+
   Bmp: TBitmap32;
+
   Obj: TInteractiveObject;
-  MO: TMetaObject;
-  Stl: TSteel;
-  fi: Integer;
-  mtn: Integer;
-  TZ: Boolean;
-  OWL, OWR, OWD, DoOWW: Integer;
-  x, y: Integer;
+  ORec: TObjectRecord;
+
+  Ter: TTerrain;
+  TRec: TTerrainRecord;
 begin
   fBgColor := Theme.BackgroundColor and $FFFFFF;
-
-  World.Clear(fBgColor);
 
   if Inf.Level = nil then Exit;
 
   with Inf do
+  begin
+
+    // Prepare the bitmaps
+    fLayers.Prepare(Level.Info.Width, Level.Info.Height);
+
+
+    // Background layer
+    with fLayers[rlBackground] do
+    begin
+      Clear($FF000000 or fBgColor);
+    end;
+
+    if DoObjects then
+    begin
+      with fLayers[rlBackgroundObjects] do
+        for i := 0 to Level.InteractiveObjects.Count-1 do
+        begin
+          Obj := Level.InteractiveObjects[i];
+          ORec := FindMetaObject(Obj);
+          if ORec.Meta.TriggerEffect <> 30 then Continue;
+
+          DrawObject(fLayers[rlBackgroundObjects], Obj, ORec.Meta.PreviewFrameIndex);
+        end;
+
+      with fLayers[rlObjectsLow] do
+        for i := Level.InteractiveObjects.Count-1 downto 0 do
+        begin
+          Obj := Level.InteractiveObjects[i];
+          if Obj.DrawingFlags and odf_NoOverwrite = 0 then Continue;
+          ORec := FindMetaObject(Obj);
+          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 24, 30] then Continue;
+
+          DrawObject(fLayers[rlObjectsLow], Obj, ORec.Meta.PreviewFrameIndex);
+        end;
+
+      with fLayers[rlObjectsHigh] do
+        for i := 0 to Level.InteractiveObjects.Count-1 do
+        begin
+          Obj := Level.InteractiveObjects[i];
+          if Obj.DrawingFlags and odf_NoOverwrite <> 0 then Continue;
+          ORec := FindMetaObject(Obj);
+          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 24, 30] then Continue;
+
+          DrawObject(fLayers[rlObjectsHigh], Obj, ORec.Meta.PreviewFrameIndex);
+        end;
+
+      with fLayers[rlLemmings] do
+        for i := 0 to Level.InteractiveObjects.Count-1 do
+        begin
+          Obj := Level.InteractiveObjects[i];
+          ORec := FindMetaObject(Obj);
+          if ORec.Meta.TriggerEffect <> 13 then Continue;
+
+          if Obj.TarLev and 64 = 0 then
+            DrawLemming(fLayers[rlLemmings], Obj)
+          else
+            DrawLemming(fLayers[rlLemmings], Obj, true);
+        end;
+    end;
+
+    with fLayers[rlTerrain] do
+      for i := 0 to Level.Terrains.Count-1 do
+      begin
+        Ter := Level.Terrains[i];
+        TRec := FindMetaTerrain(Ter);
+        if Ter.DrawingFlags and tdf_Erase = 0 then
+          if SOX and (TRec.Meta.Unknown and $01 = 0) then
+            Continue;
+        DrawTerrain(fLayers[rlTerrain], Ter, SteelOnly);
+      end;
+
+  end; // with Inf
+
+  World.SetSize(fLayers.Width, fLayers.Height);
+  fLayers.CombineTo(World);
+
+  {with Inf do
   begin
 
     // mtn := Level.Terrains.HackedList.Count - 1;
@@ -849,7 +781,7 @@ begin
       end;
 
     end;
-  end;
+  end;}
 
 end;
 
