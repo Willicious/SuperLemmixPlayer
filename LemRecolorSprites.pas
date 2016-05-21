@@ -5,23 +5,16 @@ interface
 uses
   Windows, Classes,
   LemDosStructures,
+  {LemRendering, // to get ALPHA_TERRAIN  }
   GR32, GR32_OrdinalMaps, GR32_Layers;
 
 type
   TRecolorImage = class
   public
     class function GetLemColorScheme(IsZombie, IsPermenent, IsSelected, IsHighlight: Boolean): TPixelCombineEvent;
-    (*
-     procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineMinimapWorldPixels(F: TColor32; var B: TColor32; M: TColor32);
-    *)
+    class procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
+
   private
-    class procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
     class procedure CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
     class procedure CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
     class procedure CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
@@ -55,7 +48,7 @@ begin
   else if IsZombie then
     Result := TRecolorImage.CombineLemmingPixelsZombie
   else
-    Result := TRecolorImage.CombineLemmingPixels;
+    Result := TRecolorImage.CombineDefaultPixels;
 end;
 
 procedure ChangeSkinColor(out F: TColor32);
@@ -82,10 +75,10 @@ begin
 end;
 
 
-class procedure TRecolorImage.CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
+(* class procedure TRecolorImage.CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then B := F;
-end;
+end; *)
 
 class procedure TRecolorImage.CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
 begin
@@ -141,6 +134,11 @@ begin
   if F <> 0 then B := clBlack32 else B := clWhite32;
 end;
 
+
+class procedure TRecolorImage.CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if F <> 0 then B := F;
+end;
 
 end.
  
