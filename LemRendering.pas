@@ -48,6 +48,9 @@ const
   PM_TERRAIN   = $000000FF;
 
 
+  SHADOW_COLOR = $80202020;
+
+
 type
   // temp solution
   TRenderInfoRec = record
@@ -117,6 +120,11 @@ type
 
     function HasPixelAt(X, Y: Integer): Boolean;
 
+    procedure ClearShadows;
+    procedure SetLowShadowPixel(X, Y: Integer);
+    procedure SetHighShadowPixel(X, Y: Integer);
+    procedure AddTerrainPixel(X, Y: Integer; aColor: TColor32 = $00000000);
+
 
     procedure RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
@@ -154,6 +162,40 @@ procedure TRenderer.DrawLevel(aDst: TBitmap32);
 begin
   fLayers.CombineTo(aDst); 
 end;
+
+procedure TRenderer.ClearShadows;
+begin
+  fLayers[rlLowShadows].Clear(0);
+  fLayers[rLHighShadows].Clear(0);
+end;
+
+procedure TRenderer.SetLowShadowPixel(X, Y: Integer);
+begin
+  fLayers[rlLowShadows].Pixel[x, y] := SHADOW_COLOR;
+end;
+
+procedure TRenderer.SetHighShadowPixel(X, Y: Integer);
+begin
+  fLayers[rlHighShadows].Pixel[x, y] := SHADOW_COLOR;
+end;
+
+procedure TRenderer.AddTerrainPixel(X, Y: Integer; aColor: TColor32 = $00000000);
+var
+  P: PColor32;
+begin
+  if aColor = 0 then aColor := Theme.MaskColor;
+  P := fPhysicsMap.PixelPtr[X, Y];
+  P^ := P^ or PM_SOLID;
+  P := fLayers[rlTerrain].PixelPtr[X, Y];
+  if P^ and $FF000000 <> $FF000000 then
+  begin
+    MergeMemEx(P^, aColor, $FF);
+    P^ := aColor;
+  end;
+end;
+
+
+
 
 function TRenderer.FindMetaObject(O: TInteractiveObject): TObjectRecord;
 var

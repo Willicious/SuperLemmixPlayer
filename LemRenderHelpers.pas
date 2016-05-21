@@ -16,8 +16,10 @@ type
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
                   rlObjectsLow,
+                  rlLowShadows,
                   rlTerrain,
                   rlObjectsHigh,
+                  rlHighShadows,
                   rlParticles,
                   rlLemmings);
 

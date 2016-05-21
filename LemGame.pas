@@ -36,7 +36,7 @@ uses
   LemMetaObject, LemInteractiveObject, LemSteel, LemLevel, LemStyle,
   LemRendering, LemDosAnimationSet,
   LemMusicSystem, LemDosMainDat,
-  LemObjects,
+  LemObjects, LemLemming,
   GameInterfaces, GameControl, GameSound;
 
 type
@@ -59,79 +59,6 @@ type
   end;
 
 type
-  TLemming = class
-  private
-    function GetLocationBounds: TRect; // rect in world
-    function GetFrameBounds: TRect; // rect from animation bitmap
-    function GetCountDownDigitBounds: TRect; // countdown
-    function GetLemHint: string;
-  public
-  { misc sized }
-    LemEraseRect                  : TRect; // the rectangle of the last drawaction (can include space for countdown digits)
-  { integer sized fields }
-    LemIndex                      : Integer; // index in the lemminglist
-    LemX                          : Integer; // the "main" foot x position
-    LemY                          : Integer; // the "main" foot y position
-    LemDX                         : Integer; // x speed (1 if left to right, -1 if right to left)
-    LemJumped                     : Integer; // number of pixels the lem jumped
-    LemFallen                     : Integer; // number of fallen pixels after last updraft
-    LemTrueFallen                 : Integer; // total number of fallen pixels
-    LemExplosionTimer             : Integer; // 84 (before 79) downto 0
-    LemMechanicFrames             : Integer;
-    LMA                           : TMetaLemmingAnimation; // ref to Lemming Meta Animation
-    LAB                           : TBitmap32;      // ref to Lemming Animation Bitmap
-    LemFrame                      : Integer; // current animationframe
-    LemMaxFrame                   : Integer; // copy from LMA
-    LemAnimationType              : Integer; // copy from LMA
-    LemParticleTimer              : Integer; // @particles, 52 downto 0, after explosion
-    FrameTopDy                    : Integer; // = -LMA.FootY (ccexplore compatible)
-    FrameLeftDx                   : Integer; // = -LMA.FootX (ccexplore compatible)
-    LemNumberOfBricksLeft         : Integer; // for builder, platformer, stacker
-  { byte sized fields }
-    LemAction                     : TBasicLemmingAction; // current action of the lemming
-    LemRemoved                    : Boolean; // the lemming is not in the level anymore
-    LemTeleporting                : Boolean;
-    LemEndOfAnimation             : Boolean; // got to the end of non-looping animation
-                                             // equal to (LemFrame > LemMaxFrame)
-    LemIsClimber                  : Boolean;
-    LemIsSwimmer                  : Boolean;
-    LemIsFloater                  : Boolean;
-    LemIsGlider                   : Boolean;
-    LemIsMechanic                 : Boolean;
-    LemIsZombie                   : Boolean;
-    LemPlacedBrick                : Boolean; // placed useful brick during this cycle (plaformer and stacker)
-    LemInFlipper                  : Integer;
-    LemHasBlockerField            : Boolean; // for blockers, even during ohno
-    LemIsNewDigger                : Boolean; // new digger removes one more row
-    LemIsNewClimbing              : Boolean; // new climbing lem in first 4 frames
-    LemHighlightReplay            : Boolean;
-    LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
-    LemUsedSkillCount             : Integer; // number of skills assigned to this lem, used for talisman
-    LemTimerToStone               : Boolean;
-    LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
-    // The next three values are only needed to determine intermediate trigger area checks
-    // They are set in HandleLemming
-    LemXOld                       : Integer; // position of previous frame
-    LemYOld                       : Integer;
-    LemActionOld                  : TBasicLemmingAction; // action in previous frame
-
-    procedure Assign(Source: TLemming);
-  { properties }
-    property LemHint: string read GetLemHint;
-  end;
-
-  TLemmingList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TLemming;
-  protected
-  public
-    function Add(Item: TLemming): Integer;
-    procedure Insert(Index: Integer; Item: TLemming);
-    property Items[Index: Integer]: TLemming read GetItem; default;
-    property List; // for fast access
-  end;
-
-
   // never change this anymore. it's stored in replayfile
   TDosGameOption = (
     dgoDisableObjectsAfter15,    // objects with index higher than 15 will not work
@@ -937,162 +864,6 @@ function CheckRectCopy(const A, B: TRect): Boolean;
 begin
   Result := (RectWidth(A) = RectWidth(B))
             and (Rectheight(A) = Rectheight(B));
-end;
-
-{ TLemming }
-
-function TLemming.GetCountDownDigitBounds: TRect;
-begin
-  with Result do
-  begin
-    Left := LemX - 1;
-    Top := LemY + FrameTopDy - 12;
-    Right := Left + 8;
-    Bottom := Top + 8;
-    if LemDx = 1 then
-    begin
-      Left := Left - 1;
-      Right := Right - 1;
-    end;
-  end;
-end;
-
-
-
-function TLemming.GetFrameBounds: TRect;
-begin
-  Assert(LAB <> nil, 'getframebounds error');
-  with Result do
-  begin
-    Left := 0;
-    Top := LemFrame * LMA.Height;
-    Right := LMA.Width;
-    Bottom := Top + LMA.Height;
-  end;
-end;
-
-function TLemming.GetLocationBounds: TRect;
-begin
-  Assert(LMA <> nil, 'meta animation error');
-  with Result do
-  begin
-    Left := LemX - LMA.FootX;
-    Top := LemY - LMA.FootY;
-    Right := Left + LMA.Width;
-    Bottom := Top + LMA.Height;
-    (*if (LemDX = -1) and (LemAction in [baWalking, baBuilding, baPlatforming, baStacking]) then
-      begin
-      Dec(Left);
-      Dec(Right);
-      end;*)
-    if (LemAction in [baDigging, baFixing]) and (LemDx = -1) then
-    begin
-      Inc(Left);
-      Inc(Right);
-    end;
-
-    if LemAction = baMining then
-    begin
-      if LemDx = -1 then
-      begin
-        Dec(Left);
-        Dec(Right);
-      end else begin
-        Inc(Left);
-        Inc(Right);
-      end;
-      if (LemFrame < 15) then
-      begin
-        Inc(Top);
-        Inc(Bottom);
-      end;
-    end;  // Seems to be glitchy if the animations themself are altered
-  end;
-end;
-
-
-function TLemming.GetLemHint: string;
-const
-  BoolStrings: array[Boolean] of string = ('false', 'true');
-begin
-  Result := 'Action=' + CutLeft(GetEnumName(TypeInfo(TBasicLemmingAction), Integer(LemAction)), 2) + ', ' +
-            'Index=' + i2s(LemIndex) + ', ' +
-            'X=' + i2s(LemX) + ', ' +
-            'Y=' + i2s(LemY) + ', ' +
-            'Dx=' + i2s(LemDX) + ', ' +
-            'Fallen=' + i2s(LemFallen) + ', ' +
-            'ExplosionTimer=' + i2s(LemExplosionTimer) + ', ' +
-            'Frame=' + i2s(LemFrame) + ', ' +
-            'MaxFrame=' + i2s(LemMaxFrame) + ', ' +
-            'FrameLeftDx=' + i2s(FrameLeftDx) + ', ' +
-            'FrameTopDy=' + i2s(FrameTopDy) + ', ' +
-            'NumberOfBricksLeft=' + i2s(LemNumberOfBricksLeft) + ', ' +
-            'IsNewDigger=' + BoolStrings[LemIsNewDigger] + ', ' +
-            'HasBlockerField:' + BoolStrings[LemHasBlockerField] + ', ' +
-            'CanClimb=' + BoolStrings[LemIsClimber] + ', ' +
-            'CanFloat=' + BoolStrings[LemIsFloater];
-end;
-
-procedure TLemming.Assign(Source: TLemming);
-begin
-
-  // does NOT copy LemIndex! This is intentional //
-  LemEraseRect := Source.LemEraseRect;
-  LemX := Source.LemX;
-  LemY := Source.LemY;
-  LemDX := Source.LemDX;
-  LemJumped := Source.LemJumped;
-  LemFallen := Source.LemFallen;
-  LemTrueFallen := Source.LemTrueFallen;
-  LemExplosionTimer := Source.LemExplosionTimer;
-  LemMechanicFrames := Source.LemMechanicFrames;
-  LMA := Source.LMA;
-  LAB := Source.LAB;
-  LemFrame := Source.LemFrame;
-  LemMaxFrame := Source.LemMaxFrame;
-  LemAnimationType := Source.LemAnimationType;
-  LemParticleTimer := Source.LemParticleTimer;
-  FrameTopDy := Source.FrameTopDy;
-  FrameLeftDx := Source.FrameLeftDx;
-  LemNumberOfBricksLeft := Source.LemNumberOfBricksLeft;
-
-  LemAction := Source.LemAction;
-  LemRemoved := Source.LemRemoved;
-  LemTeleporting := Source.LemTeleporting;
-  LemEndOfAnimation := Source.LemEndOfAnimation;
-  LemIsClimber := Source.LemIsClimber;
-  LemIsSwimmer := Source.LemIsSwimmer;
-  LemIsFloater := Source.LemIsFloater;
-  LemIsGlider := Source.LemIsGlider;
-  LemIsMechanic := Source.LemIsMechanic;
-  LemIsZombie := Source.LemIsZombie;
-  LemPlacedBrick := Source.LemPlacedBrick;
-  LemInFlipper := Source.LemInFlipper;
-  LemHasBlockerField := Source.LemHasBlockerField;
-  LemIsNewDigger := Source.LemIsNewDigger;
-  LemIsNewClimbing := Source.LemIsNewClimbing;
-  LemHighlightReplay := Source.LemHighlightReplay;
-  LemExploded := Source.LemExploded;
-  LemUsedSkillCount := Source.LemUsedSkillCount;
-  LemTimerToStone := Source.LemTimerToStone;
-  LemStackLow := Source.LemStackLow;
-end;
-
-{ TLemmingList }
-
-function TLemmingList.Add(Item: TLemming): Integer;
-begin
-  Result := inherited Add(Item);
-end;
-
-function TLemmingList.GetItem(Index: Integer): TLemming;
-begin
-  Result := inherited Get(Index);
-end;
-
-procedure TLemmingList.Insert(Index: Integer; Item: TLemming);
-begin
-  inherited Insert(Index, Item);
 end;
 
 
@@ -3810,7 +3581,7 @@ procedure TLemmingGame.DrawParticles(L: TLemming; DoErase: Boolean);
 var
   i, X, Y: Integer;
 begin
-  for i := 0 to 79 do
+  {for i := 0 to 79 do
   begin
     X := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DX;
     Y := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DY;
@@ -3823,7 +3594,7 @@ begin
       else
         fTargetBitmap.PixelS[X, Y] := fParticleColors[i mod 16];
     end;
-  end;
+  end;}
 
   fExplodingGraphics := True;
 end;
@@ -3834,14 +3605,6 @@ var
   i, f: Integer;
   Inf : TInteractiveObjectInfo;
 begin
-
-  if (not HyperSpeed) then
-    for i := 0 to ObjectInfos.Count - 1 do
-    begin
-      Inf := ObjectInfos[i];
-      if (Inf.TriggerEffect <> DOM_LEMMING) then
-        Renderer.EraseObject(fTargetBitmap, Inf.Obj, World);
-    end;
 
   for i := 0 to ObjectInfos.Count-1 do
   begin
@@ -3882,29 +3645,7 @@ var
   CurrentLemming: TLemming;
   DstRect, TempRect: TRect;
 begin
-  if HyperSpeed then
-    Exit;
-
-  with LemmingList do
-    for iLemming := 0 to Count - 1 do
-    begin
-      CurrentLemming := List^[iLemming];
-      with CurrentLemming do
-      begin
-        if not LemRemoved then
-        begin
-          DstRect := LemEraseRect;
-          InflateRect(DstRect, 2, 2);
-          // important to intersect the rects!
-          if IntersectRect(TempRect, DstRect, World.BoundsRect) then
-            World.DrawTo(fTargetBitmap, TempRect, TempRect);
-        end;
-        
-        // @particles (erase) if lem is removed
-        if LemParticleTimer > 1 then
-          DrawParticles(CurrentLemming, True);
-      end;
-    end;
+  // Don't need to erase lemmings anymore!
 end;
 
 procedure TLemmingGame.DrawLemmings;
@@ -4067,23 +3808,14 @@ var
   IsShadowAdded: Boolean;
   SkillButton: TSkillPanelButton;
 
-  procedure AddGrayPixel(X, Y: Integer; Erase: Boolean; DrawAtTerrain: Boolean = False);
+  procedure AddGrayPixel(X, Y: Integer; DrawAtTerrain: Boolean = False);
   begin
-    if Erase then
-    begin
-      if fTargetBitmap.PixelS[X, Y] = $00202020 then
-        fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y];
-    end
-    else if DrawAtTerrain then
+    if DrawAtTerrain then
     begin
       if HasPixelAt(X, Y) and not HasSteelAt(X, Y) then
-        fTargetBitmap.PixelS[X, Y] := $00202020; // some kind of dark gray
-    end
-    else if not HasPixelAt(X, Y) then
-    begin
-      if (fTargetBitmap.PixelS[X, Y] = DosVgaColorToColor32(DosInLevelPalette[0])) then // DosVgaColorToColor32(DosInLevelPalette[0]) = pure black
-        fTargetBitmap.PixelS[X, Y] := $00202020; // some kind of dark gray
-    end;
+        fRenderer.SetHighShadowPixel(X, Y);
+    end else
+      fRenderer.SetLowShadowPixel(X, Y);
   end;
 
 begin
@@ -4092,8 +3824,7 @@ begin
 
     if DoErase then
     begin
-      L := fLemWithShadow;
-      SkillButton := fLemWithShadowButton
+      Exit; // This should not be needed anymore!
     end else begin
       GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
       SkillButton := fSelectedSkill
@@ -4101,14 +3832,11 @@ begin
 
     if not Assigned(L) then Exit;
 
-    // Save values here to migitate race condition problems at least somewhat
-    if DoErase then fExistShadow := False;
-
     case SkillButton of
       spbPlatformer:
         begin
           for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY);
 
           IsShadowAdded := True;
         end;
@@ -4117,7 +3845,7 @@ begin
         begin
           for j := 1 to 12 do
           for i := 2*j - 3 to 2*j + 3 do
-            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
 
           IsShadowAdded := True;
         end;
@@ -4130,7 +3858,7 @@ begin
 
           for j := AdaptY to AdaptY + 7 do
           for i := 0 to 3 do
-            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j, DoErase);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
 
           IsShadowAdded := True;
         end;
@@ -4144,8 +3872,8 @@ begin
                  or HasPixelAt(L.LemX + 3, L.LemY + j))
                 and not HasSteelAt(L.LemX, L.LemY + j) do
           begin
-            AddGrayPixel(L.LemX - 4, L.LemY + j, DoErase, True);
-            AddGrayPixel(L.LemX + 4, L.LemY + j, DoErase, True);
+            AddGrayPixel(L.LemX - 4, L.LemY + j, True);
+            AddGrayPixel(L.LemX + 4, L.LemY + j, True);
             Inc(j);
           end;
 
@@ -4157,9 +3885,9 @@ begin
           i := 0;
           j := 0;
           repeat
-            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j - 1, DoErase, True);
-            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j, DoErase, True);
-            AddGrayPixel(L.LemX + (i+2)*L.LemDx, L.LemY + j, DoErase, True);
+            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j - 1, True);
+            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j, True);
+            AddGrayPixel(L.LemX + (i+2)*L.LemDx, L.LemY + j, True);
             inc(i, 2);
             Inc(j);
           until    not HasPixelAt(L.LemX + (i-1)*L.LemDx, L.LemY + j)
@@ -4176,7 +3904,7 @@ begin
           repeat
             for j := 0 to 4 do
             begin
-              AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, DoErase, True);
+              AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, True);
               // AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 9, DoErase, True);
               Inc(i);
               if i = 5 then break; // skip first two pixels to draw
@@ -4200,7 +3928,7 @@ begin
           // end always with three additional pixels
           for j := 0 to 2 do
           begin
-            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, DoErase, True);
+            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, True);
             // AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 9, DoErase, True);
             Inc(i);
           end;
@@ -4209,7 +3937,7 @@ begin
         end;
     end;
 
-    if IsShadowAdded and not DoErase then
+    if IsShadowAdded then
     begin
       fTargetBitmap.Changed;
       fLemWithShadow := L;
@@ -4238,20 +3966,13 @@ begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
 
-  BrickColor := BrickPixelColors[12 - L.LemNumberOfBricksLeft] or ALPHA_TERRAIN;
+  BrickColor := BrickPixelColors[12 - L.LemNumberOfBricksLeft] or $FF000000;
 
   If L.LemAction = baBuilding then BrickPosY := L.LemY - 1
   else BrickPosY := L.LemY; // for platformers
 
   for n := 0 to 5 do
-  begin
-    if World.PixelS[L.LemX + n*L.LemDx, BrickPosY] and ALPHA_TERRAIN = 0 then
-    begin
-      World.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
-      if not fHyperSpeed then
-        fTargetBitmap.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
-    end;
-  end;
+    fRenderer.AddTerrainPixel(L.LemX + n*L.LemDx, BrickPosY, BrickColor);
 
   InitializeMinimap;
 end;
@@ -4268,7 +3989,7 @@ begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number stacker bricks out of bounds');
 
-  BrickColor := BrickPixelColors[12 - L.LemNumberOfBricksLeft] or ALPHA_TERRAIN;
+  BrickColor := BrickPixelColors[12 - L.LemNumberOfBricksLeft] or $FF000000;
 
   BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
   if L.LemStackLow then Inc(BrickPosY);
@@ -4276,15 +3997,7 @@ begin
   Result := False;
 
   for n := 1 to 3 do
-  begin
-    if World.PixelS[L.LemX + n*L.LemDx, BrickPosY] and ALPHA_TERRAIN = 0 then
-    begin
-      World.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
-      if not fHyperSpeed then
-        fTargetBitmap.PixelS[L.LemX + n*L.LemDx, BrickPosY] := BrickColor;
-      Result := True;
-    end;
-  end;
+    fRenderer.AddTerrainPixel(L.LemX + n*L.LemDx, BrickPosY);
 
   InitializeMinimap;
 end;
@@ -5377,8 +5090,9 @@ begin
   // erase existing ShadowBridge
   if fExistShadow then
   begin
-    DrawShadowBridge(true);
-    fExplodingGraphics := True; // Redraw everything later on
+    fRenderer.ClearShadows;
+    //DrawShadowBridge(true);
+    //fExplodingGraphics := True; // Redraw everything later on
   end;
 
   // just as a warning: do *not* mess around with the order here
@@ -5394,7 +5108,6 @@ begin
   begin
     fHyperSpeed := False;
     fLeavingHyperSpeed := False;
-    fTargetBitmap.Assign(World);
     if fPauseOnHyperSpeedExit and not Paused then
       SetSelectedSkill(spbPause);
     InfoPainter.ClearSkills;
@@ -5411,8 +5124,11 @@ begin
     RegainControl;
 
   // force update if raw explosion pixels drawn (or shadowstuff)
-  if fExplodingGraphics and (not HyperSpeed) then
-    fTargetBitmap.Changed;
+  //if fExplodingGraphics and (not HyperSpeed) then
+  //  fTargetBitmap.Changed;
+
+  // Just always redraw. We can change this later if there's perfomance issues.
+  fRenderer.DrawLevel(fTargetBitmap);
 
   CheckForPlaySoundEffect;
 end;
