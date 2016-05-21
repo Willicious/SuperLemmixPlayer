@@ -124,23 +124,24 @@ begin
   Bmp.SetSize(fWidth, fHeight);
 
   Alpha := (Header.ColorType = COLOR_RGBALPHA);
-  for y := 0 to fHeight-1 do
+  for Y := 0 to fHeight-1 do
   begin
     if Alpha then
-      ASL := Png.AlphaScanline[y];
+      LongInt(ASL) := Longint(Header.GetImageAlpha) + (Y * fWidth);
 
-    // Get Png.Scanline[y] via the header
-    LongInt(XC) := LongInt(Header.GetImageData) + (fHeight - 1 - y) * LongInt(fBytesPerRow);
-    BmpScanLine := Bmp.Scanline[y];
+    // Get Png.Scanline[Y] via the Header
+    LongInt(XC) := LongInt(Header.GetImageData) + (fHeight - 1 - Y) * LongInt(fBytesPerRow);
+    // Write on Bmp via the ScanLine, too.
+    BmpScanLine := Bmp.Scanline[Y];
 
-    for x := 0 to fWidth-1 do
+    for X := 0 to fWidth-1 do
     begin
       r := pRGBLine(XC)^[X].rgbtRed;
       g := pRGBLine(XC)^[X].rgbtGreen;
       b := pRGBLine(XC)^[X].rgbtBlue;
 
       if Alpha then
-        a := ASL^[x]
+        a := ASL^[X]
       else
         a := 255;
 

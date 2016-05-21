@@ -698,6 +698,7 @@ type
   public
     property GetBytesPerRow: Integer read BytesPerRow;
     property GetImageData: Pointer read ImageData;
+    property GetImageAlpha: Pointer read ImageAlpha;
     {Access to ImageHandle}
     property ImageHandleValue: HBitmap read ImageHandle;
     {Properties}
