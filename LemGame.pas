@@ -35,7 +35,7 @@ uses
   LemMetaObject, LemInteractiveObject, LemSteel, LemLevel, LemStyle,
   LemGraphicSet, LemDosGraphicSet, LemNeoGraphicSet, LemRendering, LemDosAnimationSet,
   LemMusicSystem, LemDosMainDat,
-  LemObjects,
+  LemObjects, LemRecolorSprites,
   GameInterfaces, GameControl, GameSound;
 
 type
@@ -500,6 +500,7 @@ type
     fFreezeRecording           : Boolean;
     WhichLemming               : TLemming; // see above
     LastNPLemming              : TLemming; // for emulation of right-click bug
+    fLemSelected               : TLemming; // lem under cursor, who would receive the skill
     fLemWithShadow             : TLemming; // needed for DrawShadowBridge to erase previous shadow
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
@@ -603,12 +604,7 @@ type
   { pixel combine eventhandlers }
     procedure DoTalismanCheck;
     procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineMinimapWorldPixels(F: TColor32; var B: TColor32; M: TColor32);
@@ -654,6 +650,7 @@ type
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
     procedure DrawLemmings;
+      procedure DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
     procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
     procedure CheckForNewShadow;
     procedure DrawShadowBridge(DoErase: Boolean = False);
@@ -1747,7 +1744,7 @@ begin
       if i in [BRICKLAYING, BRICKLAYING_RTL, PLATFORMING, PLATFORMING_RTL] then
         Bmp.OnPixelCombine := CombineBuilderPixels
       else
-        Bmp.OnPixelCombine := CombineLemmingPixels;
+        Bmp.OnPixelCombine := TRecolorImage.GetLemColorScheme(false, false, false, false);  // CombineLemmingPixels;
     end;
 
   StoneLemBmp := Ani.LemmingAnimations.Items[STONED];
@@ -2121,39 +2118,6 @@ begin
   end;
 end;
 
-procedure TLemmingGame.CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then B := F;
-end;
-
-procedure TLemmingGame.CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[6]);
-  if F <> 0 then B := F;
-end;
-
-procedure TLemmingGame.CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[2]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[1])
-  else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[2]);
-  if F <> 0 then B := F;
-end;
-
-procedure TLemmingGame.CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[2]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[1])
-  else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[2])
-  else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[6]);
-
-  if F <> 0 then B := F;
-end;
-
 
 procedure TLemmingGame.CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
 {-------------------------------------------------------------------------------
@@ -2170,13 +2134,6 @@ procedure TLemmingGame.CombineDefaultPixels(F: TColor32; var B: TColor32; M: TCo
 begin
   if F <> 0 then B := F;
 end;
-
-procedure TLemmingGame.CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  // photoflash
-  if F <> 0 then B := clBlack32 else B := clWhite32;
-end;
-
 
 procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
 // copy masks to world
@@ -3989,12 +3946,8 @@ end;
 procedure TLemmingGame.DrawLemmings;
 var
   iLemming: Integer;
-  CurrentLemming: TLemming;
-  SrcRect, DstRect, DigRect: TRect;
-  Digit: Integer;
-  OldCombine: TPixelCombineEvent;
+  L: TLemming;
   Xo : Integer;
-  TempBmp : TBitmap32;
 begin
   if HyperSpeed then
     Exit;
@@ -4010,121 +3963,100 @@ begin
     fMinimapBuffer.Assign(Minimap);
   end;
 
-  OldCombine := nil;
-
-  with LemmingList do
-    for iLemming := 0 to Count - 1 do
-    begin
-
-      CurrentLemming := List^[iLemming];
-      with CurrentLemming do
-      begin
-        if not (LemRemoved or LemTeleporting) then
-        begin
-          fCurrentlyDrawnLemming := CurrentLemming;
-          SrcRect := GetFrameBounds;
-          DstRect := GetLocationBounds;
-          LemEraseRect := DstRect;
-
-          fMinimapBuffer.PixelS[(LemX div 16) + Xo, LemY div 8] :=
-            Color32(0, 255, 000);
-
-          // Change color for zombies or lems with permanent skills
-          if    LemIsClimber or LemIsFloater or LemIsGlider
-             or LemIsSwimmer or LemIsMechanic then
-          begin
-            OldCombine := LAB.OnPixelCombine;
-            if LemisZombie then
-              LAB.OnPixelCombine := CombineLemmingPixelsZombieAthlete
-            else
-              LAB.OnPixelCombine := CombineLemmingPixelsAthlete;
-          end
-          else if LemIsZombie then
-          begin
-            OldCombine := LAB.OnPixelCombine;
-            LAB.OnPixelCombine := CombineLemmingPixelsZombie;
-          end;
-
-          if not LemHighlightReplay then
-          begin
-            LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-          end else begin
-            // replay assign job highlight fotoflash effect
-            if not Assigned(OldCombine) then OldCombine := LAB.OnPixelCombine;
-            LAB.OnPixelCombine := CombineLemmingHighlight;
-            LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
-            LemHighlightReplay := False;
-          end;
-
-          if DrawLemmingPixel then
-            fTargetBitmap.FillRectS(LemX, LemY, LemX + 1, LemY + 1, clRed32);
-
-          if (LemExplosionTimer > 0) or (CurrentLemming = fHighlightLemming) then
-          begin
-            SrcRect := Rect(0, 0, 8, 8);
-            DigRect := GetCountDownDigitBounds;
-            LemEraseRect.Top := DigRect.Top;
-            Assert(CheckRectCopy(SrcRect, DigRect), 'digit rect copy');
-
-            Digit := (LemExplosionTimer div 17) + 1;
-
-            TempBmp := TBitmap32.Create;
-            TempBmp.SetSize(8, 8);
-
-            if (CurrentLemming = fHighlightLemming) and (LemExplosionTimer mod 17 < 8) then
-            begin
-              HighlightBmp.DrawTo(TempBmp);
-              TempBmp.DrawMode := HighlightBmp.DrawMode;
-              TempBmp.OnPixelCombine := HighlightBmp.OnPixelCombine;
-            end else begin
-              RectMove(SrcRect, 0, (9 - Digit) * 8); // get "frame"
-              CntDownBmp.DrawTo(TempBmp, TempBmp.BoundsRect, SrcRect);
-              TempBmp.DrawMode := CntDownBmp.DrawMode;
-              TempBmp.OnPixelCombine := CntDownBmp.OnPixelCombine;
-            end;
-
-            if LemDx = -1 then RectMove(DigRect, -1, 0);
-
-            TempBmp.DrawTo(fTargetBitmap, DigRect);
-
-            TempBmp.Free;
-
-          end;
-
-          if Assigned(OldCombine) then
-          begin
-            LAB.OnPixelCombine := OldCombine;
-            OldCombine := nil; // clear for next lemming
-          end;
-        end; // not LemmingRemoved
-
-        if LemParticleTimer > 1 then
-          DrawParticles(CurrentLemming, False);
-
-      end; // with CurrentLemming
-
-    end; // for i...
-
-  HitTest;
-
-  if InfoPainter <> nil then
+  // Draw all existing lemmings, except the selected one
+  for iLemming := 0 to LemmingList.Count - 1 do
   begin
-    UpdateLemmingCounts;
-    InfoPainter.SetReplayMark(Replaying);
-    UpdateTimeLimit;
+    L := LemmingList[iLemming];
+
+    if not (L.LemRemoved or L.LemTeleporting) and (L <> fLemSelected) then
+    begin
+      DrawThisLemming(L);
+      // Draw on Minimap
+      fMinimapBuffer.PixelS[(L.LemX div 16) + Xo, L.LemY div 8] := Color32(0, 255, 000);
+    end;
+
+    if L.LemParticleTimer > 1 then
+      DrawParticles(L, False);
   end;
 
+  // Draw currently selected lemming as last lemming
+  if Assigned(fLemSelected) then
+    DrawThisLemming(fLemSelected, true);
 end;
 
-procedure TLemmingGame.CheckForNewShadow;
+procedure TLemmingGame.DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
 var
-  L: TLemming;
+  SrcRect, DstRect, DigRect: TRect;
+  OldCombine: TPixelCombineEvent;
+  TempBmp : TBitmap32;
+  Digit: Integer;
+  IsPermenent: Boolean;
+begin
+  with L do
+  begin
+    fCurrentlyDrawnLemming := L;
+    SrcRect := GetFrameBounds;
+    DstRect := GetLocationBounds;
+    LemEraseRect := DstRect;
+
+    OldCombine := LAB.OnPixelCombine;
+
+    // Get color scheme for lemming sprite
+    IsPermenent := LemIsClimber or LemIsFloater or LemIsGlider or LemIsSwimmer or LemIsMechanic;
+    LAB.OnPixelCombine := TRecolorImage.GetLemColorScheme(LemIsZombie, IsPermenent, IsSelected, LemHighlightReplay);
+
+    LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
+
+    // Always reset LemHighlightReplay to false
+    LemHighlightReplay := False;
+
+    if DrawLemmingPixel then
+      fTargetBitmap.FillRectS(LemX, LemY, LemX + 1, LemY + 1, clRed32);
+
+    if (LemExplosionTimer > 0) or (L = fHighlightLemming) then
+    begin
+      SrcRect := Rect(0, 0, 8, 8);
+      DigRect := GetCountDownDigitBounds;
+      LemEraseRect.Top := DigRect.Top;
+      Assert(CheckRectCopy(SrcRect, DigRect), 'digit rect copy');
+
+      Digit := (LemExplosionTimer div 17) + 1;
+
+      TempBmp := TBitmap32.Create;
+      TempBmp.SetSize(8, 8);
+
+      if (L = fHighlightLemming) and (LemExplosionTimer mod 17 < 8) then
+      begin
+        HighlightBmp.DrawTo(TempBmp);
+        TempBmp.DrawMode := HighlightBmp.DrawMode;
+        TempBmp.OnPixelCombine := HighlightBmp.OnPixelCombine;
+      end else begin
+        RectMove(SrcRect, 0, (9 - Digit) * 8); // get "frame"
+        CntDownBmp.DrawTo(TempBmp, TempBmp.BoundsRect, SrcRect);
+        TempBmp.DrawMode := CntDownBmp.DrawMode;
+        TempBmp.OnPixelCombine := CntDownBmp.OnPixelCombine;
+      end;
+
+      if LemDx = -1 then RectMove(DigRect, -1, 0);
+
+      TempBmp.DrawTo(fTargetBitmap, DigRect);
+
+      TempBmp.Free;
+    end;
+
+    // Reverse change on OnPixelCombine
+    LAB.OnPixelCombine := OldCombine;
+  end;
+end;
+
+
+procedure TLemmingGame.CheckForNewShadow;
 begin
   if fHyperSpeed then Exit;
 
   // Check whether we have to redraw the Shadow (if lem or skill changed)
-  GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
-  if (not fExistShadow) or (not (fLemWithShadow = L)) or (not (fLemWithShadowButton = fSelectedSkill)) then
+  if (not fExistShadow) or (not (fLemWithShadow = fLemSelected))
+                        or (not (fLemWithShadowButton = fSelectedSkill)) then
   begin
     if fExistShadow then // false if coming from UpdateLemming
     begin
@@ -4172,10 +4104,10 @@ begin
     if DoErase then
     begin
       L := fLemWithShadow;
-      SkillButton := fLemWithShadowButton
+      SkillButton := fLemWithShadowButton;
     end else begin
-      GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
-      SkillButton := fSelectedSkill
+      L := fLemSelected;
+      SkillButton := fSelectedSkill;
     end;
 
     if not Assigned(L) then Exit;
@@ -5480,9 +5412,23 @@ begin
     InfoPainter.DrawButtonSelector(fSelectedSkill, true);
   end;
 
+  // Get highest priority lemming under cursor
+  GetPriorityLemming(fLemSelected, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
+
   DrawAnimatedObjects;
 
   DrawLemmings;
+
+  // Check lemmings under cursor
+  HitTest;
+
+  if InfoPainter <> nil then
+  begin
+    UpdateLemmingCounts;
+    InfoPainter.SetReplayMark(Replaying);
+    UpdateTimeLimit;
+  end;
+
 
   CheckForReplayAction(false);
 
@@ -5559,20 +5505,33 @@ end;
 procedure TLemmingGame.HitTest(Autofail: Boolean = false);
 var
   HitCount: Integer;
-  L: TLemming;
+  L, OldLemSelected: TLemming;
   S: string;
   i: integer;
   fAltOverride: Boolean;
 begin
+  if Autofail then fHitTestAutoFail := true;
+
+  OldLemSelected := fLemSelected;
+  // Shadow stuff for updated selected lemming
+  GetPriorityLemming(fLemSelected, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
   CheckForNewShadow;
 
-  if Autofail then fHitTestAutoFail := true;
+  // Get new priority lemming including lems that cannot receive the skill
   HitCount := GetPriorityLemming(L, baNone, CursorPoint);
+
+  if (L <> OldLemSelected) or not Assigned(L) then
+  begin
+    fLemSelected := L;
+    // redraw all lemmings to change color of selected lem
+    DrawLemmings;
+  end;
+
   if Assigned(L) and not fHitTestAutofail then
   begin
     S := LemmingActionStrings[L.LemAction];
-    // get highlight text
 
+    // get highlight text
     fAltOverride := false;
     if (L.LemIsClimber or L.LemIsFloater or L.LemIsGlider or L.LemIsSwimmer or L.LemIsMechanic)
         and L.LemIsZombie then
