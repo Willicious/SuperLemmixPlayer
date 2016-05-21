@@ -1955,7 +1955,7 @@ end;
 procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
 // copy masks to world
 begin
-  if (F <> 0) and (B and PM_STEEL <> 0) then B := B and not PM_TERRAIN;
+  if (F <> 0) and (B and PM_STEEL = 0) then B := B and not PM_TERRAIN;
 end;
 
 procedure TLemmingGame.CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);

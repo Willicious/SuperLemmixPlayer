@@ -98,6 +98,7 @@ type
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
 
     function GetLemmingLayer: TBitmap32;
+    procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
   protected
   public
     constructor Create;
@@ -169,7 +170,24 @@ end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32);
 begin
+  ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
   fLayers.CombineTo(aDst); 
+end;
+
+procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);
+var
+  cx, cy: Integer;
+begin
+  // Another somewhat kludgy thing. Eventually, TRenderer should probably handle
+  // applying masks, thereby removing them from both the visual render and the
+  // physics render at the same time.
+  for cy := Y to (Y+H-1) do
+    for cx := X to (X+W-1) do
+      if PhysicsMap.Pixel[cx, cy] and PM_SOLID = 0 then
+      begin
+        // should we double-check all terrain bits are erased?
+        fLayers[rlTerrain].Pixel[cx, cy] := 0;
+      end;
 end;
 
 procedure TRenderer.ClearShadows;
