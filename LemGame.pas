@@ -1910,20 +1910,20 @@ end;
 procedure TLemmingGame.CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[2]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[1])
+    F := DosVgaColorToColor32(DosInLevelPalette[1]) or $FF000000
   else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[2]);
+    F := DosVgaColorToColor32(DosInLevelPalette[2]) or $FF000000;
   if F <> 0 then B := F;
 end;
 
 procedure TLemmingGame.CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[2]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[1])
+    F := DosVgaColorToColor32(DosInLevelPalette[1]) or $FF000000
   else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[2])
+    F := DosVgaColorToColor32(DosInLevelPalette[2]) or $FF000000
   else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[6]);
+    F := DosVgaColorToColor32(DosInLevelPalette[6]) or $FF000000;
 
   if F <> 0 then B := F;
 end;
@@ -3830,6 +3830,8 @@ begin
 
     if DoErase then
     begin
+      fRenderer.ClearShadows;
+      fExistShadow := false;
       Exit; // This should not be needed anymore!
     end else begin
       GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
@@ -5096,8 +5098,7 @@ begin
   // erase existing ShadowBridge
   if fExistShadow then
   begin
-    fRenderer.ClearShadows;
-    //DrawShadowBridge(true);
+    DrawShadowBridge(true);
     //fExplodingGraphics := True; // Redraw everything later on
   end;
 
