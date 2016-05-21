@@ -98,6 +98,7 @@ type
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
 
     function GetLemmingLayer: TBitmap32;
+    function GetParticleLayer: TBitmap32;
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
   protected
   public
@@ -139,6 +140,7 @@ type
     property Theme: TNeoTheme read fTheme;
 
     property LemmingLayer: TBitmap32 read GetLemmingLayer; // this should be replaced with having TRenderer do the lemming drawing! But for now, this is a kludgy workaround
+    property ParticleLayer: TBitmap32 read GetParticleLayer; // same
   end;
 
 //const
@@ -168,10 +170,15 @@ begin
   Result := fLayers[rlLemmings];
 end;
 
+function TRenderer.GetParticleLayer: TBitmap32;
+begin
+  Result := fLayers[rlParticles];
+end;
+
 procedure TRenderer.DrawLevel(aDst: TBitmap32);
 begin
   ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
-  fLayers.CombineTo(aDst); 
+  fLayers.CombineTo(aDst);
 end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);

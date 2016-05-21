@@ -3582,7 +3582,8 @@ procedure TLemmingGame.DrawParticles(L: TLemming; DoErase: Boolean);
 var
   i, X, Y: Integer;
 begin
-  {for i := 0 to 79 do
+
+  for i := 0 to 79 do
   begin
     X := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DX;
     Y := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DY;
@@ -3590,12 +3591,9 @@ begin
     begin
       X := L.LemX + X;
       Y := L.LemY + Y;
-      if DoErase then
-        fTargetBitmap.PixelS[X, Y] := World.PixelS[X, Y]
-      else
-        fTargetBitmap.PixelS[X, Y] := fParticleColors[i mod 16];
+      fRenderer.ParticleLayer.PixelS[X, Y] := fRenderer.Theme.ParticleColors[i];
     end;
-  end;}
+  end;
 
   fExplodingGraphics := True;
 end;
@@ -3666,6 +3664,8 @@ begin
   LemLayer := fRenderer.LemmingLayer;
 
   LemLayer.Clear(0);
+
+  fRenderer.ParticleLayer.Clear(0);
 
   if Minimap.Width < DOS_MINIMAP_WIDTH then
   begin
