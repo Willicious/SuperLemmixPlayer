@@ -18,6 +18,7 @@ type
                   rlObjectsLow,
                   rlTerrain,
                   rlObjectsHigh,
+                  rlParticles,
                   rlLemmings);
 
   TRenderBitmaps = class(TBitmaps)

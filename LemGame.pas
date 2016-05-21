@@ -373,8 +373,9 @@ type
       LemmingList: TLemmingList;
       SelectedSkill: TSkillPanelButton;
       TargetBitmap: TBitmap32;
-      World: TBitmap32;
-      SteelWorld: TBitmap32;
+      //World: TBitmap32;
+      //SteelWorld: TBitmap32;
+      PhysicsMap: TBitmap32;
       ObjectMap: TByteMap;
       BlockerMap: TByteMap;
       SpecialMap: TByteMap;
@@ -445,8 +446,9 @@ type
 
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
-    World                      : TBitmap32; // actual bitmap that is changed by the lemmings
-    SteelWorld                 : TBitmap32; // backup bitmap for steel purposes
+    //World                      : TBitmap32; // actual bitmap that is changed by the lemmings
+    //SteelWorld                 : TBitmap32; // backup bitmap for steel purposes
+    PhysicsMap                 : TBitmap32; 
     ObjectMap                  : TByteMap;
     BlockerMap                 : TByteMap; // for blockers
     SpecialMap                 : TByteMap; // for steel and oneway
@@ -1103,8 +1105,9 @@ begin
   LemmingList := TLemmingList.Create(true);
   ObjectInfos := TInteractiveObjectInfoList.Create(true);
   TargetBitmap := TBitmap32.Create;
-  World := TBitmap32.Create;
-  SteelWorld := TBitmap32.Create;
+  //World := TBitmap32.Create;
+  //SteelWorld := TBitmap32.Create;
+  PhysicsMap := TBitmap32.Create;
   ObjectMap := TByteMap.Create;
   BlockerMap := TByteMap.Create;
   SpecialMap := TByteMap.Create;
@@ -1117,8 +1120,9 @@ begin
   LemmingList.Free;
   ObjectInfos.Free;
   TargetBitmap.Free;
-  World.Free;
-  SteelWorld.Free;
+  //World.Free;
+  //SteelWorld.Free;
+  PhysicsMap.Free;
   ObjectMap.Free;
   BlockerMap.Free;
   SpecialMap.Free;
@@ -1245,8 +1249,9 @@ begin
   // Simple stuff
   aState.SelectedSkill := fSelectedSkill;
   aState.TargetBitmap.Assign(fTargetBitmap);
-  aState.World.Assign(World);
-  aState.SteelWorld.Assign(SteelWorld);
+  //aState.World.Assign(World);
+  //aState.SteelWorld.Assign(SteelWorld);
+  aState.PhysicsMap.Assign(PhysicsMap);
   aState.ObjectMap.Assign(ObjectMap);
   aState.BlockerMap.Assign(BlockerMap);
   aState.SpecialMap.Assign(SpecialMap);
@@ -1317,8 +1322,9 @@ begin
     fSelectedSkill := aState.SelectedSkill;
   if not SkipTargetBitmap then  // We don't need to bother with this one if we're not loading the exact frame we want to go to
     fTargetBitmap.Assign(aState.TargetBitmap);
-  World.Assign(aState.World);
-  SteelWorld.Assign(aState.SteelWorld);
+  //World.Assign(aState.World);
+  //SteelWorld.Assign(aState.SteelWorld);
+  PhysicsMap.Assign(aState.PhysicsMap);
   ObjectMap.Assign(aState.ObjectMap);
   BlockerMap.Assign(aState.BlockerMap);
   SpecialMap.Assign(aState.SpecialMap);
@@ -1469,8 +1475,8 @@ begin
   inherited Create(aOwner);
 
   LemmingList    := TLemmingList.Create;
-  World          := TBitmap32.Create;
-  SteelWorld     := TBitmap32.Create;
+  //World          := TBitmap32.Create;
+  //SteelWorld     := TBitmap32.Create;
   ExplodeMaskBmp := TBitmap32.Create;
   ObjectInfos    := TInteractiveObjectInfoList.Create;
   Entries        := TInteractiveObjectInfoList.Create;
@@ -1590,8 +1596,8 @@ destructor TLemmingGame.Destroy;
 begin
   LemmingList.Free;
   ObjectInfos.Free;
-  World.Free;
-  SteelWorld.Free;
+  //World.Free;
+  //SteelWorld.Free;
   Entries.Free;
   ObjectMap.Free;
   BlockerMap.Free;
@@ -1757,8 +1763,11 @@ begin
   StoneLemBmp.DrawMode := dmCustom;
   StoneLemBmp.OnPixelCombine := CombineNoOverwriteStoner;
 
-  World.SetSize(Level.Info.Width, Level.Info.Height);
-  SteelWorld.SetSize(Level.Info.Width, Level.Info.Height);
+  //World.SetSize(Level.Info.Width, Level.Info.Height);
+  //SteelWorld.SetSize(Level.Info.Width, Level.Info.Height);
+
+  Renderer.RenderPhysicsMap;
+  PhysicsMap := Renderer.PhysicsMap;
 
   MusicSys := fGameParams.Style.MusicSystem;
   MusicFileName := GetMusicFileName;
@@ -1829,18 +1838,18 @@ begin
     fGameParams.Level.Info.ClonerCount     := 0;
   end;
 
-  fRenderer.RenderWorld(World, False, (moDebugSteel in fGameParams.MiscOptions));
+  //fRenderer.RenderWorld(World, False, (moDebugSteel in fGameParams.MiscOptions));
 
-  if ((Level.Info.LevelOptions and 8) = 0) and (fGameParams.SysDat.Options and 128 = 0) then
+  {if ((Level.Info.LevelOptions and 8) = 0) and (fGameParams.SysDat.Options and 128 = 0) then
     fRenderer.RenderWorld(SteelWorld, False, True)
   else
   begin
     fRenderer.RenderWorld(SteelWorld, False, True, True);
-    for i := 0 to SteelWorld.Width - 1 do
-    for i2 := 0 to SteelWorld.Height - 1 do
+    for i := 0 to SteelPhysicsMap.Width - 1 do
+    for i2 := 0 to SteelPhysicsMap.Height - 1 do
       if SteelWorld.PixelS[i, i2] and ALPHA_STEEL <> 0 then
         World.PixelS[i, i2] := World.PixelS[i, i2] and not ALPHA_ONEWAY;
-  end;
+  end;}
 
   // hyperspeed things
   fTargetIteration := 0;
@@ -1858,7 +1867,7 @@ begin
   LemmingsReleased := 0;
   LemmingsCloned := 0;
   fHighlightLemming := nil;
-  World.OuterColor := 0;
+  //World.OuterColor := 0;
   TimePlay := Level.Info.TimeLimit;
   if (TimePlay > 5999) or (moTimerMode in fGameParams.MiscOptions) then
     TimePlay := 0; // infinite time
@@ -1993,7 +2002,7 @@ begin
 
   //ShowMessage(IntToStr(Level.Info.LevelID));
 
-  fTargetBitmap.Assign(World);
+  fTargetBitmap.SetSize(PhysicsMap.Width, PhysicsMap.Height);
   DrawAnimatedObjects; // first draw needed
 
   //if Entries.Count = 0 then raise exception.Create('no entries');
@@ -2026,12 +2035,13 @@ begin
 
   UpdateAllSkillCounts;
 
-  SteelWorld.Assign(World);
   AddPreplacedLemming; // instantly-spawning lemmings (object type 13)
 
   fFallLimit := MAX_FALLDISTANCE;
 
   fTalismanReceived := false;
+
+  Renderer.DrawLevel(fTargetBitmap);
 
   Playing := True;
 end;
@@ -2096,7 +2106,7 @@ begin
         if (ObjectInfos[i].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
         if (ObjectInfos[i].PreAssignedSkills and 32) <> 0 then
         begin
-          while (LemY <= LEMMING_MAX_Y + World.Height) and (HasPixelAt(LemX, LemY) = false) do
+          while (LemY <= LEMMING_MAX_Y + PhysicsMap.Height) and (HasPixelAt(LemX, LemY) = false) do
             Inc(LemY);
           Transition(NewLemming, baBlocking);
         end;
@@ -2173,20 +2183,22 @@ end;
 procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
 // copy masks to world
 begin
-  if F <> 0 then B := Renderer.BackgroundColor;
+  if (F <> 0) and (B and PM_STEEL <> 0) then B := B and not PM_TERRAIN;
 end;
 
 procedure TLemmingGame.CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
 // copy Stoner to world
 begin
-  if (B and ALPHA_TERRAIN = 0) and (F <> 0) then B := ((F and $FFFFFF) or ALPHA_TERRAIN);
+  if (B and PM_SOLID = 0) and (F <> 0) then B := (B or PM_SOLID);
 end;
 
 procedure TLemmingGame.CombineMinimapWorldPixels(F: TColor32; var B: TColor32; M: TColor32);
 // copy world to minimap
 begin
-  if F and ALPHA_TERRAIN <> 0 then B := BrickPixelColor
-    else B := Renderer.BackgroundColor;
+  if F and PM_SOLID <> 0 then
+    B := Renderer.Theme.MapColor
+  else
+    B := Renderer.BackgroundColor;
 end;
 
 
@@ -2198,8 +2210,8 @@ function TLemmingGame.HasPixelAt(X, Y: Integer): Boolean;
 begin
   Result := (Y < 0);
   If Result = False then
-    Result := (Y < World.Height) and (X >= 0) and (X < World.Width)
-                   and (World.Pixel[X, Y] and ALPHA_TERRAIN <> 0);
+    Result := (Y < PhysicsMap.Height) and (X >= 0) and (X < PhysicsMap.Width)
+                   and (PhysicsMap.Pixel[X, Y] and PM_SOLID <> 0);
 
   (*// Code for solid sides!
   with World do
@@ -2212,9 +2224,7 @@ end;
 
 procedure TLemmingGame.RemovePixelAt(X, Y: Integer);
 begin
-  World.PixelS[x, y] := Renderer.BackgroundColor;
-  if not fHyperSpeed then
-    fTargetBitmap.PixelS[x, y] := Renderer.BackgroundColor;
+  PhysicsMap.Pixel[X, Y] := PhysicsMap.Pixel[X, Y] and not PM_TERRAIN;
 end;
 
 procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; oid: Byte);
@@ -2244,7 +2254,7 @@ end;
 
 function TLemmingGame.ReadObjectMap(X, Y: Integer): Word;
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     Result := (ObjectMap.Value[2*X, Y] shl 8) + ObjectMap.Value[2*X + 1, Y]
   else
     Result := DOM_NOOBJECT; // whoops, important
@@ -2254,7 +2264,7 @@ function TLemmingGame.ReadObjectMapType(X, Y: Integer): Byte;
 var
   ObjID: Word;
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
   begin
     ObjID := ReadObjectMap(X, Y);
     if ObjID = DOM_NOOBJECT then
@@ -2268,7 +2278,7 @@ end;
 
 function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     Result := BlockerMap.Value[X, Y]
   else
     Result := DOM_NONE; // whoops, important
@@ -2276,7 +2286,7 @@ end;
 
 function TLemmingGame.ReadZombieMap(X, Y: Integer): Byte;
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     Result := ZombieMap.Value[X, Y]
   else
     Result := DOM_NONE; // whoops, important
@@ -2284,19 +2294,19 @@ end;
 
 function TLemmingGame.ReadSpecialMap(X, Y: Integer): Byte;
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     Result := SpecialMap.Value[X, Y]
   else
     Result := DOM_NONE; // whoops, important
 
   if X < 0 then Result := DOM_NONE; // Old version: DOM_STEEL;
-  if X >= World.Width then Result := DOM_NONE; // Old version: DOM_STEEL;
+  if X >= PhysicsMap.Width then Result := DOM_NONE; // Old version: DOM_STEEL;
   if Y < 0 then Result := DOM_STEEL;
 end;
 
 function TLemmingGame.ReadWaterMap(X, Y: Integer): Byte;
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     Result := WaterMap.Value[X, Y]
   else
     Result := DOM_NONE; // whoops, important
@@ -2304,33 +2314,33 @@ end;
 
 procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aValue: Byte);
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     BlockerMap.Value[X, Y] := aValue;
 end;
 
 procedure TLemmingGame.WriteZombieMap(X, Y: Integer; aValue: Byte);
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     ZombieMap.Value[X, Y] := ZombieMap.Value[X, Y] or aValue
 end;
 
 procedure TLemmingGame.WriteWaterMap(X, Y: Integer; aValue: Byte);
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     WaterMap.Value[X, Y] := aValue;
 end;
 
 
 procedure TLemmingGame.WriteSpecialMap(X, Y: Integer; aValue: Byte);
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     SpecialMap.Value[X, Y] := aValue;
 end;
 
 
 procedure TLemmingGame.WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = false);
 begin
-  if (X >= 0) and (X < World.Width) and (Y >= 0) and (Y < World.Height) then
+  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
   begin
     ObjectMap.Value[2*X, Y] := aValue div 256;
     ObjectMap.Value[2*X + 1, Y] := aValue mod 256;
@@ -2644,7 +2654,7 @@ begin
       begin
         if (V in [DOM_STEEL, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
         begin
-          if (V = DOM_STEEL) or (World.PixelS[X, Y] and ALPHA_ONEWAY <> 0) then
+          if (V = DOM_STEEL) or (PhysicsMap.PixelS[X, Y] and PM_ONEWAY <> 0) then
             WriteSpecialMap(X, Y, V)
         end
         else if V = DOM_WATER then
@@ -2692,7 +2702,7 @@ begin
   DoAutoSteel := (((Level.Info.LevelOptions and 2) = 2) or
           (fGameParams.SysDat.Options and 64 <> 0));
 
-  with SteelWorld do
+  with PhysicsMap do
   begin
     for x := 0 to (Width-1) do
     for y := 0 to (Height-1) do
@@ -2700,34 +2710,22 @@ begin
       if DoAutoSteel then
       begin
         if (X >= 0) and (Y >= 0) and (X < Width) and (Y < Height)
-                    and (Pixel[X, Y] and ALPHA_STEEL <> 0)
+                    and (Pixel[X, Y] and PM_STEEL <> 0)
                     and (ReadSpecialMap(X, Y) = DOM_NONE) then
           WriteSpecialMap(X, Y, DOM_STEEL);
       end;
 
-      if (ReadSpecialMap(X, Y) = DOM_STEEL) and (World.Pixel[X, Y] and ALPHA_TERRAIN = 0) then
+      if (ReadSpecialMap(X, Y) = DOM_STEEL) and (PhysicsMap.Pixel[X, Y] and PM_SOLID = 0) then
         WriteSpecialMap(X, Y, DOM_NONE);
 
       if (ReadSpecialMap(X, Y) = DOM_STEEL) then
-        World.PixelS[X, Y] := World.PixelS[X, Y] and not ALPHA_ONEWAY;
+        PhysicsMap.Pixel[X, Y] := PhysicsMap.Pixel[X, Y] and not PM_ONEWAY;
 
       if     (ReadSpecialMap(X, Y) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN])
-         and (World.Pixel[X, Y] and ALPHA_ONEWAY = 0) then
+         and (PhysicsMap.Pixel[X, Y] and PM_ONEWAY = 0) then
         WriteSpecialMap(X, Y, DOM_NONE);
 
-      if fGameParams.DebugSteel and (ReadSpecialMap(X, Y) <> DOM_STEEL) then
-      begin
-        if SteelWorld.Pixel[X, Y] and ALPHA_TERRAIN = 0 then
-        begin
-          World.Pixel[X, Y] := $00FF00FF;
-          SteelWorld.Pixel[X, Y] := $00FF00FF;
-        end else begin
-          World.Pixel[X, Y] := $01FFFFFF;
-          SteelWorld.Pixel[X, Y] := $01FFFFFF;
-        end;
-      end;
     end;
-    fTargetBitmap.Assign(World);
   end;
 end;
 
@@ -3133,18 +3131,18 @@ var
   OldMode: TDrawMode;
   SrcRect, DstRect: TRect;
 begin
-  Minimap.SetSize(World.Width div 16, World.Height div 8);
+  Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
   Minimap.Clear(0);
-  OldCombine := World.OnPixelCombine;
-  OldMode := World.DrawMode;
-  World.DrawMode := dmCustom;
-  World.OnPixelCombine := CombineMinimapWorldPixels;
-  SrcRect := World.BoundsRect;
-  DstRect := Rect(0, 0, World.Width div 16, World.Height div 8);
+  OldCombine := PhysicsMap.OnPixelCombine;
+  OldMode := PhysicsMap.DrawMode;
+  PhysicsMap.DrawMode := dmCustom;
+  PhysicsMap.OnPixelCombine := CombineMinimapWorldPixels;
+  SrcRect := PhysicsMap.BoundsRect;
+  DstRect := Rect(0, 0, PhysicsMap.Width div 16, PhysicsMap.Height div 8);
 //  OffsetRect(DstRect, 1, 0);
-  World.DrawTo(Minimap, DstRect, SrcRect);
-  World.OnPixelCombine := OldCombine;
-  World.DrawMode := OldMode;
+  PhysicsMap.DrawTo(Minimap, DstRect, SrcRect);
+  PhysicsMap.OnPixelCombine := OldCombine;
+  PhysicsMap.DrawMode := OldMode;
 end;
 
 function TLemmingGame.GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
@@ -3722,9 +3720,9 @@ begin
   X := L.LemX;
   if L.LemDx = 1 then Inc(X);
 
-  StoneLemBmp.DrawTo(World, X - 8, L.LemY -10);
-  if not HyperSpeed then
-    StoneLemBmp.DrawTo(fTargetBitmap, X - 8, L.LemY -10);
+  StoneLemBmp.DrawTo(PhysicsMap, X - 8, L.LemY -10);
+  //if not HyperSpeed then
+  //  StoneLemBmp.DrawTo(fTargetBitmap, X - 8, L.LemY -10);
 
   InitializeMinimap;
 end;
@@ -3739,26 +3737,9 @@ begin
   if L.LemDx = 1 then Inc(PosX);
   PosY := L.LemY;
 
-  ExplodeMaskBmp.DrawTo(World, PosX - 8, PosY - 14);
-  if not HyperSpeed then
-    ExplodeMaskBmp.DrawTo(fTargetBitmap, PosX - 8, PosY - 14);
-
-  for X1 := PosX - 24 to PosX + 23 do
-  for Y1 := PosY - 36 to PosY + 35 do
-  begin
-    if (X1 >= 0) and (X1 < World.Width) and (Y1 >= 0) and (Y1 < World.Height) then
-    begin
-      if ReadSpecialMap(X1, Y1) = DOM_STEEL then
-      begin
-        World[X1, Y1] := SteelWorld[X1, Y1];
-        fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
-      end;
-
-      if (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN])
-         and (World[X1, Y1] <> SteelWorld[X1, Y1]) then
-        WriteSpecialMap(X1, Y1, DOM_NONE);
-    end;
-  end;
+  ExplodeMaskBmp.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
+  //if not HyperSpeed then
+  //  ExplodeMaskBmp.DrawTo(fTargetBitmap, PosX - 8, PosY - 14);
 
   InitializeMinimap;
 end;
@@ -3784,23 +3765,7 @@ begin
 
   Assert(CheckRectCopy(D, S), 'bash rect err');
 
-  Bmp.DrawTo(World, D, S);
-  if not HyperSpeed then
-    Bmp.DrawTo(fTargetBitmap, D, S);
-
-  for X1 := D.Left to D.Right do
-  for Y1 := D.Top to D.Bottom do
-    if (X1 >= 0) and (X1 < World.Width) and (Y1 >= 0) and (Y1 < World.Height) then
-    begin
-      if HasIndestructibleAt(X1, Y1, L.LemDx, baBashing) then
-      begin
-        World[X1, Y1] := SteelWorld[X1, Y1];
-        fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
-      end;
-      if (World[X1, Y1] <> SteelWorld[X1, Y1])
-         and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
-        WriteSpecialMap(X1, Y1, DOM_NONE);
-    end;
+  Bmp.DrawTo(PhysicsMap, D, S);
 
   InitializeMinimap;
 end;
@@ -3833,23 +3798,7 @@ begin
 
   Assert(CheckRectCopy(D, S), 'miner rect error');
 
-  Bmp.DrawTo(World, D, S);
-  if not HyperSpeed then
-    Bmp.DrawTo(fTargetBitmap, D, S);
-
-  for X1 := D.Left to D.Right do
-  for Y1 := D.Top to D.Bottom do
-    if (X1 >= 0) and (X1 < World.Width) and (Y1 >= 0) and (Y1 < World.Height) then
-    begin
-      if HasIndestructibleAt(X1, Y1, L.LemDx, baMining) then
-      begin
-        World[X1, Y1] := SteelWorld[X1, Y1];
-        fTargetBitmap[X1, Y1] := SteelWorld[X1, Y1];
-      end;
-      if (World[X1, Y1] <> SteelWorld[X1, Y1])
-      and (ReadSpecialMap(X1, Y1) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
-        WriteSpecialMap(X1, Y1, DOM_NONE);
-    end;
+  Bmp.DrawTo(PhysicsMap, D, S);
 
   InitializeMinimap;
 end;
@@ -4401,13 +4350,13 @@ function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
 begin
   Result := True;
   // Bottom
-  if L.LemY > LEMMING_MAX_Y + World.Height then
+  if L.LemY > LEMMING_MAX_Y + PhysicsMap.Height then
   begin
     RemoveLemming(L, RM_NEUTRAL);
     Result := False;
   end;
   // Sides
-  if (L.LemX < 0) or (L.LemX >= World.Width) then
+  if (L.LemX < 0) or (L.LemX >= PhysicsMap.Width) then
   begin
     RemoveLemming(L, RM_NEUTRAL);
     Result := False;
@@ -4473,7 +4422,7 @@ var
     while HasPixelAt(L.LemX, L.LemY + Result) and (Result <= DiveDepth) do
     begin
       Inc(Result);
-      if L.LemY + Result >= World.Height then Result := DiveDepth + 1; // End while loop!
+      if L.LemY + Result >= PhysicsMap.Height then Result := DiveDepth + 1; // End while loop!
     end;
 
     // do not dive, when there is no more water

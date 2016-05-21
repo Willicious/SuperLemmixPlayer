@@ -98,6 +98,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure DrawLevel(aDst: TBitmap32);
+
     function FindMetaObject(O: TInteractiveObject): TObjectRecord;
     function FindMetaTerrain(T: TTerrain): TTerrainRecord;
 
@@ -126,18 +128,18 @@ type
     property Theme: TNeoTheme read fTheme;
   end;
 
-const
-  COLOR_MASK    = $80FFFFFF; // transparent black flag is included!
-  ALPHA_MASK    = $FF000000;
+//const
+  //COLOR_MASK    = $80FFFFFF; // transparent black flag is included!
+  //ALPHA_MASK    = $FF000000;
 
-  ALPHA_TERRAIN          = $01000000;
-  ALPHA_OBJECT           = $02000000; // not really needed, but used
-  ALPHA_STEEL            = $04000000;
-  ALPHA_ONEWAY           = $08000000;
+  //ALPHA_TERRAIN          = $01000000;
+  //ALPHA_OBJECT           = $02000000; // not really needed, but used
+  //ALPHA_STEEL            = $04000000;
+  //ALPHA_ONEWAY           = $08000000;
 
   // to enable black terrain. bitmaps with transparent black should include
   // this bit
-  ALPHA_TRANSPARENTBLACK = $80000000;
+  //ALPHA_TRANSPARENTBLACK = $80000000;
 
 implementation
 
@@ -147,6 +149,11 @@ uses
 
 
 { TRenderer }
+
+procedure TRenderer.DrawLevel(aDst: TBitmap32);
+begin
+  fLayers.CombineTo(aDst); 
+end;
 
 function TRenderer.FindMetaObject(O: TInteractiveObject): TObjectRecord;
 var
@@ -182,8 +189,10 @@ begin
       if (PSrc^ and $FF000000) <> 0 then
       begin
         PDst^ := PM_SOLID;
-        if Src.Meta.Unknown and $01 <> 0 then PDst^ := PDst^ or PM_STEEL;
-        if T.DrawingFlags and tdf_NoOneWay = 0 then PDst^ := PDst^ or PM_ONEWAY; 
+        if Src.Meta.Unknown and $01 <> 0 then
+          PDst^ := PDst^ or PM_STEEL
+        else if T.DrawingFlags and tdf_NoOneWay = 0 then
+          PDst^ := PDst^ or PM_ONEWAY; 
       end;
       Inc(PSrc);
     end;
@@ -224,7 +233,7 @@ end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F <> 0) and (B and ALPHA_TERRAIN = 0) then
+  if (F <> 0) and (B and $FF000000 <> $FF000000) then
   begin
     MergeMemEx(B, F, $FF);
     B := F;
@@ -257,7 +266,7 @@ end;
 
 procedure TRenderer.CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F <> 0) and (B and ALPHA_TERRAIN <> 0) and (B and ALPHA_ONEWAY <> 0) then
+  if (F <> 0) {and (B and ALPHA_TERRAIN <> 0) and (B and ALPHA_ONEWAY <> 0)} then
   begin
     MergeMemEx(F, B, $FF);
   end;
@@ -507,10 +516,10 @@ begin
   begin
   if O.TarLev and 32 <> 0 then
   begin
-    while (ty <= Inf.Level.Info.Height-1) and (Dst.Pixel[tx, ty] and ALPHA_TERRAIN = 0) do
-      inc(ty);
+    {while (ty <= Inf.Level.Info.Height-1) and (Dst.Pixel[tx, ty] and ALPHA_TERRAIN = 0) do
+      inc(ty);}
   end else begin
-    dy := 0;
+    {dy := 0;
     while (dy < 3) and (ty + dy < Inf.Level.Info.Height) do
     begin
       if Dst.Pixel[tx, ty + dy] and ALPHA_TERRAIN <> 0 then
@@ -519,13 +528,13 @@ begin
         break;
       end;
       inc(dy);
-    end;
+    end;}
   end;
   end;
 
-  if ((ty > Inf.Level.Info.Height-1) or (Dst.Pixel[tx, ty] and ALPHA_TERRAIN = 0)) and (Inf.Level.Info.GimmickSet and 64 = 0) then
+  {if ((ty > Inf.Level.Info.Height-1) or (Dst.Pixel[tx, ty] and ALPHA_TERRAIN = 0)) and (Inf.Level.Info.GimmickSet and 64 = 0) then
     a := FALLING
-  else if O.TarLev and 32 <> 0 then
+  else} if O.TarLev and 32 <> 0 then
     a := BLOCKING
   else
     a := WALKING;
@@ -930,7 +939,8 @@ end;
 
 function TRenderer.HasPixelAt(X, Y: Integer): Boolean;
 begin
-  Result := fWorld.PixelS[X, Y] and ALPHA_TERRAIN = 0;
+  //Result := fWorld.PixelS[X, Y] and ALPHA_TERRAIN = 0;
+  Result := true;
 end;
 
 end.
