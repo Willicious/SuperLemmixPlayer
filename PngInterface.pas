@@ -99,16 +99,15 @@ end;
 
 class procedure TPngInterface.PngToBitmap32(Png: TPngObject; Bmp: TBitmap32);
 var
-  x, y: Integer;
-  c: TColor32;
+  X, Y: Integer;
   r, g, b, a: Byte;
   ASL: pByteArray;
   Alpha: Boolean;
   XC: pByte;
   TRNS: TCHUNKtRNS;
   fWidth, fHeight, fBytesPerRow: Integer;
-
   Header: TChunkIHDR;
+  BmpScanLine: pColor32Array;
 begin
   ASL := nil; // Just gets rid of a compile-time warning. ASL won't be referenced if it hasn't been initialized anyway, since
               // the only line that references it has the same IF condition as the line that initializes it.
@@ -124,15 +123,15 @@ begin
 
   Bmp.SetSize(fWidth, fHeight);
 
-  Alpha := (Png.AlphaScanline[0] <> nil);
+  Alpha := (Header.ColorType = COLOR_RGBALPHA);
   for y := 0 to fHeight-1 do
   begin
     if Alpha then
       ASL := Png.AlphaScanline[y];
 
-    // XC := Png.Scanline[y];
     // Get Png.Scanline[y] via the header
     LongInt(XC) := LongInt(Header.GetImageData) + (fHeight - 1 - y) * LongInt(fBytesPerRow);
+    BmpScanLine := Bmp.Scanline[y];
 
     for x := 0 to fWidth-1 do
     begin
@@ -146,12 +145,9 @@ begin
         a := 255;
 
       if a = 0 then
-        Bmp.Pixel[x, y] := 0
+        BmpScanLine^[X] := 0
       else
-        Bmp.Pixel[x, y] := (a shl 24)
-                         + (r shl 16)
-                         + (g shl 8)
-                         + b;
+        BmpScanLine^[X] := (a shl 24) + (r shl 16) + (g shl 8) + b;
     end;
   end;
 
