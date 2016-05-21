@@ -2704,6 +2704,8 @@ var
   L: TLemming;
 begin
   Result := False;
+
+  // Just to be safe, though this should always return in fLemSelected
   GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
 
   if not Assigned(L) then Exit;
@@ -2849,8 +2851,8 @@ var
   var
     X, Y: Integer;
   begin
-    X := L.LemX + L.FrameLeftDx;
-    Y := L.LemY + L.FrameTopDy;
+    X := L.LemX - 8; // + L.FrameLeftDx; for walker
+    Y := L.LemY - 10; // + L.FrameTopDy; for walker
     Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
   end;
 
@@ -2858,8 +2860,8 @@ var
   function GetLemDistance(L: TLemming; MousePos: TPoint): Integer;
   begin
     // We compute the distance to the center of the cursor after 2x-zooming, to have integer values
-    Result :=   Sqr(2 * (L.LemX + L.FrameLeftDx) - 2 * MousePos.X + 13)
-              + Sqr(2 * (L.LemY + L.FrameTopDy) - 2 * MousePos.Y + 13)
+    Result :=   Sqr(2 * (L.LemX - 8) - 2 * MousePos.X + 13)
+              + Sqr(2 * (L.LemY - 10) - 2 * MousePos.Y + 13)
   end;
 
   function IsCloserToCursorCenter(LOld, LNew: TLemming; MousePos: TPoint): Boolean;
