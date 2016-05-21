@@ -2964,7 +2964,7 @@ begin
     repeat
       LemIsInBox := IsLemInPriorityBox(L, PriorityBoxOrder[CurPriorityBox]);
       Inc(CurPriorityBox);
-    until (CurPriorityBox >= MinIntValue([CurValue, 7])) or LemIsInBox;
+    until (CurPriorityBox > MinIntValue([CurValue, 7])) or LemIsInBox;
 
     // Can this lemmings actually receive the skill?
     if not NewSkillMethods[NewSkill](L) then CurPriorityBox := 8;
