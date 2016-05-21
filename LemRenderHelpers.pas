@@ -305,10 +305,13 @@ procedure TRenderBitmaps.CombineTo(aDst: TBitmap32);
 var
   i: TRenderLayer;
 begin
+  aDst.BeginUpdate;
   aDst.Clear;
   //aDst.SetSize(Width, Height); //not sure if we really want to do this
   for i := Low(TRenderLayer) to High(TRenderLayer) do
     Items[i].DrawTo(aDst, aDst.BoundsRect);
+  aDst.EndUpdate;
+  aDst.Changed;
 end;
 
 end.

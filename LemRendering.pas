@@ -41,9 +41,12 @@ uses
   // create gamerenderlist in order of rendering
 
 const
-  PM_SOLID     = $00000001;
-  PM_STEEL     = $00000002;
-  PM_ONEWAY    = $00000004;
+  PM_SOLID       = $00000001;
+  PM_STEEL       = $00000002;
+  PM_ONEWAY      = $00000004;
+  PM_ONEWAYLEFT  = $00000008;
+  PM_ONEWAYRIGHT = $00000010;
+  PM_ONEWAYDOWN  = $00000020; // Yes, I know they're mutually incompatible, but it's easier to do this way
 
   PM_TERRAIN   = $000000FF;
 
@@ -714,7 +717,80 @@ var
   i: Integer;
   T: TTerrain;
   TRec: TTerrainRecord;
+  O: TInteractiveObject;
+  ORec: TObjectRecord;
+  S: TSteel;
   Bmp: TBitmap32;
+
+  procedure SetRegion(aRegion: TRect; C, AntiC: TColor32);
+  var
+    X, Y: Integer;
+    P: PColor32;
+  begin
+    for y := aRegion.Top to aRegion.Bottom do
+      for x := aRegion.Left to aRegion.Right do
+      begin
+        P := BMP.PixelPtr[x, y];
+        P^ := (P^ or C) and not AntiC;
+      end;
+  end;
+
+  procedure ApplyOWW(O: TInteractiveObject; ORec: TObjectRecord);
+  var
+    C: TColor32;
+  begin
+    case ORec.Meta.TriggerEffect of
+      7: C := PM_ONEWAYLEFT;
+      8: C := PM_ONEWAYRIGHT;
+      19: C := PM_ONEWAYDOWN;
+      else Exit; // should never happen, but just in case
+    end;
+
+    SetRegion( Rect(O.Left + ORec.Meta.TriggerLeft,
+                    O.Top + ORec.Meta.TriggerTop,
+                    O.Left + ORec.Meta.TriggerLeft + ORec.Meta.TriggerWidth - 1,
+                    O.Top + ORec.Meta.TriggerTop + ORec.Meta.TriggerHeight - 1),
+               C, 0);
+  end;
+
+  procedure ApplyArea(S: TSteel);
+  var
+    C, AntiC: TColor32;
+  begin
+    case S.fType of
+      0: C := PM_STEEL;
+      1: AntiC := PM_STEEL;
+      2: C := PM_ONEWAYLEFT;
+      3: C := PM_ONEWAYRIGHT;
+      4: C := PM_ONEWAYDOWN;
+      else Exit;
+    end;
+
+    SetRegion( Rect(S.Left, S.Top, S.Left + S.Width - 1, S.Top + S.Height - 1),
+               C, AntiC);
+  end;
+
+  procedure Validate;
+  var
+    X, Y: Integer;
+    P: PColor32;
+  begin
+    for y := 0 to BMP.Height-1 do
+      for x := 0 to BMP.Width-1 do
+      begin
+        P := BMP.PixelPtr[x, y];
+
+        // Remove all terrain markings if it's nonsolid
+        if P^ and PM_SOLID = 0 then P^ := P^ and not PM_TERRAIN;
+
+        // Remove one-way markings if it's steel
+        if P^ and PM_STEEL <> 0 then P^ := P^ and not PM_ONEWAY;
+
+        // Remove one-way markings if it's not one-way capable
+        if P^ and PM_ONEWAY = 0 then P^ := P^ and not (PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN);
+      end;
+  end;
+
 begin
   if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
   Bmp := TBitmap32.Create;
@@ -730,7 +806,24 @@ begin
       PrepareTerrainFunctionBitmap(T, Bmp, TRec);
       Bmp.DrawTo(Dst, T.Left, T.Top);
     end;
+
+    for i := 0 to InteractiveObjects.Count-1 do
+    begin
+      O := InteractiveObjects[i];
+      ORec := FindMetaObject(O);
+      if not (ORec.Meta.TriggerEffect in [7, 8, 19]) then
+        Continue;
+      ApplyOWW(O, ORec);
+    end;
+
+    for i := 0 to Steels.Count-1 do
+    begin
+      S := Steels[i];
+      ApplyArea(S);
+    end;
   end;
+
+  Validate;
 
   Bmp.Free;
 end;

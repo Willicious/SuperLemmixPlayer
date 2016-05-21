@@ -3798,8 +3798,6 @@ begin
     begin
       // erase existing ShadowBridge
       DrawShadowBridge(true);
-      // Force redrawing
-      fTargetBitmap.Changed;
     end;
     // Draw the new ShadowBridge
     DrawShadowBridge;
@@ -3832,6 +3830,7 @@ begin
     begin
       fRenderer.ClearShadows;
       fExistShadow := false;
+      if Paused then fRenderer.DrawLevel(fTargetBitmap);
       Exit; // This should not be needed anymore!
     end else begin
       GetPriorityLemming(L, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
@@ -3947,10 +3946,10 @@ begin
 
     if IsShadowAdded then
     begin
-      fTargetBitmap.Changed;
       fLemWithShadow := L;
       fLemWithShadowButton := fSelectedSkill;
       fExistShadow := True;
+      if Paused then fRenderer.DrawLevel(fTargetBitmap);
     end;
 
   except
@@ -4686,16 +4685,17 @@ function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
                                           Skill: TBasicLemmingAction): Boolean;
 begin
   // check for indestructible terrain at position (x, y), depending on skill.
-  Result := (    ( ReadSpecialMap(x, y) = DOM_STEEL)
-              or ((ReadSpecialMap(x, y) = DOM_ONEWAYDOWN) and (Skill = baBashing))
-              or ((ReadSpecialMap(x, y) = DOM_ONEWAYLEFT) and (Direction = 1) and (Skill in [baBashing, baMining]))
-              or ((ReadSpecialMap(x, y) = DOM_ONEWAYRIGHT) and (Direction = -1) and (Skill in [baBashing, baMining]))
+  Result := (    ( PhysicsMap.Pixel[X, Y] and PM_STEEL <> 0)
+              or ((PhysicsMap.Pixel[X, Y] and PM_ONEWAYDOWN <> 0) and (Skill = baBashing))
+              or ((PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0) and (Direction = 1) and (Skill in [baBashing, baMining]))
+              or ((PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0) and (Direction = -1) and (Skill in [baBashing, baMining]))
             );
 end;
 
 function TLemmingGame.HasSteelAt(X, Y: Integer): Boolean;
 begin
-  Result := (ReadSpecialMap(X, Y) = DOM_STEEL);
+  //Result := (ReadSpecialMap(X, Y) = DOM_STEEL);
+  Result := PhysicsMap.Pixel[X, Y] and PM_STEEL <> 0;
 end;
 
 
@@ -5319,6 +5319,7 @@ begin
         DrawAnimatedObjects; // not sure why this one. Might be to fix graphical glitches, I guess?
       end;
       DrawLemmings;  // so the highlight marker shows up
+      fRenderer.DrawLevel(fTargetBitmap);
     end;
   end;
 
