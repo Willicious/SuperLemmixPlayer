@@ -40,6 +40,13 @@ uses
   // we could maybe use the alpha channel for rendering, ok thats working!
   // create gamerenderlist in order of rendering
 
+const
+  PM_SOLID     = $00000001;
+  PM_STEEL     = $00000002;
+  PM_ONEWAY    = $00000004;
+
+  PM_TERRAIN   = $000000FF;
+
 
 type
   // temp solution
@@ -67,6 +74,7 @@ type
 
     fBgColor : TColor32;
 
+    // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
@@ -74,10 +82,16 @@ type
     procedure CombineObjectDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
 
+    // Functional combines
+    procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TTerrainRecord);
+    procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
+
     procedure CombineLemFrame(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemFrameZombie(F: TColor32; var B: TColor32; M: TColor32);
 
-    procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte; SteelOnly: Boolean = false; IsSteel: Boolean = false; IsNoOneWay: Boolean = false);
+    procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
   protected
   public
@@ -103,11 +117,12 @@ type
 
 
     procedure RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
+    procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
 
     procedure Highlight(World: TBitmap32; M: TColor32);
 
+    property PhysicsMap: TBitmap32 read fPhysicsMap;
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
-
     property Theme: TNeoTheme read fTheme;
   end;
 
@@ -149,40 +164,55 @@ begin
   Result := fPieceManager.Terrains[FindLabel];
 end;
 
-(*function TRenderer.FindGraphicSet(aName: String): TBaseGraphicSet;
+// Functional combines
+
+procedure TRenderer.PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TTerrainRecord);
 var
-  GS: TBaseNeoGraphicSet;
-  i: Integer;
-  MO: TMetaObject;
-  Bmp: TBitmap32;
-  Item: TDrawItem;
+  x, y: Integer;
+  PSrc, PDst: PColor32;
 begin
-  if fTempGS.GraphicSetName = aName then
+  Dst.SetSizeFrom(Src.Image);
+  Dst.Clear(0);
+  for y := 0 to Src.Image.Height-1 do
   begin
-    Result := fTempGS;
-    Exit;
+    PSrc := Src.Image.PixelPtr[0, y];
+    PDst := Dst.PixelPtr[0, y];
+    for x := 0 to Src.Image.Width-1 do
+    begin
+      if (PSrc^ and $FF000000) <> 0 then
+      begin
+        PDst^ := PM_SOLID;
+        if Src.Meta.Unknown and $01 <> 0 then PDst^ := PDst^ or PM_STEEL;
+        if T.DrawingFlags and tdf_NoOneWay = 0 then PDst^ := PDst^ or PM_ONEWAY; 
+      end;
+      Inc(PSrc);
+    end;
   end;
 
-  GS.GraphicSetName := aName;
-  GS.OnlineEnabled := true; // until we have a way to pass to here whether it is or not, just always set it to true
-  GS.GraphicSetFile := aName + '.dat';
-  GS.ReadMetaData;
-  GS.ReadData;
+  if T.DrawingFlags and tdf_Rotate <> 0 then Dst.Rotate90;
+  if T.DrawingFlags and tdf_Invert <> 0 then Dst.FlipVert;
+  if T.DrawingFlags and tdf_Flip <> 0 then Dst.FlipHorz;
+end;
 
-    with GS do
-    for i := 0 to ObjectBitmaps.Count - 1 do
-    begin
-      MO := MetaObjects[i];
-      Bmp := ObjectBitmaps.List^[i];
+procedure TRenderer.CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if F <> 0 then
+    B := (B and not PM_TERRAIN) or (F and PM_TERRAIN);
+end;
 
-      Item := TObjectAnimation.Create(Bmp, MO.AnimationFrameCount, MO.Width, MO.Height);
-      ObjectRenderList.Add(Item);
+procedure TRenderer.CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F <> 0) and (B and PM_TERRAIN = 0) then
+    B := (B and not PM_TERRAIN) or (F and PM_TERRAIN);
+end;
 
-    end;
+procedure TRenderer.CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if F <> 0 then
+    B := B and not PM_TERRAIN;
+end;
 
-  fTempGS := GS;
-  Result := GS;
-end;*)
+// Graphical combines
 
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
@@ -269,7 +299,7 @@ begin
   IsNoOneWay := (UDf and tdf_NoOneWay <> 0);
   if (T.DrawingFlags and tdf_Invert = 0) and (T.DrawingFlags and tdf_Flip = 0) and (T.DrawingFlags and tdf_Rotate = 0) then
   begin
-    PrepareTerrainBitmap(Src, UDf, SteelOnly, IsSteel, IsNoOneWay);
+    PrepareTerrainBitmap(Src, UDf);
     Src.DrawTo(Dst, T.Left, T.Top);
   end
   else
@@ -278,12 +308,12 @@ begin
     if (T.DrawingFlags and tdf_Rotate <> 0) then TempBitmap.Rotate90;
     if (T.DrawingFlags and tdf_Invert <> 0) then TempBitmap.FlipVert;
     if (T.DrawingFlags and tdf_Flip <> 0) then TempBitmap.FlipHorz;
-    PrepareTerrainBitmap(TempBitmap, UDf, SteelOnly, IsSteel, IsNoOneWay);
+    PrepareTerrainBitmap(TempBitmap, UDf);
     TempBitmap.DrawTo(Dst, T.Left, T.Top);
   end;
 end;
 
-procedure TRenderer.PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte; SteelOnly: Boolean = false; IsSteel: Boolean = false; IsNoOneWay: Boolean = false);
+procedure TRenderer.PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
 begin
   if DrawingFlags and tdf_NoOverwrite <> 0 then
   begin
@@ -396,39 +426,61 @@ var
   Inf: TInteractiveObjectInfo;
   Src: TBitmap32;
   DrawFrame, i: Integer;
+
+  procedure ProcessDrawFrame(aLayer: TRenderLayer);
+  begin
+    if Inf.IsInvisible then Exit;
+    if Inf.TriggerEffect in [13, 16, 25] then Exit;
+
+    DrawFrame := Min(Inf.CurrentFrame, Inf.AnimationFrameCount-1);
+    Src.Assign(Inf.Frames[DrawFrame]);
+
+    if Inf.IsUpsideDown then
+      Src.FlipVert;
+    if Inf.IsFlipImage then
+      Src.FlipHorz;
+
+    PrepareObjectBitmap(Src, Inf.Obj.DrawingFlags, Inf.ZombieMode);
+
+    SrcRect := Src.BoundsRect;
+    DstRect := ZeroTopLeftRect(SrcRect);
+    OffsetRect(DstRect, Inf.Left, Inf.Top);
+
+    Src.DrawTo(fLayers[aLayer], DstRect, SrcRect);
+
+    Inf.Obj.LastDrawX := Inf.Left;
+    Inf.Obj.LastDrawY := Inf.Top;
+  end;
 begin
   Src := TBitmap32.Create;
 
+  // Draw moving backgrounds
+  fLayers[rlBackgroundObjects].Clear(0);
   for i := 0 to ObjectInfos.Count - 1 do
   begin
     Inf := ObjectInfos[i];
-    if Inf.TriggerEffect <> DOM_LEMMING then
-    begin
+    if not Inf.TriggerEffect = 30 then Continue;
+    ProcessDrawFrame(rlBackgroundObjects);
+  end;
 
-      if Inf.IsInvisible then Continue;
-      if Inf.TriggerEffect = DOM_HINT then Continue;
+  // Draw no overwrite objects
+  fLayers[rlObjectsLow].Clear(0);
+  for i := ObjectInfos.Count-1 downto 0 do
+  begin
+    Inf := ObjectInfos[i];
+    if Inf.TriggerEffect = 30 then Continue;
+    if not Inf.IsNoOverwrite then Continue;
+    ProcessDrawFrame(rlObjectsLow);
+  end;
 
-      DrawFrame := MinIntValue([Inf.CurrentFrame, Inf.AnimationFrameCount - 1]);
-
-      Src.Assign(FindMetaObject(Inf.Obj).Image[DrawFrame]);
-
-      if Inf.IsUpsideDown then
-        Src.FlipVert;
-
-      if Inf.IsFlipImage then
-        Src.FlipHorz;
-
-      PrepareObjectBitmap(Src, Inf.Obj.DrawingFlags, Inf.ZombieMode);
-
-      SrcRect := Src.BoundsRect;
-      DstRect := ZeroTopLeftRect(SrcRect);
-      OffsetRect(DstRect, Inf.Left, Inf.Top);
-
-      Src.DrawTo(Dst, DstRect, SrcRect);
-
-      Inf.Obj.LastDrawX := Inf.Left;
-      Inf.Obj.LastDrawY := Inf.Top;
-    end;
+  // Draw regular objects
+  fLayers[rlObjectsHigh].Clear(0);
+  for i := 0 to ObjectInfos.Count-1 do
+  begin
+    Inf := ObjectInfos[i];
+    if Inf.TriggerEffect = 30 then Continue;
+    if Inf.IsNoOverwrite then Continue;
+    ProcessDrawFrame(rlObjectsHigh);
   end;
 
   Src.Free;
@@ -564,6 +616,32 @@ begin
   inherited Destroy;
 end;
 
+procedure TRenderer.RenderPhysicsMap(Dst: TBitmap32 = nil);
+var
+  i: Integer;
+  T: TTerrain;
+  TRec: TTerrainRecord;
+  Bmp: TBitmap32;
+begin
+  if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
+  Bmp := TBitmap32.Create;
+
+  with Inf.Level do
+  begin
+    Dst.SetSize(Info.Width, Info.Height);
+
+    for i := 0 to Terrains.Count-1 do
+    begin
+      T := Terrains[i];
+      TRec := FindMetaTerrain(T);
+      PrepareTerrainFunctionBitmap(T, Bmp, TRec);
+      Bmp.DrawTo(Dst, T.Left, T.Top);
+    end;
+  end;
+
+  Bmp.Free;
+end;
+
 procedure TRenderer.RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
 // DoObjects is only true if RenderWorld is called from the Preview Screen!
 var
@@ -612,7 +690,7 @@ begin
           Obj := Level.InteractiveObjects[i];
           if Obj.DrawingFlags and odf_NoOverwrite = 0 then Continue;
           ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 24, 30] then Continue;
+          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
 
           DrawObject(fLayers[rlObjectsLow], Obj, ORec.Meta.PreviewFrameIndex);
         end;
@@ -623,7 +701,7 @@ begin
           Obj := Level.InteractiveObjects[i];
           if Obj.DrawingFlags and odf_NoOverwrite <> 0 then Continue;
           ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 24, 30] then Continue;
+          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
 
           DrawObject(fLayers[rlObjectsHigh], Obj, ORec.Meta.PreviewFrameIndex);
         end;

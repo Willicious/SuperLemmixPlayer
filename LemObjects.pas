@@ -3,8 +3,7 @@ unit LemObjects;
 interface
 
 uses
-  Windows, {Classes,} Contnrs, {SysUtils, Math, Forms, Dialogs,}
-  {GameControl, // For reading MetaObj infos when creating objects}
+  Windows, Contnrs, LemTypes,
   LemMetaObject, LemInteractiveObject;
 
 type
@@ -41,6 +40,7 @@ type
   public
     MetaObj        : TMetaObject;
     Obj            : TInteractiveObject;
+    Frames         : TBitmaps;
 
     CurrentFrame   : Integer;
     Triggered      : Boolean;
@@ -49,7 +49,7 @@ type
 
     TwoWayReceive  : Boolean;
 
-    constructor Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject); Overload;
+    constructor Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject; Images: TBitmaps); Overload;
 
     property TriggerRect: TRect read sTriggerRect;
     property Top: Integer read sTop write SetTop;
@@ -130,10 +130,11 @@ implementation
 
 
 { TInteractiveObjectInfo }
-constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject);
+constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject; Images: TBitmaps);
 begin
   Obj := ObjParam;
   MetaObj := MetaParam;
+  Frames := Images;
 
   // Legacy code for old hatches, that haven't set a proper trigger area
   if      (MetaObj.TriggerEffect = DOM_WINDOW)

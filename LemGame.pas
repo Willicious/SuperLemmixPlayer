@@ -31,6 +31,7 @@ uses
   Controls, StrUtils,
   UMisc, TypInfo,
   GR32, GR32_OrdinalMaps, GR32_Layers,
+  LemNeoPieceManager, // makes use of the records containing images + metainfo
   LemCore, LemTypes, LemDosBmp, LemDosStructures, LemStrings, LemMetaAnimation,
   LemMetaObject, LemInteractiveObject, LemSteel, LemLevel, LemStyle,
   LemRendering, LemDosAnimationSet,
@@ -2039,14 +2040,14 @@ procedure TLemmingGame.SetObjectInfos;
 var
   i: Integer;
   Inf: TInteractiveObjectInfo;
-  MetaInfo: TMetaObject;
+  ORec: TObjectRecord;
 begin
   ObjectInfos.Clear;
 
   for i := 0 to Level.InteractiveObjects.Count - 1 do
   begin
-    MetaInfo := fRenderer.FindMetaObject(Level.InteractiveObjects[i]).Meta;
-    Inf := TInteractiveObjectInfo.Create(Level.InteractiveObjects[i], MetaInfo);
+    ORec := fRenderer.FindMetaObject(Level.InteractiveObjects[i]);
+    Inf := TInteractiveObjectInfo.Create(Level.InteractiveObjects[i], ORec.Meta, ORec.Image);
 
     ObjectInfos.Add(Inf);
 
