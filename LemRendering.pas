@@ -96,6 +96,8 @@ type
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
+
+    function GetLemmingLayer: TBitmap32;
   protected
   public
     constructor Create;
@@ -134,6 +136,8 @@ type
     property PhysicsMap: TBitmap32 read fPhysicsMap;
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
     property Theme: TNeoTheme read fTheme;
+
+    property LemmingLayer: TBitmap32 read GetLemmingLayer; // this should be replaced with having TRenderer do the lemming drawing! But for now, this is a kludgy workaround
   end;
 
 //const
@@ -157,6 +161,11 @@ uses
 
 
 { TRenderer }
+
+function TRenderer.GetLemmingLayer: TBitmap32;
+begin
+  Result := fLayers[rlLemmings];
+end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32);
 begin
@@ -224,10 +233,10 @@ begin
   Dst.Clear(0);
   for y := 0 to Src.Image.Height-1 do
   begin
-    PSrc := Src.Image.PixelPtr[0, y];
-    PDst := Dst.PixelPtr[0, y];
     for x := 0 to Src.Image.Width-1 do
     begin
+      PSrc := Src.Image.PixelPtr[x, y];
+      PDst := Dst.PixelPtr[x, y];
       if (PSrc^ and $FF000000) <> 0 then
       begin
         PDst^ := PM_SOLID;
@@ -235,32 +244,40 @@ begin
           PDst^ := PDst^ or PM_STEEL
         else if T.DrawingFlags and tdf_NoOneWay = 0 then
           PDst^ := PDst^ or PM_ONEWAY; 
-      end;
-      Inc(PSrc);
+      end else
+        PDst^ := 0;
     end;
   end;
 
   if T.DrawingFlags and tdf_Rotate <> 0 then Dst.Rotate90;
   if T.DrawingFlags and tdf_Invert <> 0 then Dst.FlipVert;
   if T.DrawingFlags and tdf_Flip <> 0 then Dst.FlipHorz;
+
+  Dst.DrawMode := dmCustom;
+  if T.DrawingFlags and tdf_NoOverwrite <> 0 then
+    Dst.OnPixelCombine := CombineTerrainFunctionNoOverwrite
+  else if T.DrawingFlags and tdf_Erase <> 0 then
+    Dst.OnPixelCombine := CombineTerrainFunctionErase
+  else
+    Dst.OnPixelCombine := CombineTerrainFunctionDefault;
 end;
 
 procedure TRenderer.CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then
-    B := (B and not PM_TERRAIN) or (F and PM_TERRAIN);
+    B := F;
 end;
 
 procedure TRenderer.CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F <> 0) and (B and PM_TERRAIN = 0) then
-    B := (B and not PM_TERRAIN) or (F and PM_TERRAIN);
+  if (F <> 0) and (B and PM_SOLID = 0) then
+    B := F;
 end;
 
 procedure TRenderer.CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then
-    B := B and not PM_TERRAIN;
+    B := 0;
 end;
 
 // Graphical combines

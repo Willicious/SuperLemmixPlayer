@@ -1539,6 +1539,7 @@ begin
 
   Renderer.RenderPhysicsMap;
   PhysicsMap := Renderer.PhysicsMap;
+  PhysicsMap.SaveToFile(AppPath + 'physics.bmp');
 
   MusicSys := fGameParams.Style.MusicSystem;
   MusicFileName := GetMusicFileName;
@@ -3650,6 +3651,7 @@ end;
 
 procedure TLemmingGame.DrawLemmings;
 var
+  LemLayer: TBitmap32;
   iLemming: Integer;
   CurrentLemming: TLemming;
   SrcRect, DstRect, DigRect: TRect;
@@ -3660,6 +3662,10 @@ var
 begin
   if HyperSpeed then
     Exit;
+
+  LemLayer := fRenderer.LemmingLayer;
+
+  LemLayer.Clear(0);
 
   if Minimap.Width < DOS_MINIMAP_WIDTH then
   begin
@@ -3709,17 +3715,17 @@ begin
 
           if not LemHighlightReplay then
           begin
-            LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
+            LAB.DrawTo(LemLayer, DstRect, SrcRect);
           end else begin
             // replay assign job highlight fotoflash effect
             if not Assigned(OldCombine) then OldCombine := LAB.OnPixelCombine;
             LAB.OnPixelCombine := CombineLemmingHighlight;
-            LAB.DrawTo(fTargetBitmap, DstRect, SrcRect);
+            LAB.DrawTo(LemLayer, DstRect, SrcRect);
             LemHighlightReplay := False;
           end;
 
           if DrawLemmingPixel then
-            fTargetBitmap.FillRectS(LemX, LemY, LemX + 1, LemY + 1, clRed32);
+            LemLayer.FillRectS(LemX, LemY, LemX + 1, LemY + 1, clRed32);
 
           if (LemExplosionTimer > 0) or (CurrentLemming = fHighlightLemming) then
           begin
@@ -3747,7 +3753,7 @@ begin
 
             if LemDx = -1 then RectMove(DigRect, -1, 0);
 
-            TempBmp.DrawTo(fTargetBitmap, DigRect);
+            TempBmp.DrawTo(LemLayer, DigRect);
 
             TempBmp.Free;
 
@@ -5128,7 +5134,8 @@ begin
   //  fTargetBitmap.Changed;
 
   // Just always redraw. We can change this later if there's perfomance issues.
-  fRenderer.DrawLevel(fTargetBitmap);
+  if not HyperSpeed then
+    fRenderer.DrawLevel(fTargetBitmap);
 
   CheckForPlaySoundEffect;
 end;
