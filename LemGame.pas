@@ -5529,8 +5529,6 @@ begin
 
   if Assigned(L) and not fHitTestAutofail then
   begin
-    S := LemmingActionStrings[L.LemAction];
-
     // get highlight text
     fAltOverride := false;
     if (L.LemIsClimber or L.LemIsFloater or L.LemIsGlider or L.LemIsSwimmer or L.LemIsMechanic)
@@ -5547,26 +5545,30 @@ begin
       if L.LemIsMechanic then S[4] := 'D';
       if L.LemIsZombie then S[5] := 'Z';
     end else begin
-      i := 0;
-      if L.LemIsClimber then inc(i);
-      if L.LemIsSwimmer then inc(i);
-      if L.LemIsFloater then inc(i);
-      if L.LemIsGlider then inc(i);
-      if L.LemIsMechanic then inc(i);
+      S := LemmingActionStrings[L.LemAction];
 
-      case i of
-        5: S := SQuadathlete;
-        4: S := SQuadathlete;
-        3: S := STriathlete;
-        2: S := SAthlete;
-        1: begin
-             if L.LemIsClimber then S := SClimber;
-             if L.LemIsSwimmer then S := SSwimmer;
-             if L.LemIsFloater then S := SFloater;
-             if L.LemIsGlider  then S := SGlider;
-             if L.LemIsMechanic then S := SMechanic;
-           end;
-        else S := LemmingActionStrings[L.LemAction];
+      if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
+      begin
+        i := 0;
+        if L.LemIsClimber then inc(i);
+        if L.LemIsSwimmer then inc(i);
+        if L.LemIsFloater then inc(i);
+        if L.LemIsGlider then inc(i);
+        if L.LemIsMechanic then inc(i);
+
+        case i of
+          5: S := SQuadathlete;
+          4: S := SQuadathlete;
+          3: S := STriathlete;
+          2: S := SAthlete;
+          1: begin
+               if L.LemIsClimber then S := SClimber;
+               if L.LemIsSwimmer then S := SSwimmer;
+               if L.LemIsFloater then S := SFloater;
+               if L.LemIsGlider  then S := SGlider;
+               if L.LemIsMechanic then S := SMechanic;
+             end;
+        end;
       end;
 
       if L.LemIsZombie then S := SZombie;
