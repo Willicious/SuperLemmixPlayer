@@ -344,12 +344,15 @@ begin
         ldtText: begin
                    // ldtText is for text files, which should never be loaded from lemdata (except music.txt,
                    // but that's why it's loaded via ldtLemmings). So it only checks the NXP.
-                   if IsSingleLevelMode then Fail;
-                   Arc.OpenArchive(GameFile, amOpen);
-                   if FileInArchive then
-                     Arc.ExtractFile(aFilename, Result)
-                   else
-                     FreeAndNil(Result);
+                   if IsSingleLevelMode then
+                     FreeAndNil(Result)
+                   else begin
+                     Arc.OpenArchive(GameFile, amOpen);
+                     if FileInArchive then
+                       Arc.ExtractFile(aFilename, Result)
+                     else
+                       FreeAndNil(Result);
+                   end;
                  end;
         ldtMusic: begin
                     // ldtMusic is the most complicated one. We search in several places until we find it.

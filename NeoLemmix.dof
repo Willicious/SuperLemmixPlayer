@@ -90,7 +90,7 @@ MaxStackSize=2097152
 ImageBase=8388608
 ExeDescription=
 [Directories]
-OutputDir=
+OutputDir=bin\
 UnitOutputDir=dcu
 PackageDLLOutputDir=
 PackageDCPOutputDir=
@@ -161,3 +161,7 @@ Item4=.;/MiscLibs/
 [HistoryLists\hlUnitOutputDirectory]
 Count=1
 Item0=dcu
+[HistoryLists\hlOutputDirectorry]
+Count=2
+Item0=bin\
+Item1=bin\;

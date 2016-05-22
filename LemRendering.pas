@@ -86,7 +86,7 @@ type
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineObjectDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineObjectDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
+    //procedure CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
 
     // Functional combines
     procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TTerrainRecord);
@@ -116,8 +116,7 @@ type
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
-    procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer); Overload;
-    procedure DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo); Overload;
+    procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
     procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
 
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
@@ -226,7 +225,7 @@ begin
   P := fLayers[rlTerrain].PixelPtr[X, Y];
   if P^ and $FF000000 <> $FF000000 then
   begin
-    MergeMemEx(P^, aColor, $FF);
+    BlendMem(P^, aColor);
     P^ := aColor;
   end;
 end;
@@ -314,7 +313,7 @@ procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColo
 begin
   if F <> 0 then
   begin
-    MergeMemEx(F, B, $FF);
+    BlendMem(F, B);
   end;
 end;
 
@@ -322,7 +321,7 @@ procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: T
 begin
   if (F <> 0) and (B and $FF000000 <> $FF000000) then
   begin
-    MergeMemEx(B, F, $FF);
+    BlendMem(B, F);
     B := F;
   end;
 end;
@@ -337,7 +336,7 @@ procedure TRenderer.CombineObjectDefault(F: TColor32; var B: TColor32; M: TColor
 begin
   if F <> 0 then
   begin
-    MergeMemEx(F, B, $FF);
+    BlendMem(F, B);
   end;
 end;
 
@@ -347,17 +346,17 @@ begin
   begin
     if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
     F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
-    MergeMemEx(F, B, $FF);
+    BlendMem(F, B);
   end;
 end;
 
-procedure TRenderer.CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
+(*procedure TRenderer.CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F <> 0) {and (B and ALPHA_TERRAIN <> 0) and (B and ALPHA_ONEWAY <> 0)} then
   begin
     MergeMemEx(F, B, $FF);
   end;
-end;
+end;*)
 
 //prepareterrainbitmap was moved a bit further down, to make it easier to work on
 //it and DrawTerrain at the same time
@@ -367,7 +366,7 @@ begin
   if DrawingFlags and odf_OnlyOnTerrain <> 0 then
   begin
     Bmp.DrawMode := dmCustom;
-      Bmp.OnPixelCombine := CombineObjectOnlyOnTerrain;
+      Bmp.OnPixelCombine := CombineObjectDefault;
   end else begin
     Bmp.DrawMode := dmCustom;
     if Zombie then
@@ -482,40 +481,6 @@ begin
   O.LastDrawY := O.Top;
 end;
 
-procedure TRenderer.DrawObject(Dst: TBitmap32; Gadget: TInteractiveObjectInfo);
-var
-  SrcRect, DstRect, R: TRect;
-  Src: TBitmap32;
-  DrawFrame: Integer;
-begin
-
-  if Gadget.IsInvisible then Exit;
-  if Gadget.TriggerEffect = DOM_HINT then Exit;
-
-  DrawFrame := MinIntValue([Gadget.CurrentFrame, Gadget.AnimationFrameCount - 1]);
-
-  Src := TBitmap32.Create;
-  Src.Assign(FindMetaObject(Gadget.Obj).Image[DrawFrame]);
-
-  if Gadget.IsUpsideDown then
-    Src.FlipVert;
-
-  if Gadget.IsFlipImage then
-    Src.FlipHorz;
-
-  PrepareObjectBitmap(Src, Gadget.Obj.DrawingFlags, Gadget.ZombieMode);
-
-  SrcRect := Src.BoundsRect;
-  DstRect := ZeroTopLeftRect(SrcRect);
-  OffsetRect(DstRect, Gadget.Left, Gadget.Top);
-
-  Src.DrawTo(Dst, DstRect);
-  Src.Free;
-
-  Gadget.Obj.LastDrawX := Gadget.Left;
-  Gadget.Obj.LastDrawY := Gadget.Top;
-end;
-
 procedure TRenderer.DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
 var
   SrcRect, DstRect: TRect;
@@ -547,6 +512,21 @@ var
     Inf.Obj.LastDrawX := Inf.Left;
     Inf.Obj.LastDrawY := Inf.Top;
   end;
+
+  procedure FixLayer(Layer: TRenderLayer; Key: TColor32);
+  var
+    X, Y: Integer;
+    PPhys, PLayer: PColor32;
+  begin
+    for y := 0 to fPhysicsMap.Height-1 do
+      for x := 0 to fPhysicsMap.Width-1 do
+      begin
+        PPhys := PhysicsMap.PixelPtr[x, y];
+        PLayer := fLayers[Layer].PixelPtr[x, y];
+        if (PPhys^ and Key) = 0 then
+          PLayer^ := 0;
+      end;
+  end;
 begin
   Src := TBitmap32.Create;
 
@@ -555,7 +535,7 @@ begin
   for i := 0 to ObjectInfos.Count - 1 do
   begin
     Inf := ObjectInfos[i];
-    if not Inf.TriggerEffect = 30 then Continue;
+    if not (Inf.TriggerEffect = 30) then Continue;
     ProcessDrawFrame(rlBackgroundObjects);
   end;
 
@@ -564,17 +544,40 @@ begin
   for i := ObjectInfos.Count-1 downto 0 do
   begin
     Inf := ObjectInfos[i];
-    if Inf.TriggerEffect = 30 then Continue;
+    if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
+    if Inf.IsOnlyOnTerrain then Continue;
     if not Inf.IsNoOverwrite then Continue;
     ProcessDrawFrame(rlObjectsLow);
   end;
+
+  // Draw only-on-terrain
+  fLayers[rlOnTerrainObjects].Clear(0);
+  for i := 0 to ObjectInfos.Count-1 do
+  begin
+    Inf := ObjectInfos[i];
+    if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
+    if not Inf.IsOnlyOnTerrain then Continue;
+    ProcessDrawFrame(rlOnTerrainObjects);
+  end;
+  FixLayer(rlOnTerrainObjects, PM_SOLID);
+
+  // Draw one-way arrows
+  fLayers[rlOneWayArrows].Clear(0);
+  for i := 0 to ObjectInfos.Count-1 do
+  begin
+    Inf := ObjectInfos[i];
+    if not (Inf.TriggerEffect in [7, 8, 19]) then Continue;
+    ProcessDrawFrame(rlOneWayArrows);
+  end;
+  FixLayer(rlOneWayArrows, PM_ONEWAY);
 
   // Draw regular objects
   fLayers[rlObjectsHigh].Clear(0);
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos[i];
-    if Inf.TriggerEffect = 30 then Continue;
+    if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
+    if Inf.IsOnlyOnTerrain then Continue;
     if Inf.IsNoOverwrite then Continue;
     ProcessDrawFrame(rlObjectsHigh);
   end;
@@ -728,11 +731,15 @@ var
     P: PColor32;
   begin
     for y := aRegion.Top to aRegion.Bottom do
+    begin
+      if (y < 0) or (y >= Dst.Height) then Continue;
       for x := aRegion.Left to aRegion.Right do
       begin
-        P := BMP.PixelPtr[x, y];
-        P^ := (P^ or C) and not AntiC;
+        if (x < 0) or (x >= Dst.Width) then Continue;
+        P := Dst.PixelPtr[x, y];
+        P^ := (P^ or C) and (not AntiC);
       end;
+    end;
   end;
 
   procedure ApplyOWW(O: TInteractiveObject; ORec: TObjectRecord);
@@ -757,6 +764,8 @@ var
   var
     C, AntiC: TColor32;
   begin
+    C := 0;
+    AntiC := 0;
     case S.fType of
       0: C := PM_STEEL;
       1: AntiC := PM_STEEL;
@@ -775,13 +784,13 @@ var
     X, Y: Integer;
     P: PColor32;
   begin
-    for y := 0 to BMP.Height-1 do
-      for x := 0 to BMP.Width-1 do
+    for y := 0 to Dst.Height-1 do
+      for x := 0 to Dst.Width-1 do
       begin
-        P := BMP.PixelPtr[x, y];
+        P := Dst.PixelPtr[x, y];
 
         // Remove all terrain markings if it's nonsolid
-        if P^ and PM_SOLID = 0 then P^ := P^ and not PM_TERRAIN;
+        if P^ and PM_SOLID = 0 then P^ := P^ and (not PM_TERRAIN);
 
         // Remove one-way markings if it's steel
         if P^ and PM_STEEL <> 0 then P^ := P^ and not PM_ONEWAY;
@@ -921,131 +930,6 @@ begin
 
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.CombineTo(World);
-
-  {with Inf do
-  begin
-
-    // mtn := Level.Terrains.HackedList.Count - 1;
-
-    with Level.Terrains.HackedList do
-      for i := 0 to Level.Terrains.HackedList.Count - 1 do
-      begin
-        Ter := List^[i];
-        if (((SOX = false) or ((Ter.DrawingFlags and tdf_Erase) <> 0))
-        or ((FindMetaTerrain(Ter).Meta.Unknown and $01) <> 0)) then
-          DrawTerrain(World, Ter, SteelOnly);
-      end;
-
-
-    // Find the one way objects
-    (*GS := FindGraphicSet(Inf.Level.Info.GraphicSetName);
-    with GS.MetaObjects.HackedList do
-    begin
-      OWL := -1;
-      OWR := -1;
-      OWD := -1;
-      for i := 0 to Count-1 do
-      begin
-        MO := List^[i];
-        if MO.TriggerEffect = 7 then OWL := i;
-        if MO.TriggerEffect = 8 then OWR := i;
-        if MO.TriggerEffect = 19 then OWD := i;
-      end;
-    end;
-
-
-    with Level.Steels.HackedList do
-    begin
-      for i := 0 to Count-1 do
-      begin
-        Stl := List^[i];
-        DoOww := -1;
-        case Stl.fType of
-          2: if OWL <> -1 then
-               DoOWW := OWL
-             else
-               Stl.fType := 5;
-          3: if OWR <> -1 then
-               DoOWW := OWR
-             else
-               Stl.fType := 5;
-          4: if OWD <> -1 then
-               DoOWW := OWD
-             else
-               Stl.fType := 5;
-        end;
-        if DoOWW <> -1 then
-        begin
-          Bmp := GS.ObjectBitmaps[DoOWW];
-          for x := Stl.Left to (Stl.Left + Stl.Width - 1) do
-            for y := Stl.Top to (Stl.Top + Stl.Height - 1) do
-            begin
-              if (x mod GS.MetaObjects[DoOWW].TriggerWidth < Bmp.Width)
-              and (y mod GS.MetaObjects[DoOWW].TriggerHeight < Bmp.Height)
-              and ((World[x, y] and ALPHA_ONEWAY) <> 0)
-              and ((Bmp[x mod GS.MetaObjects[DoOWW].TriggerWidth, y mod GS.MetaObjects[DoOWW].TriggerHeight] and $FFFFFF) <> 0) then
-                World[x, y] := (Bmp[x mod GS.MetaObjects[DoOWW].TriggerWidth, y mod GS.MetaObjects[DoOWW].TriggerHeight] and $FFFFFF) or (World[x, y] and $FF000000);
-            end;
-        end;
-
-      end;
-    end;*)
-    // This code removed for now due to incompatibility with new graphic set handling
-
-
-    if DoObjects then
-    with Level.InteractiveObjects.HackedList do
-    begin
-
-      TZ := Level.Info.GimmickSet and $4000000 <> 0;
-
-      for i := 0 to Count - 1 do
-      begin
-        Obj := List^[i];
-        MO := FindMetaObject(Obj).Meta;
-        if (Obj.DrawingFlags and odf_Invisible <> 0) or (MO.TriggerEffect in [13, 16]) then Continue;
-        fi := MO.PreviewFrameIndex;
-        if MO.TriggerEffect in [7, 8, 19] then
-        begin
-          Obj.DrawingFlags := Obj.DrawingFlags and not odf_NoOverwrite;
-          Obj.DrawingFlags := Obj.DrawingFlags or odf_OnlyOnTerrain;
-        end;
-        if MO.TriggerEffect in [15, 17] then
-          fi := 1;
-        if (MO.TriggerEffect = 21) and (Obj.DrawingFlags and 8 <> 0) then fi := 1;
-        if (MO.TriggerEffect = 14) then fi := Obj.Skill + 1;
-        if (odf_OnlyOnTerrain and Obj.DrawingFlags <> 0) then DrawObject(World, Obj, fi);
-      end;
-
-      for i := 0 to Count - 1 do
-      begin
-        Obj := List^[i];
-        MO := FindMetaObject(Obj).Meta;
-        if (Obj.DrawingFlags and odf_Invisible <> 0) or (MO.TriggerEffect in [13, 16]) then Continue;
-        fi := MO.PreviewFrameIndex;
-        if MO.TriggerEffect in [15, 17] then
-          fi := 1;
-        if (MO.TriggerEffect = 21) and (Obj.DrawingFlags and 8 <> 0) then fi := 1;
-        if (MO.TriggerEffect = 14) then fi := Obj.Skill + 1;
-        if (odf_OnlyOnTerrain and Obj.DrawingFlags = 0) then DrawObject(World, Obj, fi);
-      end;
-
-      for i := 0 to Count - 1 do
-      begin
-        Obj := List^[i];
-        MO := FindMetaObject(Obj).Meta;
-
-        if MO.TriggerEffect = 13 then
-        begin
-          if (not TZ) or (Obj.TarLev and 64 = 0) then
-            DrawLemming(World, Obj)
-            else
-            DrawLemming(World, Obj, true);
-        end;
-      end;
-
-    end;
-  end;}
 
 end;
 

@@ -18,6 +18,8 @@ type
                   rlObjectsLow,
                   rlLowShadows,
                   rlTerrain,
+                  rlOnTerrainObjects,
+                  rlOneWayArrows,
                   rlObjectsHigh,
                   rlHighShadows,
                   rlParticles,
@@ -277,8 +279,8 @@ begin
   begin
     BMP := TBitmap32.Create;
     BMP.DrawMode := dmBlend;
-    BMP.CombineMode := cmMerge;
-    TLinearResampler.Create(BMP);
+    BMP.CombineMode := cmBlend;
+    //TLinearResampler.Create(BMP);
     Add(BMP);
   end;
 end;
@@ -309,7 +311,19 @@ begin
   aDst.Clear;
   //aDst.SetSize(Width, Height); //not sure if we really want to do this
   for i := Low(TRenderLayer) to High(TRenderLayer) do
+  begin
+    {if i in [rlBackground,
+                  rlBackgroundObjects,
+                  rlObjectsLow,
+                  rlLowShadows,
+                  rlTerrain,
+                  rlOneWayArrows,
+                  rlObjectsHigh,
+                  rlHighShadows,
+                  rlParticles,
+                  rlLemmings] then Continue;}
     Items[i].DrawTo(aDst, aDst.BoundsRect);
+  end;
   aDst.EndUpdate;
   aDst.Changed;
 end;

@@ -305,7 +305,7 @@ type
       PhysicsMap: TBitmap32;
       ObjectMap: TByteMap;
       BlockerMap: TByteMap;
-      SpecialMap: TByteMap;
+      //SpecialMap: TByteMap;
       WaterMap: TByteMap;
       ZombieMap: TByteMap;
       CurrentIteration: Integer;
@@ -378,7 +378,7 @@ type
     PhysicsMap                 : TBitmap32; 
     ObjectMap                  : TByteMap;
     BlockerMap                 : TByteMap; // for blockers
-    SpecialMap                 : TByteMap; // for steel and oneway
+    //SpecialMap                 : TByteMap; // for steel and oneway
     WaterMap                   : TByteMap; // for water, so that other objects can be on it for swimmers etc to use
     ZombieMap                  : TByteMap;
     MiniMap                    : TBitmap32; // minimap of world
@@ -540,7 +540,15 @@ type
     procedure CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
+
+    // CombineMaskPixels has variants based on the direction of destruction
+    procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32); // general-purpose
+    procedure CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: TColor32);       //left-facing basher
+    procedure CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: TColor32);      //right-facing basher
+    procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);   //left-facing miner
+    procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);  //right-facing miner
+    procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber
+
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineMinimapWorldPixels(F: TColor32; var B: TColor32; M: TColor32);
   { internal methods }
@@ -603,7 +611,7 @@ type
     function ReadObjectMap(X, Y: Integer): Word;
     function ReadObjectMapType(X, Y: Integer): Byte;
     function ReadBlockerMap(X, Y: Integer): Byte;
-    function ReadSpecialMap(X, Y: Integer): Byte;
+    //function ReadSpecialMap(X, Y: Integer): Byte;
     function ReadWaterMap(X, Y: Integer): Byte;
     function ReadZombieMap(X, Y: Integer): Byte;
     procedure RecordNuke;
@@ -624,7 +632,7 @@ type
     procedure UpdateInteractiveObjects;
     procedure WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = False);
     procedure WriteBlockerMap(X, Y: Integer; aValue: Byte);
-    procedure WriteSpecialMap(X, Y: Integer; aValue: Byte);
+    //procedure WriteSpecialMap(X, Y: Integer; aValue: Byte);
     procedure WriteWaterMap(X, Y: Integer; aValue: Byte);
     procedure WriteZombieMap(X, Y: Integer; aValue: Byte);
 
@@ -881,7 +889,7 @@ begin
   PhysicsMap := TBitmap32.Create;
   ObjectMap := TByteMap.Create;
   BlockerMap := TByteMap.Create;
-  SpecialMap := TByteMap.Create;
+  //SpecialMap := TByteMap.Create;
   WaterMap := TByteMap.Create;
   ZombieMap := TByteMap.Create;
 end;
@@ -896,7 +904,7 @@ begin
   PhysicsMap.Free;
   ObjectMap.Free;
   BlockerMap.Free;
-  SpecialMap.Free;
+  //SpecialMap.Free;
   WaterMap.Free;
   ZombieMap.Free;
   inherited;
@@ -1025,7 +1033,7 @@ begin
   aState.PhysicsMap.Assign(PhysicsMap);
   aState.ObjectMap.Assign(ObjectMap);
   aState.BlockerMap.Assign(BlockerMap);
-  aState.SpecialMap.Assign(SpecialMap);
+  //aState.SpecialMap.Assign(SpecialMap);
   aState.WaterMap.Assign(WaterMap);
   aState.ZombieMap.Assign(ZombieMap);
   aState.CurrentIteration := fCurrentIteration;
@@ -1098,7 +1106,7 @@ begin
   PhysicsMap.Assign(aState.PhysicsMap);
   ObjectMap.Assign(aState.ObjectMap);
   BlockerMap.Assign(aState.BlockerMap);
-  SpecialMap.Assign(aState.SpecialMap);
+  //SpecialMap.Assign(aState.SpecialMap);
   WaterMap.Assign(aState.WaterMap);
   ZombieMap.Assign(aState.ZombieMap);
   fCurrentIteration := aState.CurrentIteration;
@@ -1253,7 +1261,7 @@ begin
   Entries        := TInteractiveObjectInfoList.Create;
   ObjectMap      := TByteMap.Create;
   BlockerMap     := TByteMap.Create;
-  SpecialMap     := TByteMap.Create;
+  //SpecialMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
   WaterMap       := TByteMap.Create;
   MiniMap        := TBitmap32.Create;
@@ -1372,7 +1380,7 @@ begin
   Entries.Free;
   ObjectMap.Free;
   BlockerMap.Free;
-  SpecialMap.Free;
+  //SpecialMap.Free;
   ZombieMap.Free;
   WaterMap.Free;
   MiniMap.Free;
@@ -1498,25 +1506,25 @@ begin
 
   ExplodeMaskBmp.Assign(Ani.ExplosionMaskBitmap);
   ExplodeMaskBmp.DrawMode := dmCustom;
-  ExplodeMaskBmp.OnPixelCombine := CombineMaskPixels;
+  ExplodeMaskBmp.OnPixelCombine := CombineMaskPixelsNeutral;
 
   fHighlightLemmingID := -1;
 
   BashMasks := Ani.BashMasksBitmap;
   BashMasks.DrawMode := dmCustom;
-  BashMasks.OnPixelCombine := CombineMaskPixels;
+  BashMasks.OnPixelCombine := CombineMaskPixelsRight;
 
   BashMasksRTL := Ani.BashMasksRTLBitmap;
   BashMasksRTL.DrawMode := dmCustom;
-  BashMasksRTL.OnPixelCombine := CombineMaskPixels;
+  BashMasksRTL.OnPixelCombine := CombineMaskPixelsLeft;
 
   MineMasks := Ani.MineMasksBitmap;
   MineMasks.DrawMode := dmCustom;
-  MineMasks.OnPixelCombine := CombineMaskPixels;
+  MineMasks.OnPixelCombine := CombineMaskPixelsDownRight;
 
   MineMasksRTL := Ani.MineMasksRTLBitmap;
   MineMasksRTL.DrawMode := dmCustom;
-  MineMasksRTL.OnPixelCombine := CombineMaskPixels;
+  MineMasksRTL.OnPixelCombine := CombineMaskPixelsDownLeft;
 
   // prepare animationbitmaps for drawing (set eventhandlers)
   with Ani.LemmingAnimations do
@@ -1952,11 +1960,53 @@ begin
 end;
 
 
-procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32);
 // copy masks to world
 begin
-  if (F <> 0) and (B and PM_STEEL = 0) then B := B and not PM_TERRAIN;
+  if (F <> 0) and (B and E = 0) then B := B and not PM_TERRAIN;
 end;
+
+procedure TLemmingGame.CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: TColor32);
+var
+  E: TColor32;
+begin
+  E := PM_STEEL or PM_ONEWAYRIGHT or PM_ONEWAYDOWN;
+  CombineMaskPixels(F, B, M, E);
+end;
+
+procedure TLemmingGame.CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: TColor32);
+var
+  E: TColor32;
+begin
+  E := PM_STEEL or PM_ONEWAYLEFT or PM_ONEWAYDOWN;
+  CombineMaskPixels(F, B, M, E);
+end;
+
+procedure TLemmingGame.CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);
+var
+  E: TColor32;
+begin
+  E := PM_STEEL or PM_ONEWAYRIGHT;
+  CombineMaskPixels(F, B, M, E);
+end;
+
+procedure TLemmingGame.CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);
+var
+  E: TColor32;
+begin
+  E := PM_STEEL or PM_ONEWAYLEFT;
+  CombineMaskPixels(F, B, M, E);
+end;
+
+procedure TLemmingGame.CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);
+var
+  E: TColor32;
+begin
+  E := PM_STEEL;
+  CombineMaskPixels(F, B, M, E);
+end;
+
+
 
 procedure TLemmingGame.CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
 // copy Stoner to world
@@ -2064,7 +2114,7 @@ begin
     Result := DOM_NONE; // whoops, important
 end;
 
-function TLemmingGame.ReadSpecialMap(X, Y: Integer): Byte;
+{function TLemmingGame.ReadSpecialMap(X, Y: Integer): Byte;
 begin
   if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     Result := SpecialMap.Value[X, Y]
@@ -2074,7 +2124,7 @@ begin
   if X < 0 then Result := DOM_NONE; // Old version: DOM_STEEL;
   if X >= PhysicsMap.Width then Result := DOM_NONE; // Old version: DOM_STEEL;
   if Y < 0 then Result := DOM_STEEL;
-end;
+end;}
 
 function TLemmingGame.ReadWaterMap(X, Y: Integer): Byte;
 begin
@@ -2103,11 +2153,11 @@ begin
 end;
 
 
-procedure TLemmingGame.WriteSpecialMap(X, Y: Integer; aValue: Byte);
+{procedure TLemmingGame.WriteSpecialMap(X, Y: Integer; aValue: Byte);
 begin
   if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     SpecialMap.Value[X, Y] := aValue;
-end;
+end;}
 
 
 procedure TLemmingGame.WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = false);
@@ -2410,8 +2460,8 @@ begin
   ObjectMap.SetSize(2*Level.Info.Width, Level.Info.Height);
   ObjectMap.Clear(255);
 
-  SpecialMap.SetSize(Level.Info.Width, Level.Info.Height);
-  SpecialMap.Clear(DOM_NONE);
+  //SpecialMap.SetSize(Level.Info.Width, Level.Info.Height);
+  //SpecialMap.Clear(DOM_NONE);
 
   WaterMap.SetSize(Level.Info.Width, Level.Info.Height);
   WaterMap.Clear(DOM_NONE);
@@ -2424,12 +2474,12 @@ begin
       for Y := ObjectInfos[i].TriggerRect.Top to ObjectInfos[i].TriggerRect.Bottom - 1 do
       for X := ObjectInfos[i].TriggerRect.Left to ObjectInfos[i].TriggerRect.Right - 1 do
       begin
-        if (V in [DOM_STEEL, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
+        {if (V in [DOM_STEEL, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
         begin
           if (V = DOM_STEEL) or (PhysicsMap.PixelS[X, Y] and PM_ONEWAY <> 0) then
             WriteSpecialMap(X, Y, V)
         end
-        else if V = DOM_WATER then
+        else} if V = DOM_WATER then
           WriteWaterMap(X, Y, V)
         else if V = DOM_BLOCKER then
           WriteBlockerMap(X, Y, V)
@@ -2441,7 +2491,7 @@ begin
 
 
   // map steel
-  if ((Level.Info.LevelOptions and 4) = 0)
+  (*if ((Level.Info.LevelOptions and 4) = 0)
      and (fGameParams.SysDat.Options and 64 = 0) then
   begin
     with Level.Steels, HackedList do
@@ -2462,7 +2512,7 @@ begin
 
       end;
     end;
-  end;
+  end;*)
 end;
 
 
@@ -2471,7 +2521,9 @@ var
   X, Y: Integer;
   DoAutoSteel : Boolean;
 begin
-  DoAutoSteel := (((Level.Info.LevelOptions and 2) = 2) or
+  // The renderer should have already handled this now
+
+  (*DoAutoSteel := (((Level.Info.LevelOptions and 2) = 2) or
           (fGameParams.SysDat.Options and 64 <> 0));
 
   with PhysicsMap do
@@ -2498,7 +2550,7 @@ begin
         WriteSpecialMap(X, Y, DOM_NONE);
 
     end;
-  end;
+  end;*)
 end;
 
 
@@ -3130,10 +3182,10 @@ begin
                             or  (ReadObjectMapType(X, Y) = DOM_TRAPONCE);
     trWater:      Result :=     (ReadWaterMap(X, Y) = DOM_WATER);
     trFire:       Result :=     (ReadObjectMapType(X, Y) = DOM_FIRE);
-    trOWLeft:     Result :=     (ReadSpecialMap(X, Y) = DOM_ONEWAYLEFT);
-    trOWRight:    Result :=     (ReadSpecialMap(X, Y) = DOM_ONEWAYRIGHT);
-    trOWDown:     Result :=     (ReadSpecialMap(X, Y) = DOM_ONEWAYDOWN);
-    trSteel:      Result :=     (ReadSpecialMap(X, Y) = DOM_STEEL);
+    trOWLeft:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0);
+    trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);
+    trOWDown:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYDOWN <> 0);
+    trSteel:      Result :=     (PhysicsMap.Pixel[X, Y] and PM_STEEL <> 0);
     trBlocker:    Result :=     (ReadBlockerMap(X, Y) = DOM_BLOCKER)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
@@ -4027,8 +4079,9 @@ begin
       if (n > -4) and (n < 4) then Result := True;
     end;
 
-    if ReadSpecialMap(PosX + n, PosY) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
-      WriteSpecialMap(PosX + n, PosY, DOM_NONE);
+    //if ReadSpecialMap(PosX + n, PosY) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
+    //  WriteSpecialMap(PosX + n, PosY, DOM_NONE);
+    // Handled by the pixel remover now :D
   end;
 
   InitializeMinimap;
