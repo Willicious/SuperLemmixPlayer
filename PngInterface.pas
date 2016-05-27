@@ -99,42 +99,59 @@ end;
 
 class procedure TPngInterface.PngToBitmap32(Png: TPngObject; Bmp: TBitmap32);
 var
-  x, y: Integer;
-  c: TColor32;
+  X, Y: Integer;
   r, g, b, a: Byte;
   ASL: pByteArray;
   Alpha: Boolean;
   XC: pByte;
   TRNS: TCHUNKtRNS;
+  fWidth, fHeight, fBytesPerRow: Integer;
+  Header: TChunkIHDR;
+  BmpScanLine: pColor32Array;
 begin
   ASL := nil; // Just gets rid of a compile-time warning. ASL won't be referenced if it hasn't been initialized anyway, since
               // the only line that references it has the same IF condition as the line that initializes it.
-  //Result := TBitmap32.Create;
-  Bmp.SetSize(Png.Width, Png.Height);
-  Alpha := (Png.AlphaScanline[0] <> nil);
-  for y := 0 to Png.Height-1 do
+
+  // exit if image is not present
+  if not Png.IsHeaderPresent then Exit;
+
+  // Load everything into one Header
+  Header := Png.Header;
+  fBytesPerRow := Header.GetBytesPerRow;
+  fWidth := Header.Width;
+  fHeight := Header.Height;
+
+  Bmp.SetSize(fWidth, fHeight);
+
+  Alpha := (Header.ColorType = COLOR_RGBALPHA);
+  for Y := 0 to fHeight-1 do
   begin
     if Alpha then
-      ASL := Png.AlphaScanline[y];
-    for x := 0 to Png.Width-1 do
+      LongInt(ASL) := Longint(Header.GetImageAlpha) + (Y * fWidth);
+
+    // Get Png.Scanline[Y] via the Header
+    LongInt(XC) := LongInt(Header.GetImageData) + (fHeight - 1 - Y) * LongInt(fBytesPerRow);
+    // Write on Bmp via the ScanLine, too.
+    BmpScanLine := Bmp.Scanline[Y];
+
+    for X := 0 to fWidth-1 do
     begin
-      c := Png.Pixels[x, y];
-      r := c and $FF;
-      g := (c and $FF00) shr 8;
-      b := (c and $FF0000) shr 16;
+      r := pRGBLine(XC)^[X].rgbtRed;
+      g := pRGBLine(XC)^[X].rgbtGreen;
+      b := pRGBLine(XC)^[X].rgbtBlue;
+
       if Alpha then
-        a := ASL^[x]
+        a := ASL^[X]
       else
         a := 255;
+
       if a = 0 then
-        Bmp.Pixel[x, y] := 0
+        BmpScanLine^[X] := 0
       else
-        Bmp.Pixel[x, y] := (a shl 24)
-                         + (r shl 16)
-                         + (g shl 8)
-                         + b;
+        BmpScanLine^[X] := (a shl 24) + (r shl 16) + (g shl 8) + b;
     end;
   end;
+
 
   // handle 8 bit PNG files - fuck the 1/2/4 bit ones
   if (PNG.TransparencyMode = ptmBit) and (PNG.Header.BitDepth = 8) then
@@ -142,10 +159,10 @@ begin
     if (Png.Header.ColorType = COLOR_PALETTE)  and (Png.Chunks.ItemFromClass(TChunktRNS) = nil) then
       Png.CreateAlpha;
     TRNS := Png.Chunks.ItemFromClass(TChunktRNS) as TChunktRNS;
-    for y := 0 to PNG.Height-1 do
+    for y := 0 to fHeight-1 do
     begin
       XC := Png.Scanline[y];
-      for x := 0 to PNG.Width-1 do
+      for x := 0 to fWidth-1 do
       begin
         if XC^ = TRNS.TransparentColor then
           Bmp.Pixel[x, y] := 0
@@ -155,6 +172,7 @@ begin
       end;
     end;
   end;
+
 end;
 
 class function TPngInterface.Bitmap32ToPng(Bmp: TBitmap32; NoAlpha: Boolean): TPngObject;

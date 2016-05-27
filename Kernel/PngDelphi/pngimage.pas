@@ -553,6 +553,8 @@ type
     {$IFDEF UseDelphi}property Canvas: TCanvas read fCanvas;{$ENDIF}
     {Returns pointer to the header}
     property Header: TChunkIHDR read GetHeader;
+    {Checks whether Header is present}
+    property IsHeaderPresent: Boolean read HeaderPresent;
     {Returns the transparency mode used by this png}
     property TransparencyMode: TPNGTransparencyMode read GetTransparencyMode;
     {Assigns from another object}
@@ -694,6 +696,9 @@ type
     {Release allocated ImageData memory}
     procedure FreeImageData;
   public
+    property GetBytesPerRow: Integer read BytesPerRow;
+    property GetImageData: Pointer read ImageData;
+    property GetImageAlpha: Pointer read ImageAlpha;
     {Access to ImageHandle}
     property ImageHandleValue: HBitmap read ImageHandle;
     {Properties}
@@ -5324,8 +5329,8 @@ end;
 function TPngObject.GetScanline(const LineIndex: Integer): Pointer;
 begin
   with Header do
-    Longint(Result) := (Longint(ImageData) + ((Longint(Height) - 1) *
-      BytesPerRow)) - (LineIndex * BytesPerRow);
+    Longint(Result) := Longint(ImageData)
+                     + (Longint(Height) - 1 - LineIndex) * BytesPerRow;
 end;
 
 {Initialize gamma table}
