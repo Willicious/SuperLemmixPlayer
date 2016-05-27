@@ -2710,6 +2710,20 @@ var
     Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
   end;
 
+
+  function GetLemDistance(L: TLemming; MousePos: TPoint): Integer;
+  begin
+    // We compute the distance to the center of the cursor after 2x-zooming, to have integer values
+    Result :=   Sqr(2 * (L.LemX + L.FrameLeftDx) - 2 * MousePos.X + 13)
+              + Sqr(2 * (L.LemY + L.FrameTopDy) - 2 * MousePos.Y + 13)
+  end;
+
+  function IsCloserToCursorCenter(LOld, LNew: TLemming; MousePos: TPoint): Boolean;
+  begin
+    Result := (GetLemDistance(LNew, MousePos) < GetLemDistance(LOld, MousePos));
+  end;
+
+
   function GetPriorityBoxOrder(NewSkill: TBasicLemmingAction): TPriorityBoxArr;
   const
     WalkerOrder : TPriorityBoxArr = (NonPerm, Perm, Expl, Walk, Shrug, Fall, Drown);
@@ -2777,7 +2791,7 @@ begin
 
   PriorityBoxOrder := GetPriorityBoxOrder(NewSkill);
 
-  for i := 0 to (LemmingList.Count - 1) do
+  for i := (LemmingList.Count - 1) downto 0 do
   begin
     L := LemmingList.List^[i];
 
@@ -2812,7 +2826,8 @@ begin
     // Deprioritize zombie even when just counting lemmings
     if L.LemIsZombie then CurPriorityBox := 9;
 
-    if CurPriorityBox < CurValue then
+    if     (CurPriorityBox < CurValue)
+       or ((CurPriorityBox = CurValue) and IsCloserToCursorCenter(PriorityLem, L, MousePos)) then
     begin
       // New top priority lemming found
       PriorityLem := L;
