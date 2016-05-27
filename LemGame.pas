@@ -3160,10 +3160,14 @@ begin
     HandleWaterSwim(L);
 
   // Check for blocker fields and force-fields
-  if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
-    HandleForceField(L, -1)
-  else if HasTriggerAt(L.LemX, L.LemY, trForceRight) then
-    HandleForceField(L, 1);
+  // but not for miners removing terrain, see http://www.lemmingsforums.net/index.php?topic=2710.0
+  if (not (L.LemAction = baMining)) and (not (L.LemFrame in [1, 2])) then
+  begin
+    if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
+      HandleForceField(L, -1)
+    else if HasTriggerAt(L.LemX, L.LemY, trForceRight) then
+      HandleForceField(L, 1);
+  end;
 end;
 
 function TLemmingGame.HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
