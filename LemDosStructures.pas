@@ -513,6 +513,7 @@ function DosVgaColorToColor32(const ColorRec: TDosVgaColorRec): TColor32;
 begin
   with TColor32Entry(Result) do
   begin
+    A := $FF;
     R := ColorRec.R * 4;
     G := ColorRec.G * 4;
     B := ColorRec.B * 4;

@@ -6,7 +6,8 @@ uses
   LemRes,
   Forms,
   FMain in 'FMain.pas' {MainForm},
-  LemObjects in 'LemObjects.pas';
+  LemObjects in 'LemObjects.pas',
+  LemRecolorSprites in 'LemRecolorSprites.pas';
 
 {$R *.res}
 
