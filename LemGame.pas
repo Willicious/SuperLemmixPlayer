@@ -3713,6 +3713,10 @@ begin
   // Draw currently selected lemming as last lemming
   if Assigned(fLemSelected) then
     DrawThisLemming(fLemSelected, true);
+
+  // If paused, update screen
+  if Paused then
+    fRenderer.DrawLevel(fTargetBitmap);
 end;
 
 procedure TLemmingGame.DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
