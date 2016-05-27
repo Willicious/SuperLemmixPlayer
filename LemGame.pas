@@ -534,7 +534,6 @@ type
     procedure UpdateAllSkillCounts;
   { pixel combine eventhandlers }
     procedure DoTalismanCheck;
-    procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
 
     // CombineMaskPixels has variants based on the direction of destruction
@@ -1495,11 +1494,11 @@ begin
   // prepare masks for drawing
   CntDownBmp := Ani.CountDownDigitsBitmap;
   CntDownBmp.DrawMode := dmCustom;
-  CntDownBmp.OnPixelCombine := CombineDefaultPixels;
+  CntDownBmp.OnPixelCombine := TRecolorImage.CombineDefaultPixels;
 
   HighlightBmp := Ani.HighlightBitmap;
   HighlightBmp.DrawMode := dmCustom;
-  HighlightBmp.OnPixelCombine := CombineDefaultPixels;
+  HighlightBmp.OnPixelCombine := TRecolorImage.CombineDefaultPixels;
 
   ExplodeMaskBmp.Assign(Ani.ExplosionMaskBitmap);
   ExplodeMaskBmp.DrawMode := dmCustom;
@@ -1532,7 +1531,7 @@ begin
       if i in [BRICKLAYING, BRICKLAYING_RTL, PLATFORMING, PLATFORMING_RTL] then
         Bmp.OnPixelCombine := CombineBuilderPixels
       else
-        Bmp.OnPixelCombine := TRecolorImage.GetLemColorScheme(false, false, false, false);  // CombineLemmingPixels;
+        Bmp.OnPixelCombine := TRecolorImage.CombineDefaultPixels;
     end;
 
   StoneLemBmp := Ani.LemmingAnimations.Items[STONED];
@@ -1903,17 +1902,13 @@ end;
 procedure TLemmingGame.CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
 {-------------------------------------------------------------------------------
   This trusts the CurrentlyDrawnLemming variable.
+  Therefore it has to stay here instead of being moved to LemRecolorSprites.pas
 -------------------------------------------------------------------------------}
 begin
   if F = BrickPixelColor then
     B := BrickPixelColors[12 - fCurrentlyDrawnLemming.LemNumberOfBricksLeft]
   else if F <> 0 then
     B := F;
-end;
-
-procedure TLemmingGame.CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then B := F;
 end;
 
 procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32);
@@ -2793,7 +2788,7 @@ begin
     end;
   end;
 
-  //  Delete PriorityLem if too low-priority and we with to assign a skill
+  //  Delete PriorityLem if too low-priority and we wish to assign a skill
   if (CurValue > 6) and not (NewSkillOrig = baNone) then PriorityLem := nil;
 
   Result := NumLemInCursor;
