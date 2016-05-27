@@ -2516,6 +2516,8 @@ var
   L: TLemming;
 begin
   Result := False;
+
+  // Just to be safe, though this should always return in fLemSelected
   GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
 
   if not Assigned(L) then Exit;
@@ -2661,8 +2663,8 @@ var
   var
     X, Y: Integer;
   begin
-    X := L.LemX + L.FrameLeftDx;
-    Y := L.LemY + L.FrameTopDy;
+    X := L.LemX - 8; // + L.FrameLeftDx; for walker
+    Y := L.LemY - 10; // + L.FrameTopDy; for walker
     Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
   end;
 
@@ -2670,8 +2672,8 @@ var
   function GetLemDistance(L: TLemming; MousePos: TPoint): Integer;
   begin
     // We compute the distance to the center of the cursor after 2x-zooming, to have integer values
-    Result :=   Sqr(2 * (L.LemX + L.FrameLeftDx) - 2 * MousePos.X + 13)
-              + Sqr(2 * (L.LemY + L.FrameTopDy) - 2 * MousePos.Y + 13)
+    Result :=   Sqr(2 * (L.LemX - 8) - 2 * MousePos.X + 13)
+              + Sqr(2 * (L.LemY - 10) - 2 * MousePos.Y + 13)
   end;
 
   function IsCloserToCursorCenter(LOld, LNew: TLemming; MousePos: TPoint): Boolean;
@@ -2774,7 +2776,7 @@ begin
     repeat
       LemIsInBox := IsLemInPriorityBox(L, PriorityBoxOrder[CurPriorityBox]);
       Inc(CurPriorityBox);
-    until (CurPriorityBox >= MinIntValue([CurValue, 7])) or LemIsInBox;
+    until (CurPriorityBox > MinIntValue([CurValue, 7])) or LemIsInBox;
 
     // Can this lemmings actually receive the skill?
     if not NewSkillMethods[NewSkill](L) then CurPriorityBox := 8;
@@ -5244,8 +5246,6 @@ begin
 
   if Assigned(L) and not fHitTestAutofail then
   begin
-    S := LemmingActionStrings[L.LemAction];
-
     // get highlight text
     fAltOverride := false;
     if (L.LemIsClimber or L.LemIsFloater or L.LemIsGlider or L.LemIsSwimmer or L.LemIsMechanic)
@@ -5262,26 +5262,30 @@ begin
       if L.LemIsMechanic then S[4] := 'D';
       if L.LemIsZombie then S[5] := 'Z';
     end else begin
-      i := 0;
-      if L.LemIsClimber then inc(i);
-      if L.LemIsSwimmer then inc(i);
-      if L.LemIsFloater then inc(i);
-      if L.LemIsGlider then inc(i);
-      if L.LemIsMechanic then inc(i);
+      S := LemmingActionStrings[L.LemAction];
 
-      case i of
-        5: S := SQuadathlete;
-        4: S := SQuadathlete;
-        3: S := STriathlete;
-        2: S := SAthlete;
-        1: begin
-             if L.LemIsClimber then S := SClimber;
-             if L.LemIsSwimmer then S := SSwimmer;
-             if L.LemIsFloater then S := SFloater;
-             if L.LemIsGlider  then S := SGlider;
-             if L.LemIsMechanic then S := SMechanic;
-           end;
-        else S := LemmingActionStrings[L.LemAction];
+      if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
+      begin
+        i := 0;
+        if L.LemIsClimber then inc(i);
+        if L.LemIsSwimmer then inc(i);
+        if L.LemIsFloater then inc(i);
+        if L.LemIsGlider then inc(i);
+        if L.LemIsMechanic then inc(i);
+
+        case i of
+          5: S := SQuadathlete;
+          4: S := SQuadathlete;
+          3: S := STriathlete;
+          2: S := SAthlete;
+          1: begin
+               if L.LemIsClimber then S := SClimber;
+               if L.LemIsSwimmer then S := SSwimmer;
+               if L.LemIsFloater then S := SFloater;
+               if L.LemIsGlider  then S := SGlider;
+               if L.LemIsMechanic then S := SMechanic;
+             end;
+        end;
       end;
 
       if L.LemIsZombie then S := SZombie;
