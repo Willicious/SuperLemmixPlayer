@@ -8,7 +8,7 @@ interface
 uses
   LemTypes,
   UMisc,
-  GR32, GR32_LowLevel, GR32_Resamplers,
+  GR32, GR32_Blend, GR32_LowLevel, GR32_Resamplers,
   Contnrs, Classes, SysUtils;
 
 type
@@ -30,6 +30,7 @@ type
     fWidth: Integer;
     fHeight: Integer;
     function GetItem(Index: TRenderLayer): TBitmap32;
+    procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
   protected
   public
     constructor Create;
@@ -278,11 +279,45 @@ begin
   for i := Low(TRenderLayer) to High(TRenderLayer) do
   begin
     BMP := TBitmap32.Create;
-    BMP.DrawMode := dmBlend;
-    BMP.CombineMode := cmBlend;
+    if i in [rlLowShadows, rlHighShadows] then
+    begin
+      BMP.DrawMode := dmCustom;
+      BMP.OnPixelCombine := CombinePixelsShadow;
+    end else begin
+      BMP.DrawMode := dmBlend;
+      BMP.CombineMode := cmBlend;
+    end;
     //TLinearResampler.Create(BMP);
     Add(BMP);
   end;
+end;
+
+procedure TRenderBitmaps.CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
+var
+  A, C: TColor32;
+  Red: Integer;
+  Green: Integer;
+  Blue: Integer;
+
+  procedure ModColor(var Component: Integer);
+  begin
+    if Component < $80 then
+      Component := $C0
+    else
+      Component := $40;
+  end;
+begin
+  A := F and $FF000000;
+  if A = 0 then Exit;
+  Red   := (B and $FF0000) shr 16;
+  Green := (B and $00FF00) shr 8;
+  Blue  := (B and $0000FF);
+  ModColor(Red);
+  ModColor(Green);
+  ModColor(Blue);
+  C := ($C0000000) or (Red shl 16) or (Green shl 8) or (Blue);
+  BlendMem(C, B);
+  //BlendReg(C, B);
 end;
 
 function TRenderBitmaps.GetItem(Index: TRenderLayer): TBitmap32;

@@ -287,6 +287,9 @@ begin
   TempBitmap := TBitmap32.Create;
   MainExtractor := TMainDatExtractor.Create;
 
+  if fMetaLemmingAnimations.Count = 0 then
+    ReadMetaData;
+
   try
 
       with fMetaLemmingAnimations do
@@ -357,6 +360,7 @@ end;
 procedure TBaseDosAnimationSet.DoClearData;
 begin
   fLemmingAnimations.Clear;
+  fMetaLemmingAnimations.Clear;
   fMaskAnimations.Clear;
   fExplosionMaskBitmap    := nil;
   fBashMasksBitmap        := nil;
