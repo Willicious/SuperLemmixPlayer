@@ -3682,9 +3682,6 @@ begin
 
   fRenderer.DrawLemmings(LemmingList, fLemSelected);
 
-  (*fRenderer.LemmingLayer.Clear(0);
-  fRenderer.ParticleLayer.Clear(0);
-
   if Minimap.Width < DOS_MINIMAP_WIDTH then
   begin
     fMinimapBuffer.SetSize(DOS_MINIMAP_WIDTH, Minimap.Height);
@@ -3701,20 +3698,14 @@ begin
   begin
     L := LemmingList[iLemming];
 
-    if not (L.LemRemoved or L.LemTeleporting) and (L <> fLemSelected) then
+    if not L.LemRemoved then
     begin
-      DrawThisLemming(L);
-      // Draw on Minimap
       fMinimapBuffer.PixelS[(L.LemX div 16) + Xo, L.LemY div 8] := Color32(0, 255, 000);
     end;
 
-    if L.LemParticleTimer > 1 then
-      DrawParticles(L, False);
+    (*if L.LemParticleTimer > 1 then
+      DrawParticles(L, False);*)
   end;
-
-  // Draw currently selected lemming as last lemming
-  if Assigned(fLemSelected) then
-    DrawThisLemming(fLemSelected, true);*)
 
   // If paused, update screen
   if Paused then
