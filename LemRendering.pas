@@ -36,7 +36,7 @@ uses
   LemObjects, LemInteractiveObject,   LemMetaObject,
   LemSteel,
   LemLemming,
-  LemDosAnimationSet, LemMetaAnimation,
+  LemDosAnimationSet, LemMetaAnimation, LemCore,
   LemLevel;
 
   // we could maybe use the alpha channel for rendering, ok thats working!
@@ -173,7 +173,52 @@ var
   SrcAnim: TBitmap32;
   SrcMetaAnim: TMetaLemmingAnimation;
   i: Integer;
+
+  function GetFrameBounds: TRect;
+  begin
+    with Result do
+    begin
+      Left := 0;
+      Top := aLemming.LemFrame * SrcMetaAnim.Height;
+      Right := SrcMetaAnim.Width;
+      Bottom := Top + SrcMetaAnim.Height;
+    end;
+  end;
+
+  function GetLocationBounds: TRect;
+  begin
+    with Result do
+    begin
+      Left := aLemming.LemX - SrcMetaAnim.FootX;
+      Top := aLemming.LemY - SrcMetaAnim.FootY;
+      Right := Left + SrcMetaAnim.Width;
+      Bottom := Top + SrcMetaAnim.Height;
+
+      // Compatibility kludges. These should be removed
+      // and replaced with properly-modified animations.
+      if aLemming.LemAction in [baDigging, baFixing] then
+      begin
+        Inc(Left);
+        Inc(Right);
+      end;
+
+      if aLemming.LemAction = baMining then
+      begin
+        Inc(Left, aLemming.LemDx);
+        Inc(Right, aLemming.LemDx);
+
+        if aLemming.LemFrame < 15 then
+        begin
+          Inc(Top);
+          Inc(Bottom);
+        end;
+      end;
+    end;
+  end;
+
 begin
+  if aLemming.LemRemoved then Exit;
+
   fRecolorer.Lemming := aLemming;
   fRecolorer.DrawAsSelected := Selected;
 
@@ -186,12 +231,12 @@ begin
   SrcMetaAnim := fAni.MetaLemmingAnimations[i];
 
   // Now we want the frame
-  i := aLemming.LemFrame mod SrcMetaAnim.FrameCount;
+  i := aLemming.LemFrame mod SrcMetaAnim.FrameCount; // mod is probably unnessecary but doesn't hurt to be safe
 
-  SrcRect := aLemming.GetFrameBounds;
-  DstRect := aLemming.GetLocationBounds;
-  aLemming.LAB.OnPixelCombine := fRecolorer.CombineLemmingPixels;
-  aLemming.LAB.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
+  SrcRect := GetFrameBounds;
+  DstRect := GetLocationBounds;
+  SrcAnim.OnPixelCombine := fRecolorer.CombineLemmingPixels;
+  SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 end;
 
 function TRenderer.GetLemmingLayer: TBitmap32;

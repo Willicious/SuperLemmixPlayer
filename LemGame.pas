@@ -588,7 +588,7 @@ type
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
     procedure DrawLemmings;
-      procedure DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
+    //  procedure DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
     procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
     procedure CheckForNewShadow;
     procedure DrawShadowBridge(DoErase: Boolean = False);
@@ -2197,6 +2197,7 @@ procedure TLemmingGame.Transition(L: TLemming; NewAction: TBasicLemmingAction; D
 -------------------------------------------------------------------------------}
 var
   i: Integer;
+  TempMetaAnim: TMetaLemmingAnimation;
 begin
   if DoTurn then TurnAround(L);
 
@@ -2233,12 +2234,11 @@ begin
 
   // New animation
   i := AnimationIndices[NewAction, (L.LemDx = -1)];
-  L.LMA := Style.AnimationSet.MetaLemmingAnimations[i];
-  L.LAB := Style.AnimationSet.LemmingAnimations.List^[i];
-  L.LemMaxFrame := L.LMA.FrameCount - 1;
-  L.LemAnimationType := L.LMA.AnimationType;
-  L.FrameTopDy  := -L.LMA.FootY; // ccexplore compatible
-  L.FrameLeftDx := -L.LMA.FootX; // ccexplore compatible
+  TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
+  L.LemMaxFrame := TempMetaAnim.FrameCount - 1;
+  L.LemAnimationType := TempMetaAnim.AnimationType;
+  L.FrameTopDy  := TempMetaAnim.FootY; // ccexplore compatible
+  L.FrameLeftDx := TempMetaAnim.FootX; // ccexplore compatible
 
   // some things to do when entering state
   case L.LemAction of
@@ -2286,17 +2286,17 @@ procedure TLemmingGame.TurnAround(L: TLemming);
 // we assume that the mirrored animations at least have the same framecount
 var
   i: Integer;
+  TempMetaAnim: TMetaLemmingAnimation;
 begin
   with L do
   begin
     LemDX := -LemDX;
     i := AnimationIndices[LemAction, (LemDx = -1)];
-    LMA := Style.AnimationSet.MetaLemmingAnimations[i];
-    LAB := Style.AnimationSet.LemmingAnimations[i];
-    LemMaxFrame := LMA.FrameCount - 1;
-    LemAnimationType := LMA.AnimationType;
-    FrameTopDy  := -LMA.FootY; // ccexplore compatible
-    FrameLeftDx := -LMA.FootX; // ccexplore compatible
+    TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
+    LemMaxFrame := TempMetaAnim.FrameCount - 1;
+    LemAnimationType := TempMetaAnim.AnimationType;
+    FrameTopDy  := -TempMetaAnim.FootY; // ccexplore compatible
+    FrameLeftDx := -TempMetaAnim.FootX; // ccexplore compatible
   end;
 end;
 
@@ -3721,7 +3721,7 @@ begin
     fRenderer.DrawLevel(fTargetBitmap);
 end;
 
-procedure TLemmingGame.DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
+(*procedure TLemmingGame.DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
 var
   LemLayer: TBitmap32;
   SrcRect, DstRect, DigRect: TRect;
@@ -3730,7 +3730,7 @@ var
   Digit: Integer;
   IsPermenent: Boolean;
 begin
-  (*LemLayer := fRenderer.LemmingLayer;
+  LemLayer := fRenderer.LemmingLayer;
 
   with L do
   begin
@@ -3786,8 +3786,8 @@ begin
 
     // Reverse change on OnPixelCombine
     LAB.OnPixelCombine := OldCombine;
-  end;*)
-end;
+  end;
+end;*)
 
 
 procedure TLemmingGame.CheckForNewShadow;

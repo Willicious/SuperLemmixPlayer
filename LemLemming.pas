@@ -26,8 +26,8 @@ TLemming = class
     LemTrueFallen                 : Integer; // total number of fallen pixels
     LemExplosionTimer             : Integer; // 84 (before 79) downto 0
     LemMechanicFrames             : Integer;
-    LMA                           : TMetaLemmingAnimation; // ref to Lemming Meta Animation
-    LAB                           : TBitmap32;      // ref to Lemming Animation Bitmap
+    //LMA                           : TMetaLemmingAnimation; // ref to Lemming Meta Animation
+    //LAB                           : TBitmap32;      // ref to Lemming Animation Bitmap
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
     LemAnimationType              : Integer; // copy from LMA
@@ -64,9 +64,9 @@ TLemming = class
     LemActionOld                  : TBasicLemmingAction; // action in previous frame
 
     procedure Assign(Source: TLemming);
-    function GetLocationBounds: TRect; // rect in world
-    function GetFrameBounds: TRect; // rect from animation bitmap
-    function GetCountDownDigitBounds: TRect; // countdown
+    //function GetLocationBounds: TRect; // rect in world
+    //function GetFrameBounds: TRect; // rect from animation bitmap
+    //function GetCountDownDigitBounds: TRect; // countdown
 
     property HasPermanentSkills: Boolean read CheckForPermanentSkills;
   end;
@@ -91,7 +91,7 @@ begin
   Result := (LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsMechanic);
 end;
 
-function TLemming.GetCountDownDigitBounds: TRect;
+(*function TLemming.GetCountDownDigitBounds: TRect;
 begin
   with Result do
   begin
@@ -130,11 +130,7 @@ begin
     Top := LemY - LMA.FootY;
     Right := Left + LMA.Width;
     Bottom := Top + LMA.Height;
-    (*if (LemDX = -1) and (LemAction in [baWalking, baBuilding, baPlatforming, baStacking]) then
-      begin
-      Dec(Left);
-      Dec(Right);
-      end;*)
+
     if (LemAction in [baDigging, baFixing]) and (LemDx = -1) then
     begin
       Inc(Left);
@@ -158,7 +154,7 @@ begin
       end;
     end;  // Seems to be glitchy if the animations themself are altered
   end;
-end;
+end;*)
 
 procedure TLemming.Assign(Source: TLemming);
 begin
@@ -173,8 +169,8 @@ begin
   LemTrueFallen := Source.LemTrueFallen;
   LemExplosionTimer := Source.LemExplosionTimer;
   LemMechanicFrames := Source.LemMechanicFrames;
-  LMA := Source.LMA;
-  LAB := Source.LAB;
+  //LMA := Source.LMA;
+  //LAB := Source.LAB;
   LemFrame := Source.LemFrame;
   LemMaxFrame := Source.LemMaxFrame;
   LemAnimationType := Source.LemAnimationType;
