@@ -277,6 +277,7 @@ begin
 
   SrcRect := GetFrameBounds;
   DstRect := GetLocationBounds;
+  SrcAnim.DrawMode := dmCustom;
   SrcAnim.OnPixelCombine := fRecolorer.CombineLemmingPixels;
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 end;

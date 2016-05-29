@@ -98,6 +98,7 @@ var
   TempColor: TColor32;
 begin
   A := (F and $FF000000);
+  if A = 0 then Exit;
   SwapColors(F, TempColor);
   TempColor := (TempColor and $FFFFFF) or A;
   BlendMem(TempColor, B);
