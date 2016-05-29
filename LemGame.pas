@@ -3680,7 +3680,9 @@ begin
   if HyperSpeed then
     Exit;
 
-  fRenderer.LemmingLayer.Clear(0);
+  fRenderer.DrawLemmings(LemmingList, fLemSelected);
+
+  (*fRenderer.LemmingLayer.Clear(0);
   fRenderer.ParticleLayer.Clear(0);
 
   if Minimap.Width < DOS_MINIMAP_WIDTH then
@@ -3712,7 +3714,7 @@ begin
 
   // Draw currently selected lemming as last lemming
   if Assigned(fLemSelected) then
-    DrawThisLemming(fLemSelected, true);
+    DrawThisLemming(fLemSelected, true);*)
 
   // If paused, update screen
   if Paused then
@@ -3728,7 +3730,7 @@ var
   Digit: Integer;
   IsPermenent: Boolean;
 begin
-  LemLayer := fRenderer.LemmingLayer;
+  (*LemLayer := fRenderer.LemmingLayer;
 
   with L do
   begin
@@ -3784,7 +3786,7 @@ begin
 
     // Reverse change on OnPixelCombine
     LAB.OnPixelCombine := OldCombine;
-  end;
+  end;*)
 end;
 
 

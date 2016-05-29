@@ -28,13 +28,15 @@ uses
   GR32, GR32_LowLevel, GR32_Blend,
   UMisc,
   SysUtils,
+  LemRecolorSprites,
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
   LemDosBmp, LemDosStructures,
   LemTypes,
   LemTerrain,
   LemObjects, LemInteractiveObject,   LemMetaObject,
   LemSteel,
-  LemDosAnimationSet,
+  LemLemming,
+  LemDosAnimationSet, LemMetaAnimation,
   LemLevel;
 
   // we could maybe use the alpha channel for rendering, ok thats working!
@@ -63,6 +65,8 @@ type
 
   TRenderer = class
   private
+    fRecolorer: TRecolorImage;
+
     fPhysicsMap: TBitmap32;
     fLayers: TRenderBitmaps;
 
@@ -86,16 +90,12 @@ type
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineObjectDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineObjectDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
-    //procedure CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
 
     // Functional combines
     procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TTerrainRecord);
     procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
-
-    procedure CombineLemFrame(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineLemFrameZombie(F: TColor32; var B: TColor32; M: TColor32);
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
@@ -115,14 +115,16 @@ type
 
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
+    // Map rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
     procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
     procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
 
+    // Lemming rendering
+    procedure DrawLemmings(aLemmings: TLemmingList; SelectedLemming: TLemming = nil);
+    procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
+
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
-    procedure EraseObject(Dst: TBitmap32; O: TInteractiveObject;
-      aOriginal: TBitmap32 = nil);
-    procedure DrawSpecialBitmap(Dst: TBitmap32; Spec: TBitmaps; Inv: Boolean = false);
 
     function HasPixelAt(X, Y: Integer): Boolean;
 
@@ -145,27 +147,52 @@ type
     property ParticleLayer: TBitmap32 read GetParticleLayer; // same
   end;
 
-//const
-  //COLOR_MASK    = $80FFFFFF; // transparent black flag is included!
-  //ALPHA_MASK    = $FF000000;
-
-  //ALPHA_TERRAIN          = $01000000;
-  //ALPHA_OBJECT           = $02000000; // not really needed, but used
-  //ALPHA_STEEL            = $04000000;
-  //ALPHA_ONEWAY           = $08000000;
-
-  // to enable black terrain. bitmaps with transparent black should include
-  // this bit
-  //ALPHA_TRANSPARENTBLACK = $80000000;
-
 implementation
 
 uses
   UTools;
 
-
-
 { TRenderer }
+
+// Lemming Drawing
+
+procedure TRenderer.DrawLemmings(aLemmings: TLemmingList; SelectedLemming: TLemming = nil);
+var
+  i: Integer;
+begin
+  fLayers[rlLemmings].Clear(0);
+  for i := 0 to aLemmings.Count-1 do
+    if aLemmings[i] <> SelectedLemming then DrawThisLemming(aLemmings[i]);
+
+  if SelectedLemming <> nil then DrawThisLemming(SelectedLemming, true);
+end;
+
+procedure TRenderer.DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
+var
+  SrcRect, DstRect: TRect;
+  SrcAnim: TBitmap32;
+  SrcMetaAnim: TMetaLemmingAnimation;
+  i: Integer;
+begin
+  fRecolorer.Lemming := aLemming;
+  fRecolorer.DrawAsSelected := Selected;
+
+  // Get the animation and meta-animation
+  if aLemming.LemDX > 0 then
+    i := AnimationIndices[aLemming.LemAction, false]
+  else
+    i := AnimationIndices[aLemming.LemAction, true];
+  SrcAnim := fAni.LemmingAnimations[i];
+  SrcMetaAnim := fAni.MetaLemmingAnimations[i];
+
+  // Now we want the frame
+  i := aLemming.LemFrame mod SrcMetaAnim.FrameCount;
+
+  SrcRect := aLemming.GetFrameBounds;
+  DstRect := aLemming.GetLocationBounds;
+  aLemming.LAB.OnPixelCombine := fRecolorer.CombineLemmingPixels;
+  aLemming.LAB.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
+end;
 
 function TRenderer.GetLemmingLayer: TBitmap32;
 begin
@@ -424,11 +451,6 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawSpecialBitmap(Dst: TBitmap32; Spec: TBitmaps; Inv: Boolean = false);
-begin
-
-end;
-
 procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
 {-------------------------------------------------------------------------------
   Draws a interactive object
@@ -643,15 +665,15 @@ begin
   TempRect.Right := fAni.MetaLemmingAnimations[a].Width-1;
   TempRect.Bottom := fAni.MetaLemmingAnimations[a].Height;
   TempBmp.DrawMode := dmCustom;
-  if Z then
+  (*if Z then
     TempBmp.OnPixelCombine := CombineLemFrameZombie
     else
-    TempBmp.OnPixelCombine := CombineLemFrame;
+    TempBmp.OnPixelCombine := CombineLemFrame;*)
   TempBmp.DrawTo(Dst, tx, ty, TempRect);
   TempBmp.Free;
 end;
 
-procedure TRenderer.CombineLemFrame(F: TColor32; var B: TColor32; M: TColor32);
+(*procedure TRenderer.CombineLemFrame(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F and $FFFFFF <> 0 then
     B := F;
@@ -662,36 +684,7 @@ begin
   if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
     F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
   if F <> 0 then B := F;
-end;
-
-procedure TRenderer.EraseObject(Dst: TBitmap32; O: TInteractiveObject; aOriginal: TBitmap32);
-{-------------------------------------------------------------------------------
-  Draws a interactive object
-  o Dst = the targetbitmap
-  o O = the object
-  o aOriginal = if specified then first a part of this bitmap (world when playing)
-    is copied to Dst to restore
--------------------------------------------------------------------------------}
-var
-  SrcRect, DstRect, R: TRect;
-  MO: TMetaObject;
-  //Src: TBitmap32;
-begin
-  if aOriginal = nil then
-    Exit;
-
-  MO := FindMetaObject(O).Meta;
-  //ObjectBitmapItems.List^[O.Identifier];
-
-  SrcRect := Rect(0, 0, MO.Width, MO.Height);
-  DstRect := SrcRect;
-  DstRect := ZeroTopLeftRect(DstRect);
-  OffsetRect(DstRect, O.LastDrawX, O.LastDrawY);
-
-  IntersectRect(R, DstRect, aOriginal.BoundsRect); // oops important!
-  aOriginal.DrawTo(Dst, R, R);
-end;
-
+end;*)
 
 constructor TRenderer.Create;
 begin
@@ -702,6 +695,8 @@ begin
   fLayers := TRenderBitmaps.Create;
   fPhysicsMap := TBitmap32.Create;
   fBgColor := $00000000;
+  fAni := TBaseDosAnimationSet.Create;
+  fRecolorer := TRecolorImage.Create;
 end;
 
 destructor TRenderer.Destroy;
@@ -711,7 +706,8 @@ begin
   fTheme.Free;
   fLayers.Free;
   fPhysicsMap.Free;
-  if fAni <> nil then fAni.Free;
+  fRecolorer.Free;
+  fAni.Free;
   inherited Destroy;
 end;
 
@@ -968,9 +964,8 @@ begin
   for i := 8 to 15 do
     Pal[i] := fTheme.ParticleColors[i-8];
 
-  if fAni <> nil then fAni.Free;
-  fAni := TBaseDosAnimationSet.Create;
   fAni.ClearData;
+  fAni.LemmingPrefix := 'lemming'; // hardcoded for now
   fAni.AnimationPalette := Pal;
   fAni.MainDataFile := 'main.dat';
   fAni.ReadMetaData;

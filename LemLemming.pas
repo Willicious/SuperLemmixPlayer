@@ -11,6 +11,8 @@ uses
 
 type
 TLemming = class
+  private
+    function CheckForPermanentSkills: Boolean;
   public
   { misc sized }
     LemEraseRect                  : TRect; // the rectangle of the last drawaction (can include space for countdown digits)
@@ -65,6 +67,8 @@ TLemming = class
     function GetLocationBounds: TRect; // rect in world
     function GetFrameBounds: TRect; // rect from animation bitmap
     function GetCountDownDigitBounds: TRect; // countdown
+
+    property HasPermanentSkills: Boolean read CheckForPermanentSkills;
   end;
 
   TLemmingList = class(TObjectList)
@@ -81,6 +85,11 @@ TLemming = class
 implementation
 
 { TLemming }
+
+function TLemming.CheckForPermanentSkills: Boolean;
+begin
+  Result := (LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsMechanic);
+end;
 
 function TLemming.GetCountDownDigitBounds: TRect;
 begin
