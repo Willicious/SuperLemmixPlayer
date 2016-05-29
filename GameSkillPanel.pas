@@ -1043,7 +1043,7 @@ var
   SrcRect : TRect;
 begin
   Dx := 208;
-  //if Map.Width < 104 then Dx := Dx + (52 - (Map.Width div 2));
+  if Map.Width < 104 then Dx := Dx + (52 - (Map.Width div 2));
   SrcRect := Rect(0, 0, 104, 20);
 
   if Parent <> nil then

@@ -137,6 +137,10 @@ type
     procedure RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
 
+    // Minimap
+    procedure RenderMinimap(Dst: TBitmap32; aLemmings: TLemmingList = nil);
+    procedure CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
+
     procedure Highlight(World: TBitmap32; M: TColor32);
 
     property PhysicsMap: TBitmap32 read fPhysicsMap;
@@ -153,6 +157,44 @@ uses
   UTools;
 
 { TRenderer }
+
+// Minimap drawing
+
+procedure TRenderer.RenderMinimap(Dst: TBitmap32; aLemmings: TLemmingList = nil);
+var
+  OldCombine: TPixelCombineEvent;
+  OldMode: TDrawMode;
+
+  i: Integer;
+  L: TLemming;
+begin
+  Dst.Clear(fTheme.BackgroundColor);
+  OldCombine := fPhysicsMap.OnPixelCombine;
+  OldMode := fPhysicsMap.DrawMode;
+
+  fPhysicsMap.DrawMode := dmCustom;
+  fPhysicsMap.OnPixelCombine := CombineMinimapPixels;
+
+  fPhysicsMap.DrawTo(Dst, Dst.BoundsRect, fPhysicsMap.BoundsRect);
+
+  fPhysicsMap.OnPixelCombine := OldCombine;
+  fPhysicsMap.DrawMode := OldMode;
+
+  if aLemmings = nil then Exit;
+
+  for i := 0 to aLemmings.Count-1 do
+  begin
+    L := aLemmings[i];
+    if L.LemRemoved then Continue;
+    Dst.PixelS[L.LemX div 16, L.LemY div 8] := $FF00FF00;
+  end;
+end;
+
+procedure TRenderer.CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F and PM_SOLID) <> 0 then
+    B := fTheme.MapColor or $FF000000;
+end;
 
 // Lemming Drawing
 

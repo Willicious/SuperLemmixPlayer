@@ -189,7 +189,7 @@ begin
     if not Hyper then
     begin
       SkillPanel.RefreshInfo;
-      SkillPanel.DrawMinimap(Game.MinimapBuffer);
+      SkillPanel.DrawMinimap(Game.Minimap);
       CheckResetCursor;
     end
     else begin
@@ -197,7 +197,7 @@ begin
       begin
         Game.HyperSpeedEnd;
         SkillPanel.RefreshInfo;
-        SkillPanel.DrawMinimap(Game.MinimapBuffer);
+        SkillPanel.DrawMinimap(Game.Minimap);
         CheckResetCursor;
       end;
     end;

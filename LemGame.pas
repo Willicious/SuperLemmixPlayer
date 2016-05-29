@@ -381,8 +381,6 @@ type
     //SpecialMap                 : TByteMap; // for steel and oneway
     WaterMap                   : TByteMap; // for water, so that other objects can be on it for swimmers etc to use
     ZombieMap                  : TByteMap;
-    MiniMap                    : TBitmap32; // minimap of world
-    fMinimapBuffer             : TBitmap32; // drawing buffer minimap
     fRecorder                  : TRecorder;
 
   { reference objects, mostly for easy access in the mechanics-code }
@@ -545,7 +543,6 @@ type
     procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber
 
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineMinimapWorldPixels(F: TColor32; var B: TColor32; M: TColor32);
   { internal methods }
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
@@ -702,6 +699,7 @@ type
     procedure SetOptions(const Value: TDosGameOptions);
     procedure SetSoundOpts(const Value: TGameSoundOptions);
   public
+    MiniMap                    : TBitmap32; // minimap of world  
     GameResult                     : Boolean;
     GameResultRec                  : TGameResultsRec;
     SkillButtonsDisabledWhenPaused : Boolean; // this really should move somewere else
@@ -752,7 +750,6 @@ type
     property LeavingHyperSpeed: Boolean read fLeavingHyperSpeed;
     property Level: TLevel read fLevel write fLevel;
     property CurrentScreenPosition: TPoint read fCurrentScreenPosition write fCurrentScreenPosition;
-    property MiniMapBuffer: TBitmap32 read fMiniMapBuffer;
     property Options: TDosGameOptions read fOptions write SetOptions default DOSORIG_GAMEOPTIONS;
     property Paused: Boolean read fPaused write fPaused;
     property Playing: Boolean read fPlaying write fPlaying;
@@ -1261,7 +1258,6 @@ begin
   ZombieMap      := TByteMap.Create;
   WaterMap       := TByteMap.Create;
   MiniMap        := TBitmap32.Create;
-  fMinimapBuffer := TBitmap32.Create;
   fRecorder      := TRecorder.Create(Self);
   fOptions       := DOSORIG_GAMEOPTIONS;
   SoundMgr       := TSoundMgr.Create;
@@ -1380,7 +1376,6 @@ begin
   ZombieMap.Free;
   WaterMap.Free;
   MiniMap.Free;
-  fMinimapBuffer.Free;
   fRecorder.Free;
   SoundMgr.Free;
   ExplodeMaskBmp.Free;
@@ -1965,14 +1960,6 @@ begin
   if (B and PM_SOLID = 0) and (F <> 0) then B := (B or PM_SOLID);
 end;
 
-procedure TLemmingGame.CombineMinimapWorldPixels(F: TColor32; var B: TColor32; M: TColor32);
-// copy world to minimap
-begin
-  if F and PM_SOLID <> 0 then
-    B := Renderer.Theme.MapColor
-  else
-    B := Renderer.BackgroundColor;
-end;
 
 
 function TLemmingGame.HasPixelAt(X, Y: Integer): Boolean;
@@ -2912,29 +2899,10 @@ end;
 
 
 procedure TLemmingGame.InitializeMiniMap;
-{-------------------------------------------------------------------------------
-  Put the terrainpixels in the minimap. Copy them (scaled) from the worldbitmap.
-  During the game the minimap will be updated like the world-bitmap gets updated.
-  The lemming-pixels are not drawn in the minimap: these are drawn in the
-  MiniMapBuffer.
-------------------------------------------------------------------------------}
-var
-  OldCombine: TPixelCombineEvent;
-  OldMode: TDrawMode;
-  SrcRect, DstRect: TRect;
 begin
+  // The renderer handles most of the work here now.
   Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
-  Minimap.Clear(0);
-  OldCombine := PhysicsMap.OnPixelCombine;
-  OldMode := PhysicsMap.DrawMode;
-  PhysicsMap.DrawMode := dmCustom;
-  PhysicsMap.OnPixelCombine := CombineMinimapWorldPixels;
-  SrcRect := PhysicsMap.BoundsRect;
-  DstRect := Rect(0, 0, PhysicsMap.Width div 16, PhysicsMap.Height div 8);
-//  OffsetRect(DstRect, 1, 0);
-  PhysicsMap.DrawTo(Minimap, DstRect, SrcRect);
-  PhysicsMap.OnPixelCombine := OldCombine;
-  PhysicsMap.DrawMode := OldMode;
+  fRenderer.RenderMinimap(Minimap, LemmingList);
 end;
 
 function TLemmingGame.GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
@@ -3681,31 +3649,7 @@ begin
     Exit;
 
   fRenderer.DrawLemmings(LemmingList, fLemSelected);
-
-  if Minimap.Width < DOS_MINIMAP_WIDTH then
-  begin
-    fMinimapBuffer.SetSize(DOS_MINIMAP_WIDTH, Minimap.Height);
-    fMinimapBuffer.Clear(Renderer.BackgroundColor);
-    Xo := 52-(Minimap.Width div 2);
-    Minimap.DrawTo(fMinimapBuffer, Xo, 0);
-  end else begin
-    Xo := 0;
-    fMinimapBuffer.Assign(Minimap);
-  end;
-
-  // Draw all existing lemmings, except the selected one
-  for iLemming := 0 to LemmingList.Count - 1 do
-  begin
-    L := LemmingList[iLemming];
-
-    if not L.LemRemoved then
-    begin
-      fMinimapBuffer.PixelS[(L.LemX div 16) + Xo, L.LemY div 8] := Color32(0, 255, 000);
-    end;
-
-    (*if L.LemParticleTimer > 1 then
-      DrawParticles(L, False);*)
-  end;
+  if not fHyperSpeed then InitializeMinimap;
 
   // If paused, update screen
   if Paused then
