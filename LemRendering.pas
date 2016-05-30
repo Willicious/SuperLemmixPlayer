@@ -295,6 +295,7 @@ end;
 procedure TRenderer.DrawLevel(aDst: TBitmap32);
 begin
   ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
+  fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(aDst);
 end;
 
@@ -669,7 +670,7 @@ begin
     if not Inf.IsOnlyOnTerrain then Continue;
     ProcessDrawFrame(rlOnTerrainObjects);
   end;
-  FixLayer(rlOnTerrainObjects, PM_SOLID);
+  //FixLayer(rlOnTerrainObjects, PM_SOLID);
 
   // Draw one-way arrows
   fLayers[rlOneWayArrows].Clear(0);
@@ -679,7 +680,7 @@ begin
     if not (Inf.TriggerEffect in [7, 8, 19]) then Continue;
     ProcessDrawFrame(rlOneWayArrows);
   end;
-  FixLayer(rlOneWayArrows, PM_ONEWAY);
+  //FixLayer(rlOneWayArrows, PM_ONEWAY);
 
   // Draw regular objects
   fLayers[rlObjectsHigh].Clear(0);
@@ -925,6 +926,7 @@ procedure TRenderer.RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly:
 // DoObjects is only true if RenderWorld is called from the Preview Screen!
 var
   i: Integer;
+  dy: Integer;
 
   Bmp: TBitmap32;
 
@@ -933,10 +935,14 @@ var
 
   Ter: TTerrain;
   TRec: TTerrainRecord;
+
+  L: TLemming;
 begin
   fBgColor := Theme.BackgroundColor and $FFFFFF;
 
   if Inf.Level = nil then Exit;
+
+  RenderPhysicsMap;
 
   with Inf do
   begin
@@ -968,10 +974,32 @@ begin
         begin
           Obj := Level.InteractiveObjects[i];
           if Obj.DrawingFlags and odf_NoOverwrite = 0 then Continue;
+          if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
           ORec := FindMetaObject(Obj);
           if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
 
           DrawObject(fLayers[rlObjectsLow], Obj, ORec.Meta.PreviewFrameIndex);
+        end;
+
+      with fLayers[rlOnTerrainObjects] do
+        for i := 0 to Level.InteractiveObjects.Count-1 do
+        begin
+          Obj := Level.InteractiveObjects[i];
+          if Obj.DrawingFlags and odf_OnlyOnTerrain = 0 then Continue;
+          ORec := FindMetaObject(Obj);
+          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
+
+          DrawObject(fLayers[rlOnTerrainObjects], Obj, ORec.Meta.PreviewFrameIndex);
+        end;
+
+      with fLayers[rlOneWayArrows] do
+        for i := 0 to Level.InteractiveObjects.Count-1 do
+        begin
+          Obj := Level.InteractiveObjects[i];
+          ORec := FindMetaObject(Obj);
+          if not (ORec.Meta.TriggerEffect in [7, 8, 19]) then Continue;
+
+          DrawObject(fLayers[rlOneWayArrows], Obj, ORec.Meta.PreviewFrameIndex);
         end;
 
       with fLayers[rlObjectsHigh] do
@@ -979,12 +1007,14 @@ begin
         begin
           Obj := Level.InteractiveObjects[i];
           if Obj.DrawingFlags and odf_NoOverwrite <> 0 then Continue;
+          if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
           ORec := FindMetaObject(Obj);
           if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
 
           DrawObject(fLayers[rlObjectsHigh], Obj, ORec.Meta.PreviewFrameIndex);
         end;
 
+      L := TLemming.Create;
       with fLayers[rlLemmings] do
         for i := 0 to Level.InteractiveObjects.Count-1 do
         begin
@@ -992,11 +1022,33 @@ begin
           ORec := FindMetaObject(Obj);
           if ORec.Meta.TriggerEffect <> 13 then Continue;
 
-          if Obj.TarLev and 64 = 0 then
-            DrawLemming(fLayers[rlLemmings], Obj)
-          else
-            DrawLemming(fLayers[rlLemmings], Obj, true);
+          with L do
+          begin
+            LemX := Obj.Left + ORec.Meta.TriggerLeft;
+            LemY := Obj.Top + ORec.Meta.TriggerTop;
+            if Obj.DrawingFlags and odf_FlipLem <> 0 then
+              LemDx := -1
+            else
+              LemDx := 1;
+
+            LemIsClimber  := (Obj.TarLev and $01 <> 0);
+            LemIsSwimmer  := (Obj.TarLev and $02 <> 0);
+            LemIsFloater  := (Obj.TarLev and $04 <> 0);
+            LemIsGlider   := (Obj.TarLev and $08 <> 0);
+            LemIsMechanic := (Obj.TarLev and $10 <> 0);
+            LemIsZombie   := (Obj.TarLev and $40 <> 0);
+
+            if (fPhysicsMap.PixelS[LemX, LemY] and PM_SOLID = 0) then
+              LemAction := baFalling
+            else if (Obj.TarLev and $20 <> 0) then
+              LemAction := baBlocking
+            else
+              LemAction := baWalking;
+          end;
+
+          DrawThisLemming(L);
         end;
+      L.Free;
     end;
 
     with fLayers[rlTerrain] do
@@ -1013,6 +1065,7 @@ begin
   end; // with Inf
 
   World.SetSize(fLayers.Width, fLayers.Height);
+  fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(World);
 
 end;

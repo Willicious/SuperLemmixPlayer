@@ -1536,7 +1536,7 @@ begin
   //World.SetSize(Level.Info.Width, Level.Info.Height);
   //SteelWorld.SetSize(Level.Info.Width, Level.Info.Height);
 
-  Renderer.RenderPhysicsMap;
+  //Renderer.RenderPhysicsMap;
   PhysicsMap := Renderer.PhysicsMap;
   PhysicsMap.SaveToFile(AppPath + 'physics.bmp');
 

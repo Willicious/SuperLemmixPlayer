@@ -29,8 +29,11 @@ type
   private
     fWidth: Integer;
     fHeight: Integer;
+    fPhysicsMap: TBitmap32;
     function GetItem(Index: TRenderLayer): TBitmap32;
     procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
   protected
   public
     constructor Create;
@@ -40,6 +43,7 @@ type
     property List;
     property Width: Integer read fWidth;
     property Height: Integer read fHeight;
+    property PhysicsMap: TBitmap32 write fPhysicsMap;
   published
   end;
 
@@ -320,6 +324,16 @@ begin
   //BlendReg(C, B);
 end;
 
+procedure TRenderBitmaps.CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F and $00000001) = 0 then B := 0;
+end;
+
+procedure TRenderBitmaps.CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F and $00000004) = 0 then B := 0;
+end;
+
 function TRenderBitmaps.GetItem(Index: TRenderLayer): TBitmap32;
 begin
   Result := inherited Get(Integer(Index));
@@ -345,6 +359,17 @@ begin
   aDst.BeginUpdate;
   aDst.Clear;
   //aDst.SetSize(Width, Height); //not sure if we really want to do this
+
+  // Tidy up the Only On Terrain and One Way Walls layers
+  if fPhysicsMap <> nil then
+  begin
+    fPhysicsMap.DrawMode := dmCustom;
+    fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyOnTerrain;
+    fPhysicsMap.DrawTo(Items[rlOnTerrainObjects]);
+    fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
+    fPhysicsMap.DrawTo(Items[rlOneWayArrows]);
+  end;
+
   for i := Low(TRenderLayer) to High(TRenderLayer) do
   begin
     {if i in [rlBackground,
