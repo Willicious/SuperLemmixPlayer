@@ -5173,7 +5173,7 @@ begin
   // Get new priority lemming including lems that cannot receive the skill
   HitCount := GetPriorityLemming(L, baNone, CursorPoint);
 
-  if (L <> OldLemSelected) or not Assigned(L) then
+  if L <> OldLemSelected then
   begin
     fLemSelected := L;
     // redraw all lemmings to change color of selected lem
