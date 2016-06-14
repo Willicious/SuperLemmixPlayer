@@ -124,6 +124,9 @@ var
   Parser: TNeoLemmixParser;
   Line: TParserLine;
   ObjLen, TerLen: Integer;
+  NewRec: TTranslationItem;
+  GotFirst: Boolean;
+  CurrentlyObject: Boolean;
 
   procedure ExtendTerrain;
   begin
@@ -142,17 +145,64 @@ var
     SetLength(fObjectArray, ObjLen);
     SetLength(fTerrainArray, TerLen);
   end;
+
+  procedure ClearTemp;
+  begin
+    if GotFirst then
+    begin
+      if CurrentlyObject then
+      begin
+        ExtendObject;
+        fObjectArray[ObjLen] := NewRec;
+        Inc(ObjLen);
+      end else begin
+        ExtendTerrain;
+        fTerrainArray[TerLen] := NewRec;
+        Inc(TerLen);
+      end;
+    end else
+      GotFirst := true;
+    NewRec.SrcName := '';
+    NewRec.DstName := '';
+    NewRec.OffsetX := 0;
+    NewRec.OffsetY := 0;
+  end;
 begin
   Parser := TNeoLemmixParser.Create;
   ObjLen := 0;
   TerLen := 0;
+  GotFirst := false;
   try
     Parser.LoadFromFile(aFilename);
     repeat
-      Line := Parser.NextLine
+      Line := Parser.NextLine;
 
-      if Line.
+      if Line.Keyword = 'TERRAIN' then
+      begin
+        ClearTemp;
+        CurrentlyObject := false;
+        NewRec.SrcName := 'T' + IntToStr(Line.Numeric);
+      end;
+
+      if Line.Keyword = 'OBJECT' then
+      begin
+        ClearTemp;
+        CurrentlyObject := true;
+        NewRec.SrcName := 'O' + IntToStr(Line.Numeric);
+      end;
+
+      if Line.Keyword = 'NAME' then
+        NewRec.DstName := Line.Value;
+
+      if Line.Keyword = 'OFFSETX' then
+        NewRec.OffsetX := Line.Numeric;
+
+      if Line.Keyword = 'OFFSETY' then
+        NewRec.OffsetY := Line.Numeric;
+        
     until Line.Keyword = '';
+
+    ClearTemp; // flush the last one!
   finally
     TrimArrays;
     Parser.Free;
