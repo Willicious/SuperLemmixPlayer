@@ -10,6 +10,7 @@ uses
   Dialogs,
   UMisc,
   Math,
+  LemNeoParser,
   LemDosMainDat,
   LemTerrain,
   LemInteractiveObject,
@@ -70,6 +71,24 @@ type
   published
   end;
 
+  TTranslationItem = record
+    SrcName: String;
+    DstName: String;
+    OffsetX: Integer;
+    OffsetY: Integer;
+  end;
+
+  TTranslationTable = class
+    private
+      fTerrainArray: array of TTranslationItem;
+      fObjectArray: array of TTranslationItem;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      procedure LoadFromFile(aFilename: String);
+      procedure Apply(aLevel: TLevel);
+  end;
+
   TLVLLoader = class
   private
     class procedure UpgradeFormat(var Buf: TNeoLVLRec);
@@ -83,6 +102,62 @@ type
   end;
 
 implementation
+
+{ TTranslationTable }
+
+constructor TTranslationTable.Create;
+begin
+  inherited;
+  SetLength(fTerrainArray, 0);
+  SetLength(fObjectArray, 0);
+end;
+
+destructor TTranslationTable.Destroy;
+begin
+  SetLength(fTerrainArray, 0);
+  SetLength(fObjectArray, 0);
+  inherited;
+end;
+
+procedure TTranslationTable.LoadFromFile(aFilename: String);
+var
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+  ObjLen, TerLen: Integer;
+
+  procedure ExtendTerrain;
+  begin
+    if Length(fTerrainArray) < TerLen then Exit;
+    SetLength(fTerrainArray, TerLen + 50);
+  end;
+
+  procedure ExtendObject;
+  begin
+    if Length(fObjectArray) < ObjLen then Exit;
+    SetLength(fObjectArray, ObjLen + 50);
+  end;
+
+  procedure TrimArrays;
+  begin
+    SetLength(fObjectArray, ObjLen);
+    SetLength(fTerrainArray, TerLen);
+  end;
+begin
+  Parser := TNeoLemmixParser.Create;
+  ObjLen := 0;
+  TerLen := 0;
+  try
+    Parser.LoadFromFile(aFilename);
+    repeat
+      Line := Parser.NextLine
+
+      if Line.
+    until Line.Keyword = '';
+  finally
+    TrimArrays;
+    Parser.Free;
+  end;
+end;
 
 { TStyleName }
 
