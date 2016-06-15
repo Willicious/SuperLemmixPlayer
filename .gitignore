@@ -1,4 +1,13 @@
-bin/
+bin/styles/*.dat
+bin/*.lvl
+bin/*.nxp
+bin/*.ini
+bin/*.nxsv
+bin/*.png
+bin/*.bmp
+!bin/gfx/*.png
+!bin/styles/*.png
+bin/packs/*
 *.~*
 *.dcu
 *.exe

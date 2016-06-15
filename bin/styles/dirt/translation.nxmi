@@ -1,0 +1,194 @@
+# Translation table
+
+TERRAIN 0
+  NAME clump_01
+
+TERRAIN 1
+  NAME clump_02
+
+TERRAIN 2
+  NAME clump_03
+
+TERRAIN 3
+  NAME clump_04
+
+TERRAIN 4
+  NAME clump_05
+
+TERRAIN 5
+  NAME clump_06
+
+TERRAIN 6
+  NAME grass_01
+
+TERRAIN 7
+  NAME grass_02
+
+TERRAIN 8
+  NAME grass_03
+
+TERRAIN 9
+  NAME grass_04
+
+TERRAIN 10
+  NAME clump_07
+
+TERRAIN 11
+  NAME rock_01
+
+TERRAIN 12
+  NAME rock_02
+
+TERRAIN 13
+  NAME rock_03
+
+TERRAIN 14
+  NAME rock_04
+
+TERRAIN 15
+  NAME rock_05
+
+TERRAIN 16
+  NAME circle_big
+
+TERRAIN 17
+  NAME circle_small
+
+TERRAIN 18
+  NAME bones_01
+
+TERRAIN 19
+  NAME clump_08
+
+TERRAIN 20
+  NAME clump_09
+
+TERRAIN 21
+  NAME bones_02
+
+TERRAIN 22
+  NAME bones_03
+
+TERRAIN 23
+  NAME steel_large
+
+TERRAIN 24
+  NAME steel_tall
+
+TERRAIN 25
+  NAME steel_wide
+
+TERRAIN 26
+  NAME steel_small
+
+TERRAIN 27
+  NAME clump_10
+
+TERRAIN 28
+  NAME treetrunk
+
+TERRAIN 29
+  NAME bridge_4x
+
+TERRAIN 30
+  NAME bridge_2x
+
+TERRAIN 31
+  NAME bridge_1x
+
+TERRAIN 32
+  NAME roots_01
+
+TERRAIN 33
+  NAME roots_02
+
+TERRAIN 34
+  NAME roots_03
+
+TERRAIN 35
+  NAME roots_04
+
+TERRAIN 36
+  NAME moss_01
+
+TERRAIN 37
+  NAME moss_02
+
+TERRAIN 38
+  NAME moss_03
+
+TERRAIN 39
+  NAME moss_04
+
+TERRAIN 40
+  NAME moss_05
+
+TERRAIN 41
+  NAME moss_06
+
+TERRAIN 42
+  NAME diag_bridge_01
+
+TERRAIN 43
+  NAME diag_bridge_02
+
+TERRAIN 44
+  NAME well
+
+TERRAIN 45
+  NAME sign_01
+
+TERRAIN 46
+  NAME sign_02
+
+TERRAIN 47
+  NAME cross
+
+TERRAIN 48
+  NAME gravestone
+
+TERRAIN 49
+  NAME stonepile
+
+OBJECT 0
+  NAME exit
+
+OBJECT 1
+  NAME window
+
+OBJECT 2
+  NAME flag_green
+
+OBJECT 3
+  NAME owa_left
+
+OBJECT 4
+  NAME owa_right
+
+OBJECT 5
+  NAME water
+
+OBJECT 6
+  NAME beartrap
+
+OBJECT 7
+  NAME exit_top
+
+OBJECT 8
+  NAME bouldertrap
+
+OBJECT 9
+  NAME flag_blue
+
+OBJECT 10
+  NAME tentontrap
+
+OBJECT 11
+  NAME preplaced
+
+OBJECT 12
+  NAME pickup
+
+OBJECT 13
+  NAME secret
+
