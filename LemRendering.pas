@@ -740,7 +740,7 @@ begin
   // TESTING - draw helpers
   fLayers[rlObjectHelpers].Clear(0);
   for i := 0 to ObjectInfos.Count-1 do
-    DrawObjectHelpers(nil, ObjectInfos[i].Obj);
+    DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i].Obj);
 
   Src.Free;
 end;
@@ -838,10 +838,7 @@ begin
   fAni := TBaseDosAnimationSet.Create;
   fRecolorer := TRecolorImage.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
-  begin
-    fHelperImages[i] := TBitmap32.Create;
-    TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
-  end;
+    fHelperImages[i] := TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
 end;
 
 destructor TRenderer.Destroy;
@@ -1171,7 +1168,6 @@ begin
   fAni.MainDataFile := 'main.dat';
   fAni.ReadMetaData;
   fAni.ReadData;
-
 end;
 
 procedure TRenderer.Highlight(World: TBitmap32; M: TColor32);
