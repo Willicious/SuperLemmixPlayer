@@ -118,11 +118,13 @@ type
 
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
-    // Map rendering
+    // Terrain rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
+
+    // Object rendering
     procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
-    procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
-    procedure DrawObjectHelpers(Dst: TBitmap32; O: TInteractiveObject);
+    procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList; MousePoint: TPoint);
+    procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 
     // Lemming rendering
     procedure DrawLemmings(aLemmings: TLemmingList; SelectedLemming: TLemming = nil);
@@ -596,17 +598,17 @@ begin
   O.LastDrawY := O.Top;
 end;
 
-procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; O: TInteractiveObject);
+procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 var
-  ORec: TObjectRecord;
+  O: TInteractiveObject;
   MO: TMetaObject;
 
   DrawX, DrawY: Integer;
 begin
   Dst := fLayers[rlObjectHelpers]; // for now
 
-  ORec := FindMetaObject(O);
-  MO := ORec.Meta;
+  O := Obj.Obj;
+  MO := Obj.MetaObj;
 
   // We don't question here whether the conditions are met to draw the helper or
   // not. We assume the calling routine has already done this, and we just draw it.
@@ -631,17 +633,19 @@ begin
 
   // Teleporters and Receivers
   if MO.TriggerEffect = 11 then
-    fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY);
+    fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
   if MO.TriggerEffect = 12 then
-    fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
+    fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
 end;
 
-procedure TRenderer.DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
+procedure TRenderer.DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList; MousePoint: TPoint);
 var
   SrcRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
   Src: TBitmap32;
-  DrawFrame, i: Integer;
+  DrawFrame: Integer;
+  i, i2: Integer;
+  UsePoint: Boolean;
 
   procedure ProcessDrawFrame(aLayer: TRenderLayer);
   begin
@@ -684,6 +688,8 @@ var
   end;
 begin
   Src := TBitmap32.Create;
+
+  UsePoint := true; //PtInRect(Dst.BoundsRect, MousePoint);
 
   // Draw moving backgrounds
   fLayers[rlBackgroundObjects].Clear(0);
@@ -737,10 +743,33 @@ begin
     ProcessDrawFrame(rlObjectsHigh);
   end;
 
-  // TESTING - draw helpers
+  // Draw object helpers
   fLayers[rlObjectHelpers].Clear(0);
-  for i := 0 to ObjectInfos.Count-1 do
-    DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i].Obj);
+  if UsePoint then
+  begin
+    for i := 0 to ObjectInfos.Count-1 do
+    begin
+      // Check if this object is relevant
+      if not PtInRect(Rect(ObjectInfos[i].Left, ObjectInfos[i].Top,
+                           ObjectInfos[i].Left + ObjectInfos[i].Width - 1, ObjectInfos[i].Top + ObjectInfos[i].Height - 1),
+                      MousePoint) then
+        Continue;
+
+      if ObjectInfos[i].IsDisabled then Continue;
+
+      // otherwise, draw its helper
+      DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i]);
+
+      // if it's a teleporter or receiver, draw all paired helpers too
+      if (ObjectInfos[i].TriggerEffect in [11, 12]) and (ObjectInfos[i].PairingId <> -1) then
+        for i2 := 0 to ObjectInfos.Count-1 do
+        begin
+          if i = i2 then Continue;
+          if (ObjectInfos[i2].PairingId = ObjectInfos[i].PairingId) then
+            DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
+        end;
+    end;
+  end;
 
   Src.Free;
 end;
@@ -945,6 +974,8 @@ var
 begin
   if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
   Bmp := TBitmap32.Create;
+
+  fPhysicsMap.Clear(0);
 
   with Inf.Level do
   begin

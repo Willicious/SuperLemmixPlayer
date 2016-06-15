@@ -18,6 +18,7 @@ type
     sTriggerEffect  : Integer;
     sIsDisabled     : Boolean;
     sReceiverId     : Integer;
+    sPairingId      : Integer;
     sZombieMode     : Boolean;
 
     function GetTriggerRect: TRect;
@@ -59,6 +60,7 @@ type
     property TriggerEffect: Integer read sTriggerEffect;
     property IsDisabled: Boolean read sIsDisabled write SetIsDisabled;
     property ReceiverId: Integer read sReceiverId;
+    property PairingId: Integer read sPairingId;  // Teleporters and receivers that are matched have same value; used for helper icons only (otherwise use ReceiverID)
     property SkillType: Integer read GetSkillType;
     property IsOnlyOnTerrain: Boolean read GetIsOnlyOnTerrain;  // ... and 1
     property IsUpsideDown: Boolean read GetIsUpsideDown;        // ... and 2
@@ -366,7 +368,17 @@ procedure TInteractiveObjectInfoList.FindReceiverID;
 var
   i, TestId: Integer;
   Inf, TestInf: TInteractiveObjectInfo;
+  PairCount: Integer;
+  IsReceiverUsed: array of Boolean;
 begin
+  PairCount := 0;
+  SetLength(IsReceiverUsed, Count);
+  for i := 0 to Count-1 do
+  begin
+    IsReceiverUsed[i] := false;
+    Items[i].sPairingId := -1;
+  end;
+
   for i := 0 to Count - 1 do
   begin
     Inf := List^[i];
@@ -384,8 +396,17 @@ begin
       // If TestID = i then there is no receiver and we disable the teleporter
       if i = TestID then
         Inf.IsDisabled := True
-      else
+      else begin
         Inf.sReceiverId := TestID;
+        if IsReceiverUsed[TestID] then
+          Inf.sPairingId := TestInf.sPairingId
+        else begin
+          Inf.sPairingId := PairCount;
+          TestInf.sPairingId := PairCount;
+          IsReceiverUsed[TestID] := true;
+          Inc(PairCount);
+        end;
+      end;
     end; // end test whether object is teleporter
   end; // next i
 end;

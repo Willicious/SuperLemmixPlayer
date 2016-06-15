@@ -3623,7 +3623,7 @@ begin
     Exit;
 
   // Main stuff comes here!!!
-  Renderer.DrawAllObjects(fTargetBitmap, ObjectInfos);
+  Renderer.DrawAllObjects(fTargetBitmap, ObjectInfos, CursorPoint);
 end;
 
 procedure TLemmingGame.EraseLemmings;

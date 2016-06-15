@@ -99,13 +99,41 @@ type
     property Inverted: TBitmap32 read fInverted;
   end;
 
-  THelperIcon = (hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation);
+  THelperIcon = (hpi_A, hpi_B, hpi_C, hpi_D, hpi_E, hpi_F, hpi_G, hpi_H, hpi_I, hpi_J, hpi_K, hpi_L, hpi_M,
+                 hpi_N, hpi_O, hpi_P, hpi_Q, hpi_R, hpi_S, hpi_T, hpi_U, hpi_V, hpi_W, hpi_X, hpi_Y, hpi_Z,
+                 hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation);
 
   THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
 
 const
   HelperImageFilenames: array[Low(THelperIcon)..High(THelperIcon)] of String =
-                             ('left_arrow.png',
+                             ('ltr_a.png',
+                              'ltr_b.png',
+                              'ltr_c.png',
+                              'ltr_d.png',
+                              'ltr_e.png',
+                              'ltr_f.png',
+                              'ltr_g.png',
+                              'ltr_h.png',
+                              'ltr_i.png',
+                              'ltr_j.png',
+                              'ltr_k.png',
+                              'ltr_l.png',
+                              'ltr_m.png',
+                              'ltr_n.png',
+                              'ltr_o.png',
+                              'ltr_p.png',
+                              'ltr_q.png',
+                              'ltr_r.png',
+                              'ltr_s.png',
+                              'ltr_t.png',
+                              'ltr_u.png',
+                              'ltr_v.png',
+                              'ltr_w.png',
+                              'ltr_x.png',
+                              'ltr_y.png',
+                              'ltr_z.png',
+                              'left_arrow.png',
                               'right_arrow.png',
                               'up_arrow.png',
                               'down_arrow.png',
