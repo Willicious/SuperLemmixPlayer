@@ -28,6 +28,7 @@ uses
   GR32, GR32_LowLevel, GR32_Blend,
   UMisc,
   SysUtils,
+  PngInterface,
   LemRecolorSprites,
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
   LemDosBmp, LemDosStructures,
@@ -78,6 +79,8 @@ type
 
     fPieceManager: TNeoPieceManager;
 
+    fHelperImages: THelperImages;
+
     fWorld: TBitmap32;
 
     fAni: TBaseDosAnimationSet;
@@ -119,6 +122,7 @@ type
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
     procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
     procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
+    procedure DrawObjectHelpers(Dst: TBitmap32; O: TInteractiveObject);
 
     // Lemming rendering
     procedure DrawLemmings(aLemmings: TLemmingList; SelectedLemming: TLemming = nil);
@@ -592,6 +596,46 @@ begin
   O.LastDrawY := O.Top;
 end;
 
+procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; O: TInteractiveObject);
+var
+  ORec: TObjectRecord;
+  MO: TMetaObject;
+
+  DrawX, DrawY: Integer;
+begin
+  Dst := fLayers[rlObjectHelpers]; // for now
+
+  ORec := FindMetaObject(O);
+  MO := ORec.Meta;
+
+  // We don't question here whether the conditions are met to draw the helper or
+  // not. We assume the calling routine has already done this, and we just draw it.
+  // We do, however, determine which ones to draw here.
+
+  DrawX := O.Left + (MO.Width div 2) - 4;
+  DrawY := O.Top - 9; // much simpler
+
+  // Windows
+  if MO.TriggerEffect = 23 then
+  begin
+    if (O.TarLev and $68) <> 0 then DrawX := DrawX - 4;
+
+    if (O.DrawingFlags and odf_FlipLem) = 0 then
+      fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX, DrawY)
+    else
+      fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX, DrawY);
+
+    if (O.TarLev and $68) <> 0 then
+      fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX+8, DrawY);
+  end;
+
+  // Teleporters and Receivers
+  if MO.TriggerEffect = 11 then
+    fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY);
+  if MO.TriggerEffect = 12 then
+    fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
+end;
+
 procedure TRenderer.DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
 var
   SrcRect, DstRect: TRect;
@@ -693,6 +737,11 @@ begin
     ProcessDrawFrame(rlObjectsHigh);
   end;
 
+  // TESTING - draw helpers
+  fLayers[rlObjectHelpers].Clear(0);
+  for i := 0 to ObjectInfos.Count-1 do
+    DrawObjectHelpers(nil, ObjectInfos[i].Obj);
+
   Src.Free;
 end;
 
@@ -776,6 +825,8 @@ begin
 end;*)
 
 constructor TRenderer.Create;
+var
+  i: THelperIcon;
 begin
   inherited Create;
   TempBitmap := TBitmap32.Create;
@@ -786,9 +837,16 @@ begin
   fBgColor := $00000000;
   fAni := TBaseDosAnimationSet.Create;
   fRecolorer := TRecolorImage.Create;
+  for i := Low(THelperIcon) to High(THelperIcon) do
+  begin
+    fHelperImages[i] := TBitmap32.Create;
+    TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
+  end;
 end;
 
 destructor TRenderer.Destroy;
+var
+  i: THelperIcon;
 begin
   TempBitmap.Free;
   fPieceManager.Free;
@@ -797,6 +855,8 @@ begin
   fPhysicsMap.Free;
   fRecolorer.Free;
   fAni.Free;
+  for i := Low(THelperIcon) to High(THelperIcon) do
+    fHelperImages[i].Free;
   inherited Destroy;
 end;
 

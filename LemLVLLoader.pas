@@ -209,6 +209,11 @@ begin
   end;
 end;
 
+procedure TTranslationTable.Apply(aLevel: TLevel);
+begin
+  // just a blank for now so that it'll compile
+end;
+
 { TStyleName }
 
 constructor TStyleName.Create(aTag: ShortString; aID: Byte; aSpec: Boolean = false);

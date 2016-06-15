@@ -22,6 +22,7 @@ type
                   rlOneWayArrows,
                   rlObjectsHigh,
                   rlHighShadows,
+                  rlObjectHelpers,
                   rlParticles,
                   rlLemmings);
 
@@ -97,6 +98,18 @@ type
     destructor Destroy; override;
     property Inverted: TBitmap32 read fInverted;
   end;
+
+  THelperIcon = (hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation);
+
+  THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
+
+const
+  HelperImageFilenames: array[Low(THelperIcon)..High(THelperIcon)] of String =
+                             ('left_arrow.png',
+                              'right_arrow.png',
+                              'up_arrow.png',
+                              'down_arrow.png',
+                              'exclamation.png');
 
 implementation
 
