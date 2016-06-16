@@ -103,7 +103,7 @@ type
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
 
-    function GetLemmingLayer: TBitmap32;
+    function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
   protected
@@ -153,8 +153,8 @@ type
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
     property Theme: TNeoTheme read fTheme;
 
-    property LemmingLayer: TBitmap32 read GetLemmingLayer; // this should be replaced with having TRenderer do the lemming drawing! But for now, this is a kludgy workaround
-    property ParticleLayer: TBitmap32 read GetParticleLayer; // same
+    property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
+    property ParticleLayer: TBitmap32 read GetParticleLayer; // needs to be replaced with making TRenderer draw them
   end;
 
 implementation
@@ -288,9 +288,9 @@ begin
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 end;
 
-function TRenderer.GetLemmingLayer: TBitmap32;
+function TRenderer.GetTerrainLayer: TBitmap32;
 begin
-  Result := fLayers[rlLemmings];
+  Result := fLayers[rlTerrain];
 end;
 
 function TRenderer.GetParticleLayer: TBitmap32;

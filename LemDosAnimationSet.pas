@@ -206,8 +206,8 @@ begin
   Lem($0D5C, 'Lwalker'            ,   8, 16, 10,  19,   9,  10,   lat_Loop);
   Lem($0BE0, 'Rjumper'            ,   1, 16, 10,  19,   8,  10,   lat_Loop);
   Lem($193C, 'Ljumper'            ,   1, 16, 10,  19,   9,  10,   lat_Loop);
-  Lem($1AB8, 'Rdigger'            ,  16, 16, 14,  19,   8,  12,   lat_Loop);
-  Lem($1AB8, 'Ldigger'            ,  16, 16, 14,  19,   9,  12,   lat_Loop);
+  Lem($1AB8, 'Rdigger'            ,  16, 17, 14,  19,   8,  12,   lat_Loop);
+  Lem($1AB8, 'Ldigger'            ,  16, 17, 14,  19,   9,  12,   lat_Loop);
   Lem($3BF8, 'Rclimber'           ,   8, 16, 12,  19,   8,  12,   lat_Loop);
   Lem($4A38, 'Lclimber'           ,   8, 16, 12,  19,   8,  12,   lat_Loop);
   Lem($5878, 'Rdrowner'           ,  16, 16, 10,  19,   8,  10,   lat_Once);
@@ -218,8 +218,8 @@ begin
   Lem($AB98, 'Lbuilder'           ,  16, 16, 13,  19,   9,  13,   lat_Loop);
   Lem($CA78, 'Rbasher'            ,  32, 16, 10,  19,   8,  10,   lat_Loop);
   Lem($F9F8, 'Lbasher'            ,  32, 16, 10,  19,   7,  10,   lat_Loop);
-  Lem($12978, 'Rminer'            ,  24, 16, 13,  19,   8,  13,   lat_Loop);
-  Lem($157C8, 'Lminer'            ,  24, 16, 13,  19,   7,  13,   lat_Loop);
+  Lem($12978, 'Rminer'            ,  24, 17, 13,  19,   8,  13,   lat_Loop);
+  Lem($157C8, 'Lminer'            ,  24, 17, 13,  19,   7,  13,   lat_Loop);
   Lem($18618, 'Rfaller'           ,   4, 16, 10,  19,   7,  10,   lat_Loop);
   Lem($18C08, 'Lfaller'           ,   4, 16, 10,  19,   9,  10,   lat_Loop);
   Lem($191F8, 'Rfloater'       ,  17, 16, 16,  19,   7,  16,   lat_Loop);

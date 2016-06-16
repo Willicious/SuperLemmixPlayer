@@ -300,9 +300,9 @@ type
       LemmingList: TLemmingList;
       SelectedSkill: TSkillPanelButton;
       TargetBitmap: TBitmap32;
-      //World: TBitmap32;
+      World: TBitmap32;         // the visual terrain image
+      PhysicsMap: TBitmap32;    // the actual physics
       //SteelWorld: TBitmap32;
-      PhysicsMap: TBitmap32;
       ObjectMap: TByteMap;
       BlockerMap: TByteMap;
       //SpecialMap: TByteMap;
@@ -877,7 +877,7 @@ begin
   LemmingList := TLemmingList.Create(true);
   ObjectInfos := TInteractiveObjectInfoList.Create(true);
   TargetBitmap := TBitmap32.Create;
-  //World := TBitmap32.Create;
+  World := TBitmap32.Create;
   //SteelWorld := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
   ObjectMap := TByteMap.Create;
@@ -892,7 +892,7 @@ begin
   LemmingList.Free;
   ObjectInfos.Free;
   TargetBitmap.Free;
-  //World.Free;
+  World.Free;
   //SteelWorld.Free;
   PhysicsMap.Free;
   ObjectMap.Free;
@@ -1021,7 +1021,7 @@ begin
   // Simple stuff
   aState.SelectedSkill := fSelectedSkill;
   aState.TargetBitmap.Assign(fTargetBitmap);
-  //aState.World.Assign(World);
+  aState.World.Assign(fRenderer.TerrainLayer);
   //aState.SteelWorld.Assign(SteelWorld);
   aState.PhysicsMap.Assign(PhysicsMap);
   aState.ObjectMap.Assign(ObjectMap);
@@ -1094,7 +1094,7 @@ begin
     fSelectedSkill := aState.SelectedSkill;
   if not SkipTargetBitmap then  // We don't need to bother with this one if we're not loading the exact frame we want to go to
     fTargetBitmap.Assign(aState.TargetBitmap);
-  //World.Assign(aState.World);
+  fRenderer.TerrainLayer.Assign(aState.World);
   //SteelWorld.Assign(aState.SteelWorld);
   PhysicsMap.Assign(aState.PhysicsMap);
   ObjectMap.Assign(aState.ObjectMap);
