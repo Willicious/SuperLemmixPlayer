@@ -1538,7 +1538,6 @@ begin
 
   //Renderer.RenderPhysicsMap;
   PhysicsMap := Renderer.PhysicsMap;
-  PhysicsMap.SaveToFile(AppPath + 'physics.bmp');
 
   MusicSys := fGameParams.Style.MusicSystem;
   MusicFileName := GetMusicFileName;

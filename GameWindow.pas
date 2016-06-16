@@ -773,8 +773,6 @@ begin
   bmpMask := TBitmap.Create;
   bmpColor := TBitmap.Create;
 
-  //bmpMask.LoadFromFile(apppath + 'dosgamecursormask1.bmp');
-  //bmpColor.LoadFromFile(apppath+'dosgamecursor1.bmp');
   bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT_MASK');
   bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT');
 //  bmpcolor.canvas.pixels[3,8]:=clred;
@@ -816,8 +814,6 @@ begin
   bmpMask := TBitmap.Create;
   bmpColor := TBitmap.Create;
 
-//  bmpMask.LoadFromFile(apppath + 'dosgamecursormask2.bmp');
-//  bmpColor.LoadFromFile(apppath+'dosgamecursor2.bmp');
   bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT_MASK');
   bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT');
 

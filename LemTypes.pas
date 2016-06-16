@@ -607,7 +607,6 @@ begin
     BMP.SetSize(w, h);
     BMP.Clear(0);
     Src.DrawTo(BMP, Rect(0, 0, w, h), Rect(0, h*i, w, (i+1)*h));
-    BMP.SaveToFile('f' + IntToStr(i) + '.bmp');
   end;
 end;
 

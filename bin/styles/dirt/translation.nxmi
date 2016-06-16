@@ -203,6 +203,7 @@ TERRAIN 49
 OBJECT 0
   SET dirt
   NAME exit
+  OFFSETX 0
   OFFSETY -8
 
 OBJECT 1
@@ -231,7 +232,7 @@ OBJECT 6
 
 OBJECT 7
   SET dirt
-  NAME *NiL
+  NAME *nil
 
 OBJECT 8
   SET dirt
@@ -246,8 +247,10 @@ OBJECT 10
   NAME tentontrap
 
 OBJECT 11
-  SET dirt
-  NAME preplaced
+  SET default
+  NAME lemming
+  OFFSETX 0
+  OFFSETY 1
 
 OBJECT 12
   SET dirt
