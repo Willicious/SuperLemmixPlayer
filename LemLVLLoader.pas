@@ -233,6 +233,14 @@ begin
     Item := aLevel.InteractiveObjects[i];
     FindMatch(Item);
   end;
+
+  for i := aLevel.Terrains.Count-1 downto 0 do
+    if Lowercase(aLevel.Terrains[i].Piece) = '*nil' then
+      aLevel.Terrains.Delete(i);
+
+  for i := aLevel.InteractiveObjects.Count-1 downto 0 do
+    if Lowercase(aLevel.InteractiveObjects[i].Piece) = '*nil' then
+      aLevel.InteractiveObjects.Delete(i);
 end;
 
 procedure TTranslationTable.FindMatch(Item: TIdentifiedPiece);
@@ -256,6 +264,8 @@ begin
     begin
       Item.GS := TransItem.DstGS;
       Item.Piece := TransItem.DstName;
+      Item.Left := Item.Left + TransItem.OffsetX;
+      Item.Top := Item.Top + TransItem.OffsetY;
       Exit;
     end;
   end;

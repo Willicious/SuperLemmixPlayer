@@ -203,6 +203,7 @@ TERRAIN 49
 OBJECT 0
   SET dirt
   NAME exit
+  OFFSETY -8
 
 OBJECT 1
   SET dirt
@@ -230,7 +231,7 @@ OBJECT 6
 
 OBJECT 7
   SET dirt
-  NAME exit_top
+  NAME *NiL
 
 OBJECT 8
   SET dirt
