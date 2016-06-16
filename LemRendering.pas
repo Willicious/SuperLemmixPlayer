@@ -244,7 +244,7 @@ var
 
       // Compatibility kludges. These should be removed
       // and replaced with properly-modified animations.
-      if aLemming.LemAction in [baDigging, baFixing] then
+      {if aLemming.LemAction in [baDigging, baFixing] then
       begin
         Inc(Left);
         Inc(Right);
@@ -260,7 +260,7 @@ var
           Inc(Top);
           Inc(Bottom);
         end;
-      end;
+      end;}
     end;
   end;
 
@@ -1194,7 +1194,7 @@ begin
     Pal[i] := fTheme.ParticleColors[i-8];
 
   fAni.ClearData;
-  fAni.LemmingPrefix := 'lemming'; // hardcoded for now
+  fAni.LemmingPrefix := fTheme.Lemmings;
   fAni.AnimationPalette := Pal;
   fAni.MainDataFile := 'main.dat';
   fAni.ReadMetaData;
