@@ -1,194 +1,258 @@
 # Translation table
 
 TERRAIN 0
+  SET dirt
   NAME clump_01
 
 TERRAIN 1
+  SET dirt
   NAME clump_02
 
 TERRAIN 2
+  SET dirt
   NAME clump_03
 
 TERRAIN 3
+  SET dirt
   NAME clump_04
 
 TERRAIN 4
+  SET dirt
   NAME clump_05
 
 TERRAIN 5
+  SET dirt
   NAME clump_06
 
 TERRAIN 6
+  SET dirt
   NAME grass_01
 
 TERRAIN 7
+  SET dirt
   NAME grass_02
 
 TERRAIN 8
+  SET dirt
   NAME grass_03
 
 TERRAIN 9
+  SET dirt
   NAME grass_04
 
 TERRAIN 10
+  SET dirt
   NAME clump_07
 
 TERRAIN 11
+  SET dirt
   NAME rock_01
 
 TERRAIN 12
+  SET dirt
   NAME rock_02
 
 TERRAIN 13
+  SET dirt
   NAME rock_03
 
 TERRAIN 14
+  SET dirt
   NAME rock_04
 
 TERRAIN 15
+  SET dirt
   NAME rock_05
 
 TERRAIN 16
+  SET dirt
   NAME circle_big
 
 TERRAIN 17
+  SET dirt
   NAME circle_small
 
 TERRAIN 18
+  SET dirt
   NAME bones_01
 
 TERRAIN 19
+  SET dirt
   NAME clump_08
 
 TERRAIN 20
+  SET dirt
   NAME clump_09
 
 TERRAIN 21
+  SET dirt
   NAME bones_02
 
 TERRAIN 22
+  SET dirt
   NAME bones_03
 
 TERRAIN 23
+  SET dirt
   NAME steel_large
 
 TERRAIN 24
+  SET dirt
   NAME steel_tall
 
 TERRAIN 25
+  SET dirt
   NAME steel_wide
 
 TERRAIN 26
+  SET dirt
   NAME steel_small
 
 TERRAIN 27
+  SET dirt
   NAME clump_10
 
 TERRAIN 28
+  SET dirt
   NAME treetrunk
 
 TERRAIN 29
+  SET dirt
   NAME bridge_4x
 
 TERRAIN 30
+  SET dirt
   NAME bridge_2x
 
 TERRAIN 31
+  SET dirt
   NAME bridge_1x
 
 TERRAIN 32
+  SET dirt
   NAME roots_01
 
 TERRAIN 33
+  SET dirt
   NAME roots_02
 
 TERRAIN 34
+  SET dirt
   NAME roots_03
 
 TERRAIN 35
+  SET dirt
   NAME roots_04
 
 TERRAIN 36
+  SET dirt
   NAME moss_01
 
 TERRAIN 37
+  SET dirt
   NAME moss_02
 
 TERRAIN 38
+  SET dirt
   NAME moss_03
 
 TERRAIN 39
+  SET dirt
   NAME moss_04
 
 TERRAIN 40
+  SET dirt
   NAME moss_05
 
 TERRAIN 41
+  SET dirt
   NAME moss_06
 
 TERRAIN 42
+  SET dirt
   NAME diag_bridge_01
 
 TERRAIN 43
+  SET dirt
   NAME diag_bridge_02
 
 TERRAIN 44
+  SET dirt
   NAME well
 
 TERRAIN 45
+  SET dirt
   NAME sign_01
 
 TERRAIN 46
+  SET dirt
   NAME sign_02
 
 TERRAIN 47
+  SET dirt
   NAME cross
 
 TERRAIN 48
+  SET dirt
   NAME gravestone
 
 TERRAIN 49
+  SET dirt
   NAME stonepile
 
 OBJECT 0
+  SET dirt
   NAME exit
 
 OBJECT 1
+  SET dirt
   NAME window
 
 OBJECT 2
+  SET dirt
   NAME flag_green
 
 OBJECT 3
+  SET dirt
   NAME owa_left
 
 OBJECT 4
+  SET dirt
   NAME owa_right
 
 OBJECT 5
+  SET dirt
   NAME water
 
 OBJECT 6
+  SET dirt
   NAME beartrap
 
 OBJECT 7
+  SET dirt
   NAME exit_top
 
 OBJECT 8
+  SET dirt
   NAME bouldertrap
 
 OBJECT 9
+  SET dirt
   NAME flag_blue
 
 OBJECT 10
+  SET dirt
   NAME tentontrap
 
 OBJECT 11
+  SET dirt
   NAME preplaced
 
 OBJECT 12
+  SET dirt
   NAME pickup
 
 OBJECT 13
+  SET dirt
   NAME secret
 

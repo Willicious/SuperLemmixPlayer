@@ -12,11 +12,13 @@ uses
   Math,
   LemNeoParser,
   LemDosMainDat,
+  LemPiece,
   LemTerrain,
   LemInteractiveObject,
   LemSteel,
   LemDosStructures,
-  LemLevel;
+  LemLevel,
+  LemTypes;
 
 type
   TStyleName = class
@@ -73,6 +75,7 @@ type
 
   TTranslationItem = record
     SrcName: String;
+    DstGS: String;
     DstName: String;
     OffsetX: Integer;
     OffsetY: Integer;
@@ -82,6 +85,7 @@ type
     private
       fTerrainArray: array of TTranslationItem;
       fObjectArray: array of TTranslationItem;
+      procedure FindMatch(Item: TIdentifiedPiece);
     public
       constructor Create;
       destructor Destroy; override;
@@ -163,6 +167,7 @@ var
     end else
       GotFirst := true;
     NewRec.SrcName := '';
+    NewRec.DstGS := '';
     NewRec.DstName := '';
     NewRec.OffsetX := 0;
     NewRec.OffsetY := 0;
@@ -191,6 +196,9 @@ begin
         NewRec.SrcName := 'O' + IntToStr(Line.Numeric);
       end;
 
+      if Line.Keyword = 'SET' then
+        NewRec.DstGS := Line.Value;
+
       if Line.Keyword = 'NAME' then
         NewRec.DstName := Line.Value;
 
@@ -210,8 +218,47 @@ begin
 end;
 
 procedure TTranslationTable.Apply(aLevel: TLevel);
+var
+  i: Integer;
+  Item: TIdentifiedPiece;
 begin
-  // just a blank for now so that it'll compile
+  for i := 0 to aLevel.Terrains.Count-1 do
+  begin
+    Item := aLevel.Terrains[i];
+    FindMatch(Item);
+  end;
+
+  for i := 0 to aLevel.InteractiveObjects.Count-1 do
+  begin
+    Item := aLevel.InteractiveObjects[i];
+    FindMatch(Item);
+  end;
+end;
+
+procedure TTranslationTable.FindMatch(Item: TIdentifiedPiece);
+var
+  TransItem: TTranslationItem;
+  ArrayLen: Integer;
+  i: Integer;
+begin
+  if Item is TTerrain then
+    ArrayLen := Length(fTerrainArray)
+  else
+    ArrayLen := Length(fObjectArray);
+
+  for i := 0 to ArrayLen-1 do
+  begin
+    if Item is TTerrain then
+      TransItem := fTerrainArray[i]
+    else
+      TransItem := fObjectArray[i];
+    if Lowercase(Item.Piece) = Lowercase(TransItem.SrcName) then
+    begin
+      Item.GS := TransItem.DstGS;
+      Item.Piece := TransItem.DstName;
+      Exit;
+    end;
+  end;
 end;
 
 { TStyleName }
@@ -388,6 +435,7 @@ var
   i, i2: integer;
   TempStream: TMemoryStream;
   TempLevel: TLevel;
+  Trans: TTranslationTable;
 begin
   SetLength(aLevel.Info.WindowOrder, 0); //kludgy bug fix
 
@@ -467,6 +515,15 @@ begin
     end;
 
     aLevel.Info.LevelID := aLevel.Info.LevelID + aLevel.InteractiveObjects.Count + aLevel.Terrains.Count + aLevel.Steels.Count;
+  end;
+
+  // Apply translation table if one exists
+  if FileExists(AppPath + 'styles\' + Trim(aLevel.Info.GraphicSetName) + '\translation.nxmi') then
+  begin
+    Trans := TTranslationTable.Create;
+    Trans.LoadFromFile(AppPath + 'styles\' + Trim(aLevel.Info.GraphicSetName) + '\translation.nxmi');
+    Trans.Apply(aLevel);
+    Trans.Free;
   end;
 
 end;
