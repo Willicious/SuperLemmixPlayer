@@ -2,63 +2,63 @@
 
 TERRAIN 0
   SET brick
-  NAME largebricks_01
+  NAME largebricks_fourrows
 
 TERRAIN 1
   SET brick
-  NAME largebricks_02
+  NAME largebricks_tworows
 
 TERRAIN 2
   SET brick
-  NAME largebricks_03
+  NAME largebricks_single
 
 TERRAIN 3
   SET brick
-  NAME largebricks_04
+  NAME largebricks_midpiece_tworows
 
 TERRAIN 4
   SET brick
-  NAME largebricks_05
+  NAME largebricks_midpiece
 
 TERRAIN 5
   SET brick
-  NAME smallbricks_01
+  NAME smallbricks_eightrows
 
 TERRAIN 6
   SET brick
-  NAME smallbricks_02
+  NAME smallbricks_fourrows
 
 TERRAIN 7
   SET brick
-  NAME smallbricks_03
+  NAME smallbricks_onerow
 
 TERRAIN 8
   SET brick
-  NAME smallbricks_04
+  NAME smallbricks_single
 
 TERRAIN 9
   SET brick
-  NAME smallbricks_05
+  NAME smallbricks_single_alt
 
 TERRAIN 10
   SET brick
-  NAME smallbricks_06
+  NAME smallbricks_diagright
 
 TERRAIN 11
   SET brick
-  NAME smallbricks_07
+  NAME smallbricks_diagleft
 
 TERRAIN 12
   SET brick
-  NAME smallbricks_08
+  NAME smallbricks_diagright_invert
 
 TERRAIN 13
   SET brick
-  NAME smallbricks_09
+  NAME smallbricks_diagleft_invert
 
 TERRAIN 14
   SET brick
-  NAME smallbricks_arches
+  NAME smallbricks_arch_double
 
 TERRAIN 15
   SET brick
@@ -70,31 +70,31 @@ TERRAIN 16
 
 TERRAIN 17
   SET brick
-  NAME diagbricks_01
+  NAME diagbricks_full
 
 TERRAIN 18
   SET brick
-  NAME diagbricks_02
+  NAME diagbricks_full_small
 
 TERRAIN 19
   SET brick
-  NAME diagbricks_03
+  NAME diagbricks_notoplayer
 
 TERRAIN 20
   SET brick
-  NAME diagbricks_04
+  NAME diagbricks_single
 
 TERRAIN 21
   SET brick
-  NAME tinybricks_01
+  NAME tinybricks_square
 
 TERRAIN 22
   SET brick
-  NAME tinybricks_02
+  NAME tinybricks_long
 
 TERRAIN 23
   SET brick
-  NAME tinybricks_03
+  NAME tinybricks_single
 
 TERRAIN 24
   SET brick
@@ -249,7 +249,7 @@ OBJECT 1
   NAME entrance
 
 OBJECT 2
-  SET brick
+  SET default
   NAME flag_green
 
 OBJECT 3
@@ -273,7 +273,7 @@ OBJECT 7
   NAME slicer
 
 OBJECT 8
-  SET brick
+  SET default
   NAME flag_blue
 
 OBJECT 9
@@ -284,7 +284,7 @@ OBJECT 10
   SET default
   NAME lemming
   OFFSETX 0
-  OFFSETY 1
+  OFFSETY 0
 
 OBJECT 11
   SET brick
