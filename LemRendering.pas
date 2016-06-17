@@ -24,7 +24,7 @@ interface
 
 uses
   Dialogs,
-  Classes, Contnrs, Math,
+  Classes, Contnrs, Math, Windows,
   GR32, GR32_LowLevel, GR32_Blend,
   UMisc,
   SysUtils,
@@ -134,6 +134,7 @@ type
     // Lemming rendering
     procedure DrawLemmings;
     procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
+    procedure DrawLemmingHelper(aLemming: TLemming);
 
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
 
@@ -227,6 +228,9 @@ begin
     if LemmingList[i] <> fRenderInterface.SelectedLemming then DrawThisLemming(LemmingList[i]);
 
   if fRenderInterface.SelectedLemming <> nil then DrawThisLemming(fRenderInterface.SelectedLemming, true);
+
+  for i := 0 to LemmingList.Count-1 do
+    DrawLemmingHelper(LemmingList[i]);
 end;
 
 procedure TRenderer.DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
@@ -300,6 +304,29 @@ begin
   SrcAnim.DrawMode := dmCustom;
   SrcAnim.OnPixelCombine := fRecolorer.CombineLemmingPixels;
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
+end;
+
+procedure TRenderer.DrawLemmingHelper(aLemming: TLemming);
+var
+  ShowCountdown, ShowHighlight: Boolean;
+  SrcRect: TRect;
+  n: Integer;
+begin
+  if aLemming.LemRemoved then Exit;
+
+  ShowCountdown := (aLemming.LemExplosionTimer > 0);
+  ShowHighlight := (aLemming = fRenderInterface.HighlitLemming);
+
+  if ShowCountdown and ShowHighlight then
+    ShowCountdown := (GetTickCount mod 1000 < 500);
+
+  if ShowCountdown then
+  begin
+    n := (aLemming.LemExplosionTimer div 17) + 1;
+    SrcRect := Rect(n * 4, 0, ((n+1) * 4), 5);
+    fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 1, aLemming.LemY - 17, SrcRect);
+  end else if ShowHighlight then
+    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 2, aLemming.LemY - 20);
 end;
 
 function TRenderer.GetTerrainLayer: TBitmap32;

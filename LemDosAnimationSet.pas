@@ -329,7 +329,9 @@ begin
       fMineMasksRTLBitmap := fMaskAnimations[3];
       fExplosionMaskBitmap := fMaskAnimations[4];
       fCountDownDigitsBitmap := fMaskAnimations[5];
+      fCountdownDigitsBitmap.DrawMode := dmBlend;
       fHighlightBitmap := fMaskAnimations[6];
+      fCountdownDigitsBitmap.DrawMode := dmBlend;
 
         // Stoner, Bomber and Highlight are a single frame each so easy enough
         TPngInterface.LoadPngFile(AppPath + 'gfx/mask/bomber.png', fExplosionMaskBitmap);
@@ -350,11 +352,11 @@ begin
         TempBitmap.DrawTo(fMineMasksBitmap, 0, 0, Rect(16, 0, 32, 26));
 
         // And countdown digits are the most complicated of all
-        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/countdown.png', TempBitmap);
-        fCountdownDigitsBitmap.SetSize(8, 80);
+        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/countdown.png', fCountdownDigitsBitmap);
+        (*fCountdownDigitsBitmap.SetSize(8, 80);
         fCountdownDigitsBitmap.Clear(0);
         for i := 0 to 9 do
-          TempBitmap.DrawTo(fCountdownDigitsBitmap, 0, (9-i)*8, Rect(i*4, 0, (i+1)*4, 8));
+          TempBitmap.DrawTo(fCountdownDigitsBitmap, 0, (9-i)*8, Rect(i*4, 0, (i+1)*4, 8));*)
 
   finally
     TempBitmap.Free;
