@@ -61,6 +61,7 @@ type
     procedure StartReplay2(const aFileName: string);
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
+    procedure DoDraw;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -227,15 +228,21 @@ begin
   // Update drawing
   if TimeForFrame or TimeForFastForwardFrame or fNeedRedraw then
   begin
-    //MinScroll * DisplayScale
-    fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
-    fRenderInterface.MousePos := Game.CursorPoint;
-    fRenderer.DrawAllObjects;
-    fRenderer.DrawLemmings;
-    DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 319, fRenderInterface.ScreenPos.Y + 159);
-    fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect);
-    fNeedRedraw := false;
+    DoDraw;
   end;
+end;
+
+procedure TGameWindow.DoDraw;
+var
+  DrawRect: TRect;
+begin
+  fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
+  fRenderInterface.MousePos := Game.CursorPoint;
+  fRenderer.DrawAllObjects;
+  fRenderer.DrawLemmings;
+  DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 319, fRenderInterface.ScreenPos.Y + 159);
+  fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect);
+  fNeedRedraw := false;
 end;
 
 procedure TGameWindow.CheckShifts(Shift: TShiftState);
@@ -316,39 +323,38 @@ begin
 end;
 
 procedure TGameWindow.CheckScroll;
+var
+  HaveScrolled: Boolean;
 begin
+  HaveScrolled := false;
+  Img.BeginUpdate;
   case GameScroll of
     gsRight:
       begin
-      //if Mouse.
-      Img.OffsetHorz := Max(MinScroll * DisplayScale, Img.OffSetHorz - DisplayScale * 8 * fScrollSpeed);
+        Img.OffsetHorz := Max(MinScroll * DisplayScale, Img.OffSetHorz - DisplayScale * 8 * fScrollSpeed);
+        HaveScrolled := true;
       end;
-(*      if Img.OffSetHorz > MinScroll * DisplayScale then
-      begin
-        Img.OffSetHorz := Img.OffSetHorz - DisplayScale * 8;
-
-      end; *)
     gsLeft:
       begin
-      Img.OffsetHorz := Min(MaxScroll * DisplayScale, Img.OffSetHorz + DisplayScale * 8 * fScrollSpeed);
+        Img.OffsetHorz := Min(MaxScroll * DisplayScale, Img.OffSetHorz + DisplayScale * 8 * fScrollSpeed);
+        HaveScrolled := true;
       end;
-      (*
-      if Img.OffSetHorz < MaxScroll * DisplayScale then
-      begin
-        Img.OffSetHorz := Img.OffSetHorz + DisplayScale * 8;
-      end;
-      *)
   end;
   case GameVScroll of
     gsUp:
       begin
-      Img.OffsetVert := Min(MaxVScroll * DisplayScale, Img.OffSetVert + DisplayScale * 8 * fScrollSpeed);
+        Img.OffsetVert := Min(MaxVScroll * DisplayScale, Img.OffSetVert + DisplayScale * 8 * fScrollSpeed);
+        HaveScrolled := true;
       end;
     gsDown:
       begin
-      Img.OffsetVert := Max(MinVScroll * DisplayScale, Img.OffSetVert - DisplayScale * 8 * fScrollSpeed);
+        Img.OffsetVert := Max(MinVScroll * DisplayScale, Img.OffSetVert - DisplayScale * 8 * fScrollSpeed);
+        HaveScrolled := true;
       end;
   end;
+  if HaveScrolled then
+    DoDraw;
+  Img.EndUpdate;
 end;
 
 constructor TGameWindow.Create(aOwner: TComponent);
