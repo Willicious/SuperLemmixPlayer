@@ -66,6 +66,8 @@ type
 
   TRenderer = class
   private
+    fRenderInterface: TRenderInterface;
+
     fRecolorer: TRecolorImage;
 
     fPhysicsMap: TBitmap32;
@@ -111,7 +113,10 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure DrawLevel(aDst: TBitmap32);
+    procedure SetInterface(aInterface: TRenderInterface);
+
+    procedure DrawLevel(aDst: TBitmap32); overload;
+    procedure DrawLevel(aDst: TBitmap32; aRegion: TRect); overload;
 
     function FindMetaObject(O: TInteractiveObject): TObjectRecord;
     function FindMetaTerrain(T: TTerrain): TTerrainRecord;
@@ -123,11 +128,11 @@ type
 
     // Object rendering
     procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
-    procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList; MousePoint: TPoint);
+    procedure DrawAllObjects;
     procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 
     // Lemming rendering
-    procedure DrawLemmings(aLemmings: TLemmingList; SelectedLemming: TLemming = nil);
+    procedure DrawLemmings;
     procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
 
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
@@ -163,6 +168,11 @@ uses
   UTools;
 
 { TRenderer }
+
+procedure TRenderer.SetInterface(aInterface: TRenderInterface);
+begin
+  fRenderInterface := aInterface;
+end;
 
 // Minimap drawing
 
@@ -204,15 +214,19 @@ end;
 
 // Lemming Drawing
 
-procedure TRenderer.DrawLemmings(aLemmings: TLemmingList; SelectedLemming: TLemming = nil);
+procedure TRenderer.DrawLemmings;
 var
   i: Integer;
+  LemmingList: TLemmingList;
 begin
   fLayers[rlLemmings].Clear(0);
-  for i := 0 to aLemmings.Count-1 do
-    if aLemmings[i] <> SelectedLemming then DrawThisLemming(aLemmings[i]);
 
-  if SelectedLemming <> nil then DrawThisLemming(SelectedLemming, true);
+  LemmingList := fRenderInterface.LemmingList;
+
+  for i := 0 to LemmingList.Count-1 do
+    if LemmingList[i] <> fRenderInterface.SelectedLemming then DrawThisLemming(LemmingList[i]);
+
+  if fRenderInterface.SelectedLemming <> nil then DrawThisLemming(fRenderInterface.SelectedLemming, true);
 end;
 
 procedure TRenderer.DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
@@ -300,9 +314,14 @@ end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32);
 begin
+  DrawLevel(aDst, fPhysicsMap.BoundsRect);
+end;
+
+procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect);
+begin
   ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
   fLayers.PhysicsMap := fPhysicsMap;
-  fLayers.CombineTo(aDst);
+  fLayers.CombineTo(aDst, aRegion);
 end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);
@@ -638,7 +657,7 @@ begin
     fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
 end;
 
-procedure TRenderer.DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList; MousePoint: TPoint);
+procedure TRenderer.DrawAllObjects;
 var
   SrcRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
@@ -646,6 +665,7 @@ var
   DrawFrame: Integer;
   i, i2: Integer;
   UsePoint: Boolean;
+  ObjectInfos: TInteractiveObjectInfoList;
 
   procedure ProcessDrawFrame(aLayer: TRenderLayer);
   begin
@@ -688,6 +708,7 @@ var
   end;
 begin
   Src := TBitmap32.Create;
+  ObjectInfos := fRenderInterface.ObjectList;
 
   UsePoint := true; //PtInRect(Dst.BoundsRect, MousePoint);
 
@@ -752,7 +773,7 @@ begin
       // Check if this object is relevant
       if not PtInRect(Rect(ObjectInfos[i].Left, ObjectInfos[i].Top,
                            ObjectInfos[i].Left + ObjectInfos[i].Width - 1, ObjectInfos[i].Top + ObjectInfos[i].Height - 1),
-                      MousePoint) then
+                      fRenderInterface.MousePos) then
         Continue;
 
       if ObjectInfos[i].IsDisabled then Continue;

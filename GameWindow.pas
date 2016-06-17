@@ -9,7 +9,7 @@ uses
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls,
   GR32, GR32_Image, GR32_Layers,
   UMisc, UTools,
-  LemCore, LemLevel, LemDosStyle, LemRendering,
+  LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
   LemGame,
   GameControl, GameSkillPanel, GameBaseScreen;
 
@@ -24,6 +24,9 @@ type
 
   TGameWindow = class(TGameBaseScreen)
   private
+    fRenderInterface: TRenderInterface;
+    fRenderer: TRenderer;
+    fNeedRedraw: Boolean;
     fNeedReset : Boolean;
     fMouseTrapped: Boolean;
     fSaveList: TLemmingGameSavedStateList;
@@ -134,6 +137,7 @@ procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
 var
   CurrTime: Cardinal;
   Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
+  DrawRect: TRect;
 begin
   if not CanPlay or not Game.Playing or Game.GameFinished then
     Exit;
@@ -218,6 +222,19 @@ begin
         end;
       end;
 
+  end;
+
+  // Update drawing
+  if TimeForFrame or TimeForFastForwardFrame or fNeedRedraw then
+  begin
+    //MinScroll * DisplayScale
+    fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
+    fRenderInterface.MousePos := Game.CursorPoint;
+    fRenderer.DrawAllObjects;
+    fRenderer.DrawLemmings;
+    DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 319, fRenderInterface.ScreenPos.Y + 159);
+    fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect);
+    fNeedRedraw := false;
   end;
 end;
 
@@ -928,6 +945,10 @@ begin
   ApplyMouseTrap;
 
   if ((Params.SysDat.Options2 and $4) <> 0) then SkillPanel.ActivateCenterDigits;
+
+  fRenderer := Params.Renderer;
+  fRenderInterface := Game.RenderInterface;
+  fRenderer.SetInterface(fRenderInterface);
 
 end;
 
