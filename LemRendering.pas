@@ -44,6 +44,8 @@ uses
   // create gamerenderlist in order of rendering
 
 const
+  PARTICLE_FRAMECOUNT = 52;
+
   PM_SOLID       = $00000001;
   PM_STEEL       = $00000002;
   PM_ONEWAY      = $00000004;
@@ -58,6 +60,12 @@ const
 
 
 type
+  TParticleRec = packed record
+    DX, DY: ShortInt
+  end;
+  TParticleArray = packed array[0..79] of TParticleRec;
+  TParticleTable = packed array[0..50] of TParticleArray;
+
   // temp solution
   TRenderInfoRec = record
     TargetBitmap : TBitmap32; // the visual bitmap
@@ -88,6 +96,8 @@ type
     fAni: TBaseDosAnimationSet;
 
     fBgColor : TColor32;
+
+    fParticles                 : TParticleTable; // all particle offsets
 
     // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -135,6 +145,7 @@ type
     procedure DrawLemmings;
     procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
     procedure DrawLemmingHelper(aLemming: TLemming);
+    procedure DrawLemmingParticles(L: TLemming);
 
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
 
@@ -220,6 +231,7 @@ var
   i: Integer;
   LemmingList: TLemmingList;
 begin
+  fLayers[rlParticles].Clear(0);
   fLayers[rlLemmings].Clear(0);
 
   LemmingList := fRenderInterface.LemmingList;
@@ -230,7 +242,11 @@ begin
   if fRenderInterface.SelectedLemming <> nil then DrawThisLemming(fRenderInterface.SelectedLemming, true);
 
   for i := 0 to LemmingList.Count-1 do
+  begin
+    if LemmingList[i].LemParticleTimer > 0 then
+      DrawLemmingParticles(LemmingList[i]);
     DrawLemmingHelper(LemmingList[i]);
+  end;
 end;
 
 procedure TRenderer.DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
@@ -327,6 +343,25 @@ begin
     fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 1, aLemming.LemY - 17, SrcRect);
   end else if ShowHighlight then
     fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 2, aLemming.LemY - 20);
+end;
+
+procedure TRenderer.DrawLemmingParticles(L: TLemming);
+var
+  i, X, Y: Integer;
+begin
+
+  for i := 0 to 79 do
+  begin
+    X := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DX;
+    Y := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DY;
+    if (X <> -128) and (Y <> -128) then
+    begin
+      X := L.LemX + X;
+      Y := L.LemY + Y;
+      fLayers[rlParticles].PixelS[X, Y] := fTheme.ParticleColors[i];
+    end;
+  end;
+
 end;
 
 function TRenderer.GetTerrainLayer: TBitmap32;
@@ -904,6 +939,7 @@ end;*)
 constructor TRenderer.Create;
 var
   i: THelperIcon;
+  S: TMemoryStream;
 begin
   inherited Create;
   TempBitmap := TBitmap32.Create;
@@ -916,6 +952,11 @@ begin
   fRecolorer := TRecolorImage.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[i] := TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
+
+  S := CreateDataStream('explode.dat', ldtParticles);
+  S.Seek(0, soFromBeginning);
+  S.Read(fParticles, S.Size);
+  S.Free;
 end;
 
 destructor TRenderer.Destroy;

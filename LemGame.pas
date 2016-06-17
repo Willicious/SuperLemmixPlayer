@@ -369,7 +369,7 @@ type
     fTargetBitmap              : TBitmap32; // reference to the drawing bitmap on the gamewindow
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
     fOptions                   : TDosGameOptions; // mechanic options
-    fParticles                 : TParticleTable; // all particle offsets
+    
     fParticleColors            : array[0..15] of TColor32;
 
   { internal objects }
@@ -1572,10 +1572,7 @@ begin
     end;
   end;
 
-  S := CreateDataStream('explode.dat', ldtParticles);
-  S.Seek(0, soFromBeginning);
-  S.Read(fParticles, S.Size);
-  S.Free;
+  
 
   fTalismans.Clear;
 
@@ -3584,11 +3581,11 @@ end;
 procedure TLemmingGame.DrawParticles(L: TLemming; DoErase: Boolean);
 // if DoErase = False, then draw the explosion particles,
 // if DoErase = True, then erase them.
-var
-  i, X, Y: Integer;
+//var
+//  i, X, Y: Integer;
 begin
 
-  for i := 0 to 79 do
+(*  for i := 0 to 79 do
   begin
     X := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DX;
     Y := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DY;
@@ -3600,7 +3597,7 @@ begin
     end;
   end;
 
-  fExplodingGraphics := True;
+  fExplodingGraphics := True;*)
 end;
 
 
