@@ -302,13 +302,15 @@ begin
         begin
           MLA := fMetaLemmingAnimations[iAnimation];
           if MLA.Description = 'pass' then Continue;          
-          Fn := RightStr(MLA.Description, Length(MLA.Description)-1) + '.png';
+          Fn := RightStr(MLA.Description, Length(MLA.Description)-1);
           if MLA.Description[1] = 'L' then
             X := 0
           else
             X := MLA.Width;
           //MainExtractor.ExtractBitmapByName(TempBitmap, Fn, Pal[7]);
-          TPngInterface.LoadPngFile(AppPath + 'gfx/sprites/' + fLemmingPrefix + '/' + Fn, TempBitmap);
+          TPngInterface.LoadPngFile(AppPath + 'gfx/sprites/' + fLemmingPrefix + '/' + Fn + '.png', TempBitmap);
+          if FileExists(AppPath + 'gfx/sprites/' + fLemmingPrefix + '/' + Fn + '_mask.png') then
+            TPngInterface.MaskImageFromFile(TempBitmap, AppPath + 'gfx/sprites/' + fLemmingPrefix + '/' + Fn + '_mask.png', Pal[7]);
           Bmp := TBitmap32.Create;
           Bmp.SetSize(MLA.Width, MLA.Height * MLA.FrameCount);
           TempBitmap.DrawTo(Bmp, 0, 0, Rect(X, 0, X + MLA.Width, MLA.Height * MLA.FrameCount));
