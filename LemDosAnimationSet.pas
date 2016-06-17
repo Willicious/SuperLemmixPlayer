@@ -332,25 +332,25 @@ begin
       fHighlightBitmap := fMaskAnimations[6];
 
         // Stoner, Bomber and Highlight are a single frame each so easy enough
-        MainExtractor.ExtractBitmapByName(fExplosionMaskBitmap, 'mask_bomber.png');
-        MainExtractor.ExtractBitmapByName(fLemmingAnimations[STONED], 'mask_stoner.png');
-        MainExtractor.ExtractBitmapByName(fHighlightBitmap, 'highlight.png');
+        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/bomber.png', fExplosionMaskBitmap);
+        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/stoner.png', fLemmingAnimations[STONED]);
+        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/highlight.png', fHighlightBitmap);
 
         // Basher and miner are a tad more complicated
-        MainExtractor.ExtractBitmapByName(TempBitmap, 'mask_basher.png');
+        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/basher.png', TempBitmap);
         fBashMasksRTLBitmap.SetSize(16, 40);
         fBashMasksBitmap.SetSize(16, 40);
         TempBitmap.DrawTo(fBashMasksRTLBitmap, 0, 0, Rect(0, 0, 16, 40));
         TempBitmap.DrawTo(fBashMasksBitmap, 0, 0, Rect(16, 0, 32, 40));
 
-        MainExtractor.ExtractBitmapByName(TempBitmap, 'mask_miner.png');
+        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/miner.png', TempBitmap);
         fMineMasksRTLBitmap.SetSize(16, 26);
         fMineMasksBitmap.SetSize(16, 26);
         TempBitmap.DrawTo(fMineMasksRTLBitmap, 0, 0, Rect(0, 0, 16, 26));
         TempBitmap.DrawTo(fMineMasksBitmap, 0, 0, Rect(16, 0, 32, 26));
 
         // And countdown digits are the most complicated of all
-        MainExtractor.ExtractBitmapByName(TempBitmap, 'countdown_digits.png');
+        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/countdown.png', TempBitmap);
         fCountdownDigitsBitmap.SetSize(8, 80);
         fCountdownDigitsBitmap.Clear(0);
         for i := 0 to 9 do

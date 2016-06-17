@@ -27,6 +27,7 @@ type
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
     fNeedRedraw: Boolean;
+    fNeedEndUpdate: Boolean;
     fNeedReset : Boolean;
     fMouseTrapped: Boolean;
     fSaveList: TLemmingGameSavedStateList;
@@ -323,38 +324,33 @@ begin
 end;
 
 procedure TGameWindow.CheckScroll;
-var
-  HaveScrolled: Boolean;
+  procedure Scroll(dx, dy: Integer);
+  begin
+    Img.OffsetHorz := Img.OffsetHorz - DisplayScale * dx * fScrollSpeed;
+    Img.OffsetVert := Img.OffsetVert - DisplayScale * dy * fScrollSpeed;
+    Img.OffsetHorz := Max(MinScroll * DisplayScale, Img.OffsetHorz);
+    Img.OffsetHorz := Min(MaxScroll * DisplayScale, Img.OffsetHorz);
+    Img.OffsetVert := Max(MinVScroll * DisplayScale, Img.OffsetVert);
+    Img.OffsetVert := Min(MaxVScroll * DisplayScale, Img.OffsetVert);
+  end;
 begin
-  HaveScrolled := false;
-  //Img.BeginUpdate;
+  Img.BeginUpdate;
   case GameScroll of
     gsRight:
-      begin
-        Img.OffsetHorz := Max(MinScroll * DisplayScale, Img.OffSetHorz - DisplayScale * 8 * fScrollSpeed);
-        HaveScrolled := true;
-      end;
+      Scroll(8, 0);
     gsLeft:
-      begin
-        Img.OffsetHorz := Min(MaxScroll * DisplayScale, Img.OffSetHorz + DisplayScale * 8 * fScrollSpeed);
-        HaveScrolled := true;
-      end;
+      Scroll(-8, 0);
   end;
   case GameVScroll of
     gsUp:
-      begin
-        Img.OffsetVert := Min(MaxVScroll * DisplayScale, Img.OffSetVert + DisplayScale * 8 * fScrollSpeed);
-        HaveScrolled := true;
-      end;
+      Scroll(0, -8);
     gsDown:
-      begin
-        Img.OffsetVert := Max(MinVScroll * DisplayScale, Img.OffSetVert - DisplayScale * 8 * fScrollSpeed);
-        HaveScrolled := true;
-      end;
+      Scroll(0, 8);
   end;
-  //if HaveScrolled then
-    //DoDraw;
-  //Img.EndUpdate;
+
+  DoDraw;
+  Img.EndUpdate;
+
 end;
 
 constructor TGameWindow.Create(aOwner: TComponent);
