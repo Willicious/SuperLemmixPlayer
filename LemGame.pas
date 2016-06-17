@@ -585,7 +585,7 @@ type
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
-    procedure DrawLemmings;
+    //procedure DrawLemmings;
     //  procedure DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
     procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
     procedure CheckForNewShadow;
@@ -3652,7 +3652,7 @@ begin
   // Don't need to erase lemmings anymore!
 end;
 
-procedure TLemmingGame.DrawLemmings;
+(*procedure TLemmingGame.DrawLemmings;
 var
   iLemming: Integer;
   L: TLemming;
@@ -3667,7 +3667,7 @@ begin
   // If paused, update screen
   //if Paused then
   //  fRenderer.DrawLevel(fTargetBitmap);
-end;
+end;*)
 
 (*procedure TLemmingGame.DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
 var
@@ -5190,8 +5190,7 @@ begin
   if (L <> OldLemSelected) or not Assigned(L) then
   begin
     fLemSelected := L;
-    // redraw all lemmings to change color of selected lem
-    DrawLemmings;
+    fRenderInterface.SelectedLemming := L;
   end;
 
   if Assigned(L) and not fHitTestAutofail then
@@ -5301,10 +5300,12 @@ begin
         EraseLemmings; //so the old highlight marker if any disappears
         DrawAnimatedObjects; // not sure why this one. Might be to fix graphical glitches, I guess?
       end;
-      DrawLemmings;  // so the highlight marker shows up
+      //DrawLemmings;  // so the highlight marker shows up
       //fRenderer.DrawLevel(fTargetBitmap);
     end;
   end;
+
+  fRenderInterface.HighlitLemming := fHighlightLemming;
 
 
 end;

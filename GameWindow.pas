@@ -327,7 +327,7 @@ var
   HaveScrolled: Boolean;
 begin
   HaveScrolled := false;
-  Img.BeginUpdate;
+  //Img.BeginUpdate;
   case GameScroll of
     gsRight:
       begin
@@ -352,9 +352,9 @@ begin
         HaveScrolled := true;
       end;
   end;
-  if HaveScrolled then
-    DoDraw;
-  Img.EndUpdate;
+  //if HaveScrolled then
+    //DoDraw;
+  //Img.EndUpdate;
 end;
 
 constructor TGameWindow.Create(aOwner: TComponent);
@@ -620,6 +620,8 @@ begin
 
   CheckShifts(Shift);
 
+  if Game.Paused then
+    DoDraw;
 end;
 
 procedure TGameWindow.Form_KeyPress(Sender: TObject; var Key: Char);
@@ -713,6 +715,9 @@ begin
         Game.ProcessHighlightAssignment;
     end;
 
+    if Game.Paused then
+      DoDraw;
+
   end;
 end;
 
@@ -755,6 +760,9 @@ begin
       GameVScroll := gsUp
     else
       GameVScroll := gsNone;
+
+    if Game.Paused then
+      DoDraw;
   end;
 
 end;
