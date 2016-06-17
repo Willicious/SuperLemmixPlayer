@@ -2,67 +2,67 @@
 
 TERRAIN 0
   SET dirt
-  NAME clump_01
+  NAME clump_medium
 
 TERRAIN 1
   SET dirt
-  NAME clump_02
+  NAME clump_small
 
 TERRAIN 2
   SET dirt
-  NAME clump_03
+  NAME clump_tall
 
 TERRAIN 3
   SET dirt
-  NAME clump_04
+  NAME clump_wide
 
 TERRAIN 4
   SET dirt
-  NAME clump_05
+  NAME clump_big
 
 TERRAIN 5
   SET dirt
-  NAME clump_06
+  NAME clump_verytall
 
 TERRAIN 6
   SET dirt
-  NAME grass_01
+  NAME grass_cornertopleft
 
 TERRAIN 7
   SET dirt
-  NAME grass_02
+  NAME grass_cornertopright
 
 TERRAIN 8
   SET dirt
-  NAME grass_03
+  NAME grass_diagleft
 
 TERRAIN 9
   SET dirt
-  NAME grass_04
+  NAME grass_horz
 
 TERRAIN 10
   SET dirt
-  NAME clump_07
+  NAME clump_huge
 
 TERRAIN 11
   SET dirt
-  NAME rock_01
+  NAME rock_pile_large
 
 TERRAIN 12
   SET dirt
-  NAME rock_02
+  NAME rock_pile_small
 
 TERRAIN 13
   SET dirt
-  NAME rock_03
+  NAME rock_stack_diagleft
 
 TERRAIN 14
   SET dirt
-  NAME rock_04
+  NAME rock_stack_diagright
 
 TERRAIN 15
   SET dirt
-  NAME rock_05
+  NAME rock_row
 
 TERRAIN 16
   SET dirt
@@ -74,23 +74,23 @@ TERRAIN 17
 
 TERRAIN 18
   SET dirt
-  NAME bones_01
+  NAME fossil_huge
 
 TERRAIN 19
   SET dirt
-  NAME clump_08
+  NAME mound_wide
 
 TERRAIN 20
   SET dirt
-  NAME clump_09
+  NAME mound_narrow
 
 TERRAIN 21
   SET dirt
-  NAME bones_02
+  NAME fossil_triple
 
 TERRAIN 22
   SET dirt
-  NAME bones_03
+  NAME fossil_single
 
 TERRAIN 23
   SET dirt
@@ -110,7 +110,7 @@ TERRAIN 26
 
 TERRAIN 27
   SET dirt
-  NAME clump_10
+  NAME clump_tiny
 
 TERRAIN 28
   SET dirt
@@ -182,11 +182,11 @@ TERRAIN 44
 
 TERRAIN 45
   SET dirt
-  NAME sign_01
+  NAME sign_left
 
 TERRAIN 46
   SET dirt
-  NAME sign_02
+  NAME sign_right
 
 TERRAIN 47
   SET dirt
@@ -207,11 +207,11 @@ OBJECT 0
   OFFSETY -8
 
 OBJECT 1
-  SET dirt
+  SET default
   NAME window
 
 OBJECT 2
-  SET dirt
+  SET default
   NAME flag_green
 
 OBJECT 3
@@ -239,7 +239,7 @@ OBJECT 8
   NAME bouldertrap
 
 OBJECT 9
-  SET dirt
+  SET default
   NAME flag_blue
 
 OBJECT 10
@@ -250,7 +250,7 @@ OBJECT 11
   SET default
   NAME lemming
   OFFSETX 0
-  OFFSETY 1
+  OFFSETY 0
 
 OBJECT 12
   SET dirt
@@ -258,5 +258,5 @@ OBJECT 12
 
 OBJECT 13
   SET dirt
-  NAME secret
+  NAME *nil
 
