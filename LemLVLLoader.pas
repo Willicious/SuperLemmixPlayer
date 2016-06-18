@@ -301,10 +301,10 @@ begin
         if not Rotate then
           Rotate := true
         else begin
-          // To change from 90 to 180, we turn rotate off, and set the other two to the opposite of each other's states
+          // To change from 90 to 180, we turn rotate off, and flip the other two
           Rotate := false;
-          Flip := not Item.Invert;
-          Inv := not Item.Flip;
+          Flip := not Item.Flip;
+          Inv := not Item.Invert;
         end;
 
       if TransItem.Flip then
