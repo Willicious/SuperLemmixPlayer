@@ -25,6 +25,12 @@ type
   private
   protected
     fDrawingFlags : Byte;
+    procedure SetFlip(aValue: Boolean); override;
+    procedure SetInvert(aValue: Boolean); override;
+    procedure SetRotate(aValue: Boolean); override;
+    function GetFlip: Boolean; override;
+    function GetInvert: Boolean; override;
+    function GetRotate: Boolean; override;
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -59,6 +65,45 @@ begin
     DrawingFlags := T.DrawingFlags;
   end
   else inherited Assign(Source);
+end;
+
+procedure TTerrain.SetFlip(aValue: Boolean);
+begin
+  if aValue then
+    DrawingFlags := DrawingFlags or tdf_Flip
+  else
+    DrawingFlags := DrawingFlags and not tdf_Flip;
+end;
+
+procedure TTerrain.SetInvert(aValue: Boolean);
+begin
+  if aValue then
+    DrawingFlags := DrawingFlags or tdf_Invert
+  else
+    DrawingFlags := DrawingFlags and not tdf_Invert;
+end;
+
+procedure TTerrain.SetRotate(aValue: Boolean);
+begin
+  if aValue then
+    DrawingFlags := DrawingFlags or tdf_Rotate
+  else
+    DrawingFlags := DrawingFlags and not tdf_Rotate;
+end;
+
+function TTerrain.GetFlip: Boolean;
+begin
+  Result := (DrawingFlags and tdf_Flip) <> 0;
+end;
+
+function TTerrain.GetInvert: Boolean;
+begin
+  Result := (DrawingFlags and tdf_Invert) <> 0;
+end;
+
+function TTerrain.GetRotate: Boolean;
+begin
+  Result := (DrawingFlags and tdf_Rotate) <> 0;
 end;
 
 { TTerrains }

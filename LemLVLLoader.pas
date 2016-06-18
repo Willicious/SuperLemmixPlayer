@@ -77,8 +77,13 @@ type
     SrcName: String;
     DstGS: String;
     DstName: String;
-    OffsetX: Integer;
-    OffsetY: Integer;
+    OffsetL: Integer;
+    OffsetT: Integer;
+    OffsetR: Integer;
+    OffsetB: Integer;
+    Flip: Boolean;
+    Invert: Boolean;
+    Rotate: Boolean;
   end;
 
   TTranslationTable = class
@@ -169,8 +174,13 @@ var
     NewRec.SrcName := '';
     NewRec.DstGS := '';
     NewRec.DstName := '';
-    NewRec.OffsetX := 0;
-    NewRec.OffsetY := 0;
+    NewRec.OffsetL := 0;
+    NewRec.OffsetT := 0;
+    NewRec.OffsetR := 0;
+    NewRec.OffsetB := 0;
+    NewRec.Flip := false;
+    NewRec.Invert := false;
+    NewRec.Rotate := false;
   end;
 begin
   Parser := TNeoLemmixParser.Create;
@@ -202,11 +212,26 @@ begin
       if Line.Keyword = 'NAME' then
         NewRec.DstName := Line.Value;
 
-      if Line.Keyword = 'OFFSETX' then
-        NewRec.OffsetX := Line.Numeric;
+      if Line.Keyword = 'OFFSET_LEFT' then
+        NewRec.OffsetL := Line.Numeric;
 
-      if Line.Keyword = 'OFFSETY' then
-        NewRec.OffsetY := Line.Numeric;
+      if Line.Keyword = 'OFFSET_TOP' then
+        NewRec.OffsetT := Line.Numeric;
+
+      if Line.Keyword = 'OFFSET_RIGHT' then
+        NewRec.OffsetR := Line.Numeric;
+
+      if Line.Keyword = 'OFFSET_BOTTOM' then
+        NewRec.OffsetB := Line.Numeric;
+
+      if Line.Keyword = 'FLIP' then
+        NewRec.Flip := true;
+
+      if Line.Keyword = 'INVERT' then
+        NewRec.Invert := true;
+
+      if Line.Keyword = 'ROTATE' then
+        NewRec.Rotate := true;
         
     until Line.Keyword = '';
 
@@ -248,6 +273,8 @@ var
   TransItem: TTranslationItem;
   ArrayLen: Integer;
   i: Integer;
+  Flip, Inv, Rotate: Boolean;
+  dx, dy: Integer;
 begin
   if Item is TTerrain then
     ArrayLen := Length(fTerrainArray)
@@ -264,8 +291,74 @@ begin
     begin
       Item.GS := TransItem.DstGS;
       Item.Piece := TransItem.DstName;
-      Item.Left := Item.Left + TransItem.OffsetX;
-      Item.Top := Item.Top + TransItem.OffsetY;
+
+      Flip := Item.Flip;
+      Inv := Item.Invert;
+      Rotate := Item.Rotate;
+
+      // Does the translation say rotate?
+      if TransItem.Rotate then
+        if not Rotate then
+          Rotate := true
+        else begin
+          // To change from 90 to 180, we turn rotate off, and set the other two to the opposite of each other's states
+          Rotate := false;
+          Flip := not Item.Invert;
+          Inv := not Item.Flip;
+        end;
+
+      if TransItem.Flip then
+        if Rotate then
+          Inv := not Inv
+        else
+          Flip := not Flip;
+
+      if TransItem.Invert then
+        if Rotate then
+          Flip := not Flip
+        else
+          Inv := not Inv;
+
+      // Offset to apply to left edge
+      //   Normal: Left
+      //   Flipped: Right
+      //   Rotated: Bottom
+      //   Rotate-Flip: Top
+
+      if Rotate then
+      begin
+        if Flip then
+          dx := TransItem.OffsetT
+        else
+          dx := TransItem.OffsetB;
+
+        if Inv then
+          dy := TransItem.OffsetR
+        else
+          dy := TransItem.OffsetL;
+      end else begin
+        if Flip then
+          dx := TransItem.OffsetR
+        else
+          dx := TransItem.OffsetL;
+
+        if Inv then
+          dy := TransItem.OffsetB
+        else
+          dy := TransItem.OffsetT;
+      end;
+
+      // Offset to apply to top edge
+      //   Normal: Top
+      //   Inverted: Bottom
+      //   Rotated: Left
+      //   Rotate-Flip: Right
+
+      Item.Flip := Flip;
+      Item.Invert := Inv;
+      Item.Rotate := Rotate;
+      Item.Left := Item.Left + dx;
+      Item.Top := Item.Top + dy;
       Exit;
     end;
   end;

@@ -28,6 +28,10 @@ type
     fLastDrawX: Integer;
     fLastDrawY: Integer;
     fDrawAsZombie: Boolean;
+    procedure SetFlip(aValue: Boolean); override;
+    procedure SetInvert(aValue: Boolean); override;
+    function GetFlip: Boolean; override;
+    function GetInvert: Boolean; override;
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -96,6 +100,32 @@ begin
     DrawingFlags := O.DrawingFlags;
   end
   else inherited Assign(Source);
+end;
+
+procedure TInteractiveObject.SetFlip(aValue: Boolean);
+begin
+  if aValue then
+    DrawingFlags := DrawingFlags or odf_Flip
+  else
+    DrawingFlags := DrawingFlags and not odf_Flip;
+end;
+
+procedure TInteractiveObject.SetInvert(aValue: Boolean);
+begin
+    if aValue then
+    DrawingFlags := DrawingFlags or odf_UpsideDown
+  else
+    DrawingFlags := DrawingFlags and not odf_UpsideDown;
+end;
+
+function TInteractiveObject.GetFlip: Boolean;
+begin
+  Result := (DrawingFlags and odf_Flip) <> 0;
+end;
+
+function TInteractiveObject.GetInvert: Boolean;
+begin
+  Result := (DrawingFlags and odf_UpsideDown) <> 0;
 end;
 
 end.
