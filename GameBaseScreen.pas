@@ -376,7 +376,6 @@ end;
 procedure TGameBaseScreen.ExtractBackGround;
 begin
   fMainDatExtractor.ExtractBrownBackGround(fBackGround);
-//  fBackground.SaveToFile('d:\bb.bmp');
 end;
 
 procedure TGameBaseScreen.ExtractPurpleFont;

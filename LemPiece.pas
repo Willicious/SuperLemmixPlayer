@@ -29,11 +29,20 @@ type
   protected
     fSet: String;
     fPiece: String;
+    function GetFlip: Boolean; virtual;
+    function GetInvert: Boolean; virtual;
+    function GetRotate: Boolean; virtual;
+    procedure SetFlip(aValue: Boolean); virtual;
+    procedure SetInvert(aValue: Boolean); virtual;
+    procedure SetRotate(aValue: Boolean); virtual;
   public
     procedure Assign(Source: TPersistent); override;
   published
     property GS: String read fSet write fSet; // "Set" is a reserved keyword :(
     property Piece: String read fPiece write fPiece;
+    property Flip   : Boolean read GetFlip write SetFlip;
+    property Invert : Boolean read GetInvert write SetInvert;
+    property Rotate : Boolean read GetRotate write SetRotate;    
   end;
 
 type
@@ -93,6 +102,35 @@ begin
     Piece := IP.Piece;
   end
   else inherited Assign(Source);
+end;
+
+procedure TIdentifiedPiece.SetFlip(aValue: Boolean);
+begin
+  // Discard if not overridden
+end;
+
+procedure TIdentifiedPiece.SetInvert(aValue: Boolean);
+begin
+end;
+
+procedure TIdentifiedPiece.SetRotate(aValue: Boolean);
+begin
+end;
+
+function TIdentifiedPiece.GetFlip: Boolean;
+begin
+  // False, if not overridden
+  Result := false;
+end;
+
+function TIdentifiedPiece.GetInvert: Boolean;
+begin
+  Result := false;
+end;
+
+function TIdentifiedPiece.GetRotate: Boolean;
+begin
+  Result := false;
 end;
 
 { TSizedPiece }

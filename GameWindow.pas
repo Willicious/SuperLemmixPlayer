@@ -9,7 +9,7 @@ uses
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls,
   GR32, GR32_Image, GR32_Layers,
   UMisc, UTools,
-  LemCore, LemLevel, LemDosStyle, LemRendering,
+  LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
   LemGame,
   GameControl, GameSkillPanel, GameBaseScreen;
 
@@ -24,6 +24,10 @@ type
 
   TGameWindow = class(TGameBaseScreen)
   private
+    fRenderInterface: TRenderInterface;
+    fRenderer: TRenderer;
+    fNeedRedraw: Boolean;
+    fNeedEndUpdate: Boolean;
     fNeedReset : Boolean;
     fMouseTrapped: Boolean;
     fSaveList: TLemmingGameSavedStateList;
@@ -58,6 +62,7 @@ type
     procedure StartReplay2(const aFileName: string);
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
+    procedure DoDraw;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -134,6 +139,7 @@ procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
 var
   CurrTime: Cardinal;
   Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
+  DrawRect: TRect;
 begin
   if not CanPlay or not Game.Playing or Game.GameFinished then
     Exit;
@@ -219,6 +225,25 @@ begin
       end;
 
   end;
+
+  // Update drawing
+  if TimeForFrame or TimeForFastForwardFrame or fNeedRedraw then
+  begin
+    DoDraw;
+  end;
+end;
+
+procedure TGameWindow.DoDraw;
+var
+  DrawRect: TRect;
+begin
+  fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
+  fRenderInterface.MousePos := Game.CursorPoint;
+  fRenderer.DrawAllObjects;
+  fRenderer.DrawLemmings;
+  DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 319, fRenderInterface.ScreenPos.Y + 159);
+  fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect);
+  fNeedRedraw := false;
 end;
 
 procedure TGameWindow.CheckShifts(Shift: TShiftState);
@@ -299,39 +324,33 @@ begin
 end;
 
 procedure TGameWindow.CheckScroll;
+  procedure Scroll(dx, dy: Integer);
+  begin
+    Img.OffsetHorz := Img.OffsetHorz - DisplayScale * dx * fScrollSpeed;
+    Img.OffsetVert := Img.OffsetVert - DisplayScale * dy * fScrollSpeed;
+    Img.OffsetHorz := Max(MinScroll * DisplayScale, Img.OffsetHorz);
+    Img.OffsetHorz := Min(MaxScroll * DisplayScale, Img.OffsetHorz);
+    Img.OffsetVert := Max(MinVScroll * DisplayScale, Img.OffsetVert);
+    Img.OffsetVert := Min(MaxVScroll * DisplayScale, Img.OffsetVert);
+  end;
 begin
+  Img.BeginUpdate;
   case GameScroll of
     gsRight:
-      begin
-      //if Mouse.
-      Img.OffsetHorz := Max(MinScroll * DisplayScale, Img.OffSetHorz - DisplayScale * 8 * fScrollSpeed);
-      end;
-(*      if Img.OffSetHorz > MinScroll * DisplayScale then
-      begin
-        Img.OffSetHorz := Img.OffSetHorz - DisplayScale * 8;
-
-      end; *)
+      Scroll(8, 0);
     gsLeft:
-      begin
-      Img.OffsetHorz := Min(MaxScroll * DisplayScale, Img.OffSetHorz + DisplayScale * 8 * fScrollSpeed);
-      end;
-      (*
-      if Img.OffSetHorz < MaxScroll * DisplayScale then
-      begin
-        Img.OffSetHorz := Img.OffSetHorz + DisplayScale * 8;
-      end;
-      *)
+      Scroll(-8, 0);
   end;
   case GameVScroll of
     gsUp:
-      begin
-      Img.OffsetVert := Min(MaxVScroll * DisplayScale, Img.OffSetVert + DisplayScale * 8 * fScrollSpeed);
-      end;
+      Scroll(0, -8);
     gsDown:
-      begin
-      Img.OffsetVert := Max(MinVScroll * DisplayScale, Img.OffSetVert - DisplayScale * 8 * fScrollSpeed);
-      end;
+      Scroll(0, 8);
   end;
+
+  DoDraw;
+  Img.EndUpdate;
+
 end;
 
 constructor TGameWindow.Create(aOwner: TComponent);
@@ -597,6 +616,8 @@ begin
 
   CheckShifts(Shift);
 
+  if Game.Paused then
+    DoDraw;
 end;
 
 procedure TGameWindow.Form_KeyPress(Sender: TObject; var Key: Char);
@@ -690,6 +711,9 @@ begin
         Game.ProcessHighlightAssignment;
     end;
 
+    if Game.Paused then
+      DoDraw;
+
   end;
 end;
 
@@ -732,6 +756,9 @@ begin
       GameVScroll := gsUp
     else
       GameVScroll := gsNone;
+
+    if Game.Paused then
+      DoDraw;
   end;
 
 end;
@@ -773,8 +800,6 @@ begin
   bmpMask := TBitmap.Create;
   bmpColor := TBitmap.Create;
 
-  //bmpMask.LoadFromFile(apppath + 'dosgamecursormask1.bmp');
-  //bmpColor.LoadFromFile(apppath+'dosgamecursor1.bmp');
   bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT_MASK');
   bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT');
 //  bmpcolor.canvas.pixels[3,8]:=clred;
@@ -816,8 +841,6 @@ begin
   bmpMask := TBitmap.Create;
   bmpColor := TBitmap.Create;
 
-//  bmpMask.LoadFromFile(apppath + 'dosgamecursormask2.bmp');
-//  bmpColor.LoadFromFile(apppath+'dosgamecursor2.bmp');
   bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT_MASK');
   bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT');
 
@@ -932,6 +955,10 @@ begin
   ApplyMouseTrap;
 
   if ((Params.SysDat.Options2 and $4) <> 0) then SkillPanel.ActivateCenterDigits;
+
+  fRenderer := Params.Renderer;
+  fRenderInterface := Game.RenderInterface;
+  fRenderer.SetInterface(fRenderInterface);
 
 end;
 

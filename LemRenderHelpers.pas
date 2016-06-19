@@ -6,7 +6,7 @@ unit LemRenderHelpers;
 interface
 
 uses
-  LemTypes,
+  LemTypes, LemObjects, LemLemming, LemCore,
   UMisc,
   GR32, GR32_Blend, GR32_LowLevel, GR32_Resamplers,
   Contnrs, Classes, SysUtils;
@@ -22,6 +22,7 @@ type
                   rlOneWayArrows,
                   rlObjectsHigh,
                   rlHighShadows,
+                  rlObjectHelpers,
                   rlParticles,
                   rlLemmings);
 
@@ -38,7 +39,8 @@ type
   public
     constructor Create;
     procedure Prepare(aWidth, aHeight: Integer);
-    procedure CombineTo(aDst: TBitmap32);
+    procedure CombineTo(aDst: TBitmap32; aRegion: TRect); overload;
+    procedure CombineTo(aDst: TBitmap32); overload;
     property Items[Index: TRenderLayer]: TBitmap32 read GetItem; default;
     property List;
     property Width: Integer read fWidth;
@@ -98,10 +100,89 @@ type
     property Inverted: TBitmap32 read fInverted;
   end;
 
+  THelperIcon = (hpi_A, hpi_B, hpi_C, hpi_D, hpi_E, hpi_F, hpi_G, hpi_H, hpi_I, hpi_J, hpi_K, hpi_L, hpi_M,
+                 hpi_N, hpi_O, hpi_P, hpi_Q, hpi_R, hpi_S, hpi_T, hpi_U, hpi_V, hpi_W, hpi_X, hpi_Y, hpi_Z,
+                 hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation);
+
+  THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
+
+  TRenderInterface = class // Used for communication between GameWindow, LemGame and LemRendering.
+    private
+      fLemmingList: TLemmingList;
+      fObjectList: TInteractiveObjectInfoList;
+      fPSelectedSkill: ^TSkillPanelButton;
+      fSelectedLemming: TLemming;
+      fHighlitLemming: TLemming;
+      fReplayLemming: TLemming;
+      fPhysicsMap: TBitmap32;
+      fTerrainMap: TBitmap32;
+      fScreenPos: TPoint;
+      fMousePos: TPoint;
+      function GetSelectedSkill: TSkillPanelButton;
+    public
+      procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
+      property LemmingList: TLemmingList read fLemmingList write fLemmingList;
+      property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
+      property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
+      property SelectedLemming: TLemming read fSelectedLemming write fSelectedLemming;
+      property HighlitLemming: TLemming read fHighlitLemming write fHighlitLemming;
+      property ReplayLemming: TLemming read fReplayLemming write fReplayLemming;
+      property PhysicsMap: TBitmap32 read fPhysicsMap write fPhysicsMap;
+      property TerrainMap: TBitmap32 read fTerrainMap write fTerrainMap;
+      property ScreenPos: TPoint read fScreenPos write fScreenPos;
+      property MousePos: TPoint read fMousePos write fMousePos;
+  end;
+
+const
+  HelperImageFilenames: array[Low(THelperIcon)..High(THelperIcon)] of String =
+                             ('ltr_a.png',
+                              'ltr_b.png',
+                              'ltr_c.png',
+                              'ltr_d.png',
+                              'ltr_e.png',
+                              'ltr_f.png',
+                              'ltr_g.png',
+                              'ltr_h.png',
+                              'ltr_i.png',
+                              'ltr_j.png',
+                              'ltr_k.png',
+                              'ltr_l.png',
+                              'ltr_m.png',
+                              'ltr_n.png',
+                              'ltr_o.png',
+                              'ltr_p.png',
+                              'ltr_q.png',
+                              'ltr_r.png',
+                              'ltr_s.png',
+                              'ltr_t.png',
+                              'ltr_u.png',
+                              'ltr_v.png',
+                              'ltr_w.png',
+                              'ltr_x.png',
+                              'ltr_y.png',
+                              'ltr_z.png',
+                              'left_arrow.png',
+                              'right_arrow.png',
+                              'up_arrow.png',
+                              'down_arrow.png',
+                              'exclamation.png');
+
 implementation
 
 uses
   UTools;
+
+{ TRenderInterface }
+
+procedure TRenderInterface.SetSelectedSkillPointer(var aButton: TSkillPanelButton);
+begin
+  fPSelectedSkill := @aButton;
+end;
+
+function TRenderInterface.GetSelectedSkill: TSkillPanelButton;
+begin
+  Result := fPSelectedSkill^;
+end;
 
 { TDrawItem }
 
@@ -353,6 +434,11 @@ begin
 end;
 
 procedure TRenderBitmaps.CombineTo(aDst: TBitmap32);
+begin
+  CombineTo(aDst, fPhysicsMap.BoundsRect);
+end;
+
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect);
 var
   i: TRenderLayer;
 begin
@@ -365,9 +451,9 @@ begin
   begin
     fPhysicsMap.DrawMode := dmCustom;
     fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyOnTerrain;
-    fPhysicsMap.DrawTo(Items[rlOnTerrainObjects]);
+    fPhysicsMap.DrawTo(Items[rlOnTerrainObjects], aRegion, aRegion);
     fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
-    fPhysicsMap.DrawTo(Items[rlOneWayArrows]);
+    fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, aRegion);
   end;
 
   for i := Low(TRenderLayer) to High(TRenderLayer) do
@@ -382,7 +468,7 @@ begin
                   rlHighShadows,
                   rlParticles,
                   rlLemmings] then Continue;}
-    Items[i].DrawTo(aDst, aDst.BoundsRect);
+    Items[i].DrawTo(aDst, aRegion, aRegion);
   end;
   aDst.EndUpdate;
   aDst.Changed;

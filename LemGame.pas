@@ -34,7 +34,7 @@ uses
   LemNeoPieceManager, // makes use of the records containing images + metainfo
   LemCore, LemTypes, LemDosBmp, LemDosStructures, LemStrings, LemMetaAnimation,
   LemMetaObject, LemInteractiveObject, LemSteel, LemLevel, LemStyle,
-  LemRendering, LemDosAnimationSet,
+  LemRenderHelpers, LemRendering, LemDosAnimationSet,
   LemMusicSystem, LemDosMainDat,
   LemObjects, LemLemming, LemRecolorSprites,
   GameInterfaces, GameControl, GameSound;
@@ -300,9 +300,9 @@ type
       LemmingList: TLemmingList;
       SelectedSkill: TSkillPanelButton;
       TargetBitmap: TBitmap32;
-      //World: TBitmap32;
+      World: TBitmap32;         // the visual terrain image
+      PhysicsMap: TBitmap32;    // the actual physics
       //SteelWorld: TBitmap32;
-      PhysicsMap: TBitmap32;
       ObjectMap: TByteMap;
       BlockerMap: TByteMap;
       //SpecialMap: TByteMap;
@@ -360,6 +360,7 @@ type
 
   TLemmingGame = class(TComponent)
   private
+    fRenderInterface           : TRenderInterface;
     fTalismans                 : TTalismans;
     fTalismanReceived          : Boolean;
 
@@ -368,7 +369,7 @@ type
     fTargetBitmap              : TBitmap32; // reference to the drawing bitmap on the gamewindow
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
     fOptions                   : TDosGameOptions; // mechanic options
-    fParticles                 : TParticleTable; // all particle offsets
+    
     fParticleColors            : array[0..15] of TColor32;
 
   { internal objects }
@@ -584,7 +585,7 @@ type
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
-    procedure DrawLemmings;
+    //procedure DrawLemmings;
     //  procedure DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
     procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
     procedure CheckForNewShadow;
@@ -769,6 +770,8 @@ type
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
     property LastReplayDir: String read fLastReplayDir write fLastReplayDir;
 
+    property RenderInterface: TRenderInterface read fRenderInterface;
+
     function GetLevelWidth: Integer;
     function GetLevelHeight: Integer;
 
@@ -877,7 +880,7 @@ begin
   LemmingList := TLemmingList.Create(true);
   ObjectInfos := TInteractiveObjectInfoList.Create(true);
   TargetBitmap := TBitmap32.Create;
-  //World := TBitmap32.Create;
+  World := TBitmap32.Create;
   //SteelWorld := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
   ObjectMap := TByteMap.Create;
@@ -892,7 +895,7 @@ begin
   LemmingList.Free;
   ObjectInfos.Free;
   TargetBitmap.Free;
-  //World.Free;
+  World.Free;
   //SteelWorld.Free;
   PhysicsMap.Free;
   ObjectMap.Free;
@@ -1021,7 +1024,7 @@ begin
   // Simple stuff
   aState.SelectedSkill := fSelectedSkill;
   aState.TargetBitmap.Assign(fTargetBitmap);
-  //aState.World.Assign(World);
+  aState.World.Assign(fRenderer.TerrainLayer);
   //aState.SteelWorld.Assign(SteelWorld);
   aState.PhysicsMap.Assign(PhysicsMap);
   aState.ObjectMap.Assign(ObjectMap);
@@ -1094,7 +1097,7 @@ begin
     fSelectedSkill := aState.SelectedSkill;
   if not SkipTargetBitmap then  // We don't need to bother with this one if we're not loading the exact frame we want to go to
     fTargetBitmap.Assign(aState.TargetBitmap);
-  //World.Assign(aState.World);
+  fRenderer.TerrainLayer.Assign(aState.World);
   //SteelWorld.Assign(aState.SteelWorld);
   PhysicsMap.Assign(aState.PhysicsMap);
   ObjectMap.Assign(aState.ObjectMap);
@@ -1246,6 +1249,8 @@ var
 begin
   inherited Create(aOwner);
 
+  fRenderInterface := TRenderInterface.Create;
+
   LemmingList    := TLemmingList.Create;
   //World          := TBitmap32.Create;
   //SteelWorld     := TBitmap32.Create;
@@ -1262,6 +1267,13 @@ begin
   fOptions       := DOSORIG_GAMEOPTIONS;
   SoundMgr       := TSoundMgr.Create;
   fTalismans     := TTalismans.Create;
+
+  fRenderInterface.LemmingList := LemmingList;
+  fRenderInterface.ObjectList := ObjectInfos;
+  fRenderInterface.SetSelectedSkillPointer(fSelectedSkill);
+  fRenderInterface.SelectedLemming := nil;
+  fRenderInterface.HighlitLemming := nil;
+  fRenderInterface.ReplayLemming := nil;
 
   LemmingMethods[baNone]       := nil;
   LemmingMethods[baWalking]    := HandleWalking;
@@ -1380,6 +1392,7 @@ begin
   SoundMgr.Free;
   ExplodeMaskBmp.Free;
   fTalismans.Free;
+  fRenderInterface.Free;
   inherited Destroy;
 end;
 
@@ -1538,7 +1551,7 @@ begin
 
   //Renderer.RenderPhysicsMap;
   PhysicsMap := Renderer.PhysicsMap;
-  PhysicsMap.SaveToFile(AppPath + 'physics.bmp');
+  RenderInterface.PhysicsMap := PhysicsMap;
 
   MusicSys := fGameParams.Style.MusicSystem;
   MusicFileName := GetMusicFileName;
@@ -1559,10 +1572,7 @@ begin
     end;
   end;
 
-  S := CreateDataStream('explode.dat', ldtParticles);
-  S.Seek(0, soFromBeginning);
-  S.Read(fParticles, S.Size);
-  S.Free;
+  
 
   fTalismans.Clear;
 
@@ -1812,7 +1822,7 @@ begin
 
   fTalismanReceived := false;
 
-  Renderer.DrawLevel(fTargetBitmap);
+  //Renderer.DrawLevel(fTargetBitmap);
 
   Playing := True;
 end;
@@ -2902,7 +2912,7 @@ procedure TLemmingGame.InitializeMiniMap;
 begin
   // The renderer handles most of the work here now.
   Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
-  fRenderer.RenderMinimap(Minimap, LemmingList);
+  //fRenderer.RenderMinimap(Minimap, LemmingList);
 end;
 
 function TLemmingGame.GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
@@ -3571,11 +3581,11 @@ end;
 procedure TLemmingGame.DrawParticles(L: TLemming; DoErase: Boolean);
 // if DoErase = False, then draw the explosion particles,
 // if DoErase = True, then erase them.
-var
-  i, X, Y: Integer;
+//var
+//  i, X, Y: Integer;
 begin
 
-  for i := 0 to 79 do
+(*  for i := 0 to 79 do
   begin
     X := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DX;
     Y := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DY;
@@ -3587,7 +3597,7 @@ begin
     end;
   end;
 
-  fExplodingGraphics := True;
+  fExplodingGraphics := True;*)
 end;
 
 
@@ -3623,7 +3633,7 @@ begin
     Exit;
 
   // Main stuff comes here!!!
-  Renderer.DrawAllObjects(fTargetBitmap, ObjectInfos);
+  //Renderer.DrawAllObjects(fTargetBitmap, ObjectInfos, CursorPoint);
 end;
 
 procedure TLemmingGame.EraseLemmings;
@@ -3639,7 +3649,7 @@ begin
   // Don't need to erase lemmings anymore!
 end;
 
-procedure TLemmingGame.DrawLemmings;
+(*procedure TLemmingGame.DrawLemmings;
 var
   iLemming: Integer;
   L: TLemming;
@@ -3648,13 +3658,13 @@ begin
   if HyperSpeed then
     Exit;
 
-  fRenderer.DrawLemmings(LemmingList, fLemSelected);
-  if not fHyperSpeed then InitializeMinimap;
+  //fRenderer.DrawLemmings(LemmingList, fLemSelected);
+  //if not fHyperSpeed then InitializeMinimap;
 
   // If paused, update screen
-  if Paused then
-    fRenderer.DrawLevel(fTargetBitmap);
-end;
+  //if Paused then
+  //  fRenderer.DrawLevel(fTargetBitmap);
+end;*)
 
 (*procedure TLemmingGame.DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
 var
@@ -3769,7 +3779,7 @@ begin
     begin
       fRenderer.ClearShadows;
       fExistShadow := false;
-      if Paused then fRenderer.DrawLevel(fTargetBitmap);
+      //if Paused then fRenderer.DrawLevel(fTargetBitmap);
       Exit; // This should not be needed anymore!
     end else begin
       L := fLemSelected;
@@ -3888,7 +3898,7 @@ begin
       fLemWithShadow := L;
       fLemWithShadowButton := fSelectedSkill;
       fExistShadow := True;
-      if Paused then fRenderer.DrawLevel(fTargetBitmap);
+      //if Paused then fRenderer.DrawLevel(fTargetBitmap);
     end;
 
   except
@@ -5066,7 +5076,8 @@ begin
 
   DrawAnimatedObjects;
 
-  DrawLemmings;
+  //DrawLemmings;
+  fRenderInterface.SelectedLemming := fLemSelected;
 
   // Check lemmings under cursor
   HitTest;
@@ -5089,8 +5100,8 @@ begin
   //  fTargetBitmap.Changed;
 
   // Just always redraw. We can change this later if there's perfomance issues.
-  if not HyperSpeed then
-    fRenderer.DrawLevel(fTargetBitmap);
+  //if not HyperSpeed then
+    //fRenderer.DrawLevel(fTargetBitmap);
 
   CheckForPlaySoundEffect;
 end;
@@ -5176,8 +5187,7 @@ begin
   if L <> OldLemSelected then
   begin
     fLemSelected := L;
-    // redraw all lemmings to change color of selected lem
-    DrawLemmings;
+    fRenderInterface.SelectedLemming := L;
   end;
 
   if Assigned(L) and not fHitTestAutofail then
@@ -5287,10 +5297,12 @@ begin
         EraseLemmings; //so the old highlight marker if any disappears
         DrawAnimatedObjects; // not sure why this one. Might be to fix graphical glitches, I guess?
       end;
-      DrawLemmings;  // so the highlight marker shows up
-      fRenderer.DrawLevel(fTargetBitmap);
+      //DrawLemmings;  // so the highlight marker shows up
+      //fRenderer.DrawLevel(fTargetBitmap);
     end;
   end;
+
+  fRenderInterface.HighlitLemming := fHighlightLemming;
 
 
 end;

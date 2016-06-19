@@ -29,6 +29,8 @@ type
       class procedure PngToBitmap32(Png: TPngObject; Bmp: TBitmap32);
       class function Bitmap32ToPng(Bmp: TBitmap32; NoAlpha: Boolean): TPngObject;
     public
+      class procedure MaskImageFromFile(Bmp: TBitmap32; fn: String; C: TColor32);
+      class procedure MaskImageFromImage(Bmp: TBitmap32; Mask: TBitmap32; C: TColor32);
       class function LoadPngFile(fn: String): TBitmap32; overload;
       class procedure LoadPngFile(fn: String; Bmp: TBitmap32); overload;
       class function LoadPngStream(aStream: TStream): TBitmap32; overload;
@@ -38,6 +40,48 @@ type
   end;
 
 implementation
+
+class procedure TPngInterface.MaskImageFromFile(Bmp: TBitmap32; fn: String; C: TColor32);
+var
+  TempBmp: TBitmap32;
+begin
+  TempBmp := LoadPngFile(fn);
+  MaskImageFromImage(Bmp, TempBmp, C);
+  TempBmp.Free;
+end;
+
+class procedure TPngInterface.MaskImageFromImage(Bmp: TBitmap32; Mask: TBitmap32; C: TColor32);
+var
+  x, y: Integer;
+  McR, McG, McB: Byte;
+  R, G, B, A: Byte;
+
+  MaskBmp: TBitmap32;
+begin
+  McR := RedComponent(C);
+  McG := GreenComponent(C);
+  McB := BlueComponent(C);
+  MaskBMP := TBitmap32.Create;
+  MaskBMP.Assign(Mask);
+  for y := 0 to MaskBMP.Height-1 do
+    for x := 0 to MaskBMP.Width-1 do
+    begin
+      A := AlphaComponent(MaskBMP.Pixel[x, y]);
+      R := RedComponent(MaskBMP.Pixel[x, y]);
+      G := GreenComponent(MaskBMP.Pixel[x, y]);
+      B := BlueComponent(MaskBMP.Pixel[x, y]);
+      // Alpha is not modified.
+      R := R * McR div 255;
+      G := G * McG div 255;
+      B := B * McB div 255;
+      MaskBMP.Pixel[x, y] := (A shl 24) + (R shl 16) + (G shl 8) + B;
+    end;
+
+  MaskBMP.DrawMode := dmBlend;
+  MaskBMP.CombineMode := cmMerge;
+  MaskBMP.DrawTo(Bmp);
+  MaskBMP.Free;
+end;
 
 class function TPngInterface.LoadPngFile(fn: String): TBitmap32;
 begin

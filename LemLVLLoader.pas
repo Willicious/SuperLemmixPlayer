@@ -10,12 +10,15 @@ uses
   Dialogs,
   UMisc,
   Math,
+  LemNeoParser,
   LemDosMainDat,
+  LemPiece,
   LemTerrain,
   LemInteractiveObject,
   LemSteel,
   LemDosStructures,
-  LemLevel;
+  LemLevel,
+  LemTypes;
 
 type
   TStyleName = class
@@ -70,6 +73,31 @@ type
   published
   end;
 
+  TTranslationItem = record
+    SrcName: String;
+    DstGS: String;
+    DstName: String;
+    OffsetL: Integer;
+    OffsetT: Integer;
+    OffsetR: Integer;
+    OffsetB: Integer;
+    Flip: Boolean;
+    Invert: Boolean;
+    Rotate: Boolean;
+  end;
+
+  TTranslationTable = class
+    private
+      fTerrainArray: array of TTranslationItem;
+      fObjectArray: array of TTranslationItem;
+      procedure FindMatch(Item: TIdentifiedPiece);
+    public
+      constructor Create;
+      destructor Destroy; override;
+      procedure LoadFromFile(aFilename: String);
+      procedure Apply(aLevel: TLevel);
+  end;
+
   TLVLLoader = class
   private
     class procedure UpgradeFormat(var Buf: TNeoLVLRec);
@@ -83,6 +111,258 @@ type
   end;
 
 implementation
+
+{ TTranslationTable }
+
+constructor TTranslationTable.Create;
+begin
+  inherited;
+  SetLength(fTerrainArray, 0);
+  SetLength(fObjectArray, 0);
+end;
+
+destructor TTranslationTable.Destroy;
+begin
+  SetLength(fTerrainArray, 0);
+  SetLength(fObjectArray, 0);
+  inherited;
+end;
+
+procedure TTranslationTable.LoadFromFile(aFilename: String);
+var
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+  ObjLen, TerLen: Integer;
+  NewRec: TTranslationItem;
+  GotFirst: Boolean;
+  CurrentlyObject: Boolean;
+
+  procedure ExtendTerrain;
+  begin
+    if Length(fTerrainArray) < TerLen then Exit;
+    SetLength(fTerrainArray, TerLen + 50);
+  end;
+
+  procedure ExtendObject;
+  begin
+    if Length(fObjectArray) < ObjLen then Exit;
+    SetLength(fObjectArray, ObjLen + 50);
+  end;
+
+  procedure TrimArrays;
+  begin
+    SetLength(fObjectArray, ObjLen);
+    SetLength(fTerrainArray, TerLen);
+  end;
+
+  procedure ClearTemp;
+  begin
+    if GotFirst then
+    begin
+      if CurrentlyObject then
+      begin
+        ExtendObject;
+        fObjectArray[ObjLen] := NewRec;
+        Inc(ObjLen);
+      end else begin
+        ExtendTerrain;
+        fTerrainArray[TerLen] := NewRec;
+        Inc(TerLen);
+      end;
+    end else
+      GotFirst := true;
+    NewRec.SrcName := '';
+    NewRec.DstGS := '';
+    NewRec.DstName := '';
+    NewRec.OffsetL := 0;
+    NewRec.OffsetT := 0;
+    NewRec.OffsetR := 0;
+    NewRec.OffsetB := 0;
+    NewRec.Flip := false;
+    NewRec.Invert := false;
+    NewRec.Rotate := false;
+  end;
+begin
+  Parser := TNeoLemmixParser.Create;
+  ObjLen := 0;
+  TerLen := 0;
+  GotFirst := false;
+  try
+    Parser.LoadFromFile(aFilename);
+    repeat
+      Line := Parser.NextLine;
+
+      if Line.Keyword = 'TERRAIN' then
+      begin
+        ClearTemp;
+        CurrentlyObject := false;
+        NewRec.SrcName := 'T' + IntToStr(Line.Numeric);
+      end;
+
+      if Line.Keyword = 'OBJECT' then
+      begin
+        ClearTemp;
+        CurrentlyObject := true;
+        NewRec.SrcName := 'O' + IntToStr(Line.Numeric);
+      end;
+
+      if Line.Keyword = 'SET' then
+        NewRec.DstGS := Line.Value;
+
+      if Line.Keyword = 'NAME' then
+        NewRec.DstName := Line.Value;
+
+      if Line.Keyword = 'OFFSET_LEFT' then
+        NewRec.OffsetL := Line.Numeric;
+
+      if Line.Keyword = 'OFFSET_TOP' then
+        NewRec.OffsetT := Line.Numeric;
+
+      if Line.Keyword = 'OFFSET_RIGHT' then
+        NewRec.OffsetR := Line.Numeric;
+
+      if Line.Keyword = 'OFFSET_BOTTOM' then
+        NewRec.OffsetB := Line.Numeric;
+
+      if Line.Keyword = 'FLIP' then
+        NewRec.Flip := true;
+
+      if Line.Keyword = 'INVERT' then
+        NewRec.Invert := true;
+
+      if Line.Keyword = 'ROTATE' then
+        NewRec.Rotate := true;
+        
+    until Line.Keyword = '';
+
+    ClearTemp; // flush the last one!
+  finally
+    TrimArrays;
+    Parser.Free;
+  end;
+end;
+
+procedure TTranslationTable.Apply(aLevel: TLevel);
+var
+  i: Integer;
+  Item: TIdentifiedPiece;
+begin
+  for i := 0 to aLevel.Terrains.Count-1 do
+  begin
+    Item := aLevel.Terrains[i];
+    FindMatch(Item);
+  end;
+
+  for i := 0 to aLevel.InteractiveObjects.Count-1 do
+  begin
+    Item := aLevel.InteractiveObjects[i];
+    FindMatch(Item);
+  end;
+
+  for i := aLevel.Terrains.Count-1 downto 0 do
+    if Lowercase(aLevel.Terrains[i].Piece) = '*nil' then
+      aLevel.Terrains.Delete(i);
+
+  for i := aLevel.InteractiveObjects.Count-1 downto 0 do
+    if Lowercase(aLevel.InteractiveObjects[i].Piece) = '*nil' then
+      aLevel.InteractiveObjects.Delete(i);
+end;
+
+procedure TTranslationTable.FindMatch(Item: TIdentifiedPiece);
+var
+  TransItem: TTranslationItem;
+  ArrayLen: Integer;
+  i: Integer;
+  Flip, Inv, Rotate: Boolean;
+  dx, dy: Integer;
+begin
+  if Item is TTerrain then
+    ArrayLen := Length(fTerrainArray)
+  else
+    ArrayLen := Length(fObjectArray);
+
+  for i := 0 to ArrayLen-1 do
+  begin
+    if Item is TTerrain then
+      TransItem := fTerrainArray[i]
+    else
+      TransItem := fObjectArray[i];
+    if Lowercase(Item.Piece) = Lowercase(TransItem.SrcName) then
+    begin
+      Item.GS := TransItem.DstGS;
+      Item.Piece := TransItem.DstName;
+
+      Flip := Item.Flip;
+      Inv := Item.Invert;
+      Rotate := Item.Rotate;
+
+      // Does the translation say rotate?
+      if TransItem.Rotate then
+        if not Rotate then
+          Rotate := true
+        else begin
+          // To change from 90 to 180, we turn rotate off, and flip the other two
+          Rotate := false;
+          Flip := not Item.Flip;
+          Inv := not Item.Invert;
+        end;
+
+      if TransItem.Flip then
+        if Rotate then
+          Inv := not Inv
+        else
+          Flip := not Flip;
+
+      if TransItem.Invert then
+        if Rotate then
+          Flip := not Flip
+        else
+          Inv := not Inv;
+
+      // Offset to apply to left edge
+      //   Normal: Left
+      //   Flipped: Right
+      //   Rotated: Bottom
+      //   Rotate-Flip: Top
+
+      if Rotate then
+      begin
+        if Flip then
+          dx := TransItem.OffsetT
+        else
+          dx := TransItem.OffsetB;
+
+        if Inv then
+          dy := TransItem.OffsetR
+        else
+          dy := TransItem.OffsetL;
+      end else begin
+        if Flip then
+          dx := TransItem.OffsetR
+        else
+          dx := TransItem.OffsetL;
+
+        if Inv then
+          dy := TransItem.OffsetB
+        else
+          dy := TransItem.OffsetT;
+      end;
+
+      // Offset to apply to top edge
+      //   Normal: Top
+      //   Inverted: Bottom
+      //   Rotated: Left
+      //   Rotate-Flip: Right
+
+      Item.Flip := Flip;
+      Item.Invert := Inv;
+      Item.Rotate := Rotate;
+      Item.Left := Item.Left + dx;
+      Item.Top := Item.Top + dy;
+      Exit;
+    end;
+  end;
+end;
 
 { TStyleName }
 
@@ -258,6 +538,7 @@ var
   i, i2: integer;
   TempStream: TMemoryStream;
   TempLevel: TLevel;
+  Trans: TTranslationTable;
 begin
   SetLength(aLevel.Info.WindowOrder, 0); //kludgy bug fix
 
@@ -337,6 +618,15 @@ begin
     end;
 
     aLevel.Info.LevelID := aLevel.Info.LevelID + aLevel.InteractiveObjects.Count + aLevel.Terrains.Count + aLevel.Steels.Count;
+  end;
+
+  // Apply translation table if one exists
+  if FileExists(AppPath + 'styles\' + Trim(aLevel.Info.GraphicSetName) + '\translation.nxmi') then
+  begin
+    Trans := TTranslationTable.Create;
+    Trans.LoadFromFile(AppPath + 'styles\' + Trim(aLevel.Info.GraphicSetName) + '\translation.nxmi');
+    Trans.Apply(aLevel);
+    Trans.Free;
   end;
 
 end;

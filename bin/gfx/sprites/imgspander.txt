@@ -1,0 +1,4 @@
+Create file called "instructions.txt"
+
+First four lines (in order): src frame width, height, dst frame width, height
+Remaining lines are filenames

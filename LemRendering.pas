@@ -24,10 +24,11 @@ interface
 
 uses
   Dialogs,
-  Classes, Contnrs, Math,
+  Classes, Contnrs, Math, Windows,
   GR32, GR32_LowLevel, GR32_Blend,
   UMisc,
   SysUtils,
+  PngInterface,
   LemRecolorSprites,
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
   LemDosBmp, LemDosStructures,
@@ -43,6 +44,8 @@ uses
   // create gamerenderlist in order of rendering
 
 const
+  PARTICLE_FRAMECOUNT = 52;
+
   PM_SOLID       = $00000001;
   PM_STEEL       = $00000002;
   PM_ONEWAY      = $00000004;
@@ -57,6 +60,12 @@ const
 
 
 type
+  TParticleRec = packed record
+    DX, DY: ShortInt
+  end;
+  TParticleArray = packed array[0..79] of TParticleRec;
+  TParticleTable = packed array[0..50] of TParticleArray;
+
   // temp solution
   TRenderInfoRec = record
     TargetBitmap : TBitmap32; // the visual bitmap
@@ -65,6 +74,8 @@ type
 
   TRenderer = class
   private
+    fRenderInterface: TRenderInterface;
+
     fRecolorer: TRecolorImage;
 
     fPhysicsMap: TBitmap32;
@@ -78,11 +89,15 @@ type
 
     fPieceManager: TNeoPieceManager;
 
+    fHelperImages: THelperImages;
+
     fWorld: TBitmap32;
 
     fAni: TBaseDosAnimationSet;
 
     fBgColor : TColor32;
+
+    fParticles                 : TParticleTable; // all particle offsets
 
     // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -100,7 +115,7 @@ type
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
 
-    function GetLemmingLayer: TBitmap32;
+    function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
   protected
@@ -108,21 +123,29 @@ type
     constructor Create;
     destructor Destroy; override;
 
-    procedure DrawLevel(aDst: TBitmap32);
+    procedure SetInterface(aInterface: TRenderInterface);
+
+    procedure DrawLevel(aDst: TBitmap32); overload;
+    procedure DrawLevel(aDst: TBitmap32; aRegion: TRect); overload;
 
     function FindMetaObject(O: TInteractiveObject): TObjectRecord;
     function FindMetaTerrain(T: TTerrain): TTerrainRecord;
 
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
-    // Map rendering
+    // Terrain rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
+
+    // Object rendering
     procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
-    procedure DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
+    procedure DrawAllObjects;
+    procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 
     // Lemming rendering
-    procedure DrawLemmings(aLemmings: TLemmingList; SelectedLemming: TLemming = nil);
+    procedure DrawLemmings;
     procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
+    procedure DrawLemmingHelper(aLemming: TLemming);
+    procedure DrawLemmingParticles(L: TLemming);
 
     procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
 
@@ -147,8 +170,8 @@ type
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
     property Theme: TNeoTheme read fTheme;
 
-    property LemmingLayer: TBitmap32 read GetLemmingLayer; // this should be replaced with having TRenderer do the lemming drawing! But for now, this is a kludgy workaround
-    property ParticleLayer: TBitmap32 read GetParticleLayer; // same
+    property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
+    property ParticleLayer: TBitmap32 read GetParticleLayer; // needs to be replaced with making TRenderer draw them
   end;
 
 implementation
@@ -157,6 +180,11 @@ uses
   UTools;
 
 { TRenderer }
+
+procedure TRenderer.SetInterface(aInterface: TRenderInterface);
+begin
+  fRenderInterface := aInterface;
+end;
 
 // Minimap drawing
 
@@ -198,15 +226,27 @@ end;
 
 // Lemming Drawing
 
-procedure TRenderer.DrawLemmings(aLemmings: TLemmingList; SelectedLemming: TLemming = nil);
+procedure TRenderer.DrawLemmings;
 var
   i: Integer;
+  LemmingList: TLemmingList;
 begin
+  fLayers[rlParticles].Clear(0);
   fLayers[rlLemmings].Clear(0);
-  for i := 0 to aLemmings.Count-1 do
-    if aLemmings[i] <> SelectedLemming then DrawThisLemming(aLemmings[i]);
 
-  if SelectedLemming <> nil then DrawThisLemming(SelectedLemming, true);
+  LemmingList := fRenderInterface.LemmingList;
+
+  for i := 0 to LemmingList.Count-1 do
+    if LemmingList[i] <> fRenderInterface.SelectedLemming then DrawThisLemming(LemmingList[i]);
+
+  if fRenderInterface.SelectedLemming <> nil then DrawThisLemming(fRenderInterface.SelectedLemming, true);
+
+  for i := 0 to LemmingList.Count-1 do
+  begin
+    if LemmingList[i].LemParticleTimer > 0 then
+      DrawLemmingParticles(LemmingList[i]);
+    DrawLemmingHelper(LemmingList[i]);
+  end;
 end;
 
 procedure TRenderer.DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
@@ -238,7 +278,7 @@ var
 
       // Compatibility kludges. These should be removed
       // and replaced with properly-modified animations.
-      if aLemming.LemAction in [baDigging, baFixing] then
+      {if aLemming.LemAction in [baDigging, baFixing] then
       begin
         Inc(Left);
         Inc(Right);
@@ -254,7 +294,7 @@ var
           Inc(Top);
           Inc(Bottom);
         end;
-      end;
+      end;}
     end;
   end;
 
@@ -282,9 +322,51 @@ begin
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 end;
 
-function TRenderer.GetLemmingLayer: TBitmap32;
+procedure TRenderer.DrawLemmingHelper(aLemming: TLemming);
+var
+  ShowCountdown, ShowHighlight: Boolean;
+  SrcRect: TRect;
+  n: Integer;
 begin
-  Result := fLayers[rlLemmings];
+  if aLemming.LemRemoved then Exit;
+
+  ShowCountdown := (aLemming.LemExplosionTimer > 0);
+  ShowHighlight := (aLemming = fRenderInterface.HighlitLemming);
+
+  if ShowCountdown and ShowHighlight then
+    ShowCountdown := (GetTickCount mod 1000 < 500);
+
+  if ShowCountdown then
+  begin
+    n := (aLemming.LemExplosionTimer div 17) + 1;
+    SrcRect := Rect(n * 4, 0, ((n+1) * 4), 5);
+    fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 1, aLemming.LemY - 17, SrcRect);
+  end else if ShowHighlight then
+    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 2, aLemming.LemY - 20);
+end;
+
+procedure TRenderer.DrawLemmingParticles(L: TLemming);
+var
+  i, X, Y: Integer;
+begin
+
+  for i := 0 to 79 do
+  begin
+    X := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DX;
+    Y := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DY;
+    if (X <> -128) and (Y <> -128) then
+    begin
+      X := L.LemX + X;
+      Y := L.LemY + Y;
+      fLayers[rlParticles].PixelS[X, Y] := fTheme.ParticleColors[i];
+    end;
+  end;
+
+end;
+
+function TRenderer.GetTerrainLayer: TBitmap32;
+begin
+  Result := fLayers[rlTerrain];
 end;
 
 function TRenderer.GetParticleLayer: TBitmap32;
@@ -294,9 +376,14 @@ end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32);
 begin
+  DrawLevel(aDst, fPhysicsMap.BoundsRect);
+end;
+
+procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect);
+begin
   ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
   fLayers.PhysicsMap := fPhysicsMap;
-  fLayers.CombineTo(aDst);
+  fLayers.CombineTo(aDst, aRegion);
 end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);
@@ -592,12 +679,55 @@ begin
   O.LastDrawY := O.Top;
 end;
 
-procedure TRenderer.DrawAllObjects(Dst: TBitmap32; ObjectInfos: TInteractiveObjectInfoList);
+procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
+var
+  O: TInteractiveObject;
+  MO: TMetaObject;
+
+  DrawX, DrawY: Integer;
+begin
+  Dst := fLayers[rlObjectHelpers]; // for now
+
+  O := Obj.Obj;
+  MO := Obj.MetaObj;
+
+  // We don't question here whether the conditions are met to draw the helper or
+  // not. We assume the calling routine has already done this, and we just draw it.
+  // We do, however, determine which ones to draw here.
+
+  DrawX := O.Left + (MO.Width div 2) - 4;
+  DrawY := O.Top - 9; // much simpler
+
+  // Windows
+  if MO.TriggerEffect = 23 then
+  begin
+    if (O.TarLev and $68) <> 0 then DrawX := DrawX - 4;
+
+    if (O.DrawingFlags and odf_FlipLem) = 0 then
+      fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX, DrawY)
+    else
+      fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX, DrawY);
+
+    if (O.TarLev and $68) <> 0 then
+      fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX+8, DrawY);
+  end;
+
+  // Teleporters and Receivers
+  if MO.TriggerEffect = 11 then
+    fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
+  if MO.TriggerEffect = 12 then
+    fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
+end;
+
+procedure TRenderer.DrawAllObjects;
 var
   SrcRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
   Src: TBitmap32;
-  DrawFrame, i: Integer;
+  DrawFrame: Integer;
+  i, i2: Integer;
+  UsePoint: Boolean;
+  ObjectInfos: TInteractiveObjectInfoList;
 
   procedure ProcessDrawFrame(aLayer: TRenderLayer);
   begin
@@ -640,6 +770,9 @@ var
   end;
 begin
   Src := TBitmap32.Create;
+  ObjectInfos := fRenderInterface.ObjectList;
+
+  UsePoint := true; //PtInRect(Dst.BoundsRect, MousePoint);
 
   // Draw moving backgrounds
   fLayers[rlBackgroundObjects].Clear(0);
@@ -691,6 +824,34 @@ begin
     if Inf.IsOnlyOnTerrain then Continue;
     if Inf.IsNoOverwrite then Continue;
     ProcessDrawFrame(rlObjectsHigh);
+  end;
+
+  // Draw object helpers
+  fLayers[rlObjectHelpers].Clear(0);
+  if UsePoint then
+  begin
+    for i := 0 to ObjectInfos.Count-1 do
+    begin
+      // Check if this object is relevant
+      if not PtInRect(Rect(ObjectInfos[i].Left, ObjectInfos[i].Top,
+                           ObjectInfos[i].Left + ObjectInfos[i].Width - 1, ObjectInfos[i].Top + ObjectInfos[i].Height - 1),
+                      fRenderInterface.MousePos) then
+        Continue;
+
+      if ObjectInfos[i].IsDisabled then Continue;
+
+      // otherwise, draw its helper
+      DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i]);
+
+      // if it's a teleporter or receiver, draw all paired helpers too
+      if (ObjectInfos[i].TriggerEffect in [11, 12]) and (ObjectInfos[i].PairingId <> -1) then
+        for i2 := 0 to ObjectInfos.Count-1 do
+        begin
+          if i = i2 then Continue;
+          if (ObjectInfos[i2].PairingId = ObjectInfos[i].PairingId) then
+            DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
+        end;
+    end;
   end;
 
   Src.Free;
@@ -776,6 +937,9 @@ begin
 end;*)
 
 constructor TRenderer.Create;
+var
+  i: THelperIcon;
+  S: TMemoryStream;
 begin
   inherited Create;
   TempBitmap := TBitmap32.Create;
@@ -786,9 +950,18 @@ begin
   fBgColor := $00000000;
   fAni := TBaseDosAnimationSet.Create;
   fRecolorer := TRecolorImage.Create;
+  for i := Low(THelperIcon) to High(THelperIcon) do
+    fHelperImages[i] := TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
+
+  S := CreateDataStream('explode.dat', ldtParticles);
+  S.Seek(0, soFromBeginning);
+  S.Read(fParticles, S.Size);
+  S.Free;
 end;
 
 destructor TRenderer.Destroy;
+var
+  i: THelperIcon;
 begin
   TempBitmap.Free;
   fPieceManager.Free;
@@ -797,6 +970,8 @@ begin
   fPhysicsMap.Free;
   fRecolorer.Free;
   fAni.Free;
+  for i := Low(THelperIcon) to High(THelperIcon) do
+    fHelperImages[i].Free;
   inherited Destroy;
 end;
 
@@ -888,6 +1063,8 @@ var
 begin
   if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
   Bmp := TBitmap32.Create;
+
+  fPhysicsMap.Clear(0);
 
   with Inf.Level do
   begin
@@ -1106,12 +1283,11 @@ begin
     Pal[i] := fTheme.ParticleColors[i-8];
 
   fAni.ClearData;
-  fAni.LemmingPrefix := 'lemming'; // hardcoded for now
+  fAni.LemmingPrefix := fTheme.Lemmings;
   fAni.AnimationPalette := Pal;
   fAni.MainDataFile := 'main.dat';
   fAni.ReadMetaData;
   fAni.ReadData;
-
 end;
 
 procedure TRenderer.Highlight(World: TBitmap32; M: TColor32);

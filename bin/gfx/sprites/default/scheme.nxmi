@@ -1,0 +1,12 @@
+# Lemming recoloring scheme
+# Format is source color > new color
+
+ZOMBIE
+  F0D0D0 808080
+
+ATHLETE
+  00B000 4040E0
+  4040E0 00B000
+  
+SELECTED
+  4040E0 F02020
