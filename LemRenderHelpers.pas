@@ -31,12 +31,15 @@ type
     fWidth: Integer;
     fHeight: Integer;
     fPhysicsMap: TBitmap32;
+
     function GetItem(Index: TRenderLayer): TBitmap32;
     procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
   protected
   public
+    fIsEmpty: array[TRenderLayer] of Boolean;
+
     constructor Create;
     procedure Prepare(aWidth, aHeight: Integer);
     procedure CombineTo(aDst: TBitmap32; aRegion: TRect); overload;
@@ -374,7 +377,16 @@ begin
     end;
     //TLinearResampler.Create(BMP);
     Add(BMP);
+
+    fIsEmpty[i] := True;
   end;
+
+  // Always draw rlBackground, rlTerrain and rlLemmings
+  fIsEmpty[rlBackground] := False;
+  fIsEmpty[rlTerrain] := False;
+  fIsEmpty[rlLemmings] := False;
+  // Always set rlObjectHelpers to be non-empty - this needs to be changed when moving this to another layer.
+  fIsEmpty[rlObjectHelpers] := False;
 end;
 
 procedure TRenderBitmaps.CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
@@ -468,7 +480,8 @@ begin
                   rlHighShadows,
                   rlParticles,
                   rlLemmings] then Continue;}
-    Items[i].DrawTo(aDst, aRegion, aRegion);
+    if not fIsEmpty[i] then
+      Items[i].DrawTo(aDst, aRegion, aRegion);
   end;
   aDst.EndUpdate;
   aDst.Changed;

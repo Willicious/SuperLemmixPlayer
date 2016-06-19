@@ -231,7 +231,7 @@ var
   i: Integer;
   LemmingList: TLemmingList;
 begin
-  fLayers[rlParticles].Clear(0);
+  if not fLayers.fIsEmpty[rlParticles] then fLayers[rlParticles].Clear(0);
   fLayers[rlLemmings].Clear(0);
 
   LemmingList := fRenderInterface.LemmingList;
@@ -241,10 +241,14 @@ begin
 
   if fRenderInterface.SelectedLemming <> nil then DrawThisLemming(fRenderInterface.SelectedLemming, true);
 
+  fLayers.fIsEmpty[rlParticles] := True;
   for i := 0 to LemmingList.Count-1 do
   begin
     if LemmingList[i].LemParticleTimer > 0 then
+    begin
       DrawLemmingParticles(LemmingList[i]);
+      fLayers.fIsEmpty[rlParticles] := False;
+    end;
     DrawLemmingHelper(LemmingList[i]);
   end;
 end;
@@ -404,18 +408,28 @@ end;
 
 procedure TRenderer.ClearShadows;
 begin
-  fLayers[rlLowShadows].Clear(0);
-  fLayers[rLHighShadows].Clear(0);
+  if not fLayers.fIsEmpty[rlLowShadows] then
+  begin
+    fLayers[rlLowShadows].Clear(0);
+    fLayers.fIsEmpty[rlLowShadows] := True;
+  end;
+  if not fLayers.fIsEmpty[rLHighShadows] then
+  begin
+    fLayers[rLHighShadows].Clear(0);
+    fLayers.fIsEmpty[rLHighShadows] := True;
+  end;
 end;
 
 procedure TRenderer.SetLowShadowPixel(X, Y: Integer);
 begin
   fLayers[rlLowShadows].Pixel[x, y] := SHADOW_COLOR;
+  fLayers.fIsEmpty[rlLowShadows] := False;  // we do this too often, but it shouldn't matter much
 end;
 
 procedure TRenderer.SetHighShadowPixel(X, Y: Integer);
 begin
   fLayers[rlHighShadows].Pixel[x, y] := SHADOW_COLOR;
+  fLayers.fIsEmpty[rlHighShadows] := False;  // we do this too often, but it shouldn't matter much
 end;
 
 procedure TRenderer.AddTerrainPixel(X, Y: Integer; aColor: TColor32 = $00000000);
@@ -775,55 +789,65 @@ begin
   UsePoint := true; //PtInRect(Dst.BoundsRect, MousePoint);
 
   // Draw moving backgrounds
-  fLayers[rlBackgroundObjects].Clear(0);
+  if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
   for i := 0 to ObjectInfos.Count - 1 do
   begin
     Inf := ObjectInfos[i];
     if not (Inf.TriggerEffect = 30) then Continue;
+
     ProcessDrawFrame(rlBackgroundObjects);
+    fLayers.fIsEmpty[rlBackgroundObjects] := False;
   end;
 
   // Draw no overwrite objects
-  fLayers[rlObjectsLow].Clear(0);
+  if not fLayers.fIsEmpty[rlObjectsLow] then fLayers[rlObjectsLow].Clear(0);
   for i := ObjectInfos.Count-1 downto 0 do
   begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
     if Inf.IsOnlyOnTerrain then Continue;
     if not Inf.IsNoOverwrite then Continue;
+
     ProcessDrawFrame(rlObjectsLow);
+    fLayers.fIsEmpty[rlObjectsLow] := False;
   end;
 
   // Draw only-on-terrain
-  fLayers[rlOnTerrainObjects].Clear(0);
+  if not fLayers.fIsEmpty[rlOnTerrainObjects] then fLayers[rlOnTerrainObjects].Clear(0);
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
     if not Inf.IsOnlyOnTerrain then Continue;
+
     ProcessDrawFrame(rlOnTerrainObjects);
+    fLayers.fIsEmpty[rlOnTerrainObjects] := False;
   end;
   //FixLayer(rlOnTerrainObjects, PM_SOLID);
 
   // Draw one-way arrows
-  fLayers[rlOneWayArrows].Clear(0);
+  if not fLayers.fIsEmpty[rlOneWayArrows] then fLayers[rlOneWayArrows].Clear(0);
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos[i];
     if not (Inf.TriggerEffect in [7, 8, 19]) then Continue;
+
     ProcessDrawFrame(rlOneWayArrows);
+    fLayers.fIsEmpty[rlOneWayArrows] := False;
   end;
   //FixLayer(rlOneWayArrows, PM_ONEWAY);
 
   // Draw regular objects
-  fLayers[rlObjectsHigh].Clear(0);
+  if not fLayers.fIsEmpty[rlObjectsHigh] then fLayers[rlObjectsHigh].Clear(0);
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
     if Inf.IsOnlyOnTerrain then Continue;
     if Inf.IsNoOverwrite then Continue;
+
     ProcessDrawFrame(rlObjectsHigh);
+    fLayers.fIsEmpty[rlObjectsHigh] := False;
   end;
 
   // Draw object helpers
@@ -1144,6 +1168,7 @@ begin
           if ORec.Meta.TriggerEffect <> 30 then Continue;
 
           DrawObject(fLayers[rlBackgroundObjects], Obj, ORec.Meta.PreviewFrameIndex);
+          fLayers.fIsEmpty[rlBackgroundObjects] := False;
         end;
 
       with fLayers[rlObjectsLow] do
@@ -1156,6 +1181,7 @@ begin
           if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
 
           DrawObject(fLayers[rlObjectsLow], Obj, ORec.Meta.PreviewFrameIndex);
+          fLayers.fIsEmpty[rlObjectsLow] := False;
         end;
 
       with fLayers[rlOnTerrainObjects] do
@@ -1167,6 +1193,7 @@ begin
           if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
 
           DrawObject(fLayers[rlOnTerrainObjects], Obj, ORec.Meta.PreviewFrameIndex);
+          fLayers.fIsEmpty[rlOnTerrainObjects] := False;
         end;
 
       with fLayers[rlOneWayArrows] do
@@ -1177,6 +1204,7 @@ begin
           if not (ORec.Meta.TriggerEffect in [7, 8, 19]) then Continue;
 
           DrawObject(fLayers[rlOneWayArrows], Obj, ORec.Meta.PreviewFrameIndex);
+          fLayers.fIsEmpty[rlOneWayArrows] := False;
         end;
 
       with fLayers[rlObjectsHigh] do
@@ -1189,6 +1217,7 @@ begin
           if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
 
           DrawObject(fLayers[rlObjectsHigh], Obj, ORec.Meta.PreviewFrameIndex);
+          fLayers.fIsEmpty[rlObjectsHigh] := False;
         end;
 
       L := TLemming.Create;
