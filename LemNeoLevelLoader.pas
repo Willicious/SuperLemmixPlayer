@@ -6,10 +6,12 @@ uses
   LemNeoParser,
   LemTerrain, LemInteractiveObject, LemSteel,
   LemLevel, LemStrings,
-  Classes, SysUtils;
+  Classes, SysUtils, StrUtils;
 
 type
   TNeoLevelLoader = class
+    private
+      class procedure SanitizeInput(aLevel: TLevel);
     public
       class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
       class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream);
@@ -320,10 +322,101 @@ begin
       end;
 
     until Line.Keyword = '';
+
+    // Sanitize loaded level stats now
+    SanitizeInput(aLevel);
+
   finally
     Parser.Free;
   end;
 end;
+
+class procedure TNeoLevelLoader.SanitizeInput(aLevel: TLevel);
+begin
+  with aLevel.Info do
+  begin
+    // Title: At most 32 characters
+    if Length(Title) > 32 then Title := LeftStr(Title, 32);
+    // Author: At most 16 characters
+    if Length(Title) > 16 then Title := LeftStr(Title, 16);
+
+    // Width of level: At least 320
+    if Width < 320 then Width := 320;
+    // Height of level: At least 160
+    if Height < 160 then Height := 160;
+
+    // Screen start: Between 0 and Widht-320 resp. Height-160
+    if ScreenPosition < 0 then ScreenPosition := 0
+    else if ScreenPosition > Width - 320 then ScreenPosition := Width - 320;
+
+    if ScreenYPosition < 0 then ScreenYPosition := 0
+    else if ScreenYPosition > Height - 160 then ScreenYPosition := Height - 160;
+
+    // Lemmings: At least 0 lemmings
+    // 0 lemmings is only allowed to let people spot their mistakes.
+    if LemmingsCount < 0 then LemmingsCount := 0;
+
+    // Requirement: At least 0 lemmings
+    // Too hight requirements are only allowed to let people spot their mistakes.
+    if RescueCount < 0 then RescueCount := 0;
+
+    // Time Limit: Between 1 and 6000 (inclusive) (6000 = infinity)
+    if TimeLimit < 1 then TimeLimit := 1
+    else if TimeLimit > 6000 then TimeLimit := 6000;
+
+    // Minimum RR is between 1 and 99
+    if ReleaseRate < 1 then ReleaseRate := 1
+    else if ReleaseRate > 99 then Releaserate := 99;
+
+    // Skill Counts: Between 0 and 100 (inclusive) (100 = infinity)
+    if WalkerCount < 0 then WalkerCount := 0
+    else if WalkerCount > 100 then WalkerCount := 100;
+
+    if ClimberCount < 0 then ClimberCount := 0
+    else if ClimberCount > 100 then ClimberCount := 100;
+
+    if SwimmerCount < 0 then SwimmerCount := 0
+    else if SwimmerCount > 100 then SwimmerCount := 100;
+
+    if FloaterCount < 0 then FloaterCount := 0
+    else if FloaterCount > 100 then FloaterCount := 100;
+
+    if GliderCount < 0 then GliderCount := 0
+    else if GliderCount > 100 then GliderCount := 100;
+
+    if MechanicCount < 0 then MechanicCount := 0
+    else if MechanicCount > 100 then MechanicCount := 100;
+
+    if BomberCount < 0 then BomberCount := 0
+    else if BomberCount > 100 then BomberCount := 100;
+
+    if BlockerCount < 0 then BlockerCount := 0
+    else if BlockerCount > 100 then BlockerCount := 100;
+
+    if PlatformerCount < 0 then PlatformerCount := 0
+    else if PlatformerCount > 100 then PlatformerCount := 100;
+
+    if BuilderCount < 0 then BuilderCount := 0
+    else if BuilderCount > 100 then BuilderCount := 100;
+
+    if StackerCount < 0 then StackerCount := 0
+    else if StackerCount > 100 then StackerCount := 100;
+
+    if BasherCount < 0 then BasherCount := 0
+    else if BasherCount > 100 then BasherCount := 100;
+
+    if MinerCount < 0 then MinerCount := 0
+    else if MinerCount > 100 then MinerCount := 100;
+
+    if DiggerCount < 0 then DiggerCount := 0
+    else if DiggerCount > 100 then DiggerCount := 100;
+
+    if ClonerCount < 0 then ClonerCount := 0
+    else if ClonerCount > 100 then ClonerCount := 100;
+  end;
+end;
+
+
 
 class procedure TNeoLevelLoader.StoreLevelInStream(aLevel: TLevel; aStream: TStream);
 var
