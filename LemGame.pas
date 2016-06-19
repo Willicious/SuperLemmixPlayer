@@ -2735,7 +2735,9 @@ begin
   NumLemInCursor := 0;
   CurValue := 10;
   if NewSkillOrig = baNone then
-    NewSkill := SkillPanelButtonToAction[fSelectedSkill]
+    NewSkill := SkillPanelButtonToAction[fSelectedSkill];
+    // Set NewSkill if level has no skill at all in the skillbar
+    if NewSkill = baNone then NewSkill := baExploding
   else
     NewSkill := NewSkillOrig;
 
