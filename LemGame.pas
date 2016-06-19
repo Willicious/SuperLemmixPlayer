@@ -2636,17 +2636,18 @@ function TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
                                           NewSkillOrig: TBasicLemmingAction;
                                           MousePos: TPoint;
                                           IsHighlight: Boolean = False): Integer;
-type
-  TPriorityBox = (Perm, NonPerm, Walk, Fall, Expl, Shrug, Drown);
-  TPriorityBoxArr = array[0..6] of TPriorityBox;
+const
+  NonPerm = 0;
+  Perm = 1;
+  NonWalk = 2;
+  Walk = 3;
 var
   i, CurPriorityBox: Integer;
-  // CurValue = 1, 2, 3, 4, 5, 6, 7: Lem is assignable and in one PriorityBox
+  // CurValue = 1, 2, 3, 4: Lem is assignable and in one PriorityBox
   // CurValue = 8: Lem is unassignable, but no zombie
   // CurValue = 9: Lem is zombie
   CurValue: Integer;
   L: TLemming;
-  PriorityBoxOrder: TPriorityBoxArr;
   LemIsInBox: Boolean;
   NumLemInCursor: Integer;
   NewSkill: TBasicLemmingAction;
@@ -2655,8 +2656,8 @@ var
   var
     X, Y: Integer;
   begin
-    X := L.LemX - 8; // + L.FrameLeftDx; for walker
-    Y := L.LemY - 10; // + L.FrameTopDy; for walker
+    X := L.LemX - 8;
+    Y := L.LemY - 10;
     Result := PtInRect(Rect(X, Y, X + 13, Y + 13), MousePos);
   end;
 
@@ -2673,60 +2674,16 @@ var
     Result := (GetLemDistance(LNew, MousePos) < GetLemDistance(LOld, MousePos));
   end;
 
-
-  function GetPriorityBoxOrder(NewSkill: TBasicLemmingAction): TPriorityBoxArr;
-  const
-    WalkerOrder : TPriorityBoxArr = (NonPerm, Perm, Expl, Shrug, Walk, Fall, Drown);
-    FloatOrder : TPriorityBoxArr = (Fall, Perm, NonPerm, Shrug, Expl, Walk, Drown);
-    ClimbOrder : TPriorityBoxArr = (Perm, NonPerm, Shrug, Expl, Fall, Walk, Drown);
-    SwimOrder : TPriorityBoxArr = (Drown, Fall, Perm, NonPerm, Shrug, Walk, Expl);
-    ExplOrder : TPriorityBoxArr = (Fall, NonPerm, Shrug, Perm, Expl, Walk, Drown);
-    BlockOrder : TPriorityBoxArr = (Shrug, NonPerm, Expl, Perm, Walk, Fall, Drown);
-    BuildOrder : TPriorityBoxArr = (Shrug, NonPerm, Perm, Expl, Walk, Fall, Drown);
-    BashOrder : TPriorityBoxArr = (Shrug, NonPerm, Perm, Expl, Walk, Fall, Drown);
-    CloneOrder : TPriorityBoxArr = (NonPerm, Perm, Expl, Shrug, Fall, Walk, Drown);
-    HighlightOrder : TPriorityBoxArr = (Perm, NonPerm, Shrug, Fall, Expl, Walk, Drown);
-  begin
-    case NewSkill of
-      baToWalking   : Result := WalkerOrder;
-      baGliding     : Result := FloatOrder;
-      baFloating    : Result := FloatOrder;
-      baClimbing    : Result := ClimbOrder;
-      baFixing      : Result := ClimbOrder;
-      baSwimming    : Result := SwimOrder;
-      baExploding   : Result := ExplOrder;
-      baStoning     : Result := ExplOrder;
-      baBlocking    : Result := BlockOrder;
-      baBuilding    : Result := BuildOrder;
-      baPlatforming : Result := BuildOrder;
-      baStacking    : Result := BuildOrder;
-      baBashing     : Result := BashOrder;
-      baMining      : Result := BashOrder;
-      baDigging     : Result := BashOrder;
-      baCloning     : Result := CloneOrder;
-      baNone        : Result := HighlightOrder // should never happen
-    else // should never happen
-      Result := WalkerOrder;
-    end;
-  end;
-
-  function IsLemInPriorityBox(L: TLemming; PriorityBox: TPriorityBox): Boolean;
+  function IsLemInPriorityBox(L: TLemming; PriorityBox: Integer): Boolean;
   begin
     Result := True;
     case PriorityBox of
       Perm    : Result :=     (L.LemIsClimber or L.LemIsSwimmer or L.LemIsFloater
-                                    or L.LemIsGlider or L.LemIsMechanic)
-                          and (L.LemExplosionTimer = 0);
-      NonPerm : Result :=     (L.LemAction in [baClimbing, baBashing, baMining, baDigging,
-                                               baBuilding, baPlatforming, baStacking, baBlocking])
-                          and (L.LemExplosionTimer = 0);
-      Walk    : Result :=     (L.LemAction in [baWalking, baJumping])
-                          and (L.LemExplosionTimer = 0);
-      Fall    : Result :=     (L.LemAction in [baFalling, baFloating, baGliding])
-                          and (L.LemExplosionTimer = 0);
-      Expl    : Result := (L.LemExplosionTimer > 0);
-      Shrug   : Result := (L.LemAction = baShrugging) and (L.LemExplosionTimer = 0);
-      Drown   : Result := (L.LemAction = baDrowning) and (L.LemExplosionTimer = 0);
+                                    or L.LemIsGlider or L.LemIsMechanic);
+      NonPerm : Result :=     (L.LemAction in [baBashing, baMining, baDigging, baBuilding,
+                                               baPlatforming, baStacking, baBlocking]);
+      Walk    : Result :=     (L.LemAction in [baWalking, baJumping]);
+      NonWalk : Result := not (L.LemAction in [baWalking, baJumping]);
     end;
   end;
 
@@ -2735,13 +2692,13 @@ begin
   NumLemInCursor := 0;
   CurValue := 10;
   if NewSkillOrig = baNone then
+  begin
     NewSkill := SkillPanelButtonToAction[fSelectedSkill];
     // Set NewSkill if level has no skill at all in the skillbar
-    if NewSkill = baNone then NewSkill := baExploding
+    if NewSkill = baNone then NewSkill := baExploding;
+  end
   else
     NewSkill := NewSkillOrig;
-
-  PriorityBoxOrder := GetPriorityBoxOrder(NewSkill);
 
   for i := (LemmingList.Count - 1) downto 0 do
   begin
@@ -2766,11 +2723,16 @@ begin
     if not L.LemIsZombie then Inc(NumLemInCursor);
 
     // Determine priority class of current lemming
-    CurPriorityBox := 0;
-    repeat
-      LemIsInBox := IsLemInPriorityBox(L, PriorityBoxOrder[CurPriorityBox]);
-      Inc(CurPriorityBox);
-    until (CurPriorityBox > MinIntValue([CurValue, 7])) or LemIsInBox;
+    if ShiftButtonHeldDown or RightMouseButtonHeldDown then
+      CurPriorityBox := 1
+    else
+    begin
+      CurPriorityBox := 0;
+      repeat
+        LemIsInBox := IsLemInPriorityBox(L, CurPriorityBox {PriorityBoxOrder[CurPriorityBox]});
+        Inc(CurPriorityBox);
+      until (CurPriorityBox > MinIntValue([CurValue, 4])) or LemIsInBox;
+    end;
 
     // Can this lemmings actually receive the skill?
     if not NewSkillMethods[NewSkill](L) then CurPriorityBox := 8;
