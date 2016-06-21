@@ -1,0 +1,212 @@
+# Translation table
+
+THEME snow
+
+TERRAIN 0
+  SET snow
+  NAME snow_wide
+
+TERRAIN 1
+  SET snow
+  NAME snow_small_01
+
+TERRAIN 2
+  SET snow
+  NAME snow_flat_01
+
+TERRAIN 3
+  SET snow
+  NAME snow_flat_02
+
+TERRAIN 4
+  SET snow
+  NAME snow_tall
+
+TERRAIN 5
+  SET snow
+  NAME snow_diagleft
+
+TERRAIN 6
+  SET snow
+  NAME snow_small_02
+
+TERRAIN 7
+  SET snow
+  NAME snow_small_03
+
+TERRAIN 8
+  SET snow
+  NAME snow_small_04
+
+TERRAIN 9
+  SET snow
+  NAME spike_double
+
+TERRAIN 10
+  SET snow
+  NAME spike_single
+
+TERRAIN 11
+  SET snow
+  NAME spike_wide
+
+TERRAIN 12
+  SET snow
+  NAME spike_stubby
+
+TERRAIN 13
+  SET snow
+  NAME spike_tiny
+
+TERRAIN 14
+  SET snow
+  NAME spike_flat
+
+TERRAIN 15
+  SET snow
+  NAME pole
+
+TERRAIN 16
+  SET snow
+  NAME pole_top
+
+TERRAIN 17
+  SET snow
+  NAME rocks_tall
+
+TERRAIN 18
+  SET snow
+  NAME rocks_small_01
+
+TERRAIN 19
+  SET snow
+  NAME rocks_diagleft
+
+TERRAIN 20
+  SET snow
+  NAME rocks_small_02
+
+TERRAIN 21
+  SET snow
+  NAME rocks_small_03
+
+TERRAIN 22
+  SET snow
+  NAME rocks_flat
+
+TERRAIN 23
+  SET snow
+  NAME snow_icy_01
+
+TERRAIN 24
+  SET snow
+  NAME snow_icy_02
+
+TERRAIN 25
+  SET snow
+  NAME snow_icy_diagright
+
+TERRAIN 26
+  SET snow
+  NAME snow_icy_diagleft
+
+TERRAIN 27
+  SET snow
+  NAME icicle_large
+
+TERRAIN 28
+  SET snow
+  NAME icicle_small
+
+TERRAIN 29
+  SET snow
+  NAME steel_large
+
+TERRAIN 30
+  SET snow
+  NAME steel_tall
+
+TERRAIN 31
+  SET snow
+  NAME steel_wide
+
+TERRAIN 32
+  SET snow
+  NAME steel_small
+
+TERRAIN 33
+  SET snow
+  NAME rect
+
+TERRAIN 34
+  SET snow
+  NAME circle_large
+
+TERRAIN 35
+  SET snow
+  NAME circle_small
+
+TERRAIN 36
+  SET snow
+  NAME circle_tiny
+
+OBJECT 0
+  SET snow
+  NAME exit
+
+OBJECT 1
+  SET snow
+  NAME window
+
+OBJECT 2
+  SET default
+  NAME flag_green
+
+OBJECT 3
+  SET snow
+  NAME owa_left
+
+OBJECT 4
+  SET snow
+  NAME owa_right
+
+OBJECT 5
+  SET snow
+  NAME water
+
+OBJECT 6
+  SET snow
+  NAME snowflag
+
+OBJECT 7
+  SET default
+  NAME flag_blue
+
+OBJECT 8
+  SET snow
+  NAME icicletrap
+
+OBJECT 9
+  SET snow
+  NAME iceblower
+
+OBJECT 10
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 11
+  SET snow
+  NAME pickup
+
+OBJECT 12
+  NAME *nil
+
+OBJECT 13
+  SET snow
+  NAME owa_down
+
+OBJECT 14
+  SET default
+  NAME slowfreeze
+

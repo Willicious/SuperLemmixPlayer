@@ -1,0 +1,325 @@
+# Translation table
+
+THEME rock
+
+TERRAIN 0
+  SET rock
+  NAME rocks_tall
+
+TERRAIN 1
+  SET rock
+  NAME rocks_diagleft
+
+TERRAIN 2
+  SET rock
+  NAME rocks_medium_01
+
+TERRAIN 3
+  SET rock
+  NAME rocks_medium_02
+
+TERRAIN 4
+  SET rock
+  NAME rocks_tall_thin
+
+TERRAIN 5
+  SET rock
+  NAME rocsk_tall_single_01
+
+TERRAIN 6
+  SET rock
+  NAME rocks_tall_single_02
+
+TERRAIN 7
+  SET rock
+  NAME rocks_wide
+
+TERRAIN 8
+  SET rock
+  NAME rocks_wide_small
+
+TERRAIN 9
+  SET rock
+  NAME rocks_small
+
+TERRAIN 10
+  SET rock
+  NAME platform_left
+
+TERRAIN 11
+  SET rock
+  NAME platform_mid
+
+TERRAIN 12
+  SET rock
+  NAME platform_right
+
+TERRAIN 13
+  SET rock
+  NAME grass_horz
+
+TERRAIN 14
+  SET rock
+  NAME grass_diagright
+
+TERRAIN 15
+  SET rock
+  NAME grass_diagleft_tiny
+
+TERRAIN 16
+  SET rock
+  NAME grass_diagleft
+
+TERRAIN 17
+  SET rock
+  NAME grass_horz_short
+
+TERRAIN 18
+  SET rock
+  NAME grass_clump_large
+
+TERRAIN 19
+  SET rock
+  NAME grass_clump_small
+
+TERRAIN 20
+  SET rock
+  NAME grass_mound_small
+
+TERRAIN 21
+  SET rock
+  NAME grass_mound_large
+
+TERRAIN 22
+  SET rock
+  NAME grass_mound_tiny_01
+
+TERRAIN 23
+  SET rock
+  NAME grass_mound_tiny_02
+
+TERRAIN 24
+  SET rock
+  NAME moss_01
+
+TERRAIN 25
+  SET rock
+  NAME moss_02
+
+TERRAIN 26
+  SET rock
+  NAME wood_01
+
+TERRAIN 27
+  SET rock
+  NAME wood_02
+
+TERRAIN 28
+  SET rock
+  NAME wood_thin_01
+
+TERRAIN 29
+  SET rock
+  NAME wood_thin_02
+
+TERRAIN 30
+  SET rock
+  NAME wood_thin_03
+
+TERRAIN 31
+  SET rock
+  NAME wood_thin_04
+
+TERRAIN 32
+  SET rock
+  NAME wood_horz_01
+
+TERRAIN 33
+  SET rock
+  NAME wood_horz_02
+
+TERRAIN 34
+  SET rock
+  NAME wood_thin_diagleft_01
+
+TERRAIN 35
+  SET rock
+  NAME wood_thin_diagleft_02
+
+TERRAIN 36
+  SET rock
+  NAME wood_thin_diagleft_03
+
+TERRAIN 37
+  SET rock
+  NAME wood_thin_diagleft_04
+
+TERRAIN 38
+  SET rock
+  NAME wood_thin_diagleft_05
+
+TERRAIN 39
+  SET rock
+  NAME wood_thin_diagright_01
+
+TERRAIN 40
+  SET rock
+  NAME wood_thin_diagright_02
+
+TERRAIN 41
+  SET rock
+  NAME wood_thin_diagright_03
+
+TERRAIN 42
+  SET rock
+  NAME crystal_large_vert
+
+TERRAIN 43
+  SET rock
+  NAME crystal_small_vert
+
+TERRAIN 44
+  SET rock
+  NAME crystal_med_vert
+
+TERRAIN 45
+  SET rock
+  NAME crystal_supertiny_vert
+
+TERRAIN 46
+  SET rock
+  NAME crystal_tiny_vert
+
+TERRAIN 47
+  SET rock
+  NAME crystal_large_diagleft
+
+TERRAIN 48
+  SET rock
+  NAME crystal_small_diagleft
+
+TERRAIN 49
+  SET rock
+  NAME crystal_med_diagleft
+
+TERRAIN 50
+  SET rock
+  NAME crystal_dual_diagleft
+
+TERRAIN 51
+  SET rock
+  NAME crystal_tiny_diagleft
+
+TERRAIN 52
+  SET rock
+  NAME crystal_med_diagright
+
+TERRAIN 53
+  SET rock
+  NAME crystal_large_diagright
+
+TERRAIN 54
+  SET rock
+  NAME crystal_tiny_diagright
+
+TERRAIN 55
+  SET rock
+  NAME crystal_tiny_diagright_short
+
+TERRAIN 56
+  SET rock
+  NAME steel_large
+
+TERRAIN 57
+  SET rock
+  NAME steel_tall
+
+TERRAIN 58
+  SET rock
+  NAME steel_wide
+
+TERRAIN 59
+  SET rock
+  NAME steel_small
+
+TERRAIN 60
+  SET rock
+  NAME rectangle
+
+TERRAIN 61
+  SET rock
+  NAME circle_large
+
+TERRAIN 62
+  SET rock
+  NAME circle_small
+
+TERRAIN 63
+  SET rock
+  NAME circle_tiny
+
+OBJECT 0
+  SET rock
+  NAME exit
+
+OBJECT 1
+  SET rock
+  NAME window
+
+OBJECT 2
+  SET default
+  NAME flag_green
+
+OBJECT 3
+  SET rock
+  NAME owa_left
+
+OBJECT 4
+  SET rock
+  NAME owa_right
+
+OBJECT 5
+  SET rock
+  NAME water
+
+OBJECT 6
+  SET rock
+  NAME roottrap
+
+OBJECT 7
+  NAME *nil
+
+OBJECT 8
+  SET rock
+  NAME chameleon
+  OFFSET_RIGHT -16
+
+OBJECT 9
+  NAME *nil
+
+OBJECT 10
+  SET rock
+  NAME chameleon
+  OFFSET_RIGHT -16
+  FLIP
+
+OBJECT 11
+  SET default
+  NAME flag_blue
+
+OBJECT 12
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 13
+  SET rock
+  NAME pickup
+
+OBJECT 14
+  NAME *nil
+
+OBJECT 15
+  SET rock
+  NAME owa_down
+

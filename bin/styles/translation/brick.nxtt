@@ -1,0 +1,303 @@
+# Translation table
+
+THEME brick
+
+TERRAIN 0
+  SET brick
+  NAME largebricks_fourrows
+
+TERRAIN 1
+  SET brick
+  NAME largebricks_tworows
+
+TERRAIN 2
+  SET brick
+  NAME largebricks_single
+
+TERRAIN 3
+  SET brick
+  NAME largebricks_midpiece_tworows
+
+TERRAIN 4
+  SET brick
+  NAME largebricks_midpiece
+
+TERRAIN 5
+  SET brick
+  NAME smallbricks_eightrows
+
+TERRAIN 6
+  SET brick
+  NAME smallbricks_fourrows
+
+TERRAIN 7
+  SET brick
+  NAME smallbricks_onerow
+
+TERRAIN 8
+  SET brick
+  NAME smallbricks_single
+
+TERRAIN 9
+  SET brick
+  NAME smallbricks_single_alt
+
+TERRAIN 10
+  SET brick
+  NAME smallbricks_diagright
+
+TERRAIN 11
+  SET brick
+  NAME smallbricks_diagleft
+
+TERRAIN 12
+  SET brick
+  NAME smallbricks_diagright_invert
+
+TERRAIN 13
+  SET brick
+  NAME smallbricks_diagleft_invert
+
+TERRAIN 14
+  SET brick
+  NAME smallbricks_arch_double
+
+TERRAIN 15
+  SET brick
+  NAME smallbricks_arch
+
+TERRAIN 16
+  SET brick
+  NAME widearch
+
+TERRAIN 17
+  SET brick
+  NAME diagbricks_full
+
+TERRAIN 18
+  SET brick
+  NAME diagbricks_full_small
+
+TERRAIN 19
+  SET brick
+  NAME diagbricks_notoplayer
+
+TERRAIN 20
+  SET brick
+  NAME diagbricks_single
+
+TERRAIN 21
+  SET brick
+  NAME tinybricks_square
+
+TERRAIN 22
+  SET brick
+  NAME tinybricks_long
+
+TERRAIN 23
+  SET brick
+  NAME tinybricks_single
+
+TERRAIN 24
+  SET brick
+  NAME thin_platform_red_double
+
+TERRAIN 25
+  SET brick
+  NAME thin_platform_red
+
+TERRAIN 26
+  SET brick
+  NAME thin_platform_red_twolayer
+
+TERRAIN 27
+  SET brick
+  NAME redblock_minis
+
+TERRAIN 28
+  SET brick
+  NAME redblock_spotted
+
+TERRAIN 29
+  SET brick
+  NAME pillar_red_bottom
+
+TERRAIN 30
+  SET brick
+  NAME pillar_red_middle
+
+TERRAIN 31
+  SET brick
+  NAME pillar_red_top
+
+TERRAIN 32
+  SET brick
+  NAME pillar_gray_bottom
+
+TERRAIN 33
+  SET brick
+  NAME pillar_gray_middle
+
+TERRAIN 34
+  SET brick
+  NAME pillar_gray_top
+
+TERRAIN 35
+  SET brick
+  NAME girder_long
+
+TERRAIN 36
+  SET brick
+  NAME girder_short
+
+TERRAIN 37
+  SET brick
+  NAME thin_platform_gray_double
+
+TERRAIN 38
+  SET brick
+  NAME thin_platform_gray
+
+TERRAIN 39
+  SET brick
+  NAME thin_platform_gray_mid
+
+TERRAIN 40
+  SET brick
+  NAME staircase_left
+
+TERRAIN 41
+  SET brick
+  NAME staircase_right
+
+TERRAIN 42
+  SET brick
+  NAME crate
+
+TERRAIN 43
+  SET brick
+  NAME chain_low
+
+TERRAIN 44
+  SET brick
+  NAME chain_high
+
+TERRAIN 45
+  SET brick
+  NAME chain_clip
+
+TERRAIN 46
+  SET brick
+  NAME chain_vertical
+
+TERRAIN 47
+  SET brick
+  NAME chain_hook_gray
+
+TERRAIN 48
+  SET brick
+  NAME chain_hook_red
+
+TERRAIN 49
+  SET brick
+  NAME barrel_large
+
+TERRAIN 50
+  SET brick
+  NAME barrel_small
+
+TERRAIN 51
+  SET brick
+  NAME steel_large
+
+TERRAIN 52
+  SET brick
+  NAME steel_tall
+
+TERRAIN 53
+  SET brick
+  NAME steel_wide
+
+TERRAIN 54
+  SET brick
+  NAME steel_small
+
+TERRAIN 55
+  SET brick
+  NAME circle_large
+
+TERRAIN 56
+  SET brick
+  NAME circle_small
+
+TERRAIN 57
+  SET brick
+  NAME circle_tiny
+
+TERRAIN 58
+  SET brick
+  NAME vertbricks
+
+TERRAIN 59
+  SET brick
+  NAME cement
+
+OBJECT 0
+  SET brick
+  NAME exit
+
+OBJECT 1
+  SET brick
+  NAME entrance
+
+OBJECT 2
+  SET default
+  NAME flag_green
+
+OBJECT 3
+  SET brick
+  NAME oneway_left
+
+OBJECT 4
+  SET brick
+  NAME oneway_right
+
+OBJECT 5
+  SET brick
+  NAME water
+
+OBJECT 6
+  SET brick
+  NAME squasher
+
+OBJECT 7
+  SET brick
+  NAME slicer
+
+OBJECT 8
+  SET default
+  NAME flag_blue
+
+OBJECT 9
+  NAME *nil
+
+OBJECT 10
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 11
+  SET brick
+  NAME pickup
+
+OBJECT 12
+  NAME *nil
+
+OBJECT 13
+  SET brick
+  NAME oneway_down
+
+OBJECT 14
+  SET brick
+  NAME splitter
+

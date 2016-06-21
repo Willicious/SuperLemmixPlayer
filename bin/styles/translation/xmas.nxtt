@@ -1,0 +1,228 @@
+# Translation table
+
+THEME xmas
+
+TERRAIN 0
+  SET snow
+  NAME snow_wide
+
+TERRAIN 1
+  SET snow
+  NAME snow_small_01
+
+TERRAIN 2
+  SET snow
+  NAME snow_flat_01
+
+TERRAIN 3
+  SET snow
+  NAME snow_flat_02
+
+TERRAIN 4
+  SET snow
+  NAME snow_tall
+
+TERRAIN 5
+  SET snow
+  NAME snow_diagleft
+
+TERRAIN 6
+  SET snow
+  NAME snow_small_02
+
+TERRAIN 7
+  SET snow
+  NAME snow_small_03
+
+TERRAIN 8
+  SET snow
+  NAME snow_small_04
+
+TERRAIN 9
+  SET snow
+  NAME spike_double
+
+TERRAIN 10
+  SET snow
+  NAME spike_single
+
+TERRAIN 11
+  SET snow
+  NAME spike_wide
+
+TERRAIN 12
+  SET snow
+  NAME snowman
+
+TERRAIN 13
+  SET snow
+  NAME twigs_apart
+
+TERRAIN 14
+  SET snow
+  NAME spike_flat
+
+TERRAIN 15
+  SET snow
+  NAME pole
+
+TERRAIN 16
+  SET snow
+  NAME pole_top
+
+TERRAIN 17
+  SET snow
+  NAME rocks_tall
+
+TERRAIN 18
+  SET snow
+  NAME rocks_small_01
+
+TERRAIN 19
+  SET snow
+  NAME rocks_diagleft
+
+TERRAIN 20
+  SET snow
+  NAME rocks_small_02
+
+TERRAIN 21
+  SET snow
+  NAME rocks_small_03
+
+TERRAIN 22
+  SET snow
+  NAME rocks_flat
+
+TERRAIN 23
+  SET snow
+  NAME snow_icy_01
+
+TERRAIN 24
+  SET snow
+  NAME snow_icy_02
+
+TERRAIN 25
+  SET snow
+  NAME snow_icy_diagright
+
+TERRAIN 26
+  SET snow
+  NAME snow_icy_diagleft
+
+TERRAIN 27
+  SET snow
+  NAME icicle_large
+
+TERRAIN 28
+  SET snow
+  NAME icicle_small
+
+TERRAIN 29
+  SET snow
+  NAME steel_large
+
+TERRAIN 30
+  SET snow
+  NAME snowball_small
+
+TERRAIN 31
+  SET snow
+  NAME snow_mound
+
+TERRAIN 32
+  SET snow
+  NAME twigs_pi
+
+TERRAIN 33
+  SET snow
+  NAME snow_speck_02
+
+TERRAIN 34
+  SET snow
+  NAME snow_small_05
+
+TERRAIN 35
+  SET snow
+  NAME snow_small_06
+
+TERRAIN 36
+  SET snow
+  NAME snow_speck_01
+
+TERRAIN 37
+  SET snow
+  NAME steel_tall
+
+TERRAIN 38
+  SET snow
+  NAME steel_wide
+
+TERRAIN 39
+  SET snow
+  NAME steel_small
+
+OBJECT 0
+  SET xmas
+  NAME exit
+  OFFSET_TOP -14
+
+OBJECT 1
+  SET xmas
+  NAME window
+  OFFSET_TOP -36
+
+OBJECT 2
+  NAME *nil
+
+OBJECT 3
+  NAME *nil
+
+OBJECT 4
+  SET xmas
+  NAME bouncy_snowman
+
+OBJECT 5
+  SET xmas
+  NAME lights
+
+OBJECT 6
+  SET xmas
+  NAME fireplace
+  OFFSET_TOP -48
+
+OBJECT 7
+  NAME *nil
+
+OBJECT 8
+  SET xmas
+  NAME jack_box
+
+OBJECT 9
+  SET xmas
+  NAME jack
+
+OBJECT 10
+  SET snow
+  NAME water
+
+OBJECT 11
+  SET snow
+  NAME iceblower
+
+OBJECT 12
+  SET xmas
+  NAME icicletrap
+
+OBJECT 13
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 14
+  SET xmas
+  NAME pickup
+
+OBJECT 15
+  NAME *nil
+

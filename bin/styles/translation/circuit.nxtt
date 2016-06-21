@@ -1,0 +1,298 @@
+# Translation table
+
+THEME circuit
+
+TERRAIN 0
+  SET circuit
+  NAME board_small
+
+TERRAIN 1
+  SET circuit
+  NAME board_large
+
+TERRAIN 2
+  SET circuit
+  NAME connector
+
+TERRAIN 3
+  SET circuit
+  NAME connector
+  FLIP
+
+TERRAIN 4
+  SET circuit
+  NAME connector
+  FLIP
+  INVERT
+  ROTATE
+
+TERRAIN 5
+  SET circuit
+  NAME connector
+  FLIP
+  ROTATE
+
+TERRAIN 6
+  SET circuit
+  NAME wire_vert
+
+TERRAIN 7
+  SET circuit
+  NAME wire_horz
+
+TERRAIN 8
+  SET circuit
+  NAME wire_vert
+  OFFSET_LEFT 4
+  OFFSET_RIGHT -4
+  FLIP
+
+TERRAIN 9
+  SET circuit
+  NAME wire_bottomtoright
+
+TERRAIN 10
+  SET circuit
+  NAME wire_bottomtoleft
+
+TERRAIN 11
+  SET circuit
+  NAME wire_bottomtoright
+  INVERT
+
+TERRAIN 12
+  SET circuit
+  NAME wire_bottomtoleft
+  INVERT
+
+TERRAIN 13
+  SET circuit
+  NAME wire_vert_long
+
+TERRAIN 14
+  SET circuit
+  NAME wire_vert_long
+  OFFSET_LEFT 4
+  OFFSET_RIGHT -4
+  FLIP
+
+TERRAIN 15
+  SET circuit
+  NAME wire_horz_long
+
+TERRAIN 16
+  SET circuit
+  NAME circuits_01
+
+TERRAIN 17
+  SET circuit
+  NAME circuits_02
+
+TERRAIN 18
+  SET circuit
+  NAME circuits_03
+
+TERRAIN 19
+  SET circuit
+  NAME circuits_03
+  FLIP
+  INVERT
+  ROTATE
+
+TERRAIN 20
+  SET circuit
+  NAME circuits_03
+  ROTATE
+
+TERRAIN 21
+  SET circuit
+  NAME connector_end
+  FLIP
+  INVERT
+  ROTATE
+
+TERRAIN 22
+  SET circuit
+  NAME connector_end
+
+TERRAIN 23
+  SET circuit
+  NAME connector_end
+  FLIP
+
+TERRAIN 24
+  SET circuit
+  NAME wire_bottomtoright_alt
+
+TERRAIN 25
+  SET circuit
+  NAME wire_bottomtoleft_alt
+
+TERRAIN 26
+  SET circuit
+  NAME wire_bottomtoright_alt
+  INVERT
+
+TERRAIN 27
+  SET circuit
+  NAME wire_bottomtoleft_alt
+  INVERT
+
+TERRAIN 28
+  SET circuit
+  NAME circuits_myo_end
+
+TERRAIN 29
+  SET circuit
+  NAME circuits_myo_horz
+
+TERRAIN 30
+  SET circuit
+  NAME circuits_myo_vert
+
+TERRAIN 31
+  SET circuit
+  NAME circuits_myo_pixel
+
+TERRAIN 32
+  SET circuit
+  NAME steel_large
+
+TERRAIN 33
+  SET circuit
+  NAME steel_diagonal
+
+TERRAIN 34
+  SET circuit
+  NAME steel_triangle_up
+
+TERRAIN 35
+  SET circuit
+  NAME steel_triangle_left
+
+TERRAIN 36
+  SET circuit
+  NAME steel_triangle_left
+  FLIP
+
+TERRAIN 37
+  SET circuit
+  NAME steel_wide
+
+TERRAIN 38
+  SET circuit
+  NAME steel_tall
+
+TERRAIN 39
+  SET circuit
+  NAME circuits_04
+
+TERRAIN 40
+  SET circuit
+  NAME circuits_05
+
+TERRAIN 41
+  SET circuit
+  NAME girder_bolt
+
+TERRAIN 42
+  SET circuit
+  NAME girder_vert
+
+TERRAIN 43
+  SET circuit
+  NAME girder_horz
+
+TERRAIN 44
+  SET circuit
+  NAME wire_end_top
+
+TERRAIN 45
+  SET circuit
+  NAME wire_end_top
+  FLIP
+
+TERRAIN 46
+  SET circuit
+  NAME wire_end_left
+
+TERRAIN 47
+  SET circuit
+  NAME wire_end_left
+
+TERRAIN 48
+  SET circuit
+  NAME counter_666
+
+TERRAIN 49
+  SET circuit
+  NAME counter_370
+
+TERRAIN 50
+  SET circuit
+  NAME counter_69
+
+TERRAIN 51
+  SET circuit
+  NAME counter_42
+
+TERRAIN 52
+  SET circuit
+  NAME blocks_small
+
+TERRAIN 53
+  SET circuit
+  NAME blocks_large
+
+OBJECT 0
+  SET circuit
+  NAME exit
+
+OBJECT 1
+  SET circuit
+  NAME window
+
+OBJECT 2
+  SET circuit
+  NAME owa_left
+
+OBJECT 3
+  SET circuit
+  NAME owa_right
+
+OBJECT 4
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 5
+  SET default
+  NAME teleporter
+
+OBJECT 6
+  SET default
+  NAME receiver
+
+OBJECT 7
+  SET circuit
+  NAME pickup
+
+OBJECT 8
+  SET circuit
+  NAME exit_light
+
+OBJECT 9
+  SET circuit
+  NAME exit
+
+OBJECT 10
+  SET default
+  NAME button
+
+OBJECT 11
+  SET circuit
+  NAME owa_down
+
+OBJECT 12
+  NAME *nil
+

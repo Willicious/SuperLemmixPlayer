@@ -19,10 +19,6 @@ type
       fMaskColor: TColor32;       // Used for masking on the skill panel, lemming sprites, and bridges
       fMapColor: TColor32;        // Used for the minimap
       fBackgroundColor: TColor32; // Used for the background
-      fParticleColors: array of TColor32;
-
-      function GetParticleColor(Index: Integer): TColor32;
-      procedure SetParticleColor(Index: Integer; aColor: TColor32);
     public
       constructor Create;
       procedure Clear;
@@ -32,7 +28,6 @@ type
       property MaskColor: TColor32 read fMaskColor write fMaskColor;
       property MapColor: TColor32 read fMapColor write fMapColor;
       property BackgroundColor: TColor32 read fBackgroundColor write fBackgroundColor;
-      property ParticleColors[Index: Integer]: TColor32 read GetParticleColor write SetParticleColor;
   end;
 
 implementation
@@ -49,22 +44,6 @@ begin
   fMaskColor := $FF7F7F7F;
   fMapColor := $FF7F7F7F;
   fBackgroundColor := $FF000000;
-  SetLength(fParticleColors, 0);
-end;
-
-function TNeoTheme.GetParticleColor(Index: Integer): TColor32;
-begin
-  if Length(fParticleColors) = 0 then
-    Result := $FF7F7F7F
-  else
-    Result := fParticleColors[Index mod Length(fParticleColors)];
-end;
-
-procedure TNeoTheme.SetParticleColor(Index: Integer; aColor: TColor32);
-begin
-  if Length(fParticleColors) < (Index + 1) then
-    SetLength(fParticleColors, Index + 1);
-  fParticleColors[Index] := aColor;
 end;
 
 procedure TNeoTheme.Load(aSet: String);
@@ -74,12 +53,12 @@ var
   i: Integer;
 begin
   Clear;
-  SetCurrentDir(AppPath + SFStyles + '\' + aSet + '\');
-  if not FileExists('theme.nxtm') then Exit;
+  SetCurrentDir(AppPath + SFStyles + SFStylesThemes);
+  if not FileExists(aSet + '.nxtm') then Exit;
 
   Parser := TNeoLemmixParser.Create;
   try
-    Parser.LoadFromFile('theme.nxtm');
+    Parser.LoadFromFile(aSet + '.nxtm');
     repeat
       Line := Parser.NextLine;
 
@@ -87,19 +66,13 @@ begin
         fLemmings := Line.Value;
 
       if Line.Keyword = 'COLOR_MASK' then
-        fMaskColor := StrToIntDef('x' + Line.Value, $FF7F7F7F);
+        fMaskColor := StrToIntDef('x' + Line.Value, $7F7F7F) or $FF000000;
 
       if Line.Keyword = 'COLOR_MAP' then
-        fMapColor := StrToIntDef('x' + Line.Value, $FF7F7F7F);
+        fMapColor := StrToIntDef('x' + Line.Value, $7F7F7F) or $FF000000;
 
       if Line.Keyword = 'COLOR_BG' then
-        fBackgroundColor := StrToIntDef('x' + Line.Value, $FF000000);
-
-      if LeftStr(Line.Keyword, 16) = 'COLOR_PARTICLES_' then
-      begin
-        i := StrToIntDef(MidStr(Line.Keyword, 17, Length(Line.Keyword)), 0);
-        ParticleColors[i] := StrToIntDef('x' + Line.Value, $FF000000);
-      end;
+        fBackgroundColor := StrToIntDef('x' + Line.Value, $000000) or $FF000000;
       
     until Line.Keyword = '';
   finally

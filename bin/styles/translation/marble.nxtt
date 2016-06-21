@@ -1,0 +1,322 @@
+# Translation table
+
+THEME marble
+
+TERRAIN 0
+  SET marble
+  NAME pole_vert_join
+
+TERRAIN 1
+  SET marble
+  NAME pole_vert
+
+TERRAIN 2
+  SET marble
+  NAME block_diagright
+
+TERRAIN 3
+  SET marble
+  NAME block_diagright_invert
+
+TERRAIN 4
+  SET marble
+  NAME block_01
+
+TERRAIN 5
+  SET marble
+  NAME steel_large
+
+TERRAIN 6
+  SET marble
+  NAME block_01
+  INVERT
+  ROTATE
+
+TERRAIN 7
+  SET marble
+  NAME block_02
+  INVERT
+  ROTATE
+
+TERRAIN 8
+  SET marble
+  NAME pole_vert_end
+
+TERRAIN 9
+  SET marble
+  NAME block_02
+  FLIP
+  INVERT
+
+TERRAIN 10
+  SET marble
+  NAME block_diagleft
+
+TERRAIN 11
+  SET marble
+  NAME block_diagleft_invert
+
+TERRAIN 12
+  SET marble
+  NAME block_02
+
+TERRAIN 13
+  SET marble
+  NAME tiny_blue_single_horz
+
+TERRAIN 14
+  SET marble
+  NAME tiny_blue_single_vert
+
+TERRAIN 15
+  SET marble
+  NAME tiny_brown_single_vert
+
+TERRAIN 16
+  SET marble
+  NAME tiny_brown_single_horz
+
+TERRAIN 17
+  SET marble
+  NAME block_small_vert
+
+TERRAIN 18
+  SET marble
+  NAME block_small_horz
+
+TERRAIN 19
+  SET marble
+  NAME pole_horz_end
+
+TERRAIN 20
+  SET marble
+  NAME pole_horz_join
+
+TERRAIN 21
+  SET marble
+  NAME pole_horz
+
+TERRAIN 22
+  SET marble
+  NAME arch
+
+TERRAIN 23
+  SET marble
+  NAME steps
+
+TERRAIN 24
+  SET marble
+  NAME stairs_right
+
+TERRAIN 25
+  SET marble
+  NAME rock_01
+
+TERRAIN 26
+  SET marble
+  NAME rock_02
+
+TERRAIN 27
+  SET marble
+  NAME stripe_pole_vert_01_long
+
+TERRAIN 28
+  SET marble
+  NAME stripe_pole_vert_02_long
+
+TERRAIN 29
+  SET marble
+  NAME stripe_pole_vert_03_long
+
+TERRAIN 30
+  SET marble
+  NAME stripe_pole_vert_04_long
+
+TERRAIN 31
+  SET marble
+  NAME stripe_pole_horz_04_short
+
+TERRAIN 32
+  SET marble
+  NAME stripe_pole_horz_04_long
+
+TERRAIN 33
+  SET marble
+  NAME stripe_pole_horz_03_short
+
+TERRAIN 34
+  SET marble
+  NAME stripe_pole_horz_03_long
+
+TERRAIN 35
+  SET marble
+  NAME stripe_pole_horz_02_short
+
+TERRAIN 36
+  SET marble
+  NAME stripe_pole_horz_02_long
+
+TERRAIN 37
+  SET marble
+  NAME stripe_pole_horz_01_short
+
+TERRAIN 38
+  SET marble
+  NAME stripe_pole_horz_01_long
+
+TERRAIN 39
+  SET marble
+  NAME tiny_brown_tiled
+
+TERRAIN 40
+  SET marble
+  NAME stripe_pole_diag_01_left
+
+TERRAIN 41
+  SET marble
+  NAME stripe_pole_diag_01_right
+
+TERRAIN 42
+  SET marble
+  NAME stairs_right_single
+
+TERRAIN 43
+  SET marble
+  NAME stairs_left
+
+TERRAIN 44
+  SET marble
+  NAME stairs_left_single
+
+TERRAIN 45
+  SET marble
+  NAME circle_large
+
+TERRAIN 46
+  SET marble
+  NAME circle_small
+
+TERRAIN 47
+  SET marble
+  NAME stripe_pole_vert_01_short
+
+TERRAIN 48
+  SET marble
+  NAME stripe_pole_vert_02_short
+
+TERRAIN 49
+  SET marble
+  NAME stripe_pole_vert_03_short
+
+TERRAIN 50
+  SET marble
+  NAME stripe_pole_vert_04_short
+
+TERRAIN 51
+  SET marble
+  NAME steps
+  INVERT
+  ROTATE
+
+TERRAIN 52
+  SET marble
+  NAME steps
+  FLIP
+  INVERT
+  ROTATE
+
+TERRAIN 53
+  SET marble
+  NAME formation_01
+
+TERRAIN 54
+  SET marble
+  NAME formation_01
+  OFFSET_RIGHT -6
+  INVERT
+  ROTATE
+
+TERRAIN 55
+  SET marble
+  NAME stuff_01
+
+TERRAIN 56
+  SET marble
+  NAME stuff_02
+
+TERRAIN 57
+  SET marble
+  NAME steel_tall
+
+TERRAIN 58
+  SET marble
+  NAME steel_wide
+
+TERRAIN 59
+  SET marble
+  NAME steel_small
+
+OBJECT 0
+  SET marble
+  NAME exit
+  OFFSET_TOP -8
+
+OBJECT 1
+  SET marble
+  NAME window
+
+OBJECT 2
+  SET default
+  NAME flag_green
+
+OBJECT 3
+  SET marble
+  NAME owa_left
+
+OBJECT 4
+  SET marble
+  NAME owa_right
+
+OBJECT 5
+  SET marble
+  NAME water
+
+OBJECT 6
+  NAME *nil
+
+OBJECT 7
+  SET default
+  NAME flag_blue
+
+OBJECT 8
+  SET marble
+  NAME squasher
+
+OBJECT 9
+  SET marble
+  NAME shredder
+
+OBJECT 10
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 11
+  SET marble
+  NAME pickup
+
+OBJECT 12
+  NAME *nil
+
+OBJECT 13
+  SET marble
+  NAME owa_down
+
+OBJECT 14
+  SET marble
+  NAME teleporter
+
+OBJECT 15
+  SET marble
+  NAME receiver
+
