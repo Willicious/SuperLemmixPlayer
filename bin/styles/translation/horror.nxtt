@@ -1,0 +1,391 @@
+# Translation table
+
+THEME horror
+
+TERRAIN 0
+  SET horror
+  NAME dirt_clump_01
+
+TERRAIN 1
+  SET horror
+  NAME dirt_clump_02
+
+TERRAIN 2
+  SET horror
+  NAME dirt_clump_03
+
+TERRAIN 3
+  SET horror
+  NAME dirt_clump_04
+
+TERRAIN 4
+  SET horror
+  NAME dirt_clump_05
+
+TERRAIN 5
+  SET horror
+  NAME dirt_clump_06
+
+TERRAIN 6
+  SET horror
+  NAME dirt_clump_07
+
+TERRAIN 7
+  SET horror
+  NAME grass_long
+
+TERRAIN 8
+  SET horror
+  NAME grass_short
+
+TERRAIN 9
+  SET horror
+  NAME grass_diag
+
+TERRAIN 10
+  SET horror
+  NAME steel_large
+
+TERRAIN 11
+  SET horror
+  NAME steel_wide
+
+TERRAIN 12
+  SET horror
+  NAME steel_tall
+
+TERRAIN 13
+  SET horror
+  NAME steel_small
+
+TERRAIN 14
+  SET horror
+  NAME gravestone
+
+TERRAIN 15
+  SET horror
+  NAME letter_A
+
+TERRAIN 16
+  SET horror
+  NAME letter_B
+
+TERRAIN 17
+  SET horror
+  NAME letter_C
+
+TERRAIN 18
+  SET horror
+  NAME letter_D
+
+TERRAIN 19
+  SET horror
+  NAME letter_E
+
+TERRAIN 20
+  SET horror
+  NAME letter_F
+
+TERRAIN 21
+  SET horror
+  NAME letter_G
+
+TERRAIN 22
+  SET horror
+  NAME letter_H
+
+TERRAIN 23
+  SET horror
+  NAME letter_I
+
+TERRAIN 24
+  SET horror
+  NAME letter_J
+
+TERRAIN 25
+  SET horror
+  NAME letter_K
+
+TERRAIN 26
+  SET horror
+  NAME letter_L
+
+TERRAIN 27
+  SET horror
+  NAME letter_M
+
+TERRAIN 28
+  SET horror
+  NAME letter_N
+
+TERRAIN 29
+  SET horror
+  NAME letter_O
+
+TERRAIN 30
+  SET horror
+  NAME letter_P
+
+TERRAIN 31
+  SET horror
+  NAME letter_Q
+
+TERRAIN 32
+  SET horror
+  NAME letter_R
+
+TERRAIN 33
+  SET horror
+  NAME letter_S
+
+TERRAIN 34
+  SET horror
+  NAME letter_T
+
+TERRAIN 35
+  SET horror
+  NAME letter_U
+
+TERRAIN 36
+  SET horror
+  NAME letter_V
+
+TERRAIN 37
+  SET horror
+  NAME letter_W
+
+TERRAIN 38
+  SET horror
+  NAME letter_X
+
+TERRAIN 39
+  SET horror
+  NAME letter_Y
+
+TERRAIN 40
+  SET horror
+  NAME letter_Z
+
+TERRAIN 41
+  SET horror
+  NAME bone_single
+
+TERRAIN 42
+  SET horror
+  NAME bone_triple
+
+TERRAIN 43
+  SET horror
+  NAME plank_horz_whole
+
+TERRAIN 44
+  SET horror
+  NAME plank_horz_left
+
+TERRAIN 45
+  SET horror
+  NAME plank_horz_right
+
+TERRAIN 46
+  SET horror
+  NAME plank_horz_middle_short
+
+TERRAIN 47
+  SET horror
+  NAME plank_horz_middle_long
+
+TERRAIN 48
+  SET horror
+  NAME plank_vert_whole
+
+TERRAIN 49
+  SET horror
+  NAME plank_vert_top
+
+TERRAIN 50
+  SET horror
+  NAME plank_vert_bottom
+
+TERRAIN 51
+  SET horror
+  NAME plank_vert_middle_short
+
+TERRAIN 52
+  SET horror
+  NAME plank_vert_middle_long
+
+TERRAIN 53
+  SET horror
+  NAME plank_thin_diagleft_short
+
+TERRAIN 54
+  SET horror
+  NAME plank_thin_diagleft_long
+
+TERRAIN 55
+  SET horror
+  NAME blood_splatter
+
+TERRAIN 56
+  SET horror
+  NAME blood_clump
+
+TERRAIN 57
+  SET horror
+  NAME wood_vert
+
+TERRAIN 58
+  SET horror
+  NAME wood_horz
+
+TERRAIN 59
+  SET horror
+  NAME wood_square
+
+TERRAIN 60
+  SET horror
+  NAME rock_01
+
+TERRAIN 61
+  SET horror
+  NAME rock_02
+
+TERRAIN 62
+  SET horror
+  NAME rock_03
+
+TERRAIN 63
+  SET horror
+  NAME bone_skull
+
+TERRAIN 64
+  SET horror
+  NAME lab_machine
+
+TERRAIN 65
+  SET horror
+  NAME lab_bump
+
+TERRAIN 66
+  SET horror
+  NAME lab_bump
+  ROTATE
+
+TERRAIN 67
+  SET horror
+  NAME lab_tile_middle
+  FLIP
+  INVERT
+  ROTATE
+
+TERRAIN 68
+  SET horror
+  NAME lab_tile_middle
+
+TERRAIN 69
+  SET horror
+  NAME lab_thing
+
+TERRAIN 70
+  SET horror
+  NAME lab_tile_end
+  FLIP
+  INVERT
+  ROTATE
+
+TERRAIN 71
+  SET horror
+  NAME lab_tile_end
+
+TERRAIN 72
+  SET horror
+  NAME lab_diagbar
+
+TERRAIN 73
+  SET horror
+  NAME lab_chain_horz
+
+TERRAIN 74
+  SET horror
+  NAME lab_chain_vert
+
+TERRAIN 75
+  SET horror
+  NAME zombie_sign
+
+TERRAIN 76
+  SET horror
+  NAME ghost_sign
+
+OBJECT 0
+  SET horror
+  NAME exit_grave
+  OFFSET_TOP -7
+
+OBJECT 1
+  SET horror
+  NAME window
+
+OBJECT 2
+  NAME *nil
+
+OBJECT 3
+  SET horror
+  NAME owa_left
+
+OBJECT 4
+  SET horror
+  NAME owa_right
+
+OBJECT 5
+  SET horror
+  NAME owa_down
+
+OBJECT 6
+  SET horror
+  NAME water
+
+OBJECT 7
+  SET horror
+  NAME fire
+
+OBJECT 8
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 9
+  SET horror
+  NAME pickup
+
+OBJECT 10
+  NAME *nil
+
+OBJECT 11
+  SET horror
+  NAME exit_lab
+
+OBJECT 12
+  SET horror
+  NAME button
+
+OBJECT 13
+  SET horror
+  NAME acid
+
+OBJECT 14
+  SET horror
+  NAME slicer
+
+OBJECT 15
+  SET horror
+  NAME owf_left
+
+OBJECT 16
+  SET horror
+  NAME owf_right
+
+OBJECT 17
+  SET horror
+  NAME splitter
+
