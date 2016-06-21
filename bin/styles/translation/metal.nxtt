@@ -167,6 +167,6 @@ OBJECT 14
   NAME exit
 
 OBJECT 15
-  SET metal
+  SET default
   NAME splitter
 
