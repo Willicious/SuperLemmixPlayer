@@ -3702,7 +3702,7 @@ end;*)
 procedure TLemmingGame.CheckForNewShadow;
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker,
-                    spbDigger, spbMiner, spbBasher];
+                    spbDigger, spbMiner, spbBasher, spbExplode];
 begin
   if fHyperSpeed then Exit;
 
@@ -3797,6 +3797,11 @@ begin
   spbStacker: // 0 or 1, depending on starting position
     begin
       if HasPixelAt(L.LemX + L.LemDx, L.LemY) then j := 1;
+    end;
+
+  spbExplode: // 0 or 1, depending on direction of Lemming
+    begin
+      if L.LemDx = 1 then j := 1;
     end;
   end;
 

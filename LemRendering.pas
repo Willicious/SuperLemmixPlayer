@@ -414,6 +414,18 @@ end;
 
 
 procedure TRenderer.DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; PosMarker: Integer);
+const
+  // This encodes only the right half of the bomber mask. The rest is obtained by mirroring it
+  BomberShadowPos: array[0..35, 0..1] of Integer = (
+     (0, 7), (1, 7), (2, 7), (2, 6), (3, 6),
+     (4, 6), (4, 5), (5, 5), (5, 4), (6, 4),
+     (6, 3), (6, 2), (6, 1), (7, 1), (7, 0),
+     (7, -1), (7, -2), (7, -3), (7, -4), (6, -4),
+     (6, -5), (6, -6), (6, -7), (6, -8), (5, -8),
+     (5, -9), (5, -10), (5, -10), (4, -11), (4, -12),
+     (3, -12), (3, -13), (2, -13), (2, -14), (1, -14),
+     (0, -14)
+   );
 var
   i, j: Integer;
   AdaptY: Integer;
@@ -469,6 +481,16 @@ begin
       for i := 3 to PosMarker do
         SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
     end;
+
+  spbExplode: // PosMarker adapts the starting position horizontally
+    begin
+      fLayers.fIsEmpty[rlHighShadows] := False;
+      for i := 0 to 35 do
+      begin
+        SetHighShadowPixel(L.LemX + PosMarker + BomberShadowPos[i, 0], L.LemY + BomberShadowPos[i, 1]);
+        SetHighShadowPixel(L.LemX + PosMarker - BomberShadowPos[i, 0] - 1, L.LemY + BomberShadowPos[i, 1]);
+      end;
+    end;
   end;
 end;
 
@@ -488,14 +510,16 @@ end;
 
 procedure TRenderer.SetLowShadowPixel(X, Y: Integer);
 begin
-  fLayers[rlLowShadows].Pixel[X, Y] := SHADOW_COLOR;
+  if (X >= 0) and (X < fPhysicsMap.Width) and (Y >= 0) and (Y < fPhysicsMap.Height) then
+    fLayers[rlLowShadows].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
 procedure TRenderer.SetHighShadowPixel(X, Y: Integer);
 begin
-  // Only draw this on terrain
-  if fPhysicsMap.Pixel[X, Y] and PM_SOLID <> 0 then
-    fLayers[rlHighShadows].Pixel[X, Y] := SHADOW_COLOR;
+  if (X >= 0) and (X < fPhysicsMap.Width) and (Y >= 0) and (Y < fPhysicsMap.Height) then
+    // Only draw this on terrain, but not on steel
+    if (fPhysicsMap.Pixel[X, Y] and PM_SOLID <> 0) and (PhysicsMap.Pixel[X, Y] and PM_STEEL = 0) then
+      fLayers[rlHighShadows].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
 procedure TRenderer.AddTerrainPixel(X, Y: Integer);
