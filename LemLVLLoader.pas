@@ -629,10 +629,10 @@ begin
   end;
 
   // Apply translation table if one exists
-  if FileExists(AppPath + SFStyles + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt') then
+  if FileExists(AppPath + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt') then
   begin
     Trans := TTranslationTable.Create;
-    Trans.LoadFromFile(AppPath + SFStyles + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt');
+    Trans.LoadFromFile(AppPath + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt');
     Trans.Apply(aLevel);
     Trans.Free;
   end;

@@ -22,6 +22,7 @@ uses
   GameControl,
   LemRendering, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
   LemGame,
+  PngInterface,
   UZip; // For checking whether files actually exist
 
   {-------------------------------------------------------------------------------
@@ -51,6 +52,7 @@ type
     fSkillFont     : array['0'..'9', 0..1] of TBitmap32;
     fSkillWhiteout : TBitmap32;
     fSkillUnwhite  : TBitmap32;
+    fSkillLock     : TBitmap32;
     fSkillInfinite : TBitmap32;
     fSkillIcons    : array[0..15] of TBitmap32;
     fInfoFont      : array[0..43] of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
@@ -189,6 +191,7 @@ begin
   fSkillInfinite := TBitmap32.Create;
   fSkillWhiteout := TBitmap32.Create;
   fSkillUnwhite := TBitmap32.Create;
+  fSkillLock := TBitmap32.Create;
 
 
   // info positions types:
@@ -234,6 +237,7 @@ begin
   fSkillInfinite.Free;
   fSkillWhiteout.Free;
   fSkillUnwhite.Free;
+  fSkillLock.Free;
 
   fOriginal.Free;
   inherited;
@@ -447,6 +451,13 @@ begin
 
   BtnIdx := (fButtonRects[aButton].Left - 1) div 16;
 
+  // If release rate locked, display as such
+  if (aButton = spbFaster) and (fLevel.Info.ReleaseRateLocked) then
+  begin
+    fSkillLock.DrawTo(fImg.Bitmap, BtnIdx * 16 + 4, 17);
+    Exit;
+  end;
+
   // White out if applicable
   fSkillUnwhite.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
   if (aoNumber = 0) and (GameParams.BlackOutZero) then Exit;
@@ -627,7 +638,6 @@ var
   c: char; i: Integer;
   LemmixPal: TArrayOfColor32;
   HiPal: TArrayOfColor32;
-  MainExtractor: TMainDatExtractor;
   TempBmp: TBitmap32;
   SrcRect: TRect;
   Arc: TArchive; // for checking whether files actually exist
@@ -677,6 +687,13 @@ const
     fSkillWhiteout.EndUpdate;
   end;
 
+  procedure GetGraphic(aName: String; aDst: TBitmap32);
+  begin
+    aName := AppPath + SFGraphicsGame + 'default\' + aName;
+    TPngInterface.LoadPngFile(aName, aDst);
+    TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(aName, '_mask.png'), LemmixPal[7]);
+  end;
+
 begin
 
 
@@ -703,18 +720,16 @@ begin
   LemmixPal[7] := GameParams.Renderer.Theme.MaskColor;
 
   SetButtonRects;
-  MainExtractor := TMainDatExtractor.Create;
 
 
     TempBmp := TBitmap32.Create;
 
     // Panel graphic
-    MainExtractor.ExtractBitmapByName(fOriginal, 'skill_panel.png', LemmixPal[7]);
-    ReplaceColor(fOriginal, $FFFC00FC, LemmixPal[7]);
+    GetGraphic('skill_panel.png', fOriginal);
     fImg.Bitmap.Assign(fOriginal);
 
     // Panel font
-    MainExtractor.ExtractBitmapByName(TempBmp, 'panel_font.png', LemmixPal[7]);
+    GetGraphic('panel_font.png', TempBmp);
     SrcRect := Rect(0, 0, 8, 16);
     for i := 0 to 43 do
     begin
@@ -726,7 +741,7 @@ begin
     end;
 
     // Skill icons
-    MainExtractor.ExtractBitmapByname(TempBmp, 'skill_icons.png', LemmixPal[7]);
+    GetGraphic('skill_icons.png', TempBmp);
     SrcRect := Rect(0, 0, 16, 23);
     for i := 0 to 15 do
     begin
@@ -738,7 +753,7 @@ begin
     end;
 
     // Skill counts
-    MainExtractor.ExtractBitmapByName(TempBmp, 'skill_count_digits.png', LemmixPal[7]);
+    GetGraphic('skill_count_digits.png', TempBmp);
     SrcRect := Rect(0, 0, 4, 8);
     for c := '0' to '9' do
     begin
@@ -756,45 +771,24 @@ begin
       SrcRect.Left := SrcRect.Left + 4;
     end;
 
-    MainExtractor.ExtractBitmapByName(fSkillInfinite, 'skill_count_infinite.png', LemmixPal[7]);
-    MainExtractor.ExtractBitmapByName(fSkillWhiteout, 'skill_count_whiteout.png', LemmixPal[7]);
+    GetGraphic('skill_count_infinite.png', fSkillInfinite);
+    GetGraphic('skill_count_erase.png', fSkillWhiteout);
+    GetGraphic('skill_count_lock.png', fSkillLock);
 
     fSkillInfinite.DrawMode := dmBlend;
     fSkillInfinite.CombineMode := cmMerge;
     fSkillWhiteout.DrawMode := dmBlend;
     fSkillWhiteout.CombineMode := cmMerge;
+    fSkillLock.DrawMode := dmBlend;
+    fSkillLock.CombineMode := cmMerge;
+
+    fSkillUnwhite.Assign(fSkillWhiteout);
 
     TempBmp.Free;
-
-
-  try
-    Arc := TArchive.Create;
-    if Arc.CheckIfFileExists('skill_count_unwhite.png') then
-      MainExtractor.ExtractBitmapByName(fSkillUnwhite, 'skill_count_unwhite.png', LemmixPal[7])
-    else
-      // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
-      // might throw an exception sometimes. Handle it by auto-generating one.
-      MakeUnwhiteImage;
-    Arc.Free;
-  except
-    // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
-    // might throw an exception sometimes. Handle it by auto-generating one.
-    MakeUnwhiteImage;
-    Arc.Free;
-  end;
-
-  (* try
-    MainExtractor.ExtractBitmapByName(fSkillUnwhite, 'skill_count_unwhite.png', LemmixPal[7]);
-  except
-    // Many packs (and the defaults) won't contain an unwhite image, so it's expected that this
-    // might throw an exception sometimes. Handle it by auto-generating one.
-    MakeUnwhiteImage;
-  end; *)
 
   fSkillUnwhite.DrawMode := dmBlend;
   fSkillUnwhite.CombineMode := cmMerge;
 
-  MainExtractor.Free;
 
 end;
 

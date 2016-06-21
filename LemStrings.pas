@@ -33,10 +33,14 @@ const
   SCheatCode = '';
 
   // Important paths
+  SFGraphics = 'gfx\';
+    SFGraphicsGame = SFGraphics + 'game\';
+    SFGraphicsSprites = SFGraphics + 'sprites\';
+
   SFStyles = 'styles\';
-    SFStylesPieces = 'pieces\';
-    SFStylesThemes = 'themes\';
-    SFStylesTranslation = 'translation\';
+    SFStylesPieces = SFStyles + 'pieces\';
+    SFStylesThemes = SFStyles + 'themes\';
+    SFStylesTranslation = SFStyles + 'translation\';
 
 resourcestring
   SProgramName = 'NeoLemmix Player';

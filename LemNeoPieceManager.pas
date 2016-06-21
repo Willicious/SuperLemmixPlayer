@@ -172,9 +172,9 @@ var
   BMP: TBitmap32;
 begin
   TerrainLabel := SplitIdentifier(Identifier);
-  if not DirectoryExists(AppPath + SFStyles + SFStylesPieces + TerrainLabel.GS) then
+  if not DirectoryExists(AppPath + SFStylesPieces + TerrainLabel.GS) then
     raise Exception.Create('TNeoPieceManager.ObtainTerrain: ' + TerrainLabel.GS + ' does not exist.');
-  SetCurrentDir(AppPath + SFStyles + SFStylesPieces + TerrainLabel.GS + '\');
+  SetCurrentDir(AppPath + SFStylesPieces + TerrainLabel.GS + '\');
 
   Result := fTerrains.Count;
 
@@ -246,9 +246,9 @@ var
 
 begin
   ObjectLabel := SplitIdentifier(Identifier);
-  if not DirectoryExists(AppPath + SFStyles + SFStylesPieces + ObjectLabel.GS) then
+  if not DirectoryExists(AppPath + SFStylesPieces + ObjectLabel.GS) then
     raise Exception.Create('TNeoPieceManager.ObtainTerrain: ' + ObjectLabel.GS + ' does not exist.');
-  SetCurrentDir(AppPath + SFStyles + SFStylesPieces + ObjectLabel.GS + '\');
+  SetCurrentDir(AppPath + SFStylesPieces + ObjectLabel.GS + '\');
 
   Result := fObjects.Count;
 

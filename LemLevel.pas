@@ -14,6 +14,7 @@ type
   TLevelInfo = class(TPersistent)
   private
   protected
+    fReleaseRateLocked : Boolean;
     fReleaseRate    : Integer;
     fLemmingsCount  : Integer;
     fZombieGhostCount: Integer;
@@ -80,6 +81,7 @@ type
     procedure Clear; virtual;
   published
     property ReleaseRate    : Integer read fReleaseRate write fReleaseRate;
+    property ReleaseRateLocked: Boolean read fReleaseRateLocked write fReleaseRateLocked;
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
     property ZombieGhostCount: Integer read fZombieGhostCount write fZombieGhostCount;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
@@ -219,6 +221,7 @@ var
   i : Integer;
 begin
   ReleaseRate    := 1;
+  ReleaseRateLocked := false;
   LemmingsCount  := 1;
   RescueCount    := 1;
   TimeLimit      := 1;

@@ -89,9 +89,16 @@ begin
           TimeLimit := Line.Numeric;
 
         if Line.Keyword = 'MIN_RR' then
+        begin
           ReleaseRate := Line.Numeric;
+          ReleaseRateLocked := false;
+        end;
 
-        // MAX_RR support needs to be implemented in-game first
+        if Line.Keyword = 'FIXED_RR' then
+        begin
+          ReleaseRate := Line.Numeric;
+          ReleaseRateLocked := true;
+        end;
 
         if Line.Keyword = 'AUTOSTEEL' then
           if Uppercase(Line.Value) = 'OFF' then
@@ -461,8 +468,10 @@ begin
       Add(' REQUIREMENT ' + IntToStr(RescueCount));
       if TimeLimit < 6000 then
         Add(' TIME_LIMIT ' + IntToStr(TimeLimit));
-      Add(' MIN_RR ' + IntToStr(ReleaseRate));
-      Add(' MAX_RR 99');
+      if ReleaseRateLocked then
+        Add(' FIXED_RR ' + IntToStr(ReleaseRate))
+      else
+        Add(' MIN_RR ' + IntToStr(ReleaseRate));
       if (LevelOptions and $02) = 0 then
         Add(' AUTOSTEEL OFF')
       else if (LevelOptions and $08) <> 0 then

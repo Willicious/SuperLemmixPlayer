@@ -53,7 +53,7 @@ var
   i: Integer;
 begin
   Clear;
-  SetCurrentDir(AppPath + SFStyles + SFStylesThemes);
+  SetCurrentDir(AppPath + SFStylesThemes);
   if not FileExists(aSet + '.nxtm') then Exit;
 
   Parser := TNeoLemmixParser.Create;

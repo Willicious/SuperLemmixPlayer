@@ -5557,9 +5557,14 @@ end;
 procedure TLemmingGame.AdjustReleaseRate(Delta: Integer);
 var
   N: Integer;
+  MaxRR: Integer;
 begin
   N := CurrReleaseRate + Delta;
-  Restrict(N, Level.Info.ReleaseRate, 99);
+  if Level.Info.ReleaseRateLocked then
+    MaxRR := Level.Info.ReleaseRate
+  else
+    MaxRR := 99;
+  Restrict(N, Level.Info.ReleaseRate, MaxRR);
   if N <> currReleaseRate then
   begin
     currReleaseRate := N;

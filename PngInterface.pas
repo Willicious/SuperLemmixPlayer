@@ -45,6 +45,7 @@ class procedure TPngInterface.MaskImageFromFile(Bmp: TBitmap32; fn: String; C: T
 var
   TempBmp: TBitmap32;
 begin
+  if not FileExists(fn) then Exit;
   TempBmp := LoadPngFile(fn);
   MaskImageFromImage(Bmp, TempBmp, C);
   TempBmp.Free;
