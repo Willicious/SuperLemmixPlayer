@@ -1,0 +1,172 @@
+# Translation table
+
+THEME metal
+
+TERRAIN 0
+  SET metal
+  NAME block_large
+
+TERRAIN 1
+  SET metal
+  NAME block_wide
+
+TERRAIN 2
+  SET metal
+  NAME block_tall
+
+TERRAIN 3
+  SET metal
+  NAME block_small
+
+TERRAIN 4
+  SET metal
+  NAME block_xlarge
+
+TERRAIN 5
+  SET metal
+  NAME block_xtall
+
+TERRAIN 6
+  SET metal
+  NAME block_xwide
+
+TERRAIN 7
+  SET metal
+  NAME bar_long
+
+TERRAIN 8
+  SET metal
+  NAME bar_short
+
+TERRAIN 9
+  SET metal
+  NAME bar_long_triple
+
+TERRAIN 10
+  SET metal
+  NAME bar_short_triple
+
+TERRAIN 11
+  SET metal
+  NAME bar_long_triple
+  ROTATE
+
+TERRAIN 12
+  SET metal
+  NAME bar_short_triple
+  ROTATE
+
+TERRAIN 13
+  SET metal
+  NAME bar_long
+  ROTATE
+
+TERRAIN 14
+  SET metal
+  NAME bar_short
+
+TERRAIN 15
+  SET metal
+  NAME steel_large
+
+TERRAIN 16
+  SET metal
+  NAME steel_wide
+
+TERRAIN 17
+  SET metal
+  NAME steel_tall
+
+TERRAIN 18
+  SET metal
+  NAME steel_small
+
+TERRAIN 19
+  SET metal
+  NAME block_diag_topleft
+
+TERRAIN 20
+  SET metal
+  NAME block_diag_topright
+
+TERRAIN 21
+  SET metal
+  NAME block_diag_bottomleft
+
+TERRAIN 22
+  SET metal
+  NAME block_diag_bottomright
+
+TERRAIN 23
+  SET metal
+  NAME bar_diag
+
+TERRAIN 24
+  SET metal
+  NAME bar_diag
+  FLIP
+
+OBJECT 0
+  SET metal
+  NAME exit
+
+OBJECT 1
+  SET metal
+  NAME window
+
+OBJECT 2
+  SET metal
+  NAME owa_left
+
+OBJECT 3
+  SET metal
+  NAME owa_right
+
+OBJECT 4
+  SET metal
+  NAME exit_deco
+
+OBJECT 5
+  SET metal
+  NAME owf_right
+
+OBJECT 6
+  SET metal
+  NAME owf_left
+
+OBJECT 7
+  SET metal
+  NAME laser_vert
+
+OBJECT 8
+  SET metal
+  NAME laser_horz
+
+OBJECT 9
+  NAME *nil
+
+OBJECT 10
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 11
+  SET metal
+  NAME pickup
+
+OBJECT 12
+  SET metal
+  NAME owa_down
+
+OBJECT 13
+  SET default
+  NAME button
+
+OBJECT 14
+  SET metal
+  NAME exit
+
+OBJECT 15
+  SET metal
+  NAME splitter
+
