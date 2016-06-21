@@ -1,0 +1,290 @@
+# Translation table
+
+THEME sega
+
+TERRAIN 0
+  SET sega
+  NAME blocks_4x4
+
+TERRAIN 1
+  SET sega
+  NAME blocks_2x2
+
+TERRAIN 2
+  SET sega
+  NAME blocks_2x2_allblue
+
+TERRAIN 3
+  SET sega
+  NAME blocks_2x2_allwhite
+
+TERRAIN 4
+  SET sega
+  NAME blocks_single_blue
+
+TERRAIN 5
+  SET sega
+  NAME blocks_single_white
+
+TERRAIN 6
+  SET sega
+  NAME blocks_5x5_rip
+
+TERRAIN 7
+  SET sega
+  NAME blocks_2x1_rip
+
+TERRAIN 8
+  SET sega
+  NAME blocks_4x2_sega
+
+TERRAIN 9
+  SET sega
+  NAME blocks_single_rip
+
+TERRAIN 10
+  SET sega
+  NAME edge_horz_long
+
+TERRAIN 11
+  SET sega
+  NAME edge_horz_short
+
+TERRAIN 12
+  SET sega
+  NAME corner_topleft
+
+TERRAIN 13
+  SET sega
+  NAME corner_topright
+
+TERRAIN 14
+  SET sega
+  NAME corner_bottomleft
+
+TERRAIN 15
+  SET sega
+  NAME corner_bottomright
+
+TERRAIN 16
+  SET sega
+  NAME edge_vert_long
+
+TERRAIN 17
+  SET sega
+  NAME edge_vert_short
+
+TERRAIN 18
+  SET sega
+  NAME edge_vert_long
+  FLIP
+
+TERRAIN 19
+  SET sega
+  NAME edge_vert_short
+  FLIP
+
+TERRAIN 20
+  SET sega
+  NAME gunk_01
+
+TERRAIN 21
+  SET sega
+  NAME letter_S
+
+TERRAIN 22
+  SET sega
+  NAME letter_E
+
+TERRAIN 23
+  SET sega
+  NAME letter_G
+
+TERRAIN 24
+  SET sega
+  NAME letter_A
+
+TERRAIN 25
+  SET sega
+  NAME letter_TM
+
+TERRAIN 26
+  SET sega
+  NAME steel_huge
+
+TERRAIN 27
+  SET sega
+  NAME steel_large
+
+TERRAIN 28
+  SET sega
+  NAME steel_wide
+
+TERRAIN 29
+  SET sega
+  NAME steel_tall
+
+TERRAIN 30
+  SET sega
+  NAME steel_small
+
+TERRAIN 31
+  SET sega
+  NAME bathplug
+
+TERRAIN 32
+  SET sega
+  NAME blocks_single_damaged_blue_01
+
+TERRAIN 33
+  SET sega
+  NAME blocks_single_damaged_white
+
+TERRAIN 34
+  SET sega
+  NAME blocks_single_damaged_blue_02
+
+TERRAIN 35
+  SET sega
+  NAME gunk_02
+
+TERRAIN 36
+  SET sega
+  NAME gunk_03
+
+TERRAIN 37
+  SET sega
+  NAME platform_medium
+
+TERRAIN 38
+  SET sega
+  NAME platform_long
+
+TERRAIN 39
+  SET sega
+  NAME platform_short
+
+TERRAIN 40
+  SET sega
+  NAME platform_xlong
+
+TERRAIN 41
+  SET sega
+  NAME pipe_thin_horz
+
+TERRAIN 42
+  SET sega
+  NAME pipe_thin_vert
+
+TERRAIN 43
+  SET sega
+  NAME pipe_thin_corner_topleft
+
+TERRAIN 44
+  SET sega
+  NAME pipe_thin_corner_topright
+
+TERRAIN 45
+  SET sega
+  NAME pipe_thin_corner_bottomleft
+
+TERRAIN 46
+  SET sega
+  NAME pipe_thin_corner_bottomright
+
+TERRAIN 47
+  SET sega
+  NAME pipe_top
+
+TERRAIN 48
+  SET sega
+  NAME pipe_bottom
+
+TERRAIN 49
+  SET sega
+  NAME pipe_horz
+
+TERRAIN 50
+  SET sega
+  NAME pipe_vert
+
+TERRAIN 51
+  SET sega
+  NAME pipe_horz_bump
+
+TERRAIN 52
+  SET sega
+  NAME pipe_vert_bump
+
+TERRAIN 53
+  SET sega
+  NAME pipe_corner_topright
+
+TERRAIN 54
+  SET sega
+  NAME pipe_left
+
+TERRAIN 55
+  SET sega
+  NAME tap_handle
+
+TERRAIN 56
+  SET sega
+  NAME tap_body_short
+
+TERRAIN 57
+  SET sega
+  NAME tap_body_long
+
+OBJECT 0
+  SET sega
+  NAME exit
+
+OBJECT 1
+  SET sega
+  NAME window
+
+OBJECT 2
+  SET sega
+  NAME water
+
+OBJECT 3
+  SET sega
+  NAME exit_deco
+
+OBJECT 4
+  SET sega
+  NAME dripper
+
+OBJECT 5
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 6
+  SET sega
+  NAME pickup
+
+OBJECT 7
+  NAME *nil
+
+OBJECT 8
+  SET sega
+  NAME owa_left
+
+OBJECT 9
+  SET sega
+  NAME owa_right
+
+OBJECT 10
+  SET sega
+  NAME owa_down
+
+OBJECT 11
+  SET sega
+  NAME exit
+
+OBJECT 12
+  SET sega
+  NAME button
+
