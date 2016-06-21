@@ -1,0 +1,140 @@
+# Translation table
+
+THEME sky
+
+TERRAIN 0
+  SET sky
+  NAME cloud_small_01
+
+TERRAIN 1
+  SET sky
+  NAME cloud_wide_01
+
+TERRAIN 2
+  SET sky
+  NAME cloud_large_01
+
+TERRAIN 3
+  SET sky
+  NAME cloud_diag_01
+
+TERRAIN 4
+  SET sky
+  NAME cloud_diag_02
+
+TERRAIN 5
+  SET sky
+  NAME cloud_large_02
+
+TERRAIN 6
+  SET sky
+  NAME cloud_steel_01
+
+TERRAIN 7
+  SET sky
+  NAME cloud_steel_02
+
+TERRAIN 8
+  SET sky
+  NAME cloud_steel_03
+
+TERRAIN 9
+  SET sky
+  NAME snowflake_large
+
+TERRAIN 10
+  SET sky
+  NAME snowflake_small
+
+TERRAIN 11
+  SET sky
+  NAME cloud_tall_01
+
+TERRAIN 12
+  SET sky
+  NAME cloud_wide_02
+
+TERRAIN 13
+  SET sky
+  NAME cloud_small_02
+
+TERRAIN 14
+  SET sky
+  NAME cloud_steel_04
+
+TERRAIN 15
+  SET sky
+  NAME balloon_yellow
+
+TERRAIN 16
+  SET sky
+  NAME balloon_blue
+
+TERRAIN 17
+  SET sky
+  NAME balloon_red
+
+TERRAIN 18
+  SET sky
+  NAME cloud_small_03
+
+TERRAIN 19
+  SET sky
+  NAME cloud_tall_02
+
+TERRAIN 20
+  SET sky
+  NAME cloud_large_03
+
+OBJECT 0
+  SET sky
+  NAME exit
+
+OBJECT 1
+  SET sky
+  NAME window
+
+OBJECT 2
+  SET sky
+  NAME exit_deco
+
+OBJECT 3
+  SET sky
+  NAME owf_left
+
+OBJECT 4
+  SET sky
+  NAME owf_right
+
+OBJECT 5
+  SET default
+  NAME radiation
+
+OBJECT 6
+  SET sky
+  NAME lightning_horz
+
+OBJECT 7
+  SET sky
+  NAME lightning_vert
+
+OBJECT 8
+  SET default
+  NAME updraft_thin
+
+OBJECT 9
+  SET default
+  NAME updraft_wide
+
+OBJECT 10
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 11
+  SET sky
+  NAME pickup
+
+OBJECT 12
+  NAME *nil
+
