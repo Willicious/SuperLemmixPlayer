@@ -1,0 +1,321 @@
+# Translation table
+
+THEME pillar
+
+TERRAIN 0
+  SET pillar
+  NAME pillar_horz_long
+
+TERRAIN 1
+  SET pillar
+  NAME pillar_vert_long
+
+TERRAIN 2
+  SET pillar
+  NAME pillar_top_180
+
+TERRAIN 3
+  SET pillar
+  NAME pillar_top_rough
+
+TERRAIN 4
+  SET pillar
+  NAME pillar_left_rough
+
+TERRAIN 5
+  SET pillar
+  NAME pillar_right_rough
+
+TERRAIN 6
+  SET pillar
+  NAME pillar_bottom_rough
+
+TERRAIN 7
+  SET pillar
+  NAME pillar_bottom_180
+
+TERRAIN 8
+  SET pillar
+  NAME rough_bottomleft
+
+TERRAIN 9
+  SET pillar
+  NAME rough_bottomright
+
+TERRAIN 10
+  SET pillar
+  NAME rough_topleft
+
+TERRAIN 11
+  SET pillar
+  NAME rough_topright
+
+TERRAIN 12
+  SET pillar
+  NAME plank_vert_bottom_01
+
+TERRAIN 13
+  SET pillar
+  NAME plank_vert_top_01
+
+TERRAIN 14
+  SET pillar
+  NAME plank_vert_mid_01
+
+TERRAIN 15
+  SET pillar
+  NAME plank_vert_bottom_02
+
+TERRAIN 16
+  SET pillar
+  NAME plank_vert_top_02
+
+TERRAIN 17
+  SET pillar
+  NAME plank_vert_mid_02
+
+TERRAIN 18
+  SET pillar
+  NAME plank_vert_bottom_03
+
+TERRAIN 19
+  SET pillar
+  NAME plank_vert_top_03
+
+TERRAIN 20
+  SET pillar
+  NAME plank_vert_middle_03
+
+TERRAIN 21
+  SET pillar
+  NAME rough_crumbly_01
+
+TERRAIN 22
+  SET pillar
+  NAME rough_crumbly_02
+
+TERRAIN 23
+  SET pillar
+  NAME pillar_left_end
+
+TERRAIN 24
+  SET pillar
+  NAME pillar_horz_short
+
+TERRAIN 25
+  SET pillar
+  NAME pillar_right_end
+
+TERRAIN 26
+  SET pillar
+  NAME pillar_top_end
+
+TERRAIN 27
+  SET pillar
+  NAME steel_large
+
+TERRAIN 28
+  SET pillar
+  NAME pillar_vert_short
+
+TERRAIN 29
+  SET pillar
+  NAME clump
+  INVERT
+
+TERRAIN 30
+  SET pillar
+  NAME clump
+
+TERRAIN 31
+  SET pillar
+  NAME rough_crumbly_wide_01
+
+TERRAIN 32
+  SET pillar
+  NAME rough_crumbly_wide_02
+
+TERRAIN 33
+  SET pillar
+  NAME rough_crumbly_tall_01
+
+TERRAIN 34
+  SET pillar
+  NAME rough_crumbly_tall_02
+
+TERRAIN 35
+  SET pillar
+  NAME pillar_bottom_end
+
+TERRAIN 36
+  SET pillar
+  NAME sandstone_tall
+
+TERRAIN 37
+  SET pillar
+  NAME pillar_thin_vert
+
+TERRAIN 38
+  SET pillar
+  NAME sandstone_wide
+
+TERRAIN 39
+  SET pillar
+  NAME sandstone_small
+
+TERRAIN 40
+  SET pillar
+  NAME pillar_thin_vert_short
+
+TERRAIN 41
+  SET pillar
+  NAME pillar_thin_horz
+
+TERRAIN 42
+  SET pillar
+  NAME plank_horz_right_01
+
+TERRAIN 43
+  SET pillar
+  NAME plank_horz_left_01
+
+TERRAIN 44
+  SET pillar
+  NAME plank_horz_mid_01
+
+TERRAIN 45
+  SET pillar
+  NAME plank_horz_right_02
+
+TERRAIN 46
+  SET pillar
+  NAME plank_horz_left_02
+
+TERRAIN 47
+  SET pillar
+  NAME plank_horz_mid_02
+
+TERRAIN 48
+  SET pillar
+  NAME steel_tall
+
+TERRAIN 49
+  SET pillar
+  NAME steel_wide
+
+TERRAIN 50
+  SET pillar
+  NAME steel_small
+
+TERRAIN 51
+  SET pillar
+  NAME brightstone_wide
+
+TERRAIN 52
+  SET pillar
+  NAME brightstone_tall
+
+TERRAIN 53
+  SET pillar
+  NAME brightstone_small
+
+TERRAIN 54
+  SET pillar
+  NAME staircase_right_3step
+
+TERRAIN 55
+  SET pillar
+  NAME staircase_right_12step
+
+TERRAIN 56
+  SET pillar
+  NAME staircase_left_12step
+
+TERRAIN 57
+  SET pillar
+  NAME staircase_left_3step
+
+TERRAIN 58
+  SET pillar
+  NAME circle_large
+
+TERRAIN 59
+  SET pillar
+  NAME circle_small
+
+TERRAIN 60
+  SET pillar
+  NAME clump_vert
+
+TERRAIN 61
+  SET pillar
+  NAME clump_vert
+  OFFSET_RIGHT -2
+  FLIP
+
+OBJECT 0
+  SET pillar
+  NAME exit
+  OFFSET_TOP -8
+
+OBJECT 1
+  SET pillar
+  NAME window
+
+OBJECT 2
+  SET default
+  NAME flag_green
+
+OBJECT 3
+  SET pillar
+  NAME owa_left
+
+OBJECT 4
+  SET pillar
+  NAME owa_right
+
+OBJECT 5
+  SET default
+  NAME water
+
+OBJECT 6
+  NAME *nil
+
+OBJECT 7
+  SET default
+  NAME flag_blue
+
+OBJECT 8
+  SET pillar
+  NAME ropetrap
+
+OBJECT 9
+  SET pillar
+  NAME spiketrap
+
+OBJECT 10
+  SET pillar
+  NAME spiketrap
+  FLIP
+
+OBJECT 11
+  SET default
+  NAME lemming
+  OFFSET_TOP 1
+
+OBJECT 12
+  SET pillar
+  NAME pickup
+
+OBJECT 13
+  NAME *nil
+
+OBJECT 14
+  SET pillar
+  NAME owa_down
+
+OBJECT 15
+  SET fire
+  NAME flamethrower
+  FLIP
+
