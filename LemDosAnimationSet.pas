@@ -203,9 +203,13 @@ begin
   // This doesn't apply to masks; they're hardcoded further down.
   //  place   description            F   W   H  BPP   FX   FY   animationtype
 
+  // NOTE: Width and height will get overwritten by the loading routine based on the image size
+  //       BPP is no longer used
+  //       animationtype is no longer used by rendering; might still be used by game logic? 
+
   Lem($0000, 'Rwalker'            ,   8, 16, 10,  19,   8,  10,   lat_Loop); // 0
   Lem($0D5C, 'Lwalker'            ,   8, 16, 10,  19,   9,  10,   lat_Loop);
-  Lem($0BE0, 'Rjumper'            ,   1, 16, 10,  19,   8,  10,   lat_Loop);
+  Lem($0BE0, 'Rjumper'            ,   1, 16, 10,  19,   7,  10,   lat_Loop);
   Lem($193C, 'Ljumper'            ,   1, 16, 10,  19,   9,  10,   lat_Loop);
   Lem($1AB8, 'Rdigger'            ,  16, 17, 14,  19,   7,  12,   lat_Loop);
   Lem($1AB8, 'Ldigger'            ,  16, 17, 14,  19,   8,  12,   lat_Loop);
@@ -229,8 +233,8 @@ begin
   Lem($1B7F8, 'Lsplatter'         ,  16, 16, 10,  19,   8,  10,   lat_Once);
   Lem($1CFB8, 'Rexiter'           ,   8, 16, 13,  19,   6,  13,   lat_Once);
   Lem($1CFB8, 'Lexiter'           ,   8, 16, 13,  19,   7,  13,   lat_Once);
-  Lem($1DF28, 'Rburner'           ,  14, 16, 14,  19,   8,  14,   lat_Once);
-  Lem($1DF28, 'Lburner'           ,  14, 16, 14,  19,   9,  14,   lat_Once);
+  Lem($1DF28, 'Rburner'           ,  14, 16, 14,  19,   7,  14,   lat_Once);
+  Lem($1DF28, 'Lburner'           ,  14, 16, 14,  19,   8,  14,   lat_Once);
   Lem($1FC40, 'Rblocker'          ,  16, 16, 10,  19,   8,  10,   lat_Loop);
   Lem($1FC40, 'Lblocker'          ,  16, 16, 10,  19,   9,  10,   lat_Loop);
   Lem($21400, 'Rshrugger'         ,   8, 16, 10,  19,   8,  10,   lat_Once);
@@ -311,6 +315,8 @@ begin
           TPngInterface.LoadPngFile(AppPath + 'gfx/sprites/' + fLemmingPrefix + '/' + Fn + '.png', TempBitmap);
           if FileExists(AppPath + 'gfx/sprites/' + fLemmingPrefix + '/' + Fn + '_mask.png') then
             TPngInterface.MaskImageFromFile(TempBitmap, AppPath + 'gfx/sprites/' + fLemmingPrefix + '/' + Fn + '_mask.png', Pal[7]);
+          MLA.Width := TempBitmap.Width div 2;
+          MLA.Height := TempBitmap.height div MLA.FrameCount;
           Bmp := TBitmap32.Create;
           Bmp.SetSize(MLA.Width, MLA.Height * MLA.FrameCount);
           TempBitmap.DrawTo(Bmp, 0, 0, Rect(X, 0, X + MLA.Width, MLA.Height * MLA.FrameCount));
@@ -338,6 +344,11 @@ begin
         // Stoner, Bomber and Highlight are a single frame each so easy enough
         TPngInterface.LoadPngFile(AppPath + 'gfx/mask/bomber.png', fExplosionMaskBitmap);
         TPngInterface.LoadPngFile(AppPath + 'gfx/mask/stoner.png', fLemmingAnimations[STONED]);
+        with fMetaLemmingAnimations[STONED] do
+        begin
+          Width := fLemmingAnimations[STONED].Width;
+          Height := fLemmingAnimations[STONED].Height;
+        end;
         TPngInterface.LoadPngFile(AppPath + 'gfx/mask/highlight.png', fHighlightBitmap);
 
         // Basher and miner are a tad more complicated
@@ -353,7 +364,7 @@ begin
         TempBitmap.DrawTo(fMineMasksRTLBitmap, 0, 0, Rect(0, 0, 16, 26));
         TempBitmap.DrawTo(fMineMasksBitmap, 0, 0, Rect(16, 0, 32, 26));
 
-        // And countdown digits are the most complicated of all
+        // And countdown digits are the most complicated of all (or not, anymore...)
         TPngInterface.LoadPngFile(AppPath + 'gfx/mask/countdown.png', fCountdownDigitsBitmap);
         (*fCountdownDigitsBitmap.SetSize(8, 80);
         fCountdownDigitsBitmap.Clear(0);
