@@ -3904,6 +3904,7 @@ function TLemmingGame.LayStackBrick(L: TLemming): Boolean;
 -------------------------------------------------------------------------------}
 var
   BrickPosY, n: Integer;
+  PixPosX: Integer;
   BrickColor: TColor32;
 begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
@@ -3917,7 +3918,14 @@ begin
   Result := False;
 
   for n := 1 to 3 do
-    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY);
+  begin
+    PixPosX := L.LemX + n*L.LemDx;
+    if not HasPixelAt(PixPosX, BrickPosY) then
+    begin
+      AddConstructivePixel(PixPosX, BrickPosY);
+      Result := true;
+    end;
+  end;
 
   InitializeMinimap;
 end;
