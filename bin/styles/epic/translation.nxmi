@@ -1,0 +1,4643 @@
+# Translation table
+
+**T
+  SET brick
+  NAME largebricks_fourrows
+
+**T
+  SET brick
+  NAME largebricks_tworows
+
+**T
+  SET brick
+  NAME largebricks_single
+
+**T
+  SET brick
+  NAME largebricks_midpiece_tworows
+
+**T
+  SET brick
+  NAME largebricks_midpiece
+
+**T
+  SET brick
+  NAME smallbricks_eightrows
+
+**T
+  SET brick
+  NAME smallbricks_fourrows
+
+**T
+  SET brick
+  NAME smallbricks_onerow
+
+**T
+  SET brick
+  NAME smallbricks_single
+
+**T
+  SET brick
+  NAME smallbricks_single_alt
+
+**T
+  SET brick
+  NAME smallbricks_diagright
+
+**T
+  SET brick
+  NAME smallbricks_diagleft
+
+**T
+  SET brick
+  NAME smallbricks_diagright_invert
+
+**T
+  SET brick
+  NAME smallbricks_diagleft_invert
+
+**T
+  SET brick
+  NAME smallbricks_arch_double
+
+**T
+  SET brick
+  NAME smallbricks_arch
+
+**T
+  SET brick
+  NAME widearch
+
+**T
+  SET brick
+  NAME diagbricks_full
+
+**T
+  SET brick
+  NAME diagbricks_full_small
+
+**T
+  SET brick
+  NAME diagbricks_notoplayer
+
+**T
+  SET brick
+  NAME diagbricks_single
+
+**T
+  SET brick
+  NAME tinybricks_square
+
+**T
+  SET brick
+  NAME tinybricks_long
+
+**T
+  SET brick
+  NAME tinybricks_single
+
+**T
+  SET brick
+  NAME thin_platform_red_double
+
+**T
+  SET brick
+  NAME thin_platform_red
+
+**T
+  SET brick
+  NAME thin_platform_red_twolayer
+
+**T
+  SET brick
+  NAME redblock_minis
+
+**T
+  SET brick
+  NAME redblock_spotted
+
+**T
+  SET brick
+  NAME pillar_red_bottom
+
+**T
+  SET brick
+  NAME pillar_red_middle
+
+**T
+  SET brick
+  NAME pillar_red_top
+
+**T
+  SET brick
+  NAME pillar_gray_bottom
+
+**T
+  SET brick
+  NAME pillar_gray_middle
+
+**T
+  SET brick
+  NAME pillar_gray_top
+
+**T
+  SET brick
+  NAME girder_long
+
+**T
+  SET brick
+  NAME girder_short
+
+**T
+  SET brick
+  NAME thin_platform_gray_double
+
+**T
+  SET brick
+  NAME thin_platform_gray
+
+**T
+  SET brick
+  NAME thin_platform_gray_mid
+
+**T
+  SET brick
+  NAME staircase_left
+
+**T
+  SET brick
+  NAME staircase_right
+
+**T
+  SET brick
+  NAME crate
+
+**T
+  SET brick
+  NAME chain_low
+
+**T
+  SET brick
+  NAME chain_high
+
+**T
+  SET brick
+  NAME chain_clip
+
+**T
+  SET brick
+  NAME chain_vertical
+
+**T
+  SET brick
+  NAME chain_hook_gray
+
+**T
+  SET brick
+  NAME chain_hook_red
+
+**T
+  SET brick
+  NAME barrel_large
+
+**T
+  SET brick
+  NAME barrel_small
+
+**T
+  SET brick
+  NAME steel_large
+
+**T
+  SET brick
+  NAME steel_tall
+
+**T
+  SET brick
+  NAME steel_wide
+
+**T
+  SET brick
+  NAME steel_small
+
+**T
+  SET brick
+  NAME circle_large
+
+**T
+  SET brick
+  NAME circle_small
+
+**T
+  SET brick
+  NAME circle_tiny
+
+**T
+  SET brick
+  NAME vertbricks
+
+**T
+  SET brick
+  NAME cement
+
+**O
+  SET brick
+  NAME exit
+
+**O
+  SET brick
+  NAME entrance
+
+**O
+  SET default
+  NAME flag_green
+
+**O
+  SET brick
+  NAME oneway_left
+
+**O
+  SET brick
+  NAME oneway_right
+
+**O
+  SET brick
+  NAME water
+
+**O
+  SET brick
+  NAME squasher
+
+**O
+  SET brick
+  NAME slicer
+
+**O
+  SET default
+  NAME flag_blue
+
+**O
+  SET brick
+  NAME *nil
+
+**T
+  SET bubble
+  NAME bubbles_gold_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME bubbles_gold_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME bubbles_gold_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME bubbles_gold_04
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME bubbles_blue_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME bubbles_blue_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME bubbles_blue_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME bubbles_blue_04
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_blue_horz_four
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_blue_horz_two
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_blue_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_blue_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_blue_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_blue_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_gold_horz_four
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_gold_horz_two
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_gold_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_gold_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_gold_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME balls_gold_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME weave
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME weave_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME weave_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME weave_thin
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME weave_thin_half
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME weave_thin_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME weave_thin_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME fence
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME fence_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME fence_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME fence_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME fence_thin
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME fence_thin_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME netting
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME netting_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME netting_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME netting_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_toptoright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_bottomtoright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_bottomtoleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_toptoleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_horz_join_bottom
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_horz_join_bottom_alt
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_crossroad
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_end_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_end_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_end_top
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_crossroad
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_bottomtoright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_toptoleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_horz_join_bottom
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_diagrighttoleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_diagrighttoright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_end_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_end_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_thin_end_top
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_ultrathin_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_ultrathin_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET bubble
+  NAME pipe_ultrathin_grid
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP -8
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME oneway_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME oneway_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME water
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME *nil
+
+**O
+  SET default
+  NAME flag_blue
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME zapper
+  OFFSET_LEFT -32
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME sucker
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET bubble
+  NAME *nil
+
+**T
+  SET crystal
+  NAME shiny_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME shiny_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME dull_cross
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME dull_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME shiny_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME dull_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME dull_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME star
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME crystal_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME dull_cross_huge
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME orb
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME crystal_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME crystal_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME shiny_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME dull_medium
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME dull_uneven
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME star_9x
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME star_36x
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME dull_uneven_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME beam_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME beam_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME beam_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME block
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME circle_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME circle_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME clump_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME clump_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME beam_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME crystal_04
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME white_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME white_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME steel_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME steel_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME steel_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME steel_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME white_cross
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET crystal
+  NAME spider_web
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET crystal
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP -8
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET crystal
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_blue
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET crystal
+  NAME owa_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET crystal
+  NAME owa_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET crystal
+  NAME water
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET crystal
+  NAME slicertrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET crystal
+  NAME *nil
+
+**O
+  SET crystal
+  NAME zappertrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET crystal
+  NAME electrotrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME clump_medium
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME clump_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME clump_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME clump_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME clump_big
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME clump_verytall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME grass_cornertopleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME grass_cornertopright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME grass_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME grass_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME clump_huge
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME rock_pile_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME rock_pile_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME rock_stack_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME rock_stack_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME rock_row
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME circle_big
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME circle_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME fossil_huge
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME mound_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME mound_narrow
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME fossil_triple
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME fossil_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME steel_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME steel_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME steel_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME steel_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME clump_tiny
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME treetrunk
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME bridge_4x
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME bridge_2x
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME bridge_1x
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME roots_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME roots_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME roots_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME roots_04
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME moss_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME moss_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME moss_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME moss_04
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME moss_05
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME moss_06
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME diag_bridge_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME diag_bridge_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME well
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME sign_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME sign_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME cross
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME gravestone
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET dirt
+  NAME stonepile
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET dirt
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP -8
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET dirt
+  NAME owa_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET dirt
+  NAME owa_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME water
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET dirt
+  NAME beartrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET dirt
+  NAME *nil
+
+**O
+  SET dirt
+  NAME bouldertrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_blue
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET dirt
+  NAME tentontrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bricks_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bricks_double
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bricks_six
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME spike
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME screw
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME screw_top
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME rock_small_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME circle_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME circle_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME rock_small_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME rock_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME thickplatform
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME steel_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME steel_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME steel_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME steel_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME rock_large_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME rock_large_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME rock_large_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bars_vert_short_triple
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bars_horz_short_triple
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bars_vert_short_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bars_vert_long_quad
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bars_vert_long_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bars_horz_long_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bars_horz_long_triple
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bluebrick_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bluebrick_bottoms
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bluebrick_chunk
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bluebrick_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME chain_link_horz_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_A
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_B
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_C
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_D
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_E
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_F
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_G
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_H
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_I
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_J
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_K
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_L
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_M
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_N
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_O
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_P
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_Q
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_R
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_S
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_T
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_U
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_V
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_W
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_X
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_Y
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME letter_Z
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME char_exclamation
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME char_arrow_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME chain_link_horz_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME chain_link_vert_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME chain_link_vert_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bluebrick_rights
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET fire
+  NAME bluebrick_lefts
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET fire
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP -24
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET fire
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET fire
+  NAME owa_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET fire
+  NAME owa_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET fire
+  NAME water
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET fire
+  NAME *nil
+
+**O
+  SET fire
+  NAME furnace
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET fire
+  NAME flamethrower
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  FLIP
+
+**O
+  SET default
+  NAME flag_blue
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET fire
+  NAME flamethrower
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME pole_vert_join
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME pole_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_diagright_invert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME steel_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  INVERT
+  ROTATE
+
+**T
+  SET marble
+  NAME block_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  INVERT
+  ROTATE
+
+**T
+  SET marble
+  NAME pole_vert_end
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  FLIP
+  INVERT
+
+**T
+  SET marble
+  NAME block_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_diagleft_invert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME tiny_blue_single_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME tiny_blue_single_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME tiny_brown_single_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME tiny_brown_single_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_small_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME block_small_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME pole_horz_end
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME pole_horz_join
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME pole_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME arch
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME steps
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stairs_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME rock_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME rock_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_vert_01_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_vert_02_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_vert_03_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_vert_04_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_horz_04_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_horz_04_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_horz_03_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_horz_03_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_horz_02_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_horz_02_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_horz_01_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_horz_01_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME tiny_brown_tiled
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_diag_01_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_diag_01_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stairs_right_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stairs_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stairs_left_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME circle_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME circle_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_vert_01_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_vert_02_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_vert_03_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stripe_pole_vert_04_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME steps
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  INVERT
+  ROTATE
+
+**T
+  SET marble
+  NAME steps
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  FLIP
+  INVERT
+  ROTATE
+
+**T
+  SET marble
+  NAME formation_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME formation_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT -6
+  OFFSET_BOTTOM 0
+  INVERT
+  ROTATE
+
+**T
+  SET marble
+  NAME stuff_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME stuff_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME steel_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME steel_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET marble
+  NAME steel_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP -8
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME owa_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME owa_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME water
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME *nil
+
+**O
+  SET default
+  NAME flag_blue
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME squasher
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME shredder
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_horz_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_vert_long
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_top_180
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_top_rough
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_left_rough
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_right_rough
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_bottom_rough
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_bottom_180
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_bottomleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_bottomright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_topleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_topright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_bottom_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_top_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_mid_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_bottom_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_top_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_mid_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_bottom_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_top_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_vert_middle_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_crumbly_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_crumbly_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_left_end
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_horz_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_right_end
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_top_end
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME steel_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_vert_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME clump
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  INVERT
+
+**T
+  SET pillar
+  NAME clump
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_crumbly_wide_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_crumbly_wide_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_crumbly_tall_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME rough_crumbly_tall_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_bottom_end
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME sandstone_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_thin_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME sandstone_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME sandstone_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_thin_vert_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME pillar_thin_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_horz_right_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_horz_left_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_horz_mid_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_horz_right_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_horz_left_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME plank_horz_mid_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME steel_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME steel_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME steel_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME brightstone_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME brightstone_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME brightstone_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME staircase_right_3step
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME staircase_right_12step
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME staircase_left_12step
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME staircase_left_3step
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME circle_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME circle_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME clump_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET pillar
+  NAME clump_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT -2
+  OFFSET_BOTTOM 0
+  FLIP
+
+**O
+  SET pillar
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP -8
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET pillar
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET pillar
+  NAME owa_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET pillar
+  NAME owa_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME water
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET pillar
+  NAME *nil
+
+**O
+  SET default
+  NAME flag_blue
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET pillar
+  NAME ropetrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET pillar
+  NAME spiketrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET pillar
+  NAME spiketrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  FLIP
+
+**T
+  SET rock
+  NAME rocks_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocks_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocks_medium_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocks_medium_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocks_tall_thin
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocsk_tall_single_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocks_tall_single_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocks_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocks_wide_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rocks_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME platform_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME platform_mid
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME platform_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_horz
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_diagleft_tiny
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_horz_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_clump_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_clump_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_mound_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_mound_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_mound_tiny_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME grass_mound_tiny_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME moss_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME moss_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_04
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_horz_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_horz_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_diagleft_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_diagleft_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_diagleft_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_diagleft_04
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_diagleft_05
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_diagright_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_diagright_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME wood_thin_diagright_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_large_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_small_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_med_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_supertiny_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_tiny_vert
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_large_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_small_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_med_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_dual_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_tiny_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_med_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_large_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_tiny_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME crystal_tiny_diagright_short
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME steel_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME steel_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME steel_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME steel_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME rectangle
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME circle_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME circle_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET rock
+  NAME circle_tiny
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET rock
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET rock
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET rock
+  NAME owa_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET rock
+  NAME owa_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET rock
+  NAME water
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET rock
+  NAME roottrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET rock
+  NAME *nil
+
+**O
+  SET rock
+  NAME chameleon
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT -16
+  OFFSET_BOTTOM 0
+
+**O
+  SET rock
+  NAME *nil
+
+**O
+  SET rock
+  NAME chameleon
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT -16
+  OFFSET_BOTTOM 0
+  FLIP
+  
+**T
+  SET snow
+  NAME snow_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_small_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_flat_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_flat_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_small_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_small_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_small_04
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME spike_double
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME spike_single
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME spike_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME spike_stubby
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME spike_tiny
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME spike_flat
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME pole
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME pole_top
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME rocks_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME rocks_small_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME rocks_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME rocks_small_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME rocks_small_03
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME rocks_flat
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_icy_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_icy_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_icy_diagright
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_icy_diagleft
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME icicle_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME icicle_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME steel_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME steel_tall
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME steel_wide
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME steel_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME rect
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME circle_large
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME circle_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME circle_tiny
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET snow
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET snow
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET snow
+  NAME owa_left
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET snow
+  NAME owa_right
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET snow
+  NAME water
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET snow
+  NAME snowflag
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET default
+  NAME flag_blue
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET snow
+  NAME icicletrap
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET snow
+  NAME iceblower
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snowman
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  
+**T
+  SET snow
+  NAME twigs_apart
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  
+**T
+  SET snow
+  NAME snowball_small
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  
+**T
+  SET snow
+  NAME snow_mound
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  
+**T
+  SET snow
+  NAME twigs_pi
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  
+**T
+  SET snow
+  NAME snow_speck_02
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_small_05
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_small_06
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**T
+  SET snow
+  NAME snow_speck_01
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET xmas
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP -14
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET xmas
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP -36
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET xmas
+  NAME *nil
+
+**O
+  SET xmas
+  NAME *nil
+
+**O
+  SET xmas
+  NAME bouncy_snowman
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET xmas
+  NAME lights
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET xmas
+  NAME fireplace
+  OFFSET_LEFT 0
+  OFFSET_TOP -48
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET xmas
+  NAME *nil
+
+**O
+  SET xmas
+  NAME jack_box
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET xmas
+  NAME jack
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+
+**O
+  SET marble
+  NAME exit
+  OFFSET_LEFT 0
+  OFFSET_TOP -8
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  
+**O
+  SET default
+  NAME window
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  
+**O
+  SET default
+  NAME *nil
+  
+**O
+  SET default
+  NAME *nil
+  
+**O
+  SET default
+  NAME updraft_thin
+  OFFSET_LEFT 0
+  OFFSET_TOP 0
+  OFFSET_RIGHT 0
+  OFFSET_BOTTOM 0
+  
+**T
+  SET special
+  NAME awesome
+  
+**T
+  SET special
+  NAME beasti
+  
+**T
+  SET special
+  NAME beastii
+  
+**T
+  SET special
+  NAME awesome
