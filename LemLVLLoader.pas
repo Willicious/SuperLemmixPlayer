@@ -89,6 +89,7 @@ type
 
   TTranslationTable = class
     private
+      fTheme: String;
       fTerrainArray: array of TTranslationItem;
       fObjectArray: array of TTranslationItem;
       procedure FindMatch(Item: TIdentifiedPiece);
@@ -120,6 +121,7 @@ begin
   inherited;
   SetLength(fTerrainArray, 0);
   SetLength(fObjectArray, 0);
+  fTheme := 'default';
 end;
 
 destructor TTranslationTable.Destroy;
@@ -192,6 +194,9 @@ begin
     Parser.LoadFromFile(aFilename);
     repeat
       Line := Parser.NextLine;
+
+      if Line.Keyword = 'THEME' then
+        fTheme := Line.Value;
 
       if Line.Keyword = 'TERRAIN' then
       begin
@@ -267,6 +272,8 @@ begin
   for i := aLevel.InteractiveObjects.Count-1 downto 0 do
     if Lowercase(aLevel.InteractiveObjects[i].Piece) = '*nil' then
       aLevel.InteractiveObjects.Delete(i);
+
+  aLevel.Info.GraphicSetName := fTheme;
 end;
 
 procedure TTranslationTable.FindMatch(Item: TIdentifiedPiece);

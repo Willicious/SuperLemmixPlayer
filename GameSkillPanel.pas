@@ -20,6 +20,7 @@ uses
   LemDosStyle,
   GameInterfaces,
   GameControl,
+  LemRendering, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
   LemGame,
   UZip; // For checking whether files actually exist
 
@@ -692,7 +693,7 @@ begin
   end;
   SetLength(HiPal, 8);
   for i := 0 to 7 do
-    HiPal[i] := GameParams.Renderer.Theme.ParticleColors[i];
+    HiPal[i] := PARTICLE_COLORS[i];
 
   {TODO: how o how is the palette constructed?????????}
   Assert(Length(HiPal) = 8, 'hipal error');

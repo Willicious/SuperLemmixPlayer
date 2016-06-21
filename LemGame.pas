@@ -1477,7 +1477,7 @@ begin
   end;
   SetLength(HiPal, 8);
   for i := 0 to 7 do
-    HiPal[i] := Renderer.Theme.ParticleColors[i];
+    HiPal[i] := PARTICLE_COLORS[i];
   LowPal[7] := Renderer.Theme.MaskColor; // copy the brickcolor
   SetLength(Pal, 16);
   for i := 0 to 7 do

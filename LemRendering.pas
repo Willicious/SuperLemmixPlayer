@@ -45,6 +45,8 @@ uses
 
 const
   PARTICLE_FRAMECOUNT = 52;
+  PARTICLE_COLORS: array[0..7] of TColor32 = ($FF4040E0, $FF00B000, $FFF0D0D0, $FFF02020,
+                                              $C04040E0, $C000B000, $C0F0D0D0, $C0F02020);
 
   PM_SOLID       = $00000001;
   PM_STEEL       = $00000002;
@@ -367,7 +369,7 @@ begin
     begin
       X := L.LemX + X;
       Y := L.LemY + Y;
-      fLayers[rlParticles].PixelS[X, Y] := fTheme.ParticleColors[i];
+      fLayers[rlParticles].PixelS[X, Y] := PARTICLE_COLORS[i mod 8];
     end;
   end;
 
@@ -1317,7 +1319,7 @@ begin
     Pal[i] := LowPal[i];
   Pal[7] := fTheme.MaskColor;
   for i := 8 to 15 do
-    Pal[i] := fTheme.ParticleColors[i-8];
+    Pal[i] := PARTICLE_COLORS[i mod 8];
 
   fAni.ClearData;
   fAni.LemmingPrefix := fTheme.Lemmings;
