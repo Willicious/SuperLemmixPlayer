@@ -467,11 +467,27 @@ begin
   spbMiner: // PosMarker gives the number of pixels to move vertically
     begin
       fLayers.fIsEmpty[rlHighShadows] := False;
+
+      // Three starting top pixels
+      for j := 0 to 2 do
+        SetHighShadowPixel(L.LemX + j*L.LemDx, L.LemY - 12);
+
       for j := 0 to PosMarker do
       begin
+        // Bottom border of tunnel
         SetHighShadowPixel(L.LemX + (2*j+1)*L.LemDx, L.LemY + j - 1);
         SetHighShadowPixel(L.LemX + (2*j+1)*L.LemDx, L.LemY + j);
         SetHighShadowPixel(L.LemX + (2*j+2)*L.LemDx, L.LemY + j);
+        // Top border of tunnel
+        if j mod 2 = 0 then
+        begin
+          SetHighShadowPixel(L.LemX + (2*j+3)*L.LemDx, L.LemY + j - 12);
+          SetHighShadowPixel(L.LemX + (2*j+4)*L.LemDx, L.LemY + j - 12);
+          SetHighShadowPixel(L.LemX + (2*j+5)*L.LemDx, L.LemY + j - 12);
+          SetHighShadowPixel(L.LemX + (2*j+5)*L.LemDx, L.LemY + j - 11);
+          SetHighShadowPixel(L.LemX + (2*j+6)*L.LemDx, L.LemY + j - 11);
+          SetHighShadowPixel(L.LemX + (2*j+6)*L.LemDx, L.LemY + j - 10);
+        end;
       end;
     end;
 
@@ -521,7 +537,7 @@ procedure TRenderer.SetHighShadowPixel(X, Y: Integer);
 begin
   if (X >= 0) and (X < fPhysicsMap.Width) and (Y >= 0) and (Y < fPhysicsMap.Height) then
     // Only draw this on terrain, but not on steel
-    if (fPhysicsMap.Pixel[X, Y] and PM_SOLID <> 0) and (PhysicsMap.Pixel[X, Y] and PM_STEEL = 0) then
+    if (fPhysicsMap.Pixel[X, Y] and PM_SOLID <> 0) and (fPhysicsMap.Pixel[X, Y] and PM_STEEL = 0) then
       fLayers[rlHighShadows].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
