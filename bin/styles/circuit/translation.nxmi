@@ -509,7 +509,7 @@ OBJECT 6
   OFFSET_BOTTOM 0
 
 OBJECT 7
-  SET circuit
+  SET default
   NAME pickup
   OFFSET_LEFT 0
   OFFSET_TOP 0

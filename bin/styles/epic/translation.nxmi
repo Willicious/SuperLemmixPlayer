@@ -1,286 +1,286 @@
 # Translation table
 
-**T
+TERRAIN 0
   SET brick
   NAME largebricks_fourrows
 
-**T
+TERRAIN 1
   SET brick
   NAME largebricks_tworows
 
-**T
+TERRAIN 2
   SET brick
   NAME largebricks_single
 
-**T
+TERRAIN 3
   SET brick
   NAME largebricks_midpiece_tworows
 
-**T
+TERRAIN 4
   SET brick
   NAME largebricks_midpiece
 
-**T
+TERRAIN 5
   SET brick
   NAME smallbricks_eightrows
 
-**T
+TERRAIN 6
   SET brick
   NAME smallbricks_fourrows
 
-**T
+TERRAIN 7
   SET brick
   NAME smallbricks_onerow
 
-**T
+TERRAIN 8
   SET brick
   NAME smallbricks_single
 
-**T
+TERRAIN 9
   SET brick
   NAME smallbricks_single_alt
 
-**T
+TERRAIN 10
   SET brick
   NAME smallbricks_diagright
 
-**T
+TERRAIN 11
   SET brick
   NAME smallbricks_diagleft
 
-**T
+TERRAIN 12
   SET brick
   NAME smallbricks_diagright_invert
 
-**T
+TERRAIN 13
   SET brick
   NAME smallbricks_diagleft_invert
 
-**T
+TERRAIN 14
   SET brick
   NAME smallbricks_arch_double
 
-**T
+TERRAIN 15
   SET brick
   NAME smallbricks_arch
 
-**T
+TERRAIN 16
   SET brick
   NAME widearch
 
-**T
+TERRAIN 17
   SET brick
   NAME diagbricks_full
 
-**T
+TERRAIN 18
   SET brick
   NAME diagbricks_full_small
 
-**T
+TERRAIN 19
   SET brick
   NAME diagbricks_notoplayer
 
-**T
+TERRAIN 20
   SET brick
   NAME diagbricks_single
 
-**T
+TERRAIN 21
   SET brick
   NAME tinybricks_square
 
-**T
+TERRAIN 22
   SET brick
   NAME tinybricks_long
 
-**T
+TERRAIN 23
   SET brick
   NAME tinybricks_single
 
-**T
+TERRAIN 24
   SET brick
   NAME thin_platform_red_double
 
-**T
+TERRAIN 25
   SET brick
   NAME thin_platform_red
 
-**T
+TERRAIN 26
   SET brick
   NAME thin_platform_red_twolayer
 
-**T
+TERRAIN 27
   SET brick
   NAME redblock_minis
 
-**T
+TERRAIN 28
   SET brick
   NAME redblock_spotted
 
-**T
+TERRAIN 29
   SET brick
   NAME pillar_red_bottom
 
-**T
+TERRAIN 30
   SET brick
   NAME pillar_red_middle
 
-**T
+TERRAIN 31
   SET brick
   NAME pillar_red_top
 
-**T
+TERRAIN 32
   SET brick
   NAME pillar_gray_bottom
 
-**T
+TERRAIN 33
   SET brick
   NAME pillar_gray_middle
 
-**T
+TERRAIN 34
   SET brick
   NAME pillar_gray_top
 
-**T
+TERRAIN 35
   SET brick
   NAME girder_long
 
-**T
+TERRAIN 36
   SET brick
   NAME girder_short
 
-**T
+TERRAIN 37
   SET brick
   NAME thin_platform_gray_double
 
-**T
+TERRAIN 38
   SET brick
   NAME thin_platform_gray
 
-**T
+TERRAIN 39
   SET brick
   NAME thin_platform_gray_mid
 
-**T
+TERRAIN 40
   SET brick
   NAME staircase_left
 
-**T
+TERRAIN 41
   SET brick
   NAME staircase_right
 
-**T
+TERRAIN 42
   SET brick
   NAME crate
 
-**T
+TERRAIN 43
   SET brick
   NAME chain_low
 
-**T
+TERRAIN 44
   SET brick
   NAME chain_high
 
-**T
+TERRAIN 45
   SET brick
   NAME chain_clip
 
-**T
+TERRAIN 46
   SET brick
   NAME chain_vertical
 
-**T
+TERRAIN 47
   SET brick
   NAME chain_hook_gray
 
-**T
+TERRAIN 48
   SET brick
   NAME chain_hook_red
 
-**T
+TERRAIN 49
   SET brick
   NAME barrel_large
 
-**T
+TERRAIN 50
   SET brick
   NAME barrel_small
 
-**T
+TERRAIN 51
   SET brick
   NAME steel_large
 
-**T
+TERRAIN 52
   SET brick
   NAME steel_tall
 
-**T
+TERRAIN 53
   SET brick
   NAME steel_wide
 
-**T
+TERRAIN 54
   SET brick
   NAME steel_small
 
-**T
+TERRAIN 55
   SET brick
   NAME circle_large
 
-**T
+TERRAIN 56
   SET brick
   NAME circle_small
 
-**T
+TERRAIN 57
   SET brick
   NAME circle_tiny
 
-**T
+TERRAIN 58
   SET brick
   NAME vertbricks
 
-**T
+TERRAIN 59
   SET brick
   NAME cement
 
-**O
+OBJECT 0
   SET brick
   NAME exit
 
-**O
+OBJECT 1
   SET brick
   NAME entrance
 
-**O
+OBJECT 2
   SET default
   NAME flag_green
 
-**O
+OBJECT 3
   SET brick
   NAME oneway_left
 
-**O
+OBJECT 4
   SET brick
   NAME oneway_right
 
-**O
+OBJECT 5
   SET brick
   NAME water
 
-**O
+OBJECT 6
   SET brick
   NAME squasher
 
-**O
+OBJECT 7
   SET brick
   NAME slicer
 
-**O
+OBJECT 8
   SET default
   NAME flag_blue
 
-**O
+OBJECT 9
   SET brick
   NAME *nil
 
-**T
+TERRAIN 60
   SET bubble
   NAME bubbles_gold_01
   OFFSET_LEFT 0
@@ -288,7 +288,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 61
   SET bubble
   NAME bubbles_gold_02
   OFFSET_LEFT 0
@@ -296,7 +296,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 62
   SET bubble
   NAME bubbles_gold_03
   OFFSET_LEFT 0
@@ -304,7 +304,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 63
   SET bubble
   NAME bubbles_gold_04
   OFFSET_LEFT 0
@@ -312,7 +312,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 64
   SET bubble
   NAME bubbles_blue_01
   OFFSET_LEFT 0
@@ -320,7 +320,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 65
   SET bubble
   NAME bubbles_blue_02
   OFFSET_LEFT 0
@@ -328,7 +328,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 66
   SET bubble
   NAME bubbles_blue_03
   OFFSET_LEFT 0
@@ -336,7 +336,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 67
   SET bubble
   NAME bubbles_blue_04
   OFFSET_LEFT 0
@@ -344,7 +344,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 68
   SET bubble
   NAME balls_blue_horz_four
   OFFSET_LEFT 0
@@ -352,7 +352,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 69
   SET bubble
   NAME balls_blue_horz_two
   OFFSET_LEFT 0
@@ -360,7 +360,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 70
   SET bubble
   NAME balls_blue_single
   OFFSET_LEFT 0
@@ -368,7 +368,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 71
   SET bubble
   NAME balls_blue_vert
   OFFSET_LEFT 0
@@ -376,7 +376,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 72
   SET bubble
   NAME balls_blue_diagright
   OFFSET_LEFT 0
@@ -384,7 +384,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 73
   SET bubble
   NAME balls_blue_diagleft
   OFFSET_LEFT 0
@@ -392,7 +392,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 74
   SET bubble
   NAME balls_gold_horz_four
   OFFSET_LEFT 0
@@ -400,7 +400,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 75
   SET bubble
   NAME balls_gold_horz_two
   OFFSET_LEFT 0
@@ -408,7 +408,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 76
   SET bubble
   NAME balls_gold_single
   OFFSET_LEFT 0
@@ -416,7 +416,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 77
   SET bubble
   NAME balls_gold_vert
   OFFSET_LEFT 0
@@ -424,7 +424,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 78
   SET bubble
   NAME balls_gold_diagright
   OFFSET_LEFT 0
@@ -432,7 +432,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 79
   SET bubble
   NAME balls_gold_diagleft
   OFFSET_LEFT 0
@@ -440,7 +440,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 80
   SET bubble
   NAME weave
   OFFSET_LEFT 0
@@ -448,7 +448,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 81
   SET bubble
   NAME weave_diagright
   OFFSET_LEFT 0
@@ -456,7 +456,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 82
   SET bubble
   NAME weave_diagleft
   OFFSET_LEFT 0
@@ -464,7 +464,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 83
   SET bubble
   NAME weave_thin
   OFFSET_LEFT 0
@@ -472,7 +472,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 84
   SET bubble
   NAME weave_thin_half
   OFFSET_LEFT 0
@@ -480,7 +480,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 85
   SET bubble
   NAME weave_thin_diagright
   OFFSET_LEFT 0
@@ -488,7 +488,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 86
   SET bubble
   NAME weave_thin_diagleft
   OFFSET_LEFT 0
@@ -496,7 +496,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 87
   SET bubble
   NAME fence
   OFFSET_LEFT 0
@@ -504,7 +504,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 88
   SET bubble
   NAME fence_small
   OFFSET_LEFT 0
@@ -512,7 +512,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 89
   SET bubble
   NAME fence_diagright
   OFFSET_LEFT 0
@@ -520,7 +520,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 90
   SET bubble
   NAME fence_diagleft
   OFFSET_LEFT 0
@@ -528,7 +528,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 91
   SET bubble
   NAME fence_thin
   OFFSET_LEFT 0
@@ -536,7 +536,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 92
   SET bubble
   NAME fence_thin_small
   OFFSET_LEFT 0
@@ -544,7 +544,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 93
   SET bubble
   NAME netting
   OFFSET_LEFT 0
@@ -552,7 +552,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 94
   SET bubble
   NAME netting_small
   OFFSET_LEFT 0
@@ -560,7 +560,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 95
   SET bubble
   NAME netting_diagright
   OFFSET_LEFT 0
@@ -568,7 +568,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 96
   SET bubble
   NAME netting_diagleft
   OFFSET_LEFT 0
@@ -576,7 +576,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 97
   SET bubble
   NAME pipe_toptoright
   OFFSET_LEFT 0
@@ -584,7 +584,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 98
   SET bubble
   NAME pipe_bottomtoright
   OFFSET_LEFT 0
@@ -592,7 +592,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 99
   SET bubble
   NAME pipe_bottomtoleft
   OFFSET_LEFT 0
@@ -600,7 +600,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 100
   SET bubble
   NAME pipe_toptoleft
   OFFSET_LEFT 0
@@ -608,7 +608,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 101
   SET bubble
   NAME pipe_horz_join_bottom
   OFFSET_LEFT 0
@@ -616,7 +616,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 102
   SET bubble
   NAME pipe_horz_join_bottom_alt
   OFFSET_LEFT 0
@@ -624,7 +624,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 103
   SET bubble
   NAME pipe_crossroad
   OFFSET_LEFT 0
@@ -632,7 +632,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 104
   SET bubble
   NAME pipe_vert
   OFFSET_LEFT 0
@@ -640,7 +640,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 105
   SET bubble
   NAME pipe_horz
   OFFSET_LEFT 0
@@ -648,7 +648,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 106
   SET bubble
   NAME pipe_end_left
   OFFSET_LEFT 0
@@ -656,7 +656,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 107
   SET bubble
   NAME pipe_end_right
   OFFSET_LEFT 0
@@ -664,7 +664,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 108
   SET bubble
   NAME pipe_end_top
   OFFSET_LEFT 0
@@ -672,7 +672,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 109
   SET bubble
   NAME pipe_thin_horz
   OFFSET_LEFT 0
@@ -680,7 +680,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 110
   SET bubble
   NAME pipe_thin_vert
   OFFSET_LEFT 0
@@ -688,7 +688,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 111
   SET bubble
   NAME pipe_thin_crossroad
   OFFSET_LEFT 0
@@ -696,7 +696,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 112
   SET bubble
   NAME pipe_thin_bottomtoright
   OFFSET_LEFT 0
@@ -704,7 +704,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 113
   SET bubble
   NAME pipe_thin_toptoleft
   OFFSET_LEFT 0
@@ -712,7 +712,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 114
   SET bubble
   NAME pipe_thin_horz_join_bottom
   OFFSET_LEFT 0
@@ -720,7 +720,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 115
   SET bubble
   NAME pipe_thin_diagrighttoleft
   OFFSET_LEFT 0
@@ -728,7 +728,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 116
   SET bubble
   NAME pipe_thin_diagrighttoright
   OFFSET_LEFT 0
@@ -736,7 +736,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 117
   SET bubble
   NAME pipe_thin_diagright
   OFFSET_LEFT 0
@@ -744,7 +744,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 118
   SET bubble
   NAME pipe_thin_end_right
   OFFSET_LEFT 0
@@ -752,7 +752,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 119
   SET bubble
   NAME pipe_thin_end_left
   OFFSET_LEFT 0
@@ -760,7 +760,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 120
   SET bubble
   NAME pipe_thin_end_top
   OFFSET_LEFT 0
@@ -768,7 +768,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 121
   SET bubble
   NAME pipe_ultrathin_horz
   OFFSET_LEFT 0
@@ -776,7 +776,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 122
   SET bubble
   NAME pipe_ultrathin_vert
   OFFSET_LEFT 0
@@ -784,7 +784,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 123
   SET bubble
   NAME pipe_ultrathin_grid
   OFFSET_LEFT 0
@@ -792,7 +792,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 10
   SET bubble
   NAME exit
   OFFSET_LEFT 0
@@ -800,7 +800,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 11
   SET bubble
   NAME window
   OFFSET_LEFT 0
@@ -808,15 +808,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 12
   SET bubble
   NAME oneway_left
   OFFSET_LEFT 0
@@ -824,7 +816,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 13
   SET bubble
   NAME oneway_right
   OFFSET_LEFT 0
@@ -832,7 +824,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 14
   SET bubble
   NAME water
   OFFSET_LEFT 0
@@ -840,19 +832,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 15
   SET bubble
   NAME *nil
 
-**O
-  SET default
-  NAME flag_blue
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 16
   SET bubble
   NAME zapper
   OFFSET_LEFT -32
@@ -860,7 +844,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 17
   SET bubble
   NAME sucker
   OFFSET_LEFT 0
@@ -868,11 +852,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 18
   SET bubble
   NAME *nil
 
-**T
+TERRAIN 124
   SET crystal
   NAME shiny_diagright
   OFFSET_LEFT 0
@@ -880,7 +864,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 125
   SET crystal
   NAME shiny_diagleft
   OFFSET_LEFT 0
@@ -888,7 +872,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 126
   SET crystal
   NAME dull_cross
   OFFSET_LEFT 0
@@ -896,7 +880,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 127
   SET crystal
   NAME dull_diagleft
   OFFSET_LEFT 0
@@ -904,7 +888,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 128
   SET crystal
   NAME shiny_horz
   OFFSET_LEFT 0
@@ -912,7 +896,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 129
   SET crystal
   NAME dull_diagleft
   OFFSET_LEFT 0
@@ -920,7 +904,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 130
   SET crystal
   NAME dull_diagright
   OFFSET_LEFT 0
@@ -928,7 +912,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 131
   SET crystal
   NAME star
   OFFSET_LEFT 0
@@ -936,7 +920,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 132
   SET crystal
   NAME crystal_01
   OFFSET_LEFT 0
@@ -944,7 +928,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 133
   SET crystal
   NAME dull_cross_huge
   OFFSET_LEFT 0
@@ -952,7 +936,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 134
   SET crystal
   NAME orb
   OFFSET_LEFT 0
@@ -960,7 +944,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 135
   SET crystal
   NAME crystal_02
   OFFSET_LEFT 0
@@ -968,7 +952,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 136
   SET crystal
   NAME crystal_03
   OFFSET_LEFT 0
@@ -976,7 +960,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 137
   SET crystal
   NAME shiny_vert
   OFFSET_LEFT 0
@@ -984,7 +968,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 138
   SET crystal
   NAME dull_medium
   OFFSET_LEFT 0
@@ -992,7 +976,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 139
   SET crystal
   NAME dull_uneven
   OFFSET_LEFT 0
@@ -1000,7 +984,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 140
   SET crystal
   NAME star_9x
   OFFSET_LEFT 0
@@ -1008,7 +992,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 141
   SET crystal
   NAME star_36x
   OFFSET_LEFT 0
@@ -1016,7 +1000,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 142
   SET crystal
   NAME dull_uneven_large
   OFFSET_LEFT 0
@@ -1024,7 +1008,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 143
   SET crystal
   NAME beam_vert
   OFFSET_LEFT 0
@@ -1032,7 +1016,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 144
   SET crystal
   NAME beam_diagright
   OFFSET_LEFT 0
@@ -1040,7 +1024,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 145
   SET crystal
   NAME beam_diagleft
   OFFSET_LEFT 0
@@ -1048,7 +1032,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 146
   SET crystal
   NAME block
   OFFSET_LEFT 0
@@ -1056,7 +1040,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 147
   SET crystal
   NAME circle_large
   OFFSET_LEFT 0
@@ -1064,7 +1048,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 148
   SET crystal
   NAME circle_small
   OFFSET_LEFT 0
@@ -1072,7 +1056,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 149
   SET crystal
   NAME clump_01
   OFFSET_LEFT 0
@@ -1080,7 +1064,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 150
   SET crystal
   NAME clump_02
   OFFSET_LEFT 0
@@ -1088,7 +1072,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 151
   SET crystal
   NAME beam_horz
   OFFSET_LEFT 0
@@ -1096,7 +1080,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 152
   SET crystal
   NAME crystal_04
   OFFSET_LEFT 0
@@ -1104,7 +1088,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 153
   SET crystal
   NAME white_diagleft
   OFFSET_LEFT 0
@@ -1112,7 +1096,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 154
   SET crystal
   NAME white_diagright
   OFFSET_LEFT 0
@@ -1120,7 +1104,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 155
   SET crystal
   NAME steel_large
   OFFSET_LEFT 0
@@ -1128,7 +1112,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 156
   SET crystal
   NAME steel_tall
   OFFSET_LEFT 0
@@ -1136,7 +1120,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 157
   SET crystal
   NAME steel_wide
   OFFSET_LEFT 0
@@ -1144,7 +1128,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 158
   SET crystal
   NAME steel_small
   OFFSET_LEFT 0
@@ -1152,7 +1136,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 159
   SET crystal
   NAME white_cross
   OFFSET_LEFT 0
@@ -1160,7 +1144,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 160
   SET crystal
   NAME spider_web
   OFFSET_LEFT 0
@@ -1168,7 +1152,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 19
   SET crystal
   NAME exit
   OFFSET_LEFT 0
@@ -1176,7 +1160,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 20
   SET crystal
   NAME window
   OFFSET_LEFT 0
@@ -1184,23 +1168,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
-  SET default
-  NAME flag_blue
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 21
   SET crystal
   NAME owa_left
   OFFSET_LEFT 0
@@ -1208,7 +1176,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 22
   SET crystal
   NAME owa_right
   OFFSET_LEFT 0
@@ -1216,7 +1184,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 23
   SET crystal
   NAME water
   OFFSET_LEFT 0
@@ -1224,7 +1192,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 24
   SET crystal
   NAME slicertrap
   OFFSET_LEFT 0
@@ -1232,11 +1200,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 25
   SET crystal
   NAME *nil
 
-**O
+OBJECT 26
   SET crystal
   NAME zappertrap
   OFFSET_LEFT 0
@@ -1244,7 +1212,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 27
   SET crystal
   NAME electrotrap
   OFFSET_LEFT 0
@@ -1252,7 +1220,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 161
   SET dirt
   NAME clump_medium
   OFFSET_LEFT 0
@@ -1260,7 +1228,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 162
   SET dirt
   NAME clump_small
   OFFSET_LEFT 0
@@ -1268,7 +1236,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 163
   SET dirt
   NAME clump_tall
   OFFSET_LEFT 0
@@ -1276,7 +1244,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 164
   SET dirt
   NAME clump_wide
   OFFSET_LEFT 0
@@ -1284,7 +1252,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 165
   SET dirt
   NAME clump_big
   OFFSET_LEFT 0
@@ -1292,7 +1260,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 166
   SET dirt
   NAME clump_verytall
   OFFSET_LEFT 0
@@ -1300,7 +1268,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 167
   SET dirt
   NAME grass_cornertopleft
   OFFSET_LEFT 0
@@ -1308,7 +1276,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 168
   SET dirt
   NAME grass_cornertopright
   OFFSET_LEFT 0
@@ -1316,7 +1284,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 169
   SET dirt
   NAME grass_diagleft
   OFFSET_LEFT 0
@@ -1324,7 +1292,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 170
   SET dirt
   NAME grass_horz
   OFFSET_LEFT 0
@@ -1332,7 +1300,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 171
   SET dirt
   NAME clump_huge
   OFFSET_LEFT 0
@@ -1340,7 +1308,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 172
   SET dirt
   NAME rock_pile_large
   OFFSET_LEFT 0
@@ -1348,7 +1316,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 173
   SET dirt
   NAME rock_pile_small
   OFFSET_LEFT 0
@@ -1356,7 +1324,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 174
   SET dirt
   NAME rock_stack_diagleft
   OFFSET_LEFT 0
@@ -1364,7 +1332,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 175
   SET dirt
   NAME rock_stack_diagright
   OFFSET_LEFT 0
@@ -1372,7 +1340,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 176
   SET dirt
   NAME rock_row
   OFFSET_LEFT 0
@@ -1380,7 +1348,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 177
   SET dirt
   NAME circle_big
   OFFSET_LEFT 0
@@ -1388,7 +1356,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 178
   SET dirt
   NAME circle_small
   OFFSET_LEFT 0
@@ -1396,7 +1364,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 179
   SET dirt
   NAME fossil_huge
   OFFSET_LEFT 0
@@ -1404,7 +1372,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 180
   SET dirt
   NAME mound_wide
   OFFSET_LEFT 0
@@ -1412,7 +1380,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 181
   SET dirt
   NAME mound_narrow
   OFFSET_LEFT 0
@@ -1420,7 +1388,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 182
   SET dirt
   NAME fossil_triple
   OFFSET_LEFT 0
@@ -1428,7 +1396,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 183
   SET dirt
   NAME fossil_single
   OFFSET_LEFT 0
@@ -1436,7 +1404,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 184
   SET dirt
   NAME steel_large
   OFFSET_LEFT 0
@@ -1444,7 +1412,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 185
   SET dirt
   NAME steel_tall
   OFFSET_LEFT 0
@@ -1452,7 +1420,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 186
   SET dirt
   NAME steel_wide
   OFFSET_LEFT 0
@@ -1460,7 +1428,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 187
   SET dirt
   NAME steel_small
   OFFSET_LEFT 0
@@ -1468,7 +1436,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 188
   SET dirt
   NAME clump_tiny
   OFFSET_LEFT 0
@@ -1476,7 +1444,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 189
   SET dirt
   NAME treetrunk
   OFFSET_LEFT 0
@@ -1484,7 +1452,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 190
   SET dirt
   NAME bridge_4x
   OFFSET_LEFT 0
@@ -1492,7 +1460,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 191
   SET dirt
   NAME bridge_2x
   OFFSET_LEFT 0
@@ -1500,7 +1468,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 192
   SET dirt
   NAME bridge_1x
   OFFSET_LEFT 0
@@ -1508,7 +1476,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 193
   SET dirt
   NAME roots_01
   OFFSET_LEFT 0
@@ -1516,7 +1484,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 194
   SET dirt
   NAME roots_02
   OFFSET_LEFT 0
@@ -1524,7 +1492,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 195
   SET dirt
   NAME roots_03
   OFFSET_LEFT 0
@@ -1532,7 +1500,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 196
   SET dirt
   NAME roots_04
   OFFSET_LEFT 0
@@ -1540,7 +1508,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 197
   SET dirt
   NAME moss_01
   OFFSET_LEFT 0
@@ -1548,7 +1516,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 198
   SET dirt
   NAME moss_02
   OFFSET_LEFT 0
@@ -1556,7 +1524,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 199
   SET dirt
   NAME moss_03
   OFFSET_LEFT 0
@@ -1564,7 +1532,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 200
   SET dirt
   NAME moss_04
   OFFSET_LEFT 0
@@ -1572,7 +1540,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 201
   SET dirt
   NAME moss_05
   OFFSET_LEFT 0
@@ -1580,7 +1548,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 202
   SET dirt
   NAME moss_06
   OFFSET_LEFT 0
@@ -1588,7 +1556,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 203
   SET dirt
   NAME diag_bridge_01
   OFFSET_LEFT 0
@@ -1596,7 +1564,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 204
   SET dirt
   NAME diag_bridge_02
   OFFSET_LEFT 0
@@ -1604,7 +1572,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 205
   SET dirt
   NAME well
   OFFSET_LEFT 0
@@ -1612,7 +1580,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 206
   SET dirt
   NAME sign_left
   OFFSET_LEFT 0
@@ -1620,7 +1588,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 207
   SET dirt
   NAME sign_right
   OFFSET_LEFT 0
@@ -1628,7 +1596,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 208
   SET dirt
   NAME cross
   OFFSET_LEFT 0
@@ -1636,7 +1604,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 209
   SET dirt
   NAME gravestone
   OFFSET_LEFT 0
@@ -1644,7 +1612,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 210
   SET dirt
   NAME stonepile
   OFFSET_LEFT 0
@@ -1652,7 +1620,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 28
   SET dirt
   NAME exit
   OFFSET_LEFT 0
@@ -1660,7 +1628,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 29
   SET default
   NAME window
   OFFSET_LEFT 0
@@ -1668,15 +1636,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 30
   SET dirt
   NAME owa_left
   OFFSET_LEFT 0
@@ -1684,7 +1644,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 31
   SET dirt
   NAME owa_right
   OFFSET_LEFT 0
@@ -1692,7 +1652,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 32
   SET default
   NAME water
   OFFSET_LEFT 0
@@ -1700,7 +1660,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 33
   SET dirt
   NAME beartrap
   OFFSET_LEFT 0
@@ -1708,11 +1668,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 34
   SET dirt
   NAME *nil
 
-**O
+OBJECT 35
   SET dirt
   NAME bouldertrap
   OFFSET_LEFT 0
@@ -1720,15 +1680,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_blue
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 36
   SET dirt
   NAME tentontrap
   OFFSET_LEFT 0
@@ -1736,7 +1688,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 211
   SET fire
   NAME bricks_single
   OFFSET_LEFT 0
@@ -1744,7 +1696,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 212
   SET fire
   NAME bricks_double
   OFFSET_LEFT 0
@@ -1752,7 +1704,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 213
   SET fire
   NAME bricks_six
   OFFSET_LEFT 0
@@ -1760,7 +1712,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 214
   SET fire
   NAME spike
   OFFSET_LEFT 0
@@ -1768,7 +1720,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 215
   SET fire
   NAME screw
   OFFSET_LEFT 0
@@ -1776,7 +1728,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 216
   SET fire
   NAME screw_top
   OFFSET_LEFT 0
@@ -1784,7 +1736,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 217
   SET fire
   NAME rock_small_01
   OFFSET_LEFT 0
@@ -1792,7 +1744,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 218
   SET fire
   NAME circle_small
   OFFSET_LEFT 0
@@ -1800,7 +1752,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 219
   SET fire
   NAME circle_large
   OFFSET_LEFT 0
@@ -1808,7 +1760,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 220
   SET fire
   NAME rock_small_02
   OFFSET_LEFT 0
@@ -1816,7 +1768,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 221
   SET fire
   NAME rock_wide
   OFFSET_LEFT 0
@@ -1824,7 +1776,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 222
   SET fire
   NAME thickplatform
   OFFSET_LEFT 0
@@ -1832,7 +1784,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 223
   SET fire
   NAME steel_large
   OFFSET_LEFT 0
@@ -1840,7 +1792,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 224
   SET fire
   NAME steel_tall
   OFFSET_LEFT 0
@@ -1848,7 +1800,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 225
   SET fire
   NAME steel_wide
   OFFSET_LEFT 0
@@ -1856,7 +1808,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 226
   SET fire
   NAME steel_small
   OFFSET_LEFT 0
@@ -1864,7 +1816,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 227
   SET fire
   NAME rock_large_01
   OFFSET_LEFT 0
@@ -1872,7 +1824,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 228
   SET fire
   NAME rock_large_02
   OFFSET_LEFT 0
@@ -1880,7 +1832,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 229
   SET fire
   NAME rock_large_03
   OFFSET_LEFT 0
@@ -1888,7 +1840,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 230
   SET fire
   NAME bars_vert_short_triple
   OFFSET_LEFT 0
@@ -1896,7 +1848,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 231
   SET fire
   NAME bars_horz_short_triple
   OFFSET_LEFT 0
@@ -1904,7 +1856,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 232
   SET fire
   NAME bars_vert_short_single
   OFFSET_LEFT 0
@@ -1912,7 +1864,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 233
   SET fire
   NAME bars_vert_long_quad
   OFFSET_LEFT 0
@@ -1920,7 +1872,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 234
   SET fire
   NAME bars_vert_long_single
   OFFSET_LEFT 0
@@ -1928,7 +1880,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 235
   SET fire
   NAME bars_horz_long_single
   OFFSET_LEFT 0
@@ -1936,7 +1888,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 236
   SET fire
   NAME bars_horz_long_triple
   OFFSET_LEFT 0
@@ -1944,7 +1896,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 237
   SET fire
   NAME bluebrick_single
   OFFSET_LEFT 0
@@ -1952,7 +1904,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 238
   SET fire
   NAME bluebrick_bottoms
   OFFSET_LEFT 0
@@ -1960,7 +1912,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 239
   SET fire
   NAME bluebrick_chunk
   OFFSET_LEFT 0
@@ -1968,7 +1920,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 240
   SET fire
   NAME bluebrick_diagleft
   OFFSET_LEFT 0
@@ -1976,7 +1928,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 241
   SET fire
   NAME chain_link_horz_01
   OFFSET_LEFT 0
@@ -1984,7 +1936,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 242
   SET fire
   NAME letter_A
   OFFSET_LEFT 0
@@ -1992,7 +1944,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 243
   SET fire
   NAME letter_B
   OFFSET_LEFT 0
@@ -2000,7 +1952,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 244
   SET fire
   NAME letter_C
   OFFSET_LEFT 0
@@ -2008,7 +1960,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 245
   SET fire
   NAME letter_D
   OFFSET_LEFT 0
@@ -2016,7 +1968,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 246
   SET fire
   NAME letter_E
   OFFSET_LEFT 0
@@ -2024,7 +1976,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 247
   SET fire
   NAME letter_F
   OFFSET_LEFT 0
@@ -2032,7 +1984,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 248
   SET fire
   NAME letter_G
   OFFSET_LEFT 0
@@ -2040,7 +1992,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 249
   SET fire
   NAME letter_H
   OFFSET_LEFT 0
@@ -2048,7 +2000,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 250
   SET fire
   NAME letter_I
   OFFSET_LEFT 0
@@ -2056,7 +2008,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 251
   SET fire
   NAME letter_J
   OFFSET_LEFT 0
@@ -2064,7 +2016,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 252
   SET fire
   NAME letter_K
   OFFSET_LEFT 0
@@ -2072,7 +2024,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 253
   SET fire
   NAME letter_L
   OFFSET_LEFT 0
@@ -2080,7 +2032,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 254
   SET fire
   NAME letter_M
   OFFSET_LEFT 0
@@ -2088,7 +2040,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 255
   SET fire
   NAME letter_N
   OFFSET_LEFT 0
@@ -2096,7 +2048,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 256
   SET fire
   NAME letter_O
   OFFSET_LEFT 0
@@ -2104,7 +2056,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 257
   SET fire
   NAME letter_P
   OFFSET_LEFT 0
@@ -2112,7 +2064,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 258
   SET fire
   NAME letter_Q
   OFFSET_LEFT 0
@@ -2120,7 +2072,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 259
   SET fire
   NAME letter_R
   OFFSET_LEFT 0
@@ -2128,7 +2080,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 260
   SET fire
   NAME letter_S
   OFFSET_LEFT 0
@@ -2136,7 +2088,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 261
   SET fire
   NAME letter_T
   OFFSET_LEFT 0
@@ -2144,7 +2096,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 262
   SET fire
   NAME letter_U
   OFFSET_LEFT 0
@@ -2152,7 +2104,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 263
   SET fire
   NAME letter_V
   OFFSET_LEFT 0
@@ -2160,7 +2112,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 264
   SET fire
   NAME letter_W
   OFFSET_LEFT 0
@@ -2168,7 +2120,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 265
   SET fire
   NAME letter_X
   OFFSET_LEFT 0
@@ -2176,7 +2128,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 266
   SET fire
   NAME letter_Y
   OFFSET_LEFT 0
@@ -2184,7 +2136,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 267
   SET fire
   NAME letter_Z
   OFFSET_LEFT 0
@@ -2192,7 +2144,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 268
   SET fire
   NAME char_exclamation
   OFFSET_LEFT 0
@@ -2200,7 +2152,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 269
   SET fire
   NAME char_arrow_right
   OFFSET_LEFT 0
@@ -2208,7 +2160,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 270
   SET fire
   NAME chain_link_horz_02
   OFFSET_LEFT 0
@@ -2216,7 +2168,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 271
   SET fire
   NAME chain_link_vert_02
   OFFSET_LEFT 0
@@ -2224,7 +2176,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 272
   SET fire
   NAME chain_link_vert_01
   OFFSET_LEFT 0
@@ -2232,7 +2184,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 273
   SET fire
   NAME bluebrick_rights
   OFFSET_LEFT 0
@@ -2240,7 +2192,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 274
   SET fire
   NAME bluebrick_lefts
   OFFSET_LEFT 0
@@ -2248,7 +2200,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 37
   SET fire
   NAME exit
   OFFSET_LEFT 0
@@ -2256,7 +2208,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 38
   SET fire
   NAME window
   OFFSET_LEFT 0
@@ -2264,15 +2216,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 39
   SET fire
   NAME owa_left
   OFFSET_LEFT 0
@@ -2280,7 +2224,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 40
   SET fire
   NAME owa_right
   OFFSET_LEFT 0
@@ -2288,7 +2232,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 41
   SET fire
   NAME water
   OFFSET_LEFT 0
@@ -2296,11 +2240,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 42
   SET fire
   NAME *nil
 
-**O
+OBJECT 43
   SET fire
   NAME furnace
   OFFSET_LEFT 0
@@ -2308,7 +2252,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 44
   SET fire
   NAME flamethrower
   OFFSET_LEFT 0
@@ -2317,15 +2261,7 @@
   OFFSET_BOTTOM 0
   FLIP
 
-**O
-  SET default
-  NAME flag_blue
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 45
   SET fire
   NAME flamethrower
   OFFSET_LEFT 0
@@ -2333,7 +2269,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 275
   SET marble
   NAME pole_vert_join
   OFFSET_LEFT 0
@@ -2341,7 +2277,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 276
   SET marble
   NAME pole_vert
   OFFSET_LEFT 0
@@ -2349,7 +2285,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 277
   SET marble
   NAME block_diagright
   OFFSET_LEFT 0
@@ -2357,7 +2293,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 278
   SET marble
   NAME block_diagright_invert
   OFFSET_LEFT 0
@@ -2365,7 +2301,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 279
   SET marble
   NAME block_01
   OFFSET_LEFT 0
@@ -2373,7 +2309,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 280
   SET marble
   NAME steel_large
   OFFSET_LEFT 0
@@ -2381,7 +2317,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 281
   SET marble
   NAME block_01
   OFFSET_LEFT 0
@@ -2391,7 +2327,7 @@
   INVERT
   ROTATE
 
-**T
+TERRAIN 282
   SET marble
   NAME block_02
   OFFSET_LEFT 0
@@ -2401,7 +2337,7 @@
   INVERT
   ROTATE
 
-**T
+TERRAIN 283
   SET marble
   NAME pole_vert_end
   OFFSET_LEFT 0
@@ -2409,7 +2345,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 284
   SET marble
   NAME block_02
   OFFSET_LEFT 0
@@ -2419,7 +2355,7 @@
   FLIP
   INVERT
 
-**T
+TERRAIN 285
   SET marble
   NAME block_diagleft
   OFFSET_LEFT 0
@@ -2427,7 +2363,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 286
   SET marble
   NAME block_diagleft_invert
   OFFSET_LEFT 0
@@ -2435,7 +2371,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 287
   SET marble
   NAME block_02
   OFFSET_LEFT 0
@@ -2443,7 +2379,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 288
   SET marble
   NAME tiny_blue_single_horz
   OFFSET_LEFT 0
@@ -2451,7 +2387,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 289
   SET marble
   NAME tiny_blue_single_vert
   OFFSET_LEFT 0
@@ -2459,7 +2395,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 290
   SET marble
   NAME tiny_brown_single_vert
   OFFSET_LEFT 0
@@ -2467,7 +2403,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 291
   SET marble
   NAME tiny_brown_single_horz
   OFFSET_LEFT 0
@@ -2475,7 +2411,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 292
   SET marble
   NAME block_small_vert
   OFFSET_LEFT 0
@@ -2483,7 +2419,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 293
   SET marble
   NAME block_small_horz
   OFFSET_LEFT 0
@@ -2491,7 +2427,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 294
   SET marble
   NAME pole_horz_end
   OFFSET_LEFT 0
@@ -2499,7 +2435,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 295
   SET marble
   NAME pole_horz_join
   OFFSET_LEFT 0
@@ -2507,7 +2443,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 296
   SET marble
   NAME pole_horz
   OFFSET_LEFT 0
@@ -2515,7 +2451,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 297
   SET marble
   NAME arch
   OFFSET_LEFT 0
@@ -2523,7 +2459,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 298
   SET marble
   NAME steps
   OFFSET_LEFT 0
@@ -2531,7 +2467,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 299
   SET marble
   NAME stairs_right
   OFFSET_LEFT 0
@@ -2539,7 +2475,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 300
   SET marble
   NAME rock_01
   OFFSET_LEFT 0
@@ -2547,7 +2483,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 301
   SET marble
   NAME rock_02
   OFFSET_LEFT 0
@@ -2555,7 +2491,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 302
   SET marble
   NAME stripe_pole_vert_01_long
   OFFSET_LEFT 0
@@ -2563,7 +2499,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 303
   SET marble
   NAME stripe_pole_vert_02_long
   OFFSET_LEFT 0
@@ -2571,7 +2507,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 304
   SET marble
   NAME stripe_pole_vert_03_long
   OFFSET_LEFT 0
@@ -2579,7 +2515,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 305
   SET marble
   NAME stripe_pole_vert_04_long
   OFFSET_LEFT 0
@@ -2587,7 +2523,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 306
   SET marble
   NAME stripe_pole_horz_04_short
   OFFSET_LEFT 0
@@ -2595,7 +2531,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 307
   SET marble
   NAME stripe_pole_horz_04_long
   OFFSET_LEFT 0
@@ -2603,7 +2539,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 308
   SET marble
   NAME stripe_pole_horz_03_short
   OFFSET_LEFT 0
@@ -2611,7 +2547,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 309
   SET marble
   NAME stripe_pole_horz_03_long
   OFFSET_LEFT 0
@@ -2619,7 +2555,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 310
   SET marble
   NAME stripe_pole_horz_02_short
   OFFSET_LEFT 0
@@ -2627,7 +2563,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 311
   SET marble
   NAME stripe_pole_horz_02_long
   OFFSET_LEFT 0
@@ -2635,7 +2571,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 312
   SET marble
   NAME stripe_pole_horz_01_short
   OFFSET_LEFT 0
@@ -2643,7 +2579,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 313
   SET marble
   NAME stripe_pole_horz_01_long
   OFFSET_LEFT 0
@@ -2651,7 +2587,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 314
   SET marble
   NAME tiny_brown_tiled
   OFFSET_LEFT 0
@@ -2659,7 +2595,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 315
   SET marble
   NAME stripe_pole_diag_01_left
   OFFSET_LEFT 0
@@ -2667,7 +2603,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 316
   SET marble
   NAME stripe_pole_diag_01_right
   OFFSET_LEFT 0
@@ -2675,7 +2611,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 317
   SET marble
   NAME stairs_right_single
   OFFSET_LEFT 0
@@ -2683,7 +2619,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 318
   SET marble
   NAME stairs_left
   OFFSET_LEFT 0
@@ -2691,7 +2627,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 319
   SET marble
   NAME stairs_left_single
   OFFSET_LEFT 0
@@ -2699,7 +2635,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 320
   SET marble
   NAME circle_large
   OFFSET_LEFT 0
@@ -2707,7 +2643,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 321
   SET marble
   NAME circle_small
   OFFSET_LEFT 0
@@ -2715,7 +2651,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 322
   SET marble
   NAME stripe_pole_vert_01_short
   OFFSET_LEFT 0
@@ -2723,7 +2659,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 323
   SET marble
   NAME stripe_pole_vert_02_short
   OFFSET_LEFT 0
@@ -2731,7 +2667,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 324
   SET marble
   NAME stripe_pole_vert_03_short
   OFFSET_LEFT 0
@@ -2739,7 +2675,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 325
   SET marble
   NAME stripe_pole_vert_04_short
   OFFSET_LEFT 0
@@ -2747,7 +2683,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 326
   SET marble
   NAME steps
   OFFSET_LEFT 0
@@ -2757,7 +2693,7 @@
   INVERT
   ROTATE
 
-**T
+TERRAIN 327
   SET marble
   NAME steps
   OFFSET_LEFT 0
@@ -2768,7 +2704,7 @@
   INVERT
   ROTATE
 
-**T
+TERRAIN 328
   SET marble
   NAME formation_01
   OFFSET_LEFT 0
@@ -2776,7 +2712,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 329
   SET marble
   NAME formation_01
   OFFSET_LEFT 0
@@ -2786,7 +2722,7 @@
   INVERT
   ROTATE
 
-**T
+TERRAIN 330
   SET marble
   NAME stuff_01
   OFFSET_LEFT 0
@@ -2794,7 +2730,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 331
   SET marble
   NAME stuff_02
   OFFSET_LEFT 0
@@ -2802,7 +2738,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 332
   SET marble
   NAME steel_tall
   OFFSET_LEFT 0
@@ -2810,7 +2746,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 333
   SET marble
   NAME steel_wide
   OFFSET_LEFT 0
@@ -2818,7 +2754,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 334
   SET marble
   NAME steel_small
   OFFSET_LEFT 0
@@ -2826,7 +2762,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 46
   SET marble
   NAME exit
   OFFSET_LEFT 0
@@ -2834,7 +2770,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 47
   SET marble
   NAME window
   OFFSET_LEFT 0
@@ -2842,15 +2778,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 48
   SET marble
   NAME owa_left
   OFFSET_LEFT 0
@@ -2858,7 +2786,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 49
   SET marble
   NAME owa_right
   OFFSET_LEFT 0
@@ -2866,7 +2794,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 50
   SET marble
   NAME water
   OFFSET_LEFT 0
@@ -2874,19 +2802,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 51
   SET marble
   NAME *nil
 
-**O
-  SET default
-  NAME flag_blue
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 52
   SET marble
   NAME squasher
   OFFSET_LEFT 0
@@ -2894,7 +2814,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 53
   SET marble
   NAME shredder
   OFFSET_LEFT 0
@@ -2902,7 +2822,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 335
   SET pillar
   NAME pillar_horz_long
   OFFSET_LEFT 0
@@ -2910,7 +2830,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 336
   SET pillar
   NAME pillar_vert_long
   OFFSET_LEFT 0
@@ -2918,7 +2838,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 337
   SET pillar
   NAME pillar_top_180
   OFFSET_LEFT 0
@@ -2926,7 +2846,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 338
   SET pillar
   NAME pillar_top_rough
   OFFSET_LEFT 0
@@ -2934,7 +2854,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 339
   SET pillar
   NAME pillar_left_rough
   OFFSET_LEFT 0
@@ -2942,7 +2862,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 340
   SET pillar
   NAME pillar_right_rough
   OFFSET_LEFT 0
@@ -2950,7 +2870,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 341
   SET pillar
   NAME pillar_bottom_rough
   OFFSET_LEFT 0
@@ -2958,7 +2878,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 342
   SET pillar
   NAME pillar_bottom_180
   OFFSET_LEFT 0
@@ -2966,7 +2886,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 343
   SET pillar
   NAME rough_bottomleft
   OFFSET_LEFT 0
@@ -2974,7 +2894,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 344
   SET pillar
   NAME rough_bottomright
   OFFSET_LEFT 0
@@ -2982,7 +2902,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 345
   SET pillar
   NAME rough_topleft
   OFFSET_LEFT 0
@@ -2990,7 +2910,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 346
   SET pillar
   NAME rough_topright
   OFFSET_LEFT 0
@@ -2998,7 +2918,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 347
   SET pillar
   NAME plank_vert_bottom_01
   OFFSET_LEFT 0
@@ -3006,7 +2926,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 348
   SET pillar
   NAME plank_vert_top_01
   OFFSET_LEFT 0
@@ -3014,7 +2934,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 349
   SET pillar
   NAME plank_vert_mid_01
   OFFSET_LEFT 0
@@ -3022,7 +2942,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 350
   SET pillar
   NAME plank_vert_bottom_02
   OFFSET_LEFT 0
@@ -3030,7 +2950,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 351
   SET pillar
   NAME plank_vert_top_02
   OFFSET_LEFT 0
@@ -3038,7 +2958,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 352
   SET pillar
   NAME plank_vert_mid_02
   OFFSET_LEFT 0
@@ -3046,7 +2966,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 353
   SET pillar
   NAME plank_vert_bottom_03
   OFFSET_LEFT 0
@@ -3054,7 +2974,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 354
   SET pillar
   NAME plank_vert_top_03
   OFFSET_LEFT 0
@@ -3062,7 +2982,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 355
   SET pillar
   NAME plank_vert_middle_03
   OFFSET_LEFT 0
@@ -3070,7 +2990,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 356
   SET pillar
   NAME rough_crumbly_01
   OFFSET_LEFT 0
@@ -3078,7 +2998,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 357
   SET pillar
   NAME rough_crumbly_02
   OFFSET_LEFT 0
@@ -3086,7 +3006,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 358
   SET pillar
   NAME pillar_left_end
   OFFSET_LEFT 0
@@ -3094,7 +3014,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 359
   SET pillar
   NAME pillar_horz_short
   OFFSET_LEFT 0
@@ -3102,7 +3022,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 360
   SET pillar
   NAME pillar_right_end
   OFFSET_LEFT 0
@@ -3110,7 +3030,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 361
   SET pillar
   NAME pillar_top_end
   OFFSET_LEFT 0
@@ -3118,7 +3038,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 362
   SET pillar
   NAME steel_large
   OFFSET_LEFT 0
@@ -3126,7 +3046,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 363
   SET pillar
   NAME pillar_vert_short
   OFFSET_LEFT 0
@@ -3134,7 +3054,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 364
   SET pillar
   NAME clump
   OFFSET_LEFT 0
@@ -3143,7 +3063,7 @@
   OFFSET_BOTTOM 0
   INVERT
 
-**T
+TERRAIN 365
   SET pillar
   NAME clump
   OFFSET_LEFT 0
@@ -3151,7 +3071,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 366
   SET pillar
   NAME rough_crumbly_wide_01
   OFFSET_LEFT 0
@@ -3159,7 +3079,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 367
   SET pillar
   NAME rough_crumbly_wide_02
   OFFSET_LEFT 0
@@ -3167,7 +3087,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 368
   SET pillar
   NAME rough_crumbly_tall_01
   OFFSET_LEFT 0
@@ -3175,7 +3095,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 369
   SET pillar
   NAME rough_crumbly_tall_02
   OFFSET_LEFT 0
@@ -3183,7 +3103,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 370
   SET pillar
   NAME pillar_bottom_end
   OFFSET_LEFT 0
@@ -3191,7 +3111,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 371
   SET pillar
   NAME sandstone_tall
   OFFSET_LEFT 0
@@ -3199,7 +3119,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 372
   SET pillar
   NAME pillar_thin_vert
   OFFSET_LEFT 0
@@ -3207,7 +3127,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 373
   SET pillar
   NAME sandstone_wide
   OFFSET_LEFT 0
@@ -3215,7 +3135,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 374
   SET pillar
   NAME sandstone_small
   OFFSET_LEFT 0
@@ -3223,7 +3143,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 375
   SET pillar
   NAME pillar_thin_vert_short
   OFFSET_LEFT 0
@@ -3231,7 +3151,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 376
   SET pillar
   NAME pillar_thin_horz
   OFFSET_LEFT 0
@@ -3239,7 +3159,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 377
   SET pillar
   NAME plank_horz_right_01
   OFFSET_LEFT 0
@@ -3247,7 +3167,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 378
   SET pillar
   NAME plank_horz_left_01
   OFFSET_LEFT 0
@@ -3255,7 +3175,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 379
   SET pillar
   NAME plank_horz_mid_01
   OFFSET_LEFT 0
@@ -3263,7 +3183,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 380
   SET pillar
   NAME plank_horz_right_02
   OFFSET_LEFT 0
@@ -3271,7 +3191,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 381
   SET pillar
   NAME plank_horz_left_02
   OFFSET_LEFT 0
@@ -3279,7 +3199,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 382
   SET pillar
   NAME plank_horz_mid_02
   OFFSET_LEFT 0
@@ -3287,7 +3207,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 383
   SET pillar
   NAME steel_tall
   OFFSET_LEFT 0
@@ -3295,7 +3215,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 384
   SET pillar
   NAME steel_wide
   OFFSET_LEFT 0
@@ -3303,7 +3223,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 385
   SET pillar
   NAME steel_small
   OFFSET_LEFT 0
@@ -3311,7 +3231,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 386
   SET pillar
   NAME brightstone_wide
   OFFSET_LEFT 0
@@ -3319,7 +3239,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 387
   SET pillar
   NAME brightstone_tall
   OFFSET_LEFT 0
@@ -3327,7 +3247,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 388
   SET pillar
   NAME brightstone_small
   OFFSET_LEFT 0
@@ -3335,7 +3255,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 389
   SET pillar
   NAME staircase_right_3step
   OFFSET_LEFT 0
@@ -3343,7 +3263,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 390
   SET pillar
   NAME staircase_right_12step
   OFFSET_LEFT 0
@@ -3351,7 +3271,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 391
   SET pillar
   NAME staircase_left_12step
   OFFSET_LEFT 0
@@ -3359,7 +3279,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 392
   SET pillar
   NAME staircase_left_3step
   OFFSET_LEFT 0
@@ -3367,7 +3287,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 393
   SET pillar
   NAME circle_large
   OFFSET_LEFT 0
@@ -3375,7 +3295,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 394
   SET pillar
   NAME circle_small
   OFFSET_LEFT 0
@@ -3383,7 +3303,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 395
   SET pillar
   NAME clump_vert
   OFFSET_LEFT 0
@@ -3391,7 +3311,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 396
   SET pillar
   NAME clump_vert
   OFFSET_LEFT 0
@@ -3400,7 +3320,7 @@
   OFFSET_BOTTOM 0
   FLIP
 
-**O
+OBJECT 54
   SET pillar
   NAME exit
   OFFSET_LEFT 0
@@ -3408,7 +3328,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 55
   SET pillar
   NAME window
   OFFSET_LEFT 0
@@ -3416,15 +3336,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 56
   SET pillar
   NAME owa_left
   OFFSET_LEFT 0
@@ -3432,7 +3344,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 57
   SET pillar
   NAME owa_right
   OFFSET_LEFT 0
@@ -3440,7 +3352,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 58
   SET default
   NAME water
   OFFSET_LEFT 0
@@ -3448,19 +3360,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 59
   SET pillar
   NAME *nil
 
-**O
-  SET default
-  NAME flag_blue
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 60
   SET pillar
   NAME ropetrap
   OFFSET_LEFT 0
@@ -3468,7 +3372,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 61
   SET pillar
   NAME spiketrap
   OFFSET_LEFT 0
@@ -3476,7 +3380,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 62
   SET pillar
   NAME spiketrap
   OFFSET_LEFT 0
@@ -3485,7 +3389,7 @@
   OFFSET_BOTTOM 0
   FLIP
 
-**T
+TERRAIN 397
   SET rock
   NAME rocks_tall
   OFFSET_LEFT 0
@@ -3493,7 +3397,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 398
   SET rock
   NAME rocks_diagleft
   OFFSET_LEFT 0
@@ -3501,7 +3405,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 399
   SET rock
   NAME rocks_medium_01
   OFFSET_LEFT 0
@@ -3509,7 +3413,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 400
   SET rock
   NAME rocks_medium_02
   OFFSET_LEFT 0
@@ -3517,7 +3421,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 401
   SET rock
   NAME rocks_tall_thin
   OFFSET_LEFT 0
@@ -3525,7 +3429,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 402
   SET rock
   NAME rocsk_tall_single_01
   OFFSET_LEFT 0
@@ -3533,7 +3437,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 403
   SET rock
   NAME rocks_tall_single_02
   OFFSET_LEFT 0
@@ -3541,7 +3445,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 404
   SET rock
   NAME rocks_wide
   OFFSET_LEFT 0
@@ -3549,7 +3453,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 405
   SET rock
   NAME rocks_wide_small
   OFFSET_LEFT 0
@@ -3557,7 +3461,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 406
   SET rock
   NAME rocks_small
   OFFSET_LEFT 0
@@ -3565,7 +3469,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 407
   SET rock
   NAME platform_left
   OFFSET_LEFT 0
@@ -3573,7 +3477,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 408
   SET rock
   NAME platform_mid
   OFFSET_LEFT 0
@@ -3581,7 +3485,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 409
   SET rock
   NAME platform_right
   OFFSET_LEFT 0
@@ -3589,7 +3493,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 410
   SET rock
   NAME grass_horz
   OFFSET_LEFT 0
@@ -3597,7 +3501,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 411
   SET rock
   NAME grass_diagright
   OFFSET_LEFT 0
@@ -3605,7 +3509,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 412
   SET rock
   NAME grass_diagleft_tiny
   OFFSET_LEFT 0
@@ -3613,7 +3517,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 413
   SET rock
   NAME grass_diagleft
   OFFSET_LEFT 0
@@ -3621,7 +3525,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 414
   SET rock
   NAME grass_horz_short
   OFFSET_LEFT 0
@@ -3629,7 +3533,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 415
   SET rock
   NAME grass_clump_large
   OFFSET_LEFT 0
@@ -3637,7 +3541,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 416
   SET rock
   NAME grass_clump_small
   OFFSET_LEFT 0
@@ -3645,7 +3549,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 417
   SET rock
   NAME grass_mound_small
   OFFSET_LEFT 0
@@ -3653,7 +3557,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 418
   SET rock
   NAME grass_mound_large
   OFFSET_LEFT 0
@@ -3661,7 +3565,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 419
   SET rock
   NAME grass_mound_tiny_01
   OFFSET_LEFT 0
@@ -3669,7 +3573,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 420
   SET rock
   NAME grass_mound_tiny_02
   OFFSET_LEFT 0
@@ -3677,7 +3581,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 421
   SET rock
   NAME moss_01
   OFFSET_LEFT 0
@@ -3685,7 +3589,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 422
   SET rock
   NAME moss_02
   OFFSET_LEFT 0
@@ -3693,7 +3597,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 423
   SET rock
   NAME wood_01
   OFFSET_LEFT 0
@@ -3701,7 +3605,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 424
   SET rock
   NAME wood_02
   OFFSET_LEFT 0
@@ -3709,7 +3613,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 425
   SET rock
   NAME wood_thin_01
   OFFSET_LEFT 0
@@ -3717,7 +3621,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 426
   SET rock
   NAME wood_thin_02
   OFFSET_LEFT 0
@@ -3725,7 +3629,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 427
   SET rock
   NAME wood_thin_03
   OFFSET_LEFT 0
@@ -3733,7 +3637,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 428
   SET rock
   NAME wood_thin_04
   OFFSET_LEFT 0
@@ -3741,7 +3645,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 429
   SET rock
   NAME wood_horz_01
   OFFSET_LEFT 0
@@ -3749,7 +3653,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 430
   SET rock
   NAME wood_horz_02
   OFFSET_LEFT 0
@@ -3757,7 +3661,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 431
   SET rock
   NAME wood_thin_diagleft_01
   OFFSET_LEFT 0
@@ -3765,7 +3669,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 432
   SET rock
   NAME wood_thin_diagleft_02
   OFFSET_LEFT 0
@@ -3773,7 +3677,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 433
   SET rock
   NAME wood_thin_diagleft_03
   OFFSET_LEFT 0
@@ -3781,7 +3685,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 434
   SET rock
   NAME wood_thin_diagleft_04
   OFFSET_LEFT 0
@@ -3789,7 +3693,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 435
   SET rock
   NAME wood_thin_diagleft_05
   OFFSET_LEFT 0
@@ -3797,7 +3701,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 436
   SET rock
   NAME wood_thin_diagright_01
   OFFSET_LEFT 0
@@ -3805,7 +3709,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 437
   SET rock
   NAME wood_thin_diagright_02
   OFFSET_LEFT 0
@@ -3813,7 +3717,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 438
   SET rock
   NAME wood_thin_diagright_03
   OFFSET_LEFT 0
@@ -3821,7 +3725,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 439
   SET rock
   NAME crystal_large_vert
   OFFSET_LEFT 0
@@ -3829,7 +3733,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 440
   SET rock
   NAME crystal_small_vert
   OFFSET_LEFT 0
@@ -3837,7 +3741,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 441
   SET rock
   NAME crystal_med_vert
   OFFSET_LEFT 0
@@ -3845,7 +3749,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 442
   SET rock
   NAME crystal_supertiny_vert
   OFFSET_LEFT 0
@@ -3853,7 +3757,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 443
   SET rock
   NAME crystal_tiny_vert
   OFFSET_LEFT 0
@@ -3861,7 +3765,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 444
   SET rock
   NAME crystal_large_diagleft
   OFFSET_LEFT 0
@@ -3869,7 +3773,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 445
   SET rock
   NAME crystal_small_diagleft
   OFFSET_LEFT 0
@@ -3877,7 +3781,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 446
   SET rock
   NAME crystal_med_diagleft
   OFFSET_LEFT 0
@@ -3885,7 +3789,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 447
   SET rock
   NAME crystal_dual_diagleft
   OFFSET_LEFT 0
@@ -3893,7 +3797,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 448
   SET rock
   NAME crystal_tiny_diagleft
   OFFSET_LEFT 0
@@ -3901,7 +3805,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 449
   SET rock
   NAME crystal_med_diagright
   OFFSET_LEFT 0
@@ -3909,7 +3813,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 450
   SET rock
   NAME crystal_large_diagright
   OFFSET_LEFT 0
@@ -3917,7 +3821,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 451
   SET rock
   NAME crystal_tiny_diagright
   OFFSET_LEFT 0
@@ -3925,7 +3829,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 452
   SET rock
   NAME crystal_tiny_diagright_short
   OFFSET_LEFT 0
@@ -3933,7 +3837,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 453
   SET rock
   NAME steel_large
   OFFSET_LEFT 0
@@ -3941,7 +3845,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 454
   SET rock
   NAME steel_tall
   OFFSET_LEFT 0
@@ -3949,7 +3853,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 455
   SET rock
   NAME steel_wide
   OFFSET_LEFT 0
@@ -3957,7 +3861,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 456
   SET rock
   NAME steel_small
   OFFSET_LEFT 0
@@ -3965,7 +3869,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 457
   SET rock
   NAME rectangle
   OFFSET_LEFT 0
@@ -3973,7 +3877,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 458
   SET rock
   NAME circle_large
   OFFSET_LEFT 0
@@ -3981,7 +3885,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 459
   SET rock
   NAME circle_small
   OFFSET_LEFT 0
@@ -3989,7 +3893,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 460
   SET rock
   NAME circle_tiny
   OFFSET_LEFT 0
@@ -3997,7 +3901,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 63
   SET rock
   NAME exit
   OFFSET_LEFT 0
@@ -4005,7 +3909,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 64
   SET rock
   NAME window
   OFFSET_LEFT 0
@@ -4013,15 +3917,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 65
   SET rock
   NAME owa_left
   OFFSET_LEFT 0
@@ -4029,7 +3925,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 66
   SET rock
   NAME owa_right
   OFFSET_LEFT 0
@@ -4037,7 +3933,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 67
   SET rock
   NAME water
   OFFSET_LEFT 0
@@ -4045,7 +3941,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 68
   SET rock
   NAME roottrap
   OFFSET_LEFT 0
@@ -4053,11 +3949,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 69
   SET rock
   NAME *nil
 
-**O
+OBJECT 70
   SET rock
   NAME chameleon
   OFFSET_LEFT 0
@@ -4065,11 +3961,11 @@
   OFFSET_RIGHT -16
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 71
   SET rock
   NAME *nil
 
-**O
+OBJECT 72
   SET rock
   NAME chameleon
   OFFSET_LEFT 0
@@ -4078,7 +3974,7 @@
   OFFSET_BOTTOM 0
   FLIP
   
-**T
+TERRAIN 461
   SET snow
   NAME snow_wide
   OFFSET_LEFT 0
@@ -4086,7 +3982,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 462
   SET snow
   NAME snow_small_01
   OFFSET_LEFT 0
@@ -4094,7 +3990,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 463
   SET snow
   NAME snow_flat_01
   OFFSET_LEFT 0
@@ -4102,7 +3998,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 464
   SET snow
   NAME snow_flat_02
   OFFSET_LEFT 0
@@ -4110,7 +4006,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 465
   SET snow
   NAME snow_tall
   OFFSET_LEFT 0
@@ -4118,7 +4014,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 466
   SET snow
   NAME snow_diagleft
   OFFSET_LEFT 0
@@ -4126,7 +4022,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 467
   SET snow
   NAME snow_small_02
   OFFSET_LEFT 0
@@ -4134,7 +4030,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 468
   SET snow
   NAME snow_small_03
   OFFSET_LEFT 0
@@ -4142,7 +4038,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 469
   SET snow
   NAME snow_small_04
   OFFSET_LEFT 0
@@ -4150,7 +4046,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 470
   SET snow
   NAME spike_double
   OFFSET_LEFT 0
@@ -4158,7 +4054,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 471
   SET snow
   NAME spike_single
   OFFSET_LEFT 0
@@ -4166,7 +4062,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 472
   SET snow
   NAME spike_wide
   OFFSET_LEFT 0
@@ -4174,7 +4070,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 473
   SET snow
   NAME spike_stubby
   OFFSET_LEFT 0
@@ -4182,7 +4078,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 474
   SET snow
   NAME spike_tiny
   OFFSET_LEFT 0
@@ -4190,7 +4086,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 475
   SET snow
   NAME spike_flat
   OFFSET_LEFT 0
@@ -4198,7 +4094,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 476
   SET snow
   NAME pole
   OFFSET_LEFT 0
@@ -4206,7 +4102,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 477
   SET snow
   NAME pole_top
   OFFSET_LEFT 0
@@ -4214,7 +4110,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 478
   SET snow
   NAME rocks_tall
   OFFSET_LEFT 0
@@ -4222,7 +4118,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 479
   SET snow
   NAME rocks_small_01
   OFFSET_LEFT 0
@@ -4230,7 +4126,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 480
   SET snow
   NAME rocks_diagleft
   OFFSET_LEFT 0
@@ -4238,7 +4134,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 481
   SET snow
   NAME rocks_small_02
   OFFSET_LEFT 0
@@ -4246,7 +4142,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 482
   SET snow
   NAME rocks_small_03
   OFFSET_LEFT 0
@@ -4254,7 +4150,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 483
   SET snow
   NAME rocks_flat
   OFFSET_LEFT 0
@@ -4262,7 +4158,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 484
   SET snow
   NAME snow_icy_01
   OFFSET_LEFT 0
@@ -4270,7 +4166,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 485
   SET snow
   NAME snow_icy_02
   OFFSET_LEFT 0
@@ -4278,7 +4174,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 486
   SET snow
   NAME snow_icy_diagright
   OFFSET_LEFT 0
@@ -4286,7 +4182,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 487
   SET snow
   NAME snow_icy_diagleft
   OFFSET_LEFT 0
@@ -4294,7 +4190,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 488
   SET snow
   NAME icicle_large
   OFFSET_LEFT 0
@@ -4302,7 +4198,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 489
   SET snow
   NAME icicle_small
   OFFSET_LEFT 0
@@ -4310,7 +4206,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 490
   SET snow
   NAME steel_large
   OFFSET_LEFT 0
@@ -4318,7 +4214,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 491
   SET snow
   NAME steel_tall
   OFFSET_LEFT 0
@@ -4326,7 +4222,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 492
   SET snow
   NAME steel_wide
   OFFSET_LEFT 0
@@ -4334,7 +4230,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 493
   SET snow
   NAME steel_small
   OFFSET_LEFT 0
@@ -4342,7 +4238,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 494
   SET snow
   NAME rect
   OFFSET_LEFT 0
@@ -4350,7 +4246,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 495
   SET snow
   NAME circle_large
   OFFSET_LEFT 0
@@ -4358,7 +4254,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 496
   SET snow
   NAME circle_small
   OFFSET_LEFT 0
@@ -4366,7 +4262,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 497
   SET snow
   NAME circle_tiny
   OFFSET_LEFT 0
@@ -4374,7 +4270,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 73
   SET snow
   NAME exit
   OFFSET_LEFT 0
@@ -4382,7 +4278,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 74
   SET snow
   NAME window
   OFFSET_LEFT 0
@@ -4390,15 +4286,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 75
   SET snow
   NAME owa_left
   OFFSET_LEFT 0
@@ -4406,7 +4294,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 76
   SET snow
   NAME owa_right
   OFFSET_LEFT 0
@@ -4414,7 +4302,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 77
   SET snow
   NAME water
   OFFSET_LEFT 0
@@ -4422,7 +4310,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 78
   SET snow
   NAME snowflag
   OFFSET_LEFT 0
@@ -4430,15 +4318,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
-  SET default
-  NAME flag_blue
-  OFFSET_LEFT 0
-  OFFSET_TOP 0
-  OFFSET_RIGHT 0
-  OFFSET_BOTTOM 0
-
-**O
+OBJECT 79
   SET snow
   NAME icicletrap
   OFFSET_LEFT 0
@@ -4446,7 +4326,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 80
   SET snow
   NAME iceblower
   OFFSET_LEFT 0
@@ -4454,7 +4334,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 498
   SET snow
   NAME snowman
   OFFSET_LEFT 0
@@ -4462,7 +4342,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
   
-**T
+TERRAIN 499
   SET snow
   NAME twigs_apart
   OFFSET_LEFT 0
@@ -4470,7 +4350,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
   
-**T
+TERRAIN 500
   SET snow
   NAME snowball_small
   OFFSET_LEFT 0
@@ -4478,7 +4358,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
   
-**T
+TERRAIN 501
   SET snow
   NAME snow_mound
   OFFSET_LEFT 0
@@ -4486,7 +4366,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
   
-**T
+TERRAIN 502
   SET snow
   NAME twigs_pi
   OFFSET_LEFT 0
@@ -4494,7 +4374,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
   
-**T
+TERRAIN 503
   SET snow
   NAME snow_speck_02
   OFFSET_LEFT 0
@@ -4502,7 +4382,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 504
   SET snow
   NAME snow_small_05
   OFFSET_LEFT 0
@@ -4510,7 +4390,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 505
   SET snow
   NAME snow_small_06
   OFFSET_LEFT 0
@@ -4518,7 +4398,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**T
+TERRAIN 506
   SET snow
   NAME snow_speck_01
   OFFSET_LEFT 0
@@ -4526,7 +4406,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 81
   SET xmas
   NAME exit
   OFFSET_LEFT 0
@@ -4534,7 +4414,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 82
   SET xmas
   NAME window
   OFFSET_LEFT 0
@@ -4542,15 +4422,15 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 83
   SET xmas
   NAME *nil
 
-**O
+OBJECT 84
   SET xmas
   NAME *nil
 
-**O
+OBJECT 85
   SET xmas
   NAME bouncy_snowman
   OFFSET_LEFT 0
@@ -4558,7 +4438,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 86
   SET xmas
   NAME lights
   OFFSET_LEFT 0
@@ -4566,7 +4446,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 87
   SET xmas
   NAME fireplace
   OFFSET_LEFT 0
@@ -4574,11 +4454,11 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 88
   SET xmas
   NAME *nil
 
-**O
+OBJECT 89
   SET xmas
   NAME jack_box
   OFFSET_LEFT 0
@@ -4586,7 +4466,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 90
   SET xmas
   NAME jack
   OFFSET_LEFT 0
@@ -4594,7 +4474,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
 
-**O
+OBJECT 91
   SET marble
   NAME exit
   OFFSET_LEFT 0
@@ -4602,7 +4482,7 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
   
-**O
+OBJECT 92
   SET default
   NAME window
   OFFSET_LEFT 0
@@ -4610,15 +4490,15 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
   
-**O
+OBJECT 93
   SET default
   NAME *nil
   
-**O
+OBJECT 94
   SET default
   NAME *nil
   
-**O
+OBJECT 95
   SET default
   NAME updraft_thin
   OFFSET_LEFT 0
@@ -4626,18 +4506,30 @@
   OFFSET_RIGHT 0
   OFFSET_BOTTOM 0
   
-**T
+OBJECT 96
+  SET default
+  NAME updraft_wide
+
+OBJECT 97
+  SET default
+  NAME lemming
+  
+OBJECT 98
+  SET default
+  NAME pickup
+  
+TERRAIN 507
   SET special
   NAME awesome
   
-**T
+TERRAIN 508
   SET special
   NAME beasti
   
-**T
+TERRAIN 509
   SET special
   NAME beastii
   
-**T
+TERRAIN 510
   SET special
   NAME awesome
