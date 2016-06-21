@@ -44,11 +44,12 @@ begin
     HFrame := SrcBmp.Width div srcw;
     VFrame := SrcBmp.Height div srch;
     DstBmp.SetSize(HFrame * dstw, VFrame * dsth);
+    DstBmp.Clear(0);
 
     for fy := 0 to VFrame-1 do
       for fx := 0 to HFrame-1 do
       begin
-        SrcRect := Rect(fx * srcw, fy * srch, (fx * srcw) + minw, (fy * srch) + minh);
+        SrcRect := Rect(fx * srcw, fy * srch, (fx * srcw) + minw - 1, (fy * srch) + minh - 1);
         SrcBmp.DrawTo(DstBmp, fx * dstw, fy * dsth, SrcRect);
       end;
 

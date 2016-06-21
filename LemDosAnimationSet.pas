@@ -223,8 +223,8 @@ begin
   Lem($AB98, 'Lbuilder'           ,  16, 16, 13,  19,   9,  13,   lat_Loop);
   Lem($CA78, 'Rbasher'            ,  32, 16, 10,  19,   8,  10,   lat_Loop);
   Lem($F9F8, 'Lbasher'            ,  32, 16, 10,  19,   7,  10,   lat_Loop);
-  Lem($12978, 'Rminer'            ,  24, 16, 14,  19,   7,  12,   lat_Loop);
-  Lem($157C8, 'Lminer'            ,  24, 16, 14,  19,   8,  12,   lat_Loop);
+  Lem($12978, 'Rminer'            ,  24, 16, 14,  19,   7,  13,   lat_Loop);
+  Lem($157C8, 'Lminer'            ,  24, 16, 14,  19,   8,  13,   lat_Loop);
   Lem($18618, 'Rfaller'           ,   4, 16, 10,  19,   7,  10,   lat_Loop);
   Lem($18C08, 'Lfaller'           ,   4, 16, 10,  19,   9,  10,   lat_Loop);
   Lem($191F8, 'Rfloater'       ,  17, 16, 16,  19,   7,  16,   lat_Loop);
