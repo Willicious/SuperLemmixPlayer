@@ -1,0 +1,191 @@
+# Translation table
+
+THEME martian
+
+TERRAIN 0
+  SET martian
+  NAME rock_wide
+
+TERRAIN 1
+  SET martian
+  NAME rock_small
+
+TERRAIN 2
+  SET martian
+  NAME rock_tall
+
+TERRAIN 3
+  SET martian
+  NAME rock_large
+
+TERRAIN 4
+  SET martian
+  NAME steel_large
+
+TERRAIN 5
+  SET martian
+  NAME steel_wide
+
+TERRAIN 6
+  SET martian
+  NAME steel_tall
+
+TERRAIN 7
+  SET martian
+  NAME steel_small
+
+TERRAIN 8
+  SET martian
+  NAME girder_bend_topleft
+
+TERRAIN 9
+  SET martian
+  NAME girder_bend_topright
+
+TERRAIN 10
+  SET martian
+  NAME girder_bend_bottomleft
+
+TERRAIN 11
+  SET martian
+  NAME girder_bend_bottomright
+
+TERRAIN 12
+  SET martian
+  NAME girder_horz
+
+TERRAIN 13
+  SET martian
+  NAME girder_vert
+
+TERRAIN 14
+  SET martian
+  NAME girder_horz_join_bottom
+
+TERRAIN 15
+  SET martian
+  NAME girder_vert_join_left
+
+TERRAIN 16
+  SET martian
+  NAME girder_vert_join_right
+
+TERRAIN 17
+  SET martian
+  NAME girder_horz_join_top
+
+TERRAIN 18
+  SET martian
+  NAME girder_cross
+
+TERRAIN 19
+  SET martian
+  NAME steelshard_01
+
+TERRAIN 20
+  SET martian
+  NAME steelshard_02
+
+TERRAIN 21
+  SET martian
+  NAME steelshard_03
+
+TERRAIN 22
+  SET martian
+  NAME steelshard_04
+
+TERRAIN 23
+  SET martian
+  NAME steelshard_05
+
+TERRAIN 24
+  SET martian
+  NAME spike_vert_long
+
+TERRAIN 25
+  SET martian
+  NAME spike_vert_medium
+
+TERRAIN 26
+  SET martian
+  NAME spike_vert_short
+
+TERRAIN 27
+  SET martian
+  NAME spike_horz_long
+
+TERRAIN 28
+  SET martian
+  NAME spike_horz_medium
+
+TERRAIN 29
+  SET martian
+  NAME spike_horz_short
+
+TERRAIN 30
+  SET martian
+  NAME spike_horz_long
+  FLIP
+
+TERRAIN 31
+  SET martian
+  NAME spike_horz_medium
+  FLIP
+
+TERRAIN 32
+  SET martian
+  NAME spike_horz_short
+  FLIP
+
+OBJECT 0
+  SET martian
+  NAME exit
+  OFFSET_TOP -6
+
+OBJECT 1
+  SET martian
+  NAME window
+
+OBJECT 2
+  SET martian
+  NAME owa_left
+
+OBJECT 3
+  SET martian
+  NAME owa_right
+
+OBJECT 4
+  NAME *nil
+
+OBJECT 5
+  SET martian
+  NAME water
+
+OBJECT 6
+  SET martian
+  NAME teleporter
+
+OBJECT 7
+  SET martian
+  NAME receiver
+
+OBJECT 8
+  SET default
+  NAME lemming
+  OFFSET_TOP 1
+
+OBJECT 9
+  SET martian
+  NAME pickup
+
+OBJECT 10
+  SET martian
+  NAME owa_down
+
+OBJECT 11
+  SET martian
+  NAME lasertrap
+
+OBJECT 12
+  NAME *nil
+

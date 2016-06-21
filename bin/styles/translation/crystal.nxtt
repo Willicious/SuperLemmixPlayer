@@ -1,0 +1,216 @@
+# Translation table
+
+THEME crystal
+
+TERRAIN 0
+  SET crystal
+  NAME shiny_diagright
+
+TERRAIN 1
+  SET crystal
+  NAME shiny_diagleft
+
+TERRAIN 2
+  SET crystal
+  NAME dull_cross
+
+TERRAIN 3
+  SET crystal
+  NAME dull_diagleft
+
+TERRAIN 4
+  SET crystal
+  NAME shiny_horz
+
+TERRAIN 5
+  SET crystal
+  NAME dull_diagleft
+
+TERRAIN 6
+  SET crystal
+  NAME dull_diagright
+
+TERRAIN 7
+  SET crystal
+  NAME star
+
+TERRAIN 8
+  SET crystal
+  NAME crystal_01
+
+TERRAIN 9
+  SET crystal
+  NAME dull_cross_huge
+
+TERRAIN 10
+  SET crystal
+  NAME orb
+
+TERRAIN 11
+  SET crystal
+  NAME crystal_02
+
+TERRAIN 12
+  SET crystal
+  NAME crystal_03
+
+TERRAIN 13
+  SET crystal
+  NAME shiny_vert
+
+TERRAIN 14
+  SET crystal
+  NAME dull_medium
+
+TERRAIN 15
+  SET crystal
+  NAME dull_uneven
+
+TERRAIN 16
+  SET crystal
+  NAME star_9x
+
+TERRAIN 17
+  SET crystal
+  NAME star_36x
+
+TERRAIN 18
+  SET crystal
+  NAME dull_uneven_large
+
+TERRAIN 19
+  SET crystal
+  NAME beam_vert
+
+TERRAIN 20
+  SET crystal
+  NAME beam_diagright
+
+TERRAIN 21
+  SET crystal
+  NAME beam_diagleft
+
+TERRAIN 22
+  SET crystal
+  NAME block
+
+TERRAIN 23
+  SET crystal
+  NAME circle_large
+
+TERRAIN 24
+  SET crystal
+  NAME circle_small
+
+TERRAIN 25
+  SET crystal
+  NAME clump_01
+
+TERRAIN 26
+  SET crystal
+  NAME clump_02
+
+TERRAIN 27
+  SET crystal
+  NAME beam_horz
+
+TERRAIN 28
+  SET crystal
+  NAME crystal_04
+
+TERRAIN 29
+  SET crystal
+  NAME white_diagleft
+
+TERRAIN 30
+  SET crystal
+  NAME white_diagright
+
+TERRAIN 31
+  SET crystal
+  NAME steel_large
+
+TERRAIN 32
+  SET crystal
+  NAME steel_tall
+
+TERRAIN 33
+  SET crystal
+  NAME steel_wide
+
+TERRAIN 34
+  SET crystal
+  NAME steel_small
+
+TERRAIN 35
+  SET crystal
+  NAME white_cross
+
+TERRAIN 36
+  SET crystal
+  NAME spider_web
+
+OBJECT 0
+  SET crystal
+  NAME exit
+  OFFSET_TOP -8
+
+OBJECT 1
+  SET crystal
+  NAME window
+
+OBJECT 2
+  SET default
+  NAME flag_green
+
+OBJECT 3
+  SET default
+  NAME flag_blue
+
+OBJECT 4
+  SET crystal
+  NAME owa_left
+
+OBJECT 5
+  SET crystal
+  NAME owa_right
+
+OBJECT 6
+  SET crystal
+  NAME water
+
+OBJECT 7
+  SET crystal
+  NAME slicertrap
+
+OBJECT 8
+  NAME *nil
+
+OBJECT 9
+  SET crystal
+  NAME zappertrap
+
+OBJECT 10
+  SET crystal
+  NAME electrotrap
+
+OBJECT 11
+  SET default
+  NAME lemming
+  OFFSET_TOP 1
+
+OBJECT 12
+  SET crystal
+  NAME pickup
+
+OBJECT 13
+  NAME *nil
+
+OBJECT 14
+  SET crystal
+  NAME owa_down
+
+OBJECT 15
+  SET default
+  NAME slowfreeze
+

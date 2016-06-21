@@ -1,0 +1,340 @@
+# Translation table
+
+THEME bubble
+
+TERRAIN 0
+  SET bubble
+  NAME bubbles_gold_01
+
+TERRAIN 1
+  SET bubble
+  NAME bubbles_gold_02
+
+TERRAIN 2
+  SET bubble
+  NAME bubbles_gold_03
+
+TERRAIN 3
+  SET bubble
+  NAME bubbles_gold_04
+
+TERRAIN 4
+  SET bubble
+  NAME bubbles_blue_01
+
+TERRAIN 5
+  SET bubble
+  NAME bubbles_blue_02
+
+TERRAIN 6
+  SET bubble
+  NAME bubbles_blue_03
+
+TERRAIN 7
+  SET bubble
+  NAME bubbles_blue_04
+
+TERRAIN 8
+  SET bubble
+  NAME balls_blue_horz_four
+
+TERRAIN 9
+  SET bubble
+  NAME balls_blue_horz_two
+
+TERRAIN 10
+  SET bubble
+  NAME balls_blue_single
+
+TERRAIN 11
+  SET bubble
+  NAME balls_blue_vert
+
+TERRAIN 12
+  SET bubble
+  NAME balls_blue_diagright
+
+TERRAIN 13
+  SET bubble
+  NAME balls_blue_diagleft
+
+TERRAIN 14
+  SET bubble
+  NAME balls_gold_horz_four
+
+TERRAIN 15
+  SET bubble
+  NAME balls_gold_horz_two
+
+TERRAIN 16
+  SET bubble
+  NAME balls_gold_single
+
+TERRAIN 17
+  SET bubble
+  NAME balls_gold_vert
+
+TERRAIN 18
+  SET bubble
+  NAME balls_gold_diagright
+
+TERRAIN 19
+  SET bubble
+  NAME balls_gold_diagleft
+
+TERRAIN 20
+  SET bubble
+  NAME weave
+
+TERRAIN 21
+  SET bubble
+  NAME weave_diagright
+
+TERRAIN 22
+  SET bubble
+  NAME weave_diagleft
+
+TERRAIN 23
+  SET bubble
+  NAME weave_thin
+
+TERRAIN 24
+  SET bubble
+  NAME weave_thin_half
+
+TERRAIN 25
+  SET bubble
+  NAME weave_thin_diagright
+
+TERRAIN 26
+  SET bubble
+  NAME weave_thin_diagleft
+
+TERRAIN 27
+  SET bubble
+  NAME fence
+
+TERRAIN 28
+  SET bubble
+  NAME fence_small
+
+TERRAIN 29
+  SET bubble
+  NAME fence_diagright
+
+TERRAIN 30
+  SET bubble
+  NAME fence_diagleft
+
+TERRAIN 31
+  SET bubble
+  NAME fence_thin
+
+TERRAIN 32
+  SET bubble
+  NAME fence_thin_small
+
+TERRAIN 33
+  SET bubble
+  NAME netting
+
+TERRAIN 34
+  SET bubble
+  NAME netting_small
+
+TERRAIN 35
+  SET bubble
+  NAME netting_diagright
+
+TERRAIN 36
+  SET bubble
+  NAME netting_diagleft
+
+TERRAIN 37
+  SET bubble
+  NAME pipe_toptoright
+
+TERRAIN 38
+  SET bubble
+  NAME pipe_bottomtoright
+
+TERRAIN 39
+  SET bubble
+  NAME pipe_bottomtoleft
+
+TERRAIN 40
+  SET bubble
+  NAME pipe_toptoleft
+
+TERRAIN 41
+  SET bubble
+  NAME pipe_horz_join_bottom
+
+TERRAIN 42
+  SET bubble
+  NAME pipe_horz_join_bottom_alt
+
+TERRAIN 43
+  SET bubble
+  NAME pipe_crossroad
+
+TERRAIN 44
+  SET bubble
+  NAME pipe_vert
+
+TERRAIN 45
+  SET bubble
+  NAME pipe_horz
+
+TERRAIN 46
+  SET bubble
+  NAME pipe_end_left
+
+TERRAIN 47
+  SET bubble
+  NAME pipe_end_right
+
+TERRAIN 48
+  SET bubble
+  NAME pipe_end_top
+
+TERRAIN 49
+  SET bubble
+  NAME pipe_thin_horz
+
+TERRAIN 50
+  SET bubble
+  NAME pipe_thin_vert
+
+TERRAIN 51
+  SET bubble
+  NAME pipe_thin_crossroad
+
+TERRAIN 52
+  SET bubble
+  NAME pipe_thin_bottomtoright
+
+TERRAIN 53
+  SET bubble
+  NAME pipe_thin_toptoleft
+
+TERRAIN 54
+  SET bubble
+  NAME pipe_thin_horz_join_bottom
+
+TERRAIN 55
+  SET bubble
+  NAME pipe_thin_diagrighttoleft
+
+TERRAIN 56
+  SET bubble
+  NAME pipe_thin_diagrighttoright
+
+TERRAIN 57
+  SET bubble
+  NAME pipe_thin_diagright
+
+TERRAIN 58
+  SET bubble
+  NAME pipe_thin_end_right
+
+TERRAIN 59
+  SET bubble
+  NAME pipe_thin_end_left
+
+TERRAIN 60
+  SET bubble
+  NAME pipe_thin_end_top
+
+TERRAIN 61
+  SET bubble
+  NAME pipe_ultrathin_horz
+
+TERRAIN 62
+  SET bubble
+  NAME pipe_ultrathin_vert
+
+TERRAIN 63
+  SET bubble
+  NAME pipe_ultrathin_grid
+
+TERRAIN 64
+  SET bubble
+  NAME steel_large
+
+TERRAIN 65
+  SET bubble
+  NAME steel_wide
+
+TERRAIN 66
+  SET bubble
+  NAME steel_tall
+
+TERRAIN 67
+  SET bubble
+  NAME steel_small
+
+OBJECT 0
+  SET bubble
+  NAME exit
+  OFFSET_TOP -8
+
+OBJECT 1
+  SET bubble
+  NAME window
+
+OBJECT 2
+  SET default
+  NAME flag_green
+
+OBJECT 3
+  SET bubble
+  NAME oneway_left
+
+OBJECT 4
+  SET bubble
+  NAME oneway_right
+
+OBJECT 5
+  SET bubble
+  NAME water
+
+OBJECT 6
+  NAME *nil
+
+OBJECT 7
+  SET default
+  NAME flag_blue
+
+OBJECT 8
+  SET bubble
+  NAME zapper
+  OFFSET_LEFT -32
+
+OBJECT 9
+  SET bubble
+  NAME sucker
+
+OBJECT 10
+  NAME *nil
+
+OBJECT 11
+  SET default
+  NAME lemming
+  OFFSET_TOP 1
+
+OBJECT 12
+  SET bubble
+  NAME pickup
+
+OBJECT 13
+  NAME *nil
+
+OBJECT 14
+  SET bubble
+  NAME oneway_down
+
+OBJECT 15
+  SET bubble
+  NAME splitter
+
