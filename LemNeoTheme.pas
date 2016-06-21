@@ -74,12 +74,12 @@ var
   i: Integer;
 begin
   Clear;
-  SetCurrentDir(AppPath + SFStyles + '\' + aSet + '\');
-  if not FileExists('theme.nxtm') then Exit;
+  SetCurrentDir(AppPath + SFStyles + SFStylesThemes);
+  if not FileExists(aSet + '.nxtm') then Exit;
 
   Parser := TNeoLemmixParser.Create;
   try
-    Parser.LoadFromFile('theme.nxtm');
+    Parser.LoadFromFile(aSet + '.nxtm');
     repeat
       Line := Parser.NextLine;
 

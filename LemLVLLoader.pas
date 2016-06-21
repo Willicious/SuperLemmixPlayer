@@ -10,6 +10,7 @@ uses
   Dialogs,
   UMisc,
   Math,
+  LemStrings,
   LemNeoParser,
   LemDosMainDat,
   LemPiece,
@@ -621,10 +622,10 @@ begin
   end;
 
   // Apply translation table if one exists
-  if FileExists(AppPath + 'styles\' + Trim(aLevel.Info.GraphicSetName) + '\translation.nxmi') then
+  if FileExists(AppPath + SFStyles + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt') then
   begin
     Trans := TTranslationTable.Create;
-    Trans.LoadFromFile(AppPath + 'styles\' + Trim(aLevel.Info.GraphicSetName) + '\translation.nxmi');
+    Trans.LoadFromFile(AppPath + SFStyles + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt');
     Trans.Apply(aLevel);
     Trans.Free;
   end;
