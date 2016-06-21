@@ -3760,11 +3760,11 @@ begin
 
   spbMiner: // Get number of pixels we have to move down
     begin
-      while (    not HasPixelAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j + 1)
-              or not HasPixelAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j + 1)
-              or HasIndestructibleAt(L.LemX + (2*j)*L.LemDx, L.LemY + j, L.LemDx, baMining)
-              or HasIndestructibleAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j, L.LemDx, baMining)
-              or HasIndestructibleAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j, L.LemDx, baMining)) do
+      while     HasPixelAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j + 1)
+            and HasPixelAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j + 1)
+            and not HasIndestructibleAt(L.LemX + (2*j)*L.LemDx, L.LemY + j, L.LemDx, baMining)
+            and not HasIndestructibleAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j, L.LemDx, baMining)
+            and not HasIndestructibleAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j, L.LemDx, baMining) do
       begin
         Inc(j);
       end;
