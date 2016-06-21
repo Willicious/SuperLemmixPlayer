@@ -13,6 +13,10 @@ uses
 
 type
 
+  TDrawableItem = (di_ConstructivePixel, di_Stoner);
+  TDrawRoutine = procedure(X, Y: Integer) of object;
+  TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
+
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
                   rlObjectsLow,
@@ -121,9 +125,13 @@ type
       fTerrainMap: TBitmap32;
       fScreenPos: TPoint;
       fMousePos: TPoint;
+      fDrawRoutines: TDrawRoutines;
       function GetSelectedSkill: TSkillPanelButton;
     public
+      constructor Create;
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
+      procedure SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
+      procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
@@ -176,6 +184,27 @@ uses
   UTools;
 
 { TRenderInterface }
+
+constructor TRenderInterface.Create;
+var
+  i: TDrawableItem;
+begin
+  for i := Low(TDrawableItem) to High(TDrawableItem) do
+    fDrawRoutines[i] := nil;
+end;
+
+procedure TRenderInterface.SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
+begin
+  fDrawRoutines[aItem] := aRoutine;
+end;
+
+procedure TRenderInterface.AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
+begin
+  // TLemmingGame is expected to handle modifications to the physics map.
+  // This is to pass to TRenderer for on-screen drawing.
+  if Assigned(fDrawRoutines[aAddType]) then
+    fDrawRoutines[aAddType](X, Y);
+end;
 
 procedure TRenderInterface.SetSelectedSkillPointer(var aButton: TSkillPanelButton);
 begin

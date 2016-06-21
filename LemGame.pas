@@ -549,6 +549,7 @@ type
     procedure ApplyExplosionMask(L: TLemming);
     procedure ApplyStoneLemming(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
+    procedure AddConstructivePixel(X, Y: Integer);
     procedure ApplyAutoSteel;
     procedure ApplyLevelEntryOrder;
     function CalculateNextLemmingCountdown: Integer;
@@ -3459,8 +3460,7 @@ begin
   if L.LemDx = 1 then Inc(X);
 
   StoneLemBmp.DrawTo(PhysicsMap, X - 8, L.LemY -10);
-  //if not HyperSpeed then
-  //  StoneLemBmp.DrawTo(fTargetBitmap, X - 8, L.LemY -10);
+  fRenderInterface.AddTerrain(di_Stoner, X - 8, L.LemY -10);
 
   InitializeMinimap;
 end;
@@ -3892,7 +3892,7 @@ begin
   else BrickPosY := L.LemY; // for platformers
 
   for n := 0 to 5 do
-    fRenderer.AddTerrainPixel(L.LemX + n*L.LemDx, BrickPosY, BrickColor);
+    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY);
 
   InitializeMinimap;
 end;
@@ -3917,9 +3917,15 @@ begin
   Result := False;
 
   for n := 1 to 3 do
-    fRenderer.AddTerrainPixel(L.LemX + n*L.LemDx, BrickPosY);
+    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY);
 
   InitializeMinimap;
+end;
+
+procedure TLemmingGame.AddConstructivePixel(X, Y: Integer);
+begin
+  PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] or PM_SOLID;
+  fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y); 
 end;
 
 

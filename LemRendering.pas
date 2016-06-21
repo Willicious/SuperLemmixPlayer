@@ -99,6 +99,10 @@ type
 
     fParticles                 : TParticleTable; // all particle offsets
 
+    // Add stuff
+    procedure AddTerrainPixel(X, Y: Integer);
+    procedure AddStoner(X, Y: Integer);
+
     // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
@@ -154,7 +158,6 @@ type
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
-    procedure AddTerrainPixel(X, Y: Integer; aColor: TColor32 = $00000000);
 
 
     procedure RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
@@ -184,6 +187,8 @@ uses
 procedure TRenderer.SetInterface(aInterface: TRenderInterface);
 begin
   fRenderInterface := aInterface;
+  fRenderInterface.SetDrawRoutine(di_ConstructivePixel, AddTerrainPixel);
+  fRenderInterface.SetDrawRoutine(di_Stoner, AddStoner);
 end;
 
 // Minimap drawing
@@ -432,23 +437,26 @@ begin
   fLayers.fIsEmpty[rlHighShadows] := False;  // we do this too often, but it shouldn't matter much
 end;
 
-procedure TRenderer.AddTerrainPixel(X, Y: Integer; aColor: TColor32 = $00000000);
+procedure TRenderer.AddTerrainPixel(X, Y: Integer);
 var
   P: PColor32;
+  C: TColor32;
 begin
-  if aColor = 0 then aColor := Theme.MaskColor;
-  P := fPhysicsMap.PixelPtr[X, Y];
-  P^ := P^ or PM_SOLID;
   P := fLayers[rlTerrain].PixelPtr[X, Y];
   if P^ and $FF000000 <> $FF000000 then
   begin
-    BlendMem(P^, aColor);
-    P^ := aColor;
+    C := Theme.MaskColor;
+    BlendMem(P^, C);
+    P^ := C;
   end;
 end;
 
-
-
+procedure TRenderer.AddStoner(X, Y: Integer);
+begin
+  fAni.LemmingAnimations[STONED].DrawMode := dmCustom;
+  fAni.LemmingAnimations[STONED].OnPixelCombine := CombineTerrainNoOverwrite;
+  fAni.LemmingAnimations[STONED].DrawTo(fLayers[rlTerrain], X, Y);
+end;
 
 function TRenderer.FindMetaObject(O: TInteractiveObject): TObjectRecord;
 var

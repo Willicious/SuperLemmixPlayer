@@ -351,6 +351,8 @@ begin
         end;
         TPngInterface.LoadPngFile(AppPath + 'gfx/mask/highlight.png', fHighlightBitmap);
 
+        fLemmingAnimations[STONED].DrawMode := dmBlend;
+
         // Basher and miner are a tad more complicated
         TPngInterface.LoadPngFile(AppPath + 'gfx/mask/basher.png', TempBitmap);
         fBashMasksRTLBitmap.SetSize(16, 40);
