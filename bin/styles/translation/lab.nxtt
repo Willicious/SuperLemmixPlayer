@@ -1,0 +1,208 @@
+# Translation table
+
+THEME lab
+
+TERRAIN 0
+  SET lab
+  NAME bricks_twolayers
+
+TERRAIN 1
+  SET lab
+  NAME bricks_fourlayers
+
+TERRAIN 2
+  SET lab
+  NAME bricks_single
+
+TERRAIN 3
+  SET lab
+  NAME bricks_single_dec_01
+
+TERRAIN 4
+  SET lab
+  NAME bricks_single_dec_02
+
+TERRAIN 5
+  SET lab
+  NAME bricks_topleft
+
+TERRAIN 6
+  SET lab
+  NAME bricks_topright
+
+TERRAIN 7
+  SET lab
+  NAME bricks_bottomleft
+
+TERRAIN 8
+  SET lab
+  NAME bricks_bottomright
+
+TERRAIN 9
+  SET lab
+  NAME pipe_vert_middle
+
+TERRAIN 10
+  SET lab
+  NAME pipe_horz_middle
+
+TERRAIN 11
+  SET lab
+  NAME pipe_horz_end_right
+
+TERRAIN 12
+  SET lab
+  NAME pipe_horz_end_left
+
+TERRAIN 13
+  SET lab
+  NAME pipe_vert_end_top
+
+TERRAIN 14
+  SET lab
+  NAME pipe_vert_end_bottom
+
+TERRAIN 15
+  SET lab
+  NAME pipe_join_overlay_topleft
+
+TERRAIN 16
+  SET lab
+  NAME pipe_join_overlay_topright
+
+TERRAIN 17
+  SET lab
+  NAME pipe_join_overlay_bottomleft
+
+TERRAIN 18
+  SET lab
+  NAME pipe_join_overlay_bottomright
+
+TERRAIN 19
+  SET lab
+  NAME pipe_corner_topleft
+
+TERRAIN 20
+  SET lab
+  NAME pipe_corner_topright
+
+TERRAIN 21
+  SET lab
+  NAME pipe_corner_bottomleft
+
+TERRAIN 22
+  SET lab
+  NAME pipe_corner_bottomright
+
+TERRAIN 23
+  SET lab
+  NAME steel_large
+
+TERRAIN 24
+  SET lab
+  NAME steel_wide
+
+TERRAIN 25
+  SET lab
+  NAME steel_tall
+
+TERRAIN 26
+  SET lab
+  NAME steel_small
+
+TERRAIN 27
+  SET lab
+  NAME goo_tall
+
+TERRAIN 28
+  SET lab
+  NAME goo_wide
+
+TERRAIN 29
+  SET lab
+  NAME goo_drip
+
+TERRAIN 30
+  SET lab
+  NAME goo_bleurgh
+
+TERRAIN 31
+  SET lab
+  NAME sign_radioactive
+
+TERRAIN 32
+  SET lab
+  NAME sign_biohazard
+
+TERRAIN 33
+  SET lab
+  NAME sign_death
+
+TERRAIN 34
+  SET lab
+  NAME shelf_wide
+
+TERRAIN 35
+  SET lab
+  NAME shelf_narrow
+
+TERRAIN 36
+  SET lab
+  NAME barrel_steel
+
+TERRAIN 37
+  SET lab
+  NAME barrel_standard
+
+OBJECT 0
+  SET lab
+  NAME exit
+  OFFSET_TOP -9
+
+OBJECT 1
+  SET lab
+  NAME window
+
+OBJECT 2
+  NAME *nil
+
+OBJECT 3
+  SET lab
+  NAME acid
+
+OBJECT 4
+  SET lab
+  NAME owa_left
+
+OBJECT 5
+  SET lab
+  NAME owa_right
+
+OBJECT 6
+  SET lab
+  NAME owa_down
+
+OBJECT 7
+  SET lab
+  NAME radiation
+
+OBJECT 8
+  SET lab
+  NAME owf_left
+
+OBJECT 9
+  SET lab
+  NAME owf_right
+
+OBJECT 10
+  SET default
+  NAME lemming
+  OFFSET_TOP -1
+
+OBJECT 11
+  SET lab
+  NAME pickup
+
+OBJECT 12
+  NAME *nil
+
