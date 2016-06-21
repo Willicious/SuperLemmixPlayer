@@ -479,7 +479,10 @@ begin
     begin
       fLayers.fIsEmpty[rlHighShadows] := False;
       for i := 3 to PosMarker do
+      begin
         SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
+        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 9);
+      end;
     end;
 
   spbExplode: // PosMarker adapts the starting position horizontally
