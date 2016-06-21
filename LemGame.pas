@@ -431,7 +431,7 @@ type
     WhichLemming               : TLemming; // see above
     LastNPLemming              : TLemming; // for emulation of right-click bug
     fLemSelected               : TLemming; // lem under cursor, who would receive the skill
-    fLemWithShadow             : TLemming; // needed for DrawShadowBridge to erase previous shadow
+    fLemWithShadow             : TLemming; // needed for CheckForNewShadow to erase previous shadow
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
@@ -590,7 +590,7 @@ type
     //  procedure DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
     procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
     procedure CheckForNewShadow;
-    procedure DrawShadowBridge(DoErase: Boolean = False);
+      function GetShadowEndPos: Integer;
     procedure EraseLemmings;
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
@@ -3700,6 +3700,9 @@ end;*)
 
 
 procedure TLemmingGame.CheckForNewShadow;
+const
+  ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker,
+                    spbDigger, spbMiner, spbBasher, spbExplode];
 begin
   if fHyperSpeed then Exit;
 
@@ -3710,167 +3713,99 @@ begin
     if fExistShadow then // false if coming from UpdateLemming
     begin
       // erase existing ShadowBridge
-      DrawShadowBridge(true);
+      fRenderer.ClearShadows;
+      fExistShadow := false;
     end;
+
     // Draw the new ShadowBridge
-    DrawShadowBridge;
+    try
+      if not Assigned(fLemSelected) then Exit;
+      if not (fSelectedSkill in ShadowSkillSet) then Exit;
+
+      // Draw the shadows
+      fRenderer.DrawShadows(fLemSelected, fSelectedSkill, GetShadowEndPos);
+
+      // remember stats for lemming with shadow
+      fLemWithShadow := fLemSelected;
+      fLemWithShadowButton := fSelectedSkill;
+      fExistShadow := True;
+    except
+      // Reset existing shadows
+      fLemWithShadow := nil;
+      fLemWithShadowButton := fSelectedSkill;
+      fExistShadow := False;
+    end;
   end;
 end;
 
-procedure TLemmingGame.DrawShadowBridge(DoErase: Boolean = False);
+function TLemmingGame.GetShadowEndPos: Integer;
 var
+  j: Integer;
   L: TLemming;
-  i, j: Integer;
-  AdaptY: Integer;
-  IsShadowAdded: Boolean;
-  SkillButton: TSkillPanelButton;
-
-  procedure AddGrayPixel(X, Y: Integer; DrawAtTerrain: Boolean = False);
-  begin
-    if DrawAtTerrain then
-    begin
-      if HasPixelAt(X, Y) and not HasSteelAt(X, Y) then
-        fRenderer.SetHighShadowPixel(X, Y);
-    end else
-      fRenderer.SetLowShadowPixel(X, Y);
-  end;
-
 begin
-  try
-    IsShadowAdded := False;
-
-    if DoErase then
+  j := 0;
+  L := fLemSelected;
+  case fSelectedSkill of
+  spbDigger: // Get number of pixels we have to move down
     begin
-      fRenderer.ClearShadows;
-      fExistShadow := false;
-      //if Paused then fRenderer.DrawLevel(fTargetBitmap);
-      Exit; // This should not be needed anymore!
-    end else begin
-      L := fLemSelected;
-      SkillButton := fSelectedSkill;
+      while (   HasPixelAt(L.LemX - 3, L.LemY + j) or HasPixelAt(L.LemX - 2, L.LemY + j)
+             or HasPixelAt(L.LemX - 1, L.LemY + j) or HasPixelAt(L.LemX, L.LemY + j)
+             or HasPixelAt(L.LemX + 1, L.LemY + j) or HasPixelAt(L.LemX + 2, L.LemY + j)
+             or HasPixelAt(L.LemX + 3, L.LemY + j))
+            and not HasSteelAt(L.LemX, L.LemY + j) do
+      begin
+        Inc(j);
+      end;
     end;
 
-    if not Assigned(L) then Exit;
-
-    case SkillButton of
-      spbPlatformer:
-        begin
-          for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY);
-
-          IsShadowAdded := True;
-        end;
-
-      spbBuilder:
-        begin
-          for j := 1 to 12 do
-          for i := 2*j - 3 to 2*j + 3 do
-            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
-
-          IsShadowAdded := True;
-        end;
-
-      spbStacker:
-        begin
-          // get starting height for stacker
-          AdaptY := 0;
-          if HasPixelAt(L.LemX + L.LemDx, L.LemY) then AdaptY := 1;
-
-          for j := AdaptY to AdaptY + 7 do
-          for i := 0 to 3 do
-            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - j);
-
-          IsShadowAdded := True;
-        end;
-
-      spbDigger:
-        begin
-          j := 0;
-          while (   HasPixelAt(L.LemX - 3, L.LemY + j) or HasPixelAt(L.LemX - 2, L.LemY + j)
-                 or HasPixelAt(L.LemX - 1, L.LemY + j) or HasPixelAt(L.LemX, L.LemY + j)
-                 or HasPixelAt(L.LemX + 1, L.LemY + j) or HasPixelAt(L.LemX + 2, L.LemY + j)
-                 or HasPixelAt(L.LemX + 3, L.LemY + j))
-                and not HasSteelAt(L.LemX, L.LemY + j) do
-          begin
-            AddGrayPixel(L.LemX - 4, L.LemY + j, True);
-            AddGrayPixel(L.LemX + 4, L.LemY + j, True);
-            Inc(j);
-          end;
-
-          IsShadowAdded := True;
-        end;
-
-      spbMiner:
-        begin
-          i := 0;
-          j := 0;
-          repeat
-            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j - 1, True);
-            AddGrayPixel(L.LemX + (i+1)*L.LemDx, L.LemY + j, True);
-            AddGrayPixel(L.LemX + (i+2)*L.LemDx, L.LemY + j, True);
-            inc(i, 2);
-            Inc(j);
-          until    not HasPixelAt(L.LemX + (i-1)*L.LemDx, L.LemY + j)
-                or not HasPixelAt(L.LemX + i*L.LemDx, L.LemY + j)
-                or HasIndestructibleAt(L.LemX + (i-1)*L.LemDx, L.LemY + j - 1, L.LemDx, baMining)
-                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY + j - 1, L.LemDx, baMining);
-
-          IsShadowAdded := True;
-        end;
-
-      spbBasher:
-        begin
-          i := 3;
-          repeat
-            for j := 0 to 4 do
-            begin
-              AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, True);
-              // AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 9, DoErase, True);
-              Inc(i);
-              if i = 5 then break; // skip first two pixels to draw
-            end;
-          until    (FindGroundPixel(L.LemX + (i-1)*L.LemDx, L.LemY) > 2)
-                or (FindGroundPixel(L.LemX + (i-2)*L.LemDx, L.LemY) > 2)
-                or (FindGroundPixel(L.LemX + (i-3)*L.LemDx, L.LemY) > 2)
-                or (FindGroundPixel(L.LemX + (i-4)*L.LemDx, L.LemY) > 2)
-                or (FindGroundPixel(L.LemX + (i-5)*L.LemDx, L.LemY) > 2)
-                or (not (   HasPixelAt(L.LemX + (i+2)*L.LemDx, L.LemY - 5)
-                         or HasPixelAt(L.LemX + (i+3)*L.LemDx, L.LemY - 5)
-                         or HasPixelAt(L.LemX + (i+4)*L.LemDx, L.LemY - 5)
-                         or HasPixelAt(L.LemX + (i+5)*L.LemDx, L.LemY - 5)
-                         or HasPixelAt(L.LemX + (i+6)*L.LemDx, L.LemY - 5)
-                         or HasPixelAt(L.LemX + (i+7)*L.LemDx, L.LemY - 5)
-                         or HasPixelAt(L.LemX + (i+8)*L.LemDx, L.LemY - 5)))
-                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
-                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
-                or HasIndestructibleAt(L.LemX + i*L.LemDx, L.LemY - 3, L.LemDx, baBashing);
-
-          // end always with three additional pixels
-          for j := 0 to 2 do
-          begin
-            AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 1, True);
-            // AddGrayPixel(L.LemX + i*L.LemDx, L.LemY - 9, DoErase, True);
-            Inc(i);
-          end;
-
-          IsShadowAdded := True;
-        end;
-    end;
-
-    if IsShadowAdded then
+  spbMiner: // Get number of pixels we have to move down
     begin
-      fLemWithShadow := L;
-      fLemWithShadowButton := fSelectedSkill;
-      fExistShadow := True;
-      //if Paused then fRenderer.DrawLevel(fTargetBitmap);
+      while     HasPixelAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j + 1)
+            and HasPixelAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j + 1)
+            and not HasIndestructibleAt(L.LemX + (2*j)*L.LemDx, L.LemY + j, L.LemDx, baMining)
+            and not HasIndestructibleAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j, L.LemDx, baMining)
+            and not HasIndestructibleAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j, L.LemDx, baMining) do
+      begin
+        Inc(j);
+      end;
     end;
 
-  except
-    // Reset existing shadows
-    fLemWithShadow := nil;
-    fLemWithShadowButton := fSelectedSkill;
-    fExistShadow := False;
+  spbBasher: // Get number of pixels we have to move horizontally
+    begin
+      repeat
+        Inc(j, 5);
+      until    (FindGroundPixel(L.LemX + (j-1)*L.LemDx, L.LemY) > 2)
+            or (FindGroundPixel(L.LemX + (j-2)*L.LemDx, L.LemY) > 2)
+            or (FindGroundPixel(L.LemX + (j-3)*L.LemDx, L.LemY) > 2)
+            or (FindGroundPixel(L.LemX + (j-4)*L.LemDx, L.LemY) > 2)
+            or (FindGroundPixel(L.LemX + (j-5)*L.LemDx, L.LemY) > 2)
+            or (not (   HasPixelAt(L.LemX + (j+2)*L.LemDx, L.LemY - 5)
+                     or HasPixelAt(L.LemX + (j+3)*L.LemDx, L.LemY - 5)
+                     or HasPixelAt(L.LemX + (j+4)*L.LemDx, L.LemY - 5)
+                     or HasPixelAt(L.LemX + (j+5)*L.LemDx, L.LemY - 5)
+                     or HasPixelAt(L.LemX + (j+6)*L.LemDx, L.LemY - 5)
+                     or HasPixelAt(L.LemX + (j+7)*L.LemDx, L.LemY - 5)
+                     or HasPixelAt(L.LemX + (j+8)*L.LemDx, L.LemY - 5)))
+            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
+            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
+            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing);
+
+      // end always with three additional pixels
+      Inc(j, 3);
+    end;
+
+  spbStacker: // 0 or 1, depending on starting position
+    begin
+      if HasPixelAt(L.LemX + L.LemDx, L.LemY) then j := 1;
+    end;
+
+  spbExplode: // 0 or 1, depending on direction of Lemming
+    begin
+      if L.LemDx = 1 then j := 1;
+    end;
   end;
+
+  Result := j;
 end;
 
 
@@ -5026,7 +4961,9 @@ begin
   // erase existing ShadowBridge
   if fExistShadow then
   begin
-    DrawShadowBridge(true);
+    fRenderer.ClearShadows;
+    fExistShadow := false;
+    //DrawShadowBridge(true);
     //fExplodingGraphics := True; // Redraw everything later on
   end;
 

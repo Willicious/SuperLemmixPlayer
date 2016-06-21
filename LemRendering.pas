@@ -157,6 +157,7 @@ type
 
     function HasPixelAt(X, Y: Integer): Boolean;
 
+    procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; PosMarker: Integer);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -413,6 +414,107 @@ begin
       end;
 end;
 
+
+procedure TRenderer.DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; PosMarker: Integer);
+const
+  // This encodes only the right half of the bomber mask. The rest is obtained by mirroring it
+  BomberShadowPos: array[0..35, 0..1] of Integer = (
+     (0, 7), (1, 7), (2, 7), (2, 6), (3, 6),
+     (4, 6), (4, 5), (5, 5), (5, 4), (6, 4),
+     (6, 3), (6, 2), (6, 1), (7, 1), (7, 0),
+     (7, -1), (7, -2), (7, -3), (7, -4), (6, -4),
+     (6, -5), (6, -6), (6, -7), (6, -8), (5, -8),
+     (5, -9), (5, -10), (5, -10), (4, -11), (4, -12),
+     (3, -12), (3, -13), (2, -13), (2, -14), (1, -14),
+     (0, -14)
+   );
+var
+  i, j: Integer;
+  AdaptY: Integer;
+begin
+  case SkillButton of
+  spbPlatformer:
+    begin
+      fLayers.fIsEmpty[rlLowShadows] := False;
+      for i := 0 to 38 do // Yes, platforms are 39 pixels long!
+        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
+    end;
+
+  spbBuilder:
+    begin
+      fLayers.fIsEmpty[rlLowShadows] := False;
+      for j := 1 to 12 do
+      for i := 2*j - 3 to 2*j + 3 do
+        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - j);
+    end;
+
+  spbStacker: // PosMarker adapts the starting position for the first brick
+    begin
+      fLayers.fIsEmpty[rlLowShadows] := False;
+      for j := PosMarker to PosMarker + 7 do
+      for i := 0 to 3 do
+        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - j);
+    end;
+
+  spbDigger: // PosMarker gives the number of pixels to move vertically
+    begin
+      fLayers.fIsEmpty[rlHighShadows] := False;
+      for j := 1 to PosMarker do
+      begin
+        SetHighShadowPixel(L.LemX - 4, L.LemY + j - 1);
+        SetHighShadowPixel(L.LemX + 4, L.LemY + j - 1);
+      end;
+    end;
+
+  spbMiner: // PosMarker gives the number of pixels to move vertically
+    begin
+      fLayers.fIsEmpty[rlHighShadows] := False;
+
+      // Three starting top pixels
+      for j := 0 to 2 do
+        SetHighShadowPixel(L.LemX + j*L.LemDx, L.LemY - 12);
+
+      for j := 0 to PosMarker do
+      begin
+        // Bottom border of tunnel
+        SetHighShadowPixel(L.LemX + (2*j+1)*L.LemDx, L.LemY + j - 1);
+        SetHighShadowPixel(L.LemX + (2*j+1)*L.LemDx, L.LemY + j);
+        SetHighShadowPixel(L.LemX + (2*j+2)*L.LemDx, L.LemY + j);
+        // Top border of tunnel
+        if j mod 2 = 0 then
+        begin
+          SetHighShadowPixel(L.LemX + (2*j+3)*L.LemDx, L.LemY + j - 12);
+          SetHighShadowPixel(L.LemX + (2*j+4)*L.LemDx, L.LemY + j - 12);
+          SetHighShadowPixel(L.LemX + (2*j+5)*L.LemDx, L.LemY + j - 12);
+          SetHighShadowPixel(L.LemX + (2*j+5)*L.LemDx, L.LemY + j - 11);
+          SetHighShadowPixel(L.LemX + (2*j+6)*L.LemDx, L.LemY + j - 11);
+          SetHighShadowPixel(L.LemX + (2*j+6)*L.LemDx, L.LemY + j - 10);
+        end;
+      end;
+    end;
+
+  spbBasher: // PosMarker gives the number of pixels to move horizontally
+    begin
+      fLayers.fIsEmpty[rlHighShadows] := False;
+      for i := 3 to PosMarker do
+      begin
+        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
+        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 9);
+      end;
+    end;
+
+  spbExplode: // PosMarker adapts the starting position horizontally
+    begin
+      fLayers.fIsEmpty[rlHighShadows] := False;
+      for i := 0 to 35 do
+      begin
+        SetHighShadowPixel(L.LemX + PosMarker + BomberShadowPos[i, 0], L.LemY + BomberShadowPos[i, 1]);
+        SetHighShadowPixel(L.LemX + PosMarker - BomberShadowPos[i, 0] - 1, L.LemY + BomberShadowPos[i, 1]);
+      end;
+    end;
+  end;
+end;
+
 procedure TRenderer.ClearShadows;
 begin
   if not fLayers.fIsEmpty[rlLowShadows] then
@@ -429,14 +531,16 @@ end;
 
 procedure TRenderer.SetLowShadowPixel(X, Y: Integer);
 begin
-  fLayers[rlLowShadows].Pixel[x, y] := SHADOW_COLOR;
-  fLayers.fIsEmpty[rlLowShadows] := False;  // we do this too often, but it shouldn't matter much
+  if (X >= 0) and (X < fPhysicsMap.Width) and (Y >= 0) and (Y < fPhysicsMap.Height) then
+    fLayers[rlLowShadows].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
 procedure TRenderer.SetHighShadowPixel(X, Y: Integer);
 begin
-  fLayers[rlHighShadows].Pixel[x, y] := SHADOW_COLOR;
-  fLayers.fIsEmpty[rlHighShadows] := False;  // we do this too often, but it shouldn't matter much
+  if (X >= 0) and (X < fPhysicsMap.Width) and (Y >= 0) and (Y < fPhysicsMap.Height) then
+    // Only draw this on terrain, but not on steel
+    if (fPhysicsMap.Pixel[X, Y] and PM_SOLID <> 0) and (fPhysicsMap.Pixel[X, Y] and PM_STEEL = 0) then
+      fLayers[rlHighShadows].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
 procedure TRenderer.AddTerrainPixel(X, Y: Integer);
