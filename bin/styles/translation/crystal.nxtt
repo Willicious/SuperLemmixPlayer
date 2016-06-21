@@ -197,7 +197,7 @@ OBJECT 10
 OBJECT 11
   SET default
   NAME lemming
-  OFFSET_TOP 1
+  OFFSET_TOP -1
 
 OBJECT 12
   SET crystal

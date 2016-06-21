@@ -310,7 +310,7 @@ OBJECT 11
 OBJECT 12
   SET default
   NAME lemming
-  OFFSET_TOP 1
+  OFFSET_TOP -1
 
 OBJECT 13
   SET rock

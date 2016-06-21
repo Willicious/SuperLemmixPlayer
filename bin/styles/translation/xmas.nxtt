@@ -217,7 +217,7 @@ OBJECT 12
 OBJECT 13
   SET default
   NAME lemming
-  OFFSET_TOP 1
+  OFFSET_TOP -1
 
 OBJECT 14
   SET xmas

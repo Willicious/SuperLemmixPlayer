@@ -263,7 +263,7 @@ OBJECT 3
 OBJECT 4
   SET default
   NAME lemming
-  OFFSET_TOP 1
+  OFFSET_TOP -1
 
 OBJECT 5
   SET default

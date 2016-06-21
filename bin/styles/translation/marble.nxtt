@@ -299,7 +299,7 @@ OBJECT 9
 OBJECT 10
   SET default
   NAME lemming
-  OFFSET_TOP 1
+  OFFSET_TOP -1
 
 OBJECT 11
   SET marble
