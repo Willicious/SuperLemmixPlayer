@@ -415,6 +415,7 @@ end;
 function TGamePreviewScreen.GetScreenText: string;
 var
   Perc, TL: string;
+  RR: String;
   tperc: Integer;
   tcount: Integer;
   i: Integer;
@@ -443,6 +444,10 @@ begin
         GameParams.Info.dLevel := 0;
       end;
 
+      RR := IntToStr(GameParams.Level.Info.ReleaseRate);
+      if GameParams.Level.Info.ReleaseRateLocked then
+        RR := RR + ' (Locked)';
+
 
       if Trim(GameParams.Level.Info.Author) = '' then
         Result := Format(SPreviewString,
@@ -450,7 +455,7 @@ begin
                  Trim(GameParams.Level.Info.Title),
                  GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieGhostCount,
                  Perc,
-                 GameParams.Level.Info.ReleaseRate,
+                 RR,
                  TL,
                  GameParams.Info.dSectionName
                ])
@@ -460,7 +465,7 @@ begin
                  Trim(GameParams.Level.Info.Title),
                  GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieGhostCount,
                  Perc,
-                 GameParams.Level.Info.ReleaseRate,
+                 RR,
                  TL,
                  GameParams.Info.dSectionName,
                  GameParams.Level.Info.Author

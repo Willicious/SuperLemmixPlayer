@@ -84,7 +84,7 @@ resourcestring
     'Level %d ' + '%s'                     + #13#13#13 +
     '          Number of Lemmings %d'      + #13#13 +
     '          %s To Be Saved'             + #13#13 +
-    '          Release Rate %d'            + #13#13 +
+    '          Release Rate %s'            + #13#13 +
     '          Time Limit  %s'            + #13#13 +
     '          Rating: %s'                 + #13#13#13 +
     '     Press mouse button to continue';
@@ -93,7 +93,7 @@ resourcestring
     'Level %d ' + '%s'                     + #13#13#13 +
     '          Number of Lemmings %d'      + #13#13 +
     '          %s To Be Saved'             + #13#13 +
-    '          Release Rate %d'            + #13#13 +
+    '          Release Rate %s'            + #13#13 +
     '          Time Limit  %s'            + #13#13 +
     '          Rating: %s'                 + #13#13 +
     '          Author: %s'                   + #13#13 +
@@ -103,7 +103,7 @@ resourcestring
     'Level %d ' + '%s'                     + #13#13#13 +
     '          Number of Lemmings %d'      + #13#13 +
     '          %s To Be Killed'             + #13#13 +
-    '          Release Rate %d'            + #13#13 +
+    '          Release Rate %s'            + #13#13 +
     '          Time Limit  %s'            + #13#13 +
     '          Rating: %s'                 + #13#13#13 +
     '     Press mouse button to continue';
@@ -112,7 +112,7 @@ resourcestring
     'Level %d ' + '%s'                     + #13#13#13 +
     '          Number of Lemmings %d'      + #13#13 +
     '          %s To Be Killed'             + #13#13 +
-    '          Release Rate %d'            + #13#13 +
+    '          Release Rate %s'            + #13#13 +
     '          Time Limit  %s'            + #13#13 +
     '          Rating: %s'                 + #13#13 +
     '          Author: %s'                   + #13#13 +
