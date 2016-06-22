@@ -445,7 +445,7 @@ begin
       end;
 
       RR := IntToStr(GameParams.Level.Info.ReleaseRate);
-      if GameParams.Level.Info.ReleaseRateLocked then
+      if GameParams.Level.Info.ReleaseRateLocked or (RR = '99') then
         RR := RR + ' (Locked)';
 
 

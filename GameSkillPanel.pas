@@ -452,7 +452,7 @@ begin
   BtnIdx := (fButtonRects[aButton].Left - 1) div 16;
 
   // If release rate locked, display as such
-  if (aButton = spbFaster) and (fLevel.Info.ReleaseRateLocked) then
+  if (aButton = spbFaster) and (fLevel.Info.ReleaseRateLocked or (fLevel.Info.ReleaseRate = 99)) then
   begin
     fSkillLock.DrawTo(fImg.Bitmap, BtnIdx * 16 + 4, 17);
     Exit;
