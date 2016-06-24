@@ -257,9 +257,9 @@ OBJECT 4
   NAME dripper
 
 OBJECT 5
-  SET default
-  NAME lemming
-  OFFSET_TOP -1
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
 
 OBJECT 6
   SET sega

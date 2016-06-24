@@ -194,9 +194,9 @@ OBJECT 8
   NAME *nil
 
 OBJECT 9
-  SET default
-  NAME lemming
-  OFFSET_TOP -1
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
 
 OBJECT 10
   SET psychedelic

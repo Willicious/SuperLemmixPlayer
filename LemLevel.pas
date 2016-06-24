@@ -6,6 +6,7 @@ interface
 uses
   Classes, SysUtils,
   UMisc,
+  LemLemming,
   LemTerrain,
   LemInteractiveObject,
   LemSteel;
@@ -145,6 +146,7 @@ type
     fTerrains           : TTerrains;
     fInteractiveObjects : TInteractiveObjects;
     fSteels             : TSteels;
+    fPreplacedLemmings  : TPreplacedLemmingList;
   { internal }
     fUpdateCounter      : Integer;
   { property access }
@@ -174,6 +176,7 @@ type
     property InteractiveObjects: TInteractiveObjects read fInteractiveObjects write SetInteractiveObjects;
     property Terrains: TTerrains read fTerrains write SetTerrains;
     property Steels: TSteels read fSteels write SetSteels;
+    property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings write fPreplacedLemmings;
   end;
 
   {
@@ -361,6 +364,7 @@ begin
   fInteractiveObjects := DoCreateInteractiveObjects;
   fTerrains := DoCreateTerrains;
   fSteels := DoCreateSteels;
+  fPreplacedLemmings := TPreplacedLemmingList.Create;
 end;
 
 destructor TLevel.Destroy;
@@ -369,6 +373,7 @@ begin
   fInteractiveObjects.Free;
   fTerrains.Free;
   fSteels.Free;
+  fPreplacedLemmings.Create;
   inherited Destroy;
 end;
 

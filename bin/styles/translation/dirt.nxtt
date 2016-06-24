@@ -206,11 +206,6 @@ OBJECT 0
   SET dirt
   NAME exit
   OFFSET_TOP -8
-AND
-  SET default
-  NAME flag_green
-  OFFSET_LEFT 18
-  OFFSET_TOP -21
 
 OBJECT 1
   SET default
@@ -252,9 +247,9 @@ OBJECT 10
   NAME tentontrap
 
 OBJECT 11
-  SET default
-  NAME lemming
-  OFFSET_TOP -1
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
 
 OBJECT 12
   SET dirt

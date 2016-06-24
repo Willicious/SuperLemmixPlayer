@@ -299,9 +299,9 @@ OBJECT 10
   FLIP
 
 OBJECT 11
-  SET default
-  NAME lemming
-  OFFSET_TOP -1
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
 
 OBJECT 12
   SET pillar

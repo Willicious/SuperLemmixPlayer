@@ -195,9 +195,9 @@ OBJECT 10
   NAME electrotrap
 
 OBJECT 11
-  SET default
-  NAME lemming
-  OFFSET_TOP -1
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
 
 OBJECT 12
   SET crystal

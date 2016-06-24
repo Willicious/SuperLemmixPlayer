@@ -2452,8 +2452,9 @@ OBJECT 96
   NAME updraft_wide
 
 OBJECT 97
-  SET default
-  NAME lemming
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
   
 OBJECT 98
   SET default

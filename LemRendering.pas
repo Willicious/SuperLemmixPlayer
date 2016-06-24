@@ -1251,6 +1251,7 @@ var
   Ter: TTerrain;
   TRec: TTerrainRecord;
 
+  Lem: TPreplacedLemming;
   L: TLemming;
 begin
   fBgColor := Theme.BackgroundColor and $FFFFFF;
@@ -1336,31 +1337,26 @@ begin
 
       L := TLemming.Create;
       with fLayers[rlLemmings] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
+        for i := 0 to Level.PreplacedLemmings.Count-1 do
         begin
-          Obj := Level.InteractiveObjects[i];
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect <> 13 then Continue;
+          Lem := Level.PreplacedLemmings[i];
 
           with L do
           begin
-            LemX := Obj.Left + ORec.Meta.TriggerLeft;
-            LemY := Obj.Top + ORec.Meta.TriggerTop;
-            if Obj.DrawingFlags and odf_FlipLem <> 0 then
-              LemDx := -1
-            else
-              LemDx := 1;
+            LemX := Lem.X;
+            LemY := Lem.Y;
+            LemDx := Lem.Dx;
 
-            LemIsClimber  := (Obj.TarLev and $01 <> 0);
-            LemIsSwimmer  := (Obj.TarLev and $02 <> 0);
-            LemIsFloater  := (Obj.TarLev and $04 <> 0);
-            LemIsGlider   := (Obj.TarLev and $08 <> 0);
-            LemIsMechanic := (Obj.TarLev and $10 <> 0);
-            LemIsZombie   := (Obj.TarLev and $40 <> 0);
+            LemIsClimber  := Lem.IsClimber;
+            LemIsSwimmer  := Lem.IsSwimmer;
+            LemIsFloater  := Lem.IsFloater;
+            LemIsGlider   := Lem.IsGlider;
+            LemIsMechanic := Lem.IsDisarmer;
+            LemIsZombie   := Lem.IsZombie;
 
             if (fPhysicsMap.PixelS[LemX, LemY] and PM_SOLID = 0) then
               LemAction := baFalling
-            else if (Obj.TarLev and $20 <> 0) then
+            else if Lem.IsBlocker then
               LemAction := baBlocking
             else
               LemAction := baWalking;

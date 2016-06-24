@@ -261,9 +261,9 @@ OBJECT 3
   NAME owa_right
 
 OBJECT 4
-  SET default
-  NAME lemming
-  OFFSET_TOP -1
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
 
 OBJECT 5
   SET default

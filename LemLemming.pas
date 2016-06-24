@@ -82,7 +82,78 @@ TLemming = class
     property List; // for fast access
   end;
 
+  TPreplacedLemming = class
+    private
+      fX: Integer;
+      fY: Integer;
+      fDx: Integer;
+      fIsClimber:  Boolean;
+      fIsSwimmer:  Boolean;
+      fIsFloater:  Boolean;
+      fIsGlider:   Boolean;
+      fIsDisarmer: Boolean;
+      fIsBlocker:  Boolean;
+      fIsZombie:   Boolean;
+    public
+      constructor Create;
+      property X: Integer read fX write fX;
+      property Y: Integer read fY write fY;
+      property Dx: Integer read fDx write fDx;
+      property IsClimber: Boolean read fIsClimber write fIsClimber;
+      property IsSwimmer: Boolean read fIsSwimmer write fIsSwimmer;
+      property IsFloater: Boolean read fIsFloater write fIsFloater;
+      property IsGlider: Boolean read fIsGlider write fIsGlider;
+      property IsDisarmer: Boolean read fIsDisarmer write fIsDisarmer;
+      property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
+      property IsZombie: Boolean read fIsZombie write fIsZombie;
+  end;
+
+  TPreplacedLemmingList = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TPreplacedLemming;
+    public
+      constructor Create;
+      function Add: TPreplacedLemming;
+      property Items[Index: Integer]: TPreplacedLemming read GetItem; default;
+      property List;
+  end;
+
 implementation
+
+{ TPreplacedLemming }
+
+constructor TPreplacedLemming.Create;
+begin
+  inherited;
+  fX := 0;
+  fY := 0;
+  fDx := 1;
+  fIsClimber := false;
+  fIsSwimmer := false;
+  fIsFloater := false;
+  fIsGlider := false;
+  fIsDisarmer := false;
+  fIsBlocker := false;
+  fIsZombie := false;
+end;
+
+{ TPreplacedLemmingList }
+
+constructor TPreplacedLemmingList.Create;
+begin
+  inherited Create(true);
+end;
+
+function TPreplacedLemmingList.Add: TPreplacedLemming;
+begin
+  Result := TPreplacedLemming.Create;
+  inherited Add(Result);
+end;
+
+function TPreplacedLemmingList.GetItem(Index: Integer): TPreplacedLemming;
+begin
+  Result := inherited Get(Index);
+end;
 
 { TLemming }
 

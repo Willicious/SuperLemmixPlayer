@@ -297,9 +297,9 @@ OBJECT 9
   NAME shredder
 
 OBJECT 10
-  SET default
-  NAME lemming
-  OFFSET_TOP -1
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
 
 OBJECT 11
   SET marble

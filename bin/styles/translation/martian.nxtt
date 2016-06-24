@@ -170,9 +170,9 @@ OBJECT 7
   NAME receiver
 
 OBJECT 8
-  SET default
-  NAME lemming
-  OFFSET_TOP -1
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
 
 OBJECT 9
   SET martian

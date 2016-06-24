@@ -19,6 +19,7 @@ uses
   LemSteel,
   LemDosStructures,
   LemLevel,
+  LemLemming,
   LemTypes;
 
 type
@@ -96,6 +97,7 @@ type
       fObjectArray: array of TTranslationItem;
       procedure FindMatch(Item: TIdentifiedPiece);
       procedure CreateExtraPiece(Item: TIdentifiedPiece; aLevel: TLevel);
+      procedure AddLemming(aObject: TInteractiveObject; aLevel: TLevel);
     public
       constructor Create;
       destructor Destroy; override;
@@ -239,10 +241,13 @@ begin
       if Line.Keyword = 'NAME' then
         NewRec.DstName := Line.Value;
 
-      if Line.Keyword = 'OFFSET_LEFT' then
+      if Line.Keyword = 'LEMMING' then
+        NewRec.DstName := '*lemming';
+
+      if (Line.Keyword = 'OFFSET_LEFT') or (Line.Keyword = 'OFFSET_X') then
         NewRec.OffsetL := Line.Numeric;
 
-      if Line.Keyword = 'OFFSET_TOP' then
+      if (Line.Keyword = 'OFFSET_TOP') or (Line.Keyword = 'OFFSET_Y') then
         NewRec.OffsetT := Line.Numeric;
 
       if Line.Keyword = 'OFFSET_RIGHT' then
@@ -305,6 +310,15 @@ begin
     Inc(i);
   end;
 
+  // Convert preplaced lemmings
+  for i := 0 to aLevel.InteractiveObjects.Count-1 do
+    if aLevel.InteractiveObjects[i].Piece = '*lemming' then
+    begin
+      AddLemming(aLevel.InteractiveObjects[i], aLevel);
+      aLevel.InteractiveObjects[i].Piece := '*nil';
+    end;
+
+  // Remove nil'd pieces
   for i := aLevel.Terrains.Count-1 downto 0 do
     if Lowercase(aLevel.Terrains[i].Piece) = '*nil' then
       aLevel.Terrains.Delete(i);
@@ -314,6 +328,27 @@ begin
       aLevel.InteractiveObjects.Delete(i);
 
   aLevel.Info.GraphicSetName := fTheme;
+end;
+
+procedure TTranslationTable.AddLemming(aObject: TInteractiveObject; aLevel: TLevel);
+var
+  L: TPreplacedLemming;
+begin
+  L := aLevel.PreplacedLemmings.Add;
+  L.X := aObject.Left;
+  L.Y := aObject.Top;
+  if (aObject.DrawingFlags and odf_FlipLem) <> 0 then
+    L.Dx := -1
+  else
+    L.Dx := 1;
+
+  L.IsClimber := (aObject.TarLev and $01) <> 0;
+  L.IsSwimmer := (aObject.TarLev and $02) <> 0;
+  L.IsFloater := (aObject.TarLev and $04) <> 0;
+  L.IsGlider := (aObject.TarLev and $08) <> 0;
+  L.IsDisarmer := (aObject.TarLev and $10) <> 0;
+  L.IsBlocker := (aObject.TarLev and $20) <> 0;
+  L.IsZombie := (aObject.TarLev and $40) <> 0;
 end;
 
 procedure TTranslationTable.CreateExtraPiece(Item: TIdentifiedPiece; aLevel: TLevel);
