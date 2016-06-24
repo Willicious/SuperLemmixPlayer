@@ -174,7 +174,7 @@ begin
   TerrainLabel := SplitIdentifier(Identifier);
   if not DirectoryExists(AppPath + SFStylesPieces + TerrainLabel.GS) then
     raise Exception.Create('TNeoPieceManager.ObtainTerrain: ' + TerrainLabel.GS + ' does not exist.');
-  SetCurrentDir(AppPath + SFStylesPieces + TerrainLabel.GS + '\');
+  SetCurrentDir(AppPath + SFStylesPieces + TerrainLabel.GS + SFPiecesTerrain);
 
   Result := fTerrains.Count;
 
@@ -248,7 +248,7 @@ begin
   ObjectLabel := SplitIdentifier(Identifier);
   if not DirectoryExists(AppPath + SFStylesPieces + ObjectLabel.GS) then
     raise Exception.Create('TNeoPieceManager.ObtainTerrain: ' + ObjectLabel.GS + ' does not exist.');
-  SetCurrentDir(AppPath + SFStylesPieces + ObjectLabel.GS + '\');
+  SetCurrentDir(AppPath + SFStylesPieces + ObjectLabel.GS + SFPiecesObjects);
 
   Result := fObjects.Count;
 

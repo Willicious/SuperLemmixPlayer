@@ -39,6 +39,8 @@ const
 
   SFStyles = 'styles\';
     SFStylesPieces = SFStyles + 'pieces\';
+      SFPiecesTerrain = '\terrain\';
+      SFPiecesObjects = '\objects\';
     SFStylesThemes = SFStyles + 'themes\';
     SFStylesTranslation = SFStyles + 'translation\';
 
