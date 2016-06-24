@@ -743,7 +743,7 @@ begin
 
     if aLevel.Info.VgaspecFile <> '' then
       if FileExists(AppPath + SFStylesTranslation + 'x_' + Trim(aLevel.Info.VgaspecFile) + '.nxtt') then
-        Trans.LoadFromFile(AppPath + SFStylesTranslation + 'x_' + Trim(aLevel.Info.VgaspecFile) + '.nxtt'); 
+        Trans.LoadFromFile(AppPath + SFStylesTranslation + 'x_' + Trim(aLevel.Info.VgaspecFile) + '.nxtt');
 
     Trans.Apply(aLevel);
     Trans.Free;
@@ -1666,7 +1666,7 @@ begin
 
       if Buf.GraphicSetEx = 255 then
       begin}
-        k := RightStr(LeftStr(VgaspecFile, Length(VgaSpecFile) - 4), Length(VgaspecFile) - 6);
+        k := VgaspecFile;
         if k = '' then k := 'none';
         System.Move(k[1], Buf.VgaspecName, Length(k));
       //end;
