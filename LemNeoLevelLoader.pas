@@ -4,7 +4,7 @@ interface
 
 uses
   LemNeoParser,
-  LemTerrain, LemInteractiveObject, LemSteel,
+  LemTerrain, LemInteractiveObject, LemSteel, LemLemming,
   LemLevel, LemStrings,
   Classes, SysUtils, StrUtils;
 
@@ -13,19 +13,20 @@ type
     private
       class procedure SanitizeInput(aLevel: TLevel);
     public
-      class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+      class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel);
       class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream);
   end;
 
 implementation
 
-class procedure TNeoLevelLoader.LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+class procedure TNeoLevelLoader.LoadLevelFromStream(aStream: TStream; aLevel: TLevel);
 var
   Parser: TNeoLemmixParser;
   Line: TParserLine;
   O: TInteractiveObject;
   T: TTerrain;
   S: TSteel;
+  L: TPreplacedLemming;
 
   function NewPiece: Boolean;
   begin
@@ -33,6 +34,7 @@ var
     if Line.Keyword = 'OBJECT' then Result := true;
     if Line.Keyword = 'TERRAIN' then Result := true;
     if Line.Keyword = 'AREA' then Result := true;
+    if Line.Keyword = 'LEMMING' then Result := true;
     if Line.Keyword = '' then Result := true; // Detect end of file as well
   end;
 
@@ -328,6 +330,44 @@ begin
         until NewPiece;
       end;
 
+      if Line.Keyword = 'LEMMING' then
+      begin
+        L := aLevel.PreplacedLemmings.Add;
+        repeat
+          Line := Parser.NextLine;
+
+          if Line.Keyword = 'X' then
+            L.X := Line.Numeric;
+
+          if Line.Keyword = 'Y' then
+            L.Y := Line.Numeric;
+
+          if Line.Keyword = 'FACE_LEFT' then
+            L.Dx := -1;
+
+          if Line.Keyword = 'CLIMBER' then
+            L.IsClimber := true;
+
+          if Line.Keyword = 'SWIMMER' then
+            L.IsSwimmer := true;
+
+          if Line.Keyword = 'FLOATER' then
+            L.IsFloater := true;
+
+          if Line.Keyword = 'GLIDER' then
+            L.IsGlider := true;
+
+          if Line.Keyword = 'DISARMER' then
+            L.IsDisarmer := true;
+
+          if Line.Keyword = 'BLOCKER' then
+            L.IsBlocker := true;
+
+          if Line.Keyword = 'ZOMBIE' then
+            L.IsZombie := true;
+        until NewPiece;
+      end;
+
     until Line.Keyword = '';
 
     // Sanitize loaded level stats now
@@ -432,6 +472,7 @@ var
   O: TInteractiveObject;
   T: TTerrain;
   S: TSteel;
+  L: TPreplacedLemming;
 
   procedure Add(const aString: String = '');
   begin
@@ -603,6 +644,36 @@ begin
           Add;
         end;
       end;
+
+      // Preplaced lemmings
+      if (PreplacedLemmings.Count > 0) then
+      begin
+        Add('# Preplaced lemmings');
+        for i := 0 to PreplacedLemmings.Count-1 do
+        begin
+          L := PreplacedLemmings[i];
+          Add(' LEMMING');
+          Add('  X ' + IntToStr(L.X));
+          Add('  Y ' + IntToStr(L.Y));
+          if L.Dx < 0 then
+            Add('  FACE_LEFT');
+          if L.IsClimber then
+            Add('  CLIMBER');
+          if L.IsSwimmer then
+            Add('  SWIMMER');
+          if L.IsFloater then
+            Add('  FLOATER');
+          if L.IsGlider then
+            Add('  GLIDER');
+          if L.IsDisarmer then
+            Add('  DISARMER');
+          if L.IsBlocker then
+            Add('  BLOCKER');
+          if L.IsZombie then
+            Add('  ZOMBIE');
+        end;
+      end;
+
     end;
 
     SL.SaveToStream(aStream);
