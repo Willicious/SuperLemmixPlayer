@@ -206,6 +206,11 @@ OBJECT 0
   SET dirt
   NAME exit
   OFFSET_TOP -8
+AND
+  SET default
+  NAME flag_green
+  OFFSET_LEFT 18
+  OFFSET_TOP -21
 
 OBJECT 1
   SET default

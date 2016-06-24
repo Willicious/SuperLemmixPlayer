@@ -85,6 +85,8 @@ type
     Flip: Boolean;
     Invert: Boolean;
     Rotate: Boolean;
+    OneWay: Boolean;
+    MorePieces: Boolean;
   end;
 
   TTranslationTable = class
@@ -93,6 +95,7 @@ type
       fTerrainArray: array of TTranslationItem;
       fObjectArray: array of TTranslationItem;
       procedure FindMatch(Item: TIdentifiedPiece);
+      procedure CreateExtraPiece(Item: TIdentifiedPiece; aLevel: TLevel);
     public
       constructor Create;
       destructor Destroy; override;
@@ -126,8 +129,6 @@ end;
 
 destructor TTranslationTable.Destroy;
 begin
-  SetLength(fTerrainArray, 0);
-  SetLength(fObjectArray, 0);
   inherited;
 end;
 
@@ -184,11 +185,13 @@ var
     NewRec.Flip := false;
     NewRec.Invert := false;
     NewRec.Rotate := false;
+    NewRec.OneWay := false;
+    NewRec.MorePieces := false;
   end;
 begin
   Parser := TNeoLemmixParser.Create;
-  ObjLen := 0;
-  TerLen := 0;
+  ObjLen := Length(fObjectArray);
+  TerLen := Length(fTerrainArray);
   GotFirst := false;
   try
     Parser.LoadFromFile(aFilename);
@@ -210,6 +213,24 @@ begin
         ClearTemp;
         CurrentlyObject := true;
         NewRec.SrcName := 'O' + IntToStr(Line.Numeric);
+      end;
+
+      if Line.Keyword = 'SPECIAL' then
+      begin
+        ClearTemp;
+        CurrentlyObject := false;
+        NewRec.SrcName := '*special';
+      end;
+
+      if Line.Keyword = 'AND' then
+      begin
+        NewRec.MorePieces := true;
+        ClearTemp;
+        NewRec.SrcName := '*and';
+        if CurrentlyObject then
+          NewRec.SrcName := NewRec.SrcName + IntToStr(ObjLen - 1)
+        else
+          NewRec.SrcName := NewRec.SrcName + IntToStr(TerLen - 1)
       end;
 
       if Line.Keyword = 'SET' then
@@ -238,6 +259,9 @@ begin
 
       if Line.Keyword = 'ROTATE' then
         NewRec.Rotate := true;
+
+      if Line.Keyword = 'ONEWAY' then
+        NewRec.OneWay := true;
         
     until Line.Keyword = '';
 
@@ -253,16 +277,31 @@ var
   i: Integer;
   Item: TIdentifiedPiece;
 begin
-  for i := 0 to aLevel.Terrains.Count-1 do
+  if (aLevel.Info.VgaspecFile <> '') then
   begin
-    Item := aLevel.Terrains[i];
-    FindMatch(Item);
+    Item := aLevel.Terrains.Insert(0);
+    Item.Left := aLevel.Info.VgaspecX;
+    Item.Top := aLevel.Info.VgaspecY;
+    Item.GS := 'special';
+    Item.Piece := '*special';
   end;
 
-  for i := 0 to aLevel.InteractiveObjects.Count-1 do
+  i := 0;
+  while i < aLevel.Terrains.Count do
+  begin
+    Item := aLevel.Terrains[i];
+    CreateExtraPiece(Item, aLevel);
+    FindMatch(Item);
+    Inc(i);
+  end;
+
+  i := 0;
+  while i < aLevel.InteractiveObjects.Count do
   begin
     Item := aLevel.InteractiveObjects[i];
+    CreateExtraPiece(Item, aLevel);
     FindMatch(Item);
+    Inc(i);
   end;
 
   for i := aLevel.Terrains.Count-1 downto 0 do
@@ -274,6 +313,74 @@ begin
       aLevel.InteractiveObjects.Delete(i);
 
   aLevel.Info.GraphicSetName := fTheme;
+end;
+
+procedure TTranslationTable.CreateExtraPiece(Item: TIdentifiedPiece; aLevel: TLevel);
+var
+  TransItem: TTranslationItem;
+  T: TTerrain absolute Item;
+  O: TInteractiveObject absolute Item;
+  T2: TTerrain;
+  O2: TInteractiveObject;
+  ItemIndex: Integer;
+  i: Integer;
+begin
+  TransItem.MorePieces := false;
+  ItemIndex := 0;
+
+  if Item is TTerrain then
+  begin
+    for i := 0 to aLevel.Terrains.Count-1 do
+      if T = aLevel.Terrains[i] then
+      begin
+        ItemIndex := i;
+        Break;
+      end;
+
+    for i := 0 to Length(fTerrainArray)-1 do
+      if fTerrainArray[i].SrcName = Item.Piece then
+      begin
+        TransItem := fTerrainArray[i];
+        Break;
+      end;
+
+    if TransItem.MorePieces then
+    begin
+      T2 := aLevel.Terrains.Insert(ItemIndex + 1);
+      T2.DrawingFlags := T.DrawingFlags;
+      T2.GS := T.GS;
+      T2.Piece := '*and' + IntToStr(i);
+      T2.Left := T.Left;
+      T2.Top := T.Top;
+    end;
+  end else begin
+    for i := 0 to aLevel.InteractiveObjects.Count-1 do
+      if O = aLevel.InteractiveObjects[i] then
+      begin
+        ItemIndex := i;
+        Break;
+      end;
+
+    for i := 0 to Length(fObjectArray)-1 do
+      if fObjectArray[i].SrcName = Item.Piece then
+      begin
+        TransItem := fObjectArray[i];
+        Break;
+      end;
+
+    if TransItem.MorePieces then
+    begin
+      O2 := aLevel.InteractiveObjects.Insert(ItemIndex + 1);
+      O2.DrawingFlags := O.DrawingFlags;
+      O2.IsFake := O.IsFake;
+      O2.Skill := O.Skill;
+      O2.TarLev := O.TarLev;
+      O2.GS := O.GS;
+      O2.Piece := '*and' + IntToStr(i);
+      O2.Left := O.Left;
+      O2.Top := O.Top;
+    end;
+  end;
 end;
 
 procedure TTranslationTable.FindMatch(Item: TIdentifiedPiece);
@@ -633,6 +740,11 @@ begin
   begin
     Trans := TTranslationTable.Create;
     Trans.LoadFromFile(AppPath + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt');
+
+    if aLevel.Info.VgaspecFile <> '' then
+      if FileExists(AppPath + SFStylesTranslation + 'x_' + Trim(aLevel.Info.VgaspecFile) + '.nxtt') then
+        Trans.LoadFromFile(AppPath + SFStylesTranslation + 'x_' + Trim(aLevel.Info.VgaspecFile) + '.nxtt'); 
+
     Trans.Apply(aLevel);
     Trans.Free;
   end;
@@ -761,7 +873,7 @@ begin
           VgaspecFile := '';
           GraphicSetEx := 0;
         end else begin
-          VgaspecFile := 'x_' + trim(Buf.VgaspecName) + '.dat';
+          VgaspecFile := trim(Buf.VgaspecName);
           GraphicSetEx := 255;
         end;
 
@@ -1325,16 +1437,14 @@ begin
           VgaspecFile := ''
         end else begin
           Buf.GraphicSetEx := 255;
-          VgaspecFile := 'x_' + trim(Buf.VgaspecName) + '.dat';
+          VgaspecFile := trim(Buf.VgaspecName);
         end;
       end else begin
         if Buf.GraphicSetEx = 0 then
           VgaspecFile := ''
         else begin
           if SFinder.FindName(Buf.GraphicSetEx, true) <> '' then
-            VgaSpecFile := 'x_' + SFinder.FindName(Buf.GraphicSetEx, true) + '.dat'
-          else
-            VgaspecFile := 'vgaspec' + i2s(Buf.GraphicSetEx - 1) + '.dat';
+            VgaSpecFile := SFinder.FindName(Buf.GraphicSetEx, true);
         end;
       end;
 
