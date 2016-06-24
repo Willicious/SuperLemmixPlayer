@@ -355,6 +355,7 @@ begin
   fInteractiveObjects.Clear;
   fTerrains.Clear;
   fSteels.Clear;
+  fPreplacedLemmings.Clear;
 end;
 
 constructor TLevel.Create(aOwner: TComponent);

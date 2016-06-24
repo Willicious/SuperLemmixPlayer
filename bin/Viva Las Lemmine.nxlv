@@ -1,0 +1,1467 @@
+# NeoLemmix Level
+# Dumped from NeoLemmix Player VExNF 1.45n-C
+
+# Level info
+ TITLE  Viva Las Lemmine               
+ AUTHOR                 
+ ID E29A4646
+
+# Level dimensions
+ WIDTH 656
+ HEIGHT 160
+ START_X 128
+ START_Y 0
+ THEME circuit
+
+# Level stats
+ LEMMINGS 40
+ REQUIREMENT 40
+ TIME_LIMIT 140
+ MIN_RR 40
+ AUTOSTEEL OFF
+
+# Level skillset
+    CLIMBER 1
+    FLOATER 1
+     BOMBER 3
+    BLOCKER 3
+    BUILDER 3
+     BASHER 2
+      MINER 1
+     DIGGER 0
+
+# Interactive objects
+ OBJECT
+  SET circuit
+  PIECE window
+  X 137
+  Y 53
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X 424
+  Y 93
+
+ OBJECT
+  SET default
+  PIECE teleporter
+  X 48
+  Y 96
+
+ OBJECT
+  SET default
+  PIECE receiver
+  X 560
+  Y 48
+
+ OBJECT
+  SET circuit
+  PIECE exit_light
+  X 424
+  Y 84
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+ OBJECT
+  SET circuit
+  PIECE exit
+  X -32768
+  Y -32768
+
+
+# Terrains
+ TERRAIN
+  SET circuit
+  PIECE board_large
+  X 128
+  Y 96
+
+ TERRAIN
+  SET circuit
+  PIECE connector
+  X 192
+  Y 101
+
+ TERRAIN
+  SET circuit
+  PIECE wire_horz
+  X 208
+  Y 103
+
+ TERRAIN
+  SET circuit
+  PIECE wire_bottomtoleft
+  X 240
+  Y 103
+
+ TERRAIN
+  SET circuit
+  PIECE wire_vert
+  X 240
+  Y 115
+
+ TERRAIN
+  SET circuit
+  PIECE wire_vert
+  X 240
+  Y 137
+
+ TERRAIN
+  SET circuit
+  PIECE wire_vert_long
+  X 283
+  Y 97
+  FLIP_HORIZONTAL
+
+ TERRAIN
+  SET circuit
+  PIECE wire_vert_long
+  X 283
+  Y 38
+  FLIP_HORIZONTAL
+
+ TERRAIN
+  SET circuit
+  PIECE wire_bottomtoright
+  X 287
+  Y 26
+
+ TERRAIN
+  SET circuit
+  PIECE wire_horz
+  X 299
+  Y 26
+
+ TERRAIN
+  SET circuit
+  PIECE connector
+  X 331
+  Y 24
+  FLIP_HORIZONTAL
+
+ TERRAIN
+  SET circuit
+  PIECE board_large
+  X 347
+  Y 96
+
+ TERRAIN
+  SET circuit
+  PIECE board_small
+  X 347
+  Y 64
+
+ TERRAIN
+  SET circuit
+  PIECE board_small
+  X 379
+  Y 64
+
+ TERRAIN
+  SET circuit
+  PIECE board_large
+  X 347
+  Y 0
+
+ TERRAIN
+  SET circuit
+  PIECE connector
+  X 411
+  Y 113
+
+ TERRAIN
+  SET circuit
+  PIECE wire_horz
+  X 427
+  Y 115
+
+ TERRAIN
+  SET circuit
+  PIECE wire_bottomtoleft
+  X 459
+  Y 115
+
+ TERRAIN
+  SET circuit
+  PIECE wire_vert_long
+  X 459
+  Y 127
+
+ TERRAIN
+  SET circuit
+  PIECE board_small
+  X 96
+  Y 112
+
+ TERRAIN
+  SET circuit
+  PIECE board_small
+  X 64
+  Y 112
+
+ TERRAIN
+  SET circuit
+  PIECE board_small
+  X 32
+  Y 112
+
+ TERRAIN
+  SET circuit
+  PIECE connector
+  X 40
+  Y 144
+  ROTATE
+  FLIP_HORIZONTAL
+
+ TERRAIN
+  SET circuit
+  PIECE board_small
+  X 504
+  Y 128
+
+ TERRAIN
+  SET circuit
+  PIECE board_large
+  X 496
+  Y 64
+
+ TERRAIN
+  SET circuit
+  PIECE board_large
+  X 560
+  Y 64
+
+ TERRAIN
+  SET circuit
+  PIECE board_small
+  X 584
+  Y 128
+
+ TERRAIN
+  SET circuit
+  PIECE connector
+  X 600
+  Y 48
+  ROTATE
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE wire_vert_long
+  X 598
+  Y -16
+  FLIP_HORIZONTAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 335
+  Y 80
+  ROTATE
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_02
+  X 378
+  Y 50
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_01
+  X 376
+  Y 104
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_02
+  X 351
+  Y 115
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 373
+  Y -14
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 364
+  Y -14
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 328
+  Y -18
+  ROTATE
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_02
+  X 358
+  Y 66
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 331
+  Y 44
+  ROTATE
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_01
+  X 364
+  Y 21
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 363
+  Y 148
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_01
+  X 108
+  Y 112
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 79
+  Y 125
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_01
+  X 46
+  Y 112
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_02
+  X 155
+  Y 102
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_02
+  X 143
+  Y 115
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_02
+  X 134
+  Y 130
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 486
+  Y 111
+  ROTATE
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_01
+  X 589
+  Y 105
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_01
+  X 509
+  Y 149
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_01
+  X 584
+  Y 142
+
+ TERRAIN
+  SET circuit
+  PIECE connector
+  X 560
+  Y 85
+  FLIP_HORIZONTAL
+
+ TERRAIN
+  SET circuit
+  PIECE connector
+  X 544
+  Y 85
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_02
+  X 501
+  Y 82
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_02
+  X 507
+  Y 76
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 588
+  Y 64
+  ROTATE
+
+ TERRAIN
+  SET circuit
+  PIECE circuits_03
+  X 580
+  Y 73
+  ROTATE
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET circuit
+  PIECE connector_end
+  X 528
+  Y 85
+
+ TERRAIN
+  SET circuit
+  PIECE connector_end
+  X 576
+  Y 85
+  FLIP_HORIZONTAL
+
+# Steel areas
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+ AREA
+  STEEL
+  X -520
+  Y 0
+  W 5
+  H 5
+
+# Preplaced lemmings
+ LEMMING
+  X 204
+  Y 36
+ LEMMING
+  X 152
+  Y 123
+ LEMMING
+  X 224
+  Y 130
+ LEMMING
+  X 187
+  Y 132
+  FACE_LEFT
+ LEMMING
+  X 198
+  Y 77
+  FACE_LEFT
+ LEMMING
+  X 288
+  Y 61
+ LEMMING
+  X 149
+  Y 52
+  FACE_LEFT
+ LEMMING
+  X 108
+  Y 50
+  FACE_LEFT
+ LEMMING
+  X 241
+  Y 46
+  FACE_LEFT
+ LEMMING
+  X 336
+  Y 131
+  FACE_LEFT
+ LEMMING
+  X 172
+  Y 61
+ LEMMING
+  X 317
+  Y 54
+  FACE_LEFT
+ LEMMING
+  X 98
+  Y 115
+ LEMMING
+  X 481
+  Y 115
+  FACE_LEFT
+ LEMMING
+  X 161
+  Y 21
+  FACE_LEFT
+ LEMMING
+  X 658
+  Y 97
+  FACE_LEFT
+ LEMMING
+  X 170
+  Y 61
+ LEMMING
+  X 334
+  Y 27
+  FACE_LEFT
+ LEMMING
+  X 202
+  Y 104

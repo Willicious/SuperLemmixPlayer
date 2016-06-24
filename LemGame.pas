@@ -1817,7 +1817,7 @@ begin
 
   UpdateAllSkillCounts;
 
-  AddPreplacedLemming; // instantly-spawning lemmings (object type 13)
+  AddPreplacedLemming;
 
   fFallLimit := MAX_FALLDISTANCE;
 
@@ -1860,48 +1860,36 @@ end;
 
 procedure TLemmingGame.AddPreplacedLemming;
 var
-  NewLemming : TLemming;
-  TrigEffect: Integer;
+  L: TLemming;
+  Lem: TPreplacedLemming;
   i: Integer;
 begin
-
-  for i := 0 to ObjectInfos.Count - 1 do
+  for i := 0 to fGameParams.Level.PreplacedLemmings.Count-1 do
   begin
-    TrigEffect := ObjectInfos[i].TriggerEffect;
-    if (TrigEffect = DOM_LEMMING) and not ObjectInfos[i].IsDisabled then
+    Lem := fGameParams.Level.PreplacedLemmings[i];
+    L := TLemming.Create;
+    with L do
     begin
-      NewLemming := TLemming.Create;
-      with NewLemming do
+      LemIndex := LemmingList.Add(L);
+      SetFromPreplaced(Lem);
+
+      if not HasPixelAt(L.LemX, L.LemY) then
+        Transition(L, baFalling)
+      else if Lem.IsBlocker then
+        Transition(L, baBlocking)
+      else
+        Transition(L, baWalking);
+
+      if Lem.IsZombie then
       begin
-        LemIndex := LemmingList.Add(NewLemming);
-        Transition(NewLemming, baFalling);
-        LemX := ObjectInfos[i].TriggerRect.Left;
-        LemY := ObjectInfos[i].TriggerRect.Top;
-
-        LemDX := 1;
-        if ObjectInfos[i].IsFlipPhysics then TurnAround(NewLemming);
-
-        if (ObjectInfos[i].PreAssignedSkills and 1) <> 0 then LemIsClimber := true;
-        if (ObjectInfos[i].PreAssignedSkills and 2) <> 0 then LemIsSwimmer := true;
-        if (ObjectInfos[i].PreAssignedSkills and 4) <> 0 then LemIsFloater := true
-        else if (ObjectInfos[i].PreAssignedSkills and 8) <> 0 then LemIsGlider := true;
-        if (ObjectInfos[i].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
-        if (ObjectInfos[i].PreAssignedSkills and 32) <> 0 then
-        begin
-          while (LemY <= LEMMING_MAX_Y + PhysicsMap.Height) and (HasPixelAt(LemX, LemY) = false) do
-            Inc(LemY);
-          Transition(NewLemming, baBlocking);
-        end;
-        if (ObjectInfos[i].PreAssignedSkills and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
-        if NewLemming.LemIsZombie then Dec(SpawnedDead);
-        LemInFlipper := -1;
-        LemParticleTimer := -1;
-        LemUsedSkillCount := 0;
-        if LemIndex = fHighlightLemmingID then fHighlightLemming := NewLemming;
+        RemoveLemming(L, RM_ZOMBIE);
+        Dec(SpawnedDead);
       end;
-      Inc(LemmingsReleased);
-      Inc(LemmingsOut);
+      
+      if LemIndex = fHighlightLemmingID then fHighlightLemming := L;
     end;
+    Inc(LemmingsReleased);
+    Inc(LemmingsOut);
   end;
 end;
 

@@ -10,7 +10,43 @@ uses
   Contnrs, Types, Classes, SysUtils;
 
 type
-TLemming = class
+  TPreplacedLemming = class
+    private
+      fX: Integer;
+      fY: Integer;
+      fDx: Integer;
+      fIsClimber:  Boolean;
+      fIsSwimmer:  Boolean;
+      fIsFloater:  Boolean;
+      fIsGlider:   Boolean;
+      fIsDisarmer: Boolean;
+      fIsBlocker:  Boolean;
+      fIsZombie:   Boolean;
+    public
+      constructor Create;
+      property X: Integer read fX write fX;
+      property Y: Integer read fY write fY;
+      property Dx: Integer read fDx write fDx;
+      property IsClimber: Boolean read fIsClimber write fIsClimber;
+      property IsSwimmer: Boolean read fIsSwimmer write fIsSwimmer;
+      property IsFloater: Boolean read fIsFloater write fIsFloater;
+      property IsGlider: Boolean read fIsGlider write fIsGlider;
+      property IsDisarmer: Boolean read fIsDisarmer write fIsDisarmer;
+      property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
+      property IsZombie: Boolean read fIsZombie write fIsZombie;
+  end;
+
+  TPreplacedLemmingList = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TPreplacedLemming;
+    public
+      constructor Create;
+      function Add: TPreplacedLemming;
+      property Items[Index: Integer]: TPreplacedLemming read GetItem; default;
+      property List;
+  end;
+
+  TLemming = class
   private
     function CheckForPermanentSkills: Boolean;
   public
@@ -63,7 +99,9 @@ TLemming = class
     LemYOld                       : Integer;
     LemActionOld                  : TBasicLemmingAction; // action in previous frame
 
+    constructor Create;
     procedure Assign(Source: TLemming);
+    procedure SetFromPreplaced(Source: TPreplacedLemming);
     //function GetLocationBounds: TRect; // rect in world
     //function GetFrameBounds: TRect; // rect from animation bitmap
     //function GetCountDownDigitBounds: TRect; // countdown
@@ -80,42 +118,6 @@ TLemming = class
     procedure Insert(Index: Integer; Item: TLemming);
     property Items[Index: Integer]: TLemming read GetItem; default;
     property List; // for fast access
-  end;
-
-  TPreplacedLemming = class
-    private
-      fX: Integer;
-      fY: Integer;
-      fDx: Integer;
-      fIsClimber:  Boolean;
-      fIsSwimmer:  Boolean;
-      fIsFloater:  Boolean;
-      fIsGlider:   Boolean;
-      fIsDisarmer: Boolean;
-      fIsBlocker:  Boolean;
-      fIsZombie:   Boolean;
-    public
-      constructor Create;
-      property X: Integer read fX write fX;
-      property Y: Integer read fY write fY;
-      property Dx: Integer read fDx write fDx;
-      property IsClimber: Boolean read fIsClimber write fIsClimber;
-      property IsSwimmer: Boolean read fIsSwimmer write fIsSwimmer;
-      property IsFloater: Boolean read fIsFloater write fIsFloater;
-      property IsGlider: Boolean read fIsGlider write fIsGlider;
-      property IsDisarmer: Boolean read fIsDisarmer write fIsDisarmer;
-      property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
-      property IsZombie: Boolean read fIsZombie write fIsZombie;
-  end;
-
-  TPreplacedLemmingList = class(TObjectList)
-    private
-      function GetItem(Index: Integer): TPreplacedLemming;
-    public
-      constructor Create;
-      function Add: TPreplacedLemming;
-      property Items[Index: Integer]: TPreplacedLemming read GetItem; default;
-      property List;
   end;
 
 implementation
@@ -157,9 +159,29 @@ end;
 
 { TLemming }
 
+constructor TLemming.Create;
+begin
+  inherited;
+  LemInFlipper := -1;
+  LemParticleTimer := -1;
+end;
+
 function TLemming.CheckForPermanentSkills: Boolean;
 begin
   Result := (LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsMechanic);
+end;
+
+procedure TLemming.SetFromPreplaced(Source: TPreplacedLemming);
+begin
+  LemX := Source.X;
+  LemY := Source.Y;
+  LemDx := Source.Dx;
+  LemIsClimber := Source.IsClimber;
+  LemIsSwimmer := Source.IsSwimmer;
+  LemIsFloater := Source.IsFloater;
+  LemIsGlider := Source.IsGlider;
+  LemIsMechanic := Source.IsDisarmer;
+  // Blocker and Zombie must be handled by the calling routine
 end;
 
 (*function TLemming.GetCountDownDigitBounds: TRect;

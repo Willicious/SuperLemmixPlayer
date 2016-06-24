@@ -671,6 +671,7 @@ begin
             Add('  BLOCKER');
           if L.IsZombie then
             Add('  ZOMBIE');
+          Add;
         end;
       end;
 

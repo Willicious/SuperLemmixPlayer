@@ -488,7 +488,7 @@ procedure TGameMenuScreen.DumpLevels;
 var
   I: Integer;
 begin
-  if GameParams.SysDat.Options3 and 4 = 0 then Exit;
+  //if GameParams.SysDat.Options3 and 4 = 0 then Exit;
   if not (GameParams.Style.LevelSystem is TBaseDosLevelSystem) then exit;
   I := MessageDlg('Dump all level files? Warning: This may overwrite' + CrLf + 'LVL files currently present!', mtCustom, [mbYes, mbNo], 0);
   if I = mrYes then

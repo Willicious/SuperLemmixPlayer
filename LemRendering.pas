@@ -1343,16 +1343,8 @@ begin
 
           with L do
           begin
-            LemX := Lem.X;
-            LemY := Lem.Y;
-            LemDx := Lem.Dx;
-
-            LemIsClimber  := Lem.IsClimber;
-            LemIsSwimmer  := Lem.IsSwimmer;
-            LemIsFloater  := Lem.IsFloater;
-            LemIsGlider   := Lem.IsGlider;
-            LemIsMechanic := Lem.IsDisarmer;
-            LemIsZombie   := Lem.IsZombie;
+            SetFromPreplaced(Lem);
+            LemIsZombie := Lem.IsZombie;
 
             if (fPhysicsMap.PixelS[LemX, LemY] and PM_SOLID = 0) then
               LemAction := baFalling
