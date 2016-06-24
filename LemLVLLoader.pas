@@ -284,6 +284,7 @@ begin
     Item.Top := aLevel.Info.VgaspecY;
     Item.GS := 'special';
     Item.Piece := '*special';
+    TTerrain(Item).DrawingFlags := tdf_NoOneWay;
   end;
 
   i := 0;
@@ -474,6 +475,8 @@ begin
       Item.Rotate := Rotate;
       Item.Left := Item.Left + dx;
       Item.Top := Item.Top + dy;
+      if TransItem.OneWay then TTerrain(Item).DrawingFlags := TTerrain(Item).DrawingFlags and not tdf_NoOneWay;
+
       Exit;
     end;
   end;
