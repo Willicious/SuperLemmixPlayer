@@ -4725,16 +4725,24 @@ var
 
   // Special behavior in 1-pxiel wide shafts: Move one pixel down even when turning
   procedure CheckOnePixelShaft(L: TLemming);
+  var
+    LemYDir: Integer;
   begin
+    // Move upwards if in updraft
+    LemYDir := 1;
+    if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then LemYDir := -1;
+
     if    ((FindGroundPixel(L.LemX + L.LemDx, L.LemY) < -4) and DoTurnAround(L, True))
        or (     HasPixelAt(L.LemX + L.LemDx, L.LemY + 1)
             and HasPixelAt(L.LemX + L.LemDx, L.LemY + 2)
             and HasPixelAt(L.LemX + L.LemDx, L.LemY + 3)) then
     begin
-      if HasPixelAt(L.LemX, L.LemY) then
+      if HasPixelAt(L.LemX, L.LemY) and (LemYDir = 1) then
         Transition(L, baWalking)
+      else if HasPixelAt(L.LemX, L.LemY - 2) and (LemYDir = -1) then
+        // Do nothing
       else
-        Inc(L.LemY);
+        Inc(L.LemY, LemYDir);
     end;
 
   end;
