@@ -84,11 +84,10 @@ begin
     //if CheckZombies then CompareVal := CompareVal + 64;
     //if CheckGhosts then CompareVal := CompareVal + 128;
 
-    for i := 0 to InteractiveObjects.Count-1 do
+    for i := 0 to PreplacedLemmings.Count-1 do
     begin
-      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).Meta.TriggerEffect <> 13 then Continue;
       LemsSpawned := LemsSpawned + 1; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
-      if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
+      if PreplacedLemmings[i].IsZombie then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
 
     i := -1;
@@ -206,14 +205,13 @@ var
   PieceID: Integer;
   MO: TMetaObject;
 begin
-  MinCount := 0;
   FoundWindow := false;
+  MinCount := aLevel.PreplacedLemmings.Count;
   for i := 0 to aLevel.InteractiveObjects.Count - 1 do
   begin
     //if aLevel.InteractiveObjects[i].Identifier = 1 then FoundWindow := true;
     MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]).Meta;
     if MO.TriggerEffect = 23 then FoundWindow := true;
-    if MO.TriggerEffect = 13 then Inc(MinCount);
   end;
   if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;
 
