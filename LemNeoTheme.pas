@@ -18,6 +18,8 @@ const
   BACKGROUND_COLOR = 'background';
   FALLBACK_COLOR = MASK_COLOR;
 
+  DEFAULT_COLOR = $FF808080;
+
 type
   TNeoThemeColor = record
     Name: String;
@@ -121,7 +123,7 @@ begin
   if i = -1 then i := FindColorIndex(FALLBACK_COLOR);
 
   if i = -1 then
-    Result := $FF808080
+    Result := DEFAULT_COLOR
   else
     Result := fColors[i].Color;
 

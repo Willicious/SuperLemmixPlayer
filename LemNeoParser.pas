@@ -54,6 +54,8 @@ type
       procedure LoadFromStream(aStream: TStream);
       procedure LoadFromStringList(aStringList: TStrings);
 
+      procedure Reset;
+
       property NextLine: TParserLine read GetNextLine;
       property StringList: TStringList read fStringList;
   end;
@@ -95,6 +97,11 @@ procedure TNeoLemmixParser.DoAfterLoad;
 begin
   fCurrentLine := 0;
   CleanStringList;
+end;
+
+procedure TNeoLemmixParser.Reset;
+begin
+  fCurrentLine := 0;
 end;
 
 function TNeoLemmixParser.GetNextLine: TParserLine;

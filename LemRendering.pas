@@ -1397,6 +1397,7 @@ begin
   fXmasPal := XmasPal;
 
   fTheme.Load(Info.Level.Info.GraphicSetName);
+  fPieceManager.SetTheme(fTheme);
 
   LowPal := DosPaletteToArrayOfColor32(DosInLevelPalette);
   if fXmasPal then

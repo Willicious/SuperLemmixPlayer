@@ -274,7 +274,7 @@ OBJECT 6
   NAME receiver
 
 OBJECT 7
-  SET circuit
+  SET default
   NAME pickup
 
 OBJECT 8

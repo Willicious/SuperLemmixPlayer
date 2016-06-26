@@ -8,7 +8,7 @@ interface
 
 uses
   Dialogs,
-  LemNeoParser, PngInterface,
+  LemNeoParser, PngInterface, LemNeoTheme,
   LemMetaTerrain, LemMetaObject, LemTypes, GR32, LemStrings,
   Classes, SysUtils;
 
@@ -31,6 +31,7 @@ type
 
   TNeoPieceManager = class
     private
+      fTheme: TNeoTheme;
       fTerrains: TMetaTerrains;
       fObjects: TMetaObjects;
       fTerrainImages: TBitmaps;
@@ -50,14 +51,19 @@ type
       function GetMetaObject(Identifier: String): TMetaObject;
       function GetTerrainBitmap(Identifier: String): TBitmap32;
       function GetObjectBitmaps(Identifier: String): TBitmaps;
+      function GetThemeColor(Index: String): TColor32;
 
       property TerrainCount: Integer read GetTerrainCount;
       property ObjectCount: Integer read GetObjectCount;
+
+      property ThemeColor[Index: String]: TColor32 read GetThemeColor;
     public
       constructor Create;
       destructor Destroy; override;
 
       procedure Tidy;
+
+      procedure SetTheme(aTheme: TNeoTheme);
 
       property Terrains[Identifier: String]: TTerrainRecord read GetTerrain;
       property Objects[Identifier: String]: TObjectRecord read GetObject;
@@ -106,6 +112,7 @@ begin
   fObjects := TMetaObjects.Create;
   fTerrainImages := TBitmaps.Create(true);
   fObjectImages := TBitmapses.Create(true);
+  fTheme := nil;
 end;
 
 destructor TNeoPieceManager.Destroy;
@@ -214,6 +221,7 @@ var
   O: TMetaObject;
   BMP: TBitmap32;
   BMPs: TBitmaps;
+  SkipOneRead: Boolean;
 
   procedure ShiftRect(var aRect: TRect; dX, dY: Integer);
   begin
@@ -244,6 +252,26 @@ var
     end;
   end;
 
+  procedure LoadApplyMask;
+  var
+    MaskName, MaskColor: String;
+  begin
+    MaskName := '';
+    MaskColor := '';
+    repeat
+      Line := Parser.NextLine;
+
+      if Line.Keyword = 'COLOR' then
+        MaskColor := Line.Value;
+
+      if Line.Keyword = 'NAME' then
+        MaskName := Line.Value;
+    until (Line.Keyword <> 'COLOR') and (Line.Keyword <> 'NAME');
+
+    SkipOneRead := true; // because the above has already read it
+    TPngInterface.MaskImageFromFile(Bmp, ObjectLabel.Piece + '_mask_' + MaskName + '.png', ThemeColor[MaskColor]);
+  end;
+
 begin
   ObjectLabel := SplitIdentifier(Identifier);
   if not DirectoryExists(AppPath + SFStylesPieces + ObjectLabel.GS) then
@@ -262,10 +290,14 @@ begin
 
   // We always need the parser for an object.
   Parser := TNeoLemmixParser.Create;
+  SkipOneRead := false;
   try
     Parser.LoadFromFile(ObjectLabel.Piece + '.nxob');
     repeat
-      Line := Parser.NextLine;
+      if SkipOneRead then
+        SkipOneRead := false
+      else
+        Line := Parser.NextLine;
 
       // Trigger effects
       if Line.Keyword = 'EXIT' then O.TriggerEffect := 1;
@@ -325,6 +357,9 @@ begin
       if Line.Keyword = 'RANDOM_FRAME' then
         O.RandomStartFrame := true;
 
+      if Line.Keyword = 'MASK' then
+        LoadApplyMask;
+
     until Line.Keyword = '';
   finally
     Parser.Free;
@@ -379,6 +414,25 @@ end;
 function TNeoPieceManager.GetObjectBitmaps(Identifier: String): TBitmaps;
 begin
   Result := GetObject(Identifier).Image;
+end;
+
+// And the stuff for communicating with the theme
+
+procedure TNeoPieceManager.SetTheme(aTheme: TNeoTheme);
+begin
+  fTheme := aTheme;
+  Tidy;
+end;
+
+function TNeoPieceManager.GetThemeColor(Index: String): TColor32;
+begin
+  if fTheme = nil then
+  begin
+    Result := DEFAULT_COLOR;
+    if Uppercase(Index) = 'BACKGROUND' then
+      Result := $FF000000;
+  end else
+    Result := fTheme.Colors[Index];
 end;
 
 end.
