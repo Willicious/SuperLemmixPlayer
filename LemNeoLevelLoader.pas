@@ -391,7 +391,7 @@ begin
     // Title: At most 32 characters
     if Length(Title) > 32 then Title := LeftStr(Title, 32);
     // Author: At most 16 characters
-    if Length(Author) > 16 then Title := LeftStr(Author, 16);
+    if Length(Author) > 16 then Author := LeftStr(Author, 16);
 
     // Width of level: At least 320
     if Width < 320 then Width := 320;

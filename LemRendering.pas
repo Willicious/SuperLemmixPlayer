@@ -803,20 +803,20 @@ begin
   if (not MO.CanResizeVertical) or (O.Height = -1) then
     O.Height := MO.Height;
 
-  CountX := (O.Width - 1) div MO.Width;
-  CountY := (O.Height - 1) div MO.Height;
+  CountX := (O.Width-1) div MO.Width;
+  CountY := (O.Height-1) div MO.Height;
 
-  for iY := 0 to CountY-1 do
+  for iY := 0 to CountY do
   begin
     DstRect := Src.BoundsRect;
     DstRect := ZeroTopLeftRect(DstRect);
     OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
-    if iY = CountY-1 then
-      DstRect.Bottom := DstRect.Bottom - (MO.Height - (O.Height mod MO.Height));
-    for iX := 0 to CountX-1 do
+    if iY = CountY then
+      DstRect.Bottom := DstRect.Bottom - (O.Height mod MO.Height);
+    for iX := 0 to CountX do
     begin
-      if iX = CountX-1 then
-        DstRect.Right := DstRect.Right - (MO.Width - (O.Width mod MO.Width));
+      if iX = CountX then
+        DstRect.Right := DstRect.Right - (O.Width mod MO.Width);
       Src.DrawTo(Dst, DstRect);
       OffsetRect(DstRect, MO.Width, 0);
     end;
@@ -898,24 +898,31 @@ var
 
     PrepareObjectBitmap(Src, Inf.Obj.DrawingFlags, Inf.ZombieMode);
 
-    CountX := (Inf.Width - 1) div MO.Width;
-    CountY := (Inf.Height - 1) div MO.Height;
     Dst := fLayers[aLayer];
     O := Inf.Obj;
     MO := Inf.MetaObj;
+    CountX := (Inf.Width-1) div MO.Width;
+    CountY := (Inf.Height-1) div MO.Height;    
 
-    for iY := 0 to CountY-1 do
+    for iY := 0 to CountY do
     begin
+      SrcRect := Src.BoundsRect;
       DstRect := Src.BoundsRect;
       DstRect := ZeroTopLeftRect(DstRect);
       OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
-      if iY = CountY-1 then
-        DstRect.Bottom := DstRect.Bottom - (MO.Height - (O.Height mod MO.Height));
-      for iX := 0 to CountX-1 do
+      if iY = CountY then
       begin
-        if iX = CountX-1 then
-          DstRect.Right := DstRect.Right - (MO.Width - (O.Width mod MO.Width));
-        Src.DrawTo(Dst, DstRect);
+        DstRect.Bottom := DstRect.Bottom - (O.Height mod MO.Height);
+        SrcRect.Bottom := SrcRect.Bottom - (O.Height mod MO.Height);
+      end;
+      for iX := 0 to CountX do
+      begin
+        if iX = CountX then
+        begin
+          DstRect.Right := DstRect.Right - (O.Width mod MO.Width);
+          SrcRect.Right := SrcRect.Right - (O.Width mod MO.Width);
+        end;
+        Src.DrawTo(Dst, DstRect, SrcRect);
         OffsetRect(DstRect, MO.Width, 0);
       end;
     end;
@@ -1187,6 +1194,8 @@ var
   procedure ApplyOWW(O: TInteractiveObject; ORec: TObjectRecord);
   var
     C: TColor32;
+
+    TW, TH: Integer;
   begin
     case ORec.Meta.TriggerEffect of
       7: C := PM_ONEWAYLEFT;
@@ -1195,10 +1204,18 @@ var
       else Exit; // should never happen, but just in case
     end;
 
+    TW := ORec.Meta.TriggerWidth;
+    TH := ORec.Meta.TriggerHeight;
+
+    if ORec.Meta.CanResizeHorizontal then
+      TW := TW + (O.Width - ORec.Meta.Width);
+    if ORec.Meta.CanResizeVertical then
+      TH := TH + (O.Height - ORec.Meta.Height);
+
     SetRegion( Rect(O.Left + ORec.Meta.TriggerLeft,
                     O.Top + ORec.Meta.TriggerTop,
-                    O.Left + ORec.Meta.TriggerLeft + ORec.Meta.TriggerWidth - 1,
-                    O.Top + ORec.Meta.TriggerTop + ORec.Meta.TriggerHeight - 1),
+                    O.Left + ORec.Meta.TriggerLeft + TW - 1,
+                    O.Top + ORec.Meta.TriggerTop + TH - 1),
                C, 0);
   end;
 

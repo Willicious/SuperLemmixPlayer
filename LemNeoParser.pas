@@ -156,7 +156,7 @@ begin
       for i2 := 1 to Length(fStringList[i]) do
         if fStringList[i][i2] <> ' ' then
         begin
-          fStringList[i] := MidStr(fStringList[i], i2, Length(fStringList[i]));
+          fStringList[i] := RightStr(fStringList[i], Length(fStringList[i]) + 1 - i2);
           Break;
         end;
 
