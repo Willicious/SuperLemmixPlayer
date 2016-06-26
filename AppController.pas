@@ -180,7 +180,7 @@ begin
       OpenDlg := TOpenDialog.Create(self);
       OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
       OpenDlg.Title := 'Select Level Pack';
-      OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxp, *.lvl)|*.nxp;*.lvl|NeoLemmix Level Pack (*.nxp)|*.nxp|NeoLemmix Level (*.lvl)|*.lvl';
+      OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxp, *.lvl, *.nxlv)|*.nxp;*.lvl;*.nxlv|NeoLemmix Level Pack (*.nxp)|*.nxp|NeoLemmix Level (*.lvl, *.nxlv)|*.lvl;*.nxlv';
       OpenDlg.InitialDir := ExtractFilePath(ParamStr(0));
       if not OpenDlg.Execute then
       begin
