@@ -1,9 +1,8 @@
 # NeoLemmix Level
 # Dumped from NeoLemmix Player VExNF 1.45n-C
-# Modified by namida
 
 # Level info
- TITLE   Keep your MOM on Mr. Lemming 
+ TITLE   Keep your hair on Mr. Lemming 
  AUTHOR                 
  ID 48064109
 
@@ -50,8 +49,54 @@
   PIECE owa_left
   X 76
   Y 56
-  WIDTH 64
-  HEIGHT 48
+
+ OBJECT
+  SET default
+  PIECE owa_left
+  X 108
+  Y 56
+
+ OBJECT
+  SET default
+  PIECE owa_left
+  X 140
+  Y 56
+
+ OBJECT
+  SET default
+  PIECE owa_left
+  X 140
+  Y 88
+
+ OBJECT
+  SET default
+  PIECE owa_left
+  X 108
+  Y 88
+
+ OBJECT
+  SET default
+  PIECE owa_left
+  X 76
+  Y 88
+
+ OBJECT
+  SET default
+  PIECE owa_left
+  X 76
+  Y 104
+
+ OBJECT
+  SET default
+  PIECE owa_left
+  X 108
+  Y 104
+
+ OBJECT
+  SET default
+  PIECE owa_left
+  X 140
+  Y 104
 
 
 # Terrains

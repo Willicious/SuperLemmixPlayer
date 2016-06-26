@@ -391,7 +391,7 @@ begin
     // Title: At most 32 characters
     if Length(Title) > 32 then Title := LeftStr(Title, 32);
     // Author: At most 16 characters
-    if Length(Title) > 16 then Title := LeftStr(Title, 16);
+    if Length(Author) > 16 then Title := LeftStr(Author, 16);
 
     // Width of level: At least 320
     if Width < 320 then Width := 320;
@@ -565,6 +565,10 @@ begin
         Add('  PIECE ' + O.Piece);
         Add('  X ' + IntToStr(O.Left));
         Add('  Y ' + IntToStr(O.Top));
+        if O.Width <> -1 then
+          Add('  WIDTH ' + IntToStr(O.Width));
+        if O.Height <> -1 then
+          Add('  HEIGHT ' + IntToStr(O.Height));
         if O.TarLev <> 0 then Add('  L ' + IntToStr(O.TarLev));
         if O.Skill <> 0 then Add('  S ' + IntToStr(O.Skill));
         if O.DrawingFlags and odf_NoOverwrite <> 0 then
@@ -618,10 +622,10 @@ begin
           Add('  FLIP_VERTICAL');
         if Info.LevelOptions and $80 = 0 then
         begin
-          if T.DrawingFlags and tdf_NoOneWay <> 0 then
+          if T.DrawingFlags and tdf_NoOneWay = 0 then
             Add('  ONE_WAY');
         end else begin
-          if T.DrawingFlags and tdf_NoOneWay = 0 then
+          if T.DrawingFlags and tdf_NoOneWay <> 0 then
             Add('  ONE_WAY');
         end;
         Add;

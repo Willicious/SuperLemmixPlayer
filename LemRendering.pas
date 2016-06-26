@@ -798,6 +798,11 @@ begin
 
   PrepareObjectBitmap(Src, O.DrawingFlags, O.DrawAsZombie);
 
+  if (not MO.CanResizeHorizontal) or (O.Width = -1) then
+    O.Width := MO.Width;
+  if (not MO.CanResizeVertical) or (O.Height = -1) then
+    O.Height := MO.Height;
+
   CountX := (O.Width - 1) div MO.Width;
   CountY := (O.Height - 1) div MO.Height;
 
@@ -874,6 +879,11 @@ var
   ObjectInfos: TInteractiveObjectInfoList;
 
   procedure ProcessDrawFrame(aLayer: TRenderLayer);
+  var
+    CountX, CountY, iX, iY: Integer;
+    Dst: TBitmap32;
+    O: TInteractiveObject;
+    MO: TMetaObject;
   begin
     if Inf.IsInvisible then Exit;
     if Inf.TriggerEffect in [13, 16, 25] then Exit;
@@ -888,11 +898,29 @@ var
 
     PrepareObjectBitmap(Src, Inf.Obj.DrawingFlags, Inf.ZombieMode);
 
-    SrcRect := Src.BoundsRect;
-    DstRect := ZeroTopLeftRect(SrcRect);
-    OffsetRect(DstRect, Inf.Left, Inf.Top);
+    CountX := (Inf.Width - 1) div MO.Width;
+    CountY := (Inf.Height - 1) div MO.Height;
+    Dst := fLayers[aLayer];
+    O := Inf.Obj;
+    MO := Inf.MetaObj;
 
-    Src.DrawTo(fLayers[aLayer], DstRect, SrcRect);
+    for iY := 0 to CountY-1 do
+    begin
+      DstRect := Src.BoundsRect;
+      DstRect := ZeroTopLeftRect(DstRect);
+      OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
+      if iY = CountY-1 then
+        DstRect.Bottom := DstRect.Bottom - (MO.Height - (O.Height mod MO.Height));
+      for iX := 0 to CountX-1 do
+      begin
+        if iX = CountX-1 then
+          DstRect.Right := DstRect.Right - (MO.Width - (O.Width mod MO.Width));
+        Src.DrawTo(Dst, DstRect);
+        OffsetRect(DstRect, MO.Width, 0);
+      end;
+    end;
+
+    //Src.DrawTo(fLayers[aLayer], DstRect, SrcRect);
 
     Inf.Obj.LastDrawX := Inf.Left;
     Inf.Obj.LastDrawY := Inf.Top;
