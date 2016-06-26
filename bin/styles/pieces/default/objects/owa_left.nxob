@@ -1,0 +1,13 @@
+# Object metainfo
+
+OWL_ARROW
+FRAMES 7
+VERTICAL
+TRIGGER_X 0
+TRIGGER_Y 0
+TRIGGER_W 32
+TRIGGER_H 32
+
+MASK
+  NAME *self
+  COLOR one_ways
