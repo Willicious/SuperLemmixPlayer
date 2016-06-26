@@ -288,12 +288,12 @@ OBJECT 2
   NAME flag_green
 
 OBJECT 3
-  SET bubble
-  NAME oneway_left
+  SET default
+  NAME owa_left_narrow
 
 OBJECT 4
-  SET bubble
-  NAME oneway_right
+  SET default
+  NAME owa_right_narrow
 
 OBJECT 5
   SET bubble
@@ -324,15 +324,15 @@ OBJECT 11
   OFFSET_Y 9
 
 OBJECT 12
-  SET bubble
+  SET default
   NAME pickup
 
 OBJECT 13
   NAME *nil
 
 OBJECT 14
-  SET bubble
-  NAME oneway_down
+  SET default
+  NAME owa_down_narrow
 
 OBJECT 15
   SET bubble

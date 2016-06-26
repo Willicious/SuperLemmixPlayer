@@ -255,12 +255,12 @@ OBJECT 2
   NAME flag_green
 
 OBJECT 3
-  SET brick
-  NAME oneway_left
+  SET default
+  NAME owa_left_narrow
 
 OBJECT 4
-  SET brick
-  NAME oneway_right
+  SET default
+  NAME owa_right_narrow
 
 OBJECT 5
   SET brick
@@ -287,15 +287,15 @@ OBJECT 10
   OFFSET_Y 9
 
 OBJECT 11
-  SET brick
+  SET default
   NAME pickup
 
 OBJECT 12
   NAME *nil
 
 OBJECT 13
-  SET brick
-  NAME oneway_down
+  SET default
+  NAME owa_down_narrow
 
 OBJECT 14
   SET brick

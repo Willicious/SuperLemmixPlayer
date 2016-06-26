@@ -175,7 +175,7 @@ OBJECT 8
   OFFSET_Y 9
 
 OBJECT 9
-  SET martian
+  SET default
   NAME pickup
 
 OBJECT 10

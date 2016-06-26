@@ -263,7 +263,7 @@ OBJECT 10
   OFFSET_Y 9
 
 OBJECT 11
-  SET desert
+  SET default
   NAME pickup
 
 OBJECT 12

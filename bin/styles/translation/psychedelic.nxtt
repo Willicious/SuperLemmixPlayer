@@ -199,7 +199,7 @@ OBJECT 9
   OFFSET_Y 9
 
 OBJECT 10
-  SET psychedelic
+  SET default
   NAME pickup
 
 OBJECT 11

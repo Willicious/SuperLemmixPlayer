@@ -220,7 +220,7 @@ OBJECT 13
   OFFSET_Y 9
 
 OBJECT 14
-  SET xmas
+  SET default
   NAME pickup
 
 OBJECT 15

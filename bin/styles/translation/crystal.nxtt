@@ -200,7 +200,7 @@ OBJECT 11
   OFFSET_Y 9
 
 OBJECT 12
-  SET crystal
+  SET default
   NAME pickup
 
 OBJECT 13

@@ -216,11 +216,11 @@ OBJECT 2
   NAME flag_green
 
 OBJECT 3
-  SET dirt
+  SET default
   NAME owa_left
 
 OBJECT 4
-  SET dirt
+  SET default
   NAME owa_right
 
 OBJECT 5
@@ -252,7 +252,7 @@ OBJECT 11
   OFFSET_Y 9
 
 OBJECT 12
-  SET dirt
+  SET default
   NAME pickup
 
 OBJECT 13

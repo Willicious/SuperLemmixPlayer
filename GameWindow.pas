@@ -227,7 +227,7 @@ begin
   end;
 
   // Update drawing
-  if TimeForFrame or TimeForFastForwardFrame or fNeedRedraw then
+  if (TimeForFrame or TimeForFastForwardFrame or fNeedRedraw) and not Game.HyperSpeed then
   begin
     DoDraw;
   end;
@@ -616,7 +616,7 @@ begin
 
   CheckShifts(Shift);
 
-  if Game.Paused then
+  if Game.Paused and not Game.HyperSpeed then
     DoDraw;
 end;
 
@@ -988,6 +988,7 @@ begin
   if O < MinVScroll * DisplayScale then O := MinVScroll * DisplayScale;
   if O > MaxVScroll * DisplayScale then O := MaxVScroll * DisplayScale;
   Img.OffsetVert := O;
+  DoDraw;
 end;
 
 

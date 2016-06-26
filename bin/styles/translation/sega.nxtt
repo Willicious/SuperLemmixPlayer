@@ -262,7 +262,7 @@ OBJECT 5
   OFFSET_Y 9
 
 OBJECT 6
-  SET sega
+  SET default
   NAME pickup
 
 OBJECT 7

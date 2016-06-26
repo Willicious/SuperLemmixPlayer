@@ -267,11 +267,11 @@ OBJECT 2
   NAME flag_green
 
 OBJECT 3
-  SET pillar
+  SET default
   NAME owa_left
 
 OBJECT 4
-  SET pillar
+  SET default
   NAME owa_right
 
 OBJECT 5
@@ -304,14 +304,14 @@ OBJECT 11
   OFFSET_Y 9
 
 OBJECT 12
-  SET pillar
+  SET default
   NAME pickup
 
 OBJECT 13
   NAME *nil
 
 OBJECT 14
-  SET pillar
+  SET default
   NAME owa_down
 
 OBJECT 15

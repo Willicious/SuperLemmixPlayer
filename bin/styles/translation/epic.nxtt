@@ -255,12 +255,12 @@ OBJECT 2
   NAME flag_green
 
 OBJECT 3
-  SET brick
-  NAME oneway_left
+  SET default
+  NAME oneway_left_narrow
 
 OBJECT 4
-  SET brick
-  NAME oneway_right
+  SET default
+  NAME oneway_right_narrow
 
 OBJECT 5
   SET brick
@@ -549,11 +549,11 @@ OBJECT 11
 
 OBJECT 12
   SET bubble
-  NAME oneway_left
+  NAME oneway_left_narrow
 
 OBJECT 13
   SET bubble
-  NAME oneway_right
+  NAME oneway_right_narrow
 
 OBJECT 14
   SET bubble
@@ -971,11 +971,11 @@ OBJECT 29
   NAME window
 
 OBJECT 30
-  SET dirt
+  SET default
   NAME owa_left
 
 OBJECT 31
-  SET dirt
+  SET default
   NAME owa_right
 
 OBJECT 32
@@ -1556,11 +1556,11 @@ OBJECT 47
   NAME window
 
 OBJECT 48
-  SET marble
+  SET default
   NAME owa_left
 
 OBJECT 49
-  SET marble
+  SET default
   NAME owa_right
 
 OBJECT 50
@@ -1840,11 +1840,11 @@ OBJECT 55
   NAME window
 
 OBJECT 56
-  SET pillar
+  SET default
   NAME owa_left
 
 OBJECT 57
-  SET pillar
+  SET default
   NAME owa_right
 
 OBJECT 58
@@ -2133,11 +2133,11 @@ OBJECT 64
   NAME window
 
 OBJECT 65
-  SET rock
+  SET default
   NAME owa_left
 
 OBJECT 66
-  SET rock
+  SET default
   NAME owa_right
 
 OBJECT 67
@@ -2324,11 +2324,11 @@ OBJECT 74
   NAME window
 
 OBJECT 75
-  SET snow
+  SET default
   NAME owa_left
 
 OBJECT 76
-  SET snow
+  SET default
   NAME owa_right
 
 OBJECT 77

@@ -309,7 +309,7 @@ OBJECT 11
   OFFSET_Y 9
 
 OBJECT 12
-  SET fire
+  SET default
   NAME pickup
 
 OBJECT 13

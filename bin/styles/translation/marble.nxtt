@@ -270,11 +270,11 @@ OBJECT 2
   NAME flag_green
 
 OBJECT 3
-  SET marble
+  SET default
   NAME owa_left
 
 OBJECT 4
-  SET marble
+  SET default
   NAME owa_right
 
 OBJECT 5
@@ -302,14 +302,14 @@ OBJECT 10
   OFFSET_Y 9
 
 OBJECT 11
-  SET marble
+  SET default
   NAME pickup
 
 OBJECT 12
   NAME *nil
 
 OBJECT 13
-  SET marble
+  SET default
   NAME owa_down
 
 OBJECT 14
