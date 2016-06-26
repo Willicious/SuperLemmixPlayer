@@ -361,9 +361,6 @@ begin
       if Line.Keyword = 'RANDOM_FRAME' then
         O.RandomStartFrame := true;
 
-      if Line.Keyword = 'MASK' then
-        LoadApplyMask;
-
       if Line.Keyword = 'RESIZE' then
       begin
         if Lowercase(LeftStr(Line.Value, 3)) = 'hor' then  // kludgy, but allows both "horz" and "horizontal" and similar variations
@@ -375,6 +372,9 @@ begin
         if Lowercase(Line.Value) = 'none' then
           O.Resizability := mos_None;
       end;
+
+      if Line.Keyword = 'MASK' then
+        LoadApplyMask;
 
     until Line.Keyword = '';
   finally

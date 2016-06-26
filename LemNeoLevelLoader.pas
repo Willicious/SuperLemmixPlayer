@@ -234,6 +234,12 @@ begin
           if Line.Keyword = 'Y' then
             O.Top := Line.Numeric;
 
+          if Line.Keyword = 'WIDTH' then
+            O.Width := Line.Numeric;
+
+          if Line.Keyword = 'HEIGHT' then
+            O.Height := Line.Numeric;
+
           if Line.Keyword = 'L' then
             O.TarLev := Line.Numeric;
 

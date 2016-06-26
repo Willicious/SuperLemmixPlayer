@@ -37,6 +37,7 @@ type
   public
     procedure Assign(Source: TPersistent); override;
   published
+    constructor Create(Collection: TCollection); override;
     property Width: Integer read fWidth write fWidth;
     property Height: Integer read fHeight write fHeight;
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
@@ -93,6 +94,13 @@ begin
 end; 
 
 { TInteractiveObject }
+
+constructor TInteractiveObject.Create(Collection: TCollection);
+begin
+  inherited;
+  fWidth := -1;
+  fHeight := -1;
+end;
 
 procedure TInteractiveObject.Assign(Source: TPersistent);
 var
