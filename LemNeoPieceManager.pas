@@ -269,7 +269,11 @@ var
     until (Line.Keyword <> 'COLOR') and (Line.Keyword <> 'NAME');
 
     SkipOneRead := true; // because the above has already read it
-    TPngInterface.MaskImageFromFile(Bmp, ObjectLabel.Piece + '_mask_' + MaskName + '.png', ThemeColor[MaskColor]);
+
+    if Lowercase(MaskName) = '*self' then
+      TPngInterface.MaskImageFromImage(Bmp, Bmp, ThemeColor[MaskColor]) // yes, this works :D
+    else
+      TPngInterface.MaskImageFromFile(Bmp, ObjectLabel.Piece + '_mask_' + MaskName + '.png', ThemeColor[MaskColor]);
   end;
 
 begin
