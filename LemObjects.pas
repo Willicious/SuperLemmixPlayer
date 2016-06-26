@@ -152,8 +152,12 @@ begin
   // Set basic stuff
   sTop := Obj.Top;
   sLeft := Obj.Left;
-  sHeight := MetaObj.Height;
-  sWidth := MetaObj.Width;
+  if not MetaObj.CanResizeVertical then
+    Obj.Height := MetaObj.Height;
+  sHeight := Obj.Height;
+  if not MetaObj.CanResizeHorizontal then
+    Obj.Width := MetaObj.Width;
+  sWidth := Obj.Width;
   sTriggerRect := GetTriggerRect;
   sIsDisabled := Obj.IsFake;
   sTriggerEffect := MetaObj.TriggerEffect;
@@ -204,27 +208,37 @@ function TInteractiveObjectInfo.GetTriggerRect(): TRect;
 // which by definition does not include the right and bottom line!
 var
   X, Y: Integer;
+  W, H: Integer;
 begin
   Y := Obj.Top; // of whole object
   X := Obj.Left;
 
   if IsFlipImage then
-    X := X + (MetaObj.Width - 1) - MetaObj.TriggerLeft - (MetaObj.TriggerWidth - 1)
+    X := X + (sWidth - 1) - MetaObj.TriggerLeft - (MetaObj.TriggerWidth - 1)
   else
     X := X + MetaObj.TriggerLeft;
 
   if IsUpsideDown then
   begin
-    Y := Y + (MetaObj.Height - 1) - MetaObj.TriggerTop - (MetaObj.TriggerHeight - 1);
+    Y := Y + (sHeight - 1) - MetaObj.TriggerTop - (MetaObj.TriggerHeight - 1);
     if not (MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
       Y := Y + 9;
   end else
     Y := Y + MetaObj.TriggerTop;
 
+  W := MetaObj.TriggerWidth;
+  H := MetaObj.TriggerHeight;
+
+  if MetaObj.CanResizeHorizontal then
+    W := W + (sWidth - MetaObj.Width);
+
+  if MetaObj.CanResizeVertical then
+    H := H + (sHeight - MetaObj.Height);
+
   Result.Top := Y;
-  Result.Bottom := Y + MetaObj.TriggerHeight;
+  Result.Bottom := Y + H;
   Result.Left := X;
-  Result.Right := X + MetaObj.TriggerWidth;
+  Result.Right := X + W;
 end;
 
 procedure TInteractiveObjectInfo.SetIsDisabled(Value: Boolean);

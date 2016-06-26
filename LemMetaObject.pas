@@ -56,6 +56,8 @@ type
   {-------------------------------------------------------------------------------
     This class describes interactive objects
   -------------------------------------------------------------------------------}
+  TMetaObjectSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
+
   TMetaObject = class(TCollectionItem)
   private
   protected
@@ -77,12 +79,14 @@ type
     fTriggerWidth                 : Integer; // width of triggerarea (if triggered)
     fTriggerHeight                : Integer; // height of triggerarea (if triggered)
     fTriggerEffect                : Integer; // ote_xxxx see dos doc
-    fTriggerNext                  : Byte;
+    fTriggerNext                  : Integer;
     fAnimationFramesBaseLoc       : Integer; // DOS only: data location of first frame in file (vgagr??.dat)
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : Integer; // ose_xxxx what sound to play
     fRandomStartFrame             : Boolean;
+    fResizability                 : TMetaObjectSizeSetting;
     function GetIdentifier: String;
+    function GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
   public
     procedure Assign(Source: TPersistent); override;
   published
@@ -105,11 +109,14 @@ type
     property TriggerWidth             : Integer read fTriggerWidth write fTriggerWidth;
     property TriggerHeight            : Integer read fTriggerHeight write fTriggerHeight;
     property TriggerEffect            : Integer read fTriggerEffect write fTriggerEffect;
-    property TriggerNext              : Byte read fTriggerNext write fTriggerNext;
+    property TriggerNext              : Integer read fTriggerNext write fTriggerNext;
     property AnimationFramesBaseLoc   : Integer read fAnimationFramesBaseLoc write fAnimationFramesBaseLoc;
     property PreviewFrameIndex        : Integer read fPreviewFrameIndex write fPreviewFrameIndex;
     property SoundEffect              : Integer read fSoundEffect write fSoundEffect;
     property RandomStartFrame         : Boolean read fRandomStartFrame write fRandomStartFrame;
+    property Resizability             : TMetaObjectSizeSetting read fResizability write fResizability;
+    property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
+    property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
   end;
 
   TMetaObjects = class(TCollectionEx)
@@ -155,6 +162,14 @@ end;
 function TMetaObject.GetIdentifier: String;
 begin
   Result := LowerCase(fGS + ':' + fPiece);
+end;
+
+function TMetaObject.GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
+begin
+  if fResizability = mos_none then
+    Result := false
+  else
+    Result := (aDir = fResizability) or (fResizability = mos_Both);
 end;
 
 { TMetaObjects }

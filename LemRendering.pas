@@ -769,6 +769,8 @@ var
   MO: TMetaObject;
 
   ORec: TObjectRecord;
+  iX, iY: Integer;
+  CountX, CountY: Integer;
 begin
 
   ORec := FindMetaObject(O);
@@ -796,11 +798,25 @@ begin
 
   PrepareObjectBitmap(Src, O.DrawingFlags, O.DrawAsZombie);
 
-  DstRect := Src.BoundsRect;
-  DstRect := ZeroTopLeftRect(DstRect);
-  OffsetRect(DstRect, O.Left, O.Top);
+  CountX := (O.Width - 1) div MO.Width;
+  CountY := (O.Height - 1) div MO.Height;
 
-  Src.DrawTo(Dst, DstRect);
+  for iY := 0 to CountY-1 do
+  begin
+    DstRect := Src.BoundsRect;
+    DstRect := ZeroTopLeftRect(DstRect);
+    OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
+    if iY = CountY-1 then
+      DstRect.Bottom := DstRect.Bottom - (MO.Height - (O.Height mod MO.Height));
+    for iX := 0 to CountX-1 do
+    begin
+      if iX = CountX-1 then
+        DstRect.Right := DstRect.Right - (MO.Width - (O.Width mod MO.Width));
+      Src.DrawTo(Dst, DstRect);
+      OffsetRect(DstRect, MO.Width, 0);
+    end;
+  end;
+
   Src.Free;
 
   O.LastDrawX := O.Left;

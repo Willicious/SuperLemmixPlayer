@@ -21,6 +21,8 @@ type
   TInteractiveObject = class(TIdentifiedPiece)
   private
   protected
+    fWidth: Integer;
+    fHeight: Integer;
     fDrawingFlags: Byte; // odf_xxxx
     fFake: Boolean;
     fSkill: Byte;
@@ -35,6 +37,8 @@ type
   public
     procedure Assign(Source: TPersistent); override;
   published
+    property Width: Integer read fWidth write fWidth;
+    property Height: Integer read fHeight write fHeight;
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
     property IsFake: Boolean read fFake write fFake;
     property Skill : Byte read fSkill write fSkill;

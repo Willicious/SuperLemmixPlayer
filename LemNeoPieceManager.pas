@@ -10,7 +10,7 @@ uses
   Dialogs,
   LemNeoParser, PngInterface, LemNeoTheme,
   LemMetaTerrain, LemMetaObject, LemTypes, GR32, LemStrings,
-  Classes, SysUtils;
+  StrUtils, Classes, SysUtils;
 
 type
 
@@ -363,6 +363,18 @@ begin
 
       if Line.Keyword = 'MASK' then
         LoadApplyMask;
+
+      if Line.Keyword = 'RESIZE' then
+      begin
+        if Lowercase(LeftStr(Line.Value, 3)) = 'hor' then  // kludgy, but allows both "horz" and "horizontal" and similar variations
+          O.Resizability := mos_Horizontal;
+        if Lowercase(LeftStr(Line.Value, 4)) = 'vert' then
+          O.Resizability := mos_Vertical;
+        if Lowercase(Line.Value) = 'both' then
+          O.Resizability := mos_Both;
+        if Lowercase(Line.Value) = 'none' then
+          O.Resizability := mos_None;
+      end;
 
     until Line.Keyword = '';
   finally
