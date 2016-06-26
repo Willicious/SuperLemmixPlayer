@@ -18,6 +18,7 @@ uses
   LemCore,
   LemLevel,
   LemDosStyle,
+  LemNeoTheme,
   GameInterfaces,
   GameControl,
   LemRendering, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
@@ -717,7 +718,7 @@ begin
   SetLength(LemmixPal, 16);
   for i := 8 to 15 do
     LemmixPal[i] := HiPal[i - 8];
-  LemmixPal[7] := GameParams.Renderer.Theme.MaskColor;
+  LemmixPal[7] := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
   SetButtonRects;
 

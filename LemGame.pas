@@ -35,7 +35,7 @@ uses
   LemCore, LemTypes, LemDosBmp, LemDosStructures, LemStrings, LemMetaAnimation,
   LemMetaObject, LemInteractiveObject, LemSteel, LemLevel, LemStyle,
   LemRenderHelpers, LemRendering, LemDosAnimationSet,
-  LemMusicSystem, LemDosMainDat,
+  LemMusicSystem, LemDosMainDat, LemNeoTheme,
   LemObjects, LemLemming, LemRecolorSprites,
   GameInterfaces, GameControl, GameSound;
 
@@ -1478,7 +1478,7 @@ begin
   SetLength(HiPal, 8);
   for i := 0 to 7 do
     HiPal[i] := PARTICLE_COLORS[i];
-  LowPal[7] := Renderer.Theme.MaskColor; // copy the brickcolor
+  LowPal[7] := Renderer.Theme.Colors[MASK_COLOR]; // copy the brickcolor
   SetLength(Pal, 16);
   for i := 0 to 7 do
     Pal[i] := LowPal[i];
@@ -1776,7 +1776,7 @@ begin
         ObjectInfos[i].CurrentFrame := 0;
 
   ApplyLevelEntryOrder;
-  InitializeBrickColors(Renderer.Theme.MaskColor);
+  InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
   InitializeObjectMap;
   InitializeBlockerMap;
   InitializeMiniMap;

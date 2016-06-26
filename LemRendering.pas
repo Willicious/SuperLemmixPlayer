@@ -204,7 +204,7 @@ var
   i: Integer;
   L: TLemming;
 begin
-  Dst.Clear(fTheme.BackgroundColor);
+  Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
   OldCombine := fPhysicsMap.OnPixelCombine;
   OldMode := fPhysicsMap.DrawMode;
 
@@ -229,7 +229,7 @@ end;
 procedure TRenderer.CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and PM_SOLID) <> 0 then
-    B := fTheme.MapColor or $FF000000;
+    B := fTheme.Colors[MINIMAP_COLOR] or $FF000000;
 end;
 
 // Lemming Drawing
@@ -551,7 +551,7 @@ begin
   P := fLayers[rlTerrain].PixelPtr[X, Y];
   if P^ and $FF000000 <> $FF000000 then
   begin
-    C := Theme.MaskColor;
+    C := Theme.Colors[MASK_COLOR];
     BlendMem(P^, C);
     P^ := C;
   end;
@@ -1254,7 +1254,7 @@ var
   Lem: TPreplacedLemming;
   L: TLemming;
 begin
-  fBgColor := Theme.BackgroundColor and $FFFFFF;
+  fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
 
   if Inf.Level = nil then Exit;
 
@@ -1409,7 +1409,7 @@ begin
   SetLength(Pal, 16);
   for i := 0 to 6 do
     Pal[i] := LowPal[i];
-  Pal[7] := fTheme.MaskColor;
+  Pal[7] := fTheme.Colors[MASK_COLOR];
   for i := 8 to 15 do
     Pal[i] := PARTICLE_COLORS[i mod 8];
 
