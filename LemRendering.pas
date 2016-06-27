@@ -43,22 +43,7 @@ uses
   // we could maybe use the alpha channel for rendering, ok thats working!
   // create gamerenderlist in order of rendering
 
-const
-  PARTICLE_FRAMECOUNT = 52;
-  PARTICLE_COLORS: array[0..7] of TColor32 = ($FF4040E0, $FF00B000, $FFF0D0D0, $FFF02020,
-                                              $C04040E0, $C000B000, $C0F0D0D0, $C0F02020);
 
-  PM_SOLID       = $00000001;
-  PM_STEEL       = $00000002;
-  PM_ONEWAY      = $00000004;
-  PM_ONEWAYLEFT  = $00000008;
-  PM_ONEWAYRIGHT = $00000010;
-  PM_ONEWAYDOWN  = $00000020; // Yes, I know they're mutually incompatible, but it's easier to do this way
-
-  PM_TERRAIN   = $000000FF;
-
-
-  SHADOW_COLOR = $80202020;
 
 
 type

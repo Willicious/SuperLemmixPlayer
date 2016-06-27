@@ -11,6 +11,24 @@ uses
   GR32, GR32_Blend, GR32_LowLevel, GR32_Resamplers,
   Contnrs, Classes, SysUtils;
 
+const
+  PARTICLE_FRAMECOUNT = 52;
+  PARTICLE_COLORS: array[0..7] of TColor32 = ($FF4040E0, $FF00B000, $FFF0D0D0, $FFF02020,
+                                              $C04040E0, $C000B000, $C0F0D0D0, $C0F02020);
+
+  PM_SOLID       = $00000001;
+  PM_STEEL       = $00000002;
+  PM_ONEWAY      = $00000004;
+  PM_ONEWAYLEFT  = $00000008;
+  PM_ONEWAYRIGHT = $00000010;
+  PM_ONEWAYDOWN  = $00000020; // Yes, I know they're mutually incompatible, but it's easier to do this way
+
+  PM_TERRAIN   = $000000FF;
+
+
+  SHADOW_COLOR = $80202020;
+  ALPHA_CUTOFF = $FF000000; // if (TColor32) and ALPHA_CUTOFF <> 0 then not solid
+
 type
 
   TDrawableItem = (di_ConstructivePixel, di_Stoner);

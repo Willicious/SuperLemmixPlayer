@@ -21,7 +21,7 @@ uses
   LemNeoTheme,
   GameInterfaces,
   GameControl,
-  LemRendering, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
+  LemRenderHelpers, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
   LemGame,
   PngInterface,
   UZip; // For checking whether files actually exist
