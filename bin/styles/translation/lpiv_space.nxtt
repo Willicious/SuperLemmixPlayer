@@ -1,0 +1,224 @@
+# Translation table
+
+THEME lpiv_space
+
+TERRAIN 0
+  SET lpiv_space
+  NAME block_large
+
+TERRAIN 1
+  SET lpiv_space
+  NAME block_wide
+
+TERRAIN 2
+  SET lpiv_space
+  NAME block_tall
+
+TERRAIN 3
+  SET lpiv_space
+  NAME block_small
+
+TERRAIN 4
+  SET lpiv_space
+  NAME block_clip
+
+TERRAIN 5
+  SET lpiv_space
+  NAME block_clip
+  ROTATE
+
+TERRAIN 6
+  SET lpiv_space
+  NAME steel_large
+
+TERRAIN 7
+  SET lpiv_space
+  NAME steel_wide
+
+TERRAIN 8
+  SET lpiv_space
+  NAME steel_tall
+
+TERRAIN 9
+  SET lpiv_space
+  NAME steel_small
+
+TERRAIN 10
+  SET lpiv_space
+  NAME barrier_long
+
+TERRAIN 11
+  SET lpiv_space
+  NAME barrier_short
+
+TERRAIN 12
+  SET lpiv_space
+  NAME barrier_long
+  FLIP
+  ROTATE
+
+TERRAIN 13
+  SET lpiv_space
+  NAME barrier_short
+  FLIP
+  ROTATE
+
+TERRAIN 14
+  SET lpiv_space
+  NAME girder_long
+
+TERRAIN 15
+  SET lpiv_space
+  NAME girder_short
+
+TERRAIN 16
+  SET lpiv_space
+  NAME girder_long
+  ROTATE
+
+TERRAIN 17
+  SET lpiv_space
+  NAME girder_short
+  ROTATE
+
+TERRAIN 18
+  SET lpiv_space
+  NAME block_large_corner_topleft
+
+TERRAIN 19
+  SET lpiv_space
+  NAME block_large_corner_topright
+
+TERRAIN 20
+  SET lpiv_space
+  NAME block_large_corner_bottomleft
+
+TERRAIN 21
+  SET lpiv_space
+  NAME block_large_corner_bottomright
+
+TERRAIN 22
+  SET lpiv_space
+  NAME block_small_corner_topleft
+
+TERRAIN 23
+  SET lpiv_space
+  NAME block_small_corner_topright
+
+TERRAIN 24
+  SET lpiv_space
+  NAME block_small_corner_bottomleft
+
+TERRAIN 25
+  SET lpiv_space
+  NAME block_small_corner_bottomright
+
+TERRAIN 26
+  SET lpiv_space
+  NAME block_teleporter
+
+TERRAIN 27
+  SET lpiv_space
+  NAME block_receiver
+
+TERRAIN 28
+  SET lpiv_space
+  NAME thruster
+
+TERRAIN 29
+  SET lpiv_space
+  NAME thruster
+  ROTATE
+
+TERRAIN 30
+  SET lpiv_space
+  NAME block_number_1
+
+TERRAIN 31
+  SET lpiv_space
+  NAME block_number_2
+
+TERRAIN 32
+  SET lpiv_space
+  NAME block_number_3
+
+TERRAIN 33
+  SET lpiv_space
+  NAME block_number_4
+
+TERRAIN 34
+  SET lpiv_space
+  NAME block_number_5
+
+OBJECT 0
+  SET lpiv_space
+  NAME exit
+  OFFSET_TOP -10
+
+OBJECT 1
+  SET lpiv_space
+  NAME window
+
+OBJECT 2
+  NAME *nil
+
+OBJECT 3
+  SET lpiv_space
+  NAME owa_left
+
+OBJECT 4
+  SET lpiv_space
+  NAME owa_right
+
+OBJECT 5
+  SET lpiv_space
+  NAME owa_down
+
+OBJECT 6
+  SET lpiv_space
+  NAME teleporter
+
+OBJECT 7
+  SET lpiv_space
+  NAME receiver
+
+OBJECT 8
+  SET lpiv_space
+  NAME exhaust_vert
+
+OBJECT 9
+  SET lpiv_space
+  NAME exhaust_horz
+
+OBJECT 10
+  SET lpiv_space
+  NAME star
+
+OBJECT 11
+  SET lpiv_space
+  NAME earth
+
+OBJECT 12
+  SET default
+  NAME pickup
+
+OBJECT 13
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 10
+
+OBJECT 14
+  SET lpiv_space
+  NAME owf_left
+
+OBJECT 15
+  SET lpiv_space
+  NAME owf_right
+
+OBJECT 16
+  SET default
+  NAME radiation
+
+OBJECT 17
+  NAME *nil
+
