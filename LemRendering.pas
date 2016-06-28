@@ -1287,6 +1287,7 @@ procedure TRenderer.RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly:
 // DoObjects is only true if RenderWorld is called from the Preview Screen!
 var
   i: Integer;
+  x, y: Integer;
   dy: Integer;
 
   Bmp: TBitmap32;
@@ -1317,6 +1318,23 @@ begin
     with fLayers[rlBackground] do
     begin
       Clear($FF000000 or fBgColor);
+    end;
+
+    if fTheme.HasImageBackground then
+    begin
+      y := 0;
+      while y < Level.Info.Height do
+      begin
+        x := 0;
+        while x < Level.Info.Width do
+        begin
+          fTheme.Background.DrawTo(fLayers[rlBackground], x, y);
+
+          Inc(x, fTheme.Background.Width);
+        end;
+
+        Inc(y, fTheme.Background.Height);
+      end;
     end;
 
     if DoObjects then

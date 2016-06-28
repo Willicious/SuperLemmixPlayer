@@ -9,7 +9,7 @@ interface
 uses
   Dialogs,
   LemNeoParser,
-  GR32, LemTypes, LemStrings,
+  GR32, LemTypes, LemStrings, PngInterface,
   StrUtils, Classes, SysUtils;
 
 const
@@ -28,18 +28,20 @@ type
 
   TNeoTheme = class
     private
+      fHasImageBackground: Boolean;
+      fBackgroundImage: TBitmap32;
       fColors: array of TNeoThemeColor;
       fLemmings: String;          // Which lemming graphics to use
-      //fMaskColor: TColor32;       // Used for masking on the skill panel, lemming sprites, and bridges
-      //fMapColor: TColor32;        // Used for the minimap
-      //fBackgroundColor: TColor32; // Used for the background
       function GetColor(Name: String): TColor32;
       function FindColorIndex(Name: String): Integer;
     public
       constructor Create;
+      destructor Destroy; override;
       procedure Clear;
       procedure Load(aSet: String);
 
+      property HasImageBackground: Boolean read fHasImageBackground;
+      property Background: TBitmap32 read fBackgroundImage;
       property Lemmings: String read fLemmings write fLemmings;
       property Colors[Name: String]: TColor32 read GetColor;
   end;
@@ -49,7 +51,14 @@ implementation
 constructor TNeoTheme.Create;
 begin
   inherited;
+  fBackgroundImage := TBitmap32.Create;
   Clear;
+end;
+
+destructor TNeoTheme.Destroy;
+begin
+  fBackgroundImage.Free;
+  inherited;
 end;
 
 procedure TNeoTheme.Clear;
@@ -110,6 +119,15 @@ begin
     until Line.Keyword = '';
 
     TrimArray;
+
+    if FileExists(aSet + '_bg.png') then
+    begin
+      fHasImageBackground := true;
+      TPngInterface.LoadPngFile(aSet + '_bg.png', fBackgroundImage)
+    end else begin
+      fBackgroundImage.SetSize(320, 160);
+      fBackgroundImage.Clear(Colors['background']);
+    end;
   finally
     Parser.Free;
   end;
