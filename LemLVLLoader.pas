@@ -79,6 +79,8 @@ type
     SrcName: String;
     DstGS: String;
     DstName: String;
+    Width: Integer;
+    Height: Integer;
     OffsetL: Integer;
     OffsetT: Integer;
     OffsetR: Integer;
@@ -180,6 +182,8 @@ var
     NewRec.SrcName := '';
     NewRec.DstGS := '';
     NewRec.DstName := '';
+    NewRec.Width := -1;
+    NewRec.Height := -1;
     NewRec.OffsetL := 0;
     NewRec.OffsetT := 0;
     NewRec.OffsetR := 0;
@@ -243,6 +247,12 @@ begin
 
       if Line.Keyword = 'LEMMING' then
         NewRec.DstName := '*lemming';
+
+      if (Line.Keyword = 'WIDTH') then
+        NewRec.Width := Line.Numeric;
+
+      if (Line.Keyword = 'HEIGHT') then
+        NewRec.Height := Line.Numeric;
 
       if (Line.Keyword = 'OFFSET_LEFT') or (Line.Keyword = 'OFFSET_X') then
         NewRec.OffsetL := Line.Numeric;
@@ -511,6 +521,13 @@ begin
       Item.Left := Item.Left + dx;
       Item.Top := Item.Top + dy;
       if TransItem.OneWay then TTerrain(Item).DrawingFlags := TTerrain(Item).DrawingFlags and not tdf_NoOneWay;
+
+      if Item is TInteractiveObject then
+        with TInteractiveObject(Item) do
+        begin
+          Width := TransItem.Width;
+          Height := TransItem.Height;
+        end;
 
       Exit;
     end;

@@ -256,11 +256,15 @@ OBJECT 2
 
 OBJECT 3
   SET default
-  NAME owa_left_narrow
+  NAME owa_left
+  WIDTH 16
+  HEIGHT 32
 
 OBJECT 4
   SET default
-  NAME owa_right_narrow
+  NAME owa_right
+  WIDTH 16
+  HEIGHT 32
 
 OBJECT 5
   SET brick
@@ -295,7 +299,9 @@ OBJECT 12
 
 OBJECT 13
   SET default
-  NAME owa_down_narrow
+  NAME owa_down
+  WIDTH 16
+  HEIGHT 32
 
 OBJECT 14
   SET brick

@@ -256,11 +256,13 @@ OBJECT 2
 
 OBJECT 3
   SET default
-  NAME oneway_left_narrow
+  NAME oneway_left
+  WIDTH 16
 
 OBJECT 4
   SET default
-  NAME oneway_right_narrow
+  NAME oneway_right
+  WIDTH 16
 
 OBJECT 5
   SET brick
@@ -549,11 +551,13 @@ OBJECT 11
 
 OBJECT 12
   SET bubble
-  NAME oneway_left_narrow
+  NAME oneway_left
+  WIDTH 16
 
 OBJECT 13
   SET bubble
-  NAME oneway_right_narrow
+  NAME oneway_right
+  WIDTH 16
 
 OBJECT 14
   SET bubble
@@ -2445,12 +2449,14 @@ OBJECT 94
   
 OBJECT 95
   SET default
-  NAME updraft_thin
+  NAME updraft
+  WIDTH 16
   
 OBJECT 96
   SET default
-  NAME updraft_wide
-
+  NAME updraft
+  WIDTH 32
+  
 OBJECT 97
   LEMMING
   OFFSET_X 2
