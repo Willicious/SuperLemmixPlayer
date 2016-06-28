@@ -332,18 +332,25 @@ OBJECT 2
 OBJECT 3
   SET horror
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   SET horror
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 5
   SET horror
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 6
   SET horror
   NAME water
+  WIDTH 64
 
 OBJECT 7
   SET horror
@@ -372,6 +379,7 @@ OBJECT 12
 OBJECT 13
   SET horror
   NAME acid
+  WIDTH 64
 
 OBJECT 14
   SET horror
@@ -380,10 +388,12 @@ OBJECT 14
 OBJECT 15
   SET horror
   NAME owf_left
+  HEIGHT 24
 
 OBJECT 16
   SET horror
   NAME owf_right
+  HEIGHT 24
 
 OBJECT 17
   SET horror

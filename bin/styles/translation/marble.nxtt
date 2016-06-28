@@ -272,14 +272,19 @@ OBJECT 2
 OBJECT 3
   SET default
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   SET default
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 5
   SET marble
   NAME water
+  WIDTH 64
 
 OBJECT 6
   NAME *nil
@@ -311,6 +316,8 @@ OBJECT 12
 OBJECT 13
   SET default
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 14
   SET marble

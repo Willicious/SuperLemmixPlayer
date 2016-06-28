@@ -180,10 +180,14 @@ OBJECT 1
 OBJECT 2
   SET tree
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 3
   SET tree
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   NAME *nil
@@ -191,6 +195,7 @@ OBJECT 4
 OBJECT 5
   SET default
   NAME water
+  WIDTH 64
 
 OBJECT 6
   SET tree
@@ -211,8 +216,11 @@ OBJECT 9
 OBJECT 10
   SET tree
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 11
   SET default
-  NAME updraft_wide
+  NAME updraft
+  WIDTH 32
 

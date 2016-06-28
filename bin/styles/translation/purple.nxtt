@@ -133,10 +133,14 @@ OBJECT 1
 OBJECT 2
   SET purple
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 3
   SET purple
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   NAME *nil
@@ -144,6 +148,7 @@ OBJECT 4
 OBJECT 5
   SET purple
   NAME water
+  WIDTH 64
 
 OBJECT 6
   SET purple
@@ -164,6 +169,8 @@ OBJECT 9
 OBJECT 10
   SET purple
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 11
   SET purple

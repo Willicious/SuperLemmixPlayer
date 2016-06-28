@@ -247,6 +247,7 @@ OBJECT 1
 OBJECT 2
   SET sega
   NAME water
+  WIDTH 48
 
 OBJECT 3
   SET sega
@@ -271,14 +272,20 @@ OBJECT 7
 OBJECT 8
   SET sega
   NAME owa_left
+  WIDTH 16
+  HEIGHT 16
 
 OBJECT 9
   SET sega
   NAME owa_right
+  WIDTH 16
+  HEIGHT 16
 
 OBJECT 10
   SET sega
   NAME owa_down
+  WIDTH 16
+  HEIGHT 16
 
 OBJECT 11
   SET sega

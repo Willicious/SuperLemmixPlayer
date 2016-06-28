@@ -101,10 +101,12 @@ OBJECT 2
 OBJECT 3
   SET sky
   NAME owf_left
+  HEIGHT 28
 
 OBJECT 4
   SET sky
   NAME owf_right
+  HEIGHT 28
 
 OBJECT 5
   SET default
@@ -113,18 +115,22 @@ OBJECT 5
 OBJECT 6
   SET sky
   NAME lightning_horz
+  WIDTH 32
 
 OBJECT 7
   SET sky
   NAME lightning_vert
+  HEIGHT 32
 
 OBJECT 8
   SET default
-  NAME updraft_thin
+  NAME updraft
+  WIDTH 16
 
 OBJECT 9
   SET default
-  NAME updraft_wide
+  NAME updraft
+  WIDTH 32
 
 OBJECT 10
   LEMMING

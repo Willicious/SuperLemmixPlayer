@@ -149,10 +149,14 @@ OBJECT 1
 OBJECT 2
   SET martian
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 3
   SET martian
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   NAME *nil
@@ -160,6 +164,7 @@ OBJECT 4
 OBJECT 5
   SET martian
   NAME water
+  WIDTH 64
 
 OBJECT 6
   SET martian
@@ -181,6 +186,8 @@ OBJECT 9
 OBJECT 10
   SET martian
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 11
   SET martian

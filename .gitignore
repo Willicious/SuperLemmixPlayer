@@ -4,6 +4,7 @@ bin/*.ini
 bin/*.nxsv
 bin/*.png
 bin/*.bmp
+bin/*.lrb
 bin/Dump/*
 !bin/gfx/*.png
 !bin/styles/*.png

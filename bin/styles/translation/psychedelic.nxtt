@@ -169,14 +169,19 @@ OBJECT 1
 OBJECT 2
   SET psychedelic
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 3
   SET psychedelic
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   SET psychedelic
   NAME water
+  WIDTH 48
 
 OBJECT 5
   SET psychedelic
@@ -205,6 +210,8 @@ OBJECT 10
 OBJECT 11
   SET psychedelic
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 12
   SET default

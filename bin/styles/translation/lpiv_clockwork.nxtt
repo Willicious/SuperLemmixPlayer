@@ -158,14 +158,20 @@ OBJECT 2
 OBJECT 3
   SET lpiv_clockwork
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   SET lpiv_clockwork
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 5
   SET lpiv_clockwork
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 6
   SET default
@@ -179,6 +185,7 @@ OBJECT 7
 OBJECT 8
   SET lpiv_clockwork
   NAME water
+  WIDTH 64
 
 OBJECT 9
   SET lpiv_clockwork
@@ -186,11 +193,13 @@ OBJECT 9
 
 OBJECT 10
   SET default
-  NAME updraft_wide
+  NAME updraft
+  WIDTH 32
 
 OBJECT 11
   SET default
-  NAME updraft_narrow
+  NAME updraft
+  WIDTH 16
 
 OBJECT 12
   SET lpiv_clockwork

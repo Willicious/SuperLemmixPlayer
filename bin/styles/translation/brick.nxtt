@@ -269,6 +269,7 @@ OBJECT 4
 OBJECT 5
   SET brick
   NAME water
+  WIDTH 64
 
 OBJECT 6
   SET brick

@@ -165,14 +165,20 @@ OBJECT 2
 OBJECT 3
   SET lpiv_space
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   SET lpiv_space
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 5
   SET lpiv_space
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 6
   SET lpiv_space

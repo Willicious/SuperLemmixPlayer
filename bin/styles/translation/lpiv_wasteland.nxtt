@@ -1,0 +1,219 @@
+# Translation table
+
+THEME lpiv_wasteland
+
+TERRAIN 0
+  SET lpiv_wasteland
+  NAME T0
+
+TERRAIN 1
+  SET lpiv_wasteland
+  NAME T1
+
+TERRAIN 2
+  SET lpiv_wasteland
+  NAME T2
+
+TERRAIN 3
+  SET lpiv_wasteland
+  NAME T3
+
+TERRAIN 4
+  SET lpiv_wasteland
+  NAME T4
+
+TERRAIN 5
+  SET lpiv_wasteland
+  NAME T5
+
+TERRAIN 6
+  SET lpiv_wasteland
+  NAME T6
+
+TERRAIN 7
+  SET lpiv_wasteland
+  NAME T7
+
+TERRAIN 8
+  SET lpiv_wasteland
+  NAME T8
+
+TERRAIN 9
+  SET lpiv_wasteland
+  NAME T9
+
+TERRAIN 10
+  SET lpiv_wasteland
+  NAME T10
+
+TERRAIN 11
+  SET lpiv_wasteland
+  NAME T11
+
+TERRAIN 12
+  SET lpiv_wasteland
+  NAME T12
+
+TERRAIN 13
+  SET lpiv_wasteland
+  NAME T13
+
+TERRAIN 14
+  SET lpiv_wasteland
+  NAME T14
+
+TERRAIN 15
+  SET lpiv_wasteland
+  NAME T15
+
+TERRAIN 16
+  SET lpiv_wasteland
+  NAME T16
+
+TERRAIN 17
+  SET lpiv_wasteland
+  NAME T17
+
+TERRAIN 18
+  SET lpiv_wasteland
+  NAME T18
+
+TERRAIN 19
+  SET lpiv_wasteland
+  NAME T19
+
+TERRAIN 20
+  SET lpiv_wasteland
+  NAME T20
+
+TERRAIN 21
+  SET lpiv_wasteland
+  NAME T21
+
+TERRAIN 22
+  SET lpiv_wasteland
+  NAME T22
+
+TERRAIN 23
+  SET lpiv_wasteland
+  NAME T23
+
+TERRAIN 24
+  SET lpiv_wasteland
+  NAME T24
+
+TERRAIN 25
+  SET lpiv_wasteland
+  NAME T25
+
+TERRAIN 26
+  SET lpiv_wasteland
+  NAME T26
+
+TERRAIN 27
+  SET lpiv_wasteland
+  NAME T27
+
+TERRAIN 28
+  SET lpiv_wasteland
+  NAME T28
+
+TERRAIN 29
+  SET lpiv_wasteland
+  NAME T29
+
+TERRAIN 30
+  SET lpiv_wasteland
+  NAME T30
+
+TERRAIN 31
+  SET lpiv_wasteland
+  NAME T31
+
+TERRAIN 32
+  SET lpiv_wasteland
+  NAME T32
+
+TERRAIN 33
+  SET lpiv_wasteland
+  NAME T33
+
+TERRAIN 34
+  SET lpiv_wasteland
+  NAME T34
+
+TERRAIN 35
+  SET lpiv_wasteland
+  NAME T35
+
+TERRAIN 36
+  SET lpiv_wasteland
+  NAME T36
+
+TERRAIN 37
+  SET lpiv_wasteland
+  NAME T37
+
+OBJECT 0
+  SET lpiv_wasteland
+  NAME O0
+
+OBJECT 1
+  SET lpiv_wasteland
+  NAME O1
+
+OBJECT 2
+  SET lpiv_wasteland
+  NAME O2
+
+OBJECT 3
+  SET lpiv_wasteland
+  NAME O3
+
+OBJECT 4
+  SET lpiv_wasteland
+  NAME O4
+  WIDTH 32
+  HEIGHT 32
+
+OBJECT 5
+  SET lpiv_wasteland
+  NAME O5
+  WIDTH 32
+  HEIGHT 32
+
+OBJECT 6
+  SET lpiv_wasteland
+  NAME O6
+  WIDTH 32
+  HEIGHT 32
+
+OBJECT 7
+  SET lpiv_wasteland
+  NAME O7
+
+OBJECT 8
+  SET default
+  NAME pickup
+
+OBJECT 9
+  LEMMING
+  OFFSET_X 2
+  OFFSET_Y 9
+
+OBJECT 10
+  SET lpiv_wasteland
+  NAME O10
+
+OBJECT 11
+  SET lpiv_wasteland
+  NAME O11
+
+OBJECT 12
+  SET lpiv_wasteland
+  NAME O12
+
+OBJECT 13
+  SET lpiv_wasteland
+  NAME O13
+

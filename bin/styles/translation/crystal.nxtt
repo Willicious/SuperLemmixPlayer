@@ -170,14 +170,19 @@ OBJECT 3
 OBJECT 4
   SET crystal
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 5
   SET crystal
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 6
   SET crystal
   NAME water
+  WIDTH 64
 
 OBJECT 7
   SET crystal
@@ -209,6 +214,8 @@ OBJECT 13
 OBJECT 14
   SET crystal
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 15
   SET default

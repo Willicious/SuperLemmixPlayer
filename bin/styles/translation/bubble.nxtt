@@ -289,15 +289,20 @@ OBJECT 2
 
 OBJECT 3
   SET default
-  NAME owa_left_narrow
+  NAME owa_left
+  WIDTH 16
+  HEIGHT 32
 
 OBJECT 4
   SET default
-  NAME owa_right_narrow
+  NAME owa_right
+  WIDTH 16
+  HEIGHT 32
 
 OBJECT 5
   SET bubble
   NAME water
+  WIDTH 64
 
 OBJECT 6
   NAME *nil
@@ -332,7 +337,9 @@ OBJECT 13
 
 OBJECT 14
   SET default
-  NAME owa_down_narrow
+  NAME owa_down
+  WIDTH 16
+  HEIGHT 32
 
 OBJECT 15
   SET bubble

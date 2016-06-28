@@ -269,14 +269,19 @@ OBJECT 2
 OBJECT 3
   SET default
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   SET default
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 5
   SET default
   NAME water
+  WIDTH 64
 
 OBJECT 6
   NAME *nil
@@ -313,6 +318,8 @@ OBJECT 13
 OBJECT 14
   SET default
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 15
   SET fire

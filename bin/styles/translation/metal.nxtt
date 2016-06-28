@@ -117,10 +117,14 @@ OBJECT 1
 OBJECT 2
   SET metal
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 3
   SET metal
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 4
   SET metal
@@ -129,10 +133,12 @@ OBJECT 4
 OBJECT 5
   SET metal
   NAME owf_right
+  HEIGHT 32
 
 OBJECT 6
   SET metal
   NAME owf_left
+  HEIGHT 32
 
 OBJECT 7
   SET metal
@@ -157,6 +163,8 @@ OBJECT 11
 OBJECT 12
   SET metal
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 13
   SET default

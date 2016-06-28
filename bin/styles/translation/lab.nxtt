@@ -169,18 +169,25 @@ OBJECT 2
 OBJECT 3
   SET lab
   NAME acid
+  WIDTH 64
 
 OBJECT 4
   SET lab
   NAME owa_left
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 5
   SET lab
   NAME owa_right
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 6
   SET lab
   NAME owa_down
+  WIDTH 32
+  HEIGHT 32
 
 OBJECT 7
   SET lab
@@ -189,10 +196,12 @@ OBJECT 7
 OBJECT 8
   SET lab
   NAME owf_left
+  HEIGHT 32
 
 OBJECT 9
   SET lab
   NAME owf_right
+  HEIGHT 32
 
 OBJECT 10
   LEMMING

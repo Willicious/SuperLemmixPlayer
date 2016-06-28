@@ -255,10 +255,14 @@ OBJECT 1
 OBJECT 2
   SET circuit
   NAME owa_left
+  WIDTH 24
+  HEIGHT 24
 
 OBJECT 3
   SET circuit
   NAME owa_right
+  WIDTH 24
+  HEIGHT 24
 
 OBJECT 4
   LEMMING
@@ -292,6 +296,8 @@ OBJECT 10
 OBJECT 11
   SET circuit
   NAME owa_down
+  WIDTH 24
+  HEIGHT 24
 
 OBJECT 12
   NAME *nil
