@@ -1,11 +1,11 @@
-WIDTH 320
-HEIGHT 160
- 
+WIDTH 96
+HEIGHT 80
+
  TERRAIN
   SET marble
   PIECE block_02
-  X 76
-  Y 88
+  X 0
+  Y 32
   ROTATE
   FLIP_HORIZONTAL
   ONE_WAY
@@ -13,8 +13,8 @@ HEIGHT 160
  TERRAIN
   SET marble
   PIECE block_02
-  X 92
-  Y 88
+  X 16
+  Y 32
   ROTATE
   FLIP_HORIZONTAL
   ONE_WAY
@@ -22,8 +22,8 @@ HEIGHT 160
  TERRAIN
   SET marble
   PIECE block_02
-  X 108
-  Y 88
+  X 32
+  Y 32
   ROTATE
   FLIP_HORIZONTAL
   ONE_WAY
@@ -31,8 +31,8 @@ HEIGHT 160
  TERRAIN
   SET marble
   PIECE block_02
-  X 124
-  Y 88
+  X 48
+  Y 32
   ROTATE
   FLIP_HORIZONTAL
   ONE_WAY
@@ -40,8 +40,8 @@ HEIGHT 160
  TERRAIN
   SET marble
   PIECE block_02
-  X 140
-  Y 88
+  X 64
+  Y 32
   ROTATE
   FLIP_HORIZONTAL
   ONE_WAY
@@ -49,27 +49,42 @@ HEIGHT 160
  TERRAIN
   SET marble
   PIECE block_02
-  X 156
-  Y 88
+  X 80
+  Y 32
   ROTATE
   FLIP_HORIZONTAL
 
  TERRAIN
   SET marble
   PIECE block_02
-  X 76
-  Y 72
+  X 0
+  Y 16
   ONE_WAY
 
  TERRAIN
   SET marble
   PIECE block_02
-  X 124
-  Y 72
+  X 48
+  Y 16
 
  TERRAIN
   SET marble
   PIECE steps
-  X 76
-  Y 56
+  X 0
+  Y 0
   ONE_WAY
+  
+ TERRAIN
+  SET marble
+  PIECE block_02
+  X 4
+  Y 34
+  ERASE
+  
+ TERRAIN
+  SET marble
+  PIECE block_02
+  X 4
+  Y 74
+  ERASE
+  ROTATE

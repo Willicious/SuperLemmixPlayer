@@ -149,8 +149,8 @@
  TERRAIN
   SET marble
   PIECE escher
-  X 0
-  Y 0
+  X 76
+  Y 56
 
  TERRAIN
   SET marble

@@ -124,7 +124,6 @@ var
   TempBMP: TBitmap32;
   i: Integer;
 begin
-  ShowMessage(IntToStr(Width) + 'x' + IntToStr(Height));
   TempBMP := TBitmap32.Create;
   try
     TempBMP.SetSize(Width, Height);
@@ -132,7 +131,6 @@ begin
       Renderer.DrawTerrain(TempBmp, fPieceList[i]);
 
     SetGraphic(TempBMP);
-    TempBMP.SaveToFile(AppPath + 'construct.bmp');
   finally
     TempBMP.Free;
   end;
