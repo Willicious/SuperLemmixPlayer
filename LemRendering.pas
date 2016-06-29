@@ -748,8 +748,7 @@ procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: In
     is copied to Dst to restore
 -------------------------------------------------------------------------------}
 var
-  SrcRect, DstRect: TRect;
-  Src: TBitmap32;
+  DstRect: TRect;
   MO: TMetaObject;
 
   ORec: TObjectRecord;
@@ -765,14 +764,13 @@ begin
 
   if aFrame > MO.AnimationFrameCount-1 then aFrame := MO.AnimationFrameCount-1; // for this one, it actually can matter sometimes
 
-  Src := TBitmap32.Create;
-  Src.Assign(ORec.Image[aFrame]);
+  TempBitmap.Assign(ORec.Image[aFrame]);
 
   if odf_UpsideDown and O.DrawingFlags <> 0 then
-    Src.FlipVert;
+    TempBitmap.FlipVert;
 
   if odf_Flip and O.DrawingFlags <> 0 then
-    Src.FlipHorz;
+    TempBitmap.FlipHorz;
 
   if MO.TriggerEffect in [7, 8, 19] then
   begin
@@ -780,7 +778,7 @@ begin
     O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
   end;
 
-  PrepareObjectBitmap(Src, O.DrawingFlags, O.DrawAsZombie);
+  PrepareObjectBitmap(TempBitmap, O.DrawingFlags, O.DrawAsZombie);
 
   if (not MO.CanResizeHorizontal) or (O.Width = -1) then
     O.Width := MO.Width;
@@ -792,7 +790,7 @@ begin
 
   for iY := 0 to CountY do
   begin
-    DstRect := Src.BoundsRect;
+    DstRect := TempBitmap.BoundsRect;
     DstRect := ZeroTopLeftRect(DstRect);
     OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
     if iY = CountY then
@@ -801,12 +799,10 @@ begin
     begin
       if iX = CountX then
         DstRect.Right := DstRect.Right - (O.Width mod MO.Width);
-      Src.DrawTo(Dst, DstRect);
+      TempBitmap.DrawTo(Dst, DstRect);
       OffsetRect(DstRect, MO.Width, 0);
     end;
   end;
-
-  Src.Free;
 
   O.LastDrawX := O.Left;
   O.LastDrawY := O.Top;
@@ -854,9 +850,8 @@ end;
 
 procedure TRenderer.DrawAllObjects;
 var
-  SrcRect, DstRect: TRect;
+  TempBitmapRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
-  Src: TBitmap32;
   DrawFrame: Integer;
   i, i2: Integer;
   UsePoint: Boolean;
@@ -873,14 +868,14 @@ var
     if Inf.TriggerEffect in [13, 16, 25] then Exit;
 
     DrawFrame := Min(Inf.CurrentFrame, Inf.AnimationFrameCount-1);
-    Src.Assign(Inf.Frames[DrawFrame]);
+    TempBitmap.Assign(Inf.Frames[DrawFrame]);
 
     if Inf.IsUpsideDown then
-      Src.FlipVert;
+      TempBitmap.FlipVert;
     if Inf.IsFlipImage then
-      Src.FlipHorz;
+      TempBitmap.FlipHorz;
 
-    PrepareObjectBitmap(Src, Inf.Obj.DrawingFlags, Inf.ZombieMode);
+    PrepareObjectBitmap(TempBitmap, Inf.Obj.DrawingFlags, Inf.ZombieMode);
 
     Dst := fLayers[aLayer];
     O := Inf.Obj;
@@ -890,34 +885,32 @@ var
 
     for iY := 0 to CountY do
     begin
-      SrcRect := Src.BoundsRect;
-      DstRect := Src.BoundsRect;
+      TempBitmapRect := TempBitmap.BoundsRect;
+      DstRect := TempBitmap.BoundsRect;
       DstRect := ZeroTopLeftRect(DstRect);
       OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
       if iY = CountY then
       begin
         DstRect.Bottom := DstRect.Bottom - (O.Height mod MO.Height);
-        SrcRect.Bottom := SrcRect.Bottom - (O.Height mod MO.Height);
+        TempBitmapRect.Bottom := TempBitmapRect.Bottom - (O.Height mod MO.Height);
       end;
       for iX := 0 to CountX do
       begin
         if iX = CountX then
         begin
           DstRect.Right := DstRect.Right - (O.Width mod MO.Width);
-          SrcRect.Right := SrcRect.Right - (O.Width mod MO.Width);
+          TempBitmapRect.Right := TempBitmapRect.Right - (O.Width mod MO.Width);
         end;
-        Src.DrawTo(Dst, DstRect, SrcRect);
+        TempBitmap.DrawTo(Dst, DstRect, TempBitmapRect);
         OffsetRect(DstRect, MO.Width, 0);
       end;
     end;
-
-    //Src.DrawTo(fLayers[aLayer], DstRect, SrcRect);
 
     Inf.Obj.LastDrawX := Inf.Left;
     Inf.Obj.LastDrawY := Inf.Top;
   end;
 
-  procedure FixLayer(Layer: TRenderLayer; Key: TColor32);
+  (*procedure FixLayer(Layer: TRenderLayer; Key: TColor32);
   var
     X, Y: Integer;
     PPhys, PLayer: PColor32;
@@ -930,9 +923,8 @@ var
         if (PPhys^ and Key) = 0 then
           PLayer^ := 0;
       end;
-  end;
+  end; *)
 begin
-  Src := TBitmap32.Create;
   ObjectInfos := fRenderInterface.ObjectList;
 
   UsePoint := true; //PtInRect(Dst.BoundsRect, MousePoint);
@@ -972,7 +964,6 @@ begin
     ProcessDrawFrame(rlOnTerrainObjects);
     fLayers.fIsEmpty[rlOnTerrainObjects] := False;
   end;
-  //FixLayer(rlOnTerrainObjects, PM_SOLID);
 
   // Draw one-way arrows
   if not fLayers.fIsEmpty[rlOneWayArrows] then fLayers[rlOneWayArrows].Clear(0);
@@ -984,7 +975,6 @@ begin
     ProcessDrawFrame(rlOneWayArrows);
     fLayers.fIsEmpty[rlOneWayArrows] := False;
   end;
-  //FixLayer(rlOneWayArrows, PM_ONEWAY);
 
   // Draw regular objects
   if not fLayers.fIsEmpty[rlObjectsHigh] then fLayers[rlObjectsHigh].Clear(0);
@@ -1026,8 +1016,6 @@ begin
         end;
     end;
   end;
-
-  Src.Free;
 end;
 
 
