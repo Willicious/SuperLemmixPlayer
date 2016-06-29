@@ -168,6 +168,7 @@ end;
 
 function TNeoPieceManager.ObtainTerrain(Identifier: String): Integer;
 var
+  BasePath: String;
   TerrainLabel: TLabelRecord;
   T: TMetaTerrain;
 begin
@@ -175,7 +176,13 @@ begin
 
   Result := fTerrains.Count;
 
-  T := fTerrains.Add;
+  BasePath := AppPath + SFStylesPieces + TerrainLabel.GS + SFPiecesTerrain + TerrainLabel.Piece;
+
+  if FileExists(BasePath + '.png') then  // .nxtp is optional, but .png is not :)
+    T := TMetaTerrain.Create
+  else if FileExists(BasePath + '.nxcs') then
+    T := TMetaConstruct.Create;
+  fTerrains.Add(T);
   T.Load(TerrainLabel.GS, TerrainLabel.Piece);
 end;
 
