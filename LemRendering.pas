@@ -697,14 +697,13 @@ var
 begin
 
   MT := FindMetaTerrain(T);
-
-  TempBitmap.Assign(Src);
   Rotate := (T.DrawingFlags and tdf_Rotate <> 0);
   Invert := (T.DrawingFlags and tdf_Invert <> 0);
   Flip := (T.DrawingFlags and tdf_Flip <> 0);
+
   Src := MT.GraphicImage[Flip, Invert, Rotate];
   PrepareTerrainBitmap(Src, T.DrawingFlags);
-  TempBitmap.DrawTo(Dst, T.Left, T.Top);
+  Src.DrawTo(Dst, T.Left, T.Top);
 end;
 
 procedure TRenderer.PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);

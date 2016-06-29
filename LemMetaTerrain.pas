@@ -107,6 +107,7 @@ procedure TMetaTerrain.SetGraphic(aImage: TBitmap32);
 begin
   ClearImages;
   fGraphicImages[0].Assign(aImage);
+  fGeneratedGraphicImage[0] := true;
 end;
 
 function TMetaTerrain.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
