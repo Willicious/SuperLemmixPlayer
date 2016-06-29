@@ -37,6 +37,7 @@ uses
   LemRenderHelpers, LemRendering, LemDosAnimationSet,
   LemMusicSystem, LemDosMainDat, LemNeoTheme,
   LemObjects, LemLemming, LemRecolorSprites,
+  LemReplay,
   GameInterfaces, GameControl, GameSound;
 
 type
