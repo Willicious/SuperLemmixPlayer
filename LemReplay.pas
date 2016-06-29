@@ -107,25 +107,30 @@ type
       fLevelRank: String;
       fLevelPosition: Integer;
       fLevelID: Cardinal;
+      function GetLastActionFrame: Integer;
       function GetItemByFrame(aItemType: Integer; aFrame: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; SL: TStringList);
       procedure SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
     public
       constructor Create;
       destructor Destroy; override;
-      procedure Clear;
+      procedure Add(aItem: TBaseReplayItem);
+      procedure Clear(EraseLevelInfo: Boolean = false);
       procedure LoadFromFile(aFile: String);
       procedure SaveToFile(aFile: String);
       procedure LoadOldReplayFile(aFile: String);
+      procedure Cut(aLastFrame: Integer);
+      function HasAnyActionAt(aFrame: Integer): Boolean;
       property LevelName: String read fLevelName write fLevelName;
       property LevelAuthor: String read fLevelAuthor write fLevelAuthor;
-      property LevelGame: String read fLevelReference write fLevelReference;
+      property LevelGame: String read fLevelGame write fLevelGame;
       property LevelRank: String read fLevelRank write fLevelRank;
-      property LevelPosition: String read fLevelPosition write fLevelPosition;
+      property LevelPosition: Integer read fLevelPosition write fLevelPosition;
       property LevelID: Cardinal read fLevelID write fLevelID;
       property Assignment[aFrame: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
       property ReleaseRateChange[aFrame: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property InterfaceAction[aFrame: Integer]: TBaseReplayItem Index 3 read GetItemByFrame;
+      property LastActionFrame: Integer read GetLastActionFrame;
   end;
 
   function GetSkillReplayName(aButton: TSkillPanelButton): String; overload;
@@ -224,7 +229,7 @@ begin
   fAssignments := TReplayItemList.Create;
   fReleaseRateChanges := TReplayItemList.Create;
   fInterfaceActions := TReplayItemList.Create;
-  Clear;
+  Clear(true);
 end;
 
 destructor TReplay.Destroy;
@@ -235,12 +240,89 @@ begin
   inherited;
 end;
 
-procedure TReplay.Clear;
+procedure TReplay.Add(aItem: TBaseReplayItem);
+var
+  Dst: TReplayItemList;
+begin
+  Dst := nil;
+
+  if aItem is TReplaySkillAssignment then Dst := fAssignments;
+  if aItem is TReplayChangeReleaseRate then Dst := fReleaseRateChanges;
+  if aItem is TReplayNuke then Dst := fAssignments;
+  if aItem is TReplayHighlightLemming then Dst := fInterfaceActions;
+  if aItem is TReplaySelectSkill then Dst := fInterfaceActions;
+
+  if Dst = nil then
+    raise Exception.Create('Unknown type passed to TReplay.Add!');
+
+  Dst.Add(aItem);
+end;
+
+procedure TReplay.Clear(EraseLevelInfo: Boolean = false);
 begin
   fAssignments.Clear;
   fReleaseRateChanges.Clear;
   fInterfaceActions.Clear;
+  if not EraseLevelInfo then Exit;
+  fPlayerName := '';
+  fLevelName := '';
+  fLevelAuthor := '';
+  fLevelGame := '';
+  fLevelRank := '';
+  fLevelPosition := 0;
   fLevelID := 0;
+end;
+
+procedure TReplay.Cut(aLastFrame: Integer);
+
+  procedure DoCut(aList: TReplayItemList);
+  var
+    i: Integer;
+  begin
+    for i := aList.Count-1 downto 0 do
+      if aList[i].Frame > aLastFrame then aList.Delete(i);
+  end;
+begin
+  DoCut(fAssignments);
+  DoCut(fReleaseRateChanges);
+  DoCut(fInterfaceActions);
+end;
+
+function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
+
+  function CheckForAction(aList: TReplayItemList): Boolean;
+  var
+    i: Integer;
+  begin
+    Result := false;
+    for i := 0 to aList.Count-1 do
+      if aList[i].Frame = aFrame then
+      begin
+        Result := true;
+        Exit;
+      end;
+  end;
+begin
+  Result := CheckForAction(fAssignments)
+         or CheckForAction(fReleaseRateChanges)
+         or CheckForAction(fInterfaceActions);
+end;
+
+function TReplay.GetLastActionFrame: Integer;
+// We could assume that the last action in the list is the last one in order,
+// but let's not, just in case.
+  procedure CheckForAction(aList: TReplayItemList);
+  var
+    i: Integer;
+  begin
+    for i := 0 to aList.Count-1 do
+      if aList[i].Frame > Result then Result := aList[i].Frame;
+  end;
+begin
+  Result := 0;
+  CheckForAction(fAssignments);
+  CheckForAction(fReleaseRateChanges);
+  CheckForAction(fInterfaceActions);
 end;
 
 procedure TReplay.LoadFromFile(aFile: String);
@@ -269,7 +351,7 @@ begin
     SL.Add('RANK ' + fLevelRank);
     SL.Add('LEVEL ' + IntToStr(fLevelPosition));
   end;
-  SL.Add('ID ' + IntToHex(fLevelID));
+  SL.Add('ID ' + IntToHex(fLevelID, 8));
   SL.Add('');
 
   SL.SaveToFile(aFile);
@@ -285,7 +367,7 @@ begin
     SaveReplayItem(aList[i], SL);
 end;
 
-procedure TReplay.SaveReplayItem(aItem: TBaseReplayItem, SL: TStringList);
+procedure TReplay.SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
 
   procedure SaveLemmingEntry;
   var

@@ -225,77 +225,6 @@ const
 type
   TLemmingGame = class;
 
-  TReplayRec = packed record
-    Check          : Char;         //  1 byte  -  1
-    Iteration      : Integer;      //  4 bytes -  5
-    ActionFlags    : Word;         //  2 bytes -  7
-    AssignedSkill  : Byte;         //  1 byte  -  8
-    SelectedButton : Byte;         //  1 byte  -  9
-    ReleaseRate    : Integer;      //  1 byte  - 13
-    LemmingIndex   : Integer;      //  4 bytes - 17
-    LemmingX       : Integer;      //  4 bytes - 21
-    LemmingY       : Integer;      //  4 bytes - 25
-    CursorX        : SmallInt;     //  2 bytes - 27
-    CursorY        : SmallInt;     //  2 bytes - 29
-    SelectDir      : ShortInt;
-    Reserved2      : Byte;
-    Reserved3      : Byte;         // 32
-  end;
-
-  TReplayItem = class
-  private
-    fIteration      : Integer;
-    fActionFlags    : Word;
-    fAssignedSkill  : Byte;
-    fSelectedButton : Byte;
-    fReleaseRate    : Byte;
-    fLemmingIndex   : Integer;
-    fLemmingX       : Integer;
-    fLemmingY       : Integer;
-    fCursorY        : Integer;
-    fCursorX        : Integer;
-    fSelectDir       : Integer;
-  protected
-  public
-    property Iteration: Integer read fIteration write fIteration;
-    property ActionFlags: Word read fActionFlags write fActionFlags;
-    property AssignedSkill: Byte read fAssignedSkill write fAssignedSkill;
-    property SelectedButton: Byte read fSelectedButton write fSelectedButton;
-    property ReleaseRate: Byte read fReleaseRate write fReleaseRate;
-    property LemmingIndex: Integer read fLemmingIndex write fLemmingIndex;
-    property LemmingX: Integer read fLemmingX write fLemmingX;
-    property LemmingY: Integer read fLemmingY write fLemmingY;
-    property CursorX: Integer read fCursorX write fCursorX;
-    property CursorY: Integer read fCursorY write fCursorY;
-    property SelectDir: Integer read fSelectDir write fSelectDir;
-  end;
-
-  TRecorder = class
-  private
-    fGame : TLemmingGame; // backlink to game
-    List  : TObjectList;
-    fLevelID: LongWord;
-    function GetNumItems: Integer;
-  protected
-  public
-    constructor Create(aGame: TLemmingGame);
-    destructor Destroy; override;
-
-    function FindIndexForFrame(aFrame: Integer): Integer;
-    function Add: TReplayItem;
-    procedure Clear;
-    procedure Truncate(aCount: Integer);
-    procedure SaveToFile(const aFileName: string);
-    procedure SaveToStream(S: TStream);
-    procedure SaveToTxt(const aFileName: string);
-    procedure LoadFromFile(const aFileName: string; IgnoreProblems: Boolean = false);
-    procedure LoadFromOldTxt(const aFileName: string); // antique
-    procedure LoadFromStream(S: TStream; IgnoreProblems: Boolean = false);
-    property LevelID: LongWord read fLevelID write fLevelID;
-    property Count: Integer read GetNumItems;
-  end;
-
-
   TLemmingGameSavedState = class
     public
       LemmingList: TLemmingList;
@@ -383,7 +312,7 @@ type
     //SpecialMap                 : TByteMap; // for steel and oneway
     WaterMap                   : TByteMap; // for water, so that other objects can be on it for swimmers etc to use
     ZombieMap                  : TByteMap;
-    fRecorder                  : TRecorder;
+    fReplayManager             : TReplay;
 
   { reference objects, mostly for easy access in the mechanics-code }
     fGameParams                : TDosGameParams; // ref
@@ -462,7 +391,7 @@ type
     fDrawLemmingPixel          : Boolean;
     fFastForward               : Boolean;
     fReplaying                 : Boolean;
-    fReplayIndex               : Integer;
+    //fReplayIndex               : Integer;
     fCurrentScreenPosition     : TPoint; // for minimap, this really sucks but works ok for the moment
     fLastCueSoundIteration     : Integer;
     fSoundToPlay               : array of Integer;
@@ -616,8 +545,8 @@ type
     procedure RecordSkillSelection(aSkill: TSkillPanelButton);
     procedure RemoveLemming(L: TLemming; RemMode: Integer = 0);
     procedure RemovePixelAt(X, Y: Integer);
-    procedure ReplaySkillAssignment(aReplayItem: TReplayItem);
-    procedure ReplaySkillSelection(aReplayItem: TReplayItem);
+    procedure ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
+    procedure ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
     procedure RestoreMap;
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
@@ -758,7 +687,7 @@ type
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
     property Replaying: Boolean read fReplaying;
-    property Recorder: TRecorder read fRecorder;
+    property ReplayManager: TReplay read fReplayManager;
     property RightMouseButtonHeldDown: Boolean read fRightMouseButtonHeldDown write fRightMouseButtonHeldDown;
     property ShiftButtonHeldDown: Boolean read fShiftButtonHeldDown write fShiftButtonHeldDown;
     property AltButtonHeldDown: Boolean read fAltButtonHeldDown write fAltButtonHeldDown;
@@ -1087,8 +1016,7 @@ begin
   // unusable. Code in TGameWindow will then delete it. (This is kludgy, but easier to implement over the
   // current setup than not creating the state in the first place would be.)
   Result := true;
-  for i := 0 to fRecorder.Count-1 do
-    if TReplayItem(fRecorder.List[i]).Iteration = aState.CurrentIteration then Result := false;
+  if fReplayManager.HasAnyActionAt(aState.CurrentIteration) then Result := false;
   if not Result then Exit;
 
   // First, some preparation, eg. undraw the selection rectangle for the selected skill
@@ -1160,7 +1088,7 @@ begin
 
   // And we must get the replay index to the right point and activate replay mode
   fReplaying := true;
-  fReplayIndex := fRecorder.FindIndexForFrame(fCurrentIteration);
+  //fReplayIndex := fRecorder.FindIndexForFrame(fCurrentIteration);
   InfoPainter.SetReplayMark(true);
 
   // And, update the minimap. Probably easier to redo this from scratch.
@@ -1265,7 +1193,8 @@ begin
   ZombieMap      := TByteMap.Create;
   WaterMap       := TByteMap.Create;
   MiniMap        := TBitmap32.Create;
-  fRecorder      := TRecorder.Create(Self);
+  //fRecorder      := TRecorder.Create(Self);
+  fReplayManager := TReplay.Create;
   fOptions       := DOSORIG_GAMEOPTIONS;
   SoundMgr       := TSoundMgr.Create;
   fTalismans     := TTalismans.Create;
@@ -1390,7 +1319,7 @@ begin
   ZombieMap.Free;
   WaterMap.Free;
   MiniMap.Free;
-  fRecorder.Free;
+  fReplayManager.Free;
   SoundMgr.Free;
   ExplodeMaskBmp.Free;
   fTalismans.Free;
@@ -1664,7 +1593,6 @@ begin
   GameResultRec.gToRescue := Level.Info.RescueCount;
 
 
-  fReplayIndex := 0;
   LemmingsReleased := 0;
   LemmingsOut := 0;
   SpawnedDead := Level.Info.ZombieGhostCount;
@@ -1698,10 +1626,15 @@ begin
   LemmingList.Clear;
   LastNPLemming := nil;
   SetLength(fSoundToPlay, 0);
-  if Level.Info.LevelID <> fRecorder.LevelID then //not aReplay then
+  if Level.Info.LevelID <> fReplayManager.LevelID then //not aReplay then
   begin
-    fRecorder.Clear;
-    fRecorder.LevelID := Level.Info.LevelID;
+    fReplayManager.Clear(true);
+    fReplayManager.LevelName := Level.Info.Title;
+    fReplayManager.LevelAuthor := Level.Info.Author;
+    fReplayManager.LevelGame := Trim(fGameParams.SysDat.PackName);
+    fReplayManager.LevelRank := Trim(fGameParams.Info.dSectionName);
+    fReplayManager.LevelPosition := fGameParams.Info.dLevel+1;
+    fReplayManager.LevelID := Level.Info.LevelID;
     fReplaying := false;
   end else
     fReplaying := true;
@@ -5004,7 +4937,7 @@ begin
 
   CheckForReplayAction(false);
 
-  if fReplaying and (fReplayIndex = fRecorder.Count) then
+  if fReplaying and (fCurrentIteration > fReplayManager.LastActionFrame) then
     RegainControl;
 
   // force update if raw explosion pixels drawn (or shadowstuff)
@@ -5219,7 +5152,7 @@ begin
 
 end;
 
-procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplayItem);
+procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
 var
   L: TLemming;
   ass: TBasicLemmingAction;
@@ -5238,9 +5171,7 @@ begin
       Exit;
     end;
     L := LemmingList.List^[LemmingIndex];
-    Assert(assignedskill > 0);
-    Assert(assignedskill < 19);
-    ass := TBasicLemmingAction(assignedskill);
+    ass := Skill;
 
     if not (ass in AssignableSkills) then
       raise exception.create(i2s(integer(ass)) + ' ' + i2s(currentiteration));
@@ -5269,30 +5200,12 @@ begin
   end;
 end;
 
-procedure TLemmingGame.ReplaySkillSelection(aReplayItem: TReplayItem);
+procedure TLemmingGame.ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
 var
   bs: TSkillPanelButton;
 begin
   if fGameParams.IgnoreReplaySelection then Exit;
-  case areplayitem.selectedbutton of
-    rsb_walker:     bs := spbWalker;
-    rsb_climber:    bs := spbClimber;
-    rsb_swimmer:    bs := spbSwimmer;
-    rsb_umbrella:   bs := spbUmbrella;
-    rsb_glider:     bs := spbGlider;
-    rsb_mechanic:   bs := spbMechanic;
-    rsb_explode:    bs := spbExplode;
-    rsb_stoner:     bs := spbStoner;
-    rsb_stopper:    bs := spbBlocker;
-    rsb_platformer: bs := spbPlatformer;
-    rsb_builder:    bs := spbBuilder;
-    rsb_stacker:    bs := spbStacker;
-    rsb_basher:     bs := spbBasher;
-    rsb_miner:      bs := spbMiner;
-    rsb_digger:     bs := spbDigger;
-    rsb_cloner:     bs := spbCloner;
-  else              bs := spbNone;
-  end;
+  bs := aReplayItem.Skill;
   setselectedskill(bs, true);
 end;
 
@@ -5576,14 +5489,13 @@ procedure TLemmingGame.RecordNuke;
   Easy one: Record nuking. Always add new record.
 -------------------------------------------------------------------------------}
 var
-  R: TReplayItem;
+  E: TReplayNuke;
 begin
   if not fPlaying or fReplaying then
     Exit;
-  R := fRecorder.Add;
-  R.Iteration := CurrentIteration;
-  R.ActionFlags := R.ActionFlags or raf_Nuke;
-  R.ReleaseRate := currReleaseRate;
+  E := TReplayNuke.Create;
+  E.Frame := fCurrentIteration;
+  fReplayManager.Add(E);
 end;
 
 procedure TLemmingGame.RecordReleaseRate(aActionFlag: Byte);
@@ -6388,590 +6300,6 @@ begin
     end;
   end;
 
-end;
-
-{ TRecorder }
-
-function TRecorder.Add: TReplayItem;
-begin
-  Result := TReplayItem.create;
-  List.Add(Result);
-end;
-
-function TRecorder.GetNumItems: Integer;
-begin
-  Result := List.Count;
-end;
-
-function TRecorder.FindIndexForFrame(aFrame: Integer): Integer;
-var
-  i: Integer;
-begin
-  Result := 0;
-  for i := 0 to List.Count-1 do
-  begin
-    Result := i;
-    if TReplayItem(List[i]).Iteration >= aFrame then Exit;
-  end;
-end;
-
-procedure TRecorder.Clear;
-begin
-  List.Clear;
-  fLevelID := 0;
-end;
-
-constructor TRecorder.Create(aGame: TLemmingGame);
-begin
-  fGame := aGame;
-  List := TObjectlist.Create;
-  fLevelID := 0;
-end;
-
-destructor TRecorder.Destroy;
-begin
-  List.Free;
-  inherited;
-end;
-
-procedure TRecorder.LoadFromFile(const aFileName: string; IgnoreProblems: Boolean = false);
-var
-  F: TFileStream;
-begin
-  F := TFileStream.Create(aFileName, fmOpenRead); // needed for silent conversion
-  try
-    LoadFromStream(F, IgnoreProblems);
-  finally
-    F.Free;
-  end;
-end;
-
-procedure TRecorder.LoadFromStream(S: TStream; IgnoreProblems: Boolean = false);
-var
-  H: TReplayFileHeaderRec;
-  R: TReplayRec;
-  It: TReplayItem;
-  ErrorID: Integer;
-  ErrorStr: String;
-  HasCheck: Boolean;
-begin
-  S.ReadBuffer(H, SizeOf(H));
-  ErrorID := 0;
-
-
-  if (H.Signature <> 'NEO') and (H.Signature <> 'LRB') then
-    ErrorID := ErrorID or $1;
-
-  //if H.Version <> 1 then
-    //raise Exception.Create('invalid replay header version, must be 1');
-
-  if H.Version = 103 then   //compatibility with old versions
-  begin
-    H.Version := 104;
-    H.ReplaySec := H.ReplayTime;
-    H.ReplayLev := H.ReplaySaved;
-    H.ReplayOpt := [];
-    H.ReplayTime := 0;
-    H.ReplaySaved := 0;
-    HasCheck := false;
-  end else
-    HasCheck := true;
-
-  if H.Version = 104 then
-  begin
-    H.Version := 105;
-    H.ReplayLevelID := 0;
-    FillChar(H.Reserved, SizeOf(H.Reserved), 0);
-  end;
-
-  if H.FileSize <> S.Size then
-    ErrorID := ErrorID or $2;
-
-  if H.HeaderSize <> SizeOf(TReplayFileHeaderRec) then
-    ErrorID := ErrorID or $4;
-
-  if H.FirstRecordPos < H.HeaderSize then
-    ErrorID := ErrorID or $8;
-
-  if H.ReplayRecordSize <> SizeOf(TReplayFileHeaderRec) then
-    ErrorID := ErrorID or $10;
-
-  if H.Version <> LEMMIX_REPLAY_VERSION then
-    ErrorID := ErrorID or $20;
-
-  if fgame.fGameParams.SysDat.Options and 8 = 0 then
-  begin
-
-  if (H.ReplayGame <> 0) or (H.ReplaySec <> 0) or (H.ReplayLev <> 0) then HasCheck := true;
-
-  if (H.ReplayGame <> fgame.fGameParams.SysDat.CodeSeed) and (HasCheck) then
-    ErrorID := ErrorID or $40;
-
-  if (H.ReplaySec <> fgame.fGameParams.Info.dSection) and (HasCheck) then
-    ErrorID := ErrorID or $80;
-
-  if (H.ReplayLev <> fgame.fGameParams.Info.dLevel) and (HasCheck) then
-    ErrorID := ErrorID or $100;
-
-  if (H.ReplayLevelID <> fGame.fGameParams.Level.Info.LevelID) then
-  begin
-    if (H.ReplayLevelID <> 0) then
-      ErrorID := ErrorID or $400;
-  end else
-    ErrorID := ErrorID and not $1C0;
-  end;
-
-  if (ErrorID <> 0) then
-  begin
-    ErrorStr := IntToHex(ErrorId, 4);
-    if (ErrorID and $20) <> 0 then ErrorStr := ErrorStr + #13 + 'Doesn''t appear to be a NeoLemmix replay.';
-    if (ErrorID and $40) <> 0 then ErrorStr := ErrorStr + #13 + 'Incorrect game.';
-    if (ErrorID and $80) <> 0 then ErrorStr := ErrorStr + #13 + 'Incorrect rank.';
-    if (ErrorID and $100) <> 0 then ErrorStr := ErrorStr + #13 + 'Incorrect level.';
-    if (ErrorID and $400) <> 0 then ErrorStr := ErrorStr + #13 + 'Incorrect level unique ID.';
-    if (ErrorID and (not $5E0)) <> 0 then ErrorStr := ErrorStr + #13 + 'Misc errors.';
-    if (ErrorID and (not $5C0)) <> 0 then
-    begin
-      ErrorStr := 'Replay error: #' + ErrorStr;
-      if not IgnoreProblems then
-        ShowMessage(ErrorStr);
-      Exit;
-    end else begin
-      ErrorStr := 'Replay warning: #' + ErrorStr;
-      if not IgnoreProblems then
-        ShowMessage(ErrorStr);
-    end;
-  end;
-
-  List.Clear;
-  List.Capacity := H.ReplayRecordCount;
-  S.Seek(H.FirstRecordPos, soFromBeginning);
-
-  while True do
-  begin
-    if S.Read(R, SizeOf(TReplayRec)) <> SizeOf(TReplayRec) then
-      Break;
-    if R.Check <> 'R' then
-    begin
-      ShowMessage('Replay error: #0200' + #13 + 'at ' + i2s(List.Count));
-      List.Clear;
-      Exit;
-    end;
-    It := Add;
-    It.Iteration := R.Iteration;
-    It.ActionFlags := R.ActionFlags;
-    It.AssignedSkill := R.AssignedSkill;
-    It.SelectedButton := R.SelectedButton;
-    It.ReleaseRate := R.ReleaseRate;
-    It.LemmingIndex := R.LemmingIndex;
-    It.LemmingX := R.LemmingX;
-    It.LemmingY := R.LemmingY;
-    It.CursorX := R.CursorX;
-    It.CursorY := R.CursorY;
-    It.fSelectDir := R.SelectDir;
-
-    if List.Count >= H.ReplayRecordCount then
-      Break;
-  end;
-end;
-
-procedure TRecorder.SaveToFile(const aFileName: string);
-var
-  F: TFileStream;
-begin
-  F := TFileStream.Create(aFileName, fmCreate);
-  try
-    SaveToStream(F);
-  finally
-    F.Free;
-  end;
-end;
-
-procedure TRecorder.SaveToStream(S: TStream);
-var
-  i: Integer;
-  H: TReplayFileHeaderRec;
-  R: TReplayRec;
-  It: TReplayItem;
-begin
-
-  FillChar(H, SizeOf(TReplayFileHeaderRec), 0);
-
-  H.Signature := 'NEO';
-  H.Version := LEMMIX_REPLAY_VERSION;
-  H.FileSize := SizeOf(TReplayFileHeaderRec) +
-                SizeOf(TReplayRec) * List.Count;
-  H.HeaderSize := SizeOf(TReplayFileHeaderRec);
-  H.Mechanics := fGame.Options; // compatible for now
-  Include(H.Mechanics, dgoObsolete);
-  H.FirstRecordPos := H.HeaderSize;
-  H.ReplayRecordSize := SizeOf(TReplayFileHeaderRec);
-  H.ReplayRecordCount := List.Count;
-
-  H.ReplayGame := fgame.fGameParams.SysDat.CodeSeed;
-  H.ReplaySec := fgame.fGameParams.Info.dSection;
-  H.ReplayLev := fgame.fGameParams.Info.dLevel;
-
-  //H.ReplayOpt
-  with fGame do
-  begin
-    if LemmingsIn >= fGameParams.Level.Info.RescueCount then
-      Include(H.ReplayOpt, rpoLevelComplete);
-    if not (
-       (fGameParams.ChallengeMode or fGameParams.TimerMode)
-       or (fGameParams.ForceSkillset <> 0)
-       ) then
-      Include(H.ReplayOpt, rpoNoModes);
-  end;
-
-  H.ReplayTime := fGame.GameResultRec.gLastRescueIteration;
-  H.ReplaySaved := fGame.LemmingsIn;
-
-  H.ReplayLevelID := fGame.fGameParams.Level.Info.LevelID;
-
-  FillChar(H.Reserved, SizeOf(H.Reserved), 0);
-
-  S.WriteBuffer(H, SizeOf(TReplayFileHeaderRec));
-
-  for i := 0 to List.Count - 1 do
-  begin
-    It := List.List^[i];
-
-    R.Check := 'R';
-    R.Iteration := It.fIteration;
-    R.ActionFlags := It.fActionFlags;
-    R.AssignedSkill := It.AssignedSkill;
-    R.SelectedButton := It.fSelectedButton;
-    R.ReleaseRate := It.fReleaseRate;
-    R.LemmingIndex := It.fLemmingIndex;
-    R.LemmingX := It.fLemmingX;
-    R.LemmingY := It.fLemmingY;
-    R.CursorX := It.CursorX;
-    R.CursorY := It.CursorY;
-    R.SelectDir := It.SelectDir;
-
-    S.WriteBuffer(R, SizeOf(TReplayRec));
-  end;
-end;
-
-procedure TRecorder.SaveToTxt(const aFileName: string);
-
-var
-  i: Integer;
-  l:tstringlist;
-  m: TDosGameOptions;
-  it:TReplayItem;
-
-const skillstrings: array[rla_none..rla_exploding] of string =
-(   '-',
-    'Walk',
-    'Jump (not allowed)',
-    'Dig',
-    'Climb',
-    'Drown (not allowed)',
-    'Hoist (not allowed)',
-    'Build',
-    'Bash',
-    'Mine',
-    'Fall (not allowed)',
-    'Float',
-    'Splat (not allowed)',
-    'Exit (not allowed)',
-    'Vaporize (not allowed)',
-    'Block',
-    'Shrug (not allowed)',
-    'Ohno (not allowed)',
-    'Explode'
-);
-
-const selstrings: array[rsb_none..rsb_cloner] of string = (
-  '-',
-  'Slower',
-  'Faster',
-  'Climber',
-  'Umbrella',
-  'Explode',
-  'Stopper',
-  'Builder',
-  'Basher',
-  'Miner',
-  'Digger',
-  'Pause',
-  'Nuke',
-  'Walker',
-  'Swimmer',
-  'Glider',
-  'Mechanic',
-  'Stoner',
-  'Platformer',
-  'Stacker',
-  'Cloner');
-
-
-    procedure ads(const s:string);
-    begin
-      l.add(s);
-    end;
-
-    function bs(b:boolean): string;
-    begin
-      if b then result := 'yes' else result := 'no';
-    end;
-
-    function lz(i,c:integer):string;
-    begin
-      result:=padl(i2s(i), c, ' ');
-//      LeadZeroStr(i,c);
-    end;
-
-    function actionstr(af: word): string;
-    begin
-      {result := '?';
-      if raf_StartPause and af <> 0  then
-        result := 'Begin Pause'
-      else if raf_EndPause and af <> 0  then
-        result := 'End Pause'
-      else if raf_StartIncreaseRR and af <> 0  then
-        result := 'Start RR+'
-      else if raf_StartDecreaseRR and af <> 0  then
-        result := 'Start RR-'
-      else if raf_StopChangingRR and af <> 0  then
-        result := 'Stop RR'
-      else if raf_SkillSelection and af <> 0  then
-        result := 'Select'
-      else if raf_SkillAssignment and af <> 0  then
-        result := 'Assign'
-      else if raf_Nuke and af <> 0  then
-        result := 'Nuke';}
-
-      Result := '........';
-      {if raf_StartPause and af <> 0  then
-        result[1] := 'B';
-      if raf_EndPause and af <> 0  then
-        result[2] := 'E';}
-      if raf_StartIncreaseRR and af <> 0  then
-        result[3] := '+';
-      if raf_StartDecreaseRR and af <> 0  then
-        result[4] := '-';
-      if raf_StopChangingRR and af <> 0  then
-        result[5] := '*';
-      if raf_SkillSelection and af <> 0  then
-        result[6] := 'S';
-      if raf_SkillAssignment and af <> 0  then
-        result[7] := 'A';
-      if raf_Nuke and af <> 0  then
-        result[8] := 'N';
-    end;
-
-
-begin
-  l:=tstringlist.create;
-  m:=fGame.Options;
-
-  ads('NeoLemmix V' + PVersion + ' Replay Textfile');
-  ads('Game: ' + Trim(fGame.fGameParams.SysDat.PackName));
-  ads('------------------------------------------');
-  ads('Title: ' + Trim(fgame.level.info.title));
-  ads('Position: ' + fgame.fGameParams.Info.dSectionName + ' ' + inttostr(fgame.fGameParams.Info.dLevel + 1));
-  ads('Replay fileversion: ' + i2s(LEMMIX_REPLAY_VERSION));
-  ads('Number of records: ' + i2s(List.count));
-  ads('------------------------------------------');
-  if moChallengeMode in fGame.fGameParams.MiscOptions then
-  begin
-    ads('Challenge mode: Enabled');
-    if fGame.Level.Info.SkillTypes and $8000 <> 0 then ads('>> Walkers used:     ' + i2s(fGame.UsedSkillCount[baToWalking]));
-    if fGame.Level.Info.SkillTypes and $4000 <> 0 then ads('>> Climbers used:    ' + i2s(fGame.UsedSkillCount[baClimbing]));
-    if fGame.Level.Info.SkillTypes and $2000 <> 0 then ads('>> Swimmers used:    ' + i2s(fGame.UsedSkillCount[baSwimming]));
-    if fGame.Level.Info.SkillTypes and $1000 <> 0 then ads('>> Floaters used:    ' + i2s(fGame.UsedSkillCount[baFloating]));
-    if fGame.Level.Info.SkillTypes and $0800 <> 0 then ads('>> Gliders used:     ' + i2s(fGame.UsedSkillCount[baGliding]));
-    if fGame.Level.Info.SkillTypes and $0400 <> 0 then ads('>> Disarmers used:   ' + i2s(fGame.UsedSkillCount[baFixing]));
-    if fGame.Level.Info.SkillTypes and $0200 <> 0 then ads('>> Bombers used:     ' + i2s(fGame.UsedSkillCount[baExploding]));
-    if fGame.Level.Info.SkillTypes and $0100 <> 0 then ads('>> Stoners used:     ' + i2s(fGame.UsedSkillCount[baStoning]));
-    if fGame.Level.Info.SkillTypes and $0080 <> 0 then ads('>> Blockers used:    ' + i2s(fGame.UsedSkillCount[baBlocking]));
-    if fGame.Level.Info.SkillTypes and $0040 <> 0 then ads('>> Platformers used: ' + i2s(fGame.UsedSkillCount[baPlatforming]));
-    if fGame.Level.Info.SkillTypes and $0020 <> 0 then ads('>> Builders used:    ' + i2s(fGame.UsedSkillCount[baBuilding]));
-    if fGame.Level.Info.SkillTypes and $0010 <> 0 then ads('>> Stackers used:    ' + i2s(fGame.UsedSkillCount[baStacking]));
-    if fGame.Level.Info.SkillTypes and $0008 <> 0 then ads('>> Bashers used:     ' + i2s(fGame.UsedSkillCount[baBashing]));
-    if fGame.Level.Info.SkillTypes and $0004 <> 0 then ads('>> Miners used:      ' + i2s(fGame.UsedSkillCount[baMining]));
-    if fGame.Level.Info.SkillTypes and $0002 <> 0 then ads('>> Diggers used:     ' + i2s(fGame.UsedSkillCount[baDigging]));
-    if fGame.Level.Info.SkillTypes and $0001 <> 0 then ads('>> Cloners used:     ' + i2s(fGame.UsedSkillCount[baCloning]));
-  end else ads('Challenge mode: Disabled');
-  if moTimerMode in fGame.fGameParams.MiscOptions then
-  begin
-    ads('Timer mode: Enabled');
-    if (fGame.TimePlay < 60) and (fGame.TimePlay >= 0) then // Nepster: Surely suboptimal; I need better understanding of moTimerMode first!!!
-      ads('>> Replay saved at: 0:00')
-    else ads('>> Replay saved at: ' + i2s(abs(fGame.TimePlay + 60) div 60) + ':' + LeadZeroStr((-fGame.TimePlay) mod 60, 2)); // Nepster: Computed values are idiotic, but who cares when the replay file is a binary blob???
-    ads('>> Lemmings saved:  ' + i2s(fGame.LemmingsIn));
-  end else ads('Timer mode: Disabled');
-  ads('------------------------------------------');
-  ads('');
-
-  ads(' Rec   Frame  Action        Skill     Button     RR   lem   x    y   mx   my   sd');
-  ads('-----------------------------------------------------------------------------------');
-
-  for i:=0 to list.count-1 do
-  begin
-    it:=list.list^[i];
-    ads(
-        lz(i, 4) + '  ' +
-        lz(it.iteration, 6) + '  ' +
-        padr(actionstr(it.actionflags), 12) + '  ' +
-        padr(skillstrings[it.assignedskill], 8) + '  ' +
-        padr(selstrings[it.selectedbutton], 8) + '  ' +
-        lz(it.ReleaseRate, 3) + ' ' +
-        lz(it.LemmingIndex,4) + ' ' +
-        lz(it.lemmingx, 4) + ' ' +
-        lz(it.lemmingy, 4) + ' ' +
-        lz(it.CursorX, 4) + ' ' +
-        lz(it.CursorY, 4) + ' ' +
-        lz(it.SelectDir, 4)
-    );
-  end;
-
-  l.savetofile(afilename);
-  l.free;
-
-end;
-
-procedure TRecorder.Truncate(aCount: Integer);
-begin
-  List.Count := aCount;
-end;
-
-procedure TRecorder.LoadFromOldTxt(const aFileName: string);
-(*
-19, rrStartIncrease, 1
-19, rrStop, 85
-19, rrStartIncrease, 85
-19, rrStop, 86
-55, raSkillAssignment, baClimbing, 0
-58, rrStartDecrease, 86
-58, rrStop, 1
-66, raSkillAssignment, baClimbing, 1
-77, raSkillAssignment, baExplosion, 0
-85, raSkillAssignment, baFloating, 0
-96, raSkillAssignment, baFloating, 1
-118, raSkillAssignment, baFloating, 2
-184, raSkillAssignment, baBuilding, 1
-202, raSkillAssignment, baBuilding, 1
-219, raSkillAssignment, baBashing, 1
-226, raSkillAssignment, baBuilding, 1
-243, raSkillAssignment, baBashing, 1
-249, raSkillAssignment, baBuilding, 1
-412, rrStartIncrease, 1
-412, rrStop, 99
-518, raSkillAssignment, baBlocking, 1
-*)
-
-(*
-  TRecordedAction = (
-    raNone,
-    raSkillAssignment,
-    raNuke
-  );
-
-  TReleaseRateAction = (
-    rrNone,
-    rrStop,
-    rrStartIncrease,
-    rrStartDecrease
-  );
-*)
-var
-  L: TStringList;
-  i,j: integer;
-  s,t: string;
-
-  Cnt: integer;
-  RR, ITER: integer;
-  TYP: Word;
-  SKILL: TBasicLemmingAction;
-  LIX: Integer;
-  It: TReplayItem;
-
-begin
-
-
-  L:= TStringList.create;
-  try
-    l.loadfromfile(aFileName);
-    for i := 0 to l.count-1 do
-    begin
-      s := l[i];
-      cnt := SplitStringCount(s, ',');
-      if cnt < 3 then
-        continue;
-
-      RR := 0;
-      ITER:=-1;
-      TYP:=0;//rtNone;
-      SKILL:=baWalking;
-      LIX:=0;
-
-      for j := 0 to cnt - 1 do
-      begin
-
-
-        t:=SplitString(s, j, ',');
-
-        case j of
-          0: // currentiteration     umisc
-            begin
-            ITER := StrToIntDef(t, -1)
-            end;
-          1: // typ
-            begin
-              if comparetext(t, 'raNone') = 0 then
-                TYP := 0//rtNone
-              else if comparetext(t, 'raSkillAssignment') = 0 then
-                TYP := raf_SkillAssignment// rtAssignSkill
-              else if comparetext(t, 'raNuke') = 0 then
-                TYP := raf_Nuke //rtNuke
-              else if comparetext(t, 'rrNone') = 0 then
-                TYP := 0 //rtNone
-              else if comparetext(t, 'rrStop') = 0 then
-                TYP := raf_StopChangingRR //rtStopChangingRR
-              else if comparetext(t, 'rrStartDecrease') = 0 then
-                TYP := raf_StartDecreaseRR //rtStartDecreaseRR
-              else if comparetext(t, 'rrStartIncrease') = 0 then
-                TYP := raf_StartIncreaseRR; //rtStartIncreaseRR;
-            end;
-          2: // assign of RR
-            begin
-             if Cnt = 3 then
-             begin
-               RR := StrToIntDef(t, -1);
-             end
-             else begin
-               SKILL := TBasiclemmingaction(GetEnumValue(typeinfo(tbasiclemmingaction), t));
-             end;
-            end;
-
-          3: // lemming index
-            begin
-              LIX := StrToIntDef(t, -1);
-            end;
-        end;
-
-      end;
-
-      if (ITER<>-1) and (TYP<>0) then
-      begin
-        //deb(['item:', iter]);
-        It := Add;
-         it.Iteration := ITER;
-         it.actionflags := TYP;//RecTyp := TYP;
-        if Skill > baWalking then
-          it.AssignedSkill := Byte(Skill) + 1;
-//        It.Skill := SKILL;
-        It.LemmingIndex :=LIX;
-        It.ReleaseRate  := RR;
-      end;
-    end;
-  finally
-    l.free;
-  end;
 end;
 
 end.
