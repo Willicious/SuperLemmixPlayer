@@ -8,8 +8,9 @@ unit LemMetaConstruct;
 interface
 
 uses
-  LemMetaTerrain, LemTerrain, LemRendering, LemRenderHelpers,
-  GR32, Classes, SysUtils;
+  Dialogs,
+  LemMetaTerrain, LemTerrain, LemRendering, LemRenderHelpers, LemNeoParser,
+  LemTypes, LemStrings, GR32, Classes, SysUtils;
 
 type
   TConstructSteelOption = (cst_Normal, cst_None, cst_Simple);
@@ -28,6 +29,7 @@ type
     public
       constructor Create;
       destructor Destroy; override;
+      procedure Load(aCollection, aPiece: String); override;
       procedure SetRenderer(aRenderer: TRenderer);
   end;
 
@@ -66,11 +68,63 @@ begin
   Result := fRenderer;
 end;
 
+procedure TMetaConstruct.Load(aCollection, aPiece: String);
+var
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+  T: TTerrain;
+begin
+  Parser := TNeoLemmixParser.Create;
+  try
+    ClearImages;
+    fPieceList.Clear;
+    fSteelMode := cst_Normal;
+
+    if not DirectoryExists(AppPath + SFStylesPieces + aCollection) then
+    raise Exception.Create('TMetaConstruct.Load: Collection "' + aCollection + '" does not exist.');
+    SetCurrentDir(AppPath + SFStylesPieces + aCollection + SFPiecesTerrain);
+
+    GS := Lowercase(aCollection);
+    Piece := Lowercase(aPiece);
+
+    Parser.LoadFromFile(Piece + '.nxcs');
+    repeat
+      Line := Parser.NextLine;
+
+      if Line.Keyword = 'WIDTH' then
+        Width := Line.Numeric;
+
+      if Line.Keyword = 'HEIGHT' then
+        Height := Line.Numeric;
+
+      if Line.Keyword = 'STEEL' then
+      begin
+        Line.Value := Lowercase(Line.Value);
+        if Line.Value = 'auto' then
+          fSteelMode := cst_Normal;
+        if Line.Value = 'simple' then
+          fSteelMode := cst_Simple;
+        if Line.Value = 'none' then
+          fSteelMode := cst_None;
+      end;
+
+      if Line.Keyword = 'TERRAIN' then
+      begin
+        T := fPieceList.Add;
+        T.LoadFromParser(Parser); 
+      end;
+    until Line.Keyword = '';
+  finally
+    Parser.Free;
+  end;
+end;
+
 procedure TMetaConstruct.GenerateGraphicImage;
 var
   TempBMP: TBitmap32;
   i: Integer;
 begin
+  ShowMessage(IntToStr(Width) + 'x' + IntToStr(Height));
   TempBMP := TBitmap32.Create;
   try
     TempBMP.SetSize(Width, Height);
@@ -78,6 +132,7 @@ begin
       Renderer.DrawTerrain(TempBmp, fPieceList[i]);
 
     SetGraphic(TempBMP);
+    TempBMP.SaveToFile(AppPath + 'construct.bmp');
   finally
     TempBMP.Free;
   end;

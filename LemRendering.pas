@@ -168,7 +168,7 @@ type
 implementation
 
 uses
-  UTools;
+  LemMetaConstruct, UTools;
 
 { TRenderer }
 
@@ -577,6 +577,9 @@ begin
   Invert := T.DrawingFlags and tdf_Invert <> 0;
   Flip := T.DrawingFlags and tdf_Flip <> 0;
 
+  if Src is TMetaConstruct then
+    TMetaConstruct(Src).SetRenderer(Self);
+
   Dst.Assign(Src.PhysicsImage[Flip, Invert, Rotate]);
 
   for y := 0 to Dst.Height-1 do
@@ -700,6 +703,9 @@ begin
   Rotate := (T.DrawingFlags and tdf_Rotate <> 0);
   Invert := (T.DrawingFlags and tdf_Invert <> 0);
   Flip := (T.DrawingFlags and tdf_Flip <> 0);
+
+  if MT is TMetaConstruct then
+    TMetaConstruct(MT).SetRenderer(Self);
 
   Src := MT.GraphicImage[Flip, Invert, Rotate];
   PrepareTerrainBitmap(Src, T.DrawingFlags);

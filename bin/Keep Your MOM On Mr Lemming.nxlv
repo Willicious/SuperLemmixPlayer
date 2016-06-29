@@ -148,78 +148,9 @@
 
  TERRAIN
   SET marble
-  PIECE block_02
-  X 76
-  Y 88
-  ROTATE
-  FLIP_HORIZONTAL
-  ONE_WAY
-
- TERRAIN
-  SET marble
-  PIECE block_02
-  X 92
-  Y 88
-  ROTATE
-  FLIP_HORIZONTAL
-  ONE_WAY
-
- TERRAIN
-  SET marble
-  PIECE block_02
-  X 108
-  Y 88
-  ROTATE
-  FLIP_HORIZONTAL
-  ONE_WAY
-
- TERRAIN
-  SET marble
-  PIECE block_02
-  X 124
-  Y 88
-  ROTATE
-  FLIP_HORIZONTAL
-  ONE_WAY
-
- TERRAIN
-  SET marble
-  PIECE block_02
-  X 140
-  Y 88
-  ROTATE
-  FLIP_HORIZONTAL
-  ONE_WAY
-
- TERRAIN
-  SET marble
-  PIECE block_02
-  X 156
-  Y 88
-  ROTATE
-  FLIP_HORIZONTAL
-  ONE_WAY
-
- TERRAIN
-  SET marble
-  PIECE block_02
-  X 76
-  Y 72
-  ONE_WAY
-
- TERRAIN
-  SET marble
-  PIECE block_02
-  X 124
-  Y 72
-  ONE_WAY
-
- TERRAIN
-  SET marble
-  PIECE steps
-  X 76
-  Y 56
-  ONE_WAY
+  PIECE escher
+  X 0
+  Y 0
 
  TERRAIN
   SET marble

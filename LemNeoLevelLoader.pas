@@ -273,40 +273,9 @@ begin
       if Line.Keyword = 'TERRAIN' then
       begin
         T := aLevel.Terrains.Add;
-        T.DrawingFlags := tdf_NoOneWay;
+        T.LoadFromParser(Parser);
         repeat
           Line := Parser.NextLine;
-
-          if Line.Keyword = 'SET' then
-            T.GS := Lowercase(Line.Value);
-
-          if Line.Keyword = 'PIECE' then
-            T.Piece := Lowercase(Line.Value);
-
-          if Line.Keyword = 'X' then
-            T.Left := Line.Numeric;
-
-          if Line.Keyword = 'Y' then
-            T.Top := Line.Numeric;
-
-          if Line.Keyword = 'NO_OVERWRITE' then
-            T.DrawingFlags := T.DrawingFlags or tdf_NoOverwrite;
-
-          if Line.Keyword = 'ERASE' then
-            T.DrawingFlags := T.DrawingFlags or tdf_Erase;
-
-          if Line.Keyword = 'ROTATE' then
-            T.DrawingFlags := T.DrawingFlags or tdf_Rotate;
-
-          if Line.Keyword = 'FLIP_HORIZONTAL' then
-            T.DrawingFlags := T.DrawingFlags or tdf_Flip;
-
-          if Line.Keyword = 'FLIP_VERTICAL' then
-            T.DrawingFlags := T.DrawingFlags or tdf_Invert;
-
-          if Line.Keyword = 'ONE_WAY' then
-            T.DrawingFlags := T.DrawingFlags and not tdf_NoOneWay;
-
         until NewPiece;
       end;
 
