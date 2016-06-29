@@ -385,18 +385,29 @@ end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);
 var
+  PhysicsArrPtr, TerrLayerArrPtr: PColor32Array;
   cx, cy: Integer;
+  MapWidth: Integer; // Width of the total PhysicsMap
 begin
   // Another somewhat kludgy thing. Eventually, TRenderer should probably handle
   // applying masks, thereby removing them from both the visual render and the
   // physics render at the same time.
+  // Nepster: At least it is fast now...
+
+  PhysicsArrPtr := PhysicsMap.Bits;
+  TerrLayerArrPtr := fLayers[rlTerrain].Bits;
+
+  MapWidth := PhysicsMap.Width;
+
   for cy := Y to (Y+H-1) do
-    for cx := X to (X+W-1) do
-      if PhysicsMap.Pixel[cx, cy] and PM_SOLID = 0 then
-      begin
-        // should we double-check all terrain bits are erased?
-        fLayers[rlTerrain].Pixel[cx, cy] := 0;
-      end;
+  for cx := X to (X+W-1) do
+  begin
+    if PhysicsArrPtr[cy * MapWidth + cx] and PM_SOLID = 0 then
+    begin
+      // should we double-check all terrain bits are erased?
+      TerrLayerArrPtr[cy * MapWidth + cx] := 0;
+    end;
+  end;
 end;
 
 
