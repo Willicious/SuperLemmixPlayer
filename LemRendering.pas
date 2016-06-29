@@ -583,7 +583,7 @@ begin
       if (PSrc^ and $FF000000) <> 0 then
       begin
         PDst^ := PM_SOLID;
-        if Src.Meta.Unknown and $01 <> 0 then
+        if Src.Meta.IsSteel then
           PDst^ := PDst^ or PM_STEEL
         else if T.DrawingFlags and tdf_NoOneWay = 0 then
           PDst^ := PDst^ or PM_ONEWAY; 
@@ -706,7 +706,7 @@ begin
   Src := TRec.Image;
 
   UDf := T.DrawingFlags;
-  IsSteel := ((TRec.Meta.Unknown and $01) = 1);
+  IsSteel := TRec.Meta.IsSteel;
   IsNoOneWay := (UDf and tdf_NoOneWay <> 0);
   if (T.DrawingFlags and tdf_Invert = 0) and (T.DrawingFlags and tdf_Flip = 0) and (T.DrawingFlags and tdf_Rotate = 0) then
   begin
@@ -1429,7 +1429,7 @@ begin
         Ter := Level.Terrains[i];
         TRec := FindMetaTerrain(Ter);
         if Ter.DrawingFlags and tdf_Erase = 0 then
-          if SOX and (TRec.Meta.Unknown and $01 = 0) then
+          if SOX and TRec.Meta.IsSteel then
             Continue;
         DrawTerrain(fLayers[rlTerrain], Ter, SteelOnly);
       end;

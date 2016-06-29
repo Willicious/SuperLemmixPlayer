@@ -34,7 +34,7 @@ type
       fTheme: TNeoTheme;
       fTerrains: TMetaTerrains;
       fObjects: TMetaObjects;
-      fTerrainImages: TBitmaps;
+      //fTerrainImages: TBitmaps;
       fObjectImages: TBitmapses;
 
       function GetTerrainCount: Integer;
@@ -110,7 +110,7 @@ begin
   inherited;
   fTerrains := TMetaTerrains.Create;
   fObjects := TMetaObjects.Create;
-  fTerrainImages := TBitmaps.Create(true);
+  //fTerrainImages := TBitmaps.Create(true);
   fObjectImages := TBitmapses.Create(true);
   fTheme := nil;
 end;
@@ -119,7 +119,7 @@ destructor TNeoPieceManager.Destroy;
 begin
   fTerrains.Free;
   fObjects.Free;
-  fTerrainImages.Free;
+  //fTerrainImages.Free;
   fObjectImages.Free;
   inherited;
 end;
@@ -130,7 +130,7 @@ procedure TNeoPieceManager.Tidy;
 begin
   fTerrains.Clear;
   fObjects.Clear;
-  fTerrainImages.Clear;
+  //fTerrainImages.Clear;
   fObjectImages.Clear;
 end;
 
@@ -186,7 +186,7 @@ begin
   Result := fTerrains.Count;
 
   T := fTerrains.Add;
-  BMP := TBitmap32.Create;
+  BMP := T.GraphicImage;
 
   T.GS := TerrainLabel.GS;
   T.Piece := TerrainLabel.Piece;
@@ -200,7 +200,7 @@ begin
       repeat
         Line := Parser.NextLine;
         if Line.Keyword = 'STEEL' then
-          T.Unknown := 1;
+          T.IsSteel := true;
       until Line.Keyword = '';
     finally
       Parser.Free;
@@ -210,7 +210,7 @@ begin
   // Either way, load the terrain's image
   TPngInterface.LoadPngFile(TerrainLabel.Piece + '.png', BMP);
 
-  fTerrainImages.Add(BMP);
+  //fTerrainImages.Add(BMP);
 end;
 
 function TNeoPieceManager.ObtainObject(Identifier: String): Integer;
@@ -398,7 +398,7 @@ var
 begin
   i := FindTerrainIndexByIdentifier(Identifier);
   Result.Meta := fTerrains[i];
-  Result.Image := fTerrainImages[i];
+  Result.Image := Result.Meta.GraphicImage;
 end;
 
 function TNeoPieceManager.GetObject(Identifier: String): TObjectRecord;
