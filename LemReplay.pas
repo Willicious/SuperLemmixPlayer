@@ -48,6 +48,7 @@ type
       fLemmingY: Integer;
       fLemmingHighlit: Boolean;
     public
+      procedure SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
       property LemmingIndex: Integer read fLemmingIndex write fLemmingIndex;
       property LemmingX: Integer read fLemmingX write fLemmingX;
       property LemmingDx: Integer read fLemmingDx write fLemmingDx;
@@ -243,6 +244,7 @@ end;
 procedure TReplay.Add(aItem: TBaseReplayItem);
 var
   Dst: TReplayItemList;
+  i: Integer;
 begin
   Dst := nil;
 
@@ -255,6 +257,9 @@ begin
   if Dst = nil then
     raise Exception.Create('Unknown type passed to TReplay.Add!');
 
+  for i := Dst.Count-1 downto 0 do
+    if (Dst[i].Frame = aItem.Frame) and (Dst[i].ClassName = aItem.ClassName) then
+      Dst.Delete(i);
   Dst.Add(aItem);
 end;
 
@@ -449,7 +454,7 @@ var
     E.LemmingDx := Item.SelectDir; // it's the closest we've got
     E.LemmingHighlit := false; // we can't tell for old replays
     E.Frame := Item.Iteration;
-    fAssignments.Add(E);
+    Add(E);
   end;
 
   procedure CreateNukeEntry;
@@ -458,7 +463,7 @@ var
   begin
     E := TReplayNuke.Create;
     E.Frame := Item.Iteration;
-    fAssignments.Add(E);
+    Add(E);
   end;
 
   procedure CreateReleaseRateEntry;
@@ -469,7 +474,7 @@ var
     E.NewReleaseRate := Item.ReleaseRate;
     E.SpawnedLemmingCount := -1; // we don't know
     E.Frame := Item.Iteration;
-    fReleaseRateChanges.Add(E);
+    Add(E);
   end;
 
   procedure CreateSelectSkillEntry;
@@ -479,7 +484,7 @@ var
     E := TReplaySelectSkill.Create;
     E.Skill := TSkillPanelButton(Item.SelectedButton);
     E.Frame := Item.Iteration;
-    fInterfaceActions.Add(E);
+    Add(E);
   end;
 
 begin
@@ -538,6 +543,17 @@ begin
       Result := L[i];
       Exit;
     end;
+end;
+
+{ TBaseReplayLemmingItem }
+
+procedure TBaseReplayLemmingItem.SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
+begin
+  fLemmingIndex := aLemming.LemIndex;
+  fLemmingX := aLemming.LemX;
+  fLemmingDx := aLemming.LemDX;
+  fLemmingY := aLemming.LemY;
+  fLemmingHighlit := aHighlit;
 end;
 
 { TReplayItemList }

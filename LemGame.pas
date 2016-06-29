@@ -5499,58 +5499,20 @@ begin
 end;
 
 procedure TLemmingGame.RecordReleaseRate(aActionFlag: Byte);
-{-------------------------------------------------------------------------------
-  This is a tricky one. It can be done when pausing and when not pausing.
-  Records a releaserate change command so the only valid parameters are:
-    o raf_StartIncreaseRR,
-    o raf_StartDecreaseRR,
-    o raf_StopChangingRR
--------------------------------------------------------------------------------}
-{ TODO : This whole "NewRec" thing can be deleted, we do not need the variable }
 var
-  R: TReplayItem;
+  E: TReplayChangeReleaseRate;
   NewRec: Boolean;
   RecIteration: Integer;
 begin
   if not fPlaying or fReplaying then
     Exit;
 
-  Assert(aActionFlag in [raf_StartIncreaseRR, raf_StartDecreaseRR, raf_StopChangingRR]);
+  E := TReplayChangeReleaseRate.Create;
+  E.Frame := fCurrentIteration;
+  E.NewReleaseRate := CurrReleaseRate;
+  E.SpawnedLemmingCount := LemmingList.Count;
 
-  if aActionFlag <> raf_StopChangingRR then Exit;
-
-  RecIteration := CurrentIteration;
-
-  NewRec := False;
-  if Paused and (Recorder.List.Count > 0) then
-  begin
-    // get last record
-    R := Recorder.List.List^[Recorder.List.Count - 1];
-
-    // some records are not safe to overwrite
-    // we must begin a new one then
-    if (R.Iteration <> RecIteration) or
-       (R.ActionFlags and raf_SkillAssignment <> 0) then
-    begin
-      R := Recorder.add;
-      NewRec := True;
-    end;
-  end
-  else begin
-    // not paused, always create new record
-    R := Recorder.Add;
-    NewRec := True;
-  end;
-
-  R.Iteration := RecIteration;
-  R.ReleaseRate := CurrReleaseRate;
-
-  { TODO : Just use the "or" statement }
-  if NewRec then
-    R.ActionFlags := aActionFlag
-  else
-    R.ActionFlags := R.ActionFlags or aActionFlag;
-
+  fReplayManager.Add(E);
 end;
 
 procedure TLemmingGame.RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
@@ -5558,72 +5520,34 @@ procedure TLemmingGame.RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingA
   Always add new record.
 -------------------------------------------------------------------------------}
 var
-  R: TReplayItem;
+  E: TReplaySkillAssignment;
 begin
-  L.LemUsedSkillCount := L.LemUsedSkillCount + 1;
+  L.LemUsedSkillCount := L.LemUsedSkillCount + 1;   // this is probably NOT where this should be
+
   if fFreezeRecording then Exit;
   if not fPlaying or fReplaying then
     Exit;
 
-  R := Recorder.Add;
+  E := TReplaySkillAssignment.Create;
+  E.Skill := aSkill;
+  E.SetInfoFromLemming(L, (L = fHighlightLemming));
+  E.Frame := fCurrentIteration;
 
-  R.Iteration := CurrentIteration;
-  R.ActionFlags := raf_SkillAssignment;
-
-  R.LemmingIndex := L.LemIndex;
-  R.ReleaseRate := CurrReleaseRate;
-  R.AssignedSkill := Byte(aSkill){ + 1}; // the byte is "compatible" for now
-  R.LemmingX := L.LemX;
-  R.LemmingY := L.LemY;
-  R.CursorX := CursorPoint.X;
-  R.CursorY := CursorPoint.Y;
-  R.SelectDir := fSelectDx;
+  fReplayManager.Add(E);
 end;
 
 procedure TLemmingGame.RecordSkillSelection(aSkill: TSkillPanelButton);
 var
-  R: TReplayItem;
-  NewRec: Boolean;
+  E: TReplaySelectSkill;
 begin
   if not fPlaying then Exit;
   if fReplaying then Exit;
 
-  Assert(aSkill in [spbClimber, spbUmbrella, spbExplode, spbBlocker, spbBuilder,
-                    spbBasher, spbMiner, spbDigger, spbWalker, spbSwimmer,
-                    spbGlider, spbMechanic, spbStoner, spbPlatformer,
-                    spbStacker, spbCloner]);
+  E := TReplaySelectSkill.Create;
+  E.Skill := aSkill;
+  E.Frame := fCurrentIteration;
 
-  R := Recorder.Add;
-  NewRec := True;
-
-  R.Iteration := CurrentIteration;
-  if NewRec then
-    R.ActionFlags := raf_SkillSelection
-  else
-    R.ActionFlags := R.ActionFlags or raf_SkillSelection;
-
-  R.ReleaseRate := CurrReleaseRate;
-
-  { TODO : make a table for this }
-  case aSkill of
-    spbWalker:     r.SelectedButton := rsb_Walker;
-    spbClimber:    r.SelectedButton := rsb_Climber;
-    spbSwimmer:    r.SelectedButton := rsb_Swimmer;
-    spbUmbrella:   r.SelectedButton := rsb_Umbrella;
-    spbGlider:     r.SelectedButton := rsb_Glider;
-    spbMechanic:   r.SelectedButton := rsb_Mechanic;
-    spbExplode:    r.SelectedButton := rsb_Explode;
-    spbStoner:     r.SelectedButton := rsb_Stoner;
-    spbBlocker:    r.SelectedButton := rsb_Stopper;
-    spbPlatformer: r.SelectedButton := rsb_Platformer;
-    spbBuilder:    r.SelectedButton := rsb_Builder;
-    spbStacker:    r.SelectedButton := rsb_Stacker;
-    spbBasher:     r.SelectedButton := rsb_Basher;
-    spbMiner:      r.SelectedButton := rsb_Miner;
-    spbDigger:     r.SelectedButton := rsb_Digger;
-    spbCloner:     r.Selectedbutton := rsb_Cloner;
-  // make sure of nothing else
-  end;
+  fReplayManager.Add(E);
 end;
 
 
