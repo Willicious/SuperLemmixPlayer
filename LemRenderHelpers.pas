@@ -509,10 +509,19 @@ begin
   if fPhysicsMap <> nil then
   begin
     fPhysicsMap.DrawMode := dmCustom;
-    fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyOnTerrain;
-    fPhysicsMap.DrawTo(Items[rlOnTerrainObjects], aRegion, aRegion);
-    fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
-    fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, aRegion);
+    // Delete Only-On-Terrain Objects not on terrain
+    if not fIsEmpty[rlOnTerrainObjects] then
+    begin
+      fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyOnTerrain;
+      fPhysicsMap.DrawTo(Items[rlOnTerrainObjects], aRegion, aRegion);
+    end;
+
+    // Delete One-Way-Arrows not on non-steel terrain
+    if not fIsEmpty[rlOneWayArrows] then
+    begin
+      fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
+      fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, aRegion);
+    end;
   end;
 
   for i := Low(TRenderLayer) to High(TRenderLayer) do
