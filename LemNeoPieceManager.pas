@@ -19,11 +19,6 @@ type
     Piece: String;
   end;
 
-  TTerrainRecord = record
-    Meta: TMetaTerrain;
-    Image: TBitmap32;
-  end;
-
   TObjectRecord = record
     Meta: TMetaObject;
     Image: TBitmaps;
@@ -45,11 +40,11 @@ type
       function ObtainTerrain(Identifier: String): Integer;
       function ObtainObject(Identifier: String): Integer;
 
-      function GetTerrain(Identifier: String): TTerrainRecord;
+      //function GetTerrain(Identifier: String): TMetaTerrain;
       function GetObject(Identifier: String): TObjectRecord;
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TMetaObject;
-      function GetTerrainBitmap(Identifier: String): TBitmap32;
+      //function GetTerrainBitmap(Identifier: String): TBitmap32;
       function GetObjectBitmaps(Identifier: String): TBitmaps;
       function GetThemeColor(Index: String): TColor32;
 
@@ -65,11 +60,9 @@ type
 
       procedure SetTheme(aTheme: TNeoTheme);
 
-      property Terrains[Identifier: String]: TTerrainRecord read GetTerrain;
+      property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TObjectRecord read GetObject;
-      property MetaTerrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property MetaObjects[Identifier: String]: TMetaObject read GetMetaObject;
-      property TerrainBitmaps[Identifier: String]: TBitmap32 read GetTerrainBitmap;
       property ObjectBitmaps[Identifier: String]: TBitmaps read GetObjectBitmaps;
   end;
 
@@ -392,16 +385,7 @@ begin
   BMP.Free;
 end;
 
-// Functions to get piece records (which contain pointers to both the metainfo and the images)
-
-function TNeoPieceManager.GetTerrain(Identifier: String): TTerrainRecord;
-var
-  i: Integer;
-begin
-  i := FindTerrainIndexByIdentifier(Identifier);
-  Result.Meta := fTerrains[i];
-  Result.Image := Result.Meta.GraphicImage[false, false, false];
-end;
+// Functions to get the metainfo
 
 function TNeoPieceManager.GetObject(Identifier: String): TObjectRecord;
 var
@@ -415,18 +399,16 @@ end;
 // And some for those cases where we only want one or the other
 
 function TNeoPieceManager.GetMetaTerrain(Identifier: String): TMetaTerrain;
+var
+  i: Integer;
 begin
-  Result := GetTerrain(Identifier).Meta;
+  i := FindTerrainIndexByIdentifier(Identifier);
+  Result := fTerrains[i];
 end;
 
 function TNeoPieceManager.GetMetaObject(Identifier: String): TMetaObject;
 begin
   Result := GetObject(Identifier).Meta;
-end;
-
-function TNeoPieceManager.GetTerrainBitmap(Identifier: String): TBitmap32;
-begin
-  Result := GetTerrain(Identifier).Image;
 end;
 
 function TNeoPieceManager.GetObjectBitmaps(Identifier: String): TBitmaps;

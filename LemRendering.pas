@@ -33,7 +33,7 @@ uses
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
   LemDosBmp, LemDosStructures,
   LemTypes,
-  LemTerrain,
+  LemTerrain, LemMetaTerrain,
   LemObjects, LemInteractiveObject,   LemMetaObject,
   LemSteel,
   LemLemming,
@@ -98,7 +98,7 @@ type
     procedure CombineObjectDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
 
     // Functional combines
-    procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TTerrainRecord);
+    procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
     procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
@@ -120,7 +120,7 @@ type
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect); overload;
 
     function FindMetaObject(O: TInteractiveObject): TObjectRecord;
-    function FindMetaTerrain(T: TTerrain): TTerrainRecord;
+    function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
@@ -557,7 +557,7 @@ begin
   Result := fPieceManager.Objects[FindLabel];
 end;
 
-function TRenderer.FindMetaTerrain(T: TTerrain): TTerrainRecord;
+function TRenderer.FindMetaTerrain(T: TTerrain): TMetaTerrain;
 var
   FindLabel: String;
 begin
@@ -567,34 +567,31 @@ end;
 
 // Functional combines
 
-procedure TRenderer.PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TTerrainRecord);
+procedure TRenderer.PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
 var
   x, y: Integer;
-  PSrc, PDst: PColor32;
+  PDst: PColor32;
+  Flip, Invert, Rotate: Boolean;
 begin
-  Dst.SetSizeFrom(Src.Image);
-  Dst.Clear(0);
-  for y := 0 to Src.Image.Height-1 do
+  Rotate := T.DrawingFlags and tdf_Rotate <> 0;
+  Invert := T.DrawingFlags and tdf_Invert <> 0;
+  Flip := T.DrawingFlags and tdf_Flip <> 0;
+
+  Dst.Assign(Src.PhysicsImage[Flip, Invert, Rotate]);
+
+  for y := 0 to Dst.Height-1 do
   begin
-    for x := 0 to Src.Image.Width-1 do
+    for x := 0 to Dst.Width-1 do
     begin
-      PSrc := Src.Image.PixelPtr[x, y];
       PDst := Dst.PixelPtr[x, y];
-      if (PSrc^ and $FF000000) <> 0 then
+      if (PDst^ and PM_SOLID) <> 0 then
       begin
-        PDst^ := PM_SOLID;
-        if Src.Meta.IsSteel then
-          PDst^ := PDst^ or PM_STEEL
-        else if T.DrawingFlags and tdf_NoOneWay = 0 then
-          PDst^ := PDst^ or PM_ONEWAY; 
+        if (not Src.IsSteel) and (T.DrawingFlags and tdf_NoOneWay = 0) then
+          PDst^ := PDst^ or PM_ONEWAY;
       end else
         PDst^ := 0;
     end;
   end;
-
-  if T.DrawingFlags and tdf_Rotate <> 0 then Dst.Rotate90;
-  if T.DrawingFlags and tdf_Invert <> 0 then Dst.FlipVert;
-  if T.DrawingFlags and tdf_Flip <> 0 then Dst.FlipHorz;
 
   Dst.DrawMode := dmCustom;
   if T.DrawingFlags and tdf_NoOverwrite <> 0 then
@@ -695,33 +692,19 @@ end;
 procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
 var
   Src: TBitmap32;
-  UDf: Byte;
-  IsSteel: Boolean;
-  IsNoOneWay: Boolean;
-
-  TRec: TTerrainRecord;
+  Flip, Invert, Rotate: Boolean;
+  MT: TMetaTerrain;
 begin
 
-  TRec := FindMetaTerrain(T);
-  Src := TRec.Image;
+  MT := FindMetaTerrain(T);
 
-  UDf := T.DrawingFlags;
-  IsSteel := TRec.Meta.IsSteel;
-  IsNoOneWay := (UDf and tdf_NoOneWay <> 0);
-  if (T.DrawingFlags and tdf_Invert = 0) and (T.DrawingFlags and tdf_Flip = 0) and (T.DrawingFlags and tdf_Rotate = 0) then
-  begin
-    PrepareTerrainBitmap(Src, UDf);
-    Src.DrawTo(Dst, T.Left, T.Top);
-  end
-  else
-  begin
-    TempBitmap.Assign(Src);
-    if (T.DrawingFlags and tdf_Rotate <> 0) then TempBitmap.Rotate90;
-    if (T.DrawingFlags and tdf_Invert <> 0) then TempBitmap.FlipVert;
-    if (T.DrawingFlags and tdf_Flip <> 0) then TempBitmap.FlipHorz;
-    PrepareTerrainBitmap(TempBitmap, UDf);
-    TempBitmap.DrawTo(Dst, T.Left, T.Top);
-  end;
+  TempBitmap.Assign(Src);
+  Rotate := (T.DrawingFlags and tdf_Rotate <> 0);
+  Invert := (T.DrawingFlags and tdf_Invert <> 0);
+  Flip := (T.DrawingFlags and tdf_Flip <> 0);
+  Src := MT.GraphicImage[Flip, Invert, Rotate];
+  PrepareTerrainBitmap(Src, T.DrawingFlags);
+  TempBitmap.DrawTo(Dst, T.Left, T.Top);
 end;
 
 procedure TRenderer.PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
@@ -1153,7 +1136,7 @@ procedure TRenderer.RenderPhysicsMap(Dst: TBitmap32 = nil);
 var
   i: Integer;
   T: TTerrain;
-  TRec: TTerrainRecord;
+  MT: TMetaTerrain;
   O: TInteractiveObject;
   ORec: TObjectRecord;
   S: TSteel;
@@ -1257,8 +1240,8 @@ begin
     for i := 0 to Terrains.Count-1 do
     begin
       T := Terrains[i];
-      TRec := FindMetaTerrain(T);
-      PrepareTerrainFunctionBitmap(T, Bmp, TRec);
+      MT := FindMetaTerrain(T);
+      PrepareTerrainFunctionBitmap(T, Bmp, MT);
       Bmp.DrawTo(Dst, T.Left, T.Top);
     end;
 
@@ -1296,7 +1279,7 @@ var
   ORec: TObjectRecord;
 
   Ter: TTerrain;
-  TRec: TTerrainRecord;
+  MT: TMetaTerrain;
 
   Lem: TPreplacedLemming;
   L: TLemming;
@@ -1427,9 +1410,9 @@ begin
       for i := 0 to Level.Terrains.Count-1 do
       begin
         Ter := Level.Terrains[i];
-        TRec := FindMetaTerrain(Ter);
+        MT := FindMetaTerrain(Ter);
         if Ter.DrawingFlags and tdf_Erase = 0 then
-          if SOX and TRec.Meta.IsSteel then
+          if SOX and MT.IsSteel then
             Continue;
         DrawTerrain(fLayers[rlTerrain], Ter, SteelOnly);
       end;
