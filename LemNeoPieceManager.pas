@@ -186,7 +186,7 @@ begin
   Result := fTerrains.Count;
 
   T := fTerrains.Add;
-  BMP := T.GraphicImage;
+  BMP := TBitmap32.Create;
 
   T.GS := TerrainLabel.GS;
   T.Piece := TerrainLabel.Piece;
@@ -210,7 +210,9 @@ begin
   // Either way, load the terrain's image
   TPngInterface.LoadPngFile(TerrainLabel.Piece + '.png', BMP);
 
-  //fTerrainImages.Add(BMP);
+  T.SetGraphic(BMP);
+
+  BMP.Free;
 end;
 
 function TNeoPieceManager.ObtainObject(Identifier: String): Integer;
@@ -398,7 +400,7 @@ var
 begin
   i := FindTerrainIndexByIdentifier(Identifier);
   Result.Meta := fTerrains[i];
-  Result.Image := Result.Meta.GraphicImage;
+  Result.Image := Result.Meta.GraphicImage[false, false, false];
 end;
 
 function TNeoPieceManager.GetObject(Identifier: String): TObjectRecord;
