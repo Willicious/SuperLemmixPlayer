@@ -169,46 +169,14 @@ end;
 function TNeoPieceManager.ObtainTerrain(Identifier: String): Integer;
 var
   TerrainLabel: TLabelRecord;
-  Parser: TNeoLemmixParser;
-  Line: TParserLine;
   T: TMetaTerrain;
-  BMP: TBitmap32;
 begin
   TerrainLabel := SplitIdentifier(Identifier);
-  if not DirectoryExists(AppPath + SFStylesPieces + TerrainLabel.GS) then
-    raise Exception.Create('TNeoPieceManager.ObtainTerrain: ' + TerrainLabel.GS + ' does not exist.');
-  SetCurrentDir(AppPath + SFStylesPieces + TerrainLabel.GS + SFPiecesTerrain);
 
   Result := fTerrains.Count;
 
   T := fTerrains.Add;
-  BMP := TBitmap32.Create;
-
-  T.GS := TerrainLabel.GS;
-  T.Piece := TerrainLabel.Piece;
-
-  // If the metainfo file exists, load and process it.
-  if FileExists(TerrainLabel.Piece + '.nxtp') then
-  begin
-    Parser := TNeoLemmixParser.Create;
-    try
-      Parser.LoadFromFile(TerrainLabel.Piece + '.nxtp');
-      repeat
-        Line := Parser.NextLine;
-        if Line.Keyword = 'STEEL' then
-          T.IsSteel := true;
-      until Line.Keyword = '';
-    finally
-      Parser.Free;
-    end;
-  end;
-
-  // Either way, load the terrain's image
-  TPngInterface.LoadPngFile(TerrainLabel.Piece + '.png', BMP);
-
-  T.SetGraphic(BMP);
-
-  BMP.Free;
+  T.Load(TerrainLabel.GS, TerrainLabel.Piece);
 end;
 
 function TNeoPieceManager.ObtainObject(Identifier: String): Integer;

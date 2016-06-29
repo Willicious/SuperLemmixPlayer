@@ -4,8 +4,10 @@ unit LemMetaTerrain;
 interface
 
 uses
+  Dialogs,
   Classes, SysUtils, GR32,
   LemRenderHelpers,
+  LemNeoParser, PngInterface, LemStrings, LemTypes,
   UTools;
 
 const
@@ -40,6 +42,8 @@ type
     procedure Assign(Source: TPersistent); override;
     procedure SetGraphic(aImage: TBitmap32);
     procedure ClearImages;
+
+    procedure Load(aCollection, aPiece: String); virtual;
 
     property Identifier : String read GetIdentifier;
     property GraphicImage[Flip, Invert, Rotate: Boolean]: TBitmap32 read GetGraphicImage;
@@ -89,6 +93,39 @@ begin
     fPhysicsImages[i].Free;
   end;
   inherited;
+end;
+
+procedure TMetaTerrain.Load(aCollection, aPiece: String);
+var
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+begin
+  Parser := TNeoLemmixParser.Create;
+  try
+    ClearImages;
+
+    if not DirectoryExists(AppPath + SFStylesPieces + aCollection) then
+    raise Exception.Create('TMetaTerrain.Load: Collection "' + aCollection + '" does not exist.');
+    SetCurrentDir(AppPath + SFStylesPieces + aCollection + SFPiecesTerrain);
+
+    fGS := Lowercase(aCollection);
+    fPiece := Lowercase(aPiece);
+
+    if FileExists(aPiece + '.nxtp') then
+    begin
+      Parser.LoadFromFile(fPiece + '.nxtp');
+      repeat
+        Line := Parser.NextLine;
+        if Line.Keyword = 'STEEL' then
+          fIsSteel := true;
+      until Line.Keyword = '';
+    end;
+
+    TPngInterface.LoadPngFile(aPiece + '.png', fGraphicImages[0]);
+    fGeneratedGraphicImage[0] := true;
+  finally
+    Parser.Free;
+  end;
 end;
 
 procedure TMetaTerrain.ClearImages;

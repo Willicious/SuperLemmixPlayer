@@ -54,6 +54,7 @@ type
       procedure LoadFromStream(aStream: TStream);
       procedure LoadFromStringList(aStringList: TStrings);
 
+      procedure Back(aLines: Integer = 1);
       procedure Reset;
 
       property NextLine: TParserLine read GetNextLine;
@@ -99,6 +100,12 @@ begin
   CleanStringList;
 end;
 
+procedure TNeoLemmixParser.Back(aLines: Integer = 1);
+begin
+  Dec(fCurrentLine, aLines);
+  if fCurrentLine < 0 then fCurrentLine := 0;
+end;
+
 procedure TNeoLemmixParser.Reset;
 begin
   fCurrentLine := 0;
@@ -111,6 +118,7 @@ begin
     Result.Keyword := '';
     Result.Value := '';
     Result.Numeric := 0;
+    Inc(fCurrentLine);
   end else begin
     Result := ParseString(fStringList[fCurrentLine]);
     Inc(fCurrentLine);
