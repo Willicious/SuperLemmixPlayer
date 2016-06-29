@@ -7,7 +7,7 @@ uses
   Dialogs,
   Classes, SysUtils, GR32,
   LemRenderHelpers,
-  LemNeoParser, PngInterface, LemStrings, LemTypes,
+  LemNeoParser, PngInterface, LemStrings, LemTypes, Contnrs,
   UTools;
 
 const
@@ -15,7 +15,7 @@ const
 
 type
 
- TMetaTerrain = class(TCollectionItem)
+ TMetaTerrain = class
   private
     fGS    : String;
     fPiece  : String;
@@ -37,9 +37,8 @@ type
     procedure GenerateGraphicImage; virtual;
     procedure GeneratePhysicsImage; virtual;
   public
-    constructor Create(Collection: TCollection); override;
+    constructor Create;
     destructor Destroy; override;
-    procedure Assign(Source: TPersistent); override;
     procedure SetGraphic(aImage: TBitmap32);
     procedure ClearImages;
 
@@ -55,23 +54,22 @@ type
     property IsSteel       : Boolean read fIsSteel write fIsSteel;
   end;
 
-  TMetaTerrains = class(TCollectionEx)
-  private
-    function GetItem(Index: Integer): TMetaTerrain;
-    procedure SetItem(Index: Integer; const Value: TMetaTerrain);
-  protected
-  public
-    constructor Create;
-    function Add: TMetaTerrain;
-    function Insert(Index: Integer): TMetaTerrain;
-    property Items[Index: Integer]: TMetaTerrain read GetItem write SetItem; default;
+  TMetaTerrains = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TMetaTerrain;
+    public
+      constructor Create;
+      function Add(Item: TMetaTerrain): Integer; overload;
+      function Add: TMetaTerrain; overload;
+      property Items[Index: Integer]: TMetaTerrain read GetItem; default;
+      property List;
   end;
 
 implementation
 
 { TMetaTerrain }
 
-constructor TMetaTerrain.Create(Collection: TCollection);
+constructor TMetaTerrain.Create;
 var
   i: Integer;
 begin
@@ -236,23 +234,6 @@ begin
   fGeneratedPhysicsImage[i] := true;
 end;
 
-procedure TMetaTerrain.Assign(Source: TPersistent);
-var
-  T: TMetaTerrain absolute Source;
-begin
-  if Source is TMetaTerrain then
-  begin
-    ClearImages;
-    fGraphicImages[0].Assign(T.fGraphicImages[0]);
-    fGS := T.fGS;
-    fPiece := T.fPiece;
-    fWidth := T.fWidth;
-    fHeight := T.fHeight;
-    fIsSteel := T.fIsSteel;
-  end
-  else inherited Assign(Source);
-end;
-
 function TMetaTerrain.GetIdentifier: String;
 begin
   Result := LowerCase(fGS + ':' + fPiece);
@@ -260,29 +241,28 @@ end;
 
 { TMetaTerrains }
 
-function TMetaTerrains.Add: TMetaTerrain;
+constructor TMetaTerrains.Create;
+var
+  aOwnsObjects: Boolean;
 begin
-  Result := TMetaTerrain(inherited Add);
+  aOwnsObjects := true;
+  inherited Create(aOwnsObjects);
 end;
 
-constructor TMetaTerrains.Create;
+function TMetaTerrains.Add(Item: TMetaTerrain): Integer;
 begin
-  inherited Create(TMetaTerrain);
+  Result := inherited Add(Item);
+end;
+
+function TMetaTerrains.Add: TMetaTerrain;
+begin
+  Result := TMetaTerrain.Create;
+  inherited Add(Result);
 end;
 
 function TMetaTerrains.GetItem(Index: Integer): TMetaTerrain;
 begin
-  Result := TMetaTerrain(inherited GetItem(Index))
-end;
-
-function TMetaTerrains.Insert(Index: Integer): TMetaTerrain;
-begin
-  Result := TMetaTerrain(inherited Insert(Index))
-end;
-
-procedure TMetaTerrains.SetItem(Index: Integer; const Value: TMetaTerrain);
-begin
-  inherited SetItem(Index, Value);
+  Result := inherited Get(Index);
 end;
 
 end.

@@ -26,14 +26,14 @@ type
       procedure GenerateGraphicImage; override;
       procedure GeneratePhysicsImage; override;
     public
-      constructor Create(Collection: TCollection); override;
+      constructor Create;
       destructor Destroy; override;
       procedure SetRenderer(aRenderer: TRenderer);
   end;
 
 implementation
 
-constructor TMetaConstruct.Create(Collection: TCollection);
+constructor TMetaConstruct.Create;
 begin
   inherited;
   fPieceList := TTerrains.Create(TTerrain);
