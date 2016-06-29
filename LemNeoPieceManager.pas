@@ -71,6 +71,9 @@ type
 
 implementation
 
+uses
+  LemMetaConstruct;
+
 // These two standalone functions are just to help shifting labels around
 
 function SplitIdentifier(Identifier: String): TLabelRecord;

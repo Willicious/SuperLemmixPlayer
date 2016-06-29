@@ -15,10 +15,6 @@ type
 
  TMetaTerrain = class(TCollectionItem)
   private
-    fGraphicImages: array[0..ALIGNMENT_COUNT-1] of TBitmap32;
-    fPhysicsImages: array[0..ALIGNMENT_COUNT-1] of TBitmap32;
-    fGeneratedGraphicImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
-    fGeneratedPhysicsImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
     fGS    : String;
     fPiece  : String;
     fWidth          : Integer;
@@ -32,6 +28,11 @@ type
     procedure DeriveGraphicImage(Flip, Invert, Rotate: Boolean);
     procedure DerivePhysicsImage(Flip, Invert, Rotate: Boolean);
   protected
+    fGraphicImages: array[0..ALIGNMENT_COUNT-1] of TBitmap32;
+    fPhysicsImages: array[0..ALIGNMENT_COUNT-1] of TBitmap32;
+    fGeneratedGraphicImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
+    fGeneratedPhysicsImage: array[0..ALIGNMENT_COUNT-1] of Boolean;  
+    procedure GenerateGraphicImage; virtual;
     procedure GeneratePhysicsImage; virtual;
   public
     constructor Create(Collection: TCollection); override;
@@ -136,6 +137,11 @@ begin
   Result := fPhysicsImages[i];
 end;
 
+procedure TMetaTerrain.GenerateGraphicImage;
+begin
+  raise Exception.Create('Basic TMetaTerrain cannot interally generate the graphical image!');
+end;
+
 procedure TMetaTerrain.GeneratePhysicsImage;
 var
   x, y: Integer;
@@ -155,6 +161,7 @@ procedure TMetaTerrain.EnsureImageMade(Flip, Invert, Rotate: Boolean);
 var
   i: Integer;
 begin
+  if not fGeneratedGraphicImage[0] then GenerateGraphicImage;
   if not fGeneratedPhysicsImage[0] then GeneratePhysicsImage;
 
   i := GetImageIndex(Flip, Invert, Rotate);
