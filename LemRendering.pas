@@ -89,6 +89,8 @@ type
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer);
     procedure AddStoner(X, Y: Integer);
+    // Remove stuff
+    procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
 
     // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -108,7 +110,7 @@ type
 
     function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
-    procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
+
   protected
   public
     constructor Create;
@@ -177,6 +179,7 @@ begin
   fRenderInterface := aInterface;
   fRenderInterface.SetDrawRoutine(di_ConstructivePixel, AddTerrainPixel);
   fRenderInterface.SetDrawRoutine(di_Stoner, AddStoner);
+  fRenderInterface.SetRemoveRoutine(ApplyRemovedTerrain);
 end;
 
 // Minimap drawing
@@ -378,7 +381,8 @@ end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect);
 begin
-  ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
+  // No longer needed: LemGame calls ApplyRemovedTerrain when applying a removal mask.
+  // ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(aDst, aRegion);
 end;
@@ -1420,6 +1424,9 @@ begin
             Continue;
         DrawTerrain(fLayers[rlTerrain], Ter, SteelOnly);
       end;
+
+    // remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
+    ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
 
   end; // with Inf
 

@@ -3464,8 +3464,9 @@ begin
   PosY := L.LemY;
 
   ExplodeMaskBmp.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
-  //if not HyperSpeed then
-  //  ExplodeMaskBmp.DrawTo(fTargetBitmap, PosX - 8, PosY - 14);
+
+  // Delete these pixels from the terrain layer
+  fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, ExplodeMaskBmp.Width, ExplodeMaskBmp.Height);
 
   InitializeMinimap;
 end;
@@ -3492,6 +3493,9 @@ begin
   Assert(CheckRectCopy(D, S), 'bash rect err');
 
   Bmp.DrawTo(PhysicsMap, D, S);
+
+  // Delete these pixels from the terrain layer
+  fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 
   InitializeMinimap;
 end;
@@ -3525,6 +3529,9 @@ begin
   Assert(CheckRectCopy(D, S), 'miner rect error');
 
   Bmp.DrawTo(PhysicsMap, D, S);
+
+  // Delete these pixels from the terrain layer
+  fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 
   InitializeMinimap;
 end;
@@ -3856,7 +3863,7 @@ end;
 procedure TLemmingGame.AddConstructivePixel(X, Y: Integer);
 begin
   PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] or PM_SOLID;
-  fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y); 
+  fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y);
 end;
 
 
@@ -3877,9 +3884,8 @@ begin
       if (n > -4) and (n < 4) then Result := True;
     end;
 
-    //if ReadSpecialMap(PosX + n, PosY) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
-    //  WriteSpecialMap(PosX + n, PosY, DOM_NONE);
-    // Handled by the pixel remover now :D
+    // Delete these pixels from the terrain layer
+    fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
   end;
 
   InitializeMinimap;
