@@ -1060,7 +1060,7 @@ begin
   if ext = '.nxrp' then
     Game.ReplayManager.LoadFromFile(aFilename)
   else if ext = '.lrb' then
-    Game.ReplayManager.LoadFromFile(aFilename)
+    Game.ReplayManager.LoadOldReplayFile(aFilename)
   else
     try
       Game.ReplayManager.LoadFromFile(aFilename);
@@ -1089,7 +1089,7 @@ begin
   dlg:=topendialog.create(nil);
   try
 //    dlg.DefaultExt := '*.lrb';
-    dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
+    dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
     dlg.FilterIndex := 1;
     if Game.LastReplayDir = '' then
     begin

@@ -16,8 +16,9 @@ unit LemReplay;
 interface
 
 uses
+  Dialogs,
   LemNeoParser, LemLemming, LemCore, LemStrings,
-  Contnrs, Classes, SysUtils;
+  Contnrs, Classes, SysUtils, StrUtils;
 
 const
   SKILL_REPLAY_NAME_COUNT = 16;
@@ -29,6 +30,7 @@ const
                                                 'BASHER', 'MINER', 'DIGGER',
                                                 'CLONER');
 
+
 type
   TReplayAction = (ra_None, ra_AssignSkill, ra_ChangeReleaseRate, ra_Nuke,
                    ra_SelectSkill, ra_HighlightLemming);
@@ -36,7 +38,12 @@ type
   TBaseReplayItem = class
     private
       fFrame: Integer;
+    protected
+      function DoLoadLine(Line: TParserLine): Boolean; virtual;    // Return TRUE if the line is understood. Should start with "if inherited then Exit".
+      procedure DoSave(SL: TStringList; aLabel: String); virtual;                  // Should start with a call to inherited.
     public
+      procedure Load(Parser: TNeoLemmixParser);
+      procedure Save(SL: TStringList);
       property Frame: Integer read fFrame write fFrame;
   end;
 
@@ -47,6 +54,9 @@ type
       fLemmingDx: Integer;
       fLemmingY: Integer;
       fLemmingHighlit: Boolean;
+    protected
+      function DoLoadLine(Line: TParserLine): Boolean; override;
+      procedure DoSave(SL: TStringList; aLabel: String); override;
     public
       procedure SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
       property LemmingIndex: Integer read fLemmingIndex write fLemmingIndex;
@@ -59,6 +69,9 @@ type
   TReplaySkillAssignment = class(TBaseReplayLemmingItem)
     private
       fSkill: TBasicLemmingAction;
+    protected
+      function DoLoadLine(Line: TParserLine): Boolean; override;
+      procedure DoSave(SL: TStringList; aLabel: String); override;
     public
       property Skill: TBasicLemmingAction read fSkill write fSkill;
   end;
@@ -67,22 +80,34 @@ type
     private
       fNewReleaseRate: Integer;
       fSpawnedLemmingCount: Integer;
+    protected
+      //function DoLoadLine(Line: TParserLine): Boolean; override;
+      //procedure DoSave(SL: TStringList; aLabel: String); override;
     public
       property NewReleaseRate: Integer read fNewReleaseRate write fNewReleaseRate;
       property SpawnedLemmingCount: Integer read fSpawnedLemmingCount write fSpawnedLemmingCount;
   end;
 
   TReplayNuke = class(TBaseReplayItem)
+    protected
+      //function DoLoadLine(Line: TParserLine): Boolean; override;
+      //procedure DoSave(SL: TStringList; aLabel: String); override;
   end;
 
   TReplaySelectSkill = class(TBaseReplayItem)
     private
       fSkill: TSkillPanelButton;
+    protected
+      //function DoLoadLine(Line: TParserLine): Boolean; override;
+      //procedure DoSave(SL: TStringList; aLabel: String); override;
     public
       property Skill: TSkillPanelButton read fSkill write fSkill;
   end;
 
   TReplayHighlightLemming = class(TBaseReplayLemmingItem)
+    protected
+      //function DoLoadLine(Line: TParserLine): Boolean; override;
+      //procedure DoSave(SL: TStringList; aLabel: String); override;
   end;
 
   TReplayItemList = class(TObjectList)
@@ -112,6 +137,7 @@ type
       function GetItemByFrame(aFrame: Integer; aItemType: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; SL: TStringList);
       procedure SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
+      //function LoadReplayItem(aParser: TNeoLemmixParser): TBaseReplayItem;
     public
       constructor Create;
       destructor Destroy; override;
@@ -122,6 +148,7 @@ type
       procedure LoadOldReplayFile(aFile: String);
       procedure Cut(aLastFrame: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
+      property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
       property LevelAuthor: String read fLevelAuthor write fLevelAuthor;
       property LevelGame: String read fLevelGame write fLevelGame;
@@ -186,7 +213,7 @@ type
     ReplayGame        : Byte;
     ReplaySec         : Byte;
     ReplayLev         : Byte;
-    ReplayOpt         : Word;
+    ReplayOpt         : Byte;
 
     ReplayTime        : LongWord;
     ReplaySaved       : Word;
@@ -202,7 +229,7 @@ type
     ActionFlags    : Word;         //  2 bytes -  7
     AssignedSkill  : Byte;         //  1 byte  -  8
     SelectedButton : Byte;         //  1 byte  -  9
-    ReleaseRate    : Integer;      //  1 byte  - 13
+    ReleaseRate    : Integer;      //  4 bytes  - 13
     LemmingIndex   : Integer;      //  4 bytes - 17
     LemmingX       : Integer;      //  4 bytes - 21
     LemmingY       : Integer;      //  4 bytes - 25
@@ -215,12 +242,32 @@ type
 
 const
   //Recorded Action Flags
-	raf_StartIncreaseRR   = $04;
-	raf_StartDecreaseRR   = $08;
-	raf_StopChangingRR    = $10;
-	raf_SkillSelection    = $20;
-	raf_SkillAssignment   = $40;
-	raf_Nuke              = $80;
+	raf_StartIncreaseRR   = $0008;
+	raf_StartDecreaseRR   = $0010;
+	raf_StopChangingRR    = $0020;
+	raf_SkillSelection    = $0040;
+	raf_SkillAssignment   = $0080;
+	raf_Nuke              = $0100;
+
+  BUTTON_TABLE: array[0..20] of TSkillPanelButton =
+                 (spbNone, spbNone, spbNone,
+                  spbClimber,
+                  spbUmbrella,
+                  spbExplode,
+                  spbBlocker,
+                  spbBuilder,
+                  spbBasher,
+                  spbMiner,
+                  spbDigger,
+                  spbNone, spbNone,
+                  spbWalker,
+                  spbSwimmer,
+                  spbGlider,
+                  spbMechanic,
+                  spbStoner,
+                  spbPlatformer,
+                  spbStacker,
+                  spbCloner);
 
 { TReplay }
 
@@ -331,8 +378,44 @@ begin
 end;
 
 procedure TReplay.LoadFromFile(aFile: String);
+var
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+  i: Integer;
 begin
   Clear(true);
+  Parser := TNeoLemmixParser.Create;
+  try
+    Parser.LoadFromFile(aFile);
+    repeat
+      Line := Parser.NextLine;
+
+      if Line.Keyword = 'USER' then
+        fPlayerName := Line.Value;
+
+      if Line.Keyword = 'TITLE' then
+        fLevelName := Line.Value;
+
+      if Line.Keyword = 'AUTHOR' then
+        fLevelAuthor := Line.Value;
+
+      if Line.Keyword = 'GAME' then
+        fLevelGame := Line.Value;
+
+      if Line.Keyword = 'RANK' then
+        fLevelRank := Line.Value;
+
+      if Line.Keyword = 'LEVEL' then
+        fLevelPosition := Line.Numeric;
+
+      if Line.Keyword = 'ID' then
+        fLevelID := StrToIntDef('x' + Line.Value, 0);
+
+
+    until Line.Keyword = '';
+  finally
+    Parser.Free;
+  end;
 end;
 
 procedure TReplay.SaveToFile(aFile: String);
@@ -352,12 +435,12 @@ begin
   SL.Add('#  UI Actions: ' + IntToStr(fInterfaceActions.Count));
 
   SL.Add('');
-  if fPlayerName <> '' then
+  if Trim(fPlayerName) <> '' then
     SL.Add('USER ' + fPlayerName);
   SL.Add('TITLE ' + fLevelName);
-  if fLevelAuthor <> '' then
+  if Trim(fLevelAuthor) <> '' then
     SL.Add('AUTHOR ' + fLevelAuthor);
-  if fLevelGame <> '' then
+  if Trim(fLevelGame) <> '' then
   begin
     SL.Add('GAME ' + fLevelGame);
     SL.Add('RANK ' + fLevelRank);
@@ -507,7 +590,7 @@ var
     E: TReplaySelectSkill;
   begin
     E := TReplaySelectSkill.Create;
-    E.Skill := TSkillPanelButton(Item.SelectedButton);
+    E.Skill := BUTTON_TABLE[Item.SelectedButton];
     E.Frame := Item.Iteration;
     Add(E);
   end;
@@ -520,6 +603,8 @@ begin
     MS.Position := 0;
     MS.Read(Header, SizeOf(TReplayFileHeaderRec));
 
+    fLevelID := Header.ReplayLevelID;
+
     MS.Position := Header.FirstRecordPos;
     LastReleaseRate := 0;
     LastSelectedSkill := spbNone;
@@ -530,9 +615,10 @@ begin
       begin
         CreateReleaseRateEntry;
         LastReleaseRate := Item.ReleaseRate;
+        if Item.ActionFlags and $38 <> 0 then Continue;
       end;
 
-      if TSkillPanelButton(Item.SelectedButton) <> LastSelectedSkill then
+      if Item.ActionFlags and raf_SkillSelection <> 0 then
       begin
         CreateSelectSkillEntry;
         LastSelectedSkill := TSkillPanelButton(Item.SelectedButton);
@@ -547,6 +633,8 @@ begin
   finally
     MS.Free;
   end;
+
+  SaveToFile(ChangeFileExt(aFile, '.nxrp'));
 end;
 
 function TReplay.GetItemByFrame(aFrame: Integer; aItemType: Integer): TBaseReplayItem;
@@ -570,6 +658,40 @@ begin
     end;
 end;
 
+{ TBaseReplayItem }
+
+procedure TBaseReplayItem.Load(Parser: TNeoLemmixParser);
+var
+  Line: TParserLine;
+begin
+  repeat
+    Line := Parser.NextLine;
+  until not DoLoadLine(Line);
+  Parser.Back;
+end;
+
+procedure TBaseReplayItem.Save(SL: TStringList);
+begin
+  DoSave(SL, ''); // It's expected that somewhere throughout the calls to inherited DoSaves, the second parameter will be filled
+end;
+
+function TBaseReplayItem.DoLoadLine(Line: TParserLine): Boolean;
+begin
+  Result := false;
+
+  if Line.Keyword = 'FRAME' then
+  begin
+    Result := true;
+    fFrame := Line.Numeric;
+  end;
+end;
+
+procedure TBaseReplayItem.DoSave(SL: TStringList; aLabel: String);
+begin
+  SL.Add(aLabel);
+  SL.Add('  FRAME ' + IntToStr(fFrame));
+end;
+
 { TBaseReplayLemmingItem }
 
 procedure TBaseReplayLemmingItem.SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
@@ -579,6 +701,81 @@ begin
   fLemmingDx := aLemming.LemDX;
   fLemmingY := aLemming.LemY;
   fLemmingHighlit := aHighlit;
+end;
+
+function TBaseReplayLemmingItem.DoLoadLine(Line: TParserLine): Boolean;
+begin
+  Result := inherited DoLoadLine(Line);
+  if Result then Exit;
+
+  if Line.Keyword = 'LEM_INDEX' then
+  begin
+    fLemmingIndex := Line.Numeric;
+    Result := true;
+  end;
+
+  if Line.Keyword = 'LEM_X' then
+  begin
+    fLemmingX := Line.Numeric;
+    Result := true;
+  end;
+
+  if Line.Keyword = 'LEM_Y' then
+  begin
+    fLemmingX := Line.Numeric;
+    Result := true;
+  end;
+
+  if Line.Keyword = 'LEM_DIR' then
+  begin
+    if LeftStr(Uppercase(Line.Value), 1) = 'L' then
+      fLemmingDx := -1
+    else if LeftStr(Uppercase(Line.Value), 1) = 'R' then
+      fLemmingDx := 1
+    else
+      fLemmingDx := 0; // we must be able to store "unknown", eg. for converting old replays
+    Result := true;
+  end;
+
+  if Line.Keyword = 'HIGHLIT' then
+  begin
+    fLemmingHighlit := true;
+    Result := true;
+  end;
+end;
+
+procedure TBaseReplayLemmingItem.DoSave(SL: TStringList; aLabel: String);
+begin
+  inherited;
+  SL.Add('  LEM_INDEX ' + IntToStr(fLemmingIndex));
+  SL.Add('  LEM_X ' + IntToStr(fLemmingX));
+  SL.Add('  LEM_Y ' + IntToStr(fLemmingY));
+  if fLemmingDx < 0 then
+    SL.Add('  LEM_DIR LEFT')
+  else if fLemmingDx > 0 then
+    SL.Add('  LEM_DIR RIGHT');
+  if fLemmingHighlit then
+    SL.Add('  HIGHLIT');
+end;
+
+{ TReplaySkillAssignment }
+
+function TReplaySkillAssignment.DoLoadLine(Line: TParserLine): Boolean;
+begin
+  Result := inherited DoLoadLine(Line);
+  if Result then Exit;
+
+  if Line.Keyword = 'ACTION' then
+  begin
+    Skill := GetSkillAction(Line.Value);
+    Result := true;
+  end;
+end;
+
+procedure TReplaySkillAssignment.DoSave(SL: TStringList; aLabel: String);
+begin
+  inherited DoSave(SL, 'ASSIGNMENT');
+  SL.Add('  ACTION ' + GetSkillReplayName(Skill));
 end;
 
 { TReplayItemList }
