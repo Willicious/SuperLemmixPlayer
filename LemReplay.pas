@@ -109,7 +109,7 @@ type
       fLevelPosition: Integer;
       fLevelID: Cardinal;
       function GetLastActionFrame: Integer;
-      function GetItemByFrame(aItemType: Integer; aFrame: Integer): TBaseReplayItem;
+      function GetItemByFrame(aFrame: Integer; aItemType: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; SL: TStringList);
       procedure SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
     public
@@ -549,7 +549,7 @@ begin
   end;
 end;
 
-function TReplay.GetItemByFrame(aItemType: Integer; aFrame: Integer): TBaseReplayItem;
+function TReplay.GetItemByFrame(aFrame: Integer; aItemType: Integer): TBaseReplayItem;
 var
   i: Integer;
   L: TReplayItemList;

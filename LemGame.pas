@@ -5595,6 +5595,9 @@ var
 
     if R is TReplaySelectSkill then
       ApplySkillSelect;
+
+    if R is TReplayNuke then
+      ApplyNuke;
   end;
 begin
   if not fReplaying then
