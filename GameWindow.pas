@@ -1052,9 +1052,22 @@ begin
 end;
 
 procedure TGameWindow.StartReplay2(const aFileName: string);
+var
+  ext: String;
 begin
   CanPlay := False;
-  Game.Recorder.LoadFromFile(aFileName, (GameParams.ReplayCheckIndex <> -2));
+  ext := Lowercase(ExtractFileExt(aFilename));
+  if ext = '.nxrp' then
+    Game.ReplayManager.LoadFromFile(aFilename)
+  else if ext = '.lrb' then
+    Game.ReplayManager.LoadFromFile(aFilename)
+  else
+    try
+      Game.ReplayManager.LoadFromFile(aFilename);
+    except
+      Game.ReplayManager.LoadOldReplayFile(aFilename);
+    end;
+
   Game.Paused := False;
   GotoSaveState(0);
   //Game.Start(True);
@@ -1066,6 +1079,7 @@ end;
 procedure TGameWindow.LoadReplay;
 var
   OldCanPlay: Boolean;
+  IsOld: Boolean;
   Dlg : TOpenDialog;
   s: string;
 begin
@@ -1075,7 +1089,7 @@ begin
   dlg:=topendialog.create(nil);
   try
 //    dlg.DefaultExt := '*.lrb';
-    dlg.Filter := 'Lemmix Replay (*.lrb)|*.lrb|All Files (*.*)|*';
+    dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
     dlg.FilterIndex := 1;
     if Game.LastReplayDir = '' then
     begin

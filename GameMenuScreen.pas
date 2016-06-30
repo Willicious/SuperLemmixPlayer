@@ -605,7 +605,7 @@ begin
   SetNextCredit;
 
   if Assigned(GlobalGame) then
-    GlobalGame.Recorder.Clear;
+    GlobalGame.ReplayManager.Clear(true);
 end;
 
 function TGameMenuScreen.BuildText(intxt: Array of char): String;

@@ -5552,91 +5552,70 @@ end;
 
 
 procedure TLemmingGame.CheckForReplayAction(RRCheck: Boolean);
-// this is bad code but works for now
-
-// all records with the same iterationnumber must be
-// handled here in one atomic moment
 var
-  R: TReplayItem;
-  Last: Integer;
-  PrevReplayIndex: Integer;
+  R: TBaseReplayItem;
+
+  procedure ApplySkillAssign;
+  var
+    E: TReplaySkillAssignment absolute R;
+  begin
+    ReplaySkillAssignment(E);
+  end;
+
+  procedure ApplyReleaseRate;
+  var
+    E: TReplayChangeReleaseRate absolute R;
+  begin
+    AdjustReleaseRate(E.NewReleaseRate - CurrReleaseRate);
+  end;
+
+  procedure ApplySkillSelect;
+  var
+    E: TReplaySelectSkill absolute R;
+  begin
+    ReplaySkillSelection(E);
+  end;
+
+  procedure ApplyNuke;
+  var
+    E: TReplayNuke absolute R;
+  begin
+    SetSelectedSkill(spbNuke, true);
+  end;
+
+  procedure Handle;
+  begin
+    if R = nil then Exit;
+
+    if R is TReplaySkillAssignment then
+      ApplySkillAssign;
+
+    if R is TReplayChangeReleaseRate then
+      ApplyReleaseRate;
+
+    if R is TReplaySelectSkill then
+      ApplySkillSelect;
+  end;
 begin
   if not fReplaying then
     Exit;
 
-  Last := fRecorder.List.Count - 1;
-
   fReplayCommanding := True;
 
-  PrevReplayIndex := fReplayIndex;
-
   try
-
-  // although it may not be possible to have 2 replay-actions at one
-  // iteration we use a while loop: it's the safest method
-
-  while fReplayIndex <= Last do
-  begin
-    R := fRecorder.List.List^[fReplayIndex];
-
-
-    if (R.Iteration <> CurrentIteration) then
-      Break;
-
-    if not RRCheck then
-    begin
-      if raf_Nuke and r.actionflags <> 0 then
-        SetSelectedSkill(spbNuke, True);
-      if raf_skillassignment and r.actionflags <> 0 then
-        ReplaySkillAssignment(R);
-      if raf_skillselection and r.actionflags <> 0 then
-        ReplaySkillSelection(R);
-    end;
-
+    // Note - the fReplayManager getters can return nil, and often will!
+    // The "Handle" procedure ensures this does not lead to errors.
     if RRCheck then
     begin
-      if raf_stopchangingRR and r.actionflags <> 0 then
-      begin
-        SetSelectedSkill(spbFaster, False);
-        SetSelectedSkill(spbSlower, False);
-        if (R.ReleaseRate <> CurrReleaseRate) then
-          if R.ReleaseRate > 0 then
-            //fRRPending := R.ReleaseRate;
-            AdjustReleaseRate(R.ReleaseRate - currReleaseRate);
-      end
-      else if raf_startincreaserr and r.actionflags <> 0 then
-      begin
-        SetSelectedSkill(spbFaster, True);
-        //fRRPending := 100;
-      end else if raf_startdecreaserr and r.actionflags <> 0 then
-      begin
-        SetSelectedSkill(spbSlower, True);
-        //fRRPending := -1;
-      end;
-
+      R := fReplayManager.ReleaseRateChange[fCurrentIteration];
+      Handle;
+    end else begin
+      R := fReplayManager.Assignment[fCurrentIteration];
+      Handle;
+      R := fReplayManager.InterfaceAction[fCurrentIteration];
+      Handle;
     end;
-
-    // check for changes (error)
-    if not fReplaying then
-      Exit;
-
-    // double check
-    if (R.ReleaseRate <> CurrReleaseRate) and RRCheck then
-      if R.ReleaseRate > 0 then
-        AdjustReleaseRate(R.ReleaseRate - currReleaseRate);
-
-    Inc(fReplayIndex);
-
-
-
-    if fReplayIndex >= fRecorder.List.Count then
-      Break;
-    if fReplayIndex < 0 then
-      Break;
-  end;
-
   finally
-    if not RRCheck then fReplayIndex := PrevReplayIndex;
     fReplayCommanding := False;
   end;
 
@@ -5805,17 +5784,7 @@ begin
   begin
     fReplaying := False;
 
-    // Don't erase the current frame.
-    fReplayIndex := 0;
-    while fReplayIndex < fRecorder.List.Count do
-    begin
-      if TReplayItem(fRecorder.List[fReplayIndex]).fIteration > fCurrentIteration then Break;
-      Inc(fReplayIndex);
-    end;
-
-    fRecorder.Truncate(fReplayIndex);
-
-    fReplayIndex := 0;//Recorder.List.Count - 1;
+    fReplayManager.Cut(fCurrentIteration);
   end;
 
   InfoPainter.SetReplayMark(false); 
@@ -5979,7 +5948,7 @@ var
     Result := FastReplace(Result, '|', '_');
     Result := FastReplace(Result, '?', '_');
     Result := FastReplace(Result, '*', '_');
-    Result := Result + '.lrb';
+    Result := Result + '.nxrp';
   end;
 
   function GetDefaultSavePath: String;
@@ -6004,7 +5973,7 @@ var
     Dlg : TSaveDialog;
   begin
     Dlg := TSaveDialog.Create(self);
-    Dlg.Filter := 'Lemmix Replay (*.lrb)|*.lrb|Replay + Text File (*.lrb)|*.lrb';
+    Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
     Dlg.DefaultExt := '.lrb';
@@ -6041,8 +6010,7 @@ begin
   case GetReplayTypeCase of
     0: SaveNameLrb := GetDefaultSavePath + SaveNameLrb;
     1: begin
-         UnpauseAfterDlg := not Paused; // Game keeps running during the MessageDlg otherwise. And yes, the code here
-                                        // bypasses the no-pause in Frenzy levels. ;P
+         UnpauseAfterDlg := not Paused; // Game keeps running during the MessageDlg otherwise.
          Paused := true;
          if MessageDlg('Replay already exists. Overwrite?', mtCustom, [mbYes, mbNo], 0) = mrNo then
            SaveNameLrb := GetSavePath(SaveNameLrb)
@@ -6056,12 +6024,7 @@ begin
   if SaveNameLrb <> '' then
   begin
     ForceDirectories(ExtractFilePath(SaveNameLrb));
-    Recorder.SaveToFile(SaveNameLrb);
-    if SaveText then
-    begin
-      SaveNameTxt := ChangeFileExt(SaveNameLrb, '.txt');
-      Recorder.SaveToTxt(SaveNameTxt);
-    end;
+    fReplayManager.SaveToFile(SaveNameLrb);
   end;
 
 end;

@@ -332,6 +332,7 @@ end;
 
 procedure TReplay.LoadFromFile(aFile: String);
 begin
+  Clear(true);
 end;
 
 procedure TReplay.SaveToFile(aFile: String);
@@ -358,6 +359,10 @@ begin
   end;
   SL.Add('ID ' + IntToHex(fLevelID, 8));
   SL.Add('');
+
+  SaveReplayList(fAssignments, SL);
+  SaveReplayList(fReleaseRateChanges, SL);
+  SaveReplayList(fInterfaceActions, SL);
 
   SL.SaveToFile(aFile);
 
@@ -430,6 +435,20 @@ procedure TReplay.SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
     SaveLemmingEntry;
   end;
 begin
+  if aItem is TReplaySkillAssignment then
+    SaveAssignEntry;
+
+  if aItem is TReplayNuke then
+    SaveNukeEntry;
+
+  if aItem is TReplayChangeReleaseRate then
+    SaveReleaseRateEntry;
+
+  if aItem is TReplaySelectSkill then
+    SaveSelectSkillEntry;
+
+  if aItem is TReplayHighlightLemming then
+    SaveHighlightEntry;
 
   SL.Add('FRAME ' + IntToStr(aItem.Frame));
   SL.Add('');
@@ -488,7 +507,7 @@ var
   end;
 
 begin
-  Clear;
+  Clear(true);
   MS := TMemoryStream.Create;
   try
     MS.LoadFromFile(aFile);
