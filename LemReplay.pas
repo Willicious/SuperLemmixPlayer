@@ -345,6 +345,12 @@ begin
 
   SL.Add('# NeoLemmix Replay File');
   SL.Add('# Saved from NeoLemmix V' + PVersion);
+
+  // Debug
+  SL.Add('# Assignments: ' + IntToStr(fAssignments.Count));
+  SL.Add('#  RR Changes: ' + IntToStr(fReleaseRateChanges.Count));
+  SL.Add('#  UI Actions: ' + IntToStr(fInterfaceActions.Count));
+
   SL.Add('');
   if fPlayerName <> '' then
     SL.Add('USER ' + fPlayerName);
@@ -450,7 +456,7 @@ begin
   if aItem is TReplayHighlightLemming then
     SaveHighlightEntry;
 
-  SL.Add('FRAME ' + IntToStr(aItem.Frame));
+  SL.Add('  FRAME ' + IntToStr(aItem.Frame));
   SL.Add('');
 end;
 
