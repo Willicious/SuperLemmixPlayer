@@ -646,14 +646,6 @@ begin
   end;
 end;
 
-(*procedure TRenderer.CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F <> 0) {and (B and ALPHA_TERRAIN <> 0) and (B and ALPHA_ONEWAY <> 0)} then
-  begin
-    MergeMemEx(F, B, $FF);
-  end;
-end;*)
-
 
 procedure TRenderer.PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
 begin
@@ -819,14 +811,11 @@ var
   Inf: TInteractiveObjectInfo;
   DrawFrame: Integer;
   i, i2: Integer;
-  UsePoint: Boolean;
   ObjectInfos: TInteractiveObjectInfoList;
 
   procedure ProcessDrawFrame(aLayer: TRenderLayer);
   var
     CountX, CountY, iX, iY: Integer;
-    Dst: TBitmap32;
-    O: TInteractiveObject;
     MO: TMetaObject;
   begin
     if Inf.IsInvisible then Exit;
@@ -842,31 +831,36 @@ var
 
     PrepareObjectBitmap(TempBitmap, Inf.Obj.DrawingFlags, Inf.ZombieMode);
 
-    Dst := fLayers[aLayer];
-    O := Inf.Obj;
     MO := Inf.MetaObj;
     CountX := (Inf.Width-1) div MO.Width;
     CountY := (Inf.Height-1) div MO.Height;    
 
     for iY := 0 to CountY do
     begin
+      // (re)size rectangles correctly
       TempBitmapRect := TempBitmap.BoundsRect;
       DstRect := TempBitmap.BoundsRect;
+      // Move to leftmost X-coordinate and correct Y-coordinate
       DstRect := ZeroTopLeftRect(DstRect);
-      OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
+      OffsetRect(DstRect, Inf.Left, Inf.Top + (MO.Height * iY));
+      // shrink sizes of rectange to draw on bottom row
       if iY = CountY then
       begin
-        DstRect.Bottom := DstRect.Bottom - (O.Height mod MO.Height);
-        TempBitmapRect.Bottom := TempBitmapRect.Bottom - (O.Height mod MO.Height);
+        Dec(DstRect.Bottom, Inf.Height mod MO.Height);
+        Dec(TempBitmapRect.Bottom, Inf.Height mod MO.Height);
       end;
+
       for iX := 0 to CountX do
       begin
+        // shrink size of rectangle to draw on rightmost column
         if iX = CountX then
         begin
-          DstRect.Right := DstRect.Right - (O.Width mod MO.Width);
-          TempBitmapRect.Right := TempBitmapRect.Right - (O.Width mod MO.Width);
+          Dec(DstRect.Right, Inf.Width mod MO.Width);
+          Dec(TempBitmapRect.Right, Inf.Width mod MO.Width);
         end;
-        TempBitmap.DrawTo(Dst, DstRect, TempBitmapRect);
+        // Draw copy of object onto alayer at this place
+        TempBitmap.DrawTo(fLayers[aLayer], DstRect, TempBitmapRect);
+        // Move to next row
         OffsetRect(DstRect, MO.Width, 0);
       end;
     end;
@@ -877,8 +871,6 @@ var
 
 begin
   ObjectInfos := fRenderInterface.ObjectList;
-
-  UsePoint := true; //PtInRect(Dst.BoundsRect, MousePoint);
 
   // Draw moving backgrounds
   if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
@@ -893,7 +885,7 @@ begin
 
   // Draw no overwrite objects
   if not fLayers.fIsEmpty[rlObjectsLow] then fLayers[rlObjectsLow].Clear(0);
-  for i := ObjectInfos.Count-1 downto 0 do
+  for i := ObjectInfos.Count - 1 downto 0 do
   begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
@@ -942,46 +934,32 @@ begin
 
   // Draw object helpers
   fLayers[rlObjectHelpers].Clear(0);
-  if UsePoint then
+  for i := 0 to ObjectInfos.Count-1 do
   begin
-    for i := 0 to ObjectInfos.Count-1 do
-    begin
-      // Check if this object is relevant
-      if not PtInRect(Rect(ObjectInfos[i].Left, ObjectInfos[i].Top,
-                           ObjectInfos[i].Left + ObjectInfos[i].Width - 1, ObjectInfos[i].Top + ObjectInfos[i].Height - 1),
-                      fRenderInterface.MousePos) then
-        Continue;
+    Inf := ObjectInfos[i];
 
-      if ObjectInfos[i].IsDisabled then Continue;
+    // Check if this object is relevant
+    if not PtInRect(Rect(Inf.Left, Inf.Top, Inf.Left + Inf.Width - 1, Inf.Top + Inf.Height - 1),
+                    fRenderInterface.MousePos) then
+      Continue;
 
-      // otherwise, draw its helper
-      DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i]);
+    if Inf.IsDisabled then Continue;
 
-      // if it's a teleporter or receiver, draw all paired helpers too
-      if (ObjectInfos[i].TriggerEffect in [11, 12]) and (ObjectInfos[i].PairingId <> -1) then
-        for i2 := 0 to ObjectInfos.Count-1 do
-        begin
-          if i = i2 then Continue;
-          if (ObjectInfos[i2].PairingId = ObjectInfos[i].PairingId) then
-            DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
-        end;
-    end;
+    // otherwise, draw its helper
+    DrawObjectHelpers(fLayers[rlObjectHelpers], Inf);
+
+    // if it's a teleporter or receiver, draw all paired helpers too
+    if (Inf.TriggerEffect in [11, 12]) and (Inf.PairingId <> -1) then
+      for i2 := 0 to ObjectInfos.Count-1 do
+      begin
+        if i = i2 then Continue;
+        if (ObjectInfos[i2].PairingId = Inf.PairingId) then
+          DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
+      end;
   end;
+
 end;
 
-
-(*procedure TRenderer.CombineLemFrame(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F and $FFFFFF <> 0 then
-    B := F;
-end;
-
-procedure TRenderer.CombineLemFrameZombie(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
-  if F <> 0 then B := F;
-end;*)
 
 constructor TRenderer.Create;
 var
@@ -1185,26 +1163,13 @@ begin
 
 
     // Background layer
-    with fLayers[rlBackground] do
-    begin
-      Clear($FF000000 or fBgColor);
-    end;
+    fLayers[rlBackground].Clear($FF000000 or fBgColor);
 
     if fTheme.HasImageBackground then
     begin
-      y := 0;
-      while y < Level.Info.Height do
-      begin
-        x := 0;
-        while x < Level.Info.Width do
-        begin
-          fTheme.Background.DrawTo(fLayers[rlBackground], x, y);
-
-          Inc(x, fTheme.Background.Width);
-        end;
-
-        Inc(y, fTheme.Background.Height);
-      end;
+      for y := 0 to Level.Info.Height div fTheme.Background.Height do
+      for x := 0 to Level.Info.Width div fTheme.Background.Width do
+        fTheme.Background.DrawTo(fLayers[rlBackground], x * fTheme.Background.Width, y * fTheme.Background.Height);
     end;
 
     if DoObjects then
