@@ -274,6 +274,7 @@ var
 
 begin
   if aLemming.LemRemoved then Exit;
+  if aLemming.LemTeleporting then Exit;
 
   fRecolorer.Lemming := aLemming;
   fRecolorer.DrawAsSelected := Selected;
