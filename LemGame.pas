@@ -1620,19 +1620,6 @@ begin
     fGameParams.Level.Info.ClonerCount     := 0;
   end;
 
-  //fRenderer.RenderWorld(World, False, (moDebugSteel in fGameParams.MiscOptions));
-
-  {if ((Level.Info.LevelOptions and 8) = 0) and (fGameParams.SysDat.Options and 128 = 0) then
-    fRenderer.RenderWorld(SteelWorld, False, True)
-  else
-  begin
-    fRenderer.RenderWorld(SteelWorld, False, True, True);
-    for i := 0 to SteelPhysicsMap.Width - 1 do
-    for i2 := 0 to SteelPhysicsMap.Height - 1 do
-      if SteelWorld.PixelS[i, i2] and ALPHA_STEEL <> 0 then
-        World.PixelS[i, i2] := World.PixelS[i, i2] and not ALPHA_ONEWAY;
-  end;}
-
   // hyperspeed things
   fTargetIteration := 0;
   fHyperSpeedCounter := 0;

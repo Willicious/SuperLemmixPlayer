@@ -257,7 +257,7 @@ begin
       W.Clear(0);
 //      W.ResamplerClassName := 'TLinearResampler';//DraftResampler';
 //      W.ResamplerClassName := 'TDraftResampler';
-      GameParams.Renderer.RenderWorld(W, True);
+      GameParams.Renderer.RenderWorld(W);
       TLinearResampler.Create(W);
       W.DrawMode := dmBlend;
       W.CombineMode := cmMerge;
@@ -309,7 +309,7 @@ begin
 
   TempBitmap := TBitmap32.Create;
   TempBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
-  GameParams.Renderer.RenderWorld(TempBitmap, True);
+  GameParams.Renderer.RenderWorld(TempBitmap);
   TPngInterface.SavePngFile(SaveName, TempBitmap, true);
   TempBitmap.Free;
 

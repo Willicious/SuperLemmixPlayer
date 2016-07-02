@@ -124,7 +124,7 @@ type
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
     // Terrain rendering
-    procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
+    procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
 
     // Object rendering
     procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
@@ -143,7 +143,7 @@ type
     procedure SetHighShadowPixel(X, Y: Integer);
 
 
-    procedure RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
+    procedure RenderWorld(World: TBitmap32);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
 
     // Minimap
@@ -660,7 +660,7 @@ begin
     Bmp.OnPixelCombine := CombineObjectDefault;
 end;
 
-procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
+procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain);
 var
   Src: TBitmap32;
   Flip, Invert, Rotate: Boolean;
@@ -1135,7 +1135,7 @@ begin
   Bmp.Free;
 end;
 
-procedure TRenderer.RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
+procedure TRenderer.RenderWorld(World: TBitmap32);
 // DoObjects is only true if RenderWorld is called from the Preview Screen!
 var
   i: Integer;
@@ -1144,137 +1144,125 @@ var
   Obj: TInteractiveObject;
   ORec: TObjectRecord;
 
-  Ter: TTerrain;
-  MT: TMetaTerrain;
-
   Lem: TPreplacedLemming;
   L: TLemming;
 begin
-  fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
-
   if Inf.Level = nil then Exit;
 
+  // Draw the PhysicsMap
   RenderPhysicsMap;
+
+  // Prepare the bitmaps
+  fLayers.Prepare(Inf.Level.Info.Width, Inf.Level.Info.Height);
+
+  // Background layer
+  fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
+  fLayers[rlBackground].Clear($FF000000 or fBgColor);
+
+  if fTheme.HasImageBackground then
+  begin
+    for y := 0 to Inf.Level.Info.Height div fTheme.Background.Height do
+    for x := 0 to Inf.Level.Info.Width div fTheme.Background.Width do
+      fTheme.Background.DrawTo(fLayers[rlBackground], x * fTheme.Background.Width, y * fTheme.Background.Height);
+  end;
 
   with Inf do
   begin
 
-    // Prepare the bitmaps
-    fLayers.Prepare(Level.Info.Width, Level.Info.Height);
-
-
-    // Background layer
-    fLayers[rlBackground].Clear($FF000000 or fBgColor);
-
-    if fTheme.HasImageBackground then
-    begin
-      for y := 0 to Level.Info.Height div fTheme.Background.Height do
-      for x := 0 to Level.Info.Width div fTheme.Background.Width do
-        fTheme.Background.DrawTo(fLayers[rlBackground], x * fTheme.Background.Width, y * fTheme.Background.Height);
-    end;
-
-    if DoObjects then
-    begin
-      with fLayers[rlBackgroundObjects] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect <> 30 then Continue;
-
-          DrawObject(fLayers[rlBackgroundObjects], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlBackgroundObjects] := False;
-        end;
-
-      with fLayers[rlObjectsLow] do
-        for i := Level.InteractiveObjects.Count-1 downto 0 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          if Obj.DrawingFlags and odf_NoOverwrite = 0 then Continue;
-          if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
-
-          DrawObject(fLayers[rlObjectsLow], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlObjectsLow] := False;
-        end;
-
-      with fLayers[rlOnTerrainObjects] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          if Obj.DrawingFlags and odf_OnlyOnTerrain = 0 then Continue;
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
-
-          DrawObject(fLayers[rlOnTerrainObjects], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlOnTerrainObjects] := False;
-        end;
-
-      with fLayers[rlOneWayArrows] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          ORec := FindMetaObject(Obj);
-          if not (ORec.Meta.TriggerEffect in [7, 8, 19]) then Continue;
-
-          DrawObject(fLayers[rlOneWayArrows], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlOneWayArrows] := False;
-        end;
-
-      with fLayers[rlObjectsHigh] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          if Obj.DrawingFlags and odf_NoOverwrite <> 0 then Continue;
-          if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
-
-          DrawObject(fLayers[rlObjectsHigh], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlObjectsHigh] := False;
-        end;
-
-      L := TLemming.Create;
-      with fLayers[rlLemmings] do
-        for i := 0 to Level.PreplacedLemmings.Count-1 do
-        begin
-          Lem := Level.PreplacedLemmings[i];
-
-          with L do
-          begin
-            SetFromPreplaced(Lem);
-            LemIsZombie := Lem.IsZombie;
-
-            if (fPhysicsMap.PixelS[LemX, LemY] and PM_SOLID = 0) then
-              LemAction := baFalling
-            else if Lem.IsBlocker then
-              LemAction := baBlocking
-            else
-              LemAction := baWalking;
-          end;
-
-          DrawThisLemming(L);
-        end;
-      L.Free;
-    end;
-
-    with fLayers[rlTerrain] do
-      for i := 0 to Level.Terrains.Count-1 do
+    with fLayers[rlBackgroundObjects] do
+      for i := 0 to Level.InteractiveObjects.Count-1 do
       begin
-        Ter := Level.Terrains[i];
-        MT := FindMetaTerrain(Ter);
-        if Ter.DrawingFlags and tdf_Erase = 0 then
-          if SOX and MT.IsSteel then
-            Continue;
-        DrawTerrain(fLayers[rlTerrain], Ter, SteelOnly);
+        Obj := Level.InteractiveObjects[i];
+        ORec := FindMetaObject(Obj);
+        if ORec.Meta.TriggerEffect <> 30 then Continue;
+
+        DrawObject(fLayers[rlBackgroundObjects], Obj, ORec.Meta.PreviewFrameIndex);
+        fLayers.fIsEmpty[rlBackgroundObjects] := False;
       end;
 
-    // remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
-    ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
+    with fLayers[rlObjectsLow] do
+      for i := Level.InteractiveObjects.Count-1 downto 0 do
+      begin
+        Obj := Level.InteractiveObjects[i];
+        if Obj.DrawingFlags and odf_NoOverwrite = 0 then Continue;
+        if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
+        ORec := FindMetaObject(Obj);
+        if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
 
+        DrawObject(fLayers[rlObjectsLow], Obj, ORec.Meta.PreviewFrameIndex);
+        fLayers.fIsEmpty[rlObjectsLow] := False;
+      end;
+
+    with fLayers[rlOnTerrainObjects] do
+      for i := 0 to Level.InteractiveObjects.Count-1 do
+      begin
+        Obj := Level.InteractiveObjects[i];
+        if Obj.DrawingFlags and odf_OnlyOnTerrain = 0 then Continue;
+        ORec := FindMetaObject(Obj);
+        if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
+
+        DrawObject(fLayers[rlOnTerrainObjects], Obj, ORec.Meta.PreviewFrameIndex);
+        fLayers.fIsEmpty[rlOnTerrainObjects] := False;
+      end;
+
+    with fLayers[rlOneWayArrows] do
+      for i := 0 to Level.InteractiveObjects.Count-1 do
+      begin
+        Obj := Level.InteractiveObjects[i];
+        ORec := FindMetaObject(Obj);
+        if not (ORec.Meta.TriggerEffect in [7, 8, 19]) then Continue;
+
+        DrawObject(fLayers[rlOneWayArrows], Obj, ORec.Meta.PreviewFrameIndex);
+        fLayers.fIsEmpty[rlOneWayArrows] := False;
+      end;
+
+    with fLayers[rlObjectsHigh] do
+      for i := 0 to Level.InteractiveObjects.Count-1 do
+      begin
+        Obj := Level.InteractiveObjects[i];
+        if Obj.DrawingFlags and odf_NoOverwrite <> 0 then Continue;
+        if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
+        ORec := FindMetaObject(Obj);
+        if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
+
+        DrawObject(fLayers[rlObjectsHigh], Obj, ORec.Meta.PreviewFrameIndex);
+        fLayers.fIsEmpty[rlObjectsHigh] := False;
+      end;
+
+
+    L := TLemming.Create;
+    for i := 0 to Level.PreplacedLemmings.Count-1 do
+    begin
+      Lem := Level.PreplacedLemmings[i];
+
+      with L do
+      begin
+        SetFromPreplaced(Lem);
+        LemIsZombie := Lem.IsZombie;
+
+        if (fPhysicsMap.PixelS[LemX, LemY] and PM_SOLID = 0) then
+          LemAction := baFalling
+        else if Lem.IsBlocker then
+          LemAction := baBlocking
+        else
+          LemAction := baWalking;
+      end;
+
+      DrawThisLemming(L);
+    end;
+    L.Free;
   end; // with Inf
 
+  // Draw all terrain pieces
+  for i := 0 to Inf.Level.Terrains.Count-1 do
+  begin
+    DrawTerrain(fLayers[rlTerrain], Inf.Level.Terrains[i]);
+  end;
+
+  // remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
+  ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
+
+  // Combine all layers to the WorldMap
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(World);
