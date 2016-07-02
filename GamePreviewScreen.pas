@@ -11,11 +11,14 @@ uses
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
   LemCore, LemStrings, LemDosStructures, LemRendering, LemLevelSystem, LemLevel,
-  LemDosStyle, LemTypes, LemMetaObject, GameControl, GameBaseScreen, GameWindow;
+  LemDosStyle, LemTypes, LemMetaObject,
+  LemObjects,
+  GameControl, GameBaseScreen, GameWindow;
 
 type
   TGamePreviewScreen = class(TGameBaseScreen)
   private
+    fObjectInfos: TInteractiveObjectInfoList; // For RenderWorld
     //fRickrolling : Boolean;
     fCanDump: Boolean;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

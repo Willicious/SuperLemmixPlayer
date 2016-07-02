@@ -83,6 +83,8 @@ type
 
     fParticles                 : TParticleTable; // all particle offsets
 
+    fObjectInfoList: TInteractiveObjectInfoList; // For rendering from Preview screen
+
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer);
     procedure AddStoner(X, Y: Integer);
@@ -127,8 +129,7 @@ type
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
 
     // Object rendering
-    procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
-    procedure DrawAllObjects;
+    procedure DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True);
     procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 
     // Lemming rendering
@@ -145,6 +146,8 @@ type
 
     procedure RenderWorld(World: TBitmap32);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
+
+    procedure CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
 
     // Minimap
     procedure RenderMinimap(Dst: TBitmap32; aLemmings: TLemmingList = nil);
@@ -692,79 +695,6 @@ begin
     Bmp.OnPixelCombine := CombineTerrainDefault;
 end;
 
-procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
-{-------------------------------------------------------------------------------
-  Draws a interactive object
-  • Dst = the targetbitmap
-  • O = the object
--------------------------------------------------------------------------------}
-var
-  DstRect: TRect;
-  MO: TMetaObject;
-
-  ORec: TObjectRecord;
-  iX, iY: Integer;
-  CountX, CountY: Integer;
-begin
-
-  ORec := FindMetaObject(O);
-  MO := ORec.Meta;
-
-  if O.DrawingFlags and odf_Invisible <> 0 then Exit;
-  if MO.TriggerEffect = 25 then Exit;
-
-  if aFrame > MO.AnimationFrameCount-1 then aFrame := MO.AnimationFrameCount-1; // for this one, it actually can matter sometimes
-
-  TempBitmap.Assign(ORec.Image[aFrame]);
-
-  if odf_UpsideDown and O.DrawingFlags <> 0 then
-    TempBitmap.FlipVert;
-
-  if odf_Flip and O.DrawingFlags <> 0 then
-    TempBitmap.FlipHorz;
-
-  if MO.TriggerEffect in [7, 8, 19] then
-  begin
-    O.DrawingFlags := O.DrawingFlags and not odf_NoOverwrite;
-    O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
-  end;
-
-  PrepareObjectBitmap(TempBitmap, O.DrawingFlags, O.DrawAsZombie);
-
-  if (not MO.CanResizeHorizontal) or (O.Width = -1) then
-    O.Width := MO.Width;
-  if (not MO.CanResizeVertical) or (O.Height = -1) then
-    O.Height := MO.Height;
-
-  CountX := (O.Width-1) div MO.Width;
-  CountY := (O.Height-1) div MO.Height;
-
-  for iY := 0 to CountY do
-  begin
-    // (re)size rectangle correctly
-    DstRect := TempBitmap.BoundsRect;
-    // Move to leftmost X-coordinate and correct Y-coordinate
-    DstRect := ZeroTopLeftRect(DstRect);
-    OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
-    // shrink size of rectange to draw on bottom row
-    if iY = CountY then
-      DstRect.Bottom := DstRect.Bottom - (O.Height mod MO.Height);
-
-    for iX := 0 to CountX do
-    begin
-      // shrink size of rectangle to draw on rightmost column
-      if iX = CountX then
-        DstRect.Right := DstRect.Right - (O.Width mod MO.Width);
-      // Draw copy of object at this place
-      TempBitmap.DrawTo(Dst, DstRect);
-      // Move to next row
-      OffsetRect(DstRect, MO.Width, 0);
-    end;
-  end;
-
-  O.LastDrawX := O.Left;
-  O.LastDrawY := O.Top;
-end;
 
 procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 var
@@ -806,13 +736,12 @@ begin
     fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
 end;
 
-procedure TRenderer.DrawAllObjects;
+procedure TRenderer.DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True);
 var
   TempBitmapRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
   DrawFrame: Integer;
   i, i2: Integer;
-  ObjectInfos: TInteractiveObjectInfoList;
 
   procedure ProcessDrawFrame(aLayer: TRenderLayer);
   var
@@ -871,8 +800,6 @@ var
   end;
 
 begin
-  ObjectInfos := fRenderInterface.ObjectList;
-
   // Draw moving backgrounds
   if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
   for i := 0 to ObjectInfos.Count - 1 do
@@ -933,30 +860,33 @@ begin
     fLayers.fIsEmpty[rlObjectsHigh] := False;
   end;
 
-  // Draw object helpers
-  fLayers[rlObjectHelpers].Clear(0);
-  for i := 0 to ObjectInfos.Count-1 do
+  if DrawHelper then
   begin
-    Inf := ObjectInfos[i];
+    // Draw object helpers
+    fLayers[rlObjectHelpers].Clear(0);
+    for i := 0 to ObjectInfos.Count-1 do
+    begin
+      Inf := ObjectInfos[i];
 
-    // Check if this object is relevant
-    if not PtInRect(Rect(Inf.Left, Inf.Top, Inf.Left + Inf.Width - 1, Inf.Top + Inf.Height - 1),
-                    fRenderInterface.MousePos) then
-      Continue;
+      // Check if this object is relevant
+      if not PtInRect(Rect(Inf.Left, Inf.Top, Inf.Left + Inf.Width - 1, Inf.Top + Inf.Height - 1),
+                      fRenderInterface.MousePos) then
+        Continue;
 
-    if Inf.IsDisabled then Continue;
+      if Inf.IsDisabled then Continue;
 
-    // otherwise, draw its helper
-    DrawObjectHelpers(fLayers[rlObjectHelpers], Inf);
+      // otherwise, draw its helper
+      DrawObjectHelpers(fLayers[rlObjectHelpers], Inf);
 
-    // if it's a teleporter or receiver, draw all paired helpers too
-    if (Inf.TriggerEffect in [11, 12]) and (Inf.PairingId <> -1) then
-      for i2 := 0 to ObjectInfos.Count-1 do
-      begin
-        if i = i2 then Continue;
-        if (ObjectInfos[i2].PairingId = Inf.PairingId) then
-          DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
-      end;
+      // if it's a teleporter or receiver, draw all paired helpers too
+      if (Inf.TriggerEffect in [11, 12]) and (Inf.PairingId <> -1) then
+        for i2 := 0 to ObjectInfos.Count-1 do
+        begin
+          if i = i2 then Continue;
+          if (ObjectInfos[i2].PairingId = Inf.PairingId) then
+            DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
+        end;
+    end;
   end;
 
 end;
@@ -976,6 +906,7 @@ begin
   fBgColor := $00000000;
   fAni := TBaseDosAnimationSet.Create;
   fRecolorer := TRecolorImage.Create;
+  fObjectInfoList := TInteractiveObjectInfoList.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[i] := TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
 
@@ -996,6 +927,7 @@ begin
   fPhysicsMap.Free;
   fRecolorer.Free;
   fAni.Free;
+  fObjectInfoList.Free;
   for i := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[i].Free;
   inherited Destroy;
@@ -1135,14 +1067,10 @@ begin
   Bmp.Free;
 end;
 
-procedure TRenderer.RenderWorld(World: TBitmap32);
-// DoObjects is only true if RenderWorld is called from the Preview Screen!
+procedure TRenderer.RenderWorld(World: TBitmap32); // Called only from Preview Screen
 var
   i: Integer;
   x, y: Integer;
-
-  Obj: TInteractiveObject;
-  ORec: TObjectRecord;
 
   Lem: TPreplacedLemming;
   L: TLemming;
@@ -1166,92 +1094,32 @@ begin
       fTheme.Background.DrawTo(fLayers[rlBackground], x * fTheme.Background.Width, y * fTheme.Background.Height);
   end;
 
-  with Inf do
+
+  // Creating the list of all interactive objects.
+  fObjectInfoList.Clear;
+  CreateInteractiveObjectList(fObjectInfoList);
+
+  // Draw all objects (except ObjectHelpers)
+  DrawAllObjects(fObjectInfoList, False);
+
+  // Draw preplaced lemmings
+  L := TLemming.Create;
+  for i := 0 to Inf.Level.PreplacedLemmings.Count-1 do
   begin
+    Lem := Inf.Level.PreplacedLemmings[i];
 
-    with fLayers[rlBackgroundObjects] do
-      for i := 0 to Level.InteractiveObjects.Count-1 do
-      begin
-        Obj := Level.InteractiveObjects[i];
-        ORec := FindMetaObject(Obj);
-        if ORec.Meta.TriggerEffect <> 30 then Continue;
+    L.SetFromPreplaced(Lem);
+    L.LemIsZombie := Lem.IsZombie;
 
-        DrawObject(fLayers[rlBackgroundObjects], Obj, ORec.Meta.PreviewFrameIndex);
-        fLayers.fIsEmpty[rlBackgroundObjects] := False;
-      end;
+    if (fPhysicsMap.PixelS[L.LemX, L.LemY] and PM_SOLID = 0) then
+      L.LemAction := baFalling
+    else if Lem.IsBlocker then
+      L.LemAction := baBlocking
+    else
 
-    with fLayers[rlObjectsLow] do
-      for i := Level.InteractiveObjects.Count-1 downto 0 do
-      begin
-        Obj := Level.InteractiveObjects[i];
-        if Obj.DrawingFlags and odf_NoOverwrite = 0 then Continue;
-        if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
-        ORec := FindMetaObject(Obj);
-        if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
-
-        DrawObject(fLayers[rlObjectsLow], Obj, ORec.Meta.PreviewFrameIndex);
-        fLayers.fIsEmpty[rlObjectsLow] := False;
-      end;
-
-    with fLayers[rlOnTerrainObjects] do
-      for i := 0 to Level.InteractiveObjects.Count-1 do
-      begin
-        Obj := Level.InteractiveObjects[i];
-        if Obj.DrawingFlags and odf_OnlyOnTerrain = 0 then Continue;
-        ORec := FindMetaObject(Obj);
-        if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
-
-        DrawObject(fLayers[rlOnTerrainObjects], Obj, ORec.Meta.PreviewFrameIndex);
-        fLayers.fIsEmpty[rlOnTerrainObjects] := False;
-      end;
-
-    with fLayers[rlOneWayArrows] do
-      for i := 0 to Level.InteractiveObjects.Count-1 do
-      begin
-        Obj := Level.InteractiveObjects[i];
-        ORec := FindMetaObject(Obj);
-        if not (ORec.Meta.TriggerEffect in [7, 8, 19]) then Continue;
-
-        DrawObject(fLayers[rlOneWayArrows], Obj, ORec.Meta.PreviewFrameIndex);
-        fLayers.fIsEmpty[rlOneWayArrows] := False;
-      end;
-
-    with fLayers[rlObjectsHigh] do
-      for i := 0 to Level.InteractiveObjects.Count-1 do
-      begin
-        Obj := Level.InteractiveObjects[i];
-        if Obj.DrawingFlags and odf_NoOverwrite <> 0 then Continue;
-        if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
-        ORec := FindMetaObject(Obj);
-        if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
-
-        DrawObject(fLayers[rlObjectsHigh], Obj, ORec.Meta.PreviewFrameIndex);
-        fLayers.fIsEmpty[rlObjectsHigh] := False;
-      end;
-
-
-    L := TLemming.Create;
-    for i := 0 to Level.PreplacedLemmings.Count-1 do
-    begin
-      Lem := Level.PreplacedLemmings[i];
-
-      with L do
-      begin
-        SetFromPreplaced(Lem);
-        LemIsZombie := Lem.IsZombie;
-
-        if (fPhysicsMap.PixelS[LemX, LemY] and PM_SOLID = 0) then
-          LemAction := baFalling
-        else if Lem.IsBlocker then
-          LemAction := baBlocking
-        else
-          LemAction := baWalking;
-      end;
-
-      DrawThisLemming(L);
-    end;
-    L.Free;
-  end; // with Inf
+    DrawThisLemming(L);
+  end;
+  L.Free;
 
   // Draw all terrain pieces
   for i := 0 to Inf.Level.Terrains.Count-1 do
@@ -1266,8 +1134,34 @@ begin
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(World);
-
 end;
+
+
+procedure TRenderer.CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
+var
+  i: Integer;
+  ObjInf: TInteractiveObjectInfo;
+  ORec: TObjectRecord;
+begin
+  for i := 0 to Inf.Level.InteractiveObjects.Count - 1 do
+  begin
+    ORec := FindMetaObject(Inf.Level.InteractiveObjects[i]);
+    ObjInf := TInteractiveObjectInfo.Create(Inf.Level.InteractiveObjects[i], ORec.Meta, ORec.Image);
+
+    // Check whether trigger area intersects the level area
+    if    (ObjInf.TriggerRect.Top > Inf.Level.Info.Height)
+       or (ObjInf.TriggerRect.Bottom < 0)
+       or (ObjInf.TriggerRect.Right < 0)
+       or (ObjInf.TriggerRect.Left > Inf.Level.Info.Width) then
+      ObjInf.IsDisabled := True;
+
+    ObjInfList.Add(ObjInf);
+  end;
+
+  // Get ReceiverID for all Teleporters
+  ObjInfList.FindReceiverID;
+end;
+
 
 procedure TRenderer.PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 var

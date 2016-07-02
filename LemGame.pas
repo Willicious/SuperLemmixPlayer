@@ -1667,7 +1667,6 @@ begin
   fClockFrame := 0;
   fFading := False;
   EntriesOpened := False;
-  ObjectInfos.Clear;
   Entries.Clear;
 
 
@@ -1734,8 +1733,11 @@ begin
   numEntries := 0;
   ButtonsRemain := 0;
 
+  // Create the list of interactive objects
+  ObjectInfos.Clear;
+  fRenderer.CreateInteractiveObjectList(ObjectInfos);
 
-  SetObjectInfos;
+  // SetObjectInfos;
 
   with Level do
   for i := 0 to ObjectInfos.Count - 1 do
