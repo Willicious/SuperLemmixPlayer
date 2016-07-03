@@ -4739,8 +4739,15 @@ var
       else
         Inc(L.LemY, LemYDir);
     end;
-
   end;
+
+  function HeadCheck(LemX, Lemy: Integer): Boolean; // returns False if lemming hits his head
+  begin
+    Result := not (     HasPixelAt(LemX - 1, LemY - 12)
+                    and HasPixelAt(LemX, LemY - 12)
+                    and HasPixelAt(LemX + 1, LemY - 12));
+  end;
+
 
 const
   GliderFallTable: array[1..17] of Integer =
@@ -4754,7 +4761,8 @@ begin
     Dec(MaxFallDist);
     // Rise a pixel every second frame
     if (L.LemFrame >= 9) and (L.LemFrame mod 2 = 1)
-       and (not HasPixelAt(L.LemX + L.LemDx, L.LemY + MaxFallDist - 1)) then
+       and (not HasPixelAt(L.LemX + L.LemDx, L.LemY + MaxFallDist - 1))
+       and HeadCheck(L.LemX, L.LemY - 1) then
       Dec(MaxFallDist);
   end;
 
@@ -4802,6 +4810,23 @@ begin
     end
     else
       Inc(L.LemY, MaxFallDist);
+  end
+
+  else if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then // head check for pushing down in updraft
+  begin
+    // move down at most 2 pixels until the HeadCheck passes
+    LemDy := -1;
+    while (not HeadCheck(L.LemX, L.LemY)) and (LemDy < 2) do
+    begin
+      Inc(L.LemY);
+      Inc(LemDy);
+      // Check whether the glider has reached the ground
+      if HasPixelAt(L.LemX, L.LemY) then
+      begin
+        Transition(L, baWalking);
+        LemDy := 4;
+      end;
+    end;
   end;
 end;
 
