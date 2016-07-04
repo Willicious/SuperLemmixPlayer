@@ -4430,7 +4430,7 @@ begin
   if AdjustedFrame = 5 then
   begin
     ContinueWork := False;
-    For n := 8 to 14 do
+    For n := 1 to 14 do
     begin
       if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
            and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx, baBashing)
