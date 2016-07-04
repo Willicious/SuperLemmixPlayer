@@ -81,8 +81,8 @@ type
       fNewReleaseRate: Integer;
       fSpawnedLemmingCount: Integer;
     protected
-      //function DoLoadLine(Line: TParserLine): Boolean; override;
-      //procedure DoSave(SL: TStringList; aLabel: String); override;
+      function DoLoadLine(Line: TParserLine): Boolean; override;
+      procedure DoSave(SL: TStringList; aLabel: String); override;
     public
       property NewReleaseRate: Integer read fNewReleaseRate write fNewReleaseRate;
       property SpawnedLemmingCount: Integer read fSpawnedLemmingCount write fSpawnedLemmingCount;
@@ -90,24 +90,24 @@ type
 
   TReplayNuke = class(TBaseReplayItem)
     protected
-      //function DoLoadLine(Line: TParserLine): Boolean; override;
-      //procedure DoSave(SL: TStringList; aLabel: String); override;
+      function DoLoadLine(Line: TParserLine): Boolean; override;
+      procedure DoSave(SL: TStringList; aLabel: String); override;
   end;
 
   TReplaySelectSkill = class(TBaseReplayItem)
     private
       fSkill: TSkillPanelButton;
     protected
-      //function DoLoadLine(Line: TParserLine): Boolean; override;
-      //procedure DoSave(SL: TStringList; aLabel: String); override;
+      function DoLoadLine(Line: TParserLine): Boolean; override;
+      procedure DoSave(SL: TStringList; aLabel: String); override;
     public
       property Skill: TSkillPanelButton read fSkill write fSkill;
   end;
 
   TReplayHighlightLemming = class(TBaseReplayLemmingItem)
     protected
-      //function DoLoadLine(Line: TParserLine): Boolean; override;
-      //procedure DoSave(SL: TStringList; aLabel: String); override;
+      function DoLoadLine(Line: TParserLine): Boolean; override;
+      procedure DoSave(SL: TStringList; aLabel: String); override;
   end;
 
   TReplayItemList = class(TObjectList)
