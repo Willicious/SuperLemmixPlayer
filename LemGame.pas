@@ -542,11 +542,11 @@ type
     procedure RecordNuke;
     procedure RecordReleaseRate(aActionFlag: Byte);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
-    procedure RecordSkillSelection(aSkill: TSkillPanelButton);
+    //procedure RecordSkillSelection(aSkill: TSkillPanelButton);
     procedure RemoveLemming(L: TLemming; RemMode: Integer = 0);
     procedure RemovePixelAt(X, Y: Integer);
     procedure ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
-    procedure ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
+    //procedure ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
     procedure RestoreMap;
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
@@ -1023,8 +1023,8 @@ begin
   InfoPainter.DrawButtonSelector(fSelectedSkill, false);
 
   // Simple stuff
-  if not fGameParams.IgnoreReplaySelection then
-    fSelectedSkill := aState.SelectedSkill;
+  (*if not fGameParams.IgnoreReplaySelection then
+    fSelectedSkill := aState.SelectedSkill;*)
   if not SkipTargetBitmap then  // We don't need to bother with this one if we're not loading the exact frame we want to go to
     fTargetBitmap.Assign(aState.TargetBitmap);
   fRenderer.TerrainLayer.Assign(aState.World);
@@ -5179,8 +5179,8 @@ begin
     if ass in AssignableSkills then
     begin
       // for antiques but nice
-      if (ActionToSkillPanelButton[ass] <> fSelectedSkill) and not fGameParams.IgnoreReplaySelection then
-        SetSelectedSkill(ActionToSkillPanelButton[ass], True);
+      //if (ActionToSkillPanelButton[ass] <> fSelectedSkill) and not fGameParams.IgnoreReplaySelection then
+      //  SetSelectedSkill(ActionToSkillPanelButton[ass], True);
 
       // In order to preserve old replays, we have to check if the skill assignments are still possible
       // As the priority of lemmings has changed, we have to hightlight this lemming
@@ -5200,14 +5200,14 @@ begin
   end;
 end;
 
-procedure TLemmingGame.ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
+(*procedure TLemmingGame.ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
 var
   bs: TSkillPanelButton;
 begin
   if fGameParams.IgnoreReplaySelection then Exit;
   bs := aReplayItem.Skill;
   setselectedskill(bs, true);
-end;
+end;*)
 
 function TLemmingGame.GetSelectedSkill: Integer;
 var
@@ -5278,7 +5278,7 @@ begin
         fSelectedSkill := Value;
         InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
         CueSoundEffect(SFX_SKILLBUTTON);
-        RecordSkillSelection(Value);
+        //RecordSkillSelection(Value);
         CheckForNewShadow;
       end;
   end;
@@ -5536,7 +5536,7 @@ begin
   fReplayManager.Add(E);
 end;
 
-procedure TLemmingGame.RecordSkillSelection(aSkill: TSkillPanelButton);
+(*procedure TLemmingGame.RecordSkillSelection(aSkill: TSkillPanelButton);
 var
   E: TReplaySelectSkill;
 begin
@@ -5548,7 +5548,7 @@ begin
   E.Frame := fCurrentIteration;
 
   fReplayManager.Add(E);
-end;
+end;*)
 
 
 procedure TLemmingGame.CheckForReplayAction(RRCheck: Boolean);
@@ -5569,12 +5569,12 @@ var
     AdjustReleaseRate(E.NewReleaseRate - CurrReleaseRate);
   end;
 
-  procedure ApplySkillSelect;
+  (*procedure ApplySkillSelect;
   var
     E: TReplaySelectSkill absolute R;
   begin
     ReplaySkillSelection(E);
-  end;
+  end;*)
 
   procedure ApplyNuke;
   var
@@ -5593,8 +5593,8 @@ var
     if R is TReplayChangeReleaseRate then
       ApplyReleaseRate;
 
-    if R is TReplaySelectSkill then
-      ApplySkillSelect;
+    (*if R is TReplaySelectSkill then
+      ApplySkillSelect;*)
 
     if R is TReplayNuke then
       ApplyNuke;

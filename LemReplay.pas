@@ -94,7 +94,7 @@ type
       procedure DoSave(SL: TStringList; aLabel: String); override;
   end;
 
-  TReplaySelectSkill = class(TBaseReplayItem)
+  {TReplaySelectSkill = class(TBaseReplayItem)
     private
       fSkill: TSkillPanelButton;
     protected
@@ -108,7 +108,7 @@ type
     protected
       function DoLoadLine(Line: TParserLine): Boolean; override;
       procedure DoSave(SL: TStringList; aLabel: String); override;
-  end;
+  end;}
 
   TReplayItemList = class(TObjectList)
     private
@@ -136,7 +136,7 @@ type
       function GetLastActionFrame: Integer;
       function GetItemByFrame(aFrame: Integer; aItemType: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; SL: TStringList);
-      procedure SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
+      //procedure SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
       //function LoadReplayItem(aParser: TNeoLemmixParser): TBaseReplayItem;
     public
       constructor Create;
@@ -298,8 +298,8 @@ begin
   if aItem is TReplaySkillAssignment then Dst := fAssignments;
   if aItem is TReplayChangeReleaseRate then Dst := fReleaseRateChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
-  if aItem is TReplayHighlightLemming then Dst := fInterfaceActions;
-  if aItem is TReplaySelectSkill then Dst := fInterfaceActions;
+  //if aItem is TReplayHighlightLemming then Dst := fInterfaceActions;
+  //if aItem is TReplaySelectSkill then Dst := fInterfaceActions;
 
   if Dst = nil then
     raise Exception.Create('Unknown type passed to TReplay.Add!');
@@ -382,6 +382,7 @@ var
   Parser: TNeoLemmixParser;
   Line: TParserLine;
   i: Integer;
+  Item: TBaseReplayItem;
 begin
   Clear(true);
   Parser := TNeoLemmixParser.Create;
@@ -411,7 +412,28 @@ begin
       if Line.Keyword = 'ID' then
         fLevelID := StrToIntDef('x' + Line.Value, 0);
 
+      if Line.Keyword = 'ACTIONS' then Break;
 
+    until Line.Keyword = '';
+
+    repeat
+      Item := nil;
+      Line := Parser.NextLine;
+
+      if Line.Keyword = 'ASSIGNMENT' then
+        Item := TReplaySkillAssignment.Create;
+
+      if Line.Keyword = 'RELEASE_RATE' then
+        Item := TReplayChangeReleaseRate.Create;
+
+      if Line.Keyword = 'NUKE' then
+        Item := TReplayNuke.Create;
+
+      if Item <> nil then
+      begin
+        Item.Load(Parser);
+        Add(Item);
+      end;
     until Line.Keyword = '';
   finally
     Parser.Free;
@@ -431,8 +453,7 @@ begin
 
   // Debug
   SL.Add('# Assignments: ' + IntToStr(fAssignments.Count));
-  SL.Add('#  RR Changes: ' + IntToStr(fReleaseRateChanges.Count));
-  SL.Add('#  UI Actions: ' + IntToStr(fInterfaceActions.Count));
+  SL.Add('# RR Changes: ' + IntToStr(fReleaseRateChanges.Count));
 
   SL.Add('');
   if Trim(fPlayerName) <> '' then
@@ -447,6 +468,8 @@ begin
     SL.Add('LEVEL ' + IntToStr(fLevelPosition));
   end;
   SL.Add('ID ' + IntToHex(fLevelID, 8));
+  SL.Add('');
+  SL.Add('ACTIONS');
   SL.Add('');
 
   SaveReplayList(fAssignments, SL);
@@ -463,84 +486,7 @@ var
   i: Integer;
 begin
   for i := 0 to aList.Count-1 do
-    SaveReplayItem(aList[i], SL);
-end;
-
-procedure TReplay.SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
-
-  procedure SaveLemmingEntry;
-  var
-    E: TBaseReplayLemmingItem absolute aItem;
-  begin
-    SL.Add('  LEM_INDEX ' + IntToStr(E.LemmingIndex));
-    SL.Add('  LEM_X ' + IntToStr(E.LemmingX));
-    SL.Add('  LEM_Y ' + IntToStr(E.LemmingY));
-    if E.fLemmingDx < 0 then
-      SL.Add('  LEM_DIR LEFT')
-    else if E.fLemmingDx > 0 then
-      SL.Add('  LEM_DIR RIGHT'); //some old replay files, we might not know either way, so it could be neither
-    if E.LemmingHighlit then
-      SL.Add('  HIGHLIT');
-  end;
-
-  procedure SaveAssignEntry;
-  var
-    E: TReplaySkillAssignment absolute aItem;
-  begin
-    SL.Add('ASSIGNMENT');
-    SL.Add('  ACTION ' + GetSkillReplayName(E.Skill));
-    SaveLemmingEntry;
-  end;
-
-  procedure SaveNukeEntry;
-  var
-    E: TReplayNuke absolute aItem;
-  begin
-    SL.Add('NUKE');
-  end;
-
-  procedure SaveReleaseRateEntry;
-  var
-    E: TReplayChangeReleaseRate absolute aItem;
-  begin
-    SL.Add('RELEASE_RATE');
-    SL.Add('  RATE ' + IntToStr(E.NewReleaseRate));
-    SL.Add('  SPAWNED ' + IntToStr(E.SpawnedLemmingCount));
-  end;
-
-  procedure SaveSelectSkillEntry;
-  var
-    E: TReplaySelectSkill absolute aItem;
-  begin
-    SL.Add('SELECT_SKILL');
-    SL.Add('  SKILL ' + GetSkillReplayName(E.Skill));
-  end;
-
-  procedure SaveHighlightEntry;
-  var
-    E: TReplayHighlightLemming absolute aItem;
-  begin
-    SL.Add('HIGHLIGHT');
-    SaveLemmingEntry;
-  end;
-begin
-  if aItem is TReplaySkillAssignment then
-    SaveAssignEntry;
-
-  if aItem is TReplayNuke then
-    SaveNukeEntry;
-
-  if aItem is TReplayChangeReleaseRate then
-    SaveReleaseRateEntry;
-
-  if aItem is TReplaySelectSkill then
-    SaveSelectSkillEntry;
-
-  if aItem is TReplayHighlightLemming then
-    SaveHighlightEntry;
-
-  SL.Add('  FRAME ' + IntToStr(aItem.Frame));
-  SL.Add('');
+    aList[i].Save(SL);
 end;
 
 procedure TReplay.LoadOldReplayFile(aFile: String);
@@ -585,7 +531,7 @@ var
     Add(E);
   end;
 
-  procedure CreateSelectSkillEntry;
+  (*procedure CreateSelectSkillEntry;
   var
     E: TReplaySelectSkill;
   begin
@@ -593,7 +539,7 @@ var
     E.Skill := BUTTON_TABLE[Item.SelectedButton];
     E.Frame := Item.Iteration;
     Add(E);
-  end;
+  end;*)
 
 begin
   Clear(true);
@@ -618,11 +564,11 @@ begin
         if Item.ActionFlags and $38 <> 0 then Continue;
       end;
 
-      if Item.ActionFlags and raf_SkillSelection <> 0 then
+      (*if Item.ActionFlags and raf_SkillSelection <> 0 then
       begin
         CreateSelectSkillEntry;
         LastSelectedSkill := TSkillPanelButton(Item.SelectedButton);
-      end;
+      end;*)
 
       if Item.ActionFlags and raf_SkillAssignment <> 0 then
         CreateAssignEntry;
@@ -673,6 +619,7 @@ end;
 procedure TBaseReplayItem.Save(SL: TStringList);
 begin
   DoSave(SL, ''); // It's expected that somewhere throughout the calls to inherited DoSaves, the second parameter will be filled
+  SL.Add(''); // But they won't put the blank line, as they're coded such that they don't nessecerially know which is the final one
 end;
 
 function TBaseReplayItem.DoLoadLine(Line: TParserLine): Boolean;
@@ -776,6 +723,45 @@ procedure TReplaySkillAssignment.DoSave(SL: TStringList; aLabel: String);
 begin
   inherited DoSave(SL, 'ASSIGNMENT');
   SL.Add('  ACTION ' + GetSkillReplayName(Skill));
+end;
+
+{ TReplayReleaseRateChange }
+
+function TReplayChangeReleaseRate.DoLoadLine(Line: TParserLine): Boolean;
+begin
+  Result := inherited DoLoadLine(Line);
+  if Result then Exit;
+
+  if Line.Keyword = 'RATE' then
+  begin
+    fNewReleaseRate := Line.Numeric;
+    Result := true;
+  end;
+
+  if Line.Keyword = 'SPAWNED' then
+  begin
+    fSpawnedLemmingCount := Line.Numeric;
+    Result := true;
+  end;
+end;
+
+procedure TReplayChangeReleaseRate.DoSave(SL: TStringList; aLabel: String);
+begin
+  inherited DoSave(SL, 'RELEASE_RATE');
+  SL.Add('  RATE ' + IntToStr(fNewReleaseRate));
+  SL.Add('  SPAWNED ' + IntToStr(fSpawnedLemmingCount));
+end;
+
+{ TReplayNuke }
+
+function TReplayNuke.DoLoadLine(Line: TParserLine): Boolean;
+begin
+  Result := inherited DoLoadLine(Line);
+end;
+
+procedure TReplayNuke.DoSave(SL: TStringList; aLabel: String);
+begin
+  inherited DoSave(SL, 'NUKE');
 end;
 
 { TReplayItemList }
