@@ -152,7 +152,7 @@ var
   TRNS: TCHUNKtRNS;
   fWidth, fHeight, fBytesPerRow: Integer;
   Header: TChunkIHDR;
-  BmpScanLine: pColor32Array;
+  BmpArrPtr: PColor32Array;
 begin
   ASL := nil; // Just gets rid of a compile-time warning. ASL won't be referenced if it hasn't been initialized anyway, since
               // the only line that references it has the same IF condition as the line that initializes it.
@@ -167,6 +167,8 @@ begin
   fHeight := Header.Height;
 
   Bmp.SetSize(fWidth, fHeight);
+  // Get pointer to array to TColor32
+  BmpArrPtr := Bmp.Bits;
 
   Alpha := (Header.ColorType = COLOR_RGBALPHA);
   for Y := 0 to fHeight-1 do
@@ -176,8 +178,6 @@ begin
 
     // Get Png.Scanline[Y] via the Header
     LongInt(XC) := LongInt(Header.GetImageData) + (fHeight - 1 - Y) * LongInt(fBytesPerRow);
-    // Write on Bmp via the ScanLine, too.
-    BmpScanLine := Bmp.Scanline[Y];
 
     for X := 0 to fWidth-1 do
     begin
@@ -191,9 +191,9 @@ begin
         a := 255;
 
       if a = 0 then
-        BmpScanLine^[X] := 0
+        BmpArrPtr^[Y * fWidth + X] := 0
       else
-        BmpScanLine^[X] := (a shl 24) + (r shl 16) + (g shl 8) + b;
+        BmpArrPtr^[Y * fWidth + X] := (a shl 24) + (r shl 16) + (g shl 8) + b;
     end;
   end;
 

@@ -34,6 +34,7 @@ type
   TDrawableItem = (di_ConstructivePixel, di_Stoner);
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
+  TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
 
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
@@ -144,12 +145,15 @@ type
       fScreenPos: TPoint;
       fMousePos: TPoint;
       fDrawRoutines: TDrawRoutines;
+      fRemoveRoutine: TRemoveRoutine;
       function GetSelectedSkill: TSkillPanelButton;
     public
       constructor Create;
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
       procedure SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
+      procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
       procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
+      procedure RemoveTerrain(X, Y, Width, Height: Integer);
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
@@ -216,6 +220,11 @@ begin
   fDrawRoutines[aItem] := aRoutine;
 end;
 
+procedure TRenderInterface.SetRemoveRoutine(aRoutine: TRemoveRoutine);
+begin
+  fRemoveRoutine := aRoutine;
+end;
+
 procedure TRenderInterface.AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
 begin
   // TLemmingGame is expected to handle modifications to the physics map.
@@ -223,6 +232,15 @@ begin
   if Assigned(fDrawRoutines[aAddType]) then
     fDrawRoutines[aAddType](X, Y);
 end;
+
+procedure TRenderInterface.RemoveTerrain(X, Y, Width, Height: Integer);
+begin
+  // This removes terrain from the layer rlTerrain accoding to the physics map
+  // within the rectange defined defined by (X, Y, Width, Height)
+  // Whenever LemGame removes some terrain, it is expected to call this method!
+  fRemoveRoutine(X, Y, Width, Height);
+end;
+
 
 procedure TRenderInterface.SetSelectedSkillPointer(var aButton: TSkillPanelButton);
 begin
@@ -509,10 +527,19 @@ begin
   if fPhysicsMap <> nil then
   begin
     fPhysicsMap.DrawMode := dmCustom;
-    fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyOnTerrain;
-    fPhysicsMap.DrawTo(Items[rlOnTerrainObjects], aRegion, aRegion);
-    fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
-    fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, aRegion);
+    // Delete Only-On-Terrain Objects not on terrain
+    if not fIsEmpty[rlOnTerrainObjects] then
+    begin
+      fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyOnTerrain;
+      fPhysicsMap.DrawTo(Items[rlOnTerrainObjects], aRegion, aRegion);
+    end;
+
+    // Delete One-Way-Arrows not on non-steel terrain
+    if not fIsEmpty[rlOneWayArrows] then
+    begin
+      fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
+      fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, aRegion);
+    end;
   end;
 
   for i := Low(TRenderLayer) to High(TRenderLayer) do

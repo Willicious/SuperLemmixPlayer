@@ -1550,19 +1550,6 @@ begin
     fGameParams.Level.Info.ClonerCount     := 0;
   end;
 
-  //fRenderer.RenderWorld(World, False, (moDebugSteel in fGameParams.MiscOptions));
-
-  {if ((Level.Info.LevelOptions and 8) = 0) and (fGameParams.SysDat.Options and 128 = 0) then
-    fRenderer.RenderWorld(SteelWorld, False, True)
-  else
-  begin
-    fRenderer.RenderWorld(SteelWorld, False, True, True);
-    for i := 0 to SteelPhysicsMap.Width - 1 do
-    for i2 := 0 to SteelPhysicsMap.Height - 1 do
-      if SteelWorld.PixelS[i, i2] and ALPHA_STEEL <> 0 then
-        World.PixelS[i, i2] := World.PixelS[i, i2] and not ALPHA_ONEWAY;
-  end;}
-
   // hyperspeed things
   fTargetIteration := 0;
   fHyperSpeedCounter := 0;
@@ -1609,7 +1596,6 @@ begin
   fClockFrame := 0;
   fFading := False;
   EntriesOpened := False;
-  ObjectInfos.Clear;
   Entries.Clear;
 
 
@@ -1681,8 +1667,11 @@ begin
   numEntries := 0;
   ButtonsRemain := 0;
 
+  // Create the list of interactive objects
+  ObjectInfos.Clear;
+  fRenderer.CreateInteractiveObjectList(ObjectInfos);
 
-  SetObjectInfos;
+  // SetObjectInfos;
 
   with Level do
   for i := 0 to ObjectInfos.Count - 1 do
@@ -3398,8 +3387,9 @@ begin
   PosY := L.LemY;
 
   ExplodeMaskBmp.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
-  //if not HyperSpeed then
-  //  ExplodeMaskBmp.DrawTo(fTargetBitmap, PosX - 8, PosY - 14);
+
+  // Delete these pixels from the terrain layer
+  fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, ExplodeMaskBmp.Width, ExplodeMaskBmp.Height);
 
   InitializeMinimap;
 end;
@@ -3426,6 +3416,9 @@ begin
   Assert(CheckRectCopy(D, S), 'bash rect err');
 
   Bmp.DrawTo(PhysicsMap, D, S);
+
+  // Delete these pixels from the terrain layer
+  fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 
   InitializeMinimap;
 end;
@@ -3459,6 +3452,9 @@ begin
   Assert(CheckRectCopy(D, S), 'miner rect error');
 
   Bmp.DrawTo(PhysicsMap, D, S);
+
+  // Delete these pixels from the terrain layer
+  fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 
   InitializeMinimap;
 end;
@@ -3790,7 +3786,7 @@ end;
 procedure TLemmingGame.AddConstructivePixel(X, Y: Integer);
 begin
   PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] or PM_SOLID;
-  fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y); 
+  fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y);
 end;
 
 
@@ -3811,9 +3807,8 @@ begin
       if (n > -4) and (n < 4) then Result := True;
     end;
 
-    //if ReadSpecialMap(PosX + n, PosY) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
-    //  WriteSpecialMap(PosX + n, PosY, DOM_NONE);
-    // Handled by the pixel remover now :D
+    // Delete these pixels from the terrain layer
+    fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
   end;
 
   InitializeMinimap;
@@ -4369,7 +4364,7 @@ begin
   if AdjustedFrame = 5 then
   begin
     ContinueWork := False;
-    For n := 8 to 14 do
+    For n := 1 to 14 do
     begin
       if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
            and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx, baBashing)
@@ -4678,8 +4673,15 @@ var
       else
         Inc(L.LemY, LemYDir);
     end;
-
   end;
+
+  function HeadCheck(LemX, Lemy: Integer): Boolean; // returns False if lemming hits his head
+  begin
+    Result := not (     HasPixelAt(LemX - 1, LemY - 12)
+                    and HasPixelAt(LemX, LemY - 12)
+                    and HasPixelAt(LemX + 1, LemY - 12));
+  end;
+
 
 const
   GliderFallTable: array[1..17] of Integer =
@@ -4693,7 +4695,8 @@ begin
     Dec(MaxFallDist);
     // Rise a pixel every second frame
     if (L.LemFrame >= 9) and (L.LemFrame mod 2 = 1)
-       and (not HasPixelAt(L.LemX + L.LemDx, L.LemY + MaxFallDist - 1)) then
+       and (not HasPixelAt(L.LemX + L.LemDx, L.LemY + MaxFallDist - 1))
+       and HeadCheck(L.LemX, L.LemY - 1) then
       Dec(MaxFallDist);
   end;
 
@@ -4741,6 +4744,23 @@ begin
     end
     else
       Inc(L.LemY, MaxFallDist);
+  end
+
+  else if ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT then // head check for pushing down in updraft
+  begin
+    // move down at most 2 pixels until the HeadCheck passes
+    LemDy := -1;
+    while (not HeadCheck(L.LemX, L.LemY)) and (LemDy < 2) do
+    begin
+      Inc(L.LemY);
+      Inc(LemDy);
+      // Check whether the glider has reached the ground
+      if HasPixelAt(L.LemX, L.LemY) then
+      begin
+        Transition(L, baWalking);
+        LemDy := 4;
+      end;
+    end;
   end;
 end;
 

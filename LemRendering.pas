@@ -24,7 +24,7 @@ interface
 
 uses
   Dialogs,
-  Classes, Contnrs, Math, Windows,
+  Classes, {Contnrs,} Math, Windows,
   GR32, GR32_LowLevel, GR32_Blend,
   UMisc,
   SysUtils,
@@ -34,7 +34,7 @@ uses
   LemDosBmp, LemDosStructures,
   LemTypes,
   LemTerrain, LemMetaTerrain,
-  LemObjects, LemInteractiveObject,   LemMetaObject,
+  LemObjects, LemInteractiveObject, LemMetaObject,
   LemSteel,
   LemLemming,
   LemDosAnimationSet, LemMetaAnimation, LemCore,
@@ -42,9 +42,6 @@ uses
 
   // we could maybe use the alpha channel for rendering, ok thats working!
   // create gamerenderlist in order of rendering
-
-
-
 
 type
   TParticleRec = packed record
@@ -78,7 +75,7 @@ type
 
     fHelperImages: THelperImages;
 
-    fWorld: TBitmap32;
+    {fWorld: TBitmap32;}
 
     fAni: TBaseDosAnimationSet;
 
@@ -86,9 +83,13 @@ type
 
     fParticles                 : TParticleTable; // all particle offsets
 
+    fObjectInfoList: TInteractiveObjectInfoList; // For rendering from Preview screen
+
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer);
     procedure AddStoner(X, Y: Integer);
+    // Remove stuff
+    procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
 
     // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -108,7 +109,7 @@ type
 
     function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
-    procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
+
   protected
   public
     constructor Create;
@@ -125,11 +126,10 @@ type
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 
     // Terrain rendering
-    procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
+    procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
 
     // Object rendering
-    procedure DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
-    procedure DrawAllObjects;
+    procedure DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True);
     procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 
     // Lemming rendering
@@ -138,24 +138,20 @@ type
     procedure DrawLemmingHelper(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
 
-    procedure DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
-
-    function HasPixelAt(X, Y: Integer): Boolean;
-
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; PosMarker: Integer);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
 
 
-    procedure RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
+    procedure RenderWorld(World: TBitmap32);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
+
+    procedure CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
 
     // Minimap
     procedure RenderMinimap(Dst: TBitmap32; aLemmings: TLemmingList = nil);
     procedure CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
-
-    procedure Highlight(World: TBitmap32; M: TColor32);
 
     property PhysicsMap: TBitmap32 read fPhysicsMap;
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
@@ -177,6 +173,7 @@ begin
   fRenderInterface := aInterface;
   fRenderInterface.SetDrawRoutine(di_ConstructivePixel, AddTerrainPixel);
   fRenderInterface.SetDrawRoutine(di_Stoner, AddStoner);
+  fRenderInterface.SetRemoveRoutine(ApplyRemovedTerrain);
 end;
 
 // Minimap drawing
@@ -229,11 +226,14 @@ begin
 
   LemmingList := fRenderInterface.LemmingList;
 
+  // Draw all lemmings, except the one below the cursor
   for i := 0 to LemmingList.Count-1 do
     if LemmingList[i] <> fRenderInterface.SelectedLemming then DrawThisLemming(LemmingList[i]);
 
+  // Draw the lemming below the cursor
   if fRenderInterface.SelectedLemming <> nil then DrawThisLemming(fRenderInterface.SelectedLemming, true);
 
+  // Draw particles for exploding lemmings
   fLayers.fIsEmpty[rlParticles] := True;
   for i := 0 to LemmingList.Count-1 do
   begin
@@ -272,31 +272,12 @@ var
       Top := aLemming.LemY - SrcMetaAnim.FootY;
       Right := Left + SrcMetaAnim.Width;
       Bottom := Top + SrcMetaAnim.Height;
-
-      // Compatibility kludges. These should be removed
-      // and replaced with properly-modified animations.
-      {if aLemming.LemAction in [baDigging, baFixing] then
-      begin
-        Inc(Left);
-        Inc(Right);
-      end;
-
-      if aLemming.LemAction = baMining then
-      begin
-        Inc(Left, aLemming.LemDx);
-        Inc(Right, aLemming.LemDx);
-
-        if aLemming.LemFrame < 15 then
-        begin
-          Inc(Top);
-          Inc(Bottom);
-        end;
-      end;}
     end;
   end;
 
 begin
   if aLemming.LemRemoved then Exit;
+  if aLemming.LemTeleporting then Exit;
 
   fRecolorer.Lemming := aLemming;
   fRecolorer.DrawAsSelected := Selected;
@@ -308,9 +289,6 @@ begin
     i := AnimationIndices[aLemming.LemAction, true];
   SrcAnim := fAni.LemmingAnimations[i];
   SrcMetaAnim := fAni.MetaLemmingAnimations[i];
-
-  // Now we want the frame
-  i := aLemming.LemFrame mod SrcMetaAnim.FrameCount; // mod is probably unnessecary but doesn't hurt to be safe
 
   SrcRect := GetFrameBounds;
   DstRect := GetLocationBounds;
@@ -378,25 +356,34 @@ end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect);
 begin
-  ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(aDst, aRegion);
 end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);
 var
+  PhysicsArrPtr, TerrLayerArrPtr: PColor32Array;
   cx, cy: Integer;
+  MapWidth: Integer; // Width of the total PhysicsMap
 begin
-  // Another somewhat kludgy thing. Eventually, TRenderer should probably handle
-  // applying masks, thereby removing them from both the visual render and the
-  // physics render at the same time.
+  // This has two applications:
+  // - Removing all non-solid pixels from rlTerrain (possibly created by blending)
+  // - Removed pixels from PhysicsMap copied to rlTerrain (called when applying a mask from LemGame via RenderInterface)
+
+  PhysicsArrPtr := PhysicsMap.Bits;
+  TerrLayerArrPtr := fLayers[rlTerrain].Bits;
+
+  MapWidth := PhysicsMap.Width;
+
   for cy := Y to (Y+H-1) do
-    for cx := X to (X+W-1) do
-      if PhysicsMap.Pixel[cx, cy] and PM_SOLID = 0 then
-      begin
-        // should we double-check all terrain bits are erased?
-        fLayers[rlTerrain].Pixel[cx, cy] := 0;
-      end;
+  for cx := X to (X+W-1) do
+  begin
+    if PhysicsArrPtr[cy * MapWidth + cx] and PM_SOLID = 0 then
+    begin
+      // should we double-check all terrain bits are erased?
+      TerrLayerArrPtr[cy * MapWidth + cx] := 0;
+    end;
+  end;
 end;
 
 
@@ -415,7 +402,6 @@ const
    );
 var
   i, j: Integer;
-  AdaptY: Integer;
 begin
   case SkillButton of
   spbPlatformer:
@@ -583,17 +569,15 @@ begin
   Dst.Assign(Src.PhysicsImage[Flip, Invert, Rotate]);
 
   for y := 0 to Dst.Height-1 do
+  for x := 0 to Dst.Width-1 do
   begin
-    for x := 0 to Dst.Width-1 do
-    begin
-      PDst := Dst.PixelPtr[x, y];
-      if (PDst^ and PM_SOLID) <> 0 then
-      begin
-        if (not Src.IsSteel) and (T.DrawingFlags and tdf_NoOneWay = 0) then
-          PDst^ := PDst^ or PM_ONEWAY;
-      end else
-        PDst^ := 0;
-    end;
+    PDst := Dst.PixelPtr[x, y];
+    // Set One-way-arrow flag
+    if (not Src.IsSteel) and (T.DrawingFlags and tdf_NoOneWay = 0) then
+      PDst^ := PDst^ or PM_ONEWAY;
+    // Remove non-sold pixels
+    if (PDst^ and PM_SOLID) = 0 then
+      PDst^ := 0;
   end;
 
   Dst.DrawMode := dmCustom;
@@ -666,33 +650,20 @@ begin
   end;
 end;
 
-(*procedure TRenderer.CombineObjectOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F <> 0) {and (B and ALPHA_TERRAIN <> 0) and (B and ALPHA_ONEWAY <> 0)} then
-  begin
-    MergeMemEx(F, B, $FF);
-  end;
-end;*)
-
-//prepareterrainbitmap was moved a bit further down, to make it easier to work on
-//it and DrawTerrain at the same time
 
 procedure TRenderer.PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
 begin
+  Bmp.DrawMode := dmCustom;
+
   if DrawingFlags and odf_OnlyOnTerrain <> 0 then
-  begin
-    Bmp.DrawMode := dmCustom;
-      Bmp.OnPixelCombine := CombineObjectDefault;
-  end else begin
-    Bmp.DrawMode := dmCustom;
-    if Zombie then
-      Bmp.OnPixelCombine := CombineObjectDefaultZombie
-    else
-      Bmp.OnPixelCombine := CombineObjectDefault;
-  end;
+    Bmp.OnPixelCombine := CombineObjectDefault
+  else if Zombie then
+    Bmp.OnPixelCombine := CombineObjectDefaultZombie
+  else
+    Bmp.OnPixelCombine := CombineObjectDefault;
 end;
 
-procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain; SteelOnly: Boolean = false);
+procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain);
 var
   Src: TBitmap32;
   Flip, Invert, Rotate: Boolean;
@@ -714,92 +685,16 @@ end;
 
 procedure TRenderer.PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
 begin
+  Bmp.DrawMode := dmCustom;
+
   if DrawingFlags and tdf_NoOverwrite <> 0 then
-  begin
-    Bmp.DrawMode := dmCustom;
-    Bmp.OnPixelCombine := CombineTerrainNoOverwrite;
-  end else if DrawingFlags and tdf_Erase <> 0 then
-  begin
-    Bmp.DrawMode := dmCustom;
-    Bmp.OnPixelCombine := CombineTerrainErase;
-  end else begin
-    Bmp.DrawMode := dmCustom;
+    Bmp.OnPixelCombine := CombineTerrainNoOverwrite
+  else if DrawingFlags and tdf_Erase <> 0 then
+    Bmp.OnPixelCombine := CombineTerrainErase
+  else
     Bmp.OnPixelCombine := CombineTerrainDefault;
-  end;
 end;
 
-procedure TRenderer.DrawObject(Dst: TBitmap32; O: TInteractiveObject; aFrame: Integer);
-{-------------------------------------------------------------------------------
-  Draws a interactive object
-  • Dst = the targetbitmap
-  • O = the object
-  • aOriginal = if specified then first a part of this bitmap (world when playing)
-    is copied to Dst to restore
--------------------------------------------------------------------------------}
-var
-  SrcRect, DstRect: TRect;
-  Src: TBitmap32;
-  MO: TMetaObject;
-
-  ORec: TObjectRecord;
-  iX, iY: Integer;
-  CountX, CountY: Integer;
-begin
-
-  ORec := FindMetaObject(O);
-  MO := ORec.Meta;
-
-  if O.DrawingFlags and odf_Invisible <> 0 then Exit;
-  if MO.TriggerEffect = 25 then Exit;
-
-  if aFrame > MO.AnimationFrameCount-1 then aFrame := MO.AnimationFrameCount-1; // for this one, it actually can matter sometimes
-
-  Src := TBitmap32.Create;
-  Src.Assign(ORec.Image[aFrame]);
-
-  if odf_UpsideDown and O.DrawingFlags <> 0 then
-    Src.FlipVert;
-
-  if odf_Flip and O.DrawingFlags <> 0 then
-    Src.FlipHorz;
-
-  if MO.TriggerEffect in [7, 8, 19] then
-  begin
-    O.DrawingFlags := O.DrawingFlags and not odf_NoOverwrite;
-    O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
-  end;
-
-  PrepareObjectBitmap(Src, O.DrawingFlags, O.DrawAsZombie);
-
-  if (not MO.CanResizeHorizontal) or (O.Width = -1) then
-    O.Width := MO.Width;
-  if (not MO.CanResizeVertical) or (O.Height = -1) then
-    O.Height := MO.Height;
-
-  CountX := (O.Width-1) div MO.Width;
-  CountY := (O.Height-1) div MO.Height;
-
-  for iY := 0 to CountY do
-  begin
-    DstRect := Src.BoundsRect;
-    DstRect := ZeroTopLeftRect(DstRect);
-    OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
-    if iY = CountY then
-      DstRect.Bottom := DstRect.Bottom - (O.Height mod MO.Height);
-    for iX := 0 to CountX do
-    begin
-      if iX = CountX then
-        DstRect.Right := DstRect.Right - (O.Width mod MO.Width);
-      Src.DrawTo(Dst, DstRect);
-      OffsetRect(DstRect, MO.Width, 0);
-    end;
-  end;
-
-  Src.Free;
-
-  O.LastDrawX := O.Left;
-  O.LastDrawY := O.Top;
-end;
 
 procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 var
@@ -841,91 +736,70 @@ begin
     fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
 end;
 
-procedure TRenderer.DrawAllObjects;
+procedure TRenderer.DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True);
 var
-  SrcRect, DstRect: TRect;
+  TempBitmapRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
-  Src: TBitmap32;
   DrawFrame: Integer;
   i, i2: Integer;
-  UsePoint: Boolean;
-  ObjectInfos: TInteractiveObjectInfoList;
 
   procedure ProcessDrawFrame(aLayer: TRenderLayer);
   var
     CountX, CountY, iX, iY: Integer;
-    Dst: TBitmap32;
-    O: TInteractiveObject;
     MO: TMetaObject;
   begin
     if Inf.IsInvisible then Exit;
     if Inf.TriggerEffect in [13, 16, 25] then Exit;
 
     DrawFrame := Min(Inf.CurrentFrame, Inf.AnimationFrameCount-1);
-    Src.Assign(Inf.Frames[DrawFrame]);
+    TempBitmap.Assign(Inf.Frames[DrawFrame]);
 
     if Inf.IsUpsideDown then
-      Src.FlipVert;
+      TempBitmap.FlipVert;
     if Inf.IsFlipImage then
-      Src.FlipHorz;
+      TempBitmap.FlipHorz;
 
-    PrepareObjectBitmap(Src, Inf.Obj.DrawingFlags, Inf.ZombieMode);
+    PrepareObjectBitmap(TempBitmap, Inf.Obj.DrawingFlags, Inf.ZombieMode);
 
-    Dst := fLayers[aLayer];
-    O := Inf.Obj;
     MO := Inf.MetaObj;
     CountX := (Inf.Width-1) div MO.Width;
     CountY := (Inf.Height-1) div MO.Height;    
 
     for iY := 0 to CountY do
     begin
-      SrcRect := Src.BoundsRect;
-      DstRect := Src.BoundsRect;
+      // (re)size rectangles correctly
+      TempBitmapRect := TempBitmap.BoundsRect;
+      DstRect := TempBitmap.BoundsRect;
+      // Move to leftmost X-coordinate and correct Y-coordinate
       DstRect := ZeroTopLeftRect(DstRect);
-      OffsetRect(DstRect, O.Left, O.Top + (MO.Height * iY));
+      OffsetRect(DstRect, Inf.Left, Inf.Top + (MO.Height * iY));
+      // shrink sizes of rectange to draw on bottom row
       if iY = CountY then
       begin
-        DstRect.Bottom := DstRect.Bottom - (O.Height mod MO.Height);
-        SrcRect.Bottom := SrcRect.Bottom - (O.Height mod MO.Height);
+        Dec(DstRect.Bottom, Inf.Height mod MO.Height);
+        Dec(TempBitmapRect.Bottom, Inf.Height mod MO.Height);
       end;
+
       for iX := 0 to CountX do
       begin
+        // shrink size of rectangle to draw on rightmost column
         if iX = CountX then
         begin
-          DstRect.Right := DstRect.Right - (O.Width mod MO.Width);
-          SrcRect.Right := SrcRect.Right - (O.Width mod MO.Width);
+          Dec(DstRect.Right, Inf.Width mod MO.Width);
+          Dec(TempBitmapRect.Right, Inf.Width mod MO.Width);
         end;
-        Src.DrawTo(Dst, DstRect, SrcRect);
+        // Draw copy of object onto alayer at this place
+        TempBitmap.DrawTo(fLayers[aLayer], DstRect, TempBitmapRect);
+        // Move to next row
         OffsetRect(DstRect, MO.Width, 0);
       end;
     end;
-
-    //Src.DrawTo(fLayers[aLayer], DstRect, SrcRect);
 
     Inf.Obj.LastDrawX := Inf.Left;
     Inf.Obj.LastDrawY := Inf.Top;
   end;
 
-  procedure FixLayer(Layer: TRenderLayer; Key: TColor32);
-  var
-    X, Y: Integer;
-    PPhys, PLayer: PColor32;
-  begin
-    for y := 0 to fPhysicsMap.Height-1 do
-      for x := 0 to fPhysicsMap.Width-1 do
-      begin
-        PPhys := PhysicsMap.PixelPtr[x, y];
-        PLayer := fLayers[Layer].PixelPtr[x, y];
-        if (PPhys^ and Key) = 0 then
-          PLayer^ := 0;
-      end;
-  end;
 begin
-  Src := TBitmap32.Create;
-  ObjectInfos := fRenderInterface.ObjectList;
-
-  UsePoint := true; //PtInRect(Dst.BoundsRect, MousePoint);
-
   // Draw moving backgrounds
   if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
   for i := 0 to ObjectInfos.Count - 1 do
@@ -939,7 +813,7 @@ begin
 
   // Draw no overwrite objects
   if not fLayers.fIsEmpty[rlObjectsLow] then fLayers[rlObjectsLow].Clear(0);
-  for i := ObjectInfos.Count-1 downto 0 do
+  for i := ObjectInfos.Count - 1 downto 0 do
   begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
@@ -961,7 +835,6 @@ begin
     ProcessDrawFrame(rlOnTerrainObjects);
     fLayers.fIsEmpty[rlOnTerrainObjects] := False;
   end;
-  //FixLayer(rlOnTerrainObjects, PM_SOLID);
 
   // Draw one-way arrows
   if not fLayers.fIsEmpty[rlOneWayArrows] then fLayers[rlOneWayArrows].Clear(0);
@@ -973,7 +846,6 @@ begin
     ProcessDrawFrame(rlOneWayArrows);
     fLayers.fIsEmpty[rlOneWayArrows] := False;
   end;
-  //FixLayer(rlOneWayArrows, PM_ONEWAY);
 
   // Draw regular objects
   if not fLayers.fIsEmpty[rlObjectsHigh] then fLayers[rlObjectsHigh].Clear(0);
@@ -988,115 +860,37 @@ begin
     fLayers.fIsEmpty[rlObjectsHigh] := False;
   end;
 
-  // Draw object helpers
-  fLayers[rlObjectHelpers].Clear(0);
-  if UsePoint then
+  if DrawHelper then
   begin
+    // Draw object helpers
+    fLayers[rlObjectHelpers].Clear(0);
     for i := 0 to ObjectInfos.Count-1 do
     begin
+      Inf := ObjectInfos[i];
+
       // Check if this object is relevant
-      if not PtInRect(Rect(ObjectInfos[i].Left, ObjectInfos[i].Top,
-                           ObjectInfos[i].Left + ObjectInfos[i].Width - 1, ObjectInfos[i].Top + ObjectInfos[i].Height - 1),
+      if not PtInRect(Rect(Inf.Left, Inf.Top, Inf.Left + Inf.Width - 1, Inf.Top + Inf.Height - 1),
                       fRenderInterface.MousePos) then
         Continue;
 
-      if ObjectInfos[i].IsDisabled then Continue;
+      if Inf.IsDisabled then Continue;
 
       // otherwise, draw its helper
-      DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i]);
+      DrawObjectHelpers(fLayers[rlObjectHelpers], Inf);
 
       // if it's a teleporter or receiver, draw all paired helpers too
-      if (ObjectInfos[i].TriggerEffect in [11, 12]) and (ObjectInfos[i].PairingId <> -1) then
+      if (Inf.TriggerEffect in [11, 12]) and (Inf.PairingId <> -1) then
         for i2 := 0 to ObjectInfos.Count-1 do
         begin
           if i = i2 then Continue;
-          if (ObjectInfos[i2].PairingId = ObjectInfos[i].PairingId) then
+          if (ObjectInfos[i2].PairingId = Inf.PairingId) then
             DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
         end;
     end;
   end;
 
-  Src.Free;
 end;
 
-
-
-procedure TRenderer.DrawLemming(Dst: TBitmap32; O: TInteractiveObject; Z: Boolean = false);
-var
-  TempBmp: TBitmap32;
-  tx, ty, dy: Integer;
-  a: Integer;
-  MO: TMetaObject;
-  TempRect: TRect;
-begin
-  if O.IsFake then exit;
-  tx := O.Left;
-  ty := O.Top;
-  MO := FindMetaObject(O).Meta;
-  tx := tx + MO.TriggerLeft;
-  ty := ty + MO.TriggerTop;
-
-  if Inf.Level.Info.GimmickSet and 64 = 0 then
-  begin
-  if O.TarLev and 32 <> 0 then
-  begin
-    {while (ty <= Inf.Level.Info.Height-1) and (Dst.Pixel[tx, ty] and ALPHA_TERRAIN = 0) do
-      inc(ty);}
-  end else begin
-    {dy := 0;
-    while (dy < 3) and (ty + dy < Inf.Level.Info.Height) do
-    begin
-      if Dst.Pixel[tx, ty + dy] and ALPHA_TERRAIN <> 0 then
-      begin
-        ty := ty + dy;
-        break;
-      end;
-      inc(dy);
-    end;}
-  end;
-  end;
-
-  {if ((ty > Inf.Level.Info.Height-1) or (Dst.Pixel[tx, ty] and ALPHA_TERRAIN = 0)) and (Inf.Level.Info.GimmickSet and 64 = 0) then
-    a := FALLING
-  else} if O.TarLev and 32 <> 0 then
-    a := BLOCKING
-  else
-    a := WALKING;
-  if O.DrawingFlags and 8 <> 0 then
-  begin
-    if a = FALLING then a := FALLING_RTL;
-    if a = WALKING then a := WALKING_RTL;
-  end;
-  tx := tx - fAni.MetaLemmingAnimations[a].FootX;
-  ty := ty - fAni.MetaLemmingAnimations[a].FootY;
-  TempBmp := TBitmap32.Create;
-  TempBmp.Assign(fAni.LemmingAnimations[a]);
-  //TempBmp.Height := TempBmp.Height div fAni.MetaLemmingAnimations[a].FrameCount;
-  TempRect.Left := 0;
-  TempRect.Top := 0;
-  TempRect.Right := fAni.MetaLemmingAnimations[a].Width-1;
-  TempRect.Bottom := fAni.MetaLemmingAnimations[a].Height;
-  TempBmp.DrawMode := dmCustom;
-  (*if Z then
-    TempBmp.OnPixelCombine := CombineLemFrameZombie
-    else
-    TempBmp.OnPixelCombine := CombineLemFrame;*)
-  TempBmp.DrawTo(Dst, tx, ty, TempRect);
-  TempBmp.Free;
-end;
-
-(*procedure TRenderer.CombineLemFrame(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F and $FFFFFF <> 0 then
-    B := F;
-end;
-
-procedure TRenderer.CombineLemFrameZombie(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
-  if F <> 0 then B := F;
-end;*)
 
 constructor TRenderer.Create;
 var
@@ -1112,6 +906,7 @@ begin
   fBgColor := $00000000;
   fAni := TBaseDosAnimationSet.Create;
   fRecolorer := TRecolorImage.Create;
+  fObjectInfoList := TInteractiveObjectInfoList.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[i] := TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
 
@@ -1132,6 +927,7 @@ begin
   fPhysicsMap.Free;
   fRecolorer.Free;
   fAni.Free;
+  fObjectInfoList.Free;
   for i := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[i].Free;
   inherited Destroy;
@@ -1271,173 +1067,106 @@ begin
   Bmp.Free;
 end;
 
-procedure TRenderer.RenderWorld(World: TBitmap32; DoObjects: Boolean; SteelOnly: Boolean = false; SOX: Boolean = false);
-// DoObjects is only true if RenderWorld is called from the Preview Screen!
+procedure TRenderer.RenderWorld(World: TBitmap32); // Called only from Preview Screen
 var
   i: Integer;
   x, y: Integer;
-  dy: Integer;
-
-  Bmp: TBitmap32;
-
-  Obj: TInteractiveObject;
-  ORec: TObjectRecord;
-
-  Ter: TTerrain;
-  MT: TMetaTerrain;
 
   Lem: TPreplacedLemming;
   L: TLemming;
 begin
-  fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
-
   if Inf.Level = nil then Exit;
 
+  // Draw the PhysicsMap
   RenderPhysicsMap;
 
-  with Inf do
+  // Prepare the bitmaps
+  fLayers.Prepare(Inf.Level.Info.Width, Inf.Level.Info.Height);
+
+  // Background layer
+  fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
+  fLayers[rlBackground].Clear($FF000000 or fBgColor);
+
+  if fTheme.HasImageBackground then
   begin
+    for y := 0 to Inf.Level.Info.Height div fTheme.Background.Height do
+    for x := 0 to Inf.Level.Info.Width div fTheme.Background.Width do
+      fTheme.Background.DrawTo(fLayers[rlBackground], x * fTheme.Background.Width, y * fTheme.Background.Height);
+  end;
 
-    // Prepare the bitmaps
-    fLayers.Prepare(Level.Info.Width, Level.Info.Height);
 
+  // Creating the list of all interactive objects.
+  fObjectInfoList.Clear;
+  CreateInteractiveObjectList(fObjectInfoList);
 
-    // Background layer
-    with fLayers[rlBackground] do
-    begin
-      Clear($FF000000 or fBgColor);
-    end;
+  // Draw all objects (except ObjectHelpers)
+  DrawAllObjects(fObjectInfoList, False);
 
-    if fTheme.HasImageBackground then
-    begin
-      y := 0;
-      while y < Level.Info.Height do
-      begin
-        x := 0;
-        while x < Level.Info.Width do
-        begin
-          fTheme.Background.DrawTo(fLayers[rlBackground], x, y);
+  // Draw preplaced lemmings
+  L := TLemming.Create;
+  for i := 0 to Inf.Level.PreplacedLemmings.Count-1 do
+  begin
+    Lem := Inf.Level.PreplacedLemmings[i];
 
-          Inc(x, fTheme.Background.Width);
-        end;
+    L.SetFromPreplaced(Lem);
+    L.LemIsZombie := Lem.IsZombie;
 
-        Inc(y, fTheme.Background.Height);
-      end;
-    end;
+    if (fPhysicsMap.PixelS[L.LemX, L.LemY] and PM_SOLID = 0) then
+      L.LemAction := baFalling
+    else if Lem.IsBlocker then
+      L.LemAction := baBlocking
+    else
 
-    if DoObjects then
-    begin
-      with fLayers[rlBackgroundObjects] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect <> 30 then Continue;
+    DrawThisLemming(L);
+  end;
+  L.Free;
 
-          DrawObject(fLayers[rlBackgroundObjects], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlBackgroundObjects] := False;
-        end;
+  // Draw all terrain pieces
+  for i := 0 to Inf.Level.Terrains.Count-1 do
+  begin
+    DrawTerrain(fLayers[rlTerrain], Inf.Level.Terrains[i]);
+  end;
 
-      with fLayers[rlObjectsLow] do
-        for i := Level.InteractiveObjects.Count-1 downto 0 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          if Obj.DrawingFlags and odf_NoOverwrite = 0 then Continue;
-          if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
+  // remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
+  ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
 
-          DrawObject(fLayers[rlObjectsLow], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlObjectsLow] := False;
-        end;
-
-      with fLayers[rlOnTerrainObjects] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          if Obj.DrawingFlags and odf_OnlyOnTerrain = 0 then Continue;
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
-
-          DrawObject(fLayers[rlOnTerrainObjects], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlOnTerrainObjects] := False;
-        end;
-
-      with fLayers[rlOneWayArrows] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          ORec := FindMetaObject(Obj);
-          if not (ORec.Meta.TriggerEffect in [7, 8, 19]) then Continue;
-
-          DrawObject(fLayers[rlOneWayArrows], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlOneWayArrows] := False;
-        end;
-
-      with fLayers[rlObjectsHigh] do
-        for i := 0 to Level.InteractiveObjects.Count-1 do
-        begin
-          Obj := Level.InteractiveObjects[i];
-          if Obj.DrawingFlags and odf_NoOverwrite <> 0 then Continue;
-          if Obj.DrawingFlags and odf_OnlyOnTerrain <> 0 then Continue;
-          ORec := FindMetaObject(Obj);
-          if ORec.Meta.TriggerEffect in [7, 8, 13, 16, 19, 25, 30] then Continue;
-
-          DrawObject(fLayers[rlObjectsHigh], Obj, ORec.Meta.PreviewFrameIndex);
-          fLayers.fIsEmpty[rlObjectsHigh] := False;
-        end;
-
-      L := TLemming.Create;
-      with fLayers[rlLemmings] do
-        for i := 0 to Level.PreplacedLemmings.Count-1 do
-        begin
-          Lem := Level.PreplacedLemmings[i];
-
-          with L do
-          begin
-            SetFromPreplaced(Lem);
-            LemIsZombie := Lem.IsZombie;
-
-            if (fPhysicsMap.PixelS[LemX, LemY] and PM_SOLID = 0) then
-              LemAction := baFalling
-            else if Lem.IsBlocker then
-              LemAction := baBlocking
-            else
-              LemAction := baWalking;
-          end;
-
-          DrawThisLemming(L);
-        end;
-      L.Free;
-    end;
-
-    with fLayers[rlTerrain] do
-      for i := 0 to Level.Terrains.Count-1 do
-      begin
-        Ter := Level.Terrains[i];
-        MT := FindMetaTerrain(Ter);
-        if Ter.DrawingFlags and tdf_Erase = 0 then
-          if SOX and MT.IsSteel then
-            Continue;
-        DrawTerrain(fLayers[rlTerrain], Ter, SteelOnly);
-      end;
-
-  end; // with Inf
-
+  // Combine all layers to the WorldMap
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(World);
-
 end;
+
+
+procedure TRenderer.CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
+var
+  i: Integer;
+  ObjInf: TInteractiveObjectInfo;
+  ORec: TObjectRecord;
+begin
+  for i := 0 to Inf.Level.InteractiveObjects.Count - 1 do
+  begin
+    ORec := FindMetaObject(Inf.Level.InteractiveObjects[i]);
+    ObjInf := TInteractiveObjectInfo.Create(Inf.Level.InteractiveObjects[i], ORec.Meta, ORec.Image);
+
+    // Check whether trigger area intersects the level area
+    if    (ObjInf.TriggerRect.Top > Inf.Level.Info.Height)
+       or (ObjInf.TriggerRect.Bottom < 0)
+       or (ObjInf.TriggerRect.Right < 0)
+       or (ObjInf.TriggerRect.Left > Inf.Level.Info.Width) then
+      ObjInf.IsDisabled := True;
+
+    ObjInfList.Add(ObjInf);
+  end;
+
+  // Get ReceiverID for all Teleporters
+  ObjInfList.FindReceiverID;
+end;
+
 
 procedure TRenderer.PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
 var
   i: Integer;
-  Item: TObjectAnimation;
-  Bmp: TBitmap32;
-  MO: TMetaObject;
-  LowPal, {HiPal,} Pal: TArrayOfColor32;
-//  R: TRect;
+  LowPal, Pal: TArrayOfColor32;
 begin
 
   Inf := Info;
@@ -1472,32 +1201,6 @@ begin
   fAni.MainDataFile := 'main.dat';
   fAni.ReadMetaData;
   fAni.ReadData;
-end;
-
-procedure TRenderer.Highlight(World: TBitmap32; M: TColor32);
-var
-  i: Integer;
-  P: PColor32;
-begin
-
-  with World do
-  begin
-    P := PixelPtr[0, 0];
-    for i := 0 to Width * Height - 1 do
-    begin
-      if P^ and M <> 0 then
-        P^ := clRed32
-      else
-        P^ := 0;
-      Inc(P);
-    end;
-  end;
-end;
-
-function TRenderer.HasPixelAt(X, Y: Integer): Boolean;
-begin
-  //Result := fWorld.PixelS[X, Y] and ALPHA_TERRAIN = 0;
-  Result := true;
 end;
 
 end.

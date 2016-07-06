@@ -239,7 +239,7 @@ var
 begin
   fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
   fRenderInterface.MousePos := Game.CursorPoint;
-  fRenderer.DrawAllObjects;
+  fRenderer.DrawAllObjects(fRenderInterface.ObjectList);
   fRenderer.DrawLemmings;
   DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 319, fRenderInterface.ScreenPos.Y + 159);
   fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect);
