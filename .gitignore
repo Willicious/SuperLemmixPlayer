@@ -17,6 +17,7 @@ instructions.txt
 *.arc
 *.rc
 *.lrb
+*.nxrp
 !lemdata.res
 lemsounds.res
 !LemResourceBuilder.exe
