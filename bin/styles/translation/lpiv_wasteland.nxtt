@@ -209,11 +209,11 @@ OBJECT 10
   NAME radiation
 
 OBJECT 11
-  SET lpiv_wasteland
+  SET default
   NAME splat_pad
 
 OBJECT 12
-  SET lpiv_wasteland
+  SET default
   NAME antisplat_pad
 
 OBJECT 13
