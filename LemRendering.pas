@@ -1116,6 +1116,7 @@ begin
     else if Lem.IsBlocker then
       L.LemAction := baBlocking
     else
+      L.LemAction := baWalking;
 
     DrawThisLemming(L);
   end;
