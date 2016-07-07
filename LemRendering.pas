@@ -376,12 +376,19 @@ begin
   MapWidth := PhysicsMap.Width;
 
   for cy := Y to (Y+H-1) do
-  for cx := X to (X+W-1) do
   begin
-    if PhysicsArrPtr[cy * MapWidth + cx] and PM_SOLID = 0 then
+    if cy < 0 then Continue;
+    if cy >= PhysicsMap.Height then Break;
+    for cx := X to (X+W-1) do
     begin
-      // should we double-check all terrain bits are erased?
-      TerrLayerArrPtr[cy * MapWidth + cx] := 0;
+      if cx < 0 then Continue;
+      if cx >= PhysicsMap.Width then Break;
+      
+      if PhysicsArrPtr[cy * MapWidth + cx] and PM_SOLID = 0 then
+      begin
+        // should we double-check all terrain bits are erased?
+        TerrLayerArrPtr[cy * MapWidth + cx] := 0;
+      end;
     end;
   end;
 end;

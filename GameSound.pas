@@ -165,13 +165,12 @@ procedure TAbstractSound.LoadFromFileName(aFileName: string; aTestMode: Boolean 
   Loads from file or archive file in resource
 -------------------------------------------------------------------------------}
 var
-  F: TStream;
+  F: TMemoryStream;
 begin
-
   F := CreateDataStream(aFileName, fResourceDataType, aTestMode);
 
   try
-    LoadFromStream(F);
+    if F <> nil then LoadFromStream(F);
   finally
     F.Free;
   end;
