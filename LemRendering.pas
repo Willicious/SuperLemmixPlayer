@@ -382,7 +382,7 @@ begin
     for cx := X to (X+W-1) do
     begin
       if cx < 0 then Continue;
-      if cx >= PhysicsMap.Width then Break;
+      if cx >= MapWidth then Break;
       
       if PhysicsArrPtr[cy * MapWidth + cx] and PM_SOLID = 0 then
       begin

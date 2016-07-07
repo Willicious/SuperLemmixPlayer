@@ -1906,7 +1906,7 @@ end;
 
 procedure TLemmingGame.RemovePixelAt(X, Y: Integer);
 begin
-  PhysicsMap.Pixel[X, Y] := PhysicsMap.Pixel[X, Y] and not PM_TERRAIN;
+  PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] and not PM_TERRAIN;
 end;
 
 procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; oid: Byte);
@@ -4465,17 +4465,17 @@ function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
                                           Skill: TBasicLemmingAction): Boolean;
 begin
   // check for indestructible terrain at position (x, y), depending on skill.
-  Result := (    ( PhysicsMap.Pixel[X, Y] and PM_STEEL <> 0)
-              or ((PhysicsMap.Pixel[X, Y] and PM_ONEWAYDOWN <> 0) and (Skill = baBashing))
-              or ((PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0) and (Direction = 1) and (Skill in [baBashing, baMining]))
-              or ((PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0) and (Direction = -1) and (Skill in [baBashing, baMining]))
+  Result := (    ( PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0)
+              or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYDOWN <> 0) and (Skill = baBashing))
+              or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYLEFT <> 0) and (Direction = 1) and (Skill in [baBashing, baMining]))
+              or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYRIGHT <> 0) and (Direction = -1) and (Skill in [baBashing, baMining]))
             );
 end;
 
 function TLemmingGame.HasSteelAt(X, Y: Integer): Boolean;
 begin
   //Result := (ReadSpecialMap(X, Y) = DOM_STEEL);
-  Result := PhysicsMap.Pixel[X, Y] and PM_STEEL <> 0;
+  Result := PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0;
 end;
 
 
