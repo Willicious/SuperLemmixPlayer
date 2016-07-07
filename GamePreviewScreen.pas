@@ -322,11 +322,13 @@ procedure TGamePreviewScreen.BuildScreenInvis;
 var
   Inf: TRenderInfoRec;
   Mainpal: TArrayOfColor32;
+  TempBmp: TBitmap32;
   //Temp, W: TBitmap32;
   //DstRect: TRect;
   epf : String;
 begin
   Assert(GameParams <> nil);
+  TempBmp := TBitmap32.Create;
 
   //ScreenImg.BeginUpdate;
   try
@@ -342,13 +344,16 @@ begin
       Inf.Level:=Level;
       CheckLemmingCount(Level);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
+      if ReplayCheckIndex <> -2 then
+        Renderer.RenderWorld(TempBmp); // because currently some important preparing code is here. it shouldn't be.
+                                       // image dumping doesn't need this because it calls RenderWorld to render the output image      
     end;
 
     if GameParams.DumpMode and fCanDump then SaveLevelImage;
 
 
   finally
-    
+    TempBmp.Free;
   end;
 end;
 
