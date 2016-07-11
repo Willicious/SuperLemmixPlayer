@@ -1343,7 +1343,12 @@ begin
 
   SL := TStringList.Create;
   TempStream := CreateDataStream('music.txt', ldtLemmings); // It's a text file, but should be loaded more similarly to data files.
-  SL.LoadFromStream(TempStream); //conveniently, if the above returns nil, this throws an exception, triggering the special handling :D
+  if TempStream = nil then
+  begin
+    TempStream := TMemoryStream.Create;
+    TempStream.LoadFromFile(AppPath + 'data\music.nxmi');
+  end;
+  SL.LoadFromStream(TempStream);
   TempStream.Free;
 
   MusicNumber := -1;
@@ -1373,10 +1378,38 @@ var
   i: Integer;
   Bmp: TBitmap32;
   LowPal, HiPal, Pal: TArrayOfColor32;
-  MusicSys: TBaseMusicSystem;
+
   //LemBlack: TColor32;
   S: TStream;
-  MusicFileName: String;
+
+
+  procedure PrepareMusic;
+  var
+    MS: TMemoryStream;
+    MusicSys: TBaseMusicSystem;
+    MusicFileName: String;
+  begin
+    MS := nil;
+    try
+      MusicSys := fGameParams.Style.MusicSystem;
+      if MusicSys = nil then Exit;
+
+      MusicFileName := GetMusicFileName;
+      MS := CreateDataStream(MusicFileName, ldtMusic);
+      if MS = nil then
+      begin
+        Level.Info.MusicFile := '';
+        MusicFileName := GetMusicFileName;
+        MS := CreateDataStream(MusicFileName, ldtMusic);
+      end;
+
+      if MS <> nil then
+        SoundMgr.AddMusicFromStream(MS);
+
+    finally
+      MS.Free;
+    end;
+  end;
 begin
 
   fGameParams := aParams;
@@ -1484,26 +1517,7 @@ begin
   PhysicsMap := Renderer.PhysicsMap;
   RenderInterface.PhysicsMap := PhysicsMap;
 
-  MusicSys := fGameParams.Style.MusicSystem;
-  MusicFileName := GetMusicFileName;
-  if (MusicSys <> nil) and (MusicFileName <> '') then
-  begin
-    try
-      SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
-    except
-      try
-        SoundMgr.Musics.Clear;
-        Level.Info.MusicFile := '';
-        MusicFileName := GetMusicFileName;
-        SoundMgr.AddMusicFromFileName(MusicFileName, fGameParams.fTestMode);
-      except
-        // silent fail, just play no music
-        // actually this shouldn't result in raising an exception at all, but to be safe... 
-      end;
-    end;
-  end;
-
-  
+  PrepareMusic;
 
   fTalismans.Clear;
 

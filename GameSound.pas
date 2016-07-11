@@ -91,6 +91,7 @@ type
     //procedure MarkChannelFree(handle: HSYNC; channel, data: DWORD; user: POINTER); stdcall;
   { musics }
     function AddMusicFromFileName(const aFileName: string; aTestMode: Boolean): Integer;
+    function AddMusicFromStream(aStream: TStream): Integer;
     procedure PlayMusic(Index: Integer);
     procedure StopMusic(Index: Integer);
     procedure CheckFreeChannels;
@@ -262,6 +263,15 @@ begin
   M := TMusic.Create;
   Result := Musics.Add(M);
   M.LoadFromFileName(aFileName, aTestMode);
+end;
+
+function TSoundMgr.AddMusicFromStream(aStream: TStream): Integer;
+var
+  M: TMusic;
+begin
+  M := TMusic.Create;
+  Result := Musics.Add(M);
+  M.LoadFromStream(aStream);
 end;
 
 function TSoundMgr.AddSoundFromFileName(const aFileName: string): Integer;
