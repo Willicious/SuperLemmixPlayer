@@ -181,6 +181,7 @@ begin
 
     //if ForceOne or not Game.Paused then THIS IS ORIGINAL BUT MAYBE WRONG
     if (TimeForFrame and not Pause)
+    or ForceOne
     or Hyper then
     begin
       PrevCallTime := CurrTime;
