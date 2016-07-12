@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils,
-  UTools;
+  Contnrs, UTools;
 
 const
   // Object Animation Types
@@ -58,7 +58,7 @@ type
   -------------------------------------------------------------------------------}
   TMetaObjectSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
-  TMetaObject = class(TCollectionItem)
+  TMetaObject = class
   private
   protected
     fGS    : String;
@@ -88,7 +88,7 @@ type
     function GetIdentifier: String;
     function GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
   public
-    procedure Assign(Source: TPersistent); override;
+    procedure Assign(Source: TMetaObject);
   published
     property Identifier : String read GetIdentifier;
     property GS     : String read fGS write fGS;
@@ -119,44 +119,41 @@ type
     property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
   end;
 
-  TMetaObjects = class(TCollectionEx)
-  private
-    function GetItem(Index: Integer): TMetaObject;
-    procedure SetItem(Index: Integer; const Value: TMetaObject);
-  protected
-  public
-    constructor Create;
-    function Add: TMetaObject;
-    function Insert(Index: Integer): TMetaObject;
-    property Items[Index: Integer]: TMetaObject read GetItem write SetItem; default;
+  TMetaObjects = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TMetaObject;
+    public
+      constructor Create;
+      function Add: TMetaObject;
+      function Insert(Index: Integer): TMetaObject;
+      property Items[Index: Integer]: TMetaObject read GetItem; default;
+      property List;
   end;
 
 implementation
 
-procedure TMetaObject.Assign(Source: TPersistent);
+procedure TMetaObject.Assign(Source: TMetaObject);
 var
   M: TMetaObject absolute Source;
 begin
-  if Source is TMetaObject then
-  begin
-    fAnimationType                := M.fAnimationType;
-    fStartAnimationFrameIndex     := M.fStartAnimationFrameIndex;
-    fAnimationFrameCount          := M.fAnimationFrameCount;
-    fWidth                        := M.fWidth;
-    fHeight                       := M.fHeight;
-    fAnimationFrameDataSize       := M.fAnimationFrameDataSize;
-    fMaskOffsetFromImage          := M.fMaskOffsetFromImage;
-    fTriggerLeft                  := M.fTriggerLeft;
-    fTriggerTop                   := M.fTriggerTop;
-    fTriggerWidth                 := M.fTriggerWidth;
-    fTriggerHeight                := M.fTriggerHeight;
-    fTriggerEffect                := M.fTriggerEffect;
-    fTriggerNext                  := M.fTriggerNext;
-    fAnimationFramesBaseLoc       := M.fAnimationFramesBaseLoc;
-    fPreviewFrameIndex            := M.fPreviewFrameIndex;
-    fSoundEffect                  := M.fSoundEffect;
-  end
-  else inherited Assign(Source);
+
+  fAnimationType                := M.fAnimationType;
+  fStartAnimationFrameIndex     := M.fStartAnimationFrameIndex;
+  fAnimationFrameCount          := M.fAnimationFrameCount;
+  fWidth                        := M.fWidth;
+  fHeight                       := M.fHeight;
+  fAnimationFrameDataSize       := M.fAnimationFrameDataSize;
+  fMaskOffsetFromImage          := M.fMaskOffsetFromImage;
+  fTriggerLeft                  := M.fTriggerLeft;
+  fTriggerTop                   := M.fTriggerTop;
+  fTriggerWidth                 := M.fTriggerWidth;
+  fTriggerHeight                := M.fTriggerHeight;
+  fTriggerEffect                := M.fTriggerEffect;
+  fTriggerNext                  := M.fTriggerNext;
+  fAnimationFramesBaseLoc       := M.fAnimationFramesBaseLoc;
+  fPreviewFrameIndex            := M.fPreviewFrameIndex;
+  fSoundEffect                  := M.fSoundEffect;
+
 end;
 
 function TMetaObject.GetIdentifier: String;
@@ -174,29 +171,29 @@ end;
 
 { TMetaObjects }
 
+constructor TMetaObjects.Create;
+var
+  aOwnsObjects: Boolean;
+begin
+  aOwnsObjects := true;
+  inherited Create(aOwnsObjects);
+end;
+
 function TMetaObjects.Add: TMetaObject;
 begin
-  Result := TMetaObject(inherited Add);
-end;
-
-constructor TMetaObjects.Create;
-begin
-  inherited Create(TMetaObject);
-end;
-
-function TMetaObjects.GetItem(Index: Integer): TMetaObject;
-begin
-  Result := TMetaObject(inherited GetItem(Index))
+  Result := TMetaObject.Create;
+  inherited Add(Result);
 end;
 
 function TMetaObjects.Insert(Index: Integer): TMetaObject;
 begin
-  Result := TMetaObject(inherited Insert(Index))
+  Result := TMetaObject.Create;
+  inherited Insert(Index, Result);
 end;
 
-procedure TMetaObjects.SetItem(Index: Integer; const Value: TMetaObject);
+function TMetaObjects.GetItem(Index: Integer): TMetaObject;
 begin
-  inherited SetItem(Index, Value);
+  Result := inherited Get(Index);
 end;
 
 end.
