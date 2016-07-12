@@ -157,11 +157,13 @@ begin
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
   Hyper := Game.HyperSpeed;
 
+  if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
+
   // relax CPU
   if not Hyper or Fast then
     Sleep(1);
 
-  if ForceOne or Hyper or TimeForFastForwardFrame or TimeForFrame or TimeForScroll then
+  if TimeForFrame or TimeForScroll then
   begin
     Game.fAssignEnabled := true;
   //  PrevCallTime := CurrTime; --> line deleted and moved down
@@ -179,8 +181,6 @@ begin
 
     //if ForceOne or not Game.Paused then THIS IS ORIGINAL BUT MAYBE WRONG
     if (TimeForFrame and not Pause)
-    or (TimeForFastForwardFrame and not Pause)
-    or (Forceone and Pause)
     or Hyper then
     begin
       PrevCallTime := CurrTime;
@@ -227,7 +227,7 @@ begin
   end;
 
   // Update drawing
-  if (TimeForFrame or TimeForFastForwardFrame or fNeedRedraw) and not Game.HyperSpeed then
+  if (TimeForFrame or fNeedRedraw) then
   begin
     DoDraw;
   end;
@@ -237,6 +237,7 @@ procedure TGameWindow.DoDraw;
 var
   DrawRect: TRect;
 begin
+  if Game.HyperSpeed then Exit;
   fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
   fRenderInterface.MousePos := Game.CursorPoint;
   fRenderer.DrawAllObjects(fRenderInterface.ObjectList);
@@ -616,7 +617,7 @@ begin
 
   CheckShifts(Shift);
 
-  if Game.Paused and not Game.HyperSpeed then
+  if Game.Paused and not ForceUpdateOneFrame then  // if ForceUpdateOneFrame is active, screen will be redrawn soon enough anyway
     DoDraw;
 end;
 
