@@ -505,6 +505,56 @@ var
     b: Byte;
     lw: LongWord;
     IsReallyOld: Boolean;
+
+    procedure SetNewReplay;
+    var
+      SL: TStringList;
+      S: String;
+      i: Integer;
+      n: LongWord;
+      Cont: Boolean;
+    begin
+      Cont := true;
+      SL := TStringList.Create;
+      try
+        TempStream.Position := 0;
+        SL.LoadFromStream(TempStream);
+        for i := 0 to SL.Count-1 do
+        begin
+          S := Uppercase(Trim(SL[i]));
+          if LeftStr(S, 2) <> 'ID' then Continue;
+
+          S := 'x' + MidStr(S, 4, 8);
+          n := StrToInt(S);
+
+          //if Cont then
+          //  Cont := MessageDlg(S, mtCustom, [mbYes, mbNo], 0) = 6;
+
+          dS := fGameParams.Info.dSection;
+          dL := fGameParams.Info.dLevel;
+          // attempt to use levelID to match
+          while dS < Length(LevelIDArray) do
+          begin
+            while dL < Length(LevelIDArray[dS]) do
+            begin
+              if LevelIDArray[dS][dL] = n then
+              begin
+                fGameParams.Info.dSection := dS;
+                fGameParams.Info.dLevel := dL;
+                Result := true;
+                Exit;
+              end;
+              Inc(dL);
+            end;
+            dL := 0;
+            Inc(dS);
+          end;
+
+        end;
+      finally
+        SL.Free;
+      end;
+    end;
   begin
     TempStream := TMemoryStream.Create;
     try
@@ -520,10 +570,7 @@ var
       else if b = 103 then
         IsReallyOld := true
       else begin
-        // Intentionally give data that will raise an exception and
-        // mark the replay as ERROR.
-        ShowMessage('force error');
-        fGameParams.Info.dSection := 255;
+        SetNewReplay;
         Exit;
       end;
 
