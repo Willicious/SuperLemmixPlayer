@@ -1,0 +1,639 @@
+# NeoLemmix Level
+# Dumped from NeoLemmix Player VExNf 1.46n-B
+
+# Level info
+ TITLE  Lightspeed Lemming             
+ AUTHOR                 
+ ID FB3897E0
+
+# Level dimensions
+ WIDTH 528
+ HEIGHT 160
+ START_X 88
+ START_Y 0
+ THEME fire
+
+# Level stats
+ LEMMINGS 80
+ REQUIREMENT 72
+ MIN_RR 10
+ AUTOSTEEL OFF
+
+# Level skillset
+    CLIMBER 10
+    FLOATER 10
+     BOMBER 0
+    BLOCKER 1
+    BUILDER 1
+     BASHER 30
+      MINER 0
+     DIGGER 0
+
+# Interactive objects
+ OBJECT
+  SET fire
+  PIECE exit
+  X 376
+  Y 72
+
+ OBJECT
+  SET fire
+  PIECE owa_down
+  X 160
+  Y 77
+  WIDTH 176
+  HEIGHT 48
+
+ OBJECT
+  SET fire
+  PIECE water
+  X 0
+  Y 140
+  WIDTH 528
+  NO_OVERWRITE
+
+ OBJECT
+  SET fire
+  PIECE window
+  X 72
+  Y 73
+
+
+# Terrains
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 110
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 360
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 135
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 160
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 185
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 210
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 235
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 260
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 285
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 310
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 335
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 160
+  Y 88
+  ONE_WAY
+
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 185
+  Y 88
+  ONE_WAY
+
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 210
+  Y 88
+  ONE_WAY
+
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 235
+  Y 88
+  ONE_WAY
+
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 260
+  Y 88
+  ONE_WAY
+
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 285
+  Y 88
+  ONE_WAY
+
+ TERRAIN
+  SET fire
+  PIECE bricks_six
+  X 310
+  Y 88
+  ONE_WAY
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 385
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE bricks_single
+  X 85
+  Y 124
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -35
+  Y 116
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -11
+  Y 115
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -52
+  Y 76
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -22
+  Y 83
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -6
+  Y 77
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -58
+  Y 40
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -31
+  Y 45
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -4
+  Y 44
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -67
+  Y 13
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X -74
+  Y -21
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X -16
+  Y 21
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X 10
+  Y 11
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X -35
+  Y -16
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X 14
+  Y -19
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_wide
+  X 51
+  Y -13
+  NO_OVERWRITE
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET fire
+  PIECE rock_wide
+  X 112
+  Y -13
+  NO_OVERWRITE
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET fire
+  PIECE rock_wide
+  X 188
+  Y -12
+  NO_OVERWRITE
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET fire
+  PIECE rock_wide
+  X 266
+  Y -10
+  NO_OVERWRITE
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET fire
+  PIECE rock_wide
+  X 342
+  Y -8
+  NO_OVERWRITE
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET fire
+  PIECE rock_wide
+  X 402
+  Y -10
+  NO_OVERWRITE
+  FLIP_VERTICAL
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X 444
+  Y 24
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X 435
+  Y -9
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X 452
+  Y 61
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X 462
+  Y 100
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_03
+  X 463
+  Y 138
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_02
+  X 472
+  Y -7
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X 489
+  Y 26
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X 484
+  Y 60
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X 491
+  Y 100
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X 502
+  Y 133
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X 486
+  Y 43
+  NO_OVERWRITE
+
+ TERRAIN
+  SET fire
+  PIECE rock_large_01
+  X 478
+  Y -17
+  NO_OVERWRITE
+
+# Steel areas
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
+ AREA
+  STEEL
+  X -560
+  Y 0
+  W 4
+  H 4
+
