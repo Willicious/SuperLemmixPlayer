@@ -213,7 +213,7 @@ begin
   Y := Obj.Top; // of whole object
   X := Obj.Left;
 
-  if IsFlipImage then
+  (*if IsFlipImage then
     X := X + (sWidth - 1) - MetaObj.TriggerLeft - (MetaObj.TriggerWidth - 1)
   else
     X := X + MetaObj.TriggerLeft;
@@ -224,8 +224,13 @@ begin
     if not (MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
       Y := Y + 9;
   end else
-    Y := Y + MetaObj.TriggerTop;
+    Y := Y + MetaObj.TriggerTop;*)
 
+  // TMetaObject itself takes care of this now, and TMetaObjectInterface hides needing to specify
+  // the flip / etc every time.
+
+  X := MetaObj.TriggerLeft;
+  Y := MetaObj.TriggerTop;
   W := MetaObj.TriggerWidth;
   H := MetaObj.TriggerHeight;
 
@@ -243,7 +248,7 @@ end;
 
 procedure TInteractiveObjectInfo.SetIsDisabled(Value: Boolean);
 begin
-  Assert(Value = True, 'Changing object from Disabled to Enabled impossible');
+  Assert(Value = True, 'Changing object from Disabled to Enabled impossible'); // do we really want this? we might want this to be possible in the future...
 
   sIsDisabled := False;
   sTriggerEffect := DOM_NONE;
