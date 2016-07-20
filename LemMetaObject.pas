@@ -5,6 +5,7 @@ unit LemMetaObject;
 interface
 
 uses
+  GR32, LemTypes,
   Classes, SysUtils,
   Contnrs, UTools;
 
@@ -14,18 +15,6 @@ const
   oat_Triggered                = 1;    // the object is triggered by a lemming
   oat_Continuous               = 2;    // the object is always moving
   oat_Once                     = 3;    // the object is animated once at the beginning (entrance only)
-
-  // Object Trigger Effects
-  ote_None                     = 0;    // no effect (harmless)
-  ote_Exit                     = 1;    // lemming reaches the exit
-  ote_BlockerLeft              = 2;    // not used in DOS metadata, but reserved for 2D-objectmap
-  ote_BlockerRight             = 3;    // not used in DOS metadata, but reserved for 2D-objectmap
-  ote_TriggeredTrap            = 4;    // trap that animates once and kills a lemming
-  ote_Drown                    = 5;    // used for watertype objects
-  ote_Vaporize                 = 6;    // desintegration
-  ote_OneWayWallLeft           = 7;    // bash en mine restriction (arrows)
-  ote_OneWayWallRight          = 8;    // bash en mine restriction (arrows)
-  ote_Steel                    = 9;    // not used by DOS metadata, but reserved for 2D-objectmap
 
   // Object Sound Effects
   ose_None                     = 0;     // no sound effect
@@ -52,65 +41,69 @@ const
   ose_Vaccuum                  = 21;
   ose_Weed                     = 22;
 
+  ALIGNMENT_COUNT = 8; // 4 possible combinations of Flip + Invert + Rotate
+
 type
   {-------------------------------------------------------------------------------
     This class describes interactive objects
   -------------------------------------------------------------------------------}
   TMetaObjectSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
+  TObjectVariableProperties = record // For properties that vary based on flip / invert
+    Image:         TBitmaps;
+    Width:         Integer;
+    Height:        Integer;
+    TriggerLeft:   Integer;
+    TriggerTop:    Integer;
+    TriggerWidth:  Integer;
+    TriggerHeight: Integer;
+    Resizability:  TMetaObjectSizeSetting;
+  end;
+
   TMetaObject = class
   private
   protected
     fGS    : String;
     fPiece  : String;
-    fAnimationType                : Integer; // oat_xxxx
-    fStartAnimationFrameIndex     : Integer; // frame with which the animation starts?
+    fVariableInfo: array[0..ALIGNMENT_COUNT-1] of TObjectVariableProperties;
+    fGeneratedVariableInfo: array[0..ALIGNMENT_COUNT-1] of Boolean;
     fAnimationFrameCount          : Integer; // number of animations
     fWidth                        : Integer; // the width of the bitmap
     fHeight                       : Integer; // the height of the bitmap
-    fAnimationFrameDataSize       : Integer; // DOS only: the datasize in bytes of one frame
-    fMaskOffsetFromImage          : Integer; // DOS only: the datalocation of the mask-bitmap relative to the animation
     fTriggerLeft                  : Integer; // x-offset of triggerarea (if triggered)
     fTriggerTop                   : Integer; // y-offset of triggerarea (if triggered)
-    fTriggerPointX                : Integer; // trigger "point", for two-way-teleports / single teleports
-    fTriggerPointY                : Integer; // ^
-    fTriggerPointW                : Integer;
-    fTriggerPointH                : Integer;
     fTriggerWidth                 : Integer; // width of triggerarea (if triggered)
     fTriggerHeight                : Integer; // height of triggerarea (if triggered)
     fTriggerEffect                : Integer; // ote_xxxx see dos doc
     fTriggerNext                  : Integer;
-    fAnimationFramesBaseLoc       : Integer; // DOS only: data location of first frame in file (vgagr??.dat)
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : Integer; // ose_xxxx what sound to play
     fRandomStartFrame             : Boolean;
     fResizability                 : TMetaObjectSizeSetting;
     function GetIdentifier: String;
     function GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
+    function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
+    function GetVariableInfo(Flip, Invert, Rotate: Boolean): TObjectVariableProperties;
+    procedure EnsureVariationMade(Flip, Invert, Rotate: Boolean);
+    procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
+    procedure MarkAllUnmade;
   public
     procedure Assign(Source: TMetaObject);
+    constructor Create;
+    destructor Destroy; override;
   published
     property Identifier : String read GetIdentifier;
     property GS     : String read fGS write fGS;
     property Piece  : String read fPiece write fPiece;
-    property AnimationType            : Integer read fAnimationType write fAnimationType;
-    property StartAnimationFrameIndex : Integer read fStartAnimationFrameIndex write fStartAnimationFrameIndex;
     property AnimationFrameCount      : Integer read fAnimationFrameCount write fAnimationFrameCount;
     property Width                    : Integer read fWidth write fWidth;
     property Height                   : Integer read fHeight write fHeight;
-    property AnimationFrameDataSize   : Integer read fAnimationFrameDataSize write fAnimationFrameDataSize;
-    property MaskOffsetFromImage      : Integer read fMaskOffsetFromImage write fMaskOffsetFromImage;
     property TriggerLeft              : Integer read fTriggerLeft write fTriggerLeft;
     property TriggerTop               : Integer read fTriggerTop write fTriggerTop;
-    property TriggerPointX            : Integer read fTriggerPointX write fTriggerPointX;
-    property TriggerPointY            : Integer read fTriggerPointY write fTriggerPointY;
-    property TriggerPointW            : Integer read fTriggerPointW write fTriggerPointW;
-    property TriggerPointH            : Integer read fTriggerPointH write fTriggerPointH;
     property TriggerWidth             : Integer read fTriggerWidth write fTriggerWidth;
     property TriggerHeight            : Integer read fTriggerHeight write fTriggerHeight;
     property TriggerEffect            : Integer read fTriggerEffect write fTriggerEffect;
     property TriggerNext              : Integer read fTriggerNext write fTriggerNext;
-    property AnimationFramesBaseLoc   : Integer read fAnimationFramesBaseLoc write fAnimationFramesBaseLoc;
     property PreviewFrameIndex        : Integer read fPreviewFrameIndex write fPreviewFrameIndex;
     property SoundEffect              : Integer read fSoundEffect write fSoundEffect;
     property RandomStartFrame         : Boolean read fRandomStartFrame write fRandomStartFrame;
@@ -132,27 +125,30 @@ type
 
 implementation
 
+constructor TMetaObject.Create;
+var
+  i: Integer;
+begin
+  inherited;
+  for i := 0 to ALIGNMENT_COUNT-1 do
+    fVariableInfo[i].Image := TBitmaps.Create(true);
+end;
+
+destructor TMetaObject.Destroy;
+var
+  i: Integer;
+begin
+  for i := 0 to ALIGNMENT_COUNT-1 do
+    fVariableInfo[i].Image.Free;
+  inherited;
+end;
+
 procedure TMetaObject.Assign(Source: TMetaObject);
 var
   M: TMetaObject absolute Source;
 begin
 
-  fAnimationType                := M.fAnimationType;
-  fStartAnimationFrameIndex     := M.fStartAnimationFrameIndex;
-  fAnimationFrameCount          := M.fAnimationFrameCount;
-  fWidth                        := M.fWidth;
-  fHeight                       := M.fHeight;
-  fAnimationFrameDataSize       := M.fAnimationFrameDataSize;
-  fMaskOffsetFromImage          := M.fMaskOffsetFromImage;
-  fTriggerLeft                  := M.fTriggerLeft;
-  fTriggerTop                   := M.fTriggerTop;
-  fTriggerWidth                 := M.fTriggerWidth;
-  fTriggerHeight                := M.fTriggerHeight;
-  fTriggerEffect                := M.fTriggerEffect;
-  fTriggerNext                  := M.fTriggerNext;
-  fAnimationFramesBaseLoc       := M.fAnimationFramesBaseLoc;
-  fPreviewFrameIndex            := M.fPreviewFrameIndex;
-  fSoundEffect                  := M.fSoundEffect;
+  raise exception.Create('TMetaObject.Assign is not implemented!');
 
 end;
 
@@ -167,6 +163,95 @@ begin
     Result := false
   else
     Result := (aDir = fResizability) or (fResizability = mos_Both);
+end;
+
+function TMetaObject.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
+begin
+  Result := 0;
+  if Flip then Inc(Result, 1);
+  if Invert then Inc(Result, 2);
+  if Rotate then Inc(Result, 4);
+end;
+
+function TMetaObject.GetVariableInfo(Flip, Invert, Rotate: Boolean): TObjectVariableProperties;
+begin
+  Result := fVariableInfo(GetImageIndex(Flip, Invert, Rotate));
+end;
+
+procedure TMetaObject.MarkAllUnmade;
+var
+  i: Integer;
+begin
+  for i := 0 to ALIGNMENT_COUNT-1 do
+    fGeneratedVariableInfo[i] := false;
+end;
+
+procedure TMetaObject.EnsureVariationMade(Flip, Invert, Rotate: Boolean);
+var
+  i: Integer;
+begin
+  i := GetImageIndex(Flip, Invert, Rotate);
+  if not fGeneratedVariableInfo[i] then
+    DeriveVariation(Flip, Invert, Rotate);
+end;
+
+procedure TMetaObject.DeriveVariation(Flip, Invert, Rotate: Boolean);
+var
+  Index: Integer;
+  i: Integer;
+
+  Src, Dst: TBitmap32;
+
+  procedure Reset;
+  begin
+    i := 0;
+  end;
+
+  function SetImages: Boolean;
+  var
+    n: Integer;
+  begin
+    Result := i < fVariableInfo.Image[0].Count;
+    if Result then
+    begin
+      Src := fVariableInfo.Image[0][i];
+      if i < fVariableInfo.Image[Index].Count then
+        Dst := fVariableInfo.Image[Index].Add
+      else
+        Dst := fVariableInfo.Image[Index][i];
+      Inc(i);
+    end else begin
+      for n := fVariableInfo.Image[Index].Count-1 downto i do
+        fVariableInfo.Image[Index].Delete(n);
+    end;
+  end;
+begin
+  Index := GetImageIndex(Flip, Invert, Rotate);
+
+  Reset;
+  while SetImages do
+    Dst.Assign(Src);
+
+  if Rotate then
+  begin
+    Reset;
+    while SetImages do
+      Dst.Rotate90;
+  end;
+
+  if Flip then
+  begin
+    Reset;
+    while SetImages do
+      Dst.FlipHorz;
+  end;
+
+  if Invert then
+  begin
+    Reset;
+    while SetImages do
+      Dst.FlipVert;
+  end;
 end;
 
 { TMetaObjects }
