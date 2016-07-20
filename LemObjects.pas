@@ -39,7 +39,7 @@ type
 
 
   public
-    MetaObj        : TMetaObject;
+    MetaObj        : TMetaObjectInterface;
     Obj            : TInteractiveObject;
     Frames         : TBitmaps;
 
@@ -135,8 +135,8 @@ implementation
 constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject; Images: TBitmaps);
 begin
   Obj := ObjParam;
-  MetaObj := MetaParam;
-  Frames := Images;
+  MetaObj := MetaParam.GetInterface(IsFlipImage, IsUpsideDown, false);
+  Frames := MetaObj.Images;
 
   // Legacy code for old hatches, that haven't set a proper trigger area
   if      (MetaObj.TriggerEffect = DOM_WINDOW)
@@ -165,13 +165,13 @@ begin
 
   // Set CurrentFrame
   if MetaObj.RandomStartFrame then
-    CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1){ + i}) mod MetaObj.AnimationFrameCount
+    CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1){ + i}) mod MetaObj.FrameCount
   else if MetaObj.TriggerEffect = DOM_PICKUP then
     CurrentFrame := Obj.Skill + 1
   else if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
     CurrentFrame := 1
   else
-    CurrentFrame := MetaObj.PreviewFrameIndex;
+    CurrentFrame := MetaObj.PreviewFrame;
 
   if (MetaObj.TriggerEffect = DOM_FLIPPER) then
     if ((Obj.DrawingFlags and odf_FlipLem) <> 0) then
@@ -310,7 +310,7 @@ end;
 
 function TInteractiveObjectInfo.GetAnimationFrameCount: Integer;
 begin
-  Result := MetaObj.AnimationFrameCount;
+  Result := MetaObj.FrameCount;
 end;
 
 function TInteractiveObjectInfo.GetPreassignedSkills: Integer;

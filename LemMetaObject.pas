@@ -44,9 +44,9 @@ const
   ALIGNMENT_COUNT = 8; // 4 possible combinations of Flip + Invert + Rotate
 
 type
-  {-------------------------------------------------------------------------------
-    This class describes interactive objects
-  -------------------------------------------------------------------------------}
+
+  TMetaObjectInterface = class;  // predefinition so it can be used in TMetaObject despite being defined later
+
   TMetaObjectSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
   TObjectVariableProperties = record // For properties that vary based on flip / invert
@@ -59,15 +59,22 @@ type
     TriggerHeight: Integer;
     Resizability:  TMetaObjectSizeSetting;
   end;
+  PObjectVariableProperties = ^TObjectVariableProperties;
+
+  TMetaObjectProperty = (ov_Frames, ov_Width, ov_Height, ov_TriggerLeft, ov_TriggerTop,
+                         ov_TriggerWidth, ov_TriggerHeight, ov_TriggerEffect,
+                         ov_KeyFrame, ov_PreviewFrame, ov_SoundEffect);
+                         // Integer properties only.
 
   TMetaObject = class
-  private
   protected
     fGS    : String;
     fPiece  : String;
     fVariableInfo: array[0..ALIGNMENT_COUNT-1] of TObjectVariableProperties;
     fGeneratedVariableInfo: array[0..ALIGNMENT_COUNT-1] of Boolean;
-    fAnimationFrameCount          : Integer; // number of animations
+    fGeneratedVariableImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
+    fInterfaces: array[0..ALIGNMENT_COUNT-1] of TMetaObjectInterface;
+    fFrameCount                   : Integer; // number of animations
     fWidth                        : Integer; // the width of the bitmap
     fHeight                       : Integer; // the height of the bitmap
     fTriggerLeft                  : Integer; // x-offset of triggerarea (if triggered)
@@ -75,41 +82,89 @@ type
     fTriggerWidth                 : Integer; // width of triggerarea (if triggered)
     fTriggerHeight                : Integer; // height of triggerarea (if triggered)
     fTriggerEffect                : Integer; // ote_xxxx see dos doc
-    fTriggerNext                  : Integer;
+    fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : Integer; // ose_xxxx what sound to play
     fRandomStartFrame             : Boolean;
     fResizability                 : TMetaObjectSizeSetting;
     function GetIdentifier: String;
-    function GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
+    function GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TMetaObjectSizeSetting): Boolean;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
     function GetVariableInfo(Flip, Invert, Rotate: Boolean): TObjectVariableProperties;
     procedure EnsureVariationMade(Flip, Invert, Rotate: Boolean);
     procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
-    procedure MarkAllUnmade;
+    function GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TMetaObjectProperty): Integer;
+    procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TMetaObjectProperty; aValue: Integer);
+    function GetResizability(Flip, Invert, Rotate: Boolean): TMetaObjectSizeSetting;
+    procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TMetaObjectSizeSetting);
+    function GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
   public
-    procedure Assign(Source: TMetaObject);
     constructor Create;
     destructor Destroy; override;
-  published
+
+    function GetInterface(Flip, Invert, Rotate: Boolean): TMetaObjectInterface;
+
+    procedure Assign(Source: TMetaObject);
+
+    procedure MarkAllUnmade;
+    procedure MarkMetaDataUnmade;
+
     property Identifier : String read GetIdentifier;
     property GS     : String read fGS write fGS;
     property Piece  : String read fPiece write fPiece;
-    property AnimationFrameCount      : Integer read fAnimationFrameCount write fAnimationFrameCount;
-    property Width                    : Integer read fWidth write fWidth;
-    property Height                   : Integer read fHeight write fHeight;
-    property TriggerLeft              : Integer read fTriggerLeft write fTriggerLeft;
-    property TriggerTop               : Integer read fTriggerTop write fTriggerTop;
-    property TriggerWidth             : Integer read fTriggerWidth write fTriggerWidth;
-    property TriggerHeight            : Integer read fTriggerHeight write fTriggerHeight;
-    property TriggerEffect            : Integer read fTriggerEffect write fTriggerEffect;
-    property TriggerNext              : Integer read fTriggerNext write fTriggerNext;
-    property PreviewFrameIndex        : Integer read fPreviewFrameIndex write fPreviewFrameIndex;
-    property SoundEffect              : Integer read fSoundEffect write fSoundEffect;
-    property RandomStartFrame         : Boolean read fRandomStartFrame write fRandomStartFrame;
-    property Resizability             : TMetaObjectSizeSetting read fResizability write fResizability;
-    property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
-    property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
+
+    property Images[Flip, Invert, Rotate: Boolean]: TBitmaps read GetImages;
+
+    property Width[Flip, Invert, Rotate: Boolean]        : Integer index ov_Width read GetVariableProperty;
+    property Height[Flip, Invert, Rotate: Boolean]       : Integer index ov_Height read GetVariableProperty;
+    property TriggerLeft[Flip, Invert, Rotate: Boolean]  : Integer index ov_TriggerLeft read GetVariableProperty write SetVariableProperty;
+    property TriggerTop[Flip, Invert, Rotate: Boolean]   : Integer index ov_TriggerTop read GetVariableProperty write SetVariableProperty;
+    property TriggerWidth[Flip, Invert, Rotate: Boolean] : Integer index ov_TriggerWidth read GetVariableProperty write SetVariableProperty;
+    property TriggerHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_TriggerHeight read GetVariableProperty write SetVariableProperty;
+    
+    property Resizability[Flip, Invert, Rotate: Boolean]: TMetaObjectSizeSetting read GetResizability write SetResizability;
+    property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
+    property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
+  end;
+
+  TMetaObjectInterface = class
+    // This is basically an abstraction layer for the flip, invert, rotate seperations. Instead of having to
+    // specify them every time the TMetaObject is referenced, a TMetaObjectInterface created for that specific
+    // combination of TMetaObject and orientation settings can be used, making the code tidier.
+    private
+      fMetaObject: TMetaObject;
+      fFlip: Boolean;
+      fInvert: Boolean;
+      fRotate: Boolean;
+      function GetIntegerProperty(aProp: TMetaObjectProperty): Integer;
+      procedure SetIntegerProperty(aProp: TMetaObjectProperty; aValue: Integer);
+      function GetRandomStartFrame: Boolean;
+      procedure SetRandomStartFrame(aValue: Boolean);
+      function GetResizability: TMetaObjectSizeSetting;
+      procedure SetResizability(aValue: TMetaObjectSizeSetting);
+      function GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
+      function GetImages: TBitmaps;
+    public
+      constructor Create(aMetaObject: TMetaObject; Flip, Invert, Rotate: Boolean);
+
+      property Images: TBitmaps read GetImages;
+
+      property FrameCount: Integer index ov_Frames read GetIntegerProperty write SetIntegerProperty;
+      property Width: Integer index ov_Width read GetIntegerProperty;
+      property Height: Integer index ov_Height read GetIntegerProperty;
+      property TriggerLeft: Integer index ov_TriggerLeft read GetIntegerProperty write SetIntegerProperty;
+      property TriggerTop: Integer index ov_TriggerTop read GetIntegerProperty write SetIntegerProperty;
+      property TriggerWidth: Integer index ov_TriggerWidth read GetIntegerProperty write SetIntegerProperty;
+      property TriggerHeight: Integer index ov_TriggerHeight read GetIntegerProperty write SetIntegerProperty;
+      property TriggerEffect: Integer index ov_TriggerEffect read GetIntegerProperty write SetIntegerProperty;
+      property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
+      property PreviewFrame: Integer index ov_PreviewFrame read GetIntegerProperty write SetIntegerProperty;
+      property RandomStartFrame: Boolean read GetRandomStartFrame write SetRandomStartFrame;
+      property SoundEffect: Integer index ov_SoundEffect read GetIntegerProperty write SetIntegerProperty; // though sound effect shouldn't really be an integer, but we'll leave it as one until this new system works overall
+
+      property Resizability             : TMetaObjectSizeSetting read GetResizability write SetResizability;
+      property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
+      property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
   end;
 
   TMetaObjects = class(TObjectList)
@@ -125,13 +180,19 @@ type
 
 implementation
 
+{uses
+  LemObjects;} //for the DOM_ constants
+
 constructor TMetaObject.Create;
 var
   i: Integer;
 begin
   inherited;
   for i := 0 to ALIGNMENT_COUNT-1 do
+  begin
     fVariableInfo[i].Image := TBitmaps.Create(true);
+    fInterfaces[i] := nil;
+  end;
 end;
 
 destructor TMetaObject.Destroy;
@@ -139,7 +200,10 @@ var
   i: Integer;
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
+  begin
     fVariableInfo[i].Image.Free;
+    fInterfaces[i].Free;
+  end;
   inherited;
 end;
 
@@ -157,12 +221,16 @@ begin
   Result := LowerCase(fGS + ':' + fPiece);
 end;
 
-function TMetaObject.GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
+function TMetaObject.GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TMetaObjectSizeSetting): Boolean;
+var
+  i: Integer;
 begin
-  if fResizability = mos_none then
+  EnsureVariationMade(Flip, Invert, Rotate);
+  i := GetImageIndex(Flip, Invert, Rotate);
+  if fVariableInfo[i].Resizability = mos_none then
     Result := false
   else
-    Result := (aDir = fResizability) or (fResizability = mos_Both);
+    Result := (aDir = fVariableInfo[i].Resizability) or (fVariableInfo[i].Resizability = mos_Both);
 end;
 
 function TMetaObject.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -175,13 +243,25 @@ end;
 
 function TMetaObject.GetVariableInfo(Flip, Invert, Rotate: Boolean): TObjectVariableProperties;
 begin
-  Result := fVariableInfo(GetImageIndex(Flip, Invert, Rotate));
+  Result := fVariableInfo[GetImageIndex(Flip, Invert, Rotate)];
 end;
 
 procedure TMetaObject.MarkAllUnmade;
 var
   i: Integer;
 begin
+  for i := 0 to ALIGNMENT_COUNT-1 do
+  begin
+    fGeneratedVariableInfo[i] := false;
+    fGeneratedVariableImage[i] := false;
+  end;
+end;
+
+procedure TMetaObject.MarkMetaDataUnmade;
+var
+  i: Integer;
+begin
+  // There may be times where we want to wipe the metadata without wiping the images.
   for i := 0 to ALIGNMENT_COUNT-1 do
     fGeneratedVariableInfo[i] := false;
 end;
@@ -191,7 +271,7 @@ var
   i: Integer;
 begin
   i := GetImageIndex(Flip, Invert, Rotate);
-  if not fGeneratedVariableInfo[i] then
+  if not (fGeneratedVariableInfo[i] and fGeneratedVariableImage[i]) then
     DeriveVariation(Flip, Invert, Rotate);
 end;
 
@@ -201,6 +281,22 @@ var
   i: Integer;
 
   Src, Dst: TBitmap32;
+  SrcRec: TObjectVariableProperties;
+  DstRec: PObjectVariableProperties;
+
+  TempInt: Integer;
+
+const
+  NO_POSITION_ADJUST = [7, 8, 19]; // OWL, OWR, OWD arrows
+
+  procedure CloneInfo(Src, Dst: PObjectVariableProperties);
+  var
+    BitmapRef: TBitmaps;
+  begin
+    BitmapRef := Dst.Image;
+    Dst^ := Src^;
+    Dst.Image := BitmapRef;
+  end;
 
   procedure Reset;
   begin
@@ -211,22 +307,40 @@ var
   var
     n: Integer;
   begin
-    Result := i < fVariableInfo.Image[0].Count;
+    if fGeneratedVariableImage[Index] then
+    begin
+      Result := false;
+      Exit;
+    end;
+
+    Result := i < fVariableInfo[0].Image.Count;
     if Result then
     begin
-      Src := fVariableInfo.Image[0][i];
-      if i < fVariableInfo.Image[Index].Count then
-        Dst := fVariableInfo.Image[Index].Add
-      else
-        Dst := fVariableInfo.Image[Index][i];
+      Src := fVariableInfo[0].Image[i];
+      if i < fVariableInfo[Index].Image.Count then
+      begin
+        Dst := TBitmap32.Create;
+        fVariableInfo[Index].Image.Add(Dst);
+      end else
+        Dst := fVariableInfo[Index].Image[i];
       Inc(i);
     end else begin
-      for n := fVariableInfo.Image[Index].Count-1 downto i do
-        fVariableInfo.Image[Index].Delete(n);
+      for n := fVariableInfo[Index].Image.Count-1 downto i do
+        fVariableInfo[Index].Image.Delete(n);
     end;
   end;
 begin
   Index := GetImageIndex(Flip, Invert, Rotate);
+
+  fGeneratedVariableImage[Index] := true;
+  fGeneratedVariableInfo[Index] := true;
+
+  if Index = 0 then Exit;
+
+  SrcRec := fVariableInfo[0];
+  DstRec := @fVariableInfo[Index];
+
+  CloneInfo(@SrcRec, DstRec);
 
   Reset;
   while SetImages do
@@ -237,6 +351,26 @@ begin
     Reset;
     while SetImages do
       Dst.Rotate90;
+
+    // Swap width / height
+    DstRec.Width := SrcRec.Height;
+    DstRec.Height := SrcRec.Width;
+
+    // Swap and adjust trigger area coordinates / dimensions
+    DstRec.TriggerLeft := SrcRec.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
+    DstRec.TriggerTop := SrcRec.TriggerLeft - SrcRec.TriggerWidth;
+    if not (fTriggerEffect in NO_POSITION_ADJUST) then
+    begin
+      DstRec.TriggerLeft := DstRec.TriggerLeft + 4;
+      DstRec.TriggerTop := DstRec.TriggerTop + 5;
+    end;
+    DstRec.TriggerWidth := SrcRec.TriggerHeight;
+    DstRec.TriggerHeight := SrcRec.TriggerWidth;
+
+    if SrcRec.Resizability = mos_Horizontal then
+      DstRec.Resizability := mos_Vertical
+    else if SrcRec.Resizability = mos_Vertical then
+      DstRec.Resizability := mos_Horizontal;
   end;
 
   if Flip then
@@ -244,6 +378,9 @@ begin
     Reset;
     while SetImages do
       Dst.FlipHorz;
+
+    // Flip trigger area X coordinate
+    DstRec.TriggerLeft := SrcRec.Width - SrcRec.TriggerLeft - SrcRec.TriggerWidth;
   end;
 
   if Invert then
@@ -251,7 +388,164 @@ begin
     Reset;
     while SetImages do
       Dst.FlipVert;
+
+    // Flip and adjust trigger area Y coordinate
+    DstRec.TriggerTop := SrcRec.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
+    if not (fTriggerEffect in NO_POSITION_ADJUST) then
+      DstRec.TriggerTop := DstRec.TriggerTop + 9;
   end;
+end;
+
+function TMetaObject.GetInterface(Flip, Invert, Rotate: Boolean): TMetaObjectInterface;
+var
+  i: Integer;
+begin
+  i := GetImageIndex(Flip, Invert, Rotate);
+  if fInterfaces[i] = nil then
+    fInterfaces[i] := TMetaObjectInterface.Create(self, Flip, Invert, Rotate);
+  Result := fInterfaces[i];
+end;
+
+function TMetaObject.GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TMetaObjectProperty): Integer;
+var
+  i: Integer;
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  i := GetImageIndex(Flip, Invert, Rotate);
+  with fVariableInfo[i] do
+    case aProp of
+      ov_Width: Result := Width;
+      ov_Height: Result := Height;
+      ov_TriggerLeft: Result := TriggerLeft;
+      ov_TriggerTop: Result := TriggerTop;
+      ov_TriggerWidth: Result := TriggerWidth;
+      ov_TriggerHeight: Result := TriggerHeight;
+    end;
+end;
+
+procedure TMetaObject.SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TMetaObjectProperty; aValue: Integer);
+var
+  i: Integer;
+begin
+  // In practice we should only ever write to the standard orientation. But here isn't the place
+  // to restrict that.
+  EnsureVariationMade(Flip, Invert, Rotate);
+  i := GetImageIndex(Flip, Invert, Rotate);
+  with fVariableInfo[i] do
+    case aProp of
+      ov_TriggerLeft: TriggerLeft := aValue;
+      ov_TriggerTop: TriggerTop := aValue;
+      ov_TriggerWidth: TriggerWidth := aValue;
+      ov_TriggerHeight: TriggerHeight := aValue;
+    end;
+  MarkMetaDataUnmade;
+end;
+
+function TMetaObject.GetResizability(Flip, Invert, Rotate: Boolean): TMetaObjectSizeSetting;
+var
+  i: Integer;
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  i := GetImageIndex(Flip, Invert, Rotate);
+  Result := fVariableInfo[i].Resizability;
+end;
+
+procedure TMetaObject.SetResizability(Flip, Invert, Rotate: Boolean; aValue: TMetaObjectSizeSetting);
+var
+  i: Integer;
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  i := GetImageIndex(Flip, Invert, Rotate);
+  fVariableInfo[i].Resizability := aValue;
+end;
+
+function TMetaObject.GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+var
+  i: Integer;
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  i := GetImageIndex(Flip, Invert, Rotate);
+  Result := fVariableInfo[i].Image;
+end;
+
+{ TMetaObjectInterface }
+
+constructor TMetaObjectInterface.Create(aMetaObject: TMetaObject; Flip, Invert, Rotate: Boolean);
+begin
+  inherited Create;
+  fMetaObject := aMetaObject;
+  fFlip := Flip;
+  fInvert := Invert;
+  fRotate := Rotate;
+end;
+
+function TMetaObjectInterface.GetIntegerProperty(aProp: TMetaObjectProperty): Integer;
+begin
+  // Access via properties where these exist to discriminate orientations (after all, that's the whole
+  // point of the TMetaObjectInterface abstraction layer :P ). Otherwise, access the fields directly.
+  case aProp of
+    ov_Frames: Result := fMetaObject.fFrameCount;
+    ov_Width: Result := fMetaObject.Width[fFlip, fInvert, fRotate];
+    ov_Height: Result := fMetaObject.Height[fFlip, fInvert, fRotate];
+    ov_TriggerLeft: Result := fMetaObject.TriggerLeft[fFlip, fInvert, fRotate];
+    ov_TriggerTop: Result := fMetaObject.TriggerTop[fFlip, fInvert, fRotate];
+    ov_TriggerWidth: Result := fMetaObject.TriggerWidth[fFlip, fInvert, fRotate];
+    ov_TriggerHeight: Result := fMetaObject.TriggerHeight[fFlip, fInvert, fRotate];
+    ov_TriggerEffect: Result := fMetaObject.fTriggerEffect;
+    ov_KeyFrame: Result := fMetaObject.fKeyFrame;
+    ov_PreviewFrame: Result := fMetaObject.fPreviewFrameIndex;
+    ov_SoundEffect: Result := fMetaObject.fSoundEffect;
+    else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
+  end;
+end;
+
+procedure TMetaObjectInterface.SetIntegerProperty(aProp: TMetaObjectProperty; aValue: Integer);
+begin
+  case aProp of
+    ov_TriggerLeft: fMetaObject.TriggerLeft[fFlip, fInvert, fRotate] := aValue;
+    ov_TriggerTop: fMetaObject.TriggerTop[fFlip, fInvert, fRotate] := aValue;
+    ov_TriggerWidth: fMetaObject.TriggerWidth[fFlip, fInvert, fRotate] := aValue;
+    ov_TriggerHeight: fMetaObject.TriggerHeight[fFlip, fInvert, fRotate] := aValue;
+    ov_TriggerEffect: fMetaObject.fTriggerEffect := aValue;
+    ov_KeyFrame: fMetaObject.fKeyFrame := aValue;
+    ov_PreviewFrame: fMetaObject.fPreviewFrameIndex := aValue;
+    ov_SoundEffect: fMetaObject.fSoundEffect := aValue;
+    else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
+  end;
+end;
+
+function TMetaObjectInterface.GetRandomStartFrame: Boolean;
+begin
+  Result := fMetaObject.fRandomStartFrame;
+end;
+
+procedure TMetaObjectInterface.SetRandomStartFrame(aValue: Boolean);
+begin
+  fMetaObject.fRandomStartFrame := aValue;
+end;
+
+function TMetaObjectInterface.GetResizability: TMetaObjectSizeSetting;
+begin
+  Result := fMetaObject.Resizability[fFlip, fInvert, fRotate];
+end;
+
+procedure TMetaObjectInterface.SetResizability(aValue: TMetaObjectSizeSetting);
+begin
+  fMetaObject.Resizability[fFlip, fInvert, fRotate] := aValue;
+end;
+
+function TMetaObjectInterface.GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
+begin
+  Result := false;
+  case aDir of
+    mos_Horizontal: Result := fMetaObject.CanResizeHorizontal[fFlip, fInvert, fRotate];
+    mos_Vertical: Result := fMetaObject.CanResizeVertical[fFlip, fInvert, fRotate];
+  end;
+end;
+
+function TMetaObjectInterface.GetImages: TBitmaps;
+begin
+  Result := fMetaObject.Images[fFlip, fInvert, fRotate];
 end;
 
 { TMetaObjects }
