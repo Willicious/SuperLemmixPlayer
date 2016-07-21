@@ -252,6 +252,9 @@ begin
           if Line.Keyword = 'ONLY_ON_TERRAIN' then
             O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
 
+          if Line.Keyword = 'ROTATE' then
+            O.DrawingFlags := O.DrawingFlags or odf_Rotate;
+
           if Line.Keyword = 'FLIP_HORIZONTAL' then
             O.DrawingFlags := O.DrawingFlags or odf_Flip;
 
@@ -544,6 +547,8 @@ begin
           Add('  NO_OVERWRITE');
         if O.DrawingFlags and odf_OnlyOnTerrain <> 0 then
           Add('  ONLY_ON_TERRAIN');
+        if O.DrawingFlags and odf_Rotate <> 0 then
+          Add('  ROTATE');
         if O.DrawingFlags and odf_Flip <> 0 then
           Add('  FLIP_HORIZONTAL');
         if O.DrawingFlags and odf_UpsideDown <> 0 then

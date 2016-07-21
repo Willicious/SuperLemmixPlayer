@@ -15,6 +15,7 @@ const
   odf_FlipLem       = 8;
   odf_Invisible     = 32;
   odf_Flip          = 64;            // Better name: odf_FlipImage
+  odf_Rotate        = 128;
 
 type
   TInteractiveObjectClass = class of TInteractiveObject;

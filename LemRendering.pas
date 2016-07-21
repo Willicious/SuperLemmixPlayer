@@ -551,7 +551,7 @@ begin
   FindLabel := O.GS + ':' + O.Piece;
   MO := fPieceManager.Objects[FindLabel];
   df := O.DrawingFlags;
-  Result := MO.GetInterface(df and 64 <> 0, df and 2 <> 0, df and 128 <> 0);
+  Result := MO.GetInterface(df and odf_Flip <> 0, df and odf_UpsideDown <> 0, df and odf_Rotate <> 0);
 end;
 
 function TRenderer.FindMetaTerrain(T: TTerrain): TMetaTerrain;

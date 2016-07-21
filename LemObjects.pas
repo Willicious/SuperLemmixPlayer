@@ -34,6 +34,7 @@ type
     function GetIsFlipPhysics: Boolean;
     function GetIsInvisible: Boolean;
     function GetIsFlipImage: Boolean;
+    function GetIsRotate: Boolean;
     function GetAnimationFrameCount: Integer;
     function GetPreassignedSkills: Integer;
 
@@ -68,6 +69,7 @@ type
     property IsFlipPhysics: Boolean read GetIsFlipPhysics;      // ... and 8
     property IsInvisible: Boolean read GetIsInvisible;          // ... and 32
     property IsFlipImage: Boolean read GetIsFlipImage;          // ... and 64
+    property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
     property SoundEffect: Integer read GetSoundEffect;
     property PreassignedSkills: Integer read GetPreassignedSkills;
@@ -285,32 +287,37 @@ end;
 
 function TInteractiveObjectInfo.GetIsOnlyOnTerrain: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and 1) <> 0);
+  Result := ((Obj.DrawingFlags and odf_OnlyOnTerrain) <> 0);
 end;
 
 function TInteractiveObjectInfo.GetIsUpsideDown: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and 2) <> 0);
+  Result := ((Obj.DrawingFlags and odf_UpsideDown) <> 0);
 end;
 
 function TInteractiveObjectInfo.GetIsNoOverwrite: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and 4) <> 0);
+  Result := ((Obj.DrawingFlags and odf_NoOverwrite) <> 0);
 end;
 
 function TInteractiveObjectInfo.GetIsFlipPhysics: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and 8) <> 0);
+  Result := ((Obj.DrawingFlags and odf_FlipLem) <> 0);
 end;
 
 function TInteractiveObjectInfo.GetIsInvisible: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and 32) <> 0);
+  Result := ((Obj.DrawingFlags and odf_Invisible) <> 0);
 end;
 
 function TInteractiveObjectInfo.GetIsFlipImage: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and 64) <> 0);
+  Result := ((Obj.DrawingFlags and odf_Flip) <> 0);
+end;
+
+function TInteractiveObjectInfo.GetIsRotate: Boolean;
+begin
+  Result := ((Obj.DrawingFlags and odf_Rotate) <> 0);
 end;
 
 function TInteractiveObjectInfo.GetAnimationFrameCount: Integer;

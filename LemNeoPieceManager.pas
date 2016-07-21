@@ -24,8 +24,6 @@ type
       fTheme: TNeoTheme;
       fTerrains: TMetaTerrains;
       fObjects: TMetaObjects;
-      //fTerrainImages: TBitmaps;
-      fObjectImages: TBitmapses;
 
       function GetTerrainCount: Integer;
       function GetObjectCount: Integer;
@@ -35,12 +33,8 @@ type
       function ObtainTerrain(Identifier: String): Integer;
       function ObtainObject(Identifier: String): Integer;
 
-      //function GetTerrain(Identifier: String): TMetaTerrain;
-      //function GetObject(Identifier: String): TMetaObject;
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TMetaObject;
-      //function GetTerrainBitmap(Identifier: String): TBitmap32;
-      //function GetObjectBitmaps(Identifier: String): TBitmaps;
       function GetThemeColor(Index: String): TColor32;
 
       property TerrainCount: Integer read GetTerrainCount;
@@ -99,8 +93,6 @@ begin
   inherited;
   fTerrains := TMetaTerrains.Create;
   fObjects := TMetaObjects.Create;
-  //fTerrainImages := TBitmaps.Create(true);
-  fObjectImages := TBitmapses.Create(true);
   fTheme := nil;
 end;
 
@@ -108,8 +100,6 @@ destructor TNeoPieceManager.Destroy;
 begin
   fTerrains.Free;
   fObjects.Free;
-  //fTerrainImages.Free;
-  fObjectImages.Free;
   inherited;
 end;
 
@@ -119,8 +109,6 @@ procedure TNeoPieceManager.Tidy;
 begin
   fTerrains.Clear;
   fObjects.Clear;
-  //fTerrainImages.Clear;
-  fObjectImages.Clear;
 end;
 
 // Quick shortcuts to get number of pieces currently present

@@ -33,7 +33,8 @@
  OBJECT
   SET fire
   PIECE exit
-  X 376
+  ROTATE
+  X 335
   Y 72
 
  OBJECT
