@@ -765,11 +765,6 @@ var
     DrawFrame := Min(Inf.CurrentFrame, Inf.AnimationFrameCount-1);
     TempBitmap.Assign(Inf.Frames[DrawFrame]);
 
-    if Inf.IsUpsideDown then
-      TempBitmap.FlipVert;
-    if Inf.IsFlipImage then
-      TempBitmap.FlipHorz;
-
     PrepareObjectBitmap(TempBitmap, Inf.Obj.DrawingFlags, Inf.ZombieMode);
 
     MO := Inf.MetaObj;

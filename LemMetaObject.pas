@@ -397,6 +397,7 @@ end;
 
 function TMetaObject.GetVariableInfo(Flip, Invert, Rotate: Boolean): TObjectVariableProperties;
 begin
+  EnsureVariationMade(Flip, Invert, Rotate);
   Result := fVariableInfo[GetImageIndex(Flip, Invert, Rotate)];
 end;
 
@@ -440,6 +441,8 @@ var
 
   TempInt: Integer;
 
+  SkipImages: Boolean;
+
 const
   NO_POSITION_ADJUST = [7, 8, 19]; // OWL, OWR, OWD arrows
 
@@ -461,7 +464,7 @@ const
   var
     n: Integer;
   begin
-    if fGeneratedVariableImage[Index] then
+    if SkipImages then
     begin
       Result := false;
       Exit;
@@ -472,11 +475,11 @@ const
     begin
       Src := fVariableInfo[0].Image[i];
       if i < fVariableInfo[Index].Image.Count then
-      begin
+        Dst := fVariableInfo[Index].Image[i]
+      else begin
         Dst := TBitmap32.Create;
         fVariableInfo[Index].Image.Add(Dst);
-      end else
-        Dst := fVariableInfo[Index].Image[i];
+      end;
       Inc(i);
     end else begin
       for n := fVariableInfo[Index].Image.Count-1 downto i do
@@ -485,6 +488,8 @@ const
   end;
 begin
   Index := GetImageIndex(Flip, Invert, Rotate);
+
+  SkipImages := fGeneratedVariableImage[Index];
 
   fGeneratedVariableImage[Index] := true;
   fGeneratedVariableInfo[Index] := true;
