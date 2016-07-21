@@ -229,8 +229,8 @@ begin
   // TMetaObject itself takes care of this now, and TMetaObjectInterface hides needing to specify
   // the flip / etc every time.
 
-  X := MetaObj.TriggerLeft;
-  Y := MetaObj.TriggerTop;
+  X := X + MetaObj.TriggerLeft;
+  Y := Y + MetaObj.TriggerTop;
   W := MetaObj.TriggerWidth;
   H := MetaObj.TriggerHeight;
 
