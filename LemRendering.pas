@@ -120,7 +120,7 @@ type
     procedure DrawLevel(aDst: TBitmap32); overload;
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect); overload;
 
-    function FindMetaObject(O: TInteractiveObject): TObjectRecord;
+    function FindMetaObject(O: TInteractiveObject): TMetaObjectInterface;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
     procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
@@ -542,12 +542,16 @@ begin
   fAni.LemmingAnimations[STONED].DrawTo(fLayers[rlTerrain], X, Y);
 end;
 
-function TRenderer.FindMetaObject(O: TInteractiveObject): TObjectRecord;
+function TRenderer.FindMetaObject(O: TInteractiveObject): TMetaObjectInterface;
 var
   FindLabel: String;
+  MO: TMetaObject;
+  df: Integer;
 begin
   FindLabel := O.GS + ':' + O.Piece;
-  Result := fPieceManager.Objects[FindLabel];
+  MO := fPieceManager.Objects[FindLabel];
+  df := O.DrawingFlags;
+  Result := MO.GetInterface(df and 64 <> 0, df and 2 <> 0, df and 128 <> 0);
 end;
 
 function TRenderer.FindMetaTerrain(T: TTerrain): TMetaTerrain;
@@ -706,7 +710,7 @@ end;
 procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 var
   O: TInteractiveObject;
-  MO: TMetaObject;
+  MO: TMetaObjectInterface;
 
   DrawX, DrawY: Integer;
 begin
@@ -753,7 +757,7 @@ var
   procedure ProcessDrawFrame(aLayer: TRenderLayer);
   var
     CountX, CountY, iX, iY: Integer;
-    MO: TMetaObject;
+    MO: TMetaObjectInterface;
   begin
     if Inf.IsInvisible then Exit;
     if Inf.TriggerEffect in [13, 16, 25] then Exit;
@@ -946,7 +950,7 @@ var
   T: TTerrain;
   MT: TMetaTerrain;
   O: TInteractiveObject;
-  ORec: TObjectRecord;
+  MO: TMetaObjectInterface;
   S: TSteel;
   Bmp: TBitmap32;
 
@@ -967,31 +971,31 @@ var
     end;
   end;
 
-  procedure ApplyOWW(O: TInteractiveObject; ORec: TObjectRecord);
+  procedure ApplyOWW(O: TInteractiveObject; MO: TMetaObjectInterface);
   var
     C: TColor32;
 
     TW, TH: Integer;
   begin
-    case ORec.Meta.TriggerEffect of
+    case MO.TriggerEffect of
       7: C := PM_ONEWAYLEFT;
       8: C := PM_ONEWAYRIGHT;
       19: C := PM_ONEWAYDOWN;
       else Exit; // should never happen, but just in case
     end;
 
-    TW := ORec.Meta.TriggerWidth;
-    TH := ORec.Meta.TriggerHeight;
+    TW := MO.TriggerWidth;
+    TH := MO.TriggerHeight;
 
-    if ORec.Meta.CanResizeHorizontal then
-      TW := TW + (O.Width - ORec.Meta.Width);
-    if ORec.Meta.CanResizeVertical then
-      TH := TH + (O.Height - ORec.Meta.Height);
+    if MO.CanResizeHorizontal then
+      TW := TW + (O.Width - MO.Width);
+    if MO.CanResizeVertical then
+      TH := TH + (O.Height - MO.Height);
 
-    SetRegion( Rect(O.Left + ORec.Meta.TriggerLeft,
-                    O.Top + ORec.Meta.TriggerTop,
-                    O.Left + ORec.Meta.TriggerLeft + TW - 1,
-                    O.Top + ORec.Meta.TriggerTop + TH - 1),
+    SetRegion( Rect(O.Left + MO.TriggerLeft,
+                    O.Top + MO.TriggerTop,
+                    O.Left + MO.TriggerLeft + TW - 1,
+                    O.Top + MO.TriggerTop + TH - 1),
                C, 0);
   end;
 
@@ -1056,10 +1060,10 @@ begin
     for i := 0 to InteractiveObjects.Count-1 do
     begin
       O := InteractiveObjects[i];
-      ORec := FindMetaObject(O);
-      if not (ORec.Meta.TriggerEffect in [7, 8, 19]) then
+      MO := FindMetaObject(O);
+      if not (MO.TriggerEffect in [7, 8, 19]) then
         Continue;
-      ApplyOWW(O, ORec);
+      ApplyOWW(O, MO);
     end;
 
     for i := 0 to Steels.Count-1 do
@@ -1149,12 +1153,12 @@ procedure TRenderer.CreateInteractiveObjectList(var ObjInfList: TInteractiveObje
 var
   i: Integer;
   ObjInf: TInteractiveObjectInfo;
-  ORec: TObjectRecord;
+  MO: TMetaObjectInterface;
 begin
   for i := 0 to Inf.Level.InteractiveObjects.Count - 1 do
   begin
-    ORec := FindMetaObject(Inf.Level.InteractiveObjects[i]);
-    ObjInf := TInteractiveObjectInfo.Create(Inf.Level.InteractiveObjects[i], ORec.Meta, ORec.Image);
+    MO := FindMetaObject(Inf.Level.InteractiveObjects[i]);
+    ObjInf := TInteractiveObjectInfo.Create(Inf.Level.InteractiveObjects[i], MO);
 
     // Check whether trigger area intersects the level area
     if    (ObjInf.TriggerRect.Top > Inf.Level.Info.Height)

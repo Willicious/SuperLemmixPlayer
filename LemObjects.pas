@@ -50,7 +50,7 @@ type
 
     TwoWayReceive  : Boolean;
 
-    constructor Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject; Images: TBitmaps); Overload;
+    constructor Create(ObjParam: TInteractiveObject; MetaParam: TMetaObjectInterface); Overload;
 
     property TriggerRect: TRect read sTriggerRect;
     property Top: Integer read sTop write SetTop;
@@ -132,10 +132,10 @@ implementation
 
 
 { TInteractiveObjectInfo }
-constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObject; Images: TBitmaps);
+constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObjectInterface);
 begin
   Obj := ObjParam;
-  MetaObj := MetaParam.GetInterface(IsFlipImage, IsUpsideDown, false);
+  MetaObj := MetaParam;
   Frames := MetaObj.Images;
 
   // Legacy code for old hatches, that haven't set a proper trigger area
@@ -203,7 +203,7 @@ begin
 end;
 
 
-function TInteractiveObjectInfo.GetTriggerRect(): TRect;
+function TInteractiveObjectInfo.GetTriggerRect: TRect;
 // Note that the trigger area is only the inside of the TRect,
 // which by definition does not include the right and bottom line!
 var

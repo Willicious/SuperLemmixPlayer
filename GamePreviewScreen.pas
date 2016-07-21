@@ -64,7 +64,7 @@ var
       repeat
         i := i + 1;
         if i = GameParams.Level.InteractiveObjects.Count then i := 0;
-      until GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).Meta.TriggerEffect = 23;
+      until GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 23;
     end else begin
       i := LemsSpawned mod Length(GameParams.Level.Info.WindowOrder);
     end;
@@ -97,7 +97,7 @@ begin
     while LemsSpawned < Info.LemmingsCount do
     begin
       FindNextWindow;
-      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).Meta.TriggerEffect <> 23 then Continue;
+      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 23 then Continue;
       LemsSpawned := LemsSpawned + 1;
       if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
@@ -206,14 +206,14 @@ var
   MinCount : Integer;
   FoundWindow : Boolean;
   PieceID: Integer;
-  MO: TMetaObject;
+  MO: TMetaObjectInterface;
 begin
   FoundWindow := false;
   MinCount := aLevel.PreplacedLemmings.Count;
   for i := 0 to aLevel.InteractiveObjects.Count - 1 do
   begin
     //if aLevel.InteractiveObjects[i].Identifier = 1 then FoundWindow := true;
-    MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]).Meta;
+    MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]);
     if MO.TriggerEffect = 23 then FoundWindow := true;
   end;
   if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;

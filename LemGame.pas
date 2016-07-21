@@ -1769,14 +1769,14 @@ procedure TLemmingGame.SetObjectInfos;
 var
   i: Integer;
   Inf: TInteractiveObjectInfo;
-  ORec: TObjectRecord;
+  MO: TMetaObjectInterface;
 begin
   ObjectInfos.Clear;
 
   for i := 0 to Level.InteractiveObjects.Count - 1 do
   begin
-    ORec := fRenderer.FindMetaObject(Level.InteractiveObjects[i]);
-    Inf := TInteractiveObjectInfo.Create(Level.InteractiveObjects[i], ORec.Meta, ORec.Image);
+    MO := fRenderer.FindMetaObject(Level.InteractiveObjects[i]);
+    Inf := TInteractiveObjectInfo.Create(Level.InteractiveObjects[i], MO);
 
     ObjectInfos.Add(Inf);
 
@@ -5744,8 +5744,8 @@ begin
      or ((ObjInfo.TriggerEffect = DOM_TWOWAYTELE) and (ObjInfo.TwoWayReceive = True))
      or  (ObjInfo.TriggerEffect = DOM_SINGLETELE) then
   begin
-    if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) and (ObjInfo.MetaObj.TriggerNext = 0))
-       or ((ObjInfo.CurrentFrame + 1 = ObjInfo.MetaObj.TriggerNext) and (ObjInfo.MetaObj.TriggerNext <> 0)) then
+    if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) and (ObjInfo.MetaObj.KeyFrame = 0))
+       or ((ObjInfo.CurrentFrame + 1 = ObjInfo.MetaObj.KeyFrame) and (ObjInfo.MetaObj.KeyFrame <> 0)) then
     begin
       L.LemTeleporting := False; // Let lemming reappear
       ObjInfo.TeleLem := -1;
@@ -5888,8 +5888,8 @@ begin
     if     (Inf.TriggerEffect = DOM_TELEPORT)
        or ((Inf.TriggerEffect = DOM_TWOWAYTELE) and (Inf.TwoWayReceive = false)) then
     begin
-      if    ((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.TriggerNext = 0))
-         or ((Inf.CurrentFrame = Inf.MetaObj.TriggerNext) and (Inf.MetaObj.TriggerNext <> 0)) then
+      if    ((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.KeyFrame = 0))
+         or ((Inf.CurrentFrame = Inf.MetaObj.KeyFrame) and (Inf.MetaObj.KeyFrame <> 0)) then
       begin
         MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
         Inf2 := ObjectInfos[Inf.ReceiverId];

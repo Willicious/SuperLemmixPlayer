@@ -19,11 +19,6 @@ type
     Piece: String;
   end;
 
-  TObjectRecord = record
-    Meta: TMetaObject;
-    Image: TBitmaps;
-  end;
-
   TNeoPieceManager = class
     private
       fTheme: TNeoTheme;
@@ -41,11 +36,11 @@ type
       function ObtainObject(Identifier: String): Integer;
 
       //function GetTerrain(Identifier: String): TMetaTerrain;
-      function GetObject(Identifier: String): TObjectRecord;
+      //function GetObject(Identifier: String): TMetaObject;
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TMetaObject;
       //function GetTerrainBitmap(Identifier: String): TBitmap32;
-      function GetObjectBitmaps(Identifier: String): TBitmaps;
+      //function GetObjectBitmaps(Identifier: String): TBitmaps;
       function GetThemeColor(Index: String): TColor32;
 
       property TerrainCount: Integer read GetTerrainCount;
@@ -61,9 +56,7 @@ type
       procedure SetTheme(aTheme: TNeoTheme);
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
-      property Objects[Identifier: String]: TObjectRecord read GetObject;
-      property MetaObjects[Identifier: String]: TMetaObject read GetMetaObject;
-      property ObjectBitmaps[Identifier: String]: TBitmaps read GetObjectBitmaps;
+      property Objects[Identifier: String]: TMetaObject read GetMetaObject;
   end;
 
   function SplitIdentifier(Identifier: String): TLabelRecord;
@@ -250,7 +243,7 @@ var
   end;
 
 begin
-  ObjectLabel := SplitIdentifier(Identifier);
+  (*ObjectLabel := SplitIdentifier(Identifier);
   if not DirectoryExists(AppPath + SFStylesPieces + ObjectLabel.GS) then
     raise Exception.Create('TNeoPieceManager.ObtainTerrain: ' + ObjectLabel.GS + ' does not exist.');
   SetCurrentDir(AppPath + SFStylesPieces + ObjectLabel.GS + SFPiecesObjects);
@@ -360,21 +353,10 @@ begin
   with fObjectImages.Add do
     Generate(BMP, O.AnimationFrameCount);
 
-  BMP.Free;
+  BMP.Free;*)
 end;
 
 // Functions to get the metainfo
-
-function TNeoPieceManager.GetObject(Identifier: String): TObjectRecord;
-var
-  i: Integer;
-begin
-  i := FindObjectIndexByIdentifier(Identifier);
-  Result.Meta := fObjects[i];
-  Result.Image := fObjectImages[i];
-end;
-
-// And some for those cases where we only want one or the other
 
 function TNeoPieceManager.GetMetaTerrain(Identifier: String): TMetaTerrain;
 var
@@ -385,13 +367,11 @@ begin
 end;
 
 function TNeoPieceManager.GetMetaObject(Identifier: String): TMetaObject;
+var
+  i: Integer;
 begin
-  Result := GetObject(Identifier).Meta;
-end;
-
-function TNeoPieceManager.GetObjectBitmaps(Identifier: String): TBitmaps;
-begin
-  Result := GetObject(Identifier).Image;
+  i := FindObjectIndexByIdentifier(Identifier);
+  Result := fObjects[i];
 end;
 
 // And the stuff for communicating with the theme
