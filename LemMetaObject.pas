@@ -5,8 +5,9 @@ unit LemMetaObject;
 interface
 
 uses
-  GR32, LemTypes,
-  Classes, SysUtils,
+  GR32, LemTypes, LemNeoParser,
+  PngInterface, LemStrings, LemNeoTheme,
+  Classes, SysUtils, StrUtils,
   Contnrs, UTools;
 
 const
@@ -98,9 +99,12 @@ type
     function GetResizability(Flip, Invert, Rotate: Boolean): TMetaObjectSizeSetting;
     procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TMetaObjectSizeSetting);
     function GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+    procedure ClearImages;
   public
     constructor Create;
     destructor Destroy; override;
+
+    procedure Load(aCollection, aPiece: String; aTheme: TNeoTheme);
 
     function GetInterface(Flip, Invert, Rotate: Boolean): TMetaObjectInterface;
 
@@ -214,6 +218,156 @@ begin
 
   raise exception.Create('TMetaObject.Assign is not implemented!');
 
+end;
+
+procedure TMetaObject.ClearImages;
+var
+  i: Integer;
+begin
+  for i := 0 to ALIGNMENT_COUNT-1 do
+    fVariableInfo[i].Image.Clear;
+end;
+
+procedure TMetaObject.Load(aCollection,aPiece: String; aTheme: TNeoTheme);
+var
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+  O: TMetaObjectInterface;
+  BMP: TBitmap32;
+  MaskBMP: TBitmap32;
+
+  DoHorizontal: Boolean;
+
+  procedure LoadApplyMask;
+  var
+    MaskName, MaskColor: String;
+  begin
+    MaskName := '';
+    MaskColor := '';
+    repeat
+      Line := Parser.NextLine;
+
+      if Line.Keyword = 'COLOR' then
+        MaskColor := Line.Value;
+
+      if Line.Keyword = 'NAME' then
+        MaskName := Line.Value;
+    until (Line.Keyword <> 'COLOR') and (Line.Keyword <> 'NAME');
+
+    Parser.Back;
+
+    if Lowercase(MaskName) = '*self' then
+      TPngInterface.MaskImageFromImage(Bmp, Bmp, aTheme.Colors[MaskColor]) // yes, this works :D
+    else
+      TPngInterface.MaskImageFromFile(Bmp, aPiece + '_mask_' + MaskName + '.png', aTheme.Colors[MaskColor]);
+  end;
+begin
+  fGS := Lowercase(aCollection);
+  fPiece := Lowercase(aPiece);
+  O := GetInterface(false, false, false);
+
+  Parser := TNeoLemmixParser.Create;
+  BMP := TBitmap32.Create;
+  MaskBMP := nil; // only created if needed, but kept until procedure finishes in case its needed again
+  try
+    ClearImages;
+
+    if not DirectoryExists(AppPath + SFStylesPieces + aCollection) then
+    raise Exception.Create('TMetaObject.Load: Collection "' + aCollection + '" does not exist.');
+    SetCurrentDir(AppPath + SFStylesPieces + aCollection + SFPiecesObjects);
+
+    Parser.LoadFromFile(aPiece + '.nxob');
+    TPngInterface.LoadPngFile(aPiece + '.png', BMP);
+
+    DoHorizontal := false;
+
+    repeat
+      Line := Parser.NextLine;
+
+      // Trigger effects
+      if Line.Keyword = 'EXIT' then fTriggerEffect := 1;
+      if Line.Keyword = 'OWL_FIELD' then fTriggerEffect := 2;
+      if Line.Keyword = 'OWR_FIELD' then fTriggerEffect := 3;
+      if Line.Keyword = 'TRAP' then fTriggerEffect := 4;
+      if Line.Keyword = 'WATER' then fTriggerEffect := 5;
+      if Line.Keyword = 'FIRE' then fTriggerEffect := 6;
+      if Line.Keyword = 'OWL_ARROW' then fTriggerEffect := 7;
+      if Line.Keyword = 'OWR_ARROW' then fTriggerEffect := 8;
+      if Line.Keyword = 'TELEPORTER' then fTriggerEffect := 11;
+      if Line.Keyword = 'RECEIVER' then fTriggerEffect := 12;
+      if Line.Keyword = 'LEMMING' then fTriggerEffect := 13;
+      if Line.Keyword = 'PICKUP' then fTriggerEffect := 14;
+      if Line.Keyword = 'LOCKED_EXIT' then fTriggerEffect := 15;
+      if Line.Keyword = 'BUTTON' then fTriggerEffect := 17;
+      if Line.Keyword = 'RADIATION' then fTriggerEffect := 18;
+      if Line.Keyword = 'OWD_ARROW' then fTriggerEffect := 19;
+      if Line.Keyword = 'UPDRAFT' then fTriggerEffect := 20;
+      if Line.Keyword = 'SPLITTER' then fTriggerEffect := 21;
+      if Line.Keyword = 'SLOWFREEZE' then fTriggerEffect := 22;
+      if Line.Keyword = 'WINDOW' then fTriggerEffect := 23;
+      if Line.Keyword = 'ANIMATION' then fTriggerEffect := 24;
+      if Line.Keyword = 'HINT' then fTriggerEffect := 25;
+      if Line.Keyword = 'ANTISPLAT' then fTriggerEffect := 26;
+      if Line.Keyword = 'SPLAT' then fTriggerEffect := 27;
+      if Line.Keyword = 'BACKGROUND' then fTriggerEffect := 30;
+      if Line.Keyword = 'TRAP_ONCE' then fTriggerEffect := 31;
+
+      if Line.Keyword = 'FRAMES' then
+        fFrameCount := Line.Numeric;
+
+      if Line.Keyword = 'HORIZONTAL' then
+        DoHorizontal := true;
+
+      if Line.Keyword = 'TRIGGER_X' then
+        O.TriggerLeft := Line.Numeric;
+
+      if Line.Keyword = 'TRIGGER_Y' then
+        O.TriggerTop := Line.Numeric;
+
+      if Line.Keyword = 'TRIGGER_W' then
+        O.TriggerWidth := Line.Numeric;
+
+      if Line.Keyword = 'TRIGGER_H' then
+        O.TriggerHeight := Line.Numeric;
+
+      if Line.Keyword = 'SOUND' then
+        fSoundEffect := Line.Numeric;
+
+      if Line.Keyword = 'PREVIEW' then
+        fPreviewFrameIndex := Line.Numeric;
+
+      if Line.Keyword = 'KEYFRAME' then
+        fKeyFrame := Line.Numeric;
+
+      if Line.Keyword = 'RANDOM_FRAME' then
+        fRandomStartFrame := true;
+
+      if Line.Keyword = 'RESIZE' then
+      begin
+        if Lowercase(LeftStr(Line.Value, 3)) = 'hor' then  // kludgy, but allows both "horz" and "horizontal" and similar variations
+          O.Resizability := mos_Horizontal;
+        if Lowercase(LeftStr(Line.Value, 4)) = 'vert' then
+          O.Resizability := mos_Vertical;
+        if Lowercase(Line.Value) = 'both' then
+          O.Resizability := mos_Both;
+        if Lowercase(Line.Value) = 'none' then
+          O.Resizability := mos_None;
+      end;
+
+      if Line.Keyword = 'MASK' then
+        LoadApplyMask;
+    until Line.Keyword = '';
+
+    O.Images.Generate(BMP, fFrameCount, DoHorizontal);
+
+    fVariableInfo[0].Width := O.Images[0].Width;   //TMetaObjectInterface's Width property is read-only
+    fVariableInfo[0].Height := O.Images[0].Height;
+
+  finally
+    Parser.Free;
+    BMP.Free;
+    if MaskBMP <> nil then MaskBMP.Free;
+  end;
 end;
 
 function TMetaObject.GetIdentifier: String;

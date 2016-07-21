@@ -76,7 +76,7 @@ type
   public
     function Add(Item: TBitmap32): Integer;
     procedure Insert(Index: Integer; Item: TBitmap32);
-    procedure Generate(Src: TBitmap32; Frames: Integer);
+    procedure Generate(Src: TBitmap32; Frames: Integer; Horizontal: Boolean = false);
     property Items[Index: Integer]: TBitmap32 read GetItem; default;
     property List;
   published
@@ -591,22 +591,29 @@ begin
   inherited Insert(Index, Item);
 end;
 
-procedure TBitmaps.Generate(Src: TBitmap32; Frames: Integer);
+procedure TBitmaps.Generate(Src: TBitmap32; Frames: Integer; Horizontal: Boolean = false);
 var
   BMP: TBitmap32;
   i: Integer;
   w, h: Integer;
+  sx, sy: Integer;
 begin
   Clear;
   w := Src.Width;
   h := Src.Height div Frames;
+  sx := 0;
+  sy := 0;
   for i := 0 to Frames-1 do
   begin
     BMP := TBitmap32.Create;
     Add(BMP);
     BMP.SetSize(w, h);
     BMP.Clear(0);
-    Src.DrawTo(BMP, Rect(0, 0, w, h), Rect(0, h*i, w, (i+1)*h));
+    Src.DrawTo(BMP, Rect(0, 0, w, h), Rect(sx, sy, sx+w, sy+h));
+    if Horizontal then
+      Inc(sx, w)
+    else
+      Inc(sy, h);
   end;
 end;
 
