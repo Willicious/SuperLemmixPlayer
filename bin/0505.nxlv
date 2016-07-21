@@ -36,6 +36,14 @@
   ROTATE
   X 335
   Y 72
+  
+ OBJECT
+   SET fire
+   PIECE flamethrower
+   ROTATE
+   INVERT
+   X 200
+   Y 8
 
  OBJECT
   SET fire
