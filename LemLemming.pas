@@ -49,6 +49,7 @@ type
   TLemming = class
   private
     function CheckForPermanentSkills: Boolean;
+    function GetPosition: TPoint;
   public
   { misc sized }
     LemEraseRect                  : TRect; // the rectangle of the last drawaction (can include space for countdown digits)
@@ -106,6 +107,7 @@ type
     //function GetFrameBounds: TRect; // rect from animation bitmap
     //function GetCountDownDigitBounds: TRect; // countdown
 
+    property Position          : TPoint read GetPosition;    
     property HasPermanentSkills: Boolean read CheckForPermanentSkills;
   end;
 
@@ -182,6 +184,12 @@ begin
   LemIsGlider := Source.IsGlider;
   LemIsMechanic := Source.IsDisarmer;
   // Blocker and Zombie must be handled by the calling routine
+end;
+
+function TLemming.GetPosition: TPoint;
+begin
+  Result.X := LemX;
+  Result.Y := LemY;
 end;
 
 (*function TLemming.GetCountDownDigitBounds: TRect;

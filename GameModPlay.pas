@@ -714,6 +714,7 @@ type
   T_BASS_GetVersion = function: DWORD; stdcall;
   T_BASS_Init = function(device: LongInt; freq, flags: DWORD; win: HWND; clsid: PGUID): BOOL; stdcall;
   T_BASS_Free = function: BOOL; stdcall;
+  T_BASS_SetConfig = function(option, value: DWORD): BOOL;
   T_BASS_MusicLoad1 = function(mem: BOOL; f: Pointer; offset: QWORD; length, flags, freq: DWORD): HMUSIC; stdcall;
   T_BASS_MusicLoad2 = function(mem: BOOL; f: String; offset: QWORD; length, flags, freq: DWORD): HMUSIC; stdcall; 
   T_BASS_ChannelPlay = function(handle: DWORD; restart: BOOL): BOOL; stdcall;
@@ -738,6 +739,7 @@ var
   BASS_GetVersion  : T_BASS_GetVersion;
   BASS_Init        : T_BASS_Init;
   BASS_Free        : T_BASS_Free;
+  BASS_SetConfig   : T_BASS_SetConfig;
   BASS_MusicLoad1  : T_BASS_MusicLoad1;
   BASS_MusicLoad2  : T_BASS_MusicLoad2;
   BASS_ChannelPlay : T_BASS_ChannelPlay;
@@ -774,10 +776,11 @@ var
  fLoopLength: QWord;
 
 var
-  MyImports: array [0..22] of TImportItem =(
+  MyImports: array [0..23] of TImportItem =(
    (Name: 'BASS_GetVersion' ;   PProcVar: @@BASS_GetVersion),
    (Name: 'BASS_Init'       ;   PProcVar: @@BASS_Init),
    (Name: 'BASS_Free'       ;   PProcVar: @@BASS_Free),
+   (Name: 'BASS_SetConfig'  ;   PProcVar: @@BASS_SetConfig),
    (Name: 'BASS_MusicLoad'  ;   PProcVar: @@BASS_MusicLoad1),
    (Name: 'BASS_MusicLoad'  ;   PProcVar: @@BASS_MusicLoad2),
    (Name: 'BASS_ChannelPlay';   PProcVar: @@BASS_ChannelPlay),

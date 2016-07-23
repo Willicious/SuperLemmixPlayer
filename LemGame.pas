@@ -394,7 +394,6 @@ type
     //fReplayIndex               : Integer;
     fCurrentScreenPosition     : TPoint; // for minimap, this really sucks but works ok for the moment
     fLastCueSoundIteration     : Integer;
-    fSoundToPlay               : array of Integer;
     fFading                    : Boolean;
     fReplayCommanding          : Boolean;
     fTargetIteration           : Integer; // this is used in hyperspeed
@@ -512,7 +511,8 @@ type
     function CheckLemTeleporting(L: TLemming): Boolean;
     procedure CheckReleaseLemming;
     procedure CheckUpdateNuking;
-    procedure CueSoundEffect(aSoundId: Integer);
+    procedure CueSoundEffect(aSoundId: Integer); overload;
+    procedure CueSoundEffect(aSoundId: Integer; aOrigin: TPoint); overload;
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
@@ -1625,7 +1625,7 @@ begin
   fParticleFinishTimer := 0;
   LemmingList.Clear;
   LastNPLemming := nil;
-  SetLength(fSoundToPlay, 0);
+  SoundMgr.ClearQueue;
   if Level.Info.LevelID <> fReplayManager.LevelID then //not aReplay then
   begin
     fReplayManager.Clear(true);
@@ -1761,6 +1761,8 @@ begin
   fTalismanReceived := false;
 
   //Renderer.DrawLevel(fTargetBitmap);
+
+  SoundMgr.ClearQueue;
 
   Playing := True;
 end;
@@ -2169,7 +2171,7 @@ begin
     baClimbing   : L.LemIsNewClimbing := True;
     baSplatting  : begin
                      L.LemExplosionTimer := 0;
-                     CueSoundEffect(SFX_SPLAT)
+                     CueSoundEffect(SFX_SPLAT, L.Position)
                    end;
     baBlocking   : begin
                      L.LemHasBlockerField := True;
@@ -2177,21 +2179,21 @@ begin
                    end;
     baExiting    : begin
                      L.LemExplosionTimer := 0;
-                     CueSoundEffect(SFX_YIPPEE);
+                     CueSoundEffect(SFX_YIPPEE, L.Position);
                    end;
     baDigging    : L.LemIsNewDigger := True;
     baBuilding   : L.LemNumberOfBricksLeft := 12;
     baPlatforming: L.LemNumberOfBricksLeft := 12;
     baStacking   : L.LemNumberOfBricksLeft := 8;
-    baOhnoing    : CueSoundEffect(SFX_OHNO);
-    baStoning    : CueSoundEffect(SFX_OHNO);
+    baOhnoing    : CueSoundEffect(SFX_OHNO, L.Position);
+    baStoning    : CueSoundEffect(SFX_OHNO, L.Position);
     baExploding  : begin
                      if fHighlightLemming = L then fHighlightLemming := nil;
-                     CueSoundEffect(SFX_EXPLOSION);
+                     CueSoundEffect(SFX_EXPLOSION, L.Position);
                    end;
     baStoneFinish: begin
                      if fHighlightLemming = L then fHighlightLemming := nil;
-                     CueSoundEffect(SFX_EXPLOSION);
+                     CueSoundEffect(SFX_EXPLOSION, L.Position);
                    end;
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
@@ -2442,7 +2444,7 @@ begin
 
   Result := DoSkillAssignment(L, Skill);
 
-  if Result then CueSoundEffect(SFX_ASSIGN_SKILL);
+  if Result then CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
 end;
 
 {
@@ -3114,7 +3116,7 @@ begin
     L.LemHasBlockerField := False;
     RestoreMap;
     RemoveLemming(L, RM_KILL);
-    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
+    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
     DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
   end;
 end;
@@ -3142,7 +3144,7 @@ begin
     L.LemHasBlockerField := False;
     RestoreMap;
     RemoveLemming(L, RM_KILL);
-    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
+    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
     DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
   end;
 end;
@@ -3154,7 +3156,7 @@ begin
   Result := False;
   Inf := ObjectInfos[ObjectID];
   Inf.Triggered := True;
-  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
+  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
 end;
 
 function TLemmingGame.HandleTelepSingle(L: TLemming; ObjectID: Word): Boolean;
@@ -3167,7 +3169,7 @@ begin
 
   Inf.Triggered := True;
   Inf.ZombieMode := L.LemIsZombie;
-  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
+  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
   L.LemTeleporting := True;
   Inf.TeleLem := L.LemIndex;
   // Make sure to remove the blocker field!
@@ -3186,7 +3188,7 @@ begin
 
   Inf.Triggered := True;
   Inf.ZombieMode := L.LemIsZombie;
-  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
+  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
   L.LemTeleporting := True;
   Inf.TeleLem := L.LemIndex;
   Inf.TwoWayReceive := false;
@@ -3207,7 +3209,7 @@ begin
   begin
     Inf := ObjectInfos[ObjectID];
     Inf.CurrentFrame := 0;
-    CueSoundEffect(SFX_PICKUP);
+    CueSoundEffect(SFX_PICKUP, L.Position);
     case Inf.SkillType of
       0 : UpdateSkillCount(baClimbing, true);
       1 : UpdateSkillCount(baFloating, true);
@@ -3240,16 +3242,19 @@ begin
   if not L.LemIsZombie then
   begin
     Inf := ObjectInfos[ObjectID];
-    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect));
+    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
     Inf.Triggered := True;
     Dec(ButtonsRemain);
 
     if ButtonsRemain = 0 then
     begin
-      CueSoundEffect(SFX_ENTRANCE);
       for n := 0 to (ObjectInfos.Count - 1) do
         if ObjectInfos[n].TriggerEffect = DOM_LOCKEXIT then
-          ObjectInfos[n].Triggered := True;
+        begin
+          Inf := ObjectInfos[n];
+          Inf.Triggered := True;
+          CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), Inf.Center);
+        end;
     end;
   end;
 end;
@@ -3262,7 +3267,7 @@ begin
   begin
     Result := True;
     Transition(L, baExiting);
-    CueSoundEffect(SFX_YIPPEE);
+    CueSoundEffect(SFX_YIPPEE, L.Position);
   end;
 end;
 
@@ -3322,7 +3327,7 @@ begin
   Result := True;
 
   Transition(L, baVaporizing);
-  CueSoundEffect(SFX_VAPORIZING);
+  CueSoundEffect(SFX_VAPORIZING, L.Position);
 end;
 
 function TLemmingGame.HandleFlipper(L: TLemming; ObjectID: Word): Boolean;
@@ -3357,7 +3362,7 @@ begin
     if not (L.LemAction in ActionSet) then
     begin
       Transition(L, baDrowning);
-      CueSoundEffect(SFX_DROWNING);
+      CueSoundEffect(SFX_DROWNING, L.Position);
     end;
   end;
 end;
@@ -3371,7 +3376,7 @@ begin
   if L.LemIsSwimmer and not (L.LemAction in ActionSet) then
   begin
     Transition(L, baSwimming);
-    CueSoundEffect(SFX_SWIMMING);
+    CueSoundEffect(SFX_SWIMMING, L.Position);
   end;
 end;
 
@@ -4056,7 +4061,7 @@ begin
 
     if HasSteelAt(L.LemX, L.LemY) then
     begin
-      CueSoundEffect(SFX_HITS_STEEL);
+      CueSoundEffect(SFX_HITS_STEEL, L.Position);
       Transition(L, baWalking);
     end
 
@@ -4135,7 +4140,7 @@ begin
   if L.LemMechanicFrames <= 0 then
     Transition(L, baWalking)
   else if L.LemFrame mod 8 = 0 then
-    CueSoundEffect(SFX_FIXING);
+    CueSoundEffect(SFX_FIXING, L.Position);
 end;
 
 
@@ -4183,7 +4188,7 @@ begin
   end
 
   else if (L.LemFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
-    CueSoundEffect(SFX_BUILDER_WARNING)
+    CueSoundEffect(SFX_BUILDER_WARNING, L.Position)
 
   else if L.LemFrame = 15 then
   begin
@@ -4238,7 +4243,7 @@ begin
     LayBrick(L)
 
   else if (L.LemFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
-    CueSoundEffect(SFX_BUILDER_WARNING)
+    CueSoundEffect(SFX_BUILDER_WARNING, L.Position)
 
   else if L.LemFrame = 0 then
   begin
@@ -4288,7 +4293,7 @@ begin
     Dec(L.LemNumberOfBricksLeft);
 
     // sound on last three bricks
-    if L.LemNumberOfBricksLeft < 3 then CueSoundEffect(SFX_BUILDER_WARNING);
+    if L.LemNumberOfBricksLeft < 3 then CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
 
     if not L.LemPlacedBrick then
       Transition(L, baWalking, True) // Even on the last brick???  // turn around as well
@@ -4318,7 +4323,7 @@ var
     // Turns basher around an transitions to walker
     Dec(L.LemX, L.LemDx);
     Transition(L, baWalking, True); // turn around as well
-    if SteelSound then CueSoundEffect(SFX_HITS_STEEL);
+    if SteelSound then CueSoundEffect(SFX_HITS_STEEL, L.Position);
   end;
 
   function BasherStepUpCheck(x, y, Direction, Step: Integer): Boolean;
@@ -4497,7 +4502,7 @@ end;
 function TLemmingGame.HandleMining(L: TLemming): Boolean;
   procedure MinerTurn(L: TLemming; X, Y: Integer);
   begin
-    if HasSteelAt(X, Y) then CueSoundEffect(SFX_HITS_STEEL);
+    if HasSteelAt(X, Y) then CueSoundEffect(SFX_HITS_STEEL, L.Position);
     // Independently of (X, Y) this check is always made at Lem position
     // No longer check at Lem position, due to http://www.lemmingsforums.net/index.php?topic=2547.0
     if HasPixelAt(L.LemX, L.LemY-1) then Dec(L.LemY);
@@ -4872,7 +4877,7 @@ begin
                 Inc(LemmingsIn);
                 GameResultRec.gLastRescueIteration := fCurrentIteration;
               end;
-    RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT);
+    RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT, L.Position);
     RM_ZOMBIE: begin
                  L.LemIsZombie := True;
                  L.LemRemoved := False;
@@ -5021,10 +5026,10 @@ begin
           begin
             ObjectInfos[i].Triggered := True;
             ObjectInfos[i].CurrentFrame := 1;
-            EntriesOpened := True;
+            EntriesOpened := true;
+            CueSoundEffect(SFX_ENTRANCE, ObjectInfos[i].Center);
           end;
-        if EntriesOpened then CueSoundEffect(SFX_ENTRANCE)
-        else if fStartupMusicAfterEntry then begin
+        if fStartupMusicAfterEntry and not EntriesOpened then begin
           if gsoMusic in fSoundOpts then
             SoundMgr.PlayMusic(0);
           fStartupMusicAfterEntry := False;
@@ -5455,23 +5460,28 @@ begin
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSoundId: Integer);
+begin
+  SoundMgr.QueueSound(aSoundId);
+end;
+
+procedure TLemmingGame.CueSoundEffect(aSoundId: Integer; aOrigin: TPoint);
 {-------------------------------------------------------------------------------
   Save last sound.
 -------------------------------------------------------------------------------}
 var
   i: Integer;
+  Bal: Single;
+  MidX: Integer; // we don't need MidY because we can't adjust the "height" of a sound anyway
+  SrcX: Integer;
 begin
-  if HyperSpeed or not Playing or not (gsoSound in fSoundOpts) then
-    Exit;
+  MidX := fRenderInterface.ScreenPos.X + 160;
+  SrcX := aOrigin.X;
 
-  if (aSoundId < 0) then
-    Exit;
+  Bal := (SrcX - MidX) / 320;
+  if Bal < -1 then Bal := -1;
+  if Bal > 1 then Bal := 1;
 
-  for i := 0 to Length(fSoundToPlay)-1 do
-    if fSoundToPlay[i] = aSoundId then Exit;
-
-  SetLength(fSoundToPlay, Length(fSoundToPlay)+1);
-  fSoundToPlay[Length(fSoundToPlay) - 1] := aSoundId;
+  SoundMgr.QueueSound(aSoundId, Bal);
 
   if Paused then
     CheckForPlaySoundEffect;
@@ -5805,11 +5815,12 @@ var
   i: Integer;
 begin
   if HyperSpeed then
+  begin
+    SoundMgr.ClearQueue;
     Exit;
-  if Length(fSoundToPlay) <> 0 then
-    for i := 0 to Length(fSoundToPlay)-1 do
-      SoundMgr.PlaySound(fSoundToPlay[i]);
-  SetLength(fSoundToPlay, 0);
+  end;
+
+  SoundMgr.FlushQueue;
 end;
 
 procedure TLemmingGame.RegainControl;

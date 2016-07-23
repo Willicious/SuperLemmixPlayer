@@ -69,10 +69,19 @@ type
   published
   end;
 
+  TSoundQueueEntry = class
+    public
+      Index: Integer;
+      Balance: Single;
+      constructor Create;
+  end;
+
   TSoundMgr = class
   private
     fMusics: TMusicList;
     fSounds: TList;
+
+    fQueue: TObjectList;
 
     fAvailableChannels : Integer;
     fBrickSound : Integer;
@@ -86,8 +95,14 @@ type
     function AddSoundFromFileName(const aFileName: string): Integer;
     function AddSoundFromStream(aStream: TMemoryStream): Integer;
     procedure FreeSound(aIndex: Integer);
-    procedure PlaySound(Index: Integer);
+    procedure PlaySound(Index: Integer; Balance: Integer); overload;
+    procedure PlaySound(Index: Integer; Balance: Single = 0); overload;
     procedure StopSound(Index: Integer);
+
+    procedure QueueSound(Index: Integer; Balance: Integer); overload;
+    procedure QueueSound(Index: Integer; Balance: Single = 0); overload;
+    procedure FlushQueue;
+    procedure ClearQueue;
     //procedure MarkChannelFree(handle: HSYNC; channel, data: DWORD; user: POINTER); stdcall;
   { musics }
     function AddMusicFromFileName(const aFileName: string; aTestMode: Boolean): Integer;
@@ -145,6 +160,13 @@ begin
   if _SoundSystem = nil then
     _SoundSystem := TSoundSystem.Create;
   Result := _SoundSystem;
+end;
+
+{ TSoundQueueEntry }
+
+constructor TSoundQueueEntry.Create;
+begin
+  Index := -1;
 end;
 
 { TAbstractSound }
@@ -298,13 +320,16 @@ var
   i: Integer;
 begin
   inherited Create;
-  if not BASS_Init(-1, 44100, 0, 0, nil) then
-    BASS_Free;
+  if not BASS_Init(-1, 44100, BASS_DEVICE_NOSPEAKER, 0, nil) then
+    BASS_Free
+  else
+    BASS_SetConfig(BASS_CONFIG_VISTA_SPEAKERS, 1);
   fSounds := TList.Create;
   fMusics := TMusicList.Create;
   fAvailableChannels := DEFAULT_CHANNELS;
   for i := 0 to 255 do
     fPlayingSounds[i] := -1;
+  fQueue := TObjectList.Create(true);
 end;
 
 destructor TSoundMgr.Destroy;
@@ -313,6 +338,7 @@ begin
   StopMusic(0);
   fSounds.Free;
   fMusics.Free;
+  fQueue.Free;
   inherited Destroy;
 end;
 
@@ -335,7 +361,14 @@ begin
   end;
 end;
 
-procedure TSoundMgr.PlaySound(Index: Integer);
+procedure TSoundMgr.PlaySound(Index: Integer; Balance: Integer);
+begin
+  if Balance < -100 then Balance := -100;
+  if Balance > 100 then Balance := 100;
+  PlaySound(Index, Balance / 100);
+end;
+
+procedure TSoundMgr.PlaySound(Index: Integer; Balance: Single = 0);
 var
   i{, i2} : Integer;
   c : HCHANNEL;
@@ -349,7 +382,10 @@ begin
     if fPlayingSounds[0] >= 0 then
       BASS_ChannelStop(fPlayingSounds[0]);
     c := BASS_SampleGetChannel(Integer(Sounds[Index]), true);
+    BASS_ChannelSetAttribute(c, BASS_ATTRIB_PAN, Balance);
+
     BASS_ChannelPlay(c, true);
+
     {BASS_ChannelSetSync(c, BASS_SYNC_POS or BASS_SYNC_MIXTIME, BASS_ChannelSeconds2Bytes(c, 0.5), BASS_MarkChannelFree, @fActiveSounds[0]);
     BASS_ChannelSetSync(c, BASS_SYNC_END or BASS_SYNC_MIXTIME, 0, BASS_MarkChannelFree, @fActiveSounds[0]);
     BASS_ChannelSetSync(c, BASS_SYNC_END or BASS_SYNC_MIXTIME, 0, BASS_WipeChannel, @fPlayingSounds[0]);}
@@ -369,6 +405,7 @@ begin
           if fPlayingSounds[i] >= 0 then
             BASS_ChannelStop(fPlayingSounds[i]);
           c := BASS_SampleGetChannel(Integer(Sounds[Index]), true);
+          BASS_ChannelSetAttribute(c, BASS_ATTRIB_PAN, Balance);
           {i2 := BASS_ErrorGetCode;
           if i2 <> 0 then messagedlg(inttostr(i2), mtcustom, [mbok], 0);}
           BASS_ChannelPlay(c, true);
@@ -403,6 +440,49 @@ begin
     if Index < Musics.Count then
       //Musics[Index].Stop;
       SoundSystem.StopMusic(nil);
+end;
+
+procedure TSoundMgr.QueueSound(Index: Integer; Balance: Integer);
+begin
+  if Balance < -100 then Balance := -100;
+  if Balance > 100 then Balance := 100;
+  QueueSound(Index, Balance / 100);
+end;
+
+procedure TSoundMgr.QueueSound(Index: Integer; Balance: Single = 0);
+var
+  i: Integer;
+  S: TSoundQueueEntry;
+begin
+  for i := 0 to fQueue.Count-1 do
+  begin
+    S := TSoundQueueEntry(fQueue[i]);
+    if (S.Index = Index) and (S.Balance = Balance) then Exit;
+  end;
+
+  S := TSoundQueueEntry.Create;
+  fQueue.Add(S);
+  S.Index := Index;
+  S.Balance := Balance;
+end;
+
+procedure TSoundMgr.FlushQueue;
+var
+  i: Integer;
+  S: TSoundQueueEntry;
+begin
+  for i := 0 to fQueue.Count-1 do
+  begin
+    S := TSoundQueueEntry(fQueue[i]);
+    PlaySound(S.Index, S.Balance);
+  end;
+
+  ClearQueue;
+end;
+
+procedure TSoundMgr.ClearQueue;
+begin
+  fQueue.Clear;
 end;
 
 { TSoundSystem }

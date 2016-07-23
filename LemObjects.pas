@@ -37,6 +37,7 @@ type
     function GetIsRotate: Boolean;
     function GetAnimationFrameCount: Integer;
     function GetPreassignedSkills: Integer;
+    function GetCenterPoint: TPoint;
 
 
   public
@@ -58,6 +59,7 @@ type
     property Left: Integer read sLeft write SetLeft;
     property Width: Integer read sWidth;
     property Height: Integer read sHeight;
+    property Center: TPoint read GetCenterPoint;
     property TriggerEffect: Integer read sTriggerEffect;
     property IsDisabled: Boolean read sIsDisabled write SetIsDisabled;
     property ReceiverId: Integer read sReceiverId;
@@ -330,6 +332,12 @@ begin
   // Only call this function for hatches and preplaces lemmings
   Assert(TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
   Result := Obj.TarLev; // Yes, "TargetLevel" stores this info!
+end;
+
+function TInteractiveObjectInfo.GetCenterPoint: TPoint;
+begin
+  Result.X := sLeft + (sWidth div 2);
+  Result.Y := sTop + (sHeight div 2);
 end;
 
 function TInteractiveObjectInfo.Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
