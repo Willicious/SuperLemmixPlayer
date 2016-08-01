@@ -242,6 +242,7 @@ var
   var
     MaskName, MaskColor: String;
   begin
+    if aTheme = nil then Exit; // kludge, this situation should never arise in the first place
     MaskName := '';
     MaskColor := '';
     repeat
