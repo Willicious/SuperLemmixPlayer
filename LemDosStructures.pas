@@ -145,16 +145,18 @@ type
           ObjectID          : Word;
           SValue            : Byte;
           LValue            : Byte;
-          ObjectFlags       : Byte;
-          Reserved          : Array[0..6] of Byte;
+          ObjectFlags       : Word;
+          GSIndex           : Byte;
+          Reserved          : Array[0..4] of Byte;
   end;
 
   TNewNeoLVLTerrain = packed record
           XPos              : LongInt;
           YPos              : LongInt;
           TerrainID         : Word;
-          TerrainFlags      : Byte;
-          TerReserved       : Array[0..4] of Byte;
+          TerrainFlags      : Word;
+          GSIndex           : Byte;
+          TerReserved       : Array[0..2] of Byte;
   end;
 
   TNewNeoLVLSteel = packed record

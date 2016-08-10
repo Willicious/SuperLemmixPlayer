@@ -129,7 +129,7 @@ begin
     end;
 
     // If requirement is below lowest supported version
-    if CombineTarget(MainVer, MaxSubVer, MaxMinorVer) < CombineTarget(Cur_MainVer, Cur_MaxSubVer, Cur_MaxMinorVer) then
+    if CombineTarget(MainVer, MaxSubVer, MaxMinorVer) < CombineTarget(Cur_MainVer, Cur_SubVer, Cur_MinorVer) then
     begin
       if SubVer < 44 then
       begin

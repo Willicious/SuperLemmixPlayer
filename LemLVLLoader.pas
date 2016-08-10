@@ -823,6 +823,8 @@ var
   Ter: TTerrain;
   Steel: TSteel;
   //SFinder: TStyleFinder;
+  GSNames: array of String;
+  GSName: array[0..15] of Char;
 
   b: Byte;
   w: Word;
@@ -923,6 +925,9 @@ begin
         GraphicMetaFile := 'g_' + trim(Buf.StyleName) + '.dat';
         GraphicSetName := trim(Buf.StyleName);
 
+        SetLength(GSNames, 1);
+        GSNames[0] := GraphicSetName; // fallback in case lvl file has no graphic set list, as most won't
+
         if trim(Buf.VgaspecName) = 'none' then
         begin
           VgaspecFile := '';
@@ -959,7 +964,7 @@ begin
              Obj := InteractiveObjects.Add;
              Obj.Left := (O.XPos * 8) div LRes;
              Obj.Top := (O.YPos * 8) div LRes;
-             Obj.GS := Info.GraphicSetName;
+             Obj.GS := IntToStr(O.GSIndex);
              Obj.Piece := 'O' + IntToStr(O.ObjectID);
              Obj.TarLev := O.LValue;
              if O.ObjectFlags and $1 <> 0 then
@@ -976,6 +981,8 @@ begin
                Obj.DrawingFlags := Obj.DrawingFlags or odf_Invisible;
              if O.ObjectFlags and $40 <> 0 then
                Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
+             if O.ObjectFlags and $100 <> 0 then
+               Obj.DrawingFlags := Obj.DrawingFlags or odf_Rotate;
              Obj.Skill := O.SValue mod 16;
 
              Obj.LastDrawX := Obj.Left;
@@ -990,7 +997,7 @@ begin
              Ter := Terrains.Add;
              Ter.Left := (T.XPos * 8) div LRes;
              Ter.Top := (T.YPos * 8) div LRes;
-             Ter.GS := Info.GraphicSetName;
+             Ter.GS := IntToStr(T.GSIndex);
              Ter.Piece := 'T' + IntToStr(T.TerrainID);
              if T.TerrainFlags and $1 <> 0 then
                Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOverwrite;
@@ -1058,6 +1065,15 @@ begin
                Info.BnsLevel := Buf2.BnsRedirectLevel;
              end;
            end;
+        6: begin
+             aStream.Read(w, 2);
+             SetLength(GSNames, w);
+             for i := 0 to w-1 do
+             begin
+               aStream.Read(GSName, 16);
+               GSNames[i] := Lowercase(Trim(GSName));
+             end;
+           end;
         else Break;
       end;
 
@@ -1085,13 +1101,21 @@ begin
         BnsLevel := Buf.RefLevel;
       end;
 
-    if (OddLoad = 2) and (Info.LevelOptions and $10 <> 0) then
+    (*if (OddLoad = 2) and (Info.LevelOptions and $10 <> 0) then
     begin
       InteractiveObjects.Clear;
       Terrains.Clear;
       Steels.Clear;
       SetLength(Info.WindowOrder, 0);
-    end;
+    end;*)
+
+    for i := 0 to InteractiveObjects.Count-1 do
+      with InteractiveObjects[i] do
+        GS := GSNames[StrToInt(GS)];
+
+    for i := 0 to Terrains.Count-1 do
+      with Terrains[i] do
+        GS := GSNames[StrToInt(GS)];
 
   end; // with aLevel
 end;
