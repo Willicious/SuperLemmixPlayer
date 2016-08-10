@@ -70,10 +70,14 @@ var
   MainVer: Integer;   // The main version. EG. For V1.37n, this would be 1.
   SubVer: Integer;    // The sub-version. EG. For V1.37n, this would be 37.
   MinorVer: Integer;  // The minor version. EG: For V1.37n, this would be 1. (V1.37n-B, it would be 2, etc.)
+  MaxSubVer: Integer; // Maximum sub-version.
+  MaxMinorVer: Integer; // Maximum minor version.
+
+  IsOut: Boolean;
 const
   // Lowest version numbers that are compatible
   Min_MainVer = 1;    // 1.bb-c
-  Min_SubVer = 44;    // a.37-c
+  Min_SubVer = 47;    // a.37-c
   Min_MinorVer = 1;   // a.bb-A
 
   function GetTargetAsString(aMain, aSub, aMinor: Integer): String;
@@ -83,6 +87,11 @@ const
     Result := Result + '.' + LeadZeroStr(aSub, 2) + 'n';
     if aMinor <> 1 then
       Result := Result + '-' + Char(aMinor + 64);
+  end;
+
+  function CombineTarget(aMain, aSub, aMinor: Integer): Integer;
+  begin
+    Result := (aMain * 10000) + (aSub * 100) + aMinor;
   end;
 begin
   //Result := nxc_Unknown;
@@ -97,36 +106,45 @@ begin
     // Get the version info from the version.txt file. It is important to note - this lists the minimum version guaranteed to
     // be compatible with the file formats; there is no accounting for mechanics changes (as long as everything will still load)
     // and it does not specify an exact version and/or "newest version at the time the pack was made".
+    // If there's a fourth line, it's a compatibility flag. This means that although the pack is marked as compatible with
+    // the older versions, it's also marked as compatible with the newer ones.
     MainVer := StrToIntDef(SL[0], 0);
     SubVer := StrToIntDef(SL[1], 0);
     MinorVer := StrToIntDef(SL[2], 0);
+    if SL.Count > 3 then
+    begin
+      MaxSubVer := StrToIntDef(SL[3], SubVer);
+      MaxMinorVer := StrToIntDef(SL[4], SubVer);
+    end else begin
+      MaxSubVer := SubVer;
+      MaxMinorVer := MinorVer;
+    end;
 
     // If requirement is above the current version
-    if (MainVer > Cur_MainVer)
-    or ((MainVer = Cur_MainVer) and (SubVer > Cur_SubVer))
-    or ((MainVer = Cur_MainVer) and (SubVer = Cur_SubVer) and (MinorVer > Cur_MinorVer))
-    then begin
+    if CombineTarget(MainVer, SubVer, MinorVer) > CombineTarget(Cur_MainVer, Cur_SubVer, Cur_MinorVer) then
+    begin
       ShowMessage('Warning: This pack may be incompatible with this version of NeoLemmix. Please use' + #13 +
                   'NeoLemmix ' + GetTargetAsString(MainVer, SubVer, MinorVer) + ' or higher.');
       Result := nxc_VersionError;
     end;
 
     // If requirement is below lowest supported version
-    if (MainVer < Min_MainVer)
-    or ((MainVer = Min_MainVer) and (SubVer < Min_SubVer))
-    or ((MainVer = Min_MainVer) and (SubVer = Min_SubVer) and (MinorVer < Min_MinorVer))
-    then begin
+    if CombineTarget(MainVer, MaxSubVer, MaxMinorVer) < CombineTarget(Cur_MainVer, Cur_MaxSubVer, Cur_MaxMinorVer) then
+    begin
       if SubVer < 44 then
       begin
-        //ShowMessage('This pack has not been updated to be fully compatible with NeoLemmix V1.44n+. Please note' + #13 +
-        //            'that certain features were removed as of V1.44n, and as such, if this pack relied on those' + #13 +
-        //            'features, it may not work properly. It is recommended that you contact the author or look' + #13 +
-        //            'on the Lemmings Forums for an updated version of this pack.');
+        ShowMessage('This pack was built for an older version of NeoLemmix. Please be aware that' + #13 +
+                    'full compatibility cannot be guaranteed. Using V1.43n-F to play this pack' + #13 +
+                    'is recommended.');
         Result := nxc_VersionError;
+      end else if SubVer < 47 then
+      begin
+        // Not likely to ever happen. Just in case.
+        ShowMessage('This pack may have compatibility issues.');
       end else begin
         // Fallback if there's no specific message. Should never happen but just in case.
-        ShowMessage('Warning: This pack may be incompatible with this version of NeoLemmix. The optimal version' + #13 +
-                    'for this pack is NeoLemmix ' + GetTargetAsString(MainVer, SubVer, MinorVer) + '.');
+        ShowMessage('Warning: This pack may be incompatible with this version of NeoLemmix. Please update to' + #13 +
+                    'NeoLemmix ' + GetTargetAsString(MainVer, SubVer, MinorVer) + ' or higher.');
         Result := nxc_VersionError;
       end;
     end;
