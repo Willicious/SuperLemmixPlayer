@@ -5462,6 +5462,9 @@ end;
 procedure TLemmingGame.CueSoundEffect(aSoundId: Integer);
 begin
   SoundMgr.QueueSound(aSoundId);
+
+  if Paused then
+    CheckForPlaySoundEffect;
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSoundId: Integer; aOrigin: TPoint);
