@@ -1061,7 +1061,7 @@ begin
   end else
     X := 0;
   Map.DrawTo(Img.Bitmap, Dx, 18, SrcRect);
-  Img.Bitmap.FrameRectS(208 + X, 18, 208 + X + 21, 38, fRectColor);
+  Img.Bitmap.FrameRectS(208 + X, 18, 208 + X + 20, 38, fRectColor);
 end;
 
 procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);
