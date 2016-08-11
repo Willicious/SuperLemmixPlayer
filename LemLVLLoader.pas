@@ -851,6 +851,9 @@ begin
         ClearLevel;
         DisplayPercent   := 0;
         ReleaseRate      := Buf.ReleaseRate;
+        if (Buf.LevelOptions2 and 1) <> 0 then
+          ReleaseRateLocked := true;
+
         LemmingsCount    := Buf.LemmingsCount;
         RescueCount      := Buf.RescueCount;
         TimeLimit        := Buf.TimeLimit; // internal structure now matches NeoLemmix file format structure (just a number of seconds)

@@ -205,7 +205,8 @@ type
             VgaspecX                   : LongInt;
             VgaspecY                   : LongInt;
             LevelID                    : LongWord;
-            Reserved2                  : array[0..3] of Byte;
+            LevelOptions2              : Byte;
+            Reserved2                  : array[0..2] of Byte;
     {0040}  LevelAuthor                : array[0..15] of Char;
     {0050}  LevelName                  : array[0..31] of Char;
     {0070}  StyleName                  : array[0..15] of Char;
