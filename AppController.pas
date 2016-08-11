@@ -133,9 +133,10 @@ begin
     begin
       if SubVer < 44 then
       begin
-        ShowMessage('This pack was built for an older version of NeoLemmix. Please be aware that' + #13 +
-                    'full compatibility cannot be guaranteed. Using V1.43n-F to play this pack' + #13 +
-                    'is recommended.');
+        //ShowMessage('This pack was built for an older version of NeoLemmix. Please be aware that' + #13 +
+        //            'full compatibility cannot be guaranteed. Using V1.43n-F to play this pack' + #13 +
+        //            'is recommended.');
+        // commented out so it doesn't get annoying while testing. restore before release.
         Result := nxc_VersionError;
       end else if SubVer < 47 then
       begin
