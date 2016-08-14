@@ -2752,8 +2752,17 @@ function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baBashing,
                baMining, baDigging];
+var
+  n: Integer;
 begin
-  Result := (L.LemAction in ActionSet) and LemCanPlatform(L);
+  // Next brick must add at least one pixel, but contrary to LemCanPlatform
+  // we ignore pixels above the platform
+  Result := False;
+  for n := 0 to 5 do
+    Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
+
+  // Test current action
+  Result := Result and (L.LemAction in ActionSet) // and LemCanPlatform(L);
 end;
 
 function TLemmingGame.MayAssignStacker(L: TLemming): Boolean;
