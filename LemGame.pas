@@ -3971,7 +3971,8 @@ begin
     begin
       if LemDive(L) > 0 then
         Inc(L.LemY, LemDive(L)) // Dive below the terrain
-      else if L.LemIsClimber then
+      // Only transition to climber, if the lemming is not under water
+      else if L.LemIsClimber and not HasTriggerAt(L.LemX, L.LemY - 1, trWater) then
         Transition(L, baClimbing)
       else
       begin
