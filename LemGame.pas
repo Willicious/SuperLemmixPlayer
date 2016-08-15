@@ -314,7 +314,11 @@ type
     ExitMap                    : TArrayArrayBoolean;
     WaterMap                   : TArrayArrayBoolean;
     FireMap                    : TArrayArrayBoolean;
+    TrapMap                    : TArrayArrayBoolean;
+    TeleporterMap              : TArrayArrayBoolean;
     UpdraftMap                 : TArrayArrayBoolean;
+    PickupMap                  : TArrayArrayBoolean;
+    ButtonMap                  : TArrayArrayBoolean;
     FlipperMap                 : TArrayArrayBoolean;
     RadiationMap               : TArrayArrayBoolean;
     SlowfreezeMap              : TArrayArrayBoolean;
@@ -2379,6 +2383,9 @@ begin
   SetLength(ExitMap, 0, 0);
   SetLength(ExitMap, Level.Info.Width, Level.Info.Height);
 
+  SetLength(TrapMap, 0, 0);
+  SetLength(TrapMap, Level.Info.Width, Level.Info.Height);
+
   //SpecialMap.SetSize(Level.Info.Width, Level.Info.Height);
   //SpecialMap.Clear(DOM_NONE);
 
@@ -2387,35 +2394,19 @@ begin
 
   if DoAllMaps then
   begin
-    SetLength(WaterMap, 0, 0);
     SetLength(WaterMap, Level.Info.Width, Level.Info.Height);
-
-    SetLength(FireMap, 0, 0);
     SetLength(FireMap, Level.Info.Width, Level.Info.Height);
-
-    SetLength(UpdraftMap, 0, 0);
+    SetLength(TeleporterMap, Level.Info.Width, Level.Info.Height);
     SetLength(UpdraftMap, Level.Info.Width, Level.Info.Height);
-
-    SetLength(FlipperMap, 0, 0);
+    SetLength(ButtonMap, Level.Info.Width, Level.Info.Height);
+    SetLength(PickupMap, Level.Info.Width, Level.Info.Height);
     SetLength(FlipperMap, Level.Info.Width, Level.Info.Height);
-
-    SetLength(RadiationMap, 0, 0);
     SetLength(RadiationMap, Level.Info.Width, Level.Info.Height);
-
-    SetLength(SlowfreezeMap, 0, 0);
     SetLength(SlowfreezeMap, Level.Info.Width, Level.Info.Height);
-
-    SetLength(SplatMap, 0, 0);
     SetLength(SplatMap, Level.Info.Width, Level.Info.Height);
-
-    SetLength(AntiSplatMap, 0, 0);
     SetLength(AntiSplatMap, Level.Info.Width, Level.Info.Height);
-
-    SetLength(AnimationMap, 0, 0);
     SetLength(AnimationMap, Level.Info.Width, Level.Info.Height);
   end;
-
-
 
 
   for i := 0 to ObjectInfos.Count - 1 do
@@ -2430,7 +2421,12 @@ begin
           end;
       DOM_WATER: if DoAllMaps then WriteTriggerMap(WaterMap, ObjectInfos[i].TriggerRect);
       DOM_FIRE: if DoAllMaps then WriteTriggerMap(FireMap, ObjectInfos[i].TriggerRect);
+      DOM_TRAP: WriteTriggerMap(TrapMap, ObjectInfos[i].TriggerRect);
+      DOM_SINGLETRAP: WriteTriggerMap(TrapMap, ObjectInfos[i].TriggerRect);
+      DOM_TELEPORT: if DoAllMaps then WriteTriggerMap(TeleporterMap, ObjectInfos[i].TriggerRect);
       DOM_UPDRAFT: if DoAllMaps then WriteTriggerMap(UpdraftMap, ObjectInfos[i].TriggerRect);
+      DOM_PICKUP: if DoAllMaps then WriteTriggerMap(PickupMap, ObjectInfos[i].TriggerRect);
+      DOM_BUTTON: if DoAllMaps then WriteTriggerMap(ButtonMap, ObjectInfos[i].TriggerRect);
       DOM_FLIPPER: if DoAllMaps then WriteTriggerMap(FlipperMap, ObjectInfos[i].TriggerRect);
       DOM_RADIATION: if DoAllMaps then WriteTriggerMap(RadiationMap, ObjectInfos[i].TriggerRect);
       DOM_SLOWFREEZE: if DoAllMaps then WriteTriggerMap(SlowfreezeMap, ObjectInfos[i].TriggerRect);
@@ -3033,10 +3029,10 @@ begin
     begin
       ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trTeleport);
       if ObjectID <> 65535 then
-        if ObjectInfos[ObjectID].TriggerEffect = DOM_SINGLETELE then
+        (*if ObjectInfos[ObjectID].TriggerEffect = DOM_SINGLETELE then
           AbortChecks := HandleTelepSingle(L, ObjectID)
-        else
-          AbortChecks := HandleTeleport(L, ObjectID);
+        else*)
+        AbortChecks := HandleTeleport(L, ObjectID);
     end
     else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPickup) then
     begin
@@ -3102,13 +3098,14 @@ begin
   Result := False;
 
   case TriggerType of
-    trExit:       Result :=      ReadTriggerMap(X, Y, ExitMap);
+    trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap);
     trForceLeft:  Result :=     (ReadObjectMapType(X, Y) = DOM_FORCELEFT)
                             or ((ReadBlockerMap(X, Y) = DOM_FORCELEFT) and not (ReadObjectMapType(X, Y) = DOM_FORCERIGHT));
     trForceRight: Result :=     (ReadObjectMapType(X, Y) = DOM_FORCERIGHT)
                             or ((ReadBlockerMap(X, Y) = DOM_FORCERIGHT) and not (ReadObjectMapType(X, Y) = DOM_FORCELEFT));
-    trTrap:       Result :=     (ReadObjectMapType(X, Y) = DOM_TRAP)
-                            or  (ReadObjectMapType(X, Y) = DOM_TRAPONCE);
+    trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
+                          (*    (ReadObjectMapType(X, Y) = DOM_TRAP)
+                            or  (ReadObjectMapType(X, Y) = DOM_TRAPONCE); *)
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);  //(ReadWaterMap(X, Y) = DOM_WATER);
     trFire:       Result :=     ReadTriggerMap(X, Y, FireMap); //(ReadObjectMapType(X, Y) = DOM_FIRE);
     trOWLeft:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0);
@@ -3118,10 +3115,11 @@ begin
     trBlocker:    Result :=     (ReadBlockerMap(X, Y) = DOM_BLOCKER)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
-    trTeleport:   Result :=     (ReadObjectMapType(X, Y) = DOM_SINGLETELE)
-                            or  (ReadObjectMapType(X, Y) = DOM_TELEPORT);
-    trPickup:     Result :=     (ReadObjectMapType(X, Y) = DOM_PICKUP);
-    trButton:     Result :=     (ReadObjectMapType(X, Y) = DOM_BUTTON);
+    trTeleport:   Result :=     ReadTriggerMap(X, Y, TeleporterMap);
+                          (*    (ReadObjectMapType(X, Y) = DOM_SINGLETELE)
+                            or  (ReadObjectMapType(X, Y) = DOM_TELEPORT);  *)
+    trPickup:     Result :=     ReadTriggerMap(X, Y, PickupMap); //(ReadObjectMapType(X, Y) = DOM_PICKUP);
+    trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap); //(ReadObjectMapType(X, Y) = DOM_BUTTON);
     trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap); // (ReadObjectMapType(X, Y) = DOM_RADIATION);
     trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);//(ReadObjectMapType(X, Y) = DOM_SLOWFREEZE);
     trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap); // (ReadObjectMapType(X, Y) = DOM_UPDRAFT);
@@ -3192,6 +3190,8 @@ begin
   begin
     ObjectInfos[ObjectID].IsDisabled := True;
     Transition(L, baFixing);
+    // Remove the trigger area from the TrapMap
+    InitializeObjectMap(False);
   end
   else
   begin
@@ -3234,6 +3234,9 @@ begin
     CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
     DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
   end;
+
+  // Remove the trigger area from the TrapMap
+  InitializeObjectMap(False);
 end;
 
 function TLemmingGame.HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
