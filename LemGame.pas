@@ -487,6 +487,7 @@ type
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming);
+      function GetObjectCheckPositions(L: TLemming): TArrayArrayInt;
       function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
       function FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
@@ -2843,83 +2844,85 @@ begin
 end;
 
 
+function TLemmingGame.GetObjectCheckPositions(L: TLemming): TArrayArrayInt;
+// This function is a big mess! The intermediate checks are made according to:
+// http://www.lemmingsforums.net/index.php?topic=2604.7
+var
+  CurrPosX, CurrPosY: Integer;
+  n: Integer;
+
+  procedure SaveCheckPos;
+  begin
+    Result[0, n] := CurrPosX;
+    Result[1, n] := CurrPosY;
+    Inc(n);
+  end;
+
+  procedure MoveHoizontal;
+  begin
+    while CurrPosX <> L.LemX do
+    begin
+      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
+      SaveCheckPos;
+    end;
+  end;
+
+  procedure MoveVertical;
+  begin
+    while CurrPosY <> L.LemY do
+    begin
+      Inc(CurrPosY, sign(L.LemY - L.LemYOld));
+      SaveCheckPos;
+    end;
+  end;
+
+begin
+  SetLength(Result, 2, 11);
+
+  n := 0;
+  CurrPosX := L.LemXOld;
+  CurrPosY := L.LemYOld;
+  // no movement
+  if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
+    SaveCheckPos
+
+  // special treatment of miners!
+  else if L.LemActionOld = baMining then
+  begin
+    // First move one pixel down, if Y-coordinate changed
+    if L.LemYOld < L.LemY then
+    begin
+      Inc(CurrPosY);
+      SaveCheckPos;
+    end;
+    MoveHoizontal;
+    MoveVertical;
+  end
+
+  // lem moves up or is faller; exception is made for builders!
+  else if ((L.LemY < L.LemYOld) or (L.LemAction = baFalling)) and not (L.LemActionOld = baBuilding) then
+  begin
+    MoveHoizontal;
+    MoveVertical;
+  end
+
+  // lem moves down (or straight) and is no faller; alternatively lem is a builder!
+  else
+  begin
+    MoveVertical;
+    MoveHoizontal;
+  end;
+end;
+
 
 procedure TLemmingGame.CheckTriggerArea(L: TLemming);
 // For intermediate pixels, we call the trigger function according to trigger area
 var
-  CheckPosX, CheckPosY: array[0..10] of Integer; // List of positions where to check
+  // CheckPosX, CheckPosY: array of Integer; // List of positions where to check
+  CheckPos: TArrayArrayInt; // Combined list for both X- and Y-coordinates
   i: Integer;
   ObjectID: Word;
   AbortChecks: Boolean;
-
-  procedure GetObjectCheckPositions(L: TLemming);
-  // This function is a big mess! The intermediate checks are made according to:
-  // http://www.lemmingsforums.net/index.php?topic=2604.7
-  var
-    CurrPosX, CurrPosY: Integer;
-    n: Integer;
-
-    procedure SaveCheckPos;
-    begin
-      CheckPosX[n] := CurrPosX;
-      CheckPosY[n] := CurrPosY;
-      Inc(n);
-    end;
-
-    procedure MoveHoizontal;
-    begin
-      while CurrPosX <> L.LemX do
-      begin
-        Inc(CurrPosX, sign(L.LemX - L.LemXOld));
-        SaveCheckPos;
-      end;
-    end;
-
-    procedure MoveVertical;
-    begin
-      while CurrPosY <> L.LemY do
-      begin
-        Inc(CurrPosY, sign(L.LemY - L.LemYOld));
-        SaveCheckPos;
-      end;
-    end;
-
-  begin
-    n := 0;
-    CurrPosX := L.LemXOld;
-    CurrPosY := L.LemYOld;
-    // no movement
-    if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
-      SaveCheckPos
-
-    // special treatment of miners!
-    else if L.LemActionOld = baMining then
-    begin
-      // First move one pixel down, if Y-coordinate changed
-      if L.LemYOld < L.LemY then
-      begin
-        Inc(CurrPosY);
-        SaveCheckPos;
-      end;
-      MoveHoizontal;
-      MoveVertical;
-    end
-
-    // lem moves up or is faller; exception is made for builders!
-    else if ((L.LemY < L.LemYOld) or (L.LemAction = baFalling)) and not (L.LemActionOld = baBuilding) then
-    begin
-      MoveHoizontal;
-      MoveVertical;
-    end
-
-    // lem moves down (or straight) and is no faller; alternatively lem is a builder!
-    else
-    begin
-      MoveVertical;
-      MoveHoizontal;
-    end;
-  end;
-
 begin
   // special treatment for blockers: Check only for (locked) exit
   if L.LemAction = baBlocking then
@@ -2929,81 +2932,87 @@ begin
   end;
 
   // Get positions to check for trigger areas
-  GetObjectCheckPositions(L);
+  CheckPos := GetObjectCheckPositions(L);
+  // CheckPosX := CheckPosAll[0];
+  // CheckPosY := CheckPosAll[1];
 
   // Now move through the values in CheckPosX/Y and check for trigger areas
   i := -1;
   AbortChecks := False;
   repeat
     Inc(i);
-    // Check for interactive objects
 
-    if HasTriggerAt(CheckPosX[i], CheckPosY[i], trTrap) then
+    // Make sure, that we do not move outside the range of CheckPos.
+    Assert(i <= Length(CheckPos[0]), 'CheckTriggerArea: CheckPos has not enough entries');
+    Assert(i <= Length(CheckPos[1]), 'CheckTriggerArea: CheckPos has not enough entries');
+
+    // Check for interactive objects
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
     begin
-      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trTrap);
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trTrap);
       if ObjectID <> 65535 then
         if ObjectInfos[ObjectID].TriggerEffect = DOM_TRAP then
           AbortChecks := HandleTrap(L, ObjectID)
         else
           AbortChecks := HandleTrapOnce(L, ObjectID);
     end
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trAnimation) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnimation) then
     begin
-      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trAnimation);
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trAnimation);
       if ObjectID <> 65535 then
         AbortChecks := HandleObjAnimation(L, ObjectID);
     end
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trTeleport) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
     begin
-      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trTeleport);
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trTeleport);
       if ObjectID <> 65535 then
         if ObjectInfos[ObjectID].TriggerEffect = DOM_SINGLETELE then
           AbortChecks := HandleTelepSingle(L, ObjectID)
         else
           AbortChecks := HandleTeleport(L, ObjectID);
     end
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trPickup) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPickup) then
     begin
-      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trPickup);
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trPickup);
       if ObjectID <> 65535 then
         AbortChecks := HandlePickup(L, ObjectID)
     end
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trButton) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trButton) then
     begin
-      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trButton);
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trButton);
       if ObjectID <> 65535 then
         AbortChecks := HandleButton(L, ObjectID)
     end
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trExit) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
       AbortChecks := HandleExit(L, False)
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trRadiation) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
       AbortChecks := HandleRadiation(L, False)
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trSlowfreeze) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
       AbortChecks := HandleRadiation(L, True)
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trFire) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
       AbortChecks := HandleFire(L)
-    else if HasTriggerAt(CheckPosX[i], CheckPosY[i], trFlipper) then
+    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper) then
     begin
-      ObjectID := FindObjectID(CheckPosX[i], CheckPosY[i], trFlipper);
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trFlipper);
       if ObjectID <> 65535 then
         AbortChecks := HandleFlipper(L, ObjectID);
     end;
     
     // Check only for drowning here!
-    if HasTriggerAt(CheckPosX[i], CheckPosY[i], trWater) then
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
       AbortChecks := HandleWaterDrown(L) or AbortChecks;
 
     // If the lem was required stop, move him there!
     if AbortChecks then
     begin
-      L.LemX := CheckPosX[i];
-      L.LemY := CheckPosY[i];
+      L.LemX := CheckPos[0, i];
+      L.LemY := CheckPos[1, i];
     end;
 
     // Set L.LemInFlipper correctly
-    if not HasTriggerAt(CheckPosX[i], CheckPosY[i], trFlipper) then
+    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper) then
       L.LemInFlipper := DOM_NOOBJECT;
-  until [CheckPosX[i], CheckPosY[i]] = [L.LemX, L.LemY] (*or AbortChecks*);
+  until [CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY] (*or AbortChecks*);
 
   // Check for water to transition to swimmer only at final position
   if HasTriggerAt(L.LemX, L.LemY, trWater) then
