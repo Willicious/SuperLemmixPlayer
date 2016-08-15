@@ -293,7 +293,7 @@ end;
 
 procedure TFormNXConfig.SliderChange(Sender: TObject);
 begin
- //
+  btnApply.Enabled := true;
 end;
 
 end.
