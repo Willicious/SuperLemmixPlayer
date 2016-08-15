@@ -504,17 +504,24 @@ var
   CopyL: TLemming;
   FrameCount: Integer; // counts number of frames we have simulated, because glider paths can be infinitely long
   MaxFrameCount: Integer;
+  LemPosArray: TArrayArrayInt;
+  i: Integer;
 begin
   // Set ShadowLayer to be drawn
   fLayers.fIsEmpty[rlLowShadows] := False;
   // Initialize FrameCount
   FrameCount := 0;
   MaxFrameCount := 2000; // enough to fill the current screen, which should be sufficient
+  // Initialize LemPosArray
+  Setlength(LemPosArray, 2, 0);
   // Copy L to simulate the path
   CopyL := TLemming.Create;
   CopyL.Assign(L);
   // and make sure the copied lemming is a glider
   CopyL.LemIsGlider := True;
+
+  // Simulate first frame advance for lemming
+  LemPosArray := fRenderInterface.SimulateLem(CopyL);
 
   // We simulate as long as the lemming is gliding, but allow for a falling period at the beginning
   while     (FrameCount < MaxFrameCount)
@@ -523,11 +530,14 @@ begin
   begin
     Inc(FrameCount);
 
-    // Print shadow pixel
-    SetLowShadowPixel(CopyL.LemX, CopyL.LemY);
+    // Print shadow pixel of previous movement
+    for i := 0 to Length(LemPosArray[0]) do
+    begin
+      SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i]);
+    end;
 
     // Simulate next frame advance for lemming
-    fRenderInterface.SimulateLem(CopyL);
+    LemPosArray := fRenderInterface.SimulateLem(CopyL);
   end;
 
   CopyL.Free;
