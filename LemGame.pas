@@ -310,8 +310,9 @@ type
     ObjectMap                  : TByteMap;
     BlockerMap                 : TByteMap; // for blockers
     //SpecialMap                 : TByteMap; // for steel and oneway
-    WaterMap                   : TByteMap; // for water, so that other objects can be on it for swimmers etc to use
+    WaterMap                   : TArrayArrayBoolean; // for water, so that other objects can be on it for swimmers etc to use
     ZombieMap                  : TByteMap;
+    ExitMap                    : TArrayArrayBoolean;
     fReplayManager             : TReplay;
 
   { reference objects, mostly for easy access in the mechanics-code }
@@ -530,7 +531,9 @@ type
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeMiniMap;
-    procedure InitializeObjectMap;
+    procedure InitializeObjectMap(DoAllMaps: Boolean = True);
+      procedure WriteTriggerMap(Map: TArrayArrayBoolean; Rect: TRect; DoAddArea: Boolean = True);
+      function ReadTriggerMap(X, Y: Integer; Map: TArrayArrayBoolean): Boolean;
     procedure InitializeBlockerMap;
     procedure LayBrick(L: TLemming);
     function LayStackBrick(L: TLemming): Boolean;
@@ -820,7 +823,7 @@ begin
   ObjectMap := TByteMap.Create;
   BlockerMap := TByteMap.Create;
   //SpecialMap := TByteMap.Create;
-  WaterMap := TByteMap.Create;
+  //WaterMap := TByteMap.Create;
   ZombieMap := TByteMap.Create;
 end;
 
@@ -835,7 +838,7 @@ begin
   ObjectMap.Free;
   BlockerMap.Free;
   //SpecialMap.Free;
-  WaterMap.Free;
+  //WaterMap.Free;
   ZombieMap.Free;
   inherited;
 end;
@@ -964,7 +967,7 @@ begin
   aState.ObjectMap.Assign(ObjectMap);
   aState.BlockerMap.Assign(BlockerMap);
   //aState.SpecialMap.Assign(SpecialMap);
-  aState.WaterMap.Assign(WaterMap);
+  //aState.WaterMap.Assign(WaterMap);
   aState.ZombieMap.Assign(ZombieMap);
   aState.CurrentIteration := fCurrentIteration;
   aState.ClockFrame := fClockFrame;
@@ -1036,7 +1039,7 @@ begin
   ObjectMap.Assign(aState.ObjectMap);
   BlockerMap.Assign(aState.BlockerMap);
   //SpecialMap.Assign(aState.SpecialMap);
-  WaterMap.Assign(aState.WaterMap);
+  //WaterMap.Assign(aState.WaterMap);
   ZombieMap.Assign(aState.ZombieMap);
   fCurrentIteration := aState.CurrentIteration;
   fClockFrame := aState.ClockFrame;
@@ -1082,6 +1085,9 @@ begin
   begin
     aState.ObjectInfos[i].AssignTo(ObjectInfos[i]);
   end;
+
+  // Redraw Object maps if they could have changed.
+  InitializeObjectMap(False);
 
   // When loading, we must update the info panel. But if we're just using the state
   // for an approximate location, we don't need to do this, it just results in graphical
@@ -1194,7 +1200,7 @@ begin
   BlockerMap     := TByteMap.Create;
   //SpecialMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
-  WaterMap       := TByteMap.Create;
+  //WaterMap       := TByteMap.Create;
   MiniMap        := TBitmap32.Create;
   //fRecorder      := TRecorder.Create(Self);
   fReplayManager := TReplay.Create;
@@ -1321,7 +1327,7 @@ begin
   BlockerMap.Free;
   //SpecialMap.Free;
   ZombieMap.Free;
-  WaterMap.Free;
+  //WaterMap.Free;
   MiniMap.Free;
   fReplayManager.Free;
   SoundMgr.Free;
@@ -1711,10 +1717,12 @@ begin
 
   // can't fix it in the previous loop tidily, so this will fix the locked exit
   // displaying as locked when it isn't issue on levels with no buttons
-  if ButtonsRemain = 0 then
+
+  // We no longer need this
+  (* if ButtonsRemain = 0 then
     for i := 0 to ObjectInfos.Count-1 do
       if (ObjectInfos[i].TriggerEffect = DOM_LOCKEXIT) then
-        ObjectInfos[i].CurrentFrame := 0;
+        ObjectInfos[i].CurrentFrame := 0; *)
 
   ApplyLevelEntryOrder;
   InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
@@ -2315,7 +2323,26 @@ begin
   end;
 end;
 
-procedure TLemmingGame.InitializeObjectMap;
+procedure TLemmingGame.WriteTriggerMap(Map: TArrayArrayBoolean; Rect: TRect; DoAddArea: Boolean = True);
+var
+  X, Y: Integer;
+begin
+  for Y := Rect.Top to Rect.Bottom - 1 do
+  for X := Rect.Left to Rect.Right - 1 do
+    if (X >= 0) and (X < Level.Info.Width) and (Y >= 0) and (Y < Level.Info.Height) then
+      Map[X, Y] := DoAddArea;
+end;
+
+function TLemmingGame.ReadTriggerMap(X, Y: Integer; Map: TArrayArrayBoolean): Boolean;
+begin
+  if (X >= 0) and (X < Level.Info.Width) and (Y >= 0) and (Y < Level.Info.Height) then
+    Result := Map[X, Y]
+  else
+    Result := False;
+end;
+
+
+procedure TLemmingGame.InitializeObjectMap(DoAllMaps: Boolean = True);
 {-------------------------------------------------------------------------------
 
   In one of the previous e-mails I said the DOS Lemmings object map has an
@@ -2337,18 +2364,39 @@ var
   V: Byte;
 begin
 
+
   ObjectMap.SetSize(2*Level.Info.Width, Level.Info.Height);
   ObjectMap.Clear(255);
+
+  SetLength(ExitMap, 0, 0);
+  SetLength(ExitMap, Level.Info.Width, Level.Info.Height);
 
   //SpecialMap.SetSize(Level.Info.Width, Level.Info.Height);
   //SpecialMap.Clear(DOM_NONE);
 
-  WaterMap.SetSize(Level.Info.Width, Level.Info.Height);
-  WaterMap.Clear(DOM_NONE);
+  SetLength(WaterMap, 0, 0);
+  SetLength(WaterMap, Level.Info.Width, Level.Info.Height);
+
+  //WaterMap.SetSize(Level.Info.Width, Level.Info.Height);
+  //WaterMap.Clear(DOM_NONE);
 
   for i := 0 to ObjectInfos.Count - 1 do
   begin
+    case ObjectInfos[i].TriggerEffect of
+      DOM_EXIT: WriteTriggerMap(ExitMap, ObjectInfos[i].TriggerRect);
+      DOM_LOCKEXIT:
+          if ButtonsRemain = 0 then
+          begin
+            ObjectInfos[i].CurrentFrame := 0;
+            WriteTriggerMap(ExitMap, ObjectInfos[i].TriggerRect);
+          end;
+      DOM_WATER: WriteTriggerMap(WaterMap, ObjectInfos[i].TriggerRect)
+    end;
+
+
+    // And here comes the elder code
     V := ObjectInfos[i].TriggerEffect;
+
     if not (V in [DOM_NONE, DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND]) then
     begin
       for Y := ObjectInfos[i].TriggerRect.Top to ObjectInfos[i].TriggerRect.Bottom - 1 do
@@ -2360,39 +2408,15 @@ begin
             WriteSpecialMap(X, Y, V)
         end
         else} if V = DOM_WATER then
-          WriteWaterMap(X, Y, V)
+          {WriteWaterMap(X, Y, V) }
         else if V = DOM_BLOCKER then
           WriteBlockerMap(X, Y, V)
         else
           WriteObjectMap(X, Y, i); // traps --> object_id
       end;
     end;
+
   end; // for i
-
-
-  // map steel
-  (*if ((Level.Info.LevelOptions and 4) = 0)
-     and (fGameParams.SysDat.Options and 64 = 0) then
-  begin
-    with Level.Steels, HackedList do
-    begin
-      for i := 0 to Count - 1 do
-      begin
-        S := List^[i];
-        with S do
-          for y := Top to Top + Height - 1 do //SteelY to SteelY + SteelHeight - 1 do
-          for x := Left to Left + Width - 1 do //SteelX to SteelX + SteelWidth - 1 do
-            case S.fType of
-              0: WriteSpecialMap(x, y, DOM_STEEL);
-              // 1: WriteSpecialMap(x, y, DOM_EXIT);  // no longer needed
-              2: WriteSpecialMap(x, y, DOM_ONEWAYLEFT);
-              3: WriteSpecialMap(x, y, DOM_ONEWAYRIGHT);
-              4: WriteSpecialMap(x, y, DOM_ONEWAYDOWN);
-            end;
-
-      end;
-    end;
-  end;*)
 end;
 
 
@@ -3032,15 +3056,14 @@ begin
   Result := False;
 
   case TriggerType of
-    trExit:       Result :=     (ReadObjectMapType(X, Y) = DOM_EXIT)
-                            or ((ReadObjectMapType(X, Y) = DOM_LOCKEXIT) and (ButtonsRemain = 0));
+    trExit:       Result :=      ReadTriggerMap(X, Y, ExitMap);
     trForceLeft:  Result :=     (ReadObjectMapType(X, Y) = DOM_FORCELEFT)
                             or ((ReadBlockerMap(X, Y) = DOM_FORCELEFT) and not (ReadObjectMapType(X, Y) = DOM_FORCERIGHT));
     trForceRight: Result :=     (ReadObjectMapType(X, Y) = DOM_FORCERIGHT)
                             or ((ReadBlockerMap(X, Y) = DOM_FORCERIGHT) and not (ReadObjectMapType(X, Y) = DOM_FORCELEFT));
     trTrap:       Result :=     (ReadObjectMapType(X, Y) = DOM_TRAP)
                             or  (ReadObjectMapType(X, Y) = DOM_TRAPONCE);
-    trWater:      Result :=     (ReadWaterMap(X, Y) = DOM_WATER);
+    trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);  //(ReadWaterMap(X, Y) = DOM_WATER);
     trFire:       Result :=     (ReadObjectMapType(X, Y) = DOM_FIRE);
     trOWLeft:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0);
     trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);
@@ -3272,6 +3295,8 @@ begin
           Inf := ObjectInfos[n];
           Inf.Triggered := True;
           CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), Inf.Center);
+          // Write exit trigger area
+          WriteTriggerMap(ExitMap, Inf.TriggerRect)
         end;
     end;
   end;
