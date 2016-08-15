@@ -3658,6 +3658,7 @@ procedure TLemmingGame.CheckForNewShadow;
 var
   ShadowSkillButton: TSkillPanelButton;
   ShadowLem: TLemming;
+  ShadowEndPos: Integer;
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker,
                     spbDigger, spbMiner, spbBasher, spbExplode, spbGlider];
@@ -3669,6 +3670,7 @@ begin
   begin
     ShadowSkillButton := fSelectedSkill;
     ShadowLem := fLemSelected;
+    ShadowEndPos := GetShadowEndPos;
   end
   else
   begin
@@ -3677,7 +3679,10 @@ begin
 
     // Glider happens if the lemming is a glider, even when other skills are
     if Assigned(ShadowLem) and ShadowLem.LemIsGlider and (ShadowLem.LemAction in [baFalling, baGliding]) then
-      ShadowSkillButton := spbGlider
+    begin
+      ShadowSkillButton := spbGlider;
+      ShadowEndPos := 0;
+    end
     else
     begin
       ShadowSkillButton := spbNone;
@@ -3703,7 +3708,7 @@ begin
       if not (ShadowSkillButton in ShadowSkillSet) then Exit; // Should always be the case, but to be sure...
 
       // Draw the shadows
-      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, GetShadowEndPos);
+      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, ShadowEndPos);
 
       // remember stats for lemming with shadow
       fLemWithShadow := ShadowLem;
@@ -4903,6 +4908,8 @@ end;
 
 procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0);
 begin
+  if fSimulation then Exit;
+
   if L.LemIsZombie then
   begin
     Assert(RemMode <> RM_SAVE, 'Zombie removed with RM_SAVE removal type!');
