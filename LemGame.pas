@@ -310,9 +310,19 @@ type
     ObjectMap                  : TByteMap;
     BlockerMap                 : TByteMap; // for blockers
     //SpecialMap                 : TByteMap; // for steel and oneway
-    WaterMap                   : TArrayArrayBoolean; // for water, so that other objects can be on it for swimmers etc to use
     ZombieMap                  : TByteMap;
     ExitMap                    : TArrayArrayBoolean;
+    WaterMap                   : TArrayArrayBoolean;
+    FireMap                    : TArrayArrayBoolean;
+    UpdraftMap                 : TArrayArrayBoolean;
+    FlipperMap                 : TArrayArrayBoolean;
+    RadiationMap               : TArrayArrayBoolean;
+    SlowfreezeMap              : TArrayArrayBoolean;
+    SplatMap                   : TArrayArrayBoolean;
+    AntiSplatMap               : TArrayArrayBoolean;
+    AnimationMap               : TArrayArrayBoolean;
+
+
     fReplayManager             : TReplay;
 
   { reference objects, mostly for easy access in the mechanics-code }
@@ -542,7 +552,7 @@ type
     function ReadObjectMapType(X, Y: Integer): Byte;
     function ReadBlockerMap(X, Y: Integer): Byte;
     //function ReadSpecialMap(X, Y: Integer): Byte;
-    function ReadWaterMap(X, Y: Integer): Byte;
+    //function ReadWaterMap(X, Y: Integer): Byte;
     function ReadZombieMap(X, Y: Integer): Byte;
     procedure RecordNuke;
     procedure RecordReleaseRate(aActionFlag: Byte);
@@ -564,7 +574,7 @@ type
     procedure WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = False);
     procedure WriteBlockerMap(X, Y: Integer; aValue: Byte);
     //procedure WriteSpecialMap(X, Y: Integer; aValue: Byte);
-    procedure WriteWaterMap(X, Y: Integer; aValue: Byte);
+    //procedure WriteWaterMap(X, Y: Integer; aValue: Byte);
     procedure WriteZombieMap(X, Y: Integer; aValue: Byte);
 
     function CheckLemmingBlink: Boolean;
@@ -2014,13 +2024,13 @@ begin
   if Y < 0 then Result := DOM_STEEL;
 end;}
 
-function TLemmingGame.ReadWaterMap(X, Y: Integer): Byte;
+(* function TLemmingGame.ReadWaterMap(X, Y: Integer): Byte;
 begin
   if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     Result := WaterMap.Value[X, Y]
   else
     Result := DOM_NONE; // whoops, important
-end;
+end;  *)
 
 procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aValue: Byte);
 begin
@@ -2034,11 +2044,11 @@ begin
     ZombieMap.Value[X, Y] := ZombieMap.Value[X, Y] or aValue
 end;
 
-procedure TLemmingGame.WriteWaterMap(X, Y: Integer; aValue: Byte);
+(* procedure TLemmingGame.WriteWaterMap(X, Y: Integer; aValue: Byte);
 begin
   if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     WaterMap.Value[X, Y] := aValue;
-end;
+end; *)
 
 
 {procedure TLemmingGame.WriteSpecialMap(X, Y: Integer; aValue: Byte);
@@ -2363,8 +2373,6 @@ var
   S: TSteel;
   V: Byte;
 begin
-
-
   ObjectMap.SetSize(2*Level.Info.Width, Level.Info.Height);
   ObjectMap.Clear(255);
 
@@ -2374,11 +2382,41 @@ begin
   //SpecialMap.SetSize(Level.Info.Width, Level.Info.Height);
   //SpecialMap.Clear(DOM_NONE);
 
-  SetLength(WaterMap, 0, 0);
-  SetLength(WaterMap, Level.Info.Width, Level.Info.Height);
-
   //WaterMap.SetSize(Level.Info.Width, Level.Info.Height);
   //WaterMap.Clear(DOM_NONE);
+
+  if DoAllMaps then
+  begin
+    SetLength(WaterMap, 0, 0);
+    SetLength(WaterMap, Level.Info.Width, Level.Info.Height);
+
+    SetLength(FireMap, 0, 0);
+    SetLength(FireMap, Level.Info.Width, Level.Info.Height);
+
+    SetLength(UpdraftMap, 0, 0);
+    SetLength(UpdraftMap, Level.Info.Width, Level.Info.Height);
+
+    SetLength(FlipperMap, 0, 0);
+    SetLength(FlipperMap, Level.Info.Width, Level.Info.Height);
+
+    SetLength(RadiationMap, 0, 0);
+    SetLength(RadiationMap, Level.Info.Width, Level.Info.Height);
+
+    SetLength(SlowfreezeMap, 0, 0);
+    SetLength(SlowfreezeMap, Level.Info.Width, Level.Info.Height);
+
+    SetLength(SplatMap, 0, 0);
+    SetLength(SplatMap, Level.Info.Width, Level.Info.Height);
+
+    SetLength(AntiSplatMap, 0, 0);
+    SetLength(AntiSplatMap, Level.Info.Width, Level.Info.Height);
+
+    SetLength(AnimationMap, 0, 0);
+    SetLength(AnimationMap, Level.Info.Width, Level.Info.Height);
+  end;
+
+
+
 
   for i := 0 to ObjectInfos.Count - 1 do
   begin
@@ -2390,7 +2428,15 @@ begin
             ObjectInfos[i].CurrentFrame := 0;
             WriteTriggerMap(ExitMap, ObjectInfos[i].TriggerRect);
           end;
-      DOM_WATER: WriteTriggerMap(WaterMap, ObjectInfos[i].TriggerRect)
+      DOM_WATER: if DoAllMaps then WriteTriggerMap(WaterMap, ObjectInfos[i].TriggerRect);
+      DOM_FIRE: if DoAllMaps then WriteTriggerMap(FireMap, ObjectInfos[i].TriggerRect);
+      DOM_UPDRAFT: if DoAllMaps then WriteTriggerMap(UpdraftMap, ObjectInfos[i].TriggerRect);
+      DOM_FLIPPER: if DoAllMaps then WriteTriggerMap(FlipperMap, ObjectInfos[i].TriggerRect);
+      DOM_RADIATION: if DoAllMaps then WriteTriggerMap(RadiationMap, ObjectInfos[i].TriggerRect);
+      DOM_SLOWFREEZE: if DoAllMaps then WriteTriggerMap(SlowfreezeMap, ObjectInfos[i].TriggerRect);
+      DOM_SPLAT: if DoAllMaps then WriteTriggerMap(SplatMap, ObjectInfos[i].TriggerRect);
+      DOM_NOSPLAT: if DoAllMaps then WriteTriggerMap(AntiSplatMap, ObjectInfos[i].TriggerRect);
+      DOM_ANIMATION: if DoAllMaps then WriteTriggerMap(AnimationMap, ObjectInfos[i].TriggerRect);
     end;
 
 
@@ -3064,7 +3110,7 @@ begin
     trTrap:       Result :=     (ReadObjectMapType(X, Y) = DOM_TRAP)
                             or  (ReadObjectMapType(X, Y) = DOM_TRAPONCE);
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);  //(ReadWaterMap(X, Y) = DOM_WATER);
-    trFire:       Result :=     (ReadObjectMapType(X, Y) = DOM_FIRE);
+    trFire:       Result :=     ReadTriggerMap(X, Y, FireMap); //(ReadObjectMapType(X, Y) = DOM_FIRE);
     trOWLeft:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0);
     trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);
     trOWDown:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYDOWN <> 0);
@@ -3076,14 +3122,14 @@ begin
                             or  (ReadObjectMapType(X, Y) = DOM_TELEPORT);
     trPickup:     Result :=     (ReadObjectMapType(X, Y) = DOM_PICKUP);
     trButton:     Result :=     (ReadObjectMapType(X, Y) = DOM_BUTTON);
-    trRadiation:  Result :=     (ReadObjectMapType(X, Y) = DOM_RADIATION);
-    trSlowfreeze: Result :=     (ReadObjectMapType(X, Y) = DOM_SLOWFREEZE);
-    trUpdraft:    Result :=     (ReadObjectMapType(X, Y) = DOM_UPDRAFT);
-    trFlipper:    Result :=     (ReadObjectMapType(X, Y) = DOM_FLIPPER);
-    trSplat:      Result :=     (ReadObjectMapType(X, Y) = DOM_SPLAT);
-    trNoSplat:    Result :=     (ReadObjectMapType(X, Y) = DOM_NOSPLAT);
+    trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap); // (ReadObjectMapType(X, Y) = DOM_RADIATION);
+    trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);//(ReadObjectMapType(X, Y) = DOM_SLOWFREEZE);
+    trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap); // (ReadObjectMapType(X, Y) = DOM_UPDRAFT);
+    trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap); //(ReadObjectMapType(X, Y) = DOM_FLIPPER);
+    trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap); // (ReadObjectMapType(X, Y) = DOM_SPLAT);
+    trNoSplat:    Result :=     ReadTriggerMap(X, Y, AntiSplatMap); //(ReadObjectMapType(X, Y) = DOM_NOSPLAT);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
-    trAnimation:  Result :=     (ReadObjectMapType(X, Y) = DOM_ANIMATION);
+    trAnimation:  Result :=     ReadTriggerMap(X, Y, AnimationMap); //(ReadObjectMapType(X, Y) = DOM_ANIMATION);
   end;
 end;
 
