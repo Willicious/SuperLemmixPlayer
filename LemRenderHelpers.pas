@@ -35,6 +35,7 @@ type
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
+  TSimulateLemRoutine = procedure(L: TLemming) of object;
 
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
@@ -146,14 +147,17 @@ type
       fMousePos: TPoint;
       fDrawRoutines: TDrawRoutines;
       fRemoveRoutine: TRemoveRoutine;
+      fSimulateLemRoutine: TSimulateLemRoutine;
       function GetSelectedSkill: TSkillPanelButton;
     public
       constructor Create;
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
       procedure SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
+      procedure SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
       procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
+      procedure SimulateLem(L: TLemming);
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
@@ -225,6 +229,11 @@ begin
   fRemoveRoutine := aRoutine;
 end;
 
+procedure TRenderInterface.SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
+begin
+  fSimulateLemRoutine := aRoutine;
+end;
+
 procedure TRenderInterface.AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
 begin
   // TLemmingGame is expected to handle modifications to the physics map.
@@ -239,6 +248,11 @@ begin
   // within the rectange defined defined by (X, Y, Width, Height)
   // Whenever LemGame removes some terrain, it is expected to call this method!
   fRemoveRoutine(X, Y, Width, Height);
+end;
+
+procedure TRenderInterface.SimulateLem(L: TLemming);
+begin
+  fSimulateLemRoutine(L);
 end;
 
 

@@ -455,6 +455,7 @@ type
     fOnDebugLemming            : TLemmingEvent; // eventhandler for debugging lemming under the cursor
     fOnFinish                  : TNotifyEvent;
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
+    fSimulation                : Boolean; // whether we are in simulation mode for drawing shadows
   { update skill panel functions }
     procedure UpdateLemmingCounts;
     procedure UpdateTimeLimit;
@@ -550,6 +551,7 @@ type
     procedure RestoreMap;
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
+    procedure SimulateLem(L: TLemming);
     procedure AddPreplacedLemming;
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
@@ -1205,6 +1207,7 @@ begin
   fRenderInterface.SelectedLemming := nil;
   fRenderInterface.HighlitLemming := nil;
   fRenderInterface.ReplayLemming := nil;
+  fRenderInterface.SetSimulateLemRoutine(SimulateLem);
 
   LemmingMethods[baNone]       := nil;
   LemmingMethods[baWalking]    := HandleWalking;
@@ -3648,7 +3651,7 @@ end;*)
 procedure TLemmingGame.CheckForNewShadow;
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker,
-                    spbDigger, spbMiner, spbBasher, spbExplode];
+                    spbDigger, spbMiner, spbBasher, spbExplode, spbGlider];
 begin
   if fHyperSpeed then Exit;
 
@@ -5472,6 +5475,8 @@ end;
 
 procedure TLemmingGame.CueSoundEffect(aSoundId: Integer);
 begin
+  if fSimulation then Exit; // Not play sound in simulation mode
+
   SoundMgr.QueueSound(aSoundId);
 
   if Paused then
@@ -5488,6 +5493,8 @@ var
   MidX: Integer; // we don't need MidY because we can't adjust the "height" of a sound anyway
   SrcX: Integer;
 begin
+  if fSimulation then Exit; // Not play sound in simulation mode
+
   MidX := fRenderInterface.ScreenPos.X + 160;
   SrcX := aOrigin.X;
 
@@ -5743,6 +5750,28 @@ begin
   end;
 
 end;
+
+procedure TLemmingGame.SimulateLem(L: TLemming); // Simulates advancing one frame for the lemming L
+var
+  HandleInteractiveObjects: Boolean;
+begin
+  // Start Simulation Mode
+  fSimulation := True;
+
+  // Advance lemming one frame
+  HandleInteractiveObjects := HandleLemming(L);
+  // Check whether the lem is still on screen
+  if HandleInteractiveObjects then
+    HandleInteractiveObjects := CheckLevelBoundaries(L);
+  // Check whether the lem has moved over trigger areas
+  // DOES NOT WORK YET, BECAUSE WE WANT NOT TO MODIFY ANY OBJECT!
+  // if HandleInteractiveObjects then
+  //   CheckTriggerArea(L);
+
+  // End Simulation Mode
+  fSimulation := False;
+end;
+
 
 
 function TLemmingGame.CheckLemTeleporting(L: TLemming): Boolean;

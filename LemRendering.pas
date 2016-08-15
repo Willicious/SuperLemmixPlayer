@@ -139,6 +139,7 @@ type
     procedure DrawLemmingParticles(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; PosMarker: Integer);
+    procedure DrawGliderShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -491,8 +492,48 @@ begin
         SetHighShadowPixel(L.LemX + PosMarker - BomberShadowPos[i, 0] - 1, L.LemY + BomberShadowPos[i, 1]);
       end;
     end;
+
+
+  spbGlider: DrawGliderShadow(L);
+
   end;
 end;
+
+procedure TRenderer.DrawGliderShadow(L: TLemming);
+var
+  CopyL: TLemming;
+  FrameCount: Integer; // counts number of frames we have simulated, because glider paths can be infinitely long
+  MaxFrameCount: Integer;
+begin
+  // Set ShadowLayer to be drawn
+  fLayers.fIsEmpty[rlLowShadows] := False;
+  // Initialize FrameCount
+  FrameCount := 0;
+  MaxFrameCount := 2000; // enough to fill the current screen, which should be sufficient
+  // Copy L to simulate the path
+  CopyL := TLemming.Create;
+  CopyL.Assign(L);
+  // and make sure the copied lemming is a glider
+  CopyL.LemIsGlider := True;
+
+  // We simulate as long as the lemming is gliding, but allow for a falling period at the beginning
+  while     (FrameCount < MaxFrameCount)
+        and Assigned(CopyL)
+        and ((CopyL.LemAction = baGliding) or ((FrameCount < 10) and (CopyL.LemAction = baFalling))) do
+  begin
+    Inc(FrameCount);
+
+    // Print shadow pixel
+    SetLowShadowPixel(CopyL.LemX, CopyL.LemY);
+
+    // Simulate next frame advance for lemming
+    fRenderInterface.SimulateLem(CopyL);
+  end;
+
+  CopyL.Free;
+end;
+
+
 
 procedure TRenderer.ClearShadows;
 begin
