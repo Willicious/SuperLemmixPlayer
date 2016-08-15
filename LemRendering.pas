@@ -1241,6 +1241,8 @@ begin
   fAni.MainDataFile := 'main.dat';
   fAni.ReadMetaData;
   fAni.ReadData;
+
+  fRecolorer.LoadSwaps(fTheme.Lemmings);
 end;
 
 end.
