@@ -15,7 +15,7 @@ uses
   Classes, Forms,
   GR32, GR32_Image,
   UTools,
-  LemStrings,
+  LemStrings, GameSound,
   LemCore, LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,
   LemNeoEncryption, LemNeoSave, TalisData,
@@ -138,7 +138,7 @@ type
     procedure SetOptionFlag(aFlag: TMiscOption; aValue: Boolean);
 
     function GetSoundFlag(aFlag: TGameSoundOption): Boolean;
-    procedure SetSoundFlag(aFlag: TGameSoundOption; aValue: Boolean);
+    //procedure SetSoundFlag(aFlag: TGameSoundOption; aValue: Boolean);
 
   public
     // this is initialized by appcontroller
@@ -201,8 +201,8 @@ type
     procedure SaveToIniFile;
     property SaveSystem: TNeoSave read fSaveSystem;
 
-    property MusicEnabled: Boolean Index gsoMusic read GetSoundFlag write SetSoundFlag;
-    property SoundEnabled: Boolean Index gsoSound read GetSoundFlag write SetSoundFlag;
+    property MusicEnabled: Boolean Index gsoMusic read GetSoundFlag;
+    property SoundEnabled: Boolean Index gsoSound read GetSoundFlag;
 
     property LookForLVLFiles: Boolean Index moLookForLVLFiles read GetOptionFlag write SetOptionFlag;
     property DebugSteel: Boolean Index moDebugSteel read GetOptionFlag write SetOptionFlag;
@@ -268,8 +268,8 @@ begin
 
   SL.Add('LastVersion=' + IntToStr(Cur_MainVer) + IntToStr(Cur_SubVer) + IntToStr(Cur_MinorVer));
 
-  SaveBoolean('MusicEnabled', MusicEnabled);
-  SaveBoolean('SoundEnabled', SoundEnabled);
+  SL.Add('MusicVolume=' + IntToStr(MusicVolume));
+  SL.Add('SoundVolume=' + IntToStr(SoundVolume));
   SaveBoolean('ClickHighlight', ClickHighlight);
   SaveBoolean('IgnoreReplaySelection', IgnoreReplaySelection);
   SaveBoolean('AutoReplayNames', AutoReplayNames);
@@ -310,8 +310,8 @@ begin
   SL := TStringList.Create;
   SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini');
 
-  MusicEnabled := LoadBoolean('MusicEnabled');
-  SoundEnabled := LoadBoolean('SoundEnabled');
+  MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 100);
+  SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 100);
   ClickHighlight := LoadBoolean('ClickHighlight');
   AutoReplayNames := LoadBoolean('AutoReplayNames');
   AutoSaveReplay := LoadBoolean('AutoSaveReplay');
@@ -333,6 +333,18 @@ begin
 
   if StrToIntDef(SL.Values['LastVersion'], 0) < 1441 then
     BlackOutZero := true;
+
+  if StrToIntDef(SL.Values['LastVersion'], 0) < 1471 then
+  begin
+    if LoadBoolean('SoundEnabled') then
+      SoundVolume := 100
+    else
+      SoundVolume := 0;
+    if LoadBoolean('MusicEnabled') then
+      MusicVolume := 100
+    else
+      MusicVolume := 0;
+  end;
 
   SL.Free;
 end;
@@ -408,16 +420,19 @@ end;
 
 function TDosGameParams.GetSoundFlag(aFlag: TGameSoundOption): Boolean;
 begin
-  Result := aFlag in SoundOptions;
+  if aFlag = gsoMusic then
+    Result := MusicVolume <> 0
+  else
+    Result := SoundVolume <> 0;
 end;
 
-procedure TDosGameParams.SetSoundFlag(aFlag: TGameSoundOption; aValue: Boolean);
+(*procedure TDosGameParams.SetSoundFlag(aFlag: TGameSoundOption; aValue: Boolean);
 begin
   if aValue then
     Include(SoundOptions, aFlag)
   else
     Exclude(SoundOptions, aFlag);
-end;
+end;*)
 
 end.
 

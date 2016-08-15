@@ -10,7 +10,7 @@ uses
   GR32, GR32_Image, GR32_Layers,
   UMisc, UTools,
   LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
-  LemGame,
+  LemGame, GameSound,
   GameControl, GameSkillPanel, GameBaseScreen;
 
 type
@@ -560,26 +560,26 @@ begin
           lka_FastForward: if not Paused then FastForward := not FastForward;
           lka_SaveImage: SaveShot;
           lka_LoadReplay: LoadReplay;
-          lka_Music: if gsoMusic in SoundOpts then
+          lka_Music: if MusicVolume <> 0 then
                      begin
                        SoundOpts := SoundOpts - [gsoMusic];
-                       GameParams.MusicEnabled := false;
+                       MusicVolume := 0;
                      end else begin
+                       MusicVolume := 100; // must be first, else music plays at volume zero                    
                        SoundOpts := SoundOpts + [gsoMusic];
-                       GameParams.MusicEnabled := true;
                      end;
           lka_Restart: begin
                          Game.Paused := false;          
                          GotoSaveState(0);
                          if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                        end;
-          lka_Sound: if gsoSound in SoundOpts then
+          lka_Sound: if SoundVolume <> 0 then
                      begin
                        SoundOpts := SoundOpts - [gsoSound];
-                       GameParams.SoundEnabled := false;
+                       SoundVolume := 0;
                      end else begin
                        SoundOpts := SoundOpts + [gsoSound];
-                       GameParams.SoundEnabled := true;
+                       SoundVolume := 100;
                      end;
           lka_SaveReplay: Save;
           lka_SkillRight: begin

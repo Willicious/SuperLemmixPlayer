@@ -7,7 +7,7 @@ uses
   SharedGlobals,
   LemTypes, LemRendering, LemLevel, LemDosStyle,
   TalisData, LemDosMainDAT, LemNeoEncryption, LemStrings,
-  GameControl,
+  GameControl, GameSound,
   FBaseDosForm,
   Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs;
 
@@ -512,7 +512,7 @@ var
   F: TGamePreviewScreen;
   dS, dL: Integer;
   i: Integer;
-  OldSound, OldMusic: Boolean;
+  OldSound, OldMusic: Integer;
   LevelIDArray: array of array of LongWord;
   FoundMatch: Boolean;
   TempSL: TStringList;
@@ -737,10 +737,10 @@ begin
     end else if fGameParams.ReplayCheckIndex <> -2 then
     begin
        TempSL := TStringList.Create;
-       OldSound := fGameParams.SoundEnabled;
-       OldMusic := fGameParams.MusicEnabled;
-       fGameParams.SoundEnabled := false;
-       fGameParams.MusicEnabled := false;
+       OldSound := SoundVolume;
+       OldMusic := MusicVolume;
+       SoundVolume := 0;
+       MusicVolume := 0;
        SetLength(LevelIDArray, TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetSectionCount);
        for dS := 0 to Length(LevelIDArray)-1 do
        begin
@@ -796,8 +796,8 @@ begin
        fGameParams.Info.dSection := 0;
        fGameParams.Info.dLevel := 0;
        ProduceReplayCheckResults;
-       fGameParams.SoundEnabled := OldSound;
-       fGameParams.MusicEnabled := OldMusic;
+       SoundVolume := OldSound;
+       MusicVolume := OldMusic;
        TempSL.Free;
     end else begin
       // In the case of loading a single level file, menu screen will never be displayed.

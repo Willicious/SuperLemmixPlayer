@@ -3,7 +3,7 @@ unit FNeoLemmixConfig;
 interface
 
 uses
-  GameControl, FEditHotkeys, LemDosStyle,
+  GameControl, GameSound, FEditHotkeys, LemDosStyle,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls;
 
@@ -12,8 +12,6 @@ type
     NXConfigPages: TPageControl;
     TabSheet1: TTabSheet;
     GroupBox1: TGroupBox;
-    cbMusic: TCheckBox;
-    cbSound: TCheckBox;
     btnOK: TButton;
     btnCancel: TButton;
     btnApply: TButton;
@@ -43,11 +41,14 @@ type
     btnClearSkill: TButton;
     cbExplicitCancel: TCheckBox;
     cbBlackOut: TCheckBox;
-    cbIgnoreReplaySelection: TCheckBox;
     TabSheet3: TTabSheet;
     cbEnableOnline: TCheckBox;
     cbUpdateCheck: TCheckBox;
     cbNoAutoReplay: TCheckBox;
+    tbSoundVol: TTrackBar;
+    tbMusicVol: TTrackBar;
+    Label3: TLabel;
+    Label5: TLabel;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -57,6 +58,7 @@ type
     procedure btnCheckSkillsClick(Sender: TObject);
     procedure OptionChanged(Sender: TObject);
     procedure cbEnableOnlineClick(Sender: TObject);
+    procedure SliderChange(Sender: TObject);
   private
     fGameParams: TDosGameParams;
     fForceSkillset: Word;
@@ -99,10 +101,9 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  cbMusic.Checked := fGameParams.MusicEnabled;
-  cbSound.Checked := fGameParams.SoundEnabled;
+  tbSoundVol.Position := SoundVolume;
+  tbMusicVol.Position := MusicVolume;
   cbOneClickHighlight.Checked := fGameParams.ClickHighlight;
-  cbIgnoreReplaySelection.Checked := fGameParams.IgnoreReplaySelection;
   cbLemmingBlink.Checked := fGameParams.LemmingBlink;
   cbTimerBlink.Checked := fGameParams.TimerBlink;
   cbBlackOut.Checked := fGameParams.BlackOutZero;
@@ -168,10 +169,11 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  fGameParams.MusicEnabled := cbMusic.Checked;
-  fGameParams.SoundEnabled := cbSound.Checked;
+  //fGameParams.MusicEnabled := cbMusic.Checked;
+  //fGameParams.SoundEnabled := cbSound.Checked;
+  SoundVolume := tbSoundVol.Position;
+  MusicVolume := tbMusicVol.Position;
   fGameParams.ClickHighlight := cbOneClickHighlight.Checked;
-  fGameParams.IgnoreReplaySelection := cbIgnoreReplaySelection.Checked;
   fGameParams.LemmingBlink := cbLemmingBlink.Checked;
   fGameParams.TimerBlink := cbTimerBlink.Checked;
   fGameParams.BlackOutZero := cbBlackOut.Checked;
@@ -287,6 +289,11 @@ procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);
 begin
   cbUpdateCheck.Enabled := cbEnableOnline.Checked;
   if not cbEnableOnline.Checked then cbUpdateCheck.Checked := false;
+end;
+
+procedure TFormNXConfig.SliderChange(Sender: TObject);
+begin
+ //
 end;
 
 end.
