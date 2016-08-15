@@ -589,7 +589,7 @@ begin
     end;
     Changed;
     Update;
-    Sleep(10);
+    Sleep(3);
     //Update;
   end;
 
