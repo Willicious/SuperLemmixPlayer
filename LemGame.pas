@@ -3655,15 +3655,40 @@ end;*)
 
 
 procedure TLemmingGame.CheckForNewShadow;
+var
+  ShadowSkillButton: TSkillPanelButton;
+  ShadowLem: TLemming;
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker,
                     spbDigger, spbMiner, spbBasher, spbExplode, spbGlider];
 begin
   if fHyperSpeed then Exit;
 
+  // Get correct skill to draw the shadow
+  if Assigned(fLemSelected) and (fSelectedSkill in ShadowSkillSet) then
+  begin
+    ShadowSkillButton := fSelectedSkill;
+    ShadowLem := fLemSelected;
+  end
+  else
+  begin
+    // Get next highest lemming under the cursor, even if he cannot receive the skill
+    GetPriorityLemming(ShadowLem, baNone, CursorPoint);
+
+    // Glider happens if the lemming is a glider, even when other skills are
+    if Assigned(ShadowLem) and ShadowLem.LemIsGlider and (ShadowLem.LemAction in [baFalling, baGliding]) then
+      ShadowSkillButton := spbGlider
+    else
+    begin
+      ShadowSkillButton := spbNone;
+      ShadowLem := nil;
+    end
+  end;
+
+
   // Check whether we have to redraw the Shadow (if lem or skill changed)
-  if (not fExistShadow) or (not (fLemWithShadow = fLemSelected))
-                        or (not (fLemWithShadowButton = fSelectedSkill)) then
+  if (not fExistShadow) or (not (fLemWithShadow = ShadowLem))
+                        or (not (fLemWithShadowButton = ShadowSkillButton)) then
   begin
     if fExistShadow then // false if coming from UpdateLemming
     begin
@@ -3674,16 +3699,17 @@ begin
 
     // Draw the new ShadowBridge
     try
-      if not Assigned(fLemSelected) then Exit;
-      if not (fSelectedSkill in ShadowSkillSet) then Exit;
+      if not Assigned(ShadowLem) then Exit;
+      if not (ShadowSkillButton in ShadowSkillSet) then Exit; // Should always be the case, but to be sure...
 
       // Draw the shadows
-      fRenderer.DrawShadows(fLemSelected, fSelectedSkill, GetShadowEndPos);
+      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, GetShadowEndPos);
 
       // remember stats for lemming with shadow
-      fLemWithShadow := fLemSelected;
-      fLemWithShadowButton := fSelectedSkill;
+      fLemWithShadow := ShadowLem;
+      fLemWithShadowButton := ShadowSkillButton;
       fExistShadow := True;
+
     except
       // Reset existing shadows
       fLemWithShadow := nil;
