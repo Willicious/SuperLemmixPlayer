@@ -552,7 +552,7 @@ type
     procedure RestoreMap;
     procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
-    procedure SimulateLem(L: TLemming);
+    function SimulateLem(L: TLemming): TArrayArrayInt;
     procedure AddPreplacedLemming;
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
@@ -2918,7 +2918,6 @@ end;
 procedure TLemmingGame.CheckTriggerArea(L: TLemming);
 // For intermediate pixels, we call the trigger function according to trigger area
 var
-  // CheckPosX, CheckPosY: array of Integer; // List of positions where to check
   CheckPos: TArrayArrayInt; // Combined list for both X- and Y-coordinates
   i: Integer;
   ObjectID: Word;
@@ -2933,8 +2932,6 @@ begin
 
   // Get positions to check for trigger areas
   CheckPos := GetObjectCheckPositions(L);
-  // CheckPosX := CheckPosAll[0];
-  // CheckPosY := CheckPosAll[1];
 
   // Now move through the values in CheckPosX/Y and check for trigger areas
   i := -1;
@@ -5760,9 +5757,11 @@ begin
 
 end;
 
-procedure TLemmingGame.SimulateLem(L: TLemming); // Simulates advancing one frame for the lemming L
+function TLemmingGame.SimulateLem(L: TLemming): TArrayArrayInt; // Simulates advancing one frame for the lemming L
 var
   HandleInteractiveObjects: Boolean;
+  LemPosArray: TArrayArrayInt;
+  i: Integer;
 begin
   // Start Simulation Mode
   fSimulation := True;
@@ -5773,12 +5772,42 @@ begin
   if HandleInteractiveObjects then
     HandleInteractiveObjects := CheckLevelBoundaries(L);
   // Check whether the lem has moved over trigger areas
-  // DOES NOT WORK YET, BECAUSE WE WANT NOT TO MODIFY ANY OBJECT!
-  // if HandleInteractiveObjects then
-  //   CheckTriggerArea(L);
+  if HandleInteractiveObjects then
+  begin
+    // Get positions to check
+    LemPosArray := GetObjectCheckPositions(L);
+
+    // Check for exit, traps and teleporters (but stop at teleporters!)
+    for i := 0 to Length(LemPosArray[0]) do
+    begin
+      if    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit)
+         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater)
+         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
+         or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
+             and (FindObjectID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
+         then
+      begin
+        L.LemAction := baExploding; // This always stops the simulation!
+        L := nil;
+        Break;
+      end;
+    end;
+
+    // Check for blocker fields and force-fields at the end of movement
+    if Assigned(L) then
+    begin
+      if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
+        HandleForceField(L, -1)
+      else if HasTriggerAt(L.LemX, L.LemY, trForceRight) then
+        HandleForceField(L, 1);
+    end;
+  end;
 
   // End Simulation Mode
   fSimulation := False;
+
+  Result := LemPosArray;
 end;
 
 

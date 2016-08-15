@@ -35,7 +35,7 @@ type
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
-  TSimulateLemRoutine = procedure(L: TLemming) of object;
+  TSimulateLemRoutine = function(L: TLemming): TArrayArrayInt of object;
 
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
@@ -157,7 +157,7 @@ type
       procedure SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
       procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
-      procedure SimulateLem(L: TLemming);
+      function SimulateLem(L: TLemming): TArrayArrayInt;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
@@ -250,9 +250,9 @@ begin
   fRemoveRoutine(X, Y, Width, Height);
 end;
 
-procedure TRenderInterface.SimulateLem(L: TLemming);
+function TRenderInterface.SimulateLem(L: TLemming): TArrayArrayInt;
 begin
-  fSimulateLemRoutine(L);
+  Result := fSimulateLemRoutine(L);
 end;
 
 
