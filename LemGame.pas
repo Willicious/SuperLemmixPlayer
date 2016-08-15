@@ -2804,7 +2804,7 @@ procedure TLemmingGame.InitializeMiniMap;
 begin
   // The renderer handles most of the work here now.
   Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
-  fRenderer.RenderMinimap(Minimap, LemmingList);
+  fRenderer.RenderMinimap(Minimap);
 end;
 
 function TLemmingGame.GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
@@ -4988,6 +4988,7 @@ begin
     //fRenderer.DrawLevel(fTargetBitmap);
 
   CheckForPlaySoundEffect;
+  InitializeMinimap;
 end;
 
 

@@ -150,7 +150,7 @@ type
     procedure CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
 
     // Minimap
-    procedure RenderMinimap(Dst: TBitmap32; aLemmings: TLemmingList = nil);
+    procedure RenderMinimap(Dst: TBitmap32);
     procedure CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
 
     property PhysicsMap: TBitmap32 read fPhysicsMap;
@@ -178,7 +178,7 @@ end;
 
 // Minimap drawing
 
-procedure TRenderer.RenderMinimap(Dst: TBitmap32; aLemmings: TLemmingList = nil);
+procedure TRenderer.RenderMinimap(Dst: TBitmap32);
 var
   OldCombine: TPixelCombineEvent;
   OldMode: TDrawMode;
@@ -198,11 +198,12 @@ begin
   fPhysicsMap.OnPixelCombine := OldCombine;
   fPhysicsMap.DrawMode := OldMode;
 
-  if aLemmings = nil then Exit;
+  if fRenderInterface = nil then Exit;
+  if fRenderInterface.LemmingList = nil then Exit;
 
-  for i := 0 to aLemmings.Count-1 do
+  for i := 0 to fRenderInterface.LemmingList.Count-1 do
   begin
-    L := aLemmings[i];
+    L := fRenderInterface.LemmingList[i];
     if L.LemRemoved then Continue;
     Dst.PixelS[L.LemX div 16, L.LemY div 8] := $FF00FF00;
   end;
