@@ -147,6 +147,9 @@ type
 
   end;
 
+var
+  SoundVolume, MusicVolume: Integer; // using global vars for now. Will implement a better-practice system later (even though I don't see what can go wrong with this)
+
 implementation
 
 uses
@@ -383,6 +386,7 @@ begin
       BASS_ChannelStop(fPlayingSounds[0]);
     c := BASS_SampleGetChannel(Integer(Sounds[Index]), true);
     BASS_ChannelSetAttribute(c, BASS_ATTRIB_PAN, Balance);
+    BASS_ChannelSetAttribute(c, BASS_ATTRIB_VOL, SoundVolume / 100);
 
     BASS_ChannelPlay(c, true);
 
@@ -406,6 +410,7 @@ begin
             BASS_ChannelStop(fPlayingSounds[i]);
           c := BASS_SampleGetChannel(Integer(Sounds[Index]), true);
           BASS_ChannelSetAttribute(c, BASS_ATTRIB_PAN, Balance);
+          BASS_ChannelSetAttribute(c, BASS_ATTRIB_VOL, SoundVolume / 100);
           {i2 := BASS_ErrorGetCode;
           if i2 <> 0 then messagedlg(inttostr(i2), mtcustom, [mbok], 0);}
           BASS_ChannelPlay(c, true);
@@ -532,7 +537,10 @@ begin
     BASS_LoadLoopData(fMusicRef);
 
   if fMusicRef <> 0 then
+  begin
+    BASS_ChannelSetAttribute(fMusicRef, BASS_ATTRIB_VOL, MusicVolume / 100);
     BASS_ChannelPlay(fMusicRef, false);
+  end;
 
 end;
 

@@ -100,6 +100,7 @@ type
 
     // Functional combines
     procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
+    procedure TerrainBitmapAutosteelMod(aBmp: TBitmap32; AutoSteel, SimpleSteel: Boolean);
     procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
@@ -615,6 +616,25 @@ end;
 
 // Functional combines
 
+procedure TRenderer.TerrainBitmapAutosteelMod(aBmp: TBitmap32; AutoSteel, SimpleSteel: Boolean);
+var
+  x, y: Integer;
+begin
+  if AutoSteel and not SimpleSteel then Exit; //no modifications needed
+  if not AutoSteel then
+  begin
+    for y := 0 to aBmp.Height-1 do
+      for x := 0 to aBmp.Width-1 do
+        if aBmp.Pixel[x, y] and PM_STEEL <> 0 then
+          aBmp.Pixel[x, y] := aBmp.Pixel[x, y] and not PM_STEEL;
+  end else begin
+    for y := 0 to aBmp.Height-1 do
+      for x := 0 to aBmp.Width-1 do
+        if aBmp.Pixel[x, y] and PM_SOLID <> 0 then
+          aBmp.Pixel[x, y] := aBmp.Pixel[x, y] or PM_NOCANCELSTEEL;
+  end;
+end;
+
 procedure TRenderer.PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
 var
   x, y: Integer;
@@ -654,13 +674,22 @@ end;
 procedure TRenderer.CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then
-    B := F;
+    if F and PM_NOCANCELSTEEL = 0 then
+      B := F
+    else
+      B := (B and PM_STEEL) or F;
 end;
 
 procedure TRenderer.CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F <> 0) and (B and PM_SOLID = 0) then
-    B := F;
+  if F <> 0 then
+    if B and PM_NOCANCELSTEEL = 0 then
+    begin
+      if (B and PM_SOLID = 0) then
+        B := F;
+    end else begin
+      B := B or (F and PM_STEEL);
+    end;
 end;
 
 procedure TRenderer.CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
@@ -1082,6 +1111,8 @@ var
 
         // Remove one-way markings if it's not one-way capable
         if P^ and PM_ONEWAY = 0 then P^ := P^ and not (PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN);
+
+        P^ := P^ and not PM_NOCANCELSTEEL;
       end;
   end;
 
@@ -1100,6 +1131,7 @@ begin
       T := Terrains[i];
       MT := FindMetaTerrain(T);
       PrepareTerrainFunctionBitmap(T, Bmp, MT);
+      TerrainBitmapAutosteelMod(Bmp, Info.LevelOptions and $02 <> 0, Info.LevelOptions and $08 <> 0);
       Bmp.DrawTo(Dst, T.Left, T.Top);
     end;
 
