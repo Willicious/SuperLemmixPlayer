@@ -1295,6 +1295,24 @@ end;
 
 destructor TLemmingGame.Destroy;
 begin
+  // Free memory of trigger area maps
+  SetLength(WaterMap, 0, 0);
+  SetLength(FireMap, 0, 0);
+  SetLength(TeleporterMap, 0, 0);
+  SetLength(UpdraftMap, 0, 0);
+  SetLength(ButtonMap, 0, 0);
+  SetLength(PickupMap, 0, 0);
+  SetLength(FlipperMap, 0, 0);
+  SetLength(RadiationMap, 0, 0);
+  SetLength(SlowfreezeMap, 0, 0);
+  SetLength(SplatMap, 0, 0);
+  SetLength(AntiSplatMap, 0, 0);
+  SetLength(AnimationMap, 0, 0);
+  SetLength(ExitMap, 0, 0);
+  SetLength(LockedExitMap, 0, 0);
+  SetLength(TrapMap, 0, 0);
+
+
   LemmingList.Free;
   ObjectInfos.Free;
   //World.Free;
