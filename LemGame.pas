@@ -232,11 +232,6 @@ type
       TargetBitmap: TBitmap32;
       World: TBitmap32;         // the visual terrain image
       PhysicsMap: TBitmap32;    // the actual physics
-      //SteelWorld: TBitmap32;
-      //ObjectMap: TByteMap;
-      //BlockerMap: TByteMap;
-      //SpecialMap: TByteMap;
-      //WaterMap: TByteMap;
       ZombieMap: TByteMap; // Still needed for now, because there is no proper method to set the ZombieMap
       CurrentIteration: Integer;
       ClockFrame: Integer;
@@ -305,11 +300,8 @@ type
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
     //World                      : TBitmap32; // actual bitmap that is changed by the lemmings
-    //SteelWorld                 : TBitmap32; // backup bitmap for steel purposes
     PhysicsMap                 : TBitmap32;
-    // ObjectMap                  : TByteMap;
     BlockerMap                 : TByteMap; // for blockers (and force fields)
-    //SpecialMap                 : TByteMap; // for steel and oneway
     ZombieMap                  : TByteMap;
     ExitMap                    : TArrayArrayBoolean;
     LockedExitMap              : TArrayArrayBoolean;
@@ -496,7 +488,6 @@ type
     procedure ApplyStoneLemming(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure AddConstructivePixel(X, Y: Integer);
-    procedure ApplyAutoSteel;
     procedure ApplyLevelEntryOrder;
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckAdjustReleaseRate;
@@ -534,12 +525,8 @@ type
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
-    //procedure DrawLemmings;
-    //  procedure DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
-    procedure DrawParticles(L: TLemming; DoErase: Boolean); // This also erases particles now!
     procedure CheckForNewShadow;
       function GetShadowEndPos: Integer;
-    procedure EraseLemmings;
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
     function HasPixelAt(X, Y: Integer): Boolean;
@@ -548,15 +535,10 @@ type
     procedure InitializeMiniMap;
     procedure InitializeAllObjectMaps;
 
-    //procedure InitializeBlockerMap;
     procedure LayBrick(L: TLemming);
     function LayStackBrick(L: TLemming): Boolean;
     procedure MoveLemToReceivePoint(L: TLemming; oid: Byte);
-    //function ReadObjectMap(X, Y: Integer): Word;
-    //function ReadObjectMapType(X, Y: Integer): Byte;
 
-    //function ReadSpecialMap(X, Y: Integer): Byte;
-    //function ReadWaterMap(X, Y: Integer): Byte;
     function ReadZombieMap(X, Y: Integer): Byte;
     procedure RecordNuke;
     procedure RecordReleaseRate(aActionFlag: Byte);
@@ -566,7 +548,6 @@ type
     procedure RemovePixelAt(X, Y: Integer);
     procedure ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
     //procedure ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
-    //procedure RestoreMap;
 
     procedure SetObjectMap;
       procedure WriteTriggerMap(Map: TArrayArrayBoolean; Rect: TRect);
@@ -576,7 +557,6 @@ type
       procedure WriteBlockerMap(X, Y: Integer; aValue: Byte);
       function ReadBlockerMap(X, Y: Integer): Byte;
 
-    //procedure SetBlockerField(L: TLemming);
     procedure SetZombieField(L: TLemming);
     function SimulateLem(L: TLemming): TArrayArrayInt;
     procedure AddPreplacedLemming;
@@ -584,10 +564,7 @@ type
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
     procedure UpdateInteractiveObjects;
-    //procedure WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = False);
 
-    //procedure WriteSpecialMap(X, Y: Integer; aValue: Byte);
-    //procedure WriteWaterMap(X, Y: Integer; aValue: Byte);
     procedure WriteZombieMap(X, Y: Integer; aValue: Byte);
 
     function CheckLemmingBlink: Boolean;
@@ -841,12 +818,7 @@ begin
   ObjectInfos := TInteractiveObjectInfoList.Create(true);
   TargetBitmap := TBitmap32.Create;
   World := TBitmap32.Create;
-  //SteelWorld := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
-  //ObjectMap := TByteMap.Create;
-  //BlockerMap := TByteMap.Create;
-  //SpecialMap := TByteMap.Create;
-  //WaterMap := TByteMap.Create;
   ZombieMap := TByteMap.Create;
 end;
 
@@ -856,12 +828,7 @@ begin
   ObjectInfos.Free;
   TargetBitmap.Free;
   World.Free;
-  //SteelWorld.Free;
   PhysicsMap.Free;
-  //ObjectMap.Free;
-  //BlockerMap.Free;
-  //SpecialMap.Free;
-  //WaterMap.Free;
   ZombieMap.Free;
   inherited;
 end;
@@ -985,12 +952,7 @@ begin
   aState.SelectedSkill := fSelectedSkill;
   aState.TargetBitmap.Assign(fTargetBitmap);
   aState.World.Assign(fRenderer.TerrainLayer);
-  //aState.SteelWorld.Assign(SteelWorld);
   aState.PhysicsMap.Assign(PhysicsMap);
-  //aState.ObjectMap.Assign(ObjectMap);
-  //aState.BlockerMap.Assign(BlockerMap);
-  //aState.SpecialMap.Assign(SpecialMap);
-  //aState.WaterMap.Assign(WaterMap);
   aState.ZombieMap.Assign(ZombieMap);
   aState.CurrentIteration := fCurrentIteration;
   aState.ClockFrame := fClockFrame;
@@ -1057,12 +1019,7 @@ begin
   if not SkipTargetBitmap then  // We don't need to bother with this one if we're not loading the exact frame we want to go to
     fTargetBitmap.Assign(aState.TargetBitmap);
   fRenderer.TerrainLayer.Assign(aState.World);
-  //SteelWorld.Assign(aState.SteelWorld);
   PhysicsMap.Assign(aState.PhysicsMap);
-  //ObjectMap.Assign(aState.ObjectMap);
-  //BlockerMap.Assign(aState.BlockerMap);
-  //SpecialMap.Assign(aState.SpecialMap);
-  //WaterMap.Assign(aState.WaterMap);
   ZombieMap.Assign(aState.ZombieMap);
   fCurrentIteration := aState.CurrentIteration;
   fClockFrame := aState.ClockFrame;
@@ -1216,15 +1173,11 @@ begin
 
   LemmingList    := TLemmingList.Create;
   //World          := TBitmap32.Create;
-  //SteelWorld     := TBitmap32.Create;
   ExplodeMaskBmp := TBitmap32.Create;
   ObjectInfos    := TInteractiveObjectInfoList.Create;
   Entries        := TInteractiveObjectInfoList.Create;
-  //ObjectMap      := TByteMap.Create;
   BlockerMap     := TByteMap.Create;
-  //SpecialMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
-  //WaterMap       := TByteMap.Create;
   MiniMap        := TBitmap32.Create;
   //fRecorder      := TRecorder.Create(Self);
   fReplayManager := TReplay.Create;
@@ -1345,13 +1298,9 @@ begin
   LemmingList.Free;
   ObjectInfos.Free;
   //World.Free;
-  //SteelWorld.Free;
   Entries.Free;
-  //ObjectMap.Free;
   BlockerMap.Free;
-  //SpecialMap.Free;
   ZombieMap.Free;
-  //WaterMap.Free;
   MiniMap.Free;
   fReplayManager.Free;
   SoundMgr.Free;
@@ -1739,15 +1688,6 @@ begin
       Inc(ButtonsRemain);
   end;
 
-  // can't fix it in the previous loop tidily, so this will fix the locked exit
-  // displaying as locked when it isn't issue on levels with no buttons
-
-  // We no longer need this
-  (* if ButtonsRemain = 0 then
-    for i := 0 to ObjectInfos.Count-1 do
-      if (ObjectInfos[i].TriggerEffect = DOM_LOCKEXIT) then
-        ObjectInfos[i].CurrentFrame := 0; *)
-
   ApplyLevelEntryOrder;
   InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
 
@@ -1757,7 +1697,6 @@ begin
   SetBlockerMap;
 
   InitializeMiniMap;
-  ApplyAutoSteel;
 
   //ShowMessage(IntToStr(Level.Info.LevelID));
 
@@ -1987,41 +1926,6 @@ begin
     L.LemX := Inf2.TriggerRect.Left + (L.LemX - Inf.TriggerRect.Left);
 end;
 
-(*
-function TLemmingGame.ReadObjectMap(X, Y: Integer): Word;
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    Result := (ObjectMap.Value[2*X, Y] shl 8) + ObjectMap.Value[2*X + 1, Y]
-  else
-    Result := DOM_NOOBJECT; // whoops, important
-end;
-*)
-
-(*
-function TLemmingGame.ReadObjectMapType(X, Y: Integer): Byte;
-var
-  ObjID: Word;
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-  begin
-    ObjID := ReadObjectMap(X, Y);
-    if ObjID = DOM_NOOBJECT then
-      Result := DOM_NONE
-    else
-      Result := ObjectInfos[ObjID].TriggerEffect;
-  end
-  else
-    Result := DOM_NONE; // whoops, important
-end;
-*)
-
-{function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    Result := BlockerMap.Value[X, Y]
-  else
-    Result := DOM_NONE; // whoops, important
-end;  }
 
 function TLemmingGame.ReadZombieMap(X, Y: Integer): Byte;
 begin
@@ -2031,73 +1935,11 @@ begin
     Result := DOM_NONE; // whoops, important
 end;
 
-{function TLemmingGame.ReadSpecialMap(X, Y: Integer): Byte;
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    Result := SpecialMap.Value[X, Y]
-  else
-    Result := DOM_NONE; // whoops, important
-
-  if X < 0 then Result := DOM_NONE; // Old version: DOM_STEEL;
-  if X >= PhysicsMap.Width then Result := DOM_NONE; // Old version: DOM_STEEL;
-  if Y < 0 then Result := DOM_STEEL;
-end;}
-
-(* function TLemmingGame.ReadWaterMap(X, Y: Integer): Byte;
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    Result := WaterMap.Value[X, Y]
-  else
-    Result := DOM_NONE; // whoops, important
-end;  *)
-
-(* procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aValue: Byte);
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    BlockerMap.Value[X, Y] := aValue;
-end; *)
-
 procedure TLemmingGame.WriteZombieMap(X, Y: Integer; aValue: Byte);
 begin
   if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
     ZombieMap.Value[X, Y] := ZombieMap.Value[X, Y] or aValue
 end;
-
-(* procedure TLemmingGame.WriteWaterMap(X, Y: Integer; aValue: Byte);
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    WaterMap.Value[X, Y] := aValue;
-end; *)
-
-
-{procedure TLemmingGame.WriteSpecialMap(X, Y: Integer; aValue: Byte);
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    SpecialMap.Value[X, Y] := aValue;
-end;}
-
-(*
-procedure TLemmingGame.WriteObjectMap(X, Y: Integer; aValue: Word; Advance: Boolean = false);
-begin
-  if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-  begin
-    ObjectMap.Value[2*X, Y] := aValue div 256;
-    ObjectMap.Value[2*X + 1, Y] := aValue mod 256;
-  end;
-end;
-*)
-
-(*
-procedure TLemmingGame.RestoreMap;
-var
-  i: Integer;
-begin
-  BlockerMap.Clear(0);
-  for i := 0 to LemmingList.Count-1 do
-    if LemmingList[i].LemHasBlockerField and not LemmingList[i].LemRemoved then
-      SetBlockerField(LemmingList[i]);
-end;
-*)
 
 procedure TLemmingGame.SetZombieField(L: TLemming);
 var
@@ -2295,7 +2137,6 @@ begin
 end;
 
 
-
 procedure TLemmingGame.ApplyLevelEntryOrder;
 var
   i, oid, eid: Integer;
@@ -2311,13 +2152,11 @@ begin
   end;
 end;
 
-
-
 //  SETTING SIZE OF OBJECT MAPS
 
 procedure TLemmingGame.InitializeAllObjectMaps;
 begin
-  SetLength(WaterMap, 0, 0);
+  SetLength(WaterMap, 0, 0); // lines like these are required to clear the arrays
   SetLength(WaterMap, Level.Info.Width, Level.Info.Height);
   SetLength(FireMap, 0, 0);
   SetLength(FireMap, Level.Info.Width, Level.Info.Height);
@@ -2416,10 +2255,6 @@ begin
 end;
 
 
-
-
-
-
 //  OBJECT MAP TREATMENT
 
 procedure TLemmingGame.WriteTriggerMap(Map: TArrayArrayBoolean; Rect: TRect);
@@ -2444,22 +2279,8 @@ procedure TLemmingGame.SetObjectMap;
 // WARNING: Only call this after InitializeAllObjectMaps
 // Otherwise the maps might already contain trigger areas
 var
-  // x, y: Integer;
   i: Integer;
-  // S: TSteel;
-  // V: Byte;
 begin
-  // ObjectMap.SetSize(2*Level.Info.Width, Level.Info.Height);
-  // ObjectMap.Clear(255);
-
-  //SpecialMap.SetSize(Level.Info.Width, Level.Info.Height);
-  //SpecialMap.Clear(DOM_NONE);
-
-  //WaterMap.SetSize(Level.Info.Width, Level.Info.Height);
-  //WaterMap.Clear(DOM_NONE);
-
-
-
   for i := 0 to ObjectInfos.Count - 1 do
   begin
     case ObjectInfos[i].TriggerEffect of
@@ -2484,74 +2305,11 @@ begin
       DOM_NOSPLAT:    WriteTriggerMap(AntiSplatMap, ObjectInfos[i].TriggerRect);
       DOM_ANIMATION:  WriteTriggerMap(AnimationMap, ObjectInfos[i].TriggerRect);
     end;
-  (*
-
-    // And here comes the elder code
-    V := ObjectInfos[i].TriggerEffect;
-
-    if not (V in [DOM_NONE, DOM_LEMMING, DOM_RECEIVER, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND]) then
-    begin
-      for Y := ObjectInfos[i].TriggerRect.Top to ObjectInfos[i].TriggerRect.Bottom - 1 do
-      for X := ObjectInfos[i].TriggerRect.Left to ObjectInfos[i].TriggerRect.Right - 1 do
-      begin
-        {if (V in [DOM_STEEL, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN]) then
-        begin
-          if (V = DOM_STEEL) or (PhysicsMap.PixelS[X, Y] and PM_ONEWAY <> 0) then
-            WriteSpecialMap(X, Y, V)
-        end
-        else} if V = DOM_WATER then
-          {WriteWaterMap(X, Y, V) }
-        else if V = DOM_BLOCKER then
-          WriteBlockerMap(X, Y, V)
-        else
-          WriteObjectMap(X, Y, i); // traps --> object_id
-      end;
-    end;        *)
-
-  end; // for i
+  end;
 end;
 
 
-procedure TLemmingGame.ApplyAutoSteel;
-var
-  X, Y: Integer;
-  DoAutoSteel : Boolean;
-begin
-  // The renderer should have already handled this now
-
-  (*DoAutoSteel := (((Level.Info.LevelOptions and 2) = 2) or
-          (fGameParams.SysDat.Options and 64 <> 0));
-
-  with PhysicsMap do
-  begin
-    for x := 0 to (Width-1) do
-    for y := 0 to (Height-1) do
-    begin
-      if DoAutoSteel then
-      begin
-        if (X >= 0) and (Y >= 0) and (X < Width) and (Y < Height)
-                    and (Pixel[X, Y] and PM_STEEL <> 0)
-                    and (ReadSpecialMap(X, Y) = DOM_NONE) then
-          WriteSpecialMap(X, Y, DOM_STEEL);
-      end;
-
-      if (ReadSpecialMap(X, Y) = DOM_STEEL) and (PhysicsMap.Pixel[X, Y] and PM_SOLID = 0) then
-        WriteSpecialMap(X, Y, DOM_NONE);
-
-      if (ReadSpecialMap(X, Y) = DOM_STEEL) then
-        PhysicsMap.Pixel[X, Y] := PhysicsMap.Pixel[X, Y] and not PM_ONEWAY;
-
-      if     (ReadSpecialMap(X, Y) in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN])
-         and (PhysicsMap.Pixel[X, Y] and PM_ONEWAY = 0) then
-        WriteSpecialMap(X, Y, DOM_NONE);
-
-    end;
-  end;*)
-end;
-
-
-function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction;
-                                     IsHighlight: Boolean = False): Boolean;
+function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False): Boolean;
 var
   L: TLemming;
 begin
@@ -2567,13 +2325,6 @@ begin
   if Result then CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
 end;
 
-{
-procedure TLemmingGame.OnAssignSkill(Lemming1: TLemming; aSkill: TBasicLemmingAction);
-begin
-  // This function only was used for gimmicks, but it might be useful so let's leave it
-  // here as an empty function just in case.
-end;
-}
 
 function TLemmingGame.DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 begin
@@ -2643,10 +2394,6 @@ begin
     else Transition(L, NewSkill);
 
     Result := True;
-
-    // OnAssignSkill currently does nothing. So unless this changes,
-    // the following line stays as a comment:
-    // if not fFreezeSkillCount then OnAssignSkill(L, NewSkill);
   end;
 end;
 
@@ -3151,16 +2898,10 @@ begin
     trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
                              or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
     trForceLeft:  Result :=     (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
-                        (*    (ReadObjectMapType(X, Y) = DOM_FORCELEFT)
-                            or ((ReadBlockerMap(X, Y) = DOM_FORCELEFT) and not (ReadObjectMapType(X, Y) = DOM_FORCERIGHT)); *)
     trForceRight: Result :=     (ReadBlockerMap(X, Y) = DOM_FORCERIGHT);
-                        (*    (ReadObjectMapType(X, Y) = DOM_FORCERIGHT)
-                            or ((ReadBlockerMap(X, Y) = DOM_FORCERIGHT) and not (ReadObjectMapType(X, Y) = DOM_FORCELEFT)); *)
     trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
-                          (*    (ReadObjectMapType(X, Y) = DOM_TRAP)
-                            or  (ReadObjectMapType(X, Y) = DOM_TRAPONCE); *)
-    trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);  //(ReadWaterMap(X, Y) = DOM_WATER);
-    trFire:       Result :=     ReadTriggerMap(X, Y, FireMap); //(ReadObjectMapType(X, Y) = DOM_FIRE);
+    trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
+    trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
     trOWLeft:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0);
     trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);
     trOWDown:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYDOWN <> 0);
@@ -3169,18 +2910,16 @@ begin
                             or  (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
     trTeleport:   Result :=     ReadTriggerMap(X, Y, TeleporterMap);
-                          (*    (ReadObjectMapType(X, Y) = DOM_SINGLETELE)
-                            or  (ReadObjectMapType(X, Y) = DOM_TELEPORT);  *)
-    trPickup:     Result :=     ReadTriggerMap(X, Y, PickupMap); //(ReadObjectMapType(X, Y) = DOM_PICKUP);
-    trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap); //(ReadObjectMapType(X, Y) = DOM_BUTTON);
-    trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap); // (ReadObjectMapType(X, Y) = DOM_RADIATION);
-    trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);//(ReadObjectMapType(X, Y) = DOM_SLOWFREEZE);
-    trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap); // (ReadObjectMapType(X, Y) = DOM_UPDRAFT);
-    trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap); //(ReadObjectMapType(X, Y) = DOM_FLIPPER);
-    trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap); // (ReadObjectMapType(X, Y) = DOM_SPLAT);
-    trNoSplat:    Result :=     ReadTriggerMap(X, Y, AntiSplatMap); //(ReadObjectMapType(X, Y) = DOM_NOSPLAT);
+    trPickup:     Result :=     ReadTriggerMap(X, Y, PickupMap);
+    trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
+    trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap);
+    trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);
+    trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
+    trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap);
+    trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
+    trNoSplat:    Result :=     ReadTriggerMap(X, Y, AntiSplatMap);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
-    trAnimation:  Result :=     ReadTriggerMap(X, Y, AnimationMap); //(ReadObjectMapType(X, Y) = DOM_ANIMATION);
+    trAnimation:  Result :=     ReadTriggerMap(X, Y, AnimationMap);
   end;
 end;
 
@@ -3243,8 +2982,6 @@ begin
   begin
     ObjectInfos[ObjectID].IsDisabled := True;
     Transition(L, baFixing);
-    // Remove the trigger area from the TrapMap
-    // InitializeObjectMap(False);
   end
   else
   begin
@@ -3287,9 +3024,6 @@ begin
     CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
     DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
   end;
-
-  // Remove the trigger area from the TrapMap
-  // InitializeObjectMap(False);
 end;
 
 function TLemmingGame.HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
@@ -3397,8 +3131,6 @@ begin
           Inf := ObjectInfos[n];
           Inf.Triggered := True;
           CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), Inf.Center);
-          // Write exit trigger area -> no longer needed as weitten in LockedExitMap
-          // WriteTriggerMap(ExitMap, Inf.TriggerRect)
         end;
     end;
   end;
@@ -3428,22 +3160,12 @@ begin
 end;
 
 function TLemmingGame.HandleForceField(L: TLemming; Direction: Integer): Boolean;
-(*var
-  dy, NewY: Integer; *)
 begin
   Result := False;
   if (L.LemDx = -Direction) and not (L.LemAction = baHoisting) then
   begin
     Result := True;
 
-    (*dy := 0;
-    NewY := L.LemY;
-    while (dy <= 8) and HasPixelAt(L.LemX + Direction, NewY + 1) do
-    begin
-      Inc(dy);
-      Dec(NewY);
-    end;
-    if dy < 9 then *)
     TurnAround(L);
 
     // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
@@ -3624,29 +3346,6 @@ begin
 end;
 
 
-procedure TLemmingGame.DrawParticles(L: TLemming; DoErase: Boolean);
-// if DoErase = False, then draw the explosion particles,
-// if DoErase = True, then erase them.
-//var
-//  i, X, Y: Integer;
-begin
-
-(*  for i := 0 to 79 do
-  begin
-    X := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DX;
-    Y := fParticles[PARTICLE_FRAMECOUNT - L.LemParticleTimer][i].DY;
-    if (X <> -128) and (Y <> -128) then
-    begin
-      X := L.LemX + X;
-      Y := L.LemY + Y;
-      fRenderer.ParticleLayer.PixelS[X, Y] := fRenderer.Theme.ParticleColors[i];
-    end;
-  end;
-
-  fExplodingGraphics := True;*)
-end;
-
-
 procedure TLemmingGame.DrawAnimatedObjects;
 var
   i, f: Integer;
@@ -3662,7 +3361,6 @@ begin
       Inf.Top := Inf.Top + Inf.Movement(False, CurrentIteration); // y-movement
 
       // Check level borders:
-      // Don't need f any more, so we can store arbitrary values in it
       // The additional "+f" are necessary! Delphi's definition of mod for negative numbers is totally absurd!
       // The following code works only if the coordinates are not too negative, so Asserts are added
       f := Level.Info.Width + Inf.Width;
@@ -3674,111 +3372,7 @@ begin
       Inf.Top := ((Inf.Top + Inf.Height + f) mod f) - Inf.Height;
     end;
   end;
-
-  if HyperSpeed then
-    Exit;
-
-  // Main stuff comes here!!!
-  //Renderer.DrawAllObjects(fTargetBitmap, ObjectInfos, CursorPoint);
 end;
-
-procedure TLemmingGame.EraseLemmings;
-{-------------------------------------------------------------------------------
-  Erase the lemming from the targetbitmap by copying it's rect from the world
-  bitmap.
--------------------------------------------------------------------------------}
-var
-  iLemming: Integer;
-  CurrentLemming: TLemming;
-  DstRect, TempRect: TRect;
-begin
-  // Don't need to erase lemmings anymore!
-end;
-
-(*procedure TLemmingGame.DrawLemmings;
-var
-  iLemming: Integer;
-  L: TLemming;
-  Xo : Integer;
-begin
-  if HyperSpeed then
-    Exit;
-
-  //fRenderer.DrawLemmings(LemmingList, fLemSelected);
-  //if not fHyperSpeed then InitializeMinimap;
-
-  // If paused, update screen
-  //if Paused then
-  //  fRenderer.DrawLevel(fTargetBitmap);
-end;*)
-
-(*procedure TLemmingGame.DrawThisLemming(L: TLemming; IsSelected: Boolean = False);
-var
-  LemLayer: TBitmap32;
-  SrcRect, DstRect, DigRect: TRect;
-  OldCombine: TPixelCombineEvent;
-  TempBmp : TBitmap32;
-  Digit: Integer;
-  IsPermenent: Boolean;
-begin
-  LemLayer := fRenderer.LemmingLayer;
-
-  with L do
-  begin
-    fCurrentlyDrawnLemming := L;
-    SrcRect := GetFrameBounds;
-    DstRect := GetLocationBounds;
-    LemEraseRect := DstRect;
-
-    OldCombine := LAB.OnPixelCombine;
-
-    // Get color scheme for lemming sprite
-    IsPermenent := LemIsClimber or LemIsFloater or LemIsGlider or LemIsSwimmer or LemIsMechanic;
-    LAB.OnPixelCombine := TRecolorImage.GetLemColorScheme(LemIsZombie, IsPermenent, IsSelected, LemHighlightReplay);
-
-    LAB.DrawTo(LemLayer, DstRect, SrcRect);
-
-    // Always reset LemHighlightReplay to false
-    LemHighlightReplay := False;
-
-    if DrawLemmingPixel then
-      LemLayer.FillRectS(LemX, LemY, LemX + 1, LemY + 1, clRed32);
-
-    if (LemExplosionTimer > 0) or (L = fHighlightLemming) then
-    begin
-      SrcRect := Rect(0, 0, 8, 8);
-      DigRect := GetCountDownDigitBounds;
-      LemEraseRect.Top := DigRect.Top;
-      Assert(CheckRectCopy(SrcRect, DigRect), 'digit rect copy');
-
-      Digit := (LemExplosionTimer div 17) + 1;
-
-      TempBmp := TBitmap32.Create;
-      TempBmp.SetSize(8, 8);
-
-      if (L = fHighlightLemming) and (LemExplosionTimer mod 17 < 8) then
-      begin
-        HighlightBmp.DrawTo(TempBmp);
-        TempBmp.DrawMode := HighlightBmp.DrawMode;
-        TempBmp.OnPixelCombine := HighlightBmp.OnPixelCombine;
-      end else begin
-        RectMove(SrcRect, 0, (9 - Digit) * 8); // get "frame"
-        CntDownBmp.DrawTo(TempBmp, TempBmp.BoundsRect, SrcRect);
-        TempBmp.DrawMode := CntDownBmp.DrawMode;
-        TempBmp.OnPixelCombine := CntDownBmp.OnPixelCombine;
-      end;
-
-      if LemDx = -1 then RectMove(DigRect, -1, 0);
-
-      TempBmp.DrawTo(LemLayer, DigRect);
-
-      TempBmp.Free;
-    end;
-
-    // Reverse change on OnPixelCombine
-    LAB.OnPixelCombine := OldCombine;
-  end;
-end;*)
 
 
 procedure TLemmingGame.CheckForNewShadow;
@@ -4121,7 +3715,6 @@ var
     end;
 
     // do not dive, when there is no more water
-    //if not (ReadWaterMap(L.LemX, L.LemY + Result) = DOM_WATER) then Result := 0;
     if not HasTriggerAt(L.LemX, L.LemY + Result, trWater) then Result := 0;
 
     if Result > DiveDepth then Result := 0; // too much terrain to dive
@@ -4132,10 +3725,9 @@ begin
 
   Inc(L.LemX, L.LemDx);
 
-  if HasTriggerAt(L.LemX, L.LemY, trWater) or HasPixelAt(L.LemX, L.LemY) then // original check only ReadWaterMap(L.LemX - L.LemDx, L.LemY)
+  if HasTriggerAt(L.LemX, L.LemY, trWater) or HasPixelAt(L.LemX, L.LemY) then // original check only HasTriggerAt(L.LemX - L.LemDx, L.LemY, trWater)
   begin
-    // This is not completely the same as in V1.43. There a check
-    // for the pixel (L.LemX, L.LemY) is omitted.
+    // This is not completely the same as in V1.43. There a check for the pixel (L.LemX, L.LemY) is omitted.
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
     // Rise if there is water above the lemming
@@ -4670,7 +4262,6 @@ end;
 
 function TLemmingGame.HasSteelAt(X, Y: Integer): Boolean;
 begin
-  //Result := (ReadSpecialMap(X, Y) = DOM_STEEL);
   Result := PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0;
 end;
 
@@ -4782,9 +4373,9 @@ begin
     if CurrFallDist < MaxFallDist then
     begin
       // Object checks at hitting ground
-      if HasTriggerAt(L.LemX, L.LemY, trSplat) {ReadObjectMapType(L.LemX, L.LemY) = DOM_SPLAT} then
+      if HasTriggerAt(L.LemX, L.LemY, trSplat) then
         Transition(L, baSplatting)
-      else if HasTriggerAt(L.LemX, L.LemY, trNoSplat) {ReadObjectMapType(L.LemX, L.LemY) = DOM_NOSPLAT} then
+      else if HasTriggerAt(L.LemX, L.LemY, trNoSplat) then
         Transition(L, baWalking)
       else if L.LemFallen > fFallLimit then
         Transition(L, baSplatting)
@@ -4805,7 +4396,7 @@ begin
   Result := True;
 
   MaxFallDist := FloaterFallTable[L.LemFrame];
-  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) {ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT} then Dec(MaxFallDist);
+  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(MaxFallDist);
 
   if MaxFallDist > MaxIntValue([FindGroundPixel(L.LemX, L.LemY), 0]) then
   begin
@@ -4856,7 +4447,7 @@ var
   begin
     // Move upwards if in updraft
     LemYDir := 1;
-    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) {ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT} then LemYDir := -1;
+    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then LemYDir := -1;
 
     if    ((FindGroundPixel(L.LemX + L.LemDx, L.LemY) < -4) and DoTurnAround(L, True))
        or (     HasPixelAt(L.LemX + L.LemDx, L.LemY + 1)
@@ -4887,7 +4478,7 @@ begin
   Result := True;
   MaxFallDist := GliderFallTable[L.LemFrame];
 
-  if HasTriggerAt(L.LemX, L.LemY, trUpdraft){ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT} then
+  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then
   begin
     Dec(MaxFallDist);
     // Rise a pixel every second frame
@@ -4943,7 +4534,7 @@ begin
       Inc(L.LemY, MaxFallDist);
   end
 
-  else if HasTriggerAt(L.LemX, L.LemY, trUpdraft) {ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT} then // head check for pushing down in updraft
+  else if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then // head check for pushing down in updraft
   begin
     // move down at most 2 pixels until the HeadCheck passes
     LemDy := -1;
@@ -5010,7 +4601,7 @@ begin
     L.LemHasBlockerField := False; // remove blocker field
     SetBlockerMap;
     // let lemming fall
-    if HasTriggerAt(L.LemX, L.LemY, trUpdraft){ReadObjectMapType(L.LemX, L.LemY) = DOM_UPDRAFT} then
+    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then
       Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 2]))
     else
       Inc(L.LemY, MinIntValue([FindGroundPixel(L.LemX, L.LemY), 3]));
@@ -5112,13 +4703,10 @@ begin
   begin
     fRenderer.ClearShadows;
     fExistShadow := false;
-    //DrawShadowBridge(true);
-    //fExplodingGraphics := True; // Redraw everything later on
   end;
 
   // just as a warning: do *not* mess around with the order here
   IncrementIteration;
-  EraseLemmings;
   CheckReleaseLemming;
   CheckLemmings;
   CheckUpdateNuking;
@@ -5158,14 +4746,6 @@ begin
 
   if fReplaying and (fCurrentIteration > fReplayManager.LastActionFrame) then
     RegainControl;
-
-  // force update if raw explosion pixels drawn (or shadowstuff)
-  //if fExplodingGraphics and (not HyperSpeed) then
-  //  fTargetBitmap.Changed;
-
-  // Just always redraw. We can change this later if there's perfomance issues.
-  //if not HyperSpeed then
-    //fRenderer.DrawLevel(fTargetBitmap);
 
   CheckForPlaySoundEffect;
   InitializeMinimap;
@@ -5359,11 +4939,8 @@ begin
     begin
       if OldHighlightLemming <> nil then
       begin
-        EraseLemmings; //so the old highlight marker if any disappears
         DrawAnimatedObjects; // not sure why this one. Might be to fix graphical glitches, I guess?
       end;
-      //DrawLemmings;  // so the highlight marker shows up
-      //fRenderer.DrawLevel(fTargetBitmap);
     end;
   end;
 
