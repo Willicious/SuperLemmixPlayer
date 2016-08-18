@@ -229,7 +229,6 @@ type
     public
       LemmingList: TLemmingList;
       SelectedSkill: TSkillPanelButton;
-      TargetBitmap: TBitmap32;
       World: TBitmap32;         // the visual terrain image
       PhysicsMap: TBitmap32;    // the actual physics
       ZombieMap: TByteMap; // Still needed for now, because there is no proper method to set the ZombieMap
@@ -816,7 +815,6 @@ begin
   inherited;
   LemmingList := TLemmingList.Create(true);
   ObjectInfos := TInteractiveObjectInfoList.Create(true);
-  TargetBitmap := TBitmap32.Create;
   World := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
   ZombieMap := TByteMap.Create;
@@ -826,7 +824,6 @@ destructor TLemmingGameSavedState.Destroy;
 begin
   LemmingList.Free;
   ObjectInfos.Free;
-  TargetBitmap.Free;
   World.Free;
   PhysicsMap.Free;
   ZombieMap.Free;
@@ -950,7 +947,6 @@ var
 begin
   // Simple stuff
   aState.SelectedSkill := fSelectedSkill;
-  aState.TargetBitmap.Assign(fTargetBitmap);
   aState.World.Assign(fRenderer.TerrainLayer);
   aState.PhysicsMap.Assign(PhysicsMap);
   aState.ZombieMap.Assign(ZombieMap);
@@ -1016,8 +1012,6 @@ begin
   // Simple stuff
   (*if not fGameParams.IgnoreReplaySelection then
     fSelectedSkill := aState.SelectedSkill;*)
-  if not SkipTargetBitmap then  // We don't need to bother with this one if we're not loading the exact frame we want to go to
-    fTargetBitmap.Assign(aState.TargetBitmap);
   fRenderer.TerrainLayer.Assign(aState.World);
   PhysicsMap.Assign(aState.PhysicsMap);
   ZombieMap.Assign(aState.ZombieMap);
