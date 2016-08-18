@@ -229,7 +229,7 @@ type
     public
       LemmingList: TLemmingList;
       SelectedSkill: TSkillPanelButton;
-      World: TBitmap32;         // the visual terrain image
+      TerrainLayer: TBitmap32;  // the visual terrain image
       PhysicsMap: TBitmap32;    // the actual physics
       ZombieMap: TByteMap; // Still needed for now, because there is no proper method to set the ZombieMap
       CurrentIteration: Integer;
@@ -815,7 +815,7 @@ begin
   inherited;
   LemmingList := TLemmingList.Create(true);
   ObjectInfos := TInteractiveObjectInfoList.Create(true);
-  World := TBitmap32.Create;
+  TerrainLayer := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
   ZombieMap := TByteMap.Create;
 end;
@@ -824,7 +824,7 @@ destructor TLemmingGameSavedState.Destroy;
 begin
   LemmingList.Free;
   ObjectInfos.Free;
-  World.Free;
+  TerrainLayer.Free;
   PhysicsMap.Free;
   ZombieMap.Free;
   inherited;
@@ -947,7 +947,7 @@ var
 begin
   // Simple stuff
   aState.SelectedSkill := fSelectedSkill;
-  aState.World.Assign(fRenderer.TerrainLayer);
+  aState.TerrainLayer.Assign(fRenderer.TerrainLayer);
   aState.PhysicsMap.Assign(PhysicsMap);
   aState.ZombieMap.Assign(ZombieMap);
   aState.CurrentIteration := fCurrentIteration;
@@ -1012,7 +1012,7 @@ begin
   // Simple stuff
   (*if not fGameParams.IgnoreReplaySelection then
     fSelectedSkill := aState.SelectedSkill;*)
-  fRenderer.TerrainLayer.Assign(aState.World);
+  fRenderer.TerrainLayer.Assign(aState.TerrainLayer);
   PhysicsMap.Assign(aState.PhysicsMap);
   ZombieMap.Assign(aState.ZombieMap);
   fCurrentIteration := aState.CurrentIteration;
