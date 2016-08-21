@@ -1163,6 +1163,29 @@ var
 
   Lem: TPreplacedLemming;
   L: TLemming;
+
+  procedure CheckLockedExits;
+  var
+    i: Integer;
+    HasButtons: Boolean;
+  begin
+    HasButtons := False;
+    // Check whether buttons exist
+    for i := 0 to fObjectInfoList.Count - 1 do
+    begin
+      if fObjectInfoList[i].TriggerEffect = DOM_BUTTON then
+        HasButtons := True;
+    end;
+    if not HasButtons then
+    begin
+      // Set all exits to open exits
+      for i := 0 to fObjectInfoList.Count - 1 do
+      begin
+        if fObjectInfoList[i].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+          fObjectInfoList[i].CurrentFrame := 0
+      end;
+    end
+  end;
 begin
   if Inf.Level = nil then Exit;
 
@@ -1187,6 +1210,9 @@ begin
   // Creating the list of all interactive objects.
   fObjectInfoList.Clear;
   CreateInteractiveObjectList(fObjectInfoList);
+
+  // Check whether there are no buttons to display open exits
+  CheckLockedExits;
 
   // Draw all objects (except ObjectHelpers)
   DrawAllObjects(fObjectInfoList, False);
