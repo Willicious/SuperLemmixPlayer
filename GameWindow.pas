@@ -281,13 +281,18 @@ begin
   //if aTargetIteration < 0 then Exit;
   CanPlay := False;
   CurrentlyPaused := Game.Paused;
+
+  // Find correct save state
   if aTargetIteration > 0 then
     UseSaveState := fSaveList.FindNearestState(aTargetIteration)
   else if fSaveList.Count = 0 then
     UseSaveState := -1
   else
     UseSaveState := 0;
+
+  // Load save state or restart the level
   for i := UseSaveState downto -1 do
+  begin
     if i >= 0 then
     begin
       if Game.LoadSavedState(fSaveList[i], true) then
@@ -296,9 +301,19 @@ begin
         fSaveList.Delete(i);
     end else
       Game.Start(true);
-  fSaveList.ClearAfterIteration(aTargetIteration);
-  Game.HyperSpeedBegin(CurrentlyPaused);
-  Game.TargetIteration := aTargetIteration;
+  end;
+
+  if aTargetIteration = Game.CurrentIteration then
+    // just redraw TargetImage to display the correct game state
+    DoDraw
+  else
+  begin
+    // start hyperspeed to the desired interation
+    fSaveList.ClearAfterIteration(aTargetIteration);
+    Game.HyperSpeedBegin(CurrentlyPaused);
+    Game.TargetIteration := aTargetIteration;
+  end;
+
   CanPlay := True;
 end;
 

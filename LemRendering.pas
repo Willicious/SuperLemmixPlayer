@@ -140,6 +140,7 @@ type
     procedure DrawLemmingParticles(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; PosMarker: Integer);
+    procedure DrawGliderShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -492,8 +493,57 @@ begin
         SetHighShadowPixel(L.LemX + PosMarker - BomberShadowPos[i, 0] - 1, L.LemY + BomberShadowPos[i, 1]);
       end;
     end;
+
+
+  spbGlider: DrawGliderShadow(L);
+
   end;
 end;
+
+procedure TRenderer.DrawGliderShadow(L: TLemming);
+var
+  CopyL: TLemming;
+  FrameCount: Integer; // counts number of frames we have simulated, because glider paths can be infinitely long
+  MaxFrameCount: Integer;
+  LemPosArray: TArrayArrayInt;
+  i: Integer;
+begin
+  // Set ShadowLayer to be drawn
+  fLayers.fIsEmpty[rlLowShadows] := False;
+  // Initialize FrameCount
+  FrameCount := 0;
+  MaxFrameCount := 2000; // enough to fill the current screen, which should be sufficient
+  // Initialize LemPosArray
+  LemPosArray := nil;
+  // Copy L to simulate the path
+  CopyL := TLemming.Create;
+  CopyL.Assign(L);
+  // and make sure the copied lemming is a glider
+  CopyL.LemIsGlider := True;
+
+  // Draw first pixel at lemming position
+  SetLowShadowPixel(CopyL.LemX, CopyL.LemY - 1);
+
+  // We simulate as long as the lemming is gliding, but allow for a falling period at the beginning
+  while     (FrameCount < MaxFrameCount)
+        and Assigned(CopyL)
+        and ((CopyL.LemAction = baGliding) or ((FrameCount < 10) and (CopyL.LemAction = baFalling))) do
+  begin
+    Inc(FrameCount);
+
+    // Print shadow pixel of previous movement
+    if Assigned(LemPosArray) then
+      for i := 0 to Length(LemPosArray[0]) do
+        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+
+    // Simulate next frame advance for lemming
+    LemPosArray := fRenderInterface.SimulateLem(CopyL);
+  end;
+
+  CopyL.Free;
+end;
+
+
 
 procedure TRenderer.ClearShadows;
 begin
@@ -1113,6 +1163,29 @@ var
 
   Lem: TPreplacedLemming;
   L: TLemming;
+
+  procedure CheckLockedExits;
+  var
+    i: Integer;
+    HasButtons: Boolean;
+  begin
+    HasButtons := False;
+    // Check whether buttons exist
+    for i := 0 to fObjectInfoList.Count - 1 do
+    begin
+      if fObjectInfoList[i].TriggerEffect = DOM_BUTTON then
+        HasButtons := True;
+    end;
+    if not HasButtons then
+    begin
+      // Set all exits to open exits
+      for i := 0 to fObjectInfoList.Count - 1 do
+      begin
+        if fObjectInfoList[i].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+          fObjectInfoList[i].CurrentFrame := 0
+      end;
+    end
+  end;
 begin
   if Inf.Level = nil then Exit;
 
@@ -1137,6 +1210,9 @@ begin
   // Creating the list of all interactive objects.
   fObjectInfoList.Clear;
   CreateInteractiveObjectList(fObjectInfoList);
+
+  // Check whether there are no buttons to display open exits
+  CheckLockedExits;
 
   // Draw all objects (except ObjectHelpers)
   DrawAllObjects(fObjectInfoList, False);

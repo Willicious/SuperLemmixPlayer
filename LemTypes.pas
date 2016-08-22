@@ -67,7 +67,8 @@ type
   );
 
 type
-
+  TArrayArrayInt = array of array of Integer;
+  TArrayArrayBoolean = array of array of Boolean;
 
   TBitmaps = class(TObjectList)
   private
