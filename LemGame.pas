@@ -2818,8 +2818,40 @@ begin
     Assert(i <= Length(CheckPos[0]), 'CheckTriggerArea: CheckPos has not enough entries');
     Assert(i <= Length(CheckPos[1]), 'CheckTriggerArea: CheckPos has not enough entries');
 
-    // Check for interactive objects
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
+    // Animations - the most useless of objects...
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnimation) then
+    begin
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trAnimation);
+      if ObjectID <> 65535 then
+        HandleObjAnimation(L, ObjectID);
+    end;
+
+    // Pickup Skills
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPickup) then
+    begin
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trPickup);
+      if ObjectID <> 65535 then
+        HandlePickup(L, ObjectID)
+    end;
+
+    // Buttons
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trButton) then
+    begin
+      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trButton);
+      if ObjectID <> 65535 then
+        AbortChecks := HandleButton(L, ObjectID)
+    end;
+
+    // Fire
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
+      AbortChecks := HandleFire(L);
+
+    // Water - Check only for drowning here!
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
+      AbortChecks := HandleWaterDrown(L);
+
+    // Triggered traps and one-shot traps
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
     begin
       ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trTrap);
       if ObjectID <> 65535 then
@@ -2827,52 +2859,35 @@ begin
           AbortChecks := HandleTrap(L, ObjectID)
         else
           AbortChecks := HandleTrapOnce(L, ObjectID);
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnimation) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trAnimation);
-      if ObjectID <> 65535 then
-        AbortChecks := HandleObjAnimation(L, ObjectID);
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
+    end;
+
+    // Radiation
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
+      HandleRadiation(L, False);
+
+    // Slowfreeze
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
+      HandleRadiation(L, True);
+
+    // Teleporter
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
     begin
       ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trTeleport);
       if ObjectID <> 65535 then
-        (*if ObjectInfos[ObjectID].TriggerEffect = DOM_SINGLETELE then
-          AbortChecks := HandleTelepSingle(L, ObjectID)
-        else*)
         AbortChecks := HandleTeleport(L, ObjectID);
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPickup) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trPickup);
-      if ObjectID <> 65535 then
-        AbortChecks := HandlePickup(L, ObjectID)
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trButton) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trButton);
-      if ObjectID <> 65535 then
-        AbortChecks := HandleButton(L, ObjectID)
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
-      AbortChecks := HandleExit(L, False)
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
-      AbortChecks := HandleRadiation(L, False)
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
-      AbortChecks := HandleRadiation(L, True)
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
-      AbortChecks := HandleFire(L)
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper) then
+    end;
+
+    // Exits
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
+      AbortChecks := HandleExit(L, False);
+
+    // Flipper
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper) then
     begin
       ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trFlipper);
       if ObjectID <> 65535 then
         AbortChecks := HandleFlipper(L, ObjectID);
     end;
-    
-    // Check only for drowning here!
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
-      AbortChecks := HandleWaterDrown(L) or AbortChecks;
 
     // If the lem was required stop, move him there!
     if AbortChecks then
