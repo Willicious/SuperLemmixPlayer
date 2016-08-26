@@ -2796,13 +2796,6 @@ var
   ObjectID: Word;
   AbortChecks: Boolean;
 begin
-  // special treatment for blockers: Check only for (locked) exit
-  if L.LemAction = baBlocking then
-  begin
-    if HasTriggerAt(L.LemX, L.LemY, trExit) then HandleExit(L);
-    Exit;
-  end;
-
   // Get positions to check for trigger areas
   CheckPos := GetObjectCheckPositions(L);
 
@@ -5582,9 +5575,7 @@ begin
 
   Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
 
-  if     (ObjInfo.TriggerEffect = DOM_RECEIVER)
-     or ((ObjInfo.TriggerEffect = DOM_TWOWAYTELE) and (ObjInfo.TwoWayReceive = True))
-     or  (ObjInfo.TriggerEffect = DOM_SINGLETELE) then
+  if ObjInfo.TriggerEffect = DOM_RECEIVER then
   begin
     if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) and (ObjInfo.MetaObj.KeyFrame = 0))
        or ((ObjInfo.CurrentFrame + 1 = ObjInfo.MetaObj.KeyFrame) and (ObjInfo.MetaObj.KeyFrame <> 0)) then
@@ -5592,6 +5583,12 @@ begin
       L.LemTeleporting := False; // Let lemming reappear
       ObjInfo.TeleLem := -1;
       Result := True;
+      // Reset blocker map, if lemming is a blocker
+      if L.LemAction = baBlocking then
+      begin
+        L.LemHasBlockerField := True;
+        SetBlockerMap;
+      end;
     end;
   end;
 end;
@@ -5728,8 +5725,7 @@ begin
        and (Inf.TriggerEffect <> DOM_PICKUP) then
       Inc(Inf.CurrentFrame);
 
-    if     (Inf.TriggerEffect = DOM_TELEPORT)
-       or ((Inf.TriggerEffect = DOM_TWOWAYTELE) and (Inf.TwoWayReceive = false)) then
+    if Inf.TriggerEffect = DOM_TELEPORT then
     begin
       if    ((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.KeyFrame = 0))
          or ((Inf.CurrentFrame = Inf.MetaObj.KeyFrame) and (Inf.MetaObj.KeyFrame <> 0)) then
