@@ -4063,6 +4063,17 @@ end;
 
 
 function TLemmingGame.HandleStacking(L: TLemming): Boolean;
+  function MayPlaceNextBrick(L: TLemming): Boolean;
+  var
+    BrickPosY: Integer;
+  begin
+    BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
+    if L.LemStackLow then Inc(BrickPosY);
+    Result := not (     HasPixelAt(L.LemX + L.LemDX, BrickPosY)
+                    and HasPixelAt(L.LemX + 2 * L.LemDX, BrickPosY)
+                    and HasPixelAt(L.LemX + 3 * L.LemDX, BrickPosY))
+  end;
+
 begin
   Result := True;
 
@@ -4077,7 +4088,12 @@ begin
     if L.LemNumberOfBricksLeft < 3 then CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
 
     if not L.LemPlacedBrick then
-      Transition(L, baWalking, True) // Even on the last brick???  // turn around as well
+    begin
+      // Relax the chech on the first brick
+      // for details see http://www.lemmingsforums.net/index.php?topic=2862.0
+      if (L.LemNumberOfBricksLeft < 7) or not MayPlaceNextBrick(L) then
+        Transition(L, baWalking, True) // Even on the last brick???  // turn around as well
+    end
     else if L.LemNumberOfBricksLeft = 0 then
       Transition(L, baShrugging);
   end;
