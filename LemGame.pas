@@ -3043,7 +3043,6 @@ begin
   CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
   L.LemTeleporting := True;
   Inf.TeleLem := L.LemIndex;
-  Inf.TwoWayReceive := false;
   // Make sure to remove the blocker field!
   L.LemHasBlockerField := False;
   SetBlockerMap;
@@ -5575,20 +5574,17 @@ begin
 
   Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
 
-  if ObjInfo.TriggerEffect = DOM_RECEIVER then
+  if      (ObjInfo.TriggerEffect = DOM_RECEIVER)
+      and (ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) then
   begin
-    if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) and (ObjInfo.MetaObj.KeyFrame = 0))
-       or ((ObjInfo.CurrentFrame + 1 = ObjInfo.MetaObj.KeyFrame) and (ObjInfo.MetaObj.KeyFrame <> 0)) then
+    L.LemTeleporting := False; // Let lemming reappear
+    ObjInfo.TeleLem := -1;
+    Result := True;
+    // Reset blocker map, if lemming is a blocker
+    if L.LemAction = baBlocking then
     begin
-      L.LemTeleporting := False; // Let lemming reappear
-      ObjInfo.TeleLem := -1;
-      Result := True;
-      // Reset blocker map, if lemming is a blocker
-      if L.LemAction = baBlocking then
-      begin
-        L.LemHasBlockerField := True;
-        SetBlockerMap;
-      end;
+      L.LemHasBlockerField := True;
+      SetBlockerMap;
     end;
   end;
 end;
@@ -5725,20 +5721,15 @@ begin
        and (Inf.TriggerEffect <> DOM_PICKUP) then
       Inc(Inf.CurrentFrame);
 
-    if Inf.TriggerEffect = DOM_TELEPORT then
+    if (Inf.TriggerEffect = DOM_TELEPORT) and (Inf.CurrentFrame >= Inf.AnimationFrameCount) then
     begin
-      if    ((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.KeyFrame = 0))
-         or ((Inf.CurrentFrame = Inf.MetaObj.KeyFrame) and (Inf.MetaObj.KeyFrame <> 0)) then
-      begin
-        MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
-        Inf2 := ObjectInfos[Inf.ReceiverId];
-        Inf2.TeleLem := Inf.TeleLem;
-        Inf2.Triggered := True;
-        Inf2.ZombieMode := Inf.ZombieMode;
-        Inf2.TwoWayReceive := true;
-        // Reset TeleLem for Teleporter
-        Inf.TeleLem := -1;
-      end;
+      MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
+      Inf2 := ObjectInfos[Inf.ReceiverId];
+      Inf2.TeleLem := Inf.TeleLem;
+      Inf2.Triggered := True;
+      Inf2.ZombieMode := Inf.ZombieMode;
+      // Reset TeleLem for Teleporter
+      Inf.TeleLem := -1;
     end;
 
     if Inf.CurrentFrame >= Inf.AnimationFrameCount then
