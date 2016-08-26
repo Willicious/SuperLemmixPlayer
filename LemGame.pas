@@ -2253,15 +2253,15 @@ var
 begin
   BlockerMap.Clear(DOM_NONE);
 
-  // First add all blocker fields
-  for i := 0 to LemmingList.Count-1 do
-    if LemmingList[i].LemHasBlockerField and not LemmingList[i].LemRemoved then
-      SetBlockerField(LemmingList[i]);
-
-  // Then add all force fields
+  // First add all force fields
   for i := 0 to ObjectInfos.Count - 1 do
     if ObjectInfos[i].TriggerEffect in [DOM_FORCELEFT, DOM_FORCERIGHT] then
       SetForceField(ObjectInfos[i].TriggerRect, ObjectInfos[i].TriggerEffect);
+
+  // Then add all blocker fields
+  for i := 0 to LemmingList.Count-1 do
+    if LemmingList[i].LemHasBlockerField and not LemmingList[i].LemRemoved then
+      SetBlockerField(LemmingList[i]);
 end;
 
 
@@ -2839,14 +2839,6 @@ begin
     // Triggered traps and one-shot traps
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
       AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
-    (* begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trTrap);
-      if ObjectID <> 65535 then
-        if ObjectInfos[ObjectID].TriggerEffect = DOM_TRAP then
-          AbortChecks := HandleTrap(L, ObjectID)
-        else
-          AbortChecks := HandleTrapOnce(L, ObjectID);
-    end; *)
 
     // Radiation
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
@@ -2864,8 +2856,9 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
       AbortChecks := HandleExit(L);
 
-    // Flipper
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper) then
+    // Flipper (except for blockers)
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
+                         and not (L.LemAction = baBlocking) then
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
 
     // If the lem was required stop, move him there!
