@@ -2981,7 +2981,7 @@ begin
   // Set ObjectInfos
   Inf := ObjectInfos[ObjectID];
 
-  if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
+  if     L.LemIsMechanic and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
   begin
     Inf.IsDisabled := True;
