@@ -2982,7 +2982,7 @@ begin
   Inf := ObjectInfos[ObjectID];
 
   if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
-     and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
+     and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
   begin
     Inf.IsDisabled := True;
     Transition(L, baFixing);
