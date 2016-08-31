@@ -66,7 +66,7 @@ var
         if i = GameParams.Level.InteractiveObjects.Count then i := 0;
       until GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 23;
     end else begin
-      i := LemsSpawned mod Length(GameParams.Level.Info.WindowOrder);
+      i := GameParams.Level.Info.WindowOrder[LemsSpawned mod Length(GameParams.Level.Info.WindowOrder)];
     end;
   end;
 
