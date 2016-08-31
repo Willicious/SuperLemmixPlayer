@@ -287,7 +287,7 @@ begin
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
 
 
-  SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini');
+  SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini');
 
   SL.Free;
 end;
@@ -306,9 +306,14 @@ var
   end;
 
 begin
-  if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini') then Exit;
+  if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini') then
+    if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini') then Exit;
   SL := TStringList.Create;
-  SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini');
+
+  if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini') then
+    SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini')
+  else
+    SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini');
 
   MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 100);
   SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 100);
@@ -327,9 +332,6 @@ begin
   CheckUpdates := LoadBoolean('UpdateCheck');
 
   ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], 0);
-
-  if StrToIntDef(SL.Values['LastVersion'], 0) < 1421 then
-    EnableOnline := true;
 
   if StrToIntDef(SL.Values['LastVersion'], 0) < 1441 then
     BlackOutZero := true;
