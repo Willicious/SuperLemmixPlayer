@@ -840,7 +840,7 @@ var
     MO: TMetaObjectInterface;
   begin
     if Inf.IsInvisible then Exit;
-    if Inf.TriggerEffect in [13, 16, 25] then Exit;
+    if Inf.TriggerEffect in [13, 16, 25, 32] then Exit;
 
     DrawFrame := Min(Inf.CurrentFrame, Inf.AnimationFrameCount-1);
     TempBitmap.Assign(Inf.Frames[DrawFrame]);
