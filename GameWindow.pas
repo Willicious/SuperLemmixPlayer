@@ -303,13 +303,15 @@ begin
       Game.Start(true);
   end;
 
+  fSaveList.ClearAfterIteration(Game.CurrentIteration);
+
   if aTargetIteration = Game.CurrentIteration then
-    // just redraw TargetImage to display the correct game state
-    DoDraw
-  else
   begin
+    // just redraw TargetImage to display the correct game state
+    DoDraw;
+    Game.RefreshAllPanelInfo;
+  end else begin
     // start hyperspeed to the desired interation
-    fSaveList.ClearAfterIteration(aTargetIteration);
     Game.HyperSpeedBegin(CurrentlyPaused);
     Game.TargetIteration := aTargetIteration;
   end;
