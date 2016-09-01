@@ -193,7 +193,7 @@ type
 
     // mass replay check stuff
     ReplayResultList: TStringList;
-    ReplayCheckIndex: Integer;
+    ReplayCheckIndex: Integer; // This is always -2, unless we are mass replay checking
 
     constructor Create;
     destructor Destroy; override;
