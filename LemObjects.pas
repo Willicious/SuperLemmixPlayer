@@ -50,8 +50,6 @@ type
     TeleLem        : Integer; // saves which lemming is currently teleported
     HoldActive     : Boolean;
 
-    TwoWayReceive  : Boolean;
-
     constructor Create(ObjParam: TInteractiveObject; MetaParam: TMetaObjectInterface); Overload;
 
     property TriggerRect: TRect read sTriggerRect;
@@ -197,7 +195,6 @@ begin
 
   HoldActive := False;
   ZombieMode := False;
-  TwoWayReceive := False;
 
   // Remove TriggerEffect if object disabled
   // If it is a preplaced lemming, we unfortunately have to keep it (or this lemming will be drawn)
@@ -376,7 +373,6 @@ begin
   NewObj.TeleLem := TeleLem;
   NewObj.HoldActive := HoldActive;
   NewObj.ZombieMode := ZombieMode;
-  NewObj.TwoWayReceive := TwoWayReceive;
 end;
 
 

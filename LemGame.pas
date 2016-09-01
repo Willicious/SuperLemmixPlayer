@@ -497,18 +497,16 @@ type
       function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
       function FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
-      function HandleTrap(L: TLemming; ObjectID: Word): Boolean;
-      function HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
-      function HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
-      function HandleTelepSingle(L: TLemming; ObjectID: Word): Boolean;
-      function HandleTeleport(L: TLemming; ObjectID: Word): Boolean;
-      function HandlePickup(L: TLemming; ObjectID: Word): Boolean;
-      function HandleButton(L: TLemming; ObjectID: Word): Boolean;
-      function HandleExit(L: TLemming; IsLocked: Boolean): Boolean;
+      function HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleObjAnimation(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
+      function HandleExit(L: TLemming): Boolean;
       function HandleRadiation(L: TLemming; Stoning: Boolean): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
-      function HandleFlipper(L: TLemming; ObjectID: Word): Boolean;
+      function HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleWaterDrown(L: TLemming): Boolean;
       function HandleWaterSwim(L: TLemming): Boolean;
 
@@ -2255,15 +2253,15 @@ var
 begin
   BlockerMap.Clear(DOM_NONE);
 
-  // First add all blocker fields
-  for i := 0 to LemmingList.Count-1 do
-    if LemmingList[i].LemHasBlockerField and not LemmingList[i].LemRemoved then
-      SetBlockerField(LemmingList[i]);
-
-  // Then add all force fields
+  // First add all force fields
   for i := 0 to ObjectInfos.Count - 1 do
     if ObjectInfos[i].TriggerEffect in [DOM_FORCELEFT, DOM_FORCERIGHT] then
       SetForceField(ObjectInfos[i].TriggerRect, ObjectInfos[i].TriggerEffect);
+
+  // Then add all blocker fields
+  for i := 0 to LemmingList.Count-1 do
+    if LemmingList[i].LemHasBlockerField and not LemmingList[i].LemRemoved then
+      SetBlockerField(LemmingList[i]);
 end;
 
 
@@ -2798,13 +2796,6 @@ var
   ObjectID: Word;
   AbortChecks: Boolean;
 begin
-  // special treatment for blockers: Check only for (locked) exit
-  if L.LemAction = baBlocking then
-  begin
-    if HasTriggerAt(L.LemX, L.LemY, trExit) then HandleExit(L, False);
-    Exit;
-  end;
-
   // Get positions to check for trigger areas
   CheckPos := GetObjectCheckPositions(L);
 
@@ -2818,61 +2809,50 @@ begin
     Assert(i <= Length(CheckPos[0]), 'CheckTriggerArea: CheckPos has not enough entries');
     Assert(i <= Length(CheckPos[1]), 'CheckTriggerArea: CheckPos has not enough entries');
 
-    // Check for interactive objects
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trTrap);
-      if ObjectID <> 65535 then
-        if ObjectInfos[ObjectID].TriggerEffect = DOM_TRAP then
-          AbortChecks := HandleTrap(L, ObjectID)
-        else
-          AbortChecks := HandleTrapOnce(L, ObjectID);
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnimation) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trAnimation);
-      if ObjectID <> 65535 then
-        AbortChecks := HandleObjAnimation(L, ObjectID);
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trTeleport);
-      if ObjectID <> 65535 then
-        (*if ObjectInfos[ObjectID].TriggerEffect = DOM_SINGLETELE then
-          AbortChecks := HandleTelepSingle(L, ObjectID)
-        else*)
-        AbortChecks := HandleTeleport(L, ObjectID);
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPickup) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trPickup);
-      if ObjectID <> 65535 then
-        AbortChecks := HandlePickup(L, ObjectID)
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trButton) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trButton);
-      if ObjectID <> 65535 then
-        AbortChecks := HandleButton(L, ObjectID)
-    end
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
-      AbortChecks := HandleExit(L, False)
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
-      AbortChecks := HandleRadiation(L, False)
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
-      AbortChecks := HandleRadiation(L, True)
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
-      AbortChecks := HandleFire(L)
-    else if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper) then
-    begin
-      ObjectID := FindObjectID(CheckPos[0, i], CheckPos[1, i], trFlipper);
-      if ObjectID <> 65535 then
-        AbortChecks := HandleFlipper(L, ObjectID);
-    end;
-    
-    // Check only for drowning here!
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
-      AbortChecks := HandleWaterDrown(L) or AbortChecks;
+    // Animations - the most useless of objects...
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnimation) then
+      HandleObjAnimation(L, CheckPos[0, i], CheckPos[1, i]);
+
+    // Pickup Skills
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPickup) then
+      HandlePickup(L, CheckPos[0, i], CheckPos[1, i]);
+
+    // Buttons
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trButton) then
+      HandleButton(L, CheckPos[0, i], CheckPos[1, i]);
+
+    // Fire
+    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFire) then
+      AbortChecks := HandleFire(L);
+
+    // Water - Check only for drowning here!
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trWater) then
+      AbortChecks := HandleWaterDrown(L);
+
+    // Triggered traps and one-shot traps
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
+      AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
+
+    // Radiation
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
+      HandleRadiation(L, False);
+
+    // Slowfreeze
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
+      HandleRadiation(L, True);
+
+    // Teleporter
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
+      AbortChecks := HandleTeleport(L, CheckPos[0, i], CheckPos[1, i]);
+
+    // Exits
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
+      AbortChecks := HandleExit(L);
+
+    // Flipper (except for blockers)
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
+                         and not (L.LemAction = baBlocking) then
+      AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
 
     // If the lem was required stop, move him there!
     if AbortChecks then
@@ -2983,50 +2963,33 @@ begin
 end;
 
 
-function TLemmingGame.HandleTrap(L: TLemming; ObjectID: Word): Boolean;
+function TLemmingGame.HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
 var
   Inf: TInteractiveObjectInfo;
+  ObjectID: Word;
 begin
   Result := True;
 
-  if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
-     and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
+  ObjectID := FindObjectID(PosX, PosY, trTrap);
+  // Exit if there is no Object
+  if ObjectID = 65535 then
   begin
-    ObjectInfos[ObjectID].IsDisabled := True;
-    Transition(L, baFixing);
-  end
-  else
-  begin
-    Inf := ObjectInfos[ObjectID];
-    // trigger
-    Inf.Triggered := True;
-    Inf.ZombieMode := L.LemIsZombie;
-    // Make sure to remove the blocker field!
-    L.LemHasBlockerField := False;
-    SetBlockerMap;
-    RemoveLemming(L, RM_KILL);
-    CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
-    DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
+    Result := False;
+    Exit;
   end;
-end;
 
-function TLemmingGame.HandleTrapOnce(L: TLemming; ObjectID: Word): Boolean;
-var
-  Inf: TInteractiveObjectInfo;
-begin
-  Result := True;
+  // Set ObjectInfos
+  Inf := ObjectInfos[ObjectID];
 
-  if     L.LemIsMechanic and HasPixelAt(L.LemX, L.LemY)
-     and not (L.LemAction in [baClimbing, baHoisting, baSwimming]) then
+  if     L.LemIsMechanic and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
+     and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
   begin
-    ObjectInfos[ObjectID].IsDisabled := True;
-    Transition(L, baFixing);
-  end
-  else
-  begin
-    Inf := ObjectInfos[ObjectID];
-    // trigger
     Inf.IsDisabled := True;
+    Transition(L, baFixing);
+  end
+  else
+  begin
+    // trigger trap
     Inf.Triggered := True;
     Inf.ZombieMode := L.LemIsZombie;
     // Make sure to remove the blocker field!
@@ -3035,24 +2998,43 @@ begin
     RemoveLemming(L, RM_KILL);
     CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
     DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
+    // Check for one-shot trap and possibly disable it
+    if Inf.TriggerEffect = DOM_TRAPONCE then Inf.IsDisabled := True;
   end;
 end;
 
-function TLemmingGame.HandleObjAnimation(L: TLemming; ObjectID: Word): Boolean;
+
+function TLemmingGame.HandleObjAnimation(L: TLemming; PosX, PosY: Integer): Boolean;
 var
   Inf: TInteractiveObjectInfo;
+  ObjectID: Word;
 begin
   Result := False;
+  ObjectID := FindObjectID(PosX, PosY, trAnimation);
+  // Exit if there is no Object
+  if ObjectID = 65535 then Exit;
+
   Inf := ObjectInfos[ObjectID];
   Inf.Triggered := True;
   CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
 end;
 
-function TLemmingGame.HandleTelepSingle(L: TLemming; ObjectID: Word): Boolean;
+
+function TLemmingGame.HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
 var
   Inf: TInteractiveObjectInfo;
+  ObjectID: Word;
 begin
   Result := True;
+
+  ObjectID := FindObjectID(PosX, PosY, trTeleport);
+
+  // Exit if there is no Object
+  if ObjectID = 65535 then
+  begin
+    Result := False;
+    Exit;
+  end;
 
   Inf := ObjectInfos[ObjectID];
 
@@ -3061,26 +3043,6 @@ begin
   CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
   L.LemTeleporting := True;
   Inf.TeleLem := L.LemIndex;
-  // Make sure to remove the blocker field!
-  L.LemHasBlockerField := False;
-  SetBlockerMap;
-  MoveLemToReceivePoint(L, ObjectID);
-end;
-
-function TLemmingGame.HandleTeleport(L: TLemming; ObjectID: Word): Boolean;
-var
-  Inf: TInteractiveObjectInfo;
-begin
-  Result := True;
-
-  Inf := ObjectInfos[ObjectID];
-
-  Inf.Triggered := True;
-  Inf.ZombieMode := L.LemIsZombie;
-  CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
-  L.LemTeleporting := True;
-  Inf.TeleLem := L.LemIndex;
-  Inf.TwoWayReceive := false;
   // Make sure to remove the blocker field!
   L.LemHasBlockerField := False;
   SetBlockerMap;
@@ -3088,11 +3050,16 @@ begin
   ObjectInfos[Inf.ReceiverID].HoldActive := True;
 end;
 
-function TLemmingGame.HandlePickup(L: TLemming; ObjectID: Word): Boolean;
+function TLemmingGame.HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
 var
   Inf: TInteractiveObjectInfo;
+  ObjectID: Word;
 begin
   Result := False;
+
+  ObjectID := FindObjectID(PosX, PosY, trPickup);
+  // Exit if there is no Object
+  if ObjectID = 65535 then Exit;
 
   if not L.LemIsZombie then
   begin
@@ -3121,12 +3088,17 @@ begin
 end;
 
 
-function TLemmingGame.HandleButton(L: TLemming; ObjectID: Word): Boolean;
+function TLemmingGame.HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
 var
   Inf: TInteractiveObjectInfo;
   n: Integer;
+  ObjectID: Word;
 begin
   Result := False;
+
+  ObjectID := FindObjectID(PosX, PosY, trButton);
+  // Exit if there is no Object
+  if ObjectID = 65535 then Exit;
 
   if not L.LemIsZombie then
   begin
@@ -3148,7 +3120,7 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleExit(L: TLemming; IsLocked: Boolean): Boolean;
+function TLemmingGame.HandleExit(L: TLemming): Boolean;
 begin
   Result := False; // only see exit trigger area, if it actually used
 
@@ -3209,11 +3181,16 @@ begin
   CueSoundEffect(SFX_VAPORIZING, L.Position);
 end;
 
-function TLemmingGame.HandleFlipper(L: TLemming; ObjectID: Word): Boolean;
+function TLemmingGame.HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
 var
   Inf: TInteractiveObjectInfo;
+  ObjectID: Word;
 begin
   Result := False;
+
+  ObjectID := FindObjectID(PosX, PosY, trFlipper);
+  // Exit if there is no Object
+  if ObjectID = 65535 then Exit;
 
   Inf := ObjectInfos[ObjectID];
   if not (L.LemInFlipper = ObjectID) then
@@ -4063,6 +4040,17 @@ end;
 
 
 function TLemmingGame.HandleStacking(L: TLemming): Boolean;
+  function MayPlaceNextBrick(L: TLemming): Boolean;
+  var
+    BrickPosY: Integer;
+  begin
+    BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
+    if L.LemStackLow then Inc(BrickPosY);
+    Result := not (     HasPixelAt(L.LemX + L.LemDX, BrickPosY)
+                    and HasPixelAt(L.LemX + 2 * L.LemDX, BrickPosY)
+                    and HasPixelAt(L.LemX + 3 * L.LemDX, BrickPosY))
+  end;
+
 begin
   Result := True;
 
@@ -4077,7 +4065,12 @@ begin
     if L.LemNumberOfBricksLeft < 3 then CueSoundEffect(SFX_BUILDER_WARNING, L.Position);
 
     if not L.LemPlacedBrick then
-      Transition(L, baWalking, True) // Even on the last brick???  // turn around as well
+    begin
+      // Relax the chech on the first brick
+      // for details see http://www.lemmingsforums.net/index.php?topic=2862.0
+      if (L.LemNumberOfBricksLeft < 7) or not MayPlaceNextBrick(L) then
+        Transition(L, baWalking, True) // Even on the last brick???  // turn around as well
+    end
     else if L.LemNumberOfBricksLeft = 0 then
       Transition(L, baShrugging);
   end;
@@ -5581,16 +5574,17 @@ begin
 
   Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
 
-  if     (ObjInfo.TriggerEffect = DOM_RECEIVER)
-     or ((ObjInfo.TriggerEffect = DOM_TWOWAYTELE) and (ObjInfo.TwoWayReceive = True))
-     or  (ObjInfo.TriggerEffect = DOM_SINGLETELE) then
+  if      (ObjInfo.TriggerEffect = DOM_RECEIVER)
+      and (ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) then
   begin
-    if    ((ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) and (ObjInfo.MetaObj.KeyFrame = 0))
-       or ((ObjInfo.CurrentFrame + 1 = ObjInfo.MetaObj.KeyFrame) and (ObjInfo.MetaObj.KeyFrame <> 0)) then
+    L.LemTeleporting := False; // Let lemming reappear
+    ObjInfo.TeleLem := -1;
+    Result := True;
+    // Reset blocker map, if lemming is a blocker
+    if L.LemAction = baBlocking then
     begin
-      L.LemTeleporting := False; // Let lemming reappear
-      ObjInfo.TeleLem := -1;
-      Result := True;
+      L.LemHasBlockerField := True;
+      SetBlockerMap;
     end;
   end;
 end;
@@ -5727,21 +5721,15 @@ begin
        and (Inf.TriggerEffect <> DOM_PICKUP) then
       Inc(Inf.CurrentFrame);
 
-    if     (Inf.TriggerEffect = DOM_TELEPORT)
-       or ((Inf.TriggerEffect = DOM_TWOWAYTELE) and (Inf.TwoWayReceive = false)) then
+    if (Inf.TriggerEffect = DOM_TELEPORT) and (Inf.CurrentFrame >= Inf.AnimationFrameCount) then
     begin
-      if    ((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.KeyFrame = 0))
-         or ((Inf.CurrentFrame = Inf.MetaObj.KeyFrame) and (Inf.MetaObj.KeyFrame <> 0)) then
-      begin
-        MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
-        Inf2 := ObjectInfos[Inf.ReceiverId];
-        Inf2.TeleLem := Inf.TeleLem;
-        Inf2.Triggered := True;
-        Inf2.ZombieMode := Inf.ZombieMode;
-        Inf2.TwoWayReceive := true;
-        // Reset TeleLem for Teleporter
-        Inf.TeleLem := -1;
-      end;
+      MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
+      Inf2 := ObjectInfos[Inf.ReceiverId];
+      Inf2.TeleLem := Inf.TeleLem;
+      Inf2.Triggered := True;
+      Inf2.ZombieMode := Inf.ZombieMode;
+      // Reset TeleLem for Teleporter
+      Inf.TeleLem := -1;
     end;
 
     if Inf.CurrentFrame >= Inf.AnimationFrameCount then
