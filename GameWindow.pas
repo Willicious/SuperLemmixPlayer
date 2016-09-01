@@ -204,6 +204,9 @@ begin
       CheckResetCursor;
     end
     // End hyperspeed if we have reached the TargetIteration and are not mass replay checking
+    // Note that TargetIteration is 1 less than the actual target frame number,
+    // because we only set Game.LeavingHyperSpeed=True here,
+    // any only exit hyperspeed after calling Game.UpdateLemmings once more!
     else if (Game.CurrentIteration >= Game.TargetIteration) and (GameParams.ReplayCheckIndex = -2) then
     begin
       Game.HyperSpeedEnd;
@@ -629,14 +632,17 @@ begin
                       if func.Modifier < 0 then
                       begin
                         if CurrentIteration > (func.Modifier * -1) then
-                          GotoSaveState((CurrentIteration + func.Modifier) - 1)
+                          GotoSaveState(CurrentIteration + func.Modifier - 1)
                         else
                           GotoSaveState(0);
                         if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                       end else if func.Modifier > 1 then
                       begin
                         HyperSpeedBegin;
-                        TargetIteration := CurrentIteration + func.Modifier;
+                        // We have to set TargetIteration one frame before the actual target frame number,
+                        // because on TargetIteration, we only set Game.LeavingHyperSpeed=True,
+                        // but exit hyperspeed only after calling Game.UpdateLemmings once more!
+                        TargetIteration := CurrentIteration + func.Modifier - 1;
                       end else
                         if Paused then ForceUpdateOneFrame := true;
         end;
