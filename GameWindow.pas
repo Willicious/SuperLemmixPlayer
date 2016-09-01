@@ -166,26 +166,29 @@ begin
   if TimeForFrame or TimeForScroll then
   begin
     Game.fAssignEnabled := true;
-  //  PrevCallTime := CurrTime; --> line deleted and moved down
 
     // only in paused mode adjust RR. If not paused it's updated per frame.
     if Game.Paused then
       if (TimeForScroll and not Game.Replaying) or ForceOne then
         CheckAdjustReleaseRate;
 
+    // set new screen position
     if TimeForScroll then
     begin
       PrevScrollTime := CurrTime;
       CheckScroll;
     end;
 
-    //if ForceOne or not Game.Paused then THIS IS ORIGINAL BUT MAYBE WRONG
+    // Check whether we have to move the lemmings
     if (TimeForFrame and not Pause)
-    or ForceOne
-    or Hyper then
+       or ForceOne
+       or Hyper then
     begin
+      // Reset time between physics updates
       PrevCallTime := CurrTime;
+      // Let all lemmings move
       Game.UpdateLemmings;
+      // Save current state every 10 seconds, unless mass replay checking
       if (Game.CurrentIteration mod 170 = 0) and (GameParams.ReplayCheckIndex = -2) then
       begin
         AddSaveState;
@@ -193,29 +196,38 @@ begin
       end;
     end;
 
+    // Refresh panel if in usual or fast play mode
     if not Hyper then
     begin
       SkillPanel.RefreshInfo;
       SkillPanel.DrawMinimap(Game.Minimap);
       CheckResetCursor;
     end
-    else begin
-      if (Game.CurrentIteration >= Game.TargetIteration) and (GameParams.ReplayCheckIndex = -2) then
-      begin
-        Game.HyperSpeedEnd;
-        SkillPanel.RefreshInfo;
-        SkillPanel.DrawMinimap(Game.Minimap);
-        CheckResetCursor;
-      end;
+    // End hyperspeed if we have reached the TargetIteration and are not mass replay checking
+    // Note that TargetIteration is 1 less than the actual target frame number,
+    // because we only set Game.LeavingHyperSpeed=True here,
+    // any only exit hyperspeed after calling Game.UpdateLemmings once more!
+    else if (Game.CurrentIteration >= Game.TargetIteration) and (GameParams.ReplayCheckIndex = -2) then
+    begin
+      Game.HyperSpeedEnd;
+      SkillPanel.RefreshInfo;
+      SkillPanel.DrawMinimap(Game.Minimap);
+      CheckResetCursor;
     end;
 
-    if (GameParams.ReplayCheckIndex <> -2) then
+
+    if (GameParams.ReplayCheckIndex <> -2) then // i.e. we are mass replay checking
+    begin
       if Game.Checkpass then
       begin
         Game.Finish;
-      end else begin
+      end
+      else
+      begin
         Game.TargetIteration := Game.CurrentIteration + 170; //keep it in hyperspeed mode
+        // Make sure to use hyperspeed mode
         if not Game.HyperSpeed then Game.HyperSpeedBegin;
+        // Save frame number of last replay action and abort the replay if it was more than 5min ago
         if Game.Replaying then
           fLastReplayingIteration := Game.CurrentIteration
         else if fLastReplayingIteration < Game.CurrentIteration - (5 * 60 * 17) then
@@ -224,6 +236,7 @@ begin
           Game.Finish;
         end;
       end;
+    end;
 
   end;
 
@@ -619,14 +632,17 @@ begin
                       if func.Modifier < 0 then
                       begin
                         if CurrentIteration > (func.Modifier * -1) then
-                          GotoSaveState((CurrentIteration + func.Modifier) - 1)
+                          GotoSaveState(CurrentIteration + func.Modifier - 1)
                         else
                           GotoSaveState(0);
                         if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                       end else if func.Modifier > 1 then
                       begin
                         HyperSpeedBegin;
-                        TargetIteration := CurrentIteration + func.Modifier;
+                        // We have to set TargetIteration one frame before the actual target frame number,
+                        // because on TargetIteration, we only set Game.LeavingHyperSpeed=True,
+                        // but exit hyperspeed only after calling Game.UpdateLemmings once more!
+                        TargetIteration := CurrentIteration + func.Modifier - 1;
                       end else
                         if Paused then ForceUpdateOneFrame := true;
         end;
