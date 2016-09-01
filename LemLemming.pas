@@ -93,6 +93,7 @@ type
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
     LemUsedSkillCount             : Integer; // number of skills assigned to this lem, used for talisman
     LemTimerToStone               : Boolean;
+    LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Stoner
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     // The next three values are only needed to determine intermediate trigger area checks
     // They are set in HandleLemming

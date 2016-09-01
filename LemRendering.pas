@@ -308,7 +308,7 @@ var
 begin
   if aLemming.LemRemoved then Exit;
 
-  ShowCountdown := (aLemming.LemExplosionTimer > 0);
+  ShowCountdown := (aLemming.LemExplosionTimer > 0) and not aLemming.LemHideCountdown;
   ShowHighlight := (aLemming = fRenderInterface.HighlitLemming);
 
   if ShowCountdown and ShowHighlight then

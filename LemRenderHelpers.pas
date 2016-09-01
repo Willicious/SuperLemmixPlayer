@@ -37,6 +37,7 @@ type
   TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
   TSimulateLemRoutine = function(L: TLemming): TArrayArrayInt of object;
+  TGetLemmingRoutine = function: TLemming of object;
 
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
@@ -140,7 +141,6 @@ type
       fObjectList: TInteractiveObjectInfoList;
       fPSelectedSkill: ^TSkillPanelButton;
       fSelectedLemming: TLemming;
-      fHighlitLemming: TLemming;
       fReplayLemming: TLemming;
       fPhysicsMap: TBitmap32;
       fTerrainMap: TBitmap32;
@@ -149,13 +149,16 @@ type
       fDrawRoutines: TDrawRoutines;
       fRemoveRoutine: TRemoveRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
+      fGetHighlitLemRoutine: TGetLemmingRoutine;
       function GetSelectedSkill: TSkillPanelButton;
+      function GetHighlitLemming: TLemming;
     public
       constructor Create;
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
       procedure SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
       procedure SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
+      procedure SetgetHighlitRoutine(aRoutine: TGetLemmingRoutine);
       procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
       function SimulateLem(L: TLemming): TArrayArrayInt;
@@ -163,7 +166,7 @@ type
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
       property SelectedLemming: TLemming read fSelectedLemming write fSelectedLemming;
-      property HighlitLemming: TLemming read fHighlitLemming write fHighlitLemming;
+      property HighlitLemming: TLemming read GetHighlitLemming;
       property ReplayLemming: TLemming read fReplayLemming write fReplayLemming;
       property PhysicsMap: TBitmap32 read fPhysicsMap write fPhysicsMap;
       property TerrainMap: TBitmap32 read fTerrainMap write fTerrainMap;
@@ -235,6 +238,11 @@ begin
   fSimulateLemRoutine := aRoutine;
 end;
 
+procedure TRenderInterface.SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
+begin
+  fGetHighlitLemRoutine := aRoutine;
+end;
+
 procedure TRenderInterface.AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
 begin
   // TLemmingGame is expected to handle modifications to the physics map.
@@ -254,6 +262,11 @@ end;
 function TRenderInterface.SimulateLem(L: TLemming): TArrayArrayInt;
 begin
   Result := fSimulateLemRoutine(L);
+end;
+
+function TRenderInterface.GetHighlitLemming: TLemming;
+begin
+  Result := fGetHighlitLemRoutine;
 end;
 
 

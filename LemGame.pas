@@ -411,7 +411,6 @@ type
     fEntranceAnimationCompleted: Boolean;
     fStartupMusicAfterEntry    : Boolean;
     fHitTestAutoFail           : Boolean;
-    fHighlightLemming          : TLemming;
     fHighlightLemmingID        : Integer;
 
     fFallLimit                 : Integer;
@@ -670,6 +669,7 @@ type
     procedure SaveGameplayImage(Filename: String);
     function GetSelectedSkill: Integer;
     function Checkpass: Boolean;
+    function GetHighlitLemming: TLemming;
 
   { properties }
     property CurrentCursor: Integer read fCurrentCursor;
@@ -1048,8 +1048,6 @@ begin
     LemmingList.Add(TLemming.Create);
     LemmingList[i].Assign(aState.LemmingList[i]);
     LemmingList[i].LemIndex := i;
-    if fHighlightLemmingID = i then
-      fHighlightLemming := LemmingList[i];
   end;
 
   // Objects
@@ -1181,9 +1179,9 @@ begin
   fRenderInterface.ObjectList := ObjectInfos;
   fRenderInterface.SetSelectedSkillPointer(fSelectedSkill);
   fRenderInterface.SelectedLemming := nil;
-  fRenderInterface.HighlitLemming := nil;
   fRenderInterface.ReplayLemming := nil;
   fRenderInterface.SetSimulateLemRoutine(SimulateLem);
+  fRenderInterface.SetGetHighlitRoutine(GetHighlitLemming);
 
   LemmingMethods[baNone]       := nil;
   LemmingMethods[baWalking]    := HandleWalking;
@@ -1572,7 +1570,6 @@ begin
   fGameCheated := False;
   LemmingsReleased := 0;
   LemmingsCloned := 0;
-  fHighlightLemming := nil;
   //World.OuterColor := 0;
   TimePlay := Level.Info.TimeLimit;
   if (TimePlay > 5999) or (moTimerMode in fGameParams.MiscOptions) then
@@ -1592,7 +1589,6 @@ begin
   SpawnedDead := Level.Info.ZombieGhostCount;
   LemmingsIn := 0;
   LemmingsRemoved := 0;
-  fHighlightLemming := nil;
   DelayEndFrames := 0;
   fRightMouseButtonHeldDown := False;
   fShiftButtonHeldDown := False;
@@ -1811,8 +1807,7 @@ begin
         RemoveLemming(L, RM_ZOMBIE);
         Dec(SpawnedDead);
       end;
-      
-      if LemIndex = fHighlightLemmingID then fHighlightLemming := L;
+
     end;
     Inc(LemmingsReleased);
     Inc(LemmingsOut);
@@ -2046,14 +2041,8 @@ begin
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing    : CueSoundEffect(SFX_OHNO, L.Position);
     baStoning    : CueSoundEffect(SFX_OHNO, L.Position);
-    baExploding  : begin
-                     if fHighlightLemming = L then fHighlightLemming := nil;
-                     CueSoundEffect(SFX_EXPLOSION, L.Position);
-                   end;
-    baStoneFinish: begin
-                     if fHighlightLemming = L then fHighlightLemming := nil;
-                     CueSoundEffect(SFX_EXPLOSION, L.Position);
-                   end;
+    baExploding  : CueSoundEffect(SFX_EXPLOSION, L.Position);
+    baStoneFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
     baSwimming   : begin // If possible, float up 4 pixels when starting
                      i := 0;
                      while (i < 4) and HasTriggerAt(L.LemX, L.LemY - i - 1, trWater)
@@ -2390,11 +2379,13 @@ begin
     begin
       L.LemExplosionTimer := 1;
       L.LemTimerToStone := False;
+      L.LemHideCountdown := True;
     end
     else if (NewSkill = baStoning) then
     begin
       L.LemExplosionTimer := 1;
       L.LemTimerToStone := True;
+      L.LemHideCountdown := True;
     end
     else if (NewSkill = baCloning) then
     begin
@@ -2510,7 +2501,7 @@ begin
     L := LemmingList.List^[i];
 
     // Check if we only look for highlighted Lems
-    if IsHighlight and not (L = fHighlightLemming) then Continue;
+    if IsHighlight and not (L = GetHighlitLemming) then Continue;
     // Does Lemming exist
     if L.LemRemoved or L.LemTeleporting then Continue;
     // Is the Lemming a Zombie (remove unless we haven't yet had any lem under the cursor)
@@ -4645,7 +4636,6 @@ begin
   begin
     Inc(LemmingsRemoved);
     Dec(LemmingsOut);
-    if (fHighlightLemming = L) then fHighlightLemming := nil;
     L.LemRemoved := True;
 
     case RemMode of
@@ -4920,37 +4910,26 @@ end;
 
 function TLemmingGame.ProcessHighlightAssignment: Boolean;
 var
-  L, OldHighlightLemming: TLemming;
+  L: TLemming;
+  OldHighlightLemmingID: Integer;
   i: Integer;
 begin
   Result := False;
-  OldHighlightLemming := fHighlightLemming;
+  OldHighlightLemmingID := fHighlightLemmingID;
   if GetPriorityLemming(L, baNone, CursorPoint) > 0 then
-    fHighlightLemming := L
+    fHighlightLemmingID := L.LemIndex
   else
-    fHighlightLemming := nil;
+    fHighlightLemmingID := -1;
 
-  if fHighlightLemming <> OldHighlightLemming then
+  if fHighlightLemmingID <> OldHighlightLemmingID then
   begin
     CueSoundEffect(SFX_SKILLBUTTON);
-    for i := 0 to LemmingList.Count-1 do
-      if LemmingList[i] = fHighlightLemming then
-      begin
-        fHighlightLemmingID := i;
-        Break;
-      end else
-        fHighlightLemmingID := -1;
+
     if (Paused) then
-    begin
-      if OldHighlightLemming <> nil then
-      begin
+      if OldHighlightLemmingID <> -1 then
         DrawAnimatedObjects; // not sure why this one. Might be to fix graphical glitches, I guess?
-      end;
-    end;
+
   end;
-
-  fRenderInterface.HighlitLemming := fHighlightLemming;
-
 
 end;
 
@@ -4958,7 +4937,7 @@ procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment
 var
   L: TLemming;
   ass: TBasicLemmingAction;
-  OldHighlightLem: TLemming;
+  OldHighlightLemID: Integer;
 begin
   if fAssignedSkillThisFrame then Exit;
   with aReplayItem do
@@ -4987,11 +4966,11 @@ begin
       // In order to preserve old replays, we have to check if the skill assignments are still possible
       // As the priority of lemmings has changed, we have to hightlight this lemming
       // After having done the assignment, revert the hightlightning.
-      OldHighlightLem := fHighlightLemming;
-      fHighlightLemming := L;
+      OldHighlightLemID := fHighlightLemmingID;
+      fHighlightLemmingID := L.LemIndex;
       if AssignNewSkill(ass, True) then
         fAssignedSkillThisFrame := true;
-      fHighlightLemming := OldHighlightLem;
+      fHighlightLemmingID := OldHighlightLemID;
 
       // if DoSkillAssignment(L, ass) then
       //  fAssignedSkillThisFrame := true;
@@ -5037,7 +5016,7 @@ procedure TLemmingGame.SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Bo
 begin
   if (fRightMouseButtonHeldDown and fGameParams.ClickHighlight)
   or (fCtrlButtonHeldDown and not fGameParams.ClickHighlight) then RightClick := true;
-  if RightClick and (fHighlightLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
+  if RightClick and (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
   begin
     // Try assigning skill to highlighted Lem
     if AssignNewSkill(SkillPanelButtonToAction[Value], True) and Paused then
@@ -5129,7 +5108,6 @@ begin
           if (ObjectInfos[ix].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
           if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
           if NewLemming.LemIsZombie then Dec(SpawnedDead);
-          if LemIndex = fHighlightLemmingID then fHighlightLemming := NewLemming;
         end;
         Inc(LemmingsReleased);
         Inc(LemmingsOut);
@@ -5263,6 +5241,16 @@ begin
     fOnDebugLemming(L);
 end;
 
+function TLemmingGame.GetHighlitLemming: TLemming;
+begin
+  Result := nil;
+  if fHighlightLemmingID < 0 then Exit;
+  if fHighlightLemmingID >= LemmingList.Count then Exit;
+  if LemmingList[fHighlightLemmingID].LemRemoved then Exit;
+  if LemmingList[fHighlightLemmingID].LemTeleporting then Exit;
+  Result := LemmingList[fHighlightLemmingID];
+end;
+
 (*
 procedure TLemmingGame.DrawError(const S: string; aCode: Integer);
 {-------------------------------------------------------------------------------
@@ -5344,7 +5332,7 @@ begin
 
   E := TReplaySkillAssignment.Create;
   E.Skill := aSkill;
-  E.SetInfoFromLemming(L, (L = fHighlightLemming));
+  E.SetInfoFromLemming(L, (L.LemIndex = fHighlightLemmingID));
   E.Frame := fCurrentIteration;
 
   fReplayManager.Add(E);
