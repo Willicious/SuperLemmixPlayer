@@ -318,7 +318,10 @@ begin
   begin
     n := (aLemming.LemExplosionTimer div 17) + 1;
     SrcRect := Rect(n * 4, 0, ((n+1) * 4), 5);
-    fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 1, aLemming.LemY - 17, SrcRect);
+    if aLemming.LemDX < 0 then
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 2, aLemming.LemY - 17, SrcRect)    
+    else
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 1, aLemming.LemY - 17, SrcRect);
   end else if ShowHighlight then
     fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 2, aLemming.LemY - 20);
 end;
