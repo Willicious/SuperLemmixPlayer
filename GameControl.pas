@@ -100,7 +100,9 @@ const
     moTimerBlink,
     moAlwaysTimestamp,
     moClickHighlight,
-    moEnableOnline
+    moAutoReplaySave,
+    moBlackOutZero,
+    moPauseAfterBackwards
   ];
 
 type
