@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 441
+  ClientHeight = 457
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object FormNXConfig: TFormNXConfig
     Left = 0
     Top = 0
     Width = 273
-    Height = 401
+    Height = 417
     ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -73,11 +73,11 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 96
         Width = 249
-        Height = 41
+        Height = 57
         Caption = 'Input Options'
         TabOrder = 1
         object cbOneClickHighlight: TCheckBox
-          Left = 16
+          Left = 12
           Top = 16
           Width = 129
           Height = 17
@@ -86,18 +86,27 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object btnHotkeys: TButton
-          Left = 160
-          Top = 10
+          Left = 168
+          Top = 18
           Width = 73
           Height = 25
           Caption = 'Set Hotkeys'
           TabOrder = 1
           OnClick = btnHotkeysClick
         end
+        object cbPauseAfterBackwards: TCheckBox
+          Left = 12
+          Top = 32
+          Width = 153
+          Height = 17
+          Caption = 'Pause After Backwards Skip'
+          TabOrder = 2
+          OnClick = OptionChanged
+        end
       end
       object GroupBox3: TGroupBox
         Left = 8
-        Top = 144
+        Top = 160
         Width = 249
         Height = 97
         Caption = 'Interface Options'
@@ -110,7 +119,7 @@ object FormNXConfig: TFormNXConfig
           Caption = 'Zoom:'
         end
         object cbLemmingBlink: TCheckBox
-          Left = 16
+          Left = 12
           Top = 16
           Width = 129
           Height = 17
@@ -119,7 +128,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbTimerBlink: TCheckBox
-          Left = 16
+          Left = 12
           Top = 32
           Width = 129
           Height = 17
@@ -142,7 +151,7 @@ object FormNXConfig: TFormNXConfig
             'Fullscreen')
         end
         object cbBlackOut: TCheckBox
-          Left = 16
+          Left = 12
           Top = 48
           Width = 153
           Height = 17
@@ -153,7 +162,7 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox4: TGroupBox
         Left = 8
-        Top = 248
+        Top = 264
         Width = 249
         Height = 113
         Caption = 'Replay Options'
@@ -166,7 +175,7 @@ object FormNXConfig: TFormNXConfig
           Caption = 'Manually-Saved Replay Naming:'
         end
         object cbAutoSaveReplay: TCheckBox
-          Left = 16
+          Left = 12
           Top = 16
           Width = 217
           Height = 17
@@ -192,7 +201,7 @@ object FormNXConfig: TFormNXConfig
             'Ask For Filename')
         end
         object cbExplicitCancel: TCheckBox
-          Left = 16
+          Left = 12
           Top = 32
           Width = 217
           Height = 17
@@ -201,7 +210,7 @@ object FormNXConfig: TFormNXConfig
           OnClick = OptionChanged
         end
         object cbNoAutoReplay: TCheckBox
-          Left = 16
+          Left = 12
           Top = 48
           Width = 225
           Height = 17
@@ -353,7 +362,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 408
+    Top = 424
     Width = 65
     Height = 25
     Caption = 'OK'
@@ -362,7 +371,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 104
-    Top = 408
+    Top = 424
     Width = 65
     Height = 25
     Caption = 'Cancel'
@@ -371,7 +380,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 184
-    Top = 408
+    Top = 424
     Width = 65
     Height = 25
     Caption = 'Apply'
