@@ -579,8 +579,6 @@ begin
   finally
     MS.Free;
   end;
-
-  SaveToFile(ChangeFileExt(aFile, '.nxrp'));
 end;
 
 function TReplay.GetItemByFrame(aFrame: Integer; aItemType: Integer): TBaseReplayItem;

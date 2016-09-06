@@ -1089,18 +1089,36 @@ end;
 procedure TGameWindow.StartReplay2(const aFileName: string);
 var
   ext: String;
+
+  procedure LoadOldReplay(aName: String);
+  var
+    L: TLevel;
+  begin
+    with Game.ReplayManager do
+    begin
+      LoadOldReplayFile(aName);
+      L := Game.Level;
+      LevelName := Trim(L.Info.Title);
+      LevelAuthor := Trim(L.Info.Author);
+      LevelGame := Trim(GameParams.SysDat.PackName);
+      LevelRank := Trim(GameParams.Info.dSectionName);
+      LevelPosition := GameParams.Info.dLevel + 1;
+      LevelID := L.Info.LevelID;
+      SaveToFile(ChangeFileExt(aName, '.nxrp'));
+    end;
+  end;
 begin
   CanPlay := False;
   ext := Lowercase(ExtractFileExt(aFilename));
   if ext = '.nxrp' then
     Game.ReplayManager.LoadFromFile(aFilename)
   else if ext = '.lrb' then
-    Game.ReplayManager.LoadOldReplayFile(aFilename)
+    LoadOldReplay(aFilename)
   else
     try
       Game.ReplayManager.LoadFromFile(aFilename);
     except
-      Game.ReplayManager.LoadOldReplayFile(aFilename);
+      LoadOldReplay(aFilename);
     end;
 
   Game.Paused := False;
