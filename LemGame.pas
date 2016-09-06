@@ -5857,6 +5857,19 @@ var
     // Don't need to handle AlwaysTimestamp here; it's handled in GetReplayFileName above.
   end;
 
+  procedure EnsureCorrectDetails;
+  begin
+    with fReplayManager do
+    begin
+      LevelName := Trim(fLevel.Info.Title);
+      LevelAuthor := Trim(fLevel.Info.Author);
+      LevelGame := Trim(fGameParams.SysDat.PackName);
+      LevelRank := Trim(fGameParams.Info.dSectionName);
+      LevelPosition := fGameParams.Info.dLevel + 1;
+      LevelID := fLevel.Info.LevelID;
+    end;
+  end;
+
 begin
   SaveText := false;
 
@@ -5879,6 +5892,7 @@ begin
   if SaveNameLrb <> '' then
   begin
     ForceDirectories(ExtractFilePath(SaveNameLrb));
+    EnsureCorrectDetails;
     fReplayManager.SaveToFile(SaveNameLrb);
   end;
 
