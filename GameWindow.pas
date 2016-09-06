@@ -582,7 +582,8 @@ begin
                         fLastNukeKeyTime := CurrTime;
                     end;
           lka_SaveState : fSaveStateFrame := fGame.CurrentIteration;
-          lka_LoadState : begin
+          lka_LoadState : if fSaveStateFrame <> -1 then
+                          begin
                             GotoSaveState(fSaveStateFrame);
                             if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                           end;
@@ -1097,14 +1098,17 @@ var
     with Game.ReplayManager do
     begin
       LoadOldReplayFile(aName);
-      L := Game.Level;
-      LevelName := Trim(L.Info.Title);
-      LevelAuthor := Trim(L.Info.Author);
-      LevelGame := Trim(GameParams.SysDat.PackName);
-      LevelRank := Trim(GameParams.Info.dSectionName);
-      LevelPosition := GameParams.Info.dLevel + 1;
-      LevelID := L.Info.LevelID;
-      SaveToFile(ChangeFileExt(aName, '.nxrp'));
+      if GameParams.ReplayCheckIndex <> -2 then
+      begin
+        L := Game.Level;
+        LevelName := Trim(L.Info.Title);
+        LevelAuthor := Trim(L.Info.Author);
+        LevelGame := Trim(GameParams.SysDat.PackName);
+        LevelRank := Trim(GameParams.Info.dSectionName);
+        LevelPosition := GameParams.Info.dLevel + 1;
+        LevelID := L.Info.LevelID;
+        SaveToFile(ChangeFileExt(aName, '.nxrp'));
+      end;
     end;
   end;
 begin
@@ -1120,6 +1124,10 @@ begin
     except
       LoadOldReplay(aFilename);
     end;
+
+  if Game.ReplayManager.LevelID <> Game.Level.Info.LevelID then
+    ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
+                'will attempt to play the replay anyway.');
 
   Game.Paused := False;
   GotoSaveState(0);
