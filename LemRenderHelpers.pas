@@ -36,7 +36,7 @@ type
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
-  TSimulateLemRoutine = function(L: TLemming): TArrayArrayInt of object;
+  TSimulateLemRoutine = function(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt of object;
 
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,

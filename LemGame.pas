@@ -555,7 +555,7 @@ type
       function ReadBlockerMap(X, Y: Integer): Byte;
 
     procedure SetZombieField(L: TLemming);
-    function SimulateLem(L: TLemming): TArrayArrayInt;
+    function SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt;
     procedure AddPreplacedLemming;
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
@@ -3292,10 +3292,14 @@ begin
 
   Bmp.DrawTo(PhysicsMap, D, S);
 
-  // Delete these pixels from the terrain layer
-  fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
-
-  InitializeMinimap;
+  // Only change the PhysicsMap if simulating stuff
+  if not fSimulation then
+  begin
+    // Delete these pixels from the terrain layer
+    fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
+    // Get now minimap
+    InitializeMinimap;
+  end;
 end;
 
 procedure TLemmingGame.ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
@@ -3620,7 +3624,7 @@ begin
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
 
-  if L.LemIsZombie then SetZombieField(L);
+  if L.LemIsZombie and not fSimulation then SetZombieField(L);
 end;
 
 function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
@@ -4142,6 +4146,60 @@ var
     end;
   end;
 
+  // Simulate the behavior of the basher in the next two frames
+  function DoTurnAtSteel(L: TLemming): Boolean;
+  var
+    CopyL: TLemming;
+    SavePhysicsMap: TBitmap32;
+    i: Integer;
+  begin
+    // Make deep copy of the lemming
+    CopyL := TLemming.Create;
+    CopyL.Assign(L);
+    // Make a deep copy of the PhysicsMap
+    SavePhysicsMap := TBitmap32.Create;
+    SavePhysicsMap.Assign(PhysicsMap);
+
+    Result := False;
+
+    // Simulate two basher cycles
+    // 11 iterations is hopefully correct: CopyL.LemFrame changes as follows:
+    // 10 -> 11 -> 12 -> 13 -> 14 -> 15 -> 16 -> 11 -> 12 -> 13 -> 14 -> 15
+    CopyL.LemFrame := 10;
+    for i := 0 to 10 do
+    begin
+      // On CopyL.LemFrame = 0 or 16, apply all basher masks and jump to frame 10 again
+      if (CopyL.LemFrame in [0, 16]) then
+      begin
+        fSimulation := True; // do not apply the changes to the TerrainLayer
+        ApplyBashingMask(CopyL, 0);
+        ApplyBashingMask(CopyL, 1);
+        ApplyBashingMask(CopyL, 2);
+        ApplyBashingMask(CopyL, 3);
+        fSimulation := False; // should not matter, because we do this in SimulateLem anyway, but to be safe...
+        // Do *not* check whether continue bashing, but move directly ahead to frame 10
+        CopyL.LemFrame := 10;
+      end;
+
+      // Move one frame forward
+      SimulateLem(CopyL, False);
+
+      // Check if we have turned around at steel
+      if (CopyL.LemDX = -L.LemDX) then
+      begin
+        Result := True;
+        Break;
+      end
+      // Check if we are still a basher
+      else if CopyL.LemRemoved or not (CopyL.LemAction = baBashing) then
+        Break; // and return false
+    end;
+
+    // Copy PhysicsMap back
+    PhysicsMap.Assign(SavePhysicsMap);
+  end;
+
+
 begin
   Result := True;
 
@@ -4157,15 +4215,26 @@ begin
   if AdjustedFrame = 5 then
   begin
     ContinueWork := False;
-    For n := 1 to 14 do
+
+    // check for destructible terrain at height 5 and 6
+    for n := 1 to 14 do
     begin
       if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
            and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx, baBashing)
          ) then ContinueWork := True;
-      if HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 5) then ContinueWork := True;
+      if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 5)
+           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 5, L.LemDx, baBashing)
+         ) then ContinueWork := True;
     end;
 
-    if ContinueWork = False then
+    // check whether we turn around within the next two basher strokes (only if we don't simulate)
+    if (not ContinueWork) and (not fSimulation) then
+    begin
+      Assert(not fSimulation, 'Lemming simulation does basher steel turn checks and creates an infinite recursion');
+      ContinueWork := DoTurnAtSteel(L);
+    end;
+
+    if not ContinueWork then
     begin
       if HasPixelAt(L.LemX, L.LemY) then
         Transition(L, baWalking)
@@ -5500,7 +5569,7 @@ begin
 
 end;
 
-function TLemmingGame.SimulateLem(L: TLemming): TArrayArrayInt; // Simulates advancing one frame for the lemming L
+function TLemmingGame.SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt; // Simulates advancing one frame for the lemming L
 var
   HandleInteractiveObjects: Boolean;
   LemPosArray: TArrayArrayInt;
@@ -5515,7 +5584,7 @@ begin
   if HandleInteractiveObjects then
     HandleInteractiveObjects := CheckLevelBoundaries(L);
   // Check whether the lem has moved over trigger areas
-  if HandleInteractiveObjects then
+  if HandleInteractiveObjects and DoCheckObjects then
   begin
     // Get positions to check
     LemPosArray := GetObjectCheckPositions(L);
