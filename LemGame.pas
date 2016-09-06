@@ -2655,8 +2655,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baMining, baDigging];
 begin
-  Result := (L.LemAction in ActionSet)
-            and not HasIndestructibleAt(L.LemX + 4 * L.LemDx, L.LemY - 5, L.LemDx, baBashing);
+  Result := (L.LemAction in ActionSet);
 end;
 
 function TLemmingGame.MayAssignMiner(L: TLemming): Boolean;
