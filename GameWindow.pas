@@ -294,6 +294,7 @@ begin
   //if aTargetIteration < 0 then Exit;
   CanPlay := False;
   CurrentlyPaused := Game.Paused;
+  if (aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip then CurrentlyPaused := true;
 
   // Find correct save state
   if aTargetIteration > 0 then
@@ -529,14 +530,13 @@ begin
   if Game.HyperSpeed then
      Exit;
 
-  if ((func.Action in NON_CANCELLING_KEYS) or ((func.Action in SKILL_KEYS) and GameParams.IgnoreReplaySelection))
+  if (func.Action in NON_CANCELLING_KEYS) or (func.Action in SKILL_KEYS)
   or (not Game.Replaying)
   or (not GameParams.ExplicitCancel) then
     with Game do
     begin
 
-        if (func.Action in [lka_CancelReplay, lka_ReleaseRateUp, lka_ReleaseRateDown, lka_SkillLeft, lka_SkillRight])
-        or ((func.Action in SKILL_KEYS) and not GameParams.IgnoreReplaySelection) then
+        if (func.Action in [lka_CancelReplay, lka_ReleaseRateUp, lka_ReleaseRateDown]) then
           Game.RegainControl; // for keys that interrupt replays inherently. Note that some others might have their own
                               // handling for it, instead of using this always-on one
 
@@ -582,7 +582,8 @@ begin
                         fLastNukeKeyTime := CurrTime;
                     end;
           lka_SaveState : fSaveStateFrame := fGame.CurrentIteration;
-          lka_LoadState : begin
+          lka_LoadState : if fSaveStateFrame <> -1 then
+                          begin
                             GotoSaveState(fSaveStateFrame);
                             if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                           end;
@@ -598,8 +599,7 @@ begin
                        MusicVolume := 100; // must be first, else music plays at volume zero                    
                        SoundOpts := SoundOpts + [gsoMusic];
                      end;
-          lka_Restart: begin
-                         Game.Paused := false;          
+          lka_Restart: begin         
                          GotoSaveState(0);
                          if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                        end;
@@ -1089,19 +1089,44 @@ end;
 procedure TGameWindow.StartReplay2(const aFileName: string);
 var
   ext: String;
+
+  procedure LoadOldReplay(aName: String);
+  var
+    L: TLevel;
+  begin
+    with Game.ReplayManager do
+    begin
+      LoadOldReplayFile(aName);
+      if GameParams.ReplayCheckIndex <> -2 then
+      begin
+        L := Game.Level;
+        LevelName := Trim(L.Info.Title);
+        LevelAuthor := Trim(L.Info.Author);
+        LevelGame := Trim(GameParams.SysDat.PackName);
+        LevelRank := Trim(GameParams.Info.dSectionName);
+        LevelPosition := GameParams.Info.dLevel + 1;
+        LevelID := L.Info.LevelID;
+        SaveToFile(ChangeFileExt(aName, '.nxrp'));
+      end;
+    end;
+  end;
 begin
   CanPlay := False;
   ext := Lowercase(ExtractFileExt(aFilename));
   if ext = '.nxrp' then
     Game.ReplayManager.LoadFromFile(aFilename)
   else if ext = '.lrb' then
-    Game.ReplayManager.LoadOldReplayFile(aFilename)
+    LoadOldReplay(aFilename)
   else
     try
       Game.ReplayManager.LoadFromFile(aFilename);
     except
-      Game.ReplayManager.LoadOldReplayFile(aFilename);
+      LoadOldReplay(aFilename);
     end;
+
+  if Game.ReplayManager.LevelID <> Game.Level.Info.LevelID then
+    ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
+                'will attempt to play the replay anyway.');
 
   Game.Paused := False;
   GotoSaveState(0);
@@ -1124,6 +1149,7 @@ begin
   dlg:=topendialog.create(nil);
   try
 //    dlg.DefaultExt := '*.lrb';
+    dlg.Title := 'Select a replay file to load (' + GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
     dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
     dlg.FilterIndex := 1;
     if Game.LastReplayDir = '' then

@@ -49,6 +49,7 @@ type
     tbMusicVol: TTrackBar;
     Label3: TLabel;
     Label5: TLabel;
+    cbPauseAfterBackwards: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -110,6 +111,7 @@ begin
   cbAutoSaveReplay.Checked := fGameParams.AutoSaveReplay;
   cbExplicitCancel.Checked := fGameParams.ExplicitCancel;
   cbNoAutoReplay.Checked := fGameParams.NoAutoReplayMode;
+  cbPauseAfterBackwards.Checked := fGameParams.PauseAfterBackwardsSkip;
 
   // Zoom Dropdown
   cbZoom.Items.Clear;
@@ -180,6 +182,7 @@ begin
   fGameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
   fGameParams.ExplicitCancel := cbExplicitCancel.Checked;
   fGameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
+  fGameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
 
   // Zoom Dropdown
   if fGameParams.ZoomLevel <> cbZoom.ItemIndex then

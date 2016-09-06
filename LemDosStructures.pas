@@ -147,7 +147,8 @@ type
           LValue            : Byte;
           ObjectFlags       : Word;
           GSIndex           : Byte;
-          Reserved          : Array[0..4] of Byte;
+          Reserved          : Array[0..3] of Byte;
+          Locked            : Byte; // editor use only, but keeping consistency
   end;
 
   TNewNeoLVLTerrain = packed record
@@ -156,7 +157,8 @@ type
           TerrainID         : Word;
           TerrainFlags      : Word;
           GSIndex           : Byte;
-          TerReserved       : Array[0..2] of Byte;
+          TerReserved       : Array[0..1] of Byte;
+          Locked            : Byte; // editor use only
   end;
 
   TNewNeoLVLSteel = packed record
@@ -165,7 +167,8 @@ type
          SteelWidth        : LongWord;
          SteelHeight       : LongWord;
          SteelFlags        : Byte;
-         SteReserved       : Array[0..2] of Byte;
+         SteReserved       : Array[0..1] of Byte;
+         Locked            : Byte; // editor use only
   end;
 
   TNeoLVLHeader = packed record

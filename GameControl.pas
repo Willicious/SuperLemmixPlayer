@@ -73,38 +73,23 @@ type
 
 type
   TMiscOption = (
-    moRemoved0,  // 0
-    moRemoved1,      // 1
-    moRemoved2,        // 2
-    moRemoved3,       // 3
-    moRemoved4,       // 4
-    moRemoved5,    // 5
     moLookForLVLFiles,  // 6
     moDebugSteel,
     moChallengeMode,
     moTimerMode,
-    moRemoved10, //10
-    moRemoved11,
-    moRemoved12,
     moAutoReplayNames,
     moLemmingBlink,
     moTimerBlink,
     moAutoReplaySave,
-    moRemoved17,
     moClickHighlight,
-    moRemoved19,
-    moRemoved20, //20
-    moRemoved21,
-    moRemoved22,
     moAlwaysTimestamp,
     moConfirmOverwrite,
     moExplicitCancel,
     moBlackOutZero,
-    moIgnoreReplaySelection,
     moEnableOnline,
     moCheckUpdates,
     moNoAutoReplayMode,
-    mo31
+    moPauseAfterBackwards
   );
 
   TMiscOptions = set of TMiscOption;
@@ -115,7 +100,9 @@ const
     moTimerBlink,
     moAlwaysTimestamp,
     moClickHighlight,
-    moEnableOnline
+    moAutoReplaySave,
+    moBlackOutZero,
+    moPauseAfterBackwards
   ];
 
 type
@@ -217,10 +204,10 @@ type
     property ConfirmOverwrite: boolean Index moConfirmOverwrite read GetOptionFlag write SetOptionFlag;
     property ExplicitCancel: boolean Index moExplicitCancel read GetOptionFlag write SetOptionFlag;
     property BlackOutZero: boolean Index moBlackOutZero read GetOptionFlag write SetOptionFlag;
-    property IgnoreReplaySelection: boolean Index moIgnoreReplaySelection read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
+    property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
 
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
@@ -271,13 +258,13 @@ begin
   SL.Add('MusicVolume=' + IntToStr(MusicVolume));
   SL.Add('SoundVolume=' + IntToStr(SoundVolume));
   SaveBoolean('ClickHighlight', ClickHighlight);
-  SaveBoolean('IgnoreReplaySelection', IgnoreReplaySelection);
   SaveBoolean('AutoReplayNames', AutoReplayNames);
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
   SaveBoolean('AlwaysTimestampReplays', AlwaysTimestamp);
   SaveBoolean('ConfirmReplayOverwrite', ConfirmOverwrite);
   SaveBoolean('ExplicitReplayCancel', ExplicitCancel);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
+  SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('LemmingCountBlink', LemmingBlink);
   SaveBoolean('TimerBlink', TimerBlink);
   SaveBoolean('BlackOutZero', BlackOutZero);
@@ -326,8 +313,8 @@ begin
   ConfirmOverwrite := LoadBoolean('ConfirmReplayOverwrite');
   ExplicitCancel := LoadBoolean('ExplicitReplayCancel');
   NoAutoReplayMode := LoadBoolean('NoAutoReplay');
+  PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip');
   BlackOutZero := LoadBoolean('BlackOutZero');
-  IgnoreReplaySelection := LoadBoolean('IgnoreReplaySelection');
   EnableOnline := LoadBoolean('EnableOnline');
   CheckUpdates := LoadBoolean('UpdateCheck');
 
@@ -346,6 +333,8 @@ begin
       MusicVolume := 100
     else
       MusicVolume := 0;
+
+    PauseAfterBackwardsSkip := true;
   end;
 
   SL.Free;
