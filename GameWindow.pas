@@ -294,6 +294,7 @@ begin
   //if aTargetIteration < 0 then Exit;
   CanPlay := False;
   CurrentlyPaused := Game.Paused;
+  if (aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip then CurrentlyPaused := true;
 
   // Find correct save state
   if aTargetIteration > 0 then
@@ -529,14 +530,13 @@ begin
   if Game.HyperSpeed then
      Exit;
 
-  if ((func.Action in NON_CANCELLING_KEYS) or ((func.Action in SKILL_KEYS) and GameParams.IgnoreReplaySelection))
+  if (func.Action in NON_CANCELLING_KEYS) or (func.Action in SKILL_KEYS)
   or (not Game.Replaying)
   or (not GameParams.ExplicitCancel) then
     with Game do
     begin
 
-        if (func.Action in [lka_CancelReplay, lka_ReleaseRateUp, lka_ReleaseRateDown, lka_SkillLeft, lka_SkillRight])
-        or ((func.Action in SKILL_KEYS) and not GameParams.IgnoreReplaySelection) then
+        if (func.Action in [lka_CancelReplay, lka_ReleaseRateUp, lka_ReleaseRateDown]) then
           Game.RegainControl; // for keys that interrupt replays inherently. Note that some others might have their own
                               // handling for it, instead of using this always-on one
 
@@ -599,8 +599,7 @@ begin
                        MusicVolume := 100; // must be first, else music plays at volume zero                    
                        SoundOpts := SoundOpts + [gsoMusic];
                      end;
-          lka_Restart: begin
-                         Game.Paused := false;          
+          lka_Restart: begin         
                          GotoSaveState(0);
                          if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                        end;
