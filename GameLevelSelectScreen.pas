@@ -1,6 +1,6 @@
 {$include lem_directives.inc}
 
-unit GameLevelCodeScreen;
+unit GameLevelSelectScreen;
 
 interface
 
@@ -13,7 +13,7 @@ uses
   GameControl, GameBaseScreen;
 
 type
-  TGameLevelCodeScreen = class(TGameBaseScreen)
+  TGameLevelSelectScreen = class(TGameBaseScreen)
   private
     LevelCode      : string[10];
     CursorPosition : Integer;
@@ -46,9 +46,9 @@ implementation
 
 uses SysUtils, LemLevelSystem;
 
-{ TGameLevelCodeScreen }
+{ TGameLevelSelectScreen }
 
-procedure TGameLevelCodeScreen.Application_Idle(Sender: TObject; var Done: Boolean);
+procedure TGameLevelSelectScreen.Application_Idle(Sender: TObject; var Done: Boolean);
 var
   CurrTime: Cardinal;
 //  C: Char;
@@ -73,7 +73,7 @@ begin
   end;
 end;
 
-procedure TGameLevelCodeScreen.BuildScreen;
+procedure TGameLevelSelectScreen.BuildScreen;
 var
   Mainpal: TArrayOfColor32;
 //  S: string;
@@ -98,7 +98,7 @@ begin
   end;
 end;
 
-function TGameLevelCodeScreen.CheckLevelCode: Boolean;
+function TGameLevelSelectScreen.CheckLevelCode: Boolean;
 var
 //  i: Integer;
   s: string;
@@ -145,7 +145,7 @@ begin
 
 end;
 
-constructor TGameLevelCodeScreen.Create(aOwner: TComponent);
+constructor TGameLevelSelectScreen.Create(aOwner: TComponent);
 begin
   inherited;
   LevelCode := '..........';
@@ -167,13 +167,13 @@ begin
 
 end;
 
-destructor TGameLevelCodeScreen.Destroy;
+destructor TGameLevelSelectScreen.Destroy;
 begin
   Application.OnIdle := nil;
   inherited;
 end;
 
-procedure TGameLevelCodeScreen.DrawChar(aCursorPos: Integer; aBlink: Boolean);
+procedure TGameLevelSelectScreen.DrawChar(aCursorPos: Integer; aBlink: Boolean);
 var
   C: Char;
 begin
@@ -184,7 +184,7 @@ begin
   DrawPurpleText(ScreenImg.Bitmap, C, XPos + CursorPosition * 16 - 16, YPositions[1], BackBuffer);
 end;
 
-procedure TGameLevelCodeScreen.DrawMessage(const S: string);
+procedure TGameLevelSelectScreen.DrawMessage(const S: string);
 begin
   if LastMessage <> '' then
  //   DrawPurpleText(ScreenImg.Bitmap, );
@@ -198,7 +198,7 @@ begin
   DrawPurpleTextCentered(ScreenImg.Bitmap, S, YPositions[2]);
 end;
 
-procedure TGameLevelCodeScreen.UpdateCheatMessage;
+procedure TGameLevelSelectScreen.UpdateCheatMessage;
 var
   StringToDisplay: String;
 begin
@@ -218,14 +218,14 @@ begin
 end;
 
 
-procedure TGameLevelCodeScreen.Form_Close(Sender: TObject; var Action: TCloseAction);
+procedure TGameLevelSelectScreen.Form_Close(Sender: TObject; var Action: TCloseAction);
 begin
   Application.OnIdle := nil;
   if ValidLevelCode then
     GameParams.WhichLevel := wlLevelCode;
 end;
 
-procedure TGameLevelCodeScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TGameLevelSelectScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if ScreenIsClosing then
     Exit;
@@ -256,7 +256,7 @@ begin
   end;
 end;
 
-procedure TGameLevelCodeScreen.Form_KeyPress(Sender: TObject; var Key: Char);
+procedure TGameLevelSelectScreen.Form_KeyPress(Sender: TObject; var Key: Char);
 var
   OldC, C: Char;
   OldPos: Integer;

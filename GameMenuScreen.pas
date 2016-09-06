@@ -16,7 +16,7 @@ uses
   UFastStrings,
   UMisc, Dialogs,
   LemCore, LemTypes, LemStrings, LemDosStructures, LemRendering, LemLevel, LemDosStyle, LemGame,
-  GameControl, GameBaseScreen, GamePreviewScreen, GameLevelCodeScreen;
+  GameControl, GameBaseScreen, GamePreviewScreen, GameLevelSelectScreen;
 
 type
   {-------------------------------------------------------------------------------
@@ -421,7 +421,7 @@ begin
     case Key of
       VK_RETURN : CloseScreen(gstPreview);
       VK_F1     : CloseScreen(gstPreview);
-      VK_F2     : CloseScreen(gstLevelCode);
+      VK_F2     : CloseScreen(gstLevelSelect);
       //VK_F3     : NextSoundSetting;
       VK_F3   : begin
                   ConfigDlg := TFormNXConfig.Create(self);

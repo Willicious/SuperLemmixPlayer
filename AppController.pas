@@ -41,7 +41,7 @@ type
     procedure ShowPreviewScreen;
     procedure ShowPlayScreen;
     procedure ShowPostviewScreen;
-    procedure ShowLevelCodeScreen;
+    procedure ShowLevelSelectScreen;
     procedure ShowTextScreen;
     procedure ShowTalismanScreen;
     procedure Execute;
@@ -53,7 +53,7 @@ implementation
 
 uses
   GameMenuScreen,
-  GameLevelCodeScreen,
+  GameLevelSelectScreen,
   GamePreviewScreen,
   GamePostviewScreen,
   //GameConfigScreen,
@@ -415,7 +415,7 @@ begin
       gstPreview   : ShowPreviewScreen;
       gstPlay      : ShowPlayScreen;
       gstPostview  : ShowPostviewScreen;
-      gstLevelCode : ShowLevelCodeScreen;
+      gstLevelSelect : ShowLevelSelectScreen;
       gstText      : ShowTextScreen;
       gstTalisman  : ShowTalismanScreen;
       else begin
@@ -428,11 +428,11 @@ begin
   end;
 end;
 
-procedure TAppController.ShowLevelCodeScreen;
+procedure TAppController.ShowLevelSelectScreen;
 var
-  F: TGameLevelCodeScreen;
+  F: TGameLevelSelectScreen;
 begin
-  F := TGameLevelCodeScreen.Create(nil);
+  F := TGameLevelSelectScreen.Create(nil);
   try
     F.ShowScreen(fGameParams);
   finally
