@@ -296,6 +296,8 @@ type
     
     fParticleColors            : array[0..15] of TColor32;
 
+    fMusicLoaded               : Boolean;
+
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
     //World                      : TBitmap32; // actual bitmap that is changed by the lemmings
@@ -647,6 +649,8 @@ type
     destructor Destroy; override;
   { iteration }
     procedure PrepareParams(aParams: TDosGameParams);
+    procedure PrepareMusic;
+    procedure PlayMusic;
     procedure Start(aReplay: Boolean = False);
       procedure SetObjectInfos;
     procedure UpdateLemmings;
@@ -1362,6 +1366,44 @@ begin
   SL.Free;
 end;
 
+procedure TLemmingGame.PlayMusic;
+begin
+  if MusicVolume = 0 then Exit;
+  PrepareMusic;
+  SoundMgr.PlayMusic(0);
+end;
+
+procedure TLemmingGame.PrepareMusic;
+var
+  MS: TMemoryStream;
+  MusicSys: TBaseMusicSystem;
+  MusicFileName: String;
+begin
+  if fMusicLoaded then Exit;
+  MS := nil;
+  try
+    MusicSys := fGameParams.Style.MusicSystem;
+    if MusicSys = nil then Exit;
+
+    MusicFileName := GetMusicFileName;
+    MS := CreateDataStream(MusicFileName, ldtMusic);
+    if MS = nil then
+    begin
+      Level.Info.MusicFile := '';
+      MusicFileName := GetMusicFileName;
+      MS := CreateDataStream(MusicFileName, ldtMusic);
+    end;
+
+    if MS <> nil then
+      SoundMgr.AddMusicFromStream(MS);
+
+  finally
+    MS.Free;
+  end;
+
+  fMusicLoaded := true;
+end;
+
 procedure TLemmingGame.PrepareParams(aParams: TDosGameParams);
 var
   //Inf: TRenderInfoRec;
@@ -1372,43 +1414,17 @@ var
 
   //LemBlack: TColor32;
   S: TStream;
-
-
-  procedure PrepareMusic;
-  var
-    MS: TMemoryStream;
-    MusicSys: TBaseMusicSystem;
-    MusicFileName: String;
-  begin
-    MS := nil;
-    try
-      MusicSys := fGameParams.Style.MusicSystem;
-      if MusicSys = nil then Exit;
-
-      MusicFileName := GetMusicFileName;
-      MS := CreateDataStream(MusicFileName, ldtMusic);
-      if MS = nil then
-      begin
-        Level.Info.MusicFile := '';
-        MusicFileName := GetMusicFileName;
-        MS := CreateDataStream(MusicFileName, ldtMusic);
-      end;
-
-      if MS <> nil then
-        SoundMgr.AddMusicFromStream(MS);
-
-    finally
-      MS.Free;
-    end;
-  end;
 begin
 
   fGameParams := aParams;
   fXmasPal := fGameParams.SysDat.Options2 and 2 <> 0;
 
   fStartupMusicAfterEntry := True;
+  fMusicLoaded := false;
 
-  fSoundOpts := fGameParams.SoundOptions;
+  fSoundOpts := [];
+  if SoundVolume > 0 then fSoundOpts := fSoundOpts + [gsoSound];
+  if MusicVolume > 0 then fSoundOpts := fSoundOpts + [gsoMusic];
   fUseGradientBridges := true;
 
   fRenderer := fGameParams.Renderer; // set ref
@@ -1508,7 +1524,7 @@ begin
   PhysicsMap := Renderer.PhysicsMap;
   RenderInterface.PhysicsMap := PhysicsMap;
 
-  PrepareMusic;
+  if MusicVolume > 0 then PrepareMusic;
 
   fTalismans.Clear;
 
@@ -4785,9 +4801,9 @@ begin
             EntriesOpened := true;
             CueSoundEffect(SFX_ENTRANCE, ObjectInfos[i].Center);
           end;
-        if fStartupMusicAfterEntry and not EntriesOpened then begin
-          if gsoMusic in fSoundOpts then
-            SoundMgr.PlayMusic(0);
+        if fStartupMusicAfterEntry and not EntriesOpened then
+        begin
+          PlayMusic;
           fStartupMusicAfterEntry := False;
         end;
         EntriesOpened := True;
@@ -4796,8 +4812,7 @@ begin
       begin
         if fStartupMusicAfterEntry then
         begin
-          if gsoMusic in fSoundOpts then
-            SoundMgr.PlayMusic(0);
+          PlayMusic;
           fStartupMusicAfterEntry := False;
         end;
       end;
@@ -5757,11 +5772,16 @@ procedure TLemmingGame.SetSoundOpts(const Value: TGameSoundOptions);
 begin
   if fSoundOpts = Value then
     Exit;
+
+  if (gsoMusic in Value) <> (gsoMusic in fSoundOpts) then
+  begin
+    if not (gsoMusic in Value) then
+      SoundMgr.StopMusic(0)
+    else
+      PlayMusic;
+  end;
+
   fSoundOpts := Value;
-  if not (gsoMusic in fSoundOpts) then
-    SoundMgr.StopMusic(0)
-  else if not fStartupMusicAfterEntry then
-    SoundMgr.PlayMusic(0);
 end;
 
 procedure TLemmingGame.Finish;
