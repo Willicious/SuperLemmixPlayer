@@ -5828,6 +5828,7 @@ var
     Dlg : TSaveDialog;
   begin
     Dlg := TSaveDialog.Create(self);
+    Dlg.Title := 'Save replay file (' + fGameParams.Info.dSectionName + ' ' + IntToStr(fGameParams.Info.dLevel + 1) + ', ' + Trim(Level.Info.Title) + ')';
     Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;

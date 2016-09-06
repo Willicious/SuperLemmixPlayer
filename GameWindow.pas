@@ -1149,6 +1149,7 @@ begin
   dlg:=topendialog.create(nil);
   try
 //    dlg.DefaultExt := '*.lrb';
+    dlg.Title := 'Select a replay file to load (' + GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
     dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
     dlg.FilterIndex := 1;
     if Game.LastReplayDir = '' then
