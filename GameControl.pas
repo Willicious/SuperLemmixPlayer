@@ -333,6 +333,8 @@ begin
       MusicVolume := 100
     else
       MusicVolume := 0;
+
+    PauseAfterBackwardsSkip := true;
   end;
 
   SL.Free;
