@@ -66,6 +66,9 @@ type
     all dos styles, overriding only 3 methods.
   -------------------------------------------------------------------------------}
   TBaseDosLevelSystem = class(TBaseLevelSystem)
+  private
+    fLevelNames: array of array of String;
+    fTempLevel: TLevel;
   protected
     fDefaultLevelCount: Integer;
     fLevelCount : array[0..15] of Integer;
@@ -83,12 +86,14 @@ type
     fTestLevel: String;
     fOneLvlString: String;
     constructor Create(aOwner: TPersistent);
+    destructor Destroy; override;
   { these methods must be overridden by derived dos loaders }
     procedure GetSections(aSectionNames: TStrings); virtual;
     procedure GetEntry(aSection, aLevel: Integer; var aFileName: string; var aFileIndex: Integer);
     function GetLevelPackPrefix: String;
     function GetLevelCount(aSection: Integer): Integer; virtual; //override;
     function GetSectionCount: Integer; virtual;
+    function GetLevelName(aSection, aLevel: Integer): String;
     procedure DumpAllLevels;
     procedure InitSave;
 
@@ -114,7 +119,6 @@ type
   private
     //SysLoaded : Boolean;
   public
-    SysDat : TSysDatRec;
     procedure LoadSystemInfo();
     procedure GetSections(aSectionNames: TStrings); override;
     function GetRankName(aSection: Byte): String;
@@ -284,10 +288,17 @@ var
   i: integer;
 begin
   inherited;
+  fTempLevel := TLevel.Create(nil);
   fDefaultSectionCount := GetSectionCount;
   fDefaultLevelCount := GetLevelCount(0);
   for i := 0 to 15 do
     fLevelCount[i] := -1;
+end;
+
+destructor TBaseDosLevelSystem.Destroy;
+begin
+  fTempLevel.Free;
+  inherited;
 end;
 
 procedure TBaseDosLevelSystem.InitSave;
@@ -859,6 +870,24 @@ begin
 
   END;
 
+  fLevelNames[aSection][aLevelIndex] := Trim(aLevel.Info.Title) + ' ';
+
+end;
+
+function TBaseDosLevelSystem.GetLevelName(aSection, aLevel: Integer): String;
+begin
+  Result := '';
+  if (aSection >= Length(fLevelNames)) or (aLevel >= Length(fLevelNames[aSection])) then
+    Exit;
+
+  if fLevelNames[aSection][aLevel] <> '' then
+  begin
+    Result := fLevelNames[aSection][aLevel];
+    Exit;
+  end;
+
+  LoadSingleLevel(0, aSection, aLevel, fTempLevel);
+  Result := Trim(fTempLevel.Info.Title);
 end;
 
 procedure TBaseDosLevelSystem.InternalPrepare;
@@ -874,11 +903,20 @@ end;
 procedure TDosFlexiLevelSystem.LoadSystemInfo();
 var
   fMainDatExtractor : TMainDatExtractor;
+  i, i2: Integer;
 begin
   fMainDatExtractor := TMainDatExtractor.Create;
   fMainDatExtractor.FileName := LemmingsPath + 'main.dat';
   SysDat := fMainDatExtractor.GetSysData;
   fMainDatExtractor.free;
+
+  SetLength(fLevelNames, SysDat.RankCount);
+  for i := 0 to SysDat.RankCount-1 do
+  begin
+    SetLength(fLevelNames[i], GetLevelCount(i));
+    for i2 := 0 to GetLevelCount(i)-1 do
+      fLevelNames[i][i2] := '';
+  end;
 end;
 
 function TDosFlexiMusicSystem.GetMusicFileName(aPack, aSection, aLevel: Integer): string;
@@ -894,24 +932,12 @@ begin
   for x := 0 to (SysDat.RankCount - 1) do
   begin
     aSectionNames.Add(GetRankName(x));
-    {aSectionNames.CommaText := aSectionNames.CommaText + GetRankName(x);
-    if x <> (SysDat.RankCount - 1) then aSectionNames.CommaText := aSectionNames.CommaText + ','};
   end;
 end;
 
 function TDosFlexiLevelSystem.GetRankName(aSection: Byte): String;
-var
-  tstr : String;
-  x : byte;
 begin
-  for x := 0 to 15 do
-  begin
-    if (tstr <> '') or (SysDat.RankNames[aSection][x] <> ' ') then
-    begin
-      tstr := tstr + SysDat.RankNames[aSection][x];
-      if SysDat.RankNames[aSection][x] <> ' ' then Result := tstr;
-    end;
-  end;
+  Result := Trim(SysDat.RankNames[aSection]);
 end;
 
 
