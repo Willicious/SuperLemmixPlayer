@@ -870,6 +870,10 @@ begin
 
   END;
 
+  if Length(fLevelNames) <= aSection then
+    SetLength(fLevelNames, aSection+1);
+  if Length(fLevelNames[aSection]) <= aLevelIndex then
+    SetLength(fLevelNames[aSection], aLevelIndex+15); // to avoid it happening too often; it isn't an issue if we have extras
   fLevelNames[aSection][aLevelIndex] := Trim(aLevel.Info.Title) + ' ';
 
 end;
@@ -877,14 +881,12 @@ end;
 function TBaseDosLevelSystem.GetLevelName(aSection, aLevel: Integer): String;
 begin
   Result := '';
-  if (aSection >= Length(fLevelNames)) or (aLevel >= Length(fLevelNames[aSection])) then
-    Exit;
-
-  if fLevelNames[aSection][aLevel] <> '' then
-  begin
-    Result := fLevelNames[aSection][aLevel];
-    Exit;
-  end;
+  if (aSection < Length(fLevelNames)) and (aLevel < Length(fLevelNames[aSection])) then
+    if fLevelNames[aSection][aLevel] <> '' then
+    begin
+      Result := fLevelNames[aSection][aLevel];
+      Exit;
+    end;
 
   LoadSingleLevel(0, aSection, aLevel, fTempLevel);
   Result := Trim(fTempLevel.Info.Title);
@@ -909,14 +911,6 @@ begin
   fMainDatExtractor.FileName := LemmingsPath + 'main.dat';
   SysDat := fMainDatExtractor.GetSysData;
   fMainDatExtractor.free;
-
-  SetLength(fLevelNames, SysDat.RankCount);
-  for i := 0 to SysDat.RankCount-1 do
-  begin
-    SetLength(fLevelNames[i], GetLevelCount(i));
-    for i2 := 0 to GetLevelCount(i)-1 do
-      fLevelNames[i][i2] := '';
-  end;
 end;
 
 function TDosFlexiMusicSystem.GetMusicFileName(aPack, aSection, aLevel: Integer): string;
