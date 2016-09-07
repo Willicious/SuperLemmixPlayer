@@ -303,6 +303,13 @@ begin
     GlobalGame.Save;
     Exit;
   end;
+
+  if GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_Restart then
+  begin
+    ReplaySameLevel;
+    Exit;
+  end;
+
   case Key of
     VK_ESCAPE: begin
                  if GameParams.fTestMode then
@@ -313,10 +320,6 @@ begin
     VK_RETURN: begin
                  CloseScreen(gstPreview);
                end;
-    else begin
-      if GameParams.Hotkeys.CheckForKey(lka_Restart) then
-        ReplaySameLevel;
-    end;
   end;
 end;
 
