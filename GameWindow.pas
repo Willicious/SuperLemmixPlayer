@@ -1241,6 +1241,11 @@ begin
   begin
     if (gSuccess or gCheated) and (not GameParams.fTestMode) then
       WhichLevel := wlNext;
+    if gCheated then
+    begin
+      GameParams.ShownText := false;
+      aNextScreen := gstPreview;
+    end;
   end;
   Img.RepaintMode := rmFull;
 
