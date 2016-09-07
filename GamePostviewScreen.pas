@@ -25,6 +25,7 @@ uses
 type
   TGamePostviewScreen = class(TGameBaseScreen)
   private
+    fSameLevelInfo: TDosGamePlayInfoRec;
     function GetScreenText: string;
     function BuildText(intxt: Array of char): string;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -32,6 +33,7 @@ type
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure HandleMouseClick(Button: TMouseButton);
+    procedure ReplaySameLevel;
   protected
     procedure PrepareGameParams(Params: TDosGameParams); override;
     procedure BuildScreen; override;
@@ -73,6 +75,14 @@ procedure TGamePostviewScreen.PrepareGameParams(Params: TDosGameParams);
 begin
   inherited;
   if (GameParams.AutoSaveReplay) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then GlobalGame.Save(true);
+  fSameLevelInfo := GameParams.Info;
+end;
+
+procedure TGamePostviewScreen.ReplaySameLevel;
+begin
+  GameParams.Info := fSameLevelInfo;
+  GameParams.WhichLevel := wlSame;
+  CloseScreen(gstPreview);
 end;
 
 procedure TGamePostviewScreen.BuildScreen;
@@ -254,12 +264,12 @@ begin
 
       LF(6); // gap 2 + score space 1 + gap 3
 
-      LF(5);
+      LF(4);
 
 
 
     // force bottomtext to a fixed position
-    LF(18 - CountChars(#13, Result));
+    LF(17 - CountChars(#13, Result));
 
     // bottom text
 
@@ -271,9 +281,13 @@ begin
     // default bottom text
     else begin
       if gSuccess then
-        Add(SPressLeftMouseForNextLevel)
-      else
+      begin
+        Add(SPressLeftMouseForNextLevel);
+        Add(SPressMiddleMouseToReplayLevel);
+      end else begin
+        LF(1);
         Add(SPressLeftMouseToRetryLevel);
+      end;
       Add(SPressRightMouseForMenu);
     end;
 
@@ -299,6 +313,10 @@ begin
     VK_RETURN: begin
                  CloseScreen(gstPreview);
                end;
+    else begin
+      if GameParams.Hotkeys.CheckForKey(lka_Restart) then
+        ReplaySameLevel;
+    end;
   end;
 end;
 
@@ -319,6 +337,8 @@ procedure TGamePostviewScreen.HandleMouseClick(Button: TMouseButton);
 begin
   if Button = mbLeft then
     CloseScreen(gstPreview)
+  else if Button = mbMiddle then
+    ReplaySameLevel
   else if Button = mbRight then
   begin
     if GameParams.fTestMode then

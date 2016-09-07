@@ -590,6 +590,9 @@ resourcestring
   SPressLeftMouseToRetryLevel =
     'Press left mouse button to retry level';
 
+  SPressMiddleMouseToReplayLevel =
+    'Press middle mouse button to replay';
+
   SPressRightMouseForMenu =
     'Press right mouse button for menu';
 
