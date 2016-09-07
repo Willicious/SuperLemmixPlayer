@@ -19,6 +19,7 @@ type
     fSelectedLevel: Integer;
     fLevelSystem: TDosFlexiLevelSystem;
     fBasicState: TBitmap32;
+    fTick: TBitmap32;
     procedure DrawLevelList;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   protected
@@ -39,11 +40,15 @@ begin
   inherited;
   OnKeyDown := Form_KeyDown;
   fBasicState := TBitmap32.Create;
+  fTick := TBitmap32.Create;
+
+  fTick.DrawMode := dmBlend;
 end;
 
 destructor TGameLevelSelectScreen.Destroy;
 begin
   fBasicState.Free;
+  fTick.Free;
   inherited;
 end;
 
@@ -66,6 +71,8 @@ begin
     ScreenImg.Bitmap.DrawTo(fBasicState); // save background
 
     fSelectedLevel := GameParams.Info.dLevel;
+
+    MainDatExtractor.ExtractBitmapByName(fTick, 'tick.png');
 
     DrawLevelList;
   finally
@@ -101,7 +108,7 @@ begin
         S := S + ' ';
       if i < 99 then
         S := S + '  '; // just in case someone actually makes a rank this big
-      S := S + IntToStr(i + 1) + '. ' + fLevelSystem.GetLevelName(fSection, i);
+      S := S + IntToStr(i + 1) + '.  ' + fLevelSystem.GetLevelName(fSection, i);
 
       if (i = MinLv) and (i <> 0) then
         S := '   .....';
@@ -109,7 +116,11 @@ begin
       if (i = MaxLv) and (i <> fLevelSystem.GetLevelCount(fSection)-1) then
         S := '   .....';
         
-      DrawPurpleText(ScreenImg.Bitmap, S, 15, Y);
+      DrawPurpleText(ScreenImg.Bitmap, S, 10, Y);
+
+      if GameParams.SaveSystem.CheckCompleted(fSection, i) then
+        fTick.DrawTo(ScreenImg.Bitmap, 110, Y);
+
       Inc(Y, 18);
     end;
   finally
