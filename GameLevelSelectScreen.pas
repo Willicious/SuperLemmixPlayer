@@ -76,19 +76,18 @@ end;
 procedure TGameLevelSelectScreen.DrawLevelList;
 var
   i, Y: Integer;
-  TempSelLv: Integer;
   MinLv, MaxLv: Integer;
   S: String;
 begin
   ScreenImg.Bitmap.BeginUpdate;
   try
     fBasicState.DrawTo(ScreenImg.Bitmap);
-    TempSelLv := fSelectedLevel;
-    if TempSelLv >= fLevelSystem.GetLevelCount(fSection) - 6 then TempSelLv := fLevelSystem.GetLevelCount(fSection) - 7;
-    if TempSelLv < 6 then TempSelLv := 6;
-    MinLv := TempSelLv - 7;
-    MaxLv := TempSelLv + 7;
+    MinLv := fSelectedLevel - 7;
+    MaxLv := fSelectedLevel + 7;
+    if MaxLv >= fLevelSystem.GetLevelCount(fSection) then MaxLv := fLevelSystem.GetLevelCount(fSection) - 1;
+    if MinLv > MaxLv - 14 then MinLv := MaxLv - 14;
     if MinLv < 0 then MinLv := 0;
+    if MaxLv < MinLv + 14 then MaxLv := MinLv + 14;
     if MaxLv >= fLevelSystem.GetLevelCount(fSection) then MaxLv := fLevelSystem.GetLevelCount(fSection) - 1;
 
     Y := 55;
