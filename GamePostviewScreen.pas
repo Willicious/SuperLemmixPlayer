@@ -260,26 +260,7 @@ begin
 
       LF(6); // gap 2 + score space 1 + gap 3
 
-      if not GameParams.OneLevelMode then
-      begin
-      if not fTestMode then
-      begin
-
-      if gSuccess then
-      begin
-        H := Style.LevelSystem.GetLevelCode(NextInfo);
-          // NextInfo.dSectionName + i2s(NextInfo.dLevel + 1);
-        Add(Format(SYourAccessCode_ds, [NextInfo.dLevel + 1, H]));
-        LF(3);
-      end
-      else begin
-        H := Style.LevelSystem.GetLevelCode(Info);
-          // NextInfo.dSectionName + i2s(NextInfo.dLevel + 1);
-        Add(Format(SYourAccessCode_ds, [Info.dLevel + 1, H]));
-        LF(3);
-      end;
-      end else LF(5);
-      end else LF(5);
+      LF(5);
 
 
 

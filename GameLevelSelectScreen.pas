@@ -129,14 +129,26 @@ begin
                 fLevelSystem.FindLevel(GameParams.Info);
                 CloseScreen(gstPreview);
               end;
-    VK_UP: begin
-             if fSelectedLevel > 0 then Dec(fSelectedLevel);
+    VK_UP: if fSelectedLevel > 0 then
+           begin
+             Dec(fSelectedLevel);
              DrawLevelList;
            end;
-    VK_DOWN: begin
-               if fSelectedLevel < fLevelSystem.GetLevelCount(fSection)-1 then Inc(fSelectedLevel);
+    VK_DOWN: if fSelectedLevel < fLevelSystem.GetLevelCount(fSection)-1 then
+             begin
+               Inc(fSelectedLevel);
                DrawLevelList;
              end;
+    VK_LEFT: if fSection > 0 then
+             begin
+               Dec(GameParams.Info.dSection);
+               CloseScreen(gstLevelSelect);
+             end;
+    VK_RIGHT: if fSection < fLevelSystem.SysDat.RankCount-1 then
+              begin
+                Inc(GameParams.Info.dSection);
+                CloseScreen(gstLevelSelect);
+              end;
   end;
 end;
 
