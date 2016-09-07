@@ -383,8 +383,8 @@ begin
           $52: ShowRecords;
     VK_LEFT: PreviousLevel;
     VK_RIGHT: NextLevel;
-    VK_UP: PreviousRank;
-    VK_DOWN: NextRank;
+    VK_DOWN: PreviousRank;
+    VK_UP: NextRank;
   end;
 end;
 
