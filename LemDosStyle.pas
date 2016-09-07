@@ -14,7 +14,6 @@ uses
   LemMetaAnimation, LemAnimationSet, LemDosCmp, LemDosStructures, LemDosAnimationSet,
   LemDosMainDat,
   LemStyle, LemLevelSystem, LemMusicSystem,
-  LemNeoEncryption,
   LemNeoSave,
   UZip; // For checking whether files actually exist
 
@@ -250,12 +249,8 @@ end;
 procedure TBaseDosLemmingStyle.LoadSystemDat;
 var
   SysDatFile: TMemoryStream;
-  NeoEncrypt: TNeoEncryption;
 begin
-  NeoEncrypt := TNeoEncryption.Create;
   SysDatFile := CreateDataStream('system.dat', ldtLemmings);
-  if NeoEncrypt.CheckEncrypted(SysDatFile) then
-    NeoEncrypt.LoadStream(SysDatFile);
   SysDatFile.Seek(0, soFromBeginning);
   SysDatFile.ReadBuffer(SysDat, SYSDAT_SIZE);
   SysDatFile.Free;
@@ -680,17 +675,13 @@ var
   Dcmp : TDosDatDecompressor;
   FSt : TMemoryStream;
   FSl : TDosDatSectionList;
-  Dcr : TNeoEncryption;
 begin
   Result := fLevelCount[aSection];
   if Result <> -1 then Exit;
   Fst := CreateDataStream(GetLevelPackPrefix + LeadZeroStr(aSection, 3) + '.dat', ldtLemmings);
   Dcmp := TDosDatDecompressor.Create;
   Fsl := TDosDatSectionList.Create;
-  Dcr := TNeoEncryption.Create;
   try
-    if Dcr.CheckEncrypted(Fst) then
-      Dcr.LoadStream(Fst);
     Dcmp.LoadSectionList(Fst, Fsl, False);
     Result := Fsl.Count;
     fLevelCount[aSection] := Result;
@@ -698,7 +689,6 @@ begin
     Fst.Free;
     Dcmp.Free;
     Fsl.Free;
-    Dcr.Free;
   end;
 end;
 
@@ -735,17 +725,13 @@ var
   Sections: TDosDatSectionList;
   Decompressor: TDosDatDecompressor;
   TheSection: TDosDatSection;
-  NeoEncrypt: TNeoEncryption;
 begin
   Assert(Owner is TBaseDosLemmingStyle);
 
   Sections := TDosDatSectionList.Create;
   Decompressor := TDosDatDecompressor.Create;
-  NeoEncrypt := TNeoEncryption.Create;
   try
     DataStream := CreateDataStream(aInfo.DosLevelPackFileName, ldtLemmings);
-    if NeoEncrypt.CheckEncrypted(DataStream) then
-      NeoEncrypt.LoadStream(DataStream);
     try
       Decompressor.LoadSectionList(DataStream, Sections, False);
     finally
@@ -766,7 +752,6 @@ begin
 
 
   finally
-    NeoEncrypt.Free;
     Decompressor.Free;
     Sections.Free;
   end;
@@ -794,7 +779,6 @@ var
 var
   F: TMemoryStream;
   IsLoaded: Boolean;
-  Enc: TNeoEncryption;
   i: integer;
 
 begin
@@ -824,17 +808,13 @@ begin
     begin
       F := TMemoryStream.Create;
       F.LoadFromFile(FN);
-      Enc := TNeoEncryption.Create;
       try
-        if Enc.CheckEncrypted(F) then
-          Enc.LoadStream(F);
         TLVLLoader.LoadLevelFromStream(F, aLevel, OddLoad);
         if (((aLevel.Info.LevelOptions) and 16) <> 0) and (OddLoad <> 2) then
           InternalLoadSingleLevel((aLevel.Info.fOddtarget shr 8), (aLevel.Info.fOddtarget mod 256), aLevel, 1);
         IsLoaded := True;
       finally
         F.Free;
-        Enc.Free;
       end;
     end;
   end;

@@ -6,8 +6,7 @@ interface
 uses
   Dialogs,
   Classes, SysUtils, GR32, UMisc, PngInterface,
-  LemTypes, LemDosStructures, LemDosCmp, LemDosBmp,
-  LemNeoEncryption;
+  LemTypes, LemDosStructures, LemDosCmp, LemDosBmp;
 
 type
   {-------------------------------------------------------------------------------
@@ -21,7 +20,6 @@ type
     //fPlanar: TDosPlanarBitmap;
     fSysDat: TSysDatRec;
     fSysDatLoaded: Boolean;
-    //fNeoEncrypt: TNeoEncryption;
     fPositions: array[0..7] of Integer; // for compatibility with code that relied on current MAIN.DAT position, obviously needs to be
                                         // removed at some point, but works for now
     procedure EnsureLoaded;
@@ -58,7 +56,6 @@ begin
   //fSections := TDosDatSectionList.Create;
   //fPlanar := TDosPlanarBitmap.Create;
   //fDecompressor := TDosDatDecompressor.Create;
-  //fNeoEncrypt := TNeoEncryption.Create;
   FillChar(fPositions, SizeOf(fPositions), 0);
 end;
 
@@ -67,7 +64,6 @@ begin
   //fSections.Free;
   //fPlanar.Free;
   //fDecompressor.Free;
-  //fNeoEncrypt.Free;
   inherited;
 end;
 
@@ -89,21 +85,8 @@ begin
 end;
 
 procedure TMainDatExtractor.EnsureLoaded;
-//var
-//  DataStream: TMemoryStream;
 begin
-{  if fSections.Count = 0 then
-  begin
-    //DataStream := CreateDataStream(fFileName, ldtLemmings);
-    DataStream := CreateDataStream(fFileName, ldtLemmings);
-    if fNeoEncrypt.CheckEncrypted(DataStream) then
-        fNeoEncrypt.LoadStream(DataStream);
-    try
-      fDecompressor.LoadSectionList(DataStream, fSections, False);
-    finally
-      DataStream.Free;
-    end;
-  end;}
+
 end;
 
 procedure TMainDatExtractor.ExtractAnimation(Bmp: TBitmap32; aSection, aPos, aWidth,
@@ -291,8 +274,6 @@ var
 begin
   if fSysDatLoaded then exit;
   TempStream := CreateDataStream('system.dat', ldtLemmings);
-  //if fNeoEncrypt.CheckEncrypted(TempStream) then
-  //  fNeoEncrypt.LoadStream(TempStream);
   TempStream.Seek(0, soFromBeginning);
   TempStream.ReadBuffer(fSysDat, SYSDAT_SIZE);
   TempStream.Free;

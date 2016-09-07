@@ -7,9 +7,7 @@ uses
   SharedGlobals,
   Dialogs, StrUtils, UMisc,
   Classes, SysUtils, LemTypes, LemDosStructures,
-  LemNeoEncryption, TalisData;
-
-  // LemNeoEncryption is now only used for backwards-compatibility.
+  TalisData;
 
 type
   TalismanLog = packed record
@@ -21,7 +19,6 @@ type
   private
     fCodeSeed   : Integer;
     fTalismans  : TTalismans;
-    fNeoEncrypt : TNeoEncryption;
     fDisableSave: Boolean;
     fSaveData   : TNeoSaveRecord;
     fTalismanData : Array of TalismanLog;
@@ -39,7 +36,6 @@ type
     procedure SetTimeRecord(aSection, aLevel, aValue: Integer);
     procedure SaveFile(aPointer: Pointer);
     procedure LoadFile(aPointer: Pointer);
-    procedure LoadOldFile(aPointer: Pointer);
     procedure SetTalismans(aValue: TTalismans);
     procedure AddMissingTalismans;
     function CheckTalisman(aSig: Cardinal): Boolean;
@@ -56,7 +52,6 @@ uses
 constructor TNeoSave.Create;
 begin
   inherited Create;
-  fNeoEncrypt := TNeoEncryption.Create;
   SetLength(fTalismanData, 0);
   fCodeSeed := 0;
   fDisableSave := false;
@@ -64,7 +59,6 @@ end;
 
 destructor TNeoSave.Destroy;
 begin
-  fNeoEncrypt.Free;
   inherited Destroy;
 end;
 
@@ -578,14 +572,7 @@ begin
   Clear;
 
   if not FileExists(SaveFileName) then
-  begin
-    if FileExists(ChangeFileExt(SaveFileName, '.sav')) then
-    begin
-      LoadOldFile(aPointer);
-      DeleteFile(ChangeFileExt(SaveFileName, '.sav'));
-    end;
     SaveFile(aPointer);
-  end;
 
   SL := TStringList.Create;
   try
@@ -623,118 +610,6 @@ begin
   finally
     SL.Free;
   end;
-end;
-
-procedure TNeoSave.LoadOldFile(aPointer: Pointer);
-var
-  S : TMemoryStream;
-  TempTalis: TalismanLog;
-  DecryptSuccess: Boolean;
-  w: Word;
-
-  function CheckValidTalisman(aSig: LongWord): Boolean;
-  var
-    i: Integer;
-  begin
-    Result := false;
-    for i := 0 to fTalismans.Count-1 do
-      if fTalismans[i].Signature = aSig then Result := true;
-  end;
-
-begin
-  //if TDosGameParams(aPointer).fTestMode then Exit;
-  //if (ParamStr(0) = 'testmode')
-  //or (GameFile = 'Single Levels') then
-  //  Exit;
-  if fDisableSave then Exit;
-
-  if not FileExists(ChangeFileExt(GameFile, '.sav')) then
-  begin
-    Clear;
-    SaveFile(aPointer);
-  end;
-  S := TMemoryStream.Create;
-  try
-    S.LoadFromFile(ChangeFileExt(GameFile, '.sav'));
-
-    // We need to check multiple sets of encryption variables.
-    // This is due to flexi / hardcode differences, as well as
-    // a Flexi bug, in older NeoLemmix versions.
-    DecryptSuccess := false;
-
-    // First, let's try decrypting the way it should be.
-    if not DecryptSuccess then
-    begin
-      fNeoEncrypt.KeyNumber := fCodeSeed;
-      fNeoEncrypt.RepKey := 7;
-      if fNeoEncrypt.CheckEncrypted(S) then
-      begin
-        fNeoEncrypt.LoadStream(S);
-        // Due to an invalid RepKey not being directly detectable, we must
-        // try checking the actual contents. For the purpose of this, we'll
-        // use some bytes that will ALWAYS be zero.
-        S.Position := 990;
-        S.Read(w, 2);
-        if w = 0 then
-          DecryptSuccess := true
-        else
-          S.LoadFromFile(ChangeFileExt(GameFile, '.sav'));
-      end;
-    end;
-
-    // No luck? Let's try Flexi decryption with the old bug emulated.
-    if not DecryptSuccess then
-    begin
-      fNeoEncrypt.KeyNumber := 50;
-      fNeoEncrypt.RepKey := 7;
-      if fNeoEncrypt.CheckEncrypted(S) then
-      begin
-        DecryptSuccess := true;
-        fNeoEncrypt.LoadStream(S);
-      end;
-    end;
-
-    // Still no luck? Let's try made-from-source decryption (which didn't have the bug).
-    if not DecryptSuccess then
-    begin
-      fNeoEncrypt.KeyNumber := fCodeSeed;
-      fNeoEncrypt.RepKey := 3;
-      if fNeoEncrypt.CheckEncrypted(S) then
-      begin
-        DecryptSuccess := true;
-        fNeoEncrypt.LoadStream(S);
-      end;
-    end;
-
-
-    // At this point, if none of these have worked, we are dealing with an invalid save,
-    // or one from a different game.
-    if not DecryptSuccess then
-    begin
-      Clear;
-      SaveFile(aPointer);
-      Exit;
-    end;
-
-    S.Position := 0;
-    S.ReadBuffer(fSaveData, SizeOf(fSaveData));
-    LoadConfig(aPointer);
-
-    SetLength(fTalismanData, 0); // erase any existing data. otherwise, it may get duplicated, then the first one is read, and thus determines achievement has not been unlocked
-    while (S.Read(TempTalis, SizeOf(TempTalis)) = SizeOf(TempTalis)) do
-      if CheckValidTalisman(TempTalis.TalSignature) then
-      begin
-        SetLength(fTalismanData, Length(fTalismanData) + 1);
-        fTalismanData[Length(fTalismanData)-1] := TempTalis;
-      end;
-
-    SetLength(fTalismanData, fTalismans.Count);
-    AddMissingTalismans;
-  finally
-    S.Free;
-  end;
-
-
 end;
 
 procedure TNeoSave.AddMissingTalismans;

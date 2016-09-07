@@ -23,7 +23,7 @@ uses
   LemDosBmp,
   LemDosCmp,
   LemDosMisc,
-  LemNeoEncryption, Dialogs;
+  Dialogs;
 
 type
   TBaseDosGraphicSet = class(TBaseGraphicSet)
@@ -43,7 +43,6 @@ type
     fExtLoc          : Boolean;
     fFullColorVgaspec: Boolean;
     fMultiWin        : Boolean;
-    fNeoEncrypt      : TNeoEncryption;
     procedure DoReadMetaData(XmasPal : Boolean = false); override;
     procedure DoReadData; override;
     procedure DoClearMetaData; override;

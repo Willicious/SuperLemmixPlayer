@@ -16,8 +16,7 @@ uses
   LemDosBmp,
   LemDosMainDat,
   LemMetaAnimation,
-  LemAnimationSet,
-  LemNeoEncryption;
+  LemAnimationSet;
 
 const
   LTR = False;

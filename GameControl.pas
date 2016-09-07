@@ -18,7 +18,7 @@ uses
   LemStrings, GameSound,
   LemCore, LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,
-  LemNeoEncryption, LemNeoSave, TalisData,
+  LemNeoSave, TalisData,
   LemLevelSystem, LemRendering,
   UZip; // only for checking whether some files actually exist
 
