@@ -294,7 +294,12 @@ var
 
 begin
   if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini') then
-    if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini') then Exit;
+    if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini') then
+    begin
+      SoundVolume := 100;
+      MusicVolume := 100;
+      Exit;
+    end;
   SL := TStringList.Create;
 
   if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini') then
