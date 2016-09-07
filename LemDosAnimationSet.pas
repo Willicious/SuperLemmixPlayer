@@ -275,10 +275,9 @@ var
   Fn: string;
   Bmp: TBitmap32;
   TempBitmap: TBitmap32;
-  iAnimation, iFrame, i: Integer;
+  iAnimation, i: Integer;
   MLA: TMetaLemmingAnimation;
-  MA: TMetaAnimation;
-  X, Y: Integer;
+  X: Integer;
   Pal: TArrayOfColor32;
   MainExtractor: TMainDatExtractor;
 

@@ -605,7 +605,6 @@ end;
 function TBaseDosLevelSystem.FindNextLevel(var Rec: TDosGamePlayInfoRec): Boolean;
 var
   L: TStringList;
-  STe1, STe2: Byte;
   KT: TDosGamePlayInfoRec;
 begin
   Result := (Rec.dLevel < GetLevelCount(Rec.dSection)) or (Rec.dSection < fDefaultSectionCount - 1);
@@ -885,7 +884,6 @@ end;
 procedure TDosFlexiLevelSystem.LoadSystemInfo();
 var
   fMainDatExtractor : TMainDatExtractor;
-  i, i2: Integer;
 begin
   fMainDatExtractor := TMainDatExtractor.Create;
   fMainDatExtractor.FileName := LemmingsPath + 'main.dat';

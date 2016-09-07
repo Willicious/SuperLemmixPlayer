@@ -134,13 +134,11 @@ type
     procedure SetSoundOptions(aOptions: TGameSoundOptions);
     procedure SetSection(aSection: Integer);
     procedure NextSection(Forwards: Boolean);
-    procedure NextSoundSetting;
     procedure DrawWorkerLemmings(aFrame: Integer);
     procedure DrawReel;//(aReelShift, aTextX: Integer);
     procedure SetNextCredit;
     procedure DumpLevels;
     procedure DumpImages;
-    procedure LoadOneLevel;
     procedure DoTestStuff; //what a great name. it's a function I have here for testing things.
     procedure PerformUpdateCheck;
     procedure DoMassReplayCheck;
@@ -241,7 +239,6 @@ var
   Mainpal: TArrayOfColor32;
   Tmp: TBitmap32;
   i: Integer;
-  LoadImageStream: TMemoryStream;
   GrabRect: TRect;
 
   procedure LoadScrollerGraphics;
@@ -452,23 +449,6 @@ begin
   end;
 end;
 
-procedure TGameMenuScreen.LoadOneLevel;
-var
-  fOpenDlg: TOpenDialog;
-begin
-  fOpenDlg := TOpenDialog.Create(self);
-  fOpenDlg.Title := 'Select a level';
-  fOpenDlg.Filter := 'Lemmix / NeoLemmix Level Files|*.lvl';
-  fOpenDlg.Options := [ofFileMustExist];
-  if fOpenDlg.Execute then
-  begin
-    GameParams.LevelString := fOpenDlg.Filename;
-    GameParams.OneLevelMode := true;
-    CloseScreen(gstPreview);
-  end else
-    fOpenDlg.Free;
-end;
-
 procedure TGameMenuScreen.DumpImages;
 var
   I: Integer;
@@ -552,19 +532,6 @@ begin
       end;
   end;
 end;
-
-procedure TGameMenuScreen.NextSoundSetting;
-var
-  Opt: TGameSoundOptions;
-begin
-  Opt := GameParams.SoundOptions;
-  if Opt = [] then Include(Opt, gsoSound)
-  else if Opt = [gsoSound] then Include(Opt, gsoMusic)
-  else if Opt = [gsoMusic, gsoSound] then Opt := [];
-  SetSoundOptions(Opt);
-end;
-
-
 
 procedure TGameMenuScreen.PrepareGameParams(Params: TDosGameParams);
 var

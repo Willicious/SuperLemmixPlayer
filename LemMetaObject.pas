@@ -440,8 +440,6 @@ var
   SrcRec: TObjectVariableProperties;
   DstRec: PObjectVariableProperties;
 
-  TempInt: Integer;
-
   SkipImages: Boolean;
 
 const
@@ -580,6 +578,7 @@ begin
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
       ov_TriggerHeight: Result := TriggerHeight;
+      else raise Exception.Create('TMetaObject.GetVariableProperty called for an invalid property!');
     end;
 end;
 
@@ -597,6 +596,7 @@ begin
       ov_TriggerTop: TriggerTop := aValue;
       ov_TriggerWidth: TriggerWidth := aValue;
       ov_TriggerHeight: TriggerHeight := aValue;
+      else raise Exception.Create('TMetaObject.SetVariableProperty called for an invalid property!');
     end;
   MarkMetaDataUnmade;
 end;

@@ -67,7 +67,6 @@ end;
 
 procedure TFLemmixHotkeys.RefreshList;
 var
-  ListMark: Integer;
   i: Integer;
   e: Integer;
   Hotkey: TLemmixHotkey;

@@ -99,8 +99,6 @@ end;
 procedure TNeoSave.LoadConfig(aPointer: Pointer);
 var
   p : ^TDOSGameParams;
-  //g : TDOSGameParams;
-  i : integer;
 begin
   p := aPointer;
   //g := p^;
@@ -239,10 +237,10 @@ var
     Mins, Secs, Frames: Integer;
   begin
     Result := '';
-    Secs := Frames div 17;
+    Secs := aFrameCount div 17;
     Mins := Secs div 60;
 
-    Frames := Frames mod 17;
+    Frames := aFrameCount mod 17;
     Secs := Secs mod 60;
 
     Result := IntToStr(Mins) + ':' + LeadZeroStr(Secs, 2) + '.' + LeadZeroStr(Frames, 2);
@@ -647,7 +645,7 @@ end;
 
 procedure TNeoSave.GetTalisman(aSig: Cardinal);
 var
-  i, i2: Integer;
+  i: Integer;
 begin
   for i := 0 to Length(fTalismanData)-1 do
     if fTalismanData[i].TalSignature = aSig then

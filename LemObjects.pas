@@ -402,6 +402,7 @@ var
   IsReceiverUsed: array of Boolean;
 begin
   PairCount := 0;
+  TestInf := nil;
   SetLength(IsReceiverUsed, Count);
   for i := 0 to Count-1 do
   begin

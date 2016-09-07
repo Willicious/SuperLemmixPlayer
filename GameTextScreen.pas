@@ -29,7 +29,6 @@ type
   private
     ScreenText: string;
     function GetScreenText: string;
-    function BuildText(intxt: Array of char): string;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_KeyPress(Sender: TObject; var Key: Char);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -76,7 +75,6 @@ end;
 procedure TGameTextScreen.BuildScreen;
 var
   Temp: TBitmap32;
-  st: String;
 begin
 
   {st := GetScreenText;
@@ -104,23 +102,6 @@ begin
   end;
 end;
 
-function TGameTextScreen.BuildText(intxt: Array of char): String;
-var
-  tstr : String;
-  x : byte;
-begin
-  Result := '';
-  tstr := '';
-  for x := 0 to 35 do
-  begin
-    if (tstr <> '') or (intxt[x] <> ' ') then
-    begin
-      tstr := tstr + intxt[x];
-    end;
-  end;
-  Result := Trim(tstr);
-end;
-
 constructor TGameTextScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
@@ -142,7 +123,6 @@ var
    fn{, ts}: String;
    b: byte;
    lfc: byte;
-   Arc: TArchive; // for checking whether files actually exist
 
     procedure Add(const S: string);
     begin
@@ -167,7 +147,6 @@ begin
   Result := '';
   //ts := '';
   lfc := 0;
-  TextFileStream := nil;
 
   if GameParams.NextScreen = gstPostview then
   begin
@@ -207,8 +186,6 @@ begin
   Add(SPressMouseToContinue);
 
   TextFileStream.Free;
-
-  Arc.Free;
 end;
 procedure TGameTextScreen.Form_KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);

@@ -18,7 +18,6 @@ uses
 type
   TGamePreviewScreen = class(TGameBaseScreen)
   private
-    fObjectInfos: TInteractiveObjectInfoList; // For RenderWorld
     //fRickrolling : Boolean;
     fCanDump: Boolean;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -53,7 +52,6 @@ uses FBaseDosForm;
 procedure TGamePreviewScreen.SimulateSpawn;
 var
   i: Integer;
-  IgnoreLemmings: Integer;
   LemsSpawned: Integer;
   CompareVal: Byte;
 
@@ -74,7 +72,6 @@ begin
   // A full blown simulation of lemming spawning is the only way to
   // check how many Zombies and Ghosts the level has.
   GameParams.Level.Info.ZombieGhostCount := 0;
-  IgnoreLemmings := 0;
   LemsSpawned := 0;
 
   // Trigger effect 13: Preplaced lemming
@@ -205,7 +202,6 @@ var
   i: Integer;
   MinCount : Integer;
   FoundWindow : Boolean;
-  PieceID: Integer;
   MO: TMetaObjectInterface;
 begin
   FoundWindow := false;
@@ -227,9 +223,7 @@ var
   Mainpal: TArrayOfColor32;
   Temp, W: TBitmap32;
   DstRect: TRect;
-  epf : String;
   Lw, Lh : Integer;
-  GSName: String;
 begin
   Assert(GameParams <> nil);
 
@@ -321,11 +315,7 @@ end;
 procedure TGamePreviewScreen.BuildScreenInvis;
 var
   Inf: TRenderInfoRec;
-  Mainpal: TArrayOfColor32;
   TempBmp: TBitmap32;
-  //Temp, W: TBitmap32;
-  //DstRect: TRect;
-  epf : String;
 begin
   Assert(GameParams <> nil);
   TempBmp := TBitmap32.Create;
@@ -422,9 +412,6 @@ function TGamePreviewScreen.GetScreenText: string;
 var
   Perc, TL: string;
   RR: String;
-  tperc: Integer;
-  tcount: Integer;
-  i: Integer;
 begin
   Assert(GameParams <> nil);
 

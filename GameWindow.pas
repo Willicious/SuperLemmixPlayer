@@ -27,7 +27,6 @@ type
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
     fNeedRedraw: Boolean;
-    fNeedEndUpdate: Boolean;
     fNeedReset : Boolean;
     fMouseTrapped: Boolean;
     fSaveList: TLemmingGameSavedStateList;
@@ -58,7 +57,6 @@ type
     procedure CheckAdjustReleaseRate;
     procedure LoadReplay;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
-    procedure StartReplay;
     procedure StartReplay2(const aFileName: string);
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
@@ -139,7 +137,6 @@ procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
 var
   CurrTime: Cardinal;
   Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
-  DrawRect: TRect;
 begin
   if not CanPlay or not Game.Playing or Game.GameFinished then
     Exit;
@@ -656,8 +653,6 @@ begin
 end;
 
 procedure TGameWindow.Form_KeyPress(Sender: TObject; var Key: Char);
-var
-  sn : Integer;
 begin
 
 end;
@@ -910,13 +905,10 @@ procedure TGameWindow.PrepareGameParams(Params: TDosGameParams);
   This method is called by the inherited ShowScreen
 -------------------------------------------------------------------------------}
 var
-  HScale, VScale: Integer;
   Sca: Integer;
-  StoredScale: Integer; // scale as stored in ini-file
   CenterPoint: TPoint;
 begin
   inherited;
-  StoredScale := 0;
 //  fSystemCursor := GameParams.UseSystemCursor;
 
   // set the final displayscale
@@ -926,17 +918,6 @@ begin
     Sca := GameParams.ZoomLevel;
     DisplayScale := Sca;
   end;
-
-  {Sca := MaxDisplayScale;
-  if (StoredScale > 0) and (StoredScale <= MaxDisplayScale) then
-  begin
-     Sca := StoredScale;
-     DisplayScale := Sca;
-  end;}
-
-  // correct if wrong zoomfactor in inifile
-//  if (StoredScale <> 0) and (StoredScale > MaxDisplayScale) then
- //   Params.ZoomFactor := Sca;
 
   GameParams.TargetBitmap := Img.Bitmap;
   fGame.PrepareParams(Params);
@@ -1004,7 +985,6 @@ procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   Here we scroll the game-image.
 -------------------------------------------------------------------------------}
 var
-//  N: TPoint;
   O: Single;
 begin
 //  Game.CurrentScreenPosition := Point(P.X, 0);
@@ -1017,7 +997,6 @@ begin
   if O < MinScroll * DisplayScale then O := MinScroll * DisplayScale;
   if O > MaxScroll * DisplayScale then O := MaxScroll * DisplayScale;
   Img.OffSetHorz := O;
-  O := (P.Y - 60) div 4;
   O := -P.Y * DisplayScale;
   O :=  O + Img.Height div 2;
   if O < MinVScroll * DisplayScale then O := MinVScroll * DisplayScale;
@@ -1077,15 +1056,6 @@ begin
   end;
 end;
 
-procedure TGameWindow.StartReplay;
-begin
-  CanPlay := False;
-  Game.SetGameResult;
-  Game.Start(True);
-  SkillPanel.RefreshInfo;
-  CanPlay := True;
-end;
-
 procedure TGameWindow.StartReplay2(const aFileName: string);
 var
   ext: String;
@@ -1139,7 +1109,6 @@ end;
 procedure TGameWindow.LoadReplay;
 var
   OldCanPlay: Boolean;
-  IsOld: Boolean;
   Dlg : TOpenDialog;
   s: string;
 begin
@@ -1148,7 +1117,6 @@ begin
   s:='';
   dlg:=topendialog.create(nil);
   try
-//    dlg.DefaultExt := '*.lrb';
     dlg.Title := 'Select a replay file to load (' + GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
     dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
     dlg.FilterIndex := 1;

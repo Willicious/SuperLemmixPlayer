@@ -46,13 +46,12 @@ uses Forms, LemStyle;
 
 function TGameTalismanScreen.ShowScreen(Params: TDosGameParams): Integer;
 begin
-  inherited ShowScreen(Params);
+  Result := inherited ShowScreen(Params);
 end;
 
 procedure TGameTalismanScreen.BuildScreen;
 var
   Temp: TBitmap32;
-  st: String;
 begin
   ScreenImg.BeginUpdate;
   Temp := TBitmap32.Create;

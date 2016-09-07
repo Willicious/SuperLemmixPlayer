@@ -71,7 +71,6 @@ type
 
     fHighlitSkill: TSkillPanelButton;
     fSkillCounts: Array[0..20] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
-    fCurRR: Integer;
 
 
 
@@ -421,7 +420,6 @@ var
   BtnIdx: Integer;
   DstRect, SrcRect: TRect;
   aoNumber: Integer;
-  c:tcolor32;
 
 const
   FontYPos = 17;
@@ -447,8 +445,6 @@ begin
   S := LeadZeroStr(aNumber, 2);
   L := S[1];
   R := S[2];
-
-  BtnIdx := Ord(aButton) - 1; // "ignore" the spbNone
 
   BtnIdx := (fButtonRects[aButton].Left - 1) div 16;
 
@@ -645,7 +641,6 @@ var
   HiPal: TArrayOfColor32;
   TempBmp: TBitmap32;
   SrcRect: TRect;
-  Arc: TArchive; // for checking whether files actually exist
 const
   SKILL_NAMES: array[0..15] of string = (
                  'walker',
@@ -805,7 +800,7 @@ end;
 procedure TSkillPanelToolbar.SetSkillIcons;
 var
   Org, R, SrcRect: TRect;
-  i, x : Integer;
+  x : Integer;
 begin
   Org := Rect(33, 16, 47, 38); // exact position of first button
   R := Org;
@@ -822,7 +817,6 @@ begin
       fSkillIcons[x].DrawTo(fOriginal, R.Left, R.Top{, SrcRect});
 
       RectMove(R, 16, 0);
-      Inc(i);
     end;
   end;
 end;
@@ -948,7 +942,6 @@ end;
 procedure TSkillPanelToolbar.SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
 var
   S: string;
-  i: Integer;
 begin
   // stringspositions cursor,out,in,time = 1,15,24,32
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';

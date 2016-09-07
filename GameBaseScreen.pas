@@ -382,60 +382,35 @@ procedure TGameBaseScreen.ExtractPurpleFont;
 var
   Pal: TArrayOfColor32;
   i: Integer;
-  PurpleFontPos: Integer;
   TempBMP: TBitmap32;
 begin
   Pal := GetDosMainMenuPaletteColors32;
   with MainDatExtractor do
   begin
-    PurpleFontPos := $1ADE0;
-
-//  {$else}
-  //    Adjust Drawmethod here!
-
     TempBMP := TBitmap32.Create;
-    //try
-      ExtractBitmapByName(TempBMP, 'menu_font.png');
-      for i := 0 to PURPLEFONTCOUNT-7 do
-      begin
-        fPurpleFont.fBitmaps[i].SetSize(16, 16);
-        fPurpleFont.fBitmaps[i].Clear(0);
-        TempBMP.DrawTo(fPurpleFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 16));
-        fPurpleFont.fBitmaps[i].DrawMode := dmBlend;
-        fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
-      end;
-    {except
-      // extract first
-      ExtractBitmap(fPurpleFont.fBitmaps[0], 4, PurpleFontPos, 16, 16, 19, Pal);
-      // the other positions are updated automatically by the stream (-1)
-      for i := 1 to PURPLEFONTCOUNT - 7 do
-        ExtractBitmap(fPurpleFont.fBitmaps[i], 4, -1, 16, 16, 19, Pal);
-    end;}
 
-    //try
-      ExtractBitmapByName(TempBMP, 'talismans.png');
-      for i := 0 to 5 do
-      begin
-        fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);
-        fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].Clear(0);
-        TempBMP.DrawTo(fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i], 0, 0, Rect(48 * (i mod 2), 48 * (i div 2), 48 * ((i mod 2) + 1), 48 * ((i div 2) + 1)));
-        fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].DrawMode := dmBlend;
-        fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].CombineMode := cmMerge;
-      end;
-    {except
-      for i := PURPLEFONTCOUNT-6 to PURPLEFONTCOUNT-1 do
-        try
-          ExtractBitmap(fPurpleFont.fBitmaps[i], 4, -1, 48, 48, 19, Pal);
-        except // handle MAIN.DAT files that don't contain talisman graphics
-          fPurpleFont.fBitmaps[i] := TBitmap32.Create;
-          fPurpleFont.fBitmaps[i].SetSize(1, 1);
-          fPurpleFont.fBitmaps[i].Clear(0);
-        end;
-    end;}
+    ExtractBitmapByName(TempBMP, 'menu_font.png');
+    for i := 0 to PURPLEFONTCOUNT-7 do
+    begin
+      fPurpleFont.fBitmaps[i].SetSize(16, 16);
+      fPurpleFont.fBitmaps[i].Clear(0);
+      TempBMP.DrawTo(fPurpleFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 16));
+      fPurpleFont.fBitmaps[i].DrawMode := dmBlend;
+      fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
+    end;
+
+    ExtractBitmapByName(TempBMP, 'talismans.png');
+    for i := 0 to 5 do
+    begin
+      fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);
+      fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].Clear(0);
+      TempBMP.DrawTo(fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i], 0, 0, Rect(48 * (i mod 2), 48 * (i div 2), 48 * ((i mod 2) + 1), 48 * ((i div 2) + 1)));
+      fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].DrawMode := dmBlend;
+      fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].CombineMode := cmMerge;
+    end;
+
     TempBMP.Free;
   end;
-
-  //asdf
 end;
 
 procedure TGameBaseScreen.InitializeImageSizeAndPosition(aWidth, aHeight: Integer);

@@ -18,7 +18,6 @@ type
   TBaseDosForm = class(TForm)
   private
     fGameParams: TDosGameParams;
-    procedure OnShowForm(Sender: TObject);
     procedure HideMainForm(var msg : TMessage); message WM_AFTERSHOW;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
@@ -53,7 +52,6 @@ begin
   BorderIcons := [{biSystemMenu, biMinimize, biMaximize}];
   WindowState := {wsNormal} wsMaximized;
   Cursor := crNone;
-  //OnActivate := OnShowForm;
 end;
 
 procedure TBaseDosForm.CreateParams(var Params: TCreateParams);
@@ -100,12 +98,6 @@ begin
   begin
     GameParams.MainForm.Visible := false;
   end;
-end;
-
-procedure TBaseDosForm.OnShowForm(Sender: TObject);
-begin
-  //HideMainForm;
-  PostMessage(Handle, WM_AFTERSHOW, 0, 0);
 end;
 
 end.

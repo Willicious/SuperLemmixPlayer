@@ -184,6 +184,7 @@ function GetSkillButton(aName: String): TSkillPanelButton;
 var
   i: Integer;
 begin
+  Result := TSkillPanelButton(0); // to avoid compiler warning
   aName := Uppercase(aName);
   for i := 0 to SKILL_REPLAY_NAME_COUNT-1 do
     if aName = SKILL_REPLAY_NAMES[i] then
@@ -381,7 +382,6 @@ procedure TReplay.LoadFromFile(aFile: String);
 var
   Parser: TNeoLemmixParser;
   Line: TParserLine;
-  i: Integer;
   Item: TBaseReplayItem;
 begin
   Clear(true);
@@ -443,8 +443,6 @@ end;
 procedure TReplay.SaveToFile(aFile: String);
 var
   SL: TStringList;
-  E: TBaseReplayItem; //why do I keep naming it E? I don't know. But it's become a thing now.
-  i: Integer;
 begin
   SL := TStringList.Create;
 
@@ -495,7 +493,6 @@ var
   Header: TReplayFileHeaderRec;
   Item: TReplayRec;
   LastReleaseRate: Integer;
-  LastSelectedSkill: TSkillPanelButton;
 
   procedure CreateAssignEntry;
   var
@@ -553,7 +550,6 @@ begin
 
     MS.Position := Header.FirstRecordPos;
     LastReleaseRate := 0;
-    LastSelectedSkill := spbNone;
 
     while MS.Read(Item, SizeOf(TReplayRec)) = SizeOf(TReplayRec) do
     begin

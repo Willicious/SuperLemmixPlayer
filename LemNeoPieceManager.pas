@@ -35,12 +35,9 @@ type
 
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TMetaObject;
-      function GetThemeColor(Index: String): TColor32;
 
       property TerrainCount: Integer read GetTerrainCount;
       property ObjectCount: Integer read GetObjectCount;
-
-      property ThemeColor[Index: String]: TColor32 read GetThemeColor;
     public
       constructor Create;
       destructor Destroy; override;
@@ -162,7 +159,9 @@ begin
   if FileExists(BasePath + '.png') then  // .nxtp is optional, but .png is not :)
     T := TMetaTerrain.Create
   else if FileExists(BasePath + '.nxcs') then
-    T := TMetaConstruct.Create;
+    T := TMetaConstruct.Create
+  else
+    raise Exception.Create('TNeoPieceManager.ObtainTerrain: Could not find terrain piece: ' + Identifier);
   fTerrains.Add(T);
   T.Load(TerrainLabel.GS, TerrainLabel.Piece);
 end;
@@ -202,17 +201,6 @@ procedure TNeoPieceManager.SetTheme(aTheme: TNeoTheme);
 begin
   fTheme := aTheme;
   Tidy;
-end;
-
-function TNeoPieceManager.GetThemeColor(Index: String): TColor32;
-begin
-  if fTheme = nil then
-  begin
-    Result := DEFAULT_COLOR;
-    if Uppercase(Index) = 'BACKGROUND' then
-      Result := $FF000000;
-  end else
-    Result := fTheme.Colors[Index];
 end;
 
 end.

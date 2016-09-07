@@ -1406,14 +1406,10 @@ end;
 
 procedure TLemmingGame.PrepareParams(aParams: TDosGameParams);
 var
-  //Inf: TRenderInfoRec;
   Ani: TBaseDosAnimationSet;
   i: Integer;
   Bmp: TBitmap32;
   LowPal, HiPal, Pal: TArrayOfColor32;
-
-  //LemBlack: TColor32;
-  S: TStream;
 begin
 
   fGameParams := aParams;
@@ -2799,7 +2795,6 @@ procedure TLemmingGame.CheckTriggerArea(L: TLemming);
 var
   CheckPos: TArrayArrayInt; // Combined list for both X- and Y-coordinates
   i: Integer;
-  ObjectID: Word;
   AbortChecks: Boolean;
 begin
   // Get positions to check for trigger areas
@@ -3260,7 +3255,6 @@ end;
 
 procedure TLemmingGame.ApplyExplosionMask(L: TLemming);
 var
-  X1, Y1: Integer;
   PosX, PosY: Integer;
 begin
   PosX := L.LemX;
@@ -3279,7 +3273,6 @@ procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);
 var
   Bmp: TBitmap32;
   S, D: TRect;
-  X1, Y1: Integer;
 begin
   // dos bashing mask = 16 x 10
 
@@ -3315,7 +3308,6 @@ var
   Bmp: TBitmap32;
   MaskX, MaskY: Integer;
   S, D: TRect;
-  X1, Y1: Integer;
 begin
   Assert((MaskFrame >=0) and (MaskFrame <= 1), 'miner mask error');
 
@@ -3407,6 +3399,7 @@ begin
     begin
       ShadowSkillButton := spbNone;
       ShadowLem := nil;
+      ShadowEndPos := 0;
     end
   end;
 
@@ -3522,12 +3515,9 @@ procedure TLemmingGame.LayBrick(L: TLemming);
 -------------------------------------------------------------------------------}
 var
   BrickPosY, n: Integer;
-  BrickColor: TColor32;
 begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
-
-  BrickColor := BrickPixelColors[12 - L.LemNumberOfBricksLeft] or $FF000000;
 
   If L.LemAction = baBuilding then BrickPosY := L.LemY - 1
   else BrickPosY := L.LemY; // for platformers
@@ -3546,12 +3536,9 @@ function TLemmingGame.LayStackBrick(L: TLemming): Boolean;
 var
   BrickPosY, n: Integer;
   PixPosX: Integer;
-  BrickColor: TColor32;
 begin
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number stacker bricks out of bounds');
-
-  BrickColor := BrickPixelColors[12 - L.LemNumberOfBricksLeft] or $FF000000;
 
   BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
   if L.LemStackLow then Inc(BrickPosY);
@@ -4995,7 +4982,6 @@ function TLemmingGame.ProcessHighlightAssignment: Boolean;
 var
   L: TLemming;
   OldHighlightLemmingID: Integer;
-  i: Integer;
 begin
   Result := False;
   OldHighlightLemmingID := fHighlightLemmingID;
@@ -5298,7 +5284,6 @@ procedure TLemmingGame.CueSoundEffect(aSoundId: Integer; aOrigin: TPoint);
   Save last sound.
 -------------------------------------------------------------------------------}
 var
-  i: Integer;
   Bal: Single;
   MidX: Integer; // we don't need MidY because we can't adjust the "height" of a sound anyway
   SrcX: Integer;
@@ -5386,8 +5371,6 @@ end;
 procedure TLemmingGame.RecordReleaseRate(aActionFlag: Byte);
 var
   E: TReplayChangeReleaseRate;
-  NewRec: Boolean;
-  RecIteration: Integer;
 begin
   if not fPlaying or fReplaying then
     Exit;
@@ -5616,7 +5599,8 @@ begin
       else if HasTriggerAt(L.LemX, L.LemY, trForceRight) then
         HandleForceField(L, 1);
     end;
-  end;
+  end else
+    SetLength(LemPosArray, 0);
 
   // End Simulation Mode
   fSimulation := False;
@@ -5707,8 +5691,6 @@ begin
 end;
 
 procedure TLemmingGame.CheckForPlaySoundEffect;
-var
-  i: Integer;
 begin
   if HyperSpeed then
   begin
@@ -5870,7 +5852,7 @@ end;
 
 procedure TLemmingGame.Save(TestModeName: Boolean = false);
 var
-  SaveNameLrb, SaveNameTxt : String;
+  SaveNameLrb: String;
   SaveText: Boolean;
   UnpauseAfterDlg: Boolean;
 

@@ -72,8 +72,6 @@ var
   MinorVer: Integer;  // The minor version. EG: For V1.37n, this would be 1. (V1.37n-B, it would be 2, etc.)
   MaxSubVer: Integer; // Maximum sub-version.
   MaxMinorVer: Integer; // Maximum minor version.
-
-  IsOut: Boolean;
 const
   // Lowest version numbers that are compatible
   Min_MainVer = 1;    // 1.bb-c
@@ -176,7 +174,6 @@ end;
 
 constructor TAppController.Create(aOwner: TComponent);
 var
-  i: Integer;
   OpenDlg: TOpenDialog;
   DoSingleLevel: Boolean;
   fMainDatExtractor : TMainDatExtractor;
@@ -202,10 +199,7 @@ begin
       OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxp, *.lvl, *.nxlv)|*.nxp;*.lvl;*.nxlv|NeoLemmix Level Pack (*.nxp)|*.nxp|NeoLemmix Level (*.lvl, *.nxlv)|*.lvl;*.nxlv';
       OpenDlg.InitialDir := ExtractFilePath(ParamStr(0));
       if not OpenDlg.Execute then
-      begin
         fLoadSuccess := false;
-        DoSingleLevel := true; // kludge to load nessecary files from internal, to prevent crash
-      end;
       GameFile := OpenDlg.FileName;
       OpenDlg.Free;
     end;
@@ -531,9 +525,7 @@ var
       S: String;
       i: Integer;
       n: LongWord;
-      Cont: Boolean;
     begin
-      Cont := true;
       SL := TStringList.Create;
       try
         TempStream.Position := 0;
