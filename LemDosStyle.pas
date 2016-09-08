@@ -15,6 +15,7 @@ uses
   LemDosMainDat,
   LemStyle, LemLevelSystem, LemMusicSystem,
   LemNeoSave,
+  LemNeoParser,
   UZip; // For checking whether files actually exist
 
 const
@@ -68,6 +69,7 @@ type
   private
     fLevelNames: array of array of String;
     fTempLevel: TLevel;
+    fDoneQuickLevelNameLoad: Boolean;
   protected
     fDefaultLevelCount: Integer;
     fLevelCount : array[0..15] of Integer;
@@ -105,6 +107,8 @@ type
     function FindNextUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
     function FindPreviousUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
     procedure ResetOddtableHistory;
+
+    procedure QuickLoadLevelNames;
 
 
     function GetLevelCode(const Rec : TDosGamePlayInfoRec): string; override;
@@ -730,7 +734,7 @@ begin
   DataStream := CreateDataStream(LeadZeroStr(aInfo.DosLevelRankIndex, 2) + LeadZeroStr(aInfo.DosLevelPackIndex, 2) + '.lvl', ldtLemmings);
   if DataStream <> nil then
   begin
-    TLVLLoader.LoadLevelFromStream(TheSection.DecompressedData, aLevel, OddLoad);
+    TLVLLoader.LoadLevelFromStream(DataStream, aLevel, OddLoad);
     Exit;
   end;
 
@@ -865,9 +869,60 @@ begin
 
 end;
 
+procedure TBaseDosLevelSystem.QuickLoadLevelNames;
+var
+  DataStream: TMemoryStream;
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+  R, L: Integer;
+begin
+  if fDoneQuickLevelNameLoad then Exit;
+  fDoneQuickLevelNameLoad := true;
+
+  DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
+  if DataStream = nil then Exit; //if the file's absent, we'll need to rely on the slow way
+
+  Parser := TNeoLemmixParser.Create;
+  try
+    Parser.LoadFromStream(DataStream);
+
+    SetLength(fLevelNames, GetSectionCount);
+    for R := 0 to GetSectionCount-1 do
+      SetLength(fLevelNames[R], GetLevelCount(R));
+
+    R := -1;
+    repeat
+      Line := Parser.NextLine;
+      if (Line.Keyword <> 'LEVEL') and (R = -1) then Continue;
+
+      if Line.Keyword = 'LEVEL' then
+      begin
+        if Line.Numeric > 9999 then
+        begin
+          R := Line.Numeric div 1000;
+          L := Line.Numeric mod 1000;
+        end else begin
+          R := Line.Numeric div 100;
+          L := Line.Numeric mod 100;
+        end;
+
+        if (R > GetSectionCount) or (L > GetLevelCount(R)) then
+          R := -1;
+      end;
+
+      if Line.Keyword = 'TITLE' then
+        fLevelNames[R][L] := Trim(Line.Value);
+
+    until (Line.Keyword = '');
+  finally
+    Parser.Free;
+  end;
+end;
+
 function TBaseDosLevelSystem.GetLevelName(aSection, aLevel: Integer): String;
 begin
   Result := '';
+  QuickLoadLevelNames;
   if (aSection < Length(fLevelNames)) and (aLevel < Length(fLevelNames[aSection])) then
     if fLevelNames[aSection][aLevel] <> '' then
     begin
