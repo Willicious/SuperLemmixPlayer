@@ -727,6 +727,13 @@ var
 begin
   Assert(Owner is TBaseDosLemmingStyle);
 
+  DataStream := CreateDataStream(LeadZeroStr(aInfo.DosLevelRankIndex, 2) + LeadZeroStr(aInfo.DosLevelPackIndex, 2) + '.lvl', ldtLemmings);
+  if DataStream <> nil then
+  begin
+    TLVLLoader.LoadLevelFromStream(TheSection.DecompressedData, aLevel, OddLoad);
+    Exit;
+  end;
+
   Sections := TDosDatSectionList.Create;
   Decompressor := TDosDatDecompressor.Create;
   try
@@ -837,6 +844,7 @@ begin
   Fn := Sty.CommonPath + Fn;//IncludeCommonPath(Fn);
 
   LocalLevelInfo.DosLevelPackFileName := Fn;
+  LocalLevelInfo.DosLevelRankIndex := aSection;
   LocalLevelInfo.DosLevelPackIndex := FileIndex;
 
   InternalLoadLevel(LocalLevelInfo, aLevel, OddLoad);

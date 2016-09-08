@@ -29,6 +29,7 @@ type
   protected
     fTrimmedTitle            : string; // the title: this is only for display purposes.
     fDosLevelPackFileName    : string; // dos file where we can find this level (levelxxx.dat)
+    fDosLevelRankIndex       : Integer;
     fDosLevelPackIndex       : Integer; // dos file position in doslevelpackfilename(in fact: which decompression section)
     fOwnerFile               : string; // lemmini: lemmini ini file containing this level
   public
@@ -36,6 +37,7 @@ type
   published
     property TrimmedTitle: string read fTrimmedTitle write fTrimmedTitle;
     property DosLevelPackFileName: string read fDosLevelPackFileName write fDosLevelPackFileName;
+    property DosLevelRankIndex: Integer read fDosLevelRankIndex write fDosLevelRankIndex;
     property DosLevelPackIndex: Integer read fDosLevelPackIndex write fDosLevelPackIndex;
     property OwnerFile: string read fOwnerFile write fOwnerFile;
   end;
