@@ -62,7 +62,8 @@ type
     procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombinePhysicsMapVisual(F: TColor32; var B: TColor32; M: TColor32);
+
+    procedure DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);
   protected
   public
     fIsEmpty: array[TRenderLayer] of Boolean;
@@ -511,14 +512,6 @@ begin
   //BlendReg(C, B);
 end;
 
-procedure TRenderBitmaps.CombinePhysicsMapVisual(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F and PM_STEEL <> 0 then
-    B := $FF606060
-  else if F and PM_SOLID <> 0 then
-    B := $FFB0B0B0;
-end;
-
 procedure TRenderBitmaps.CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $00000001) = 0 then B := 0;
@@ -586,8 +579,7 @@ begin
 
     if aClearPhysics and (i = rlTerrain) then
     begin // we want to draw based on physics map, not graphical map, in this case
-      fPhysicsMap.OnPixelCombine := CombinePhysicsMapVisual;
-      fPhysicsMap.DrawTo(aDst, aRegion, aRegion);
+      DrawClearPhysicsTerrain(aDst, aRegion);
       Continue;
     end;
 
@@ -596,6 +588,37 @@ begin
   end;
   aDst.EndUpdate;
   aDst.Changed;
+end;
+
+procedure TRenderBitmaps.DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);
+var
+  x, y: Integer;
+  PSrc,PDst: PColor32;
+  C: TColor32;
+begin
+  // It's very messy to track position in a custom pixelcombine, hence using an entirely
+  // custom procedure instead.
+  for y := aRegion.Top to aRegion.Bottom-1 do
+  begin
+    PSrc := fPhysicsMap.PixelPtr[aRegion.Left, y];
+    PDst := aDst.PixelPtr[aRegion.Left, y];
+    Dec(PSrc); // so we can put Inc(P) at the start of the next loop rather than having to use lots of if statements
+    Dec(PDst);
+    for x := aRegion.Left to aRegion.Right-1 do
+    begin
+      Inc(PSrc);
+      Inc(PDst);
+      if PSrc^ and PM_SOLID = 0 then
+        Continue
+      else if PSrc^ and PM_STEEL = 0 then
+        C := $FFB0B0B0
+      else
+        C := $FF606060;
+      if (x mod 2) <> (y mod 2) then
+        C := C - $00202020;
+      PDst^ := C;
+    end;
+  end;
 end;
 
 end.
