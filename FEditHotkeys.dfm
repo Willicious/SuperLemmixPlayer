@@ -19,23 +19,25 @@ object FLemmixHotkeys: TFLemmixHotkeys
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
+  object lblSkill: TLabel
     Left = 304
     Top = 131
     Width = 22
     Height = 13
     Caption = 'Skill:'
+    Visible = False
   end
-  object Label2: TLabel
+  object lblDuration: TLabel
     Left = 284
     Top = 155
     Width = 43
     Height = 13
     Caption = 'Duration:'
+    Visible = False
   end
   object Label3: TLabel
     Left = 280
-    Top = 64
+    Top = 72
     Width = 5
     Height = 13
     Alignment = taCenter
@@ -106,7 +108,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Restart Level'
       'Previous Skill'
       'Next Skill'
-      'Release Mouse')
+      'Release Mouse'
+      'Clear Physics Mode')
   end
   object Button1: TButton
     Left = 312
@@ -126,6 +129,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Enabled = False
     ItemHeight = 13
     TabOrder = 3
+    Visible = False
     OnChange = cbSkillChange
     Items.Strings = (
       'Walker'
@@ -161,11 +165,12 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Height = 21
     Enabled = False
     TabOrder = 5
+    Visible = False
     OnChange = ebSkipDurationChange
   end
   object Button2: TButton
     Left = 296
-    Top = 200
+    Top = 216
     Width = 121
     Height = 25
     Caption = 'Find Key'
@@ -183,5 +188,15 @@ object FLemmixHotkeys: TFLemmixHotkeys
     State = cbChecked
     TabOrder = 7
     OnClick = cbHardcodedNamesClick
+  end
+  object cbHoldKey: TCheckBox
+    Left = 312
+    Top = 176
+    Width = 97
+    Height = 17
+    Caption = 'Hold Key'
+    TabOrder = 8
+    Visible = False
+    OnClick = cbHoldKeyClick
   end
 end

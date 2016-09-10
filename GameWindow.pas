@@ -24,6 +24,7 @@ type
 
   TGameWindow = class(TGameBaseScreen)
   private
+    fClearPhysics: Boolean;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
     fNeedRedraw: Boolean;
@@ -254,7 +255,7 @@ begin
   fRenderer.DrawAllObjects(fRenderInterface.ObjectList);
   fRenderer.DrawLemmings;
   DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 320, fRenderInterface.ScreenPos.Y + 160);
-  fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect);
+  fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
   fNeedRedraw := false;
 end;
 
@@ -510,7 +511,8 @@ const
                          lka_Sound,
                          lka_Restart,
                          lka_ReleaseMouse,
-                         lka_Nuke];         // nuke also cancels, but requires double-press to do so so handled elsewhere
+                         lka_Nuke,          // nuke also cancels, but requires double-press to do so so handled elsewhere
+                         lka_ClearPhysics];
   SKILL_KEYS = [lka_Skill, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
@@ -642,6 +644,10 @@ begin
                         TargetIteration := CurrentIteration + func.Modifier - 1;
                       end else
                         if Paused then ForceUpdateOneFrame := true;
+          lka_ClearPhysics: if func.Modifier = 0 then
+                              fClearPhysics := not fClearPhysics
+                            else
+                              fClearPhysics := true;
         end;
 
     end;
@@ -672,6 +678,8 @@ begin
     case func.Action of
       lka_ReleaseRateDown    : SetSelectedSkill(spbSlower, False);
       lka_ReleaseRateUp      : SetSelectedSkill(spbFaster, False);
+      lka_ClearPhysics       : if func.Modifier <> 0 then
+                                 fClearPhysics := false;
     end;
   end;
 

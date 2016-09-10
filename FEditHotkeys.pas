@@ -13,13 +13,14 @@ type
     cbFunctions: TComboBox;
     Button1: TButton;
     cbSkill: TComboBox;
-    Label1: TLabel;
+    lblSkill: TLabel;
     cbShowUnassigned: TCheckBox;
-    Label2: TLabel;
+    lblDuration: TLabel;
     ebSkipDuration: TEdit;
     Button2: TButton;
     Label3: TLabel;
     cbHardcodedNames: TCheckBox;
+    cbHoldKey: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);
@@ -32,6 +33,8 @@ type
       Shift: TShiftState);
     procedure Button2Click(Sender: TObject);
     procedure cbHardcodedNamesClick(Sender: TObject);
+    procedure cbHoldKeyClick(Sender: TObject);
+    procedure SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
   private
     fShownFindInfo: Boolean;
     fKeyNames: Array [0..MAX_KEY] of String; //MAX_KEY defined in unit LemmixHotkeys
@@ -110,6 +113,10 @@ begin
                   else
                     s := 'Time Skip: Forward 1 Frame';
                 end;
+      lka_ClearPhysics: if Hotkey.Modifier = 0 then
+                          s := 'Clear Physics Mode (toggle)'
+                        else
+                          s := 'Clear Physics Mode (hold)';
       else s := cbFunctions.Items[Integer(fHotkeys.CheckKeyEffect(i).Action)];
     end;
     if e < lvHotkeys.Items.Count then
@@ -219,6 +226,35 @@ begin
   RefreshList;
 end;
 
+procedure TFLemmixHotkeys.SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
+begin
+  lblSkill.Visible := false;
+  cbSkill.Visible := false;
+  cbSkill.Enabled := false;
+  lblDuration.Visible := false;
+  ebSkipDuration.Visible := false;
+  ebSkipDuration.Enabled := false;
+  cbHoldKey.Visible := false;
+  cbHoldKey.Enabled := false;
+
+  case aKeyType of
+    lka_Skill: begin
+                 lblSkill.Visible := true;
+                 cbSkill.Visible := true;
+                 cbSkill.Enabled := true;
+               end;
+    lka_Skip: begin
+                lblDuration.Visible := true;
+                ebSkipDuration.Visible := true;
+                ebSkipDuration.Enabled := true;
+              end;
+    lka_ClearPhysics: begin
+                        cbHoldKey.Visible := true;
+                        cbHoldKey.Enabled := true;
+                      end;  
+  end;
+end;
+
 procedure TFLemmixHotkeys.lvHotkeysClick(Sender: TObject);
 var
   i: Integer;
@@ -267,30 +303,17 @@ begin
   if i = -1 then Exit; //safety; should never happen
   case TLemmixHotkeyAction(cbFunctions.ItemIndex) of
     lka_Skill: begin
-                 ebSkipDuration.Text := '';
-                 ebSkipDuration.Enabled := false;
-                 cbSkill.Enabled := true;
                  if cbSkill.ItemIndex = -1 then cbSkill.ItemIndex := 0;
                  fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
-                 cbSkillChange(Self);
                end;
     lka_Skip: begin
-                cbSkill.ItemIndex := -1;
-                cbSkill.Enabled := false;
-                ebSkipDuration.Enabled := true;
                 ebSkipDuration.Text := IntToStr(StrToIntDef(ebSkipDuration.Text, 0)); // not redundant; destroys non-numeric values
                 fHotkeys.SetKeyFunction(i, lka_Skip, StrToInt(ebSkipDuration.Text));
-                ebSkipDurationChange(Self);
               end;
-    else begin
-           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
-           cbSkill.ItemIndex := -1;
-           cbSkill.Enabled := false;
-           ebSkipDuration.Text := '';
-           ebSkipDuration.Enabled := false;
-           RefreshList;
-         end;
+    else fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
   end;
+  SetVisibleModifier(TLemmixHotkeyAction(cbFunctions.ItemIndex));
+  RefreshList;
 end;
 
 procedure TFLemmixHotkeys.cbSkillChange(Sender: TObject);
@@ -383,6 +406,22 @@ end;
 procedure TFLemmixHotkeys.cbHardcodedNamesClick(Sender: TObject);
 begin
   SetKeyNames;
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.cbHoldKeyClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := FindKeyFromList(lvHotkeys.ItemIndex);
+  if i = -1 then Exit; //safety; should never happen
+
+  if fHotkeys.CheckKeyEffect(i).Action <> lka_ClearPhysics then Exit;
+
+  if cbHoldKey.Checked then
+    fHotkeys.SetKeyFunction(i, lka_ClearPhysics, 1)
+  else
+    fHotkeys.SetKeyFunction(i, lka_ClearPhysics, 0);
   RefreshList;
 end;
 

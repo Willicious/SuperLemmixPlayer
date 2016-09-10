@@ -118,8 +118,8 @@ type
 
     procedure SetInterface(aInterface: TRenderInterface);
 
-    procedure DrawLevel(aDst: TBitmap32); overload;
-    procedure DrawLevel(aDst: TBitmap32; aRegion: TRect); overload;
+    procedure DrawLevel(aDst: TBitmap32; aClearPhysics: Boolean = false); overload;
+    procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
 
     function FindMetaObject(O: TInteractiveObject): TMetaObjectInterface;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
@@ -355,15 +355,15 @@ begin
   Result := fLayers[rlParticles];
 end;
 
-procedure TRenderer.DrawLevel(aDst: TBitmap32);
+procedure TRenderer.DrawLevel(aDst: TBitmap32; aClearPhysics: Boolean = false);
 begin
-  DrawLevel(aDst, fPhysicsMap.BoundsRect);
+  DrawLevel(aDst, fPhysicsMap.BoundsRect, aClearPhysics);
 end;
 
-procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect);
+procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false);
 begin
-  fLayers.PhysicsMap := fPhysicsMap;
-  fLayers.CombineTo(aDst, aRegion);
+  fLayers.PhysicsMap := fPhysicsMap; // can we assign this just once somewhere? very likely.
+  fLayers.CombineTo(aDst, aRegion, aClearPhysics);
 end;
 
 procedure TRenderer.ApplyRemovedTerrain(X, Y, W, H: Integer);

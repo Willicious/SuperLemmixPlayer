@@ -11,7 +11,7 @@ uses
 const
   MAX_KEY = 255;
   MAX_KEY_LEN = 4;
-  KEYSET_VERSION = 2;
+  KEYSET_VERSION = 4;
 
 type
   TLemmixHotkeyAction = (lka_Null,
@@ -41,7 +41,8 @@ type
                          lka_Restart,
                          lka_SkillLeft,
                          lka_SkillRight,
-                         lka_ReleaseMouse);
+                         lka_ReleaseMouse,
+                         lka_ClearPhysics);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
 
@@ -120,6 +121,8 @@ begin
   fKeyFunctions[$42].Modifier := -1;
   fKeyFunctions[$4E].Action := lka_Skip;
   fKeyFunctions[$4E].Modifier := 1;
+  fKeyFunctions[$54].Action := lka_ClearPhysics;
+  fKeyFunctions[$54].Modifier := 1;
   fKeyFunctions[$6D].Action := lka_Skip;
   fKeyFunctions[$6D].Modifier := -17;
   fKeyFunctions[$BC].Action := lka_Skip;
@@ -204,6 +207,7 @@ var
     if s = 'next_skill' then Result := lka_SkillRight;
     if s = 'release_mouse' then Result := lka_ReleaseMouse;
     if s = 'highlight' then Result := lka_Highlight;
+    if s = 'clear_physics' then Result := lka_ClearPhysics;
   end;
 
   function InterpretSecondary(s: String): Integer;
@@ -273,19 +277,26 @@ begin
       end;
 
       FixVersion := StrToIntDef(StringList.Values['Version'], 0);
+      
       if FixVersion < 1 then
-      begin
         if fKeyFunctions[$C0].Action = lka_Null then fKeyFunctions[$C0].Action := lka_ReleaseMouse;
-      end;
+
       if FixVersion < 2 then
       begin
         fKeyFunctions[$02].Action := lka_Highlight;
         fKeyFunctions[$04].Action := lka_Pause;
       end;
+
       if FixVersion < 3 then
-      begin
         if fKeyFunctions[$43].Action = lka_Null then fKeyFunctions[$43].Action := lka_CancelReplay;
-      end;
+
+      if FixVersion < 4 then
+        if fKeyFunctions[$54].Action = lka_Null then
+        begin
+          fKeyFunctions[$54].Action := lka_ClearPhysics;
+          fKeyFunctions[$54].Modifier := 1;
+        end;
+
     except
       SetDefaults;
     end;
@@ -330,6 +341,7 @@ var
       lka_SkillRight:       Result := 'Next_Skill';
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
+      lka_ClearPhysics:     Result := 'Clear_Physics';
       else Result := 'Null';
     end;
   end;
@@ -367,6 +379,8 @@ begin
     if fKeyFunctions[i].Action = lka_Skill then
       s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier);
     if fKeyFunctions[i].Action = lka_Skip then
+      s := s + ':' + IntToStr(fKeyFunctions[i].Modifier);
+    if fKeyFunctions[i].Action = lka_ClearPhysics then
       s := s + ':' + IntToStr(fKeyFunctions[i].Modifier);
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
   end;
