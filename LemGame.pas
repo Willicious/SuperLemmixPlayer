@@ -4831,6 +4831,8 @@ end;
 procedure TLemmingGame.IncrementIteration;
 var
   i: Integer;
+  AX, AY: Integer; // average position of entrances
+  EntryOpenCount: Integer;
 const
   OID_ENTRY = 1;
 begin
@@ -4858,14 +4860,25 @@ begin
     35:
       begin
         EntriesOpened := False;
+        EntryOpenCount := 0;
+        AX := 0;
+        AY := 0;
         for i := 0 to ObjectInfos.Count - 1 do
           if ObjectInfos[i].TriggerEffect = DOM_WINDOW then
           begin
             ObjectInfos[i].Triggered := True;
             ObjectInfos[i].CurrentFrame := 1;
             EntriesOpened := true;
-            CueSoundEffect(SFX_ENTRANCE, ObjectInfos[i].Center);
+            Inc(EntryOpenCount);
+            AX := AX + ObjectInfos[i].Center.X;
+            AY := AY + ObjectInfos[i].Center.Y;
           end;
+        if EntriesOpened then
+        begin
+          AX := AX div EntryOpenCount;
+          AY := AY div EntryOpenCount;
+          CueSoundEffect(SFX_ENTRANCE, Point(AX, AY));
+        end;
         if fStartupMusicAfterEntry and not EntriesOpened then
         begin
           PlayMusic;
