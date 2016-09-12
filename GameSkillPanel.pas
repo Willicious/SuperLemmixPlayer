@@ -561,11 +561,6 @@ begin
 
       if Exec then
       begin
-        (*if (i <> spbPause) and
-        ( ((not GameParams.IgnoreReplaySelection) or (i in [spbSlower, spbFaster, spbNuke]))
-        or GameParams.Hotkeys.CheckForKey(lka_Highlight)) then
-          Game.RegainControl;*)
-
         if i in [spbNuke] then
           Game.RegainControl;
           

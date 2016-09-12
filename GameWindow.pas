@@ -614,18 +614,12 @@ begin
           lka_SkillRight: begin
                             sn := GetSelectedSkill;
                             if (sn < 7) and (fActiveSkills[sn + 1] <> spbNone) then
-                            begin
-                              //RegainControl;
                               SetSelectedSkill(fActiveSkills[sn + 1]);
-                            end;
                           end;
           lka_SkillLeft:  begin
                             sn := GetSelectedSkill;
                             if (sn > 0) and (fActiveSkills[sn - 1] <> spbNone) and (sn <> 8) then
-                            begin
-                              //RegainControl;
                               SetSelectedSkill(fActiveSkills[sn - 1]);
-                            end;
                           end;
           lka_Skip: if Game.Playing then
                       if func.Modifier < 0 then
@@ -711,7 +705,6 @@ begin
   // so we're not allowing it
   if Game.Playing and not Game.HyperSpeed then
   begin
-    //Game.RegainControl;
 
     SetAdjustedGameCursorPoint(Img.ControlToBitmap(Point(X, Y)));
 
@@ -742,7 +735,7 @@ begin
       end;
     end;
 
-    if Game.CtrlButtonHeldDown then
+    if Game.CtrlButtonHeldDown and not (Game.Replaying and GameParams.ExplicitCancel) then
     begin
       HandleClick := true; //not Game.FastForward;
       if HandleClick and Game.fAssignEnabled then

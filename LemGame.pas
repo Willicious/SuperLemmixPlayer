@@ -607,13 +607,13 @@ type
     function HandleFixing(L: TLemming): Boolean;
 
   { interaction }
-    function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False): Boolean;
+    function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
     procedure GenerateClonedLem(L: TLemming);
     function GetPriorityLemming(out PriorityLem: TLemming;
                                   NewSkillOrig: TBasicLemmingAction;
                                   MousePos: TPoint;
                                   IsHighlight: Boolean = False): Integer;
-    function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
+    function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction; IsReplayAssignment: Boolean = false): Boolean;
 
     function MayAssignWalker(L: TLemming): Boolean;
     function MayAssignClimber(L: TLemming): Boolean;
@@ -2320,7 +2320,7 @@ begin
 end;
 
 
-function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False): Boolean;
+function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
 var
   L: TLemming;
 begin
@@ -2331,13 +2331,13 @@ begin
 
   if not Assigned(L) then Exit;
 
-  Result := DoSkillAssignment(L, Skill);
+  Result := DoSkillAssignment(L, Skill, IsReplayAssignment);
 
   if Result then CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
 end;
 
 
-function TLemmingGame.DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
+function TLemmingGame.DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction; IsReplayAssignment: Boolean = false): Boolean;
 begin
 
   Result := False;
@@ -2346,11 +2346,21 @@ begin
   if not CheckSkillAvailable(NewSkill) then Exit;
 
   // Have to ask namida what fCheckWhichLemmingOnly actually does!!
+  // from namida: In case I forget to mention it, this is part of ccexplore's code.
+  //              I think I made use of it too at some point. It's intended so that
+  //              the function can be called to check which lemming the skill would
+  //              be assigned to, without actually assigning it. Probably not needed
+  //              anymore.
   if fCheckWhichLemmingOnly then WhichLemming := L
   else
   begin
     UpdateSkillCount(NewSkill);
-    RecordSkillAssignment(L, NewSkill);
+
+    if not IsReplayAssignment then
+    begin
+      if fReplaying then RegainControl;
+      RecordSkillAssignment(L, NewSkill);
+    end;
 
     // Get starting position for stacker
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
@@ -5037,7 +5047,7 @@ begin
       // After having done the assignment, revert the hightlightning.
       OldHighlightLemID := fHighlightLemmingID;
       fHighlightLemmingID := L.LemIndex;
-      if AssignNewSkill(ass, True) then
+      if AssignNewSkill(ass, true, true) then
         fAssignedSkillThisFrame := true;
       fHighlightLemmingID := OldHighlightLemID;
 
@@ -5088,6 +5098,7 @@ begin
   if RightClick and (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
   begin
     // Try assigning skill to highlighted Lem
+    
     if AssignNewSkill(SkillPanelButtonToAction[Value], True) and Paused then
       UpdateLemmings;
 
