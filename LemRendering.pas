@@ -888,7 +888,62 @@ var
     Inf.Obj.LastDrawY := Inf.Top;
   end;
 
+  procedure DrawTriggerArea(aInf: TInteractiveObjectInfo);
+  var
+    i: Integer;
+    x, y: Integer;
+    PPhys, PDst: PColor32;
+  const
+    DO_NOT_DRAW_COUNT = 15;
+    DO_NOT_DRAW: array[0..DO_NOT_DRAW_COUNT-1] of Integer = (0, 7, 8, 9, 10, 12, 13, 16, 19, 23, 25, 28, 29, 30, 32);
+  begin
+    if aInf.Obj.IsFake or aInf.IsDisabled then
+      Exit;
+
+    for i := 0 to DO_NOT_DRAW_COUNT-1 do
+      if aInf.TriggerEffect = DO_NOT_DRAW[i] then
+        Exit;
+
+    for y := aInf.TriggerRect.Top to aInf.TriggerRect.Bottom-1 do
+    begin
+      if y < 0 then Continue;
+      if y >= fPhysicsMap.Height then Break;
+
+      PDst := nil;
+      PPhys := nil;
+
+      for x := aInf.TriggerRect.Left to aInf.TriggerRect.Right-1 do
+      begin
+        if x < 0 then Continue;
+        if x >= fPhysicsMap.Width then Break;
+
+        if PDst = nil then
+        begin
+          PDst := fLayers[rlTriggers].PixelPtr[x, y];
+          PPhys := fPhysicsMap.PixelPtr[x, y];
+        end else begin
+          Inc(PDst);
+          Inc(PPhys);
+        end;
+
+        if PPhys^ and PM_SOLID = 0 then
+          PDst^ := $FFFF00FF
+        else if PPhys^ and PM_STEEL <> 0 then
+          PDst^ := $FF400040
+        else
+          PDst^ := $FFA000A0;
+
+        if (x mod 2) <> (y mod 2) then
+            PDst^ := PDst^ - $00200020;
+      end;
+    end;
+
+    fLayers.fIsEmpty[rlTriggers] := false;
+  end;
+
 begin
+  if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
+
   // Draw moving backgrounds
   if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
   for i := 0 to ObjectInfos.Count - 1 do
@@ -911,6 +966,8 @@ begin
 
     ProcessDrawFrame(rlObjectsLow);
     fLayers.fIsEmpty[rlObjectsLow] := False;
+
+    DrawTriggerArea(Inf);
   end;
 
   // Draw only-on-terrain
@@ -947,6 +1004,8 @@ begin
 
     ProcessDrawFrame(rlObjectsHigh);
     fLayers.fIsEmpty[rlObjectsHigh] := False;
+
+    DrawTriggerArea(Inf);
   end;
 
   if DrawHelper then
