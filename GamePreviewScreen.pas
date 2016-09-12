@@ -254,7 +254,7 @@ begin
       W.Clear(0);
 //      W.ResamplerClassName := 'TLinearResampler';//DraftResampler';
 //      W.ResamplerClassName := 'TDraftResampler';
-      GameParams.Renderer.RenderWorld(W);
+      GameParams.Renderer.RenderWorld(W, not GameParams.NoBackgrounds);
       TLinearResampler.Create(W);
       W.DrawMode := dmBlend;
       W.CombineMode := cmMerge;
@@ -306,7 +306,7 @@ begin
 
   TempBitmap := TBitmap32.Create;
   TempBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
-  GameParams.Renderer.RenderWorld(TempBitmap);
+  GameParams.Renderer.RenderWorld(TempBitmap, not GameParams.NoBackgrounds);
   TPngInterface.SavePngFile(SaveName, TempBitmap, true);
   TempBitmap.Free;
 
@@ -335,7 +335,7 @@ begin
       CheckLemmingCount(Level);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
       if ReplayCheckIndex <> -2 then
-        Renderer.RenderWorld(TempBmp); // because currently some important preparing code is here. it shouldn't be.
+        Renderer.RenderWorld(TempBmp, not GameParams.NoBackgrounds); // because currently some important preparing code is here. it shouldn't be.
                                        // image dumping doesn't need this because it calls RenderWorld to render the output image      
     end;
 

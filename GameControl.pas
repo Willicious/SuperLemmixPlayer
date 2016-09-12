@@ -89,7 +89,8 @@ type
     moEnableOnline,
     moCheckUpdates,
     moNoAutoReplayMode,
-    moPauseAfterBackwards
+    moPauseAfterBackwards,
+    moNoBackgrounds
   );
 
   TMiscOptions = set of TMiscOption;
@@ -208,6 +209,7 @@ type
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
+    property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
 
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
@@ -268,6 +270,7 @@ begin
   SaveBoolean('LemmingCountBlink', LemmingBlink);
   SaveBoolean('TimerBlink', TimerBlink);
   SaveBoolean('BlackOutZero', BlackOutZero);
+  SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('EnableOnline', EnableOnline);
   SaveBoolean('UpdateCheck', CheckUpdates);
 
@@ -320,6 +323,7 @@ begin
   NoAutoReplayMode := LoadBoolean('NoAutoReplay');
   PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip');
   BlackOutZero := LoadBoolean('BlackOutZero');
+  NoBackgrounds := LoadBoolean('NoBackgrounds');
   EnableOnline := LoadBoolean('EnableOnline');
   CheckUpdates := LoadBoolean('UpdateCheck');
 

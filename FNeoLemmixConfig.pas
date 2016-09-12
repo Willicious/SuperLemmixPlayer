@@ -50,6 +50,7 @@ type
     Label3: TLabel;
     Label5: TLabel;
     cbPauseAfterBackwards: TCheckBox;
+    cbNoBackgrounds: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -108,6 +109,7 @@ begin
   cbLemmingBlink.Checked := fGameParams.LemmingBlink;
   cbTimerBlink.Checked := fGameParams.TimerBlink;
   cbBlackOut.Checked := fGameParams.BlackOutZero;
+  cbNoBackgrounds.Checked := fGameParams.NoBackgrounds;
   cbAutoSaveReplay.Checked := fGameParams.AutoSaveReplay;
   cbExplicitCancel.Checked := fGameParams.ExplicitCancel;
   cbNoAutoReplay.Checked := fGameParams.NoAutoReplayMode;
@@ -179,6 +181,7 @@ begin
   fGameParams.LemmingBlink := cbLemmingBlink.Checked;
   fGameParams.TimerBlink := cbTimerBlink.Checked;
   fGameParams.BlackOutZero := cbBlackOut.Checked;
+  fGameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   fGameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
   fGameParams.ExplicitCancel := cbExplicitCancel.Checked;
   fGameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
@@ -292,6 +295,7 @@ procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);
 begin
   cbUpdateCheck.Enabled := cbEnableOnline.Checked;
   if not cbEnableOnline.Checked then cbUpdateCheck.Checked := false;
+  btnApply.Enabled := true;
 end;
 
 procedure TFormNXConfig.SliderChange(Sender: TObject);

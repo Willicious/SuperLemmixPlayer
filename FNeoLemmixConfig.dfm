@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 457
+  ClientHeight = 473
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,7 +22,7 @@ object FormNXConfig: TFormNXConfig
     Left = 0
     Top = 0
     Width = 273
-    Height = 417
+    Height = 433
     ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -108,12 +108,12 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 160
         Width = 249
-        Height = 97
+        Height = 113
         Caption = 'Interface Options'
         TabOrder = 2
         object Label1: TLabel
           Left = 11
-          Top = 72
+          Top = 88
           Width = 30
           Height = 13
           Caption = 'Zoom:'
@@ -138,7 +138,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbZoom: TComboBox
           Left = 56
-          Top = 68
+          Top = 84
           Width = 177
           Height = 21
           Style = csDropDownList
@@ -159,10 +159,19 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 3
           OnClick = OptionChanged
         end
+        object cbNoBackgrounds: TCheckBox
+          Left = 12
+          Top = 64
+          Width = 153
+          Height = 17
+          Caption = 'Disable Background Images'
+          TabOrder = 4
+          OnClick = OptionChanged
+        end
       end
       object GroupBox4: TGroupBox
         Left = 8
-        Top = 264
+        Top = 280
         Width = 249
         Height = 113
         Caption = 'Replay Options'
@@ -238,6 +247,7 @@ object FormNXConfig: TFormNXConfig
         Height = 17
         Caption = 'Enable Update Check'
         TabOrder = 1
+        OnClick = OptionChanged
       end
     end
     object TabSheet2: TTabSheet
@@ -362,7 +372,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 424
+    Top = 440
     Width = 65
     Height = 25
     Caption = 'OK'
@@ -371,7 +381,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 104
-    Top = 424
+    Top = 440
     Width = 65
     Height = 25
     Caption = 'Cancel'
@@ -380,7 +390,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 184
-    Top = 424
+    Top = 440
     Width = 65
     Height = 25
     Caption = 'Apply'

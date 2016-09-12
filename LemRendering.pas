@@ -146,7 +146,7 @@ type
     procedure SetHighShadowPixel(X, Y: Integer);
 
 
-    procedure RenderWorld(World: TBitmap32);
+    procedure RenderWorld(World: TBitmap32; DoBackground: Boolean);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
 
     procedure CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
@@ -1159,7 +1159,7 @@ begin
   Bmp.Free;
 end;
 
-procedure TRenderer.RenderWorld(World: TBitmap32); // Called only from Preview Screen
+procedure TRenderer.RenderWorld(World: TBitmap32; DoBackground: Boolean); // Called only from Preview Screen
 var
   i: Integer;
   x, y: Integer;
@@ -1202,7 +1202,7 @@ begin
   fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
   fLayers[rlBackground].Clear($FF000000 or fBgColor);
 
-  if fTheme.HasImageBackground then
+  if fTheme.HasImageBackground and DoBackground then
   begin
     for y := 0 to Inf.Level.Info.Height div fTheme.Background.Height do
     for x := 0 to Inf.Level.Info.Width div fTheme.Background.Width do
