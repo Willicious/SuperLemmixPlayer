@@ -6,7 +6,7 @@ interface
 uses
   SharedGlobals,
   LemTypes, LemRendering, LemLevel, LemDosStyle,
-  TalisData, LemDosMainDAT, LemStrings,
+  TalisData, LemDosMainDAT, LemStrings, LemNeoParser,
   GameControl, GameSound,
   FBaseDosForm,
   Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs;
@@ -692,6 +692,59 @@ var
     Result := ' <<' + Trim(fGameParams.SysDat.RankNames[fGameParams.Info.dSection]) + ' ' + LeadZeroStr(fGameParams.Info.dLevel+1, 2) + '>>';
   end;
 
+  function TryLevelInfoFile: Boolean;
+  var
+    LS: TBaseDosLevelSystem;
+    DataStream: TMemoryStream;
+    Parser: TNeoLemmixParser;
+    Line: TParserLine;
+    R, L: Integer;
+  begin
+    Result := false;
+    DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
+    if DataStream = nil then Exit;
+
+    LS := TBaseDosLevelSystem(fGameParams.Style.LevelSystem);
+
+    Parser := TNeoLemmixParser.Create;
+    try
+      Parser.LoadFromStream(DataStream);
+
+      SetLength(LevelIDArray, LS.GetSectionCount);
+      for R := 0 to LS.GetSectionCount-1 do
+        SetLength(LevelIDArray[R], LS.GetLevelCount(R));
+
+      R := -1;
+      repeat
+        Line := Parser.NextLine;
+        if (Line.Keyword <> 'LEVEL') and (R = -1) then Continue;
+
+        if Line.Keyword = 'LEVEL' then
+        begin
+          if Line.Numeric > 9999 then
+          begin
+            R := Line.Numeric div 1000;
+            L := Line.Numeric mod 1000;
+          end else begin
+            R := Line.Numeric div 100;
+            L := Line.Numeric mod 100;
+          end;
+
+          if (R > LS.GetSectionCount) or (L > LS.GetLevelCount(R)) then
+            R := -1;
+        end;
+
+        if Line.Keyword = 'ID' then
+          LevelIDArray[R][L] := StrToIntDef('x' + Line.Value, 0);
+
+      until (Line.Keyword = '');
+
+      Result := true;
+    finally
+      Parser.Free;
+    end;
+  end;
+
 begin
   // This one has a lot of code. Some code run on the preview screen is critical to preparing
   // for in-game, so in testplay mode with preview screen disabled, it still needs to create a
@@ -733,15 +786,18 @@ begin
        OldMusic := MusicVolume;
        SoundVolume := 0;
        MusicVolume := 0;
-       SetLength(LevelIDArray, TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetSectionCount);
-       for dS := 0 to Length(LevelIDArray)-1 do
+       if not TryLevelInfoFile then
        begin
-         SetLength(LevelIDArray[dS], TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetLevelCount(dS));
-         for dL := 0 to Length(LevelIDArray[dS])-1 do
+         SetLength(LevelIDArray, TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetSectionCount);
+         for dS := 0 to Length(LevelIDArray)-1 do
          begin
-           TBaseDosLevelSystem(fGameParams.Style.LevelSystem).ResetOddtableHistory;
-           fGameParams.Style.LevelSystem.LoadSingleLevel(fGameParams.Info.dPack, dS, dL, fGameParams.Level);
-           LevelIDArray[dS][dL] := fGameParams.Level.Info.LevelID;
+           SetLength(LevelIDArray[dS], TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetLevelCount(dS));
+           for dL := 0 to Length(LevelIDArray[dS])-1 do
+           begin
+             TBaseDosLevelSystem(fGameParams.Style.LevelSystem).ResetOddtableHistory;
+             fGameParams.Style.LevelSystem.LoadSingleLevel(fGameParams.Info.dPack, dS, dL, fGameParams.Level);
+             LevelIDArray[dS][dL] := fGameParams.Level.Info.LevelID;
+           end;
          end;
        end;
        for i := 0 to fGameParams.ReplayResultList.Count-1 do
