@@ -2653,7 +2653,7 @@ begin
     Result := Result or not HasPixelAt(L.LemX + n*L.LemDx, L.LemY);
 
   // Test current action
-  Result := Result and (L.LemAction in ActionSet) // and LemCanPlatform(L);
+  Result := Result and (L.LemAction in ActionSet) and LemCanPlatform(L);
 end;
 
 function TLemmingGame.MayAssignStacker(L: TLemming): Boolean;
