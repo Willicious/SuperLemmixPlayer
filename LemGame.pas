@@ -678,6 +678,7 @@ type
   { properties }
     property CurrentCursor: Integer read fCurrentCursor;
     property CurrentIteration: Integer read fCurrentIteration;
+    property CurrentReleaseRate: Integer read CurrReleaseRate; // for skill panel's usage
     property ClockFrame: Integer read fClockFrame;
     property CursorPoint: TPoint read fCursorPoint write fCursorPoint;
     property DrawLemmingPixel: Boolean read fDrawLemmingPixel write fDrawLemmingPixel;

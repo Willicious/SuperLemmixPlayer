@@ -548,8 +548,14 @@ begin
     if PtInRectEx(R^, P) then
     begin
 
-      if (Game.Replaying and GameParams.ExplicitCancel) and not (i = spbPause) then
-        Exit;
+      if GameParams.ExplicitCancel and (i in [spbSlower, spbFaster, spbNuke]) then Exit;
+
+      if (Game.Replaying) and (i in [spbSlower, spbFaster]) and not (Game.Level.Info.ReleaseRateLocked) then
+      begin
+        if ((i = spbSlower) and (Game.CurrentReleaseRate > Level.Info.ReleaseRate))
+        or ((i = spbFaster) and (Game.CurrentReleaseRate < 99)) then
+          Game.RegainControl;
+      end;
 
       if not (i in [spbSlower, spbFaster]) then
         if (Button <> mbLeft) and not (GameParams.ClickHighlight) then Exit;
