@@ -2334,7 +2334,11 @@ begin
 
   Result := DoSkillAssignment(L, Skill, IsReplayAssignment);
 
-  if Result then CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
+  if Result then
+  begin
+    CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
+    Inc(L.LemUsedSkillCount);
+  end;
 end;
 
 
@@ -5415,8 +5419,6 @@ procedure TLemmingGame.RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingA
 var
   E: TReplaySkillAssignment;
 begin
-  L.LemUsedSkillCount := L.LemUsedSkillCount + 1;   // this is probably NOT where this should be
-
   if fFreezeRecording then Exit;
   if not fPlaying or fReplaying then
     Exit;
