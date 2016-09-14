@@ -1527,13 +1527,13 @@ begin
   FDirectAddList := True; { vlaggetje zie overloaded AddFiles }
   try
     { zoek files en voeg objecten toe aan templist }
-    CreateFileList(TempList, AWildCard, faAllFiles and not faDirectory, True, True, AddSearchEvent);
+    CreateFileList(TempList, AWildCard, faAllFiles and not faDirectory, True, False, AddSearchEvent); // modified - we DON'T want it recursive!
     { haal zipfile zelf uit de lijst }
     i := TempList.IndexOf(fFileName);
     if i <> -1 then
       ClearStringListItemWithObject(TempList, i);
-    if TempList.Count = 0 then
-      ZipErrorFmt(Self, ERR_ZIP_NO_MATCHING_FILES, SZipNoMatchingFiles, [AWildCard]);
+    //if TempList.Count = 0 then
+    //  ZipErrorFmt(Self, ERR_ZIP_NO_MATCHING_FILES, SZipNoMatchingFiles, [AWildCard]);
     TempList.Sorted := True;
     AddFiles(TempList, BaseDir);
 {    if zoDeleteAfterZip in fZipOptions then

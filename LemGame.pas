@@ -1252,32 +1252,32 @@ begin
 
   with SoundMgr do
   begin
-    SFX_BUILDER_WARNING := AddSoundFromFileName(P + 'sounds\win\' + 'ting.wav');
-    SFX_ASSIGN_SKILL    := AddSoundFromFileName(P + 'sounds\win\' + 'mousepre.wav');
-    SFX_YIPPEE          := AddSoundFromFileName(P + 'sounds\win\' + 'yippee.wav');
-    SFX_SPLAT           := AddSoundFromFileName(P + 'sounds\win\' + 'splat.wav');
-    SFX_LETSGO          := AddSoundFromFileName(P + 'sounds\win\' + 'letsgo.wav');
-    SFX_ENTRANCE        := AddSoundFromFileName(P + 'sounds\win\' + 'door.wav');
-    SFX_VAPORIZING      := AddSoundFromFileName(P + 'sounds\win\' + 'fire.wav');
-    SFX_DROWNING        := AddSoundFromFileName(P + 'sounds\win\' + 'glug.wav');
-    SFX_EXPLOSION       := AddSoundFromFileName(P + 'sounds\win\' + 'explode.wav');
-    SFX_HITS_STEEL      := AddSoundFromFileName(P + 'sounds\win\' + 'chink.wav');
-    SFX_OHNO            := AddSoundFromFileName(P + 'sounds\win\' + 'ohno.wav');
-    SFX_SKILLBUTTON     := AddSoundFromFileName(P + 'sounds\win\' + 'changeop.wav');
-    SFX_ROPETRAP        := AddSoundFromFileName(P + 'sounds\win\' + 'chain.wav');
-    SFX_TENTON          := AddSoundFromFileName(P + 'sounds\win\' + 'tenton.wav');
-    SFX_BEARTRAP        := AddSoundFromFileName(P + 'sounds\win\' + 'thunk.wav');
-    SFX_ELECTROTRAP     := AddSoundFromFileName(P + 'sounds\win\' + 'electric.wav');
-    SFX_SPINNINGTRAP    := AddSoundFromFileName(P + 'sounds\win\' + 'chain.wav');
-    SFX_SQUISHINGTRAP   := AddSoundFromFileName(P + 'sounds\win\' + 'thud.wav');
-    SFX_PICKUP          := AddSoundFromFileName(P + 'sounds\win\' + 'oing2.wav');
-    SFX_MECHANIC        := AddSoundFromFileName(P + 'sounds\win\' + 'ting.wav');
-    SFX_VACCUUM         := AddSoundFromFileName(P + 'sounds\win\' + 'vacuusux.wav');
-    SFX_SLURP           := AddSoundFromFileName(P + 'sounds\win\' + 'slurp.wav');
-    SFX_WEED            := AddSoundFromFileName(P + 'sounds\win\' + 'weedgulp.wav');
-    SFX_SWIMMING        := AddSoundFromFileName(P + 'sounds\win\' + 'splash.wav');
-    SFX_FALLOUT         := AddSoundFromFileName(P + 'sounds\win\' + 'die.wav');
-    SFX_FIXING          := AddSoundFromFileName(P + 'sounds\win\' + 'wrench.wav');
+    SFX_BUILDER_WARNING := AddSoundFromFileName(P + 'sounds\win\' + 'ting.ogg');
+    SFX_ASSIGN_SKILL    := AddSoundFromFileName(P + 'sounds\win\' + 'mousepre.ogg');
+    SFX_YIPPEE          := AddSoundFromFileName(P + 'sounds\win\' + 'yippee.ogg');
+    SFX_SPLAT           := AddSoundFromFileName(P + 'sounds\win\' + 'splat.ogg');
+    SFX_LETSGO          := AddSoundFromFileName(P + 'sounds\win\' + 'letsgo.ogg');
+    SFX_ENTRANCE        := AddSoundFromFileName(P + 'sounds\win\' + 'door.ogg');
+    SFX_VAPORIZING      := AddSoundFromFileName(P + 'sounds\win\' + 'fire.ogg');
+    SFX_DROWNING        := AddSoundFromFileName(P + 'sounds\win\' + 'glug.ogg');
+    SFX_EXPLOSION       := AddSoundFromFileName(P + 'sounds\win\' + 'explode.ogg');
+    SFX_HITS_STEEL      := AddSoundFromFileName(P + 'sounds\win\' + 'chink.ogg');
+    SFX_OHNO            := AddSoundFromFileName(P + 'sounds\win\' + 'ohno.ogg');
+    SFX_SKILLBUTTON     := AddSoundFromFileName(P + 'sounds\win\' + 'changeop.ogg');
+    SFX_ROPETRAP        := AddSoundFromFileName(P + 'sounds\win\' + 'chain.ogg');
+    SFX_TENTON          := AddSoundFromFileName(P + 'sounds\win\' + 'tenton.ogg');
+    SFX_BEARTRAP        := AddSoundFromFileName(P + 'sounds\win\' + 'thunk.ogg');
+    SFX_ELECTROTRAP     := AddSoundFromFileName(P + 'sounds\win\' + 'electric.ogg');
+    SFX_SPINNINGTRAP    := AddSoundFromFileName(P + 'sounds\win\' + 'chain.ogg');
+    SFX_SQUISHINGTRAP   := AddSoundFromFileName(P + 'sounds\win\' + 'thud.ogg');
+    SFX_PICKUP          := AddSoundFromFileName(P + 'sounds\win\' + 'oing2.ogg');
+    SFX_MECHANIC        := AddSoundFromFileName(P + 'sounds\win\' + 'ting.ogg');
+    SFX_VACCUUM         := AddSoundFromFileName(P + 'sounds\win\' + 'vacuusux.ogg');
+    SFX_SLURP           := AddSoundFromFileName(P + 'sounds\win\' + 'slurp.ogg');
+    SFX_WEED            := AddSoundFromFileName(P + 'sounds\win\' + 'weedgulp.ogg');
+    SFX_SWIMMING        := AddSoundFromFileName(P + 'sounds\win\' + 'splash.ogg');
+    SFX_FALLOUT         := AddSoundFromFileName(P + 'sounds\win\' + 'die.ogg');
+    SFX_FIXING          := AddSoundFromFileName(P + 'sounds\win\' + 'wrench.ogg');
 
     SoundMgr.BrickSound := SFX_BUILDER_WARNING;
   end;

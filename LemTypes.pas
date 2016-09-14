@@ -308,10 +308,16 @@ begin
         ldtSound: begin
                     Result := TMemoryStream.Create;
                     Arc.OpenResource(HINSTANCE, 'lemsounds', 'archive');
+                    aFilename := ChangeFileExt(aFilename, '.ogg');
                     if FileInArchive then
                       Arc.ExtractFile(aFilename, Result)
-                    else
-                      FreeAndNil(Result);
+                    else begin
+                      aFilename := ChangeFileExt(aFilename, '.wav');
+                      if FileInArchive then
+                        Arc.ExtractFile(aFilename, Result)
+                      else
+                        FreeAndNil(Result);
+                    end;
                   end;
         ldtParticles: begin
                         Arc.OpenResource(HINSTANCE, 'lemparticles', 'archive');

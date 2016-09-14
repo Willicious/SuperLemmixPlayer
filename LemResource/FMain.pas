@@ -110,6 +110,7 @@ begin
   Z.OpenArchive(ZipFileName, amCreate);
   Z.ZipOptions := [];
   Z.AddFiles('sounds\*.wav');
+  Z.AddFiles('sounds\*.ogg');
   Z.Free;
 
   StringToFile('LANGUAGE 9, 5' + CrLf + 'LEMSOUNDS' + ' ' + 'ARCHIVE ' + '"' + ZipFileName + '"', ScriptFileName);
