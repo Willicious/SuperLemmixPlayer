@@ -678,20 +678,48 @@ var
   Dcmp : TDosDatDecompressor;
   FSt : TMemoryStream;
   FSl : TDosDatSectionList;
+
+  Parser: TNeoLemmixParser;
+  Line: TParserLine;
+  i: Integer;
 begin
   Result := fLevelCount[aSection];
   if Result <> -1 then Exit;
-  Fst := CreateDataStream(GetLevelPackPrefix + LeadZeroStr(aSection, 3) + '.dat', ldtLemmings);
-  Dcmp := TDosDatDecompressor.Create;
-  Fsl := TDosDatSectionList.Create;
-  try
-    Dcmp.LoadSectionList(Fst, Fsl, False);
-    Result := Fsl.Count;
-    fLevelCount[aSection] := Result;
-  finally
-    Fst.Free;
-    Dcmp.Free;
-    Fsl.Free;
+
+  Fst := CreateDataStream('levels.nxmi', ldtLemmings);
+
+  if Fst = nil then
+  begin
+    Fst := CreateDataStream(GetLevelPackPrefix + LeadZeroStr(aSection, 3) + '.dat', ldtLemmings);
+    Dcmp := TDosDatDecompressor.Create;
+    Fsl := TDosDatSectionList.Create;
+    try
+      Dcmp.LoadSectionList(Fst, Fsl, False);
+      Result := Fsl.Count;
+      fLevelCount[aSection] := Result;
+    finally
+      Fst.Free;
+      Dcmp.Free;
+      Fsl.Free;
+    end;
+  end else begin
+    Parser := TNeoLemmixParser.Create;
+    try
+      Parser.LoadFromStream(Fst);
+      i := 0;
+      repeat
+        Line := Parser.NextLine;
+        if Line.Keyword = 'LEVELCOUNT' then
+        begin
+          fLevelCount[i] := Line.Numeric;
+          if i = aSection then Result := Line.Numeric;
+          Inc(i);
+        end;
+      until (Line.Keyword = '') or (i = GetSectionCount);
+    finally
+      Fst.Free;
+      Parser.Free;
+    end;
   end;
 end;
 
