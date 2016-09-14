@@ -337,7 +337,7 @@ begin
       fCountDownDigitsBitmap := fMaskAnimations[5];
       fCountdownDigitsBitmap.DrawMode := dmBlend;
       fHighlightBitmap := fMaskAnimations[6];
-      fCountdownDigitsBitmap.DrawMode := dmBlend;
+      fHighlightBitmap.DrawMode := dmBlend;
 
         // Stoner, Bomber and Highlight are a single frame each so easy enough
         TPngInterface.LoadPngFile(AppPath + 'gfx/mask/bomber.png', fExplosionMaskBitmap);
