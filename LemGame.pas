@@ -426,7 +426,6 @@ type
     fCancelReplayAfterSkip     : Boolean;
   { sound vars }
     fSoundOpts                 : TGameSoundOptions;
-    SoundMgr                   : TSoundMgr;
   { sound indices in list of soundmgr}
     SFX_BUILDER_WARNING        : Integer;
     SFX_ASSIGN_SKILL           : Integer;
@@ -645,6 +644,12 @@ type
     fAssignEnabled                    : Boolean;
     InstReleaseRate            : Integer;
     fActiveSkills              : array[0..7] of TSkillPanelButton;
+
+    // Postview screen needs access to these two sounds and the sound manager now
+    SoundMgr                   : TSoundMgr;
+    SFX_FAILURE                : Integer;
+    SFX_SUCCESS                : Integer;
+
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
   { iteration }
@@ -1252,6 +1257,8 @@ begin
 
   with SoundMgr do
   begin
+    SFX_FAILURE         := AddSoundFromFileName(P + 'sounds\win\' + 'failure.ogg');
+    SFX_SUCCESS         := AddSoundFromFileName(P + 'sounds\win\' + 'success.ogg');
     SFX_BUILDER_WARNING := AddSoundFromFileName(P + 'sounds\win\' + 'ting.ogg');
     SFX_ASSIGN_SKILL    := AddSoundFromFileName(P + 'sounds\win\' + 'mousepre.ogg');
     SFX_YIPPEE          := AddSoundFromFileName(P + 'sounds\win\' + 'yippee.ogg');

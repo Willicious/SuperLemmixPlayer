@@ -240,6 +240,11 @@ begin
       SetTimeRecord(dSection, dLevel, gLastRescueIteration);
     end;
 
+    if gSuccess then
+      GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_SUCCESS)
+    else
+      GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_FAILURE);
+
 
       // init some local strings
         STarget := PadL(i2s(gToRescue), 4);

@@ -19,7 +19,7 @@ instructions.txt
 *.lrb
 *.nxrp
 !lemdata.res
-lemsounds.res
+!lemsounds.res
 !LemResourceBuilder.exe
 !OLMaker.exe
 Data/lemdata_Original.RES
