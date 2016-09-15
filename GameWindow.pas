@@ -926,7 +926,7 @@ begin
   // set timers
   IdealFrameTimeMSFast := 10;
   IdealScrollTimeMS := 60;
-  IdealFrameTimeMS := 180; // slow motion
+  IdealFrameTimeMS := 60; // slow motion
 
   Img.Width := 320 * Sca;
   Img.Height := 160 * Sca;

@@ -5137,8 +5137,6 @@ begin
           RecordReleaseRate(99)
         else
           ReleaseRateModifier := 1;
-
-        CheckForReplayAction(true);
       end;
     spbSlower:
       begin
@@ -5154,8 +5152,6 @@ begin
           RecordReleaseRate(Level.Info.ReleaseRate)
         else
           ReleaseRateModifier := -1;
-
-        CheckForReplayAction(true);
       end;
     spbPause:
       begin
@@ -5430,6 +5426,7 @@ begin
   E.SpawnedLemmingCount := LemmingList.Count;
 
   fReplayManager.Add(E);
+  CheckForReplayAction(true);
 end;
 
 procedure TLemmingGame.RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
