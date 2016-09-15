@@ -538,7 +538,7 @@ type
 
     function ReadZombieMap(X, Y: Integer): Byte;
     procedure RecordNuke;
-    procedure RecordReleaseRate(aActionFlag: Byte);
+    procedure RecordReleaseRate(aRR: Integer);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
     //procedure RecordSkillSelection(aSkill: TSkillPanelButton);
     procedure RemoveLemming(L: TLemming; RemMode: Integer = 0);
@@ -2338,7 +2338,7 @@ begin
 
   if not Assigned(L) then Exit;
 
-  if IsReplayAssignment then
+  if IsReplayAssignment then   // Should probably divide into two seperate routines rather than having IsReplayAssignment parameter
     Result := DoSkillAssignment(L, Skill)
   else begin
     RecordSkillAssignment(L, Skill);
@@ -4766,8 +4766,8 @@ begin
 
   if fLastRecordedRR <> CurrReleaseRate then
   begin
-    RecordReleaseRate(raf_StopChangingRR);
-    fLastRecordedRR := CurrReleaseRate;
+    //RecordReleaseRate(CurrReleaseRate);
+    //fLastRecordedRR := CurrReleaseRate;
 
     if LemmingsReleased < Level.Info.LemmingsCount - 1 then
     begin
@@ -5131,17 +5131,25 @@ begin
   case Value of
     spbFaster:
       begin
-        fSpeedingUpReleaseRate := MakeActive;
-        if MakeActive then
-          fSlowingDownReleaseRate := False;
-        if RightClick and fSpeedingUpReleaseRate then InstReleaseRate := 1;
+        if not MakeActive then Exit;
+
+        if Level.Info.ReleaseRateLocked or (CurrReleaseRate = 99) then Exit;
+
+        if RightClick then
+          RecordReleaseRate(99)
+        else
+          RecordReleaseRate(CurrReleaseRate+1);
       end;
     spbSlower:
       begin
-        fSlowingDownReleaseRate := MakeActive;
-        if MakeActive then
-          fSpeedingUpReleaseRate := False;
-        if RightClick and fSlowingDownReleaseRate then InstReleaseRate := -1;
+        if not MakeActive then Exit;
+        
+        if Level.Info.ReleaseRateLocked or (CurrReleaseRate = Level.Info.ReleaseRate) then Exit;
+
+        if RightClick then
+          RecordReleaseRate(Level.Info.ReleaseRate)
+        else
+          RecordReleaseRate(CurrReleaseRate-1);
       end;
     spbPause:
       begin
@@ -5150,8 +5158,8 @@ begin
       end;
     spbNuke:
       begin
-        UserSetNuking := True;
-        ExploderAssignInProgress := True;
+        //UserSetNuking := True;
+        //ExploderAssignInProgress := True;
         RecordNuke;
       end;
     spbNone: ; // Do Nothing
@@ -5402,7 +5410,7 @@ begin
   fReplayManager.Add(E);
 end;
 
-procedure TLemmingGame.RecordReleaseRate(aActionFlag: Byte);
+procedure TLemmingGame.RecordReleaseRate(aRR: Integer);
 var
   E: TReplayChangeReleaseRate;
 begin
@@ -5411,7 +5419,7 @@ begin
 
   E := TReplayChangeReleaseRate.Create;
   E.Frame := fCurrentIteration;
-  E.NewReleaseRate := CurrReleaseRate;
+  E.NewReleaseRate := aRR;
   E.SpawnedLemmingCount := LemmingList.Count;
 
   fReplayManager.Add(E);
@@ -5480,7 +5488,8 @@ var
   var
     E: TReplayNuke absolute R;
   begin
-    SetSelectedSkill(spbNuke, true);
+    UserSetNuking := True;
+    ExploderAssignInProgress := True;
   end;
 
   procedure Handle;
