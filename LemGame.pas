@@ -2327,7 +2327,6 @@ begin
   end;
 end;
 
-
 function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
 var
   L: TLemming;
@@ -2339,7 +2338,12 @@ begin
 
   if not Assigned(L) then Exit;
 
-  Result := DoSkillAssignment(L, Skill, IsReplayAssignment);
+  if IsReplayAssignment then
+    Result := DoSkillAssignment(L, Skill, IsReplayAssignment)
+  else begin
+    RecordSkillAssignment(L, Skill);
+    Exit;
+  end;
 
   if Result then
   begin
