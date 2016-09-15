@@ -251,7 +251,7 @@ procedure TInteractiveObjectInfo.SetIsDisabled(Value: Boolean);
 begin
   Assert(Value = True, 'Changing object from Disabled to Enabled impossible'); // do we really want this? we might want this to be possible in the future...
 
-  sIsDisabled := False;
+  sIsDisabled := Value;
   sTriggerEffect := DOM_NONE;
 end;
 

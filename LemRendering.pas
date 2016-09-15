@@ -806,28 +806,50 @@ begin
   // not. We assume the calling routine has already done this, and we just draw it.
   // We do, however, determine which ones to draw here.
 
-  DrawX := O.Left + (MO.Width div 2) - 4;
-  DrawY := O.Top - 9; // much simpler
+  DrawX := (Obj.TriggerRect.Left + Obj.TriggerRect.Right) div 2 - 4; // Obj.Left + Obj.Width div 2 - 4;
+  DrawY := Obj.Top - 9; // much simpler
 
-  // Windows
-  if MO.TriggerEffect = 23 then
-  begin
-    if (O.TarLev and $68) <> 0 then DrawX := DrawX - 4;
+  case MO.TriggerEffect of
+    DOM_WINDOW:
+      begin
+        if (O.TarLev and $68) <> 0 then DrawX := DrawX - 4;
 
-    if (O.DrawingFlags and odf_FlipLem) = 0 then
-      fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX, DrawY)
-    else
-      fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX, DrawY);
+        if (O.DrawingFlags and odf_FlipLem) = 0 then
+          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX, DrawY)
+        else
+          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX, DrawY);
 
-    if (O.TarLev and $68) <> 0 then
-      fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX+8, DrawY);
+        if (O.TarLev and $68) <> 0 then
+          fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX+8, DrawY);
+      end;
+
+    DOM_TELEPORT:
+      begin
+        fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX - 4, DrawY);
+        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX + 4, DrawY);
+      end;
+
+    DOM_RECEIVER:
+      begin
+        fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX - 4, DrawY);
+        fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX + 4, DrawY);
+      end;
+
+    DOM_EXIT, DOM_LOCKEXIT:
+      begin
+        Dec(DrawX, 9); // HelperImage is 26 pixels wide, not 8 as the rest
+        fHelperImages[hpi_Exit].DrawTo(Dst, DrawX, DrawY);
+      end;
+
+    DOM_TRAP, DOM_TRAPONCE, DOM_FIRE:
+      begin
+        Dec(DrawX, 9); // HelperImage is 26 pixels wide, not 8 as the rest
+        if Obj.IsDisabled then
+          fHelperImages[hpi_Trap_Disabled].DrawTo(Dst, DrawX, DrawY)
+        else
+          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX, DrawY);
+      end;
   end;
-
-  // Teleporters and Receivers
-  if MO.TriggerEffect = 11 then
-    fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
-  if MO.TriggerEffect = 12 then
-    fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX, DrawY);
 end;
 
 procedure TRenderer.DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True);
@@ -1021,7 +1043,8 @@ begin
                       fRenderInterface.MousePos) then
         Continue;
 
-      if Inf.IsDisabled then Continue;
+      if Inf.IsDisabled and (Inf.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) then
+        Continue;
 
       // otherwise, draw its helper
       DrawObjectHelpers(fLayers[rlObjectHelpers], Inf);
