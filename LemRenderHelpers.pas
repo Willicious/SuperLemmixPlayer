@@ -592,11 +592,12 @@ begin
     if (not aClearPhysics) and (i = rlTriggers) then
       Continue; // we only want to draw triggers when Clear Physics Mode is enabled
 
-    if aClearPhysics and (i = rlBackground) then
-      Continue; // we want to keep the black background in this case
+    if aClearPhysics and (i in [rlBackground, rlOnTerrainObjects, rlObjectsHigh]) then
+      Continue; // we don't want to draw the first two in Clear Physics mode; while the latter has special handling
 
     if aClearPhysics and (i = rlTerrain) then
     begin // we want to draw based on physics map, not graphical map, in this case
+      Items[rlObjectsHigh].DrawTo(aDst, aRegion, aRegion); // we want it behind terrain
       DrawClearPhysicsTerrain(aDst, aRegion);
       Continue;
     end;
