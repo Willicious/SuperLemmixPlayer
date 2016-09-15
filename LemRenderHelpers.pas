@@ -136,7 +136,7 @@ type
   THelperIcon = (hpi_A, hpi_B, hpi_C, hpi_D, hpi_E, hpi_F, hpi_G, hpi_H, hpi_I, hpi_J, hpi_K, hpi_L, hpi_M,
                  hpi_N, hpi_O, hpi_P, hpi_Q, hpi_R, hpi_S, hpi_T, hpi_U, hpi_V, hpi_W, hpi_X, hpi_Y, hpi_Z,
                  hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation,
-                 hpi_Exit, hpi_Trap, hpi_Trap_Disabled);
+                 hpi_Exit, hpi_Trap, hpi_Trap_Disabled, hpi_Radiation, hpi_Slowfreeze, hpi_Flipper);
 
   THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
 
@@ -214,7 +214,10 @@ const
                               'exclamation.png',
                               'exit.png',
                               'trap.png',
-                              'trap_dis.png');
+                              'trap_dis.png',
+                              'radiation.png',
+                              'slowfreeze.png',
+                              'flipper.png');
 
 implementation
 

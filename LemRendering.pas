@@ -806,7 +806,7 @@ begin
   // not. We assume the calling routine has already done this, and we just draw it.
   // We do, however, determine which ones to draw here.
 
-  DrawX := (Obj.TriggerRect.Left + Obj.TriggerRect.Right) div 2 - 4; // Obj.Left + Obj.Width div 2 - 4;
+  DrawX := (Obj.TriggerRect.Left + Obj.TriggerRect.Right) div 2; // Obj.Left + Obj.Width div 2 - 4;
   DrawY := Obj.Top - 9; // much simpler
 
   case MO.TriggerEffect of
@@ -815,39 +815,52 @@ begin
         if (O.TarLev and $68) <> 0 then DrawX := DrawX - 4;
 
         if (O.DrawingFlags and odf_FlipLem) = 0 then
-          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX, DrawY)
+          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4, DrawY)
         else
-          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX, DrawY);
+          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY);
 
         if (O.TarLev and $68) <> 0 then
-          fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX+8, DrawY);
+          fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8, DrawY);
       end;
 
     DOM_TELEPORT:
       begin
-        fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX - 4, DrawY);
-        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX + 4, DrawY);
+        fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX - 8, DrawY);
+        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY);
       end;
 
     DOM_RECEIVER:
       begin
-        fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX - 4, DrawY);
-        fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX + 4, DrawY);
+        fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX - 8, DrawY);
+        fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
       end;
 
     DOM_EXIT, DOM_LOCKEXIT:
       begin
-        Dec(DrawX, 9); // HelperImage is 26 pixels wide, not 8 as the rest
-        fHelperImages[hpi_Exit].DrawTo(Dst, DrawX, DrawY);
+        fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13, DrawY);
       end;
 
     DOM_TRAP, DOM_TRAPONCE, DOM_FIRE:
       begin
-        Dec(DrawX, 9); // HelperImage is 26 pixels wide, not 8 as the rest
         if Obj.IsDisabled then
-          fHelperImages[hpi_Trap_Disabled].DrawTo(Dst, DrawX, DrawY)
+          fHelperImages[hpi_Trap_Disabled].DrawTo(Dst, DrawX - 13, DrawY)
         else
-          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX, DrawY);
+          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 13, DrawY);
+      end;
+
+    DOM_RADIATION:
+      begin
+        fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 4, DrawY);
+      end;
+
+    DOM_SLOWFREEZE:
+      begin
+        fHelperImages[hpi_Slowfreeze].DrawTo(Dst, DrawX - 4, DrawY);
+      end;
+
+    DOM_FLIPPER:
+      begin
+        fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13, DrawY);
       end;
   end;
 end;
