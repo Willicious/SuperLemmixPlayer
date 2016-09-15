@@ -1038,23 +1038,12 @@ procedure TGameWindow.CheckAdjustReleaseRate;
   In the mainloop the decision is made if we really have to update
 -------------------------------------------------------------------------------}
 begin
-  with Game do
-  begin
-    if SpeedingUpReleaseRate then
-    begin
-//        if not (Replaying and Paused) then
-      AdjustReleaseRate(1);
-      if InstReleaseRate = 1 then AdjustReleaseRate(100);
-      InstReleaseRate := 0;
-    end
-    else if SlowingDownReleaseRate then
-    begin
-//      if not (Replaying and Paused) then
-      AdjustReleaseRate(-1);
-      if InstReleaseRate = -1 then AdjustReleaseRate(-100);
-      InstReleaseRate := 0;
-    end;
-  end;
+  Game.CheckAdjustReleaseRate;
+  (*with Game do
+    if ReleaseRateModifier > 0 then
+      AdjustReleaseRate(1)
+    else if ReleaseRateModifier < 0 then
+      AdjustReleaseRate(-1);*)
 end;
 
 procedure TGameWindow.StartReplay2(const aFileName: string);

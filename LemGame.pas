@@ -376,8 +376,6 @@ type
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
     Entries                    : TInteractiveObjectInfoList; // list of entrances (NOT USED ANYMORE)
     DosEntryTable              : array of Integer; // table for entrance release order
-    fSlowingDownReleaseRate    : Boolean;
-    fSpeedingUpReleaseRate     : Boolean;
     fPaused                    : Boolean;
     MaxNumLemmings             : Integer;
     LowestReleaseRate          : Integer;
@@ -489,7 +487,6 @@ type
     procedure AddConstructivePixel(X, Y: Integer);
     procedure ApplyLevelEntryOrder;
     function CalculateNextLemmingCountdown: Integer;
-    procedure CheckAdjustReleaseRate;
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming);
@@ -644,6 +641,7 @@ type
     fAssignEnabled                    : Boolean;
     InstReleaseRate            : Integer;
     fActiveSkills              : array[0..7] of TSkillPanelButton;
+    ReleaseRateModifier        : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
 
     // Postview screen needs access to these two sounds and the sound manager now
     SoundMgr                   : TSoundMgr;
@@ -661,7 +659,9 @@ type
     procedure UpdateLemmings;
 
   { callable }
-    procedure AdjustReleaseRate(Delta: Integer);
+    procedure CheckAdjustReleaseRate;  
+    procedure AdjustReleaseRate(aRR: Integer);
+    function CheckIfLegalRR(aRR: Integer): Boolean;
     procedure CreateLemmingAtCursorPoint;
     procedure Finish;
     procedure Cheat;
@@ -705,9 +705,7 @@ type
     property ShiftButtonHeldDown: Boolean read fShiftButtonHeldDown write fShiftButtonHeldDown;
     property AltButtonHeldDown: Boolean read fAltButtonHeldDown write fAltButtonHeldDown;
     property CtrlButtonHeldDown: Boolean read fCtrlButtonHeldDown write fCtrlButtonHeldDown;
-    property SlowingDownReleaseRate: Boolean read fSlowingDownReleaseRate;
     property SoundOpts: TGameSoundOptions read fSoundOpts write SetSoundOpts;
-    property SpeedingUpReleaseRate: Boolean read fSpeedingUpReleaseRate;
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
     property DoTimePause: Boolean read fDoTimePause write fDoTimePause;
@@ -1624,8 +1622,7 @@ begin
 
   SetLength(DosEntryTable, 0);
 
-  fSlowingDownReleaseRate := False;
-  fSpeedingUpReleaseRate := False;
+  ReleaseRateModifier := 0;
   fPaused := False;
   UserSetNuking := False;
   ExploderAssignInProgress := False;
@@ -5128,27 +5125,35 @@ begin
   case Value of
     spbFaster:
       begin
-        if not MakeActive then Exit;
+        if not MakeActive then
+        begin
+          ReleaseRateModifier := 0;
+          Exit;
+        end;
 
         if Level.Info.ReleaseRateLocked or (CurrReleaseRate = 99) then Exit;
 
         if RightClick then
           RecordReleaseRate(99)
         else
-          RecordReleaseRate(CurrReleaseRate+1);
+          ReleaseRateModifier := 1;
 
         CheckForReplayAction(true);
       end;
     spbSlower:
       begin
-        if not MakeActive then Exit;
+        if not MakeActive then
+        begin
+          ReleaseRateModifier := 0;
+          Exit;
+        end;
         
         if Level.Info.ReleaseRateLocked or (CurrReleaseRate = Level.Info.ReleaseRate) then Exit;
 
         if RightClick then
           RecordReleaseRate(Level.Info.ReleaseRate)
         else
-          RecordReleaseRate(CurrReleaseRate-1);
+          ReleaseRateModifier := -1;
 
         CheckForReplayAction(true);
       end;
@@ -5377,21 +5382,22 @@ begin
 end;
 *)
 
-procedure TLemmingGame.AdjustReleaseRate(Delta: Integer);
-var
-  N: Integer;
-  MaxRR: Integer;
+function TLemmingGame.CheckIfLegalRR(aRR: Integer): Boolean;
 begin
-  N := CurrReleaseRate + Delta;
-  if Level.Info.ReleaseRateLocked then
-    MaxRR := Level.Info.ReleaseRate
+  if Level.Info.ReleaseRateLocked
+  or (aRR > 99)
+  or (aRR < Level.Info.ReleaseRate) then
+    Result := false
   else
-    MaxRR := 99;
-  Restrict(N, Level.Info.ReleaseRate, MaxRR);
-  if N <> currReleaseRate then
+    Result := true;
+end;
+
+procedure TLemmingGame.AdjustReleaseRate(aRR: Integer);
+begin
+  if (aRR <> currReleaseRate) and CheckIfLegalRR(aRR) then
   begin
-    currReleaseRate := N;
-    LastReleaseRate := N;
+    currReleaseRate := aRR;
+    LastReleaseRate := aRR;
     InfoPainter.DrawSkillCount(spbFaster, currReleaseRate);
   end;
 end;
@@ -5475,7 +5481,7 @@ var
   var
     E: TReplayChangeReleaseRate absolute R;
   begin
-    AdjustReleaseRate(E.NewReleaseRate - CurrReleaseRate);
+    AdjustReleaseRate(E.NewReleaseRate);
   end;
 
   procedure ApplyNuke;
@@ -5830,22 +5836,14 @@ begin
 end;
 
 procedure TLemmingGame.CheckAdjustReleaseRate;
+var
+  NewRR: Integer;
 begin
-  if SpeedingUpReleaseRate then
-  begin
-    //if not (Replaying and Paused) then
-    AdjustReleaseRate(1)
-  end
-  else if SlowingDownReleaseRate then
-  begin
-    //if not (Replaying and Paused) then
-    AdjustReleaseRate(-1)
-  end;
-  if InstReleaseRate = -1 then
-    AdjustReleaseRate(-100)
-  else if InstReleaseRate = 1 then
-    AdjustReleaseRate(100);
-  InstReleaseRate := 0;
+  if ReleaseRateModifier = 0 then Exit;
+
+  NewRR := CurrReleaseRate + ReleaseRateModifier;
+  if CheckIfLegalRR(NewRR) then
+    RecordReleaseRate(NewRR);
 end;
 
 procedure TLemmingGame.SetSoundOpts(const Value: TGameSoundOptions);
