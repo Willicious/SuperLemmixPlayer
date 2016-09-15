@@ -512,7 +512,7 @@ type
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForPlaySoundEffect;
-    procedure CheckForReplayAction(RRCheck: Boolean);
+    procedure CheckForReplayAction(PausedRRCheck: Boolean = false);
     procedure CheckLemmings;
     function CheckLemTeleporting(L: TLemming): Boolean;
     procedure CheckReleaseLemming;
@@ -4782,7 +4782,7 @@ begin
     end;
   end;
 
-  CheckForReplayAction(true);
+  CheckForReplayAction;
 
   // erase existing ShadowBridge
   if fExistShadow then
@@ -4826,9 +4826,6 @@ begin
     InfoPainter.SetReplayMark(Replaying);
     UpdateTimeLimit;
   end;
-
-
-  CheckForReplayAction(false);
 
   if fReplaying and (fCurrentIteration > fReplayManager.LastActionFrame) then
     RegainControl;
@@ -5139,6 +5136,8 @@ begin
           RecordReleaseRate(99)
         else
           RecordReleaseRate(CurrReleaseRate+1);
+
+        CheckForReplayAction(true);
       end;
     spbSlower:
       begin
@@ -5150,6 +5149,8 @@ begin
           RecordReleaseRate(Level.Info.ReleaseRate)
         else
           RecordReleaseRate(CurrReleaseRate-1);
+
+        CheckForReplayAction(true);
       end;
     spbPause:
       begin
@@ -5459,7 +5460,7 @@ begin
 end;*)
 
 
-procedure TLemmingGame.CheckForReplayAction(RRCheck: Boolean);
+procedure TLemmingGame.CheckForReplayAction(PausedRRCheck: Boolean = false);
 var
   R: TBaseReplayItem;
 
@@ -5476,13 +5477,6 @@ var
   begin
     AdjustReleaseRate(E.NewReleaseRate - CurrReleaseRate);
   end;
-
-  (*procedure ApplySkillSelect;
-  var
-    E: TReplaySelectSkill absolute R;
-  begin
-    ReplaySkillSelection(E);
-  end;*)
 
   procedure ApplyNuke;
   var
@@ -5502,31 +5496,26 @@ var
     if R is TReplayChangeReleaseRate then
       ApplyReleaseRate;
 
-    (*if R is TReplaySelectSkill then
-      ApplySkillSelect;*)
-
     if R is TReplayNuke then
       ApplyNuke;
   end;
 begin
-  if not fReplaying then
-    Exit;
+  //if not fReplaying then
+  //  Exit;
 
   fReplayCommanding := True;
 
   try
     // Note - the fReplayManager getters can return nil, and often will!
     // The "Handle" procedure ensures this does not lead to errors.
-    if RRCheck then
-    begin
-      R := fReplayManager.ReleaseRateChange[fCurrentIteration];
-      Handle;
-    end else begin
-      R := fReplayManager.Assignment[fCurrentIteration];
-      Handle;
-      R := fReplayManager.InterfaceAction[fCurrentIteration];
-      Handle;
-    end;
+    R := fReplayManager.ReleaseRateChange[fCurrentIteration];
+    Handle;
+    if PausedRRCheck then Exit;
+
+    R := fReplayManager.Assignment[fCurrentIteration];
+    Handle;
+    R := fReplayManager.InterfaceAction[fCurrentIteration];
+    Handle;
   finally
     fReplayCommanding := False;
   end;
