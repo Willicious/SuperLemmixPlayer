@@ -516,7 +516,7 @@ begin
 
     // Swap and adjust trigger area coordinates / dimensions
     DstRec.TriggerLeft := SrcRec.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
-    DstRec.TriggerTop := SrcRec.TriggerLeft - SrcRec.TriggerWidth;
+    DstRec.TriggerTop := SrcRec.TriggerLeft {- SrcRec.TriggerWidth};
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
     begin
       DstRec.TriggerLeft := DstRec.TriggerLeft + 4;
@@ -538,7 +538,7 @@ begin
       Dst.FlipHorz;
 
     // Flip trigger area X coordinate
-    DstRec.TriggerLeft := SrcRec.Width - SrcRec.TriggerLeft - SrcRec.TriggerWidth;
+    DstRec.TriggerLeft := DstRec.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
   end;
 
   if Invert then
@@ -548,9 +548,9 @@ begin
       Dst.FlipVert;
 
     // Flip and adjust trigger area Y coordinate
-    DstRec.TriggerTop := SrcRec.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
+    DstRec.TriggerTop := DstRec.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
-      DstRec.TriggerTop := DstRec.TriggerTop + 9;
+      DstRec.TriggerTop := DstRec.TriggerTop + 10;
   end;
 end;
 
