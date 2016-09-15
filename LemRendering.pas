@@ -825,13 +825,13 @@ begin
 
     DOM_TELEPORT:
       begin
-        fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX - 8, DrawY);
+        fHelperImages[THelperIcon(Obj.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
         fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY);
       end;
 
     DOM_RECEIVER:
       begin
-        fHelperImages[THelperIcon(Obj.PairingID)].DrawTo(Dst, DrawX - 8, DrawY);
+        fHelperImages[THelperIcon(Obj.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
         fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
       end;
 
@@ -976,6 +976,19 @@ var
     fLayers.fIsEmpty[rlTriggers] := false;
   end;
 
+  procedure DrawUserHelper;
+  var
+    BMP: TBitmap32;
+    DrawPoint: TPoint;
+  begin
+    BMP := fHelperImages[fRenderInterface.UserHelper];
+    DrawPoint := fRenderInterface.MousePos;
+    DrawPoint.X := DrawPoint.X - (BMP.Width div 2);
+    DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2);
+    BMP.DrawTo(fLayers[rlObjectHelpers], DrawPoint.X, DrawPoint.Y);
+    fLayers.fIsEmpty[rlObjectHelpers] := false;
+  end;
+
 begin
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
 
@@ -1071,6 +1084,9 @@ begin
             DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
         end;
     end;
+
+    if fRenderInterface.UserHelper <> hpi_None then
+      DrawUserHelper;
   end;
 
 end;
@@ -1092,7 +1108,10 @@ begin
   fRecolorer := TRecolorImage.Create;
   fObjectInfoList := TInteractiveObjectInfoList.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
+  begin
+    if i = hpi_None then Continue;
     fHelperImages[i] := TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
+  end;
 
   S := CreateDataStream('explode.dat', ldtParticles);
   S.Seek(0, soFromBeginning);

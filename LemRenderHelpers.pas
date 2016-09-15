@@ -133,10 +133,12 @@ type
     property Inverted: TBitmap32 read fInverted;
   end;
 
-  THelperIcon = (hpi_A, hpi_B, hpi_C, hpi_D, hpi_E, hpi_F, hpi_G, hpi_H, hpi_I, hpi_J, hpi_K, hpi_L, hpi_M,
+  THelperIcon = (hpi_None,
+                 hpi_A, hpi_B, hpi_C, hpi_D, hpi_E, hpi_F, hpi_G, hpi_H, hpi_I, hpi_J, hpi_K, hpi_L, hpi_M,
                  hpi_N, hpi_O, hpi_P, hpi_Q, hpi_R, hpi_S, hpi_T, hpi_U, hpi_V, hpi_W, hpi_X, hpi_Y, hpi_Z,
                  hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation,
-                 hpi_Exit, hpi_Trap, hpi_Trap_Disabled, hpi_Radiation, hpi_Slowfreeze, hpi_Flipper);
+                 hpi_Exit, hpi_Trap, hpi_Trap_Disabled, hpi_Radiation, hpi_Slowfreeze, hpi_Flipper,
+                 hpi_FallDist);
 
   THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
 
@@ -155,6 +157,7 @@ type
       fRemoveRoutine: TRemoveRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
       fGetHighlitLemRoutine: TGetLemmingRoutine;
+      fUserHelperIcon: THelperIcon;
       function GetSelectedSkill: TSkillPanelButton;
       function GetHighlitLemming: TLemming;
     public
@@ -177,11 +180,13 @@ type
       property TerrainMap: TBitmap32 read fTerrainMap write fTerrainMap;
       property ScreenPos: TPoint read fScreenPos write fScreenPos;
       property MousePos: TPoint read fMousePos write fMousePos;
+      property UserHelper: THelperIcon read fUserHelperIcon write fUserHelperIcon;
   end;
 
 const
   HelperImageFilenames: array[Low(THelperIcon)..High(THelperIcon)] of String =
-                             ('ltr_a.png',
+                             ('ltr_a.png', // placeholder
+                              'ltr_a.png',
                               'ltr_b.png',
                               'ltr_c.png',
                               'ltr_d.png',
@@ -217,7 +222,8 @@ const
                               'trap_dis.png',
                               'radiation.png',
                               'slowfreeze.png',
-                              'flipper.png');
+                              'flipper.png',
+                              'fall_distance.png');
 
 implementation
 
@@ -232,6 +238,7 @@ var
 begin
   for i := Low(TDrawableItem) to High(TDrawableItem) do
     fDrawRoutines[i] := nil;
+  fUserHelperIcon := hpi_None;
 end;
 
 procedure TRenderInterface.SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);

@@ -61,6 +61,7 @@ type
     procedure StartReplay2(const aFileName: string);
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
+    procedure CheckUserHelpers;
     procedure DoDraw;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
@@ -165,6 +166,9 @@ begin
   begin
     Game.fAssignEnabled := true;
 
+    // Check for user helpers
+    CheckUserHelpers;
+
     // only in paused mode adjust RR. If not paused it's updated per frame.
     if Game.Paused then
       if (TimeForScroll and not Game.Replaying) or ForceOne then
@@ -243,6 +247,13 @@ begin
   begin
     DoDraw;
   end;
+end;
+
+procedure TGameWindow.CheckUserHelpers;
+begin
+  fRenderInterface.UserHelper := hpi_None;
+  if GameParams.Hotkeys.CheckForKey(lka_FallDistance) then
+    fRenderInterface.UserHelper := hpi_FallDist;
 end;
 
 procedure TGameWindow.DoDraw;

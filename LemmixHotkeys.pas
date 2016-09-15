@@ -42,7 +42,8 @@ type
                          lka_SkillLeft,
                          lka_SkillRight,
                          lka_ReleaseMouse,
-                         lka_ClearPhysics);
+                         lka_ClearPhysics,
+                         lka_FallDistance);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
 
@@ -98,6 +99,7 @@ begin
   fKeyFunctions[$27].Action := lka_DirRight;
   fKeyFunctions[$31].Action := lka_Cheat;
   fKeyFunctions[$43].Action := lka_CancelReplay;
+  fKeyFunctions[$44].Action := lka_FallDistance;
   fKeyFunctions[$46].Action := lka_FastForward;
   fKeyFunctions[$49].Action := lka_SaveImage;
   fKeyFunctions[$4C].Action := lka_LoadReplay;
@@ -113,6 +115,10 @@ begin
   fKeyFunctions[$7A].Action := lka_Pause;
   fKeyFunctions[$7B].Action := lka_Nuke;
   fKeyFunctions[$C0].Action := lka_ReleaseMouse;
+
+  // Misc ones that need other details set
+  fKeyFunctions[$54].Action := lka_ClearPhysics;
+  fKeyFunctions[$54].Modifier := 1;
 
   // Here's the frameskip ones; these need a number of *frames* to skip (forwards or backwards).
   fKeyFunctions[$20].Action := lka_Skip;
@@ -208,6 +214,7 @@ var
     if s = 'release_mouse' then Result := lka_ReleaseMouse;
     if s = 'highlight' then Result := lka_Highlight;
     if s = 'clear_physics' then Result := lka_ClearPhysics;
+    if s = 'fall_distance' then Result := lka_FallDistance;
   end;
 
   function InterpretSecondary(s: String): Integer;
@@ -297,6 +304,10 @@ begin
           fKeyFunctions[$54].Modifier := 1;
         end;
 
+      if FixVersion < 5 then
+        if fKeyFunctions[$44].Action = lka_Null then
+          fKeyFunctions[$44].Action := lka_FallDistance;
+
     except
       SetDefaults;
     end;
@@ -342,6 +353,7 @@ var
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
       lka_ClearPhysics:     Result := 'Clear_Physics';
+      lka_FallDistance:     Result := 'Fall_Distance';
       else Result := 'Null';
     end;
   end;

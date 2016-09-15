@@ -109,7 +109,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Previous Skill'
       'Next Skill'
       'Release Mouse'
-      'Clear Physics Mode')
+      'Clear Physics Mode'
+      'Fall Distance Template')
   end
   object Button1: TButton
     Left = 312
