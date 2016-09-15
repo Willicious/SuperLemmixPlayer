@@ -1800,6 +1800,8 @@ begin
         O.ObjectFlags := O.ObjectFlags or $20;
       if Obj.DrawingFlags and odf_Flip <> 0 then
         O.ObjectFlags := O.ObjectFlags or $40;
+      if Obj.DrawingFlags and odf_Rotate <> 0 then
+        O.ObjectFlags := O.ObjectFlags or $100;
 
       b := 1;
       aStream.Write(b, 1);
