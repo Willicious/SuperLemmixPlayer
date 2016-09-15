@@ -612,7 +612,7 @@ type
                                   NewSkillOrig: TBasicLemmingAction;
                                   MousePos: TPoint;
                                   IsHighlight: Boolean = False): Integer;
-    function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction; IsReplayAssignment: Boolean = false): Boolean;
+    function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 
     function MayAssignWalker(L: TLemming): Boolean;
     function MayAssignClimber(L: TLemming): Boolean;
@@ -2339,7 +2339,7 @@ begin
   if not Assigned(L) then Exit;
 
   if IsReplayAssignment then
-    Result := DoSkillAssignment(L, Skill, IsReplayAssignment)
+    Result := DoSkillAssignment(L, Skill)
   else begin
     RecordSkillAssignment(L, Skill);
     Exit;
@@ -2353,7 +2353,7 @@ begin
 end;
 
 
-function TLemmingGame.DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction; IsReplayAssignment: Boolean = false): Boolean;
+function TLemmingGame.DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 begin
 
   Result := False;
@@ -2371,12 +2371,6 @@ begin
   else
   begin
     UpdateSkillCount(NewSkill);
-
-    if not IsReplayAssignment then
-    begin
-      if fReplaying then RegainControl;
-      RecordSkillAssignment(L, NewSkill);
-    end;
 
     // Get starting position for stacker
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
