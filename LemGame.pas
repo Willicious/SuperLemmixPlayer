@@ -5398,7 +5398,7 @@ procedure TLemmingGame.RecordNuke;
 var
   E: TReplayNuke;
 begin
-  if not fPlaying or fReplaying then
+  if not fPlaying then
     Exit;
   E := TReplayNuke.Create;
   E.Frame := fCurrentIteration;
@@ -5458,6 +5458,7 @@ end;*)
 procedure TLemmingGame.CheckForReplayAction(PausedRRCheck: Boolean = false);
 var
   R: TBaseReplayItem;
+  i: Integer;
 
   procedure ApplySkillAssign;
   var
@@ -5481,9 +5482,12 @@ var
     ExploderAssignInProgress := True;
   end;
 
-  procedure Handle;
+  function Handle: Boolean;
   begin
+    Result := false;
     if R = nil then Exit;
+
+    Result := true;
 
     if R is TReplaySkillAssignment then
       ApplySkillAssign;
@@ -5503,14 +5507,19 @@ begin
   try
     // Note - the fReplayManager getters can return nil, and often will!
     // The "Handle" procedure ensures this does not lead to errors.
-    R := fReplayManager.ReleaseRateChange[fCurrentIteration];
-    Handle;
+    i := 0;
+    repeat
+      R := fReplayManager.ReleaseRateChange[fCurrentIteration, i];
+      Inc(i);
+    until not Handle;
     if PausedRRCheck then Exit;
 
-    R := fReplayManager.Assignment[fCurrentIteration];
-    Handle;
-    R := fReplayManager.InterfaceAction[fCurrentIteration];
-    Handle;
+    i := 0;
+    repeat
+      R := fReplayManager.Assignment[fCurrentIteration, i];
+      Inc(i);
+    until not Handle;
+
   finally
     fReplayCommanding := False;
   end;

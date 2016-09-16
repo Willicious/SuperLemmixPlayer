@@ -125,7 +125,6 @@ type
     private
       fAssignments: TReplayItemList;        // nuking is also included here
       fReleaseRateChanges: TReplayItemList;
-      fInterfaceActions: TReplayItemList;
       fPlayerName: String;
       fLevelName: String;
       fLevelAuthor: String;
@@ -134,7 +133,7 @@ type
       fLevelPosition: Integer;
       fLevelID: Cardinal;
       function GetLastActionFrame: Integer;
-      function GetItemByFrame(aFrame: Integer; aItemType: Integer): TBaseReplayItem;
+      function GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; SL: TStringList);
       //procedure SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
       //function LoadReplayItem(aParser: TNeoLemmixParser): TBaseReplayItem;
@@ -155,9 +154,8 @@ type
       property LevelRank: String read fLevelRank write fLevelRank;
       property LevelPosition: Integer read fLevelPosition write fLevelPosition;
       property LevelID: Cardinal read fLevelID write fLevelID;
-      property Assignment[aFrame: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
-      property ReleaseRateChange[aFrame: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
-      property InterfaceAction[aFrame: Integer]: TBaseReplayItem Index 3 read GetItemByFrame;
+      property Assignment[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
+      property ReleaseRateChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
   end;
 
@@ -277,7 +275,6 @@ begin
   inherited;
   fAssignments := TReplayItemList.Create;
   fReleaseRateChanges := TReplayItemList.Create;
-  fInterfaceActions := TReplayItemList.Create;
   Clear(true);
 end;
 
@@ -285,7 +282,6 @@ destructor TReplay.Destroy;
 begin
   fAssignments.Free;
   fReleaseRateChanges.Free;
-  fInterfaceActions.Free;
   inherited;
 end;
 
@@ -299,8 +295,6 @@ begin
   if aItem is TReplaySkillAssignment then Dst := fAssignments;
   if aItem is TReplayChangeReleaseRate then Dst := fReleaseRateChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
-  //if aItem is TReplayHighlightLemming then Dst := fInterfaceActions;
-  //if aItem is TReplaySelectSkill then Dst := fInterfaceActions;
 
   if Dst = nil then
     raise Exception.Create('Unknown type passed to TReplay.Add!');
@@ -315,7 +309,6 @@ procedure TReplay.Clear(EraseLevelInfo: Boolean = false);
 begin
   fAssignments.Clear;
   fReleaseRateChanges.Clear;
-  fInterfaceActions.Clear;
   if not EraseLevelInfo then Exit;
   fPlayerName := '';
   fLevelName := '';
@@ -338,7 +331,6 @@ procedure TReplay.Cut(aLastFrame: Integer);
 begin
   DoCut(fAssignments);
   DoCut(fReleaseRateChanges);
-  DoCut(fInterfaceActions);
 end;
 
 function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
@@ -357,8 +349,7 @@ function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
   end;
 begin
   Result := CheckForAction(fAssignments)
-         or CheckForAction(fReleaseRateChanges)
-         or CheckForAction(fInterfaceActions);
+         or CheckForAction(fReleaseRateChanges);
 end;
 
 function TReplay.GetLastActionFrame: Integer;
@@ -375,7 +366,6 @@ begin
   Result := 0;
   CheckForAction(fAssignments);
   CheckForAction(fReleaseRateChanges);
-  CheckForAction(fInterfaceActions);
 end;
 
 procedure TReplay.LoadFromFile(aFile: String);
@@ -472,7 +462,6 @@ begin
 
   SaveReplayList(fAssignments, SL);
   SaveReplayList(fReleaseRateChanges, SL);
-  SaveReplayList(fInterfaceActions, SL);
 
   SL.SaveToFile(aFile);
 
@@ -577,24 +566,29 @@ begin
   end;
 end;
 
-function TReplay.GetItemByFrame(aFrame: Integer; aItemType: Integer): TBaseReplayItem;
+function TReplay.GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
 var
   i: Integer;
+  n: Integer;
   L: TReplayItemList;
 begin
   Result := nil;
   case aItemType of
     1: L := fAssignments;
     2: L := fReleaseRateChanges;
-    3: L := fInterfaceActions;
     else Exit;
   end;
 
+  n := 0;
   for i := 0 to L.Count-1 do
     if L[i].Frame = aFrame then
     begin
-      Result := L[i];
-      Exit;
+      if n = aIndex then
+      begin
+        Result := L[i];
+        Exit;
+      end else
+        Inc(n);
     end;
 end;
 
