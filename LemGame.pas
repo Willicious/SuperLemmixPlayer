@@ -667,7 +667,7 @@ type
     procedure HitTest(Autofail: Boolean = false);
     procedure HyperSpeedBegin(PauseWhenDone: Boolean = False);
     procedure HyperSpeedEnd;
-    function ProcessSkillAssignment: Boolean;
+    function ProcessSkillAssignment(IsHighlight: Boolean = false): Boolean;
     function ProcessHighlightAssignment: Boolean;
     procedure RefreshAllPanelInfo;
     procedure RegainControl;
@@ -2336,7 +2336,12 @@ begin
   if IsReplayAssignment then   // Should probably divide into two seperate routines rather than having IsReplayAssignment parameter
     Result := DoSkillAssignment(L, Skill)
   else begin
-    RecordSkillAssignment(L, Skill);
+    Result := CheckSkillAvailable(Skill);
+    if Result then
+    begin
+      RegainControl;
+      RecordSkillAssignment(L, Skill);
+    end;
     Exit;
   end;
 
@@ -4980,7 +4985,7 @@ begin
   end;
 end;
 
-function TLemmingGame.ProcessSkillAssignment: Boolean;
+function TLemmingGame.ProcessSkillAssignment(IsHighlight: Boolean = false): Boolean;
 var
   Sel: TBasicLemmingAction;
 begin
@@ -4990,7 +4995,7 @@ begin
   Sel := SkillPanelButtonToAction[fSelectedSkill];
   Assert(Sel <> baNone);
 
-  Result := AssignNewSkill(Sel);
+  Result := AssignNewSkill(Sel, IsHighlight);
 
   fCheckWhichLemmingOnly := False;
   if Result then
@@ -5099,16 +5104,7 @@ procedure TLemmingGame.SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Bo
 begin
   if (fRightMouseButtonHeldDown and fGameParams.ClickHighlight)
   or (fCtrlButtonHeldDown and not fGameParams.ClickHighlight) then RightClick := true;
-  if RightClick and (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
-  begin
-    // Try assigning skill to highlighted Lem
-    
-    if AssignNewSkill(SkillPanelButtonToAction[Value], True) and Paused then
-      UpdateLemmings;
 
-    (* if AssignSkill(fHighlightLemming, fHighlightLemming, SkillPanelButtonToAction[Value]) then
-      if Paused then UpdateLemmings; *)
-  end;
   case Value of
     spbFaster:
       begin
@@ -5154,13 +5150,22 @@ begin
     spbNone: ; // Do Nothing
     else // all skill buttons
       begin
-        if (not CheckSkillInSet(Value)) or (fSelectedSkill = Value) then Exit;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, False);  // unselect old skill
-        fSelectedSkill := Value;
-        InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
-        CueSoundEffect(SFX_SKILLBUTTON);
-        //RecordSkillSelection(Value);
-        CheckForNewShadow;
+        if (not CheckSkillInSet(Value)) then
+          Exit;
+
+        if fSelectedSkill <> Value then
+        begin
+          InfoPainter.DrawButtonSelector(fSelectedSkill, False);  // unselect old skill
+          fSelectedSkill := Value;
+          InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
+          CueSoundEffect(SFX_SKILLBUTTON);
+          //RecordSkillSelection(Value);
+          CheckForNewShadow;
+        end;
+
+        if RightClick and (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
+          if ProcessSkillAssignment(true) and Paused then
+            fRenderInterface.ForceUpdate := true;
       end;
   end;
 end;

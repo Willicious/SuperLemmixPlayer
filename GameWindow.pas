@@ -148,7 +148,7 @@ begin
 
   Pause := Game.Paused;
   Fast := Game.FastForward;
-  ForceOne := ForceUpdateOneFrame;
+  ForceOne := ForceUpdateOneFrame or fRenderInterface.ForceUpdate;
   ForceUpdateOneFrame := False;
   CurrTime := TimeGetTime;
   TimeForFrame := CurrTime - PrevCallTime > IdealFrameTimeMS;
@@ -165,6 +165,7 @@ begin
   if TimeForFrame or TimeForScroll then
   begin
     Game.fAssignEnabled := true;
+    fRenderInterface.ForceUpdate := false;
 
     // Check for user helpers
     CheckUserHelpers;

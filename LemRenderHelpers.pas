@@ -158,6 +158,7 @@ type
       fSimulateLemRoutine: TSimulateLemRoutine;
       fGetHighlitLemRoutine: TGetLemmingRoutine;
       fUserHelperIcon: THelperIcon;
+      fForceUpdate: Boolean;
       function GetSelectedSkill: TSkillPanelButton;
       function GetHighlitLemming: TLemming;
     public
@@ -181,6 +182,7 @@ type
       property ScreenPos: TPoint read fScreenPos write fScreenPos;
       property MousePos: TPoint read fMousePos write fMousePos;
       property UserHelper: THelperIcon read fUserHelperIcon write fUserHelperIcon;
+      property ForceUpdate: Boolean read fForceUpdate write fForceUpdate; //used after a assign-to-highlit while paused
   end;
 
 const
