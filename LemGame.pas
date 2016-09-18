@@ -3131,7 +3131,10 @@ begin
         begin
           Inf := ObjectInfos[n];
           Inf.Triggered := True;
-          CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), Inf.Center);
+          if Inf.SoundEffect = 0 then
+            CueSoundEffect(SFX_ENTRANCE, Inf.Center)
+          else
+            CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), Inf.Center);
         end;
     end;
   end;
