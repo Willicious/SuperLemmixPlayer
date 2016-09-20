@@ -147,8 +147,8 @@ type
       fLemmingList: TLemmingList;
       fObjectList: TInteractiveObjectInfoList;
       fPSelectedSkill: ^TSkillPanelButton;
-      fSelectedLemming: TLemming;
-      fReplayLemming: TLemming;
+      fSelectedLemmingID: Integer;
+      fReplayLemmingID: Integer;
       fPhysicsMap: TBitmap32;
       fTerrainMap: TBitmap32;
       fScreenPos: TPoint;
@@ -161,13 +161,17 @@ type
       fForceUpdate: Boolean;
       function GetSelectedSkill: TSkillPanelButton;
       function GetHighlitLemming: TLemming;
+      function GetSelectedLemming: TLemming;
+      procedure SetSelectedLemming(aValue: TLemming);
+      function GetReplayLemming: TLemming;
+      procedure SetReplayLemming(aValue: TLemming);
     public
       constructor Create;
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
       procedure SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
       procedure SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
-      procedure SetgetHighlitRoutine(aRoutine: TGetLemmingRoutine);
+      procedure SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
       procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
       procedure Null;
@@ -175,9 +179,9 @@ type
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
-      property SelectedLemming: TLemming read fSelectedLemming write fSelectedLemming;
+      property SelectedLemming: TLemming read GetSelectedLemming write SetSelectedLemming;
       property HighlitLemming: TLemming read GetHighlitLemming;
-      property ReplayLemming: TLemming read fReplayLemming write fReplayLemming;
+      property ReplayLemming: TLemming read GetReplayLemming write SetReplayLemming;
       property PhysicsMap: TBitmap32 read fPhysicsMap write fPhysicsMap;
       property TerrainMap: TBitmap32 read fTerrainMap write fTerrainMap;
       property ScreenPos: TPoint read fScreenPos write fScreenPos;
@@ -242,6 +246,7 @@ begin
   for i := Low(TDrawableItem) to High(TDrawableItem) do
     fDrawRoutines[i] := nil;
   fUserHelperIcon := hpi_None;
+  fSelectedLemmingID := -1;
 end;
 
 procedure TRenderInterface.SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
@@ -290,6 +295,37 @@ begin
   Result := fGetHighlitLemRoutine;
 end;
 
+procedure TRenderInterface.SetSelectedLemming(aValue: TLemming);
+begin
+  if aValue = nil then
+    fSelectedLemmingID := -1
+  else
+    fSelectedLemmingID := aValue.LemIndex;
+end;
+
+function TRenderInterface.GetSelectedLemming: TLemming;
+begin
+  if (fSelectedLemmingID < 0) or (fSelectedLemmingID >= fLemmingList.Count) then
+    Result := nil
+  else
+    Result := fLemmingList[fSelectedLemmingID];
+end;
+
+procedure TRenderInterface.SetReplayLemming(aValue: TLemming);
+begin
+  if aValue = nil then
+    fReplayLemmingID := -1
+  else
+    fReplayLemmingID := aValue.LemIndex;
+end;
+
+function TRenderInterface.GetReplayLemming: TLemming;
+begin
+  if (fReplayLemmingID < 0) or (fReplayLemmingID >= fLemmingList.Count) then
+    Result := nil
+  else
+    Result := fLemmingList[fReplayLemmingID];
+end;
 
 procedure TRenderInterface.SetSelectedSkillPointer(var aButton: TSkillPanelButton);
 begin
