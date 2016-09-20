@@ -62,6 +62,7 @@ type
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
     procedure DoDraw;
+    procedure OnException(E: Exception; aCaller: String = 'Unknown');
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -138,12 +139,8 @@ procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
 var
   CurrTime: Cardinal;
   Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
-
-  // Debugging
-  SL: TStringList;
-  RIValid: Boolean;
 begin
-  try
+//  try
     if not CanPlay or not Game.Playing or Game.GameFinished then
       Exit;
 
@@ -248,133 +245,138 @@ begin
     begin
       DoDraw;
     end;
-  except
+(*  except
     on E: Exception do
+      OnException(E, 'TGameWindow.Application_Idle');
+  end;*)
+end;
+
+procedure TGameWindow.OnException(E: Exception; aCaller: String = 'Unknown');
+var
+  SL: TStringList;
+  RIValid: Boolean;
+begin
+  Game.Paused := true;
+  SL := TStringList.Create;
+
+  // Attempt to load existing report so we can simply add to the end.
+  // We don't want to trigger a second exception here, so let's be over-cautious
+  // with the try...excepts. Performance probably doesn't matter if we end up here.
+  try
+    if FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt') then
     begin
-      Done := true;
-      SL := TStringList.Create;
+      SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt');
+      SL.Add('');
+      SL.Add('');
+    end;
+  except
+    SL.Clear;
+  end;
 
-      // Attempt to load existing report so we can simply add to the end.
-      // We don't want to trigger a second exception here, so let's be over-cautious
-      // with the try...excepts. Performance probably doesn't matter if we end up here.
+  SL.Add('Exception raised at ' + DateToStr(Now));
+  SL.Add('  Happened in: ' + aCaller);
+  SL.Add('  Class: ' + E.ClassName);
+  SL.Add('  Message: ' + E.Message);
+
+  RIValid := false;
+  if fRenderInterface = nil then
+    SL.Add('  fRenderInterface: nil')
+  else
+    try
+      fRenderInterface.Null;
+      SL.Add('  fRenderInterface: Valid');
+      RIValid := true;
+    except
+      SL.Add('  fRenderInterface: Exception on access attempt');
+    end;
+
+  if RIValid then
+  begin
+    if fRenderInterface.LemmingList = nil then
+      SL.Add('  fRenderInterface.LemmingList: nil')
+    else
       try
-        if FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt') then
-        begin
-          SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt');
-          SL.Add('');
-          SL.Add('');
-        end;
+        SL.Add('  fRenderInterface.LemmingList.Count: ' + IntToStr(fRenderInterface.LemmingList.Count));
       except
-        SL.Clear;
+        SL.Add('  fRenderInterface.LemmingList: Exception on access attempt');
       end;
 
-      SL.Add('Exception raised at ' + DateToStr(Now));
-      SL.Add('  Class: ' + E.ClassName);
-      SL.Add('  Message: ' + E.Message);
-
-      RIValid := false;
-      if fRenderInterface = nil then
-        SL.Add('  fRenderInterface: nil')
-      else
-        try
-          fRenderInterface.Null;
-          SL.Add('  fRenderInterface: Valid');
-          RIValid := true;
-        except
-          SL.Add('  fRenderInterface: Exception on access attempt');
-        end;
-
-      if RIValid then
-      begin
-        if fRenderInterface.LemmingList = nil then
-          SL.Add('  fRenderInterface.LemmingList: nil')
-        else
-          try
-            SL.Add('  fRenderInterface.LemmingList.Count: ' + IntToStr(fRenderInterface.LemmingList.Count));
-          except
-            SL.Add('  fRenderInterface.LemmingList: Exception on access attempt');
-          end;
-
-        if fRenderInterface.SelectedLemming = nil then
-          SL.Add('  fRenderInterface.SelectedLemming: nil')
-        else
-          try
-            fRenderInterface.SelectedLemming.LemX := 0;
-            SL.Add('  fRenderInterface.SelectedLemming: Valid');
-          except
-            SL.Add('  fRenderInterface.SelectedLemming: Exception on access attempt');
-          end;
-
-        if fRenderInterface.HighlitLemming = nil then
-          SL.Add('  fRenderInterface.HighlitLemming: nil')
-        else
-          try
-            fRenderInterface.HighlitLemming.LemX := 0;
-            SL.Add('  fRenderInterface.HighlitLemming: Valid');
-          except
-            SL.Add('  fRenderInterface.HighlitLemming: Exception on access attempt');
-          end;
-
-        if fRenderInterface.ReplayLemming = nil then
-          SL.Add('  fRenderInterface.ReplayLemming: nil')
-        else
-          try
-            fRenderInterface.ReplayLemming.LemX := 0;
-            SL.Add('  fRenderInterface.ReplayLemming: Valid');
-          except
-            SL.Add('  fRenderInterface.ReplayLemming: Exception on access attempt');
-          end;
-
-        case fRenderInterface.SelectedSkill of
-          spbWalker: SL.Add('  fRenderInterface.SelectedSkill: Walker');
-          spbClimber: SL.Add('  fRenderInterface.SelectedSkill: Climber');
-          spbSwimmer: SL.Add('  fRenderInterface.SelectedSkill: Swimmer');
-          spbUmbrella: SL.Add('  fRenderInterface.SelectedSkill: Floater');
-          spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
-          spbMechanic: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
-          spbExplode: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
-          spbStoner: SL.Add('  fRenderInterface.SelectedSkill: Stoner');
-          spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
-          spbPlatformer: SL.Add('  fRenderInterface.SelectedSkill: Platformer');
-          spbBuilder: SL.Add('  fRenderInterface.SelectedSkill: Builder');
-          spbStacker: SL.Add('  fRenderInterface.SelectedSkill: Stacker');
-          spbBasher: SL.Add('  fRenderInterface.SelectedSkill: Basher');
-          spbMiner: SL.Add('  fRenderInterface.SelectedSkill: Miner');
-          spbDigger: SL.Add('  fRenderInterface.SelectedSkill: Digger');
-          spbCloner: SL.Add('  fRenderInterface.SelectedSkill: Cloner');
-          else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
-        end;
-      end;
-
-      // Attempt to save report. Once again, we'd rather it just fail than crash
-      // and lose the replay data.
+    if fRenderInterface.SelectedLemming = nil then
+      SL.Add('  fRenderInterface.SelectedLemming: nil')
+    else
       try
-        SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt');
-        RIValid := true;
+        fRenderInterface.SelectedLemming.LemX := 0;
+        SL.Add('  fRenderInterface.SelectedLemming: Valid');
       except
-        // We can't do much here.
-        RIValid := false; // reuse is lazy. but I'm doing it anyway.
+        SL.Add('  fRenderInterface.SelectedLemming: Exception on access attempt');
       end;
 
-      if RIValid then
-        ShowMessage('An exception has occurred. Details have been saved to NeoLemmixException.txt. Your current replay will be' + #13 +
-                    'saved to the "Auto" folder if possible, then you will be returned to the main menu.')
-      else
-        ShowMessage('An exception has occurred. Attempting to save details to a text file failed. Your current replay will be' + #13 +
-                    'saved to the "Auto" folder if possible, then you will be returned to the main menu.');
-
+    if fRenderInterface.HighlitLemming = nil then
+      SL.Add('  fRenderInterface.HighlitLemming: nil')
+    else
       try
-        Game.Save(true);
-        ShowMessage('Your replay was saved successfully. Returning to main menu now. Restarting NeoLemmix is recommended.');
+        fRenderInterface.HighlitLemming.LemX := 0;
+        SL.Add('  fRenderInterface.HighlitLemming: Valid');
       except
-        ShowMessage('Unfortunately, your replay could not be saved.');
+        SL.Add('  fRenderInterface.HighlitLemming: Exception on access attempt');
       end;
 
-      SL.Free; // don't see the need for try...finally here. It's unlikely to be needed, and at any rate avoiding a memory
-               // leak here is hardly nessecary given the situation we're already in.
-      CloseScreen(gstMenu);
+    if fRenderInterface.ReplayLemming = nil then
+      SL.Add('  fRenderInterface.ReplayLemming: nil')
+    else
+      try
+        fRenderInterface.ReplayLemming.LemX := 0;
+        SL.Add('  fRenderInterface.ReplayLemming: Valid');
+      except
+        SL.Add('  fRenderInterface.ReplayLemming: Exception on access attempt');
+      end;
+
+    case fRenderInterface.SelectedSkill of
+      spbWalker: SL.Add('  fRenderInterface.SelectedSkill: Walker');
+      spbClimber: SL.Add('  fRenderInterface.SelectedSkill: Climber');
+      spbSwimmer: SL.Add('  fRenderInterface.SelectedSkill: Swimmer');
+      spbUmbrella: SL.Add('  fRenderInterface.SelectedSkill: Floater');
+      spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
+      spbMechanic: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
+      spbExplode: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
+      spbStoner: SL.Add('  fRenderInterface.SelectedSkill: Stoner');
+      spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
+      spbPlatformer: SL.Add('  fRenderInterface.SelectedSkill: Platformer');
+      spbBuilder: SL.Add('  fRenderInterface.SelectedSkill: Builder');
+      spbStacker: SL.Add('  fRenderInterface.SelectedSkill: Stacker');
+      spbBasher: SL.Add('  fRenderInterface.SelectedSkill: Basher');
+      spbMiner: SL.Add('  fRenderInterface.SelectedSkill: Miner');
+      spbDigger: SL.Add('  fRenderInterface.SelectedSkill: Digger');
+      spbCloner: SL.Add('  fRenderInterface.SelectedSkill: Cloner');
+      else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
     end;
   end;
+
+  // Attempt to save report. Once again, we'd rather it just fail than crash
+  // and lose the replay data.
+  try
+    SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt');
+    RIValid := true;
+  except
+    // We can't do much here.
+    RIValid := false; // reuse is lazy. but I'm doing it anyway.
+  end;
+
+  if RIValid then
+    ShowMessage('An exception has occurred. Details have been saved to NeoLemmixException.txt. Your current replay will be' + #13 +
+                'saved to the "Auto" folder if possible, then you will be returned to the main menu.')
+  else
+    ShowMessage('An exception has occurred. Attempting to save details to a text file failed. Your current replay will be' + #13 +
+                'saved to the "Auto" folder if possible, then you will be returned to the main menu.');
+
+  try
+    Game.Save(true);
+    ShowMessage('Your replay was saved successfully. Returning to main menu now. Restarting NeoLemmix is recommended.');
+  except
+    ShowMessage('Unfortunately, your replay could not be saved.');
+  end;
+
+  CloseScreen(gstMenu);
 end;
 
 procedure TGameWindow.DoDraw;
@@ -382,13 +384,18 @@ var
   DrawRect: TRect;
 begin
   if Game.HyperSpeed then Exit;
-  fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
-  fRenderInterface.MousePos := Game.CursorPoint;
-  fRenderer.DrawAllObjects(fRenderInterface.ObjectList);
-  fRenderer.DrawLemmings;
-  DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 320, fRenderInterface.ScreenPos.Y + 160);
-  fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
-  fNeedRedraw := false;
+  try
+    fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
+    fRenderInterface.MousePos := Game.CursorPoint;
+    fRenderer.DrawAllObjects(fRenderInterface.ObjectList);
+    fRenderer.DrawLemmings;
+    DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 320, fRenderInterface.ScreenPos.Y + 160);
+    fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
+    fNeedRedraw := false;
+  except
+    on E: Exception do
+      OnException(E, 'TGameWindow.DoDraw');
+  end;
 end;
 
 procedure TGameWindow.CheckShifts(Shift: TShiftState);

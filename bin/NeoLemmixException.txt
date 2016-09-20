@@ -1,0 +1,24 @@
+
+
+Exception raised at 20/09/2016
+  Happened in: TGameWindow.DoDraw
+  Class: EAccessViolation
+  Message: Access violation at address 008C36A4 in module 'NeoLemmix.exe'. Read of address 05E0E529
+  fRenderInterface: Valid
+  fRenderInterface.LemmingList.Count: 0
+  fRenderInterface.SelectedLemming: Exception on access attempt
+  fRenderInterface.HighlitLemming: nil
+  fRenderInterface.ReplayLemming: nil
+  fRenderInterface.SelectedSkill: Digger
+
+
+Exception raised at 20/09/2016
+  Happened in: TGameWindow.DoDraw
+  Class: EAccessViolation
+  Message: Access violation at address 008C36A4 in module 'NeoLemmix.exe'. Read of address 05E0E529
+  fRenderInterface: Valid
+  fRenderInterface.LemmingList.Count: 0
+  fRenderInterface.SelectedLemming: Exception on access attempt
+  fRenderInterface.HighlitLemming: nil
+  fRenderInterface.ReplayLemming: nil
+  fRenderInterface.SelectedSkill: Digger
