@@ -170,6 +170,7 @@ type
       procedure SetgetHighlitRoutine(aRoutine: TGetLemmingRoutine);
       procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
+      procedure Null;
       function SimulateLem(L: TLemming): TArrayArrayInt;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
@@ -298,6 +299,16 @@ end;
 function TRenderInterface.GetSelectedSkill: TSkillPanelButton;
 begin
   Result := fPSelectedSkill^;
+end;
+
+procedure TRenderInterface.Null;
+var
+  TempVar: Integer;
+begin
+  // This is a dummy procedure. We simply call it to ensure TRenderInterface exists
+  // and can be accessed correctly during exception logging.
+  TempVar := fScreenPos.X;
+  fScreenPos.X := TempVar;
 end;
 
 { TDrawItem }

@@ -63,6 +63,7 @@ type
     procedure CheckShifts(Shift: TShiftState);
     procedure CheckUserHelpers;
     procedure DoDraw;
+    procedure OnException(E: Exception; aCaller: String = 'Unknown');
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -140,114 +141,247 @@ var
   CurrTime: Cardinal;
   Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
 begin
-  if not CanPlay or not Game.Playing or Game.GameFinished then
-    Exit;
+//  try
+    if not CanPlay or not Game.Playing or Game.GameFinished then
+      Exit;
 
-  // this makes sure this method is called very often :)
-  Done := False;
+    // this makes sure this method is called very often :)
+    Done := False;
 
-  Pause := Game.Paused;
-  Fast := Game.FastForward;
-  ForceOne := ForceUpdateOneFrame or fRenderInterface.ForceUpdate;
-  ForceUpdateOneFrame := False;
-  CurrTime := TimeGetTime;
-  TimeForFrame := CurrTime - PrevCallTime > IdealFrameTimeMS;
-  TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
-  TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
-  Hyper := Game.HyperSpeed;
+    Pause := Game.Paused;
+    Fast := Game.FastForward;
+    ForceOne := ForceUpdateOneFrame;
+    ForceUpdateOneFrame := False;
+    CurrTime := TimeGetTime;
+    TimeForFrame := CurrTime - PrevCallTime > IdealFrameTimeMS;
+    TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
+    TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
+    Hyper := Game.HyperSpeed;
 
-  if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
+    if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
 
-  // relax CPU
-  if not Hyper or Fast then
-    Sleep(1);
+    // relax CPU
+    if not Hyper or Fast then
+      Sleep(1);
 
-  if TimeForFrame or TimeForScroll then
-  begin
-    Game.fAssignEnabled := true;
-    fRenderInterface.ForceUpdate := false;
-
-    // Check for user helpers
-    CheckUserHelpers;
-
-    // only in paused mode adjust RR. If not paused it's updated per frame.
-    if Game.Paused then
-      if (TimeForScroll and not Game.Replaying) or ForceOne then
-        CheckAdjustReleaseRate;
-
-    // set new screen position
-    if TimeForScroll then
+    if TimeForFrame or TimeForScroll then
     begin
-      PrevScrollTime := CurrTime;
-      CheckScroll;
-    end;
+      Game.fAssignEnabled := true;
 
-    // Check whether we have to move the lemmings
-    if (TimeForFrame and not Pause)
-       or ForceOne
-       or Hyper then
-    begin
-      // Reset time between physics updates
-      PrevCallTime := CurrTime;
-      // Let all lemmings move
-      Game.UpdateLemmings;
-      // Save current state every 10 seconds, unless mass replay checking
-      if (Game.CurrentIteration mod 170 = 0) and (GameParams.ReplayCheckIndex = -2) then
+      fRenderInterface.ForceUpdate := false;
+
+      // Check for user helpers
+      CheckUserHelpers;
+
+      // only in paused mode adjust RR. If not paused it's updated per frame.
+      if Game.Paused then
+        if (TimeForScroll and not Game.Replaying) or ForceOne then
+          CheckAdjustReleaseRate;
+
+      // set new screen position
+      if TimeForScroll then
       begin
-        AddSaveState;
-        fSaveList.TidyList(Game.CurrentIteration);
+        PrevScrollTime := CurrTime;
+        CheckScroll;
       end;
-    end;
 
-    // Refresh panel if in usual or fast play mode
-    if not Hyper then
-    begin
-      SkillPanel.RefreshInfo;
-      SkillPanel.DrawMinimap(Game.Minimap);
-      CheckResetCursor;
-    end
-    // End hyperspeed if we have reached the TargetIteration and are not mass replay checking
-    // Note that TargetIteration is 1 less than the actual target frame number,
-    // because we only set Game.LeavingHyperSpeed=True here,
-    // any only exit hyperspeed after calling Game.UpdateLemmings once more!
-    else if (Game.CurrentIteration >= Game.TargetIteration) and (GameParams.ReplayCheckIndex = -2) then
-    begin
-      Game.HyperSpeedEnd;
-      SkillPanel.RefreshInfo;
-      SkillPanel.DrawMinimap(Game.Minimap);
-      CheckResetCursor;
-    end;
-
-
-    if (GameParams.ReplayCheckIndex <> -2) then // i.e. we are mass replay checking
-    begin
-      if Game.Checkpass then
+      // Check whether we have to move the lemmings
+      if (TimeForFrame and not Pause)
+         or ForceOne
+         or Hyper then
       begin
-        Game.Finish;
-      end
-      else
-      begin
-        Game.TargetIteration := Game.CurrentIteration + 170; //keep it in hyperspeed mode
-        // Make sure to use hyperspeed mode
-        if not Game.HyperSpeed then Game.HyperSpeedBegin;
-        // Save frame number of last replay action and abort the replay if it was more than 5min ago
-        if Game.Replaying then
-          fLastReplayingIteration := Game.CurrentIteration
-        else if fLastReplayingIteration < Game.CurrentIteration - (5 * 60 * 17) then
+        // Reset time between physics updates
+        PrevCallTime := CurrTime;
+        // Let all lemmings move
+        Game.UpdateLemmings;
+        // Save current state every 10 seconds, unless mass replay checking
+        if (Game.CurrentIteration mod 170 = 0) and (GameParams.ReplayCheckIndex = -2) then
         begin
-          fReplayKilled := true;
-          Game.Finish;
+          AddSaveState;
+          fSaveList.TidyList(Game.CurrentIteration);
         end;
       end;
+
+      // Refresh panel if in usual or fast play mode
+      if not Hyper then
+      begin
+        SkillPanel.RefreshInfo;
+        SkillPanel.DrawMinimap(Game.Minimap);
+        CheckResetCursor;
+      end
+      // End hyperspeed if we have reached the TargetIteration and are not mass replay checking
+      // Note that TargetIteration is 1 less than the actual target frame number,
+      // because we only set Game.LeavingHyperSpeed=True here,
+      // any only exit hyperspeed after calling Game.UpdateLemmings once more!
+      else if (Game.CurrentIteration >= Game.TargetIteration) and (GameParams.ReplayCheckIndex = -2) then
+      begin
+        Game.HyperSpeedEnd;
+        SkillPanel.RefreshInfo;
+        SkillPanel.DrawMinimap(Game.Minimap);
+        CheckResetCursor;
+      end;
+
+      if (GameParams.ReplayCheckIndex <> -2) then // i.e. we are mass replay checking
+      begin
+        if Game.Checkpass then
+        begin
+          Game.Finish;
+        end
+        else
+        begin
+          Game.TargetIteration := Game.CurrentIteration + 170; //keep it in hyperspeed mode
+          // Make sure to use hyperspeed mode
+          if not Game.HyperSpeed then Game.HyperSpeedBegin;
+          // Save frame number of last replay action and abort the replay if it was more than 5min ago
+          if Game.Replaying then
+            fLastReplayingIteration := Game.CurrentIteration
+          else if fLastReplayingIteration < Game.CurrentIteration - (5 * 60 * 17) then
+          begin
+            fReplayKilled := true;
+            Game.Finish;
+          end;
+        end;
+      end;
+
     end;
 
+    // Update drawing
+    if (TimeForFrame or fNeedRedraw) then
+    begin
+      DoDraw;
+    end;
+(*  except
+    on E: Exception do
+      OnException(E, 'TGameWindow.Application_Idle');
+  end;*)
+end;
+
+procedure TGameWindow.OnException(E: Exception; aCaller: String = 'Unknown');
+var
+  SL: TStringList;
+  RIValid: Boolean;
+begin
+  Game.Paused := true;
+  SL := TStringList.Create;
+
+  // Attempt to load existing report so we can simply add to the end.
+  // We don't want to trigger a second exception here, so let's be over-cautious
+  // with the try...excepts. Performance probably doesn't matter if we end up here.
+  try
+    if FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt') then
+    begin
+      SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt');
+      SL.Add('');
+      SL.Add('');
+    end;
+  except
+    SL.Clear;
   end;
 
-  // Update drawing
-  if (TimeForFrame or fNeedRedraw) then
+  SL.Add('Exception raised at ' + DateToStr(Now));
+  SL.Add('  Happened in: ' + aCaller);
+  SL.Add('  Class: ' + E.ClassName);
+  SL.Add('  Message: ' + E.Message);
+
+  RIValid := false;
+  if fRenderInterface = nil then
+    SL.Add('  fRenderInterface: nil')
+  else
+    try
+      fRenderInterface.Null;
+      SL.Add('  fRenderInterface: Valid');
+      RIValid := true;
+    except
+      SL.Add('  fRenderInterface: Exception on access attempt');
+    end;
+
+  if RIValid then
   begin
-    DoDraw;
+    if fRenderInterface.LemmingList = nil then
+      SL.Add('  fRenderInterface.LemmingList: nil')
+    else
+      try
+        SL.Add('  fRenderInterface.LemmingList.Count: ' + IntToStr(fRenderInterface.LemmingList.Count));
+      except
+        SL.Add('  fRenderInterface.LemmingList: Exception on access attempt');
+      end;
+
+    if fRenderInterface.SelectedLemming = nil then
+      SL.Add('  fRenderInterface.SelectedLemming: nil')
+    else
+      try
+        fRenderInterface.SelectedLemming.LemX := 0;
+        SL.Add('  fRenderInterface.SelectedLemming: Valid');
+      except
+        SL.Add('  fRenderInterface.SelectedLemming: Exception on access attempt');
+      end;
+
+    if fRenderInterface.HighlitLemming = nil then
+      SL.Add('  fRenderInterface.HighlitLemming: nil')
+    else
+      try
+        fRenderInterface.HighlitLemming.LemX := 0;
+        SL.Add('  fRenderInterface.HighlitLemming: Valid');
+      except
+        SL.Add('  fRenderInterface.HighlitLemming: Exception on access attempt');
+      end;
+
+    if fRenderInterface.ReplayLemming = nil then
+      SL.Add('  fRenderInterface.ReplayLemming: nil')
+    else
+      try
+        fRenderInterface.ReplayLemming.LemX := 0;
+        SL.Add('  fRenderInterface.ReplayLemming: Valid');
+      except
+        SL.Add('  fRenderInterface.ReplayLemming: Exception on access attempt');
+      end;
+
+    case fRenderInterface.SelectedSkill of
+      spbWalker: SL.Add('  fRenderInterface.SelectedSkill: Walker');
+      spbClimber: SL.Add('  fRenderInterface.SelectedSkill: Climber');
+      spbSwimmer: SL.Add('  fRenderInterface.SelectedSkill: Swimmer');
+      spbUmbrella: SL.Add('  fRenderInterface.SelectedSkill: Floater');
+      spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
+      spbMechanic: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
+      spbExplode: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
+      spbStoner: SL.Add('  fRenderInterface.SelectedSkill: Stoner');
+      spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
+      spbPlatformer: SL.Add('  fRenderInterface.SelectedSkill: Platformer');
+      spbBuilder: SL.Add('  fRenderInterface.SelectedSkill: Builder');
+      spbStacker: SL.Add('  fRenderInterface.SelectedSkill: Stacker');
+      spbBasher: SL.Add('  fRenderInterface.SelectedSkill: Basher');
+      spbMiner: SL.Add('  fRenderInterface.SelectedSkill: Miner');
+      spbDigger: SL.Add('  fRenderInterface.SelectedSkill: Digger');
+      spbCloner: SL.Add('  fRenderInterface.SelectedSkill: Cloner');
+      else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
+    end;
   end;
+
+  // Attempt to save report. Once again, we'd rather it just fail than crash
+  // and lose the replay data.
+  try
+    SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmixException.txt');
+    RIValid := true;
+  except
+    // We can't do much here.
+    RIValid := false; // reuse is lazy. but I'm doing it anyway.
+  end;
+
+  if RIValid then
+    ShowMessage('An exception has occurred. Details have been saved to NeoLemmixException.txt. Your current replay will be' + #13 +
+                'saved to the "Auto" folder if possible, then you will be returned to the main menu.')
+  else
+    ShowMessage('An exception has occurred. Attempting to save details to a text file failed. Your current replay will be' + #13 +
+                'saved to the "Auto" folder if possible, then you will be returned to the main menu.');
+
+  try
+    Game.Save(true);
+    ShowMessage('Your replay was saved successfully. Returning to main menu now. Restarting NeoLemmix is recommended.');
+  except
+    ShowMessage('Unfortunately, your replay could not be saved.');
+  end;
+
+  CloseScreen(gstMenu);
 end;
 
 procedure TGameWindow.CheckUserHelpers;
@@ -262,13 +396,18 @@ var
   DrawRect: TRect;
 begin
   if Game.HyperSpeed then Exit;
-  fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
-  fRenderInterface.MousePos := Game.CursorPoint;
-  fRenderer.DrawAllObjects(fRenderInterface.ObjectList);
-  fRenderer.DrawLemmings;
-  DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 320, fRenderInterface.ScreenPos.Y + 160);
-  fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
-  fNeedRedraw := false;
+  try
+    fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
+    fRenderInterface.MousePos := Game.CursorPoint;
+    fRenderer.DrawAllObjects(fRenderInterface.ObjectList);
+    fRenderer.DrawLemmings;
+    DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 320, fRenderInterface.ScreenPos.Y + 160);
+    fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
+    fNeedRedraw := false;
+  except
+    on E: Exception do
+      OnException(E, 'TGameWindow.DoDraw');
+  end;
 end;
 
 procedure TGameWindow.CheckShifts(Shift: TShiftState);
