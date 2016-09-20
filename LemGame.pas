@@ -1550,7 +1550,7 @@ begin
 
   Playing := False;
 
-  if moChallengeMode in fGameParams.MiscOptions then
+  if fGameParams.ChallengeMode then
   begin
     fGameParams.Level.Info.ClimberCount    := 0;
     fGameParams.Level.Info.FloaterCount    := 0;
@@ -1587,7 +1587,7 @@ begin
   LemmingsCloned := 0;
   //World.OuterColor := 0;
   TimePlay := Level.Info.TimeLimit;
-  if (TimePlay > 5999) or (moTimerMode in fGameParams.MiscOptions) then
+  if (TimePlay > 5999) or (fGameParams.TimerMode) then
     TimePlay := 0; // infinite time
 
   Options := DOSOHNO_GAMEOPTIONS;
@@ -2116,7 +2116,7 @@ begin
   if fGameFinished then
     Exit;
 
-  if (TimePlay <= 0) and not ((moTimerMode in fGameParams.MiscOptions) or (fGameParams.Level.Info.TimeLimit > 5999)) then
+  if (TimePlay <= 0) and not ((fGameParams.TimerMode) or (fGameParams.Level.Info.TimeLimit > 5999)) then
   begin
     fGameFinished := True;
     GameResultRec.gTimeIsUp := True;

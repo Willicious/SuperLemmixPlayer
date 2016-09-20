@@ -23,59 +23,17 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 433
-    ActivePage = TabSheet1
+    ActivePage = TabSheet4
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Global Options'
-      object GroupBox1: TGroupBox
-        Left = 8
-        Top = 8
-        Width = 249
-        Height = 81
-        Caption = 'Audio Options'
-        TabOrder = 0
-        object Label3: TLabel
-          Left = 16
-          Top = 21
-          Width = 31
-          Height = 13
-          Caption = 'Sound'
-        end
-        object Label5: TLabel
-          Left = 16
-          Top = 51
-          Width = 28
-          Height = 13
-          Caption = 'Music'
-        end
-        object tbSoundVol: TTrackBar
-          Left = 64
-          Top = 16
-          Width = 177
-          Height = 33
-          Max = 100
-          Frequency = 10
-          TabOrder = 0
-          OnChange = SliderChange
-        end
-        object tbMusicVol: TTrackBar
-          Left = 64
-          Top = 46
-          Width = 177
-          Height = 33
-          Max = 100
-          Frequency = 10
-          TabOrder = 1
-          OnChange = SliderChange
-        end
-      end
       object GroupBox2: TGroupBox
         Left = 8
         Top = 96
         Width = 249
         Height = 57
         Caption = 'Input Options'
-        TabOrder = 1
+        TabOrder = 0
         object cbOneClickHighlight: TCheckBox
           Left = 12
           Top = 16
@@ -110,7 +68,7 @@ object FormNXConfig: TFormNXConfig
         Width = 249
         Height = 113
         Caption = 'Interface Options'
-        TabOrder = 2
+        TabOrder = 1
         object Label1: TLabel
           Left = 11
           Top = 88
@@ -175,7 +133,7 @@ object FormNXConfig: TFormNXConfig
         Width = 249
         Height = 113
         Caption = 'Replay Options'
-        TabOrder = 3
+        TabOrder = 2
         object Label2: TLabel
           Left = 16
           Top = 64
@@ -226,6 +184,88 @@ object FormNXConfig: TFormNXConfig
           Caption = 'Don'#39't Replay After Backwards Frameskips'
           TabOrder = 3
         end
+      end
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'Audio Options'
+      ImageIndex = 3
+      object Label3: TLabel
+        Left = 24
+        Top = 45
+        Width = 31
+        Height = 13
+        Caption = 'Sound'
+      end
+      object Label5: TLabel
+        Left = 24
+        Top = 75
+        Width = 28
+        Height = 13
+        Caption = 'Music'
+      end
+      object Label6: TLabel
+        Left = 16
+        Top = 16
+        Width = 42
+        Height = 13
+        Caption = 'Volume'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label7: TLabel
+        Left = 16
+        Top = 112
+        Width = 104
+        Height = 13
+        Caption = 'Post-Level Jingles'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object tbSoundVol: TTrackBar
+        Left = 64
+        Top = 40
+        Width = 177
+        Height = 33
+        Max = 100
+        Frequency = 10
+        TabOrder = 0
+        OnChange = SliderChange
+      end
+      object tbMusicVol: TTrackBar
+        Left = 64
+        Top = 70
+        Width = 177
+        Height = 33
+        Max = 100
+        Frequency = 10
+        TabOrder = 1
+        OnChange = SliderChange
+      end
+      object cbSuccessJingle: TCheckBox
+        Left = 28
+        Top = 136
+        Width = 129
+        Height = 17
+        Caption = 'Success'
+        TabOrder = 2
+        OnClick = OptionChanged
+      end
+      object cbFailureJingle: TCheckBox
+        Left = 28
+        Top = 160
+        Width = 129
+        Height = 17
+        Caption = 'Failure'
+        TabOrder = 3
+        OnClick = OptionChanged
       end
     end
     object TabSheet3: TTabSheet

@@ -240,10 +240,14 @@ begin
       SetTimeRecord(dSection, dLevel, gLastRescueIteration);
     end;
 
-    if gSuccess then
-      GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_SUCCESS)
-    else
-      GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_FAILURE);
+    if gRescued >= Level.Info.RescueCount then
+    begin
+      if PostLevelVictorySound then
+        GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_SUCCESS)
+    end else begin
+      if PostLevelFailureSound then
+        GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_FAILURE);
+    end;
 
 
       // init some local strings

@@ -104,7 +104,7 @@ begin
   //g := p^;
   with fSaveData.Config do
   begin
-    p.MiscOptions := TMiscOptions(ToggleOptions);
+    //p.MiscOptions := TMiscOptions(ToggleOptions);
     p.ForceSkillset := ForceSkillset;
     p.fTestScreens := TestOption;
     p.SoundOptions := TGameSoundOptions(SoundOption);

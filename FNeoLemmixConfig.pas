@@ -11,7 +11,6 @@ type
   TFormNXConfig = class(TForm)
     NXConfigPages: TPageControl;
     TabSheet1: TTabSheet;
-    GroupBox1: TGroupBox;
     btnOK: TButton;
     btnCancel: TButton;
     btnApply: TButton;
@@ -45,12 +44,17 @@ type
     cbEnableOnline: TCheckBox;
     cbUpdateCheck: TCheckBox;
     cbNoAutoReplay: TCheckBox;
-    tbSoundVol: TTrackBar;
-    tbMusicVol: TTrackBar;
-    Label3: TLabel;
-    Label5: TLabel;
     cbPauseAfterBackwards: TCheckBox;
     cbNoBackgrounds: TCheckBox;
+    TabSheet4: TTabSheet;
+    tbSoundVol: TTrackBar;
+    Label3: TLabel;
+    Label5: TLabel;
+    tbMusicVol: TTrackBar;
+    Label6: TLabel;
+    Label7: TLabel;
+    cbSuccessJingle: TCheckBox;
+    cbFailureJingle: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -103,8 +107,6 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  tbSoundVol.Position := SoundVolume;
-  tbMusicVol.Position := MusicVolume;
   cbOneClickHighlight.Checked := fGameParams.ClickHighlight;
   cbLemmingBlink.Checked := fGameParams.LemmingBlink;
   cbTimerBlink.Checked := fGameParams.TimerBlink;
@@ -137,11 +139,17 @@ begin
     i := 0;
   cbReplayNaming.ItemIndex := i;
 
-  //// Page 2 (Online Options) ////
+  //// Page 2 (Audio Options) ////
+  tbSoundVol.Position := SoundVolume;
+  tbMusicVol.Position := MusicVolume;
+  cbSuccessJingle.Checked := fGameParams.PostLevelVictorySound;
+  cbFailureJingle.Checked := fGameParams.PostLevelFailureSound;
+
+  //// Page 3 (Online Options) ////
   cbUpdateCheck.Checked := fGameParams.CheckUpdates; // in reverse order as the next one may override this
   cbEnableOnline.Checked := fGameParams.EnableOnline;
 
-  //// Page 3 (Game Options) ////
+  //// Page 4 (Game-Specific Options) ////
   // Checkboxes
   cbLookForLVL.Enabled := (fGameParams.SysDat.Options and 1) <> 0;
   cbLookForLVL.Checked := fGameParams.LookForLVLFiles and cbLookForLVL.Enabled;
@@ -173,10 +181,6 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  //fGameParams.MusicEnabled := cbMusic.Checked;
-  //fGameParams.SoundEnabled := cbSound.Checked;
-  SoundVolume := tbSoundVol.Position;
-  MusicVolume := tbMusicVol.Position;
   fGameParams.ClickHighlight := cbOneClickHighlight.Checked;
   fGameParams.LemmingBlink := cbLemmingBlink.Checked;
   fGameParams.TimerBlink := cbTimerBlink.Checked;
@@ -216,12 +220,18 @@ begin
        end;
   end;
 
-  //// Page 2 (Online Options) ////
+  //// Page 2 (Audio Options) ////
+  SoundVolume := tbSoundVol.Position;
+  MusicVolume := tbMusicVol.Position;
+  fGameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
+  fGameParams.PostLevelFailureSound := cbFailureJingle.Checked;
+
+  //// Page 3 (Online Options) ////
   // Checkboxes
   fGameParams.EnableOnline := cbEnableOnline.Checked;
   fGameParams.CheckUpdates := cbUpdateCheck.Checked;
 
-  //// Page 3 (Game Options) ////
+  //// Page 4 (Game Options) ////
   // Checkboxes
   fGameParams.LookForLVLFiles := cbLookForLVL.Checked;
   TBaseDosLevelSystem(fGameParams.Style.LevelSystem).LookForLVL := fGameParams.LookForLVLFiles;
