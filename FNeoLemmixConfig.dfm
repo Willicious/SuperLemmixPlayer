@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 473
+  ClientHeight = 385
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,14 +22,14 @@ object FormNXConfig: TFormNXConfig
     Left = 0
     Top = 0
     Width = 273
-    Height = 433
-    ActivePage = TabSheet4
+    Height = 345
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
-      Caption = 'Global Options'
+      Caption = 'General Options'
       object GroupBox2: TGroupBox
         Left = 8
-        Top = 96
+        Top = 8
         Width = 249
         Height = 57
         Caption = 'Input Options'
@@ -64,7 +64,7 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox3: TGroupBox
         Left = 8
-        Top = 160
+        Top = 72
         Width = 249
         Height = 113
         Caption = 'Interface Options'
@@ -129,7 +129,7 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox4: TGroupBox
         Left = 8
-        Top = 280
+        Top = 192
         Width = 249
         Height = 113
         Caption = 'Replay Options'
@@ -412,7 +412,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 440
+    Top = 352
     Width = 65
     Height = 25
     Caption = 'OK'
@@ -421,7 +421,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 104
-    Top = 440
+    Top = 352
     Width = 65
     Height = 25
     Caption = 'Cancel'
@@ -430,7 +430,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 184
-    Top = 440
+    Top = 352
     Width = 65
     Height = 25
     Caption = 'Apply'
