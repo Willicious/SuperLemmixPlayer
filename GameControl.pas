@@ -44,6 +44,7 @@ type
     gstPlay,
     gstPostview,
     gstLevelSelect,
+    gstLevelCode,
     gstSounds,
     gstExit,
     gstText,

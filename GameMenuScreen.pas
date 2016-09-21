@@ -16,7 +16,7 @@ uses
   UFastStrings,
   UMisc, Dialogs,
   LemCore, LemTypes, LemStrings, LemDosStructures, LemRendering, LemLevel, LemDosStyle, LemGame,
-  GameControl, GameBaseScreen, GamePreviewScreen, GameLevelSelectScreen;
+  GameControl, GameBaseScreen, GamePreviewScreen, GameLevelSelectScreen, GameLevelCodeScreen;
 
 type
   {-------------------------------------------------------------------------------
@@ -437,6 +437,7 @@ begin
       VK_F5     : DumpImages;
       VK_F6     : if GameParams.Talismans.Count <> 0 then CloseScreen(gstTalisman);
       VK_F7     : DoMassReplayCheck;
+      VK_F8     : CloseScreen(gstLevelCode);
       VK_F12    : DoTestStuff;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : NextSection(True);
