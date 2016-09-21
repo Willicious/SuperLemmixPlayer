@@ -92,7 +92,7 @@ type
     constructor Create;
     destructor Destroy; override;
   { sounds }
-    function AddSoundFromFileName(const aFileName: string): Integer;
+    function AddSoundFromFileName(const aFileName: string; FromNXP: Boolean = false): Integer;
     function AddSoundFromStream(aStream: TMemoryStream): Integer;
     procedure FreeSound(aIndex: Integer);
     procedure PlaySound(Index: Integer; Balance: Integer); overload;
@@ -299,11 +299,14 @@ begin
   M.LoadFromStream(aStream);
 end;
 
-function TSoundMgr.AddSoundFromFileName(const aFileName: string): Integer;
+function TSoundMgr.AddSoundFromFileName(const aFileName: string; FromNXP: Boolean = false): Integer;
 var
   S: TMemoryStream;
 begin
-  S := CreateDataStream(aFileName, ldtSound);
+  if FromNXP then
+    S := CreateDataStream(aFileName, ldtLemmings)
+  else
+    S := CreateDataStream(aFileName, ldtSound);
   Result := Sounds.Add(Pointer(BASS_SampleLoad(true, S.Memory, 0, S.Size, 65535, 0)));
   //S.LoadFromFileName(aFileName);
 end;
