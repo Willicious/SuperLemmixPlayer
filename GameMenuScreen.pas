@@ -430,9 +430,7 @@ begin
                   // Wise advice from Simon - save these things on exiting the
                   // config dialog, rather than waiting for a quit or a screen
                   // transition to save them.
-                  GameParams.SaveSystem.SaveFile(@GameParams);
-                  GameParams.SaveToIniFile;
-                  GameParams.Hotkeys.SaveFile;
+                  GameParams.Save;
                 end;
       //VK_F4     : CloseScreen(gstNavigation);
       VK_F4     : DumpLevels;

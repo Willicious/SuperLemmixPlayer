@@ -137,6 +137,9 @@ type
     function GetSoundFlag(aFlag: TGameSoundOption): Boolean;
     //procedure SetSoundFlag(aFlag: TGameSoundOption; aValue: Boolean);
 
+    procedure LoadFromIniFile;
+    procedure SaveToIniFile;
+
   public
     // this is initialized by appcontroller
     MainDatFile  : string;
@@ -193,9 +196,10 @@ type
 
     constructor Create;
     destructor Destroy; override;
-    procedure LoadFromIniFile;
-    procedure SaveToIniFile;
     property SaveSystem: TNeoSave read fSaveSystem;
+
+    procedure Save;
+    procedure Load;
 
     property MusicEnabled: Boolean Index gsoMusic read GetSoundFlag;
     property SoundEnabled: Boolean Index gsoSound read GetSoundFlag;
@@ -246,6 +250,24 @@ type
 implementation
 
 { TDosGameParams }
+
+procedure TDosGameParams.Save;
+begin
+  try
+    SaveToIniFile;
+    Hotkeys.SaveFile;
+    SaveSystem.SaveFile(@self);
+  except
+    ShowMessage('An error occured while trying to save data.');
+  end;
+end;
+
+procedure TDosGameParams.Load;
+begin
+  SaveSystem.LoadFile(@self);
+  LoadFromIniFile;
+  // Hotkeys automatically load when the hotkey manager is created
+end;
 
 procedure TDosGameParams.SaveToIniFile;
 var
