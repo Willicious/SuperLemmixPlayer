@@ -18,5 +18,10 @@ this gives an error, you may need to modify LemResourceBuilder's source and
 replace the path to brcc32.exe with the correct path for your system. (I
 believe using GoRC.exe instead works, too.)
 
-NOTE: LemResourceBuilder was last modified in V1.47n-D. If you had to recompile
+From commit 21D0B58 onwards; the following use is made for branches:
+  backwards-compatible: Releases based on (mostly) old formats and NXP files.
+  new-formats: Releases that are working towards solely using the new formats.
+  master: Changes that need to be integrated into both of the other two branches.
+
+NOTE: LemResourceBuilder was last modified in 31E8175. If you had to recompile
       it, you'll need to do so again!
