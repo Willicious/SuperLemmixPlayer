@@ -381,6 +381,7 @@ begin
                end;
     VK_RETURN: begin VGASpecPrep; CloseScreen(gstPlay); end;
           $52: ShowRecords;
+    VK_F2: CloseScreen(gstLevelSelect);
     VK_LEFT: PreviousLevel;
     VK_RIGHT: NextLevel;
     VK_DOWN: PreviousRank;

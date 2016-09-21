@@ -329,6 +329,7 @@ begin
     VK_RETURN: begin
                  CloseScreen(gstPreview);
                end;
+    VK_F2: CloseScreen(gstLevelSelect);
   end;
 end;
 
