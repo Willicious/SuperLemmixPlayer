@@ -449,6 +449,7 @@ type
     SFX_SWIMMING               : Integer;
     SFX_FALLOUT                : Integer;
     SFX_FIXING                 : Integer;
+    SFX_ZOMBIE                 : Integer;
     SFX_CUSTOM                 : Array[0..255] of Integer;
   { errors }
     //fErrorFrameCountDown       : Integer;
@@ -1280,6 +1281,7 @@ begin
     SFX_SWIMMING        := AddSoundFromFileName('splash.ogg');
     SFX_FALLOUT         := AddSoundFromFileName('die.ogg');
     SFX_FIXING          := AddSoundFromFileName('wrench.ogg');
+    SFX_ZOMBIE          := AddSoundFromFileName('zombie.ogg');
 
     SoundMgr.BrickSound := SFX_BUILDER_WARNING;
   end;
@@ -4721,6 +4723,7 @@ begin
     Assert(RemMode <> RM_SAVE, 'Zombie removed with RM_SAVE removal type!');
     Assert(RemMode <> RM_ZOMBIE, 'Zombie removed with RM_ZOMBIE removal type!');
     L.LemRemoved := True;
+    if RemMode = RM_NEUTRAL then CueSoundEffect(SFX_FALLOUT, L.Position);
   end
 
   else if not L.LemRemoved then // usual and living lemming
@@ -4736,6 +4739,7 @@ begin
               end;
     RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT, L.Position);
     RM_ZOMBIE: begin
+                 CueSoundEffect(SFX_ZOMBIE);
                  L.LemIsZombie := True;
                  L.LemRemoved := False;
                end;
