@@ -27,6 +27,7 @@ type
     procedure SaveLevelImage;
     function GetScreenText: string;
     procedure CheckLemmingCount(aLevel: TLevel);
+    procedure FilterSkillset(aLevel: TLevel);
     procedure NextLevel;
     procedure PreviousLevel;
     procedure NextRank;
@@ -98,6 +99,59 @@ begin
       LemsSpawned := LemsSpawned + 1;
       if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
     end;
+  end;
+end;
+
+procedure TGamePreviewScreen.FilterSkillset(aLevel: TLevel);
+var
+  i, SkillCount: Integer;
+  Key: Word;
+  NeedClear: Boolean;
+const
+  BIT_TO_SV: array[0..15] of Integer = (15, 7, 6, 5, 14, 4, 13, 3, 12, 2, 11, 10, 1, 9, 0, 8);
+  function FindPickupSkill(aSkillSValue: Integer): Boolean;
+  var
+    i: Integer;
+  begin
+    Result := false;
+    for i := 0 to aLevel.InteractiveObjects.Count-1 do
+      if GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]).TriggerEffect = 14 then
+        if aLevel.InteractiveObjects[i].Skill = aSkillSValue then
+        begin
+          Result := true;
+          Exit;
+        end;
+  end;
+begin
+  for i := 0 to 15 do
+  begin
+    Key := 1 shl i;
+    if (aLevel.Info.SkillTypes and Key) <> Key then Continue;
+    case i of
+      0: SkillCount := aLevel.Info.ClonerCount;
+      1: SkillCount := aLevel.Info.DiggerCount;
+      2: SkillCount := aLevel.Info.MinerCount;
+      3: SkillCount := aLevel.Info.BasherCount;
+      4: SkillCount := aLevel.Info.StackerCount;
+      5: SkillCount := aLevel.Info.BuilderCount;
+      6: SkillCount := aLevel.Info.PlatformerCount;
+      7: SkillCount := aLevel.Info.BlockerCount;
+      8: SkillCount := aLevel.Info.StonerCount;
+      9: SkillCount := aLevel.Info.BomberCount;
+      10: SkillCount := aLevel.Info.MechanicCount;
+      11: SkillCount := aLevel.Info.GliderCount;
+      12: SkillCount := aLevel.Info.FloaterCount;
+      13: SkillCount := aLevel.Info.SwimmerCount;
+      14: SkillCount := aLevel.Info.ClimberCount;
+      15: SkillCount := aLevel.Info.WalkerCount;
+      else SkillCount := 0; // just to avoid compiler warning
+    end;
+    if SkillCount = 0 then
+      NeedClear := not FindPickupSkill(BIT_TO_SV[i])
+    else
+      NeedClear := false;
+    if NeedClear then
+      aLevel.Info.SkillTypes := aLevel.Info.SkillTypes and (not Key);
   end;
 end;
 
@@ -241,6 +295,7 @@ begin
       Lw := Level.Info.Width;
       Lh := Level.Info.Height;
       CheckLemmingCount(Level);
+      FilterSkillset(Level);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
 
