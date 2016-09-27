@@ -47,6 +47,8 @@ type
     fGraphicSet     : Integer;
     fGraphicSetEx   : Integer;
 
+    fBackgroundIndex: Integer;
+
     fLevelOptions   : Cardinal;
 
     fSuperLemming   : Integer;
@@ -132,6 +134,8 @@ type
     property VgaspecFile    : String read fVgaspecFile write fVgaspecFile;
     property GraphicSetName : String read fGraphicSetName write fGraphicSetName;
     property MusicFile      : String read fMusicFile write fMusicFile;
+
+    property BackgroundIndex: Integer read fBackgroundIndex write fBackgroundIndex;
 
     property BnsRank: Integer read fBnsRank write fBnsRank;
     property BnsLevel: Integer read fBnsLevel write fBnsLevel;
@@ -254,8 +258,8 @@ begin
   Height := 160;
   Title          := '';
   Author         := '';
-  for i := 0 to Length(WindowOrder)-1 do
-    WindowOrder[i] := 0;
+  fBackgroundIndex := 0;
+  SetLength(WindowOrder, 0);
 end;
 
 constructor TLevelInfo.Create;

@@ -180,7 +180,7 @@ type
     {0008}  ReleaseRate                : Byte;
             LevelOptions               : Byte;
             Resolution                 : Byte;
-            Reserved                   : Byte;
+            BgIndex                    : Byte;
             ScreenPosition             : Word;
             ScreenYPosition            : Word;
     {0010}  WalkerCount                : Byte;

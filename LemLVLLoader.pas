@@ -851,8 +851,8 @@ begin
         ClearLevel;
         DisplayPercent   := 0;
         ReleaseRate      := Buf.ReleaseRate;
-        if (Buf.LevelOptions2 and 1) <> 0 then
-          ReleaseRateLocked := true;
+        ReleaseRateLocked := (Buf.LevelOptions2 and 1) <> 0;
+        BackgroundIndex := Buf.BgIndex;
 
         LemmingsCount    := Buf.LemmingsCount;
         RescueCount      := Buf.RescueCount;
@@ -1721,6 +1721,7 @@ begin
       Buf.ScreenYPosition := ScreenYPosition;
 
       Buf.Resolution := 8;
+      Buf.BgIndex := BackgroundIndex;
 
       Buf.Width := Width;
       Buf.Height := Height;
