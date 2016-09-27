@@ -714,7 +714,6 @@ var
   begin
     Result := false;
     DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
-    if DataStream = nil then Exit;
 
     LS := TBaseDosLevelSystem(fGameParams.Style.LevelSystem);
 
@@ -799,19 +798,7 @@ begin
        SoundVolume := 0;
        MusicVolume := 0;
        if not TryLevelInfoFile then
-       begin
-         SetLength(LevelIDArray, TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetSectionCount);
-         for dS := 0 to Length(LevelIDArray)-1 do
-         begin
-           SetLength(LevelIDArray[dS], TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetLevelCount(dS));
-           for dL := 0 to Length(LevelIDArray[dS])-1 do
-           begin
-             TBaseDosLevelSystem(fGameParams.Style.LevelSystem).ResetOddtableHistory;
-             fGameParams.Style.LevelSystem.LoadSingleLevel(fGameParams.Info.dPack, dS, dL, fGameParams.Level);
-             LevelIDArray[dS][dL] := fGameParams.Level.Info.LevelID;
-           end;
-         end;
-       end;
+         raise Exception.Create('Couldn''t get Level IDs from info file.');
        for i := 0 to fGameParams.ReplayResultList.Count-1 do
        begin
          FoundMatch := false;
