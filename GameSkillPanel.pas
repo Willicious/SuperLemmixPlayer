@@ -724,6 +724,7 @@ begin
 
 
     TempBmp := TBitmap32.Create;
+    TempBmp.DrawMode := dmBlend;
 
     // Panel graphic
     GetGraphic('skill_panel.png', fOriginal);
@@ -751,6 +752,15 @@ begin
       TempBmp.DrawTo(fSkillIcons[i], 0, 0, SrcRect);
       SrcRect.Right := SrcRect.Right + 16;
       SrcRect.Left := SrcRect.Left + 16;
+
+      if SrcRect.Left >= TempBmp.Width then
+        SrcRect := Rect(0, 0, 16, 23);
+    end;
+
+    for i := 0 to 15 do
+    begin
+      GetGraphic('icon_' + SKILL_NAMES[i] + '.png', TempBmp);
+      TempBmp.DrawTo(fSkillIcons[i]);
     end;
 
     // Skill counts
