@@ -688,38 +688,22 @@ begin
 
   Fst := CreateDataStream('levels.nxmi', ldtLemmings);
 
-  if Fst = nil then
-  begin
-    Fst := CreateDataStream(GetLevelPackPrefix + LeadZeroStr(aSection, 3) + '.dat', ldtLemmings);
-    Dcmp := TDosDatDecompressor.Create;
-    Fsl := TDosDatSectionList.Create;
-    try
-      Dcmp.LoadSectionList(Fst, Fsl, False);
-      Result := Fsl.Count;
-      fLevelCount[aSection] := Result;
-    finally
-      Fst.Free;
-      Dcmp.Free;
-      Fsl.Free;
-    end;
-  end else begin
-    Parser := TNeoLemmixParser.Create;
-    try
-      Parser.LoadFromStream(Fst);
-      i := 0;
-      repeat
-        Line := Parser.NextLine;
-        if Line.Keyword = 'LEVELCOUNT' then
-        begin
-          fLevelCount[i] := Line.Numeric;
-          if i = aSection then Result := Line.Numeric;
-          Inc(i);
-        end;
-      until (Line.Keyword = '') or (i = GetSectionCount);
-    finally
-      Fst.Free;
-      Parser.Free;
-    end;
+  Parser := TNeoLemmixParser.Create;
+  try
+    Parser.LoadFromStream(Fst);
+    i := 0;
+    repeat
+      Line := Parser.NextLine;
+      if Line.Keyword = 'LEVELCOUNT' then
+      begin
+        fLevelCount[i] := Line.Numeric;
+        if i = aSection then Result := Line.Numeric;
+        Inc(i);
+      end;
+    until (Line.Keyword = '') or (i = GetSectionCount);
+  finally
+    Fst.Free;
+    Parser.Free;
   end;
 end;
 
@@ -760,40 +744,7 @@ begin
   Assert(Owner is TBaseDosLemmingStyle);
 
   DataStream := CreateDataStream(LeadZeroStr(aInfo.DosLevelRankIndex, 2) + LeadZeroStr(aInfo.DosLevelPackIndex, 2) + '.lvl', ldtLemmings);
-  if DataStream <> nil then
-  begin
-    TLVLLoader.LoadLevelFromStream(DataStream, aLevel, OddLoad);
-    Exit;
-  end;
-
-  Sections := TDosDatSectionList.Create;
-  Decompressor := TDosDatDecompressor.Create;
-  try
-    DataStream := CreateDataStream(aInfo.DosLevelPackFileName, ldtLemmings);
-    try
-      Decompressor.LoadSectionList(DataStream, Sections, False);
-    finally
-      DataStream.Free;
-    end;
-    //Decompressor.LoadSectionListFromFile(aInfo.DosLevelPackFileName, Sections, False);
-    TheSection := Sections[aInfo.DosLevelPackIndex];
-    with TheSection do
-    begin
-      Decompressor.DecompressSection(CompressedData, DecompressedData);
-      DecompressedData.Seek(0, soFromBeginning);
-      //DecompressedData.ReadBuffer(LVL, SizeOf(LVL));
-      //DecompressedData.Seek(0, soFromBeginning);
-    end;
-
-    TLVLLoader.LoadLevelFromStream(TheSection.DecompressedData, aLevel, OddLoad);
-
-
-
-  finally
-    Decompressor.Free;
-    Sections.Free;
-  end;
-
+  TLVLLoader.LoadLevelFromStream(DataStream, aLevel, OddLoad);
 end;
 
 procedure TBaseDosLevelSystem.ResetOddtableHistory;
@@ -879,22 +830,13 @@ begin
   LocalLevelInfo.DosLevelRankIndex := aSection;
   LocalLevelInfo.DosLevelPackIndex := FileIndex;
 
-  InternalLoadLevel(LocalLevelInfo, aLevel, OddLoad);
-  if (((aLevel.Info.LevelOptions) and 16) <> 0) and (OddLoad <> 2) then
-    InternalLoadSingleLevel((aLevel.Info.fOddtarget shr 8), (aLevel.Info.fOddtarget mod 256), aLevel, 1);
+  InternalLoadLevel(LocalLevelInfo, aLevel, 0);
   FINALLY
   
   LocalSectionNames.Free;
   LocalLevelInfo.Free;
 
   END;
-
-  if Length(fLevelNames) <= aSection then
-    SetLength(fLevelNames, aSection+1);
-  if Length(fLevelNames[aSection]) <= aLevelIndex then
-    SetLength(fLevelNames[aSection], aLevelIndex+15); // to avoid it happening too often; it isn't an issue if we have extras
-  fLevelNames[aSection][aLevelIndex] := Trim(aLevel.Info.Title) + ' ';
-
 end;
 
 procedure TBaseDosLevelSystem.QuickLoadLevelNames;
@@ -908,7 +850,6 @@ begin
   fDoneQuickLevelNameLoad := true;
 
   DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
-  if DataStream = nil then Exit; //if the file's absent, we'll need to rely on the slow way
 
   Parser := TNeoLemmixParser.Create;
   try
@@ -952,14 +893,9 @@ begin
   Result := '';
   QuickLoadLevelNames;
   if (aSection < Length(fLevelNames)) and (aLevel < Length(fLevelNames[aSection])) then
-    if fLevelNames[aSection][aLevel] <> '' then
-    begin
-      Result := fLevelNames[aSection][aLevel];
-      Exit;
-    end;
-
-  LoadSingleLevel(0, aSection, aLevel, fTempLevel);
-  Result := Trim(fTempLevel.Info.Title);
+    Result := fLevelNames[aSection][aLevel]
+  else
+    raise Exception.Create('TBaseDosLevelSystem.GetLevelName called for a non-existant level');
 end;
 
 procedure TBaseDosLevelSystem.InternalPrepare;

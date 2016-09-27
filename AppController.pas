@@ -20,7 +20,8 @@ type
 
   // Compatibility flags. These are used by the CheckCompatible function.
   TNxCompatibility = (nxc_Unknown,
-                      nxc_VersionError,
+                      nxc_VersionErrorNew,
+                      nxc_VersionErrorOld,
                       nxc_Compatible,
                       nxc_Incompatible,
                       nxc_BC); //nxc_BC works but implements some backwards compatibility fixes
@@ -77,7 +78,7 @@ var
 const
   // Lowest version numbers that are compatible
   Min_MainVer = 1;    // 1.bb-c
-  Min_SubVer = 47;    // a.37-c
+  Min_SubVer = 48;    // a.37-c
   Min_MinorVer = 1;   // a.bb-A
 
   function GetTargetAsString(aMain, aSub, aMinor: Integer): String;
@@ -92,6 +93,15 @@ const
   function CombineTarget(aMain, aSub, aMinor: Integer): Integer;
   begin
     Result := (aMain * 10000) + (aSub * 100) + aMinor;
+  end;
+
+  function TestFor148Compatible: Boolean;
+  var
+    TempStream: TMemoryStream;
+  begin
+    TempStream := CreateDataStream('levels.nxmi', ldtLemmings);
+    Result := (TempStream <> nil);
+    TempStream.Free;
   end;
 begin
   //Result := nxc_Unknown;
@@ -125,29 +135,19 @@ begin
     begin
       ShowMessage('Warning: This pack may be incompatible with this version of NeoLemmix. Please use' + #13 +
                   'NeoLemmix ' + GetTargetAsString(MainVer, SubVer, MinorVer) + ' or higher.');
-      Result := nxc_VersionError;
+      Result := nxc_VersionErrorNew;
     end;
 
     // If requirement is below lowest supported version
     if CombineTarget(MainVer, MaxSubVer, MaxMinorVer) < CombineTarget(Min_MainVer, Min_SubVer, Min_MinorVer) then
     begin
-      if SubVer < 44 then
+      if not TestFor148Compatible then
       begin
-        //ShowMessage('This pack was built for an older version of NeoLemmix. Please be aware that' + #13 +
-        //            'full compatibility cannot be guaranteed. Using V1.43n-F to play this pack' + #13 +
-        //            'is recommended.');
-        // commented out so it doesn't get annoying while testing. restore before release.
-        Result := nxc_VersionError;
-      end else if SubVer < 47 then
-      begin
-        // Not likely to ever happen. Just in case.
-        ShowMessage('This pack may have compatibility issues.');
-      end else begin
-        // Fallback if there's no specific message. Should never happen but just in case.
-        ShowMessage('Warning: This pack may be incompatible with this version of NeoLemmix. Please update to' + #13 +
-                    'NeoLemmix ' + GetTargetAsString(MainVer, SubVer, MinorVer) + ' or higher.');
-        Result := nxc_VersionError;
+        ShowMessage('This pack was built for older versions of NeoLemmix and is not compatible with this version.' + #13 +
+                    'Use NeoLemmix ' + GetTargetAsString(MainVer, MaxSubVer, MaxMinorVer) + ' to play this pack.');
+        Result := nxc_VersionErrorOld;
       end;
+      // TestFor148Compatible will only pass on certain V1.47n-targetting packs that will not have compatibility issues.
     end;
 
   except
@@ -214,6 +214,9 @@ begin
                                          ShowMessage('ERROR: ' + ExtractFileName(GameFile) + ' is not a valid NeoLemmix data file.');
                                          Halt(0);
                                        end;
+        nxc_VersionErrorOld: begin
+                               Halt(0);
+                             end;
         //nxc_BC: OverrideDirectDrop := false;
       end;
     end else begin

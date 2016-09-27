@@ -149,6 +149,7 @@ type
 
 var
   SoundVolume, MusicVolume: Integer; // using global vars for now. Will implement a better-practice system later (even though I don't see what can go wrong with this)
+  SavedSoundVol, SavedMusicVol: Integer;
 
 implementation
 

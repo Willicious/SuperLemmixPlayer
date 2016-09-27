@@ -16,12 +16,12 @@ uses
   function NumericalVersionToStringVersion(Main, Sub, Minor: Integer): String;
 
 const
-  PVersion = '1.47n-D';
+  PVersion = '1.48n';
 
   // Current version number
   Cur_MainVer = 1;
-  Cur_SubVer = 47;
-  Cur_MinorVer = 4;
+  Cur_SubVer = 48;
+  Cur_MinorVer = 1;
 
   // Do not forget to update consts in TAppController.CheckCompatibility if minimum compatible version has changed!
 
