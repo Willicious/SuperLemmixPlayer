@@ -54,7 +54,7 @@ type
     procedure CheckResetCursor;
     procedure CheckScroll;
     procedure AddSaveState;
-    procedure GotoSaveState(aTargetIteration: Integer);
+    procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     procedure CheckAdjustReleaseRate;
     procedure LoadReplay;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
@@ -431,7 +431,7 @@ begin
   Game.fSelectDx := SDir;  
 end;
 
-procedure TGameWindow.GotoSaveState(aTargetIteration: Integer);
+procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
 {-------------------------------------------------------------------------------
   Go in hyperspeed from the beginning to aTargetIteration
 -------------------------------------------------------------------------------}
@@ -444,6 +444,11 @@ begin
   CanPlay := False;
   CurrentlyPaused := Game.Paused;
   if (aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip then CurrentlyPaused := true;
+  if IsRestart then
+  begin
+    Game.Paused := false;
+    CurrentlyPaused := false;
+  end;
 
   // Find correct save state
   if aTargetIteration > 0 then
@@ -752,8 +757,8 @@ begin
                        MusicVolume := SavedMusicVol; // must be first, else music plays at volume zero
                        SoundOpts := SoundOpts + [gsoMusic];
                      end;
-          lka_Restart: begin         
-                         GotoSaveState(0);
+          lka_Restart: begin
+                         GotoSaveState(0, true); // the true prevents pausing afterwards
                          if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                        end;
           lka_Sound: if SoundVolume <> 0 then
