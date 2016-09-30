@@ -130,7 +130,7 @@ type
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
 
     // Object rendering
-    procedure DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True);
+    procedure DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
     procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 
     // Lemming rendering
@@ -865,7 +865,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True);
+procedure TRenderer.DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
 var
   TempBitmapRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
@@ -989,19 +989,31 @@ var
     fLayers.fIsEmpty[rlObjectHelpers] := false;
   end;
 
+  function IsUseful(aInf: TInteractiveObjectInfo): Boolean;
+  begin
+    Result := true;
+    if not UsefulOnly then Exit;
+
+    if aInf.Obj.IsFake
+    or aInf.IsDisabled
+    or (aInf.TriggerEffect in [DOM_NONE, DOM_ANIMATION, DOM_HINT, DOM_BACKGROUND]) then
+      Result := false;
+  end;
+
 begin
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
 
   // Draw moving backgrounds
   if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
-  for i := 0 to ObjectInfos.Count - 1 do
-  begin
-    Inf := ObjectInfos[i];
-    if not (Inf.TriggerEffect = 30) then Continue;
+  if not UsefulOnly then
+    for i := 0 to ObjectInfos.Count - 1 do
+    begin
+      Inf := ObjectInfos[i];
+      if not (Inf.TriggerEffect = 30) then Continue;
 
-    ProcessDrawFrame(rlBackgroundObjects);
-    fLayers.fIsEmpty[rlBackgroundObjects] := False;
-  end;
+      ProcessDrawFrame(rlBackgroundObjects);
+      fLayers.fIsEmpty[rlBackgroundObjects] := False;
+    end;
 
   // Draw no overwrite objects
   if not fLayers.fIsEmpty[rlObjectsLow] then fLayers[rlObjectsLow].Clear(0);
@@ -1011,6 +1023,7 @@ begin
     if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
     if Inf.IsOnlyOnTerrain then Continue;
     if not Inf.IsNoOverwrite then Continue;
+    if not IsUseful(Inf) then Continue;
 
     ProcessDrawFrame(rlObjectsLow);
     fLayers.fIsEmpty[rlObjectsLow] := False;
@@ -1025,6 +1038,7 @@ begin
     Inf := ObjectInfos[i];
     if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
     if not Inf.IsOnlyOnTerrain then Continue;
+    if not IsUseful(Inf) then Continue;
 
     ProcessDrawFrame(rlOnTerrainObjects);
     fLayers.fIsEmpty[rlOnTerrainObjects] := False;
@@ -1036,6 +1050,7 @@ begin
   begin
     Inf := ObjectInfos[i];
     if not (Inf.TriggerEffect in [7, 8, 19]) then Continue;
+    if not IsUseful(Inf) then Continue;
 
     ProcessDrawFrame(rlOneWayArrows);
     fLayers.fIsEmpty[rlOneWayArrows] := False;
@@ -1049,6 +1064,7 @@ begin
     if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
     if Inf.IsOnlyOnTerrain then Continue;
     if Inf.IsNoOverwrite then Continue;
+    if not IsUseful(Inf) then Continue;
 
     ProcessDrawFrame(rlObjectsHigh);
     fLayers.fIsEmpty[rlObjectsHigh] := False;
