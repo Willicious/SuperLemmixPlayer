@@ -655,7 +655,6 @@ type
     procedure PrepareMusic;
     procedure PlayMusic;
     procedure Start(aReplay: Boolean = False);
-      procedure SetObjectInfos;
     procedure UpdateLemmings;
 
   { callable }
@@ -1688,8 +1687,6 @@ begin
   ObjectInfos.Clear;
   fRenderer.CreateInteractiveObjectList(ObjectInfos);
 
-  // SetObjectInfos;
-
   with Level do
   for i := 0 to ObjectInfos.Count - 1 do
   begin
@@ -1763,35 +1760,6 @@ begin
 
   Playing := True;
 end;
-
-procedure TLemmingGame.SetObjectInfos;
-var
-  i: Integer;
-  Inf: TInteractiveObjectInfo;
-  MO: TMetaObjectInterface;
-begin
-  ObjectInfos.Clear;
-
-  for i := 0 to Level.InteractiveObjects.Count - 1 do
-  begin
-    MO := fRenderer.FindMetaObject(Level.InteractiveObjects[i]);
-    Inf := TInteractiveObjectInfo.Create(Level.InteractiveObjects[i], MO);
-
-    ObjectInfos.Add(Inf);
-
-    // Check whether trigger area intersects the level area
-    if    (Inf.TriggerRect.Top > Level.Info.Height)
-       or (Inf.TriggerRect.Bottom < 0)
-       or (Inf.TriggerRect.Right < 0)
-       or (Inf.TriggerRect.Left > Level.Info.Width) then
-      Inf.IsDisabled := True;
-  end;
-
-  // Get ReceiverID for all Teleporters
-  ObjectInfos.FindReceiverID;
-end;
-
-
 
 
 procedure TLemmingGame.AddPreplacedLemming;

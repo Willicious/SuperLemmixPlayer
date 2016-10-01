@@ -1397,12 +1397,14 @@ begin
     MO := FindMetaObject(Inf.Level.InteractiveObjects[i]);
     ObjInf := TInteractiveObjectInfo.Create(Inf.Level.InteractiveObjects[i], MO);
 
-    // Check whether trigger area intersects the level area
+    // Check whether trigger area intersects the level area, except for moving backgrounds
     if    (ObjInf.TriggerRect.Top > Inf.Level.Info.Height)
        or (ObjInf.TriggerRect.Bottom < 0)
        or (ObjInf.TriggerRect.Right < 0)
        or (ObjInf.TriggerRect.Left > Inf.Level.Info.Width) then
-      ObjInf.IsDisabled := True;
+    begin
+      if ObjInf.TriggerEffect <> DOM_BACKGROUND then ObjInf.IsDisabled := True;
+    end;
 
     ObjInfList.Add(ObjInf);
   end;
