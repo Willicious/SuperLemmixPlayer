@@ -538,7 +538,7 @@ type
     procedure RecordReleaseRate(aRR: Integer);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
     //procedure RecordSkillSelection(aSkill: TSkillPanelButton);
-    procedure RemoveLemming(L: TLemming; RemMode: Integer = 0);
+    procedure RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);
     procedure RemovePixelAt(X, Y: Integer);
     procedure ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
     //procedure ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
@@ -1786,7 +1786,7 @@ begin
 
       if Lem.IsZombie then
       begin
-        RemoveLemming(L, RM_ZOMBIE);
+        RemoveLemming(L, RM_ZOMBIE, true);
         Dec(SpawnedDead);
       end;
 
@@ -4684,7 +4684,7 @@ begin
 end;
 
 
-procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0);
+procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);
 begin
   if fSimulation then Exit;
 
@@ -4693,7 +4693,8 @@ begin
     Assert(RemMode <> RM_SAVE, 'Zombie removed with RM_SAVE removal type!');
     Assert(RemMode <> RM_ZOMBIE, 'Zombie removed with RM_ZOMBIE removal type!');
     L.LemRemoved := True;
-    if RemMode = RM_NEUTRAL then CueSoundEffect(SFX_FALLOUT, L.Position);
+    if (RemMode = RM_NEUTRAL) and not Silent then
+      CueSoundEffect(SFX_FALLOUT, L.Position);
   end
 
   else if not L.LemRemoved then // usual and living lemming
@@ -4707,9 +4708,11 @@ begin
                 Inc(LemmingsIn);
                 GameResultRec.gLastRescueIteration := fCurrentIteration;
               end;
-    RM_NEUTRAL: CueSoundEffect(SFX_FALLOUT, L.Position);
+    RM_NEUTRAL: if not Silent then
+                  CueSoundEffect(SFX_FALLOUT, L.Position);
     RM_ZOMBIE: begin
-                 CueSoundEffect(SFX_ZOMBIE);
+                 if not Silent then
+                   CueSoundEffect(SFX_ZOMBIE);
                  L.LemIsZombie := True;
                  L.LemRemoved := False;
                end;
@@ -4809,6 +4812,33 @@ var
   i: Integer;
   AX, AY: Integer; // average position of entrances
   EntryOpenCount: Integer;
+
+  function UseZombieSound: Boolean;
+  var
+    i, i2: Integer;
+  begin
+    Result := false;
+    for i := 0 to LemmingList.Count-1 do
+      if LemmingList[i].LemIsZombie then
+      begin
+        Result := true;
+        Exit;
+      end;
+    for i := 0 to ObjectInfos.Count-1 do
+      if (ObjectInfos[i].TriggerEffect = 23)
+      and not (ObjectInfos[i].IsDisabled)
+      and (ObjectInfos[i].PreassignedSkills and 64 <> 0) then
+      begin
+        if Length(Level.Info.WindowOrder) = 0 then
+          Result := true
+        else
+          for i2 := 0 to Length(Level.Info.WindowOrder) do
+            if Level.Info.WindowOrder[i2] = i then
+              Result := true;
+
+        if Result then Exit;
+      end;
+  end;
 const
   OID_ENTRY = 1;
 begin
@@ -4830,9 +4860,10 @@ begin
   // hard coded dos frame numbers
   case CurrentIteration of
     15:
-      begin
+      if UseZombieSound then
+        CueSoundEffect(SFX_ZOMBIE)
+      else
         CueSoundEffect(SFX_LETSGO);
-      end;
     35:
       begin
         EntriesOpened := False;
@@ -5182,7 +5213,7 @@ begin
           if (ObjectInfos[ix].PreAssignedSkills and 4) <> 0 then LemIsFloater := true
           else if (ObjectInfos[ix].PreAssignedSkills and 8) <> 0 then LemIsGlider := true;
           if (ObjectInfos[ix].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
-          if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE);
+          if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE, true);
           if NewLemming.LemIsZombie then Dec(SpawnedDead);
         end;
         Inc(LemmingsReleased);
