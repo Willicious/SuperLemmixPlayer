@@ -840,12 +840,27 @@ begin
         fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13, DrawY);
       end;
 
-    DOM_TRAP, DOM_TRAPONCE, DOM_FIRE:
+    DOM_FIRE:
       begin
+        fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13, DrawY);
+      end;
+
+    DOM_TRAP:
+      begin
+        fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17, DrawY);
         if Obj.IsDisabled then
-          fHelperImages[hpi_Trap_Disabled].DrawTo(Dst, DrawX - 13, DrawY)
+          fHelperImages[hpi_Trap_Disabled].DrawTo(Dst, DrawX - 10, DrawY)
         else
-          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 13, DrawY);
+          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
+      end;
+
+    DOM_TRAPONCE:
+      begin
+        fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17, DrawY);
+        if Obj.IsDisabled then
+          fHelperImages[hpi_Trap_Disabled].DrawTo(Dst, DrawX - 10, DrawY)
+        else
+          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
       end;
 
     DOM_RADIATION:
@@ -862,6 +877,24 @@ begin
       begin
         fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13, DrawY);
       end;
+
+    DOM_BUTTON:
+      begin
+        fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19, DrawY);
+      end;
+
+    DOM_FORCELEFT:
+      begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19, DrawY);
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 11, DrawY);
+      end;
+
+    DOM_FORCERIGHT:
+      begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19, DrawY);
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 11, DrawY);
+      end;
+
   end;
 end;
 
@@ -1006,6 +1039,7 @@ begin
   // Draw moving backgrounds
   if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
   if not UsefulOnly then
+  begin
     for i := 0 to ObjectInfos.Count - 1 do
     begin
       Inf := ObjectInfos[i];
@@ -1014,6 +1048,7 @@ begin
       ProcessDrawFrame(rlBackgroundObjects);
       fLayers.fIsEmpty[rlBackgroundObjects] := False;
     end;
+  end;
 
   // Draw no overwrite objects
   if not fLayers.fIsEmpty[rlObjectsLow] then fLayers[rlObjectsLow].Clear(0);
@@ -1072,10 +1107,10 @@ begin
     DrawTriggerArea(Inf);
   end;
 
-  if DrawHelper then
+  // Draw object helpers
+  if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
+  if DrawHelper and UsefulOnly then
   begin
-    // Draw object helpers
-    fLayers[rlObjectHelpers].Clear(0);
     for i := 0 to ObjectInfos.Count-1 do
     begin
       Inf := ObjectInfos[i];
@@ -1090,6 +1125,7 @@ begin
 
       // otherwise, draw its helper
       DrawObjectHelpers(fLayers[rlObjectHelpers], Inf);
+      fLayers.fIsEmpty[rlObjectHelpers] := false;
 
       // if it's a teleporter or receiver, draw all paired helpers too
       if (Inf.TriggerEffect in [11, 12]) and (Inf.PairingId <> -1) then
@@ -1127,6 +1163,7 @@ begin
   begin
     if i = hpi_None then Continue;
     fHelperImages[i] := TPngInterface.LoadPngFile(AppPath + 'gfx/helpers/' + HelperImageFilenames[i]);
+    fHelperImages[i].DrawMode := dmBlend;
   end;
 
   S := CreateDataStream('explode.dat', ldtParticles);
