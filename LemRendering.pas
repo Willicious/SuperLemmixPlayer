@@ -808,6 +808,7 @@ begin
 
   DrawX := (Obj.TriggerRect.Left + Obj.TriggerRect.Right) div 2; // Obj.Left + Obj.Width div 2 - 4;
   DrawY := Obj.Top - 9; // much simpler
+  if DrawY < 0 then DrawY := Obj.Top + Obj.Height + 1; // Draw below instead above the level border
 
   case MO.TriggerEffect of
     DOM_WINDOW:
@@ -826,7 +827,7 @@ begin
     DOM_TELEPORT:
       begin
         fHelperImages[THelperIcon(Obj.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
-        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY);
+        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1);
       end;
 
     DOM_RECEIVER:
@@ -847,20 +848,20 @@ begin
 
     DOM_TRAP:
       begin
-        fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17, DrawY);
-        if Obj.IsDisabled then
-          fHelperImages[hpi_Trap_Disabled].DrawTo(Dst, DrawX - 10, DrawY)
-        else
+        if not Obj.IsDisabled then
+        begin
+          fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17, DrawY);
           fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
+        end;
       end;
 
     DOM_TRAPONCE:
       begin
-        fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17, DrawY);
-        if Obj.IsDisabled then
-          fHelperImages[hpi_Trap_Disabled].DrawTo(Dst, DrawX - 10, DrawY)
-        else
+        if not Obj.IsDisabled then
+        begin
+          fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17, DrawY);
           fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
+        end;
       end;
 
     DOM_RADIATION:
@@ -886,13 +887,23 @@ begin
     DOM_FORCELEFT:
       begin
         fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19, DrawY);
-        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 11, DrawY);
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13, DrawY);
       end;
 
     DOM_FORCERIGHT:
       begin
         fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19, DrawY);
-        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 11, DrawY);
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12, DrawY);
+      end;
+
+    DOM_SPLAT:
+      begin
+        fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16, DrawY);
+      end;
+
+    DOM_NOSPLAT:
+      begin
+        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16, DrawY);
       end;
 
   end;
@@ -1116,7 +1127,8 @@ begin
       Inf := ObjectInfos[i];
 
       // Check if this object is relevant
-      if not PtInRect(Rect(Inf.Left, Inf.Top, Inf.Left + Inf.Width - 1, Inf.Top + Inf.Height - 1),
+      // Magic numbers are needed due to some offset of MousePos wrt. the center of the cursor.
+      if not PtInRect(Rect(Inf.Left - 4, Inf.Top + 1, Inf.Left + Inf.Width - 2, Inf.Top + Inf.Height + 3),
                       fRenderInterface.MousePos) then
         Continue;
 
