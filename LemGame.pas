@@ -1008,7 +1008,7 @@ begin
   // unusable. Code in TGameWindow will then delete it. (This is kludgy, but easier to implement over the
   // current setup than not creating the state in the first place would be.)
   Result := true;
-  if fReplayManager.HasAnyActionAt(aState.CurrentIteration) then Result := false;
+  //if fReplayManager.HasAnyActionAt(aState.CurrentIteration) and (aState.CurrentIteration > 1) then Result := false;
   if not Result then Exit;
 
   // First, some preparation, eg. undraw the selection rectangle for the selected skill
