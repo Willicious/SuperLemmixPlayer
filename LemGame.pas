@@ -3116,7 +3116,8 @@ begin
   Result := False; // only see exit trigger area, if it actually used
 
   if     (not L.LemIsZombie)
-     and ((L.LemAction in [baFloating, baGliding]) or HasPixelAt(L.LemX, L.LemY)) then
+     and (not (L.LemAction in [baFalling, baSplatting]))
+     and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
     Result := True;
     Transition(L, baExiting);
