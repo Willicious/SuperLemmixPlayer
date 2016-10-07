@@ -1079,6 +1079,8 @@ begin
   //fReplayIndex := fRecorder.FindIndexForFrame(fCurrentIteration);
   InfoPainter.SetReplayMark(Replaying);
 
+  ReleaseRateModifier := 0; // we don't want to continue changing it if it's currently changing
+
   // And, update the minimap. Probably easier to redo this from scratch.
   InitializeMiniMap;
 end;

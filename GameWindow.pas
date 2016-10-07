@@ -175,7 +175,7 @@ begin
 
       // only in paused mode adjust RR. If not paused it's updated per frame.
       if Game.Paused then
-        if (TimeForScroll and not Game.Replaying) or ForceOne then
+        if TimeForScroll or ForceOne then
           CheckAdjustReleaseRate;
 
       // set new screen position
