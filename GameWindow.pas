@@ -150,7 +150,7 @@ begin
 
     Pause := Game.Paused;
     Fast := Game.FastForward;
-    ForceOne := ForceUpdateOneFrame;
+    ForceOne := ForceUpdateOneFrame or fRenderInterface.ForceUpdate;
     ForceUpdateOneFrame := False;
     CurrTime := TimeGetTime;
     TimeForFrame := CurrTime - PrevCallTime > IdealFrameTimeMS;
