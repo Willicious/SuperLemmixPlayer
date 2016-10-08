@@ -340,7 +340,6 @@ begin
   if fGameParams.SysDat.Options and 32 = 0 then
   begin
     // This is a setting that disables these options.
-    fGameParams.DebugSteel := false;
     fGameParams.ChallengeMode := false;
     fGameParams.TimerMode := false;
     fGameParams.ForceSkillset := 0;
@@ -355,7 +354,6 @@ begin
     fGameParams.ChallengeMode := false;
     fGameParams.TimerMode := false;
     fGameParams.ForceSkillset := 0;
-    fGameParams.DebugSteel := false;
   end;
 
   fGameParams.WhichLevel := wlLastUnlocked;

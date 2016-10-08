@@ -23,10 +23,10 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 345
-    ActivePage = TabSheet1
+    ActivePage = TabSheet4
     TabOrder = 0
     object TabSheet1: TTabSheet
-      Caption = 'General Options'
+      Caption = 'General'
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -187,7 +187,7 @@ object FormNXConfig: TFormNXConfig
       end
     end
     object TabSheet4: TTabSheet
-      Caption = 'Audio Options'
+      Caption = 'Audio'
       ImageIndex = 3
       object Label3: TLabel
         Left = 24
@@ -269,7 +269,7 @@ object FormNXConfig: TFormNXConfig
       end
     end
     object TabSheet3: TTabSheet
-      Caption = 'Online Options'
+      Caption = 'Online'
       ImageIndex = 2
       object cbEnableOnline: TCheckBox
         Left = 16
@@ -291,13 +291,13 @@ object FormNXConfig: TFormNXConfig
       end
     end
     object TabSheet2: TTabSheet
-      Caption = 'Game Options'
+      Caption = 'Debug'
       ImageIndex = 1
       object GroupBox5: TGroupBox
         Left = 8
         Top = 16
         Width = 249
-        Height = 89
+        Height = 73
         Caption = 'Debugging Options'
         TabOrder = 0
         object cbLookForLVL: TCheckBox
@@ -309,40 +309,31 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbSteelDebug: TCheckBox
+        object cbChallengeMode: TCheckBox
           Left = 16
           Top = 32
           Width = 113
           Height = 17
-          Caption = 'Steel Debug'
+          Caption = 'Infinite Skills'
           TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbChallengeMode: TCheckBox
-          Left = 16
-          Top = 48
-          Width = 113
-          Height = 17
-          Caption = 'Challenge Mode'
-          TabOrder = 2
           OnClick = OptionChanged
         end
         object cbTimerMode: TCheckBox
           Left = 16
-          Top = 64
+          Top = 48
           Width = 113
           Height = 17
-          Caption = 'Timer Mode'
-          TabOrder = 3
+          Caption = 'Infinite Time'
+          TabOrder = 2
           OnClick = OptionChanged
         end
       end
       object GroupBox7: TGroupBox
         Left = 8
-        Top = 112
+        Top = 96
         Width = 249
         Height = 97
-        Caption = 'Forced Skillset'
+        Caption = 'Skillset Override'
         TabOrder = 1
         object Label4: TLabel
           Left = 16
@@ -385,7 +376,7 @@ object FormNXConfig: TFormNXConfig
           Top = 40
           Width = 97
           Height = 17
-          Caption = 'Force This Skill'
+          Caption = 'Have This Skill'
           TabOrder = 1
           OnClick = cbForceSkillClick
         end

@@ -74,8 +74,7 @@ type
 
 type
   TMiscOption = (
-    moLookForLVLFiles,  // 6
-    moDebugSteel,
+    moLookForLVLFiles,
     moChallengeMode,
     moTimerMode,
     moAutoReplayNames,
@@ -206,7 +205,6 @@ type
     property SoundEnabled: Boolean Index gsoSound read GetSoundFlag;
 
     property LookForLVLFiles: Boolean Index moLookForLVLFiles read GetOptionFlag write SetOptionFlag;
-    property DebugSteel: Boolean Index moDebugSteel read GetOptionFlag write SetOptionFlag;
     property ChallengeMode: Boolean Index moChallengeMode read GetOptionFlag write SetOptionFlag;
     property TimerMode: Boolean Index moTimerMode read GetOptionFlag write SetOptionFlag;
     property ClickHighlight: Boolean Index moClickHighlight read GetOptionFlag write SetOptionFlag;

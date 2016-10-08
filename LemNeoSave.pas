@@ -168,7 +168,6 @@ var
     if ((GameParams.SysDat.Options and 32) = 0) then Exit;
 
     // The rest will only execute if these modes are enabled. ^_^
-    if GameParams.DebugSteel then Result := true;
     if GameParams.ChallengeMode then Result := true;
     if GameParams.TimerMode then Result := true;
     if GameParams.ForceSkillset <> 0 then Result := true;
@@ -288,7 +287,6 @@ begin
       AddBoolean('LookForLVLFiles', GameParams.LookForLVLFiles);
     if ((GameParams.SysDat.Options and 32) <> 0) then
     begin
-      AddBoolean('DebugSteel', GameParams.DebugSteel);
       AddBoolean('ChallengeMode', GameParams.ChallengeMode);
       AddBoolean('TimerMode', GameParams.TimerMode);
       AddForcedSkillset;
@@ -441,8 +439,6 @@ var
       // First four are simple on/off options
       if GetKey(Line) = 'lookforlvlfiles' then
         GameParams.LookForLVLFiles := GetToggle(Line);
-      if GetKey(Line) = 'debugsteel' then
-        GameParams.DebugSteel := GetToggle(Line);
       if GetKey(Line) = 'challengemode' then
         GameParams.ChallengeMode := GetToggle(Line);
       if GetKey(Line) = 'timermode' then
