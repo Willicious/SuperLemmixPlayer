@@ -5109,8 +5109,7 @@ procedure TLemmingGame.SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Bo
       if fActiveSkills[i] = Value then Result := true;
   end;
 begin
-  if (fRightMouseButtonHeldDown and fGameParams.ClickHighlight)
-  or (fCtrlButtonHeldDown and not fGameParams.ClickHighlight) then RightClick := true;
+  if fRightMouseButtonHeldDown then RightClick := true;
 
   case Value of
     spbFaster:

@@ -15,7 +15,6 @@ type
     btnCancel: TButton;
     btnApply: TButton;
     GroupBox2: TGroupBox;
-    cbOneClickHighlight: TCheckBox;
     btnHotkeys: TButton;
     GroupBox3: TGroupBox;
     cbLemmingBlink: TCheckBox;
@@ -106,7 +105,6 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  cbOneClickHighlight.Checked := fGameParams.ClickHighlight;
   cbLemmingBlink.Checked := fGameParams.LemmingBlink;
   cbTimerBlink.Checked := fGameParams.TimerBlink;
   cbBlackOut.Checked := fGameParams.BlackOutZero;
@@ -178,7 +176,6 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  fGameParams.ClickHighlight := cbOneClickHighlight.Checked;
   fGameParams.LemmingBlink := cbLemmingBlink.Checked;
   fGameParams.TimerBlink := cbTimerBlink.Checked;
   fGameParams.BlackOutZero := cbBlackOut.Checked;

@@ -557,9 +557,6 @@ begin
           Game.RegainControl;
       end;
 
-      if not (i in [spbSlower, spbFaster]) then
-        if (Button <> mbLeft) and not (GameParams.ClickHighlight) then Exit;
-
       Exec := true;
       //if Exec then
         if i = spbNuke then

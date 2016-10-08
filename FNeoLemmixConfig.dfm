@@ -23,7 +23,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 345
-    ActivePage = TabSheet4
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
@@ -34,31 +34,22 @@ object FormNXConfig: TFormNXConfig
         Height = 57
         Caption = 'Input Options'
         TabOrder = 0
-        object cbOneClickHighlight: TCheckBox
-          Left = 12
-          Top = 16
-          Width = 129
-          Height = 17
-          Caption = 'One-Click Highlighting'
-          TabOrder = 0
-          OnClick = OptionChanged
-        end
         object btnHotkeys: TButton
-          Left = 168
-          Top = 18
-          Width = 73
-          Height = 25
-          Caption = 'Set Hotkeys'
-          TabOrder = 1
+          Left = 8
+          Top = 31
+          Width = 97
+          Height = 23
+          Caption = 'Configure Hotkeys'
+          TabOrder = 0
           OnClick = btnHotkeysClick
         end
         object cbPauseAfterBackwards: TCheckBox
           Left = 12
-          Top = 32
+          Top = 14
           Width = 153
           Height = 17
           Caption = 'Pause After Backwards Skip'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = OptionChanged
         end
       end

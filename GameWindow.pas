@@ -881,7 +881,6 @@ begin
       PassKey := $02;
     if PassKey <> 0 then
       Form_KeyDown(Sender, PassKey, Shift);
-    if (Button <> mbLeft) and not (GameParams.ClickHighlight) then Exit;
 
     if (Button = mbLeft) and (not Game.CtrlButtonHeldDown)
     and not (Game.Replaying and GameParams.ExplicitCancel) then
