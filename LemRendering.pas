@@ -144,6 +144,7 @@ type
     procedure DrawBuilderShadow(L: TLemming);
     procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
+    procedure DrawBasherShadow(L: TLemming);
     procedure DrawMinerShadow(L: TLemming);
     procedure DrawDiggerShadow(L: TLemming);
     procedure ClearShadows;
@@ -457,14 +458,10 @@ begin
       DrawMinerShadow(CopyL);
     end;
 
-  spbBasher: // PosMarker gives the number of pixels to move horizontally
+  spbBasher:
     begin
-      fLayers.fIsEmpty[rlHighShadows] := False;
-      for i := 3 to PosMarker do
-      begin
-        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
-        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 9);
-      end;
+      fRenderInterface.SimulateTransitionLem(CopyL, baBashing);
+      DrawBasherShadow(CopyL);
     end;
 
   spbExplode: // PosMarker adapts the starting position horizontally
@@ -517,7 +514,10 @@ begin
     // Print shadow pixel of previous movement
     if Assigned(LemPosArray) then
       for i := 0 to Length(LemPosArray[0]) do
+      begin
         SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
+      end;
 
     // Simulate next frame advance for lemming
     LemPosArray := fRenderInterface.SimulateLem(L);
@@ -594,6 +594,56 @@ begin
   end;
 end;
 
+procedure TRenderer.DrawBasherShadow(L: TLemming);
+const
+  BasherEnd: array[0..10, 0..1] of Integer = (
+     (6, -1), (6, -2), (7, -2), (7, -3), (7, -4),
+     (7, -5), (7, -6), (7, -7), (6, -7), (6, -8),
+     (5, -8)
+   );
+var
+  i: Integer;
+  BashPosX, BashPosY, BashPosDx: Integer;
+  SavePhysicsMap: TBitmap32;
+begin
+  fLayers.fIsEmpty[rlHighShadows] := False;
+
+  // Make a deep copy of the PhysicsMap
+  SavePhysicsMap := TBitmap32.Create;
+  SavePhysicsMap.Assign(PhysicsMap);
+
+  BashPosDx := L.LemDx;
+  BashPosX := L.LemX;
+  BashPosY := L.LemY;
+
+  while Assigned(L) and (L.LemAction = baBashing) do
+  begin
+    // draw shadow for basher tunnel
+    if (L.LemFrame + 1) mod 16 = 2 then
+    begin
+      BashPosX := L.LemX;
+      BashPosY := L.LemY;
+      BashPosDx := L.LemDx;
+
+      for i := 0 to 5 do
+      begin
+        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
+        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 9);
+      end;
+    end;
+
+    // Simulate next frame advance for lemming
+    fRenderInterface.SimulateLem(L);
+  end;
+
+  // Draw end of the tunnel
+  for i := 0 to Length(BasherEnd) - 1 do
+    SetHighShadowPixel(BashPosX + BasherEnd[i, 0] * BashPosDx, BashPosY + BasherEnd[i, 1]);
+
+  PhysicsMap.Assign(SavePhysicsMap);
+  SavePhysicsMap.Free;
+end;
+
 procedure TRenderer.DrawMinerShadow(L: TLemming);
 const
   MinerTurn: array[0..11, 0..1] of Integer = (
@@ -629,6 +679,7 @@ begin
     begin
       MinePosX := L.LemX;
       MinePosY := L.LemY;
+      MinePosDx := L.LemDx;
 
       for i := 0 to Length(MinerTurn) - 1 do
         SetHighShadowPixel(MinePosX + MinerTurn[i, 0] * MinePosDx, MinePosY + MinerTurn[i, 1]);

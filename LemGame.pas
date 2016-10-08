@@ -3440,30 +3440,6 @@ begin
   j := 0;
   L := fLemSelected;
   case fSelectedSkill of
-  spbBasher: // Get number of pixels we have to move horizontally
-    begin
-      repeat
-        Inc(j, 5);
-      until    (FindGroundPixel(L.LemX + (j-1)*L.LemDx, L.LemY) > 2)
-            or (FindGroundPixel(L.LemX + (j-2)*L.LemDx, L.LemY) > 2)
-            or (FindGroundPixel(L.LemX + (j-3)*L.LemDx, L.LemY) > 2)
-            or (FindGroundPixel(L.LemX + (j-4)*L.LemDx, L.LemY) > 2)
-            or (FindGroundPixel(L.LemX + (j-5)*L.LemDx, L.LemY) > 2)
-            or (not (   HasPixelAt(L.LemX + (j+2)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+3)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+4)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+5)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+6)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+7)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+8)*L.LemDx, L.LemY - 5)))
-            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
-            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
-            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing);
-
-      // end always with three additional pixels
-      Inc(j, 3);
-    end;
-
   spbExplode: // 0 or 1, depending on direction of Lemming
     begin
       if L.LemDx = 1 then j := 1;
@@ -5598,7 +5574,7 @@ begin
         Break;
       end;
 
-      // Ebd this loop when we have reached the lemming position
+      // End this loop when we have reached the lemming position
       if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
     end;
 
