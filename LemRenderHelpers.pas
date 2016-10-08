@@ -36,6 +36,7 @@ type
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
+  TSimulateTransitionRoutine = procedure(L: TLemming; NewAction: TBasicLemmingAction) of object;
   TSimulateLemRoutine = function(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt of object;
   TGetLemmingRoutine = function: TLemming of object;
 
@@ -157,6 +158,7 @@ type
       fMousePos: TPoint;
       fDrawRoutines: TDrawRoutines;
       fRemoveRoutine: TRemoveRoutine;
+      fSimulateTransitionRoutine: TSimulateTransitionRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
       fGetHighlitLemRoutine: TGetLemmingRoutine;
       fUserHelperIcon: THelperIcon;
@@ -172,11 +174,12 @@ type
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
       procedure SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
-      procedure SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
+      procedure SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
       procedure SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
       procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
       procedure Null;
+      procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
       function SimulateLem(L: TLemming): TArrayArrayInt;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
@@ -268,9 +271,10 @@ begin
   fRemoveRoutine := aRoutine;
 end;
 
-procedure TRenderInterface.SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
+procedure TRenderInterface.SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
 begin
-  fSimulateLemRoutine := aRoutine;
+  fSimulateLemRoutine := aLemRoutine;
+  fSimulateTransitionRoutine := aTransRoutine;
 end;
 
 procedure TRenderInterface.SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
@@ -292,6 +296,11 @@ begin
   // within the rectange defined defined by (X, Y, Width, Height)
   // Whenever LemGame removes some terrain, it is expected to call this method!
   fRemoveRoutine(X, Y, Width, Height);
+end;
+
+procedure TRenderInterface.SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
+begin
+  fSimulateTransitionRoutine(L, NewAction);
 end;
 
 function TRenderInterface.SimulateLem(L: TLemming): TArrayArrayInt;

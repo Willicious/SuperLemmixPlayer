@@ -552,6 +552,7 @@ type
       function ReadBlockerMap(X, Y: Integer): Byte;
 
     procedure SetZombieField(L: TLemming);
+    procedure SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
     function SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt;
     procedure AddPreplacedLemming;
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
@@ -1185,7 +1186,7 @@ begin
   fRenderInterface.SetSelectedSkillPointer(fSelectedSkill);
   fRenderInterface.SelectedLemming := nil;
   fRenderInterface.ReplayLemming := nil;
-  fRenderInterface.SetSimulateLemRoutine(SimulateLem);
+  fRenderInterface.SetSimulateLemRoutine(SimulateLem, SimulateTransition);
   fRenderInterface.SetGetHighlitRoutine(GetHighlitLemming);
 
   LemmingMethods[baNone]       := nil;
@@ -2741,6 +2742,7 @@ var
 begin
   SetLength(Result, 2, 11);
 
+
   n := 0;
   CurrPosX := L.LemXOld;
   CurrPosY := L.LemYOld;
@@ -3508,6 +3510,9 @@ procedure TLemmingGame.LayBrick(L: TLemming);
 var
   BrickPosY, n: Integer;
 begin
+  // Do not change the fPhysicsMap when simulating building (but do so for platformers!)
+  if fSimulation and (L.LemAction = baBuilding) then Exit;
+
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
 
@@ -5573,6 +5578,13 @@ begin
 
 end;
 
+procedure TLemmingGame.SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
+begin
+  fSimulation := True;
+  Transition(L, NewAction);
+  fSimulation := False;
+end;
+
 function TLemmingGame.SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt; // Simulates advancing one frame for the lemming L
 var
   HandleInteractiveObjects: Boolean;
@@ -5608,6 +5620,9 @@ begin
         L := nil;
         Break;
       end;
+
+      // Ebd this loop when we have reached the lemming position
+      if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
     end;
 
     // Check for blocker fields and force-fields at the end of movement
