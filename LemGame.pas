@@ -520,7 +520,6 @@ type
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
     procedure CheckForNewShadow;
-      function GetShadowEndPos: Integer;
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
     function HasPixelAt(X, Y: Integer): Boolean;
@@ -3365,7 +3364,6 @@ procedure TLemmingGame.CheckForNewShadow;
 var
   ShadowSkillButton: TSkillPanelButton;
   ShadowLem: TLemming;
-  ShadowEndPos: Integer;
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker,
                     spbDigger, spbMiner, spbBasher, spbExplode, spbGlider];
@@ -3377,7 +3375,6 @@ begin
   begin
     ShadowSkillButton := fSelectedSkill;
     ShadowLem := fLemSelected;
-    ShadowEndPos := GetShadowEndPos;
   end
   else
   begin
@@ -3388,13 +3385,11 @@ begin
     if Assigned(ShadowLem) and ShadowLem.LemIsGlider and (ShadowLem.LemAction in [baFalling, baGliding]) then
     begin
       ShadowSkillButton := spbGlider;
-      ShadowEndPos := 0;
     end
     else
     begin
       ShadowSkillButton := spbNone;
       ShadowLem := nil;
-      ShadowEndPos := 0;
     end
   end;
 
@@ -3416,7 +3411,7 @@ begin
       if not (ShadowSkillButton in ShadowSkillSet) then Exit; // Should always be the case, but to be sure...
 
       // Draw the shadows
-      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, ShadowEndPos);
+      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton);
 
       // remember stats for lemming with shadow
       fLemWithShadow := ShadowLem;
@@ -3430,23 +3425,6 @@ begin
       fExistShadow := False;
     end;
   end;
-end;
-
-function TLemmingGame.GetShadowEndPos: Integer;
-var
-  j: Integer;
-  L: TLemming;
-begin
-  j := 0;
-  L := fLemSelected;
-  case fSelectedSkill of
-  spbExplode: // 0 or 1, depending on direction of Lemming
-    begin
-      if L.LemDx = 1 then j := 1;
-    end;
-  end;
-
-  Result := j;
 end;
 
 
