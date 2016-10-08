@@ -3547,7 +3547,8 @@ begin
     PixPosX := L.LemX + n*L.LemDx;
     if not HasPixelAt(PixPosX, BrickPosY) then
     begin
-      AddConstructivePixel(PixPosX, BrickPosY);
+      // Do not change the fPhysicsMap when simulating stacking
+      if not fSimulation then AddConstructivePixel(PixPosX, BrickPosY);
       Result := true;
     end;
   end;
@@ -5581,7 +5582,10 @@ end;
 procedure TLemmingGame.SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
 begin
   fSimulation := True;
+
+  if (NewAction = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
   Transition(L, NewAction);
+
   fSimulation := False;
 end;
 

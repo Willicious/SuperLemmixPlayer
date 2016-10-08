@@ -142,6 +142,7 @@ type
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; PosMarker: Integer);
     procedure DrawGliderShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
+    procedure DrawStackerShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -434,18 +435,18 @@ begin
     begin
       fRenderInterface.SimulateTransitionLem(CopyL, baBuilding);
       DrawBuilderShadow(CopyL);
-    (*  fLayers.fIsEmpty[rlLowShadows] := False;
-      for j := 1 to 12 do
-      for i := 2*j - 3 to 2*j + 3 do
-        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - j);   *)
     end;
 
   spbStacker: // PosMarker adapts the starting position for the first brick
     begin
+      fRenderInterface.SimulateTransitionLem(CopyL, baStacking);
+      DrawStackerShadow(CopyL);
+      (*
       fLayers.fIsEmpty[rlLowShadows] := False;
       for j := PosMarker to PosMarker + 7 do
       for i := 0 to 3 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - j);
+        *)
     end;
 
   spbDigger: // PosMarker gives the number of pixels to move vertically
@@ -556,14 +557,12 @@ procedure TRenderer.DrawBuilderShadow(L: TLemming);
 var
   i: Integer;
 begin
-  // Set ShadowLayer to be drawn
   fLayers.fIsEmpty[rlLowShadows] := False;
 
-  // We simulate as long as the lemming is gliding, but allow for a falling period at the beginning
   while Assigned(L) and (L.LemAction = baBuilding) do
   begin
-    // Print shadow pixel of previous movement
-    if (L.LemFrame = 9) then
+    // draw shadow for placed brick
+    if (L.LemFrame + 1 = 9) then
       for i := 0 to 5 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
 
@@ -572,7 +571,31 @@ begin
   end;
 end;
 
+procedure TRenderer.DrawStackerShadow(L: TLemming);
+var
+  BrickPosY, i: Integer;
+begin
+  fLayers.fIsEmpty[rlLowShadows] := False;
 
+  // Set correct Y-position for first brick
+  BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
+  if L.LemStackLow then Inc(BrickPosY);
+
+  while Assigned(L) and (L.LemAction = baStacking) do
+  begin
+    // draw shadow for placed brick
+    if (L.LemFrame + 1 = 7) then
+    begin
+      for i := 1 to 3 do
+        SetLowShadowPixel(L.LemX + i*L.LemDx, BrickPosY);
+
+      Dec(BrickPosY); // for the next brick
+    end;
+
+    // Simulate next frame advance for lemming
+    fRenderInterface.SimulateLem(L);
+  end;
+end;
 
 
 
