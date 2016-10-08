@@ -144,6 +144,7 @@ type
     procedure DrawBuilderShadow(L: TLemming);
     procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
+    procedure DrawDiggerShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -435,11 +436,6 @@ begin
     begin
       fRenderInterface.SimulateTransitionLem(CopyL, baPlatforming);
       DrawPlatformerShadow(CopyL);
-      (*
-      fLayers.fIsEmpty[rlLowShadows] := False;
-      for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
-      *)
     end;
 
   spbStacker: // PosMarker adapts the starting position for the first brick
@@ -448,14 +444,10 @@ begin
       DrawStackerShadow(CopyL);
     end;
 
-  spbDigger: // PosMarker gives the number of pixels to move vertically
+  spbDigger:
     begin
-      fLayers.fIsEmpty[rlHighShadows] := False;
-      for j := 1 to PosMarker do
-      begin
-        SetHighShadowPixel(L.LemX - 4, L.LemY + j - 1);
-        SetHighShadowPixel(L.LemX + 4, L.LemY + j - 1);
-      end;
+      fRenderInterface.SimulateTransitionLem(CopyL, baDigging);
+      DrawDiggerShadow(CopyL);
     end;
 
   spbMiner: // PosMarker gives the number of pixels to move vertically
@@ -622,7 +614,45 @@ begin
   end;
 end;
 
+procedure TRenderer.DrawDiggerShadow(L: TLemming);
+var
+  i: Integer;
+  DigPosX, DigPosY: Integer;
+  SavePhysicsMap: TBitmap32;
+begin
+  fLayers.fIsEmpty[rlHighShadows] := False;
 
+  // Make a deep copy of the PhysicsMap
+  SavePhysicsMap := TBitmap32.Create;
+  SavePhysicsMap.Assign(PhysicsMap);
+
+  DigPosX := L.LemX;
+  DigPosY := L.LemY;
+
+  while Assigned(L) and (L.LemAction = baDigging) do
+  begin
+    // draw shadow for dug row
+    if (L.LemFrame + 1) mod 8 = 0 then
+    begin
+      SetHighShadowPixel(DigPosX - 4, DigPosY - 1);
+      SetHighShadowPixel(DigPosX + 4, DigPosY - 1);
+
+      Inc(DigPosY);
+    end;
+
+    // Simulate next frame advance for lemming
+    fRenderInterface.SimulateLem(L);
+  end;
+
+  // Draw bottom line of digger tunnel
+  SetHighShadowPixel(DigPosX - 4, DigPosY - 1);
+  SetHighShadowPixel(DigPosX + 4, DigPosY - 1);
+  for i := -4 to 4 do
+    SetHighShadowPixel(DigPosX + i, DigPosY);
+
+  PhysicsMap.Assign(SavePhysicsMap);
+  SavePhysicsMap.Free;
+end;
 
 
 
@@ -649,9 +679,7 @@ end;
 procedure TRenderer.SetHighShadowPixel(X, Y: Integer);
 begin
   if (X >= 0) and (X < fPhysicsMap.Width) and (Y >= 0) and (Y < fPhysicsMap.Height) then
-    // Only draw this on terrain, but not on steel
-    if (fPhysicsMap.Pixel[X, Y] and PM_SOLID <> 0) and (fPhysicsMap.Pixel[X, Y] and PM_STEEL = 0) then
-      fLayers[rlHighShadows].Pixel[X, Y] := SHADOW_COLOR;
+    fLayers[rlHighShadows].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
 procedure TRenderer.AddTerrainPixel(X, Y: Integer);

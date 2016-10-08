@@ -3439,18 +3439,6 @@ begin
   j := 0;
   L := fLemSelected;
   case fSelectedSkill of
-  spbDigger: // Get number of pixels we have to move down
-    begin
-      while (   HasPixelAt(L.LemX - 3, L.LemY + j) or HasPixelAt(L.LemX - 2, L.LemY + j)
-             or HasPixelAt(L.LemX - 1, L.LemY + j) or HasPixelAt(L.LemX, L.LemY + j)
-             or HasPixelAt(L.LemX + 1, L.LemY + j) or HasPixelAt(L.LemX + 2, L.LemY + j)
-             or HasPixelAt(L.LemX + 3, L.LemY + j))
-            and not HasSteelAt(L.LemX, L.LemY + j) do
-      begin
-        Inc(j);
-      end;
-    end;
-
   spbMiner: // Get number of pixels we have to move down
     begin
       while     HasPixelAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j + 1)
@@ -3485,11 +3473,6 @@ begin
 
       // end always with three additional pixels
       Inc(j, 3);
-    end;
-
-  spbStacker: // 0 or 1, depending on starting position
-    begin
-      if HasPixelAt(L.LemX + L.LemDx, L.LemY) then j := 1;
     end;
 
   spbExplode: // 0 or 1, depending on direction of Lemming
@@ -3581,7 +3564,7 @@ begin
     end;
 
     // Delete these pixels from the terrain layer
-    fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
+    if not fSimulation then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
   end;
 
   InitializeMinimap;

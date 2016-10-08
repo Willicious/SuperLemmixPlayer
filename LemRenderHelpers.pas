@@ -64,6 +64,7 @@ type
     procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTriggerLayer(F: TColor32; var B: TColor32; M: TColor32);
 
     procedure DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);
@@ -616,6 +617,11 @@ begin
     B := B and $FFFF00FF;
 end;
 
+procedure TRenderBitmaps.CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if ((F and PM_SOLID) = 0) or ((F and PM_STEEL) <> 0) then B := 0;
+end;
+
 function TRenderBitmaps.GetItem(Index: TRenderLayer): TBitmap32;
 begin
   Result := inherited Get(Integer(Index));
@@ -663,6 +669,13 @@ begin
     begin
       fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
       fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, aRegion);
+    end;
+
+    // Delete High Shadows not on non-steel terrain
+    if not fIsEmpty[rlHighShadows] then
+    begin
+      fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyDestructible;
+      fPhysicsMap.DrawTo(Items[rlHighShadows], aRegion, aRegion);
     end;
   end;
 
