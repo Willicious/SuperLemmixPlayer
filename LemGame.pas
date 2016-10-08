@@ -3559,7 +3559,7 @@ end;
 procedure TLemmingGame.AddConstructivePixel(X, Y: Integer);
 begin
   PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] or PM_SOLID;
-  fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y);
+  if not fSimulation then fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y);
 end;
 
 
@@ -4188,6 +4188,7 @@ var
 
     // Copy PhysicsMap back
     PhysicsMap.Assign(SavePhysicsMap);
+    SavePhysicsMap.Free;
   end;
 
 

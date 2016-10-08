@@ -142,6 +142,7 @@ type
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; PosMarker: Integer);
     procedure DrawGliderShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
+    procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
@@ -424,29 +425,27 @@ begin
   CopyL.Assign(L);
 
   case SkillButton of
-  spbPlatformer:
-    begin
-      fLayers.fIsEmpty[rlLowShadows] := False;
-      for i := 0 to 38 do // Yes, platforms are 39 pixels long!
-        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
-    end;
-
   spbBuilder:
     begin
       fRenderInterface.SimulateTransitionLem(CopyL, baBuilding);
       DrawBuilderShadow(CopyL);
     end;
 
+  spbPlatformer:
+    begin
+      fRenderInterface.SimulateTransitionLem(CopyL, baPlatforming);
+      DrawPlatformerShadow(CopyL);
+      (*
+      fLayers.fIsEmpty[rlLowShadows] := False;
+      for i := 0 to 38 do // Yes, platforms are 39 pixels long!
+        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
+      *)
+    end;
+
   spbStacker: // PosMarker adapts the starting position for the first brick
     begin
       fRenderInterface.SimulateTransitionLem(CopyL, baStacking);
       DrawStackerShadow(CopyL);
-      (*
-      fLayers.fIsEmpty[rlLowShadows] := False;
-      for j := PosMarker to PosMarker + 7 do
-      for i := 0 to 3 do
-        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - j);
-        *)
     end;
 
   spbDigger: // PosMarker gives the number of pixels to move vertically
@@ -571,6 +570,32 @@ begin
   end;
 end;
 
+procedure TRenderer.DrawPlatformerShadow(L: TLemming);
+var
+  i: Integer;
+  SavePhysicsMap: TBitmap32;
+begin
+  fLayers.fIsEmpty[rlLowShadows] := False;
+
+  // Make a deep copy of the PhysicsMap
+  SavePhysicsMap := TBitmap32.Create;
+  SavePhysicsMap.Assign(PhysicsMap);
+
+  while Assigned(L) and (L.LemAction = baPlatforming) do
+  begin
+    // draw shadow for placed brick
+    if (L.LemFrame + 1 = 9) then
+      for i := 0 to 5 do
+        SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
+
+    // Simulate next frame advance for lemming
+    fRenderInterface.SimulateLem(L);
+  end;
+
+  PhysicsMap.Assign(SavePhysicsMap);
+  SavePhysicsMap.Free;
+end;
+
 procedure TRenderer.DrawStackerShadow(L: TLemming);
 var
   BrickPosY, i: Integer;
@@ -596,6 +621,8 @@ begin
     fRenderInterface.SimulateLem(L);
   end;
 end;
+
+
 
 
 
