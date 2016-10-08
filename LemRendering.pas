@@ -144,6 +144,7 @@ type
     procedure DrawBuilderShadow(L: TLemming);
     procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
+    procedure DrawMinerShadow(L: TLemming);
     procedure DrawDiggerShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
@@ -418,7 +419,7 @@ const
      (0, -14)
    );
 var
-  i, j: Integer;
+  i: Integer;
   CopyL: TLemming;
 begin
   // Copy L to simulate the path
@@ -438,7 +439,7 @@ begin
       DrawPlatformerShadow(CopyL);
     end;
 
-  spbStacker: // PosMarker adapts the starting position for the first brick
+  spbStacker:
     begin
       fRenderInterface.SimulateTransitionLem(CopyL, baStacking);
       DrawStackerShadow(CopyL);
@@ -450,31 +451,10 @@ begin
       DrawDiggerShadow(CopyL);
     end;
 
-  spbMiner: // PosMarker gives the number of pixels to move vertically
+  spbMiner:
     begin
-      fLayers.fIsEmpty[rlHighShadows] := False;
-
-      // Three starting top pixels
-      for j := 0 to 2 do
-        SetHighShadowPixel(L.LemX + j*L.LemDx, L.LemY - 12);
-
-      for j := 0 to PosMarker do
-      begin
-        // Bottom border of tunnel
-        SetHighShadowPixel(L.LemX + (2*j+1)*L.LemDx, L.LemY + j - 1);
-        SetHighShadowPixel(L.LemX + (2*j+1)*L.LemDx, L.LemY + j);
-        SetHighShadowPixel(L.LemX + (2*j+2)*L.LemDx, L.LemY + j);
-        // Top border of tunnel
-        if j mod 2 = 0 then
-        begin
-          SetHighShadowPixel(L.LemX + (2*j+3)*L.LemDx, L.LemY + j - 12);
-          SetHighShadowPixel(L.LemX + (2*j+4)*L.LemDx, L.LemY + j - 12);
-          SetHighShadowPixel(L.LemX + (2*j+5)*L.LemDx, L.LemY + j - 12);
-          SetHighShadowPixel(L.LemX + (2*j+5)*L.LemDx, L.LemY + j - 11);
-          SetHighShadowPixel(L.LemX + (2*j+6)*L.LemDx, L.LemY + j - 11);
-          SetHighShadowPixel(L.LemX + (2*j+6)*L.LemDx, L.LemY + j - 10);
-        end;
-      end;
+      fRenderInterface.SimulateTransitionLem(CopyL, baMining);
+      DrawMinerShadow(CopyL);
     end;
 
   spbBasher: // PosMarker gives the number of pixels to move horizontally
@@ -553,7 +533,7 @@ begin
   while Assigned(L) and (L.LemAction = baBuilding) do
   begin
     // draw shadow for placed brick
-    if (L.LemFrame + 1 = 9) then
+    if L.LemFrame + 1 = 9 then
       for i := 0 to 5 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
 
@@ -576,7 +556,7 @@ begin
   while Assigned(L) and (L.LemAction = baPlatforming) do
   begin
     // draw shadow for placed brick
-    if (L.LemFrame + 1 = 9) then
+    if L.LemFrame + 1 = 9 then
       for i := 0 to 5 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
 
@@ -601,7 +581,7 @@ begin
   while Assigned(L) and (L.LemAction = baStacking) do
   begin
     // draw shadow for placed brick
-    if (L.LemFrame + 1 = 7) then
+    if L.LemFrame + 1 = 7 then
     begin
       for i := 1 to 3 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, BrickPosY);
@@ -612,6 +592,58 @@ begin
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
   end;
+end;
+
+procedure TRenderer.DrawMinerShadow(L: TLemming);
+const
+  MinerTurn: array[0..11, 0..1] of Integer = (
+     (1, -1), (1, 0), (2, 0), (3, 0), (3, 1), (4, 1),             // bottom border
+     (3, -12), (4, -12), (5, -12), (5, -11), (6, -11), (6, -10)   // top border
+   );
+
+  MinerEnd: array[0..15, 0..1] of Integer = (
+     (5, 1), (6, 1), (6, 0), (7, 0), (7, -1),
+     (8, -1), (8, -2), (8, -3), (8, -4), (8, -5),
+     (8, -6), (8, -7), (7, -7), (7, -8), (7, -9),
+     (7, -10)
+   );
+var
+  i: Integer;
+  MinePosX, MinePosY, MinePosDx: Integer;
+  SavePhysicsMap: TBitmap32;
+begin
+  fLayers.fIsEmpty[rlHighShadows] := False;
+
+  // Make a deep copy of the PhysicsMap
+  SavePhysicsMap := TBitmap32.Create;
+  SavePhysicsMap.Assign(PhysicsMap);
+
+  MinePosDx := L.LemDx;
+  MinePosX := L.LemX;
+  MinePosY := L.LemY;
+
+  while Assigned(L) and (L.LemAction = baMining) do
+  begin
+    // draw shadow for miner tunnel
+    if L.LemFrame + 1 = 1 then
+    begin
+      MinePosX := L.LemX;
+      MinePosY := L.LemY;
+
+      for i := 0 to Length(MinerTurn) - 1 do
+        SetHighShadowPixel(MinePosX + MinerTurn[i, 0] * MinePosDx, MinePosY + MinerTurn[i, 1]);
+    end;
+
+    // Simulate next frame advance for lemming
+    fRenderInterface.SimulateLem(L);
+  end;
+
+  // Draw end of the tunnel
+  for i := 0 to Length(MinerEnd) - 1 do
+    SetHighShadowPixel(MinePosX + MinerEnd[i, 0] * MinePosDx, MinePosY + MinerEnd[i, 1]);
+
+  PhysicsMap.Assign(SavePhysicsMap);
+  SavePhysicsMap.Free;
 end;
 
 procedure TRenderer.DrawDiggerShadow(L: TLemming);

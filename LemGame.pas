@@ -2678,6 +2678,7 @@ end;
 
 procedure TLemmingGame.InitializeMiniMap;
 begin
+  if fSimulation then Exit;
   // The renderer handles most of the work here now.
   Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
   fRenderer.RenderMinimap(Minimap);
@@ -3325,7 +3326,7 @@ begin
   Bmp.DrawTo(PhysicsMap, D, S);
 
   // Delete these pixels from the terrain layer
-  fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
+  if not fSimulation then fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 
   InitializeMinimap;
 end;
@@ -3439,18 +3440,6 @@ begin
   j := 0;
   L := fLemSelected;
   case fSelectedSkill of
-  spbMiner: // Get number of pixels we have to move down
-    begin
-      while     HasPixelAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j + 1)
-            and HasPixelAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j + 1)
-            and not HasIndestructibleAt(L.LemX + (2*j)*L.LemDx, L.LemY + j, L.LemDx, baMining)
-            and not HasIndestructibleAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j, L.LemDx, baMining)
-            and not HasIndestructibleAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j, L.LemDx, baMining) do
-      begin
-        Inc(j);
-      end;
-    end;
-
   spbBasher: // Get number of pixels we have to move horizontally
     begin
       repeat
