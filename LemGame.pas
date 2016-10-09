@@ -4339,6 +4339,13 @@ function TLemmingGame.HandleFalling(L: TLemming): Boolean;
 var
   CurrFallDist: Integer;
   MaxFallDist: Integer;
+
+  function IsFallFatal: Boolean;
+  begin
+    Result := (not (L.LemIsFloater or L.LemIsGlider))
+          and (((L.LemFallen >= fFallLimit) and not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
+            or HasTriggerAt(L.LemX, L.LemY, trSplat));
+  end;
 begin
   Result := True;
 
@@ -4370,11 +4377,7 @@ begin
     if CurrFallDist < MaxFallDist then
     begin
       // Object checks at hitting ground
-      if HasTriggerAt(L.LemX, L.LemY, trSplat) then
-        Transition(L, baSplatting)
-      else if HasTriggerAt(L.LemX, L.LemY, trNoSplat) then
-        Transition(L, baWalking)
-      else if L.LemFallen > fFallLimit then
+      if IsFallFatal then
         Transition(L, baSplatting)
       else
         Transition(L, baWalking);
