@@ -521,7 +521,6 @@ type
     procedure DrawAnimatedObjects;
     procedure DrawDebugString(L: TLemming);
     procedure CheckForNewShadow;
-      function GetShadowEndPos: Integer;
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
     function HasPixelAt(X, Y: Integer): Boolean;
@@ -553,6 +552,7 @@ type
       function ReadBlockerMap(X, Y: Integer): Byte;
 
     procedure SetZombieField(L: TLemming);
+    procedure SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
     function SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt;
     procedure AddPreplacedLemming;
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
@@ -1190,7 +1190,7 @@ begin
   fRenderInterface.SetSelectedSkillPointer(fSelectedSkill);
   fRenderInterface.SelectedLemming := nil;
   fRenderInterface.ReplayLemming := nil;
-  fRenderInterface.SetSimulateLemRoutine(SimulateLem);
+  fRenderInterface.SetSimulateLemRoutine(SimulateLem, SimulateTransition);
   fRenderInterface.SetGetHighlitRoutine(GetHighlitLemming);
 
   LemmingMethods[baNone]       := nil;
@@ -2682,6 +2682,7 @@ end;
 
 procedure TLemmingGame.InitializeMiniMap;
 begin
+  if fSimulation then Exit;
   // The renderer handles most of the work here now.
   Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
   fRenderer.RenderMinimap(Minimap);
@@ -2745,6 +2746,7 @@ var
 
 begin
   SetLength(Result, 2, 11);
+
 
   n := 0;
   CurrPosX := L.LemXOld;
@@ -3328,7 +3330,7 @@ begin
   Bmp.DrawTo(PhysicsMap, D, S);
 
   // Delete these pixels from the terrain layer
-  fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
+  if not fSimulation then fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 
   InitializeMinimap;
 end;
@@ -3367,7 +3369,6 @@ procedure TLemmingGame.CheckForNewShadow;
 var
   ShadowSkillButton: TSkillPanelButton;
   ShadowLem: TLemming;
-  ShadowEndPos: Integer;
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker,
                     spbDigger, spbMiner, spbBasher, spbExplode, spbGlider];
@@ -3379,7 +3380,6 @@ begin
   begin
     ShadowSkillButton := fSelectedSkill;
     ShadowLem := fLemSelected;
-    ShadowEndPos := GetShadowEndPos;
   end
   else
   begin
@@ -3390,13 +3390,11 @@ begin
     if Assigned(ShadowLem) and ShadowLem.LemIsGlider and (ShadowLem.LemAction in [baFalling, baGliding]) then
     begin
       ShadowSkillButton := spbGlider;
-      ShadowEndPos := 0;
     end
     else
     begin
       ShadowSkillButton := spbNone;
       ShadowLem := nil;
-      ShadowEndPos := 0;
     end
   end;
 
@@ -3418,7 +3416,7 @@ begin
       if not (ShadowSkillButton in ShadowSkillSet) then Exit; // Should always be the case, but to be sure...
 
       // Draw the shadows
-      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, ShadowEndPos);
+      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton);
 
       // remember stats for lemming with shadow
       fLemWithShadow := ShadowLem;
@@ -3434,76 +3432,6 @@ begin
   end;
 end;
 
-function TLemmingGame.GetShadowEndPos: Integer;
-var
-  j: Integer;
-  L: TLemming;
-begin
-  j := 0;
-  L := fLemSelected;
-  case fSelectedSkill of
-  spbDigger: // Get number of pixels we have to move down
-    begin
-      while (   HasPixelAt(L.LemX - 3, L.LemY + j) or HasPixelAt(L.LemX - 2, L.LemY + j)
-             or HasPixelAt(L.LemX - 1, L.LemY + j) or HasPixelAt(L.LemX, L.LemY + j)
-             or HasPixelAt(L.LemX + 1, L.LemY + j) or HasPixelAt(L.LemX + 2, L.LemY + j)
-             or HasPixelAt(L.LemX + 3, L.LemY + j))
-            and not HasSteelAt(L.LemX, L.LemY + j) do
-      begin
-        Inc(j);
-      end;
-    end;
-
-  spbMiner: // Get number of pixels we have to move down
-    begin
-      while     HasPixelAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j + 1)
-            and HasPixelAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j + 1)
-            and not HasIndestructibleAt(L.LemX + (2*j)*L.LemDx, L.LemY + j, L.LemDx, baMining)
-            and not HasIndestructibleAt(L.LemX + (2*j+1)*L.LemDx, L.LemY + j, L.LemDx, baMining)
-            and not HasIndestructibleAt(L.LemX + (2*j+2)*L.LemDx, L.LemY + j, L.LemDx, baMining) do
-      begin
-        Inc(j);
-      end;
-    end;
-
-  spbBasher: // Get number of pixels we have to move horizontally
-    begin
-      repeat
-        Inc(j, 5);
-      until    (FindGroundPixel(L.LemX + (j-1)*L.LemDx, L.LemY) > 2)
-            or (FindGroundPixel(L.LemX + (j-2)*L.LemDx, L.LemY) > 2)
-            or (FindGroundPixel(L.LemX + (j-3)*L.LemDx, L.LemY) > 2)
-            or (FindGroundPixel(L.LemX + (j-4)*L.LemDx, L.LemY) > 2)
-            or (FindGroundPixel(L.LemX + (j-5)*L.LemDx, L.LemY) > 2)
-            or (not (   HasPixelAt(L.LemX + (j+2)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+3)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+4)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+5)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+6)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+7)*L.LemDx, L.LemY - 5)
-                     or HasPixelAt(L.LemX + (j+8)*L.LemDx, L.LemY - 5)))
-            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
-            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing)
-            or HasIndestructibleAt(L.LemX + j*L.LemDx, L.LemY - 3, L.LemDx, baBashing);
-
-      // end always with three additional pixels
-      Inc(j, 3);
-    end;
-
-  spbStacker: // 0 or 1, depending on starting position
-    begin
-      if HasPixelAt(L.LemX + L.LemDx, L.LemY) then j := 1;
-    end;
-
-  spbExplode: // 0 or 1, depending on direction of Lemming
-    begin
-      if L.LemDx = 1 then j := 1;
-    end;
-  end;
-
-  Result := j;
-end;
-
 
 procedure TLemmingGame.LayBrick(L: TLemming);
 {-------------------------------------------------------------------------------
@@ -3513,6 +3441,9 @@ procedure TLemmingGame.LayBrick(L: TLemming);
 var
   BrickPosY, n: Integer;
 begin
+  // Do not change the fPhysicsMap when simulating building (but do so for platformers!)
+  if fSimulation and (L.LemAction = baBuilding) then Exit;
+
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
 
@@ -3547,7 +3478,8 @@ begin
     PixPosX := L.LemX + n*L.LemDx;
     if not HasPixelAt(PixPosX, BrickPosY) then
     begin
-      AddConstructivePixel(PixPosX, BrickPosY);
+      // Do not change the fPhysicsMap when simulating stacking
+      if not fSimulation then AddConstructivePixel(PixPosX, BrickPosY);
       Result := true;
     end;
   end;
@@ -3558,7 +3490,7 @@ end;
 procedure TLemmingGame.AddConstructivePixel(X, Y: Integer);
 begin
   PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] or PM_SOLID;
-  fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y);
+  if not fSimulation then fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y);
 end;
 
 
@@ -3580,7 +3512,7 @@ begin
     end;
 
     // Delete these pixels from the terrain layer
-    fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
+    if not fSimulation then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
   end;
 
   InitializeMinimap;
@@ -4187,6 +4119,7 @@ var
 
     // Copy PhysicsMap back
     PhysicsMap.Assign(SavePhysicsMap);
+    SavePhysicsMap.Free;
   end;
 
 
@@ -5577,6 +5510,16 @@ begin
 
 end;
 
+procedure TLemmingGame.SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
+begin
+  fSimulation := True;
+
+  if (NewAction = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
+  Transition(L, NewAction);
+
+  fSimulation := False;
+end;
+
 function TLemmingGame.SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt; // Simulates advancing one frame for the lemming L
 var
   HandleInteractiveObjects: Boolean;
@@ -5612,6 +5555,9 @@ begin
         L := nil;
         Break;
       end;
+
+      // End this loop when we have reached the lemming position
+      if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
     end;
 
     // Check for blocker fields and force-fields at the end of movement

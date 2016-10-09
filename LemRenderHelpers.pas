@@ -36,6 +36,7 @@ type
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
+  TSimulateTransitionRoutine = procedure(L: TLemming; NewAction: TBasicLemmingAction) of object;
   TSimulateLemRoutine = function(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt of object;
   TGetLemmingRoutine = function: TLemming of object;
 
@@ -63,6 +64,7 @@ type
     procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombinePhysicsMapOneWays(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTriggerLayer(F: TColor32; var B: TColor32; M: TColor32);
 
     procedure DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);
@@ -157,6 +159,7 @@ type
       fMousePos: TPoint;
       fDrawRoutines: TDrawRoutines;
       fRemoveRoutine: TRemoveRoutine;
+      fSimulateTransitionRoutine: TSimulateTransitionRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
       fGetHighlitLemRoutine: TGetLemmingRoutine;
       fUserHelperIcon: THelperIcon;
@@ -172,11 +175,12 @@ type
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
       procedure SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
-      procedure SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
+      procedure SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
       procedure SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
       procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
       procedure Null;
+      procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
       function SimulateLem(L: TLemming): TArrayArrayInt;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
@@ -268,9 +272,10 @@ begin
   fRemoveRoutine := aRoutine;
 end;
 
-procedure TRenderInterface.SetSimulateLemRoutine(aRoutine: TSimulateLemRoutine);
+procedure TRenderInterface.SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
 begin
-  fSimulateLemRoutine := aRoutine;
+  fSimulateLemRoutine := aLemRoutine;
+  fSimulateTransitionRoutine := aTransRoutine;
 end;
 
 procedure TRenderInterface.SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
@@ -292,6 +297,11 @@ begin
   // within the rectange defined defined by (X, Y, Width, Height)
   // Whenever LemGame removes some terrain, it is expected to call this method!
   fRemoveRoutine(X, Y, Width, Height);
+end;
+
+procedure TRenderInterface.SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
+begin
+  fSimulateTransitionRoutine(L, NewAction);
 end;
 
 function TRenderInterface.SimulateLem(L: TLemming): TArrayArrayInt;
@@ -607,6 +617,11 @@ begin
     B := B and $FFFF00FF;
 end;
 
+procedure TRenderBitmaps.CombinePhysicsMapOnlyDestructible(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if ((F and PM_SOLID) = 0) or ((F and PM_STEEL) <> 0) then B := 0;
+end;
+
 function TRenderBitmaps.GetItem(Index: TRenderLayer): TBitmap32;
 begin
   Result := inherited Get(Integer(Index));
@@ -654,6 +669,13 @@ begin
     begin
       fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
       fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, aRegion);
+    end;
+
+    // Delete High Shadows not on non-steel terrain
+    if not fIsEmpty[rlHighShadows] then
+    begin
+      fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyDestructible;
+      fPhysicsMap.DrawTo(Items[rlHighShadows], aRegion, aRegion);
     end;
   end;
 
