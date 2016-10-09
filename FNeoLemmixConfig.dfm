@@ -23,7 +23,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 345
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
@@ -274,7 +274,7 @@ object FormNXConfig: TFormNXConfig
       object cbUpdateCheck: TCheckBox
         Left = 16
         Top = 40
-        Width = 153
+        Width = 169
         Height = 17
         Caption = 'Enable Update Check'
         TabOrder = 1

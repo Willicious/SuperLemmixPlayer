@@ -151,7 +151,7 @@ begin
   cbLookForLVL.Enabled := (fGameParams.SysDat.Options and 1) <> 0;
   cbLookForLVL.Checked := fGameParams.LookForLVLFiles and cbLookForLVL.Enabled;
   cbChallengeMode.Enabled := ((fGameParams.SysDat.Options and 32) <> 0) and (fGameParams.ForceSkillset = 0);
-  cbChallengeMode.Checked := (fGameParams.ChallengeMode or (fGameParams.ForceSkillset = 0)) and cbChallengeMode.Enabled;
+  cbChallengeMode.Checked := (fGameParams.ChallengeMode or (fGameParams.ForceSkillset <> 0));
   cbTimerMode.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
   cbTimerMode.Checked := fGameParams.TimerMode and cbTimerMode.Enabled;
   cbForceSkill.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
