@@ -141,10 +141,15 @@ begin
     // If requirement is below lowest supported version
     if CombineTarget(MainVer, MaxSubVer, MaxMinorVer) < CombineTarget(Min_MainVer, Min_SubVer, Min_MinorVer) then
     begin
-      if not TestFor148Compatible then
+      if MaxSubVer < 47 then
       begin
         ShowMessage('This pack was built for older versions of NeoLemmix and is not compatible with this version.' + #13 +
-                    'Use NeoLemmix ' + GetTargetAsString(MainVer, MaxSubVer, MaxMinorVer) + ' to play this pack.');
+                    'It is recommended to use NeoLemmix V1.43n-F to play this pack.');
+        Result := nxc_VersionErrorOld;
+      end else if not TestFor148Compatible then
+      begin
+        ShowMessage('This pack was built for older versions of NeoLemmix and is not compatible with this version.' + #13 +
+                    'It is recommended to use NeoLemmix V1.47n-D to play this pack.');
         Result := nxc_VersionErrorOld;
       end;
       // TestFor148Compatible will only pass on certain V1.47n-targetting packs that will not have compatibility issues.
