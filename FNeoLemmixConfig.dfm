@@ -174,6 +174,7 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Don'#39't Replay After Backwards Frameskips'
           TabOrder = 3
+          OnClick = OptionChanged
         end
       end
     end

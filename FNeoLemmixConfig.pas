@@ -215,6 +215,10 @@ begin
   end;
 
   //// Page 2 (Audio Options) ////
+  if (tbSoundVol.Position = 0) and (SoundVolume <> 0) then
+    SavedSoundVol := SoundVolume;
+  if (tbMusicVol.Position := 0) and (MusicVolume <> 0) then
+    SavedMusicVol := MusicVolume;
   SoundVolume := tbSoundVol.Position;
   MusicVolume := tbMusicVol.Position;
   fGameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
