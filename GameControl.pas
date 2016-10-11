@@ -15,12 +15,17 @@ uses
   Classes, Forms,
   GR32, GR32_Image,
   UTools,
-  LemStrings, GameSound,
+  LemStrings, LemVersion, GameSound,
   LemCore, LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,
   LemNeoSave, TalisData,
   LemLevelSystem, LemRendering,
   UZip; // only for checking whether some files actually exist
+
+var
+  IsHalting: Boolean; // ONLY used during AppController's init routines. Don't use this anywhere else.
+                      // Shouldn't even be used there really, but a kludgy fix is okay since that's gonna
+                      // be replaced once proper level select menus are introduced. 
 
 type
   TGameResultsRec = record
@@ -249,6 +254,7 @@ implementation
 
 procedure TDosGameParams.Save;
 begin
+  if IsHalting then Exit;
   try
     SaveToIniFile;
     Hotkeys.SaveFile;
@@ -260,6 +266,7 @@ end;
 
 procedure TDosGameParams.Load;
 begin
+  if IsHalting then Exit;
   SaveSystem.LoadFile(@self);
   LoadFromIniFile;
   // Hotkeys automatically load when the hotkey manager is created
@@ -284,7 +291,7 @@ begin
   //if fTestMode then Exit;
   SL := TStringList.Create;
 
-  SL.Add('LastVersion=' + IntToStr(Cur_MainVer) + IntToStr(Cur_SubVer) + IntToStr(Cur_MinorVer));
+  SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
 
   SL.Add('');
   SL.Add('# Interface Options');

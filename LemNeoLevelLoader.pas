@@ -5,7 +5,7 @@ interface
 uses
   LemNeoParser,
   LemTerrain, LemInteractiveObject, LemSteel, LemLemming,
-  LemLevel, LemStrings,
+  LemLevel, {LemStrings,} LemVersion,
   Classes, SysUtils, StrUtils;
 
 type
@@ -460,7 +460,7 @@ begin
   SL := TStringList.Create;
   try
     Add('# NeoLemmix Level');
-    Add('# Dumped from NeoLemmix Player V' + PVersion);
+    Add('# Dumped from NeoLemmix Player V' + CurrentVersionString);
     Add;
 
     // Statics

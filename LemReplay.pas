@@ -17,7 +17,7 @@ interface
 
 uses
   Dialogs,
-  LemNeoParser, LemLemming, LemCore, LemStrings,
+  LemNeoParser, LemLemming, LemCore, LemVersion,
   Contnrs, Classes, SysUtils, StrUtils;
 
 const
@@ -437,7 +437,7 @@ begin
   SL := TStringList.Create;
 
   SL.Add('# NeoLemmix Replay File');
-  SL.Add('# Saved from NeoLemmix V' + PVersion);
+  SL.Add('# Saved from NeoLemmix V' + CurrentVersionString);
 
   // Debug
   SL.Add('# Assignments: ' + IntToStr(fAssignments.Count));

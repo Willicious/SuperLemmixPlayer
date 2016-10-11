@@ -14,7 +14,7 @@ uses
   PngImage, FNeoLemmixConfig,
   GR32, GR32_Image, GR32_Layers,
   UFastStrings,
-  UMisc, Dialogs,
+  UMisc, Dialogs, LemVersion,
   LemCore, LemTypes, LemStrings, LemDosStructures, LemRendering, LemLevel, LemDosStyle, LemGame,
   GameControl, GameBaseScreen, GamePreviewScreen, GameLevelSelectScreen, GameLevelCodeScreen;
 
@@ -168,20 +168,16 @@ uses
 procedure TGameMenuScreen.DoTestStuff;
 {$ifdef exp}
 var
-  MainVer, SubVer, MinorVer: Integer;
+  Format, Core, Feature, Fix: Integer;
   S: String;
 {$endif}
 begin
 // Any random test code can go here. Since it's for testing purposes, I've
 // added a conditional define so it doesn't get included in release versions.
 {$ifdef exp}
-  if GetLatestNeoLemmixVersion(NxaPlayer, MainVer, SubVer, MinorVer) then
+  if GetLatestNeoLemmixVersion(NxaPlayer, Format, Core, Feature, Fix) then
   begin
-    S := 'V' + IntToStr(MainVer) + '.' + IntToStr(SubVer) + 'n';
-    if MinorVer > 1 then
-    begin
-      S := S + '-' + chr(64+MinorVer);
-    end;
+    S := 'V' + MakeVersionString(Format, Core, Feature, Fix);
     ShowMessage('Latest version reported as: ' + S);
   end else
     ShowMessage('Version check fail.');
@@ -190,20 +186,21 @@ end;
 
 procedure TGameMenuScreen.PerformUpdateCheck;
 var
-  MainVer, SubVer, MinorVer: Integer;
+  Format, Core, Feature, Fix: Integer;
+  CurVer, AvailVer: Int64;
 begin
   // Checks if the latest version according to NeoLemmix Website is more recent than the
   // one currently running. If running an experimental version, also checks if it's the
   // exact same version (as it would be a stable release).
   GameParams.DoneUpdateCheck := true;
   if not (GameParams.EnableOnline and GameParams.CheckUpdates) then Exit;
-  if GetLatestNeoLemmixVersion(NxaPlayer, MainVer, SubVer, MinorVer) then
+  if GetLatestNeoLemmixVersion(NxaPlayer, Format, Core, Feature, Fix) then
   begin
-    if (MainVer > Cur_MainVer)
-    or ((MainVer = Cur_MainVer) and (SubVer > Cur_SubVer))
-    or ((MainVer = Cur_MainVer) and (SubVer = Cur_SubVer) and (MinorVer > Cur_MinorVer))
-    {$ifdef exp}or ((MainVer = Cur_MainVer) and (SubVer = Cur_SubVer) and (MinorVer = Cur_MinorVer)){$endif} then
-      if MessageDlg('Update available: NeoLemmix V' + NumericalVersionToStringVersion(MainVer, SubVer, MinorVer) + #13 +
+    CurVer := CurrentVersionID;
+    AvailVer := MakeVersionID(Format, Core, Feature, Fix);
+    if (AvailVer > CurVer)
+    {$ifdef exp}or (AvailVer = CurVer){$endif} then
+      if MessageDlg('Update available: NeoLemmix V' + MakeVersionString(Format, Core, Feature, Fix) + #13 +
                     'Go to the NeoLemmix website?', mtCustom, [mbYes, mbNo], 0) = mrYes then
       begin
         ShellExecute(handle,'open',PChar('http://www.neolemmix.com/neolemmix.html'), '','',SW_SHOWNORMAL);
@@ -330,7 +327,7 @@ begin
     BitmapElements[gmbSection].DrawMode := dmOpaque;
 
     // program text
-    DrawPurpleTextCentered(ScreenImg.Bitmap, BuildText(GameParams.SysDat.PackName) + #13 + BuildText(GameParams.SysDat.SecondLine) + #13 + 'NeoLemmix Player V' + PVersion, YPos_ProgramText);
+    DrawPurpleTextCentered(ScreenImg.Bitmap, BuildText(GameParams.SysDat.PackName) + #13 + BuildText(GameParams.SysDat.SecondLine) + #13 + 'NeoLemmix Player V' + CurrentVersionString, YPos_ProgramText);
 
     // credits animation
     DrawWorkerLemmings(0);

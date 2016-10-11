@@ -7,7 +7,7 @@ uses
   SharedGlobals,
   LemTypes, LemRendering, LemLevel, LemDosStyle,
   TalisData, LemDosMainDAT, LemStrings, LemNeoParser,
-  GameControl, GameSound,
+  GameControl, GameSound, LemVersion,
   FBaseDosForm,
   Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs;
 
@@ -19,12 +19,11 @@ type
   -------------------------------------------------------------------------------}
 
   // Compatibility flags. These are used by the CheckCompatible function.
-  TNxCompatibility = (nxc_Unknown,
-                      nxc_VersionErrorNew,
-                      nxc_VersionErrorOld,
-                      nxc_Compatible,
-                      nxc_Incompatible,
-                      nxc_BC); //nxc_BC works but implements some backwards compatibility fixes
+  TNxCompatibility = (nxc_Compatible,
+                      nxc_WrongFormat,
+                      nxc_OldCore,
+                      nxc_NewCore,
+                      nxc_Error);
 
   TAppController = class(TComponent)
   private
@@ -32,7 +31,7 @@ type
     fGameParams: TDosGameParams; // instance
     DoneBringToFront: Boolean; // We don't want to steal focus all the time. This is just to fix the
                                // bug where it doesn't initially come to front.
-    function CheckCompatible: TNxCompatibility;
+    function CheckCompatible(var Target: String): TNxCompatibility;
     procedure BringToFront;
   public
     constructor Create(aOwner: TComponent); override;
@@ -66,99 +65,62 @@ uses
 
 { TAppController }
 
-function TAppController.CheckCompatible: TNxCompatibility;
+function TAppController.CheckCompatible(var Target: String): TNxCompatibility;
 var
   SL: TStringList;
   TS: TMemoryStream;
-  MainVer: Integer;   // The main version. EG. For V1.37n, this would be 1.
-  SubVer: Integer;    // The sub-version. EG. For V1.37n, this would be 37.
-  MinorVer: Integer;  // The minor version. EG: For V1.37n, this would be 1. (V1.37n-B, it would be 2, etc.)
-  MaxSubVer: Integer; // Maximum sub-version.
-  MaxMinorVer: Integer; // Maximum minor version.
-const
-  // Lowest version numbers that are compatible
-  Min_MainVer = 1;    // 1.bb-c
-  Min_SubVer = 48;    // a.37-c
-  Min_MinorVer = 1;   // a.bb-A
-
-  function GetTargetAsString(aMain, aSub, aMinor: Integer): String;
-  begin
-    Result := 'V';
-    Result := Result + IntToStr(aMain);
-    Result := Result + '.' + LeadZeroStr(aSub, 2) + 'n';
-    if aMinor <> 1 then
-      Result := Result + '-' + Char(aMinor + 64);
-  end;
-
-  function CombineTarget(aMain, aSub, aMinor: Integer): Integer;
-  begin
-    Result := (aMain * 10000) + (aSub * 100) + aMinor;
-  end;
+  Format, Core: Integer;
 
   function TestFor148Compatible: Boolean;
   var
     TempStream: TMemoryStream;
   begin
-    TempStream := CreateDataStream('levels.nxmi', ldtLemmings);
+    TempStream := CreateDataStream('levels.nxmi', ldtText); // ldtText only checks the NXP, nothing else
     Result := (TempStream <> nil);
     TempStream.Free;
   end;
 begin
-  //Result := nxc_Unknown;
+  Result := nxc_Error;
   SL := TStringList.Create;
 
   try
     TS := CreateDataStream('version.txt', ldtText);
     SL.LoadFromStream(TS);
-    Result := nxc_Compatible; //preliminary - may change to nxc_VersionError, but if we can get version.txt from the archive,
-                              //it's probably at least valid
 
-    // Get the version info from the version.txt file. It is important to note - this lists the minimum version guaranteed to
-    // be compatible with the file formats; there is no accounting for mechanics changes (as long as everything will still load)
-    // and it does not specify an exact version and/or "newest version at the time the pack was made".
-    // If there's a fourth line, it's a compatibility flag. This means that although the pack is marked as compatible with
-    // the older versions, it's also marked as compatible with the newer ones.
-    MainVer := StrToIntDef(SL[0], 0);
-    SubVer := StrToIntDef(SL[1], 0);
-    MinorVer := StrToIntDef(SL[2], 0);
-    if SL.Count > 3 then
+    if SL.Values['format'] = '' then  // Remove if there's a new format change; this is because formats 10 = V1.48
     begin
-      MaxSubVer := StrToIntDef(SL[3], SubVer);
-      MaxMinorVer := StrToIntDef(SL[4], SubVer);
-    end else begin
-      MaxSubVer := SubVer;
-      MaxMinorVer := MinorVer;
-    end;
-
-    // If requirement is above the current version
-    if CombineTarget(MainVer, SubVer, MinorVer) > CombineTarget(Cur_MainVer, Cur_SubVer, Cur_MinorVer) then
-    begin
-      ShowMessage('Warning: This pack may be incompatible with this version of NeoLemmix. Please use' + #13 +
-                  'NeoLemmix ' + GetTargetAsString(MainVer, SubVer, MinorVer) + ' or higher.');
-      Result := nxc_VersionErrorNew;
-    end;
-
-    // If requirement is below lowest supported version
-    if CombineTarget(MainVer, MaxSubVer, MaxMinorVer) < CombineTarget(Min_MainVer, Min_SubVer, Min_MinorVer) then
-    begin
-      if MaxSubVer < 47 then
+      if not TestFor148Compatible then
       begin
-        ShowMessage('This pack was built for older versions of NeoLemmix and is not compatible with this version.' + #13 +
-                    'It is recommended to use NeoLemmix V1.43n-F to play this pack.');
-        Result := nxc_VersionErrorOld;
-      end else if not TestFor148Compatible then
-      begin
-        ShowMessage('This pack was built for older versions of NeoLemmix and is not compatible with this version.' + #13 +
-                    'It is recommended to use NeoLemmix V1.47n-D to play this pack.');
-        Result := nxc_VersionErrorOld;
-      end;
-      // TestFor148Compatible will only pass on certain V1.47n-targetting packs that will not have compatibility issues.
+        Result := nxc_WrongFormat;
+        if SL[1] = '47' then
+          Target := '1.47n-D'
+        else
+          Target := '1.43n-F';
+      end else
+        Result := nxc_Compatible;
+      Exit;
     end;
 
+    Format := StrToIntDef(SL.Values['format'], 0);
+    Core := StrToIntDef(SL.Values['core'], 0);
+
+    // if Format doesn't match, treat as incompatible
+    if Format <> FORMAT_VERSION then
+    begin
+      Result := nxc_WrongFormat;
+      Target := IntToStr(Format) + '.xxx.xxx';
+    end else if Core < CORE_VERSION then
+    begin
+      Result := nxc_OldCore;
+      Target := IntToStr(Format) + '.' + LeadZeroStr(Core, 3) + '.xxx';
+    end else if Core > CORE_VERSION then
+    begin
+      Result := nxc_NewCore;
+      Target := IntToStr(Format) + '.' + LeadZeroStr(Core, 3) + '.xxx';
+    end else
+      Result := nxc_Compatible;
   except
-    // Error would most likely result from either a. the file not being an archive in UZip.pas's format,
-    // or b. a missing or invalid version.txt. In either case, this would indicate it's not a valid NXP file.
-    Result := nxc_Incompatible;
+    Result := nxc_Error;
   end;
 
   SL.Free;
@@ -184,6 +146,7 @@ var
   OpenDlg: TOpenDialog;
   DoSingleLevel: Boolean;
   fMainDatExtractor : TMainDatExtractor;
+  Target: String;
 begin
   inherited;
 
@@ -214,15 +177,34 @@ begin
     if LowerCase(ExtractFileExt(GameFile)) = '.nxp' then
     begin
       DoSingleLevel := false;
-      case CheckCompatible of
-        nxc_Unknown, nxc_Incompatible: begin
-                                         ShowMessage('ERROR: ' + ExtractFileName(GameFile) + ' is not a valid NeoLemmix data file.');
-                                         Halt(0);
-                                       end;
-        nxc_VersionErrorOld: begin
-                               Halt(0);
-                             end;
-        //nxc_BC: OverrideDirectDrop := false;
+      Target := '';
+      //BringToFront;
+      //DoneBringToFront := false;
+      IsHalting := false;
+      case CheckCompatible(Target) of
+        nxc_WrongFormat: begin
+                           ShowMessage('This pack''s data is in the wrong format for this version of NeoLemmix.' + #13 +
+                                       'Please use NeoLemmix V' + Target + ' to play this pack.');
+                           IsHalting := true;
+                           Halt(0);
+                         end;
+        nxc_OldCore: begin
+                       ShowMessage('This pack is designed for older versions of NeoLemmix. It should be compatible,' + #13 +
+                                   'but please be aware that it may not have been tested against this version. For' + #13 +
+                                   'optimal results, use NeoLemmix V' + Target + ' to play this pack.');
+                       // don't need to halt
+                     end;
+        nxc_NewCore: begin
+                       ShowMessage('This pack is designed for newer versions of NeoLemmix. Please upgrade to' + #13 +
+                                   'NeoLemmix V' + Target + ' to play this pack.');
+                       IsHalting := true;
+                       Halt(0);
+                     end;
+        nxc_Error: begin
+                     ShowMessage('The NXP file could not be loaded. It may be corrupt or an invalid file.');
+                     IsHalting := true;
+                     Halt(0);
+                   end;
       end;
     end else begin
       // If it's not an NXP file, treat it as a LVL file. This may not always be the case (eg. could be an NXP file with a wrong

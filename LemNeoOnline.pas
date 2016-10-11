@@ -10,7 +10,7 @@ expanded to directly access some kind of content database. :)
 interface
 
 uses
-  Dialogs,
+  Dialogs, LemVersion,
   URLMon, Wininet, Classes, ActiveX, Axctrls, SysUtils; // I can only guess why IStream and others are in the ActiveX units...
 
 const
@@ -27,11 +27,11 @@ type
   function DownloadToStringList(aURL: String; aStringList: TStringList): Boolean;
 
   // Specialty functions
-  function GetLatestNeoLemmixVersion(const aApp: TNxAppType; var MainVer, SubVer, MinorVer: Integer): Boolean;
+  function GetLatestNeoLemmixVersion(const aApp: TNxAppType; var aFormat, aCore, aFeature, aHotfix: Integer): Boolean;
 
 implementation
 
-function GetLatestNeoLemmixVersion(const aApp: TNxAppType; var MainVer, SubVer, MinorVer: Integer): Boolean;
+function GetLatestNeoLemmixVersion(const aApp: TNxAppType; var aFormat, aCore, aFeature, aHotfix: Integer): Boolean;
 var
   SL: TStringList;
   TempString: String;
@@ -64,9 +64,10 @@ begin
   SL.Delimiter := '.';
   SL.DelimitedText := TempString;
 
-  MainVer := StrToIntDef(SL[0], 0);
-  SubVer := StrToIntDef(SL[1], 0);
-  MinorVer := StrToIntDef(SL[2], 0);
+  aFormat := StrToIntDef(SL[0], 0);
+  aCore := StrToIntDef(SL[1], 0);
+  aFeature := StrToIntDef(SL[2], 0);
+  aHotfix := StrToIntDef(SL[3], 0);
 
   SL.Free;
 end;
