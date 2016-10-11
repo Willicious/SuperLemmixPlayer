@@ -9,6 +9,7 @@ uses
   UTools,
   LemPiece,
   LemNeoParser,
+  Contnrs,
   SysUtils;
 
 const
@@ -35,40 +36,40 @@ type
     function GetInvert: Boolean; override;
     function GetRotate: Boolean; override;
   public
-    procedure Assign(Source: TPersistent); override;
+    procedure Assign(Source: TPiece); override;
     procedure LoadFromParser(aParser: TNeoLemmixParser);
   published
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
   end;
 
 type
-  TTerrains = class(TPieces)
-  private
-    function GetItem(Index: Integer): TTerrain;
-    procedure SetItem(Index: Integer; const Value: TTerrain);
-  protected
-  public
-    constructor Create(aItemClass: TTerrainClass);
-    function Add: TTerrain;
-    function Insert(Index: Integer): TTerrain;
-    property Items[Index: Integer]: TTerrain read GetItem write SetItem; default;
-  published
+  TTerrains = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TTerrain;
+    public
+      constructor Create(aOwnsObjects: Boolean = true);
+      function Add(Item: TTerrain): Integer; overload;
+      function Add: TTerrain; overload;
+      procedure Insert(Index: Integer; Item: TTerrain); overload;
+      function Insert(Index: Integer): TTerrain; overload;
+      procedure Assign(aSrc: TTerrains);
+      property Items[Index: Integer]: TTerrain read GetItem; default;
+      property List;
   end;
 
 implementation
 
 { TTerrain }
 
-procedure TTerrain.Assign(Source: TPersistent);
+procedure TTerrain.Assign(Source: TPiece);
 var
   T: TTerrain absolute Source;
 begin
   if Source is TTerrain then
   begin
-    inherited Assign(Source);
+    inherited;
     DrawingFlags := T.DrawingFlags;
-  end
-  else inherited Assign(Source);
+  end;
 end;
 
 procedure TTerrain.LoadFromParser(aParser: TNeoLemmixParser);
@@ -196,31 +197,51 @@ end;
 
 { TTerrains }
 
+constructor TTerrains.Create(aOwnsObjects: Boolean = true);
+begin
+  inherited Create(aOwnsObjects);
+end;
+
+function TTerrains.Add(Item: TTerrain): Integer;
+begin
+  Result := inherited Add(Item);
+end;
+
 function TTerrains.Add: TTerrain;
 begin
-  Result := TTerrain(inherited Add);
+  Result := TTerrain.Create;
+  inherited Add(Result);
 end;
 
-
-constructor TTerrains.Create(aItemClass: TTerrainClass);
+procedure TTerrains.Insert(Index: Integer; Item: TTerrain);
 begin
-  inherited Create(aItemClass);
-end;
-
-function TTerrains.GetItem(Index: Integer): TTerrain;
-begin
-  Result := TTerrain(inherited GetItem(Index))
+  inherited Insert(Index, Item);
 end;
 
 function TTerrains.Insert(Index: Integer): TTerrain;
 begin
-  Result := TTerrain(inherited Insert(Index))
+  Result := TTerrain.Create;
+  inherited Insert(Index, Result);
 end;
 
-procedure TTerrains.SetItem(Index: Integer; const Value: TTerrain);
+procedure TTerrains.Assign(aSrc: TTerrains);
+var
+  i: Integer;
+  Item: TTerrain;
 begin
-  inherited SetItem(Index, Value);
+  Clear;
+  for i := 0 to aSrc.Count-1 do
+  begin
+    Item := Add;
+    Item.Assign(aSrc[i]);
+  end;
 end;
+
+function TTerrains.GetItem(Index: Integer): TTerrain;
+begin
+  Result := inherited Get(Index);
+end;
+
 
 end.
 

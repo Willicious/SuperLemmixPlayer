@@ -4,6 +4,7 @@ unit LemInteractiveObject;
 interface
 
 uses
+  Contnrs,
   Classes,
   LemPiece;
 
@@ -36,9 +37,9 @@ type
     function GetFlip: Boolean; override;
     function GetInvert: Boolean; override;
   public
-    procedure Assign(Source: TPersistent); override;
+    procedure Assign(Source: TPiece); override;
   published
-    constructor Create(Collection: TCollection); override;
+    constructor Create;
     property Width: Integer read fWidth write fWidth;
     property Height: Integer read fHeight write fHeight;
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
@@ -51,17 +52,18 @@ type
   end;
 
 type
-  TInteractiveObjects = class(TPieces)
-  private
-    function GetItem(Index: Integer): TInteractiveObject;
-    procedure SetItem(Index: Integer; const Value: TInteractiveObject);
-  protected
-  public
-    constructor Create(aItemClass: TInteractiveObjectClass);
-    function Add: TInteractiveObject;
-    function Insert(Index: Integer): TInteractiveObject;
-    property Items[Index: Integer]: TInteractiveObject read GetItem write SetItem; default;
-  published
+  TInteractiveObjects = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TInteractiveObject;
+    public
+      constructor Create(aOwnsObjects: Boolean = true);
+      function Add(Item: TInteractiveObject): Integer; overload;
+      function Add: TInteractiveObject; overload;
+      procedure Insert(Index: Integer; Item: TInteractiveObject); overload;
+      function Insert(Index: Integer): TInteractiveObject; overload;
+      procedure Assign(aSrc: TInteractiveObjects);
+      property Items[Index: Integer]: TInteractiveObject read GetItem; default;
+      property List;
   end;
 
 implementation
@@ -69,50 +71,79 @@ implementation
 
 { TInteractiveObjects }
 
-function TInteractiveObjects.Add: TInteractiveObject; 
-begin 
-  Result := TInteractiveObject(inherited Add); 
+constructor TInteractiveObjects.Create(aOwnsObjects: Boolean = true);
+begin
+  inherited Create(aOwnsObjects);
 end;
 
-constructor TInteractiveObjects.Create(aItemClass: TInteractiveObjectClass);
+function TInteractiveObjects.Add(Item: TInteractiveObject): Integer;
 begin
-  inherited Create(aItemClass);
-end; 
+  Result := inherited Add(Item);
+end;
 
-function TInteractiveObjects.GetItem(Index: Integer): TInteractiveObject; 
-begin 
-  Result := TInteractiveObject(inherited GetItem(Index)) 
-end; 
+function TInteractiveObjects.Add: TInteractiveObject;
+begin
+  Result := TInteractiveObject.Create;
+  inherited Add(Result);
+end;
 
-function TInteractiveObjects.Insert(Index: Integer): TInteractiveObject; 
-begin 
-  Result := TInteractiveObject(inherited Insert(Index)) 
-end; 
+procedure TInteractiveObjects.Insert(Index: Integer; Item: TInteractiveObject);
+begin
+  inherited Insert(Index, Item);
+end;
 
-procedure TInteractiveObjects.SetItem(Index: Integer; const Value: TInteractiveObject);
-begin 
-  inherited SetItem(Index, Value); 
-end; 
+function TInteractiveObjects.Insert(Index: Integer): TInteractiveObject;
+begin
+  Result := TInteractiveObject.Create;
+  inherited Insert(Index, Result);
+end;
+
+procedure TInteractiveObjects.Assign(aSrc: TInteractiveObjects);
+var
+  i: Integer;
+  Item: TInteractiveObject;
+begin
+  Clear;
+  for i := 0 to aSrc.Count-1 do
+  begin
+    Item := Add;
+    Item.Assign(aSrc[i]);
+  end;
+end;
+
+function TInteractiveObjects.GetItem(Index: Integer): TInteractiveObject;
+begin
+  Result := inherited Get(Index);
+end;
+
 
 { TInteractiveObject }
 
-constructor TInteractiveObject.Create(Collection: TCollection);
+constructor TInteractiveObject.Create;
 begin
   inherited;
   fWidth := -1;
   fHeight := -1;
 end;
 
-procedure TInteractiveObject.Assign(Source: TPersistent);
+procedure TInteractiveObject.Assign(Source: TPiece);
 var
   O: TInteractiveObject absolute Source;
 begin
   if Source is TInteractiveObject then
   begin
-    inherited Assign(Source);
+    inherited;
     DrawingFlags := O.DrawingFlags;
-  end
-  else inherited Assign(Source);
+    Width := O.Width;
+    Height := O.Height;
+    IsFake := O.IsFake;
+    Skill := O.Skill;
+    TarLev := O.TarLev;
+    LastDrawX := O.LastDrawX;
+    LastDrawY := O.LastDrawY;
+    DrawAsZombie := O.DrawAsZombie;
+    // some of these probably don't need to be copied really
+  end;
 end;
 
 procedure TInteractiveObject.SetFlip(aValue: Boolean);

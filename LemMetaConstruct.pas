@@ -38,7 +38,7 @@ implementation
 constructor TMetaConstruct.Create;
 begin
   inherited;
-  fPieceList := TTerrains.Create(TTerrain);
+  fPieceList := TTerrains.Create;
   fRenderer := nil;
   fUsingOwnRenderer := false;
 end;

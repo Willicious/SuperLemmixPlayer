@@ -10,13 +10,13 @@ uses
 type
   // abstract ancestor for object, terrain and steel
   TPieceClass = class of TPiece;
-  TPiece = class(TCollectionItem)
+  TPiece = class
   private
   protected
     fLeft : Integer;
     fTop  : Integer;
   public
-    procedure Assign(Source: TPersistent); override;
+    procedure Assign(Source: TPiece); virtual;
   published
     property Left: Integer read fLeft write fLeft;
     property Top: Integer read fTop write fTop;
@@ -36,7 +36,7 @@ type
     procedure SetInvert(aValue: Boolean); virtual;
     procedure SetRotate(aValue: Boolean); virtual;
   public
-    procedure Assign(Source: TPersistent); override;
+    procedure Assign(Source: TPiece); override;
   published
     property GS: String read fSet write fSet; // "Set" is a reserved keyword :(
     property Piece: String read fPiece write fPiece;
@@ -53,55 +53,34 @@ type
     fHeight: Integer;
     fWidth: Integer;
   public
-    procedure Assign(Source: TPersistent); override;
+    procedure Assign(Source: TPiece); override;
   published
     property Width: Integer read fWidth write fWidth;
     property Height: Integer read fHeight write fHeight;
   end;
 
-type
-  TPieces = class(TCollectionEx)
-  public
-    constructor Create(aItemClass: TPieceClass);
-  end;
-
 implementation
-
-
-{ TPieces }
-
-constructor TPieces.Create(aItemClass: TPieceClass);
-begin
-  inherited Create(aItemClass);
-end;
 
 { TPiece }
 
-procedure TPiece.Assign(Source: TPersistent);
-var
-  P: TPiece absolute Source;
+procedure TPiece.Assign(Source: TPiece);
 begin
-  if Source is TPiece then
-  begin
-    Left := P.Left;
-    Top := P.Top;
-  end
-  else inherited Assign(Source);
+  Left := Source.Left;
+  Top := Source.Top;
 end;
 
 { TIdentifiedPiece }
 
-procedure TIdentifiedPiece.Assign(Source: TPersistent);
+procedure TIdentifiedPiece.Assign(Source: TPiece);
 var
   IP: TIdentifiedPiece absolute Source;
 begin
   if Source is TIdentifiedPiece then
   begin
-    inherited Assign(Source);
+    inherited;
     GS := IP.GS;
     Piece := IP.Piece;
-  end
-  else inherited Assign(Source);
+  end;
 end;
 
 procedure TIdentifiedPiece.SetFlip(aValue: Boolean);
@@ -135,17 +114,16 @@ end;
 
 { TSizedPiece }
 
-procedure TSizedPiece.Assign(Source: TPersistent);
+procedure TSizedPiece.Assign(Source: TPiece);
 var
   SP: TSizedPiece absolute Source;
 begin
   if Source is TSizedPiece then
   begin
-    inherited Assign(Source);
+    inherited;
     Width := SP.Width;
     Height := SP.Height;
-  end
-  else inherited Assign(Source);
+  end;
 end;
 
 end.

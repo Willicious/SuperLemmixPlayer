@@ -347,9 +347,9 @@ begin
   Inc(fUpdateCounter);
   if fUpdateCounter = 1 then
   begin
-    fInteractiveObjects.BeginUpdate;
-    fTerrains.BeginUpdate;
-    fSteels.BeginUpdate;
+    //fInteractiveObjects.BeginUpdate;
+    //fTerrains.BeginUpdate;
+    //fSteels.BeginUpdate;
   end;
 end;
 
@@ -384,7 +384,7 @@ end;
 
 function TLevel.DoCreateInteractiveObjects: TInteractiveObjects;
 begin
-  Result := TInteractiveObjects.Create(TInteractiveObject);
+  Result := TInteractiveObjects.Create;
 end;
 
 function TLevel.DoCreateLevelInfo: TLevelInfo;
@@ -394,12 +394,12 @@ end;
 
 function TLevel.DoCreateSteels: TSteels;
 begin
-  Result := TSteels.Create(TSteel);
+  Result := TSteels.Create;
 end;
 
 function TLevel.DoCreateTerrains: TTerrains;
 begin
-  Result := TTerrains.Create(TTerrain);
+  Result := TTerrains.Create;
 end;
 
 procedure TLevel.EndUpdate;
@@ -409,9 +409,9 @@ begin
     Dec(fUpdateCounter);
     if fUpdateCounter = 0 then
     begin
-      fInteractiveObjects.EndUpdate;
-      fTerrains.EndUpdate;
-      fSteels.EndUpdate;
+      //fInteractiveObjects.EndUpdate;
+      //fTerrains.EndUpdate;
+      //fSteels.EndUpdate;
     end;
   end;
 end;
