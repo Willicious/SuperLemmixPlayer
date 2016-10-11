@@ -329,7 +329,7 @@ end;
 procedure TDosGameParams.LoadFromIniFile;
 var
   SL: TStringList;
-  LastVer: Integer;
+  LastVer: Int64;
 
   function LoadBoolean(aLabel: String): Boolean;
   begin
@@ -373,7 +373,7 @@ begin
   PostLevelVictorySound := LoadBoolean('VictoryJingle');
   PostLevelFailureSound := LoadBoolean('FailureJingle');
 
-  LastVer := StrToIntDef(SL.Values['LastVersion'], 0);
+  LastVer := StrToInt64Def(SL.Values['LastVersion'], 0);
 
   if LastVer < 1441 then
     BlackOutZero := true;
@@ -381,11 +381,11 @@ begin
   if LastVer < 1471 then
   begin
     if LoadBoolean('SoundEnabled') then
-      SoundVolume := 100
+      SoundVolume := 50
     else
       SoundVolume := 0;
     if LoadBoolean('MusicEnabled') then
-      MusicVolume := 100
+      MusicVolume := 50
     else
       MusicVolume := 0;
 
@@ -412,8 +412,8 @@ begin
   MiscOptions := DEF_MISCOPTIONS;
   PostLevelSoundOptions := [plsVictory, plsFailure];
 
-  MusicVolume := 100;
-  SoundVolume := 100;
+  MusicVolume := 50;
+  SoundVolume := 50;
   fForceSkillset := 0;
   fDumpMode := false;
   fTestScreens := 0;
