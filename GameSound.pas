@@ -527,6 +527,8 @@ const
                BASS_MUSIC_POSRESET or BASS_SAMPLE_SOFTWARE;
 //var
   //i, v : Integer;
+var
+  V: Single;
 begin
   BASS_StreamFree(fMusicRef);
   BASS_MusicFree(fMusicRef);
@@ -537,12 +539,16 @@ begin
   if fMusicRef = 0 then
   begin
     fMusicRef := BASS_MusicLoad(true, S.Memory, 0, S.Size, MusicFlags, 1);
-  end else
+    BASS_ChannelGetAttribute(fMusicRef, BASS_ATTRIB_MUSIC_VOL_GLOBAL, V);
+    V := V * MusicVolume / 100;
+    BASS_ChannelSetAttribute(fMusicRef, BASS_ATTRIB_MUSIC_VOL_GLOBAL, V);
+  end else begin
+    BASS_ChannelSetAttribute(fMusicRef, BASS_ATTRIB_VOL, MusicVolume / 100);
     BASS_LoadLoopData(fMusicRef);
+  end;
 
   if fMusicRef <> 0 then
   begin
-    BASS_ChannelSetAttribute(fMusicRef, BASS_ATTRIB_VOL, MusicVolume / 100);
     BASS_ChannelPlay(fMusicRef, false);
   end;
 
