@@ -46,7 +46,7 @@ begin
   end;
 
   case aApp of
-    NxaPlayer: TempString := 'player';
+    NxaPlayer: TempString := 'game';
     NxaEditor: TempString := 'editor';
     NxaFlexi: TempString := 'flexi';
     NxaGS: TempString := 'gstool';
