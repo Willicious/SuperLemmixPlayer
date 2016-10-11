@@ -310,8 +310,16 @@ begin
 
   SL.Add('');
   SL.Add('# Sound Options');
-  SL.Add('MusicVolume=' + IntToStr(MusicVolume));
-  SL.Add('SoundVolume=' + IntToStr(SoundVolume));
+  SaveBoolean('MusicEnabled', MusicVolume <> 0);
+  SaveBoolean('SoundEnabled', SoundVolume <> 0);
+  if MusicVolume <> 0 then
+    SL.Add('MusicVolume=' + IntToStr(MusicVolume))
+  else
+    SL.Add('MusicVolume=' + IntToStr(SavedMusicVol));
+  if SoundVolume <> 0 then
+    SL.Add('SoundVolume=' + IntToStr(SoundVolume))
+  else
+    SL.Add('SoundVolume=' + IntToStr(SavedSoundVol));
   SaveBoolean('VictoryJingle', PostLevelVictorySound);
   SaveBoolean('FailureJingle', PostLevelFailureSound);
 
@@ -352,8 +360,6 @@ begin
   else
     SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini');
 
-  MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 100);
-  SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 100);
   AutoReplayNames := LoadBoolean('AutoReplayNames');
   AutoSaveReplay := LoadBoolean('AutoSaveReplay');
   LemmingBlink := LoadBoolean('LemmingCountBlink');
@@ -372,6 +378,22 @@ begin
 
   PostLevelVictorySound := LoadBoolean('VictoryJingle');
   PostLevelFailureSound := LoadBoolean('FailureJingle');
+
+  // Sound options are tricky
+  if LoadBoolean('SoundEnabled') then
+    SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50)
+  else begin
+    SavedSoundVol := StrToIntDef(SL.Values['SoundVolume'], 50);
+    SoundVolume := 0;
+  end;
+
+  if LoadBoolean('MusicEnabled') then
+    MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50)
+  else begin
+    SavedMusicVol := StrToIntDef(SL.Values['MusicVolume'], 50);
+    MusicVolume := 0;
+  end;
+
 
   LastVer := StrToInt64Def(SL.Values['LastVersion'], 0);
 
@@ -396,6 +418,14 @@ begin
   begin
     PostLevelVictorySound := true;
     PostLevelFailureSound := true;
+  end;
+
+  if LastVer < 1001001000 then
+  begin
+    if SavedSoundVol <> 0 then
+      SoundVolume := SavedSoundVol;
+    if SavedMusicVol <> 0 then
+      MusicVolume := SavedMusicVol;
   end;
 
   SL.Free;
