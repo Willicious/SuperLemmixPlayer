@@ -24,6 +24,7 @@ type
       fIsZombie:   Boolean;
     public
       constructor Create;
+      procedure Assign(aSrc: TPreplacedLemming);
       property X: Integer read fX write fX;
       property Y: Integer read fY write fY;
       property Dx: Integer read fDx write fDx;
@@ -40,8 +41,10 @@ type
     private
       function GetItem(Index: Integer): TPreplacedLemming;
     public
-      constructor Create;
+      constructor Create(aOwnsObjects: Boolean = true);
       function Add: TPreplacedLemming;
+      function Insert(Index: Integer): TPreplacedLemming;
+      procedure Assign(aSrc: TPreplacedLemmingList);
       property Items[Index: Integer]: TPreplacedLemming read GetItem; default;
       property List;
   end;
@@ -142,17 +145,50 @@ begin
   fIsZombie := false;
 end;
 
+procedure TPreplacedLemming.Assign(aSrc: TPreplacedLemming);
+begin
+  X := aSrc.X;
+  Y := aSrc.Y;
+  Dx := aSrc.Dx;
+  IsClimber := aSrc.IsClimber;
+  IsSwimmer := aSrc.IsSwimmer;
+  IsFloater := aSrc.IsFloater;
+  IsGlider := aSrc.IsGlider;
+  IsDisarmer := aSrc.IsDisarmer;
+  IsBlocker := aSrc.IsBlocker;
+  IsZombie := aSrc.IsZombie;
+end;
+
 { TPreplacedLemmingList }
 
-constructor TPreplacedLemmingList.Create;
+constructor TPreplacedLemmingList.Create(aOwnsObjects: Boolean = true);
 begin
-  inherited Create(true);
+  inherited Create(aOwnsObjects);
 end;
 
 function TPreplacedLemmingList.Add: TPreplacedLemming;
 begin
   Result := TPreplacedLemming.Create;
   inherited Add(Result);
+end;
+
+function TPreplacedLemmingList.Insert(Index: Integer): TPreplacedLemming;
+begin
+  Result := TPreplacedLemming.Create;
+  inherited Insert(Index, Result);
+end;
+
+procedure TPreplacedLemmingList.Assign(aSrc: TPreplacedLemmingList);
+var
+  i: Integer;
+  Item: TPreplacedLemming;
+begin
+  Clear;
+  for i := 0 to aSrc.Count-1 do
+  begin
+    Item := Add;
+    Item.Assign(aSrc[i]);
+  end;
 end;
 
 function TPreplacedLemmingList.GetItem(Index: Integer): TPreplacedLemming;
