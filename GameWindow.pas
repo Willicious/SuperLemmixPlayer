@@ -478,6 +478,11 @@ begin
     // just redraw TargetImage to display the correct game state
     DoDraw;
     Game.RefreshAllPanelInfo;
+    if Game.CancelReplayAfterSkip then
+    begin
+      Game.RegainControl;
+      Game.CancelReplayAfterSkip := false;
+    end;
   end else begin
     // start hyperspeed to the desired interation
     Game.HyperSpeedBegin(CurrentlyPaused);
@@ -758,8 +763,8 @@ begin
                        SoundOpts := SoundOpts + [gsoMusic];
                      end;
           lka_Restart: begin
-                         GotoSaveState(0, true); // the true prevents pausing afterwards
                          if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+                         GotoSaveState(0, true); // the true prevents pausing afterwards
                        end;
           lka_Sound: if SoundVolume <> 0 then
                      begin
@@ -786,11 +791,11 @@ begin
           lka_Skip: if Game.Playing then
                       if func.Modifier < 0 then
                       begin
+                        if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                         if CurrentIteration > (func.Modifier * -1) then
                           GotoSaveState(CurrentIteration + func.Modifier - 1)
                         else
                           GotoSaveState(0);
-                        if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                       end else if func.Modifier > 1 then
                       begin
                         HyperSpeedBegin;

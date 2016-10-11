@@ -5678,7 +5678,7 @@ procedure TLemmingGame.RegainControl;
   This is a very important routine. It jumps from replay into usercontrol.
 -------------------------------------------------------------------------------}
 begin
-  if Replaying then
+  //if Replaying then
     fReplayManager.Cut(fCurrentIteration);
 
   InfoPainter.SetReplayMark(false);
