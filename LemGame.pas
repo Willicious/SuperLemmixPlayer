@@ -374,6 +374,7 @@ type
     fLemWithShadow             : TLemming; // needed for CheckForNewShadow to erase previous shadow
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
+    fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
     Entries                    : TInteractiveObjectInfoList; // list of entrances (NOT USED ANYMORE)
     DosEntryTable              : array of Integer; // table for entrance release order
@@ -2804,6 +2805,13 @@ begin
     Assert(i <= Length(CheckPos[0]), 'CheckTriggerArea: CheckPos has not enough entries');
     Assert(i <= Length(CheckPos[1]), 'CheckTriggerArea: CheckPos has not enough entries');
 
+    // Transition if we are at the end position and need to do one
+    if (fLemNextAction <> baNone) and ([CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY]) then
+    begin
+      Transition(L, fLemNextAction);
+      fLemNextAction := baNone;
+    end;
+
     // Animations - the most useless of objects...
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnimation) then
       HandleObjAnimation(L, CheckPos[0, i], CheckPos[1, i]);
@@ -3020,16 +3028,19 @@ var
   Inf: TInteractiveObjectInfo;
   ObjectID: Word;
 begin
-  Result := True;
+  Result := False;
+
+  // Exit if lemming is splatting
+  if L.LemAction = baSplatting then Exit;
+  // Exit if lemming is falling, has ground under his feet and will splat
+  if (L.LemAction = baFalling) and HasPixelAt(PosX, PosY) and (L.LemFallen > fFallLimit) then Exit;
 
   ObjectID := FindObjectID(PosX, PosY, trTeleport);
 
   // Exit if there is no Object
-  if ObjectID = 65535 then
-  begin
-    Result := False;
-    Exit;
-  end;
+  if ObjectID = 65535 then Exit;
+
+  Result := True;
 
   Inf := ObjectInfos[ObjectID];
 
@@ -3532,6 +3543,8 @@ begin
   L.LemXOld := L.LemX;
   L.LemYOld := L.LemY;
   L.LemActionOld := L.LemAction;
+  // No transition to do at the end of lemming movement
+  fLemNextAction := baNone;
 
   Inc(L.LemFrame);
 
@@ -3713,7 +3726,7 @@ begin
 
     if (dy < 2) and not HasPixelAt(LemX, LemY-1) then
     begin
-      Transition(L, baWalking);
+      fLemNextAction := baWalking;
     end else if ((LemJumped = 4) and HasPixelAt(LemX, LemY-1) and HasPixelAt(LemX, LemY-2)) or ((LemJumped >= 5) and HasPixelAt(LemX, LemY-1)) then
     begin
       Dec(LemX, LemDx);
@@ -4378,9 +4391,9 @@ begin
     begin
       // Object checks at hitting ground
       if IsFallFatal then
-        Transition(L, baSplatting)
+        fLemNextAction := baSplatting
       else
-        Transition(L, baWalking);
+        fLemNextAction := baWalking;
     end;
   end;
 end;
@@ -4402,7 +4415,7 @@ begin
   begin
     // Lem has found solid terrain
     Inc(L.LemY, MaxIntValue([FindGroundPixel(L.LemX, L.LemY), 0]));
-    Transition(L, baWalking);
+    fLemNextAction := baWalking;
   end
   else
     Inc(L.LemY, MaxFallDist);
@@ -4455,7 +4468,7 @@ var
             and HasPixelAt(L.LemX + L.LemDx, L.LemY + 3)) then
     begin
       if HasPixelAt(L.LemX, L.LemY) and (LemYDir = 1) then
-        Transition(L, baWalking)
+        fLemNextAction := baWalking
       else if HasPixelAt(L.LemX, L.LemY - 2) and (LemYDir = -1) then
         // Do nothing
       else
@@ -4518,7 +4531,7 @@ begin
   else if GroundDist < 0 then // Move 1 to 4 pixels up
   begin
     Inc(L.LemY, GroundDist);
-    Transition(L, baWalking);
+    fLemNextAction := baWalking;
   end
 
   else if MaxFallDist > 0 then // no pixel above current location; not checked if one has moved upwards
@@ -4528,7 +4541,7 @@ begin
       // Lem has found solid terrain
       Assert(GroundDist >= 0, 'glider GroundDist negative');
       Inc(L.LemY, GroundDist);
-      Transition(L, baWalking);
+      fLemNextAction := baWalking;
     end
     else
       Inc(L.LemY, MaxFallDist);
@@ -4545,7 +4558,7 @@ begin
       // Check whether the glider has reached the ground
       if HasPixelAt(L.LemX, L.LemY) then
       begin
-        Transition(L, baWalking);
+        fLemNextAction := baWalking;
         LemDy := 4;
       end;
     end;
