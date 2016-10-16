@@ -5571,7 +5571,8 @@ begin
     // Check for exit, traps and teleporters (but stop at teleporters!)
     for i := 0 to Length(LemPosArray[0]) do
     begin
-      if    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+      if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+             and (FindObjectID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
