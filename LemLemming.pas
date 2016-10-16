@@ -103,6 +103,7 @@ type
     LemXOld                       : Integer; // position of previous frame
     LemYOld                       : Integer;
     LemActionOld                  : TBasicLemmingAction; // action in previous frame
+    LemActionNew                  : TBasicLemmingAction; // new action after fixing a trap, see http://www.lemmingsforums.net/index.php?topic=3004.0
 
     constructor Create;
     procedure Assign(Source: TLemming);
@@ -341,6 +342,7 @@ begin
   LemXOld := Source.LemXOld;
   LemYOld := Source.LemYOld;
   LemActionOld := Source.LemActionOld;
+  LemActionNew := Source.LemActionNew;
 end;
 
 { TLemmingList }

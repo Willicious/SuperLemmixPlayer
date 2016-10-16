@@ -2834,7 +2834,11 @@ begin
 
     // Triggered traps and one-shot traps
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
+    begin
       AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
+      // Disarmers move always to final X-position, see http://www.lemmingsforums.net/index.php?topic=3004.0
+      if (L.LemAction = baFixing) then CheckPos[0, i] := L.LemX;
+    end;
 
     // Radiation
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
@@ -2987,6 +2991,10 @@ begin
   if     L.LemIsMechanic and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
   begin
+    // Set action after fixing, if we are moving upwards and haven't reached the top yet
+    if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baJumping
+    else L.LemActionNew := baWalking;
+
     Inf.IsDisabled := True;
     Transition(L, baFixing);
   end
@@ -3835,7 +3843,11 @@ begin
   Result := False;
   Dec(L.LemMechanicFrames);
   if L.LemMechanicFrames <= 0 then
-    Transition(L, baWalking)
+  begin
+    if L.LemActionNew <> baNone then Transition(L, L.LemActionNew)
+    else Transition(L, baWalking);
+    L.LemActionNew := baNone;
+  end
   else if L.LemFrame mod 8 = 0 then
     CueSoundEffect(SFX_FIXING, L.Position);
 end;
