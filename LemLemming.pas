@@ -336,7 +336,11 @@ begin
   LemExploded := Source.LemExploded;
   LemUsedSkillCount := Source.LemUsedSkillCount;
   LemTimerToStone := Source.LemTimerToStone;
+  LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
+  LemXOld := Source.LemXOld;
+  LemYOld := Source.LemYOld;
+  LemActionOld := Source.LemActionOld;
 end;
 
 { TLemmingList }
