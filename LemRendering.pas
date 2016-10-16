@@ -132,10 +132,11 @@ type
     // Object rendering
     procedure DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
     procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
+    procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming);
 
     // Lemming rendering
-    procedure DrawLemmings;
-    procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
+    procedure DrawLemmings(UsefulOnly: Boolean = false);
+    procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false; UsefulOnly: Boolean = false);
     procedure DrawLemmingHelper(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
 
@@ -226,7 +227,7 @@ end;
 
 // Lemming Drawing
 
-procedure TRenderer.DrawLemmings;
+procedure TRenderer.DrawLemmings(UsefulOnly: Boolean = false);
 var
   i: Integer;
   LemmingList: TLemmingList;
@@ -241,7 +242,8 @@ begin
     if LemmingList[i] <> fRenderInterface.SelectedLemming then DrawThisLemming(LemmingList[i]);
 
   // Draw the lemming below the cursor
-  if fRenderInterface.SelectedLemming <> nil then DrawThisLemming(fRenderInterface.SelectedLemming, true);
+  if fRenderInterface.SelectedLemming <> nil then
+    DrawThisLemming(fRenderInterface.SelectedLemming, true, UsefulOnly);
 
   // Draw particles for exploding lemmings
   fLayers.fIsEmpty[rlParticles] := True;
@@ -256,7 +258,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawThisLemming(aLemming: TLemming; Selected: Boolean = false);
+procedure TRenderer.DrawThisLemming(aLemming: TLemming; Selected: Boolean = false; UsefulOnly: Boolean = false);
 var
   SrcRect, DstRect: TRect;
   SrcAnim: TBitmap32;
@@ -305,6 +307,13 @@ begin
   SrcAnim.DrawMode := dmCustom;
   SrcAnim.OnPixelCombine := fRecolorer.CombineLemmingPixels;
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
+
+  // Helper for selected blockers
+  if UsefulOnly and Selected and (aLemming.LemAction = baBlocking) then
+  begin
+    DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
+    fLayers.fIsEmpty[rlObjectHelpers] := false;
+  end;
 end;
 
 procedure TRenderer.DrawLemmingHelper(aLemming: TLemming);
@@ -997,7 +1006,7 @@ var
 
   DrawX, DrawY: Integer;
 begin
-  Dst := fLayers[rlObjectHelpers]; // for now
+  Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
 
   O := Obj.Obj;
   MO := Obj.MetaObj;
@@ -1108,6 +1117,22 @@ begin
 
   end;
 end;
+
+procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming);
+var
+  DrawX, DrawY: Integer;
+begin
+  Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+
+  DrawX := L.LemX;
+  DrawY := L.LemY - 10 - 9; // much simpler
+
+  Assert(L.LemAction = baBlocking, 'Lemming helper called for non-blocker');
+
+  if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4, DrawY)
+  else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY);
+end;
+
 
 procedure TRenderer.DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
 var
@@ -1349,8 +1374,8 @@ begin
         end;
     end;
 
-    if fRenderInterface.UserHelper <> hpi_None then
-      DrawUserHelper;
+    // if fRenderInterface.UserHelper <> hpi_None then
+    //  DrawUserHelper;
   end;
 
 end;

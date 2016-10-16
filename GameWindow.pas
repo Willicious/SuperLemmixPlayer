@@ -400,7 +400,7 @@ begin
     fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
     fRenderInterface.MousePos := Game.CursorPoint;
     fRenderer.DrawAllObjects(fRenderInterface.ObjectList, true, fClearPhysics);
-    fRenderer.DrawLemmings;
+    fRenderer.DrawLemmings(fClearPhysics);
     DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 320, fRenderInterface.ScreenPos.Y + 160);
     fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
     fNeedRedraw := false;
