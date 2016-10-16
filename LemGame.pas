@@ -5614,17 +5614,20 @@ begin
 
   Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
 
-  if      (ObjInfo.TriggerEffect = DOM_RECEIVER)
-      and (ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) then
+  if ObjInfo.TriggerEffect = DOM_RECEIVER then
   begin
-    L.LemTeleporting := False; // Let lemming reappear
-    ObjInfo.TeleLem := -1;
-    Result := True;
-    // Reset blocker map, if lemming is a blocker
-    if L.LemAction = baBlocking then
+    if    (ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount)
+       or ((ObjInfo.KeyFrame <> 0) and (ObjInfo.CurrentFrame + 1 >= ObjInfo.KeyFrame)) then
     begin
-      L.LemHasBlockerField := True;
-      SetBlockerMap;
+      L.LemTeleporting := False; // Let lemming reappear
+      ObjInfo.TeleLem := -1;
+      Result := True;
+      // Reset blocker map, if lemming is a blocker
+      if L.LemAction = baBlocking then
+      begin
+        L.LemHasBlockerField := True;
+        SetBlockerMap;
+      end;
     end;
   end;
 end;

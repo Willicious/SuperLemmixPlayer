@@ -38,7 +38,7 @@ type
     function GetAnimationFrameCount: Integer;
     function GetPreassignedSkills: Integer;
     function GetCenterPoint: TPoint;
-
+    function GetKeyFrame: Integer;
 
   public
     MetaObj        : TMetaObjectInterface;
@@ -74,6 +74,7 @@ type
     property SoundEffect: Integer read GetSoundEffect;
     property PreassignedSkills: Integer read GetPreassignedSkills;
     property ZombieMode: Boolean read sZombieMode write SetZombieMode;
+    property KeyFrame: Integer read GetKeyFrame;
 
     procedure AssignTo(NewObj: TInteractiveObjectInfo);
 
@@ -335,6 +336,11 @@ function TInteractiveObjectInfo.GetCenterPoint: TPoint;
 begin
   Result.X := sLeft + (sWidth div 2);
   Result.Y := sTop + (sHeight div 2);
+end;
+
+function TInteractiveObjectInfo.GetKeyFrame: Integer;
+begin
+  Result := MetaObj.KeyFrame;
 end;
 
 function TInteractiveObjectInfo.Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
