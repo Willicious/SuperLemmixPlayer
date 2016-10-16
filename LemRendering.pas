@@ -1115,6 +1115,10 @@ begin
         fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16, DrawY);
       end;
 
+    DOM_WATER:
+      begin
+        fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16, DrawY);
+      end;
   end;
 end;
 
