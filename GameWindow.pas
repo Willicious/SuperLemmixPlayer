@@ -52,7 +52,7 @@ type
     procedure SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   { internal }
     procedure CheckResetCursor;
-    procedure CheckScroll;
+    function CheckScroll: Boolean;
     procedure AddSaveState;
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     procedure CheckAdjustReleaseRate;
@@ -182,7 +182,7 @@ begin
       if TimeForScroll then
       begin
         PrevScrollTime := CurrTime;
-        CheckScroll;
+        if CheckScroll then fNeedRedraw := True;
       end;
 
       // Check whether we have to move the lemmings
@@ -246,7 +246,7 @@ begin
     end;
 
     // Update drawing
-    if (TimeForFrame or TimeForScroll or fNeedRedraw) then
+    if (TimeForFrame {or TimeForScroll} or fNeedRedraw) then
     begin
       DoDraw;
     end;
@@ -515,7 +515,7 @@ begin
   end;}
 end;
 
-procedure TGameWindow.CheckScroll;
+function TGameWindow.CheckScroll: Boolean;
   procedure Scroll(dx, dy: Integer);
   begin
     Img.OffsetHorz := Img.OffsetHorz - DisplayScale * dx * fScrollSpeed;
@@ -539,9 +539,9 @@ begin
     gsDown:
       Scroll(0, 8);
   end;
-
   Img.EndUpdate;
 
+  Result := (GameScroll in [gsRight, gsLeft]) or(GameVScroll in [gsUp, gsDown]);
 end;
 
 constructor TGameWindow.Create(aOwner: TComponent);
