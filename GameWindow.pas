@@ -153,7 +153,7 @@ begin
     ForceOne := ForceUpdateOneFrame or fRenderInterface.ForceUpdate;
     ForceUpdateOneFrame := False;
     CurrTime := TimeGetTime;
-    TimeForFrame := CurrTime - PrevCallTime > IdealFrameTimeMS;
+    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
     TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
     TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
     Hyper := Game.HyperSpeed;
@@ -246,7 +246,7 @@ begin
     end;
 
     // Update drawing
-    if (TimeForFrame or fNeedRedraw) then
+    if (TimeForFrame or TimeForScroll or fNeedRedraw) then
     begin
       DoDraw;
     end;
@@ -540,7 +540,6 @@ begin
       Scroll(0, 8);
   end;
 
-  DoDraw;
   Img.EndUpdate;
 
 end;
