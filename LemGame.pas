@@ -511,6 +511,7 @@ type
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForPlaySoundEffect;
+    procedure CheckForQueuedAction;
     procedure CheckForReplayAction(PausedRRCheck: Boolean = false);
     procedure CheckLemmings;
     function CheckLemTeleporting(L: TLemming): Boolean;
@@ -2296,32 +2297,48 @@ begin
 end;
 
 function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
+const
+  PermSkillSet = [baClimbing, baFloating, baGliding, baFixing, baSwimming];
 var
-  L: TLemming;
+  L, LQueue: TLemming;
 begin
   Result := False;
 
   // Just to be safe, though this should always return in fLemSelected
   GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
+  // Get lemming to queue the skill assignment
+  GetPriorityLemming(LQueue, baNone, CursorPoint);
 
-  if not Assigned(L) then Exit;
+  // Queue skill assignment if current assignment is impossible
+  if not Assigned(L) or not CheckSkillAvailable(Skill) then
+  begin
+    if Assigned(LQueue) and not (Skill in PermSkillSet) then
+    begin
+      LQueue.LemQueueAction := Skill;
+      LQueue.LemQueueFrame := 0;
+    end;
+  end
 
-  if IsReplayAssignment then   // Should probably divide into two seperate routines rather than having IsReplayAssignment parameter
-    Result := DoSkillAssignment(L, Skill)
-  else begin
+  // If the assignment is written in the replay, change lemming state
+  else if IsReplayAssignment then
+  begin
+    Result := DoSkillAssignment(L, Skill);
+    if Result then
+    begin
+      CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
+      Inc(L.LemUsedSkillCount);
+    end;
+  end
+
+  // record new skill assignment to be assigned once we call again UpdateLemmings
+  else
+  begin
     Result := CheckSkillAvailable(Skill);
     if Result then
     begin
       RegainControl;
       RecordSkillAssignment(L, Skill);
     end;
-    Exit;
-  end;
-
-  if Result then
-  begin
-    CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
-    Inc(L.LemUsedSkillCount);
   end;
 end;
 
@@ -2344,6 +2361,10 @@ begin
   else
   begin
     UpdateSkillCount(NewSkill);
+
+    // Remove queued skill assignment
+    L.LemQueueAction := baNone;
+    L.LemQueueFrame := 0;
 
     // Get starting position for stacker
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
@@ -4723,6 +4744,7 @@ begin
     end;
   end;
 
+  CheckForQueuedAction; // needs to be done before CheckForReplayAction, because it writes an assignment in the replay
   CheckForReplayAction;
 
   // erase existing ShadowBridge
@@ -5475,6 +5497,50 @@ begin
   end;
 
 end;
+
+procedure TLemmingGame.CheckForQueuedAction;
+var
+  i: Integer;
+  L: TLemming;
+  NewSkill: TBasicLemmingAction;
+begin
+  // First check whether there was already a skill assignment this frame
+  if Assigned(fReplayManager.Assignment[fCurrentIteration, 0]) then Exit;
+
+  for i := 0 to LemmingList.Count - 1 do
+  begin
+    L := LemmingList.List^[i];
+
+    if L.LemQueueAction = baNone then Continue;
+
+    if L.LemRemoved or L.LemIsZombie or L.LemTeleporting then
+    begin
+      // delete queued action first
+      L.LemQueueAction := baNone;
+      L.LemQueueFrame := 0;
+      Continue;
+    end;
+
+    NewSkill := L.LemQueueAction;
+
+    // Try assigning the skill
+    if NewSkillMethods[NewSkill](L) and CheckSkillAvailable(NewSkill) then
+      // Record skill assignment, so that we apply it in CheckForReplayAction
+      RecordSkillAssignment(L, NewSkill)
+    else
+    begin;
+      Inc(L.LemQueueFrame);
+      // Delete queued action after 8 frames
+      if L.LemQueueFrame > 7 then
+      begin
+        L.LemQueueAction := baNone;
+        L.LemQueueFrame := 0;
+      end;
+    end;
+  end;
+
+end;
+
 
 procedure TLemmingGame.CheckLemmings;
 var
