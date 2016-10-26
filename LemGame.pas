@@ -1712,12 +1712,13 @@ begin
       Inc(ButtonsRemain);
   end;
 
-  ApplyLevelEntryOrder;
   InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
+
+  AddPreplacedLemming;
+  ApplyLevelEntryOrder; // This method assumes that all preplaced lemmings are already added to the level
 
   InitializeAllObjectMaps;
   SetObjectMap;
-  AddPreplacedLemming;
   SetBlockerMap;
 
   InitializeMiniMap;
@@ -2127,16 +2128,34 @@ end;
 
 procedure TLemmingGame.ApplyLevelEntryOrder;
 var
-  i, oid, eid: Integer;
+  i: Integer;
+  ObjIndex, WindowNumber: Integer;
+  NumPreplaced: Integer;
+  ShiftedEntryTable: array of Integer;
 begin
-  eid := 0;
-  for i := 0 to Length(Level.Info.WindowOrder)-1 do
+  WindowNumber := 0;
+  for i := 0 to Length(Level.Info.WindowOrder) - 1 do
   begin
-    oid := Level.Info.WindowOrder[i];
-    if not (ObjectInfos[oid].TriggerEffect = DOM_WINDOW) then Continue;
-    SetLength(DosEntryTable, eid+1);
-    DosEntryTable[eid] := oid;
-    Inc(eid);
+    ObjIndex := Level.Info.WindowOrder[i];
+    if not (ObjectInfos[ObjIndex].TriggerEffect = DOM_WINDOW) then Continue;
+    SetLength(DosEntryTable, WindowNumber + 1);
+    DosEntryTable[WindowNumber] := ObjIndex;
+    Inc(WindowNumber);
+  end;
+
+  // Shift the hatch order according to the number of preplaced lemmings
+  // see http://www.lemmingsforums.net/index.php?topic=3028.0
+  NumPreplaced := LemmingList.Count; // we already called AddPreplacedLemmings before that
+  SetLength(ShiftedEntryTable, Length(DosEntryTable));
+  for i := 0 to Length(DosEntryTable) - 1 do
+  begin
+    ShiftedEntryTable[(i + NumPreplaced) mod Length(DosEntryTable)] := DosEntryTable[i];
+  end;
+  // Copy ShiftedEntryTable back to DosEntryTable
+  // Needs to be done by hand, because two arrays of Integers are f***ing INCOMPATIBLE types when defined in different methods
+  for i := 0 to Length(DosEntryTable) - 1 do
+  begin
+    DosEntryTable[i] := ShiftedEntryTable[i];
   end;
 end;
 
