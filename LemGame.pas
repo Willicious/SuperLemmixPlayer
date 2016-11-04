@@ -3092,6 +3092,9 @@ begin
 
   Inf := ObjectInfos[ObjectID];
 
+  Assert((Inf.ReceiverID >= 0) and (Inf.ReceiverID < ObjectInfos.Count), 'ReceiverID for teleporter out of bounds.');
+  Assert(ObjectInfos[Inf.ReceiverID].TriggerEffect = DOM_RECEIVER, 'Receiving object for teleporter has wrong trigger effect.');
+
   Inf.Triggered := True;
   Inf.ZombieMode := L.LemIsZombie;
   CueSoundEffect(GetTrapSoundIndex(Inf.SoundEffect), L.Position);
@@ -5707,11 +5710,11 @@ begin
   ObjID := -1;
   repeat
     Inc(ObjID);
-    ObjInfo := ObjectInfos[ObjID];
-  until (L.LemIndex = ObjInfo.TeleLem) or (ObjID > ObjectInfos.Count - 1);
+  until (ObjID > ObjectInfos.Count - 1) or (L.LemIndex = ObjectInfos[ObjID].TeleLem);
 
   Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
 
+  ObjInfo := ObjectInfos[ObjID];
   if ObjInfo.TriggerEffect = DOM_RECEIVER then
   begin
     if    (ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount)
@@ -5860,6 +5863,7 @@ begin
     begin
       MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
       Inf2 := ObjectInfos[Inf.ReceiverId];
+      Assert(Inf2.TriggerEffect = DOM_RECEIVER, 'Lemming teleported to non-receiver object.');
       Inf2.TeleLem := Inf.TeleLem;
       Inf2.Triggered := True;
       Inf2.ZombieMode := Inf.ZombieMode;
