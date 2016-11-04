@@ -1356,12 +1356,11 @@ begin
       Inf := ObjectInfos[i];
 
       // Check if this object is relevant
+      if Inf.IsDisabled then Continue;
+
       // Magic numbers are needed due to some offset of MousePos wrt. the center of the cursor.
       if not PtInRect(Rect(Inf.Left - 4, Inf.Top + 1, Inf.Left + Inf.Width - 2, Inf.Top + Inf.Height + 3),
                       fRenderInterface.MousePos) then
-        Continue;
-
-      if Inf.IsDisabled and (Inf.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) then
         Continue;
 
       // otherwise, draw its helper
