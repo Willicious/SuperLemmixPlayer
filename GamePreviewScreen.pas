@@ -257,16 +257,38 @@ var
   MinCount : Integer;
   FoundWindow : Boolean;
   MO: TMetaObjectInterface;
+
+  ActualNewWindowLen: Integer;
 begin
   FoundWindow := false;
-  MinCount := aLevel.PreplacedLemmings.Count;
-  for i := 0 to aLevel.InteractiveObjects.Count - 1 do
+
+  if Length(aLevel.Info.WindowOrder) > 0 then
   begin
-    //if aLevel.InteractiveObjects[i].Identifier = 1 then FoundWindow := true;
-    MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]);
-    if MO.TriggerEffect = 23 then FoundWindow := true;
+    // Remove invalid entries from window ordering
+    ActualNewWindowLen := 0;
+    for i := 0 to Length(aLevel.Info.WindowOrder)-1 do
+    begin
+      MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[aLevel.Info.WindowOrder[i]]);
+      if aLevel.InteractiveObjects[aLevel.Info.WindowOrder[i]].IsFake then Continue;
+      if MO.TriggerEffect <> 23 then Continue;
+      aLevel.Info.WindowOrder[ActualNewWindowLen] := aLevel.Info.WindowOrder[i];
+      Inc(ActualNewWindowLen);
+    end;
+    SetLength(aLevel.Info.WindowOrder, ActualNewWindowLen);
   end;
-  if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;
+
+  if Length(aLevel.Info.WindowOrder) = 0 then
+  begin
+    MinCount := aLevel.PreplacedLemmings.Count;
+    for i := 0 to aLevel.InteractiveObjects.Count - 1 do
+    begin
+      //if aLevel.InteractiveObjects[i].Identifier = 1 then FoundWindow := true;
+      MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]);
+      if aLevel.InteractiveObjects[i].IsFake then Continue;
+      if MO.TriggerEffect = 23 then FoundWindow := true;
+    end;
+    if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;
+  end;
 
   SimulateSpawn;
 end;
