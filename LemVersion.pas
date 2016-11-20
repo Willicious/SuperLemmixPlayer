@@ -9,8 +9,8 @@ uses
 
 const
   FORMAT_VERSION = 10;
-  CORE_VERSION = 10;
-  FEATURES_VERSION = 10;
+  CORE_VERSION = 11;
+  FEATURES_VERSION = 11;
   HOTFIX_VERSION = 0;
 
 function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
