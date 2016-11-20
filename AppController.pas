@@ -87,7 +87,7 @@ begin
     TS := CreateDataStream('version.txt', ldtText);
     SL.LoadFromStream(TS);
 
-    if SL.Values['format'] = '' then  // Remove if there's a new format change; this is because formats 10 = V1.48
+    if SL.Values['format'] = '' then  // Backwards compatibility
     begin
       if not TestFor148Compatible then
       begin
@@ -96,13 +96,15 @@ begin
           Target := '1.47n-D'
         else
           Target := '1.43n-F';
-      end else
-        Result := nxc_Compatible;
-      Exit;
-    end;
+        Exit;
+      end;
 
-    Format := StrToIntDef(SL.Values['format'], 0);
-    Core := StrToIntDef(SL.Values['core'], 0);
+      Format := 10;
+      Core := 10;
+    end else begin
+      Format := StrToIntDef(SL.Values['format'], 0);
+      Core := StrToIntDef(SL.Values['core'], 0);
+    end;
 
     // if Format doesn't match, treat as incompatible
     if Format <> FORMAT_VERSION then
@@ -147,6 +149,24 @@ var
   DoSingleLevel: Boolean;
   fMainDatExtractor : TMainDatExtractor;
   Target: String;
+  ShowWarning: Boolean;
+
+  function CheckIfWarningNeeded: Boolean;
+  var
+    SL: TStringList;
+  begin
+    Result := true;
+    SL := TStringList.Create;
+    try
+      SL.LoadFromFile(ChangeFileExt(GameFile, '.nxsv'));
+      if SL.Count < 2 then Exit;
+      if Lowercase(Trim(SL[0])) <> '[version]' then Exit;
+      if (CurrentVersionID div 1000000) <> (StrToInt64Def(Trim(SL[1]), 0) div 1000000) then Exit;
+      Result := false;
+    finally
+      SL.Free;
+    end;
+  end;
 begin
   inherited;
 
@@ -189,9 +209,15 @@ begin
                            Halt(0);
                          end;
         nxc_OldCore: begin
-                       ShowMessage('This pack is designed for older versions of NeoLemmix. It should be compatible,' + #13 +
-                                   'but please be aware that it may not have been tested against this version. For' + #13 +
-                                   'optimal results, use NeoLemmix V' + Target + ' to play this pack.');
+                       if FileExists(ChangeFileExt(GameFile, '.nxsv')) then
+                         ShowWarning := CheckIfWarningNeeded
+                       else
+                         ShowWarning := true;
+
+                       if ShowWarning then
+                         ShowMessage('This pack is designed for older versions of NeoLemmix. It should be compatible,' + #13 +
+                                     'but please be aware that it may not have been tested against this version. For' + #13 +
+                                     'optimal results, use NeoLemmix V' + Target + ' to play this pack.');
                        // don't need to halt
                      end;
         nxc_NewCore: begin

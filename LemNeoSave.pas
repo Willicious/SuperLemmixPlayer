@@ -4,7 +4,7 @@ unit LemNeoSave;
 interface
 
 uses
-  SharedGlobals,
+  SharedGlobals, LemVersion,
   Dialogs, StrUtils, UMisc,
   Classes, SysUtils, LemTypes, LemDosStructures,
   TalisData;
@@ -278,6 +278,11 @@ begin
   GameParams := TDosGameParams(aPointer^);
 
   SL := TStringList.Create;
+
+  // NEW - record the versions last used to run this pack
+  SL.Add('[version]');
+  SL.Add(IntToStr(CurrentVersionID));
+  SL.Add('');
 
   // First, the config.
   if CheckNeedSaveConfig then
