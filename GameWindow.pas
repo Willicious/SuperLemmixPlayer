@@ -52,7 +52,7 @@ type
     procedure SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   { internal }
     procedure CheckResetCursor;
-    procedure CheckScroll;
+    function CheckScroll: Boolean;
     procedure AddSaveState;
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     procedure CheckAdjustReleaseRate;
@@ -92,9 +92,6 @@ type
     fSaveStateFrame      : Integer;      // list of savestates (only first is used)
     fLastNukeKeyTime     : Cardinal;
     fScrollSpeed         : Integer;
-//    fSystemCursor        : Boolean;
-  //  fMouseBmp            : TBitmap32;
-//    fMouseLayer          : TBitmapLayer;
   { overridden}
     procedure PrepareGameParams(Params: TDosGameParams); override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
@@ -105,7 +102,6 @@ type
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure ApplyMouseTrap;
-    //function CheckClickHighlight: Boolean; // for Skill Panel to use
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property GameParams; //need to promote for skill panel's use
@@ -115,12 +111,7 @@ implementation
 
 uses FBaseDosForm;
 
-{ TGameControllerForm }
-
-//function TGameWindow.CheckClickHighlight: Boolean;
-//begin
-//  Result := GameParams.ClickHighlight;
-//end;
+{ TGameWindow }
 
 procedure TGameWindow.ApplyMouseTrap;
 begin
@@ -141,119 +132,114 @@ var
   CurrTime: Cardinal;
   Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
 begin
-//  try
-    if not CanPlay or not Game.Playing or Game.GameFinished then
-      Exit;
+  if not CanPlay or not Game.Playing or Game.GameFinished then
+    Exit;
 
-    // this makes sure this method is called very often :)
-    Done := False;
+  // this makes sure this method is called very often :)
+  Done := False;
 
-    Pause := Game.Paused;
-    Fast := Game.FastForward;
-    ForceOne := ForceUpdateOneFrame or fRenderInterface.ForceUpdate;
-    ForceUpdateOneFrame := False;
-    CurrTime := TimeGetTime;
-    TimeForFrame := CurrTime - PrevCallTime > IdealFrameTimeMS;
-    TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
-    TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
-    Hyper := Game.HyperSpeed;
+  Pause := Game.Paused;
+  Fast := Game.FastForward;
+  ForceOne := ForceUpdateOneFrame or fRenderInterface.ForceUpdate;
+  ForceUpdateOneFrame := False;
+  CurrTime := TimeGetTime;
+  TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
+  TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
+  TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
+  Hyper := Game.HyperSpeed;
 
-    if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
+  if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
 
-    // relax CPU
-    if not Hyper or Fast then
-      Sleep(1);
+  // relax CPU
+  if not Hyper or Fast then
+    Sleep(1);
 
-    if TimeForFrame or TimeForScroll then
+  if TimeForFrame or TimeForScroll then
+  begin
+    Game.fAssignEnabled := true;
+
+    fRenderInterface.ForceUpdate := false;
+
+    // Check for user helpers
+    CheckUserHelpers;
+
+    // only in paused mode adjust RR. If not paused it's updated per frame.
+    if Game.Paused then
+      if TimeForScroll or ForceOne then
+        CheckAdjustReleaseRate;
+
+    // set new screen position
+    if TimeForScroll then
     begin
-      Game.fAssignEnabled := true;
+      PrevScrollTime := CurrTime;
+      if CheckScroll then fNeedRedraw := True;
+    end;
 
-      fRenderInterface.ForceUpdate := false;
-
-      // Check for user helpers
-      CheckUserHelpers;
-
-      // only in paused mode adjust RR. If not paused it's updated per frame.
-      if Game.Paused then
-        if TimeForScroll or ForceOne then
-          CheckAdjustReleaseRate;
-
-      // set new screen position
-      if TimeForScroll then
+    // Check whether we have to move the lemmings
+    if (TimeForFrame and not Pause)
+       or ForceOne
+       or Hyper then
+    begin
+      // Reset time between physics updates
+      PrevCallTime := CurrTime;
+      // Let all lemmings move
+      Game.UpdateLemmings;
+      // Save current state every 10 seconds, unless mass replay checking
+      if (Game.CurrentIteration mod 170 = 0) and (GameParams.ReplayCheckIndex = -2) then
       begin
-        PrevScrollTime := CurrTime;
-        CheckScroll;
+        AddSaveState;
+        fSaveList.TidyList(Game.CurrentIteration);
       end;
+    end;
 
-      // Check whether we have to move the lemmings
-      if (TimeForFrame and not Pause)
-         or ForceOne
-         or Hyper then
-      begin
-        // Reset time between physics updates
-        PrevCallTime := CurrTime;
-        // Let all lemmings move
-        Game.UpdateLemmings;
-        // Save current state every 10 seconds, unless mass replay checking
-        if (Game.CurrentIteration mod 170 = 0) and (GameParams.ReplayCheckIndex = -2) then
-        begin
-          AddSaveState;
-          fSaveList.TidyList(Game.CurrentIteration);
-        end;
-      end;
+    // Refresh panel if in usual or fast play mode
+    if not Hyper then
+    begin
+      SkillPanel.RefreshInfo;
+      SkillPanel.DrawMinimap(Game.Minimap);
+      CheckResetCursor;
+    end
+    // End hyperspeed if we have reached the TargetIteration and are not mass replay checking
+    // Note that TargetIteration is 1 less than the actual target frame number,
+    // because we only set Game.LeavingHyperSpeed=True here,
+    // any only exit hyperspeed after calling Game.UpdateLemmings once more!
+    else if (Game.CurrentIteration >= Game.TargetIteration) and (GameParams.ReplayCheckIndex = -2) then
+    begin
+      Game.HyperSpeedEnd;
+      SkillPanel.RefreshInfo;
+      SkillPanel.DrawMinimap(Game.Minimap);
+      CheckResetCursor;
+    end;
 
-      // Refresh panel if in usual or fast play mode
-      if not Hyper then
+    if (GameParams.ReplayCheckIndex <> -2) then // i.e. we are mass replay checking
+    begin
+      if Game.Checkpass then
       begin
-        SkillPanel.RefreshInfo;
-        SkillPanel.DrawMinimap(Game.Minimap);
-        CheckResetCursor;
+        Game.Finish;
       end
-      // End hyperspeed if we have reached the TargetIteration and are not mass replay checking
-      // Note that TargetIteration is 1 less than the actual target frame number,
-      // because we only set Game.LeavingHyperSpeed=True here,
-      // any only exit hyperspeed after calling Game.UpdateLemmings once more!
-      else if (Game.CurrentIteration >= Game.TargetIteration) and (GameParams.ReplayCheckIndex = -2) then
+      else
       begin
-        Game.HyperSpeedEnd;
-        SkillPanel.RefreshInfo;
-        SkillPanel.DrawMinimap(Game.Minimap);
-        CheckResetCursor;
-      end;
-
-      if (GameParams.ReplayCheckIndex <> -2) then // i.e. we are mass replay checking
-      begin
-        if Game.Checkpass then
+        Game.TargetIteration := Game.CurrentIteration + 170; //keep it in hyperspeed mode
+        // Make sure to use hyperspeed mode
+        if not Game.HyperSpeed then Game.HyperSpeedBegin;
+        // Save frame number of last replay action and abort the replay if it was more than 5min ago
+        if Game.Replaying then
+          fLastReplayingIteration := Game.CurrentIteration
+        else if fLastReplayingIteration < Game.CurrentIteration - (5 * 60 * 17) then
         begin
+          fReplayKilled := true;
           Game.Finish;
-        end
-        else
-        begin
-          Game.TargetIteration := Game.CurrentIteration + 170; //keep it in hyperspeed mode
-          // Make sure to use hyperspeed mode
-          if not Game.HyperSpeed then Game.HyperSpeedBegin;
-          // Save frame number of last replay action and abort the replay if it was more than 5min ago
-          if Game.Replaying then
-            fLastReplayingIteration := Game.CurrentIteration
-          else if fLastReplayingIteration < Game.CurrentIteration - (5 * 60 * 17) then
-          begin
-            fReplayKilled := true;
-            Game.Finish;
-          end;
         end;
       end;
-
     end;
 
-    // Update drawing
-    if (TimeForFrame or fNeedRedraw) then
-    begin
-      DoDraw;
-    end;
-(*  except
-    on E: Exception do
-      OnException(E, 'TGameWindow.Application_Idle');
-  end;*)
+  end;
+
+  // Update drawing
+  if TimeForFrame or fNeedRedraw then
+  begin
+    DoDraw;
+  end;
 end;
 
 procedure TGameWindow.OnException(E: Exception; aCaller: String = 'Unknown');
@@ -400,7 +386,7 @@ begin
     fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
     fRenderInterface.MousePos := Game.CursorPoint;
     fRenderer.DrawAllObjects(fRenderInterface.ObjectList, true, fClearPhysics);
-    fRenderer.DrawLemmings;
+    fRenderer.DrawLemmings(fClearPhysics);
     DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 320, fRenderInterface.ScreenPos.Y + 160);
     fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
     fNeedRedraw := false;
@@ -414,14 +400,8 @@ procedure TGameWindow.CheckShifts(Shift: TShiftState);
 var
   SDir: Integer;
 begin
-  //if GameParams.CtrlHighlight then
-    {begin
-      Game.RightMouseButtonHeldDown := ssRight in Shift;
-      Game.CtrlButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
-    end else begin}
-      Game.RightMouseButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
-      Game.CtrlButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_Highlight); {ssRight in Shift;}
-    //end;
+  Game.RightMouseButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
+  Game.CtrlButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_Highlight);
   Game.ShiftButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_SelectNewLem);
   Game.AltButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
 
@@ -509,13 +489,9 @@ begin
     ApplyMouseTrap;
     fNeedReset := false;
   end;
-  {if ** need proper clip check here**
-  begin
-    ClipCursor(@MouseClipRect);
-  end;}
 end;
 
-procedure TGameWindow.CheckScroll;
+function TGameWindow.CheckScroll: Boolean;
   procedure Scroll(dx, dy: Integer);
   begin
     Img.OffsetHorz := Img.OffsetHorz - DisplayScale * dx * fScrollSpeed;
@@ -539,10 +515,9 @@ begin
     gsDown:
       Scroll(0, 8);
   end;
-
-  DoDraw;
   Img.EndUpdate;
 
+  Result := (GameScroll in [gsRight, gsLeft]) or(GameVScroll in [gsUp, gsDown]);
 end;
 
 constructor TGameWindow.Create(aOwner: TComponent);
@@ -566,15 +541,9 @@ begin
   Img.BitmapAlign := baCustom;
   Img.ScaleMode := smScale;
 
-//  fMouseBmp := TBitmap32.create;
-
   // create toolbar
   SkillPanel := TSkillPanelToolbar.Create(Self);
   SkillPanel.Parent := Self;
-
-//  IdealFrameTimeMS := 60;
-//  IdealFrameTimeMSFast := 0;
-//  IdealScrollTimeMS := 60;
 
   // calculate displayscale
   // This gets overridden later in windowed mode but is important for fullscreen.
@@ -619,8 +588,6 @@ begin
     DestroyIcon(HCursor1);
   if HCursor2 <> 0 then
     DestroyIcon(HCursor2);
-//  if fMouseBmp <> nil then
-  //  fMouseBmp.Free;
   fSaveList.Free;
   inherited Destroy;
 end;
@@ -863,7 +830,6 @@ procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
 -------------------------------------------------------------------------------}
 
 var
-  HandleClick: Boolean;
   PassKey: Word;
 begin
   if not fMouseTrapped then
@@ -884,28 +850,23 @@ begin
       PassKey := $04
     else if (Button = mbRight) then
       PassKey := $02;
+
     if PassKey <> 0 then
       Form_KeyDown(Sender, PassKey, Shift);
 
     if (Button = mbLeft) and (not Game.CtrlButtonHeldDown)
-    and not (Game.Replaying and GameParams.ExplicitCancel) then
+       and not (Game.Replaying and GameParams.ExplicitCancel) then
     begin
       Game.RegainControl;
-      HandleClick := true; //{not Game.Paused and} not Game.FastForward{ or UseClicksWhenPaused};
-      if HandleClick then
-      begin
-        if Game.fAssignEnabled then
-        Game.ProcessSkillAssignment;
-        if Game.Paused then
-            ForceUpdateOneFrame := True;
-      end;
+
+      if Game.fAssignEnabled then Game.ProcessSkillAssignment;
+      if Game.Paused then ForceUpdateOneFrame := True;
     end;
 
-    if Game.CtrlButtonHeldDown and not (Game.Replaying and GameParams.ExplicitCancel) then
+    if Game.CtrlButtonHeldDown and Game.fAssignEnabled
+       and not (Game.Replaying and GameParams.ExplicitCancel) then
     begin
-      HandleClick := true; //not Game.FastForward;
-      if HandleClick and Game.fAssignEnabled then
-        Game.ProcessHighlightAssignment;
+      Game.ProcessHighlightAssignment;
     end;
 
     if Game.Paused then
@@ -919,18 +880,8 @@ begin
   if Game.Playing then
   begin
     CheckShifts(Shift);
-(*    if ssRight in Shift then
-      fScrollSpeed := 2
-    else
-      fScrollSpeed := 1; *)
 
     SetAdjustedGameCursorPoint(Img.ControlToBitmap(Point(X, Y)));
-    //Game.CursorPoint := Img.ControlToBitmap(Point(X, Y));
-
-    //if (Y >= SkillPanel.Top) then Game.HitTestAutoFail := 1
-    //else if Game.HitTestAutoFail = 1 then Game.HitTestAutoFail := 2;
-
-    //Game.HitTestAutoFail := (Y >= SkillPanel.Top);
 
     if (Game.Paused) or (Game.HitTestAutoFail) then
     begin
@@ -999,26 +950,15 @@ begin
 
   bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT_MASK');
   bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT');
-//  bmpcolor.canvas.pixels[3,8]:=clred;
 
   ScaleBmp(bmpMask, DisplayScale);
   ScaleBmp(bmpColor, DisplayScale);
 
-  (*
-  if not fSystemCursor then
-  begin
-    fMouseBmp.Assign(bmpColor);
-    fMouseBmp.DrawMode := dmTransparent;
-    fMouseLayer := TBitmapLayer.Create(Img.Layers);
-    fMouseLayer.LayerOptions := LOB_VISIBLE;
-    fMouseLayer.Location := FloatRect(0, 0, fMouseBmp.Width, fMouseBmp.Height)
-  end;     *)
-
   with LemCursorIconInfo do
   begin
     fIcon := false;
-    xHotspot := 7 * DisplayScale; //4 * displayscale;//7 * DisplayScale;//bmpmask.width div 2+displayscale;
-    yHotspot := 7 * DisplayScale; //9 * displayscale;//7 * DisplayScale;//bmpmask.Height div 2+displayscale;
+    xHotspot := 7 * DisplayScale;
+    yHotspot := 7 * DisplayScale;
     hbmMask := bmpMask.Handle;
     hbmColor := bmpColor.Handle;
   end;
@@ -1048,19 +988,14 @@ begin
   with LemSelCursorIconInfo do
   begin
     fIcon := false;
-    xHotspot := 7 * DisplayScale; //4 * DisplayScale;//}bmpmask.width div 2+displayscale;
-    yHotspot := 7 * DisplayScale; //9 * DisplayScale;//}bmpmask.Height div 2+displayscale;
-//    xHotspot := 7 * 3;////5;
-//    yHotspot := 7 * 3;//15;
+    xHotspot := 7 * DisplayScale;
+    yHotspot := 7 * DisplayScale;
     hbmMask := bmpMask.Handle;
     hbmColor := bmpColor.Handle;
   end;
 
   HCursor2 := CreateIconIndirect(LemSelCursorIconInfo);
   Screen.Cursors[PLAYCURSOR_LEMMING] := HCursor2;
-
-//  Screen.Cursor := MyCursor;
-//  Self.Cursor := HCursor1;
 
   bmpMask.Free;
   bmpColor.Free;
@@ -1076,7 +1011,6 @@ var
   CenterPoint: TPoint;
 begin
   inherited;
-//  fSystemCursor := GameParams.UseSystemCursor;
 
   // set the final displayscale
   if GameParams.ZoomLevel = 0 then
@@ -1154,13 +1088,9 @@ procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
 var
   O: Single;
 begin
-//  Game.CurrentScreenPosition := Point(P.X, 0);
   O := -P.X * DisplayScale;
   O :=  O + Img.Width div 2;
-  {if Game.Level.Info.Width < 1664 then
-  begin
-  end else begin
-  end;}
+
   if O < MinScroll * DisplayScale then O := MinScroll * DisplayScale;
   if O > MaxScroll * DisplayScale then O := MaxScroll * DisplayScale;
   Img.OffSetHorz := O;
@@ -1205,11 +1135,6 @@ procedure TGameWindow.CheckAdjustReleaseRate;
 -------------------------------------------------------------------------------}
 begin
   Game.CheckAdjustReleaseRate;
-  (*with Game do
-    if ReleaseRateModifier > 0 then
-      AdjustReleaseRate(1)
-    else if ReleaseRateModifier < 0 then
-      AdjustReleaseRate(-1);*)
 end;
 
 procedure TGameWindow.StartReplay2(const aFileName: string);
@@ -1256,8 +1181,6 @@ begin
 
   Game.Paused := False;
   GotoSaveState(0);
-  //Game.Start(True);
-  //SkillPanel.RefreshInfo;
   CanPlay := True;
 end;
 
@@ -1358,7 +1281,7 @@ begin
   Application.OnIdle := nil;
   ClipCursor(nil);
   Cursor := crNone;
-//  GameParams.NextScreen := gstPostview;
+
   Game.SetGameResult;
   GameParams.GameResult := Game.GameResultRec;
   with GameParams, GameResult do
@@ -1380,12 +1303,6 @@ procedure TGameWindow.AddSaveState;
 begin
   fGame.CreateSavedState(fSaveList.Add);
 end;
-
-{procedure TGameWindow.NextSaveState(Forwards: Boolean);
-begin
-  if fSaveStateFrame = -1 then Exit;
-  fGame.LoadSavedState(fTestSave); 
-end;}
 
 end.
 

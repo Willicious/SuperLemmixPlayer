@@ -374,6 +374,7 @@ type
     fLemWithShadow             : TLemming; // needed for CheckForNewShadow to erase previous shadow
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
+    fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
     Entries                    : TInteractiveObjectInfoList; // list of entrances (NOT USED ANYMORE)
     DosEntryTable              : array of Integer; // table for entrance release order
@@ -510,6 +511,7 @@ type
 
     function CheckForOverlappingField(L: TLemming): Boolean;
     procedure CheckForPlaySoundEffect;
+    procedure CheckForQueuedAction;
     procedure CheckForReplayAction(PausedRRCheck: Boolean = false);
     procedure CheckLemmings;
     function CheckLemTeleporting(L: TLemming): Boolean;
@@ -1710,12 +1712,13 @@ begin
       Inc(ButtonsRemain);
   end;
 
-  ApplyLevelEntryOrder;
   InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
+
+  AddPreplacedLemming;
+  ApplyLevelEntryOrder; // This method assumes that all preplaced lemmings are already added to the level
 
   InitializeAllObjectMaps;
   SetObjectMap;
-  AddPreplacedLemming;
   SetBlockerMap;
 
   InitializeMiniMap;
@@ -2125,16 +2128,34 @@ end;
 
 procedure TLemmingGame.ApplyLevelEntryOrder;
 var
-  i, oid, eid: Integer;
+  i: Integer;
+  ObjIndex, WindowNumber: Integer;
+  NumPreplaced: Integer;
+  ShiftedEntryTable: array of Integer;
 begin
-  eid := 0;
-  for i := 0 to Length(Level.Info.WindowOrder)-1 do
+  WindowNumber := 0;
+  for i := 0 to Length(Level.Info.WindowOrder) - 1 do
   begin
-    oid := Level.Info.WindowOrder[i];
-    if not (ObjectInfos[oid].TriggerEffect = DOM_WINDOW) then Continue;
-    SetLength(DosEntryTable, eid+1);
-    DosEntryTable[eid] := oid;
-    Inc(eid);
+    ObjIndex := Level.Info.WindowOrder[i];
+    if not (ObjectInfos[ObjIndex].TriggerEffect = DOM_WINDOW) then Continue;
+    SetLength(DosEntryTable, WindowNumber + 1);
+    DosEntryTable[WindowNumber] := ObjIndex;
+    Inc(WindowNumber);
+  end;
+
+  // Shift the hatch order according to the number of preplaced lemmings
+  // see http://www.lemmingsforums.net/index.php?topic=3028.0
+  NumPreplaced := LemmingList.Count; // we already called AddPreplacedLemmings before that
+  SetLength(ShiftedEntryTable, Length(DosEntryTable));
+  for i := 0 to Length(DosEntryTable) - 1 do
+  begin
+    ShiftedEntryTable[(i + NumPreplaced) mod Length(DosEntryTable)] := DosEntryTable[i];
+  end;
+  // Copy ShiftedEntryTable back to DosEntryTable
+  // Needs to be done by hand, because two arrays of Integers are f***ing INCOMPATIBLE types when defined in different methods
+  for i := 0 to Length(DosEntryTable) - 1 do
+  begin
+    DosEntryTable[i] := ShiftedEntryTable[i];
   end;
 end;
 
@@ -2295,32 +2316,48 @@ begin
 end;
 
 function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
+const
+  PermSkillSet = [baClimbing, baFloating, baGliding, baFixing, baSwimming];
 var
-  L: TLemming;
+  L, LQueue: TLemming;
 begin
   Result := False;
 
   // Just to be safe, though this should always return in fLemSelected
   GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
+  // Get lemming to queue the skill assignment
+  GetPriorityLemming(LQueue, baNone, CursorPoint);
 
-  if not Assigned(L) then Exit;
+  // Queue skill assignment if current assignment is impossible
+  if not Assigned(L) or not CheckSkillAvailable(Skill) then
+  begin
+    if Assigned(LQueue) and not (Skill in PermSkillSet) then
+    begin
+      LQueue.LemQueueAction := Skill;
+      LQueue.LemQueueFrame := 0;
+    end;
+  end
 
-  if IsReplayAssignment then   // Should probably divide into two seperate routines rather than having IsReplayAssignment parameter
-    Result := DoSkillAssignment(L, Skill)
-  else begin
+  // If the assignment is written in the replay, change lemming state
+  else if IsReplayAssignment then
+  begin
+    Result := DoSkillAssignment(L, Skill);
+    if Result then
+    begin
+      CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
+      Inc(L.LemUsedSkillCount);
+    end;
+  end
+
+  // record new skill assignment to be assigned once we call again UpdateLemmings
+  else
+  begin
     Result := CheckSkillAvailable(Skill);
     if Result then
     begin
       RegainControl;
       RecordSkillAssignment(L, Skill);
     end;
-    Exit;
-  end;
-
-  if Result then
-  begin
-    CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
-    Inc(L.LemUsedSkillCount);
   end;
 end;
 
@@ -2343,6 +2380,10 @@ begin
   else
   begin
     UpdateSkillCount(NewSkill);
+
+    // Remove queued skill assignment
+    L.LemQueueAction := baNone;
+    L.LemQueueFrame := 0;
 
     // Get starting position for stacker
     if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
@@ -2804,6 +2845,13 @@ begin
     Assert(i <= Length(CheckPos[0]), 'CheckTriggerArea: CheckPos has not enough entries');
     Assert(i <= Length(CheckPos[1]), 'CheckTriggerArea: CheckPos has not enough entries');
 
+    // Transition if we are at the end position and need to do one
+    if (fLemNextAction <> baNone) and ([CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY]) then
+    begin
+      Transition(L, fLemNextAction);
+      fLemNextAction := baNone;
+    end;
+
     // Animations - the most useless of objects...
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnimation) then
       HandleObjAnimation(L, CheckPos[0, i], CheckPos[1, i]);
@@ -2826,7 +2874,11 @@ begin
 
     // Triggered traps and one-shot traps
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTrap) then
+    begin
       AbortChecks := HandleTrap(L, CheckPos[0, i], CheckPos[1, i]);
+      // Disarmers move always to final X-position, see http://www.lemmingsforums.net/index.php?topic=3004.0
+      if (L.LemAction = baFixing) then CheckPos[0, i] := L.LemX;
+    end;
 
     // Radiation
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
@@ -2979,6 +3031,10 @@ begin
   if     L.LemIsMechanic and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
   begin
+    // Set action after fixing, if we are moving upwards and haven't reached the top yet
+    if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baJumping
+    else L.LemActionNew := baWalking;
+
     Inf.IsDisabled := True;
     Transition(L, baFixing);
   end
@@ -3020,18 +3076,24 @@ var
   Inf: TInteractiveObjectInfo;
   ObjectID: Word;
 begin
-  Result := True;
+  Result := False;
+
+  // Exit if lemming is splatting
+  if L.LemAction = baSplatting then Exit;
+  // Exit if lemming is falling, has ground under his feet and will splat
+  if (L.LemAction = baFalling) and HasPixelAt(PosX, PosY) and (L.LemFallen > fFallLimit) then Exit;
 
   ObjectID := FindObjectID(PosX, PosY, trTeleport);
 
   // Exit if there is no Object
-  if ObjectID = 65535 then
-  begin
-    Result := False;
-    Exit;
-  end;
+  if ObjectID = 65535 then Exit;
+
+  Result := True;
 
   Inf := ObjectInfos[ObjectID];
+
+  Assert((Inf.ReceiverID >= 0) and (Inf.ReceiverID < ObjectInfos.Count), 'ReceiverID for teleporter out of bounds.');
+  Assert(ObjectInfos[Inf.ReceiverID].TriggerEffect = DOM_RECEIVER, 'Receiving object for teleporter has wrong trigger effect.');
 
   Inf.Triggered := True;
   Inf.ZombieMode := L.LemIsZombie;
@@ -3532,6 +3594,8 @@ begin
   L.LemXOld := L.LemX;
   L.LemYOld := L.LemY;
   L.LemActionOld := L.LemAction;
+  // No transition to do at the end of lemming movement
+  fLemNextAction := baNone;
 
   Inc(L.LemFrame);
 
@@ -3713,7 +3777,7 @@ begin
 
     if (dy < 2) and not HasPixelAt(LemX, LemY-1) then
     begin
-      Transition(L, baWalking);
+      fLemNextAction := baWalking;
     end else if ((LemJumped = 4) and HasPixelAt(LemX, LemY-1) and HasPixelAt(LemX, LemY-2)) or ((LemJumped >= 5) and HasPixelAt(LemX, LemY-1)) then
     begin
       Dec(LemX, LemDx);
@@ -3822,7 +3886,11 @@ begin
   Result := False;
   Dec(L.LemMechanicFrames);
   if L.LemMechanicFrames <= 0 then
-    Transition(L, baWalking)
+  begin
+    if L.LemActionNew <> baNone then Transition(L, L.LemActionNew)
+    else Transition(L, baWalking);
+    L.LemActionNew := baNone;
+  end
   else if L.LemFrame mod 8 = 0 then
     CueSoundEffect(SFX_FIXING, L.Position);
 end;
@@ -4378,9 +4446,9 @@ begin
     begin
       // Object checks at hitting ground
       if IsFallFatal then
-        Transition(L, baSplatting)
+        fLemNextAction := baSplatting
       else
-        Transition(L, baWalking);
+        fLemNextAction := baWalking;
     end;
   end;
 end;
@@ -4402,7 +4470,7 @@ begin
   begin
     // Lem has found solid terrain
     Inc(L.LemY, MaxIntValue([FindGroundPixel(L.LemX, L.LemY), 0]));
-    Transition(L, baWalking);
+    fLemNextAction := baWalking;
   end
   else
     Inc(L.LemY, MaxFallDist);
@@ -4455,7 +4523,7 @@ var
             and HasPixelAt(L.LemX + L.LemDx, L.LemY + 3)) then
     begin
       if HasPixelAt(L.LemX, L.LemY) and (LemYDir = 1) then
-        Transition(L, baWalking)
+        fLemNextAction := baWalking
       else if HasPixelAt(L.LemX, L.LemY - 2) and (LemYDir = -1) then
         // Do nothing
       else
@@ -4518,7 +4586,7 @@ begin
   else if GroundDist < 0 then // Move 1 to 4 pixels up
   begin
     Inc(L.LemY, GroundDist);
-    Transition(L, baWalking);
+    fLemNextAction := baWalking;
   end
 
   else if MaxFallDist > 0 then // no pixel above current location; not checked if one has moved upwards
@@ -4528,7 +4596,7 @@ begin
       // Lem has found solid terrain
       Assert(GroundDist >= 0, 'glider GroundDist negative');
       Inc(L.LemY, GroundDist);
-      Transition(L, baWalking);
+      fLemNextAction := baWalking;
     end
     else
       Inc(L.LemY, MaxFallDist);
@@ -4545,7 +4613,7 @@ begin
       // Check whether the glider has reached the ground
       if HasPixelAt(L.LemX, L.LemY) then
       begin
-        Transition(L, baWalking);
+        fLemNextAction := baWalking;
         LemDy := 4;
       end;
     end;
@@ -4698,6 +4766,7 @@ begin
     end;
   end;
 
+  CheckForQueuedAction; // needs to be done before CheckForReplayAction, because it writes an assignment in the replay
   CheckForReplayAction;
 
   // erase existing ShadowBridge
@@ -5451,6 +5520,50 @@ begin
 
 end;
 
+procedure TLemmingGame.CheckForQueuedAction;
+var
+  i: Integer;
+  L: TLemming;
+  NewSkill: TBasicLemmingAction;
+begin
+  // First check whether there was already a skill assignment this frame
+  if Assigned(fReplayManager.Assignment[fCurrentIteration, 0]) then Exit;
+
+  for i := 0 to LemmingList.Count - 1 do
+  begin
+    L := LemmingList.List^[i];
+
+    if L.LemQueueAction = baNone then Continue;
+
+    if L.LemRemoved or L.LemIsZombie or L.LemTeleporting then
+    begin
+      // delete queued action first
+      L.LemQueueAction := baNone;
+      L.LemQueueFrame := 0;
+      Continue;
+    end;
+
+    NewSkill := L.LemQueueAction;
+
+    // Try assigning the skill
+    if NewSkillMethods[NewSkill](L) and CheckSkillAvailable(NewSkill) then
+      // Record skill assignment, so that we apply it in CheckForReplayAction
+      RecordSkillAssignment(L, NewSkill)
+    else
+    begin;
+      Inc(L.LemQueueFrame);
+      // Delete queued action after 8 frames
+      if L.LemQueueFrame > 7 then
+      begin
+        L.LemQueueAction := baNone;
+        L.LemQueueFrame := 0;
+      end;
+    end;
+  end;
+
+end;
+
+
 procedure TLemmingGame.CheckLemmings;
 var
   i: Integer;
@@ -5546,7 +5659,8 @@ begin
     // Check for exit, traps and teleporters (but stop at teleporters!)
     for i := 0 to Length(LemPosArray[0]) do
     begin
-      if    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+      if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
+             and (FindObjectID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
@@ -5596,22 +5710,25 @@ begin
   ObjID := -1;
   repeat
     Inc(ObjID);
-    ObjInfo := ObjectInfos[ObjID];
-  until (L.LemIndex = ObjInfo.TeleLem) or (ObjID > ObjectInfos.Count - 1);
+  until (ObjID > ObjectInfos.Count - 1) or (L.LemIndex = ObjectInfos[ObjID].TeleLem);
 
   Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
 
-  if      (ObjInfo.TriggerEffect = DOM_RECEIVER)
-      and (ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount) then
+  ObjInfo := ObjectInfos[ObjID];
+  if ObjInfo.TriggerEffect = DOM_RECEIVER then
   begin
-    L.LemTeleporting := False; // Let lemming reappear
-    ObjInfo.TeleLem := -1;
-    Result := True;
-    // Reset blocker map, if lemming is a blocker
-    if L.LemAction = baBlocking then
+    if    (ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount)
+       or ((ObjInfo.KeyFrame <> 0) and (ObjInfo.CurrentFrame + 1 >= ObjInfo.KeyFrame)) then
     begin
-      L.LemHasBlockerField := True;
-      SetBlockerMap;
+      L.LemTeleporting := False; // Let lemming reappear
+      ObjInfo.TeleLem := -1;
+      Result := True;
+      // Reset blocker map, if lemming is a blocker
+      if L.LemAction = baBlocking then
+      begin
+        L.LemHasBlockerField := True;
+        SetBlockerMap;
+      end;
     end;
   end;
 end;
@@ -5746,6 +5863,7 @@ begin
     begin
       MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
       Inf2 := ObjectInfos[Inf.ReceiverId];
+      Assert(Inf2.TriggerEffect = DOM_RECEIVER, 'Lemming teleported to non-receiver object.');
       Inf2.TeleLem := Inf.TeleLem;
       Inf2.Triggered := True;
       Inf2.ZombieMode := Inf.ZombieMode;

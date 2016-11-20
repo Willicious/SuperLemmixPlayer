@@ -38,7 +38,7 @@ type
     function GetAnimationFrameCount: Integer;
     function GetPreassignedSkills: Integer;
     function GetCenterPoint: TPoint;
-
+    function GetKeyFrame: Integer;
 
   public
     MetaObj        : TMetaObjectInterface;
@@ -74,6 +74,7 @@ type
     property SoundEffect: Integer read GetSoundEffect;
     property PreassignedSkills: Integer read GetPreassignedSkills;
     property ZombieMode: Boolean read sZombieMode write SetZombieMode;
+    property KeyFrame: Integer read GetKeyFrame;
 
     procedure AssignTo(NewObj: TInteractiveObjectInfo);
 
@@ -337,6 +338,11 @@ begin
   Result.Y := sTop + (sHeight div 2);
 end;
 
+function TInteractiveObjectInfo.GetKeyFrame: Integer;
+begin
+  Result := MetaObj.KeyFrame;
+end;
+
 function TInteractiveObjectInfo.Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
 var
   f: Integer;
@@ -402,7 +408,6 @@ var
   IsReceiverUsed: array of Boolean;
 begin
   PairCount := 0;
-  TestInf := nil;
   SetLength(IsReceiverUsed, Count);
   for i := 0 to Count-1 do
   begin
@@ -416,12 +421,12 @@ begin
     if Inf.TriggerEffect = DOM_TELEPORT then
     begin
       // Find receiver for this teleporter with index i
-      for TestId := i+1 to i + Count do
-      begin
+      TestID := i;
+      repeat
+        Inc(TestID);
         TestInf := List^[TestId mod Count];
-        if     (TestInf.TriggerEffect = DOM_RECEIVER)
-           and (TestInf.Obj.Skill = Inf.Obj.Skill) then break;
-      end;
+      until ((TestInf.TriggerEffect = DOM_RECEIVER) and (TestInf.Obj.Skill = Inf.Obj.Skill))
+            or (TestID = i + Count);
 
       TestID := TestID mod Count;
       // If TestID = i then there is no receiver and we disable the teleporter

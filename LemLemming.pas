@@ -66,8 +66,6 @@ type
     LemTrueFallen                 : Integer; // total number of fallen pixels
     LemExplosionTimer             : Integer; // 84 (before 79) downto 0
     LemMechanicFrames             : Integer;
-    //LMA                           : TMetaLemmingAnimation; // ref to Lemming Meta Animation
-    //LAB                           : TBitmap32;      // ref to Lemming Animation Bitmap
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
     LemAnimationType              : Integer; // copy from LMA
@@ -103,6 +101,9 @@ type
     LemXOld                       : Integer; // position of previous frame
     LemYOld                       : Integer;
     LemActionOld                  : TBasicLemmingAction; // action in previous frame
+    LemActionNew                  : TBasicLemmingAction; // new action after fixing a trap, see http://www.lemmingsforums.net/index.php?topic=3004.0
+    LemQueueAction                : TBasicLemmingAction; // queued action to be assigned within the next few frames
+    LemQueueFrame                 : Integer; // number of frames the skill is already queued
 
     constructor Create;
     procedure Assign(Source: TLemming);
@@ -307,8 +308,6 @@ begin
   LemTrueFallen := Source.LemTrueFallen;
   LemExplosionTimer := Source.LemExplosionTimer;
   LemMechanicFrames := Source.LemMechanicFrames;
-  //LMA := Source.LMA;
-  //LAB := Source.LAB;
   LemFrame := Source.LemFrame;
   LemMaxFrame := Source.LemMaxFrame;
   LemAnimationType := Source.LemAnimationType;
@@ -336,7 +335,13 @@ begin
   LemExploded := Source.LemExploded;
   LemUsedSkillCount := Source.LemUsedSkillCount;
   LemTimerToStone := Source.LemTimerToStone;
+  LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
+  LemXOld := Source.LemXOld;
+  LemYOld := Source.LemYOld;
+  LemActionOld := Source.LemActionOld;
+  LemActionNew := Source.LemActionNew;
+  // does NOT copy LemQueueAction or LemQueueFrame! This is intentional, because we want to cancel queuing on backwards frameskips.
 end;
 
 { TLemmingList }
