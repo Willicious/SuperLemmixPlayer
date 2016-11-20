@@ -60,6 +60,8 @@ type
   private
     fRenderInterface: TRenderInterface;
 
+    fDisableBackground: Boolean;
+
     fRecolorer: TRecolorImage;
 
     fPhysicsMap: TBitmap32;
@@ -1279,7 +1281,7 @@ begin
 
   // Draw moving backgrounds
   if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
-  if not UsefulOnly then
+  if not (UsefulOnly or fDisableBackground) then
   begin
     for i := 0 to ObjectInfos.Count - 1 do
     begin
@@ -1599,6 +1601,8 @@ var
   end;
 begin
   if Inf.Level = nil then Exit;
+
+  fDisableBackground := not DoBackground;
 
   // Draw the PhysicsMap
   RenderPhysicsMap;
