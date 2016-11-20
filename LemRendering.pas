@@ -165,6 +165,7 @@ type
     property PhysicsMap: TBitmap32 read fPhysicsMap;
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
     property Theme: TNeoTheme read fTheme;
+    property LemmingAnimations: TBaseDosAnimationSet read fAni;
 
     property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
     property ParticleLayer: TBitmap32 read GetParticleLayer; // needs to be replaced with making TRenderer draw them

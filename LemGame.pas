@@ -1460,7 +1460,7 @@ begin
   for i := 8 to 15 do
     Pal[i] := HiPal[i - 8];
 
-  Ani := Style.AnimationSet as TBaseDosAnimationSet;
+  Ani := Renderer.LemmingAnimations; //Style.AnimationSet as TBaseDosAnimationSet;
   Ani.AnimationPalette := Copy(Pal);
   Ani.ClearData;
   if (fGameParams.SysDat.Options3 and 128) <> 0 then
