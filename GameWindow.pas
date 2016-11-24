@@ -64,6 +64,7 @@ type
     procedure CheckUserHelpers;
     procedure DoDraw;
     procedure OnException(E: Exception; aCaller: String = 'Unknown');
+    procedure ExecuteReplayEdit;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -109,9 +110,34 @@ type
 
 implementation
 
-uses FBaseDosForm;
+uses FBaseDosForm, FEditReplay;
 
 { TGameWindow }
+
+procedure TGameWindow.ExecuteReplayEdit;
+var
+  F: TFReplayEditor;
+  OldPaused: Boolean;
+  OldClearReplay: Boolean;
+begin
+  OldPaused := Game.Paused;
+  Game.Paused := true;
+  F := TFReplayEditor.Create(self);
+  F.SetReplay(Game.ReplayManager);
+  try
+    if F.ShowModal = mrOk then
+    begin
+      OldClearReplay := GameParams.NoAutoReplayMode;
+      fSaveList.ClearAfterIteration(0);
+      GotoSaveState(Game.CurrentIteration-1);
+      ForceUpdateOneFrame := true;
+      GameParams.NoAutoReplayMode := OldClearReplay;
+    end;
+  finally
+    Game.Paused := OldPaused;
+    F.Free;
+  end;
+end;
 
 procedure TGameWindow.ApplyMouseTrap;
 begin
@@ -776,6 +802,7 @@ begin
                               fClearPhysics := not fClearPhysics
                             else
                               fClearPhysics := true;
+          lka_EditReplay: ExecuteReplayEdit;
         end;
 
     end;

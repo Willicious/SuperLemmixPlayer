@@ -144,6 +144,8 @@ type
       procedure Clear(EraseLevelInfo: Boolean = false);
       procedure LoadFromFile(aFile: String);
       procedure SaveToFile(aFile: String);
+      procedure LoadFromStream(aStream: TStream);
+      procedure SaveToStream(aStream: TStream);
       procedure LoadOldReplayFile(aFile: String);
       procedure Cut(aLastFrame: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
@@ -368,7 +370,7 @@ begin
   CheckForAction(fReleaseRateChanges);
 end;
 
-procedure TReplay.LoadFromFile(aFile: String);
+procedure TReplay.LoadFromStream(aStream: TStream);
 var
   Parser: TNeoLemmixParser;
   Line: TParserLine;
@@ -377,7 +379,7 @@ begin
   Clear(true);
   Parser := TNeoLemmixParser.Create;
   try
-    Parser.LoadFromFile(aFile);
+    Parser.LoadFromStream(aStream);
     repeat
       Line := Parser.NextLine;
 
@@ -432,6 +434,32 @@ end;
 
 procedure TReplay.SaveToFile(aFile: String);
 var
+  FS: TFileStream;
+begin
+  FS := TFileStream.Create(aFile, fmCreate);
+  try
+    FS.Position := 0;
+    SaveToStream(FS);
+  finally
+    FS.Free;
+  end;
+end;
+
+procedure TReplay.LoadFromFile(aFile: String);
+var
+  FS: TFileStream;
+begin
+  FS := TFileStream.Create(aFile, fmOpenRead);
+  try
+    FS.Position := 0;
+    LoadFromStream(FS);
+  finally
+    FS.Free;
+  end;
+end;
+
+procedure TReplay.SaveToStream(aStream: TStream);
+var
   SL: TStringList;
 begin
   SL := TStringList.Create;
@@ -463,7 +491,7 @@ begin
   SaveReplayList(fAssignments, SL);
   SaveReplayList(fReleaseRateChanges, SL);
 
-  SL.SaveToFile(aFile);
+  SL.SaveToStream(aStream);
 
   SL.Free;
 end;

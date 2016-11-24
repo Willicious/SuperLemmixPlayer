@@ -103,6 +103,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Load Replay'
       'Save Replay'
       'Cancel Replay'
+      'Edit Replay'
       'Toggle Music'
       'Toggle Sound'
       'Restart Level'

@@ -11,7 +11,7 @@ uses
 const
   MAX_KEY = 255;
   MAX_KEY_LEN = 4;
-  KEYSET_VERSION = 4;
+  KEYSET_VERSION = 6;
 
 type
   TLemmixHotkeyAction = (lka_Null,
@@ -36,6 +36,7 @@ type
                          lka_LoadReplay,
                          lka_SaveReplay,
                          lka_CancelReplay,
+                         lka_EditReplay,
                          lka_Music,
                          lka_Sound,
                          lka_Restart,
@@ -100,6 +101,7 @@ begin
   fKeyFunctions[$31].Action := lka_Cheat;
   fKeyFunctions[$43].Action := lka_CancelReplay;
   fKeyFunctions[$44].Action := lka_FallDistance;
+  fKeyFunctions[$45].Action := lka_EditReplay;
   fKeyFunctions[$46].Action := lka_FastForward;
   fKeyFunctions[$49].Action := lka_SaveImage;
   fKeyFunctions[$4C].Action := lka_LoadReplay;
@@ -215,6 +217,7 @@ var
     if s = 'highlight' then Result := lka_Highlight;
     if s = 'clear_physics' then Result := lka_ClearPhysics;
     if s = 'fall_distance' then Result := lka_FallDistance;
+    if s = 'edit_replay' then Result := lka_EditReplay;
   end;
 
   function InterpretSecondary(s: String): Integer;
@@ -308,6 +311,10 @@ begin
         if fKeyFunctions[$44].Action = lka_Null then
           fKeyFunctions[$44].Action := lka_FallDistance;
 
+      if FixVersion < 6 then
+        if fKeyFunctions[$45].Action = lka_Null then
+          fKeyFunctions[$45].Action := lka_EditReplay;
+
     except
       SetDefaults;
     end;
@@ -354,6 +361,7 @@ var
       lka_Highlight:        Result := 'Highlight';
       lka_ClearPhysics:     Result := 'Clear_Physics';
       lka_FallDistance:     Result := 'Fall_Distance';
+      lka_EditReplay:       Result := 'Edit_Replay';
       else Result := 'Null';
     end;
   end;
