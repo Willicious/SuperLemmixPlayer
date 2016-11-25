@@ -37,6 +37,7 @@ type
                          lka_SaveReplay,
                          lka_CancelReplay,
                          lka_EditReplay,
+                         lka_ReplayInsert,
                          lka_Music,
                          lka_Sound,
                          lka_Restart,
@@ -110,6 +111,7 @@ begin
   fKeyFunctions[$52].Action := lka_Restart;
   fKeyFunctions[$53].Action := lka_Sound;
   fKeyFunctions[$55].Action := lka_SaveReplay;
+  fKeyFunctions[$57].Action := lka_ReplayInsert;
   fKeyFunctions[$58].Action := lka_SkillRight;
   fKeyFunctions[$5A].Action := lka_SkillLeft;
   fKeyFunctions[$70].Action := lka_ReleaseRateDown;
@@ -252,6 +254,13 @@ var
       end;
     end;
   end;
+
+  procedure SetIfFree(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
+  begin
+    if fKeyFunctions[aKey].Action <> lka_Null then Exit;
+    fKeyFunctions[aKey].Action := aFunc;
+    fKeyFunctions[aKey].Modifier := aMod;
+  end;
 begin
   if FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixHotkeys.ini') then
   begin
@@ -289,31 +298,28 @@ begin
       FixVersion := StrToIntDef(StringList.Values['Version'], 0);
       
       if FixVersion < 1 then
-        if fKeyFunctions[$C0].Action = lka_Null then fKeyFunctions[$C0].Action := lka_ReleaseMouse;
+        SetIfFree($C0, lka_ReleaseMouse);
 
       if FixVersion < 2 then
       begin
-        fKeyFunctions[$02].Action := lka_Highlight;
-        fKeyFunctions[$04].Action := lka_Pause;
+        SetIfFree($02, lka_Highlight);
+        SetIfFree($04, lka_Pause);
       end;
 
       if FixVersion < 3 then
-        if fKeyFunctions[$43].Action = lka_Null then fKeyFunctions[$43].Action := lka_CancelReplay;
+        SetIfFree($43, lka_CancelReplay);
 
       if FixVersion < 4 then
-        if fKeyFunctions[$54].Action = lka_Null then
-        begin
-          fKeyFunctions[$54].Action := lka_ClearPhysics;
-          fKeyFunctions[$54].Modifier := 1;
-        end;
+        SetIfFree($54, lka_ClearPhysics, 1);
 
       if FixVersion < 5 then
-        if fKeyFunctions[$44].Action = lka_Null then
-          fKeyFunctions[$44].Action := lka_FallDistance;
+        SetIfFree($44, lka_FallDistance);
 
       if FixVersion < 6 then
-        if fKeyFunctions[$45].Action = lka_Null then
-          fKeyFunctions[$45].Action := lka_EditReplay;
+      begin
+        SetIfFree($45, lka_EditReplay);
+        SetIfFree($57, lka_ReplayInsert);
+      end;
 
     except
       SetDefaults;
