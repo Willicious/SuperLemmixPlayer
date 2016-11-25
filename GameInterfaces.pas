@@ -24,7 +24,7 @@ type
     procedure SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
-    procedure SetReplayMark(Status: Boolean);
+    procedure SetReplayMark(Status: Integer);
     procedure SetTimeLimit(Status: Boolean);
     procedure RefreshInfo;
     procedure ClearSkills;

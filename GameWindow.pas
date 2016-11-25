@@ -661,6 +661,8 @@ const
                          lka_LoadReplay,
                          lka_SaveReplay,
                          lka_CancelReplay,  // this one does cancel. but the code should show why it's in this list. :)
+                         lka_EditReplay,
+                         lka_ReplayInsert,
                          lka_Music,
                          lka_Sound,
                          lka_Restart,
@@ -684,7 +686,7 @@ begin
      Exit;
 
   if (func.Action in NON_CANCELLING_KEYS) or (func.Action in SKILL_KEYS)
-  or (not Game.Replaying)
+  or ((not Game.Replaying) or Game.ReplayInsert)
   or (not GameParams.ExplicitCancel) then
     with Game do
     begin
@@ -803,6 +805,7 @@ begin
                             else
                               fClearPhysics := true;
           lka_EditReplay: ExecuteReplayEdit;
+          lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
         end;
 
     end;

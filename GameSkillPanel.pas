@@ -119,7 +119,7 @@ type
     procedure SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
-    procedure SetReplayMark(Status: Boolean);
+    procedure SetReplayMark(Status: Integer);
     procedure SetTimeLimit(Status: Boolean);
 
     procedure ActivateCenterDigits;
@@ -358,8 +358,8 @@ begin
     idx := -1;
 
 
-    O := UpCase(fLastDrawnStr[i]);
-    N := UpCase(fNewDrawStr[i]);
+    O := fLastDrawnStr[i];
+    N := fNewDrawStr[i];
 
     if O <> N then
     begin
@@ -385,7 +385,7 @@ begin
           begin
             idx := ord(n) - ord('A') + 12;
           end;
-        #91 .. #96:
+        #91 .. #97:
           begin
             idx := ord(n) - ord('A') + 12;
           end;
@@ -881,13 +881,15 @@ var
   S: string;
 begin
 //exit;
+
+  S := Uppercase(Lem);
   if Lem <> '' then
   begin
 
     if Num = 0 then
-      S := PadR(Lem, 14)
+      S := PadR(S, 14)
     else
-      S := PadR(Lem + ' ' + i2s(Num), 14); //
+      S := PadR(S + ' ' + i2s(Num), 14); //
     Move(S[1], fNewDrawStr[1], 14);
   end
   else begin
@@ -896,12 +898,14 @@ begin
   end;
 end;
 
-procedure TSkillPanelToolbar.SetReplayMark(Status: Boolean);
+procedure TSkillPanelToolbar.SetReplayMark(Status: Integer);
 var
   S: String;
 begin
-  if Status then
+  if Status = 1 then
     S := #91
+  else if Status = 2 then
+    S := #97
   else
     S := ' ';
   Move(S[1], fNewDrawStr[15], 1);

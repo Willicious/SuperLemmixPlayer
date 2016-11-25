@@ -570,6 +570,7 @@ type
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Rev: Boolean = false);
 
+    procedure SetCorrectReplayMark;
 
   { lemming actions }
     function FindGroundPixel(x, y: Integer): Integer;
@@ -645,6 +646,7 @@ type
     InstReleaseRate            : Integer;
     fActiveSkills              : array[0..7] of TSkillPanelButton;
     ReleaseRateModifier        : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
+    ReplayInsert: Boolean;
 
     // Postview screen needs access to these two sounds and the sound manager now
     SoundMgr                   : TSoundMgr;
@@ -911,6 +913,19 @@ begin
 end;
 
 { TLemmingGame }
+
+procedure TLemmingGame.SetCorrectReplayMark;
+begin
+  if Replaying then
+  begin
+    if ReplayInsert then
+      InfoPainter.SetReplayMark(2)
+    else
+      InfoPainter.SetReplayMark(1)
+  end else
+    InfoPainter.SetReplayMark(0);
+end;
+
 procedure TLemmingGame.UpdateLemmingCounts;
 begin
   // Set Lemmings in Hatch, Lemmings Alive and Lemmings Saved
@@ -1079,7 +1094,7 @@ begin
     RefreshAllPanelInfo;
 
   //fReplayIndex := fRecorder.FindIndexForFrame(fCurrentIteration);
-  InfoPainter.SetReplayMark(Replaying);
+  SetCorrectReplayMark;
 
   ReleaseRateModifier := 0; // we don't want to continue changing it if it's currently changing
 
@@ -1734,7 +1749,7 @@ begin
   begin
     UpdateTimeLimit;
     UpdateLemmingCounts;
-    SetReplayMark(Replaying);
+    SetCorrectReplayMark;
     SetTimeLimit(Level.Info.TimeLimit < 6000);
   end;
 
@@ -4731,7 +4746,7 @@ begin
   DoTalismanCheck;
 
   UpdateLemmingCounts;
-  InfoPainter.SetReplayMark(Replaying);
+  SetCorrectReplayMark;
 end;
 
 
@@ -4808,7 +4823,7 @@ begin
   if InfoPainter <> nil then
   begin
     UpdateLemmingCounts;
-    InfoPainter.SetReplayMark(Replaying);
+    SetCorrectReplayMark;
     UpdateTimeLimit;
   end;
 
@@ -5802,10 +5817,10 @@ procedure TLemmingGame.RegainControl;
   This is a very important routine. It jumps from replay into usercontrol.
 -------------------------------------------------------------------------------}
 begin
-  //if Replaying then
-    fReplayManager.Cut(fCurrentIteration);
+  if ReplayInsert then Exit;
 
-  InfoPainter.SetReplayMark(false);
+  fReplayManager.Cut(fCurrentIteration);
+  SetCorrectReplayMark;
 end;
 
 procedure TLemmingGame.SetOptions(const Value: TDosGameOptions);

@@ -220,6 +220,7 @@ var
     if s = 'clear_physics' then Result := lka_ClearPhysics;
     if s = 'fall_distance' then Result := lka_FallDistance;
     if s = 'edit_replay' then Result := lka_EditReplay;
+    if s = 'replay_insert' then Result := lka_ReplayInsert;
   end;
 
   function InterpretSecondary(s: String): Integer;
@@ -368,6 +369,7 @@ var
       lka_ClearPhysics:     Result := 'Clear_Physics';
       lka_FallDistance:     Result := 'Fall_Distance';
       lka_EditReplay:       Result := 'Edit_Replay';
+      lka_ReplayInsert:     Result := 'Replay_Insert';
       else Result := 'Null';
     end;
   end;
