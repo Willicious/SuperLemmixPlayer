@@ -237,6 +237,7 @@ var
   Tmp: TBitmap32;
   i: Integer;
   GrabRect: TRect;
+  S: String;
 
   procedure LoadScrollerGraphics;
   var
@@ -327,7 +328,9 @@ begin
     BitmapElements[gmbSection].DrawMode := dmOpaque;
 
     // program text
-    DrawPurpleTextCentered(ScreenImg.Bitmap, BuildText(GameParams.SysDat.PackName) + #13 + BuildText(GameParams.SysDat.SecondLine) + #13 + 'NeoLemmix Player V' + CurrentVersionString, YPos_ProgramText);
+    S := CurrentVersionString;
+    if COMMIT_ID <> '' then S := S + ':' + Uppercase(COMMIT_ID);
+    DrawPurpleTextCentered(ScreenImg.Bitmap, BuildText(GameParams.SysDat.PackName) + #13 + BuildText(GameParams.SysDat.SecondLine) + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText);
 
     // credits animation
     DrawWorkerLemmings(0);
