@@ -56,7 +56,7 @@ type
     fSkillLock     : TBitmap32;
     fSkillInfinite : TBitmap32;
     fSkillIcons    : array[0..15] of TBitmap32;
-    fInfoFont      : array[0..43] of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
+    fInfoFont      : array[0..44] of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
     fGame          : TLemmingGame;
     { TODO : do something with this hardcoded shit }
     //fActiveButtons : array[0..7] of TSkillPanelButton;
@@ -178,7 +178,7 @@ begin
 
   fOriginal := TBitmap32.Create;
 
-  for i := 0 to 43 do
+  for i := 0 to 44 do
     fInfoFont[i] := TBitmap32.Create;
 
   for i := 0 to 15 do
@@ -730,8 +730,14 @@ begin
     // Panel font
     GetGraphic('panel_font.png', TempBmp);
     SrcRect := Rect(0, 0, 8, 16);
-    for i := 0 to 43 do
+    for i := 0 to 44 do
     begin
+      if i = 38 then
+      begin
+        // switch to panel_icons.png file at this point
+        GetGraphic('panel_icons.png', TempBmp);
+        SrcRect := Rect(0, 0, 8, 16);
+      end;
       fInfoFont[i].SetSize(8, 16);
       fInfoFont[i].Clear;
       TempBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
