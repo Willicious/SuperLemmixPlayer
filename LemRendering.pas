@@ -1350,6 +1350,8 @@ begin
     DrawTriggerArea(Inf);
   end;
 
+  if fRenderInterface = nil then Exit; // otherwise, some of the remaining code may cause an exception on first rendering
+
   // Draw object helpers
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
   if DrawHelper and UsefulOnly then
@@ -1379,10 +1381,10 @@ begin
             DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
         end;
     end;
-
-    // if fRenderInterface.UserHelper <> hpi_None then
-    //  DrawUserHelper;
   end;
+
+  if fRenderInterface.UserHelper <> hpi_None then
+      DrawUserHelper;
 
 end;
 
