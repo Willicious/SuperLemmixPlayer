@@ -24,6 +24,7 @@ type
 
   TGameWindow = class(TGameBaseScreen)
   private
+    fSuspendCursor: Boolean;
     fClearPhysics: Boolean;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
@@ -124,16 +125,18 @@ begin
   Game.Paused := true;
   F := TFReplayEditor.Create(self);
   F.SetReplay(Game.ReplayManager);
+  fSuspendCursor := true;
   try
-    if F.ShowModal = mrOk then
+    if (F.ShowModal = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
     begin
       OldClearReplay := GameParams.NoAutoReplayMode;
       fSaveList.ClearAfterIteration(0);
-      GotoSaveState(Game.CurrentIteration-1);
-      ForceUpdateOneFrame := true;
+      GotoSaveState(Game.CurrentIteration);
+      //ForceUpdateOneFrame := true;
       GameParams.NoAutoReplayMode := OldClearReplay;
     end;
   finally
+    fSuspendCursor := false;
     Game.Paused := OldPaused;
     F.Free;
   end;
@@ -505,7 +508,7 @@ begin
     fNeedReset := true;
     exit;
   end;
-  if Screen.Cursor <> Game.CurrentCursor then
+  if (Screen.Cursor <> Game.CurrentCursor) and not fSuspendCursor then
   begin
     Img.Cursor := Game.CurrentCursor;
     Screen.Cursor := Game.CurrentCursor;

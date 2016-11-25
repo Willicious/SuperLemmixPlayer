@@ -142,6 +142,7 @@ type
       destructor Destroy; override;
       procedure Add(aItem: TBaseReplayItem);
       procedure Clear(EraseLevelInfo: Boolean = false);
+      procedure Delete(aItem: TBaseReplayItem);
       procedure LoadFromFile(aFile: String);
       procedure SaveToFile(aFile: String);
       procedure LoadFromStream(aStream: TStream);
@@ -305,6 +306,19 @@ begin
     if (Dst[i].Frame = aItem.Frame) and (Dst[i].ClassName = aItem.ClassName) then
       Dst.Delete(i);
   Dst.Add(aItem);
+end;
+
+procedure TReplay.Delete(aItem: TBaseReplayItem);
+var
+  Dst: TReplayItemList;
+  i: Integer;
+begin
+  if aItem is TReplaySkillAssignment then Dst := fAssignments;
+  if aItem is TReplayChangeReleaseRate then Dst := fReleaseRateChanges;
+  if aItem is TReplayNuke then Dst := fAssignments;
+  for i := Dst.Count-1 downto 0 do
+    if Dst[i] = aItem then
+      Dst.Delete(i);
 end;
 
 procedure TReplay.Clear(EraseLevelInfo: Boolean = false);

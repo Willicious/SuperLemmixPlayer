@@ -8,7 +8,7 @@ interface
 uses
   LemReplay, UMisc, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls;
 
 type
   TFReplayEditor = class(TForm)
@@ -16,17 +16,25 @@ type
     btnCancel: TButton;
     lbReplayActions: TListBox;
     lblLevelName: TLabel;
+    Panel1: TPanel;
+    Label1: TLabel;
+    ebActionFrame: TEdit;
+    btnDelete: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
     procedure lbReplayActionsClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
   private
     fSavedReplay: TMemoryStream;
     fReplay: TReplay;
+    fEarliestChange: Integer;
 
-    procedure ListReplayActions;
+    procedure ListReplayActions(aSelect: TBaseReplayItem = nil);
+    procedure NoteChangeAtFrame(aFrame: Integer);
   public
     procedure SetReplay(aReplay: TReplay);
+    property EarliestChange: Integer read fEarliestChange;
   end;
 
 var
@@ -36,7 +44,13 @@ implementation
 
 {$R *.dfm}
 
-procedure TFReplayEditor.ListReplayActions;
+procedure TFReplayEditor.NoteChangeAtFrame(aFrame: Integer);
+begin
+  if (fEarliestChange = -1) or (aFrame < fEarliestChange) then
+    fEarliestChange := aFrame;
+end;
+
+procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil);
 var
   Selected: TObject;
   i: Integer;
@@ -87,13 +101,16 @@ var
       Result := 'Unknown replay action';
   end;
 begin
-  if lbReplayActions.ItemIndex = -1 then
+  if aSelect <> nil then
+    Selected := aSelect
+  else if lbReplayActions.ItemIndex = -1 then
     Selected := nil
   else
     Selected := lbReplayActions.Items.Objects[lbReplayActions.ItemIndex];
   lbReplayActions.OnClick := nil;
   lbReplayActions.Items.BeginUpdate;
   try
+    lbReplayActions.Items.Clear;
     for i := 0 to fReplay.LastActionFrame do
     begin
       Action := fReplay.ReleaseRateChange[i, 0];
@@ -112,6 +129,7 @@ begin
       end;
     lbReplayActions.Items.EndUpdate;
     lbReplayActions.OnClick := lbReplayActionsClick;
+    lbReplayActionsClick(lbReplayActions);
   end;
 end;
 
@@ -120,13 +138,18 @@ begin
   fReplay := aReplay;
   fSavedReplay.Clear;
   fReplay.SaveToStream(fSavedReplay);
-  lblLevelName.Caption := fReplay.LevelName;
+  lblLevelName.Caption := Trim(fReplay.LevelName);
   ListReplayActions;
 end;
 
 procedure TFReplayEditor.FormCreate(Sender: TObject);
 begin
   fSavedReplay := TMemoryStream.Create;
+  fEarliestChange := -1;
+
+  // Temporary stuff
+  lbReplayActions.Height := lbReplayActions.Height + 96;
+  btnDelete.Top := btnDelete.Top + 96;
 end;
 
 procedure TFReplayEditor.FormDestroy(Sender: TObject);
@@ -141,8 +164,64 @@ begin
 end;
 
 procedure TFReplayEditor.lbReplayActionsClick(Sender: TObject);
+var
+  I: TBaseReplayItem;
+  A: TReplaySkillAssignment absolute I;
+  R: TReplayChangeReleaseRate absolute I;
+  N: TReplayNuke absolute I;
 begin
-  // placeholder
+  btnDelete.Enabled := lbReplayActions.ItemIndex <> -1;
+  if lbReplayActions.ItemIndex = -1 then Exit;
+  I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
+  ebActionFrame.Text := IntToStr(I.Frame);
+end;
+
+procedure TFReplayEditor.btnDeleteClick(Sender: TObject);
+var
+  I: TBaseReplayItem;
+  ApplyRRDelete: Boolean;
+
+  function CheckConsecutiveRR: Boolean;
+  var
+    I2: TBaseReplayItem;
+    R1: TReplayChangeReleaseRate absolute I;
+    R2: TReplayChangeReleaseRate absolute I2;
+  begin
+    Result := false;
+    I2 := fReplay.ReleaseRateChange[I.Frame + 1, 0];
+    if I2 = nil then Exit;
+    if Abs(R1.NewReleaseRate - R2.NewReleaseRate) <= 1 then
+      Result := true;
+  end;
+
+  procedure HandleRRDelete(StartFrame: Integer);
+  var
+    Frame: Integer;
+  begin
+    Frame := StartFrame;
+    while CheckConsecutiveRR do
+    begin
+      fReplay.Delete(I);
+      Inc(Frame);
+      I := fReplay.ReleaseRateChange[Frame, 0];
+    end;
+    fReplay.Delete(I);
+  end;
+begin
+  ApplyRRDelete := false;
+
+  if lbReplayActions.ItemIndex = -1 then Exit;
+  I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
+  NoteChangeAtFrame(I.Frame);
+  if I is TReplayChangeReleaseRate then
+    if CheckConsecutiveRR then
+      ApplyRRDelete := MessageDlg('Delete consecutive RR changes as well?', mtCustom, [mbYes, mbNo], 0) = mrYes;
+
+  if ApplyRRDelete then
+    HandleRRDelete(I.Frame)
+  else
+    fReplay.Delete(I);
+  ListReplayActions;
 end;
 
 end.
