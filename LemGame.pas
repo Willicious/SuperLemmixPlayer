@@ -5253,8 +5253,11 @@ begin
           if (ObjectInfos[ix].PreAssignedSkills and 4) <> 0 then LemIsFloater := true
           else if (ObjectInfos[ix].PreAssignedSkills and 8) <> 0 then LemIsGlider := true;
           if (ObjectInfos[ix].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
-          if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then RemoveLemming(NewLemming, RM_ZOMBIE, true);
-          if NewLemming.LemIsZombie then Dec(SpawnedDead);
+          if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then
+          begin
+            Dec(SpawnedDead);
+            RemoveLemming(NewLemming, RM_ZOMBIE, true);
+          end;
         end;
         Inc(LemmingsReleased);
         Inc(LemmingsOut);
