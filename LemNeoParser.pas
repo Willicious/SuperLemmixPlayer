@@ -33,6 +33,7 @@ type
   TParserLine = record
     Keyword: String;
     Value: String;
+    ValueTrimmed: String;
     Numeric: Integer;
   end;
 
@@ -117,6 +118,7 @@ begin
   begin
     Result.Keyword := '';
     Result.Value := '';
+    Result.ValueTrimmed := '';
     Result.Numeric := 0;
     Inc(fCurrentLine);
   end else begin
@@ -132,6 +134,7 @@ var
 begin
   Result.Keyword := '';
   Result.Value := '';
+  Result.ValueTrimmed := '';
   Result.Numeric := 0;
   FinishedKeyword := false;
   for i := 1 to Length(aString) do
@@ -147,7 +150,10 @@ begin
   Result.Keyword := Uppercase(Result.Keyword);
 
   if Result.Value <> '' then
-    Result.Numeric := StrToIntDef(Result.Value, 0);
+  begin
+    Result.ValueTrimmed := Trim(Result.Value);
+    Result.Numeric := StrToIntDef(Result.ValueTrimmed, 0);
+  end;
 end;
 
 procedure TNeoLemmixParser.CleanStringList;
