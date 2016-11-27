@@ -3322,6 +3322,8 @@ begin
   X := L.LemX;
   if L.LemDx = 1 then Inc(X);
 
+  StoneLemBmp.DrawMode := dmCustom;
+  StoneLemBmp.OnPixelCombine := CombineNoOverwriteStoner;
   StoneLemBmp.DrawTo(PhysicsMap, X - 8, L.LemY -10);
   fRenderInterface.AddTerrain(di_Stoner, X - 8, L.LemY -10);
 
