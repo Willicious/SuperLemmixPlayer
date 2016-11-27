@@ -682,6 +682,7 @@ type
     procedure SaveGameplayImage(Filename: String);
     function GetSelectedSkill: Integer;
     function Checkpass: Boolean;
+    function CheckFinishedTest: Boolean;
     function GetHighlitLemming: TLemming;
 
   { properties }
@@ -1168,6 +1169,19 @@ end;
 function TLemmingGame.Checkpass: Boolean;
 begin
   Result := fGameCheated or (LemmingsIn >= Level.Info.RescueCount);
+end;
+
+function TLemmingGame.CheckFinishedTest;
+var
+  i: Integer;
+begin
+  Result := false;
+  if not Checkpass then Exit;
+
+  for i := 0 to fTalismans.Count-1 do
+    if not fGameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Exit;
+
+  Result := true;
 end;
 
 function TLemmingGame.GetLevelWidth: Integer;

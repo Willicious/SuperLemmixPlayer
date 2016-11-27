@@ -242,7 +242,7 @@ begin
 
     if (GameParams.ReplayCheckIndex <> -2) then // i.e. we are mass replay checking
     begin
-      if Game.Checkpass then
+      if Game.CheckFinishedTest then
       begin
         Game.Finish;
       end
