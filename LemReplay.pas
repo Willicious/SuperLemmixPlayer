@@ -431,6 +431,7 @@ begin
       Item := nil;
       Line := Parser.NextLine;
 
+      // Upon adding new keywords here, add them as well in TBaseReplayItem.Load!
       if Line.Keyword = 'ASSIGNMENT' then
         Item := TReplaySkillAssignment.Create;
 
@@ -658,7 +659,10 @@ var
 begin
   repeat
     Line := Parser.NextLine;
-  until not DoLoadLine(Line);
+    DoLoadLine(Line);
+  until (Line.Keyword = '') or (Line.Keyword = 'ASSIGNMENT')
+     or (Line.Keyword = 'RELEASE_RATE') or (Line.Keyword = 'NUKE');
+
   Parser.Back;
 end;
 
