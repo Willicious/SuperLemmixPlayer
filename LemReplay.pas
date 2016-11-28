@@ -40,8 +40,10 @@ type
       fFrame: Integer;
     protected
       function DoLoadLine(Line: TParserLine): Boolean; virtual;    // Return TRUE if the line is understood. Should start with "if inherited then Exit".
-      procedure DoSave(SL: TStringList; aLabel: String); virtual;                  // Should start with a call to inherited.
+      procedure DoSave(SL: TStringList; aLabel: String); virtual;  // Should start with a call to inherited.
+      procedure InitializeValues(); virtual; // we cannot guarantee that all values will be set, so make sure that there is nothing null and nothing that will crash the game!!!
     public
+      constructor Create; // NEVER call this from this base class - only instanciate children!
       procedure Load(Parser: TNeoLemmixParser);
       procedure Save(SL: TStringList);
       property Frame: Integer read fFrame write fFrame;
@@ -57,6 +59,7 @@ type
     protected
       function DoLoadLine(Line: TParserLine): Boolean; override;
       procedure DoSave(SL: TStringList; aLabel: String); override;
+      procedure InitializeValues(); override;
     public
       procedure SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
       property LemmingIndex: Integer read fLemmingIndex write fLemmingIndex;
@@ -72,6 +75,7 @@ type
     protected
       function DoLoadLine(Line: TParserLine): Boolean; override;
       procedure DoSave(SL: TStringList; aLabel: String); override;
+      procedure InitializeValues(); override; // THIS IS VERY IMPORTANT HERE!!! Null-Actions will crash the game!!!
     public
       property Skill: TBasicLemmingAction read fSkill write fSkill;
   end;
@@ -83,6 +87,7 @@ type
     protected
       function DoLoadLine(Line: TParserLine): Boolean; override;
       procedure DoSave(SL: TStringList; aLabel: String); override;
+      procedure InitializeValues(); override;
     public
       property NewReleaseRate: Integer read fNewReleaseRate write fNewReleaseRate;
       property SpawnedLemmingCount: Integer read fSpawnedLemmingCount write fSpawnedLemmingCount;
@@ -636,6 +641,17 @@ end;
 
 { TBaseReplayItem }
 
+constructor TBaseReplayItem.Create;
+begin
+  inherited Create();
+  InitializeValues();
+end;
+
+procedure TBaseReplayItem.InitializeValues();
+begin
+  Frame := 0;
+end;
+
 procedure TBaseReplayItem.Load(Parser: TNeoLemmixParser);
 var
   Line: TParserLine;
@@ -670,6 +686,16 @@ begin
 end;
 
 { TBaseReplayLemmingItem }
+
+procedure TBaseReplayLemmingItem.InitializeValues();
+begin
+  inherited InitializeValues();
+  fLemmingIndex := 0;
+  fLemmingX := 0;
+  fLemmingDx := 0;
+  fLemmingY := 0;
+  fLemmingHighlit := False;
+end;
 
 procedure TBaseReplayLemmingItem.SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
 begin
@@ -737,6 +763,12 @@ end;
 
 { TReplaySkillAssignment }
 
+procedure TReplaySkillAssignment.InitializeValues();
+begin
+  inherited InitializeValues();
+  Skill := baCloning;
+end;
+
 function TReplaySkillAssignment.DoLoadLine(Line: TParserLine): Boolean;
 begin
   Result := inherited DoLoadLine(Line);
@@ -756,6 +788,13 @@ begin
 end;
 
 { TReplayReleaseRateChange }
+
+procedure TReplayChangeReleaseRate.InitializeValues();
+begin
+  inherited InitializeValues();
+  NewReleaseRate := 1;
+  SpawnedLemmingCount := 0;
+end;
 
 function TReplayChangeReleaseRate.DoLoadLine(Line: TParserLine): Boolean;
 begin
