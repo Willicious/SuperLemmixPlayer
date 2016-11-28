@@ -5072,7 +5072,6 @@ end;
 procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
 var
   L: TLemming;
-  ass: TBasicLemmingAction;
   OldHighlightLemID: Integer;
 begin
   with aReplayItem do
@@ -5080,35 +5079,30 @@ begin
     if (LemmingIndex < 0) or (LemmingIndex >= LemmingList.Count) then
     begin
       RegainControl;
-//      ShowMessage('invalid replay, replay ended');
-//          fRecorder.SaveToTxt(apppath+'inv.txt');
       infopainter.SetInfoCursorLemming('invalid', 0);
-
       Exit;
     end;
+
     L := LemmingList.List^[LemmingIndex];
-    ass := Skill;
 
-    if not (ass in AssignableSkills) then
-      raise exception.create(i2s(integer(ass)) + ' ' + i2s(currentiteration));
-
-    if ass in AssignableSkills then
+    if Skill in AssignableSkills then
     begin
-      // for antiques but nice
-      //if (ActionToSkillPanelButton[ass] <> fSelectedSkill) and not fGameParams.IgnoreReplaySelection then
-      //  SetSelectedSkill(ActionToSkillPanelButton[ass], True);
-
       // In order to preserve old replays, we have to check if the skill assignments are still possible
       // As the priority of lemmings has changed, we have to hightlight this lemming
       // After having done the assignment, revert the hightlightning.
       OldHighlightLemID := fHighlightLemmingID;
       fHighlightLemmingID := L.LemIndex;
-      AssignNewSkill(ass, true, true);
+      AssignNewSkill(Skill, true, true);
       fHighlightLemmingID := OldHighlightLemID;
 
       if not HyperSpeed then
         L.LemHighlightReplay := True;
+    end
+    else
+    begin
+      Application.Messagebox('Replay action skipped: It contains an invalid skill.', 'Replay warning')
     end;
+
   end;
 end;
 

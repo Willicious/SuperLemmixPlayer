@@ -739,7 +739,7 @@ end;
 procedure TReplaySkillAssignment.InitializeValues();
 begin
   inherited InitializeValues();
-  Skill := baCloning;
+  Skill := baNone;
 end;
 
 procedure TReplaySkillAssignment.DoLoadLine(Line: TParserLine);
