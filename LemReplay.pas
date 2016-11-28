@@ -649,7 +649,7 @@ end;
 
 procedure TBaseReplayItem.InitializeValues();
 begin
-  Frame := 0;
+  Frame := 17 * 60 * 99; // try corrupt values only after 99 minutes.
 end;
 
 procedure TBaseReplayItem.Load(Parser: TNeoLemmixParser);
@@ -776,7 +776,7 @@ begin
 
   if Line.Keyword = 'ACTION' then
   begin
-    Skill := GetSkillAction(Line.Value);
+    Skill := GetSkillAction(Line.ValueTrimmed);
     Result := true;
   end;
 end;
