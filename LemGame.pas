@@ -675,7 +675,7 @@ type
     function ProcessSkillAssignment(IsHighlight: Boolean = false): Boolean;
     function ProcessHighlightAssignment: Boolean;
     procedure RefreshAllPanelInfo;
-    procedure RegainControl;
+    procedure RegainControl(Force: Boolean = false);
     procedure Save(TestModeName: Boolean = false);
     procedure SetGameResult;
     procedure SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Boolean = True; RightClick: Boolean = False);
@@ -5825,12 +5825,12 @@ begin
   SoundMgr.FlushQueue;
 end;
 
-procedure TLemmingGame.RegainControl;
+procedure TLemmingGame.RegainControl(Force: Boolean = false);
 {-------------------------------------------------------------------------------
   This is a very important routine. It jumps from replay into usercontrol.
 -------------------------------------------------------------------------------}
 begin
-  if ReplayInsert then Exit;
+  if ReplayInsert and not Force then Exit;
 
   fReplayManager.Cut(fCurrentIteration);
   SetCorrectReplayMark;

@@ -694,9 +694,11 @@ begin
     with Game do
     begin
 
-        if (func.Action in [lka_CancelReplay, lka_ReleaseRateUp, lka_ReleaseRateDown]) then
-          Game.RegainControl; // for keys that interrupt replays inherently. Note that some others might have their own
-                              // handling for it, instead of using this always-on one
+        if (func.Action = lka_CancelReplay) then
+          Game.RegainControl(true); // force the cancel even if in Replay Insert mode
+
+        if (func.Action in [lka_ReleaseRateDown, lka_ReleaseRateUp]) then
+          Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
 
         if func.Action = lka_Skill then
         begin
