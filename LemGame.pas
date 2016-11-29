@@ -2140,7 +2140,7 @@ begin
     Exit;
   end;
 
-  if (LemmingsRemoved >= MaxNumLemmings + LemmingsCloned) and (DelayEndFrames = 0) then
+  if ((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved) = 0) and (DelayEndFrames = 0) then
   begin
     Finish;
     Exit;
