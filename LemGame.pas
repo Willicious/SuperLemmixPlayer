@@ -1743,11 +1743,12 @@ begin
 
   InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
 
+  InitializeAllObjectMaps;
+  SetObjectMap;
+
   AddPreplacedLemming;
   ApplyLevelEntryOrder; // This method assumes that all preplaced lemmings are already added to the level
 
-  InitializeAllObjectMaps;
-  SetObjectMap;
   SetBlockerMap;
 
   InitializeMiniMap;
