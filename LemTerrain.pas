@@ -37,7 +37,7 @@ type
     function GetRotate: Boolean; override;
   public
     procedure Assign(Source: TPiece); override;
-    procedure LoadFromParser(aParser: TNeoLemmixParser);
+    procedure EvaluateParserLine(Line: TParserLine);
   published
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
   end;
@@ -72,89 +72,39 @@ begin
   end;
 end;
 
-procedure TTerrain.LoadFromParser(aParser: TNeoLemmixParser);
-var
-  Line: TParserLine;
-  UnderstoodLine: Boolean;
-
-  procedure Understand;
-  begin
-    // Lazy shortcut. :P
-    UnderstoodLine := true;
-  end;
+procedure TTerrain.EvaluateParserLine(Line: TParserLine);
 begin
-  fDrawingFlags := tdf_NoOneWay;
-  fSet := '';
-  fPiece := '';
-  fLeft := 0;
-  fTop := 0;
+  if Line.Keyword = 'SET' then
+    fSet := Lowercase(Line.ValueTrimmed);
 
-  repeat
-    UnderstoodLine := false;
-    Line := aParser.NextLine;
+  if Line.Keyword = 'PIECE' then
+    fPiece := Lowercase(Line.ValueTrimmed);
 
-    if Line.Keyword = 'SET' then
-    begin
-      Understand;
-      fSet := Lowercase(Line.Value);
-    end;
+  if Line.Keyword = 'X' then
+    fLeft := Line.Numeric;
 
-    if Line.Keyword = 'PIECE' then
-    begin
-      Understand;
-      fPiece := Lowercase(Line.Value);
-    end;
+  if Line.Keyword = 'Y' then
+    fTop := Line.Numeric;
 
-    if Line.Keyword = 'X' then
-    begin
-      Understand;
-      fLeft := Line.Numeric;
-    end;
+  if Line.Keyword = 'NO_OVERWRITE' then
+    fDrawingFlags := fDrawingFlags or tdf_NoOverwrite;
 
-    if Line.Keyword = 'Y' then
-    begin
-      Understand;
-      fTop := Line.Numeric;
-    end;
+  if Line.Keyword = 'FLIP_HORIZONTAL' then
+    fDrawingFlags := fDrawingFlags or tdf_Flip;
 
-    if Line.Keyword = 'NO_OVERWRITE' then
-    begin
-      Understand;
-      fDrawingFlags := fDrawingFlags or tdf_NoOverwrite;
-    end;
+  if Line.Keyword = 'FLIP_VERTICAL' then
+    fDrawingFlags := fDrawingFlags or tdf_Invert;
 
-    if Line.Keyword = 'FLIP_HORIZONTAL' then
-    begin
-      Understand;
-      fDrawingFlags := fDrawingFlags or tdf_Flip;
-    end;
+  if Line.Keyword = 'ERASE' then
+    fDrawingFlags := fDrawingFlags or tdf_Erase;
 
-    if Line.Keyword = 'FLIP_VERTICAL' then
-    begin
-      Understand;
-      fDrawingFlags := fDrawingFlags or tdf_Invert;
-    end;
+  if Line.Keyword = 'ROTATE' then
+    fDrawingFlags := fDrawingFlags or tdf_Rotate;
 
-    if Line.Keyword = 'ERASE' then
-    begin
-      Understand;
-      fDrawingFlags := fDrawingFlags or tdf_Erase;
-    end;
-
-    if Line.Keyword = 'ROTATE' then
-    begin
-      Understand;
-      fDrawingFlags := fDrawingFlags or tdf_Rotate;
-    end;
-
-    if Line.Keyword = 'ONE_WAY' then
-    begin
-      Understand;
-      fDrawingFlags := fDrawingFlags and not tdf_NoOneWay;
-    end;
-  until not UnderstoodLine;
-  aParser.Back;
+  if Line.Keyword = 'ONE_WAY' then
+    fDrawingFlags := fDrawingFlags and not tdf_NoOneWay;
 end;
+
 
 procedure TTerrain.SetFlip(aValue: Boolean);
 begin
