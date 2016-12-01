@@ -36,7 +36,7 @@ type
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
-    function ShowScreen(Params: TDosGameParams): Integer; override;
+    function ShowScreen: Integer; override;
   published
   end;
 
@@ -44,9 +44,9 @@ implementation
 
 uses Forms, LemStyle;
 
-function TGameTalismanScreen.ShowScreen(Params: TDosGameParams): Integer;
+function TGameTalismanScreen.ShowScreen: Integer;
 begin
-  Result := inherited ShowScreen(Params);
+  Result := inherited ShowScreen;
 end;
 
 procedure TGameTalismanScreen.BuildScreen;

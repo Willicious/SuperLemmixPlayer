@@ -54,7 +54,7 @@ type
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN; 
     //procedure Fade_Idle(Sender: TObject; var Done: Boolean);
   protected
-    procedure PrepareGameParams(Params: TDosGameParams); override;
+    procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
     function HasTalismanGraphic: Boolean;
     property PurpleFont: TPurpleFont read fPurpleFont;
@@ -441,10 +441,10 @@ begin
   end;
 end;
 
-procedure TGameBaseScreen.PrepareGameParams(Params: TDosGameParams);
+procedure TGameBaseScreen.PrepareGameParams;
 begin
   inherited;
-  fMainDatExtractor.FileName := Params.MainDatFile;
+  fMainDatExtractor.FileName := GameParams.MainDatFile;
 end;
 
 procedure TGameBaseScreen.SetStretched(const Value: Boolean);

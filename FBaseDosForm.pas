@@ -17,16 +17,14 @@ type
   -------------------------------------------------------------------------------}
   TBaseDosForm = class(TForm)
   private
-    fGameParams: TDosGameParams;
     procedure HideMainForm(var msg : TMessage); message WM_AFTERSHOW;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure BuildScreen; virtual;
-    procedure PrepareGameParams(Params: TDosGameParams); virtual; // always call inherited
-    property GameParams: TDosGameParams read fGameParams;
+    procedure PrepareGameParams; virtual; // always call inherited
   public
     constructor Create(aOwner: TComponent); override;
-    function ShowScreen(Params: TDosGameParams): Integer; virtual;
+    function ShowScreen: Integer; virtual;
 
   end;
 
@@ -63,29 +61,28 @@ begin
   end;
 end;
 
-procedure TBaseDosForm.PrepareGameParams(Params: TDosGameParams);
+procedure TBaseDosForm.PrepareGameParams;
 begin
-  fGameParams := Params;
-  if fGameParams.fTestMode then
+  if GameParams.fTestMode then
     Caption := 'NeoLemmix - Single Level'
   else
-    Caption := Trim(fGameParams.SysDat.PackName);
+    Caption := Trim(GameParams.SysDat.PackName);
 
-  if fGameParams.ZoomLevel <> 0 then
+  if GameParams.ZoomLevel <> 0 then
   begin
     BorderStyle := bsToolWindow;
     WindowState := wsNormal;
-    ClientWidth := 320 * fGameParams.ZoomLevel;
-    ClientHeight := 200 * fGameParams.ZoomLevel;
-    Left := fGameParams.MainForm.Left;
-    Top := fGameParams.MainForm.Top;
+    ClientWidth := 320 * GameParams.ZoomLevel;
+    ClientHeight := 200 * GameParams.ZoomLevel;
+    Left := GameParams.MainForm.Left;
+    Top := GameParams.MainForm.Top;
   end;
 
 end;
 
-function TBaseDosForm.ShowScreen(Params: TDosGameParams): Integer;
+function TBaseDosForm.ShowScreen: Integer;
 begin
-  PrepareGameParams(Params);
+  PrepareGameParams;
   BuildScreen;
   Result := ShowModal;
 end;

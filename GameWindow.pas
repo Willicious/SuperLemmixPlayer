@@ -95,7 +95,7 @@ type
     fLastNukeKeyTime     : Cardinal;
     fScrollSpeed         : Integer;
   { overridden}
-    procedure PrepareGameParams(Params: TDosGameParams); override;
+    procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
     procedure SaveShot;
   { internal properties }
@@ -106,7 +106,6 @@ type
     procedure ApplyMouseTrap;
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
-    property GameParams; //need to promote for skill panel's use
   end;
 
 implementation
@@ -1037,7 +1036,7 @@ begin
 end;
 
 
-procedure TGameWindow.PrepareGameParams(Params: TDosGameParams);
+procedure TGameWindow.PrepareGameParams;
 {-------------------------------------------------------------------------------
   This method is called by the inherited ShowScreen
 -------------------------------------------------------------------------------}
@@ -1056,7 +1055,7 @@ begin
   end;
 
   GameParams.TargetBitmap := Img.Bitmap;
-  fGame.PrepareParams(Params);
+  fGame.PrepareParams;
 
   // set timers
   IdealFrameTimeMSFast := 10;
@@ -1088,7 +1087,6 @@ begin
   else
     MouseClipRect := Rect(ClientToScreen(Point(0, 0)), ClientToScreen(Point(Img.Width, Img.Height + SkillPanel.Height)));
 
-  SkillPanel.GameParams := GameParams;
   SkillPanel.SetStyleAndGraph(Gameparams.Style, Sca);
 
   SkillPanel.Level := GameParams.Level;
@@ -1106,9 +1104,9 @@ begin
     SetCursorPos(CenterPoint.X, CenterPoint.Y);
   ApplyMouseTrap;
 
-  if ((Params.SysDat.Options2 and $4) <> 0) then SkillPanel.ActivateCenterDigits;
+  if ((GameParams.SysDat.Options2 and $4) <> 0) then SkillPanel.ActivateCenterDigits;
 
-  fRenderer := Params.Renderer;
+  fRenderer := GameParams.Renderer;
   fRenderInterface := Game.RenderInterface;
   fRenderer.SetInterface(fRenderInterface);
 

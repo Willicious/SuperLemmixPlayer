@@ -247,6 +247,9 @@ type
   published
   end;
 
+var
+  GameParams: TDosGameParams; // Easier to just globalize this than constantly pass it around everywhere
+
 
 implementation
 

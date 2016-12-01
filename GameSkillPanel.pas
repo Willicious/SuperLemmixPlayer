@@ -42,7 +42,6 @@ type
   TSkillPanelToolbar = class(TCustomControl, IGameToolbar)
   private
     fStyle         : TBaseDosLemmingStyle;
-    fParams        : TDosGameParams;
 
     fImg           : TImage32;
     //fButtonHighlightLayer: TPositionedLayer;
@@ -124,7 +123,6 @@ type
 
     procedure ActivateCenterDigits;
     procedure SetCurrentScreenOffset(X: Integer);
-    property GameParams: TDosGameParams read fParams write fParams;    
     property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);

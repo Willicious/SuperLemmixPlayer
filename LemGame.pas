@@ -325,7 +325,6 @@ type
     fReplayManager             : TReplay;
 
   { reference objects, mostly for easy access in the mechanics-code }
-    fGameParams                : TDosGameParams; // ref
     fRenderer                  : TRenderer; // ref to gameparams.renderer
     fInfoPainter               : IGameToolbar; // ref to interface to enable this component to draw to skillpanel
     fLevel                     : TLevel; // ref to gameparams.level
@@ -656,7 +655,7 @@ type
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
   { iteration }
-    procedure PrepareParams(aParams: TDosGameParams);
+    procedure PrepareParams;
     procedure PrepareMusic;
     procedure PlayMusic;
     procedure Start(aReplay: Boolean = False);
@@ -1035,7 +1034,7 @@ begin
   InfoPainter.DrawButtonSelector(fSelectedSkill, false);
 
   // Simple stuff
-  (*if not fGameParams.IgnoreReplaySelection then
+  (*if not GameParams.IgnoreReplaySelection then
     fSelectedSkill := aState.SelectedSkill;*)
   fRenderer.TerrainLayer.Assign(aState.TerrainLayer);
   PhysicsMap.Assign(aState.PhysicsMap);
@@ -1121,12 +1120,12 @@ var
 begin
   for i := 0 to fTalismans.Count-1 do
   begin
-    if fGameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Continue;
+    if GameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Continue;
     with fTalismans[i] do
     begin
 
       if    (LemmingsIn < SaveRequirement)
-         or ((SaveRequirement = 0) and (LemmingsIn < fGameParams.Level.Info.RescueCount)) then Continue;
+         or ((SaveRequirement = 0) and (LemmingsIn < GameParams.Level.Info.RescueCount)) then Continue;
 
       if    ((TimeLimit <> 0) and (CurrentIteration > TimeLimit))
          or ((TimeLimit = 0) and (CurrentIteration > Level.Info.TimeLimit * 17)) then Continue;
@@ -1159,7 +1158,7 @@ begin
       if UsedSkillLems > 1 then Continue;
 
       // Award Talisman
-      fGameParams.SaveSystem.GetTalisman(Signature);
+      GameParams.SaveSystem.GetTalisman(Signature);
       if TalismanType <> 0 then fTalismanReceived := True;
 
     end;
@@ -1179,19 +1178,19 @@ begin
   if not Checkpass then Exit;
 
   for i := 0 to fTalismans.Count-1 do
-    if not fGameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Exit;
+    if not GameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Exit;
 
   Result := true;
 end;
 
 function TLemmingGame.GetLevelWidth: Integer;
 begin
-  Result := fGameParams.Level.Info.Width;
+  Result := GameParams.Level.Info.Width;
 end;
 
 function TLemmingGame.GetLevelHeight: Integer;
 begin
-  Result := fGameParams.Level.Info.Height;
+  Result := GameParams.Level.Info.Height;
 end;
 
 constructor TLemmingGame.Create(aOwner: TComponent);
@@ -1393,12 +1392,12 @@ begin
     Result := ''
   else begin
     if MusicNumber < 0 then
-      if fGameParams.fTestMode then
+      if GameParams.fTestMode then
       begin
         Randomize;
         MusicNumber := Random(SL.Count);
       end else
-        MusicNumber := fGameParams.Info.dLevel mod SL.Count;
+        MusicNumber := GameParams.Info.dLevel mod SL.Count;
     Result := SL[MusicNumber];
   end;
 
@@ -1422,7 +1421,7 @@ begin
   if fMusicLoaded then Exit;
   MS := nil;
   try
-    MusicSys := fGameParams.Style.MusicSystem;
+    MusicSys := GameParams.Style.MusicSystem;
     if MusicSys = nil then Exit;
 
     MusicFileName := GetMusicFileName;
@@ -1444,16 +1443,14 @@ begin
   fMusicLoaded := true;
 end;
 
-procedure TLemmingGame.PrepareParams(aParams: TDosGameParams);
+procedure TLemmingGame.PrepareParams;
 var
   Ani: TBaseDosAnimationSet;
   i: Integer;
   Bmp: TBitmap32;
   LowPal, HiPal, Pal: TArrayOfColor32;
 begin
-
-  fGameParams := aParams;
-  fXmasPal := fGameParams.SysDat.Options2 and 2 <> 0;
+  fXmasPal := GameParams.SysDat.Options2 and 2 <> 0;
 
   fStartupMusicAfterEntry := True;
   fMusicLoaded := false;
@@ -1463,10 +1460,10 @@ begin
   if MusicVolume > 0 then fSoundOpts := fSoundOpts + [gsoMusic];
   fUseGradientBridges := true;
 
-  fRenderer := fGameParams.Renderer; // set ref
-  fTargetBitmap := fGameParams.TargetBitmap;
-  Level := fGameParams.Level;
-  Style := fGameParams.Style;
+  fRenderer := GameParams.Renderer; // set ref
+  fTargetBitmap := GameParams.TargetBitmap;
+  Level := GameParams.Level;
+  Style := GameParams.Style;
 
   {-------------------------------------------------------------------------------
     Initialize the palette of AnimationSet.
@@ -1494,9 +1491,9 @@ begin
   Ani := Renderer.LemmingAnimations; //Style.AnimationSet as TBaseDosAnimationSet;
   Ani.AnimationPalette := Copy(Pal);
   Ani.ClearData;
-  if (fGameParams.SysDat.Options3 and 128) <> 0 then
+  if (GameParams.SysDat.Options3 and 128) <> 0 then
     Ani.LemmingPrefix := 'lemming'
-  else if (fGameParams.SysDat.Options3 and 64) <> 0 then
+  else if (GameParams.SysDat.Options3 and 64) <> 0 then
     Ani.LemmingPrefix := 'xlemming'
   else
     Ani.LemmingPrefix := Renderer.Theme.Lemmings;
@@ -1564,11 +1561,11 @@ begin
 
   fTalismans.Clear;
 
-  for i := 0 to fGameParams.Talismans.Count-1 do
+  for i := 0 to GameParams.Talismans.Count-1 do
   begin
-    if (fGameParams.Talismans[i].RankNumber = fGameParams.Info.dSection)
-    and (fGameParams.Talismans[i].LevelNumber = fGameParams.Info.dLevel) then
-      fTalismans.Add.Assign(fGameParams.Talismans[i]);
+    if (GameParams.Talismans[i].RankNumber = GameParams.Info.dSection)
+    and (GameParams.Talismans[i].LevelNumber = GameParams.Info.dLevel) then
+      fTalismans.Add.Assign(GameParams.Talismans[i]);
   end;
 
 end;
@@ -1587,24 +1584,24 @@ begin
 
   Playing := False;
 
-  if fGameParams.ChallengeMode then
+  if GameParams.ChallengeMode then
   begin
-    fGameParams.Level.Info.ClimberCount    := 0;
-    fGameParams.Level.Info.FloaterCount    := 0;
-    fGameParams.Level.Info.BomberCount     := 0;
-    fGameParams.Level.Info.BlockerCount    := 0;
-    fGameParams.Level.Info.BuilderCount    := 0;
-    fGameParams.Level.Info.BasherCount     := 0;
-    fGameParams.Level.Info.MinerCount      := 0;
-    fGameParams.Level.Info.DiggerCount     := 0;
-    fGameParams.Level.Info.WalkerCount     := 0;
-    fGameParams.Level.Info.SwimmerCount    := 0;
-    fGameParams.Level.Info.GliderCount     := 0;
-    fGameParams.Level.Info.MechanicCount   := 0;
-    fGameParams.Level.Info.StonerCount     := 0;
-    fGameParams.Level.Info.PlatformerCount := 0;
-    fGameParams.Level.Info.StackerCount    := 0;
-    fGameParams.Level.Info.ClonerCount     := 0;
+    GameParams.Level.Info.ClimberCount    := 0;
+    GameParams.Level.Info.FloaterCount    := 0;
+    GameParams.Level.Info.BomberCount     := 0;
+    GameParams.Level.Info.BlockerCount    := 0;
+    GameParams.Level.Info.BuilderCount    := 0;
+    GameParams.Level.Info.BasherCount     := 0;
+    GameParams.Level.Info.MinerCount      := 0;
+    GameParams.Level.Info.DiggerCount     := 0;
+    GameParams.Level.Info.WalkerCount     := 0;
+    GameParams.Level.Info.SwimmerCount    := 0;
+    GameParams.Level.Info.GliderCount     := 0;
+    GameParams.Level.Info.MechanicCount   := 0;
+    GameParams.Level.Info.StonerCount     := 0;
+    GameParams.Level.Info.PlatformerCount := 0;
+    GameParams.Level.Info.StackerCount    := 0;
+    GameParams.Level.Info.ClonerCount     := 0;
   end;
 
   // hyperspeed things
@@ -1624,7 +1621,7 @@ begin
   LemmingsCloned := 0;
   //World.OuterColor := 0;
   TimePlay := Level.Info.TimeLimit;
-  if (TimePlay > 5999) or (fGameParams.TimerMode) then
+  if (TimePlay > 5999) or (GameParams.TimerMode) then
     TimePlay := 0; // infinite time
 
   Options := DOSOHNO_GAMEOPTIONS;
@@ -1671,9 +1668,9 @@ begin
     fReplayManager.Clear(true);
     fReplayManager.LevelName := Level.Info.Title;
     fReplayManager.LevelAuthor := Level.Info.Author;
-    fReplayManager.LevelGame := Trim(fGameParams.SysDat.PackName);
-    fReplayManager.LevelRank := Trim(fGameParams.Info.dSectionName);
-    fReplayManager.LevelPosition := fGameParams.Info.dLevel+1;
+    fReplayManager.LevelGame := Trim(GameParams.SysDat.PackName);
+    fReplayManager.LevelRank := Trim(GameParams.Info.dSectionName);
+    fReplayManager.LevelPosition := GameParams.Info.dLevel+1;
     fReplayManager.LevelID := Level.Info.LevelID;
   end;
 
@@ -1806,9 +1803,9 @@ var
   Lem: TPreplacedLemming;
   i: Integer;
 begin
-  for i := 0 to fGameParams.Level.PreplacedLemmings.Count-1 do
+  for i := 0 to GameParams.Level.PreplacedLemmings.Count-1 do
   begin
-    Lem := fGameParams.Level.PreplacedLemmings[i];
+    Lem := GameParams.Level.PreplacedLemmings[i];
     L := TLemming.Create;
     with L do
     begin
@@ -2124,7 +2121,7 @@ begin
   if fGameFinished then
     Exit;
 
-  if (TimePlay <= 0) and not ((fGameParams.TimerMode) or (fGameParams.Level.Info.TimeLimit > 5999)) then
+  if (TimePlay <= 0) and not ((GameParams.TimerMode) or (GameParams.Level.Info.TimeLimit > 5999)) then
   begin
     fGameFinished := True;
     GameResultRec.gTimeIsUp := True;
@@ -5111,7 +5108,7 @@ end;
 var
   bs: TSkillPanelButton;
 begin
-  if fGameParams.IgnoreReplaySelection then Exit;
+  if GameParams.IgnoreReplaySelection then Exit;
   bs := aReplayItem.Skill;
   setselectedskill(bs, true);
 end;*)
@@ -5972,11 +5969,11 @@ var
 
   function GetReplayFileName: String;
   begin
-    if fGameParams.fTestMode then
-      Result := Trim(fGameParams.Level.Info.Title)
+    if GameParams.fTestMode then
+      Result := Trim(GameParams.Level.Info.Title)
     else
-      Result := fGameParams.Info.dSectionName + '_' + LeadZeroStr(fGameParams.Info.dLevel + 1, 2);
-    if TestModeName or fGameParams.AlwaysTimestamp then
+      Result := GameParams.Info.dSectionName + '_' + LeadZeroStr(GameParams.Info.dLevel + 1, 2);
+    if TestModeName or GameParams.AlwaysTimestamp then
       Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
     Result := FastReplace(Result, '<', '_');
     Result := FastReplace(Result, '>', '_');
@@ -5992,7 +5989,7 @@ var
 
   function GetDefaultSavePath: String;
   begin
-    if fGameParams.fTestMode then
+    if GameParams.fTestMode then
       Result := ExtractFilePath(ParamStr(0)) + 'Replay\'
     else
       Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
@@ -6012,7 +6009,7 @@ var
     Dlg : TSaveDialog;
   begin
     Dlg := TSaveDialog.Create(self);
-    Dlg.Title := 'Save replay file (' + fGameParams.Info.dSectionName + ' ' + IntToStr(fGameParams.Info.dLevel + 1) + ', ' + Trim(Level.Info.Title) + ')';
+    Dlg.Title := 'Save replay file (' + GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + ', ' + Trim(Level.Info.Title) + ')';
     Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
@@ -6035,9 +6032,9 @@ var
     // integer value... xD
     Result := 0;
     if TestModeName then Exit;
-    if not fGameParams.AutoReplayNames then
+    if not GameParams.AutoReplayNames then
       Result := 2
-    else if fGameParams.ConfirmOverwrite and FileExists(GetInitialSavePath + SaveNameLrb) then
+    else if GameParams.ConfirmOverwrite and FileExists(GetInitialSavePath + SaveNameLrb) then
       Result := 1;
     // Don't need to handle AlwaysTimestamp here; it's handled in GetReplayFileName above.
   end;
@@ -6048,9 +6045,9 @@ var
     begin
       LevelName := Trim(fLevel.Info.Title);
       LevelAuthor := Trim(fLevel.Info.Author);
-      LevelGame := Trim(fGameParams.SysDat.PackName);
-      LevelRank := Trim(fGameParams.Info.dSectionName);
-      LevelPosition := fGameParams.Info.dLevel + 1;
+      LevelGame := Trim(GameParams.SysDat.PackName);
+      LevelRank := Trim(GameParams.Info.dSectionName);
+      LevelPosition := GameParams.Info.dLevel + 1;
       LevelID := fLevel.Info.LevelID;
     end;
   end;
@@ -6089,8 +6086,8 @@ var
 begin
   Result := false;
   pcc := 0;
-  if not (fGameParams.LemmingBlink) then Exit;
-  if (fGameParams.ChallengeMode) and ((Level.Info.SkillTypes and 1) <> 0) then Exit;
+  if not (GameParams.LemmingBlink) then Exit;
+  if (GameParams.ChallengeMode) and ((Level.Info.SkillTypes and 1) <> 0) then Exit;
   for i := 0 to ObjectInfos.Count-1 do
     if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].SkillType = 15) then pcc := pcc + 1;
 
@@ -6105,8 +6102,8 @@ end;
 function TLemmingGame.CheckTimerBlink: Boolean;
 begin
   Result := false;
-  if not (fGameParams.TimerBlink) then Exit; 
-  if ((fGameParams.TimerMode) or (fGameParams.Level.Info.TimeLimit > 5999)) then Exit;
+  if not (GameParams.TimerBlink) then Exit; 
+  if ((GameParams.TimerMode) or (GameParams.Level.Info.TimeLimit > 5999)) then Exit;
   if (TimePlay < 30) and (TimePlay >= 0) and (CurrentIteration mod 17 > 8) then
     Result := true;
 end;
@@ -6124,7 +6121,7 @@ begin
 
   sc := CurrSkillCount[aAction];
 
-  if (sc > 0) or (fGameParams.ChallengeMode) then Result := true;
+  if (sc > 0) or (GameParams.ChallengeMode) then Result := true;
 
   CheckButton := ActionToSkillPanelButton[aAction];
   for i := 0 to 7 do
@@ -6139,7 +6136,7 @@ procedure TLemmingGame.UpdateSkillCount(aAction: TBasicLemmingAction; Rev : Bool
 var
   sc, sc2: ^Integer;
 begin
-  if fGameParams.ChallengeMode then
+  if GameParams.ChallengeMode then
     if Rev then
       Exit
     else

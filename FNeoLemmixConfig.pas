@@ -64,12 +64,11 @@ type
     procedure cbEnableOnlineClick(Sender: TObject);
     procedure SliderChange(Sender: TObject);
   private
-    fGameParams: TDosGameParams;
     fForceSkillset: Word;
     procedure SetFromParams;
     procedure SaveToParams;
   public
-    procedure SetGameParams(aGameParams: TDosGameParams);
+    procedure SetGameParams;
   end;
 
 var
@@ -79,9 +78,8 @@ implementation
 
 {$R *.dfm}
 
-procedure TFormNXConfig.SetGameParams(aGameParams: TDosGameParams);
+procedure TFormNXConfig.SetGameParams;
 begin
-  fGameParams := aGameParams;
   SetFromParams;
 end;
 
@@ -101,18 +99,18 @@ var
   i: Integer;
 begin
   //// Variables ////
-  fForceSkillset := fGameParams.ForceSkillset;
+  fForceSkillset := GameParams.ForceSkillset;
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  cbLemmingBlink.Checked := fGameParams.LemmingBlink;
-  cbTimerBlink.Checked := fGameParams.TimerBlink;
-  cbBlackOut.Checked := fGameParams.BlackOutZero;
-  cbNoBackgrounds.Checked := fGameParams.NoBackgrounds;
-  cbAutoSaveReplay.Checked := fGameParams.AutoSaveReplay;
-  cbExplicitCancel.Checked := fGameParams.ExplicitCancel;
-  cbNoAutoReplay.Checked := fGameParams.NoAutoReplayMode;
-  cbPauseAfterBackwards.Checked := fGameParams.PauseAfterBackwardsSkip;
+  cbLemmingBlink.Checked := GameParams.LemmingBlink;
+  cbTimerBlink.Checked := GameParams.TimerBlink;
+  cbBlackOut.Checked := GameParams.BlackOutZero;
+  cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
+  cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
+  cbExplicitCancel.Checked := GameParams.ExplicitCancel;
+  cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
+  cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
 
   // Zoom Dropdown
   cbZoom.Items.Clear;
@@ -123,14 +121,14 @@ begin
     cbZoom.Items.Add('Windowed, ' + IntToStr(i) + 'x Zoom');
     Inc(i);
   end;
-  cbZoom.ItemIndex := fGameParams.ZoomLevel;
+  cbZoom.ItemIndex := GameParams.ZoomLevel;
 
   // Replay Naming Dropdown
-  if fGameParams.AutoReplayNames = false then
+  if GameParams.AutoReplayNames = false then
     i := 3 // Manual naming
-  else if fGameParams.AlwaysTimestamp then
+  else if GameParams.AlwaysTimestamp then
     i := 2
-  else if fGameParams.ConfirmOverwrite then
+  else if GameParams.ConfirmOverwrite then
     i := 1
   else
     i := 0;
@@ -139,31 +137,31 @@ begin
   //// Page 2 (Audio Options) ////
   tbSoundVol.Position := SoundVolume;
   tbMusicVol.Position := MusicVolume;
-  cbSuccessJingle.Checked := fGameParams.PostLevelVictorySound;
-  cbFailureJingle.Checked := fGameParams.PostLevelFailureSound;
+  cbSuccessJingle.Checked := GameParams.PostLevelVictorySound;
+  cbFailureJingle.Checked := GameParams.PostLevelFailureSound;
 
   //// Page 3 (Online Options) ////
-  cbUpdateCheck.Checked := fGameParams.CheckUpdates; // in reverse order as the next one may override this
-  cbEnableOnline.Checked := fGameParams.EnableOnline;
+  cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
+  cbEnableOnline.Checked := GameParams.EnableOnline;
 
   //// Page 4 (Game-Specific Options) ////
   // Checkboxes
-  cbLookForLVL.Enabled := (fGameParams.SysDat.Options and 1) <> 0;
-  cbLookForLVL.Checked := fGameParams.LookForLVLFiles and cbLookForLVL.Enabled;
-  cbChallengeMode.Enabled := ((fGameParams.SysDat.Options and 32) <> 0) and (fGameParams.ForceSkillset = 0);
-  cbChallengeMode.Checked := (fGameParams.ChallengeMode or (fGameParams.ForceSkillset <> 0));
-  cbTimerMode.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
-  cbTimerMode.Checked := fGameParams.TimerMode and cbTimerMode.Enabled;
-  cbForceSkill.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
+  cbLookForLVL.Enabled := (GameParams.SysDat.Options and 1) <> 0;
+  cbLookForLVL.Checked := GameParams.LookForLVLFiles and cbLookForLVL.Enabled;
+  cbChallengeMode.Enabled := ((GameParams.SysDat.Options and 32) <> 0) and (GameParams.ForceSkillset = 0);
+  cbChallengeMode.Checked := (GameParams.ChallengeMode or (GameParams.ForceSkillset <> 0));
+  cbTimerMode.Enabled := (GameParams.SysDat.Options and 32) <> 0;
+  cbTimerMode.Checked := GameParams.TimerMode and cbTimerMode.Enabled;
+  cbForceSkill.Enabled := (GameParams.SysDat.Options and 32) <> 0;
   cbForceSkill.Checked := ((fForceSkillset and $8000) <> 0) and cbForceSkill.Enabled; // set based on first skill in list (highest bit)
 
   // Skillset dropdown / etc
-  cbSkillList.Enabled := (fGameParams.SysDat.Options and 32) <> 0;
-  btnCheckSkills.Enabled := ((fGameParams.SysDat.Options and 32) <> 0) and
+  cbSkillList.Enabled := (GameParams.SysDat.Options and 32) <> 0;
+  btnCheckSkills.Enabled := ((GameParams.SysDat.Options and 32) <> 0) and
                             (fForceSkillset <> 0);
   btnClearSkill.Enabled := btnCheckSkills.Enabled;
 
-  if (fGameParams.SysDat.Options and 33) = 0 then
+  if (GameParams.SysDat.Options and 33) = 0 then
     TabSheet2.TabVisible := false;
 
   btnApply.Enabled := false;
@@ -172,45 +170,45 @@ end;
 procedure TFormNXConfig.SaveToParams;
 begin
   //// Variables ////
-  fGameParams.ForceSkillset := fForceSkillset;
+  GameParams.ForceSkillset := fForceSkillset;
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  fGameParams.LemmingBlink := cbLemmingBlink.Checked;
-  fGameParams.TimerBlink := cbTimerBlink.Checked;
-  fGameParams.BlackOutZero := cbBlackOut.Checked;
-  fGameParams.NoBackgrounds := cbNoBackgrounds.Checked;
-  fGameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
-  fGameParams.ExplicitCancel := cbExplicitCancel.Checked;
-  fGameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
-  fGameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
+  GameParams.LemmingBlink := cbLemmingBlink.Checked;
+  GameParams.TimerBlink := cbTimerBlink.Checked;
+  GameParams.BlackOutZero := cbBlackOut.Checked;
+  GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
+  GameParams.ExplicitCancel := cbExplicitCancel.Checked;
+  GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
+  GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
 
   // Zoom Dropdown
-  if fGameParams.ZoomLevel <> cbZoom.ItemIndex then
+  if GameParams.ZoomLevel <> cbZoom.ItemIndex then
     ShowMessage('New zoom setting will be applied upon leaving the main menu.');
-  fGameParams.ZoomLevel := cbZoom.ItemIndex;
+  GameParams.ZoomLevel := cbZoom.ItemIndex;
 
   // Replay Naming Dropdown
   case cbReplayNaming.ItemIndex of
     0: begin
-         fGameParams.AutoReplayNames := true;
-         fGameParams.AlwaysTimestamp := false;
-         fGameParams.ConfirmOverwrite := false;
+         GameParams.AutoReplayNames := true;
+         GameParams.AlwaysTimestamp := false;
+         GameParams.ConfirmOverwrite := false;
        end;
     1: begin
-         fGameParams.AutoReplayNames := true;
-         fGameParams.AlwaysTimestamp := false;
-         fGameParams.ConfirmOverwrite := true;
+         GameParams.AutoReplayNames := true;
+         GameParams.AlwaysTimestamp := false;
+         GameParams.ConfirmOverwrite := true;
        end;
     2: begin
-         fGameParams.AutoReplayNames := true;
-         fGameParams.AlwaysTimestamp := true;
-         fGameParams.ConfirmOverwrite := false;
+         GameParams.AutoReplayNames := true;
+         GameParams.AlwaysTimestamp := true;
+         GameParams.ConfirmOverwrite := false;
        end;
     3: begin
-         fGameParams.AutoReplayNames := false;
-         fGameParams.AlwaysTimestamp := false;
-         fGameParams.ConfirmOverwrite := false;
+         GameParams.AutoReplayNames := false;
+         GameParams.AlwaysTimestamp := false;
+         GameParams.ConfirmOverwrite := false;
        end;
   end;
 
@@ -221,23 +219,23 @@ begin
     SavedMusicVol := MusicVolume;
   SoundVolume := tbSoundVol.Position;
   MusicVolume := tbMusicVol.Position;
-  fGameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
-  fGameParams.PostLevelFailureSound := cbFailureJingle.Checked;
+  GameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
+  GameParams.PostLevelFailureSound := cbFailureJingle.Checked;
 
   //// Page 3 (Online Options) ////
   // Checkboxes
-  fGameParams.EnableOnline := cbEnableOnline.Checked;
-  fGameParams.CheckUpdates := cbUpdateCheck.Checked;
+  GameParams.EnableOnline := cbEnableOnline.Checked;
+  GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
   //// Page 4 (Game Options) ////
   // Checkboxes
-  fGameParams.LookForLVLFiles := cbLookForLVL.Checked;
-  TBaseDosLevelSystem(fGameParams.Style.LevelSystem).LookForLVL := fGameParams.LookForLVLFiles;
+  GameParams.LookForLVLFiles := cbLookForLVL.Checked;
+  TBaseDosLevelSystem(GameParams.Style.LevelSystem).LookForLVL := GameParams.LookForLVLFiles;
   if fForceSkillset <> 0 then
-    fGameParams.ChallengeMode := true
+    GameParams.ChallengeMode := true
   else
-    fGameParams.ChallengeMode := cbChallengeMode.Checked;
-  fGameParams.TimerMode := cbTimerMode.Checked;
+    GameParams.ChallengeMode := cbChallengeMode.Checked;
+  GameParams.TimerMode := cbTimerMode.Checked;
 
   btnApply.Enabled := false;
 end;
@@ -247,7 +245,7 @@ var
   HotkeyForm: TFLemmixHotkeys;
 begin
   HotkeyForm := TFLemmixHotkeys.Create(self);
-  HotkeyForm.HotkeyManager := fGameParams.Hotkeys;
+  HotkeyForm.HotkeyManager := GameParams.Hotkeys;
   HotkeyForm.ShowModal;
   HotkeyForm.Free;
 end;

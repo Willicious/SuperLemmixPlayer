@@ -35,7 +35,7 @@ type
     procedure HandleMouseClick(Button: TMouseButton);
     procedure ReplaySameLevel;
   protected
-    procedure PrepareGameParams(Params: TDosGameParams); override;
+    procedure PrepareGameParams; override;
     procedure BuildScreen; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
   public
@@ -71,7 +71,7 @@ begin
   inherited CloseScreen(aNextScreen);
 end;
 
-procedure TGamePostviewScreen.PrepareGameParams(Params: TDosGameParams);
+procedure TGamePostviewScreen.PrepareGameParams;
 begin
   inherited;
   if (GameParams.AutoSaveReplay) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then GlobalGame.Save(true);

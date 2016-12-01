@@ -28,7 +28,6 @@ type
   TAppController = class(TComponent)
   private
     fLoadSuccess: Boolean;
-    fGameParams: TDosGameParams; // instance
     DoneBringToFront: Boolean; // We don't want to steal focus all the time. This is just to fix the
                                // bug where it doesn't initially come to front.
     function CheckCompatible(var Target: String): TNxCompatibility;
@@ -242,37 +241,38 @@ begin
 
   DoneBringToFront := false;
 
-  fGameParams := TDosGameParams.Create;
-  fGameParams.Directory := LemmingsPath;
-  fGameParams.MainDatFile := LemmingsPath + 'main.dat';
-  fGameParams.Renderer := TRenderer.Create;
-  fGameParams.Level := Tlevel.Create(nil);
-  fGameParams.MainForm := TForm(aOwner);
+  GameParams := TDosGameParams.Create;
+
+  GameParams.Directory := LemmingsPath;
+  GameParams.MainDatFile := LemmingsPath + 'main.dat';
+  GameParams.Renderer := TRenderer.Create;
+  GameParams.Level := Tlevel.Create(nil);
+  GameParams.MainForm := TForm(aOwner);
 
   // fMainDatExtractor currently has a convenient routine for loading SYSTEM.DAT. This is a relic
   // from when SYSTEM.DAT was embedded in MAIN.DAT in very early versions of Flexi.
   fMainDatExtractor := TMainDatExtractor.Create;
   fMainDatExtractor.FileName := LemmingsPath + 'main.dat';
-  fGameParams.SysDat := fMainDatExtractor.GetSysData;
-  Application.Title := Trim(fGameParams.SysDat.PackName);
+  GameParams.SysDat := fMainDatExtractor.GetSysData;
+  Application.Title := Trim(GameParams.SysDat.PackName);
   fMainDatExtractor.free;
 
-  fGameParams.SaveSystem.SetCodeSeed(fGameParams.SysDat.CodeSeed);
+  GameParams.SaveSystem.SetCodeSeed(GameParams.SysDat.CodeSeed);
 
 
-  fGameParams.Style := AutoCreateStyle(fGameParams.Directory, fGameParams.SysDat);
-  fGameParams.NextScreen := gstMenu;
+  GameParams.Style := AutoCreateStyle(GameParams.Directory, GameParams.SysDat);
+  GameParams.NextScreen := gstMenu;
 
   if ParamStr(1) = 'testmode' then
   begin
-    fGameParams.fTestMode := true;
-    fGameParams.fTestLevelFile := ExtractFilePath(Application.ExeName) + ParamStr(2);
-    fGameParams.fTestGroundFile := ExtractFilePath(Application.ExeName) + ParamStr(3);
-    fGameParams.fTestVgagrFile := ExtractFilePath(Application.ExeName) + ParamStr(4);
-    fGameParams.fTestVgaspecFile := ExtractFilePath(Application.ExeName) + ParamStr(5);
-    if fGameParams.fTestVgaspecFile = 'none' then fGameParams.fTestVgaspecFile := '';
-    fGameParams.NextScreen := gstPreview;
-    fGameParams.SaveSystem.DisableSave := true;
+    GameParams.fTestMode := true;
+    GameParams.fTestLevelFile := ExtractFilePath(Application.ExeName) + ParamStr(2);
+    GameParams.fTestGroundFile := ExtractFilePath(Application.ExeName) + ParamStr(3);
+    GameParams.fTestVgagrFile := ExtractFilePath(Application.ExeName) + ParamStr(4);
+    GameParams.fTestVgaspecFile := ExtractFilePath(Application.ExeName) + ParamStr(5);
+    if GameParams.fTestVgaspecFile = 'none' then GameParams.fTestVgaspecFile := '';
+    GameParams.NextScreen := gstPreview;
+    GameParams.SaveSystem.DisableSave := true;
   end;
 
   if DoSingleLevel then
@@ -280,101 +280,101 @@ begin
     // Simply putting the player into testplay mode, with a workaround to use normal methods
     // to load graphic sets, is a kludgey way of enabling single-level loading. Tidier code
     // is needed.
-    fGameParams.fTestMode := true;
-    fGameParams.fTestLevelFile := GameFile;
-    fGameParams.fTestGroundFile := '*';
-    fGameParams.fTestVgagrFile := '*';
-    fGameParams.fTestVgaspecFile := '*';
+    GameParams.fTestMode := true;
+    GameParams.fTestLevelFile := GameFile;
+    GameParams.fTestGroundFile := '*';
+    GameParams.fTestVgagrFile := '*';
+    GameParams.fTestVgaspecFile := '*';
 
     GameFile := 'Single Levels';
 
-    fGameParams.NextScreen := gstPreview;
-    fGameParams.SaveSystem.DisableSave := true;
+    GameParams.NextScreen := gstPreview;
+    GameParams.SaveSystem.DisableSave := true;
   end;
 
-  fGameParams.SoundOptions := [gsoSound, gsoMusic]; // This was to fix a glitch where an older version disabled them
+  GameParams.SoundOptions := [gsoSound, gsoMusic]; // This was to fix a glitch where an older version disabled them
                                                     // sometimes. Not sure if this still needs to be here but no harm
                                                     // in having it.
 
-  fGameParams.Load;
+  GameParams.Load;
 
-  if fGameParams.fTestMode and (ParamStr(6) <> '') then
+  if GameParams.fTestMode and (ParamStr(6) <> '') then
   begin
     // Very old editor versions didn't specify a testplay mode in the commandline, it had to be
     // configured in the game's settings. I doubt anyone still uses versions this old, but...
     // (Actually, are editor versions that old even compatible with player versions this recent?)
     if DoSingleLevel then
-      fGameParams.QuickTestMode := 0
+      GameParams.QuickTestMode := 0
     else
-      fGameParams.QuickTestMode := s2i(ParamStr(6));
+      GameParams.QuickTestMode := s2i(ParamStr(6));
   end;
 
   // Unless Zoom level is 0 (fullscreen), resize the main window
-  if fGameParams.ZoomLevel <> 0 then
+  if GameParams.ZoomLevel <> 0 then
   begin
-    if fGameParams.ZoomLevel > Screen.Width div 320 then
-      fGameParams.ZoomLevel := Screen.Width div 320;
-    if fGameParams.ZoomLevel > Screen.Height div 200 then
-      fGameParams.ZoomLevel := Screen.Height div 200;
-    fGameParams.MainForm.BorderStyle := bsToolWindow;
-    fGameParams.MainForm.WindowState := wsNormal;
-    fGameParams.MainForm.ClientWidth := 320 * fGameParams.ZoomLevel;
-    fGameParams.MainForm.ClientHeight := 200 * fGameParams.ZoomLevel;
-    fGameParams.MainForm.Left := (Screen.Width - fGameParams.MainForm.Width) div 2;
-    fGameParams.MainForm.Top := (Screen.Height - fGameParams.MainForm.Height) div 2;
+    if GameParams.ZoomLevel > Screen.Width div 320 then
+      GameParams.ZoomLevel := Screen.Width div 320;
+    if GameParams.ZoomLevel > Screen.Height div 200 then
+      GameParams.ZoomLevel := Screen.Height div 200;
+    GameParams.MainForm.BorderStyle := bsToolWindow;
+    GameParams.MainForm.WindowState := wsNormal;
+    GameParams.MainForm.ClientWidth := 320 * GameParams.ZoomLevel;
+    GameParams.MainForm.ClientHeight := 200 * GameParams.ZoomLevel;
+    GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;
+    GameParams.MainForm.Top := (Screen.Height - GameParams.MainForm.Height) div 2;
   end;
 
-  if fGameParams.fTestMode then
-    fGameParams.MainForm.Caption := 'NeoLemmix - Single Level'
+  if GameParams.fTestMode then
+    GameParams.MainForm.Caption := 'NeoLemmix - Single Level'
   else
-    fGameParams.MainForm.Caption := Trim(fGameParams.SysDat.PackName);
+    GameParams.MainForm.Caption := Trim(GameParams.SysDat.PackName);
 
-  Application.Title := fGameParams.MainForm.Caption;
+  Application.Title := GameParams.MainForm.Caption;
 
   // Background color is not supported as a user option anymore. I intend to support it in the
   // future as a graphic set option. So let's just make it inaccessible for now rather than fully
   // removing it.
-  fGameParams.Renderer.BackgroundColor := $000000;
+  GameParams.Renderer.BackgroundColor := $000000;
 
-  fGameParams.Style.LevelSystem.SetSaveSystem(@fGameParams.SaveSystem);
+  GameParams.Style.LevelSystem.SetSaveSystem(@GameParams.SaveSystem);
 
-  if fGameParams.Style.LevelSystem is TBaseDosLevelSystem then  // which it should always be
+  if GameParams.Style.LevelSystem is TBaseDosLevelSystem then  // which it should always be
   begin
-    TBaseDosLevelSystem(fGameParams.Style.LevelSystem).LookForLVL := fGameParams.LookForLVLFiles;
-    TBaseDosLevelSystem(fGameParams.Style.LevelSystem).fTestMode := fGameParams.fTestMode;
-    TBaseDosLevelSystem(fGameParams.Style.LevelSystem).fTestLevel := fGameParams.fTestLevelFile;
-    TBaseDosLevelSystem(fGameParams.Style.LevelSystem).SysDat := fGameParams.SysDat;
-    TDosFlexiLevelSystem(fGameParams.Style.LevelSystem).SysDat := fGameParams.SysDat;
-    TDosFlexiMusicSystem(fGameParams.Style.MusicSystem).MusicCount := fGameParams.SysDat.TrackCount;
-    TBaseDosLevelSystem(fGameParams.Style.LevelSystem).fDefaultSectionCount := TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetSectionCount;
+    TBaseDosLevelSystem(GameParams.Style.LevelSystem).LookForLVL := GameParams.LookForLVLFiles;
+    TBaseDosLevelSystem(GameParams.Style.LevelSystem).fTestMode := GameParams.fTestMode;
+    TBaseDosLevelSystem(GameParams.Style.LevelSystem).fTestLevel := GameParams.fTestLevelFile;
+    TBaseDosLevelSystem(GameParams.Style.LevelSystem).SysDat := GameParams.SysDat;
+    TDosFlexiLevelSystem(GameParams.Style.LevelSystem).SysDat := GameParams.SysDat;
+    TDosFlexiMusicSystem(GameParams.Style.MusicSystem).MusicCount := GameParams.SysDat.TrackCount;
+    TBaseDosLevelSystem(GameParams.Style.LevelSystem).fDefaultSectionCount := TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetSectionCount;
   end;
 
-  if fGameParams.SysDat.Options and 1 = 0 then fGameParams.LookForLVLFiles := false;
-  if fGameParams.SysDat.Options and 32 = 0 then
+  if GameParams.SysDat.Options and 1 = 0 then GameParams.LookForLVLFiles := false;
+  if GameParams.SysDat.Options and 32 = 0 then
   begin
     // This is a setting that disables these options.
-    fGameParams.ChallengeMode := false;
-    fGameParams.TimerMode := false;
-    fGameParams.ForceSkillset := 0;
+    GameParams.ChallengeMode := false;
+    GameParams.TimerMode := false;
+    GameParams.ForceSkillset := 0;
   end;
 
-  if fGameParams.fTestMode then
+  if GameParams.fTestMode then
   begin
     // These options should never be enabled when using testplay mode.
     // (Maybe they should when manually loading a single level? But probably not. Anyway,
     // I don't think they actually /can/ be enabled in such modes anymore due to how the
     // saving of settings works now...)
-    fGameParams.ChallengeMode := false;
-    fGameParams.TimerMode := false;
-    fGameParams.ForceSkillset := 0;
+    GameParams.ChallengeMode := false;
+    GameParams.TimerMode := false;
+    GameParams.ForceSkillset := 0;
   end;
 
-  fGameParams.WhichLevel := wlLastUnlocked;
+  GameParams.WhichLevel := wlLastUnlocked;
 
-  TBaseDosLevelSystem(fGameParams.Style.LevelSystem).InitSave;
+  TBaseDosLevelSystem(GameParams.Style.LevelSystem).InitSave;
 
   if not fLoadSuccess then
-    fGameParams.NextScreen := gstExit;
+    GameParams.NextScreen := gstExit;
 
 end;
 
@@ -384,12 +384,12 @@ begin
   // game will be terminating after this procedure anyway.
   // More important is making sure all relevant data is saved.
 
-  fGameParams.Save;
+  GameParams.Save;
 
-  fGameParams.Renderer.Free;
-  fGameParams.Level.Free;
-  fGameParams.Style.Free;
-  fGameParams.Free;
+  GameParams.Renderer.Free;
+  GameParams.Level.Free;
+  GameParams.Style.Free;
+  GameParams.Free;
   inherited;
 end;
 
@@ -401,18 +401,18 @@ procedure TAppController.Execute;
 var
   NewScreen: TGameScreenType;
 begin
-  while fGameParams.NextScreen <> gstExit do
+  while GameParams.NextScreen <> gstExit do
   begin
     // Save the data between screens. This way it's more up to date in case
     // game crashes at any point.
-    fGameParams.Save;
+    GameParams.Save;
 
     // I don't remember why this part is written like this.
     // Might be so that after the text screen, the right screen out of
     // gstPlay or gstPostview is shown.
-    NewScreen := fGameParams.NextScreen;
-    fGameParams.NextScreen := fGameParams.NextScreen2;
-    fGameParams.NextScreen2 := gstUnknown;
+    NewScreen := GameParams.NextScreen;
+    GameParams.NextScreen := GameParams.NextScreen2;
+    GameParams.NextScreen2 := gstUnknown;
 
     case NewScreen of
       gstMenu      : ShowMenuScreen;
@@ -424,9 +424,9 @@ begin
       gstText      : ShowTextScreen;
       gstTalisman  : ShowTalismanScreen;
       else begin
-             //fGameParams.SaveSystem.SaveFile(@fGameParams);
-             //fGameParams.SaveToIniFile;
-             //fGameParams.Hotkeys.SaveFile;
+             //GameParams.SaveSystem.SaveFile(@GameParams);
+             //GameParams.SaveToIniFile;
+             //GameParams.Hotkeys.SaveFile;
              Break;
            end;
     end;
@@ -439,7 +439,7 @@ var
 begin
   F := TGameLevelSelectScreen.Create(nil);
   try
-    F.ShowScreen(fGameParams);
+    F.ShowScreen;
   finally
     F.Free;
   end;
@@ -451,7 +451,7 @@ var
 begin
   F := TGameLevelCodeScreen.Create(nil);
   try
-    F.ShowScreen(fGameParams);
+    F.ShowScreen;
   finally
     F.Free;
   end;
@@ -464,7 +464,7 @@ begin
   F := TGameMenuScreen.Create(nil);
   try
     if not DoneBringToFront then BringToFront;
-    F.ShowScreen(fGameParams);
+    F.ShowScreen;
   finally
     F.Free;
   end;
@@ -476,7 +476,7 @@ var
 begin
   F := TGameWindow.Create(nil);
   try
-    F.ShowScreen(fGameParams);
+    F.ShowScreen;
   finally
     F.Free;
   end;
@@ -492,9 +492,9 @@ begin
   // no text to show, it does nothing, and proceeds directly to the
   // next screen.
   F := TGameTextScreen.Create(nil);
-  HasTextToShow := F.HasScreenText(fGameParams);
+  HasTextToShow := F.HasScreenText;
   try
-    if HasTextToShow then F.ShowScreen(fGameParams);
+    if HasTextToShow then F.ShowScreen;
   finally
     F.Free;
   end;
@@ -506,7 +506,7 @@ var
 begin
   F := TGamePostviewScreen.Create(nil);
   try
-    F.ShowScreen(fGameParams);
+    F.ShowScreen;
   finally
     F.Free;
   end;
@@ -518,7 +518,7 @@ var
 begin
   F := TGameTalismanScreen.Create(nil);
   try
-    F.ShowScreen(fGameParams);
+    F.ShowScreen;
   finally
     F.Free;
   end;
@@ -564,8 +564,8 @@ var
           //if Cont then
           //  Cont := MessageDlg(S, mtCustom, [mbYes, mbNo], 0) = 6;
 
-          dS := fGameParams.Info.dSection;
-          dL := fGameParams.Info.dLevel;
+          dS := GameParams.Info.dSection;
+          dL := GameParams.Info.dLevel;
           // attempt to use levelID to match
           while dS < Length(LevelIDArray) do
           begin
@@ -573,8 +573,8 @@ var
             begin
               if LevelIDArray[dS][dL] = n then
               begin
-                fGameParams.Info.dSection := dS;
-                fGameParams.Info.dLevel := dL;
+                GameParams.Info.dSection := dS;
+                GameParams.Info.dLevel := dL;
                 Result := true;
                 Exit;
               end;
@@ -592,7 +592,7 @@ var
   begin
     TempStream := TMemoryStream.Create;
     try
-      fGameParams.WhichLevel := wlSame;
+      GameParams.WhichLevel := wlSame;
       TempStream.LoadFromFile(aReplay);
 
       Result := false;
@@ -615,8 +615,8 @@ var
           TempStream.Position := 30;
           TempStream.Read(lw, 4);
 
-          dS := fGameParams.Info.dSection;
-          dL := fGameParams.Info.dLevel;
+          dS := GameParams.Info.dSection;
+          dL := GameParams.Info.dLevel;
           // attempt to use levelID to match
           while dS < Length(LevelIDArray) do
           begin
@@ -624,8 +624,8 @@ var
             begin
               if LevelIDArray[dS][dL] = lw then
               begin
-                fGameParams.Info.dSection := dS;
-                fGameParams.Info.dLevel := dL;
+                GameParams.Info.dSection := dS;
+                GameParams.Info.dLevel := dL;
                 Result := true;
                 Exit;
               end;
@@ -643,16 +643,16 @@ var
         else
           TempStream.Position := 21;
         TempStream.Read(b, 1);
-        fGameParams.Info.dSection := b;
+        GameParams.Info.dSection := b;
 
         if IsReallyOld then
           TempStream.Position := 28
         else
           TempStream.Position := 22;
         TempStream.Read(b, 1);
-        fGameParams.Info.dLevel := b;
+        GameParams.Info.dLevel := b;
 
-        Result := (fGameParams.Info.dSection < Length(LevelIDArray)) and (fGameParams.Info.dLevel < Length(LevelIDArray[fGameParams.Info.dSection]));
+        Result := (GameParams.Info.dSection < Length(LevelIDArray)) and (GameParams.Info.dLevel < Length(LevelIDArray[GameParams.Info.dSection]));
 
       end;
     finally
@@ -712,7 +712,7 @@ var
 
   function GetRankAndNumber: String;
   begin
-    Result := ' <<' + Trim(fGameParams.SysDat.RankNames[fGameParams.Info.dSection]) + ' ' + LeadZeroStr(fGameParams.Info.dLevel+1, 2) + '>>';
+    Result := ' <<' + Trim(GameParams.SysDat.RankNames[GameParams.Info.dSection]) + ' ' + LeadZeroStr(GameParams.Info.dLevel+1, 2) + '>>';
   end;
 
   function TryLevelInfoFile: Boolean;
@@ -726,7 +726,7 @@ var
     Result := false;
     DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
 
-    LS := TBaseDosLevelSystem(fGameParams.Style.LevelSystem);
+    LS := TBaseDosLevelSystem(GameParams.Style.LevelSystem);
 
     Parser := TNeoLemmixParser.Create;
     try
@@ -775,33 +775,33 @@ begin
   // and why some of its code is here. This seriously needs to be improved.
   F := TGamePreviewScreen.Create(nil);
   try
-    if (fGameParams.fTestMode and (fGameParams.QuickTestMode <> 0)) then
+    if (GameParams.fTestMode and (GameParams.QuickTestMode <> 0)) then
     begin
       // Test play, with preview screen disabled. Do the screen prep routines without actually showing
       // anything, then move directly to play screen.
-      F.PrepareGameParams(fGameParams);
+      F.PrepareGameParams;
       F.BuildScreenInvis;
-      fGameParams.NextScreen := gstPlay;
+      GameParams.NextScreen := gstPlay;
     end else
-    if fGameParams.DumpMode then
+    if GameParams.DumpMode then
     begin
       // This is for IMAGE DUMPING (level dumping does not require preview screen to be invoked).
       // Invisibly creates the preview screen, renders the level, saves image, closes, continues.
       // Very kludgey and should be replaced, but for now it works.
-      for dS := 0 to TBaseDosLevelSystem(fGameParams.Style.LevelSystem).fDefaultSectionCount - 1 do
-        for dL := 0 to TBaseDosLevelSystem(fGameParams.Style.LevelSystem).GetLevelCount(dS) - 1 do
+      for dS := 0 to TBaseDosLevelSystem(GameParams.Style.LevelSystem).fDefaultSectionCount - 1 do
+        for dL := 0 to TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetLevelCount(dS) - 1 do
         begin
-          fGameParams.WhichLevel := wlSame;
-          fGameParams.Info.dSection := dS;
-          fGameParams.Info.dLevel := dL;
-          F.PrepareGameParams(fGameParams);
+          GameParams.WhichLevel := wlSame;
+          GameParams.Info.dSection := dS;
+          GameParams.Info.dLevel := dL;
+          F.PrepareGameParams;
           F.BuildScreenInvis;
         end;
-      fGameParams.Info.dSection := 0;
-      fGameParams.WhichLevel := wlLastUnlocked;
-      fGameParams.NextScreen := gstMenu;
-      fGameParams.DumpMode := false;
-    end else if fGameParams.ReplayCheckIndex <> -2 then
+      GameParams.Info.dSection := 0;
+      GameParams.WhichLevel := wlLastUnlocked;
+      GameParams.NextScreen := gstMenu;
+      GameParams.DumpMode := false;
+    end else if GameParams.ReplayCheckIndex <> -2 then
     begin
        TempSL := TStringList.Create;
        OldSound := SoundVolume;
@@ -810,49 +810,49 @@ begin
        MusicVolume := 0;
        if not TryLevelInfoFile then
          raise Exception.Create('Couldn''t get Level IDs from info file.');
-       for i := 0 to fGameParams.ReplayResultList.Count-1 do
+       for i := 0 to GameParams.ReplayResultList.Count-1 do
        begin
          FoundMatch := false;
-         fGameParams.ReplayCheckIndex := i;
-         fGameParams.Info.dSection := 0;
-         fGameParams.Info.dLevel := 0;
-         while SetParamsLevel(fGameParams.ReplayResultList[i], true) do
+         GameParams.ReplayCheckIndex := i;
+         GameParams.Info.dSection := 0;
+         GameParams.Info.dLevel := 0;
+         while SetParamsLevel(GameParams.ReplayResultList[i], true) do
          begin
            FoundMatch := true;
-           TempString := fGameParams.ReplayResultList[i];
+           TempString := GameParams.ReplayResultList[i];
            try
-             F.PrepareGameParams(fGameParams);
+             F.PrepareGameParams;
              F.BuildScreenInvis;
              ShowPlayScreen;
            except
-             fGameParams.ReplayResultList[i] := ExtractFileName(fGameParams.ReplayResultList[i]) + ': ERROR';
+             GameParams.ReplayResultList[i] := ExtractFileName(GameParams.ReplayResultList[i]) + ': ERROR';
            end;
-           TempSL.Add(fGameParams.ReplayResultList[i] + GetRankAndNumber + ' (By Level ID)');
-           fGameParams.ReplayResultList[i] := TempString;
-           fGameParams.Info.dLevel := fGameParams.Info.dLevel + 1;
+           TempSL.Add(GameParams.ReplayResultList[i] + GetRankAndNumber + ' (By Level ID)');
+           GameParams.ReplayResultList[i] := TempString;
+           GameParams.Info.dLevel := GameParams.Info.dLevel + 1;
          end;
 
          if not FoundMatch then
          begin
            // no need to preserve the ReplayResultList entry as this will be the last time the replay
            // in question is referenced here
-           if SetParamsLevel(fGameParams.ReplayResultList[i], false) then
+           if SetParamsLevel(GameParams.ReplayResultList[i], false) then
            try
-             F.PrepareGameParams(fGameParams);
+             F.PrepareGameParams;
              F.BuildScreenInvis;
              ShowPlayScreen;
            except
-             fGameParams.ReplayResultList[i] := ExtractFileName(fGameParams.ReplayResultList[i]) + ': ERROR';
+             GameParams.ReplayResultList[i] := ExtractFileName(GameParams.ReplayResultList[i]) + ': ERROR';
            end else
-             fGameParams.ReplayResultList[i] := ExtractFileName(fGameParams.ReplayResultList[i]) + ': CANNOT FIND LEVEL';
+             GameParams.ReplayResultList[i] := ExtractFileName(GameParams.ReplayResultList[i]) + ': CANNOT FIND LEVEL';
 
-           TempSL.Add(fGameParams.ReplayResultList[i] + GetRankAndNumber + ' (By Position)');
+           TempSL.Add(GameParams.ReplayResultList[i] + GetRankAndNumber + ' (By Position)');
          end;
        end;
-       fGameParams.ReplayCheckIndex := -2;
-       fGameParams.NextScreen := gstMenu;
-       fGameParams.Info.dSection := 0;
-       fGameParams.Info.dLevel := 0;
+       GameParams.ReplayCheckIndex := -2;
+       GameParams.NextScreen := gstMenu;
+       GameParams.Info.dSection := 0;
+       GameParams.Info.dLevel := 0;
        ProduceReplayCheckResults;
        SoundVolume := OldSound;
        MusicVolume := OldMusic;
@@ -861,7 +861,7 @@ begin
       // In the case of loading a single level file, menu screen will never be displayed.
       // Therefore, bringing to front must be done here.
       if not DoneBringToFront then BringToFront;
-      F.ShowScreen(fGameParams);
+      F.ShowScreen;
     end;
   finally
     F.Free;

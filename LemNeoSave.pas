@@ -156,10 +156,9 @@ begin
   if (aValue < p^) or (p^ = 0) then p^ := aValue;
 end;
 
-procedure TNeoSave.SaveFile(aPointer: Pointer);
+procedure TNeoSave.SaveFile;
 var
   SL: TStringList;
-  GameParams: TDosGameParams;
 
   function CheckNeedSaveConfig: Boolean;
   begin
@@ -275,8 +274,6 @@ var
 begin
   if fDisableSave then Exit;
 
-  GameParams := TDosGameParams(aPointer^);
-
   SL := TStringList.Create;
 
   // NEW - record the versions last used to run this pack
@@ -316,10 +313,9 @@ begin
   SL.Free; 
 end;
 
-procedure TNeoSave.LoadFile(aPointer: Pointer);
+procedure TNeoSave.LoadFile;
 var
   SaveFileName: String;
-  GameParams: TDosGameParams;
   SL: TStringList;
   CurrentLine: Integer;
   Line: String;

@@ -35,13 +35,11 @@ type
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure HandleMouseClick(Button: TMouseButton);
   protected
-    //procedure PrepareGameParams(Params: TDosGameParams); override;
     procedure BuildScreen; override;
-    //procedure CloseScreen(aNextScreen: TGameScreenType); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
-    function HasScreenText(Params: TDosGameParams): Boolean;
+    function HasScreenText: Boolean;
   published
   end;
 
@@ -51,20 +49,9 @@ uses Forms, LemStyle;
 
 { TDosGamePreview }
 
-{procedure TGameTextScreen.CloseScreen(aNextScreen: TGameScreenType);
+function TGameTextScreen.HasScreenText: Boolean;
 begin
-  inherited CloseScreen(aNextScreen);
-end;}
-
-{procedure TGameTextScreen.PrepareGameParams(Params: TDosGameParams);
-begin
-  inherited;
-
-end;}
-
-function TGameTextScreen.HasScreenText(Params: TDosGameParams): Boolean;
-begin
-  PrepareGameParams(Params);
+  PrepareGameParams;
   ScreenText := GetScreenText;
   if ScreenText = '' then
     Result := false

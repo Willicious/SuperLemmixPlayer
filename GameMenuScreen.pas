@@ -150,7 +150,7 @@ type
     function BuildText(intxt: Array of char): String;
   protected
   { overrides }
-    procedure PrepareGameParams(Params: TDosGameParams); override;
+    procedure PrepareGameParams; override;
     procedure BuildScreen; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
   public
@@ -422,7 +422,7 @@ begin
       //VK_F3     : NextSoundSetting;
       VK_F3   : begin
                   ConfigDlg := TFormNXConfig.Create(self);
-                  ConfigDlg.SetGameParams(GameParams);
+                  ConfigDlg.SetGameParams;
                   ConfigDlg.NXConfigPages.TabIndex := 0;
                   ConfigDlg.ShowModal;
                   ConfigDlg.Free;
@@ -532,12 +532,12 @@ begin
   end;
 end;
 
-procedure TGameMenuScreen.PrepareGameParams(Params: TDosGameParams);
+procedure TGameMenuScreen.PrepareGameParams;
 var
   i: Integer;
   k: String;
 begin
-  inherited PrepareGameParams(Params);
+  inherited PrepareGameParams;
   with GameParams do
   begin
     OneLevelMode := false;
@@ -557,13 +557,13 @@ begin
       WhichLevel := wlSame;
     end;
   end;
-  CurrentSection := Params.Info.dSection;
-  LastSection := (Params.Style.LevelSystem as TBaseDosLevelSystem).GetSectionCount - 1;
+  CurrentSection := GameParams.Info.dSection;
+  LastSection := (GameParams.Style.LevelSystem as TBaseDosLevelSystem).GetSectionCount - 1;
 
-  CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} BuildText(Params.SysDat.PackName) + #13;
+  CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} BuildText(GameParams.SysDat.PackName) + #13;
   for i := 0 to 15 do
   begin
-    k := BuildText(Params.SysDat.ScrollerTexts[i]);
+    k := BuildText(GameParams.SysDat.ScrollerTexts[i]);
     if k <> '' then
       CreditList.Text := CreditList.Text + k + #13;
   end;

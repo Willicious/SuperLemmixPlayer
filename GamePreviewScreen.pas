@@ -40,7 +40,7 @@ type
     destructor Destroy; override;
     procedure BuildScreen; override;
     procedure BuildScreenInvis;
-    procedure PrepareGameParams(Params: TDosGameParams); override;
+    procedure PrepareGameParams; override;
     procedure CloseScreen(NextScreen: TGameScreenType); override;
   end;
 
@@ -547,7 +547,7 @@ begin
   end;
 end;
 
-procedure TGamePreviewScreen.PrepareGameParams(Params: TDosGameParams);
+procedure TGamePreviewScreen.PrepareGameParams;
 //var
   //Inf: TDosGamePlayInfoRec;
 begin
@@ -555,7 +555,7 @@ begin
 
   fCanDump := true;
 
-  with Params, Info do
+  with GameParams, Info do
   begin
 
     case WhichLevel of
