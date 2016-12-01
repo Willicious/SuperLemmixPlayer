@@ -53,6 +53,9 @@ type
   function SplitIdentifier(Identifier: String): TLabelRecord;
   function CombineIdentifier(Identifier: TLabelRecord): String;
 
+var
+  PieceManager: TNeoPieceManager; // globalized as this does not need to have seperate instances
+
 implementation
 
 uses

@@ -8,6 +8,7 @@ uses
   LemTypes, LemRendering, LemLevel, LemDosStyle,
   TalisData, LemDosMainDAT, LemStrings, LemNeoParser,
   GameControl, GameSound, LemVersion,
+  LemNeoPieceManager, // to initially create it
   FBaseDosForm,
   Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs;
 
@@ -242,6 +243,7 @@ begin
   DoneBringToFront := false;
 
   GameParams := TDosGameParams.Create;
+  PieceManager := TNeoPieceManager.Create;
 
   GameParams.Directory := LemmingsPath;
   GameParams.MainDatFile := LemmingsPath + 'main.dat';

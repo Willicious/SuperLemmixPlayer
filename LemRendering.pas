@@ -73,8 +73,6 @@ type
 
     fTheme: TNeoTheme;
 
-    fPieceManager: TNeoPieceManager;
-
     fHelperImages: THelperImages;
 
     {fWorld: TBitmap32;}
@@ -816,7 +814,7 @@ var
   df: Integer;
 begin
   FindLabel := O.GS + ':' + O.Piece;
-  MO := fPieceManager.Objects[FindLabel];
+  MO := PieceManager.Objects[FindLabel];
   df := O.DrawingFlags;
   Result := MO.GetInterface(df and odf_Flip <> 0, df and odf_UpsideDown <> 0, df and odf_Rotate <> 0);
 end;
@@ -826,7 +824,7 @@ var
   FindLabel: String;
 begin
   FindLabel := T.GS + ':' + T.Piece;
-  Result := fPieceManager.Terrains[FindLabel];
+  Result := PieceManager.Terrains[FindLabel];
 end;
 
 // Functional combines
@@ -1396,7 +1394,6 @@ var
 begin
   inherited Create;
   TempBitmap := TBitmap32.Create;
-  fPieceManager := TNeoPieceManager.Create;
   fTheme := TNeoTheme.Create;
   fLayers := TRenderBitmaps.Create;
   fPhysicsMap := TBitmap32.Create;
@@ -1422,7 +1419,6 @@ var
   i: THelperIcon;
 begin
   TempBitmap.Free;
-  fPieceManager.Free;
   fTheme.Free;
   fLayers.Free;
   fPhysicsMap.Free;
@@ -1706,14 +1702,14 @@ begin
 
   Inf := Info;
 
-  fPieceManager.Tidy;
+  PieceManager.Tidy;
 
   // create cache to draw from
 
   fXmasPal := XmasPal;
 
   fTheme.Load(Info.Level.Info.GraphicSetName);
-  fPieceManager.SetTheme(fTheme);
+  PieceManager.SetTheme(fTheme);
 
   LowPal := DosPaletteToArrayOfColor32(DosInLevelPalette);
   if fXmasPal then
