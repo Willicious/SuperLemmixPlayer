@@ -88,6 +88,7 @@ type
     fSoundEffect                  : Integer; // ose_xxxx what sound to play
     fRandomStartFrame             : Boolean;
     fResizability                 : TMetaObjectSizeSetting;
+    fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
     function GetIdentifier: String;
     function GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TMetaObjectSizeSetting): Boolean;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -129,6 +130,8 @@ type
     property Resizability[Flip, Invert, Rotate: Boolean]: TMetaObjectSizeSetting read GetResizability write SetResizability;
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
+
+    property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
   end;
 
   TMetaObjectInterface = class

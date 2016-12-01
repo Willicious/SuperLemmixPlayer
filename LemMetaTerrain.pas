@@ -22,6 +22,7 @@ type
     fWidth          : Integer;
     fHeight         : Integer;
     fIsSteel        : Boolean;
+    fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
     function GetIdentifier: String;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
     function GetGraphicImage(Flip, Invert, Rotate: Boolean): TBitmap32;
@@ -52,6 +53,7 @@ type
     property Width         : Integer read fWidth write fWidth;
     property Height        : Integer read fHeight write fHeight;
     property IsSteel       : Boolean read fIsSteel write fIsSteel;
+    property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
   end;
 
   TMetaTerrains = class(TObjectList)

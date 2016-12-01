@@ -1702,8 +1702,6 @@ begin
 
   Inf := Info;
 
-  PieceManager.Tidy;
-
   // create cache to draw from
 
   fXmasPal := XmasPal;
