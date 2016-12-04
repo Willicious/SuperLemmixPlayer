@@ -1287,8 +1287,8 @@ begin
 
   with SoundMgr do
   begin
-    SFX_FAILURE         := AddSoundFromFileName('failure.ogg', true);
-    SFX_SUCCESS         := AddSoundFromFileName('success.ogg', true);
+    SFX_FAILURE         := AddSoundFromFileName('failure.ogg');
+    SFX_SUCCESS         := AddSoundFromFileName('success.ogg');
     SFX_BUILDER_WARNING := AddSoundFromFileName('ting.ogg');
     SFX_ASSIGN_SKILL    := AddSoundFromFileName('mousepre.ogg');
     SFX_YIPPEE          := AddSoundFromFileName('yippee.ogg');
