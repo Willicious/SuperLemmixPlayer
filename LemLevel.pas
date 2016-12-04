@@ -4,7 +4,7 @@ unit LemLevel;
 interface
 
 uses
-  Classes, SysUtils,
+  Classes, SysUtils, StrUtils,
   UMisc,
   LemLemming,
   LemTerrain,
@@ -13,7 +13,7 @@ uses
   LemNeoParser;
 
 type
-  TLevelInfo = class(TPersistent)
+  TLevelInfo = class
   private
   protected
     fReleaseRateLocked : Boolean;
@@ -70,6 +70,7 @@ type
     property ZombieGhostCount: Integer read fZombieGhostCount write fZombieGhostCount;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
+
     property ClimberCount   : Integer read fClimberCount write fClimberCount;
     property FloaterCount   : Integer read fFloaterCount write fFloaterCount;
     property BomberCount    : Integer read fBomberCount write fBomberCount;
@@ -78,7 +79,6 @@ type
     property BasherCount    : Integer read fBasherCount write fBasherCount;
     property MinerCount     : Integer read fMinerCount write fMinerCount;
     property DiggerCount    : Integer read fDiggerCount write fDiggerCount;
-
     property WalkerCount    : Integer read fWalkerCount write fWalkerCount;
     property SwimmerCount    : Integer read fSwimmerCount write fSwimmerCount;
     property GliderCount    : Integer read fGliderCount write fGliderCount;
@@ -131,6 +131,8 @@ type
     constructor Create;
     destructor Destroy; override;
 
+    procedure Clear;
+
     procedure LoadFromFile(aFile: String);
     procedure LoadFromStream(aStream: TStream);
 
@@ -158,8 +160,10 @@ begin
   ReleaseRate    := 1;
   ReleaseRateLocked := false;
   LemmingsCount  := 1;
+  ZombieGhostCount := 0;
   RescueCount    := 1;
-  TimeLimit      := 1;
+  TimeLimit      := 6000;
+
   ClimberCount   := 0;
   FloaterCount   := 0;
   BomberCount    := 0;
@@ -176,15 +180,21 @@ begin
   PlatformerCount := 0;
   StackerCount   := 0;
   ClonerCount := 0;
-  LevelOptions   := 0;
+  SkillTypes := 0;
+
+  LevelOptions   := 2;
   ScreenPosition := 0;
   ScreenYPosition := 0;
-  Width := 1584;
+  Width := 320;
   Height := 160;
   Title          := '';
   Author         := '';
   fBackgroundIndex := 0;
   SetLength(WindowOrder, 0);
+
+  GraphicSetName := '';
+  MusicFile := '';
+  LevelID := 0;
 end;
 
 constructor TLevelInfo.Create;
@@ -213,6 +223,15 @@ begin
   fSteels.Free;
   fPreplacedLemmings.Free;
   inherited;
+end;
+
+procedure TLevel.Clear;
+begin
+  fLevelInfo.Clear;
+  fInteractiveObjects.Clear;
+  fTerrains.Clear;
+  fSteels.Clear;
+  fPreplacedLemmings.Clear;
 end;
 
 procedure TLevel.LoadFromFile(aFile: String);
@@ -264,6 +283,7 @@ begin
     Main.DoForEachSection('object', HandleObjectEntry);
     Main.DoForEachSection('terrain', HandleTerrainEntry);
     Main.DoForEachSection('area', HandleAreaEntry);
+    Main.DoForEachSection('lemming', HandleLemmingEntry)
   finally
     Parser.Free;
   end;
@@ -383,8 +403,8 @@ begin
   O.DrawingFlags := 0;
   if (aSection.Line['invisible'] <> nil) then Flag(odf_Invisible);
   if (aSection.Line['rotate'] <> nil) then Flag(odf_Rotate);
-  if (aSection.Line['flip'] <> nil) then Flag(odf_Flip);
-  if (aSection.Line['invert'] <> nil) then Flag(odf_UpsideDown);
+  if (aSection.Line['flip_horizontal'] <> nil) then Flag(odf_Flip);
+  if (aSection.Line['flip_vertical'] <> nil) then Flag(odf_UpsideDown);
   if (aSection.Line['face_left'] <> nil) then Flag(odf_FlipLem);
   if (aSection.Line['no_overwrite'] <> nil) then Flag(odf_NoOverwrite);
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
@@ -397,19 +417,66 @@ end;
 procedure TLevel.HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
 var
   T: TTerrain;
+
+  procedure Flag(aValue: Integer);
+  begin
+    T.DrawingFlags := T.DrawingFlags or aValue;
+  end;
 begin
+  T := fTerrains.Add;
+
+  T.GS := aSection.LineTrimString['collection'];
+  T.Piece := aSection.LineTrimString['piece'];
+  T.Left := aSection.LineNumeric['x'];
+  T.Top := aSection.LineNumeric['y'];
+
+  T.DrawingFlags := tdf_NoOneWay;
+  if (aSection.Line['one_way'] <> nil) then T.DrawingFlags := 0;
+  if (aSection.Line['rotate'] <> nil) then Flag(tdf_Rotate);
+  if (aSection.Line['flip_horizontal'] <> nil) then Flag(tdf_Flip);
+  if (aSection.Line['flip_vertical'] <> nil) then Flag(tdf_Invert);
+  if (aSection.Line['no_overwrite'] <> nil) then Flag(tdf_NoOverwrite);
+  if (aSection.Line['erase'] <> nil) then Flag(tdf_Erase);
 end;
 
 procedure TLevel.HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
 var
   S: TSteel;
 begin
+  S := fSteels.Add;
+
+  S.Left := aSection.LineNumeric['x'];
+  S.Top := aSection.LineNumeric['y'];
+  S.Width := aSection.LineNumeric['width'];
+  S.Height := aSection.LineNumeric['height'];
+
+  if (aSection.Line['erase'] <> nil) then
+    S.fType := 1
+  else
+    S.fType := 0;
 end;
 
 procedure TLevel.HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
 var
   L: TPreplacedLemming;
 begin
+  L := fPreplacedLemmings.Add;
+
+  L.X := aSection.LineNumeric['x'];
+  L.Y := aSection.LineNumeric['y'];
+
+  if Lowercase(LeftStr(aSection.LineTrimString['direction'], 1)) = 'l' then
+    L.Dx := -1
+  else
+    L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
+               // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES RIGHT".
+
+  L.IsClimber  := (aSection.Line['climber']  <> nil);
+  L.IsSwimmer  := (aSection.Line['swimmer']  <> nil);
+  L.IsFloater  := (aSection.Line['floater']  <> nil);
+  L.IsGlider   := (aSection.Line['glider']   <> nil);
+  L.IsDisarmer := (aSection.Line['disarmer'] <> nil);
+  L.IsZombie   := (aSection.Line['zombie']   <> nil);
 end;
 
 procedure TLevel.SaveToStream(aStream: TStream);

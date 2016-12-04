@@ -9,7 +9,6 @@ uses
   GR32,
   SharedGlobals,
   Dialogs, Controls,
-  LemNeoLevelLoader, // FOR TESTING! //
   LemTypes, LemLevel, LemLVLLoader,
   LemMetaAnimation, LemAnimationSet, LemDosCmp, LemDosStructures, LemDosAnimationSet,
   LemDosMainDat,
@@ -287,7 +286,7 @@ var
   i: integer;
 begin
   inherited;
-  fTempLevel := TLevel.Create(nil);
+  fTempLevel := TLevel.Create;
   fDefaultSectionCount := GetSectionCount;
   fDefaultLevelCount := GetLevelCount(0);
   for i := 0 to 15 do
@@ -322,7 +321,7 @@ begin
   OldLookForLvls := fLookForLVL;
   fLookForLVL := false;
   aInfo := TLevelInfo.Create(nil);
-  aLevel := TLevel.Create(nil);
+  aLevel := TLevel.Create;
 try
   if not ForceDirectories(ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\') then Exit;
   SoftOddMode := true;
@@ -344,7 +343,7 @@ try
                   + '\' + LeadZeroStr(dS + 1, 2) + LeadZeroStr(dL + 1, 2) + '.nxlv';
       FileStream := TFileStream.Create(FilePath, fmCreate);
       try
-        TNeoLevelLoader.StoreLevelInStream(aLevel, FileStream);
+        aLevel.SaveToStream(FileStream);
       finally
         FileStream.Free;
       end;
@@ -799,8 +798,6 @@ begin
       F.LoadFromFile(FN);
       try
         TLVLLoader.LoadLevelFromStream(F, aLevel, OddLoad);
-        if (((aLevel.Info.LevelOptions) and 16) <> 0) and (OddLoad <> 2) then
-          InternalLoadSingleLevel((aLevel.Info.fOddtarget shr 8), (aLevel.Info.fOddtarget mod 256), aLevel, 1);
         IsLoaded := True;
       finally
         F.Free;

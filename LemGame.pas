@@ -5791,8 +5791,6 @@ begin
     else
       gTarget := (gToRescue * 100) div gLemCap;
 
-    if Level.Info.DisplayPercent > 0 then gTarget := Level.Info.DisplayPercent;
-
     if not fGameCheated then
     begin
       if gCount = 0 then

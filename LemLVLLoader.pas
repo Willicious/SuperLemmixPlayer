@@ -806,6 +806,7 @@ var
   Ter: TTerrain;
   Steel: TSteel;
   //SFinder: TStyleFinder;
+  GraphicSet: Integer;
   GSNames: array of String;
   GSName: array[0..15] of Char;
 
@@ -831,8 +832,7 @@ begin
     begin
       if OddLoad <> 1 then
       begin
-        ClearLevel;
-        DisplayPercent   := 0;
+        aLevel.Clear;
         ReleaseRate      := Buf.ReleaseRate;
         ReleaseRateLocked := (Buf.LevelOptions2 and 1) <> 0;
         BackgroundIndex := Buf.BgIndex;
@@ -866,17 +866,12 @@ begin
         DiggerCount := Buf.DiggerCount;
         ClonerCount := Buf.ClonerCount;
 
-        SuperLemming     := 0;
-
-        GimmickSet := Buf.Gimmick;
-
         Title            := Buf.LevelName;
         Author           := Buf.LevelAuthor;
         GraphicSet := Buf.MusicNumber shl 8;
         LevelID := Buf.LevelID;
       end;
 
-      fOddTarget       := (Buf.RefSection shl 8) + (Buf.RefLevel);
       if (OddLoad = 2) and (Buf.LevelOptions and 16 <> 0) then
       begin
         LevelOptions := $71;
@@ -907,27 +902,12 @@ begin
           if ScreenYPosition > (Height - 160) then ScreenYPosition := (Height - 160);
         end;
 
-        GraphicSetFile := 'v_' + trim(Buf.StyleName) + '.dat';
-        GraphicMetaFile := 'g_' + trim(Buf.StyleName) + '.dat';
         GraphicSetName := trim(Buf.StyleName);
 
         SetLength(GSNames, 1);
         GSNames[0] := GraphicSetName; // fallback in case lvl file has no graphic set list, as most won't
 
-        if trim(Buf.VgaspecName) = 'none' then
-        begin
-          VgaspecFile := '';
-          GraphicSetEx := 0;
-        end else begin
-          VgaspecFile := trim(Buf.VgaspecName);
-          GraphicSetEx := 255;
-        end;
-
-        GraphicSet       := 255 + (GraphicSet and $FF00);
-
         LevelOptions := Buf.LevelOptions;
-        VgaspecX := (Buf.VgaspecX * 8) div LRes;
-        VgaspecY := (Buf.VgaspecY * 8) div LRes;
       end;
       if LevelOptions and $2 = 0 then
         LevelOptions := LevelOptions and $F7;
@@ -1044,11 +1024,7 @@ begin
              end;
              if OddLoad <> 1 then
              begin
-               Info.GimmickSet2 := Buf2.GimmickFlags2;
-               Info.GimmickSet3 := Buf2.GimmickFlags3;
                Info.MusicFile := Trim(Buf2.MusicName);
-               Info.BnsRank := Buf2.BnsRedirectRank;
-               Info.BnsLevel := Buf2.BnsRedirectLevel;
              end;
            end;
         6: begin
@@ -1081,10 +1057,6 @@ begin
         255: MusicFile := 'gimmick';
           else  MusicFile := 'track_' + LeadZeroStr(Buf.MusicNumber, 2); // best compatibility with existing packs
         end;
-        GimmickSet2 := 0;
-        GimmickSet3 := 0;
-        BnsRank := Buf.RefSection;
-        BnsLevel := Buf.RefLevel;
       end;
 
     (*if (OddLoad = 2) and (Info.LevelOptions and $10 <> 0) then
@@ -1121,6 +1093,7 @@ var
   Obj: TInteractiveObject;
   Ter: TTerrain;
   Steel: TSteel;
+  GraphicSet: Integer;
   //SkTemp: array[0..15] of byte;
   //SkT2: array[0..7] of byte;
   SFinder: TStyleFinder;
@@ -1136,8 +1109,7 @@ begin
     begin
       if OddLoad <> 1 then
       begin
-      ClearLevel;
-      DisplayPercent   := {Buf.ReleaseRate mod 256} 0;
+      aLevel.Clear;
       ReleaseRate      := SwapWord(Buf.ReleaseRate) mod 256;
       LemmingsCount    := SwapWord(Buf.LemmingsCount);
       RescueCount      := SwapWord(Buf.RescueCount);
@@ -1195,11 +1167,6 @@ begin
         DiggerCount := SkTemp[14];
         ClonerCount := SkTemp[15];
       end;}
-      if Buf.Reserved = $FFFF then
-        GimmickSet := 1
-      else
-        GimmickSet := 0;
-      GraphicSetEx     := Buf.GraphicSetEx;
       LevelOptions     := Buf.LevelOptions and $10;
       {if (LevelOptions and 32) <> 0 then
         begin
@@ -1226,7 +1193,6 @@ begin
         else MusicFile := '?';
       end;
       end;
-      fOddTarget       := (((Buf.BuilderCount) mod 256) shl 8) + ((Buf.BasherCount) mod 256);
       if (OddLoad = 2) and (LevelOptions and $10 <> 0) then
       begin
         LevelOptions := LevelOptions and $71;
@@ -1238,28 +1204,13 @@ begin
       Height := 160;
       if ScreenPosition > (Width - 320) then ScreenPosition := (Width - 320);
       GraphicSet       := (SwapWord(Buf.GraphicSet) and $00FF) + (GraphicSet and $FF00);
-      GraphicSetEx     := Buf.GraphicSetEx;
 
       SFinder := TStyleFinder.Create;
-
-      GraphicSetFile := 'vgagr' + i2s(GraphicSet mod 256) + '.dat';
-      GraphicMetaFile := 'ground' + i2s(GraphicSet mod 256) + 'o.dat';
-      if GraphicSetEx > 0 then
-        VgaspecFile := 'vgaspec' + i2s(GraphicSetEx - 1) + '.dat'
-        else
-        VgaspecFile := '';
 
       if SFinder.FindName(GraphicSet mod 256, false) <> '' then
         GraphicSetName := SFinder.FindName(GraphicSet mod 256, false);
 
       SFinder.Free;
-
-      VgaspecX := 304;
-      VgaspecY := 0;
-
-
-      GimmickSet2 := 0;
-      GimmickSet3 := 0;
 
       {if (LevelOptions) and $2 = 0 then
         LevelOptions := LevelOptions and $77
@@ -1405,8 +1356,7 @@ begin
     begin
       if OddLoad <> 1 then
       begin
-      ClearLevel;
-      DisplayPercent   := {Buf.ReleaseRate mod 256} 0;
+      aLevel.Clear;
       ReleaseRate      := Buf.ReleaseRate;
       LemmingsCount    := Buf.LemmingsCount;
       RescueCount      := Buf.RescueCount;
@@ -1437,15 +1387,8 @@ begin
         DiggerCount := Buf.DiggerCount;
         ClonerCount := Buf.ClonerCount;
 
-      SuperLemming     := 0;
-
-        GimmickSet := Buf.Gimmick;
-        GimmickSet2 := 0;
-        GimmickSet3 := 0;
-
       Title            := Buf.LevelName;
       Author           := Buf.LevelAuthor;
-      GraphicSet := Buf.MusicNumber shl 8;
       case Buf.MusicNumber of
         0: MusicFile := '';
       253: MusicFile := '*';
@@ -1454,7 +1397,6 @@ begin
         else MusicFile := '?';
       end;
       end;
-      fOddTarget       := (Buf.RefSection shl 8) + (Buf.RefLevel);
       if (OddLoad = 2) and (Buf.LevelOptions and 16 <> 0) then
       begin
         LevelOptions := $71;
@@ -1490,36 +1432,12 @@ begin
         Buf.GraphicSet := 255;
       end else begin
         GraphicSetName := SFinder.FindName(Buf.GraphicSet, false);
-        GraphicSetFile := 'vgagr' + i2s(Buf.GraphicSet) + '.dat';
-        GraphicMetaFile := 'ground' + i2s(Buf.GraphicSet) + 'o.dat';
-      end;
-
-      if trim(Buf.VgaspecName) <> '' then
-      begin
-        if trim(Buf.VgaspecName) = 'none' then
-        begin
-          Buf.GraphicSetEx := 0;
-          VgaspecFile := ''
-        end else begin
-          Buf.GraphicSetEx := 255;
-          VgaspecFile := trim(Buf.VgaspecName);
-        end;
-      end else begin
-        if Buf.GraphicSetEx = 0 then
-          VgaspecFile := ''
-        else begin
-          if SFinder.FindName(Buf.GraphicSetEx, true) <> '' then
-            VgaSpecFile := SFinder.FindName(Buf.GraphicSetEx, true);
-        end;
       end;
 
       SFinder.Free;
 
-      GraphicSet       := Buf.GraphicSet + (GraphicSet and $FF00);
-      GraphicSetEx     := Buf.GraphicSetEx;
       LevelOptions := Buf.LevelOptions;
-      VgaspecX := Buf.VgaspecX;
-      VgaspecY := Buf.VgaspecY;
+
       for x := 0 to 31 do
         TempWindowOrder[x] := Buf.WindowOrder[x];
       end;
@@ -1699,7 +1617,7 @@ begin
       Buf.LevelOptions := LevelOptions;
       //Buf.GraphicSetEx := GraphicSetEx;
       //Buf.GraphicSet   := GraphicSet;
-      Buf.MusicNumber  := GraphicSet shr 8;
+      Buf.MusicNumber  := 0;
       Buf.ScreenPosition := ScreenPosition;
       Buf.ScreenYPosition := ScreenYPosition;
 
@@ -1709,7 +1627,7 @@ begin
       Buf.Width := Width;
       Buf.Height := Height;
 
-      Buf.Gimmick := GimmickSet;
+      Buf.Gimmick := 0;
 
       if Length(Title) > 0 then
          System.Move(Title[1], Buf.LevelName, Length(Title));
@@ -1732,19 +1650,18 @@ begin
 
       if Buf.GraphicSetEx = 255 then
       begin}
-        k := VgaspecFile;
-        if k = '' then k := 'none';
+        k := 'none';
         System.Move(k[1], Buf.VgaspecName, Length(k));
       //end;
 
       {for i := 0 to 31 do
         Buf.WindowOrder[i] := WindowOrder[i];}
 
-      Buf.RefSection := fOddTarget shr 8;
-      Buf.RefLevel   := fOddTarget;
+      Buf.RefSection := 0;
+      Buf.RefLevel   := 0;
 
-      Buf.VgaspecX := VgaspecX;
-      Buf.VgaspecY := VgaspecY;
+      Buf.VgaspecX := 0;
+      Buf.VgaspecY := 0;
 
       Buf.LevelID := LevelID;
     end;
@@ -1871,14 +1788,14 @@ begin
     FillChar(Buf2.MusicName, 16, 0);
     Buf2.ScreenPosition := Info.ScreenPosition;
     Buf2.ScreenYPosition := Info.ScreenYPosition;
-    Buf2.GimmickFlags2 := Info.GimmickSet2;
-    Buf2.GimmickFlags3 := Info.GimmickSet3;
+    Buf2.GimmickFlags2 := 0;
+    Buf2.GimmickFlags3 := 0;
     k := LowerCase(LeftStr(Info.MusicFile, 16));
     Move(k[1], Buf2.MusicName, Length(k));
     Buf2.SecRedirectRank := 0;
     Buf2.SecRedirectLevel := 0;
-    Buf2.BnsRedirectRank := Info.BnsRank;
-    Buf2.BnsRedirectLevel := Info.BnsLevel;
+    Buf2.BnsRedirectRank := 0;
+    Buf2.BnsRedirectLevel := 0;
     aStream.Write(Buf2, SizeOf(Buf2));
 
     //aStream.WriteBuffer(Buf, NEO_LVL_SIZE);

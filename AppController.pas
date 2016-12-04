@@ -252,7 +252,7 @@ begin
   GameParams.Directory := LemmingsPath;
   GameParams.MainDatFile := LemmingsPath + 'main.dat';
   GameParams.Renderer := TRenderer.Create;
-  GameParams.Level := Tlevel.Create(nil);
+  GameParams.Level := Tlevel.Create;
   GameParams.MainForm := TForm(aOwner);
 
   // fMainDatExtractor currently has a convenient routine for loading SYSTEM.DAT. This is a relic
