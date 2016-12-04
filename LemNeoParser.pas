@@ -1,5 +1,67 @@
 unit LemNeoParser;
 
+(*
+
+Handles parsing text-based data files.
+
+--- General Format ---
+
+Blank lines are ignored completely. Whitespace at the start of a line (before the first non-whitespace character)
+is also ignored, but whitespace after this is NOT ignored.
+
+A regular line is in the format of a keyword (not case-sensitive). This may optionally be followed by one space and
+then a value, but if the keyword does not need a value, then none needs to be included (nor does the space).
+
+A sub-section can also be declared. Lines within the sub-section are not found in the list (or iterators) of the main
+section, and vice versa. To declare a subsection, a line should start with a $ symbol, followed by the keyword for the
+sub-section (it cannot also have a value). The subsection should be ended with "$end" (not case-sensitive). Subsections
+can be nested within each other if nessecary.
+
+How to specifically interpret the lines / sections is dependant on the specific file; TParser simply provides a means
+of parsing the file into keyword / value pairs and seperate subsections.
+
+--- Usage Notes ---
+
+>> Loading
+Create a TParser object and load the file into it (can also load from a stream or TStringList). <TParser>.MainSection
+holds the "main" section, which all lines that aren't in a sub-section are considered part of. <TParser>.MainSection
+and any sub-sections of it are TParserSection objects - beyond existing as <TParser>.MainSection, the main section has
+nothing special about it, although the keyword for it is never loaded or saved to a file, nor is there any guarantee
+it will have a reliable value.
+Although direct access is possible, the recommended ways to get lines or subsections are:
+  In the case that only one occurance is expected within the section:
+    Use <TParserSection>.Line[$$$$] (returns a TParserLine) where $$$$ is the keyword, to get a line
+    Use <TParserSection>.Section[$$$$] (returns a TParserSection) where $$$$ is the keyword, to get a section
+    In the event that more than one line / section with the keyword exist, the LAST one in the file is returned.
+  In the case that multiple occurances may be expected:
+    Define a procedure (may be private) in the class that's loading the file, of the following format. This can
+    either be a procedure of the object itself, or a sub-procedure of another method.
+      procedure <name>(aLine: TParserLine);
+      procedure <name>(aSection: TParserSection);
+    You can then use the following calls to run this procedure once for each line:
+      <TParserSection>.DoForEachLine($$$$, <name>);
+      <TParserSection>.DoForEachSection($$$$, <name>);
+    This effectively works like the following code would be expected to if it were valid:
+      for each Item := TParserLine in <TParserSection>.LineList do
+        <name>(Item);
+
+>> Saving
+Create a TParser object. The main section will be created, but empty, and can be accessed as <TParser>.MainSection.
+You can add lines to a TParserSection as follows:
+  <TParserSection>.LineList.Add(TParserLine.Create($$$$, $$$$));
+    The first $$$$ is the keyword, the second is the value. Either a String or an Int64 is accepted for the value.
+Adding a new section is a tiny bit trickier. First, the section must be created and assigned to a temporary variable:
+  <TParserSection 2> := TParserSection.Create($$$$);
+  <TParserSection>.SectionList.Add(<TParserSection 2>);
+    The $$$$ is the section's keyword.
+  You can then manipluate <TParserSection 2> the same way as any other TParserSection.
+Once all is done, simply call TParser.SaveToFile (or SaveToStream).
+
+>> Modifying
+Don't. Load the data into the actual class that's meant to use it, then re-save it.
+
+*)
+
 interface
 
 uses
@@ -48,11 +110,14 @@ type
       fLines: TParserLineList;
       function GetKeyword: String;
       procedure SetKeyword(aValue: String);
+      function GetLine(aKeyword: String): TParserLine;
+      function GetSection(aKeyword: String): TParserSection;
 
       procedure LoadFromStrings(aStrings: TStrings; var aPos: Integer);
       procedure SaveToStrings(aStrings: TStrings; aIndent: Integer);
     public
       constructor Create(aKeyword: String);
+      destructor Destroy; override;
 
       function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure): Integer;
       function DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure): Integer;
@@ -60,8 +125,11 @@ type
       property Keyword: String read GetKeyword write SetKeyword;
       property KeywordDirect: String read fKeyword write SetKeyword;
 
-      property Sections: TParserSectionList read fSections;
-      property Lines: TParserLineList read fLines;
+      property Section[Keyword: String]: TParserSection read GetSection;
+      property Line[Keyword: String]: TParserLine read GetLine;
+
+      property SectionList: TParserSectionList read fSections;
+      property LineList: TParserLineList read fLines;
   end;
 
   TParserLine = class
@@ -157,10 +225,14 @@ var
   procedure TrimStrings;
   var
     i: Integer;
+    S: String;
   begin
     for i := aStrings.Count-1 downto 0 do
-      if Trim(aStrings[i]) = '' then
+    begin
+      S := Trim(aStrings[i]);
+      if (S = '') or (LeftStr(S, 1) = '#') then
         aStrings.Delete(i);
+    end;
   end;
 begin
   TrimStrings;
@@ -208,8 +280,12 @@ begin
   inherited Create;
   aLine := TrimLeft(aLine);
   SplitPos := Pos(' ', aLine);
-  fKeyword := MidStr(aLine, 1, SplitPos-1);
-  fValue := MidStr(aLine, SplitPos+1, Length(aLine)-SplitPos);
+  if Pos = 0 then
+    fKeyword := aLine
+  else begin
+    fKeyword := MidStr(aLine, 1, SplitPos-1);
+    fValue := MidStr(aLine, SplitPos+1, Length(aLine)-SplitPos);
+  end;
 end;
 
 constructor TParserLine.Create(aKeyword: String; aValue: String);
@@ -272,6 +348,8 @@ constructor TParserSection.Create(aKeyword: String);
 begin
   inherited Create;
   fIterator := -1;
+  fSections := TParserSectionList.Create;
+  fLines := TParserLineList.Create;  
   Keyword := aKeyword;
 end;
 
@@ -285,9 +363,36 @@ begin
   fKeyword := Trim(aValue);
 end;
 
+function TParserSection.GetLine(aKeyword: String): TParserLine;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := fLines.Count-1 downto 0 do
+    if fLines[i].Keyword = aKeyword then
+    begin
+      Result := fLines[i];
+      Exit;
+    end;
+end;
+
+function TParserSection.GetSection(aKeyword: String): TParserSection;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := fSections.Count-1 downto 0 do
+    if fSections[i].Keyword = aKeyword then
+    begin
+      Result := fSections[i];
+      Exit;
+    end;
+end;
+
 procedure TParserSection.LoadFromStrings(aStrings: TStrings; var aPos: Integer);
 var
   S: String;
+  NewSection: TParserSection;
 begin
   while aPos < aStrings.Count do
   begin
@@ -296,9 +401,11 @@ begin
     if Trim(Lowercase(S)) = '$end' then
       Break
     else if LeftStr(Trim(Lowercase(S)), 1) = '$' then
-      with TParserSection.Create(RightStr(Trim(Lowercase(S)), Length(Trim(S)) - 1)) do
-        LoadFromStrings(aStrings, aPos)
-    else
+    begin
+      NewSection := TParserSection.Create(RightStr(Trim(Lowercase(S)), Length(Trim(S)) - 1));
+      NewSection.LoadFromStrings(aStrings, aPos);
+      fSections.Add(NewSection);
+    end else
       fLines.Add(TParserLine.Create(S));
   end;
 end;
