@@ -474,6 +474,9 @@ begin
   for i := 0 to fLines.Count-1 do
     aStrings.Add(fLines[i].GetAsLine(aIndent));
 
+  if fSections.Count > 0 then
+    aStrings.Add('');
+
   Base := StringOfChar(' ', aIndent);
 
   for i := 0 to fSections.Count-1 do
