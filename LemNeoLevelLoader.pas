@@ -3,7 +3,6 @@ unit LemNeoLevelLoader;
 interface
 
 uses
-  LemNeoParserOld,
   LemTerrain, LemInteractiveObject, LemSteel, LemLemming,
   LemLevel, {LemStrings,} LemVersion,
   Classes, SysUtils, StrUtils;
@@ -19,202 +18,124 @@ type
 
 implementation
 
+uses
+  LemNeoParser;
+
 class procedure TNeoLevelLoader.LoadLevelFromStream(aStream: TStream; aLevel: TLevel);
 var
-  Parser: TNeoLemmixParser;
-  Line: TParserLine;
   O: TInteractiveObject;
   T: TTerrain;
   S: TSteel;
   L: TPreplacedLemming;
 
-  function NewPiece: Boolean;
+  Parser: TParser;
+  Main: TParserSection;
+  Line: TParserLine;
+  Section: TParserSection;
+
+  procedure LoadSkillsetSection(aSection: TParserSection);
+    function HandleSkill(aLabel: String; aFlag: Cardinal): Integer;
+    begin
+      Result := 0;
+      Line := aSection.Line[aLabel];
+      if Line = nil then Exit;
+      Result := Line.ValueNumeric;
+      aLevel.Info.SkillTypes := aLevel.Info.SkillTypes or aFlag;
+    end;
   begin
-    Result := false;
-    if Line.Keyword = 'OBJECT' then Result := true;
-    if Line.Keyword = 'TERRAIN' then Result := true;
-    if Line.Keyword = 'AREA' then Result := true;
-    if Line.Keyword = 'LEMMING' then Result := true;
-    if Line.Keyword = '' then Result := true; // Detect end of file as well
+    aLevel.Info.SkillTypes := 0;
+    if aSection = nil then Exit;
+
+    aLevel.Info.WalkerCount := HandleSkill('walker', $8000);
+    aLevel.Info.ClimberCount := HandleSkill('climber', $4000);
+    aLevel.Info.SwimmerCount := HandleSkill('swimmer', $2000);
+    aLevel.Info.FloaterCount := HandleSkill('floater', $1000);
+    aLevel.Info.GliderCount := HandleSkill('glider', $0800);
+    aLevel.Info.MechanicCount := HandleSkill('disarmer', $0400);
+    aLevel.Info.BomberCount := HandleSkill('bomber', $0200);
+    aLevel.Info.StonerCount := HandleSkill('stoner', $0100);
+    aLevel.Info.BlockerCount := HandleSkill('blocker', $0080);
+    aLevel.Info.PlatformerCount := HandleSkill('platformer', $0040);
+    aLevel.Info.BuilderCount := HandleSkill('builder', $0020);
+    aLevel.Info.StackerCount := HandleSkill('stacker', $0010);
+    aLevel.Info.BasherCount := HandleSkill('basher', $0008);
+    aLevel.Info.MinerCount := HandleSkill('miner', $0004);
+    aLevel.Info.DiggerCount := HandleSkill('digger', $0002);
+    aLevel.Info.ClonerCount := HandleSkill('cloner', $0001);
+  end;
+
+  procedure LoadSpawnOrder(aSection: TParserSection);
+  var
+    i: Integer;
+    Count: Integer;
+
+    procedure HandleSpawnEntry(aLine: TParserLine);
+    begin
+      aLevel.Info.WindowOrder[i] := aLine.ValueNumeric;
+      Inc(i);
+    end;
+  begin
+    if aSection = nil then
+    begin
+      SetLength(aLevel.Info.WindowOrder, 0);
+      Exit;
+    end;
+    SetLength(aLevel.Info.WindowOrder, aSection.LineList.Count);
+    i := 0;
+    aSection.DoForEachLine('object', );
+    SetLength(aLevel.Info.WindowOrder, i);
+  end;
+
+  function GetLevelOptionsValue(aString: String): Byte;
+  begin
+    aString := Lowercase(aString);
+    if aString = 'simple' then
+      Result := $0A
+    else if aString = 'off' then
+      Result := $00
+    else
+      Result := $02;
   end;
 
 begin
   aLevel.ClearLevel;
   aLevel.Info.TimeLimit := 6000; // Default should be infinite, not 1 second
   aLevel.Info.LevelOptions := $02;
-  Parser := TNeoLemmixParser.Create;
+  Parser := TParser.Create;
   try
     Parser.LoadFromStream(aStream);
+    Main := Parser.MainSection;
 
-    // Stage 1. Anything that comes before an OBJECT, TERRAIN or AREA definition
-    repeat
-      Line := Parser.NextLine;
+    with aLevel.Info do
+    begin
+      Title := Main.LineString['title'];
+      Author := Main.LineString['author'];
+      GraphicSetName := Main.LineTrimString['theme'];
+      MusicFile := Main.LineTrimString['music'];
+      LevelID := Main.LineNumeric['id'];
 
-      with aLevel.Info do
-      begin
-        // There are a lot of keywords we can encounter here.
+      LemmingsCount := Main.LineNumeric['lemmings'];
+      RescueCount := Main.LineNumeric['requirement'];
+      TimeLimit := Main.LineNumeric['time_limit'];
+      if TimeLimit = 0 then TimeLimit := 6000; // treated as infinite
+      ReleaseRate := Main.LineNumeric['release_rate'];
+      ReleaseRateLocked := (Main.Line['release_rate_locked'] <> nil);
 
-        if Line.Keyword = 'TITLE' then
-          Title := Line.Value;
+      Width := Main.LineNumeric['width'];
+      Height := Main.LineNumeric['height'];
+      ScreenPosition := Main.LineNumeric['start_x'];
+      ScreenYPosition := Main.LineNumeric['start_y'];
 
-        if Line.Keyword = 'AUTHOR' then
-          Author := Line.Value;
+      LevelOptions := GetLevelOptionsValue(Main.LineTrimString['autosteel']);
 
-        if Line.Keyword = 'MUSIC' then
-          MusicFile := Line.Value;
+      BackgroundIndex := Main.LineNumeric['background']; // temporary, need to replace with referencing it by filename
+    end;
 
-        if Line.Keyword = 'ID' then
-          LevelID := StrToIntDef('x' + Line.Value, 0);
+    LoadSkillsetSection(Main.Section['skillset']);
+    LoadSpawnOrder(Main.Section['spawn_order']);
 
-        if Line.Keyword = 'WIDTH' then
-          Width := Line.Numeric;
 
-        if Line.Keyword = 'HEIGHT' then
-          Height := Line.Numeric;
-
-        if Line.Keyword = 'START_X' then
-          ScreenPosition := Line.Numeric;
-
-        if Line.Keyword = 'START_Y' then
-          ScreenYPosition := Line.Numeric;
-
-        if Line.Keyword = 'THEME' then
-          GraphicSetName := Line.ValueTrimmed;
-
-        if Line.Keyword = 'LEMMINGS' then
-          LemmingsCount := Line.Numeric;
-
-        if Line.Keyword = 'REQUIREMENT' then
-          RescueCount := Line.Numeric;
-
-        if Line.Keyword = 'TIME_LIMIT' then
-          TimeLimit := Line.Numeric;
-
-        if Line.Keyword = 'MIN_RR' then
-        begin
-          ReleaseRate := Line.Numeric;
-          ReleaseRateLocked := false;
-        end;
-
-        if Line.Keyword = 'FIXED_RR' then
-        begin
-          ReleaseRate := Line.Numeric;
-          ReleaseRateLocked := true;
-        end;
-
-        if Line.Keyword = 'AUTOSTEEL' then
-          if Uppercase(Line.ValueTrimmed) = 'OFF' then
-            LevelOptions := LevelOptions and not $0A
-          else if Uppercase(Line.ValueTrimmed) = 'SIMPLE' then
-            LevelOptions := LevelOptions or $0A
-          else if Uppercase(Line.ValueTrimmed) = 'ON' then
-            LevelOptions := (LevelOptions or $02) and not $08;
-
-        if Line.Keyword = 'WALKER' then
-        begin
-          SkillTypes := SkillTypes or $8000;
-          WalkerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'CLIMBER' then
-        begin
-          SkillTypes := SkillTypes or $4000;
-          ClimberCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'SWIMMER' then
-        begin
-          SkillTypes := SkillTypes or $2000;
-          SwimmerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'FLOATER' then
-        begin
-          SkillTypes := SkillTypes or $1000;
-          FloaterCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'GLIDER' then
-        begin
-          SkillTypes := SkillTypes or $0800;
-          GliderCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'DISARMER' then
-        begin
-          SkillTypes := SkillTypes or $0400;
-          MechanicCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'BOMBER' then
-        begin
-          SkillTypes := SkillTypes or $0200;
-          BomberCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'STONER' then
-        begin
-          SkillTypes := SkillTypes or $0100;
-          StonerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'BLOCKER' then
-        begin
-          SkillTypes := SkillTypes or $0080;
-          BlockerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'PLATFORMER' then
-        begin
-          SkillTypes := SkillTypes or $0040;
-          PlatformerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'BUILDER' then
-        begin
-          SkillTypes := SkillTypes or $0020;
-          BuilderCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'STACKER' then
-        begin
-          SkillTypes := SkillTypes or $0010;
-          StackerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'BASHER' then
-        begin
-          SkillTypes := SkillTypes or $0008;
-          BasherCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'MINER' then
-        begin
-          SkillTypes := SkillTypes or $0004;
-          MinerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'DIGGER' then
-        begin
-          SkillTypes := SkillTypes or $0002;
-          DiggerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'CLONER' then
-        begin
-          SkillTypes := SkillTypes or $0001;
-          ClonerCount := Line.Numeric;
-        end;
-
-        if Line.Keyword = 'SPAWN' then
-        begin
-          SetLength(WindowOrder, Length(WindowOrder)+1);
-          WindowOrder[Length(WindowOrder)-1] := Line.Numeric;
-        end;
-      end;
-
-    until (NewPiece);
-
+    {------------- OLD CODE FROM HERE ON ---------------}
     repeat
       if Line.Keyword = 'OBJECT' then
       begin

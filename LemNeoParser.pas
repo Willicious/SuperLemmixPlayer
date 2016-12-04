@@ -30,7 +30,10 @@ nothing special about it, although the keyword for it is never loaded or saved t
 it will have a reliable value.
 Although direct access is possible, the recommended ways to get lines or subsections are:
   In the case that only one occurance is expected within the section:
-    Use <TParserSection>.Line[$$$$] (returns a TParserLine) where $$$$ is the keyword, to get a line
+    Use <TParserSection>.Line[$$$$] (returns a TParserLine) where $$$$ is the keyword, to get a line (returns nil if not found)
+    Use <TParserSection>.LineString[$$$$] (returns a String) where $$$$ is the keyword, to get the corresponding value (returns empty string if not found)
+    Use <TParserSection>.LineTrimString[$$$$] (returns a String) where $$$$ is the keyword, for same as above but with leading / trailing whitespace removed
+    Use <TParserSection>.LineNumeric[$$$$] (returns an Int64) where $$$$ is the keyword, to get the corresponding numeric value (returns 0 if not found)
     Use <TParserSection>.Section[$$$$] (returns a TParserSection) where $$$$ is the keyword, to get a section
     In the event that more than one line / section with the keyword exist, the LAST one in the file is returned.
   In the case that multiple occurances may be expected:
@@ -113,6 +116,10 @@ type
       function GetLine(aKeyword: String): TParserLine;
       function GetSection(aKeyword: String): TParserSection;
 
+      function GetLineString(aKeyword: String): String;
+      function GetLineTrimString(aKeyword: String): String;
+      function GetLineNumeric(aKeyword: String): Int64;
+
       procedure LoadFromStrings(aStrings: TStrings; var aPos: Integer);
       procedure SaveToStrings(aStrings: TStrings; aIndent: Integer);
     public
@@ -127,6 +134,10 @@ type
 
       property Section[Keyword: String]: TParserSection read GetSection;
       property Line[Keyword: String]: TParserLine read GetLine;
+
+      property LineString[Keyword: String]: String read GetLineString;
+      property LineTrimString[Keyword: String]: String read GetLineTrimString;
+      property LineNumeric[Keyword: String]: Int64 read GetLineNumeric;
 
       property SectionList: TParserSectionList read fSections;
       property LineList: TParserLineList read fLines;
@@ -280,7 +291,7 @@ begin
   inherited Create;
   aLine := TrimLeft(aLine);
   SplitPos := Pos(' ', aLine);
-  if Pos = 0 then
+  if SplitPos = 0 then
     fKeyword := aLine
   else begin
     fKeyword := MidStr(aLine, 1, SplitPos-1);
@@ -353,6 +364,13 @@ begin
   Keyword := aKeyword;
 end;
 
+destructor TParserSection.Destroy;
+begin
+  fSections.Free;
+  fLines.Free;
+  inherited;
+end;
+
 function TParserSection.GetKeyword: String;
 begin
   Result := Lowercase(fKeyword);
@@ -387,6 +405,39 @@ begin
       Result := fSections[i];
       Exit;
     end;
+end;
+
+function TParserSection.GetLineString(aKeyword: String): String;
+var
+  Line: TParserLine;
+begin
+  Line := GetLine(aKeyword);
+  if Line = nil then
+    Result := ''
+  else
+    Result := Line.Value;
+end;
+
+function TParserSection.GetLineTrimString(aKeyword: String): String;
+var
+  Line: TParserLine;
+begin
+  Line := GetLine(aKeyword);
+  if Line = nil then
+    Result := ''
+  else
+    Result := Line.ValueTrimmed;
+end;
+
+function TParserSection.GetLineNumeric(aKeyword: String): Int64;
+var
+  Line: TParserLine;
+begin
+  Line := GetLine(aKeyword);
+  if Line = nil then
+    Result := 0
+  else
+    Result := Line.ValueNumeric;
 end;
 
 procedure TParserSection.LoadFromStrings(aStrings: TStrings; var aPos: Integer);
