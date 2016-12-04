@@ -17,7 +17,7 @@ interface
 
 uses
   Dialogs,
-  LemNeoParser, LemLemming, LemCore, LemVersion,
+  LemNeoParserOld, LemLemming, LemCore, LemVersion,
   Contnrs, Classes, SysUtils, StrUtils;
 
 const

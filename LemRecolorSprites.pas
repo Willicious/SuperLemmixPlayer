@@ -5,7 +5,7 @@ interface
 uses
   Dialogs,
   Classes, SysUtils,
-  LemNeoParser,
+  LemNeoParserOld,
   LemDosStructures, LemLemming, LemTypes,
   GR32, GR32_Blend{, GR32_OrdinalMaps, GR32_Layers};
 

@@ -11,7 +11,7 @@ uses
   UMisc,
   Math,
   LemStrings,
-  LemNeoParser,
+  LemNeoParserOld,
   LemDosMainDat,
   LemPiece,
   LemTerrain,

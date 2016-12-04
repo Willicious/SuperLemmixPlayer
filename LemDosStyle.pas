@@ -15,7 +15,7 @@ uses
   LemDosMainDat,
   LemStyle, LemLevelSystem, LemMusicSystem,
   LemNeoSave,
-  LemNeoParser,
+  LemNeoParserOld,
   UZip; // For checking whether files actually exist
 
 const

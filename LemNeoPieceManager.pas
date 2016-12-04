@@ -11,7 +11,7 @@ interface
 
 uses
   Dialogs,
-  LemNeoParser, PngInterface, LemNeoTheme,
+  LemNeoParserOld, PngInterface, LemNeoTheme,
   LemMetaTerrain, LemMetaObject, LemTypes, GR32, LemStrings,
   StrUtils, Classes, SysUtils;
 

@@ -9,7 +9,7 @@ interface
 
 uses
   Dialogs,
-  LemMetaTerrain, LemTerrain, LemRendering, LemRenderHelpers, LemNeoParser,
+  LemMetaTerrain, LemTerrain, LemRendering, LemRenderHelpers, LemNeoParserOld,
   LemTypes, LemStrings, GR32, Classes, SysUtils;
 
 type

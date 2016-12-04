@@ -7,7 +7,7 @@ uses
   Dialogs,
   Classes, SysUtils, GR32,
   LemRenderHelpers,
-  LemNeoParser, PngInterface, LemStrings, LemTypes, Contnrs,
+  LemNeoParserOld, PngInterface, LemStrings, LemTypes, Contnrs,
   UTools;
 
 const

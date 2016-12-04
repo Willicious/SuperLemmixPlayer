@@ -8,7 +8,7 @@ uses
   Classes,
   UTools,
   LemPiece,
-  LemNeoParser,
+  LemNeoParserOld,
   Contnrs,
   SysUtils;
 

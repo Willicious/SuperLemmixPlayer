@@ -3,7 +3,7 @@ unit LemNeoLevelLoader;
 interface
 
 uses
-  LemNeoParser,
+  LemNeoParserOld,
   LemTerrain, LemInteractiveObject, LemSteel, LemLemming,
   LemLevel, {LemStrings,} LemVersion,
   Classes, SysUtils, StrUtils;
