@@ -22,6 +22,11 @@ of parsing the file into keyword / value pairs and seperate subsections.
 
 --- Usage Notes ---
 
+>> General
+Make sure that if StrUtils is used in the same unit as this, LemNeoParser comes AFTER StrUtils in the "Uses" clause. This
+is because StrUtils also has a class called TParser. Why didn't I rename it? Because nowhere in the code is StrUtils' TParser
+ever used, and for a frequently-used class like this, having a simple name is important.
+
 >> Loading
 Create a TParser object and load the file into it (can also load from a stream or TStringList). <TParser>.MainSection
 holds the "main" section, which all lines that aren't in a sub-section are considered part of. <TParser>.MainSection

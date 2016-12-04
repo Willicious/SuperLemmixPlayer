@@ -69,7 +69,7 @@ var
     i: Integer;
     Count: Integer;
 
-    procedure HandleSpawnEntry(aLine: TParserLine);
+    procedure HandleSpawnEntry(aLine: TParserLine; const aIteration: Integer);
     begin
       aLevel.Info.WindowOrder[i] := aLine.ValueNumeric;
       Inc(i);
@@ -98,41 +98,6 @@ var
   end;
 
 begin
-  aLevel.ClearLevel;
-  aLevel.Info.TimeLimit := 6000; // Default should be infinite, not 1 second
-  aLevel.Info.LevelOptions := $02;
-  Parser := TParser.Create;
-  try
-    Parser.LoadFromStream(aStream);
-    Main := Parser.MainSection;
-
-    with aLevel.Info do
-    begin
-      Title := Main.LineString['title'];
-      Author := Main.LineString['author'];
-      GraphicSetName := Main.LineTrimString['theme'];
-      MusicFile := Main.LineTrimString['music'];
-      LevelID := Main.LineNumeric['id'];
-
-      LemmingsCount := Main.LineNumeric['lemmings'];
-      RescueCount := Main.LineNumeric['requirement'];
-      TimeLimit := Main.LineNumeric['time_limit'];
-      if TimeLimit = 0 then TimeLimit := 6000; // treated as infinite
-      ReleaseRate := Main.LineNumeric['release_rate'];
-      ReleaseRateLocked := (Main.Line['release_rate_locked'] <> nil);
-
-      Width := Main.LineNumeric['width'];
-      Height := Main.LineNumeric['height'];
-      ScreenPosition := Main.LineNumeric['start_x'];
-      ScreenYPosition := Main.LineNumeric['start_y'];
-
-      LevelOptions := GetLevelOptionsValue(Main.LineTrimString['autosteel']);
-
-      BackgroundIndex := Main.LineNumeric['background']; // temporary, need to replace with referencing it by filename
-    end;
-
-    LoadSkillsetSection(Main.Section['skillset']);
-    LoadSpawnOrder(Main.Section['spawn_order']);
 
 
     {------------- OLD CODE FROM HERE ON ---------------}

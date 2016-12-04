@@ -6,7 +6,7 @@ interface
 uses
   Classes, SysUtils, StrUtils,
   //Dialogs, Controls,
-  LemNeoLevelLoader,
+  //LemNeoLevelLoader,
   Dialogs,
   UMisc,
   Math,
@@ -292,16 +292,6 @@ var
   i: Integer;
   Item: TIdentifiedPiece;
 begin
-  if (aLevel.Info.VgaspecFile <> '') then
-  begin
-    Item := aLevel.Terrains.Insert(0);
-    Item.Left := aLevel.Info.VgaspecX;
-    Item.Top := aLevel.Info.VgaspecY;
-    Item.GS := 'special';
-    Item.Piece := '*special';
-    TTerrain(Item).DrawingFlags := tdf_NoOneWay;
-  end;
-
   i := 0;
   while i < aLevel.Terrains.Count do
   begin
@@ -713,7 +703,7 @@ begin
   SetLength(aLevel.Info.WindowOrder, 0); //kludgy bug fix
 
   TempStream := TMemoryStream.Create;
-  TempLevel := TLevel.Create(nil);
+  TempLevel := TLevel.Create;
   aStream.Seek(0, soFromBeginning);
   aStream.Read(b, 1);
   aStream.Seek(0, soFromBeginning);
@@ -722,10 +712,7 @@ begin
     0: LoadTradLevelFromStream(aStream, TempLevel);
   1..3: LoadNeoLevelFromStream(aStream, TempLevel);
     4: LoadNewNeoLevelFromStream(aStream, TempLevel);
-    else begin
-      TNeoLevelLoader.LoadLevelFromStream(aStream, aLevel);
-      Exit;
-    end;
+    else TempLevel.LoadFromStream(aStream);
   end;
 
   // easiest way to avoid issues with older level formats is to save as a new level then re-load that
@@ -795,10 +782,6 @@ begin
   begin
     Trans := TTranslationTable.Create;
     Trans.LoadFromFile(AppPath + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt');
-
-    if aLevel.Info.VgaspecFile <> '' then
-      if FileExists(AppPath + SFStylesTranslation + 'x_' + Trim(aLevel.Info.VgaspecFile) + '.nxtt') then
-        Trans.LoadFromFile(AppPath + SFStylesTranslation + 'x_' + Trim(aLevel.Info.VgaspecFile) + '.nxtt');
 
     Trans.Apply(aLevel);
     Trans.Free;

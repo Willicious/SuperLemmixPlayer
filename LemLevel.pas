@@ -9,7 +9,8 @@ uses
   LemLemming,
   LemTerrain,
   LemInteractiveObject,
-  LemSteel;
+  LemSteel,
+  LemNeoParser;
 
 type
   TLevelInfo = class(TPersistent)
@@ -114,9 +115,27 @@ type
     fInteractiveObjects : TInteractiveObjects;
     fSteels             : TSteels;
     fPreplacedLemmings  : TPreplacedLemmingList;
+
+    // Loading routines
+    procedure LoadGeneralInfo(aSection: TParserSection);
+    procedure LoadSpawnOrderSection(aSection: TParserSection);
+      procedure HandleSpawnEntry(aLine: TParserLine; const aIteration: Integer);
+    procedure LoadSkillsetSection(aSection: TParserSection);
+    procedure HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
+    procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
+    procedure HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
+    procedure HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
+
+    // Saving routines
   public
     constructor Create;
     destructor Destroy; override;
+
+    procedure LoadFromFile(aFile: String);
+    procedure LoadFromStream(aStream: TStream);
+
+    procedure SaveToFile(aFile: String);
+    procedure SaveToStream(aStream: TStream);
   published
     property Info: TLevelInfo read fLevelInfo;
     property InteractiveObjects: TInteractiveObjects read fInteractiveObjects;
@@ -125,15 +144,10 @@ type
     property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings;
   end;
 
-  {
-  T_Level = class
-  private
-  protected
-  public
-  published
-  end;}
-
 implementation
+
+uses
+  LemLVLLoader; // for backwards compatibility
 
 { TLevelInfo }
 
@@ -198,7 +212,208 @@ begin
   fTerrains.Free;
   fSteels.Free;
   fPreplacedLemmings.Free;
-  inherited Destroy;
+  inherited;
+end;
+
+procedure TLevel.LoadFromFile(aFile: String);
+var
+  F: TFileStream;
+begin
+  F := TFileStream.Create(aFile, fmOpenRead);
+  try
+    F.Position := 0;
+    LoadFromStream(F);
+  finally
+    F.Free;
+  end;
+end;
+
+procedure TLevel.SaveToFile(aFile: String);
+var
+  F: TFileStream;
+begin
+  F := TFileStream.Create(aFile, fmCreate);
+  try
+    F.Position := 0;
+    SaveToStream(F);
+  finally
+    F.Free;
+  end;
+end;
+
+procedure TLevel.LoadFromStream(aStream: TStream);
+var
+  Parser: TParser;
+  Main: TParserSection;
+  b: Byte;
+begin
+  aStream.Read(b, 1);
+  aStream.Position := aStream.Position - 1;
+
+  if b < 5 then
+    TLVLLoader.LoadLevelFromStream(aStream, self); 
+
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromStream(aStream);
+    Main := Parser.MainSection;
+
+    LoadGeneralInfo(Main);
+    LoadSkillsetSection(Main.Section['skillset']);
+
+    Main.DoForEachSection('object', HandleObjectEntry);
+    Main.DoForEachSection('terrain', HandleTerrainEntry);
+    Main.DoForEachSection('area', HandleAreaEntry);
+  finally
+    Parser.Free;
+  end;
+end;
+
+procedure TLevel.LoadGeneralInfo(aSection: TParserSection);
+
+  function GetLevelOptionsValue(aString: String): Byte;
+  begin
+    aString := Lowercase(aString);
+    if aString = 'simple' then
+      Result := $0A
+    else if aString = 'off' then
+      Result := $00
+    else
+      Result := $02;
+  end;
+begin
+  // This procedure should receive the Parser's MAIN section
+  with Info do
+  begin
+    Title := aSection.LineString['title'];
+    Author := aSection.LineString['author'];
+    GraphicSetName := aSection.LineTrimString['theme'];
+    MusicFile := aSection.LineTrimString['music'];
+    LevelID := aSection.LineNumeric['id'];
+
+    LemmingsCount := aSection.LineNumeric['lemmings'];
+    RescueCount := aSection.LineNumeric['requirement'];
+    TimeLimit := aSection.LineNumeric['time_limit'];
+    if TimeLimit = 0 then TimeLimit := 6000; // treated as infinite
+    ReleaseRate := aSection.LineNumeric['release_rate'];
+    ReleaseRateLocked := (aSection.Line['release_rate_locked'] <> nil);
+
+    Width := aSection.LineNumeric['width'];
+    Height := aSection.LineNumeric['height'];
+    ScreenPosition := aSection.LineNumeric['start_x'];
+    ScreenYPosition := aSection.LineNumeric['start_y'];
+
+    LevelOptions := GetLevelOptionsValue(aSection.LineTrimString['autosteel']);
+
+    BackgroundIndex := aSection.LineNumeric['background']; // temporary, need to replace with referencing it by filename
+  end;
+end;
+
+procedure TLevel.LoadSpawnOrderSection(aSection: TParserSection);
+var
+  Count: Integer;
+begin
+  if aSection = nil then
+  begin
+    SetLength(Info.WindowOrder, 0);
+    Exit;
+  end;
+  SetLength(Info.WindowOrder, aSection.LineList.Count);
+  Count := aSection.DoForEachLine('object', HandleSpawnEntry);
+  SetLength(Info.WindowOrder, Count);
+end;
+
+procedure TLevel.HandleSpawnEntry(aLine: TParserLine; const aIteration: Integer);
+begin
+  Info.WindowOrder[aIteration] := aLine.ValueNumeric;
+end;
+
+procedure TLevel.LoadSkillsetSection(aSection: TParserSection);
+  function HandleSkill(aLabel: String; aFlag: Cardinal): Integer;
+  var
+    Line: TParserLine;
+  begin
+    Result := 0;
+    Line := aSection.Line[aLabel];
+    if Line = nil then Exit;
+    Result := Line.ValueNumeric;
+    Info.SkillTypes := Info.SkillTypes or aFlag;
+  end;
+begin
+  Info.SkillTypes := 0;
+  if aSection = nil then Exit;
+
+  Info.WalkerCount := HandleSkill('walker', $8000);
+  Info.ClimberCount := HandleSkill('climber', $4000);
+  Info.SwimmerCount := HandleSkill('swimmer', $2000);
+  Info.FloaterCount := HandleSkill('floater', $1000);
+  Info.GliderCount := HandleSkill('glider', $0800);
+  Info.MechanicCount := HandleSkill('disarmer', $0400);
+  Info.BomberCount := HandleSkill('bomber', $0200);
+  Info.StonerCount := HandleSkill('stoner', $0100);
+  Info.BlockerCount := HandleSkill('blocker', $0080);
+  Info.PlatformerCount := HandleSkill('platformer', $0040);
+  Info.BuilderCount := HandleSkill('builder', $0020);
+  Info.StackerCount := HandleSkill('stacker', $0010);
+  Info.BasherCount := HandleSkill('basher', $0008);
+  Info.MinerCount := HandleSkill('miner', $0004);
+  Info.DiggerCount := HandleSkill('digger', $0002);
+  Info.ClonerCount := HandleSkill('cloner', $0001);
+end;
+
+procedure TLevel.HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
+var
+  O: TInteractiveObject;
+
+  procedure Flag(aValue: Integer);
+  begin
+    O.DrawingFlags := O.DrawingFlags or aValue;
+  end;
+begin
+  O := fInteractiveObjects.Add;
+  
+  O.GS := aSection.LineTrimString['collection'];
+  O.Piece := aSection.LineTrimString['piece'];
+  O.Left := aSection.LineNumeric['x'];
+  O.Top := aSection.LineNumeric['y'];
+  O.Width := aSection.LineNumeric['width'];
+  O.Height := aSection.LineNumeric['height'];
+
+  O.IsFake := (aSection.Line['fake'] <> nil);
+  O.DrawingFlags := 0;
+  if (aSection.Line['invisible'] <> nil) then Flag(odf_Invisible);
+  if (aSection.Line['rotate'] <> nil) then Flag(odf_Rotate);
+  if (aSection.Line['flip'] <> nil) then Flag(odf_Flip);
+  if (aSection.Line['invert'] <> nil) then Flag(odf_UpsideDown);
+  if (aSection.Line['face_left'] <> nil) then Flag(odf_FlipLem);
+  if (aSection.Line['no_overwrite'] <> nil) then Flag(odf_NoOverwrite);
+  if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
+
+  // Need to replace with better stuff
+  O.Skill := aSection.LineNumeric['s_value'];
+  O.TarLev := aSection.LineNumeric['l_value'];
+end;
+
+procedure TLevel.HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
+var
+  T: TTerrain;
+begin
+end;
+
+procedure TLevel.HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
+var
+  S: TSteel;
+begin
+end;
+
+procedure TLevel.HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
+var
+  L: TPreplacedLemming;
+begin
+end;
+
+procedure TLevel.SaveToStream(aStream: TStream);
+begin
 end;
 
 end.
