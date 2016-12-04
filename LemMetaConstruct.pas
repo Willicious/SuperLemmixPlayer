@@ -111,7 +111,18 @@ begin
       if Line.Keyword = 'TERRAIN' then
       begin
         T := fPieceList.Add;
-        T.LoadFromParser(Parser); 
+
+        T.DrawingFlags := tdf_NoOneWay;
+        T.GS := '';
+        T.Piece := '';
+        T.Left := 0;
+        T.Top := 0;
+
+        repeat
+          Line := Parser.NextLine;
+          T.EvaluateParserLine(Line);
+        until (Line.Keyword = '') or (Line.Keyword = 'TERRAIN') or (Line.Keyword = 'STEEL');
+        Parser.Back;
       end;
     until Line.Keyword = '';
   finally

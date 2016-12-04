@@ -79,7 +79,7 @@ begin
           ScreenYPosition := Line.Numeric;
 
         if Line.Keyword = 'THEME' then
-          GraphicSetName := Line.Value;
+          GraphicSetName := Line.ValueTrimmed;
 
         if Line.Keyword = 'LEMMINGS' then
           LemmingsCount := Line.Numeric;
@@ -103,11 +103,11 @@ begin
         end;
 
         if Line.Keyword = 'AUTOSTEEL' then
-          if Uppercase(Line.Value) = 'OFF' then
+          if Uppercase(Line.ValueTrimmed) = 'OFF' then
             LevelOptions := LevelOptions and not $0A
-          else if Uppercase(Line.Value) = 'SIMPLE' then
+          else if Uppercase(Line.ValueTrimmed) = 'SIMPLE' then
             LevelOptions := LevelOptions or $0A
-          else if Uppercase(Line.Value) = 'ON' then
+          else if Uppercase(Line.ValueTrimmed) = 'ON' then
             LevelOptions := (LevelOptions or $02) and not $08;
 
         if Line.Keyword = 'WALKER' then
@@ -213,7 +213,7 @@ begin
         end;
       end;
 
-    until (NewPiece) or (Line.Keyword = '');
+    until (NewPiece);
 
     repeat
       if Line.Keyword = 'OBJECT' then
@@ -223,10 +223,10 @@ begin
           Line := Parser.NextLine;
 
           if Line.Keyword = 'SET' then
-            O.GS := Lowercase(Line.Value);
+            O.GS := Lowercase(Line.ValueTrimmed);
 
           if Line.Keyword = 'PIECE' then
-            O.Piece := Lowercase(Line.Value);
+            O.Piece := Lowercase(Line.ValueTrimmed);
 
           if Line.Keyword = 'X' then
             O.Left := Line.Numeric;
@@ -276,9 +276,16 @@ begin
       if Line.Keyword = 'TERRAIN' then
       begin
         T := aLevel.Terrains.Add;
-        T.LoadFromParser(Parser);
+
+        T.DrawingFlags := tdf_NoOneWay;
+        T.GS := '';
+        T.Piece := '';
+        T.Left := 0;
+        T.Top := 0;
+
         repeat
           Line := Parser.NextLine;
+          T.EvaluateParserLine(Line);
         until NewPiece;
       end;
 

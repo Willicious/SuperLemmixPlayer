@@ -206,7 +206,7 @@ begin
                            ShowMessage('This pack''s data is in the wrong format for this version of NeoLemmix.' + #13 +
                                        'Please use NeoLemmix V' + Target + ' to play this pack.');
                            IsHalting := true;
-                           Halt(0);
+                           Application.Terminate();
                          end;
         nxc_OldCore: begin
                        if FileExists(ChangeFileExt(GameFile, '.nxsv')) then
@@ -218,18 +218,22 @@ begin
                          ShowMessage('This pack is designed for older versions of NeoLemmix. It should be compatible,' + #13 +
                                      'but please be aware that it may not have been tested against this version. For' + #13 +
                                      'optimal results, use NeoLemmix V' + Target + ' to play this pack.');
-                       // don't need to halt
+                       // don't need to exit the application
                      end;
         nxc_NewCore: begin
                        ShowMessage('This pack is designed for newer versions of NeoLemmix. Please upgrade to' + #13 +
                                    'NeoLemmix V' + Target + ' to play this pack.');
-                       IsHalting := true;
-                       Halt(0);
+                       // only exit if file formats changed, i.e there is a change to FORMAT_VERSION
+                       if LeftStr(Target, 3) <> LeftStr(CurrentVersionString, 3) then
+                       begin
+                         IsHalting := true;
+                         Application.Terminate();
+                       end;
                      end;
         nxc_Error: begin
                      ShowMessage('The NXP file could not be loaded. It may be corrupt or an invalid file.');
                      IsHalting := true;
-                     Halt(0);
+                     Application.Terminate();
                    end;
       end;
     end else begin
