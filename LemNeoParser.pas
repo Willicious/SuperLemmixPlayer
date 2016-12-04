@@ -39,14 +39,14 @@ Although direct access is possible, the recommended ways to get lines or subsect
   In the case that multiple occurances may be expected:
     Define a procedure (may be private) in the class that's loading the file, of the following format. This can
     either be a procedure of the object itself, or a sub-procedure of another method.
-      procedure <name>(aLine: TParserLine);
-      procedure <name>(aSection: TParserSection);
+      procedure <name>(aLine: TParserLine; const aIteration: Integer);
+      procedure <name>(aSection: TParserSection; const aIteration: Integer);
     You can then use the following calls to run this procedure once for each line:
       <TParserSection>.DoForEachLine($$$$, <name>);
       <TParserSection>.DoForEachSection($$$$, <name>);
     This effectively works like the following code would be expected to if it were valid:
       for each Item := TParserLine in <TParserSection>.LineList do
-        <name>(Item);
+        <name>(Item, # of previous Item found);
 
 >> Saving
 Create a TParser object. The main section will be created, but empty, and can be accessed as <TParser>.MainSection.
@@ -84,8 +84,8 @@ type
   TParserSectionList = class;
   TParserLineList = class;
 
-  TForEachLineProcedure = procedure(aLine: TParserLine) of object;
-  TForEachSectionProcedure = procedure(aSection: TParserSection) of object;
+  TForEachLineProcedure = procedure(aLine: TParserLine; const aIteration: Integer) of object;
+  TForEachSectionProcedure = procedure(aSection: TParserSection; const aIteration: Integer) of object;
 
   TParser = class
     private
@@ -490,7 +490,7 @@ begin
   for i := 0 to fLines.Count-1 do
     if fLines[i].Keyword = aKeyword then
     begin
-      aMethod(fLines[i]);
+      aMethod(fLines[i], Result);
       Inc(Result);
     end;
 end;
@@ -503,7 +503,7 @@ begin
   for i := 0 to fSections.Count-1 do
     if fSections[i].Keyword = aKeyword then
     begin
-      aMethod(fSections[i]);
+      aMethod(fSections[i], Result);
       Inc(Result);
     end;
 end;

@@ -82,7 +82,7 @@ var
     end;
     SetLength(aLevel.Info.WindowOrder, aSection.LineList.Count);
     i := 0;
-    aSection.DoForEachLine('object', );
+    aSection.DoForEachLine('object', HandleSpawnEntry);
     SetLength(aLevel.Info.WindowOrder, i);
   end;
 
