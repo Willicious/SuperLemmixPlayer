@@ -125,6 +125,7 @@ type
     procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
+    procedure Sanitize;
 
     // Saving routines
   public
@@ -260,6 +261,8 @@ begin
   end;
 end;
 
+// TLevel Loading Routines
+
 procedure TLevel.LoadFromStream(aStream: TStream);
 var
   Parser: TParser;
@@ -283,7 +286,9 @@ begin
     Main.DoForEachSection('object', HandleObjectEntry);
     Main.DoForEachSection('terrain', HandleTerrainEntry);
     Main.DoForEachSection('area', HandleAreaEntry);
-    Main.DoForEachSection('lemming', HandleLemmingEntry)
+    Main.DoForEachSection('lemming', HandleLemmingEntry);
+
+    Sanitize;
   finally
     Parser.Free;
   end;
@@ -469,7 +474,7 @@ begin
     L.Dx := -1
   else
     L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
-               // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES RIGHT".
+               // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES IS RIGHT".
 
   L.IsClimber  := (aSection.Line['climber']  <> nil);
   L.IsSwimmer  := (aSection.Line['swimmer']  <> nil);
@@ -478,6 +483,78 @@ begin
   L.IsDisarmer := (aSection.Line['disarmer'] <> nil);
   L.IsZombie   := (aSection.Line['zombie']   <> nil);
 end;
+
+procedure TLevel.Sanitize;
+begin
+  // Nepster - I have removed certain parts of this as they are not needed in regards to longer-term plans
+  with Info do
+  begin
+    if Width < 320 then Width := 320;
+    if Height < 160 then Height := 160;
+
+    if ScreenPosition < 0 then ScreenPosition := 0;
+    if ScreenPosition > Width-320 then ScreenPosition := Width-320;
+
+    if ScreenYPosition < 0 then ScreenYPosition := 0;
+    if ScreenYPosition > Height-160 then ScreenYPosition := Height-160;
+
+    if LemmingsCount < 0 then LemmingsCount := 0;
+    if RescueCount < 0 then RescueCount := 0;
+
+    if TimeLimit < 1 then TimeLimit := 1;
+    if TimeLimit > 6000 then TimeLimit := 6000;
+
+    if ReleaseRate < 1 then ReleaseRate := 1;
+    if ReleaseRate > 99 then ReleaseRate := 99;
+
+    if WalkerCount < 0 then WalkerCount := 0;
+    if WalkerCount > 100 then WalkerCount := 100;
+
+    if ClimberCount < 0 then ClimberCount := 0;
+    if ClimberCount > 100 then ClimberCount := 100;
+
+    if SwimmerCount < 0 then SwimmerCount := 0;
+    if SwimmerCount > 100 then SwimmerCount := 100;
+
+    if FloaterCount < 0 then FloaterCount := 0;
+    if FloaterCount > 100 then FloaterCount := 100;
+
+    if GliderCount < 0 then GliderCount := 0;
+    if GliderCount > 100 then GliderCount := 100;
+
+    if MechanicCount < 0 then MechanicCount := 0;
+    if MechanicCount > 100 then MechanicCount := 100;
+
+    if BomberCount < 0 then BomberCount := 0;
+    if BomberCount > 100 then BomberCount := 100;
+
+    if BlockerCount < 0 then BlockerCount := 0;
+    if BlockerCount > 100 then BlockerCount := 100;
+
+    if PlatformerCount < 0 then PlatformerCount := 0;
+    if PlatformerCount > 100 then PlatformerCount := 100;
+
+    if BuilderCount < 0 then BuilderCount := 0;
+    if BuilderCount > 100 then BuilderCount := 100;
+
+    if StackerCount < 0 then StackerCount := 0;
+    if StackerCount > 100 then StackerCount := 100;
+
+    if BasherCount < 0 then BasherCount := 0;
+    if BasherCount > 100 then BasherCount := 100;
+
+    if MinerCount < 0 then MinerCount := 0;
+    if MinerCount > 100 then MinerCount := 100;
+
+    if DiggerCount < 0 then DiggerCount := 0;
+    if DiggerCount > 100 then DiggerCount := 100;
+
+    if ClonerCount < 0 then ClonerCount := 0;
+    if ClonerCount > 100 then ClonerCount := 100;
+  end;
+end;
+
+// TLevel Saving Routines
 
 procedure TLevel.SaveToStream(aStream: TStream);
 begin
