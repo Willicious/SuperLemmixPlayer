@@ -7,8 +7,9 @@ uses
   Classes, SysUtils, StrUtils,
   UMisc,
   LemLemming,
-  LemTerrain,
-  LemInteractiveObject,
+  LemTerrain, LemMetaTerrain,
+  LemInteractiveObject, LemMetaObject,
+  LemNeoPieceManager,
   LemSteel,
   LemNeoParser;
 
@@ -399,14 +400,77 @@ end;
 procedure TLevel.HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
 var
   O: TInteractiveObject;
+  MO: TMetaObject;
 
   procedure Flag(aValue: Integer);
   begin
     O.DrawingFlags := O.DrawingFlags or aValue;
   end;
+
+  procedure GetTeleporterData;
+  begin
+    if (aSection.Line['flip_lemming'] <> nil) then Flag(odf_FlipLem);
+    O.Skill := aSection.LineNumeric['pairing'];
+  end;
+
+  procedure GetReceiverData;
+  begin
+    O.Skill := aSection.LineNumeric['pairing'];
+  end;
+
+  procedure GetPickupData;
+  var
+    S: String;
+  begin
+    S := Lowercase(aSection.LineTrimString['skill']);
+
+    if S = 'walker' then O.Skill := 8;
+    if S = 'climber' then O.Skill := 0;
+    if S = 'swimmer' then O.Skill := 9;
+    if S = 'floater' then O.Skill := 1;
+    if S = 'glider' then O.Skill := 10;
+    if S = 'disarmer' then O.Skill := 11;
+    if S = 'bomber' then O.Skill := 2;
+    if S = 'stoner' then O.Skill := 12;
+    if S = 'blocker' then O.Skill := 3;
+    if S = 'platformer' then O.Skill := 13;
+    if S = 'builder' then O.Skill := 4;
+    if S = 'stacker' then O.Skill := 14;
+    if S = 'basher' then O.Skill := 5;
+    if S = 'miner' then O.Skill := 6;
+    if S = 'digger' then O.Skill := 7;
+    if S = 'cloner' then O.Skill := 15;
+  end;
+
+  procedure GetSplitterData;
+  begin
+    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then
+      Flag(odf_FlipLem);
+  end;
+
+  procedure GetWindowData;
+  begin
+    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem);
+    if (aSection.Line['climber'] <> nil) then O.TarLev := O.TarLev or 1;
+    if (aSection.Line['swimmer'] <> nil) then O.TarLev := O.TarLev or 2;
+    if (aSection.Line['floater'] <> nil) then O.TarLev := O.TarLev or 4;
+    if (aSection.Line['glider'] <> nil) then O.TarLev := O.TarLev or 8;
+    if (aSection.Line['disarmer'] <> nil) then O.TarLev := O.TarLev or 16;
+    if (aSection.Line['zombie'] <> nil) then O.TarLev := O.TarLev or 64;
+  end;
+
+  procedure GetMovingBackgroundData;
+  var
+    Angle: Integer;
+  begin
+    Angle := aSection.LineNumeric['angle'];
+    Angle := ((Angle * 10) + 113) div 225;
+    O.Skill := Angle;
+    O.TarLev := aSection.LineNumeric['speed'];
+  end;
 begin
   O := fInteractiveObjects.Add;
-  
+
   O.GS := aSection.LineTrimString['collection'];
   O.Piece := aSection.LineTrimString['piece'];
   O.Left := aSection.LineNumeric['x'];
@@ -420,13 +484,18 @@ begin
   if (aSection.Line['rotate'] <> nil) then Flag(odf_Rotate);
   if (aSection.Line['flip_horizontal'] <> nil) then Flag(odf_Flip);
   if (aSection.Line['flip_vertical'] <> nil) then Flag(odf_UpsideDown);
-  if (aSection.Line['face_left'] <> nil) then Flag(odf_FlipLem);
   if (aSection.Line['no_overwrite'] <> nil) then Flag(odf_NoOverwrite);
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
 
-  // Need to replace with better stuff
-  O.Skill := aSection.LineNumeric['s_value'];
-  O.TarLev := aSection.LineNumeric['l_value'];
+  MO := PieceManager.Objects[O.Identifier];
+  case MO.TriggerEffect of
+    11: GetTeleporterData;
+    12: GetReceiverData;
+    14: GetPickupData;
+    21: GetSplitterData;
+    23: GetWindowData;
+    30: GetMovingBackgroundData;
+  end;
 end;
 
 procedure TLevel.HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
@@ -676,11 +745,84 @@ procedure TLevel.SaveObjectSections(aSection: TParserSection);
 var
   i: Integer;
   O: TInteractiveObject;
+  MO: TMetaObject;
   Sec: TParserSection;
 
   function Flag(aValue: Integer): Boolean;
   begin
     Result := O.DrawingFlags and aValue = aValue;
+  end;
+
+  //if Flag(odf_FlipLem) then Sec.AddLine('FACE_LEFT');
+
+  procedure SetTeleporterData;
+  begin
+    if Flag(odf_FlipLem) then Sec.AddLine('FLIP_LEMMING');
+    Sec.AddLine('PAIRING', O.Skill);
+  end;
+
+  procedure SetReceiverData;
+  begin
+    Sec.AddLine('PAIRING', O.Skill);
+  end;
+
+  procedure SetPickupData;
+  var
+    S: String;
+  begin
+    case O.Skill of
+      8: S := 'WALKER';
+      0: S := 'CLIMBER';
+      9: S := 'SWIMMER';
+      1: S := 'FLOATER';
+      10: S := 'GLIDER';
+      11: S := 'DISARMER';
+      2: S := 'BOMBER';
+      12: S := 'STONER';
+      3: S := 'BLOCKER';
+      13: S := 'PLATFORMER';
+      4: S := 'BUILDER';
+      14: S := 'STACKER';
+      5: S := 'BASHER';
+      6: S := 'MINER';
+      7: S := 'DIGGER';
+      15: S := 'CLONER';
+    end;
+
+    Sec.AddLine(S);
+  end;
+
+  procedure SetSplitterData;
+  begin
+    if Flag(odf_FlipLem) then
+      Sec.AddLine('DIRECTION', 'left')
+    else
+      Sec.AddLine('DIRECTION', 'right');
+  end;
+
+  procedure SetWindowData;
+  begin
+    if Flag(odf_FlipLem) then
+      Sec.AddLine('DIRECTION', 'left')
+    else
+      Sec.AddLine('DIRECTION', 'right');
+
+    if O.TarLev and 1 <> 0 then Sec.AddLine('CLIMBER');
+    if O.TarLev and 2 <> 0 then Sec.AddLine('SWIMMER');
+    if O.TarLev and 4 <> 0 then Sec.AddLine('FLOATER');
+    if O.TarLev and 8 <> 0 then Sec.AddLine('GLIDER');
+    if O.TarLev and 16 <> 0 then Sec.AddLine('DISARMER');
+    if O.TarLev and 64 <> 0 then Sec.AddLine('ZOMBIE');
+  end;
+
+  procedure SetMovingBackgroundData;
+  var
+    Angle: Integer;
+  begin
+    Angle := (O.Skill * 225) div 10;
+
+    Sec.AddLine('ANGLE', O.Skill);
+    Sec.AddLine('SPEED', O.TarLev);
   end;
 begin
   for i := 0 to fInteractiveObjects.Count-1 do
@@ -700,12 +842,18 @@ begin
     if Flag(odf_Rotate) then Sec.AddLine('ROTATE');
     if Flag(odf_Flip) then Sec.AddLine('FLIP_HORIZONTAL');
     if Flag(odf_UpsideDown) then Sec.AddLine('FLIP_VERTICAL');
-    if Flag(odf_FlipLem) then Sec.AddLine('FACE_LEFT');
     if Flag(odf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
     if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');
 
-    Sec.AddLine('S_VALUE', O.Skill);
-    Sec.AddLine('L_VALUE', O.TarLev);
+    MO := PieceManager.Objects[O.Identifier];
+    case MO.TriggerEffect of
+      11: SetTeleporterData;
+      12: SetReceiverData;
+      14: SetPickupData;
+      21: SetSplitterData;
+      23: SetWindowData;
+      30: SetMovingBackgroundData;
+    end;
   end;
 end;
 

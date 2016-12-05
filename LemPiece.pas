@@ -35,11 +35,13 @@ type
     procedure SetFlip(aValue: Boolean); virtual;
     procedure SetInvert(aValue: Boolean); virtual;
     procedure SetRotate(aValue: Boolean); virtual;
+    function GetIdentifier: String;
   public
     procedure Assign(Source: TPiece); override;
   published
     property GS: String read fSet write fSet; // "Set" is a reserved keyword :(
     property Piece: String read fPiece write fPiece;
+    property Identifier: String read GetIdentifier;
     property Flip   : Boolean read GetFlip write SetFlip;
     property Invert : Boolean read GetInvert write SetInvert;
     property Rotate : Boolean read GetRotate write SetRotate;    
@@ -110,6 +112,11 @@ end;
 function TIdentifiedPiece.GetRotate: Boolean;
 begin
   Result := false;
+end;
+
+function TIdentifiedPiece.GetIdentifier: String;
+begin
+  Result := fSet + ':' + fPiece;
 end;
 
 { TSizedPiece }
