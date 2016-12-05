@@ -402,7 +402,7 @@ var
 begin
   Result := nil;
   for i := fLines.Count-1 downto 0 do
-    if fLines[i].Keyword = aKeyword then
+    if fLines[i].Keyword = Lowercase(aKeyword) then
     begin
       Result := fLines[i];
       Exit;
@@ -415,7 +415,7 @@ var
 begin
   Result := nil;
   for i := fSections.Count-1 downto 0 do
-    if fSections[i].Keyword = aKeyword then
+    if fSections[i].Keyword = Lowercase(aKeyword) then
     begin
       Result := fSections[i];
       Exit;
@@ -521,7 +521,7 @@ var
 begin
   Result := 0;
   for i := 0 to fLines.Count-1 do
-    if fLines[i].Keyword = aKeyword then
+    if fLines[i].Keyword = Lowercase(aKeyword) then
     begin
       aMethod(fLines[i], Result);
       Inc(Result);
@@ -534,7 +534,7 @@ var
 begin
   Result := 0;
   for i := 0 to fSections.Count-1 do
-    if fSections[i].Keyword = aKeyword then
+    if fSections[i].Keyword = Lowercase(aKeyword) then
     begin
       aMethod(fSections[i], Result);
       Inc(Result);
