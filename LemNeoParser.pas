@@ -56,11 +56,13 @@ Although direct access is possible, the recommended ways to get lines or subsect
 >> Saving
 Create a TParser object. The main section will be created, but empty, and can be accessed as <TParser>.MainSection.
 You can add lines to a TParserSection as follows:
-  <TParserSection>.LineList.Add(TParserLine.Create($$$$, $$$$));
-    The first $$$$ is the keyword, the second is the value. Either a String or an Int64 is accepted for the value.
+  <TParserSection>.AddLine($$$$);
+  <TParserSection>.AddLine($$$$, $$$$);
+    The first $$$$ is the keyword, the second is the value. Either a String or an Int64 is accepted for the value. If the
+    value is an empty string, it will not be added; to add a line with no value specified, omit the value altogether rather
+    than leaving it empty.
 Adding a new section is a tiny bit trickier. First, the section must be created and assigned to a temporary variable:
-  <TParserSection 2> := TParserSection.Create($$$$);
-  <TParserSection>.SectionList.Add(<TParserSection 2>);
+  <TParserSection 2> := <TParserSection>.SectionList.Add($$$$);
     The $$$$ is the section's keyword.
   You can then manipluate <TParserSection 2> the same way as any other TParserSection.
 Once all is done, simply call TParser.SaveToFile (or SaveToStream).
@@ -134,6 +136,10 @@ type
       function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure): Integer;
       function DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure): Integer;
 
+      procedure AddLine(aKeyword: String); overload;
+      procedure AddLine(aKeyword: String; aValue: String); overload;
+      procedure AddLine(aKeyword: String; aValue: Int64); overload;
+
       property Keyword: String read GetKeyword write SetKeyword;
       property KeywordDirect: String read fKeyword write SetKeyword;
 
@@ -175,7 +181,8 @@ type
       function GetItem(Index: Integer): TParserSection;
     public
       constructor Create;
-      function Add(Item: TParserSection): Integer;
+      function Add(Item: TParserSection): Integer; overload;
+      function Add(aKeyword: String): TParserSection; overload;
       procedure Insert(Index: Integer; Item: TParserSection);
       property Items[Index: Integer]: TParserSection read GetItem; default;
       property List;
@@ -254,6 +261,9 @@ begin
   TrimStrings;
   i := 0;
   fMainSection.LoadFromStrings(aStrings, i);
+
+  // For testing
+  SaveToFile(ExtractFilePath(ParamStr(0)) + 'test.nxpr');
 end;
 
 procedure TParser.SaveToFile(aFile: String);
@@ -445,6 +455,22 @@ begin
     Result := Line.ValueNumeric;
 end;
 
+procedure TParserSection.AddLine(aKeyword: String);
+begin
+  fLines.Add(TParserLine.Create(aKeyword, ''));
+end;
+
+procedure TParserSection.AddLine(aKeyword: String; aValue: String);
+begin
+  if aValue = '' then Exit;
+  fLines.Add(TParserLine.Create(aKeyword, aValue));
+end;
+
+procedure TParserSection.AddLine(aKeyword: String; aValue: Int64);
+begin
+  fLines.Add(TParserLine.Create(aKeyword, aValue));
+end;
+
 procedure TParserSection.LoadFromStrings(aStrings: TStrings; var aPos: Integer);
 var
   S: String;
@@ -487,7 +513,6 @@ begin
     aStrings.Add('');
   end;
 
-  aStrings.Add('');
 end;
 
 function TParserSection.DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure): Integer;
@@ -529,6 +554,12 @@ end;
 function TParserSectionList.Add(Item: TParserSection): Integer;
 begin
   Result := inherited Add(Item);
+end;
+
+function TParserSectionList.Add(aKeyword: String): TParserSection;
+begin
+  Result := TParserSection.Create(aKeyword);
+  Add(Result);
 end;
 
 procedure TParserSectionList.Insert(Index: Integer; Item: TParserSection);

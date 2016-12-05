@@ -128,6 +128,13 @@ type
     procedure Sanitize;
 
     // Saving routines
+    procedure SaveGeneralInfo(aSection: TParserSection);
+    procedure SaveSpawnOrderSection(aSection: TParserSection);
+    procedure SaveSkillsetSection(aSection: TParserSection);
+    procedure SaveObjectSections(aSection: TParserSection);
+    procedure SaveTerrainSections(aSection: TParserSection);
+    procedure SaveAreaSections(aSection: TParserSection);
+    procedure SaveLemmingSections(aSection: TParserSection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -281,6 +288,7 @@ begin
     Main := Parser.MainSection;
 
     LoadGeneralInfo(Main);
+    LoadSpawnOrderSection(Main.Section['spawn_order']);
     LoadSkillsetSection(Main.Section['skillset']);
 
     Main.DoForEachSection('object', HandleObjectEntry);
@@ -557,7 +565,225 @@ end;
 // TLevel Saving Routines
 
 procedure TLevel.SaveToStream(aStream: TStream);
+var
+  Parser: TParser;
 begin
+  Parser := TParser.Create;
+  try
+    SaveGeneralInfo(Parser.MainSection);
+    SaveSpawnOrderSection(Parser.MainSection);
+    SaveSkillsetSection(Parser.MainSection);
+    SaveObjectSections(Parser.MainSection);
+    SaveTerrainSections(Parser.MainSection);
+    SaveAreaSections(Parser.MainSection);
+    SaveLemmingSections(Parser.MainSection);
+    Parser.SaveToStream(aStream);
+  finally
+    Parser.Free;
+  end;
+end;
+
+procedure TLevel.SaveGeneralInfo(aSection: TParserSection);
+  procedure MakeAutoSteelLine;
+  var
+    S: String;
+  begin
+    if (Info.LevelOptions and $0A) = $0A then
+      S := 'simple'
+    else if (Info.LevelOptions and $02) = 0 then
+      S := 'off'
+    else
+      S := 'on'; // not strictly needed as "On" is default value
+
+    aSection.AddLine('AUTOSTEEL', S);
+  end;
+begin
+  with Info do
+  begin
+    aSection.AddLine('TITLE', Title);
+    aSection.AddLine('AUTHOR', Author);
+    aSection.AddLine('THEME', GraphicSetName);
+    aSection.AddLine('MUSIC', MusicFile);
+    aSection.AddLine('ID', 'x' + IntToHex(LevelID, 8));
+
+    aSection.AddLine('LEMMINGS', LemmingsCount);
+    aSection.AddLine('REQUIREMENT', RescueCount);
+
+    if (TimeLimit > 0) and (TimeLimit < 6000) then
+      aSection.AddLine('TIME_LIMIT', TimeLimit);
+
+    aSection.AddLine('RELEASE_RATE', ReleaseRate);
+    if ReleaseRateLocked then
+      aSection.AddLine('RELEASE_RATE_LOCKED');
+
+    aSection.AddLine('WIDTH', Width);
+    aSection.AddLine('HEIGHT', Height);
+    aSection.AddLine('START_X', ScreenPosition);
+    aSection.AddLine('START_Y', ScreenYPosition);
+
+    MakeAutosteelLine;
+
+    aSection.AddLine('BACKGROUND', BackgroundIndex);
+  end;
+end;
+
+procedure TLevel.SaveSpawnOrderSection(aSection: TParserSection);
+var
+  Sec: TParserSection;
+  i: Integer;
+begin
+  if Length(Info.WindowOrder) = 0 then Exit;
+
+  Sec := aSection.SectionList.Add('SPAWN_ORDER');
+  for i := 0 to Length(Info.WindowOrder)-1 do
+    Sec.AddLine('OBJECT', Info.WindowOrder[i]);
+end; 
+
+procedure TLevel.SaveSkillsetSection(aSection: TParserSection);
+var
+  Sec: TParserSection;
+
+  procedure HandleSkill(aLabel: String; aFlag: Cardinal; aCount: Integer);
+  begin
+    if Info.SkillTypes and aFlag = 0 then Exit; // we don't check aCount because a zero count might still mean pickup skills exist
+    Sec.AddLine(aLabel, aCount);
+  end;
+begin
+  if Info.SkillTypes = 0 then Exit;
+  Sec := aSection.SectionList.Add('SKILLSET');
+
+  HandleSkill('WALKER', $8000, Info.WalkerCount);
+  HandleSkill('CLIMBER', $4000, Info.ClimberCount);
+  HandleSkill('SWIMMER', $2000, Info.SwimmerCount);
+  HandleSkill('FLOATER', $1000, Info.FloaterCount);
+  HandleSkill('GLIDER', $0800, Info.GliderCount);
+  HandleSkill('DISARMER', $0400, Info.MechanicCount);
+  HandleSkill('BOMBER', $0200, Info.BomberCount);
+  HandleSkill('STONER', $0100, Info.StonerCount);
+  HandleSkill('BLOCKER', $0080, Info.BlockerCount);
+  HandleSkill('PLATFORMER', $0040, Info.PlatformerCount);
+  HandleSkill('BUILDER', $0020, Info.BuilderCount);
+  HandleSkill('STACKER', $0010, Info.StackerCount);
+  HandleSkill('BASHER', $0008, Info.BasherCount);
+  HandleSkill('MINER', $0004, Info.MinerCount);
+  HandleSkill('DIGGER', $0002, Info.DiggerCount);
+  HandleSkill('CLONER', $0001, Info.ClonerCount);
+end;
+
+procedure TLevel.SaveObjectSections(aSection: TParserSection);
+var
+  i: Integer;
+  O: TInteractiveObject;
+  Sec: TParserSection;
+
+  function Flag(aValue: Integer): Boolean;
+  begin
+    Result := O.DrawingFlags and aValue = aValue;
+  end;
+begin
+  for i := 0 to fInteractiveObjects.Count-1 do
+  begin
+    O := fInteractiveObjects[i];
+    Sec := aSection.SectionList.Add('OBJECT');
+
+    Sec.AddLine('COLLECTION', O.GS);
+    Sec.AddLine('PIECE', O.Piece);
+    Sec.AddLine('X', O.Left);
+    Sec.AddLine('Y', O.Top);
+    if O.Width > 0 then Sec.AddLine('WIDTH', O.Width);
+    if O.Height > 0 then Sec.AddLine('HEIGHT', O.Height);
+
+    if O.IsFake then Sec.AddLine('FAKE');
+    if Flag(odf_Invisible) then Sec.AddLine('INVISIBLE');
+    if Flag(odf_Rotate) then Sec.AddLine('ROTATE');
+    if Flag(odf_Flip) then Sec.AddLine('FLIP_HORIZONTAL');
+    if Flag(odf_UpsideDown) then Sec.AddLine('FLIP_VERTICAL');
+    if Flag(odf_FlipLem) then Sec.AddLine('FACE_LEFT');
+    if Flag(odf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
+    if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');
+
+    Sec.AddLine('S_VALUE', O.Skill);
+    Sec.AddLine('L_VALUE', O.TarLev);
+  end;
+end;
+
+procedure TLevel.SaveTerrainSections(aSection: TParserSection);
+var
+  i: Integer;
+  T: TTerrain;
+  Sec: TParserSection;
+
+  function Flag(aValue: Integer): Boolean;
+  begin
+    Result := T.DrawingFlags and aValue = aValue;
+  end;
+begin
+  for i := 0 to fTerrains.Count-1 do
+  begin
+    T := fTerrains[i];
+    Sec := aSection.SectionList.Add('TERRAIN');
+
+    Sec.AddLine('COLLECTION', T.GS);
+    Sec.AddLine('PIECE', T.Piece);
+    Sec.AddLine('X', T.Left);
+    Sec.AddLine('Y', T.Top);
+
+    if Flag(tdf_Rotate) then Sec.AddLine('ROTATE');
+    if Flag(tdf_Flip) then Sec.AddLine('FLIP_HORIZONTAL');
+    if Flag(tdf_Invert) then Sec.AddLine('FLIP_VERTICAL');
+    if Flag(tdf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
+    if Flag(tdf_Erase) then Sec.AddLine('ERASE');
+    if not Flag(tdf_NoOneWay) then Sec.AddLine('ONE_WAY');
+  end;
+end;
+
+procedure TLevel.SaveAreaSections(aSection: TParserSection);
+var
+  i: Integer;
+  S: TSteel;
+  Sec: TParserSection;
+begin
+  for i := 0 to fSteels.Count-1 do
+  begin
+    S := fSteels[i];
+    Sec := aSection.SectionList.Add('AREA');
+
+    Sec.AddLine('X', S.Left);
+    Sec.AddLine('Y', S.Top);
+    Sec.AddLine('WIDTH', S.Width);
+    Sec.AddLine('HEIGHT', S.Height);
+
+    if S.fType = 1 then
+      Sec.AddLine('ERASE');
+  end;
+end;
+
+procedure TLevel.SaveLemmingSections(aSection: TParserSection);
+var
+  i: Integer;
+  L: TPreplacedLemming;
+  Sec: TParserSection;
+begin
+  for i := 0 to fPreplacedLemmings.Count-1 do
+  begin
+    L := fPreplacedLemmings[i];
+    Sec := aSection.SectionList.Add('LEMMING');
+
+    Sec.AddLine('X', L.X);
+    Sec.AddLine('Y', L.Y);
+
+    if L.Dx > 0 then
+      Sec.AddLine('DIRECTION', 'right')
+    else
+      Sec.AddLine('DIRECTION', 'left');
+
+    if L.IsClimber then Sec.AddLine('CLIMBER');
+    if L.IsSwimmer then Sec.AddLine('SWIMMER');
+    if L.IsFloater then Sec.AddLine('FLOATER');
+    if L.IsGlider then Sec.AddLine('GLIDER');
+    if L.IsDisarmer then Sec.AddLine('DISARMER');
+    if L.IsZombie then Sec.AddLine('ZOMBIE');
+  end;
 end;
 
 end.
