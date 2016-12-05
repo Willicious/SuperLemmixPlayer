@@ -101,6 +101,8 @@ type
       constructor Create;
       destructor Destroy; override;
 
+      procedure Clear;
+
       procedure LoadFromFile(aFile: String);
       procedure LoadFromStream(aStream: TStream);
       procedure LoadFromStrings(aStrings: TStrings);
@@ -215,6 +217,12 @@ begin
   inherited;
 end;
 
+procedure TParser.Clear;
+begin
+  fMainSection.Free;
+  fMainSection := TParserSection.Create('main');
+end;
+
 procedure TParser.LoadFromFile(aFile: String);
 var
   F: TFileStream;
@@ -261,9 +269,6 @@ begin
   TrimStrings;
   i := 0;
   fMainSection.LoadFromStrings(aStrings, i);
-
-  // For testing
-  SaveToFile(ExtractFilePath(ParamStr(0)) + 'test.nxpr');
 end;
 
 procedure TParser.SaveToFile(aFile: String);

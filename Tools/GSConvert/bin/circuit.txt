@@ -1,0 +1,8 @@
+$object
+  index 0
+  $merge
+    index 8
+    side top
+    keep_piece
+  $end
+$end

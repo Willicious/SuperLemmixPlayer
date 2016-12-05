@@ -1,0 +1,7 @@
+$object
+  index 0
+  $merge
+    index 5
+    side top
+  $end
+$end
