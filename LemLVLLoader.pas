@@ -712,17 +712,17 @@ begin
     0: LoadTradLevelFromStream(aStream, TempLevel);
   1..3: LoadNeoLevelFromStream(aStream, TempLevel);
     4: LoadNewNeoLevelFromStream(aStream, TempLevel);
-    else TempLevel.LoadFromStream(aStream);
+    else aLevel.LoadFromStream(aStream);
   end;
 
-  // easiest way to avoid issues with older level formats is to save as a new level then re-load that
-  TempStream.Seek(0, soFromBeginning);
-  StoreLevelInStream(TempLevel, TempStream);
-  TempStream.Seek(0, soFromBeginning);
-  if OddLoad = 2 then
-    LoadNewNeoLevelFromStream(TempStream, aLevel, 0)
-  else
-    LoadNewNeoLevelFromStream(TempStream, aLevel, OddLoad);
+  if b < 5 then
+  begin
+    // easiest way to avoid issues with older level formats is to save as a new level then re-load that
+    TempStream.Seek(0, soFromBeginning);
+    TempLevel.SaveToStream(TempStream);
+    TempStream.Seek(0, soFromBeginning);
+    aLevel.LoadFromStream(TempStream);
+  end;
   TempLevel.Free;
   TempStream.Free;
 

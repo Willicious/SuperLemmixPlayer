@@ -279,6 +279,8 @@ begin
   aStream.Read(b, 1);
   aStream.Position := aStream.Position - 1;
 
+  Clear;
+
   if b < 5 then
     TLVLLoader.LoadLevelFromStream(aStream, self); 
 
