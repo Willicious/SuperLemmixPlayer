@@ -696,35 +696,22 @@ class procedure TLVLLoader.LoadLevelFromStream(aStream: TStream; aLevel: TLevel;
 var
   b: byte;
   i, i2: integer;
-  TempStream: TMemoryStream;
-  TempLevel: TLevel;
+  //TempStream: TMemoryStream;
+  //TempLevel: TLevel;
   Trans: TTranslationTable;
 begin
-  SetLength(aLevel.Info.WindowOrder, 0); //kludgy bug fix
-
-  TempStream := TMemoryStream.Create;
-  TempLevel := TLevel.Create;
   aStream.Seek(0, soFromBeginning);
   aStream.Read(b, 1);
   aStream.Seek(0, soFromBeginning);
 
+  aLevel.Clear;
+
   case b of
-    0: LoadTradLevelFromStream(aStream, TempLevel);
-  1..3: LoadNeoLevelFromStream(aStream, TempLevel);
-    4: LoadNewNeoLevelFromStream(aStream, TempLevel);
+    0: LoadTradLevelFromStream(aStream, aLevel);
+  1..3: LoadNeoLevelFromStream(aStream, aLevel);
+    4: LoadNewNeoLevelFromStream(aStream, aLevel);
     else aLevel.LoadFromStream(aStream);
   end;
-
-  if b < 5 then
-  begin
-    // easiest way to avoid issues with older level formats is to save as a new level then re-load that
-    TempStream.Seek(0, soFromBeginning);
-    TempLevel.SaveToStream(TempStream);
-    TempStream.Seek(0, soFromBeginning);
-    aLevel.LoadFromStream(TempStream);
-  end;
-  TempLevel.Free;
-  TempStream.Free;
 
   // if the level has no Level ID, make one.
   // must be pseudo-random to enough extent to generate a different ID for each level,
@@ -778,7 +765,7 @@ begin
   end;
 
   // Apply translation table if one exists
-  if FileExists(AppPath + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt') then
+  if FileExists(AppPath + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt') and (b < 5) then
   begin
     Trans := TTranslationTable.Create;
     Trans.LoadFromFile(AppPath + SFStylesTranslation + Trim(aLevel.Info.GraphicSetName) + '.nxtt');

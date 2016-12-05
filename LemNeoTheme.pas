@@ -63,7 +63,7 @@ end;
 
 procedure TNeoTheme.Clear;
 begin
-  fLemmings := 'lemming';
+  fLemmings := 'default';
   SetLength(fColors, 0);
 end;
 
