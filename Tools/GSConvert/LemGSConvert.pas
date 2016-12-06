@@ -40,7 +40,7 @@ function LeadZeroStr(aValue, aLen: Integer): String;
 begin
   Result := IntToStr(aValue);
   if Length(Result) < aLen then
-    Result := StringOfChar('0', Length(Result) - aLen) + Result;
+    Result := StringOfChar('0', aLen - Length(Result)) + Result;
 end;
 
 // Actual save
@@ -705,8 +705,8 @@ end;
 
 procedure Prepare(aGS: TBaseGraphicSet);
 var
-  i: Integer;
-  n: Integer;
+  i, i2: Integer;
+  n, n2: Integer;
 
   T: TMetaTerrain;
   O: TMetaObject;
@@ -737,6 +737,16 @@ begin
 
     if LeftStr(T.Name, 1) <> '*' then
       Inc(n);
+
+    if RightStr(T.Name, 1) = '#' then
+    begin
+      n2 := 1;
+      for i2 := 0 to i-1 do
+        // Somewhat bad code here. We assume there'll never be more than 99 relevant pieces. There probably never will be.
+        if LeftStr(GS.MetaTerrains[i2].Name, Length(GS.MetaTerrains[i2].Name)-2) = LeftStr(T.Name, Length(T.Name)-1) then
+          Inc(n2);
+      T.Name := LeftStr(T.Name, Length(T.Name)-1) + LeadZeroStr(n2, 2);
+    end;
   end;
 
   n := 0;
