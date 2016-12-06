@@ -64,9 +64,6 @@ var
 
 implementation
 
-uses
-  LemMetaConstruct;
-
 // These two standalone functions are just to help shifting labels around
 
 function SplitIdentifier(Identifier: String): TLabelRecord;
@@ -179,8 +176,6 @@ begin
 
   if FileExists(BasePath + '.png') then  // .nxtp is optional, but .png is not :)
     T := TMetaTerrain.Create
-  else if FileExists(BasePath + '.nxcs') then
-    T := TMetaConstruct.Create
   else
     raise Exception.Create('TNeoPieceManager.ObtainTerrain: Could not find terrain piece: ' + Identifier);
   fTerrains.Add(T);

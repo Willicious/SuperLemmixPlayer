@@ -8,7 +8,6 @@ uses
   Classes,
   UTools,
   LemPiece,
-  LemNeoParserOld,
   Contnrs,
   SysUtils;
 
@@ -37,7 +36,6 @@ type
     function GetRotate: Boolean; override;
   public
     procedure Assign(Source: TPiece); override;
-    procedure EvaluateParserLine(Line: TParserLine);
   published
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
   end;
@@ -71,40 +69,6 @@ begin
     DrawingFlags := T.DrawingFlags;
   end;
 end;
-
-procedure TTerrain.EvaluateParserLine(Line: TParserLine);
-begin
-  if Line.Keyword = 'SET' then
-    fSet := Lowercase(Line.ValueTrimmed);
-
-  if Line.Keyword = 'PIECE' then
-    fPiece := Lowercase(Line.ValueTrimmed);
-
-  if Line.Keyword = 'X' then
-    fLeft := Line.Numeric;
-
-  if Line.Keyword = 'Y' then
-    fTop := Line.Numeric;
-
-  if Line.Keyword = 'NO_OVERWRITE' then
-    fDrawingFlags := fDrawingFlags or tdf_NoOverwrite;
-
-  if Line.Keyword = 'FLIP_HORIZONTAL' then
-    fDrawingFlags := fDrawingFlags or tdf_Flip;
-
-  if Line.Keyword = 'FLIP_VERTICAL' then
-    fDrawingFlags := fDrawingFlags or tdf_Invert;
-
-  if Line.Keyword = 'ERASE' then
-    fDrawingFlags := fDrawingFlags or tdf_Erase;
-
-  if Line.Keyword = 'ROTATE' then
-    fDrawingFlags := fDrawingFlags or tdf_Rotate;
-
-  if Line.Keyword = 'ONE_WAY' then
-    fDrawingFlags := fDrawingFlags and not tdf_NoOneWay;
-end;
-
 
 procedure TTerrain.SetFlip(aValue: Boolean);
 begin
