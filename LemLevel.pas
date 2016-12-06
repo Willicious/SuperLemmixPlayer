@@ -821,7 +821,7 @@ var
   begin
     Angle := (O.Skill * 225) div 10;
 
-    Sec.AddLine('ANGLE', O.Skill);
+    Sec.AddLine('ANGLE', Angle);
     Sec.AddLine('SPEED', O.TarLev);
   end;
 begin

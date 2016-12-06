@@ -38,10 +38,7 @@ uses
   LemSteel,
   LemLemming,
   LemDosAnimationSet, LemMetaAnimation, LemCore,
-  LemLevel;
-
-  // we could maybe use the alpha channel for rendering, ok thats working!
-  // create gamerenderlist in order of rendering
+  LemLevel, StrUtils, LemStrings;
 
 type
   TParticleRec = packed record
@@ -1574,6 +1571,7 @@ var
 
   Lem: TPreplacedLemming;
   L: TLemming;
+  BgImg: TBitmap32;
 
   procedure CheckLockedExits;
   var
@@ -1597,6 +1595,23 @@ var
       end;
     end
   end;
+
+  procedure LoadBackgroundImage;
+  var
+    Collection, Piece: String;
+    SplitPos: Integer;
+  begin
+    SplitPos := pos(':', Inf.Level.Info.Background);
+    Collection := LeftStr(Inf.Level.Info.Background, SplitPos-1);
+    Piece := RightStr(Inf.Level.Info.Background, Length(Inf.Level.Info.Background)-SplitPos);
+
+    if FileExists(AppPath + SFStyles + Collection + '\backgrounds\' + Piece + '.png') then
+      TPngInterface.LoadPngFile((AppPath + SFStyles + Collection + '\backgrounds\' + Piece + '.png'), BgImg)
+    else begin
+      BgImg.SetSize(320, 160);
+      BgImg.Clear(fTheme.Colors['background']);
+    end;
+  end;
 begin
   if Inf.Level = nil then Exit;
 
@@ -1612,11 +1627,17 @@ begin
   fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
   fLayers[rlBackground].Clear($FF000000 or fBgColor);
 
-  if fTheme.HasImageBackground and DoBackground then
+  if DoBackground and (Inf.Level.Info.Background <> '') then
   begin
-    for y := 0 to Inf.Level.Info.Height div fTheme.Background.Height do
-    for x := 0 to Inf.Level.Info.Width div fTheme.Background.Width do
-      fTheme.Background.DrawTo(fLayers[rlBackground], x * fTheme.Background.Width, y * fTheme.Background.Height);
+    BgImg := TBitmap32.Create;
+    try
+      LoadBackgroundImage;
+      for y := 0 to Inf.Level.Info.Height div BgImg.Height do
+        for x := 0 to Inf.Level.Info.Width div BgImg.Width do
+          BgImg.DrawTo(fLayers[rlBackground], x * BgImg.Width, y * BgImg.Height);
+    finally
+      BgImg.Free;
+    end;
   end;
 
 

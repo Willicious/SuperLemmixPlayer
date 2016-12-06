@@ -152,6 +152,9 @@ begin
   NewItem.DstGS := aSec.LineTrimString['collection'];
   NewItem.DstName := aSec.LineTrimString['piece'];
 
+  if Lowercase(aSec.LineTrimString['special']) = 'lemming' then
+    NewItem.DstName := '*lemming';
+
   NewItem.Width := aSec.LineNumeric['width'];
   NewItem.Height := aSec.LineNumeric['height'];
 
@@ -200,8 +203,36 @@ var
 
   T: TTerrain;
   O: TInteractiveObject;
+  L: TPreplacedLemming;
 
   PatchL, PatchT: Integer;
+
+  procedure LoadTables;
+  var
+    i: Integer;
+    SetList: array of String;
+
+    procedure AddToList(aValue: String);
+    var
+      i: Integer;
+    begin
+      aValue := Lowercase(Trim(aValue));
+      for i := 0 to Length(SetList)-1 do
+        if SetList[i] = aValue then Exit;
+      SetLength(SetList, Length(SetList)+1);
+      SetList[Length(SetList)-1] := aValue;
+    end;
+  begin
+    Clear;
+    AddToList(aLevel.Info.GraphicSetName);
+    for i := 0 to aLevel.Terrains.Count-1 do
+      AddToList(aLevel.Terrains[i].GS);
+    for i := 0 to aLevel.InteractiveObjects.Count-1 do
+      AddToList(aLevel.InteractiveObjects[i].GS);
+
+    for i := 0 to Length(SetList)-1 do
+      LoadForGS(SetList[i]);
+  end;
 
   function FindMatchIndex(aCollection, aName: String; aType: TTranslationItemType): Integer;
   var
@@ -241,6 +272,8 @@ var
     end;
   end;
 begin
+  LoadTables;
+
   for i := 0 to aLevel.Terrains.Count-1 do
   begin
     T := aLevel.Terrains[i];
@@ -269,6 +302,10 @@ begin
     T.Invert := T.Invert xor MatchRec.Invert;
   end;
 
+  for i := aLevel.Terrains.Count-1 downto 0 do
+    if aLevel.Terrains[i].Piece = '*nil' then
+      aLevel.Terrains.Delete(i);
+
   for i := 0 to aLevel.InteractiveObjects.Count-1 do
   begin
     O := aLevel.InteractiveObjects[i];
@@ -295,6 +332,34 @@ begin
     O.Rotate := O.Rotate xor MatchRec.Rotate;
     O.Flip := O.Flip xor MatchRec.Flip;
     O.Invert := O.Invert xor MatchRec.Invert;
+  end;
+
+  for i := aLevel.InteractiveObjects.Count-1 downto 0 do
+  begin
+    O := aLevel.InteractiveObjects[i];
+
+    if O.Piece = '*lemming' then
+    begin
+      L := aLevel.PreplacedLemmings.Insert(0);
+      L.X := O.Left;
+      L.Y := O.Top;
+      if O.DrawingFlags and odf_FlipLem <> 0 then
+        L.Dx := -1
+      else
+        L.Dx := 1;
+      L.IsClimber := O.TarLev and 1 <> 0;
+      L.IsSwimmer := O.TarLev and 2 <> 0;
+      L.IsFloater := O.TarLev and 4 <> 0;
+      L.IsGlider := O.TarLev and 8 <> 0;
+      L.IsDisarmer := O.TarLev and 16 <> 0;
+      L.IsBlocker := O.TarLev and 32 <> 0;
+      L.IsZombie := O.TarLev and 64 <> 0;
+
+      O.Piece := '*nil';
+    end;
+
+    if O.Piece = '*nil' then
+      aLevel.InteractiveObjects.Delete(i);
   end;
 
   MatchIndex := FindMatchIndex(Lowercase(aLevel.Info.GraphicSetName), aLevel.Info.Background, itBackground);
@@ -546,7 +611,6 @@ begin
 
 
   Trans := TTranslationTable.Create;
-
   Trans.Apply(aLevel);
   Trans.Free;
 end;

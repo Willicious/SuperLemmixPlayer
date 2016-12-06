@@ -8,9 +8,9 @@ interface
 
 uses
   Dialogs,
-  LemNeoParserOld,
   GR32, LemTypes, LemStrings, PngInterface,
-  StrUtils, Classes, SysUtils;
+  StrUtils, Classes, SysUtils,
+  LemNeoParser;
 
 const
   MASK_COLOR = 'mask';
@@ -28,8 +28,6 @@ type
 
   TNeoTheme = class
     private
-      fHasImageBackground: Boolean;
-      fBackgroundImage: TBitmap32;
       fColors: array of TNeoThemeColor;
       fLemmings: String;          // Which lemming graphics to use
       function GetColor(Name: String): TColor32;
@@ -40,8 +38,6 @@ type
       procedure Clear;
       procedure Load(aSet: String);
 
-      property HasImageBackground: Boolean read fHasImageBackground;
-      property Background: TBitmap32 read fBackgroundImage;
       property Lemmings: String read fLemmings write fLemmings;
       property Colors[Name: String]: TColor32 read GetColor;
   end;
@@ -51,13 +47,11 @@ implementation
 constructor TNeoTheme.Create;
 begin
   inherited;
-  fBackgroundImage := TBitmap32.Create;
   Clear;
 end;
 
 destructor TNeoTheme.Destroy;
 begin
-  fBackgroundImage.Free;
   inherited;
 end;
 
@@ -69,63 +63,30 @@ end;
 
 procedure TNeoTheme.Load(aSet: String);
 var
-  Parser: TNeoLemmixParser;
-  Line: TParserLine;
-  RealColorCount: Integer;
-  TempColor: TNeoThemeColor;
-
-  procedure ExpandArray;
-  begin
-    if Length(fColors) <= RealColorCount then
-      SetLength(fColors, RealColorCount+50);
-  end;
-
-  procedure TrimArray;
-  begin
-    SetLength(fColors, RealColorCount);
-  end;
-
-  procedure AddColor(aColor: TNeoThemeColor);
-  begin
-    ExpandArray;
-    fColors[RealColorCount] := aColor;
-    Inc(RealColorCount);
-  end;
+  Parser: TParser;
+  Sec: TParserSection;
+  i: Integer;
 begin
   Clear;
-  SetCurrentDir(AppPath + SFStylesThemes);
-  if not FileExists(aSet + '.nxtm') then Exit;
+  SetCurrentDir(AppPath + SFStyles + aSet + '\');
+  if not FileExists('theme.nxtm') then Exit; // should this raise an exception?
 
-  Parser := TNeoLemmixParser.Create;
+  Parser := TParser.Create;
   try
-    Parser.LoadFromFile(aSet + '.nxtm');
-    repeat
-      Line := Parser.NextLine;
+    Parser.LoadFromFile('theme.nxtm');
 
-      if Line.Keyword = 'LEMMINGS' then
-        fLemmings := Line.Value;
+    fLemmings := Parser.MainSection.LineString['lemmings'];
 
-    until (Line.Keyword = '') or (Line.Keyword = 'COLORS');
-
-    RealColorCount := 0;
-    SetLength(fColors, 0);
-    repeat
-      Line := Parser.NextLine;
-
-      TempColor.Name := Line.Keyword;
-      TempColor.Color := StrToIntDef('x' + Line.Value, $808080) or $FF000000;
-      AddColor(TempColor);
-    until Line.Keyword = '';
-
-    TrimArray;
-
-    if FileExists(aSet + '_bg.png') then
-    begin
-      fHasImageBackground := true;
-      TPngInterface.LoadPngFile(aSet + '_bg.png', fBackgroundImage)
-    end else begin
-      fBackgroundImage.SetSize(320, 160);
-      fBackgroundImage.Clear(Colors['background']);
+    Sec := Parser.MainSection.Section['colors'];
+    if Sec = nil then
+      SetLength(fColors, 0)
+    else begin
+      SetLength(fColors, Sec.LineList.Count);
+      for i := 0 to Sec.LineList.Count-1 do
+      begin
+        fColors[i].Name := Sec.LineList[i].Keyword;
+        fColors[i].Color := Sec.LineList[i].ValueNumeric or $FF000000;
+      end;
     end;
   finally
     Parser.Free;
@@ -137,37 +98,28 @@ var
   i: Integer;
 begin
   i := FindColorIndex(Name);
+
+  // Special exception
+  if (i = -1) and (Lowercase(Name) = BACKGROUND_COLOR) then
+  begin
+    Result := $FF000000;
+    Exit;
+  end;
+
   if i = -1 then i := FindColorIndex(FALLBACK_COLOR);
 
   if i = -1 then
     Result := DEFAULT_COLOR
   else
     Result := fColors[i].Color;
-
-  // Special exception
-  if (i = -1) and (Lowercase(Name) = BACKGROUND_COLOR) then
-    Result := $FF000000;
 end;
 
 function TNeoTheme.FindColorIndex(Name: String): Integer;
 begin
-  Name := Uppercase(Name);
+  Name := Lowercase(Name);
   for Result := 0 to Length(fColors)-1 do
     if Name = fColors[Result].Name then Exit;
   Result := -1;
 end;
-
-{LEMMINGS lemming
-COLOR_MASK FFD08020
-COLOR_MAP FFD08020
-COLOR_BG 000000
-COLOR_PARTICLES_0 FFD08020
-COLOR_PARTICLES_1 FFC05010
-COLOR_PARTICLES_2 FF902010
-COLOR_PARTICLES_3 FF600010
-COLOR_PARTICLES_4 FF404050
-COLOR_PARTICLES_5 FF606070
-COLOR_PARTICLES_6 FF709000
-COLOR_PARTICLES_7 FF206020}
 
 end.
