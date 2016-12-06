@@ -61,6 +61,8 @@ You can add lines to a TParserSection as follows:
     The first $$$$ is the keyword, the second is the value. Either a String or an Int64 is accepted for the value. If the
     value is an empty string, it will not be added; to add a line with no value specified, omit the value altogether rather
     than leaving it empty.
+    When using a numeric value, you can also pass a third parameter (optional). If a positive nonzero value is passed, the
+    value will be written to the file in hexidecimal with that many digits; if zero or blank, it will be written in decimal.
 Adding a new section is a tiny bit trickier. First, the section must be created and assigned to a temporary variable:
   <TParserSection 2> := <TParserSection>.SectionList.Add($$$$);
     The $$$$ is the section's keyword.
@@ -140,7 +142,7 @@ type
 
       procedure AddLine(aKeyword: String); overload;
       procedure AddLine(aKeyword: String; aValue: String); overload;
-      procedure AddLine(aKeyword: String; aValue: Int64); overload;
+      procedure AddLine(aKeyword: String; aValue: Int64; HexLength: Integer = 0); overload;
 
       property Keyword: String read GetKeyword write SetKeyword;
       property KeywordDirect: String read fKeyword write SetKeyword;
@@ -471,9 +473,12 @@ begin
   fLines.Add(TParserLine.Create(aKeyword, aValue));
 end;
 
-procedure TParserSection.AddLine(aKeyword: String; aValue: Int64);
+procedure TParserSection.AddLine(aKeyword: String; aValue: Int64; HexLength: Integer = 0);
 begin
-  fLines.Add(TParserLine.Create(aKeyword, aValue));
+  if HexLength > 0 then
+    fLines.Add(TParserLine.Create(aKeyword, 'x' + IntToHex(aValue, HexLength)))
+  else
+    fLines.Add(TParserLine.Create(aKeyword, aValue));
 end;
 
 procedure TParserSection.LoadFromStrings(aStrings: TStrings; var aPos: Integer);

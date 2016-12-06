@@ -303,6 +303,30 @@ var
     TPngInterface.SavePngFile(O.Name + '.png', BMP);
     BMP.Free;
   end;
+
+  procedure SaveTheme;
+  var
+    Sec: TParserSection;
+  begin
+    Parser.Clear;
+    Sec := Parser.MainSection;
+
+    if GS.LemmingSprites = 'xlemming' then
+      Sec.AddLine('LEMMINGS', 'xmas')
+    else
+      Sec.AddLine('LEMMINGS', 'default');
+
+    Sec := Sec.SectionList.Add('COLORS');
+
+    Sec.AddLine('MASK', GS.KeyColors[0] and $FFFFFF, 6);
+    Sec.AddLine('MINIMAP', GS.KeyColors[1] and $FFFFFF, 6);
+    Sec.AddLine('BACKGROUND', GS.KeyColors[2] and $FFFFFF, 6);
+    Sec.AddLine('ONE_WAYS', GS.KeyColors[3] and $FFFFFF, 6);
+    Sec.AddLine('PICKUP_BORDER', GS.KeyColors[4] and $FFFFFF, 6);
+    Sec.AddLine('PICKUP_INSIDE', GS.KeyColors[5] and $FFFFFF, 6);
+
+    Parser.SaveToFile(BasePath + aName + '\theme.nxtm'); 
+  end;
 begin
   GS := aGS;
   BasePath := ExtractFilePath(ParamStr(0));
@@ -382,6 +406,7 @@ procedure Adjust(aGS: TBaseGraphicSet; aSL: TStringList);
 var
   Parser: TParser;
   Funcs: TConvertFunctions;
+  Sec: TParserSection;
 begin
   GS := aGS;
 
@@ -391,6 +416,17 @@ begin
     Parser.LoadFromStrings(aSL);
     Parser.MainSection.DoForEachSection('object', Funcs.HandleObjectAdjust);
     Parser.MainSection.DoForEachSection('terrain', Funcs.HandleTerrainAdjust);
+
+    Sec := Parser.MainSection.Section['colors'];
+    if Sec <> nil then
+    begin
+      if Sec.Line['mask'] <> nil then GS.KeyColors[0] := Sec.LineNumeric['mask'] or $FF000000;
+      if Sec.Line['minimap'] <> nil then GS.KeyColors[0] := Sec.LineNumeric['minimap'] or $FF000000;
+      if Sec.Line['background'] <> nil then GS.KeyColors[0] := Sec.LineNumeric['background'] or $FF000000;
+      if Sec.Line['pickup_border'] <> nil then GS.KeyColors[0] := Sec.LineNumeric['pickup_border'] or $FF000000;
+      if Sec.Line['pickup_inside'] <> nil then GS.KeyColors[0] := Sec.LineNumeric['pickup_inside'] or $FF000000;
+      if Sec.Line['one_ways'] <> nil then GS.KeyColors[0] := Sec.LineNumeric['one_ways'] or $FF000000;
+    end;
   finally
     Parser.Free;
     Funcs.Free;
