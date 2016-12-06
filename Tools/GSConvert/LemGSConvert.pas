@@ -352,6 +352,8 @@ begin
 
   TranslationTable.SaveToFile(BasePath + aName + '\' + 'translation.nxtt');
 
+  SaveTheme;
+
   TranslationTable.Free;
   Parser.Free;
 

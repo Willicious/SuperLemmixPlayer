@@ -300,8 +300,8 @@ begin
                      FixBmpSize(TempBmp, SrcRes);
                    end;
 
-                   if FlushColors then
-                   begin
+                   //if FlushColors then
+                   //begin
                      if TempObject.TriggerEff = 14 then
                      begin
                        Result.KeyColors[4] := TempBMPs[1].Pixel[5, 0] or $FF000000;
@@ -312,7 +312,7 @@ begin
                      begin
                        Result.KeyColors[3] := GetAverageColor(TempBMPs);
                      end;
-                   end;
+                   //end;
 
                    FixObject(TempGSObject, SrcRes);
 
