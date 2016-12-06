@@ -17,8 +17,9 @@ interface
 
 uses
   Dialogs,
-  LemNeoParserOld, LemLemming, LemCore, LemVersion,
-  Contnrs, Classes, SysUtils, StrUtils;
+  LemLemming, LemCore, LemVersion,
+  Contnrs, Classes, SysUtils, StrUtils,
+  LemNeoParser;
 
 const
   SKILL_REPLAY_NAME_COUNT = 16;
@@ -39,13 +40,13 @@ type
     private
       fFrame: Integer;
     protected
-      procedure DoLoadLine(Line: TParserLine); virtual;    // Return TRUE if the line is understood. Should start with "if inherited then Exit".
-      procedure DoSave(SL: TStringList; aLabel: String); virtual;  // Should start with a call to inherited.
+      procedure DoLoadSection(Sec: TParserSection); virtual;    // Return TRUE if the line is understood. Should start with "if inherited then Exit".
+      procedure DoSave(Sec: TParserSection); virtual;  // Should start with a call to inherited.
       procedure InitializeValues(); virtual; // we cannot guarantee that all values will be set, so make sure that there is nothing null and nothing that will crash the game!!!
     public
       constructor Create; // NEVER call this from this base class - only instanciate children!
-      procedure Load(Parser: TNeoLemmixParser);
-      procedure Save(SL: TStringList);
+      procedure Load(Sec: TParserSection);
+      procedure Save(Sec: TParserSection);
       property Frame: Integer read fFrame write fFrame;
   end;
 
@@ -57,8 +58,8 @@ type
       fLemmingY: Integer;
       fLemmingHighlit: Boolean;
     protected
-      procedure DoLoadLine(Line: TParserLine); override;
-      procedure DoSave(SL: TStringList; aLabel: String); override;
+      procedure DoLoadSection(Sec: TParserSection); override;
+      procedure DoSave(Sec: TParserSection); override;
       procedure InitializeValues(); override;
     public
       procedure SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
@@ -73,8 +74,8 @@ type
     private
       fSkill: TBasicLemmingAction;
     protected
-      procedure DoLoadLine(Line: TParserLine); override;
-      procedure DoSave(SL: TStringList; aLabel: String); override;
+      procedure DoLoadSection(Sec: TParserSection); override;
+      procedure DoSave(Sec: TParserSection); override;
       procedure InitializeValues(); override; // THIS IS VERY IMPORTANT HERE!!! Null-Actions will crash the game!!!
     public
       property Skill: TBasicLemmingAction read fSkill write fSkill;
@@ -85,8 +86,8 @@ type
       fNewReleaseRate: Integer;
       fSpawnedLemmingCount: Integer;
     protected
-      procedure DoLoadLine(Line: TParserLine); override;
-      procedure DoSave(SL: TStringList; aLabel: String); override;
+      procedure DoLoadSection(Sec: TParserSection); override;
+      procedure DoSave(Sec: TParserSection); override;
       procedure InitializeValues(); override;
     public
       property NewReleaseRate: Integer read fNewReleaseRate write fNewReleaseRate;
@@ -95,25 +96,9 @@ type
 
   TReplayNuke = class(TBaseReplayItem)
     protected
-      procedure DoLoadLine(Line: TParserLine); override;
-      procedure DoSave(SL: TStringList; aLabel: String); override;
+      procedure DoLoadSection(Sec: TParserSection); override;
+      procedure DoSave(Sec: TParserSection); override;
   end;
-
-  {TReplaySelectSkill = class(TBaseReplayItem)
-    private
-      fSkill: TSkillPanelButton;
-    protected
-      function DoLoadLine(Line: TParserLine): Boolean; override;
-      procedure DoSave(SL: TStringList; aLabel: String); override;
-    public
-      property Skill: TSkillPanelButton read fSkill write fSkill;
-  end;
-
-  TReplayHighlightLemming = class(TBaseReplayLemmingItem)
-    protected
-      function DoLoadLine(Line: TParserLine): Boolean; override;
-      procedure DoSave(SL: TStringList; aLabel: String); override;
-  end;}
 
   TReplayItemList = class(TObjectList)
     private
@@ -139,9 +124,9 @@ type
       fLevelID: Cardinal;
       function GetLastActionFrame: Integer;
       function GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
-      procedure SaveReplayList(aList: TReplayItemList; SL: TStringList);
-      //procedure SaveReplayItem(aItem: TBaseReplayItem; SL: TStringList);
-      //function LoadReplayItem(aParser: TNeoLemmixParser): TBaseReplayItem;
+      procedure SaveReplayList(aList: TReplayItemList; Sec: TParserSection);
+      procedure UpdateFormat(SL: TStringList);
+      procedure HandleLoadSection(aSection: TParserSection; const aIteration: Integer);
     public
       constructor Create;
       destructor Destroy; override;
@@ -178,7 +163,7 @@ implementation
 
 function GetSkillReplayName(aButton: TSkillPanelButton): String;
 begin
-  Result := SKILL_REPLAY_NAMES[Integer(aButton)];
+  Result := Lowercase(SKILL_REPLAY_NAMES[Integer(aButton)]);
 end;
 
 function GetSkillReplayName(aAction: TBasicLemmingAction): String;
@@ -391,65 +376,52 @@ end;
 
 procedure TReplay.LoadFromStream(aStream: TStream);
 var
-  Parser: TNeoLemmixParser;
-  Line: TParserLine;
+  Parser: TParser;
+  Sec: TParserSection;
   Item: TBaseReplayItem;
+  SL: TStringList;
 begin
   Clear(true);
-  Parser := TNeoLemmixParser.Create;
+
+  SL := TStringList.Create;
+  Parser := TParser.Create;
   try
-    Parser.LoadFromStream(aStream);
-    repeat
-      Line := Parser.NextLine;
+    SL.LoadFromStream(aStream);
+    UpdateFormat(SL);
+    Parser.LoadFromStrings(SL);
+    Sec := Parser.MainSection;
 
-      if Line.Keyword = 'USER' then
-        fPlayerName := Line.Value;
+    fPlayerName := Sec.LineString['user'];
+    fLevelName := Sec.LineString['title'];
+    fLevelAuthor := Sec.LineString['author'];
+    fLevelGame := Sec.LineString['game'];
+    fLevelRank := Sec.LineString['rank'];
+    fLevelPosition := Sec.LineNumeric['level'];
+    fLevelID := Sec.LineNumeric['id'];
 
-      if Line.Keyword = 'TITLE' then
-        fLevelName := Line.Value;
-
-      if Line.Keyword = 'AUTHOR' then
-        fLevelAuthor := Line.Value;
-
-      if Line.Keyword = 'GAME' then
-        fLevelGame := Line.Value;
-
-      if Line.Keyword = 'RANK' then
-        fLevelRank := Line.Value;
-
-      if Line.Keyword = 'LEVEL' then
-        fLevelPosition := Line.Numeric;
-
-      if Line.Keyword = 'ID' then
-        fLevelID := StrToIntDef('x' + Line.Value, 0);
-
-      if Line.Keyword = 'ACTIONS' then Break;
-
-    until Line.Keyword = '';
-
-    repeat
-      Item := nil;
-      Line := Parser.NextLine;
-
-      // Upon adding new keywords here, add them as well in TBaseReplayItem.Load!
-      if Line.Keyword = 'ASSIGNMENT' then
-        Item := TReplaySkillAssignment.Create;
-
-      if Line.Keyword = 'RELEASE_RATE' then
-        Item := TReplayChangeReleaseRate.Create;
-
-      if Line.Keyword = 'NUKE' then
-        Item := TReplayNuke.Create;
-
-      if Item <> nil then
-      begin
-        Item.Load(Parser);
-        Add(Item);
-      end;
-    until Line.Keyword = '';
+    Sec.DoForEachSection('assignment', HandleLoadSection);
+    Sec.DoForEachSection('release_rate', HandleLoadSection);
+    Sec.DoForEachSection('nuke', HandleLoadSection);
   finally
     Parser.Free;
+    SL.Free
   end;
+end;
+
+procedure TReplay.HandleLoadSection(aSection: TParserSection; const aIteration: Integer);
+var
+  Item: TBaseReplayItem;
+begin
+  if aSection.Keyword = 'assignment' then Item := TReplaySkillAssignment.Create;
+  if aSection.Keyword = 'release_rate' then Item := TReplayChangeReleaseRate.Create;
+  if aSection.Keyword = 'nuke' then Item := TReplayNuke.Create;
+
+  Item.Load(aSection);
+
+  if Item is TReplayChangeReleaseRate then
+    fReleaseRateChanges.Add(Item)
+  else
+    fAssignments.Add(Item);
 end;
 
 procedure TReplay.SaveToFile(aFile: String);
@@ -480,48 +452,99 @@ end;
 
 procedure TReplay.SaveToStream(aStream: TStream);
 var
-  SL: TStringList;
+  Parser: TParser;
+  Sec: TParserSection;
 begin
-  SL := TStringList.Create;
+  Parser := TParser.Create;
+  try
+    Sec := Parser.MainSection;
 
-  SL.Add('# NeoLemmix Replay File');
-  SL.Add('# Saved from NeoLemmix V' + CurrentVersionString);
+    Sec.AddLine('USER', fPlayerName);
+    Sec.AddLine('TITLE', fLevelName);
+    Sec.AddLine('AUTHOR', fLevelAuthor);
+    if Trim(fLevelGame) <> '' then
+    begin
+      Sec.AddLine('GAME', fLevelGame);
+      Sec.AddLine('RANK', fLevelRank);
+      Sec.AddLine('LEVEL', fLevelPosition);
+    end;
+    Sec.AddLine('ID', fLevelID, 8);
 
-  // Debug
-  SL.Add('# Assignments: ' + IntToStr(fAssignments.Count));
-  SL.Add('# RR Changes: ' + IntToStr(fReleaseRateChanges.Count));
+    SaveReplayList(fAssignments, Sec);
+    SaveReplayList(fReleaseRateChanges, Sec);
 
-  SL.Add('');
-  if Trim(fPlayerName) <> '' then
-    SL.Add('USER ' + fPlayerName);
-  SL.Add('TITLE ' + fLevelName);
-  if Trim(fLevelAuthor) <> '' then
-    SL.Add('AUTHOR ' + fLevelAuthor);
-  if Trim(fLevelGame) <> '' then
-  begin
-    SL.Add('GAME ' + fLevelGame);
-    SL.Add('RANK ' + fLevelRank);
-    SL.Add('LEVEL ' + IntToStr(fLevelPosition));
+    Parser.SaveToStream(aStream);
+  finally
+    Parser.Free;
   end;
-  SL.Add('ID ' + IntToHex(fLevelID, 8));
-  SL.Add('');
-  SL.Add('ACTIONS');
-  SL.Add('');
-
-  SaveReplayList(fAssignments, SL);
-  SaveReplayList(fReleaseRateChanges, SL);
-
-  SL.SaveToStream(aStream);
-
-  SL.Free;
 end;
 
-procedure TReplay.SaveReplayList(aList: TReplayItemList; SL: TStringList);
+procedure TReplay.SaveReplayList(aList: TReplayItemList; Sec: TParserSection);
 var
   i: Integer;
 begin
   for i := 0 to aList.Count-1 do
-    aList[i].Save(SL);
+    aList[i].Save(Sec);
+end;
+
+procedure TReplay.UpdateFormat(SL: TStringList);
+var
+  i: Integer;
+  NeedUpdate: Boolean;
+  S: String;
+
+  function ModLine(aLine: String): String;
+  begin
+    Result := Lowercase(Trim(aLine));
+  end;
+begin
+  // First, verify if it NEEDS to be updated. There's a few things we can check for, though we don't have anything 100% reliable.
+  // (These tests are 100% reliable on NeoLemmix-generated files, but possibly not on user-edited ones.)
+  NeedUpdate := false;
+  for i := 0 to SL.Count-1 do
+  begin
+    if LeftStr(Trim(SL[i]), 1) = '$' then Exit; // Almost a surefire sign of a new format replay
+    if LowerCase(Trim(SL[i])) = 'actions' then NeedUpdate := true; // The presence is almost surefire sign of old format, and absence almost surefire sign of new
+
+    if NeedUpdate then Break;
+  end;
+
+  if not NeedUpdate then Exit;
+
+  SL.Add('$END');
+  for i := SL.Count-1 downto 0 do
+  begin
+    S := ModLine(SL[i]);
+
+    if (S = '') or (S = 'actions') then
+    begin
+      SL.Delete(i);
+      Continue;
+    end;
+
+    if (S = 'release_rate') or (S = 'nuke') or (S = 'assignment') then
+    begin
+      SL[i] := '$' + Trim(SL[i]);
+      SL.Insert(i, '');
+      SL.Insert(i, '$END');
+    end;
+
+    if LeftStr(S, 3) = 'id ' then
+    begin
+      S := RightStr(S, 8);
+      SL[i] := 'ID x' + S;
+    end;
+  end;
+
+  for i := 0 to SL.Count-1 do
+  begin
+    if ModLine(SL[i]) = '$end' then
+    begin
+      SL.Delete(i);
+      Break;
+      // This is to remove the extra $END added before the first action
+    end;
+  end;
 end;
 
 procedure TReplay.LoadOldReplayFile(aFile: String);
@@ -653,34 +676,26 @@ begin
   Frame := 17 * 60 * 99; // try corrupt values only after 99 minutes.
 end;
 
-procedure TBaseReplayItem.Load(Parser: TNeoLemmixParser);
+procedure TBaseReplayItem.Load(Sec: TParserSection);
 var
   Line: TParserLine;
 begin
-  repeat
-    Line := Parser.NextLine;
-    DoLoadLine(Line);
-  until (Line.Keyword = '') or (Line.Keyword = 'ASSIGNMENT')
-     or (Line.Keyword = 'RELEASE_RATE') or (Line.Keyword = 'NUKE');
-
-  Parser.Back;
+  DoLoadSection(Sec);
 end;
 
-procedure TBaseReplayItem.Save(SL: TStringList);
+procedure TBaseReplayItem.Save(Sec: TParserSection);
 begin
-  DoSave(SL, ''); // It's expected that somewhere throughout the calls to inherited DoSaves, the second parameter will be filled
-  SL.Add(''); // But they won't put the blank line, as they're coded such that they don't nessecerially know which is the final one
+  DoSave(Sec);
 end;
 
-procedure TBaseReplayItem.DoLoadLine(Line: TParserLine);
+procedure TBaseReplayItem.DoLoadSection(Sec: TParserSection);
 begin
-  if Line.Keyword = 'FRAME' then fFrame := Line.Numeric;
+  fFrame := Sec.LineNumeric['frame'];
 end;
 
-procedure TBaseReplayItem.DoSave(SL: TStringList; aLabel: String);
+procedure TBaseReplayItem.DoSave(Sec: TParserSection);
 begin
-  SL.Add(aLabel);
-  SL.Add('  FRAME ' + IntToStr(fFrame));
+  Sec.AddLine('FRAME', fFrame);
 end;
 
 { TBaseReplayLemmingItem }
@@ -704,34 +719,39 @@ begin
   fLemmingHighlit := aHighlit;
 end;
 
-procedure TBaseReplayLemmingItem.DoLoadLine(Line: TParserLine);
+procedure TBaseReplayLemmingItem.DoLoadSection(Sec: TParserSection);
+var
+  S: String;
 begin
-  inherited DoLoadLine(Line);
+  inherited DoLoadSection(Sec);
 
-  if Line.Keyword = 'LEM_INDEX' then fLemmingIndex := Line.Numeric;
-  if Line.Keyword = 'LEM_X' then fLemmingX := Line.Numeric;
-  if Line.Keyword = 'LEM_Y' then fLemmingY := Line.Numeric;
-  if Line.Keyword = 'LEM_DIR' then
-  begin
-    if LeftStr(Uppercase(Line.Value), 1) = 'L' then fLemmingDx := -1
-    else if LeftStr(Uppercase(Line.Value), 1) = 'R' then fLemmingDx := 1
-    else fLemmingDx := 0; // we must be able to store "unknown", eg. for converting old replays
-  end;
-  if Line.Keyword = 'HIGHLIT' then fLemmingHighlit := true;
+  fLemmingIndex := Sec.LineNumeric['lem_index'];
+  fLemmingX := Sec.LineNumeric['lem_x'];
+  fLemmingY := Sec.LineNumeric['lem_y'];
+
+  S := LeftStr(Lowercase(Sec.LineString['lem_dir']), 1);
+  if S = 'l' then
+    fLemmingDx := -1
+  else if S = 'r' then
+    fLemmingDx := 1
+  else
+    fLemmingDx := 0;
+
+  fLemmingHighlit := Sec.Line['highlit'] <> nil;
 end;
 
-procedure TBaseReplayLemmingItem.DoSave(SL: TStringList; aLabel: String);
+procedure TBaseReplayLemmingItem.DoSave(Sec: TParserSection);
 begin
   inherited;
-  SL.Add('  LEM_INDEX ' + IntToStr(fLemmingIndex));
-  SL.Add('  LEM_X ' + IntToStr(fLemmingX));
-  SL.Add('  LEM_Y ' + IntToStr(fLemmingY));
+  Sec.AddLine('LEM_INDEX', fLemmingIndex);
+  Sec.AddLine('LEM_X', fLemmingX);
+  Sec.AddLine('LEM_Y', fLemmingY);
   if fLemmingDx < 0 then
-    SL.Add('  LEM_DIR LEFT')
-  else if fLemmingDx > 0 then
-    SL.Add('  LEM_DIR RIGHT');
+    Sec.AddLine('LEM_DIR', 'left')
+  else
+    Sec.AddLine('LEM_DIR', 'right');
   if fLemmingHighlit then
-    SL.Add('  HIGHLIT');
+    Sec.AddLine('HIGHLIT');
 end;
 
 { TReplaySkillAssignment }
@@ -742,17 +762,18 @@ begin
   Skill := baNone;
 end;
 
-procedure TReplaySkillAssignment.DoLoadLine(Line: TParserLine);
+procedure TReplaySkillAssignment.DoLoadSection(Sec: TParserSection);
 begin
-  inherited DoLoadLine(Line);
+  inherited DoLoadSection(Sec);
 
-  if Line.Keyword = 'ACTION' then Skill := GetSkillAction(Line.ValueTrimmed);
+  Skill := GetSkillAction(Sec.LineTrimString['action']);
 end;
 
-procedure TReplaySkillAssignment.DoSave(SL: TStringList; aLabel: String);
+procedure TReplaySkillAssignment.DoSave(Sec: TParserSection);
 begin
-  inherited DoSave(SL, 'ASSIGNMENT');
-  SL.Add('  ACTION ' + GetSkillReplayName(Skill));
+  Sec := Sec.SectionList.Add('ASSIGNMENT');
+  inherited DoSave(Sec);
+  Sec.AddLine('ACTION', GetSkillReplayName(Skill));
 end;
 
 { TReplayReleaseRateChange }
@@ -764,31 +785,33 @@ begin
   SpawnedLemmingCount := 0;
 end;
 
-procedure TReplayChangeReleaseRate.DoLoadLine(Line: TParserLine);
+procedure TReplayChangeReleaseRate.DoLoadSection(Sec: TParserSection);
 begin
-  inherited DoLoadLine(Line);
+  inherited DoLoadSection(Sec);
 
-  if Line.Keyword = 'RATE' then fNewReleaseRate := Line.Numeric;
-  if Line.Keyword = 'SPAWNED' then fSpawnedLemmingCount := Line.Numeric;
+  fNewReleaseRate := Sec.LineNumeric['rate'];
+  fSpawnedLemmingCount := Sec.LineNumeric['spawned'];
 end;
 
-procedure TReplayChangeReleaseRate.DoSave(SL: TStringList; aLabel: String);
+procedure TReplayChangeReleaseRate.DoSave(Sec: TParserSection);
 begin
-  inherited DoSave(SL, 'RELEASE_RATE');
-  SL.Add('  RATE ' + IntToStr(fNewReleaseRate));
-  SL.Add('  SPAWNED ' + IntToStr(fSpawnedLemmingCount));
+  Sec := Sec.SectionList.Add('RELEASE_RATE');
+  inherited DoSave(Sec);
+  Sec.AddLine('RATE', fNewReleaseRate);
+  Sec.AddLine('SPAWNED', fSpawnedLemmingCount);
 end;
 
 { TReplayNuke }
 
-procedure TReplayNuke.DoLoadLine(Line: TParserLine);
+procedure TReplayNuke.DoLoadSection(Sec: TParserSection);
 begin
-  inherited DoLoadLine(Line);
+  inherited DoLoadSection(Sec);
 end;
 
-procedure TReplayNuke.DoSave(SL: TStringList; aLabel: String);
+procedure TReplayNuke.DoSave(Sec: TParserSection);
 begin
-  inherited DoSave(SL, 'NUKE');
+  Sec := Sec.SectionList.Add('NUKE');
+  inherited DoSave(Sec);
 end;
 
 { TReplayItemList }
