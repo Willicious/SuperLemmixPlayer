@@ -7,7 +7,7 @@ uses
   Dialogs,
   Classes, SysUtils, GR32,
   LemRenderHelpers,
-  LemNeoParserOld, PngInterface, LemStrings, LemTypes, Contnrs,
+  LemNeoParser, PngInterface, LemStrings, LemTypes, Contnrs,
   UTools;
 
 const
@@ -97,35 +97,33 @@ end;
 
 procedure TMetaTerrain.Load(aCollection, aPiece: String);
 var
-  Parser: TNeoLemmixParser;
+  Parser: TParser;
   Line: TParserLine;
 begin
-  Parser := TNeoLemmixParser.Create;
-  try
+  Parser := TParser.Create;
+
     ClearImages;
 
-    if not DirectoryExists(AppPath + SFStylesPieces + aCollection) then
-    raise Exception.Create('TMetaTerrain.Load: Collection "' + aCollection + '" does not exist.');
+    if not DirectoryExists(AppPath + SFStylesPieces + aCollection + SFPiecesTerrain) then
+      raise Exception.Create('TMetaTerrain.Load: Collection "' + aCollection + '" does not exist or lacks terrain.');
     SetCurrentDir(AppPath + SFStylesPieces + aCollection + SFPiecesTerrain);
 
     fGS := Lowercase(aCollection);
     fPiece := Lowercase(aPiece);
 
-    if FileExists(aPiece + '.nxtp') then
+    if FileExists(aPiece + '.nxmt') then
     begin
-      Parser.LoadFromFile(fPiece + '.nxtp');
-      repeat
-        Line := Parser.NextLine;
-        if Line.Keyword = 'STEEL' then
-          fIsSteel := true;
-      until Line.Keyword = '';
+      Parser := TParser.Create;
+      try
+        Parser.LoadFromFile(aPiece + '.nxmt');
+        fIsSteel := Parser.MainSection.Line['steel'] <> nil;
+      finally
+        Parser.Free;
+      end;
     end;
 
     TPngInterface.LoadPngFile(aPiece + '.png', fGraphicImages[0]);
     fGeneratedGraphicImage[0] := true;
-  finally
-    Parser.Free;
-  end;
 end;
 
 procedure TMetaTerrain.ClearImages;
