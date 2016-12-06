@@ -783,8 +783,8 @@ begin
     if O.TriggerType = 13 {Preplaced Lemming} then
     begin
       O.Name := '*lemming';
-      O.OffsetL := 0 - O.PTriggerX;
-      O.OffsetT := 0 - O.PTriggerY;
+      O.OffsetL := O.PTriggerX;
+      O.OffsetT := O.PTriggerY;
       // We must account for the differences in trigger positions; some use Y = 9, some use Y = 10
     end;
 
