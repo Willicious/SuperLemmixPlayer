@@ -788,8 +788,8 @@ begin
       // We must account for the differences in trigger positions; some use Y = 9, some use Y = 10
     end;
 
-    //if O.TriggerType = 14 {Pickup Skill} then
-    //  O.Name := '*pickup';
+    if O.TriggerType = 14 {Pickup Skill} then
+      O.Name := '#default:pickup';
 
     // And resizability settings
     if not O.NoAutoResizeSettings then

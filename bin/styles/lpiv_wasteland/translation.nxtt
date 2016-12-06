@@ -459,8 +459,8 @@ $END
 
 $OBJECT
   INDEX 8
-  COLLECTION lpiv_wasteland
-  PIECE O8
+  COLLECTION default
+  PIECE pickup
   LEFT_OFFSET 0
   RIGHT_OFFSET 4
   TOP_OFFSET 0

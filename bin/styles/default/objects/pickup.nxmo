@@ -4,3 +4,13 @@ TRIGGER_X 4
 TRIGGER_Y 9
 TRIGGER_WIDTH 4
 TRIGGER_HEIGHT 7
+
+$MASK
+  NAME border
+  COLOR pickup_border
+$END
+
+$MASK
+  NAME inside
+  COLOR pickup_inside
+$END

@@ -89,6 +89,7 @@ type
     fRandomStartFrame             : Boolean;
     fResizability                 : TMetaObjectSizeSetting;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
+    fIsMasked: Boolean;
     function GetIdentifier: String;
     function GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TMetaObjectSizeSetting): Boolean;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -133,6 +134,7 @@ type
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
 
     property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
+    property IsMasked: Boolean read fIsMasked; // we don't want to write to this one
   end;
 
   TMetaObjectInterface = class
@@ -355,7 +357,7 @@ begin
         O.Resizability := mos_None;
     end;
 
-    Sec.DoForEachSection('mask', Masker.ApplyMask);
+    fIsMasked := Sec.DoForEachSection('mask', Masker.ApplyMask) <> 0;
 
     O.Images.Generate(BMP, fFrameCount, DoHorizontal);
 
