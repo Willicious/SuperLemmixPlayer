@@ -281,9 +281,9 @@ begin
   try
     ClearImages;
 
-    if not DirectoryExists(AppPath + SFStylesPieces + aCollection + SFPiecesObjects) then
+    if not DirectoryExists(AppPath + SFStyles + aCollection + SFPiecesObjects) then
       raise Exception.Create('TMetaObject.Load: Collection "' + aCollection + '" does not exist or does not have objects.');
-    SetCurrentDir(AppPath + SFStylesPieces + aCollection + SFPiecesObjects);
+    SetCurrentDir(AppPath + SFStyles + aCollection + SFPiecesObjects);
 
     Parser.LoadFromFile(aPiece + '.nxmo');
     Sec := Parser.MainSection;
@@ -302,7 +302,8 @@ begin
     // 9, 10 are unused
     if Sec.Line['teleporter'] <> nil then fTriggerEffect := 11;
     if Sec.Line['receiver'] <> nil then fTriggerEffect := 12;
-    // 13, 14 are unused
+    // 13 is unused
+    if Sec.Line['pickup_skill'] <> nil then fTriggerEffect := 14;
     if Sec.Line['locked_exit'] <> nil then fTriggerEffect := 15;
     // 16 is unused
     if Sec.Line['button'] <> nil then fTriggerEffect := 17;

@@ -175,7 +175,7 @@ begin
 
   Result := fTerrains.Count;
 
-  BasePath := AppPath + SFStylesPieces + TerrainLabel.GS + SFPiecesTerrain + TerrainLabel.Piece;
+  BasePath := AppPath + SFStyles + TerrainLabel.GS + SFPiecesTerrain + TerrainLabel.Piece;
 
   if FileExists(BasePath + '.png') then  // .nxtp is optional, but .png is not :)
     T := TMetaTerrain.Create

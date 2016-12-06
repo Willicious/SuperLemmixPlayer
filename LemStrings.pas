@@ -26,11 +26,12 @@ const
     SFGraphicsSprites = SFGraphics + 'sprites\';
 
   SFStyles = 'styles\';
-    SFStylesPieces = SFStyles + 'pieces\';
       SFPiecesTerrain = '\terrain\';
       SFPiecesObjects = '\objects\';
-    SFStylesThemes = SFStyles + 'themes\';
-    SFStylesTranslation = SFStyles + 'translation\';
+      SFPiecesBackgrounds = '\backgrounds\';
+      SFTheme = 'theme.nxtm';
+      SFTranslation = 'translation.nxtt';
+  SFStylesThemes = SFStyles + 'themes\';
 
 resourcestring
   SProgramName = 'NeoLemmix Player';

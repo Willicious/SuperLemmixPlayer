@@ -104,9 +104,9 @@ begin
 
     ClearImages;
 
-    if not DirectoryExists(AppPath + SFStylesPieces + aCollection + SFPiecesTerrain) then
+    if not DirectoryExists(AppPath + SFStyles + aCollection + SFPiecesTerrain) then
       raise Exception.Create('TMetaTerrain.Load: Collection "' + aCollection + '" does not exist or lacks terrain.');
-    SetCurrentDir(AppPath + SFStylesPieces + aCollection + SFPiecesTerrain);
+    SetCurrentDir(AppPath + SFStyles + aCollection + SFPiecesTerrain);
 
     fGS := Lowercase(aCollection);
     fPiece := Lowercase(aPiece);

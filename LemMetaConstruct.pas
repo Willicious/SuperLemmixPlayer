@@ -80,9 +80,9 @@ begin
     fPieceList.Clear;
     fSteelMode := cst_Normal;
 
-    if not DirectoryExists(AppPath + SFStylesPieces + aCollection) then
+    if not DirectoryExists(AppPath + SFStyles + aCollection) then
     raise Exception.Create('TMetaConstruct.Load: Collection "' + aCollection + '" does not exist.');
-    SetCurrentDir(AppPath + SFStylesPieces + aCollection + SFPiecesTerrain);
+    SetCurrentDir(AppPath + SFStyles + aCollection + SFPiecesTerrain);
 
     GS := Lowercase(aCollection);
     Piece := Lowercase(aPiece);

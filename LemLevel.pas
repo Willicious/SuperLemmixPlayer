@@ -46,7 +46,7 @@ type
     fWidth : Integer;
     fHeight : Integer;
 
-    fBackgroundIndex: Integer;
+    fBackground: String;
 
     fLevelOptions   : Cardinal;
 
@@ -104,7 +104,7 @@ type
     property GraphicSetName : String read fGraphicSetName write fGraphicSetName;
     property MusicFile      : String read fMusicFile write fMusicFile;
 
-    property BackgroundIndex: Integer read fBackgroundIndex write fBackgroundIndex;
+    property Background: String read fBackground write fBackground;
 
     property LevelID: LongWord read fLevelID write fLevelID;
   end;
@@ -198,7 +198,7 @@ begin
   Height := 160;
   Title          := '';
   Author         := '';
-  fBackgroundIndex := 0;
+  fBackground := '';
   SetLength(WindowOrder, 0);
 
   GraphicSetName := '';
@@ -341,7 +341,7 @@ begin
 
     LevelOptions := GetLevelOptionsValue(aSection.LineTrimString['autosteel']);
 
-    BackgroundIndex := aSection.LineNumeric['background']; // temporary, need to replace with referencing it by filename
+    Background := aSection.LineTrimString['background'];
   end;
 end;
 
@@ -694,7 +694,7 @@ begin
 
     MakeAutosteelLine;
 
-    aSection.AddLine('BACKGROUND', BackgroundIndex);
+    aSection.AddLine('BACKGROUND', Background);
   end;
 end;
 

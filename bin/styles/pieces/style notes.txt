@@ -1,4 +1,0 @@
-These copies of style files have additional info in them, for
-generating the conversion table and outputting in the new format.
-
-Experimental version of GSTool can preserve this info.

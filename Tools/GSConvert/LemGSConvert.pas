@@ -240,7 +240,8 @@ var
       // 9, 10 are unused
       11: S := 'TELEPORTER';
       12: S := 'RECEIVER';
-      // 13, 14 are unused
+      // 13 is unused
+      14: S := 'PICKUP_SKILL';
       15: S := 'LOCKED_EXIT';
       // 16 is unused
       17: S := 'BUTTON';
@@ -787,8 +788,8 @@ begin
       // We must account for the differences in trigger positions; some use Y = 9, some use Y = 10
     end;
 
-    if O.TriggerType = 14 {Pickup Skill} then
-      O.Name := '*pickup';
+    //if O.TriggerType = 14 {Pickup Skill} then
+    //  O.Name := '*pickup';
 
     // And resizability settings
     if not O.NoAutoResizeSettings then
