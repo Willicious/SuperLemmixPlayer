@@ -503,8 +503,15 @@ begin
   NeedUpdate := false;
   for i := 0 to SL.Count-1 do
   begin
-    if LeftStr(Trim(SL[i]), 1) = '$' then Exit; // Almost a surefire sign of a new format replay
-    if LowerCase(Trim(SL[i])) = 'actions' then NeedUpdate := true; // The presence is almost surefire sign of old format, and absence almost surefire sign of new
+    if ModLine(SL[0]) = 'force_update' then // panic button
+    begin
+      SL.Delete(0);
+      NeedUpdate := true;
+      Break;
+    end;
+
+    if LeftStr(ModLine(SL[i]), 1) = '$' then Exit; // Almost a surefire sign of a new format replay
+    if ModLine(SL[i]) = 'actions' then NeedUpdate := true; // The presence is almost surefire sign of old format, and absence almost surefire sign of new
 
     if NeedUpdate then Break;
   end;
@@ -522,7 +529,7 @@ begin
       Continue;
     end;
 
-    if (S = 'release_rate') or (S = 'nuke') or (S = 'assignment') then
+    if (LeftStr(S, 12) = 'release_rate') or (LeftStr(S, 4) = 'nuke') or (LeftStr(S, 10) = 'assignment') then
     begin
       SL[i] := '$' + Trim(SL[i]);
       SL.Insert(i, '');
