@@ -178,6 +178,11 @@ var
       Sec.AddLine('FLIP_HORIZONTAL');
     if O.ConvertInvert then
       Sec.AddLine('FLIP_VERTICAL');
+
+    if O.ResizeHorizontal then
+      Sec.AddLine('WIDTH', GS.ObjectImages[i][0].Width);
+    if O.ResizeVertical then
+      Sec.AddLine('HEIGHT', GS.ObjectImages[i][0].Height);
   end;
 
   procedure SaveTerrain(i: Integer);
@@ -290,6 +295,11 @@ var
     begin
       Sec.AddLine('KEY_FRAME', O.KeyFrame);
     end;
+
+    if O.ResizeHorizontal then
+      Sec.AddLine('RESIZE_HORIZONTAL');
+    if O.ResizeVertical then
+      Sec.AddLine('RESIZE_VERTICAL');
 
     SetCurrentDir(BasePath + aName + '\objects\');
     Parser.SaveToFile(O.Name + '.nxmo');
@@ -651,6 +661,12 @@ begin
   fPieceIndex := aSection.LineNumeric['index'];
   O := GS.MetaObjects[fPieceIndex];
 
+  if (aSection.Line['resize_horizontal'] <> nil) or (aSection.Line['resize_vertical'] <> nil) or (aSection.Line['no_resize'] <> nil) then
+    O.NoAutoResizeSettings := true;
+
+  if (aSection.Line['resize_horizontal'] <> nil) then O.ResizeHorizontal := true;
+  if (aSection.Line['resize_vertical'] <> nil) then O.ResizeVertical := true;
+
   if aSection.Line['reference'] <> nil then
   begin
     O.Name := '#' + aSection.LineTrimString['reference'];
@@ -773,6 +789,25 @@ begin
 
     if O.TriggerType = 14 {Pickup Skill} then
       O.Name := '*pickup';
+
+    // And resizability settings
+    if not O.NoAutoResizeSettings then
+    begin
+      O.ResizeHorizontal := false;
+      O.ResizeVertical := false;
+
+      if O.TriggerType in [2, 3] {One-Way Fields} then
+        O.ResizeVertical := true;
+
+      if O.TriggerType = 5 {Water} then
+        O.ResizeHorizontal := true;
+
+      if O.TriggerType in [7, 8, 19, 20] {One Way Arrows & Updraft} then
+      begin
+        O.ResizeHorizontal := true;
+        O.ResizeVertical := true;
+      end;
+    end;
 
     if O.TriggerType = 32 {Background Image} then
       O.Name := '&' + O.Name;

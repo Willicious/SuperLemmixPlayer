@@ -57,6 +57,7 @@ type
     fRandomFrame:    Boolean;
     fResizeHorizontal: Boolean;
     fResizeVertical:   Boolean;
+    fNoAutoResizeSettings: Boolean;
   public
     procedure Assign(aValue: TMetaObject);
     property TriggerType: Byte read fTriggerType write fTriggerType;
@@ -82,6 +83,7 @@ type
     property ConvertInvert: Boolean read fConvertInvert write fConvertInvert;
     property ResizeHorizontal: Boolean read fResizeHorizontal write fResizeHorizontal;
     property ResizeVertical: Boolean read fResizeVertical write fResizeVertical;
+    property NoAutoResizeSettings: Boolean read fNoAutoResizeSettings write fNoAutoResizeSettings;
   end;
 
   TMetaTerrain = class

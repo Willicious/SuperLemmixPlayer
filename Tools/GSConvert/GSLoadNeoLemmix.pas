@@ -286,8 +286,9 @@ begin
                    TempGSObject.STriggerW := TempObject.STriggerW;
                    TempGSObject.STriggerH := TempObject.STriggerH;
                    TempGSObject.RandomFrame := ((TempObject.ObjectFlags and $0002) <> 0);
-                   TempGSObject.ResizeHorizontal := ((TempObject.Resize and $01) <> 0);
-                   TempGSObject.ResizeVertical := ((TempObject.Resize and $02) <> 0);
+                   TempGSObject.ResizeHorizontal := false;
+                   TempGSObject.ResizeVertical := false;
+                   TempGSObject.NoAutoResizeSettings := false;
 
                    TempBMPs := TBitmaps.Create;
                    for i := 0 to TempObject.FrameCount-1 do
