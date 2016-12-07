@@ -162,37 +162,24 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
   o make lemming animations
   o make mask animations metadata
 -------------------------------------------------------------------------------}
-
-    procedure Lem(aFrameCount: Integer);
+  procedure Msk(aImageLocation: Integer; const aDescription: string;
+    aFrameCount, aWidth, aHeight, aBPP: Integer);
+  begin
+    with fMetaMaskAnimations.Add do
     begin
-      // Frame count:
-      // If a value is specified, the animation must have exactly that many frames
-      // If it's zero, any number of frames is allowed
-
-      // Floater and Glider must have a minimum of 10 frames, but can have more. This is
-      // handled when loading the animations.
-      fMetaLemmingAnimations.Add.FrameCount := aFrameCount;
+      ImageLocation      := aImageLocation;
+      Description        := aDescription;
+      FrameCount         := aFrameCount;
+      Width              := aWidth;
+      Height             := aHeight;
+      BitsPerPixel       := aBPP;
     end;
-
-    procedure Msk(aImageLocation: Integer; const aDescription: string;
-      aFrameCount, aWidth, aHeight, aBPP: Integer);
-    begin
-      with fMetaMaskAnimations.Add do
-      begin
-        ImageLocation      := aImageLocation;
-        Description        := aDescription;
-        FrameCount         := aFrameCount;
-        Width              := aWidth;
-        Height             := aHeight;
-        BitsPerPixel       := aBPP;
-      end;
-    end;
+  end;
 
   procedure LoadPositionData;
   const
     // These match the order these are stored by this class. They do NOT have to be in this
     // order in "scheme.nxmi", they just have to all be there.
-
     ANIM_NAMES: array[0..23] of String =  ('WALKER', 'JUMPER', 'DIGGER', 'CLIMBER',
                                            'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                            'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
@@ -237,12 +224,24 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
     Parser.Free;
   end;
 
+const
+  // Number of frames for the various lemming actions.
+  // If zero, the animations area loaded dynamically.
+  // Otherwise the animation must have *exactly* this number of frames.
+  ANIM_FRAMECOUNT: array[0..23] of Integer =
+    ( 0,  0, 16,  8,   // walker, jumper, digger, climber
+     16,  8, 16, 32,   // drowner, hoister, builder, basher
+     24,  0,  0, 16,   // miner, faller, floater, splatter
+      8, 14,  0,  8,   // exiter, burner, blocker, shrugger
+     16,  1, 16,  1,   // ohnoer, bomber, platformer, stoner
+      8, 17, 16,  8 ); // swimmer, glider, disarmer, stacker
+var
+  AnimIndex: Integer;
 begin
-
-  // Due to dynamic loading, only two values are needed here: Whether it's looping or
-  // not, and the frame count. If the frame count is zero, even that can be dynamically
-  // loaded; this is usually for animations where the graphic has no impact on the
-  // physics (such as walkers).
+  // Due to dynamic loading, only one value is needed here: The frame count.
+  // In situations where the graphic has no impact on physics (e.g. walkers),
+  // the frame count can be zero. In such situations even the animations are
+  // loaded dynamically.
 
   // Eventually, this should be changed so that even animations that do currently impact
   // physics can have a different number of frames without impact.
@@ -250,55 +249,15 @@ begin
   // Note that currently, floater and glider have a minimum of 10 frames; this is handled
   // elsewhere.
 
-  Lem(0); //Rwalker
-  Lem(0); //Lwalker
-  Lem(0); //Rjumper
-  Lem(0); //Ljumper
-  Lem(16); //Rdigger
-  Lem(16); //Ldigger
-  Lem(8); //Rclimber
-  Lem(8); //Lclimber
-  Lem(16); //Rdrowner
-  Lem(16); //Ldrowner
-  Lem(8); //Rhoister
-  Lem(8); //Lhoister
-  Lem(16); //Rbuilder
-  Lem(16); //Lbuilder
-  Lem(32); //Rbasher
-  Lem(32); //Lbasher
-  Lem(24); //Rminer
-  Lem(24); //Lminer
-  Lem(0); //Rfaller
-  Lem(0); //Lfaller
-  Lem(0); //Rfloater
-  Lem(0); //Lfloater
-  Lem(16); //Rsplatter
-  Lem(16); //Lsplatter
-  Lem(8); //Rexiter
-  Lem(8); //Lexiter
-  Lem(14); //Rburner
-  Lem(14); //Lburner
-  Lem(0); //Rblocker
-  Lem(0); //Lblocker
-  Lem(8); //Rshrugger
-  Lem(8); //Lshrugger
-  Lem(16); //Rohnoer
-  Lem(16); //Lohnoer
-  Lem(1); //Rbomber
-  Lem(1); //Lbomber
-  Lem(16); //Rplatformer
-  Lem(16); //Lplatformer
-  Lem(1); //Rstoner
-  Lem(1); //Lstoner
-  Lem(8); //Rswimmer
-  Lem(8); //Lswimmer
-  Lem(17); //Rglider
-  Lem(17); //Lglider
-  Lem(16); //Rdisarmer
-  Lem(16); //Ldisarmer
-  Lem(8); //Rstacker
-  Lem(8); //Lstacker
-  Lem(1); //  This one is a placeholder for the stoner mask, I can't remember why it's in here but it is. I need to fix that.
+  for AnimIndex := 0 to 23 do
+  begin
+    // Add right- and left-facing version
+    fMetaLemmingAnimations.Add.FrameCount := ANIM_FRAMECOUNT[AnimIndex];
+    fMetaLemmingAnimations.Add.FrameCount := ANIM_FRAMECOUNT[AnimIndex];
+  end;
+  // This one is a placeholder for the stoner mask, I can't remember why it's in here but it is. I need to fix that.
+  fMetaLemmingAnimations.Add.FrameCount := 1;
+
 
   if fMetaLemmingAnimations.Count <> 49 then
     ShowMessage('Missing an animation? Total: ' + IntToStr(fMetaLemmingAnimations.Count));
