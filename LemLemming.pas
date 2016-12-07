@@ -69,8 +69,6 @@ type
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
     LemParticleTimer              : Integer; // @particles, 52 downto 0, after explosion
-    FrameTopDy                    : Integer; // = -LMA.FootY (ccexplore compatible)
-    FrameLeftDx                   : Integer; // = -LMA.FootX (ccexplore compatible)
     LemNumberOfBricksLeft         : Integer; // for builder, platformer, stacker
   { byte sized fields }
     LemAction                     : TBasicLemmingAction; // current action of the lemming
@@ -242,8 +240,6 @@ begin
   LemFrame := Source.LemFrame;
   LemMaxFrame := Source.LemMaxFrame;
   LemParticleTimer := Source.LemParticleTimer;
-  FrameTopDy := Source.FrameTopDy;
-  FrameLeftDx := Source.FrameLeftDx;
   LemNumberOfBricksLeft := Source.LemNumberOfBricksLeft;
 
   LemAction := Source.LemAction;
