@@ -7,8 +7,13 @@ $object
 $end
 
 $object
-  index 15
-  reference fire:flamethrower
-  right_offset 11
-  top_offset 1
+  index 10
+  reference pillar:trap_02
+  flip_horizontal
+$end
+
+$object
+  index 17
+  reference pillar:trap_03
+  flip_horizontal
 $end

@@ -632,7 +632,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION brick
+  COLLECTION default
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -644,7 +644,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION brick
+  COLLECTION default
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -714,7 +714,7 @@ $END
 
 $OBJECT
   INDEX 13
-  COLLECTION brick
+  COLLECTION default
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 1

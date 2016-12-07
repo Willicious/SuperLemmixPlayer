@@ -722,7 +722,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION bubble
+  COLLECTION default
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -734,7 +734,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION bubble
+  COLLECTION default
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -824,7 +824,7 @@ $END
 
 $OBJECT
   INDEX 14
-  COLLECTION bubble
+  COLLECTION default
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 1

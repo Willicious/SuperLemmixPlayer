@@ -5,3 +5,9 @@ $object
     side top
   $end
 $end
+
+$object
+  index 10
+  reference fire:flamethrower
+  flip_horizontal
+$end
