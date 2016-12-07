@@ -203,23 +203,27 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
       AnimSec := Parser.MainSection.Section['animations'];
       for i := 0 to 23 do
       begin
-        ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
-        for dx := 0 to 1 do
-        begin
-          DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
-          Anim := fMetaLemmingAnimations[(i * 2) + dx];
+        try
+          ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
+          for dx := 0 to 1 do
+          begin
+            DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
+            Anim := fMetaLemmingAnimations[(i * 2) + dx];
 
-          if Anim.FrameCount = 0 then Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
-          if (i in [10, 21 {Floater, Glider}]) and (Anim.FrameCount < 10) then
-            Anim.FrameCount := 10;
+            if Anim.FrameCount = 0 then Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
+            if (i in [10, 21 {Floater, Glider}]) and (Anim.FrameCount < 10) then
+              Anim.FrameCount := 10;
 
-          Anim.FootX := DirSec.LineNumeric['foot_x'];
-          Anim.FootY := DirSec.LineNumeric['foot_y'];
-          Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
+            Anim.FootX := DirSec.LineNumeric['foot_x'];
+            Anim.FootY := DirSec.LineNumeric['foot_y'];
+            Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
+          end;
+        except
+          raise Exception.Create('TBaseDosAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.')
         end;
       end;
     except
-      raise Exception.Create('TBaseDosAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.');
+      raise Exception.Create('TBaseDosAnimationSet: Error while opening scheme.nxmi.');
     end;
     Parser.Free;
   end;
@@ -266,11 +270,13 @@ begin
   SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
   LoadPositionData;
 
+  // Setting the foot position of the stoner mask.
+  // This should be irrelevant for the stoner mask, as the stoner mask is not positioned wrt. the lemming's foot.
+  // For other sprites, the foot position is required though.
   with fMetaLemmingAnimations[48] do
   begin
     FootX := 8;
     FootY := 10;
-    // not sure if these values are needed, but better safe than sorry until tested (and ideally, the dependancy on them resolved)
   end;
 
   //  place   description            F   W   H  BPP
