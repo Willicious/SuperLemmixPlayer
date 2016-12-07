@@ -322,6 +322,9 @@ var
           Anim := fMetaLemmingAnimations[(i * 2) + dx];
 
           if Anim.FrameCount = 0 then Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
+          if (i in [10, 21 {Floater, Glider}]) and (Anim.FrameCount < 10) then
+            Anim.FrameCount := 10;
+
           Anim.FootX := DirSec.LineNumeric['foot_x'];
           Anim.FootY := DirSec.LineNumeric['foot_y'];
           Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
@@ -367,7 +370,7 @@ begin
           MLA.Width := TempBitmap.Width div 2;
           MLA.Height := TempBitmap.height div MLA.FrameCount;
 
-          if iAnimation mod 2 = 0 then
+          if iAnimation mod 2 = 1 then
             X := 0
           else
             X := MLA.Width;
