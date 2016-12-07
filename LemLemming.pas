@@ -68,7 +68,6 @@ type
     LemMechanicFrames             : Integer;
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
-    LemAnimationType              : Integer; // copy from LMA
     LemParticleTimer              : Integer; // @particles, 52 downto 0, after explosion
     FrameTopDy                    : Integer; // = -LMA.FootY (ccexplore compatible)
     FrameLeftDx                   : Integer; // = -LMA.FootX (ccexplore compatible)
@@ -310,7 +309,6 @@ begin
   LemMechanicFrames := Source.LemMechanicFrames;
   LemFrame := Source.LemFrame;
   LemMaxFrame := Source.LemMaxFrame;
-  LemAnimationType := Source.LemAnimationType;
   LemParticleTimer := Source.LemParticleTimer;
   FrameTopDy := Source.FrameTopDy;
   FrameLeftDx := Source.FrameLeftDx;

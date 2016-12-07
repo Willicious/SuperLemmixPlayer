@@ -2032,7 +2032,6 @@ begin
   i := AnimationIndices[NewAction, (L.LemDx = -1)];
   TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
   L.LemMaxFrame := TempMetaAnim.FrameCount - 1;
-  L.LemAnimationType := TempMetaAnim.AnimationType;
   L.FrameTopDy  := TempMetaAnim.FootY; // ccexplore compatible
   L.FrameLeftDx := TempMetaAnim.FootX; // ccexplore compatible
 
@@ -2084,7 +2083,6 @@ begin
     i := AnimationIndices[LemAction, (LemDx = -1)];
     TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
     LemMaxFrame := TempMetaAnim.FrameCount - 1;
-    LemAnimationType := TempMetaAnim.AnimationType;
     FrameTopDy  := -TempMetaAnim.FootY; // ccexplore compatible
     FrameLeftDx := -TempMetaAnim.FootX; // ccexplore compatible
   end;

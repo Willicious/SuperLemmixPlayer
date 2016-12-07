@@ -163,7 +163,7 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
   o make mask animations metadata
 -------------------------------------------------------------------------------}
 
-    procedure Lem(aFrameCount, aAnimType: Integer);
+    procedure Lem(aFrameCount: Integer);
     begin
       // Frame count:
       // If a value is specified, the animation must have exactly that many frames
@@ -171,11 +171,7 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
 
       // Floater and Glider must have a minimum of 10 frames, but can have more. This is
       // handled when loading the animations.
-      with fMetaLemmingAnimations.Add do
-      begin
-        FrameCount         := aFrameCount;
-        AnimationType      := aAnimType;
-      end;
+      fMetaLemmingAnimations.Add.FrameCount := aFrameCount;
     end;
 
     procedure Msk(aImageLocation: Integer; const aDescription: string;
@@ -254,55 +250,55 @@ begin
   // Note that currently, floater and glider have a minimum of 10 frames; this is handled
   // elsewhere.
 
-  Lem(0, lat_Loop); //Rwalker
-  Lem(0, lat_Loop); //Lwalker
-  Lem(0, lat_Loop); //Rjumper
-  Lem(0, lat_Loop); //Ljumper
-  Lem(16, lat_Loop); //Rdigger
-  Lem(16, lat_Loop); //Ldigger
-  Lem(8, lat_Loop); //Rclimber
-  Lem(8, lat_Loop); //Lclimber
-  Lem(16, lat_Once); //Rdrowner
-  Lem(16, lat_Once); //Ldrowner
-  Lem(8, lat_Once); //Rhoister
-  Lem(8, lat_Once); //Lhoister
-  Lem(16, lat_Loop); //Rbuilder
-  Lem(16, lat_Loop); //Lbuilder
-  Lem(32, lat_Loop); //Rbasher
-  Lem(32, lat_Loop); //Lbasher
-  Lem(24, lat_Loop); //Rminer
-  Lem(24, lat_Loop); //Lminer
-  Lem(0, lat_Loop); //Rfaller
-  Lem(0, lat_Loop); //Lfaller
-  Lem(0, lat_Loop); //Rfloater
-  Lem(0, lat_Loop); //Lfloater
-  Lem(16, lat_Once); //Rsplatter
-  Lem(16, lat_Once); //Lsplatter
-  Lem(8, lat_Once); //Rexiter
-  Lem(8, lat_Once); //Lexiter
-  Lem(14, lat_Once); //Rburner
-  Lem(14, lat_Once); //Lburner
-  Lem(0, lat_Loop); //Rblocker
-  Lem(0, lat_Loop); //Lblocker
-  Lem(8, lat_Once); //Rshrugger
-  Lem(8, lat_Once); //Lshrugger
-  Lem(16, lat_Once); //Rohnoer
-  Lem(16, lat_Once); //Lohnoer
-  Lem(1, lat_Once); //Rbomber
-  Lem(1, lat_Once); //Lbomber
-  Lem(16, lat_Loop); //Rplatformer
-  Lem(16, lat_Loop); //Lplatformer
-  Lem(1, lat_Once); //Rstoner
-  Lem(1, lat_Once); //Lstoner
-  Lem(8, lat_Loop); //Rswimmer
-  Lem(8, lat_Loop); //Lswimmer
-  Lem(17, lat_Loop); //Rglider
-  Lem(17, lat_Loop); //Lglider
-  Lem(16, lat_Loop); //Rdisarmer
-  Lem(16, lat_Loop); //Ldisarmer
-  Lem(8, lat_Loop); //Rstacker
-  Lem(8, lat_Loop); //Lstacker
-  Lem(1, lat_Once); //  This one is a placeholder for the stoner mask, I can't remember why it's in here but it is. I need to fix that.
+  Lem(0); //Rwalker
+  Lem(0); //Lwalker
+  Lem(0); //Rjumper
+  Lem(0); //Ljumper
+  Lem(16); //Rdigger
+  Lem(16); //Ldigger
+  Lem(8); //Rclimber
+  Lem(8); //Lclimber
+  Lem(16); //Rdrowner
+  Lem(16); //Ldrowner
+  Lem(8); //Rhoister
+  Lem(8); //Lhoister
+  Lem(16); //Rbuilder
+  Lem(16); //Lbuilder
+  Lem(32); //Rbasher
+  Lem(32); //Lbasher
+  Lem(24); //Rminer
+  Lem(24); //Lminer
+  Lem(0); //Rfaller
+  Lem(0); //Lfaller
+  Lem(0); //Rfloater
+  Lem(0); //Lfloater
+  Lem(16); //Rsplatter
+  Lem(16); //Lsplatter
+  Lem(8); //Rexiter
+  Lem(8); //Lexiter
+  Lem(14); //Rburner
+  Lem(14); //Lburner
+  Lem(0); //Rblocker
+  Lem(0); //Lblocker
+  Lem(8); //Rshrugger
+  Lem(8); //Lshrugger
+  Lem(16); //Rohnoer
+  Lem(16); //Lohnoer
+  Lem(1); //Rbomber
+  Lem(1); //Lbomber
+  Lem(16); //Rplatformer
+  Lem(16); //Lplatformer
+  Lem(1); //Rstoner
+  Lem(1); //Lstoner
+  Lem(8); //Rswimmer
+  Lem(8); //Lswimmer
+  Lem(17); //Rglider
+  Lem(17); //Lglider
+  Lem(16); //Rdisarmer
+  Lem(16); //Ldisarmer
+  Lem(8); //Rstacker
+  Lem(8); //Lstacker
+  Lem(1); //  This one is a placeholder for the stoner mask, I can't remember why it's in here but it is. I need to fix that.
 
   if fMetaLemmingAnimations.Count <> 49 then
     ShowMessage('Missing an animation? Total: ' + IntToStr(fMetaLemmingAnimations.Count));
