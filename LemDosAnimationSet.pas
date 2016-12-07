@@ -192,6 +192,55 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
       end;
     end;
 
+  procedure LoadPositionData;
+  const
+    // These match the order these are stored by this class. They do NOT have to be in this
+    // order in "scheme.nxmi", they just have to all be there.
+
+    ANIM_NAMES: array[0..23] of String =  ('WALKER', 'JUMPER', 'DIGGER', 'CLIMBER',
+                                           'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
+                                           'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
+                                           'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
+                                           'OHNOER', 'BOMBER', 'PLATFORMER', 'STONER',
+                                           'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER');
+    DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
+  var
+    Parser: TParser;
+    AnimSec: TParserSection;
+    ThisAnimSec: TParserSection;
+    DirSec: TParserSection;
+    i: Integer;
+    dx: Integer;
+
+    Anim: TMetaLemmingAnimation;
+  begin
+    Parser := TParser.Create;
+    try
+      Parser.LoadFromFile('scheme.nxmi');
+      AnimSec := Parser.MainSection.Section['animations'];
+      for i := 0 to 23 do
+      begin
+        ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
+        for dx := 0 to 1 do
+        begin
+          DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
+          Anim := fMetaLemmingAnimations[(i * 2) + dx];
+
+          if Anim.FrameCount = 0 then Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
+          if (i in [10, 21 {Floater, Glider}]) and (Anim.FrameCount < 10) then
+            Anim.FrameCount := 10;
+
+          Anim.FootX := DirSec.LineNumeric['foot_x'];
+          Anim.FootY := DirSec.LineNumeric['foot_y'];
+          Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
+        end;
+      end;
+    except
+      raise Exception.Create('TBaseDosAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.');
+    end;
+    Parser.Free;
+  end;
+
 begin
 
   // Due to dynamic loading, only two values are needed here: Whether it's looping or
@@ -258,6 +307,10 @@ begin
   if fMetaLemmingAnimations.Count <> 49 then
     ShowMessage('Missing an animation? Total: ' + IntToStr(fMetaLemmingAnimations.Count));
 
+  if fLemmingPrefix = '' then fLemmingPrefix := 'default';
+  SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
+  LoadPositionData;
+
   with fMetaLemmingAnimations[48] do
   begin
     FootX := 8;
@@ -287,55 +340,6 @@ var
   Pal: TArrayOfColor32;
   MainExtractor: TMainDatExtractor;
 
-  procedure LoadPositionData;
-  const
-    // These match the order these are stored by this class. They do NOT have to be in this
-    // order in "scheme.nxmi", they just have to all be there.
-
-    ANIM_NAMES: array[0..23] of String =  ('WALKER', 'JUMPER', 'DIGGER', 'CLIMBER',
-                                           'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
-                                           'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
-                                           'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
-                                           'OHNOER', 'BOMBER', 'PLATFORMER', 'STONER',
-                                           'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER');
-    DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
-  var
-    Parser: TParser;
-    AnimSec: TParserSection;
-    ThisAnimSec: TParserSection;
-    DirSec: TParserSection;
-    i: Integer;
-    dx: Integer;
-
-    Anim: TMetaLemmingAnimation;
-  begin
-    Parser := TParser.Create;
-    try
-      Parser.LoadFromFile('scheme.nxmi');
-      AnimSec := Parser.MainSection.Section['animations'];
-      for i := 0 to 23 do
-      begin
-        ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
-        for dx := 0 to 1 do
-        begin
-          DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
-          Anim := fMetaLemmingAnimations[(i * 2) + dx];
-
-          if Anim.FrameCount = 0 then Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
-          if (i in [10, 21 {Floater, Glider}]) and (Anim.FrameCount < 10) then
-            Anim.FrameCount := 10;
-
-          Anim.FootX := DirSec.LineNumeric['foot_x'];
-          Anim.FootY := DirSec.LineNumeric['foot_y'];
-          Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
-        end;
-      end;
-    except
-      raise Exception.Create('TBaseDosAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.');
-    end;
-    Parser.Free;
-  end;
-
 begin
   // fried and or vaporizing has high color indices
   Assert(Length(AnimationPalette) >= 16);
@@ -355,7 +359,6 @@ begin
   SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
 
   try
-      LoadPositionData;
 
       with fMetaLemmingAnimations do
         for iAnimation := 0 to Count-2 do // -2 to leave out the stoner placeholder
@@ -365,7 +368,7 @@ begin
 
           TPngInterface.LoadPngFile(Fn + '.png', TempBitmap);
           if FileExists(Fn + '_mask.png') then
-            TPngInterface.MaskImageFromFile(TempBitmap, AppPath + 'gfx/sprites/' + fLemmingPrefix + '/' + Fn + '_mask.png', Pal[7]);
+            TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', Pal[7]);
 
           MLA.Width := TempBitmap.Width div 2;
           MLA.Height := TempBitmap.height div MLA.FrameCount;
