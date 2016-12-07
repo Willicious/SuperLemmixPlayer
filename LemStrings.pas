@@ -23,12 +23,12 @@ const
   // Important paths
   SFGraphics = 'gfx\';
     SFGraphicsGame = SFGraphics + 'game\';
-    SFGraphicsSprites = SFGraphics + 'sprites\';
 
   SFStyles = 'styles\';
       SFPiecesTerrain = '\terrain\';
       SFPiecesObjects = '\objects\';
       SFPiecesBackgrounds = '\backgrounds\';
+      SFPiecesLemmings = '\lemmings\';
       SFTheme = 'theme.nxtm';
       SFTranslation = 'translation.nxtt';
   SFStylesThemes = SFStyles + 'themes\';
