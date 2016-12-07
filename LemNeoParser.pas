@@ -45,13 +45,16 @@ Although direct access is possible, the recommended ways to get lines or subsect
     Define a procedure (may be private) in the class that's loading the file, of the following format. This can
     either be a procedure of the object itself, or a sub-procedure of another method.
       procedure <name>(aLine: TParserLine; const aIteration: Integer);
+      procedure <name>(aLine: TParserLine; const aIteration: Integer; aData: Pointer);
       procedure <name>(aSection: TParserSection; const aIteration: Integer);
+      procedure <name>(aSection: TParserSection; const aIteration: Integer; aData: Pointer);
     You can then use the following calls to run this procedure once for each line:
-      <TParserSection>.DoForEachLine($$$$, <name>);
-      <TParserSection>.DoForEachSection($$$$, <name>);
+      <TParserSection>.DoForEachLine($$$$, <name>[, <pointer>]);
+      <TParserSection>.DoForEachSection($$$$, <name>[, <pointer>]);
     This effectively works like the following code would be expected to if it were valid:
       for each Item := TParserLine in <TParserSection>.LineList do
-        <name>(Item, # of previous Item found);
+        <name>(Item, # of previous Item found[, <pointer>]);
+    The pointer, if used, is not used by DoForEachXXXX itself, but simply passed to the function it calls.
 
 >> Saving
 Create a TParser object. The main section will be created, but empty, and can be accessed as <TParser>.MainSection.
@@ -95,6 +98,8 @@ type
 
   TForEachLineProcedure = procedure(aLine: TParserLine; const aIteration: Integer) of object;
   TForEachSectionProcedure = procedure(aSection: TParserSection; const aIteration: Integer) of object;
+  TForEachLinePointerProcedure = procedure(aLine: TParserLine; const aIteration: Integer; aData: Pointer) of object;
+  TForEachSectionPointerProcedure = procedure(aSection: TParserSection; const aIteration: Integer; aData: Pointer) of object;
 
   TParser = class
     private
@@ -137,8 +142,10 @@ type
       constructor Create(aKeyword: String);
       destructor Destroy; override;
 
-      function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure): Integer;
-      function DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure): Integer;
+      function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure): Integer; overload;
+      function DoForEachLine(aKeyword: String; aMethod: TForEachLinePointerProcedure; aData: Pointer): Integer; overload;
+      function DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure): Integer; overload;
+      function DoForEachSection(aKeyword: String; aMethod: TForEachSectionPointerProcedure; aData: Pointer): Integer; overload;
 
       procedure AddLine(aKeyword: String); overload;
       procedure AddLine(aKeyword: String; aValue: String); overload;
@@ -538,6 +545,19 @@ begin
     end;
 end;
 
+function TParserSection.DoForEachLine(aKeyword: String; aMethod: TForEachLinePointerProcedure; aData: Pointer): Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+  for i := 0 to fLines.Count-1 do
+    if fLines[i].Keyword = Lowercase(aKeyword) then
+    begin
+      aMethod(fLines[i], Result, aData);
+      Inc(Result);
+    end;
+end;
+
 function TParserSection.DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure): Integer;
 var
   i: Integer;
@@ -547,6 +567,19 @@ begin
     if fSections[i].Keyword = Lowercase(aKeyword) then
     begin
       aMethod(fSections[i], Result);
+      Inc(Result);
+    end;
+end;
+
+function TParserSection.DoForEachSection(aKeyword: String; aMethod: TForEachSectionPointerProcedure; aData: Pointer): Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+  for i := 0 to fSections.Count-1 do
+    if fSections[i].Keyword = Lowercase(aKeyword) then
+    begin
+      aMethod(fSections[i], Result, aData);
       Inc(Result);
     end;
 end;

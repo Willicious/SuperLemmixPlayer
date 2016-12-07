@@ -5,8 +5,8 @@ interface
 uses
   Dialogs,
   Classes, SysUtils,
-  LemNeoParserOld,
-  LemDosStructures, LemLemming, LemTypes,
+  LemNeoParser,
+  LemDosStructures, LemLemming, LemTypes, LemStrings,
   GR32, GR32_Blend{, GR32_OrdinalMaps, GR32_Layers};
 
 type
@@ -32,6 +32,7 @@ type
       fSwaps: TColorSwapArray;
 
       procedure SwapColors(F: TColor32; var B: TColor32);
+      procedure RegisterSwap(aSec: TParserSection; const aIteration: Integer; aData: Pointer);
 
       (*procedure CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
       procedure CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
@@ -110,41 +111,37 @@ begin
   if F <> 0 then B := clBlack32 else B := clWhite32;
 end;
 
+procedure TRecolorImage.RegisterSwap(aSec: TParserSection; const aIteration: Integer; aData: Pointer);
+var
+  Mode: ^TColorSwapType absolute aData;
+  i: Integer;
+begin
+  i := Length(fSwaps);
+  SetLength(fSwaps, i+1);
+  fSwaps[i].Condition := Mode^;
+  fSwaps[i].SrcColor := aSec.LineNumeric['from'];
+  fSwaps[i].DstColor := aSec.LineNumeric['to'];
+end;
+
 procedure TRecolorImage.LoadSwaps(aName: String);
 var
-  Parser: TNeoLemmixParser;
-  Line: TParserLine;
+  Parser: TParser;
   Mode: TColorSwapType;
-  SwapCount: Integer;
-
-  procedure CheckExpand;
-  begin
-    if Length(fSwaps) = SwapCount then
-      SetLength(fSwaps, Length(fSwaps)+64);
-  end;
 begin
   SetLength(fSwaps, 0);
-  SwapCount := 0;
-  Parser := TNeoLemmixParser.Create;
-  Mode := rcl_Selected;
+  Parser := TParser.Create;
   try
-    Parser.LoadFromFile(AppPath + 'gfx/sprites/' + aName + '/scheme.nxmi');
-    repeat
-      Line := Parser.NextLine;
-      if Line.Keyword = 'SELECTED' then Mode := rcl_Selected;
-      if Line.Keyword = 'ZOMBIE' then Mode := rcl_Zombie;
-      if Line.Keyword = 'ATHLETE' then Mode := rcl_Athlete;
-      if StrToIntDef('x' + Line.Keyword, -1) <> -1 then
-      begin
-        CheckExpand;
-        fSwaps[SwapCount].Condition := Mode;
-        fSwaps[SwapCount].SrcColor := StrToInt('x' + Line.Keyword);
-        fSwaps[SwapCount].DstColor := StrToInt('x' + Line.Value);
-        Inc(SwapCount);
-      end;
-    until Line.Keyword = '';
+    Parser.LoadFromFile(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi');
+
+    Mode := rcl_Athlete;
+    Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
+
+    Mode := rcl_Zombie;
+    Parser.MainSection.Section['recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
+
+    Mode := rcl_Selected;
+    Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
   finally
-    SetLength(fSwaps, SwapCount);
     Parser.Free;
   end;
 end;
