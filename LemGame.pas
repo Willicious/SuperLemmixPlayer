@@ -3618,6 +3618,10 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
   o Call specialized action-method
   o Do *not* call this method for a removed lemming
 -------------------------------------------------------------------------------}
+const
+  OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
+                      baVaporizing, baShrugging, baOhnoing, baExploding,
+                      baStoning];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -3633,7 +3637,7 @@ begin
     L.LemFrame := 0;
     // Floater and Glider start cycle at frame 9!
     if L.LemAction in [baFloating, baGliding] then L.LemFrame := 9;
-    if L.LemAnimationType = lat_Once then L.LemEndOfAnimation := True;
+    if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
 
   // Do Lem action
