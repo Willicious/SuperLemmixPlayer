@@ -4,14 +4,11 @@ unit LemNeoPieceManager;
 // graphic sets were in the past. It could be thought of as a huge
 // dynamic graphic set.
 
-
-// TODO: New changes probably cause recolorable pieces to not recolor when the theme is changed.
-
 interface
 
 uses
   Dialogs,
-  LemNeoParserOld, PngInterface, LemNeoTheme,
+  PngInterface, LemNeoTheme,
   LemMetaTerrain, LemMetaObject, LemTypes, GR32, LemStrings,
   StrUtils, Classes, SysUtils;
 
