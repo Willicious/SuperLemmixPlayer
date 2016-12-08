@@ -8,7 +8,8 @@ interface
 uses
   Classes, SysUtils;
 
-  function CalculateCRC32(AStream : TStream) : Cardinal;
+  function CalculateCRC32(aFilename: String): Cardinal; overload;
+  function CalculateCRC32(aStream : TStream): Cardinal; overload;
 
 implementation
 
@@ -79,9 +80,23 @@ const
     $B3667A2E, $C4614AB8, $5D681B02, $2A6F2B94,
     $B40BBE37, $C30C8EA1, $5A05DF1B, $2D02EF8D);
 
-function CalculateCRC32(AStream : TStream) : Cardinal;
-var aMemStream : TMemoryStream;
-    aValue : Byte;
+function CalculateCRC32(aFilename: String): Cardinal;
+var
+  F: TFileStream;
+begin
+  F := TFileStream.Create(aFilename, fmOpenRead);
+  try
+    F.Position := 0;
+    Result := CalculateCRC32(F);
+  finally
+    F.Free;
+  end;
+end;
+
+function CalculateCRC32(aStream : TStream): Cardinal;
+var
+  aMemStream : TMemoryStream;
+  aValue : Byte;
 begin
   aMemStream := TMemoryStream.Create;
   try

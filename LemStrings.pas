@@ -35,6 +35,8 @@ const
       SFTheme = 'theme.nxtm';
       SFTranslation = 'translation.nxtt';
 
+  SFLevels = 'levels\';
+
 resourcestring
   SProgramName = 'NeoLemmix Player';
   SDummyString = '';
