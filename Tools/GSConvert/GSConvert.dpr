@@ -3,7 +3,7 @@ program GSConvert;
 {$APPTYPE CONSOLE}
 
 uses
-  Classes, SysUtils, LemGSConvert, LemGraphicSet, GSLoadNeoLemmix;
+  Classes, SysUtils, LemGSConvert, LemGraphicSet, GSLoadNeoLemmix, StrUtils, LemNeoParser;
 
 var
   GS: TBaseGraphicSet;
@@ -28,6 +28,68 @@ var
     GS.Free;
   end;
 
+  procedure HandleMatching(aInput: String);
+  var
+    Parser: TParser;
+    MainSec: TParserSection;
+    Sec: TParserSection;
+    GS1Name, GS2Name: String;
+    GS1, GS2: TBaseGraphicSet;
+    SL: TStringList;
+
+    i, i2: Integer;
+    GS1Max, GS2Max: Integer;
+  begin
+    aInput := RightStr(aInput, Length(aInput) - Pos(' ', aInput));
+    GS1Name := LeftStr(aInput, Pos(' ', aInput) - 1);
+    GS2Name := RightStr(aInput, Length(aInput) - Pos(' ', aInput));
+
+    GS1 := L.LoadGraphicSet(GS1Name);
+    GS2 := L.LoadGraphicSet(GS2Name);
+    Parser := TParser.Create;
+    MainSec := Parser.MainSection;
+    try
+      if FileExists(ChangeFileExt(GS1Name, '.txt')) then
+      begin
+        SL := TStringList.Create;
+        SL.LoadFromFile(ChangeFileExt(GS1Name, '.txt'));
+        Parser.LoadFromStrings(SL);
+        Adjust(GS1, SL);
+        SL.Free;
+      end;
+      if FileExists(ChangeFileExt(GS2Name, '.txt')) then
+      begin
+        SL := TStringList.Create;
+        SL.LoadFromFile(ChangeFileExt(GS2Name, '.txt'));
+        Adjust(GS2, SL);
+        SL.Free;
+      end;
+
+      Prepare(GS1);
+      Prepare(GS2);
+
+      GS1Name := ChangeFileExt(GS1Name, '');
+      GS2Name := ChangeFileExt(GS2Name, '');
+
+      for i := 0 to GS1.TerrainImages.Count-1 do
+        for i2 := 0 to GS2.TerrainImages.Count-1 do
+        begin
+          if GS1.MetaTerrains[i].Steel <> GS2.MetaTerrains[i2].Steel then Continue;
+          if not CheckHashMatch(GS1.TerrainImages[i], GS2.TerrainImages[i2]) then Continue;
+          if not CheckImageMatch(GS1.TerrainImages[i], GS2.TerrainImages[i2]) then Continue;
+
+          Sec := MainSec.SectionList.Add('TERRAIN');
+          Sec.AddLine('INDEX', IntToStr(i));
+          Sec.AddLine('REFERENCE', GS2Name + ':' + GS2.MetaTerrains[i2].Name);
+        end;
+
+      Parser.SaveToFile(GS1Name + '.txt');
+    finally
+      GS1.Free;
+      GS2.Free;
+    end;
+  end;
+
 begin
   L := TNeoLemmixGraphicSet.Create(nil);
 
@@ -41,7 +103,7 @@ begin
       ReadLn(SrcName);
     end;
 
-    if (SrcName <> '') and (Lowercase(SrcName) <> '*all') then
+    if (SrcName <> '') and (Lowercase(SrcName) <> '*all') and (LeftStr(Lowercase(SrcName), 6) <> '*match') then
       if not FileExists(SrcName) then
       begin
         WriteLn('ERROR: File "' + SrcName + '" does not exist.');
@@ -60,7 +122,9 @@ begin
       until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
     WriteLn('Conversions complete!');
-  end else
+  end else if LeftStr(Lowercase(SrcName), 6) = '*match' then
+    HandleMatching(SrcName)
+  else
     ConvertGraphicSet(SrcName);
 
   L.Free;

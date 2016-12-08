@@ -20,6 +20,9 @@ uses
 
   function LeadZeroStr(aValue, aLen: Integer): String;
 
+  function CheckHashMatch(BMP1, BMP2: TBitmap32): Boolean;
+  function CheckImageMatch(BMP1, BMP2: TBitmap32): Boolean;
+
 type
   TConvertFunctions = class // Because TParser's foreach type procedures need methods of an object
     private
