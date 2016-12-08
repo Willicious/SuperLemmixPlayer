@@ -68,10 +68,7 @@ type
     LemMechanicFrames             : Integer;
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
-    LemAnimationType              : Integer; // copy from LMA
     LemParticleTimer              : Integer; // @particles, 52 downto 0, after explosion
-    FrameTopDy                    : Integer; // = -LMA.FootY (ccexplore compatible)
-    FrameLeftDx                   : Integer; // = -LMA.FootX (ccexplore compatible)
     LemNumberOfBricksLeft         : Integer; // for builder, platformer, stacker
   { byte sized fields }
     LemAction                     : TBasicLemmingAction; // current action of the lemming
@@ -108,9 +105,6 @@ type
     constructor Create;
     procedure Assign(Source: TLemming);
     procedure SetFromPreplaced(Source: TPreplacedLemming);
-    //function GetLocationBounds: TRect; // rect in world
-    //function GetFrameBounds: TRect; // rect from animation bitmap
-    //function GetCountDownDigitBounds: TRect; // countdown
 
     property Position          : TPoint read GetPosition;    
     property HasPermanentSkills: Boolean read CheckForPermanentSkills;
@@ -230,71 +224,6 @@ begin
   Result.Y := LemY;
 end;
 
-(*function TLemming.GetCountDownDigitBounds: TRect;
-begin
-  with Result do
-  begin
-    Left := LemX - 1;
-    Top := LemY + FrameTopDy - 12;
-    Right := Left + 8;
-    Bottom := Top + 8;
-    if LemDx = 1 then
-    begin
-      Left := Left - 1;
-      Right := Right - 1;
-    end;
-  end;
-end;
-
-
-
-function TLemming.GetFrameBounds: TRect;
-begin
-  Assert(LAB <> nil, 'getframebounds error');
-  with Result do
-  begin
-    Left := 0;
-    Top := LemFrame * LMA.Height;
-    Right := LMA.Width;
-    Bottom := Top + LMA.Height;
-  end;
-end;
-
-function TLemming.GetLocationBounds: TRect;
-begin
-  Assert(LMA <> nil, 'meta animation error');
-  with Result do
-  begin
-    Left := LemX - LMA.FootX;
-    Top := LemY - LMA.FootY;
-    Right := Left + LMA.Width;
-    Bottom := Top + LMA.Height;
-
-    if (LemAction in [baDigging, baFixing]) and (LemDx = -1) then
-    begin
-      Inc(Left);
-      Inc(Right);
-    end;
-
-    if LemAction = baMining then
-    begin
-      if LemDx = -1 then
-      begin
-        Dec(Left);
-        Dec(Right);
-      end else begin
-        Inc(Left);
-        Inc(Right);
-      end;
-      if (LemFrame < 15) then
-      begin
-        Inc(Top);
-        Inc(Bottom);
-      end;
-    end;  // Seems to be glitchy if the animations themself are altered
-  end;
-end;*)
-
 procedure TLemming.Assign(Source: TLemming);
 begin
 
@@ -310,10 +239,7 @@ begin
   LemMechanicFrames := Source.LemMechanicFrames;
   LemFrame := Source.LemFrame;
   LemMaxFrame := Source.LemMaxFrame;
-  LemAnimationType := Source.LemAnimationType;
   LemParticleTimer := Source.LemParticleTimer;
-  FrameTopDy := Source.FrameTopDy;
-  FrameLeftDx := Source.FrameLeftDx;
   LemNumberOfBricksLeft := Source.LemNumberOfBricksLeft;
 
   LemAction := Source.LemAction;

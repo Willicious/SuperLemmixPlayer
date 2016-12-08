@@ -162,41 +162,24 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
   o make lemming animations
   o make mask animations metadata
 -------------------------------------------------------------------------------}
-
-    procedure Lem(aFrameCount, aAnimType: Integer);
+  procedure Msk(aImageLocation: Integer; const aDescription: string;
+    aFrameCount, aWidth, aHeight, aBPP: Integer);
+  begin
+    with fMetaMaskAnimations.Add do
     begin
-      // Frame count:
-      // If a value is specified, the animation must have exactly that many frames
-      // If it's zero, any number of frames is allowed
-
-      // Floater and Glider must have a minimum of 10 frames, but can have more. This is
-      // handled when loading the animations.
-      with fMetaLemmingAnimations.Add do
-      begin
-        FrameCount         := aFrameCount;
-        AnimationType      := aAnimType;
-      end;
+      ImageLocation      := aImageLocation;
+      Description        := aDescription;
+      FrameCount         := aFrameCount;
+      Width              := aWidth;
+      Height             := aHeight;
+      BitsPerPixel       := aBPP;
     end;
-
-    procedure Msk(aImageLocation: Integer; const aDescription: string;
-      aFrameCount, aWidth, aHeight, aBPP: Integer);
-    begin
-      with fMetaMaskAnimations.Add do
-      begin
-        ImageLocation      := aImageLocation;
-        Description        := aDescription;
-        FrameCount         := aFrameCount;
-        Width              := aWidth;
-        Height             := aHeight;
-        BitsPerPixel       := aBPP;
-      end;
-    end;
+  end;
 
   procedure LoadPositionData;
   const
     // These match the order these are stored by this class. They do NOT have to be in this
     // order in "scheme.nxmi", they just have to all be there.
-
     ANIM_NAMES: array[0..23] of String =  ('WALKER', 'JUMPER', 'DIGGER', 'CLIMBER',
                                            'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                            'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
@@ -220,33 +203,49 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
       AnimSec := Parser.MainSection.Section['animations'];
       for i := 0 to 23 do
       begin
-        ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
-        for dx := 0 to 1 do
-        begin
-          DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
-          Anim := fMetaLemmingAnimations[(i * 2) + dx];
+        try
+          ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
+          for dx := 0 to 1 do
+          begin
+            DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
+            Anim := fMetaLemmingAnimations[(i * 2) + dx];
 
-          if Anim.FrameCount = 0 then Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
-          if (i in [10, 21 {Floater, Glider}]) and (Anim.FrameCount < 10) then
-            Anim.FrameCount := 10;
+            if Anim.FrameCount = 0 then Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
+            if (i in [10, 21 {Floater, Glider}]) and (Anim.FrameCount < 10) then
+              Anim.FrameCount := 10;
 
-          Anim.FootX := DirSec.LineNumeric['foot_x'];
-          Anim.FootY := DirSec.LineNumeric['foot_y'];
-          Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
+            Anim.FootX := DirSec.LineNumeric['foot_x'];
+            Anim.FootY := DirSec.LineNumeric['foot_y'];
+            Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
+          end;
+        except
+          raise Exception.Create('TBaseDosAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.')
         end;
       end;
     except
-      raise Exception.Create('TBaseDosAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.');
+      raise Exception.Create('TBaseDosAnimationSet: Error while opening scheme.nxmi.');
     end;
     Parser.Free;
   end;
 
+const
+  // Number of frames for the various lemming actions.
+  // If zero, the animations area loaded dynamically.
+  // Otherwise the animation must have *exactly* this number of frames.
+  ANIM_FRAMECOUNT: array[0..23] of Integer =
+    ( 0,  0, 16,  8,   // walker, jumper, digger, climber
+     16,  8, 16, 32,   // drowner, hoister, builder, basher
+     24,  0,  0, 16,   // miner, faller, floater, splatter
+      8, 14,  0,  8,   // exiter, burner, blocker, shrugger
+     16,  1, 16,  1,   // ohnoer, bomber, platformer, stoner
+      8, 17, 16,  8 ); // swimmer, glider, disarmer, stacker
+var
+  AnimIndex: Integer;
 begin
-
-  // Due to dynamic loading, only two values are needed here: Whether it's looping or
-  // not, and the frame count. If the frame count is zero, even that can be dynamically
-  // loaded; this is usually for animations where the graphic has no impact on the
-  // physics (such as walkers).
+  // Due to dynamic loading, only one value is needed here: The frame count.
+  // In situations where the graphic has no impact on physics (e.g. walkers),
+  // the frame count can be zero. In such situations even the animations are
+  // loaded dynamically.
 
   // Eventually, this should be changed so that even animations that do currently impact
   // physics can have a different number of frames without impact.
@@ -254,55 +253,15 @@ begin
   // Note that currently, floater and glider have a minimum of 10 frames; this is handled
   // elsewhere.
 
-  Lem(0, lat_Loop); //Rwalker
-  Lem(0, lat_Loop); //Lwalker
-  Lem(0, lat_Loop); //Rjumper
-  Lem(0, lat_Loop); //Ljumper
-  Lem(16, lat_Loop); //Rdigger
-  Lem(16, lat_Loop); //Ldigger
-  Lem(8, lat_Loop); //Rclimber
-  Lem(8, lat_Loop); //Lclimber
-  Lem(16, lat_Once); //Rdrowner
-  Lem(16, lat_Once); //Ldrowner
-  Lem(8, lat_Once); //Rhoister
-  Lem(8, lat_Once); //Lhoister
-  Lem(16, lat_Loop); //Rbuilder
-  Lem(16, lat_Loop); //Lbuilder
-  Lem(32, lat_Loop); //Rbasher
-  Lem(32, lat_Loop); //Lbasher
-  Lem(24, lat_Loop); //Rminer
-  Lem(24, lat_Loop); //Lminer
-  Lem(0, lat_Loop); //Rfaller
-  Lem(0, lat_Loop); //Lfaller
-  Lem(0, lat_Loop); //Rfloater
-  Lem(0, lat_Loop); //Lfloater
-  Lem(16, lat_Once); //Rsplatter
-  Lem(16, lat_Once); //Lsplatter
-  Lem(8, lat_Once); //Rexiter
-  Lem(8, lat_Once); //Lexiter
-  Lem(14, lat_Once); //Rburner
-  Lem(14, lat_Once); //Lburner
-  Lem(0, lat_Loop); //Rblocker
-  Lem(0, lat_Loop); //Lblocker
-  Lem(8, lat_Once); //Rshrugger
-  Lem(8, lat_Once); //Lshrugger
-  Lem(16, lat_Once); //Rohnoer
-  Lem(16, lat_Once); //Lohnoer
-  Lem(1, lat_Once); //Rbomber
-  Lem(1, lat_Once); //Lbomber
-  Lem(16, lat_Loop); //Rplatformer
-  Lem(16, lat_Loop); //Lplatformer
-  Lem(1, lat_Once); //Rstoner
-  Lem(1, lat_Once); //Lstoner
-  Lem(8, lat_Loop); //Rswimmer
-  Lem(8, lat_Loop); //Lswimmer
-  Lem(17, lat_Loop); //Rglider
-  Lem(17, lat_Loop); //Lglider
-  Lem(16, lat_Loop); //Rdisarmer
-  Lem(16, lat_Loop); //Ldisarmer
-  Lem(8, lat_Loop); //Rstacker
-  Lem(8, lat_Loop); //Lstacker
-  Lem(1, lat_Once); //  This one is a placeholder for the stoner mask, I can't remember why it's in here but it is. I need to fix that.
+  for AnimIndex := 0 to 23 do
+  begin
+    // Add right- and left-facing version
+    fMetaLemmingAnimations.Add.FrameCount := ANIM_FRAMECOUNT[AnimIndex];
+    fMetaLemmingAnimations.Add.FrameCount := ANIM_FRAMECOUNT[AnimIndex];
+  end;
+  // This one is a placeholder for the stoner mask, I can't remember why it's in here but it is. I need to fix that.
+  fMetaLemmingAnimations.Add.FrameCount := 1;
+
 
   if fMetaLemmingAnimations.Count <> 49 then
     ShowMessage('Missing an animation? Total: ' + IntToStr(fMetaLemmingAnimations.Count));
@@ -311,11 +270,13 @@ begin
   SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
   LoadPositionData;
 
+  // Setting the foot position of the stoner mask.
+  // This should be irrelevant for the stoner mask, as the stoner mask is not positioned wrt. the lemming's foot.
+  // For other sprites, the foot position is required though.
   with fMetaLemmingAnimations[48] do
   begin
     FootX := 8;
     FootY := 10;
-    // not sure if these values are needed, but better safe than sorry until tested (and ideally, the dependancy on them resolved)
   end;
 
   //  place   description            F   W   H  BPP

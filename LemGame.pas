@@ -2032,9 +2032,6 @@ begin
   i := AnimationIndices[NewAction, (L.LemDx = -1)];
   TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
   L.LemMaxFrame := TempMetaAnim.FrameCount - 1;
-  L.LemAnimationType := TempMetaAnim.AnimationType;
-  L.FrameTopDy  := TempMetaAnim.FootY; // ccexplore compatible
-  L.FrameLeftDx := TempMetaAnim.FootX; // ccexplore compatible
 
   // some things to do when entering state
   case L.LemAction of
@@ -2084,9 +2081,6 @@ begin
     i := AnimationIndices[LemAction, (LemDx = -1)];
     TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
     LemMaxFrame := TempMetaAnim.FrameCount - 1;
-    LemAnimationType := TempMetaAnim.AnimationType;
-    FrameTopDy  := -TempMetaAnim.FootY; // ccexplore compatible
-    FrameLeftDx := -TempMetaAnim.FootX; // ccexplore compatible
   end;
 end;
 
@@ -3618,6 +3612,10 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
   o Call specialized action-method
   o Do *not* call this method for a removed lemming
 -------------------------------------------------------------------------------}
+const
+  OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
+                      baVaporizing, baShrugging, baOhnoing, baExploding,
+                      baStoning];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -3633,7 +3631,7 @@ begin
     L.LemFrame := 0;
     // Floater and Glider start cycle at frame 9!
     if L.LemAction in [baFloating, baGliding] then L.LemFrame := 9;
-    if L.LemAnimationType = lat_Once then L.LemEndOfAnimation := True;
+    if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
 
   // Do Lem action

@@ -7,10 +7,6 @@ uses
   Classes, UTools,
   LemCore;
 
-const
-  lat_Loop = 0; // always animate
-  lat_Once = 1; // state change if finished
-
 type
   TMetaAnimationClass = class of TMetaAnimation;
   TMetaAnimation = class(TCollectionItem)
@@ -32,18 +28,6 @@ type
     property BitsPerPixel     : Integer read fBitsPerPixel write fBitsPerPixel;
     property ImageLocation    : Integer read fImageLocation write fImageLocation;
   end;
-
-  {
-  TMetaAnimationFrame = class(TCollectionItem)
-  private
-    fFootX           : Integer;
-    fFootY           : Integer;
-  protected
-  public
-  published
-    property FootX            : Integer read fFootX write fFootX;
-    property FootY            : Integer read fFootY write fFootY;
-  end; }
 
   TMetaLemmingAnimationClass = class of TMetaLemmingAnimation;
   TMetaLemmingAnimation = class(TMetaAnimation)
