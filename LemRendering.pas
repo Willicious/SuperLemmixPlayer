@@ -1163,19 +1163,19 @@ var
       DstRect := ZeroTopLeftRect(DstRect);
       OffsetRect(DstRect, Inf.Left, Inf.Top + (MO.Height * iY));
       // shrink sizes of rectange to draw on bottom row
-      if iY = CountY then
+      if (iY = CountY) and (Inf.Height mod MO.Height <> 0) then
       begin
-        Dec(DstRect.Bottom, Inf.Height mod MO.Height);
-        Dec(TempBitmapRect.Bottom, Inf.Height mod MO.Height);
+        Dec(DstRect.Bottom, MO.Height - (Inf.Height mod MO.Height));
+        Dec(TempBitmapRect.Bottom, MO.Height - (Inf.Height mod MO.Height));
       end;
 
       for iX := 0 to CountX do
       begin
         // shrink size of rectangle to draw on rightmost column
-        if iX = CountX then
+        if (iX = CountX) and (Inf.Width mod MO.Width <> 0) then
         begin
-          Dec(DstRect.Right, Inf.Width mod MO.Width);
-          Dec(TempBitmapRect.Right, Inf.Width mod MO.Width);
+          Dec(DstRect.Right, MO.Width - (Inf.Width mod MO.Width));
+          Dec(TempBitmapRect.Right, MO.Width - (Inf.Width mod MO.Width));
         end;
         // Draw copy of object onto alayer at this place
         TempBitmap.DrawTo(fLayers[aLayer], DstRect, TempBitmapRect);
