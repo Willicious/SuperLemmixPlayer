@@ -907,6 +907,8 @@ var
   i, x, y: Integer;
   MinX, MaxX, MinY, MaxY: Integer;
 begin
+  if O.TriggerType in [7, 8, 19] then Exit;
+
   TempBMP := TBitmap32.Create;
 
   MinX := BMPs[0].Width;
