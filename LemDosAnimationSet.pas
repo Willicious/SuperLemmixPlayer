@@ -238,7 +238,7 @@ const
      24,  0,  0, 16,   // miner, faller, floater, splatter
       8, 14,  0,  8,   // exiter, burner, blocker, shrugger
      16,  1, 16,  1,   // ohnoer, bomber, platformer, stoner
-      8, 17, 16,  8 ); // swimmer, glider, disarmer, stacker
+      8,  0, 16,  8 ); // swimmer, glider, disarmer, stacker
 var
   AnimIndex: Integer;
 begin
@@ -364,32 +364,32 @@ begin
       fHighlightBitmap.DrawMode := dmBlend;
 
         // Stoner, Bomber and Highlight are a single frame each so easy enough
-        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/bomber.png', fExplosionMaskBitmap);
-        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/stoner.png', fLemmingAnimations[STONED]);
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'bomber.png', fExplosionMaskBitmap);
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'stoner.png', fLemmingAnimations[STONED]);
         with fMetaLemmingAnimations[STONED] do
         begin
           Width := fLemmingAnimations[STONED].Width;
           Height := fLemmingAnimations[STONED].Height;
         end;
-        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/highlight.png', fHighlightBitmap);
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
 
         fLemmingAnimations[STONED].DrawMode := dmBlend;
 
         // Basher and miner are a tad more complicated
-        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/basher.png', TempBitmap);
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'basher.png', TempBitmap);
         fBashMasksRTLBitmap.SetSize(16, 40);
         fBashMasksBitmap.SetSize(16, 40);
         TempBitmap.DrawTo(fBashMasksRTLBitmap, 0, 0, Rect(0, 0, 16, 40));
         TempBitmap.DrawTo(fBashMasksBitmap, 0, 0, Rect(16, 0, 32, 40));
 
-        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/miner.png', TempBitmap);
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'miner.png', TempBitmap);
         fMineMasksRTLBitmap.SetSize(16, 26);
         fMineMasksBitmap.SetSize(16, 26);
         TempBitmap.DrawTo(fMineMasksRTLBitmap, 0, 0, Rect(0, 0, 16, 26));
         TempBitmap.DrawTo(fMineMasksBitmap, 0, 0, Rect(16, 0, 32, 26));
 
         // And countdown digits are the most complicated of all (or not, anymore...)
-        TPngInterface.LoadPngFile(AppPath + 'gfx/mask/countdown.png', fCountdownDigitsBitmap);
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'countdown.png', fCountdownDigitsBitmap);
         (*fCountdownDigitsBitmap.SetSize(8, 80);
         fCountdownDigitsBitmap.Clear(0);
         for i := 0 to 9 do

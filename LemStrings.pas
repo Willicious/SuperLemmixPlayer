@@ -22,7 +22,10 @@ const
 
   // Important paths
   SFGraphics = 'gfx\';
-    SFGraphicsGame = SFGraphics + 'game\';
+    SFGraphicsHelpers = SFGraphics + 'helpers\';
+    SFGraphicsMasks = SFGraphics + 'mask\';
+    SFGraphicsMenu = SFGraphics + 'menu\';
+    SFGraphicsPanel = SFGraphics + 'panel\';
 
   SFStyles = 'styles\';
       SFPiecesTerrain = '\terrain\';
@@ -31,7 +34,6 @@ const
       SFPiecesLemmings = '\lemmings\';
       SFTheme = 'theme.nxtm';
       SFTranslation = 'translation.nxtt';
-  SFStylesThemes = SFStyles + 'themes\';
 
 resourcestring
   SProgramName = 'NeoLemmix Player';

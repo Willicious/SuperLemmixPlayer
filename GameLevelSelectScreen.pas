@@ -10,7 +10,8 @@ uses
   UMisc,
   LemStrings, LemDosStructures, LemDosStyle,
   StrUtils,
-  GameControl, GameBaseScreen;
+  GameControl, GameBaseScreen,
+  PngInterface, LemTypes;
 
 type
   TGameLevelSelectScreen = class(TGameBaseScreen)
@@ -72,7 +73,7 @@ begin
 
     fSelectedLevel := GameParams.Info.dLevel;
 
-    MainDatExtractor.ExtractBitmapByName(fTick, 'tick.png');
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'tick.png', fTick);
 
     DrawLevelList;
   finally

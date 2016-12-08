@@ -10,7 +10,8 @@ uses
   FBaseDosForm,
   GameControl,
   LemDosStructures,
-  LemDosMainDat;
+  LemDosMainDat,
+  LemStrings, PngInterface, LemTypes;
 
 const
   DEF_STRETCHED = TRUE;
@@ -389,7 +390,7 @@ begin
   begin
     TempBMP := TBitmap32.Create;
 
-    ExtractBitmapByName(TempBMP, 'menu_font.png');
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP);
     for i := 0 to PURPLEFONTCOUNT-7 do
     begin
       fPurpleFont.fBitmaps[i].SetSize(16, 16);
@@ -399,7 +400,7 @@ begin
       fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
     end;
 
-    ExtractBitmapByName(TempBMP, 'talismans.png');
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png');
     for i := 0 to 5 do
     begin
       fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);

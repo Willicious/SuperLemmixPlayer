@@ -6,7 +6,8 @@ interface
 uses
   Dialogs,
   Classes, SysUtils, GR32, UMisc, PngInterface,
-  LemTypes, LemDosStructures, LemDosCmp, LemDosBmp;
+  LemTypes, LemDosStructures, LemDosCmp, LemDosBmp,
+  LemStrings;
 
 type
   {-------------------------------------------------------------------------------
@@ -235,7 +236,7 @@ begin
   begin
     //try
       fPositions[aSection] := aPosition;
-      ExtractBitmapByName(Bmp, GetImageFileName(aSection, aPosition));
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + GetImageFileName(aSection, aPosition), Bmp);
       SetDrawModes(Bmp, aSection, aPosition);
       fPositions[aSection] := fPositions[aSection] + ((aWidth * aHeight * BPP) div 8); // compatibility with those using relative positions
       Exit;
@@ -250,7 +251,7 @@ procedure TMainDatExtractor.ExtractBrownBackGround(Bmp: TBitmap32);
   Extract hte brown background, used in several screens
 -------------------------------------------------------------------------------}
 begin
-  ExtractBitmapByName(Bmp, 'background.png');
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', BMP);
 end;
 
 procedure TMainDatExtractor.ExtractLogo(Bmp: TBitmap32);
@@ -258,7 +259,7 @@ procedure TMainDatExtractor.ExtractLogo(Bmp: TBitmap32);
   Extract the LemmingLogo
 -------------------------------------------------------------------------------}
 begin
-  ExtractBitmapByName(Bmp, 'logo.png');
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'logo.png', BMP);
 end;
 
 function TMainDatExtractor.GetSysData(): TSysDatRec;

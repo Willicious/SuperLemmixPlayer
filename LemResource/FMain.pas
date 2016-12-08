@@ -66,7 +66,7 @@ begin
   //Z.AddFiles(IncludeTrailingBackslash(GetApplicationPath + aSourcePath) + '*.it');
   //Z.AddFiles(IncludeTrailingBackslash(GetApplicationPath + aSourcePath) + '*.ogg');
   Z.AddFiles(IncludeTrailingBackslash(GetApplicationPath + aSourcePath) + '*.nxmi');
-  Z.AddFiles(IncludeTrailingBackslash(GetApplicationPath + aSourcePath) + 'image\*.png');
+  //Z.AddFiles(IncludeTrailingBackslash(GetApplicationPath + aSourcePath) + 'image\*.png');
   //Z.AddFiles(IncludeTrailingBackslash(GetApplicationPath + aSourcePath) + 'lems\*.png');
   Z.AddFiles(IncludeTrailingBackslash(GetApplicationPath + aSourcePath) + '*.txt');
 

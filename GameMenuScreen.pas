@@ -245,9 +245,9 @@ var
     SourceRect: TRect;
   begin
     try
-      MainDatExtractor.ExtractBitmapByName(Tmp, 'scroller_segment.png');
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'scroller_segment.png', Tmp);
       TempBMP := TBitmap32.Create;
-      MainDatExtractor.ExtractBitmapByName(TempBMP, 'scroller_lemmings.png');
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'scroller_lemmings.png', TempBMP);
       SourceRect := Rect(0, 0, 48, 256);
       LeftLemmingAnimation.SetSize(48, 256);
       RightLemmingAnimation.SetSize(48, 256);

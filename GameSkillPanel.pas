@@ -685,7 +685,7 @@ const
 
   procedure GetGraphic(aName: String; aDst: TBitmap32);
   begin
-    aName := AppPath + SFGraphicsGame + 'default\' + aName;
+    aName := AppPath + SFGraphicsPanel + aName;
     TPngInterface.LoadPngFile(aName, aDst);
     TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(aName, '_mask.png'), LemmixPal[7]);
   end;
