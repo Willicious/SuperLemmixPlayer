@@ -317,6 +317,15 @@ procedure TLevel.LoadGeneralInfo(aSection: TParserSection);
     else
       Result := $02;
   end;
+
+  function GetTimeLimitValue(aString: String): Integer;
+  begin
+    aString := Lowercase(aString);
+    if (aString = '') or (aString = 'infinite') then
+      Result := 6000
+    else
+      Result := StrToIntDef(aString, 6000); // normally we'd treat an invalid value as 0, but 0 gets treated as 6000 here ;)
+  end;
 begin
   // This procedure should receive the Parser's MAIN section
   with Info do
@@ -329,8 +338,7 @@ begin
 
     LemmingsCount := aSection.LineNumeric['lemmings'];
     RescueCount := aSection.LineNumeric['requirement'];
-    TimeLimit := aSection.LineNumeric['time_limit'];
-    if TimeLimit = 0 then TimeLimit := 6000; // treated as infinite
+    TimeLimit := GetTimeLimitValue(aSection.LineTrimString['time_limit']);
     ReleaseRate := aSection.LineNumeric['release_rate'];
     ReleaseRateLocked := (aSection.Line['release_rate_locked'] <> nil);
 
@@ -372,7 +380,10 @@ procedure TLevel.LoadSkillsetSection(aSection: TParserSection);
     Result := 0;
     Line := aSection.Line[aLabel];
     if Line = nil then Exit;
-    Result := Line.ValueNumeric;
+    if Lowercase(Line.ValueTrimmed) = 'infinite' then
+      Result := 100
+    else
+      Result := Line.ValueNumeric;
     Info.SkillTypes := Info.SkillTypes or aFlag;
   end;
 begin
@@ -717,7 +728,10 @@ var
   procedure HandleSkill(aLabel: String; aFlag: Cardinal; aCount: Integer);
   begin
     if Info.SkillTypes and aFlag = 0 then Exit; // we don't check aCount because a zero count might still mean pickup skills exist
-    Sec.AddLine(aLabel, aCount);
+    if aCount > 99 then
+      Sec.AddLine(aLabel, 'infinite')
+    else
+      Sec.AddLine(aLabel, aCount);
   end;
 begin
   if Info.SkillTypes = 0 then Exit;

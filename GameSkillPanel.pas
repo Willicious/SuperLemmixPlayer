@@ -783,9 +783,18 @@ begin
       SrcRect.Left := SrcRect.Left + 4;
     end;
 
-    GetGraphic('skill_count_infinite.png', fSkillInfinite);
+    SrcRect.Right := SrcRect.Right + 4; // Position is correct at this point, but Infinite symbol is 8px wide not 4px
+    fSkillInfinite.SetSize(8, 8);
+    fSkillInfinite.Clear(0);
+    TempBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
+
+    SrcRect.Right := SrcRect.Right + 8;
+    SrcRect.Left := SrcRect.Left + 8;
+    fSkillLock.SetSize(8, 8);
+    fSkillLock.Clear(0);
+    TempBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
+
     GetGraphic('skill_count_erase.png', fSkillWhiteout);
-    GetGraphic('skill_count_lock.png', fSkillLock);
 
     fSkillInfinite.DrawMode := dmBlend;
     fSkillInfinite.CombineMode := cmMerge;

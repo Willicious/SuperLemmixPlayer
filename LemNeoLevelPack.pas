@@ -5,9 +5,27 @@ unit LemNeoLevelPack;
 interface
 
 uses
-  GR32, CRC32,
+  GR32, CRC32, PngInterface,
   Classes, SysUtils, StrUtils, Contnrs,
   LemStrings, LemTypes, LemNeoParser;
+
+const
+  PKI_PANEL_BASE         = 0;
+  PKI_PANEL_BASE_MASK    = 1;
+  PKI_PANEL_BUTTONS      = 2;
+  PKI_PANEL_BUTTONS_MASK = 3;
+  PKI_PANEL_FONT         = 4;
+  PKI_PANEL_FONT_MASK    = 5;
+  PKI_PANEL_DIGITS       = 6;
+  PKI_PANEL_DIGITS_MASK  = 7;
+  PKI_PANEL_ERASE        = 8;
+
+
+  PANEL_IMAGE_NAMES: array[0..8] of String = ('skill_panel.png', 'skill_panel_mask.png',
+                                              'skill_buttons.png', 'skill_buttons_mask.png',
+                                              'skill_panel_font.png', 'skill_panel_font_mask.png',
+                                              'skill_panel_digits.png', 'skill_panel_digits_mask.png',
+                                              'skill_count_erase.png');
 
 type
   TNeoLevelEntry = class;
@@ -47,18 +65,23 @@ type
       fChildGroups: TNeoLevelGroups;
       fLevels: TNeoLevelEntries;
 
+      fPanelImages: array[0..8] of TBitmap32;
+
       fFolder: String;
 
       procedure SetFolderName(aValue: String);
       function GetFullPath: String;
+      function GetPanelImage(Index: Integer): TBitmap32;
     public
       constructor Create(aParentGroup: TNeoLevelGroup);
       destructor Destroy; override;
 
-      procedure EnsureAllLevelsUpdated;
+      procedure EnsureUpdated;
 
       property Folder: String read fFolder write SetFolderName;
       property Path: String read GetFullPath; // relative to base NeoLemmix folder
+
+      property PanelImage[Index: Integer]: TBitmap32 read GetPanelImage;
   end;
 
 
@@ -130,7 +153,12 @@ end;
 
 function TNeoLevelEntry.GetFullPath: String;
 begin
-  Result := fGroup.Path + fFilename;
+  if fGroup = nil then
+    Result := ''
+  else
+    Result := fGroup.Path;
+
+  Result := Result + fFilename;
 end;
 
 { TNeoLevelGroup }
@@ -154,15 +182,15 @@ procedure TNeoLevelGroup.SetFolderName(aValue: String);
 begin
   if fFolder = aValue then Exit;
   fFolder := aValue;
-  EnsureAllLevelsUpdated;
+  EnsureUpdated;
 end;
 
-procedure TNeoLevelGroup.EnsureAllLevelsUpdated;
+procedure TNeoLevelGroup.EnsureUpdated;
 var
   i: Integer;
 begin
   for i := 0 to fChildGroups.Count-1 do
-    fChildGroups[i].EnsureAllLevelsUpdated;
+    fChildGroups[i].EnsureUpdated;
 
   for i := 0 to fLevels.Count-1 do
     fLevels[i].EnsureUpdated;
@@ -176,6 +204,11 @@ begin
     Result := fParentGroup.Path;
 
   Result := Result + fFolder + '\';
+end;
+
+function TNeoLevelGroup.GetPanelImage(Index: Integer): TBitmap32;
+begin
+  Result := fPanelImages[Index];
 end;
 
 
