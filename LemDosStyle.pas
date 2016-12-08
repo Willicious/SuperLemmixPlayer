@@ -15,6 +15,7 @@ uses
   LemStyle, LemLevelSystem, LemMusicSystem,
   LemNeoSave,
   LemNeoParserOld,
+  LemNeoParser,
   UZip; // For checking whether files actually exist
 
 const
@@ -313,10 +314,18 @@ var
   aFileIndex: Integer;
   OldLookForLvls: Boolean;
   SoftOddMode: Boolean;
+  BasePath: String;
   FilePath: String;
   FileStream: TFileStream;
   //i: integer;
   //fHasSteel : Boolean;
+
+  n: Integer;
+  Suffix: String;
+
+  Parser: TParser;
+  MainSec: TParserSection;
+  Sec: TParserSection;
 begin
   OldLookForLvls := fLookForLVL;
   fLookForLVL := false;
@@ -330,17 +339,44 @@ try
     else
     SoftOddMode := false;
 
+  BasePath :=   AppPath + 'Dump\'
+            + ChangeFileExt(ExtractFileName(GameFile), '')
+            + '\';
+
+  Parser := TParser.Create;
+  MainSec := Parser.MainSection;
+
   for dS := 0 to fDefaultSectionCount-1 do
+  begin
+    Sec := MainSec.SectionList.Add('RANK');
+    Sec.AddLine('NAME', EasyGetSectionName(dS));
+    Sec.AddLine('FOLDER', MakeSuitableForFilename(EasyGetSectionName(dS)));
+
+    ForceDirectories(BasePath + MakeSuitableForFilename(EasyGetSectionName(dS)));
+
     for DL := 0 to GetLevelCount(dS)-1 do
     begin
+
       ResetOddtableHistory;
       GetEntry(dS, dL, aFilename, aFileIndex);
       aInfo.DosLevelPackFileName := aFilename;
       aInfo.DosLevelPackIndex := aFileIndex;
       LoadSingleLevel(aFileIndex, dS, dL, aLevel, SoftOddMode);
-      FilePath :=   ExtractFilePath(ParamStr(0)) + 'Dump\'
-                  + ChangeFileExt(ExtractFileName(GameFile), '')
-                  + '\' + LeadZeroStr(dS + 1, 2) + LeadZeroStr(dL + 1, 2) + '.nxlv';
+      FilePath := BasePath + MakeSuitableForFilename(EasyGetSectionName(dS)) + '\' + Trim(MakeSuitableForFilename(aLevel.Info.Title));
+
+      n := 0;
+      Suffix := '';
+
+      while FileExists(FilePath + Suffix + '.nxlv') do
+      begin
+        Inc(n);
+        Suffix := LeadZeroStr(n, 2);
+      end;
+
+      FilePath := FilePath + Suffix + '.nxlv';
+
+      Sec.AddLine('LEVEL', ExtractFileName(FilePath));
+
       FileStream := TFileStream.Create(FilePath, fmCreate);
       try
         aLevel.SaveToStream(FileStream);
@@ -349,6 +385,9 @@ try
       end;
 
     end;
+  end;
+
+  Parser.SaveToFile(BasePath + 'levels.nxmi');
 except
 end;
 
@@ -679,7 +718,7 @@ var
   FSl : TDosDatSectionList;
 
   Parser: TNeoLemmixParser;
-  Line: TParserLine;
+  Line: LemNeoParserOld.TParserLine;
   i: Integer;
 begin
   Result := fLevelCount[aSection];
@@ -840,7 +879,7 @@ procedure TBaseDosLevelSystem.QuickLoadLevelNames;
 var
   DataStream: TMemoryStream;
   Parser: TNeoLemmixParser;
-  Line: TParserLine;
+  Line: LemNeoParserOld.TParserLine;
   R, L: Integer;
 begin
   if fDoneQuickLevelNameLoad then Exit;

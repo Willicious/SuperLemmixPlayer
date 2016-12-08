@@ -107,6 +107,7 @@ function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;
 procedure PrepareFramedBitmap(Bmp: TBitmap32; FrameCount, FrameWidth, FrameHeight: Integer);
 procedure InsertFrame(Dst, Src: TBitmap32; FrameCount, FrameIndex: Integer);
 function AppPath: string;
+function MakeSuitableForFilename(const aInput: String): String;
 function LemmingsPath: string;
 function MusicsPath: string;
 
@@ -122,6 +123,26 @@ begin
   if _AppPath = '' then
     _AppPath := ExtractFilePath(ParamStr(0));
   Result := _AppPath;
+end;
+
+function MakeSuitableForFilename(const aInput: String): String;
+const
+  FORBIDDEN_CHARS = '<>:"/\|?*';
+  REPLACEMENT_CHAR = '_';
+var
+  i: Integer;
+  CharPos: Integer;
+begin
+  Result := aInput;
+  for i := 1 to Length(FORBIDDEN_CHARS) do
+  begin
+    CharPos := Pos(FORBIDDEN_CHARS[i], Result);
+    while CharPos <> 0 do
+    begin
+      Result[CharPos] := REPLACEMENT_CHAR;
+      CharPos := Pos(FORBIDDEN_CHARS[i], Result);
+    end;
+  end;
 end;
 
 function LemmingsPath: string;
