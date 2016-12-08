@@ -1849,6 +1849,9 @@ begin
   if (F <> 0) and (B and E = 0) then B := B and not PM_TERRAIN;
 end;
 
+// Not sure who wrote this (probably me), but upon seeing this I forgot what the hell they were
+// for. The pixel in "E" is excluded, IE: anything that matches even one bit of E, will not be
+// removed when applying the mask.
 procedure TLemmingGame.CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: TColor32);
 var
   E: TColor32;
