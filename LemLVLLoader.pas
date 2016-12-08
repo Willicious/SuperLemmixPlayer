@@ -609,10 +609,12 @@ begin
     aLevel.Info.LevelID := aLevel.Info.LevelID + aLevel.InteractiveObjects.Count + aLevel.Terrains.Count + aLevel.Steels.Count;
   end;
 
-
-  Trans := TTranslationTable.Create;
-  Trans.Apply(aLevel);
-  Trans.Free;
+  if b < 5 then  // earlier in this procedure, this was used to differentiate between formats. >5 = NXLV format = does not need translation table
+  begin
+    Trans := TTranslationTable.Create;
+    Trans.Apply(aLevel);
+    Trans.Free;
+  end;
 end;
 
 
