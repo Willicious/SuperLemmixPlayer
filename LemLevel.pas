@@ -324,7 +324,7 @@ procedure TLevel.LoadGeneralInfo(aSection: TParserSection);
     if (aString = '') or (aString = 'infinite') then
       Result := 6000
     else
-      Result := StrToIntDef(aString, 6000); // normally we'd treat an invalid value as 0, but 0 gets treated as 6000 here ;)
+      Result := StrToIntDef(aString, 6000);
   end;
 begin
   // This procedure should receive the Parser's MAIN section
