@@ -5035,7 +5035,7 @@ begin
 
   // convert buttontype to skilltype
   Sel := SkillPanelButtonToAction[fSelectedSkill];
-  Assert(Sel <> baNone);
+  if Sel = baNone then Exit;
 
   Result := AssignNewSkill(Sel, IsHighlight);
 
