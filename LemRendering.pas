@@ -45,7 +45,7 @@ type
     DX, DY: ShortInt
   end;
   TParticleArray = packed array[0..79] of TParticleRec;
-  TParticleTable = packed array[0..50] of TParticleArray;
+  TParticleTable = packed array[0..51] of TParticleArray;
 
   // temp solution
   TRenderInfoRec = record
@@ -1399,6 +1399,7 @@ begin
     fHelperImages[i].DrawMode := dmBlend;
   end;
 
+  FillChar(fParticles, SizeOf(TParticleTable), $80);
   S := CreateDataStream('explode.dat', ldtParticles);
   S.Seek(0, soFromBeginning);
   S.Read(fParticles, S.Size);
