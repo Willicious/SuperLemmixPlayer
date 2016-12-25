@@ -635,8 +635,11 @@ var
   c: char; i: Integer;
   LemmixPal: TArrayOfColor32;
   HiPal: TArrayOfColor32;
-  TempBmp: TBitmap32;
+  TempBmp, TempBmp2: TBitmap32;
   SrcRect: TRect;
+
+  BlankPanels: TBitmap32;
+  PanelIndex: Integer;
 const
   SKILL_NAMES: array[0..15] of string = (
                  'walker',
@@ -690,6 +693,28 @@ const
     TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(aName, '_mask.png'), LemmixPal[7]);
   end;
 
+  procedure DrawBlankPanel(aDst: TBitmap32; aDigitArea: Boolean);
+  var
+    SrcRect: TRect;
+  begin
+    SrcRect := Rect(PanelIndex * 16, 0, (PanelIndex+1) * 16, 23);
+    aDst.SetSize(16, 23);
+    aDst.Clear(0);
+    BlankPanels.DrawTo(aDst, aDst.BoundsRect, SrcRect);
+    if aDigitArea then
+      fSkillWhiteout.DrawTo(aDst);
+    Inc(PanelIndex);
+    if PanelIndex * 16 >= BlankPanels.Width then
+      PanelIndex := 0;
+  end;
+
+  procedure MakePanel(aDst: TBitmap32; aImageFile: String; aDigitArea: Boolean);
+  begin
+    DrawBlankPanel(aDst, aDigitArea);
+    GetGraphic(aImageFile, TempBmp2);
+    TempBmp2.DrawTo(aDst);
+  end;
+
 begin
 
 
@@ -717,12 +742,45 @@ begin
 
   SetButtonRects;
 
+    PanelIndex := 0;
 
     TempBmp := TBitmap32.Create;
     TempBmp.DrawMode := dmBlend;
+    TempBmp.CombineMode := cmMerge;
+    TempBmp2 := TBitmap32.Create;
+    TempBmp2.DrawMode := dmBlend;
+    TempBmp2.CombineMode := cmMerge;
+
+    BlankPanels := TBitmap32.Create;
+    BlankPanels.DrawMode := dmBlend;
+
+    GetGraphic('skill_count_erase.png', fSkillWhiteout);
+    fSkillWhiteout.DrawMode := dmBlend;
+    fSkillWhiteout.CombineMode := cmMerge;
+
+    GetGraphic('skill_panels.png', BlankPanels);
 
     // Panel graphic
-    GetGraphic('skill_panel.png', fOriginal);
+    fOriginal.SetSize(320, 40);
+    fOriginal.Clear($FF000000);
+
+    MakePanel(TempBmp, 'icon_rr_minus.png', true);
+    TempBmp.DrawTo(fOriginal, 1, 16);
+    MakePanel(TempBmp, 'icon_rr_plus.png', true);
+    TempBmp.DrawTo(fOriginal, 17, 16);
+
+    GetGraphic('minimap_region.png', TempBmp);
+    TempBmp.DrawTo(fOriginal, 193, 16);
+
+    GetGraphic('empty_slot.png', TempBmp);
+    for i := 0 to 7 do
+      TempBmp.DrawTo(fOriginal, (i * 16) + 33, 16);
+
+    MakePanel(TempBmp, 'icon_pause.png', false);
+    TempBmp.DrawTo(fOriginal, 161, 16);
+    MakePanel(TempBmp, 'icon_nuke.png', false);
+    TempBmp.DrawTo(fOriginal, 177, 16);
+
     fImg.Bitmap.Assign(fOriginal);
 
     // Panel font
@@ -744,25 +802,8 @@ begin
     end;
 
     // Skill icons
-    GetGraphic('skill_icons.png', TempBmp);
-    SrcRect := Rect(0, 0, 16, 23);
     for i := 0 to 15 do
-    begin
-      fSkillIcons[i].SetSize(16, 23);
-      fSkillIcons[i].Clear;
-      TempBmp.DrawTo(fSkillIcons[i], 0, 0, SrcRect);
-      SrcRect.Right := SrcRect.Right + 16;
-      SrcRect.Left := SrcRect.Left + 16;
-
-      if SrcRect.Left >= TempBmp.Width then
-        SrcRect := Rect(0, 0, 16, 23);
-    end;
-
-    for i := 0 to 15 do
-    begin
-      GetGraphic('icon_' + SKILL_NAMES[i] + '.png', TempBmp);
-      TempBmp.DrawTo(fSkillIcons[i]);
-    end;
+      MakePanel(fSkillIcons[i], 'icon_' + SKILL_NAMES[i] + '.png', true);
 
     // Skill counts
     GetGraphic('skill_count_digits.png', TempBmp);
@@ -794,18 +835,16 @@ begin
     fSkillLock.Clear(0);
     TempBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
 
-    GetGraphic('skill_count_erase.png', fSkillWhiteout);
-
     fSkillInfinite.DrawMode := dmBlend;
     fSkillInfinite.CombineMode := cmMerge;
-    fSkillWhiteout.DrawMode := dmBlend;
-    fSkillWhiteout.CombineMode := cmMerge;
     fSkillLock.DrawMode := dmBlend;
     fSkillLock.CombineMode := cmMerge;
 
     fSkillUnwhite.Assign(fSkillWhiteout);
 
     TempBmp.Free;
+    TempBmp2.Free;
+    BlankPanels.Free;
 
   fSkillUnwhite.DrawMode := dmBlend;
   fSkillUnwhite.CombineMode := cmMerge;
