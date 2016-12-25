@@ -3458,8 +3458,8 @@ var
   ShadowSkillButton: TSkillPanelButton;
   ShadowLem: TLemming;
 const
-  ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker,
-                    spbDigger, spbMiner, spbBasher, spbExplode, spbGlider];
+  ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker, spbDigger, spbMiner,
+                    spbBasher, spbExplode, spbGlider, spbCloner];
 begin
   if fHyperSpeed then Exit;
 

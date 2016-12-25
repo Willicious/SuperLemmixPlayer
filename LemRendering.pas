@@ -471,6 +471,11 @@ begin
       DrawGliderShadow(CopyL);
     end;
 
+  spbCloner:
+    begin
+      CopyL.LemDX := -CopyL.LemDX;
+      DrawShadows(CopyL, ActionToSkillPanelButton[CopyL.LemAction]);
+    end;
   end;
 
   CopyL.Free;
