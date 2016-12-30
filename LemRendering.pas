@@ -528,7 +528,7 @@ begin
   while Assigned(L) and (L.LemAction = baBuilding) do
   begin
     // draw shadow for placed brick
-    if L.LemFrame + 1 = 9 then
+    if L.LemPhysicsFrame + 1 = 9 then  // why not just "if L.LemPhysicsFrame = 8"?
       for i := 0 to 5 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
 
@@ -551,7 +551,7 @@ begin
   while Assigned(L) and (L.LemAction = baPlatforming) do
   begin
     // draw shadow for placed brick
-    if L.LemFrame + 1 = 9 then
+    if L.LemPhysicsFrame + 1 = 9 then
       for i := 0 to 5 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY);
 
@@ -576,7 +576,7 @@ begin
   while Assigned(L) and (L.LemAction = baStacking) do
   begin
     // draw shadow for placed brick
-    if L.LemFrame + 1 = 7 then
+    if L.LemPhysicsFrame + 1 = 7 then
     begin
       for i := 1 to 3 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, BrickPosY);
@@ -614,7 +614,7 @@ begin
   while Assigned(L) and (L.LemAction = baBashing) do
   begin
     // draw shadow for basher tunnel
-    if (L.LemFrame + 1) mod 16 = 2 then
+    if (L.LemPhysicsFrame + 1) mod 16 = 2 then
     begin
       BashPosX := L.LemX;
       BashPosY := L.LemY;
@@ -670,7 +670,7 @@ begin
   while Assigned(L) and (L.LemAction = baMining) do
   begin
     // draw shadow for miner tunnel
-    if L.LemFrame + 1 = 1 then
+    if L.LemPhysicsFrame + 1 = 1 then
     begin
       MinePosX := L.LemX;
       MinePosY := L.LemY;
@@ -710,7 +710,7 @@ begin
   while Assigned(L) and (L.LemAction = baDigging) do
   begin
     // draw shadow for dug row
-    if (L.LemFrame + 1) mod 8 = 0 then
+    if (L.LemPhysicsFrame + 1) mod 8 = 0 then
     begin
       SetHighShadowPixel(DigPosX - 4, DigPosY - 1);
       SetHighShadowPixel(DigPosX + 4, DigPosY - 1);
