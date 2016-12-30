@@ -14,6 +14,8 @@ type
   protected
     fDescription     : string;  // for fun, really
     fFrameCount      : Integer; // number of frames
+    fPhysicsFrameCount: Integer; // number of frames for physics
+    fKeyFrame        : Integer; // visual frame to return to at end of animation; doesn't affect physics frames
     fWidth           : Integer; // width of a single frame picture
     fHeight          : Integer; // height of a single frame
     fImageLocation   : Integer; // dos only
@@ -23,6 +25,8 @@ type
   published
     property Description      : string read fDescription write fDescription;
     property FrameCount       : Integer read fFrameCount write fFrameCount;
+    property PhysicsFrameCount: Integer read fPhysicsFrameCount write fPhysicsFrameCount;
+    property KeyFrame         : Integer read fKeyFrame write fKeyFrame;
     property Width            : Integer read fWidth write fWidth;
     property Height           : Integer read fHeight write fHeight;
     property BitsPerPixel     : Integer read fBitsPerPixel write fBitsPerPixel;

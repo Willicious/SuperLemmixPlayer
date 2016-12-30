@@ -68,6 +68,9 @@ type
     LemMechanicFrames             : Integer;
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
+    LemKeyFrame                   : Integer;
+    LemPhysicsFrame               : Integer;
+    LemMaxPhysicsFrame            : Integer;
     LemParticleTimer              : Integer; // @particles, 52 downto 0, after explosion
     LemNumberOfBricksLeft         : Integer; // for builder, platformer, stacker
   { byte sized fields }
@@ -239,6 +242,9 @@ begin
   LemMechanicFrames := Source.LemMechanicFrames;
   LemFrame := Source.LemFrame;
   LemMaxFrame := Source.LemMaxFrame;
+  LemKeyFrame := Source.LemKeyFrame;
+  LemPhysicsFrame := Source.LemPhysicsFrame;
+  LemMaxPhysicsFrame := Source.LemMaxPhysicsFrame;
   LemParticleTimer := Source.LemParticleTimer;
   LemNumberOfBricksLeft := Source.LemNumberOfBricksLeft;
 

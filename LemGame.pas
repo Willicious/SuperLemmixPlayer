@@ -2028,6 +2028,7 @@ begin
   // Change Action
   L.LemAction := NewAction;
   L.LemFrame := 0;
+  L.LemPhysicsFrame := 0;
   L.LemEndOfAnimation := False;
   L.LemNumberOfBricksLeft := 0;
 
@@ -2035,6 +2036,8 @@ begin
   i := AnimationIndices[NewAction, (L.LemDx = -1)];
   TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
   L.LemMaxFrame := TempMetaAnim.FrameCount - 1;
+  L.LemKeyFrame := TempMetaAnim.KeyFrame;
+  L.LemMaxPhysicsFrame := TempMetaAnim.PhysicsFrameCount - 1;
 
   // some things to do when entering state
   case L.LemAction of
@@ -2074,6 +2077,7 @@ end;
 
 procedure TLemmingGame.TurnAround(L: TLemming);
 // we assume that the mirrored animations at least have the same framecount
+// namida: actually the code seems to NOT assume this, even though (at least for now) it's a safe assumption as the format enforces this
 var
   i: Integer;
   TempMetaAnim: TMetaLemmingAnimation;
@@ -2084,6 +2088,8 @@ begin
     i := AnimationIndices[LemAction, (LemDx = -1)];
     TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
     LemMaxFrame := TempMetaAnim.FrameCount - 1;
+    LemKeyFrame := TempMetaAnim.KeyFrame;
+    LemMaxPhysicsFrame := TempMetaAnim.PhysicsFrameCount - 1;
   end;
 end;
 
@@ -2485,14 +2491,14 @@ begin
   // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
   if NewL.LemAction = baMining then
   begin
-    if NewL.LemFrame = 2 then
+    if NewL.LemPhysicsFrame = 2 then
       ApplyMinerMask(NewL, 1, 0, 0)
-    else if (NewL.LemFrame >= 3) and (NewL.LemFrame < 15) then
+    else if (NewL.LemPhysicsFrame >= 3) and (NewL.LemPhysicsFrame < 15) then
       ApplyMinerMask(NewL, 1, -2*NewL.LemDx, -1);
   end
   // Required for turned builders not to walk into air
   // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
-  else if (NewL.LemAction in [baBuilding, baPlatforming]) and (NewL.LemFrame >= 9) then
+  else if (NewL.LemAction in [baBuilding, baPlatforming]) and (NewL.LemPhysicsFrame >= 9) then
     LayBrick(NewL);
 end;
 
@@ -2943,7 +2949,7 @@ begin
 
   // Check for blocker fields and force-fields
   // but not for miners removing terrain, see http://www.lemmingsforums.net/index.php?topic=2710.0
-  if (L.LemAction <> baMining) or not (L.LemFrame in [1, 2]) then
+  if (L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2]) then
   begin
     if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
       HandleForceField(L, -1)
@@ -3241,14 +3247,14 @@ begin
     // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
     if L.LemAction = baMining then
     begin
-      if L.LemFrame = 2 then
+      if L.LemPhysicsFrame = 2 then
         ApplyMinerMask(L, 1, 0, 0)
-      else if (L.LemFrame >= 3) and (L.LemFrame < 15) then
+      else if (L.LemPhysicsFrame >= 3) and (L.LemPhysicsFrame < 15) then
         ApplyMinerMask(L, 1, -2*L.LemDx, -1);
     end
     // Required for turned builders not to walk into air
     // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
-    else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemFrame >= 9) then
+    else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
       LayBrick(L)
     else if L.LemAction = baClimbing then
     begin
@@ -3628,14 +3634,18 @@ begin
   fLemNextAction := baNone;
 
   Inc(L.LemFrame);
+  Inc(L.LemPhysicsFrame);
 
-  if L.LemFrame > L.LemMaxFrame then
+  if L.LemPhysicsFrame > L.LemMaxPhysicsFrame then
   begin
-    L.LemFrame := 0;
+    L.LemPhysicsFrame := 0;
     // Floater and Glider start cycle at frame 9!
-    if L.LemAction in [baFloating, baGliding] then L.LemFrame := 9;
+    if L.LemAction in [baFloating, baGliding] then L.LemPhysicsFrame := 9;
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
+
+  if L.LemFrame > L.LemMaxFrame then
+    L.LemFrame := L.LemKeyFrame;
 
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
@@ -3828,10 +3838,10 @@ begin
     DigOneRow(L.LemX, L.LemY - 1);
     // The first digger cycle is one frame longer!
     // So we need to artificially cancel the very first frame advancement.
-    Dec(L.LemFrame);
+    Dec(L.LemPhysicsFrame);
   end;
 
-  if L.LemFrame in [0, 8] then
+  if L.LemPhysicsFrame in [0, 8] then
   begin
     Inc(L.LemY);
 
@@ -3857,27 +3867,27 @@ var
 begin
   Result := True;
 
-  if L.LemFrame <= 3 then
+  if L.LemPhysicsFrame <= 3 then
   begin
-    FoundClip := (HasPixelAt(L.LemX - L.LemDx, L.LemY - 6 - L.LemFrame))
-              or (HasPixelAt(L.LemX - L.LemDx, L.LemY - 5 - L.LemFrame) and (not L.LemIsNewClimbing));
+    FoundClip := (HasPixelAt(L.LemX - L.LemDx, L.LemY - 6 - L.LemPhysicsFrame))
+              or (HasPixelAt(L.LemX - L.LemDx, L.LemY - 5 - L.LemPhysicsFrame) and (not L.LemIsNewClimbing));
 
-    if L.LemFrame = 0 then // first triggered after 8 frames!
+    if L.LemPhysicsFrame = 0 then // first triggered after 8 frames!
       FoundClip := FoundClip and HasPixelAt(L.LemX - L.LemDx, L.LemY - 7);
 
     if FoundClip then
     begin
       // Don't fall below original position on hitting terrain in first cycle
-      if not L.LemIsNewClimbing then L.LemY := L.LemY - L.LemFrame + 3;
+      if not L.LemIsNewClimbing then L.LemY := L.LemY - L.LemPhysicsFrame + 3;
       Dec(L.LemX, L.LemDx);
       Transition(L, baFalling, True); // turn around as well
     end
-    else if not HasPixelAt(L.LemX, L.LemY - 7 - L.LemFrame) then
+    else if not HasPixelAt(L.LemX, L.LemY - 7 - L.LemPhysicsFrame) then
     begin
       // if-case prevents too deep bombing, see http://www.lemmingsforums.net/index.php?topic=2620.0
-      if not (L.LemIsNewClimbing and (L.LemFrame = 1)) then
+      if not (L.LemIsNewClimbing and (L.LemPhysicsFrame = 1)) then
       begin
-        L.LemY := L.LemY - L.LemFrame + 2;
+        L.LemY := L.LemY - L.LemPhysicsFrame + 2;
         L.LemIsNewClimbing := False;
       end;
       Transition(L, baHoisting);
@@ -3891,7 +3901,7 @@ begin
 
     FoundClip := HasPixelAt(L.LemX - L.LemDx, L.LemY - 7);
 
-    if L.LemFrame = 7 then
+    if L.LemPhysicsFrame = 7 then
       FoundClip := FoundClip and HasPixelAt(L.LemX, L.LemY - 7);
 
     if FoundClip then
@@ -3921,7 +3931,7 @@ begin
     else Transition(L, baWalking);
     L.LemActionNew := baNone;
   end
-  else if L.LemFrame mod 8 = 0 then
+  else if L.LemPhysicsFrame mod 8 = 0 then
     CueSoundEffect(SFX_FIXING, L.Position);
 end;
 
@@ -3932,9 +3942,9 @@ begin
   if L.LemEndOfAnimation then
     Transition(L, baWalking)
   // special case due to http://www.lemmingsforums.net/index.php?topic=2620.0
-  else if (L.LemFrame = 1) and L.LemIsNewClimbing then
+  else if (L.LemPhysicsFrame = 1) and L.LemIsNewClimbing then
     Dec(L.LemY, 1)
-  else if L.LemFrame <= 4 then
+  else if L.LemPhysicsFrame <= 4 then
     Dec(L.LemY, 2);
 end;
 
@@ -3963,16 +3973,16 @@ function TLemmingGame.HandlePlatforming(L: TLemming): Boolean;
 begin
   Result := True;
 
-  if L.LemFrame = 9 then
+  if L.LemPhysicsFrame = 9 then
   begin
     L.LemPlacedBrick := LemCanPlatform(L);
     LayBrick(L);
   end
 
-  else if (L.LemFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
+  else if (L.LemPhysicsFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
     CueSoundEffect(SFX_BUILDER_WARNING, L.Position)
 
-  else if L.LemFrame = 15 then
+  else if L.LemPhysicsFrame = 15 then
   begin
     if not L.LemPlacedBrick then
       Transition(L, baWalking, True) // turn around as well
@@ -3987,7 +3997,7 @@ begin
       Inc(L.LemX, L.LemDx);
   end
 
-  else if L.LemFrame = 0 then
+  else if L.LemPhysicsFrame = 0 then
   begin
     if PlatformerTerrainCheck(L.LemX + 2*L.LemDx, L.LemY) and (L.LemNumberOfBricksLeft > 1) then
     begin
@@ -4021,13 +4031,13 @@ function TLemmingGame.HandleBuilding(L: TLemming): Boolean;
 begin
   Result := True;
 
-  if L.LemFrame = 9 then
+  if L.LemPhysicsFrame = 9 then
     LayBrick(L)
 
-  else if (L.LemFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
+  else if (L.LemPhysicsFrame = 10) and (L.LemNumberOfBricksLeft <= 3) then
     CueSoundEffect(SFX_BUILDER_WARNING, L.Position)
 
-  else if L.LemFrame = 0 then
+  else if L.LemPhysicsFrame = 0 then
   begin
     Dec(L.LemNumberOfBricksLeft);
 
@@ -4078,10 +4088,10 @@ function TLemmingGame.HandleStacking(L: TLemming): Boolean;
 begin
   Result := True;
 
-  if L.LemFrame = 7 then
+  if L.LemPhysicsFrame = 7 then
     L.LemPlacedBrick := LayStackBrick(L)
 
-  else if L.LemFrame = 0 then
+  else if L.LemPhysicsFrame = 0 then
   begin
     Dec(L.LemNumberOfBricksLeft);
 
@@ -4183,13 +4193,13 @@ var
     Result := False;
 
     // Simulate two basher cycles
-    // 11 iterations is hopefully correct: CopyL.LemFrame changes as follows:
+    // 11 iterations is hopefully correct: CopyL.LemPhysicsFrame changes as follows:
     // 10 -> 11 -> 12 -> 13 -> 14 -> 15 -> 16 -> 11 -> 12 -> 13 -> 14 -> 15
-    CopyL.LemFrame := 10;
+    CopyL.LemPhysicsFrame := 10;
     for i := 0 to 10 do
     begin
-      // On CopyL.LemFrame = 0 or 16, apply all basher masks and jump to frame 10 again
-      if (CopyL.LemFrame in [0, 16]) then
+      // On CopyL.LemPhysicsFrame = 0 or 16, apply all basher masks and jump to frame 10 again
+      if (CopyL.LemPhysicsFrame in [0, 16]) then
       begin
         fSimulation := True; // do not apply the changes to the TerrainLayer
         ApplyBashingMask(CopyL, 0);
@@ -4198,7 +4208,7 @@ var
         ApplyBashingMask(CopyL, 3);
         fSimulation := False; // should not matter, because we do this in SimulateLem anyway, but to be safe...
         // Do *not* check whether continue bashing, but move directly ahead to frame 10
-        CopyL.LemFrame := 10;
+        CopyL.LemPhysicsFrame := 10;
       end;
 
       // Move one frame forward
@@ -4226,7 +4236,7 @@ begin
 
   // The basher graphics have a cycle length of 32
   // However the mechanics have only a cycle of 16
-  AdjustedFrame := L.LemFrame mod 16;
+  AdjustedFrame := L.LemPhysicsFrame mod 16;
 
   // Remove terrain
   if AdjustedFrame in [2, 3, 4, 5] then
@@ -4375,10 +4385,10 @@ function TLemmingGame.HandleMining(L: TLemming): Boolean;
 begin
   Result := True;
 
-  if L.LemFrame in [1, 2] then
-    ApplyMinerMask(L, L.LemFrame - 1, 0, 0)
+  if L.LemPhysicsFrame in [1, 2] then
+    ApplyMinerMask(L, L.LemPhysicsFrame - 1, 0, 0)
 
-  else if L.LemFrame in [3, 15] then
+  else if L.LemPhysicsFrame in [3, 15] then
   begin
     Inc(L.LemX, 2*L.LemDx);
     Inc(L.LemY);
@@ -4395,7 +4405,7 @@ begin
 
     // This first check is only relevant during the very first cycle.
     // Otherwise the pixel was already checked in frame 15 of the previous cycle
-    else if (L.LemFrame = 3) and HasIndestructibleAt(L.LemX - L.LemDx, L.LemY - 2, L.LemDx, baMining) then
+    else if (L.LemPhysicsFrame = 3) and HasIndestructibleAt(L.LemX - L.LemDx, L.LemY - 2, L.LemDx, baMining) then
     begin
       Dec(L.LemX, 2*L.LemDx);
       MinerTurn(L, L.LemX + L.LemDx, L.LemY - 2);
@@ -4493,7 +4503,7 @@ const
 begin
   Result := True;
 
-  MaxFallDist := FloaterFallTable[L.LemFrame];
+  MaxFallDist := FloaterFallTable[L.LemPhysicsFrame];
   if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then Dec(MaxFallDist);
 
   if MaxFallDist > MaxIntValue([FindGroundPixel(L.LemX, L.LemY), 0]) then
@@ -4574,13 +4584,13 @@ const
     (3, 3, 3, 3, -1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 begin
   Result := True;
-  MaxFallDist := GliderFallTable[L.LemFrame];
+  MaxFallDist := GliderFallTable[L.LemPhysicsFrame];
 
   if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then
   begin
     Dec(MaxFallDist);
     // Rise a pixel every second frame
-    if (L.LemFrame >= 9) and (L.LemFrame mod 2 = 1)
+    if (L.LemPhysicsFrame >= 9) and (L.LemPhysicsFrame mod 2 = 1)
        and (not HasPixelAt(L.LemX + L.LemDx, L.LemY + MaxFallDist - 1))
        and HeadCheck(L.LemX, L.LemY - 1) then
       Dec(MaxFallDist);

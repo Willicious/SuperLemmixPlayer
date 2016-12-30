@@ -210,9 +210,8 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
             DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
             Anim := fMetaLemmingAnimations[(i * 2) + dx];
 
-            if Anim.FrameCount = 0 then Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
-            if (i in [10, 21 {Floater, Glider}]) and (Anim.FrameCount < 10) then
-              Anim.FrameCount := 10;
+            Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
+            Anim.KeyFrame := ThisAnimSec.LineNumeric['keyframe'];
 
             Anim.FootX := DirSec.LineNumeric['foot_x'];
             Anim.FootY := DirSec.LineNumeric['foot_y'];
@@ -229,16 +228,14 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
   end;
 
 const
-  // Number of frames for the various lemming actions.
-  // If zero, the animations area loaded dynamically.
-  // Otherwise the animation must have *exactly* this number of frames.
+  // Number of physics frames for the various lemming actions.
   ANIM_FRAMECOUNT: array[0..23] of Integer =
-    ( 0,  0, 16,  8,   // walker, jumper, digger, climber
+    ( 4,  1, 16,  8,   // walker, jumper, digger, climber
      16,  8, 16, 32,   // drowner, hoister, builder, basher
-     24,  0,  0, 16,   // miner, faller, floater, splatter
-      8, 14,  0,  8,   // exiter, burner, blocker, shrugger
+     24,  4, 17, 16,   // miner, faller, floater, splatter
+      8, 14, 16,  8,   // exiter, burner, blocker, shrugger
      16,  1, 16,  1,   // ohnoer, bomber, platformer, stoner
-      8,  0, 16,  8 ); // swimmer, glider, disarmer, stacker
+      8, 17, 16,  8 ); // swimmer, glider, disarmer, stacker
 var
   AnimIndex: Integer;
 begin
@@ -256,11 +253,15 @@ begin
   for AnimIndex := 0 to 23 do
   begin
     // Add right- and left-facing version
-    fMetaLemmingAnimations.Add.FrameCount := ANIM_FRAMECOUNT[AnimIndex];
-    fMetaLemmingAnimations.Add.FrameCount := ANIM_FRAMECOUNT[AnimIndex];
+    fMetaLemmingAnimations.Add.PhysicsFrameCount := ANIM_FRAMECOUNT[AnimIndex];
+    fMetaLemmingAnimations.Add.PhysicsFrameCount := ANIM_FRAMECOUNT[AnimIndex];
   end;
   // This one is a placeholder for the stoner mask, I can't remember why it's in here but it is. I need to fix that.
-  fMetaLemmingAnimations.Add.FrameCount := 1;
+  with fMetaLemmingAnimations.Add do
+  begin
+    FrameCount := 1;
+    PhysicsFrameCount := 1;
+  end;
 
 
   if fMetaLemmingAnimations.Count <> 49 then
