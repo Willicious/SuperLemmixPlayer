@@ -1749,7 +1749,6 @@ begin
   fAni.LemmingPrefix := fTheme.Lemmings;
   fAni.AnimationPalette := Pal;
   fAni.MainDataFile := 'main.dat';
-  fAni.ReadMetaData;
   fAni.ReadData;
 
   fRecolorer.LoadSwaps(fTheme.Lemmings);

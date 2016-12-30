@@ -267,6 +267,7 @@ begin
     ShowMessage('Missing an animation? Total: ' + IntToStr(fMetaLemmingAnimations.Count));
 
   if fLemmingPrefix = '' then fLemmingPrefix := 'default';
+  if not DirectoryExists(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings) then fLemmingPrefix := 'default';
   SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
   LoadPositionData;
 
@@ -317,6 +318,7 @@ begin
   if fMetaLemmingAnimations.Count = 0 then
     ReadMetaData;
 
+  if not DirectoryExists(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings) then fLemmingPrefix := 'default';
   SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
 
   try

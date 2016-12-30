@@ -131,6 +131,8 @@ begin
   SetLength(fSwaps, 0);
   Parser := TParser.Create;
   try
+    if not FileExists(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi') then
+      aName := 'default';
     Parser.LoadFromFile(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi');
 
     Mode := rcl_Athlete;
