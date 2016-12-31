@@ -859,7 +859,7 @@ end;
 
 procedure TSkillPanelToolbar.SetSkillIcons;
 var
-  Org, R, SrcRect: TRect;
+  Org, R: TRect;
   Skill: TSkillPanelButton;
 begin
   Org := Rect(33, 16, 47, 38); // exact position of first button
@@ -868,11 +868,8 @@ begin
   begin
     if Skill in Level.Info.Skillset then
     begin
-      //fActiveButtons[i] := TSkillPanelButton(x);
-      //Game.fActiveSkills[i] := TSkillPanelButton(x);
       fButtonRects[Skill] := R;
 
-      SrcRect := Rect(0, 0, 14, 22);
       fSkillIcons[Integer(Skill)].DrawTo(fImg.Bitmap, R.Left, R.Top{, SrcRect});
       fSkillIcons[Integer(Skill)].DrawTo(fOriginal, R.Left, R.Top{, SrcRect});
 

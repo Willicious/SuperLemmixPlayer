@@ -1753,13 +1753,14 @@ begin
     if Skill in Level.Info.Skillset then
     begin
       if InitialSkill = spbNone then InitialSkill := Skill;
-      Self.fActiveSkills[i] := TSkillPanelButton(i);
+      fActiveSkills[i] := Skill;
       inc(i);
 
       if i = 8 then Break; // remove this if we ever allow more than 8 skill types per level
     end;
   end;
-  SetSelectedSkill(InitialSkill, True); // default
+  if InitialSkill <> spbNone then
+    SetSelectedSkill(InitialSkill, True); // default
 
   UpdateAllSkillCounts;
 
