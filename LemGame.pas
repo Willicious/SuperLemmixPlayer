@@ -1581,6 +1581,7 @@ var
   numEntries:integer;
 
   Skill: TSkillPanelButton;
+  InitialSkill: TSkillPanelButton;
 begin
   Assert(InfoPainter <> nil);
 
@@ -1743,6 +1744,7 @@ begin
   InfoPainter.DrawButtonSelector(fSelectedSkill, False);
   // force update
   fSelectedSkill := spbNone;
+  InitialSkill := spbNone;
   i := 0;
   for i := 0 to 7 do
     fActiveSkills[i] := spbNone;
@@ -1750,14 +1752,14 @@ begin
   begin
     if Skill in Level.Info.Skillset then
     begin
-      if fSelectedSkill = spbNone then fSelectedSkill := Skill;
+      if InitialSkill = spbNone then InitialSkill := Skill;
       Self.fActiveSkills[i] := TSkillPanelButton(i);
       inc(i);
 
       if i = 8 then Break; // remove this if we ever allow more than 8 skill types per level
     end;
   end;
-  SetSelectedSkill(fSelectedSkill, True); // default
+  SetSelectedSkill(InitialSkill, True); // default
 
   UpdateAllSkillCounts;
 
