@@ -104,8 +104,8 @@ end;
 
 procedure TGamePreviewScreen.FilterSkillset(aLevel: TLevel);
 var
-  i, SkillCount: Integer;
-  Key: Word;
+  SkillCount: Integer;
+  Skill: TSkillPanelButton;
   NeedClear: Boolean;
 const
   BIT_TO_SV: array[0..15] of Integer = (15, 7, 6, 5, 14, 4, 13, 3, 12, 2, 11, 10, 1, 9, 0, 8);
@@ -123,35 +123,18 @@ const
         end;
   end;
 begin
-  for i := 0 to 15 do
+  for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
   begin
-    Key := 1 shl i;
-    if (aLevel.Info.SkillTypes and Key) <> Key then Continue;
-    case i of
-      0: SkillCount := aLevel.Info.ClonerCount;
-      1: SkillCount := aLevel.Info.DiggerCount;
-      2: SkillCount := aLevel.Info.MinerCount;
-      3: SkillCount := aLevel.Info.BasherCount;
-      4: SkillCount := aLevel.Info.StackerCount;
-      5: SkillCount := aLevel.Info.BuilderCount;
-      6: SkillCount := aLevel.Info.PlatformerCount;
-      7: SkillCount := aLevel.Info.BlockerCount;
-      8: SkillCount := aLevel.Info.StonerCount;
-      9: SkillCount := aLevel.Info.BomberCount;
-      10: SkillCount := aLevel.Info.MechanicCount;
-      11: SkillCount := aLevel.Info.GliderCount;
-      12: SkillCount := aLevel.Info.FloaterCount;
-      13: SkillCount := aLevel.Info.SwimmerCount;
-      14: SkillCount := aLevel.Info.ClimberCount;
-      15: SkillCount := aLevel.Info.WalkerCount;
-      else SkillCount := 0; // just to avoid compiler warning
-    end;
-    if SkillCount = 0 then
-      NeedClear := not FindPickupSkill(BIT_TO_SV[i])
+    if not (Skill in aLevel.Info.Skillset) then Continue;
+    SkillCount := aLevel.Info.SkillCount[Skill];
+    if Skill >= spbNone then // to avoid an out of bounds error on BIT_TO_SV
+      NeedClear := true
+    else if SkillCount = 0 then
+      NeedClear := not FindPickupSkill(BIT_TO_SV[Integer(Skill)])
     else
       NeedClear := false;
     if NeedClear then
-      aLevel.Info.SkillTypes := aLevel.Info.SkillTypes and (not Key);
+      aLevel.Info.Skillset := aLevel.Info.Skillset - [Skill];
   end;
 end;
 
@@ -490,6 +473,7 @@ function TGamePreviewScreen.GetScreenText: string;
 var
   Perc, TL: string;
   RR: String;
+  i: Integer;
 begin
   Assert(GameParams <> nil);
 
@@ -543,7 +527,14 @@ begin
                ]);
 
     if GameParams.ForceSkillset <> 0 then
-      GameParams.Level.Info.SkillTypes := GameParams.ForceSkillset;
+    begin
+      GameParams.Level.Info.Skillset := [];
+      for i := 0 to 15 do
+      begin
+        if GameParams.ForceSkillset and (1 shl (15-i)) <> 0 then
+          GameParams.Level.Info.Skillset := GameParams.Level.Info.Skillset + [TSkillPanelButton(i)];
+      end;
+    end;
   end;
 end;
 

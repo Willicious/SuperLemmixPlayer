@@ -1579,7 +1579,8 @@ var
   i, i2, i3: Integer;
   Inf: TInteractiveObjectInfo;
   numEntries:integer;
-  
+
+  Skill: TSkillPanelButton;
 begin
   Assert(InfoPainter <> nil);
 
@@ -1587,22 +1588,8 @@ begin
 
   if GameParams.ChallengeMode then
   begin
-    GameParams.Level.Info.ClimberCount    := 0;
-    GameParams.Level.Info.FloaterCount    := 0;
-    GameParams.Level.Info.BomberCount     := 0;
-    GameParams.Level.Info.BlockerCount    := 0;
-    GameParams.Level.Info.BuilderCount    := 0;
-    GameParams.Level.Info.BasherCount     := 0;
-    GameParams.Level.Info.MinerCount      := 0;
-    GameParams.Level.Info.DiggerCount     := 0;
-    GameParams.Level.Info.WalkerCount     := 0;
-    GameParams.Level.Info.SwimmerCount    := 0;
-    GameParams.Level.Info.GliderCount     := 0;
-    GameParams.Level.Info.MechanicCount   := 0;
-    GameParams.Level.Info.StonerCount     := 0;
-    GameParams.Level.Info.PlatformerCount := 0;
-    GameParams.Level.Info.StackerCount    := 0;
-    GameParams.Level.Info.ClonerCount     := 0;
+    for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+      Level.Info.SkillCount[Skill] := 0;
   end;
 
   // hyperspeed things
@@ -1686,22 +1673,9 @@ begin
     lastReleaseRate    := ReleaseRate  ;
 
     // Set available skills
-    CurrSkillCount[baDigging]      := DiggerCount;
-    CurrSkillCount[baClimbing]     := ClimberCount;
-    CurrSkillCount[baBuilding]     := BuilderCount;
-    CurrSkillCount[baBashing]      := BasherCount;
-    CurrSkillCount[baMining]       := MinerCount;
-    CurrSkillCount[baFloating]     := FloaterCount;
-    CurrSkillCount[baBlocking]     := BlockerCount;
-    CurrSkillCount[baExploding]    := BomberCount;
-    CurrSkillCount[baToWalking]    := WalkerCount;
-    CurrSkillCount[baPlatforming]  := PlatformerCount;
-    CurrSkillCount[baStacking]     := StackerCount;
-    CurrSkillCount[baStoning]      := StonerCount;
-    CurrSkillCount[baSwimming]     := SwimmerCount;
-    CurrSkillCount[baGliding]      := GliderCount;
-    CurrSkillCount[baFixing]       := MechanicCount;
-    CurrSkillCount[baCloning]      := ClonerCount;
+    for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+      if SkillPanelButtonToAction[Skill] <> baNone then
+        CurrSkillCount[SkillPanelButtonToAction[Skill]] := SkillCount[Skill];
     // Initialize used skills
     for i := 0 to 15 do
       UsedSkillCount[ActionListArray[i]] := 0;
@@ -1769,20 +1743,21 @@ begin
   InfoPainter.DrawButtonSelector(fSelectedSkill, False);
   // force update
   fSelectedSkill := spbNone;
-  i2 := -1;
-  i3 := 0;
+  i := 0;
   for i := 0 to 7 do
     fActiveSkills[i] := spbNone;
-  for i := 0 to 15 do
+  for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
   begin
-    if Level.Info.SkillTypes and Trunc(IntPower(2, (15-i))) <> 0 then
+    if Skill in Level.Info.Skillset then
     begin
-      if i2 = -1 then i2 := i;
-      Self.fActiveSkills[i3] := TSkillPanelButton(i);
-      inc(i3);
+      if fSelectedSkill = spbNone then fSelectedSkill := Skill;
+      Self.fActiveSkills[i] := TSkillPanelButton(i);
+      inc(i);
+
+      if i = 8 then Break; // remove this if we ever allow more than 8 skill types per level
     end;
   end;
-  SetSelectedSkill(TSkillPanelButton(i2), True); // default
+  SetSelectedSkill(fSelectedSkill, True); // default
 
   UpdateAllSkillCounts;
 
@@ -5811,7 +5786,7 @@ begin
         gDone := (gRescued * 100) div gLemCap;   //gCount
     end else begin
       gRescued := gCount;
-      if (Level.Info.SkillTypes and $1) <> 0 then gRescued := gRescued + Level.Info.ClonerCount;
+      if spbCloner in Level.Info.Skillset then gRescued := gRescued + Level.Info.SkillCount[spbCloner];
       gDone := (gRescued * 100) div gLemCap;
     end;
 
@@ -6092,18 +6067,23 @@ end;
 
 function TLemmingGame.CheckLemmingBlink: Boolean;
 var
-  i, pcc: Integer;
+  i: Integer;
+  pcc: Integer; // pickup cloner count
+  tcc: Integer; // total cloner count
 begin
   Result := false;
-  pcc := 0;
+  pcc := 0;  // pickup cloner count
   if not (GameParams.LemmingBlink) then Exit;
-  if (GameParams.ChallengeMode) and ((Level.Info.SkillTypes and 1) <> 0) then Exit;
+  if (GameParams.ChallengeMode) and (spbCloner in Level.Info.Skillset) then Exit;
   for i := 0 to ObjectInfos.Count-1 do
     if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].SkillType = 15) then pcc := pcc + 1;
 
+  if (spbCloner in Level.Info.Skillset) then
+    tcc := CurrSkillCount[baCloning] + pcc
+  else
+    tcc := 0;
 
-  if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) +
-      ((Level.Info.SkillTypes and 1) * CurrSkillCount[baCloning]) + pcc
+  if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) + tcc
      < Level.Info.RescueCount)
   and (CurrentIteration mod 17 > 8) then
     Result := true;
