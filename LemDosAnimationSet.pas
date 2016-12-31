@@ -77,7 +77,9 @@ const
   FIXING_RTL          = 45;
   STACKING            = 46;
   STACKING_RTL        = 47;
-  STONED              = 48; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
+  FENCING             = 48;
+  FENCING_RTL         = 49;
+  STONED              = 50; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
   // and the left-facing on the right. Is this standard practice? Maybe
@@ -110,7 +112,8 @@ const
     (SWIMMING, SWIMMING_RTL),                  // baSwimming
     (GLIDING, GLIDING_RTL),                    // baGliding
     (FIXING, FIXING_RTL),                          // baFixing
-    (0,0)                                      // baCloning? Another that should never happen
+    (0,0),                                      // baCloning? Another that should never happen
+    (FENCING, FENCING_RTL)                      // baFencing
   );
 
 
@@ -130,6 +133,8 @@ type
     fMineMasksRTLBitmap     : TBitmap32;
     fCountDownDigitsBitmap  : TBitmap32;
     fHighlightBitmap        : TBitmap32;
+    fFencerMasksBitmap      : TBitmap32;
+    fFencerMasksRTLBitmap   : TBitmap32;
   protected
     procedure DoReadMetaData(XmasPal : Boolean = false); override;
     procedure DoReadData; override;
@@ -142,6 +147,8 @@ type
     property BashMasksRTLBitmap    : TBitmap32 read fBashMasksRTLBitmap;
     property MineMasksBitmap       : TBitmap32 read fMineMasksBitmap;
     property MineMasksRTLBitmap    : TBitmap32 read fMineMasksRTLBitmap;
+    property FencerMasksBitmap     : TBitmap32 read fFencerMasksBitmap;
+    property FencerMasksRTLBitmap  : TBitmap32 read fFencerMasksRTLBitmap;
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
     property AnimationPalette: TArrayOfColor32 read fAnimationPalette write fAnimationPalette;
@@ -180,12 +187,13 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
   const
     // These match the order these are stored by this class. They do NOT have to be in this
     // order in "scheme.nxmi", they just have to all be there.
-    ANIM_NAMES: array[0..23] of String =  ('WALKER', 'JUMPER', 'DIGGER', 'CLIMBER',
+    ANIM_NAMES: array[0..24] of String =  ('WALKER', 'JUMPER', 'DIGGER', 'CLIMBER',
                                            'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                            'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                            'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
                                            'OHNOER', 'BOMBER', 'PLATFORMER', 'STONER',
-                                           'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER');
+                                           'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
+                                           'FENCER');
     DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
   var
     Parser: TParser;
@@ -201,7 +209,7 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
     try
       Parser.LoadFromFile('scheme.nxmi');
       AnimSec := Parser.MainSection.Section['animations'];
-      for i := 0 to 23 do
+      for i := 0 to 24 do
       begin
         try
           ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
@@ -229,13 +237,14 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
 
 const
   // Number of physics frames for the various lemming actions.
-  ANIM_FRAMECOUNT: array[0..23] of Integer =
+  ANIM_FRAMECOUNT: array[0..24] of Integer =
     ( 4,  1, 16,  8,   // walker, jumper, digger, climber
      16,  8, 16, 32,   // drowner, hoister, builder, basher
      24,  4, 17, 16,   // miner, faller, floater, splatter
       8, 14, 16,  8,   // exiter, burner, blocker, shrugger
      16,  1, 16,  1,   // ohnoer, bomber, platformer, stoner
-      8, 17, 16,  8 ); // swimmer, glider, disarmer, stacker
+      8, 17, 16,  8,   // swimmer, glider, disarmer, stacker
+     16 );             // fencer
 var
   AnimIndex: Integer;
 begin
@@ -250,7 +259,7 @@ begin
   // Note that currently, floater and glider have a minimum of 10 frames; this is handled
   // elsewhere.
 
-  for AnimIndex := 0 to 23 do
+  for AnimIndex := 0 to 24 do
   begin
     // Add right- and left-facing version
     fMetaLemmingAnimations.Add.PhysicsFrameCount := ANIM_FRAMECOUNT[AnimIndex];
@@ -264,7 +273,7 @@ begin
   end;
 
 
-  if fMetaLemmingAnimations.Count <> 49 then
+  if fMetaLemmingAnimations.Count <> 51 then
     ShowMessage('Missing an animation? Total: ' + IntToStr(fMetaLemmingAnimations.Count));
 
   if fLemmingPrefix = '' then fLemmingPrefix := 'default';
@@ -290,6 +299,8 @@ begin
   Msk($1398, 'Explosionmask'     ,   1, 16, 22,  19);
   Msk($16DC, 'Countdown digits'  ,  10,  8,  8,  19); // 10 digits
   Msk($1CCC, 'Highlight icon'    ,   1,  8,  8,  19);
+  Msk($2000, 'Fencer'            ,   4, 16, 10,  19);
+  Msk($2100, 'Fencer (rtl)'      ,   4, 16, 10,  19);
 end;
 
 procedure TBaseDosAnimationSet.DoReadData;
@@ -353,7 +364,7 @@ begin
     // // // // // // // // // // // //
 
       // refer the "easy access" bitmaps
-      for i := 0 to 6 do
+      for i := 0 to 8 do
         fMaskAnimations.Add(TBitmap32.Create);
       fLemmingAnimations.Add(TBitmap32.Create); // for the Stoner
       fBashMasksBitmap := fMaskAnimations[0];
@@ -365,6 +376,8 @@ begin
       fCountdownDigitsBitmap.DrawMode := dmBlend;
       fHighlightBitmap := fMaskAnimations[6];
       fHighlightBitmap.DrawMode := dmBlend;
+      fFencerMasksBitmap := fMaskAnimations[7];
+      fFencerMasksRTLBitmap := fMaskAnimations[8];
 
         // Stoner, Bomber and Highlight are a single frame each so easy enough
         TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'bomber.png', fExplosionMaskBitmap);
@@ -378,12 +391,18 @@ begin
 
         fLemmingAnimations[STONED].DrawMode := dmBlend;
 
-        // Basher and miner are a tad more complicated
+        // Basher, fencer and miner are a tad more complicated
         TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'basher.png', TempBitmap);
         fBashMasksRTLBitmap.SetSize(16, 40);
         fBashMasksBitmap.SetSize(16, 40);
         TempBitmap.DrawTo(fBashMasksRTLBitmap, 0, 0, Rect(0, 0, 16, 40));
         TempBitmap.DrawTo(fBashMasksBitmap, 0, 0, Rect(16, 0, 32, 40));
+
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'fencer.png', TempBitmap);
+        fFencerMasksRTLBitmap.SetSize(16, 40);
+        fFencerMasksBitmap.SetSize(16, 40);
+        TempBitmap.DrawTo(fFencerMasksRTLBitmap, 0, 0, Rect(0, 0, 16, 40));
+        TempBitmap.DrawTo(fFencerMasksBitmap, 0, 0, Rect(16, 0, 32, 40));
 
         TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'miner.png', TempBitmap);
         fMineMasksRTLBitmap.SetSize(16, 26);
@@ -415,9 +434,11 @@ begin
   fBashMasksRTLBitmap     := nil;
   fMineMasksBitmap        := nil;
   fMineMasksRTLBitmap     := nil;
+  fFencerMasksBitmap      := nil;
+  fFencerMasksRTLBitmap   := nil;
   fCountDownDigitsBitmap  := nil;
   fHighlightBitmap        := nil;
-  fLemmingPrefix := 'lemming';
+  fLemmingPrefix := 'default';
 end;
 
 constructor TBaseDosAnimationSet.Create;

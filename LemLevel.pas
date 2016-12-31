@@ -374,6 +374,7 @@ begin
   HandleSkill('builder', spbBuilder);
   HandleSkill('stacker', spbStacker);
   HandleSkill('basher', spbBasher);
+  HandleSkill('fencer', spbFencer);
   HandleSkill('miner', spbMiner);
   HandleSkill('digger', spbDigger);
   HandleSkill('cloner', spbCloner);
@@ -685,6 +686,7 @@ begin
   HandleSkill('BUILDER', spbBuilder);
   HandleSkill('STACKER', spbStacker);
   HandleSkill('BASHER', spbBasher);
+  HandleSkill('FENCER', spbFencer);
   HandleSkill('MINER', spbMiner);
   HandleSkill('DIGGER', spbDigger);
   HandleSkill('CLONER', spbCloner);

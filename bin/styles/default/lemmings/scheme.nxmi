@@ -385,4 +385,19 @@ $ANIMATIONS
     $END
 
   $END
+  
+  $FENCER
+    FRAMES 16
+    
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+    
+  $END
 $END

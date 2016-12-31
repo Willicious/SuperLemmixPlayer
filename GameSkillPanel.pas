@@ -54,7 +54,7 @@ type
     fSkillUnwhite  : TBitmap32;
     fSkillLock     : TBitmap32;
     fSkillInfinite : TBitmap32;
-    fSkillIcons    : array[0..15] of TBitmap32;
+    fSkillIcons    : array[0..16] of TBitmap32;
     fInfoFont      : array[0..44] of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
     fGame          : TLemmingGame;
     { TODO : do something with this hardcoded shit }
@@ -179,7 +179,7 @@ begin
   for i := 0 to 44 do
     fInfoFont[i] := TBitmap32.Create;
 
-  for i := 0 to 15 do
+  for i := 0 to 16 do
     fSkillIcons[i] := TBitmap32.Create;
 
   for c := '0' to '9' do
@@ -229,7 +229,7 @@ begin
     for i := 0 to 1 do
       fSkillFont[c, i].Free;
 
-  for i := 0 to 15 do
+  for i := 0 to 16 do
     fSkillIcons[i].Free;
 
   fSkillInfinite.Free;
@@ -641,7 +641,7 @@ var
   BlankPanels: TBitmap32;
   PanelIndex: Integer;
 const
-  SKILL_NAMES: array[0..15] of string = (
+  SKILL_NAMES: array[0..16] of string = (
                  'walker',
                  'climber',
                  'swimmer',
@@ -655,6 +655,7 @@ const
                  'builder',
                  'stacker',
                  'basher',
+                 'fencer',
                  'miner',
                  'digger',
                  'cloner'
@@ -802,7 +803,7 @@ begin
     end;
 
     // Skill icons
-    for i := 0 to 15 do
+    for i := 0 to 16 do
       MakePanel(fSkillIcons[i], 'icon_' + SKILL_NAMES[i] + '.png', true);
 
     // Skill counts

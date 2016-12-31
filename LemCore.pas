@@ -70,7 +70,8 @@ type
     baSwimming,
     baGliding,
     baFixing,
-    baCloning
+    baCloning,
+    baFencing
   );
 
   {TSkillPanelButton = (
@@ -106,6 +107,7 @@ type
     spbBuilder,
     spbStacker,
     spbBasher,
+    spbFencer,
     spbMiner,
     spbDigger,
     spbCloner,
@@ -161,7 +163,8 @@ const
     baSwimming,
     baGliding,
     baFixing,
-    baCloning
+    baCloning,
+    baFencing
   ];
 
 const
@@ -193,7 +196,8 @@ const
     spbSwimmer,
     spbGlider,
     spbDisarmer,
-    spbCloner
+    spbCloner,
+    spbFencer
   );
 
 const
@@ -212,6 +216,7 @@ const
     baBuilding,
     baStacking,
     baBashing,
+    baFencing,
     baMining,
     baDigging,
     baCloning,
