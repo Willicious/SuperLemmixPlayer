@@ -22,14 +22,14 @@ uses
   LemNeoParser;
 
 const
-  SKILL_REPLAY_NAME_COUNT = 16;
+  SKILL_REPLAY_NAME_COUNT = 17;
   SKILL_REPLAY_NAMES: array[0..SKILL_REPLAY_NAME_COUNT-1] of String =
                                                ('WALKER', 'CLIMBER', 'SWIMMER',
                                                 'FLOATER', 'GLIDER', 'DISARMER',
                                                 'BOMBER', 'STONER', 'BLOCKER',
                                                 'PLATFORMER', 'BUILDER', 'STACKER',
-                                                'BASHER', 'MINER', 'DIGGER',
-                                                'CLONER');
+                                                'BASHER', 'FENCER', 'MINER',
+                                                'DIGGER', 'CLONER');
 
 
 type

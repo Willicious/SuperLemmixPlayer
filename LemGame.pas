@@ -334,6 +334,8 @@ type
     ExplodeMaskBmp             : TBitmap32; // ref to style.animationset.explosionmask
     BashMasks                  : TBitmap32; // ref to style.animationset.bashmasks
     BashMasksRTL               : TBitmap32; // ref to style.animationset.bashmasksrtl
+    FencerMasks                : TBitmap32;
+    FencerMasksRTL             : TBitmap32;
     MineMasks                  : TBitmap32; // ref to style.animationset.minemasks
     MineMasksRTL               : TBitmap32; // ref to style.animationset.minemasksrtl
     StoneLemBmp                : TBitmap32;
@@ -482,6 +484,7 @@ type
   { internal methods }
     function GetIsReplaying: Boolean;
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
+    procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
     procedure ApplyStoneLemming(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
@@ -604,6 +607,7 @@ type
     function HandleSwimming(L: TLemming): Boolean;
     function HandleGliding(L: TLemming): Boolean;
     function HandleFixing(L: TLemming): Boolean;
+    function HandleFencing(L: TLemming): Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -625,6 +629,7 @@ type
     function MayAssignPlatformer(L: TLemming): Boolean;
     function MayAssignStacker(L: TLemming): Boolean;
     function MayAssignBasher(L: TLemming): Boolean;
+    function MayAssignFencer(L: TLemming): Boolean;
     function MayAssignMiner(L: TLemming): Boolean;
     function MayAssignDigger(L: TLemming): Boolean;
     function MayAssignCloner(L: TLemming): Boolean;
@@ -803,10 +808,10 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..15] of TBasicLemmingAction =
+  ActionListArray: array[0..16] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
-             baStacking, baBashing, baMining, baDigging, baCloning);
+             baStacking, baBashing, baMining, baDigging, baCloning, baFencing);
 
 
 
@@ -991,7 +996,7 @@ begin
   aState.CurrReleaseRate := CurrReleaseRate;
   aState.LastReleaseRate := LastReleaseRate;
 
-  for i := 0 to 15 do
+  for i := 0 to 16 do
   begin
     aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
     aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
@@ -1057,7 +1062,7 @@ begin
   CurrReleaseRate := aState.CurrReleaseRate;
   LastReleaseRate := aState.LastReleaseRate;
 
-  for i := 0 to 15 do
+  for i := 0 to 16 do
   begin
     CurrSkillCount[ActionListArray[i]] := aState.CurrSkillCount[ActionListArray[i]];
     UsedSkillCount[ActionListArray[i]] := aState.UsedSkillCount[ActionListArray[i]];
@@ -1134,7 +1139,7 @@ begin
 
       TotalSkillUsed := 0;
       GetTalisman := True;
-      for j := 0 to 15 do
+      for j := 0 to 15 do // currently Fencer-related stuff in talismans is not supported
       begin
         if (UsedSkillCount[ActionListArray[j]] > SkillLimit[j]) and (SkillLimit[j] <> -1) then GetTalisman := False;
         TotalSkillUsed := TotalSkillUsed + UsedSkillCount[ActionListArray[j]];
@@ -1250,6 +1255,7 @@ begin
   LemmingMethods[baSwimming]   := HandleSwimming;
   LemmingMethods[baGliding]    := HandleGliding;
   LemmingMethods[baFixing]     := HandleFixing;
+  LemmingMethods[baFencing]    := HandleFencing;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -1278,6 +1284,7 @@ begin
   NewSkillMethods[baGliding]      := MayAssignFloaterGlider;
   NewSkillMethods[baFixing]       := MayAssignMechanic;
   NewSkillMethods[baCloning]      := MayAssignCloner;
+  NewSkillMethods[baFencing]      := MayAssignFencer; // temporary
 
 
   fFallLimit := MAX_FALLDISTANCE;
@@ -1526,6 +1533,14 @@ begin
   BashMasksRTL.DrawMode := dmCustom;
   BashMasksRTL.OnPixelCombine := CombineMaskPixelsLeft;
 
+  FencerMasks := Ani.FencerMasksBitmap;
+  FencerMasks.DrawMode := dmCustom;
+  FencerMasks.OnPixelCombine := CombineMaskPixelsRight;
+
+  FencerMasksRTL := Ani.FencerMasksRTLBitmap;
+  FencerMasksRTL.DrawMode := dmCustom;
+  FencerMasksRTL.OnPixelCombine := CombineMaskPixelsLeft;
+
   MineMasks := Ani.MineMasksBitmap;
   MineMasks.DrawMode := dmCustom;
   MineMasks.OnPixelCombine := CombineMaskPixelsDownRight;
@@ -1678,7 +1693,7 @@ begin
       if SkillPanelButtonToAction[Skill] <> baNone then
         CurrSkillCount[SkillPanelButtonToAction[Skill]] := SkillCount[Skill];
     // Initialize used skills
-    for i := 0 to 15 do
+    for i := 0 to 16 do
       UsedSkillCount[ActionListArray[i]] := 0;
   end;
 
@@ -2531,7 +2546,7 @@ var
     case PriorityBox of
       Perm    : Result :=     (L.LemIsClimber or L.LemIsSwimmer or L.LemIsFloater
                                     or L.LemIsGlider or L.LemIsMechanic);
-      NonPerm : Result :=     (L.LemAction in [baBashing, baMining, baDigging, baBuilding,
+      NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
                                                baPlatforming, baStacking, baBlocking]);
       Walk    : Result :=     (L.LemAction in [baWalking, baJumping]);
       NonWalk : Result := not (L.LemAction in [baWalking, baJumping]);
@@ -2609,7 +2624,7 @@ end;
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
-               baStacking, baBashing, baMining, baDigging];
+               baStacking, baBashing, baFencing, baMining, baDigging];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2649,7 +2664,7 @@ end;
 function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baMining, baDigging];
+               baBashing, baFencing, baMining, baDigging];
 begin
   Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
 end;
@@ -2666,7 +2681,7 @@ end;
 function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baBashing,
-               baMining, baDigging];
+               baFencing, baMining, baDigging];
 begin
   Result := (L.LemAction in ActionSet) and not (L.LemY <= 1);
 end;
@@ -2674,7 +2689,7 @@ end;
 function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baBashing,
-               baMining, baDigging];
+               baFencing, baMining, baDigging];
 var
   n: Integer;
 begin
@@ -2691,7 +2706,7 @@ end;
 function TLemmingGame.MayAssignStacker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baBashing,
-               baMining, baDigging];
+               baFencing, baMining, baDigging];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2699,7 +2714,15 @@ end;
 function TLemmingGame.MayAssignBasher(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baMining, baDigging];
+               baFencing, baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet);
+end;
+
+function TLemmingGame.MayAssignFencer(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baMining, baDigging];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2707,7 +2730,7 @@ end;
 function TLemmingGame.MayAssignMiner(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baDigging];
+               baBashing, baFencing, baDigging];
 begin
   Result := (L.LemAction in ActionSet)
             and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining)
@@ -2716,7 +2739,7 @@ end;
 function TLemmingGame.MayAssignDigger(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baMining];
+               baBashing, baFencing, baMining];
 begin
   Result := (L.LemAction in ActionSet) and not HasSteelAt(L.LemX, L.LemY);
 end;
@@ -2724,8 +2747,8 @@ end;
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baMining, baDigging, baJumping, baFalling, baFloating,
-               baSwimming, baGliding, baFixing];
+               baBashing, baFencing, baMining, baDigging, baJumping, baFalling,
+               baFloating, baSwimming, baGliding, baFixing];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -3374,6 +3397,36 @@ begin
   end;
 end;
 
+procedure TLemmingGame.ApplyFencerMask(L: TLemming; MaskFrame: Integer);
+var
+  Bmp: TBitmap32;
+  S, D: TRect;
+begin
+  if L.LemDx = 1 then
+    Bmp := FencerMasks
+  else
+    Bmp := FencerMasksRTL;
+
+  S := CalcFrameRect(Bmp, 4, MaskFrame);
+  D.Left := L.LemX - 8;
+  D.Top := L.LemY - 10;
+  D.Right := D.Left + 16;
+  D.Bottom := D.Top + 10;
+
+  Assert(CheckRectCopy(D, S), 'fencer rect err');
+
+  Bmp.DrawTo(PhysicsMap, D, S);
+
+  // Only change the PhysicsMap if simulating stuff
+  if not fSimulation then
+  begin
+    // Delete these pixels from the terrain layer
+    fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
+    // Get now minimap
+    InitializeMinimap;
+  end;
+end;
+
 procedure TLemmingGame.ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
 // The miner mask is usually centered at the feet of L
 // AdjustX, AdjustY lets one adjust the position of the miner mask relative to this
@@ -3446,6 +3499,7 @@ var
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker, spbDigger, spbMiner,
                     spbBasher, spbBomber, spbGlider, spbCloner];
+  // need to add spbFencer here too, but let's get it working first
 begin
   if fHyperSpeed then Exit;
 
@@ -4311,6 +4365,232 @@ begin
       else
         Dec(L.LemX, L.LemDx);
     end;
+  end;
+end;
+
+function TLemmingGame.HandleFencing(L: TLemming): Boolean;
+// This is almost an exact copy of HandleBasher except for which mask to use.
+var
+  LemDy, AdjustedFrame, n: Integer;
+  ContinueWork: Boolean;
+
+  function FencerIndestructibleCheck(x, y, Direction: Integer): Boolean;
+  begin
+    // check for indestructible terrain 3, 4 and 5 pixels above (x, y)
+    Result := (    (HasIndestructibleAt(x, y - 3, Direction, baBashing))
+                or (HasIndestructibleAt(x, y - 4, Direction, baBashing))
+                or (HasIndestructibleAt(x, y - 5, Direction, baBashing))
+              );
+  end;
+
+  procedure FencerTurn(L: TLemming; SteelSound: Boolean);
+  begin
+    // Turns basher around an transitions to walker
+    Dec(L.LemX, L.LemDx);
+    Transition(L, baWalking, True); // turn around as well
+    if SteelSound then CueSoundEffect(SFX_HITS_STEEL, L.Position);
+  end;
+
+  function FencerStepUpCheck(x, y, Direction, Step: Integer): Boolean;
+  begin
+    Result := True;
+
+    if Step = -1 then
+    begin
+      if (     (not HasPixelAt(x + Direction, y + Step - 1))
+           and HasPixelAt(x + Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step - 1)
+           and HasPixelAt(x + 2*Direction, y + Step - 2)
+         ) then Result := False;
+      if (     (not HasPixelAt(x + Direction, y + Step - 2))
+           and HasPixelAt(x + Direction, y + Step)
+           and HasPixelAt(x + Direction, y + Step - 1)
+           and HasPixelAt(x + 2*Direction, y + Step - 1)
+           and HasPixelAt(x + 2*Direction, y + Step - 2)
+         ) then Result := False;
+      if (     HasPixelAt(x + Direction, y + Step - 2)
+           and HasPixelAt(x + Direction, y + Step - 1)
+           and HasPixelAt(x + Direction, y + Step)
+         ) then Result := False;
+    end
+    else if Step = -2 then
+    begin
+      if (     (not HasPixelAt(x + Direction, y + Step))
+           and HasPixelAt(x + Direction, y + Step + 1)
+           and HasPixelAt(x + 2*Direction, y + Step + 1)
+           and HasPixelAt(x + 2*Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step - 1)
+         ) then Result := False;
+      if (     (not HasPixelAt(x + Direction, y + Step - 1))
+           and HasPixelAt(x + Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step)
+           and HasPixelAt(x + 2*Direction, y + Step - 1)
+         ) then Result := False;
+      if (     HasPixelAt(x + Direction, y + Step - 1)
+           and HasPixelAt(x + Direction, y + Step)
+         ) then Result := False;
+    end;
+  end;
+
+  // Simulate the behavior of the basher in the next two frames
+  function DoTurnAtSteel(L: TLemming): Boolean;
+  var
+    CopyL: TLemming;
+    SavePhysicsMap: TBitmap32;
+    i: Integer;
+  begin
+    // Make deep copy of the lemming
+    CopyL := TLemming.Create;
+    CopyL.Assign(L);
+    // Make a deep copy of the PhysicsMap
+    SavePhysicsMap := TBitmap32.Create;
+    SavePhysicsMap.Assign(PhysicsMap);
+
+    Result := False;
+
+    // Simulate two fencer cycles
+    // 11 iterations is hopefully correct: CopyL.LemPhysicsFrame changes as follows:
+    // 10 -> 11 -> 12 -> 13 -> 14 -> 15 -> 16 -> 11 -> 12 -> 13 -> 14 -> 15
+    CopyL.LemPhysicsFrame := 10;
+    for i := 0 to 10 do
+    begin
+      // On CopyL.LemPhysicsFrame = 0, apply all fencer masks and jump to frame 10 again
+      if (CopyL.LemPhysicsFrame = 0) then
+      begin
+        fSimulation := True; // do not apply the changes to the TerrainLayer
+        ApplyFencerMask(CopyL, 0);
+        ApplyFencerMask(CopyL, 1);
+        ApplyFencerMask(CopyL, 2);
+        ApplyFencerMask(CopyL, 3);
+        fSimulation := False; // should not matter, because we do this in SimulateLem anyway, but to be safe...
+        // Do *not* check whether continue fencing, but move directly ahead to frame 10
+        CopyL.LemPhysicsFrame := 10;
+      end;
+
+      // Move one frame forward
+      SimulateLem(CopyL, False);
+
+      // Check if we have turned around at steel
+      if (CopyL.LemDX = -L.LemDX) then
+      begin
+        Result := True;
+        Break;
+      end
+      // Check if we are still a basher
+      else if CopyL.LemRemoved or not (CopyL.LemAction = baFencing) then
+        Break; // and return false
+    end;
+
+    // Copy PhysicsMap back
+    PhysicsMap.Assign(SavePhysicsMap);
+    SavePhysicsMap.Free;
+  end;
+
+
+begin
+  Result := True;
+
+  // Fencer only has 16 frames physics-wise, but I couldn't be bothered trimming AdjustedFrame out yet.
+  // Actually, Basher probably doesn't need it anymore either, can just set the physics-frames to 16 while keeping anim-frames at 32.
+  AdjustedFrame := L.LemPhysicsFrame mod 16;
+
+  // Remove terrain
+  if AdjustedFrame in [2, 3, 4, 5] then
+    ApplyFencerMask(L, AdjustedFrame - 2);
+
+  // Check for enough terrain to continue working
+  if AdjustedFrame = 5 then
+  begin
+    ContinueWork := False;
+
+    // check for destructible terrain at height 5 and 6
+    for n := 1 to 14 do
+    begin
+      if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
+           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx, baBashing)
+         ) then ContinueWork := True;
+      if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 5)
+           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 5, L.LemDx, baBashing)
+         ) then ContinueWork := True;
+    end;
+
+    // check whether we turn around within the next two basher strokes (only if we don't simulate)
+    if (not ContinueWork) and (not fSimulation) then
+    begin
+      Assert(not fSimulation, 'Lemming simulation does basher steel turn checks and creates an infinite recursion');
+      ContinueWork := DoTurnAtSteel(L);
+    end;
+
+    if not ContinueWork then
+    begin
+      if HasPixelAt(L.LemX, L.LemY) then
+        Transition(L, baWalking)
+      else
+        Transition(L, baFalling);
+    end;
+  end;
+
+  // Fencer movement
+  if AdjustedFrame in [11, 12, 13, 14, 15] then
+  begin
+    Inc(L.LemX, L.LemDx);
+
+    LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+    If LemDy = 4 then
+    begin
+      Inc(L.LemY, LemDy);
+      Transition(L, baFalling);
+    end
+
+    else if LemDy > 0 then
+    begin
+      Inc(L.LemY, LemDy);
+      Transition(L, baWalking);
+    end
+
+    else if LemDy in [0, 1, 2] then
+    begin
+      // Move no, one or two pixels down, if there no steel
+      if FencerIndestructibleCheck(L.LemX, L.LemY + LemDy, L.LemDx) then
+        FencerTurn(L, HasSteelAt(L.LemX, L.LemY + LemDy - 4))
+      else
+        Inc(L.LemY, LemDy)
+    end
+
+    else if (LemDy = -1) or (LemDy = -2) then
+    begin
+      // Move one or two pixels up, if there is no steel and not too much terrain
+      if FencerIndestructibleCheck(L.LemX, L.LemY + LemDy, L.LemDx) then
+        FencerTurn(L, HasSteelAt(L.LemX, L.LemY + LemDy - 4))
+      else if FencerStepUpCheck(L.LemX, L.LemY, L.LemDx, LemDy) = False then
+      begin
+        if FencerIndestructibleCheck(L.LemX + L.LemDx, L.LemY + 2, L.LemDx) then
+          FencerTurn(L,    HasSteelAt(L.LemX + L.LemDx, L.LemY + LemDy)
+                        or HasSteelAt(L.LemX + L.LemDx, L.LemY + LemDy + 1))
+        else
+          //stall fencer
+          Dec(L.LemX, L.LemDx);
+      end
+      else
+        Inc(L.LemY, LemDy); // Lem may move up
+    end
+
+    else if LemDy < -2 then
+    begin
+      // Either stall or turn if there is steel
+      if FencerIndestructibleCheck(L.LemX, L.LemY, L.LemDx) then
+        FencerTurn(L,(    HasSteelAt(L.LemX, L.LemY - 3)
+                       or HasSteelAt(L.LemX, L.LemY - 4)
+                       or HasSteelAt(L.LemX, L.LemY - 5)
+                     ))
+      else
+        Dec(L.LemX, L.LemDx);
+    end;
+
+    if L.LemY <= 2 then
+      Transition(L, baWalking);
   end;
 end;
 
