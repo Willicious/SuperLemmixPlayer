@@ -1748,6 +1748,7 @@ begin
   i := 0;
   for i := 0 to 7 do
     fActiveSkills[i] := spbNone;
+  i := 0;
   for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
   begin
     if Skill in Level.Info.Skillset then
