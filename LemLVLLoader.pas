@@ -700,6 +700,7 @@ begin
         if Buf.Skillset and $4 <> 0 then AddSkill(spbMiner);
         if Buf.Skillset and $2 <> 0 then AddSkill(spbDigger);
         if Buf.Skillset and $1 <> 0 then AddSkill(spbCloner);
+        if Buf.LevelOptions2 and $2 <> 0 then AddSkill(spbFencer);
 
         SetSkillCount(spbWalker, Buf.WalkerCount);
         SetSkillCount(spbClimber, Buf.ClimberCount);
@@ -717,6 +718,7 @@ begin
         SetSkillCount(spbMiner, Buf.MinerCount);
         SetSkillCount(spbDigger, Buf.DiggerCount);
         SetSkillCount(spbCloner, Buf.ClonerCount);
+        SetSkillCount(spbFencer, Buf.FencerCount);
 
         Title            := Buf.LevelName;
         Author           := Buf.LevelAuthor;

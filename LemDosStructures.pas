@@ -209,7 +209,8 @@ type
             VgaspecY                   : LongInt;
             LevelID                    : LongWord;
             LevelOptions2              : Byte;
-            Reserved2                  : array[0..2] of Byte;
+            FencerCount                : Byte;
+            Reserved2                  : array[0..1] of Byte;
     {0040}  LevelAuthor                : array[0..15] of Char;
     {0050}  LevelName                  : array[0..31] of Char;
     {0070}  StyleName                  : array[0..15] of Char;
