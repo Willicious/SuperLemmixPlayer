@@ -31,26 +31,6 @@ type
     fSkillset: TSkillset;
     fSkillCounts: TSkillCounts;
 
-    (*fClimberCount   : Integer;
-    fFloaterCount   : Integer;
-    fBomberCount    : Integer;
-    fBlockerCount   : Integer;
-    fBuilderCount   : Integer;
-    fBasherCount    : Integer;
-    fMinerCount     : Integer;
-    fDiggerCount    : Integer;
-
-    fWalkerCount : Integer;
-    fSwimmerCount : Integer;
-    fGliderCount : Integer;
-    fMechanicCount : Integer;
-    fStonerCount : Integer;
-    fPlatformerCount : Integer;
-    fStackerCount : Integer;
-    fClonerCount : Integer;
-
-    fSkillTypes : Integer;*)
-
     fWidth : Integer;
     fHeight : Integer;
 
@@ -85,25 +65,6 @@ type
 
     property Skillset: TSkillset read fSkillset write fSkillset;
     property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount write SetSkillCount;
-
-    (*property ClimberCount   : Integer read fClimberCount write fClimberCount;
-    property FloaterCount   : Integer read fFloaterCount write fFloaterCount;
-    property BomberCount    : Integer read fBomberCount write fBomberCount;
-    property BlockerCount   : Integer read fBlockerCount write fBlockerCount;
-    property BuilderCount   : Integer read fBuilderCount write fBuilderCount;
-    property BasherCount    : Integer read fBasherCount write fBasherCount;
-    property MinerCount     : Integer read fMinerCount write fMinerCount;
-    property DiggerCount    : Integer read fDiggerCount write fDiggerCount;
-    property WalkerCount    : Integer read fWalkerCount write fWalkerCount;
-    property SwimmerCount    : Integer read fSwimmerCount write fSwimmerCount;
-    property GliderCount    : Integer read fGliderCount write fGliderCount;
-    property MechanicCount    : Integer read fMechanicCount write fMechanicCount;
-    property StonerCount    : Integer read fStonerCount write fStonerCount;
-    property PlatformerCount    : Integer read fPlatformerCount write fPlatformerCount;
-    property StackerCount    : Integer read fStackerCount write fStackerCount;
-    property ClonerCount    : Integer read fClonerCount write fClonerCount;
-
-    property SkillTypes     : Integer read fSkillTypes write fSkillTypes;*)
 
     property ScreenPosition : Integer read fScreenPosition write fScreenPosition;
     property ScreenYPosition : Integer read fScreenYPosition write fScreenYPosition;
