@@ -11,9 +11,13 @@ uses
   LemInteractiveObject, LemMetaObject,
   LemNeoPieceManager,
   LemSteel,
+  LemCore,
   LemNeoParser;
 
 type
+  TSkillset = set of TSkillPanelButton;
+  TSkillCounts = array[Low(TSkillPanelButton)..High(TSkillPanelButton)] of Integer; // non-skill buttons are just unused
+
   TLevelInfo = class
   private
   protected
@@ -23,7 +27,11 @@ type
     fZombieGhostCount: Integer;
     fRescueCount    : Integer;
     fTimeLimit      : Integer;
-    fClimberCount   : Integer;
+
+    fSkillset: TSkillset;
+    fSkillCounts: TSkillCounts;
+
+    (*fClimberCount   : Integer;
     fFloaterCount   : Integer;
     fBomberCount    : Integer;
     fBlockerCount   : Integer;
@@ -41,7 +49,7 @@ type
     fStackerCount : Integer;
     fClonerCount : Integer;
 
-    fSkillTypes : Integer;
+    fSkillTypes : Integer;*)
 
     fWidth : Integer;
     fHeight : Integer;
@@ -59,12 +67,15 @@ type
     fMusicFile      : string;
 
     fLevelID        : LongWord;
+
+    procedure SetSkillCount(aSkill: TSkillPanelButton; aCount: Integer);
+    function GetSkillCount(aSkill: TSkillPanelButton): Integer;
   protected
   public
     WindowOrder       : array of word;
     constructor Create;
     procedure Clear; virtual;
-  published
+
     property ReleaseRate    : Integer read fReleaseRate write fReleaseRate;
     property ReleaseRateLocked: Boolean read fReleaseRateLocked write fReleaseRateLocked;
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
@@ -72,7 +83,10 @@ type
     property RescueCount    : Integer read fRescueCount write fRescueCount;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
 
-    property ClimberCount   : Integer read fClimberCount write fClimberCount;
+    property Skillset: TSkillset read fSkillset write fSkillset;
+    property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount write SetSkillCount;
+
+    (*property ClimberCount   : Integer read fClimberCount write fClimberCount;
     property FloaterCount   : Integer read fFloaterCount write fFloaterCount;
     property BomberCount    : Integer read fBomberCount write fBomberCount;
     property BlockerCount   : Integer read fBlockerCount write fBlockerCount;
@@ -89,7 +103,7 @@ type
     property StackerCount    : Integer read fStackerCount write fStackerCount;
     property ClonerCount    : Integer read fClonerCount write fClonerCount;
 
-    property SkillTypes     : Integer read fSkillTypes write fSkillTypes;
+    property SkillTypes     : Integer read fSkillTypes write fSkillTypes;*)
 
     property ScreenPosition : Integer read fScreenPosition write fScreenPosition;
     property ScreenYPosition : Integer read fScreenYPosition write fScreenYPosition;
@@ -173,23 +187,8 @@ begin
   RescueCount    := 1;
   TimeLimit      := 6000;
 
-  ClimberCount   := 0;
-  FloaterCount   := 0;
-  BomberCount    := 0;
-  BlockerCount   := 0;
-  BuilderCount   := 0;
-  BasherCount    := 0;
-  MinerCount     := 0;
-  DiggerCount    := 0;
-  WalkerCount    := 0;
-  SwimmerCount   := 0;
-  GliderCount    := 0;
-  MechanicCount  := 0;
-  StonerCount    := 0;
-  PlatformerCount := 0;
-  StackerCount   := 0;
-  ClonerCount := 0;
-  SkillTypes := 0;
+  fSkillset := [];
+  FillChar(fSkillCounts, SizeOf(TSkillCounts), 0);
 
   LevelOptions   := 2;
   ScreenPosition := 0;
@@ -210,6 +209,16 @@ constructor TLevelInfo.Create;
 begin
   inherited Create;
   Clear;
+end;
+
+procedure TLevelInfo.SetSkillCount(aSkill: TSkillPanelButton; aCount: Integer);
+begin
+  fSkillCounts[aSkill] := aCount;
+end;
+
+function TLevelInfo.GetSkillCount(aSkill: TSkillPanelButton): Integer;
+begin
+  Result := fSkillCounts[aSkill];
 end;
 
 { TLevel }
@@ -373,39 +382,40 @@ begin
 end;
 
 procedure TLevel.LoadSkillsetSection(aSection: TParserSection);
-  function HandleSkill(aLabel: String; aFlag: Cardinal): Integer;
+  procedure HandleSkill(aLabel: String; aFlag: TSkillPanelButton);
   var
     Line: TParserLine;
+    Count: Integer;
   begin
-    Result := 0;
     Line := aSection.Line[aLabel];
     if Line = nil then Exit;
     if Lowercase(Line.ValueTrimmed) = 'infinite' then
-      Result := 100
+      Count := 100
     else
-      Result := Line.ValueNumeric;
-    Info.SkillTypes := Info.SkillTypes or aFlag;
+      Count := Line.ValueNumeric;
+    Info.Skillset := Info.Skillset + [aFlag];
+    Info.SkillCount[aFlag] := Count;
   end;
 begin
-  Info.SkillTypes := 0;
+  Info.Skillset := [];
   if aSection = nil then Exit;
 
-  Info.WalkerCount := HandleSkill('walker', $8000);
-  Info.ClimberCount := HandleSkill('climber', $4000);
-  Info.SwimmerCount := HandleSkill('swimmer', $2000);
-  Info.FloaterCount := HandleSkill('floater', $1000);
-  Info.GliderCount := HandleSkill('glider', $0800);
-  Info.MechanicCount := HandleSkill('disarmer', $0400);
-  Info.BomberCount := HandleSkill('bomber', $0200);
-  Info.StonerCount := HandleSkill('stoner', $0100);
-  Info.BlockerCount := HandleSkill('blocker', $0080);
-  Info.PlatformerCount := HandleSkill('platformer', $0040);
-  Info.BuilderCount := HandleSkill('builder', $0020);
-  Info.StackerCount := HandleSkill('stacker', $0010);
-  Info.BasherCount := HandleSkill('basher', $0008);
-  Info.MinerCount := HandleSkill('miner', $0004);
-  Info.DiggerCount := HandleSkill('digger', $0002);
-  Info.ClonerCount := HandleSkill('cloner', $0001);
+  HandleSkill('walker', spbWalker);
+  HandleSkill('climber', spbClimber);
+  HandleSkill('swimmer', spbSwimmer);
+  HandleSkill('floater', spbFloater);
+  HandleSkill('glider', spbGlider);
+  HandleSkill('disarmer', spbDisarmer);
+  HandleSkill('bomber', spbBomber);
+  HandleSkill('stoner', spbStoner);
+  HandleSkill('blocker', spbBlocker);
+  HandleSkill('platformer', spbPlatformer);
+  HandleSkill('builder', spbBuilder);
+  HandleSkill('stacker', spbStacker);
+  HandleSkill('basher', spbBasher);
+  HandleSkill('miner', spbMiner);
+  HandleSkill('digger', spbDigger);
+  HandleSkill('cloner', spbCloner);
 end;
 
 procedure TLevel.HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
@@ -575,6 +585,8 @@ begin
 end;
 
 procedure TLevel.Sanitize;
+var
+  SkillIndex: TSkillPanelButton;
 begin
   // Nepster - I have removed certain parts of this as they are not needed in regards to longer-term plans
   with Info do
@@ -597,50 +609,12 @@ begin
     if ReleaseRate < 1 then ReleaseRate := 1;
     if ReleaseRate > 99 then ReleaseRate := 99;
 
-    if WalkerCount < 0 then WalkerCount := 0;
-    if WalkerCount > 100 then WalkerCount := 100;
-
-    if ClimberCount < 0 then ClimberCount := 0;
-    if ClimberCount > 100 then ClimberCount := 100;
-
-    if SwimmerCount < 0 then SwimmerCount := 0;
-    if SwimmerCount > 100 then SwimmerCount := 100;
-
-    if FloaterCount < 0 then FloaterCount := 0;
-    if FloaterCount > 100 then FloaterCount := 100;
-
-    if GliderCount < 0 then GliderCount := 0;
-    if GliderCount > 100 then GliderCount := 100;
-
-    if MechanicCount < 0 then MechanicCount := 0;
-    if MechanicCount > 100 then MechanicCount := 100;
-
-    if BomberCount < 0 then BomberCount := 0;
-    if BomberCount > 100 then BomberCount := 100;
-
-    if BlockerCount < 0 then BlockerCount := 0;
-    if BlockerCount > 100 then BlockerCount := 100;
-
-    if PlatformerCount < 0 then PlatformerCount := 0;
-    if PlatformerCount > 100 then PlatformerCount := 100;
-
-    if BuilderCount < 0 then BuilderCount := 0;
-    if BuilderCount > 100 then BuilderCount := 100;
-
-    if StackerCount < 0 then StackerCount := 0;
-    if StackerCount > 100 then StackerCount := 100;
-
-    if BasherCount < 0 then BasherCount := 0;
-    if BasherCount > 100 then BasherCount := 100;
-
-    if MinerCount < 0 then MinerCount := 0;
-    if MinerCount > 100 then MinerCount := 100;
-
-    if DiggerCount < 0 then DiggerCount := 0;
-    if DiggerCount > 100 then DiggerCount := 100;
-
-    if ClonerCount < 0 then ClonerCount := 0;
-    if ClonerCount > 100 then ClonerCount := 100;
+    for SkillIndex := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+    begin
+      if SkillCount[SkillIndex] < 0 then SkillCount[SkillIndex] := 0;
+      if SkillCount[SkillIndex] > 100 then SkillCount[SkillIndex] := 100;
+      if not(SkillIndex in Skillset) then SkillCount[SkillIndex] := 0;
+    end;
   end;
 end;
 
@@ -725,34 +699,34 @@ procedure TLevel.SaveSkillsetSection(aSection: TParserSection);
 var
   Sec: TParserSection;
 
-  procedure HandleSkill(aLabel: String; aFlag: Cardinal; aCount: Integer);
+  procedure HandleSkill(aLabel: String; aFlag: TSkillPanelButton);
   begin
-    if Info.SkillTypes and aFlag = 0 then Exit; // we don't check aCount because a zero count might still mean pickup skills exist
-    if aCount > 99 then
+    if not (aFlag in Info.Skillset) then Exit;
+    if Info.SkillCount[aFlag] > 99 then
       Sec.AddLine(aLabel, 'infinite')
     else
-      Sec.AddLine(aLabel, aCount);
+      Sec.AddLine(aLabel, Info.SkillCount[aFlag]);
   end;
 begin
-  if Info.SkillTypes = 0 then Exit;
+  if Info.Skillset = [] then Exit;
   Sec := aSection.SectionList.Add('SKILLSET');
 
-  HandleSkill('WALKER', $8000, Info.WalkerCount);
-  HandleSkill('CLIMBER', $4000, Info.ClimberCount);
-  HandleSkill('SWIMMER', $2000, Info.SwimmerCount);
-  HandleSkill('FLOATER', $1000, Info.FloaterCount);
-  HandleSkill('GLIDER', $0800, Info.GliderCount);
-  HandleSkill('DISARMER', $0400, Info.MechanicCount);
-  HandleSkill('BOMBER', $0200, Info.BomberCount);
-  HandleSkill('STONER', $0100, Info.StonerCount);
-  HandleSkill('BLOCKER', $0080, Info.BlockerCount);
-  HandleSkill('PLATFORMER', $0040, Info.PlatformerCount);
-  HandleSkill('BUILDER', $0020, Info.BuilderCount);
-  HandleSkill('STACKER', $0010, Info.StackerCount);
-  HandleSkill('BASHER', $0008, Info.BasherCount);
-  HandleSkill('MINER', $0004, Info.MinerCount);
-  HandleSkill('DIGGER', $0002, Info.DiggerCount);
-  HandleSkill('CLONER', $0001, Info.ClonerCount);
+  HandleSkill('WALKER', spbWalker);
+  HandleSkill('CLIMBER', spbClimber);
+  HandleSkill('SWIMMER', spbSwimmer);
+  HandleSkill('FLOATER', spbFloater);
+  HandleSkill('GLIDER', spbGlider);
+  HandleSkill('DISARMER', spbDisarmer);
+  HandleSkill('BOMBER', spbBomber);
+  HandleSkill('STONER', spbStoner);
+  HandleSkill('BLOCKER', spbBlocker);
+  HandleSkill('PLATFORMER', spbPlatformer);
+  HandleSkill('BUILDER', spbBuilder);
+  HandleSkill('STACKER', spbStacker);
+  HandleSkill('BASHER', spbBasher);
+  HandleSkill('MINER', spbMiner);
+  HandleSkill('DIGGER', spbDigger);
+  HandleSkill('CLONER', spbCloner);
 end;
 
 procedure TLevel.SaveObjectSections(aSection: TParserSection);

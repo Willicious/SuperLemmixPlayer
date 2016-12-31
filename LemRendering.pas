@@ -460,7 +460,7 @@ begin
       DrawBasherShadow(CopyL);
     end;
 
-  spbExplode:
+  spbBomber:
     begin
       DrawExploderShadow(CopyL);
     end;

@@ -354,10 +354,10 @@ begin
       spbWalker: SL.Add('  fRenderInterface.SelectedSkill: Walker');
       spbClimber: SL.Add('  fRenderInterface.SelectedSkill: Climber');
       spbSwimmer: SL.Add('  fRenderInterface.SelectedSkill: Swimmer');
-      spbUmbrella: SL.Add('  fRenderInterface.SelectedSkill: Floater');
+      spbFloater: SL.Add('  fRenderInterface.SelectedSkill: Floater');
       spbGlider: SL.Add('  fRenderInterface.SelectedSkill: Glider');
-      spbMechanic: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
-      spbExplode: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
+      spbDisarmer: SL.Add('  fRenderInterface.SelectedSkill: Disarmer');
+      spbBomber: SL.Add('  fRenderInterface.SelectedSkill: Bomber');
       spbStoner: SL.Add('  fRenderInterface.SelectedSkill: Stoner');
       spbBlocker: SL.Add('  fRenderInterface.SelectedSkill: Blocker');
       spbPlatformer: SL.Add('  fRenderInterface.SelectedSkill: Platformer');
@@ -705,10 +705,10 @@ begin
               0: SetSelectedSkill(spbWalker, True);
               1: SetSelectedSkill(spbClimber, True);
               2: SetSelectedSkill(spbSwimmer, True);
-              3: SetSelectedSkill(spbUmbrella, True);
+              3: SetSelectedSkill(spbFloater, True);
               4: SetSelectedSkill(spbGlider, True);
-              5: SetSelectedSkill(spbMechanic, True);
-              6: SetSelectedSkill(spbExplode, True);
+              5: SetSelectedSkill(spbDisarmer, True);
+              6: SetSelectedSkill(spbBomber, True);
               7: SetSelectedSkill(spbStoner, True);
               8: SetSelectedSkill(spbBlocker, True);
               9: SetSelectedSkill(spbPlatformer, True);

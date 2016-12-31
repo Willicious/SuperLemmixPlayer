@@ -1579,6 +1579,7 @@ var
   i, i2, i3: Integer;
   Inf: TInteractiveObjectInfo;
   numEntries:integer;
+  
 begin
   Assert(InfoPainter <> nil);
 
@@ -3465,7 +3466,7 @@ var
   ShadowLem: TLemming;
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker, spbDigger, spbMiner,
-                    spbBasher, spbExplode, spbGlider, spbCloner];
+                    spbBasher, spbBomber, spbGlider, spbCloner];
 begin
   if fHyperSpeed then Exit;
 
