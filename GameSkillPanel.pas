@@ -1096,6 +1096,7 @@ var
   X, Y: Integer;
   Dx : Integer;
   SrcRect : TRect;
+  EraseRect: TRect;
 begin
   Dx := 208;
   if Map.Width < 104 then Dx := Dx + (52 - (Map.Width div 2));
@@ -1115,6 +1116,10 @@ begin
     if SrcRect.Bottom > Map.Height then RectMove(SrcRect, 0, -1);
   end else
     X := 0;
+
+  EraseRect := Rect(208, 18, 312, 38);
+  fOriginal.DrawTo(Img.Bitmap, EraseRect, EraseRect);
+
   Map.DrawTo(Img.Bitmap, Dx, 18, SrcRect);
   Img.Bitmap.FrameRectS(208 + X, 18, 208 + X + 20, 38, fRectColor);
 end;
