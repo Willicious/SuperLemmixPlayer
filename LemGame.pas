@@ -3502,6 +3502,7 @@ const
   // need to add spbFencer here too, but let's get it working first
 begin
   if fHyperSpeed then Exit;
+  if GameParams.NoShadows then Exit;
 
   // Get correct skill to draw the shadow
   if Assigned(fLemSelected) and (fSelectedSkill in ShadowSkillSet) then

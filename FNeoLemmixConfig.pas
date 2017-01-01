@@ -14,13 +14,6 @@ type
     btnOK: TButton;
     btnCancel: TButton;
     btnApply: TButton;
-    GroupBox2: TGroupBox;
-    btnHotkeys: TButton;
-    GroupBox3: TGroupBox;
-    cbLemmingBlink: TCheckBox;
-    cbTimerBlink: TCheckBox;
-    Label1: TLabel;
-    cbZoom: TComboBox;
     GroupBox4: TGroupBox;
     cbAutoSaveReplay: TCheckBox;
     Label2: TLabel;
@@ -37,13 +30,7 @@ type
     btnCheckSkills: TButton;
     btnClearSkill: TButton;
     cbExplicitCancel: TCheckBox;
-    cbBlackOut: TCheckBox;
-    TabSheet3: TTabSheet;
-    cbEnableOnline: TCheckBox;
-    cbUpdateCheck: TCheckBox;
     cbNoAutoReplay: TCheckBox;
-    cbPauseAfterBackwards: TCheckBox;
-    cbNoBackgrounds: TCheckBox;
     TabSheet4: TTabSheet;
     tbSoundVol: TTrackBar;
     Label3: TLabel;
@@ -53,6 +40,21 @@ type
     Label7: TLabel;
     cbSuccessJingle: TCheckBox;
     cbFailureJingle: TCheckBox;
+    TabSheet5: TTabSheet;
+    GroupBox2: TGroupBox;
+    btnHotkeys: TButton;
+    cbPauseAfterBackwards: TCheckBox;
+    GroupBox3: TGroupBox;
+    cbLemmingBlink: TCheckBox;
+    cbTimerBlink: TCheckBox;
+    cbBlackOut: TCheckBox;
+    cbNoBackgrounds: TCheckBox;
+    GroupBox1: TGroupBox;
+    cbEnableOnline: TCheckBox;
+    cbUpdateCheck: TCheckBox;
+    cbZoom: TComboBox;
+    Label1: TLabel;
+    cbDisableShadows: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -103,13 +105,31 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
+  cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
+  cbExplicitCancel.Checked := GameParams.ExplicitCancel;
+  cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
+
+  cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
+  cbEnableOnline.Checked := GameParams.EnableOnline;
+
+  // Replay Naming Dropdown
+  if GameParams.AutoReplayNames = false then
+    i := 3 // Manual naming
+  else if GameParams.AlwaysTimestamp then
+    i := 2
+  else if GameParams.ConfirmOverwrite then
+    i := 1
+  else
+    i := 0;
+  cbReplayNaming.ItemIndex := i;
+
+  //// Page 2 (Interface Options) ////
+  // Checkboxes
   cbLemmingBlink.Checked := GameParams.LemmingBlink;
   cbTimerBlink.Checked := GameParams.TimerBlink;
   cbBlackOut.Checked := GameParams.BlackOutZero;
   cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
-  cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
-  cbExplicitCancel.Checked := GameParams.ExplicitCancel;
-  cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
+  cbDisableShadows.Checked := GameParams.NoShadows;
   cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
 
   // Zoom Dropdown
@@ -123,26 +143,11 @@ begin
   end;
   cbZoom.ItemIndex := GameParams.ZoomLevel;
 
-  // Replay Naming Dropdown
-  if GameParams.AutoReplayNames = false then
-    i := 3 // Manual naming
-  else if GameParams.AlwaysTimestamp then
-    i := 2
-  else if GameParams.ConfirmOverwrite then
-    i := 1
-  else
-    i := 0;
-  cbReplayNaming.ItemIndex := i;
-
-  //// Page 2 (Audio Options) ////
+  //// Page 3 (Audio Options) ////
   tbSoundVol.Position := SoundVolume;
   tbMusicVol.Position := MusicVolume;
   cbSuccessJingle.Checked := GameParams.PostLevelVictorySound;
   cbFailureJingle.Checked := GameParams.PostLevelFailureSound;
-
-  //// Page 3 (Online Options) ////
-  cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
-  cbEnableOnline.Checked := GameParams.EnableOnline;
 
   //// Page 4 (Game-Specific Options) ////
   // Checkboxes
@@ -174,19 +179,11 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  GameParams.LemmingBlink := cbLemmingBlink.Checked;
-  GameParams.TimerBlink := cbTimerBlink.Checked;
-  GameParams.BlackOutZero := cbBlackOut.Checked;
-  GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.EnableOnline := cbEnableOnline.Checked;
+  GameParams.CheckUpdates := cbUpdateCheck.Checked;
   GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
   GameParams.ExplicitCancel := cbExplicitCancel.Checked;
   GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
-  GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
-
-  // Zoom Dropdown
-  if GameParams.ZoomLevel <> cbZoom.ItemIndex then
-    ShowMessage('New zoom setting will be applied upon leaving the main menu.');
-  GameParams.ZoomLevel := cbZoom.ItemIndex;
 
   // Replay Naming Dropdown
   case cbReplayNaming.ItemIndex of
@@ -212,7 +209,21 @@ begin
        end;
   end;
 
-  //// Page 2 (Audio Options) ////
+  //// Page 2 (Interface Options) ////
+  // Checkboxes
+  GameParams.LemmingBlink := cbLemmingBlink.Checked;
+  GameParams.TimerBlink := cbTimerBlink.Checked;
+  GameParams.BlackOutZero := cbBlackOut.Checked;
+  GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.NoShadows := cbDisableShadows.Checked;
+  GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
+
+  // Zoom Dropdown
+  if GameParams.ZoomLevel <> cbZoom.ItemIndex then
+    ShowMessage('New zoom setting will be applied upon leaving the main menu.');
+  GameParams.ZoomLevel := cbZoom.ItemIndex;
+
+  //// Page 3 (Audio Options) ////
   if (tbSoundVol.Position = 0) and (SoundVolume <> 0) then
     SavedSoundVol := SoundVolume;
   if (tbMusicVol.Position = 0) and (MusicVolume <> 0) then
@@ -221,11 +232,6 @@ begin
   MusicVolume := tbMusicVol.Position;
   GameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
   GameParams.PostLevelFailureSound := cbFailureJingle.Checked;
-
-  //// Page 3 (Online Options) ////
-  // Checkboxes
-  GameParams.EnableOnline := cbEnableOnline.Checked;
-  GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
   //// Page 4 (Game Options) ////
   // Checkboxes

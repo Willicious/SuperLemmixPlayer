@@ -23,108 +23,17 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 345
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
-      object GroupBox2: TGroupBox
+      object GroupBox4: TGroupBox
         Left = 8
         Top = 8
         Width = 249
-        Height = 57
-        Caption = 'Input Options'
-        TabOrder = 0
-        object btnHotkeys: TButton
-          Left = 8
-          Top = 31
-          Width = 97
-          Height = 23
-          Caption = 'Configure Hotkeys'
-          TabOrder = 0
-          OnClick = btnHotkeysClick
-        end
-        object cbPauseAfterBackwards: TCheckBox
-          Left = 12
-          Top = 14
-          Width = 153
-          Height = 17
-          Caption = 'Pause After Backwards Skip'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
-      end
-      object GroupBox3: TGroupBox
-        Left = 8
-        Top = 72
-        Width = 249
-        Height = 113
-        Caption = 'Interface Options'
-        TabOrder = 1
-        object Label1: TLabel
-          Left = 11
-          Top = 88
-          Width = 30
-          Height = 13
-          Caption = 'Zoom:'
-        end
-        object cbLemmingBlink: TCheckBox
-          Left = 12
-          Top = 16
-          Width = 129
-          Height = 17
-          Caption = 'Lemming Count Blink'
-          TabOrder = 0
-          OnClick = OptionChanged
-        end
-        object cbTimerBlink: TCheckBox
-          Left = 12
-          Top = 32
-          Width = 129
-          Height = 17
-          Caption = 'Timer Blink'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbZoom: TComboBox
-          Left = 56
-          Top = 84
-          Width = 177
-          Height = 21
-          Style = csDropDownList
-          ItemHeight = 13
-          ItemIndex = 0
-          TabOrder = 2
-          Text = 'Fullscreen'
-          OnChange = OptionChanged
-          Items.Strings = (
-            'Fullscreen')
-        end
-        object cbBlackOut: TCheckBox
-          Left = 12
-          Top = 48
-          Width = 153
-          Height = 17
-          Caption = 'Black-Out Zero Skill Count'
-          TabOrder = 3
-          OnClick = OptionChanged
-        end
-        object cbNoBackgrounds: TCheckBox
-          Left = 12
-          Top = 64
-          Width = 153
-          Height = 17
-          Caption = 'Disable Background Images'
-          TabOrder = 4
-          OnClick = OptionChanged
-        end
-      end
-      object GroupBox4: TGroupBox
-        Left = 8
-        Top = 192
-        Width = 249
         Height = 113
         Caption = 'Replay Options'
-        TabOrder = 2
+        TabOrder = 0
         object Label2: TLabel
           Left = 16
           Top = 64
@@ -176,6 +85,136 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 3
           OnClick = OptionChanged
         end
+      end
+      object GroupBox1: TGroupBox
+        Left = 8
+        Top = 128
+        Width = 249
+        Height = 57
+        Caption = 'Internet Options'
+        TabOrder = 1
+        object cbEnableOnline: TCheckBox
+          Left = 16
+          Top = 16
+          Width = 153
+          Height = 17
+          Caption = 'Enable Online Features'
+          TabOrder = 0
+          OnClick = cbEnableOnlineClick
+        end
+        object cbUpdateCheck: TCheckBox
+          Left = 16
+          Top = 32
+          Width = 169
+          Height = 17
+          Caption = 'Enable Update Check'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+      end
+    end
+    object TabSheet5: TTabSheet
+      Caption = 'Interface'
+      ImageIndex = 4
+      object Label1: TLabel
+        Left = 11
+        Top = 192
+        Width = 30
+        Height = 13
+        Caption = 'Zoom:'
+      end
+      object GroupBox2: TGroupBox
+        Left = 8
+        Top = 8
+        Width = 249
+        Height = 57
+        Caption = 'Input Options'
+        TabOrder = 0
+        object btnHotkeys: TButton
+          Left = 8
+          Top = 31
+          Width = 97
+          Height = 23
+          Caption = 'Configure Hotkeys'
+          TabOrder = 0
+          OnClick = btnHotkeysClick
+        end
+        object cbPauseAfterBackwards: TCheckBox
+          Left = 12
+          Top = 14
+          Width = 153
+          Height = 17
+          Caption = 'Pause After Backwards Skip'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+      end
+      object GroupBox3: TGroupBox
+        Left = 8
+        Top = 72
+        Width = 249
+        Height = 105
+        Caption = 'Interface Options'
+        TabOrder = 1
+        object cbLemmingBlink: TCheckBox
+          Left = 12
+          Top = 16
+          Width = 129
+          Height = 17
+          Caption = 'Lemming Count Blink'
+          TabOrder = 0
+          OnClick = OptionChanged
+        end
+        object cbTimerBlink: TCheckBox
+          Left = 12
+          Top = 32
+          Width = 129
+          Height = 17
+          Caption = 'Timer Blink'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbBlackOut: TCheckBox
+          Left = 12
+          Top = 48
+          Width = 153
+          Height = 17
+          Caption = 'Black-Out Zero Skill Count'
+          TabOrder = 2
+          OnClick = OptionChanged
+        end
+        object cbNoBackgrounds: TCheckBox
+          Left = 12
+          Top = 64
+          Width = 153
+          Height = 17
+          Caption = 'Disable Background Images'
+          TabOrder = 3
+          OnClick = OptionChanged
+        end
+        object cbDisableShadows: TCheckBox
+          Left = 12
+          Top = 80
+          Width = 153
+          Height = 17
+          Caption = 'Disable Skill Shadows'
+          TabOrder = 4
+          OnClick = OptionChanged
+        end
+      end
+      object cbZoom: TComboBox
+        Left = 56
+        Top = 188
+        Width = 177
+        Height = 21
+        Style = csDropDownList
+        ItemHeight = 13
+        ItemIndex = 0
+        TabOrder = 2
+        Text = 'Fullscreen'
+        OnChange = OptionChanged
+        Items.Strings = (
+          'Fullscreen')
       end
     end
     object TabSheet4: TTabSheet
@@ -257,28 +296,6 @@ object FormNXConfig: TFormNXConfig
         Height = 17
         Caption = 'Failure'
         TabOrder = 3
-        OnClick = OptionChanged
-      end
-    end
-    object TabSheet3: TTabSheet
-      Caption = 'Online'
-      ImageIndex = 2
-      object cbEnableOnline: TCheckBox
-        Left = 16
-        Top = 16
-        Width = 153
-        Height = 17
-        Caption = 'Enable Online Features'
-        TabOrder = 0
-        OnClick = cbEnableOnlineClick
-      end
-      object cbUpdateCheck: TCheckBox
-        Left = 16
-        Top = 40
-        Width = 169
-        Height = 17
-        Caption = 'Enable Update Check'
-        TabOrder = 1
         OnClick = OptionChanged
       end
     end
