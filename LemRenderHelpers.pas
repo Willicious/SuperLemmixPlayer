@@ -22,7 +22,8 @@ const
   PM_ONEWAYLEFT  = $00000008;
   PM_ONEWAYRIGHT = $00000010;
   PM_ONEWAYDOWN  = $00000020; // Yes, I know they're mutually incompatible, but it's easier to do this way
-  PM_NOCANCELSTEEL = $00000040;
+  PM_ONEWAYUP    = $00000040;
+  PM_NOCANCELSTEEL = $00000080;
 
   PM_TERRAIN   = $000000FF;
 

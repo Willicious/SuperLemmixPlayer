@@ -1522,6 +1522,38 @@ var
     C: TColor32;
 
     TW, TH: Integer;
+
+    procedure HandleRotate;
+    var
+      Temp: Integer;
+    begin
+      Temp := TW;
+      TW := TH;
+      TH := Temp;
+
+      case C of
+        PM_ONEWAYLEFT: C := PM_ONEWAYUP;
+        PM_ONEWAYUP: C := PM_ONEWAYRIGHT;
+        PM_ONEWAYRIGHT: C := PM_ONEWAYDOWN;
+        PM_ONEWAYDOWN: C := PM_ONEWAYLEFT;
+      end;
+    end;
+
+    procedure HandleFlip;
+    begin
+      case C of
+        PM_ONEWAYLEFT: C := PM_ONEWAYRIGHT;
+        PM_ONEWAYRIGHT: C := PM_ONEWAYLEFT;
+      end;
+    end;
+
+    procedure HandleInvert;
+    begin
+      case C of
+        PM_ONEWAYUP: C := PM_ONEWAYDOWN;
+        PM_ONEWAYDOWN: C := PM_ONEWAYUP;
+      end;
+    end;
   begin
     case MO.TriggerEffect of
       7: C := PM_ONEWAYLEFT;
@@ -1532,6 +1564,10 @@ var
 
     TW := MO.TriggerWidth;
     TH := MO.TriggerHeight;
+
+    if O.Rotate then HandleRotate;
+    if O.Flip then HandleFlip;
+    if O.Invert then HandleInvert;
 
     if MO.CanResizeHorizontal then
       TW := TW + (O.Width - MO.Width);
@@ -1581,7 +1617,7 @@ var
         if P^ and PM_STEEL <> 0 then P^ := P^ and not PM_ONEWAY;
 
         // Remove one-way markings if it's not one-way capable
-        if P^ and PM_ONEWAY = 0 then P^ := P^ and not (PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN);
+        if P^ and PM_ONEWAY = 0 then P^ := P^ and not (PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN or PM_ONEWAYUP);
 
         P^ := P^ and not PM_NOCANCELSTEEL;
       end;

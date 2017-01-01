@@ -476,6 +476,8 @@ type
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32); // general-purpose
     procedure CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: TColor32);       //left-facing basher
     procedure CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: TColor32);      //right-facing basher
+    procedure CombineMaskPixelsUpLeft(F: TColor32; var B: TColor32; M: TColor32);     //left-facing fencer
+    procedure CombineMaskPixelsUpRight(F: TColor32; var B: TColor32; M: TColor32);    //right-facing fencer
     procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);   //left-facing miner
     procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);  //right-facing miner
     procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber
@@ -1535,11 +1537,11 @@ begin
 
   FencerMasks := Ani.FencerMasksBitmap;
   FencerMasks.DrawMode := dmCustom;
-  FencerMasks.OnPixelCombine := CombineMaskPixelsRight;
+  FencerMasks.OnPixelCombine := CombineMaskPixelsUpRight;
 
   FencerMasksRTL := Ani.FencerMasksRTLBitmap;
   FencerMasksRTL.DrawMode := dmCustom;
-  FencerMasksRTL.OnPixelCombine := CombineMaskPixelsLeft;
+  FencerMasksRTL.OnPixelCombine := CombineMaskPixelsUpLeft;
 
   MineMasks := Ani.MineMasksBitmap;
   MineMasks.DrawMode := dmCustom;
@@ -1847,7 +1849,7 @@ end;
 // Not sure who wrote this (probably me), but upon seeing this I forgot what the hell they were
 // for. The pixel in "E" is excluded, IE: anything that matches even one bit of E, will not be
 // removed when applying the mask.
-procedure TLemmingGame.CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsUpLeft(F: TColor32; var B: TColor32; M: TColor32);
 var
   E: TColor32;
 begin
@@ -1855,11 +1857,27 @@ begin
   CombineMaskPixels(F, B, M, E);
 end;
 
-procedure TLemmingGame.CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: TColor32);
+procedure TLemmingGame.CombineMaskPixelsUpRight(F: TColor32; var B: TColor32; M: TColor32);
 var
   E: TColor32;
 begin
   E := PM_STEEL or PM_ONEWAYLEFT or PM_ONEWAYDOWN;
+  CombineMaskPixels(F, B, M, E);
+end;
+
+procedure TLemmingGame.CombineMaskPixelsLeft(F: TColor32; var B: TColor32; M: TColor32);
+var
+  E: TColor32;
+begin
+  E := PM_STEEL or PM_ONEWAYRIGHT or PM_ONEWAYDOWN or PM_ONEWAYUP;
+  CombineMaskPixels(F, B, M, E);
+end;
+
+procedure TLemmingGame.CombineMaskPixelsRight(F: TColor32; var B: TColor32; M: TColor32);
+var
+  E: TColor32;
+begin
+  E := PM_STEEL or PM_ONEWAYLEFT or PM_ONEWAYDOWN or PM_ONEWAYUP;
   CombineMaskPixels(F, B, M, E);
 end;
 
@@ -2741,7 +2759,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining];
 begin
-  Result := (L.LemAction in ActionSet) and not HasSteelAt(L.LemX, L.LemY);
+  Result := (L.LemAction in ActionSet) and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baDigging);
 end;
 
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
@@ -2975,7 +2993,7 @@ begin
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
     trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
     trOWLeft:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0);
-    trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);
+    trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);    // are these ever used? (the one-way wall ones)
     trOWDown:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYDOWN <> 0);
     trSteel:      Result :=     (PhysicsMap.Pixel[X, Y] and PM_STEEL <> 0);
     trBlocker:    Result :=     (ReadBlockerMap(X, Y) = DOM_BLOCKER)
@@ -3633,7 +3651,7 @@ begin
 
   For n := -4 to 4 do
   begin
-    if HasPixelAt(PosX + n, PosY) and not HasTriggerAt(PosX + n, PosY, trSteel) then
+    if HasPixelAt(PosX + n, PosY) and not HasIndestructibleAt(PosX + n, PosY, 0, baDigging) then // we can live with not passing a proper LemDx here
     begin
       RemovePixelAt(PosX + n, PosY);
       if (n > -4) and (n < 4) then Result := True;
@@ -3881,9 +3899,10 @@ begin
 
     ContinueWork := DigOneRow(L.LemX, L.LemY - 1);
 
-    if HasSteelAt(L.LemX, L.LemY) then
+    if HasIndestructibleAt(L.LemX, L.LemY, L.LemDX, baDigging) then
     begin
-      CueSoundEffect(SFX_HITS_STEEL, L.Position);
+      if HasSteelAt(L.LemX, L.LemY) then
+        CueSoundEffect(SFX_HITS_STEEL, L.Position);
       Transition(L, baWalking);
     end
 
@@ -4511,10 +4530,10 @@ begin
     for n := 1 to 14 do
     begin
       if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 6)
-           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx, baBashing)
+           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 6, L.LemDx, baFencing)
          ) then ContinueWork := True;
       if (     HasPixelAt(L.LemX + n*L.LemDx, L.LemY - 5)
-           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 5, L.LemDx, baBashing)
+           and not HasIndestructibleAt(L.LemX + n*L.LemDx, L.LemY - 5, L.LemDx, baFencing)
          ) then ContinueWork := True;
     end;
 
@@ -4631,6 +4650,7 @@ function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
 begin
   // check for indestructible terrain at position (x, y), depending on skill.
   Result := (    ( PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0)
+              or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYUP <> 0) and (Skill in [baBashing, baMining, baDigging]))
               or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYDOWN <> 0) and (Skill in [baBashing, baFencing]))
               or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYLEFT <> 0) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining]))
               or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYRIGHT <> 0) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining]))
