@@ -4373,6 +4373,7 @@ function TLemmingGame.HandleFencing(L: TLemming): Boolean;
 var
   LemDy, AdjustedFrame, n: Integer;
   ContinueWork: Boolean;
+  NeedUndoMoveUp: Boolean;
 
   function FencerIndestructibleCheck(x, y, Direction: Integer): Boolean;
   begin
@@ -4387,6 +4388,8 @@ var
   begin
     // Turns basher around an transitions to walker
     Dec(L.LemX, L.LemDx);
+    if NeedUndoMoveUp then
+      Inc(L.LemY);
     Transition(L, baWalking, True); // turn around as well
     if SteelSound then CueSoundEffect(SFX_HITS_STEEL, L.Position);
   end;
@@ -4532,11 +4535,21 @@ begin
   end;
 
   // Fencer movement
-  if AdjustedFrame in [11, 12, 13, 14, 15] then
+  if AdjustedFrame in [11, 12, 13, 14] then
   begin
     Inc(L.LemX, L.LemDx);
 
     LemDy := FindGroundPixel(L.LemX, L.LemY);
+
+    if (LemDy = -1) and (AdjustedFrame in [11, 13]) then
+    begin
+      Dec(L.LemY, 1);
+      LemDy := 0;
+      NeedUndoMoveUp := true;
+      // This is to ignore the effect of the fencer's own slope on determining how far it can step up or down.
+      // I'm starting to think I should've based the Fencer code off Miner rather than Basher...
+    end else
+      NeedUndoMoveUp := false;
 
     If LemDy = 4 then
     begin
@@ -4556,7 +4569,7 @@ begin
       if FencerIndestructibleCheck(L.LemX, L.LemY + LemDy, L.LemDx) then
         FencerTurn(L, HasSteelAt(L.LemX, L.LemY + LemDy - 4))
       else
-        Inc(L.LemY, LemDy)
+        Inc(L.LemY, LemDy);
     end
 
     else if (LemDy = -1) or (LemDy = -2) then
@@ -4569,9 +4582,11 @@ begin
         if FencerIndestructibleCheck(L.LemX + L.LemDx, L.LemY + 2, L.LemDx) then
           FencerTurn(L,    HasSteelAt(L.LemX + L.LemDx, L.LemY + LemDy)
                         or HasSteelAt(L.LemX + L.LemDx, L.LemY + LemDy + 1))
-        else
+        else begin
           //stall fencer
           Dec(L.LemX, L.LemDx);
+          if NeedUndoMoveUp then Inc(L.LemY);
+        end;
       end
       else
         Inc(L.LemY, LemDy); // Lem may move up
