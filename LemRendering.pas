@@ -650,10 +650,9 @@ procedure TRenderer.DrawFencerShadow(L: TLemming);
 // Like with the Fencer code itself, this is an almost exact copy of the Basher shadow code,
 // and probably needs some work.
 const
-  FencerEnd: array[0..10, 0..1] of Integer = (
-     (6, -1), (6, -2), (7, -2), (7, -3), (7, -4),
-     (7, -5), (7, -6), (7, -7), (6, -7), (6, -8),
-     (5, -8)
+  FencerEnd: array[0..5, 0..1] of Integer = (
+     (6, -4), (6, -5), (6, -6), (6, -7), (6, -8),
+     (6, -9)
    );
 var
   i: Integer;
@@ -683,10 +682,11 @@ begin
       DrawDY := 0;
       for i := 0 to 5 do
       begin
-        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1 - DrawDy);
-        if (i mod 2) = 1 then
-          Inc(DrawDY); // no, putting it between the SetHighShadowPixel is not a mistake; it reflects the mask 100% accurately ;)
-        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 7 - DrawDy);
+        if i > 0 then
+          SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 2 - DrawDy); // slightly more consistent graphics with this If here
+        if i in [2, 4] then
+          Inc(DrawDY); // putting it between the SetHighShadowPixel's is not a mistake; it reflects the mask 100% accurately ;)
+        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 8 - DrawDy);
       end;
     end;
 
