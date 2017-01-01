@@ -143,6 +143,7 @@ type
     procedure DrawPlatformerShadow(L: TLemming);
     procedure DrawStackerShadow(L: TLemming);
     procedure DrawBasherShadow(L: TLemming);
+    procedure DrawFencerShadow(L: TLemming);
     procedure DrawMinerShadow(L: TLemming);
     procedure DrawDiggerShadow(L: TLemming);
     procedure DrawExploderShadow(L: TLemming);
@@ -460,6 +461,12 @@ begin
       DrawBasherShadow(CopyL);
     end;
 
+  spbFencer:
+    begin
+      fRenderInterface.SimulateTransitionLem(CopyL, baFencing);
+      DrawFencerShadow(CopyL);
+    end;
+
   spbBomber:
     begin
       DrawExploderShadow(CopyL);
@@ -634,6 +641,62 @@ begin
   // Draw end of the tunnel
   for i := 0 to Length(BasherEnd) - 1 do
     SetHighShadowPixel(BashPosX + BasherEnd[i, 0] * BashPosDx, BashPosY + BasherEnd[i, 1]);
+
+  PhysicsMap.Assign(SavePhysicsMap);
+  SavePhysicsMap.Free;
+end;
+
+procedure TRenderer.DrawFencerShadow(L: TLemming);
+// Like with the Fencer code itself, this is an almost exact copy of the Basher shadow code,
+// and probably needs some work.
+const
+  FencerEnd: array[0..10, 0..1] of Integer = (
+     (6, -1), (6, -2), (7, -2), (7, -3), (7, -4),
+     (7, -5), (7, -6), (7, -7), (6, -7), (6, -8),
+     (5, -8)
+   );
+var
+  i: Integer;
+  FencePosX, FencePosY, FencePosDx: Integer;
+  DrawDY: Integer;
+  SavePhysicsMap: TBitmap32;
+begin
+  fLayers.fIsEmpty[rlHighShadows] := False;
+
+  // Make a deep copy of the PhysicsMap
+  SavePhysicsMap := TBitmap32.Create;
+  SavePhysicsMap.Assign(PhysicsMap);
+
+  FencePosDx := L.LemDx;
+  FencePosX := L.LemX;
+  FencePosY := L.LemY;
+
+  while Assigned(L) and (L.LemAction = baFencing) do
+  begin
+    // draw shadow for fencer tunnel
+    if (L.LemPhysicsFrame + 1) mod 16 = 2 then
+    begin
+      FencePosX := L.LemX;
+      FencePosY := L.LemY;
+      FencePosDx := L.LemDx;
+
+      DrawDY := 0;
+      for i := 0 to 5 do
+      begin
+        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1 - DrawDy);
+        if (i mod 2) = 1 then
+          Inc(DrawDY); // no, putting it between the SetHighShadowPixel is not a mistake; it reflects the mask 100% accurately ;)
+        SetHighShadowPixel(L.LemX + i*L.LemDx, L.LemY - 7 - DrawDy);
+      end;
+    end;
+
+    // Simulate next frame advance for lemming
+    fRenderInterface.SimulateLem(L);
+  end;
+
+  // Draw end of the tunnel
+  for i := 0 to Length(FencerEnd) - 1 do
+    SetHighShadowPixel(FencePosX + FencerEnd[i, 0] * FencePosDx, FencePosY + FencerEnd[i, 1]);
 
   PhysicsMap.Assign(SavePhysicsMap);
   SavePhysicsMap.Free;

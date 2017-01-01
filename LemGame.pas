@@ -3498,8 +3498,7 @@ var
   ShadowLem: TLemming;
 const
   ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker, spbDigger, spbMiner,
-                    spbBasher, spbBomber, spbGlider, spbCloner];
-  // need to add spbFencer here too, but let's get it working first
+                    spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
 begin
   if fHyperSpeed then Exit;
   if GameParams.NoShadows then Exit;
