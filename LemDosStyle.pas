@@ -96,7 +96,6 @@ type
     function GetSectionCount: Integer; virtual;
     function GetLevelName(aSection, aLevel: Integer): String;
     procedure DumpAllLevels;
-    procedure InitSave;
 
     //For the time being it is not needed to virtualize this into a higher class.
     function FindFirstLevel(var Rec: TDosGamePlayInfoRec): Boolean; override;
@@ -120,7 +119,6 @@ type
 
   TDosFlexiLevelSystem = class(TBaseDosLevelSystem)
   private
-    //SysLoaded : Boolean;
   public
     procedure LoadSystemInfo();
     procedure GetSections(aSectionNames: TStrings); override;
@@ -129,7 +127,6 @@ type
 
   TDosFlexiMusicSystem = class(TBaseMusicSystem)
   private
-    //SysLoaded : Boolean;
   protected
   public
     MusicCount : Byte;
@@ -188,12 +185,8 @@ const
   end;
 
 var
-  //L: TStringList;
-  //Sec, Lev,
   i: Integer;
-  //r: Integer;
   c : Char;
-  //s: string;
   DoMedeKlinker: Boolean;
   TempStream: TMemoryStream;
   SL: TStringList;
@@ -218,14 +211,11 @@ begin
   // never change this
   LemRandseed := (aLevel div 99) * 1000000 + aRandseed * 10000 + (aSection + 1) * 100 + ((aLevel mod 99) + 1);
 
-//  randseed := -1207816797; // so we do not need consts
   Result := StringOfChar(' ', 10);
 
   DoMedeKlinker := Boolean(LemRandom(2)); // init on random
   for i := 1 to 10 do
   begin
-    //r := LemRandom(26);
-    //c := Chr(r + ord('A'));
     C := RndChar(DoMedeKlinker);
     DoMedeKlinker := not DoMedeKlinker;
     Result[i] := c;
@@ -300,10 +290,6 @@ begin
   inherited;
 end;
 
-procedure TBaseDosLevelSystem.InitSave;
-begin
-  // doesn't seem to need to do anything anymore
-end;
 
 procedure TBaseDosLevelSystem.DumpAllLevels;
 var
@@ -317,8 +303,6 @@ var
   BasePath: String;
   FilePath: String;
   FileStream: TFileStream;
-  //i: integer;
-  //fHasSteel : Boolean;
 
   n: Integer;
   Suffix: String;
@@ -413,7 +397,6 @@ end;
 function TBaseDosLevelSystem.FindCheatCode(const aCode: string;
   var Rec: TDosGamePlayInfoRec; CheatsEnabled: Boolean = true): Boolean;
 var
-  //Sec, Lev: Integer;
   P, i, L: Integer;
   Comp, Comp2: string;
   List: TStringList;
@@ -472,8 +455,6 @@ begin
     begin
       dValid         := True;
       dPack          := 0;
-      //if dSection >= 0
-      //dSection       := 0;
       dLevel         := 0;
       dSectionName   := L[dSection]; //#EL watch out for the record-string-mem-leak
     end;
@@ -498,8 +479,6 @@ begin
     begin
       dValid         := True;
       dPack          := 0;
-      //if dSection >= 0
-      //dSection       := 0;
       dLevel         := 0;
       for i := 0 to GetLevelCount(dSection) - 1 do
       begin
@@ -593,9 +572,7 @@ end;
 function TBaseDosLevelSystem.FindLevelCode(const aCode: string; var Rec: TDosGamePlayInfoRec): Boolean;
 var
   Sec, Lev: Integer;
-  //P, i, L: Integer;
   Code: string;
-  //List: TStringList;
 begin
   Result := False;
 
@@ -606,8 +583,6 @@ begin
     for Lev := 0 to GetLevelCount(Sec) do
     begin
       Code := GenCode(SysDat.CodeSeed, Sec, Lev);
-
-
 
       if CompareText(Code, aCode) = 0 then
       begin
@@ -634,10 +609,8 @@ begin
     begin
       dValid         := True;
       dPack          := 0;
-      //if dSection >= 0
       dSection       := fDefaultSectionCount - 1;
       dLevel         := GetLevelCount(dSection) - 1;
-      //dSectionName   := L[dSection]; //#EL watch out for the record-string-mem-leak
     end;
   finally
     L.Free;
@@ -652,8 +625,6 @@ begin
   Result := (Rec.dLevel < GetLevelCount(Rec.dSection)) or (Rec.dSection < fDefaultSectionCount - 1);
 
   Rec.dValid := False;
-  //if not Result then
-  //  Exit;
 
   L := TStringList.Create;
   try
@@ -713,9 +684,7 @@ end;
 
 function TBaseDosLevelSystem.GetLevelCount(aSection: Integer): Integer;
 var
-  Dcmp : TDosDatDecompressor;
   FSt : TMemoryStream;
-  FSl : TDosDatSectionList;
 
   Parser: TNeoLemmixParser;
   Line: LemNeoParserOld.TParserLine;
@@ -751,7 +720,6 @@ function TBaseDosLevelSystem.GetSectionCount: Integer;
 var
   Dummy: TStringList;
 begin
-//  Result := 0;
   Dummy := TStringList.Create;
   try
     GetSections(Dummy);
@@ -772,12 +740,7 @@ procedure TBaseDosLevelSystem.InternalLoadLevel(aInfo: TLevelInfo; aLevel: TLeve
   NB: a little moving/messing around here with mem
 -------------------------------------------------------------------------------}
 var
-  //LVL: TLVLRec;
-  //Ox: Integer;
   DataStream: TMemoryStream;
-  Sections: TDosDatSectionList;
-  Decompressor: TDosDatDecompressor;
-  TheSection: TDosDatSection;
 begin
   Assert(Owner is TBaseDosLemmingStyle);
 
@@ -797,8 +760,6 @@ procedure TBaseDosLevelSystem.InternalLoadSingleLevel(aSection, aLevelIndex: Int
 var
   LocalSectionNames: TStringList;
   Fn: string;
-  //IsOdd: Boolean;
-  //OddIndex: Integer;
   FileIndex: Integer;
   Sty: TBaseDosLemmingStyle;
   LocalLevelInfo: TLevelInfo;
