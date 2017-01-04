@@ -88,17 +88,11 @@ const
 
   Font_Width = 16;
 
-
 type
-  TStringAnimationInfo = record
-  end;
-
   TGameMenuScreen = class(TGameBaseScreen)
   private
   { enumerated menu bitmap elements }
     BitmapElements : array[TGameMenuBitmap] of TBitmap32;
-  { music }
-//    MusicSetting   : TGameMusicSetting;
   { section }
     CurrentSection : Integer; // game section
     LastSection    : Integer; // last game section
@@ -116,9 +110,6 @@ type
     Pausing                : Boolean;
     UserPausing            : Boolean;
     PausingDone            : Boolean; // the current text has been paused
-//    Credits                : TStringList;
-//    LastCredit             : Integer;
-//    CompleteCreditString   : string;
     CreditList             : TStringList;
     CreditIndex            : Integer;
     CreditString          : string;
@@ -127,7 +118,6 @@ type
     TextGoneX       : Integer;
 
     CurrentFrame           : Integer;
-//    PausePosition          : Integer;
     ReelShift              : Integer;
   { internal }
     procedure DrawBitmapElement(aElement: TGameMenuBitmap);
@@ -135,7 +125,7 @@ type
     procedure SetSection(aSection: Integer);
     procedure NextSection(Forwards: Boolean);
     procedure DrawWorkerLemmings(aFrame: Integer);
-    procedure DrawReel;//(aReelShift, aTextX: Integer);
+    procedure DrawReel;
     procedure SetNextCredit;
     procedure DumpLevels;
     procedure DumpImages;
@@ -261,12 +251,6 @@ var
     end;
   end;
 begin
-(*  stretched := false;
-//  screenimg.ScaleMode := smscale;
-  screenimg.BitmapAlign := baCustom;
-  screenimg.ScaleMode := smScale;
-  screenimg.scale := 1.5; *)
-
   Tmp := TBitmap32.Create;
   ScreenImg.BeginUpdate;
   try
@@ -284,7 +268,6 @@ begin
     MainDatExtractor.ExtractBitmap(BitmapElements[gmbNavigation], 3, $4AF73, 120, 61, 19, MainPal);
     MainDatExtractor.ExtractBitmap(BitmapElements[gmbMusicNote], 3, $4F35C, 64, 31, 19, MainPal);
     MainDatExtractor.ExtractBitmap(BitmapElements[gmbFXSound], 3, $505C4, 64, 31, 19, MainPal);
-
 
     //@styledef
     for i := 1 to 15 do
@@ -332,14 +315,13 @@ begin
 
     // credits animation
     DrawWorkerLemmings(0);
-    DrawReel;//(0, TextX);
+    DrawReel;
 
     // a bit weird place, but here we know the bitmaps are loaded
     SetSection(CurrentSection);
     SetSoundOptions(GameParams.SoundOptions);
 
     CanAnimate := True;
-//    ScreenImg.Bitmap.ResamplerClassName := 'TDraftResampler';
   finally
     ScreenImg.EndUpdate;
     Tmp.Free;
@@ -417,7 +399,6 @@ begin
       VK_RETURN : CloseScreen(gstPreview);
       VK_F1     : CloseScreen(gstPreview);
       VK_F2     : CloseScreen(gstLevelSelect);
-      //VK_F3     : NextSoundSetting;
       VK_F3   : begin
                   ConfigDlg := TFormNXConfig.Create(self);
                   ConfigDlg.SetGameParams;
@@ -465,7 +446,6 @@ procedure TGameMenuScreen.DumpLevels;
 var
   I: Integer;
 begin
-  //if GameParams.SysDat.Options3 and 4 = 0 then Exit;
   if not (GameParams.Style.LevelSystem is TBaseDosLevelSystem) then exit;
   I := MessageDlg('Dump all level files? Warning: This may overwrite' + CrLf + 'LVL files currently present!', mtCustom, [mbYes, mbNo], 0);
   if I = mrYes then
@@ -590,14 +570,8 @@ begin
 end;
 
 procedure TGameMenuScreen.SetSoundOptions(aOptions: TGameSoundOptions);
-var
-  Opt: TGameSoundOptions;
 begin
   GameParams.SoundOptions := aOptions;
-  Opt := GameParams.SoundOptions;
-  {if Opt = [] then DrawBitmapElement(gmbMusic)
-  else if Opt = [gsoSound] then DrawBitmapElement(gmbFXSound)
-  else if Opt = [gsoMusic, gsoSound] then DrawBitmapElement(gmbMusicNote);}
 end;
 
 procedure TGameMenuScreen.SetSection(aSection: Integer);
@@ -635,7 +609,6 @@ begin
   BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   LeftLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 
-//  SrcRect := CalcFrameRect(RightLemmingAnimation, 16, 0);
   DstRect := SrcRect;
   DstRect := ZeroTopLeftRect(DstRect);
   OffsetRect(DstRect, 640 - 48, YPos_Credits);
@@ -673,43 +646,10 @@ procedure TGameMenuScreen.DrawReel;//(aReelShift, aTextX: Integer);
   Drawing of the moving credits. aShift = the reel shift which is wrapped every
   other 16 pixels to zero.
 -------------------------------------------------------------------------------}
-var
-//  X: Integer;
-  R: TRect;
-//  S: string;
 begin
-//  X := 48;
-  R := Reel.BoundsRect;
-  R.Left := ReelShift;
-  R.Right := R.Left + ReelLetterBoxCount * 16 ;
-
-
-//  S := Copy(CurrentCreditString, aStringShift + 1, 50);
-  // copy reel, draw text on it, draw to screen
-//  ReelBuffer.Assign(Reel);
-
-
   Reel.DrawTo(ReelBuffer, ReelShift, 0);
-
-(*
-  DrawPurpleText(ReelBuffer,
-//    Copy(CurrentCreditString, FirstChar, 50),
-    '1234567890123456789012345678901234',
-     aTextPosition, 0);//48, YPos_Credits);
-*)
-
   DrawPurpleText(ReelBuffer, CreditString, TextX, 0);
-
-
-//  DrawPurpleText(ReelBuffer, 'Scrolling credits...', 13 * 16, 0);
-//  DrawPurpleText(ReelBuffer, 'Volker Oth, ccexplore and Mindless', 0, 0);
-
-
-//  ReelBuffer.DrawTo(ScreenImg.Bitmap, 48, YPos_Credits, R);
   ReelBuffer.DrawTo(ScreenImg.Bitmap, 48, YPos_Credits);
-
-//  ScreenImg.Update;
-
 end;
 
 procedure TGameMenuScreen.Application_Idle(Sender: TObject; var Done: Boolean);
@@ -725,9 +665,9 @@ begin
   if not GameParams.DoneUpdateCheck then
     PerformUpdateCheck;
 
-
   if not CanAnimate or ScreenIsClosing then
     Exit;
+
   Sleep(1);
   Done := False;
   CurrTime := TimeGetTime;
@@ -765,7 +705,6 @@ begin
     if TextX < TextGoneX then
     begin
       SetNextCredit;
-      //TextX := 33 * 16;
     end;
 
     if not PausingDone then
@@ -777,8 +716,7 @@ begin
     end;
 
     DrawWorkerLemmings(CurrentFrame);
-    DrawReel;//(ReelShift, TextX);
-
+    DrawReel;
   end;
 end;
 
