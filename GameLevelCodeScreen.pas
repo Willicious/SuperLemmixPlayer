@@ -5,12 +5,14 @@ unit GameLevelCodeScreen;
 interface
 
 uses
-  Windows, Classes, Controls, Graphics, MMSystem, Forms,
-  GR32, GR32_Image, GR32_Layers,
-  UMisc,
-  LemStrings, LemDosStructures, LemDosStyle,
-  StrUtils,
+  Windows, Classes, MMSystem, Forms, GR32,
+  LemDosStyle,
   GameControl, GameBaseScreen;
+
+const
+  BlinkSpeedMS = 240;
+  XPos = (640 - (10 * 16)) div 2;
+  YPositions: array[0..3] of Integer = (120, 152, 184, 216);
 
 type
   TGameLevelCodeScreen = class(TGameBaseScreen)
@@ -18,13 +20,9 @@ type
     LevelCode      : string[10];
     CursorPosition : Integer;
     ValidLevelCode: Boolean;
-    YPositions: array[0..3] of Integer;
-    XPos: Integer;
-    BlinkSpeedMS: Cardinal;
     PrevBlinkTime: Cardinal;
     Blinking: Boolean;
     Typing: Boolean;
-    Validated: Boolean;
     LastMessage: string;
     LastCheatMessage: string;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -44,19 +42,17 @@ type
 
 implementation
 
-uses SysUtils, LemLevelSystem;
+uses SysUtils;
 
 { TGameLevelCodeScreen }
 
 procedure TGameLevelCodeScreen.Application_Idle(Sender: TObject; var Done: Boolean);
 var
   CurrTime: Cardinal;
-//  C: Char;
 begin
-  if ScreenIsClosing then
+  if ScreenIsClosing or Typing then
     Exit;
-  if Typing then
-    Exit;
+
   Done := False;
   Sleep(1); // relax CPU
   CurrTime := TimeGetTime;
@@ -65,22 +61,13 @@ begin
     PrevBlinkTime := CurrTime;
     Blinking := not Blinking;
     DrawChar(CursorPosition, Blinking);
-(*    if Blinking then
-      C := '_'
-    else
-      C := LevelCode[CursorPosition];
-    DrawPurpleText(ScreenImg.Bitmap, C, 200 + CursorPosition * 16 - 16, 120 + 32, BackBuffer); *)
   end;
 end;
 
 procedure TGameLevelCodeScreen.BuildScreen;
-var
-  Mainpal: TArrayOfColor32;
-//  S: string;
 begin
   ScreenImg.BeginUpdate;
   try
-    MainPal := GetDosMainMenuPaletteColors32;
     InitializeImageSizeAndPosition(640, 350);
     ExtractBackGround;
     ExtractPurpleFont;
@@ -100,29 +87,14 @@ end;
 
 function TGameLevelCodeScreen.CheckLevelCode: Boolean;
 var
-//  i: Integer;
-  s: string;
-//  P, L: Integer;
-  List: TStringList;
   Sys: TBaseDosLevelSystem;
   Txt: string;
 begin
-  Validated := True;
-//  Result := False;
-  s := stringreplace(LowerCase(LevelCode), '.', '', [rfReplaceAll]);
-
-//  if not GameParams.CheatMode then
-  //  Exit;
-
   Sys := GameParams.Style.LevelSystem as TBaseDosLevelSystem;
-  List := TStringList.Create;
 
   try
-    Result := Sys.FindLevelCode(LevelCode, GameParams.Info);
-
-    if not Result then
-      //if GameParams.CheatCodesEnabled then       // HERE TO DISABLE INSTANT LEVEL CODES 1 // if GameParams.CheatCodesEnabled then
-        Result := Sys.FindCheatCode(LevelCode, GameParams.Info);
+    Result := Sys.FindLevelCode(LevelCode, GameParams.Info)
+           or Sys.FindCheatCode(LevelCode, GameParams.Info);
 
     if Result then
     begin
@@ -130,19 +102,15 @@ begin
       Txt := GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1);
       DrawPurpleTextCentered(ScreenImg.Bitmap, Txt, YPositions[2], BackBuffer);
       DrawMessage(Txt);
-      Exit;
     end
     else
-      //if not CheckBackgroundColor then
-      begin
-      DrawPurpleTextCentered(ScreenImg.Bitmap, 'Invalid code', {XPos, }YPositions[2], BackBuffer);
+    begin
+      DrawPurpleTextCentered(ScreenImg.Bitmap, 'Invalid code', YPositions[2], BackBuffer);
       DrawMessage('Invalid code');
-      end;
-  finally
-
-  List.Free;
+    end;
+  except
+    Result := false;
   end;
-
 end;
 
 constructor TGameLevelCodeScreen.Create(aOwner: TComponent);
@@ -155,16 +123,6 @@ begin
   OnKeyDown := Form_KeyDown;
   OnKeyPress := Form_KeyPress;
   OnClose := Form_Close;
-
-  BlinkSpeedMS := 240;
-
-  XPos := (640 - (10 * 16)) div 2;
-
-  YPositions[0] := 120;
-  YPositions[1] := 152;
-  YPositions[2] := 184;
-  YPositions[3] := 216;
-
 end;
 
 destructor TGameLevelCodeScreen.Destroy;
@@ -187,34 +145,23 @@ end;
 procedure TGameLevelCodeScreen.DrawMessage(const S: string);
 begin
   if LastMessage <> '' then
- //   DrawPurpleText(ScreenImg.Bitmap, );
     DrawPurpleTextCentered(ScreenImg.Bitmap, LastMessage, YPositions[2], BackBuffer, True);
 
   LastMessage := S;
 
-  if S = '' then
-    Exit;
-
-  DrawPurpleTextCentered(ScreenImg.Bitmap, S, YPositions[2]);
+  if S <> '' then
+    DrawPurpleTextCentered(ScreenImg.Bitmap, S, YPositions[2]);
 end;
 
 procedure TGameLevelCodeScreen.UpdateCheatMessage;
-var
-  StringToDisplay: String;
 begin
   Assert(GameParams <> nil);
 
   if LastCheatMessage <> '' then
     DrawPurpleTextCentered(ScreenImg.Bitmap, LastCheatMessage, 330- 20, BackBuffer, True);
 
-  LastCheatMessage := '';
-
-  StringToDisplay := 'All Levels Unlocked';
-
-  LastCheatMessage := StringToDisplay;
-
+  LastCheatMessage := 'All Levels Unlocked';
   DrawPurpleTextCentered(ScreenImg.Bitmap, LastCheatMessage, 330 - 20);
-
 end;
 
 
@@ -227,32 +174,21 @@ end;
 
 procedure TGameLevelCodeScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  if ScreenIsClosing then
+  if ScreenIsClosing or (Shift <> []) then
     Exit;
-  if Shift = [] then
-  begin
-    case Key of
-      VK_ESCAPE: CloseScreen(gstMenu);
-      VK_RETURN:
+
+  case Key of
+    VK_ESCAPE: CloseScreen(gstMenu);
+    VK_RETURN:
+      begin
+        if CheckLevelCode then
         begin
-          if not ValidLevelCode then
-          begin
-            ValidLevelCode := CheckLevelCode;
-            if ValidLevelCode then
-            begin
-              CloseDelay := 1000;
-              DrawChar(CursorPosition, False);
-              CloseScreen(gstPreview);
-            end;
-//            closedelay:=1000;
-  //          CloseScreen(gstMenu);
-          end
-          else
-            CloseScreen(gstPreview);
-//          if ValidLevelCode then
-  //          GameParams.WhichLevel := wlLevelCode;
+          ValidLevelCode := True;
+          CloseDelay := 1000;
+          DrawChar(CursorPosition, False);
+          CloseScreen(gstPreview);
         end;
-    end;
+      end;
   end;
 end;
 
@@ -260,8 +196,6 @@ procedure TGameLevelCodeScreen.Form_KeyPress(Sender: TObject; var Key: Char);
 var
   OldC, C: Char;
   OldPos: Integer;
-  //GoBack: Boolean;
-  
 begin
   if ScreenIsClosing then
     Exit;
@@ -280,10 +214,7 @@ begin
 
       if CursorPosition < 10 then
       begin
-        // maybe blinking: repair
-//        if OldC <> C then
-          DrawChar(CursorPosition, False);
-        // next pos
+        DrawChar(CursorPosition, False);
         Inc(CursorPosition);
       end;
 
@@ -293,30 +224,26 @@ begin
       end;
 
       ValidLevelCode := False;
-
     end
     else if C = Chr(8) then begin
       DrawMessage('');
-//      GoBack := True;
       if CursorPosition > 1 then
       begin
+        if LevelCode[CursorPosition] = '.' then
+        begin
+          DrawChar(CursorPosition, False);
+          Dec(CursorPosition);
+        end;
 
         LevelCode[CursorPosition] := '.';
-        // maybe blinking: repair
         DrawChar(CursorPosition, False);
-
-        if CursorPosition > 1 then
-          Dec(CursorPosition);
-
         ValidLevelCode := False;
-
       end;
     end;
 
   finally
     Typing := False;
   end;
-
 end;
 
 end.
