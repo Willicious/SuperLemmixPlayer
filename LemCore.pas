@@ -122,7 +122,10 @@ type
     spbRestart,
     spbBackOneFrame,
     spbForwardOneFrame,
-    spbClearPhysics
+    spbClearPhysics,
+    spbDirLeft,
+    spbDirRight,
+    spbLoadReplay
   );
 
 
@@ -235,7 +238,10 @@ const
     baNone,  // Restart
     baNone,  // -1f
     baNone,  // +1f
-    baNone   // Clear Physics
+    baNone,  // Clear Physics
+    baNone,  // Dir Sel Left
+    baNone,  // Dir Sel Right
+    baNone   // Load Replay
   );
 
 const

@@ -591,6 +591,24 @@ begin
             spbBackOneFrame: TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 2); // logically this should be -1, but -2 seems to give correct behaviour. should probably investigate this.
             spbForwardOneFrame: TGameWindow(Parent).ForceUpdateOneFrame := true;
             spbClearPhysics: TGameWindow(Parent).ClearPhysics := not TGameWindow(Parent).ClearPhysics;
+            spbDirLeft: if TGameWindow(Parent).SkillPanelSelectDx = -1 then
+                        begin
+                          TGameWindow(Parent).SkillPanelSelectDx := 0;
+                          DrawButtonSelector(spbDirLeft, false);
+                        end else begin
+                          TGameWindow(Parent).SkillPanelSelectDx := -1;
+                          DrawButtonSelector(spbDirLeft, true);
+                          DrawButtonSelector(spbDirRight, false);
+                        end;
+            spbDirRight: if TGameWindow(Parent).SkillPanelSelectDx = 1 then
+                        begin
+                          TGameWindow(Parent).SkillPanelSelectDx := 0;
+                          DrawButtonSelector(spbDirRight, false);
+                        end else begin
+                          TGameWindow(Parent).SkillPanelSelectDx := 1;
+                          DrawButtonSelector(spbDirLeft, false);
+                          DrawButtonSelector(spbDirRight, true);
+                        end;
           end;
         end;
       Exit;
@@ -795,6 +813,12 @@ begin
       TempBmp.DrawTo(fOriginal, 241, 16);
       MakePanel(TempBmp, 'icon_clearphysics.png', false);
       TempBmp.DrawTo(fOriginal, 257, 16);
+      MakePanel(TempBmp, 'icon_ds_left.png', false);
+      TempBmp.DrawTo(fOriginal, 273, 16);
+      MakePanel(TempBmp, 'icon_ds_right.png', false);
+      TempBmp.DrawTo(fOriginal, 289, 16);
+      MakePanel(TempBmp, 'icon_load_replay.png', false);
+      TempBmp.DrawTo(fOriginal, 305, 16);
     end;
 
     GetGraphic('empty_slot.png', TempBmp);
