@@ -4,10 +4,8 @@ unit LemDosMainDat;
 interface
 
 uses
-  Dialogs,
-  Classes, SysUtils, GR32, UMisc, PngInterface,
-  LemTypes, LemDosStructures, LemDosCmp, LemDosBmp,
-  LemStrings;
+  Classes, GR32, UMisc, PngInterface,
+  LemTypes, LemDosStructures, LemStrings;
 
 type
   {-------------------------------------------------------------------------------
@@ -28,10 +26,8 @@ type
     destructor Destroy; override;
     procedure ExtractBrownBackGround(Bmp: TBitmap32);
     procedure ExtractLogo(Bmp: TBitmap32);
-    procedure ExtractBitmapByName(Bmp: TBitmap32; aName: String; aMaskColor: TColor32 = $00000000);
     procedure ExtractBitmap(Bmp: TBitmap32; aSection, aPosition,
       aWidth, aHeight, BPP: Integer; aPal: TArrayOfColor32);
-    procedure SetSectionPosition(aSection: Integer; aPosition: Integer);
 
     function GetSysData: TSysDatRec;
     procedure LoadSysData;
@@ -54,12 +50,6 @@ destructor TMainDatExtractor.Destroy;
 begin
   inherited;
 end;
-
-procedure TMainDatExtractor.SetSectionPosition(aSection: Integer; aPosition: Integer);
-begin
-  fPositions[aSection] := aPosition;
-end;
-
 
 function TMainDatExtractor.GetImageFileName(aSection, aPosition: Integer): String;
 begin
@@ -99,61 +89,6 @@ begin
   end;
 end;
 
-procedure TMainDatExtractor.ExtractBitmapByName(Bmp: TBitmap32; aName: String; aMaskColor: TColor32 = $00000000);
-var
-  LoadImageStream: TMemoryStream;
-  MaskBMP: TBitmap32;
-
-  procedure PrepareMaskImage;
-  var
-    x, y: Integer;
-    McR, McG, McB: Byte;
-    R, G, B, A: Byte;
-  begin
-    McR := RedComponent(aMaskColor);
-    McG := GreenComponent(aMaskColor);
-    McB := BlueComponent(aMaskColor);
-    MaskBMP.BeginUpdate;
-    for y := 0 to MaskBMP.Height-1 do
-      for x := 0 to MaskBMP.Width-1 do
-      begin
-        A := AlphaComponent(MaskBMP.Pixel[x, y]);
-        R := RedComponent(MaskBMP.Pixel[x, y]);
-        G := GreenComponent(MaskBMP.Pixel[x, y]);
-        B := BlueComponent(MaskBMP.Pixel[x, y]);
-        // Alpha is not modified.
-        R := R * McR div 255;
-        G := G * McG div 255;
-        B := B * McB div 255;
-        MaskBMP.Pixel[x, y] := (A shl 24) + (R shl 16) + (G shl 8) + B;
-      end;
-    MaskBMP.EndUpdate;
-  end;
-
-begin
-  LoadSysData;
-
-  // Does NOT configure any draw modes, ever! This must be handled from the calling unit! //
-  LoadImageStream := CreateDataStream(aName, ldtLemmings);
-  TPngInterface.LoadPngStream(LoadImageStream, Bmp);
-  LoadImageStream.Free;
-
-  if (aMaskColor <> $00000000) then
-  try
-    LoadImageStream := CreateDataStream(ChangeFileExt(aName, '_mask.png'), ldtLemmings);
-    if LoadImageStream <> nil then
-    begin
-      MaskBMP := TPngInterface.LoadPngStream(LoadImageStream);
-      PrepareMaskImage;
-      MaskBMP.DrawMode := dmBlend;
-      MaskBMP.CombineMode := cmMerge;
-      MaskBMP.DrawTo(Bmp);
-      MaskBMP.Free;
-    end;
-  except
-    // another silent fail
-  end;
-end;
 
 procedure TMainDatExtractor.ExtractBitmap(Bmp: TBitmap32; aSection,
   aPosition, aWidth, aHeight, BPP: Integer; aPal: TArrayOfColor32);
