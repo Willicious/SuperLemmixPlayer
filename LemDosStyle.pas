@@ -78,7 +78,6 @@ type
   { overridden from base loader }
     procedure InternalLoadLevel(aInfo: TLevelInfo; aLevel: TLevel; OddLoad: Byte = 0); override;
     procedure InternalLoadSingleLevel(aSection, aLevelIndex: Integer; aLevel: TLevel; OddLoad: Byte = 0); override;
-    procedure InternalPrepare; override;
     function EasyGetSectionName(aSection: Integer): string;
   public
     fDefaultSectionCount: Integer; // initialized at creation
@@ -103,14 +102,12 @@ type
     function FindLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindFinalLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindLastUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
-    function FindNextUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
+    function FindNextUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindPreviousUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
     procedure ResetOddtableHistory;
 
     procedure QuickLoadLevelNames;
 
-
-    function GetLevelCode(const Rec : TDosGamePlayInfoRec): string; override;
     function FindLevelCode(const aCode: string; var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindCheatCode(const aCode: string; var Rec : TDosGamePlayInfoRec; CheatsEnabled: Boolean = true): Boolean; override;
 
@@ -498,7 +495,7 @@ begin
   if not FoundLevel then Rec.dLevel := 0; // go to first level if all available levels are completed
 end;
 
-function TBaseDosLevelSystem.FindNextUnlockedLevel(var Rec: TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean;
+function TBaseDosLevelSystem.FindNextUnlockedLevel(var Rec: TDosGamePlayInfoRec): Boolean;
 var
   L: TStringList;
   i, odLevel: Integer;
@@ -675,11 +672,6 @@ begin
   FnPrefix := GetLevelPackPrefix;
   aFileName := FnPrefix + LeadZeroStr(aSection, 3) + '.DAT';
   afileIndex := aLevel;
-end;
-
-function TBaseDosLevelSystem.GetLevelCode(const Rec: TDosGamePlayInfoRec): string;
-begin
-  Result := GenCode(SysDat.CodeSeed, Rec.dSection, Rec.dLevel);
 end;
 
 function TBaseDosLevelSystem.GetLevelCount(aSection: Integer): Integer;
@@ -895,12 +887,6 @@ begin
     raise Exception.Create('TBaseDosLevelSystem.GetLevelName called for a non-existant level');
 end;
 
-procedure TBaseDosLevelSystem.InternalPrepare;
-begin
-
-  raise Exception.Create('Internal Prepare not implemented');
-
-end;
 
 
 

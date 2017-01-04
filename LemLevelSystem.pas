@@ -141,17 +141,10 @@ type
     dSectionName   : string;
   end;
 
-  TBaseLevelSystemClass = class of TBaseLevelSystem;
   TBaseLevelSystem = class(TOwnedPersistent)
   private
     fSaveSystem : TNeoSave;
-    function GetLevelPackCount: Integer;
-
   protected
-    fLevelPacks       : TLevelPacks;
-    fPrepared         : Boolean;
-    procedure InternalPrepare; virtual; abstract;
-//    function InternalGetLevelInfo(aPack, aSection, aLevel: Integer): TLevelInfo; virtual; abstract;
     procedure InternalLoadLevel(aInfo: TLevelInfo; aLevel: TLevel; OddLoad: Byte = 0); virtual; abstract;
     procedure InternalLoadSingleLevel(aSection, aLevelIndex: Integer; aLevel: TLevel; OddLoad: Byte = 0); virtual; abstract;
   public
@@ -161,24 +154,19 @@ type
 
     procedure SetSaveSystem(aValue: Pointer);
 
-    procedure Prepare;
     procedure LoadSingleLevel(aPack, aSection, aLevelIndex: Integer; aLevel: TLevel; SoftOdd: Boolean = false);
-
 
     function FindFirstLevel(var Rec: TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindNextLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindFinalLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindLastUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
-    function FindNextUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; virtual; abstract;
+    function FindNextUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindPreviousUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; virtual; abstract;
 
-    function GetLevelCode(const Rec : TDosGamePlayInfoRec): string; virtual; abstract;
     function FindLevelCode(const aCode: string; var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindCheatCode(const aCode: string; var Rec : TDosGamePlayInfoRec; CheatsEnabled: Boolean = true): Boolean; virtual; abstract;
 
-    property LevelPacks: TLevelPacks read fLevelPacks;
-    property LevelPackCount: Integer read GetLevelPackCount;
     property SaveSystem: TNeoSave read fSaveSystem;
   end;
 
@@ -363,12 +351,10 @@ end;
 constructor TBaseLevelSystem.Create(aOwner: TPersistent);
 begin
   inherited Create(aOwner);
-  fLevelPacks := TLevelPacks.Create;
 end;
 
 destructor TBaseLevelSystem.Destroy;
 begin
-  fLevelPacks.Free;
   inherited;
 end;
 
@@ -380,26 +366,13 @@ begin
   fSaveSystem := p^;
 end;
 
-function TBaseLevelSystem.GetLevelPackCount: Integer;
-begin
-  Result := fLevelPacks.Count
-end;
 
 procedure TBaseLevelSystem.LoadSingleLevel(aPack, aSection, aLevelIndex: Integer; aLevel: TLevel; SoftOdd: Boolean = false);
 begin
   if SoftOdd then
     InternalLoadSingleLevel(aSection, aLevelIndex, aLevel, 2)
-    else
+  else
     InternalLoadSingleLevel(aSection, aLevelIndex, aLevel);
-end;
-
-procedure TBaseLevelSystem.Prepare;
-begin
-  if not fPrepared then
-  begin
-    InternalPrepare;
-    fPrepared := True;
-  end;
 end;
 
 
