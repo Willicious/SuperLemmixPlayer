@@ -50,8 +50,7 @@ type
     fOriginal      : TBitmap32;
     fLevel         : TLevel;
     fSkillFont     : array['0'..'9', 0..1] of TBitmap32;
-    fSkillWhiteout : TBitmap32;
-    fSkillUnwhite  : TBitmap32;
+    fSkillCountErase : TBitmap32;
     fSkillLock     : TBitmap32;
     fSkillInfinite : TBitmap32;
     fSkillIcons    : array[0..16] of TBitmap32;
@@ -187,8 +186,7 @@ begin
       fSkillFont[c, i] := TBitmap32.Create;
 
   fSkillInfinite := TBitmap32.Create;
-  fSkillWhiteout := TBitmap32.Create;
-  fSkillUnwhite := TBitmap32.Create;
+  fSkillCountErase := TBitmap32.Create;
   fSkillLock := TBitmap32.Create;
 
 
@@ -233,8 +231,7 @@ begin
     fSkillIcons[i].Free;
 
   fSkillInfinite.Free;
-  fSkillWhiteout.Free;
-  fSkillUnwhite.Free;
+  fSkillCountErase.Free;
   fSkillLock.Free;
 
   fOriginal.Free;
@@ -454,7 +451,7 @@ begin
   end;
 
   // White out if applicable
-  fSkillUnwhite.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
+  fSkillCountErase.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
   if (aoNumber = 0) and (GameParams.BlackOutZero) then Exit;
 
   // Draw infinite symbol if, well, infinite.
@@ -665,26 +662,13 @@ const
   var
     x, y: Integer;
   begin
-    fSkillWhiteout.SetSize(16, 23);
-    fSkillWhiteout.Clear(0);
-    fSkillWhiteout.BeginUpdate;
+    fSkillCountErase.SetSize(16, 23);
+    fSkillCountErase.Clear(0);
+    fSkillCountErase.BeginUpdate;
     for x := 3 to 11 do
       for y := 1 to 8 do
-        fSkillWhiteout[x, y] := $FFF0D0D0;
-    fSkillWhiteout.EndUpdate;
-  end;
-
-  procedure MakeUnwhiteImage;
-  var
-    x, y: Integer;
-  begin
-    fSkillUnwhite.SetSize(16, 23);
-    fSkillUnwhite.Clear(0);
-    fSkillUnwhite.BeginUpdate;
-    for x := 0 to 15 do
-      for y := 0 to 22 do
-        if (fSkillWhiteout[x, y] and $FF000000) <> 0 then fSkillUnwhite[x, y] := $FF000000;
-    fSkillWhiteout.EndUpdate;
+        fSkillCountErase[x, y] := $FFF0D0D0;
+    fSkillCountErase.EndUpdate;
   end;
 
   procedure GetGraphic(aName: String; aDst: TBitmap32);
@@ -703,7 +687,7 @@ const
     aDst.Clear(0);
     BlankPanels.DrawTo(aDst, aDst.BoundsRect, SrcRect);
     if aDigitArea then
-      fSkillWhiteout.DrawTo(aDst);
+      fSkillCountErase.DrawTo(aDst);
     Inc(PanelIndex);
     if PanelIndex * 16 >= BlankPanels.Width then
       PanelIndex := 0;
@@ -755,9 +739,9 @@ begin
     BlankPanels := TBitmap32.Create;
     BlankPanels.DrawMode := dmBlend;
 
-    GetGraphic('skill_count_erase.png', fSkillWhiteout);
-    fSkillWhiteout.DrawMode := dmBlend;
-    fSkillWhiteout.CombineMode := cmMerge;
+    GetGraphic('skill_count_erase.png', fSkillCountErase);
+    fSkillCountErase.DrawMode := dmBlend;
+    fSkillCountErase.CombineMode := cmMerge;
 
     GetGraphic('skill_panels.png', BlankPanels);
 
@@ -841,15 +825,9 @@ begin
     fSkillLock.DrawMode := dmBlend;
     fSkillLock.CombineMode := cmMerge;
 
-    fSkillUnwhite.Assign(fSkillWhiteout);
-
     TempBmp.Free;
     TempBmp2.Free;
     BlankPanels.Free;
-
-  fSkillUnwhite.DrawMode := dmBlend;
-  fSkillUnwhite.CombineMode := cmMerge;
-
 
 end;
 
