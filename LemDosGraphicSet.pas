@@ -22,7 +22,6 @@ uses
   LemDosStructures,
   LemDosBmp,
   LemDosCmp,
-  LemDosMisc,
   Dialogs;
 
 type

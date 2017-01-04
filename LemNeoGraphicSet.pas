@@ -17,7 +17,6 @@ uses
   LemDosStructures,
   LemDosBmp,
   LemDosCmp,
-  LemDosMisc,
   LemNeoOnline,
   LemNeoEncryption, Dialogs, Contnrs;
 
