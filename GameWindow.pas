@@ -65,6 +65,7 @@ type
     procedure DoDraw;
     procedure OnException(E: Exception; aCaller: String = 'Unknown');
     procedure ExecuteReplayEdit;
+    procedure SetClearPhysics(aValue: Boolean);
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -108,6 +109,7 @@ type
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
+    property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
   end;
 
 implementation
@@ -115,6 +117,14 @@ implementation
 uses FBaseDosForm, FEditReplay;
 
 { TGameWindow }
+
+procedure TGameWindow.SetClearPhysics(aValue: Boolean);
+begin
+  fClearPhysics := aValue;
+  if Game.Paused then
+    fNeedRedraw := true;
+  SkillPanel.DrawButtonSelector(spbClearPhysics, fClearPhysics);
+end;
 
 procedure TGameWindow.ExecuteReplayEdit;
 var
@@ -815,9 +825,9 @@ begin
                       end else
                         if Paused then ForceUpdateOneFrame := true;
           lka_ClearPhysics: if func.Modifier = 0 then
-                              fClearPhysics := not fClearPhysics
+                              ClearPhysics := not ClearPhysics
                             else
-                              fClearPhysics := true;
+                              ClearPhysics := true;
           lka_EditReplay: ExecuteReplayEdit;
           lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
         end;
@@ -851,7 +861,7 @@ begin
       lka_ReleaseRateDown    : SetSelectedSkill(spbSlower, False);
       lka_ReleaseRateUp      : SetSelectedSkill(spbFaster, False);
       lka_ClearPhysics       : if func.Modifier <> 0 then
-                                 fClearPhysics := false;
+                                 ClearPhysics := false;
     end;
   end;
 
