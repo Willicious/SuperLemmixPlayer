@@ -183,7 +183,7 @@ var
   FindInfo: TDosGamePlayInfoRec;
 begin
   FindInfo := GameParams.Info;
-  GameParams.Style.LevelSystem.FindNextUnlockedLevel(FindInfo);
+  GameParams.Style.LevelSystem.FindNextUnsolvedLevel(FindInfo);
   if FindInfo.dLevel <> GameParams.Info.dLevel then
   begin
     GameParams.ShownText := false;
@@ -197,7 +197,7 @@ var
   FindInfo: TDosGamePlayInfoRec;
 begin
   FindInfo := GameParams.Info;
-  GameParams.Style.LevelSystem.FindPreviousUnlockedLevel(FindInfo);
+  GameParams.Style.LevelSystem.FindPreviousUnsolvedLevel(FindInfo);
   if FindInfo.dLevel <> GameParams.Info.dLevel then
   begin
     GameParams.ShownText := false;
@@ -213,7 +213,7 @@ begin
   FindInfo := GameParams.Info;
   if FindInfo.dSection = TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetSectionCount-1 then Exit;
   FindInfo.dSection := FindInfo.dSection + 1;
-  GameParams.Style.LevelSystem.FindLastUnlockedLevel(FindInfo);
+  GameParams.Style.LevelSystem.FindFirstUnsolvedLevel(FindInfo);
   GameParams.ShownText := false;
   GameParams.WhichLevel := wlLastUnlocked;
   GameParams.Info := FindInfo;
@@ -227,7 +227,7 @@ begin
   FindInfo := GameParams.Info;
   if FindInfo.dSection = 0 then Exit;
   FindInfo.dSection := FindInfo.dSection - 1;
-  GameParams.Style.LevelSystem.FindLastUnlockedLevel(FindInfo);
+  GameParams.Style.LevelSystem.FindFirstUnsolvedLevel(FindInfo);
   GameParams.ShownText := false;
   GameParams.WhichLevel := wlLastUnlocked;
   GameParams.Info := FindInfo;
@@ -555,9 +555,9 @@ begin
       wlLevelCode: Style.LevelSystem.FindLevel(Info);
       wlNext: Style.LevelSystem.FindNextLevel(Info);
       wlSame: Style.LevelSystem.FindLevel(Info);
-      wlNextUnlocked: Style.LevelSystem.FindNextUnlockedLevel(Info);
-      wlPreviousUnlocked: Style.LevelSystem.FindPreviousUnlockedLevel(Info);
-      wlLastUnlocked: Style.LevelSystem.FindLastUnlockedLevel(Info);
+      wlNextUnlocked: Style.LevelSystem.FindNextUnsolvedLevel(Info);
+      wlPreviousUnlocked: Style.LevelSystem.FindPreviousUnsolvedLevel(Info);
+      wlLastUnlocked: Style.LevelSystem.FindFirstUnsolvedLevel(Info);
     end;
 
     if not GameParams.OneLevelMode then

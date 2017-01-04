@@ -154,13 +154,13 @@ begin
     VK_LEFT: if fSection > 0 then
              begin
                Dec(GameParams.Info.dSection);
-               fLevelSystem.FindLastUnlockedLevel(GameParams.Info);
+               fLevelSystem.FindFirstUnsolvedLevel(GameParams.Info);
                CloseScreen(gstLevelSelect);
              end;
     VK_RIGHT: if fSection < fLevelSystem.SysDat.RankCount-1 then
               begin
                 Inc(GameParams.Info.dSection);
-                fLevelSystem.FindLastUnlockedLevel(GameParams.Info);
+                fLevelSystem.FindFirstUnsolvedLevel(GameParams.Info);
                 CloseScreen(gstLevelSelect);
               end;
   end;

@@ -160,9 +160,9 @@ type
     function FindNextLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindFinalLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
-    function FindLastUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
-    function FindNextUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
-    function FindPreviousUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; virtual; abstract;
+    function FindFirstUnsolvedLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
+    function FindNextUnsolvedLevel(var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
+    function FindPreviousUnsolvedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; virtual; abstract;
 
     function FindLevelCode(const aCode: string; var Rec : TDosGamePlayInfoRec): Boolean; virtual; abstract;
     function FindCheatCode(const aCode: string; var Rec : TDosGamePlayInfoRec; CheatsEnabled: Boolean = true): Boolean; virtual; abstract;

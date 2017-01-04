@@ -101,9 +101,9 @@ type
     function FindNextLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindFinalLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
-    function FindLastUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
-    function FindNextUnlockedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
-    function FindPreviousUnlockedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
+    function FindFirstUnsolvedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
+    function FindNextUnsolvedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
+    function FindPreviousUnsolvedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
     procedure ResetOddtableHistory;
 
     procedure QuickLoadLevelNames;
@@ -460,8 +460,7 @@ begin
   end;
 end;
 
-function TBaseDosLevelSystem.FindLastUnlockedLevel(var Rec: TDosGamePlayInfoRec): Boolean;
-// Somewhat misleading name. It finds the first level that is unlocked but not completed.
+function TBaseDosLevelSystem.FindFirstUnsolvedLevel(var Rec: TDosGamePlayInfoRec): Boolean;
 var
   L: TStringList;
   i: Integer;
@@ -495,7 +494,7 @@ begin
   if not FoundLevel then Rec.dLevel := 0; // go to first level if all available levels are completed
 end;
 
-function TBaseDosLevelSystem.FindNextUnlockedLevel(var Rec: TDosGamePlayInfoRec): Boolean;
+function TBaseDosLevelSystem.FindNextUnsolvedLevel(var Rec: TDosGamePlayInfoRec): Boolean;
 var
   L: TStringList;
   i, odLevel: Integer;
@@ -524,7 +523,7 @@ begin
   end;
 end;
 
-function TBaseDosLevelSystem.FindPreviousUnlockedLevel(var Rec: TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean;
+function TBaseDosLevelSystem.FindPreviousUnsolvedLevel(var Rec: TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean;
 var
   L: TStringList;
   i, odLevel: Integer;

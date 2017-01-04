@@ -546,7 +546,7 @@ begin
     end;
     if (WhichLevel = wlLastUnlocked) then
     begin
-      Style.LevelSystem.FindLastUnlockedLevel(Info);
+      Style.LevelSystem.FindFirstUnsolvedLevel(Info);
       WhichLevel := wlSame;
     end;
     if (WhichLevel = wlNext) then
