@@ -108,7 +108,7 @@ var
   Skill: TSkillPanelButton;
   NeedClear: Boolean;
 const
-  BIT_TO_SV: array[0..15] of Integer = (15, 7, 6, 5, 14, 4, 13, 3, 12, 2, 11, 10, 1, 9, 0, 8);
+  BIT_TO_SV: array[0..16] of Integer = (8, 0, 9, 1, 10, 11, 2, 12, 3, 13, 4, 14, 5, 16, 6, 7, 15);
   function FindPickupSkill(aSkillSValue: Integer): Boolean;
   var
     i: Integer;
