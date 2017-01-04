@@ -467,46 +467,20 @@ begin
 end;
 
 procedure TGameMenuScreen.NextSection(Forwards: Boolean);
-var
-  i : Integer;
-
-    procedure Change;
-    begin
-      GameParams.ShownText := false;
-      with GameParams.Info do
-      begin
-        dValid := True;
-        dPack := 0;
-        dSection := CurrentSection;
-        dLevel := 0;
-        GameParams.WhichLevel := wlLastUnlocked;
-      end;
-    end;
-
 begin
-  case Forwards of
-    False:
-      begin
-        if CurrentSection > 0 then
-        begin
-          SetSection(CurrentSection - 1);
-          Change;
-        end else
-          Exit;
-      end;
-    True:
-      begin
-        if CurrentSection = LastSection then Exit;
+  if Forwards and (CurrentSection < LastSection) then
+    SetSection(CurrentSection + 1)
+  else if (not Forwards) and (CurrentSection > 0) then
+    SetSection(CurrentSection - 1);
 
-        with TBaseDosLevelSystem(GameParams.Style.LevelSystem) do
-        begin
-          i := CurrentSection + 1;
-          SetSection(i);
-          Change;
-          Exit;
-        end;
-
-      end;
+  GameParams.ShownText := false;
+  with GameParams.Info do
+  begin
+    dValid := True;
+    dPack := 0;
+    dSection := CurrentSection;
+    dLevel := 0;
+    GameParams.WhichLevel := wlLastUnlocked;
   end;
 end;
 
