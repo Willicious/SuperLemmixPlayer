@@ -78,13 +78,9 @@ implementation
 { TBaseLevelSystem }
 
 procedure TBaseLevelSystem.SetSaveSystem(aValue: Pointer);
-var
-  p : ^TNeoSave;
 begin
-  p := aValue;
-  fSaveSystem := p^;
+  fSaveSystem := TNeoSave(aValue^);
 end;
-
 
 procedure TBaseLevelSystem.LoadSingleLevel(aPack, aSection, aLevelIndex: Integer; aLevel: TLevel; SoftOdd: Boolean = false);
 begin
@@ -93,7 +89,6 @@ begin
   else
     InternalLoadSingleLevel(aSection, aLevelIndex, aLevel);
 end;
-
 
 end.
 
