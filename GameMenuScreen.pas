@@ -257,8 +257,6 @@ var
       TempBmp.DrawTo(RightLemmingAnimation, 0, 0, SourceRect);
       TempBmp.Free; 
     except
-      MainDatExtractor.ExtractAnimation(LeftLemmingAnimation, 4, $C780, 48, 16, 16, 19, MainPal);
-      MainDatExtractor.ExtractAnimation(RightLemmingAnimation, 4, $13980, 48, 16, 16, 19, MainPal);
       MainDatExtractor.ExtractBitmap(Tmp, 4, $1AB80, 16, 16, 19, MainPal);
     end;
   end;

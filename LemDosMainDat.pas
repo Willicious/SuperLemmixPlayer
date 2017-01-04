@@ -16,15 +16,10 @@ type
   TMainDatExtractor = class
   private
     fFileName: string;
-    //fDecompressor: TDosDatDecompressor;
-    //fSections: TDosDatSectionList;
-    //fPlanar: TDosPlanarBitmap;
     fSysDat: TSysDatRec;
     fSysDatLoaded: Boolean;
     fPositions: array[0..7] of Integer; // for compatibility with code that relied on current MAIN.DAT position, obviously needs to be
                                         // removed at some point, but works for now
-    procedure EnsureLoaded;
-    procedure EnsureDecompressed(aSection: Integer);
     function GetImageFileName(aSection, aPosition: Integer): String;
     procedure SetDrawModes(Bmp: TBitmap32; aSection, aPosition: Integer);
   protected
@@ -36,8 +31,6 @@ type
     procedure ExtractBitmapByName(Bmp: TBitmap32; aName: String; aMaskColor: TColor32 = $00000000);
     procedure ExtractBitmap(Bmp: TBitmap32; aSection, aPosition,
       aWidth, aHeight, BPP: Integer; aPal: TArrayOfColor32);
-    procedure ExtractAnimation(Bmp: TBitmap32; aSection, aPos,
-      aWidth, aHeight, aFrameCount: Integer; BPP: Byte; aPal: TArrayOfColor32);
     procedure SetSectionPosition(aSection: Integer; aPosition: Integer);
 
     function GetSysData: TSysDatRec;
@@ -54,73 +47,25 @@ constructor TMainDatExtractor.Create;
 begin
   inherited Create;
   fFileName := 'MAIN.DAT';
-  //fSections := TDosDatSectionList.Create;
-  //fPlanar := TDosPlanarBitmap.Create;
-  //fDecompressor := TDosDatDecompressor.Create;
   FillChar(fPositions, SizeOf(fPositions), 0);
 end;
 
 destructor TMainDatExtractor.Destroy;
 begin
-  //fSections.Free;
-  //fPlanar.Free;
-  //fDecompressor.Free;
   inherited;
 end;
 
 procedure TMainDatExtractor.SetSectionPosition(aSection: Integer; aPosition: Integer);
 begin
-  EnsureDecompressed(aSection);
   fPositions[aSection] := aPosition;
-  //fSections[aSection].DecompressedData.Position := aPosition;
 end;
 
-procedure TMainDatExtractor.EnsureDecompressed(aSection: Integer);
-//var
-//  Sec: TDosDatSection;
-begin
-  EnsureLoaded;
-  //Sec := fSections[aSection];
-  //if Sec.DecompressedData.Size = 0 then
-  //  fDecompressor.DecompressSection(Sec.CompressedData, Sec.DecompressedData)
-end;
-
-procedure TMainDatExtractor.EnsureLoaded;
-begin
-
-end;
-
-procedure TMainDatExtractor.ExtractAnimation(Bmp: TBitmap32; aSection, aPos, aWidth,
-  aHeight, aFrameCount: Integer; BPP: Byte; aPal: TArrayOfColor32);
-begin
-{  EnsureDecompressed(aSection);
-
-  LoadSysData;
-  if fSysDat.Options2 and 2 <> 0 then
-  begin
-    if (aSection = 0) or (aSection = 6) then
-    begin
-      aPal[1] := $D02020;
-      aPal[4] := $F0F000;
-      aPal[5] := $4040E0;
-    end else if (aSection > 2) and (aSection < 6) then
-    begin
-      aPal := GetDosMainMenuPaletteColors32(true);
-    end;
-  end;
-
-  fPlanar.LoadAnimationFromStream(fSections[aSection].DecompressedData,
-    Bmp, aPos, aWidth, aHeight, aFrameCount, BPP, aPal);}
-end;
 
 function TMainDatExtractor.GetImageFileName(aSection, aPosition: Integer): String;
 begin
   // Inefficient, but works for now.
   Result := '';
-  //if (fSysDat.Options3 and 32) = 0 then Exit;
   case aSection of
-    {2: case aPosition of  // Skill digits here
-       end;}
     3: case aPosition of
          $000000: Result := 'background';
          $0134C0: Result := 'logo';
@@ -131,19 +76,9 @@ begin
          $046B8A: Result := 'sign_quit';
          $04AF73: Result := 'sign_talisman';
        end;
-{    4: case aPosition of
-         $028D20: Result := 'talisman_bronze_inactive';
-         $02A280: Result := 'talisman_bronze';
-         $02B7E0: Result := 'talisman_silver_inactive';
-         $02CD40: Result := 'talisman_silver';
-         $02E2A0: Result := 'talisman_gold_inactive';
-         $02F800: Result := 'talisman_gold';
-       end;}
     5: Result := 'rank_' + LeadZeroStr((aPosition div $1209) + 1, 2);
   end;
   if Result <> '' then Result := Result + '.png';
-  //if (aSection = 3) or (aSection = 5) then
-  //  ShowMessage(IntToStr(aSection) + ':$' + IntToHex(aPosition, 8) + ':' + Result);
 end;
 
 procedure TMainDatExtractor.SetDrawModes(Bmp: TBitmap32; aSection, aPosition: Integer);
@@ -197,8 +132,6 @@ var
 
 begin
   LoadSysData;
-  //if fSysDat.Options3 and 32 = 0 then
-  //  raise Exception.Create('Tried to load PNG graphics from a pre-PNG pack: ' + aName);
 
   // Does NOT configure any draw modes, ever! This must be handled from the calling unit! //
   LoadImageStream := CreateDataStream(aName, ldtLemmings);
@@ -227,22 +160,15 @@ procedure TMainDatExtractor.ExtractBitmap(Bmp: TBitmap32; aSection,
 begin
   LoadSysData;
 
-  //EnsureDecompressed(aSection);
-
   if aPosition = -1 then
     aPosition := fPositions[aSection];
 
   if GetImageFileName(aSection, aPosition) <> '' then
   begin
-    //try
-      fPositions[aSection] := aPosition;
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + GetImageFileName(aSection, aPosition), Bmp);
-      SetDrawModes(Bmp, aSection, aPosition);
-      fPositions[aSection] := fPositions[aSection] + ((aWidth * aHeight * BPP) div 8); // compatibility with those using relative positions
-      Exit;
-    //except
-      // Continue with the rest of the code here if it fails.
-    //end;
+    fPositions[aSection] := aPosition;
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + GetImageFileName(aSection, aPosition), Bmp);
+    SetDrawModes(Bmp, aSection, aPosition);
+    fPositions[aSection] := fPositions[aSection] + ((aWidth * aHeight * BPP) div 8); // compatibility with those using relative positions
   end;
 end;
 
@@ -270,7 +196,6 @@ end;
 
 procedure TMainDatExtractor.LoadSysData;
 var
-  //TempRec : TSysDatRec;
   TempStream : TMemoryStream;
 begin
   if fSysDatLoaded then exit;
