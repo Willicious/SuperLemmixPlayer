@@ -28,33 +28,6 @@ const
                     '.mtm',
                     '.umx');
 
-  ORIG_LEMMINGS_RANDSEED = 47;
-  OHNO_LEMMINGS_RANDSEED = 48;
-  H94_LEMMINGS_RANDSEED = 49;
-  LPDOS_LEMMINGS_RANDSEED = 45;
-  LPII_LEMMINGS_RANDSEED = 46;
-  LP2B_LEMMINGS_RANDSEED = 44;
-  CUST_LEMMINGS_RANDSEED = 50;
-  COVOX_LEMMINGS_RANDSEED = 51;
-  PRIMA_LEMMINGS_RANDSEED = 53;
-  XMAS_LEMMINGS_RANDSEED = 54;
-  EXTRA_LEMMINGS_RANDSEED = 55;
-
-  LPIII_LEMMINGS_RANDSEED = 52;
-  LP3B_LEMMINGS_RANDSEED = 60;
-  LPIV_LEMMINGS_RANDSEED = 68; //12; DEMOCODE
-  LPZ_LEMMINGS_RANDSEED = 67;
-
-  LPH_LEMMINGS_RANDSEED = 63;
-  LPC_LEMMINGS_RANDSEED = 64;
-  LPCII_LEMMINGS_RANDSEED = 73;
-
-  ZOMBIE_LEMMINGS_RANDSEED = 72;
-
-  COPYCAT_LEMMINGS_RANDSEED = 100;
-
-  LEMMINGS_RANDSEED = CUST_LEMMINGS_RANDSEED;
-
 type
   TLemDataType = (
     ldtNone,
@@ -83,29 +56,9 @@ type
   published
   end;
 
-  TBitmapses = class(TObjectList) // very creative naming here
-    private
-      function GetItem(Index: Integer): TBitmaps;
-    public
-      function Add: TBitmaps;
-      property Items[Index: Integer]: TBitmaps read GetItem; default;
-      property List;
-  end;
-
-  TBasicWrapper = class(TComponent)
-  private
-    fPersistentObject: TPersistent;
-  protected
-  public
-  published
-    property PersistentObject: TPersistent read fPersistentObject write fPersistentObject;
-  end;
-
   // lemlowlevel
 procedure ReplaceColor(B: TBitmap32; FromColor, ToColor: TColor32);
 function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;
-procedure PrepareFramedBitmap(Bmp: TBitmap32; FrameCount, FrameWidth, FrameHeight: Integer);
-procedure InsertFrame(Dst, Src: TBitmap32; FrameCount, FrameIndex: Integer);
 function AppPath: string;
 function MakeSuitableForFilename(const aInput: String): String;
 function LemmingsPath: string;
@@ -147,16 +100,12 @@ end;
 
 function LemmingsPath: string;
 begin
-
     Result := AppPath;
-
 end;
 
 function MusicsPath: string;
 begin
-
     Result := AppPath;
-
 end;
 
 procedure ReplaceColor(B: TBitmap32; FromColor, ToColor: TColor32);
@@ -180,44 +129,13 @@ begin
   W := Bmp.Width;
   H := Bmp.Height div FrameCount;
   Y := H * FrameIndex;
-//  Assert(Bmp.Height mod FrameCount = 0)
+
   Result.Left := 0;
   Result.Top := Y;
   Result.Right := W;
   Result.Bottom := Y + H;
 end;
 
-procedure PrepareFramedBitmap(Bmp: TBitmap32; FrameCount, FrameWidth, FrameHeight: Integer);
-begin
-  Bmp.SetSize(FrameWidth, FrameCount * FrameHeight);
-  Bmp.ResetAlpha(0);
-end;
-
-procedure InsertFrame(Dst, Src: TBitmap32; FrameCount, FrameIndex: Integer);
-var
-  H, Y: Integer;
-  W: Integer;
-  SrcP, DstP: PColor32;
-begin
-  Assert(FrameCount > 0);
-  Assert(Dst.Height = FrameCount * Src.Height);
-  Assert(Dst.Width = Src.Width);
-
-  H := Dst.Height div FrameCount;
-  Y := H * FrameIndex;
-
-  SrcP := Src.PixelPtr[0, 0];
-  DstP := Dst.PixelPtr[0, Y];
-  W := Dst.Width;
-
-  for Y := 0 to H - 1 do
-    begin
-      MoveLongWord(SrcP^, DstP^, W);
-      Inc(SrcP, W);
-      Inc(DstP, W);
-    end;
-
-end;
 
 
 function CreateDataStream(aFileName: string; aType: TLemDataType; aAllowExternal: Boolean = false): TMemoryStream;
@@ -291,19 +209,10 @@ var
       end;
   end;
 begin
-
   aFilename := ExtractFileName(aFilename); // there should never be a call to this with a path;
                                            // but just in case.
 
   IsSingleLevelMode := LowerCase(ExtractFileExt(GameFile)) <> '.nxp'; // need a tidier way, but this does work
-
-  { //   ldtNone,
-    // ldtLemmings,  // NXP or resource
-    // ldtSound,     // in a resource
-    // ldtMusic,     // NXP, music packs, resource... there are a few places this looks
-    // ldtParticles, // is in a resource
-    // ldtText,      // NXP
-    ldtStyle}
 
   Result := TMemoryStream.Create;
 
@@ -398,181 +307,6 @@ begin
     end;
     Arc.Free;
   end;
-
-  Exit;
-
-  (*
-  ============= OLD CODE =========
-
-  //ShowMessage('load: ' + aFileName);
-
-  case aType of
-    ldtLemmings:
-      begin
-
-        Result := TMemoryStream.Create;
-        Arc := TArchive.Create;
-        try
-          if ParamStr(1) = 'testmode' then
-            Arc.OpenResource(HINSTANCE, 'lemdata', 'archive')
-          else
-            try
-              Arc.OpenArchive(GameFile, amOpen);
-            except
-              Arc.OpenResource(HINSTANCE, 'lemdata', 'archive')
-            end;
-
-          try
-            Arc.ExtractFile(ExtractFileName(aFileName), Result);
-          except
-            Arc.OpenResource(HINSTANCE, 'lemdata', 'archive');
-            Arc.ExtractFile(ExtractFileName(aFileName), Result);
-          end;
-        finally
-          Arc.Free;
-        end;
-
-      end;
-    ldtText:  // A routine using ldtText MUST be prepared to handle a "nil" result
-      begin
-
-        Result := TMemoryStream.Create;
-        Arc := TArchive.Create;
-        try
-
-          if ParamStr(1) = 'testmode' then
-            Arc.OpenResource(HINSTANCE, 'lemdata', 'archive')
-          else
-            try
-              Arc.OpenArchive(GameFile, amOpen);
-            except
-              Arc.OpenResource(HINSTANCE, 'lemdata', 'archive')
-            end;
-
-          if Arc.ArchiveList.IndexOf(ExtractFileName(aFileName)) = -1 then
-          begin
-            Result.Free;
-            Result := nil;
-          end else
-            Arc.ExtractFile(ExtractFileName(aFileName), Result);
-        finally
-          Arc.Free;
-        end;
-
-      if Result <> nil then Result.Seek(0, soFromBeginning);
-      Exit;
-      end;
-    ldtSound:
-      begin
-
-        Result := TMemoryStream.Create;
-        Arc := TArchive.Create;
-        try
-
-          Arc.OpenResource(HINSTANCE, 'lemsounds', 'archive');
-
-          Arc.ExtractFile(ExtractFileName(aFileName), Result);
-        finally
-          Arc.Free;
-        end;
-
-      end;
-    ldtMusic:
-      begin
-
-        Result := TMemoryStream.Create;
-        Arc := TArchive.Create;
-        try
-          if FormatDateTime('mmdd', Now) = '0401' then
-          begin
-            // If you've worked out what this code is for, but the date it triggers hasn't come yet,
-            // please don't spoil the prank. :P
-            Arc.OpenResource(HINSTANCE, 'lemmusic', 'archive');
-            Arc.ExtractFile('orig_00.it', Result);
-          end else begin
-
-            // Step 1 - Look for a music pack, and try that.
-            if (ParamStr(1) = 'testmode') or (GameFile = 'Single Levels') then //need a better way to pass single level mode to this...
-              tk := 'NeoLemmix_MUSIC.DAT'
-            else
-              tk := ChangeFileExt(GameFile, '') + '_MUSIC.DAT';
-
-            if FileExists(tk) then
-            begin
-              Arc.OpenArchive(tk, amOpen);
-              tk := ChangeFileExt(aFileName, '') + '.ogg';
-              if Arc.ArchiveList.IndexOf(ExtractFileName(tk)) = -1 then tk := ChangeFileExt(aFileName, '') + '.it';
-              if Arc.ArchiveList.IndexOf(ExtractFileName(tk)) <> -1 then
-              begin
-                Arc.ExtractFile(ExtractFileName(tk), Result);
-                Exit;
-              end;
-            end;
-
-            // Not found? Search the global music packs.
-            if FindFirst(ExtractFilePath(ParamStr(0)) + 'NeoLemmix_Music_*.dat', faAnyFile, SearchRec) = 0 then
-            begin
-              repeat
-                Arc.OpenArchive(ExtractFilePath(ParamStr(0)) + SearchRec.Name, amOpen);
-                tk := ChangeFileExt(aFileName, '') + '.ogg';
-                if Arc.ArchiveList.IndexOf(ExtractFileName(tk)) = -1 then tk := ChangeFileExt(aFileName, '') + '.it';
-                if Arc.ArchiveList.IndexOf(ExtractFileName(tk)) <> -1 then
-                begin
-                  Arc.ExtractFile(ExtractFileName(tk), Result);
-                  FindClose(SearchRec);
-                  Exit;
-                end;
-              until FindNext(SearchRec) <> 0;
-              FindClose(SearchRec);
-            end;
-
-            // Not found? Try the game's data itself.
-            if (ParamStr(1) <> 'testmode') and (GameFile <> 'Single Levels') then
-            begin
-              Arc.OpenArchive(GameFile, amOpen);
-              tk := ChangeFileExt(aFileName, '') + '.ogg';
-              if Arc.ArchiveList.IndexOf(ExtractFileName(tk)) = -1 then tk := ChangeFileExt(aFileName, '') + '.it';
-              if Arc.ArchiveList.IndexOf(ExtractFileName(tk)) <> -1 then
-              begin
-                Arc.ExtractFile(ExtractFileName(tk), Result);
-                Exit;
-              end;
-            end;
-
-            // Still not found? Try defaults.
-            Arc.OpenResource(HINSTANCE, 'lemmusic', 'archive');
-            tk := ChangeFileExt(aFileName, '') + '.ogg';
-            if Arc.ArchiveList.IndexOf(ExtractFileName(tk)) = -1 then tk := ChangeFileExt(aFileName, '') + '.it';
-            Arc.ExtractFile(ExtractFileName(tk), Result);
-          end;
-        finally
-          Arc.Free;
-        end;
-
-      end;
-    ldtParticles:
-      begin
-
-        Result := TMemoryStream.Create;
-        Arc := TArchive.Create;
-        try
-          Arc.OpenResource(HINSTANCE, 'lemparticles', 'archive');
-          Arc.ExtractFile(ExtractFileName(aFileName), Result);
-        finally
-          Arc.Free;
-        end;
-
-      end;
-  else
-    Result := nil;
-
-  end;
-
-
-  Assert(Result <> nil);
-
-  Result.Seek(0, soFromBeginning);
-  *)
 end;
 
 
@@ -619,22 +353,6 @@ begin
   end;
 end;
 
-////////////////
-// TBitmapses //
-////////////////
-
-function TBitmapses.Add: TBitmaps;
-begin
-  // Creates a new TBitmaps, adds it, and returns it.
-  Result := TBitmaps.Create;
-  inherited Add(Result);
-end;
-
-function TBitmapses.GetItem(Index: Integer): TBitmaps;
-begin
-  // Gets a TBitmaps from the list.
-  Result := inherited Get(Index);
-end;
 
 end.
 
