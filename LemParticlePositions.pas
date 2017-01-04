@@ -1,13 +1,6 @@
-unit LemConsts;
+unit LemParticlePositions;
 
 interface
-
-type
-  TParticleRec = packed record
-    DX, DY: ShortInt
-  end;
-  TParticleArray = packed array[0..79] of TParticleRec;
-  TParticleTable = packed array[0..50] of TParticleArray;
 
 const
   GlobalParticles: TParticleTable = (
@@ -895,8 +888,8 @@ const
   (DX:  -33; DY:   26),   (DX:  -34; DY:   29),   (DX:  -36; DY:   33),   (DX:  -37; DY:   37),   (DX:  -38; DY:   41), 
   (DX:  -40; DY:   45),   (DX:  -41; DY:   50),   (DX:  -42; DY:   55),   (DX:  -43; DY:   60),   (DX:  -45; DY:   65), 
   (DX:  -46; DY:   70),   (DX:  -47; DY:   76),   (DX:  -49; DY:   81),   (DX:  -50; DY:   87),   (DX:  -51; DY:   93), 
-  (DX:  -53; DY:  100),   (DX:  -54; DY:  106),   (DX:  -55; DY:  113),   (DX:  -56; DY:  120),   (DX: -128; DY: -128), 
-  (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128), 
+  (DX:  -53; DY:  100),   (DX:  -54; DY:  106),   (DX:  -55; DY:  113),   (DX:  -56; DY:  120),   (DX: -128; DY: -128),
+  (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128),
   (DX: -128; DY: -128),   (DX:    0; DY:    0),   (DX:    0; DY:    0),   (DX:   41; DY:   44),   (DX:  114; DY:  108), 
   (DX:    4; DY:   -6),   (DX: -128; DY:  118),   (DX:    0; DY:    0),   (DX:  -16; DY:  110),   (DX: -108; DY:    2), 
   (DX:   36; DY:  -95),   (DX:   28; DY:    0),   (DX:   -8; DY:   -5),   (DX:   14; DY:  -80),   (DX:    0; DY:    0), 
@@ -908,7 +901,7 @@ const
   // particles for frame 47
   (DX:   -2; DY:   -1),   (DX:   -2; DY:   -3),   (DX:   -1; DY:   -5),   (DX:   -1; DY:   -6),   (DX:    0; DY:   -7), 
   (DX:    0; DY:   -8),   (DX:    0; DY:   -9),   (DX:    1; DY:   -9),   (DX:    1; DY:  -10),   (DX:    2; DY:  -10), 
-  (DX:    2; DY:  -10),   (DX:    2; DY:   -9),   (DX:    3; DY:   -9),   (DX:    3; DY:   -8),   (DX:    3; DY:   -7), 
+  (DX:    2; DY:  -10),   (DX:    2; DY:   -9),   (DX:    3; DY:   -9),   (DX:    3; DY:   -8),   (DX:    3; DY:   -7),
   (DX:    4; DY:   -6),   (DX:    4; DY:   -5),   (DX:    5; DY:   -4),   (DX:    5; DY:   -2),   (DX:    5; DY:    0), 
   (DX:    6; DY:    2),   (DX:    6; DY:    4),   (DX:    6; DY:    7),   (DX:    7; DY:    9),   (DX:    7; DY:   12), 
   (DX:    8; DY:   15),   (DX:    8; DY:   19),   (DX:    8; DY:   22),   (DX:    9; DY:   26),   (DX:    9; DY:   30), 
@@ -935,7 +928,7 @@ const
   (DX:   56; DY:   60),   (DX:   58; DY:   65),   (DX:   59; DY:   71),   (DX:   61; DY:   77),   (DX:   62; DY:   83), 
   (DX:   64; DY:   89),   (DX:   65; DY:   95),   (DX:   67; DY:  102),   (DX:   68; DY:  109),   (DX:   70; DY:  116), 
   (DX:   71; DY:  123),   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128), 
-  (DX: -128; DY: -128),   (DX:    0; DY:    0),   (DX:    0; DY:    0),   (DX:   32; DY:   32),   (DX:    0; DY:    0), 
+  (DX: -128; DY: -128),   (DX:    0; DY:    0),   (DX:    0; DY:    0),   (DX:   32; DY:   32),   (DX:    0; DY:    0),
   (DX:    0; DY:    0),   (DX: -116; DY:   -7),   (DX:  124; DY:    8),   (DX:  -23; DY:   79),   (DX:  -43; DY:   15), 
   (DX:    1; DY:    0),   (DX:    1; DY:    0),   (DX:   22; DY: -120),   (DX: -108; DY:    2),   (DX: -100; DY:   -4), 
   (DX: -108; DY:  107),   (DX:   83; DY:   15),   (DX: -128; DY:   -2),   (DX:  -40; DY:   22),   (DX:    0; DY:    0), 
@@ -973,8 +966,8 @@ const
   (DX:  -12; DY:   64),   (DX:  -13; DY:   70),   (DX:  -13; DY:   76),   (DX:  -13; DY:   82),   (DX:  -13; DY:   88), 
   (DX:  -14; DY:   94),   (DX:  -14; DY:  100),   (DX:  -14; DY:  107),   (DX:  -14; DY:  114),   (DX:  -15; DY:  121), 
   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128),   (DX: -128; DY: -128), 
-  (DX: -128; DY: -128),   (DX:    0; DY:    0),   (DX:    0; DY:    0),   (DX:   32; DY:   40),   (DX:  -47; DY:  117), 
-  (DX:  -63; DY:  -39),   (DX:   68; DY:   30),   (DX: -112; DY:   91),   (DX:  -72; DY:   10),   (DX:  -51; DY:  -85), 
+  (DX: -128; DY: -128),   (DX:    0; DY:    0),   (DX:    0; DY:    0),   (DX:   32; DY:   40),   (DX:  -47; DY:  117),
+  (DX:  -63; DY:  -39),   (DX:   68; DY:   30),   (DX: -112; DY:   91),   (DX:  -72; DY:   10),   (DX:  -51; DY:  -85),
   (DX:  -88; DY:   81),   (DX: -108; DY:    2),   (DX:   14; DY:  -80),   (DX:    2; DY:    2),   (DX:    0; DY:    0), 
   (DX: -116; DY:   -3),   (DX:    0; DY:    0),   (DX: -108; DY:    2),   (DX:  -85; DY:   32),   (DX:  -44; DY:  -42), 
   (DX:  -46; DY:  -43),   (DX:   44; DY:    0),   (DX:  -20; DY:    5),   (DX:   77; DY:    0),   (DX:   53; DY:    0), 

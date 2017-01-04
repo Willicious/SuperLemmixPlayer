@@ -40,13 +40,6 @@ uses
   LemReplay,
   GameInterfaces, GameControl, GameSound;
 
-type
-  TParticleRec = packed record
-    DX, DY: ShortInt
-  end;
-  TParticleArray = packed array[0..79] of TParticleRec;
-  TParticleTable = packed array[0..50] of TParticleArray;
-
 const
   ParticleColorIndices: array[0..15] of Byte =
     (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
