@@ -4,9 +4,7 @@ unit LemDosStructures;
 interface
 
 uses
-  Classes, SysUtils, Types,
-  GR32,
-  LemTypes;
+  Types, GR32;
 
 // NeoLemmix Save Data Structure
 type
@@ -106,7 +104,6 @@ type
   TLVLObjects = array[0..LVL_MAXOBJECTCOUNT - 1] of TLVLObject;
   TLVLTerrains = array[0..LVL_MAXTERRAINCOUNT - 1] of TLVLTerrain;
   TLVLSteels = array[0..LVL_MAXSTEELCOUNT - 1] of TLVLSteel;
-//  TChars32 = array[0..31] of Char;
 
   // the main record 2048 bytes
   TLVLRec = packed record
@@ -376,61 +373,13 @@ const
 -------------------------------------------------------------------------------}
 
 type
-  PDosMetaObject = ^TDosMetaObject;
-  TDosMetaObject = packed record
-    oAnimation_flags               : Word; // 2
-    oStart_animation_frame_index   : Byte; // 3
-    oAnimation_frame_count         : Byte; // 4
-    oWidth                         : Byte; // 5
-    oHeight                        : Byte; // 6
-    oAnimation_frame_data_size     : Word; // 8   size in bytes of each animation frame
-    oMask_offset_from_image        : Word; // 10
-    oUnknown1                      : Word; // 12
-    oUnknown2                      : Word; // 14
-    oTrigger_left                  : Byte; // 16
-    oTrigger_pointX                : Byte;
-    oTrigger_top                   : Byte; // 18
-    oTrigger_pointY                : Byte;
-    oTrigger_width                 : Byte; // 19
-    oTrigger_height                : Byte; // 20
-    oTrigger_effect_id             : Byte; // 21
-    oAnimation_frames_base_loc     : Word; // 23
-    oPreview_image_location        : Word; // 25
-    oUnknown3                      : Word; // 27
-    oSound_effect_id               : Byte; // 28
-  end;
-  TDosMetaObjectArray = packed array[0..15] of TDOSMetaObject;
-
-  PDosMetaTerrain = ^TDosMetaTerrain;
-  TDosMetaTerrain = packed record
-    tWidth        : Byte;
-    tHeight       : Byte;
-    tImage_loc    : Word;
-    tMask_loc     : Word;
-    tUnknown1     : Word
-  end;
-
-  TDosMetaTerrainArray = packed array[0..63] of TDosMetaTerrain;
   TDosEGAPalette8 = packed array[0..7] of Byte;
 
-  PDosVgaColorRec = ^TDosVgaColorRec;
   TDosVgaColorRec = packed record
     R, G, B: Byte;
   end;
 
   TDosVGAPalette8 = packed array[0..7] of TDosVGAColorRec;
-
-  // this is the total structure of a dos ground?.dat
-  TDosGroundRec = packed record
-    ObjectInfoArray     : TDosMetaObjectArray;
-    TerrainInfoArray    : TDosMetaTerrainArray;
-    EGA_PaletteCustom   : TDosEGAPalette8;
-    EGA_PaletteStandard : TDOSEGAPalette8;
-    EGA_PalettePreview  : TDOSEGAPalette8;
-    VGA_PaletteCustom   : TDOSVGAPalette8;
-    VGA_PaletteStandard : TDOSVGAPalette8;
-    VGA_PalettePreview  : TDOSVGAPalette8;
-  end;
 
   TDosVGAPalette16 = packed array[0..15] of TDosVGAColorRec;
 
@@ -453,11 +402,7 @@ const
     (R: 000; G: 000; B: 000) // not used: probably this color is replaced with the standard palette entry in ground??.dat
   );
 
-//const
-  //LemmingBlue: TColor32 =
-  //LemmixInLevelPallette =
-
-const                             
+const
   { TODO : do not mix original rgb and converted rgb }
   DosMainMenuPalette: TDosVGAPalette16 = (
     (R: 000; G: 000; B: 000), // black
