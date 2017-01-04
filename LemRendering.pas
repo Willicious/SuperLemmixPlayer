@@ -2,32 +2,12 @@
 
 unit LemRendering;
 
-{-------------------------------------------------------------------------------
-  Some notes on the rendering here...
-
-  Levels consist of terrains and objects.
-  1) Objects kan animate and terrain can be changed.
-  2) Lemmings only have collisions with terrain
-
-  The alpha channel of the pixels is used to put information about the pixels
-  in the bitmap:
-  Bit0 = there is terrain in this pixel
-  Bit1 = there is interactive object in this pixel (maybe this makes no sense)
-
-  This is done to optimize the drawing of (funny enough) static and triggered
-  objects. mmm how are we going to do that????
-
-  (Other ideas: pixel builder-brick, pixel erased by basher/miner/digger, triggerarea)
--------------------------------------------------------------------------------}
-
 interface
 
 uses
-  Dialogs,
-  Classes, {Contnrs,} Math, Windows,
-  GR32, GR32_LowLevel, GR32_Blend,
-  UMisc,
-  SysUtils,
+  Classes, Math, Windows,
+  GR32, GR32_Blend,
+  UMisc, SysUtils, StrUtils,
   PngInterface,
   LemRecolorSprites,
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
@@ -38,7 +18,7 @@ uses
   LemSteel,
   LemLemming,
   LemDosAnimationSet, LemMetaAnimation, LemCore,
-  LemLevel, StrUtils, LemStrings;
+  LemLevel, LemStrings;
 
 type
   TParticleRec = packed record
@@ -67,19 +47,11 @@ type
     TempBitmap         : TBitmap32;
     Inf                : TRenderInfoRec;
     fXmasPal : Boolean;
-
     fTheme: TNeoTheme;
-
     fHelperImages: THelperImages;
-
-    {fWorld: TBitmap32;}
-
     fAni: TBaseDosAnimationSet;
-
     fBgColor : TColor32;
-
     fParticles                 : TParticleTable; // all particle offsets
-
     fObjectInfoList: TInteractiveObjectInfoList; // For rendering from Preview screen
 
     // Add stuff
@@ -134,7 +106,7 @@ type
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
     procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false; UsefulOnly: Boolean = false);
-    procedure DrawLemmingHelper(aLemming: TLemming);
+    procedure DrawLemmingCountdown(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton);
@@ -171,9 +143,6 @@ type
   end;
 
 implementation
-
-uses
-  UTools;
 
 { TRenderer }
 
@@ -253,7 +222,7 @@ begin
       DrawLemmingParticles(LemmingList[i]);
       fLayers.fIsEmpty[rlParticles] := False;
     end;
-    DrawLemmingHelper(LemmingList[i]);
+    DrawLemmingCountdown(LemmingList[i]);
   end;
 end;
 
@@ -315,7 +284,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawLemmingHelper(aLemming: TLemming);
+procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
 var
   ShowCountdown, ShowHighlight: Boolean;
   SrcRect: TRect;
@@ -417,7 +386,6 @@ end;
 
 procedure TRenderer.DrawShadows(L: TLemming; SkillButton: TSkillPanelButton);
 var
-  i: Integer;
   CopyL: TLemming;
 begin
   // Copy L to simulate the path
