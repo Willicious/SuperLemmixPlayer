@@ -170,7 +170,7 @@ begin
   if MetaObj.RandomStartFrame then
     CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1){ + i}) mod MetaObj.FrameCount
   else if MetaObj.TriggerEffect = DOM_PICKUP then
-    CurrentFrame := Obj.Skill + 1
+    CurrentFrame := Obj.Skill + (Obj.TarLev * 16) + 1
   else if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
     CurrentFrame := 1
   else
@@ -277,7 +277,7 @@ end;
 function TInteractiveObjectInfo.GetSkillType: Integer;
 begin
   Assert(TriggerEffect = DOM_PICKUP, 'Object.SkillType called for non-PickUp skill');
-  Result := Obj.Skill;
+  Result := Obj.Skill + (Obj.TarLev * 16);
 end;
 
 function TInteractiveObjectInfo.GetSoundEffect: Integer;

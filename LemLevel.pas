@@ -423,6 +423,11 @@ var
     if S = 'miner' then O.Skill := 6;
     if S = 'digger' then O.Skill := 7;
     if S = 'cloner' then O.Skill := 15;
+    if S = 'fencer' then
+    begin
+      O.Skill := 0;
+      O.TarLev := 1;
+    end;
   end;
 
   procedure GetSplitterData;
@@ -721,7 +726,7 @@ var
   var
     S: String;
   begin
-    case O.Skill of
+    case O.Skill + (O.TarLev * 16) of
       8: S := 'WALKER';
       0: S := 'CLIMBER';
       9: S := 'SWIMMER';
@@ -738,6 +743,7 @@ var
       6: S := 'MINER';
       7: S := 'DIGGER';
       15: S := 'CLONER';
+      16: S := 'FENCER';
     end;
 
     Sec.AddLine(S);
