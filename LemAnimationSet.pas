@@ -6,10 +6,7 @@ interface
 
 uses
   Classes, GR32,
-  LemCore,
-  LemTypes,
-  LemMetaAnimation,
-  LemAnimation;
+  LemTypes, LemMetaAnimation;
 
 type
   {-------------------------------------------------------------------------------
@@ -18,7 +15,6 @@ type
   TBaseAnimationSet = class(TPersistent)
   private
     procedure SetMetaLemmingAnimations(Value: TMetaLemmingAnimations);
-    procedure SetMetaMaskAnimations(Value: TMetaAnimations);
   protected
     fMetaLemmingAnimations : TMetaLemmingAnimations; // meta data lemmings
     fMetaMaskAnimations    : TMetaAnimations; // meta data masks (for bashing etc.)
@@ -39,7 +35,6 @@ type
     procedure ReadMetaData(XmasPal : Boolean = false);
     procedure ReadData;
     procedure ClearData;
-    procedure ReplaceLemmingAnimationColor(OldColor, NewColor: TColor32);
 
     property BrickColor: TColor32 read fBrickColor write fBrickColor;
 
@@ -47,7 +42,6 @@ type
     property MaskAnimations: TBitmaps read fMaskAnimations;
   published
     property MetaLemmingAnimations: TMetaLemmingAnimations read fMetaLemmingAnimations write SetMetaLemmingAnimations;
-    property MetaMaskAnimations: TMetaAnimations read fMetaMaskAnimations write SetMetaMaskAnimations;
   end;
 
 implementation
@@ -57,7 +51,6 @@ implementation
 constructor TBaseAnimationSet.Create;
 begin
   inherited Create;
-  //fBrickColor := clMask32;
   fMetaLemmingAnimations := DoCreateMetaLemmingAnimations;
   fMetaMaskAnimations := DoCreateMetaMaskAnimations;
   fLemmingAnimations := TBitmaps.Create;
@@ -79,31 +72,13 @@ begin
 end;
 
 procedure TBaseAnimationSet.ReadData;
-//var
-  //i: Integer;
 begin
   DoReadData;
-  (*
-  for i := 0 to fAnimationCache.Count - 1 do
-  begin
-    ReplaceColor(TBitmap32(fAnimationCache[i]), clBRICK32, fBrickColor);
-  end;
-  *)
 end;
 
 procedure TBaseAnimationSet.ClearData;
 begin
   DoClearData;
-end;
-
-
-procedure TBaseAnimationSet.ReplaceLemmingAnimationColor(OldColor, NewColor: TColor32);
-var
-  i: Integer;
-begin
-  for i := 0 to fLemmingAnimations.Count - 1 do
-    //ReplaceColor(TBitmap32(fLemmingAnimations[i]), fBrickColor, aColor);
-    ReplaceColor(fLemmingAnimations[i], OldColor, NewColor);
 end;
 
 
@@ -122,10 +97,6 @@ begin
   fMetaLemmingAnimations.Assign(Value);
 end;
 
-procedure TBaseAnimationSet.SetMetaMaskAnimations(Value: TMetaAnimations);
-begin
-  fMetaMaskAnimations.Assign(Value);
-end;
 
 end.
 
