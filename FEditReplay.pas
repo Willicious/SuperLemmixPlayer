@@ -81,6 +81,7 @@ var
             baGliding:     Result := 'Glider';
             baFixing:      Result := 'Disarmer';
             baCloning:     Result := 'Cloner';
+            baFencing:     Result := 'Fencer';
         else Result := '(Invalid skill)';
       end;
     end;

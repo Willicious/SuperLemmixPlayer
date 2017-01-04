@@ -23,6 +23,7 @@ const
   tls_Miner = 13;
   tls_Digger = 14;
   tls_Cloner = 15;
+  tls_Fencer = 16;
 
   tls_FormatVersion = 1;
   tls_Signature = $E39F;
@@ -30,7 +31,7 @@ const
 type
 
   TalismanMiscOpts = (tmFindSecret, tmOneSkill, tmOneLemming, tmUnlockLevel,
-                      tm4, tm5, tm6, tm7,
+                      tmRestrictFencer, tm5, tm6, tm7,
                       tm8, tm9, tm10, tm11,
                       tm12, tm13, tm14, tm15,
                       tm16, tm17, tm18, tm19,
@@ -60,7 +61,8 @@ type
     MiscOptions        : LongWord;
     UnlockRank         : Byte;
     UnlockLevel        : Byte;
-    Reserved           : Array[0..8] of Byte;
+    FencerLimit        : Byte;
+    Reserved           : Array[0..7] of Byte;
     Signature          : LongWord;
     Description        : Array[0..63] of Char;
   end;
@@ -82,7 +84,7 @@ type
       fMiscOptions: TalismanMisc;
       fSignature: Cardinal;
     public
-      SkillLimit: Array[0..15] of Integer;
+      SkillLimit: Array[0..16] of Integer;
       constructor Create;
       destructor Destroy; override; // just in case this is needed at a later date
       procedure Assign(aValue: TTalisman);
@@ -204,11 +206,15 @@ begin
           SkillLimit[i] := DataRec.SkillLimits[i]
         else
           SkillLimit[i] := -1;
+      if tmRestrictFencer in TalismanMisc(DataRec.MiscOptions) then
+        SkillLimit[16] := DataRec.FencerLimit
+      else
+        SkillLimit[16] := -1;
       TotalSkillLimit := DataRec.TotalSkillLimit;
       if TotalSkillLimit = 65535 then TotalSkillLimit := -1;
       UnlockRank := DataRec.UnlockRank;
       UnlockLevel := DataRec.UnlockLevel;
-      MiscOptions := TalismanMisc(DataRec.MiscOptions);
+      MiscOptions := TalismanMisc(DataRec.MiscOptions) - [tmRestrictFencer];
       Signature := DataRec.Signature;
     end;
   fVisibleCount := -1;
