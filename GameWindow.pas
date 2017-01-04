@@ -55,7 +55,6 @@ type
     procedure CheckResetCursor;
     function CheckScroll: Boolean;
     procedure AddSaveState;
-    procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     procedure CheckAdjustReleaseRate;
     procedure LoadReplay;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
@@ -71,7 +70,7 @@ type
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
     SkillPanel           : TSkillPanelToolbar;// our good old dos skill panel
     fActivateCount       : Integer;           // used when activating the form
-    ForceUpdateOneFrame  : Boolean;           // used when paused
+    //ForceUpdateOneFrame  : Boolean;           // used when paused -- MOVED TO PUBLIC FOR SKILL PANEL'S USE
     GameScroll           : TGameScroll;       // scrollmode
     GameVScroll          : TGameScroll;
     IdealFrameTimeMS     : Cardinal;          // normal frame speed in milliseconds
@@ -101,9 +100,12 @@ type
   { internal properties }
     property Game: TLemmingGame read fGame;
   public
+    ForceUpdateOneFrame  : Boolean;           // used when paused
+    
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure ApplyMouseTrap;
+    procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
   end;

@@ -587,6 +587,9 @@ begin
                               Game.FastForward := not Game.FastForward;
                               DrawButtonSelector(spbFastForward, Game.FastForward);
                             end;
+            spbRestart: TGameWindow(Parent).GotoSaveState(0, true);
+            spbBackOneFrame: TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 2); // logically this should be -1, but -2 seems to give correct behaviour. should probably investigate this.
+            spbForwardOneFrame: TGameWindow(Parent).ForceUpdateOneFrame := true;
           end;
         end;
       Exit;
