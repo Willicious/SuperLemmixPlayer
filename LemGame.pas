@@ -2774,7 +2774,7 @@ end;
 
 procedure TLemmingGame.InitializeMiniMap;
 begin
-  if fSimulation then Exit;
+  if fSimulation or not GameParams.ShowMinimap then Exit;  // it wouldn't be shown anyway, but not rendering it = better performance
   // The renderer handles most of the work here now.
   Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
   fRenderer.RenderMinimap(Minimap);

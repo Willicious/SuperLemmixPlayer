@@ -730,7 +730,11 @@ begin
                             end;
           lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
           lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
-          lka_Pause: SetSelectedSkill(spbPause);
+          lka_Pause: begin
+                       SetSelectedSkill(spbPause);
+                       SkillPanel.DrawButtonSelector(spbPause, Paused);
+                       if Paused then SkillPanel.DrawButtonSelector(spbFastForward, false);
+                     end;
           lka_Nuke: begin
                       // double keypress needed to prevent accidently nuking
                       CurrTime := TimeGetTime;
@@ -748,7 +752,10 @@ begin
                             if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                           end;
           lka_Cheat: Game.Cheat;
-          lka_FastForward: if not Paused then FastForward := not FastForward;
+          lka_FastForward: begin
+                             if not Paused then FastForward := not FastForward;
+                             SkillPanel.DrawButtonSelector(spbFastForward, Game.FastForward);
+                           end;
           lka_SaveImage: SaveShot;
           lka_LoadReplay: LoadReplay;
           lka_Music: if MusicVolume <> 0 then

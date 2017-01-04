@@ -116,7 +116,13 @@ type
     spbSlower,
     spbFaster,
     spbPause,
-    spbNuke
+    spbNuke,
+
+    spbFastForward,
+    spbRestart,
+    spbBackOneFrame,
+    spbForwardOneFrame,
+    spbClearPhysics
   );
 
 
@@ -224,7 +230,12 @@ const
     baNone, //RR-
     baNone, //RR+
     baNone, //Pause
-    baNone  //Nuke
+    baNone,  //Nuke
+    baNone,  // FF
+    baNone,  // Restart
+    baNone,  // -1f
+    baNone,  // +1f
+    baNone   // Clear Physics
   );
 
 const

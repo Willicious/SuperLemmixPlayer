@@ -271,9 +271,13 @@ begin
   case Highlight of
     False :
       begin
-        if fHighlitSkill = spbNone then Exit;
-        R := fButtonRects[fHighlitSkill];
-        fHighlitSkill := spbNone;
+        if aButton < spbNone then
+        begin
+          if fHighlitSkill = spbNone then Exit;
+          R := fButtonRects[fHighlitSkill];
+          fHighlitSkill := spbNone;
+        end else
+          R := fButtonRects[aButton];
         Inc(R.Right);
         Inc(R.Bottom, 2);
 
@@ -302,8 +306,12 @@ begin
       end;
     True  :
       begin
-        fHighlitSkill := aButton;
-        R := fButtonRects[fHighlitSkill];
+        if aButton < spbNone then // we don't want to memorize this for eg. fast forward
+        begin
+          fHighlitSkill := aButton;
+          R := fButtonRects[fHighlitSkill];
+        end else
+          R := fButtonRects[aButton];
         Inc(R.Right);
         Inc(R.Bottom, 2);
         { TODO : do something with this palettes }
@@ -514,7 +522,7 @@ begin
   TGameWindow(Parent).ApplyMouseTrap;
 
   // check minimap scroll
-  if PtInRectEx(DosMiniMapCorners, P) then
+  if PtInRectEx(DosMiniMapCorners, P) and GameParams.ShowMinimap then
   begin
     Dec(P.X, DosMinimapCorners.Left);
     Dec(P.Y, DosMiniMapCorners.Top);
@@ -558,15 +566,29 @@ begin
           Exec := ssDouble in Shift;
 
       if Exec then
-      begin
-        if i in [spbNuke] then
-          Game.RegainControl;
-          
-        if i in [spbSlower, spbFaster] then
-          Game.SetSelectedSkill(i, True, (Button = mbRight))
-        else
-          Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
-      end;
+        if i < spbFastForward then // handled by TLemmingGame alone
+        begin
+          if i in [spbNuke] then
+            Game.RegainControl;
+
+          if i in [spbSlower, spbFaster] then
+            Game.SetSelectedSkill(i, True, (Button = mbRight))
+          else begin
+            Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
+            if (i = spbPause) then
+            begin
+              DrawButtonSelector(spbFastForward, false);
+              DrawButtonSelector(spbPause, Game.Paused);
+            end;
+          end;
+        end else begin // need special handling
+          case i of
+            spbFastForward: begin
+                              Game.FastForward := not Game.FastForward;
+                              DrawButtonSelector(spbFastForward, Game.FastForward);
+                            end;
+          end;
+        end;
       Exit;
     end;
   end;
@@ -587,7 +609,7 @@ begin
   begin
     P := Img.ControlToBitmap(Point(X, Y));
 
-    if PtInRectEx(DosMiniMapCorners, P) then
+    if PtInRectEx(DosMiniMapCorners, P) and GameParams.ShowMinimap then
     begin
       Dec(P.X, DosMinimapCorners.Left);
       Dec(P.Y, DosMiniMapCorners.Top);
@@ -754,8 +776,22 @@ begin
     MakePanel(TempBmp, 'icon_rr_plus.png', true);
     TempBmp.DrawTo(fOriginal, 17, 16);
 
-    GetGraphic('minimap_region.png', TempBmp);
-    TempBmp.DrawTo(fOriginal, 193, 16);
+    if GameParams.ShowMinimap then
+    begin
+      GetGraphic('minimap_region.png', TempBmp);
+      TempBmp.DrawTo(fOriginal, 193, 16);
+    end else begin
+      MakePanel(TempBmp, 'icon_ff.png', false);
+      TempBmp.DrawTo(fOriginal, 193, 16);
+      MakePanel(TempBmp, 'icon_restart.png', false);
+      TempBmp.DrawTo(fOriginal, 209, 16);
+      MakePanel(TempBmp, 'icon_1fb.png', false);
+      TempBmp.DrawTo(fOriginal, 225, 16);
+      MakePanel(TempBmp, 'icon_1ff.png', false);
+      TempBmp.DrawTo(fOriginal, 241, 16);
+      MakePanel(TempBmp, 'icon_clearphysics.png', false);
+      TempBmp.DrawTo(fOriginal, 257, 16);
+    end;
 
     GetGraphic('empty_slot.png', TempBmp);
     for i := 0 to 7 do
@@ -878,13 +914,22 @@ begin
   begin
     fButtonRects[iButton] := R;
     //RectMove(R, 16, 0);
-    
+
   end;
 
   fButtonRects[spbSlower] := Rect(1, 16, 15, 38);
   fButtonRects[spbFaster] := Rect(17, 16, 31, 38);
   fButtonRects[spbPause]  := Rect(161, 16, 175, 38);
   fButtonRects[spbNuke]   := Rect(177, 16, 191, 38);
+
+  R := Rect(193, 16, 207, 38);
+
+  if not GameParams.ShowMinimap then
+    for iButton := spbFastForward to High(TSkillPanelButton) do
+    begin
+      fButtonRects[iButton] := R;
+      RectMove(R, 16, 0);
+    end;
 
 
 end;
@@ -1076,6 +1121,8 @@ var
   SrcRect : TRect;
   EraseRect: TRect;
 begin
+  if not GameParams.ShowMinimap then Exit;
+
   Dx := 208;
   if Map.Width < 104 then Dx := Dx + (52 - (Map.Width div 2));
   SrcRect := Rect(0, 0, 104, 20);
