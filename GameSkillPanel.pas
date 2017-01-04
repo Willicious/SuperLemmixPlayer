@@ -609,6 +609,7 @@ begin
                           DrawButtonSelector(spbDirLeft, false);
                           DrawButtonSelector(spbDirRight, true);
                         end;
+            spbLoadReplay: TGameWindow(Parent).LoadReplay;
           end;
         end;
       Exit;

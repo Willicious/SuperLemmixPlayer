@@ -56,7 +56,6 @@ type
     function CheckScroll: Boolean;
     procedure AddSaveState;
     procedure CheckAdjustReleaseRate;
-    procedure LoadReplay;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
     procedure StartReplay2(const aFileName: string);
     procedure InitializeCursor;
@@ -108,6 +107,7 @@ type
     destructor Destroy; override;
     procedure ApplyMouseTrap;
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
+    procedure LoadReplay;    
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;

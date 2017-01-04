@@ -23,7 +23,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 345
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
@@ -118,7 +118,7 @@ object FormNXConfig: TFormNXConfig
       ImageIndex = 4
       object Label1: TLabel
         Left = 11
-        Top = 192
+        Top = 208
         Width = 30
         Height = 13
         Caption = 'Zoom:'
@@ -153,7 +153,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 72
         Width = 249
-        Height = 105
+        Height = 121
         Caption = 'Interface Options'
         TabOrder = 1
         object cbLemmingBlink: TCheckBox
@@ -201,10 +201,19 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 4
           OnClick = OptionChanged
         end
+        object cbShowMinimap: TCheckBox
+          Left = 12
+          Top = 96
+          Width = 153
+          Height = 17
+          Caption = 'Show Minimap'
+          TabOrder = 5
+          OnClick = OptionChanged
+        end
       end
       object cbZoom: TComboBox
         Left = 56
-        Top = 188
+        Top = 204
         Width = 177
         Height = 21
         Style = csDropDownList
