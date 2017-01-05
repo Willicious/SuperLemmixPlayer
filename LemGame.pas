@@ -34,7 +34,10 @@ const
   ParticleColorIndices: array[0..15] of Byte =
     (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
 
-  AlwaysAnimateObjects = [0, 1, 2, 3, 5, 6, 7, 8, 18, 19, 20, 22, 25, 26, 27, 30];
+  AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
+        DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_RADIATION,
+        DOM_ONEWAYDOWN, DOM_UPDRAFT, DOM_SLOWFREEZE, DOM_HINT, DOM_NOSPLAT,
+        DOM_SPLAT, DOM_BACKGROUND];
 
 const
   // never change, do NOT trust the bits are the same as the enumerated type.
@@ -220,7 +223,6 @@ type
     ExploderAssignInProgress   : Boolean;
     Index_LemmingToBeNuked     : Integer;
     fCurrentCursor             : Integer; // normal or highlight
-    BrickPixelColor            : TColor32;
     BrickPixelColors           : array[0..11] of TColor32; // gradient steps
     fGameFinished              : Boolean;
     fGameCheated               : Boolean;
@@ -1262,7 +1264,6 @@ procedure TLemmingGame.PrepareParams;
 var
   Ani: TBaseDosAnimationSet;
   i: Integer;
-  Bmp: TBitmap32;
   LowPal, HiPal, Pal: TArrayOfColor32;
 begin
   fXmasPal := GameParams.SysDat.Options2 and 2 <> 0;
@@ -6202,74 +6203,18 @@ begin
   TPngInterface.SavePngFile(Filename, fTargetBitmap, true);
 end;
 
-{ TReplayItem }
-
 procedure TLemmingGame.InitializeBrickColors(aBrickPixelColor: TColor32);
 var
   i: Integer;
-  aR, aG, aB: Integer;
-  P: PColor32Entry;
 begin
-  BrickPixelColor := aBrickPixelColor;
-  (*
-  // testing
-  for i := 0 to 11 do
-    if Odd(i) then
-    BrickPixelColors[i] := clyellow32
-  else
-    BrickPixelColors[i] := clred32;
-  exit;
-  *)
-
-  for i := 0 to 11 do
-    BrickPixelColors[i] := aBrickPixelColor;
-
-  P := @BrickPixelColor;
-
-  with p^ do
+  with TColor32Entry(aBrickPixelColor) do
+  for i := 0 to Length(BrickPixelColors) - 1 do
   begin
-    ar:=r;
-    ag:=g;
-    ab:=b;
+    TColor32Entry(BrickPixelColors[i]).A := A;
+    TColor32Entry(BrickPixelColors[i]).R := Min(Max(R + (i - 6) * 4, 0), 255);
+    TColor32Entry(BrickPixelColors[i]).B := Min(Max(B + (i - 6) * 4, 0), 255);
+    TColor32Entry(BrickPixelColors[i]).G := Min(Max(G + (i - 6) * 4, 0), 255);
   end;
-
-  // lighter
-  for i := 7 to 11 do
-  begin
-    P := @BrickPixelColors[i];
-    with P^ do
-    begin
-      if aR < 252  then inc(ar,4);
-      if ag < 252 then inc(ag,4);
-      if ab < 252 then inc(ab,4);
-      r:=ar; g:=ag; b:=ab;
-    end;
-  end;
-
-
-  P := @BrickPixelColor;
-
-  with p^ do
-  begin
-    ar:=r;
-    ag:=g;
-    ab:=b;
-  end;
-
-
-  // darker
-  for i := 5 downto 0 do
-  begin
-    P := @BrickPixelColors[i];
-    with P^ do
-    begin
-      if aR > 3 then dec(ar,4);
-      if ag > 3 then dec(ag,4);
-      if ab > 3 then dec(ab,4);
-      r:=ar; g:=ag; b:=ab;
-    end;
-  end;
-
 end;
 
 function TLemmingGame.GetIsReplaying: Boolean;
