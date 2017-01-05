@@ -34,7 +34,8 @@ type
 
   TDrawableItem = (di_ConstructivePixel, di_Stoner);
   TDrawRoutine = procedure(X, Y: Integer) of object;
-  TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
+  TDrawRoutineWithColor = procedure(X, Y: Integer; Color: TColor32) of object;
+  //TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
   TSimulateTransitionRoutine = procedure(L: TLemming; NewAction: TBasicLemmingAction) of object;
   TSimulateLemRoutine = function(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt of object;
@@ -125,7 +126,9 @@ type
       fTerrainMap: TBitmap32;
       fScreenPos: TPoint;
       fMousePos: TPoint;
-      fDrawRoutines: TDrawRoutines;
+      fDrawRoutineBrick: TDrawRoutineWithColor;
+      fDrawRoutineStoner: TDrawRoutine;
+      //fDrawRoutines: TDrawRoutines;
       fRemoveRoutine: TRemoveRoutine;
       fSimulateTransitionRoutine: TSimulateTransitionRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
@@ -141,11 +144,13 @@ type
     public
       constructor Create;
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
-      procedure SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
+      procedure SetDrawRoutineStoner(aRoutine: TDrawRoutine);
+      procedure SetDrawRoutineBrick(aRoutine: TDrawRoutineWithColor);
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
       procedure SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
       procedure SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
-      procedure AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
+      procedure AddTerrainBrick(X, Y: Integer; Color: TColor32);
+      procedure AddTerrainStoner(X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
       procedure Null;
       procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
@@ -222,15 +227,20 @@ constructor TRenderInterface.Create;
 var
   i: TDrawableItem;
 begin
-  for i := Low(TDrawableItem) to High(TDrawableItem) do
-    fDrawRoutines[i] := nil;
+  fDrawRoutineBrick := nil;
+  fDrawRoutineStoner := nil;
   fUserHelperIcon := hpi_None;
   fSelectedLemmingID := -1;
 end;
 
-procedure TRenderInterface.SetDrawRoutine(aItem: TDrawableItem; aRoutine: TDrawRoutine);
+procedure TRenderInterface.SetDrawRoutineStoner(aRoutine: TDrawRoutine);
 begin
-  fDrawRoutines[aItem] := aRoutine;
+  fDrawRoutineStoner := aRoutine;
+end;
+
+procedure TRenderInterface.SetDrawRoutineBrick(aRoutine: TDrawRoutineWithColor);
+begin
+  fDrawRoutineBrick := aRoutine;
 end;
 
 procedure TRenderInterface.SetRemoveRoutine(aRoutine: TRemoveRoutine);
@@ -249,12 +259,18 @@ begin
   fGetHighlitLemRoutine := aRoutine;
 end;
 
-procedure TRenderInterface.AddTerrain(aAddType: TDrawableItem; X, Y: Integer);
+procedure TRenderInterface.AddTerrainBrick(X, Y: Integer; Color: TColor32);
 begin
   // TLemmingGame is expected to handle modifications to the physics map.
   // This is to pass to TRenderer for on-screen drawing.
-  if Assigned(fDrawRoutines[aAddType]) then
-    fDrawRoutines[aAddType](X, Y);
+  if Assigned(fDrawRoutineBrick) then fDrawRoutineBrick(X, Y, Color);
+end;
+
+procedure TRenderInterface.AddTerrainStoner(X, Y: Integer);
+begin
+  // TLemmingGame is expected to handle modifications to the physics map.
+  // This is to pass to TRenderer for on-screen drawing.
+  if Assigned(fDrawRoutineStoner) then fDrawRoutineStoner(X, Y);
 end;
 
 procedure TRenderInterface.RemoveTerrain(X, Y, Width, Height: Integer);

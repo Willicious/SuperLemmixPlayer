@@ -55,7 +55,7 @@ type
     fObjectInfoList: TInteractiveObjectInfoList; // For rendering from Preview screen
 
     // Add stuff
-    procedure AddTerrainPixel(X, Y: Integer);
+    procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
     procedure AddStoner(X, Y: Integer);
     // Remove stuff
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
@@ -149,8 +149,8 @@ implementation
 procedure TRenderer.SetInterface(aInterface: TRenderInterface);
 begin
   fRenderInterface := aInterface;
-  fRenderInterface.SetDrawRoutine(di_ConstructivePixel, AddTerrainPixel);
-  fRenderInterface.SetDrawRoutine(di_Stoner, AddStoner);
+  fRenderInterface.SetDrawRoutineBrick(AddTerrainPixel);
+  fRenderInterface.SetDrawRoutineStoner(AddStoner);
   fRenderInterface.SetRemoveRoutine(ApplyRemovedTerrain);
 end;
 
@@ -819,7 +819,7 @@ begin
     fLayers[rlHighShadows].Pixel[X, Y] := SHADOW_COLOR;
 end;
 
-procedure TRenderer.AddTerrainPixel(X, Y: Integer);
+procedure TRenderer.AddTerrainPixel(X, Y: Integer; Color: TColor32);
 var
   P: PColor32;
   C: TColor32;
@@ -827,7 +827,7 @@ begin
   P := fLayers[rlTerrain].PixelPtr[X, Y];
   if P^ and $FF000000 <> $FF000000 then
   begin
-    C := Theme.Colors[MASK_COLOR];
+    C := Color; //Theme.Colors[MASK_COLOR];
     BlendMem(P^, C);
     P^ := C;
   end;

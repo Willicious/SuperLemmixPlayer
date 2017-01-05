@@ -312,7 +312,7 @@ type
     procedure ApplyExplosionMask(L: TLemming);
     procedure ApplyStoneLemming(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
-    procedure AddConstructivePixel(X, Y: Integer);
+    procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     procedure ApplyLevelEntryOrder;
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckForGameFinished;
@@ -3150,7 +3150,7 @@ begin
   StoneLemBmp.DrawMode := dmCustom;
   StoneLemBmp.OnPixelCombine := CombineNoOverwriteStoner;
   StoneLemBmp.DrawTo(PhysicsMap, X - 8, L.LemY -10);
-  fRenderInterface.AddTerrain(di_Stoner, X - 8, L.LemY -10);
+  fRenderInterface.AddTerrainStoner(X - 8, L.LemY -10);
 
   InitializeMinimap;
 end;
@@ -3386,7 +3386,7 @@ begin
   else BrickPosY := L.LemY; // for platformers
 
   for n := 0 to 5 do
-    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY);
+    AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
 
   InitializeMinimap;
 end;
@@ -3414,7 +3414,7 @@ begin
     if not HasPixelAt(PixPosX, BrickPosY) then
     begin
       // Do not change the fPhysicsMap when simulating stacking
-      if not fSimulation then AddConstructivePixel(PixPosX, BrickPosY);
+      if not fSimulation then AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
       Result := true;
     end;
   end;
@@ -3422,10 +3422,10 @@ begin
   InitializeMinimap;
 end;
 
-procedure TLemmingGame.AddConstructivePixel(X, Y: Integer);
+procedure TLemmingGame.AddConstructivePixel(X, Y: Integer; Color: TColor32);
 begin
   PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] or PM_SOLID;
-  if not fSimulation then fRenderInterface.AddTerrain(di_ConstructivePixel, X, Y);
+  if not fSimulation then fRenderInterface.AddTerrainBrick(X, Y, Color);
 end;
 
 
