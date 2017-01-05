@@ -192,10 +192,6 @@ type
     EntriesOpened              : Boolean;
     LemmingMethods             : TLemmingMethodArray; // a method for each basic lemming state
     NewSkillMethods            : TNewSkillMethodArray; // The replacement of SkillMethods
-    fFreezeSkillCount          : Boolean; // used when skill count should be frozen, for example when
-                                          // calling assign routines that should assign the skill for free
-                                          // note that this also overrides the test for if skills are available
-    fFreezeRecording           : Boolean;
     LastNPLemming              : TLemming; // for emulation of right-click bug
     fLemSelected               : TLemming; // lem under cursor, who would receive the skill
     fLemWithShadow             : TLemming; // needed for CheckForNewShadow to erase previous shadow
@@ -5483,9 +5479,7 @@ procedure TLemmingGame.RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingA
 var
   E: TReplaySkillAssignment;
 begin
-  if fFreezeRecording then Exit;
-  if not fPlaying then
-    Exit;
+  if not fPlaying then Exit;
 
   E := TReplaySkillAssignment.Create;
   E.Skill := aSkill;
@@ -6130,8 +6124,7 @@ var
   sc, i: Integer;
   CheckButton: TSkillPanelButton;
 begin
-  Result := fFreezeSkillCount;
-  if fFreezeSkillCount then Exit;
+  Result := false;
 
   Assert(aAction in AssignableSkills, 'CheckSkillAvailable for not assignable skill');
 
@@ -6157,7 +6150,6 @@ begin
       Exit
     else
       Rev := true;
-  if fFreezeSkillCount then Exit;
 
   Assert(aAction in AssignableSkills, 'UpdateSkillCount for not assignable skill');
 
