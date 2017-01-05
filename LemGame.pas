@@ -3,16 +3,6 @@
 {-------------------------------------------------------------------------------
   Some source code notes:
 
-  • Places with optional mechanics are marked with a comment
-  :
-    "// @Optional Game Mechanic"
-
-  • Note that a lot of routines start with "Result := False". I removed
-    redundant code, so if you see just an "Exit" call then it is always
-    to be interpreted as "Return False".
-    Nepster: This is no longer true in rewritten code. Here the default is
-    to return True.
-
   • Transition() method: It has a default parameter. So if you see a
     call to Transition() with three parameters and the last one is TRUE, it means
     that the lemming has to turn around as well. I commented this too at all
@@ -46,100 +36,22 @@ const
 
   AlwaysAnimateObjects = [0, 1, 2, 3, 5, 6, 7, 8, 18, 19, 20, 22, 25, 26, 27, 30];
 
-type
-  tFloatParameterRec = record
-    Dy: Integer;
-    AnimationFrameIndex: Integer;
-  end;
-
-
-{-------------------------------------------------------------------------------
-  Replay things
--------------------------------------------------------------------------------}
-type
-
-  TReplayOption = (
-    rpoLevelComplete,
-    rpoNoModes,
-    rpoB2,
-    rpoB3,
-    rpoB4,
-    rpoB5,
-    rpoB6,
-    rpoB7);
-  TReplayOptions = set of TReplayOption;
-
 const
   // never change, do NOT trust the bits are the same as the enumerated type.
-
-  //Recorded Game Flags
-  rgf_DisableObjectsAfter15          = Bit0;
-	rgf_MinerOneWayRightBug            = Bit1;
-	rgf_DisableButtonClicksWhenPaused  = Bit2;
-	rgf_SplattingExitsBug              = Bit3;
-	rgf_OldEntranceABBAOrder           = Bit4;
-	rgf_EntranceX25                    = Bit5;
-	rgf_FallerStartsWith3              = Bit6;
-  rgf_Max4EnabledEntrances           = Bit7;
-	rgf_AssignClimberShruggerActionBug = Bit8;
 
   //Recorded Action Flags
 	//raf_StartPause        = Bit0;
 	//raf_EndPause          = Bit1;
 	//raf_Pausing           = Bit2;
-	raf_StartIncreaseRR   = Bit3;  // only allowed when not pausing
-	raf_StartDecreaseRR   = Bit4;  // only allowed when not pausing
-	raf_StopChangingRR    = Bit5;  // only allowed when not pausing
-	raf_SkillSelection    = Bit6;
+	//raf_StartIncreaseRR   = Bit3;  // only allowed when not pausing
+	//raf_StartDecreaseRR   = Bit4;  // only allowed when not pausing
+	//raf_StopChangingRR    = Bit5;  // only allowed when not pausing
+	//raf_SkillSelection    = Bit6;
 	raf_SkillAssignment   = Bit7;
 	raf_Nuke              = Bit8;  // only allowed when not pausing, as in the game
-  raf_NewNPLemming      = Bit9;  // related to emulation of right-click bug
+  //raf_NewNPLemming      = Bit9;  // related to emulation of right-click bug
   //raf_RR99              = Bit10;
   //raf_RRmin             = Bit11;
-
-  //Recorded Lemming Action
-  rla_None       = 0;
-  rla_Walking    = 1;  // not allowed
-  rla_Jumping    = 2;  // not allowed
-  rla_Digging    = 3;
-  rla_Climbing   = 4;
-  rla_Drowning   = 5;  // not allowed
-  rla_Hoisting   = 6;  // not allowed
-  rla_Building   = 7;
-  rla_Bashing    = 8;
-  rla_Mining     = 9;
-  rla_Falling    = 10; // not allowed
-  rla_Floating   = 11;
-  rla_Splatting  = 12; // not allowed
-  rla_Exiting    = 13; // not allowed
-  rla_Vaporizing = 14; // not allowed
-  rla_Blocking   = 15;
-  rla_Shrugging  = 16; // not allowed
-  rla_Ohnoing    = 17; // not allowed
-  rla_Exploding  = 18;
-
-  // Recorded Selected Button
-  rsb_None       = 0;
-  rsb_Slower     = 1;  // not allowed
-  rsb_Faster     = 2;  // not allowed
-  rsb_Climber    = 3;
-  rsb_Umbrella   = 4;
-  rsb_Explode    = 5;
-  rsb_Stopper    = 6;
-  rsb_Builder    = 7;
-  rsb_Basher     = 8;
-  rsb_Miner      = 9;
-  rsb_Digger     = 10;
-  rsb_Pause      = 11; // not allowed
-  rsb_Nuke       = 12; // not allowed
-  rsb_Walker     = 13;
-  rsb_Swimmer    = 14;
-  rsb_Glider     = 15;
-  rsb_Mechanic   = 16;
-  rsb_Stoner     = 17;
-  rsb_Platformer = 18;
-  rsb_Stacker    = 19;
-  rsb_Cloner     = 20;
 
 type
   TLemmingGame = class;
@@ -1675,7 +1587,7 @@ begin
   // force update
   fSelectedSkill := spbNone;
   InitialSkill := spbNone;
-  i := 0;
+
   for i := 0 to 7 do
     fActiveSkills[i] := spbNone;
   i := 0;
@@ -1685,7 +1597,7 @@ begin
     begin
       if InitialSkill = spbNone then InitialSkill := Skill;
       fActiveSkills[i] := Skill;
-      inc(i);
+      Inc(i);
 
       if i = 8 then Break; // remove this if we ever allow more than 8 skill types per level
     end;
