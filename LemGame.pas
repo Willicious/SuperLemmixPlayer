@@ -17,15 +17,12 @@ uses
   SharedGlobals, PngInterface,
   Windows, Classes, Contnrs, SysUtils, Math, Forms, Dialogs,
   TalisData,
-  PngImage,
-  Controls, StrUtils,
-  UMisc, TypInfo,
-  GR32, GR32_OrdinalMaps, GR32_Layers,
-  LemNeoPieceManager, // makes use of the records containing images + metainfo
+  Controls, StrUtils, UMisc,
+  GR32, GR32_OrdinalMaps,
   LemCore, LemTypes, LemDosBmp, LemDosStructures, LemStrings, LemMetaAnimation,
-  LemMetaObject, LemInteractiveObject, LemSteel, LemLevel, LemStyle,
+  LemMetaObject, LemLevel, LemStyle,
   LemRenderHelpers, LemRendering, LemDosAnimationSet,
-  LemMusicSystem, LemDosMainDat, LemNeoTheme,
+  LemMusicSystem, LemNeoTheme,
   LemObjects, LemLemming, LemRecolorSprites,
   LemReplay,
   GameInterfaces, GameControl, GameSound;
@@ -90,7 +87,6 @@ type
       UserSetNuking: Boolean;
       ExploderAssignInProgress: Boolean;
       Index_LemmingToBeNuked: Integer;
-      LastRecordedRR: Integer;
       constructor Create;
       destructor Destroy; override;
   end;
@@ -223,11 +219,6 @@ type
     fStartupMusicAfterEntry    : Boolean;
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
-    
-    fLastRecordedRR            : Integer;
-
-    fExplodingGraphics         : Boolean;
-    fDoTimePause               : Boolean;
     fCancelReplayAfterSkip     : Boolean;
   { sound vars }
     fSoundOpts                 : TGameSoundOptions;
@@ -261,7 +252,6 @@ type
     SFX_ZOMBIE                 : Integer;
     SFX_CUSTOM                 : Array[0..255] of Integer;
   { events }
-    fOnDebugLemming            : TLemmingEvent; // eventhandler for debugging lemming under the cursor
     fOnFinish                  : TNotifyEvent;
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
     fSimulation                : Boolean; // whether we are in simulation mode for drawing shadows
@@ -326,7 +316,6 @@ type
     procedure CueSoundEffect(aSoundId: Integer; aOrigin: TPoint); overload;
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedObjects;
-    procedure DrawDebugString(L: TLemming);
     procedure CheckForNewShadow;
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
     function GetMusicFileName: String;
@@ -340,7 +329,7 @@ type
     function LayStackBrick(L: TLemming): Boolean;
     procedure MoveLemToReceivePoint(L: TLemming; oid: Byte);
 
-    function ReadZombieMap(X, Y: Integer): Byte;
+
     procedure RecordNuke;
     procedure RecordReleaseRate(aRR: Integer);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
@@ -357,6 +346,9 @@ type
       function ReadBlockerMap(X, Y: Integer): Byte;
 
     procedure SetZombieField(L: TLemming);
+      procedure WriteZombieMap(X, Y: Integer; aValue: Byte);
+      function ReadZombieMap(X, Y: Integer): Byte;
+
     procedure SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
     function SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt;
     procedure AddPreplacedLemming;
@@ -364,8 +356,6 @@ type
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
     procedure UpdateInteractiveObjects;
-
-    procedure WriteZombieMap(X, Y: Integer; aValue: Byte);
 
     function CheckLemmingBlink: Boolean;
     function CheckTimerBlink: Boolean;
@@ -437,18 +427,14 @@ type
 
     procedure SetSoundOpts(const Value: TGameSoundOptions);
   public
-    MiniMap                    : TBitmap32; // minimap of world  
-    GameResult                     : Boolean;
-    GameResultRec                  : TGameResultsRec;
-    SkillButtonsDisabledWhenPaused : Boolean; // this really should move somewere else
+    MiniMap                    : TBitmap32; // minimap of world
+    GameResult                 : Boolean;
+    GameResultRec              : TGameResultsRec;
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
-    UseReplayPhotoFlashEffect      : Boolean;
-    fAssignEnabled                    : Boolean;
-    InstReleaseRate            : Integer;
     fActiveSkills              : array[0..7] of TSkillPanelButton;
     ReleaseRateModifier        : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
-    ReplayInsert: Boolean;
+    ReplayInsert               : Boolean;
 
     // Postview screen needs access to these two sounds and the sound manager now
     SoundMgr                   : TSoundMgr;
@@ -465,7 +451,7 @@ type
     procedure UpdateLemmings;
 
   { callable }
-    procedure CheckAdjustReleaseRate;  
+    procedure CheckAdjustReleaseRate;
     procedure AdjustReleaseRate(aRR: Integer);
     function CheckIfLegalRR(aRR: Integer): Boolean;
     procedure CreateLemmingAtCursorPoint;
@@ -511,7 +497,6 @@ type
     property SoundOpts: TGameSoundOptions read fSoundOpts write SetSoundOpts;
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
-    property DoTimePause: Boolean read fDoTimePause write fDoTimePause;
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
     property LastReplayDir: String read fLastReplayDir write fLastReplayDir;
 
@@ -525,7 +510,6 @@ type
     function LoadSavedState(aState: TLemmingGameSavedState; SkipTargetBitmap: Boolean = false): Boolean;
 
   { events }
-    property OnDebugLemming: TLemmingEvent read fOnDebugLemming write fOnDebugLemming;
     property OnFinish: TNotifyEvent read fOnFinish write fOnFinish;
   end;
 
@@ -540,12 +524,10 @@ var
 implementation
 
 uses
-  UFastStrings,
-  LemDosStyle;
+  UFastStrings;
 
 const
   LEMMIX_REPLAY_VERSION    = 105;
-  MAX_REPLAY_RECORDS       = 32768;
   MAX_FALLDISTANCE         = 62;
 
 const
@@ -796,7 +778,6 @@ begin
   aState.UserSetNuking := UserSetNuking;
   aState.ExploderAssignInProgress := ExploderAssignInProgress;
   aState.Index_LemmingToBeNuked := Index_LemmingToBeNuked;
-  aState.LastRecordedRR := fLastRecordedRR;
 
   // Lemmings.
   aState.LemmingList.Clear;
@@ -859,7 +840,6 @@ begin
   UserSetNuking := aState.UserSetNuking;
   ExploderAssignInProgress := aState.ExploderAssignInProgress;
   Index_LemmingToBeNuked := aState.Index_LemmingToBeNuked;
-  fLastRecordedRR := aState.LastRecordedRR;
 
   // Lemmings.
   LemmingList.Clear;
@@ -1380,8 +1360,6 @@ begin
   if (TimePlay > 5999) or (GameParams.TimerMode) then
     TimePlay := 0; // infinite time
 
-  SkillButtonsDisabledWhenPaused := False;
-
   FillChar(GameResultRec, SizeOf(GameResultRec), 0);
   GameResultRec.gCount  := Level.Info.LemmingsCount;
   GameResultRec.gToRescue := Level.Info.RescueCount;
@@ -1424,12 +1402,9 @@ begin
     fReplayManager.LevelID := Level.Info.LevelID;
   end;
 
-  fExplodingGraphics := False;
-
-
   with Level.Info do
   begin
-    currReleaseRate    := ReleaseRate  ;
+    CurrReleaseRate := ReleaseRate;
 
     // Set available skills
     for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
@@ -1442,8 +1417,6 @@ begin
 
   LowestReleaseRate := CurrReleaseRate;
   HighestReleaseRate := CurrReleaseRate;
-
-  fLastRecordedRR := CurrReleaseRate;
 
   NextLemmingCountDown := 20;
 
@@ -4790,19 +4763,12 @@ begin
   if not Paused then // paused is handled by the GUI
     CheckAdjustReleaseRate;
 
-  if fLastRecordedRR <> CurrReleaseRate then
+  if LemmingsReleased < Level.Info.LemmingsCount - 1 then
   begin
-    if LemmingsReleased < Level.Info.LemmingsCount - 1 then
-    begin
-      if CurrReleaseRate < LowestReleaseRate then LowestReleaseRate := CurrReleaseRate;
-      if CurrReleaseRate > HighestReleaseRate then HighestReleaseRate := CurrReleaseRate;
-    end;
-
-    if CurrentIteration < 20 then
-    begin
+    if (CurrReleaseRate < LowestReleaseRate) or (CurrentIteration < 20) then
       LowestReleaseRate := CurrReleaseRate;
+    if (CurrReleaseRate > HighestReleaseRate) or (CurrentIteration < 20) then
       HighestReleaseRate := CurrReleaseRate;
-    end;
   end;
 
   CheckForQueuedAction; // needs to be done before CheckForReplayAction, because it writes an assignment in the replay
@@ -5024,7 +4990,6 @@ begin
     end;
 
     InfoPainter.SetInfoCursorLemming(S, HitCount);
-    DrawDebugString(L);
     fCurrentCursor := 2;
   end
   else begin
@@ -5369,11 +5334,6 @@ begin
     CheckForPlaySoundEffect;
 end;
 
-procedure TLemmingGame.DrawDebugString(L: TLemming);
-begin
-  if Assigned(fOnDebugLemming) then
-    fOnDebugLemming(L);
-end;
 
 function TLemmingGame.GetHighlitLemming: TLemming;
 begin

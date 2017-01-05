@@ -197,8 +197,6 @@ begin
 
   if TimeForFrame or TimeForScroll then
   begin
-    Game.fAssignEnabled := true;
-
     fRenderInterface.ForceUpdate := false;
 
     // Check for user helpers
@@ -930,13 +928,11 @@ begin
        and not (Game.Replaying and GameParams.ExplicitCancel) then
     begin
       Game.RegainControl;
-
-      if Game.fAssignEnabled then Game.ProcessSkillAssignment;
+      Game.ProcessSkillAssignment;
       if Game.Paused then ForceUpdateOneFrame := True;
     end;
 
-    if Game.IsHighlightHotkey and Game.fAssignEnabled
-       and not (Game.Replaying and GameParams.ExplicitCancel) then
+    if Game.IsHighlightHotkey and not (Game.Replaying and GameParams.ExplicitCancel) then
     begin
       Game.ProcessHighlightAssignment;
     end;
