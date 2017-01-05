@@ -83,7 +83,6 @@ type
       LowestReleaseRate: Integer;
       HighestReleaseRate: Integer;
       CurrReleaseRate: Integer;
-      LastReleaseRate: Integer;
 
       CurrSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
       UsedSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -200,10 +199,9 @@ type
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
     WindowOrderList            : array of Integer; // table for entrance release order
     fPaused                    : Boolean;
-    LowestReleaseRate          : Integer;
-    HighestReleaseRate         : Integer;
+    LowestReleaseRate          : Integer;   // only used for talismans
+    HighestReleaseRate         : Integer;   // only used for talismans
     CurrReleaseRate            : Integer;
-    LastReleaseRate            : Integer;
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -216,24 +214,16 @@ type
     fGameFinished              : Boolean;
     fGameCheated               : Boolean;
     NextLemmingCountDown       : Integer;
-    fDrawLemmingPixel          : Boolean;
     fFastForward               : Boolean;
-    //fReplayIndex               : Integer;
-    fCurrentScreenPosition     : TPoint; // for minimap, this really sucks but works ok for the moment
-    fLastCueSoundIteration     : Integer;
-    fFading                    : Boolean;
-    fReplayCommanding          : Boolean;
     fTargetIteration           : Integer; // this is used in hyperspeed
     fHyperSpeedCounter         : Integer; // no screenoutput
     fHyperSpeed                : Boolean; // we are at hyperspeed no targetbitmap output
     fLeavingHyperSpeed         : Boolean; // in between state (see UpdateLemmings)
     fPauseOnHyperSpeedExit     : Boolean; // to maintain pause state before invoking a savestate
-    fEntranceAnimationCompleted: Boolean;
     fStartupMusicAfterEntry    : Boolean;
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
-
-    fFallLimit                 : Integer;
+    
     fLastRecordedRR            : Integer;
 
     fExplodingGraphics         : Boolean;
@@ -503,15 +493,12 @@ type
     property CurrentReleaseRate: Integer read CurrReleaseRate; // for skill panel's usage
     property ClockFrame: Integer read fClockFrame;
     property CursorPoint: TPoint read fCursorPoint write fCursorPoint;
-    property DrawLemmingPixel: Boolean read fDrawLemmingPixel write fDrawLemmingPixel;
-    property Fading: Boolean read fFading;
     property FastForward: Boolean read fFastForward write fFastForward;
     property GameFinished: Boolean read fGameFinished;
     property HyperSpeed: Boolean read fHyperSpeed;
     property InfoPainter: IGameToolbar read fInfoPainter write fInfoPainter;
     property LeavingHyperSpeed: Boolean read fLeavingHyperSpeed;
     property Level: TLevel read fLevel write fLevel;
-    property CurrentScreenPosition: TPoint read fCurrentScreenPosition write fCurrentScreenPosition;
     property Paused: Boolean read fPaused write fPaused;
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
@@ -799,7 +786,6 @@ begin
   aState.LowestReleaseRate := LowestReleaseRate;
   aState.HighestReleaseRate := HighestReleaseRate;
   aState.CurrReleaseRate := CurrReleaseRate;
-  aState.LastReleaseRate := LastReleaseRate;
 
   for i := 0 to 16 do
   begin
@@ -863,7 +849,6 @@ begin
   LowestReleaseRate := aState.LowestReleaseRate;
   HighestReleaseRate := aState.HighestReleaseRate;
   CurrReleaseRate := aState.CurrReleaseRate;
-  LastReleaseRate := aState.LastReleaseRate;
 
   for i := 0 to 16 do
   begin
@@ -893,7 +878,6 @@ begin
 
   // Recreate Blocker map
   SetBlockerMap;
-  
 
   // When loading, we must update the info panel. But if we're just using the state
   // for an approximate location, we don't need to do this, it just results in graphical
@@ -901,7 +885,6 @@ begin
   if not SkipTargetBitmap then
     RefreshAllPanelInfo;
 
-  //fReplayIndex := fRecorder.FindIndexForFrame(fCurrentIteration);
   SetCorrectReplayMark;
 
   ReleaseRateModifier := 0; // we don't want to continue changing it if it's currently changing
@@ -1084,9 +1067,6 @@ begin
   NewSkillMethods[baFixing]       := MayAssignMechanic;
   NewSkillMethods[baCloning]      := MayAssignCloner;
   NewSkillMethods[baFencing]      := MayAssignFencer; // temporary
-
-
-  fFallLimit := MAX_FALLDISTANCE;
 
   P := AppPath;
   fLastReplayDir := '';
@@ -1389,7 +1369,6 @@ begin
   fHyperSpeed := False;
   fLeavingHyperSpeed := False;
   fPauseOnHyperSpeedExit := False;
-  fEntranceAnimationCompleted := False;
 
   fFastForward := False;
 
@@ -1419,9 +1398,7 @@ begin
   IsShowAthleteInfo := False;
   IsHighlightHotkey := False;
   fCurrentIteration := 0;
-  fLastCueSoundIteration := 0;
   fClockFrame := 0;
-  fFading := False;
   EntriesOpened := False;
 
 
@@ -1453,7 +1430,6 @@ begin
   with Level.Info do
   begin
     currReleaseRate    := ReleaseRate  ;
-    lastReleaseRate    := ReleaseRate  ;
 
     // Set available skills
     for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
@@ -1542,8 +1518,6 @@ begin
     SetSelectedSkill(InitialSkill, True); // default
 
   UpdateAllSkillCounts;
-
-  fFallLimit := MAX_FALLDISTANCE;
 
   fTalismanReceived := false;
 
@@ -2867,7 +2841,7 @@ begin
   // Exit if lemming is splatting
   if L.LemAction = baSplatting then Exit;
   // Exit if lemming is falling, has ground under his feet and will splat
-  if (L.LemAction = baFalling) and HasPixelAt(PosX, PosY) and (L.LemFallen > fFallLimit) then Exit;
+  if (L.LemAction = baFalling) and HasPixelAt(PosX, PosY) and (L.LemFallen > MAX_FALLDISTANCE) then Exit;
 
   ObjectID := FindObjectID(PosX, PosY, trTeleport);
 
@@ -4479,7 +4453,7 @@ var
   function IsFallFatal: Boolean;
   begin
     Result := (not (L.LemIsFloater or L.LemIsGlider))
-          and (((L.LemFallen > fFallLimit) and not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
+          and (((L.LemFallen > MAX_FALLDISTANCE) and not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
             or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
 begin
@@ -5427,7 +5401,6 @@ begin
   if (aRR <> currReleaseRate) and CheckIfLegalRR(aRR) then
   begin
     currReleaseRate := aRR;
-    LastReleaseRate := aRR;
     InfoPainter.DrawSkillCount(spbFaster, currReleaseRate);
   end;
 end;
@@ -5524,9 +5497,6 @@ var
       ApplyNuke;
   end;
 begin
-
-  fReplayCommanding := True;
-
   try
     // Note - the fReplayManager getters can return nil, and often will!
     // The "Handle" procedure ensures this does not lead to errors.
@@ -5544,9 +5514,8 @@ begin
     until not Handle;
 
   finally
-    fReplayCommanding := False;
+    // do nothing
   end;
-
 end;
 
 procedure TLemmingGame.CheckForQueuedAction;
@@ -5906,8 +5875,6 @@ begin
       Inf.Triggered := False;
       Inf.HoldActive := False;
       Inf.ZombieMode := False;
-      if Inf.TriggerEffect = DOM_WINDOW then
-        fEntranceAnimationCompleted := True;
     end;
 
   end;
