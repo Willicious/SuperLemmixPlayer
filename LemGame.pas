@@ -6121,54 +6121,32 @@ end;
 
 function TLemmingGame.CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
 var
-  sc, i: Integer;
-  CheckButton: TSkillPanelButton;
+  HasSkillButton: Boolean;
+  i: Integer;
 begin
-  Result := false;
-
   Assert(aAction in AssignableSkills, 'CheckSkillAvailable for not assignable skill');
 
-  sc := CurrSkillCount[aAction];
+  HasSkillButton := false;
+  for i := 0 to Length(fActiveSkills) - 1 do
+    HasSkillButton := HasSkillButton or (fActiveSkills[i] = ActionToSkillPanelButton[aAction]);
 
-  if (sc > 0) or (GameParams.ChallengeMode) then Result := true;
-
-  CheckButton := ActionToSkillPanelButton[aAction];
-  for i := 0 to 7 do
-    if fActiveSkills[i] = CheckButton then Exit;
-
-  Result := false;
-
+  Result := HasSkillButton and ((CurrSkillCount[aAction] > 0) or GameParams.ChallengeMode);
 end;
 
 
 procedure TLemmingGame.UpdateSkillCount(aAction: TBasicLemmingAction; Rev : Boolean = false);
-var
-  sc, sc2: ^Integer;
 begin
-  if GameParams.ChallengeMode then
-    if Rev then
-      Exit
-    else
-      Rev := true;
+  if GameParams.ChallengeMode xor Rev then
+  begin
+    CurrSkillCount[aAction] := Min(CurrSkillCount[aAction] + 1, 99);
+  end
+  else if not Rev then // and neither GameParams.ChallengeMode
+  begin
+    CurrSkillCount[aAction] := Max(CurrSkillCount[aAction] - 1, 0);
+    Inc(UsedSkillCount[aAction])
+  end;
 
-  Assert(aAction in AssignableSkills, 'UpdateSkillCount for not assignable skill');
-
-  sc := @CurrSkillCount[aAction];
-  sc2 := @UsedSkillCount[aAction];
-
-  if sc^ > 99 then Exit;
-
-  if Rev then
-    Inc(sc^)
-  else
-    Dec(sc^);
-
-  if not Rev then Inc(sc2^);
-
-  if sc^ < 0 then sc^ := 0;
-  if sc^ > 99 then sc^ := 99;
-
-  InfoPainter.DrawSkillCount(ActionToSkillPanelButton[aAction], sc^);
+  InfoPainter.DrawSkillCount(ActionToSkillPanelButton[aAction], CurrSkillCount[aAction]);
 end;
 
 procedure TLemmingGame.SaveGameplayImage(Filename: String);
