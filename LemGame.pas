@@ -6088,25 +6088,22 @@ end;
 function TLemmingGame.CheckLemmingBlink: Boolean;
 var
   i: Integer;
-  pcc: Integer; // pickup cloner count
-  tcc: Integer; // total cloner count
+  MaxSavedLemCount: Integer;
 begin
   Result := false;
-  pcc := 0;  // pickup cloner count
-  if not (GameParams.LemmingBlink) then Exit;
-  if (GameParams.ChallengeMode) and (spbCloner in Level.Info.Skillset) then Exit;
-  for i := 0 to ObjectInfos.Count-1 do
-    if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].SkillType = 15) then pcc := pcc + 1;
+  if not GameParams.LemmingBlink then Exit;
+  if GameParams.ChallengeMode and (spbCloner in Level.Info.Skillset) then Exit;
 
+  MaxSavedLemCount := LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead);
   if (spbCloner in Level.Info.Skillset) then
-    tcc := CurrSkillCount[baCloning] + pcc
-  else
-    tcc := 0;
+  begin
+    Inc(MaxSavedLemCount, CurrSkillCount[baCloning]);
+    for i := 0 to ObjectInfos.Count - 1 do
+      if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].SkillType = 15) then
+        Inc(MaxSavedLemCount);
+  end;
 
-  if (LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead) + tcc
-     < Level.Info.RescueCount)
-  and (CurrentIteration mod 17 > 8) then
-    Result := true;
+  Result := (CurrentIteration mod 17 > 8) and (MaxSavedLemCount < Level.Info.RescueCount);
 end;
 
 function TLemmingGame.CheckTimerBlink: Boolean;
