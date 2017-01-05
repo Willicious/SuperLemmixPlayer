@@ -192,14 +192,10 @@ type
     EntriesOpened              : Boolean;
     LemmingMethods             : TLemmingMethodArray; // a method for each basic lemming state
     NewSkillMethods            : TNewSkillMethodArray; // The replacement of SkillMethods
-    fCheckWhichLemmingOnly     : Boolean; // use during replays only, to signal the AssignSkill methods
-                                          // to only indicate which Lemming gets the assignment, without
-                                          // actually doing the assignment
     fFreezeSkillCount          : Boolean; // used when skill count should be frozen, for example when
                                           // calling assign routines that should assign the skill for free
                                           // note that this also overrides the test for if skills are available
     fFreezeRecording           : Boolean;
-    WhichLemming               : TLemming; // see above
     LastNPLemming              : TLemming; // for emulation of right-click bug
     fLemSelected               : TLemming; // lem under cursor, who would receive the skill
     fLemWithShadow             : TLemming; // needed for CheckForNewShadow to erase previous shadow
@@ -2171,83 +2167,72 @@ end;
 
 function TLemmingGame.DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 begin
-
   Result := False;
 
   // We check first, whether the skill is available at all
   if not CheckSkillAvailable(NewSkill) then Exit;
 
-  // Have to ask namida what fCheckWhichLemmingOnly actually does!!
-  // from namida: In case I forget to mention it, this is part of ccexplore's code.
-  //              I think I made use of it too at some point. It's intended so that
-  //              the function can be called to check which lemming the skill would
-  //              be assigned to, without actually assigning it. Probably not needed
-  //              anymore.
-  if fCheckWhichLemmingOnly then WhichLemming := L
-  else
+  UpdateSkillCount(NewSkill);
+
+  // Remove queued skill assignment
+  L.LemQueueAction := baNone;
+  L.LemQueueFrame := 0;
+
+  // Get starting position for stacker
+  if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
+
+  // Important! If a builder just placed a brick and part of the previous brick
+  // got removed, he should not fall if turned into a walker!
+  if     (NewSkill = baToWalking) and (L.LemAction = baBuilding)
+     and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
+    L.LemY := L.LemY - 1;
+
+  // Turn around walking lem, if assigned a walker
+  if (NewSkill = baToWalking) and (L.LemAction = baWalking) then
   begin
-    UpdateSkillCount(NewSkill);
+    TurnAround(L);
 
-    // Remove queued skill assignment
-    L.LemQueueAction := baNone;
-    L.LemQueueFrame := 0;
-
-    // Get starting position for stacker
-    if (Newskill = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
-
-    // Important! If a builder just placed a brick and part of the previous brick
-    // got removed, he should not fall if turned into a walker!
-    if     (NewSkill = baToWalking) and (L.LemAction = baBuilding)
-       and HasPixelAt(L.LemX, L.LemY - 1) and not HasPixelAt(L.LemX + L.LemDx, L.LemY) then
-      L.LemY := L.LemY - 1;
-
-    // Turn around walking lem, if assigned a walker
-    if (NewSkill = baToWalking) and (L.LemAction = baWalking) then
+    // Special treatment if in one-way-field facing the wrong direction
+    // see http://www.lemmingsforums.net/index.php?topic=2640.0
+    if    (HasTriggerAt(L.LemX, L.LemY, trForceRight) and (L.LemDx = -1))
+       or (HasTriggerAt(L.LemX, L.LemY, trForceLeft) and (L.LemDx = 1)) then
     begin
-      TurnAround(L);
-
-      // Special treatment if in one-way-field facing the wrong direction
-      // see http://www.lemmingsforums.net/index.php?topic=2640.0
-      if    (HasTriggerAt(L.LemX, L.LemY, trForceRight) and (L.LemDx = -1))
-         or (HasTriggerAt(L.LemX, L.LemY, trForceLeft) and (L.LemDx = 1)) then
-      begin
-        // Go one back to cancel the Inc(L.LemX, L.LemDx) in HandleWalking
-        // unless the Lem will fall down (which is handles already in Transition)
-        if HasPixelAt(L.LemX, L.LemY) then Dec(L.LemX, L.LemDx);
-      end;
+      // Go one back to cancel the Inc(L.LemX, L.LemDx) in HandleWalking
+      // unless the Lem will fall down (which is handles already in Transition)
+      if HasPixelAt(L.LemX, L.LemY) then Dec(L.LemX, L.LemDx);
     end;
-
-    // Special behavior of permament skills.
-    if (NewSkill = baClimbing) then L.LemIsClimber := True
-    else if (NewSkill = baFloating) then L.LemIsFloater := True
-    else if (NewSkill = baGliding) then L.LemIsGlider := True
-    else if (NewSkill = baFixing) then L.LemIsMechanic := True
-    else if (NewSkill = baSwimming) then
-    begin
-      L.LemIsSwimmer := True;
-      if L.LemAction = baDrowning then Transition(L, baSwimming);
-    end
-    else if (NewSkill = baExploding) then
-    begin
-      L.LemExplosionTimer := 1;
-      L.LemTimerToStone := False;
-      L.LemHideCountdown := True;
-    end
-    else if (NewSkill = baStoning) then
-    begin
-      L.LemExplosionTimer := 1;
-      L.LemTimerToStone := True;
-      L.LemHideCountdown := True;
-    end
-    else if (NewSkill = baCloning) then
-    begin
-      Inc(LemmingsCloned);
-      GenerateClonedLem(L);
-    end
-    else Transition(L, NewSkill);
-
-    Result := True;
   end;
+
+  // Special behavior of permament skills.
+  if (NewSkill = baClimbing) then L.LemIsClimber := True
+  else if (NewSkill = baFloating) then L.LemIsFloater := True
+  else if (NewSkill = baGliding) then L.LemIsGlider := True
+  else if (NewSkill = baFixing) then L.LemIsMechanic := True
+  else if (NewSkill = baSwimming) then
+  begin
+    L.LemIsSwimmer := True;
+    if L.LemAction = baDrowning then Transition(L, baSwimming);
+  end
+  else if (NewSkill = baExploding) then
+  begin
+    L.LemExplosionTimer := 1;
+    L.LemTimerToStone := False;
+    L.LemHideCountdown := True;
+  end
+  else if (NewSkill = baStoning) then
+  begin
+    L.LemExplosionTimer := 1;
+    L.LemTimerToStone := True;
+    L.LemHideCountdown := True;
+  end
+  else if (NewSkill = baCloning) then
+  begin
+    Inc(LemmingsCloned);
+    GenerateClonedLem(L);
+  end
+  else Transition(L, NewSkill);
+
+  Result := True;
 end;
 
 
@@ -5099,7 +5084,6 @@ begin
 
   Result := AssignNewSkill(Sel, IsHighlight);
 
-  fCheckWhichLemmingOnly := False;
   if Result then
     CheckForNewShadow;        // probably unneeded now?
 end;
