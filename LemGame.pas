@@ -52,51 +52,6 @@ type
     AnimationFrameIndex: Integer;
   end;
 
-type
-  // never change this anymore. it's stored in replayfile
-  TDosGameOption = (
-    dgoDisableObjectsAfter15,    // objects with index higher than 15 will not work
-    dgoMinerOneWayRightBug,      // the miner bug check
-    dgoObsolete,                 // deleted skillbutton option. never replace.
-    dgoSplattingExitsBug,
-    dgoOldEntranceABBAOrder,
-    dgoEntranceX25,
-    dgoFallerStartsWith3,
-    dgoMax4EnabledEntrances,
-    dgoAssignClimberShruggerActionBug
-  );
-  TDosGameOptions = set of TDosGameOption;
-
-const      // todo: remove this and all references to it; it's irrelevant in NeoLemmix
-  DOSORIG_GAMEOPTIONS = [
-    dgoDisableObjectsAfter15,
-    dgoMinerOneWayRightBug,
-    dgoObsolete,
-    dgoSplattingExitsBug,
-    dgoFallerStartsWith3,
-    dgoEntranceX25,
-    dgoMax4EnabledEntrances
-  ];
-
-  DOSOHNO_GAMEOPTIONS = [
-    dgoDisableObjectsAfter15,
-    dgoMinerOneWayRightBug,
-    dgoObsolete,
-    dgoSplattingExitsBug,
-    dgoFallerStartsWith3,
-    dgoEntranceX25,
-    dgoMax4EnabledEntrances
-  ];
-
-  CUSTLEMM_GAMEOPTIONS = [
-    dgoDisableObjectsAfter15,
-    dgoMinerOneWayRightBug,
-    dgoObsolete,
-    dgoSplattingExitsBug,
-    dgoFallerStartsWith3,
-    dgoEntranceX25,
-    dgoMax4EnabledEntrances
-  ];
 
 {-------------------------------------------------------------------------------
   Replay things
@@ -113,35 +68,6 @@ type
     rpoB6,
     rpoB7);
   TReplayOptions = set of TReplayOption;
-
-  TReplayFileHeaderRec = packed record
-    Signature         : array[0..2] of Char;     //  3 bytes -  3
-    Version           : Byte;                    //  1 byte  -  4
-    FileSize          : Integer;                 //  4 bytes -  8
-    HeaderSize        : Word;                    //  2 bytes - 10
-    Mechanics         : TDosGameOptions;         //  2 bytes - 12
-    FirstRecordPos    : Integer;                 //  4 bytes - 16
-    ReplayRecordSize  : Word;                    //  2 bytes - 18
-    ReplayRecordCount : Word;                    //  2 bytes - 20
-
-    ReplayGame        : Byte;
-    ReplaySec         : Byte;
-    ReplayLev         : Byte;
-    ReplayOpt         : TReplayOptions;
-
-    ReplayTime        : LongWord;
-    ReplaySaved       : Word;
-
-    ReplayLevelID    : LongWord;
-
-    {
-    Reserved1         : Integer;                 //  4 bytes - 24
-    Reserved2         : Integer;                 //  4 bytes - 28
-    Reserved3         : Integer;                 //  4 bytes - 32
-    }
-
-    Reserved        : array[0..29] of Char;    // 32 bytes - 64
-  end;
 
 const
   // never change, do NOT trust the bits are the same as the enumerated type.
@@ -286,7 +212,6 @@ type
 
     fTargetBitmap              : TBitmap32; // reference to the drawing bitmap on the gamewindow
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
-    fOptions                   : TDosGameOptions; // mechanic options
     
     fParticleColors            : array[0..15] of TColor32;
 
@@ -631,7 +556,6 @@ type
 
     // procedure OnAssignSkill(Lemming1: TLemming; aSkill: TBasicLemmingAction);
 
-    procedure SetOptions(const Value: TDosGameOptions);
     procedure SetSoundOpts(const Value: TGameSoundOptions);
   public
     MiniMap                    : TBitmap32; // minimap of world  
@@ -699,7 +623,6 @@ type
     property LeavingHyperSpeed: Boolean read fLeavingHyperSpeed;
     property Level: TLevel read fLevel write fLevel;
     property CurrentScreenPosition: TPoint read fCurrentScreenPosition write fCurrentScreenPosition;
-    property Options: TDosGameOptions read fOptions write SetOptions default DOSORIG_GAMEOPTIONS;
     property Paused: Boolean read fPaused write fPaused;
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
@@ -1211,7 +1134,6 @@ begin
   MiniMap        := TBitmap32.Create;
   //fRecorder      := TRecorder.Create(Self);
   fReplayManager := TReplay.Create;
-  fOptions       := DOSORIG_GAMEOPTIONS;
   SoundMgr       := TSoundMgr.Create;
   fTalismans     := TTalismans.Create;
 
@@ -1622,8 +1544,6 @@ begin
   TimePlay := Level.Info.TimeLimit;
   if (TimePlay > 5999) or (GameParams.TimerMode) then
     TimePlay := 0; // infinite time
-
-  Options := DOSOHNO_GAMEOPTIONS;
 
   SkillButtonsDisabledWhenPaused := False;
 
@@ -6130,11 +6050,6 @@ begin
   SetCorrectReplayMark;
 end;
 
-procedure TLemmingGame.SetOptions(const Value: TDosGameOptions);
-begin
-  fOptions := Value;
-  Include(fOptions, dgoObsolete);
-end;
 
 procedure TLemmingGame.HyperSpeedBegin(PauseWhenDone: Boolean = False);
 begin
