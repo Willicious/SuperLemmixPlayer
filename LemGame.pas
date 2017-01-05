@@ -124,14 +124,11 @@ type
 
     fTargetBitmap              : TBitmap32; // reference to the drawing bitmap on the gamewindow
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
-    
-    fParticleColors            : array[0..15] of TColor32;
 
     fMusicLoaded               : Boolean;
 
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
-    //World                      : TBitmap32; // actual bitmap that is changed by the lemmings
     PhysicsMap                 : TBitmap32;
     BlockerMap                 : TByteMap; // for blockers (and force fields)
     ZombieMap                  : TByteMap;
@@ -249,7 +246,6 @@ type
     fLastRecordedRR            : Integer;
 
     fCurrentlyDrawnLemming     : TLemming; // needed for pixelcombining bridges in combinebuilderpixels
-    fUseGradientBridges        : Boolean;
     fExplodingGraphics         : Boolean;
     fDoTimePause               : Boolean;
     fCancelReplayAfterSkip     : Boolean;
@@ -284,10 +280,6 @@ type
     SFX_FIXING                 : Integer;
     SFX_ZOMBIE                 : Integer;
     SFX_CUSTOM                 : Array[0..255] of Integer;
-  { errors }
-    //fErrorFrameCountDown       : Integer;
-    //fErrorMsg                  : string;
-    //fErrorCode                 : Integer;
   { events }
     fOnDebugLemming            : TLemmingEvent; // eventhandler for debugging lemming under the cursor
     fOnFinish                  : TNotifyEvent;
@@ -373,11 +365,9 @@ type
     procedure RecordNuke;
     procedure RecordReleaseRate(aRR: Integer);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
-    //procedure RecordSkillSelection(aSkill: TSkillPanelButton);
     procedure RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);
     procedure RemovePixelAt(X, Y: Integer);
     procedure ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
-    //procedure ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
 
     procedure SetObjectMap;
       procedure WriteTriggerMap(Map: TArrayArrayBoolean; Rect: TRect);
@@ -465,8 +455,6 @@ type
     function MayAssignMiner(L: TLemming): Boolean;
     function MayAssignDigger(L: TLemming): Boolean;
     function MayAssignCloner(L: TLemming): Boolean;
-
-    // procedure OnAssignSkill(Lemming1: TLemming; aSkill: TBasicLemmingAction);
 
     procedure SetSoundOpts(const Value: TGameSoundOptions);
   public
@@ -628,8 +616,6 @@ const
   RM_ZOMBIE            = 3;
 
   HEAD_MIN_Y = -7;
-  //LEMMING_MIN_X = 0;
-  //LEMMING_MAX_X = 1647;
   LEMMING_MAX_Y = 9;
 
   PARTICLE_FRAMECOUNT = 52;
@@ -869,8 +855,6 @@ begin
   InfoPainter.DrawButtonSelector(fSelectedSkill, false);
 
   // Simple stuff
-  (*if not GameParams.IgnoreReplaySelection then
-    fSelectedSkill := aState.SelectedSkill;*)
   fRenderer.TerrainLayer.Assign(aState.TerrainLayer);
   PhysicsMap.Assign(aState.PhysicsMap);
   ZombieMap.Assign(aState.ZombieMap);
@@ -1037,14 +1021,12 @@ begin
   fRenderInterface := TRenderInterface.Create;
 
   LemmingList    := TLemmingList.Create;
-  //World          := TBitmap32.Create;
   ExplodeMaskBmp := TBitmap32.Create;
   ObjectInfos    := TInteractiveObjectInfoList.Create;
   Entries        := TInteractiveObjectInfoList.Create;
   BlockerMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
   MiniMap        := TBitmap32.Create;
-  //fRecorder      := TRecorder.Create(Self);
   fReplayManager := TReplay.Create;
   SoundMgr       := TSoundMgr.Create;
   fTalismans     := TTalismans.Create;
@@ -1183,7 +1165,6 @@ begin
 
   LemmingList.Free;
   ObjectInfos.Free;
-  //World.Free;
   Entries.Free;
   BlockerMap.Free;
   ZombieMap.Free;
@@ -1294,7 +1275,6 @@ begin
   fSoundOpts := [];
   if SoundVolume > 0 then fSoundOpts := fSoundOpts + [gsoSound];
   if MusicVolume > 0 then fSoundOpts := fSoundOpts + [gsoMusic];
-  fUseGradientBridges := true;
 
   fRenderer := GameParams.Renderer; // set ref
   fTargetBitmap := GameParams.TargetBitmap;
@@ -1334,10 +1314,6 @@ begin
   else
     Ani.LemmingPrefix := Renderer.Theme.Lemmings;
   Ani.ReadData;
-
-  // initialize explosion particle colors
-  for i := 0 to 15 do
-    fParticleColors[i] := Pal[ParticleColorIndices[i]];
 
   // prepare masks for drawing
   CntDownBmp := Ani.CountDownDigitsBitmap;
@@ -1394,10 +1370,6 @@ begin
   StoneLemBmp.DrawMode := dmCustom;
   StoneLemBmp.OnPixelCombine := CombineNoOverwriteStoner;
 
-  //World.SetSize(Level.Info.Width, Level.Info.Height);
-  //SteelWorld.SetSize(Level.Info.Width, Level.Info.Height);
-
-  //Renderer.RenderPhysicsMap;
   PhysicsMap := Renderer.PhysicsMap;
   RenderInterface.PhysicsMap := PhysicsMap;
 
@@ -1420,7 +1392,7 @@ procedure TLemmingGame.Start(aReplay: Boolean = False);
   (i.e: renderer.levelbitmap, level, infopainter)
 -------------------------------------------------------------------------------}
 var
-  i, i2, i3: Integer;
+  i: Integer;
   Inf: TInteractiveObjectInfo;
   numEntries:integer;
 
@@ -1447,12 +1419,10 @@ begin
 
   fFastForward := False;
 
-  //Inc(fStartCalls); // this is used for music, we do not want to restart music each start
   fGameFinished := False;
   fGameCheated := False;
   LemmingsReleased := 0;
   LemmingsCloned := 0;
-  //World.OuterColor := 0;
   TimePlay := Level.Info.TimeLimit;
   if (TimePlay > 5999) or (GameParams.TimerMode) then
     TimePlay := 0; // infinite time
@@ -1568,12 +1538,8 @@ begin
 
   InitializeMiniMap;
 
-  //ShowMessage(IntToStr(Level.Info.LevelID));
-
   fTargetBitmap.SetSize(PhysicsMap.Width, PhysicsMap.Height);
   DrawAnimatedObjects; // first draw needed
-
-  //if Entries.Count = 0 then raise exception.Create('no entries');
 
   with InfoPainter do
   begin
@@ -1610,8 +1576,6 @@ begin
   fFallLimit := MAX_FALLDISTANCE;
 
   fTalismanReceived := false;
-
-  //Renderer.DrawLevel(fTargetBitmap);
 
   SoundMgr.ClearQueue;
 
@@ -1887,7 +1851,7 @@ begin
                    end;
     baBlocking   : begin
                      L.LemHasBlockerField := True;
-                     SetBlockerMap; //SetBlockerField(L);
+                     SetBlockerMap;
                    end;
     baExiting    : begin
                      L.LemExplosionTimer := 0;
@@ -2630,7 +2594,7 @@ end;
 
 
 function TLemmingGame.GetObjectCheckPositions(L: TLemming): TArrayArrayInt;
-// This function is a big mess! The intermediate checks are made according to:
+// The intermediate checks are made according to:
 // http://www.lemmingsforums.net/index.php?topic=2604.7
 var
   CurrPosX, CurrPosY: Integer;
@@ -2663,7 +2627,6 @@ var
 
 begin
   SetLength(Result, 2, 11);
-
 
   n := 0;
   CurrPosX := L.LemXOld;
@@ -3322,7 +3285,7 @@ begin
       Inf.Top := Inf.Top + Inf.Movement(False, CurrentIteration); // y-movement
 
       // Check level borders:
-      // The additional "+f" are necessary! Delphi's definition of mod for negative numbers is totally absurd!
+      // The additional "+f" are necessary! Delphi's definition of mod returns negative numbers when passing negative numbers.
       // The following code works only if the coordinates are not too negative, so Asserts are added
       f := Level.Info.Width + Inf.Width;
       Assert(Inf.Left + Inf.Width + f >= 0, 'Animation Object too far left');
@@ -3622,14 +3585,13 @@ begin
 
   Inc(L.LemX, L.LemDx);
 
-  if HasTriggerAt(L.LemX, L.LemY, trWater) or HasPixelAt(L.LemX, L.LemY) then // original check only HasTriggerAt(L.LemX - L.LemDx, L.LemY, trWater)
+  if HasTriggerAt(L.LemX, L.LemY, trWater) or HasPixelAt(L.LemX, L.LemY) then
   begin
-    // This is not completely the same as in V1.43. There a check for the pixel (L.LemX, L.LemY) is omitted.
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
     // Rise if there is water above the lemming
     if (LemDy >= -1) and HasTriggerAt(L.LemX, L.LemY -1, trWater)
-                     and not HasPixelAt(L.LemX, L.LemY - 1) then   // original check at -2!
+                     and not HasPixelAt(L.LemX, L.LemY - 1) then
       Dec(L.LemY)
 
     else if LemDy < -6 then
@@ -3979,10 +3941,10 @@ begin
 
     if not L.LemPlacedBrick then
     begin
-      // Relax the chech on the first brick
+      // Relax the check on the first brick
       // for details see http://www.lemmingsforums.net/index.php?topic=2862.0
       if (L.LemNumberOfBricksLeft < 7) or not MayPlaceNextBrick(L) then
-        Transition(L, baWalking, True) // Even on the last brick???  // turn around as well
+        Transition(L, baWalking, True) // turn around as well
     end
     else if L.LemNumberOfBricksLeft = 0 then
       Transition(L, baShrugging);
@@ -4909,9 +4871,6 @@ begin
 
   if fLastRecordedRR <> CurrReleaseRate then
   begin
-    //RecordReleaseRate(CurrReleaseRate);
-    //fLastRecordedRR := CurrReleaseRate;
-
     if LemmingsReleased < Level.Info.LemmingsCount - 1 then
     begin
       if CurrReleaseRate < LowestReleaseRate then LowestReleaseRate := CurrReleaseRate;
@@ -4958,7 +4917,6 @@ begin
 
   DrawAnimatedObjects;
 
-  //DrawLemmings;
   fRenderInterface.SelectedLemming := fLemSelected;
 
   // Check lemmings under cursor
@@ -5189,7 +5147,7 @@ begin
   begin
     CueSoundEffect(SFX_SKILLBUTTON);
 
-    if (Paused) then
+    if Paused then
       if OldHighlightLemmingID <> -1 then
         DrawAnimatedObjects; // not sure why this one. Might be to fix graphical glitches, I guess?
 
@@ -5234,14 +5192,6 @@ begin
   end;
 end;
 
-(*procedure TLemmingGame.ReplaySkillSelection(aReplayItem: TReplaySelectSkill);
-var
-  bs: TSkillPanelButton;
-begin
-  if GameParams.IgnoreReplaySelection then Exit;
-  bs := aReplayItem.Skill;
-  setselectedskill(bs, true);
-end;*)
 
 function TLemmingGame.GetSelectedSkill: Integer;
 var
@@ -5307,8 +5257,6 @@ begin
       end;
     spbNuke:
       begin
-        //UserSetNuking := True;
-        //ExploderAssignInProgress := True;
         RecordNuke;
       end;
     spbNone: ; // Do Nothing
@@ -5323,7 +5271,6 @@ begin
           fSelectedSkill := Value;
           InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
           CueSoundEffect(SFX_SKILLBUTTON);
-          //RecordSkillSelection(Value);
           CheckForNewShadow;
         end;
 
@@ -5416,9 +5363,7 @@ begin
       Inc(Index_LemmingToBeNuked);
 
     end;
-
   end;
-
 end;
 
 procedure TLemmingGame.CreateLemmingAtCursorPoint;
@@ -5522,20 +5467,6 @@ begin
   Result := LemmingList[fHighlightLemmingID];
 end;
 
-(*
-procedure TLemmingGame.DrawError(const S: string; aCode: Integer);
-{-------------------------------------------------------------------------------
-  this procedure
-  o sets the errorcountdown to 48
-  o shows the error + code at the place of the hittest
--------------------------------------------------------------------------------}
-begin
-  if aCode > 0 then
-    aCode := -aCode;
-  if fInfoPainter <> nil then
-    fInfoPainter.SetInfoCursorLemming(S, aCode);
-end;
-*)
 
 function TLemmingGame.CheckIfLegalRR(aRR: Integer): Boolean;
 begin
@@ -6306,24 +6237,18 @@ var
   P: PColor32Entry;
 begin
   BrickPixelColor := aBrickPixelColor;
-//  FillChar(BrickPixelColors, sizeof(BrickPixelColors), 0);
-
-
-(* testing
+  (*
+  // testing
   for i := 0 to 11 do
     if Odd(i) then
     BrickPixelColors[i] := clyellow32
   else
     BrickPixelColors[i] := clred32;
-
-    exit; *)
-
+  exit;
+  *)
 
   for i := 0 to 11 do
     BrickPixelColors[i] := aBrickPixelColor;
-
-  if not fUseGradientBridges then
-    Exit;
 
   P := @BrickPixelColor;
 
