@@ -192,17 +192,14 @@ type
     EntriesOpened              : Boolean;
     LemmingMethods             : TLemmingMethodArray; // a method for each basic lemming state
     NewSkillMethods            : TNewSkillMethodArray; // The replacement of SkillMethods
-    LastNPLemming              : TLemming; // for emulation of right-click bug
     fLemSelected               : TLemming; // lem under cursor, who would receive the skill
     fLemWithShadow             : TLemming; // needed for CheckForNewShadow to erase previous shadow
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
-    Entries                    : TInteractiveObjectInfoList; // list of entrances (NOT USED ANYMORE)
-    DosEntryTable              : array of Integer; // table for entrance release order
+    WindowOrderList            : array of Integer; // table for entrance release order
     fPaused                    : Boolean;
-    MaxNumLemmings             : Integer;
     LowestReleaseRate          : Integer;
     HighestReleaseRate         : Integer;
     CurrReleaseRate            : Integer;
@@ -1015,7 +1012,6 @@ begin
   LemmingList    := TLemmingList.Create;
   ExplodeMaskBmp := TBitmap32.Create;
   ObjectInfos    := TInteractiveObjectInfoList.Create;
-  Entries        := TInteractiveObjectInfoList.Create;
   BlockerMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
   MiniMap        := TBitmap32.Create;
@@ -1157,7 +1153,6 @@ begin
 
   LemmingList.Free;
   ObjectInfos.Free;
-  Entries.Free;
   BlockerMap.Free;
   ZombieMap.Free;
   MiniMap.Free;
@@ -1428,10 +1423,9 @@ begin
   fClockFrame := 0;
   fFading := False;
   EntriesOpened := False;
-  Entries.Clear;
 
 
-  SetLength(DosEntryTable, 0);
+  SetLength(WindowOrderList, 0);
 
   ReleaseRateModifier := 0;
   fPaused := False;
@@ -1441,7 +1435,6 @@ begin
   fCurrentCursor := 0;
   fParticleFinishTimer := 0;
   LemmingList.Clear;
-  LastNPLemming := nil;
   SoundMgr.ClearQueue;
   if Level.Info.LevelID <> fReplayManager.LevelID then //not aReplay then
   begin
@@ -1459,8 +1452,6 @@ begin
 
   with Level.Info do
   begin
-    MaxNumLemmings := LemmingsCount;
-
     currReleaseRate    := ReleaseRate  ;
     lastReleaseRate    := ReleaseRate  ;
 
@@ -1495,8 +1486,8 @@ begin
     // Update number of hatches
     if Inf.TriggerEffect = DOM_WINDOW then
     begin
-      SetLength(dosEntryTable, numEntries + 1);
-      dosentrytable[numEntries] := i;
+      SetLength(WindowOrderList, numEntries + 1);
+      WindowOrderList[numEntries] := i;
       Inc(numEntries);
     end;
 
@@ -1904,7 +1895,7 @@ begin
   if fParticleFinishTimer > 0 then
     Exit;
 
-  if (LemmingsIn >= MaxNumLemmings + LemmingsCloned) and (DelayEndFrames = 0) then
+  if (LemmingsIn >= Level.Info.LemmingsCount + LemmingsCloned) and (DelayEndFrames = 0) then
   begin
     Finish;
     Exit;
@@ -1937,24 +1928,24 @@ begin
   begin
     ObjIndex := Level.Info.WindowOrder[i];
     if not (ObjectInfos[ObjIndex].TriggerEffect = DOM_WINDOW) then Continue;
-    SetLength(DosEntryTable, WindowNumber + 1);
-    DosEntryTable[WindowNumber] := ObjIndex;
+    SetLength(WindowOrderList, WindowNumber + 1);
+    WindowOrderList[WindowNumber] := ObjIndex;
     Inc(WindowNumber);
   end;
 
   // Shift the hatch order according to the number of preplaced lemmings
   // see http://www.lemmingsforums.net/index.php?topic=3028.0
   NumPreplaced := LemmingList.Count; // we already called AddPreplacedLemmings before that
-  SetLength(ShiftedEntryTable, Length(DosEntryTable));
-  for i := 0 to Length(DosEntryTable) - 1 do
+  SetLength(ShiftedEntryTable, Length(WindowOrderList));
+  for i := 0 to Length(WindowOrderList) - 1 do
   begin
-    ShiftedEntryTable[(i + NumPreplaced) mod Length(DosEntryTable)] := DosEntryTable[i];
+    ShiftedEntryTable[(i + NumPreplaced) mod Length(WindowOrderList)] := WindowOrderList[i];
   end;
-  // Copy ShiftedEntryTable back to DosEntryTable
+  // Copy ShiftedEntryTable back to WindowOrderList
   // Needs to be done by hand, because two arrays of Integers are f***ing INCOMPATIBLE types when defined in different methods
-  for i := 0 to Length(DosEntryTable) - 1 do
+  for i := 0 to Length(WindowOrderList) - 1 do
   begin
-    DosEntryTable[i] := ShiftedEntryTable[i];
+    WindowOrderList[i] := ShiftedEntryTable[i];
   end;
 end;
 
@@ -5251,10 +5242,10 @@ begin
   if NextLemmingCountdown = 0 then
   begin
     NextLemmingCountdown := CalculateNextLemmingCountdown;
-    if (LemmingsReleased < MaxNumLemmings) and (Length(DosEntryTable) > 0) then
+    if (LemmingsReleased < Level.Info.LemmingsCount) and (Length(WindowOrderList) > 0) then
     begin
-      EntranceIndex := LemmingsReleased mod Length(DosEntryTable);
-      ix := DosEntryTable[EntranceIndex];
+      EntranceIndex := LemmingsReleased mod Length(WindowOrderList);
+      ix := WindowOrderList[EntranceIndex];
       if ix >= 0 then
       begin
         NewLemming := TLemming.Create;
@@ -5330,7 +5321,7 @@ begin
     Exit;
   if UserSetNuking then
     Exit;
-  if LemmingsReleased < MaxNumLemmings then
+  if LemmingsReleased < Level.Info.LemmingsCount then
   begin
     NewLemming := TLemming.Create;
     with NewLemming do
