@@ -442,10 +442,10 @@ procedure TGameWindow.CheckShifts(Shift: TShiftState);
 var
   SDir: Integer;
 begin
-  Game.RightMouseButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
-  Game.CtrlButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_Highlight);
-  Game.ShiftButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_SelectNewLem);
-  Game.AltButtonHeldDown := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
+  Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
+  Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
+  Game.IsSelectUnassignedHotkey := GameParams.Hotkeys.CheckForKey(lka_SelectNewLem);
+  Game.IsShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
 
   SDir := 0;
   if GameParams.Hotkeys.CheckForKey(lka_DirLeft) then SDir := SDir - 1;
@@ -926,7 +926,7 @@ begin
     if PassKey <> 0 then
       Form_KeyDown(Sender, PassKey, Shift);
 
-    if (Button = mbLeft) and (not Game.CtrlButtonHeldDown)
+    if (Button = mbLeft) and (not Game.IsHighlightHotkey)
        and not (Game.Replaying and GameParams.ExplicitCancel) then
     begin
       Game.RegainControl;
@@ -935,7 +935,7 @@ begin
       if Game.Paused then ForceUpdateOneFrame := True;
     end;
 
-    if Game.CtrlButtonHeldDown and Game.fAssignEnabled
+    if Game.IsHighlightHotkey and Game.fAssignEnabled
        and not (Game.Replaying and GameParams.ExplicitCancel) then
     begin
       Game.ProcessHighlightAssignment;

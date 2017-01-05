@@ -175,17 +175,17 @@ type
     fClockFrame                : Integer; // 17 frames is one game-second
     ButtonsRemain              : Byte;
     LemmingsReleased           : Integer; // number of lemmings that were created
-    LemmingsCloned             : Integer;
+    LemmingsCloned             : Integer; // number of cloned lemmings
     LemmingsOut                : Integer; // number of lemmings currently walking around
-    SpawnedDead                : Integer;
+    SpawnedDead                : Integer; // number of zombies that were created
     LemmingsIn                 : integer; // number of lemmings that made it to heaven
     LemmingsRemoved            : Integer; // number of lemmings removed
     DelayEndFrames             : Integer;
     fCursorPoint               : TPoint;
-    fRightMouseButtonHeldDown  : Boolean;
-    fShiftButtonHeldDown       : Boolean;
-    fAltButtonHeldDown         : Boolean;
-    fCtrlButtonHeldDown        : Boolean;
+    fIsSelectWalkerHotkey      : Boolean;
+    fIsSelectUnassignedHotkey  : Boolean;
+    fIsShowAthleteInfo         : Boolean;
+    fIsHighlightHotkey         : Boolean;
     TimePlay                   : Integer; // positive when time limit
                                           // negative when just counting time used
     fPlaying                   : Boolean; // game in active playing mode?
@@ -528,10 +528,10 @@ type
     property Renderer: TRenderer read fRenderer;
     property Replaying: Boolean read GetIsReplaying;
     property ReplayManager: TReplay read fReplayManager;
-    property RightMouseButtonHeldDown: Boolean read fRightMouseButtonHeldDown write fRightMouseButtonHeldDown;
-    property ShiftButtonHeldDown: Boolean read fShiftButtonHeldDown write fShiftButtonHeldDown;
-    property AltButtonHeldDown: Boolean read fAltButtonHeldDown write fAltButtonHeldDown;
-    property CtrlButtonHeldDown: Boolean read fCtrlButtonHeldDown write fCtrlButtonHeldDown;
+    property IsSelectWalkerHotkey: Boolean read fIsSelectWalkerHotkey write fIsSelectWalkerHotkey;
+    property IsSelectUnassignedHotkey: Boolean read fIsSelectUnassignedHotkey write fIsSelectUnassignedHotkey;
+    property IsShowAthleteInfo: Boolean read fIsShowAthleteInfo write fIsShowAthleteInfo;
+    property IsHighlightHotkey: Boolean read fIsHighlightHotkey write fIsHighlightHotkey;
     property SoundOpts: TGameSoundOptions read fSoundOpts write SetSoundOpts;
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
@@ -1427,10 +1427,10 @@ begin
   LemmingsIn := 0;
   LemmingsRemoved := 0;
   DelayEndFrames := 0;
-  fRightMouseButtonHeldDown := False;
-  fShiftButtonHeldDown := False;
-  fAltButtonHeldDown := False;
-  fCtrlButtonHeldDown := False;
+  IsSelectWalkerHotkey := False;
+  IsSelectUnassignedHotkey := False;
+  IsShowAthleteInfo := False;
+  IsHighlightHotkey := False;
   fCurrentIteration := 0;
   fLastCueSoundIteration := 0;
   fClockFrame := 0;
@@ -2363,15 +2363,15 @@ begin
     // Directional select
     if (fSelectDx <> 0) and (fSelectDx <> L.LemDx) then Continue;
     // Select unassigned lemming
-    if ShiftButtonHeldDown and (L.LemUsedSkillCount > 0) then Continue;
+    if IsSelectUnassignedHotkey and (L.LemUsedSkillCount > 0) then Continue;
     // Select only walkers
-    if RightMouseButtonHeldDown and (L.LemAction <> baWalking) then Continue;
+    if IsSelectWalkerHotkey and (L.LemAction <> baWalking) then Continue;
 
     // Increase number of lemmings in cursor (if not a zombie)
     if not L.LemIsZombie then Inc(NumLemInCursor);
 
     // Determine priority class of current lemming
-    if ShiftButtonHeldDown or RightMouseButtonHeldDown then
+    if IsSelectUnassignedHotkey or IsSelectWalkerHotkey then
       CurPriorityBox := 1
     else
     begin
@@ -5014,7 +5014,7 @@ var
   L, OldLemSelected: TLemming;
   S: string;
   i: integer;
-  fAltOverride: Boolean;
+  ForceShowAthleteInfo: Boolean;
 begin
   if Autofail then fHitTestAutoFail := true;
 
@@ -5035,12 +5035,10 @@ begin
   if Assigned(L) and not fHitTestAutofail then
   begin
     // get highlight text
-    fAltOverride := false;
-    if (L.LemIsClimber or L.LemIsFloater or L.LemIsGlider or L.LemIsSwimmer or L.LemIsMechanic)
-        and L.LemIsZombie then
-      fAltOverride := true;
+    ForceShowAthleteInfo := L.LemIsZombie
+           and (L.LemIsClimber or L.LemIsFloater or L.LemIsGlider or L.LemIsSwimmer or L.LemIsMechanic);
 
-    if fAltButtonHeldDown or fAltOverride then
+    if IsShowAthleteInfo or ForceShowAthleteInfo then
     begin
       S := '-----';
       if L.LemIsClimber then S[1] := 'C';
@@ -5192,7 +5190,7 @@ procedure TLemmingGame.SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Bo
       if fActiveSkills[i] = Value then Result := true;
   end;
 begin
-  if fRightMouseButtonHeldDown then RightClick := true;
+  if fIsSelectWalkerHotkey then RightClick := true;  // THIS DOES NOT MAKE ANY SENSE!!!
 
   case Value of
     spbFaster:
