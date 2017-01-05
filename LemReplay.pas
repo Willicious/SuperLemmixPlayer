@@ -595,16 +595,6 @@ var
     Add(E);
   end;
 
-  (*procedure CreateSelectSkillEntry;
-  var
-    E: TReplaySelectSkill;
-  begin
-    E := TReplaySelectSkill.Create;
-    E.Skill := BUTTON_TABLE[Item.SelectedButton];
-    E.Frame := Item.Iteration;
-    Add(E);
-  end;*)
-
 begin
   Clear(true);
   MS := TMemoryStream.Create;
@@ -626,12 +616,6 @@ begin
         LastReleaseRate := Item.ReleaseRate;
         if Item.ActionFlags and $38 <> 0 then Continue;
       end;
-
-      (*if Item.ActionFlags and raf_SkillSelection <> 0 then
-      begin
-        CreateSelectSkillEntry;
-        LastSelectedSkill := TSkillPanelButton(Item.SelectedButton);
-      end;*)
 
       if Item.ActionFlags and raf_SkillAssignment <> 0 then
         CreateAssignEntry;
