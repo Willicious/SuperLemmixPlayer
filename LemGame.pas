@@ -245,7 +245,6 @@ type
     fFallLimit                 : Integer;
     fLastRecordedRR            : Integer;
 
-    fCurrentlyDrawnLemming     : TLemming; // needed for pixelcombining bridges in combinebuilderpixels
     fExplodingGraphics         : Boolean;
     fDoTimePause               : Boolean;
     fCancelReplayAfterSkip     : Boolean;
@@ -292,7 +291,6 @@ type
     procedure UpdateAllSkillCounts;
   { pixel combine eventhandlers }
     procedure DoTalismanCheck;
-    procedure CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
 
     // CombineMaskPixels has variants based on the direction of destruction
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32); // general-purpose
@@ -1354,18 +1352,6 @@ begin
   MineMasksRTL.DrawMode := dmCustom;
   MineMasksRTL.OnPixelCombine := CombineMaskPixelsDownLeft;
 
-  // prepare animationbitmaps for drawing (set eventhandlers)
-  with Ani.LemmingAnimations do
-    for i := 0 to Count - 1 do
-    begin
-      Bmp := List^[i];
-      Bmp.DrawMode := dmCustom;
-      if i in [BRICKLAYING, BRICKLAYING_RTL, PLATFORMING, PLATFORMING_RTL] then
-        Bmp.OnPixelCombine := CombineBuilderPixels
-      else
-        Bmp.OnPixelCombine := TRecolorImage.CombineDefaultPixels;
-    end;
-
   StoneLemBmp := Ani.LemmingAnimations.Items[STONED];
   StoneLemBmp.DrawMode := dmCustom;
   StoneLemBmp.OnPixelCombine := CombineNoOverwriteStoner;
@@ -1615,18 +1601,6 @@ begin
     Inc(LemmingsReleased);
     Inc(LemmingsOut);
   end;
-end;
-
-procedure TLemmingGame.CombineBuilderPixels(F: TColor32; var B: TColor32; M: TColor32);
-{-------------------------------------------------------------------------------
-  This trusts the CurrentlyDrawnLemming variable.
-  Therefore it has to stay here instead of being moved to LemRecolorSprites.pas
--------------------------------------------------------------------------------}
-begin
-  if F = BrickPixelColor then
-    B := BrickPixelColors[12 - fCurrentlyDrawnLemming.LemNumberOfBricksLeft]
-  else if F <> 0 then
-    B := F;
 end;
 
 procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32);
