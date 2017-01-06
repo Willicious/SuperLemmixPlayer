@@ -78,7 +78,6 @@ var
   TalisChar: String;
   TempString: String;
   p, cl: Integer;
-  HasTalisGraphic: Boolean;
   NumLines: Integer;
 begin
   Result := '';
@@ -87,8 +86,6 @@ begin
 
   for cl := 0 to 2 do
     Lines[cl] := '';
-
-  HasTalisGraphic := HasTalismanGraphic; //avoid repeated calls to this
 
   cl := 0;
   TempString := '';
@@ -124,26 +121,15 @@ begin
     Lines[0] := '';
   end;
 
-  if HasTalisGraphic then
-  begin
-    case color of
-      2: TalisChar := #129;
-      3: TalisChar := #131;
-      else TalisChar := #127;
-    end;
-    if acheived then TalisChar := Chr(Ord(TalisChar[1]) + 1);
-    Lines[0] := TalisChar + '   ' + Lines[0];
-    Lines[1] := '    ' + Lines[1];
-    Lines[2] := '    ' + Lines[2];
-  end else begin
-    if acheived then
-      TalisChar := '*'
-    else
-      TalisChar := ' ';
-    Lines[0] := '+-+ ' + Lines[0];
-    Lines[1] := '|' + TalisChar + '| ' + Lines[1];
-    Lines[2] := '+-+ ' + Lines[2];
+  case color of
+    2: TalisChar := #129;
+    3: TalisChar := #131;
+    else TalisChar := #127;
   end;
+  if acheived then TalisChar := Chr(Ord(TalisChar[1]) + 1);
+  Lines[0] := TalisChar + '   ' + Lines[0];
+  Lines[1] := '    ' + Lines[1];
+  Lines[2] := '    ' + Lines[2];
 
   for cl := 0 to 2 do
   begin

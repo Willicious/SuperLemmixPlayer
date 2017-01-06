@@ -57,7 +57,6 @@ type
   protected
     procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
-    function HasTalismanGraphic: Boolean;
     property PurpleFont: TPurpleFont read fPurpleFont;
     property MainDatExtractor: TMainDatExtractor read fMainDatExtractor;
     property ScreenIsClosing: Boolean read fScreenIsClosing;
@@ -136,17 +135,6 @@ begin
     if Assigned(AssignedEventHandler) then
       OnKeyDown(Self, Message.CharCode, KeyDataToShiftState(Message.KeyData));
   inherited;
-end;
-
-function TGameBaseScreen.HasTalismanGraphic: Boolean;
-var
-  i: Integer;
-begin
-  Result := true;
-  for i := 127 to 132 do
-  begin
-    if fPurpleFont.GetBitmapOfChar(Chr(i)).Width = 1 then Result := false;
-  end;
 end;
 
 procedure TGameBaseScreen.AdjustImage;
