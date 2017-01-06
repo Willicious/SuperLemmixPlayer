@@ -388,7 +388,7 @@ begin
       fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
     end;
 
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png');
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP);
     for i := 0 to 5 do
     begin
       fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);
