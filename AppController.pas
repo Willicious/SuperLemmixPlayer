@@ -562,7 +562,9 @@ var
           S := Uppercase(Trim(SL[i]));
           if LeftStr(S, 2) <> 'ID' then Continue;
 
-          S := 'x' + MidStr(S, 4, 8);
+          S := Trim(MidStr(S, 4, 9));
+          if LeftStr(S, 1) <> 'x' then
+            S := 'x' + S;
           n := StrToInt(S);
 
           //if Cont then
