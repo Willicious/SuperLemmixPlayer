@@ -563,7 +563,7 @@ var
           if LeftStr(S, 2) <> 'ID' then Continue;
 
           S := Trim(MidStr(S, 4, 9));
-          if LeftStr(S, 1) <> 'x' then
+          if LeftStr(S, 1) <> 'X' then
             S := 'x' + S;
           n := StrToInt(S);
 
