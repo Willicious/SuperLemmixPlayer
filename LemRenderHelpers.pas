@@ -28,7 +28,7 @@ const
 
 
   SHADOW_COLOR = $80202020;
-  ALPHA_CUTOFF = $FF000000; // if (TColor32) and ALPHA_CUTOFF <> 0 then not solid
+  ALPHA_CUTOFF = $80000000; // if (TColor32) and ALPHA_CUTOFF = 0 then not solid
 
 type
 

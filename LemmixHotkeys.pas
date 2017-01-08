@@ -158,7 +158,7 @@ begin
   fKeyFunctions[$39].Action := lka_Skill;
   fKeyFunctions[$39].Modifier := 11;
   fKeyFunctions[$30].Action := lka_Skill;
-  fKeyFunctions[$30].Modifier := 15;
+  fKeyFunctions[$30].Modifier := 16;
   fKeyFunctions[$72].Action := lka_Skill;
   fKeyFunctions[$72].Modifier := 1;
   fKeyFunctions[$73].Action := lka_Skill;
@@ -172,9 +172,9 @@ begin
   fKeyFunctions[$77].Action := lka_Skill;
   fKeyFunctions[$77].Modifier := 12;
   fKeyFunctions[$78].Action := lka_Skill;
-  fKeyFunctions[$78].Modifier := 13;
+  fKeyFunctions[$78].Modifier := 14;
   fKeyFunctions[$79].Action := lka_Skill;
-  fKeyFunctions[$79].Modifier := 14;
+  fKeyFunctions[$79].Modifier := 15;
 end;
 
 procedure TLemmixHotkeyManager.LoadFile;
@@ -241,9 +241,10 @@ var
     else if s = 'builder' then Result := 10
     else if s = 'stacker' then Result := 11
     else if s = 'basher' then Result := 12
-    else if s = 'miner' then Result := 13
-    else if s = 'digger' then Result := 14
-    else if s = 'cloner' then Result := 15
+    else if s = 'fencer' then Result := 13
+    else if s = 'miner' then Result := 14
+    else if s = 'digger' then Result := 15
+    else if s = 'cloner' then Result := 16
     else if s = '' then Result := 0
     else
     begin
@@ -391,9 +392,10 @@ var
       10: Result := 'Builder';
       11: Result := 'Stacker';
       12: Result := 'Basher';
-      13: Result := 'Miner';
-      14: Result := 'Digger';
-      15: Result := 'Cloner';
+      13: Result := 'Fencer';
+      14: Result := 'Miner';
+      15: Result := 'Digger';
+      16: Result := 'Cloner';
       else Result := IntToStr(aValue);
     end;
   end;

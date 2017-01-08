@@ -744,9 +744,10 @@ begin
               10: SetSelectedSkill(spbBuilder, True);
               11: SetSelectedSkill(spbStacker, True);
               12: SetSelectedSkill(spbBasher, True);
-              13: SetSelectedSkill(spbMiner, True);
-              14: SetSelectedSkill(spbDigger, True);
-              15: SetSelectedSkill(spbCloner, True);
+              13: SetSelectedSkill(spbFencer, True);
+              14: SetSelectedSkill(spbMiner, True);
+              15: SetSelectedSkill(spbDigger, True);
+              16: SetSelectedSkill(spbCloner, True);
             end
         end;
 
