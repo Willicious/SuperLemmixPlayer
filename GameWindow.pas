@@ -673,6 +673,7 @@ var
   CurrTime: Cardinal;
   sn: Integer;
   func: TLemmixHotkey;
+  AssignToHighlit: Boolean;
 const
   NON_CANCELLING_KEYS = [lka_Null,
                          lka_SelectNewLem,
@@ -730,24 +731,25 @@ begin
 
         if func.Action = lka_Skill then
         begin
+          AssignToHighlit := GameParams.Hotkeys.CheckForKey(lka_Highlight);
             case func.Modifier of
-              0: SetSelectedSkill(spbWalker, True);
-              1: SetSelectedSkill(spbClimber, True);
-              2: SetSelectedSkill(spbSwimmer, True);
-              3: SetSelectedSkill(spbFloater, True);
-              4: SetSelectedSkill(spbGlider, True);
-              5: SetSelectedSkill(spbDisarmer, True);
-              6: SetSelectedSkill(spbBomber, True);
-              7: SetSelectedSkill(spbStoner, True);
-              8: SetSelectedSkill(spbBlocker, True);
-              9: SetSelectedSkill(spbPlatformer, True);
-              10: SetSelectedSkill(spbBuilder, True);
-              11: SetSelectedSkill(spbStacker, True);
-              12: SetSelectedSkill(spbBasher, True);
-              13: SetSelectedSkill(spbFencer, True);
-              14: SetSelectedSkill(spbMiner, True);
-              15: SetSelectedSkill(spbDigger, True);
-              16: SetSelectedSkill(spbCloner, True);
+              0: SetSelectedSkill(spbWalker, True, AssignToHighlit);
+              1: SetSelectedSkill(spbClimber, True, AssignToHighlit);
+              2: SetSelectedSkill(spbSwimmer, True, AssignToHighlit);
+              3: SetSelectedSkill(spbFloater, True, AssignToHighlit);
+              4: SetSelectedSkill(spbGlider, True, AssignToHighlit);
+              5: SetSelectedSkill(spbDisarmer, True, AssignToHighlit);
+              6: SetSelectedSkill(spbBomber, True, AssignToHighlit);
+              7: SetSelectedSkill(spbStoner, True, AssignToHighlit);
+              8: SetSelectedSkill(spbBlocker, True, AssignToHighlit);
+              9: SetSelectedSkill(spbPlatformer, True, AssignToHighlit);
+              10: SetSelectedSkill(spbBuilder, True, AssignToHighlit);
+              11: SetSelectedSkill(spbStacker, True, AssignToHighlit);
+              12: SetSelectedSkill(spbBasher, True, AssignToHighlit);
+              13: SetSelectedSkill(spbFencer, True, AssignToHighlit);
+              14: SetSelectedSkill(spbMiner, True, AssignToHighlit);
+              15: SetSelectedSkill(spbDigger, True, AssignToHighlit);
+              16: SetSelectedSkill(spbCloner, True, AssignToHighlit);
             end
         end;
 
