@@ -124,8 +124,9 @@ type
     spbForwardOneFrame,
     spbClearPhysics,
     spbDirLeft,
-    spbDirRight,
-    spbLoadReplay
+    spbLoadReplay,
+    spbMinimap,
+    spbDirRight  // because of special handling to draw it, it's not immediately after spbDirLeft in the list
   );
 
 
@@ -240,8 +241,9 @@ const
     baNone,  // +1f
     baNone,  // Clear Physics
     baNone,  // Dir Sel Left
-    baNone,  // Dir Sel Right
-    baNone   // Load Replay
+    baNone,  // Load Replay
+    baNone,  // Minimap toggle
+    baNone   // Dir Sel Right
   );
 
 const

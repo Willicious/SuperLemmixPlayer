@@ -48,6 +48,7 @@ type
     //fMinimapHighlightLayer: TPositionedLayer;
 
     fOriginal      : TBitmap32;
+    fMinimapRegion : TBitmap32;
     fLevel         : TLevel;
     fSkillFont     : array['0'..'9', 0..1] of TBitmap32;
     fSkillCountErase : TBitmap32;
@@ -157,6 +158,8 @@ begin
   fImg.Parent := Self;
   fImg.RepaintMode := rmOptimizer;
 
+  fMinimapRegion := TBitmap32.Create;
+
   fImg.OnMouseDown := ImgMouseDown;
   fImg.OnMouseMove := ImgMouseMove;
   fImg.OnMouseUp := ImgMouseUp;
@@ -234,6 +237,8 @@ begin
   fSkillCountErase.Free;
   fSkillLock.Free;
 
+  fMinimapRegion.Free;
+
   fOriginal.Free;
   inherited;
 end;
@@ -267,6 +272,7 @@ begin
     Exit;
 
   if fButtonRects[aButton].Left <= 0 then Exit;
+  if (aButton > spbNuke) and GameParams.ShowMinimap then Exit;
 
   case Highlight of
     False :
@@ -514,6 +520,7 @@ var
   P: TPoint;
   i: TSkillPanelButton;
   R: PRect;
+  SrcRect: TRect;
   q: Integer;
   Exec: Boolean;
 begin
@@ -582,8 +589,18 @@ begin
             end;
           end;
         end else begin // need special handling
+          if GameParams.ShowMinimap and (i <> spbFastForward) then Exit;
+          // note that Show Minimap button appears in Fast Forward's position when minimap is shown.
+          // it's easier to just test this here and react accordingly rather than move the rects around
+
           case i of
-            spbFastForward: begin
+            spbFastForward: if GameParams.ShowMinimap then
+                            begin
+                              GameParams.ShowMinimap := false;
+                              SrcRect := Rect(193, 16, 320, 48);
+                              fOriginal.DrawTo(Img.Bitmap, SrcRect, SrcRect);
+                              Img.Update;
+                            end else begin
                               Game.FastForward := not Game.FastForward;
                               DrawButtonSelector(spbFastForward, Game.FastForward);
                             end;
@@ -610,6 +627,7 @@ begin
                           DrawButtonSelector(spbDirRight, true);
                         end;
             spbLoadReplay: TGameWindow(Parent).LoadReplay;
+            spbMinimap: GameParams.ShowMinimap := true;
           end;
         end;
       Exit;
@@ -799,28 +817,25 @@ begin
     MakePanel(TempBmp, 'icon_rr_plus.png', true);
     TempBmp.DrawTo(fOriginal, 17, 16);
 
-    if GameParams.ShowMinimap then
-    begin
-      GetGraphic('minimap_region.png', TempBmp);
-      TempBmp.DrawTo(fOriginal, 193, 16);
-    end else begin
-      MakePanel(TempBmp, 'icon_ff.png', false);
-      TempBmp.DrawTo(fOriginal, 193, 16);
-      MakePanel(TempBmp, 'icon_restart.png', false);
-      TempBmp.DrawTo(fOriginal, 209, 16);
-      MakePanel(TempBmp, 'icon_1fb.png', false);
-      TempBmp.DrawTo(fOriginal, 225, 16);
-      MakePanel(TempBmp, 'icon_1ff.png', false);
-      TempBmp.DrawTo(fOriginal, 241, 16);
-      MakePanel(TempBmp, 'icon_clearphysics.png', false);
-      TempBmp.DrawTo(fOriginal, 257, 16);
-      MakePanel(TempBmp, 'icon_ds_left.png', false);
-      TempBmp.DrawTo(fOriginal, 273, 16);
-      MakePanel(TempBmp, 'icon_ds_right.png', false);
-      TempBmp.DrawTo(fOriginal, 289, 16);
-      MakePanel(TempBmp, 'icon_load_replay.png', false);
-      TempBmp.DrawTo(fOriginal, 305, 16);
-    end;
+    GetGraphic('minimap_region.png', fMinimapRegion);
+
+    MakePanel(TempBmp, 'icon_ff.png', false);
+    TempBmp.DrawTo(fOriginal, 193, 16);
+    MakePanel(TempBmp, 'icon_restart.png', false);
+    TempBmp.DrawTo(fOriginal, 209, 16);
+    MakePanel(TempBmp, 'icon_1fb.png', false);
+    TempBmp.DrawTo(fOriginal, 225, 16);
+    MakePanel(TempBmp, 'icon_1ff.png', false);
+    TempBmp.DrawTo(fOriginal, 241, 16);
+    MakePanel(TempBmp, 'icon_clearphysics.png', false);
+    TempBmp.DrawTo(fOriginal, 257, 16);
+    MakePanel(TempBmp, 'icon_directional.png', false);
+    TempBmp.DrawTo(fOriginal, 273, 16);
+    MakePanel(TempBmp, 'icon_load_replay.png', false);
+    TempBmp.DrawTo(fOriginal, 289, 16);
+    MakePanel(TempBmp, 'icon_minimap.png', false);
+    TempBmp.DrawTo(fOriginal, 305, 16);
+    TempBmp.DrawTo(fMinimapRegion, 0, 0);
 
     GetGraphic('empty_slot.png', TempBmp);
     for i := 0 to 7 do
@@ -953,12 +968,17 @@ begin
 
   R := Rect(193, 16, 207, 38);
 
-  if not GameParams.ShowMinimap then
+  //if not GameParams.ShowMinimap then
     for iButton := spbFastForward to High(TSkillPanelButton) do
     begin
       fButtonRects[iButton] := R;
       RectMove(R, 16, 0);
     end;
+
+  // special handling
+  fButtonRects[spbDirLeft].Bottom := fButtonRects[spbDirLeft].Bottom - 12;
+  fButtonRects[spbDirRight] := fButtonRects[spbDirLeft];
+  RectMove(fButtonRects[spbDirRight], 0, 12);
 
 
 end;
@@ -1152,7 +1172,9 @@ var
 begin
   if not GameParams.ShowMinimap then Exit;
 
-  Dx := 208;
+  fMinimapRegion.DrawTo(Img.Bitmap, 193, 16);
+
+  Dx := 212;
   if Map.Width < 104 then Dx := Dx + (52 - (Map.Width div 2));
   SrcRect := Rect(0, 0, 104, 20);
 
@@ -1171,11 +1193,11 @@ begin
   end else
     X := 0;
 
-  EraseRect := Rect(208, 18, 312, 38);
-  fOriginal.DrawTo(Img.Bitmap, EraseRect, EraseRect);
+  //EraseRect := Rect(212, 18, 316, 38);
+  //fOriginal.DrawTo(Img.Bitmap, EraseRect, EraseRect);
 
   Map.DrawTo(Img.Bitmap, Dx, 18, SrcRect);
-  Img.Bitmap.FrameRectS(208 + X, 18, 208 + X + 20, 38, fRectColor);
+  Img.Bitmap.FrameRectS(212 + X, 18, 212 + X + 20, 38, fRectColor);
 end;
 
 procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);
