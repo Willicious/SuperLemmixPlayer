@@ -589,18 +589,10 @@ begin
             end;
           end;
         end else begin // need special handling
-          if GameParams.ShowMinimap and (i <> spbFastForward) then Exit;
-          // note that Show Minimap button appears in Fast Forward's position when minimap is shown.
-          // it's easier to just test this here and react accordingly rather than move the rects around
+          if GameParams.ShowMinimap and (i <> spbMinimap) then Exit;
 
           case i of
-            spbFastForward: if GameParams.ShowMinimap then
-                            begin
-                              GameParams.ShowMinimap := false;
-                              SrcRect := Rect(193, 16, 320, 48);
-                              fOriginal.DrawTo(Img.Bitmap, SrcRect, SrcRect);
-                              Img.Update;
-                            end else begin
+            spbFastForward: begin
                               Game.FastForward := not Game.FastForward;
                               DrawButtonSelector(spbFastForward, Game.FastForward);
                             end;
@@ -627,7 +619,14 @@ begin
                           DrawButtonSelector(spbDirRight, true);
                         end;
             spbLoadReplay: TGameWindow(Parent).LoadReplay;
-            spbMinimap: GameParams.ShowMinimap := true;
+            spbMinimap: if GameParams.ShowMinimap then
+                        begin
+                          GameParams.ShowMinimap := false;
+                          SrcRect := Rect(193, 16, 304, 48);
+                          fOriginal.DrawTo(Img.Bitmap, SrcRect, SrcRect);
+                          Img.Update;
+                        end else
+                          GameParams.ShowMinimap := true;
           end;
         end;
       Exit;
@@ -835,7 +834,7 @@ begin
     TempBmp.DrawTo(fOriginal, 289, 16);
     MakePanel(TempBmp, 'icon_minimap.png', false);
     TempBmp.DrawTo(fOriginal, 305, 16);
-    TempBmp.DrawTo(fMinimapRegion, 0, 0);
+    //TempBmp.DrawTo(fMinimapRegion, 0, 0);
 
     GetGraphic('empty_slot.png', TempBmp);
     for i := 0 to 7 do
@@ -1174,7 +1173,7 @@ begin
 
   fMinimapRegion.DrawTo(Img.Bitmap, 193, 16);
 
-  Dx := 212;
+  Dx := 196;
   if Map.Width < 104 then Dx := Dx + (52 - (Map.Width div 2));
   SrcRect := Rect(0, 0, 104, 20);
 
@@ -1197,7 +1196,7 @@ begin
   //fOriginal.DrawTo(Img.Bitmap, EraseRect, EraseRect);
 
   Map.DrawTo(Img.Bitmap, Dx, 18, SrcRect);
-  Img.Bitmap.FrameRectS(212 + X, 18, 212 + X + 20, 38, fRectColor);
+  Img.Bitmap.FrameRectS(196 + X, 18, 196 + X + 20, 38, fRectColor);
 end;
 
 procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);

@@ -20,17 +20,17 @@ uses
 
 const
   DosMiniMapCorners: TRect = (
-    Left: 212;   // width =about 100
+    Left: 196;   // width =about 100
     Top: 18;
-    Right: 315;  // height =about 20
+    Right: 299;  // height =about 20
     Bottom: 37
   );
 
   // to draw
   DosMiniMapBounds: TRect = (
-    Left: 212;   // width =about 100
+    Left: 196;   // width =about 100
     Top: 18;
-    Right: 315 + 1;  // height =about 20
+    Right: 299 + 1;  // height =about 20
     Bottom: 37 + 1
   );
 
