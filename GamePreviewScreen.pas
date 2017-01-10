@@ -107,16 +107,15 @@ var
   SkillCount: Integer;
   Skill: TSkillPanelButton;
   NeedClear: Boolean;
-const
-  BIT_TO_SV: array[0..16] of Integer = (8, 0, 9, 1, 10, 11, 2, 12, 3, 13, 4, 14, 5, 16, 6, 7, 15);
-  function FindPickupSkill(aSkillSValue: Integer): Boolean;
+
+  function FindPickupSkill(aSkillSValue: TSkillPanelButton): Boolean;
   var
     i: Integer;
   begin
     Result := false;
     for i := 0 to aLevel.InteractiveObjects.Count-1 do
       if GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]).TriggerEffect = 14 then
-        if aLevel.InteractiveObjects[i].Skill = aSkillSValue then
+        if aLevel.InteractiveObjects[i].Skill = Integer(aSkillSValue) then
         begin
           Result := true;
           Exit;
@@ -130,7 +129,7 @@ begin
     if Skill >= spbNone then // to avoid an out of bounds error on BIT_TO_SV
       NeedClear := true
     else if SkillCount = 0 then
-      NeedClear := not FindPickupSkill(BIT_TO_SV[Integer(Skill)])
+      NeedClear := not FindPickupSkill(Skill)
     else
       NeedClear := false;
     if NeedClear then

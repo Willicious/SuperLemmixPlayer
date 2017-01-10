@@ -92,6 +92,7 @@ type
     Flip: Boolean;
     Invert: Boolean;
     Rotate: Boolean;
+    PickupPatch: Boolean;
   end;
 
   TTranslationTable = class
@@ -167,6 +168,8 @@ begin
   NewItem.Rotate := aSec.Line['rotate'] <> nil;
   NewItem.Flip := aSec.Line['flip_horizontal'] <> nil;
   NewItem.Invert := aSec.Line['flip_vertical'] <> nil;
+
+  NewItem.PickupPatch := aSec.Line['pickup_patch'] <> nil;
 
   fMatchArray[fCurrentPos] := NewItem;
   Inc(fCurrentPos);
@@ -333,6 +336,31 @@ begin
     O.Rotate := O.Rotate xor MatchRec.Rotate;
     O.Flip := O.Flip xor MatchRec.Flip;
     O.Invert := O.Invert xor MatchRec.Invert;
+
+    if MatchRec.PickupPatch then
+    begin
+      // because pickup skill S Values are now ordered more logically
+      case O.Skill + (O.TarLev * 16) of
+        0: O.Skill := Integer(spbClimber);
+        1: O.Skill := Integer(spbFloater);
+        2: O.Skill := Integer(spbBomber);
+        3: O.Skill := Integer(spbBlocker);
+        4: O.Skill := Integer(spbBuilder);
+        5: O.Skill := Integer(spbBasher);
+        6: O.Skill := Integer(spbMiner);
+        7: O.Skill := Integer(spbDigger);
+        8: O.Skill := Integer(spbWalker);
+        9: O.Skill := Integer(spbSwimmer);
+        10: O.Skill := Integer(spbGlider);
+        11: O.Skill := Integer(spbDisarmer);
+        12: O.Skill := Integer(spbStoner);
+        13: O.Skill := Integer(spbPlatformer);
+        14: O.Skill := Integer(spbStacker);
+        15: O.Skill := Integer(spbCloner);
+        16: O.Skill := Integer(spbFencer);
+        // else raise exception?
+      end;
+    end;
   end;
 
   for i := aLevel.InteractiveObjects.Count-1 downto 0 do

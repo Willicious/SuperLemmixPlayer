@@ -170,7 +170,7 @@ var
       if spbCloner in GameParams.Level.Info.Skillset then AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
       for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
         if GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 14 then
-          if GameParams.Level.InteractiveObjects[i].Skill = 15 then Inc(AdjLemCount);
+          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount);
       with GameParams.GameResult do
       begin
         // result text

@@ -6,6 +6,7 @@ interface
 uses
   Contnrs,
   Classes,
+  LemCore,
   LemPiece;
 
 const
@@ -27,8 +28,8 @@ type
     fHeight: Integer;
     fDrawingFlags: Byte; // odf_xxxx
     fFake: Boolean;
-    fSkill: Byte;
-    fTarLev: Byte;
+    fSkill: Integer;
+    fTarLev: Integer;
     fLastDrawX: Integer;
     fLastDrawY: Integer;
     fDrawAsZombie: Boolean;
@@ -44,8 +45,8 @@ type
     property Height: Integer read fHeight write fHeight;
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
     property IsFake: Boolean read fFake write fFake;
-    property Skill : Byte read fSkill write fSkill;
-    property TarLev : Byte read fTarLev write fTarLev;
+    property Skill : Integer read fSkill write fSkill;
+    property TarLev : Integer read fTarLev write fTarLev;
     property LastDrawX: Integer read fLastDrawX write fLastDrawX;
     property LastDrawY: Integer read fLastDrawY write fLastDrawY;
     property DrawAsZombie: Boolean read fDrawAsZombie write fDrawAsZombie;

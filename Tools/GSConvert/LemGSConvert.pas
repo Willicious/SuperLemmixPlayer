@@ -186,6 +186,9 @@ var
       Sec.AddLine('WIDTH', GS.ObjectImages[i][0].Width);
     if O.ResizeVertical then
       Sec.AddLine('HEIGHT', GS.ObjectImages[i][0].Height);
+
+    if O.TriggerType = 14 then
+      Sec.AddLine('PICKUP_PATCH');
   end;
 
   procedure SaveTerrain(i: Integer);

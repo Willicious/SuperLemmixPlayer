@@ -32,3 +32,4 @@ tools/GSConvert/bin/*
 !tools/GSConvert/bin/*.txt
 !tools/GSConvert/bin/*.dat
 !tools/GSConvert/bin/default/
+*.nxp

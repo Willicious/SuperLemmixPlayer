@@ -3,7 +3,7 @@ unit LemObjects;
 interface
 
 uses
-  Windows, Contnrs, LemTypes,
+  Windows, Contnrs, LemTypes, LemCore,
   LemMetaObject, LemInteractiveObject;
 
 type
@@ -26,7 +26,7 @@ type
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
     procedure SetZombieMode(Value: Boolean);
-    function GetSkillType: Integer;
+    function GetSkillType: TSkillPanelButton;
     function GetSoundEffect: Integer;
     function GetIsOnlyOnTerrain: Boolean;
     function GetIsUpsideDown: Boolean;
@@ -62,7 +62,7 @@ type
     property IsDisabled: Boolean read sIsDisabled write SetIsDisabled;
     property ReceiverId: Integer read sReceiverId;
     property PairingId: Integer read sPairingId;  // Teleporters and receivers that are matched have same value; used for helper icons only (otherwise use ReceiverID)
-    property SkillType: Integer read GetSkillType;
+    property SkillType: TSkillPanelButton read GetSkillType;
     property IsOnlyOnTerrain: Boolean read GetIsOnlyOnTerrain;  // ... and 1
     property IsUpsideDown: Boolean read GetIsUpsideDown;        // ... and 2
     property IsNoOverwrite: Boolean read GetIsNoOverwrite;      // ... and 4
@@ -170,7 +170,7 @@ begin
   if MetaObj.RandomStartFrame then
     CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1){ + i}) mod MetaObj.FrameCount
   else if MetaObj.TriggerEffect = DOM_PICKUP then
-    CurrentFrame := Obj.Skill + (Obj.TarLev * 16) + 1
+    CurrentFrame := Obj.Skill + 1
   else if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
     CurrentFrame := 1
   else
@@ -274,10 +274,10 @@ begin
   Obj.DrawAsZombie := Value;
 end;
 
-function TInteractiveObjectInfo.GetSkillType: Integer;
+function TInteractiveObjectInfo.GetSkillType: TSkillPanelButton;
 begin
   Assert(TriggerEffect = DOM_PICKUP, 'Object.SkillType called for non-PickUp skill');
-  Result := Obj.Skill + (Obj.TarLev * 16);
+  Result := TSkillPanelButton(Obj.Skill);
 end;
 
 function TInteractiveObjectInfo.GetSoundEffect: Integer;

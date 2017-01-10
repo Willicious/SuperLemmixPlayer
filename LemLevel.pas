@@ -407,27 +407,23 @@ var
   begin
     S := Lowercase(aSection.LineTrimString['skill']);
 
-    if S = 'walker' then O.Skill := 8;
-    if S = 'climber' then O.Skill := 0;
-    if S = 'swimmer' then O.Skill := 9;
-    if S = 'floater' then O.Skill := 1;
-    if S = 'glider' then O.Skill := 10;
-    if S = 'disarmer' then O.Skill := 11;
-    if S = 'bomber' then O.Skill := 2;
-    if S = 'stoner' then O.Skill := 12;
-    if S = 'blocker' then O.Skill := 3;
-    if S = 'platformer' then O.Skill := 13;
-    if S = 'builder' then O.Skill := 4;
-    if S = 'stacker' then O.Skill := 14;
-    if S = 'basher' then O.Skill := 5;
-    if S = 'miner' then O.Skill := 6;
-    if S = 'digger' then O.Skill := 7;
-    if S = 'cloner' then O.Skill := 15;
-    if S = 'fencer' then
-    begin
-      O.Skill := 0;
-      O.TarLev := 1;
-    end;
+    if S = 'walker' then O.Skill := Integer(spbWalker);
+    if S = 'climber' then O.Skill := Integer(spbClimber);
+    if S = 'swimmer' then O.Skill := Integer(spbSwimmer);
+    if S = 'floater' then O.Skill := Integer(spbFloater);
+    if S = 'glider' then O.Skill := Integer(spbGlider);
+    if S = 'disarmer' then O.Skill := Integer(spbDisarmer);
+    if S = 'bomber' then O.Skill := Integer(spbBomber);
+    if S = 'stoner' then O.Skill := Integer(spbStoner);
+    if S = 'blocker' then O.Skill := Integer(spbBlocker);
+    if S = 'platformer' then O.Skill := Integer(spbPlatformer);
+    if S = 'builder' then O.Skill := Integer(spbBuilder);
+    if S = 'stacker' then O.Skill := Integer(spbStacker);
+    if S = 'basher' then O.Skill := Integer(spbBasher);
+    if S = 'fencer' then O.Skill := Integer(spbFencer);
+    if S = 'miner' then O.Skill := Integer(spbMiner);
+    if S = 'digger' then O.Skill := Integer(spbDigger);
+    if S = 'cloner' then O.Skill := Integer(spbCloner);
   end;
 
   procedure GetSplitterData;
@@ -726,24 +722,24 @@ var
   var
     S: String;
   begin
-    case O.Skill + (O.TarLev * 16) of
-      8: S := 'WALKER';
-      0: S := 'CLIMBER';
-      9: S := 'SWIMMER';
-      1: S := 'FLOATER';
-      10: S := 'GLIDER';
-      11: S := 'DISARMER';
-      2: S := 'BOMBER';
-      12: S := 'STONER';
-      3: S := 'BLOCKER';
-      13: S := 'PLATFORMER';
-      4: S := 'BUILDER';
-      14: S := 'STACKER';
-      5: S := 'BASHER';
-      6: S := 'MINER';
-      7: S := 'DIGGER';
-      15: S := 'CLONER';
-      16: S := 'FENCER';
+    case TSkillPanelButton(O.Skill) of
+     spbWalker: s := 'WALKER';
+     spbClimber: s := 'CLIMBER';
+     spbSwimmer: s := 'SWIMMER';
+     spbFloater: s := 'FLOATER';
+     spbGlider: s := 'GLIDER';
+     spbDisarmer: s := 'DISARMER';
+     spbBomber: s := 'BOMBER';
+     spbStoner: s := 'STONER';
+     spbBlocker: s := 'BLOCKER';
+     spbPlatformer: s := 'PLATFORMER';
+     spbBuilder: s := 'BUILDER';
+     spbStacker: s := 'STACKER';
+     spbBasher: s := 'BASHER';
+     spbFencer: s := 'FENCER';     
+     spbMiner: s := 'MINER';
+     spbDigger: s := 'DIGGER';
+     spbCloner: s := 'CLONER';
     end;
 
     Sec.AddLine(S);

@@ -2856,25 +2856,7 @@ begin
     Inf := ObjectInfos[ObjectID];
     Inf.CurrentFrame := 0;
     CueSoundEffect(SFX_PICKUP, L.Position);
-    case Inf.SkillType of
-      0 : UpdateSkillCount(baClimbing, true);
-      1 : UpdateSkillCount(baFloating, true);
-      2 : UpdateSkillCount(baExploding, true);
-      3 : UpdateSkillCount(baBlocking, true);
-      4 : UpdateSkillCount(baBuilding, true);
-      5 : UpdateSkillCount(baBashing, true);
-      6 : UpdateSkillCount(baMining, true);
-      7 : UpdateSkillCount(baDigging, true);
-      8 : UpdateSkillCount(baToWalking, true);
-      9 : UpdateSkillCount(baSwimming, true);
-      10 : UpdateSkillCount(baGliding, true);
-      11 : UpdateSkillCount(baFixing, true);
-      12 : UpdateSkillCount(baStoning, true);
-      13 : UpdateSkillCount(baPlatforming, true);
-      14 : UpdateSkillCount(baStacking, true);
-      15 : UpdateSkillCount(baCloning, true);
-      16 : UpdateSkillCount(baFencing, true);
-    end;
+    UpdateSkillCount(SkillPanelButtonToAction[Inf.SkillType], true);
   end;
 end;
 
@@ -6016,7 +5998,7 @@ begin
   begin
     Inc(MaxSavedLemCount, CurrSkillCount[baCloning]);
     for i := 0 to ObjectInfos.Count - 1 do
-      if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].SkillType = 15) then
+      if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].SkillType = spbCloner) then
         Inc(MaxSavedLemCount);
   end;
 
