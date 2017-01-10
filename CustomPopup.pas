@@ -110,8 +110,45 @@ var
   i: Integer;
   TotalButtonWidth: Integer;
   x, y: Integer;
+
+  CW, CH: Integer;
+
+  procedure PrepareCaption;
+  var
+    i: Integer;
+    Substr: String;
+    Linebreaks: Integer;
+  begin
+    // Changes all line returns to just CRs, and detects actual width / height as Canvas.TextWidth/TextHeight is not reliable
+    // in text that has linebreaks.
+
+    fText := StringReplace(fText, #13 + #10, #13, [rfReplaceAll]); // change all CRLF to just CR
+    fText := StringReplace(fText, #10, #13, [rfReplaceAll]);       // change any remaining lone LFs to CRs
+
+    fText := fText + #13; // put a dummy one at the end to make the loop easier
+
+    LineBreaks := 0;
+    Substr := '';
+    CW := 0;
+    CH := 0;
+    for i := 1 to Length(fText) do
+      if fText[i] <> #13 then
+        SubStr := SubStr + fText[i]
+      else begin
+        if Canvas.TextWidth(SubStr) > CW then CW := Canvas.TextWidth(Substr);
+        if LineBreaks = 0 then CH := Canvas.TextHeight(Substr);
+        Inc(LineBreaks);
+        SubStr := '';
+      end;
+    CH := CH * LineBreaks;
+
+    fText := LeftStr(fText, Length(fText)-1); // remove dummy CR
+  end;
+
 begin
   Lbl := TLabel.Create(self);
+
+  PrepareCaption;
 
   with Lbl do
   begin
@@ -121,8 +158,8 @@ begin
     Caption := fText;
     Left := PADDING_SIZE;
     Top := PADDING_SIZE;
-    self.ClientWidth := Canvas.TextWidth(Caption) + (PADDING_SIZE * 2);
-    self.ClientHeight := Canvas.TextHeight(Caption) + (PADDING_SIZE * 2);
+    self.ClientWidth := CW + (PADDING_SIZE * 2);
+    self.ClientHeight := CH + (PADDING_SIZE * 2);
   end;
 
   TotalButtonWidth := 0;
