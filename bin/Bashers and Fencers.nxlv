@@ -29,6 +29,15 @@ $OBJECT
 $END
 
 $OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 132
+  Y 40
+  NO_OVERWRITE
+  SKILL fencer
+$END
+
+$OBJECT
   COLLECTION crystal
   PIECE exit
   X 595
