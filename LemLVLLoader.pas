@@ -337,6 +337,15 @@ begin
     O.Flip := O.Flip xor MatchRec.Flip;
     O.Invert := O.Invert xor MatchRec.Invert;
 
+    if O.Rotate then
+    begin
+      O.Width := MatchRec.Height;
+      O.Height := MatchRec.Width;
+    end else begin
+      O.Width := MatchRec.Width;
+      O.Height := MatchRec.Height;
+    end;
+
     if MatchRec.PickupPatch then
     begin
       // because pickup skill S Values are now ordered more logically

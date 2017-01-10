@@ -1489,6 +1489,7 @@ var
   var
     C: TColor32;
 
+    OW, OH: Integer;
     TW, TH: Integer;
 
     procedure HandleRotate;
@@ -1537,10 +1538,15 @@ var
     if O.Flip then HandleFlip;
     if O.Invert then HandleInvert;
 
+    OW := O.Width;
+    OH := O.Height;
+    if OW = 0 then OW := MO.Width;
+    if OH = 0 then OH := MO.Height;
+
     if MO.CanResizeHorizontal then
-      TW := TW + (O.Width - MO.Width);
+      TW := TW + (OW - MO.Width);
     if MO.CanResizeVertical then
-      TH := TH + (O.Height - MO.Height);
+      TH := TH + (OH - MO.Height);
 
     SetRegion( Rect(O.Left + MO.TriggerLeft,
                     O.Top + MO.TriggerTop,

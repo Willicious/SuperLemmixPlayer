@@ -45,8 +45,8 @@ $OBJECT
   PIECE owa_left
   X 76
   Y 56
-  WIDTH 96
-  HEIGHT 80
+  WIDTH 32
+  HEIGHT 32
 $END
 
 $TERRAIN
