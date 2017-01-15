@@ -107,7 +107,8 @@ type
     destructor Destroy; override;
     procedure ApplyMouseTrap;
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
-    procedure LoadReplay;    
+    procedure LoadReplay;
+    procedure ForceRenderMinimap;
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
@@ -125,6 +126,13 @@ begin
   if Game.Paused then
     fNeedRedraw := true;
   SkillPanel.DrawButtonSelector(spbClearPhysics, fClearPhysics);
+end;
+
+procedure TGameWindow.ForceRenderMinimap;
+begin
+  // why is the physics code (LemGame) responsible for minimap rendering in the first place?
+  // oh right, cause that's how Lemmix was and I still haven't changed it...
+  fRenderer.RenderMinimap(Game.MiniMap);
 end;
 
 procedure TGameWindow.ExecuteReplayEdit;

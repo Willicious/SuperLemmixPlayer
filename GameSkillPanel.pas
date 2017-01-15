@@ -625,8 +625,14 @@ begin
                           SrcRect := Rect(193, 16, 304, 48);
                           fOriginal.DrawTo(Img.Bitmap, SrcRect, SrcRect);
                           Img.Update;
-                        end else
+                        end else begin
                           GameParams.ShowMinimap := true;
+                          if Game.Paused then
+                          begin
+                            TGameWindow(Parent).ForceRenderMinimap;
+                            DrawMinimap(Game.MiniMap);
+                          end;
+                        end;
           end;
         end;
       Exit;
