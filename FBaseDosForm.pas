@@ -4,8 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs,
-  UMisc, Gr32,
+  Dialogs, Gr32,
   GameControl;
 
 const

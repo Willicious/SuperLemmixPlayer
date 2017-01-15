@@ -16,8 +16,6 @@ uses
   LemGame,
   GameControl,
   GameBaseScreen;
-//  LemCore, LemGame, LemDosFiles, LemDosStyles, LemControls,
-  //LemDosScreen;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.

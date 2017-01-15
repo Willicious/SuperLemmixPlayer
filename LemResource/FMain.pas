@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  umisc, ucodes, Dialogs,uzip, StdCtrls;
+  umisc, Dialogs,uzip, StdCtrls;
 
 type
   TForm1 = class(TForm)

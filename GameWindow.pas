@@ -8,7 +8,6 @@ uses
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls,
   GR32, GR32_Image, GR32_Layers,
-  UMisc,
   LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
   LemGame, GameSound,
   GameControl, GameSkillPanel, GameBaseScreen;
@@ -1148,8 +1147,6 @@ begin
   if (GameParams.ReplayCheckIndex = -2) then
     SetCursorPos(CenterPoint.X, CenterPoint.Y);
   ApplyMouseTrap;
-
-  if ((GameParams.SysDat.Options2 and $4) <> 0) then SkillPanel.ActivateCenterDigits;
 
   fRenderer := GameParams.Renderer;
   fRenderInterface := Game.RenderInterface;

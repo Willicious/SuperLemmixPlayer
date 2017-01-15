@@ -6,7 +6,6 @@ interface
 uses
   Windows, Messages, Classes, Controls, Graphics, MMSystem, Forms, Dialogs,
   GR32, GR32_Image, GR32_Layers,
-  UMisc,
   FBaseDosForm,
   GameControl,
   LemDosStructures,
