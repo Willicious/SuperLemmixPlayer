@@ -523,9 +523,6 @@ var
 
 implementation
 
-uses
-  UFastStrings;
-
 const
   LEMMIX_REPLAY_VERSION    = 105;
   MAX_FALLDISTANCE         = 62;
@@ -5879,15 +5876,15 @@ var
       Result := GameParams.Info.dSectionName + '_' + LeadZeroStr(GameParams.Info.dLevel + 1, 2);
     if TestModeName or GameParams.AlwaysTimestamp then
       Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
-    Result := FastReplace(Result, '<', '_');
-    Result := FastReplace(Result, '>', '_');
-    Result := FastReplace(Result, ':', '_');
-    Result := FastReplace(Result, '"', '_');
-    Result := FastReplace(Result, '/', '_');
-    Result := FastReplace(Result, '\', '_');
-    Result := FastReplace(Result, '|', '_');
-    Result := FastReplace(Result, '?', '_');
-    Result := FastReplace(Result, '*', '_');
+    Result := StringReplace(Result, '<', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '>', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, ':', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '"', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '/', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '\', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '|', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '?', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '*', '_', [rfReplaceAll]);
     Result := Result + '.nxrp';
   end;
 

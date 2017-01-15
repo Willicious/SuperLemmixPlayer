@@ -258,7 +258,6 @@ type
   TVolatileStream = class(TStream)
   private
     FMyStream: TStream;
-    //FStreamClass: TStreamClass;
   protected
     function GetSize: Int64; override;
     procedure SetSize(NewSize: Longint); overload; override;
@@ -399,8 +398,7 @@ type
 implementation
 
 uses
-  TypInfo, Masks,
-  Math, UFastStrings;
+  TypInfo, Masks, Math;
 
 const
   MaxBufSize = 1024 * 1024; //MegaByte
@@ -842,7 +840,7 @@ var
       if Drive = '' then
         Result := AFileName
       else
-        Result := FastReplace(AFileName, Drive, '');
+        Result := StringReplace(AFileName, Drive, '', [rfReplaceAll]);
       { haal}
       while (Length(Result) > 0) and (Result[1] = '\') do
       begin

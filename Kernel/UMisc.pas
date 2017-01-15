@@ -26,8 +26,7 @@ unit UMisc;
 interface
 
 uses
-  Windows, Classes, Sysutils, TypInfo, Math,
-  UFastStrings;
+  Windows, Classes, Sysutils, TypInfo, Math;
 
 { Algemene constanten en types }
 
@@ -219,6 +218,17 @@ procedure Log(const aValues: array of const);
 begin
   Deb(aValues);
 end;
+
+// No longer fast, but instead independent of UFastStrings.
+// And the methods that uses FastCharPos should be rewritten anyway.
+function FastCharPos(S, Seperator: String; Start: Integer): Integer;
+var
+  SubS: String;
+begin
+  SubS := Copy(S, Start, Length(S) - Start);
+  Result := Start + Pos(Seperator, SubS);
+end;
+
 
 function BoolStr(B: boolean): string;
 begin
@@ -774,7 +784,7 @@ procedure WinDlg(const AValues: array of const);
           Result := Result + '[¿NULL¿]' + Chr(13);
         end;
       end;
-      Result := FastReplace(Result, '#0', ' ');
+      Result := StringReplace(Result, '#0', ' ', [rfReplaceAll]);
     end;
 
 var

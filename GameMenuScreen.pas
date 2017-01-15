@@ -13,7 +13,6 @@ uses
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, ShellApi,
   PngImage, FNeoLemmixConfig,
   GR32, GR32_Image, GR32_Layers,
-  UFastStrings,
   UMisc, Dialogs, LemVersion,
   LemCore, LemTypes, LemStrings, LemDosStructures, LemRendering, LemLevel, LemDosStyle, LemGame,
   GameControl, GameBaseScreen, GamePreviewScreen, GameLevelSelectScreen, GameLevelCodeScreen;
