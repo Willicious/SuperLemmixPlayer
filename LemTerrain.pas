@@ -6,7 +6,6 @@ interface
 uses
   Dialogs,
   Classes,
-  UTools,
   LemPiece,
   Contnrs,
   SysUtils;

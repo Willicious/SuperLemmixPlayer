@@ -8,7 +8,7 @@ uses
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls,
   GR32, GR32_Image, GR32_Layers,
-  UMisc, UTools,
+  UMisc,
   LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
   LemGame, GameSound,
   GameControl, GameSkillPanel, GameBaseScreen;

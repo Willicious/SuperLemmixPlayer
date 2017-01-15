@@ -5,7 +5,7 @@ interface
 
 uses
   Classes, SysUtils,
-  UMisc, UTools, TypInfo,
+  UMisc, TypInfo,
   LemCore, LemTypes;
 
 { TODO : make None versions for our types. Replay is suffering from unclearness }

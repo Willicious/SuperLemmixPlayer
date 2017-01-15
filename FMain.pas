@@ -14,7 +14,6 @@ unit FMain;
 { TODO: make sure sounds en music can be set off before the bassmod is loaded }
 { TODO: safe load bassmod?}
 { TODO : maybe create palette class? }
-{ TODO : Strip UTools }
 { TODO : Remove refs to kernel, when making opensource }
 
 interface

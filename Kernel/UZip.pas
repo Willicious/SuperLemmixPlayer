@@ -386,7 +386,6 @@ type
     procedure CloseArchive;
     procedure ExtractFile(const AFileName: string; aDestStream: TStream); overload;
 
-    function GetTotalFileBytes(aIndexList: TIntegerList = nil; Compressed: Boolean = False): Int64;
     function CheckIfFileExists(aName: String): Boolean;
 
     property ArchiveList: TArchiveList read FArchiveList;
@@ -1130,33 +1129,6 @@ begin
     FIgnoreConfirm := True;
 end;
 
-
-function TArchive.GetTotalFileBytes(aIndexList: TIntegerList = nil; Compressed: Boolean = False): Int64;
-// retourneert totale grootte van alle files of een gedeelte daarvan, wanneer aIndexList gevuld is
-var
-  i: Integer;
-begin
-  Result := 0;
-  if aIndexList = nil then
-    case Compressed of
-      False:
-        for i := 0 to ArchiveList.Count - 1 do
-          Inc(Result, ArchiveList.ArchiveObjects[i].FileSize);
-      True:
-        for i := 0 to ArchiveList.Count - 1 do
-          Inc(Result, ArchiveList.ArchiveObjects[i].ArcSize);
-    end
-  else begin
-    case Compressed of
-      False:
-        for i := 0 to aIndexList.Count - 1 do
-          Inc(Result, ArchiveList.ArchiveObjects[aIndexList[i]].FileSize);
-      True:
-        for i := 0 to aIndexList.Count - 1 do
-          Inc(Result, ArchiveList.ArchiveObjects[aIndexList[i]].ArcSize);
-    end
-  end;
-end;
 
 function TArchive.CheckIfFileExists(aName: String): Boolean;
 // Addition by namida. Check if a file exists without actually trying to extract it.

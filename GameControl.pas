@@ -14,7 +14,6 @@ uses
   Dialogs, SysUtils,
   Classes, Forms,
   GR32, GR32_Image,
-  UTools,
   LemStrings, LemVersion, GameSound,
   LemCore, LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,

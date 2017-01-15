@@ -7,8 +7,7 @@ uses
   Dialogs,
   Classes, SysUtils, GR32,
   LemRenderHelpers,
-  LemNeoParser, PngInterface, LemStrings, LemTypes, Contnrs,
-  UTools;
+  LemNeoParser, PngInterface, LemStrings, LemTypes, Contnrs;
 
 const
   ALIGNMENT_COUNT = 8; // 8 possible combinations of Flip + Invert + Rotate
