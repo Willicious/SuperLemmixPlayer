@@ -47,7 +47,7 @@ type
     procedure ShowTalismanScreen;
     procedure Execute;
 
-    property LoadSuccess: Boolean read fLoadSuccess;
+    property LoadSuccess: Boolean read fLoadSuccess; // currently unused!
   end;
 
 implementation
@@ -58,7 +58,6 @@ uses
   GameLevelCodeScreen,
   GamePreviewScreen,
   GamePostviewScreen,
-  //GameConfigScreen,
   GameWindow,
   GameTextScreen,
   GameTalismanScreen;
@@ -198,8 +197,6 @@ begin
     begin
       DoSingleLevel := false;
       Target := '';
-      //BringToFront;
-      //DoneBringToFront := false;
       IsHalting := false;
       case CheckCompatible(Target) of
         nxc_WrongFormat: begin
@@ -427,12 +424,7 @@ begin
       gstLevelCode: ShowLevelCodeScreen;
       gstText      : ShowTextScreen;
       gstTalisman  : ShowTalismanScreen;
-      else begin
-             //GameParams.SaveSystem.SaveFile(@GameParams);
-             //GameParams.SaveToIniFile;
-             //GameParams.Hotkeys.SaveFile;
-             Break;
-           end;
+      else Break;
     end;
   end;
 end;
@@ -566,9 +558,6 @@ var
           if LeftStr(S, 1) <> 'X' then
             S := 'x' + S;
           n := StrToInt(S);
-
-          //if Cont then
-          //  Cont := MessageDlg(S, mtCustom, [mbYes, mbNo], 0) = 6;
 
           dS := GameParams.Info.dSection;
           dL := GameParams.Info.dLevel;

@@ -1,4 +1,3 @@
-{$include lem_directives.inc}
 unit LemLevelSystem;
 
 interface

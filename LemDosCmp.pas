@@ -5,8 +5,6 @@
   o a dos compression algorithm, based on free basic code of Mindless
   o an easy to use sectionlist
 -------------------------------------------------------------------------------}
-
-{$include lem_directives.inc}
 unit LemDosCmp;
 
 interface
