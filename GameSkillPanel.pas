@@ -918,7 +918,7 @@ begin
     if Num = 0 then
       S := PadR(S, 14)
     else
-      S := PadR(S + ' ' + i2s(Num), 14); //
+      S := PadR(S + ' ' + IntToStr(Num), 14); //
     Move(S[1], fNewDrawStr[1], 14);
   end
   else begin
@@ -957,7 +957,7 @@ var
   S: string;
 begin
   Assert(Num >= 0, 'Negative number of lemmings in hatch displayed');
-  S := i2s(Num);
+  S := IntToStr(Num);
   if Length(S) < 4 then
   begin
     S := PadR(S, 3);
@@ -976,7 +976,7 @@ begin
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
   // Nepster: The two lines above are outdated and wrong!!
   Assert(Num >= 0, 'Negative number of alive lemmings displayed');
-  S := i2s(Num);
+  S := IntToStr(Num);
   if Length(S) < 4 then
   begin
     S := PadR(S, 3);
@@ -993,7 +993,7 @@ begin
   // stringspositions cursor,out,in,time = 1,15,24,32
   //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
   // Nepster: The two lines above are outdated and wrong!!
-  S := i2s(Num);
+  S := IntToStr(Num);
   if Length(S) < 4 then
   begin
     S := PadR(S, 3);
@@ -1013,7 +1013,7 @@ begin
   if Blinking then
     S := '  '
   else
-    S := PadL(i2s(Num), 2);
+    S := PadL(IntToStr(Num), 2);
   Move(S[1], fNewDrawStr[36], 2);
 end;
 

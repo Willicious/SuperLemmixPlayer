@@ -134,7 +134,7 @@ begin
     for y := 0 to aHeight - 1 do
       for x := 0 to aWidth - 1 do
       begin
-        if not (BPP in [18, 19]) then Assert(B^ < PalLen, 'error color ' + i2s(B^) + ',' + i2s(PalLen));
+        if not (BPP in [18, 19]) then Assert(B^ < PalLen, 'error color ' + IntToStr(B^) + ',' + IntToStr(PalLen));
 
         if BPP in [18, 19] then
         begin
@@ -336,7 +336,7 @@ var
       for i := 0 to 7 do
       with TColor32Entry(pal[i]) do
       begin
-        deb(['RGB (' + i2s(i) + ')' + i2s(r) + ',' + i2s(g) +',' + i2s(b)])
+        deb(['RGB (' + IntToStr(i) + ')' + IntToStr(r) + ',' + IntToStr(g) +',' + IntToStr(b)])
       end;
     end;
 

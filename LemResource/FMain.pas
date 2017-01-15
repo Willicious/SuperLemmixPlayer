@@ -52,12 +52,12 @@ var
   Z: TArchive;
   Command, Param, ZipFileName, ScriptFileName: string;
 begin
-  ZipFileName    := GetApplicationPath + aSourcePath + 'lemdata.arc';
-  ScriptFileName := GetApplicationPath + aSourcePath + 'lemdata.rc';
+  ZipFileName    := GetApplicationPath + aSourcePath + 'lemdata';
+  ScriptFileName := GetApplicationPath + aSourcePath + 'lemdata';
 
-  DeleteFile(ZipFileName);
-  DeleteFile(ScriptFileName);
-  DeleteFile(ReplaceFileExt(ZipFileName, '.res'));
+  DeleteFile(ZipFileName + '.arc');
+  DeleteFile(ScriptFileName + '.rc');
+  DeleteFile(ZipFileName + '.res');
 
   Z := TArchive.Create;
   Z.OpenArchive(ZipFileName, amCreate);
@@ -101,12 +101,12 @@ var
   Z: TArchive;
   Command, Param, ZipFileName, ScriptFileName: string;
 begin
-  ZipFileName    := GetApplicationPath + 'sounds\lemsounds.arc';
-  ScriptFileName := GetApplicationPath + 'sounds\lemsounds.rc';
+  ZipFileName    := GetApplicationPath + 'sounds\lemsounds';
+  ScriptFileName := GetApplicationPath + 'sounds\lemsounds';
 
-  DeleteFile(ZipFileName);
-  DeleteFile(ScriptFileName);
-  DeleteFile(ReplaceFileExt(ZipFileName, '.res'));
+  DeleteFile(ZipFileName + '.arc');
+  DeleteFile(ScriptFileName + '.rc');
+  DeleteFile(ZipFileName + '.res'));
 
   Z := TArchive.Create;
   Z.OpenArchive(ZipFileName, amCreate);

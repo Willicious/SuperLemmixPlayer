@@ -163,7 +163,6 @@ var
       i: Integer;
       AdjLemCount: Integer;
     begin
-//      i := 0;
       AdjLemCount := GameParams.Level.Info.LemmingsCount;
       if spbCloner in GameParams.Level.Info.Skillset then AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
       for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
@@ -247,33 +246,30 @@ begin
         GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_FAILURE);
     end;
 
+    // init some local strings
+    STarget := PadL(IntToStr(gToRescue), 4);
+    SDone := PadL(IntToStr(gRescued), 4);
 
-      // init some local strings
-        STarget := PadL(i2s(gToRescue), 4);
-        SDone := PadL(i2s(gRescued), 4);
+    // top text
+    if gGotTalisman then
+        Add(STalismanUnlocked)
+    else if gTimeIsUp then
+        Add(SYourTimeIsUp)
+    else
+        Add(SAllLemmingsAccountedFor);
 
-      // top text
-      if gGotTalisman then
-          Add(STalismanUnlocked)
-      else if gTimeIsUp then
-          Add(SYourTimeIsUp)
-      else
-          Add(SAllLemmingsAccountedFor);
+    LF(1);
 
-      LF(1);
+    Add(Format(SYouRescuedYouNeeded_ss, [SDone, STarget]));
 
-      Add(Format(SYouRescuedYouNeeded_ss, [SDone, STarget]));
+    LF(1);
 
-      LF(1);
+    i := GetResultIndex;
+    Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]));
 
-      i := GetResultIndex;
-      Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]));
+    LF(6); // gap 2 + score space 1 + gap 3
 
-      LF(6); // gap 2 + score space 1 + gap 3
-
-      LF(4);
-
-
+    LF(4);
 
     // force bottomtext to a fixed position
     LF(17 - CountChars(#13, Result));
@@ -297,11 +293,9 @@ begin
       end;
       Add(SPressRightMouseForMenu);
     end;
-
-
   end;
-
 end;
+
 procedure TGamePostviewScreen.Form_KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin

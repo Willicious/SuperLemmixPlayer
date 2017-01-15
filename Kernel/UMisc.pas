@@ -26,104 +26,34 @@ unit UMisc;
 interface
 
 uses
-  Windows, Classes, Sysutils, TypInfo, Math;
+  Windows, Classes, SysUtils, StrUtils, TypInfo, Math;
 
 { Algemene constanten en types }
 
 const
-  { getallen }
-  CrLf        = Chr(13) + Chr(10);
-
-{ pointers naar basische types }
-type
-  pWord          = ^word;
-  pPointer       = ^Pointer;
+  CrLf = Chr(13) + Chr(10);
 
 type
   PBytes = ^TBytes;
   TBytes = array[0..MaxListSize * 4 - 1] of Byte;  // Warning: MaxListSize is deprecated!!!
 
-{ sets }
-type
-  TCharSet = set of char;
-  PCharSet = ^TCharSet;
-  TByteSet = set of byte;
-  PByteSet = ^TByteSet;
-
-type
-  TIntArray = array[0..MaxListSize - 1] of integer;
-  PIntArray = ^TIntArray;
-  TPointArray = array[0..MaxListSize div 2 - 1] of TPoint;
-  PPointArray = ^TPointArray;
-  TOpenBooleanArray = array of boolean;
-  TOpenByteArray = array of Byte;
-  TOpenStringArray = array of string;
-  TOpenIntegerArray = array of integer;
-  TOpenVarRecArray = array of TVarRec;
-  TOpenExtendedArray = array of Extended;
-  TOpenVariantArray = array of Variant;
-  TOpenVariantPointerArray = array of PVariant;
-  TOpenRectArray = array of TRect;
-
-{ Chars en Strings }
-
-function BoolStr(B: boolean): string;
-    { converteert een boolean naar een string }
+// Counts the number of characters C in the string S
 function CountChars(C: Char; const S: string): integer;
-    { telt aantal chars in string }
-function CutLeft(const S: string; aLen: integer): string;
-    { haal aan begin van string chars weg }
-function CutRight(const S: string; aLen: integer): string;
-    { haal aan eind van string chars weg }
-function HexStr(I: integer): string;
-    { geeft hexadecimale notatie van integer }
-function i2s(i: integer): string;
-    { str }
-function LeadZeroStr(Int, Len: integer): string;
-    { lijdende nullen voor getal }
-function PadL(const S: string; aLen: integer; PadChar: char = ' '): string;
-    { = RStr met een te kiezen karakter }
-function PadR(const S: string; aLen: integer; PadChar: char = ' '): string;
-    { = Lstr met een te kiezen karakter }
-function ReplaceChar(const S: string; aFrom, aTo: Char): string;
-    { vervangt karakters in string }
-function ReplaceFileExt(const aFileName, aNewExt: string): string;
-    { vervangt fileext door nieuwe ext, als niet gevonden dan geen verandering }
-function s2i(const S: string): integer;
-    { als StrToInt }
 
-function SplitString(const S: string; Index: integer; Seperator: Char; DoTrim: Boolean = True): string;
-    { haal string uit Seperated string }
-function SplitStringCount(const S: string; Seperator: Char): integer;
-    { geeft aan hoeveel splitstrings er in S zitten }
-function SplitString_To_StringList(const S: string; Seperator: Char;
-  DoTrim: boolean = False): TStringList; overload;
-    { sloopt <S>, gescheiden door een <Seperator> uit elkaar in meerdere strings }
-procedure SplitString_To_StringList(const S: string; AList: TStringList; Seperator: Char;
-  DoTrim: boolean = False); overload;
-    { sloopt <S>, gescheiden door een <Seperator> uit elkaar in meerdere strings }
+// Pads the string S to length aLen by adding PadChar to the left resp. right.
+// If S is already longer than aLen, then it gets truncated.
+function PadL(const S: string; aLen: integer; PadChar: char = ' '): string;
+function PadR(const S: string; aLen: integer; PadChar: char = ' '): string;
+
+// This is PadL(IntToStr(Int), Len, '0')
+function LeadZeroStr(Int, Len: integer): string;
+
 
 procedure StringToFile(const aString, aFileName: string);
     { bewaar string als file }
 
 function Transform(const AVarRec: TVarRec): string;
     { transformeert een varrec naar string }
-function StrToFloatDef(const S: string; const DefValue: Extended = 0): Extended; overload;
-    { = StrToFloat, maar geeft DefValue terug bij exception. NB StrToIntDef staat in sysutils }
-function StringToCharSet(const S: string; const Keep: TCharSet = []): TCharSet;
-    { geeft alle letters uit set }
-
-{ Datum en Tijd }
-
-function DtoS(const aDate: TDateTime): ShortString;
-    { output: 20011231 }
-function TtoS(const ATime: TDateTime; const aSeparator: string = ''): ShortString;
-    { output: 20011231 + aSeparator + 124559 }
-
-{ Memory }
-
-procedure FillDWord(var Dest; Count, Value: Integer);
-    { vult een stuk geheugen met DWords }
 
 { TRect TPoint }
 
@@ -131,28 +61,6 @@ function RectHeight(const aRect: TRect): integer;
 function RectWidth(const aRect: TRect): integer;
 procedure RectMove(var R: TRect; X, Y: integer); {windows.offsetrect}
 function ZeroTopLeftRect(const aRect: TRect): TRect;
-
-{ Range }
-
-function Between(X, A, B: integer): boolean; overload;
-procedure Restrict(var aValue: integer; aMin, aMax: integer);
-
-{ IIFS }
-
-function IIF(aExpr: boolean; const aTrue, aFalse: pointer): pointer; overload;
-function IIF(aExpr, aTrue, aFalse: boolean): boolean; overload;
-function IIF(aExpr: boolean; const aTrue, aFalse: integer): integer; overload;
-function IIF(aExpr: boolean; const aTrue, aFalse: string): string; overload;
-function IIF(aExpr: boolean; const aTrue, aFalse: Char): Char; overload;
-function IIF(aExpr: boolean; const aTrue, aFalse: Currency): Currency; overload;
-
-{ Swaps }
-
-procedure Swap(var A, B; Size: integer);
-procedure SwapInts(var A, B: integer);
-
-{ nibble swap }
-function SwapWord(W: Word): Word;
 
 { Components }
 
@@ -224,94 +132,32 @@ begin
 end;
 
 
-function BoolStr(B: boolean): string;
-begin
- if B then Result := 'TRUE' else Result := 'FALSE';
-end;
-
 function CountChars(C: Char; const S: string): integer;
 var
   i: integer;
 begin
   Result := 0;
   for i := 1 to Length(S) do
-    if S[i] = C then inc(Result);
+    if S[i] = C then Inc(Result);
 end;
 
-function CutLeft(const S: string; aLen: integer): string;
-begin
-  Result := Copy(S, aLen + 1, Length(S));
-end;
 
-function CutRight(const S: string; aLen: integer): string;
-begin
-  Result := Copy(S, 1, Length(S) - aLen);
-end;
-
-function HexStr(I: integer): string;
-begin
-  Result := '$' + Format('%x', [i]);
-end;
-
-function i2s(i: integer): string;
-begin
-  Str(i, Result);
-end;
 
 function PadL(const S: string; aLen: integer; PadChar: char = ' '): string;
 begin
-  Result := StringOfChar(PadChar, aLen - Length(S)) + Copy(S, Length(S) - aLen + 1, aLen);
+  if Length(S) >= aLen then Result := RightStr(S, aLen)
+  else Result := StringOfChar(PadChar, aLen - Length(S)) + S;
 end;
 
 function PadR(const S: string; aLen: integer; PadChar: char = ' '): string;
 begin
-  { de compiler checkt intern al op negatieve waarden, daar maken we gebruik van }
-  Result := Copy(S, 1, aLen) + StringOfChar(PadChar, aLen - Length(S));
-end;
-
-function ReplaceChar(const S: string; aFrom, aTo: Char): string;
-var
-  i: Integer;
-begin
-  Result := S;
-  for i := 1 to length(Result) do
-    if Result[i] = aFrom then
-      Result[i] := aTo;
-end;
-
-function ReplaceFileExt(const aFileName, aNewExt: string): string;
-var
-  Ext: string;
-begin
-  Ext := ExtractFileExt(aFileName);
-  if Ext <> '' then
-  begin
-    Result := CutRight(aFileName, Length(Ext)) + aNewExt;
-  end;
-end;
-
-function s2i(const S: string): integer;
-var
-  Code: integer;
-begin
-  {$I-}
-  Val(S, Result, Code);
-  {$I+}
-  if Code <> 0 then
-    Result := 0;
+  if Length(S) >= aLen then Result := LeftStr(S, aLen)
+  else Result := S + StringOfChar(PadChar, aLen - Length(S));
 end;
 
 function LeadZeroStr(Int, Len: integer): string;
-var
-  i: byte;
 begin
-  Str(Int:Len, Result);
-  i := 1;
-  while Result[i] = ' ' do
-  begin
-    Result[i] := '0';
-    Inc(i);
-  end;
+  Result := PadL(IntToStr(Int), Len, '0')
 end;
 
 
@@ -320,7 +166,7 @@ begin
   with AVarRec do
     case VType of
       vtInteger     : Result := IntToStr(VInteger);
-      vtBoolean     : Result := BoolStr(VBoolean);
+      vtBoolean     : if VBoolean then Result := 'TRUE' else Result := 'FALSE';
       vtChar        : if VChar = #0 then Result := ' ' else Result := VChar;
       vtExtended    : Result := FloatToStrF(VExtended^, ffFixed, 15, 4);
       vtString      : Result := VString^;
@@ -332,124 +178,6 @@ begin
       vtVariant     : Result := string(VVariant^);
       vtInt64       : Result := IntToStr(VInt64^);
       else Result := '';
-    end;
-end;
-
-function StrToFloatDef(const S: string; const DefValue: Extended): Extended;
-begin
-  if not TextToFloat(PChar(S), Result, fvExtended) then
-    Result := DefValue;
-end;
-
-function StringToCharSet(const S: string; const Keep: TCharSet = []): TCharSet;
-var
-  i: Integer;
-begin
-  Result := [];
-  for i := 1 to Length(S) do
-    if (Keep = []) or (S[i] in Keep) then
-      Include(Result, S[i]);
-end;
-
-
-
-function SplitString(const S: string; Index: integer; Seperator: Char; DoTrim: Boolean = True): string;
-var
-  L: TStringList;
-begin
-  Result := '';
-  L := SplitString_To_StringList(S, Seperator, DoTrim);
-  try
-    if Index < L.Count then
-      Result := L[Index];
-  finally
-    L.Free;
-  end;
-end;
-
-function SplitStringCount(const S: string; Seperator: Char): integer;
-var
-  Start, P: integer;
-begin
-  Result := 0;
-  Start := 1;
-  repeat
-    P := FastCharPos(S, Seperator, Start);
-    if P = 0 then Break;
-    Inc(Result);
-    Start := P + 1;
-  until P = 0;
-  { evt laatste }
-  if (Result > 0) and (Start <= Length(S)) then
-    inc(Result);
-end;
-
-
-function SplitString_To_StringList(const S: string; Seperator: Char; DoTrim: boolean = False): TStringList;
-var
-  Cnt, Start, P: integer;
-begin
-  Result := TStringList.Create;
-  Start := 1;
-  Cnt := 0;
-  repeat
-    P := FastCharPos(S, Seperator, Start);
-    if P = 0 then Break;
-    case DoTrim of
-      False: Result.Add(Copy(S, Start, P - Start));
-      True: Result.Add(Trim(Copy(S, Start, P - Start)));
-    end;
-    Inc(Cnt);
-    Start := P + 1;
-  until P = 0;
-  { evt laatste }
-  if (Cnt = 0) and (P = 0) and (S <> '') then
-    case DoTrim of
-      False: Result.Add(S);
-      True: Result.Add(Trim(S));
-    end
-  else if (Cnt > 0) and (Start <= Length(S)) then
-    case DoTrim of
-      False: Result.Add(Copy(S, Start, Length(S) - Start + 1));
-      True: Result.Add(Trim(Copy(S, Start, Length(S) - Start + 1)));
-    end;
-end;
-
-procedure SplitString_To_StringList(const S: string; AList: TStringList; Seperator: Char;
-  DoTrim: boolean = False);
-var
-  Cnt, Start, P: integer;
-begin
-  if not Assigned(AList) then Exit;
-  AList.Clear;
-  Start := 1;
-  Cnt := 0;
-  repeat
-    P := FastCharPos(S, Seperator, Start);
-    if P = 0 then Break;
-    case DoTrim of
-      False:
-         AList.Add(Copy(S, Start, P - Start));
-      True:
-         AList.Add(Trim(Copy(S, Start, P - Start)));
-    end;
-    Inc(Cnt);
-    Start := P + 1;
-  until P = 0;
-  { evt laatste }
-  if (Cnt = 0) and (P = 0) and (S <> '') then
-    case DoTrim of
-      False:
-         AList.Add(S);
-      True:
-         AList.Add(Trim(S));
-    end
-  else if (Cnt > 0) and (Start <= Length(S)) then
-    case DoTrim of
-      False:
-        AList.Add(Copy(S, Start, Length(S) - Start + 1));
-      True:
-         AList.Add(Trim(Copy(S, Start, Length(S) - Start + 1)));
     end;
 end;
 
@@ -465,113 +193,6 @@ begin
   finally
     L.Free;
   end;
-end;
-
-
-
-function Between(X, A, B: integer): boolean;
-begin
-  Result := (X >= A) and (X <= B);
-end;
-
-
-
-procedure Restrict(var aValue: integer; aMin, aMax: integer);
-begin
-  if aMin > aMax then SwapInts(aMin, aMax);
-  if aValue < aMin then
-    aValue := aMin else
-  if aValue > aMax then
-    aValue := aMax
-end;
-
-
-
-
-function DtoS(const aDate: TDateTime): ShortString;
-var
-  Y, M, D: word;
-begin
-  DecodeDate(aDate, Y, M, D);
-  Result := IntToStr(Y) + LeadZeroStr(M, 2) + LeadZeroStr(D, 2);
-end;
-
-function TtoS(const ATime: TDateTime; const aSeparator: string = ''): ShortString;
-var
-  H, Min, S, MS: word;
-begin
-  DecodeTime(aTime, H, Min, S, MS);
-  Result := DtoS(aTime) + aSeparator + LeadZeroStr(H, 2) + LeadZeroStr(Min, 2) + LeadZeroStr(S, 2);
-end;
-
-
-procedure Swap(var A, B; Size: integer);
-var
-  Temp: pointer;
-begin
-  GetMem(Temp, Size);
-  Move(A, Temp^, Size);
-  Move(B, A, Size);
-  Move(Temp^, B, Size);
-  FreeMem(Temp, Size);
-end;
-
-function SwapWord(W: Word): Word;
-begin
-  Result := System.Swap(W);
-end;
-
-procedure FillDWord(var Dest; Count, Value: Integer); register;
-asm
-  XCHG  EDX, ECX
-  PUSH  EDI
-  MOV   EDI, EAX
-  MOV   EAX, EDX
-  REP   STOSD
-  POP   EDI
-end;
-
-
-procedure SwapInts(var A, B: integer);
-begin
-  a := a xor b;
-  b := b xor a;
-  a := a xor b;
-end;
-
-
-
-{ Intern }
-
-function IIF(aExpr: boolean; const aTrue, aFalse: pointer): pointer; overload;
-begin
-  if aExpr then Result := aTrue else Result := aFalse;
-end;
-
-function IIF(aExpr: boolean; const aTrue, aFalse: integer): integer; overload;
-begin
-  if aExpr then Result := aTrue else Result := aFalse;
-end;
-
-function IIF(aExpr, aTrue, aFalse: boolean): boolean; overload;
-begin
-  if aExpr then Result := aTrue else Result := aFalse;
-end;
-
-function IIF(aExpr: boolean; const aTrue, aFalse: string): string; overload;
-begin
-  if aExpr then Result := aTrue else Result := aFalse;
-end;
-
-
-function IIF(aExpr: boolean; const aTrue, aFalse: Char): Char; overload;
-begin
-  if aExpr then Result := aTrue else Result := aFalse;
-end;
-
-function IIF(aExpr: boolean; const aTrue, aFalse: Currency): Currency; overload;
-begin
-  if aExpr then Result := aTrue else Result := aFalse;
 end;
 
 

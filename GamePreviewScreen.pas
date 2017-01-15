@@ -135,12 +135,12 @@ begin
     frms := mintime mod 17;
     secs := (mintime div 17) mod 60;
     mins := (mintime div 17) div 60;
-    outstring := GameParams.Info.dSectionName + ' ' + i2s(GameParams.Info.dLevel + 1) + #13 + #13;
+    outstring := GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + #13 + #13;
 
     if beaten then
       outstring := outstring + 'Completed: Yes' + #13 +
-                 'Most Lemmings Saved: ' + i2s(maxlem) + #13 +
-                 'Best Time: ' + i2s(mins) + ':' + LeadZeroStr(secs, 2) + ' + ' + i2s(frms) + ' frames'
+                 'Most Lemmings Saved: ' + IntToStr(maxlem) + #13 +
+                 'Best Time: ' + IntToStr(mins) + ':' + LeadZeroStr(secs, 2) + ' + ' + IntToStr(frms) + ' frames'
     else
       outstring := outstring + 'Completed: No';
 
@@ -445,10 +445,10 @@ var
 begin
   Assert(GameParams <> nil);
 
-  Perc := i2s(GameParams.Level.Info.RescueCount) + ' Lemming';
+  Perc := IntToStr(GameParams.Level.Info.RescueCount) + ' Lemming';
   if GameParams.Level.Info.RescueCount <> 1 then Perc := Perc + 's';
 
-  TL := i2s(GameParams.Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(GameParams.Level.Info.TimeLimit mod 60,2);
+  TL := IntToStr(GameParams.Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(GameParams.Level.Info.TimeLimit mod 60,2);
   if GameParams.Level.Info.TimeLimit > 5999 then TL := '(Infinite)'; //99:59
 
   if GameParams.OneLevelMode then

@@ -312,7 +312,7 @@ begin
     if DoSingleLevel then
       GameParams.QuickTestMode := 0
     else
-      GameParams.QuickTestMode := s2i(ParamStr(6));
+      GameParams.QuickTestMode := StrToInt(ParamStr(6));
   end;
 
   // Unless Zoom level is 0 (fullscreen), resize the main window
