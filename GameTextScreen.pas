@@ -6,20 +6,11 @@ interface
 
 uses
   LemmixHotkeys,
-  Dialogs,
   Windows, Classes, SysUtils, Controls,
   UMisc,
-  Gr32, Gr32_Image, Gr32_Layers,
-  LemCore,
-  LemTypes,
-  LemStrings,
-  LemLevelSystem,
-  LemGame,
-  GameControl,
-  GameBaseScreen,
-  UZip; // only for checking whether preview/postview text files exist
-//  LemCore, LemGame, LemDosFiles, LemDosStyles, LemControls,
-  //LemDosScreen;
+  Gr32, Gr32_Layers,
+  LemTypes, LemStrings, LemGame,
+  GameControl, GameBaseScreen;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.
@@ -55,7 +46,7 @@ begin
   ScreenText := GetScreenText;
   if ScreenText = '' then
     Result := false
-    else
+  else
     Result := true;
 end;
 
@@ -63,14 +54,6 @@ procedure TGameTextScreen.BuildScreen;
 var
   Temp: TBitmap32;
 begin
-
-  {st := GetScreenText;
-  if st = '' then
-  begin
-    CloseScreen(GameParams.NextScreen);
-    Exit;
-  end;}
-
   ScreenImg.BeginUpdate;
   Temp := TBitmap32.Create;
   try
@@ -106,10 +89,10 @@ end;
 
 function TGameTextScreen.GetScreenText: string;
 var
-   TextFileStream: TMemoryStream;
-   fn{, ts}: String;
-   b: byte;
-   lfc: byte;
+  TextFileStream: TMemoryStream;
+  fn: String;
+  b: byte;
+  lfc: byte;
 
     procedure Add(const S: string);
     begin
@@ -130,9 +113,7 @@ var
     end;
 
 begin
-
   Result := '';
-  //ts := '';
   lfc := 0;
 
   if GameParams.NextScreen = gstPostview then
@@ -145,7 +126,6 @@ begin
     fn := 'i';
   end;
 
-  // fn := ExtractFilePath(ParamStr(0)) + fn + LeadZeroStr(GameParams.Info.dSection + 1, 2) + LeadZeroStr(GameParams.Info.dLevel + 1, 2) + '.txt';
   fn := fn + LeadZeroStr(GameParams.Info.dSection + 1, 2) + LeadZeroStr(GameParams.Info.dLevel + 1, 2) + '.txt';
 
   fn := ExtractFilePath(ParamStr(0)) + fn;
@@ -156,11 +136,7 @@ begin
   while (TextFileStream.Read(b, 1) <> 0) and (lfc < 18) do
   begin
     if (b = 10) then LF(1);
-    {begin
-      Add(ts);
-      ts := '';
-    end;}
-    if (b >= 32) and (b <= 126) then Result := Result + Chr(b); //ts := ts + Chr(b);
+    if (b >= 32) and (b <= 126) then Result := Result + Chr(b);
   end;
 
   while lfc < 18 do
