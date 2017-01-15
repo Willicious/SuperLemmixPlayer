@@ -11,7 +11,6 @@ type
     fOwner: TPersistent;
   protected
     function GetOwner: TPersistent; override;
-    procedure CheckOwnerType(aOwner: TPersistent; const Allowed: array of TClass);
     function FindOwner(aClass: TClass): TPersistent;
     function GetMaster: TPersistent;
   public
@@ -22,33 +21,9 @@ type
 implementation
 
 uses
-  (*ULog,*) UMisc;
+  UMisc;
 
 { TOwnedPersistent }
-
-procedure TOwnedPersistent.CheckOwnerType(aOwner: TPersistent; const Allowed: array of TClass);
-var
-  i: integer;
-  OK: boolean;
-  S: string;
-begin
-  OK := False;
-  for i := 0 to Length(Allowed) - 1 do
-  begin
-    if Allowed[i] <> nil then
-      OK := OK or (aOwner is Allowed[i])
-    else
-      OK := True;
-    if OK then
-      Break;  
-  end;
-
-  if not OK then
-  begin
-    if aOwner <> nil then S := aOwner.ClassName else S := 'nil';
-    AppErrorFmt('CheckOwnerType: %s is een ongeldig Owner type',[S], Self);
-  end;
-end;
 
 constructor TOwnedPersistent.Create(aOwner: TPersistent);
 begin

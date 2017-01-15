@@ -327,21 +327,6 @@ var
   PalInfo: TDosVgaSpecPaletteHeader;
   normsize: Boolean;
 
-
-    procedure LogPal;
-    var
-      i: Integer;
-    begin
-      deb(['spec pal']);
-      for i := 0 to 7 do
-      with TColor32Entry(pal[i]) do
-      begin
-        deb(['RGB (' + IntToStr(i) + ')' + IntToStr(r) + ',' + IntToStr(g) +',' + IntToStr(b)])
-      end;
-    end;
-
-
-
 begin
   Assert(aBitmaps <> nil);
 
@@ -366,8 +351,6 @@ begin
         Pal := DosPaletteToArrayOfColor32(DosPal);
 
         normsize := PalInfo.EgaPal[1] <> 255;
-
-        logpal;
 
         Planar := TDosPlanarBitmap.Create;
         try
