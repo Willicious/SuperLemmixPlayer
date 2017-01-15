@@ -4,9 +4,8 @@ unit LemLevelSystem;
 interface
 
 uses
-  Classes, UClasses,
-  LemDosStructures,
-  LemNeoSave, LemLevel;
+  Classes,
+  LemDosStructures, LemNeoSave, LemLevel;
 
   {-------------------------------------------------------------------------------
     Nested classes for levelpack system:
@@ -44,8 +43,9 @@ type
     dSectionName   : string;
   end;
 
-  TBaseLevelSystem = class(TOwnedPersistent)
+  TBaseLevelSystem = class(TPersistent)
   private
+    fOwner: TPersistent;
     fSaveSystem : TNeoSave;
   protected
     procedure InternalLoadLevel(aInfo: TLevelInfo; aLevel: TLevel; OddLoad: Byte = 0); virtual; abstract;
@@ -53,8 +53,9 @@ type
   public
     SysDat : TSysDatRec;
 
-    procedure SetSaveSystem(aValue: Pointer);
+    constructor Create(aOwner: TPersistent);
 
+    procedure SetSaveSystem(aValue: Pointer);
     procedure LoadSingleLevel(aPack, aSection, aLevelIndex: Integer; aLevel: TLevel; SoftOdd: Boolean = false);
 
     function FindFirstLevel(var Rec: TDosGamePlayInfoRec): Boolean; virtual; abstract;
@@ -69,6 +70,7 @@ type
     function FindCheatCode(const aCode: string; var Rec : TDosGamePlayInfoRec; CheatsEnabled: Boolean = true): Boolean; virtual; abstract;
 
     property SaveSystem: TNeoSave read fSaveSystem;
+    property Owner: TPersistent read fOwner;
   end;
 
 
@@ -76,6 +78,11 @@ type
 implementation
 
 { TBaseLevelSystem }
+
+constructor TBaseLevelSystem.Create(aOwner: TPersistent);
+begin
+  fOwner := aOwner;
+end;
 
 procedure TBaseLevelSystem.SetSaveSystem(aValue: Pointer);
 begin
