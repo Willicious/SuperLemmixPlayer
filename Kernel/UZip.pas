@@ -468,7 +468,7 @@ const
   OFFSET_NUMFILES = 3;
 
 const
-  MaxBufSize = MegaByte;
+  MaxBufSize = 1024 * 1024; //MegaByte
   CreateHeader: TZipHeader = (
     ID        : 'EL';
     Version   : ZIPHEADER_VERSION;

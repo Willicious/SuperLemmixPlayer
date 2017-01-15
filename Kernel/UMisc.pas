@@ -33,90 +33,19 @@ uses
 
 const
   { getallen }
-  KiloByte    = 1024;
-  MegaByte    = KiloByte * KiloByte;
-  GigaByte    = KiloByte * MegaByte;
-  KB64        = 64 * KiloByte;
-  MinInt      = Low(Integer);
   CrLf        = Chr(13) + Chr(10);
-
-  { bits }
-  Bit0  = 1;         {1}
-  Bit1  = 1 shl 1;   {2}
-  Bit2  = 1 shl 2;   {4}
-  Bit3  = 1 shl 3;   {8}
-  Bit4  = 1 shl 4;   {16}
-  Bit5  = 1 shl 5;   {32}
-  Bit6  = 1 shl 6;   {64}
-  Bit7  = 1 shl 7;   {128}
-  Bit8  = 1 shl 8;   {256}
-  Bit9  = 1 shl 9;   {512}
-  Bit10 = 1 shl 10;  {1024}
-  Bit11 = 1 shl 11;  {2048}
-  Bit12 = 1 shl 12;  {4096}
-  Bit13 = 1 shl 13;  {8192}
-  Bit14 = 1 shl 14;  {16384}
-  Bit15 = 1 shl 15;  {32768}
-  Bit16 = 1 shl 16;  // Etc :)
-  Bit17 = 1 shl 17;
-  Bit18 = 1 shl 18;
-  Bit19 = 1 shl 19;
-  Bit20 = 1 shl 20;
-  Bit21 = 1 shl 21;
-  Bit22 = 1 shl 22;
-  Bit23 = 1 shl 23;
-  Bit24 = 1 shl 24;
-  Bit25 = 1 shl 25;
-  Bit26 = 1 shl 26;
-  Bit27 = 1 shl 27;
-  Bit28 = 1 shl 28;
-  Bit29 = 1 shl 29;
-  Bit30 = 1 shl 30;
-  Bit31 = 1 shl 31;
-
-type
-  String1   = string[1];
-  String2   = string[2];
-  String3   = string[3];
-  String4   = string[4];
-  String5   = string[5];
-  String6   = string[6];
-  String7   = string[7];
-  String8   = string[8];
-  String9   = string[9];
-  String10  = string[10];
-  String11  = string[11];
-  String12  = string[12];
-  String13  = string[13];
-  String14  = string[14];
-  String15  = string[15];
-  String16  = string[16];
-  String20  = string[20];
-  String31  = string[31];
-  String32  = string[32];
-  String40  = string[40];
-  String63  = string[63];
-  String64  = string[64];
-  String79  = string[79];
-  String80  = string[80];
-  String127 = string[127];
-  String128 = string[128];
 
 { pointers naar basische types }
 type
-//  PByte = T
-//  pByte          = ^byte; // declared in Types and System (starting from delphi 7 I think)
   pShortint      = ^shortint;
-//  pInteger       = ^integer; defined in types unit since delphi 7
   pWord          = ^word;
   pLongint       = ^longint;
   pReal          = ^real;
-  //  pShortString   = ^ShortString;  staat al in delphi system unit
   pBoolean       = ^boolean;
   PPointer       = ^Pointer;
 
 const
-  MaxBytes = MaxListSize * 4; // MaxListSize = Maxint div 16;
+  MaxBytes = MaxListSize * 4;
 
 type
   PBytes = ^TBytes;
@@ -311,9 +240,6 @@ function StrToFloatDef(const S: string; const DefValue: Extended = 0): Extended;
 function StringToCharSet(const S: string; const Keep: TCharSet = []): TCharSet;
     { geeft alle letters uit set }
 
-
-    //function QuotedStr(const S: string): string;
-  //  { haalt dubbele of enkele aanhalingstekens om S weg }
 function UnQuotedStr(const S: string): string;
     { haalt dubbele of enkele aanhalingstekens om S weg }
 function VTypeStr(const AType: word): string;
@@ -321,16 +247,12 @@ function VarTypeStr(const V: Variant): string;
 
 { Getallen }
 
-function Percentage(Max, N: Double): Double; overload;
 function Percentage(Max, N: integer): integer; overload;
-function Percentage(Max, N: Int64): integer; overload;
-function GetKB(N: integer): integer;
 function RandomDouble(const Max: Double): Double;
     { random floating point }
 
 function Wrap(aValue, aMax: Integer): Integer; //overload;
-//function Wrap(var aValue: Integer; aMax: Integer): Boolean; overload;
-                                    //math
+
 { Datum en Tijd }
 
 function MilliSeconds: integer;
@@ -348,7 +270,6 @@ function TtoS(const ATime: TDateTime; const aSeparator: string = ''): ShortStrin
     { output: 20011231 + aSeparator + 124559 }
 function GetEncodeDate(Y, M, D: word): TDateTime;
     { DecodeDate als function }
-//function EncodeDateTime(): TDateTime    
 function GetDay(const aDate: TDateTime): Word;
 function GetMonth(const aDate: TDateTime): Word;
 function GetYear(const aDate: TDateTime): Word;
@@ -359,8 +280,6 @@ function UserStrToDate(const DateStr: string): TDateTime;
 function WeekOfYear(const aDate: TDateTime) : Integer;
     { geeft weeknummer van het jaar van een datum }
 function IncYears(const ADate: TDateTime; Count: integer): TDateTime;
-//function StrToDateDef(const S, ShortFormat: string; const ErrorDate: TDateTime = 0): TDateTime;
-    { = StrToDate uit SysUtils, maar geeft 0 terug bij exception }
 
 { Memory }
 
@@ -400,8 +319,6 @@ procedure RectMove(var R: TRect; X, Y: integer); {windows.offsetrect}
 procedure RectAssign(var ARect: TRect; X, Y, W, H: integer); { en staat deze dan niet in windows? }
 function ZeroTopLeftRect(const aRect: TRect): TRect;
 function CenterRect(const Child, Parent: TRect): TRect;
-
-//function ClientRectToScreenRect(const aControl: TControl): TRect;
 
 { Encrypt }
 
@@ -447,7 +364,6 @@ procedure AllocIntArray(var Ar: PIntArray; Count: integer);
 
 function StrListToArray(AList: TStringList): TOpenStringArray;
     { converteert stringlist naar stringarray }
-//function StringArray_To_StringList(const Ar: AList: TStringList): TOpenStringArray;
 
 { Sorteren }
 
@@ -466,7 +382,6 @@ procedure SwapStrings(var A, B: string);
 
 { nibble swap }
 function SwapWord(W: Word): Word;
-//procedure SwapPoints(var )
 
 { Toetsenbord }
 
@@ -487,14 +402,7 @@ type
 
 procedure ForEachComponent(aComponent: TComponent; Method: TComponentMethod;
   SubComponents: boolean; const Filter: array of TComponentClass;
-  IncludeMain: Boolean = False); //overload;
-
-{ procedure LocalProc(const aComponent: TComponent); far;}
-//procedure ForEachComponent(aComponent: TComponent; LocalProc: pointer;
-  //SubComponents: boolean); overload;
-
-//procedure SetDisplayDragImage(Parent: TControl);
-    { zorgt ervoor dat control + subcontrols dragimages laten zien }
+  IncludeMain: Boolean = False);
 
 { Exception handling algemeen }
 
@@ -529,7 +437,6 @@ procedure Deb(const aValues: array of const);
 procedure Log(const aValues: array of const);
 
 resourcestring
-// origineel uit sysconst:  SMyException = 'Fout %s in module %s at %p.'#$0A'%s%s';
   SMyException = 'Fout: %s in module %s.' + Chr(13) +
                  'Adres: %p.' + Chr(13) + Chr(13) +
                  '%s%s';
@@ -558,10 +465,6 @@ begin
 end;
 
 
-(*type
-  PTextFile = ^TextFile;
-var
-  _LogTxt: PTextFile; verhuisd naar ulog *)
 
 function AllDigits(const S: string; Count: Integer = 0): Boolean;
 var
@@ -613,15 +516,6 @@ begin
   end;
 end;
 
-{function Bit_UB_Str(UB: Byte): string;
-var
-  i: Byte;
-begin
-  Result := '00000000';
-  for i := 0 to 7 do
-    if UB and (1 shl i) <> 0 then
-      Result[(7 - i) + 1] := '1'
-end;}
 
 function BlancStr(const S: string): boolean;
 begin
@@ -664,8 +558,6 @@ begin
   Result := '';
   for i := Low(aChars) to High(aChars) do
     Result := Result + aChars[i];
-{  SetLength(Result, Length(AChars));
-  Move(AChars, Result[1], Length(AChars)); kan dit? moet nog testen }
 end;
 
 function CountChars(C: Char; const S: string): integer;
@@ -698,9 +590,6 @@ end;
 
 function CutLeft(const S: string; aLen: integer): string;
 begin
-{  if aLen + 1 >= Length(S)
-  then Result := ''
-  else }
   Result := Copy(S, aLen + 1, Length(S));
 end;
 
@@ -712,7 +601,6 @@ end;
 function ThousandStr(Int: Integer): string;
 begin
   Result := FloatToStrF(Int/1, ffNumber, 15, 0);
-  //  Result := Format('%.0n', [Int/1]);
 end;
 
 function EmptyStr(const S: string): boolean;
@@ -880,32 +768,12 @@ function HexStr64(I: Int64{; Mode: Byte = 0}): string;
 // 1 = h at the end
 // otherwise nothing
 begin
-(*function Hex64(const B: Int64; Prefix: Boolean = True): string;
-begin
-  Result := IIF(Prefix, '$', '') + IntToHex(B, 16);
-end; *)
   Result := '$' + IntToHex(I, 16);
-  //Format('%x', [i]);
 end;
 
 function IntPointStr(N: integer): string;
-//var
-//  i, j: integer;
-//  PointAr: array of integer;
 begin
   Result := IntToStr(N);
-  //if Length(Result) <= 3 then Exit;
-{
-  for i := Length(Result) downto 1 do
-  begin
-    Inc(j);
-    if (J mod 3 = 0) and (i <> 1) then
-    begin
-      SetLength(PointAr, Length(PointAr) + 1);
-      Insert('.', Result, i);      sysutils
-    end;
-  end;}
-
 end;
 
 function InvertStr(const S: string): string;
@@ -929,16 +797,12 @@ end;
 function f2s(const D: Double): string;
 begin
   Result := FloatToStr(D);
-//  Str(D, Result);
 end;
 
 function s2f(const S: string): Double;
 begin
-  //Result := StrToFloat(S);
   if not TextToFloat(PChar(S), Result, fvExtended) then
     Result := 0;
-//    ConvertErrorFmt(@SInvalidFloat, [S]);
-
 end;
 
 function KeepChars(const S: string; aCharSet: TCharSet): string;
@@ -1008,10 +872,6 @@ end;
 function PassWordStr(const S: string): string;
 begin
   Result := StringOfChar('*', Length(S));
-{  if S = '' then
-    Result := S
-  else
-    Result := '********'; }
 end;
 
 Function Prime(N: Integer): Boolean; // van internet. volstrekt onleesbaar
@@ -1178,22 +1038,6 @@ begin
   Result := -1;
 end;
 
-(*function InStrList(const S: string; const AList: TStringList; CaseSensitive: boolean): integer; overload;
-begin
-  if AList <> nil then
-    with AList do
-      if CaseSensitive then
-        for Result := 0 to Count - 1 do
-        begin
-          if S = aList[Result] then Exit;
-        end
-      else
-        for Result := 0 to Count - 1 do
-        begin
-          if CompareText(S, aList[Result]) = 0 then Exit;
-        end;
-  Result := -1;
-end;*)
 
 function InIntList(I: integer; const aList: array of integer): integer; overload;
 begin
@@ -1272,20 +1116,6 @@ begin
       vtInt64       : Result := IntToStr(VInt64^);
       else Result := '';
     end;
-    (* UIT DELPHI HELP
-        vtInteger:    Result := Result + IntToStr(VInteger);
-        vtBoolean:    Result := Result + BoolChars[VBoolean];
-        vtChar:       Result := Result + VChar;
-        vtExtended:   Result := Result + FloatToStr(VExtended^);
-
-        vtString:     Result := Result + VString^;
-        vtPChar:      Result := Result + VPChar;
-        vtObject:     Result := Result + VObject.ClassName;
-        vtClass:      Result := Result + VClass.ClassName;
-        vtAnsiString: Result := Result + string(VAnsiString);
-        vtCurrency:   Result := Result + CurrToStr(VCurrency^);
-        vtVariant:    Result := Result + string(VVariant^);
-        vtInt64:      Result := Result + IntToStr(VInt64^);*)
 end;
 
 function StrToFloatDef(const S: string; const DefValue: Extended): Extended;
@@ -1412,7 +1242,6 @@ function SplitStringCount(const S: string; Seperator: Char): integer;
 var
   Start, P: integer;
 begin
-  //windlg('splitstringcount: kijken of deze functie goed is');
   Result := 0;
   Start := 1;
   repeat
@@ -1426,51 +1255,11 @@ begin
     inc(Result);
 end;
 
-(*function GetNextToken(const aSeparators: TCharSet; var CharPtr: PChar; var aToken: string): boolean;
-var
-  P: PChar;
-begin
-  Result := True;
-  P := CharPtr;
-  if P^ = #0 then
-  begin
-    Result := False;
-    Exit;
-  end;
-  if P^ <> #0 then
-  begin
-    if P^ in aSeparators then
-    begin
-      Inc(P);
-      Inc(CharPtr);
-    end;
-    while not (P^ in aSeparators) do
-      Inc(P);
-    SetString(aToken, CharPtr, P - CharPtr);
-  end;
-  CharPtr := P;
-end;*)
-
-//function DoSplit(const S: string)
 
 function SplitString_To_StringList(const S: string; Seperator: Char; DoTrim: boolean = False): TStringList;
 var
   Cnt, Start, P: integer;
 begin
-
-  (* CODE VERVANGEN DOOR SNELLERE
-  H := S;
-  Result := TStringList.Create;
-  if H = '' then Exit;
-  repeat
-    P := Pos(Seperator, H);
-    if P = 0 then Break;
-    Result.Add(Copy(H, 1, P - 1));
-    H := Copy(H, P + 1, Length(H)); { copy kapt zelf goed af }
-  until False;
-  if H <> '' then Result.Add(H);
-  *)
-
   Result := TStringList.Create;
   Start := 1;
   Cnt := 0;
@@ -1511,13 +1300,9 @@ begin
     if P = 0 then Break;
     case DoTrim of
       False:
-//        if not MakeUpper
          AList.Add(Copy(S, Start, P - Start));
-  //      else AList.Add(UpperCase(Copy(S, Start, P - Start)));
       True:
-    //    if not MakeUpper
          AList.Add(Trim(Copy(S, Start, P - Start)));
-      //  else AList.Add(UpperCase(Trim(Copy(S, Start, P - Start))));
     end;
     Inc(Cnt);
     Start := P + 1;
@@ -1526,24 +1311,16 @@ begin
   if (Cnt = 0) and (P = 0) and (S <> '') then
     case DoTrim of
       False:
-        //if not MakeUpper
          AList.Add(S);
-        //else aList.Add(UpperCase(S));
       True:
-        //if not MakeUpper
          AList.Add(Trim(S));
-        //else AList.Add(Trim(UpperCase(S)))
     end
   else if (Cnt > 0) and (Start <= Length(S)) then
     case DoTrim of
       False:
-        //if not MakeUpper
-         AList.Add(Copy(S, Start, Length(S) - Start + 1));
-        //else AList.Add(UpperCase(Copy(S, Start, Length(S) - Start + 1)));
+        AList.Add(Copy(S, Start, Length(S) - Start + 1));
       True:
-        //if not MakeUpper
          AList.Add(Trim(Copy(S, Start, Length(S) - Start + 1)));
-        //else AList.Add(UpperCase(Trim(Copy(S, Start, Length(S) - Start + 1))))
     end;
 end;
 
@@ -1633,11 +1410,9 @@ end;
 
 function SetIntegerArray(const Ar: array of integer): TOpenIntegerArray;
 var
-//  TAr: TOpenIntegerArray absolute Ar;
   i: integer;
 begin
   SetLength(Result, Length(Ar));
-//  Result := Copy(TAr);
   for i := 0 to Length(Ar) - 1 do Result[i] := Ar[i];
 end;
 
@@ -1659,17 +1434,6 @@ asm
   @@Exit:
 end;
 
-{function LowerCase(const S: string): string;
-var
-  i: integer;
-begin
-  SetLength(Result, Length(S));
-  Result := S;
-  for i := 1 to Length(S) do
-    if S[i] in ['A'..'Z'] then
-      Result[i] := Chr(Ord(S[i]) + 32);
-end;}
-
 function Between(X, A, B: integer): boolean;
 begin
   Result := (X >= A) and (X <= B);
@@ -1680,13 +1444,6 @@ begin
   Result := (X >= A) and (X <= B);
 end;
 
-function Percentage(Max, N: Double): Double;
-begin
-  if Max = 0 then
-    Result := 0
-  else
-    Result := (N/Max) * 100;
-end;
 
 function Percentage(Max, N: integer): integer;
 begin
@@ -1696,19 +1453,6 @@ begin
     Result := Trunc((N/Max) * 100);
 end;
 
-function Percentage(Max, N: Int64): integer; overload;
-begin
-  if Max = 0 then
-    Result := 0
-  else
-    Result := Round((N/Max) * 100);
-end;
-
-function GetKB(N: integer): integer;
-begin
-  Result := N div KiloByte;
-  if N mod KiloByte > 0 then Inc(Result);
-end;
 
 function RandomDouble(const Max: Double): Double;
 begin
@@ -1723,12 +1467,6 @@ begin
     Result := 0;
 end;
 
-{function Wrap(var aValue: Integer; aMax: Integer): Boolean; overload;
-begin
-  Result := aValue >= aMax;
-  if Result then
-    aValue := 0;
-end;}
 
 function Between(const X, A, B: TDateTime): boolean; overload;
 begin
@@ -1737,7 +1475,7 @@ end;
 
 function Between(const S, A, B: string): boolean; overload;
 begin
-  Result := (S > A){ and (S <= B)};
+  Result := (S > A);
 end;
 
 function Limit(AValue, AMin, AMax: integer): integer;
@@ -1758,16 +1496,12 @@ begin
     aValue := aMin else
   if aValue > aMax then
     aValue := aMax
-{  else
-    aValue := aMin; }
 end;
 
 function RestrictValue(aValue: integer; aMin, aMax: integer): Integer;
 begin
   Result := aValue;
   Restrict(Result, aMin, aMax);
-//  if aMin > aMax then SwapInts(aMin, aMax);
-//  if aValue < aMin then aValue := aMin else if aValue > aMax then aValue := aMax;
 end;
 
 function Restricted(var aValue: integer; aMin, aMax: integer): Boolean;
@@ -1940,27 +1674,12 @@ begin
 end;
 
 function WeekOfYear(const aDate: TDateTime): Integer;
-
-{var
-  FirstDayOfYear: TDateTime;
-  Y, M, D: word;
-  DiffDays: integer; }
 var
   ResultWeek: Word;
   LYear, LDOW: Word;
 begin
-{  DecodeDate(aDate, Y, M, D);
-  FirstDayOfYear := EncodeDate(Y, 1, 1);
-  DiffDays := Trunc(aDate - FirstDayOfYear);
-  Result := DiffDays div 7 + 1; }
-
-//  Result := Trunc(ADate - EncodeDate(GetYear(ADate), 1, 1)) div 7 + 1;
-
-
   DecodeDateWeek(aDate, LYear, ResultWeek, LDOW);
   Result := ResultWeek;
-
-
 end;
 
 function IncYears(const ADate: TDateTime; Count: integer): TDateTime;
@@ -1999,16 +1718,10 @@ end;
 
 function TtoS(const ATime: TDateTime; const aSeparator: string = ''): ShortString;
 var
-  {Y, M, D, }H, Min, S, MS: word;
+  H, Min, S, MS: word;
 begin
-//  Result := DtoS(ATime) + IntToStr(MilliSeconds)
   DecodeTime(aTime, H, Min, S, MS);
-  Result := //IntToStr(Y) + LeadZeroStr(M, 2) + LeadZeroStr(D, 2)
-    DtoS(aTime)
-    + aSeparator + LeadZeroStr(H, 2) + LeadZeroStr(Min, 2) + LeadZeroStr(S, 2);
-
-//  DecodeDate(aDate, Y, M, D);
-//  Result := IntToStr(Y) + LeadZeroStr(M, 2) + LeadZeroStr(D, 2);
+  Result := DtoS(aTime) + aSeparator + LeadZeroStr(H, 2) + LeadZeroStr(Min, 2) + LeadZeroStr(S, 2);
 end;
 
 function StrToDateDef(const S, ShortFormat: string; const ErrorDate: TDateTime = 0): TDateTime;
@@ -2030,18 +1743,14 @@ end;
 
 function GetEncodeDate(Y, M, D: word): TDateTime;
 begin
-  //WinDlg('GetEncodeDate is niet geimplementeerd!');
   Result := 0;
-//  Result := EncodeDate(Result, Y, M, D);
 end;
 
 function StoD(const aDateStr: ShortString; const Def: TDateTime = 0): TDateTime;
 var
-  //E: Integer;
   Y, M, D: word;
 begin
   try
-    //Val(S, Result, E);
     Y := StrToInt(Copy(aDateStr, 1, 4));
     M := StrToInt(Copy(aDateStr, 5, 2));
     D := StrToInt(Copy(aDateStr, 7, 2));
@@ -2058,8 +1767,6 @@ var
   P, Y, M, D: integer;
 begin
   { we zouden hier ook wel een delphi strtodate met format of zoiets kunnen gebruiken }
-//  Result := 0;
-//  try
     S := StringReplace(DateStr, ' ', '', [rfReplaceAll]);
     { luxe }
     if Length(S) = 1 then
@@ -2086,10 +1793,6 @@ begin
       Y := StrToInt(Copy(S, 1, 4));
       Result := EncodeDate(Y, M, D);
     end;
-//  except
-    //raise// EConvertError.Create('Foute datum invoer');
-//  end;
-//  Result := ToDay;
 end;
 
 
@@ -2224,7 +1927,7 @@ end;
 
 procedure SetPointerListSize(var PointerList: TPointerList; ASize: integer);
 begin
-//  ReallocMem(@PointerList, ASize * SizeOf(Pointer));
+
 end;
 
 function EqualRects(const R1, R2: TRect): boolean;
@@ -2234,7 +1937,7 @@ end;
 
 function EqualPoints(const P1, P2: TPoint): boolean;
 begin
-  Result := (P1.X = P2.X) and (P1.Y = P2.Y);//CompareMem(@P1, @P2, SizeOf(TPoint));
+  Result := (P1.X = P2.X) and (P1.Y = P2.Y);
 end;
 
 procedure SwapBytes(var A, B: byte);
@@ -2266,13 +1969,10 @@ begin
 end;
 
 procedure SwapInts(var A, B: integer);
-//var
-  //C: integer;
 begin
   a := a xor b;
   b := b xor a;
   a := a xor b;
-//  C := A;  A := B;  B := C;
 end;
 
 procedure SwapStrings(var A, B: string);
@@ -2322,7 +2022,6 @@ begin
               Break;
             end;
         end;
-//      if not Result then WinDlg('verschil op positie ' + i2s(P));
       Inc(P, 1024);
     end
   else Result := False;
@@ -2390,36 +2089,8 @@ function SortStr (const S : string) : string;  { retourneert op alfabet gesortee
 begin
   Result := S;
   if Length(S) > 1 then
-    QuickSortStr(Result, 1, length (S)); 
+    QuickSortStr(Result, 1, length (S));
 end;
-
-(* RANGE CHECK ERROR
-function SortStr(const S: string): string;
-
-    procedure QuickSortStr (L, R : integer);
-    var
-      min,  max : integer;
-      mid : char;
-    begin
-      min := L; max := R; mid:= Result[(L + R) div 2];
-      repeat
-      while S[min] < mid do inc(min);
-      while S[max] > mid do dec(max);
-      if min <= max then
-        begin
-        SwapChars(Result[Min], Result[Max]);
-        Inc(min);
-        Dec(max);
-        end;
-      until min > max;
-      if L < max then QuickSortStr(L, max);
-      if min<R then QuickSortStr(min, R);
-    end;
-
-begin
-  Result := S;
-  QuickSortStr(1, Length (Result));
-end; *)
 
 procedure SortStrings(var Strings: array of string; CaseSensitive: boolean = True);
 
@@ -2504,16 +2175,6 @@ function IIF(aExpr: boolean; const aTrue, aFalse: Char): Char; overload;
 begin
   if aExpr then Result := aTrue else Result := aFalse;
 end;
-(*asm
-  { al = aExpr, dl = aTrue, cl = aFalse }
-    cmp al, False
-    je @False
-    mov al, dl
-    jmp @Exit
-  @False:
-    mov al, cl
-  @Exit:
-end;*)
 
 function IIF(aExpr: boolean; const aTrue, aFalse: Currency): Currency; overload;
 begin
@@ -2579,14 +2240,6 @@ begin
   end;
 end;
 
-{function CenterRect(const Source, Dest: TRect): TRect;
-begin
-  Result := Source;
-  Result.Left := Dest.Left + (Source.Right - Source.Left) div 2;
-  Result.Top := Dest.Top + (Source.Bottom - Source.Top) div 2;
-  Result.Right := Result.Left + (Source.Right - Source.Left);
-  Result.Bottom := Result.Top + (Source.Bottom - Source.Top); 
-end;        }
 
 function CenterRect(const Child, Parent: TRect): TRect;
 begin
@@ -2594,30 +2247,7 @@ begin
   Result.Top    := (RectHeight(Parent) - RectHeight(Child)) div 2;
   Result.Right  := Result.Left + RectWidth(Child);
   Result.Bottom := Result.Top + RectHeight(Child);
-
-//  Result := Child;                                      extctrls
-{  Result.Left := Child.Left + (Parent.Right - Parent.Left) div 2;
-  Result.Top := Dest.Top + (Source.Bottom - Source.Top) div 2;
-  Result.Right := Result.Left + (Source.Right - Source.Left);
-  Result.Bottom := Result.Top + (Source.Bottom - Source.Top); }
-
-
-
-//    Result := Bounds((Width - Picture.Width) div 2, (Height - Picture.Height) div 2,
-  //    Picture.Width, Picture.Height)
-
-
 end;
-
-(*function ClientRectToScreenRect(const aControl: TControl): TRect;
-begin
-  with aControl do
-  begin
-    Result := ClientRect;
-    Result.TopLeft := ClientToScreen(Result.TopLeft);
-    Result.BottomRight := ClientToScreen(Result.BottomRight);
-  end;
-end;*)
 
 { nooit veranderen, nooit weghalen }
 const
@@ -2718,7 +2348,6 @@ begin
   { standaard startwaarde genereren, is gelijk aan de eerste 4 letters van ECode }
   PECode := @ECode[1];
   Result := PECode^;
-//  P := @Mem;
   with aStream do
   for i := 0 to Size - 1 do
   begin
@@ -2727,7 +2356,6 @@ begin
     CRC := P;  { LongWord CRC = byte P^ }
     CRC := CRC shl Shift;  { En schuif de bytes op voor goede xor }
     Result := Result xor CRC;  { en xor }
-//    Inc(P);  { volgende byte }
   end;
 end;
 
@@ -2750,9 +2378,6 @@ begin
   Result := KeyboardStateToShiftState(KeyState);
 end;
 
-
-(*
-*)
 
 
 { Component Streaming }
@@ -2843,27 +2468,6 @@ begin
   end;
 end;
 
-(*procedure ComponentToTextFile(C: TComponent; const AFileName: string);
-var
-  StrStream: TFileStream;
-  BinStream: TMemoryStream;
-  aFormat: TStreamOriginalFormat;
-begin
-  StrStream := TFileStream.Create(aFileName, fmOpenRead);
-  try
-    BinStream := TMemoryStream.Create;
-    try
-      BinStream.ReadComponent(C);
-      ObjectBinaryToText(BinStream, StrStream, aFormat);
-      StrStream.Seek(0, soFromBeginning);
-      StrStream.WriteComponent(C);
-    finally
-      BinStream.Free;
-    end;
-  finally
-    StrStream.Free;
-  end;
-end;*)
 
 procedure TextFileToComponent(const aFileName: string; C: TComponent);
 var
@@ -2933,7 +2537,6 @@ end;
 function UniqueComponentName(const aBaseName: string; aOwner: TComponent): string;
 var
    ix: Integer;
-  //N: string;
 begin
   ix := 0;
   if aOwner <> nil then
@@ -3042,9 +2645,7 @@ end;
 
 procedure WinDlg(const S: string);
 begin
-//  P := PChar(S);
-//  showmessage(S);
-  MessageBox(0, PChar(S), PChar('ok'), MB_OK + {MB_APPLMODAL}MB_TASKMODAL);
+  MessageBox(0, PChar(S), PChar('ok'), MB_OK + MB_TASKMODAL);
 end;
 
 procedure WinDlg(const AValues: array of const);
@@ -3068,9 +2669,6 @@ procedure WinDlg(const AValues: array of const);
 var
   S: string;
 begin
-//  P := PChar(S);
-//  showmessage(S);
-
   S := SetStr;
 
   MessageBox(0, PChar(S), PChar('ok'), MB_OK + MB_TASKMODAL);

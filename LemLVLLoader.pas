@@ -1115,8 +1115,8 @@ begin
       //if S.D0 = 0 then
       //  Continue;
       Steel := Steels.Add;  
-      Steel.Left := ((Integer(S.B0) shl 1) + (Integer(S.B1 and Bit7) shr 7)) * 4 - 16;  // 9 bits
-      Steel.Top := Integer(S.B1 and not Bit7) * 4;  // bit 7 belongs to steelx
+      Steel.Left := ((Integer(S.B0) shl 1) + (Integer(S.B1 and (1 shl 7)) shr 7)) * 4 - 16;  // 9 bits
+      Steel.Top := Integer(S.B1 and not (1 shl 7)) * 4;  // bit 7 belongs to steelx
       Steel.Width := Integer(S.B2 shr 4) * 4 + 4;  // first nibble bits 4..7 is width in units of 4 pixels (and then add 4)
       Steel.Height := Integer(S.B2 and $F) * 4 + 4;  // second nibble bits 0..3 is height in units of 4 pixels (and then add 4)
       {Steel.Left := Steel.Left - (Integer(S.B3 shr 6) mod 4);

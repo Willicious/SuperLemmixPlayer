@@ -47,8 +47,8 @@ const
 	//raf_StartDecreaseRR   = Bit4;  // only allowed when not pausing
 	//raf_StopChangingRR    = Bit5;  // only allowed when not pausing
 	//raf_SkillSelection    = Bit6;
-	raf_SkillAssignment   = Bit7;
-	raf_Nuke              = Bit8;  // only allowed when not pausing, as in the game
+	raf_SkillAssignment   = 1 shl 7; // Bit7;
+	raf_Nuke              = 1 shl 8; // Bit8;  // only allowed when not pausing, as in the game
   //raf_NewNPLemming      = Bit9;  // related to emulation of right-click bug
   //raf_RR99              = Bit10;
   //raf_RRmin             = Bit11;
