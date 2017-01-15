@@ -72,7 +72,7 @@ interface
 
 uses
   Windows, Classes, Contnrs, SysUtils,
-  UMisc, UTools, ZLibEx;
+  UMisc, ZLibEx;
 
 // copy van controls
 const

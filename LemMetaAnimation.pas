@@ -4,8 +4,7 @@ unit LemMetaAnimation;
 interface
 
 uses
-  Classes, UTools,
-  LemCore;
+  Classes, LemCore;
 
 type
   TMetaAnimationClass = class of TMetaAnimation;
@@ -49,7 +48,7 @@ type
     property FootY            : Integer read fFootY write fFootY;
   end;
 
-  TMetaAnimations = class(TCollectionEx)
+  TMetaAnimations = class(TCollection)
   private
     function GetItem(Index: Integer): TMetaAnimation;
     procedure SetItem(Index: Integer; const Value: TMetaAnimation);

@@ -47,7 +47,7 @@ type
   end;
 
 type
-  TReplayItems = class(TCollectionEx)
+  TReplayItems = class(TCollection)
   private
     function GetItem(Index: Integer): TReplayItem;
     procedure SetItem(Index: Integer; const Value: TReplayItem);
