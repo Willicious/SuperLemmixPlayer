@@ -9,8 +9,8 @@ uses
 
 const
   FORMAT_VERSION = 10;
-  CORE_VERSION = 11;
-  FEATURES_VERSION = 11;
+  CORE_VERSION = 12;
+  FEATURES_VERSION = 12;
   HOTFIX_VERSION = 0;
   COMMIT_ID = '';  // empty string is handled, and is uppercased when needed so don't need to do manually anymore :D
 
