@@ -76,6 +76,7 @@ begin
     end;
 
     LemsSpawned := PreplacedLemmings.Count; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
+    i := -1; // Needed for FindNextWindow!
     while LemsSpawned < LemmingsCount do
     begin
       FindNextWindow;
