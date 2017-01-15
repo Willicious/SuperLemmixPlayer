@@ -51,8 +51,7 @@ type
     procedure SetStretched(const Value: Boolean);
     procedure AdjustImage;
     procedure MakeList(const S: string; aList: TStrings);
-    procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN; 
-    //procedure Fade_Idle(Sender: TObject; var Done: Boolean);
+    procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
   protected
     procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
@@ -174,8 +173,6 @@ begin
     GameParams.MainForm.Top := Top;
     GameParams.MainForm.BorderStyle := bsToolWindow;
     GameParams.MainForm.WindowState := wsNormal;
-    //GameParams.MainForm.Visible := true;
-    //BringToFront;
   end else begin
     GameParams.MainForm.Left := 0;
     GameParams.MainForm.Top := 0;
@@ -187,9 +184,7 @@ begin
 
   if GameParams.ZoomLevel = 0 then
   begin
-    //GameParams.MainForm.Visible := true;
     GameParams.MainForm.BorderStyle := bsNone;
-    //BringToFront;
   end;
   if not GameParams.MainForm.Visible then
     GameParams.MainForm.Show;
@@ -203,9 +198,6 @@ constructor TGameBaseScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
   fScreenImg := TImage32.Create(Self);
-  //fScreenImg.Color := 
-  //fScreenImg.Align := alClient;
-  //fScreenImg.ScaleMode := smResize;
   fScreenImg.Parent := Self;
 
   fPurpleFont := TPurpleFont.Create(nil);
@@ -216,8 +208,6 @@ begin
   fStretched := DEF_STRETCHED;
 
   ScreenImg.Cursor := crNone;
-//  Screen.Cursor := crNone;
-  
 end;
 
 destructor TGameBaseScreen.Destroy;
@@ -276,7 +266,6 @@ var
   CX, CY, i: Integer;
   R: TRect;
 begin
-  //if GameParams.SysDat.Options3 and 32 <> 0 then
   Y := Y + 1; // accounts for moving graphic up by 1 pixel
 
   if aRestoreBuffer <> nil then
@@ -324,8 +313,7 @@ procedure TGameBaseScreen.DrawPurpleTextCentered(Dst: TBitmap32; const S: string
   Spaces increment 16 pixels
 -------------------------------------------------------------------------------}
 var
-//  C: Char;
-  X, {CY, }i: Integer;
+  X, i: Integer;
   R: TRect;
   List: TStringList;
   H: string;
@@ -355,7 +343,6 @@ begin
       Inc(Y, 16)
     else
       Inc(Y, 8);
-    //Inc(Y, 16);
   end;
 
   List.Free;
@@ -415,17 +402,9 @@ begin
       Bottom := Top + aHeight;
     end;
 
-
     BoundsRect := fOriginalImageBounds;
 
     AdjustImage;
-    (*
-      (Screen.Width - aWidth) div 2,
-      (Screen.Height - aHeight) div 2,
-              aWidth,
-              aHeight);
-    *)
-//     windlg([fscreenimg.visible])
   end;
 end;
 
@@ -444,8 +423,6 @@ end;
 procedure TGameBaseScreen.TileBackgroundBitmap(X, Y: Integer; Dst: TBitmap32 = nil);
 var
   aX, aY: Integer;
-//  S, D: TBitmap32;
-//  Dst: TBitmap32;
 begin
 
   Assert(fBackground.Width > 0);
@@ -472,16 +449,12 @@ end;
 
 procedure TGameBaseScreen.MakeList(const S: string; aList: TStrings);
 var
-//  i: Integer;
   StartP, P: PChar;
-//  Start, Curr: Integer;
   NewS: string;
 begin
   StartP := PChar(S);
   P := StartP;
   repeat
-//  begin
-
     case P^ of
     #12, #13 :
       begin
@@ -489,17 +462,13 @@ begin
         begin
           SetString(NewS, StartP, P - StartP);
           aList.Add(NewS);
-          //deb([NewS]);
 
           while (P^ = #12) or (P^ = #13) do
           begin
             aList.Add(P^);
-            //deb(['LineFeed']);
             Inc(P);
           end;
-          if P^ = #0 then
-            Break;
-          //aList.Add(#13);
+          if P^ = #0 then Break;
 
           StartP := P;
         end;
@@ -512,8 +481,6 @@ begin
         begin
           SetString(NewS, StartP, P - StartP);
           aList.Add(NewS);
-          //deb([NewS]);
-          //deb(['last', p -startp]);
           break;
         end;
       end;
@@ -524,7 +491,6 @@ begin
     if P = #0 then Break;
 
   until False;
-
 end;
 
 procedure TGameBaseScreen.FadeOut;
@@ -533,36 +499,28 @@ var
   P: PColor32;
 begin
   Steps := 16;
-  while Steps > 0 do begin
-
-  with ScreenImg.Bitmap do
+  while Steps > 0 do
   begin
-//    clear(c);
-    P := PixelPtr[0, 0];
-    for i := 0 to Width * Height - 1 do
+    with ScreenImg.Bitmap do
     begin
-      with TColor32Entry(P^) do
+      P := PixelPtr[0, 0];
+      for i := 0 to Width * Height - 1 do
       begin
-        if R > 8 then Dec(R, 8) else R := 0;
-        if G > 8 then Dec(G, 8) else G := 0;
-        if B > 8 then Dec(B, 8) else B := 0;
+        with TColor32Entry(P^) do
+        begin
+          if R > 8 then Dec(R, 8) else R := 0;
+          if G > 8 then Dec(G, 8) else G := 0;
+          if B > 8 then Dec(B, 8) else B := 0;
+        end;
+        Inc(P);
       end;
-      //P^ := c;
-      Inc(P);
+      Changed;
+      Update;
+      Sleep(3);
     end;
-    Changed;
-    Update;
-    Sleep(3);
-    //Update;
-  end;
 
-  dec(Steps);
+    Dec(Steps);
   end;
-  //GameParams.MainForm.Visible := true;
-  //GameParams.MainForm.BringToFront;
-  //GameParams.MainForm.Update;
-//  Invalidate;
-  //Update;
 
   GameParams.MainForm.Show;
 
