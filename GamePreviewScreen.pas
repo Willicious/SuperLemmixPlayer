@@ -1,5 +1,3 @@
-{$include lem_directives.inc}
-
 unit GamePreviewScreen;
 
 interface
@@ -8,17 +6,15 @@ uses
   PngInterface,
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, SysUtils,
-  GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
+  GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
   LemCore, LemStrings, LemDosStructures, LemRendering, LemLevelSystem, LemLevel,
-  LemDosStyle, LemTypes, LemMetaObject,
-  LemObjects,
+  LemDosStyle, LemMetaObject, LemObjects,
   GameControl, GameBaseScreen, GameWindow;
 
 type
   TGamePreviewScreen = class(TGameBaseScreen)
   private
-    //fRickrolling : Boolean;
     fCanDump: Boolean;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -54,7 +50,6 @@ procedure TGamePreviewScreen.SimulateSpawn;
 var
   i: Integer;
   LemsSpawned: Integer;
-  CompareVal: Byte;
 
   procedure FindNextWindow;
   begin
@@ -71,33 +66,22 @@ var
 
 begin
   // A full blown simulation of lemming spawning is the only way to
-  // check how many Zombies and Ghosts the level has.
-  GameParams.Level.Info.ZombieCount := 0;
-  LemsSpawned := 0;
-
-  // Trigger effect 13: Preplaced lemming
-  // Trigger effect 23: Window
-
-  with GameParams.Level do
+  // check how many Zombies the level has.
+  with GameParams.Level, GameParams.Level.Info do
   begin
-
-    CompareVal := 64;
-    //if CheckZombies then CompareVal := CompareVal + 64;
-    //if CheckGhosts then CompareVal := CompareVal + 128;
-
-    for i := 0 to PreplacedLemmings.Count-1 do
+    ZombieCount := 0;
+    for i := 0 to PreplacedLemmings.Count - 1 do
     begin
-      LemsSpawned := LemsSpawned + 1; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
-      if PreplacedLemmings[i].IsZombie then Info.ZombieCount := Info.ZombieCount + 1;
+      if PreplacedLemmings[i].IsZombie then ZombieCount := ZombieCount + 1;
     end;
 
-    i := -1;
-    while LemsSpawned < Info.LemmingsCount do
+    LemsSpawned := PreplacedLemmings.Count; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
+    while LemsSpawned < LemmingsCount do
     begin
       FindNextWindow;
-      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 23 then Continue;
-      LemsSpawned := LemsSpawned + 1;
-      if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieCount := Info.ZombieCount + 1;
+      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 23 {DOM_WINDOW} then Continue;
+      Inc(LemsSpawned);
+      if (InteractiveObjects[i].TarLev and 64) <> 0 then ZombieCount := ZombieCount + 1;
     end;
   end;
 end;
@@ -106,7 +90,6 @@ procedure TGamePreviewScreen.FilterSkillset(aLevel: TLevel);
 var
   SkillCount: Integer;
   Skill: TSkillPanelButton;
-  NeedClear: Boolean;
 
   function FindPickupSkill(aSkillSValue: TSkillPanelButton): Boolean;
   var
@@ -126,14 +109,12 @@ begin
   begin
     if not (Skill in aLevel.Info.Skillset) then Continue;
     SkillCount := aLevel.Info.SkillCount[Skill];
-    if Skill >= spbNone then // to avoid an out of bounds error on BIT_TO_SV
-      NeedClear := true
-    else if SkillCount = 0 then
-      NeedClear := not FindPickupSkill(Skill)
-    else
-      NeedClear := false;
-    if NeedClear then
+
+    if    (Skill >= spbNone) // to avoid an out of bounds error on BIT_TO_SV
+       or ((SkillCount = 0) and not FindPickupSkill(Skill)) then
+    begin
       aLevel.Info.Skillset := aLevel.Info.Skillset - [Skill];
+    end;
   end;
 end;
 
@@ -248,7 +229,7 @@ begin
   begin
     // Remove invalid entries from window ordering
     ActualNewWindowLen := 0;
-    for i := 0 to Length(aLevel.Info.WindowOrder)-1 do
+    for i := 0 to Length(aLevel.Info.WindowOrder) - 1 do
     begin
       MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[aLevel.Info.WindowOrder[i]]);
       if aLevel.InteractiveObjects[aLevel.Info.WindowOrder[i]].IsFake then Continue;
@@ -264,7 +245,6 @@ begin
     MinCount := aLevel.PreplacedLemmings.Count;
     for i := 0 to aLevel.InteractiveObjects.Count - 1 do
     begin
-      //if aLevel.InteractiveObjects[i].Identifier = 1 then FoundWindow := true;
       MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]);
       if aLevel.InteractiveObjects[i].IsFake then Continue;
       if MO.TriggerEffect = 23 then FoundWindow := true;
@@ -311,8 +291,7 @@ begin
       // draw level preview
       W.SetSize(Lw, Lh);
       W.Clear(0);
-//      W.ResamplerClassName := 'TLinearResampler';//DraftResampler';
-//      W.ResamplerClassName := 'TDraftResampler';
+
       GameParams.Renderer.RenderWorld(W, not GameParams.NoBackgrounds);
       TLinearResampler.Create(W);
       W.DrawMode := dmBlend;
@@ -329,8 +308,6 @@ begin
       W.Free;
       Temp.Free;
     end;
-
-
   finally
     ScreenImg.EndUpdate;
   end;
@@ -346,15 +323,15 @@ begin
 
   if GameParams.DumpMode then
   begin
-    if not ForceDirectories(ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\') then Exit;
-    SaveName := ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\' + LeadZeroStr(GameParams.Info.dSection + 1, 2) + LeadZeroStr(GameParams.Info.dLevel + 1, 2) + '.png'
+    SaveName := ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
+    if not ForceDirectories(SaveName) then Exit;
+    SaveName := SaveName + LeadZeroStr(GameParams.Info.dSection + 1, 2) + LeadZeroStr(GameParams.Info.dLevel + 1, 2) + '.png'
   end else begin
     Dlg := TSaveDialog.Create(self);
-    dlg.Filter := 'PNG Image (*.png)|*.png';
-    dlg.FilterIndex := 1;
-    //dlg.InitialDir := '"' + GameParams. + '/"';
-    dlg.DefaultExt := '.png';
-    if dlg.Execute then
+    Dlg.Filter := 'PNG Image (*.png)|*.png';
+    Dlg.FilterIndex := 1;
+    Dlg.DefaultExt := '.png';
+    if Dlg.Execute then
       SaveName := dlg.FileName
     else
       SaveName := '';
@@ -379,28 +356,18 @@ begin
   Assert(GameParams <> nil);
   TempBmp := TBitmap32.Create;
 
-  //ScreenImg.BeginUpdate;
   try
-    //MainPal := GetDosMainMenuPaletteColors32;
-    //InitializeImageSizeAndPosition(640, 350);
-    //ExtractBackGround;
-    //ExtractPurpleFont;
-
-
     // prepare the renderer, this is a little bit shaky (wrong place)
     with GameParams do
     begin
-      Inf.Level:=Level;
+      Inf.Level := Level;
       CheckLemmingCount(Level);
-      Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
+      Renderer.PrepareGameRendering(Inf, (SysDat.Options2 and 2 <> 0));
       if ReplayCheckIndex <> -2 then
-        Renderer.RenderWorld(TempBmp, not GameParams.NoBackgrounds); // because currently some important preparing code is here. it shouldn't be.
-                                       // image dumping doesn't need this because it calls RenderWorld to render the output image      
+        Renderer.RenderWorld(TempBmp, not NoBackgrounds); // because currently some important preparing code is here. it shouldn't be.
+                                       // image dumping doesn't need this because it calls RenderWorld to render the output image
+      if DumpMode and fCanDump then SaveLevelImage;
     end;
-
-    if GameParams.DumpMode and fCanDump then SaveLevelImage;
-
-
   finally
     TempBmp.Free;
   end;
@@ -433,7 +400,7 @@ begin
   end;
   case Key of
     VK_ESCAPE: begin
-               if GameParams.fTestMode then
+                 if GameParams.fTestMode then
                    CloseScreen(gstExit)
                  else
                    CloseScreen(gstMenu);
@@ -450,10 +417,11 @@ end;
 
 procedure TGamePreviewScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  if Button = mbLeft then begin
+  if Button = mbLeft then
+  begin
     VGASpecPrep;
     CloseScreen(gstPlay);
-    end;
+  end;
 end;
 
 procedure TGamePreviewScreen.Img_MouseDown(Sender: TObject;
@@ -461,10 +429,10 @@ procedure TGamePreviewScreen.Img_MouseDown(Sender: TObject;
   Layer: TCustomLayer);
 begin
   if Button = mbLeft then
-    begin
+  begin
     VGASpecPrep;
     CloseScreen(gstPlay);
-    end;
+  end;
 end;
 
 
@@ -476,35 +444,30 @@ var
 begin
   Assert(GameParams <> nil);
 
-//  with GameParams.Level.Info do
+  Perc := i2s(GameParams.Level.Info.RescueCount) + ' Lemming';
+  if GameParams.Level.Info.RescueCount <> 1 then Perc := Perc + 's';
+
+  TL := i2s(GameParams.Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(GameParams.Level.Info.TimeLimit mod 60,2);
+  if GameParams.Level.Info.TimeLimit > 5999 then TL := '(Infinite)'; //99:59
+
+  if GameParams.OneLevelMode then
   begin
+    GameParams.Info.dSectionName := 'Single Level';
+    GameParams.Info.dLevel := 0;
+  end;
 
-      Perc := i2s(GameParams.Level.Info.RescueCount) + ' Lemming';
-      if GameParams.Level.Info.RescueCount <> 1 then Perc := Perc + 's';
+  if GameParams.fTestMode then
+  begin
+    GameParams.Info.dSectionName := 'TEST MODE';
+    GameParams.Info.dLevel := 0;
+  end;
 
-      TL := i2s(GameParams.Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(GameParams.Level.Info.TimeLimit mod 60,2);
-      if GameParams.Level.Info.TimeLimit > 5999 then TL := '(Infinite)'; //99:59
+  RR := IntToStr(GameParams.Level.Info.ReleaseRate);
+  if GameParams.Level.Info.ReleaseRateLocked or (RR = '99') then
+    RR := RR + ' (Locked)';
 
-      if GameParams.OneLevelMode then
-      begin
-        GameParams.Info.dSectionName := 'Single Level';
-        GameParams.Info.dLevel := 0;
-      end;
-
-
-      if GameParams.fTestMode then
-      begin
-        GameParams.Info.dSectionName := 'TEST MODE';
-        GameParams.Info.dLevel := 0;
-      end;
-
-      RR := IntToStr(GameParams.Level.Info.ReleaseRate);
-      if GameParams.Level.Info.ReleaseRateLocked or (RR = '99') then
-        RR := RR + ' (Locked)';
-
-
-      if Trim(GameParams.Level.Info.Author) = '' then
-        Result := Format(SPreviewString,
+  if Trim(GameParams.Level.Info.Author) = '' then
+    Result := Format(SPreviewString,
                 [GameParams.Info.dLevel + 1, // humans read 1-based
                  Trim(GameParams.Level.Info.Title),
                  GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
@@ -512,9 +475,9 @@ begin
                  RR,
                  TL,
                  GameParams.Info.dSectionName
-               ])
-      else
-        Result := Format(SPreviewStringAuth,
+                ])
+  else
+    Result := Format(SPreviewStringAuth,
                 [GameParams.Info.dLevel + 1, // humans read 1-based
                  Trim(GameParams.Level.Info.Title),
                  GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
@@ -523,23 +486,20 @@ begin
                  TL,
                  GameParams.Info.dSectionName,
                  GameParams.Level.Info.Author
-               ]);
+                ]);
 
-    if GameParams.ForceSkillset <> 0 then
+  if GameParams.ForceSkillset <> 0 then
+  begin
+    GameParams.Level.Info.Skillset := [];
+    for i := 0 to 15 do
     begin
-      GameParams.Level.Info.Skillset := [];
-      for i := 0 to 15 do
-      begin
-        if GameParams.ForceSkillset and (1 shl (15-i)) <> 0 then
-          GameParams.Level.Info.Skillset := GameParams.Level.Info.Skillset + [TSkillPanelButton(i)];
-      end;
+      if GameParams.ForceSkillset and (1 shl (15 - i)) <> 0 then
+        GameParams.Level.Info.Skillset := GameParams.Level.Info.Skillset + [TSkillPanelButton(i)];
     end;
   end;
 end;
 
 procedure TGamePreviewScreen.PrepareGameParams;
-//var
-  //Inf: TDosGamePlayInfoRec;
 begin
   inherited;
 
@@ -562,25 +522,20 @@ begin
     if not GameParams.OneLevelMode then
     begin
       TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := '';
-
       try
         TBaseDosLevelSystem(Style.LevelSystem).ResetOddtableHistory;
         Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);
       except
-          fCanDump := false;
-          Exit;
+        fCanDump := false;
+        Exit;
       end;
-
     end else begin
-
       TBaseDosLevelSystem(Style.LevelSystem).ResetOddtableHistory;
       TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := GameParams.LevelString;
       Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);
-      
     end;
 
     WhichLevel := wlSame;
-
   end;
 end;
 
