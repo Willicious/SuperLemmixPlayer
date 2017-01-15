@@ -99,15 +99,6 @@ begin
   Result := nil;
 end;
 
-{procedure TOwnedPersistent.Changed;
-begin
-  if Assigned(fOnChange) then fOnChange(Self);
-end;
-
-procedure TOwnedPersistent.Change(Sender: TObject);
-begin
-  Changed;
-end;}
 
 end.
 
