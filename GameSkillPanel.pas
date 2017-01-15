@@ -44,8 +44,6 @@ type
     fStyle         : TBaseDosLemmingStyle;
 
     fImg           : TImage32;
-    //fButtonHighlightLayer: TPositionedLayer;
-    //fMinimapHighlightLayer: TPositionedLayer;
 
     fOriginal      : TBitmap32;
     fMinimapRegion : TBitmap32;
@@ -58,15 +56,12 @@ type
     fInfoFont      : array[0..44] of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
     fGame          : TLemmingGame;
     { TODO : do something with this hardcoded shit }
-    //fActiveButtons : array[0..7] of TSkillPanelButton;
     fButtonRects   : array[TSkillPanelButton] of TRect;
     fRectColor     : TColor32;
 
     fViewPortRect  : TRect;
     fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
     fCurrentScreenOffset : Integer;
-
-    (*fCenterDigits: Boolean;*)
 
     fHighlitSkill: TSkillPanelButton;
     fSkillCounts: Array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
@@ -83,21 +78,16 @@ type
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 
     procedure SetGame(const Value: TLemmingGame);
-
   protected
-    //procedure Paint; override;
     procedure ReadBitmapFromStyle; virtual;
     procedure ReadFont;
     procedure SetButtonRects;
-
-//    procedure KeyDown(var Key: Word; Shift: TShiftState); override;
   public
     fLastDrawnStr: string[40];
     fNewDrawStr: string[40];
     RedrawnChars: Integer;
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
-//    procedure DrawInfo(aType: TInfoType; const S: string);
     procedure DrawNewStr;
     procedure SetButtonRect(btn: TSkillPanelButton; bpos: Integer);
     procedure SetSkillIcons;
@@ -121,7 +111,6 @@ type
     procedure SetReplayMark(Status: Integer);
     procedure SetTimeLimit(Status: Boolean);
 
-    procedure ActivateCenterDigits;
     procedure SetCurrentScreenOffset(X: Integer);
     property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
   published
@@ -129,8 +118,6 @@ type
 
     property Level: TLevel read fLevel write SetLevel;
     property Game: TLemmingGame read fGame write SetGame;
-    //property FirstSkill: TSkillPanelButton read fActiveButtons[0];
-
   end;
 
 
@@ -153,7 +140,6 @@ var
   i: Integer;
 begin
   inherited Create(aOwner);
-//  fBitmap := TBitmap.Create;
   fImg := TImage32.Create(Self);
   fImg.Parent := Self;
   fImg.RepaintMode := rmOptimizer;
@@ -165,16 +151,6 @@ begin
   fImg.OnMouseUp := ImgMouseUp;
 
   fRectColor := DosVgaColorToColor32(DosInLevelPalette[3]);
-
-{  fButtonHighlightLayer := TPositionedLayer.Create(Img.Layers);
-  fButtonHighlightLayer.MouseEvents := False;
-  fButtonHighlightLayer.Scaled := True;
-  fButtonHighlightLayer.OnPaint := ButtonHighlightLayer_Paint; }
-
-{  fMinimapHighlightLayer := TPositionedLayer.Create(Img.Layers);
-  fMinimapHighlightLayer.MouseEvents := False;
-  fMinimapHighlightLayer.Scaled := True;
-  fMinimapHighlightLayer.OnPaint := MinimapHighlightLayer_Paint; }
 
   fOriginal := TBitmap32.Create;
 
@@ -204,11 +180,8 @@ begin
   fNewDrawStr := StringOfChar(' ', 40);
   fNewDrawStr := SSkillPanelTemplate;
 //  '..............' + 'OUT_.....' + 'IN_.....' + '   T_.-..';
-//  windlg([length(fnewDrawStr)]);
 
   Assert(length(fnewdrawstr) = 40, 'length error infostring');
-
-  (*fCenterDigits := false;*)
 
   fHighlitSkill := spbNone;
 
@@ -220,12 +193,9 @@ var
   c: Char;
   i: Integer;
 begin
-
-
   for i := 0 to 43 do
     fInfoFont[i].Free;
 
-//  fBitmap.Free;
   for c := '0' to '9' do
     for i := 0 to 1 do
       fSkillFont[c, i].Free;
@@ -255,10 +225,6 @@ begin
    DrawSkillCount(spbFaster, fSkillCounts[spbFaster]);
 end;
 
-procedure TSkillPanelToolbar.ActivateCenterDigits;
-begin
-  (*fCenterDigits := true;*)
-end;
 
 procedure TSkillPanelToolbar.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
 var
@@ -306,9 +272,6 @@ begin
         A := R;
         A.Top := A.Bottom - 1;
         fOriginal.DrawTo(fImg.Bitmap, A, A);
-
-  //      fOriginal.DrawTo(fImg.Bitmap, R, R);
-    //    fOriginal.DrawTo(fImg.Bitmap, R, R);
       end;
     True  :
       begin
@@ -324,8 +287,6 @@ begin
         C := fRectColor;
 
         fImg.Bitmap.FrameRectS(R, C);
-//        C := clWhite32;
-        //fImg.Bitmap.FrameRectS(fButtonRects[aButton], clWhite);
       end;
   end;
 end;
@@ -334,7 +295,6 @@ procedure TSkillPanelToolbar.DrawNewStr;
 var
   O, N: char;
   i, x, y, idx: integer;
-//  LocalS: string;
   Changed: Integer;
 begin
 
@@ -351,22 +311,12 @@ begin
   // 3. IN 99%                  24/31              23..30
   // 4. TIME 2-31               32/40              31..39
 
-{  case aType of
-    itCursor: x := 0;
-    itOut: x := 14 * 8;
-    itIn : x := 23 * 8;
-    itTime: x := 31 * 8
-  end; }
   y := 0;
-
-
   x := 0;
 
   for i := 1 to 40 do
   begin
     idx := -1;
-
-
     O := fLastDrawnStr[i];
     N := fNewDrawStr[i];
 
@@ -398,12 +348,8 @@ begin
           begin
             idx := ord(n) - ord('A') + 12;
           end;
-
-
       end;
-          Inc(Changed);
-
-  //    finfoforn[idx]
+      Inc(Changed);
 
       if idx >= 0 then
         fInfoFont[idx].DrawTo(fimg.Bitmap, x, 0)
@@ -416,9 +362,6 @@ begin
   end;
 
   RedrawnChars := Changed;
-
-
-//  fImg.Bitmap.
 end;
 
 
@@ -432,7 +375,6 @@ var
 
 const
   FontYPos = 17;
-//  Font
 
 begin
   // x = 3, 19, 35 etc. are the "black holes" for the numbers in the image
@@ -444,12 +386,8 @@ begin
 
   if Game.HyperSpeed then exit;
 
-//  if aNumber < 0 then
-  //  aNumber
   aoNumber := aNumber;
-  aNumber := aNumber mod 100;
-  Restrict(aNumber, 0, 100);
-//  Assert(Between(aNumber, 0, 99), 'skillpanel number error 1');
+  aNumber := Math.Max(aNumber mod 100, 0);
 
   S := LeadZeroStr(aNumber, 2);
   L := S[1];
@@ -477,34 +415,23 @@ begin
     Exit;
   end;
 
-  // Clear the area for numbers (to undo whiteouts / allow centering)
-  // Best way to do this is just copy from original
-  //fSkillIcons[Ord(aButton)].DrawTo(fImg.Bitmap, fButtonRects[aButton]);
-  {DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 9, 17 + 8);
-  c:=Color32(0, 0, 0);
-  with DstRect do
-    fImg.Bitmap.FillRect(Left, Top, Right, Bottom, c);}
-
   // left
   DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 4, 17 + 8);
   SrcRect := Rect(0, 0, 4, 8);
-  if (*(not fCenterDigits) or*) (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 1 is left
+  if (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 1 is left
 
   // right
   RectMove(DstRect, 2, 0);
-  if (*(fCenterDigits = false) or*) (aoNumber >= 10) then RectMove(DstRect, 2, 0);
+  if (aoNumber >= 10) then RectMove(DstRect, 2, 0);
   SrcRect := Rect(4, 0, 8, 8);
   fSkillFont[R, 0].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 0 is right
 
-//  with
-//  fimg.Bitmap.FillRect(0, 0, 20, 20, clwhite32);
-//  fSkillFont[R, 1].DrawTo(fImg.Bitmap, BtnIdx * 16 + 3, 17)
 end;
 
 procedure TSkillPanelToolbar.RefreshInfo;
 begin
   DrawNewStr;
-  fLastDrawnStr := fNewDrawStr;// := fLastDrawnStr;
+  fLastDrawnStr := fNewDrawStr;
 end;
 
 
@@ -524,7 +451,6 @@ var
   q: Integer;
   Exec: Boolean;
 begin
-//  Exec := False;
   P := Img.ControlToBitmap(Point(X, Y));
   TGameWindow(Parent).ApplyMouseTrap;
 
@@ -545,11 +471,10 @@ begin
     if Assigned(fOnMiniMapClick) then
       fOnMinimapClick(Self, P);
 
-    //Game.MiniMapClick(P);
     Exit;
   end;
 
-  if Game.HyperSpeed {or Game.FastForward} then
+  if Game.HyperSpeed then
     Exit;
 
   for i := Low(TSkillPanelButton) to High(TSkillPanelButton) do // "ignore" spbNone
@@ -568,9 +493,8 @@ begin
       end;
 
       Exec := true;
-      //if Exec then
-        if i = spbNuke then
-          Exec := ssDouble in Shift;
+      if i = spbNuke then
+        Exec := ssDouble in Shift;
 
       if Exec then
         if i < spbFastForward then // handled by TLemmingGame alone
@@ -669,7 +593,6 @@ begin
       P.Y := Round(P.Y * 8 * Game.Level.Info.Height / 160);
       if Assigned(fOnMiniMapClick) then
         fOnMinimapClick(Self, P);
-      //Game.MiniMapClick(P);
     end;
   end;
   if Y >= Img.Height - 1 then
@@ -840,7 +763,6 @@ begin
     TempBmp.DrawTo(fOriginal, 289, 16);
     MakePanel(TempBmp, 'icon_minimap.png', false);
     TempBmp.DrawTo(fOriginal, 305, 16);
-    //TempBmp.DrawTo(fMinimapRegion, 0, 0);
 
     GetGraphic('empty_slot.png', TempBmp);
     for i := 0 to 7 do
@@ -946,24 +868,13 @@ procedure TSkillPanelToolbar.SetButtonRects;
 var
   Org, R: TRect;
   iButton: TSkillPanelButton;
-//  Sca: Integer;
-
-//    function ScaleRect(const ):
-
 begin
-//  Sca := 3;
   Org := Rect(-1, -1, 0, 0); // exact position of first button
   R := Org;
-  {R.Left := R.Left * Sca;
-  R.Right := R.Right * Sca;
-  R.Top := R.Top * Sca;
-  R.Bottom := R.Bottom * Sca; }
 
   for iButton := Low(TSkillPanelButton) to High(TSkillPanelButton) do
   begin
     fButtonRects[iButton] := R;
-    //RectMove(R, 16, 0);
-
   end;
 
   fButtonRects[spbSlower] := Rect(1, 16, 15, 38);
@@ -973,12 +884,11 @@ begin
 
   R := Rect(193, 16, 207, 38);
 
-  //if not GameParams.ShowMinimap then
-    for iButton := spbFastForward to High(TSkillPanelButton) do
-    begin
-      fButtonRects[iButton] := R;
-      RectMove(R, 16, 0);
-    end;
+  for iButton := spbFastForward to High(TSkillPanelButton) do
+  begin
+    fButtonRects[iButton] := R;
+    RectMove(R, 16, 0);
+  end;
 
   // special handling
   fButtonRects[spbDirLeft].Bottom := fButtonRects[spbDirLeft].Bottom - 12;
@@ -1001,8 +911,6 @@ procedure TSkillPanelToolbar.SetInfoCursorLemming(const Lem: string; Num: Intege
 var
   S: string;
 begin
-//exit;
-
   S := Uppercase(Lem);
   if Lem <> '' then
   begin
@@ -1138,23 +1046,13 @@ begin
     ReadBitmapFromStyle;
     ReadFont;
   end;
-//  Width := fBitmap.Width;
-//  Height := fBitmap.Height;
   fImg.Scale := aScale;
   fImg.ScaleMode := smScale;
-  //fImg.AutoSize := True;
 
   fImg.Height := fOriginal.Height * aScale;
   fImg.Width := fOriginal.Width * aScale;
   Width := fImg.Width;
   Height := fImg.Height;
-
-//  AutoSize := True;
-//  fImg.Width * fImg.Bitmap.Width
-
-//  DrawNumber(bskClimber, 23);
-//  DrawInfo('1234567890123456789012345678901234567890');
-
 
   fImg.EndUpdate;
   fImg.Changed;
@@ -1164,8 +1062,6 @@ end;
 procedure TSkillPanelToolbar.SetViewPort(const R: TRect);
 begin
   fViewPortRect := R;
-//  fMinimapHighlightLayer.Changed;
-
 end;
 
 procedure TSkillPanelToolbar.DrawMinimap(Map: TBitmap32);
@@ -1198,9 +1094,6 @@ begin
   end else
     X := 0;
 
-  //EraseRect := Rect(212, 18, 316, 38);
-  //fOriginal.DrawTo(Img.Bitmap, EraseRect, EraseRect);
-
   Map.DrawTo(Img.Bitmap, Dx, 18, SrcRect);
   Img.Bitmap.FrameRectS(196 + X, 18, 196 + X + 20, 38, fRectColor);
 end;
@@ -1212,9 +1105,6 @@ begin
   fGame := Value;
   if fGame <> nil then
     fGame.InfoPainter := Self;
-
-//  else
-  //  fGame.InfoPainter := nil;  
 end;
 
 
