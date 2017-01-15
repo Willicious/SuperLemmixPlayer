@@ -1,18 +1,12 @@
-{$include lem_directives.inc}
 unit LemLevel;
 
 interface
 
 uses
   Classes, SysUtils, StrUtils,
-  UMisc,
-  LemLemming,
-  LemTerrain, LemMetaTerrain,
-  LemInteractiveObject, LemMetaObject,
-  LemNeoPieceManager,
-  LemSteel,
-  LemCore,
-  LemNeoParser;
+  LemCore, LemLemming,
+  LemTerrain, LemInteractiveObject, LemSteel,
+  LemNeoPieceManager, LemNeoParser;
 
 type
   TSkillset = set of TSkillPanelButton;
@@ -24,7 +18,7 @@ type
     fReleaseRateLocked : Boolean;
     fReleaseRate    : Integer;
     fLemmingsCount  : Integer;
-    fZombieGhostCount: Integer;
+    fZombieCount    : Integer;
     fRescueCount    : Integer;
     fTimeLimit      : Integer;
 
@@ -59,7 +53,7 @@ type
     property ReleaseRate    : Integer read fReleaseRate write fReleaseRate;
     property ReleaseRateLocked: Boolean read fReleaseRateLocked write fReleaseRateLocked;
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
-    property ZombieGhostCount: Integer read fZombieGhostCount write fZombieGhostCount;
+    property ZombieCount    : Integer read fZombieCount write fZombieCount;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
 
@@ -138,32 +132,30 @@ uses
 { TLevelInfo }
 
 procedure TLevelInfo.Clear;
-var
-  i : Integer;
 begin
-  ReleaseRate    := 1;
+  ReleaseRate     := 1;
   ReleaseRateLocked := false;
-  LemmingsCount  := 1;
-  ZombieGhostCount := 0;
-  RescueCount    := 1;
-  TimeLimit      := 6000;
+  LemmingsCount   := 1;
+  ZombieCount     := 0;
+  RescueCount     := 1;
+  TimeLimit       := 6000;
 
-  fSkillset := [];
+  fSkillset       := [];
   FillChar(fSkillCounts, SizeOf(TSkillCounts), 0);
 
-  LevelOptions   := 2;
-  ScreenPosition := 0;
+  LevelOptions    := 2;
+  ScreenPosition  := 0;
   ScreenYPosition := 0;
-  Width := 320;
-  Height := 160;
-  Title          := '';
-  Author         := '';
-  fBackground := '';
+  Width           := 320;
+  Height          := 160;
+  Title           := '';
+  Author          := '';
+  fBackground     := '';
   SetLength(WindowOrder, 0);
 
-  GraphicSetName := '';
-  MusicFile := '';
-  LevelID := 0;
+  GraphicSetName  := '';
+  MusicFile       := '';
+  LevelID         := 0;
 end;
 
 constructor TLevelInfo.Create;
@@ -253,7 +245,7 @@ begin
   Clear;
 
   if b < 5 then
-    TLVLLoader.LoadLevelFromStream(aStream, self); 
+    TLVLLoader.LoadLevelFromStream(aStream, self);
 
   Parser := TParser.Create;
   try
@@ -383,7 +375,6 @@ end;
 procedure TLevel.HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
 var
   O: TInteractiveObject;
-  MO: TMetaObject;
 
   procedure Flag(aValue: Integer);
   begin
@@ -448,8 +439,7 @@ var
     Angle: Integer;
   begin
     Angle := aSection.LineNumeric['angle'];
-    Angle := ((Angle * 10) + 113) div 225;
-    O.Skill := Angle;
+    O.Skill := (Round(Angle / 22.5) mod 16 + 16) mod 16; // Convert angle in degrees to a mod 16 segment
     O.TarLev := aSection.LineNumeric['speed'];
   end;
 begin
@@ -471,8 +461,7 @@ begin
   if (aSection.Line['no_overwrite'] <> nil) then Flag(odf_NoOverwrite);
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
 
-  MO := PieceManager.Objects[O.Identifier];
-  case MO.TriggerEffect of
+  case PieceManager.Objects[O.Identifier].TriggerEffect of
     11: GetTeleporterData;
     12: GetReceiverData;
     14: GetPickupData;
@@ -697,15 +686,12 @@ procedure TLevel.SaveObjectSections(aSection: TParserSection);
 var
   i: Integer;
   O: TInteractiveObject;
-  MO: TMetaObject;
   Sec: TParserSection;
 
   function Flag(aValue: Integer): Boolean;
   begin
     Result := O.DrawingFlags and aValue = aValue;
   end;
-
-  //if Flag(odf_FlipLem) then Sec.AddLine('FACE_LEFT');
 
   procedure SetTeleporterData;
   begin
@@ -798,8 +784,7 @@ begin
     if Flag(odf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
     if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');
 
-    MO := PieceManager.Objects[O.Identifier];
-    case MO.TriggerEffect of
+    case PieceManager.Objects[O.Identifier].TriggerEffect of
       11: SetTeleporterData;
       12: SetReceiverData;
       14: SetPickupData;

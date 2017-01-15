@@ -72,7 +72,7 @@ var
 begin
   // A full blown simulation of lemming spawning is the only way to
   // check how many Zombies and Ghosts the level has.
-  GameParams.Level.Info.ZombieGhostCount := 0;
+  GameParams.Level.Info.ZombieCount := 0;
   LemsSpawned := 0;
 
   // Trigger effect 13: Preplaced lemming
@@ -88,7 +88,7 @@ begin
     for i := 0 to PreplacedLemmings.Count-1 do
     begin
       LemsSpawned := LemsSpawned + 1; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
-      if PreplacedLemmings[i].IsZombie then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
+      if PreplacedLemmings[i].IsZombie then Info.ZombieCount := Info.ZombieCount + 1;
     end;
 
     i := -1;
@@ -97,7 +97,7 @@ begin
       FindNextWindow;
       if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 23 then Continue;
       LemsSpawned := LemsSpawned + 1;
-      if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieGhostCount := Info.ZombieGhostCount + 1;
+      if (InteractiveObjects[i].TarLev and CompareVal) <> 0 then Info.ZombieCount := Info.ZombieCount + 1;
     end;
   end;
 end;
@@ -507,7 +507,7 @@ begin
         Result := Format(SPreviewString,
                 [GameParams.Info.dLevel + 1, // humans read 1-based
                  Trim(GameParams.Level.Info.Title),
-                 GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieGhostCount,
+                 GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
                  Perc,
                  RR,
                  TL,
@@ -517,7 +517,7 @@ begin
         Result := Format(SPreviewStringAuth,
                 [GameParams.Info.dLevel + 1, // humans read 1-based
                  Trim(GameParams.Level.Info.Title),
-                 GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieGhostCount,
+                 GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
                  Perc,
                  RR,
                  TL,

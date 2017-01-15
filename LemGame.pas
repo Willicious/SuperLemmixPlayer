@@ -1367,7 +1367,7 @@ begin
 
   LemmingsReleased := 0;
   LemmingsOut := 0;
-  SpawnedDead := Level.Info.ZombieGhostCount;
+  SpawnedDead := Level.Info.ZombieCount;
   LemmingsIn := 0;
   LemmingsRemoved := 0;
   DelayEndFrames := 0;
