@@ -71,8 +71,7 @@ interface
 }
 
 uses
-  Windows, Classes, Contnrs, SysUtils,
-  UMisc, ZLibEx;
+  Windows, Classes, Contnrs, SysUtils, ZLibEx;
 
 // copy van controls
 const
@@ -317,7 +316,6 @@ type
     ArcPosition : integer;
     ArcSize     : integer;
     ArcDelta    : integer;
-    function Ratio: integer;
     constructor CreateClone(const AO: TArchiveObject);
   end;
 
@@ -716,11 +714,6 @@ begin
   ArcPosition := AO.ArcPosition;
   ArcSize     := AO.ArcSize;
   ArcDelta    := AO.ArcDelta;
-end;
-
-function TArchiveObject.Ratio: integer;
-begin
-  Result := Percentage(FileSize, ArcSize);
 end;
 
 { TArchiveList }

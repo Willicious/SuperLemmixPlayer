@@ -113,14 +113,8 @@ function StrToFloatDef(const S: string; const DefValue: Extended = 0): Extended;
 function StringToCharSet(const S: string; const Keep: TCharSet = []): TCharSet;
     { geeft alle letters uit set }
 
-{ Getallen }
-
-function Percentage(Max, N: integer): integer; overload;
-
 { Datum en Tijd }
 
-function MilliSeconds: integer;
-    { geeft milliseconden sinds middernacht }
 function DtoS(const aDate: TDateTime): ShortString;
     { output: 20011231 }
 function TtoS(const ATime: TDateTime; const aSeparator: string = ''): ShortString;
@@ -481,13 +475,6 @@ begin
 end;
 
 
-function Percentage(Max, N: integer): integer;
-begin
-  if Max = 0 then
-    Result := 0
-  else
-    Result := Trunc((N/Max) * 100);
-end;
 
 procedure Restrict(var aValue: integer; aMin, aMax: integer);
 begin
@@ -500,15 +487,6 @@ end;
 
 
 
-{ retourneert aantal milliseconden sinds middernacht }
-function MilliSeconds: integer;
-var
-  SysTime: TSystemTime;
-begin
-  DateTimeToSystemTime(Now, SysTime);
-  with SysTime do
-    Result := (wHour * 60 * 60 + wMinute * 60 + wSecond) * 1000 + wMilliSeconds;
-end;
 
 function DtoS(const aDate: TDateTime): ShortString;
 var
