@@ -15,6 +15,11 @@ uses
   Classes, SysUtils, Math, UMisc;
 
 type
+  // Origianlly MaxInt div 4 was MaxListSize * 4, but MaxListSize is deprecated!!!
+  PBytes = ^TBytes;
+  TBytes = array[0..MaxInt div 4 - 1] of Byte;
+
+type
   {-------------------------------------------------------------------------------
     This header is at each section of compressed data.
     o Watch out: the words are Big Endian so swap when reading or writing!!!

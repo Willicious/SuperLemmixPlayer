@@ -576,14 +576,12 @@ var
   SrcRect, DstRect: TRect;
 begin
   SrcRect := CalcFrameRect(LeftLemmingAnimation, 16, aFrame);
-  DstRect := SrcRect;
-  DstRect := ZeroTopLeftRect(DstRect);
+  DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
   OffsetRect(DstRect, 0, YPos_Credits);
   BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   LeftLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 
-  DstRect := SrcRect;
-  DstRect := ZeroTopLeftRect(DstRect);
+  DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
   OffsetRect(DstRect, 640 - 48, YPos_Credits);
   BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   RightLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);

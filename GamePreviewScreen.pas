@@ -298,7 +298,7 @@ begin
       W.DrawMode := dmBlend;
       W.CombineMode := cmMerge;
       DstRect := Rect(0, 0, (lw div 4), (lh div 4)); // div 4
-      RectMove(DstRect, (120 + (200 - (lw div 8))), (20 + (20 - (lh div 8)))); // set location
+      OffsetRect(DstRect, (120 + (200 - (lw div 8))), (20 + (20 - (lh div 8)))); // set location
       W.DrawTo(Temp, DstRect, W.BoundsRect);
       // draw background
       TileBackgroundBitmap(0, 78, Temp);

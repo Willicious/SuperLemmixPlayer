@@ -421,8 +421,8 @@ begin
   if (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 1 is left
 
   // right
-  RectMove(DstRect, 2, 0);
-  if (aoNumber >= 10) then RectMove(DstRect, 2, 0);
+  OffsetRect(DstRect, 2, 0);
+  if (aoNumber >= 10) then OffsetRect(DstRect, 2, 0);
   SrcRect := Rect(4, 0, 8, 8);
   fSkillFont[R, 0].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 0 is right
 
@@ -859,18 +859,17 @@ begin
       fSkillIcons[Integer(Skill)].DrawTo(fImg.Bitmap, R.Left, R.Top{, SrcRect});
       fSkillIcons[Integer(Skill)].DrawTo(fOriginal, R.Left, R.Top{, SrcRect});
 
-      RectMove(R, 16, 0);
+      OffsetRect(R, 16, 0);
     end;
   end;
 end;
 
 procedure TSkillPanelToolbar.SetButtonRects;
 var
-  Org, R: TRect;
+  R: TRect;
   iButton: TSkillPanelButton;
 begin
-  Org := Rect(-1, -1, 0, 0); // exact position of first button
-  R := Org;
+  R := Rect(-1, -1, 0, 0); // exact position of first button
 
   for iButton := Low(TSkillPanelButton) to High(TSkillPanelButton) do
   begin
@@ -887,15 +886,13 @@ begin
   for iButton := spbFastForward to High(TSkillPanelButton) do
   begin
     fButtonRects[iButton] := R;
-    RectMove(R, 16, 0);
+    OffsetRect(R, 16, 0);
   end;
 
   // special handling
   fButtonRects[spbDirLeft].Bottom := fButtonRects[spbDirLeft].Bottom - 12;
   fButtonRects[spbDirRight] := fButtonRects[spbDirLeft];
-  RectMove(fButtonRects[spbDirRight], 0, 12);
-
-
+  OffsetRect(fButtonRects[spbDirRight], 0, 12);
 end;
 
 procedure TSkillPanelToolbar.SetButtonRect(btn: TSkillPanelButton; bpos: Integer);
@@ -903,7 +900,7 @@ var
   R: TRect;
 begin
   R := Rect(1, 16, 15, 38);
-  RectMove(R, 16 * (bpos - 1), 0);
+  OffsetRect(R, 16 * (bpos - 1), 0);
   fButtonRects[btn] := R;
 end;
 
@@ -1086,11 +1083,11 @@ begin
     if Game.GetLevelWidth < 1664 then X := X + 52 - (Game.GetLevelWidth div 32);
     if Map.Width > 104 then
     begin
-      RectMove(SrcRect, Round((Map.Width - 104) * X / (Map.Width - 22)), 0);
+      OffsetRect(SrcRect, Round((Map.Width - 104) * X / (Map.Width - 22)), 0);
       X := X - SrcRect.Left;
     end;
-    RectMove(SrcRect, 0, Y);
-    if SrcRect.Bottom > Map.Height then RectMove(SrcRect, 0, -1);
+    OffsetRect(SrcRect, 0, Y);
+    if SrcRect.Bottom > Map.Height then OffsetRect(SrcRect, 0, -1);
   end else
     X := 0;
 

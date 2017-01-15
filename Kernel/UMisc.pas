@@ -28,14 +28,8 @@ interface
 uses
   Windows, Classes, SysUtils, StrUtils, TypInfo, Math;
 
-{ Algemene constanten en types }
-
 const
   CrLf = Chr(13) + Chr(10);
-
-type
-  PBytes = ^TBytes;
-  TBytes = array[0..MaxListSize * 4 - 1] of Byte;  // Warning: MaxListSize is deprecated!!!
 
 // Counts the number of characters C in the string S
 function CountChars(C: Char; const S: string): integer;
@@ -60,11 +54,6 @@ function RectWidth(const aRect: TRect): integer;
 
 function Transform(const AVarRec: TVarRec): string;
     { transformeert een varrec naar string }
-
-
-
-procedure RectMove(var R: TRect; X, Y: integer); {windows.offsetrect}
-function ZeroTopLeftRect(const aRect: TRect): TRect;
 
 { Components }
 
@@ -210,35 +199,7 @@ begin
   Result := aRect.Right - aRect.Left;
 end;
 
-procedure RectMove(var R: TRect; X, Y: integer);
-begin
-  with R do
-  begin
-    if X <> 0 then
-    begin
-      Inc(R.Left, X);
-      Inc(R.Right, X);
-    end;
-    if Y <> 0 then
-    begin
-      Inc(R.Top, Y);
-      Inc(R.Bottom, Y);
-    end;
-  end;
-end;
 
-
-function ZeroTopLeftRect(const aRect: TRect): TRect;
-begin
-  Result := aRect;
-  with Result do
-  begin
-    Dec(Right, Left);
-    Dec(Bottom, Top);
-    Left := 0;
-    Top := 0;
-  end;
-end;
 
 { Component Streaming }
 
