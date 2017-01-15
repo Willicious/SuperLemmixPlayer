@@ -48,17 +48,21 @@ function PadR(const S: string; aLen: integer; PadChar: char = ' '): string;
 // This is PadL(IntToStr(Int), Len, '0')
 function LeadZeroStr(Int, Len: integer): string;
 
-
+// Saves a string to a file
 procedure StringToFile(const aString, aFileName: string);
-    { bewaar string als file }
+
+// Computes the height resp. width of a rectangle.
+function RectHeight(const aRect: TRect): integer;
+function RectWidth(const aRect: TRect): integer;
+
+
+
 
 function Transform(const AVarRec: TVarRec): string;
     { transformeert een varrec naar string }
 
-{ TRect TPoint }
 
-function RectHeight(const aRect: TRect): integer;
-function RectWidth(const aRect: TRect): integer;
+
 procedure RectMove(var R: TRect; X, Y: integer); {windows.offsetrect}
 function ZeroTopLeftRect(const aRect: TRect): TRect;
 
@@ -198,12 +202,12 @@ end;
 
 function RectHeight(const aRect: TRect): integer;
 begin
-  with aRect do Result := Bottom - Top + 1;
+  Result := aRect.Bottom - aRect.Top;
 end;
 
 function RectWidth(const aRect: TRect): integer;
 begin
-  with aRect do Result := Right - Left + 1;
+  Result := aRect.Right - aRect.Left;
 end;
 
 procedure RectMove(var R: TRect; X, Y: integer);

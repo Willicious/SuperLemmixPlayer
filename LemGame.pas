@@ -3129,8 +3129,8 @@ begin
 
   D.Left := MaskX;
   D.Top := MaskY;
-  D.Right := MaskX + RectWidth(S) - 1; // whoops: -1 is important to avoid stretching
-  D.Bottom := MaskY + RectHeight(S) - 1; // whoops: -1 is important to avoid stretching
+  D.Right := MaskX + RectWidth(S);
+  D.Bottom := MaskY + RectHeight(S);
 
   Assert(CheckRectCopy(D, S), 'miner rect error');
 
