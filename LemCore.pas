@@ -129,7 +129,10 @@ type
     spbDirRight  // because of special handling to draw it, it's not immediately after spbDirLeft in the list
   );
 
+const
+  LAST_SKILL_BUTTON = spbCloner;
 
+type
   TTriggerTypes = (
     trExit,       // as well for locked exits, once all buttons are pressed
     trForceLeft,  // as well for blockers

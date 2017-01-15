@@ -69,7 +69,7 @@ type
     (*fCenterDigits: Boolean;*)
 
     fHighlitSkill: TSkillPanelButton;
-    fSkillCounts: Array[0..20] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
+    fSkillCounts: Array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
 
 
 
@@ -245,14 +245,14 @@ end;
 
 procedure TSkillPanelToolbar.ClearSkills;
 var
-  i: Integer;
+  i: TSkillPanelButton;
 begin
-   for i := 0 to 15 do // standard skills
+   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do // standard skills
    begin
-     DrawButtonSelector(TSkillPanelButton(i), false);
-     DrawSkillCount(TSkillPanelButton(i), fSkillCounts[i]);
+     DrawButtonSelector(i, false);
+     DrawSkillCount(i, fSkillCounts[i]);
    end;
-   DrawSkillCount(spbFaster, fSkillCounts[Integer(spbFaster)]);
+   DrawSkillCount(spbFaster, fSkillCounts[spbFaster]);
 end;
 
 procedure TSkillPanelToolbar.ActivateCenterDigits;
@@ -440,7 +440,7 @@ begin
 
   if (fButtonRects[aButton].Left < 0) then exit;
 
-  fSkillCounts[Integer(aButton)] := aNumber;
+  fSkillCounts[aButton] := aNumber;
 
   if Game.HyperSpeed then exit;
 
