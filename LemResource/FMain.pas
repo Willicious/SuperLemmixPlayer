@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   StdCtrls, Dialogs, ShellApi,
-  {umisc,} {uwintools,} uzip, ufiles;
+  {umisc,} {uwintools,} uzip{, ufiles};
 
 type
   TForm1 = class(TForm)
@@ -65,7 +65,7 @@ procedure TForm1.CreateDatResource(const aSourcePath: string);
 -------------------------------------------------------------------------------}
 var
   Z: TArchive;
-  Command, Param, ZipFileName, ScriptFileName: string;
+  ZipFileName, ScriptFileName: string;
   SL: TStringList;
 begin
   ZipFileName    := GetApplicationPath + aSourcePath + 'lemdata.arc';
@@ -119,7 +119,7 @@ end;
 procedure TForm1.BtnSoundsOrigClick(Sender: TObject);
 var
   Z: TArchive;
-  Command, Param, ZipFileName, ScriptFileName: string;
+  ZipFileName, ScriptFileName: string;
   SL: TStringList;
 begin
   ZipFileName    := GetApplicationPath + 'sounds\lemsounds.arc';
