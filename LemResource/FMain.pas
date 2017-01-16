@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-(*ulog,*) umisc, ucodes, uwintools,  Dialogs,uzip, StdCtrls,ufiles;
+  StdCtrls, Dialogs, ShellApi,
+  {umisc,} {uwintools,} uzip, ufiles;
 
 type
   TForm1 = class(TForm)
@@ -26,11 +27,25 @@ type
     { Public declarations }
   end;
 
+  function GetApplicationPath: String;
+  procedure DoShellExecute(aCommand: String; aParams: String);
+
 var
   Form1: TForm1;
 
 
 implementation
+
+// moved from otherwise-junk units
+function GetApplicationPath: String;
+begin
+  Result := ExtractFilePath(ParamStr(0));
+end;
+
+procedure DoShellExecute(aCommand: String; aParams: String);
+begin
+  ShellExecute(Application.Handle, 'open', PChar(aCommand), PChar(aParams), '', SW_SHOWNORMAL);
+end;
 
 {$R *.dfm}
 
@@ -51,13 +66,14 @@ procedure TForm1.CreateDatResource(const aSourcePath: string);
 var
   Z: TArchive;
   Command, Param, ZipFileName, ScriptFileName: string;
+  SL: TStringList;
 begin
   ZipFileName    := GetApplicationPath + aSourcePath + 'lemdata.arc';
   ScriptFileName := GetApplicationPath + aSourcePath + 'lemdata.rc';
 
   DeleteFile(ZipFileName);
   DeleteFile(ScriptFileName);
-  DeleteFile(ReplaceFileExt(ZipFileName, '.res'));
+  DeleteFile(ChangeFileExt(ZipFileName, '.res'));
 
   Z := TArchive.Create;
   Z.OpenArchive(ZipFileName, amCreate);
@@ -74,10 +90,14 @@ begin
 
   Z.Free;
 
-  StringToFile('LANGUAGE 9, 5' + CrLf + 'LEMDATA' + ' ' + 'ARCHIVE ' + '"' + ZipFileName + '"', ScriptFileName);
+  SL := TStringList.Create;
+  SL.Add('LANGUAGE 9, 5' + #13 + #10 + 'LEMDATA' + ' ' + 'ARCHIVE ' + '"' + ZipFileName + '"');
+  SL.SaveToFile(ScriptFileName);
+  SL.Free;
 
   // compileer tot resource met brcc32.exe
-  DoShellExecute('C:\Program Files (x86)\Borland\Delphi7\Bin\brcc32.exe', '"' + ScriptFileName + '"', '');
+  DoShellExecute(GetApplicationPath + 'gorc.exe', '/r "' +
+                 ScriptFileName + '"');
 end;
 
 procedure TForm1.BtnDataClick(Sender: TObject);
@@ -100,13 +120,14 @@ procedure TForm1.BtnSoundsOrigClick(Sender: TObject);
 var
   Z: TArchive;
   Command, Param, ZipFileName, ScriptFileName: string;
+  SL: TStringList;
 begin
   ZipFileName    := GetApplicationPath + 'sounds\lemsounds.arc';
   ScriptFileName := GetApplicationPath + 'sounds\lemsounds.rc';
 
   DeleteFile(ZipFileName);
   DeleteFile(ScriptFileName);
-  DeleteFile(ReplaceFileExt(ZipFileName, '.res'));
+  DeleteFile(ChangeFileExt(ZipFileName, '.res'));
 
   Z := TArchive.Create;
   Z.OpenArchive(ZipFileName, amCreate);
@@ -115,11 +136,14 @@ begin
   Z.AddFiles('sounds\*.ogg');
   Z.Free;
 
-  StringToFile('LANGUAGE 9, 5' + CrLf + 'LEMSOUNDS' + ' ' + 'ARCHIVE ' + '"' + ZipFileName + '"', ScriptFileName);
+  SL := TStringList.Create;
+  SL.Add('LANGUAGE 9, 5' + #13 + #10 + 'LEMSOUNDS' + ' ' + 'ARCHIVE ' + '"' + ZipFileName + '"');
+  SL.SaveToFile(ScriptFileName);
+  SL.Free;
 
   // compileer tot resource met brcc32.exe
-  DoShellExecute('C:\Program Files (x86)\Borland\Delphi7\Bin\brcc32.exe', '"' +
-                 ScriptFileName + '"', '');
+  DoShellExecute(GetApplicationPath + 'gorc.exe', '/r "' +
+                 ScriptFileName + '"');
 
 end;
 

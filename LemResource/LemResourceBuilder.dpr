@@ -2,8 +2,7 @@ program LemResourceBuilder;
 
 uses
   Forms,
-  FMain in 'FMain.pas' {Form1},
-  UCodes in 'UCodes.pas';
+  FMain in 'FMain.pas';
 
 {$R *.res}
 
