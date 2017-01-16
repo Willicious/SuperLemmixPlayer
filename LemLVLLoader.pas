@@ -977,7 +977,7 @@ class procedure TLVLLoader.LoadTradLevelFromStream(aStream: TStream; aLevel: TLe
 -------------------------------------------------------------------------------}
 var
   Buf: TLVLRec;
-  H, i{, x, x2, x3}: Integer;
+  H, i: Integer;
   O: TLVLObject;
   T: TLVLTerrain;
   S: TLVLSteel;
@@ -985,8 +985,6 @@ var
   Ter: TTerrain;
   Steel: TSteel;
   GraphicSet: Integer;
-  //SkTemp: array[0..15] of byte;
-  //SkT2: array[0..7] of byte;
   SFinder: TStyleFinder;
 begin
   with aLevel do
@@ -1001,23 +999,23 @@ begin
       if OddLoad <> 1 then
       begin
       aLevel.Clear;
-      ReleaseRate      := SwapWord(Buf.ReleaseRate) mod 256;
-      LemmingsCount    := SwapWord(Buf.LemmingsCount);
-      RescueCount      := SwapWord(Buf.RescueCount);
+      ReleaseRate      := System.Swap(Buf.ReleaseRate) mod 256;
+      LemmingsCount    := System.Swap(Buf.LemmingsCount);
+      RescueCount      := System.Swap(Buf.RescueCount);
       TimeLimit        := (Buf.TimeMinutes * 60){ + Buf.TimeSeconds};
       Skillset := [spbClimber, spbFloater, spbBomber, spbBlocker, spbBuilder, spbBasher, spbMiner, spbDigger];
-      SkillCount[spbClimber]     := SwapWord(Buf.ClimberCount) mod 256;
-      SkillCount[spbFloater]     := SwapWord(Buf.FloaterCount) mod 256;
-      SkillCount[spbBomber]      := SwapWord(Buf.BomberCount) mod 256;
-      SkillCount[spbBlocker]     := SwapWord(Buf.BlockerCount) mod 256;
-      SkillCount[spbBuilder]     := SwapWord(Buf.BuilderCount) mod 256;
-      SkillCount[spbBasher]      := SwapWord(Buf.BasherCount) mod 256;
-      SkillCount[spbMiner]       := SwapWord(Buf.MinerCount) mod 256;
-      SkillCount[spbDigger]      := SwapWord(Buf.DiggerCount) mod 256;
+      SkillCount[spbClimber]     := System.Swap(Buf.ClimberCount) mod 256;
+      SkillCount[spbFloater]     := System.Swap(Buf.FloaterCount) mod 256;
+      SkillCount[spbBomber]      := System.Swap(Buf.BomberCount) mod 256;
+      SkillCount[spbBlocker]     := System.Swap(Buf.BlockerCount) mod 256;
+      SkillCount[spbBuilder]     := System.Swap(Buf.BuilderCount) mod 256;
+      SkillCount[spbBasher]      := System.Swap(Buf.BasherCount) mod 256;
+      SkillCount[spbMiner]       := System.Swap(Buf.MinerCount) mod 256;
+      SkillCount[spbDigger]      := System.Swap(Buf.DiggerCount) mod 256;
       LevelOptions     := 0;
       Title            := Buf.LevelName;
       Author           := '';
-      GraphicSet := SwapWord(Buf.GraphicSet);
+      GraphicSet := System.Swap(Buf.GraphicSet);
       case (GraphicSet shr 8) and $FF of
         0: MusicFile := '';
       253: MusicFile := '*';
@@ -1031,12 +1029,12 @@ begin
         LevelOptions := LevelOptions and $71;
         Exit;
       end;
-      ScreenPosition   := SwapWord(Buf.ScreenPosition);
+      ScreenPosition   := System.Swap(Buf.ScreenPosition);
       ScreenYPosition  := 0;
       Width := 1584;
       Height := 160;
       if ScreenPosition > (Width - 320) then ScreenPosition := (Width - 320);
-      GraphicSet       := (SwapWord(Buf.GraphicSet) and $00FF) + (GraphicSet and $FF00);
+      GraphicSet       := (System.Swap(Buf.GraphicSet) and $00FF) + (GraphicSet and $FF00);
 
       SFinder := TStyleFinder.Create;
 
@@ -1044,11 +1042,6 @@ begin
         GraphicSetName := SFinder.FindName(GraphicSet mod 256, false);
 
       SFinder.Free;
-
-      {if (LevelOptions) and $2 = 0 then
-        LevelOptions := LevelOptions and $77
-        else
-        LevelOptions := LevelOptions and $7F;}
     end;
 
     {-------------------------------------------------------------------------------
@@ -1115,8 +1108,8 @@ begin
       //if S.D0 = 0 then
       //  Continue;
       Steel := Steels.Add;  
-      Steel.Left := ((Integer(S.B0) shl 1) + (Integer(S.B1 and Bit7) shr 7)) * 4 - 16;  // 9 bits
-      Steel.Top := Integer(S.B1 and not Bit7) * 4;  // bit 7 belongs to steelx
+      Steel.Left := ((Integer(S.B0) shl 1) + (Integer(S.B1 and (1 shl 7)) shr 7)) * 4 - 16;  // 9 bits
+      Steel.Top := Integer(S.B1 and not (1 shl 7)) * 4;  // bit 7 belongs to steelx
       Steel.Width := Integer(S.B2 shr 4) * 4 + 4;  // first nibble bits 4..7 is width in units of 4 pixels (and then add 4)
       Steel.Height := Integer(S.B2 and $F) * 4 + 4;  // second nibble bits 0..3 is height in units of 4 pixels (and then add 4)
       {Steel.Left := Steel.Left - (Integer(S.B3 shr 6) mod 4);
@@ -1194,7 +1187,6 @@ begin
 
     aStream.ReadBuffer(Buf, NEO_LVL_SIZE);
     UpgradeFormat(Buf);
-    //if MessageDlg('OddLoad: ' + i2s(OddLoad), mtCustom, [mbYes, mbNo], 0) = mrNo then Halt;
     {-------------------------------------------------------------------------------
       Get the statics. This is easy
     -------------------------------------------------------------------------------}

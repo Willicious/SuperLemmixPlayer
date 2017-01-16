@@ -9,8 +9,7 @@ uses
   SharedGlobals,
   Classes, SysUtils, Contnrs,
   GR32, GR32_LowLevel,
-  UZip,
-  UTools;
+  UZip;
 
 const
   MUSIC_EXT_COUNT = 12;
@@ -165,20 +164,6 @@ var
       Result := false;
   end;
 
-  function MusicFileInArchive(aStream: TMemoryStream = nil): Boolean;
-  var
-    i: Integer;
-  begin
-    i := 0;
-    repeat
-      aFilename := ChangeFileExt(aFilename, MUSIC_EXTENSIONS[i]);
-      Result := FileInArchive;
-      Inc(i);
-    until Result or (i = MUSIC_EXT_COUNT);
-
-    if Result and (aStream <> nil) then
-      Arc.ExtractFile(aFilename, aStream);
-  end;
 
   function FindExternalMusicFile(aStream: TMemoryStream = nil): Boolean;
     var

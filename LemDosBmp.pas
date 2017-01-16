@@ -134,7 +134,7 @@ begin
     for y := 0 to aHeight - 1 do
       for x := 0 to aWidth - 1 do
       begin
-        if not (BPP in [18, 19]) then Assert(B^ < PalLen, 'error color ' + i2s(B^) + ',' + i2s(PalLen));
+        if not (BPP in [18, 19]) then Assert(B^ < PalLen, 'error color ' + IntToStr(B^) + ',' + IntToStr(PalLen));
 
         if BPP in [18, 19] then
         begin
@@ -327,21 +327,6 @@ var
   PalInfo: TDosVgaSpecPaletteHeader;
   normsize: Boolean;
 
-
-    procedure LogPal;
-    var
-      i: Integer;
-    begin
-      deb(['spec pal']);
-      for i := 0 to 7 do
-      with TColor32Entry(pal[i]) do
-      begin
-        deb(['RGB (' + i2s(i) + ')' + i2s(r) + ',' + i2s(g) +',' + i2s(b)])
-      end;
-    end;
-
-
-
 begin
   Assert(aBitmaps <> nil);
 
@@ -366,8 +351,6 @@ begin
         Pal := DosPaletteToArrayOfColor32(DosPal);
 
         normsize := PalInfo.EgaPal[1] <> 255;
-
-        logpal;
 
         Planar := TDosPlanarBitmap.Create;
         try

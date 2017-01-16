@@ -11,16 +11,12 @@ interface
 
 uses
   LemmixHotkeys,
-  Dialogs, SysUtils,
-  Classes, Forms,
-  GR32, GR32_Image,
-  UTools,
-  LemStrings, LemVersion, GameSound,
-  LemCore, LemTypes, LemLevel, LemDosStyle,
+  Dialogs, SysUtils, Classes, Forms, GR32,
+  LemVersion, GameSound,
+  LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,
   LemNeoSave, TalisData,
-  LemLevelSystem, LemRendering,
-  UZip; // only for checking whether some files actually exist
+  LemLevelSystem, LemRendering;
 
 var
   IsHalting: Boolean; // ONLY used during AppController's init routines. Don't use this anywhere else.
@@ -140,7 +136,6 @@ type
     procedure SetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption; aValue: Boolean);
 
     function GetSoundFlag(aFlag: TGameSoundOption): Boolean;
-    //procedure SetSoundFlag(aFlag: TGameSoundOption; aValue: Boolean);
 
     procedure LoadFromIniFile;
     procedure SaveToIniFile;
@@ -177,9 +172,6 @@ type
     LemSoundsOnDisk     : Boolean;
     LemMusicInResource  : Boolean;
     LemMusicOnDisk      : Boolean;
-
-    // cheat
-//    Cheatmode: Boolean; // levelcode screen
 
     fZoomFactor          : Integer;
     fForceSkillset       : Word;
@@ -240,8 +232,6 @@ type
     property ForceSkillset: Word read fForceSkillset write fForceSkillset;
     property QuickTestMode: Integer read fTestScreens write fTestScreens;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
-    {property WindowX: Integer read fWindowX write fWindowX;
-    property WindowY: Integer read fWindowY write fWindowY;}
     property MainForm: TForm read fMainForm write fMainForm;
 
     property Talismans: TTalismans read fTalismans;
@@ -446,7 +436,6 @@ end;
 constructor TDosGameParams.Create;
 var
   TempStream: TMemoryStream; //for loading talisman data
-  Arc: TArchive; // for checking whether talisman.dat exists
 begin
   inherited Create;
 
@@ -471,8 +460,6 @@ begin
   fTalismans := TTalismans.Create;
 
 
-  Arc := TArchive.Create;
-
   TempStream := CreateDataStream('talisman.dat', ldtLemmings);
   if TempStream <> nil then
   begin
@@ -481,8 +468,6 @@ begin
   end;
 
   fTalismans.SortTalismans;
-
-  Arc.Free;
 
   fSaveSystem.SetTalismans(fTalismans);
 

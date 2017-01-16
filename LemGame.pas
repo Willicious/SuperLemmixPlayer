@@ -47,8 +47,8 @@ const
 	//raf_StartDecreaseRR   = Bit4;  // only allowed when not pausing
 	//raf_StopChangingRR    = Bit5;  // only allowed when not pausing
 	//raf_SkillSelection    = Bit6;
-	raf_SkillAssignment   = Bit7;
-	raf_Nuke              = Bit8;  // only allowed when not pausing, as in the game
+	raf_SkillAssignment   = 1 shl 7; // Bit7;
+	raf_Nuke              = 1 shl 8; // Bit8;  // only allowed when not pausing, as in the game
   //raf_NewNPLemming      = Bit9;  // related to emulation of right-click bug
   //raf_RR99              = Bit10;
   //raf_RRmin             = Bit11;
@@ -522,9 +522,6 @@ var
   GlobalGame: TLemmingGame;
 
 implementation
-
-uses
-  UFastStrings;
 
 const
   LEMMIX_REPLAY_VERSION    = 105;
@@ -1367,7 +1364,7 @@ begin
 
   LemmingsReleased := 0;
   LemmingsOut := 0;
-  SpawnedDead := Level.Info.ZombieGhostCount;
+  SpawnedDead := Level.Info.ZombieCount;
   LemmingsIn := 0;
   LemmingsRemoved := 0;
   DelayEndFrames := 0;
@@ -3132,8 +3129,8 @@ begin
 
   D.Left := MaskX;
   D.Top := MaskY;
-  D.Right := MaskX + RectWidth(S) - 1; // whoops: -1 is important to avoid stretching
-  D.Bottom := MaskY + RectHeight(S) - 1; // whoops: -1 is important to avoid stretching
+  D.Right := MaskX + RectWidth(S);
+  D.Bottom := MaskY + RectHeight(S);
 
   Assert(CheckRectCopy(D, S), 'miner rect error');
 
@@ -5879,15 +5876,15 @@ var
       Result := GameParams.Info.dSectionName + '_' + LeadZeroStr(GameParams.Info.dLevel + 1, 2);
     if TestModeName or GameParams.AlwaysTimestamp then
       Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
-    Result := FastReplace(Result, '<', '_');
-    Result := FastReplace(Result, '>', '_');
-    Result := FastReplace(Result, ':', '_');
-    Result := FastReplace(Result, '"', '_');
-    Result := FastReplace(Result, '/', '_');
-    Result := FastReplace(Result, '\', '_');
-    Result := FastReplace(Result, '|', '_');
-    Result := FastReplace(Result, '?', '_');
-    Result := FastReplace(Result, '*', '_');
+    Result := StringReplace(Result, '<', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '>', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, ':', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '"', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '/', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '\', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '|', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '?', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '*', '_', [rfReplaceAll]);
     Result := Result + '.nxrp';
   end;
 

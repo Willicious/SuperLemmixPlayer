@@ -122,11 +122,6 @@ type
     procedure CompressFile(const aFileName, aDstFile: string); // obsolete
   { core method }
     function Compress(Src, Dst: TStream): Integer;
-  { higher methods }
-    procedure StoreSection(aList: TDosDatSectionEx; DstStream: TStream;
-      CompressOnTheFly: Boolean = True);
-    procedure StoreSectionList(aList: TDosDatSectionListEx; DstStream: TStream;
-      CompressOnTheFly: Boolean = True);
 
     property OnProgress: TProgressEvent read fOnProgress write fOnProgress;
   end;
@@ -671,10 +666,6 @@ begin
       Header.Unused1 := (DSize + 1) div 65536;
       Header.CompressedSize := (ci + 10 + 1) mod 65536;
       Header.Unused2 := (ci + 10 + 1) div 65536;
-                                                   {
-      windlg(['checksum = ' + hexstr(header.checksum),
-              'decompressed size = ' + i2s(dsize+1),
-              'compressed size = ' + i2s(ci+1)]); }
 
       // convert little-endian to big-endian
       Header.DecompressedSize := system.swap(header.DecompressedSize);
@@ -701,7 +692,6 @@ var
   NumBytes: Integer;
   i: Integer;
 begin
-//  Result := 0;
   NumBytes := Src.Size - Src.Position;
   FillChar(Header, SizeOf(Header), 0);
   DSize := Numbytes - 1;
@@ -724,10 +714,6 @@ begin
     Header.Unused1 := (DSize + 1) div 65536;
     Header.CompressedSize := (ci + 10 + 1) mod 65536;
     Header.Unused2 := (ci + 10 + 1) div 65536;
-    {
-    windlg(['checksum = ' + hexstr(header.checksum),
-            'decompressed size = ' + i2s(dsize+1),
-            'compressed size = ' + i2s(ci+1)]); }
 
     // convert little-endian to big-endian
     Header.DecompressedSize := System.Swap(Header.DecompressedSize);
@@ -737,8 +723,6 @@ begin
     Dst.WriteBuffer(Header, COMPRESSIONHEADER_SIZE);
     Dst.WriteBuffer(CData^, CSize + 1);
     Result := CSize + 1 + COMPRESSIONHEADER_SIZE;
-//    windlg(['after compress', header.compressedsize, header.decompressedsize]);
-    //Savetotemp;
   finally
     FreeMem(DData);
     FreeMem(CData);
@@ -747,35 +731,6 @@ begin
   end;
 end;
 
-procedure TDosDatCompressor.StoreSection(aList: TDosDatSectionEx;
-  DstStream: TStream; CompressOnTheFly: Boolean);
-begin
-  //
-end;
-
-procedure TDosDatCompressor.StoreSectionList(aList: TDosDatSectionListEx;
-  DstStream: TStream; CompressOnTheFly: Boolean = True);
-{-------------------------------------------------------------------------------
-  Write compresseddata of each section item to stream.
--------------------------------------------------------------------------------}
-var
-  i: Integer;
-  Sec: TDosDatSectionEx;
-begin
-  with aList do
-    for i := 0 to Count - 1 do
-    begin
-      Sec := Items[i];
-      if CompressOnTheFly then
-      begin
-        Sec.DecompressedData.Seek(0, soFromBeginning);
-        Sec.CompressedData.Clear;
-        Compress(Sec.DecompressedData, Sec.CompressedData);
-      end;
-      Sec.CompressedData.Seek(0, soFromBeginning);
-      DstStream.CopyFrom(Sec.CompressedData, Sec.CompressedData.Size);
-    end;
-end;
 
 end.
 

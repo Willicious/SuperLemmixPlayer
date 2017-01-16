@@ -24,28 +24,22 @@ type
     destructor Destroy; override;
     procedure LoadFromFileName(aFileName: string; aTestMode: Boolean = false);
     procedure LoadFromStream(aStream: TStream);
-//    procedure Play; virtual; abstract;
-//    procedure Stop; virtual; abstract;
   end;
-
+  (*
   TSound = class(TAbstractSound)
   private
   protected
   public
     constructor Create;
-//    procedure Play; override;
-//    procedure Stop; override;
   end;
-
+  *)
   TMusic = class(TAbstractSound)
   private
   protected
   public
     constructor Create;
-//    procedure Play; override;
-//    procedure Stop; override;
   end;
-
+  (*
   TSoundList = class(TObjectList)
   private
     function GetItem(Index: Integer): TSound;
@@ -56,7 +50,7 @@ type
     property Items[Index: Integer]: TSound read GetItem; default;
   published
   end;
-
+  *)
 
   TMusicList = class(TObjectList)
   private
@@ -70,10 +64,10 @@ type
   end;
 
   TSoundQueueEntry = class
-    public
-      Index: Integer;
-      Balance: Single;
-      constructor Create;
+  public
+    Index: Integer;
+    Balance: Single;
+    constructor Create;
   end;
 
   TSoundMgr = class
@@ -103,7 +97,6 @@ type
     procedure QueueSound(Index: Integer; Balance: Single = 0); overload;
     procedure FlushQueue;
     procedure ClearQueue;
-    //procedure MarkChannelFree(handle: HSYNC; channel, data: DWORD; user: POINTER); stdcall;
   { musics }
     function AddMusicFromFileName(const aFileName: string; aTestMode: Boolean): Integer;
     function AddMusicFromStream(aStream: TStream): Integer;
@@ -118,22 +111,9 @@ type
     property BrickSound: Integer read fBrickSound write fBrickSound;
   end;
 
-(*  TWavePlayerEx = class(TWavePlayer)
-  private
-//    Ix: Integer;
-  protected
-  public
-  end;
-  *)
-
   TSoundSystem = class
   private
     fMusicRef : HMUSIC;
-    //fWinampPlugin : HPLUGIN;
-    //fVgmPlugin : DWORD;
-
-    //fWavePlayer: TWavePlayerEx;//array[0..2] of TWavePlayerEx;
-//    procedure WavePlayer_Finished(Sender: TObject);
   protected
   public
     constructor Create;
@@ -144,7 +124,6 @@ type
 
     procedure PlayMusic(S: TMemoryStream);
     procedure StopMusic(S: TMemoryStream);
-
   end;
 
 var
@@ -208,6 +187,7 @@ begin
   fStream.LoadFromStream(aStream);
 end;
 
+(*
 { TSound }
 
 constructor TSound.Create;
@@ -215,6 +195,7 @@ begin
   inherited Create;
   fResourceDataType := ldtSound;
 end;
+*)
 
 { TMusic }
 
@@ -225,27 +206,6 @@ begin
 end;
 
 (*
-procedure TSound.Play;
-begin
-  SoundSystem.PlayWav(fStream);
-end;
-
-procedure TSound.Stop;
-begin
-  SoundSystem.StopWav(fStream);
-end;
-
-procedure TMusic.Play;
-begin
-  SoundSystem.PlayMusic(fStream);
-end;
-
-procedure TMusic.Stop;
-begin
-  SoundSystem.StopMusic(fStream);
-end;
-*)
-
 { TSoundList }
 
 function TSoundList.Add(Item: TSound): Integer;
@@ -262,6 +222,7 @@ procedure TSoundList.Insert(Index: Integer; Item: TSound);
 begin
   inherited Insert(Index, Item);
 end;
+*)
 
 { TMusicList }
 
@@ -309,7 +270,6 @@ begin
   else
     S := CreateDataStream(aFileName, ldtSound);
   Result := Sounds.Add(Pointer(BASS_SampleLoad(true, S.Memory, 0, S.Size, 65535, 0)));
-  //S.LoadFromFileName(aFileName);
 end;
 
 function TSoundMgr.AddSoundFromStream(aStream: TMemoryStream): Integer;
@@ -355,7 +315,6 @@ var
 begin
   for i := 0 to fAvailableChannels-1 do
   begin
-    //if fPlayingSounds[i] < 0 then Continue;
     if (BASS_ChannelIsActive(fPlayingSounds[i]) <> BASS_ACTIVE_PLAYING)
     or (BASS_ChannelGetPosition(fPlayingSounds[i], BASS_POS_BYTE) >= BASS_ChannelGetLength(fPlayingSounds[i], BASS_POS_BYTE)) then
     begin
@@ -377,9 +336,8 @@ end;
 
 procedure TSoundMgr.PlaySound(Index: Integer; Balance: Single = 0);
 var
-  i{, i2} : Integer;
+  i : Integer;
   c : HCHANNEL;
-  //LPosBytes : Integer;
 begin
 
   CheckFreeChannels;
@@ -394,9 +352,6 @@ begin
 
     BASS_ChannelPlay(c, true);
 
-    {BASS_ChannelSetSync(c, BASS_SYNC_POS or BASS_SYNC_MIXTIME, BASS_ChannelSeconds2Bytes(c, 0.5), BASS_MarkChannelFree, @fActiveSounds[0]);
-    BASS_ChannelSetSync(c, BASS_SYNC_END or BASS_SYNC_MIXTIME, 0, BASS_MarkChannelFree, @fActiveSounds[0]);
-    BASS_ChannelSetSync(c, BASS_SYNC_END or BASS_SYNC_MIXTIME, 0, BASS_WipeChannel, @fPlayingSounds[0]);}
     fPlayingSounds[0] := c;
     fActiveSounds[0] := true;
     Exit;
@@ -404,23 +359,17 @@ begin
 
   if Index >= 0 then
     if Index < Sounds.Count then
-      //Sounds[Index].Play;
       for i := 1 to (fAvailableChannels - 1) do
       begin
         if not fActiveSounds[i] then
         begin
-          //c := (Sounds[Index]);
           if fPlayingSounds[i] >= 0 then
             BASS_ChannelStop(fPlayingSounds[i]);
           c := BASS_SampleGetChannel(Integer(Sounds[Index]), true);
           BASS_ChannelSetAttribute(c, BASS_ATTRIB_PAN, Balance);
           BASS_ChannelSetAttribute(c, BASS_ATTRIB_VOL, SoundVolume / 100);
-          {i2 := BASS_ErrorGetCode;
-          if i2 <> 0 then messagedlg(inttostr(i2), mtcustom, [mbok], 0);}
           BASS_ChannelPlay(c, true);
-          {BASS_ChannelSetSync(c, BASS_SYNC_POS or BASS_SYNC_MIXTIME, BASS_ChannelSeconds2Bytes(c, 0.5), BASS_MarkChannelFree, @fActiveSounds[i]);
-          BASS_ChannelSetSync(c, BASS_SYNC_END or BASS_SYNC_MIXTIME, 0, BASS_MarkChannelFree, @fActiveSounds[i]);
-          BASS_ChannelSetSync(c, BASS_SYNC_END or BASS_SYNC_MIXTIME, 0, BASS_WipeChannel, @fPlayingSounds[i]);}
+
           fPlayingSounds[i] := c;
           fActiveSounds[i] := true;
           Exit;
@@ -432,14 +381,11 @@ procedure TSoundMgr.PlayMusic(Index: Integer);
 begin
   if Index >= 0 then
     if Index < Musics.Count then
-    //  Musics[Index].Play;
       SoundSystem.PlayMusic(Musics[Index].fStream)
 end;
 
 procedure TSoundMgr.StopSound(Index: Integer);
 begin
-//  if Index >= 0 then
-  //  if Index <
   SoundSystem.StopWav(nil);
 end;
 
@@ -447,7 +393,6 @@ procedure TSoundMgr.StopMusic(Index: Integer);
 begin
   if Index >= 0 then
     if Index < Musics.Count then
-      //Musics[Index].Stop;
       SoundSystem.StopMusic(nil);
 end;
 
@@ -497,22 +442,14 @@ end;
 { TSoundSystem }
 
 constructor TSoundSystem.Create;
-//var
-  //i: Integer;
 begin
   inherited Create;
-  //if not BASS_Init(-1, 44100, 0, 0, nil) then
-  //  BASS_Free;
   InitWav;
 end;
 
 destructor TSoundSystem.Destroy;
-//var
-  //i: Integer;
 begin
   BASS_Free;
-//  for i := 0 to 2 do
-//    fWavePlayer.Free;
   inherited;
 end;
 
@@ -525,8 +462,6 @@ procedure TSoundSystem.PlayMusic(S: TMemoryStream);
 const
   MusicFlags = BASS_MUSIC_LOOP or BASS_MUSIC_RAMPS or BASS_MUSIC_SURROUND or
                BASS_MUSIC_POSRESET or BASS_SAMPLE_SOFTWARE;
-//var
-  //i, v : Integer;
 var
   V: Single;
 begin
@@ -555,34 +490,14 @@ begin
 end;
 
 function TSoundSystem.PlayWav(S: TMemoryStream): Integer;
-//var
-  //i: Integer;
 begin
-(*
-//  for i := 0 to 2 do
-  begin
-    with fWavePlayer do
-    begin
-//      if State = wpPlaying then
-  //      Stop;
-//      if State <> wpPlaying then
-      begin
-        Source := S;
-        Play;
-  //      Exit;
-      end;
-    end;
-  end; *)
-
   PlaySound(S.Memory, HINSTANCE, SND_ASYNC + SND_MEMORY);
   Result := 0;
-
 end;
 
 procedure TSoundSystem.StopMusic(S: TMemoryStream);
 begin
   BASS_ChannelStop(fMusicRef);
-  //BASS_StreamFree(fMusicRef);
 end;
 
 procedure TSoundSystem.StopWav(S: TMemoryStream);

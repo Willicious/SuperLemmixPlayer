@@ -7,7 +7,6 @@ interface
 uses
   Windows, Classes, Controls, Graphics, MMSystem, Forms,
   GR32, GR32_Image, GR32_Layers,
-  UMisc,
   LemStrings, LemDosStructures, LemDosStyle,
   StrUtils,
   GameControl, GameBaseScreen,

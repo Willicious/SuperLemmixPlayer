@@ -11,12 +11,11 @@ interface
 uses
   PngInterface, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, ShellApi,
-  PngImage, FNeoLemmixConfig,
-  GR32, GR32_Image, GR32_Layers,
-  UFastStrings,
+  FNeoLemmixConfig,
+  GR32, GR32_Layers,
   UMisc, Dialogs, LemVersion,
-  LemCore, LemTypes, LemStrings, LemDosStructures, LemRendering, LemLevel, LemDosStyle, LemGame,
-  GameControl, GameBaseScreen, GamePreviewScreen, GameLevelSelectScreen, GameLevelCodeScreen;
+  LemTypes, LemStrings, LemDosStructures, LemDosStyle, LemGame,
+  GameControl, GameBaseScreen;
 
 type
   {-------------------------------------------------------------------------------
@@ -577,14 +576,12 @@ var
   SrcRect, DstRect: TRect;
 begin
   SrcRect := CalcFrameRect(LeftLemmingAnimation, 16, aFrame);
-  DstRect := SrcRect;
-  DstRect := ZeroTopLeftRect(DstRect);
+  DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
   OffsetRect(DstRect, 0, YPos_Credits);
   BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   LeftLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 
-  DstRect := SrcRect;
-  DstRect := ZeroTopLeftRect(DstRect);
+  DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
   OffsetRect(DstRect, 640 - 48, YPos_Credits);
   BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   RightLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);

@@ -5,14 +5,17 @@
   o a dos compression algorithm, based on free basic code of Mindless
   o an easy to use sectionlist
 -------------------------------------------------------------------------------}
-
-{$include lem_directives.inc}
 unit LemDosCmp;
 
 interface
 
 uses
   Classes, SysUtils, Math, UMisc;
+
+type
+  // Origianlly MaxInt div 4 was MaxListSize * 4, but MaxListSize is deprecated!!!
+  PBytes = ^TBytes;
+  TBytes = array[0..MaxInt div 4 - 1] of Byte;
 
 type
   {-------------------------------------------------------------------------------

@@ -1118,7 +1118,7 @@ procedure TCollectionEx.ForEach(LocalProc: Pointer);
 -------------------------------------------------------------------------------}
 var
   CallerBP: Cardinal;
-  {Cnt,} i: Integer;
+  Cnt, i: Integer;
   aItem: TCollectionItem;
 begin
   asm
@@ -1126,8 +1126,8 @@ begin
     MOV callerBP, EAX
   end;
 
-  //Cnt := HackedList.Count;
-  //i := 0;
+  Cnt := HackedList.Count;
+  i := 0;
   for i := 0 to HackedList.Count - 1 do
   begin
     aItem := HackedList.List^[i];
