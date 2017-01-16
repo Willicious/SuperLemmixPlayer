@@ -25,6 +25,7 @@ uses
   LemMusicSystem, LemNeoTheme,
   LemObjects, LemLemming, LemRecolorSprites,
   LemReplay,
+  LemGameMessageQueue,
   GameInterfaces, GameControl, GameSound;
 
 const
@@ -115,6 +116,8 @@ type
   TLemmingGame = class(TComponent)
   private
     fRenderInterface           : TRenderInterface;
+    fMessageQueue              : TGameMessageQueue;
+
     fTalismans                 : TTalismans;
     fTalismanReceived          : Boolean;
 
@@ -252,7 +255,7 @@ type
     SFX_ZOMBIE                 : Integer;
     SFX_CUSTOM                 : Array[0..255] of Integer;
   { events }
-    fOnFinish                  : TNotifyEvent;
+    //fOnFinish                  : TNotifyEvent;
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
     fSimulation                : Boolean; // whether we are in simulation mode for drawing shadows
   { update skill panel functions }
@@ -485,6 +488,7 @@ type
     property InfoPainter: IGameToolbar read fInfoPainter write fInfoPainter;
     property LeavingHyperSpeed: Boolean read fLeavingHyperSpeed;
     property Level: TLevel read fLevel write fLevel;
+    property MessageQueue: TGameMessageQueue read fMessageQueue;
     property Paused: Boolean read fPaused write fPaused;
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
@@ -510,7 +514,7 @@ type
     function LoadSavedState(aState: TLemmingGameSavedState; SkipTargetBitmap: Boolean = false): Boolean;
 
   { events }
-    property OnFinish: TNotifyEvent read fOnFinish write fOnFinish;
+    //property OnFinish: TNotifyEvent read fOnFinish write fOnFinish;
   end;
 
 {-------------------------------------------------------------------------------
@@ -968,6 +972,7 @@ begin
   inherited Create(aOwner);
 
   fRenderInterface := TRenderInterface.Create;
+  fMessageQueue := TGameMessageQueue.Create;
 
   LemmingList    := TLemmingList.Create;
   ExplodeMaskBmp := TBitmap32.Create;
@@ -5851,8 +5856,7 @@ begin
   fGameFinished := True;
   SoundMgr.StopMusic(0);
   SoundMgr.Musics.Clear;
-  if Assigned(fOnFinish) then
-    fOnFinish(Self);
+  MessageQueue.Add(GAMEMSG_FINISH);
 end;
 
 procedure TLemmingGame.Cheat;
