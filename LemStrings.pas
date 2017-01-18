@@ -37,6 +37,9 @@ const
 
   SFLevels = 'levels\';
 
+  SFSounds = 'sound\';
+  SFMusic = 'music\';
+
 resourcestring
   SProgramName = 'NeoLemmix Player';
   SDummyString = '';
