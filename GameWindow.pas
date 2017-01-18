@@ -734,7 +734,8 @@ begin
 
   if func.Action = lka_Exit then
   begin
-    Game.Finish; // OnFinish eventhandler does the rest
+    Game.Finish;
+    Game_Finished;
   end;
 
   if not Game.Playing then
