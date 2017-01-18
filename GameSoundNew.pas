@@ -3,6 +3,38 @@ unit GameSoundNew;
 // Entire rewrite, as this is more efficient (or at least less tedious) than tidying up
 // the existing unit.
 
+// NOTE: NOT YET TESTED. But it should work. Will test during integration into NL's code.
+
+// USAGE:   (note to Nepster: unless you just want something to do, just leave it to me to integrate this)
+//
+// Need to add these lines to AppController or somewhere similar:
+//   SoundManager := TSoundManager.Create;
+//   SoundManager.LoadDefaultSounds;
+//
+// To load a sound:
+//   SoundManager.LoadSoundFromFile(<path relative to "sound\" folder>);
+//   (is also possible to load from streams, but this is mostly for backwards-compatible's use)
+//
+// To play a sound (must be loaded first):
+//   SoundManager.PlaySound(<path relative to "sound\" folder>, <balance>);  -- -100 is fully left, 0 is center, +100 is fully right
+//
+// To unload all sounds except the default ones:
+//   SoundManager.PurgeNonDefaultSounds;
+//   (Currently, the sounds used by objects in official sets are included in the default sounds. Once backwards-compatible is a thing
+//    of the past, this should be changed so that only game-wide sounds are considered default.)
+//
+// To load a music:
+//   SoundManager.LoadMusicFromFile(<path relative to "music\" folder);
+//   (this too can be loaded from streams. Only one music can be loaded at a time)
+//
+// To play or stop music:
+//   SoundManager.PlayMusic;
+//   SoundManager.StopMusic;
+//
+// This new sound manager will handle not loading music if music is muted. With that being said, it currently still loads the file
+// into memory, but doesn't load it into BASS. This is to simplify integration into backwards-compatible; and it can be changed to
+// not load the file at all once backwards-compatible is no longer a thing.
+
 interface
 
 uses
@@ -68,7 +100,7 @@ type
       procedure LoadDefaultSounds;
       procedure LoadSoundFromFile(aName: String; aDefault: Boolean = false);
       procedure LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false);
-
+      procedure PurgeNonDefaultSounds;
 
       procedure LoadMusicFromFile(aName: String);
       procedure LoadMusicFromStream(aStream: TStream; aName: String);
@@ -236,6 +268,15 @@ begin
     if fSoundEffects[Result].Name = aName then
       Exit;
   Result := -1;
+end;
+
+procedure TSoundManager.PurgeNonDefaultSounds;
+var
+  i: Integer;
+begin
+  for i := fSoundEffects.Count-1 downto 0 do
+    if not fSoundEffects[i].IsDefaultSound then
+      fSoundEffects.Delete(i);
 end;
 
 procedure TSoundManager.LoadMusicFromFile(aName: String);
