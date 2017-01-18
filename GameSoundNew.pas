@@ -35,6 +35,10 @@ unit GameSoundNew;
 // into memory, but doesn't load it into BASS. This is to simplify integration into backwards-compatible; and it can be changed to
 // not load the file at all once backwards-compatible is no longer a thing.
 
+
+// TODO: Instead of playing nothing when a non-loaded sound is attempted to be played, try to load the sound. This will be very
+//       hard to integrate into backwards-compatible so maybe this should be left until backwards-compatible is no more.
+
 interface
 
 uses
