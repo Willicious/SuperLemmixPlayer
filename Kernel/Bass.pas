@@ -1,5 +1,3 @@
-{$include lem_directives.inc}
-
 // Modified by namida for internal DLL storage
 
 {
@@ -15,7 +13,7 @@
   NOTE: Delphi users should use the BASS_UNICODE flag where possible
 }
 
-unit GameModPlay;
+unit Bass;
 
 interface
 

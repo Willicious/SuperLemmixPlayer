@@ -6,7 +6,7 @@ interface
 
 uses
   Windows, Classes, Contnrs, SysUtils,
-  GameModPlay,
+  Bass,
   Dialogs,
   LemTypes;
 

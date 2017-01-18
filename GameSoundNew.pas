@@ -42,7 +42,7 @@ unit GameSoundNew;
 interface
 
 uses
-  GameModPlay, // inaccurately named, it's the interface to BASS.DLL. This is a carryover from Lemmix.
+  Bass,
   LemTypes, // only uses AppPath in new-formats but uses other stuff from LemTypes in backwards-compatible
   LemStrings, Contnrs, Classes, SysUtils;
 
