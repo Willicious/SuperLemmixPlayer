@@ -217,6 +217,23 @@ var
     Sec: TParserSection;
     BMP: TBitmap32;
     Frame: Integer;
+
+    function GetSoundName(aIndex: Integer): String;
+    begin
+      case aIndex of
+        6:  Result := 'electric';
+        7:  Result := 'thud';
+        9:  Result := 'chain';
+        13: Result := 'chain';
+        14: Result := 'tenton';
+        15: Result := 'thunk';
+        19: Result := 'fire';
+        20: Result := 'slurp';
+        21: Result := 'vacuusux';
+        22: Result := 'weedgulp';
+        else Result := '';
+      end;
+    end;
   begin
     O := GS.MetaObjects[i];
     if LeftStr(O.Name, 1) = '*' then Exit;
@@ -287,7 +304,8 @@ var
 
     if O.TriggerType in [4, 11, 15, 17, 24, 31] then
     begin
-      Sec.AddLine('SOUND', O.TriggerSound);
+      if GetSoundName(O.TriggerSound) <> '' then
+        Sec.AddLine('SOUND', GetSoundName(O.TriggerSound));
     end;
 
     if not O.TriggerType in [4, 11, 12, 15, 17, 21, 23, 24, 31] then
