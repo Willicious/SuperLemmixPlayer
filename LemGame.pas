@@ -54,15 +54,6 @@ const
   SFX_FALLOUT = 'die';
   SFX_FIXING = 'wrench';
   SFX_ZOMBIE = 'zombie';
-  { SFX_ROPETRAP        := AddSoundFromFileName('chain.ogg');
-    SFX_TENTON          := AddSoundFromFileName('tenton.ogg');
-    SFX_BEARTRAP        := AddSoundFromFileName('thunk.ogg');
-    SFX_ELECTROTRAP     := AddSoundFromFileName('electric.ogg');
-    SFX_SPINNINGTRAP    := AddSoundFromFileName('chain.ogg');
-    SFX_SQUISHINGTRAP   := AddSoundFromFileName('thud.ogg');
-    SFX_VACCUUM         := AddSoundFromFileName('vacuusux.ogg');
-    SFX_SLURP           := AddSoundFromFileName('slurp.ogg');
-    SFX_WEED            := AddSoundFromFileName('weedgulp.ogg');}
 
 const
   // never change, do NOT trust the bits are the same as the enumerated type.
@@ -2320,33 +2311,6 @@ begin
   Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
   fRenderer.RenderMinimap(Minimap);
 end;
-
-(*
-// DO NOT REMOVE THIS YET. I need it for reference.
-
-function TLemmingGame.GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
-begin
-  if SFX_CUSTOM[aDosSoundEffect] <> 0 then
-  begin
-    Result := SFX_CUSTOM[aDosSoundEffect];
-    Exit;
-  end;
-  case aDosSoundEffect of
-    ose_RopeTrap             : Result := SFX_ROPETRAP;
-    ose_SquishingTrap        : Result := SFX_SQUISHINGTRAP;
-    ose_TenTonTrap           : Result := SFX_TENTON;
-    ose_BearTrap             : Result := SFX_BEARTRAP;
-    ose_ElectroTrap          : Result := SFX_ELECTROTRAP;
-    ose_SpinningTrap         : Result := SFX_SPINNINGTRAP;
-    ose_FireTrap             : Result := SFX_VAPORIZING;
-    ose_Vaccuum              : Result := SFX_VACCUUM;
-    ose_Slurp                : Result := SFX_SLURP;
-    ose_Weed                 : Result := SFX_WEED;
-  else
-    Result := -1;
-  end;
-end;*)
-
 
 function TLemmingGame.GetObjectCheckPositions(L: TLemming): TArrayArrayInt;
 // The intermediate checks are made according to:
