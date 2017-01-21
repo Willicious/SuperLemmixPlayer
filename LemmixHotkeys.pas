@@ -11,7 +11,7 @@ uses
 const
   MAX_KEY = 255;
   MAX_KEY_LEN = 4;
-  KEYSET_VERSION = 6;
+  KEYSET_VERSION = 7;
 
 type
   TLemmixHotkeyAction = (lka_Null,
@@ -143,20 +143,22 @@ begin
   fKeyFunctions[$BE].Modifier := 17 * 5;
 
   // And here's the skill ones; these ones need the skill specified seperately
+  fKeyFunctions[$32].Action := lka_Skill;
+  fKeyFunctions[$32].Modifier := 0;
   fKeyFunctions[$33].Action := lka_Skill;
-  fKeyFunctions[$33].Modifier := 0;
+  fKeyFunctions[$33].Modifier := 2;
   fKeyFunctions[$34].Action := lka_Skill;
-  fKeyFunctions[$34].Modifier := 2;
+  fKeyFunctions[$34].Modifier := 4;
   fKeyFunctions[$35].Action := lka_Skill;
-  fKeyFunctions[$35].Modifier := 4;
+  fKeyFunctions[$35].Modifier := 5;
   fKeyFunctions[$36].Action := lka_Skill;
-  fKeyFunctions[$36].Modifier := 5;
+  fKeyFunctions[$36].Modifier := 7;
   fKeyFunctions[$37].Action := lka_Skill;
-  fKeyFunctions[$37].Modifier := 7;
+  fKeyFunctions[$37].Modifier := 9;
   fKeyFunctions[$38].Action := lka_Skill;
-  fKeyFunctions[$38].Modifier := 9;
+  fKeyFunctions[$38].Modifier := 11;
   fKeyFunctions[$39].Action := lka_Skill;
-  fKeyFunctions[$39].Modifier := 11;
+  fKeyFunctions[$39].Modifier := 13;
   fKeyFunctions[$30].Action := lka_Skill;
   fKeyFunctions[$30].Modifier := 16;
   fKeyFunctions[$72].Action := lka_Skill;
@@ -263,6 +265,21 @@ var
     fKeyFunctions[aKey].Action := aFunc;
     fKeyFunctions[aKey].Modifier := aMod;
   end;
+
+  function CheckDefaultNumericKeys: Boolean;
+  var
+    i: Integer;
+  const
+    SKILL_ARRAY: array[0..9] of Integer = (16, -1, -1, 0, 2, 4, 5, 7, 9, 11);
+  begin
+    Result := true;
+    for i := $30 to $39 do
+    begin
+      if i in [$31, $32] then Continue;
+      if (fKeyFunctions[i].Action <> lka_Skill) or (fKeyFunctions[i].Modifier <> SKILL_ARRAY[i-$30]) then
+        Result := false;
+    end;
+  end;
 begin
   if FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixHotkeys.ini') then
   begin
@@ -321,6 +338,32 @@ begin
       begin
         SetIfFree($45, lka_EditReplay);
         SetIfFree($57, lka_ReplayInsert);
+      end;
+
+      if FixVersion < 7 then
+      begin
+        if CheckDefaultNumericKeys then
+        begin
+          fKeyFunctions[$32].Action := lka_Skill;
+          fKeyFunctions[$32].Modifier := 0;
+          fKeyFunctions[$33].Action := lka_Skill;
+          fKeyFunctions[$33].Modifier := 2;
+          fKeyFunctions[$34].Action := lka_Skill;
+          fKeyFunctions[$34].Modifier := 4;
+          fKeyFunctions[$35].Action := lka_Skill;
+          fKeyFunctions[$35].Modifier := 5;
+          fKeyFunctions[$36].Action := lka_Skill;
+          fKeyFunctions[$36].Modifier := 7;
+          fKeyFunctions[$37].Action := lka_Skill;
+          fKeyFunctions[$37].Modifier := 9;
+          fKeyFunctions[$38].Action := lka_Skill;
+          fKeyFunctions[$38].Modifier := 11;
+          fKeyFunctions[$39].Action := lka_Skill;
+          fKeyFunctions[$39].Modifier := 13;
+          fKeyFunctions[$30].Action := lka_Skill;
+          fKeyFunctions[$30].Modifier := 16;
+        end else
+          SetIfFree($32, lka_Skill, 13);
       end;
 
     except

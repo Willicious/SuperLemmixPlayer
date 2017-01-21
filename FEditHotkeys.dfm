@@ -148,6 +148,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Builder'
       'Stacker'
       'Basher'
+      'Fencer'
       'Miner'
       'Digger'
       'Cloner')
@@ -160,7 +161,6 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Caption = 'Show Unassigned Keys'
     TabOrder = 4
     OnClick = cbShowUnassignedClick
-    OnKeyDown = cbShowUnassignedKeyDown
   end
   object ebSkipDuration: TEdit
     Left = 336

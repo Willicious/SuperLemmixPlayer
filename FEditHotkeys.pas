@@ -35,8 +35,6 @@ type
     procedure cbHardcodedNamesClick(Sender: TObject);
     procedure cbHoldKeyClick(Sender: TObject);
     procedure SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
-    procedure cbShowUnassignedKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
   private
     fShownFindInfo: Boolean;
     fKeyNames: Array [0..MAX_KEY] of String; //MAX_KEY defined in unit LemmixHotkeys
@@ -277,17 +275,7 @@ begin
   cbFunctions.Enabled := true;
   cbFunctions.ItemIndex := Integer(fHotkeys.CheckKeyEffect(i).Action);
   case fHotkeys.CheckKeyEffect(i).Action of
-    lka_Skill: case fHotkeys.CheckKeyEffect(i).Modifier of
-                 0..12: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
-                 13: begin
-                       if cbSkill.Items.Count = 16 then cbSkill.Items.Insert(13, 'Fencer');
-                       cbSkill.ItemIndex := 13;
-                     end;
-                 14..16: if cbSkill.Items.Count = 16 then
-                           cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier - 1
-                         else
-                           cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
-               end;
+    lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
   end;
   Label3.Caption := 'Editing key: ' + fKeyNames[i];
@@ -317,10 +305,7 @@ begin
   case TLemmixHotkeyAction(cbFunctions.ItemIndex) of
     lka_Skill: begin
                  if cbSkill.ItemIndex = -1 then cbSkill.ItemIndex := 0;
-                 if (cbSkill.Items.Count = 17) or (cbSkill.ItemIndex < 13) then
-                   fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex)
-                 else
-                   fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex + 1);
+                 fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
                end;
     lka_Skip: begin
                 ebSkipDuration.Text := IntToStr(StrToIntDef(ebSkipDuration.Text, 0)); // not redundant; destroys non-numeric values
@@ -339,10 +324,7 @@ begin
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; //safety; should never happen
   if fHotkeys.CheckKeyEffect(i).Action <> lka_Skill then Exit;
-  if (cbSkill.Items.Count = 17) or (cbSkill.ItemIndex < 13) then
-    fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex)
-  else
-    fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex + 1);  
+  fHotkeys.SetKeyFunction(i, lka_Skill, cbSkill.ItemIndex);
   RefreshList;
 end;
 
@@ -442,13 +424,6 @@ begin
   else
     fHotkeys.SetKeyFunction(i, lka_ClearPhysics, 0);
   RefreshList;
-end;
-
-procedure TFLemmixHotkeys.cbShowUnassignedKeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
-begin
-  if (Key = VK_F1) and (cbSkill.Items.Count = 16) then
-    cbSkill.Items.Insert(13, 'Fencer');
 end;
 
 end.
