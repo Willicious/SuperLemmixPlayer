@@ -9,7 +9,7 @@ uses
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
   GR32, GR32_Image, GR32_Layers,
   LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
-  LemGame, GameSoundOld, LemGameMessageQueue,
+  LemGame, LemGameMessageQueue,
   GameSound, LemTypes, LemStrings,
   GameControl, GameSkillPanel, GameBaseScreen;
 

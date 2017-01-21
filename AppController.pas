@@ -7,7 +7,7 @@ uses
   SharedGlobals,
   LemTypes, LemRendering, LemLevel, LemDosStyle,
   TalisData, LemDosMainDAT, LemStrings, LemNeoParserOld,
-  GameControl, GameSoundOld, LemVersion,
+  GameControl, LemVersion,
   GameSound,          // initial creation
   LemNeoPieceManager, // initial creation
   FBaseDosForm,
@@ -244,11 +244,11 @@ begin
 
   DoneBringToFront := false;
 
+  SoundManager := TSoundManager.Create;
+  SoundManager.LoadDefaultSounds;  
+
   GameParams := TDosGameParams.Create;
   PieceManager := TNeoPieceManager.Create;
-
-  SoundManager := TSoundManager.Create;
-  SoundManager.LoadDefaultSounds;
 
   GameParams.Directory := LemmingsPath;
   GameParams.MainDatFile := LemmingsPath + 'main.dat';
@@ -532,7 +532,7 @@ var
   F: TGamePreviewScreen;
   dS, dL: Integer;
   i: Integer;
-  OldSound, OldMusic: Integer;
+  OldSound, OldMusic: Boolean;
   LevelIDArray: array of array of LongWord;
   FoundMatch: Boolean;
   TempSL: TStringList;
@@ -806,10 +806,10 @@ begin
     end else if GameParams.ReplayCheckIndex <> -2 then
     begin
        TempSL := TStringList.Create;
-       OldSound := SoundVolume;
-       OldMusic := MusicVolume;
-       SoundVolume := 0;
-       MusicVolume := 0;
+       OldSound := SoundManager.MuteSound;
+       OldMusic := SoundManager.MuteMusic;
+       SoundManager.MuteSound := true;
+       SoundManager.MuteMusic := true;
        if not TryLevelInfoFile then
          raise Exception.Create('Couldn''t get Level IDs from info file.');
        for i := 0 to GameParams.ReplayResultList.Count-1 do
@@ -856,8 +856,8 @@ begin
        GameParams.Info.dSection := 0;
        GameParams.Info.dLevel := 0;
        ProduceReplayCheckResults;
-       SoundVolume := OldSound;
-       MusicVolume := OldMusic;
+       SoundManager.MuteSound := OldSound;
+       SoundManager.MuteMusic := OldMusic;
        TempSL.Free;
     end else begin
       // In the case of loading a single level file, menu screen will never be displayed.

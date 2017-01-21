@@ -363,11 +363,13 @@ var
   SoundIndex: Integer;
   SampleChannel: LongWord;
 begin
+  if fMuteSound then Exit;
   SoundIndex := FindSoundIndex(aName);
   if SoundIndex <> -1 then
   begin
     SampleChannel := BASS_SampleGetChannel(fSoundEffects[SoundIndex].BassSample, true);
     BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100));
+    BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_VOL, (fSoundVolume / 100));
     BASS_ChannelPlay(SampleChannel, true);
   end;
 end;

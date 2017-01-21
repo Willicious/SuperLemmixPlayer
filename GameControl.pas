@@ -12,7 +12,7 @@ interface
 uses
   LemmixHotkeys,
   Dialogs, SysUtils, Classes, Forms, GR32,
-  LemVersion, GameSoundOld,
+  LemVersion,
   LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,
   LemNeoSave, TalisData,
@@ -135,8 +135,6 @@ type
     function GetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption): Boolean;
     procedure SetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption; aValue: Boolean);
 
-    function GetSoundFlag(aFlag: TGameSoundOption): Boolean;
-
     procedure LoadFromIniFile;
     procedure SaveToIniFile;
 
@@ -197,9 +195,6 @@ type
 
     procedure Save;
     procedure Load;
-
-    property MusicEnabled: Boolean Index gsoMusic read GetSoundFlag;
-    property SoundEnabled: Boolean Index gsoSound read GetSoundFlag;
 
     property LookForLVLFiles: Boolean Index moLookForLVLFiles read GetOptionFlag write SetOptionFlag;
     property ChallengeMode: Boolean Index moChallengeMode read GetOptionFlag write SetOptionFlag;
@@ -313,12 +308,9 @@ begin
   SL.Add('');
   SL.Add('# Sound Options');
   SaveBoolean('MusicEnabled', not SoundManager.MuteMusic);
-  SaveBoolean('SoundEnabled', SoundVolume <> 0);
+  SaveBoolean('SoundEnabled', not SoundManager.MuteSound);
   SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
-  if SoundVolume <> 0 then
-    SL.Add('SoundVolume=' + IntToStr(SoundVolume))
-  else
-    SL.Add('SoundVolume=' + IntToStr(SavedSoundVol));
+  SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
   SaveBoolean('VictoryJingle', PostLevelVictorySound);
   SaveBoolean('FailureJingle', PostLevelFailureSound);
 
@@ -380,34 +372,16 @@ begin
   PostLevelVictorySound := LoadBoolean('VictoryJingle');
   PostLevelFailureSound := LoadBoolean('FailureJingle');
 
-  // Sound options are tricky
-  if LoadBoolean('SoundEnabled') then
-    SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50)
-  else begin
-    SavedSoundVol := StrToIntDef(SL.Values['SoundVolume'], 50);
-    SoundVolume := 0;
-  end;
-
+  SoundManager.MuteSound := not LoadBoolean('SoundEnabled');
+  SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
   SoundManager.MuteMusic := not LoadBoolean('MusicEnabled');
   SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
-
 
   LastVer := StrToInt64Def(SL.Values['LastVersion'], 0);
 
   if LastVer < 1441 then
-    BlackOutZero := true;
-
-  if LastVer < 1471 then
   begin
-    if LoadBoolean('SoundEnabled') then
-      SoundVolume := 50
-    else
-      SoundVolume := 0;
-    if LoadBoolean('MusicEnabled') then
-      MusicVolume := 50
-    else
-      MusicVolume := 0;
-
+    BlackOutZero := true;
     PauseAfterBackwardsSkip := true;
   end;
 
@@ -415,14 +389,6 @@ begin
   begin
     PostLevelVictorySound := true;
     PostLevelFailureSound := true;
-  end;
-
-  if LastVer < 1001001000 then
-  begin
-    if SavedSoundVol <> 0 then
-      SoundVolume := SavedSoundVol;
-    if SavedMusicVol <> 0 then
-      MusicVolume := SavedMusicVol;
   end;
 
   SL.Free;
@@ -438,8 +404,8 @@ begin
   MiscOptions := DEF_MISCOPTIONS;
   PostLevelSoundOptions := [plsVictory, plsFailure];
 
-  MusicVolume := 50;
-  SoundVolume := 50;
+  SoundManager.MusicVolume := 50;
+  SoundManager.SoundVolume := 50;
   fForceSkillset := 0;
   fDumpMode := false;
   fTestScreens := 0;
@@ -508,22 +474,6 @@ begin
   else
     Exclude(PostLevelSoundOptions, aFlag);
 end;
-
-function TDosGameParams.GetSoundFlag(aFlag: TGameSoundOption): Boolean;
-begin
-  if aFlag = gsoMusic then
-    Result := MusicVolume <> 0
-  else
-    Result := SoundVolume <> 0;
-end;
-
-(*procedure TDosGameParams.SetSoundFlag(aFlag: TGameSoundOption; aValue: Boolean);
-begin
-  if aValue then
-    Include(SoundOptions, aFlag)
-  else
-    Exclude(SoundOptions, aFlag);
-end;*)
 
 end.
 
