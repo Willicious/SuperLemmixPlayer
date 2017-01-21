@@ -7,7 +7,7 @@ uses
   Classes, SysUtils,
   GR32,
   UMisc,
-  GameSound,
+  GameSoundOld,
   LemRenderHelpers,
   LemTypes,
   LemMetaObject,

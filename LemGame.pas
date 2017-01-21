@@ -26,7 +26,7 @@ uses
   LemObjects, LemLemming, LemRecolorSprites,
   LemReplay,
   LemGameMessageQueue,
-  GameInterfaces, GameControl, GameSound;
+  GameInterfaces, GameControl, GameSoundOld;
 
 const
   ParticleColorIndices: array[0..15] of Byte =

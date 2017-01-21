@@ -7,7 +7,7 @@ uses
   SharedGlobals,
   LemTypes, LemRendering, LemLevel, LemDosStyle,
   TalisData, LemDosMainDAT, LemStrings, LemNeoParserOld,
-  GameControl, GameSound, LemVersion,
+  GameControl, GameSoundOld, LemVersion,
   LemNeoPieceManager, // to initially create it
   FBaseDosForm,
   Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs;

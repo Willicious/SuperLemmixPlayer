@@ -1,514 +1,450 @@
-{$include lem_directives.inc}
+unit GameSoundNew;
 
-unit GameSound;
+// Entire rewrite, as this is more efficient (or at least less tedious) than tidying up
+// the existing unit.
+
+// NOTE: NOT YET TESTED. But it should work. Will test during integration into NL's code.
+
+// USAGE:   (note to Nepster: unless you just want something to do, just leave it to me to integrate this)
+//
+// Need to add these lines to AppController or somewhere similar:
+//   SoundManager := TSoundManager.Create;
+//   SoundManager.LoadDefaultSounds;
+//
+// To load a sound:
+//   SoundManager.LoadSoundFromFile(<path relative to "sound\" folder>);
+//   (is also possible to load from streams, but this is mostly for backwards-compatible's use)
+//
+// To play a sound (must be loaded first):
+//   SoundManager.PlaySound(<path relative to "sound\" folder>, <balance>);  -- -100 is fully left, 0 is center, +100 is fully right
+//
+// To unload all sounds except the default ones:
+//   SoundManager.PurgeNonDefaultSounds;
+//   (Currently, the sounds used by objects in official sets are included in the default sounds. Once backwards-compatible is a thing
+//    of the past, this should be changed so that only game-wide sounds are considered default.)
+//
+// To load a music:
+//   SoundManager.LoadMusicFromFile(<path relative to "music\" folder);
+//   (this too can be loaded from streams. Only one music can be loaded at a time)
+//
+// To play or stop music:
+//   SoundManager.PlayMusic;
+//   SoundManager.StopMusic;
+//
+// This new sound manager will handle not loading music if music is muted. With that being said, it currently still loads the file
+// into memory, but doesn't load it into BASS. This is to simplify integration into backwards-compatible; and it can be changed to
+// not load the file at all once backwards-compatible is no longer a thing.
+
+
+// TODO: Instead of playing nothing when a non-loaded sound is attempted to be played, try to load the sound. This will be very
+//       hard to integrate into backwards-compatible so maybe this should be left until backwards-compatible is no more.
 
 interface
 
 uses
-  Windows, Classes, Contnrs, SysUtils,
   Bass,
-  Dialogs,
-  LemTypes;
-
-const
-  DEFAULT_CHANNELS = 16;
+  LemTypes, // only uses AppPath in new-formats but uses other stuff from LemTypes in backwards-compatible
+  LemStrings, Contnrs, Classes, SysUtils;
 
 type
-  TAbstractSound = class
-  private
-    fStream: TMemoryStream;
-    fResourceDataType: TLemDataType;
-  protected
-  public
-    constructor Create;
-    destructor Destroy; override;
-    procedure LoadFromFileName(aFileName: string; aTestMode: Boolean = false);
-    procedure LoadFromStream(aStream: TStream);
-  end;
-  (*
-  TSound = class(TAbstractSound)
-  private
-  protected
-  public
-    constructor Create;
-  end;
-  *)
-  TMusic = class(TAbstractSound)
-  private
-  protected
-  public
-    constructor Create;
-  end;
-  (*
-  TSoundList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TSound;
-  protected
-  public
-    function Add(Item: TSound): Integer;
-    procedure Insert(Index: Integer; Item: TSound);
-    property Items[Index: Integer]: TSound read GetItem; default;
-  published
-  end;
-  *)
+  TSoundEffect = class
+    private
+      fName: String;
+      fBassSample: LongWord;
+      fStream: TMemoryStream;
+      fIsDefaultSound: Boolean;
+      procedure FreeBassSample;
+      procedure ObtainBassSample;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      procedure LoadFromFile(aFile: String);
+      procedure LoadFromStream(aStream: TStream; aName: String);
 
-  TMusicList = class(TObjectList)
-  private
-    function GetItem(Index: Integer): TMusic;
-  protected
-  public
-    function Add(Item: TMusic): Integer;
-    procedure Insert(Index: Integer; Item: TMusic);
-    property Items[Index: Integer]: TMusic read GetItem; default;
-  published
+      property Name: String read fName;
+      property BassSample: LongWord read fBassSample;
+      property IsDefaultSound: Boolean read fIsDefaultSound write fIsDefaultSound;
   end;
 
-  TSoundQueueEntry = class
-  public
-    Index: Integer;
-    Balance: Single;
-    constructor Create;
+  TSoundEffects = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TSoundEffect;
+    public
+      constructor Create;
+      function Add: TSoundEffect;
+      property Items[Index: Integer]: TSoundEffect read GetItem; default;
+      property List;
   end;
 
-  TSoundMgr = class
-  private
-    fMusics: TMusicList;
-    fSounds: TList;
+  TSoundManager = class
+    private
+      fSoundVolume: Integer;
+      fMusicVolume: Integer;
+      fMuteSound: Boolean;
+      fMuteMusic: Boolean;
 
-    fQueue: TObjectList;
+      fSoundEffects: TSoundEffects;
 
-    fAvailableChannels : Integer;
-    fBrickSound : Integer;
-    fActiveSounds  : array[0..255] of Boolean;
-    fPlayingSounds : array[0..255] of Integer;
-  protected
-  public
-    constructor Create;
-    destructor Destroy; override;
-  { sounds }
-    function AddSoundFromFileName(const aFileName: string; FromNXP: Boolean = false): Integer;
-    function AddSoundFromStream(aStream: TMemoryStream): Integer;
-    procedure FreeSound(aIndex: Integer);
-    procedure PlaySound(Index: Integer; Balance: Integer); overload;
-    procedure PlaySound(Index: Integer; Balance: Single = 0); overload;
-    procedure StopSound(Index: Integer);
+      fMusicName: String;
+      fMusicStream: TMemoryStream;
+      fMusicChannel: LongWord;
+      fMusicPlaying: Boolean;
 
-    procedure QueueSound(Index: Integer; Balance: Integer); overload;
-    procedure QueueSound(Index: Integer; Balance: Single = 0); overload;
-    procedure FlushQueue;
-    procedure ClearQueue;
-  { musics }
-    function AddMusicFromFileName(const aFileName: string; aTestMode: Boolean): Integer;
-    function AddMusicFromStream(aStream: TStream): Integer;
-    procedure PlayMusic(Index: Integer);
-    procedure StopMusic(Index: Integer);
-    procedure CheckFreeChannels;
+      procedure ObtainMusicBassChannel;
+      procedure FreeMusic;
 
-    property Musics: TMusicList read fMusics;
-    property Sounds: TList read fSounds;
+      procedure SetMusicVolume(aValue: Integer);
+      procedure SetMusicMute(aValue: Boolean);
 
-    property AvailableChannels: Integer read fAvailableChannels write fAvailableChannels;
-    property BrickSound: Integer read fBrickSound write fBrickSound;
-  end;
+      function FindSoundIndex(aName: String): Integer;
+    public
+      constructor Create;
+      destructor Destroy; override;
 
-  TSoundSystem = class
-  private
-    fMusicRef : HMUSIC;
-  protected
-  public
-    constructor Create;
-    destructor Destroy; override;
-    procedure InitWav;
-    function PlayWav(S: TMemoryStream): Integer;
-    procedure StopWav(S: TMemoryStream);
+      procedure LoadDefaultSounds;
+      procedure LoadSoundFromFile(aName: String; aDefault: Boolean = false);
+      procedure LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false);
+      procedure PurgeNonDefaultSounds;
 
-    procedure PlayMusic(S: TMemoryStream);
-    procedure StopMusic(S: TMemoryStream);
+      procedure LoadMusicFromFile(aName: String);
+      procedure LoadMusicFromStream(aStream: TStream; aName: String);
+
+      procedure PlaySound(aName: String; aBalance: Integer = 0); // -100 = fully left, +100 = fully right
+      procedure PlayMusic;
+      procedure StopMusic;
+
+      property SoundVolume: Integer read fSoundVolume write fSoundVolume;
+      property MusicVolume: Integer read fMusicVolume write SetMusicVolume;
+      property MuteSound: Boolean read fMuteSound write fMuteSound;
+      property MuteMusic: Boolean read fMuteMusic write SetMusicMute;
   end;
 
 var
-  SoundVolume, MusicVolume: Integer; // using global vars for now. Will implement a better-practice system later (even though I don't see what can go wrong with this)
-  SavedSoundVol, SavedMusicVol: Integer;
+  SoundManager: TSoundManager;
 
 implementation
 
-uses
-  MMSystem;
+(* --- TSoundManager --- *)
 
-var
-  _SoundSystem: TSoundSystem;
-
-function SoundSystem: TSoundSystem;
+constructor TSoundManager.Create;
 begin
-  if _SoundSystem = nil then
-    _SoundSystem := TSoundSystem.Create;
-  Result := _SoundSystem;
+  inherited;
+  fSoundEffects := TSoundEffects.Create;
+  fMusicStream := TMemoryStream.Create;
+  fMusicChannel := $FFFFFFFF;
 end;
 
-{ TSoundQueueEntry }
-
-constructor TSoundQueueEntry.Create;
+destructor TSoundManager.Destroy;
 begin
-  Index := -1;
-end;
-
-{ TAbstractSound }
-
-constructor TAbstractSound.Create;
-begin
-  inherited Create;
-  fStream := TMemoryStream.Create;
-end;
-
-destructor TAbstractSound.Destroy;
-begin
-  fStream.Free;
+  FreeMusic;
+  fMusicStream.Free;
+  fSoundEffects.Free;
   inherited;
 end;
 
-procedure TAbstractSound.LoadFromFileName(aFileName: string; aTestMode: Boolean = false);
-{-------------------------------------------------------------------------------
-  Loads from file or archive file in resource
--------------------------------------------------------------------------------}
-var
-  F: TMemoryStream;
+procedure TSoundManager.FreeMusic;
 begin
-  F := CreateDataStream(aFileName, fResourceDataType, aTestMode);
+  if fMusicChannel = $FFFFFFFF then Exit;
+  BASS_StreamFree(fMusicChannel);
+  fMusicPlaying := false;
+  fMusicChannel := $FFFFFFFF;
+end;
 
+procedure TSoundManager.ObtainMusicBassChannel;
+begin
+  Assert(fMusicChannel = $FFFFFFFF, 'TSoundManager.ObtainMusicBassChannel: A channel already exists!');
+  fMusicChannel := BASS_StreamCreateFile(true, fMusicStream.Memory, 0, fMusicStream.Size, 0);
+  if fMusicChannel = 0 then // this means we have a module-based file
+  begin
+    fMusicChannel := BASS_MusicLoad(true, fMusicStream.Memory, 0, fMusicStream.Size, 0, 0);
+    BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume);
+  end else begin
+    BASS_LoadLoopData(fMusicChannel); // yay, this was added to the BASS unit rather than GameSound
+    BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
+  end;
+end;
+
+procedure TSoundManager.SetMusicVolume(aValue: Integer);
+begin
+  fMusicVolume := aValue;
+  if fMusicChannel = $FFFFFFFF then Exit;
+  BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
+  BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume);
+end;
+
+procedure TSoundManager.SetMusicMute(aValue: Boolean);
+begin
+  fMuteMusic := aValue;
+  if fMusicChannel = $FFFFFFFF then Exit;
+  if fMuteMusic then
+    BASS_ChannelStop(fMusicChannel)
+  else if fMusicPlaying then
+    PlayMusic;
+end;
+
+procedure TSoundManager.LoadSoundFromFile(aName: String; aDefault: Boolean = false);
+var
+  F: TFileStream;
+
+  function FindExt: String;
+  var
+    i: Integer;
+    LocalName: String;
+  const
+    VALID_EXTS: array[0..1] of String = ('.ogg', '.wav');
+  begin
+    Result := '';
+    LocalName := ChangeFileExt(aName, '');
+    for i := 0 to Length(VALID_EXTS) - 1 do
+      if FileExists(AppPath + SFSounds + LocalName + VALID_EXTS[i]) then
+      begin
+        Result := VALID_EXTS[i];
+        Exit;
+      end;
+  end;
+begin
+  F := TFileStream.Create(AppPath + SFSounds + aName + FindExt, fmOpenRead);
   try
-    if F <> nil then LoadFromStream(F);
+    LoadSoundFromStream(F, aName, aDefault);
   finally
     F.Free;
   end;
 end;
 
-procedure TAbstractSound.LoadFromStream(aStream: TStream);
+
+procedure TSoundManager.LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false);
 begin
-  fStream.LoadFromStream(aStream);
+  with fSoundEffects.Add do
+  begin
+    LoadFromStream(aStream, aName);
+    IsDefaultSound := aDefault;
+  end;
 end;
 
-(*
-{ TSound }
-
-constructor TSound.Create;
+procedure TSoundManager.LoadDefaultSounds;
+  procedure Get(aName: String);
+  begin
+    LoadSoundFromFile(aName, true);
+  end;
 begin
-  inherited Create;
-  fResourceDataType := ldtSound;
-end;
-*)
+  // Commented-out lines are sound files that existed since Lemmix, but don't appear to be referenced anywhere in the code.
+  // Just in case, I haven't deleted these files, but put them in an "unused" subfolder of the sound folder.
 
-{ TMusic }
-
-constructor TMusic.Create;
-begin
-  inherited;
-  fResourceDataType := ldtMusic;
-end;
-
-(*
-{ TSoundList }
-
-function TSoundList.Add(Item: TSound): Integer;
-begin
-  Result := inherited Add(Item);
-end;
-
-function TSoundList.GetItem(Index: Integer): TSound;
-begin
-  Result := inherited Get(Index);
-end;
-
-procedure TSoundList.Insert(Index: Integer; Item: TSound);
-begin
-  inherited Insert(Index, Item);
-end;
-*)
-
-{ TMusicList }
-
-function TMusicList.Add(Item: TMusic): Integer;
-begin
-  Result := inherited Add(Item);
-end;
-
-function TMusicList.GetItem(Index: Integer): TMusic;
-begin
-  Result := inherited Get(Index);
+  //Get('bang');
+  //Get('bell');
+  Get('chain');
+  Get('changeop');
+  Get('chink');
+  Get('die');
+  Get('door');
+  Get('electric');
+  Get('explode');
+  Get('failure');
+  Get('fire');
+  Get('glug');
+  Get('letsgo');
+  //Get('mantrap');
+  Get('mousepre');
+  Get('ohno');
+  //Get('oing');
+  Get('oing2');
+  //Get('scrape');
+  //Get('slicer');
+  Get('slurp');
+  Get('splash');
+  Get('splat');
+  Get('success');
+  Get('tenton');
+  Get('thud');
+  Get('thunk');
+  Get('ting');
+  Get('vacuusux');
+  Get('weedgulp');
+  Get('wrench');
+  Get('yippee');
+  Get('zombie');
 end;
 
-procedure TMusicList.Insert(Index: Integer; Item: TMusic);
+function TSoundManager.FindSoundIndex(aName: String): Integer;
 begin
-  inherited Insert(Index, Item);
+  aName := Lowercase(aName);
+  for Result := 0 to fSoundEffects.Count-1 do
+    if fSoundEffects[Result].Name = aName then
+      Exit;
+  Result := -1;
 end;
 
-{ TSoundMgr }
-
-function TSoundMgr.AddMusicFromFileName(const aFileName: string; aTestMode: Boolean): Integer;
-var
-  M: TMusic;
-begin
-  M := TMusic.Create;
-  Result := Musics.Add(M);
-  M.LoadFromFileName(aFileName, aTestMode);
-end;
-
-function TSoundMgr.AddMusicFromStream(aStream: TStream): Integer;
-var
-  M: TMusic;
-begin
-  M := TMusic.Create;
-  Result := Musics.Add(M);
-  M.LoadFromStream(aStream);
-end;
-
-function TSoundMgr.AddSoundFromFileName(const aFileName: string; FromNXP: Boolean = false): Integer;
-var
-  S: TMemoryStream;
-begin
-  if FromNXP then
-    S := CreateDataStream(aFileName, ldtLemmings)
-  else
-    S := CreateDataStream(aFileName, ldtSound);
-  Result := Sounds.Add(Pointer(BASS_SampleLoad(true, S.Memory, 0, S.Size, 65535, 0)));
-end;
-
-function TSoundMgr.AddSoundFromStream(aStream: TMemoryStream): Integer;
-begin
-  Result := Sounds.Add(Pointer(BASS_SampleLoad(true, aStream.Memory, 0, aStream.Size, 65535, 0)));
-end;
-
-procedure TSoundMgr.FreeSound(aIndex: Integer);
-begin
-  BASS_SampleFree(LongWord(Sounds[aIndex]));
-end;
-
-constructor TSoundMgr.Create;
+procedure TSoundManager.PurgeNonDefaultSounds;
 var
   i: Integer;
 begin
-  inherited Create;
-  if not BASS_Init(-1, 44100, BASS_DEVICE_NOSPEAKER, 0, nil) then
-    BASS_Free
-  else
-    BASS_SetConfig(BASS_CONFIG_VISTA_SPEAKERS, 1);
-  fSounds := TList.Create;
-  fMusics := TMusicList.Create;
-  fAvailableChannels := DEFAULT_CHANNELS;
-  for i := 0 to 255 do
-    fPlayingSounds[i] := -1;
-  fQueue := TObjectList.Create(true);
+  for i := fSoundEffects.Count-1 downto 0 do
+    if not fSoundEffects[i].IsDefaultSound then
+      fSoundEffects.Delete(i);
 end;
 
-destructor TSoundMgr.Destroy;
-begin
-  StopSound(0);
-  StopMusic(0);
-  fSounds.Free;
-  fMusics.Free;
-  fQueue.Free;
-  inherited Destroy;
-end;
-
-procedure TSoundMgr.CheckFreeChannels;
+procedure TSoundManager.LoadMusicFromFile(aName: String);
 var
-  i : integer;
-begin
-  for i := 0 to fAvailableChannels-1 do
+  F: TFileStream;
+
+  function FindExt: String;
+  var
+    i: Integer;
+    LocalName: String;
+  const
+    VALID_EXTS: array[0..11] of string = (
+                    '.ogg',
+                    '.wav',
+                    '.aiff',
+                    '.aif',
+                    '.mp3',
+                    '.mo3',
+                    '.it',
+                    '.mod',
+                    '.xm',
+                    '.s3m',
+                    '.mtm',
+                    '.umx'
+                    );
   begin
-    if (BASS_ChannelIsActive(fPlayingSounds[i]) <> BASS_ACTIVE_PLAYING)
-    or (BASS_ChannelGetPosition(fPlayingSounds[i], BASS_POS_BYTE) >= BASS_ChannelGetLength(fPlayingSounds[i], BASS_POS_BYTE)) then
-    begin
-      fActiveSounds[i] := false;
-      fPlayingSounds[i] := -1;
-      Continue;
-    end;
-    if BASS_ChannelGetPosition(fPlayingSounds[i], BASS_POS_BYTE) >= BASS_ChannelSeconds2Bytes(fPlayingSounds[i], 0.5) then
-      fActiveSounds[i] := false;
-  end;
-end;
-
-procedure TSoundMgr.PlaySound(Index: Integer; Balance: Integer);
-begin
-  if Balance < -100 then Balance := -100;
-  if Balance > 100 then Balance := 100;
-  PlaySound(Index, Balance / 100);
-end;
-
-procedure TSoundMgr.PlaySound(Index: Integer; Balance: Single = 0);
-var
-  i : Integer;
-  c : HCHANNEL;
-begin
-
-  CheckFreeChannels;
-
-  if Index = fBrickSound then
-  begin
-    if fPlayingSounds[0] >= 0 then
-      BASS_ChannelStop(fPlayingSounds[0]);
-    c := BASS_SampleGetChannel(Integer(Sounds[Index]), true);
-    BASS_ChannelSetAttribute(c, BASS_ATTRIB_PAN, Balance);
-    BASS_ChannelSetAttribute(c, BASS_ATTRIB_VOL, SoundVolume / 100);
-
-    BASS_ChannelPlay(c, true);
-
-    fPlayingSounds[0] := c;
-    fActiveSounds[0] := true;
-    Exit;
-  end;
-
-  if Index >= 0 then
-    if Index < Sounds.Count then
-      for i := 1 to (fAvailableChannels - 1) do
+    Result := '';
+    LocalName := ChangeFileExt(aName, '');
+    for i := 0 to Length(VALID_EXTS) - 1 do
+      if FileExists(AppPath + SFMusic + LocalName + VALID_EXTS[i]) then
       begin
-        if not fActiveSounds[i] then
-        begin
-          if fPlayingSounds[i] >= 0 then
-            BASS_ChannelStop(fPlayingSounds[i]);
-          c := BASS_SampleGetChannel(Integer(Sounds[Index]), true);
-          BASS_ChannelSetAttribute(c, BASS_ATTRIB_PAN, Balance);
-          BASS_ChannelSetAttribute(c, BASS_ATTRIB_VOL, SoundVolume / 100);
-          BASS_ChannelPlay(c, true);
-
-          fPlayingSounds[i] := c;
-          fActiveSounds[i] := true;
-          Exit;
-        end;
+        Result := VALID_EXTS[i];
+        Exit;
       end;
-end;
-
-procedure TSoundMgr.PlayMusic(Index: Integer);
-begin
-  if Index >= 0 then
-    if Index < Musics.Count then
-      SoundSystem.PlayMusic(Musics[Index].fStream)
-end;
-
-procedure TSoundMgr.StopSound(Index: Integer);
-begin
-  SoundSystem.StopWav(nil);
-end;
-
-procedure TSoundMgr.StopMusic(Index: Integer);
-begin
-  if Index >= 0 then
-    if Index < Musics.Count then
-      SoundSystem.StopMusic(nil);
-end;
-
-procedure TSoundMgr.QueueSound(Index: Integer; Balance: Integer);
-begin
-  if Balance < -100 then Balance := -100;
-  if Balance > 100 then Balance := 100;
-  QueueSound(Index, Balance / 100);
-end;
-
-procedure TSoundMgr.QueueSound(Index: Integer; Balance: Single = 0);
-var
-  i: Integer;
-  S: TSoundQueueEntry;
-begin
-  for i := 0 to fQueue.Count-1 do
-  begin
-    S := TSoundQueueEntry(fQueue[i]);
-    if (S.Index = Index) and (S.Balance = Balance) then Exit;
   end;
 
-  S := TSoundQueueEntry.Create;
-  fQueue.Add(S);
-  S.Index := Index;
-  S.Balance := Balance;
-end;
-
-procedure TSoundMgr.FlushQueue;
-var
-  i: Integer;
-  S: TSoundQueueEntry;
 begin
-  for i := 0 to fQueue.Count-1 do
-  begin
-    S := TSoundQueueEntry(fQueue[i]);
-    PlaySound(S.Index, S.Balance);
+  aName := Lowercase(aName);
+  if fMusicName = aName then Exit; // saves some time
+
+  F := TFileStream.Create(AppPath + SFMusic + aName + FindExt, fmOpenRead);
+  try
+    LoadMusicFromStream(F, aName);
+  finally
+    F.Free;
   end;
-
-  ClearQueue;
 end;
 
-procedure TSoundMgr.ClearQueue;
+procedure TSoundManager.LoadMusicFromStream(aStream: TStream; aName: String);
 begin
-  fQueue.Clear;
+  aName := Lowercase(aName);
+  if fMusicName = aName then Exit; // saves some time
+
+  FreeMusic;
+  fMusicStream.Clear;
+
+  fMusicStream.LoadFromStream(aStream);
+  if not fMuteMusic then
+    ObtainMusicBassChannel;
 end;
 
-{ TSoundSystem }
-
-constructor TSoundSystem.Create;
+procedure TSoundManager.PlayMusic;
 begin
-  inherited Create;
-  InitWav;
+  fMusicPlaying := true;
+
+  if fMuteMusic then
+    Exit;
+
+  if fMusicChannel = $FFFFFFFF then
+    ObtainMusicBassChannel;
+  BASS_ChannelPlay(fMusicChannel, false);
 end;
 
-destructor TSoundSystem.Destroy;
+procedure TSoundManager.StopMusic;
 begin
-  BASS_Free;
+  fMusicPlaying := false;
+  BASS_ChannelStop(fMusicChannel);
+end;
+
+procedure TSoundManager.PlaySound(aName: String; aBalance: Integer = 0);
+var
+  SoundIndex: Integer;
+  SampleChannel: LongWord;
+begin
+  SoundIndex := FindSoundIndex(aName);
+  if SoundIndex <> -1 then
+  begin
+    SampleChannel := BASS_SampleGetChannel(fSoundEffects[SoundIndex].BassSample, true);
+    BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100));
+    BASS_ChannelPlay(SampleChannel, true);
+  end;
+end;
+
+(* --- TSoundEffect --- *)
+
+constructor TSoundEffect.Create;
+begin
+  inherited;
+  fBassSample := $FFFFFFFF;
+  fStream := TMemoryStream.Create;
+end;
+
+destructor TSoundEffect.Destroy;
+begin
+  FreeBassSample;
+  fStream.Free;
   inherited;
 end;
 
-procedure TSoundSystem.InitWav;
+procedure TSoundEffect.FreeBassSample;
 begin
-  PlaySound(nil, HINSTANCE, SND_ASYNC + SND_MEMORY);
+  if fBassSample = $FFFFFFFF then Exit;
+  BASS_SampleFree(fBassSample);
+  fBassSample := $FFFFFFFF;
 end;
 
-procedure TSoundSystem.PlayMusic(S: TMemoryStream);
-const
-  MusicFlags = BASS_MUSIC_LOOP or BASS_MUSIC_RAMPS or BASS_MUSIC_SURROUND or
-               BASS_MUSIC_POSRESET or BASS_SAMPLE_SOFTWARE;
+procedure TSoundEffect.ObtainBassSample;
+begin
+  FreeBassSample;
+  fBassSample := BASS_SampleLoad(true, fStream.Memory, 0, fStream.Size, 65535, 0);
+end;
+
+procedure TSoundEffect.LoadFromFile(aFile: String);
 var
-  V: Single;
+  F: TFileStream;
+  SoundName: String;
 begin
-  BASS_StreamFree(fMusicRef);
-  BASS_MusicFree(fMusicRef);
-  fMusicRef := 0;
-  if S.Size > 0 then
-    fMusicRef := BASS_StreamCreateFile(true, S.Memory, 0, S.Size, MusicFlags);
-
-  if fMusicRef = 0 then
-  begin
-    fMusicRef := BASS_MusicLoad(true, S.Memory, 0, S.Size, MusicFlags, 1);
-    BASS_ChannelGetAttribute(fMusicRef, BASS_ATTRIB_MUSIC_VOL_GLOBAL, V);
-    V := V * MusicVolume / 100;
-    BASS_ChannelSetAttribute(fMusicRef, BASS_ATTRIB_MUSIC_VOL_GLOBAL, V);
-  end else begin
-    BASS_ChannelSetAttribute(fMusicRef, BASS_ATTRIB_VOL, MusicVolume / 100);
-    BASS_LoadLoopData(fMusicRef);
+  F := TFileStream.Create(aFile, fmOpenRead);
+  try
+    SoundName := ExtractFileName(aFile);
+    SoundName := ChangeFileExt(aFile, '');
+    LoadFromStream(F, SoundName);
+  finally
+    F.Free;
   end;
-
-  if fMusicRef <> 0 then
-  begin
-    BASS_ChannelPlay(fMusicRef, false);
-  end;
-
 end;
 
-function TSoundSystem.PlayWav(S: TMemoryStream): Integer;
+procedure TSoundEffect.LoadFromStream(aStream: TStream; aName: String);
 begin
-  PlaySound(S.Memory, HINSTANCE, SND_ASYNC + SND_MEMORY);
-  Result := 0;
+  fStream.Clear;
+  fStream.LoadFromStream(aStream);
+  fName := Lowercase(aName);
+  ObtainBassSample;
 end;
 
-procedure TSoundSystem.StopMusic(S: TMemoryStream);
+(* --- TSoundEffects --- *)
+
+constructor TSoundEffects.Create;
+var
+  aOwnsObjects: Boolean;
 begin
-  BASS_ChannelStop(fMusicRef);
+  aOwnsObjects := true;
+  inherited Create(aOwnsObjects);
 end;
 
-procedure TSoundSystem.StopWav(S: TMemoryStream);
+function TSoundEffects.Add: TSoundEffect;
 begin
-  PlaySound(nil, HINSTANCE, SND_ASYNC + SND_MEMORY);
+  Result := TSoundEffect.Create;
+  inherited Add(Result);
 end;
 
-initialization
-finalization
-  _SoundSystem.Free;
-  _SoundSystem := nil;
+function TSoundEffects.GetItem(Index: Integer): TSoundEffect;
+begin
+  Result := inherited Get(Index);
+end;
+
 end.
-
-

@@ -12,7 +12,7 @@ interface
 uses
   LemmixHotkeys,
   Dialogs, SysUtils, Classes, Forms, GR32,
-  LemVersion, GameSound,
+  LemVersion, GameSoundOld,
   LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,
   LemNeoSave, TalisData,
