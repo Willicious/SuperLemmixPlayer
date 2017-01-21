@@ -22,7 +22,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs,  StdCtrls,
   FBaseDosForm,
-  LemNeoLevelPack, GameSoundNew, // compile test
+  LemNeoLevelPack, // compile test
   LemGame,
   AppController;
 

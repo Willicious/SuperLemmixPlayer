@@ -247,6 +247,9 @@ var
 
 implementation
 
+uses
+  GameSound;
+
 { TDosGameParams }
 
 procedure TDosGameParams.Save;
@@ -309,12 +312,9 @@ begin
 
   SL.Add('');
   SL.Add('# Sound Options');
-  SaveBoolean('MusicEnabled', MusicVolume <> 0);
+  SaveBoolean('MusicEnabled', not SoundManager.MuteMusic);
   SaveBoolean('SoundEnabled', SoundVolume <> 0);
-  if MusicVolume <> 0 then
-    SL.Add('MusicVolume=' + IntToStr(MusicVolume))
-  else
-    SL.Add('MusicVolume=' + IntToStr(SavedMusicVol));
+  SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
   if SoundVolume <> 0 then
     SL.Add('SoundVolume=' + IntToStr(SoundVolume))
   else
@@ -388,12 +388,8 @@ begin
     SoundVolume := 0;
   end;
 
-  if LoadBoolean('MusicEnabled') then
-    MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50)
-  else begin
-    SavedMusicVol := StrToIntDef(SL.Values['MusicVolume'], 50);
-    MusicVolume := 0;
-  end;
+  SoundManager.MuteMusic := not LoadBoolean('MusicEnabled');
+  SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
 
 
   LastVer := StrToInt64Def(SL.Values['LastVersion'], 0);

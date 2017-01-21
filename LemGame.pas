@@ -321,7 +321,6 @@ type
     procedure DrawAnimatedObjects;
     procedure CheckForNewShadow;
     function GetTrapSoundIndex(aDosSoundEffect: Integer): Integer;
-    function GetMusicFileName: String;
     function HasPixelAt(X, Y: Integer): Boolean;
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
@@ -448,7 +447,6 @@ type
     destructor Destroy; override;
   { iteration }
     procedure PrepareParams;
-    procedure PrepareMusic;
     procedure PlayMusic;
     procedure Start(aReplay: Boolean = False);
     procedure UpdateLemmings;
@@ -1126,87 +1124,9 @@ begin
   inherited Destroy;
 end;
 
-function TLemmingGame.GetMusicFileName: String;
-var
-  TempStream: TMemoryStream;
-  SL: TStringList;
-  MusicNumber: Integer;
-begin
-  if (Level.Info.MusicFile <> '')
-  and (LeftStr(Level.Info.MusicFile, 1) <> '?')
-  and (LeftStr(Level.Info.MusicFile, 1) <> '*') then
-  begin
-    Result := Level.Info.MusicFile;
-    Exit;
-  end;
-
-  SL := TStringList.Create;
-  TempStream := CreateDataStream('music.txt', ldtLemmings); // It's a text file, but should be loaded more similarly to data files.
-  if TempStream = nil then
-  begin
-    TempStream := TMemoryStream.Create;
-    TempStream.LoadFromFile(AppPath + 'data\music.nxmi');
-  end;
-  SL.LoadFromStream(TempStream);
-  TempStream.Free;
-
-  MusicNumber := -1;
-  if LeftStr(Level.Info.MusicFile, 1) = '?' then
-    MusicNumber := StrToIntDef(MidStr(Level.Info.MusicFile, 2, Length(Level.Info.MusicFile)-1), -1) - 1;
-
-  if SL.Count = 0 then
-    Result := ''
-  else begin
-    if MusicNumber < 0 then
-      if GameParams.fTestMode then
-      begin
-        Randomize;
-        MusicNumber := Random(SL.Count);
-      end else
-        MusicNumber := GameParams.Info.dLevel mod SL.Count;
-    Result := SL[MusicNumber];
-  end;
-
-  SL.Free;
-end;
-
 procedure TLemmingGame.PlayMusic;
 begin
-  if MusicVolume = 0 then Exit;
-  PrepareMusic;
-  if not fStartupMusicAfterEntry then
-    SoundMgr.PlayMusic(0);
-end;
-
-procedure TLemmingGame.PrepareMusic;
-var
-  MS: TMemoryStream;
-  MusicSys: TBaseMusicSystem;
-  MusicFileName: String;
-begin
-  if fMusicLoaded then Exit;
-  MS := nil;
-  try
-    MusicSys := GameParams.Style.MusicSystem;
-    if MusicSys = nil then Exit;
-
-    MusicFileName := GetMusicFileName;
-    MS := CreateDataStream(MusicFileName, ldtMusic);
-    if MS = nil then
-    begin
-      Level.Info.MusicFile := '';
-      MusicFileName := GetMusicFileName;
-      MS := CreateDataStream(MusicFileName, ldtMusic);
-    end;
-
-    if MS <> nil then
-      SoundMgr.AddMusicFromStream(MS);
-
-  finally
-    MS.Free;
-  end;
-
-  fMusicLoaded := true;
+  MessageQueue.Add(GAMEMSG_MUSIC);
 end;
 
 procedure TLemmingGame.PrepareParams;
@@ -1308,8 +1228,6 @@ begin
 
   PhysicsMap := Renderer.PhysicsMap;
   RenderInterface.PhysicsMap := PhysicsMap;
-
-  if MusicVolume > 0 then PrepareMusic;
 
   fTalismans.Clear;
 

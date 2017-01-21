@@ -8,7 +8,8 @@ uses
   LemTypes, LemRendering, LemLevel, LemDosStyle,
   TalisData, LemDosMainDAT, LemStrings, LemNeoParserOld,
   GameControl, GameSoundOld, LemVersion,
-  LemNeoPieceManager, // to initially create it
+  GameSound,          // initial creation
+  LemNeoPieceManager, // initial creation
   FBaseDosForm,
   Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs;
 
@@ -246,6 +247,9 @@ begin
   GameParams := TDosGameParams.Create;
   PieceManager := TNeoPieceManager.Create;
 
+  SoundManager := TSoundManager.Create;
+  SoundManager.LoadDefaultSounds;
+
   GameParams.Directory := LemmingsPath;
   GameParams.MainDatFile := LemmingsPath + 'main.dat';
   GameParams.Renderer := TRenderer.Create;
@@ -384,6 +388,9 @@ begin
   // It isn't too critical to free absolutely everything here, since the
   // game will be terminating after this procedure anyway.
   // More important is making sure all relevant data is saved.
+
+  PieceManager.Free;
+  SoundManager.Free;
 
   GameParams.Save;
 

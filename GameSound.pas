@@ -1,4 +1,4 @@
-unit GameSoundNew;
+unit GameSound;
 
 // Entire rewrite, as this is more efficient (or at least less tedious) than tidying up
 // the existing unit.
@@ -42,6 +42,7 @@ unit GameSoundNew;
 interface
 
 uses
+  Dialogs,
   Bass,
   LemTypes, // only uses AppPath in new-formats but uses other stuff from LemTypes in backwards-compatible
   LemStrings, Contnrs, Classes, SysUtils;
@@ -91,7 +92,6 @@ type
       fMusicPlaying: Boolean;
 
       procedure ObtainMusicBassChannel;
-      procedure FreeMusic;
 
       procedure SetMusicVolume(aValue: Integer);
       procedure SetMusicMute(aValue: Boolean);
@@ -112,6 +112,9 @@ type
       procedure PlaySound(aName: String; aBalance: Integer = 0); // -100 = fully left, +100 = fully right
       procedure PlayMusic;
       procedure StopMusic;
+      procedure FreeMusic;
+
+      function FindExtension(const aName: String; aIsMusic: Boolean): String;
 
       property SoundVolume: Integer read fSoundVolume write fSoundVolume;
       property MusicVolume: Integer read fMusicVolume write SetMusicVolume;
@@ -157,7 +160,7 @@ begin
   if fMusicChannel = 0 then // this means we have a module-based file
   begin
     fMusicChannel := BASS_MusicLoad(true, fMusicStream.Memory, 0, fMusicStream.Size, 0, 0);
-    BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume);
+    BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume / 2);
   end else begin
     BASS_LoadLoopData(fMusicChannel); // yay, this was added to the BASS unit rather than GameSound
     BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
@@ -169,41 +172,64 @@ begin
   fMusicVolume := aValue;
   if fMusicChannel = $FFFFFFFF then Exit;
   BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
-  BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume);
+  BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume / 2);
 end;
 
 procedure TSoundManager.SetMusicMute(aValue: Boolean);
 begin
   fMuteMusic := aValue;
-  if fMusicChannel = $FFFFFFFF then Exit;
   if fMuteMusic then
-    BASS_ChannelStop(fMusicChannel)
-  else if fMusicPlaying then
+  begin
+    if fMusicChannel <> $FFFFFFFF then
+      BASS_ChannelStop(fMusicChannel);
+  end else if fMusicPlaying then
     PlayMusic;
+end;
+
+function TSoundManager.FindExtension(const aName: String; aIsMusic: Boolean): String;
+const
+  VALID_EXTS: array[0..11] of string = (
+                  '.ogg',
+                  '.wav',
+                  '.aiff',
+                  '.aif',
+                  '.mp3',
+                  '.mo3',
+                  '.it',
+                  '.mod',
+                  '.xm',
+                  '.s3m',
+                  '.mtm',
+                  '.umx'
+                  );
+  LAST_SOUND_EXT = '.mp3'; // anything beyond this entry can only be used for music, not sfx
+var
+  i: Integer;
+  LocalName: String;
+  BasePath: String;
+begin
+  Result := '';
+  LocalName := ChangeFileExt(aName, '');
+
+  if aIsMusic then
+    BasePath := AppPath + SFMusic
+  else
+    BasePath := AppPath + SFSounds;
+
+  for i := 0 to Length(VALID_EXTS) - 1 do
+    if FileExists(BasePath + LocalName + VALID_EXTS[i]) then
+    begin
+      Result := VALID_EXTS[i];
+      Exit;
+    end else if (not aIsMusic) and (VALID_EXTS[i] = LAST_SOUND_EXT) then
+      Exit;
 end;
 
 procedure TSoundManager.LoadSoundFromFile(aName: String; aDefault: Boolean = false);
 var
   F: TFileStream;
-
-  function FindExt: String;
-  var
-    i: Integer;
-    LocalName: String;
-  const
-    VALID_EXTS: array[0..1] of String = ('.ogg', '.wav');
-  begin
-    Result := '';
-    LocalName := ChangeFileExt(aName, '');
-    for i := 0 to Length(VALID_EXTS) - 1 do
-      if FileExists(AppPath + SFSounds + LocalName + VALID_EXTS[i]) then
-      begin
-        Result := VALID_EXTS[i];
-        Exit;
-      end;
-  end;
 begin
-  F := TFileStream.Create(AppPath + SFSounds + aName + FindExt, fmOpenRead);
+  F := TFileStream.Create(AppPath + SFSounds + aName + FindExtension(aName, false), fmOpenRead);
   try
     LoadSoundFromStream(F, aName, aDefault);
   finally
@@ -286,42 +312,11 @@ end;
 procedure TSoundManager.LoadMusicFromFile(aName: String);
 var
   F: TFileStream;
-
-  function FindExt: String;
-  var
-    i: Integer;
-    LocalName: String;
-  const
-    VALID_EXTS: array[0..11] of string = (
-                    '.ogg',
-                    '.wav',
-                    '.aiff',
-                    '.aif',
-                    '.mp3',
-                    '.mo3',
-                    '.it',
-                    '.mod',
-                    '.xm',
-                    '.s3m',
-                    '.mtm',
-                    '.umx'
-                    );
-  begin
-    Result := '';
-    LocalName := ChangeFileExt(aName, '');
-    for i := 0 to Length(VALID_EXTS) - 1 do
-      if FileExists(AppPath + SFMusic + LocalName + VALID_EXTS[i]) then
-      begin
-        Result := VALID_EXTS[i];
-        Exit;
-      end;
-  end;
-
 begin
   aName := Lowercase(aName);
   if fMusicName = aName then Exit; // saves some time
 
-  F := TFileStream.Create(AppPath + SFMusic + aName + FindExt, fmOpenRead);
+  F := TFileStream.Create(AppPath + SFMusic + aName + FindExtension(aName, true), fmOpenRead);
   try
     LoadMusicFromStream(F, aName);
   finally
@@ -351,6 +346,7 @@ begin
 
   if fMusicChannel = $FFFFFFFF then
     ObtainMusicBassChannel;
+
   BASS_ChannelPlay(fMusicChannel, false);
 end;
 

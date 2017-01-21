@@ -6,10 +6,11 @@ interface
 
 uses
   LemmixHotkeys, SharedGlobals,
-  Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls,
+  Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
   GR32, GR32_Image, GR32_Layers,
   LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
   LemGame, GameSoundOld, LemGameMessageQueue,
+  GameSound, LemTypes, LemStrings,
   GameControl, GameSkillPanel, GameBaseScreen;
 
 type
@@ -65,6 +66,8 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     procedure ProcessGameMessages;
+
+    function GetLevelMusicName: String;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -119,6 +122,46 @@ implementation
 uses FBaseDosForm, FEditReplay;
 
 { TGameWindow }
+
+function TGameWindow.GetLevelMusicName: String;
+var
+  MusicName: String;
+  Ext: String;
+  MusicIndex: Integer;
+  TempStream: TMemoryStream;
+  SL: TStringList;
+begin
+  MusicName := ChangeFileExt(GameParams.Level.Info.MusicFile, '');
+
+  if (MusicName <> '') and (LeftStr(MusicName, 1) <> '?') then
+    if SoundManager.FindExtension(MusicName, true) <> '' then
+    begin
+      Result := MusicName;
+      Exit;
+    end;
+
+  if LeftStr(MusicName, 1) = '?' then
+    MusicIndex := StrToIntDef(RightStr(MusicName, Length(MusicName)-1), -1)
+  else
+    MusicIndex := -1;
+
+  SL := TStringList.Create;
+  TempStream := CreateDataStream('music.txt', ldtLemmings); // It's a text file, but should be loaded more similarly to data files.
+  if TempStream = nil then
+    SL.LoadFromFile(AppPath + SFData + 'music.nxmi')
+  else begin
+    SL.LoadFromStream(TempStream);
+    TempStream.Free;
+  end;
+
+  if MusicIndex = -1 then
+    if GameParams.fTestMode then
+      MusicIndex := Random(SL.Count)
+    else
+      MusicIndex := GameParams.Info.dLevel;
+
+  Result := SL[MusicIndex mod SL.Count];
+end;
 
 procedure TGameWindow.SetClearPhysics(aValue: Boolean);
 begin
@@ -304,7 +347,8 @@ begin
       GAMEMSG_FINISH: Game_Finished;
       GAMEMSG_TIMEUP: Game_Finished; // currently no distinction as it relies on reading LemGame's data
 
-      // still need to implement sound / music here
+      // still need to implement sound
+      GAMEMSG_MUSIC: SoundManager.PlayMusic;
     end;
   end;
 end;
@@ -817,17 +861,7 @@ begin
                            end;
           lka_SaveImage: SaveShot;
           lka_LoadReplay: LoadReplay;
-          lka_Music: if MusicVolume <> 0 then
-                     begin
-                       SavedMusicVol := MusicVolume;
-                       SoundOpts := SoundOpts - [gsoMusic];
-                       MusicVolume := 0;
-                     end else begin
-                       if SavedMusicVol = 0 then
-                         SavedMusicVol := 50;
-                       MusicVolume := SavedMusicVol; // must be first, else music plays at volume zero
-                       SoundOpts := SoundOpts + [gsoMusic];
-                     end;
+          lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
           lka_Restart: begin
                          if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                          GotoSaveState(0, true); // the true prevents pausing afterwards
@@ -1173,6 +1207,13 @@ begin
   fRenderInterface := Game.RenderInterface;
   fRenderer.SetInterface(fRenderInterface);
 
+  if FileExists(AppPath + SFMusic + GetLevelMusicName + SoundManager.FindExtension(GetLevelMusicName, true)) then
+    SoundManager.LoadMusicFromFile(GetLevelMusicName)
+  else begin
+    ShowMessage('not found!' + #13 + AppPath + SFMusic + GetLevelMusicName + SoundManager.FindExtension(GetLevelMusicName, true));
+    SoundManager.FreeMusic; // This is safe to call even if no music is loaded, but ensures we don't just get the previous level's music
+  end;
+
 end;
 
 procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
@@ -1356,6 +1397,8 @@ begin
     GameParams.ReplayResultList[GameParams.ReplayCheckIndex] := s;
     CloseScreen(gstPreview);
   end;
+
+  SoundManager.StopMusic;
 
   if (GameParams.fTestMode and (GameParams.QuickTestMode in [2, 3])) then
   begin
