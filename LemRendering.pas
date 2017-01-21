@@ -1344,6 +1344,8 @@ begin
 
     ProcessDrawFrame(rlOnTerrainObjects);
     fLayers.fIsEmpty[rlOnTerrainObjects] := False;
+
+    DrawTriggerArea(Inf);
   end;
 
   // Draw one-way arrows
