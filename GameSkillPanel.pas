@@ -12,6 +12,7 @@ uses
   LemCore, LemLevel, LemNeoTheme,
   GameInterfaces, GameControl,
   LemGame, LemRenderHelpers, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
+  GameSound,
   PngInterface;
 
   {-------------------------------------------------------------------------------
@@ -24,6 +25,7 @@ uses
   // 4. TIME 2-31               32/40
 
   -------------------------------------------------------------------------------}
+
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
 type
@@ -236,6 +238,7 @@ begin
           if fHighlitSkill = spbNone then Exit;
           R := fButtonRects[fHighlitSkill];
           fHighlitSkill := spbNone;
+          SoundManager.PlaySound(SFX_SKILLBUTTON); // kinda kludgy putting this here, should improve at some point
         end else
           R := fButtonRects[aButton];
         Inc(R.Right);
@@ -271,7 +274,7 @@ begin
           R := fButtonRects[aButton];
         Inc(R.Right);
         Inc(R.Bottom, 2);
-        { TODO : do something with this palettes }
+
         C := fRectColor;
 
         fImg.Bitmap.FrameRectS(R, C);

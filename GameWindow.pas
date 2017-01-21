@@ -10,7 +10,7 @@ uses
   GR32, GR32_Image, GR32_Layers,
   LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
   LemGame, LemGameMessageQueue,
-  GameSound, LemTypes, LemStrings,
+  GameSound, LemTypes, LemStrings, LemLemming,
   GameControl, GameSkillPanel, GameBaseScreen;
 
 type
@@ -963,6 +963,7 @@ procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
 
 var
   PassKey: Word;
+  OldHighlightLemming: TLemming;
 begin
   if not fMouseTrapped then
     ApplyMouseTrap;
@@ -996,7 +997,10 @@ begin
 
     if Game.IsHighlightHotkey and not (Game.Replaying and GameParams.ExplicitCancel) then
     begin
+      OldHighlightLemming := fRenderInterface.HighlitLemming;
       Game.ProcessHighlightAssignment;
+      if fRenderInterface.HighlitLemming <> OldHighlightLemming then
+        SoundManager.PlaySound(SFX_SKILLBUTTON);
     end;
 
     if Game.Paused then

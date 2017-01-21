@@ -37,24 +37,6 @@ const
         DOM_ONEWAYDOWN, DOM_UPDRAFT, DOM_SLOWFREEZE, DOM_HINT, DOM_NOSPLAT,
         DOM_SPLAT, DOM_BACKGROUND];
 
-  SFX_BUILDER_WARNING = 'ting';
-  SFX_ASSIGN_SKILL = 'mousepre';
-  SFX_YIPPEE = 'yippee';
-  SFX_SPLAT = 'splat';
-  SFX_LETSGO = 'letsgo';
-  SFX_ENTRANCE = 'door';
-  SFX_VAPORIZING = 'fire';
-  SFX_DROWNING = 'glug';
-  SFX_EXPLOSION = 'explode';
-  SFX_HITS_STEEL = 'chink';
-  SFX_OHNO = 'ohno';
-  SFX_SKILLBUTTON = 'changeop';
-  SFX_PICKUP = 'oing2';
-  SFX_SWIMMING = 'splash';
-  SFX_FALLOUT = 'die';
-  SFX_FIXING = 'wrench';
-  SFX_ZOMBIE = 'zombie';
-
 const
   // never change, do NOT trust the bits are the same as the enumerated type.
 
@@ -4825,7 +4807,6 @@ begin
 
   if fHighlightLemmingID <> OldHighlightLemmingID then
   begin
-    CueSoundEffect(SFX_SKILLBUTTON);
 
     if Paused then
       if OldHighlightLemmingID <> -1 then
@@ -4949,7 +4930,6 @@ begin
           InfoPainter.DrawButtonSelector(fSelectedSkill, False);  // unselect old skill
           fSelectedSkill := Value;
           InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
-          CueSoundEffect(SFX_SKILLBUTTON);
           CheckForNewShadow;
         end;
 

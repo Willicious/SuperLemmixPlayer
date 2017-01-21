@@ -42,6 +42,25 @@ const
 
   SFData = 'data\';
 
+  // Sound effect files
+  SFX_BUILDER_WARNING = 'ting';
+  SFX_ASSIGN_SKILL = 'mousepre';
+  SFX_YIPPEE = 'yippee';
+  SFX_SPLAT = 'splat';
+  SFX_LETSGO = 'letsgo';
+  SFX_ENTRANCE = 'door';
+  SFX_VAPORIZING = 'fire';
+  SFX_DROWNING = 'glug';
+  SFX_EXPLOSION = 'explode';
+  SFX_HITS_STEEL = 'chink';
+  SFX_OHNO = 'ohno';
+  SFX_SKILLBUTTON = 'changeop';
+  SFX_PICKUP = 'oing2';
+  SFX_SWIMMING = 'splash';
+  SFX_FALLOUT = 'die';
+  SFX_FIXING = 'wrench';
+  SFX_ZOMBIE = 'zombie';
+
 resourcestring
   SProgramName = 'NeoLemmix Player';
   SDummyString = '';
