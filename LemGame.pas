@@ -22,7 +22,7 @@ uses
   LemCore, LemTypes, LemDosBmp, LemDosStructures, LemStrings, LemMetaAnimation,
   LemMetaObject, LemLevel, LemStyle,
   LemRenderHelpers, LemRendering, LemDosAnimationSet,
-  LemMusicSystem, LemNeoTheme,
+  LemNeoTheme,
   LemObjects, LemLemming, LemRecolorSprites,
   LemReplay,
   LemGameMessageQueue,
@@ -126,8 +126,6 @@ type
     fTargetBitmap              : TBitmap32; // reference to the drawing bitmap on the gamewindow
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
-    fMusicLoaded               : Boolean;
-
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
     PhysicsMap                 : TBitmap32;
@@ -219,7 +217,6 @@ type
     fHyperSpeed                : Boolean; // we are at hyperspeed no targetbitmap output
     fLeavingHyperSpeed         : Boolean; // in between state (see UpdateLemmings)
     fPauseOnHyperSpeedExit     : Boolean; // to maintain pause state before invoking a savestate
-    fStartupMusicAfterEntry    : Boolean;
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
     fCancelReplayAfterSkip     : Boolean;
@@ -1137,12 +1134,8 @@ var
 begin
   fXmasPal := GameParams.SysDat.Options2 and 2 <> 0;
 
-  fStartupMusicAfterEntry := True;
-  fMusicLoaded := false;
-
   fSoundOpts := [];
   if SoundVolume > 0 then fSoundOpts := fSoundOpts + [gsoSound];
-  if MusicVolume > 0 then fSoundOpts := fSoundOpts + [gsoMusic];
 
   fRenderer := GameParams.Renderer; // set ref
   fTargetBitmap := GameParams.TargetBitmap;
@@ -4804,21 +4797,12 @@ begin
           AY := AY div EntryOpenCount;
           CueSoundEffect(SFX_ENTRANCE, Point(AX, AY));
         end;
-        if fStartupMusicAfterEntry and not EntriesOpened then
-        begin
-          fStartupMusicAfterEntry := False;
+        if not EntriesOpened then
           PlayMusic;
-        end;
         EntriesOpened := True;
       end;
     55:
-      begin
-        if fStartupMusicAfterEntry then
-        begin
-          fStartupMusicAfterEntry := False;
-          PlayMusic;
-        end;
-      end;
+      PlayMusic;
   end;
 
 end;
