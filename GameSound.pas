@@ -148,10 +148,10 @@ end;
 procedure TSoundManager.ObtainMusicBassChannel;
 begin
   Assert(fMusicChannel = $FFFFFFFF, 'TSoundManager.ObtainMusicBassChannel: A channel already exists!');
-  fMusicChannel := BASS_StreamCreateFile(true, fMusicStream.Memory, 0, fMusicStream.Size, 0);
+  fMusicChannel := BASS_StreamCreateFile(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP);
   if fMusicChannel = 0 then // this means we have a module-based file
   begin
-    fMusicChannel := BASS_MusicLoad(true, fMusicStream.Memory, 0, fMusicStream.Size, 0, 0);
+    fMusicChannel := BASS_MusicLoad(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP, 0);
     BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume / 2);
   end else begin
     BASS_LoadLoopData(fMusicChannel); // yay, this was added to the BASS unit rather than GameSound
