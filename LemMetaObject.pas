@@ -17,31 +17,6 @@ const
   oat_Continuous               = 2;    // the object is always moving
   oat_Once                     = 3;    // the object is animated once at the beginning (entrance only)
 
-  // Object Sound Effects
-  ose_None                     = 0;     // no sound effect
-  ose_SkillSelect              = 1;     // the sound you get when you click on one of the skill icons at the bottom of the screen
-  ose_Entrance                 = 2;     // entrance opening (sounds like "boing")
-  ose_LevelIntro               = 3;     // level intro (the "let's go" sound)
-  ose_SkillAssign              = 4;     // the sound you get when you assign a skill to lemming
-  ose_OhNo                     = 5;     // the "oh no" sound when a lemming is about to explode
-  ose_ElectroTrap              = 6;     // sound effect of the electrode trap and zap trap,
-  ose_SquishingTrap            = 7;     // sound effect of the rock squishing trap, pillar squishing trap, and spikes trap
-  ose_Splattering              = 8;     // the "aargh" sound when the lemming fall down too far and splatters
-  ose_RopeTrap                 = 9;     // sound effect of the rope trap and slicer trap
-  ose_HitsSteel                = 10;    // sound effect when a basher/miner/digger hits steel
-  ose_Unknown                  = 11;    // ? (not sure where used in game)
-  ose_Explosion                = 12;    // sound effect of a lemming explosion
-  ose_SpinningTrap             = 13;    // sound effect of the spinning-trap-of-death, coal pits, and fire shooters (when a lemming touches the object and dies)
-  ose_TenTonTrap               = 14;    // sound effect of the 10-ton trap
-  ose_BearTrap                 = 15;    // sound effect of the bear trap
-  ose_Exit                     = 16;    // sound effect of a lemming exiting
-  ose_Drowning                 = 17;    // sound effect of a lemming dropping into water and drowning
-  ose_BuilderWarning           = 18;    // sound effect for the last 3 bricks a builder is laying down
-  ose_FireTrap                 = 19;
-  ose_Slurp                    = 20;
-  ose_Vaccuum                  = 21;
-  ose_Weed                     = 22;
-
   ALIGNMENT_COUNT = 8; // 4 possible combinations of Flip + Invert + Rotate
 
 type
