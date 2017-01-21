@@ -102,8 +102,8 @@ type
       destructor Destroy; override;
 
       procedure LoadDefaultSounds;
-      procedure LoadSoundFromFile(aName: String; aDefault: Boolean = false);
-      procedure LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false);
+      function LoadSoundFromFile(aName: String; aDefault: Boolean = false): Integer;
+      function LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false): Integer;
       procedure PurgeNonDefaultSounds;
 
       procedure LoadMusicFromFile(aName: String);
@@ -115,6 +115,7 @@ type
       procedure FreeMusic;
 
       function FindExtension(const aName: String; aIsMusic: Boolean): String;
+      function DoesSoundExist(const aName: String): Boolean;
 
       property SoundVolume: Integer read fSoundVolume write fSoundVolume;
       property MusicVolume: Integer read fMusicVolume write SetMusicVolume;
@@ -227,21 +228,37 @@ begin
       Exit;
 end;
 
-procedure TSoundManager.LoadSoundFromFile(aName: String; aDefault: Boolean = false);
+function TSoundManager.LoadSoundFromFile(aName: String; aDefault: Boolean = false): Integer;
 var
   F: TFileStream;
+  Ext: String;
 begin
+  Result := FindSoundIndex(aName);
+
+  if Result <> -1 then
+    Exit;
+
+  Ext := FindExtension(aName, false);
+  if Ext = '' then
+    Exit;
+
   F := TFileStream.Create(AppPath + SFSounds + aName + FindExtension(aName, false), fmOpenRead);
   try
-    LoadSoundFromStream(F, aName, aDefault);
+    Result := LoadSoundFromStream(F, aName, aDefault);
   finally
     F.Free;
   end;
 end;
 
-
-procedure TSoundManager.LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false);
+function TSoundManager.LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false): Integer;
 begin
+  Result := FindSoundIndex(aName);
+
+  if Result <> -1 then
+    Exit;
+
+  Result := fSoundEffects.Count;
+
   with fSoundEffects.Add do
   begin
     LoadFromStream(aStream, aName);
@@ -302,6 +319,11 @@ begin
   Result := -1;
 end;
 
+function TSoundManager.DoesSoundExist(const aName: String): Boolean;
+begin
+  Result := FindSoundIndex(aName) <> -1;
+end;
+
 procedure TSoundManager.PurgeNonDefaultSounds;
 var
   i: Integer;
@@ -314,11 +336,19 @@ end;
 procedure TSoundManager.LoadMusicFromFile(aName: String);
 var
   F: TFileStream;
+  Ext: String;
 begin
   aName := Lowercase(aName);
   if fMusicName = aName then Exit; // saves some time
 
-  F := TFileStream.Create(AppPath + SFMusic + aName + FindExtension(aName, true), fmOpenRead);
+  Ext := FindExtension(aName, true);
+  if Ext = '' then
+  begin
+    FreeMusic;
+    Exit;
+  end;
+
+  F := TFileStream.Create(AppPath + SFMusic + aName + Ext, fmOpenRead);
   try
     LoadMusicFromStream(F, aName);
   finally
@@ -365,6 +395,10 @@ var
 begin
   if fMuteSound then Exit;
   SoundIndex := FindSoundIndex(aName);
+
+  if SoundIndex = -1 then
+    SoundIndex := LoadSoundFromFile(aName);
+
   if SoundIndex <> -1 then
   begin
     SampleChannel := BASS_SampleGetChannel(fSoundEffects[SoundIndex].BassSample, true);
