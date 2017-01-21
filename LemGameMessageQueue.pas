@@ -55,6 +55,7 @@ type
       constructor Create;
       // no special destructor needed due to using an array type rather than an object
       procedure Add(aType: Integer; aData1: String = ''; aData2: String = '');
+      procedure Clear;
       property NextMessage: TGameMessage read GetMessage;
       property HasMessages: Boolean read GetHasMessages;
   end;
@@ -64,8 +65,7 @@ implementation
 constructor TGameMessageQueue.Create;
 begin
   inherited;
-  fQueueEntryCount := 0;
-  fCurrentReadEntry := 0;
+  Clear;
   SetLength(fQueueEntries, 50);
 end;
 
@@ -92,8 +92,7 @@ begin
     Inc(fCurrentReadEntry);
   end else begin
     Result.MessageType := GAMEMSG_NIL;
-    fQueueEntryCount := 0;
-    fCurrentReadEntry := 0;
+    Clear;
   end;
 end;
 
@@ -101,10 +100,13 @@ function TGameMessageQueue.GetHasMessages: Boolean;
 begin
   Result := fCurrentReadEntry < fQueueEntryCount;
   if not Result then
-  begin
-    fQueueEntryCount := 0;
-    fCurrentReadEntry := 0;
-  end;
+    Clear;
+end;
+
+procedure TGameMessageQueue.Clear;
+begin
+  fCurrentReadEntry := 0;
+  fQueueEntryCount := 0;
 end;
 
 end.

@@ -1498,6 +1498,8 @@ begin
 
   SoundMgr.ClearQueue;
 
+  MessageQueue.Clear;
+
   Playing := True;
 end;
 
