@@ -132,6 +132,7 @@ implementation
 constructor TSoundManager.Create;
 begin
   inherited;
+  BASS_Init(-1, 44100, BASS_DEVICE_NOSPEAKER, 0, nil);
   fSoundEffects := TSoundEffects.Create;
   fMusicStream := TMemoryStream.Create;
   fMusicChannel := $FFFFFFFF;
@@ -142,6 +143,7 @@ begin
   FreeMusic;
   fMusicStream.Free;
   fSoundEffects.Free;
+  BASS_Free;
   inherited;
 end;
 

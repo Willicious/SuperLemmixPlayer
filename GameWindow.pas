@@ -348,6 +348,10 @@ begin
       GAMEMSG_TIMEUP: Game_Finished; // currently no distinction as it relies on reading LemGame's data
 
       // still need to implement sound
+      GAMEMSG_SOUND: if not Game.HyperSpeed then
+                       SoundManager.PlaySound(Msg.MessageDataStr);
+      GAMEMSG_SOUND_BAL: if not Game.HyperSpeed then
+                           SoundManager.PlaySound(Msg.MessageDataStr, Msg.MessageDataInt);
       GAMEMSG_MUSIC: SoundManager.PlayMusic;
     end;
   end;
@@ -869,17 +873,7 @@ begin
                          if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                          GotoSaveState(0, true); // the true prevents pausing afterwards
                        end;
-          lka_Sound: if SoundVolume <> 0 then
-                     begin
-                       SavedSoundVol := SoundVolume;
-                       SoundOpts := SoundOpts - [gsoSound];
-                       SoundVolume := 0;
-                     end else begin
-                       if SavedSoundVol = 0 then
-                         SavedSoundVol := 50;
-                       SoundOpts := SoundOpts + [gsoSound];
-                       SoundVolume := SavedSoundVol;
-                     end;
+          lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
           lka_SaveReplay: Save;
           lka_SkillRight: begin
                             sn := GetSelectedSkill;

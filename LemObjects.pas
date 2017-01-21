@@ -27,7 +27,7 @@ type
     procedure SetTop(Value: Integer);
     procedure SetZombieMode(Value: Boolean);
     function GetSkillType: TSkillPanelButton;
-    function GetSoundEffect: Integer;
+    function GetSoundEffect: String;
     function GetIsOnlyOnTerrain: Boolean;
     function GetIsUpsideDown: Boolean;
     function GetIsNoOverwrite: Boolean;
@@ -71,7 +71,7 @@ type
     property IsFlipImage: Boolean read GetIsFlipImage;          // ... and 64
     property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
-    property SoundEffect: Integer read GetSoundEffect;
+    property SoundEffect: String read GetSoundEffect;
     property PreassignedSkills: Integer read GetPreassignedSkills;
     property ZombieMode: Boolean read sZombieMode write SetZombieMode;
     property KeyFrame: Integer read GetKeyFrame;
@@ -280,7 +280,7 @@ begin
   Result := TSkillPanelButton(Obj.Skill);
 end;
 
-function TInteractiveObjectInfo.GetSoundEffect: Integer;
+function TInteractiveObjectInfo.GetSoundEffect: String;
 begin
   Result := MetaObj.SoundEffect;
 end;

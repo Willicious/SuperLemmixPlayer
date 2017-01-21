@@ -64,7 +64,7 @@ type
 
   TMetaObjectProperty = (ov_Frames, ov_Width, ov_Height, ov_TriggerLeft, ov_TriggerTop,
                          ov_TriggerWidth, ov_TriggerHeight, ov_TriggerEffect,
-                         ov_KeyFrame, ov_PreviewFrame, ov_SoundEffect);
+                         ov_KeyFrame, ov_PreviewFrame);
                          // Integer properties only.
 
   TMetaObject = class
@@ -85,7 +85,7 @@ type
     fTriggerEffect                : Integer; // ote_xxxx see dos doc
     fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
-    fSoundEffect                  : Integer; // ose_xxxx what sound to play
+    fSoundEffect                  : String;  // filename of sound to play
     fRandomStartFrame             : Boolean;
     fResizability                 : TMetaObjectSizeSetting;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
@@ -154,6 +154,8 @@ type
       procedure SetResizability(aValue: TMetaObjectSizeSetting);
       function GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
       function GetImages: TBitmaps;
+      function GetSoundEffect: String;
+      procedure SetSoundEffect(aValue: String);
     public
       constructor Create(aMetaObject: TMetaObject; Flip, Invert, Rotate: Boolean);
 
@@ -170,7 +172,7 @@ type
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
       property PreviewFrame: Integer index ov_PreviewFrame read GetIntegerProperty write SetIntegerProperty;
       property RandomStartFrame: Boolean read GetRandomStartFrame write SetRandomStartFrame;
-      property SoundEffect: Integer index ov_SoundEffect read GetIntegerProperty write SetIntegerProperty; // though sound effect shouldn't really be an integer, but we'll leave it as one until this new system works overall
+      property SoundEffect: String read GetSoundEffect write SetSoundEffect;
 
       property Resizability             : TMetaObjectSizeSetting read GetResizability write SetResizability;
       property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
@@ -332,7 +334,7 @@ begin
     O.TriggerWidth := Sec.LineNumeric['trigger_width'];
     O.TriggerHeight := Sec.LineNumeric['trigger_height'];
 
-    fSoundEffect := Sec.LineNumeric['sound'];
+    fSoundEffect := Sec.LineTrimString['sound'];
 
     if Sec.Line['random_start_frame'] <> nil then
     begin
@@ -653,7 +655,6 @@ begin
     ov_TriggerEffect: Result := fMetaObject.fTriggerEffect;
     ov_KeyFrame: Result := fMetaObject.fKeyFrame;
     ov_PreviewFrame: Result := fMetaObject.fPreviewFrameIndex;
-    ov_SoundEffect: Result := fMetaObject.fSoundEffect;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;
@@ -668,9 +669,18 @@ begin
     ov_TriggerEffect: fMetaObject.fTriggerEffect := aValue;
     ov_KeyFrame: fMetaObject.fKeyFrame := aValue;
     ov_PreviewFrame: fMetaObject.fPreviewFrameIndex := aValue;
-    ov_SoundEffect: fMetaObject.fSoundEffect := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
+end;
+
+function TMetaObjectInterface.GetSoundEffect: String;
+begin
+  Result := fMetaObject.fSoundEffect;
+end;
+
+procedure TMetaObjectInterface.SetSoundEffect(aValue: String);
+begin
+  fMetaObject.fSoundEffect := aValue;
 end;
 
 function TMetaObjectInterface.GetRandomStartFrame: Boolean;

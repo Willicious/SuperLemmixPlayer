@@ -15,6 +15,7 @@ uses
   LemLevelSystem,
   LemGame,
   GameControl,
+  GameSound,
   GameBaseScreen;
 
 {-------------------------------------------------------------------------------
@@ -240,10 +241,10 @@ begin
     if gRescued >= Level.Info.RescueCount then
     begin
       if PostLevelVictorySound then
-        GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_SUCCESS)
+        SoundManager.PlaySound('success');
     end else begin
       if PostLevelFailureSound then
-        GlobalGame.SoundMgr.PlaySound(GlobalGame.SFX_FAILURE);
+        SoundManager.PlaySound('failure');
     end;
 
     // init some local strings

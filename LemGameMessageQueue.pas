@@ -34,14 +34,15 @@ const
   GAMEMSG_FINISH = 1;   // Signifies that gameplay has ended due to lack of remaining lemmings.
   GAMEMSG_TIMEUP = 2;   // Signifies that gameplay has ended due to time running out.
 
-  GAMEMSG_SOUND = 10;   // Plays a sound. Data1: Filename of sound to play, without any extension. Data2: X coordinate of origin.
-  GAMEMSG_MUSIC = 11;   // Starts music if not already playing.
+  GAMEMSG_SOUND = 10;       // Plays a sound. DataStr: Filename of sound to play, without any extension.
+  GAMEMSG_SOUND_BAL = 11;   // Plays a sound. DataStr: Filename of sound to play, without any extension. DataInt: X coordinate of origin.
+  GAMEMSG_MUSIC = 12;       // Starts music if not already playing.
 
 type
   TGameMessage = record
     MessageType:    Integer;
-    MessageData1:    String;
-    MessageData2:    String;
+    MessageDataStr:    String;
+    MessageDataInt:    Int64;
   end;
 
   TGameMessageQueue = class
@@ -54,7 +55,11 @@ type
     public
       constructor Create;
       // no special destructor needed due to using an array type rather than an object
-      procedure Add(aType: Integer; aData1: String = ''; aData2: String = '');
+      procedure Add(aType: Integer); overload;
+      procedure Add(aType: Integer; aDataStr: String); overload;
+      procedure Add(aType: Integer; aDataInt: Int64); overload;
+      procedure Add(aType: Integer; aDataStr: String; aDataInt: Int64); overload;
+      procedure Add(aType: Integer; aDataInt: Int64; aDataStr: String); overload;
       procedure Clear;
       property NextMessage: TGameMessage read GetMessage;
       property HasMessages: Boolean read GetHasMessages;
@@ -69,7 +74,27 @@ begin
   SetLength(fQueueEntries, 50);
 end;
 
-procedure TGameMessageQueue.Add(aType: Integer; aData1: String = ''; aData2: String = '');
+procedure TGameMessageQueue.Add(aType: Integer);
+begin
+  Add(aType, '', 0);
+end;
+
+procedure TGameMessageQueue.Add(aType: Integer; aDataStr: String);
+begin
+  Add(aType, aDataStr, 0);
+end;
+
+procedure TGameMessageQueue.Add(aType: Integer; aDataInt: Int64);
+begin
+  Add(aType, '', aDataInt);
+end;
+
+procedure TGameMessageQueue.Add(aType: Integer; aDataInt: Int64; aDataStr: String);
+begin
+  Add(aType, aDataStr, aDataInt);
+end;
+
+procedure TGameMessageQueue.Add(aType: Integer; aDataStr: String; aDataInt: Int64);
 begin
   if fQueueEntryCount = Length(fQueueEntries) then
     SetLength(fQueueEntries, fQueueEntryCount + 50); // avoids constant resizing, but does so if the need arises
@@ -77,8 +102,8 @@ begin
   with fQueueEntries[fQueueEntryCount] do
   begin
     MessageType := aType;
-    MessageData1 := aData1;
-    MessageData2 := aData2;
+    MessageDataStr := aDataStr;
+    MessageDataInt := aDataInt;
   end;
 
   Inc(fQueueEntryCount);
