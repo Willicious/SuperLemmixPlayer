@@ -854,7 +854,10 @@ begin
                             GotoSaveState(fSaveStateFrame);
                             if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                           end;
-          lka_Cheat: Game.Cheat;
+          lka_Cheat: begin
+                       Game.Cheat;
+                       Game_Finished;
+                     end;
           lka_FastForward: begin
                              if not Paused then FastForward := not FastForward;
                              SkillPanel.DrawButtonSelector(spbFastForward, Game.FastForward);
