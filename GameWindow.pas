@@ -160,7 +160,8 @@ begin
     else
       MusicIndex := GameParams.Info.dLevel;
 
-  Result := SL[MusicIndex mod SL.Count];
+  if SL.Count > 0 then
+    Result := SL[MusicIndex mod SL.Count];
 end;
 
 procedure TGameWindow.SetClearPhysics(aValue: Boolean);
