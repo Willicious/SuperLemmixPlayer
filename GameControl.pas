@@ -172,6 +172,7 @@ type
     LemMusicOnDisk      : Boolean;
 
     fZoomFactor          : Integer;
+    fZoomForNextLoad     : Integer;
     fForceSkillset       : Word;
     fLevelOverride       : Integer;
 
@@ -227,6 +228,7 @@ type
     property ForceSkillset: Word read fForceSkillset write fForceSkillset;
     property QuickTestMode: Integer read fTestScreens write fTestScreens;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
+    property ZoomForNextLoad: Integer read fZoomForNextLoad write fZoomForNextLoad;
     property MainForm: TForm read fMainForm write fMainForm;
 
     property Talismans: TTalismans read fTalismans;
@@ -303,7 +305,11 @@ begin
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('NoShadows', NoShadows);
   SaveBoolean('ShowMinimap', ShowMinimap);
-  SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
+
+  if ZoomForNextLoad = -1 then
+    SL.Add('ZoomLevel=' + IntToStr(ZoomLevel))
+  else
+    SL.Add('ZoomLevel=' + IntToStr(ZoomForNextLoad));
 
   SL.Add('');
   SL.Add('# Sound Options');
@@ -413,6 +419,7 @@ begin
   fOneLevelMode := false;
   fTalismanPage := 0;
   fZoomLevel := 0;
+  fZoomForNextLoad := -1;
 
   LemDataInResource := True;
   LemSoundsInResource := True;

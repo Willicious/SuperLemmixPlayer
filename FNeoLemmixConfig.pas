@@ -143,7 +143,10 @@ begin
     cbZoom.Items.Add('Windowed, ' + IntToStr(i) + 'x Zoom');
     Inc(i);
   end;
-  cbZoom.ItemIndex := GameParams.ZoomLevel;
+  if GameParams.ZoomForNextLoad = -1 then
+    cbZoom.ItemIndex := GameParams.ZoomLevel
+  else
+    cbZoom.ItemIndex := GameParams.ZoomForNextLoad;
 
   //// Page 3 (Audio Options) ////
   if SoundManager.MuteSound then
@@ -181,6 +184,12 @@ begin
 end;
 
 procedure TFormNXConfig.SaveToParams;
+var
+  ResChangeNotification: Integer;
+const
+  CHANGE_NOTE_NONE = 0;
+  CHANGE_NOTE_LEAVE_MENU = 1;
+  CHANGE_NOTE_RESTART = 2;
 begin
   //// Variables ////
   GameParams.ForceSkillset := fForceSkillset;
@@ -228,9 +237,58 @@ begin
   GameParams.ShowMinimap := cbShowMinimap.Checked;
 
   // Zoom Dropdown
-  if GameParams.ZoomLevel <> cbZoom.ItemIndex then
-    ShowMessage('New zoom setting will be applied upon leaving the main menu.');
-  GameParams.ZoomLevel := cbZoom.ItemIndex;
+  // This is complex - changing windowed zoom just requires leaving the menu screen
+  // but changing between fullscreen and windowed requires a restart
+
+  // Conditions we need to handle:
+  // No setting for next load
+  //   - Currently windowed, selected fullscreen: Notify, and remember
+  //   - Currently fullscreen, selected windowed: Notify, and remember
+  //   - Currently windowed, selected different windowed: Notify of application on leaving menu screen, apply
+  // Has setting for next load
+  //   - Memorized setting is windowed
+  //       - Different zoom is selected: Notify, remember
+  //       - Same zoom is selected: Do nothing
+  //       - Fullscreen is selected: Cancel memorized setting
+  //   - Memorized setting is fullscreen
+  //       - Windowed is selected: Cancel memorized setting, notify apply on leaving menu, apply
+  //       - Fullscreen is selected: Do nothing
+  ResChangeNotification := CHANGE_NOTE_NONE;
+  if GameParams.ZoomForNextLoad = -1 then
+  begin
+    if (GameParams.ZoomLevel = 0) <> (cbZoom.ItemIndex = 0) then
+    begin
+      ResChangeNotification := CHANGE_NOTE_RESTART;
+      GameParams.ZoomForNextLoad := cbZoom.ItemIndex;
+    end else if GameParams.ZoomLevel <> cbZoom.ItemIndex then
+    begin
+      ResChangeNotification := CHANGE_NOTE_LEAVE_MENU;
+      GameParams.ZoomLevel := cbZoom.ItemIndex;
+    end;
+  end else if GameParams.ZoomForNextLoad = 0 then
+  begin
+    if cbZoom.ItemIndex > 0 then
+    begin
+      ResChangeNotification := CHANGE_NOTE_LEAVE_MENU;
+      GameParams.ZoomLevel := cbZoom.ItemIndex;
+      GameParams.ZoomForNextLoad := -1;
+    end;
+  end else begin
+    if cbZoom.ItemIndex = 0 then
+    begin
+      GameParams.ZoomForNextLoad := -1;
+    end;
+    if cbZoom.ItemIndex <> GameParams.ZoomForNextLoad then
+    begin
+      ResChangeNotification := CHANGE_NOTE_RESTART;
+      GameParams.ZoomForNextLoad := cbZoom.ItemIndex;
+    end;
+  end;
+
+  case ResChangeNotification of
+    CHANGE_NOTE_LEAVE_MENU: ShowMessage('Your new zoom setting will be applied upon leaving the menu screen.');
+    CHANGE_NOTE_RESTART: ShowMessage('Your new zoom setting will be applied upon restarting NeoLemmix.');
+  end;
 
   //// Page 3 (Audio Options) ////
   SoundManager.MuteSound := tbSoundVol.Position = 0;
