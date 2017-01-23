@@ -10,6 +10,7 @@ uses
   GameControl,
   LemDosStructures,
   LemDosMainDat,
+  LemSystemMessages,
   LemStrings, PngInterface, LemTypes;
 
 const
@@ -192,6 +193,8 @@ begin
   if GameParams <> nil then
     GameParams.NextScreen := aNextScreen;
   Close;
+
+  SendMessage(MainFormHandle, LM_NEXT, 0, 0);
 end;
 
 constructor TGameBaseScreen.Create(aOwner: TComponent);

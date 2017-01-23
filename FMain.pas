@@ -19,15 +19,13 @@ unit FMain;
 interface
 
 uses
+  LemSystemMessages,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs,  StdCtrls,
   FBaseDosForm,
   LemNeoLevelPack, // compile test
   LemGame,
   AppController;
-
-const
-  LM_START = WM_USER + 1;
 
 type
   TMainForm = class(TBaseDosForm)
@@ -36,6 +34,8 @@ type
     Started: Boolean;
     AppController: TAppController;
     procedure LMStart(var Msg: TMessage); message LM_START;
+    procedure LMNext(var Msg: TMessage); message LM_NEXT;
+    procedure LMExit(var Msg: TMessage); message LM_EXIT;
     procedure PlayGame;
   public
     constructor Create(aOwner: TComponent); override;
@@ -47,12 +47,27 @@ var
 
 implementation
 
+uses
+  GameControl;
+
 {$R *.dfm}
 
 procedure TMainForm.LMStart(var Msg: TMessage);
 begin
   //Hide;
   PlayGame;
+end;
+
+procedure TMainForm.LMNext(var Msg: TMessage);
+begin
+  AppController.FreeScreen;
+  PlayGame;
+end;
+
+procedure TMainForm.LMExit(var Msg: TMessage);
+begin
+  AppController.FreeScreen;
+  Close;
 end;
 
 constructor TMainForm.Create(aOwner: TComponent);
@@ -74,8 +89,10 @@ end;
 procedure TMainForm.PlayGame;
 begin
   try
-    AppController.Execute;
-    Close;
+    if not AppController.Execute then
+    begin
+      Close;
+    end;
   except
     on E: Exception do
     begin
@@ -90,6 +107,7 @@ begin
   if Started then
     Exit;
   Started := True;
+  MainFormHandle := Handle;
   PostMessage(Handle, LM_START, 0, 0);
 end;
 

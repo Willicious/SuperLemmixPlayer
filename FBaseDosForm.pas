@@ -7,16 +7,11 @@ uses
   Dialogs, Gr32,
   GameControl;
 
-const
-  WM_AFTERSHOW = WM_USER + $1;
-
 type
   {-------------------------------------------------------------------------------
     abstract black, fullscreen, ancestor form
   -------------------------------------------------------------------------------}
   TBaseDosForm = class(TForm)
-  private
-    procedure HideMainForm(var msg : TMessage); message WM_AFTERSHOW;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure BuildScreen; virtual;
@@ -83,17 +78,7 @@ function TBaseDosForm.ShowScreen: Integer;
 begin
   PrepareGameParams;
   BuildScreen;
-  Result := ShowModal;
-end;
-
-procedure TBaseDosForm.HideMainForm(var msg : TMessage);
-begin
-  // Tried a hundred different ways to prevent the between-screen flickering in windowed mode.
-  // Nothing seems to work, but this way seems to have the least-noticable flickering.
-  if (GameParams <> nil) and (GameParams.ZoomLevel <> 0) and (GameParams.MainForm <> self) then
-  begin
-    GameParams.MainForm.Visible := false;
-  end;
+  Show;
 end;
 
 end.
