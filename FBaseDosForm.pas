@@ -24,6 +24,9 @@ type
 
 implementation
 
+uses
+  FMain;
+
 {$R *.dfm}
 
 { TBaseDosForm }
@@ -42,7 +45,7 @@ begin
   Color := clBlack;
   BorderStyle := {bsSizeable} bsNone;
   BorderIcons := [{biSystemMenu, biMinimize, biMaximize}];
-  WindowState := {wsNormal} wsMaximized;
+  WindowState := wsNormal {wsMaximized};
   Cursor := crNone;
 end;
 
@@ -64,12 +67,13 @@ begin
 
   if GameParams.ZoomLevel <> 0 then
   begin
-    BorderStyle := bsToolWindow;
-    WindowState := wsNormal;
+    //BorderStyle := bsToolWindow;
+    //WindowState := wsNormal;
+    Parent := GameParams.MainForm;
     ClientWidth := 320 * GameParams.ZoomLevel;
     ClientHeight := 200 * GameParams.ZoomLevel;
-    Left := GameParams.MainForm.Left;
-    Top := GameParams.MainForm.Top;
+    Left := 0; //GameParams.MainForm.Left;
+    Top := 0; //GameParams.MainForm.Top;
   end;
 
 end;
@@ -78,6 +82,7 @@ function TBaseDosForm.ShowScreen: Integer;
 begin
   PrepareGameParams;
   BuildScreen;
+  TMainForm(GameParams.MainForm).ChildForm := self;
   Show;
 end;
 

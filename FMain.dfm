@@ -12,6 +12,8 @@ object MainForm: TMainForm
   Font.Style = []
   OldCreateOrder = False
   OnActivate = FormActivate
+  OnKeyDown = FormKeyDown
+  OnKeyUp = FormKeyUp
   PixelsPerInch = 96
   TextHeight = 13
 end

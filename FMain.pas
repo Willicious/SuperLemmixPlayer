@@ -30,9 +30,14 @@ uses
 type
   TMainForm = class(TBaseDosForm)
     procedure FormActivate(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     Started: Boolean;
     AppController: TAppController;
+    fChildForm: TForm;
     procedure LMStart(var Msg: TMessage); message LM_START;
     procedure LMNext(var Msg: TMessage); message LM_NEXT;
     procedure LMExit(var Msg: TMessage); message LM_EXIT;
@@ -40,6 +45,7 @@ type
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
+    property ChildForm: TForm read fChildForm write fChildForm;
   end;
 
 var
@@ -109,6 +115,22 @@ begin
   Started := True;
   MainFormHandle := Handle;
   PostMessage(Handle, LM_START, 0, 0);
+end;
+
+procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if fChildForm = nil then Exit;
+  if not Assigned(fChildForm.OnKeyDown) then Exit;
+  fChildForm.OnKeyDown(Sender, Key, Shift);
+end;
+
+procedure TMainForm.FormKeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if fChildForm = nil then Exit;
+  if not Assigned(fChildForm.OnKeyUp) then Exit;
+  fChildForm.OnKeyUp(Sender, Key, Shift);
 end;
 
 end.

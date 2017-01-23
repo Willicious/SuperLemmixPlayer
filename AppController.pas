@@ -57,6 +57,7 @@ type
 implementation
 
 uses
+  FMain,
   GameMenuScreen,
   GameLevelSelectScreen,
   GameLevelCodeScreen,
@@ -406,6 +407,7 @@ end;
 
 procedure TAppController.FreeScreen;
 begin
+  TMainForm(GameParams.MainForm).ChildForm := nil;
   fActiveForm.Free;
   fActiveForm := nil;
 end;
