@@ -208,9 +208,15 @@ begin
 end;
 
 procedure TGameWindow.ApplyMouseTrap;
+var
+  ClientTopLeft, ClientBottomRight: TPoint;
 begin
   fMouseTrapped := true;
   if (GameParams.ReplayCheckIndex <> -2) then Exit;
+
+  ClientTopLeft := ClientToScreen(Point(Img.Left, Img.Top));
+  ClientBottomRight := ClientToScreen(Point(Img.Left + Img.Width, SkillPanel.Top + SkillPanel.Height));
+    MouseClipRect := Rect(ClientTopLeft, ClientBottomRight);
   ClipCursor(@MouseClipRect);
 end;
 
@@ -1152,8 +1158,6 @@ procedure TGameWindow.PrepareGameParams;
 var
   Sca: Integer;
   CenterPoint: TPoint;
-
-  ClientTopLeft, ClientBottomRight: TPoint;
 begin
   inherited;
 
@@ -1178,27 +1182,13 @@ begin
   Img.Scale := Sca;
   Img.OffsetHorz := -GameParams.Level.Info.ScreenPosition * Sca;
   Img.OffsetVert := -GameParams.Level.Info.ScreenYPosition * Sca;
-  {if GameParams.ZoomLevel = 0 then
-  begin
-    Img.Left := (Screen.Width - Img.Width) div 2;
-    Img.Top := (Screen.Height - 200 * Sca) div 2;
-  end else begin}
-    Img.Left := 0;
-    Img.Top := 0;
-  //end;
+  Img.Left := 0;
+  Img.Top := 0;
 
   SkillPanel.Top := Img.Top + Img.Height;
   SkillPanel.left := Img.Left;
   SkillPanel.Width := Img.Width;
   SkillPanel.Height := 40 * Sca;
-
-  //if GameParams.ZoomLevel = 0 then
-  ClientTopLeft := ClientToScreen(Point(Img.Left, Img.Top));
-  ClientBottomRight := ClientToScreen(Point(Img.Left + Img.Width, SkillPanel.Top + SkillPanel.Height));
-    MouseClipRect := Rect(ClientTopLeft, ClientBottomRight);
-
-  {else
-    MouseClipRect := Rect(ClientToScreen(Point(0, 0)), ClientToScreen(Point(Img.Width, Img.Height + SkillPanel.Height)));}
 
   SkillPanel.SetStyleAndGraph(Gameparams.Style, Sca);
 
@@ -1434,6 +1424,7 @@ begin
   Application.OnIdle := nil;
   ClipCursor(nil);
   Cursor := crNone;
+  Screen.Cursor := crNone;
 
   Game.SetGameResult;
   GameParams.GameResult := Game.GameResultRec;
