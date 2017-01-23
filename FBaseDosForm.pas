@@ -75,7 +75,7 @@ begin
     if GameParams.ZoomLevel = 0 then
     begin
       Scale := Screen.Width div 320;
-      if Scale > Screen.Height div 200 then Scale := Screen.Width div 200;
+      if Scale > Screen.Height div 200 then Scale := Screen.Height div 200;
       ClientWidth := 320 * Scale;
       ClientHeight := 200 * Scale;
       Left := (Screen.Width - ClientWidth) div 2;

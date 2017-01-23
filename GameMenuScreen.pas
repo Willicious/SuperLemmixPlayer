@@ -701,8 +701,8 @@ begin
     GameParams.MainForm.BorderStyle := bsSingle;
     GameParams.MainForm.ClientWidth := 320 * GameParams.ZoomLevel;
     GameParams.MainForm.ClientHeight := 200 * GameParams.ZoomLevel;
-    GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;
-    GameParams.MainForm.Top := (Screen.Height - GameParams.MainForm.Height) div 2;
+    //GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;
+    //GameParams.MainForm.Top := (Screen.Height - GameParams.MainForm.Height) div 2;
   end;
   inherited CloseScreen(aNextScreen);
 end;

@@ -333,6 +333,11 @@ begin
     GameParams.MainForm.ClientHeight := 200 * GameParams.ZoomLevel;
     GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;
     GameParams.MainForm.Top := (Screen.Height - GameParams.MainForm.Height) div 2;
+  end else begin
+    GameParams.MainForm.BorderStyle := bsNone;
+    GameParams.MainForm.WindowState := wsMaximized;
+    GameParams.MainForm.ClientWidth := Screen.Width;
+    GameParams.MainForm.ClientHeight := Screen.Height;
   end;
 
   if GameParams.fTestMode then
