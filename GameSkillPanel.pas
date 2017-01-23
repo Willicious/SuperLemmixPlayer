@@ -54,6 +54,7 @@ type
     fCurrentScreenOffset : Integer;
 
     fHighlitSkill: TSkillPanelButton;
+    fLastHighlitSkill: TSkillPanelButton; // to avoid sounds when shouldn't be played
     fSkillCounts: Array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
 
 
@@ -174,6 +175,7 @@ begin
   Assert(length(fnewdrawstr) = 40, 'length error infostring');
 
   fHighlitSkill := spbNone;
+  fLastHighlitSkill := spbNone;
 
 
 end;
@@ -237,8 +239,8 @@ begin
         begin
           if fHighlitSkill = spbNone then Exit;
           R := fButtonRects[fHighlitSkill];
+          fLastHighlitSkill := fHighlitSkill;
           fHighlitSkill := spbNone;
-          SoundManager.PlaySound(SFX_SKILLBUTTON); // kinda kludgy putting this here, should improve at some point
         end else
           R := fButtonRects[aButton];
         Inc(R.Right);
@@ -270,6 +272,8 @@ begin
         begin
           fHighlitSkill := aButton;
           R := fButtonRects[fHighlitSkill];
+          if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
+            SoundManager.PlaySound(SFX_SKILLBUTTON);
         end else
           R := fButtonRects[aButton];
         Inc(R.Right);
