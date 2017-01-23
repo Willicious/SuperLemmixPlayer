@@ -5,9 +5,7 @@ program NeoLemmix;
 uses
   LemRes,
   Forms,
-  FMain in 'FMain.pas' {MainForm},
-  LemObjects in 'LemObjects.pas',
-  LemRecolorSprites in 'LemRecolorSprites.pas';
+  FMain in 'FMain.pas' {MainForm};
 
 {$R *.res}
 
