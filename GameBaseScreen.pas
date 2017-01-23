@@ -170,9 +170,9 @@ begin
 
   if GameParams.ZoomLevel <> 0 then
   begin
-    GameParams.MainForm.Left := Left;
-    GameParams.MainForm.Top := Top;
-    GameParams.MainForm.BorderStyle := bsToolWindow;
+    //GameParams.MainForm.Left := Left;
+    //GameParams.MainForm.Top := Top;
+    GameParams.MainForm.BorderStyle := bsSingle;
     GameParams.MainForm.WindowState := wsNormal;
   end else begin
     GameParams.MainForm.Left := 0;
@@ -187,8 +187,9 @@ begin
   begin
     GameParams.MainForm.BorderStyle := bsNone;
   end;
-  if not GameParams.MainForm.Visible then
-    GameParams.MainForm.Show;
+
+  //if not GameParams.MainForm.Visible then
+  //  GameParams.MainForm.Show;
 
   if GameParams <> nil then
     GameParams.NextScreen := aNextScreen;
@@ -399,10 +400,14 @@ begin
 
     with fOriginalImageBounds do
     begin
-      Left := (Screen.Width - aWidth) div 2;
+      {Left := (Screen.Width - aWidth) div 2;
       Top := (Screen.Height - aHeight) div 2;
       Right := Left + aWidth;
-      Bottom := Top + aHeight;
+      Bottom := Top + aHeight;}
+      Left := 0;
+      Height := 0;
+      Right := ClientWidth;
+      Bottom := ClientHeight;
     end;
 
     BoundsRect := fOriginalImageBounds;

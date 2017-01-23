@@ -327,7 +327,7 @@ begin
       GameParams.ZoomLevel := Screen.Width div 320;
     if GameParams.ZoomLevel > Screen.Height div 200 then
       GameParams.ZoomLevel := Screen.Height div 200;
-    GameParams.MainForm.BorderStyle := bsToolWindow;
+    GameParams.MainForm.BorderStyle := bsSingle;
     GameParams.MainForm.WindowState := wsNormal;
     GameParams.MainForm.ClientWidth := 320 * GameParams.ZoomLevel;
     GameParams.MainForm.ClientHeight := 200 * GameParams.ZoomLevel;

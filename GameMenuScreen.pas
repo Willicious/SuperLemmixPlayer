@@ -698,7 +698,7 @@ begin
     GameParams.MainForm.BorderStyle := bsNone;
     GameParams.MainForm.WindowState := wsMaximized;
   end else begin
-    GameParams.MainForm.BorderStyle := bsToolWindow;
+    GameParams.MainForm.BorderStyle := bsSingle;
     GameParams.MainForm.ClientWidth := 320 * GameParams.ZoomLevel;
     GameParams.MainForm.ClientHeight := 200 * GameParams.ZoomLevel;
     GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;

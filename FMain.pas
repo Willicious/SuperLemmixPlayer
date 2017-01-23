@@ -98,7 +98,8 @@ begin
     if not AppController.Execute then
     begin
       Close;
-    end;
+    end else if Assigned(ChildForm.OnActivate) then
+      ChildForm.OnActivate(ChildForm); 
   except
     on E: Exception do
     begin

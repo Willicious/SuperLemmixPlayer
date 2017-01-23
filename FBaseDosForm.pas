@@ -59,22 +59,34 @@ begin
 end;
 
 procedure TBaseDosForm.PrepareGameParams;
+var
+  Scale: Integer;
 begin
   if GameParams.fTestMode then
     Caption := 'NeoLemmix - Single Level'
   else
     Caption := Trim(GameParams.SysDat.PackName);
 
-  if GameParams.ZoomLevel <> 0 then
-  begin
+  //if GameParams.ZoomLevel <> 0 then
+  //begin
     //BorderStyle := bsToolWindow;
     //WindowState := wsNormal;
     Parent := GameParams.MainForm;
-    ClientWidth := 320 * GameParams.ZoomLevel;
-    ClientHeight := 200 * GameParams.ZoomLevel;
-    Left := 0; //GameParams.MainForm.Left;
-    Top := 0; //GameParams.MainForm.Top;
-  end;
+    if GameParams.ZoomLevel = 0 then
+    begin
+      Scale := Screen.Width div 320;
+      if Scale > Screen.Height div 200 then Scale := Screen.Width div 200;
+      ClientWidth := 320 * Scale;
+      ClientHeight := 200 * Scale;
+      Left := (Screen.Width - ClientWidth) div 2;
+      Top := (Screen.Height - ClientHeight) div 2;
+    end else begin
+      ClientWidth := 320 * GameParams.ZoomLevel;
+      ClientHeight := 200 * GameParams.ZoomLevel;
+      Left := 0; //GameParams.MainForm.Left;
+      Top := 0; //GameParams.MainForm.Top;
+    end;
+  //end;
 
 end;
 
