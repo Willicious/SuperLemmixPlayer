@@ -12,6 +12,9 @@ uses
   GameControl, GameBaseScreen,
   PngInterface, LemTypes;
 
+const
+  MAX_VIEWABLE_ROWS = 18; // Code probably won't handle an even number correctly, stick to odd.
+
 type
   TGameLevelSelectScreen = class(TGameBaseScreen)
   private
@@ -85,16 +88,20 @@ var
   i, Y: Integer;
   MinLv, MaxLv: Integer;
   S: String;
+  MaxViewableRounded: Integer;
 begin
   ScreenImg.Bitmap.BeginUpdate;
   try
     fBasicState.DrawTo(ScreenImg.Bitmap);
-    MinLv := fSelectedLevel - 7;
-    MaxLv := fSelectedLevel + 7;
+
+    MaxViewableRounded := (MAX_VIEWABLE_ROWS div 2) * 2;
+
+    MinLv := fSelectedLevel - (MAX_VIEWABLE_ROWS div 2);
+    MaxLv := fSelectedLevel + (MAX_VIEWABLE_ROWS div 2);
     if MaxLv >= fLevelSystem.GetLevelCount(fSection) then MaxLv := fLevelSystem.GetLevelCount(fSection) - 1;
-    if MinLv > MaxLv - 14 then MinLv := MaxLv - 14;
+    if MinLv > MaxLv - MaxViewableRounded then MinLv := MaxLv - MaxViewableRounded;
     if MinLv < 0 then MinLv := 0;
-    if MaxLv < MinLv + 14 then MaxLv := MinLv + 14;
+    if MaxLv < MinLv + MaxViewableRounded then MaxLv := MinLv + MaxViewableRounded;
     if MaxLv >= fLevelSystem.GetLevelCount(fSection) then MaxLv := fLevelSystem.GetLevelCount(fSection) - 1;
 
     Y := 55;
