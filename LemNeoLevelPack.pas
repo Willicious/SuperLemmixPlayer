@@ -2,6 +2,8 @@ unit LemNeoLevelPack;
 
 // Replaces LemDosStyle, LemDosLevelSystem etc. Those are messy. This should be tidier.
 
+// NOTE TO NEPSTER: This is a work-in-progress file that I haven't integrated yet, not an unused one. Do not remove.
+
 interface
 
 uses
