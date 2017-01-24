@@ -19,6 +19,9 @@ uses
 //  LemCore, LemGame, LemDosFiles, LemDosStyles, LemControls,
   //LemDosScreen;
 
+const
+  TALISMANS_PER_PAGE = 6;
+
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.
 -------------------------------------------------------------------------------}
@@ -233,7 +236,7 @@ begin
   end;
   playerpoints := (playerpoints * 100) div maxpoints;
 
-  for i := (fPage * 5) to (((fPage+1) * 5)-1) do
+  for i := (fPage * TALISMANS_PER_PAGE) to (((fPage+1) * TALISMANS_PER_PAGE)-1) do
   begin
     if i > GameParams.Talismans.VisibleCount-1 then
     begin
@@ -245,7 +248,7 @@ begin
 
   LF(1);
 
-  if GameParams.Talismans.VisibleCount <= 5 then
+  if GameParams.Talismans.VisibleCount <= TALISMANS_PER_PAGE then
     LF(1)
   else begin
     if fPage > 0 then
@@ -257,11 +260,11 @@ begin
     if fPage < 9 then S := S + ' ';
     S := S + 'Page ';
     S := S + IntToStr(fPage+1) + '/';
-    S := S + IntToStr(((GameParams.Talismans.VisibleCount - 1) div 5) + 1);
+    S := S + IntToStr(((GameParams.Talismans.VisibleCount - 1) div TALISMANS_PER_PAGE) + 1);
     if GameParams.Talismans.VisibleCount < 46 then S := S + ' ';
     S := S + '       ';
 
-    if fPage < (GameParams.Talismans.VisibleCount-1) div 5 then
+    if fPage < (GameParams.Talismans.VisibleCount-1) div TALISMANS_PER_PAGE then
       S := S + '>>'
     else
       S := S + '  ';
@@ -289,7 +292,7 @@ begin
                GameParams.TalismanPage := fPage - 1;
                CloseScreen(gstTalisman);
              end;
-    VK_RIGHT: if fPage < ((GameParams.Talismans.VisibleCount - 1) div 5) then
+    VK_RIGHT: if fPage < ((GameParams.Talismans.VisibleCount - 1) div TALISMANS_PER_PAGE) then
               begin
                 GameParams.TalismanPage := fPage + 1;
                 CloseScreen(gstTalisman);
