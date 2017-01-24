@@ -139,7 +139,7 @@ begin
     if (b >= 32) and (b <= 126) then Result := Result + Chr(b);
   end;
 
-  while lfc < 18 do
+  while lfc < 21 do
   begin
     if lfc mod 2 = 1 then LF(1)
     else PreLF(1);
