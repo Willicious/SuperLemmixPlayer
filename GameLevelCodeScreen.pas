@@ -68,7 +68,7 @@ procedure TGameLevelCodeScreen.BuildScreen;
 begin
   ScreenImg.BeginUpdate;
   try
-    InitializeImageSizeAndPosition(640, 350);
+    InitializeImageSizeAndPosition(640, 400);
     ExtractBackGround;
     ExtractPurpleFont;
     TileBackgroundBitmap(0, 0);

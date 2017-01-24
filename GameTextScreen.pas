@@ -57,11 +57,11 @@ begin
   ScreenImg.BeginUpdate;
   Temp := TBitmap32.Create;
   try
-    InitializeImageSizeAndPosition(640, 350);
+    InitializeImageSizeAndPosition(640, 400);
     ExtractBackGround;
     ExtractPurpleFont;
 
-    Temp.SetSize(640, 350);
+    Temp.SetSize(640, 400);
     Temp.Clear(0);
     TileBackgroundBitmap(0, 0, Temp);
     DrawPurpleTextCentered(Temp, ScreenText, 16);

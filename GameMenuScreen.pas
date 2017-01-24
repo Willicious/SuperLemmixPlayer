@@ -53,34 +53,34 @@ const
     Positions at which the images of the menuscreen are drawn
   -------------------------------------------------------------------------------}
   GameMenuBitmapPositions: array[TGameMenuBitmap] of TPoint = (
-    (X:8;    Y:10),                   // gmbLogo
-    (X:136;   Y:120),                  // gmbPlay
-    (X:264;  Y:120),                  // gmbLevelCode
-    (X:136;  Y:196),
-    (X:392;  Y:120),                  // gmbSection
-    (X:392;  Y:196),
-    (X:264;  Y:196),                  // gmbNavigation
-    (X:200 + 27;    Y:196 + 26),      // gmbMusicNote
-    (X:200 + 27;    Y:196 + 26),      // gmbFXSign,
-    (X:392 + 32;    Y:120 + 24),      // gmbSection1
-    (X:392 + 32;    Y:120 + 24),      // gmbSection2
-    (X:392 + 32;    Y:120 + 24),      // gmbSection3
-    (X:392 + 32;    Y:120 + 24),      // gmbSection4
-    (X:392 + 32;    Y:120 + 24),      // gmbSection5
-    (X:392 + 32;    Y:120 + 24),       // gmbSection6
-    (X:392 + 32;    Y:120 + 24),
-    (X:392 + 32;    Y:120 + 24),
-    (X:392 + 32;    Y:120 + 24),
-    (X:392 + 32;    Y:120 + 24),
-    (X:392 + 32;    Y:120 + 24),
-    (X:392 + 32;    Y:120 + 24),
-    (X:392 + 32;    Y:120 + 24),
-    (X:392 + 32;    Y:120 + 24),
-    (X:392 + 32;    Y:120 + 24)
+    (X:8;    Y:20),                   // gmbLogo
+    (X:136;   Y:140),                  // gmbPlay
+    (X:264;  Y:140),                  // gmbLevelCode
+    (X:136;  Y:236),
+    (X:392;  Y:140),                  // gmbSection
+    (X:392;  Y:236),
+    (X:264;  Y:236),                  // gmbNavigation
+    (X:200 + 27;    Y:236 + 26),      // gmbMusicNote
+    (X:200 + 27;    Y:236 + 26),      // gmbFXSign,
+    (X:392 + 32;    Y:140 + 24),      // gmbSection1
+    (X:392 + 32;    Y:140 + 24),      // gmbSection2
+    (X:392 + 32;    Y:140 + 24),      // gmbSection3
+    (X:392 + 32;    Y:140 + 24),      // gmbSection4
+    (X:392 + 32;    Y:140 + 24),      // gmbSection5
+    (X:392 + 32;    Y:140 + 24),       // gmbSection6
+    (X:392 + 32;    Y:140 + 24),
+    (X:392 + 32;    Y:140 + 24),
+    (X:392 + 32;    Y:140 + 24),
+    (X:392 + 32;    Y:140 + 24),
+    (X:392 + 32;    Y:140 + 24),
+    (X:392 + 32;    Y:140 + 24),
+    (X:392 + 32;    Y:140 + 24),
+    (X:392 + 32;    Y:140 + 24),
+    (X:392 + 32;    Y:140 + 24)
   );
 
-  YPos_ProgramText = 272;
-  YPos_Credits = 350 - 16;
+  YPos_ProgramText = 322;
+  YPos_Credits = 400 - 24;
 
   Reel_Width = 34 * 16;
   Reel_Height = 16;
@@ -254,7 +254,7 @@ begin
   ScreenImg.BeginUpdate;
   try
     MainPal := GetDosMainMenuPaletteColors32;
-    InitializeImageSizeAndPosition(640, 350);
+    InitializeImageSizeAndPosition(640, 400);
     ExtractBackGround;
     ExtractPurpleFont;
 
@@ -302,8 +302,8 @@ begin
     GrabRect := BitmapElements[gmbSection].BoundsRect;
     GrabRect.Right := GrabRect.Right + 392;
     GrabRect.Left := GrabRect.Left + 392;
-    GrabRect.Bottom := GrabRect.Bottom + 120;
-    GrabRect.Top := GrabRect.Top + 120;
+    GrabRect.Bottom := GrabRect.Bottom + 140;
+    GrabRect.Top := GrabRect.Top + 140;
     ScreenImg.Bitmap.DrawTo(BitmapElements[gmbSection], BitmapElements[gmbSection].BoundsRect, GrabRect);
     BitmapElements[gmbSection].DrawMode := dmOpaque;
 

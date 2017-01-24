@@ -269,7 +269,7 @@ begin
   ScreenImg.BeginUpdate;
   try
     MainPal := GetDosMainMenuPaletteColors32;
-    InitializeImageSizeAndPosition(640, 350);
+    InitializeImageSizeAndPosition(640, 400);
     ExtractBackGround;
     ExtractPurpleFont;
 
@@ -287,7 +287,7 @@ begin
     Temp := TBitmap32.Create;
     W := TBitmap32.Create;
     try
-      Temp.SetSize(640, 350);
+      Temp.SetSize(640, 400);
       Temp.Clear(0);
       // draw level preview
       W.SetSize(Lw, Lh);
