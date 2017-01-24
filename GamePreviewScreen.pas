@@ -263,6 +263,7 @@ var
   Temp, W: TBitmap32;
   DstRect: TRect;
   Lw, Lh : Integer;
+  LevelScale: Double;
 begin
   Assert(GameParams <> nil);
 
@@ -297,13 +298,19 @@ begin
       TLinearResampler.Create(W);
       W.DrawMode := dmBlend;
       W.CombineMode := cmMerge;
-      DstRect := Rect(0, 0, (lw div 4), (lh div 4)); // div 4
-      OffsetRect(DstRect, (120 + (200 - (lw div 8))), (20 + (20 - (lh div 8)))); // set location
+
+      // We have a 640x128 area in which to draw the level preview
+      LevelScale := 640 / lw;
+      if LevelScale > 128 / lh then LevelScale := 128 / lh;
+
+      DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
+      OffsetRect(DstRect, 320 - (DstRect.Right div 2), 64 - (DstRect.Bottom div 2));
+
       W.DrawTo(Temp, DstRect, W.BoundsRect);
       // draw background
-      TileBackgroundBitmap(0, 78, Temp);
+      TileBackgroundBitmap(0, 128, Temp);
       // draw text
-      DrawPurpleText(Temp, GetScreenText, 0, 80);
+      DrawPurpleText(Temp, GetScreenText, 0, 130);
       ScreenImg.Bitmap.Assign(Temp);
     finally
       W.Free;
