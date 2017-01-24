@@ -9,24 +9,6 @@ uses
   Classes, SysUtils, StrUtils, Contnrs,
   LemStrings, LemTypes, LemNeoParser;
 
-const
-  PKI_PANEL_BASE         = 0;
-  PKI_PANEL_BASE_MASK    = 1;
-  PKI_PANEL_BUTTONS      = 2;
-  PKI_PANEL_BUTTONS_MASK = 3;
-  PKI_PANEL_FONT         = 4;
-  PKI_PANEL_FONT_MASK    = 5;
-  PKI_PANEL_DIGITS       = 6;
-  PKI_PANEL_DIGITS_MASK  = 7;
-  PKI_PANEL_ERASE        = 8;
-
-
-  PANEL_IMAGE_NAMES: array[0..8] of String = ('skill_panel.png', 'skill_panel_mask.png',
-                                              'skill_buttons.png', 'skill_buttons_mask.png',
-                                              'skill_panel_font.png', 'skill_panel_font_mask.png',
-                                              'skill_panel_digits.png', 'skill_panel_digits_mask.png',
-                                              'skill_count_erase.png');
-
 type
   TNeoLevelEntry = class;
   TNeoLevelEntries = class;
@@ -39,24 +21,22 @@ type
 
       fTitle: String;
       fFilename: String;
-      fPreviewImage: TBitmap32; // cached
-      // Should we cache the physics map too? I decided against it for the reason: It's not a critical problem if
-      // the preview image is inaccurate, but it's far more serious if the physics map is wrong.
 
       fLastCRC32: Cardinal;
 
       procedure Wipe;
       procedure SetFilename(aValue: String);
       function GetFullPath: String;
+      function GetTitle: String;
     public
       constructor Create(aGroup: TNeoLevelGroup);
       destructor Destroy; override;
 
       procedure EnsureUpdated;
 
-      property Title: String read fTitle;
+      property Title: String read GetTitle;
       property Filename: String read fFilename write SetFilename;
-      property Path: String read GetFullPath; // relative to base NeoLemmix folder
+      property Path: String read GetFullPath;
   end;
 
   TNeoLevelGroup = class
@@ -67,21 +47,28 @@ type
 
       fPanelImages: array[0..8] of TBitmap32;
 
+      fName: String;
       fFolder: String;
 
       procedure SetFolderName(aValue: String);
       function GetFullPath: String;
-      function GetPanelImage(Index: Integer): TBitmap32;
+
+      procedure LoadFromMetaInfo;
+      procedure LoadFromSearchRec;
+
+      procedure LoadLevel(aLine: TParserLine; const aIteration: Integer);
+      procedure LoadSubGroup(aSection: TParserSection; const aIteration: Integer);
+
+      procedure Load;
     public
       constructor Create(aParentGroup: TNeoLevelGroup);
       destructor Destroy; override;
 
       procedure EnsureUpdated;
 
+      property Name: String read fName write fName;
       property Folder: String read fFolder write SetFolderName;
-      property Path: String read GetFullPath; // relative to base NeoLemmix folder
-
-      property PanelImage[Index: Integer]: TBitmap32 read GetPanelImage;
+      property Path: String read GetFullPath;
   end;
 
 
@@ -109,7 +96,33 @@ type
       property List;
   end;
 
+  function SortAlphabetical(Item1, Item2: Pointer): Integer;
+
 implementation
+
+function SortAlphabetical(Item1, Item2: Pointer): Integer;
+var
+  G1: TNeoLevelGroup;
+  G2: TNeoLevelGroup;
+  L1: TNeoLevelEntry;
+  L2: TNeoLevelEntry;
+begin
+  Result := 0;
+
+  if (TObject(Item1^) is TNeoLevelGroup) and (TObject(Item2^) is TNeoLevelGroup) then
+  begin
+    G1 := TNeoLevelGroup(Item1^);
+    G2 := TNeoLevelGroup(Item2^);
+    Result := CompareStr(G1.Name, G2.Name);
+  end;
+
+  if (TObject(Item1^) is TNeoLevelEntry) and (TObject(Item2^) is TNeoLevelEntry) then
+  begin
+    L1 := TNeoLevelEntry(Item1^);
+    L2 := TNeoLevelEntry(Item2^);
+    Result := CompareStr(L1.Title, L2.Title);
+  end;
+end;
 
 { TNeoLevelEntry }
 
@@ -117,22 +130,36 @@ constructor TNeoLevelEntry.Create(aGroup: TNeoLevelGroup);
 begin
   inherited Create;
   fGroup := aGroup;
-  fPreviewImage := nil;
 end;
 
 destructor TNeoLevelEntry.Destroy;
 begin
-  Wipe; // since object fields are freed and nil'd there, saves having to free everything in two places
+  // Did have stuff here but it's no longer used. But left this here because stuff that needs it
+  // will probably be added later.
   inherited;
 end;
 
 procedure TNeoLevelEntry.Wipe;
 begin
-  if fPreviewImage <> nil then
-    fPreviewImage.Free;
-  fPreviewImage := nil;
-
   fTitle := '';
+end;
+
+function TNeoLevelEntry.GetTitle: String;
+var
+  Parser: TParser;
+begin
+  if fTitle = '' then
+  begin
+    Parser := TParser.Create;
+    try
+      Parser.LoadFromFile(Path);
+      fTitle := Parser.MainSection.LineTrimString['title'];
+    finally
+      Parser.Free;
+    end;
+  end;
+
+  Result := fTitle;
 end;
 
 procedure TNeoLevelEntry.EnsureUpdated;
@@ -148,7 +175,7 @@ procedure TNeoLevelEntry.SetFilename(aValue: String);
 begin
   if fFilename = aValue then Exit;
   fFilename := aValue;
-  EnsureUpdated; // firstly, in case of duplicate files; secondly, avoids duplicating code as much would be the same as what's done there
+  EnsureUpdated;
 end;
 
 function TNeoLevelEntry.GetFullPath: String;
@@ -178,6 +205,80 @@ begin
   inherited;
 end;
 
+procedure TNeoLevelGroup.Load;
+begin
+  if FileExists(Path + 'levels.nxmi') then
+    LoadFromMetaInfo
+  else
+    LoadFromSearchRec;
+end;
+
+procedure TNeoLevelGroup.LoadLevel(aLine: TParserLine; const aIteration: Integer);
+var
+  L: TNeoLevelEntry;
+begin
+  L := fLevels.Add;
+  L.Filename := aLine.ValueTrimmed;
+end;
+
+procedure TNeoLevelGroup.LoadSubGroup(aSection: TParserSection; const aIteration: Integer);
+var
+  G: TNeoLevelGroup;
+begin
+  G := fChildGroups.Add;
+  G.Name := aSection.LineTrimString['name'];
+  G.Folder := aSection.LineTrimString['folder'];
+  G.Load;
+end;
+
+procedure TNeoLevelGroup.LoadFromMetaInfo;
+var
+  Parser: TParser;
+  MainSec: TParserSection;
+begin
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromFile(Path + 'levels.nxmi');
+    MainSec := Parser.MainSection;
+    MainSec.DoForEachSection('rank', LoadSubGroup);
+    MainSec.DoForEachLine('level', LoadLevel);
+
+    // we do NOT want to sort alphabetically here, we want them to stay in the order
+    // the metainfo file lists them in!
+  finally
+    Parser.Free;
+  end;
+end;
+
+procedure TNeoLevelGroup.LoadFromSearchRec;
+var
+  SearchRec: TSearchRec;
+  G: TNeoLevelGroup;
+  L: TNeoLevelEntry;
+begin
+  if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
+  begin
+    repeat
+      G := fChildGroups.Add;
+      G.Name := SearchRec.Name;
+      G.Folder := SearchRec.Name;
+      G.Load;
+    until FindNext(SearchRec) <> 0;
+    FindClose(SearchRec);
+    fChildGroups.Sort(SortAlphabetical);
+  end;
+
+  if FindFirst(Path + '*.nxlv', 0, SearchRec) = 0 then
+  begin
+    repeat
+      L := fLevels.Add;
+      L.Filename := SearchRec.Name;
+    until FindNext(SearchRec) <> 0;
+    FindClose(SearchRec);
+    fLevels.Sort(SortAlphabetical);
+  end;
+end;
+
 procedure TNeoLevelGroup.SetFolderName(aValue: String);
 begin
   if fFolder = aValue then Exit;
@@ -204,11 +305,6 @@ begin
     Result := fParentGroup.Path;
 
   Result := Result + fFolder + '\';
-end;
-
-function TNeoLevelGroup.GetPanelImage(Index: Integer): TBitmap32;
-begin
-  Result := fPanelImages[Index];
 end;
 
 

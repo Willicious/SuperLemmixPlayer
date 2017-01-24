@@ -307,6 +307,9 @@ var
   Parser: TParser;
   MainSec: TParserSection;
   Sec: TParserSection;
+
+  SubParser: TParser;
+  SubMainSec: TParserSection;
 begin
   OldLookForLvls := fLookForLVL;
   fLookForLVL := false;
@@ -335,6 +338,9 @@ try
 
     ForceDirectories(BasePath + MakeSuitableForFilename(EasyGetSectionName(dS)));
 
+    SubParser := TParser.Create;
+    SubMainSec := SubParser.MainSection;
+
     for DL := 0 to GetLevelCount(dS)-1 do
     begin
 
@@ -356,7 +362,7 @@ try
 
       FilePath := FilePath + Suffix + '.nxlv';
 
-      Sec.AddLine('LEVEL', ExtractFileName(FilePath));
+      SubMainSec.AddLine('LEVEL', ExtractFileName(FilePath));
 
       FileStream := TFileStream.Create(FilePath, fmCreate);
       try
@@ -366,9 +372,13 @@ try
       end;
 
     end;
+
+    SubParser.SaveToFile(BasePath + MakeSuitableForFilename(EasyGetSectionName(dS)) + '\levels.nxmi');
+    SubParser.Free;
   end;
 
   Parser.SaveToFile(BasePath + 'levels.nxmi');
+  Parser.Free;
 except
 end;
 
