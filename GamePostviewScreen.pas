@@ -259,21 +259,16 @@ begin
     else
         Add(SAllLemmingsAccountedFor);
 
-    LF(1);
+    LF(2);
 
     Add(Format(SYouRescuedYouNeeded_ss, [SDone, STarget]));
 
-    LF(1);
+    LF(2);
 
     i := GetResultIndex;
     Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]));
 
-    LF(6); // gap 2 + score space 1 + gap 3
-
-    LF(4);
-
-    // force bottomtext to a fixed position
-    LF(17 - CountChars(#13, Result));
+    LF(11);
 
     // bottom text
 
