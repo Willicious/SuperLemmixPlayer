@@ -399,7 +399,6 @@ begin
   // More important is making sure all relevant data is saved.
 
   PieceManager.Free;
-  SoundManager.Free;
 
   GameParams.Save;
 
@@ -407,6 +406,8 @@ begin
   GameParams.Level.Free;
   GameParams.Style.Free;
   GameParams.Free;
+
+  SoundManager.Free; // must NOT be moved before GameParams.Save!
   inherited;
 end;
 

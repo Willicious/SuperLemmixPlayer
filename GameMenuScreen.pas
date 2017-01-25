@@ -9,6 +9,7 @@ unit GameMenuScreen;
 interface
 
 uses
+  GameSound, // testing
   PngInterface, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, ShellApi,
   FNeoLemmixConfig,
@@ -416,6 +417,7 @@ begin
       VK_F6     : if GameParams.Talismans.Count <> 0 then CloseScreen(gstTalisman);
       VK_F7     : DoMassReplayCheck;
       VK_F8     : CloseScreen(gstLevelCode);
+      VK_F9     : ShowMessage(IntToStr(SoundManager.SoundVolume));
       VK_F12    : DoTestStuff;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : NextSection(True);

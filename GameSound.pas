@@ -82,6 +82,7 @@ type
 
       procedure ObtainMusicBassChannel;
 
+      procedure SetSoundVolume(aValue: Integer);
       procedure SetMusicVolume(aValue: Integer);
       procedure SetMusicMute(aValue: Boolean);
 
@@ -106,7 +107,7 @@ type
       function FindExtension(const aName: String; aIsMusic: Boolean): String;
       function DoesSoundExist(const aName: String): Boolean;
 
-      property SoundVolume: Integer read fSoundVolume write fSoundVolume;
+      property SoundVolume: Integer read fSoundVolume write SetSoundVolume;
       property MusicVolume: Integer read fMusicVolume write SetMusicVolume;
       property MuteSound: Boolean read fMuteSound write fMuteSound;
       property MuteMusic: Boolean read fMuteMusic write SetMusicMute;
@@ -159,8 +160,17 @@ begin
   end;
 end;
 
+procedure TSoundManager.SetSoundVolume(aValue: Integer);
+begin
+  if aValue < 0 then aValue := 0;
+  if aValue > 100 then aValue := 100;
+  fSoundVolume := aValue;
+end;
+
 procedure TSoundManager.SetMusicVolume(aValue: Integer);
 begin
+  if aValue < 0 then aValue := 0;
+  if aValue > 100 then aValue := 100;
   fMusicVolume := aValue;
   if fMusicChannel = $FFFFFFFF then Exit;
   BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
