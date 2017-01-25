@@ -4519,7 +4519,8 @@ begin
     case RemMode of
     RM_SAVE : begin
                 Inc(LemmingsIn);
-                GameResultRec.gLastRescueIteration := fCurrentIteration;
+                if LemmingsIn = Level.Info.RescueCount then
+                  GameResultRec.gLastRescueIteration := fCurrentIteration;
               end;
     RM_NEUTRAL: if not Silent then
                   CueSoundEffect(SFX_FALLOUT, L.Position);

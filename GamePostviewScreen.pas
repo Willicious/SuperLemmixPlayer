@@ -205,6 +205,13 @@ var
       end;
     end;
 
+    function MakeTimeString(aFrames: Integer): String;
+    begin
+      Result := IntToStr(aFrames div (17 * 60));
+      Result := Result + ':' + IntToStr((aFrames mod (17 * 60)) div 17);
+      Result := Result + ' +' + IntToStr(aFrames mod 17) + 'f';
+    end;
+
 var
   FinalInfo: TDosGamePlayInfoRec;
 begin
@@ -228,14 +235,18 @@ begin
 
     Style.LevelSystem.FindFinalLevel(FinalInfo);
 
-    if (gSuccess and not gCheated)
+    if ({gSuccess and} not gCheated)
     and not (ChallengeMode or TimerMode)
     and (ForceSkillset = 0) then
     with SaveSystem, Info do
     begin
-      CompleteLevel(dSection, dLevel);
       SetLemmingRecord(dSection, dLevel, gRescued);
-      SetTimeRecord(dSection, dLevel, gLastRescueIteration);
+
+      if gSuccess then
+      begin
+        CompleteLevel(dSection, dLevel);
+        SetTimeRecord(dSection, dLevel, gLastRescueIteration);
+      end;
     end;
 
     if gRescued >= Level.Info.RescueCount then
@@ -261,14 +272,31 @@ begin
 
     LF(2);
 
-    Add(Format(SYouRescuedYouNeeded_ss, [SDone, STarget]));
+    Add(SYouRescued + SDone);
+    Add(SYouNeeded + STarget);
+
+    if GameParams.fTestMode then
+      LF(1)
+    else
+      Add(SYourRecord + PadL(IntToStr(SaveSystem.GetLemmingRecord(Info.dSection, Info.dLevel)), 4));
+
+    LF(1);
+
+    if GameParams.fTestMode or not gSuccess then
+      LF(2)
+    else begin
+      Add(SYourTime + MakeTimeString(gLastRescueIteration));
+      Add(SYourTimeRecord + MakeTimeString(SaveSystem.GetTimeRecord(Info.dSection, Info.dLevel)));
+    end;
 
     LF(2);
 
     i := GetResultIndex;
     Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]));
 
-    LF(11);
+    LF(2);
+
+    LF(5);
 
     // bottom text
 

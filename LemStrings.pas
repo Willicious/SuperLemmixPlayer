@@ -210,25 +210,12 @@ resourcestring
   STalismanUnlocked =
     'You unlocked a talisman!';
 
-  SYouRescuedYouNeeded_ss =
-     'You rescued %s' + #13 +
-     'You needed  %s';
+  SYouRescued = 'You rescued ';
+  SYouNeeded = 'You needed  ';
+  SYourRecord = 'Your record ';
 
-  KYouRescuedYouNeeded_ss =
-     'You killed  %s' + #13 +
-     'You needed  %s';
-
-  KResult0 =
-    'Come on, you can kill more than' + #13 +
-    'that. Try harder!';
-
-  KResult1 =
-    'Well done! You put plenty of them' + #13 +
-    'lemmings out of their misery.';
-
-  KResult2 =
-    'You killed every last lemming. How' + #13 +
-    'does that make you feel?';
+  SYourTime = 'Your time taken is ';
+  SYourTimeRecord = 'Your record time is ';
 
   SResult0 =
     'ROCK BOTTOM! I hope for your sake'      + #13 +
