@@ -95,6 +95,8 @@ begin
   PrepareGameParams;
   BuildScreen;
   TMainForm(GameParams.MainForm).ChildForm := self;
+  Cursor := crNone;
+  Screen.Cursor := crNone;
   Show;
 end;
 

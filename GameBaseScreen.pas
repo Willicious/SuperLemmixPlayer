@@ -192,7 +192,10 @@ begin
   //  GameParams.MainForm.Show;
 
   if GameParams <> nil then
+  begin
     GameParams.NextScreen := aNextScreen;
+    GameParams.MainForm.Cursor := crNone;
+  end;
   Close;
 
   SendMessage(MainFormHandle, LM_NEXT, 0, 0);

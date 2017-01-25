@@ -34,6 +34,12 @@ type
       Shift: TShiftState);
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure FormMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
   private
     Started: Boolean;
     AppController: TAppController;
@@ -132,6 +138,30 @@ begin
   if fChildForm = nil then Exit;
   if not Assigned(fChildForm.OnKeyUp) then Exit;
   fChildForm.OnKeyUp(Sender, Key, Shift);
+end;
+
+procedure TMainForm.FormMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if fChildForm = nil then Exit;
+  if not Assigned(fChildForm.OnMouseDown) then Exit;
+  fChildForm.OnMouseDown(Sender, Button, Shift, X, Y);
+end;
+
+procedure TMainForm.FormMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  if fChildForm = nil then Exit;
+  if not Assigned(fChildForm.OnMouseUp) then Exit;
+  fChildForm.OnMouseUp(Sender, Button, Shift, X, Y);
+end;
+
+procedure TMainForm.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  if fChildForm = nil then Exit;
+  if not Assigned(fChildForm.OnMouseMove) then Exit;
+  fChildForm.OnMouseMove(Sender, Shift, X, Y);
 end;
 
 end.
