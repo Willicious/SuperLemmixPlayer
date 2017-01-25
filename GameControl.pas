@@ -92,7 +92,8 @@ type
     moPauseAfterBackwards,
     moNoBackgrounds,
     moNoShadows,
-    moShowMinimap
+    moShowMinimap,
+    moDisableWineWarnings
   );
 
   TMiscOptions = set of TMiscOption;
@@ -215,6 +216,7 @@ type
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
     property NoShadows: boolean Index moNoShadows read GetOptionFlag write SetOptionFlag;
     property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
+    property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -325,6 +327,13 @@ begin
   SaveBoolean('EnableOnline', EnableOnline);
   SaveBoolean('UpdateCheck', CheckUpdates);
 
+  if UnderWine then
+  begin
+    SL.Add('');
+    SL.Add('# WINE Options');
+    SaveBoolean('DisableWineWarnings', DisableWineWarnings);
+  end;
+
 
   SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini');
 
@@ -372,6 +381,8 @@ begin
   ShowMinimap := LoadBoolean('ShowMinimap');
   EnableOnline := LoadBoolean('EnableOnline');
   CheckUpdates := LoadBoolean('UpdateCheck');
+
+  DisableWineWarnings := LoadBoolean('DisableWineWarnings');
 
   ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], 0);
 

@@ -9,6 +9,7 @@ uses
   SharedGlobals,
   Classes, SysUtils, Contnrs,
   GR32, GR32_LowLevel,
+  Windows,
   UZip;
 
 const
@@ -65,16 +66,41 @@ function MusicsPath: string;
 
 function CreateDataStream(aFileName: string; aType: TLemDataType; aAllowExternal: Boolean = false): TMemoryStream;
 
+function UnderWine: Boolean;
+
 implementation
 
 var
   _AppPath: string;
+  _UnderWine: Integer;
 
 function AppPath: string;
 begin
   if _AppPath = '' then
     _AppPath := ExtractFilePath(ParamStr(0));
   Result := _AppPath;
+end;
+
+function UnderWine: Boolean;
+var
+  H: cardinal;
+begin
+  Result := false;
+
+  if _UnderWine = 2 then Result := true;
+  if _UnderWine > 0 then Exit;
+
+  H := LoadLibrary('ntdll.dll');
+  if H > HINSTANCE_ERROR then
+    begin
+      Result := Assigned(GetProcAddress(H, 'wine_get_version'));
+      FreeLibrary(H);
+    end;
+
+  if Result then
+    _UnderWine := 2
+  else
+    _UnderWine := 1;
 end;
 
 function MakeSuitableForFilename(const aInput: String): String;

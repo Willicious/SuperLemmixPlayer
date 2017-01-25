@@ -12,6 +12,7 @@ uses
   GameSound,          // initial creation
   LemNeoPieceManager, // initial creation
   FBaseDosForm, GameBaseScreen,
+  CustomPopup,
   Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs, Messages;
 
 type
@@ -320,6 +321,17 @@ begin
       GameParams.QuickTestMode := StrToInt(ParamStr(6));
   end;
 
+  if UnderWine and not GameParams.DisableWineWarnings then
+    if GameParams.ZoomLevel = 0 then
+    begin
+      case RunCustomPopup(nil, 'WINE Detected',
+                               'You appear to be running NeoLemmix under WINE. Fullscreen mode may not work properly.' + #13 +
+                               'Do you wish to change to windowed mode instead?', 'Yes|No|Never') of
+        1: GameParams.ZoomLevel := 1;
+        3: GameParams.DisableWineWarnings := true;
+      end;
+    end;
+
   // Unless Zoom level is 0 (fullscreen), resize the main window
   if GameParams.ZoomLevel <> 0 then
   begin
@@ -336,6 +348,13 @@ begin
   end else begin
     GameParams.MainForm.BorderStyle := bsNone;
     GameParams.MainForm.WindowState := wsMaximized;
+
+    if UnderWine then
+    begin
+      GameParams.MainForm.Left := 0;
+      GameParams.MainForm.Top := 0;
+    end;
+
     GameParams.MainForm.ClientWidth := Screen.Width;
     GameParams.MainForm.ClientHeight := Screen.Height;
   end;
