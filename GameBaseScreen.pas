@@ -5,7 +5,7 @@ interface
 
 uses
   Windows, Messages, Classes, Controls, Graphics, MMSystem, Forms, Dialogs,
-  GR32, GR32_Image, GR32_Layers,
+  GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   FBaseDosForm,
   GameControl,
   LemDosStructures,
@@ -416,6 +416,12 @@ begin
     BoundsRect := fOriginalImageBounds;
 
     AdjustImage;
+
+    if GameParams.LinearResampleMenu and not IsGameplayScreen then
+    begin
+      TLinearResampler.Create(fScreenImg.Bitmap);
+      fScreenImg.ScaleMode := smStretch;
+    end;
   end;
 end;
 
@@ -508,6 +514,7 @@ procedure TGameBaseScreen.FadeOut;
 var
   Steps: Integer; i: Integer;
   P: PColor32;
+  StepStartTickCount: Integer;
 begin
   Steps := 16;
   while Steps > 0 do
@@ -525,9 +532,11 @@ begin
         end;
         Inc(P);
       end;
+      StepStartTickCount := GetTickCount;
       Changed;
       Update;
-      Sleep(3);
+      repeat
+      until GetTickCount - StepStartTickCount >= 3; // changed Sleep(3) to this so that if Update takes a while, there isn't further delay on top of that
     end;
 
     Dec(Steps);

@@ -8,7 +8,7 @@ uses
   LemmixHotkeys,
   Windows, Classes, SysUtils, Controls,
   UMisc,
-  Gr32, Gr32_Image, Gr32_Layers,
+  Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,
   LemCore,
   LemTypes,
   LemStrings,
@@ -105,6 +105,9 @@ begin
     TileBackgroundBitmap(0, 0, Temp);
     DrawPurpleTextCentered(Temp, GetScreenText, 16);
     ScreenImg.Bitmap.Assign(Temp);
+
+    if GameParams.LinearResampleMenu then
+      TLinearResampler.Create(ScreenImg.Bitmap);
   finally
     ScreenImg.EndUpdate;
     Temp.Free;

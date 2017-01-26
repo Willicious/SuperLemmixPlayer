@@ -281,6 +281,9 @@ begin
       // draw text
       DrawPurpleText(Temp, GetScreenText, 0, 130);
       ScreenImg.Bitmap.Assign(Temp);
+
+      if GameParams.LinearResampleMenu then
+        TLinearResampler.Create(ScreenImg.Bitmap);
     finally
       W.Free;
       Temp.Free;

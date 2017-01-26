@@ -7,7 +7,7 @@ interface
 uses
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
-  GR32, GR32_Image, GR32_Layers,
+  GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
   LemGame, LemGameMessageQueue,
   GameSound, LemTypes, LemStrings, LemLemming,
@@ -101,6 +101,7 @@ type
     procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
     procedure SaveShot;
+    function IsGameplayScreen: Boolean; override;
   { internal properties }
     property Game: TLemmingGame read fGame;
   public
@@ -123,6 +124,11 @@ implementation
 uses FBaseDosForm, FEditReplay;
 
 { TGameWindow }
+
+function TGameWindow.IsGameplayScreen: Boolean;
+begin
+  Result := true;
+end;
 
 function TGameWindow.GetLevelMusicName: String;
 var
@@ -1196,6 +1202,12 @@ begin
 
   SkillPanel.Level := GameParams.Level;
   SkillPanel.SetSkillIcons;
+
+  if GameParams.LinearResampleGame then
+  begin
+    TLinearResampler.Create(Img.Bitmap);
+    TLinearResampler.Create(SkillPanel.Img.Bitmap);
+  end;
 
   MinScroll := -(GameParams.Level.Info.Width - 320);
   MaxScroll := 0;

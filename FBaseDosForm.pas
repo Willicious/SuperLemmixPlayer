@@ -16,6 +16,8 @@ type
     procedure CreateParams(var Params: TCreateParams); override;
     procedure BuildScreen; virtual;
     procedure PrepareGameParams; virtual; // always call inherited
+
+    function IsGameplayScreen: Boolean; virtual;
   public
     constructor Create(aOwner: TComponent); override;
     function ShowScreen: Integer; virtual;
@@ -74,12 +76,20 @@ begin
     Parent := GameParams.MainForm;
     if GameParams.ZoomLevel = 0 then
     begin
-      Scale := Screen.Width div 320;
-      if Scale > Screen.Height div 200 then Scale := Screen.Height div 200;
-      ClientWidth := 320 * Scale;
-      ClientHeight := 200 * Scale;
-      Left := (Screen.Width - ClientWidth) div 2;
-      Top := (Screen.Height - ClientHeight) div 2;
+      if IsGameplayScreen or not GameParams.UseEntireScreen then
+      begin
+        Scale := Screen.Width div 320;
+        if Scale > Screen.Height div 200 then Scale := Screen.Height div 200;
+        ClientWidth := 320 * Scale;
+        ClientHeight := 200 * Scale;
+        Left := (Screen.Width - ClientWidth) div 2;
+        Top := (Screen.Height - ClientHeight) div 2;
+      end else begin
+        ClientWidth := GameParams.MainForm.Width;
+        ClientHeight := GameParams.MainForm.Height;
+        Left := 0;
+        Top := 0;
+      end;
     end else begin
       ClientWidth := 320 * GameParams.ZoomLevel;
       ClientHeight := 200 * GameParams.ZoomLevel;
@@ -98,6 +108,11 @@ begin
   Cursor := crNone;
   Screen.Cursor := crNone;
   Show;
+end;
+
+function TBaseDosForm.IsGameplayScreen: Boolean;
+begin
+  Result := false;
 end;
 
 end.

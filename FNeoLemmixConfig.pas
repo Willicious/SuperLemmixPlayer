@@ -52,10 +52,14 @@ type
     GroupBox1: TGroupBox;
     cbEnableOnline: TCheckBox;
     cbUpdateCheck: TCheckBox;
-    cbZoom: TComboBox;
-    Label1: TLabel;
     cbDisableShadows: TCheckBox;
     cbShowMinimap: TCheckBox;
+    GroupBox6: TGroupBox;
+    cbZoom: TComboBox;
+    Label1: TLabel;
+    cbUseEntireArea: TCheckBox;
+    cbLinearResampleMenu: TCheckBox;
+    cbLinearResampleGame: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -133,6 +137,9 @@ begin
   cbDisableShadows.Checked := GameParams.NoShadows;
   cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
   cbShowMinimap.Checked := GameParams.ShowMinimap;
+  cbUseEntireArea.Checked := GameParams.UseEntireScreen;
+  cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
+  cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
 
   // Zoom Dropdown
   cbZoom.Items.Clear;
@@ -235,6 +242,9 @@ begin
   GameParams.NoShadows := cbDisableShadows.Checked;
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
   GameParams.ShowMinimap := cbShowMinimap.Checked;
+  GameParams.UseEntireScreen := cbUseEntireArea.Checked;
+  GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
+  GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
 
   // Zoom Dropdown
   // This is complex - changing windowed zoom just requires leaving the menu screen
