@@ -211,10 +211,10 @@ resourcestring
     'You unlocked a talisman!';
 
   SYouRescued = 'You rescued ';
-  SYouNeeded = 'You needed  ';
+  SYouNeeded =  'You needed  ';
   SYourRecord = 'Your record ';
 
-  SYourTime = 'Your time taken is ';
+  SYourTime =       'Your time taken is  ';
   SYourTimeRecord = 'Your record time is ';
 
   SResult0 =

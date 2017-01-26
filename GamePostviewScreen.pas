@@ -206,10 +206,16 @@ var
     end;
 
     function MakeTimeString(aFrames: Integer): String;
+    const
+      CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18',
+                                              '24', '29', '35', '41',
+                                              '47', '53', '59', '65',
+                                              '71', '76', '82', '88',
+                                              '94');
     begin
       Result := IntToStr(aFrames div (17 * 60));
       Result := Result + ':' + IntToStr((aFrames mod (17 * 60)) div 17);
-      Result := Result + ' +' + IntToStr(aFrames mod 17) + 'f';
+      Result := Result + '.' + CENTISECONDS[aFrames mod 17];
     end;
 
 var
@@ -285,8 +291,8 @@ begin
     if GameParams.fTestMode or not gSuccess then
       LF(2)
     else begin
-      Add(SYourTime + MakeTimeString(gLastRescueIteration));
-      Add(SYourTimeRecord + MakeTimeString(SaveSystem.GetTimeRecord(Info.dSection, Info.dLevel)));
+      Add(SYourTime + PadL(MakeTimeString(gLastRescueIteration), 8));
+      Add(SYourTimeRecord + PadL(MakeTimeString(SaveSystem.GetTimeRecord(Info.dSection, Info.dLevel)), 8));
     end;
 
     LF(2);
