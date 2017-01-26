@@ -28,7 +28,6 @@ type
     procedure PreviousLevel;
     procedure NextRank;
     procedure PreviousRank;
-    procedure ShowRecords;
     procedure SimulateSpawn;
   protected
   public
@@ -117,36 +116,6 @@ begin
       aLevel.Info.Skillset := aLevel.Info.Skillset - [Skill];
     end;
   end;
-end;
-
-procedure TGamePreviewScreen.ShowRecords;
-var
-  maxlem, mintime: Integer;
-  beaten: Boolean;
-  mins, secs, frms: Integer;
-  outstring: String;
-begin
-
-  with GameParams.SaveSystem do
-  begin
-    maxlem := GetLemmingRecord(GameParams.Info.dSection, GameParams.Info.dLevel);
-    mintime := GetTimeRecord(GameParams.Info.dSection, GameParams.Info.dLevel);
-    beaten := CheckCompleted(GameParams.Info.dSection, GameParams.Info.dLevel);
-    frms := mintime mod 17;
-    secs := (mintime div 17) mod 60;
-    mins := (mintime div 17) div 60;
-    outstring := GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + #13 + #13;
-
-    if beaten then
-      outstring := outstring + 'Completed: Yes' + #13 +
-                 'Most Lemmings Saved: ' + IntToStr(maxlem) + #13 +
-                 'Best Time: ' + IntToStr(mins) + ':' + LeadZeroStr(secs, 2) + ' + ' + IntToStr(frms) + ' frames'
-    else
-      outstring := outstring + 'Completed: No';
-
-    MessageDlg(outstring, mtcustom, [mbOk], 0);
-  end;
-
 end;
 
 procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
@@ -414,7 +383,6 @@ begin
                    CloseScreen(gstMenu);
                end;
     VK_RETURN: begin VGASpecPrep; CloseScreen(gstPlay); end;
-          $52: ShowRecords;
     VK_F2: CloseScreen(gstLevelSelect);
     VK_LEFT: PreviousLevel;
     VK_RIGHT: NextLevel;
