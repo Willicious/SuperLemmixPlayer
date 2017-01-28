@@ -787,25 +787,7 @@ begin
       F.BuildScreenInvis;
       GameParams.NextScreen := gstPlay;
     end else
-    if GameParams.DumpMode then
-    begin
-      // This is for IMAGE DUMPING (level dumping does not require preview screen to be invoked).
-      // Invisibly creates the preview screen, renders the level, saves image, closes, continues.
-      // Very kludgey and should be replaced, but for now it works.
-      for dS := 0 to TBaseDosLevelSystem(GameParams.Style.LevelSystem).fDefaultSectionCount - 1 do
-        for dL := 0 to TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetLevelCount(dS) - 1 do
-        begin
-          GameParams.WhichLevel := wlSame;
-          GameParams.Info.dSection := dS;
-          GameParams.Info.dLevel := dL;
-          F.PrepareGameParams;
-          F.BuildScreenInvis;
-        end;
-      GameParams.Info.dSection := 0;
-      GameParams.WhichLevel := wlLastUnlocked;
-      GameParams.NextScreen := gstMenu;
-      GameParams.DumpMode := false;
-    end else if GameParams.ReplayCheckIndex <> -2 then
+    if GameParams.ReplayCheckIndex <> -2 then
     begin
        TempSL := TStringList.Create;
        OldSound := SoundManager.MuteSound;

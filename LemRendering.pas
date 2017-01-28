@@ -1399,7 +1399,7 @@ begin
       fLayers.fIsEmpty[rlObjectHelpers] := false;
 
       // if it's a teleporter or receiver, draw all paired helpers too
-      if (Inf.TriggerEffect in [11, 12]) and (Inf.PairingId <> -1) then
+      if (Inf.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Inf.PairingId <> -1) then
         for i2 := 0 to ObjectInfos.Count-1 do
         begin
           if i = i2 then Continue;

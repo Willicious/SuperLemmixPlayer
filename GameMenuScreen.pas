@@ -436,10 +436,11 @@ begin
   I := MessageDlg('Dump all level images? Warning: This is very slow!', mtCustom, [mbYes, mbNo], 0);
   if I = mrYes then
   begin
-    MessageDlg('The screen will go blank while dumping level images.' + CrLf + 'This is normal.', mtCustom, [mbOk], 0);
+    TBaseDosLevelSystem(GameParams.Style.LevelSystem).DumpAllImages;
+    (*MessageDlg('The screen will go blank while dumping level images.' + CrLf + 'This is normal.', mtCustom, [mbOk], 0);
     GameParams.DumpMode := true;
     GameParams.WhichLevel := wlFirst;
-    CloseScreen(gstPreview);
+    CloseScreen(gstPreview);*)
   end;
 end;
 
