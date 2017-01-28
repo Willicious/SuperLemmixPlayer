@@ -130,7 +130,8 @@ const
   DOM_SINGLETELE       = 29;
   DOM_BACKGROUND       = 30;
   DOM_TRAPONCE         = 31;
-  DOM_ONEWAYUP         = 32; // let's NOT make this apparent to end-users; just use it internally
+  DOM_BGIMAGE          = 32;
+  DOM_ONEWAYUP         = 33; // let's NOT make this apparent to end-users; just use it internally
 
 implementation
 

@@ -1310,7 +1310,7 @@ begin
     for i := 0 to ObjectInfos.Count - 1 do
     begin
       Inf := ObjectInfos[i];
-      if not (Inf.TriggerEffect = 30) then Continue;
+      if not (Inf.TriggerEffect = DOM_BACKGROUND) then Continue;
 
       ProcessDrawFrame(rlBackgroundObjects);
       fLayers.fIsEmpty[rlBackgroundObjects] := False;
@@ -1322,7 +1322,7 @@ begin
   for i := ObjectInfos.Count - 1 downto 0 do
   begin
     Inf := ObjectInfos[i];
-    if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
+    if Inf.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP, DOM_BACKGROUND] then Continue;
     if Inf.IsOnlyOnTerrain then Continue;
     if not Inf.IsNoOverwrite then Continue;
     if not IsUseful(Inf) then Continue;
@@ -1338,7 +1338,7 @@ begin
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos[i];
-    if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
+    if Inf.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP, DOM_BACKGROUND] then Continue;
     if not Inf.IsOnlyOnTerrain then Continue;
     if not IsUseful(Inf) then Continue;
 
@@ -1353,7 +1353,7 @@ begin
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos[i];
-    if not (Inf.TriggerEffect in [7, 8, 19]) then Continue;
+    if not (Inf.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP]) then Continue;
     if not IsUseful(Inf) then Continue;
 
     ProcessDrawFrame(rlOneWayArrows);
@@ -1365,7 +1365,7 @@ begin
   for i := 0 to ObjectInfos.Count-1 do
   begin
     Inf := ObjectInfos[i];
-    if Inf.TriggerEffect in [7, 8, 19, 30] then Continue;
+    if Inf.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP, DOM_BACKGROUND] then Continue;
     if Inf.IsOnlyOnTerrain then Continue;
     if Inf.IsNoOverwrite then Continue;
     if not IsUseful(Inf) then Continue;
