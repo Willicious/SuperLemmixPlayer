@@ -81,16 +81,21 @@ uses Forms, LemStyle, LemDosStyle, LemNeoParserOld, CustomPopup; // old parser u
 { TGameReplayCheckScreen }
 
 procedure TGameReplayCheckScreen.Application_Idle(Sender: TObject; var Done: Boolean);
+var
+  Terminated: Boolean;
 begin
   Application.OnIdle := nil;
   fProcessing := true;
+  Terminated := false;
   try
     RunTests;
     if not fProcessing then
-      CloseScreen(gstMenu);
+      Terminated := true;
   finally
     fProcessing := false;
   end;
+
+  if Terminated then CloseScreen(gstMenu);
 end;
 
 procedure TGameReplayCheckScreen.RunTests;
