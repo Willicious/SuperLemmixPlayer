@@ -51,6 +51,9 @@ type
   private
     fScreenText: TStringList;
     fReplays: TReplayCheckEntries;
+
+    fProcessing: Boolean;
+
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_KeyPress(Sender: TObject; var Key: Char);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -73,14 +76,21 @@ type
 
 implementation
 
-uses Forms, LemStyle, LemDosStyle, LemNeoParserOld; // old parser used because levels.nxmi is still based on it, no true new-format equivalent exists yet
+uses Forms, LemStyle, LemDosStyle, LemNeoParserOld, CustomPopup; // old parser used because levels.nxmi is still based on it, no true new-format equivalent exists yet
 
 { TGameReplayCheckScreen }
 
 procedure TGameReplayCheckScreen.Application_Idle(Sender: TObject; var Done: Boolean);
 begin
   Application.OnIdle := nil;
-  RunTests;
+  fProcessing := true;
+  try
+    RunTests;
+    if not fProcessing then
+      CloseScreen(gstMenu);
+  finally
+    fProcessing := false;
+  end;
 end;
 
 procedure TGameReplayCheckScreen.RunTests;
@@ -220,17 +230,6 @@ var
   end;
 
   function MakeResultText: String;
-    function MakeTimeText: String;
-    var
-      m, s, f: Integer;
-    begin
-      m := fReplays[i].ReplayDuration div (60 * 17);
-      s := (fReplays[i].ReplayDuration div 17) mod 60;
-      f := fReplays[i].ReplayDuration mod 17;
-      Result := IntToStr(m) + ':' + LeadZeroStr(s, 2);
-      if f <> 0 then
-        Result := Result + ' + ' + IntToStr(f) + ' frames';
-    end;
   begin
     Result := '';
     case fReplays[i].ReplayResult of
@@ -242,9 +241,18 @@ var
       CR_ERROR: Result := 'ERROR';
       else Result := 'UNDEFINED RESULT';
     end;
+  end;
 
-    if fReplays[i].ReplayResult in [CR_PASS, CR_FAIL, CR_UNDETERMINED] then
-      Result := Result + ', ran for ' + MakeTimeText;
+  function MakeTimeText: String;
+  var
+    m, s, f: Integer;
+  begin
+    m := fReplays[i].ReplayDuration div (60 * 17);
+    s := (fReplays[i].ReplayDuration div 17) mod 60;
+    f := fReplays[i].ReplayDuration mod 17;
+    Result := IntToStr(m) + ':' + LeadZeroStr(s, 2);
+    if f <> 0 then
+      Result := Result + ' + ' + IntToStr(f) + ' frames';
   end;
 
 begin
@@ -298,11 +306,22 @@ begin
 
       Game.Start;
       repeat
+        if Game.CurrentIteration mod 170 = 0 then
+        begin
+          if Game.CurrentIteration = 0 then
+            fScreenText.Add('');
+          fScreenText[fScreenText.Count-1] := 'Running for ' + IntToStr(Game.CurrentIteration div 17) + ' seconds (in-game time).';
+          OutputText;
+
+          Application.ProcessMessages;
+          if not fProcessing then Break;
+        end;
+
         Game.UpdateLemmings;
         while Game.MessageQueue.HasMessages do
           if Game.MessageQueue.NextMessage.MessageType in [GAMEMSG_FINISH, GAMEMSG_TIMEUP] then
           begin
-            if GameParams.GameResult.gSuccess then
+            if Game.GameResultRec.gSuccess then
               fReplays[i].ReplayResult := CR_PASS
             else
               fReplays[i].ReplayResult := CR_FAIL;
@@ -311,32 +330,39 @@ begin
       until Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17);
 
       fReplays[i].ReplayDuration := Game.CurrentIteration;
-
-      if Game.CurrentIteration mod 170 = 0 then
-      begin
-        fScreenText[fScreenText.Count-1] := '-- Running for ' + IntToStr(Game.CurrentIteration div 17) + ' seconds --';
-        OutputText;
-      end;
     except
       fReplays[i].ReplayResult := CR_ERROR;
     end;
 
-    fScreenText.Add(fReplays[i].ReplayLevelText + ' ' + fReplays[i].ReplayLevelTitle);
-    fScreenText.Add(MakeResultText);
-    fScreenText.Add('');
+    if fProcessing then
+    begin
+      fScreenText.Delete(fScreenText.Count-1);
+
+      fScreenText.Add(fReplays[i].ReplayLevelText + ' ' + fReplays[i].ReplayLevelTitle);
+      if fReplays[i].ReplayResult in [CR_PASS, CR_FAIL, CR_UNDETERMINED] then
+        fScreenText.Add('Ran for ' + MakeTimeText);
+      fScreenText.Add('*** ' + MakeResultText + ' ***');
+      fScreenText.Add('');
+
+      OutputText;
+    end;
+
+    Application.ProcessMessages;
+    if not fProcessing then Break;
+  end;
+
+  if fProcessing then
+  begin
+    fReplays.SaveToFile;
+
+    fScreenText.Add('Results saved to');
+    fScreenText.Add(ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
+    while fScreenText.Count < 23 do
+      fScreenText.Add('');
+    fScreenText.Add('Click mouse to exit');
 
     OutputText;
   end;
-
-  fReplays.SaveToFile;
-
-  fScreenText.Add('Results saved to');
-  fScreenText.Add(ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
-  while fScreenText.Count < 23 do
-    fScreenText.Add('');
-  fScreenText.Add('Click mouse to exit');
-
-  OutputText;
 end;
 
 procedure TGameReplayCheckScreen.BuildScreen;
@@ -409,8 +435,15 @@ procedure TGameReplayCheckScreen.Form_KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   case Key of
-    VK_RETURN: CloseScreen(gstMenu);
-    VK_ESCAPE: CloseScreen(gstMenu);
+    VK_RETURN: if not fProcessing then CloseScreen(gstMenu);
+    VK_ESCAPE: if not fProcessing then
+                 CloseScreen(gstMenu)
+               else
+                 if RunCustomPopup(self, 'Terminate replay test?', 'Do you wish to terminate mass replay testing?', 'Yes|No') = 1 then
+                 begin
+                   fProcessing := false;
+                   Exit;
+                 end;
   end;
 end;
 
@@ -429,8 +462,8 @@ end;
 
 procedure TGameReplayCheckScreen.HandleMouseClick(Button: TMouseButton);
 begin
-  //if Button = mbLeft then
-    CloseScreen(gstMenu);
+  if fProcessing then Exit;
+  CloseScreen(gstMenu);
 end;
 
 procedure TGameReplayCheckScreen.Form_KeyPress(Sender: TObject; var Key: Char);
@@ -474,7 +507,7 @@ var
     for i := 0 to Count-1 do
     begin
       if Items[i].ReplayResult <> aGroupIndex then Continue;
-      SL.Add(ExtractFileName(Items[i].ReplayFile) + '   (' + IntToStr(Items[i].ReplayDuration) + ' frames)');
+      SL.Add(Items[i].ReplayLevelText + ':  ' + ExtractFileName(Items[i].ReplayFile) + '   (' + IntToStr(Items[i].ReplayDuration) + ' frames)');
       FoundAny := true;
     end;
 
@@ -491,7 +524,6 @@ begin
     SaveGroup(CR_PASS, 'PASSED');
     SaveGroup(CR_NOLEVELMATCH, 'LEVEL NOT FOUND');
     SaveGroup(CR_ERROR, 'ERROR');
-    SaveGroup(CR_UNKNOWN, 'DEBUG');
     SL.SaveToFile(ChangeFileExt(GameFile, '') + ' Replay Results.txt');
   finally
     SL.Free;
