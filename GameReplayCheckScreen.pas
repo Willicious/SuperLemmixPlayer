@@ -207,7 +207,10 @@ var
           SL.LoadFromStream(S);
           for i2 := 0 to SL.Count-1 do
             if UpperCase(LeftStr(Trim(SL[i2]), 2)) = 'ID' then
+            begin
               fReplays[i].ReplayLevelID := StrToIntDef('x' + RightStr(Trim(SL[i2]), 8), 0);
+              Break;
+            end;
         end;
       end;
     finally
@@ -328,7 +331,7 @@ begin
   fReplays.SaveToFile;
 
   fScreenText.Add('Results saved to');
-  fScreenText.Add(ChangeFileExt(GameFile, '') + ' Replay Results.txt');
+  fScreenText.Add(ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
   while fScreenText.Count < 23 do
     fScreenText.Add('');
   fScreenText.Add('Click mouse to exit');
@@ -489,7 +492,7 @@ begin
     SaveGroup(CR_NOLEVELMATCH, 'LEVEL NOT FOUND');
     SaveGroup(CR_ERROR, 'ERROR');
     SaveGroup(CR_UNKNOWN, 'DEBUG');
-    SL.SaveToFile(ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
+    SL.SaveToFile(ChangeFileExt(GameFile, '') + ' Replay Results.txt');
   finally
     SL.Free;
   end;
