@@ -218,7 +218,6 @@ var
   ClientTopLeft, ClientBottomRight: TPoint;
 begin
   fMouseTrapped := true;
-  if (GameParams.ReplayCheckIndex <> -2) then Exit;
 
   ClientTopLeft := ClientToScreen(Point(Img.Left, Img.Top));
   ClientBottomRight := ClientToScreen(Point(Img.Left + Img.Width, SkillPanel.Top + SkillPanel.Height));
@@ -298,8 +297,8 @@ begin
       PrevCallTime := CurrTime;
       // Let all lemmings move
       Game.UpdateLemmings;
-      // Save current state every 10 seconds, unless mass replay checking
-      if (Game.CurrentIteration mod 170 = 0) and (GameParams.ReplayCheckIndex = -2) then
+      // Save current state every 10 seconds
+      if (Game.CurrentIteration mod 170 = 0) then
       begin
         AddSaveState;
         fSaveList.TidyList(Game.CurrentIteration);
@@ -317,34 +316,12 @@ begin
     // Note that TargetIteration is 1 less than the actual target frame number,
     // because we only set Game.LeavingHyperSpeed=True here,
     // any only exit hyperspeed after calling Game.UpdateLemmings once more!
-    else if (Game.CurrentIteration >= Game.TargetIteration) and (GameParams.ReplayCheckIndex = -2) then
+    else if (Game.CurrentIteration >= Game.TargetIteration) then
     begin
       Game.HyperSpeedEnd;
       SkillPanel.RefreshInfo;
       SkillPanel.DrawMinimap(Game.Minimap);
       CheckResetCursor;
-    end;
-
-    if (GameParams.ReplayCheckIndex <> -2) then // i.e. we are mass replay checking
-    begin
-      if Game.CheckFinishedTest then
-      begin
-        Game.Finish;
-      end
-      else
-      begin
-        Game.TargetIteration := Game.CurrentIteration + 170; //keep it in hyperspeed mode
-        // Make sure to use hyperspeed mode
-        if not Game.HyperSpeed then Game.HyperSpeedBegin;
-        // Save frame number of last replay action and abort the replay if it was more than 5min ago
-        if Game.Replaying then
-          fLastReplayingIteration := Game.CurrentIteration
-        else if fLastReplayingIteration < Game.CurrentIteration - (5 * 60 * 17) then
-        begin
-          fReplayKilled := true;
-          Game.Finish;
-        end;
-      end;
     end;
 
   end;
@@ -760,13 +737,6 @@ begin
     CanPlay := True;
   end;
   Inc(fActivateCount);
-
-  if GameParams.ReplayCheckIndex <> -2 then
-  begin
-    StartReplay2(GameParams.ReplayResultList[GameParams.ReplayCheckIndex]);
-    Game.TargetIteration := 170;
-    Game.HyperSpeedBegin;
-  end;
 end;
 
 procedure TGameWindow.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1178,6 +1148,7 @@ begin
   end;
 
   GameParams.TargetBitmap := Img.Bitmap;
+  GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
   fGame.PrepareParams;
 
   // set timers
@@ -1217,8 +1188,7 @@ begin
 
   InitializeCursor;
   CenterPoint := ClientToScreen(Point(Width div 2, Height div 2));
-  if (GameParams.ReplayCheckIndex = -2) then
-    SetCursorPos(CenterPoint.X, CenterPoint.Y);
+  SetCursorPos(CenterPoint.X, CenterPoint.Y);
   ApplyMouseTrap;
 
   fRenderer := GameParams.Renderer;
@@ -1301,20 +1271,7 @@ var
     L: TLevel;
   begin
     with Game.ReplayManager do
-    begin
       LoadOldReplayFile(aName);
-      if GameParams.ReplayCheckIndex <> -2 then
-      begin
-        L := Game.Level;
-        LevelName := Trim(L.Info.Title);
-        LevelAuthor := Trim(L.Info.Author);
-        LevelGame := Trim(GameParams.SysDat.PackName);
-        LevelRank := Trim(GameParams.Info.dSectionName);
-        LevelPosition := GameParams.Info.dLevel + 1;
-        LevelID := L.Info.LevelID;
-        SaveToFile(ChangeFileExt(aName, '.nxrp'));
-      end;
-    end;
   end;
 begin
   CanPlay := False;
@@ -1403,19 +1360,6 @@ procedure TGameWindow.Game_Finished;
 var
   s: String;
 begin
-  if (GameParams.ReplayCheckIndex <> -2) then
-  begin
-    s := ExtractFileName(GameParams.ReplayResultList[GameParams.ReplayCheckIndex]) + ': ';
-    if Game.CheckPass then
-      s := s + 'PASSED'
-    else if fReplayKilled then
-      s := s + 'UNDETERMINED'
-    else
-      s := s + 'FAILED';
-    GameParams.ReplayResultList[GameParams.ReplayCheckIndex] := s;
-    fCloseToScreen := gstPreview;
-  end;
-
   SoundManager.StopMusic;
 
   if (GameParams.fTestMode and (GameParams.QuickTestMode in [2, 3])) then

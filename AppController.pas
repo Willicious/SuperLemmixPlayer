@@ -49,6 +49,7 @@ type
     procedure ShowLevelCodeScreen;
     procedure ShowTextScreen;
     procedure ShowTalismanScreen;
+    procedure ShowReplayCheckScreen;
     function Execute: Boolean;
     procedure FreeScreen;
 
@@ -66,7 +67,8 @@ uses
   GamePostviewScreen,
   GameWindow,
   GameTextScreen,
-  GameTalismanScreen;
+  GameTalismanScreen,
+  GameReplayCheckScreen;
 
 { TAppController }
 
@@ -469,6 +471,7 @@ begin
       gstLevelCode: ShowLevelCodeScreen;
       gstText      : ShowTextScreen;
       gstTalisman  : ShowTalismanScreen;
+      gstReplayTest: ShowReplayCheckScreen;
       else Result := false;
     end;
 
@@ -528,327 +531,17 @@ begin
   fActiveForm.ShowScreen;
 end;
 
-procedure TAppController.ShowPreviewScreen;
-var
-  F: TGamePreviewScreen;
-  dS, dL: Integer;
-  i: Integer;
-  OldSound, OldMusic: Boolean;
-  LevelIDArray: array of array of LongWord;
-  FoundMatch: Boolean;
-  TempSL: TStringList;
-  TempString: String;
-
-  function SetParamsLevel(aReplay: String; DoByID: Boolean): Boolean;
-  var
-    TempStream: TMemoryStream;
-    b: Byte;
-    lw: LongWord;
-    IsReallyOld: Boolean;
-
-    procedure SetNewReplay;
-    var
-      SL: TStringList;
-      S: String;
-      i: Integer;
-      n: LongWord;
-    begin
-      SL := TStringList.Create;
-      try
-        TempStream.Position := 0;
-        SL.LoadFromStream(TempStream);
-        for i := 0 to SL.Count-1 do
-        begin
-          S := Uppercase(Trim(SL[i]));
-          if LeftStr(S, 2) <> 'ID' then Continue;
-
-          S := Trim(MidStr(S, 4, 9));
-          if LeftStr(S, 1) <> 'X' then
-            S := 'x' + S;
-          n := StrToInt(S);
-
-          dS := GameParams.Info.dSection;
-          dL := GameParams.Info.dLevel;
-          // attempt to use levelID to match
-          while dS < Length(LevelIDArray) do
-          begin
-            while dL < Length(LevelIDArray[dS]) do
-            begin
-              if LevelIDArray[dS][dL] = n then
-              begin
-                GameParams.Info.dSection := dS;
-                GameParams.Info.dLevel := dL;
-                Result := true;
-                Exit;
-              end;
-              Inc(dL);
-            end;
-            dL := 0;
-            Inc(dS);
-          end;
-
-        end;
-      finally
-        SL.Free;
-      end;
-    end;
-  begin
-    TempStream := TMemoryStream.Create;
-    try
-      GameParams.WhichLevel := wlSame;
-      TempStream.LoadFromFile(aReplay);
-
-      Result := false;
-
-      TempStream.Position := 3;
-      TempStream.Read(b, 1);
-      if (b = 104) or (b = 105) then
-        IsReallyOld := false
-      else if b = 103 then
-        IsReallyOld := true
-      else begin
-        SetNewReplay;
-        Exit;
-      end;
-
-      if DoByID then
-      begin
-        if (b = 105) then
-        begin
-          TempStream.Position := 30;
-          TempStream.Read(lw, 4);
-
-          dS := GameParams.Info.dSection;
-          dL := GameParams.Info.dLevel;
-          // attempt to use levelID to match
-          while dS < Length(LevelIDArray) do
-          begin
-            while dL < Length(LevelIDArray[dS]) do
-            begin
-              if LevelIDArray[dS][dL] = lw then
-              begin
-                GameParams.Info.dSection := dS;
-                GameParams.Info.dLevel := dL;
-                Result := true;
-                Exit;
-              end;
-              Inc(dL);
-            end;
-            dL := 0;
-            Inc(dS);
-          end;
-        end;
-
-      end else begin
-
-        if IsReallyOld then
-          TempStream.Position := 24 // from V1.27n-B or earlier
-        else
-          TempStream.Position := 21;
-        TempStream.Read(b, 1);
-        GameParams.Info.dSection := b;
-
-        if IsReallyOld then
-          TempStream.Position := 28
-        else
-          TempStream.Position := 22;
-        TempStream.Read(b, 1);
-        GameParams.Info.dLevel := b;
-
-        Result := (GameParams.Info.dSection < Length(LevelIDArray)) and (GameParams.Info.dLevel < Length(LevelIDArray[GameParams.Info.dSection]));
-
-      end;
-    finally
-      TempStream.Free;
-    end;
-  end;
-
-  procedure ProduceReplayCheckResults;
-  var
-    OutSL: TStringList;
-    S: String;
-    C: Integer;
-
-    procedure AddByValue(aTarget: string; var Count: Integer);
-    var
-      i: Integer;
-    begin
-      Count := 0;
-      for i := 0 to TempSL.Count-1 do
-        if Pos(aTarget, TempSL[i]) <> 0 then
-        begin
-          Count := Count + 1;
-          OutSL.Add(TempSL[i]);
-        end;
-    end;
-
-    procedure AddSep;
-    begin
-      OutSL.Add('');
-      OutSL.Add('------------');
-      OutSL.Add('');
-    end;
-
-  begin
-    OutSL := TStringList.Create;
-    AddByValue('FAILED', C);
-    S := 'Failed: ' + IntToStr(C);
-    AddSep;
-    AddByValue('UNDETERMINED', C);
-    S := S + #13 + 'Undetermined: ' + IntToStr(C);
-    AddSep;
-    AddByValue('PASSED', C);
-    S := S + #13 + 'Passed: ' + IntToStr(C);
-    AddSep;
-    AddByValue('ERROR', C);
-    S := S + #13 + 'Error Occurred: ' + IntToStr(C);
-    AddSep;
-    AddByValue('CANNOT FIND LEVEL', C);
-    S := S + #13 + 'Couldn''t Find Level: ' + IntToStr(C);
-    OutSL.SaveToFile(ChangeFileExt(GameFile, '') + ' Replay Results.txt');
-    OutSL.Free;
-
-    S := S + #13 + #13 + 'Please check "' + ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt" for full details.';
-
-    ShowMessage(S);
-  end;
-
-  function GetRankAndNumber: String;
-  begin
-    Result := ' <<' + Trim(GameParams.SysDat.RankNames[GameParams.Info.dSection]) + ' ' + LeadZeroStr(GameParams.Info.dLevel+1, 2) + '>>';
-  end;
-
-  function TryLevelInfoFile: Boolean;
-  var
-    LS: TBaseDosLevelSystem;
-    DataStream: TMemoryStream;
-    Parser: TNeoLemmixParser;
-    Line: TParserLine;
-    R, L: Integer;
-  begin
-    Result := false;
-    DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
-
-    LS := TBaseDosLevelSystem(GameParams.Style.LevelSystem);
-
-    Parser := TNeoLemmixParser.Create;
-    try
-      Parser.LoadFromStream(DataStream);
-
-      SetLength(LevelIDArray, LS.GetSectionCount);
-      for R := 0 to LS.GetSectionCount-1 do
-        SetLength(LevelIDArray[R], LS.GetLevelCount(R));
-
-      R := -1;
-      repeat
-        Line := Parser.NextLine;
-        if (Line.Keyword <> 'LEVEL') and (R = -1) then Continue;
-
-        if Line.Keyword = 'LEVEL' then
-        begin
-          if Line.Numeric > 9999 then
-          begin
-            R := Line.Numeric div 1000;
-            L := Line.Numeric mod 1000;
-          end else begin
-            R := Line.Numeric div 100;
-            L := Line.Numeric mod 100;
-          end;
-
-          if (R > LS.GetSectionCount) or (L > LS.GetLevelCount(R)) then
-            R := -1;
-        end;
-
-        if Line.Keyword = 'ID' then
-          LevelIDArray[R][L] := StrToIntDef('x' + Line.Value, 0);
-
-      until (Line.Keyword = '');
-
-      Result := true;
-    finally
-      Parser.Free;
-    end;
-  end;
-
+procedure TAppController.ShowReplayCheckScreen;
 begin
-  // This one has a lot of code. Some code run on the preview screen is critical to preparing
-  // for in-game, so in testplay mode with preview screen disabled, it still needs to create a
-  // TGamePreviewScreen and run it invisibly. Because this code relates to rendering the level,
-  // it also needs to be invoked when dumping images; this is both why the image dumping is slow,
-  // and why some of its code is here. This seriously needs to be improved.
+  fActiveForm := TGameReplayCheckScreen.Create(nil);
+  fActiveForm.ShowScreen;
+end;
+
+procedure TAppController.ShowPreviewScreen;
+begin
   fActiveForm := TGamePreviewScreen.Create(nil);
-  F := TGamePreviewScreen(fActiveForm); // too much to rewrite in this one until it's confirmed working. maybe even then.
-
-    if (GameParams.fTestMode and (GameParams.QuickTestMode <> 0)) then
-    begin
-      // Test play, with preview screen disabled. Do the screen prep routines without actually showing
-      // anything, then move directly to play screen.
-      F.PrepareGameParams;
-      F.BuildScreenInvis;
-      GameParams.NextScreen := gstPlay;
-    end else
-    if GameParams.ReplayCheckIndex <> -2 then
-    begin
-       TempSL := TStringList.Create;
-       OldSound := SoundManager.MuteSound;
-       OldMusic := SoundManager.MuteMusic;
-       SoundManager.MuteSound := true;
-       SoundManager.MuteMusic := true;
-       if not TryLevelInfoFile then
-         raise Exception.Create('Couldn''t get Level IDs from info file.');
-       for i := 0 to GameParams.ReplayResultList.Count-1 do
-       begin
-         FoundMatch := false;
-         GameParams.ReplayCheckIndex := i;
-         GameParams.Info.dSection := 0;
-         GameParams.Info.dLevel := 0;
-         while SetParamsLevel(GameParams.ReplayResultList[i], true) do
-         begin
-           FoundMatch := true;
-           TempString := GameParams.ReplayResultList[i];
-           try
-             F.PrepareGameParams;
-             F.BuildScreenInvis;
-             ShowPlayScreen;
-           except
-             GameParams.ReplayResultList[i] := ExtractFileName(GameParams.ReplayResultList[i]) + ': ERROR';
-           end;
-           TempSL.Add(GameParams.ReplayResultList[i] + GetRankAndNumber + ' (By Level ID)');
-           GameParams.ReplayResultList[i] := TempString;
-           GameParams.Info.dLevel := GameParams.Info.dLevel + 1;
-         end;
-
-         if not FoundMatch then
-         begin
-           // no need to preserve the ReplayResultList entry as this will be the last time the replay
-           // in question is referenced here
-           if SetParamsLevel(GameParams.ReplayResultList[i], false) then
-           try
-             F.PrepareGameParams;
-             F.BuildScreenInvis;
-             ShowPlayScreen;
-           except
-             GameParams.ReplayResultList[i] := ExtractFileName(GameParams.ReplayResultList[i]) + ': ERROR';
-           end else
-             GameParams.ReplayResultList[i] := ExtractFileName(GameParams.ReplayResultList[i]) + ': CANNOT FIND LEVEL';
-
-           TempSL.Add(GameParams.ReplayResultList[i] + GetRankAndNumber + ' (By Position)');
-         end;
-       end;
-       GameParams.ReplayCheckIndex := -2;
-       GameParams.NextScreen := gstMenu;
-       GameParams.Info.dSection := 0;
-       GameParams.Info.dLevel := 0;
-       ProduceReplayCheckResults;
-       SoundManager.MuteSound := OldSound;
-       SoundManager.MuteMusic := OldMusic;
-       TempSL.Free;
-    end else begin
-      // In the case of loading a single level file, menu screen will never be displayed.
-      // Therefore, bringing to front must be done here.
-      if not DoneBringToFront then BringToFront;
-      F.ShowScreen;
-    end;
+  if not DoneBringToFront then BringToFront;
+  fActiveForm.ShowScreen;
 end;
 
 end.

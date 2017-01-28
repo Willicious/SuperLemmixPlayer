@@ -720,52 +720,23 @@ end;
 
 procedure TGameMenuScreen.DoMassReplayCheck;
 var
-  SearchRec: TSearchRec;
   OpenDlg: TOpenDialog;
   TestPath: String;
-  Found: Boolean;
 begin
   if MessageDlg('Mass replay checking can take a very long time. Proceed?', mtcustom, [mbYes, mbNo], 0) = mrNo then Exit;
-  GameParams.ReplayResultList.Clear;
   OpenDlg := TOpenDialog.Create(self);
-  OpenDlg.InitialDir := AppPath + 'Replay\' + ChangeFileExt(ExtractFileName(GameFile), '');
-  OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp, *.lrb)|*.nxrp;*.lrb';
-  OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
-  if not OpenDlg.Execute then
-  begin
+  try
+    OpenDlg.Title := 'Select any file in the folder containing replays';
+    OpenDlg.InitialDir := AppPath + 'Replay\' + ChangeFileExt(ExtractFileName(GameFile), '');
+    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp, *.lrb)|*.nxrp;*.lrb';
+    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
+    if not OpenDlg.Execute then
+      Exit;
+    GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
+  finally
     OpenDlg.Free;
-    Exit;
   end;
-  TestPath := ExtractFilePath(OpenDlg.FileName);
-
-  Found := false;
-
-  if FindFirst(TestPath + '*.lrb', faAnyFile, SearchRec) = 0 then
-  begin
-    repeat
-      GameParams.ReplayResultList.Add(TestPath + SearchRec.Name);
-    until FindNext(SearchRec) <> 0;
-    FindClose(SearchRec);
-    Found := true;
-  end;
-
-  if FindFirst(TestPath + '*.nxrp', faAnyFile, SearchRec) = 0 then
-  begin
-    repeat
-      GameParams.ReplayResultList.Add(TestPath + SearchRec.Name);
-    until FindNext(SearchRec) <> 0;
-    FindClose(SearchRec);
-    Found := true;
-  end;
-
-  if not Found then
-  begin
-    ShowMessage('No replays found!');
-    Exit;
-  end;
-
-  GameParams.ReplayCheckIndex := -1;
-  CloseScreen(gstPreview);
+  CloseScreen(gstReplayTest);
 end;
 
 end.

@@ -28,6 +28,8 @@ type
       fTerrains: TMetaTerrains;
       fObjects: TMetaObjects;
 
+      fDisableTidy: Boolean;
+
       function GetTerrainCount: Integer;
       function GetObjectCount: Integer;
 
@@ -51,6 +53,8 @@ type
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TMetaObject read GetMetaObject;
+
+      property DisableTidy: Boolean read fDisableTidy write fDisableTidy;
   end;
 
   function SplitIdentifier(Identifier: String): TLabelRecord;
@@ -109,6 +113,8 @@ procedure TNeoPieceManager.Tidy;
 var
   i: Integer;
 begin
+  if fDisableTidy then Exit; // speeds up replay testing by not discarding and having to reload tiles
+
   for i := fTerrains.Count-1 downto 0 do
   begin
     fTerrains[i].CyclesSinceLastUse := fTerrains[i].CyclesSinceLastUse + 1;

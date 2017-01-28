@@ -123,7 +123,6 @@ type
 
     fLastReplayDir             : String;
 
-    fTargetBitmap              : TBitmap32; // reference to the drawing bitmap on the gamewindow
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
   { internal objects }
@@ -152,7 +151,7 @@ type
 
   { reference objects, mostly for easy access in the mechanics-code }
     fRenderer                  : TRenderer; // ref to gameparams.renderer
-    fInfoPainter               : IGameToolbar; // ref to interface to enable this component to draw to skillpanel
+    fInfoPainter               : IGameToolbar; // in so many places we have to check if this is nil. TLemmingGame should really have no knowledge of the skill panel in the first place.
     fLevel                     : TLevel; // ref to gameparams.level
     Style                      : TBaseLemmingStyle; // ref to gameparams.style
     CntDownBmp                 : TBitmap32; // ref to style.animationset.countdowndigits
@@ -650,6 +649,7 @@ end;
 
 procedure TLemmingGame.SetCorrectReplayMark;
 begin
+  if InfoPainter = nil then Exit;
   if Replaying then
   begin
     if ReplayInsert then
@@ -662,6 +662,7 @@ end;
 
 procedure TLemmingGame.UpdateLemmingCounts;
 begin
+  if InfoPainter = nil then Exit;
   // Set Lemmings in Hatch, Lemmings Alive and Lemmings Saved
   InfoPainter.SetInfoLemHatch((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
   InfoPainter.SetInfoLemAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
@@ -672,6 +673,7 @@ procedure TLemmingGame.UpdateTimeLimit;
 var
   TimeMinutes, TimeSeconds: Integer;
 begin
+  if InfoPainter = nil then Exit;
   // Keep TimeSeconds and TimeMinues as separate variables!
   // Otherwise weird visual glitches occur when framestepping 10 seconds
   TimeMinutes := abs(TimePlay) div 60;
@@ -682,6 +684,7 @@ end;
 
 procedure TLemmingGame.UpdateOneSkillCount(aSkill: TSkillPanelButton);
 begin
+  if InfoPainter = nil then Exit;
   if aSkill = spbSlower then
     InfoPainter.DrawSkillCount(spbSlower, Level.Info.ReleaseRate)
   else if aSkill = spbFaster then
@@ -830,6 +833,7 @@ end;
 
 procedure TLemmingGame.RefreshAllPanelInfo;
 begin
+  if InfoPainter = nil then Exit;
   InfoPainter.DrawButtonSelector(fSelectedSkill, true);
   UpdateLemmingCounts;
   UpdateTimeLimit;
@@ -1057,7 +1061,6 @@ begin
   fXmasPal := GameParams.SysDat.Options2 and 2 <> 0;
 
   fRenderer := GameParams.Renderer; // set ref
-  fTargetBitmap := GameParams.TargetBitmap;
   Level := GameParams.Level;
   Style := GameParams.Style;
 
@@ -1165,7 +1168,7 @@ var
   Skill: TSkillPanelButton;
   InitialSkill: TSkillPanelButton;
 begin
-  Assert(InfoPainter <> nil);
+  //Assert(InfoPainter <> nil);
 
   Playing := False;
 
@@ -1288,18 +1291,18 @@ begin
 
   InitializeMiniMap;
 
-  fTargetBitmap.SetSize(PhysicsMap.Width, PhysicsMap.Height);
   DrawAnimatedObjects; // first draw needed
 
-  with InfoPainter do
-  begin
-    UpdateTimeLimit;
-    UpdateLemmingCounts;
-    SetCorrectReplayMark;
-    SetTimeLimit(Level.Info.TimeLimit < 6000);
-  end;
+  if InfoPainter <> nil then
+    with InfoPainter do
+    begin
+      UpdateTimeLimit;
+      UpdateLemmingCounts;
+      SetCorrectReplayMark;
+      SetTimeLimit(Level.Info.TimeLimit < 6000);
+      DrawButtonSelector(fSelectedSkill, False);
+    end;
 
-  InfoPainter.DrawButtonSelector(fSelectedSkill, False);
   // force update
   fSelectedSkill := spbNone;
   InitialSkill := spbNone;
@@ -4585,8 +4588,12 @@ begin
     fLeavingHyperSpeed := False;
     if fPauseOnHyperSpeedExit and not Paused then
       SetSelectedSkill(spbPause);
-    InfoPainter.ClearSkills;
-    InfoPainter.DrawButtonSelector(fSelectedSkill, true);
+
+    if InfoPainter <> nil then
+    begin
+      InfoPainter.ClearSkills;
+      InfoPainter.DrawButtonSelector(fSelectedSkill, true);
+    end;
   end;
 
   // Get highest priority lemming under cursor
@@ -4769,11 +4776,13 @@ begin
       if L.LemIsZombie then S := SZombie;
     end;
 
-    InfoPainter.SetInfoCursorLemming(S, HitCount);
+    if InfoPainter <> nil then
+      InfoPainter.SetInfoCursorLemming(S, HitCount);
     fCurrentCursor := 2;
   end
   else begin
-    InfoPainter.SetInfoCursorLemming('', 0);
+    if InfoPainter <> nil then
+      InfoPainter.SetInfoCursorLemming('', 0);
     fCurrentCursor := 1;
   end;
 end;
@@ -4827,7 +4836,8 @@ begin
     if (LemmingIndex < 0) or (LemmingIndex >= LemmingList.Count) then
     begin
       RegainControl;
-      infopainter.SetInfoCursorLemming('invalid', 0);
+      if InfoPainter <> nil then
+        infopainter.SetInfoCursorLemming('invalid', 0);
       Exit;
     end;
 
@@ -4928,9 +4938,11 @@ begin
 
         if fSelectedSkill <> Value then
         begin
-          InfoPainter.DrawButtonSelector(fSelectedSkill, False);  // unselect old skill
+          if InfoPainter <> nil then
+            InfoPainter.DrawButtonSelector(fSelectedSkill, False);  // unselect old skill
           fSelectedSkill := Value;
-          InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
+          if InfoPainter <> nil then
+            InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
           CheckForNewShadow;
         end;
 
@@ -5118,7 +5130,8 @@ begin
   if (aRR <> currReleaseRate) and CheckIfLegalRR(aRR) then
   begin
     currReleaseRate := aRR;
-    InfoPainter.DrawSkillCount(spbFaster, currReleaseRate);
+    if InfoPainter <> nil then
+      InfoPainter.DrawSkillCount(spbFaster, currReleaseRate);
   end;
 end;
 
@@ -5600,6 +5613,7 @@ end;
 
 procedure TLemmingGame.Finish;
 begin
+  SetGameResult;
   fGameFinished := True;
   MessageQueue.Add(GAMEMSG_FINISH);
 end;
@@ -5788,13 +5802,21 @@ begin
     Inc(UsedSkillCount[aAction])
   end;
 
-  InfoPainter.DrawSkillCount(ActionToSkillPanelButton[aAction], CurrSkillCount[aAction]);
+  if InfoPainter <> nil then
+    InfoPainter.DrawSkillCount(ActionToSkillPanelButton[aAction], CurrSkillCount[aAction]);
 end;
 
 procedure TLemmingGame.SaveGameplayImage(Filename: String);
+var
+  BMP: TBitmap32;
 begin
-  fRenderer.DrawLevel(fTargetBitmap);
-  TPngInterface.SavePngFile(Filename, fTargetBitmap, true);
+  BMP := TBitmap32.Create;
+  try
+    fRenderer.DrawLevel(BMP);
+    TPngInterface.SavePngFile(Filename, BMP, true);
+  finally
+    BMP.Free;
+  end;
 end;
 
 procedure TLemmingGame.InitializeBrickColors(aBrickPixelColor: TColor32);

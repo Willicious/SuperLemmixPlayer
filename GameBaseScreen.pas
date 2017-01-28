@@ -180,9 +180,6 @@ begin
     GameParams.MainForm.WindowState := wsMaximized;
   end;
 
-  if GameParams.ReplayCheckIndex = -2 then
-    FadeOut;
-
   if GameParams.ZoomLevel = 0 then
   begin
     GameParams.MainForm.BorderStyle := bsNone;

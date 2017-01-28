@@ -49,7 +49,8 @@ type
     gstSounds,
     gstExit,
     gstText,
-    gstTalisman
+    gstTalisman,
+    gstReplayTest
   );
 
 type
@@ -190,10 +191,7 @@ type
     fTestScreens: Integer;
 
     SysDat               : TSysDatRec;
-
-    // mass replay check stuff
-    ReplayResultList: TStringList;
-    ReplayCheckIndex: Integer; // This is always -2, unless we are mass replay checking
+    ReplayCheckPath: String;
 
     constructor Create;
     destructor Destroy; override;
@@ -470,10 +468,6 @@ begin
   fSaveSystem.SetTalismans(fTalismans);
 
   fHotkeys := TLemmixHotkeyManager.Create;
-
-  ReplayCheckIndex := -2;
-  ReplayResultList := TStringList.Create;
-
 end;
 
 destructor TDosGameParams.Destroy;
@@ -481,7 +475,6 @@ begin
   fSaveSystem.Free;
   fTalismans.Free;
   fHotkeys.Free;
-  ReplayResultList.Free;
   inherited Destroy;
 end;
 

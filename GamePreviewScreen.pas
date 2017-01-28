@@ -343,10 +343,6 @@ begin
       Inf.Level := Level;
       CheckLemmingCount(Level);
       Renderer.PrepareGameRendering(Inf, (SysDat.Options2 and 2 <> 0));
-      if ReplayCheckIndex <> -2 then
-        Renderer.RenderWorld(TempBmp, not NoBackgrounds); // because currently some important preparing code is here. it shouldn't be.
-                                       // image dumping doesn't need this because it calls RenderWorld to render the output image
-      if DumpMode and fCanDump then SaveLevelImage;
     end;
   finally
     TempBmp.Free;
@@ -502,14 +498,12 @@ begin
     begin
       TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := '';
       try
-        TBaseDosLevelSystem(Style.LevelSystem).ResetOddtableHistory;
         Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);
       except
         fCanDump := false;
         Exit;
       end;
     end else begin
-      TBaseDosLevelSystem(Style.LevelSystem).ResetOddtableHistory;
       TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := GameParams.LevelString;
       Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);
     end;

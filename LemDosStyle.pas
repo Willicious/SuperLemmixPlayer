@@ -74,7 +74,6 @@ type
   protected
     fDefaultLevelCount: Integer;
     fLevelCount : array[0..15] of Integer;
-    fOddHistory: array of Integer;
     fLookForLVL: Boolean; // looks for user-overridden lvl-files on disk
   { overridden from base loader }
     procedure InternalLoadLevel(aInfo: TLevelInfo; aLevel: TLevel; OddLoad: Byte = 0); override;
@@ -106,7 +105,6 @@ type
     function FindFirstUnsolvedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindNextUnsolvedLevel(var Rec : TDosGamePlayInfoRec): Boolean; override;
     function FindPreviousUnsolvedLevel(var Rec : TDosGamePlayInfoRec; CheatMode: Boolean = false): Boolean; override;
-    procedure ResetOddtableHistory;
 
     procedure QuickLoadLevelNames;
 
@@ -323,7 +321,6 @@ begin
       for dL := 0 to GetLevelCount(dS)-1 do
       begin
 
-        ResetOddtableHistory;
         GetEntry(dS, dL, aFilename, aFileIndex);
         aInfo.DosLevelPackFileName := aFilename;
         aInfo.DosLevelPackIndex := aFileIndex;
@@ -406,7 +403,6 @@ try
     for DL := 0 to GetLevelCount(dS)-1 do
     begin
 
-      ResetOddtableHistory;
       GetEntry(dS, dL, aFilename, aFileIndex);
       aInfo.DosLevelPackFileName := aFilename;
       aInfo.DosLevelPackIndex := aFileIndex;
@@ -811,11 +807,6 @@ begin
   TLVLLoader.LoadLevelFromStream(DataStream, aLevel, OddLoad);
 end;
 
-procedure TBaseDosLevelSystem.ResetOddtableHistory;
-begin
-  SetLength(fOddHistory, 0);
-end;
-
 procedure TBaseDosLevelSystem.InternalLoadSingleLevel(aSection, aLevelIndex: Integer; aLevel: TLevel; OddLoad: Byte = 0);
 {-------------------------------------------------------------------------------
   Method for loading one level, without the preparing caching system.
@@ -836,13 +827,6 @@ begin
   Assert(Owner is TBaseDosLemmingStyle);
 
   IsLoaded := False;
-
-  for i := 0 to Length(fOddHistory)-1 do
-    if fOddHistory[i] = (aSection shl 8) + aLevelIndex then
-      raise Exception.Create('ERROR: Self-referencing or circular oddtabling detected.');
-
-  SetLength(fOddHistory, Length(fOddHistory)+1);
-  fOddHistory[Length(fOddHistory)-1] := (aSection shl 8) + aLevelIndex;
 
   // added override on demand (look for tricky21 = 221.lvl)
 
