@@ -130,12 +130,39 @@ const
   DOM_SINGLETELE       = 29;
   DOM_BACKGROUND       = 30;
   DOM_TRAPONCE         = 31;
+  DOM_ONEWAYUP         = 32; // let's NOT make this apparent to end-users; just use it internally
 
 implementation
 
 
 { TInteractiveObjectInfo }
 constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObjectInterface);
+
+  procedure AdjustOWWDirection;
+  var
+    UseDir: Integer;
+  const
+    DIRS: array[0..3] of Integer = (DOM_ONEWAYLEFT, DOM_ONEWAYUP, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN);
+  begin
+    case sTriggerEffect of
+      DOM_ONEWAYLEFT: UseDir := 0;
+      DOM_ONEWAYUP: UseDir := 1;
+      DOM_ONEWAYRIGHT: UseDir := 2;
+      DOM_ONEWAYDOWN: UseDir := 3;
+      else Exit;
+    end;
+
+    if Obj.Rotate then
+      Inc(UseDir, 1);
+
+    if Obj.Flip and (UseDir mod 2 = 0) then
+      Inc(UseDir, 2);
+
+    if Obj.Invert and (UseDir mod 2 = 1) then
+      Inc(UseDir, 2);
+
+    sTriggerEffect := DIRS[UseDir mod 4];
+  end;
 begin
   Obj := ObjParam;
   MetaObj := MetaParam;
@@ -161,9 +188,10 @@ begin
   if (not MetaObj.CanResizeHorizontal) or (Obj.Width = -1) then
     Obj.Width := MetaObj.Width;
   sWidth := Obj.Width;
+  sTriggerEffect := MetaObj.TriggerEffect;
+  AdjustOWWDirection; // adjusts eg. flipped OWL becomes OWR
   sTriggerRect := GetTriggerRect;
   sIsDisabled := Obj.IsFake;
-  sTriggerEffect := MetaObj.TriggerEffect;
   sReceiverId := 65535;
 
   // Set CurrentFrame
@@ -183,11 +211,12 @@ begin
       CurrentFrame := 0;
 
   // Set OWW to Only-On-Terrain and remove No-Overwrite
-  if MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
+  // from namida: Don't think this is nessecary anymore, OWWs are handled seperately during rendering so these properties would be ignored
+  (*if MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
   begin
     Obj.DrawingFlags := Obj.DrawingFlags and not 4; // odf_NoOverwrite
     Obj.DrawingFlags := Obj.DrawingFlags or 1; // odf_OnlyOnTerrain
-  end;
+  end;*)
 
 
   // Set other stuff
@@ -199,6 +228,7 @@ begin
 
   // Remove TriggerEffect if object disabled
   // If it is a preplaced lemming, we unfortunately have to keep it (or this lemming will be drawn)
+  //    from namida: Woudln't it be safer to apply the change, but set the Invisible flag?
   if sIsDisabled and not (TriggerEffect = DOM_LEMMING) then
     sTriggerEffect := DOM_NONE;
 
