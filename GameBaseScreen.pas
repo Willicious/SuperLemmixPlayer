@@ -180,6 +180,8 @@ begin
     GameParams.MainForm.WindowState := wsMaximized;
   end;
 
+  FadeOut;
+
   if GameParams.ZoomLevel = 0 then
   begin
     GameParams.MainForm.BorderStyle := bsNone;
