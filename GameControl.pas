@@ -404,6 +404,11 @@ var
     // Once we've got our window size, ensure the zoom is low enough to fit on it
     while ((WindowWidth < (ZoomLevel * 320)) or (WindowHeight < (ZoomLevel * 200))) and (ZoomLevel > 1) do
       ZoomLevel := ZoomLevel - 1;
+
+    // Finally, we must make sure the window size is an integer multiple of the zoom level
+    InternalZoomLevel := Max(1, ZoomLevel); // avoid div by 0 errors
+    WindowWidth := (WindowWidth div InternalZoomLevel) * InternalZoomLevel;
+    WindowHeight := (WindowHeight div InternalZoomLevel) * InternalZoomLevel;
   end;
 
 begin

@@ -179,8 +179,18 @@ end;
 procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth,
   NewHeight: Integer; var Resize: Boolean);
 begin
+  if GameParams.ZoomLevel = 0 then
+  begin
+    NewWidth := Screen.Width;
+    NewHeight := Screen.Height;
+    Exit;
+  end;
+
   NewWidth := Max(GameParams.ZoomLevel * 320, NewWidth);
   NewHeight := Max(GameParams.ZoomLevel * 200, NewHeight);
+
+  NewWidth := (NewWidth div GameParams.ZoomLevel) * GameParams.ZoomLevel;
+  NewHeight := (NewHeight div GameParams.ZoomLevel) * GameParams.ZoomLevel;
 end;
 
 end.
