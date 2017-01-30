@@ -76,28 +76,10 @@ begin
     //BorderStyle := bsToolWindow;
     //WindowState := wsNormal;
     Parent := GameParams.MainForm;
-    if GameParams.ZoomLevel = 0 then
-    begin
-      if IsGameplayScreen then
-      begin
-        Scale := Screen.Width div 320;
-        if Scale > Screen.Height div 200 then Scale := Screen.Height div 200;
-        ClientWidth := 320 * Scale;
-        ClientHeight := 200 * Scale;
-        Left := (Screen.Width - ClientWidth) div 2;
-        Top := (Screen.Height - ClientHeight) div 2;
-      end else begin
-        ClientWidth := GameParams.MainForm.Width;
-        ClientHeight := GameParams.MainForm.Height;
-        Left := 0;
-        Top := 0;
-      end;
-    end else begin
-      ClientWidth := GameParams.WindowWidth;
-      ClientHeight := GameParams.WindowHeight;
-      Left := 0; //GameParams.MainForm.Left;
-      Top := 0; //GameParams.MainForm.Top;
-    end;
+    ClientWidth := GameParams.MainForm.Width;
+    ClientHeight := GameParams.MainForm.Height;
+    Left := 0; //GameParams.MainForm.Left;
+    Top := 0; //GameParams.MainForm.Top;
   //end;
 
 end;

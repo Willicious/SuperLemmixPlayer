@@ -57,7 +57,7 @@ type
     fLastHighlitSkill: TSkillPanelButton; // to avoid sounds when shouldn't be played
     fSkillCounts: Array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
 
-
+    fDoHorizontalScroll: Boolean;
 
 
     procedure SetLevel(const Value: TLevel);
@@ -104,6 +104,7 @@ type
 
     procedure SetCurrentScreenOffset(X: Integer);
     property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
+    property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
 
@@ -594,12 +595,16 @@ begin
     TGameWindow(Parent).VScroll := gsDown
   else
     TGameWindow(Parent).VScroll := gsNone;
-  if X >= Img.Width - 1 then
-    TGameWindow(Parent).HScroll := gsRight
-  else if X <= 0 then
-    TGameWindow(Parent).HScroll := gsLeft
-  else
-    TGameWindow(Parent).HScroll := gsNone;
+
+  if DoHorizontalScroll then
+  begin
+    if X >= Img.Width - 1 then
+      TGameWindow(Parent).HScroll := gsRight
+    else if X <= 0 then
+      TGameWindow(Parent).HScroll := gsLeft
+    else
+      TGameWindow(Parent).HScroll := gsNone;
+  end;
 end;
 
 procedure TSkillPanelToolbar.ImgMouseUp(Sender: TObject;

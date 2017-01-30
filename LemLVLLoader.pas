@@ -780,14 +780,14 @@ begin
         if Height < 160 then Height := 160;
 
         // Screen positions are saved as a Word, i.e. unsigned. So we treat anything >32768 as negative
-        if Buf.ScreenPosition > 32768 then ScreenPosition := 0
+        if Buf.ScreenPosition > 32768 then ScreenPosition := 160
         else
         begin
           ScreenPosition   := ((Buf.ScreenPosition * 8) div LRes) + 160;
           if ScreenPosition > (Width - 160) then ScreenPosition := (Width - 160);
           if ScreenPosition < 160 then ScreenPosition := 160;
         end;
-        if Buf.ScreenYPosition > 32768 then ScreenYPosition := 0
+        if Buf.ScreenYPosition > 32768 then ScreenYPosition := 80
         else
         begin
           ScreenYPosition := ((Buf.ScreenYPosition * 8) div LRes) + 80;
