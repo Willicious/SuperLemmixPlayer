@@ -384,6 +384,13 @@ var
     if (ZoomLevel > (Screen.Width div 320)) or (ZoomLevel > (Screen.Height div 200)) then
       ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
 
+    // WindowWidth and WindowHeight can't exceed screen area
+    if (WindowWidth > Screen.Width) or (WindowHeight > Screen.Height) then
+    begin
+      WindowWidth := -1;
+      WindowHeight := -1;
+    end;
+
     // If no WindowWidth or WindowHeight is specified, we want to set them so that they
     // match 320x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
