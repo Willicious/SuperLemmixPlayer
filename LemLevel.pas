@@ -546,11 +546,11 @@ begin
     if Width < 320 then Width := 320;
     if Height < 160 then Height := 160;
 
-    if ScreenPosition < 0 then ScreenPosition := 0;
-    if ScreenPosition > Width-320 then ScreenPosition := Width-320;
+    if ScreenPosition < 160 then ScreenPosition := 160;
+    if ScreenPosition > Width-160 then ScreenPosition := Width-160;
 
-    if ScreenYPosition < 0 then ScreenYPosition := 0;
-    if ScreenYPosition > Height-160 then ScreenYPosition := Height-160;
+    if ScreenYPosition < 80 then ScreenYPosition := 80;
+    if ScreenYPosition > Height-80 then ScreenYPosition := Height-80;
 
     if LemmingsCount < 0 then LemmingsCount := 0;
     if RescueCount < 0 then RescueCount := 0;
