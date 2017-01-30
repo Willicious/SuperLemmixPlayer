@@ -68,7 +68,7 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     procedure ProcessGameMessages;
-    procedure MainFormResized; override;
+    procedure ApplyResize;
 
     function GetLevelMusicName: String;
   protected
@@ -104,6 +104,7 @@ type
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
     procedure SaveShot;
     function IsGameplayScreen: Boolean; override;
+    procedure MainFormResized; override;
   { internal properties }
     property Game: TLemmingGame read fGame;
   public
@@ -129,15 +130,26 @@ uses FBaseDosForm, FEditReplay;
 
 procedure TGameWindow.MainFormResized;
 begin
+  ApplyResize;
+  DoDraw;
+end;
+
+procedure TGameWindow.ApplyResize;
+begin
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
-  Img.Height := Min(ClientHeight - SkillPanel.ClientHeight, (GameParams.Level.Info.Height * fInternalZoom) - SkillPanel.ClientHeight);
+  Img.Height := Min(ClientHeight - SkillPanel.Height, GameParams.Level.Info.Height * fInternalZoom);
   Img.Left := (ClientWidth div 2) - (Img.Width div 2);
-  Img.Top := ClientHeight - (SkillPanel.ClientHeight + Img.Height);
-  SkillPanel.Left := (ClientWidth div 2) - (SkillPanel.ClientWidth div 2);
-  SkillPanel.Top := ClientHeight - SkillPanel.ClientHeight;
-  DoDraw;
+  Img.Top := ClientHeight - (SkillPanel.Height + Img.Height);
+  SkillPanel.Left := (ClientWidth div 2) - (SkillPanel.Width div 2);
+  SkillPanel.Top := ClientHeight - SkillPanel.Height;
+
+  MinScroll := -(GameParams.Level.Info.Width - (Img.Width div fInternalZoom));
+  MaxScroll := 0;
+
+  MinVScroll := -(GameParams.Level.Info.Height - (Img.Height div fInternalZoom));
+  MaxVScroll := 0;
 end;
 
 function TGameWindow.IsGameplayScreen: Boolean;
@@ -1175,20 +1187,28 @@ begin
   IdealScrollTimeMS := 60;
   IdealFrameTimeMS := 60; // slow motion
 
-  Img.Width := 320 * Sca;
-  Img.Height := 160 * Sca;
+  //Img.Width := 320 * Sca;
+  //Img.Height := 160 * Sca;
   Img.Scale := Sca;
-  Img.OffsetHorz := -GameParams.Level.Info.ScreenPosition * Sca;
-  Img.OffsetVert := -GameParams.Level.Info.ScreenYPosition * Sca;
   //Img.Left := 0;
   //Img.Top := 0;
 
-  SkillPanel.Top := Img.Top + Img.Height;
-  SkillPanel.left := Img.Left;
+  //SkillPanel.Top := Img.Top + Img.Height;
+  //SkillPanel.left := Img.Left;
   SkillPanel.Width := 320 * Sca;
   SkillPanel.Height := 40 * Sca;
 
-  //MainFormResized; // rather than duplicating code, just call it
+  (*ClientWidth := GameParams.MainForm.ClientWidth;
+  ClientHeight := GameParams.MainForm.ClientHeight;
+  Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
+  Img.Height := Min(ClientHeight - SkillPanel.ClientHeight, (GameParams.Level.Info.Height * fInternalZoom) - SkillPanel.ClientHeight);
+  Img.Left := (ClientWidth div 2) - (Img.Width div 2);
+  Img.Top := ClientHeight - (SkillPanel.ClientHeight + Img.Height);
+  SkillPanel.Left := (ClientWidth div 2) - (SkillPanel.ClientWidth div 2);
+  SkillPanel.Top := ClientHeight - SkillPanel.ClientHeight;*)
+  ApplyResize;
+  Img.OffsetHorz := -GameParams.Level.Info.ScreenPosition * Sca;
+  Img.OffsetVert := -GameParams.Level.Info.ScreenYPosition * Sca;
 
   SkillPanel.SetStyleAndGraph(Gameparams.Style, Sca);
 
@@ -1200,12 +1220,6 @@ begin
     TLinearResampler.Create(Img.Bitmap);
     TLinearResampler.Create(SkillPanel.Img.Bitmap);
   end;
-
-  MinScroll := -(GameParams.Level.Info.Width - (Img.Width div fInternalZoom));
-  MaxScroll := 0;
-
-  MinVScroll := -(GameParams.Level.Info.Height - (Img.Height div fInternalZoom));
-  MaxVScroll := 0;
 
   InitializeCursor;
   CenterPoint := ClientToScreen(Point(Width div 2, Height div 2));
