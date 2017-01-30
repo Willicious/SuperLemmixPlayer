@@ -57,7 +57,6 @@ type
     GroupBox6: TGroupBox;
     cbZoom: TComboBox;
     Label1: TLabel;
-    cbUseEntireArea: TCheckBox;
     cbLinearResampleMenu: TCheckBox;
     cbLinearResampleGame: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
@@ -137,7 +136,6 @@ begin
   cbDisableShadows.Checked := GameParams.NoShadows;
   cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
   cbShowMinimap.Checked := GameParams.ShowMinimap;
-  cbUseEntireArea.Checked := GameParams.UseEntireScreen;
   cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
   cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
 
@@ -242,7 +240,6 @@ begin
   GameParams.NoShadows := cbDisableShadows.Checked;
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
   GameParams.ShowMinimap := cbShowMinimap.Checked;
-  GameParams.UseEntireScreen := cbUseEntireArea.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
   GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
 

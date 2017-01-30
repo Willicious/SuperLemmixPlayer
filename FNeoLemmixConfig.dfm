@@ -232,22 +232,13 @@ object FormNXConfig: TFormNXConfig
           Items.Strings = (
             'Fullscreen')
         end
-        object cbUseEntireArea: TCheckBox
-          Left = 12
-          Top = 40
-          Width = 205
-          Height = 17
-          Caption = 'Stretch Menu Screens To Fit Screen'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
         object cbLinearResampleMenu: TCheckBox
           Left = 12
           Top = 56
           Width = 205
           Height = 17
           Caption = 'Use Smooth Resampling In Menus'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = OptionChanged
         end
         object cbLinearResampleGame: TCheckBox
@@ -256,7 +247,7 @@ object FormNXConfig: TFormNXConfig
           Width = 205
           Height = 17
           Caption = 'Use Smooth Resampling In Game'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = OptionChanged
         end
       end

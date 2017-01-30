@@ -76,7 +76,7 @@ begin
     Parent := GameParams.MainForm;
     if GameParams.ZoomLevel = 0 then
     begin
-      if IsGameplayScreen or not GameParams.UseEntireScreen then
+      if IsGameplayScreen then
       begin
         Scale := Screen.Width div 320;
         if Scale > Screen.Height div 200 then Scale := Screen.Height div 200;
@@ -91,8 +91,8 @@ begin
         Top := 0;
       end;
     end else begin
-      ClientWidth := 320 * GameParams.ZoomLevel;
-      ClientHeight := 200 * GameParams.ZoomLevel;
+      ClientWidth := GameParams.WindowWidth;
+      ClientHeight := GameParams.WindowHeight;
       Left := 0; //GameParams.MainForm.Left;
       Top := 0; //GameParams.MainForm.Top;
     end;

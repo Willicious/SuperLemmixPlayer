@@ -96,7 +96,6 @@ type
     moNoShadows,
     moShowMinimap,
     moDisableWineWarnings,
-    moUseEntireScreen,
     moLinearResampleMenu,
     moLinearResampleGame
   );
@@ -224,7 +223,6 @@ type
     property NoShadows: boolean Index moNoShadows read GetOptionFlag write SetOptionFlag;
     property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
-    property UseEntireScreen: boolean Index moUseEntireScreen read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
 
@@ -330,7 +328,6 @@ begin
   SL.Add('WindowWidth=' + IntToStr(WindowWidth));
   SL.Add('WindowHeight=' + IntToStr(WindowHeight));
 
-  SaveBoolean('UseEntireScreen', UseEntireScreen);
   SaveBoolean('LinearResampleMenu', LinearResampleMenu);
   SaveBoolean('LinearResampleGame', LinearResampleGame);
 
@@ -401,7 +398,7 @@ var
         InternalZoomLevel := ZoomLevel;
 
       WindowWidth := 320 * InternalZoomLevel;
-      WindowHeight := 320 * InternalZoomLevel;
+      WindowHeight := 200 * InternalZoomLevel;
     end;
 
     // Once we've got our window size, ensure the zoom is low enough to fit on it
@@ -446,7 +443,6 @@ begin
 
   EnsureValidWindowSize;
 
-  UseEntireScreen := LoadBoolean('UseEntireScreen');
   LinearResampleMenu := LoadBoolean('LinearResampleMenu');
   LinearResampleGame := LoadBoolean('LinearResampleGame');
 

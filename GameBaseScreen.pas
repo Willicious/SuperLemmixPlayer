@@ -147,7 +147,10 @@ begin
     True:
       begin
         fScreenImg.Align := alClient;
-        fScreenImg.ScaleMode := smResize;
+        if IsGameplayScreen then
+          fScreenImg.ScaleMode := smScale
+        else
+          fScreenImg.ScaleMode := smStretch;
         fScreenImg.BitmapAlign := baCenter;
       end;
   end;
@@ -417,10 +420,7 @@ begin
     AdjustImage;
 
     if GameParams.LinearResampleMenu and not IsGameplayScreen then
-    begin
       TLinearResampler.Create(fScreenImg.Bitmap);
-      fScreenImg.ScaleMode := smStretch;
-    end;
   end;
 end;
 
