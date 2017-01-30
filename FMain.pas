@@ -178,6 +178,9 @@ end;
 
 procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth,
   NewHeight: Integer; var Resize: Boolean);
+var
+  CWDiff, CHDiff: Integer;
+  NewCW, NewCH: Integer;
 begin
   if GameParams.ZoomLevel = 0 then
   begin
@@ -186,11 +189,20 @@ begin
     Exit;
   end;
 
-  NewWidth := Max(GameParams.ZoomLevel * 320, NewWidth);
-  NewHeight := Max(GameParams.ZoomLevel * 200, NewHeight);
+  CWDiff := Width - ClientWidth;
+  CHDiff := Height - ClientHeight;
 
-  NewWidth := (NewWidth div GameParams.ZoomLevel) * GameParams.ZoomLevel;
-  NewHeight := (NewHeight div GameParams.ZoomLevel) * GameParams.ZoomLevel;
+  NewCW := NewWidth - CWDiff;
+  NewCH := NewHeight - CHDiff;
+
+  NewCW := Max(GameParams.ZoomLevel * 320, NewCW);
+  NewCH := Max(GameParams.ZoomLevel * 200, NewCH);
+
+  NewCW := (NewCW div GameParams.ZoomLevel) * GameParams.ZoomLevel;
+  NewCH := (NewCH div GameParams.ZoomLevel) * GameParams.ZoomLevel;
+
+  NewWidth := NewCW + CWDiff;
+  NewHeight := NewCH + CHDiff;
 end;
 
 end.
