@@ -35,6 +35,7 @@ type
     fSaveList: TLemmingGameSavedStateList;
     fLastReplayingIteration: Integer;
     fReplayKilled: Boolean;
+    fInternalZoom: Integer;
   { game eventhandler}
     procedure Game_Finished;
   { self eventhandlers }
@@ -67,6 +68,7 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     procedure ProcessGameMessages;
+    procedure MainFormResized; override;
 
     function GetLevelMusicName: String;
   protected
@@ -124,6 +126,19 @@ implementation
 uses FBaseDosForm, FEditReplay;
 
 { TGameWindow }
+
+procedure TGameWindow.MainFormResized;
+begin
+  ClientWidth := GameParams.MainForm.ClientWidth;
+  ClientHeight := GameParams.MainForm.ClientHeight;
+  Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
+  Img.Height := Min(ClientHeight - SkillPanel.ClientHeight, (GameParams.Level.Info.Height * fInternalZoom) - SkillPanel.ClientHeight);
+  Img.Left := (ClientWidth div 2) - (Img.Width div 2);
+  Img.Top := ClientHeight - (SkillPanel.ClientHeight + Img.Height);
+  SkillPanel.Left := (ClientWidth div 2) - (SkillPanel.ClientWidth div 2);
+  SkillPanel.Top := ClientHeight - SkillPanel.ClientHeight;
+  DoDraw;
+end;
 
 function TGameWindow.IsGameplayScreen: Boolean;
 begin
@@ -497,6 +512,7 @@ end;
 procedure TGameWindow.DoDraw;
 var
   DrawRect: TRect;
+  DrawWidth, DrawHeight: Integer;
 begin
   if Game.HyperSpeed then Exit;
   try
@@ -504,7 +520,9 @@ begin
     fRenderInterface.MousePos := Game.CursorPoint;
     fRenderer.DrawAllObjects(fRenderInterface.ObjectList, true, fClearPhysics);
     fRenderer.DrawLemmings(fClearPhysics);
-    DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + 320, fRenderInterface.ScreenPos.Y + 160);
+    DrawWidth := ClientWidth div fInternalZoom;
+    DrawHeight := ClientHeight div fInternalZoom;
+    DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
     fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
     fNeedRedraw := false;
   except
@@ -1147,6 +1165,7 @@ begin
     DisplayScale := Sca;
   end;
 
+  fInternalZoom := Sca;
   GameParams.TargetBitmap := Img.Bitmap;
   GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
   fGame.PrepareParams;
@@ -1161,13 +1180,15 @@ begin
   Img.Scale := Sca;
   Img.OffsetHorz := -GameParams.Level.Info.ScreenPosition * Sca;
   Img.OffsetVert := -GameParams.Level.Info.ScreenYPosition * Sca;
-  Img.Left := 0;
-  Img.Top := 0;
+  //Img.Left := 0;
+  //Img.Top := 0;
 
   SkillPanel.Top := Img.Top + Img.Height;
   SkillPanel.left := Img.Left;
-  SkillPanel.Width := Img.Width;
+  SkillPanel.Width := 320 * Sca;
   SkillPanel.Height := 40 * Sca;
+
+  //MainFormResized; // rather than duplicating code, just call it
 
   SkillPanel.SetStyleAndGraph(Gameparams.Style, Sca);
 
@@ -1180,10 +1201,10 @@ begin
     TLinearResampler.Create(SkillPanel.Img.Bitmap);
   end;
 
-  MinScroll := -(GameParams.Level.Info.Width - 320);
+  MinScroll := -(GameParams.Level.Info.Width - (Img.Width div fInternalZoom));
   MaxScroll := 0;
 
-  MinVScroll := -(GameParams.Level.Info.Height - 160);
+  MinVScroll := -(GameParams.Level.Info.Height - (Img.Height div fInternalZoom));
   MaxVScroll := 0;
 
   InitializeCursor;

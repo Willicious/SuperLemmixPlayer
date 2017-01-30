@@ -49,6 +49,8 @@ begin
   BorderIcons := [{biSystemMenu, biMinimize, biMaximize}];
   WindowState := wsNormal {wsMaximized};
   Cursor := crNone;
+  HorzScrollBar.Visible := False;
+  VertScrollBar.Visible := False;
 end;
 
 procedure TBaseDosForm.CreateParams(var Params: TCreateParams);
