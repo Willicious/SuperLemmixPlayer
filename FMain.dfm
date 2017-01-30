@@ -3,7 +3,7 @@ object MainForm: TMainForm
   Top = 208
   Width = 444
   Height = 311
-  Caption = 'Lemmix'
+  Caption = 'NeoLemmix'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,11 +13,13 @@ object MainForm: TMainForm
   KeyPreview = True
   OldCreateOrder = False
   OnActivate = FormActivate
+  OnCanResize = FormCanResize
   OnKeyDown = FormKeyDown
   OnKeyUp = FormKeyUp
   OnMouseDown = FormMouseDown
   OnMouseMove = FormMouseMove
   OnMouseUp = FormMouseUp
+  OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13
 end

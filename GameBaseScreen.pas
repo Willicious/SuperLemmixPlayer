@@ -72,6 +72,9 @@ type
     function CalcPurpleTextSize(const S: string): TRect;
     procedure FadeOut;
     procedure InitializeImageSizeAndPosition(aWidth, aHeight: Integer);
+
+    procedure MainFormResized; virtual;
+
     property ScreenImg: TImage32 read fScreenImg;
     property BackGround: TBitmap32 read fBackGround;
     property BackBuffer: TBitmap32 read fBackBuffer;
@@ -175,7 +178,7 @@ begin
   begin
     //GameParams.MainForm.Left := Left;
     //GameParams.MainForm.Top := Top;
-    GameParams.MainForm.BorderStyle := bsSingle;
+    GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;
   end else begin
     GameParams.MainForm.Left := 0;
@@ -544,6 +547,15 @@ begin
   GameParams.MainForm.Show;
 
   Application.ProcessMessages;
+end;
+
+procedure TGameBaseScreen.MainFormResized;
+begin
+  // basic procedure. Special handling needed for in-game screen, hence why this procedure can be overridden.
+  fScreenImg.Width := GameParams.MainForm.ClientWidth;
+  fScreenImg.Height := GameParams.MainForm.ClientHeight;
+  ClientWidth := GameParams.MainForm.ClientWidth;
+  ClientHeight := GameParams.MainForm.ClientHeight;
 end;
 
 
