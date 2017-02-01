@@ -14,7 +14,7 @@ uses
   URLMon, Wininet, Classes, ActiveX, Axctrls, SysUtils; // I can only guess why IStream and others are in the ActiveX units...
 
 const
-  NX_BASE_URL = 'http://online.neolemmix.com/';
+  NX_BASE_URL = 'http://www.neolemmix.com/';
   NX_VERSIONS_URL = NX_BASE_URL + 'version.php';
   NX_STYLES_URL   = NX_BASE_URL + 'styles.php';
 
