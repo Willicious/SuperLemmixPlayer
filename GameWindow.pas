@@ -1290,13 +1290,13 @@ begin
   O := -P.X * DisplayScale;
   O :=  O + Img.Width div 2;
 
-  if O < MinScroll * DisplayScale then O := MinScroll * DisplayScale;
-  if O > MaxScroll * DisplayScale then O := MaxScroll * DisplayScale;
+  if O < MinScroll then O := MinScroll;
+  if O > MaxScroll then O := MaxScroll;
   Img.OffSetHorz := O;
   O := -P.Y * DisplayScale;
   O :=  O + Img.Height div 2;
-  if O < MinVScroll * DisplayScale then O := MinVScroll * DisplayScale;
-  if O > MaxVScroll * DisplayScale then O := MaxVScroll * DisplayScale;
+  if O < MinVScroll then O := MinVScroll;
+  if O > MaxVScroll then O := MaxVScroll;
   Img.OffsetVert := O;
   DoDraw;
 end;
