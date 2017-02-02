@@ -1097,14 +1097,27 @@ begin
     X := -Round(TGameWindow(Parent).ScreenImg.OffsetHorz / Img.Scale / 16);
     Y := -Round(TGameWindow(Parent).ScreenImg.OffsetVert / Img.Scale / 8);
 
-    ViewRect := Rect(0, 0, fDisplayWidth div 16 + 2, fDisplayHeight div 8 + 2); // the +2 is to account for that the viewport rect is one pixel outside the actual viewed area
+    ViewRect := Rect(0, 0, fDisplayWidth div 16 + 1, fDisplayHeight div 8); // the +1 is to account for that the viewport rect is one pixel outside the actual viewed area
     OffsetRect(ViewRect, X, Y);
+
+    // On levels of certain exact sizes, the rect can end up being one pixel outside the minimap
+    if ViewRect.Right > fMinimapTemp.Width then
+    begin
+      Dec(ViewRect.Left);
+      Dec(ViewRect.Right);
+    end;
+    if ViewRect.Bottom > fMinimapTemp.Height then
+    begin
+      Dec(ViewRect.Top);
+      Dec(ViewRect.Bottom);
+    end;
+
     fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
     if fMinimapTemp.Width > MINIMAP_REGION_WIDTH then
     begin
       DstX := 0;
-      SrcX := X;
+      SrcY := X + (fDisplayWidth div 32) - (MINIMAP_REGION_WIDTH div 2);
     end else begin
       SrcX := 0;
       DstX := (MINIMAP_REGION_WIDTH - fMinimapTemp.Width) div 2;
@@ -1113,7 +1126,7 @@ begin
     if fMinimapTemp.Height > MINIMAP_REGION_HEIGHT then
     begin
       DstY := 0;
-      SrcY := Y;
+      SrcY := Y + (fDisplayHeight div 16) - (MINIMAP_REGION_HEIGHT div 2);
     end else begin
       SrcY := 0;
       DstY := (MINIMAP_REGION_HEIGHT - fMinimapTemp.Height) div 2;
