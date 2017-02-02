@@ -75,7 +75,6 @@ end;
 constructor TGameTextScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
-  Stretched := True;
   OnKeyDown := Form_KeyDown;
   OnKeyPress := Form_KeyPress;
   OnMouseDown := Form_MouseDown;

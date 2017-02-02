@@ -337,10 +337,6 @@ begin
   // Unless Zoom level is 0 (fullscreen), resize the main window
   if GameParams.ZoomLevel <> 0 then
   begin
-    if GameParams.ZoomLevel > Screen.Width div 320 then
-      GameParams.ZoomLevel := Screen.Width div 320;
-    if GameParams.ZoomLevel > Screen.Height div 200 then
-      GameParams.ZoomLevel := Screen.Height div 200;
     GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;
     GameParams.MainForm.ClientWidth := GameParams.WindowWidth;

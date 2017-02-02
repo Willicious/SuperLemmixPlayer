@@ -158,7 +158,6 @@ end;
 constructor TGameTalismanScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
-  Stretched := True;
   OnKeyDown := Form_KeyDown;
   OnKeyPress := Form_KeyPress;
 end;

@@ -422,7 +422,6 @@ end;
 constructor TGameReplayCheckScreen.Create(aOwner: TComponent);
 begin
   inherited;
-  Stretched := True;
   OnKeyDown := Form_KeyDown;
   OnKeyPress := Form_KeyPress;
   OnMouseDown := Form_MouseDown;

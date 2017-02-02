@@ -260,7 +260,7 @@ begin
   //   - Memorized setting is fullscreen
   //       - Windowed is selected: Cancel memorized setting, notify apply on leaving menu, apply
   //       - Fullscreen is selected: Do nothing
-  ResChangeNotification := CHANGE_NOTE_NONE;
+  (*ResChangeNotification := CHANGE_NOTE_NONE;
   if GameParams.ZoomForNextLoad = -1 then
   begin
     if (GameParams.ZoomLevel = 0) <> (cbZoom.ItemIndex = 0) then
@@ -293,9 +293,10 @@ begin
   end;
 
   case ResChangeNotification of
-    CHANGE_NOTE_LEAVE_MENU: ShowMessage('Your new zoom setting will be applied upon leaving the menu screen.');
+    //CHANGE_NOTE_LEAVE_MENU: ShowMessage('Your new zoom setting will be applied upon leaving the menu screen.');
     CHANGE_NOTE_RESTART: ShowMessage('Your new zoom setting will be applied upon restarting NeoLemmix.');
-  end;
+  end;*)
+  GameParams.ZoomLevel := cbZoom.ItemIndex;
 
   //// Page 3 (Audio Options) ////
   SoundManager.MuteSound := tbSoundVol.Position = 0;

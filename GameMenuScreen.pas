@@ -129,6 +129,7 @@ type
     procedure SetNextCredit;
     procedure DumpLevels;
     procedure DumpImages;
+    procedure ShowConfigMenu;
     procedure DoTestStuff; //what a great name. it's a function I have here for testing things.
     procedure PerformUpdateCheck;
     procedure DoMassReplayCheck;
@@ -390,8 +391,6 @@ begin
 end;
 
 procedure TGameMenuScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-var
-  ConfigDlg: TFormNXConfig;
 begin
   if Shift = [] then
   begin
@@ -399,18 +398,7 @@ begin
       VK_RETURN : CloseScreen(gstPreview);
       VK_F1     : CloseScreen(gstPreview);
       VK_F2     : CloseScreen(gstLevelSelect);
-      VK_F3   : begin
-                  ConfigDlg := TFormNXConfig.Create(self);
-                  ConfigDlg.SetGameParams;
-                  ConfigDlg.NXConfigPages.TabIndex := 0;
-                  ConfigDlg.ShowModal;
-                  ConfigDlg.Free;
-
-                  // Wise advice from Simon - save these things on exiting the
-                  // config dialog, rather than waiting for a quit or a screen
-                  // transition to save them.
-                  GameParams.Save;
-                end;
+      VK_F3     : ShowConfigMenu;
       //VK_F4     : CloseScreen(gstNavigation);
       VK_F4     : DumpLevels;
       VK_F5     : DumpImages;
@@ -424,6 +412,43 @@ begin
       VK_DOWN   : NextSection(False);
 
       //VK_SPACE  : UserPausing := not UserPausing;
+    end;
+  end;
+end;
+
+procedure TGameMenuScreen.ShowConfigMenu;
+var
+  ConfigDlg: TFormNXConfig;
+  OldZoom: Integer;
+begin
+  OldZoom := GameParams.ZoomLevel;
+  ConfigDlg := TFormNXConfig.Create(self);
+  ConfigDlg.SetGameParams;
+  ConfigDlg.NXConfigPages.TabIndex := 0;
+  ConfigDlg.ShowModal;
+  ConfigDlg.Free;
+
+  // Wise advice from Simon - save these things on exiting the
+  // config dialog, rather than waiting for a quit or a screen
+  // transition to save them.
+  GameParams.Save;
+
+  if GameParams.ZoomLevel <> OldZoom then
+  begin
+    if GameParams.ZoomLevel = 0 then
+    begin
+      GameParams.MainForm.WindowState := wsMaximized;
+      GameParams.MainForm.BorderStyle := bsNone;
+    end else begin
+      GameParams.MainForm.ClientWidth := GameParams.ZoomLevel * 320;
+      GameParams.MainForm.ClientHeight := GameParams.ZoomLevel * 200;
+      if OldZoom = 0 then
+      begin
+        GameParams.MainForm.BorderStyle := bsSizeable;
+        GameParams.MainForm.WindowState := wsNormal;
+        GameParams.MainForm.Left := (Screen.Width div 2) - (GameParams.MainForm.Width div 2);
+        GameParams.MainForm.Height := (Screen.Height div 2) - (GameParams.MainForm.Height div 2);
+      end;
     end;
   end;
 end;
@@ -696,25 +721,6 @@ end;
 
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
-  if GameParams.ZoomLevel = 0 then
-  begin
-    GameParams.MainForm.BorderStyle := bsNone;
-    GameParams.MainForm.WindowState := wsMaximized;
-    GameParams.MainForm.ClientWidth := Screen.Width;
-    GameParams.MainForm.ClientHeight := Screen.Height;
-  end else begin
-    if GameParams.ZoomLevel > Screen.Width div 320 then
-      GameParams.ZoomLevel := Screen.Width div 320;
-    if GameParams.ZoomLevel > Screen.Height div 200 then
-      GameParams.ZoomLevel := Screen.Height div 200;
-    GameParams.MainForm.BorderStyle := bsSizeable;
-    GameParams.MainForm.WindowState := wsNormal;
-    GameParams.MainForm.ClientWidth := GameParams.WindowWidth;
-    GameParams.MainForm.ClientHeight := GameParams.WindowHeight;
-    //GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;
-    //GameParams.MainForm.Top := (Screen.Height - GameParams.MainForm.Height) div 2;
-  end;
-  GameParams.MainForm.Update;
   inherited CloseScreen(aNextScreen);
 end;
 

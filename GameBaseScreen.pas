@@ -14,9 +14,6 @@ uses
   LemStrings, PngInterface, LemTypes;
 
 const
-  DEF_STRETCHED = TRUE;
-
-const
   PURPLEFONTCOUNT = ord(#132) - ord('!') + 1;
   PurpleFontCharSet = ['!'..#132];
 
@@ -46,10 +43,8 @@ type
     fBackBuffer          : TBitmap32; // general purpose buffer
     fPurpleFont          : TPurpleFont;
     fOriginalImageBounds : TRect;
-    fStretched           : Boolean;
     fScreenIsClosing     : Boolean;
     fCloseDelay          : Integer;
-    procedure SetStretched(const Value: Boolean);
     procedure AdjustImage;
     procedure MakeList(const S: string; aList: TStrings);
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
@@ -78,7 +73,6 @@ type
     property ScreenImg: TImage32 read fScreenImg;
     property BackGround: TBitmap32 read fBackGround;
     property BackBuffer: TBitmap32 read fBackBuffer;
-    property Stretched: Boolean read fStretched write SetStretched default DEF_STRETCHED;
   end;
 
 implementation
@@ -141,22 +135,13 @@ end;
 
 procedure TGameBaseScreen.AdjustImage;
 begin
-  case fStretched of
-    False:
-      begin
-        fScreenImg.Align := alNone;
-        fScreenImg.ScaleMode := smNormal;
-      end;
-    True:
-      begin
-        fScreenImg.Align := alClient;
-        if IsGameplayScreen then
-          fScreenImg.ScaleMode := smScale
-        else
-          fScreenImg.ScaleMode := smStretch;
-        fScreenImg.BitmapAlign := baCenter;
-      end;
-  end;
+  fScreenImg.Align := alClient;
+  if IsGameplayScreen then
+    fScreenImg.ScaleMode := smScale
+  else
+    fScreenImg.ScaleMode := smStretch;
+  fScreenImg.BitmapAlign := baCenter;
+
   Update;
   Changed;
 end;
@@ -174,27 +159,8 @@ begin
     Sleep(fCloseDelay);
   end;
 
-  if GameParams.ZoomLevel <> 0 then
-  begin
-    //GameParams.MainForm.Left := Left;
-    //GameParams.MainForm.Top := Top;
-    GameParams.MainForm.BorderStyle := bsSizeable;
-    GameParams.MainForm.WindowState := wsNormal;
-  end else begin
-    GameParams.MainForm.Left := 0;
-    GameParams.MainForm.Top := 0;
-    GameParams.MainForm.WindowState := wsMaximized;
-  end;
 
   FadeOut;
-
-  if GameParams.ZoomLevel = 0 then
-  begin
-    GameParams.MainForm.BorderStyle := bsNone;
-  end;
-
-  //if not GameParams.MainForm.Visible then
-  //  GameParams.MainForm.Show;
 
   if GameParams <> nil then
   begin
@@ -217,7 +183,6 @@ begin
   fBackGround := TBitmap32.Create;
   fBackBuffer := TBitmap32.Create;
   fMainDatExtractor := TMainDatExtractor.Create;
-  fStretched := DEF_STRETCHED;
 
   ScreenImg.Cursor := crNone;
 end;
@@ -433,12 +398,6 @@ begin
   fMainDatExtractor.FileName := GameParams.MainDatFile;
 end;
 
-procedure TGameBaseScreen.SetStretched(const Value: Boolean);
-begin
-  fStretched := Value;
-  AdjustImage;
-end;
-
 procedure TGameBaseScreen.TileBackgroundBitmap(X, Y: Integer; Dst: TBitmap32 = nil);
 var
   aX, aY: Integer;
@@ -543,8 +502,6 @@ begin
 
     Dec(Steps);
   end;
-
-  GameParams.MainForm.Show;
 
   Application.ProcessMessages;
 end;

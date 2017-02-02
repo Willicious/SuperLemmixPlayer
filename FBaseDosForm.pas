@@ -45,9 +45,9 @@ begin
   inherited Create(aOwner);
   Caption := 'NeoLemmix';
   Color := clBlack;
-  BorderStyle := {bsSizeable} bsNone;
-  BorderIcons := [{biSystemMenu, biMinimize, biMaximize}];
-  WindowState := wsNormal {wsMaximized};
+  BorderStyle := bsNone;
+  BorderIcons := [];
+  WindowState := wsNormal;
   Cursor := crNone;
   HorzScrollBar.Visible := False;
   VertScrollBar.Visible := False;
@@ -71,17 +71,11 @@ begin
   else
     Caption := Trim(GameParams.SysDat.PackName);
 
-  //if GameParams.ZoomLevel <> 0 then
-  //begin
-    //BorderStyle := bsToolWindow;
-    //WindowState := wsNormal;
-    Parent := GameParams.MainForm;
-    ClientWidth := GameParams.MainForm.ClientWidth;
-    ClientHeight := GameParams.MainForm.ClientHeight;
-    Left := 0; //GameParams.MainForm.Left;
-    Top := 0; //GameParams.MainForm.Top;
-  //end;
-
+  Parent := GameParams.MainForm;
+  ClientWidth := GameParams.MainForm.ClientWidth;
+  ClientHeight := GameParams.MainForm.ClientHeight;
+  Left := 0;
+  Top := 0;
 end;
 
 function TBaseDosForm.ShowScreen: Integer;
