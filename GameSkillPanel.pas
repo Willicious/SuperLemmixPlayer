@@ -1072,6 +1072,9 @@ end;
 procedure TSkillPanelToolbar.DrawMinimap(Map: TBitmap32);
 var
   X, Y: Integer;
+  SrcX, SrcY: Integer;
+  DstX, DstY: Integer;
+  MinPos, MaxPos, Range: Integer;
   ViewRect: TRect;
   SrcRect : TRect;
 const
@@ -1098,23 +1101,28 @@ begin
     OffsetRect(ViewRect, X, Y);
     fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
-    X := 0;
-    Y := 0;
-
-    SrcRect := Rect(X, Y, X + MINIMAP_REGION_WIDTH, Y + MINIMAP_REGION_HEIGHT);
-    IntersectRect(SrcRect, SrcRect, fMinimapTemp.BoundsRect);
-
     if fMinimapTemp.Width > MINIMAP_REGION_WIDTH then
-      X := X // filler
-    else
-      X := (MINIMAP_REGION_WIDTH - fMinimapTemp.Width) div 2;
+    begin
+      DstX := 0;
+      SrcX := X;
+    end else begin
+      SrcX := 0;
+      DstX := (MINIMAP_REGION_WIDTH - fMinimapTemp.Width) div 2;
+    end;
 
     if fMinimapTemp.Height > MINIMAP_REGION_HEIGHT then
-      Y := Y // filler
-    else
-      Y := (MINIMAP_REGION_HEIGHT - fMinimapTemp.Height) div 2;
+    begin
+      DstY := 0;
+      SrcY := Y;
+    end else begin
+      SrcY := 0;
+      DstY := (MINIMAP_REGION_HEIGHT - fMinimapTemp.Height) div 2;
+    end;
 
-    fMinimapTemp.DrawTo(Img.Bitmap, 196 + X, 18 + Y, SrcRect);
+    SrcRect := Rect(SrcX, SrcY, SrcX + MINIMAP_REGION_WIDTH, SrcY + MINIMAP_REGION_HEIGHT);
+    IntersectRect(SrcRect, SrcRect, fMinimapTemp.BoundsRect);
+
+    fMinimapTemp.DrawTo(Img.Bitmap, 196 + DstX, 18 + DstY, SrcRect);
   end;
 end;
 
