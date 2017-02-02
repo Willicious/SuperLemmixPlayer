@@ -97,7 +97,8 @@ type
     moShowMinimap,
     moDisableWineWarnings,
     moLinearResampleMenu,
-    moLinearResampleGame
+    moLinearResampleGame,
+    moFullScreen
   );
 
   TMiscOptions = set of TMiscOption;
@@ -113,7 +114,8 @@ const
     moAutoReplaySave,
     moBlackOutZero,
     moPauseAfterBackwards,
-    moLinearResampleMenu
+    moLinearResampleMenu,
+    moFullScreen
   ];
 
 type
@@ -182,7 +184,6 @@ type
     LemMusicOnDisk      : Boolean;
 
     fZoomFactor          : Integer;
-    fZoomForNextLoad     : Integer;
     fForceSkillset       : Word;
     fLevelOverride       : Integer;
 
@@ -225,6 +226,7 @@ type
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
+    property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -239,7 +241,6 @@ type
     property QuickTestMode: Integer read fTestScreens write fTestScreens;
 
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
-    property ZoomForNextLoad: Integer read fZoomForNextLoad write fZoomForNextLoad;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
     property WindowHeight: Integer read fWindowHeight write fWindowHeight;
 
@@ -320,10 +321,8 @@ begin
   SaveBoolean('NoShadows', NoShadows);
   SaveBoolean('ShowMinimap', ShowMinimap);
 
-  if ZoomForNextLoad = -1 then
-    SL.Add('ZoomLevel=' + IntToStr(ZoomLevel))
-  else
-    SL.Add('ZoomLevel=' + IntToStr(ZoomForNextLoad));
+  SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
+  SaveBoolean('FullScreen', FullScreen);
 
   SL.Add('WindowWidth=' + IntToStr(WindowWidth));
   SL.Add('WindowHeight=' + IntToStr(WindowHeight));
@@ -377,9 +376,18 @@ var
     Scale: Integer;
     InternalZoomLevel: Integer;
   begin
+    if ZoomLevel = 0 then
+    begin
+      FullScreen := true;
+      ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+    end;
+
     // Zoom level must not be so high that 320x200 x ZoomLevel won't fit on screen
     if (ZoomLevel > (Screen.Width div 320)) or (ZoomLevel > (Screen.Height div 200)) then
       ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+
+    if ZoomLevel < 1 then
+      ZoomLevel := 1;
 
     // WindowWidth and WindowHeight can't exceed screen area
     if (WindowWidth > Screen.Width) or (WindowHeight > Screen.Height) then
@@ -392,7 +400,7 @@ var
     // match 320x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
-      if ZoomLevel = 0 then
+      if FullScreen then
         InternalZoomLevel := Min(Screen.Width div 320, Screen.Height div 200)
       else
         InternalZoomLevel := ZoomLevel;
@@ -406,7 +414,6 @@ var
       ZoomLevel := ZoomLevel - 1;
 
     // Finally, we must make sure the window size is an integer multiple of the zoom level
-    InternalZoomLevel := Max(1, ZoomLevel); // avoid div by 0 errors
     WindowWidth := (WindowWidth div InternalZoomLevel) * InternalZoomLevel;
     WindowHeight := (WindowHeight div InternalZoomLevel) * InternalZoomLevel;
   end;
@@ -441,7 +448,8 @@ begin
 
   DisableWineWarnings := LoadBoolean('DisableWineWarnings');
 
-  ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], 0);
+  FullScreen := LoadBoolean('FullScreen');
+  ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
 
   WindowWidth := StrToIntDef(SL.Values['WindowWidth'], -1);
   WindowHeight := StrToIntDef(SL.Values['WindowHeight'], -1);
@@ -498,8 +506,7 @@ begin
   fShownText := false;
   fOneLevelMode := false;
   fTalismanPage := 0;
-  fZoomLevel := 0;
-  fZoomForNextLoad := -1;
+  fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
 
   LemDataInResource := True;
   LemSoundsInResource := True;

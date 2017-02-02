@@ -868,7 +868,7 @@ begin
         end;
 
         case func.Action of
-          lka_ReleaseMouse: if GameParams.ZoomLevel <> 0 then
+          lka_ReleaseMouse: if not GameParams.FullScreen then
                             begin
                               fMouseTrapped := false;
                               ClipCursor(nil);
@@ -1202,12 +1202,12 @@ begin
   inherited;
 
   // set the final displayscale
-  if GameParams.ZoomLevel = 0 then
-    Sca := DisplayScale
-  else begin
+  //if GameParams.FullScreen = 0 then
+  //  Sca := DisplayScale
+  //else begin
     Sca := GameParams.ZoomLevel;
     DisplayScale := Sca;
-  end;
+  //end;
 
   fInternalZoom := Sca;
   GameParams.TargetBitmap := Img.Bitmap;

@@ -420,8 +420,10 @@ procedure TGameMenuScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
   OldZoom: Integer;
+  OldFullScreen: Boolean;
 begin
   OldZoom := GameParams.ZoomLevel;
+  OldFullScreen := GameParams.FullScreen;
   ConfigDlg := TFormNXConfig.Create(self);
   ConfigDlg.SetGameParams;
   ConfigDlg.NXConfigPages.TabIndex := 0;
@@ -433,16 +435,16 @@ begin
   // transition to save them.
   GameParams.Save;
 
-  if GameParams.ZoomLevel <> OldZoom then
+  if (GameParams.ZoomLevel <> OldZoom) or (GameParams.FullScreen <> OldFullScreen) then
   begin
-    if GameParams.ZoomLevel = 0 then
+    if GameParams.FullScreen then
     begin
       GameParams.MainForm.WindowState := wsMaximized;
       GameParams.MainForm.BorderStyle := bsNone;
     end else begin
       GameParams.MainForm.ClientWidth := GameParams.ZoomLevel * 320;
       GameParams.MainForm.ClientHeight := GameParams.ZoomLevel * 200;
-      if OldZoom = 0 then
+      if OldFullScreen then
       begin
         GameParams.MainForm.BorderStyle := bsSizeable;
         GameParams.MainForm.WindowState := wsNormal;

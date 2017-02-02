@@ -227,10 +227,10 @@ object FormNXConfig: TFormNXConfig
           ItemHeight = 13
           ItemIndex = 0
           TabOrder = 0
-          Text = 'Fullscreen'
+          Text = '1x Zoom'
           OnChange = OptionChanged
           Items.Strings = (
-            'Fullscreen')
+            '1x Zoom')
         end
         object cbLinearResampleMenu: TCheckBox
           Left = 12
@@ -248,6 +248,15 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Use Smooth Resampling In Game'
           TabOrder = 2
+          OnClick = OptionChanged
+        end
+        object cbFullScreen: TCheckBox
+          Left = 12
+          Top = 40
+          Width = 205
+          Height = 17
+          Caption = 'Full Screen'
+          TabOrder = 3
           OnClick = OptionChanged
         end
       end

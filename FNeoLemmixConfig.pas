@@ -59,6 +59,7 @@ type
     Label1: TLabel;
     cbLinearResampleMenu: TCheckBox;
     cbLinearResampleGame: TCheckBox;
+    cbFullScreen: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -136,22 +137,19 @@ begin
   cbDisableShadows.Checked := GameParams.NoShadows;
   cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
   cbShowMinimap.Checked := GameParams.ShowMinimap;
+  cbFullScreen.Checked := GameParams.FullScreen;
   cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
   cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
 
   // Zoom Dropdown
   cbZoom.Items.Clear;
-  cbZoom.Items.Add('Fullscreen');
   i := 1;
   while (i * 320 <= Screen.Width) and (i * 200 < Screen.Height) do
   begin
-    cbZoom.Items.Add('Windowed, ' + IntToStr(i) + 'x Zoom');
+    cbZoom.Items.Add(IntToStr(i) + 'x Zoom');
     Inc(i);
   end;
-  if GameParams.ZoomForNextLoad = -1 then
-    cbZoom.ItemIndex := GameParams.ZoomLevel
-  else
-    cbZoom.ItemIndex := GameParams.ZoomForNextLoad;
+  cbZoom.ItemIndex := GameParams.ZoomLevel-1;
 
   //// Page 3 (Audio Options) ////
   if SoundManager.MuteSound then
@@ -234,11 +232,12 @@ begin
   GameParams.NoShadows := cbDisableShadows.Checked;
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
   GameParams.ShowMinimap := cbShowMinimap.Checked;
+  GameParams.FullScreen := cbFullScreen.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
   GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
 
   // Zoom Dropdown
-  GameParams.ZoomLevel := cbZoom.ItemIndex;
+  GameParams.ZoomLevel := cbZoom.ItemIndex + 1;
 
   //// Page 3 (Audio Options) ////
   SoundManager.MuteSound := tbSoundVol.Position = 0;

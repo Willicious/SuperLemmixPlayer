@@ -324,18 +324,18 @@ begin
   end;
 
   if UnderWine and not GameParams.DisableWineWarnings then
-    if GameParams.ZoomLevel = 0 then
+    if GameParams.FullScreen then
     begin
       case RunCustomPopup(nil, 'WINE Detected',
                                'You appear to be running NeoLemmix under WINE. Fullscreen mode may not work properly.' + #13 +
                                'Do you wish to change to windowed mode instead?', 'Yes|No|Never') of
-        1: GameParams.ZoomLevel := 1;
+        1: GameParams.FullScreen := false;
         3: GameParams.DisableWineWarnings := true;
       end;
     end;
 
   // Unless Zoom level is 0 (fullscreen), resize the main window
-  if GameParams.ZoomLevel <> 0 then
+  if not GameParams.FullScreen then
   begin
     GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;

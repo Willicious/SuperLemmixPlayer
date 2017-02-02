@@ -183,7 +183,7 @@ var
   CWDiff, CHDiff: Integer;
   NewCW, NewCH: Integer;
 begin
-  if GameParams.ZoomLevel = 0 then
+  if GameParams.FullScreen then
   begin
     NewWidth := Screen.Width;
     NewHeight := Screen.Height;
