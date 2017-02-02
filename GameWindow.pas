@@ -92,8 +92,6 @@ type
     HCursor2             : HCURSOR;           // highlight play cursor
     LemCursorIconInfo    : TIconInfo;         // normal play cursor icon
     LemSelCursorIconInfo : TIconInfo;         // highlight play cursor icon
-    MaxDisplayScale      : Integer;           // calculated in constructor
-    DisplayScale         : Integer;           // what's the zoomfactor (mostly 2, 3 or 4)
     MinScroll            : Single;            // scroll boundary for image
     MaxScroll            : Single;            // scroll boundary for image
     MinVScroll           : Single;
@@ -167,8 +165,7 @@ begin
   SkillPanel.Img.Scale := aNewZoom;
 
   ApplyResize;
-
-  Img.Invalidate;
+  InitializeCursor;
 end;
 
 procedure TGameWindow.ApplyResize;
@@ -583,7 +580,7 @@ var
 begin
   if Game.HyperSpeed then Exit;
   try
-    fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / DisplayScale) * -1, Trunc(Img.OffsetVert / DisplayScale) * -1);
+    fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
     fRenderInterface.MousePos := Game.CursorPoint;
     fRenderer.DrawAllObjects(fRenderInterface.ObjectList, true, fClearPhysics);
     fRenderer.DrawLemmings(fClearPhysics);
@@ -715,8 +712,8 @@ end;
 function TGameWindow.CheckScroll: Boolean;
   procedure Scroll(dx, dy: Integer);
   begin
-    Img.OffsetHorz := Img.OffsetHorz - DisplayScale * dx * fScrollSpeed;
-    Img.OffsetVert := Img.OffsetVert - DisplayScale * dy * fScrollSpeed;
+    Img.OffsetHorz := Img.OffsetHorz - fInternalZoom * dx * fScrollSpeed;
+    Img.OffsetVert := Img.OffsetVert - fInternalZoom * dy * fScrollSpeed;
     Img.OffsetHorz := Max(MinScroll, Img.OffsetHorz);
     Img.OffsetHorz := Min(MaxScroll, Img.OffsetHorz);
     Img.OffsetVert := Max(MinVScroll, Img.OffsetVert);
@@ -764,15 +761,6 @@ begin
   // create toolbar
   SkillPanel := TSkillPanelToolbar.Create(Self);
   SkillPanel.Parent := Self;
-
-  // calculate displayscale
-  // This gets overridden later in windowed mode but is important for fullscreen.
-  HScale := Screen.Width div 320;
-  VScale := Screen.Height div 200;
-  DisplayScale := HScale;
-  if VScale < HScale then
-    DisplayScale := VScale;
-  MaxDisplayScale := DisplayScale;
 
   Self.KeyPreview := True;
 
@@ -1181,20 +1169,25 @@ var
 
 
 begin
+  if HCursor1 <> 0 then
+    DestroyIcon(HCursor1);
+  if HCursor2 <> 0 then
+    DestroyIcon(HCursor2);
+
   bmpMask := TBitmap.Create;
   bmpColor := TBitmap.Create;
 
   bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT_MASK');
   bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT');
 
-  ScaleBmp(bmpMask, DisplayScale);
-  ScaleBmp(bmpColor, DisplayScale);
+  ScaleBmp(bmpMask, fInternalZoom);
+  ScaleBmp(bmpColor, fInternalZoom);
 
   with LemCursorIconInfo do
   begin
     fIcon := false;
-    xHotspot := 7 * DisplayScale;
-    yHotspot := 7 * DisplayScale;
+    xHotspot := 7 * fInternalZoom;
+    yHotspot := 7 * fInternalZoom;
     hbmMask := bmpMask.Handle;
     hbmColor := bmpColor.Handle;
   end;
@@ -1217,15 +1210,15 @@ begin
   bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT_MASK');
   bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT');
 
-  scalebmp(bmpmask, DisplayScale);
-  scalebmp(bmpcolor, DisplayScale);
+  scalebmp(bmpmask, fInternalZoom);
+  scalebmp(bmpcolor, fInternalZoom);
 
 
   with LemSelCursorIconInfo do
   begin
     fIcon := false;
-    xHotspot := 7 * DisplayScale;
-    yHotspot := 7 * DisplayScale;
+    xHotspot := 7 * fInternalZoom;
+    yHotspot := 7 * fInternalZoom;
     hbmMask := bmpMask.Handle;
     hbmColor := bmpColor.Handle;
   end;
@@ -1249,12 +1242,12 @@ var
 begin
   inherited;
 
-  // set the final displayscale
+  // set the final fInternalZoom
   //if GameParams.FullScreen = 0 then
-  //  Sca := DisplayScale
+  //  Sca := fInternalZoom
   //else begin
     Sca := GameParams.ZoomLevel;
-    DisplayScale := Sca;
+    fInternalZoom := Sca;
   //end;
 
   fInternalZoom := Sca;
@@ -1335,13 +1328,13 @@ procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
 var
   O: Single;
 begin
-  O := -P.X * DisplayScale;
+  O := -P.X * fInternalZoom;
   O :=  O + Img.Width div 2;
 
   if O < MinScroll then O := MinScroll;
   if O > MaxScroll then O := MaxScroll;
   Img.OffSetHorz := O;
-  O := -P.Y * DisplayScale;
+  O := -P.Y * fInternalZoom;
   O :=  O + Img.Height div 2;
   if O < MinVScroll then O := MinVScroll;
   if O > MaxVScroll then O := MaxVScroll;
