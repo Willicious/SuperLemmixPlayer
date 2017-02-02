@@ -76,8 +76,8 @@ begin
     //BorderStyle := bsToolWindow;
     //WindowState := wsNormal;
     Parent := GameParams.MainForm;
-    ClientWidth := GameParams.MainForm.Width;
-    ClientHeight := GameParams.MainForm.Height;
+    ClientWidth := GameParams.MainForm.ClientWidth;
+    ClientHeight := GameParams.MainForm.ClientHeight;
     Left := 0; //GameParams.MainForm.Left;
     Top := 0; //GameParams.MainForm.Top;
   //end;
