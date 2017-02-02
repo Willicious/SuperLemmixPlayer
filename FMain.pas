@@ -43,6 +43,8 @@ type
     procedure FormResize(Sender: TObject);
     procedure FormCanResize(Sender: TObject; var NewWidth,
       NewHeight: Integer; var Resize: Boolean);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
     Started: Boolean;
     AppController: TAppController;
@@ -204,6 +206,13 @@ begin
 
   NewWidth := NewCW + CWDiff;
   NewHeight := NewCH + CHDiff;
+end;
+
+procedure TMainForm.FormMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+begin
+  if Assigned(fChildForm.OnMouseWheel) then
+    fChildForm.OnMouseWheel(Sender, Shift, WheelDelta, MousePos, Handled);
 end;
 
 end.

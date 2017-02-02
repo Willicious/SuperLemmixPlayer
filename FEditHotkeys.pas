@@ -159,6 +159,8 @@ begin
   begin
   fKeyNames[$02] := 'Right-Click';
   fKeyNames[$04] := 'Middle-Click';
+  fKeyNames[$05] := 'Wheel Up';
+  fKeyNames[$06] := 'Wheel Down';
   fKeyNames[$08] := 'Backspace';
   fKeyNames[$09] := 'Tab';
   fKeyNames[$0D] := 'Enter';

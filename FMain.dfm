@@ -19,6 +19,7 @@ object MainForm: TMainForm
   OnMouseDown = FormMouseDown
   OnMouseMove = FormMouseMove
   OnMouseUp = FormMouseUp
+  OnMouseWheel = FormMouseWheel
   OnResize = FormResize
   PixelsPerInch = 96
   TextHeight = 13

@@ -45,6 +45,7 @@ type
     procedure Form_KeyPress(Sender: TObject; var Key: Char);
     procedure Form_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure Form_MouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure Form_MouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   { app eventhandlers }
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
   { gameimage eventhandlers }
@@ -127,6 +128,23 @@ implementation
 uses FBaseDosForm, FEditReplay;
 
 { TGameWindow }
+
+procedure TGameWindow.Form_MouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+var
+  Key: Word;
+begin
+  Key := 0;
+  if WheelDelta > 0 then
+    Key := $05
+  else if WheelDelta < 0 then
+    Key := $06;
+
+  if Key <> 0 then
+    OnKeyDown(Sender, Key, Shift);
+
+  Handled := true;
+end;
 
 procedure TGameWindow.MainFormResized;
 begin
@@ -740,6 +758,7 @@ begin
   Self.OnKeyPress := Form_KeyPress;
   Self.OnMouseMove := Form_MouseMove;
   Self.OnMouseUp := Form_MouseUp;
+  Self.OnMouseWheel := Form_MouseWheel;
 
   Img.OnMouseDown := Img_MouseDown;
   Img.OnMouseMove := Img_MouseMove;

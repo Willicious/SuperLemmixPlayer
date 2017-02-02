@@ -396,17 +396,25 @@ var
       WindowHeight := -1;
     end;
 
+    if FullScreen then
+    begin
+      // Important later in this routine.
+      WindowWidth := Screen.Width;
+      WindowHeight := Screen.Height;
+    end;
+
     // If no WindowWidth or WindowHeight is specified, we want to set them so that they
     // match 320x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
       if FullScreen then
-        InternalZoomLevel := Min(Screen.Width div 320, Screen.Height div 200)
-      else
+      begin
+        InternalZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+      end else begin
         InternalZoomLevel := ZoomLevel;
-
-      WindowWidth := 320 * InternalZoomLevel;
-      WindowHeight := 200 * InternalZoomLevel;
+        WindowWidth := 320 * InternalZoomLevel;
+        WindowHeight := 200 * InternalZoomLevel;
+      end;
     end;
 
     // Once we've got our window size, ensure the zoom is low enough to fit on it
