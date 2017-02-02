@@ -70,6 +70,7 @@ type
     procedure SetClearPhysics(aValue: Boolean);
     procedure ProcessGameMessages;
     procedure ApplyResize;
+    procedure ChangeZoom(aNewZoom: Integer);
 
     function GetLevelMusicName: String;
   protected
@@ -152,9 +153,29 @@ begin
   DoDraw;
 end;
 
+procedure TGameWindow.ChangeZoom(aNewZoom: Integer);
+begin
+  if aNewZoom < 1 then Exit;
+  if aNewZoom > Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200) then Exit;
+
+  fInternalZoom := aNewZoom;
+  Img.Scale := aNewZoom;
+  SkillPanel.Width := 320 * aNewZoom;
+  SkillPanel.Height := 40 * aNewZoom;
+  SkillPanel.Img.Width := SkillPanel.Width;
+  SkillPanel.Img.Height := SkillPanel.Height;
+  SkillPanel.Img.Scale := aNewZoom;
+
+  ApplyResize;
+
+  Img.Invalidate;
+end;
+
 procedure TGameWindow.ApplyResize;
 var
   OSHorz, OSVert: Single;
+
+  VertOffset: Integer;
 begin
   OSHorz := Img.OffsetHorz - (Img.Width / 2);
   OSVert := Img.OffsetVert - (Img.Height / 2);
@@ -167,6 +188,10 @@ begin
   Img.Top := ClientHeight - (SkillPanel.Height + Img.Height);
   SkillPanel.Left := (ClientWidth div 2) - (SkillPanel.Width div 2);
   SkillPanel.Top := ClientHeight - SkillPanel.Height;
+
+  VertOffset := Img.Top div 2;
+  Img.Top := Img.Top - VertOffset;
+  SkillPanel.Top := SkillPanel.Top - VertOffset;
 
   MinScroll := -((GameParams.Level.Info.Width * fInternalZoom) - Img.Width);
   MaxScroll := 0;
@@ -832,7 +857,9 @@ const
                          lka_Restart,
                          lka_ReleaseMouse,
                          lka_Nuke,          // nuke also cancels, but requires double-press to do so so handled elsewhere
-                         lka_ClearPhysics];
+                         lka_ClearPhysics,
+                         lka_ZoomIn,
+                         lka_ZoomOut];
   SKILL_KEYS = [lka_Skill, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
@@ -962,6 +989,8 @@ begin
                               ClearPhysics := true;
           lka_EditReplay: ExecuteReplayEdit;
           lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
+          lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
+          lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
         end;
 
     end;
