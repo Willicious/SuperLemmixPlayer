@@ -69,7 +69,7 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     procedure ProcessGameMessages;
-    procedure ApplyResize;
+    procedure ApplyResize(NoRecenter: Boolean = false);
     procedure ChangeZoom(aNewZoom: Integer);
 
     function GetLevelMusicName: String;
@@ -152,30 +152,53 @@ begin
 end;
 
 procedure TGameWindow.ChangeZoom(aNewZoom: Integer);
+var
+  OSHorz, OSVert: Single;
 begin
   if aNewZoom < 1 then Exit;
   if aNewZoom > Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200) then Exit;
 
-  fInternalZoom := aNewZoom;
-  Img.Scale := aNewZoom;
-  SkillPanel.Width := 320 * aNewZoom;
-  SkillPanel.Height := 40 * aNewZoom;
-  SkillPanel.Img.Width := SkillPanel.Width;
-  SkillPanel.Img.Height := SkillPanel.Height;
-  SkillPanel.Img.Scale := aNewZoom;
+  Img.BeginUpdate;
+  SkillPanel.Img.BeginUpdate;
+  try
+    OSHorz := Img.OffsetHorz - (Img.Width / 2);
+    OSVert := Img.OffsetVert - (Img.Height / 2);
+    OSHorz := (OSHorz * aNewZoom) / fInternalZoom;
+    OSVert := (OSVert * aNewZoom) / fInternalZoom;
 
-  ApplyResize;
-  InitializeCursor;
+    Img.Scale := aNewZoom;
+    SkillPanel.Width := 320 * aNewZoom;
+    SkillPanel.Height := 40 * aNewZoom;
+    SkillPanel.Img.Width := SkillPanel.Width;
+    SkillPanel.Img.Height := SkillPanel.Height;
+    SkillPanel.Img.Scale := aNewZoom;
+
+    fInternalZoom := aNewZoom;
+
+    ApplyResize;
+    InitializeCursor;
+
+    OSHorz := OSHorz + (Img.Width / 2);
+    OSVert := OSVert + (Img.Height / 2);
+    Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
+    Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
+  finally
+    Img.EndUpdate;
+    SkillPanel.Img.EndUpdate;
+  end;
 end;
 
-procedure TGameWindow.ApplyResize;
+procedure TGameWindow.ApplyResize(NoRecenter: Boolean = false);
 var
   OSHorz, OSVert: Single;
 
   VertOffset: Integer;
 begin
-  OSHorz := Img.OffsetHorz - (Img.Width / 2);
-  OSVert := Img.OffsetVert - (Img.Height / 2);
+  if not NoRecenter then
+  begin
+    OSHorz := Img.OffsetHorz - (Img.Width / 2);
+    OSVert := Img.OffsetVert - (Img.Height / 2);
+  end;
 
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
@@ -196,10 +219,13 @@ begin
   MinVScroll := -((GameParams.Level.Info.Height * fInternalZoom) - Img.Height);
   MaxVScroll := 0;
 
-  OSHorz := OSHorz + (Img.Width / 2);
-  OSVert := OSVert + (Img.Height / 2);
-  Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
-  Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
+  if not NoRecenter then
+  begin
+    OSHorz := OSHorz + (Img.Width / 2);
+    OSVert := OSVert + (Img.Height / 2);
+    Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
+    Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
+  end;
 
   SkillPanel.DoHorizontalScroll := (ClientWidth = SkillPanel.Width);
 end;

@@ -372,11 +372,9 @@ var
   end;
 
   procedure EnsureValidWindowSize;
-  var
-    Scale: Integer;
-    InternalZoomLevel: Integer;
   begin
-    if ZoomLevel = 0 then
+    // Older config files might specify a zoom level of zero, to represent fullscreen.
+    if ZoomLevel < 1 then
     begin
       FullScreen := true;
       ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
@@ -396,9 +394,11 @@ var
       WindowHeight := -1;
     end;
 
+    // Set window size to screen size if fullscreen. This doesn't get used directly,
+    // and will be overwritten when the user changes zoom settings (unless done by
+    // editing INI manually), but it keeps this function tidier.
     if FullScreen then
     begin
-      // Important later in this routine.
       WindowWidth := Screen.Width;
       WindowHeight := Screen.Height;
     end;
@@ -407,23 +407,17 @@ var
     // match 320x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
-      if FullScreen then
-      begin
-        InternalZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
-      end else begin
-        InternalZoomLevel := ZoomLevel;
-        WindowWidth := 320 * InternalZoomLevel;
-        WindowHeight := 200 * InternalZoomLevel;
-      end;
+      WindowWidth := ZoomLevel * 320;
+      WindowHeight := ZoomLevel * 200;
     end;
 
     // Once we've got our window size, ensure the zoom is low enough to fit on it
-    while ((WindowWidth < (ZoomLevel * 320)) or (WindowHeight < (ZoomLevel * 200))) and (ZoomLevel > 1) do
+    while (ZoomLevel > 1) and ((ZoomLevel * 320 > WindowWidth) or (ZoomLevel * 200 > WindowHeight)) do
       ZoomLevel := ZoomLevel - 1;
 
     // Finally, we must make sure the window size is an integer multiple of the zoom level
-    WindowWidth := (WindowWidth div InternalZoomLevel) * InternalZoomLevel;
-    WindowHeight := (WindowHeight div InternalZoomLevel) * InternalZoomLevel;
+    WindowWidth := (WindowWidth div ZoomLevel) * ZoomLevel;
+    WindowHeight := (WindowHeight div ZoomLevel) * ZoomLevel;
   end;
 
 begin
