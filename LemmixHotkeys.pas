@@ -11,7 +11,7 @@ uses
 const
   MAX_KEY = 255;
   MAX_KEY_LEN = 4;
-  KEYSET_VERSION = 7;
+  KEYSET_VERSION = 8;
 
 type
   TLemmixHotkeyAction = (lka_Null,
@@ -45,7 +45,9 @@ type
                          lka_SkillRight,
                          lka_ReleaseMouse,
                          lka_ClearPhysics,
-                         lka_FallDistance);
+                         lka_FallDistance,
+                         lka_ZoomIn,
+                         lka_ZoomOut);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
 
@@ -90,6 +92,8 @@ begin
   // Here's the simple ones that don't need further settings.
   fKeyFunctions[$02].Action := lka_Highlight;
   fKeyFunctions[$04].Action := lka_Pause;
+  fKeyFunctions[$05].Action := lka_ZoomIn;
+  fKeyFunctions[$06].Action := lka_ZoomOut;
   fKeyFunctions[$08].Action := lka_LoadState;
   fKeyFunctions[$0D].Action := lka_SaveState;
   fKeyFunctions[$10].Action := lka_SelectNewLem;
@@ -223,6 +227,8 @@ var
     if s = 'fall_distance' then Result := lka_FallDistance;
     if s = 'edit_replay' then Result := lka_EditReplay;
     if s = 'replay_insert' then Result := lka_ReplayInsert;
+    if s = 'zoom_in' then Result := lka_ZoomIn;
+    if s = 'zoom_out' then Result := lka_ZoomOut;
   end;
 
   function InterpretSecondary(s: String): Integer;
@@ -366,6 +372,12 @@ begin
           SetIfFree($32, lka_Skill, 13);
       end;
 
+      if FixVersion < 8 then
+      begin
+        SetIfFree($05, lka_ZoomIn);
+        SetIfFree($06, lka_ZoomOut);
+      end;
+
     except
       SetDefaults;
     end;
@@ -414,6 +426,8 @@ var
       lka_FallDistance:     Result := 'Fall_Distance';
       lka_EditReplay:       Result := 'Edit_Replay';
       lka_ReplayInsert:     Result := 'Replay_Insert';
+      lka_ZoomIn:           Result := 'Zoom_In';
+      lka_ZoomOut:          Result := 'Zoom_Out';
       else Result := 'Null';
     end;
   end;
