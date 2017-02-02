@@ -37,6 +37,8 @@ type
 
     fOriginal      : TBitmap32;
     fMinimapRegion : TBitmap32;
+    fMinimapTemp   : TBitmap32;
+
     fLevel         : TLevel;
     fSkillFont     : array['0'..'9', 0..1] of TBitmap32;
     fSkillCountErase : TBitmap32;
@@ -58,6 +60,8 @@ type
     fSkillCounts: Array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
 
     fDoHorizontalScroll: Boolean;
+    fDisplayWidth: Integer;
+    fDisplayHeight: Integer;
 
 
     procedure SetLevel(const Value: TLevel);
@@ -105,6 +109,8 @@ type
     procedure SetCurrentScreenOffset(X: Integer);
     property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
     property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
+    property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
+    property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
 
@@ -137,6 +143,7 @@ begin
   fImg.RepaintMode := rmOptimizer;
 
   fMinimapRegion := TBitmap32.Create;
+  fMinimapTemp := TBitmap32.Create;
 
   fImg.OnMouseDown := ImgMouseDown;
   fImg.OnMouseMove := ImgMouseMove;
@@ -201,6 +208,7 @@ begin
   fSkillLock.Free;
 
   fMinimapRegion.Free;
+  fMinimapTemp.Free;
 
   fOriginal.Free;
   inherited;
@@ -1063,35 +1071,93 @@ end;
 
 procedure TSkillPanelToolbar.DrawMinimap(Map: TBitmap32);
 var
-  X, Y: Integer;
-  Dx : Integer;
+  X, Y, W, H: Integer;
+  DrawX, DrawY: Integer;
+  DrawXRange, DrawYRange: Integer;
+  MinX, MaxX, MinY, MaxY: Integer;
+  ViewRect: TRect;
   SrcRect : TRect;
+const
+  MINIMAP_REGION_WIDTH = 104;
+  MINIMAP_REGION_HEIGHT = 20;
 begin
   if not GameParams.ShowMinimap then Exit;
 
   fMinimapRegion.DrawTo(Img.Bitmap, 193, 16);
 
-  Dx := 196;
-  if Map.Width < 104 then Dx := Dx + (52 - (Map.Width div 2));
-  SrcRect := Rect(0, 0, 104, 20);
+  // We want to add some space for when the viewport rect lies on the very edges
+  fMinimapTemp.Width := Map.Width + 2;
+  fMinimapTemp.Height := Map.Height + 2;
+  fMinimapTemp.Clear(0);
+  Map.DrawTo(fMinimapTemp, 1, 1);
 
   if Parent <> nil then
   begin
-    X := -Round(TGameWindow(Parent).ScreenImg.OffsetHorz/(16 * fImg.Scale));
-    Y := -Round(TGameWindow(Parent).ScreenImg.OffsetVert/(8 * fImg.Scale));
-    if Game.GetLevelWidth < 1664 then X := X + 52 - (Game.GetLevelWidth div 32);
-    if Map.Width > 104 then
-    begin
-      OffsetRect(SrcRect, Round((Map.Width - 104) * X / (Map.Width - 22)), 0);
-      X := X - SrcRect.Left;
-    end;
-    OffsetRect(SrcRect, 0, Y);
-    if SrcRect.Bottom > Map.Height then OffsetRect(SrcRect, 0, -1);
-  end else
-    X := 0;
+    // We want topleft position for now, to draw the visible area frame
+    X := -Round(TGameWindow(Parent).ScreenImg.OffsetHorz / Img.Scale / 16);
+    Y := -Round(TGameWindow(Parent).ScreenImg.OffsetVert / Img.Scale / 8);
 
-  Map.DrawTo(Img.Bitmap, Dx, 18, SrcRect);
-  Img.Bitmap.FrameRectS(196 + X, 18, 196 + X + 20, 38, fRectColor);
+    ViewRect := Rect(0, 0, fDisplayWidth div 16 + 2, fDisplayHeight div 8 + 2); // the +2 is to account for that the viewport rect is one pixel outside the actual viewed area
+    OffsetRect(ViewRect, X, Y);
+    fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+
+    // Now we want the center point, to determine which part of the map to draw on the panel
+    X := X + (fDisplayWidth div 40);
+    Y := Y + (fDisplayWidth div 20);
+
+    // Determine the range of scrolling on each axis
+    DrawXRange := Max(fMinimapTemp.Width - MINIMAP_REGION_WIDTH, 0);
+    DrawYRange := Max(fMinimapTemp.Height - MINIMAP_REGION_HEIGHT, 0);
+
+    // The minimum possible center point should be equal to 0.
+    // The maximum possible center point should be equal to Draw(axis)Range.
+    MinX := fDisplayWidth div 40;
+    MinY := fDisplayHeight div 20;
+    MaxX := (fMinimapTemp.Width - MinX);
+    MaxY := (fMinimapTemp.Height - MinY);
+
+    // Now, we need find out how far between the two limits each coordinate is.
+    if MaxX > MinX then
+    begin
+      // if drawrange is 3
+      // first quarter,  X = 0
+      // second quarter, X = 1
+      // third quarter,  X = 2
+      // fourth quarter, X = 3
+
+      // exampe: if X is 0..24, 0
+      //                25..49, 1
+      //                50..74, 2
+      //                75..99, 3
+      //((MaxX + 1) div (DrawRange + 1)) gives cutoff point to start each bracket
+      //((X - MinX) div (DrawRange+1)) gives which bracket it falls into?
+      X := (X - MinX) div (DrawXRange + 1);
+    end else
+      X := 0;
+
+    if MaxY > MinY then
+    begin
+      Y := (Y - MinY) div (DrawYRange + 1);
+    end else
+      Y := 0;
+
+    // We need to handle when the minimap isn't large enough to fill the minimap space.
+    if fMinimapTemp.Width < MINIMAP_REGION_WIDTH then
+      DrawX := (MINIMAP_REGION_WIDTH - fMinimapTemp.Width) div 2
+    else
+      DrawX := 0;
+
+    if fMinimapTemp.Height < MINIMAP_REGION_HEIGHT then // not possible with current minimap setup vs minimum level size, this is for futureproofing
+      DrawY := (MINIMAP_REGION_HEIGHT - fMinimapTemp.Height) div 2
+    else
+      DrawY := 0;
+
+    // Now we turn it into a rect.
+    SrcRect := Rect(X, Y, X+104, Y+20);
+    IntersectRect(SrcRect, SrcRect, fMinimapTemp.BoundsRect);
+
+    fMinimapTemp.DrawTo(Img.Bitmap, DrawX + 196, DrawY + 18, SrcRect);
+  end;
 end;
 
 procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);

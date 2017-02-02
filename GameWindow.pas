@@ -185,6 +185,7 @@ begin
   finally
     Img.EndUpdate;
     SkillPanel.Img.EndUpdate;
+    ApplyMouseTrap;
   end;
 end;
 
@@ -208,6 +209,9 @@ begin
   Img.Top := ClientHeight - (SkillPanel.Height + Img.Height);
   SkillPanel.Left := (ClientWidth div 2) - (SkillPanel.Width div 2);
   SkillPanel.Top := ClientHeight - SkillPanel.Height;
+
+  SkillPanel.DisplayWidth := Img.Width div fInternalZoom;
+  SkillPanel.DisplayHeight := Img.Height div fInternalZoom;
 
   VertOffset := Img.Top div 2;
   Img.Top := Img.Top - VertOffset;
