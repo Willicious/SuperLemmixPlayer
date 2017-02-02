@@ -1071,10 +1071,7 @@ end;
 
 procedure TSkillPanelToolbar.DrawMinimap(Map: TBitmap32);
 var
-  X, Y, W, H: Integer;
-  DrawX, DrawY: Integer;
-  DrawXRange, DrawYRange: Integer;
-  MinX, MaxX, MinY, MaxY: Integer;
+  X, Y: Integer;
   ViewRect: TRect;
   SrcRect : TRect;
 const
@@ -1101,62 +1098,23 @@ begin
     OffsetRect(ViewRect, X, Y);
     fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
-    // Now we want the center point, to determine which part of the map to draw on the panel
-    X := X + (fDisplayWidth div 40);
-    Y := Y + (fDisplayWidth div 20);
+    X := 0;
+    Y := 0;
 
-    // Determine the range of scrolling on each axis
-    DrawXRange := Max(fMinimapTemp.Width - MINIMAP_REGION_WIDTH, 0);
-    DrawYRange := Max(fMinimapTemp.Height - MINIMAP_REGION_HEIGHT, 0);
-
-    // The minimum possible center point should be equal to 0.
-    // The maximum possible center point should be equal to Draw(axis)Range.
-    MinX := fDisplayWidth div 40;
-    MinY := fDisplayHeight div 20;
-    MaxX := (fMinimapTemp.Width - MinX);
-    MaxY := (fMinimapTemp.Height - MinY);
-
-    // Now, we need find out how far between the two limits each coordinate is.
-    if MaxX > MinX then
-    begin
-      // if drawrange is 3
-      // first quarter,  X = 0
-      // second quarter, X = 1
-      // third quarter,  X = 2
-      // fourth quarter, X = 3
-
-      // exampe: if X is 0..24, 0
-      //                25..49, 1
-      //                50..74, 2
-      //                75..99, 3
-      //((MaxX + 1) div (DrawRange + 1)) gives cutoff point to start each bracket
-      //((X - MinX) div (DrawRange+1)) gives which bracket it falls into?
-      X := (X - MinX) div (DrawXRange + 1);
-    end else
-      X := 0;
-
-    if MaxY > MinY then
-    begin
-      Y := (Y - MinY) div (DrawYRange + 1);
-    end else
-      Y := 0;
-
-    // We need to handle when the minimap isn't large enough to fill the minimap space.
-    if fMinimapTemp.Width < MINIMAP_REGION_WIDTH then
-      DrawX := (MINIMAP_REGION_WIDTH - fMinimapTemp.Width) div 2
-    else
-      DrawX := 0;
-
-    if fMinimapTemp.Height < MINIMAP_REGION_HEIGHT then // not possible with current minimap setup vs minimum level size, this is for futureproofing
-      DrawY := (MINIMAP_REGION_HEIGHT - fMinimapTemp.Height) div 2
-    else
-      DrawY := 0;
-
-    // Now we turn it into a rect.
-    SrcRect := Rect(X, Y, X+104, Y+20);
+    SrcRect := Rect(X, Y, X + MINIMAP_REGION_WIDTH, Y + MINIMAP_REGION_HEIGHT);
     IntersectRect(SrcRect, SrcRect, fMinimapTemp.BoundsRect);
 
-    fMinimapTemp.DrawTo(Img.Bitmap, DrawX + 196, DrawY + 18, SrcRect);
+    if fMinimapTemp.Width > MINIMAP_REGION_WIDTH then
+      X := X // filler
+    else
+      X := (MINIMAP_REGION_WIDTH - fMinimapTemp.Width) div 2;
+
+    if fMinimapTemp.Height > MINIMAP_REGION_HEIGHT then
+      Y := Y // filler
+    else
+      Y := (MINIMAP_REGION_HEIGHT - fMinimapTemp.Height) div 2;
+
+    fMinimapTemp.DrawTo(Img.Bitmap, 196 + X, 18 + Y, SrcRect);
   end;
 end;
 
