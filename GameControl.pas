@@ -423,7 +423,17 @@ var
 begin
   if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini') then
     if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini') then
+    begin
+      if UnderWine then
+      begin
+        // When running under WINE without an existing config, let's default to windowed.
+        FullScreen := false;
+        ZoomLevel := Max(Max((Screen.Width - 100) div 320, (Screen.Height - 100) div 200), 1);
+        WindowWidth := 320 * ZoomLevel;
+        WindowHeight := 200 * ZoomLevel;
+      end;
       Exit;
+    end;
 
   SL := TStringList.Create;
 
