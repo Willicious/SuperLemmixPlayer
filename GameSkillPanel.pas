@@ -1097,8 +1097,8 @@ begin
   if Parent <> nil then
   begin
     // We want topleft position for now, to draw the visible area frame
-    X := -Round(TGameWindow(Parent).ScreenImg.OffsetHorz / Img.Scale / 16);
-    Y := -Round(TGameWindow(Parent).ScreenImg.OffsetVert / Img.Scale / 8);
+    X := -Round(TGameWindow(Parent).ScreenImg.OffsetHorz / TGameWindow(Parent).ScreenImg.Scale / 16);
+    Y := -Round(TGameWindow(Parent).ScreenImg.OffsetVert / TGameWindow(Parent).ScreenImg.Scale / 8);
 
     ViewRect := Rect(0, 0, fDisplayWidth div 16 + 1, fDisplayHeight div 8); // the +1 is to account for that the viewport rect is one pixel outside the actual viewed area
     OffsetRect(ViewRect, X, Y);

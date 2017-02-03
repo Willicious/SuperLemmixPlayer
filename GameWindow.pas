@@ -171,11 +171,15 @@ begin
     OSVert := (OSVert * aNewZoom) / fInternalZoom;
 
     Img.Scale := aNewZoom;
-    SkillPanel.Width := 320 * aNewZoom;
-    SkillPanel.Height := 40 * aNewZoom;
-    SkillPanel.Img.Width := SkillPanel.Width;
-    SkillPanel.Img.Height := SkillPanel.Height;
-    SkillPanel.Img.Scale := aNewZoom;
+
+    if aNewZoom >= GameParams.ZoomLevel then
+    begin
+      SkillPanel.Width := 320 * aNewZoom;
+      SkillPanel.Height := 40 * aNewZoom;
+      SkillPanel.Img.Width := SkillPanel.Width;
+      SkillPanel.Img.Height := SkillPanel.Height;
+      SkillPanel.Img.Scale := aNewZoom;
+    end;
 
     fInternalZoom := aNewZoom;
 
@@ -212,16 +216,16 @@ begin
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
   Img.Height := Min(ClientHeight - SkillPanel.Height, GameParams.Level.Info.Height * fInternalZoom);
   Img.Left := (ClientWidth div 2) - (Img.Width div 2);
-  Img.Top := ClientHeight - (SkillPanel.Height + Img.Height);
+  //Img.Top := ClientHeight - (SkillPanel.Height + Img.Height);
   SkillPanel.Left := (ClientWidth div 2) - (SkillPanel.Width div 2);
-  SkillPanel.Top := ClientHeight - SkillPanel.Height;
+  //SkillPanel.Top := ClientHeight - SkillPanel.Height;
 
   SkillPanel.DisplayWidth := Img.Width div fInternalZoom;
   SkillPanel.DisplayHeight := Img.Height div fInternalZoom;
 
-  VertOffset := Img.Top div 2;
-  Img.Top := Img.Top - VertOffset;
-  SkillPanel.Top := SkillPanel.Top - VertOffset;
+  VertOffset := (ClientHeight - (SkillPanel.Height + Img.Height)) div 2;
+  Img.Top := VertOffset;
+  SkillPanel.Top := Img.Top + Img.Height;
 
   MinScroll := -((GameParams.Level.Info.Width * fInternalZoom) - Img.Width);
   MaxScroll := 0;
@@ -725,6 +729,8 @@ begin
 end;
 
 procedure TGameWindow.CheckResetCursor(aForce: Boolean = false);
+var
+  NewCursor: Integer;
 begin
   if not CanPlay then Exit;
 
@@ -733,10 +739,17 @@ begin
     fNeedReset := true;
     exit;
   end;
-  if ((Screen.Cursor mod CURSOR_TYPES <> Game.CurrentCursor mod CURSOR_TYPES) or aForce) and not fSuspendCursor then
+  if (((Screen.Cursor mod CURSOR_TYPES = 1) <> (fRenderInterface.SelectedLemming = nil)) or aForce) and not fSuspendCursor then
   begin
-    Img.Cursor := Game.CurrentCursor + ((fInternalZoom-1) * CURSOR_TYPES);
-    Screen.Cursor := Game.CurrentCursor + ((fInternalZoom-1) * CURSOR_TYPES);
+    if fRenderInterface.SelectedLemming = nil then
+      NewCursor := 1
+    else
+      NewCursor := 2;
+    NewCursor := NewCursor + ((fInternalZoom-1) * CURSOR_TYPES);
+    Cursor := NewCursor;
+    Img.Cursor := NewCursor;
+    Screen.Cursor := NewCursor;
+    SkillPanel.Img.Cursor := NewCursor;
   end;
   if (fNeedReset or aForce) and fMouseTrapped then
   begin
@@ -1071,6 +1084,7 @@ procedure TGameWindow.SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
   convert the normal hotspot to the hotspot the game uses (4,9 instead of 7,7)
 -------------------------------------------------------------------------------}
 begin
+  // todo: work out WHY this change is needed
   Game.CursorPoint := Point(BitmapPoint.X - 3, BitmapPoint.Y + 2);
 end;
 
@@ -1236,8 +1250,8 @@ begin
     with LemCursorIconInfo do
     begin
       fIcon := false;
-      xHotspot := 7 * i;
-      yHotspot := 7 * i;
+      xHotspot := bmpColor.Width div 2;
+      yHotspot := bmpColor.Width div 2;
       hbmMask := bmpMask.Handle;
       hbmColor := bmpColor.Handle;
     end;
@@ -1256,8 +1270,8 @@ begin
     with LemSelCursorIconInfo do
     begin
       fIcon := false;
-      xHotspot := 7 * fInternalZoom;
-      yHotspot := 7 * fInternalZoom;
+      xHotspot := bmpColor.Width div 2;
+      yHotspot := bmpColor.Width div 2;
       hbmMask := bmpMask.Handle;
       hbmColor := bmpColor.Handle;
     end;

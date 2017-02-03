@@ -205,7 +205,6 @@ type
     UserSetNuking              : Boolean;
     ExploderAssignInProgress   : Boolean;
     Index_LemmingToBeNuked     : Integer;
-    fCurrentCursor             : Integer; // normal or highlight
     BrickPixelColors           : array[0..11] of TColor32; // gradient steps
     fGameFinished              : Boolean;
     fGameCheated               : Boolean;
@@ -431,7 +430,6 @@ type
     function GetHighlitLemming: TLemming;
 
   { properties }
-    property CurrentCursor: Integer read fCurrentCursor;
     property CurrentIteration: Integer read fCurrentIteration;
     property CurrentReleaseRate: Integer read CurrReleaseRate; // for skill panel's usage
     property ClockFrame: Integer read fClockFrame;
@@ -1005,7 +1003,7 @@ begin
   NewSkillMethods[baGliding]      := MayAssignFloaterGlider;
   NewSkillMethods[baFixing]       := MayAssignMechanic;
   NewSkillMethods[baCloning]      := MayAssignCloner;
-  NewSkillMethods[baFencing]      := MayAssignFencer; // temporary
+  NewSkillMethods[baFencing]      := MayAssignFencer;
 
   P := AppPath;
   fLastReplayDir := '';
@@ -1222,7 +1220,6 @@ begin
   UserSetNuking := False;
   ExploderAssignInProgress := False;
   Index_LemmingToBeNuked := 0;
-  fCurrentCursor := 0;
   fParticleFinishTimer := 0;
   LemmingList.Clear;
   if Level.Info.LevelID <> fReplayManager.LevelID then //not aReplay then
@@ -4778,12 +4775,10 @@ begin
 
     if InfoPainter <> nil then
       InfoPainter.SetInfoCursorLemming(S, HitCount);
-    fCurrentCursor := 2;
   end
   else begin
     if InfoPainter <> nil then
       InfoPainter.SetInfoCursorLemming('', 0);
-    fCurrentCursor := 1;
   end;
 end;
 
