@@ -11,7 +11,7 @@ const
   FORMAT_VERSION = 10;
   CORE_VERSION = 12;
   FEATURES_VERSION = 15;
-  HOTFIX_VERSION = 0;
+  HOTFIX_VERSION = 2;
   COMMIT_ID = 'ef4efb9';  // empty string is handled, and is uppercased when needed so don't need to do manually anymore :D
 
 function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;

@@ -539,6 +539,7 @@ var
 begin
   // It's very messy to track position in a custom pixelcombine, hence using an entirely
   // custom procedure instead.
+  IntersectRect(aRegion, aRegion, fPhysicsMap.BoundsRect);
   for y := aRegion.Top to aRegion.Bottom-1 do
   begin
     PSrc := fPhysicsMap.PixelPtr[aRegion.Left, y];
