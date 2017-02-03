@@ -136,10 +136,10 @@ end;
 procedure TGameBaseScreen.AdjustImage;
 begin
   fScreenImg.Align := alClient;
-  if IsGameplayScreen then
-    fScreenImg.ScaleMode := smScale
-  else
-    fScreenImg.ScaleMode := smStretch;
+  //if IsGameplayScreen then
+    fScreenImg.ScaleMode := smResize;
+  //else
+  //  fScreenImg.ScaleMode := smStretch;
   fScreenImg.BitmapAlign := baCenter;
 
   Update;
