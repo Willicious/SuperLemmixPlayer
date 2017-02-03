@@ -22,6 +22,10 @@ type
     gsDown
   );
 
+const
+  CURSOR_TYPES = 2;
+
+type
   TGameWindow = class(TGameBaseScreen)
   private
     fCloseToScreen: TGameScreenType;
@@ -55,7 +59,7 @@ type
   { skillpanel eventhandlers }
     procedure SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   { internal }
-    procedure CheckResetCursor;
+    procedure CheckResetCursor(aForce: Boolean = false);
     function CheckScroll: Boolean;
     procedure AddSaveState;
     procedure CheckAdjustReleaseRate;
@@ -71,6 +75,7 @@ type
     procedure ProcessGameMessages;
     procedure ApplyResize(NoRecenter: Boolean = false);
     procedure ChangeZoom(aNewZoom: Integer);
+    procedure ReleaseCursors;
 
     function GetLevelMusicName: String;
   protected
@@ -88,8 +93,7 @@ type
     PrevScrollTime       : Cardinal;          // last time we scrolled in idle
     MouseClipRect        : TRect;             // we clip the mouse when there is more space
     CanPlay              : Boolean;           // use in idle en set to false whenever we don't want to play
-    HCursor1             : HCURSOR;           // normal play cursor
-    HCursor2             : HCURSOR;           // highlight play cursor
+    HCursors             : array of array[1..CURSOR_TYPES] of HCURSOR; // 0 = normal, 1 = on lemming
     LemCursorIconInfo    : TIconInfo;         // normal play cursor icon
     LemSelCursorIconInfo : TIconInfo;         // highlight play cursor icon
     MinScroll            : Single;            // scroll boundary for image
@@ -176,16 +180,18 @@ begin
     fInternalZoom := aNewZoom;
 
     ApplyResize;
-    InitializeCursor;
+    //InitializeCursor;
 
     OSHorz := OSHorz + (Img.Width / 2);
     OSVert := OSVert + (Img.Height / 2);
     Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
+
+    DoDraw;
+    CheckResetCursor(true);
   finally
     Img.EndUpdate;
     SkillPanel.Img.EndUpdate;
-    ApplyMouseTrap;
   end;
 end;
 
@@ -718,7 +724,7 @@ begin
   CanPlay := True;
 end;
 
-procedure TGameWindow.CheckResetCursor;
+procedure TGameWindow.CheckResetCursor(aForce: Boolean = false);
 begin
   if not CanPlay then Exit;
 
@@ -727,12 +733,12 @@ begin
     fNeedReset := true;
     exit;
   end;
-  if (Screen.Cursor <> Game.CurrentCursor) and not fSuspendCursor then
+  if ((Screen.Cursor mod CURSOR_TYPES <> Game.CurrentCursor mod CURSOR_TYPES) or aForce) and not fSuspendCursor then
   begin
-    Img.Cursor := Game.CurrentCursor;
-    Screen.Cursor := Game.CurrentCursor;
+    Img.Cursor := Game.CurrentCursor + ((fInternalZoom-1) * CURSOR_TYPES);
+    Screen.Cursor := Game.CurrentCursor + ((fInternalZoom-1) * CURSOR_TYPES);
   end;
-  if fNeedReset and fMouseTrapped then
+  if (fNeedReset or aForce) and fMouseTrapped then
   begin
     ApplyMouseTrap;
     fNeedReset := false;
@@ -815,20 +821,32 @@ begin
 
   fReplayKilled := false;
 
+  DoubleBuffered := true;
 end;
 
 destructor TGameWindow.Destroy;
 begin
   CanPlay := False;
   Application.OnIdle := nil;
+
   if SkillPanel <> nil then
     SkillPanel.Game := nil;
-  if HCursor1 <> 0 then
-    DestroyIcon(HCursor1);
-  if HCursor2 <> 0 then
-    DestroyIcon(HCursor2);
+
   fSaveList.Free;
+
+  ReleaseCursors;
   inherited Destroy;
+end;
+
+procedure TGameWindow.ReleaseCursors;
+var
+  i, i2: Integer;
+  MaxZoom: Integer;
+begin
+  for i := 0 to Length(HCursors)-1 do
+    for i2 := 0 to 1 do
+      if HCursors[i][i2] <> 0 then
+        DestroyIcon(HCursors[i][i2]);
 end;
 
 procedure TGameWindow.Form_Activate(Sender: TObject);
@@ -1178,6 +1196,8 @@ const
 var
   bmpMask : TBitmap;
   bmpColor : TBitmap;
+  i: Integer;
+  n: Integer;
 
     procedure scalebmp(bmp:tbitmap; ascale:integer);
     var                         //bad code but it works for now
@@ -1199,62 +1219,53 @@ var
 
 
 begin
-  if HCursor1 <> 0 then
-    DestroyIcon(HCursor1);
-  if HCursor2 <> 0 then
-    DestroyIcon(HCursor2);
+  ReleaseCursors;
 
   bmpMask := TBitmap.Create;
   bmpColor := TBitmap.Create;
 
-  bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT_MASK');
-  bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT');
+  n := 0;
 
-  ScaleBmp(bmpMask, fInternalZoom);
-  ScaleBmp(bmpColor, fInternalZoom);
-
-  with LemCursorIconInfo do
+  for i := 0 to Length(HCursors)-1 do
   begin
-    fIcon := false;
-    xHotspot := 7 * fInternalZoom;
-    yHotspot := 7 * fInternalZoom;
-    hbmMask := bmpMask.Handle;
-    hbmColor := bmpColor.Handle;
+    bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT_MASK');
+    bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT');
+    ScaleBmp(bmpMask, i+1);
+    ScaleBmp(bmpColor, i+1);
+
+    with LemCursorIconInfo do
+    begin
+      fIcon := false;
+      xHotspot := 7 * i;
+      yHotspot := 7 * i;
+      hbmMask := bmpMask.Handle;
+      hbmColor := bmpColor.Handle;
+    end;
+
+    HCursors[i][1] := CreateIconIndirect(LemCursorIconInfo);
+    Inc(n);
+    Screen.Cursors[n] := HCursors[i][1];
+
+    bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT_MASK');
+    bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT');
+
+    scalebmp(bmpmask, i+1);
+    scalebmp(bmpcolor, i+1);
+
+
+    with LemSelCursorIconInfo do
+    begin
+      fIcon := false;
+      xHotspot := 7 * fInternalZoom;
+      yHotspot := 7 * fInternalZoom;
+      hbmMask := bmpMask.Handle;
+      hbmColor := bmpColor.Handle;
+    end;
+
+    HCursors[i][2] := CreateIconIndirect(LemSelCursorIconInfo);
+    Inc(n);
+    Screen.Cursors[n] := HCursors[i][2];
   end;
-
-  HCursor1 := CreateIconIndirect(LemCursorIconInfo);
-  Screen.Cursors[PLAYCURSOR_DEFAULT] := HCursor1;
-
-  img.Cursor := PLAYCURSOR_DEFAULT;
-  SkillPanel.img.cursor := PLAYCURSOR_DEFAULT;
-  Self.Cursor := PLAYCURSOR_DEFAULT;
-
-  bmpMask.Free;
-  bmpColor.Free;
-
-  //////////
-
-  bmpMask := TBitmap.Create;
-  bmpColor := TBitmap.Create;
-
-  bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT_MASK');
-  bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT');
-
-  scalebmp(bmpmask, fInternalZoom);
-  scalebmp(bmpcolor, fInternalZoom);
-
-
-  with LemSelCursorIconInfo do
-  begin
-    fIcon := false;
-    xHotspot := 7 * fInternalZoom;
-    yHotspot := 7 * fInternalZoom;
-    hbmMask := bmpMask.Handle;
-    hbmColor := bmpColor.Handle;
-  end;
-
-  HCursor2 := CreateIconIndirect(LemSelCursorIconInfo);
-  Screen.Cursors[PLAYCURSOR_LEMMING] := HCursor2;
 
   bmpMask.Free;
   bmpColor.Free;
@@ -1331,6 +1342,7 @@ begin
     TLinearResampler.Create(SkillPanel.Img.Bitmap);
   end;
 
+  SetLength(HCURSORS, Min(Screen.Width div 320, Screen.Height div 200));
   InitializeCursor;
   CenterPoint := ClientToScreen(Point(ClientWidth div 2, ClientHeight div 2));
   SetCursorPos(CenterPoint.X, CenterPoint.Y);

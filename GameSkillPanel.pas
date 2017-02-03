@@ -138,6 +138,9 @@ var
   i: Integer;
 begin
   inherited Create(aOwner);
+
+  DoubleBuffered := true;
+
   fImg := TImage32.Create(Self);
   fImg.Parent := Self;
   fImg.RepaintMode := rmOptimizer;
