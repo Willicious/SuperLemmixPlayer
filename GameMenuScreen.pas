@@ -13,7 +13,7 @@ uses
   PngInterface, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, ShellApi,
   FNeoLemmixConfig,
-  GR32, GR32_Layers,
+  GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs, LemVersion,
   LemTypes, LemStrings, LemDosStructures, LemDosStyle, LemGame,
   GameControl, GameBaseScreen;
@@ -453,6 +453,22 @@ begin
       end;
     end;
   end;
+
+  if GameParams.LinearResampleMenu then
+  begin
+    if ScreenImg.Bitmap.Resampler is TNearestResampler then
+    begin
+      TLinearResampler.Create(ScreenImg.Bitmap);
+      ScreenImg.Bitmap.Changed;
+    end;
+  end else begin
+    if ScreenImg.Bitmap.Resampler is TLinearResampler then
+    begin
+      TNearestResampler.Create(ScreenImg.Bitmap);
+      ScreenImg.Bitmap.Changed;
+    end;
+  end;
+
 end;
 
 procedure TGameMenuScreen.DumpImages;
