@@ -297,6 +297,16 @@ begin
     TriggerRect := Rect(TriggerLeft + 8, TriggerTop, TriggerLeft + 12, TriggerTop + 11);
     DrawTriggerAreaRectOnLayer(TriggerRect);
   end;
+
+  // Draw lemming
+  if Selected then
+  begin
+    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY] := $FFFFD700;
+    fLayers[rlTriggers].PixelS[aLemming.LemX + 1, aLemming.LemY] := $FFFF4500;
+    fLayers[rlTriggers].PixelS[aLemming.LemX - 1, aLemming.LemY] := $FFFF4500;
+    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY + 1] := $FFFF4500;
+    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY - 1] := $FFFF4500;
+  end;
 end;
 
 procedure TRenderer.DrawLemmingCountdown(aLemming: TLemming);
