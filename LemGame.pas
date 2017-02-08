@@ -514,8 +514,8 @@ const
   DOM_HINT             = 25;
   DOM_NOSPLAT          = 26;
   DOM_SPLAT            = 27;
-  DOM_TWOWAYTELE       = 28;
-  DOM_SINGLETELE       = 29;
+  DOM_TWOWAYTELE       = 28; // no longer used!!
+  DOM_SINGLETELE       = 29; // no longer used!!
   DOM_BACKGROUND       = 30;
   DOM_TRAPONCE         = 31;  *)
 
