@@ -232,6 +232,8 @@ var
   SrcRect, DstRect: TRect;
   SrcAnim: TBitmap32;
   SrcMetaAnim: TMetaLemmingAnimation;
+  TriggerRect: TRect;
+  TriggerLeft, TriggerTop: Integer;
   i: Integer;
 
   function GetFrameBounds: TRect;
@@ -282,6 +284,18 @@ begin
   begin
     DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
     fLayers.fIsEmpty[rlObjectHelpers] := false;
+  end;
+
+  // Draw blocker areas on the triggerLayer
+  if (aLemming.LemAction = baBlocking) then
+  begin
+    TriggerLeft := aLemming.LemX - 6;
+    if (aLemming.LemDX = 1) then Inc(TriggerLeft);
+    TriggerTop := aLemming.LemY - 6;
+    TriggerRect := Rect(TriggerLeft, TriggerTop, TriggerLeft + 4, TriggerTop + 11);
+    DrawTriggerAreaRectOnLayer(TriggerRect);
+    TriggerRect := Rect(TriggerLeft + 8, TriggerTop, TriggerLeft + 12, TriggerTop + 11);
+    DrawTriggerAreaRectOnLayer(TriggerRect);
   end;
 end;
 
