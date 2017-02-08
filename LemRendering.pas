@@ -1558,23 +1558,6 @@ var
       else Exit;
     end;
 
-    (*TW := MO.TriggerWidth;
-    TH := MO.TriggerHeight;
-
-    if O.Rotate then HandleRotate;
-    if O.Flip then HandleFlip;
-    if O.Invert then HandleInvert;
-
-    OW := O.Width;
-    OH := O.Height;
-    if OW = 0 then OW := MO.Width;
-    if OH = 0 then OH := MO.Height;
-
-    if MO.CanResizeHorizontal then
-      TW := TW + (OW - MO.Width);
-    if MO.CanResizeVertical then
-      TH := TH + (OH - MO.Height);*)
-
     SetRegion( Inf.TriggerRect, C, 0);
   end;
 
