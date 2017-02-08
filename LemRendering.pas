@@ -1392,30 +1392,36 @@ var
   x, y: Integer;
   PPhys, PDst: PColor32;
   DrawRect: TRect;
+
+  procedure DrawTriggerPixel();
+  begin
+    if PPhys^ and PM_SOLID = 0 then
+      PDst^ := $FFFF00FF
+    else if PPhys^ and PM_STEEL <> 0 then
+      PDst^ := $FF400040
+    else
+      PDst^ := $FFA000A0;
+
+    if (x - y) mod 2 <> 0 then
+      PDst^ := PDst^ - $00200020;
+  end;
+
 begin
   if    (TriggerRect.Right <= 0) or (TriggerRect.Left > fPhysicsMap.Width)
      or (TriggerRect.Bottom <= 0) or (TriggerRect.Top > fPhysicsMap.Height) Then
     Exit;
 
   DrawRect := Rect(Max(TriggerRect.Left, 0), Max(TriggerRect.Top, 0),
-                   Min(TriggerRect.Right, fPhysicsMap.Width + 1), Min(TriggerRect.Bottom, fPhysicsMap.Height + 1));
+                   Min(TriggerRect.Right, fPhysicsMap.Width), Min(TriggerRect.Bottom, fPhysicsMap.Height));
 
   for y := DrawRect.Top to DrawRect.Bottom - 1 do
   begin
     PDst := fLayers[rlTriggers].PixelPtr[DrawRect.Left, y];
     PPhys := fPhysicsMap.PixelPtr[DrawRect.Left, y];
 
-    for x := DrawRect.Left to DrawRect.Right-1 do
+    for x := DrawRect.Left to DrawRect.Right - 1 do
     begin
-      if PPhys^ and PM_SOLID = 0 then
-        PDst^ := $FFFF00FF
-      else if PPhys^ and PM_STEEL <> 0 then
-        PDst^ := $FF400040
-      else
-        PDst^ := $FFA000A0;
-
-      if (x - y) mod 2 <> 0 then
-        PDst^ := PDst^ - $00200020;
+      DrawTriggerPixel();
 
       Inc(PDst);
       Inc(PPhys);
