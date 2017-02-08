@@ -8,7 +8,7 @@ uses
   GR32, GR32_Image, GR32_Layers,
   UMisc,
   LemmixHotkeys, LemStrings, LemTypes,
-  LemDosBmp, LemDosStructures, LemDosStyle,
+  {LemDosBmp,} LemDosStructures, LemDosStyle,
   LemCore, LemLevel, LemNeoTheme,
   GameInterfaces, GameControl,
   LemGame, LemRenderHelpers, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
@@ -632,10 +632,9 @@ end;
 procedure TSkillPanelToolbar.ReadBitmapFromStyle;
 var
   c: char; i: Integer;
-  LemmixPal: TArrayOfColor32;
-  HiPal: TArrayOfColor32;
   TempBmp, TempBmp2: TBitmap32;
   SrcRect: TRect;
+  MaskColor: TColor32;
 
   BlankPanels: TBitmap32;
   PanelIndex: Integer;
@@ -677,7 +676,7 @@ const
   begin
     aName := AppPath + SFGraphicsPanel + aName;
     TPngInterface.LoadPngFile(aName, aDst);
-    TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(aName, '_mask.png'), LemmixPal[7]);
+    TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(aName, '_mask.png'), MaskColor);
   end;
 
   procedure DrawBlankPanel(aDst: TBitmap32; aDigitArea: Boolean);
@@ -708,24 +707,7 @@ begin
   if not (fStyle is TBaseDosLemmingStyle) then
     Exit;
 
-  // try and concat palettes
-  LemmixPal := DosPaletteToArrayOfColor32(DosInLevelPalette);
-  if Game.fXmasPal then
-  begin
-    LemmixPal[1] := $D02020;
-    LemmixPal[4] := $F0F000;
-    LemmixPal[5] := $4040E0;
-  end;
-  SetLength(HiPal, 8);
-  for i := 0 to 7 do
-    HiPal[i] := PARTICLE_COLORS[i];
-
-  {TODO: how o how is the palette constructed?????????}
-  Assert(Length(HiPal) = 8, 'hipal error');
-  SetLength(LemmixPal, 16);
-  for i := 8 to 15 do
-    LemmixPal[i] := HiPal[i - 8];
-  LemmixPal[7] := GameParams.Renderer.Theme.Colors[MASK_COLOR];
+  MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
   SetButtonRects;
 
@@ -1077,7 +1059,6 @@ var
   X, Y: Integer;
   SrcX, SrcY: Integer;
   DstX, DstY: Integer;
-  MinPos, MaxPos, Range: Integer;
   ViewRect: TRect;
   SrcRect : TRect;
 const
@@ -1120,7 +1101,7 @@ begin
     if fMinimapTemp.Width > MINIMAP_REGION_WIDTH then
     begin
       DstX := 0;
-      SrcY := X + (fDisplayWidth div 32) - (MINIMAP_REGION_WIDTH div 2);
+      SrcX := X + (fDisplayWidth div 32) - (MINIMAP_REGION_WIDTH div 2);
     end else begin
       SrcX := 0;
       DstX := (MINIMAP_REGION_WIDTH - fMinimapTemp.Width) div 2;

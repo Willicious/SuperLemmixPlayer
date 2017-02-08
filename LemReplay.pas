@@ -303,9 +303,13 @@ var
   Dst: TReplayItemList;
   i: Integer;
 begin
+  Dst := nil;
   if aItem is TReplaySkillAssignment then Dst := fAssignments;
   if aItem is TReplayChangeReleaseRate then Dst := fReleaseRateChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
+
+  if Dst = nil then Exit;
+
   for i := Dst.Count-1 downto 0 do
     if Dst[i] = aItem then
       Dst.Delete(i);
@@ -378,7 +382,6 @@ procedure TReplay.LoadFromStream(aStream: TStream);
 var
   Parser: TParser;
   Sec: TParserSection;
-  Item: TBaseReplayItem;
   SL: TStringList;
 begin
   Clear(true);
@@ -412,9 +415,12 @@ procedure TReplay.HandleLoadSection(aSection: TParserSection; const aIteration: 
 var
   Item: TBaseReplayItem;
 begin
+  Item := nil;
   if aSection.Keyword = 'assignment' then Item := TReplaySkillAssignment.Create;
   if aSection.Keyword = 'release_rate' then Item := TReplayChangeReleaseRate.Create;
   if aSection.Keyword = 'nuke' then Item := TReplayNuke.Create;
+
+  if Item = nil then Exit;
 
   Item.Load(aSection);
 
@@ -668,8 +674,6 @@ begin
 end;
 
 procedure TBaseReplayItem.Load(Sec: TParserSection);
-var
-  Line: TParserLine;
 begin
   DoLoadSection(Sec);
 end;

@@ -37,7 +37,6 @@ type
     fNeedReset : Boolean;
     fMouseTrapped: Boolean;
     fSaveList: TLemmingGameSavedStateList;
-    fLastReplayingIteration: Integer;
     fReplayKilled: Boolean;
     fInternalZoom: Integer;
   { game eventhandler}
@@ -108,7 +107,6 @@ type
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
     procedure SaveShot;
     function IsGameplayScreen: Boolean; override;
-    procedure MainFormResized; override;
   { internal properties }
     property Game: TLemmingGame read fGame;
   public
@@ -121,6 +119,7 @@ type
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     procedure LoadReplay;
     procedure ForceRenderMinimap;
+    procedure MainFormResized; override;    
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
@@ -205,11 +204,8 @@ var
 
   VertOffset: Integer;
 begin
-  if not NoRecenter then
-  begin
-    OSHorz := Img.OffsetHorz - (Img.Width / 2);
-    OSVert := Img.OffsetVert - (Img.Height / 2);
-  end;
+  OSHorz := Img.OffsetHorz - (Img.Width / 2);
+  OSVert := Img.OffsetVert - (Img.Height / 2);
 
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
@@ -252,7 +248,6 @@ end;
 function TGameWindow.GetLevelMusicName: String;
 var
   MusicName: String;
-  Ext: String;
   MusicIndex: Integer;
   TempStream: TMemoryStream;
   SL: TStringList;
@@ -788,8 +783,6 @@ begin
 end;
 
 constructor TGameWindow.Create(aOwner: TComponent);
-var
-  HScale, VScale: Integer;
 begin
   inherited Create(aOwner);
 
@@ -854,7 +847,6 @@ end;
 procedure TGameWindow.ReleaseCursors;
 var
   i, i2: Integer;
-  MaxZoom: Integer;
 begin
   for i := 0 to Length(HCursors)-1 do
     for i2 := 0 to 1 do
@@ -1417,8 +1409,6 @@ var
   ext: String;
 
   procedure LoadOldReplay(aName: String);
-  var
-    L: TLevel;
   begin
     with Game.ReplayManager do
       LoadOldReplayFile(aName);
@@ -1507,8 +1497,6 @@ end;
 
 
 procedure TGameWindow.Game_Finished;
-var
-  s: String;
 begin
   SoundManager.StopMusic;
 

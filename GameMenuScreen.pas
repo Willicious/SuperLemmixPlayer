@@ -745,7 +745,6 @@ end;
 procedure TGameMenuScreen.DoMassReplayCheck;
 var
   OpenDlg: TOpenDialog;
-  TestPath: String;
 begin
   if MessageDlg('Mass replay checking can take a very long time. Proceed?', mtcustom, [mbYes, mbNo], 0) = mrNo then Exit;
   OpenDlg := TOpenDialog.Create(self);

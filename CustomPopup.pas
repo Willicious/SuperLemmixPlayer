@@ -58,7 +58,6 @@ var
   SplitPos: Integer;
   n: Integer;
 begin
-  Result := 0; // fallback to avoid undefined result, this is a result that would only occur if something goes wrong
   F := TCustomPopup.Create(aOwner);
   try
     F.Caption := aCaption;

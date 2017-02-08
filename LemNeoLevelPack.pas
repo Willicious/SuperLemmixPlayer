@@ -201,9 +201,14 @@ begin
 end;
 
 destructor TNeoLevelGroup.Destroy;
+var
+  i: Integer;
 begin
   fChildGroups.Free;
   fLevels.Free;
+  for i := 0 to Length(fPanelImages)-1 do
+    if fPanelImages[i] <> nil then
+      fPanelImages[i].Free;
   inherited;
 end;
 

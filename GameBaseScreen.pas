@@ -475,7 +475,7 @@ procedure TGameBaseScreen.FadeOut;
 var
   Steps: Integer; i: Integer;
   P: PColor32;
-  StepStartTickCount: Integer;
+  StepStartTickCount: Cardinal;
 begin
   Steps := 16;
   while Steps > 0 do

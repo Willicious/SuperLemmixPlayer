@@ -33,7 +33,7 @@ type
     function GetLemmingRecord(aSection, aLevel: Integer): Integer;
     procedure SetLemmingRecord(aSection, aLevel, aValue: Integer);
     function GetTimeRecord(aSection, aLevel: Integer): Integer;
-    procedure SetTimeRecord(aSection, aLevel, aValue: Integer);
+    procedure SetTimeRecord(aSection, aLevel, aValue: Cardinal);
     procedure SaveFile(aPointer: Pointer);
     procedure LoadFile(aPointer: Pointer);
     procedure SetTalismans(aValue: TTalismans);
@@ -148,7 +148,7 @@ begin
   Result := fSaveData.RecordTable[aSection][aLevel].BestTime;
 end;
 
-procedure TNeoSave.SetTimeRecord(aSection, aLevel, aValue: Integer);
+procedure TNeoSave.SetTimeRecord(aSection, aLevel, aValue: Cardinal);
 var
   p : ^longword;
 begin

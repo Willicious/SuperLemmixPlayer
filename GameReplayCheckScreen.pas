@@ -102,7 +102,6 @@ procedure TGameReplayCheckScreen.RunTests;
 var
   Renderer: TRenderer;
   RenderInfo: TRenderInfoRec;
-  RenderInterface: TRenderInterface;
   Game: TLemmingGame;
   Level: TLevel;
   LevelIDArray: array of array of Cardinal;
@@ -138,7 +137,6 @@ var
     Line: TParserLine;
     R, L: Integer;
   begin
-    Result := false;
     DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
 
     LS := TBaseDosLevelSystem(GameParams.Style.LevelSystem);
@@ -152,6 +150,7 @@ var
         SetLength(LevelIDArray[R], LS.GetLevelCount(R));
 
       R := -1;
+      L := -1;
       repeat
         Line := Parser.NextLine;
         if (Line.Keyword <> 'LEVEL') and (R = -1) then Continue;

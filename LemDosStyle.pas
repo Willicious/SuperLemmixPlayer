@@ -821,7 +821,6 @@ var
 var
   F: TMemoryStream;
   IsLoaded: Boolean;
-  i: integer;
 
 begin
   Assert(Owner is TBaseDosLemmingStyle);
@@ -894,6 +893,8 @@ begin
   fDoneQuickLevelNameLoad := true;
 
   DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
+
+  L := 0;
 
   Parser := TNeoLemmixParser.Create;
   try

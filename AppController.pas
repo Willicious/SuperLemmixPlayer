@@ -87,7 +87,6 @@ var
     TempStream.Free;
   end;
 begin
-  Result := nxc_Error;
   SL := TStringList.Create;
 
   try

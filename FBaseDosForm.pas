@@ -63,8 +63,6 @@ begin
 end;
 
 procedure TBaseDosForm.PrepareGameParams;
-var
-  Scale: Integer;
 begin
   if GameParams.fTestMode then
     Caption := 'NeoLemmix - Single Level'
@@ -86,6 +84,7 @@ begin
   Cursor := crNone;
   Screen.Cursor := crNone;
   Show;
+  Result := 0; // not needed, this can be changed to a procedure
 end;
 
 function TBaseDosForm.IsGameplayScreen: Boolean;

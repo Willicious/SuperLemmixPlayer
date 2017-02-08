@@ -224,8 +224,6 @@ implementation
 { TRenderInterface }
 
 constructor TRenderInterface.Create;
-var
-  i: TDrawableItem;
 begin
   fDrawRoutineBrick := nil;
   fDrawRoutineStoner := nil;
@@ -412,11 +410,11 @@ end;
 procedure TRenderBitmaps.CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
 var
   A, C: TColor32;
-  Red: Integer;
-  Green: Integer;
-  Blue: Integer;
+  Red: Cardinal;
+  Green: Cardinal;
+  Blue: Cardinal;
 
-  procedure ModColor(var Component: Integer);
+  procedure ModColor(var Component: Cardinal);
   begin
     if Component < $80 then
       Component := $C0
@@ -539,6 +537,7 @@ var
 begin
   // It's very messy to track position in a custom pixelcombine, hence using an entirely
   // custom procedure instead.
+  C := 0;
   IntersectRect(aRegion, aRegion, fPhysicsMap.BoundsRect);
   for y := aRegion.Top to aRegion.Bottom-1 do
   begin
