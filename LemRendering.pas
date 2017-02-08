@@ -1180,7 +1180,7 @@ var
     MO: TMetaObjectInterface;
   begin
     if Inf.IsInvisible then Exit;
-    if Inf.TriggerEffect in [13, 16, 25, 32] then Exit;
+    if Inf.TriggerEffect in [DOM_LEMMING, DOM_HINT, DOM_BGIMAGE] then Exit;
 
     DrawFrame := Min(Inf.CurrentFrame, Inf.AnimationFrameCount-1);
     TempBitmap.Assign(Inf.Frames[DrawFrame]);
@@ -1229,7 +1229,7 @@ var
     DO_NOT_DRAW: set of 0..255 =
           [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
            DOM_RECEIVER, DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT,
-           DOM_BACKGROUND];
+           DOM_BACKGROUND, DOM_BGIMAGE, DOM_ONEWAYUP];
   begin
     if not (aInf.Obj.IsFake or aInf.IsDisabled or (aInf.TriggerEffect in DO_NOT_DRAW)) then
       DrawTriggerAreaRectOnLayer(aInf.TriggerRect);

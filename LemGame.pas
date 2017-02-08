@@ -517,7 +517,9 @@ const
   DOM_TWOWAYTELE       = 28; // no longer used!!
   DOM_SINGLETELE       = 29; // no longer used!!
   DOM_BACKGROUND       = 30;
-  DOM_TRAPONCE         = 31;  *)
+  DOM_TRAPONCE         = 31;
+  DOM_BGIMAGE          = 32;
+  DOM_ONEWAYUP         = 33; *)
 
   // removal modes
   RM_NEUTRAL           = 0;
