@@ -3757,6 +3757,9 @@ var
     // Copy PhysicsMap back
     PhysicsMap.Assign(SavePhysicsMap);
     SavePhysicsMap.Free;
+
+    // Free CopyL
+    CopyL.Free;
   end;
 
 
@@ -3983,6 +3986,40 @@ var
     // Copy PhysicsMap back
     PhysicsMap.Assign(SavePhysicsMap);
     SavePhysicsMap.Free;
+
+    // Free the copy lemming! This was missing in Nepster's code.
+    CopyL.Free;
+  end;
+
+  function WillMoveUp(L: TLemming): Boolean;
+  var
+    CopyL: TLemming;
+    i: Integer;
+    OrigY: Integer;
+  begin
+    // Make deep copy of the lemming
+    CopyL := TLemming.Create;
+    CopyL.Assign(L);
+    // We don't need to copy the physics map, as this simulation only tests frames where no terrain is altered
+
+    // Simulate four frames: 11, 12, 13, 14 (The four frames on which movement occurs)
+    CopyL.LemPhysicsFrame := 11;
+    OrigY := CopyL.LemY;
+
+    for i := 0 to 3 do
+    begin
+      // Move one frame forward
+      SimulateLem(CopyL, False);
+
+
+      // Terminate if we've moved up, no longer exist, or are no longer a fencer
+      if (CopyL.LemY < OrigY) or CopyL.LemRemoved or not (CopyL.LemAction = baFencing) then Break;
+    end;
+
+    Result := CopyL.LemY < OrigY;
+
+    // Free the copy lemming
+    CopyL.Free;
   end;
 
 
@@ -3996,6 +4033,9 @@ begin
   // Remove terrain
   if AdjustedFrame in [2, 3, 4, 5] then
     ApplyFencerMask(L, AdjustedFrame - 2);
+
+  if AdjustedFrame = 15 then
+    L.LemIsStartingAction := false;
 
   // Check for enough terrain to continue working
   if AdjustedFrame = 5 then
@@ -4015,10 +4055,11 @@ begin
 
     // check whether we turn around within the next two fencer strokes (only if we don't simulate)
     if (not ContinueWork) and (not fSimulation) then
-    begin
-      Assert(not fSimulation, 'Lemming simulation does fencer steel turn checks and creates an infinite recursion');
       ContinueWork := DoTurnAtSteel(L);
-    end;
+
+    // check whether we will move up in the next movement
+    if (ContinueWork) and (not fSimulation) and (not L.LemIsStartingAction) then
+      ContinueWork := WillMoveUp(L);
 
     if not ContinueWork then
     begin
