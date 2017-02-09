@@ -2851,7 +2851,6 @@ begin
   PosY := L.LemY;
 
   ExplodeMaskBmp.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
-  TPngInterface.SavePngFile(AppPath + 'bomber.png', ExplodeMaskBmp);
 
   // Delete these pixels from the terrain layer
   fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, ExplodeMaskBmp.Width, ExplodeMaskBmp.Height);
