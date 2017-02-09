@@ -1644,7 +1644,6 @@ begin
 
   if (TimePlay <= 0) and not ((GameParams.TimerMode) or (GameParams.Level.Info.TimeLimit > 5999)) then
   begin
-    fGameFinished := True;
     GameResultRec.gTimeIsUp := True;
     Finish;
     Exit;
@@ -5663,8 +5662,7 @@ end;
 
 procedure TLemmingGame.Cheat;
 begin
-  fGameCheated := True;   // IN-LEVEL CHEAT // just uncomment these two lines to reverse
-  SetGameResult;
+  fGameCheated := True;
   Finish;
 end;
 
