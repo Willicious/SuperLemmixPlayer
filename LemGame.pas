@@ -1346,7 +1346,7 @@ end;
 procedure TLemmingGame.CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32);
 // copy masks to world
 begin
-  if (F <> 0) and (B and E = 0) then B := B and not PM_TERRAIN;
+  if (AlphaComponent(F) <> 0) and (B and E = 0) then B := B and not PM_TERRAIN;
 end;
 
 // Not sure who wrote this (probably me), but upon seeing this I forgot what the hell they were
@@ -2851,6 +2851,7 @@ begin
   PosY := L.LemY;
 
   ExplodeMaskBmp.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
+  TPngInterface.SavePngFile(AppPath + 'bomber.png', ExplodeMaskBmp);
 
   // Delete these pixels from the terrain layer
   fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, ExplodeMaskBmp.Width, ExplodeMaskBmp.Height);
