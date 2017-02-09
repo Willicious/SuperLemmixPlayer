@@ -120,7 +120,8 @@ type
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     procedure LoadReplay;
     procedure ForceRenderMinimap;
-    procedure MainFormResized; override;    
+    procedure MainFormResized; override;
+    procedure SetCurrentCursor(aCursor: Integer = 0); // 0 = autodetect correct graphic
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
@@ -192,7 +193,7 @@ begin
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
 
     DoDraw;
-    CheckResetCursor(true);
+    CheckResetCursor;
   finally
     Img.EndUpdate;
     SkillPanel.Img.EndUpdate;
@@ -725,8 +726,6 @@ begin
 end;
 
 procedure TGameWindow.CheckResetCursor(aForce: Boolean = false);
-var
-  NewCursor: Integer;
 begin
   if not CanPlay then Exit;
 
@@ -735,22 +734,36 @@ begin
     fNeedReset := true;
     exit;
   end;
-  if (((Screen.Cursor mod CURSOR_TYPES = 1) <> (fRenderInterface.SelectedLemming = nil)) or aForce) and not fSuspendCursor then
-  begin
-    if fRenderInterface.SelectedLemming = nil then
-      NewCursor := 1
-    else
-      NewCursor := 2;
-    NewCursor := NewCursor + ((fInternalZoom-1) * CURSOR_TYPES);
-    Cursor := NewCursor;
-    Img.Cursor := NewCursor;
-    Screen.Cursor := NewCursor;
-    SkillPanel.Img.Cursor := NewCursor;
-  end;
+
+  SetCurrentCursor;
+
   if (fNeedReset or aForce) and fMouseTrapped then
   begin
     ApplyMouseTrap;
     fNeedReset := false;
+  end;
+end;
+
+procedure TGameWindow.SetCurrentCursor(aCursor: Integer = 0);
+var
+  NewCursor: Integer;
+begin
+  if aCursor = 0 then
+  begin
+    if (fRenderInterface.SelectedLemming = nil) or not PtInRect(Img.BoundsRect, ScreenToClient(Mouse.CursorPos)) then
+      NewCursor := 1
+    else
+      NewCursor := 2;
+  end else
+    NewCursor := aCursor;
+  NewCursor := NewCursor + ((fInternalZoom-1) * CURSOR_TYPES);
+
+  if NewCursor <> Cursor then
+  begin
+    Cursor := NewCursor;
+    Img.Cursor := NewCursor;
+    Screen.Cursor := NewCursor;
+    SkillPanel.Img.Cursor := NewCursor;
   end;
 end;
 
@@ -1164,8 +1177,8 @@ begin
 
     if (Game.Paused) or (Game.HitTestAutoFail) then
     begin
-      CheckResetCursor;
       Game.HitTest;
+      CheckResetCursor;
     end;
 
     Game.HitTestAutoFail := not PtInRect(Img.BoundsRect, Point(X, Y));
