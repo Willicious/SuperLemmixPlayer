@@ -5617,7 +5617,9 @@ begin
        and (Inf.TriggerEffect <> DOM_PICKUP) then
       Inc(Inf.CurrentFrame);
 
-    if (Inf.TriggerEffect = DOM_TELEPORT) and (Inf.CurrentFrame >= Inf.AnimationFrameCount) then
+    if (Inf.TriggerEffect = DOM_TELEPORT)
+      and (((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.KeyFrame = 0))
+        or ((Inf.CurrentFrame = Inf.MetaObj.KeyFrame) and (Inf.MetaObj.KeyFrame <> 0))   ) then
     begin
       MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
       Inf2 := ObjectInfos[Inf.ReceiverId];
