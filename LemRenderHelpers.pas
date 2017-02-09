@@ -35,7 +35,6 @@ type
   TDrawableItem = (di_ConstructivePixel, di_Stoner);
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutineWithColor = procedure(X, Y: Integer; Color: TColor32) of object;
-  //TDrawRoutines = array[Low(TDrawableItem)..High(TDrawableItem)] of TDrawRoutine;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
   TSimulateTransitionRoutine = procedure(L: TLemming; NewAction: TBasicLemmingAction) of object;
   TSimulateLemRoutine = function(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt of object;
@@ -128,7 +127,6 @@ type
       fMousePos: TPoint;
       fDrawRoutineBrick: TDrawRoutineWithColor;
       fDrawRoutineStoner: TDrawRoutine;
-      //fDrawRoutines: TDrawRoutines;
       fRemoveRoutine: TRemoveRoutine;
       fSimulateTransitionRoutine: TSimulateTransitionRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;

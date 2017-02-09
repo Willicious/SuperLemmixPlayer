@@ -11,7 +11,7 @@ uses
   PngInterface,
   LemRecolorSprites,
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
-  {LemDosBmp,} LemDosStructures,
+  LemDosStructures,
   LemTypes,
   LemTerrain, LemMetaTerrain,
   LemObjects, LemInteractiveObject, LemMetaObject,
@@ -75,6 +75,8 @@ type
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
+
+    procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 
     function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
@@ -230,6 +232,8 @@ var
   SrcRect, DstRect: TRect;
   SrcAnim: TBitmap32;
   SrcMetaAnim: TMetaLemmingAnimation;
+  TriggerRect: TRect;
+  TriggerLeft, TriggerTop: Integer;
   i: Integer;
 
   function GetFrameBounds: TRect;
@@ -280,6 +284,28 @@ begin
   begin
     DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
     fLayers.fIsEmpty[rlObjectHelpers] := false;
+  end;
+
+  // Draw blocker areas on the triggerLayer
+  if (aLemming.LemAction = baBlocking) then
+  begin
+    TriggerLeft := aLemming.LemX - 6;
+    if (aLemming.LemDX = 1) then Inc(TriggerLeft);
+    TriggerTop := aLemming.LemY - 6;
+    TriggerRect := Rect(TriggerLeft, TriggerTop, TriggerLeft + 4, TriggerTop + 11);
+    DrawTriggerAreaRectOnLayer(TriggerRect);
+    TriggerRect := Rect(TriggerLeft + 8, TriggerTop, TriggerLeft + 12, TriggerTop + 11);
+    DrawTriggerAreaRectOnLayer(TriggerRect);
+  end;
+
+  // Draw lemming
+  if Selected then
+  begin
+    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY] := $FFFFD700;
+    fLayers[rlTriggers].PixelS[aLemming.LemX + 1, aLemming.LemY] := $FFFF4500;
+    fLayers[rlTriggers].PixelS[aLemming.LemX - 1, aLemming.LemY] := $FFFF4500;
+    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY + 1] := $FFFF4500;
+    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY - 1] := $FFFF4500;
   end;
 end;
 
@@ -1178,7 +1204,7 @@ var
     MO: TMetaObjectInterface;
   begin
     if Inf.IsInvisible then Exit;
-    if Inf.TriggerEffect in [13, 16, 25, 32] then Exit;
+    if Inf.TriggerEffect in [DOM_LEMMING, DOM_HINT, DOM_BGIMAGE] then Exit;
 
     DrawFrame := Min(Inf.CurrentFrame, Inf.AnimationFrameCount-1);
     TempBitmap.Assign(Inf.Frames[DrawFrame]);
@@ -1223,56 +1249,14 @@ var
   end;
 
   procedure DrawTriggerArea(aInf: TInteractiveObjectInfo);
-  var
-    i: Integer;
-    x, y: Integer;
-    PPhys, PDst: PColor32;
   const
-    DO_NOT_DRAW_COUNT = 15;
-    DO_NOT_DRAW: array[0..DO_NOT_DRAW_COUNT-1] of Integer = (0, 7, 8, 9, 10, 12, 13, 16, 19, 23, 25, 28, 29, 30, 32);
+    DO_NOT_DRAW: set of 0..255 =
+          [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
+           DOM_RECEIVER, DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT,
+           DOM_BACKGROUND, DOM_BGIMAGE, DOM_ONEWAYUP];
   begin
-    if aInf.Obj.IsFake or aInf.IsDisabled then
-      Exit;
-
-    for i := 0 to DO_NOT_DRAW_COUNT-1 do
-      if aInf.TriggerEffect = DO_NOT_DRAW[i] then
-        Exit;
-
-    for y := aInf.TriggerRect.Top to aInf.TriggerRect.Bottom-1 do
-    begin
-      if y < 0 then Continue;
-      if y >= fPhysicsMap.Height then Break;
-
-      PDst := nil;
-      PPhys := nil;
-
-      for x := aInf.TriggerRect.Left to aInf.TriggerRect.Right-1 do
-      begin
-        if x < 0 then Continue;
-        if x >= fPhysicsMap.Width then Break;
-
-        if PDst = nil then
-        begin
-          PDst := fLayers[rlTriggers].PixelPtr[x, y];
-          PPhys := fPhysicsMap.PixelPtr[x, y];
-        end else begin
-          Inc(PDst);
-          Inc(PPhys);
-        end;
-
-        if PPhys^ and PM_SOLID = 0 then
-          PDst^ := $FFFF00FF
-        else if PPhys^ and PM_STEEL <> 0 then
-          PDst^ := $FF400040
-        else
-          PDst^ := $FFA000A0;
-
-        if (x mod 2) <> (y mod 2) then
-            PDst^ := PDst^ - $00200020;
-      end;
-    end;
-
-    fLayers.fIsEmpty[rlTriggers] := false;
+    if not (aInf.Obj.IsFake or aInf.IsDisabled or (aInf.TriggerEffect in DO_NOT_DRAW)) then
+      DrawTriggerAreaRectOnLayer(aInf.TriggerRect);
   end;
 
   procedure DrawUserHelper;
@@ -1413,6 +1397,50 @@ begin
 
 end;
 
+procedure TRenderer.DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
+var
+  x, y: Integer;
+  PPhys, PDst: PColor32;
+  DrawRect: TRect;
+
+  procedure DrawTriggerPixel();
+  begin
+    if PPhys^ and PM_SOLID = 0 then
+      PDst^ := $FFFF00FF
+    else if PPhys^ and PM_STEEL <> 0 then
+      PDst^ := $FF400040
+    else
+      PDst^ := $FFA000A0;
+
+    if (x - y) mod 2 <> 0 then
+      PDst^ := PDst^ - $00200020;
+  end;
+
+begin
+  if    (TriggerRect.Right <= 0) or (TriggerRect.Left > fPhysicsMap.Width)
+     or (TriggerRect.Bottom <= 0) or (TriggerRect.Top > fPhysicsMap.Height) Then
+    Exit;
+
+  DrawRect := Rect(Max(TriggerRect.Left, 0), Max(TriggerRect.Top, 0),
+                   Min(TriggerRect.Right, fPhysicsMap.Width), Min(TriggerRect.Bottom, fPhysicsMap.Height));
+
+  for y := DrawRect.Top to DrawRect.Bottom - 1 do
+  begin
+    PDst := fLayers[rlTriggers].PixelPtr[DrawRect.Left, y];
+    PPhys := fPhysicsMap.PixelPtr[DrawRect.Left, y];
+
+    for x := DrawRect.Left to DrawRect.Right - 1 do
+    begin
+      DrawTriggerPixel();
+
+      Inc(PDst);
+      Inc(PPhys);
+    end;
+  end;
+
+  fLayers.fIsEmpty[rlTriggers] := false;
+end;
+
 
 constructor TRenderer.Create;
 var
@@ -1529,23 +1557,6 @@ var
       DOM_ONEWAYUP: C := PM_ONEWAYUP;
       else Exit;
     end;
-
-    (*TW := MO.TriggerWidth;
-    TH := MO.TriggerHeight;
-
-    if O.Rotate then HandleRotate;
-    if O.Flip then HandleFlip;
-    if O.Invert then HandleInvert;
-
-    OW := O.Width;
-    OH := O.Height;
-    if OW = 0 then OW := MO.Width;
-    if OH = 0 then OH := MO.Height;
-
-    if MO.CanResizeHorizontal then
-      TW := TW + (OW - MO.Width);
-    if MO.CanResizeVertical then
-      TH := TH + (OH - MO.Height);*)
 
     SetRegion( Inf.TriggerRect, C, 0);
   end;

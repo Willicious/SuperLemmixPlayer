@@ -514,10 +514,12 @@ const
   DOM_HINT             = 25;
   DOM_NOSPLAT          = 26;
   DOM_SPLAT            = 27;
-  DOM_TWOWAYTELE       = 28;
-  DOM_SINGLETELE       = 29;
+  DOM_TWOWAYTELE       = 28; // no longer used!!
+  DOM_SINGLETELE       = 29; // no longer used!!
   DOM_BACKGROUND       = 30;
-  DOM_TRAPONCE         = 31;  *)
+  DOM_TRAPONCE         = 31;
+  DOM_BGIMAGE          = 32;
+  DOM_ONEWAYUP         = 33; *)
 
   // removal modes
   RM_NEUTRAL           = 0;
@@ -1755,9 +1757,34 @@ begin
 end;
 
 function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
+var
+  LemPosRect: TRect;
+  i: Integer;
 begin
   if (X >= 0) and (X < Level.Info.Width) and (Y >= 0) and (Y < Level.Info.Height) then
-    Result := BlockerMap.Value[X, Y]
+  begin
+    Result := BlockerMap.Value[X, Y];
+
+    // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
+    if fSimulation and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
+    begin
+      if Result = DOM_FORCERIGHT then
+        LemPosRect := Rect(X - 6, Y - 5, X - 1, Y + 6)
+      else
+        LemPosRect := Rect(X + 2, Y - 5, X + 7, Y + 6);
+
+      for i := 0 to LemmingList.Count - 1 do
+      begin
+        if     LemmingList[i].LemHasBlockerField
+           and PtInRect(LemPosRect, Point(LemmingList[i].LemX, LemmingList[i].LemY))
+           and not HasPixelAt(LemmingList[i].LemX, LemmingList[i].LemY) then
+        begin
+          Result := DOM_NONE;
+          Exit;
+        end;
+      end;
+    end;
+  end
   else
     Result := DOM_NONE; // whoops, important
 end;
