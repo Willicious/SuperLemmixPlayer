@@ -3870,6 +3870,7 @@ function TLemmingGame.HandleFencing(L: TLemming): Boolean;
 var
   LemDy, AdjustedFrame, n: Integer;
   ContinueWork: Boolean;
+  SteelContinue, MoveUpContinue: Boolean;
   NeedUndoMoveUp: Boolean;
 
   function FencerIndestructibleCheck(x, y, Direction: Integer): Boolean;
@@ -3934,7 +3935,7 @@ var
   end;
 
   // Simulate the behavior of the fencer in the next two frames
-  function DoTurnAtSteel(L: TLemming): Boolean;
+  procedure DoFencerContinueTests(L: TLemming; var SteelContinue: Boolean; var MoveUpContinue: Boolean);
   var
     CopyL: TLemming;
     SavePhysicsMap: TBitmap32;
@@ -3947,12 +3948,14 @@ var
     SavePhysicsMap := TBitmap32.Create;
     SavePhysicsMap.Assign(PhysicsMap);
 
-    Result := False;
+    SteelContinue := False;
+    MoveUpContinue := False;
 
     // Simulate two fencer cycles
     // 11 iterations is hopefully correct: CopyL.LemPhysicsFrame changes as follows:
     // 10 -> 11 -> 12 -> 13 -> 14 -> 15 -> 16 -> 11 -> 12 -> 13 -> 14 -> 15
     CopyL.LemPhysicsFrame := 10;
+
     for i := 0 to 10 do
     begin
       // On CopyL.LemPhysicsFrame = 0, apply all fencer masks and jump to frame 10 again
@@ -3971,12 +3974,17 @@ var
       // Move one frame forward
       SimulateLem(CopyL, False);
 
+      // Check if we've moved upwards
+      if (CopyL.LemY < L.LemY) then
+        MoveUpContinue := true;
+
       // Check if we have turned around at steel
       if (CopyL.LemDX = -L.LemDX) then
       begin
-        Result := True;
+        SteelContinue := True;
         Break;
       end
+
       // Check if we are still a fencer
       else if CopyL.LemRemoved or not (CopyL.LemAction = baFencing) then
         Break; // and return false
@@ -3989,38 +3997,6 @@ var
     // Free the copy lemming! This was missing in Nepster's code.
     CopyL.Free;
   end;
-
-  function WillMoveUp(L: TLemming): Boolean;
-  var
-    CopyL: TLemming;
-    i: Integer;
-    OrigY: Integer;
-  begin
-    // Make deep copy of the lemming
-    CopyL := TLemming.Create;
-    CopyL.Assign(L);
-    // We don't need to copy the physics map, as this simulation only tests frames where no terrain is altered
-
-    // Simulate four frames: 11, 12, 13, 14 (The four frames on which movement occurs)
-    CopyL.LemPhysicsFrame := 11;
-    OrigY := CopyL.LemY;
-
-    for i := 0 to 3 do
-    begin
-      // Move one frame forward
-      SimulateLem(CopyL, False);
-
-
-      // Terminate if we've moved up, no longer exist, or are no longer a fencer
-      if (CopyL.LemY < OrigY) or CopyL.LemRemoved or not (CopyL.LemAction = baFencing) then Break;
-    end;
-
-    Result := CopyL.LemY < OrigY;
-
-    // Free the copy lemming
-    CopyL.Free;
-  end;
-
 
 begin
   Result := True;
@@ -4053,12 +4029,17 @@ begin
     end;
 
     // check whether we turn around within the next two fencer strokes (only if we don't simulate)
-    if (not ContinueWork) and (not fSimulation) then
-      ContinueWork := DoTurnAtSteel(L);
+    if not fSimulation then
+      if not (ContinueWork and L.LemIsStartingAction) then // if BOTH of these are true, then both things being tested for are irrelevant
+      begin
+        DoFencerContinueTests(L, SteelContinue, MoveUpContinue);
 
-    // check whether we will move up in the next movement
-    if (ContinueWork) and (not fSimulation) and (not L.LemIsStartingAction) then
-      ContinueWork := WillMoveUp(L);
+        if not ContinueWork then
+          ContinueWork := SteelContinue;
+
+        if ContinueWork and not L.LemIsStartingAction then
+          ContinueWork := MoveUpContinue;
+      end;
 
     if not ContinueWork then
     begin
