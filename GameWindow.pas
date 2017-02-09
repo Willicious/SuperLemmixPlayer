@@ -5,6 +5,7 @@ unit GameWindow;
 interface
 
 uses
+  PngInterface,
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
@@ -1481,6 +1482,7 @@ procedure TGameWindow.SaveShot;
 var
   Dlg : TSaveDialog;
   SaveName: String;
+  BMP: TBitmap32;
 begin
   Dlg := TSaveDialog.Create(self);
   dlg.Filter := 'PNG Image (*.png)|*.png';
@@ -1490,7 +1492,16 @@ begin
   if dlg.Execute then
   begin
     SaveName := dlg.FileName;
-    Game.SaveGameplayImage(SaveName);
+    BMP := TBitmap32.Create;
+    BMP.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+
+    fRenderer.DrawAllObjects(fRenderInterface.ObjectList, true, fClearPhysics);
+    fRenderer.DrawLemmings(fClearPhysics);
+    fRenderer.DrawLevel(BMP, fClearPhysics);
+
+    TPngInterface.SavePngFile(SaveName, BMP, true);
+
+    BMP.Free;
   end;
   Dlg.Free;
 end;
