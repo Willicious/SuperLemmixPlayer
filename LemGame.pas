@@ -1413,7 +1413,7 @@ end;
 procedure TLemmingGame.CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
 // copy Stoner to world
 begin
-  if (B and PM_SOLID = 0) and (F <> 0) then B := (B or PM_SOLID);
+  if (B and PM_SOLID = 0) and (AlphaComponent(F) <> 0) then B := (B or PM_SOLID);
 end;
 
 
