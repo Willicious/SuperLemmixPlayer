@@ -1513,6 +1513,7 @@ procedure TLemmingGame.Transition(L: TLemming; NewAction: TBasicLemmingAction; D
 var
   i: Integer;
   TempMetaAnim: TMetaLemmingAnimation;
+  OldIsStartingAction: Boolean;
 begin
   if DoTurn then TurnAround(L);
 
@@ -1547,6 +1548,8 @@ begin
   L.LemPhysicsFrame := 0;
   L.LemEndOfAnimation := False;
   L.LemNumberOfBricksLeft := 0;
+  OldIsStartingAction := L.LemIsStartingAction;
+  L.LemIsStartingAction := True;
 
   // New animation
   i := AnimationIndices[NewAction, (L.LemDx = -1)];
@@ -1558,7 +1561,7 @@ begin
   // some things to do when entering state
   case L.LemAction of
     baJumping    : L.LemJumped := 0;
-    baClimbing   : L.LemIsNewClimbing := True;
+    baHoisting   : L.LemIsStartingAction := OldIsStartingAction; // it needs to know what the Climber's value was
     baSplatting  : begin
                      L.LemExplosionTimer := 0;
                      CueSoundEffect(SFX_SPLAT, L.Position)
@@ -1571,7 +1574,6 @@ begin
                      L.LemExplosionTimer := 0;
                      CueSoundEffect(SFX_YIPPEE, L.Position);
                    end;
-    baDigging    : L.LemIsNewDigger := True;
     baBuilding   : L.LemNumberOfBricksLeft := 12;
     baPlatforming: L.LemNumberOfBricksLeft := 12;
     baStacking   : L.LemNumberOfBricksLeft := 8;
@@ -2755,7 +2757,7 @@ begin
     else if L.LemAction = baClimbing then
     begin
       Inc(L.LemX, L.LemDx); // Move out of the wall
-      if not L.LemIsNewClimbing then Inc(L.LemY); // Don't move below original position
+      if not L.LemIsStartingAction then Inc(L.LemY); // Don't move below original position
       Transition(L, baWalking);
     end;
   end;
@@ -3358,9 +3360,9 @@ var
 begin
   Result := True;
 
-  if L.LemIsNewDigger then
+  if L.LemIsStartingAction then
   begin
-    L.LemIsNewDigger := False;
+    L.LemIsStartingAction := False;
     DigOneRow(L.LemX, L.LemY - 1);
     // The first digger cycle is one frame longer!
     // So we need to artificially cancel the very first frame advancement.
@@ -3397,7 +3399,7 @@ begin
   if L.LemPhysicsFrame <= 3 then
   begin
     FoundClip := (HasPixelAt(L.LemX - L.LemDx, L.LemY - 6 - L.LemPhysicsFrame))
-              or (HasPixelAt(L.LemX - L.LemDx, L.LemY - 5 - L.LemPhysicsFrame) and (not L.LemIsNewClimbing));
+              or (HasPixelAt(L.LemX - L.LemDx, L.LemY - 5 - L.LemPhysicsFrame) and (not L.LemIsStartingAction));
 
     if L.LemPhysicsFrame = 0 then // first triggered after 8 frames!
       FoundClip := FoundClip and HasPixelAt(L.LemX - L.LemDx, L.LemY - 7);
@@ -3405,17 +3407,17 @@ begin
     if FoundClip then
     begin
       // Don't fall below original position on hitting terrain in first cycle
-      if not L.LemIsNewClimbing then L.LemY := L.LemY - L.LemPhysicsFrame + 3;
+      if not L.LemIsStartingAction then L.LemY := L.LemY - L.LemPhysicsFrame + 3;
       Dec(L.LemX, L.LemDx);
       Transition(L, baFalling, True); // turn around as well
     end
     else if not HasPixelAt(L.LemX, L.LemY - 7 - L.LemPhysicsFrame) then
     begin
       // if-case prevents too deep bombing, see http://www.lemmingsforums.net/index.php?topic=2620.0
-      if not (L.LemIsNewClimbing and (L.LemPhysicsFrame = 1)) then
+      if not (L.LemIsStartingAction and (L.LemPhysicsFrame = 1)) then
       begin
         L.LemY := L.LemY - L.LemPhysicsFrame + 2;
-        L.LemIsNewClimbing := False;
+        L.LemIsStartingAction := False;
       end;
       Transition(L, baHoisting);
     end;
@@ -3424,7 +3426,7 @@ begin
   else
   begin
     Dec(L.LemY);
-    L.LemIsNewClimbing := False;
+    L.LemIsStartingAction := False;
 
     FoundClip := HasPixelAt(L.LemX - L.LemDx, L.LemY - 7);
 
@@ -3469,7 +3471,7 @@ begin
   if L.LemEndOfAnimation then
     Transition(L, baWalking)
   // special case due to http://www.lemmingsforums.net/index.php?topic=2620.0
-  else if (L.LemPhysicsFrame = 1) and L.LemIsNewClimbing then
+  else if (L.LemPhysicsFrame = 1) and L.LemIsStartingAction then
     Dec(L.LemY, 1)
   else if L.LemPhysicsFrame <= 4 then
     Dec(L.LemY, 2);

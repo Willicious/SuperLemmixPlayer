@@ -88,8 +88,7 @@ type
     LemPlacedBrick                : Boolean; // placed useful brick during this cycle (plaformer and stacker)
     LemInFlipper                  : Integer;
     LemHasBlockerField            : Boolean; // for blockers, even during ohno
-    LemIsNewDigger                : Boolean; // new digger removes one more row
-    LemIsNewClimbing              : Boolean; // new climbing lem in first 4 frames
+    LemIsStartingAction           : Boolean; // replaces LemIsNewDigger, LemIsNewClimber, and acts as LemIsNewFencer
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
     LemUsedSkillCount             : Integer; // number of skills assigned to this lem, used for talisman
@@ -261,8 +260,7 @@ begin
   LemPlacedBrick := Source.LemPlacedBrick;
   LemInFlipper := Source.LemInFlipper;
   LemHasBlockerField := Source.LemHasBlockerField;
-  LemIsNewDigger := Source.LemIsNewDigger;
-  LemIsNewClimbing := Source.LemIsNewClimbing;
+  LemIsStartingAction := Source.LemIsStartingAction;
   LemHighlightReplay := Source.LemHighlightReplay;
   LemExploded := Source.LemExploded;
   LemUsedSkillCount := Source.LemUsedSkillCount;
