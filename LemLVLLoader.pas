@@ -296,10 +296,7 @@ begin
     T.Top := T.Top + PatchT;
 
     if T.Rotate and MatchRec.Rotate then
-    begin
-      T.Flip := not T.Flip;
       T.Invert := not T.Invert;
-    end;
 
     T.Rotate := T.Rotate xor MatchRec.Rotate;
     T.Flip := T.Flip xor MatchRec.Flip;
@@ -328,10 +325,7 @@ begin
     O.Top := O.Top + PatchT;
 
     if O.Rotate and MatchRec.Rotate then
-    begin
-      O.Flip := not O.Flip;
       O.Invert := not O.Invert;
-    end;
 
     O.Rotate := O.Rotate xor MatchRec.Rotate;
     O.Flip := O.Flip xor MatchRec.Flip;
