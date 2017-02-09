@@ -221,7 +221,7 @@ type
   { events }
     //fOnFinish                  : TNotifyEvent;
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
-    fSimulation                : Boolean; // whether we are in simulation mode for drawing shadows
+    fSimulationDepth           : Integer; // whether we are in simulation mode for drawing shadows
   { update skill panel functions }
     procedure UpdateLemmingCounts;
     procedure UpdateTimeLimit;
@@ -288,6 +288,8 @@ type
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeMiniMap;
     procedure InitializeAllObjectMaps;
+
+    function GetIsSimulating: Boolean;
 
     procedure LayBrick(L: TLemming);
     function LayStackBrick(L: TLemming): Boolean;
@@ -456,6 +458,7 @@ type
     property LastReplayDir: String read fLastReplayDir write fLastReplayDir;
 
     property RenderInterface: TRenderInterface read fRenderInterface;
+    property IsSimulating: Boolean read GetIsSimulating;
 
     function GetLevelWidth: Integer;
     function GetLevelHeight: Integer;
@@ -1012,6 +1015,8 @@ begin
 
   ButtonsRemain := 0;
   fHitTestAutoFail := false;
+
+  fSimulationDepth := 0;
 
 end;
 
@@ -1767,7 +1772,7 @@ begin
     Result := BlockerMap.Value[X, Y];
 
     // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
-    if fSimulation and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
+    if IsSimulating and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
     begin
       if Result = DOM_FORCERIGHT then
         LemPosRect := Rect(X - 6, Y - 5, X - 1, Y + 6)
@@ -2292,7 +2297,7 @@ end;
 
 procedure TLemmingGame.InitializeMiniMap;
 begin
-  if fSimulation or not GameParams.ShowMinimap then Exit;  // it wouldn't be shown anyway, but not rendering it = better performance
+  if IsSimulating or not GameParams.ShowMinimap then Exit;  // it wouldn't be shown anyway, but not rendering it = better performance
   // The renderer handles most of the work here now.
   Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
   fRenderer.RenderMinimap(Minimap);
@@ -2882,7 +2887,7 @@ begin
   Bmp.DrawTo(PhysicsMap, D, S);
 
   // Only change the PhysicsMap if simulating stuff
-  if not fSimulation then
+  if not IsSimulating then
   begin
     // Delete these pixels from the terrain layer
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
@@ -2912,7 +2917,7 @@ begin
   Bmp.DrawTo(PhysicsMap, D, S);
 
   // Only change the PhysicsMap if simulating stuff
-  if not fSimulation then
+  if not IsSimulating then
   begin
     // Delete these pixels from the terrain layer
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
@@ -2951,7 +2956,7 @@ begin
   Bmp.DrawTo(PhysicsMap, D, S);
 
   // Delete these pixels from the terrain layer
-  if not fSimulation then fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
+  if not IsSimulating then fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 
   InitializeMinimap;
 end;
@@ -3064,7 +3069,7 @@ var
   BrickPosY, n: Integer;
 begin
   // Do not change the fPhysicsMap when simulating building (but do so for platformers!)
-  if fSimulation and (L.LemAction = baBuilding) then Exit;
+  if IsSimulating and (L.LemAction = baBuilding) then Exit;
 
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
@@ -3101,7 +3106,7 @@ begin
     if not HasPixelAt(PixPosX, BrickPosY) then
     begin
       // Do not change the fPhysicsMap when simulating stacking
-      if not fSimulation then AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+      if not IsSimulating then AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
       Result := true;
     end;
   end;
@@ -3112,7 +3117,7 @@ end;
 procedure TLemmingGame.AddConstructivePixel(X, Y: Integer; Color: TColor32);
 begin
   PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] or PM_SOLID;
-  if not fSimulation then fRenderInterface.AddTerrainBrick(X, Y, Color);
+  if not IsSimulating then fRenderInterface.AddTerrainBrick(X, Y, Color);
 end;
 
 
@@ -3134,7 +3139,7 @@ begin
     end;
 
     // Delete these pixels from the terrain layer
-    if not fSimulation then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
+    if not IsSimulating then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
   end;
 
   InitializeMinimap;
@@ -3178,7 +3183,7 @@ begin
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
 
-  if L.LemIsZombie and not fSimulation then SetZombieField(L);
+  if L.LemIsZombie and not IsSimulating then SetZombieField(L);
 end;
 
 function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
@@ -3714,6 +3719,8 @@ var
     // Make deep copy of the lemming
     CopyL := TLemming.Create;
     CopyL.Assign(L);
+    CopyL.LemIsPhysicsSimulation := true;
+
     // Make a deep copy of the PhysicsMap
     SavePhysicsMap := TBitmap32.Create;
     SavePhysicsMap.Assign(PhysicsMap);
@@ -3729,12 +3736,12 @@ var
       // On CopyL.LemPhysicsFrame = 0 or 16, apply all basher masks and jump to frame 10 again
       if (CopyL.LemPhysicsFrame in [0, 16]) then
       begin
-        fSimulation := True; // do not apply the changes to the TerrainLayer
+        Inc(fSimulationDepth);
         ApplyBashingMask(CopyL, 0);
         ApplyBashingMask(CopyL, 1);
         ApplyBashingMask(CopyL, 2);
         ApplyBashingMask(CopyL, 3);
-        fSimulation := False; // should not matter, because we do this in SimulateLem anyway, but to be safe...
+        Dec(fSimulationDepth); // should not matter, because we do this in SimulateLem anyway, but to be safe...
         // Do *not* check whether continue bashing, but move directly ahead to frame 10
         CopyL.LemPhysicsFrame := 10;
       end;
@@ -3790,11 +3797,8 @@ begin
     end;
 
     // check whether we turn around within the next two basher strokes (only if we don't simulate)
-    if (not ContinueWork) and (not fSimulation) then
-    begin
-      Assert(not fSimulation, 'Lemming simulation does basher steel turn checks and creates an infinite recursion');
+    if (not ContinueWork) and (not L.LemIsPhysicsSimulation) then
       ContinueWork := DoTurnAtSteel(L);
-    end;
 
     if not ContinueWork then
     begin
@@ -3944,6 +3948,8 @@ var
     // Make deep copy of the lemming
     CopyL := TLemming.Create;
     CopyL.Assign(L);
+    CopyL.LemIsPhysicsSimulation := true;
+
     // Make a deep copy of the PhysicsMap
     SavePhysicsMap := TBitmap32.Create;
     SavePhysicsMap.Assign(PhysicsMap);
@@ -3961,12 +3967,12 @@ var
       // On CopyL.LemPhysicsFrame = 0, apply all fencer masks and jump to frame 10 again
       if (CopyL.LemPhysicsFrame = 0) then
       begin
-        fSimulation := True; // do not apply the changes to the TerrainLayer
+        Inc(fSimulationDepth); // do not apply the changes to the TerrainLayer
         ApplyFencerMask(CopyL, 0);
         ApplyFencerMask(CopyL, 1);
         ApplyFencerMask(CopyL, 2);
         ApplyFencerMask(CopyL, 3);
-        fSimulation := False; // should not matter, because we do this in SimulateLem anyway, but to be safe...
+        Dec(fSimulationDepth); // should not matter, because we do this in SimulateLem anyway, but to be safe...
         // Do *not* check whether continue fencing, but move directly ahead to frame 10
         CopyL.LemPhysicsFrame := 10;
       end;
@@ -4029,7 +4035,7 @@ begin
     end;
 
     // check whether we turn around within the next two fencer strokes (only if we don't simulate)
-    if not fSimulation then
+    if not L.LemIsPhysicsSimulation then
       if not (ContinueWork and L.LemIsStartingAction) then // if BOTH of these are true, then both things being tested for are irrelevant
       begin
         DoFencerContinueTests(L, SteelContinue, MoveUpContinue);
@@ -4525,7 +4531,7 @@ end;
 
 procedure TLemmingGame.RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);
 begin
-  if fSimulation then Exit;
+  if IsSimulating then Exit;
 
   if L.LemIsZombie then
   begin
@@ -5112,14 +5118,14 @@ end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String);
 begin
-  if fSimulation then Exit; // Not play sound in simulation mode
+  if IsSimulating then Exit; // Not play sound in simulation mode
 
   MessageQueue.Add(GAMEMSG_SOUND, aSound);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);
 begin
-  if fSimulation then Exit; // Not play sound in simulation mode
+  if IsSimulating then Exit; // Not play sound in simulation mode
 
   MessageQueue.Add(GAMEMSG_SOUND_BAL, aSound, aOrigin.X);
 end;
@@ -5377,12 +5383,12 @@ end;
 
 procedure TLemmingGame.SimulateTransition(L: TLemming; NewAction: TBasicLemmingAction);
 begin
-  fSimulation := True;
+  Inc(fSimulationDepth);
 
   if (NewAction = baStacking) then L.LemStackLow := not HasPixelAt(L.LemX + L.LemDx, L.LemY);
   Transition(L, NewAction);
 
-  fSimulation := False;
+  Dec(fSimulationDepth);
 end;
 
 function TLemmingGame.SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt; // Simulates advancing one frame for the lemming L
@@ -5392,7 +5398,7 @@ var
   i: Integer;
 begin
   // Start Simulation Mode
-  fSimulation := True;
+  Inc(fSimulationDepth);
 
   // Advance lemming one frame
   HandleInteractiveObjects := HandleLemming(L);
@@ -5445,7 +5451,7 @@ begin
     SetLength(LemPosArray, 0);
 
   // End Simulation Mode
-  fSimulation := False;
+  Dec(fSimulationDepth);
 
   Result := LemPosArray;
 end;
@@ -5858,6 +5864,11 @@ end;
 function TLemmingGame.GetIsReplaying: Boolean;
 begin
   Result := fCurrentIteration <= fReplayManager.LastActionFrame;
+end;
+
+function TLemmingGame.GetIsSimulating: Boolean;
+begin
+  Result := fSimulationDepth > 0;
 end;
 
 end.

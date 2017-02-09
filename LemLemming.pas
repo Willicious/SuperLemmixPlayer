@@ -79,6 +79,8 @@ type
     LemTeleporting                : Boolean;
     LemEndOfAnimation             : Boolean; // got to the end of non-looping animation
                                              // equal to (LemFrame > LemMaxFrame)
+    LemIsPhysicsSimulation        : Boolean; // for simulations that are used for physics (eg. the Basher / Fencer checks) as opposed
+                                             // to simulations to determine shadows
     LemIsClimber                  : Boolean;
     LemIsSwimmer                  : Boolean;
     LemIsFloater                  : Boolean;
@@ -251,6 +253,7 @@ begin
   LemRemoved := Source.LemRemoved;
   LemTeleporting := Source.LemTeleporting;
   LemEndOfAnimation := Source.LemEndOfAnimation;
+  LemIsPhysicsSimulation := Source.LemIsPhysicsSimulation;
   LemIsClimber := Source.LemIsClimber;
   LemIsSwimmer := Source.LemIsSwimmer;
   LemIsFloater := Source.LemIsFloater;
