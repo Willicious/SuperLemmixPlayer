@@ -235,21 +235,19 @@ var
     TempBMP: TBitmap32;
     SourceRect: TRect;
   begin
-    try
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'scroller_segment.png', Tmp);
-      TempBMP := TBitmap32.Create;
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'scroller_lemmings.png', TempBMP);
-      SourceRect := Rect(0, 0, 48, 256);
-      LeftLemmingAnimation.SetSize(48, 256);
-      RightLemmingAnimation.SetSize(48, 256);
-      TempBmp.DrawTo(LeftLemmingAnimation, 0, 0, SourceRect);
-      SourceRect.Right := SourceRect.Right + 48;
-      SourceRect.Left := SourceRect.Left + 48;
-      TempBmp.DrawTo(RightLemmingAnimation, 0, 0, SourceRect);
-      TempBmp.Free; 
-    except
-      MainDatExtractor.ExtractBitmap(Tmp, 4, $1AB80, 16, 16, 19, MainPal);
-    end;
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'scroller_segment.png', Tmp);
+    TempBMP := TBitmap32.Create;
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'scroller_lemmings.png', TempBMP);
+    SourceRect := Rect(0, 0, 48, 256);
+    LeftLemmingAnimation.SetSize(48, 256);
+    RightLemmingAnimation.SetSize(48, 256);
+    TempBmp.DrawTo(LeftLemmingAnimation, 0, 0, SourceRect);
+    SourceRect.Right := SourceRect.Right + 48;
+    SourceRect.Left := SourceRect.Left + 48;
+    TempBmp.DrawTo(RightLemmingAnimation, 0, 0, SourceRect);
+    TempBmp.Free;
+    LeftLemmingAnimation.DrawMode := dmBlend;
+    RightLemmingAnimation.DrawMode := dmBlend;
   end;
 begin
   Tmp := TBitmap32.Create;

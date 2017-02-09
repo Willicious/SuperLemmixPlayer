@@ -21,13 +21,13 @@ unit PngInterface;
 interface
 
 uses
-  Classes, SysUtils, GR32, PngImage;
+  Classes, SysUtils, GR32, GR32_PNG;
 
 type
   TPngInterface = class
     private
-      class procedure PngToBitmap32(Png: TPngObject; Bmp: TBitmap32);
-      class function Bitmap32ToPng(Bmp: TBitmap32; NoAlpha: Boolean): TPngObject;
+      //class procedure PngToBitmap32(Png: TPortableNetworkGraphic32; Bmp: TBitmap32);
+      //class function Bitmap32ToPng(Bmp: TBitmap32; NoAlpha: Boolean): TPortableNetworkGraphic32;
     public
       class procedure MaskImageFromFile(Bmp: TBitmap32; fn: String; C: TColor32);
       class procedure MaskImageFromImage(Bmp: TBitmap32; Mask: TBitmap32; C: TColor32);
@@ -110,12 +110,12 @@ end;
 
 class procedure TPngInterface.LoadPngStream(aStream: TStream; Bmp: TBitmap32);
 var
-  TempPng: TPngObject;
+  TempPng: TPortableNetworkGraphic32;
 begin
-  TempPng := TPngObject.Create;
+  TempPng := TPortableNetworkGraphic32.Create;
   try
     TempPng.LoadFromStream(aStream);
-    PngToBitmap32(TempPng, Bmp);
+    Bmp.Assign(TempPng);
   finally
     TempPng.Free;
   end;
@@ -135,14 +135,16 @@ end;
 
 class procedure TPngInterface.SavePngStream(aStream: TStream; Bmp: TBitmap32; NoAlpha: Boolean = false);
 var
-  TempPng: TPngObject;
+  TempPng: TPortableNetworkGraphic32;
 begin
-  TempPng := Bitmap32ToPng(Bmp, NoAlpha);
+  TempPng := TPortableNetworkGraphic32.Create;
+  TempPng.Assign(Bmp);
   TempPng.SaveToStream(aStream);
   TempPng.Free;
 end;
 
-class procedure TPngInterface.PngToBitmap32(Png: TPngObject; Bmp: TBitmap32);
+(*
+class procedure TPngInterface.PngToBitmap32(Png: TPortableNetworkGraphic32; Bmp: TBitmap32);
 var
   X, Y: Integer;
   r, g, b, a: Byte;
@@ -220,14 +222,14 @@ begin
 
 end;
 
-class function TPngInterface.Bitmap32ToPng(Bmp: TBitmap32; NoAlpha: Boolean): TPngObject;
+class function TPngInterface.Bitmap32ToPng(Bmp: TBitmap32; NoAlpha: Boolean): TPortableNetworkGraphic32;
 var
   x, y: Integer;
   r, g, b, a: Byte;
   c: TColor32;
   ASL: pByteArray;
 begin
-  Result := TPngObject.CreateBlank(COLOR_RGBALPHA, 8, Bmp.Width, Bmp.Height);
+  Result := TPortableNetworkGraphic32.CreateBlank(COLOR_RGBALPHA, 8, Bmp.Width, Bmp.Height);
   for y := 0 to Bmp.Height-1 do
   begin
     ASL := Result.AlphaScanline[y];
@@ -247,6 +249,6 @@ begin
       ASL^[x] := a;
     end;
   end;
-end;
+end;*)
 
 end.
