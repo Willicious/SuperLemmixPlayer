@@ -52,6 +52,7 @@ type
     fBgColor : TColor32;
     fParticles                 : TParticleTable; // all particle offsets
     fObjectInfoList: TInteractiveObjectInfoList; // For rendering from Preview screen
+    fDoneBackgroundDraw: Boolean;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
@@ -1295,9 +1296,15 @@ begin
       Inf := ObjectInfos[i];
       if not (Inf.TriggerEffect = DOM_BACKGROUND) then Continue;
 
-      ProcessDrawFrame(rlBackgroundObjects);
-      fLayers.fIsEmpty[rlBackgroundObjects] := False;
+      if (not fDoneBackgroundDraw) and Inf.CanDrawToBackground  then
+        ProcessDrawFrame(rlBackground)
+      else begin
+        ProcessDrawFrame(rlBackgroundObjects);
+        fLayers.fIsEmpty[rlBackgroundObjects] := False;
+      end;
     end;
+
+    fDoneBackgroundDraw := true;
   end;
 
   // Draw no overwrite objects
@@ -1692,6 +1699,7 @@ begin
   if Inf.Level = nil then Exit;
 
   fDisableBackground := not DoBackground;
+  fDoneBackgroundDraw := false;
 
   // Background layer
   fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;

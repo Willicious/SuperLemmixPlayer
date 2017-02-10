@@ -39,6 +39,7 @@ type
     function GetPreassignedSkills: Integer;
     function GetCenterPoint: TPoint;
     function GetKeyFrame: Integer;
+    function GetCanDrawToBackground: Boolean;
 
   public
     MetaObj        : TMetaObjectInterface;
@@ -75,6 +76,7 @@ type
     property PreassignedSkills: Integer read GetPreassignedSkills;
     property ZombieMode: Boolean read sZombieMode write SetZombieMode;
     property KeyFrame: Integer read GetKeyFrame;
+    property CanDrawToBackground: Boolean read GetCanDrawToBackground; // moving backgrounds: if only one frame and zero speed, this returns true
 
     procedure AssignTo(NewObj: TInteractiveObjectInfo);
 
@@ -392,6 +394,12 @@ begin
     Result := (AnimObjMov[Obj.Skill] * f) div 2
   else
     Result := (AnimObjMov[(Obj.Skill + 12) mod 16] * f) div 2;
+end;
+
+function TInteractiveObjectInfo.GetCanDrawToBackground: Boolean;
+begin
+  Assert(TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
+  Result := (Frames.Count = 1) and (Obj.TarLev = 0);
 end;
 
 procedure TInteractiveObjectInfo.AssignTo(NewObj: TInteractiveObjectInfo);
