@@ -478,12 +478,15 @@ begin
 
   if fProcessing then
   begin
-    fReplays.SaveToFile;
-
     ApplyToReplayINIFile; // fuck yeah, Flexi integration (sort of)
 
-    fScreenText.Add('Results saved to');
-    fScreenText.Add(ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
+    if ParamStr(2) <> 'replaytest' then
+    begin
+      fReplays.SaveToFile;
+      fScreenText.Add('Results saved to');
+      fScreenText.Add(ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
+    end;
+    
     while fScreenText.Count < 23 do
       fScreenText.Add('');
     fScreenText.Add('Click mouse to exit');
