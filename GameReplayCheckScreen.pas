@@ -63,6 +63,7 @@ type
     procedure OutputText;
 
     procedure RunTests;
+    procedure ApplyToReplayINIFile;
 
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
   protected
@@ -96,6 +97,78 @@ begin
   end;
 
   if Terminated then CloseScreen(gstMenu);
+end;
+
+procedure TGameReplayCheckScreen.ApplyToReplayINIFile;
+var
+  SL: TStringList;
+  n: Integer;
+
+  CurBaseName: String;
+  CurFullName: String;
+  CurIndex: Integer;
+
+  function GetFilenameIndex(aName: String): Integer;
+  var
+    i: Integer;
+  begin
+    Result := -1;
+    for i := 0 to fReplays.Count-1 do
+      if CompareText(aName, ExtractFileName(fReplays[i].ReplayFile)) = 0 then
+      begin
+        Result := i;
+        Exit;
+      end;
+  end;
+begin
+  if not FileExists(GameParams.ReplayCheckPath + 'replays.ini') then Exit;
+
+  fScreenText.Add('Updating Flexi replays data');
+  fScreenText.Add('');
+  OutputText;
+
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(GameParams.ReplayCheckPath + 'replays.ini');
+    n := 0;
+
+    while n < SL.Count do
+    begin
+      if SL[n] = '' then Break;
+      Inc(n);
+    end;
+
+    Inc(n);
+
+    while n < SL.Count do
+    begin
+      CurBaseName := SL[n];
+      Inc(n);
+      if n > SL.Count then Break;
+
+      while (n < SL.Count) and (SL[n] <> '') do
+      begin
+        CurFullName := CurBaseName + '_' + SL[n];
+        CurIndex := GetFilenameIndex(CurFullName);
+
+        Inc(n, 4);
+
+        if CurIndex <> -1 then
+          if fReplays[CurIndex].ReplayResult = CR_PASS then
+            SL[n] := 'PASS'
+          else
+            SL[n] := 'FAIL';
+
+      Inc(n, 1);
+      end;
+
+      Inc(n);
+    end;
+
+    SL.SaveToFile(GameParams.ReplayCheckPath + 'replays.ini');
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure TGameReplayCheckScreen.RunTests;
@@ -406,6 +479,8 @@ begin
   if fProcessing then
   begin
     fReplays.SaveToFile;
+
+    ApplyToReplayINIFile; // fuck yeah, Flexi integration (sort of)
 
     fScreenText.Add('Results saved to');
     fScreenText.Add(ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
