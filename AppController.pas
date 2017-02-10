@@ -406,6 +406,12 @@ begin
   if not fLoadSuccess then
     GameParams.NextScreen := gstExit;
 
+  if ParamStr(2) = 'replaytest' then
+  begin
+    GameParams.ReplayCheckPath := ParamStr(3);
+    GameParams.NextScreen := gstReplayTest;
+  end;
+
 end;
 
 destructor TAppController.Destroy;

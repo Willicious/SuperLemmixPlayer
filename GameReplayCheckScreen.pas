@@ -534,7 +534,11 @@ end;
 procedure TGameReplayCheckScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
   PieceManager.DisableTidy := false;
-  inherited;
+
+  if ParamStr(2) = 'replaytest' then
+    inherited CloseScreen(gstExit)
+  else
+    inherited;
 end;
 
 constructor TGameReplayCheckScreen.Create(aOwner: TComponent);
