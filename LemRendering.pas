@@ -166,6 +166,8 @@ var
   i: Integer;
   L: TLemming;
 begin
+  if fRenderInterface.DisableDrawing then Exit;
+
   Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
   OldCombine := fPhysicsMap.OnPixelCombine;
   OldMode := fPhysicsMap.DrawMode;
