@@ -1490,8 +1490,41 @@ procedure TLemmingGame.Transition(L: TLemming; NewAction: TBasicLemmingAction; D
 -------------------------------------------------------------------------------}
 var
   i: Integer;
-  TempMetaAnim: TMetaLemmingAnimation;
   OldIsStartingAction: Boolean;
+const
+  // Number of physics frames for the various lemming actions.
+  ANIM_FRAMECOUNT: array[TBasicLemmingAction] of Integer =
+    (
+     0, //baNone,
+     4, //baWalking,
+     1, //baJumping,
+    16, //baDigging,
+     8, //baClimbing,
+    16, //baDrowning,
+     8, //baHoisting,
+    16, //baBuilding,
+    16, //baBashing,
+    24, //baMining,
+     4, //baFalling,
+    17, //baFloating,
+    16, //baSplatting,
+     8, //baExiting,
+    14, //baVaporizing,
+    16, //baBlocking,
+     8, //baShrugging,
+    16, //baOhnoing,
+     1, //baExploding,
+     0, //baToWalking,
+    16, //baPlatforming,
+     8, //baStacking,
+    16, //baStoning,
+     1, //baStoneFinish,
+     8, //baSwimming,
+    17, //baGliding,
+    16, //baFixing,
+     0, //baCloning,
+    16  //baFencing
+    );
 begin
   if DoTurn then TurnAround(L);
 
@@ -1530,11 +1563,14 @@ begin
   L.LemIsStartingAction := True;
 
   // New animation
-  i := AnimationIndices[NewAction, (L.LemDx = -1)];
-  TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
-  L.LemMaxFrame := TempMetaAnim.FrameCount - 1;
-  L.LemKeyFrame := TempMetaAnim.KeyFrame;
-  L.LemMaxPhysicsFrame := TempMetaAnim.PhysicsFrameCount - 1;
+  //i := AnimationIndices[NewAction, (L.LemDx = -1)];
+  //TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
+
+  // Need to set max visual frames elsewhere now...
+  //L.LemMaxFrame := TempMetaAnim.FrameCount - 1;
+  //L.LemKeyFrame := TempMetaAnim.KeyFrame;
+  L.LemMaxFrame := -1;
+  L.LemMaxPhysicsFrame := ANIM_FRAMECOUNT[NewAction] - 1;
 
   // some things to do when entering state
   case L.LemAction of
@@ -1572,21 +1608,11 @@ begin
 end;
 
 procedure TLemmingGame.TurnAround(L: TLemming);
-// we assume that the mirrored animations at least have the same framecount
-// namida: actually the code seems to NOT assume this, even though (at least for now) it's a safe assumption as the format enforces this
-var
-  i: Integer;
-  TempMetaAnim: TMetaLemmingAnimation;
+// we assume that the mirrored animations have the same framecount, key frames and physics frames
+// this is safe because current code elsewhere enforces this anyway
 begin
   with L do
-  begin
     LemDX := -LemDX;
-    i := AnimationIndices[LemAction, (LemDx = -1)];
-    TempMetaAnim := Style.AnimationSet.MetaLemmingAnimations[i];
-    LemMaxFrame := TempMetaAnim.FrameCount - 1;
-    LemKeyFrame := TempMetaAnim.KeyFrame;
-    LemMaxPhysicsFrame := TempMetaAnim.PhysicsFrameCount - 1;
-  end;
 end;
 
 
@@ -3169,8 +3195,8 @@ begin
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
 
-  if L.LemFrame > L.LemMaxFrame then
-    L.LemFrame := L.LemKeyFrame;
+  //if L.LemFrame > L.LemMaxFrame then
+  //  L.LemFrame := L.LemKeyFrame;
 
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
@@ -3639,7 +3665,7 @@ end;
 
 function TLemmingGame.HandleBashing(L: TLemming): Boolean;
 var
-  LemDy, AdjustedFrame, n: Integer;
+  LemDy, n: Integer;
   ContinueWork: Boolean;
 
   function BasherIndestructibleCheck(x, y, Direction: Integer): Boolean;
@@ -3764,16 +3790,12 @@ var
 begin
   Result := True;
 
-  // The basher graphics have a cycle length of 32
-  // However the mechanics have only a cycle of 16
-  AdjustedFrame := L.LemPhysicsFrame mod 16;
-
   // Remove terrain
-  if AdjustedFrame in [2, 3, 4, 5] then
-    ApplyBashingMask(L, AdjustedFrame - 2);
+  if L.LemPhysicsFrame in [2, 3, 4, 5] then
+    ApplyBashingMask(L, L.LemPhysicsFrame - 2);
 
   // Check for enough terrain to continue working
-  if AdjustedFrame = 5 then
+  if L.LemPhysicsFrame = 5 then
   begin
     ContinueWork := False;
 
@@ -3802,7 +3824,7 @@ begin
   end;
 
   // Basher movement
-  if AdjustedFrame in [11, 12, 13, 14, 15] then
+  if L.LemPhysicsFrame in [11, 12, 13, 14, 15] then
   begin
     Inc(L.LemX, L.LemDx);
 
@@ -3864,7 +3886,7 @@ end;
 function TLemmingGame.HandleFencing(L: TLemming): Boolean;
 // This is based off HandleBashing but has some changes.
 var
-  LemDy, AdjustedFrame, n: Integer;
+  LemDy, n: Integer;
   ContinueWork: Boolean;
   SteelContinue, MoveUpContinue: Boolean;
   NeedUndoMoveUp: Boolean;
@@ -3999,19 +4021,15 @@ var
 begin
   Result := True;
 
-  // Fencer only has 16 frames physics-wise, but I couldn't be bothered trimming AdjustedFrame out yet.
-  // Actually, Basher probably doesn't need it anymore either, can just set the physics-frames to 16 while keeping anim-frames at 32.
-  AdjustedFrame := L.LemPhysicsFrame mod 16;
-
   // Remove terrain
-  if AdjustedFrame in [2, 3, 4, 5] then
-    ApplyFencerMask(L, AdjustedFrame - 2);
+  if L.LemPhysicsFrame in [2, 3, 4, 5] then
+    ApplyFencerMask(L, L.LemPhysicsFrame - 2);
 
-  if AdjustedFrame = 15 then
+  if L.LemPhysicsFrame = 15 then
     L.LemIsStartingAction := false;
 
   // Check for enough terrain to continue working
-  if AdjustedFrame = 5 then
+  if L.LemPhysicsFrame = 5 then
   begin
     ContinueWork := False;
 
@@ -4049,13 +4067,13 @@ begin
   end;
 
   // Fencer movement
-  if AdjustedFrame in [11, 12, 13, 14] then
+  if L.LemPhysicsFrame in [11, 12, 13, 14] then
   begin
     Inc(L.LemX, L.LemDx);
 
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-    if (LemDy = -1) and (AdjustedFrame in [11, 13]) then
+    if (LemDy = -1) and (L.LemPhysicsFrame in [11, 13]) then
     begin
       Dec(L.LemY, 1);
       LemDy := 0;

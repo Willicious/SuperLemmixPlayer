@@ -235,16 +235,6 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
     Parser.Free;
   end;
 
-const
-  // Number of physics frames for the various lemming actions.
-  ANIM_FRAMECOUNT: array[0..24] of Integer =
-    ( 4,  1, 16,  8,   // walker, jumper, digger, climber
-     16,  8, 16, 32,   // drowner, hoister, builder, basher
-     24,  4, 17, 16,   // miner, faller, floater, splatter
-      8, 14, 16,  8,   // exiter, burner, blocker, shrugger
-     16,  1, 16,  1,   // ohnoer, bomber, platformer, stoner
-      8, 17, 16,  8,   // swimmer, glider, disarmer, stacker
-     16 );             // fencer
 var
   AnimIndex: Integer;
 begin
@@ -262,14 +252,14 @@ begin
   for AnimIndex := 0 to 24 do
   begin
     // Add right- and left-facing version
-    fMetaLemmingAnimations.Add.PhysicsFrameCount := ANIM_FRAMECOUNT[AnimIndex];
-    fMetaLemmingAnimations.Add.PhysicsFrameCount := ANIM_FRAMECOUNT[AnimIndex];
+    fMetaLemmingAnimations.Add{.PhysicsFrameCount := ANIM_FRAMECOUNT[AnimIndex]};
+    fMetaLemmingAnimations.Add{.PhysicsFrameCount := ANIM_FRAMECOUNT[AnimIndex]};
   end;
   // This one is a placeholder for the stoner mask, I can't remember why it's in here but it is. I need to fix that.
   with fMetaLemmingAnimations.Add do
   begin
     FrameCount := 1;
-    PhysicsFrameCount := 1;
+    //PhysicsFrameCount := 1;
   end;
 
 

@@ -274,6 +274,15 @@ begin
   SrcAnim := fAni.LemmingAnimations[i];
   SrcMetaAnim := fAni.MetaLemmingAnimations[i];
 
+  if aLemming.LemMaxFrame = -1 then
+  begin
+    aLemming.LemMaxFrame := SrcMetaAnim.FrameCount - 1;
+    aLemming.LemKeyFrame := SrcMetaAnim.KeyFrame;
+  end;
+
+  if aLemming.LemFrame > aLemming.LemMaxFrame then
+    aLemming.LemFrame := aLemming.LemKeyFrame;
+
   SrcRect := GetFrameBounds;
   DstRect := GetLocationBounds;
   SrcAnim.DrawMode := dmCustom;
