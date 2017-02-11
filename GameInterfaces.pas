@@ -17,7 +17,7 @@ type
   IGameToolbar = interface
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
     procedure DrawButtonSelector(aButton: TSkillPanelButton; SelectorOn: Boolean);
-    procedure DrawMinimap(Map: TBitmap32);
+    procedure DrawMinimap;
     procedure SetInfoCursorLemming(const Lem: string; HitCount: Integer);
     procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);

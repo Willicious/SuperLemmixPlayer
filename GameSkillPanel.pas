@@ -38,6 +38,7 @@ type
     fOriginal      : TBitmap32;
     fMinimapRegion : TBitmap32;
     fMinimapTemp   : TBitmap32;
+    fMinimap       : TBitmap32;
 
     fLevel         : TLevel;
     fSkillFont     : array['0'..'9', 0..1] of TBitmap32;
@@ -96,7 +97,7 @@ type
   { IGameInfoView support }
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
-    procedure DrawMinimap(Map: TBitmap32);
+    procedure DrawMinimap;
     procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
     procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
@@ -111,6 +112,7 @@ type
     property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
     property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
     property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
+    property Minimap: TBitmap32 read fMinimap;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
 
@@ -147,6 +149,7 @@ begin
 
   fMinimapRegion := TBitmap32.Create;
   fMinimapTemp := TBitmap32.Create;
+  fMinimap := TBitmap32.Create;
 
   fImg.OnMouseDown := ImgMouseDown;
   fImg.OnMouseMove := ImgMouseMove;
@@ -212,6 +215,7 @@ begin
 
   fMinimapRegion.Free;
   fMinimapTemp.Free;
+  fMinimap.Free;
 
   fOriginal.Free;
   inherited;
@@ -559,10 +563,7 @@ begin
                         end else begin
                           GameParams.ShowMinimap := true;
                           if Game.Paused then
-                          begin
-                            TGameWindow(Parent).ForceRenderMinimap;
-                            DrawMinimap(Game.MiniMap);
-                          end;
+                            TGameWindow(Parent).RenderMinimap;
                         end;
           end;
         end;
@@ -1054,7 +1055,7 @@ begin
   fViewPortRect := R;
 end;
 
-procedure TSkillPanelToolbar.DrawMinimap(Map: TBitmap32);
+procedure TSkillPanelToolbar.DrawMinimap;
 var
   X, Y: Integer;
   SrcX, SrcY: Integer;
@@ -1070,10 +1071,10 @@ begin
   fMinimapRegion.DrawTo(Img.Bitmap, 193, 16);
 
   // We want to add some space for when the viewport rect lies on the very edges
-  fMinimapTemp.Width := Map.Width + 2;
-  fMinimapTemp.Height := Map.Height + 2;
+  fMinimapTemp.Width := fMinimap.Width + 2;
+  fMinimapTemp.Height := fMinimap.Height + 2;
   fMinimapTemp.Clear(0);
-  Map.DrawTo(fMinimapTemp, 1, 1);
+  fMinimap.DrawTo(fMinimapTemp, 1, 1);
 
   if Parent <> nil then
   begin

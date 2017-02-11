@@ -284,7 +284,6 @@ type
     function HasPixelAt(X, Y: Integer): Boolean;
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
-    procedure InitializeMiniMap;
     procedure InitializeAllObjectMaps;
 
     function GetIsSimulating: Boolean;
@@ -389,7 +388,6 @@ type
     function MayAssignDigger(L: TLemming): Boolean;
     function MayAssignCloner(L: TLemming): Boolean;
   public
-    MiniMap                    : TBitmap32; // minimap of world
     GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
     fSelectDx                  : Integer;
@@ -827,9 +825,6 @@ begin
   SetCorrectReplayMark;
 
   ReleaseRateModifier := 0; // we don't want to continue changing it if it's currently changing
-
-  // And, update the minimap. Probably easier to redo this from scratch.
-  InitializeMiniMap;
 end;
 
 procedure TLemmingGame.RefreshAllPanelInfo;
@@ -944,7 +939,6 @@ begin
   ObjectInfos    := TInteractiveObjectInfoList.Create;
   BlockerMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
-  MiniMap        := TBitmap32.Create;
   fReplayManager := TReplay.Create;
   fTalismans     := TTalismans.Create;
 
@@ -1053,7 +1047,6 @@ begin
   ObjectInfos.Free;
   BlockerMap.Free;
   ZombieMap.Free;
-  MiniMap.Free;
   fReplayManager.Free;
   fTalismans.Free;
   fRenderInterface.Free;
@@ -1241,8 +1234,6 @@ begin
   ApplyLevelEntryOrder; // This method assumes that all preplaced lemmings are already added to the level
 
   SetBlockerMap;
-
-  InitializeMiniMap;
 
   DrawAnimatedObjects; // first draw needed
 
@@ -2293,15 +2284,6 @@ begin
   Result := (L.LemAction in ActionSet);
 end;
 
-
-procedure TLemmingGame.InitializeMiniMap;
-begin
-  if IsSimulating or not GameParams.ShowMinimap then Exit;  // it wouldn't be shown anyway, but not rendering it = better performance
-  // The renderer handles most of the work here now.
-  Minimap.SetSize(PhysicsMap.Width div 16, PhysicsMap.Height div 8);
-  fRenderer.RenderMinimap(Minimap);
-end;
-
 function TLemmingGame.GetObjectCheckPositions(L: TLemming): TArrayArrayInt;
 // The intermediate checks are made according to:
 // http://www.lemmingsforums.net/index.php?topic=2604.7
@@ -2841,10 +2823,7 @@ begin
   StonerMask.DrawTo(PhysicsMap, X - 8, L.LemY -10);
 
   if not IsSimulating then // could happen as a result of slowfreeze objects!
-  begin
     fRenderInterface.AddTerrainStoner(X - 8, L.LemY -10);
-    InitializeMinimap;
-  end;
 end;
 
 
@@ -2859,10 +2838,7 @@ begin
   BomberMask.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
 
   if not IsSimulating then // could happen as a result of radiation or nuke
-  begin
     fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, BomberMask.Width, BomberMask.Height);
-    InitializeMinimap;
-  end;
 end;
 
 procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);
@@ -2893,12 +2869,7 @@ begin
 
   // Only change the PhysicsMap if simulating stuff
   if not IsSimulating then
-  begin
-    // Delete these pixels from the terrain layer
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
-    // Get now minimap
-    InitializeMinimap;
-  end;
 end;
 
 procedure TLemmingGame.ApplyFencerMask(L: TLemming; MaskFrame: Integer);
@@ -2929,12 +2900,8 @@ begin
 
   // Only change the PhysicsMap if simulating stuff
   if not IsSimulating then
-  begin
     // Delete these pixels from the terrain layer
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
-    // Get now minimap
-    InitializeMinimap;
-  end;
 end;
 
 procedure TLemmingGame.ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
@@ -2973,10 +2940,7 @@ begin
 
   // Delete these pixels from the terrain layer
   if not IsSimulating then
-  begin
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
-    InitializeMinimap;
-  end;
 end;
 
 
@@ -3097,8 +3061,6 @@ begin
 
   for n := 0 to 5 do
     AddConstructivePixel(L.LemX + n*L.LemDx, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
-
-  InitializeMinimap;
 end;
 
 function TLemmingGame.LayStackBrick(L: TLemming): Boolean;
@@ -3128,8 +3090,6 @@ begin
       Result := true;
     end;
   end;
-
-  InitializeMinimap;
 end;
 
 procedure TLemmingGame.AddConstructivePixel(X, Y: Integer; Color: TColor32);
@@ -3159,8 +3119,6 @@ begin
     // Delete these pixels from the terrain layer
     if not IsSimulating then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
   end;
-
-  InitializeMinimap;
 end;
 
 function TLemmingGame.HandleLemming(L: TLemming): Boolean;
@@ -4651,8 +4609,6 @@ begin
     SetCorrectReplayMark;
     UpdateTimeLimit;
   end;
-
-  InitializeMinimap;
 end;
 
 

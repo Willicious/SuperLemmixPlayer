@@ -168,6 +168,9 @@ var
 begin
   if fRenderInterface.DisableDrawing then Exit;
 
+  if (Dst.Width <> fPhysicsMap.Width div 16) or (Dst.Width <> fPhysicsMap.Height div 8) then
+    Dst.SetSize(fPhysicsMap.Width div 16, fPhysicsMap.Height div 8);
+
   Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
   OldCombine := fPhysicsMap.OnPixelCombine;
   OldMode := fPhysicsMap.DrawMode;
@@ -1821,14 +1824,15 @@ begin
     fLayers.Prepare(Inf.Level.Info.Width, Inf.Level.Info.Height);
   end;
 
-  fRenderInterface.DisableDrawing := NoOutput;
-
   // Creating the list of all interactive objects.
   fObjectInfoList.Clear;
   CreateInteractiveObjectList(fObjectInfoList);
 
   if fRenderInterface <> nil then
+  begin
     fRenderInterface.UserHelper := hpi_None;
+    fRenderInterface.DisableDrawing := NoOutput;
+  end;
 
   // Draw the PhysicsMap
   RenderPhysicsMap;

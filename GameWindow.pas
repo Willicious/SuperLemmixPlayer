@@ -119,7 +119,7 @@ type
     procedure ApplyMouseTrap;
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     procedure LoadReplay;
-    procedure ForceRenderMinimap;
+    procedure RenderMinimap;
     procedure MainFormResized; override;
     procedure SetCurrentCursor(aCursor: Integer = 0); // 0 = autodetect correct graphic
     property HScroll: TGameScroll read GameScroll write GameScroll;
@@ -295,11 +295,10 @@ begin
   SkillPanel.DrawButtonSelector(spbClearPhysics, fClearPhysics);
 end;
 
-procedure TGameWindow.ForceRenderMinimap;
+procedure TGameWindow.RenderMinimap;
 begin
-  // why is the physics code (LemGame) responsible for minimap rendering in the first place?
-  // oh right, cause that's how Lemmix was and I still haven't changed it...
-  fRenderer.RenderMinimap(Game.MiniMap);
+  fRenderer.RenderMinimap(SkillPanel.Minimap);
+  SkillPanel.DrawMinimap;
 end;
 
 procedure TGameWindow.ExecuteReplayEdit;
@@ -425,7 +424,6 @@ begin
     if not Hyper then
     begin
       SkillPanel.RefreshInfo;
-      SkillPanel.DrawMinimap(Game.Minimap);
       CheckResetCursor;
     end
     // End hyperspeed if we have reached the TargetIteration and are not mass replay checking
@@ -436,7 +434,7 @@ begin
     begin
       Game.HyperSpeedEnd;
       SkillPanel.RefreshInfo;
-      SkillPanel.DrawMinimap(Game.Minimap);
+      fNeedRedraw := true;
       CheckResetCursor;
     end;
 
@@ -625,6 +623,7 @@ begin
     DrawHeight := ClientHeight div fInternalZoom;
     DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
     fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
+    RenderMinimap;
     fNeedRedraw := false;
   except
     on E: Exception do
