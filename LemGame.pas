@@ -154,16 +154,14 @@ type
     fInfoPainter               : IGameToolbar; // in so many places we have to check if this is nil. TLemmingGame should really have no knowledge of the skill panel in the first place.
     fLevel                     : TLevel; // ref to gameparams.level
     Style                      : TBaseLemmingStyle; // ref to gameparams.style
-    CntDownBmp                 : TBitmap32; // ref to style.animationset.countdowndigits
-    HighlightBmp               : TBitmap32;
-    ExplodeMaskBmp             : TBitmap32; // ref to style.animationset.explosionmask
-    BashMasks                  : TBitmap32; // ref to style.animationset.bashmasks
-    BashMasksRTL               : TBitmap32; // ref to style.animationset.bashmasksrtl
+
+  { masks }
+    BomberMask                 : TBitmap32;
+    StonerMask                 : TBitmap32;
+    BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
-    FencerMasksRTL             : TBitmap32;
-    MineMasks                  : TBitmap32; // ref to style.animationset.minemasks
-    MineMasksRTL               : TBitmap32; // ref to style.animationset.minemasksrtl
-    StoneLemBmp                : TBitmap32;
+    MinerMasks                  : TBitmap32;
+    fMasksLoaded               : Boolean;
 
   { vars }
     fCurrentIteration          : Integer;
@@ -936,7 +934,13 @@ begin
   fMessageQueue := TGameMessageQueue.Create;
 
   LemmingList    := TLemmingList.Create;
-  ExplodeMaskBmp := TBitmap32.Create;
+
+  BomberMask     := TBitmap32.Create;
+  StonerMask     := TBitmap32.Create;
+  BasherMasks    := TBitmap32.Create;
+  FencerMasks    := TBitmap32.Create;
+  MinerMasks     := TBitmap32.Create;
+
   ObjectInfos    := TInteractiveObjectInfoList.Create;
   BlockerMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
@@ -1039,6 +1043,11 @@ begin
   SetLength(LockedExitMap, 0, 0);
   SetLength(TrapMap, 0, 0);
 
+  BomberMask.Free;
+  StonerMask.Free;
+  BasherMasks.Free;
+  FencerMasks.Free;
+  MinerMasks.Free;
 
   LemmingList.Free;
   ObjectInfos.Free;
@@ -1046,7 +1055,6 @@ begin
   ZombieMap.Free;
   MiniMap.Free;
   fReplayManager.Free;
-  ExplodeMaskBmp.Free;
   fTalismans.Free;
   fRenderInterface.Free;
   inherited Destroy;
@@ -1059,8 +1067,15 @@ end;
 
 procedure TLemmingGame.PrepareParams;
 var
-  Ani: TBaseDosAnimationSet;
   i: Integer;
+
+  procedure LoadMask(aDst: TBitmap32; aFilename: String; aCombine: TPixelCombineEvent);
+  begin
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + aFilename, aDst);
+    aDst.DrawMode := dmCustom;
+    aDst.OnPixelCombine := aCombine;
+  end;
+
 begin
   fXmasPal := GameParams.SysDat.Options2 and 2 <> 0;
 
@@ -1068,59 +1083,17 @@ begin
   Level := GameParams.Level;
   Style := GameParams.Style;
 
-  Ani := Renderer.LemmingAnimations; //Style.AnimationSet as TBaseDosAnimationSet;
-  Ani.MaskingColor := Renderer.Theme.Colors[MASK_COLOR];
-  Ani.ClearData;
-  if (GameParams.SysDat.Options3 and 128) <> 0 then
-    Ani.LemmingPrefix := 'lemming'
-  else if (GameParams.SysDat.Options3 and 64) <> 0 then
-    Ani.LemmingPrefix := 'xlemming'
-  else
-    Ani.LemmingPrefix := Renderer.Theme.Lemmings;
-  Ani.ReadData;
-
-  // prepare masks for drawing
-  CntDownBmp := Ani.CountDownDigitsBitmap;
-  CntDownBmp.DrawMode := dmCustom;
-  CntDownBmp.OnPixelCombine := TRecolorImage.CombineDefaultPixels;
-
-  HighlightBmp := Ani.HighlightBitmap;
-  HighlightBmp.DrawMode := dmCustom;
-  HighlightBmp.OnPixelCombine := TRecolorImage.CombineDefaultPixels;
-
-  ExplodeMaskBmp.Assign(Ani.ExplosionMaskBitmap);
-  ExplodeMaskBmp.DrawMode := dmCustom;
-  ExplodeMaskBmp.OnPixelCombine := CombineMaskPixelsNeutral;
-
   fHighlightLemmingID := -1;
 
-  BashMasks := Ani.BashMasksBitmap;
-  BashMasks.DrawMode := dmCustom;
-  BashMasks.OnPixelCombine := CombineMaskPixelsRight;
-
-  BashMasksRTL := Ani.BashMasksRTLBitmap;
-  BashMasksRTL.DrawMode := dmCustom;
-  BashMasksRTL.OnPixelCombine := CombineMaskPixelsLeft;
-
-  FencerMasks := Ani.FencerMasksBitmap;
-  FencerMasks.DrawMode := dmCustom;
-  FencerMasks.OnPixelCombine := CombineMaskPixelsUpRight;
-
-  FencerMasksRTL := Ani.FencerMasksRTLBitmap;
-  FencerMasksRTL.DrawMode := dmCustom;
-  FencerMasksRTL.OnPixelCombine := CombineMaskPixelsUpLeft;
-
-  MineMasks := Ani.MineMasksBitmap;
-  MineMasks.DrawMode := dmCustom;
-  MineMasks.OnPixelCombine := CombineMaskPixelsDownRight;
-
-  MineMasksRTL := Ani.MineMasksRTLBitmap;
-  MineMasksRTL.DrawMode := dmCustom;
-  MineMasksRTL.OnPixelCombine := CombineMaskPixelsDownLeft;
-
-  StoneLemBmp := Ani.LemmingAnimations.Items[STONED];
-  StoneLemBmp.DrawMode := dmCustom;
-  StoneLemBmp.OnPixelCombine := CombineNoOverwriteStoner;
+  if not fMasksLoaded then
+  begin
+    LoadMask(BomberMask, 'bomber.png', CombineMaskPixelsNeutral);
+    LoadMask(StonerMask, 'stoner.png', CombineNoOverwriteStoner);
+    LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Basher, Fencer and Miner are set when used
+    LoadMask(FencerMasks, 'fencer.png', CombineMaskPixelsNeutral);
+    LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
+    fMasksLoaded := true;
+  end;
 
   PhysicsMap := Renderer.PhysicsMap;
   RenderInterface.PhysicsMap := PhysicsMap;
@@ -2839,12 +2812,13 @@ begin
   X := L.LemX;
   if L.LemDx = 1 then Inc(X);
 
-  StoneLemBmp.DrawMode := dmCustom;
-  StoneLemBmp.OnPixelCombine := CombineNoOverwriteStoner;
-  StoneLemBmp.DrawTo(PhysicsMap, X - 8, L.LemY -10);
-  fRenderInterface.AddTerrainStoner(X - 8, L.LemY -10);
+  StonerMask.DrawTo(PhysicsMap, X - 8, L.LemY -10);
 
-  InitializeMinimap;
+  if not IsSimulating then // could happen as a result of slowfreeze objects!
+  begin
+    fRenderInterface.AddTerrainStoner(X - 8, L.LemY -10);
+    InitializeMinimap;
+  end;
 end;
 
 
@@ -2856,27 +2830,32 @@ begin
   if L.LemDx = 1 then Inc(PosX);
   PosY := L.LemY;
 
-  ExplodeMaskBmp.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
+  BomberMask.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
 
-  // Delete these pixels from the terrain layer
-  fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, ExplodeMaskBmp.Width, ExplodeMaskBmp.Height);
-
-  InitializeMinimap;
+  if not IsSimulating then // could happen as a result of radiation or nuke
+  begin
+    fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, BomberMask.Width, BomberMask.Height);
+    InitializeMinimap;
+  end;
 end;
 
 procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);
 var
-  Bmp: TBitmap32;
   S, D: TRect;
 begin
-  // dos bashing mask = 16 x 10
+  // basher mask = 16 x 10
+
+  S := Rect(0, 0, 16, 10);
 
   if L.LemDx = 1 then
-    Bmp := BashMasks
-  else
-    Bmp := BashMasksRTL;
+  begin
+    BasherMasks.OnPixelCombine := CombineMaskPixelsRight;
+    MoveRect(S, 16, MaskFrame * 10);
+  end else begin
+    BasherMasks.OnPixelCombine := CombineMaskPixelsLeft;
+    MoveRect(S, 0, MaskFrame * 10);
+  end;
 
-  S := CalcFrameRect(Bmp, 4, MaskFrame);
   D.Left := L.LemX - 8;
   D.Top := L.LemY - 10;
   D.Right := D.Left + 16;
@@ -2884,7 +2863,7 @@ begin
 
   Assert(CheckRectCopy(D, S), 'bash rect err');
 
-  Bmp.DrawTo(PhysicsMap, D, S);
+  BasherMasks.DrawTo(PhysicsMap, D, S);
 
   // Only change the PhysicsMap if simulating stuff
   if not IsSimulating then
@@ -2898,23 +2877,29 @@ end;
 
 procedure TLemmingGame.ApplyFencerMask(L: TLemming; MaskFrame: Integer);
 var
-  Bmp: TBitmap32;
   S, D: TRect;
 begin
-  if L.LemDx = 1 then
-    Bmp := FencerMasks
-  else
-    Bmp := FencerMasksRTL;
+  // fencer mask = 16 x 10
 
-  S := CalcFrameRect(Bmp, 4, MaskFrame);
+  S := Rect(0, 0, 16, 10);
+
+  if L.LemDx = 1 then
+  begin
+    FencerMasks.OnPixelCombine := CombineMaskPixelsUpRight;
+    MoveRect(S, 16, MaskFrame * 10);
+  end else begin
+    FencerMasks.OnPixelCombine := CombineMaskPixelsUpLeft;
+    MoveRect(S, 0, MaskFrame * 10);
+  end;
+
   D.Left := L.LemX - 8;
   D.Top := L.LemY - 10;
   D.Right := D.Left + 16;
   D.Bottom := D.Top + 10;
 
-  Assert(CheckRectCopy(D, S), 'fencer rect err');
+  Assert(CheckRectCopy(D, S), 'fence rect err');
 
-  Bmp.DrawTo(PhysicsMap, D, S);
+  FencerMasks.DrawTo(PhysicsMap, D, S);
 
   // Only change the PhysicsMap if simulating stuff
   if not IsSimulating then
@@ -2930,7 +2915,6 @@ procedure TLemmingGame.ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: 
 // The miner mask is usually centered at the feet of L
 // AdjustX, AdjustY lets one adjust the position of the miner mask relative to this
 var
-  Bmp: TBitmap32;
   MaskX, MaskY: Integer;
   S, D: TRect;
 begin
@@ -2939,12 +2923,18 @@ begin
   MaskX := L.LemX + L.LemDx - 8 + AdjustX;
   MaskY := L.LemY + MaskFrame - 12 + AdjustY;
 
-  if L.LemDx = 1 then
-    Bmp := MineMasks
-  else
-    Bmp := MineMasksRTL;
+  S := Rect(0, 0, 16, 13);
 
-  S := CalcFrameRect(Bmp, 2, MaskFrame);
+  if L.LemDx = 1 then
+  begin
+    MinerMasks.OnPixelCombine := CombineMaskPixelsDownRight;
+    MoveRect(S, 16, MaskFrame * 13);
+  end else begin
+    MinerMasks.OnPixelCombine := CombineMaskPixelsDownLeft;
+    MoveRect(S, 0, MaskFrame * 13);
+  end;
+
+
 
   D.Left := MaskX;
   D.Top := MaskY;
@@ -2953,12 +2943,14 @@ begin
 
   Assert(CheckRectCopy(D, S), 'miner rect error');
 
-  Bmp.DrawTo(PhysicsMap, D, S);
+  MinerMasks.DrawTo(PhysicsMap, D, S);
 
   // Delete these pixels from the terrain layer
-  if not IsSimulating then fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
-
-  InitializeMinimap;
+  if not IsSimulating then
+  begin
+    fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
+    InitializeMinimap;
+  end;
 end;
 
 
