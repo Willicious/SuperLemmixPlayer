@@ -116,6 +116,7 @@ type
 
   TRenderInterface = class // Used for communication between GameWindow, LemGame and LemRendering.
     private
+      fDisableDrawing: Boolean;
       fLemmingList: TLemmingList;
       fObjectList: TInteractiveObjectInfoList;
       fPSelectedSkill: ^TSkillPanelButton;
@@ -153,6 +154,7 @@ type
       procedure Null;
       procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
       function SimulateLem(L: TLemming): TArrayArrayInt;
+      property DisableDrawing: Boolean read fDisableDrawing write fDisableDrawing;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
@@ -259,6 +261,7 @@ procedure TRenderInterface.AddTerrainBrick(X, Y: Integer; Color: TColor32);
 begin
   // TLemmingGame is expected to handle modifications to the physics map.
   // This is to pass to TRenderer for on-screen drawing.
+  if fDisableDrawing then Exit;
   if Assigned(fDrawRoutineBrick) then fDrawRoutineBrick(X, Y, Color);
 end;
 
@@ -266,6 +269,7 @@ procedure TRenderInterface.AddTerrainStoner(X, Y: Integer);
 begin
   // TLemmingGame is expected to handle modifications to the physics map.
   // This is to pass to TRenderer for on-screen drawing.
+  if fDisableDrawing then Exit;
   if Assigned(fDrawRoutineStoner) then fDrawRoutineStoner(X, Y);
 end;
 
@@ -274,6 +278,7 @@ begin
   // This removes terrain from the layer rlTerrain accoding to the physics map
   // within the rectange defined defined by (X, Y, Width, Height)
   // Whenever LemGame removes some terrain, it is expected to call this method!
+  if fDisableDrawing then Exit;
   fRemoveRoutine(X, Y, Width, Height);
 end;
 

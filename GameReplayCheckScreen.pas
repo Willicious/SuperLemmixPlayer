@@ -413,7 +413,7 @@ begin
       fReplays[i].ReplayLevelText := Trim(LevelSys.SysDat.RankNames[LR]) + ' ' + IntToStr(LL + 1);
       fReplays[i].ReplayLevelTitle := Trim(Level.Info.Title);
 
-      Renderer.PrepareGameRendering(RenderInfo);
+      Renderer.PrepareGameRendering(RenderInfo, true);
       Game.PrepareParams;
 
       SimulateSpawn; // to get ZombieCount correct

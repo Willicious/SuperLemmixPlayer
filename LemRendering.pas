@@ -95,7 +95,7 @@ type
     function FindMetaObject(O: TInteractiveObject): TMetaObjectInterface;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
-    procedure PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
+    procedure PrepareGameRendering(const Info: TRenderInfoRec; NoOutput: Boolean = false);
 
     // Terrain rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
@@ -1797,24 +1797,29 @@ begin
 end;
 
 
-procedure TRenderer.PrepareGameRendering(const Info: TRenderInfoRec; XmasPal: Boolean = false);
+procedure TRenderer.PrepareGameRendering(const Info: TRenderInfoRec; NoOutput: Boolean = false);
 begin
 
   Inf := Info;
 
-  fTheme.Load(Info.Level.Info.GraphicSetName);
-  PieceManager.SetTheme(fTheme);
+  if not NoOutput then
+  begin
+    fTheme.Load(Info.Level.Info.GraphicSetName);
+    PieceManager.SetTheme(fTheme);
 
-  fAni.ClearData;
-  fAni.LemmingPrefix := fTheme.Lemmings;
-  fAni.MaskingColor := fTheme.Colors[MASK_COLOR];
-  fAni.MainDataFile := 'main.dat';
-  fAni.ReadData;
+    fAni.ClearData;
+    fAni.LemmingPrefix := fTheme.Lemmings;
+    fAni.MaskingColor := fTheme.Colors[MASK_COLOR];
+    fAni.MainDataFile := 'main.dat';
+    fAni.ReadData;
 
-  fRecolorer.LoadSwaps(fTheme.Lemmings);
+    fRecolorer.LoadSwaps(fTheme.Lemmings);
 
-  // Prepare the bitmaps
-  fLayers.Prepare(Inf.Level.Info.Width, Inf.Level.Info.Height);
+    // Prepare the bitmaps
+    fLayers.Prepare(Inf.Level.Info.Width, Inf.Level.Info.Height);
+  end;
+
+  fRenderInterface.DisableDrawing := NoOutput;
 
   // Creating the list of all interactive objects.
   fObjectInfoList.Clear;
