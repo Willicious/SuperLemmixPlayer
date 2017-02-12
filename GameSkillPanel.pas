@@ -81,8 +81,8 @@ type
     procedure ReadFont;
     procedure SetButtonRects;
   public
-    fLastDrawnStr: string[40];
-    fNewDrawStr: string[40];
+    fLastDrawnStr: string[38];
+    fNewDrawStr: string[38];
     RedrawnChars: Integer;
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -95,6 +95,7 @@ type
     procedure RefreshInfo;
 
     procedure ClearSkills;
+    //procedure RedrawInfo;
 
   { IGameInfoView support }
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
@@ -185,12 +186,11 @@ begin
   // 3. IN 99%                  24/31              23..30      8
   // 4. TIME 2-31               32/40              31..39      9
                                                            //=40
-  fLastDrawnStr := StringOfChar(' ', 40);
-  fNewDrawStr := StringOfChar(' ', 40);
+  fLastDrawnStr := StringOfChar(' ', 38);
+  fNewDrawStr := StringOfChar(' ', 38);
   fNewDrawStr := SSkillPanelTemplate;
-//  '..............' + 'OUT_.....' + 'IN_.....' + '   T_.-..';
 
-  Assert(length(fnewdrawstr) = 40, 'length error infostring');
+  Assert(length(fnewdrawstr) = 38, 'length error infostring');
 
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
@@ -333,7 +333,7 @@ begin
   y := 0;
   x := 0;
 
-  for i := 1 to 40 do
+  for i := 1 to 39 do
   begin
     idx := -1;
     O := fLastDrawnStr[i];
@@ -901,14 +901,14 @@ begin
   begin
 
     if Num = 0 then
-      S := PadR(S, 14)
+      S := PadR(S, 12)
     else
-      S := PadR(S + ' ' + IntToStr(Num), 14); //
-    Move(S[1], fNewDrawStr[1], 14);
+      S := PadR(S + ' ' + IntToStr(Num), 12); //
+    Move(S[1], fNewDrawStr[1], 12);
   end
   else begin
-    S := '              ';
-    Move(S[1], fNewDrawStr[1], 14);
+    S := '             ';
+    Move(S[1], fNewDrawStr[1], 12);
   end;
 end;
 
@@ -922,7 +922,7 @@ begin
     S := #97
   else
     S := ' ';
-  Move(S[1], fNewDrawStr[15], 1);
+  Move(S[1], fNewDrawStr[13], 1);
 end;
 
 procedure TSkillPanelToolbar.SetTimeLimit(Status: Boolean);
@@ -933,7 +933,7 @@ begin
     S := #96
   else
     S := #95;
-  Move(S[1], fNewDrawStr[35], 1);
+  Move(S[1], fNewDrawStr[33], 1);
 end;
 
 
@@ -949,7 +949,7 @@ begin
     S := PadL(S, 4);
   end;
   if Blinking then S := '    ';  // probably will never blink, but let's have the option there for futureproofing
-  Move(S[1], fNewDrawStr[18], 4);
+  Move(S[1], fNewDrawStr[16], 4);
 end;
 
 
@@ -968,7 +968,7 @@ begin
     S := PadL(S, 4);
   end;
   if Blinking then S := '    ';
-  Move(S[1], fNewDrawStr[24], 4);
+  Move(S[1], fNewDrawStr[22], 4);
 end;
 
 procedure TSkillPanelToolbar.SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
@@ -985,7 +985,7 @@ begin
     S := PadL(S, 4);
   end;
   if Blinking then S := '    ';
-  Move(S[1], fNewDrawStr[30], 4);
+  Move(S[1], fNewDrawStr[28], 4);
 end;
 
 procedure TSkillPanelToolbar.SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
@@ -999,7 +999,7 @@ begin
     S := '  '
   else
     S := PadL(IntToStr(Num), 2);
-  Move(S[1], fNewDrawStr[36], 2);
+  Move(S[1], fNewDrawStr[34], 2);
 end;
 
 procedure TSkillPanelToolbar.SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
@@ -1013,7 +1013,7 @@ begin
     S := '  '
   else
     S := LeadZeroStr(Num, 2);
-  Move(S[1], fNewDrawStr[39], 2);
+  Move(S[1], fNewDrawStr[37], 2);
 end;
 
 procedure TSkillPanelToolbar.SetLevel(const Value: TLevel);
