@@ -161,7 +161,7 @@ var
   OSHorz, OSVert: Single;
 begin
   if aNewZoom < 1 then Exit;
-  if aNewZoom > Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200) then Exit;
+  if aNewZoom > Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200) + 2 then Exit;
 
   Img.BeginUpdate;
   SkillPanel.Img.BeginUpdate;
@@ -173,7 +173,7 @@ begin
 
     Img.Scale := aNewZoom;
 
-    if aNewZoom >= GameParams.ZoomLevel then
+    if (aNewZoom >= GameParams.ZoomLevel) and (aNewZoom <= Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200)) then
     begin
       SkillPanel.Width := 320 * aNewZoom;
       SkillPanel.Height := 40 * aNewZoom;
@@ -193,7 +193,7 @@ begin
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
 
     DoDraw;
-    CheckResetCursor;
+    CheckResetCursor(true);
   finally
     Img.EndUpdate;
     SkillPanel.Img.EndUpdate;
@@ -334,9 +334,9 @@ var
 begin
   fMouseTrapped := true;
 
-  ClientTopLeft := ClientToScreen(Point(Img.Left, Img.Top));
-  ClientBottomRight := ClientToScreen(Point(Img.Left + Img.Width, SkillPanel.Top + SkillPanel.Height));
-    MouseClipRect := Rect(ClientTopLeft, ClientBottomRight);
+  ClientTopLeft := ClientToScreen(Point(Min(SkillPanel.Left, Img.Left), Img.Top));
+  ClientBottomRight := ClientToScreen(Point(Max(Img.Left + Img.Width, SkillPanel.Left + SkillPanel.Width), SkillPanel.Top + SkillPanel.Height));
+  MouseClipRect := Rect(ClientTopLeft, ClientBottomRight);
   ClipCursor(@MouseClipRect);
 end;
 
@@ -1361,7 +1361,7 @@ begin
     TLinearResampler.Create(SkillPanel.Img.Bitmap);
   end;
 
-  SetLength(HCURSORS, Min(Screen.Width div 320, Screen.Height div 200));
+  SetLength(HCURSORS, Min(Screen.Width div 320, Screen.Height div 200) + 2);
   InitializeCursor;
   CenterPoint := ClientToScreen(Point(ClientWidth div 2, ClientHeight div 2));
   SetCursorPos(CenterPoint.X, CenterPoint.Y);
