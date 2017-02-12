@@ -168,8 +168,8 @@ var
 begin
   if fRenderInterface.DisableDrawing then Exit;
 
-  if (Dst.Width <> fPhysicsMap.Width div 16) or (Dst.Width <> fPhysicsMap.Height div 8) then
-    Dst.SetSize(fPhysicsMap.Width div 16, fPhysicsMap.Height div 8);
+  if (Dst.Width <> fPhysicsMap.Width div 8) or (Dst.Width <> fPhysicsMap.Height div 8) then
+    Dst.SetSize(fPhysicsMap.Width div 8, fPhysicsMap.Height div 8);
 
   Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
   OldCombine := fPhysicsMap.OnPixelCombine;
@@ -190,7 +190,10 @@ begin
   begin
     L := fRenderInterface.LemmingList[i];
     if L.LemRemoved then Continue;
-    Dst.PixelS[L.LemX div 16, L.LemY div 8] := $FF00FF00;
+    if L.LemIsZombie then
+      Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00C000
+    else
+      Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00FF00;
   end;
 end;
 

@@ -1080,10 +1080,10 @@ begin
   if Parent <> nil then
   begin
     // We want topleft position for now, to draw the visible area frame
-    X := -Round(TGameWindow(Parent).ScreenImg.OffsetHorz / TGameWindow(Parent).ScreenImg.Scale / 16);
+    X := -Round(TGameWindow(Parent).ScreenImg.OffsetHorz / TGameWindow(Parent).ScreenImg.Scale / 8);
     Y := -Round(TGameWindow(Parent).ScreenImg.OffsetVert / TGameWindow(Parent).ScreenImg.Scale / 8);
 
-    ViewRect := Rect(0, 0, fDisplayWidth div 16 + 2, fDisplayHeight div 8 + 2);
+    ViewRect := Rect(0, 0, fDisplayWidth div 8 + 2, fDisplayHeight div 8 + 2);
     OffsetRect(ViewRect, X, Y);
 
     // On levels of certain exact sizes, the rect can end up being one pixel outside the minimap
@@ -1103,7 +1103,7 @@ begin
     if fMinimapTemp.Width > MINIMAP_REGION_WIDTH then
     begin
       DstX := 0;
-      SrcX := Max(X + (fDisplayWidth div 32) - (MINIMAP_REGION_WIDTH div 2), 0);
+      SrcX := Max(X + (fDisplayWidth div 16) - (MINIMAP_REGION_WIDTH div 2), 0);
       SrcX := Min(fMinimapTemp.Width - MINIMAP_REGION_WIDTH - 1, SrcX);
     end else begin
       SrcX := 0;
