@@ -132,7 +132,7 @@ type
     procedure CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
 
     // Minimap
-    procedure RenderMinimap(Dst: TBitmap32);
+    procedure RenderMinimap(Dst: TBitmap32; LemmingsOnly: Boolean);
     procedure CombineMinimapPixels(F: TColor32; var B: TColor32; M: TColor32);
 
     property PhysicsMap: TBitmap32 read fPhysicsMap;
@@ -158,7 +158,7 @@ end;
 
 // Minimap drawing
 
-procedure TRenderer.RenderMinimap(Dst: TBitmap32);
+procedure TRenderer.RenderMinimap(Dst: TBitmap32; LemmingsOnly: Boolean);
 var
   OldCombine: TPixelCombineEvent;
   OldMode: TDrawMode;
@@ -168,20 +168,20 @@ var
 begin
   if fRenderInterface.DisableDrawing then Exit;
 
-  if (Dst.Width <> fPhysicsMap.Width div 8) or (Dst.Width <> fPhysicsMap.Height div 8) then
-    Dst.SetSize(fPhysicsMap.Width div 8, fPhysicsMap.Height div 8);
+  if not LemmingsOnly then
+  begin
+    Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
+    OldCombine := fPhysicsMap.OnPixelCombine;
+    OldMode := fPhysicsMap.DrawMode;
 
-  Dst.Clear(fTheme.Colors[BACKGROUND_COLOR]);
-  OldCombine := fPhysicsMap.OnPixelCombine;
-  OldMode := fPhysicsMap.DrawMode;
+    fPhysicsMap.DrawMode := dmCustom;
+    fPhysicsMap.OnPixelCombine := CombineMinimapPixels;
 
-  fPhysicsMap.DrawMode := dmCustom;
-  fPhysicsMap.OnPixelCombine := CombineMinimapPixels;
+    fPhysicsMap.DrawTo(Dst, Dst.BoundsRect, fPhysicsMap.BoundsRect);
 
-  fPhysicsMap.DrawTo(Dst, Dst.BoundsRect, fPhysicsMap.BoundsRect);
-
-  fPhysicsMap.OnPixelCombine := OldCombine;
-  fPhysicsMap.DrawMode := OldMode;
+    fPhysicsMap.OnPixelCombine := OldCombine;
+    fPhysicsMap.DrawMode := OldMode;
+  end;
 
   if fRenderInterface = nil then Exit;
   if fRenderInterface.LemmingList = nil then Exit;
@@ -191,7 +191,7 @@ begin
     L := fRenderInterface.LemmingList[i];
     if L.LemRemoved then Continue;
     if L.LemIsZombie then
-      Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00C000
+      Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FFFF0000
     else
       Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00FF00;
   end;

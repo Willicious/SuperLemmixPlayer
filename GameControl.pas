@@ -98,7 +98,8 @@ type
     moDisableWineWarnings,
     moLinearResampleMenu,
     moLinearResampleGame,
-    moFullScreen
+    moFullScreen,
+    moMinimapHighQuality
   );
 
   TMiscOptions = set of TMiscOption;
@@ -115,7 +116,8 @@ const
     moBlackOutZero,
     moPauseAfterBackwards,
     moLinearResampleMenu,
-    moFullScreen
+    moFullScreen,
+    moMinimapHighQuality
   ];
 
 type
@@ -227,6 +229,7 @@ type
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
+    property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;

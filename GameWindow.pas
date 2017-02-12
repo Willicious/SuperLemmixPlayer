@@ -40,6 +40,7 @@ type
     fSaveList: TLemmingGameSavedStateList;
     fReplayKilled: Boolean;
     fInternalZoom: Integer;
+    fMinimapBuffer: TBitmap32;
   { game eventhandler}
     procedure Game_Finished;
   { self eventhandlers }
@@ -297,7 +298,15 @@ end;
 
 procedure TGameWindow.RenderMinimap;
 begin
-  fRenderer.RenderMinimap(SkillPanel.Minimap);
+  if GameParams.MinimapHighQuality then
+  begin
+    fMinimapBuffer.Clear(0);
+    Img.Bitmap.DrawTo(fMinimapBuffer);
+    SkillPanel.Minimap.Clear(0);
+    fMinimapBuffer.DrawTo(SkillPanel.Minimap, SkillPanel.Minimap.BoundsRect, fMinimapBuffer.BoundsRect);
+    fRenderer.RenderMinimap(SkillPanel.Minimap, true);
+  end else
+    fRenderer.RenderMinimap(SkillPanel.Minimap, false);
   SkillPanel.DrawMinimap;
 end;
 
@@ -619,9 +628,13 @@ begin
     fRenderInterface.MousePos := Game.CursorPoint;
     fRenderer.DrawAllObjects(fRenderInterface.ObjectList, true, fClearPhysics);
     fRenderer.DrawLemmings(fClearPhysics);
-    DrawWidth := ClientWidth div fInternalZoom;
-    DrawHeight := ClientHeight div fInternalZoom;
-    DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
+    if GameParams.MinimapHighQuality then
+      DrawRect := Img.Bitmap.BoundsRect
+    else begin
+      DrawWidth := ClientWidth div fInternalZoom;
+      DrawHeight := ClientHeight div fInternalZoom;
+      DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
+    end;
     fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
     RenderMinimap;
     fNeedRedraw := false;
@@ -840,6 +853,9 @@ begin
 
   fReplayKilled := false;
 
+  fMinimapBuffer := TBitmap32.Create;
+  TLinearResampler.Create(fMinimapBuffer);
+
   DoubleBuffered := true;
 end;
 
@@ -854,6 +870,9 @@ begin
   fSaveList.Free;
 
   ReleaseCursors;
+
+  fMinimapBuffer.Free;
+
   inherited Destroy;
 end;
 
@@ -1330,6 +1349,8 @@ begin
   //SkillPanel.left := Img.Left;
   SkillPanel.Width := 320 * Sca;
   SkillPanel.Height := 40 * Sca;
+  SkillPanel.Minimap.SetSize(GameParams.Level.Info.Width div 8, GameParams.Level.Info.Height div 8);
+  fMinimapBuffer.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
 
   (*ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
