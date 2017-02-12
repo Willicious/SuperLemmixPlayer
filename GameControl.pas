@@ -361,13 +361,14 @@ end;
 procedure TDosGameParams.LoadFromIniFile;
 var
   SL: TStringList;
-  LastVer: Int64;
 
-  function LoadBoolean(aLabel: String): Boolean;
+  function LoadBoolean(aLabel: String; aDefault: Boolean): Boolean;
   begin
     // CANNOT load multi-saved in one for obvious reasons, those must be handled manually
-    if (SL.Values[aLabel] = '0') or (SL.Values[aLabel] = '') then
+    if (SL.Values[aLabel] = '0') then
       Result := false
+    else if (SL.Values[aLabel] = '') then
+      Result := aDefault
     else
       Result := true;
   end;
@@ -443,25 +444,26 @@ begin
   else
     SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini');
 
-  AutoReplayNames := LoadBoolean('AutoReplayNames');
-  AutoSaveReplay := LoadBoolean('AutoSaveReplay');
-  LemmingBlink := LoadBoolean('LemmingCountBlink');
-  TimerBlink := LoadBoolean('TimerBlink');
-  AlwaysTimestamp := LoadBoolean('AlwaysTimestampReplays');
-  ConfirmOverwrite := LoadBoolean('ConfirmReplayOverwrite');
-  ExplicitCancel := LoadBoolean('ExplicitReplayCancel');
-  NoAutoReplayMode := LoadBoolean('NoAutoReplay');
-  PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip');
-  BlackOutZero := LoadBoolean('BlackOutZero');
-  NoBackgrounds := LoadBoolean('NoBackgrounds');
-  NoShadows := LoadBoolean('NoShadows');
-  MinimapHighQuality := LoadBoolean('HighQualityMinimap');
-  EnableOnline := LoadBoolean('EnableOnline');
-  CheckUpdates := LoadBoolean('UpdateCheck');
+  AutoReplayNames := LoadBoolean('AutoReplayNames', AutoReplayNames);
+  AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
+  LemmingBlink := LoadBoolean('LemmingCountBlink', LemmingBlink);
+  TimerBlink := LoadBoolean('TimerBlink', TimerBlink);
+  AlwaysTimestamp := LoadBoolean('AlwaysTimestampReplays', AlwaysTimestamp);
+  ConfirmOverwrite := LoadBoolean('ConfirmReplayOverwrite', ConfirmOverwrite);
+  ExplicitCancel := LoadBoolean('ExplicitReplayCancel', ExplicitCancel);
+  NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
+  PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
+  BlackOutZero := LoadBoolean('BlackOutZero', BlackOutZero);
+  NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
+  NoShadows := LoadBoolean('NoShadows', NoShadows);
+  MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
+  EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
+  CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 
-  DisableWineWarnings := LoadBoolean('DisableWineWarnings');
+  DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
 
-  FullScreen := LoadBoolean('FullScreen');
+  FullScreen := LoadBoolean('FullScreen', FullScreen);
+
   ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
 
   WindowWidth := StrToIntDef(SL.Values['WindowWidth'], -1);
@@ -469,34 +471,17 @@ begin
 
   EnsureValidWindowSize;
 
-  LinearResampleMenu := LoadBoolean('LinearResampleMenu');
-  LinearResampleGame := LoadBoolean('LinearResampleGame');
+  LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
+  LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
 
 
-  PostLevelVictorySound := LoadBoolean('VictoryJingle');
-  PostLevelFailureSound := LoadBoolean('FailureJingle');
+  PostLevelVictorySound := LoadBoolean('VictoryJingle', PostLevelVictorySound);
+  PostLevelFailureSound := LoadBoolean('FailureJingle', PostLevelFailureSound);
 
-  SoundManager.MuteSound := not LoadBoolean('SoundEnabled');
+  SoundManager.MuteSound := not LoadBoolean('SoundEnabled', not SoundManager.MuteSound);
   SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
-  SoundManager.MuteMusic := not LoadBoolean('MusicEnabled');
+  SoundManager.MuteMusic := not LoadBoolean('MusicEnabled', not SoundManager.MuteMusic);
   SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
-
-  LastVer := StrToInt64Def(SL.Values['LastVersion'], 0);
-
-  if LastVer < 1441 then
-  begin
-    BlackOutZero := true;
-    PauseAfterBackwardsSkip := true;
-  end;
-
-  if LastVer < 1474 then
-  begin
-    PostLevelVictorySound := true;
-    PostLevelFailureSound := true;
-  end;
-
-  if LastVer < 10012014000 then
-    LinearResampleMenu := true;
 
   SL.Free;
 end;
