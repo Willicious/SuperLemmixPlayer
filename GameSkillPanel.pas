@@ -399,7 +399,7 @@ begin
   y := 0;
   x := 0;
 
-  for i := 1 to 39 do
+  for i := 1 to 38 do
   begin
     idx := -1;
     O := fLastDrawnStr[i];
