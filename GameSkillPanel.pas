@@ -582,6 +582,7 @@ begin
 
   Game.HitTestAutoFail := true;
   Game.HitTest;
+  TGameWindow(Parent).SetCurrentCursor;
 
   if ssLeft in Shift then
   begin
