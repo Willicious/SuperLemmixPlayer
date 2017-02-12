@@ -126,6 +126,7 @@ type
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
+    property SuspendCursor: Boolean read fSuspendCursor;
   end;
 
 implementation
@@ -1569,10 +1570,11 @@ begin
   CanPlay := False;
   Application.OnIdle := nil;
   ClipCursor(nil);
+  fSuspendCursor := true;
   Cursor := crNone;
   Screen.Cursor := crNone;
   Img.Cursor := crNone;
-  SkillPanel.Img.Cursor := crNone;
+  SkillPanel.SetCursor(crNone);
 
   Game.SetGameResult;
   GameParams.GameResult := Game.GameResultRec;

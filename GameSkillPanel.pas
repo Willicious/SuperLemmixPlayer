@@ -615,6 +615,7 @@ end;
 procedure TSkillPanelToolbar.ImgMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
+  if TGameWindow(Owner).SuspendCursor then Exit;
 
   Game.HitTestAutoFail := true;
   Game.HitTest;
@@ -672,6 +673,7 @@ procedure TSkillPanelToolbar.MinimapMouseMove(Sender: TObject;
 var
   P: TPoint;
 begin
+  if TGameWindow(Owner).SuspendCursor then Exit;
 
   Game.HitTestAutoFail := true;
   Game.HitTest;
