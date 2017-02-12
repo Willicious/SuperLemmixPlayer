@@ -282,11 +282,11 @@ begin
   if aLemming.LemMaxFrame = -1 then
   begin
     aLemming.LemMaxFrame := SrcMetaAnim.FrameCount - 1;
-    aLemming.LemKeyFrame := SrcMetaAnim.KeyFrame;
+    aLemming.LemFrameDiff := SrcMetaAnim.FrameDiff;
   end;
 
-  if aLemming.LemFrame > aLemming.LemMaxFrame then
-    aLemming.LemFrame := aLemming.LemKeyFrame;
+  while aLemming.LemFrame > aLemming.LemMaxFrame do
+    Dec(aLemming.LemFrame, aLemming.LemFrameDiff);
 
   SrcRect := GetFrameBounds;
   DstRect := GetLocationBounds;

@@ -219,7 +219,7 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
             Anim := fMetaLemmingAnimations[(i * 2) + dx];
 
             Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
-            Anim.KeyFrame := ThisAnimSec.LineNumeric['keyframe'];
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe'];
 
             Anim.FootX := DirSec.LineNumeric['foot_x'];
             Anim.FootY := DirSec.LineNumeric['foot_y'];
