@@ -440,7 +440,7 @@ begin
       GameParams.MainForm.WindowState := wsMaximized;
       GameParams.MainForm.BorderStyle := bsNone;
     end else begin
-      GameParams.MainForm.ClientWidth := GameParams.ZoomLevel * 320;
+      GameParams.MainForm.ClientWidth := GameParams.ZoomLevel * 416;
       GameParams.MainForm.ClientHeight := GameParams.ZoomLevel * 200;
       if OldFullScreen then
       begin

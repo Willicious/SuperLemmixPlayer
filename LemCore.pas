@@ -125,7 +125,6 @@ type
     spbClearPhysics,
     spbDirLeft,
     spbLoadReplay,
-    spbMinimap,
     spbDirRight  // because of special handling to draw it, it's not immediately after spbDirLeft in the list
   );
 
@@ -245,7 +244,6 @@ const
     baNone,  // Clear Physics
     baNone,  // Dir Sel Left
     baNone,  // Load Replay
-    baNone,  // Minimap toggle
     baNone   // Dir Sel Right
   );
 

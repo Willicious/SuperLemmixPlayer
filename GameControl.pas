@@ -94,7 +94,6 @@ type
     moPauseAfterBackwards,
     moNoBackgrounds,
     moNoShadows,
-    moShowMinimap,
     moDisableWineWarnings,
     moLinearResampleMenu,
     moLinearResampleGame,
@@ -224,7 +223,6 @@ type
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
     property NoShadows: boolean Index moNoShadows read GetOptionFlag write SetOptionFlag;
-    property ShowMinimap: boolean Index moShowMinimap read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
@@ -322,7 +320,6 @@ begin
   SaveBoolean('BlackOutZero', BlackOutZero);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('NoShadows', NoShadows);
-  SaveBoolean('ShowMinimap', ShowMinimap);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
   SaveBoolean('FullScreen', FullScreen);
@@ -380,12 +377,12 @@ var
     if ZoomLevel < 1 then
     begin
       FullScreen := true;
-      ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+      ZoomLevel := Min(Screen.Width div 416, Screen.Height div 200);
     end;
 
     // Zoom level must not be so high that 320x200 x ZoomLevel won't fit on screen
-    if (ZoomLevel > (Screen.Width div 320)) or (ZoomLevel > (Screen.Height div 200)) then
-      ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+    if (ZoomLevel > (Screen.Width div 416)) or (ZoomLevel > (Screen.Height div 200)) then
+      ZoomLevel := Min(Screen.Width div 416, Screen.Height div 200);
 
     if ZoomLevel < 1 then
       ZoomLevel := 1;
@@ -410,12 +407,12 @@ var
     // match 320x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
-      WindowWidth := ZoomLevel * 320;
+      WindowWidth := ZoomLevel * 416;
       WindowHeight := ZoomLevel * 200;
     end;
 
     // Once we've got our window size, ensure the zoom is low enough to fit on it
-    while (ZoomLevel > 1) and ((ZoomLevel * 320 > WindowWidth) or (ZoomLevel * 200 > WindowHeight)) do
+    while (ZoomLevel > 1) and ((ZoomLevel * 416 > WindowWidth) or (ZoomLevel * 200 > WindowHeight)) do
       ZoomLevel := ZoomLevel - 1;
 
     // Finally, we must make sure the window size is an integer multiple of the zoom level
@@ -431,8 +428,8 @@ begin
       begin
         // When running under WINE without an existing config, let's default to windowed.
         FullScreen := false;
-        ZoomLevel := Max(Max((Screen.Width - 100) div 320, (Screen.Height - 100) div 200), 1);
-        WindowWidth := 320 * ZoomLevel;
+        ZoomLevel := Max(Max((Screen.Width - 100) div 416, (Screen.Height - 100) div 200), 1);
+        WindowWidth := 416 * ZoomLevel;
         WindowHeight := 200 * ZoomLevel;
       end;
       Exit;
@@ -457,7 +454,6 @@ begin
   BlackOutZero := LoadBoolean('BlackOutZero');
   NoBackgrounds := LoadBoolean('NoBackgrounds');
   NoShadows := LoadBoolean('NoShadows');
-  ShowMinimap := LoadBoolean('ShowMinimap');
   EnableOnline := LoadBoolean('EnableOnline');
   CheckUpdates := LoadBoolean('UpdateCheck');
 
@@ -521,7 +517,7 @@ begin
   fShownText := false;
   fOneLevelMode := false;
   fTalismanPage := 0;
-  fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+  fZoomLevel := Min(Screen.Width div 416, Screen.Height div 200);
 
   LemDataInResource := True;
   LemSoundsInResource := True;

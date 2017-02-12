@@ -21,9 +21,9 @@ uses
 
 const
   DosMiniMapCorners: TRect = (
-    Left: 196;   // width =about 100
+    Left: 308;   // width =about 100
     Top: 18;
-    Right: 299;  // height =about 20
+    Right: 411;  // height =about 20
     Bottom: 37
   );
 

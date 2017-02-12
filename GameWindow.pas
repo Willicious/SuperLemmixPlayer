@@ -162,7 +162,7 @@ var
   OSHorz, OSVert: Single;
 begin
   if aNewZoom < 1 then Exit;
-  if aNewZoom > Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200) + 2 then Exit;
+  if aNewZoom > Min(GameParams.MainForm.Width div 416, GameParams.MainForm.Height div 200) + 2 then Exit;
 
   Img.BeginUpdate;
   SkillPanel.Img.BeginUpdate;
@@ -174,9 +174,9 @@ begin
 
     Img.Scale := aNewZoom;
 
-    if (aNewZoom >= GameParams.ZoomLevel) and (aNewZoom <= Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200)) then
+    if (aNewZoom >= GameParams.ZoomLevel) and (aNewZoom <= SkillPanel.MaxZoom) then
     begin
-      SkillPanel.Width := 320 * aNewZoom;
+      SkillPanel.Width := 416 * aNewZoom;
       SkillPanel.Height := 40 * aNewZoom;
       SkillPanel.Img.Width := SkillPanel.Width;
       SkillPanel.Img.Height := SkillPanel.Height;
@@ -1347,7 +1347,7 @@ begin
 
   //SkillPanel.Top := Img.Top + Img.Height;
   //SkillPanel.left := Img.Left;
-  SkillPanel.Width := 320 * Sca;
+  SkillPanel.Width := 416 * Sca;
   SkillPanel.Height := 40 * Sca;
   SkillPanel.Minimap.SetSize(GameParams.Level.Info.Width div 8, GameParams.Level.Info.Height div 8);
   fMinimapBuffer.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
@@ -1382,7 +1382,7 @@ begin
     TLinearResampler.Create(SkillPanel.Img.Bitmap);
   end;
 
-  SetLength(HCURSORS, Min(Screen.Width div 320, Screen.Height div 200) + 2);
+  SetLength(HCURSORS, Min(Screen.Width div 416, Screen.Height div 200) + 2);
   InitializeCursor;
   CenterPoint := ClientToScreen(Point(ClientWidth div 2, ClientHeight div 2));
   SetCursorPos(CenterPoint.X, CenterPoint.Y);

@@ -53,13 +53,13 @@ type
     cbEnableOnline: TCheckBox;
     cbUpdateCheck: TCheckBox;
     cbDisableShadows: TCheckBox;
-    cbShowMinimap: TCheckBox;
     GroupBox6: TGroupBox;
     cbZoom: TComboBox;
     Label1: TLabel;
     cbLinearResampleMenu: TCheckBox;
     cbLinearResampleGame: TCheckBox;
     cbFullScreen: TCheckBox;
+    cbMinimapHighQuality: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -136,15 +136,15 @@ begin
   cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
   cbDisableShadows.Checked := GameParams.NoShadows;
   cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
-  cbShowMinimap.Checked := GameParams.ShowMinimap;
   cbFullScreen.Checked := GameParams.FullScreen;
   cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
   cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
+  cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
 
   // Zoom Dropdown
   cbZoom.Items.Clear;
   i := 1;
-  while (i * 320 <= Screen.Width) and (i * 200 < Screen.Height) do
+  while (i * 416 <= Screen.Width) and (i * 200 < Screen.Height) do
   begin
     cbZoom.Items.Add(IntToStr(i) + 'x Zoom');
     Inc(i);
@@ -231,10 +231,10 @@ begin
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.NoShadows := cbDisableShadows.Checked;
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
-  GameParams.ShowMinimap := cbShowMinimap.Checked;
   GameParams.FullScreen := cbFullScreen.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
   GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
+  GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
 
   // Zoom Dropdown
   GameParams.ZoomLevel := cbZoom.ItemIndex + 1;

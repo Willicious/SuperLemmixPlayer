@@ -74,6 +74,8 @@ type
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 
     procedure SetGame(const Value: TLemmingGame);
+
+    function GetMaxZoom: Integer;
   protected
     procedure ReadBitmapFromStyle; virtual;
     procedure ReadFont;
@@ -113,6 +115,8 @@ type
     property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
     property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
     property Minimap: TBitmap32 read fMinimap;
+
+    property MaxZoom: Integer read GetMaxZoom;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
 
@@ -221,6 +225,11 @@ begin
   inherited;
 end;
 
+function TSkillPanelToolbar.GetMaxZoom: Integer;
+begin
+  Result := Max(Min(GameParams.MainForm.ClientWidth div 416, GameParams.MainForm.ClientHeight div 200), 1);
+end;
+
 procedure TSkillPanelToolbar.ClearSkills;
 var
   i: TSkillPanelButton;
@@ -246,7 +255,6 @@ begin
     Exit;
 
   if fButtonRects[aButton].Left <= 0 then Exit;
-  if (aButton > spbNuke) and GameParams.ShowMinimap then Exit;
 
   case Highlight of
     False :
@@ -458,7 +466,6 @@ var
   P: TPoint;
   i: TSkillPanelButton;
   R: PRect;
-  SrcRect: TRect;
   q: Integer;
   Exec: Boolean;
 begin
@@ -466,7 +473,7 @@ begin
   TGameWindow(Parent).ApplyMouseTrap;
 
   // check minimap scroll
-  if PtInRectEx(DosMiniMapCorners, P) and GameParams.ShowMinimap then
+  if PtInRectEx(DosMiniMapCorners, P) then
   begin
     Dec(P.X, DosMinimapCorners.Left);
     Dec(P.Y, DosMiniMapCorners.Top);
@@ -524,8 +531,6 @@ begin
             end;
           end;
         end else begin // need special handling
-          if GameParams.ShowMinimap and (i <> spbMinimap) then Exit;
-
           case i of
             spbFastForward: begin
                               Game.FastForward := not Game.FastForward;
@@ -554,17 +559,6 @@ begin
                           DrawButtonSelector(spbDirRight, true);
                         end;
             spbLoadReplay: TGameWindow(Parent).LoadReplay;
-            spbMinimap: if GameParams.ShowMinimap then
-                        begin
-                          GameParams.ShowMinimap := false;
-                          SrcRect := Rect(193, 16, 304, 48);
-                          fOriginal.DrawTo(Img.Bitmap, SrcRect, SrcRect);
-                          Img.Update;
-                        end else begin
-                          GameParams.ShowMinimap := true;
-                          if Game.Paused then
-                            TGameWindow(Parent).RenderMinimap;
-                        end;
           end;
         end;
       Exit;
@@ -588,7 +582,7 @@ begin
   begin
     P := Img.ControlToBitmap(Point(X, Y));
 
-    if PtInRectEx(DosMiniMapCorners, P) and GameParams.ShowMinimap then
+    if PtInRectEx(DosMiniMapCorners, P) then
     begin
       Dec(P.X, DosMinimapCorners.Left);
       Dec(P.Y, DosMiniMapCorners.Top);
@@ -732,7 +726,7 @@ begin
     GetGraphic('skill_panels.png', BlankPanels);
 
     // Panel graphic
-    fOriginal.SetSize(320, 40);
+    fOriginal.SetSize(416, 40);
     fOriginal.Clear($FF000000);
 
     MakePanel(TempBmp, 'icon_rr_minus.png', true);
@@ -741,6 +735,7 @@ begin
     TempBmp.DrawTo(fOriginal, 17, 16);
 
     GetGraphic('minimap_region.png', fMinimapRegion);
+    fMinimapRegion.DrawTo(fOriginal, 305, 16);
 
     MakePanel(TempBmp, 'icon_ff.png', false);
     TempBmp.DrawTo(fOriginal, 193, 16);
@@ -756,8 +751,6 @@ begin
     TempBmp.DrawTo(fOriginal, 273, 16);
     MakePanel(TempBmp, 'icon_load_replay.png', false);
     TempBmp.DrawTo(fOriginal, 289, 16);
-    MakePanel(TempBmp, 'icon_minimap.png', false);
-    TempBmp.DrawTo(fOriginal, 305, 16);
 
     GetGraphic('empty_slot.png', TempBmp);
     for i := 0 to 7 do
@@ -1067,9 +1060,7 @@ const
   MINIMAP_REGION_WIDTH = 104;
   MINIMAP_REGION_HEIGHT = 20;
 begin
-  if not GameParams.ShowMinimap then Exit;
-
-  fMinimapRegion.DrawTo(Img.Bitmap, 193, 16);
+  fMinimapRegion.DrawTo(Img.Bitmap, 305, 16);
 
   // We want to add some space for when the viewport rect lies on the very edges
   fMinimapTemp.Width := fMinimap.Width + 2;
@@ -1123,7 +1114,7 @@ begin
     SrcRect := Rect(SrcX, SrcY, SrcX + MINIMAP_REGION_WIDTH, SrcY + MINIMAP_REGION_HEIGHT);
     IntersectRect(SrcRect, SrcRect, fMinimapTemp.BoundsRect);
 
-    fMinimapTemp.DrawTo(Img.Bitmap, 196 + DstX, 18 + DstY, SrcRect);
+    fMinimapTemp.DrawTo(Img.Bitmap, 308 + DstX, 18 + DstY, SrcRect);
   end;
 end;
 
