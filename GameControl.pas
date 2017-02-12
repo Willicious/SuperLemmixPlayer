@@ -320,6 +320,7 @@ begin
   SaveBoolean('BlackOutZero', BlackOutZero);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('NoShadows', NoShadows);
+  SaveBoolean('HighQualityMinimap', MinimapHighQuality);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
   SaveBoolean('FullScreen', FullScreen);
@@ -454,6 +455,7 @@ begin
   BlackOutZero := LoadBoolean('BlackOutZero');
   NoBackgrounds := LoadBoolean('NoBackgrounds');
   NoShadows := LoadBoolean('NoShadows');
+  MinimapHighQuality := LoadBoolean('HighQualityMinimap');
   EnableOnline := LoadBoolean('EnableOnline');
   CheckUpdates := LoadBoolean('UpdateCheck');
 
