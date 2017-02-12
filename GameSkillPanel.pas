@@ -34,11 +34,14 @@ type
     fStyle         : TBaseDosLemmingStyle;
 
     fImg           : TImage32;
+    fMinimapImg    : TImage32;
 
     fOriginal      : TBitmap32;
     fMinimapRegion : TBitmap32;
     fMinimapTemp   : TBitmap32;
     fMinimap       : TBitmap32;
+
+    fMinimapScrollFreeze: Boolean;
 
     fLevel         : TLevel;
     fSkillFont     : array['0'..'9', 0..1] of TBitmap32;
@@ -73,9 +76,16 @@ type
     procedure ImgMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 
+    procedure MinimapMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+    procedure MinimapMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+    procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+
     procedure SetGame(const Value: TLemmingGame);
 
     function GetMaxZoom: Integer;
+    procedure SetMinimapScrollFreeze(aValue: Boolean);
   protected
     procedure ReadBitmapFromStyle; virtual;
     procedure ReadFont;
@@ -97,6 +107,9 @@ type
     procedure ClearSkills;
     //procedure RedrawInfo;
 
+    procedure SetZoom(aZoom: Integer);
+    procedure SetCursor(aCursor: TCursor);
+
   { IGameInfoView support }
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -116,6 +129,7 @@ type
     property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
     property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
     property Minimap: TBitmap32 read fMinimap;
+    property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
     property MaxZoom: Integer read GetMaxZoom;
   published
@@ -124,6 +138,20 @@ type
     property Level: TLevel read fLevel write SetLevel;
     property Game: TLemmingGame read fGame write SetGame;
   end;
+
+const
+  MINIMAP_X = 308;
+  MINIMAP_Y = 3;
+  MINIMAP_WIDTH  = 104;
+  MINIMAP_HEIGHT = 34;
+
+const
+  MiniMapCorners: TRect = (
+    Left: MINIMAP_X + 2;
+    Top: MINIMAP_Y + 2;
+    Right: MINIMAP_X + MINIMAP_WIDTH;
+    Bottom: MINIMAP_Y + MINIMAP_HEIGHT;
+  );
 
 
 implementation
@@ -152,6 +180,10 @@ begin
   fImg.Parent := Self;
   fImg.RepaintMode := rmOptimizer;
 
+  fMinimapImg := TImage32.Create(Self);
+  fMinimapImg.Parent := Self;
+  fMinimapImg.RepaintMode := rmOptimizer;
+
   fMinimapRegion := TBitmap32.Create;
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
@@ -159,6 +191,10 @@ begin
   fImg.OnMouseDown := ImgMouseDown;
   fImg.OnMouseMove := ImgMouseMove;
   fImg.OnMouseUp := ImgMouseUp;
+
+  fMinimapImg.OnMouseDown := MinimapMouseDown;
+  fMinimapImg.OnMouseMove := MinimapMouseMove;
+  fMinimapImg.OnMouseUp := MinimapMouseUp;
 
   fRectColor := DosVgaColorToColor32(DosInLevelPalette[3]);
 
@@ -222,7 +258,37 @@ begin
   fMinimap.Free;
 
   fOriginal.Free;
+
+  fImg.Free;
+  fMinimapImg.Free;
   inherited;
+end;
+
+procedure TSkillPanelToolbar.SetZoom(aZoom: Integer);
+begin
+  ClientWidth := 416 * aZoom;
+  ClientHeight := 40 * aZoom;
+  Img.Width := 416 * aZoom;
+  Img.Height := 416 * aZoom;
+  fMinimapImg.Width := MINIMAP_WIDTH * aZoom;
+  fMinimapImg.Height := MINIMAP_HEIGHT * aZoom;
+  fMinimapImg.Left := MINIMAP_X * aZoom;
+  fMinimapImg.Top := MINIMAP_Y * aZoom;
+end;
+
+procedure TSkillPanelToolbar.SetCursor(aCursor: TCursor);
+begin
+  Cursor := aCursor;
+  fImg.Cursor := aCursor;
+  fMinimapImg.Cursor := aCursor;
+end;
+
+procedure TSkillPanelToolbar.SetMinimapScrollFreeze(aValue: Boolean);
+begin
+  if fMinimapScrollFreeze = aValue then Exit;
+  fMinimapScrollFreeze := aValue;
+  if aValue then
+    DrawMinimap;
 end;
 
 function TSkillPanelToolbar.GetMaxZoom: Integer;
@@ -466,31 +532,10 @@ var
   P: TPoint;
   i: TSkillPanelButton;
   R: PRect;
-  q: Integer;
   Exec: Boolean;
 begin
   P := Img.ControlToBitmap(Point(X, Y));
   TGameWindow(Parent).ApplyMouseTrap;
-
-  // check minimap scroll
-  if PtInRectEx(DosMiniMapCorners, P) then
-  begin
-    Dec(P.X, DosMinimapCorners.Left);
-    Dec(P.Y, DosMiniMapCorners.Top);
-    if Game.Level.Info.Width < 1664 then
-    begin
-      Dec(P.X, 52 - (Game.Level.Info.Width div 32));
-      q := Game.Level.Info.Width;
-    end else
-      q := 1664;
-    if Game.Level.Info.Width < 1664 then
-      P.X := Round(P.X * 16 * Game.Level.Info.Width / q);
-      P.Y := Round(P.Y * 8 * Game.Level.Info.Height / 160);
-    if Assigned(fOnMiniMapClick) then
-      fOnMinimapClick(Self, P);
-
-    Exit;
-  end;
 
   if Game.HyperSpeed then
     Exit;
@@ -569,35 +614,12 @@ end;
 
 procedure TSkillPanelToolbar.ImgMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-var
-  P: TPoint;
-  q: Integer;
 begin
 
   Game.HitTestAutoFail := true;
   Game.HitTest;
   TGameWindow(Parent).SetCurrentCursor;
 
-  if ssLeft in Shift then
-  begin
-    P := Img.ControlToBitmap(Point(X, Y));
-
-    if PtInRectEx(DosMiniMapCorners, P) then
-    begin
-      Dec(P.X, DosMinimapCorners.Left);
-      Dec(P.Y, DosMiniMapCorners.Top);
-      if Game.Level.Info.Width < 1664 then
-      begin
-        Dec(P.X, 52 - (Game.Level.Info.Width div 32));
-        q := Game.Level.Info.Width;
-      end else
-        q := 1664;
-      P.X := Round(P.X * 16 * Game.Level.Info.Width / q);
-      P.Y := Round(P.Y * 8 * Game.Level.Info.Height / 160);
-      if Assigned(fOnMiniMapClick) then
-        fOnMinimapClick(Self, P);
-    end;
-  end;
   if Y >= Img.Height - 1 then
     TGameWindow(Parent).VScroll := gsDown
   else
@@ -612,6 +634,8 @@ begin
     else
       TGameWindow(Parent).HScroll := gsNone;
   end;
+
+  MinimapScrollFreeze := false;
 end;
 
 procedure TSkillPanelToolbar.ImgMouseUp(Sender: TObject;
@@ -622,7 +646,62 @@ begin
    Game.SetSelectedSkill(spbFaster, False);
 end;
 
+procedure TSkillPanelToolbar.MinimapMouseDown(Sender: TObject; Button: TMouseButton;
+    Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+{-------------------------------------------------------------------------------
+  Mouse behaviour of toolbar.
+  o Minimap scrolling
+  o button clicks
+-------------------------------------------------------------------------------}
+var
+  P: TPoint;
+begin
+  P := fMinimapImg.ControlToBitmap(Point(X, Y));
+  P.X := P.X * 8;
+  P.Y := P.Y * 8;
+  TGameWindow(Parent).ApplyMouseTrap;
 
+  fMinimapScrollFreeze := true;
+
+  if Assigned(fOnMiniMapClick) then
+    fOnMinimapClick(Self, P);
+end;
+
+procedure TSkillPanelToolbar.MinimapMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+var
+  P: TPoint;
+begin
+
+  Game.HitTestAutoFail := true;
+  Game.HitTest;
+  TGameWindow(Parent).SetCurrentCursor;
+
+  if not fMinimapScrollFreeze then Exit;
+
+  if ssLeft in Shift then
+  begin
+    P := fMinimapImg.ControlToBitmap(Point(X, Y));
+    if not PtInRect(fMinimapImg.Bitmap.BoundsRect, P) then
+    begin
+      MinimapMouseUp(Sender, mbLeft, Shift, X, Y, Layer);
+      Exit;
+    end;
+
+    P.X := P.X * 8;
+    P.Y := P.Y * 8;
+    if Assigned(fOnMiniMapClick) then
+      fOnMinimapClick(Self, P);
+  end;
+
+end;
+
+procedure TSkillPanelToolbar.MinimapMouseUp(Sender: TObject; Button: TMouseButton;
+    Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+begin
+  fMinimapScrollFreeze := false;
+  DrawMinimap;
+end;
 
 
 procedure TSkillPanelToolbar.ReadBitmapFromStyle;
@@ -697,6 +776,20 @@ const
     TempBmp2.DrawTo(aDst);
   end;
 
+  procedure ExpandMinimap(aBmp: TBitmap32);
+  var
+    TempBmp: TBitmap32;
+  begin
+    if aBmp.Height = 38 then Exit;
+    TempBmp := TBitmap32.Create;
+    TempBmp.Assign(aBmp);
+    aBmp.SetSize(111, 38);
+    aBmp.Clear($FF000000);
+    TempBmp.DrawTo(aBmp, 0, 14);
+    TempBmp.DrawTo(aBmp, 1, 0, Rect(1, 0, 109, 16));
+    TempBmp.Free;
+  end;
+
 begin
 
 
@@ -735,7 +828,8 @@ begin
     TempBmp.DrawTo(fOriginal, 17, 16);
 
     GetGraphic('minimap_region.png', fMinimapRegion);
-    fMinimapRegion.DrawTo(fOriginal, 305, 16);
+    ExpandMinimap(fMinimapRegion);
+    fMinimapRegion.DrawTo(fOriginal, 305, 1);
 
     MakePanel(TempBmp, 'icon_ff.png', false);
     TempBmp.DrawTo(fOriginal, 193, 16);
@@ -1039,6 +1133,14 @@ begin
   Width := fImg.Width;
   Height := fImg.Height;
 
+  fMinimapImg.Scale := aScale;
+  fMinimapImg.ScaleMode := smScale;
+  fMinimapImg.BitmapAlign := baCustom;
+  fMinimapImg.Left := MINIMAP_X * aScale;
+  fMinimapImg.Top := MINIMAP_Y * aScale;
+  fMinimapImg.Width := MINIMAP_WIDTH * aScale;
+  fMinimapImg.Height := MINIMAP_HEIGHT * aScale;
+
   fImg.EndUpdate;
   fImg.Changed;
   Invalidate;
@@ -1052,15 +1154,10 @@ end;
 procedure TSkillPanelToolbar.DrawMinimap;
 var
   X, Y: Integer;
-  SrcX, SrcY: Integer;
-  DstX, DstY: Integer;
+  OH, OV: Double;
   ViewRect: TRect;
-  SrcRect : TRect;
-const
-  MINIMAP_REGION_WIDTH = 104;
-  MINIMAP_REGION_HEIGHT = 20;
 begin
-  fMinimapRegion.DrawTo(Img.Bitmap, 305, 16);
+  fMinimapRegion.DrawTo(Img.Bitmap, 305, 1);
 
   // We want to add some space for when the viewport rect lies on the very edges
   fMinimapTemp.Width := fMinimap.Width + 2;
@@ -1077,44 +1174,37 @@ begin
     ViewRect := Rect(0, 0, fDisplayWidth div 8 + 2, fDisplayHeight div 8 + 2);
     OffsetRect(ViewRect, X, Y);
 
-    // On levels of certain exact sizes, the rect can end up being one pixel outside the minimap
-    if ViewRect.Right > fMinimapTemp.Width then
-    begin
-      Dec(ViewRect.Left);
-      Dec(ViewRect.Right);
-    end;
-    if ViewRect.Bottom > fMinimapTemp.Height then
-    begin
-      Dec(ViewRect.Top);
-      Dec(ViewRect.Bottom);
-    end;
-
     fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
-    if fMinimapTemp.Width > MINIMAP_REGION_WIDTH then
+    fMinimapImg.Bitmap.Assign(fMinimapTemp);
+
+    if not fMinimapScrollFreeze then
     begin
-      DstX := 0;
-      SrcX := Max(X + (fDisplayWidth div 16) - (MINIMAP_REGION_WIDTH div 2), 0);
-      SrcX := Min(fMinimapTemp.Width - MINIMAP_REGION_WIDTH - 1, SrcX);
-    end else begin
-      SrcX := 0;
-      DstX := (MINIMAP_REGION_WIDTH - fMinimapTemp.Width) div 2;
+      if fMinimapTemp.Width < MINIMAP_WIDTH then
+        OH := (((MINIMAP_WIDTH - fMinimapTemp.Width) * fMinimapImg.Scale) / 2)
+      else begin
+        OH := TGameWindow(Parent).ScreenImg.OffsetHorz / TGameWindow(Parent).ScreenImg.Scale / 8;
+        OH := OH + (MINIMAP_WIDTH - RectWidth(ViewRect)) div 2;
+        OH := OH * fMinimapImg.Scale;
+        OH := Min(OH, 0);
+        OH := Max(OH, -(fMinimapTemp.Width - MINIMAP_WIDTH) * fMinimapImg.Scale);
+      end;
+
+      if fMinimapTemp.Height < MINIMAP_HEIGHT then
+        OV := (((MINIMAP_HEIGHT - fMinimapTemp.Height) * fMinimapImg.Scale) / 2)
+      else begin
+        OV := TGameWindow(Parent).ScreenImg.OffsetVert / TGameWindow(Parent).ScreenImg.Scale / 8;
+        OV := OV + (MINIMAP_HEIGHT - RectHeight(ViewRect)) div 2;
+        OV := OV * fMinimapImg.Scale;
+        OV := Min(OV, 0);
+        OV := Max(OV, -(fMinimapTemp.Height - MINIMAP_HEIGHT) * fMinimapImg.Scale);
+      end;
+
+      fMinimapImg.OffsetHorz := OH;
+      fMinimapImg.OffsetVert := OV;
     end;
 
-    if fMinimapTemp.Height > MINIMAP_REGION_HEIGHT then
-    begin
-      DstY := 0;
-      SrcY := Max(Y + (fDisplayHeight div 16) - (MINIMAP_REGION_HEIGHT div 2), 0);
-      SrcY := Min(fMinimapTemp.Height - MINIMAP_REGION_HEIGHT - 1, SrcY);
-    end else begin
-      SrcY := 0;
-      DstY := (MINIMAP_REGION_HEIGHT - fMinimapTemp.Height) div 2;
-    end;
-
-    SrcRect := Rect(SrcX, SrcY, SrcX + MINIMAP_REGION_WIDTH, SrcY + MINIMAP_REGION_HEIGHT);
-    IntersectRect(SrcRect, SrcRect, fMinimapTemp.BoundsRect);
-
-    fMinimapTemp.DrawTo(Img.Bitmap, 308 + DstX, 18 + DstY, SrcRect);
+    fMinimapImg.Changed;
   end;
 end;
 

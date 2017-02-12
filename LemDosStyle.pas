@@ -19,26 +19,6 @@ uses
   LemRendering, PngInterface, // for image mass dump, yeah, finally moved it to here :D
   UZip; // For checking whether files actually exist
 
-const
-  DosMiniMapCorners: TRect = (
-    Left: 308;   // width =about 100
-    Top: 18;
-    Right: 411;  // height =about 20
-    Bottom: 37
-  );
-
-  // to draw
-  DosMiniMapBounds: TRect = (
-    Left: 196;   // width =about 100
-    Top: 18;
-    Right: 299 + 1;  // height =about 20
-    Bottom: 37 + 1
-  );
-
-const
-  DOS_MINIMAP_WIDTH  = 104;
-  DOS_MINIMAP_HEIGHT = 20;
-
 type
   TBaseDosLemmingStyle = class(TBaseLemmingStyle)
   private

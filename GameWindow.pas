@@ -176,11 +176,12 @@ begin
 
     if (aNewZoom >= GameParams.ZoomLevel) and (aNewZoom <= SkillPanel.MaxZoom) then
     begin
-      SkillPanel.Width := 416 * aNewZoom;
+      (*SkillPanel.Width := 416 * aNewZoom;
       SkillPanel.Height := 40 * aNewZoom;
       SkillPanel.Img.Width := SkillPanel.Width;
       SkillPanel.Img.Height := SkillPanel.Height;
-      SkillPanel.Img.Scale := aNewZoom;
+      SkillPanel.Img.Scale := aNewZoom;*)
+      SkillPanel.SetZoom(aNewZoom);
     end;
 
     fInternalZoom := aNewZoom;
@@ -775,7 +776,7 @@ begin
     Cursor := NewCursor;
     Img.Cursor := NewCursor;
     Screen.Cursor := NewCursor;
-    SkillPanel.Img.Cursor := NewCursor;
+    SkillPanel.SetCursor(NewCursor);
   end;
 end;
 
@@ -1170,6 +1171,8 @@ procedure TGameWindow.Form_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: 
 begin
   if fSuspendCursor then Exit;
 
+  SkillPanel.MinimapScrollFreeze := false;
+
   if X <= Img.Left then
     GameScroll := gsLeft
   else if X >= (Img.Left + Img.Width - 1) then
@@ -1214,6 +1217,8 @@ begin
       GameVScroll := gsUp
     else
       GameVScroll := gsNone;
+
+    SkillPanel.MinimapScrollFreeze := false;
 
     if Game.Paused then
       DoDraw; // probably causing major lag, can we detect if it's nessecary and only redraw if it is?
@@ -1412,15 +1417,16 @@ var
 begin
   O := -P.X * fInternalZoom;
   O :=  O + Img.Width div 2;
-
   if O < MinScroll then O := MinScroll;
   if O > MaxScroll then O := MaxScroll;
   Img.OffSetHorz := O;
+
   O := -P.Y * fInternalZoom;
   O :=  O + Img.Height div 2;
   if O < MinVScroll then O := MinVScroll;
   if O > MaxVScroll then O := MaxVScroll;
   Img.OffsetVert := O;
+  
   DoDraw;
 end;
 
