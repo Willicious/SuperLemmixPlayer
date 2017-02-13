@@ -105,7 +105,6 @@ type
     procedure RefreshInfo;
 
     procedure ClearSkills;
-    //procedure RedrawInfo;
 
     procedure SetZoom(aZoom: Integer);
     procedure SetCursor(aCursor: TCursor);
@@ -518,9 +517,32 @@ begin
 end;
 
 procedure TSkillPanelToolbar.RefreshInfo;
+var
+  i: TSkillPanelButton;
+  TimeRemaining: Integer;
 begin
+  SetInfoLemHatch(Game.LemmingsToSpawn - Level.Info.ZombieCount);
+  SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive);
+  SetInfoLemIn(Level.Info.RescueCount - Game.LemmingsSaved);
+
+  if Level.Info.TimeLimit > 5999 then
+  begin
+    SetInfoMinutes(Game.CurrentIteration div (17 * 60));
+    SetInfoSeconds((Game.CurrentIteration mod (17 * 60)) div 17);
+  end else begin
+    TimeRemaining := Level.Info.TimeLimit - (Game.CurrentIteration div 17);
+    SetInfoMinutes(TimeRemaining div 60);
+    SetInfoMinutes(TimeRemaining mod 60);
+  end;
+
   DrawNewStr;
   fLastDrawnStr := fNewDrawStr;
+  
+  for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    DrawSkillCount(i, Game.SkillCount[i]);
+
+  DrawSkillCount(spbSlower, Level.Info.ReleaseRate);
+  DrawSkillCount(spbFaster, Game.CurrentReleaseRate);
 end;
 
 

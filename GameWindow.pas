@@ -636,6 +636,7 @@ begin
     end;
     fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
     RenderMinimap;
+    SkillPanel.RefreshInfo;
     fNeedRedraw := false;
   except
     on E: Exception do

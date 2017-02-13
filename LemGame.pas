@@ -67,7 +67,7 @@ type
       CurrentIteration: Integer;
       ClockFrame: Integer;
       ButtonsRemain: Integer;
-      LemmingsReleased: Integer;
+      LemmingsToRelease: Integer;
       LemmingsCloned: Integer;
       LemmingsOut: Integer;
       SpawnedDead: Integer;
@@ -167,7 +167,7 @@ type
     fCurrentIteration          : Integer;
     fClockFrame                : Integer; // 17 frames is one game-second
     ButtonsRemain              : Byte;
-    LemmingsReleased           : Integer; // number of lemmings that were created
+    LemmingsToRelease           : Integer; // number of lemmings that were created
     LemmingsCloned             : Integer; // number of cloned lemmings
     LemmingsOut                : Integer; // number of lemmings currently walking around
     SpawnedDead                : Integer; // number of zombies that were created
@@ -220,11 +220,6 @@ type
     //fOnFinish                  : TNotifyEvent;
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
     fSimulationDepth           : Integer; // whether we are in simulation mode for drawing shadows
-  { update skill panel functions }
-    procedure UpdateLemmingCounts;
-    procedure UpdateTimeLimit;
-    procedure UpdateOneSkillCount(aSkill: TSkillPanelButton);
-    procedure UpdateAllSkillCounts;
   { pixel combine eventhandlers }
     procedure DoTalismanCheck;
 
@@ -320,9 +315,6 @@ type
     function UpdateExplosionTimer(L: TLemming): Boolean;
     procedure UpdateInteractiveObjects;
 
-    function CheckLemmingBlink: Boolean;
-    function CheckTimerBlink: Boolean;
-
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Rev: Boolean = false);
 
@@ -387,6 +379,9 @@ type
     function MayAssignMiner(L: TLemming): Boolean;
     function MayAssignDigger(L: TLemming): Boolean;
     function MayAssignCloner(L: TLemming): Boolean;
+
+    // for properties
+    function GetSkillCount(aSkill: TSkillPanelButton): Integer;
   public
     GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
@@ -429,7 +424,11 @@ type
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
+    property LemmingsToSpawn: Integer read LemmingsToRelease;
+    property LemmingsActive: Integer read LemmingsOut;
+    property LemmingsSaved: Integer read LemmingsIn;
     property CurrentReleaseRate: Integer read CurrReleaseRate; // for skill panel's usage
+    property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount;
     property ClockFrame: Integer read fClockFrame;
     property CursorPoint: TPoint read fCursorPoint write fCursorPoint;
     property FastForward: Boolean read fFastForward write fFastForward;
@@ -659,47 +658,6 @@ begin
     InfoPainter.SetReplayMark(0);
 end;
 
-procedure TLemmingGame.UpdateLemmingCounts;
-begin
-  if InfoPainter = nil then Exit;
-  // Set Lemmings in Hatch, Lemmings Alive and Lemmings Saved
-  InfoPainter.SetInfoLemHatch((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsOut + LemmingsRemoved), false);
-  InfoPainter.SetInfoLemAlive((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved), CheckLemmingBlink);
-  InfoPainter.SetInfoLemIn(LemmingsIn - Level.Info.RescueCount, False);
-end;
-
-procedure TLemmingGame.UpdateTimeLimit;
-var
-  TimeMinutes, TimeSeconds: Integer;
-begin
-  if InfoPainter = nil then Exit;
-  // Keep TimeSeconds and TimeMinues as separate variables!
-  // Otherwise weird visual glitches occur when framestepping 10 seconds
-  TimeMinutes := abs(TimePlay) div 60;
-  TimeSeconds := abs(TimePlay) mod 60;
-  InfoPainter.SetInfoMinutes(TimeMinutes, CheckTimerBlink);
-  InfoPainter.SetInfoSeconds(TimeSeconds, CheckTimerBlink);
-end;
-
-procedure TLemmingGame.UpdateOneSkillCount(aSkill: TSkillPanelButton);
-begin
-  if InfoPainter = nil then Exit;
-  if aSkill = spbSlower then
-    InfoPainter.DrawSkillCount(spbSlower, Level.Info.ReleaseRate)
-  else if aSkill = spbFaster then
-    InfoPainter.DrawSkillCount(spbFaster, CurrReleaseRate)
-  else if aSkill in [spbWalker..spbCloner] then
-    InfoPainter.DrawSkillCount(aSkill, CurrSkillCount[SkillPanelButtonToAction[aSkill]]);
-end;
-
-procedure TLemmingGame.UpdateAllSkillCounts;
-var
-  i: TSkillPanelButton;
-begin
-  for i := Low(TSkillPanelButton) to High(TSkillPanelButton) do
-    UpdateOneSkillCount(i);
-end;
-
 procedure TLemmingGame.CreateSavedState(aState: TLemmingGameSavedState);
 var
   i: Integer;
@@ -712,7 +670,7 @@ begin
   aState.CurrentIteration := fCurrentIteration;
   aState.ClockFrame := fClockFrame;
   aState.ButtonsRemain := ButtonsRemain;
-  aState.LemmingsReleased := LemmingsReleased;
+  aState.LemmingsToRelease := LemmingsToRelease;
   aState.LemmingsCloned := LemmingsCloned;
   aState.LemmingsOut := LemmingsOut;
   aState.SpawnedDead := SpawnedDead;
@@ -774,7 +732,7 @@ begin
   fCurrentIteration := aState.CurrentIteration;
   fClockFrame := aState.ClockFrame;
   ButtonsRemain := aState.ButtonsRemain;
-  LemmingsReleased := aState.LemmingsReleased;
+  LemmingsToRelease := aState.LemmingsToRelease;
   LemmingsCloned := aState.LemmingsCloned;
   LemmingsOut := aState.LemmingsOut;
   SpawnedDead := aState.SpawnedDead;
@@ -831,9 +789,6 @@ procedure TLemmingGame.RefreshAllPanelInfo;
 begin
   if InfoPainter = nil then Exit;
   InfoPainter.DrawButtonSelector(fSelectedSkill, true);
-  UpdateLemmingCounts;
-  UpdateTimeLimit;
-  UpdateAllSkillCounts;
 end;
 
 procedure TLemmingGame.DoTalismanCheck;
@@ -1137,7 +1092,7 @@ begin
 
   fGameFinished := False;
   fGameCheated := False;
-  LemmingsReleased := 0;
+  LemmingsToRelease := Level.Info.LemmingsCount;
   LemmingsCloned := 0;
   TimePlay := Level.Info.TimeLimit;
   if (TimePlay > 5999) or (GameParams.TimerMode) then
@@ -1147,8 +1102,6 @@ begin
   GameResultRec.gCount  := Level.Info.LemmingsCount;
   GameResultRec.gToRescue := Level.Info.RescueCount;
 
-
-  LemmingsReleased := 0;
   LemmingsOut := 0;
   SpawnedDead := Level.Info.ZombieCount;
   LemmingsIn := 0;
@@ -1241,10 +1194,7 @@ begin
   if InfoPainter <> nil then
     with InfoPainter do
     begin
-      UpdateTimeLimit;
-      UpdateLemmingCounts;
       SetCorrectReplayMark;
-      SetTimeLimit(Level.Info.TimeLimit < 6000);
       DrawButtonSelector(fSelectedSkill, False);
     end;
 
@@ -1268,8 +1218,6 @@ begin
   end;
   if InitialSkill <> spbNone then
     SetSelectedSkill(InitialSkill, True); // default
-
-  UpdateAllSkillCounts;
 
   fTalismanReceived := false;
 
@@ -1308,7 +1256,7 @@ begin
       end;
 
     end;
-    Inc(LemmingsReleased);
+    Dec(LemmingsToRelease);
     Inc(LemmingsOut);
   end;
 end;
@@ -4526,7 +4474,6 @@ begin
 
   DoTalismanCheck;
 
-  UpdateLemmingCounts;
   SetCorrectReplayMark;
 end;
 
@@ -4544,7 +4491,7 @@ begin
   if not Paused then // paused is handled by the GUI
     CheckAdjustReleaseRate;
 
-  if LemmingsReleased < Level.Info.LemmingsCount - 1 then
+  if LemmingsToRelease > 0 then
   begin
     if (CurrReleaseRate < LowestReleaseRate) or (CurrentIteration < 20) then
       LowestReleaseRate := CurrReleaseRate;
@@ -4596,9 +4543,7 @@ begin
 
   if InfoPainter <> nil then
   begin
-    UpdateLemmingCounts;
     SetCorrectReplayMark;
-    UpdateTimeLimit;
   end;
 end;
 
@@ -4649,9 +4594,7 @@ begin
   begin
     fClockFrame := 0;
     if TimePlay > -5999 then Dec(TimePlay);
-  end
-  else if fClockFrame = 1 then
-    if InfoPainter <> nil then UpdateTimeLimit;
+  end;
 
   // hard coded dos frame numbers
   case CurrentIteration of
@@ -4954,9 +4897,9 @@ begin
   if NextLemmingCountdown = 0 then
   begin
     NextLemmingCountdown := CalculateNextLemmingCountdown;
-    if (LemmingsReleased < Level.Info.LemmingsCount) and (Length(WindowOrderList) > 0) then
+    if (LemmingsToRelease > 0) and (Length(WindowOrderList) > 0) then
     begin
-      EntranceIndex := LemmingsReleased mod Length(WindowOrderList);
+      EntranceIndex := (Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease) mod Length(WindowOrderList);
       ix := WindowOrderList[EntranceIndex];
       if ix >= 0 then
       begin
@@ -4984,7 +4927,7 @@ begin
             RemoveLemming(NewLemming, RM_ZOMBIE, true);
           end;
         end;
-        Inc(LemmingsReleased);
+        Dec(LemmingsToRelease);
         Inc(LemmingsOut);
       end;
     end;
@@ -5000,11 +4943,11 @@ begin
   begin
 
     // find first following non removed lemming
-    while     (Index_LemmingToBeNuked < LemmingsReleased + LemmingsCloned)
+    while     (Index_LemmingToBeNuked < LemmingList.Count-1)
           and (LemmingList[Index_LemmingToBeNuked].LemRemoved) do
       Inc(Index_LemmingToBeNuked);
 
-    if (Index_LemmingToBeNuked > LemmingsReleased + LemmingsCloned - 1) then
+    if (Index_LemmingToBeNuked > LemmingList.Count-1) then
       ExploderAssignInProgress := FALSE
     else
     begin
@@ -5033,20 +4976,17 @@ begin
     Exit;
   if UserSetNuking then
     Exit;
-  if LemmingsReleased < Level.Info.LemmingsCount then
+
+  NewLemming := TLemming.Create;
+  with NewLemming do
   begin
-    NewLemming := TLemming.Create;
-    with NewLemming do
-    begin
-      LemIndex := LemmingList.Add(NewLemming);
-      Transition(NewLemming, baFalling);
-      LemX := CursorPoint.X;
-      LemY := CursorPoint.Y;
-      LemDX := 1;
-    end;
-    Inc(LemmingsReleased);
-    Inc(LemmingsOut);
+    LemIndex := LemmingList.Add(NewLemming);
+    Transition(NewLemming, baFalling);
+    LemX := CursorPoint.X;
+    LemY := CursorPoint.Y;
+    LemDX := 1;
   end;
+  Inc(LemmingsOut);
 
 end;
 
@@ -5729,6 +5669,10 @@ begin
 
 end;
 
+(*
+
+// Nepster: Please keep these until further notice.
+
 function TLemmingGame.CheckLemmingBlink: Boolean;
 var
   i: Integer;
@@ -5738,7 +5682,7 @@ begin
   if not GameParams.LemmingBlink then Exit;
   if GameParams.ChallengeMode and (spbCloner in Level.Info.Skillset) then Exit;
 
-  MaxSavedLemCount := LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsReleased - SpawnedDead);
+  MaxSavedLemCount := LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsToRelease - SpawnedDead);
   if (spbCloner in Level.Info.Skillset) then
   begin
     Inc(MaxSavedLemCount, CurrSkillCount[baCloning]);
@@ -5758,6 +5702,8 @@ begin
   if (TimePlay < 30) and (TimePlay >= 0) and (CurrentIteration mod 17 > 8) then
     Result := true;
 end;
+
+*)
 
 
 function TLemmingGame.CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
@@ -5826,6 +5772,14 @@ end;
 function TLemmingGame.GetIsSimulating: Boolean;
 begin
   Result := fSimulationDepth > 0;
+end;
+
+function TLemmingGame.GetSkillCount(aSkill: TSkillPanelButton): Integer;
+begin
+  if (aSkill < Low(TSkillPanelButton)) or (aSkill > LAST_SKILL_BUTTON) then
+    Result := 0
+  else
+    Result := CurrSkillCount[SkillPanelButtonToAction[aSkill]];
 end;
 
 end.

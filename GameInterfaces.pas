@@ -19,13 +19,7 @@ type
     procedure DrawButtonSelector(aButton: TSkillPanelButton; SelectorOn: Boolean);
     procedure DrawMinimap;
     procedure SetInfoCursorLemming(const Lem: string; HitCount: Integer);
-    procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
     procedure SetReplayMark(Status: Integer);
-    procedure SetTimeLimit(Status: Boolean);
     procedure RefreshInfo;
     procedure ClearSkills;
   end;
