@@ -860,9 +860,10 @@ begin
 
       TotalSkillUsed := 0;
       GetTalisman := True;
-      for j := 0 to 16 do // currently Fencer-related stuff in talismans is not supported
+      for j := 0 to 16 do
       begin
-        if (UsedSkillCount[ActionListArray[j]] > SkillLimit[j]) and (SkillLimit[j] <> -1) then GetTalisman := False;
+        if (UsedSkillCount[ActionListArray[j]] > SkillLimit[j]) and (SkillLimit[j] <> -1) then
+          GetTalisman := False;
         TotalSkillUsed := TotalSkillUsed + UsedSkillCount[ActionListArray[j]];
       end;
       if not GetTalisman then Continue;

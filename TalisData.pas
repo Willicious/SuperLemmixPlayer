@@ -415,7 +415,7 @@ begin
   fRRMax := aValue.RRMax;
   fTotalSkillLimit := aValue.TotalSkillLimit;
   fSignature := aValue.Signature;
-  for i := 0 to 15 do
+  for i := 0 to 16 do
     SkillLimit[i] := aValue.SkillLimit[i];
   fUnlockRank := aValue.UnlockRank;
   fUnlockLevel := aValue.UnlockLevel;
