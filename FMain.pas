@@ -204,6 +204,9 @@ begin
   NewCW := (NewCW div GameParams.ZoomLevel) * GameParams.ZoomLevel;
   NewCH := (NewCH div GameParams.ZoomLevel) * GameParams.ZoomLevel;
 
+  NewCW := Min(NewCW, Screen.Width - CWDiff);
+  NewCH := Min(NewCH, Screen.Height - CHDiff);
+
   NewWidth := NewCW + CWDiff;
   NewHeight := NewCH + CHDiff;
 end;

@@ -264,6 +264,7 @@ var
 implementation
 
 uses
+  GameWindow, //for EXTRA_ZOOM_LEVELS const
   GameSound;
 
 { TDosGameParams }
@@ -411,6 +412,10 @@ var
       fWindowWidth := Screen.Width;
     if fWindowHeight > Screen.Height then
       fWindowHeight := Screen.Height;
+
+    // Disallow zoom levels that are too high
+    if fZoomLevel > Min(Screen.Width div 320, Screen.Height div 200) then
+      fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
 
     // Finally, we must make sure the window size is an integer multiple of the zoom level
     WindowWidth := (WindowWidth div ZoomLevel) * ZoomLevel;

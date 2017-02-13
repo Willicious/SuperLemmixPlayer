@@ -25,6 +25,7 @@ type
 
 const
   CURSOR_TYPES = 2;
+  EXTRA_ZOOM_LEVELS = 4;
 
 type
   TGameWindow = class(TGameBaseScreen)
@@ -40,6 +41,7 @@ type
     fSaveList: TLemmingGameSavedStateList;
     fReplayKilled: Boolean;
     fInternalZoom: Integer;
+    fMaxZoom: Integer;
     fMinimapBuffer: TBitmap32;
   { game eventhandler}
     procedure Game_Finished;
@@ -162,7 +164,7 @@ procedure TGameWindow.ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
 var
   OSHorz, OSVert: Single;
 begin
-  aNewZoom := Max(Min(Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200) + 2, aNewZoom), 1);
+  aNewZoom := Max(Min(fMaxZoom, aNewZoom), 1);
   if (aNewZoom = fInternalZoom) and not NoRedraw then
     Exit;
 
@@ -234,6 +236,8 @@ begin
     Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
   end;
+
+  fMaxZoom := Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS;
 
   SkillPanel.DoHorizontalScroll := (ClientWidth = SkillPanel.Width);
 end;
@@ -1235,6 +1239,7 @@ var
   bmpColor : TBitmap;
   i: Integer;
   n: Integer;
+  LocalMaxZoom: Integer;
 
     procedure scalebmp(bmp:tbitmap; ascale:integer);
     var                         //bad code but it works for now
@@ -1262,6 +1267,9 @@ begin
   bmpColor := TBitmap.Create;
 
   n := 0;
+
+  LocalMaxZoom := Min(Screen.Width div 320, (Screen.Height - (40 * SkillPanel.MaxZoom)) div 160) + EXTRA_ZOOM_LEVELS;
+  SetLength(HCursors, LocalMaxZoom);
 
   for i := 0 to Length(HCursors)-1 do
   begin
@@ -1324,8 +1332,12 @@ begin
 
   if GameParams.IncreaseZoom then
     while (GameParams.Level.Info.Width * (Sca+1) <= GameParams.MainForm.ClientWidth) or
-          ((GameParams.Level.Info.Height * (Sca+1)) + (40 * Max(SkillPanel.MaxZoom, (Sca+1))) <= GameParams.MainForm.ClientHeight) do
+          ((GameParams.Level.Info.Height * (Sca+1)) + (40 * Min(SkillPanel.MaxZoom, (Sca+1))) <= GameParams.MainForm.ClientHeight) do
       Inc(Sca);
+
+  fMaxZoom := Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS;
+
+  Sca := Min(Sca, fMaxZoom);
 
   fInternalZoom := Sca;
   GameParams.TargetBitmap := Img.Bitmap;
@@ -1362,7 +1374,7 @@ begin
     TLinearResampler.Create(SkillPanel.Img.Bitmap);
   end;
 
-  SetLength(HCURSORS, Min(Screen.Width div 320, Screen.Height div 200) + 2);
+  SetLength(HCURSORS, fMaxZoom);
   InitializeCursor;
   CenterPoint := ClientToScreen(Point(ClientWidth div 2, ClientHeight div 2));
   SetCursorPos(CenterPoint.X, CenterPoint.Y);
