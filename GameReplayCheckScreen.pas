@@ -9,7 +9,7 @@ uses
   LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager, SharedGlobals,
   Windows, Classes, SysUtils, StrUtils, Controls, Contnrs,
   UMisc,
-  Gr32, Gr32_Layers,
+  Gr32, Gr32_Layers, GR32_Resamplers,
   LemTypes, LemStrings, LemGame, LemGameMessageQueue,
   GameControl, GameBaseScreen;
 
@@ -394,6 +394,9 @@ begin
   Renderer := GameParams.Renderer; // shortcut
   Renderer.SetInterface(Game.RenderInterface);
 
+  if ScreenImg.Bitmap.Resampler is TLinearResampler then
+    TNearestResampler.Create(ScreenImg.Bitmap);
+
   for i := 0 to fReplays.Count-1 do
   begin
     fScreenText.Add(ExtractFileName(fReplays[i].ReplayFile));
@@ -490,6 +493,9 @@ begin
     while fScreenText.Count < 23 do
       fScreenText.Add('');
     fScreenText.Add('Click mouse to exit');
+
+    if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
+      TLinearResampler.Create(ScreenImg.Bitmap);
 
     OutputText;
   end;
