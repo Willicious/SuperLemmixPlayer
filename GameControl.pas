@@ -414,7 +414,7 @@ var
       fWindowHeight := Screen.Height;
 
     // Disallow zoom levels that are too high
-    if fZoomLevel > Min(Screen.Width div 320, Screen.Height div 200) then
+    if fZoomLevel > Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS then
       fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
 
     // Finally, we must make sure the window size is an integer multiple of the zoom level
