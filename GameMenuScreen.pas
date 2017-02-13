@@ -9,7 +9,7 @@ unit GameMenuScreen;
 interface
 
 uses
-  GameSound, // testing
+  Math,
   PngInterface, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, ShellApi,
   FNeoLemmixConfig,
@@ -403,7 +403,6 @@ begin
       VK_F6     : if GameParams.Talismans.Count <> 0 then CloseScreen(gstTalisman);
       VK_F7     : DoMassReplayCheck;
       VK_F8     : CloseScreen(gstLevelCode);
-      VK_F9     : ShowMessage(IntToStr(SoundManager.SoundVolume));
       VK_F12    : DoTestStuff;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : NextSection(True);
@@ -417,10 +416,8 @@ end;
 procedure TGameMenuScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
-  OldZoom: Integer;
   OldFullScreen: Boolean;
 begin
-  OldZoom := GameParams.ZoomLevel;
   OldFullScreen := GameParams.FullScreen;
   ConfigDlg := TFormNXConfig.Create(self);
   ConfigDlg.SetGameParams;
@@ -433,22 +430,20 @@ begin
   // transition to save them.
   GameParams.Save;
 
-  if (GameParams.ZoomLevel <> OldZoom) or (GameParams.FullScreen <> OldFullScreen) then
+  if (GameParams.FullScreen <> OldFullScreen) then
   begin
     if GameParams.FullScreen then
     begin
       GameParams.MainForm.WindowState := wsMaximized;
       GameParams.MainForm.BorderStyle := bsNone;
     end else begin
-      GameParams.MainForm.ClientWidth := GameParams.ZoomLevel * 416;
-      GameParams.MainForm.ClientHeight := GameParams.ZoomLevel * 200;
-      if OldFullScreen then
-      begin
-        GameParams.MainForm.BorderStyle := bsSizeable;
-        GameParams.MainForm.WindowState := wsNormal;
-        GameParams.MainForm.Left := (Screen.Width div 2) - (GameParams.MainForm.Width div 2);
-        GameParams.MainForm.Height := (Screen.Height div 2) - (GameParams.MainForm.Height div 2);
-      end;
+      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320, Min(Screen.Width div 320, Screen.Height div 200) * 320);
+      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200, Min(Screen.Width div 320, Screen.Height div 200) * 200);
+
+      GameParams.MainForm.BorderStyle := bsSizeable;
+      GameParams.MainForm.WindowState := wsNormal;
+      GameParams.MainForm.Left := (Screen.Width div 2) - (GameParams.MainForm.Width div 2);
+      GameParams.MainForm.Height := (Screen.Height div 2) - (GameParams.MainForm.Height div 2);
     end;
   end;
 

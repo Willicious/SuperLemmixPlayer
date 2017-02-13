@@ -382,19 +382,8 @@ var
       ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
     end;
 
-    // Zoom level must not be so high that 320x200 x ZoomLevel won't fit on screen
-    if (ZoomLevel > (Screen.Width div 320)) or (ZoomLevel > (Screen.Height div 200)) then
-      ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
-
     if ZoomLevel < 1 then
       ZoomLevel := 1;
-
-    // WindowWidth and WindowHeight can't exceed screen area
-    if (WindowWidth > Screen.Width) or (WindowHeight > Screen.Height) then
-    begin
-      WindowWidth := -1;
-      WindowHeight := -1;
-    end;
 
     // Set window size to screen size if fullscreen. This doesn't get used directly,
     // and will be overwritten when the user changes zoom settings (unless done by
@@ -413,9 +402,11 @@ var
       WindowHeight := ZoomLevel * 200;
     end;
 
-    // Once we've got our window size, ensure the zoom is low enough to fit on it
-    while (ZoomLevel > 1) and ((ZoomLevel * 416 > WindowWidth) or (ZoomLevel * 200 > WindowHeight)) do
-      ZoomLevel := ZoomLevel - 1;
+    // Once we've got our window size, ensure it can fit on the screen
+    if fWindowWidth > Screen.Width then
+      fWindowWidth := Screen.Width;
+    if fWindowHeight > Screen.Height then
+      fWindowHeight := Screen.Height;
 
     // Finally, we must make sure the window size is an integer multiple of the zoom level
     WindowWidth := (WindowWidth div ZoomLevel) * ZoomLevel;

@@ -75,7 +75,7 @@ type
     procedure SetClearPhysics(aValue: Boolean);
     procedure ProcessGameMessages;
     procedure ApplyResize(NoRecenter: Boolean = false);
-    procedure ChangeZoom(aNewZoom: Integer);
+    procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
     procedure ReleaseCursors;
 
     function GetLevelMusicName: String;
@@ -158,12 +158,13 @@ begin
   DoDraw;
 end;
 
-procedure TGameWindow.ChangeZoom(aNewZoom: Integer);
+procedure TGameWindow.ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
 var
   OSHorz, OSVert: Single;
 begin
-  if aNewZoom < 1 then Exit;
-  if aNewZoom > Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200) + 2 then Exit;
+  aNewZoom := Max(Min(Min(GameParams.MainForm.Width div 320, GameParams.MainForm.Height div 200) + 2, aNewZoom), 1);
+  if (aNewZoom = fInternalZoom) and not NoRedraw then
+    Exit;
 
   Img.BeginUpdate;
   SkillPanel.Img.BeginUpdate;
@@ -175,20 +176,20 @@ begin
 
     Img.Scale := aNewZoom;
 
-    if (aNewZoom >= GameParams.ZoomLevel) and (aNewZoom <= SkillPanel.MaxZoom) then
+    if (aNewZoom >= GameParams.ZoomLevel) or NoRedraw then // NoRedraw is only true during the call at a start of gameplay
       SkillPanel.SetZoom(aNewZoom);
 
     fInternalZoom := aNewZoom;
 
     ApplyResize;
-    //InitializeCursor;
 
     OSHorz := OSHorz + (Img.Width / 2);
     OSVert := OSVert + (Img.Height / 2);
     Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
 
-    DoDraw;
+    if not NoRedraw then
+      DoDraw;
     CheckResetCursor(true);
   finally
     Img.EndUpdate;
@@ -209,10 +210,9 @@ begin
   ClientHeight := GameParams.MainForm.ClientHeight;
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
   Img.Height := Min(ClientHeight - SkillPanel.Height, GameParams.Level.Info.Height * fInternalZoom);
-  Img.Left := (ClientWidth div 2) - (Img.Width div 2);
-  //Img.Top := ClientHeight - (SkillPanel.Height + Img.Height);
-  SkillPanel.Left := (ClientWidth div 2) - (SkillPanel.Width div 2);
-  //SkillPanel.Top := ClientHeight - SkillPanel.Height;
+  Img.Left := (ClientWidth - Img.Width) div 2;
+  SkillPanel.Left := (ClientWidth - SkillPanel.Width) div 2;
+  // tops are calculated later
 
   SkillPanel.DisplayWidth := Img.Width div fInternalZoom;
   SkillPanel.DisplayHeight := Img.Height div fInternalZoom;
@@ -1334,11 +1334,11 @@ begin
   Img.Scale := Sca;
 
 
-  SkillPanel.SetZoom(Sca);
   SkillPanel.Minimap.SetSize(GameParams.Level.Info.Width div 8, GameParams.Level.Info.Height div 8);
   fMinimapBuffer.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
 
-  ApplyResize;
+  SkillPanel.SetStyleAndGraph(Gameparams.Style, Sca);
+  ChangeZoom(Sca, true);
 
   HorzStart := GameParams.Level.Info.ScreenPosition - ((Img.Width div 2) div Sca);
   VertStart := GameParams.Level.Info.ScreenYPosition - ((Img.Height div 2) div Sca);
@@ -1346,8 +1346,6 @@ begin
   VertStart := VertStart * Sca;
   Img.OffsetHorz := Min(Max(-HorzStart, MinScroll), MaxScroll);
   Img.OffsetVert := Min(Max(-VertStart, MinVScroll), MaxVScroll);
-
-  SkillPanel.SetStyleAndGraph(Gameparams.Style, Sca);
 
   SkillPanel.Level := GameParams.Level;
   SkillPanel.SetSkillIcons;

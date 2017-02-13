@@ -266,19 +266,18 @@ end;
 
 procedure TSkillPanelToolbar.SetZoom(aZoom: Integer);
 begin
-  if aZoom > MaxZoom then
-    aZoom := MaxZoom;
-  if aZoom < 1 then
-    aZoom := 1;
+  aZoom := Max(Min(MaxZoom, aZoom), 1);
 
-  ClientWidth := 416 * aZoom;
-  ClientHeight := 40 * aZoom;
-  Img.Width := 416 * aZoom;
-  Img.Height := 40 * aZoom;
+  Width := 416 * aZoom;
+  Height := 40 * aZoom;
+  Img.Width := Width;
+  Img.Height := Height;
+  Img.Scale := aZoom;
   fMinimapImg.Width := MINIMAP_WIDTH * aZoom;
   fMinimapImg.Height := MINIMAP_HEIGHT * aZoom;
   fMinimapImg.Left := MINIMAP_X * aZoom;
   fMinimapImg.Top := MINIMAP_Y * aZoom;
+  fMinimapImg.Scale := aZoom;
 end;
 
 procedure TSkillPanelToolbar.SetCursor(aCursor: TCursor);
@@ -863,6 +862,7 @@ begin
     TempBmp.DrawTo(fOriginal, 177, 16);
 
     fImg.Bitmap.Assign(fOriginal);
+    fImg.Bitmap.Changed;
 
     // Panel font
     GetGraphic('panel_font.png', TempBmp);
@@ -1132,21 +1132,12 @@ begin
     ReadBitmapFromStyle;
     ReadFont;
   end;
-  fImg.Scale := aScale;
+  fImg.Scale := Max(aScale, MaxZoom);
   fImg.ScaleMode := smScale;
 
-  fImg.Height := fOriginal.Height * aScale;
-  fImg.Width := fOriginal.Width * aScale;
-  Width := fImg.Width;
-  Height := fImg.Height;
-
-  fMinimapImg.Scale := aScale;
+  fMinimapImg.Scale := Max(aScale, MaxZoom);
   fMinimapImg.ScaleMode := smScale;
   fMinimapImg.BitmapAlign := baCustom;
-  fMinimapImg.Left := MINIMAP_X * aScale;
-  fMinimapImg.Top := MINIMAP_Y * aScale;
-  fMinimapImg.Width := MINIMAP_WIDTH * aScale;
-  fMinimapImg.Height := MINIMAP_HEIGHT * aScale;
 
   fImg.EndUpdate;
   fImg.Changed;

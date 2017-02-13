@@ -144,7 +144,7 @@ begin
   // Zoom Dropdown
   cbZoom.Items.Clear;
   i := 1;
-  while ((i + 2) * 416 <= Screen.Width) and ((i + 2) * 200 < Screen.Height) do
+  while ((i - 2) * 320 <= Screen.Width) and ((i - 2) * 200 < Screen.Height) do
   begin
     cbZoom.Items.Add(IntToStr(i) + 'x Zoom');
     Inc(i);
