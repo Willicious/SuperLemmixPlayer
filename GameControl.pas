@@ -379,12 +379,12 @@ var
     if ZoomLevel < 1 then
     begin
       FullScreen := true;
-      ZoomLevel := Min(Screen.Width div 416, Screen.Height div 200);
+      ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
     end;
 
     // Zoom level must not be so high that 320x200 x ZoomLevel won't fit on screen
-    if (ZoomLevel > (Screen.Width div 416)) or (ZoomLevel > (Screen.Height div 200)) then
-      ZoomLevel := Min(Screen.Width div 416, Screen.Height div 200);
+    if (ZoomLevel > (Screen.Width div 320)) or (ZoomLevel > (Screen.Height div 200)) then
+      ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
 
     if ZoomLevel < 1 then
       ZoomLevel := 1;
@@ -406,7 +406,7 @@ var
     end;
 
     // If no WindowWidth or WindowHeight is specified, we want to set them so that they
-    // match 320x200 x ZoomLevel exactly.
+    // match 416x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
       WindowWidth := ZoomLevel * 416;
@@ -504,7 +504,7 @@ begin
   fShownText := false;
   fOneLevelMode := false;
   fTalismanPage := 0;
-  fZoomLevel := Min(Screen.Width div 416, Screen.Height div 200);
+  fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
 
   LemDataInResource := True;
   LemSoundsInResource := True;

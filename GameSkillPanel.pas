@@ -266,10 +266,15 @@ end;
 
 procedure TSkillPanelToolbar.SetZoom(aZoom: Integer);
 begin
+  if aZoom > MaxZoom then
+    aZoom := MaxZoom;
+  if aZoom < 1 then
+    aZoom := 1;
+
   ClientWidth := 416 * aZoom;
   ClientHeight := 40 * aZoom;
   Img.Width := 416 * aZoom;
-  Img.Height := 416 * aZoom;
+  Img.Height := 40 * aZoom;
   fMinimapImg.Width := MINIMAP_WIDTH * aZoom;
   fMinimapImg.Height := MINIMAP_HEIGHT * aZoom;
   fMinimapImg.Left := MINIMAP_X * aZoom;

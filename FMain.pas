@@ -198,8 +198,8 @@ begin
   NewCW := NewWidth - CWDiff;
   NewCH := NewHeight - CHDiff;
 
-  NewCW := Max(GameParams.ZoomLevel * 418, NewCW);
-  NewCH := Max(GameParams.ZoomLevel * 200, NewCH);
+  NewCW := Max(416, NewCW);
+  NewCH := Max(200, NewCH);
 
   NewCW := (NewCW div GameParams.ZoomLevel) * GameParams.ZoomLevel;
   NewCH := (NewCH div GameParams.ZoomLevel) * GameParams.ZoomLevel;
