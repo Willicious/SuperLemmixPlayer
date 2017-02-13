@@ -98,7 +98,8 @@ type
     moLinearResampleMenu,
     moLinearResampleGame,
     moFullScreen,
-    moMinimapHighQuality
+    moMinimapHighQuality,
+    moIncreaseZoom
   );
 
   TMiscOptions = set of TMiscOption;
@@ -116,7 +117,8 @@ const
     moPauseAfterBackwards,
     moLinearResampleMenu,
     moFullScreen,
-    moMinimapHighQuality
+    moMinimapHighQuality,
+    moIncreaseZoom
   ];
 
 type
@@ -228,6 +230,7 @@ type
     property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
+    property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -323,6 +326,7 @@ begin
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
+  SaveBoolean('IncreaseZoom', IncreaseZoom);
   SaveBoolean('FullScreen', FullScreen);
 
   SL.Add('WindowWidth=' + IntToStr(WindowWidth));
@@ -448,6 +452,7 @@ begin
   NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
   NoShadows := LoadBoolean('NoShadows', NoShadows);
   MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
+  IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
   EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
   CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 

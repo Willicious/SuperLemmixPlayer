@@ -1321,6 +1321,12 @@ begin
   inherited;
 
   Sca := GameParams.ZoomLevel;
+
+  if GameParams.IncreaseZoom then
+    while (GameParams.Level.Info.Width * (Sca+1) <= GameParams.MainForm.ClientWidth) or
+          ((GameParams.Level.Info.Height * (Sca+1)) + (40 * Max(SkillPanel.MaxZoom, (Sca+1))) <= GameParams.MainForm.ClientHeight) do
+      Inc(Sca);
+
   fInternalZoom := Sca;
   GameParams.TargetBitmap := Img.Bitmap;
   GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
