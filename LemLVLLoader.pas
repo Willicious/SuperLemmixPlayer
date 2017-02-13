@@ -772,8 +772,8 @@ begin
         Height := (Buf.Height * 8) div LRes;
 
 
-        if Width < 320 then Width := 320;
-        if Height < 160 then Height := 160;
+        if Width < 1 then Width := 1;
+        if Height < 1 then Height := 1;
 
         // Screen positions are saved as a Word, i.e. unsigned. So we treat anything >32768 as negative
         if Buf.ScreenPosition > 32768 then ScreenPosition := 160
@@ -781,14 +781,14 @@ begin
         begin
           ScreenPosition   := ((Buf.ScreenPosition * 8) div LRes) + 160;
           if ScreenPosition > (Width - 160) then ScreenPosition := (Width - 160);
-          if ScreenPosition < 160 then ScreenPosition := 160;
+          if ScreenPosition < 0 then ScreenPosition := 0;
         end;
         if Buf.ScreenYPosition > 32768 then ScreenYPosition := 80
         else
         begin
           ScreenYPosition := ((Buf.ScreenYPosition * 8) div LRes) + 80;
           if ScreenYPosition > (Height - 80) then ScreenYPosition := (Height - 80);
-          if ScreenYPosition < 80 then ScreenYPosition := 80;
+          if ScreenYPosition < 0 then ScreenYPosition := 0;
         end;
 
         GraphicSetName := trim(Buf.StyleName);
@@ -905,10 +905,10 @@ begin
              Info.ScreenYPosition := ((Buf2.ScreenYPosition * 8) div LRes) + 80;
              with Info do
              begin
-               if ScreenPosition > Width-160 then ScreenPosition := Width-160;
-               if ScreenYPosition > Height-80 then ScreenYPosition := Height-80;
-               if ScreenPosition < 160 then ScreenPosition := 160;
-               if ScreenYPosition < 80 then ScreenYPosition := 80;
+               if ScreenPosition > Width-1 then ScreenPosition := Width-1;
+               if ScreenYPosition > Height-1 then ScreenYPosition := Height-1;
+               if ScreenPosition < 0 then ScreenPosition := 0;
+               if ScreenYPosition < 0 then ScreenYPosition := 0;
              end;
              if OddLoad <> 1 then
              begin

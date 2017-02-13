@@ -543,14 +543,14 @@ begin
   // Nepster - I have removed certain parts of this as they are not needed in regards to longer-term plans
   with Info do
   begin
-    if Width < 320 then Width := 320;
-    if Height < 160 then Height := 160;
+    if Width < 1 then Width := 1;
+    if Height < 1 then Height := 1;
 
-    if ScreenPosition < 160 then ScreenPosition := 160;
-    if ScreenPosition > Width-160 then ScreenPosition := Width-160;
+    if ScreenPosition < 0 then ScreenPosition := 0;
+    if ScreenPosition > Width-1 then ScreenPosition := Width-1;
 
-    if ScreenYPosition < 80 then ScreenYPosition := 80;
-    if ScreenYPosition > Height-80 then ScreenYPosition := Height-80;
+    if ScreenYPosition < 0 then ScreenYPosition := 0;
+    if ScreenYPosition > Height-1 then ScreenYPosition := Height-1;
 
     if LemmingsCount < 0 then LemmingsCount := 0;
     if RescueCount < 0 then RescueCount := 0;
