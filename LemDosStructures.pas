@@ -216,8 +216,8 @@ type
   end;
 
   TNeoLVLSecondHeader = packed record
-    {0000} ScreenPosition: LongWord;
-           ScreenYPosition: LongWord;
+    {0000} ScreenPosition: LongInt;
+           ScreenYPosition: LongInt;
            GimmickFlags2: LongWord;
            GimmickFlags3: LongWord;
     {0010} MusicName: array[0..15] of Char;
