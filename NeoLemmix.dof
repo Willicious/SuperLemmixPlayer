@@ -136,35 +136,3 @@ ProductVersion=1.0.0.0
 Comments=
 [Excluded Packages]
 c:\program files (x86)\borland\delphi7\Projects\Bpl\dclusr70.bpl=Borland User Components
-[HistoryLists\hlConditionals]
-Count=12
-Item0=exp;
-Item1=exp;profile_parser;
-Item2=exp;test_alpha
-Item3=exp;test_new_config
-Item4=exp;test_mapmouse
-Item5=exp;test_zoom
-Item6=test_zoom
-Item7=testfeature
-Item8=universal;flexi;testmode;secrets;extmusic;clonepercent;
-Item9=universal;flexi;testmode;external;uselevelname;secrets;extmusic;clonepercent;
-Item10=universal;cust;testmode;external;uselevelname;secrets;extmusic;clonepercent;
-Item11=lpc2;lemplus;neoonly;nolookforlvls;extmusic;noextramodes;
-[HistoryLists\hlUnitAliases]
-Count=1
-Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
-[HistoryLists\hlSearchPath]
-Count=6
-Item0=kernel;kernel\zlib;kernel\gr32png
-Item1=kernel;kernel\zlib;kernel\pngdelphi
-Item2=kernel;graphics32;kernel\zlib;kernel\pngdelphi
-Item3=.;./MiscLibs/;./MiscLibs/ZLib/
-Item4=.;./MiscLibs/
-Item5=.;/MiscLibs/
-[HistoryLists\hlUnitOutputDirectory]
-Count=1
-Item0=dcu
-[HistoryLists\hlOutputDirectorry]
-Count=2
-Item0=bin\
-Item1=bin\;

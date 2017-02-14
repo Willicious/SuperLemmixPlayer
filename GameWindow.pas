@@ -1332,9 +1332,7 @@ begin
   Sca := GameParams.ZoomLevel;
 
   if GameParams.IncreaseZoom then
-    while (GameParams.Level.Info.Width * (Sca+1) <= GameParams.MainForm.ClientWidth) or
-          ((GameParams.Level.Info.Height * (Sca+1)) + (40 * Min(SkillPanel.MaxZoom, (Sca+1))) <= GameParams.MainForm.ClientHeight) do
-      Inc(Sca);
+    Sca := Max(Sca, (ClientHeight - (SkillPanel.MaxZoom * 40)) div Min(GameParams.Level.Info.Height, 160));
 
   fMaxZoom := Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS;
 
