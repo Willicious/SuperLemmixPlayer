@@ -1,7 +1,7 @@
 {-$define develop}
 {$WARN SYMBOL_PLATFORM OFF} // Disable "___ is specific to a platform" warnings, since NeoLemmix is only for Windows anyway
 
-{$define bc-ver}
+{$define nf-ver}
 
 {$ifdef req-bc-ver}
   {$ifndef bc-ver}
