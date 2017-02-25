@@ -58,7 +58,6 @@ type
 
     fViewPortRect  : TRect;
     fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
-    fCurrentScreenOffset : Integer;
 
     fHighlitSkill: TSkillPanelButton;
     fLastHighlitSkill: TSkillPanelButton; // to avoid sounds when shouldn't be played
@@ -123,7 +122,6 @@ type
     procedure SetReplayMark(Status: Integer);
     procedure SetTimeLimit(Status: Boolean);
 
-    procedure SetCurrentScreenOffset(X: Integer);
     property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
     property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
     property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
@@ -1301,13 +1299,6 @@ procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);
 begin
   fGame := Value;
   SetTimeLimit(GameParams.Level.Info.TimeLimit < 6000);
-end;
-
-
-
-procedure TSkillPanelToolbar.SetCurrentScreenOffset(X: Integer);
-begin
-  fCurrentScreenOffset := X;
 end;
 
 end.
