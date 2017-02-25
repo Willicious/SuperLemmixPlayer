@@ -10,7 +10,7 @@ uses
   LemmixHotkeys, LemStrings, LemTypes,
   {LemDosBmp,} LemDosStructures, LemDosStyle,
   LemCore, LemLevel, LemNeoTheme,
-  GameInterfaces, GameControl,
+  GameControl,
   LemGame, LemRenderHelpers, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
   GameSound,
   PngInterface;
@@ -29,7 +29,7 @@ uses
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
 type
-  TSkillPanelToolbar = class(TCustomControl, IGameToolbar)
+  TSkillPanelToolbar = class(TCustomControl)
   private
     fStyle         : TBaseDosLemmingStyle;
 
@@ -1230,11 +1230,7 @@ end;
 
 procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);
 begin
-  if fGame <> nil then
-    fGame.InfoPainter := nil;
   fGame := Value;
-  if fGame <> nil then
-    fGame.InfoPainter := Self;
 end;
 
 

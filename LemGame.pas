@@ -26,7 +26,7 @@ uses
   LemObjects, LemLemming, LemRecolorSprites,
   LemReplay,
   LemGameMessageQueue,
-  GameInterfaces, GameControl;
+  GameControl;
 
 const
   ParticleColorIndices: array[0..15] of Byte =
@@ -151,7 +151,6 @@ type
 
   { reference objects, mostly for easy access in the mechanics-code }
     fRenderer                  : TRenderer; // ref to gameparams.renderer
-    fInfoPainter               : IGameToolbar; // in so many places we have to check if this is nil. TLemmingGame should really have no knowledge of the skill panel in the first place.
     fLevel                     : TLevel; // ref to gameparams.level
     Style                      : TBaseLemmingStyle; // ref to gameparams.style
 
@@ -318,8 +317,6 @@ type
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Rev: Boolean = false);
 
-    procedure SetCorrectReplayMark;
-
   { lemming actions }
     function FindGroundPixel(x, y: Integer): Integer;
     function HasSteelAt(x, y: Integer): Boolean;
@@ -411,7 +408,6 @@ type
     procedure HyperSpeedEnd;
     function ProcessSkillAssignment(IsHighlight: Boolean = false): Boolean;
     function ProcessHighlightAssignment: Boolean;
-    procedure RefreshAllPanelInfo;
     procedure RegainControl(Force: Boolean = false);
     procedure Save(TestModeName: Boolean = false);
     procedure SetGameResult;
@@ -434,7 +430,6 @@ type
     property FastForward: Boolean read fFastForward write fFastForward;
     property GameFinished: Boolean read fGameFinished;
     property HyperSpeed: Boolean read fHyperSpeed;
-    property InfoPainter: IGameToolbar read fInfoPainter write fInfoPainter;
     property LeavingHyperSpeed: Boolean read fLeavingHyperSpeed;
     property Level: TLevel read fLevel write fLevel;
     property MessageQueue: TGameMessageQueue read fMessageQueue;
@@ -645,19 +640,6 @@ end;
 
 { TLemmingGame }
 
-procedure TLemmingGame.SetCorrectReplayMark;
-begin
-  if InfoPainter = nil then Exit;
-  if Replaying then
-  begin
-    if ReplayInsert then
-      InfoPainter.SetReplayMark(2)
-    else
-      InfoPainter.SetReplayMark(1)
-  end else
-    InfoPainter.SetReplayMark(0);
-end;
-
 procedure TLemmingGame.CreateSavedState(aState: TLemmingGameSavedState);
 var
   i: Integer;
@@ -722,9 +704,6 @@ begin
   //if fReplayManager.HasAnyActionAt(aState.CurrentIteration) and (aState.CurrentIteration > 1) then Result := false;
   if not Result then Exit;
 
-  // First, some preparation, eg. undraw the selection rectangle for the selected skill
-  InfoPainter.DrawButtonSelector(fSelectedSkill, false);
-
   // Simple stuff
   fRenderer.TerrainLayer.Assign(aState.TerrainLayer);
   PhysicsMap.Assign(aState.PhysicsMap);
@@ -774,21 +753,7 @@ begin
   // Recreate Blocker map
   SetBlockerMap;
 
-  // When loading, we must update the info panel. But if we're just using the state
-  // for an approximate location, we don't need to do this, it just results in graphical
-  // glitching as the values from load time are shown for a split second.
-  if not SkipTargetBitmap then
-    RefreshAllPanelInfo;
-
-  SetCorrectReplayMark;
-
   ReleaseRateModifier := 0; // we don't want to continue changing it if it's currently changing
-end;
-
-procedure TLemmingGame.RefreshAllPanelInfo;
-begin
-  if InfoPainter = nil then Exit;
-  InfoPainter.DrawButtonSelector(fSelectedSkill, true);
 end;
 
 procedure TLemmingGame.DoTalismanCheck;
@@ -1061,7 +1026,7 @@ end;
 procedure TLemmingGame.Start(aReplay: Boolean = False);
 {-------------------------------------------------------------------------------
   part of the initialization is still in FGame. bad programming
-  (i.e: renderer.levelbitmap, level, infopainter)
+  (i.e: renderer.levelbitmap, level)
 -------------------------------------------------------------------------------}
 var
   i: Integer;
@@ -1071,8 +1036,6 @@ var
   Skill: TSkillPanelButton;
   InitialSkill: TSkillPanelButton;
 begin
-  //Assert(InfoPainter <> nil);
-
   Playing := False;
 
   if GameParams.ChallengeMode then
@@ -1190,13 +1153,6 @@ begin
   SetBlockerMap;
 
   DrawAnimatedObjects; // first draw needed
-
-  if InfoPainter <> nil then
-    with InfoPainter do
-    begin
-      SetCorrectReplayMark;
-      DrawButtonSelector(fSelectedSkill, False);
-    end;
 
   // force update
   fSelectedSkill := spbNone;
@@ -4473,8 +4429,6 @@ begin
   end;
 
   DoTalismanCheck;
-
-  SetCorrectReplayMark;
 end;
 
 
@@ -4523,12 +4477,6 @@ begin
     fLeavingHyperSpeed := False;
     if fPauseOnHyperSpeedExit and not Paused then
       SetSelectedSkill(spbPause);
-
-    if InfoPainter <> nil then
-    begin
-      InfoPainter.ClearSkills;
-      InfoPainter.DrawButtonSelector(fSelectedSkill, true);
-    end;
   end;
 
   // Get highest priority lemming under cursor
@@ -4540,11 +4488,6 @@ begin
 
   // Check lemmings under cursor
   HitTest;
-
-  if InfoPainter <> nil then
-  begin
-    SetCorrectReplayMark;
-  end;
 end;
 
 
@@ -4705,12 +4648,6 @@ begin
       if L.LemIsZombie then S := SZombie;
     end;
 
-    if InfoPainter <> nil then
-      InfoPainter.SetInfoCursorLemming(S, HitCount);
-  end
-  else begin
-    if InfoPainter <> nil then
-      InfoPainter.SetInfoCursorLemming('', 0);
   end;
 end;
 
@@ -4763,8 +4700,6 @@ begin
     if (LemmingIndex < 0) or (LemmingIndex >= LemmingList.Count) then
     begin
       RegainControl;
-      if InfoPainter <> nil then
-        infopainter.SetInfoCursorLemming('invalid', 0);
       Exit;
     end;
 
@@ -4865,11 +4800,7 @@ begin
 
         if fSelectedSkill <> Value then
         begin
-          if InfoPainter <> nil then
-            InfoPainter.DrawButtonSelector(fSelectedSkill, False);  // unselect old skill
           fSelectedSkill := Value;
-          if InfoPainter <> nil then
-            InfoPainter.DrawButtonSelector(fSelectedSkill, True);   // select new skill
           CheckForNewShadow;
         end;
 
@@ -5052,11 +4983,7 @@ end;
 procedure TLemmingGame.AdjustReleaseRate(aRR: Integer);
 begin
   if (aRR <> currReleaseRate) and CheckIfLegalRR(aRR) then
-  begin
     currReleaseRate := aRR;
-    if InfoPainter <> nil then
-      InfoPainter.DrawSkillCount(spbFaster, currReleaseRate);
-  end;
 end;
 
 
@@ -5444,7 +5371,6 @@ begin
   if ReplayInsert and not Force then Exit;
 
   fReplayManager.Cut(fCurrentIteration);
-  SetCorrectReplayMark;
 end;
 
 
@@ -5472,7 +5398,6 @@ begin
         RegainControl;
         CancelReplayAfterSkip := false;
       end;
-      RefreshAllPanelInfo;
     end;
   end;
 end;
@@ -5732,9 +5657,6 @@ begin
     CurrSkillCount[aAction] := Max(CurrSkillCount[aAction] - 1, 0);
     Inc(UsedSkillCount[aAction])
   end;
-
-  if InfoPainter <> nil then
-    InfoPainter.DrawSkillCount(ActionToSkillPanelButton[aAction], CurrSkillCount[aAction]);
 end;
 
 procedure TLemmingGame.SaveGameplayImage(Filename: String);
