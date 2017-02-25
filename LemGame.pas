@@ -385,6 +385,7 @@ type
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
     fActiveSkills              : array[0..7] of TSkillPanelButton;
+    LastHitCount               : Integer;
     ReleaseRateModifier        : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     ReplayInsert               : Boolean;
 
@@ -4602,6 +4603,8 @@ begin
     fLemSelected := L;
     fRenderInterface.SelectedLemming := L;
   end;
+
+  LastHitCount := HitCount;
 
   if Assigned(L) and not fHitTestAutofail then
   begin

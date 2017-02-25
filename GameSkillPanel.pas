@@ -8,6 +8,7 @@ uses
   GR32, GR32_Image, GR32_Layers,
   UMisc,
   LemmixHotkeys, LemStrings, LemTypes,
+  LemLemming,
   {LemDosBmp,} LemDosStructures, LemDosStyle,
   LemCore, LemLevel, LemNeoTheme,
   GameControl,
@@ -520,6 +521,59 @@ procedure TSkillPanelToolbar.RefreshInfo;
 var
   i: TSkillPanelButton;
   TimeRemaining: Integer;
+
+  function GetSkillString(L: TLemming): String;
+  var
+    i: Integer;
+    ShowAthleteInfo: Boolean;
+
+    procedure DoInc(aText: String);
+    begin
+      Inc(i);
+      case i of
+        1: Result := aText;
+        2: Result := SAthlete;
+        3: Result := STriathlete;
+        4: Result := SQuadathlete;
+      end;
+    end;
+  begin
+    if L = nil then
+    begin
+      Result := '';
+      Exit;
+    end;
+
+    Result := LemmingActionStrings[L.LemAction];
+
+    if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
+    begin
+      i := 0;
+      if L.LemIsClimber then DoInc(SClimber);
+      if L.LemIsSwimmer then DoInc(SSwimmer);
+      if L.LemIsFloater then DoInc(SFloater);
+      if L.LemIsGlider then DoInc(SGlider);
+      if L.LemIsMechanic then DoInc(SMechanic);
+      if L.LemIsZombie then
+      begin
+        Result := SZombie;
+        ShowAthleteInfo := true;
+      end else
+        ShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
+
+      if ShowAthleteInfo then
+      begin
+        Result := '-----';
+        if L.LemIsClimber then Result[1] := 'C';
+        if L.LemIsSwimmer then Result[2] := 'S';
+        if L.LemIsFloater then Result[3] := 'F';
+        if L.LemIsGlider then Result[3] := 'G';
+        if L.LemIsMechanic then Result[4] := 'D';
+        if L.LemIsZombie then Result[5] := 'Z';
+      end;
+    end;
+  end;
+
 begin
   SetInfoLemHatch(Game.LemmingsToSpawn - Level.Info.ZombieCount);
   SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive);
@@ -537,7 +591,7 @@ begin
 
   DrawNewStr;
   fLastDrawnStr := fNewDrawStr;
-  
+
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     DrawSkillCount(i, Game.SkillCount[i]);
 
@@ -549,6 +603,8 @@ begin
     DrawButtonSelector(fHighlitSkill, false);
     DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
   end; // ugly code, but it's very temporary
+
+  SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
 end;
 
 
