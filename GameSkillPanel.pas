@@ -532,7 +532,7 @@ begin
   end else begin
     TimeRemaining := Level.Info.TimeLimit - (Game.CurrentIteration div 17);
     SetInfoMinutes(TimeRemaining div 60);
-    SetInfoMinutes(TimeRemaining mod 60);
+    SetInfoSeconds(TimeRemaining mod 60);
   end;
 
   DrawNewStr;
