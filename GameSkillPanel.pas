@@ -602,7 +602,7 @@ begin
   begin
     DrawButtonSelector(fHighlitSkill, false);
     DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
-  end; // ugly code, but it's very temporary
+  end; // ugly code, but it's temporary
 
   SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
 
@@ -1300,6 +1300,7 @@ end;
 procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);
 begin
   fGame := Value;
+  SetTimeLimit(GameParams.Level.Info.TimeLimit < 6000);
 end;
 
 
