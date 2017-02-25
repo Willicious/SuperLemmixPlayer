@@ -605,6 +605,13 @@ begin
   end; // ugly code, but it's very temporary
 
   SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
+
+  if not Game.Replaying then
+    SetReplayMark(0)
+  else if Game.ReplayInsert then
+    SetReplayMark(2)
+  else
+    SetReplayMark(1);
 end;
 
 
