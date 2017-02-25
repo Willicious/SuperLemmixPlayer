@@ -543,6 +543,12 @@ begin
 
   DrawSkillCount(spbSlower, Level.Info.ReleaseRate);
   DrawSkillCount(spbFaster, Game.CurrentReleaseRate);
+
+  if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
+  begin
+    DrawButtonSelector(fHighlitSkill, false);
+    DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
+  end; // ugly code, but it's very temporary
 end;
 
 
