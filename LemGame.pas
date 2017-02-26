@@ -4782,7 +4782,10 @@ begin
         end;
 
         if RightClick and (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
-          fRenderInterface.ForceUpdate := true;
+        begin
+          if ProcessSkillAssignment(true) then
+            fRenderInterface.ForceUpdate := true;
+        end;
       end;
   end;
 end;
