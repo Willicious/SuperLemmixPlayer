@@ -650,6 +650,7 @@ begin
     Trans := TTranslationTable.Create;
     Trans.Apply(aLevel);
     Trans.Free;
+    aLevel.Sanitize;
   end;
 end;
 

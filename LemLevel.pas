@@ -5,7 +5,7 @@ interface
 uses
   Classes, SysUtils, StrUtils,
   LemCore, LemLemming,
-  LemTerrain, LemInteractiveObject, LemSteel,
+  LemTerrain, LemInteractiveObject, LemObjects, LemSteel,
   LemNeoPieceManager, LemNeoParser;
 
 type
@@ -46,7 +46,8 @@ type
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
   protected
   public
-    WindowOrder       : array of word;
+    WindowOrder      : array of Integer;
+    SpawnOrder       : array of Integer;
     constructor Create;
     procedure Clear; virtual;
 
@@ -95,7 +96,6 @@ type
     procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
-    procedure Sanitize;
 
     // Saving routines
     procedure SaveGeneralInfo(aSection: TParserSection);
@@ -116,6 +116,9 @@ type
 
     procedure SaveToFile(aFile: String);
     procedure SaveToStream(aStream: TStream);
+
+    procedure Sanitize;
+    procedure PrepareForUse;
   published
     property Info: TLevelInfo read fLevelInfo;
     property InteractiveObjects: TInteractiveObjects read fInteractiveObjects;
@@ -566,6 +569,89 @@ begin
       if SkillCount[SkillIndex] < 0 then SkillCount[SkillIndex] := 0;
       if SkillCount[SkillIndex] > 100 then SkillCount[SkillIndex] := 100;
       if not(SkillIndex in Skillset) then SkillCount[SkillIndex] := 0;
+    end;
+  end;
+
+  PrepareForUse;
+end;
+
+procedure TLevel.PrepareForUse;
+var
+  i: Integer;
+  S: TSkillPanelButton;
+  FoundSkill: Boolean;
+
+  IsWindow: array of Boolean;
+  FoundWindow: Boolean;
+  n: Integer;
+
+  procedure SetNextWindow;
+  begin
+    if FoundWindow then
+    begin
+      repeat
+        Inc(n);
+        if n >= Length(Info.WindowOrder) then n := 0;
+      until Info.WindowOrder[n] <> -1;
+    end else begin
+      repeat
+        Inc(n);
+        if n >= InteractiveObjects.Count then n := 0;
+      until IsWindow[n];
+    end;
+  end;
+begin
+  // 1. Validate skillset - remove skills that don't exist in the level
+  for S := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+  begin
+    if not (S in Info.Skillset) then Continue;
+    if Info.SkillCount[S] > 0 then Continue;
+    FoundSkill := false;
+    for i := 0 to InteractiveObjects.Count-1 do
+    begin
+      if PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect <> DOM_PICKUP then Continue;
+      if InteractiveObjects[i].Skill <> Integer(S) then Continue;
+      FoundSkill := true;
+      Break;
+    end;
+    if not FoundSkill then Info.Skillset := Info.Skillset - [S];
+  end;
+
+  // 2. Calculate ZombieCount, precise spawn order, and finalised lemming count
+  FoundWindow := false;
+  SetLength(IsWindow, InteractiveObjects.Count);
+  for i := 0 to InteractiveObjects.Count-1 do
+    if PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW then
+    begin
+      FoundWindow := true;
+      IsWindow[i] := true;
+    end else
+      IsWindow[i] := false;
+
+  Info.ZombieCount := 0;
+  for i := 0 to PreplacedLemmings.Count-1 do
+    if PreplacedLemmings[i].IsZombie then
+      Info.ZombieCount := Info.ZombieCount + 1;
+
+  if not FoundWindow then
+  begin
+    Info.LemmingsCount := PreplacedLemmings.Count;
+    SetLength(Info.SpawnOrder, 0);
+  end else begin
+    FoundWindow := false; // we're now wanting to know if a proper window exists in the window order
+    for i := 0 to Length(Info.WindowOrder)-1 do
+      if not IsWindow[Info.WindowOrder[i]] then
+        Info.WindowOrder[i] := -1
+      else
+        FoundWindow := true;
+    n := -1;
+    SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count);
+    for i := 0 to Length(Info.SpawnOrder)-1 do
+    begin
+      SetNextWindow;
+      if (InteractiveObjects[n].TarLev and 64) <> 0 then
+        Info.ZombieCount := Info.ZombieCount + 1;
+      Info.SpawnOrder[i] := n;
     end;
   end;
 end;

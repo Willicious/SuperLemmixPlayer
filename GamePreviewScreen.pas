@@ -22,13 +22,10 @@ type
     procedure VGASpecPrep;
     procedure SaveLevelImage;
     function GetScreenText: string;
-    procedure CheckLemmingCount(aLevel: TLevel);
-    procedure FilterSkillset(aLevel: TLevel);
     procedure NextLevel;
     procedure PreviousLevel;
     procedure NextRank;
     procedure PreviousRank;
-    procedure SimulateSpawn;
   protected
   public
     constructor Create(aOwner: TComponent); override;
@@ -44,79 +41,6 @@ implementation
 uses FBaseDosForm;
 
 { TGamePreviewScreen }
-
-procedure TGamePreviewScreen.SimulateSpawn;
-var
-  i: Integer;
-  LemsSpawned: Integer;
-
-  procedure FindNextWindow;
-  begin
-    if Length(GameParams.Level.Info.WindowOrder) = 0 then
-    begin
-      repeat
-        i := i + 1;
-        if i = GameParams.Level.InteractiveObjects.Count then i := 0;
-      until GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 23;
-    end else begin
-      i := GameParams.Level.Info.WindowOrder[LemsSpawned mod Length(GameParams.Level.Info.WindowOrder)];
-    end;
-  end;
-
-begin
-  // A full blown simulation of lemming spawning is the only way to
-  // check how many Zombies the level has.
-  with GameParams.Level, GameParams.Level.Info do
-  begin
-    ZombieCount := 0;
-    for i := 0 to PreplacedLemmings.Count - 1 do
-    begin
-      if PreplacedLemmings[i].IsZombie then ZombieCount := ZombieCount + 1;
-    end;
-
-    LemsSpawned := PreplacedLemmings.Count; // to properly emulate the spawn order glitch, since no decision on how to fix it has been reached
-    i := -1; // Needed for FindNextWindow!
-    while LemsSpawned < LemmingsCount do
-    begin
-      FindNextWindow;
-      if GameParams.Renderer.FindMetaObject(InteractiveObjects[i]).TriggerEffect <> 23 {DOM_WINDOW} then Continue;
-      Inc(LemsSpawned);
-      if (InteractiveObjects[i].TarLev and 64) <> 0 then ZombieCount := ZombieCount + 1;
-    end;
-  end;
-end;
-
-procedure TGamePreviewScreen.FilterSkillset(aLevel: TLevel);
-var
-  SkillCount: Integer;
-  Skill: TSkillPanelButton;
-
-  function FindPickupSkill(aSkillSValue: TSkillPanelButton): Boolean;
-  var
-    i: Integer;
-  begin
-    Result := false;
-    for i := 0 to aLevel.InteractiveObjects.Count-1 do
-      if GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]).TriggerEffect = 14 then
-        if aLevel.InteractiveObjects[i].Skill = Integer(aSkillSValue) then
-        begin
-          Result := true;
-          Exit;
-        end;
-  end;
-begin
-  for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
-  begin
-    if not (Skill in aLevel.Info.Skillset) then Continue;
-    SkillCount := aLevel.Info.SkillCount[Skill];
-
-    if    (Skill >= spbNone) // to avoid an out of bounds error on BIT_TO_SV
-       or ((SkillCount = 0) and not FindPickupSkill(Skill)) then
-    begin
-      aLevel.Info.Skillset := aLevel.Info.Skillset - [Skill];
-    end;
-  end;
-end;
 
 procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
 begin
@@ -184,47 +108,6 @@ begin
   CloseScreen(gstPreview);
 end;
 
-procedure TGamePreviewScreen.CheckLemmingCount(aLevel: TLevel);
-var
-  i: Integer;
-  MinCount : Integer;
-  FoundWindow : Boolean;
-  MO: TMetaObjectInterface;
-
-  ActualNewWindowLen: Integer;
-begin
-  FoundWindow := false;
-
-  if Length(aLevel.Info.WindowOrder) > 0 then
-  begin
-    // Remove invalid entries from window ordering
-    ActualNewWindowLen := 0;
-    for i := 0 to Length(aLevel.Info.WindowOrder) - 1 do
-    begin
-      MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[aLevel.Info.WindowOrder[i]]);
-      if aLevel.InteractiveObjects[aLevel.Info.WindowOrder[i]].IsFake then Continue;
-      if MO.TriggerEffect <> 23 then Continue;
-      aLevel.Info.WindowOrder[ActualNewWindowLen] := aLevel.Info.WindowOrder[i];
-      Inc(ActualNewWindowLen);
-    end;
-    SetLength(aLevel.Info.WindowOrder, ActualNewWindowLen);
-  end;
-
-  if Length(aLevel.Info.WindowOrder) = 0 then
-  begin
-    MinCount := aLevel.PreplacedLemmings.Count;
-    for i := 0 to aLevel.InteractiveObjects.Count - 1 do
-    begin
-      MO := GameParams.Renderer.FindMetaObject(aLevel.InteractiveObjects[i]);
-      if aLevel.InteractiveObjects[i].IsFake then Continue;
-      if MO.TriggerEffect = 23 then FoundWindow := true;
-    end;
-    if (not FoundWindow) or (aLevel.Info.LemmingsCount < MinCount) then aLevel.Info.LemmingsCount := MinCount;
-  end;
-
-  SimulateSpawn;
-end;
-
 procedure TGamePreviewScreen.BuildScreen;
 var
   Inf: TRenderInfoRec;
@@ -249,8 +132,6 @@ begin
       Inf.Level:=Level;
       Lw := Level.Info.Width;
       Lh := Level.Info.Height;
-      CheckLemmingCount(Level);
-      FilterSkillset(Level);
       Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
 
@@ -341,7 +222,6 @@ begin
     with GameParams do
     begin
       Inf.Level := Level;
-      CheckLemmingCount(Level);
       Renderer.PrepareGameRendering(Inf, (SysDat.Options2 and 2 <> 0));
     end;
   finally

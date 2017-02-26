@@ -4793,7 +4793,7 @@ end;
 procedure TLemmingGame.CheckReleaseLemming;
 var
   NewLemming: TLemming;
-  ix, EntranceIndex: Integer;
+  ix: Integer;
 begin
 
   if not EntriesOpened then
@@ -4807,10 +4807,9 @@ begin
   if NextLemmingCountdown = 0 then
   begin
     NextLemmingCountdown := CalculateNextLemmingCountdown;
-    if (LemmingsToRelease > 0) and (Length(WindowOrderList) > 0) then
+    if (LemmingsToRelease > 0) then
     begin
-      EntranceIndex := (Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease) mod Length(WindowOrderList);
-      ix := WindowOrderList[EntranceIndex];
+      ix := Level.Info.SpawnOrder[Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease];
       if ix >= 0 then
       begin
         NewLemming := TLemming.Create;
