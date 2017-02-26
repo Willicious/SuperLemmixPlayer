@@ -573,9 +573,12 @@ var
   end;
 
 begin
-  SetInfoLemHatch(Game.LemmingsToSpawn - Level.Info.ZombieCount);
+  // hatch: (Count + Cloned - SpawnedDead) - (Out + Removed)
+  // alive: (Count + Cloned - SpawnedDead) - Removed
+  //    in: Saved - Requirement
+  SetInfoLemHatch(Game.LemmingsToSpawn);
   SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive);
-  SetInfoLemIn(Level.Info.RescueCount - Game.LemmingsSaved);
+  SetInfoLemIn(Game.LemmingsSaved - Level.Info.RescueCount);
 
   if Level.Info.TimeLimit > 5999 then
   begin
