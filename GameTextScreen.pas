@@ -149,14 +149,21 @@ begin
 
   TextFileStream.Free;
 end;
+
 procedure TGameTextScreen.Form_KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
+var
+  S: String;
 begin
   if (GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_SaveReplay) and (GameParams.NextScreen = gstPostview) then
   begin
-    GlobalGame.Save;
+    S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
+    if S = '' then Exit;
+    GlobalGame.EnsureCorrectReplayDetails;
+    GlobalGame.ReplayManager.SaveToFile(S);
     Exit;
   end;
+
   case Key of
     VK_RETURN: CloseScreen(GameParams.NextScreen);
     VK_ESCAPE: CloseScreen(gstMenu);

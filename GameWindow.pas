@@ -132,6 +132,7 @@ type
     procedure ApplyMouseTrap;
     procedure GotoSaveState(aTargetIteration: Integer; IsRestart: Boolean = false);
     procedure LoadReplay;
+    procedure SaveReplay;
     procedure RenderMinimap;
     procedure MainFormResized; override;
     procedure SetCurrentCursor(aCursor: Integer = 0); // 0 = autodetect correct graphic
@@ -620,7 +621,10 @@ begin
                 'saved to the "Auto" folder if possible, then you will be returned to the main menu.');
 
   try
-    Game.Save(true);
+    SL.Insert(0, Game.ReplayManager.GetSaveFileName(self, Game.Level, true));
+    ForceDirectories(ExtractFilePath(SL[0]));
+    Game.EnsureCorrectReplayDetails;
+    Game.ReplayManager.SaveToFile(SL[0]);
     ShowMessage('Your replay was saved successfully. Returning to main menu now. Restarting NeoLemmix is recommended.');
   except
     ShowMessage('Unfortunately, your replay could not be saved.');
@@ -1049,7 +1053,7 @@ begin
                          GotoSaveState(0, true); // the true prevents pausing afterwards
                        end;
           lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
-          lka_SaveReplay: Save;
+          lka_SaveReplay: SaveReplay;
           lka_SkillRight: begin
                             sn := GetSelectedSkill;
                             if (sn < 7) and (fActiveSkills[sn + 1] <> spbNone) then
@@ -1482,6 +1486,23 @@ begin
   CanPlay := True;
 end;
 
+procedure TGameWindow.SaveReplay;
+var
+  s: String;
+  OldSpeed: TGameSpeed;
+begin
+  OldSpeed := fGameSpeed;
+  try
+    fGameSpeed := gspPause;
+    s := Game.ReplayManager.GetSaveFileName(self, Game.Level);
+    if s = '' then Exit;
+    Game.EnsureCorrectReplayDetails;
+    ForceDirectories(ExtractFilePath(s));
+    Game.ReplayManager.SaveToFile(s);
+  finally
+    fGameSpeed := OldSpeed;
+  end;
+end;
 
 procedure TGameWindow.LoadReplay;
 var
@@ -1556,21 +1577,16 @@ procedure TGameWindow.Game_Finished;
 begin
   SoundManager.StopMusic;
 
-  if (GameParams.fTestMode and (GameParams.QuickTestMode in [2, 3])) then
-  begin
-    if GameParams.QuickTestMode = 3 then Game.Save(true);
-    fCloseToScreen := gstExit;
-  end else
-  begin
-    GameParams.NextScreen2 := gstPostview;
-    if Game.CheckPass then
-      fCloseToScreen := gstText
-    else
-      fCloseToScreen := gstPostview;
-  end;
+  GameParams.NextScreen2 := gstPostview;
+  if Game.CheckPass then
+    fCloseToScreen := gstText
+  else
+    fCloseToScreen := gstPostview;
 end;
 
 procedure TGameWindow.CloseScreen(aNextScreen: TGameScreenType);
+var
+  S: String;
 begin
   CanPlay := False;
   Application.OnIdle := nil;
@@ -1591,6 +1607,14 @@ begin
     begin
       GameParams.ShownText := false;
       aNextScreen := gstPreview;
+    end;
+
+    if (GameParams.AutoSaveReplay) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
+    begin
+      S := Game.ReplayManager.GetSaveFileName(self, Game.Level, true);
+      ForceDirectories(S);
+      Game.EnsureCorrectReplayDetails;
+      Game.ReplayManager.SaveToFile(S);
     end;
   end;
   Img.RepaintMode := rmFull;

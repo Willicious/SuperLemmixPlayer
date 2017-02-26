@@ -410,7 +410,7 @@ type
     function ProcessSkillAssignment(IsHighlight: Boolean = false): Boolean;
     function ProcessHighlightAssignment: Boolean;
     procedure RegainControl(Force: Boolean = false);
-    procedure Save(TestModeName: Boolean = false);
+    procedure EnsureCorrectReplayDetails;
     procedure SetGameResult;
     procedure SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Boolean = True; RightClick: Boolean = False);
     procedure SaveGameplayImage(Filename: String);
@@ -5453,123 +5453,17 @@ begin
   Finish;
 end;
 
-procedure TLemmingGame.Save(TestModeName: Boolean = false);
-// this entire thing needs to go in TGameWindow or something!!!
-var
-  SaveNameLrb: String;
-  SaveText: Boolean;
-
-  function GetReplayFileName: String;
-  begin
-    if GameParams.fTestMode then
-      Result := Trim(GameParams.Level.Info.Title)
-    else
-      Result := GameParams.Info.dSectionName + '_' + LeadZeroStr(GameParams.Info.dLevel + 1, 2);
-    if TestModeName or GameParams.AlwaysTimestamp then
-      Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
-    Result := StringReplace(Result, '<', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '>', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, ':', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '"', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '/', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '\', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '|', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '?', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '*', '_', [rfReplaceAll]);
-    Result := Result + '.nxrp';
-  end;
-
-  function GetDefaultSavePath: String;
-  begin
-    if GameParams.fTestMode then
-      Result := ExtractFilePath(ParamStr(0)) + 'Replay\'
-    else
-      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
-    if TestModeName then Result := Result + 'Auto\';
-  end;
-
-  function GetInitialSavePath: String;
-  begin
-    if (fLastReplayDir <> '') and not TestModeName then
-      Result := fLastReplayDir
-    else
-      Result := GetDefaultSavePath;
-  end;
-
-  function GetSavePath(DefaultFileName: String): String;
-  var
-    Dlg : TSaveDialog;
-  begin
-    Dlg := TSaveDialog.Create(self);
-    Dlg.Title := 'Save replay file (' + GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + ', ' + Trim(Level.Info.Title) + ')';
-    Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
-    Dlg.FilterIndex := 1;
-    Dlg.InitialDir := GetInitialSavePath;
-    Dlg.DefaultExt := '.lrb';
-    Dlg.Options := [ofOverwritePrompt];
-    Dlg.FileName := DefaultFileName;
-    if Dlg.Execute then
-    begin
-      fLastReplayDir := ExtractFilePath(Dlg.FileName);
-      SaveText := (dlg.FilterIndex = 2);
-      Result := Dlg.FileName;
-    end else
-      Result := '';
-    Dlg.Free;
-  end;
-
-  function GetReplayTypeCase: Integer;
-  begin
-    // Wouldn't need this if I bothered to merge the boolean options into a single
-    // integer value... xD
-    Result := 0;
-    if TestModeName then Exit;
-    if not GameParams.AutoReplayNames then
-      Result := 2
-    else if GameParams.ConfirmOverwrite and FileExists(GetInitialSavePath + SaveNameLrb) then
-      Result := 1;
-    // Don't need to handle AlwaysTimestamp here; it's handled in GetReplayFileName above.
-  end;
-
-  procedure EnsureCorrectDetails;
-  begin
-    with fReplayManager do
-    begin
-      LevelName := Trim(fLevel.Info.Title);
-      LevelAuthor := Trim(fLevel.Info.Author);
-      LevelGame := Trim(GameParams.SysDat.PackName);
-      LevelRank := Trim(GameParams.Info.dSectionName);
-      LevelPosition := GameParams.Info.dLevel + 1;
-      LevelID := fLevel.Info.LevelID;
-    end;
-  end;
-
+procedure TLemmingGame.EnsureCorrectReplayDetails;
 begin
-  SaveText := false;
-
-  SaveNameLrb := GetReplayFileName;
-
-  case GetReplayTypeCase of
-    0: SaveNameLrb := GetDefaultSavePath + SaveNameLrb;
-    1: begin
-         //UnpauseAfterDlg := not Paused; // Game keeps running during the MessageDlg otherwise.
-         //Paused := true;
-         if MessageDlg('Replay already exists. Overwrite?', mtCustom, [mbYes, mbNo], 0) = mrNo then
-           SaveNameLrb := GetSavePath(SaveNameLrb)
-         else
-           SaveNameLrb := GetDefaultSavePath + SaveNameLrb;
-         //if UnpauseAfterDlg then Paused := false;
-       end;
-    2:  SaveNameLrb := GetSavePath(SaveNameLrb);
-  end;
-
-  if SaveNameLrb <> '' then
+  with fReplayManager do
   begin
-    ForceDirectories(ExtractFilePath(SaveNameLrb));
-    EnsureCorrectDetails;
-    fReplayManager.SaveToFile(SaveNameLrb);
+    LevelName := Trim(fLevel.Info.Title);
+    LevelAuthor := Trim(fLevel.Info.Author);
+    LevelGame := Trim(GameParams.SysDat.PackName);
+    LevelRank := Trim(GameParams.Info.dSectionName);
+    LevelPosition := GameParams.Info.dLevel + 1;
+    LevelID := fLevel.Info.LevelID;
   end;
-
 end;
 
 (*

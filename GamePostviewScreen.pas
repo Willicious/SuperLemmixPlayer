@@ -73,7 +73,6 @@ end;
 procedure TGamePostviewScreen.PrepareGameParams;
 begin
   inherited;
-  if (GameParams.AutoSaveReplay) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then GlobalGame.Save(true);
   fSameLevelInfo := GameParams.Info;
 end;
 
@@ -330,10 +329,15 @@ end;
 
 procedure TGamePostviewScreen.Form_KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
+var
+  S: String;
 begin
   if GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_SaveReplay then
   begin
-    GlobalGame.Save;
+    S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
+    if S = '' then Exit;
+    GlobalGame.EnsureCorrectReplayDetails;
+    GlobalGame.ReplayManager.SaveToFile(S);
     Exit;
   end;
 

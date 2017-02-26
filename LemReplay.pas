@@ -17,6 +17,7 @@ interface
 
 uses
   Dialogs,
+  LemLevel,
   LemLemming, LemCore, LemVersion,
   Contnrs, Classes, SysUtils, StrUtils,
   LemNeoParser;
@@ -130,6 +131,7 @@ type
     public
       constructor Create;
       destructor Destroy; override;
+      class function GetSaveFileName(aOwner: TComponent; aLevel: TLevel; TestModeName: Boolean = false): String;
       procedure Add(aItem: TBaseReplayItem);
       procedure Clear(EraseLevelInfo: Boolean = false);
       procedure Delete(aItem: TBaseReplayItem);
@@ -158,6 +160,9 @@ type
   function GetSkillAction(aName: String): TBasicLemmingAction;
 
 implementation
+
+uses
+  CustomPopup, GameControl, uMisc, SharedGlobals; // in TReplay.GetSaveFileName
 
 // Standalone functions
 
@@ -276,6 +281,106 @@ begin
   fAssignments.Free;
   fReleaseRateChanges.Free;
   inherited;
+end;
+
+// Until a more permanent measure is found, LastReplayDir is implemented as a global variable.
+var
+  LastReplayDir: String;
+class function TReplay.GetSaveFileName(aOwner: TComponent; aLevel: TLevel; TestModeName: Boolean = false): String;
+var
+  SaveNameLrb: String;
+  SaveText: Boolean;
+
+  function GetReplayFileName(TestModeName: Boolean): String;
+  begin
+    if GameParams.fTestMode then
+      Result := Trim(aLevel.Info.Title)
+    else
+      Result := GameParams.Info.dSectionName + '_' + LeadZeroStr(GameParams.Info.dLevel + 1, 2);
+    if TestModeName or GameParams.AlwaysTimestamp then
+      Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
+    Result := StringReplace(Result, '<', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '>', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, ':', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '"', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '/', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '\', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '|', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '?', '_', [rfReplaceAll]);
+    Result := StringReplace(Result, '*', '_', [rfReplaceAll]);
+    Result := Result + '.nxrp';
+  end;
+
+  function GetDefaultSavePath: String;
+  begin
+    if GameParams.fTestMode then
+      Result := ExtractFilePath(ParamStr(0)) + 'Replay\'
+    else
+      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
+    if TestModeName then Result := Result + 'Auto\';
+  end;
+
+  function GetInitialSavePath: String;
+  begin
+    if (LastReplayDir <> '') and not TestModeName then
+      Result := LastReplayDir
+    else
+      Result := GetDefaultSavePath;
+  end;
+
+  function GetSavePath(DefaultFileName: String): String;
+  var
+    Dlg : TSaveDialog;
+  begin
+    Dlg := TSaveDialog.Create(aOwner);
+    Dlg.Title := 'Save replay file (' + GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + ', ' + Trim(aLevel.Info.Title) + ')';
+    Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
+    Dlg.FilterIndex := 1;
+    Dlg.InitialDir := GetInitialSavePath;
+    Dlg.DefaultExt := '.lrb';
+    Dlg.Options := [ofOverwritePrompt];
+    Dlg.FileName := DefaultFileName;
+    if Dlg.Execute then
+    begin
+      LastReplayDir := ExtractFilePath(Dlg.FileName);
+      SaveText := (dlg.FilterIndex = 2);
+      Result := Dlg.FileName;
+    end else
+      Result := '';
+    Dlg.Free;
+  end;
+
+  function GetReplayTypeCase: Integer;
+  begin
+    // Wouldn't need this if I bothered to merge the boolean options into a single
+    // integer value... xD
+    Result := 0;
+    if TestModeName then Exit;
+    if not GameParams.AutoReplayNames then
+      Result := 2
+    else if GameParams.ConfirmOverwrite and FileExists(GetInitialSavePath + SaveNameLrb) then
+      Result := 1;
+    // Don't need to handle AlwaysTimestamp here; it's handled in GetReplayFileName above.
+  end;
+begin
+  SaveText := false;
+
+  SaveNameLrb := GetReplayFileName(TestModeName);
+
+  case GetReplayTypeCase of
+    0: SaveNameLrb := GetDefaultSavePath + SaveNameLrb;
+    1: begin
+         case RunCustomPopup(aOwner, 'File Already Exists', 'A file with the default filename "' + SaveNameLrb + '" already exists. ' + #13 + 'What would you like to do?', 'Overwrite|Add Timestamp|Pick Filename|Cancel') of
+           1: SaveNameLrb := GetInitialSavePath + SaveNameLrb;
+           2: SaveNameLrb := GetInitialSavePath + GetReplayFilename(true);
+           3: SaveNameLrb := GetSavePath(SaveNameLrb);
+           4: SaveNameLrb := '';
+         end;
+       end;
+    2:  SaveNameLrb := GetSavePath(SaveNameLrb);
+  end;
+
+  Result := SaveNameLrb;
 end;
 
 procedure TReplay.Add(aItem: TBaseReplayItem);
