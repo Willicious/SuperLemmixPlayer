@@ -191,7 +191,7 @@ type
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
     WindowOrderList            : array of Integer; // table for entrance release order
-    fPaused                    : Boolean;
+    //fPaused                    : Boolean;
     LowestReleaseRate          : Integer;   // only used for talismans
     HighestReleaseRate         : Integer;   // only used for talismans
     CurrReleaseRate            : Integer;
@@ -405,8 +405,8 @@ type
     procedure Finish;
     procedure Cheat;
     procedure HitTest(Autofail: Boolean = false);
-    procedure HyperSpeedBegin(PauseWhenDone: Boolean = False);
-    procedure HyperSpeedEnd;
+    //procedure HyperSpeedBegin(PauseWhenDone: Boolean = False);
+    //procedure HyperSpeedEnd;
     function ProcessSkillAssignment(IsHighlight: Boolean = false): Boolean;
     function ProcessHighlightAssignment: Boolean;
     procedure RegainControl(Force: Boolean = false);
@@ -428,13 +428,13 @@ type
     property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount;
     property ClockFrame: Integer read fClockFrame;
     property CursorPoint: TPoint read fCursorPoint write fCursorPoint;
-    property FastForward: Boolean read fFastForward write fFastForward;
+    //property FastForward: Boolean read fFastForward write fFastForward;
     property GameFinished: Boolean read fGameFinished;
-    property HyperSpeed: Boolean read fHyperSpeed;
-    property LeavingHyperSpeed: Boolean read fLeavingHyperSpeed;
+    //property HyperSpeed: Boolean read fHyperSpeed;
+    //property LeavingHyperSpeed: Boolean read fLeavingHyperSpeed;
     property Level: TLevel read fLevel write fLevel;
     property MessageQueue: TGameMessageQueue read fMessageQueue;
-    property Paused: Boolean read fPaused write fPaused;
+    //property Paused: Boolean read fPaused write fPaused;
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
     property Replaying: Boolean read GetIsReplaying;
@@ -1083,7 +1083,6 @@ begin
   SetLength(WindowOrderList, 0);
 
   ReleaseRateModifier := 0;
-  fPaused := False;
   UserSetNuking := False;
   ExploderAssignInProgress := False;
   Index_LemmingToBeNuked := 0;
@@ -4442,9 +4441,7 @@ begin
     Exit;
   CheckForGameFinished;
 
-  // do not move this!
-  if not Paused then // paused is handled by the GUI
-    CheckAdjustReleaseRate;
+  CheckAdjustReleaseRate;
 
   if LemmingsToRelease > 0 then
   begin
@@ -4470,15 +4467,6 @@ begin
   CheckLemmings;
   CheckUpdateNuking;
   UpdateInteractiveObjects;
-
-  // when hyperspeed is terminated then copy world back into targetbitmap
-  if fLeavingHyperSpeed then
-  begin
-    fHyperSpeed := False;
-    fLeavingHyperSpeed := False;
-    if fPauseOnHyperSpeedExit and not Paused then
-      SetSelectedSkill(spbPause);
-  end;
 
   // Get highest priority lemming under cursor
   GetPriorityLemming(fLemSelected, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
@@ -4673,24 +4661,12 @@ end;
 function TLemmingGame.ProcessHighlightAssignment: Boolean;
 var
   L: TLemming;
-  OldHighlightLemmingID: Integer;
 begin
   Result := False;
-  OldHighlightLemmingID := fHighlightLemmingID;
   if GetPriorityLemming(L, baNone, CursorPoint) > 0 then
     fHighlightLemmingID := L.LemIndex
   else
     fHighlightLemmingID := -1;
-
-  if fHighlightLemmingID <> OldHighlightLemmingID then
-  begin
-
-    if Paused then
-      if OldHighlightLemmingID <> -1 then
-        DrawAnimatedObjects; // not sure why this one. Might be to fix graphical glitches, I guess?
-
-  end;
-
 end;
 
 procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
@@ -4717,9 +4693,6 @@ begin
       fHighlightLemmingID := L.LemIndex;
       AssignNewSkill(Skill, true, true);
       fHighlightLemmingID := OldHighlightLemID;
-
-      if not HyperSpeed then
-        L.LemHighlightReplay := True;
     end
     else
     begin
@@ -4788,8 +4761,9 @@ begin
       end;
     spbPause:
       begin
-        Paused := not Paused;
-        FastForward := False;
+        // this now needs to be handled elsewhere
+        //Paused := not Paused;
+        //FastForward := False;
       end;
     spbNuke:
       begin
@@ -4808,8 +4782,7 @@ begin
         end;
 
         if RightClick and (GetHighlitLemming <> nil) and (SkillPanelButtonToAction[Value] <> baNone) then
-          if ProcessSkillAssignment(true) and Paused then
-            fRenderInterface.ForceUpdate := true;
+          fRenderInterface.ForceUpdate := true;
       end;
   end;
 end;
@@ -5377,7 +5350,7 @@ begin
 end;
 
 
-procedure TLemmingGame.HyperSpeedBegin(PauseWhenDone: Boolean = False);
+(*procedure TLemmingGame.HyperSpeedBegin(PauseWhenDone: Boolean = False);
 begin
   Inc(fHyperSpeedCounter);
   fHyperSpeed := True;
@@ -5403,7 +5376,7 @@ begin
       end;
     end;
   end;
-end;
+end;*)
 
 
 procedure TLemmingGame.UpdateInteractiveObjects;
@@ -5479,10 +5452,10 @@ begin
 end;
 
 procedure TLemmingGame.Save(TestModeName: Boolean = false);
+// this entire thing needs to go in TGameWindow or something!!!
 var
   SaveNameLrb: String;
   SaveText: Boolean;
-  UnpauseAfterDlg: Boolean;
 
   function GetReplayFileName: String;
   begin
@@ -5577,13 +5550,13 @@ begin
   case GetReplayTypeCase of
     0: SaveNameLrb := GetDefaultSavePath + SaveNameLrb;
     1: begin
-         UnpauseAfterDlg := not Paused; // Game keeps running during the MessageDlg otherwise.
-         Paused := true;
+         //UnpauseAfterDlg := not Paused; // Game keeps running during the MessageDlg otherwise.
+         //Paused := true;
          if MessageDlg('Replay already exists. Overwrite?', mtCustom, [mbYes, mbNo], 0) = mrNo then
            SaveNameLrb := GetSavePath(SaveNameLrb)
          else
            SaveNameLrb := GetDefaultSavePath + SaveNameLrb;
-         if UnpauseAfterDlg then Paused := false;
+         //if UnpauseAfterDlg then Paused := false;
        end;
     2:  SaveNameLrb := GetSavePath(SaveNameLrb);
   end;

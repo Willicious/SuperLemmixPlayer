@@ -429,8 +429,8 @@ begin
       fReplays[i].ReplayResult := CR_UNDETERMINED;
 
       Game.Start;
-      Game.HyperSpeedBegin;
-      Game.TargetIteration := 170;
+      //Game.HyperSpeedBegin;
+      //Game.TargetIteration := 170;
       repeat
         if Game.CurrentIteration mod 170 = 0 then
         begin
@@ -454,7 +454,7 @@ begin
           end;
         if fReplays[i].ReplayResult <> CR_UNDETERMINED then Break;
 
-        Game.TargetIteration := Game.TargetIteration + 1; // never actually allow it to reach the targetiteration
+        //Game.TargetIteration := Game.TargetIteration + 1; // never actually allow it to reach the targetiteration
       until Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17);
 
       fReplays[i].ReplayDuration := Game.CurrentIteration;

@@ -23,6 +23,12 @@ type
     gsDown
   );
 
+  TGameSpeed = (
+    gspNormal,
+    gspPause,
+    gspFF
+  );
+
 const
   CURSOR_TYPES = 2;
   EXTRA_ZOOM_LEVELS = 4;
@@ -43,6 +49,9 @@ type
     fInternalZoom: Integer;
     fMaxZoom: Integer;
     fMinimapBuffer: TBitmap32;
+  { current gameplay }
+    fGameSpeed: TGameSpeed;
+    fHyperSpeedTarget: Integer;
   { game eventhandler}
     procedure Game_Finished;
   { self eventhandlers }
@@ -81,6 +90,7 @@ type
     procedure ReleaseCursors;
 
     function GetLevelMusicName: String;
+    function GetIsHyperSpeed: Boolean;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -129,6 +139,10 @@ type
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
     property SuspendCursor: Boolean read fSuspendCursor;
+
+    property GameSpeed: TGameSpeed read fGameSpeed write fGameSpeed;
+    property HyperSpeedTarget: Integer read fHyperSpeedTarget write fHyperSpeedTarget;
+    property IsHyperSpeed: Boolean read GetIsHyperSpeed;
   end;
 
 implementation
@@ -290,7 +304,7 @@ end;
 procedure TGameWindow.SetClearPhysics(aValue: Boolean);
 begin
   fClearPhysics := aValue;
-  if Game.Paused then
+  if fGameSpeed = gspPause then
     fNeedRedraw := true;
   SkillPanel.DrawButtonSelector(spbClearPhysics, fClearPhysics);
 end;
@@ -315,8 +329,8 @@ var
   OldPaused: Boolean;
   OldClearReplay: Boolean;
 begin
-  OldPaused := Game.Paused;
-  Game.Paused := true;
+  OldPaused := fGameSpeed = gspPause;
+  fGameSpeed := gspPause;
   F := TFReplayEditor.Create(self);
   F.SetReplay(Game.ReplayManager);
   fSuspendCursor := true;
@@ -331,7 +345,7 @@ begin
     end;
   finally
     fSuspendCursor := false;
-    Game.Paused := OldPaused;
+    if not OldPaused then fGameSpeed := gspNormal;
     F.Free;
   end;
 end;
@@ -376,15 +390,15 @@ begin
     Exit;
   end;
 
-  Pause := Game.Paused;
-  Fast := Game.FastForward;
+  Pause := (fGameSpeed = gspPause);
+  Fast := (fGameSpeed = gspFF);
   ForceOne := ForceUpdateOneFrame or fRenderInterface.ForceUpdate;
   ForceUpdateOneFrame := False;
   CurrTime := TimeGetTime;
   TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
-  Hyper := Game.HyperSpeed;
+  Hyper := IsHyperSpeed;
 
   if ForceOne or TimeForFastForwardFrame or Hyper then TimeForFrame := true;
 
@@ -400,7 +414,7 @@ begin
     CheckUserHelpers;
 
     // only in paused mode adjust RR. If not paused it's updated per frame.
-    if Game.Paused then
+    if fGameSpeed = gspPause then
       if TimeForScroll or ForceOne then
         CheckAdjustReleaseRate;
 
@@ -438,9 +452,10 @@ begin
     // Note that TargetIteration is 1 less than the actual target frame number,
     // because we only set Game.LeavingHyperSpeed=True here,
     // any only exit hyperspeed after calling Game.UpdateLemmings once more!
-    else if (Game.CurrentIteration >= Game.TargetIteration) then
+    else if (Game.CurrentIteration = fHyperSpeedTarget) then
     begin
-      Game.HyperSpeedEnd;
+      //Game.HyperSpeedEnd;
+      fHyperSpeedTarget := -1;
       SkillPanel.RefreshInfo;
       fNeedRedraw := true;
       CheckResetCursor;
@@ -458,6 +473,11 @@ begin
     ProcessGameMessages;
 end;
 
+function TGameWindow.GetIsHyperSpeed: Boolean;
+begin
+  Result := fHyperSpeedTarget > Game.CurrentIteration;
+end;
+
 procedure TGameWindow.ProcessGameMessages;
 var
   Msg: TGameMessage;
@@ -471,9 +491,9 @@ begin
       GAMEMSG_TIMEUP: Game_Finished; // currently no distinction as it relies on reading LemGame's data
 
       // still need to implement sound
-      GAMEMSG_SOUND: if not Game.HyperSpeed then
+      GAMEMSG_SOUND: if not IsHyperSpeed then
                        SoundManager.PlaySound(Msg.MessageDataStr);
-      GAMEMSG_SOUND_BAL: if not Game.HyperSpeed then
+      GAMEMSG_SOUND_BAL: if not IsHyperSpeed then
                            SoundManager.PlaySound(Msg.MessageDataStr, Msg.MessageDataInt);
       GAMEMSG_MUSIC: SoundManager.PlayMusic;
     end;
@@ -485,7 +505,7 @@ var
   SL: TStringList;
   RIValid: Boolean;
 begin
-  Game.Paused := true;
+  fGameSpeed := gspPause;
   SL := TStringList.Create;
 
   // Attempt to load existing report so we can simply add to the end.
@@ -621,7 +641,7 @@ var
   DrawRect: TRect;
   DrawWidth, DrawHeight: Integer;
 begin
-  if Game.HyperSpeed then Exit;
+  if IsHyperSpeed then Exit;
   try
     fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
     fRenderInterface.MousePos := Game.CursorPoint;
@@ -681,19 +701,14 @@ procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; IsRestart: Boolea
   Go in hyperspeed from the beginning to aTargetIteration
 -------------------------------------------------------------------------------}
 var
-  CurrentlyPaused: Boolean;
   UseSaveState: Integer;
   i: Integer;
 begin
-  //if aTargetIteration < 0 then Exit;
   CanPlay := False;
-  CurrentlyPaused := Game.Paused;
-  if (aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip then CurrentlyPaused := true;
+  if (aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip then
+    fGameSpeed := gspPause;
   if IsRestart then
-  begin
-    Game.Paused := false;
-    CurrentlyPaused := false;
-  end;
+    fGameSpeed := gspNormal;
 
   // Find correct save state
   if aTargetIteration > 0 then
@@ -729,8 +744,7 @@ begin
     end;
   end else begin
     // start hyperspeed to the desired interation
-    Game.HyperSpeedBegin(CurrentlyPaused);
-    Game.TargetIteration := aTargetIteration;
+    fHyperSpeedTarget := aTargetIteration;
   end;
 
   CanPlay := True;
@@ -818,6 +832,8 @@ begin
   fScrollSpeed := 1;
 
   fSaveStateFrame := -1;
+
+  fHyperSpeedTarget := -1;
 
   Img := ScreenImg; // set ref to inherited screenimg (just for a short name)
   Img.RepaintMode := rmOptimizer;
@@ -946,7 +962,7 @@ begin
     Exit;
 
   // this is quite important: no gamecontrol if going fast
-  if Game.HyperSpeed then
+  if IsHyperSpeed then
      Exit;
 
   if (func.Action in NON_CANCELLING_KEYS) or (func.Action in SKILL_KEYS)
@@ -994,9 +1010,12 @@ begin
           lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
           lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
           lka_Pause: begin
-                       SetSelectedSkill(spbPause);
-                       SkillPanel.DrawButtonSelector(spbPause, Paused);
-                       if Paused then SkillPanel.DrawButtonSelector(spbFastForward, false);
+                       if fGameSpeed = gspPause then
+                         fGameSpeed := gspNormal
+                       else
+                         fGameSpeed := gspPause;
+                       SkillPanel.DrawButtonSelector(spbPause, fGameSpeed = gspPause);
+                       if fGameSpeed = gspPause then SkillPanel.DrawButtonSelector(spbFastForward, false);
                      end;
           lka_Nuke: begin
                       // double keypress needed to prevent accidently nuking
@@ -1016,8 +1035,11 @@ begin
                           end;
           lka_Cheat: Game.Cheat;
           lka_FastForward: begin
-                             if not Paused then FastForward := not FastForward;
-                             SkillPanel.DrawButtonSelector(spbFastForward, Game.FastForward);
+                             case fGameSpeed of
+                               gspNormal: fGameSpeed := gspFF;
+                               gspFF: fGameSpeed := gspNormal;
+                             end;
+                             SkillPanel.DrawButtonSelector(spbFastForward, fGameSpeed = gspFF);
                            end;
           lka_SaveImage: SaveShot;
           lka_LoadReplay: LoadReplay;
@@ -1048,13 +1070,12 @@ begin
                           GotoSaveState(0);
                       end else if func.Modifier > 1 then
                       begin
-                        HyperSpeedBegin;
                         // We have to set TargetIteration one frame before the actual target frame number,
                         // because on TargetIteration, we only set Game.LeavingHyperSpeed=True,
                         // but exit hyperspeed only after calling Game.UpdateLemmings once more!
-                        TargetIteration := CurrentIteration + func.Modifier - 1;
+                        fHyperSpeedTarget := CurrentIteration + func.Modifier - 1;
                       end else
-                        if Paused then ForceUpdateOneFrame := true;
+                        if fGameSpeed = gspPause then ForceUpdateOneFrame := true;
           lka_ClearPhysics: if func.Modifier = 0 then
                               ClearPhysics := not ClearPhysics
                             else
@@ -1069,7 +1090,7 @@ begin
 
   CheckShifts(Shift);
 
-  if Game.Paused and not ForceUpdateOneFrame then  // if ForceUpdateOneFrame is active, screen will be redrawn soon enough anyway
+  if (fGameSpeed = gspPause) and not ForceUpdateOneFrame then  // if ForceUpdateOneFrame is active, screen will be redrawn soon enough anyway
     DoDraw;
 end;
 
@@ -1125,7 +1146,7 @@ begin
     ApplyMouseTrap;
   // interrupting hyperspeed can break the handling of savestates
   // so we're not allowing it
-  if Game.Playing and not Game.HyperSpeed then
+  if Game.Playing and not IsHyperSpeed then
   begin
 
     SetAdjustedGameCursorPoint(Img.ControlToBitmap(Point(X, Y)));
@@ -1148,7 +1169,7 @@ begin
     begin
       Game.RegainControl;
       Game.ProcessSkillAssignment;
-      if Game.Paused then ForceUpdateOneFrame := True;
+      if fGameSpeed = gspPause then ForceUpdateOneFrame := True;
     end;
 
     if Game.IsHighlightHotkey and not (Game.Replaying and GameParams.ExplicitCancel) then
@@ -1159,7 +1180,7 @@ begin
         SoundManager.PlaySound(SFX_SKILLBUTTON);
     end;
 
-    if Game.Paused then
+    if fGameSpeed = gspPause then
       DoDraw;
 
   end;
@@ -1194,7 +1215,7 @@ begin
 
     SetAdjustedGameCursorPoint(Img.ControlToBitmap(Point(X, Y)));
 
-    if (Game.Paused) or (Game.HitTestAutoFail) then
+    if (fGameSpeed = gspPause) or (Game.HitTestAutoFail) then
     begin
       Game.HitTest;
       CheckResetCursor;
@@ -1218,7 +1239,7 @@ begin
 
     SkillPanel.MinimapScrollFreeze := false;
 
-    if Game.Paused then
+    if fGameSpeed = gspPause then
       DoDraw; // probably causing major lag, can we detect if it's nessecary and only redraw if it is?
   end;
 
@@ -1456,7 +1477,7 @@ begin
     ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
                 'will attempt to play the replay anyway.');
 
-  Game.Paused := False;
+  fGameSpeed := gspNormal;
   GotoSaveState(0);
   CanPlay := True;
 end;

@@ -317,7 +317,7 @@ var
   C: TColor32;
   A: TRect;
 begin
-  if Game.HyperSpeed then Exit;
+  if TGameWindow(Owner).IsHyperSpeed then Exit;
 
   if (aButton = spbNone) or ((aButton = fHighlitSkill) and (Highlight = true)) then
     Exit;
@@ -471,7 +471,7 @@ begin
 
   fSkillCounts[aButton] := aNumber;
 
-  if Game.HyperSpeed then exit;
+  if TGameWindow(Owner).IsHyperSpeed then exit;
 
   aoNumber := aNumber;
   aNumber := Math.Max(aNumber mod 100, 0);
@@ -633,7 +633,7 @@ begin
   P := Img.ControlToBitmap(Point(X, Y));
   TGameWindow(Parent).ApplyMouseTrap;
 
-  if Game.HyperSpeed then
+  if TGameWindow(Owner).IsHyperSpeed then
     Exit;
 
   for i := Low(TSkillPanelButton) to High(TSkillPanelButton) do // "ignore" spbNone
@@ -664,18 +664,25 @@ begin
           if i in [spbSlower, spbFaster] then
             Game.SetSelectedSkill(i, True, (Button = mbRight))
           else begin
-            Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
             if (i = spbPause) then
             begin
+              if TGameWindow(Owner).GameSpeed = gspPause then
+                TGameWindow(Owner).GameSpeed := gspNormal
+              else
+                TGameWindow(Owner).GameSpeed := gspPause;
               DrawButtonSelector(spbFastForward, false);
-              DrawButtonSelector(spbPause, Game.Paused);
-            end;
+              DrawButtonSelector(spbPause, TGameWindow(Owner).GameSpeed = gspPause);
+            end else
+              Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
           end;
         end else begin // need special handling
           case i of
             spbFastForward: begin
-                              Game.FastForward := not Game.FastForward;
-                              DrawButtonSelector(spbFastForward, Game.FastForward);
+                              case TGameWindow(Owner).GameSpeed of
+                                gspNormal: TGameWindow(Owner).GameSpeed := gspFF;
+                                gspFF: TGameWindow(Owner).GameSpeed := gspNormal;
+                              end;
+                              DrawButtonSelector(spbFastForward, TGameWindow(Owner).GameSpeed = gspFF);
                             end;
             spbRestart: TGameWindow(Parent).GotoSaveState(0, true);
             spbBackOneFrame: TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 2); // logically this should be -1, but -2 seems to give correct behaviour. should probably investigate this.
