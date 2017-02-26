@@ -31,8 +31,11 @@ uses
 const
   GAMEMSG_NIL = 0;      // Does nothing.
 
-  GAMEMSG_FINISH = 1;   // Signifies that gameplay has ended due to lack of remaining lemmings.
-  GAMEMSG_TIMEUP = 2;   // Signifies that gameplay has ended due to time running out.
+  GAMEMSG_FINISH = 1;   // Signifies that gameplay has ended. DataInt: 0 = unknown reason, 1 = no lemmings left, 2 = no time left, 3 = terminated
+    GM_FIN_UNKNOWN = 0;
+    GM_FIN_LEMMINGS = 1;
+    GM_FIN_TIME = 2;
+    GM_FIN_TERMINATE = 3;
 
   GAMEMSG_SOUND = 10;       // Plays a sound. DataStr: Filename of sound to play, without any extension.
   GAMEMSG_SOUND_BAL = 11;   // Plays a sound. DataStr: Filename of sound to play, without any extension. DataInt: X coordinate of origin.

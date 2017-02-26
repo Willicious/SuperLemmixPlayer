@@ -489,7 +489,6 @@ begin
 
     case Msg.MessageType of
       GAMEMSG_FINISH: Game_Finished;
-      GAMEMSG_TIMEUP: Game_Finished; // currently no distinction as it relies on reading LemGame's data
 
       // still need to implement sound
       GAMEMSG_SOUND: if not IsHyperSpeed then
@@ -958,7 +957,7 @@ begin
 
   if func.Action = lka_Exit then
   begin
-    Game.Finish;
+    Game.Finish(GM_FIN_TERMINATE);
     Exit;
   end;
 

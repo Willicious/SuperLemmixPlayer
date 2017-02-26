@@ -402,7 +402,7 @@ type
     procedure AdjustReleaseRate(aRR: Integer);
     function CheckIfLegalRR(aRR: Integer): Boolean;
     procedure CreateLemmingAtCursorPoint;
-    procedure Finish;
+    procedure Finish(aReason: Integer);
     procedure Cheat;
     procedure HitTest(Autofail: Boolean = false);
     //procedure HyperSpeedBegin(PauseWhenDone: Boolean = False);
@@ -1538,7 +1538,7 @@ begin
   if (TimePlay <= 0) and not ((GameParams.TimerMode) or (GameParams.Level.Info.TimeLimit > 5999)) then
   begin
     GameResultRec.gTimeIsUp := True;
-    Finish;
+    Finish(GM_FIN_TIME);
     Exit;
   end;
 
@@ -1547,19 +1547,19 @@ begin
 
   if (LemmingsIn >= Level.Info.LemmingsCount + LemmingsCloned) and (DelayEndFrames = 0) then
   begin
-    Finish;
+    Finish(GM_FIN_LEMMINGS);
     Exit;
   end;
 
   if ((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved) = 0) and (DelayEndFrames = 0) then
   begin
-    Finish;
+    Finish(GM_FIN_LEMMINGS);
     Exit;
   end;
 
   if UserSetNuking and (LemmingsOut = 0) and (DelayEndFrames = 0) then
   begin
-    Finish;
+    Finish(GM_FIN_LEMMINGS);
     Exit;
   end;
 
@@ -5440,17 +5440,17 @@ begin
     RecordReleaseRate(NewRR);
 end;
 
-procedure TLemmingGame.Finish;
+procedure TLemmingGame.Finish(aReason: Integer);
 begin
   SetGameResult;
   fGameFinished := True;
-  MessageQueue.Add(GAMEMSG_FINISH);
+  MessageQueue.Add(GAMEMSG_FINISH, aReason);
 end;
 
 procedure TLemmingGame.Cheat;
 begin
   fGameCheated := True;
-  Finish;
+  Finish(GM_FIN_TERMINATE);
 end;
 
 procedure TLemmingGame.EnsureCorrectReplayDetails;

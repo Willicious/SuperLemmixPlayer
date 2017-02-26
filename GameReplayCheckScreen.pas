@@ -401,7 +401,7 @@ begin
 
         Game.UpdateLemmings;
         while Game.MessageQueue.HasMessages do
-          if Game.MessageQueue.NextMessage.MessageType in [GAMEMSG_FINISH, GAMEMSG_TIMEUP] then
+          if Game.MessageQueue.NextMessage.MessageType = GAMEMSG_FINISH then
           begin
             if Game.GameResultRec.gSuccess then
               fReplays[i].ReplayResult := CR_PASS
