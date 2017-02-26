@@ -555,7 +555,7 @@ begin
     if ScreenYPosition < 0 then ScreenYPosition := 0;
     if ScreenYPosition > Height-1 then ScreenYPosition := Height-1;
 
-    if LemmingsCount < 0 then LemmingsCount := 0;
+    if LemmingsCount < PreplacedLemmings.Count then LemmingsCount := PreplacedLemmings.Count;
     if RescueCount < 0 then RescueCount := 0;
 
     if TimeLimit < 1 then TimeLimit := 1;
