@@ -7,6 +7,7 @@ uses
   Classes, Controls, SysUtils, Math,
   GR32, GR32_Image, GR32_Layers,
   UMisc,
+  Windows,
   LemmixHotkeys, LemStrings, LemTypes,
   LemLemming,
   {LemDosBmp,} LemDosStructures, LemDosStyle,
@@ -519,6 +520,8 @@ procedure TSkillPanelToolbar.RefreshInfo;
 var
   i: TSkillPanelButton;
   TimeRemaining: Integer;
+  IsBlinkFrame: Boolean;
+  DoTimerBlink: Boolean;
 
   function GetSkillString(L: TLemming): String;
   var
@@ -570,11 +573,13 @@ var
   end;
 
 begin
+  IsBlinkFrame := (GetTickCount mod 1000) > 499;
+
   // hatch: (Count + Cloned - SpawnedDead) - (Out + Removed)
   // alive: (Count + Cloned - SpawnedDead) - Removed
   //    in: Saved - Requirement
   SetInfoLemHatch(Game.LemmingsToSpawn);
-  SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive);
+  SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner]) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame);
   SetInfoLemIn(Game.LemmingsSaved - Level.Info.RescueCount);
 
   if Level.Info.TimeLimit > 5999 then
@@ -583,8 +588,9 @@ begin
     SetInfoSeconds((Game.CurrentIteration mod (17 * 60)) div 17);
   end else begin
     TimeRemaining := Level.Info.TimeLimit - (Game.CurrentIteration div 17);
-    SetInfoMinutes(TimeRemaining div 60);
-    SetInfoSeconds(TimeRemaining mod 60);
+    DoTimerBlink := IsBlinkFrame and (TimeRemaining <= 30);
+    SetInfoMinutes(TimeRemaining div 60, DoTimerBlink);
+    SetInfoSeconds(TimeRemaining mod 60, DoTimerBlink);
   end;
 
   DrawNewStr;
