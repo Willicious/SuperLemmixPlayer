@@ -5526,7 +5526,8 @@ begin
   end
   else if not Rev then // and neither GameParams.ChallengeMode
   begin
-    CurrSkillCount[aAction] := Max(CurrSkillCount[aAction] - 1, 0);
+    if CurrSkillCount[aAction] < 100 then // need to implement a seperate "infinite" setting
+      CurrSkillCount[aAction] := Max(CurrSkillCount[aAction] - 1, 0);
     Inc(UsedSkillCount[aAction])
   end;
 end;
