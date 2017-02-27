@@ -544,7 +544,9 @@ var
 
     Result := LemmingActionStrings[L.LemAction];
 
-    if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
+    ShowAthleteInfo := L.LemIsZombie or GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
+
+    if ShowAthleteInfo or (not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking])) then
     begin
       i := 0;
       if L.LemIsClimber then DoInc(SClimber);
@@ -552,12 +554,7 @@ var
       if L.LemIsFloater then DoInc(SFloater);
       if L.LemIsGlider then DoInc(SGlider);
       if L.LemIsMechanic then DoInc(SMechanic);
-      if L.LemIsZombie then
-      begin
-        Result := SZombie;
-        ShowAthleteInfo := true;
-      end else
-        ShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
+      if L.LemIsZombie then Result := SZombie;
 
       if ShowAthleteInfo then
       begin
