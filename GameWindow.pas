@@ -33,6 +33,9 @@ const
   CURSOR_TYPES = 2;
   EXTRA_ZOOM_LEVELS = 4;
 
+  // special hyperspeed ends. usually only needed for forwards ones, backwards can often get the exact frame.
+  SHE_SHRUGGER = 1;
+
 type
   TGameWindow = class(TGameBaseScreen)
   private
@@ -52,6 +55,7 @@ type
     fMinimapBuffer: TBitmap32;
   { current gameplay }
     fGameSpeed: TGameSpeed;
+    fHyperSpeedStopCondition: Integer;
     fHyperSpeedTarget: Integer;
   { game eventhandler}
     procedure Game_Finished;
@@ -374,6 +378,9 @@ procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
     Game.UpdateLemmings().
 -------------------------------------------------------------------------------}
 var
+  i: Integer;
+  ContinueHyper: Boolean;
+
   CurrTime: Cardinal;
   Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
 begin
@@ -445,19 +452,40 @@ begin
       end;
     end;
 
+    if Hyper and (fHyperSpeedStopCondition <> 0) then
+    begin
+      ContinueHyper := false;
+      case fHyperSpeedStopCondition of
+        SHE_SHRUGGER: for i := 0 to fRenderInterface.LemmingList.Count-1 do
+                      begin
+                        if fRenderInterface.LemmingList[i].LemRemoved then Continue;
+
+                        if fRenderInterface.LemmingList[i].LemAction = baShrugging then
+                        begin
+                          ContinueHyper := false;
+                          Break;
+                        end;
+
+                        if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baStacking, baPlatforming] then
+                          ContinueHyper := true;
+                      end;
+      end;
+
+      if not ContinueHyper then
+      begin
+        fHyperSpeedTarget := Game.CurrentIteration;
+        fHyperSpeedStopCondition := 0;
+      end else
+        fHyperSpeedTarget := Game.CurrentIteration + 1;
+    end;
+
     // Refresh panel if in usual or fast play mode
     if not Hyper then
     begin
       SkillPanel.RefreshInfo;
       CheckResetCursor;
-    end
-    // End hyperspeed if we have reached the TargetIteration and are not mass replay checking
-    // Note that TargetIteration is 1 less than the actual target frame number,
-    // because we only set Game.LeavingHyperSpeed=True here,
-    // any only exit hyperspeed after calling Game.UpdateLemmings once more!
-    else if (Game.CurrentIteration = fHyperSpeedTarget) then
+    end else if (Game.CurrentIteration = fHyperSpeedTarget) then
     begin
-      //Game.HyperSpeedEnd;
       fHyperSpeedTarget := -1;
       SkillPanel.RefreshInfo;
       fNeedRedraw := true;
@@ -478,7 +506,7 @@ end;
 
 function TGameWindow.GetIsHyperSpeed: Boolean;
 begin
-  Result := fHyperSpeedTarget > Game.CurrentIteration;
+  Result := (fHyperSpeedTarget > Game.CurrentIteration) or (fHyperSpeedStopCondition <> 0);
 end;
 
 procedure TGameWindow.ProcessGameMessages;
@@ -1113,10 +1141,13 @@ procedure TGameWindow.HandleSpecialSkip(aSkipType: Integer);
 var
   i: Integer;
   TargetFrame: Integer;
+  HasSuitableSkill: Boolean;
 begin
   TargetFrame := 0; // fallback
   case aSkipType of
     0: begin
+         if (Game.ReplayManager.LastActionFrame = -1) then Exit;
+
          if Game.CurrentIteration > Game.ReplayManager.LastActionFrame then
            TargetFrame := Game.ReplayManager.LastActionFrame
          else
@@ -1124,6 +1155,23 @@ begin
              if Game.ReplayManager.HasAnyActionAt(i) then
                TargetFrame := i;
          GotoSaveState(Max(TargetFrame - 1, 0));
+       end;
+    1: begin
+         HasSuitableSkill := false;
+         for i := 0 to fRenderInterface.LemmingList.Count-1 do
+         begin
+           if fRenderInterface.LemmingList[i].LemRemoved then Continue;
+
+           if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baPlatforming, baStacking] then
+           begin
+             HasSuitableSkill := true;
+             Break;
+           end;
+         end;
+         if not HasSuitableSkill then Exit;
+
+         fHyperSpeedStopCondition := SHE_SHRUGGER;
+         GameSpeed := gspPause;
        end;
   end;
 end;

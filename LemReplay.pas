@@ -478,7 +478,7 @@ function TReplay.GetLastActionFrame: Integer;
       if aList[i].Frame > Result then Result := aList[i].Frame;
   end;
 begin
-  Result := 0;
+  Result := -1;
   CheckForAction(fAssignments);
   CheckForAction(fReleaseRateChanges);
 end;

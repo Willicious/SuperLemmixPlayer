@@ -259,8 +259,8 @@ var
     else if s = 'miner' then Result := 14
     else if s = 'digger' then Result := 15
     else if s = 'cloner' then Result := 16
-    else if s = 'last_skill' then Result := 0
-    else if s = 'next_shrug' then Result := 1
+    else if s = 'lastskill' then Result := 0
+    else if s = 'nextshrug' then Result := 1
     else if s = '' then Result := 0
     else
     begin
