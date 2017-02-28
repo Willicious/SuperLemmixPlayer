@@ -221,6 +221,9 @@ const
 
 implementation
 
+uses
+  Math;
+
 { TRenderInterface }
 
 constructor TRenderInterface.Create;
@@ -537,10 +540,22 @@ var
   x, y: Integer;
   PSrc,PDst: PColor32;
   C: TColor32;
+
+  function Redify(aColor: TColor32): TColor32;
+  var
+    R, G, B: Byte;
+  begin
+    R := RedComponent(aColor);
+    G := GreenComponent(aColor);
+    B := BlueComponent(aColor);
+    R := Max((R + 255) div 2, $80);
+    G := Max(G div 2, $20);
+    B := Max(B div 2, $20);
+    Result := $FF000000 or (R shl 16) or (G shl 8) or B;
+  end;
 begin
   // It's very messy to track position in a custom pixelcombine, hence using an entirely
   // custom procedure instead.
-  C := 0;
   IntersectRect(aRegion, aRegion, fPhysicsMap.BoundsRect);
   for y := aRegion.Top to aRegion.Bottom-1 do
   begin
@@ -552,14 +567,22 @@ begin
     begin
       Inc(PSrc);
       Inc(PDst);
-      if PSrc^ and PM_SOLID = 0 then
-        Continue
-      else if PSrc^ and PM_STEEL = 0 then
-        C := $FFB0B0B0
-      else
-        C := $FF606060;
-      if (x mod 2) <> (y mod 2) then
-        C := C - $00202020;
+
+      if PSrc^ and PM_SOLID <> 0 then
+      begin
+        if PSrc^ and PM_STEEL = 0 then
+          C := $FFB0B0B0
+        else
+          C := $FF606060;
+      end else
+        C := 0;
+
+      if (x = 0) or (y = 0) or (x = fPhysicsMap.Width-1) or (y = fPhysicsMap.Height-1) then
+        C := Redify(C);
+
+      if ((x mod 2) <> (y mod 2)) and (C <> 0) then
+          C := C - $00202020;
+
       PDst^ := C;
     end;
   end;
