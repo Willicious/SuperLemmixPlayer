@@ -116,7 +116,7 @@ const
   DOM_LEMMING          = 13;
   DOM_PICKUP           = 14;
   DOM_LOCKEXIT         = 15;
-  //DOM_SECRET           = 16;
+  DOM_SKETCH           = 16; // replaces DOM_SECRET, shouldn't be in LVL files, and gets hidden if it is
   DOM_BUTTON           = 17;
   DOM_RADIATION        = 18;
   DOM_ONEWAYDOWN       = 19;
@@ -220,7 +220,6 @@ begin
     Obj.DrawingFlags := Obj.DrawingFlags and not 4; // odf_NoOverwrite
     Obj.DrawingFlags := Obj.DrawingFlags or 1; // odf_OnlyOnTerrain
   end;*)
-
 
   // Set other stuff
   Triggered := False;
@@ -340,7 +339,7 @@ end;
 
 function TInteractiveObjectInfo.GetIsInvisible: Boolean;
 begin
-  Result := ((Obj.DrawingFlags and odf_Invisible) <> 0);
+  Result := ((Obj.DrawingFlags and odf_Invisible) <> 0) or (MetaObj.TriggerEffect = DOM_SKETCH);
 end;
 
 function TInteractiveObjectInfo.GetIsFlipImage: Boolean;
