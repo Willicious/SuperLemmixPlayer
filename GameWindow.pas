@@ -524,7 +524,7 @@ begin
       GAMEMSG_SOUND: if not IsHyperSpeed then
                        SoundManager.PlaySound(Msg.MessageDataStr);
       GAMEMSG_SOUND_BAL: if not IsHyperSpeed then
-                           SoundManager.PlaySound(Msg.MessageDataStr, Msg.MessageDataInt);
+                           SoundManager.PlaySound(Msg.MessageDataStr,  (Msg.MessageDataInt - Trunc(((Img.Width / 2) - Img.OffsetHorz) / Img.Scale)) div 2);
       GAMEMSG_MUSIC: SoundManager.PlayMusic;
     end;
   end;

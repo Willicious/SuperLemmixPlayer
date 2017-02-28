@@ -398,10 +398,17 @@ begin
   if SoundIndex = -1 then
     SoundIndex := LoadSoundFromFile(aName);
 
+  if aBalance < -100 then aBalance := -100;
+  if aBalance > 100 then aBalance := 100;
+
   if SoundIndex <> -1 then
   begin
     SampleChannel := BASS_SampleGetChannel(fSoundEffects[SoundIndex].BassSample, true);
-    BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100));
+    if aBalance <> 0 then
+    begin
+      if not BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100)) then
+        ShowMessage(IntToStr(BASS_ErrorGetCode));
+    end;
     BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_VOL, (fSoundVolume / 100));
     BASS_ChannelPlay(SampleChannel, true);
   end;
