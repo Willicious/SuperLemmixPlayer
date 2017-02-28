@@ -578,8 +578,8 @@ begin
   // hatch: (Count + Cloned - SpawnedDead) - (Out + Removed)
   // alive: (Count + Cloned - SpawnedDead) - Removed
   //    in: Saved - Requirement
-  SetInfoLemHatch(Game.LemmingsToSpawn);
-  SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner]) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame);
+  SetInfoLemHatch(Game.LemmingsToSpawn - Game.SpawnedDead);
+  SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner] - Game.SpawnedDead) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame);
   SetInfoLemIn(Game.LemmingsSaved - Level.Info.RescueCount);
 
   if Level.Info.HasTimeLimit then

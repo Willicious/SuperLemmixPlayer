@@ -70,7 +70,7 @@ type
       LemmingsToRelease: Integer;
       LemmingsCloned: Integer;
       LemmingsOut: Integer;
-      SpawnedDead: Integer;
+      fSpawnedDead: Integer;
       LemmingsIn: Integer;
       LemmingsRemoved: Integer;
       NextLemmingCountdown: Integer;
@@ -169,7 +169,7 @@ type
     LemmingsToRelease           : Integer; // number of lemmings that were created
     LemmingsCloned             : Integer; // number of cloned lemmings
     LemmingsOut                : Integer; // number of lemmings currently walking around
-    SpawnedDead                : Integer; // number of zombies that were created
+    fSpawnedDead                : Integer; // number of zombies that were created
     LemmingsIn                 : integer; // number of lemmings that made it to heaven
     LemmingsRemoved            : Integer; // number of lemmings removed
     DelayEndFrames             : Integer;
@@ -422,6 +422,7 @@ type
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
     property LemmingsToSpawn: Integer read LemmingsToRelease;
+    property SpawnedDead: Integer read fSpawnedDead;
     property LemmingsActive: Integer read LemmingsOut;
     property LemmingsSaved: Integer read LemmingsIn;
     property CurrentReleaseRate: Integer read CurrReleaseRate; // for skill panel's usage
@@ -656,7 +657,7 @@ begin
   aState.LemmingsToRelease := LemmingsToRelease;
   aState.LemmingsCloned := LemmingsCloned;
   aState.LemmingsOut := LemmingsOut;
-  aState.SpawnedDead := SpawnedDead;
+  aState.fSpawnedDead := fSpawnedDead;
   aState.LemmingsIn := LemmingsIn;
   aState.LemmingsRemoved := LemmingsRemoved;
   aState.NextLemmingCountdown := NextLemmingCountdown;
@@ -715,7 +716,7 @@ begin
   LemmingsToRelease := aState.LemmingsToRelease;
   LemmingsCloned := aState.LemmingsCloned;
   LemmingsOut := aState.LemmingsOut;
-  SpawnedDead := aState.SpawnedDead;
+  fSpawnedDead := aState.fSpawnedDead;
   LemmingsIn := aState.LemmingsIn;
   LemmingsRemoved := aState.LemmingsRemoved;
   NextLemmingCountdown := aState.NextLemmingCountdown;
@@ -1067,7 +1068,7 @@ begin
   GameResultRec.gToRescue := Level.Info.RescueCount;
 
   LemmingsOut := 0;
-  SpawnedDead := Level.Info.ZombieCount;
+  fSpawnedDead := Level.Info.ZombieCount;
   LemmingsIn := 0;
   LemmingsRemoved := 0;
   DelayEndFrames := 0;
@@ -1208,7 +1209,7 @@ begin
       if Lem.IsZombie then
       begin
         RemoveLemming(L, RM_ZOMBIE, true);
-        Dec(SpawnedDead);
+        Dec(fSpawnedDead);
       end;
 
     end;
@@ -1551,7 +1552,7 @@ begin
     Exit;
   end;
 
-  if ((Level.Info.LemmingsCount + LemmingsCloned - SpawnedDead) - (LemmingsRemoved) = 0) and (DelayEndFrames = 0) then
+  if ((Level.Info.LemmingsCount + LemmingsCloned - fSpawnedDead) - (LemmingsRemoved) = 0) and (DelayEndFrames = 0) then
   begin
     Finish(GM_FIN_LEMMINGS);
     Exit;
@@ -4832,7 +4833,7 @@ begin
           if (ObjectInfos[ix].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
           if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then
           begin
-            Dec(SpawnedDead);
+            Dec(fSpawnedDead);
             RemoveLemming(NewLemming, RM_ZOMBIE, true);
           end;
         end;
