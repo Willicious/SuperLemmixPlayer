@@ -591,6 +591,9 @@ begin
     else aLevel.LoadFromStream(aStream);
   end;
 
+  if (b <= 4) and (aLevel.Info.TimeLimit >= 6000) then
+    aLevel.Info.HasTimeLimit := false;
+
   // if the level has no Level ID, make one.
   // must be pseudo-random to enough extent to generate a different ID for each level,
   // but the same ID for the same level if unmodified

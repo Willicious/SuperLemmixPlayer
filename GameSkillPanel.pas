@@ -582,15 +582,15 @@ begin
   SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner]) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame);
   SetInfoLemIn(Game.LemmingsSaved - Level.Info.RescueCount);
 
-  if Level.Info.TimeLimit > 5999 then
+  if Level.Info.HasTimeLimit then
   begin
-    SetInfoMinutes(Game.CurrentIteration div (17 * 60));
-    SetInfoSeconds((Game.CurrentIteration mod (17 * 60)) div 17);
-  end else begin
     TimeRemaining := Level.Info.TimeLimit - (Game.CurrentIteration div 17);
     DoTimerBlink := IsBlinkFrame and (TimeRemaining <= 30);
     SetInfoMinutes(TimeRemaining div 60, DoTimerBlink);
     SetInfoSeconds(TimeRemaining mod 60, DoTimerBlink);
+  end else begin
+    SetInfoMinutes(Game.CurrentIteration div (17 * 60));
+    SetInfoSeconds((Game.CurrentIteration mod (17 * 60)) div 17);
   end;
 
   DrawNewStr;
@@ -1311,7 +1311,7 @@ end;
 procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);
 begin
   fGame := Value;
-  SetTimeLimit(GameParams.Level.Info.TimeLimit < 6000);
+  SetTimeLimit(GameParams.Level.Info.HasTimeLimit);
 end;
 
 end.

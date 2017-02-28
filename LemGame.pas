@@ -775,7 +775,7 @@ begin
          or ((SaveRequirement = 0) and (LemmingsIn < GameParams.Level.Info.RescueCount)) then Continue;
 
       if    ((TimeLimit <> 0) and (CurrentIteration > TimeLimit))
-         or ((TimeLimit = 0) and (CurrentIteration > Level.Info.TimeLimit * 17)) then Continue;
+         or ((TimeLimit = 0) and Level.Info.HasTimeLimit and (CurrentIteration > Level.Info.TimeLimit * 17)) then Continue;
       if LowestReleaseRate < RRMin then Continue;
       if HighestReleaseRate > RRMax then Continue;
 
@@ -1059,7 +1059,7 @@ begin
   LemmingsToRelease := Level.Info.LemmingsCount;
   LemmingsCloned := 0;
   TimePlay := Level.Info.TimeLimit;
-  if (TimePlay > 5999) or (GameParams.TimerMode) then
+  if (not Level.Info.HasTimeLimit) or (GameParams.TimerMode) then
     TimePlay := 0; // infinite time
 
   FillChar(GameResultRec, SizeOf(GameResultRec), 0);
@@ -1535,7 +1535,7 @@ begin
   if fGameFinished then
     Exit;
 
-  if (TimePlay <= 0) and not ((GameParams.TimerMode) or (GameParams.Level.Info.TimeLimit > 5999)) then
+  if (TimePlay <= 0) and not ((GameParams.TimerMode) or (not GameParams.Level.Info.HasTimeLimit)) then
   begin
     GameResultRec.gTimeIsUp := True;
     Finish(GM_FIN_TIME);
@@ -5465,43 +5465,6 @@ begin
     LevelID := fLevel.Info.LevelID;
   end;
 end;
-
-(*
-
-// Nepster: Please keep these until further notice.
-
-function TLemmingGame.CheckLemmingBlink: Boolean;
-var
-  i: Integer;
-  MaxSavedLemCount: Integer;
-begin
-  Result := false;
-  if not GameParams.LemmingBlink then Exit;
-  if GameParams.ChallengeMode and (spbCloner in Level.Info.Skillset) then Exit;
-
-  MaxSavedLemCount := LemmingsOut + LemmingsIn + (Level.Info.LemmingsCount - LemmingsToRelease - SpawnedDead);
-  if (spbCloner in Level.Info.Skillset) then
-  begin
-    Inc(MaxSavedLemCount, CurrSkillCount[baCloning]);
-    for i := 0 to ObjectInfos.Count - 1 do
-      if (ObjectInfos[i].TriggerEffect = DOM_PICKUP) and (ObjectInfos[i].SkillType = spbCloner) then
-        Inc(MaxSavedLemCount);
-  end;
-
-  Result := (CurrentIteration mod 17 > 8) and (MaxSavedLemCount < Level.Info.RescueCount);
-end;
-
-function TLemmingGame.CheckTimerBlink: Boolean;
-begin
-  Result := false;
-  if not (GameParams.TimerBlink) then Exit; 
-  if ((GameParams.TimerMode) or (GameParams.Level.Info.TimeLimit > 5999)) then Exit;
-  if (TimePlay < 30) and (TimePlay >= 0) and (CurrentIteration mod 17 > 8) then
-    Result := true;
-end;
-
-*)
-
 
 function TLemmingGame.CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
 var

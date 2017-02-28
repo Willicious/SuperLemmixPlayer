@@ -302,8 +302,10 @@ begin
   Perc := IntToStr(GameParams.Level.Info.RescueCount) + ' Lemming';
   if GameParams.Level.Info.RescueCount <> 1 then Perc := Perc + 's';
 
-  TL := IntToStr(GameParams.Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(GameParams.Level.Info.TimeLimit mod 60,2);
-  if GameParams.Level.Info.TimeLimit > 5999 then TL := '(Infinite)'; //99:59
+  if GameParams.Level.Info.HasTimeLimit then
+    TL := IntToStr(GameParams.Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(GameParams.Level.Info.TimeLimit mod 60,2)
+  else
+    TL := '(Infinite)';
 
   if GameParams.OneLevelMode then
   begin

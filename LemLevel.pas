@@ -20,6 +20,7 @@ type
     fLemmingsCount  : Integer;
     fZombieCount    : Integer;
     fRescueCount    : Integer;
+    fHasTimeLimit   : Boolean;
     fTimeLimit      : Integer;
 
     fSkillset: TSkillset;
@@ -56,6 +57,7 @@ type
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
     property ZombieCount    : Integer read fZombieCount write fZombieCount;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
+    property HasTimeLimit   : Boolean read fHasTimeLimit write fHasTimeLimit;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
 
     property Skillset: TSkillset read fSkillset write fSkillset;
@@ -141,7 +143,8 @@ begin
   LemmingsCount   := 1;
   ZombieCount     := 0;
   RescueCount     := 1;
-  TimeLimit       := 6000;
+  HasTimeLimit    := false;
+  TimeLimit       := 0;
 
   fSkillset       := [];
   FillChar(fSkillCounts, SizeOf(TSkillCounts), 0);
@@ -283,13 +286,17 @@ procedure TLevel.LoadGeneralInfo(aSection: TParserSection);
       Result := $02;
   end;
 
-  function GetTimeLimitValue(aString: String): Integer;
+  procedure HandleTimeLimit(aString: String);
   begin
     aString := Lowercase(aString);
     if (aString = '') or (aString = 'infinite') then
-      Result := 6000
-    else
-      Result := StrToIntDef(aString, 6000);
+    begin
+      Info.HasTimeLimit := false;
+      Info.TimeLimit := 0;
+    end else begin
+      Info.HasTimeLimit := true;
+      Info.TimeLimit := StrToIntDef(aString, 1);
+    end;
   end;
 begin
   // This procedure should receive the Parser's MAIN section
@@ -303,7 +310,7 @@ begin
 
     LemmingsCount := aSection.LineNumeric['lemmings'];
     RescueCount := aSection.LineNumeric['requirement'];
-    TimeLimit := GetTimeLimitValue(aSection.LineTrimString['time_limit']);
+    HandleTimeLimit(aSection.LineTrimString['time_limit']);
     ReleaseRate := aSection.LineNumeric['release_rate'];
     ReleaseRateLocked := (aSection.Line['release_rate_locked'] <> nil);
 
@@ -559,7 +566,7 @@ begin
     if RescueCount < 0 then RescueCount := 0;
 
     if TimeLimit < 1 then TimeLimit := 1;
-    if TimeLimit > 6000 then TimeLimit := 6000;
+    if TimeLimit > 5999 then TimeLimit := 5999;
 
     if ReleaseRate < 1 then ReleaseRate := 1;
     if ReleaseRate > 99 then ReleaseRate := 99;
@@ -703,7 +710,7 @@ begin
     aSection.AddLine('LEMMINGS', LemmingsCount);
     aSection.AddLine('REQUIREMENT', RescueCount);
 
-    if (TimeLimit > 0) and (TimeLimit < 6000) then
+    if HasTimeLimit then
       aSection.AddLine('TIME_LIMIT', TimeLimit);
 
     aSection.AddLine('RELEASE_RATE', ReleaseRate);
