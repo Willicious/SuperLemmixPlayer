@@ -88,6 +88,7 @@ type
     procedure ApplyResize(NoRecenter: Boolean = false);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
     procedure ReleaseCursors;
+    procedure HandleSpecialSkip(aSkipType: Integer);
 
     function GetLevelMusicName: String;
     function GetIsHyperSpeed: Boolean;
@@ -936,6 +937,7 @@ const
                          lka_ForceWalker,
                          lka_Cheat,
                          lka_Skip,
+                         lka_SpecialSkip,
                          lka_FastForward,
                          lka_SaveImage,
                          lka_LoadReplay,
@@ -1068,17 +1070,15 @@ begin
                       begin
                         if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                         if CurrentIteration > (func.Modifier * -1) then
-                          GotoSaveState(CurrentIteration + func.Modifier - 1)
+                          GotoSaveState(CurrentIteration + func.Modifier)
                         else
                           GotoSaveState(0);
                       end else if func.Modifier > 1 then
                       begin
-                        // We have to set TargetIteration one frame before the actual target frame number,
-                        // because on TargetIteration, we only set Game.LeavingHyperSpeed=True,
-                        // but exit hyperspeed only after calling Game.UpdateLemmings once more!
-                        fHyperSpeedTarget := CurrentIteration + func.Modifier - 1;
+                        fHyperSpeedTarget := CurrentIteration + func.Modifier;
                       end else
                         if fGameSpeed = gspPause then ForceUpdateOneFrame := true;
+          lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
           lka_ClearPhysics: if func.Modifier = 0 then
                               ClearPhysics := not ClearPhysics
                             else
@@ -1095,6 +1095,25 @@ begin
 
   if (fGameSpeed = gspPause) and not ForceUpdateOneFrame then  // if ForceUpdateOneFrame is active, screen will be redrawn soon enough anyway
     DoDraw;
+end;
+
+procedure TGameWindow.HandleSpecialSkip(aSkipType: Integer);
+var
+  i: Integer;
+  TargetFrame: Integer;
+begin
+  TargetFrame := 0; // fallback
+  case aSkipType of
+    0: begin
+         if Game.CurrentIteration > Game.ReplayManager.LastActionFrame then
+           TargetFrame := Game.ReplayManager.LastActionFrame
+         else
+           for i := 0 to Game.CurrentIteration do
+             if Game.ReplayManager.HasAnyActionAt(i) then
+               TargetFrame := i;
+         GotoSaveState(Max(TargetFrame - 1, 0));
+       end;
+  end;
 end;
 
 procedure TGameWindow.Form_KeyPress(Sender: TObject; var Key: Char);

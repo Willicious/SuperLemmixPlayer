@@ -48,6 +48,14 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblSkip: TLabel
+    Left = 301
+    Top = 179
+    Width = 24
+    Height = 13
+    Caption = 'Skip:'
+    Visible = False
+  end
   object lvHotkeys: TListView
     Left = 8
     Top = 8
@@ -98,6 +106,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Select Walker'
       'Cheat'
       'Time Skip'
+      'Special Skip'
       'Fast Forward'
       'Save Image'
       'Load Replay'
@@ -176,7 +185,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object Button2: TButton
     Left = 296
-    Top = 216
+    Top = 264
     Width = 121
     Height = 25
     Caption = 'Find Key'
@@ -197,12 +206,27 @@ object FLemmixHotkeys: TFLemmixHotkeys
   end
   object cbHoldKey: TCheckBox
     Left = 312
-    Top = 176
+    Top = 208
     Width = 97
     Height = 17
     Caption = 'Hold Key'
     TabOrder = 8
     Visible = False
     OnClick = cbHoldKeyClick
+  end
+  object cbSpecialSkip: TComboBox
+    Left = 336
+    Top = 176
+    Width = 97
+    Height = 21
+    Style = csDropDownList
+    Enabled = False
+    ItemHeight = 13
+    TabOrder = 9
+    Visible = False
+    OnChange = cbSpecialSkipChange
+    Items.Strings = (
+      'Previous Assignment'
+      'Next Shrugger')
   end
 end

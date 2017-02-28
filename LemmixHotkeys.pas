@@ -11,7 +11,7 @@ uses
 const
   MAX_KEY = 255;
   MAX_KEY_LEN = 4;
-  KEYSET_VERSION = 8;
+  KEYSET_VERSION = 9;
 
 type
   TLemmixHotkeyAction = (lka_Null,
@@ -31,6 +31,7 @@ type
                          lka_ForceWalker,
                          lka_Cheat,
                          lka_Skip,
+                         lka_SpecialSkip,
                          lka_FastForward,
                          lka_SaveImage,
                          lka_LoadReplay,
@@ -145,6 +146,10 @@ begin
   fKeyFunctions[$BD].Modifier := -17;
   fKeyFunctions[$BE].Action := lka_Skip;
   fKeyFunctions[$BE].Modifier := 17 * 5;
+  fKeyFunctions[$DB].Action := lka_SpecialSkip;
+  fKeyFunctions[$DB].Modifier := 0;
+  fKeyFunctions[$DD].Action := lka_SpecialSkip;
+  fKeyFunctions[$DD].Modifier := 1;
 
   // And here's the skill ones; these ones need the skill specified seperately
   fKeyFunctions[$32].Action := lka_Skill;
@@ -211,6 +216,7 @@ var
     if s = 'force_walker' then Result := lka_ForceWalker;
     if s = 'cheat' then Result := lka_Cheat;
     if s = 'skip' then Result := lka_Skip;
+    if s = 'special_skip' then Result := lka_SpecialSkip;
     if s = 'fastforward' then Result := lka_FastForward;
     if s = 'save_image' then Result := lka_SaveImage;
     if s = 'load_replay' then Result := lka_LoadReplay;
@@ -253,6 +259,8 @@ var
     else if s = 'miner' then Result := 14
     else if s = 'digger' then Result := 15
     else if s = 'cloner' then Result := 16
+    else if s = 'last_skill' then Result := 0
+    else if s = 'next_shrug' then Result := 1
     else if s = '' then Result := 0
     else
     begin
@@ -378,6 +386,12 @@ begin
         SetIfFree($06, lka_ZoomOut);
       end;
 
+      if FixVersion < 9 then
+      begin
+        SetIfFree($DB, lka_SpecialSkip, 0);
+        SetIfFree($DD, lka_SpecialSkip, 1);
+      end;
+
     except
       SetDefaults;
     end;
@@ -410,6 +424,7 @@ var
       lka_ForceWalker:      Result := 'Force_Walker';
       lka_Cheat:            Result := 'Cheat';
       lka_Skip:             Result := 'Skip';
+      lka_SpecialSkip:      Result := 'Special_Skip';
       lka_FastForward:      Result := 'FastForward';
       lka_SaveImage:        Result := 'Save_Image';
       lka_LoadReplay:       Result := 'Load_Replay';
@@ -432,27 +447,32 @@ var
     end;
   end;
 
-  function InterpretSecondary(aValue: Integer): String;
+  function InterpretSecondary(aValue: Integer; aMain: TLemmixHotkeyAction): String;
   begin
-    // Used only for skills!
-    case aValue of
-      0: Result := 'Walker';
-      1: Result := 'Climber';
-      2: Result := 'Swimmer';
-      3: Result := 'Floater';
-      4: Result := 'Glider';
-      5: Result := 'Disarmer';
-      6: Result := 'Bomber';
-      7: Result := 'Stoner';
-      8: Result := 'Blocker';
-      9: Result := 'Platformer';
-      10: Result := 'Builder';
-      11: Result := 'Stacker';
-      12: Result := 'Basher';
-      13: Result := 'Fencer';
-      14: Result := 'Miner';
-      15: Result := 'Digger';
-      16: Result := 'Cloner';
+    case aMain of
+      lka_Skill:  case aValue of
+                    0: Result := 'Walker';
+                    1: Result := 'Climber';
+                    2: Result := 'Swimmer';
+                    3: Result := 'Floater';
+                    4: Result := 'Glider';
+                    5: Result := 'Disarmer';
+                    6: Result := 'Bomber';
+                    7: Result := 'Stoner';
+                    8: Result := 'Blocker';
+                    9: Result := 'Platformer';
+                    10: Result := 'Builder';
+                    11: Result := 'Stacker';
+                    12: Result := 'Basher';
+                    13: Result := 'Fencer';
+                    14: Result := 'Miner';
+                    15: Result := 'Digger';
+                    16: Result := 'Cloner';
+                  end;
+      lka_SpecialSkip:  case aValue of
+                          0: Result := 'LastSkill';
+                          1: Result := 'NextShrug';
+                        end;
       else Result := IntToStr(aValue);
     end;
   end;
@@ -463,12 +483,8 @@ begin
   begin
     s := InterpretMain(fKeyFunctions[i].Action);
     if s = 'Null' then Continue;
-    if fKeyFunctions[i].Action = lka_Skill then
-      s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier);
-    if fKeyFunctions[i].Action = lka_Skip then
-      s := s + ':' + IntToStr(fKeyFunctions[i].Modifier);
-    if fKeyFunctions[i].Action = lka_ClearPhysics then
-      s := s + ':' + IntToStr(fKeyFunctions[i].Modifier);
+    if fKeyFunctions[i].Action in [lka_Skill, lka_Skip, lka_SpecialSkip, lka_ClearPhysics] then
+      s := s + ':' + InterpretSecondary(fKeyFunctions[i].Modifier, fKeyFunctions[i].Action);
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
   end;
   try

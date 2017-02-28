@@ -21,6 +21,8 @@ type
     Label3: TLabel;
     cbHardcodedNames: TCheckBox;
     cbHoldKey: TCheckBox;
+    cbSpecialSkip: TComboBox;
+    lblSkip: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);
@@ -35,6 +37,7 @@ type
     procedure cbHardcodedNamesClick(Sender: TObject);
     procedure cbHoldKeyClick(Sender: TObject);
     procedure SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
+    procedure cbSpecialSkipChange(Sender: TObject);
   private
     fShownFindInfo: Boolean;
     fKeyNames: Array [0..MAX_KEY] of String; //MAX_KEY defined in unit LemmixHotkeys
@@ -118,6 +121,13 @@ begin
                           s := 'Clear Physics Mode (toggle)'
                         else
                           s := 'Clear Physics Mode (hold)';
+      lka_SpecialSkip: begin
+                         s := s + 'Skip to ';
+                         case Hotkey.Modifier of
+                           0: s := s + 'Previous Assignment';
+                           1: s := s + 'Next Shrugger';
+                         end;
+                       end;
       else s := cbFunctions.Items[Integer(fHotkeys.CheckKeyEffect(i).Action)];
     end;
     if e < lvHotkeys.Items.Count then
@@ -237,6 +247,9 @@ begin
   lblDuration.Visible := false;
   ebSkipDuration.Visible := false;
   ebSkipDuration.Enabled := false;
+  lblSkip.Visible := false;
+  cbSpecialSkip.Visible := false;
+  cbSpecialSkip.Enabled := false;
   cbHoldKey.Visible := false;
   cbHoldKey.Enabled := false;
 
@@ -254,7 +267,12 @@ begin
     lka_ClearPhysics: begin
                         cbHoldKey.Visible := true;
                         cbHoldKey.Enabled := true;
-                      end;  
+                      end;
+    lka_SpecialSkip: begin
+                       lblSkip.Visible := true;
+                       cbSpecialSkip.Visible := true;
+                       cbSpecialSkip.Enabled := true;
+                     end;
   end;
 end;
 
@@ -313,6 +331,10 @@ begin
                 ebSkipDuration.Text := IntToStr(StrToIntDef(ebSkipDuration.Text, 0)); // not redundant; destroys non-numeric values
                 fHotkeys.SetKeyFunction(i, lka_Skip, StrToInt(ebSkipDuration.Text));
               end;
+    lka_SpecialSkip: begin
+                       if cbSpecialSkip.ItemIndex = -1 then cbSpecialSkip.ItemIndex := 0;
+                       fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
+                     end;
     else fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
   end;
   SetVisibleModifier(TLemmixHotkeyAction(cbFunctions.ItemIndex));
@@ -425,6 +447,17 @@ begin
     fHotkeys.SetKeyFunction(i, lka_ClearPhysics, 1)
   else
     fHotkeys.SetKeyFunction(i, lka_ClearPhysics, 0);
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.cbSpecialSkipChange(Sender: TObject);
+var
+  i: Integer;
+begin
+  i := FindKeyFromList(lvHotkeys.ItemIndex);
+  if i = -1 then Exit; //safety; should never happen
+  if fHotkeys.CheckKeyEffect(i).Action <> lka_SpecialSkip then Exit;
+  fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
   RefreshList;
 end;
 
