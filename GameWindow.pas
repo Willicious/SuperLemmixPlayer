@@ -36,6 +36,7 @@ const
 type
   TGameWindow = class(TGameBaseScreen)
   private
+    fSaveStateReplayStream: TMemoryStream;
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
     fClearPhysics: Boolean;
@@ -831,6 +832,8 @@ begin
 
   fNeedReset := true;
 
+  fSaveStateReplayStream := TMemoryStream.Create;
+
   // create game
   fGame := GlobalGame; // set ref to GlobalGame
   fScrollSpeed := 1;
@@ -887,6 +890,8 @@ begin
     SkillPanel.Game := nil;
 
   fSaveList.Free;
+
+  fSaveStateReplayStream.Free;
 
   ReleaseCursors;
 
@@ -1032,9 +1037,16 @@ begin
                       end else
                         fLastNukeKeyTime := CurrTime;
                     end;
-          lka_SaveState : fSaveStateFrame := fGame.CurrentIteration;
+          lka_SaveState : begin
+                            fSaveStateFrame := fGame.CurrentIteration;
+                            fSaveStateReplayStream.Clear;
+                            Game.ReplayManager.SaveToStream(fSaveStateReplayStream);
+                          end;
           lka_LoadState : if fSaveStateFrame <> -1 then
                           begin
+                            fSaveList.ClearAfterIteration(0);
+                            fSaveStateReplayStream.Position := 0;
+                            Game.ReplayManager.LoadFromStream(fSaveStateReplayStream);
                             GotoSaveState(fSaveStateFrame);
                             if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
                           end;
