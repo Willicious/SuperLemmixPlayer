@@ -432,7 +432,7 @@ begin
     if TimeForScroll then
     begin
       PrevScrollTime := CurrTime;
-      if CheckScroll then fNeedRedraw := True;
+      if CheckScroll and not (GameParams.MinimapHighQuality) then fNeedRedraw := True;
     end;
 
     // Check whether we have to move the lemmings
@@ -769,7 +769,7 @@ begin
   if aTargetIteration = Game.CurrentIteration then
   begin
     // just redraw TargetImage to display the correct game state
-    DoDraw;
+    //DoDraw;
     if Game.CancelReplayAfterSkip then
     begin
       Game.RegainControl;
@@ -1321,7 +1321,7 @@ begin
 
     SkillPanel.MinimapScrollFreeze := false;
 
-    if fGameSpeed = gspPause then
+    if (fGameSpeed = gspPause) and (GameScroll = gsNone) and (GameVScroll = gsNone) and (not GameParams.MinimapHighQuality) then
       DoDraw; // probably causing major lag, can we detect if it's nessecary and only redraw if it is?
   end;
 
@@ -1514,8 +1514,9 @@ begin
   if O < MinVScroll then O := MinVScroll;
   if O > MaxVScroll then O := MaxVScroll;
   Img.OffsetVert := O;
-  
-  DoDraw;
+
+  if not GameParams.MinimapHighQuality then
+    DoDraw;
 end;
 
 procedure TGameWindow.Form_MouseUp(Sender: TObject; Button: TMouseButton;
