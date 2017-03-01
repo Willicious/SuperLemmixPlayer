@@ -1690,7 +1690,7 @@ begin
     if (GameParams.AutoSaveReplay) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
     begin
       S := Game.ReplayManager.GetSaveFileName(self, Game.Level, true);
-      ForceDirectories(S);
+      ForceDirectories(ExtractFilePath(S));
       Game.EnsureCorrectReplayDetails;
       Game.ReplayManager.SaveToFile(S);
     end;
