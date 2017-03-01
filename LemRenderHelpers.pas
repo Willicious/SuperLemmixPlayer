@@ -580,7 +580,9 @@ begin
       if (x = 0) or (y = 0) or (x = fPhysicsMap.Width-1) or (y = fPhysicsMap.Height-1) then
         C := Redify(C);
 
-      if ((x mod 2) <> (y mod 2)) and (C <> 0) then
+      if C = 0 then Continue;
+
+      if ((x mod 2) <> (y mod 2)) then
           C := C - $00202020;
 
       PDst^ := C;
