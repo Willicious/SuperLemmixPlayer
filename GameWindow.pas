@@ -50,6 +50,7 @@ type
     fMouseTrapped: Boolean;
     fSaveList: TLemmingGameSavedStateList;
     fReplayKilled: Boolean;
+    fLastSelectedLemming: TLemming;
     fInternalZoom: Integer;
     fMaxZoom: Integer;
     fMinimapBuffer: TBitmap32;
@@ -1321,8 +1322,13 @@ begin
 
     SkillPanel.MinimapScrollFreeze := false;
 
-    if (fGameSpeed = gspPause) and (GameScroll = gsNone) and (GameVScroll = gsNone) and (not GameParams.MinimapHighQuality) then
-      DoDraw; // probably causing major lag, can we detect if it's nessecary and only redraw if it is?
+    if (fGameSpeed = gspPause) and
+       ( (fRenderInterface.SelectedLemming <> fLastSelectedLemming) or
+         ((not GameParams.MinimapHighQuality) and ((GameScroll <> gsNone) or (GameVScroll <> gsNone)))
+       ) then
+      DoDraw;
+
+    fLastSelectedLemming := fRenderInterface.SelectedLemming;
   end;
 
 end;
