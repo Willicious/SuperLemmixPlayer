@@ -122,7 +122,7 @@ begin
                         else
                           s := 'Clear Physics Mode (hold)';
       lka_SpecialSkip: begin
-                         s := s + 'Skip to ';
+                         s := 'Skip to ';
                          case Hotkey.Modifier of
                            0: s := s + 'Previous Assignment';
                            1: s := s + 'Next Shrugger';
