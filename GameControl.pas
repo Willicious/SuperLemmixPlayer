@@ -463,9 +463,11 @@ begin
 
   DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
 
-  FullScreen := LoadBoolean('FullScreen', FullScreen);
-
   ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
+
+  if (StrToIntDef(SL.Values['LastVersion'], 0) div 1000) mod 100 < 16 then
+    FullScreen := ZoomLevel < 1;
+  FullScreen := LoadBoolean('FullScreen', FullScreen);
 
   WindowWidth := StrToIntDef(SL.Values['WindowWidth'], -1);
   WindowHeight := StrToIntDef(SL.Values['WindowHeight'], -1);
