@@ -87,6 +87,9 @@ type
 
     function GetMaxZoom: Integer;
     procedure SetMinimapScrollFreeze(aValue: Boolean);
+
+    procedure SetZoom(aZoom: Integer);
+    function GetZoom: Integer;
   protected
     procedure ReadBitmapFromStyle; virtual;
     procedure ReadFont;
@@ -107,7 +110,7 @@ type
 
     procedure ClearSkills;
 
-    procedure SetZoom(aZoom: Integer);
+
     procedure SetCursor(aCursor: TCursor);
 
   { IGameInfoView support }
@@ -130,6 +133,7 @@ type
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
+    property Zoom: Integer read GetZoom write SetZoom;
     property MaxZoom: Integer read GetMaxZoom;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
@@ -267,6 +271,8 @@ procedure TSkillPanelToolbar.SetZoom(aZoom: Integer);
 begin
   aZoom := Max(Min(MaxZoom, aZoom), 1);
 
+  if aZoom = Trunc(Img.Scale) then Exit;
+
   Width := 416 * aZoom;
   Height := 40 * aZoom;
   Img.Width := Width;
@@ -277,6 +283,11 @@ begin
   fMinimapImg.Left := MINIMAP_X * aZoom;
   fMinimapImg.Top := MINIMAP_Y * aZoom;
   fMinimapImg.Scale := aZoom;
+end;
+
+function TSkillPanelToolbar.GetZoom: Integer;
+begin
+  Result := Trunc(Img.Scale);
 end;
 
 procedure TSkillPanelToolbar.SetCursor(aCursor: TCursor);

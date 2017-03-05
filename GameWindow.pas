@@ -201,7 +201,7 @@ begin
     Img.Scale := aNewZoom;
 
     if (aNewZoom >= GameParams.ZoomLevel) or NoRedraw then // NoRedraw is only true during the call at a start of gameplay
-      SkillPanel.SetZoom(aNewZoom);
+      SkillPanel.Zoom := aNewZoom;
 
     fInternalZoom := aNewZoom;
 
@@ -235,6 +235,10 @@ begin
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
   Img.Height := Min(ClientHeight - SkillPanel.Height, GameParams.Level.Info.Height * fInternalZoom);
   Img.Left := (ClientWidth - Img.Width) div 2;
+  if SkillPanel.Zoom > SkillPanel.MaxZoom then
+    SkillPanel.Zoom := SkillPanel.MaxZoom
+  else if (SkillPanel.Zoom < fInternalZoom) and (SkillPanel.Zoom < SkillPanel.MaxZoom) then
+    SkillPanel.Zoom := fInternalZoom;
   SkillPanel.Left := (ClientWidth - SkillPanel.Width) div 2;
   // tops are calculated later
 
