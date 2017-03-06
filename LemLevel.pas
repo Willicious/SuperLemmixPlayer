@@ -47,7 +47,7 @@ type
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
   protected
   public
-    WindowOrder      : array of Integer;
+    //WindowOrder      : array of Integer;
     SpawnOrder       : array of Integer;
     constructor Create;
     procedure Clear; virtual;
@@ -91,8 +91,6 @@ type
 
     // Loading routines
     procedure LoadGeneralInfo(aSection: TParserSection);
-    procedure LoadSpawnOrderSection(aSection: TParserSection);
-      procedure HandleSpawnEntry(aLine: TParserLine; const aIteration: Integer);
     procedure LoadSkillsetSection(aSection: TParserSection);
     procedure HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
@@ -101,7 +99,6 @@ type
 
     // Saving routines
     procedure SaveGeneralInfo(aSection: TParserSection);
-    procedure SaveSpawnOrderSection(aSection: TParserSection);
     procedure SaveSkillsetSection(aSection: TParserSection);
     procedure SaveObjectSections(aSection: TParserSection);
     procedure SaveTerrainSections(aSection: TParserSection);
@@ -157,7 +154,6 @@ begin
   Title           := '';
   Author          := '';
   fBackground     := '';
-  SetLength(WindowOrder, 0);
 
   GraphicSetName  := '';
   MusicFile       := '';
@@ -259,7 +255,6 @@ begin
     Main := Parser.MainSection;
 
     LoadGeneralInfo(Main);
-    LoadSpawnOrderSection(Main.Section['spawn_order']);
     LoadSkillsetSection(Main.Section['skillset']);
 
     Main.DoForEachSection('object', HandleObjectEntry);
@@ -323,25 +318,6 @@ begin
 
     Background := aSection.LineTrimString['background'];
   end;
-end;
-
-procedure TLevel.LoadSpawnOrderSection(aSection: TParserSection);
-var
-  Count: Integer;
-begin
-  if aSection = nil then
-  begin
-    SetLength(Info.WindowOrder, 0);
-    Exit;
-  end;
-  SetLength(Info.WindowOrder, aSection.LineList.Count);
-  Count := aSection.DoForEachLine('object', HandleSpawnEntry);
-  SetLength(Info.WindowOrder, Count);
-end;
-
-procedure TLevel.HandleSpawnEntry(aLine: TParserLine; const aIteration: Integer);
-begin
-  Info.WindowOrder[aIteration] := aLine.ValueNumeric;
 end;
 
 procedure TLevel.LoadSkillsetSection(aSection: TParserSection);
@@ -594,18 +570,10 @@ var
 
   procedure SetNextWindow;
   begin
-    if FoundWindow then
-    begin
-      repeat
-        Inc(n);
-        if n >= Length(Info.WindowOrder) then n := 0;
-      until Info.WindowOrder[n] <> -1;
-    end else begin
-      repeat
-        Inc(n);
-        if n >= InteractiveObjects.Count then n := 0;
-      until IsWindow[n];
-    end;
+    repeat
+      Inc(n);
+      if n >= InteractiveObjects.Count then n := 0;
+    until IsWindow[n];
   end;
 begin
   // 1. Validate skillset - remove skills that don't exist in the level
@@ -645,12 +613,6 @@ begin
     Info.LemmingsCount := PreplacedLemmings.Count;
     SetLength(Info.SpawnOrder, 0);
   end else begin
-    FoundWindow := false; // we're now wanting to know if a proper window exists in the window order
-    for i := 0 to Length(Info.WindowOrder)-1 do
-      if not IsWindow[Info.WindowOrder[i]] then
-        Info.WindowOrder[i] := -1
-      else
-        FoundWindow := true;
     n := -1;
     SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count);
     for i := 0 to Length(Info.SpawnOrder)-1 do
@@ -672,7 +634,6 @@ begin
   Parser := TParser.Create;
   try
     SaveGeneralInfo(Parser.MainSection);
-    SaveSpawnOrderSection(Parser.MainSection);
     SaveSkillsetSection(Parser.MainSection);
     SaveObjectSections(Parser.MainSection);
     SaveTerrainSections(Parser.MainSection);
@@ -727,18 +688,6 @@ begin
     aSection.AddLine('BACKGROUND', Background);
   end;
 end;
-
-procedure TLevel.SaveSpawnOrderSection(aSection: TParserSection);
-var
-  Sec: TParserSection;
-  i: Integer;
-begin
-  if Length(Info.WindowOrder) = 0 then Exit;
-
-  Sec := aSection.SectionList.Add('SPAWN_ORDER');
-  for i := 0 to Length(Info.WindowOrder)-1 do
-    Sec.AddLine('OBJECT', Info.WindowOrder[i]);
-end; 
 
 procedure TLevel.SaveSkillsetSection(aSection: TParserSection);
 var

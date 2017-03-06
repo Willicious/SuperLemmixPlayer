@@ -241,7 +241,6 @@ type
     procedure ApplyStoneLemming(L: TLemming);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
-    procedure ApplyLevelEntryOrder;
     function CalculateNextLemmingCountdown: Integer;
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
@@ -1149,7 +1148,6 @@ begin
   SetObjectMap;
 
   AddPreplacedLemming;
-  ApplyLevelEntryOrder; // This method assumes that all preplaced lemmings are already added to the level
 
   SetBlockerMap;
 
@@ -1564,40 +1562,6 @@ begin
     Exit;
   end;
 
-end;
-
-
-procedure TLemmingGame.ApplyLevelEntryOrder;
-var
-  i: Integer;
-  ObjIndex, WindowNumber: Integer;
-  NumPreplaced: Integer;
-  ShiftedEntryTable: array of Integer;
-begin
-  WindowNumber := 0;
-  for i := 0 to Length(Level.Info.WindowOrder) - 1 do
-  begin
-    ObjIndex := Level.Info.WindowOrder[i];
-    if not (ObjectInfos[ObjIndex].TriggerEffect = DOM_WINDOW) then Continue;
-    SetLength(WindowOrderList, WindowNumber + 1);
-    WindowOrderList[WindowNumber] := ObjIndex;
-    Inc(WindowNumber);
-  end;
-
-  // Shift the hatch order according to the number of preplaced lemmings
-  // see http://www.lemmingsforums.net/index.php?topic=3028.0
-  NumPreplaced := LemmingList.Count; // we already called AddPreplacedLemmings before that
-  SetLength(ShiftedEntryTable, Length(WindowOrderList));
-  for i := 0 to Length(WindowOrderList) - 1 do
-  begin
-    ShiftedEntryTable[(i + NumPreplaced) mod Length(WindowOrderList)] := WindowOrderList[i];
-  end;
-  // Copy ShiftedEntryTable back to WindowOrderList
-  // Needs to be done by hand, because two arrays of Integers are f***ing INCOMPATIBLE types when defined in different methods
-  for i := 0 to Length(WindowOrderList) - 1 do
-  begin
-    WindowOrderList[i] := ShiftedEntryTable[i];
-  end;
 end;
 
 //  SETTING SIZE OF OBJECT MAPS
@@ -4489,7 +4453,7 @@ var
 
   function UseZombieSound: Boolean;
   var
-    i, i2: Integer;
+    i: Integer;
   begin
     Result := false;
     for i := 0 to LemmingList.Count-1 do
@@ -4503,14 +4467,8 @@ var
       and not (ObjectInfos[i].IsDisabled)
       and (ObjectInfos[i].PreassignedSkills and 64 <> 0) then
       begin
-        if Length(Level.Info.WindowOrder) = 0 then
-          Result := true
-        else
-          for i2 := 0 to Length(Level.Info.WindowOrder) do
-            if Level.Info.WindowOrder[i2] = i then
-              Result := true;
-
-        if Result then Exit;
+        Result := true;
+        Exit;
       end;
   end;
 const

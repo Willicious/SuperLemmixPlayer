@@ -24,6 +24,8 @@ uses
   LemCore;
 
 type
+  TWindowOrder = array of Integer;
+
   TStyleName = class
   private
     fStyleName : ShortString;
@@ -112,6 +114,7 @@ type
   TLVLLoader = class
   private
     class procedure UpgradeFormat(var Buf: TNeoLVLRec);
+    class procedure ApplyWindowOrder(aLevel: TLevel; WindowOrder: TWindowOrder);
   protected
   public
     class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
@@ -657,6 +660,30 @@ begin
   end;
 end;
 
+class procedure TLVLLoader.ApplyWindowOrder(aLevel: TLevel; WindowOrder: TWindowOrder);
+var
+  i, i2: Integer;
+  OrigCount: Integer;
+  SrcO, DstO: TInteractiveObject;
+begin
+  OrigCount := aLevel.InteractiveObjects.Count;
+
+  for i := 0 to Length(WindowOrder)-1 do
+  begin
+    SrcO := aLevel.InteractiveObjects[WindowOrder[i]];
+    DstO := aLevel.InteractiveObjects.Add;
+    DstO.Assign(SrcO);
+  end;
+
+  for i := OrigCount-1 downto 0 do
+    for i2 := 0 to Length(WindowOrder)-1 do
+      if WindowOrder[i2] = i then
+      begin
+        aLevel.InteractiveObjects.Delete(i);
+        Break;
+      end;
+end;
+
 
 class procedure TLVLLoader.LoadNewNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
 {-------------------------------------------------------------------------------
@@ -676,6 +703,8 @@ var
   //SFinder: TStyleFinder;
   GSNames: array of String;
   GSName: array[0..15] of Char;
+
+  WindowOrder: TWindowOrder;
 
   b: Byte;
   w: Word;
@@ -700,6 +729,7 @@ var
   end;
 begin
   SetLength(SkipObjects, 0);
+  SetLength(WindowOrder, 0);
   HasSubHeader := false;
   with aLevel do
   begin
@@ -818,7 +848,7 @@ begin
              if (O.ObjectFlags and 128) = 0 then
              begin
                SetLength(SkipObjects, Length(SkipObjects) + 1);
-               SkipObjects[Length(SkipObjects)-1] := InteractiveObjects.Count; //not a mistake; it's *intended* that it doesn't take into account previous skipped objects
+               SkipObjects[Length(SkipObjects)-1] := InteractiveObjects.Count + Length(SkipObjects) - 1;
              end else begin
              Obj := InteractiveObjects.Add;
              Obj.Left := (O.XPos * 8) div LRes;
@@ -891,13 +921,13 @@ begin
              end;
            end;
         4: begin
-             SetLength(Info.WindowOrder, 0);
+             SetLength(WindowOrder, 0);
              w := $FFFF;
              aStream.Read(w, 2);
              while w <> $FFFF do
              begin
-               SetLength(Info.WindowOrder, Length(Info.WindowOrder) + 1);
-               Info.WindowOrder[Length(Info.WindowOrder) - 1] := w;
+               SetLength(WindowOrder, Length(WindowOrder) + 1);
+               WindowOrder[Length(WindowOrder) - 1] := w;
                w := $FFFF;
                aStream.Read(w, 2);
              end;
@@ -936,8 +966,8 @@ begin
     end;
 
     for i := 0 to Length(SkipObjects)-1 do
-      for x := 0 to Length(Info.WindowOrder)-1 do
-        if Info.WindowOrder[x] > SkipObjects[i] then Dec(Info.WindowOrder[x]);
+      for x := 0 to Length(WindowOrder)-1 do
+        if WindowOrder[x] > SkipObjects[i] then Dec(WindowOrder[x]);
 
     if (not HasSubHeader) and (OddLoad <> 1) then
     with Info do
@@ -958,6 +988,9 @@ begin
       Steels.Clear;
       SetLength(Info.WindowOrder, 0);
     end;*)
+
+    if Length(WindowOrder) <> 0 then
+      ApplyWindowOrder(aLevel, WindowOrder);
 
     for i := 0 to InteractiveObjects.Count-1 do
       with InteractiveObjects[i] do
@@ -1161,6 +1194,7 @@ var
   Steel: TSteel;
   SFinder: TStyleFinder;
   TempWindowOrder: Array[0..31] of Byte;
+  WindowOrder: TWindowOrder;
 
   procedure AddSkill(aSkill: TSkillPanelButton);
   begin
@@ -1382,7 +1416,7 @@ begin
       Steel.fType := S.SteelFlags and not $80;
     end;
 
-    SetLength(Info.WindowOrder, 0);
+    SetLength(WindowOrder, 0);
     with Info do
       for i := 0 to 31 do
         if (TempWindowOrder[i] and $80) <> 0 then
@@ -1392,6 +1426,8 @@ begin
         end;
 
   end; // with aLevel
+
+  ApplyWindowOrder(aLevel, WindowOrder);
 end;
 
 
