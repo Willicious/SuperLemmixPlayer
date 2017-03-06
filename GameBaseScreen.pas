@@ -473,34 +473,46 @@ end;
 
 procedure TGameBaseScreen.FadeOut;
 var
-  Steps: Integer; i: Integer;
+  Steps: Cardinal;
+  i: Integer;
   P: PColor32;
-  StepStartTickCount: Cardinal;
+  StartTickCount: Cardinal;
+const
+  TOTAL_STEPS = 32;
+  STEP_DELAY = 6;
 begin
-  Steps := 16;
-  while Steps > 0 do
+  Steps := 0;
+  StartTickCount := GetTickCount;
+  while Steps < TOTAL_STEPS do
   begin
-    with ScreenImg.Bitmap do
+    if (GetTickCount - StartTickCount) div STEP_DELAY <= Steps then
     begin
-      P := PixelPtr[0, 0];
-      for i := 0 to Width * Height - 1 do
-      begin
-        with TColor32Entry(P^) do
-        begin
-          if R > 8 then Dec(R, 8) else R := 0;
-          if G > 8 then Dec(G, 8) else G := 0;
-          if B > 8 then Dec(B, 8) else B := 0;
-        end;
-        Inc(P);
-      end;
-      StepStartTickCount := GetTickCount;
-      Changed;
-      Update;
-      repeat
-      until GetTickCount - StepStartTickCount >= 3; // changed Sleep(3) to this so that if Update takes a while, there isn't further delay on top of that
+      Sleep(1);
+      Continue;
     end;
 
-    Dec(Steps);
+    while ((GetTickCount - StartTickCount) div STEP_DELAY > Steps) and (Steps < TOTAL_STEPS) do
+    begin
+      with ScreenImg.Bitmap do
+      begin
+        P := PixelPtr[0, 0];
+        for i := 0 to Width * Height - 1 do
+        begin
+          with TColor32Entry(P^) do
+          begin
+            if R > 8 then Dec(R, 8) else R := 0;
+            if G > 8 then Dec(G, 8) else G := 0;
+            if B > 8 then Dec(B, 8) else B := 0;
+          end;
+          Inc(P);
+        end;
+      end;
+      Inc(Steps);
+    end;
+
+    ScreenImg.Bitmap.Changed;
+    Changed;
+    Update;
   end;
 
   Application.ProcessMessages;
