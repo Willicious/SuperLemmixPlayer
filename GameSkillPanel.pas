@@ -694,8 +694,18 @@ begin
                               gspFF: TGameWindow(Owner).GameSpeed := gspNormal;
                             end;
             spbRestart: TGameWindow(Parent).GotoSaveState(0, -1);
-            spbBackOneFrame: TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 1);
-            spbForwardOneFrame: TGameWindow(Parent).ForceUpdateOneFrame := true;
+            spbBackOneFrame: if Button = mbLeft then
+                               TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 1)
+                             else if Button = mbRight then
+                               TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 17)
+                             else if Button = mbMiddle then
+                               TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 85);
+            spbForwardOneFrame: if Button = mbLeft then
+                                  TGameWindow(Parent).ForceUpdateOneFrame := true
+                                else if Button = mbRight then
+                                  TGameWindow(Parent).HyperSpeedTarget := Game.CurrentIteration + 17
+                                else if Button = mbMiddle then
+                                  TGameWindow(Parent).HyperSpeedTarget := Game.CurrentIteration + 85;
             spbClearPhysics: TGameWindow(Parent).ClearPhysics := not TGameWindow(Parent).ClearPhysics;
             spbDirLeft: if TGameWindow(Parent).SkillPanelSelectDx = -1 then
                         begin
