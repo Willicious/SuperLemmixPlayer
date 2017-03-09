@@ -684,19 +684,14 @@ begin
                 TGameWindow(Owner).GameSpeed := gspNormal
               else
                 TGameWindow(Owner).GameSpeed := gspPause;
-              DrawButtonSelector(spbFastForward, false);
-              DrawButtonSelector(spbPause, TGameWindow(Owner).GameSpeed = gspPause);
             end else
               Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
           end;
         end else begin // need special handling
           case i of
-            spbFastForward: begin
-                              case TGameWindow(Owner).GameSpeed of
-                                gspNormal: TGameWindow(Owner).GameSpeed := gspFF;
-                                gspFF: TGameWindow(Owner).GameSpeed := gspNormal;
-                              end;
-                              DrawButtonSelector(spbFastForward, TGameWindow(Owner).GameSpeed = gspFF);
+            spbFastForward: case TGameWindow(Owner).GameSpeed of
+                              gspNormal: TGameWindow(Owner).GameSpeed := gspFF;
+                              gspFF: TGameWindow(Owner).GameSpeed := gspNormal;
                             end;
             spbRestart: TGameWindow(Parent).GotoSaveState(0, true);
             spbBackOneFrame: TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 2); // logically this should be -1, but -2 seems to give correct behaviour. should probably investigate this.

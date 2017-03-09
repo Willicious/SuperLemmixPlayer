@@ -98,6 +98,8 @@ type
 
     function GetLevelMusicName: String;
     function GetIsHyperSpeed: Boolean;
+
+    procedure SetGameSpeed(aValue: TGameSpeed);
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -148,7 +150,7 @@ type
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
     property SuspendCursor: Boolean read fSuspendCursor;
 
-    property GameSpeed: TGameSpeed read fGameSpeed write fGameSpeed;
+    property GameSpeed: TGameSpeed read fGameSpeed write SetGameSpeed;
     property HyperSpeedTarget: Integer read fHyperSpeedTarget write fHyperSpeedTarget;
     property IsHyperSpeed: Boolean read GetIsHyperSpeed;
   end;
@@ -158,6 +160,13 @@ implementation
 uses FBaseDosForm, FEditReplay;
 
 { TGameWindow }
+
+procedure TGameWindow.SetGameSpeed(aValue: TGameSpeed);
+begin
+  fGameSpeed := aValue;
+  SkillPanel.DrawButtonSelector(spbPause, fGameSpeed = gspPause);
+  SkillPanel.DrawButtonSelector(spbFastForward, fGameSpeed = gspFF);
+end;
 
 procedure TGameWindow.Form_MouseWheel(Sender: TObject; Shift: TShiftState;
   WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
@@ -342,7 +351,7 @@ var
   OldClearReplay: Boolean;
 begin
   OldPaused := fGameSpeed = gspPause;
-  fGameSpeed := gspPause;
+  GameSpeed := gspPause;
   F := TFReplayEditor.Create(self);
   F.SetReplay(Game.ReplayManager);
   fSuspendCursor := true;
@@ -357,7 +366,7 @@ begin
     end;
   finally
     fSuspendCursor := false;
-    if not OldPaused then fGameSpeed := gspNormal;
+    if not OldPaused then GameSpeed := gspNormal;
     F.Free;
   end;
 end;
@@ -743,10 +752,10 @@ var
   i: Integer;
 begin
   CanPlay := False;
-  if (aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip then
-    fGameSpeed := gspPause;
   if IsRestart then
-    fGameSpeed := gspNormal;
+    GameSpeed := gspNormal
+  else if (aTargetIteration < Game.CurrentIteration) and GameParams.PauseAfterBackwardsSkip then
+    GameSpeed := gspPause;
 
   // Find correct save state
   if aTargetIteration > 0 then
@@ -1054,11 +1063,9 @@ begin
           lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
           lka_Pause: begin
                        if fGameSpeed = gspPause then
-                         fGameSpeed := gspNormal
+                         GameSpeed := gspNormal
                        else
-                         fGameSpeed := gspPause;
-                       SkillPanel.DrawButtonSelector(spbPause, fGameSpeed = gspPause);
-                       if fGameSpeed = gspPause then SkillPanel.DrawButtonSelector(spbFastForward, false);
+                         GameSpeed := gspPause;
                      end;
           lka_Nuke: begin
                       // double keypress needed to prevent accidently nuking
@@ -1086,10 +1093,9 @@ begin
           lka_Cheat: Game.Cheat;
           lka_FastForward: begin
                              case fGameSpeed of
-                               gspNormal: fGameSpeed := gspFF;
-                               gspFF: fGameSpeed := gspNormal;
+                               gspNormal: GameSpeed := gspFF;
+                               gspFF: GameSpeed := gspNormal;
                              end;
-                             SkillPanel.DrawButtonSelector(spbFastForward, fGameSpeed = gspFF);
                            end;
           lka_SaveImage: SaveShot;
           lka_LoadReplay: LoadReplay;
@@ -1570,8 +1576,8 @@ begin
     ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
                 'will attempt to play the replay anyway.');
 
-  fGameSpeed := gspNormal;
-  GotoSaveState(0);
+  GameSpeed := gspNormal;
+  GotoSaveState(0, true);
   CanPlay := True;
 end;
 
@@ -1582,14 +1588,14 @@ var
 begin
   OldSpeed := fGameSpeed;
   try
-    fGameSpeed := gspPause;
+    GameSpeed := gspPause;
     s := Game.ReplayManager.GetSaveFileName(self, Game.Level);
     if s = '' then Exit;
     Game.EnsureCorrectReplayDetails;
     ForceDirectories(ExtractFilePath(s));
     Game.ReplayManager.SaveToFile(s);
   finally
-    fGameSpeed := OldSpeed;
+    GameSpeed := OldSpeed;
   end;
 end;
 
