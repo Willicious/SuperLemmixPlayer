@@ -215,7 +215,7 @@ var
                                               '94');
     begin
       Result := IntToStr(aFrames div (17 * 60));
-      Result := Result + ':' + IntToStr((aFrames mod (17 * 60)) div 17);
+      Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
       Result := Result + '.' + CENTISECONDS[aFrames mod 17];
     end;
 
