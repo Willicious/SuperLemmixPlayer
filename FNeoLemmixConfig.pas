@@ -134,13 +134,16 @@ begin
 
   //// Page 2 (Interface Options) ////
   // Checkboxes
+  cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
+
   cbLemmingBlink.Checked := GameParams.LemmingBlink;
   cbTimerBlink.Checked := GameParams.TimerBlink;
   cbBlackOut.Checked := GameParams.BlackOutZero;
   cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
   cbDisableShadows.Checked := GameParams.NoShadows;
-  cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
+
   cbFullScreen.Checked := GameParams.FullScreen;
+  cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
   cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
   cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
   cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
@@ -164,6 +167,7 @@ begin
     tbMusicVol.Position := 0
   else
     tbMusicVol.Position := SoundManager.MusicVolume;
+
   cbSuccessJingle.Checked := GameParams.PostLevelVictorySound;
   cbFailureJingle.Checked := GameParams.PostLevelFailureSound;
 
@@ -229,13 +233,16 @@ begin
 
   //// Page 2 (Interface Options) ////
   // Checkboxes
+  GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
+
   GameParams.LemmingBlink := cbLemmingBlink.Checked;
   GameParams.TimerBlink := cbTimerBlink.Checked;
   GameParams.BlackOutZero := cbBlackOut.Checked;
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.NoShadows := cbDisableShadows.Checked;
-  GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
+
   GameParams.FullScreen := cbFullScreen.Checked;
+  GameParams.IncreaseZoom := cbIncreaseZoom.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
   GameParams.LinearResampleGame := cbLinearResampleGame.Checked;
   GameParams.MinimapHighQuality := cbMinimapHighQuality.Checked;
@@ -250,6 +257,7 @@ begin
   SoundManager.MuteMusic := tbMusicVol.Position = 0;
   if tbMusicVol.Position <> 0 then
     SoundManager.MusicVolume := tbMusicVol.Position;
+    
   GameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
   GameParams.PostLevelFailureSound := cbFailureJingle.Checked;
 
