@@ -1949,6 +1949,13 @@ var
 
 begin
   PriorityLem := nil;
+
+  if fHitTestAutoFail then
+  begin
+    Result := 0;
+    Exit;
+  end;
+
   NumLemInCursor := 0;
   CurValue := 10;
   if NewSkillOrig = baNone then
