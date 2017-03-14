@@ -705,6 +705,8 @@ var
 begin
   if IsHyperSpeed then Exit;
 
+  Game.HitTest(PtInRect(Img.BoundsRect, Mouse.CursorPos));
+
   if (fRenderInterface.SelectedLemming <> fLastSelectedLemming)
   or (fRenderInterface.HighlitLemming <> fLastHighlightLemming)
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill) then
