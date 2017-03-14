@@ -1577,8 +1577,7 @@ begin
   if O > MaxVScroll then O := MaxVScroll;
   Img.OffsetVert := O;
 
-  if not GameParams.MinimapHighQuality then
-    DoDraw;
+  fNeedRedraw := rdRefresh;
 end;
 
 procedure TGameWindow.Form_MouseUp(Sender: TObject; Button: TMouseButton;
