@@ -1335,6 +1335,7 @@ begin
 
     if (fGameSpeed = gspPause) or (Game.HitTestAutoFail) then
     begin
+      fLastSelectedLemming := fRenderInterface.SelectedLemming;
       Game.HitTest;
       CheckResetCursor;
     end;
@@ -1357,11 +1358,13 @@ begin
 
     SkillPanel.MinimapScrollFreeze := false;
 
-    if (fGameSpeed = gspPause) and
-       ( (fRenderInterface.SelectedLemming <> fLastSelectedLemming) or
-         ((not GameParams.MinimapHighQuality) and ((GameScroll <> gsNone) or (GameVScroll <> gsNone)))
-       ) then
-      DoDraw;
+    if fGameSpeed = gspPause then
+    begin
+      if fRenderInterface.SelectedLemming <> fLastSelectedLemming then
+        fNeedRedraw := rdRedraw
+      else if ((GameScroll <> gsNone) or (GameVScroll <> gsNone)) and not GameParams.MinimapHighQuality then
+        fNeedRedraw := rdRefresh;
+    end;
 
     fLastSelectedLemming := fRenderInterface.SelectedLemming;
   end;
