@@ -1488,12 +1488,17 @@ var
 begin
   inherited;
 
-  Sca := GameParams.ZoomLevel;
+  fMaxZoom := Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS;
 
   if GameParams.IncreaseZoom then
-    Sca := Max(Sca, (ClientHeight - (SkillPanel.MaxZoom * 40)) div Min(GameParams.Level.Info.Height, 160));
-
-  fMaxZoom := Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS;
+  begin
+    Sca := 2;
+    while (Min(Sca, SkillPanel.MaxZoom) * 40) + (Max(GameParams.Level.Info.Height, 160) * Sca) <= ClientHeight do
+      Inc(Sca);
+    Dec(Sca);
+    Sca := Max(Sca, GameParams.ZoomLevel);
+  end else
+    Sca := GameParams.ZoomLevel;
 
   Sca := Min(Sca, fMaxZoom);
 
