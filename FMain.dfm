@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 909
-  Top = 208
+  Left = 1592
+  Top = 485
   Width = 444
   Height = 311
   Caption = 'NeoLemmix'

@@ -139,6 +139,7 @@ type
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
     function BuildText(intxt: Array of char): String;
+    procedure ShowSetupMenu;
   protected
   { overrides }
     procedure PrepareGameParams; override;
@@ -152,6 +153,7 @@ type
 implementation
 
 uses
+  FNeoLemmixSetup,
   LemNeoOnline;
 
 { TGameMenuScreen }
@@ -674,6 +676,12 @@ begin
   if not GameParams.DoneUpdateCheck then
     PerformUpdateCheck;
 
+  if not GameParams.LoadedConfig then
+  begin
+    GameParams.LoadedConfig := true;
+    ShowSetupMenu;
+  end;
+
   if not CanAnimate or ScreenIsClosing then
     Exit;
 
@@ -752,6 +760,18 @@ begin
     OpenDlg.Free;
   end;
   CloseScreen(gstReplayTest);
+end;
+
+procedure TGameMenuScreen.ShowSetupMenu;
+var
+  F: TFNLSetup;
+begin
+  F := TFNLSetup.Create(self);
+  try
+    F.ShowModal;
+  finally
+    F.Free;
+  end;
 end;
 
 end.

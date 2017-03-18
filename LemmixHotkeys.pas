@@ -66,6 +66,7 @@ type
     public
       constructor Create;
       destructor Destroy; override;
+      procedure ClearAllKeys;
       procedure SaveFile;
       procedure SetKeyFunction(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
       function CheckKeyEffect(aKey: Word): TLemmixHotkey;
@@ -84,6 +85,14 @@ end;
 destructor TLemmixHotkeyManager.Destroy;
 begin
   inherited;
+end;
+
+procedure TLemmixHotkeyManager.ClearAllKeys;
+var
+  i: Integer;
+begin
+  for i := 0 to MAX_KEY-1 do
+    fKeyFunctions[i].Action := lka_Null;
 end;
 
 procedure TLemmixHotkeyManager.SetDefaults;
