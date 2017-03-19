@@ -66,6 +66,7 @@ var
 implementation
 
 uses
+  LemNeoPieceManager, // debugging
   GR32, // debug version
   Math,
   GameControl, GameBaseScreen;
@@ -138,7 +139,11 @@ procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if fChildForm = nil then Exit;
   if not Assigned(fChildForm.OnKeyDown) then Exit;
-  fChildForm.OnKeyDown(Sender, Key, Shift);
+  if Key = $43 then
+    ShowMessage('Terrains: ' + IntToStr(PieceManager.TerrainCount) + #13 +
+                'Objects: ' + IntToStr(PieceManager.ObjectCount))         // debug stuff
+  else
+    fChildForm.OnKeyDown(Sender, Key, Shift);
 end;
 
 procedure TMainForm.FormKeyUp(Sender: TObject; var Key: Word;

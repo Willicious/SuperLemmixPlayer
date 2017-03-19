@@ -40,9 +40,6 @@ type
 
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TMetaObject;
-
-      property TerrainCount: Integer read GetTerrainCount;
-      property ObjectCount: Integer read GetObjectCount;
     public
       constructor Create;
       destructor Destroy; override;
@@ -55,6 +52,10 @@ type
       property Objects[Identifier: String]: TMetaObject read GetMetaObject;
 
       property DisableTidy: Boolean read fDisableTidy write fDisableTidy;
+
+      // These two are usually private. Promoted to public for debugging purposes.
+      property TerrainCount: Integer read GetTerrainCount;
+      property ObjectCount: Integer read GetObjectCount;
   end;
 
   function SplitIdentifier(Identifier: String): TLabelRecord;
