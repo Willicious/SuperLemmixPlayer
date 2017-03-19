@@ -45,6 +45,7 @@ type
       NewHeight: Integer; var Resize: Boolean);
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     Started: Boolean;
     AppController: TAppController;
@@ -65,6 +66,7 @@ var
 implementation
 
 uses
+  GR32, // debug version
   Math,
   GameControl, GameBaseScreen;
 
@@ -216,6 +218,13 @@ procedure TMainForm.FormMouseWheel(Sender: TObject; Shift: TShiftState;
 begin
   if Assigned(fChildForm.OnMouseWheel) then
     fChildForm.OnMouseWheel(Sender, Shift, WheelDelta, MousePos, Handled);
+end;
+
+procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  ShowMessage('Bitmaps created: ' + IntToStr(Gr32DebugCreateCount) + #13 +
+              'Bitmaps destroyed: ' + IntToStr(Gr32DebugDestroyCount) + #13 +
+              'Unfreed bitmaps: ' + IntToStr(Gr32DebugCreateCount - Gr32DebugDestroyCount));
 end;
 
 end.
