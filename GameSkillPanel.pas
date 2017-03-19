@@ -1250,10 +1250,10 @@ begin
     ReadBitmapFromStyle;
     ReadFont;
   end;
-  fImg.Scale := Max(aScale, MaxZoom);
+  //fImg.Scale := Max(aScale, MaxZoom);
   fImg.ScaleMode := smScale;
 
-  fMinimapImg.Scale := Max(aScale, MaxZoom);
+  //fMinimapImg.Scale := Max(aScale, MaxZoom);
   fMinimapImg.ScaleMode := smScale;
   fMinimapImg.BitmapAlign := baCustom;
 
