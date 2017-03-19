@@ -45,7 +45,6 @@ type
       NewHeight: Integer; var Resize: Boolean);
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     Started: Boolean;
     AppController: TAppController;
@@ -54,6 +53,7 @@ type
     procedure LMNext(var Msg: TMessage); message LM_NEXT;
     procedure LMExit(var Msg: TMessage); message LM_EXIT;
     procedure PlayGame;
+    procedure DebugInfo;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -103,6 +103,7 @@ begin
   GlobalGame.Free;
   AppController.Free;
 //  ProgramSettings.Free;
+  DebugInfo;
   inherited;
 end;
 
@@ -220,11 +221,19 @@ begin
     fChildForm.OnMouseWheel(Sender, Shift, WheelDelta, MousePos, Handled);
 end;
 
-procedure TMainForm.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TMainForm.DebugInfo;
+var
+  SL: TStringList;
 begin
-  ShowMessage('Bitmaps created: ' + IntToStr(Gr32DebugCreateCount) + #13 +
-              'Bitmaps destroyed: ' + IntToStr(Gr32DebugDestroyCount) + #13 +
-              'Unfreed bitmaps: ' + IntToStr(Gr32DebugCreateCount - Gr32DebugDestroyCount));
+  SL := TStringList.Create;
+  try
+    SL.Add('Bitmaps created: ' + IntToStr(Gr32DebugCreateCount));
+    SL.Add('Bitmaps destroyed: ' + IntToStr(Gr32DebugDestroyCount));
+    SL.Add('Unfreed bitmaps: ' + IntToStr(Gr32DebugCreateCount - Gr32DebugDestroyCount));
+    SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'debug.txt');
+  finally
+    SL.Free;
+  end;
 end;
 
 end.
