@@ -14,7 +14,6 @@ object MainForm: TMainForm
   OldCreateOrder = False
   OnActivate = FormActivate
   OnCanResize = FormCanResize
-  OnClose = FormClose
   OnKeyDown = FormKeyDown
   OnKeyUp = FormKeyUp
   OnMouseDown = FormMouseDown
