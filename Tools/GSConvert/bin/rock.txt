@@ -15,9 +15,3 @@ $object
     offset_x 16
   $end
 $end
-
-$object
-  index 10
-  reference rock:trap_02
-  flip_horizontal
-$end

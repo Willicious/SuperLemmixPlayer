@@ -5,15 +5,3 @@ $object
     side top
   $end
 $end
-
-$object
-  index 10
-  reference pillar:trap_02
-  flip_horizontal
-$end
-
-$object
-  index 17
-  reference pillar:trap_03
-  flip_horizontal
-$end

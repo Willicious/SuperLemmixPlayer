@@ -797,7 +797,7 @@ begin
     if O.Name = '' then
       O.Name := 'object_' + LeadZeroStr(n, 2);
 
-    ShrinkObject(O, GS.ObjectImages[i]);
+    //ShrinkObject(O, GS.ObjectImages[i]);
 
     // We won't try to check for matches here as they're far less common AND far
     // more complicated to detect. We'll let this be done manually.
@@ -851,6 +851,8 @@ var
   x, y: Integer;
   MinX, MaxX, MinY, MaxY: Integer;
 begin
+  Exit;
+
   TempBMP := TBitmap32.Create;
 
   MinX := BMP.Width;
@@ -890,6 +892,7 @@ var
   InternalRotate, InternalFlip, InternalInvert: Boolean;
 begin
   Result := false;
+  Exit;
   TempBMP := TBitmap32.Create;
   try
     for i := 0 to Index-1 do
@@ -928,6 +931,8 @@ var
   i, x, y: Integer;
   MinX, MaxX, MinY, MaxY: Integer;
 begin
+  Exit;
+
   if O.TriggerType in [7, 8, 19] then Exit;
 
   TempBMP := TBitmap32.Create;

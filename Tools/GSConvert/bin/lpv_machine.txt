@@ -1,0 +1,34 @@
+$object
+  index 12
+  resize_horizontal
+$end
+
+$object
+  index 13
+  resize_vertical
+$end
+
+$object
+  index 14
+  no_resize
+$end
+
+$object
+  index 15
+  resize_horizontal
+$end
+
+$object
+  index 16
+  resize_vertical
+$end
+
+$object
+  index 18
+  no_resize
+$end
+
+$object
+  index 19
+  resize_horizontal
+$end
