@@ -290,13 +290,20 @@ var
 
     Sec.AddLine(S);
 
+    if (O.TriggerType = 12) and not ((O.PTriggerW = 1) and (O.PTriggerH = 1)) then
+    begin
+      WriteLn('*** Warning: Receiver does not have a 1x1 trigger area. Autoadjusting.');
+      O.PTriggerX := O.PTriggerX + (O.PTriggerW div 2);
+      O.PTriggerY := Min(GS.ObjectImages[i][0].Height, O.PTriggerY + O.PTriggerH - 1);
+    end;
+
     if not (O.TriggerType in [0, 30]) then
     begin
       Sec.AddLine('TRIGGER_X', O.PTriggerX);
       Sec.AddLine('TRIGGER_Y', O.PTriggerY);
     end;
 
-    if not (O.TriggerType in [0, 23, 30]) then
+    if not (O.TriggerType in [0, 12, 23, 30]) then
     begin
       Sec.AddLine('TRIGGER_WIDTH', O.PTriggerW);
       Sec.AddLine('TRIGGER_HEIGHT', O.PTriggerH);
