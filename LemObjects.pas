@@ -3,6 +3,7 @@ unit LemObjects;
 interface
 
 uses
+  Math,
   Windows, Contnrs, LemTypes, LemCore,
   LemMetaObject, LemInteractiveObject;
 
@@ -171,17 +172,6 @@ begin
   MetaObj := MetaParam;
   Frames := MetaObj.Images;
 
-  // Legacy code for old hatches, that haven't set a proper trigger area
-  if      (MetaObj.TriggerEffect = DOM_WINDOW)
-     and ((MetaObj.TriggerTop = -4) or (MetaObj.TriggerTop = 0))
-     and  (MetaObj.TriggerLeft = 0) then
-  begin
-    MetaObj.TriggerTop := 24;
-    MetaObj.TriggerLeft := 13;
-    MetaObj.TriggerHeight := 1;
-    MetaObj.TriggerWidth := 1;
-  end;
-
   // Set basic stuff
   sTop := Obj.Top;
   sLeft := Obj.Left;
@@ -247,22 +237,6 @@ begin
   Y := Obj.Top; // of whole object
   X := Obj.Left;
 
-  (*if IsFlipImage then
-    X := X + (sWidth - 1) - MetaObj.TriggerLeft - (MetaObj.TriggerWidth - 1)
-  else
-    X := X + MetaObj.TriggerLeft;
-
-  if IsUpsideDown then
-  begin
-    Y := Y + (sHeight - 1) - MetaObj.TriggerTop - (MetaObj.TriggerHeight - 1);
-    if not (MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_ONEWAYDOWN]) then
-      Y := Y + 9;
-  end else
-    Y := Y + MetaObj.TriggerTop;*)
-
-  // TMetaObject itself takes care of this now, and TMetaObjectInterface hides needing to specify
-  // the flip / etc every time.
-
   X := X + MetaObj.TriggerLeft;
   Y := Y + MetaObj.TriggerTop;
   W := MetaObj.TriggerWidth;
@@ -273,6 +247,15 @@ begin
 
   if MetaObj.CanResizeVertical then
     H := H + (sHeight - MetaObj.Height);
+
+  if MetaObj.TriggerEffect = DOM_RECEIVER then
+    if not ((W = 1) and (H = 1)) then
+    begin
+      X := X + (W div 2);
+      Y := Obj.Top + Min(Height, MetaObj.TriggerTop + H - 1);
+      W := 1;
+      H := 1;
+    end;
 
   Result.Top := Y;
   Result.Bottom := Y + H;

@@ -1321,23 +1321,14 @@ var
   Inf, Inf2: TInteractiveObjectInfo;
 begin
   Inf := ObjectInfos[oid];
-  Assert(Inf.ReceiverId <> 65535, 'Telerporter used without receiver');
+  Assert(Inf.ReceiverId <> 65535, 'Telerporter used without receiver'); // note to self or Nepster: change this to use -1 instead?
   Inf2 := ObjectInfos[Inf.ReceiverId];
 
   if Inf.IsFlipPhysics then TurnAround(L);
 
   // Mirror trigger area, if Upside-Down Flag is valid for exactly one object
-  if Inf.IsUpsideDown xor Inf2.IsUpsideDown then
-    L.LemY := (Inf2.TriggerRect.Bottom - 1) - (L.LemY - Inf.TriggerRect.Top)
-  else
-    L.LemY := Inf2.TriggerRect.Top + (L.LemY - Inf.TriggerRect.Top);
-
-  // Mirror trigger area, if FlipLem Flag is valid for exactly one object
-  // The FlipImage Flag is already taken care of when computing trigger areas.
-  if Inf.IsFlipPhysics xor Inf2.IsFlipPhysics then
-    L.LemX := (Inf2.TriggerRect.Right - 1) - (L.LemX - Inf.TriggerRect.Left)
-  else
-    L.LemX := Inf2.TriggerRect.Left + (L.LemX - Inf.TriggerRect.Left);
+  L.LemX := Inf2.TriggerRect.Left;
+  L.LemY := Inf2.TriggerRect.Top;
 end;
 
 
