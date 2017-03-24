@@ -1741,13 +1741,19 @@ const
   PermSkillSet = [baClimbing, baFloating, baGliding, baFixing, baSwimming];
 var
   L, LQueue: TLemming;
+  OldHTAF: Boolean;
 begin
   Result := False;
+
+  OldHTAF := HitTestAutoFail;
+  HitTestAutoFail := false;
 
   // Just to be safe, though this should always return in fLemSelected
   GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
   // Get lemming to queue the skill assignment
   GetPriorityLemming(LQueue, baNone, CursorPoint);
+
+  HitTestAutoFail := OldHTAF;
 
   // Queue skill assignment if current assignment is impossible
   if not Assigned(L) or not CheckSkillAvailable(Skill) then
