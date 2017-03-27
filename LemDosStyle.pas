@@ -349,6 +349,34 @@ var
 
   SubParser: TParser;
   SubMainSec: TParserSection;
+const
+  SR_COUNT = 1;
+  SR_PERCENT = 2;
+  SR_RELATIVE = 3;
+  SR_RELATIVE_PERCENT = 4;
+  SR_TYPES: array[0..8] of Integer =
+            (SR_COUNT, SR_RELATIVE_PERCENT, SR_RELATIVE_PERCENT, SR_RELATIVE, SR_RELATIVE, SR_RELATIVE, SR_RELATIVE, SR_RELATIVE_PERCENT, SR_PERCENT);
+  SR_VALUE: array[0..8] of Integer =
+            (0, -50, -10, -2, -1, 0, 1, 20, 100);
+
+            (*        if gRescued >= AdjLemCount then
+          i := 8
+        else if gRescued = 0 then
+          i := 0
+        else if gRescued < gToRescue div 2 then
+          i := 1
+        else if gDone < gTarget - 10 then
+          i := 2
+        else if gRescued <= gToRescue - 2 then
+          i := 3
+        else if gRescued = gToRescue - 1 then
+          i := 4
+        else if gRescued = gToRescue then
+          i := 5
+        else if gDone < gTarget + 20 then
+          i := 6
+        else if gDone >= gTarget + 20 then
+          i := 7*)
 begin
   OldLookForLvls := fLookForLVL;
   fLookForLVL := false;
@@ -416,6 +444,45 @@ try
   end;
 
   Parser.SaveToFile(BasePath + 'levels.nxmi');
+
+  // Menu Stuff
+  Parser.Clear;
+  MainSec := Parser.MainSection;
+  MainSec.AddLine('title', Trim(SysDat.PackName));
+  MainSec.AddLine('author', Trim(SysDat.SecondLine));
+  if Trim(SysDat.StyleNames[0]) <> '' then
+    MainSec.AddLine('lemmings', Trim(SysDat.StyleNames[0]));
+  Sec := MainSec.SectionList.Add('scroller');
+  for n := 0 to 15 do
+    if Length(Trim(SysDat.ScrollerTexts[n])) <> 0 then
+      Sec.AddLine('line', Trim(SysDat.ScrollerTexts[n]));
+
+  Parser.SaveToFile(BasePath + 'info.nxmi');
+
+  // SResult
+  Parser.Clear;
+  MainSec := Parser.MainSection;
+  for n := 0 to 8 do
+  begin
+    Sec := MainSec.SectionList.Add('result');
+    case SR_TYPES[n] of
+      SR_COUNT: Sec.AddLine('condition', IntToStr(SR_VALUE[n]));
+      SR_PERCENT: Sec.AddLine('condition', IntToStr(SR_VALUE[n]) + '%');
+      SR_RELATIVE: if SR_VALUE[n] >= 0 then
+                          Sec.AddLine('condition', '+' + IntToStr(SR_VALUE[n]))
+                        else
+                          Sec.AddLine('condition', IntToStr(SR_VALUE[n])); // IntToStr will already give the - sign
+      SR_RELATIVE_PERCENT: if SR_VALUE[n] >= 0 then
+                          Sec.AddLine('condition', '+' + IntToStr(SR_VALUE[n]) + '%')
+                        else
+                          Sec.AddLine('condition', IntToStr(SR_VALUE[n]) + '%'); // same here
+    end;
+    Sec.AddLine('line', Trim(SysDat.SResult[n][0]));
+    Sec.AddLine('line', Trim(SysDat.SResult[n][1]));
+  end;
+
+  Parser.SaveToFile(BasePath + 'postview.nxmi');
+
   Parser.Free;
 except
 end;

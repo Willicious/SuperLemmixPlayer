@@ -529,6 +529,9 @@ begin
   // Nepster - I have removed certain parts of this as they are not needed in regards to longer-term plans
   with Info do
   begin
+    Title := Trim(Title);
+    Author := Trim(Author);
+
     if Width < 1 then Width := 1;
     if Height < 1 then Height := 1;
 

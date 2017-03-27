@@ -370,7 +370,7 @@ end;
 
 procedure TParserLine.SetKeyword(aValue: String);
 begin
-  fKeyword := Trim(aValue);
+  fKeyword := Trim(Uppercase(aValue));
 end;
 
 function TParserLine.GetAsLine(aLeadingSpaces: Integer = 0): String;
@@ -407,7 +407,7 @@ end;
 
 procedure TParserSection.SetKeyword(aValue: String);
 begin
-  fKeyword := Trim(aValue);
+  fKeyword := Trim(Uppercase(aValue));
 end;
 
 function TParserSection.GetLine(aKeyword: String): TParserLine;

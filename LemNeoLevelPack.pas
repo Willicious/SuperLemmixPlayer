@@ -17,12 +17,16 @@ type
   TNeoLevelGroup = class;
   TNeoLevelGroups = class;
 
+  TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);
+
   TNeoLevelEntry = class  // This is an entry in a level pack's list, and does NOT contain the level itself
     private
       fGroup: TNeoLevelGroup;
 
       fTitle: String;
       fFilename: String;
+
+      fStatus: TNeoLevelStatus;
 
       fLastCRC32: Cardinal;
 
@@ -39,6 +43,7 @@ type
       property Title: String read GetTitle;
       property Filename: String read fFilename write SetFilename;
       property Path: String read GetFullPath;
+      property Status: TNeoLevelStatus read fStatus write fStatus;
   end;
 
   TNeoLevelGroup = class
