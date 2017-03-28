@@ -4640,10 +4640,7 @@ begin
   with aReplayItem do
   begin
     if (LemmingIndex < 0) or (LemmingIndex >= LemmingList.Count) then
-    begin
-      RegainControl;
       Exit;
-    end;
 
     L := LemmingList.List^[LemmingIndex];
 
@@ -4656,10 +4653,6 @@ begin
       fHighlightLemmingID := L.LemIndex;
       AssignNewSkill(Skill, true, true);
       fHighlightLemmingID := OldHighlightLemID;
-    end
-    else
-    begin
-      Application.Messagebox('Replay action skipped: It contains an invalid skill.', 'Replay warning')
     end;
 
   end;
