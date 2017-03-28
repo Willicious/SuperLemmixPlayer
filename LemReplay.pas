@@ -114,6 +114,7 @@ type
 
   TReplay = class
     private
+      fIsModified: Boolean;
       fAssignments: TReplayItemList;        // nuking is also included here
       fReleaseRateChanges: TReplayItemList;
       fPlayerName: String;
@@ -152,6 +153,7 @@ type
       property Assignment[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
       property ReleaseRateChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
+      property IsModified: Boolean read fIsModified;
   end;
 
   function GetSkillReplayName(aButton: TSkillPanelButton): String; overload;
@@ -401,6 +403,8 @@ begin
     if (Dst[i].Frame = aItem.Frame) and (Dst[i].ClassName = aItem.ClassName) then
       Dst.Delete(i);
   Dst.Add(aItem);
+
+  fIsModified := true;
 end;
 
 procedure TReplay.Delete(aItem: TBaseReplayItem);
@@ -418,6 +422,8 @@ begin
   for i := Dst.Count-1 downto 0 do
     if Dst[i] = aItem then
       Dst.Delete(i);
+
+  fIsModified := true;
 end;
 
 procedure TReplay.Clear(EraseLevelInfo: Boolean = false);
@@ -432,6 +438,7 @@ begin
   fLevelRank := '';
   fLevelPosition := 0;
   fLevelID := 0;
+  fIsModified := true;
 end;
 
 procedure TReplay.Cut(aLastFrame: Integer);
@@ -446,6 +453,7 @@ procedure TReplay.Cut(aLastFrame: Integer);
 begin
   DoCut(fAssignments);
   DoCut(fReleaseRateChanges);
+  fIsModified := true;
 end;
 
 function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
@@ -490,6 +498,8 @@ var
   SL: TStringList;
 begin
   Clear(true);
+
+  fIsModified := false;
 
   SL := TStringList.Create;
   Parser := TParser.Create;

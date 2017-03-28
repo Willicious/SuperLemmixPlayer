@@ -1758,7 +1758,7 @@ begin
       aNextScreen := gstPreview;
     end;
 
-    if (GameParams.AutoSaveReplay) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
+    if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
     begin
       S := Game.ReplayManager.GetSaveFileName(self, Game.Level, true);
       ForceDirectories(ExtractFilePath(S));
