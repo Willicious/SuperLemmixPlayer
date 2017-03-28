@@ -298,6 +298,7 @@ var
   MusicIndex: Integer;
   TempStream: TMemoryStream;
   SL: TStringList;
+  i: Integer;
 begin
   MusicName := ChangeFileExt(GameParams.Level.Info.MusicFile, '');
 
@@ -325,8 +326,16 @@ begin
   if MusicIndex = -1 then
     if GameParams.fTestMode then
       MusicIndex := Random(SL.Count)
-    else
+    else begin
       MusicIndex := GameParams.Info.dLevel;
+
+      if GameParams.SysDat.Options4 and 2 <> 0 then
+      begin
+        for i := 0 to GameParams.Info.dSection-1 do
+          MusicIndex := MusicIndex + TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetLevelCount(i);
+      end else
+        ShowMessage(IntToStr(GameParams.SysDat.Options4));
+    end;
 
   if SL.Count > 0 then
     Result := SL[MusicIndex mod SL.Count];
