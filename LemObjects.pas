@@ -466,6 +466,14 @@ begin
       end;
     end; // end test whether object is teleporter
   end; // next i
+
+  for i := 0 to Count-1 do
+  begin
+    Inf := List^[i];
+    if Inf.TriggerEffect = DOM_RECEIVER then
+      if not IsReceiverUsed[i] then
+        Inf.IsDisabled := true;
+  end;
 end;
 
 
