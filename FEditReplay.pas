@@ -20,6 +20,7 @@ type
     Label1: TLabel;
     ebActionFrame: TEdit;
     btnDelete: TButton;
+    lblFrame: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnCancelClick(Sender: TObject);
@@ -33,7 +34,7 @@ type
     procedure ListReplayActions(aSelect: TBaseReplayItem = nil);
     procedure NoteChangeAtFrame(aFrame: Integer);
   public
-    procedure SetReplay(aReplay: TReplay);
+    procedure SetReplay(aReplay: TReplay; aIteration: Integer = -1);
     property EarliestChange: Integer read fEarliestChange;
   end;
 
@@ -134,12 +135,14 @@ begin
   end;
 end;
 
-procedure TFReplayEditor.SetReplay(aReplay: TReplay);
+procedure TFReplayEditor.SetReplay(aReplay: TReplay; aIteration: Integer = -1);
 begin
   fReplay := aReplay;
   fSavedReplay.Clear;
   fReplay.SaveToStream(fSavedReplay);
   lblLevelName.Caption := Trim(fReplay.LevelName);
+  if aIteration <> -1 then
+    lblFrame.Caption := 'Current frame: ' + IntToStr(aIteration);
   ListReplayActions;
 end;
 

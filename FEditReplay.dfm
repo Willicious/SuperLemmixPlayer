@@ -23,8 +23,21 @@ object FReplayEditor: TFReplayEditor
   object lblLevelName: TLabel
     Left = 14
     Top = 8
-    Width = 5
+    Width = 203
     Height = 13
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold, fsUnderline]
+    ParentFont = False
+  end
+  object lblFrame: TLabel
+    Left = 14
+    Top = 24
+    Width = 195
+    Height = 13
+    AutoSize = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -53,9 +66,9 @@ object FReplayEditor: TFReplayEditor
   end
   object lbReplayActions: TListBox
     Left = 8
-    Top = 32
+    Top = 48
     Width = 209
-    Height = 225
+    Height = 209
     ItemHeight = 13
     TabOrder = 2
     OnClick = lbReplayActionsClick

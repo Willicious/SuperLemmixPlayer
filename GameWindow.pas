@@ -372,7 +372,7 @@ begin
   OldPaused := fGameSpeed = gspPause;
   GameSpeed := gspPause;
   F := TFReplayEditor.Create(self);
-  F.SetReplay(Game.ReplayManager);
+  F.SetReplay(Game.ReplayManager, Game.CurrentIteration);
   fSuspendCursor := true;
   try
     if (F.ShowModal = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
