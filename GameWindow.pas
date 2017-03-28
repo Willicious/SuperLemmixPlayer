@@ -712,7 +712,7 @@ var
 begin
   if IsHyperSpeed then Exit;
 
-  Game.HitTest(not PtInRect(Img.BoundsRect, Mouse.CursorPos));
+  Game.HitTest(not PtInRect(Img.BoundsRect, ScreenToClient(Mouse.CursorPos)));
   CheckUserHelpers;
 
   if (fRenderInterface.SelectedLemming <> fLastSelectedLemming)

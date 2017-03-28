@@ -4442,8 +4442,6 @@ begin
 
   DrawAnimatedObjects;
 
-  fRenderInterface.SelectedLemming := fLemSelected;
-
   // Check lemmings under cursor
   HitTest;
 end;
@@ -4535,13 +4533,10 @@ procedure TLemmingGame.HitTest(Autofail: Boolean = false);
 var
   HitCount: Integer;
   L, OldLemSelected: TLemming;
-  S: string;
-  i: integer;
-  ForceShowAthleteInfo: Boolean;
 begin
   if Autofail then fHitTestAutoFail := true;
 
-  OldLemSelected := fLemSelected;
+  OldLemSelected := fRenderInterface.SelectedLemming;
   // Shadow stuff for updated selected lemming
   GetPriorityLemming(fLemSelected, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
   CheckForNewShadow;
@@ -4556,53 +4551,6 @@ begin
   end;
 
   LastHitCount := HitCount;
-
-  if Assigned(L) and not fHitTestAutofail then
-  begin
-    // get highlight text
-    ForceShowAthleteInfo := L.LemIsZombie
-           and (L.LemIsClimber or L.LemIsFloater or L.LemIsGlider or L.LemIsSwimmer or L.LemIsMechanic);
-
-    if IsShowAthleteInfo or ForceShowAthleteInfo then
-    begin
-      S := '-----';
-      if L.LemIsClimber then S[1] := 'C';
-      if L.LemIsSwimmer then S[2] := 'S';
-      if L.LemIsFloater then S[3] := 'F';
-      if L.LemIsGlider then S[3] := 'G';
-      if L.LemIsMechanic then S[4] := 'D';
-      if L.LemIsZombie then S[5] := 'Z';
-    end else begin
-      S := LemmingActionStrings[L.LemAction];
-
-      if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
-      begin
-        i := 0;
-        if L.LemIsClimber then inc(i);
-        if L.LemIsSwimmer then inc(i);
-        if L.LemIsFloater then inc(i);
-        if L.LemIsGlider then inc(i);
-        if L.LemIsMechanic then inc(i);
-
-        case i of
-          5: S := SQuadathlete;
-          4: S := SQuadathlete;
-          3: S := STriathlete;
-          2: S := SAthlete;
-          1: begin
-               if L.LemIsClimber then S := SClimber;
-               if L.LemIsSwimmer then S := SSwimmer;
-               if L.LemIsFloater then S := SFloater;
-               if L.LemIsGlider  then S := SGlider;
-               if L.LemIsMechanic then S := SMechanic;
-             end;
-        end;
-      end;
-
-      if L.LemIsZombie then S := SZombie;
-    end;
-
-  end;
 end;
 
 function TLemmingGame.ProcessSkillAssignment(IsHighlight: Boolean = false): Boolean;
