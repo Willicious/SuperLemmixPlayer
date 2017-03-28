@@ -1364,7 +1364,7 @@ begin
       CheckResetCursor;
     end;
 
-    Game.HitTestAutoFail := not PtInRect(Img.BoundsRect, Point(X, Y));
+    Game.HitTestAutoFail := not PtInRect(Rect(0, 0, Img.Width, Img.Height), Point(X, Y));
 
     if X >= Img.Width - 1 then
       GameScroll := gsRight
