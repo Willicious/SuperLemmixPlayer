@@ -1270,8 +1270,7 @@ var
   const
     DO_NOT_DRAW: set of 0..255 =
           [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
-           DOM_RECEIVER, DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT,
-           DOM_BACKGROUND, DOM_BGIMAGE, DOM_ONEWAYUP];
+           DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND, DOM_BGIMAGE, DOM_ONEWAYUP];
   begin
     if not (aInf.Obj.IsFake or aInf.IsDisabled or (aInf.TriggerEffect in DO_NOT_DRAW)) then
       DrawTriggerAreaRectOnLayer(aInf.TriggerRect);
