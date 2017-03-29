@@ -18,17 +18,6 @@ type
     cbAutoSaveReplay: TCheckBox;
     Label2: TLabel;
     cbReplayNaming: TComboBox;
-    TabSheet2: TTabSheet;
-    GroupBox5: TGroupBox;
-    cbLookForLVL: TCheckBox;
-    cbChallengeMode: TCheckBox;
-    cbTimerMode: TCheckBox;
-    GroupBox7: TGroupBox;
-    Label4: TLabel;
-    cbSkillList: TComboBox;
-    cbForceSkill: TCheckBox;
-    btnCheckSkills: TButton;
-    btnClearSkill: TButton;
     cbExplicitCancel: TCheckBox;
     cbNoAutoReplay: TCheckBox;
     TabSheet4: TTabSheet;
@@ -64,15 +53,10 @@ type
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
-    procedure cbSkillListChange(Sender: TObject);
-    procedure cbForceSkillClick(Sender: TObject);
-    procedure btnClearSkillClick(Sender: TObject);
-    procedure btnCheckSkillsClick(Sender: TObject);
     procedure OptionChanged(Sender: TObject);
     procedure cbEnableOnlineClick(Sender: TObject);
     procedure SliderChange(Sender: TObject);
   private
-    fForceSkillset: Word;
     procedure SetFromParams;
     procedure SaveToParams;
   public
@@ -109,8 +93,6 @@ procedure TFormNXConfig.SetFromParams;
 var
   i: Integer;
 begin
-  //// Variables ////
-  fForceSkillset := GameParams.ForceSkillset;
 
   //// Page 1 (Global Options) ////
   // Checkboxes
@@ -171,33 +153,11 @@ begin
   cbSuccessJingle.Checked := GameParams.PostLevelVictorySound;
   cbFailureJingle.Checked := GameParams.PostLevelFailureSound;
 
-  //// Page 4 (Game-Specific Options) ////
-  // Checkboxes
-  cbLookForLVL.Enabled := (GameParams.SysDat.Options and 1) <> 0;
-  cbLookForLVL.Checked := GameParams.LookForLVLFiles and cbLookForLVL.Enabled;
-  cbChallengeMode.Enabled := ((GameParams.SysDat.Options and 32) <> 0) and (GameParams.ForceSkillset = 0);
-  cbChallengeMode.Checked := (GameParams.ChallengeMode or (GameParams.ForceSkillset <> 0));
-  cbTimerMode.Enabled := (GameParams.SysDat.Options and 32) <> 0;
-  cbTimerMode.Checked := GameParams.TimerMode and cbTimerMode.Enabled;
-  cbForceSkill.Enabled := (GameParams.SysDat.Options and 32) <> 0;
-  cbForceSkill.Checked := ((fForceSkillset and $8000) <> 0) and cbForceSkill.Enabled; // set based on first skill in list (highest bit)
-
-  // Skillset dropdown / etc
-  cbSkillList.Enabled := (GameParams.SysDat.Options and 32) <> 0;
-  btnCheckSkills.Enabled := ((GameParams.SysDat.Options and 32) <> 0) and
-                            (fForceSkillset <> 0);
-  btnClearSkill.Enabled := btnCheckSkills.Enabled;
-
-  if (GameParams.SysDat.Options and 33) = 0 then
-    TabSheet2.TabVisible := false;
-
   btnApply.Enabled := false;
 end;
 
 procedure TFormNXConfig.SaveToParams;
 begin
-  //// Variables ////
-  GameParams.ForceSkillset := fForceSkillset;
 
   //// Page 1 (Global Options) ////
   // Checkboxes
@@ -261,16 +221,6 @@ begin
   GameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
   GameParams.PostLevelFailureSound := cbFailureJingle.Checked;
 
-  //// Page 4 (Game Options) ////
-  // Checkboxes
-  GameParams.LookForLVLFiles := cbLookForLVL.Checked;
-  TBaseDosLevelSystem(GameParams.Style.LevelSystem).LookForLVL := GameParams.LookForLVLFiles;
-  if fForceSkillset <> 0 then
-    GameParams.ChallengeMode := true
-  else
-    GameParams.ChallengeMode := cbChallengeMode.Checked;
-  GameParams.TimerMode := cbTimerMode.Checked;
-
   btnApply.Enabled := false;
 end;
 
@@ -282,53 +232,6 @@ begin
   HotkeyForm.HotkeyManager := GameParams.Hotkeys;
   HotkeyForm.ShowModal;
   HotkeyForm.Free;
-end;
-
-procedure TFormNXConfig.cbSkillListChange(Sender: TObject);
-begin
-  cbForceSkill.Checked := (fForceSkillset and (1 shl (15 - cbSkillList.ItemIndex))) <> 0;
-end;
-
-procedure TFormNXConfig.cbForceSkillClick(Sender: TObject);
-begin
-  if cbForceSkill.Checked then
-    fForceSkillset := fForceSkillset or (1 shl (15 - cbSkillList.ItemIndex))
-  else
-    fForceSkillset := fForceSkillset and not (1 shl (15 - cbSkillList.ItemIndex));
-
-  btnCheckSkills.Enabled := (fForceSkillset <> 0);
-  cbChallengeMode.Checked := (fForceSkillset <> 0);
-  cbChallengeMode.Enabled := (fForceSkillset <> 0);
-  btnClearSkill.Enabled := btnCheckSkills.Enabled;
-
-  OptionChanged(Sender);
-end;
-
-procedure TFormNXConfig.btnClearSkillClick(Sender: TObject);
-begin
-  fForceSkillset := 0;
-  cbForceSkill.Checked := false;
-  btnCheckSkills.Enabled := false;
-  btnClearSkill.Enabled := false;
-  cbChallengeMode.Enabled := true;
-  OptionChanged(Sender);
-end;
-
-procedure TFormNXConfig.btnCheckSkillsClick(Sender: TObject);
-var
-  i: Integer;
-  S: String;
-begin
-  S := '';
-
-  // Using pointery stuff to simplify handling the split into three
-  // different variables.
-  for i := 15 downto 0 do
-    if (fForceSkillset and (1 shl i)) <> 0 then
-      S := S + '- ' + cbSkillList.Items[15-i] + #13;
-
-  S := 'Forced Skillset:' + #13 + #13 + S;
-  ShowMessage(S);
 end;
 
 procedure TFormNXConfig.OptionChanged(Sender: TObject);

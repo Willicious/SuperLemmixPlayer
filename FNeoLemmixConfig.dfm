@@ -23,7 +23,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 345
-    ActivePage = TabSheet5
+    ActivePage = TabSheet4
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
@@ -350,116 +350,6 @@ object FormNXConfig: TFormNXConfig
         Caption = 'Failure'
         TabOrder = 3
         OnClick = OptionChanged
-      end
-    end
-    object TabSheet2: TTabSheet
-      Caption = 'Debug'
-      ImageIndex = 1
-      object GroupBox5: TGroupBox
-        Left = 8
-        Top = 16
-        Width = 249
-        Height = 73
-        Caption = 'Debugging Options'
-        TabOrder = 0
-        object cbLookForLVL: TCheckBox
-          Left = 16
-          Top = 16
-          Width = 113
-          Height = 17
-          Caption = 'Look For LVL Files'
-          TabOrder = 0
-          OnClick = OptionChanged
-        end
-        object cbChallengeMode: TCheckBox
-          Left = 16
-          Top = 32
-          Width = 113
-          Height = 17
-          Caption = 'Infinite Skills'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbTimerMode: TCheckBox
-          Left = 16
-          Top = 48
-          Width = 113
-          Height = 17
-          Caption = 'Infinite Time'
-          TabOrder = 2
-          OnClick = OptionChanged
-        end
-      end
-      object GroupBox7: TGroupBox
-        Left = 8
-        Top = 96
-        Width = 249
-        Height = 97
-        Caption = 'Skillset Override'
-        TabOrder = 1
-        object Label4: TLabel
-          Left = 16
-          Top = 16
-          Width = 55
-          Height = 13
-          Caption = 'Select Skill:'
-        end
-        object cbSkillList: TComboBox
-          Left = 80
-          Top = 14
-          Width = 145
-          Height = 21
-          Style = csDropDownList
-          ItemHeight = 13
-          ItemIndex = 0
-          TabOrder = 0
-          Text = 'Walker'
-          OnChange = cbSkillListChange
-          Items.Strings = (
-            'Walker'
-            'Climber'
-            'Swimmer'
-            'Floater'
-            'Glider'
-            'Disarmer'
-            'Bomber'
-            'Stoner'
-            'Blocker'
-            'Platformer'
-            'Builder'
-            'Stacker'
-            'Basher'
-            'Miner'
-            'Digger'
-            'Cloner')
-        end
-        object cbForceSkill: TCheckBox
-          Left = 40
-          Top = 40
-          Width = 97
-          Height = 17
-          Caption = 'Have This Skill'
-          TabOrder = 1
-          OnClick = cbForceSkillClick
-        end
-        object btnCheckSkills: TButton
-          Left = 32
-          Top = 64
-          Width = 89
-          Height = 25
-          Caption = 'Check Skills'
-          TabOrder = 2
-          OnClick = btnCheckSkillsClick
-        end
-        object btnClearSkill: TButton
-          Left = 128
-          Top = 64
-          Width = 89
-          Height = 25
-          Caption = 'Clear Skills'
-          TabOrder = 3
-          OnClick = btnClearSkillClick
-        end
       end
     end
   end
