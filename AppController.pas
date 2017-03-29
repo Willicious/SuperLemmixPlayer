@@ -270,9 +270,6 @@ begin
   Application.Title := Trim(GameParams.SysDat.PackName);
   fMainDatExtractor.free;
 
-  GameParams.SaveSystem.SetCodeSeed(GameParams.SysDat.CodeSeed);
-
-
   GameParams.Style := AutoCreateStyle(GameParams.Directory, GameParams.SysDat);
   GameParams.NextScreen := gstMenu;
 

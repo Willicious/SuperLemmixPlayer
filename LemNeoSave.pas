@@ -17,7 +17,6 @@ type
 
   TNeoSave = class(TPersistent)
   private
-    fCodeSeed   : Integer;
     fTalismans  : TTalismans;
     fDisableSave: Boolean;
     fSaveData   : TNeoSaveRecord;
@@ -38,7 +37,6 @@ type
     procedure AddMissingTalismans;
     function CheckTalisman(aSig: Cardinal): Boolean;
     procedure GetTalisman(aSig: Cardinal);
-    procedure SetCodeSeed(aValue: Integer);
     property DisableSave: Boolean read fDisableSave write fDisableSave;
   end;
 
@@ -51,18 +49,12 @@ constructor TNeoSave.Create;
 begin
   inherited Create;
   SetLength(fTalismanData, 0);
-  fCodeSeed := 0;
   fDisableSave := false;
 end;
 
 destructor TNeoSave.Destroy;
 begin
   inherited Destroy;
-end;
-
-procedure TNeoSave.SetCodeSeed(aValue: Integer);
-begin
-  fCodeSeed := aValue;
 end;
 
 procedure TNeoSave.SetTalismans(aValue: TTalismans);
