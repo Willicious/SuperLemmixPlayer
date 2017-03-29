@@ -416,6 +416,7 @@ var
 
   CurrTime: Cardinal;
   Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
+  PanelFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
   begin
@@ -433,10 +434,18 @@ begin
     Exit;
   end;
 
+  PanelFrameSkip := SkillPanel.FrameSkip;
+
+  if PanelFrameSkip < 0 then
+  begin
+    if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+    GotoSaveState(Max(Game.CurrentIteration-1, 0));
+  end;
+
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
   ForceOne := ForceUpdateOneFrame or fRenderInterface.ForceUpdate;
-  ForceUpdateOneFrame := False;
+  ForceUpdateOneFrame := (PanelFrameSkip > 0);
   CurrTime := TimeGetTime;
   TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);

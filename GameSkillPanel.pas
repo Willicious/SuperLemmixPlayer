@@ -33,6 +33,8 @@ type
 type
   TSkillPanelToolbar = class(TCustomControl)
   private
+    fLastClickFrameskip: Cardinal;
+
     fStyle         : TBaseDosLemmingStyle;
 
     fImg           : TImage32;
@@ -90,6 +92,8 @@ type
 
     procedure SetZoom(aZoom: Integer);
     function GetZoom: Integer;
+
+    function GetFrameSkip: Integer;
   protected
     procedure ReadBitmapFromStyle; virtual;
     procedure ReadFont;
@@ -135,6 +139,8 @@ type
 
     property Zoom: Integer read GetZoom write SetZoom;
     property MaxZoom: Integer read GetMaxZoom;
+
+    property FrameSkip: Integer read GetFrameSkip;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
 
@@ -176,6 +182,8 @@ var
   i: Integer;
 begin
   inherited Create(aOwner);
+
+  fLastClickFrameskip := GetTickCount;
 
   DoubleBuffered := true;
 
@@ -695,14 +703,18 @@ begin
                             end;
             spbRestart: TGameWindow(Parent).GotoSaveState(0, -1);
             spbBackOneFrame: if Button = mbLeft then
-                               TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 1)
-                             else if Button = mbRight then
+                             begin
+                               TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 1);
+                               fLastClickFrameskip := GetTickCount;
+                             end else if Button = mbRight then
                                TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 17)
                              else if Button = mbMiddle then
                                TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 85);
             spbForwardOneFrame: if Button = mbLeft then
-                                  TGameWindow(Parent).ForceUpdateOneFrame := true
-                                else if Button = mbRight then
+                                begin
+                                  TGameWindow(Parent).ForceUpdateOneFrame := true;
+                                  fLastClickFrameskip := GetTickCount;
+                                end else if Button = mbRight then
                                   TGameWindow(Parent).HyperSpeedTarget := Game.CurrentIteration + 17
                                 else if Button = mbMiddle then
                                   TGameWindow(Parent).HyperSpeedTarget := Game.CurrentIteration + 85;
@@ -1328,6 +1340,23 @@ procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);
 begin
   fGame := Value;
   SetTimeLimit(GameParams.Level.Info.HasTimeLimit);
+end;
+
+function TSkillPanelToolbar.GetFrameSkip: Integer;
+var
+  P: TPoint;
+begin
+  Result := 0;
+  if GetTickCount - fLastClickFrameskip < 250 then Exit;
+  P := Img.ControlToBitmap(ScreenToClient(Mouse.CursorPos));
+  if GetKeyState(VK_LBUTTON) < 0 then
+    if PtInRect(fButtonRects[spbBackOneFrame], P) then
+      Result := -1
+    else if PtInRect(fButtonRects[spbForwardOneFrame], P) then
+      Result := 1;
+
+  if Result <> 0 then
+    fLastClickFrameskip := GetTickCount - 150;
 end;
 
 end.
