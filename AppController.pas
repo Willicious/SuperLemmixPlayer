@@ -311,17 +311,6 @@ begin
 
   GameParams.Load;
 
-  if GameParams.fTestMode and (ParamStr(6) <> '') then
-  begin
-    // Very old editor versions didn't specify a testplay mode in the commandline, it had to be
-    // configured in the game's settings. I doubt anyone still uses versions this old, but...
-    // (Actually, are editor versions that old even compatible with player versions this recent?)
-    if DoSingleLevel then
-      GameParams.QuickTestMode := 0
-    else
-      GameParams.QuickTestMode := StrToInt(ParamStr(6));
-  end;
-
   if UnderWine and not GameParams.DisableWineWarnings then
     if GameParams.FullScreen then
     begin
@@ -372,33 +361,12 @@ begin
 
   if GameParams.Style.LevelSystem is TBaseDosLevelSystem then  // which it should always be
   begin
-    TBaseDosLevelSystem(GameParams.Style.LevelSystem).LookForLVL := GameParams.LookForLVLFiles;
     TBaseDosLevelSystem(GameParams.Style.LevelSystem).fTestMode := GameParams.fTestMode;
     TBaseDosLevelSystem(GameParams.Style.LevelSystem).fTestLevel := GameParams.fTestLevelFile;
     TBaseDosLevelSystem(GameParams.Style.LevelSystem).SysDat := GameParams.SysDat;
     TDosFlexiLevelSystem(GameParams.Style.LevelSystem).SysDat := GameParams.SysDat;
     TDosFlexiMusicSystem(GameParams.Style.MusicSystem).MusicCount := GameParams.SysDat.TrackCount;
     TBaseDosLevelSystem(GameParams.Style.LevelSystem).fDefaultSectionCount := TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetSectionCount;
-  end;
-
-  if GameParams.SysDat.Options and 1 = 0 then GameParams.LookForLVLFiles := false;
-  if GameParams.SysDat.Options and 32 = 0 then
-  begin
-    // This is a setting that disables these options.
-    GameParams.ChallengeMode := false;
-    GameParams.TimerMode := false;
-    GameParams.ForceSkillset := 0;
-  end;
-
-  if GameParams.fTestMode then
-  begin
-    // These options should never be enabled when using testplay mode.
-    // (Maybe they should when manually loading a single level? But probably not. Anyway,
-    // I don't think they actually /can/ be enabled in such modes anymore due to how the
-    // saving of settings works now...)
-    GameParams.ChallengeMode := false;
-    GameParams.TimerMode := false;
-    GameParams.ForceSkillset := 0;
   end;
 
   GameParams.WhichLevel := wlLastUnlocked;

@@ -242,9 +242,7 @@ begin
 
     Style.LevelSystem.FindFinalLevel(FinalInfo);
 
-    if ({gSuccess and} not gCheated)
-    and not (ChallengeMode or TimerMode)
-    and (ForceSkillset = 0) then
+    if not gCheated then
     with SaveSystem, Info do
     begin
       SetLemmingRecord(dSection, dLevel, gRescued);

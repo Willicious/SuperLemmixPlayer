@@ -77,9 +77,6 @@ type
 
 type
   TMiscOption = (
-    moLookForLVLFiles,
-    moChallengeMode,
-    moTimerMode,
     moAutoReplayNames,
     moLemmingBlink,
     moTimerBlink,
@@ -188,7 +185,6 @@ type
     LemMusicOnDisk      : Boolean;
 
     fZoomFactor          : Integer;
-    fForceSkillset       : Word;
     fLevelOverride       : Integer;
 
     fTestMode : Boolean;
@@ -196,8 +192,6 @@ type
     fTestVgagrFile : String;
     fTestVgaspecFile : String;
     fTestLevelFile : String;
-
-    fTestScreens: Integer;
 
     SysDat               : TSysDatRec;
     ReplayCheckPath: String;
@@ -209,9 +203,6 @@ type
     procedure Save;
     procedure Load;
 
-    property LookForLVLFiles: Boolean Index moLookForLVLFiles read GetOptionFlag write SetOptionFlag;
-    property ChallengeMode: Boolean Index moChallengeMode read GetOptionFlag write SetOptionFlag;
-    property TimerMode: Boolean Index moTimerMode read GetOptionFlag write SetOptionFlag;
     property AutoReplayNames: Boolean Index moAutoReplayNames read GetOptionFlag write SetOptionFlag;
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property LemmingBlink: Boolean Index moLemmingBlink read GetOptionFlag write SetOptionFlag;
@@ -243,8 +234,6 @@ type
     property DoneUpdateCheck: Boolean read fDoneUpdateCheck write fDoneUpdateCheck;
 
     property Directory: string read fDirectory write fDirectory;
-    property ForceSkillset: Word read fForceSkillset write fForceSkillset;
-    property QuickTestMode: Integer read fTestScreens write fTestScreens;
 
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
@@ -277,7 +266,7 @@ begin
   try
     SaveToIniFile;
     Hotkeys.SaveFile;
-    SaveSystem.SaveFile(@self);
+    SaveSystem.SaveFile;
   except
     ShowMessage('An error occured while trying to save data.');
   end;
@@ -286,7 +275,7 @@ end;
 procedure TDosGameParams.Load;
 begin
   if IsHalting then Exit;
-  SaveSystem.LoadFile(@self);
+  SaveSystem.LoadFile;
   LoadFromIniFile;
   // Hotkeys automatically load when the hotkey manager is created
 end;
@@ -504,9 +493,7 @@ begin
 
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
-  fForceSkillset := 0;
   fDumpMode := false;
-  fTestScreens := 0;
   fShownText := false;
   fOneLevelMode := false;
   fTalismanPage := 0;

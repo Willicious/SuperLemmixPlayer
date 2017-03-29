@@ -295,7 +295,6 @@ function TGamePreviewScreen.GetScreenText: string;
 var
   Perc, TL: string;
   RR: String;
-  i: Integer;
 begin
   Assert(GameParams <> nil);
 
@@ -344,16 +343,6 @@ begin
                  GameParams.Info.dSectionName,
                  GameParams.Level.Info.Author
                 ]);
-
-  if GameParams.ForceSkillset <> 0 then
-  begin
-    GameParams.Level.Info.Skillset := [];
-    for i := 0 to 15 do
-    begin
-      if GameParams.ForceSkillset and (1 shl (15 - i)) <> 0 then
-        GameParams.Level.Info.Skillset := GameParams.Level.Info.Skillset + [TSkillPanelButton(i)];
-    end;
-  end;
 end;
 
 procedure TGamePreviewScreen.PrepareGameParams;

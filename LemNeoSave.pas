@@ -28,14 +28,12 @@ type
     procedure Clear;
     procedure CompleteLevel(aSection, aLevel: Integer);
     function CheckCompleted(aSection, aLevel: Integer): Boolean;
-    procedure UpdateConfig(aPointer: Pointer);
-    procedure LoadConfig(aPointer: Pointer);
     function GetLemmingRecord(aSection, aLevel: Integer): Integer;
     procedure SetLemmingRecord(aSection, aLevel, aValue: Integer);
     function GetTimeRecord(aSection, aLevel: Integer): Integer;
     procedure SetTimeRecord(aSection, aLevel, aValue: Cardinal);
-    procedure SaveFile(aPointer: Pointer);
-    procedure LoadFile(aPointer: Pointer);
+    procedure SaveFile;
+    procedure LoadFile;
     procedure SetTalismans(aValue: TTalismans);
     procedure AddMissingTalismans;
     function CheckTalisman(aSig: Cardinal): Boolean;
@@ -91,26 +89,6 @@ begin
   AddMissingTalismans;
 end;
 
-procedure TNeoSave.UpdateConfig(aPointer: Pointer);
-begin
-  // No longer needed
-end;
-
-procedure TNeoSave.LoadConfig(aPointer: Pointer);
-var
-  p : ^TDOSGameParams;
-begin
-  p := aPointer;
-  //g := p^;
-  with fSaveData.Config do
-  begin
-    //p.MiscOptions := TMiscOptions(ToggleOptions);
-    p.ForceSkillset := ForceSkillset;
-    p.fTestScreens := TestOption;
-    p.SoundOptions := TGameSoundOptions(SoundOption);
-  end;
-end;
-
 procedure TNeoSave.CompleteLevel(aSection, aLevel: Integer);
 var
   p : ^byte;
@@ -160,18 +138,6 @@ procedure TNeoSave.SaveFile;
 var
   SL: TStringList;
 
-  function CheckNeedSaveConfig: Boolean;
-  begin
-    Result := false;
-    if ((GameParams.SysDat.Options and 1) <> 0) and GameParams.LookForLVLFiles then Result := true;
-    if ((GameParams.SysDat.Options and 32) = 0) then Exit;
-
-    // The rest will only execute if these modes are enabled. ^_^
-    if GameParams.ChallengeMode then Result := true;
-    if GameParams.TimerMode then Result := true;
-    if GameParams.ForceSkillset <> 0 then Result := true;
-  end;
-
   procedure AddBoolean(aLabel: String; aValue: Boolean);
   var
     s: String;
@@ -183,42 +149,6 @@ var
 
     s := aLabel + '=' + s;
     SL.Add(s);
-  end;
-
-  procedure AddForcedSkillset;
-  var
-    s: String;
-    i: Integer;
-  const
-    SkillKeys: array[0..15] of String = (
-               'Walker',
-               'Climber',
-               'Swimmer',
-               'Floater',
-               'Glider',
-               'Disarmer',
-               'Bomber',
-               'Stoner',
-               'Blocker',
-               'Platformer',
-               'Builder',
-               'Stacker',
-               'Basher',
-               'Miner',
-               'Digger',
-               'Cloner');
-  begin
-    if GameParams.ForceSkillset = 0 then
-    begin
-      SL.Add('ForcedSkillset=none');
-      Exit;
-    end;
-    s := '';
-    for i := 0 to 15 do
-      if (GameParams.ForceSkillset and (1 shl (15-i))) <> 0 then
-        s := s + SkillKeys[i] + ',';
-    s := LeftStr(s, Length(s) - 1); // remove final comma
-    SL.Add('ForcedSkillset=' + s);
   end;
 
   procedure AddTalismans;
@@ -280,21 +210,6 @@ begin
   SL.Add('[version]');
   SL.Add(IntToStr(CurrentVersionID));
   SL.Add('');
-
-  // First, the config.
-  if CheckNeedSaveConfig then
-  begin
-    SL.Add('[config]');
-    if ((GameParams.SysDat.Options and 1) <> 0) then
-      AddBoolean('LookForLVLFiles', GameParams.LookForLVLFiles);
-    if ((GameParams.SysDat.Options and 32) <> 0) then
-    begin
-      AddBoolean('ChallengeMode', GameParams.ChallengeMode);
-      AddBoolean('TimerMode', GameParams.TimerMode);
-      AddForcedSkillset;
-    end;
-    SL.Add('');
-  end;
 
   // Talismans next
   if fTalismans.Count <> 0 then
@@ -368,93 +283,6 @@ var
   function GetToggle(aString: String): Boolean;
   begin
     Result := (GetValue(aString) = 'on');
-  end;
-
-  function GetForcedSkillset(aString: String): Word;
-  var
-    LocalSL: TStringList;
-    i: Integer;
-  begin
-    Result := 0;
-    LocalSL := TStringList.Create;
-    try
-      LocalSL.CommaText := GetValue(aString);
-      for i := 0 to LocalSL.Count-1 do
-      begin
-        LocalSL[i] := Trim(LocalSL[i]); // spaces for readability, but they're undesirable here
-        if LocalSL[i] = 'walker' then
-          Result := Result or $8000;
-        if LocalSL[i] = 'climber' then
-          Result := Result or $4000;
-        if LocalSL[i] = 'swimmer' then
-          Result := Result or $2000;
-        if LocalSL[i] = 'floater' then
-          Result := Result or $1000;
-        if LocalSL[i] = 'glider' then
-          Result := Result or $0800;
-        if LocalSL[i] = 'disarmer' then
-          Result := Result or $0400;
-        if LocalSL[i] = 'bomber' then
-          Result := Result or $0200;
-        if LocalSL[i] = 'stoner' then
-          Result := Result or $0100;
-        if LocalSL[i] = 'blocker' then
-          Result := Result or $0080;
-        if LocalSL[i] = 'platformer' then
-          Result := Result or $0040;
-        if LocalSL[i] = 'builder' then
-          Result := Result or $0020;
-        if LocalSL[i] = 'stacker' then
-          Result := Result or $0010;
-        if LocalSL[i] = 'basher' then
-          Result := Result or $0008;
-        if LocalSL[i] = 'miner' then
-          Result := Result or $0004;
-        if LocalSL[i] = 'digger' then
-          Result := Result or $0002;
-        if LocalSL[i] = 'cloner' then
-          Result := Result or $0001;
-      end;
-    except
-      // Not worth raising an exception over. Just silently turn the
-      // option off instead.
-      Result := 0;
-    end;
-    LocalSL.Free;
-  end;
-
-  procedure LoadConfigSection;
-  begin
-    // Which options are used, and stored in the per-game files?
-    // -- Look For LVL Files
-    // -- Debug Steel
-    // -- Challenge Mode
-    // -- Timer Mode
-    // -- Forced Skillset
-    // Don't forget - file is not case sensitive. But all lines
-    // are read from it as lowercase.
-    repeat
-      Line := trim(LowerCase(SL[CurrentLine]));
-      Inc(CurrentLine);
-
-      // First four are simple on/off options
-      if GetKey(Line) = 'lookforlvlfiles' then
-        GameParams.LookForLVLFiles := GetToggle(Line);
-      if GetKey(Line) = 'challengemode' then
-        GameParams.ChallengeMode := GetToggle(Line);
-      if GetKey(Line) = 'timermode' then
-        GameParams.TimerMode := GetToggle(Line);
-
-      // Last one is a bit more complicated. Let's delegate it to another
-      // subfunction.
-      if GetKey(Line) = 'forcedskillset' then
-        GameParams.ForceSkillset := GetForcedSkillset(Line);
-
-      // And if we get a blank line, we break. Between sections we must have one
-      // blank line (or more). Within a section we must not have any.
-      if Line = '' then Break;
-
-    until CurrentLine = SL.Count;
   end;
 
   function TimeToFrames(aTime: String): Integer;
@@ -563,11 +391,10 @@ var
 begin
   if fDisableSave then Exit;
   SaveFileName := ChangeFileExt(GameFile, '.nxsv');
-  GameParams := TDosGameParams(aPointer^);
   Clear;
 
   if not FileExists(SaveFileName) then
-    SaveFile(aPointer);
+    SaveFile;
 
   SL := TStringList.Create;
   try
@@ -580,13 +407,6 @@ begin
     repeat
       Line := trim(LowerCase(SL[CurrentLine]));
       Inc(CurrentLine);
-
-      // Config header
-      if Line = '[config]' then
-      begin
-        LoadConfigSection;
-        Continue;
-      end;
 
       if Line = '[talismans]' then
       begin

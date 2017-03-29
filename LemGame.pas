@@ -1039,12 +1039,6 @@ var
 begin
   Playing := False;
 
-  if GameParams.ChallengeMode then
-  begin
-    for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
-      Level.Info.SkillCount[Skill] := 0;
-  end;
-
   // hyperspeed things
   fTargetIteration := 0;
   fHyperSpeedCounter := 0;
@@ -1059,7 +1053,7 @@ begin
   LemmingsToRelease := Level.Info.LemmingsCount;
   LemmingsCloned := 0;
   TimePlay := Level.Info.TimeLimit;
-  if (not Level.Info.HasTimeLimit) or (GameParams.TimerMode) then
+  if not Level.Info.HasTimeLimit then
     TimePlay := 0; // infinite time
 
   FillChar(GameResultRec, SizeOf(GameResultRec), 0);
@@ -1525,7 +1519,7 @@ begin
   if fGameFinished then
     Exit;
 
-  if (TimePlay <= 0) and not ((GameParams.TimerMode) or (not GameParams.Level.Info.HasTimeLimit)) then
+  if (TimePlay <= 0) and GameParams.Level.Info.HasTimeLimit then
   begin
     GameResultRec.gTimeIsUp := True;
     Finish(GM_FIN_TIME);
@@ -5381,21 +5375,18 @@ begin
   for i := 0 to Length(fActiveSkills) - 1 do
     HasSkillButton := HasSkillButton or (fActiveSkills[i] = ActionToSkillPanelButton[aAction]);
 
-  Result := HasSkillButton and ((CurrSkillCount[aAction] > 0) or GameParams.ChallengeMode);
+  Result := HasSkillButton and (CurrSkillCount[aAction] > 0);
 end;
 
 
 procedure TLemmingGame.UpdateSkillCount(aAction: TBasicLemmingAction; Rev : Boolean = false);
 begin
-  if GameParams.ChallengeMode xor Rev then
-  begin
-    CurrSkillCount[aAction] := Min(CurrSkillCount[aAction] + 1, 99);
-  end
-  else if not Rev then // and neither GameParams.ChallengeMode
-  begin
+  if Rev then
+    CurrSkillCount[aAction] := Min(CurrSkillCount[aAction] + 1, 99)
+  else begin
     if CurrSkillCount[aAction] < 100 then // need to implement a seperate "infinite" setting
       CurrSkillCount[aAction] := Max(CurrSkillCount[aAction] - 1, 0);
-    Inc(UsedSkillCount[aAction])
+    Inc(UsedSkillCount[aAction]);
   end;
 end;
 
