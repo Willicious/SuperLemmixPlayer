@@ -249,12 +249,16 @@ begin
     H := H + (sHeight - MetaObj.Height);
 
   if MetaObj.TriggerEffect = DOM_RECEIVER then
-    if not ((W = 1) and (H = 1)) then
+    if (W > 1) or (H > 1) then
     begin
       X := X + (W div 2);
       Y := Obj.Top + Min(Height, MetaObj.TriggerTop + H - 1);
       W := 1;
       H := 1;
+    end else begin
+      W := 1;
+      H := 1;
+      // for cases where these are zero
     end;
 
   Result.Top := Y;
