@@ -12,7 +12,7 @@ interface
 uses
   LemmixHotkeys,
   Math,
-  Dialogs, SysUtils, Classes, Forms, GR32,
+  Dialogs, SysUtils, StrUtils, Classes, Forms, GR32,
   LemVersion,
   LemTypes, LemLevel, LemDosStyle,
   LemDosStructures,
@@ -282,7 +282,7 @@ end;
 
 procedure TDosGameParams.SaveToIniFile;
 var
-  SL: TStringList;
+  SL, SL2: TStringList;
 
   procedure SaveBoolean(aLabel: String; aValue: Boolean; aValue2: Boolean = false);
   var
@@ -295,9 +295,36 @@ var
     if aValue2 then NumValue := NumValue + 2;
     SL.Add(aLabel + '=' + IntToStr(NumValue));
   end;
+
+  procedure AddUnknowns;
+  var
+    i: Integer;
+    RemoveLine: Boolean;
+  begin
+    for i := SL2.Count-1 downto 0 do
+    begin
+      RemoveLine := false;
+      if SL2[i] = '' then RemoveLine := true;
+      if LeftStr(SL2[i], 1) = '#' then RemoveLine := true;
+      if SL.IndexOfName(SL2.Names[i]) > -1 then RemoveLine := true;
+
+      if RemoveLine then SL2.Delete(i);
+    end;
+
+    if SL2.Count = 0 then Exit;
+
+    SL.Add('');
+    SL.Add('# Preserved unknown options');
+    for i := 0 to SL2.Count-1 do
+      SL.Add(SL2[i]);
+  end;
 begin
   //if fTestMode then Exit;
   SL := TStringList.Create;
+  SL2 := TStringList.Create;
+
+  if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
+    SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
 
   SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
 
@@ -348,6 +375,7 @@ begin
     SaveBoolean('DisableWineWarnings', DisableWineWarnings);
   end;
 
+  AddUnknowns;
 
   SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini');
 
