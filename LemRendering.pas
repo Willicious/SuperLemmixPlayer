@@ -867,6 +867,8 @@ var
   P: PColor32;
   C: TColor32;
 begin
+  if not PtInRect(fLayers[rlTerrain].BoundsRect, Point(X, Y)) then Exit;
+  
   P := fLayers[rlTerrain].PixelPtr[X, Y];
   if P^ and $FF000000 <> $FF000000 then
   begin
