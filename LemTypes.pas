@@ -311,9 +311,6 @@ begin
                    end;
                  end;
         ldtMusic: begin
-                    if FormatDateTime('mmdd', Now) = '0401' then
-                      aFilename := 'orig_00'; // April fools prank. "orig_00" is a rickroll.
-
                     if FindInMusicFolder = '' then
                       FreeAndNil(Result)
                     else
