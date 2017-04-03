@@ -599,7 +599,8 @@ begin
   FoundWindow := false;
   SetLength(IsWindow, InteractiveObjects.Count);
   for i := 0 to InteractiveObjects.Count-1 do
-    if PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW then
+    if (PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW)
+    and not (InteractiveObjects[i].IsFake) then
     begin
       FoundWindow := true;
       IsWindow[i] := true;

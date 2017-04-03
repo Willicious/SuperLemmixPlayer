@@ -190,7 +190,6 @@ type
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
-    WindowOrderList            : array of Integer; // table for entrance release order
     //fPaused                    : Boolean;
     LowestReleaseRate          : Integer;   // only used for talismans
     HighestReleaseRate         : Integer;   // only used for talismans
@@ -1032,7 +1031,6 @@ procedure TLemmingGame.Start(aReplay: Boolean = False);
 var
   i: Integer;
   Inf: TInteractiveObjectInfo;
-  numEntries:integer;
 
   Skill: TSkillPanelButton;
   InitialSkill: TSkillPanelButton;
@@ -1073,9 +1071,6 @@ begin
   fClockFrame := 0;
   EntriesOpened := False;
 
-
-  SetLength(WindowOrderList, 0);
-
   ReleaseRateModifier := 0;
   UserSetNuking := False;
   ExploderAssignInProgress := False;
@@ -1111,7 +1106,6 @@ begin
 
   NextLemmingCountDown := 20;
 
-  numEntries := 0;
   ButtonsRemain := 0;
 
   // Create the list of interactive objects
@@ -1122,14 +1116,6 @@ begin
   for i := 0 to ObjectInfos.Count - 1 do
   begin
     Inf := ObjectInfos[i];
-
-    // Update number of hatches
-    if Inf.TriggerEffect = DOM_WINDOW then
-    begin
-      SetLength(WindowOrderList, numEntries + 1);
-      WindowOrderList[numEntries] := i;
-      Inc(numEntries);
-    end;
 
     // Update number of buttons
     if Inf.TriggerEffect = DOM_BUTTON then
@@ -4497,7 +4483,7 @@ begin
         AX := 0;
         AY := 0;
         for i := 0 to ObjectInfos.Count - 1 do
-          if ObjectInfos[i].TriggerEffect = DOM_WINDOW then
+          if ObjectInfos[i].MetaObj.TriggerEffect = DOM_WINDOW then // uses MetaObj.TriggerEffect so that fake windows still animate
           begin
             ObjectInfos[i].Triggered := True;
             ObjectInfos[i].CurrentFrame := 1;
@@ -4693,7 +4679,7 @@ var
   NewLemming: TLemming;
   ix: Integer;
 begin
-
+                                            
   if not EntriesOpened then
     Exit;
   if UserSetNuking then
