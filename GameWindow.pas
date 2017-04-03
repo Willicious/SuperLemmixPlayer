@@ -1655,7 +1655,6 @@ begin
     s := Game.ReplayManager.GetSaveFileName(self, Game.Level);
     if s = '' then Exit;
     Game.EnsureCorrectReplayDetails;
-    ForceDirectories(ExtractFilePath(s));
     Game.ReplayManager.SaveToFile(s);
   finally
     GameSpeed := OldSpeed;

@@ -549,6 +549,7 @@ procedure TReplay.SaveToFile(aFile: String);
 var
   FS: TFileStream;
 begin
+  ForceDirectories(ExtractFilePath(aFile));
   FS := TFileStream.Create(aFile, fmCreate);
   try
     FS.Position := 0;
