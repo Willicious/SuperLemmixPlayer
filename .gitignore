@@ -34,3 +34,4 @@ tools/GSConvert/bin/*
 !tools/GSConvert/bin/default/
 *.nxp
 bin/LemmingBytes Replay Results.txt
+bin/* Replay Results.txt

@@ -401,6 +401,15 @@ begin
         end;
 
         Game.UpdateLemmings;
+
+        if Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17) then
+        begin
+          Game.Finish(GM_FIN_TERMINATE);
+          if Game.GameResultRec.gSuccess then
+            fReplays[i].ReplayResult := CR_PASS;
+          Break;
+        end;
+
         while Game.MessageQueue.HasMessages do
           if Game.MessageQueue.NextMessage.MessageType = GAMEMSG_FINISH then
           begin
@@ -410,9 +419,7 @@ begin
               fReplays[i].ReplayResult := CR_FAIL;
           end;
         if fReplays[i].ReplayResult <> CR_UNDETERMINED then Break;
-
-        //Game.TargetIteration := Game.TargetIteration + 1; // never actually allow it to reach the targetiteration
-      until Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17);
+      until false;
 
       fReplays[i].ReplayDuration := Game.CurrentIteration;
     except
