@@ -529,6 +529,11 @@ begin
       CheckResetCursor;
     end else if (Game.CurrentIteration = fHyperSpeedTarget) then
     begin
+      if Game.CancelReplayAfterSkip then
+      begin
+        Game.RegainControl(true);
+        Game.CancelReplayAfterSkip := false;
+      end;
       fHyperSpeedTarget := -1;
       SkillPanel.RefreshInfo;
       fNeedRedraw := rdRedraw;
@@ -845,7 +850,7 @@ begin
     //DoDraw;
     if Game.CancelReplayAfterSkip then
     begin
-      Game.RegainControl;
+      Game.RegainControl(true);
       Game.CancelReplayAfterSkip := false;
     end;
   end else begin
@@ -1159,10 +1164,7 @@ begin
           lka_SaveImage: SaveShot;
           lka_LoadReplay: LoadReplay;
           lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
-          lka_Restart: begin
-                         if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
-                         GotoSaveState(0, -1); // the -1 prevents pausing afterwards
-                       end;
+          lka_Restart: GotoSaveState(0, -1); // the -1 prevents pausing afterwards
           lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
           lka_SaveReplay: SaveReplay;
           lka_SkillRight: begin
