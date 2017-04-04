@@ -33,6 +33,7 @@ type
 type
   TSkillPanelToolbar = class(TCustomControl)
   private
+    fPanelWidth: Integer;
     fLastClickFrameskip: Cardinal;
 
     fStyle         : TBaseDosLemmingStyle;
@@ -149,10 +150,20 @@ type
   end;
 
 const
+  PANEL_WIDTH = 416;
+  PANEL_HEIGHT = 40;
+  COMPACT_PANEL_WIDTH = 320;
+  COMPACT_PANEL_HEIGHT = 40;
+
   MINIMAP_X = 308;
   MINIMAP_Y = 3;
   MINIMAP_WIDTH  = 104;
   MINIMAP_HEIGHT = 34;
+
+  COMPACT_MINIMAP_X = 213;
+  COMPACT_MINIMAP_Y = 18;
+  COMPACT_MINIMAP_WIDTH = 104;
+  COMPACT_MINIMAP_HEIGHT = 20;
 
 const
   MiniMapCorners: TRect = (
@@ -160,6 +171,13 @@ const
     Top: MINIMAP_Y + 2;
     Right: MINIMAP_X + MINIMAP_WIDTH;
     Bottom: MINIMAP_Y + MINIMAP_HEIGHT;
+  );
+
+  CompactMinimapCorners: TRect = (
+    Left: COMPACT_MINIMAP_X + 2;
+    Top: COMPACT_MINIMAP_Y + 2;
+    Right: COMPACT_MINIMAP_X + COMPACT_MINIMAP_WIDTH;
+    Bottom: COMPACT_MINIMAP_Y + COMPACT_MINIMAP_HEIGHT;
   );
 
 
@@ -182,6 +200,11 @@ var
   i: Integer;
 begin
   inherited Create(aOwner);
+
+  if GameParams.CompactSkillPanel then
+    fPanelWidth := COMPACT_PANEL_WIDTH
+  else
+    fPanelWidth := PANEL_WIDTH;
 
   fLastClickFrameskip := GetTickCount;
 
@@ -281,15 +304,23 @@ begin
 
   if aZoom = Trunc(Img.Scale) then Exit;
 
-  Width := 416 * aZoom;
+  Width := fPanelWidth * aZoom;
   Height := 40 * aZoom;
   Img.Width := Width;
   Img.Height := Height;
   Img.Scale := aZoom;
-  fMinimapImg.Width := MINIMAP_WIDTH * aZoom;
-  fMinimapImg.Height := MINIMAP_HEIGHT * aZoom;
-  fMinimapImg.Left := MINIMAP_X * aZoom;
-  fMinimapImg.Top := MINIMAP_Y * aZoom;
+  if GameParams.CompactSkillPanel then
+  begin
+    fMinimapImg.Width := COMPACT_MINIMAP_WIDTH * aZoom;
+    fMinimapImg.Height := COMPACT_MINIMAP_HEIGHT * aZoom;
+    fMinimapImg.Left := COMPACT_MINIMAP_X * aZoom;
+    fMinimapImg.Top := COMPACT_MINIMAP_Y * aZoom;
+  end else begin
+    fMinimapImg.Width := MINIMAP_WIDTH * aZoom;
+    fMinimapImg.Height := MINIMAP_HEIGHT * aZoom;
+    fMinimapImg.Left := MINIMAP_X * aZoom;
+    fMinimapImg.Top := MINIMAP_Y * aZoom;
+  end;
   fMinimapImg.Scale := aZoom;
 end;
 
@@ -315,7 +346,7 @@ end;
 
 function TSkillPanelToolbar.GetMaxZoom: Integer;
 begin
-  Result := Max(Min(GameParams.MainForm.ClientWidth div 416, GameParams.MainForm.ClientHeight div 200), 1);
+  Result := Max(Min(GameParams.MainForm.ClientWidth div fPanelWidth, GameParams.MainForm.ClientHeight div 200), 1);
 end;
 
 procedure TSkillPanelToolbar.ClearSkills;
@@ -955,7 +986,7 @@ begin
     GetGraphic('skill_panels.png', BlankPanels);
 
     // Panel graphic
-    fOriginal.SetSize(416, 40);
+    fOriginal.SetSize(fPanelWidth, 40);
     fOriginal.Clear($FF000000);
 
     MakePanel(TempBmp, 'icon_rr_minus.png', true);
@@ -965,22 +996,29 @@ begin
 
     GetGraphic('minimap_region.png', fMinimapRegion);
     ExpandMinimap(fMinimapRegion);
-    fMinimapRegion.DrawTo(fOriginal, 305, 1);
+    if GameParams.CompactSkillPanel then
+      fMinimapRegion.DrawTo(fOriginal, 209, 16)
+    else
+      fMinimapRegion.DrawTo(fOriginal, 305, 1);
 
     MakePanel(TempBmp, 'icon_ff.png', false);
     TempBmp.DrawTo(fOriginal, 193, 16);
-    MakePanel(TempBmp, 'icon_restart.png', false);
-    TempBmp.DrawTo(fOriginal, 209, 16);
-    MakePanel(TempBmp, 'icon_1fb.png', false);
-    TempBmp.DrawTo(fOriginal, 225, 16);
-    MakePanel(TempBmp, 'icon_1ff.png', false);
-    TempBmp.DrawTo(fOriginal, 241, 16);
-    MakePanel(TempBmp, 'icon_clearphysics.png', false);
-    TempBmp.DrawTo(fOriginal, 257, 16);
-    MakePanel(TempBmp, 'icon_directional.png', false);
-    TempBmp.DrawTo(fOriginal, 273, 16);
-    MakePanel(TempBmp, 'icon_load_replay.png', false);
-    TempBmp.DrawTo(fOriginal, 289, 16);
+
+    if not GameParams.CompactSkillPanel then
+    begin
+      MakePanel(TempBmp, 'icon_restart.png', false);
+      TempBmp.DrawTo(fOriginal, 209, 16);
+      MakePanel(TempBmp, 'icon_1fb.png', false);
+      TempBmp.DrawTo(fOriginal, 225, 16);
+      MakePanel(TempBmp, 'icon_1ff.png', false);
+      TempBmp.DrawTo(fOriginal, 241, 16);
+      MakePanel(TempBmp, 'icon_clearphysics.png', false);
+      TempBmp.DrawTo(fOriginal, 257, 16);
+      MakePanel(TempBmp, 'icon_directional.png', false);
+      TempBmp.DrawTo(fOriginal, 273, 16);
+      MakePanel(TempBmp, 'icon_load_replay.png', false);
+      TempBmp.DrawTo(fOriginal, 289, 16);
+    end;
 
     GetGraphic('empty_slot.png', TempBmp);
     for i := 0 to 7 do
@@ -1106,12 +1144,17 @@ begin
   begin
     fButtonRects[iButton] := R;
     OffsetRect(R, 16, 0);
+    if GameParams.CompactSkillPanel and (iButton > spbFastForward) then
+      R := Rect(-1, -1, 0, 0);
   end;
 
   // special handling
-  fButtonRects[spbDirLeft].Bottom := fButtonRects[spbDirLeft].Bottom - 12;
-  fButtonRects[spbDirRight] := fButtonRects[spbDirLeft];
-  OffsetRect(fButtonRects[spbDirRight], 0, 12);
+  if not GameParams.CompactSkillPanel then
+  begin
+    fButtonRects[spbDirLeft].Bottom := fButtonRects[spbDirLeft].Bottom - 12;
+    fButtonRects[spbDirRight] := fButtonRects[spbDirLeft];
+    OffsetRect(fButtonRects[spbDirRight], 0, 12);
+  end;
 end;
 
 procedure TSkillPanelToolbar.SetButtonRect(btn: TSkillPanelButton; bpos: Integer);
@@ -1284,8 +1327,16 @@ var
   X, Y: Integer;
   OH, OV: Double;
   ViewRect: TRect;
+  MMW, MMH: Integer;
 begin
-  fMinimapRegion.DrawTo(Img.Bitmap, 305, 1);
+  if GameParams.CompactSkillPanel then
+  begin
+    MMW := COMPACT_MINIMAP_WIDTH;
+    MMH := COMPACT_MINIMAP_HEIGHT;
+  end else begin
+    MMW := MINIMAP_WIDTH;
+    MMH := MINIMAP_HEIGHT;
+  end;
 
   // We want to add some space for when the viewport rect lies on the very edges
   fMinimapTemp.Width := fMinimap.Width + 2;
@@ -1308,24 +1359,24 @@ begin
 
     if not fMinimapScrollFreeze then
     begin
-      if fMinimapTemp.Width < MINIMAP_WIDTH then
-        OH := (((MINIMAP_WIDTH - fMinimapTemp.Width) * fMinimapImg.Scale) / 2)
+      if fMinimapTemp.Width < MMW then
+        OH := (((MMW - fMinimapTemp.Width) * fMinimapImg.Scale) / 2)
       else begin
         OH := TGameWindow(Parent).ScreenImg.OffsetHorz / TGameWindow(Parent).ScreenImg.Scale / 8;
-        OH := OH + (MINIMAP_WIDTH - RectWidth(ViewRect)) div 2;
+        OH := OH + (MMW - RectWidth(ViewRect)) div 2;
         OH := OH * fMinimapImg.Scale;
         OH := Min(OH, 0);
-        OH := Max(OH, -(fMinimapTemp.Width - MINIMAP_WIDTH) * fMinimapImg.Scale);
+        OH := Max(OH, -(fMinimapTemp.Width - MMW) * fMinimapImg.Scale);
       end;
 
-      if fMinimapTemp.Height < MINIMAP_HEIGHT then
-        OV := (((MINIMAP_HEIGHT - fMinimapTemp.Height) * fMinimapImg.Scale) / 2)
+      if fMinimapTemp.Height < MMH then
+        OV := (((MMH - fMinimapTemp.Height) * fMinimapImg.Scale) / 2)
       else begin
         OV := TGameWindow(Parent).ScreenImg.OffsetVert / TGameWindow(Parent).ScreenImg.Scale / 8;
-        OV := OV + (MINIMAP_HEIGHT - RectHeight(ViewRect)) div 2;
+        OV := OV + (MMH - RectHeight(ViewRect)) div 2;
         OV := OV * fMinimapImg.Scale;
         OV := Min(OV, 0);
-        OV := Max(OV, -(fMinimapTemp.Height - MINIMAP_HEIGHT) * fMinimapImg.Scale);
+        OV := Max(OV, -(fMinimapTemp.Height - MMH) * fMinimapImg.Scale);
       end;
 
       fMinimapImg.OffsetHorz := OH;

@@ -425,7 +425,10 @@ var
     // match 416x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
-      WindowWidth := ZoomLevel * 416;
+      if CompactSkillPanel then
+        WindowWidth := ZoomLevel * 320
+      else
+        WindowWidth := ZoomLevel * 416;
       WindowHeight := ZoomLevel * 200;
     end;
 

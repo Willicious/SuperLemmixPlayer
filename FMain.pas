@@ -198,7 +198,10 @@ begin
   NewCW := NewWidth - CWDiff;
   NewCH := NewHeight - CHDiff;
 
-  NewCW := Max(416, NewCW);
+  if GameParams.CompactSkillPanel then
+    NewCW := Max(320, NewCW)
+  else
+    NewCW := Max(416, NewCW);
   NewCH := Max(200, NewCH);
 
   NewCW := (NewCW div GameParams.ZoomLevel) * GameParams.ZoomLevel;
