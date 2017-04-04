@@ -199,7 +199,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 170
         Width = 249
-        Height = 127
+        Height = 143
         Caption = 'Graphics Options'
         TabOrder = 2
         object Label1: TLabel
@@ -252,7 +252,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbMinimapHighQuality: TCheckBox
           Left = 12
-          Top = 104
+          Top = 120
           Width = 153
           Height = 17
           Caption = 'High Quality Minimap'
@@ -266,6 +266,15 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Increase Zoom On Small Levels'
           TabOrder = 5
+          OnClick = OptionChanged
+        end
+        object cbCompactSkillPanel: TCheckBox
+          Left = 12
+          Top = 103
+          Width = 153
+          Height = 17
+          Caption = 'Compact Skill Panel'
+          TabOrder = 6
           OnClick = OptionChanged
         end
       end

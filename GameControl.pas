@@ -97,7 +97,8 @@ type
     moFullScreen,
     moMinimapHighQuality,
     moIncreaseZoom,
-    moLoadedConfig
+    moLoadedConfig,
+    moCompactSkillPanel
   );
 
   TMiscOptions = set of TMiscOption;
@@ -224,6 +225,7 @@ type
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
+    property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -342,6 +344,7 @@ begin
   SaveBoolean('BlackOutZero', BlackOutZero);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('NoShadows', NoShadows);
+  SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
@@ -476,6 +479,7 @@ begin
   BlackOutZero := LoadBoolean('BlackOutZero', BlackOutZero);
   NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
   NoShadows := LoadBoolean('NoShadows', NoShadows);
+  CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
   MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
   IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
   EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
