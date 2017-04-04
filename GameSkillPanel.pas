@@ -1010,6 +1010,7 @@ begin
 
     GetGraphic('minimap_region.png', fMinimapRegion);
     ExpandMinimap(fMinimapRegion);
+    ShrinkMinimap(fMinimapRegion); // these two functions exit immediately if they're not needed, so no "if" statements needed here
     if GameParams.CompactSkillPanel then
       fMinimapRegion.DrawTo(fOriginal, 209, 16)
     else
@@ -1154,21 +1155,20 @@ begin
 
   R := Rect(193, 16, 207, 38);
 
-  for iButton := spbFastForward to High(TSkillPanelButton) do
-  begin
-    fButtonRects[iButton] := R;
-    OffsetRect(R, 16, 0);
-    if GameParams.CompactSkillPanel and (iButton > spbFastForward) then
-      R := Rect(-1, -1, 0, 0);
-  end;
-
-  // special handling
   if not GameParams.CompactSkillPanel then
   begin
+    for iButton := spbFastForward to High(TSkillPanelButton) do
+    begin
+      fButtonRects[iButton] := R;
+      OffsetRect(R, 16, 0);
+    end;
+
     fButtonRects[spbDirLeft].Bottom := fButtonRects[spbDirLeft].Bottom - 12;
     fButtonRects[spbDirRight] := fButtonRects[spbDirLeft];
     OffsetRect(fButtonRects[spbDirRight], 0, 12);
-  end;
+  end else
+    fButtonRects[spbFastForward] := R; // others aren't used on compact panel
+
 end;
 
 procedure TSkillPanelToolbar.SetButtonRect(btn: TSkillPanelButton; bpos: Integer);
