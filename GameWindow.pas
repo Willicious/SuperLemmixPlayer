@@ -64,6 +64,7 @@ type
     fLastHighlightLemming: TLemming;
     fLastSelectedSkill: TSkillPanelButton;
     fLastHelperIcon: THelperIcon;
+    fLastDrawPaused: Boolean;
   { current gameplay }
     fGameSpeed: TGameSpeed;               // do NOT set directly, set via GameSpeed property
     fHyperSpeedStopCondition: Integer;
@@ -724,7 +725,8 @@ begin
   if (fRenderInterface.SelectedLemming <> fLastSelectedLemming)
   or (fRenderInterface.HighlitLemming <> fLastHighlightLemming)
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill)
-  or (fRenderInterface.UserHelper <> fLastHelperIcon) then
+  or (fRenderInterface.UserHelper <> fLastHelperIcon)
+  or ((GameSpeed = gspPause) and not fLastDrawPaused) then
     fNeedRedraw := rdRedraw;
 
   if fNeedRedraw = rdRefresh then
@@ -740,7 +742,7 @@ begin
     fRenderInterface.MousePos := Game.CursorPoint;
     fRenderer.DrawAllObjects(fRenderInterface.ObjectList, true, fClearPhysics);
     fRenderer.DrawLemmings(fClearPhysics);
-    if GameParams.MinimapHighQuality then
+    if GameParams.MinimapHighQuality or (GameSpeed = gspPause) then
       DrawRect := Img.Bitmap.BoundsRect
     else begin
       DrawWidth := ClientWidth div fInternalZoom;
@@ -756,6 +758,7 @@ begin
     fLastHighlightLemming := fRenderInterface.HighlitLemming;
     fLastSelectedSkill := fRenderInterface.SelectedSkill;
     fLastHelperIcon := fRenderInterface.UserHelper;
+    fLastDrawPaused := (GameSpeed = gspPause);
   except
     on E: Exception do
       OnException(E, 'TGameWindow.DoDraw');
