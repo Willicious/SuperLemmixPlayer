@@ -160,7 +160,7 @@ const
   MINIMAP_WIDTH  = 104;
   MINIMAP_HEIGHT = 34;
 
-  COMPACT_MINIMAP_X = 213;
+  COMPACT_MINIMAP_X = 212;
   COMPACT_MINIMAP_Y = 18;
   COMPACT_MINIMAP_WIDTH = 104;
   COMPACT_MINIMAP_HEIGHT = 20;
@@ -947,13 +947,27 @@ const
   var
     TempBmp: TBitmap32;
   begin
-    if aBmp.Height = 38 then Exit;
+    if (aBmp.Height = 38) or GameParams.CompactSkillPanel then Exit;
     TempBmp := TBitmap32.Create;
     TempBmp.Assign(aBmp);
     aBmp.SetSize(111, 38);
     aBmp.Clear($FF000000);
     TempBmp.DrawTo(aBmp, 0, 14);
-    TempBmp.DrawTo(aBmp, 1, 0, Rect(1, 0, 109, 16));
+    TempBmp.DrawTo(aBmp, 0, 0, Rect(0, 0, 112, 16));
+    TempBmp.Free;
+  end;
+
+  procedure ShrinkMinimap(aBmp: TBitmap32);
+  var
+    TempBmp: TBitmap32;
+  begin
+    if (aBmp.Height = 24) or not GameParams.CompactSkillPanel then Exit;
+    TempBmp := TBitmap32.Create;
+    TempBmp.Assign(aBmp);
+    aBmp.SetSize(111, 24);
+    aBmp.Clear($FF000000);
+    TempBmp.DrawTo(aBmp, 0, 0, Rect(0, 0, 112, 12));
+    TempBmp.DrawTo(aBmp, 0, 12, Rect(0, 26, 112, 38));
     TempBmp.Free;
   end;
 
