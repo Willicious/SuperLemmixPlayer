@@ -346,7 +346,7 @@ end;
 
 function TSkillPanelToolbar.GetMaxZoom: Integer;
 begin
-  Result := Max(Min(GameParams.MainForm.ClientWidth div fPanelWidth, GameParams.MainForm.ClientHeight div 200), 1);
+  Result := Max(Min(GameParams.MainForm.ClientWidth div fPanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
 end;
 
 procedure TSkillPanelToolbar.ClearSkills;
