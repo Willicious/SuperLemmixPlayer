@@ -846,8 +846,7 @@ begin
 
   if aTargetIteration = Game.CurrentIteration then
   begin
-    // just redraw TargetImage to display the correct game state
-    //DoDraw;
+    fNeedRedraw := rdRedraw;
     if Game.CancelReplayAfterSkip then
     begin
       Game.RegainControl(true);
