@@ -629,13 +629,13 @@ begin
   // alive: (Count + Cloned - SpawnedDead) - Removed
   //    in: Saved - Requirement
   SetInfoLemHatch(Game.LemmingsToSpawn - Game.SpawnedDead);
-  SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner] - Game.SpawnedDead) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame);
+  SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner] - Game.SpawnedDead) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame and GameParams.LemmingBlink);
   SetInfoLemIn(Game.LemmingsSaved - Level.Info.RescueCount);
 
   if Level.Info.HasTimeLimit then
   begin
     TimeRemaining := Level.Info.TimeLimit - (Game.CurrentIteration div 17);
-    DoTimerBlink := IsBlinkFrame and (TimeRemaining <= 30);
+    DoTimerBlink := IsBlinkFrame and (TimeRemaining <= 30) and GameParams.TimerBlink;
     SetInfoMinutes(TimeRemaining div 60, DoTimerBlink);
     SetInfoSeconds(TimeRemaining mod 60, DoTimerBlink);
   end else begin
