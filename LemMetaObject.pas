@@ -495,8 +495,9 @@ begin
     DstRec.TriggerTop := SrcRec.TriggerLeft {- SrcRec.TriggerWidth};
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
     begin
-      DstRec.TriggerLeft := DstRec.TriggerLeft + 4;
       DstRec.TriggerTop := DstRec.TriggerTop + 5;
+      if Flip then DstRec.TriggerLeft := DstRec.TriggerLeft - 4
+      else DstRec.TriggerLeft := DstRec.TriggerLeft + 4;
     end;
     DstRec.TriggerWidth := SrcRec.TriggerHeight;
     DstRec.TriggerHeight := SrcRec.TriggerWidth;
