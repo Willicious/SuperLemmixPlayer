@@ -287,12 +287,11 @@ begin
 
     LF(1);
 
+    Add(SYourTime + PadL(MakeTimeString(gLastRescueIteration), 8));
     if GameParams.fTestMode or not gSuccess then
-      LF(2)
-    else begin
-      Add(SYourTime + PadL(MakeTimeString(gLastRescueIteration), 8));
+      LF(1)
+    else
       Add(SYourTimeRecord + PadL(MakeTimeString(SaveSystem.GetTimeRecord(Info.dSection, Info.dLevel)), 8));
-    end;
 
     LF(2);
 
