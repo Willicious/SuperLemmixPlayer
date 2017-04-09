@@ -88,6 +88,8 @@ var
   begin
     T := GS.MetaTerrains[i];
 
+    if T.Name = '*nil' then Exit;
+
     Sec := TranslationTable.MainSection.SectionList.Add('TERRAIN');
     Sec.AddLine('INDEX', i);
 
