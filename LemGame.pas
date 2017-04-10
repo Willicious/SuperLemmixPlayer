@@ -4438,12 +4438,6 @@ var
     i: Integer;
   begin
     Result := false;
-    for i := 0 to LemmingList.Count-1 do
-      if LemmingList[i].LemIsZombie then
-      begin
-        Result := true;
-        Exit;
-      end;
     for i := 0 to ObjectInfos.Count-1 do
       if (ObjectInfos[i].TriggerEffect = 23)
       and not (ObjectInfos[i].IsDisabled)
