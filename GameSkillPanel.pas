@@ -201,6 +201,9 @@ var
 begin
   inherited Create(aOwner);
 
+  Color := $000000;
+  ParentBackground := false;
+
   if GameParams.CompactSkillPanel then
     fPanelWidth := COMPACT_PANEL_WIDTH
   else
@@ -221,6 +224,8 @@ begin
   fMinimapRegion := TBitmap32.Create;
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
+
+  OnMouseMove := ImgMouseMove;
 
   fImg.OnMouseDown := ImgMouseDown;
   fImg.OnMouseMove := ImgMouseMove;
@@ -302,23 +307,24 @@ procedure TSkillPanelToolbar.SetZoom(aZoom: Integer);
 begin
   aZoom := Max(Min(MaxZoom, aZoom), 1);
 
-  if aZoom = Trunc(Img.Scale) then Exit;
+  Width := TGameWindow(Parent).Width;
+  Height := TGameWindow(Parent).Height;
 
-  Width := fPanelWidth * aZoom;
-  Height := 40 * aZoom;
-  Img.Width := Width;
-  Img.Height := Height;
+  if aZoom = Trunc(Img.Scale) then Exit;
+  Img.Width := fPanelWidth * aZoom;
+  Img.Height := 40 * aZoom;
+  Img.Left := (Width - Img.Width) div 2;
   Img.Scale := aZoom;
   if GameParams.CompactSkillPanel then
   begin
     fMinimapImg.Width := COMPACT_MINIMAP_WIDTH * aZoom;
     fMinimapImg.Height := COMPACT_MINIMAP_HEIGHT * aZoom;
-    fMinimapImg.Left := COMPACT_MINIMAP_X * aZoom;
+    fMinimapImg.Left := (COMPACT_MINIMAP_X * aZoom) + Img.Left;
     fMinimapImg.Top := COMPACT_MINIMAP_Y * aZoom;
   end else begin
     fMinimapImg.Width := MINIMAP_WIDTH * aZoom;
     fMinimapImg.Height := MINIMAP_HEIGHT * aZoom;
-    fMinimapImg.Left := MINIMAP_X * aZoom;
+    fMinimapImg.Left := (MINIMAP_X * aZoom) + Img.Left;
     fMinimapImg.Top := MINIMAP_Y * aZoom;
   end;
   fMinimapImg.Scale := aZoom;
@@ -779,8 +785,13 @@ end;
 
 procedure TSkillPanelToolbar.ImgMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+var
+  CSender: TControl;
 begin
   if TGameWindow(Owner).SuspendCursor then Exit;
+
+  if not (Sender is TControl) then Exit;
+  CSender := TControl(Sender);
 
   Game.HitTestAutoFail := true;
   Game.HitTest;

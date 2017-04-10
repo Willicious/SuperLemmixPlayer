@@ -252,22 +252,26 @@ begin
 
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
-  Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
-  Img.Height := Min(ClientHeight - SkillPanel.Height, GameParams.Level.Info.Height * fInternalZoom);
-  Img.Left := (ClientWidth - Img.Width) div 2;
+
   if SkillPanel.Zoom > SkillPanel.MaxZoom then
     SkillPanel.Zoom := SkillPanel.MaxZoom
   else if (SkillPanel.Zoom < fInternalZoom) and (SkillPanel.Zoom < SkillPanel.MaxZoom) then
     SkillPanel.Zoom := fInternalZoom;
+
+  Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
+  Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40), GameParams.Level.Info.Height * fInternalZoom);
+  Img.Left := (ClientWidth - Img.Width) div 2;
   SkillPanel.Left := (ClientWidth - SkillPanel.Width) div 2;
   // tops are calculated later
 
   SkillPanel.DisplayWidth := Img.Width div fInternalZoom;
   SkillPanel.DisplayHeight := Img.Height div fInternalZoom;
 
-  VertOffset := (ClientHeight - (SkillPanel.Height + Img.Height)) div 2;
+  VertOffset := (ClientHeight - ((SkillPanel.Zoom * 40) + Img.Height)) div 2;
   Img.Top := VertOffset;
   SkillPanel.Top := Img.Top + Img.Height;
+  SkillPanel.Height := Max(SkillPanel.Zoom * 40, ClientHeight - SkillPanel.Top);
+  SkillPanel.Img.Left := (ClientWidth - SkillPanel.Img.Width) div 2;
 
   MinScroll := -((GameParams.Level.Info.Width * fInternalZoom) - Img.Width);
   MaxScroll := 0;
@@ -394,8 +398,8 @@ var
 begin
   fMouseTrapped := true;
 
-  ClientTopLeft := ClientToScreen(Point(Min(SkillPanel.Left, Img.Left), Img.Top));
-  ClientBottomRight := ClientToScreen(Point(Max(Img.Left + Img.Width, SkillPanel.Left + SkillPanel.Width), SkillPanel.Top + SkillPanel.Height));
+  ClientTopLeft := ClientToScreen(Point(Min(SkillPanel.Img.Left, Img.Left), Img.Top));
+  ClientBottomRight := ClientToScreen(Point(Max(Img.Left + Img.Width, SkillPanel.Img.Left + SkillPanel.Img.Width), SkillPanel.Top + SkillPanel.Img.Height));
   MouseClipRect := Rect(ClientTopLeft, ClientBottomRight);
   ClipCursor(@MouseClipRect);
 end;
@@ -934,6 +938,8 @@ end;
 constructor TGameWindow.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
+
+  Color := $202020;
 
   fNeedReset := true;
 
