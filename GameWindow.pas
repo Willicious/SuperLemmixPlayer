@@ -232,8 +232,7 @@ begin
     Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
 
-    if not NoRedraw then
-      DoDraw;
+    fNeedRedraw := rdRedraw;
     CheckResetCursor(true);
   finally
     Img.EndUpdate;
@@ -272,6 +271,7 @@ begin
   SkillPanel.Top := Img.Top + Img.Height;
   SkillPanel.Height := Max(SkillPanel.Zoom * 40, ClientHeight - SkillPanel.Top);
   SkillPanel.Img.Left := (ClientWidth - SkillPanel.Img.Width) div 2;
+  SkillPanel.Img.Update;
 
   MinScroll := -((GameParams.Level.Info.Width * fInternalZoom) - Img.Width);
   MaxScroll := 0;
@@ -288,8 +288,6 @@ begin
   end;
 
   fMaxZoom := Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS;
-
-  SkillPanel.DoHorizontalScroll := (ClientWidth = SkillPanel.Width);
 end;
 
 function TGameWindow.IsGameplayScreen: Boolean;
@@ -917,6 +915,20 @@ function TGameWindow.CheckScroll: Boolean;
     Img.OffsetVert := Min(MaxVScroll, Img.OffsetVert);
   end;
 begin
+  if Mouse.CursorPos.X <= MouseClipRect.Left then
+    GameScroll := gsLeft
+  else if Mouse.CursorPos.X >= MouseClipRect.Right-1 then
+    GameScroll := gsRight
+  else
+    GameScroll := gsNone;
+
+  if Mouse.CursorPos.Y <= MouseClipRect.Top then
+    GameVScroll := gsUp
+  else if Mouse.CursorPos.Y >= MouseClipRect.Bottom-1 then
+    GameVScroll := gsDown
+  else
+    GameVScroll := gsNone;
+
   Img.BeginUpdate;
   case GameScroll of
     gsRight:
@@ -1347,23 +1359,7 @@ end;
 
 procedure TGameWindow.Form_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
-  if fSuspendCursor then Exit;
-
   SkillPanel.MinimapScrollFreeze := false;
-
-  if X <= Img.Left then
-    GameScroll := gsLeft
-  else if X >= (Img.Left + Img.Width - 1) then
-    GameScroll := gsRight
-  else
-    GameScroll := gsNone;
-
-  if Y <= Img.Top then
-    GameVScroll := gsUp
-  else if Y >= (SkillPanel.Top + SkillPanel.Height - 1) then
-    GameVScroll := gsDown
-  else
-    GameVScroll := gsNone;
 end;
 
 procedure TGameWindow.Img_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
@@ -1382,28 +1378,12 @@ begin
 
     Game.HitTestAutoFail := not PtInRect(Rect(0, 0, Img.Width, Img.Height), Point(X, Y));
 
-    if X >= Img.Width - 1 then
-      GameScroll := gsRight
-    else if X <= 0 then
-      GameScroll := gsLeft
-    else
-      GameScroll := gsNone;
-
-    {if Y >= Img.Height - 1 then
-      GameVScroll := gsDown
-    else} if Y <= 0 then
-      GameVScroll := gsUp
-    else
-      GameVScroll := gsNone;
-
     SkillPanel.MinimapScrollFreeze := false;
 
     if fGameSpeed = gspPause then
     begin
       if fRenderInterface.UserHelper <> hpi_None then
-        fNeedRedraw := rdRedraw
-      else if ((GameScroll <> gsNone) or (GameVScroll <> gsNone)) and not GameParams.MinimapHighQuality then
-        fNeedRedraw := rdRefresh;
+        fNeedRedraw := rdRedraw;
     end;
   end;
 

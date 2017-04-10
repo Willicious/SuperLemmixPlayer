@@ -225,8 +225,6 @@ begin
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
 
-  OnMouseMove := ImgMouseMove;
-
   fImg.OnMouseDown := ImgMouseDown;
   fImg.OnMouseMove := ImgMouseMove;
   fImg.OnMouseUp := ImgMouseUp;
@@ -785,32 +783,12 @@ end;
 
 procedure TSkillPanelToolbar.ImgMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-var
-  CSender: TControl;
 begin
   if TGameWindow(Owner).SuspendCursor then Exit;
-
-  if not (Sender is TControl) then Exit;
-  CSender := TControl(Sender);
 
   Game.HitTestAutoFail := true;
   Game.HitTest;
   TGameWindow(Parent).SetCurrentCursor;
-
-  if Y >= Img.Height - 1 then
-    TGameWindow(Parent).VScroll := gsDown
-  else
-    TGameWindow(Parent).VScroll := gsNone;
-
-  if DoHorizontalScroll then
-  begin
-    if X >= Img.Width - 1 then
-      TGameWindow(Parent).HScroll := gsRight
-    else if X <= 0 then
-      TGameWindow(Parent).HScroll := gsLeft
-    else
-      TGameWindow(Parent).HScroll := gsNone;
-  end;
 
   MinimapScrollFreeze := false;
 end;
