@@ -51,7 +51,7 @@ type
     fClearPhysics: Boolean;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
-    fNeedReset : Boolean;
+    fNeedResetMouseTrap : Boolean;
     fMouseTrapped: Boolean;
     fSaveList: TLemmingGameSavedStateList;
     fReplayKilled: Boolean;
@@ -876,16 +876,16 @@ begin
 
   if FindControl(GetForegroundWindow()) = nil then
   begin
-    fNeedReset := true;
+    fNeedResetMouseTrap := true;
     exit;
   end;
 
   SetCurrentCursor;
 
-  if (fNeedReset or aForce) and fMouseTrapped then
+  if (fNeedResetMouseTrap or aForce) and fMouseTrapped then
   begin
     ApplyMouseTrap;
-    fNeedReset := false;
+    fNeedResetMouseTrap := false;
   end;
 end;
 
@@ -923,36 +923,43 @@ function TGameWindow.CheckScroll: Boolean;
     Img.OffsetVert := Min(MaxVScroll, Img.OffsetVert);
   end;
 begin
-  if Mouse.CursorPos.X <= MouseClipRect.Left then
-    GameScroll := gsLeft
-  else if Mouse.CursorPos.X >= MouseClipRect.Right-1 then
-    GameScroll := gsRight
-  else
+  if fNeedResetMouseTrap or not fMouseTrapped then // why are these two seperate variables anyway?
+  begin
     GameScroll := gsNone;
-
-  if Mouse.CursorPos.Y <= MouseClipRect.Top then
-    GameVScroll := gsUp
-  else if Mouse.CursorPos.Y >= MouseClipRect.Bottom-1 then
-    GameVScroll := gsDown
-  else
     GameVScroll := gsNone;
+    Result := false;
+  end else begin
+    if Mouse.CursorPos.X <= MouseClipRect.Left then
+      GameScroll := gsLeft
+    else if Mouse.CursorPos.X >= MouseClipRect.Right-1 then
+      GameScroll := gsRight
+    else
+      GameScroll := gsNone;
 
-  Img.BeginUpdate;
-  case GameScroll of
-    gsRight:
-      Scroll(8, 0);
-    gsLeft:
-      Scroll(-8, 0);
-  end;
-  case GameVScroll of
-    gsUp:
-      Scroll(0, -8);
-    gsDown:
-      Scroll(0, 8);
-  end;
-  Img.EndUpdate;
+    if Mouse.CursorPos.Y <= MouseClipRect.Top then
+      GameVScroll := gsUp
+    else if Mouse.CursorPos.Y >= MouseClipRect.Bottom-1 then
+      GameVScroll := gsDown
+    else
+      GameVScroll := gsNone;
 
-  Result := (GameScroll in [gsRight, gsLeft]) or(GameVScroll in [gsUp, gsDown]);
+    Img.BeginUpdate;
+    case GameScroll of
+      gsRight:
+        Scroll(8, 0);
+      gsLeft:
+        Scroll(-8, 0);
+    end;
+    case GameVScroll of
+      gsUp:
+        Scroll(0, -8);
+      gsDown:
+        Scroll(0, 8);
+    end;
+    Img.EndUpdate;
+
+    Result := (GameScroll in [gsRight, gsLeft]) or(GameVScroll in [gsUp, gsDown]);
+  end;
 end;
 
 constructor TGameWindow.Create(aOwner: TComponent);
@@ -961,7 +968,7 @@ begin
 
   Color := $202020;
 
-  fNeedReset := true;
+  fNeedResetMouseTrap := true;
 
   fSaveStateReplayStream := TMemoryStream.Create;
 
