@@ -1083,7 +1083,7 @@ begin
       Obj.Top := Integer(O.B2) shl 8 + Integer(O.B3);
       If Obj.Top > 32767 then Obj.Top := Obj.Top - 65536;
       Obj.GS := Info.GraphicSetName;
-      Obj.Piece := 'O' + IntToStr(Integer(O.B5 and 31));
+      Obj.Piece := IntToStr(Integer(O.B5 and 31));
       //Obj.TarLev := (O.B4);
       if O.Modifier and $80 <> 0 then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_NoOverwrite;
@@ -1120,9 +1120,9 @@ begin
       Ter.Top := H;
       Ter.GS := Info.GraphicSetName;
       if T.B0 and 16 <> 0 then
-        Ter.Piece := 'T' + IntToStr((T.B3 and 63) + 64)
+        Ter.Piece := IntToStr((T.B3 and 63) + 64)
       else
-        Ter.Piece := 'T' + IntToStr(T.B3 and 63);
+        Ter.Piece := IntToStr(T.B3 and 63);
     end;
 
     {-------------------------------------------------------------------------------
@@ -1346,7 +1346,7 @@ begin
       Obj.Left := O.XPos;
       Obj.Top := O.YPos;
       Obj.GS := Info.GraphicSetName;
-      Obj.Piece := 'O' + IntToStr(O.ObjectID);
+      Obj.Piece := IntToStr(O.ObjectID);
       Obj.TarLev := O.LValue;
       if O.ObjectFlags and $1 <> 0 then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_NoOverwrite;
@@ -1381,7 +1381,7 @@ begin
       Ter.Left := T.XPos;
       Ter.Top := T.YPos;
       Ter.GS := Info.GraphicSetName;
-      Ter.Piece := 'T' + IntToStr(T.TerrainID);
+      Ter.Piece := IntToStr(T.TerrainID);
       if T.TerrainFlags and $1 <> 0 then
         Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOverwrite;
       if T.TerrainFlags and $2 <> 0 then
