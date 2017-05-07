@@ -474,10 +474,6 @@ begin
   if I = mrYes then
   begin
     TBaseDosLevelSystem(GameParams.Style.LevelSystem).DumpAllImages;
-    (*MessageDlg('The screen will go blank while dumping level images.' + CrLf + 'This is normal.', mtCustom, [mbOk], 0);
-    GameParams.DumpMode := true;
-    GameParams.WhichLevel := wlFirst;
-    CloseScreen(gstPreview);*)
   end;
 end;
 
@@ -566,20 +562,14 @@ begin
 end;
 
 function TGameMenuScreen.BuildText(intxt: Array of char): String;
-var
-  tstr : String;
-  x : byte;
 begin
+  // Casts the array to a string and trims it.
   Result := '';
-  tstr := '';
-  for x := 0 to (SizeOf(intxt) - 1) do
+  if Length(intxt) > 0 then
   begin
-    if (tstr <> '') or (intxt[x] <> ' ') then
-    begin
-      tstr := tstr + intxt[x];
-    end;
+    SetString(Result, PChar(@intxt[0]), Length(intxt));
+    Result := Trim(Result);
   end;
-  Result := trim(tstr);
 end;
 
 procedure TGameMenuScreen.SetSoundOptions(aOptions: TGameSoundOptions);

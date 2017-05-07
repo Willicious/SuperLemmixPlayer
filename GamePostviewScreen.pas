@@ -6,7 +6,7 @@ interface
 
 uses
   LemmixHotkeys,
-  Windows, Classes, SysUtils, Controls,
+  Windows, Classes, SysUtils, StrUtils, Controls,
   UMisc,
   Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,
   LemCore,
@@ -109,20 +109,14 @@ begin
 end;
 
 function TGamePostviewScreen.BuildText(intxt: Array of char): String;
-var
-  tstr : String;
-  x : byte;
 begin
+  // Casts the array to a string, trims it and then takes the first 36 characters.
   Result := '';
-  tstr := '';
-  for x := 0 to 35 do
+  if Length(intxt) > 0 then
   begin
-    if (tstr <> '') or (intxt[x] <> ' ') then
-    begin
-      tstr := tstr + intxt[x];
-    end;
+    SetString(Result, PChar(@intxt[0]), Length(intxt));
+    Result := AnsiLeftStr(Trim(Result), 36);
   end;
-  Result := Trim(tstr);
 end;
 
 constructor TGamePostviewScreen.Create(aOwner: TComponent);
