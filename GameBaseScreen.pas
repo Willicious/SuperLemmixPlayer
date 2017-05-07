@@ -136,10 +136,7 @@ end;
 procedure TGameBaseScreen.AdjustImage;
 begin
   fScreenImg.Align := alClient;
-  //if IsGameplayScreen then
-    fScreenImg.ScaleMode := smResize;
-  //else
-  //  fScreenImg.ScaleMode := smStretch;
+  fScreenImg.ScaleMode := smResize;
   fScreenImg.BitmapAlign := baCenter;
 
   Update;
@@ -294,12 +291,9 @@ var
   R: TRect;
   List: TStringList;
   H: string;
-
 begin
-
   List := TStringList.Create;
   MakeList(S, List);
-
 
   if aRestoreBuffer <> nil then
   begin
@@ -310,17 +304,17 @@ begin
   end;
 
   if not EraseOnly then
-  for i := 0 to List.Count - 1 do
-  begin
-    H := List[i]; // <= 40 characters!!!
-    X := (Dst.Width - 16 * Length(H)) div 2;
-    if (H <> #13) and (H <> #12) then
-      DrawPurpleText(Dst, H, X, Y)
-    else if H = #13 then
-      Inc(Y, 16)
-    else
-      Inc(Y, 8);
-  end;
+    for i := 0 to List.Count - 1 do
+    begin
+      H := List[i]; // <= 40 characters!!!
+      X := (Dst.Width - 16 * Length(H)) div 2;
+      if (H <> #13) and (H <> #12) then
+        DrawPurpleText(Dst, H, X, Y)
+      else if H = #13 then
+        Inc(Y, 16)
+      else
+        Inc(Y, 8);
+    end;
 
   List.Free;
 end;
@@ -373,10 +367,6 @@ begin
 
     with fOriginalImageBounds do
     begin
-      {Left := (Screen.Width - aWidth) div 2;
-      Top := (Screen.Height - aHeight) div 2;
-      Right := Left + aWidth;
-      Bottom := Top + aHeight;}
       Left := 0;
       Height := 0;
       Right := ClientWidth;
@@ -459,7 +449,7 @@ begin
         begin
           SetString(NewS, StartP, P - StartP);
           aList.Add(NewS);
-          break;
+          Break;
         end;
       end;
 
