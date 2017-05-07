@@ -3,18 +3,8 @@
 unit FMain;
 
 {-------------------------------------------------------------------------------
-  This is the main form which does almost nothing. It's black and fullscreen to
-  prevent seeing the desktop when changing forms.
+  This is the main form which does almost nothing.
 -------------------------------------------------------------------------------}
-
-{ DONE : better animated objects drawing }
-{ DONE : perfect level logic GUI }
-
-{ TODO: make use of tbitmap32.drawto(dst, x, y, srcrect) }
-{ TODO: make sure sounds en music can be set off before the bassmod is loaded }
-{ TODO: safe load bassmod?}
-{ TODO : maybe create palette class? }
-{ TODO : Remove refs to kernel, when making opensource }
 
 interface
 
@@ -30,21 +20,16 @@ uses
 type
   TMainForm = class(TBaseDosForm)
     procedure FormActivate(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure FormKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure FormMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
-    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Integer);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure FormMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure FormResize(Sender: TObject);
-    procedure FormCanResize(Sender: TObject; var NewWidth,
-      NewHeight: Integer; var Resize: Boolean);
-    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
-      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+    procedure FormCanResize(Sender: TObject; var NewWidth, NewHeight: Integer;
+      var Resize: Boolean);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
+      MousePos: TPoint; var Handled: Boolean);
   private
     Started: Boolean;
     AppController: TAppController;
@@ -72,7 +57,6 @@ uses
 
 procedure TMainForm.LMStart(var Msg: TMessage);
 begin
-  //Hide;
   PlayGame;
 end;
 
@@ -91,7 +75,6 @@ end;
 constructor TMainForm.Create(aOwner: TComponent);
 begin
   inherited;
-  //ProgramSettings := TProgramSettings.Create;
   GlobalGame := TLemmingGame.Create(nil);
   AppController := TAppController.Create(self);
 end;
@@ -100,7 +83,6 @@ destructor TMainForm.Destroy;
 begin
   GlobalGame.Free;
   AppController.Free;
-//  ProgramSettings.Free;
   inherited;
 end;
 
@@ -176,7 +158,9 @@ begin
   TGameBaseScreen(fChildForm).MainFormResized;
   GameParams.WindowWidth := ClientWidth;
   GameParams.WindowHeight := ClientHeight;
-  MainFormHandle := Handle; // Seems pointless? Yes. But apparently, changing between maximized and not maximized causes the handle to change, which was causing the fullscreen-windowed change glitch.
+  // Seems pointless? Yes. But apparently, changing between maximized and not maximized
+  // causes the handle to change, which was causing the fullscreen-windowed change glitch.
+  MainFormHandle := Handle;
 end;
 
 procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth,
