@@ -664,7 +664,7 @@ begin
 
   SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
 
-  if not Game.Replaying then
+  if not Game.ReplayingNoRR[TGameWindow(Parent).GameSpeed = gspPause] then
     SetReplayMark(0)
   else if Game.ReplayInsert then
     SetReplayMark(2)

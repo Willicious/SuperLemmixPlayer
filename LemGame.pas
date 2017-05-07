@@ -234,6 +234,7 @@ type
     procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
   { internal methods }
     function GetIsReplaying: Boolean;
+    function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
@@ -437,6 +438,7 @@ type
     property Playing: Boolean read fPlaying write fPlaying;
     property Renderer: TRenderer read fRenderer;
     property Replaying: Boolean read GetIsReplaying;
+    property ReplayingNoRR[isPaused: Boolean]: Boolean read GetIsReplayingNoRR;
     property ReplayManager: TReplay read fReplayManager;
     property IsSelectWalkerHotkey: Boolean read fIsSelectWalkerHotkey write fIsSelectWalkerHotkey;
     property IsSelectUnassignedHotkey: Boolean read fIsSelectUnassignedHotkey write fIsSelectUnassignedHotkey;
@@ -5401,6 +5403,15 @@ function TLemmingGame.GetIsReplaying: Boolean;
 begin
   Result := fCurrentIteration <= fReplayManager.LastActionFrame;
 end;
+
+function TLemmingGame.GetIsReplayingNoRR(isPaused: Boolean): Boolean;
+begin
+  // Ignore RR changes at the current frame when paused
+  Result :=     (fCurrentIteration < fReplayManager.LastActionFrame)
+            or  (fReplayManager.Assignment[fCurrentIteration, 0] <> nil)
+            or  ((fReplayManager.ReleaseRateChange[fCurrentIteration, 0] <> nil) and not isPaused);
+end;
+
 
 function TLemmingGame.GetIsSimulating: Boolean;
 begin
