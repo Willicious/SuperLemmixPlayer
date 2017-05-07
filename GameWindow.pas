@@ -842,14 +842,8 @@ begin
   // Load save state or restart the level
   for i := UseSaveState downto -1 do
   begin
-    if i >= 0 then
-    begin
-      if Game.LoadSavedState(fSaveList[i], true) then
-        Break
-      else
-        fSaveList.Delete(i);
-    end else
-      Game.Start(true);
+    if i >= 0 then Game.LoadSavedState(fSaveList[i])
+    else Game.Start(true);
   end;
 
   fSaveList.ClearAfterIteration(Game.CurrentIteration);
