@@ -358,25 +358,7 @@ const
             (SR_COUNT, SR_RELATIVE_PERCENT, SR_RELATIVE_PERCENT, SR_RELATIVE, SR_RELATIVE, SR_RELATIVE, SR_RELATIVE, SR_RELATIVE_PERCENT, SR_PERCENT);
   SR_VALUE: array[0..8] of Integer =
             (0, -50, -10, -2, -1, 0, 1, 20, 100);
-
-            (*        if gRescued >= AdjLemCount then
-          i := 8
-        else if gRescued = 0 then
-          i := 0
-        else if gRescued < gToRescue div 2 then
-          i := 1
-        else if gDone < gTarget - 10 then
-          i := 2
-        else if gRescued <= gToRescue - 2 then
-          i := 3
-        else if gRescued = gToRescue - 1 then
-          i := 4
-        else if gRescued = gToRescue then
-          i := 5
-        else if gDone < gTarget + 20 then
-          i := 6
-        else if gDone >= gTarget + 20 then
-          i := 7*)
+            
 begin
   OldLookForLvls := fLookForLVL;
   fLookForLVL := false;

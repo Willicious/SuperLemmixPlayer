@@ -31,8 +31,6 @@ type
     gCount              : Integer; // number
     gToRescue           : Integer;
     gRescued            : Integer;
-    gTarget             : Integer;
-    gDone               : Integer;
     gTimeIsUp           : Boolean;
     gLastRescueIteration: Integer;
     gGotTalisman        : Boolean;

@@ -86,12 +86,7 @@ end;
 procedure TGamePostviewScreen.BuildScreen;
 var
   Temp: TBitmap32;
-//  DstRect: TRect;
 begin
-  //fSection := aSection;
-  //fLevelNumber := aLevelNumber;
-  //fGameResult := aResult;
-
   ScreenImg.BeginUpdate;
   Temp := TBitmap32.Create;
   try
@@ -179,7 +174,7 @@ var
           i := 0
         else if gRescued < gToRescue div 2 then
           i := 1
-        else if gDone < gTarget - 10 then
+        else if gRescued < gToRescue - gCount div 10 then
           i := 2
         else if gRescued <= gToRescue - 2 then
           i := 3
@@ -187,9 +182,9 @@ var
           i := 4
         else if gRescued = gToRescue then
           i := 5
-        else if gDone < gTarget + 20 then
+        else if gRescued < gToRescue + gCount div 5 then
           i := 6
-        else if gDone >= gTarget + 20 then
+        else if gRescued >= gToRescue + gCount div 5 then
           i := 7
         else
           raise exception.Create('leveltext error');

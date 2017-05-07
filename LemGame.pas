@@ -377,7 +377,7 @@ type
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
   public
-    GameResult                 : Boolean;
+    //GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
@@ -5143,39 +5143,22 @@ procedure TLemmingGame.SetGameResult;
   (ccexplore: sorry, code added to implement the nuke error by popular demand)
   (Nepster: sorry, namida removed the code long ago again by popular demand)
 -------------------------------------------------------------------------------}
-var
-  gLemCap : Integer;
 begin
   with GameResultRec do
   begin
     gCount              := Level.Info.LemmingsCount;
     gToRescue           := Level.Info.RescueCount;
     gRescued            := LemmingsIn;
-    gLemCap             := Level.Info.LemmingsCount;
-
     gGotTalisman        := fTalismanReceived;
-
-    if gLemCap = 0 then
-      gTarget := 0
-    else
-      gTarget := (gToRescue * 100) div gLemCap;
-
-    if not fGameCheated then
-    begin
-      if gCount = 0 then
-        gDone := 0
-      else
-        gDone := (gRescued * 100) div gLemCap;   //gCount
-    end else begin
-      gRescued := gCount;
-      if spbCloner in Level.Info.Skillset then gRescued := gRescued + Level.Info.SkillCount[spbCloner];
-      gDone := (gRescued * 100) div gLemCap;
-    end;
-
-    GameResult          := gRescued >= gToRescue;
-    gSuccess            := GameResult;
     gCheated            := fGameCheated;
+    gSuccess            := (gRescued >= gToRescue) or gCheated;
 
+    if fGameCheated then
+    begin
+      gRescued := gCount;
+      if spbCloner in Level.Info.Skillset then
+        Inc(gRescued, Level.Info.SkillCount[spbCloner]);
+    end;
   end;
 end;
 
