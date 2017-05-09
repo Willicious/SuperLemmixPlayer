@@ -10,7 +10,7 @@ uses
 const
   FORMAT_VERSION = 10;
   CORE_VERSION = 13;
-  FEATURES_VERSION = 16;
+  FEATURES_VERSION = 17;
   HOTFIX_VERSION = 0;
   COMMIT_ID = '2e06d6c';  // empty string is handled, and is uppercased when needed so don't need to do manually anymore :D
 
