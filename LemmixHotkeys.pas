@@ -11,7 +11,7 @@ uses
 const
   MAX_KEY = 255;
   MAX_KEY_LEN = 4;
-  KEYSET_VERSION = 9;
+  KEYSET_VERSION = 10;
 
 type
   TLemmixHotkeyAction = (lka_Null,
@@ -48,7 +48,8 @@ type
                          lka_ClearPhysics,
                          lka_FallDistance,
                          lka_ZoomIn,
-                         lka_ZoomOut);
+                         lka_ZoomOut,
+                         lka_Scroll);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
 
@@ -114,6 +115,7 @@ begin
   fKeyFunctions[$25].Action := lka_DirLeft;
   fKeyFunctions[$27].Action := lka_DirRight;
   fKeyFunctions[$31].Action := lka_Cheat;
+  fKeyFunctions[$41].Action := lka_Scroll;
   fKeyFunctions[$43].Action := lka_CancelReplay;
   fKeyFunctions[$44].Action := lka_FallDistance;
   fKeyFunctions[$45].Action := lka_EditReplay;
@@ -244,6 +246,7 @@ var
     if s = 'replay_insert' then Result := lka_ReplayInsert;
     if s = 'zoom_in' then Result := lka_ZoomIn;
     if s = 'zoom_out' then Result := lka_ZoomOut;
+    if s = 'scroll' then Result := lka_Scroll;
   end;
 
   function InterpretSecondary(s: String): Integer;
@@ -401,6 +404,9 @@ begin
         SetIfFree($DD, lka_SpecialSkip, 1);
       end;
 
+      if FixVersion < 10 then
+        SetIfFree($41, lka_Scroll);
+
     except
       SetDefaults;
     end;
@@ -452,6 +458,7 @@ var
       lka_ReplayInsert:     Result := 'Replay_Insert';
       lka_ZoomIn:           Result := 'Zoom_In';
       lka_ZoomOut:          Result := 'Zoom_Out';
+      lka_Scroll:           Result := 'Scroll';
       else Result := 'Null';
     end;
   end;

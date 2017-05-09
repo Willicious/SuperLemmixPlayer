@@ -35,6 +35,12 @@ type
    rdRedraw   // needs to redraw completely
   );
 
+  THoldScrollData = record
+    Active: Boolean;
+    StartCursor: TPoint;
+    StartImg: TFloatPoint;
+  end;
+
 const
   CURSOR_TYPES = 2;
   EXTRA_ZOOM_LEVELS = 4;
@@ -70,6 +76,8 @@ type
     fHyperSpeedStopCondition: Integer;
     fHyperSpeedTarget: Integer;
     fLastZombieSound: Cardinal;
+
+    fHoldScrollPoint: THoldScrollData;
   { game eventhandler}
     procedure Game_Finished;
   { self eventhandlers }
@@ -913,14 +921,44 @@ function TGameWindow.CheckScroll: Boolean;
     Img.OffsetHorz := Min(MaxScroll, Img.OffsetHorz);
     Img.OffsetVert := Max(MinVScroll, Img.OffsetVert);
     Img.OffsetVert := Min(MaxVScroll, Img.OffsetVert);
+    Result := (dx <> 0) or (dy <> 0) or Result; // though it should never happen anyway, a Scroll(0, 0) call after an earlier nonzero call should not set Result to false 
+  end;
+
+  procedure HandleHeldScroll;
+  var
+    HDiff, VDiff: Integer;
+  begin
+    HDiff := (Mouse.CursorPos.X - fHoldScrollPoint.StartCursor.X) div fInternalZoom;
+    VDiff := (Mouse.CursorPos.Y - fHoldScrollPoint.StartCursor.Y) div fInternalZoom;
+
+    if Abs(HDiff) = 1 then
+      fHoldScrollPoint.StartCursor.X := Mouse.CursorPos.X
+    else
+      fHoldScrollPoint.StartCursor.X := fHoldScrollPoint.StartCursor.X + (HDiff * 3 div 4);
+
+    if Abs(VDiff) = 1 then
+      fHoldScrollPoint.StartCursor.Y := Mouse.CursorPos.Y
+    else
+      fHoldScrollPoint.StartCursor.Y := fHoldScrollPoint.StartCursor.Y + (VDiff * 3 div 4);
+
+    Img.BeginUpdate;
+    Scroll(HDiff, VDiff);
+    Img.EndUpdate;
   end;
 begin
+  Result := false;
+
   if fNeedResetMouseTrap or not fMouseTrapped then // why are these two seperate variables anyway?
   begin
     GameScroll := gsNone;
     GameVScroll := gsNone;
-    Result := false;
-  end else begin
+  end else if fHoldScrollPoint.Active then
+  begin
+    if GameParams.Hotkeys.CheckForKey(lka_Scroll) then
+      HandleHeldScroll
+    else
+      fHoldScrollPoint.Active := false;
+  end else if GameParams.EdgeScroll then begin
     if Mouse.CursorPos.X <= MouseClipRect.Left then
       GameScroll := gsLeft
     else if Mouse.CursorPos.X >= MouseClipRect.Right-1 then
@@ -949,8 +987,6 @@ begin
         Scroll(0, 8);
     end;
     Img.EndUpdate;
-
-    Result := (GameScroll in [gsRight, gsLeft]) or(GameVScroll in [gsUp, gsDown]);
   end;
 end;
 
@@ -1087,7 +1123,8 @@ const
                          lka_Nuke,          // nuke also cancels, but requires double-press to do so so handled elsewhere
                          lka_ClearPhysics,
                          lka_ZoomIn,
-                         lka_ZoomOut];
+                         lka_ZoomOut,
+                         lka_Scroll];
   SKILL_KEYS = [lka_Skill, lka_SkillLeft, lka_SkillRight];
 begin
   func := GameParams.Hotkeys.CheckKeyEffect(Key);
@@ -1223,6 +1260,14 @@ begin
           lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
           lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
           lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
+          lka_Scroll: begin
+                        if PtInRect(Img.BoundsRect, Img.ParentToClient(ScreenToClient(Mouse.CursorPos))) and not fHoldScrollPoint.Active then
+                        begin
+                          fHoldScrollPoint.Active := true;
+                          fHoldScrollPoint.StartCursor := Mouse.CursorPos;
+                          fHoldScrollPoint.StartImg := FloatPoint(Img.OffsetHorz, Img.OffsetVert);
+                        end;
+                      end;
         end;
 
     end;

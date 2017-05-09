@@ -51,6 +51,7 @@ type
     cbMinimapHighQuality: TCheckBox;
     cbIncreaseZoom: TCheckBox;
     cbCompactSkillPanel: TCheckBox;
+    cbEdgeScrolling: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -124,6 +125,7 @@ begin
   cbBlackOut.Checked := GameParams.BlackOutZero;
   cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
   cbDisableShadows.Checked := GameParams.NoShadows;
+  cbEdgeScrolling.Checked := GameParams.EdgeScroll;
 
   cbFullScreen.Checked := GameParams.FullScreen;
   cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
@@ -202,6 +204,7 @@ begin
   GameParams.BlackOutZero := cbBlackOut.Checked;
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.NoShadows := cbDisableShadows.Checked;
+  GameParams.EdgeScroll := cbEdgeScrolling.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;

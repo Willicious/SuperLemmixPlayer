@@ -65,6 +65,7 @@ begin
     SetKeyFunction($25, lka_DirLeft);
     SetKeyFunction($27, lka_DirRight);
     SetKeyFunction($31, lka_Cheat);
+    SetKeyFunction($41, lka_Scroll);
     SetKeyFunction($43, lka_CancelReplay);
     SetKeyFunction($44, lka_FallDistance);
     SetKeyFunction($45, lka_EditReplay);
@@ -159,6 +160,7 @@ begin
     SetKeyFunction($4F, lka_ReplayInsert);
     SetKeyFunction($55, lka_SelectNewLem);
     SetKeyFunction($0D, lka_SaveImage);
+    SetKeyFunction($4A, lka_Scroll);
 
     // Misc ones that need other details set
     SetKeyFunction($BF, lka_ClearPhysics, 1);
