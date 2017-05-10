@@ -197,7 +197,7 @@ type
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
 
-    UserSetNuking              : Boolean;
+    fUserSetNuking              : Boolean;
     ExploderAssignInProgress   : Boolean;
     Index_LemmingToBeNuked     : Integer;
     BrickPixelColors           : array[0..11] of TColor32; // gradient steps
@@ -443,6 +443,8 @@ type
 
     property RenderInterface: TRenderInterface read fRenderInterface;
     property IsSimulating: Boolean read GetIsSimulating;
+
+    property UserSetNuking: Boolean read fUserSetNuking write fUserSetNuking;
 
     function GetLevelWidth: Integer;
     function GetLevelHeight: Integer;
@@ -5313,7 +5315,7 @@ function TLemmingGame.GetIsReplayingNoRR(isPaused: Boolean): Boolean;
 begin
   // Ignore RR changes at the current frame when paused
   Result :=     (fCurrentIteration < fReplayManager.LastActionFrame)
-            or  (fReplayManager.Assignment[fCurrentIteration, 0] <> nil)
+            or  ((fReplayManager.Assignment[fCurrentIteration, 0] <> nil) and not (fReplayManager.Assignment[fCurrentIteration, 0] is TReplayNuke))
             or  ((fReplayManager.ReleaseRateChange[fCurrentIteration, 0] <> nil) and not isPaused);
 end;
 

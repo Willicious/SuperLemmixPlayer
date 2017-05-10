@@ -184,7 +184,7 @@ const
 implementation
 
 uses
-  GameWindow;
+  LemReplay, GameWindow;
 
 function PtInRectEx(const Rect: TRect; const P: TPoint): Boolean;
 begin
@@ -661,6 +661,8 @@ begin
     DrawButtonSelector(fHighlitSkill, false);
     DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
   end; // ugly code, but it's temporary
+
+  DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
 
   SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
 
