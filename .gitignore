@@ -35,3 +35,4 @@ tools/GSConvert/bin/*
 *.nxp
 bin/LemmingBytes Replay Results.txt
 bin/* Replay Results.txt
+bin/neolemmix_logging.txt

@@ -9,25 +9,33 @@ uses
 
 var
   GameFile: String;
-  {$ifdef profile_parser}ProfilingList: TStringList;{$endif}
+  {$ifdef logging}DebugLog: TStringList;
+
+  procedure Log(aString: String);{$endif}
 
 implementation
 
+{$ifdef logging}
+procedure Log(aString: String);
+begin
+  DebugLog.Add(aString);
+end;
+{$endif}
 
 initialization
-{$ifdef profile_parser}
-  ProfilingList := TStringList.Create;
-  if FileExists(ExtractFilePath(ParamStr(0)) + 'neolemmix_profiling.txt') then
-    ProfilingList.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_profiling.txt');
-  ProfilingList.Add('** Begin session at ' + FormatDateTime('yyyy/mm/dd hh:nn:ss', Now()));
+{$ifdef logging}
+  DebugLog := TStringList.Create;
+  if FileExists(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt') then
+    DebugLog.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
+  DebugLog.Add('** Begin session at ' + FormatDateTime('yyyy/mm/dd hh:nn:ss', Now()));
 {$endif}
 
 finalization
-{$ifdef profile_parser}
-  ProfilingList.Add('----------------------------------------');
-  ProfilingList.Add('');
-  ProfilingList.SaveToFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_profiling.txt');
-  ProfilingList.Free;
+{$ifdef logging}
+  DebugLog.Add('----------------------------------------');
+  DebugLog.Add('');
+  DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
+  DebugLog.Free;
 {$endif}
 
 end.
