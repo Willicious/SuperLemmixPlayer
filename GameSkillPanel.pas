@@ -1402,7 +1402,7 @@ var
 begin
   Result := 0;
   if GetTickCount - fLastClickFrameskip < 250 then Exit;
-  P := Img.ControlToBitmap(ScreenToClient(Mouse.CursorPos));
+  P := Img.ControlToBitmap(Img.ScreenToClient(Mouse.CursorPos));
   if GetKeyState(VK_LBUTTON) < 0 then
     if PtInRect(fButtonRects[spbBackOneFrame], P) then
       Result := -1
