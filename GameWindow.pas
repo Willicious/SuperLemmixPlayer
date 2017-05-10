@@ -38,7 +38,7 @@ type
   THoldScrollData = record
     Active: Boolean;
     StartCursor: TPoint;
-    StartImg: TFloatPoint;
+    //StartImg: TFloatPoint;
   end;
 
 const
@@ -77,7 +77,7 @@ type
     fHyperSpeedTarget: Integer;
     fLastZombieSound: Cardinal;
 
-    fHoldScrollPoint: THoldScrollData;
+    fHoldScrollData: THoldScrollData;
   { game eventhandler}
     procedure Game_Finished;
   { self eventhandlers }
@@ -928,18 +928,18 @@ function TGameWindow.CheckScroll: Boolean;
   var
     HDiff, VDiff: Integer;
   begin
-    HDiff := (Mouse.CursorPos.X - fHoldScrollPoint.StartCursor.X) div fInternalZoom;
-    VDiff := (Mouse.CursorPos.Y - fHoldScrollPoint.StartCursor.Y) div fInternalZoom;
+    HDiff := (Mouse.CursorPos.X - fHoldScrollData.StartCursor.X) div fInternalZoom;
+    VDiff := (Mouse.CursorPos.Y - fHoldScrollData.StartCursor.Y) div fInternalZoom;
 
     if Abs(HDiff) = 1 then
-      fHoldScrollPoint.StartCursor.X := Mouse.CursorPos.X
+      fHoldScrollData.StartCursor.X := Mouse.CursorPos.X
     else
-      fHoldScrollPoint.StartCursor.X := fHoldScrollPoint.StartCursor.X + (HDiff * 3 div 4);
+      fHoldScrollData.StartCursor.X := fHoldScrollData.StartCursor.X + (HDiff * 3 div 4);
 
     if Abs(VDiff) = 1 then
-      fHoldScrollPoint.StartCursor.Y := Mouse.CursorPos.Y
+      fHoldScrollData.StartCursor.Y := Mouse.CursorPos.Y
     else
-      fHoldScrollPoint.StartCursor.Y := fHoldScrollPoint.StartCursor.Y + (VDiff * 3 div 4);
+      fHoldScrollData.StartCursor.Y := fHoldScrollData.StartCursor.Y + (VDiff * 3 div 4);
 
     Img.BeginUpdate;
     Scroll(HDiff, VDiff);
@@ -952,12 +952,12 @@ begin
   begin
     GameScroll := gsNone;
     GameVScroll := gsNone;
-  end else if fHoldScrollPoint.Active then
+  end else if fHoldScrollData.Active then
   begin
     if GameParams.Hotkeys.CheckForKey(lka_Scroll) then
       HandleHeldScroll
     else
-      fHoldScrollPoint.Active := false;
+      fHoldScrollData.Active := false;
   end else if GameParams.EdgeScroll then begin
     if Mouse.CursorPos.X <= MouseClipRect.Left then
       GameScroll := gsLeft
@@ -1261,11 +1261,11 @@ begin
           lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
           lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
           lka_Scroll: begin
-                        if PtInRect(Img.BoundsRect, Img.ParentToClient(ScreenToClient(Mouse.CursorPos))) and not fHoldScrollPoint.Active then
+                        if PtInRect(Img.BoundsRect, Img.ParentToClient(ScreenToClient(Mouse.CursorPos))) and not fHoldScrollData.Active then
                         begin
-                          fHoldScrollPoint.Active := true;
-                          fHoldScrollPoint.StartCursor := Mouse.CursorPos;
-                          fHoldScrollPoint.StartImg := FloatPoint(Img.OffsetHorz, Img.OffsetVert);
+                          fHoldScrollData.Active := true;
+                          fHoldScrollData.StartCursor := Mouse.CursorPos;
+                          //fHoldScrollData.StartImg := FloatPoint(Img.OffsetHorz, Img.OffsetVert);
                         end;
                       end;
         end;
