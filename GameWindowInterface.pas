@@ -4,6 +4,9 @@ unit GameWindowInterface;
 
 interface
 
+uses
+  GR32_Image;
+
 type
 
   TGameSpeed = (
@@ -15,6 +18,7 @@ type
   IGameWindow = Interface(IInterface)
     function GetWidth: Integer;
     function GetHeight: Integer;
+    function ScreenImage: TImage32; 
 
     procedure SetForceUpdateOneFrame(aValue: Boolean);
     procedure SetHyperSpeedTarget(aValue: Integer);

@@ -72,6 +72,7 @@ type
     fDisplayWidth: Integer;
     fDisplayHeight: Integer;
 
+    fGameWindow: IGameWindow;
 
     procedure SetLevel(const Value: TLevel);
 
@@ -104,7 +105,8 @@ type
     fLastDrawnStr: string[38];
     fNewDrawStr: string[38];
     RedrawnChars: Integer;
-    constructor Create(aOwner: TComponent); override;
+    constructor Create(aOwner: TComponent); overload; override;
+    constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload;
     destructor Destroy; override;
     procedure DrawNewStr;
     procedure SetButtonRect(btn: TSkillPanelButton; bpos: Integer);
@@ -195,6 +197,12 @@ end;
 
 { TSkillPanelToolbar }
 
+constructor TSkillPanelToolbar.Create(aOwner: TComponent; aGameWindow: IGameWindow);
+begin
+  Create(aOwner);
+  fGameWindow := aGameWindow;
+end;
+
 constructor TSkillPanelToolbar.Create(aOwner: TComponent);
 var
   c: Char;
@@ -268,8 +276,6 @@ begin
 
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
-
-
 end;
 
 destructor TSkillPanelToolbar.Destroy;
@@ -306,8 +312,8 @@ procedure TSkillPanelToolbar.SetZoom(aZoom: Integer);
 begin
   aZoom := Max(Min(MaxZoom, aZoom), 1);
 
-  Width := TGameWindow(Parent).Width;
-  Height := TGameWindow(Parent).Height;
+  Width := fGameWindow.GetWidth;
+  Height := fGameWindow.GetHeight;
 
   if aZoom = Trunc(Img.Scale) then Exit;
   Img.Width := fPanelWidth * aZoom;
@@ -373,7 +379,7 @@ var
   C: TColor32;
   A: TRect;
 begin
-  if TGameWindow(Owner).IsHyperSpeed then Exit;
+  if fGameWindow.IsHyperSpeed then Exit;
 
   if (aButton = spbNone) or ((aButton = fHighlitSkill) and (Highlight = true)) then
     Exit;
@@ -523,11 +529,11 @@ begin
   // x = 3, 19, 35 etc. are the "black holes" for the numbers in the image
   // y = 17
 
-  if (fButtonRects[aButton].Left < 0) then exit;
+  if fButtonRects[aButton].Left < 0 then Exit;
 
   fSkillCounts[aButton] := aNumber;
 
-  if TGameWindow(Owner).IsHyperSpeed then exit;
+  if fGameWindow.IsHyperSpeed then Exit;
 
   aoNumber := aNumber;
   aNumber := Math.Max(aNumber mod 100, 0);
@@ -667,7 +673,7 @@ begin
 
   SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
 
-  if not Game.ReplayingNoRR[TGameWindow(Parent).GameSpeed = gspPause] then
+  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
     SetReplayMark(0)
   else if Game.ReplayInsert then
     SetReplayMark(2)
@@ -691,9 +697,9 @@ var
   Exec: Boolean;
 begin
   P := Img.ControlToBitmap(Point(X, Y));
-  TGameWindow(Parent).ApplyMouseTrap;
+  fGameWindow.ApplyMouseTrap;
 
-  if TGameWindow(Owner).IsHyperSpeed then
+  if fGameWindow.IsHyperSpeed then
     Exit;
 
   for i := Low(TSkillPanelButton) to High(TSkillPanelButton) do // "ignore" spbNone
@@ -726,37 +732,37 @@ begin
           else begin
             if (i = spbPause) then
             begin
-              if TGameWindow(Owner).GameSpeed = gspPause then
-                TGameWindow(Owner).GameSpeed := gspNormal
+              if fGameWindow.GameSpeed = gspPause then
+                fGameWindow.GameSpeed := gspNormal
               else
-                TGameWindow(Owner).GameSpeed := gspPause;
+                fGameWindow.GameSpeed := gspPause;
             end else
               Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
           end;
         end else begin // need special handling
           case i of
-            spbFastForward: case TGameWindow(Owner).GameSpeed of
-                              gspNormal: TGameWindow(Owner).GameSpeed := gspFF;
-                              gspFF: TGameWindow(Owner).GameSpeed := gspNormal;
+            spbFastForward: case fGameWindow.GameSpeed of
+                              gspNormal: fGameWindow.GameSpeed := gspFF;
+                              gspFF: fGameWindow.GameSpeed := gspNormal;
                             end;
-            spbRestart: TGameWindow(Parent).GotoSaveState(0, -1);
+            spbRestart: fGameWindow.GotoSaveState(0, -1);
             spbBackOneFrame: if Button = mbLeft then
                              begin
-                               TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 1);
+                               fGameWindow.GotoSaveState(Game.CurrentIteration - 1);
                                fLastClickFrameskip := GetTickCount;
                              end else if Button = mbRight then
-                               TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 17)
+                               fGameWindow.GotoSaveState(Game.CurrentIteration - 17)
                              else if Button = mbMiddle then
-                               TGameWindow(Parent).GotoSaveState(Game.CurrentIteration - 85);
+                               fGameWindow.GotoSaveState(Game.CurrentIteration - 85);
             spbForwardOneFrame: if Button = mbLeft then
                                 begin
-                                  TGameWindow(Parent).ForceUpdateOneFrame := true;
+                                  fGameWindow.SetForceUpdateOneFrame(True);
                                   fLastClickFrameskip := GetTickCount;
                                 end else if Button = mbRight then
-                                  TGameWindow(Parent).HyperSpeedTarget := Game.CurrentIteration + 17
+                                  fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 17)
                                 else if Button = mbMiddle then
-                                  TGameWindow(Parent).HyperSpeedTarget := Game.CurrentIteration + 85;
-            spbClearPhysics: TGameWindow(Parent).ClearPhysics := not TGameWindow(Parent).ClearPhysics;
+                                  fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
+            spbClearPhysics: fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
             spbDirLeft: if TGameWindow(Parent).SkillPanelSelectDx = -1 then
                         begin
                           TGameWindow(Parent).SkillPanelSelectDx := 0;
@@ -775,7 +781,7 @@ begin
                           DrawButtonSelector(spbDirLeft, false);
                           DrawButtonSelector(spbDirRight, true);
                         end;
-            spbLoadReplay: TGameWindow(Parent).LoadReplay;
+            spbLoadReplay: fGameWindow.LoadReplay;
           end;
         end;
       Exit;
@@ -787,11 +793,11 @@ end;
 procedure TSkillPanelToolbar.ImgMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
-  if TGameWindow(Owner).SuspendCursor then Exit;
+  if fGameWindow.DoSuspendCursor then Exit;
 
   Game.HitTestAutoFail := true;
   Game.HitTest;
-  TGameWindow(Parent).SetCurrentCursor;
+  fGameWindow.SetCurrentCursor;
 
   MinimapScrollFreeze := false;
 end;
@@ -817,7 +823,7 @@ begin
   P := fMinimapImg.ControlToBitmap(Point(X, Y));
   P.X := P.X * 8;
   P.Y := P.Y * 8;
-  TGameWindow(Parent).ApplyMouseTrap;
+  fGameWindow.ApplyMouseTrap;
 
   fMinimapScrollFreeze := true;
 
@@ -830,11 +836,11 @@ procedure TSkillPanelToolbar.MinimapMouseMove(Sender: TObject;
 var
   P: TPoint;
 begin
-  if TGameWindow(Owner).SuspendCursor then Exit;
+  if fGameWindow.DoSuspendCursor then Exit;
 
   Game.HitTestAutoFail := true;
   Game.HitTest;
-  TGameWindow(Parent).SetCurrentCursor;
+  fGameWindow.SetCurrentCursor;
 
   if not fMinimapScrollFreeze then Exit;
 
@@ -1120,8 +1126,8 @@ begin
     begin
       fButtonRects[Skill] := R;
 
-      fSkillIcons[Integer(Skill)].DrawTo(fImg.Bitmap, R.Left, R.Top{, SrcRect});
-      fSkillIcons[Integer(Skill)].DrawTo(fOriginal, R.Left, R.Top{, SrcRect});
+      fSkillIcons[Integer(Skill)].DrawTo(fImg.Bitmap, R.Left, R.Top);
+      fSkillIcons[Integer(Skill)].DrawTo(fOriginal, R.Left, R.Top);
 
       OffsetRect(R, 16, 0);
     end;
@@ -1353,8 +1359,8 @@ begin
   if Parent <> nil then
   begin
     // We want topleft position for now, to draw the visible area frame
-    X := -Round(TGameWindow(Parent).ScreenImg.OffsetHorz / TGameWindow(Parent).ScreenImg.Scale / 8);
-    Y := -Round(TGameWindow(Parent).ScreenImg.OffsetVert / TGameWindow(Parent).ScreenImg.Scale / 8);
+    X := -Round(fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8);
+    Y := -Round(fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8);
 
     ViewRect := Rect(0, 0, fDisplayWidth div 8 + 2, fDisplayHeight div 8 + 2);
     OffsetRect(ViewRect, X, Y);
@@ -1368,7 +1374,7 @@ begin
       if fMinimapTemp.Width < MMW then
         OH := (((MMW - fMinimapTemp.Width) * fMinimapImg.Scale) / 2)
       else begin
-        OH := TGameWindow(Parent).ScreenImg.OffsetHorz / TGameWindow(Parent).ScreenImg.Scale / 8;
+        OH := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
         OH := OH + (MMW - RectWidth(ViewRect)) div 2;
         OH := OH * fMinimapImg.Scale;
         OH := Min(OH, 0);
@@ -1378,7 +1384,7 @@ begin
       if fMinimapTemp.Height < MMH then
         OV := (((MMH - fMinimapTemp.Height) * fMinimapImg.Scale) / 2)
       else begin
-        OV := TGameWindow(Parent).ScreenImg.OffsetVert / TGameWindow(Parent).ScreenImg.Scale / 8;
+        OV := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
         OV := OV + (MMH - RectHeight(ViewRect)) div 2;
         OV := OV * fMinimapImg.Scale;
         OV := Min(OV, 0);

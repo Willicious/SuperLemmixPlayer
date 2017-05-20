@@ -166,7 +166,6 @@ type
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
-    property SuspendCursor: Boolean read fSuspendCursor;  // --> replace by DoSuspendCursor
     function DoSuspendCursor: Boolean;
 
     property GameSpeed: TGameSpeed read GetGameSpeed write SetGameSpeed;
@@ -175,6 +174,7 @@ type
 
     function GetWidth: Integer;  // to satisfy IGameWindow
     function GetHeight: Integer; // to satisfy IGameWindow
+    function ScreenImage: TImage32; // to staisfy IGameWindow, should be moved to TGameBaseScreen, but it causes bugs there.
     procedure SetForceUpdateOneFrame(aValue: Boolean);  // to satisfy IGameWindow
     procedure SetHyperSpeedTarget(aValue: Integer);     // to satisfy IGameWindow
 
@@ -1037,7 +1037,7 @@ begin
   Img.ScaleMode := smScale;
 
   // create toolbar
-  SkillPanel := TSkillPanelToolbar.Create(Self);
+  SkillPanel := TSkillPanelToolbar.Create(Self, Self);
   SkillPanel.Parent := Self;
 
   Self.KeyPreview := True;
@@ -1850,6 +1850,11 @@ end;
 function TGameWindow.GetHeight: Integer;
 begin
   Result := Height;
+end;
+
+function TGameWindow.ScreenImage: TImage32;
+begin
+  Result := ScreenImg;
 end;
 
 procedure TGameWindow.SetForceUpdateOneFrame(aValue: Boolean);
