@@ -18,18 +18,19 @@ type
 
   private
     fGame                 : TLemmingGame;
+
     function GetLevel: TLevel;
 
   protected
     fGameWindow           : IGameWindow;
+    fImage                : TImage32;
 
-    fPanelWidth: Integer;
     fLastClickFrameskip: Cardinal;
 
     fStyle         : TBaseDosLemmingStyle;
 
-    fImg           : TImage32;
-    fMinimapImg    : TImage32;
+
+    fMinimapImage  : TImage32;
 
     fOriginal      : TBitmap32;
     fMinimapRegion : TBitmap32;
@@ -42,8 +43,8 @@ type
     fSkillCountErase : TBitmap32;
     fSkillLock     : TBitmap32;
     fSkillInfinite : TBitmap32;
-    fSkillIcons    : array[0..16] of TBitmap32;
-    fInfoFont      : array[0..44] of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
+    fSkillIcons    : array of TBitmap32;
+    fInfoFont      : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
     fButtonRects   : array[TSkillPanelButton] of TRect;
     fRectColor     : TColor32;
@@ -70,8 +71,8 @@ type
     procedure SetMinimapScrollFreeze(aValue: Boolean);
 
 
-    function GetPanelWidth: Integer; virtual; abstract;
-    function GetPanelHeight: Integer; virtual; abstract;
+    function PanelWidth: Integer; virtual; abstract;
+    function PanelHeight: Integer; virtual; abstract;
 
     property Level : TLevel read GetLevel;
     property Game  : TLemmingGame read fGame;
@@ -101,7 +102,7 @@ type
     procedure RefreshInfo; virtual; abstract;
     procedure SetCursor(aCursor: TCursor); virtual; abstract;
 
-    property Image: TImage32 read fImg;
+    property Image: TImage32 read fImage;
 
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); virtual; abstract;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); virtual; abstract;
@@ -125,7 +126,9 @@ type
     procedure SetGame(const Value: TLemmingGame);
   end;
 
-
+const
+  NUM_SKILL_ICONS = 17;
+  NUM_FONT_CHARS = 45;
 
 implementation
 
@@ -145,40 +148,40 @@ begin
   Color := $000000;
   ParentBackground := false;
 
-  fPanelWidth := GetPanelWidth;
-
   fLastClickFrameskip := GetTickCount;
 
   DoubleBuffered := true;
 
-  fImg := TImage32.Create(Self);
-  fImg.Parent := Self;
-  fImg.RepaintMode := rmOptimizer;
+  fImage := TImage32.Create(Self);
+  fImage.Parent := Self;
+  fImage.RepaintMode := rmOptimizer;
 
-  fMinimapImg := TImage32.Create(Self);
-  fMinimapImg.Parent := Self;
-  fMinimapImg.RepaintMode := rmOptimizer;
+  fMinimapImage := TImage32.Create(Self);
+  fMinimapImage.Parent := Self;
+  fMinimapImage.RepaintMode := rmOptimizer;
 
   fMinimapRegion := TBitmap32.Create;
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
 
-  fImg.OnMouseDown := ImgMouseDown;
-  fImg.OnMouseMove := ImgMouseMove;
-  fImg.OnMouseUp := ImgMouseUp;
+  fImage.OnMouseDown := ImgMouseDown;
+  fImage.OnMouseMove := ImgMouseMove;
+  fImage.OnMouseUp := ImgMouseUp;
 
-  fMinimapImg.OnMouseDown := MinimapMouseDown;
-  fMinimapImg.OnMouseMove := MinimapMouseMove;
-  fMinimapImg.OnMouseUp := MinimapMouseUp;
+  fMinimapImage.OnMouseDown := MinimapMouseDown;
+  fMinimapImage.OnMouseMove := MinimapMouseMove;
+  fMinimapImage.OnMouseUp := MinimapMouseUp;
 
   fRectColor := DosVgaColorToColor32(DosInLevelPalette[3]);
 
   fOriginal := TBitmap32.Create;
 
-  for i := 0 to 44 do
+  SetLength(fInfoFont, NUM_FONT_CHARS);
+  for i := 0 to NUM_FONT_CHARS - 1 do
     fInfoFont[i] := TBitmap32.Create;
 
-  for i := 0 to 16 do
+  SetLength(fSkillIcons, NUM_SKILL_ICONS);
+  for i := 0 to NUM_SKILL_ICONS - 1 do
     fSkillIcons[i] := TBitmap32.Create;
 
   for c := '0' to '9' do
@@ -212,14 +215,14 @@ var
   c: Char;
   i: Integer;
 begin
-  for i := 0 to 43 do
+  for i := 0 to NUM_FONT_CHARS - 1 do
     fInfoFont[i].Free;
 
   for c := '0' to '9' do
     for i := 0 to 1 do
       fSkillFont[c, i].Free;
 
-  for i := 0 to 16 do
+  for i := 0 to NUM_SKILL_ICONS - 1 do
     fSkillIcons[i].Free;
 
   fSkillInfinite.Free;
@@ -232,10 +235,13 @@ begin
 
   fOriginal.Free;
 
-  fImg.Free;
-  fMinimapImg.Free;
+  fImage.Free;
+  fMinimapImage.Free;
   inherited;
 end;
+
+
+
 
 function TBaseSkillPanel.GetFrameSkip: Integer;
 var
@@ -243,15 +249,19 @@ var
 begin
   Result := 0;
   if GetTickCount - fLastClickFrameskip < 250 then Exit;
-  P := Image.ControlToBitmap(Image.ScreenToClient(Mouse.CursorPos));
-  if GetKeyState(VK_LBUTTON) < 0 then
-    if PtInRect(fButtonRects[spbBackOneFrame], P) then
-      Result := -1
-    else if PtInRect(fButtonRects[spbForwardOneFrame], P) then
-      Result := 1;
+  if GetKeyState(VK_LBUTTON) >= 0 then Exit;
 
-  if Result <> 0 then
+  P := Image.ControlToBitmap(Image.ScreenToClient(Mouse.CursorPos));
+  if PtInRect(fButtonRects[spbBackOneFrame], P) then
+  begin
+    Result := -1;
     fLastClickFrameskip := GetTickCount - 150;
+  end
+  else if PtInRect(fButtonRects[spbForwardOneFrame], P) then
+  begin
+    Result := 1;
+    fLastClickFrameskip := GetTickCount - 150;
+  end;
 end;
 
 
@@ -262,7 +272,7 @@ end;
 
 function TBaseSkillPanel.GetMaxZoom: Integer;
 begin
-  Result := Max(Min(GameParams.MainForm.ClientWidth div fPanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
+  Result := Max(Min(GameParams.MainForm.ClientWidth div PanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
 end;
 
 procedure TBaseSkillPanel.SetMinimapScrollFreeze(aValue: Boolean);
@@ -274,7 +284,7 @@ end;
 procedure TBaseSkillPanel.SetGame(const Value: TLemmingGame);
 begin
   fGame := Value;
-  SetTimeLimit(GameParams.Level.Info.HasTimeLimit);
+  SetTimeLimit(Level.Info.HasTimeLimit);
 end;
 
 end.

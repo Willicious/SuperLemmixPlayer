@@ -33,53 +33,6 @@ uses
 type
   TSkillPanelToolbar = class(TBaseSkillPanel)
   private
-    (*
-    fPanelWidth: Integer;
-    fLastClickFrameskip: Cardinal;
-
-    fStyle         : TBaseDosLemmingStyle;
-
-    fImg           : TImage32;
-    fMinimapImg    : TImage32;
-
-    fOriginal      : TBitmap32;
-    fMinimapRegion : TBitmap32;
-    fMinimapTemp   : TBitmap32;
-    fMinimap       : TBitmap32;
-
-    fMinimapScrollFreeze: Boolean;
-
-    fLevel         : TLevel;
-    fSkillFont     : array['0'..'9', 0..1] of TBitmap32;
-    fSkillCountErase : TBitmap32;
-    fSkillLock     : TBitmap32;
-    fSkillInfinite : TBitmap32;
-    fSkillIcons    : array[0..16] of TBitmap32;
-    fInfoFont      : array[0..44] of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
-    fGame          : TLemmingGame;
-    { TODO : do something with this hardcoded shit }
-    fButtonRects   : array[TSkillPanelButton] of TRect;
-    fRectColor     : TColor32;
-
-    fSelectDx      : Integer;
-
-    fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
-
-    fHighlitSkill: TSkillPanelButton;
-    fLastHighlitSkill: TSkillPanelButton; // to avoid sounds when shouldn't be played
-    fSkillCounts: Array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
-
-    fDoHorizontalScroll: Boolean;
-    fDisplayWidth: Integer;
-    fDisplayHeight: Integer;
-
-    fLastDrawnStr: string[38];
-    fNewDrawStr: string[38];
-       *)
-
-
-
-
     function GetMaxZoom: Integer;
     procedure SetMinimapScrollFreeze(aValue: Boolean);
 
@@ -118,8 +71,8 @@ type
 
     property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
 
-    function GetPanelWidth: Integer; override;
-    function GetPanelHeight: Integer; override;
+    function PanelWidth: Integer; override;
+    function PanelHeight: Integer; override;
 
   public
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
@@ -128,8 +81,6 @@ type
     procedure SetSkillIcons; override;
     procedure RefreshInfo; override;
     procedure SetCursor(aCursor: TCursor); override;
-
-    property Img: TImage32 read fImg;
 
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); override;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); override;
@@ -204,7 +155,7 @@ begin
   inherited Create(aOwner, aGameWindow);
 end;
 
-function TSkillPanelToolbar.GetPanelWidth: Integer;
+function TSkillPanelToolbar.PanelWidth: Integer;
 begin
   if GameParams.CompactSkillPanel then
     Result := COMPACT_PANEL_WIDTH
@@ -212,7 +163,7 @@ begin
     Result := PANEL_WIDTH;
 end;
 
-function TSkillPanelToolbar.GetPanelHeight: Integer;
+function TSkillPanelToolbar.PanelHeight: Integer;
 begin
   if GameParams.CompactSkillPanel then
     Result := COMPACT_PANEL_HEIGHT
@@ -233,36 +184,36 @@ begin
   Width := fGameWindow.GetWidth;
   Height := fGameWindow.GetHeight;
 
-  if aZoom = Trunc(Img.Scale) then Exit;
-  Img.Width := fPanelWidth * aZoom;
-  Img.Height := 40 * aZoom;
-  Img.Left := (Width - Img.Width) div 2;
-  Img.Scale := aZoom;
+  if aZoom = Trunc(Image.Scale) then Exit;
+  Image.Width := PanelWidth * aZoom;
+  Image.Height := 40 * aZoom;
+  Image.Left := (Width - Image.Width) div 2;
+  Image.Scale := aZoom;
   if GameParams.CompactSkillPanel then
   begin
-    fMinimapImg.Width := COMPACT_MINIMAP_WIDTH * aZoom;
-    fMinimapImg.Height := COMPACT_MINIMAP_HEIGHT * aZoom;
-    fMinimapImg.Left := (COMPACT_MINIMAP_X * aZoom) + Img.Left;
-    fMinimapImg.Top := COMPACT_MINIMAP_Y * aZoom;
+    fMinimapImage.Width := COMPACT_MINIMAP_WIDTH * aZoom;
+    fMinimapImage.Height := COMPACT_MINIMAP_HEIGHT * aZoom;
+    fMinimapImage.Left := (COMPACT_MINIMAP_X * aZoom) + Image.Left;
+    fMinimapImage.Top := COMPACT_MINIMAP_Y * aZoom;
   end else begin
-    fMinimapImg.Width := MINIMAP_WIDTH * aZoom;
-    fMinimapImg.Height := MINIMAP_HEIGHT * aZoom;
-    fMinimapImg.Left := (MINIMAP_X * aZoom) + Img.Left;
-    fMinimapImg.Top := MINIMAP_Y * aZoom;
+    fMinimapImage.Width := MINIMAP_WIDTH * aZoom;
+    fMinimapImage.Height := MINIMAP_HEIGHT * aZoom;
+    fMinimapImage.Left := (MINIMAP_X * aZoom) + Image.Left;
+    fMinimapImage.Top := MINIMAP_Y * aZoom;
   end;
-  fMinimapImg.Scale := aZoom;
+  fMinimapImage.Scale := aZoom;
 end;
 
 function TSkillPanelToolbar.GetZoom: Integer;
 begin
-  Result := Trunc(Img.Scale);
+  Result := Trunc(Image.Scale);
 end;
 
 procedure TSkillPanelToolbar.SetCursor(aCursor: TCursor);
 begin
   Cursor := aCursor;
-  fImg.Cursor := aCursor;
-  fMinimapImg.Cursor := aCursor;
+  Image.Cursor := aCursor;
+  fMinimapImage.Cursor := aCursor;
 end;
 
 procedure TSkillPanelToolbar.SetMinimapScrollFreeze(aValue: Boolean);
@@ -275,7 +226,7 @@ end;
 
 function TSkillPanelToolbar.GetMaxZoom: Integer;
 begin
-  Result := Max(Min(GameParams.MainForm.ClientWidth div fPanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
+  Result := Max(Min(GameParams.MainForm.ClientWidth div PanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
 end;
 
 
@@ -310,22 +261,22 @@ begin
         // top
         A := R;
         A.Bottom := A.Top + 1;
-        fOriginal.DrawTo(fImg.Bitmap, A, A);
+        fOriginal.DrawTo(Image.Bitmap, A, A);
 
         // left
         A := R;
         A.Right := A.Left + 1;
-        fOriginal.DrawTo(fImg.Bitmap, A, A);
+        fOriginal.DrawTo(Image.Bitmap, A, A);
 
         // right
         A := R;
         A.Left := A.Right - 1;
-        fOriginal.DrawTo(fImg.Bitmap, A, A);
+        fOriginal.DrawTo(Image.Bitmap, A, A);
 
         // bottom
         A := R;
         A.Top := A.Bottom - 1;
-        fOriginal.DrawTo(fImg.Bitmap, A, A);
+        fOriginal.DrawTo(Image.Bitmap, A, A);
       end;
     True  :
       begin
@@ -342,7 +293,7 @@ begin
 
         C := fRectColor;
 
-        fImg.Bitmap.FrameRectS(R, C);
+        Image.Bitmap.FrameRectS(R, C);
       end;
   end;
 end;
@@ -404,9 +355,9 @@ begin
       end;
 
       if idx >= 0 then
-        fInfoFont[idx].DrawTo(fimg.Bitmap, x, 0)
+        fInfoFont[idx].DrawTo(Image.Bitmap, x, 0)
       else
-        fimg.Bitmap.FillRectS(x, y, x + 8, y + 16, 0);
+        Image.Bitmap.FillRectS(x, y, x + 8, y + 16, 0);
     end;
 
     Inc(x, 8);
@@ -448,12 +399,12 @@ begin
   // If release rate locked, display as such
   if (aButton = spbFaster) and (Level.Info.ReleaseRateLocked or (Level.Info.ReleaseRate = 99)) then
   begin
-    fSkillLock.DrawTo(fImg.Bitmap, BtnIdx * 16 + 4, 17);
+    fSkillLock.DrawTo(Image.Bitmap, BtnIdx * 16 + 4, 17);
     Exit;
   end;
 
   // White out if applicable
-  fSkillCountErase.DrawTo(fImg.Bitmap, BtnIdx * 16 + 1, 16);
+  fSkillCountErase.DrawTo(Image.Bitmap, BtnIdx * 16 + 1, 16);
   if (aoNumber = 0) and (GameParams.BlackOutZero) then Exit;
 
   // Draw infinite symbol if, well, infinite.
@@ -461,20 +412,20 @@ begin
   begin
     DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 8, 17 + 8);
     SrcRect := Rect(0, 0, 8, 8);
-    fSkillInfinite.DrawTo(fImg.Bitmap, DstRect, SrcRect);
+    fSkillInfinite.DrawTo(fImage.Bitmap, DstRect, SrcRect);
     Exit;
   end;
 
   // left
   DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 4, 17 + 8);
   SrcRect := Rect(0, 0, 4, 8);
-  if (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 1 is left
+  if (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImage.Bitmap, DstRect, SrcRect); // 1 is left
 
   // right
   OffsetRect(DstRect, 2, 0);
   if (aoNumber >= 10) then OffsetRect(DstRect, 2, 0);
   SrcRect := Rect(4, 0, 8, 8);
-  fSkillFont[R, 0].DrawTo(fImg.Bitmap, DstRect, SrcRect); // 0 is right
+  fSkillFont[R, 0].DrawTo(Image.Bitmap, DstRect, SrcRect); // 0 is right
 
 end;
 
@@ -597,7 +548,7 @@ var
   R: PRect;
   Exec: Boolean;
 begin
-  P := Img.ControlToBitmap(Point(X, Y));
+  P := Image.ControlToBitmap(Point(X, Y));
   fGameWindow.ApplyMouseTrap;
 
   if fGameWindow.IsHyperSpeed then
@@ -721,7 +672,7 @@ procedure TSkillPanelToolbar.MinimapMouseDown(Sender: TObject; Button: TMouseBut
 var
   P: TPoint;
 begin
-  P := fMinimapImg.ControlToBitmap(Point(X, Y));
+  P := fMinimapImage.ControlToBitmap(Point(X, Y));
   P.X := P.X * 8;
   P.Y := P.Y * 8;
   fGameWindow.ApplyMouseTrap;
@@ -747,8 +698,8 @@ begin
 
   if ssLeft in Shift then
   begin
-    P := fMinimapImg.ControlToBitmap(Point(X, Y));
-    if not PtInRect(fMinimapImg.Bitmap.BoundsRect, P) then
+    P := fMinimapImage.ControlToBitmap(Point(X, Y));
+    if not PtInRect(fMinimapImage.Bitmap.BoundsRect, P) then
     begin
       MinimapMouseUp(Sender, mbLeft, Shift, X, Y, Layer);
       Exit;
@@ -899,7 +850,7 @@ begin
     GetGraphic('skill_panels.png', BlankPanels);
 
     // Panel graphic
-    fOriginal.SetSize(fPanelWidth, 40);
+    fOriginal.SetSize(PanelWidth, 40);
     fOriginal.Clear($FF000000);
 
     MakePanel(TempBmp, 'icon_rr_minus.png', true);
@@ -943,8 +894,8 @@ begin
     MakePanel(TempBmp, 'icon_nuke.png', false);
     TempBmp.DrawTo(fOriginal, 177, 16);
 
-    fImg.Bitmap.Assign(fOriginal);
-    fImg.Bitmap.Changed;
+    fImage.Bitmap.Assign(fOriginal);
+    fImage.Bitmap.Changed;
 
     // Panel font
     GetGraphic('panel_font.png', TempBmp);
@@ -1027,7 +978,7 @@ begin
     begin
       fButtonRects[Skill] := R;
 
-      fSkillIcons[Integer(Skill)].DrawTo(fImg.Bitmap, R.Left, R.Top);
+      fSkillIcons[Integer(Skill)].DrawTo(fImage.Bitmap, R.Left, R.Top);
       fSkillIcons[Integer(Skill)].DrawTo(fOriginal, R.Left, R.Top);
 
       OffsetRect(R, 16, 0);
@@ -1207,22 +1158,21 @@ end;
 procedure TSkillPanelToolbar.SetStyleAndGraph(const Value: TBaseDosLemmingStyle;
       aScale: Integer);
 begin
-  fImg.BeginUpdate;
+  fImage.BeginUpdate;
   fStyle := Value;
   if fStyle <> nil then
   begin
     ReadBitmapFromStyle;
     ReadFont;
   end;
-  //fImg.Scale := Max(aScale, MaxZoom);
-  fImg.ScaleMode := smScale;
 
-  //fMinimapImg.Scale := Max(aScale, MaxZoom);
-  fMinimapImg.ScaleMode := smScale;
-  fMinimapImg.BitmapAlign := baCustom;
+  fImage.ScaleMode := smScale;
 
-  fImg.EndUpdate;
-  fImg.Changed;
+  fMinimapImage.ScaleMode := smScale;
+  fMinimapImage.BitmapAlign := baCustom;
+
+  fImage.EndUpdate;
+  fImage.Changed;
   Invalidate;
 end;
 
@@ -1260,35 +1210,35 @@ begin
 
     fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
-    fMinimapImg.Bitmap.Assign(fMinimapTemp);
+    fMinimapImage.Bitmap.Assign(fMinimapTemp);
 
     if not fMinimapScrollFreeze then
     begin
       if fMinimapTemp.Width < MMW then
-        OH := (((MMW - fMinimapTemp.Width) * fMinimapImg.Scale) / 2)
+        OH := (((MMW - fMinimapTemp.Width) * fMinimapImage.Scale) / 2)
       else begin
         OH := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
         OH := OH + (MMW - RectWidth(ViewRect)) div 2;
-        OH := OH * fMinimapImg.Scale;
+        OH := OH * fMinimapImage.Scale;
         OH := Min(OH, 0);
-        OH := Max(OH, -(fMinimapTemp.Width - MMW) * fMinimapImg.Scale);
+        OH := Max(OH, -(fMinimapTemp.Width - MMW) * fMinimapImage.Scale);
       end;
 
       if fMinimapTemp.Height < MMH then
-        OV := (((MMH - fMinimapTemp.Height) * fMinimapImg.Scale) / 2)
+        OV := (((MMH - fMinimapTemp.Height) * fMinimapImage.Scale) / 2)
       else begin
         OV := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
         OV := OV + (MMH - RectHeight(ViewRect)) div 2;
-        OV := OV * fMinimapImg.Scale;
+        OV := OV * fMinimapImage.Scale;
         OV := Min(OV, 0);
-        OV := Max(OV, -(fMinimapTemp.Height - MMH) * fMinimapImg.Scale);
+        OV := Max(OV, -(fMinimapTemp.Height - MMH) * fMinimapImage.Scale);
       end;
 
-      fMinimapImg.OffsetHorz := OH;
-      fMinimapImg.OffsetVert := OV;
+      fMinimapImage.OffsetHorz := OH;
+      fMinimapImage.OffsetVert := OV;
     end;
 
-    fMinimapImg.Changed;
+    fMinimapImage.Changed;
   end;
 end;
 
@@ -1299,7 +1249,7 @@ var
 begin
   Result := 0;
   if GetTickCount - fLastClickFrameskip < 250 then Exit;
-  P := Img.ControlToBitmap(Img.ScreenToClient(Mouse.CursorPos));
+  P := Image.ControlToBitmap(Image.ScreenToClient(Mouse.CursorPos));
   if GetKeyState(VK_LBUTTON) < 0 then
     if PtInRect(fButtonRects[spbBackOneFrame], P) then
       Result := -1
