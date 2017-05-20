@@ -16,7 +16,8 @@ uses
   LemGame, LemRenderHelpers, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
   GameSound,
   PngInterface,
-  GameWindowInterface;
+  GameWindowInterface,
+  GameBaseSkillPanel;
 
   {-------------------------------------------------------------------------------
     maybe this must be handled by lemgame (just bitmap writing)
@@ -30,10 +31,9 @@ uses
   -------------------------------------------------------------------------------}
 
 type
-  TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
-type
-  TSkillPanelToolbar = class(TCustomControl)
+  TSkillPanelToolbar = class(TBaseSkillPanel)
   private
+    (*
     fPanelWidth: Integer;
     fLastClickFrameskip: Cardinal;
 
@@ -63,7 +63,6 @@ type
 
     fSelectDx      : Integer;
 
-    fViewPortRect  : TRect;
     fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
 
     fHighlitSkill: TSkillPanelButton;
@@ -74,58 +73,40 @@ type
     fDisplayWidth: Integer;
     fDisplayHeight: Integer;
 
-    fGameWindow: IGameWindow;
+    fLastDrawnStr: string[38];
+    fNewDrawStr: string[38];
+       *)
 
-    procedure SetLevel(const Value: TLevel);
 
-    procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-    procedure ImgMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-    procedure ImgMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 
-    procedure MinimapMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-    procedure MinimapMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-    procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-
-    procedure SetGame(const Value: TLemmingGame);
 
     function GetMaxZoom: Integer;
     procedure SetMinimapScrollFreeze(aValue: Boolean);
 
-    procedure SetZoom(aZoom: Integer);
-    function GetZoom: Integer;
-
     function GetFrameSkip: Integer;
   protected
+    procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
+    procedure ImgMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
+    procedure ImgMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
+
+    procedure MinimapMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
+    procedure MinimapMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
+    procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
+
+    procedure SetZoom(aZoom: Integer); override;
+    function GetZoom: Integer; override;
+
     procedure ReadBitmapFromStyle; virtual;
     procedure ReadFont;
     procedure SetButtonRects;
-  public
-    fLastDrawnStr: string[38];
-    fNewDrawStr: string[38];
-    RedrawnChars: Integer;
-    constructor Create(aOwner: TComponent); overload; override;
-    constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload;
-    destructor Destroy; override;
+
     procedure DrawNewStr;
     procedure SetButtonRect(btn: TSkillPanelButton; bpos: Integer);
-    procedure SetSkillIcons;
-    property Img: TImage32 read fImg;
 
-    procedure SetViewPort(const R: TRect);
-    procedure RefreshInfo;
-
-    procedure ClearSkills;
-
-    procedure SetCursor(aCursor: TCursor);
-
-  { IGameInfoView support }
-    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
-    procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
-    procedure DrawMinimap;
     procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
     procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
@@ -133,12 +114,32 @@ type
     procedure SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
     procedure SetReplayMark(Status: Integer);
-    procedure SetTimeLimit(Status: Boolean);
+    procedure SetTimeLimit(Status: Boolean); override;
+
+    property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
+
+    function GetPanelWidth: Integer; override;
+    function GetPanelHeight: Integer; override;
+
+  public
+    constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
+    destructor Destroy; override;
+
+    procedure SetSkillIcons; override;
+    procedure RefreshInfo; override;
+    procedure SetCursor(aCursor: TCursor); override;
+
+    property Img: TImage32 read fImg;
+
+    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); override;
+    procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); override;
+    procedure DrawMinimap; override;
 
     property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
-    property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
+
     property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
     property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
+
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
 
@@ -147,11 +148,10 @@ type
 
     property FrameSkip: Integer read GetFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
-  published
-    procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
 
-    property Level: TLevel read fLevel write SetLevel;
-    property Game: TLemmingGame read fGame write SetGame;
+    procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer); override;
+
+
   end;
 
 const
@@ -201,112 +201,28 @@ end;
 
 constructor TSkillPanelToolbar.Create(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
-  Create(aOwner);
-  fGameWindow := aGameWindow;
+  inherited Create(aOwner, aGameWindow);
 end;
 
-constructor TSkillPanelToolbar.Create(aOwner: TComponent);
-var
-  c: Char;
-  i: Integer;
+function TSkillPanelToolbar.GetPanelWidth: Integer;
 begin
-  inherited Create(aOwner);
-
-  Color := $000000;
-  ParentBackground := false;
-
   if GameParams.CompactSkillPanel then
-    fPanelWidth := COMPACT_PANEL_WIDTH
+    Result := COMPACT_PANEL_WIDTH
   else
-    fPanelWidth := PANEL_WIDTH;
-
-  fLastClickFrameskip := GetTickCount;
-
-  DoubleBuffered := true;
-
-  fImg := TImage32.Create(Self);
-  fImg.Parent := Self;
-  fImg.RepaintMode := rmOptimizer;
-
-  fMinimapImg := TImage32.Create(Self);
-  fMinimapImg.Parent := Self;
-  fMinimapImg.RepaintMode := rmOptimizer;
-
-  fMinimapRegion := TBitmap32.Create;
-  fMinimapTemp := TBitmap32.Create;
-  fMinimap := TBitmap32.Create;
-
-  fImg.OnMouseDown := ImgMouseDown;
-  fImg.OnMouseMove := ImgMouseMove;
-  fImg.OnMouseUp := ImgMouseUp;
-
-  fMinimapImg.OnMouseDown := MinimapMouseDown;
-  fMinimapImg.OnMouseMove := MinimapMouseMove;
-  fMinimapImg.OnMouseUp := MinimapMouseUp;
-
-  fRectColor := DosVgaColorToColor32(DosInLevelPalette[3]);
-
-  fOriginal := TBitmap32.Create;
-
-  for i := 0 to 44 do
-    fInfoFont[i] := TBitmap32.Create;
-
-  for i := 0 to 16 do
-    fSkillIcons[i] := TBitmap32.Create;
-
-  for c := '0' to '9' do
-    for i := 0 to 1 do
-      fSkillFont[c, i] := TBitmap32.Create;
-
-  fSkillInfinite := TBitmap32.Create;
-  fSkillCountErase := TBitmap32.Create;
-  fSkillLock := TBitmap32.Create;
-
-
-  // info positions types:
-  // stringspositions=cursor,out,in,time=1,15,24,32
-  // 1. BUILDER(23)             1/14               0..13      14
-  // 2. OUT 28                  15/23              14..22      9
-  // 3. IN 99%                  24/31              23..30      8
-  // 4. TIME 2-31               32/40              31..39      9
-                                                           //=40
-  fLastDrawnStr := StringOfChar(' ', 38);
-  fNewDrawStr := StringOfChar(' ', 38);
-  fNewDrawStr := SSkillPanelTemplate;
-
-  Assert(length(fnewdrawstr) = 38, 'length error infostring');
-
-  fHighlitSkill := spbNone;
-  fLastHighlitSkill := spbNone;
+    Result := PANEL_WIDTH;
 end;
+
+function TSkillPanelToolbar.GetPanelHeight: Integer;
+begin
+  if GameParams.CompactSkillPanel then
+    Result := COMPACT_PANEL_HEIGHT
+  else
+    Result := PANEL_HEIGHT;
+end;
+
 
 destructor TSkillPanelToolbar.Destroy;
-var
-  c: Char;
-  i: Integer;
 begin
-  for i := 0 to 43 do
-    fInfoFont[i].Free;
-
-  for c := '0' to '9' do
-    for i := 0 to 1 do
-      fSkillFont[c, i].Free;
-
-  for i := 0 to 16 do
-    fSkillIcons[i].Free;
-
-  fSkillInfinite.Free;
-  fSkillCountErase.Free;
-  fSkillLock.Free;
-
-  fMinimapRegion.Free;
-  fMinimapTemp.Free;
-  fMinimap.Free;
-
-  fOriginal.Free;
-
-  fImg.Free;
-  fMinimapImg.Free;
   inherited;
 end;
 
@@ -362,17 +278,6 @@ begin
   Result := Max(Min(GameParams.MainForm.ClientWidth div fPanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
 end;
 
-procedure TSkillPanelToolbar.ClearSkills;
-var
-  i: TSkillPanelButton;
-begin
-   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do // standard skills
-   begin
-     DrawButtonSelector(i, false);
-     DrawSkillCount(i, fSkillCounts[i]);
-   end;
-   DrawSkillCount(spbFaster, fSkillCounts[spbFaster]);
-end;
 
 
 procedure TSkillPanelToolbar.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -446,10 +351,7 @@ procedure TSkillPanelToolbar.DrawNewStr;
 var
   O, N: char;
   i, x, y, idx: integer;
-  Changed: Integer;
 begin
-
-  Changed := 0;
   // optimze this by pre-drawing
      // - "OUT "
      // - "IN "
@@ -500,7 +402,6 @@ begin
             idx := ord(n) - ord('A') + 12;
           end;
       end;
-      Inc(Changed);
 
       if idx >= 0 then
         fInfoFont[idx].DrawTo(fimg.Bitmap, x, 0)
@@ -511,8 +412,6 @@ begin
     Inc(x, 8);
 
   end;
-
-  RedrawnChars := Changed;
 end;
 
 
@@ -547,7 +446,7 @@ begin
   BtnIdx := (fButtonRects[aButton].Left - 1) div 16;
 
   // If release rate locked, display as such
-  if (aButton = spbFaster) and (fLevel.Info.ReleaseRateLocked or (fLevel.Info.ReleaseRate = 99)) then
+  if (aButton = spbFaster) and (Level.Info.ReleaseRateLocked or (Level.Info.ReleaseRate = 99)) then
   begin
     fSkillLock.DrawTo(fImg.Bitmap, BtnIdx * 16 + 4, 17);
     Exit;
@@ -1304,10 +1203,6 @@ begin
   Move(S[1], fNewDrawStr[37], 2);
 end;
 
-procedure TSkillPanelToolbar.SetLevel(const Value: TLevel);
-begin
-  fLevel := Value;
-end;
 
 procedure TSkillPanelToolbar.SetStyleAndGraph(const Value: TBaseDosLemmingStyle;
       aScale: Integer);
@@ -1331,10 +1226,6 @@ begin
   Invalidate;
 end;
 
-procedure TSkillPanelToolbar.SetViewPort(const R: TRect);
-begin
-  fViewPortRect := R;
-end;
 
 procedure TSkillPanelToolbar.DrawMinimap;
 var
@@ -1401,11 +1292,6 @@ begin
   end;
 end;
 
-procedure TSkillPanelToolbar.SetGame(const Value: TLemmingGame);
-begin
-  fGame := Value;
-  SetTimeLimit(GameParams.Level.Info.HasTimeLimit);
-end;
 
 function TSkillPanelToolbar.GetFrameSkip: Integer;
 var
