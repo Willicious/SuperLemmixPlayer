@@ -8,7 +8,7 @@ uses
   GameControl,
   GameWindowInterface,
   LemCore, LemGame, LemLevel,
-  LemDosStyle, LemDosStructures, LemStrings;
+  LemDosStyle, LemDosStructures;
 
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
@@ -17,9 +17,10 @@ type
   TBaseSkillPanel = class(TCustomControl)
 
   private
-    fGame                 : TLemmingGame;
+    fGame                   : TLemmingGame;
+    function GetLevel       : TLevel;
 
-    function GetLevel: TLevel;
+    function CheckFrameSkip : Integer; // Checks the duration since the last click on the panel.
 
   protected
     fGameWindow           : IGameWindow;
@@ -28,7 +29,6 @@ type
     fLastClickFrameskip: Cardinal;
 
     fStyle         : TBaseDosLemmingStyle;
-
 
     fMinimapImage  : TImage32;
 
@@ -39,17 +39,17 @@ type
 
     fMinimapScrollFreeze: Boolean;
 
-    fSkillFont     : array['0'..'9', 0..1] of TBitmap32;
-    fSkillCountErase : TBitmap32;
-    fSkillLock     : TBitmap32;
-    fSkillInfinite : TBitmap32;
-    fSkillIcons    : array of TBitmap32;
-    fInfoFont      : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
+    fSkillFont        : array['0'..'9', 0..1] of TBitmap32;
+    fSkillCountErase  : TBitmap32;
+    fSkillLock        : TBitmap32;
+    fSkillInfinite    : TBitmap32;
+    fSkillIcons       : array of TBitmap32;
+    fInfoFont         : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
-    fButtonRects   : array[TSkillPanelButton] of TRect;
-    fRectColor     : TColor32;
+    fButtonRects      : array[TSkillPanelButton] of TRect;
+    fRectColor        : TColor32;
 
-    fSelectDx      : Integer;
+    fSelectDx         : Integer;
 
     fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
 
@@ -64,7 +64,10 @@ type
     fLastDrawnStr: string[38];
     fNewDrawStr: string[38];
 
-    function GetFrameSkip: Integer;
+    function RectFirstButton: TRect; virtual;
+
+
+
     function GetZoom: Integer; virtual; abstract;
     function GetMaxZoom: Integer;
     procedure SetZoom(aZoom: Integer); virtual; abstract;
@@ -98,7 +101,7 @@ type
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
     destructor Destroy; override;
 
-    procedure SetSkillIcons; virtual; abstract;
+    procedure SetSkillIcons;
     procedure RefreshInfo; virtual; abstract;
     procedure SetCursor(aCursor: TCursor); virtual; abstract;
 
@@ -119,7 +122,7 @@ type
     property Zoom: Integer read GetZoom write SetZoom;
     property MaxZoom: Integer read GetMaxZoom;
 
-    property FrameSkip: Integer read GetFrameSkip;
+    property FrameSkip: Integer read CheckFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer); virtual; abstract;
 
@@ -129,6 +132,8 @@ type
 const
   NUM_SKILL_ICONS = 17;
   NUM_FONT_CHARS = 45;
+
+  TEXT_TEMPLATE = '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' ' + #94 + '_...' + ' ' + #95 +  '_.-..';
 
 implementation
 
@@ -145,13 +150,14 @@ var
 begin
   inherited Create(aOwner);
 
+  // Some general settings for the panel
   Color := $000000;
   ParentBackground := false;
+  DoubleBuffered := true;
 
   fLastClickFrameskip := GetTickCount;
 
-  DoubleBuffered := true;
-
+  // Initialize images
   fImage := TImage32.Create(Self);
   fImage.Parent := Self;
   fImage.RepaintMode := rmOptimizer;
@@ -164,6 +170,9 @@ begin
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
 
+  fOriginal := TBitmap32.Create;
+
+  // Initialize event handlers
   fImage.OnMouseDown := ImgMouseDown;
   fImage.OnMouseMove := ImgMouseMove;
   fImage.OnMouseUp := ImgMouseUp;
@@ -172,10 +181,7 @@ begin
   fMinimapImage.OnMouseMove := MinimapMouseMove;
   fMinimapImage.OnMouseUp := MinimapMouseUp;
 
-  fRectColor := DosVgaColorToColor32(DosInLevelPalette[3]);
-
-  fOriginal := TBitmap32.Create;
-
+  // Create font and skill panel images (but do not yet load them)
   SetLength(fInfoFont, NUM_FONT_CHARS);
   for i := 0 to NUM_FONT_CHARS - 1 do
     fInfoFont[i] := TBitmap32.Create;
@@ -192,6 +198,8 @@ begin
   fSkillCountErase := TBitmap32.Create;
   fSkillLock := TBitmap32.Create;
 
+  // WARNING:
+  // THE FOLLOWING INFO NEED NO LONGER TO BE TRUE!!!
 
   // info positions types:
   // stringspositions=cursor,out,in,time=1,15,24,32
@@ -201,11 +209,11 @@ begin
   // 4. TIME 2-31               32/40              31..39      9
                                                            //=40
   fLastDrawnStr := StringOfChar(' ', 38);
-  fNewDrawStr := StringOfChar(' ', 38);
-  fNewDrawStr := SSkillPanelTemplate;
+  fNewDrawStr := TEXT_TEMPLATE;
 
-  Assert(length(fnewdrawstr) = 38, 'length error infostring');
+  Assert(Length(fNewDrawStr) = 38, 'SkillPanel.Create: InfoString has not length 38 characters.');
 
+  fRectColor := DosVgaColorToColor32(DosInLevelPalette[3]);
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
 end;
@@ -240,10 +248,42 @@ begin
   inherited;
 end;
 
+{-----------------------------------------
+    Positions of buttons, ...
+-----------------------------------------}
+function TBaseSkillPanel.RectFirstButton: TRect;
+begin
+  Result := Rect(33, 16, 47, 38);
+end;
 
 
+{-----------------------------------------
+    Draw the initial skill panel
+-----------------------------------------}
+procedure TBaseSkillPanel.SetSkillIcons;
+var
+  ButtonRect: TRect;
+  Skill: TSkillPanelButton;
+begin
+  ButtonRect := RectFirstButton;
+  for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+  begin
+    if Skill in Level.Info.Skillset then
+    begin
+      fButtonRects[Skill] := ButtonRect;
 
-function TBaseSkillPanel.GetFrameSkip: Integer;
+      fSkillIcons[Integer(Skill)].DrawTo(fImage.Bitmap, ButtonRect.Left, ButtonRect.Top);
+      fSkillIcons[Integer(Skill)].DrawTo(fOriginal, ButtonRect.Left, ButtonRect.Top);
+
+      OffsetRect(ButtonRect, 16, 0);
+    end;
+  end;
+end;
+
+{-----------------------------------------
+    User interaction
+-----------------------------------------}
+function TBaseSkillPanel.CheckFrameSkip: Integer;
 var
   P: TPoint;
 begin

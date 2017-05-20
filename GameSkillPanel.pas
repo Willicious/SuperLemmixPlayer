@@ -51,7 +51,6 @@ type
     function GetZoom: Integer; override;
 
     procedure ReadBitmapFromStyle; virtual;
-    procedure ReadFont;
     procedure SetButtonRects;
 
     procedure DrawNewStr;
@@ -75,27 +74,12 @@ type
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
 
-    procedure SetSkillIcons; override;
     procedure RefreshInfo; override;
     procedure SetCursor(aCursor: TCursor); override;
 
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); override;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); override;
     procedure DrawMinimap; override;
-
-    property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
-
-    property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
-    property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
-
-    property Minimap: TBitmap32 read fMinimap;
-    property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
-
-    property Zoom: Integer read GetZoom write SetZoom;
-    property MaxZoom: Integer read GetMaxZoom;
-
-    property FrameSkip: Integer read GetFrameSkip;
-    property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
 
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer); override;
 
@@ -943,31 +927,6 @@ begin
 
 end;
 
-procedure TSkillPanelToolbar.ReadFont;
-begin
-
-end;
-
-procedure TSkillPanelToolbar.SetSkillIcons;
-var
-  Org, R: TRect;
-  Skill: TSkillPanelButton;
-begin
-  Org := Rect(33, 16, 47, 38); // exact position of first button
-  R := Org;
-  for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
-  begin
-    if Skill in Level.Info.Skillset then
-    begin
-      fButtonRects[Skill] := R;
-
-      fSkillIcons[Integer(Skill)].DrawTo(fImage.Bitmap, R.Left, R.Top);
-      fSkillIcons[Integer(Skill)].DrawTo(fOriginal, R.Left, R.Top);
-
-      OffsetRect(R, 16, 0);
-    end;
-  end;
-end;
 
 procedure TSkillPanelToolbar.SetButtonRects;
 var
@@ -1146,7 +1105,6 @@ begin
   if fStyle <> nil then
   begin
     ReadBitmapFromStyle;
-    ReadFont;
   end;
 
   fImage.ScaleMode := smScale;
