@@ -152,7 +152,7 @@ type
     property Game: TLemmingGame read fGame;
   public
     ForceUpdateOneFrame  : Boolean;           // used when paused    --> move to private!
-    SkillPanelSelectDx: Integer; //for skill panel dir select buttons  --> move to TBaseSkillPanel!
+    //SkillPanelSelectDx: Integer; //for skill panel dir select buttons  --> move to TBaseSkillPanel!
 
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -816,14 +816,14 @@ begin
   if GameParams.Hotkeys.CheckForKey(lka_DirRight) then SDir := SDir + 1; // These two cancel each other out if both are pressed. Genius. :D
   if SDir = 0 then
   begin
-    SDir := SkillPanelSelectDx;
+    SDir := SkillPanel.SkillPanelSelectDx;
     if (SDir = 0) and (Game.fSelectDx <> 0) then
     begin
       SkillPanel.DrawButtonSelector(spbDirLeft, false);
       SkillPanel.DrawButtonSelector(spbDirRight, false);
     end;
   end else begin
-    SkillPanelSelectDx := 0;
+    SkillPanel.SkillPanelSelectDx := 0;
     if (Game.fSelectDx <> SDir) then
     begin
       SkillPanel.DrawButtonSelector(spbDirLeft, (SDir = -1));

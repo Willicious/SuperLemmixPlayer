@@ -61,6 +61,8 @@ type
     fButtonRects   : array[TSkillPanelButton] of TRect;
     fRectColor     : TColor32;
 
+    fSelectDx      : Integer;
+
     fViewPortRect  : TRect;
     fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
 
@@ -118,7 +120,6 @@ type
 
     procedure ClearSkills;
 
-
     procedure SetCursor(aCursor: TCursor);
 
   { IGameInfoView support }
@@ -145,6 +146,7 @@ type
     property MaxZoom: Integer read GetMaxZoom;
 
     property FrameSkip: Integer read GetFrameSkip;
+    property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
   published
     procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer);
 
@@ -187,7 +189,7 @@ const
 implementation
 
 uses
-  LemReplay, GameWindow;
+  LemReplay;
 
 function PtInRectEx(const Rect: TRect; const P: TPoint): Boolean;
 begin
@@ -763,21 +765,21 @@ begin
                                 else if Button = mbMiddle then
                                   fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
             spbClearPhysics: fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
-            spbDirLeft: if TGameWindow(Parent).SkillPanelSelectDx = -1 then
+            spbDirLeft: if fSelectDx = -1 then
                         begin
-                          TGameWindow(Parent).SkillPanelSelectDx := 0;
+                          fSelectDx := 0;
                           DrawButtonSelector(spbDirLeft, false);
                         end else begin
-                          TGameWindow(Parent).SkillPanelSelectDx := -1;
+                          fSelectDx := -1;
                           DrawButtonSelector(spbDirLeft, true);
                           DrawButtonSelector(spbDirRight, false);
                         end;
-            spbDirRight: if TGameWindow(Parent).SkillPanelSelectDx = 1 then
+            spbDirRight: if fSelectDx = 1 then
                         begin
-                          TGameWindow(Parent).SkillPanelSelectDx := 0;
+                          fSelectDx := 0;
                           DrawButtonSelector(spbDirRight, false);
                         end else begin
-                          TGameWindow(Parent).SkillPanelSelectDx := 1;
+                          fSelectDx := 1;
                           DrawButtonSelector(spbDirLeft, false);
                           DrawButtonSelector(spbDirRight, true);
                         end;
