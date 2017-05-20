@@ -10,12 +10,13 @@ uses
   Windows,
   LemmixHotkeys, LemStrings, LemTypes,
   LemLemming,
-  {LemDosBmp,} LemDosStructures, LemDosStyle,
+  LemDosStructures, LemDosStyle,
   LemCore, LemLevel, LemNeoTheme,
   GameControl,
   LemGame, LemRenderHelpers, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
   GameSound,
-  PngInterface;
+  PngInterface,
+  GameWindowInterface;
 
   {-------------------------------------------------------------------------------
     maybe this must be handled by lemgame (just bitmap writing)

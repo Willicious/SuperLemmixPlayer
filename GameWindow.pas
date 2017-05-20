@@ -12,21 +12,18 @@ uses
   LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
   LemGame, LemGameMessageQueue,
   GameSound, LemTypes, LemStrings, LemLemming,
-  GameControl, GameSkillPanel, GameBaseScreen;
+  GameControl, GameSkillPanel, GameBaseScreen,
+  GameWindowInterface;
 
 type
+  // For TGameSpeed see unit GameWindowInterface
+
   TGameScroll = (
     gsNone,
     gsRight,
     gsLeft,
     gsUp,
     gsDown
-  );
-
-  TGameSpeed = (
-    gspNormal,
-    gspPause,
-    gspFF
   );
 
   TRedrawOption = (
@@ -49,7 +46,7 @@ const
   SHE_SHRUGGER = 1;
 
 type
-  TGameWindow = class(TGameBaseScreen)
+  TGameWindow = class(TGameBaseScreen, IGameWindow)
   private
     fSaveStateReplayStream: TMemoryStream;
     fCloseToScreen: TGameScreenType;
@@ -110,6 +107,7 @@ type
     procedure OnException(E: Exception; aCaller: String = 'Unknown');
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
+    function GetClearPhysics: Boolean;
     procedure ProcessGameMessages;
     procedure ApplyResize(NoRecenter: Boolean = false);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
@@ -120,6 +118,7 @@ type
     function GetIsHyperSpeed: Boolean;
 
     procedure SetGameSpeed(aValue: TGameSpeed);
+    function GetGameSpeed: TGameSpeed;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -152,9 +151,9 @@ type
   { internal properties }
     property Game: TLemmingGame read fGame;
   public
-    ForceUpdateOneFrame  : Boolean;           // used when paused
-    SkillPanelSelectDx: Integer; //for skill panel dir select buttons
-    
+    ForceUpdateOneFrame  : Boolean;           // used when paused    --> move to private!
+    SkillPanelSelectDx: Integer; //for skill panel dir select buttons  --> move to TBaseSkillPanel!
+
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure ApplyMouseTrap;
@@ -167,11 +166,18 @@ type
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
-    property SuspendCursor: Boolean read fSuspendCursor;
+    property SuspendCursor: Boolean read fSuspendCursor;  // --> replace by DoSuspendCursor
+    function DoSuspendCursor: Boolean;
 
-    property GameSpeed: TGameSpeed read fGameSpeed write SetGameSpeed;
+    property GameSpeed: TGameSpeed read GetGameSpeed write SetGameSpeed;
     property HyperSpeedTarget: Integer read fHyperSpeedTarget write fHyperSpeedTarget;
     property IsHyperSpeed: Boolean read GetIsHyperSpeed;
+
+    function GetWidth: Integer;  // to satisfy IGameWindow
+    function GetHeight: Integer; // to satisfy IGameWindow
+    procedure SetForceUpdateOneFrame(aValue: Boolean);  // to satisfy IGameWindow
+    procedure SetHyperSpeedTarget(aValue: Integer);     // to satisfy IGameWindow
+
   end;
 
 implementation
@@ -185,6 +191,11 @@ begin
   fGameSpeed := aValue;
   SkillPanel.DrawButtonSelector(spbPause, fGameSpeed = gspPause);
   SkillPanel.DrawButtonSelector(spbFastForward, fGameSpeed = gspFF);
+end;
+
+function TGameWindow.GetGameSpeed: TGameSpeed;
+begin
+  Result := fGameSpeed;
 end;
 
 procedure TGameWindow.Form_MouseWheel(Sender: TObject; Shift: TShiftState;
@@ -355,6 +366,11 @@ begin
   if fGameSpeed = gspPause then
     fNeedRedraw := rdRedraw;
   SkillPanel.DrawButtonSelector(spbClearPhysics, fClearPhysics);
+end;
+
+function TGameWindow.GetClearPhysics: Boolean;
+begin
+  Result := fClearPhysics;
 end;
 
 procedure TGameWindow.RenderMinimap;
@@ -911,6 +927,12 @@ begin
     SkillPanel.SetCursor(NewCursor);
   end;
 end;
+
+function TGameWindow.DoSuspendCursor: Boolean;
+begin
+  Result := fSuspendCursor;
+end;
+
 
 function TGameWindow.CheckScroll: Boolean;
   procedure Scroll(dx, dy: Integer);
@@ -1819,6 +1841,27 @@ procedure TGameWindow.AddSaveState;
 begin
   fGame.CreateSavedState(fSaveList.Add);
 end;
+
+function TGameWindow.GetWidth: Integer;
+begin
+  Result := Width;
+end;
+
+function TGameWindow.GetHeight: Integer;
+begin
+  Result := Height;
+end;
+
+procedure TGameWindow.SetForceUpdateOneFrame(aValue: Boolean);
+begin
+  ForceUpdateOneFrame := aValue;
+end;
+
+procedure TGameWindow.SetHyperSpeedTarget(aValue: Integer);
+begin
+  fHyperSpeedTarget := aValue;
+end;
+
 
 end.
 
