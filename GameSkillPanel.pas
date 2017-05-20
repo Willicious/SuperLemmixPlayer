@@ -33,10 +33,7 @@ uses
 type
   TSkillPanelToolbar = class(TBaseSkillPanel)
   private
-    function GetMaxZoom: Integer;
-    procedure SetMinimapScrollFreeze(aValue: Boolean);
 
-    function GetFrameSkip: Integer;
   protected
     procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
@@ -215,20 +212,6 @@ begin
   Image.Cursor := aCursor;
   fMinimapImage.Cursor := aCursor;
 end;
-
-procedure TSkillPanelToolbar.SetMinimapScrollFreeze(aValue: Boolean);
-begin
-  if fMinimapScrollFreeze = aValue then Exit;
-  fMinimapScrollFreeze := aValue;
-  if aValue then
-    DrawMinimap;
-end;
-
-function TSkillPanelToolbar.GetMaxZoom: Integer;
-begin
-  Result := Max(Min(GameParams.MainForm.ClientWidth div PanelWidth, (GameParams.MainForm.ClientHeight - 160) div 40), 1);
-end;
-
 
 
 procedure TSkillPanelToolbar.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -1242,23 +1225,6 @@ begin
   end;
 end;
 
-
-function TSkillPanelToolbar.GetFrameSkip: Integer;
-var
-  P: TPoint;
-begin
-  Result := 0;
-  if GetTickCount - fLastClickFrameskip < 250 then Exit;
-  P := Image.ControlToBitmap(Image.ScreenToClient(Mouse.CursorPos));
-  if GetKeyState(VK_LBUTTON) < 0 then
-    if PtInRect(fButtonRects[spbBackOneFrame], P) then
-      Result := -1
-    else if PtInRect(fButtonRects[spbForwardOneFrame], P) then
-      Result := 1;
-
-  if Result <> 0 then
-    fLastClickFrameskip := GetTickCount - 150;
-end;
 
 end.
 
