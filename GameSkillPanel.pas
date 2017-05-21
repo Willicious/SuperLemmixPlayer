@@ -48,9 +48,8 @@ type
 
     // The following stuff still needs to be updated
 
-    //procedure DrawNewStr;
 
-    procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
+    //procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
     procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
     procedure SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
@@ -154,75 +153,6 @@ end;
 
 
 
-           (*
-procedure TSkillPanelToolbar.DrawNewStr;
-var
-  O, N: char;
-  i, x, y, idx: integer;
-begin
-  // optimze this by pre-drawing
-     // - "OUT "
-     // - "IN "
-     // - "TIME "
-     // - "-"
-
-  // info positions types:
-  // 1. BUILDER(23)             1/14               0..13
-  // 2. OUT 28                  15/23              14..22
-  // 3. IN 99%                  24/31              23..30
-  // 4. TIME 2-31               32/40              31..39
-
-  y := 0;
-  x := 0;
-
-  for i := 1 to 38 do
-  begin
-    idx := -1;
-    O := fLastDrawnStr[i];
-    N := fNewDrawStr[i];
-
-    if O <> N then
-    begin
-
-      case N of
-        '%':
-          begin
-            idx := 0;
-          end;
-        '0'..'9':
-          begin
-            idx := ord(n) - ord('0') + 1;
-          end;
-        '-':
-          begin
-            idx := 11;
-          end;
-        'A'..'Y':
-          begin
-            idx := ord(n) - ord('A') + 12;
-          end;
-        'Z':
-          begin
-            idx := ord(n) - ord('A') + 12;
-          end;
-        #91 .. #97:
-          begin
-            idx := ord(n) - ord('A') + 12;
-          end;
-      end;
-
-      if idx >= 0 then
-        fInfoFont[idx].DrawTo(Image.Bitmap, x, 0)
-      else
-        Image.Bitmap.FillRectS(x, y, x + 8, y + 16, 0);
-    end;
-
-    Inc(x, 8);
-
-  end;
-end;
-      *)
-
 procedure TSkillPanelToolbar.RefreshInfo;
 var
   i: TSkillPanelButton;
@@ -317,7 +247,8 @@ begin
 
   DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
 
-  SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
+  SetInfoCursorLemming(1);
+  //SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
 
   if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
     SetReplayMark(0)
@@ -327,7 +258,7 @@ begin
     SetReplayMark(1);
 end;
 
-
+  (*
 procedure TSkillPanelToolbar.SetInfoCursorLemming(const Lem: string; Num: Integer);
 var
   S: string;
@@ -347,7 +278,7 @@ begin
     Move(S[1], fNewDrawStr[1], 12);
   end;
 end;
-
+   *)
 procedure TSkillPanelToolbar.SetReplayMark(Status: Integer);
 var
   S: String;

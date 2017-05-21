@@ -9,7 +9,7 @@ uses
   GameControl,
   GameWindowInterface,
   LemTypes, LemCore, LemStrings, LemNeoTheme,
-  LemGame, LemLevel,
+  LemLemming, LemGame, LemLevel,
   LemDosStyle, LemDosStructures;
 
 type
@@ -108,6 +108,8 @@ type
     function DrawStringTemplate: string; virtual; abstract;
 
     procedure DrawNewStr;
+    procedure SetInfoCursorLemming(Pos: Integer);
+      function GetSkillString(L: TLemming): String;
 
     // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
@@ -776,6 +778,66 @@ begin
     end;
   end;
 end;
+
+function TBaseSkillPanel.GetSkillString(L: TLemming): String;
+var
+  i: Integer;
+
+  procedure DoInc(aText: String);
+  begin
+    Inc(i);
+    case i of
+      1: Result := aText;
+      2: Result := SAthlete;
+      3: Result := STriathlete;
+      4: Result := SQuadathlete;
+    end;
+  end;
+begin
+  Result := '';
+  if L = nil then Exit;
+
+  Result := LemmingActionStrings[L.LemAction];
+
+  if L.LemIsZombie or GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
+  begin
+    Result := '-----';
+    if L.LemIsClimber then Result[1] := 'C';
+    if L.LemIsSwimmer then Result[2] := 'S';
+    if L.LemIsFloater then Result[3] := 'F';
+    if L.LemIsGlider then Result[3] := 'G';
+    if L.LemIsMechanic then Result[4] := 'D';
+    if L.LemIsZombie then Result[5] := 'Z';
+  end
+  else if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
+  begin
+    i := 0;
+    if L.LemIsClimber then DoInc(SClimber);
+    if L.LemIsSwimmer then DoInc(SSwimmer);
+    if L.LemIsFloater then DoInc(SFloater);
+    if L.LemIsGlider then DoInc(SGlider);
+    if L.LemIsMechanic then DoInc(SMechanic);
+    if L.LemIsZombie then Result := SZombie;
+  end;
+end;
+
+procedure TBaseSkillPanel.SetInfoCursorLemming(Pos: Integer);
+var
+  S: string;
+const
+  LENGTH = 12;
+begin
+  S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
+  if S = '' then
+    S := StringOfChar(' ', LENGTH)
+  else if Game.LastHitCount = 0 then
+    S := PadR(S, LENGTH)
+  else
+    S := PadR(S + ' ' + IntToStr(Game.LastHitCount), LENGTH);
+
+  Move(S[1], fNewDrawStr[Pos], LENGTH);
+end;
+
 
 {-----------------------------------------
     User interaction
