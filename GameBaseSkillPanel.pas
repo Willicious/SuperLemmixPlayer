@@ -63,7 +63,7 @@ type
     fRectColor        : TColor32;
 
     fSelectDx         : Integer;
-
+    fIsBlinkFrame     : Boolean;
     fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
 
     fHighlitSkill: TSkillPanelButton;
@@ -110,6 +110,12 @@ type
     procedure DrawNewStr;
     procedure SetInfoCursorLemming(Pos: Integer);
       function GetSkillString(L: TLemming): String;
+    procedure SetInfoLemHatch(Pos: Integer);
+    procedure SetInfoLemAlive(Pos: Integer);
+    procedure SetInfoLemIn(Pos: Integer);
+    procedure SetInfoTime(PosMin, PosSec: Integer);
+    procedure SetReplayMark(Pos: Integer);
+    procedure SetTimeLimit(Pos: Integer);
 
     // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
@@ -130,8 +136,6 @@ type
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
-    // Not sure where this belongs...
-    procedure SetTimeLimit(Status: Boolean); virtual; abstract;
 
 
   public
@@ -825,17 +829,122 @@ procedure TBaseSkillPanel.SetInfoCursorLemming(Pos: Integer);
 var
   S: string;
 const
-  LENGTH = 12;
+  LEN = 12;
 begin
   S := Uppercase(GetSkillString(Game.RenderInterface.SelectedLemming));
   if S = '' then
-    S := StringOfChar(' ', LENGTH)
+    S := StringOfChar(' ', LEN)
   else if Game.LastHitCount = 0 then
-    S := PadR(S, LENGTH)
+    S := PadR(S, LEN)
   else
-    S := PadR(S + ' ' + IntToStr(Game.LastHitCount), LENGTH);
+    S := PadR(S + ' ' + IntToStr(Game.LastHitCount), LEN);
 
-  Move(S[1], fNewDrawStr[Pos], LENGTH);
+  Move(S[1], fNewDrawStr[Pos], LEN);
+end;
+
+procedure TBaseSkillPanel.SetInfoLemHatch(Pos: Integer);
+var
+  S: string;
+const
+  LEN = 4;
+begin
+  Assert(Game.LemmingsToSpawn - Game.SpawnedDead >= 0, 'Negative number of lemmings in hatch displayed');
+  S := IntToStr(Game.LemmingsToSpawn - Game.SpawnedDead);
+
+  if Length(S) < LEN then
+    S := PadL(PadR(S, LEN - 1), LEN);
+
+  Move(S[1], fNewDrawStr[Pos], LEN);
+end;
+
+procedure TBaseSkillPanel.SetInfoLemAlive(Pos: Integer);
+var
+  LemNum, LemToSave: Integer;
+  Blinking : Boolean;
+  S: string;
+const
+  LEN = 4;
+begin
+  LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
+  Assert(LemNum >= 0, 'Negative number of alive lemmings displayed');
+  LemToSave := Level.Info.RescueCount - Game.LemmingsSaved - Game.SkillCount[spbCloner];
+  Blinking := GameParams.LemmingBlink and fIsBlinkFrame and (LemNum < LemToSave);
+
+  if Blinking then
+    S := StringOfChar(' ', LEN)
+  else
+    S := IntToStr(LemNum);
+
+  if Length(S) < LEN then
+    S := PadL(PadR(S, LEN - 1), LEN);
+
+  Move(S[1], fNewDrawStr[Pos], Len);
+end;
+
+procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
+var
+  S: string;
+const
+  LEN = 4;
+begin
+  S := IntToStr(Game.LemmingsSaved - Level.Info.RescueCount);
+
+  if Length(S) < LEN then
+    S := PadL(PadR(S, LEN - 1), LEN);
+
+  Move(S[1], fNewDrawStr[Pos], LEN);
+end;
+
+procedure TBaseSkillPanel.SetInfoTime(PosMin, PosSec: Integer);
+var
+  Time : Integer;
+  Blinking : Boolean;
+  S: string;
+const
+  LEN = 2;
+begin
+  if Level.Info.HasTimeLimit then
+  begin
+    Time := Level.Info.TimeLimit - Game.CurrentIteration div 17;
+    Blinking := GameParams.TimerBlink and fIsBlinkFrame and (Time <= 30);
+  end
+  else
+  begin
+    Time := Game.CurrentIteration div 17;
+    Blinking := false;
+  end;
+
+  // Minutes
+  if Blinking then
+    S := StringOfChar(' ', LEN)
+  else
+    S := PadL(IntToStr(Time div 60), 2);
+  Move(S[1], fNewDrawStr[PosMin], LEN);
+
+  // Seconds
+  if Blinking then
+    S := StringOfChar(' ', LEN)
+  else
+    S := LeadZeroStr(Time mod 60, 2);
+  Move(S[1], fNewDrawStr[PosSec], LEN);
+end;
+
+procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
+begin
+  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
+    fNewDrawStr[Pos] := ' '
+  else if Game.ReplayInsert then
+    fNewDrawStr[Pos] := #97
+  else
+    fNewDrawStr[Pos] := #91;
+end;
+
+procedure TBaseSkillPanel.SetTimeLimit(Pos: Integer);
+begin
+  if Level.Info.HasTimeLimit then
+    fNewDrawStr[Pos] := #96
+  else
+    fNewDrawStr[Pos] := #95;
 end;
 
 
@@ -1041,12 +1150,9 @@ begin
   end;
 end;
 
-
-
-
-
-
-
+{-----------------------------------------
+    General stuff
+-----------------------------------------}
 function TBaseSkillPanel.GetLevel: TLevel;
 begin
   Result := GameParams.Level;
@@ -1091,7 +1197,6 @@ end;
 procedure TBaseSkillPanel.SetGame(const Value: TLemmingGame);
 begin
   fGame := Value;
-  SetTimeLimit(Level.Info.HasTimeLimit);
 end;
 
 procedure TBaseSkillPanel.SetOnMinimapClick(const Value: TMinimapClickEvent);

@@ -48,15 +48,8 @@ type
 
     // The following stuff still needs to be updated
 
-
-    //procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
-    procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
-    procedure SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
-    procedure SetReplayMark(Status: Integer);
-    procedure SetTimeLimit(Status: Boolean); override;
+    //procedure SetReplayMark(Status: Integer);
+    //procedure SetTimeLimit(Status: Boolean); override;
 
   public
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
@@ -157,79 +150,34 @@ procedure TSkillPanelToolbar.RefreshInfo;
 var
   i: TSkillPanelButton;
   TimeRemaining: Integer;
-  IsBlinkFrame: Boolean;
   DoTimerBlink: Boolean;
 
-  function GetSkillString(L: TLemming): String;
-  var
-    i: Integer;
-    ShowAthleteInfo: Boolean;
-
-    procedure DoInc(aText: String);
-    begin
-      Inc(i);
-      case i of
-        1: Result := aText;
-        2: Result := SAthlete;
-        3: Result := STriathlete;
-        4: Result := SQuadathlete;
-      end;
-    end;
-  begin
-    if L = nil then
-    begin
-      Result := '';
-      Exit;
-    end;
-
-    Result := LemmingActionStrings[L.LemAction];
-
-    ShowAthleteInfo := L.LemIsZombie or GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
-
-    if ShowAthleteInfo or (not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking])) then
-    begin
-      i := 0;
-      if L.LemIsClimber then DoInc(SClimber);
-      if L.LemIsSwimmer then DoInc(SSwimmer);
-      if L.LemIsFloater then DoInc(SFloater);
-      if L.LemIsGlider then DoInc(SGlider);
-      if L.LemIsMechanic then DoInc(SMechanic);
-      if L.LemIsZombie then Result := SZombie;
-
-      if ShowAthleteInfo then
-      begin
-        Result := '-----';
-        if L.LemIsClimber then Result[1] := 'C';
-        if L.LemIsSwimmer then Result[2] := 'S';
-        if L.LemIsFloater then Result[3] := 'F';
-        if L.LemIsGlider then Result[3] := 'G';
-        if L.LemIsMechanic then Result[4] := 'D';
-        if L.LemIsZombie then Result[5] := 'Z';
-      end;
-    end;
-  end;
-
 begin
-  IsBlinkFrame := (GetTickCount mod 1000) > 499;
+  fIsBlinkFrame := (GetTickCount mod 1000) > 499;
 
   // hatch: (Count + Cloned - SpawnedDead) - (Out + Removed)
   // alive: (Count + Cloned - SpawnedDead) - Removed
   //    in: Saved - Requirement
-  SetInfoLemHatch(Game.LemmingsToSpawn - Game.SpawnedDead);
-  SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner] - Game.SpawnedDead) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame and GameParams.LemmingBlink);
-  SetInfoLemIn(Game.LemmingsSaved - Level.Info.RescueCount);
+  SetTimeLimit(33);
+  SetInfoLemHatch(16);
+  SetInfoLemAlive(22);
+  //SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner] - Game.SpawnedDead) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame and GameParams.LemmingBlink);
+  SetInfoLemIn(28);
+  //SetInfoLemIn(Game.LemmingsSaved - Level.Info.RescueCount);
 
+  SetInfoTime(34, 37);
+  (*
   if Level.Info.HasTimeLimit then
   begin
     TimeRemaining := Level.Info.TimeLimit - (Game.CurrentIteration div 17);
-    DoTimerBlink := IsBlinkFrame and (TimeRemaining <= 30) and GameParams.TimerBlink;
+    DoTimerBlink := fIsBlinkFrame and (TimeRemaining <= 30) and GameParams.TimerBlink;
     SetInfoMinutes(TimeRemaining div 60, DoTimerBlink);
     SetInfoSeconds(TimeRemaining mod 60, DoTimerBlink);
   end else begin
     SetInfoMinutes(Game.CurrentIteration div (17 * 60));
     SetInfoSeconds((Game.CurrentIteration mod (17 * 60)) div 17);
   end;
-
+      *)
   DrawNewStr;
   fLastDrawnStr := fNewDrawStr;
 
@@ -250,137 +198,15 @@ begin
   SetInfoCursorLemming(1);
   //SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
 
+  SetReplayMark(13);
+  (*
   if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
     SetReplayMark(0)
   else if Game.ReplayInsert then
     SetReplayMark(2)
   else
     SetReplayMark(1);
-end;
-
-  (*
-procedure TSkillPanelToolbar.SetInfoCursorLemming(const Lem: string; Num: Integer);
-var
-  S: string;
-begin
-  S := Uppercase(Lem);
-  if Lem <> '' then
-  begin
-
-    if Num = 0 then
-      S := PadR(S, 12)
-    else
-      S := PadR(S + ' ' + IntToStr(Num), 12); //
-    Move(S[1], fNewDrawStr[1], 12);
-  end
-  else begin
-    S := '             ';
-    Move(S[1], fNewDrawStr[1], 12);
-  end;
-end;
-   *)
-procedure TSkillPanelToolbar.SetReplayMark(Status: Integer);
-var
-  S: String;
-begin
-  if Status = 1 then
-    S := #91
-  else if Status = 2 then
-    S := #97
-  else
-    S := ' ';
-  Move(S[1], fNewDrawStr[13], 1);
-end;
-
-procedure TSkillPanelToolbar.SetTimeLimit(Status: Boolean);
-var
-  S: String;
-begin
-  if Status then
-    S := #96
-  else
-    S := #95;
-  Move(S[1], fNewDrawStr[33], 1);
-end;
-
-
-procedure TSkillPanelToolbar.SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
-var
-  S: string;
-begin
-  Assert(Num >= 0, 'Negative number of lemmings in hatch displayed');
-  S := IntToStr(Num);
-  if Length(S) < 4 then
-  begin
-    S := PadR(S, 3);
-    S := PadL(S, 4);
-  end;
-  if Blinking then S := '    ';  // probably will never blink, but let's have the option there for futureproofing
-  Move(S[1], fNewDrawStr[16], 4);
-end;
-
-
-procedure TSkillPanelToolbar.SetInfoLemAlive(Num: Integer; Blinking: Boolean = false);
-var
-  S: string;
-begin
-  // stringspositions cursor,out,in,time = 1,15,24,32
-  //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
-  // Nepster: The two lines above are outdated and wrong!!
-  Assert(Num >= 0, 'Negative number of alive lemmings displayed');
-  S := IntToStr(Num);
-  if Length(S) < 4 then
-  begin
-    S := PadR(S, 3);
-    S := PadL(S, 4);
-  end;
-  if Blinking then S := '    ';
-  Move(S[1], fNewDrawStr[22], 4);
-end;
-
-procedure TSkillPanelToolbar.SetInfoLemIn(Num: Integer; Blinking: Boolean = false);
-var
-  S: string;
-begin
-  // stringspositions cursor,out,in,time = 1,15,24,32
-  //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
-  // Nepster: The two lines above are outdated and wrong!!
-  S := IntToStr(Num);
-  if Length(S) < 4 then
-  begin
-    S := PadR(S, 3);
-    S := PadL(S, 4);
-  end;
-  if Blinking then S := '    ';
-  Move(S[1], fNewDrawStr[28], 4);
-end;
-
-procedure TSkillPanelToolbar.SetInfoMinutes(Num: Integer; Blinking: Boolean = false);
-var
-  S: string;
-begin
-  // stringspositions cursor,out,in,time = 1,15,24,32
-  //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
-  // Nepster: The two lines above are outdated and wrong!!
-  if Blinking then
-    S := '  '
-  else
-    S := PadL(IntToStr(Num), 2);
-  Move(S[1], fNewDrawStr[34], 2);
-end;
-
-procedure TSkillPanelToolbar.SetInfoSeconds(Num: Integer; Blinking: Boolean = false);
-var
-  S: string;
-begin
-  // stringspositions cursor,out,in,time = 1,15,24,32
-  //fNewDrawStr := '..............' + 'OUT_.....' + 'IN_.....' + 'TIME_.-..';
-  // Nepster: The two lines above are outdated and wrong!!
-  if Blinking then
-    S := '  '
-  else
-    S := LeadZeroStr(Num, 2);
-  Move(S[1], fNewDrawStr[37], 2);
+    *)
 end;
 
 
