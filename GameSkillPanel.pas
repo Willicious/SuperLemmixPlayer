@@ -61,9 +61,7 @@ type
     destructor Destroy; override;
 
     procedure RefreshInfo; override;
-    procedure SetCursor(aCursor: TCursor); override;
 
-    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); override;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); override;
   end;
 
@@ -137,14 +135,6 @@ end;
 destructor TSkillPanelToolbar.Destroy;
 begin
   inherited;
-end;
-
-
-procedure TSkillPanelToolbar.SetCursor(aCursor: TCursor);
-begin
-  Cursor := aCursor;
-  Image.Cursor := aCursor;
-  fMinimapImage.Cursor := aCursor;
 end;
 
 
@@ -282,69 +272,6 @@ begin
   end;
 end;
 
-
-procedure TSkillPanelToolbar.DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
-var
-  S: string;
-  L, R: Char;
-  BtnIdx: Integer;
-  DstRect, SrcRect: TRect;
-  aoNumber: Integer;
-
-const
-  FontYPos = 17;
-
-begin
-  // x = 3, 19, 35 etc. are the "black holes" for the numbers in the image
-  // y = 17
-
-  if fButtonRects[aButton].Left < 0 then Exit;
-
-  fSkillCounts[aButton] := aNumber;
-
-  if fGameWindow.IsHyperSpeed then Exit;
-
-  aoNumber := aNumber;
-  aNumber := Math.Max(aNumber mod 100, 0);
-
-  S := LeadZeroStr(aNumber, 2);
-  L := S[1];
-  R := S[2];
-
-  BtnIdx := (fButtonRects[aButton].Left - 1) div 16;
-
-  // If release rate locked, display as such
-  if (aButton = spbFaster) and (Level.Info.ReleaseRateLocked or (Level.Info.ReleaseRate = 99)) then
-  begin
-    fSkillLock.DrawTo(Image.Bitmap, BtnIdx * 16 + 4, 17);
-    Exit;
-  end;
-
-  // White out if applicable
-  fSkillCountErase.DrawTo(Image.Bitmap, BtnIdx * 16 + 1, 16);
-  if (aoNumber = 0) and (GameParams.BlackOutZero) then Exit;
-
-  // Draw infinite symbol if, well, infinite.
-  if (aoNumber > 99) then
-  begin
-    DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 8, 17 + 8);
-    SrcRect := Rect(0, 0, 8, 8);
-    fSkillInfinite.DrawTo(fImage.Bitmap, DstRect, SrcRect);
-    Exit;
-  end;
-
-  // left
-  DstRect := Rect(BtnIdx * 16 + 4, 17, BtnIdx * 16 + 4 + 4, 17 + 8);
-  SrcRect := Rect(0, 0, 4, 8);
-  if (aoNumber >= 10) then fSkillFont[L, 1].DrawTo(fImage.Bitmap, DstRect, SrcRect); // 1 is left
-
-  // right
-  OffsetRect(DstRect, 2, 0);
-  if (aoNumber >= 10) then OffsetRect(DstRect, 2, 0);
-  SrcRect := Rect(4, 0, 8, 8);
-  fSkillFont[R, 0].DrawTo(fImage.Bitmap, DstRect, SrcRect); // 0 is right
-
-end;
 
 procedure TSkillPanelToolbar.RefreshInfo;
 var

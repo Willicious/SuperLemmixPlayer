@@ -68,7 +68,6 @@ type
 
     fHighlitSkill: TSkillPanelButton;
     fLastHighlitSkill: TSkillPanelButton; // to avoid sounds when shouldn't be played
-    fSkillCounts: array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
 
     fDisplayWidth: Integer;
     fDisplayHeight: Integer;
@@ -129,13 +128,13 @@ type
     procedure PrepareForGame;
 
     procedure RefreshInfo; virtual; abstract;
-    procedure SetCursor(aCursor: TCursor); virtual; abstract;
+    procedure SetCursor(aCursor: TCursor);
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
     procedure SetGame(const Value: TLemmingGame);
 
     property Image: TImage32 read fImage;
 
-    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); virtual; abstract;
+    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); virtual; abstract;
     procedure DrawMinimap; virtual;
 
@@ -416,14 +415,6 @@ end;
 
 procedure TBaseSkillPanel.AddButtonImage(ButtonName: string; Index: Integer);
 begin
-  (*
-  // This was originally there, but it seems we don't need it.
-  if   (ButtonName = 'icon_rr_minus.png')
-    or (ButtonName = 'icon_rr_plus.png')
-    or (ButtonName = 'empty_slot.png') then
-    fSkillCountErase.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
-  *)
-
   GetGraphic(ButtonName, fIconBmp);
   fIconBmp.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
 end;
@@ -648,7 +639,40 @@ begin
   fMinimapImage.Changed;
 end;
 
+procedure TBaseSkillPanel.DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
+var
+  ButtonLeft, ButtonTop: Integer;
+  NumberStr: string;
+begin
+  if fButtonRects[aButton].Left < 0 then Exit;
+  if fGameWindow.IsHyperSpeed then Exit;
 
+  ButtonLeft := fButtonRects[aButton].Left;
+  ButtonTop := fButtonRects[aButton].Top;
+
+  // Erase previous number
+  fSkillCountErase.DrawTo(fImage.Bitmap, ButtonLeft, ButtonTop);
+  if (aNumber = 0) and (GameParams.BlackOutZero) then Exit;
+
+  // Check for locked release rate icon
+  if (aButton = spbFaster) and (Level.Info.ReleaseRateLocked or (Level.Info.ReleaseRate = 99)) then
+    fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
+  // Check for infinite icon
+  else if aNumber > 99 then
+    fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
+  // Otherwise draw the digits
+  else if aNumber < 10 then
+  begin
+    NumberStr := LeadZeroStr(aNumber, 2);
+    fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 1, ButtonTop + 1);
+  end
+  else
+  begin
+    NumberStr := LeadZeroStr(aNumber, 2);
+    fSkillFont[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1);
+    fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1);
+  end;
+end;
 
 
 
@@ -910,6 +934,13 @@ end;
 procedure TBaseSkillPanel.SetOnMinimapClick(const Value: TMinimapClickEvent);
 begin
   fOnMinimapClick := Value;
+end;
+
+procedure TBaseSkillPanel.SetCursor(aCursor: TCursor);
+begin
+  Cursor := aCursor;
+  fImage.Cursor := aCursor;
+  fMinimapImage.Cursor := aCursor;
 end;
 
 end.
