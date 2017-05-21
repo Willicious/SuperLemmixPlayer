@@ -35,7 +35,7 @@ type
   private
 
   protected
-    function GetButtonList: TStringArray; override;
+    function GetButtonList: TPanelButtonArray; override;
 
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
@@ -54,8 +54,6 @@ type
 
     procedure SetZoom(aZoom: Integer); override;
     function GetZoom: Integer; override;
-
-    procedure SetButtonRects; override;
 
     procedure DrawNewStr;
 
@@ -690,46 +688,6 @@ begin
   DrawMinimap;
 end;
 
-
-
-
-
-procedure TSkillPanelToolbar.SetButtonRects;
-var
-  R: TRect;
-  iButton: TSkillPanelButton;
-begin
-  R := Rect(-1, -1, 0, 0); // exact position of first button
-
-  for iButton := Low(TSkillPanelButton) to High(TSkillPanelButton) do
-  begin
-    fButtonRects[iButton] := R;
-  end;
-
-  fButtonRects[spbSlower] := Rect(1, 16, 15, 38);
-  fButtonRects[spbFaster] := Rect(17, 16, 31, 38);
-  fButtonRects[spbPause]  := Rect(161, 16, 175, 38);
-  fButtonRects[spbNuke]   := Rect(177, 16, 191, 38);
-
-  R := Rect(193, 16, 207, 38);
-
-  if not GameParams.CompactSkillPanel then
-  begin
-    for iButton := spbFastForward to High(TSkillPanelButton) do
-    begin
-      fButtonRects[iButton] := R;
-      OffsetRect(R, 16, 0);
-    end;
-
-    fButtonRects[spbDirLeft].Bottom := fButtonRects[spbDirLeft].Bottom - 12;
-    fButtonRects[spbDirRight] := fButtonRects[spbDirLeft];
-    OffsetRect(fButtonRects[spbDirRight], 0, 12);
-  end else
-    fButtonRects[spbFastForward] := R; // others aren't used on compact panel
-
-end;
-
-
 procedure TSkillPanelToolbar.SetInfoCursorLemming(const Lem: string; Num: Integer);
 var
   S: string;
@@ -941,38 +899,38 @@ begin
   end;
 end;
 
-function TSkillPanelToolbar.GetButtonList: TStringArray;
+function TSkillPanelToolbar.GetButtonList: TPanelButtonArray;
 var
-  ButtonList: TStringArray;
+  ButtonList: TPanelButtonArray;
   i : Integer;
 begin
   if GameParams.CompactSkillPanel then
   begin
     SetLength(ButtonList, 13);
-    ButtonList[0] := 'icon_rr_minus.png';
-    ButtonList[1] := 'icon_rr_plus.png';
+    ButtonList[0] := spbSlower;
+    ButtonList[1] := spbFaster;
     for i := 2 to 9 do
-      ButtonList[i] := 'empty_slot.png';
-    ButtonList[10] := 'icon_pause.png';
-    ButtonList[11] := 'icon_nuke.png';
-    ButtonList[12] := 'icon_ff.png';
+      ButtonList[i] := spbWalker; // placeholder for any skill
+    ButtonList[10] := spbPause;
+    ButtonList[11] := spbNuke;
+    ButtonList[12] := spbFastForward;
   end
   else
   begin
     SetLength(ButtonList, 19);
-    ButtonList[0] := 'icon_rr_minus.png';
-    ButtonList[1] := 'icon_rr_plus.png';
+    ButtonList[0] := spbSlower;
+    ButtonList[1] := spbFaster;
     for i := 2 to 9 do
-      ButtonList[i] := 'empty_slot.png';
-    ButtonList[10] := 'icon_pause.png';
-    ButtonList[11] := 'icon_nuke.png';
-    ButtonList[12] := 'icon_ff.png';
-    ButtonList[13] := 'icon_restart.png';
-    ButtonList[14] := 'icon_1fb.png';
-    ButtonList[15] := 'icon_1ff.png';
-    ButtonList[16] := 'icon_clearphysics.png';
-    ButtonList[17] := 'icon_directional.png';
-    ButtonList[18] := 'icon_load_replay.png';
+      ButtonList[i] := spbWalker; // placeholder for any skill
+    ButtonList[10] := spbPause;
+    ButtonList[11] := spbNuke;
+    ButtonList[12] := spbFastForward;
+    ButtonList[13] := spbRestart;
+    ButtonList[14] := spbBackOneFrame;
+    ButtonList[15] := spbForwardOneFrame;
+    ButtonList[16] := spbClearPhysics;
+    ButtonList[17] := spbDirLeft; // includes spbDirRight
+    ButtonList[18] := spbLoadReplay;
   end;
 
   Result := ButtonList;

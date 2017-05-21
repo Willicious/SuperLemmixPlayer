@@ -17,7 +17,7 @@ type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
 
 type
-  TStringArray = array of string;
+  TPanelButtonArray = array of TSkillPanelButton;
 
 type
   TBaseSkillPanel = class(TCustomControl)
@@ -84,7 +84,7 @@ type
     function FirstSkillButtonIndex: Integer; virtual;
 
     procedure ReadBitmapFromStyle;
-    function GetButtonList: TStringArray; virtual; abstract;
+    function GetButtonList: TPanelButtonArray; virtual; abstract;
     procedure DrawBlankPanel(NumButtons: Integer);
     procedure AddButtonImage(ButtonName: string; Index: Integer);
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
@@ -117,11 +117,13 @@ type
 
     procedure SetTimeLimit(Status: Boolean); virtual; abstract;
 
-    procedure SetButtonRects; virtual; abstract;
+    procedure SetButtonRects;
   public
     constructor Create(aOwner: TComponent); overload; override;
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
     destructor Destroy; override;
+
+    procedure PrepareForGame(ScaleFactor: Integer);
 
     procedure SetSkillIcons;
     procedure RefreshInfo; virtual; abstract;
@@ -163,6 +165,23 @@ const
       'disarmer', 'bomber', 'stoner', 'blocker', 'platformer',
       'builder', 'stacker', 'basher', 'fencer', 'miner',
       'digger', 'cloner' );
+
+const
+  // WARNING: The order of the strings has to correspond to the one
+  //          of TSkillPanelButton in LemCore.pas!
+  // As skill icons are dealt with separately, we use a placeholder here
+  BUTTON_TO_STRING: array[TSkillPanelButton] of string = (
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    'empty_slot.png',                                 {Skills end here}
+    'empty_slot.png', 'icon_rr_minus.png', 'icon_rr_plus.png', 'icon_pause.png',
+    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_1fb.png',
+    'icon_1ff.png', 'icon_clearphysics.png', 'icon_directional.png', 'icon_load_replay.png',
+    'icon_directional.png'
+    );
+
 
 implementation
 
@@ -461,13 +480,11 @@ end;
 
 procedure TBaseSkillPanel.ReadBitmapFromStyle;
 var
-  ButtonList: TStringArray;
+  ButtonList: TPanelButtonArray;
   MinimapRegion : TBitmap32;
   i: Integer;
 begin
   if not (fStyle is TBaseDosLemmingStyle) then Exit;
-
-  SetButtonRects;
 
   fOriginal.SetSize(PanelWidth, PanelHeight);
   fOriginal.Clear($FF000000);
@@ -481,7 +498,7 @@ begin
 
   // Draw single buttons icons
   for i := 0 to Length(ButtonList) - 1 do
-    AddButtonImage(ButtonList[i], i);
+    AddButtonImage(BUTTON_TO_STRING[ButtonList[i]], i);
 
   // Draw minimap region
   MinimapRegion := TBitmap32.Create;
@@ -500,6 +517,15 @@ begin
   LoadSkillFont;
 end;
 
+procedure TBaseSkillPanel.PrepareForGame(ScaleFactor: Integer);
+begin
+  // Sets game-dependant properties of the skill panel:
+  // Size of the minimap, style, scaling factor, skills on the panel, ...
+  Minimap.SetSize(Level.Info.Width div 8, Level.Info.Height div 8);
+  SetStyleAndGraph(GameParams.Style, ScaleFactor);
+  SetButtonRects;
+  SetSkillIcons;
+end;
 
 procedure TBaseSkillPanel.SetSkillIcons;
 var
@@ -521,6 +547,29 @@ begin
     end;
   end;
 end;
+
+procedure TBaseSkillPanel.SetButtonRects;
+var
+  ButtonList: TPanelButtonArray;
+  Button: TSkillPanelButton;
+  i : Integer;
+begin
+  // Set all to never reached rectangles
+  for Button := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+    fButtonRects[Button] := Rect(-1, -1, 0, 0);
+
+  ButtonList := GetButtonList;
+  Assert(Assigned(ButtonList), 'SkillPanel: List of Buttons was nil');
+
+  // Set only rectangles for non-skill buttons
+  // The skill buttons are dealt with in SetSkillIcons
+  for i := 0 to Length(ButtonList) - 1 do
+  begin
+    if ButtonList[i] > spbNone then
+      fButtonRects[ButtonList[i]] := ButtonRect(i);
+  end;
+end;
+
 
 {-----------------------------------------
     User interaction

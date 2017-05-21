@@ -1589,11 +1589,10 @@ begin
 
   Img.Scale := Sca;
 
+  SkillPanel.PrepareForGame(Sca);
 
-  SkillPanel.Minimap.SetSize(GameParams.Level.Info.Width div 8, GameParams.Level.Info.Height div 8);
   fMinimapBuffer.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
 
-  SkillPanel.SetStyleAndGraph(Gameparams.Style, Sca);
   ChangeZoom(Sca, true);
 
   HorzStart := GameParams.Level.Info.ScreenPosition - ((Img.Width div 2) div Sca);
@@ -1602,8 +1601,6 @@ begin
   VertStart := VertStart * Sca;
   Img.OffsetHorz := Min(Max(-HorzStart, MinScroll), MaxScroll);
   Img.OffsetVert := Min(Max(-VertStart, MinVScroll), MaxVScroll);
-
-  SkillPanel.SetSkillIcons;
 
   if GameParams.LinearResampleGame then
   begin
