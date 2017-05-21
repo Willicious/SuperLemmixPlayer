@@ -70,7 +70,6 @@ type
     fLastHighlitSkill: TSkillPanelButton; // to avoid sounds when shouldn't be played
     fSkillCounts: array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
 
-    fDoHorizontalScroll: Boolean;
     fDisplayWidth: Integer;
     fDisplayHeight: Integer;
 
@@ -122,16 +121,12 @@ type
 
     procedure SetTimeLimit(Status: Boolean); virtual; abstract;
 
-
-
-
   public
     constructor Create(aOwner: TComponent); overload; override;
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
     destructor Destroy; override;
 
     procedure PrepareForGame;
-
 
     procedure RefreshInfo; virtual; abstract;
     procedure SetCursor(aCursor: TCursor); virtual; abstract;
@@ -142,9 +137,7 @@ type
 
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); virtual; abstract;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); virtual; abstract;
-    procedure DrawMinimap; virtual; abstract;
-
-    //property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
+    procedure DrawMinimap; virtual;
 
     property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
     property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
@@ -194,6 +187,7 @@ const
 implementation
 
 uses
+  UMisc,
   LemmixHotkeys;
 
 
@@ -373,9 +367,9 @@ begin
 end;
 
 
-{-----------------------------------------
-    Draw the initial skill panel
------------------------------------------}
+{-----------------------------------------------
+  Draw the initial skill panel and the minimap
+-----------------------------------------------}
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
   MaskColor: TColor32;
@@ -607,6 +601,56 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.DrawMinimap;
+var
+  BaseOffsetHoriz, BaseOffsetVert: Double;
+  OH, OV: Double;
+  ViewRect: TRect;
+begin
+  if Parent = nil then Exit;
+
+  // Add some space for when the viewport rect lies on the very edges
+  fMinimapTemp.Width := fMinimap.Width + 2;
+  fMinimapTemp.Height := fMinimap.Height + 2;
+  fMinimapTemp.Clear(0);
+  fMinimap.DrawTo(fMinimapTemp, 1, 1);
+
+  BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
+  BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
+
+  // Draw the visible area frame
+  ViewRect := Rect(0, 0, fDisplayWidth div 8 + 2, fDisplayHeight div 8 + 2);
+  OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
+  fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+
+  fMinimapImage.Bitmap.Assign(fMinimapTemp);
+
+  if not fMinimapScrollFreeze then
+  begin
+    if fMinimapTemp.Width < MinimapWidth then
+      OH := (MinimapWidth - fMinimapTemp.Width) / 2
+    else begin
+      OH := BaseOffsetHoriz + (MinimapWidth - RectWidth(ViewRect)) / 2;
+      OH := Min(Max(OH, MinimapWidth - fMinimapTemp.Width), 0);
+    end;
+
+    if fMinimapTemp.Height < MinimapHeight then
+      OV := (MinimapHeight - fMinimapTemp.Height) / 2
+    else begin
+      OV := BaseOffsetVert + (MinimapHeight - RectHeight(ViewRect)) / 2;
+      OV := Min(Max(OV, MinimapHeight - fMinimapTemp.Height), 0);
+    end;
+
+    fMinimapImage.OffsetHorz := OH * fMinimapImage.Scale;
+    fMinimapImage.OffsetVert := OV * fMinimapImage.Scale;
+  end;
+
+  fMinimapImage.Changed;
+end;
+
+
+
+
 
 {-----------------------------------------
     User interaction
@@ -809,6 +853,11 @@ begin
     fLastClickFrameskip := GetTickCount - 150;
   end;
 end;
+
+
+
+
+
 
 
 function TBaseSkillPanel.GetLevel: TLevel;

@@ -56,8 +56,6 @@ type
     procedure SetReplayMark(Status: Integer);
     procedure SetTimeLimit(Status: Boolean); override;
 
-    property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
-
   public
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -67,7 +65,6 @@ type
 
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); override;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); override;
-    procedure DrawMinimap; override;
   end;
 
 const
@@ -578,72 +575,6 @@ begin
   Move(S[1], fNewDrawStr[37], 2);
 end;
 
-
-
-procedure TSkillPanelToolbar.DrawMinimap;
-var
-  X, Y: Integer;
-  OH, OV: Double;
-  ViewRect: TRect;
-  MMW, MMH: Integer;
-begin
-  if GameParams.CompactSkillPanel then
-  begin
-    MMW := COMPACT_MINIMAP_WIDTH;
-    MMH := COMPACT_MINIMAP_HEIGHT;
-  end else begin
-    MMW := MINIMAP_WIDTH;
-    MMH := MINIMAP_HEIGHT;
-  end;
-
-  // We want to add some space for when the viewport rect lies on the very edges
-  fMinimapTemp.Width := fMinimap.Width + 2;
-  fMinimapTemp.Height := fMinimap.Height + 2;
-  fMinimapTemp.Clear(0);
-  fMinimap.DrawTo(fMinimapTemp, 1, 1);
-
-  if Parent <> nil then
-  begin
-    // We want topleft position for now, to draw the visible area frame
-    X := -Round(fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8);
-    Y := -Round(fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8);
-
-    ViewRect := Rect(0, 0, fDisplayWidth div 8 + 2, fDisplayHeight div 8 + 2);
-    OffsetRect(ViewRect, X, Y);
-
-    fMinimapTemp.FrameRectS(ViewRect, fRectColor);
-
-    fMinimapImage.Bitmap.Assign(fMinimapTemp);
-
-    if not fMinimapScrollFreeze then
-    begin
-      if fMinimapTemp.Width < MMW then
-        OH := (((MMW - fMinimapTemp.Width) * fMinimapImage.Scale) / 2)
-      else begin
-        OH := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
-        OH := OH + (MMW - RectWidth(ViewRect)) div 2;
-        OH := OH * fMinimapImage.Scale;
-        OH := Min(OH, 0);
-        OH := Max(OH, -(fMinimapTemp.Width - MMW) * fMinimapImage.Scale);
-      end;
-
-      if fMinimapTemp.Height < MMH then
-        OV := (((MMH - fMinimapTemp.Height) * fMinimapImage.Scale) / 2)
-      else begin
-        OV := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
-        OV := OV + (MMH - RectHeight(ViewRect)) div 2;
-        OV := OV * fMinimapImage.Scale;
-        OV := Min(OV, 0);
-        OV := Max(OV, -(fMinimapTemp.Height - MMH) * fMinimapImage.Scale);
-      end;
-
-      fMinimapImage.OffsetHorz := OH;
-      fMinimapImage.OffsetVert := OV;
-    end;
-
-    fMinimapImage.Changed;
-  end;
-end;
 
 function TSkillPanelToolbar.GetButtonList: TPanelButtonArray;
 var
