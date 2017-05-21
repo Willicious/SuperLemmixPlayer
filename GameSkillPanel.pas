@@ -4,31 +4,8 @@ unit GameSkillPanel;
 interface
 
 uses
-  Classes, Controls, SysUtils, Math,
-  GR32, GR32_Image, GR32_Layers,
-  UMisc,
-  Windows,
-  LemmixHotkeys, LemStrings, LemTypes,
-  LemLemming,
-  LemDosStructures, LemDosStyle,
-  LemCore, LemLevel, LemNeoTheme,
-  GameControl,
-  LemGame, LemRenderHelpers, //for PARTICLE_COLORS consts, not that i'm sure if it acutally needs them anymore
-  GameSound,
-  PngInterface,
-  GameWindowInterface,
-  GameBaseSkillPanel;
-
-  {-------------------------------------------------------------------------------
-    maybe this must be handled by lemgame (just bitmap writing)
-
-  // info positions types:
-  // 1. BUILDER(23)             1/14
-  // 2. OUT 28                  15/23
-  // 3. IN 99%                  24/31
-  // 4. TIME 2-31               32/40
-
-  -------------------------------------------------------------------------------}
+  Classes, GR32,
+  GameWindowInterface, GameBaseSkillPanel;
 
 type
   TSkillPanelToolbar = class(TBaseSkillPanel)
@@ -49,50 +26,10 @@ type
     destructor Destroy; override;
   end;
 
-const
-  PANEL_WIDTH = 416;
-  PANEL_HEIGHT = 40;
-  COMPACT_PANEL_WIDTH = 320;
-  COMPACT_PANEL_HEIGHT = 40;
-
-  MINIMAP_X = 308;
-  MINIMAP_Y = 3;
-  MINIMAP_WIDTH  = 104;
-  MINIMAP_HEIGHT = 34;
-
-  COMPACT_MINIMAP_X = 212;
-  COMPACT_MINIMAP_Y = 18;
-  COMPACT_MINIMAP_WIDTH = 104;
-  COMPACT_MINIMAP_HEIGHT = 20;
-
-const
-  MiniMapCorners: TRect = (
-    Left: MINIMAP_X + 2;
-    Top: MINIMAP_Y + 2;
-    Right: MINIMAP_X + MINIMAP_WIDTH;
-    Bottom: MINIMAP_Y + MINIMAP_HEIGHT;
-  );
-
-  CompactMinimapCorners: TRect = (
-    Left: COMPACT_MINIMAP_X + 2;
-    Top: COMPACT_MINIMAP_Y + 2;
-    Right: COMPACT_MINIMAP_X + COMPACT_MINIMAP_WIDTH;
-    Bottom: COMPACT_MINIMAP_Y + COMPACT_MINIMAP_HEIGHT;
-  );
-
-
 implementation
 
 uses
-  LemReplay;
-
-function PtInRectEx(const Rect: TRect; const P: TPoint): Boolean;
-begin
-  Result := (P.X >= Rect.Left) and (P.X < Rect.Right) and (P.Y >= Rect.Top)
-    and (P.Y < Rect.Bottom);
-end;
-
-{ TSkillPanelToolbar }
+  GameControl, LemCore;
 
 constructor TSkillPanelToolbar.Create(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
@@ -107,17 +44,17 @@ end;
 function TSkillPanelToolbar.PanelWidth: Integer;
 begin
   if GameParams.CompactSkillPanel then
-    Result := COMPACT_PANEL_WIDTH
+    Result := 320
   else
-    Result := PANEL_WIDTH;
+    Result := 416;
 end;
 
 function TSkillPanelToolbar.PanelHeight: Integer;
 begin
   if GameParams.CompactSkillPanel then
-    Result := COMPACT_PANEL_HEIGHT
+    Result := 40
   else
-    Result := PANEL_HEIGHT;
+    Result := 40;
 end;
 
 
@@ -142,8 +79,6 @@ begin
   SetTimeLimit(33);
   SetInfoTime(34, 37);
 end;
-
-
 
 function TSkillPanelToolbar.GetButtonList: TPanelButtonArray;
 var

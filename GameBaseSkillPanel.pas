@@ -3,14 +3,9 @@ unit GameBaseSkillPanel;
 interface
 
 uses
-  Classes, Controls, SysUtils, Types, Math, Windows,
-  GR32, GR32_Image, GR32_Layers,
-  PngInterface,
-  GameControl,
+  Classes, Controls, GR32, GR32_Image, GR32_Layers,
   GameWindowInterface,
-  LemTypes, LemCore, LemStrings, LemNeoTheme,
-  LemLemming, LemGame, LemLevel,
-  LemDosStyle, LemDosStructures;
+  LemCore, LemLemming, LemGame, LemLevel;
 
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
@@ -25,59 +20,53 @@ type
     fGame                   : TLemmingGame;
     fIconBmp                : TBitmap32;   // for temporary storage
 
-    function GetLevel       : TLevel;
+    fDisplayWidth         : Integer;
+    fDisplayHeight        : Integer;
 
-    function CheckFrameSkip : Integer; // Checks the duration since the last click on the panel.
+    fRectColor            : TColor32;
+    fSelectDx             : Integer;
+    fIsBlinkFrame         : Boolean;
+    fOnMinimapClick       : TMinimapClickEvent; // event handler for minimap
+
+    function CheckFrameSkip: Integer; // Checks the duration since the last click on the panel.
 
     procedure LoadPanelFont;
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
 
+    function GetLevel: TLevel;
     function GetZoom: Integer;
     procedure SetZoom(NewZoom: Integer);
     function GetMaxZoom: Integer;
   protected
     fGameWindow           : IGameWindow;
-    fImage                : TImage32;
+    fButtonRects          : array[TSkillPanelButton] of TRect;
 
-    fLastClickFrameskip: Cardinal;
+    fImage                : TImage32;  // panel image to be displayed
+    fOriginal             : TBitmap32; // original panel image
+    fMinimap              : TBitmap32; // full minimap image
+    fMinimapImage         : TImage32;  // minimap to be displayed
+    fMinimapTemp          : TBitmap32; // temp image, to create fMinimapImage from fMinimap
 
-    fStyle         : TBaseDosLemmingStyle;
+    fMinimapScrollFreeze  : Boolean;
+    fLastClickFrameskip   : Cardinal;
 
-    fMinimapImage  : TImage32;
+    fSkillFont            : array['0'..'9', 0..1] of TBitmap32;
+    fSkillCountErase      : TBitmap32;
+    fSkillLock            : TBitmap32;
+    fSkillInfinite        : TBitmap32;
+    fSkillIcons           : array of TBitmap32;
+    fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
-    fOriginal      : TBitmap32;
-    fMinimapTemp   : TBitmap32;
-    fMinimap       : TBitmap32;
+    fHighlitSkill         : TSkillPanelButton;
+    fLastHighlitSkill     : TSkillPanelButton; // to avoid sounds when shouldn't be played
 
-    fMinimapScrollFreeze: Boolean;
-
-    fSkillFont        : array['0'..'9', 0..1] of TBitmap32;
-    fSkillCountErase  : TBitmap32;
-    fSkillLock        : TBitmap32;
-    fSkillInfinite    : TBitmap32;
-    fSkillIcons       : array of TBitmap32;
-    fInfoFont         : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
-
-    fButtonRects      : array[TSkillPanelButton] of TRect;
-    fRectColor        : TColor32;
-
-    fSelectDx         : Integer;
-    fIsBlinkFrame     : Boolean;
-    fOnMinimapClick            : TMinimapClickEvent; // event handler for minimap
-
-    fHighlitSkill: TSkillPanelButton;
-    fLastHighlitSkill: TSkillPanelButton; // to avoid sounds when shouldn't be played
-
-    fDisplayWidth: Integer;
-    fDisplayHeight: Integer;
-
-    fLastDrawnStr: string[38];
-    fNewDrawStr: string[38];
+    fLastDrawnStr         : string;
+    fNewDrawStr           : string;
 
     // Global stuff
-    property Level : TLevel read GetLevel;
-    property Game  : TLemmingGame read fGame;
+    property Level: TLevel read GetLevel;
+    property Game: TLemmingGame read fGame;
 
     function PanelWidth: Integer; virtual; abstract;
     function PanelHeight: Integer; virtual; abstract;
@@ -101,6 +90,7 @@ type
     procedure SetButtonRects;
     procedure SetSkillIcons;
     procedure DrawHightlight(aButton: TSkillPanelButton); virtual;
+    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
     procedure RemoveHightlight(aButton: TSkillPanelButton); virtual;
 
     // Drawing routines for the info string at the top
@@ -137,15 +127,12 @@ type
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
-
-
   public
     constructor Create(aOwner: TComponent); overload; override;
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
     destructor Destroy; override;
 
     procedure PrepareForGame;
-
     procedure RefreshInfo;
     procedure SetCursor(aCursor: TCursor);
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
@@ -153,7 +140,6 @@ type
 
     property Image: TImage32 read fImage;
 
-    procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawMinimap; virtual;
 
@@ -168,8 +154,6 @@ type
 
     property FrameSkip: Integer read CheckFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
-
-
   end;
 
 const
@@ -203,10 +187,10 @@ const
 implementation
 
 uses
-  UMisc,
-  GameSound,
-  LemReplay,
-  LemmixHotkeys;
+  SysUtils, Types, Math, Windows, UMisc, PngInterface,
+  GameControl, GameSound,
+  LemTypes, LemReplay, LemStrings, LemNeoTheme,
+  LemmixHotkeys, LemDosStructures;
 
 
 constructor TBaseSkillPanel.Create(aOwner: TComponent; aGameWindow: IGameWindow);
@@ -502,8 +486,6 @@ var
   MinimapRegion : TBitmap32;
   i: Integer;
 begin
-  if not (fStyle is TBaseDosLemmingStyle) then Exit;
-
   fOriginal.SetSize(PanelWidth, PanelHeight);
   fOriginal.Clear($FF000000);
 
@@ -542,8 +524,8 @@ begin
   fImage.BeginUpdate;
 
   Minimap.SetSize(Level.Info.Width div 8, Level.Info.Height div 8);
-  fStyle := GameParams.Style;
-  if fStyle <> nil then ReadBitmapFromStyle;
+
+  ReadBitmapFromStyle;
   SetButtonRects;
   SetSkillIcons;
 
