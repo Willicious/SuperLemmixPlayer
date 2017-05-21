@@ -108,6 +108,7 @@ type
     function DrawStringTemplate: string; virtual; abstract;
 
     procedure DrawNewStr;
+    procedure CreateNewInfoString; virtual; abstract;
     procedure SetInfoCursorLemming(Pos: Integer);
       function GetSkillString(L: TLemming): String;
     procedure SetInfoLemHatch(Pos: Integer);

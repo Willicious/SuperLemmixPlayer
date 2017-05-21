@@ -43,6 +43,7 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
 
+    procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
 
@@ -141,7 +142,16 @@ begin
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
-
+procedure TSkillPanelToolbar.CreateNewInfoString;
+begin
+  SetInfoCursorLemming(1);
+  SetReplayMark(13);
+  SetInfoLemHatch(16);
+  SetInfoLemAlive(22);
+  SetInfoLemIn(28);
+  SetTimeLimit(33);
+  SetInfoTime(34, 37);
+end;
 
 
 
@@ -155,29 +165,7 @@ var
 begin
   fIsBlinkFrame := (GetTickCount mod 1000) > 499;
 
-  // hatch: (Count + Cloned - SpawnedDead) - (Out + Removed)
-  // alive: (Count + Cloned - SpawnedDead) - Removed
-  //    in: Saved - Requirement
-  SetTimeLimit(33);
-  SetInfoLemHatch(16);
-  SetInfoLemAlive(22);
-  //SetInfoLemAlive(Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead, ((Game.LemmingsToSpawn + Game.LemmingsActive + Game.SkillCount[spbCloner] - Game.SpawnedDead) < (Level.Info.RescueCount - Game.LemmingsSaved)) and IsBlinkFrame and GameParams.LemmingBlink);
-  SetInfoLemIn(28);
-  //SetInfoLemIn(Game.LemmingsSaved - Level.Info.RescueCount);
-
-  SetInfoTime(34, 37);
-  (*
-  if Level.Info.HasTimeLimit then
-  begin
-    TimeRemaining := Level.Info.TimeLimit - (Game.CurrentIteration div 17);
-    DoTimerBlink := fIsBlinkFrame and (TimeRemaining <= 30) and GameParams.TimerBlink;
-    SetInfoMinutes(TimeRemaining div 60, DoTimerBlink);
-    SetInfoSeconds(TimeRemaining mod 60, DoTimerBlink);
-  end else begin
-    SetInfoMinutes(Game.CurrentIteration div (17 * 60));
-    SetInfoSeconds((Game.CurrentIteration mod (17 * 60)) div 17);
-  end;
-      *)
+  CreateNewInfoString;
   DrawNewStr;
   fLastDrawnStr := fNewDrawStr;
 
@@ -194,19 +182,6 @@ begin
   end; // ugly code, but it's temporary
 
   DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
-
-  SetInfoCursorLemming(1);
-  //SetInfoCursorLemming(GetSkillString(Game.RenderInterface.SelectedLemming), Game.LastHitCount);
-
-  SetReplayMark(13);
-  (*
-  if not Game.ReplayingNoRR[fGameWindow.GameSpeed = gspPause] then
-    SetReplayMark(0)
-  else if Game.ReplayInsert then
-    SetReplayMark(2)
-  else
-    SetReplayMark(1);
-    *)
 end;
 
 
