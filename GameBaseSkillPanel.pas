@@ -4,7 +4,6 @@ interface
 
 uses
   Classes, Controls, SysUtils, Types, Math, Windows,
-
   GR32, GR32_Image, GR32_Layers,
   PngInterface,
   GameControl,
@@ -80,6 +79,7 @@ type
 
     function FirstButtonRect: TRect; virtual;
     function ButtonRect(Index: Integer): TRect;
+    function HalfButtonRect(Index: Integer; IsUpper: Boolean): TRect;
     function MinimapRect: TRect; virtual; abstract;
     function MinimapWidth: Integer;
     function MinimapHeight: Integer;
@@ -345,6 +345,16 @@ begin
   OffsetRect(Result, Index * 16, 0);
 end;
 
+function TBaseSkillPanel.HalfButtonRect(Index: Integer; IsUpper: Boolean): TRect;
+begin
+  Result := FirstButtonRect;
+  OffsetRect(Result, Index * 16, 0);
+  if IsUpper then
+    Result.Bottom := (Result.Top + Result.Bottom) div 2 - 1
+  else
+    Result.Top := (Result.Top + Result.Bottom) div 2 + 1;
+end;
+
 function TBaseSkillPanel.FirstSkillButtonIndex: Integer;
 begin
   Result := 2;
@@ -585,7 +595,12 @@ begin
   // The skill buttons are dealt with in SetSkillIcons
   for i := 0 to Length(ButtonList) - 1 do
   begin
-    if ButtonList[i] > spbNone then
+    if ButtonList[i] in [spbDirLeft, spbDirRight] then
+    begin
+      fButtonRects[spbDirLeft] := HalfButtonRect(i, true);
+      fButtonRects[spbDirRight] := HalfButtonRect(i, false);
+    end
+    else if ButtonList[i] > spbNone then
       fButtonRects[ButtonList[i]] := ButtonRect(i);
   end;
 end;
