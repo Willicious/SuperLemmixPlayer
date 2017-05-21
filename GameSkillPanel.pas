@@ -61,8 +61,6 @@ type
     destructor Destroy; override;
 
     procedure RefreshInfo; override;
-
-    procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); override;
   end;
 
 const
@@ -138,72 +136,6 @@ begin
 end;
 
 
-procedure TSkillPanelToolbar.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
-var
-  R: TRect;
-  C: TColor32;
-  A: TRect;
-begin
-  if fGameWindow.IsHyperSpeed then Exit;
-
-  if (aButton = spbNone) or ((aButton = fHighlitSkill) and (Highlight = true)) then
-    Exit;
-
-  if fButtonRects[aButton].Left <= 0 then Exit;
-
-  case Highlight of
-    False :
-      begin
-        if aButton < spbNone then
-        begin
-          if fHighlitSkill = spbNone then Exit;
-          R := fButtonRects[fHighlitSkill];
-          fLastHighlitSkill := fHighlitSkill;
-          fHighlitSkill := spbNone;
-        end else
-          R := fButtonRects[aButton];
-        Inc(R.Right);
-        Inc(R.Bottom, 2);
-
-        // top
-        A := R;
-        A.Bottom := A.Top + 1;
-        fOriginal.DrawTo(Image.Bitmap, A, A);
-
-        // left
-        A := R;
-        A.Right := A.Left + 1;
-        fOriginal.DrawTo(Image.Bitmap, A, A);
-
-        // right
-        A := R;
-        A.Left := A.Right - 1;
-        fOriginal.DrawTo(Image.Bitmap, A, A);
-
-        // bottom
-        A := R;
-        A.Top := A.Bottom - 1;
-        fOriginal.DrawTo(Image.Bitmap, A, A);
-      end;
-    True  :
-      begin
-        if aButton < spbNone then // we don't want to memorize this for eg. fast forward
-        begin
-          fHighlitSkill := aButton;
-          R := fButtonRects[fHighlitSkill];
-          if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
-            SoundManager.PlaySound(SFX_SKILLBUTTON);
-        end else
-          R := fButtonRects[aButton];
-        Inc(R.Right);
-        Inc(R.Bottom, 2);
-
-        C := fRectColor;
-
-        Image.Bitmap.FrameRectS(R, C);
-      end;
-  end;
-end;
 
 procedure TSkillPanelToolbar.DrawNewStr;
 var

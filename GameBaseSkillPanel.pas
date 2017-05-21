@@ -120,6 +120,8 @@ type
 
     procedure SetTimeLimit(Status: Boolean); virtual; abstract;
 
+    procedure DrawHightlight(aButton: TSkillPanelButton); virtual;
+    procedure RemoveHightlight(aButton: TSkillPanelButton); virtual;
   public
     constructor Create(aOwner: TComponent); overload; override;
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
@@ -135,7 +137,7 @@ type
     property Image: TImage32 read fImage;
 
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
-    procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); virtual; abstract;
+    procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawMinimap; virtual;
 
     property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
@@ -187,6 +189,7 @@ implementation
 
 uses
   UMisc,
+  GameSound,
   LemmixHotkeys;
 
 
@@ -639,6 +642,77 @@ begin
   fMinimapImage.Changed;
 end;
 
+procedure TBaseSkillPanel.DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
+begin
+  if fGameWindow.IsHyperSpeed then Exit;
+  if aButton = spbNone then Exit;
+  if (fHighlitSkill = aButton) and Highlight then Exit;
+  if (fHighlitSkill = spbNone) and not Highlight then Exit;
+  if fButtonRects[aButton].Left <= 0 then Exit;
+
+  if Highlight then
+    DrawHightlight(aButton)
+  else
+    RemoveHightlight(aButton);
+end;
+
+procedure TBaseSkillPanel.DrawHightlight(aButton: TSkillPanelButton);
+var
+  BorderRect: TRect;
+begin
+  if aButton < spbNone then // we don't want to memorize this for eg. fast forward
+  begin
+    BorderRect := fButtonRects[aButton];
+    fHighlitSkill := aButton;
+    if (fLastHighlitSkill <> spbNone) and (fLastHighlitSkill <> fHighlitSkill) then
+      SoundManager.PlaySound(SFX_SKILLBUTTON);
+  end else
+    BorderRect := fButtonRects[aButton];
+
+  Inc(BorderRect.Right);
+  Inc(BorderRect.Bottom, 2);
+
+  Image.Bitmap.FrameRectS(BorderRect, fRectColor);
+end;
+
+procedure TBaseSkillPanel.RemoveHightlight(aButton: TSkillPanelButton);
+var
+  BorderRect, EraseRect: TRect;
+begin
+  if aButton < spbNone then
+  begin
+    BorderRect := fButtonRects[fHighlitSkill];
+    fLastHighlitSkill := fHighlitSkill;
+    fHighlitSkill := spbNone;
+  end else
+    BorderRect := fButtonRects[aButton];
+
+  Inc(BorderRect.Right);
+  Inc(BorderRect.Bottom, 2);
+
+  // top
+  EraseRect := BorderRect;
+  EraseRect.Bottom := EraseRect.Top + 1;
+  fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
+
+  // left
+  EraseRect := BorderRect;
+  EraseRect.Right := EraseRect.Left + 1;
+  fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
+
+  // right
+  EraseRect := BorderRect;
+  EraseRect.Left := EraseRect.Right - 1;
+  fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
+
+  // bottom
+  EraseRect := BorderRect;
+  EraseRect.Top := EraseRect.Bottom - 1;
+  fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
+end;
+
+
+
 procedure TBaseSkillPanel.DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
 var
   ButtonLeft, ButtonTop: Integer;
@@ -652,7 +726,7 @@ begin
 
   // Erase previous number
   fSkillCountErase.DrawTo(fImage.Bitmap, ButtonLeft, ButtonTop);
-  if (aNumber = 0) and (GameParams.BlackOutZero) then Exit;
+  if (aNumber = 0) and GameParams.BlackOutZero then Exit;
 
   // Check for locked release rate icon
   if (aButton = spbFaster) and (Level.Info.ReleaseRateLocked or (Level.Info.ReleaseRate = 99)) then
