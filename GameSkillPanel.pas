@@ -35,6 +35,11 @@ type
   private
 
   protected
+    function GetButtonList: TStringArray; override;
+
+    procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
+    function MinimapRect: TRect; override;
+
     procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
     procedure ImgMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
@@ -50,11 +55,9 @@ type
     procedure SetZoom(aZoom: Integer); override;
     function GetZoom: Integer; override;
 
-    procedure ReadBitmapFromStyle; virtual;
-    procedure SetButtonRects;
+    procedure SetButtonRects; override;
 
     procedure DrawNewStr;
-    procedure SetButtonRect(btn: TSkillPanelButton; bpos: Integer);
 
     procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
     procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
@@ -392,7 +395,7 @@ begin
   OffsetRect(DstRect, 2, 0);
   if (aoNumber >= 10) then OffsetRect(DstRect, 2, 0);
   SrcRect := Rect(4, 0, 8, 8);
-  fSkillFont[R, 0].DrawTo(Image.Bitmap, DstRect, SrcRect); // 0 is right
+  fSkillFont[R, 0].DrawTo(fImage.Bitmap, DstRect, SrcRect); // 0 is right
 
 end;
 
@@ -688,244 +691,7 @@ begin
 end;
 
 
-procedure TSkillPanelToolbar.ReadBitmapFromStyle;
-var
-  c: char; i: Integer;
-  TempBmp, TempBmp2: TBitmap32;
-  SrcRect: TRect;
-  MaskColor: TColor32;
 
-  BlankPanels: TBitmap32;
-  PanelIndex: Integer;
-const
-  SKILL_NAMES: array[0..16] of string = (
-                 'walker',
-                 'climber',
-                 'swimmer',
-                 'floater',
-                 'glider',
-                 'disarmer',
-                 'bomber',
-                 'stoner',
-                 'blocker',
-                 'platformer',
-                 'builder',
-                 'stacker',
-                 'basher',
-                 'fencer',
-                 'miner',
-                 'digger',
-                 'cloner'
-               );  
-
-  procedure MakeWhiteoutImage;
-  var
-    x, y: Integer;
-  begin
-    fSkillCountErase.SetSize(16, 23);
-    fSkillCountErase.Clear(0);
-    fSkillCountErase.BeginUpdate;
-    for x := 3 to 11 do
-      for y := 1 to 8 do
-        fSkillCountErase[x, y] := $FFF0D0D0;
-    fSkillCountErase.EndUpdate;
-  end;
-
-  procedure GetGraphic(aName: String; aDst: TBitmap32);
-  begin
-    aName := AppPath + SFGraphicsPanel + aName;
-    TPngInterface.LoadPngFile(aName, aDst);
-    TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(aName, '_mask.png'), MaskColor);
-  end;
-
-  procedure DrawBlankPanel(aDst: TBitmap32; aDigitArea: Boolean);
-  var
-    SrcRect: TRect;
-  begin
-    SrcRect := Rect(PanelIndex * 16, 0, (PanelIndex+1) * 16, 23);
-    aDst.SetSize(16, 23);
-    aDst.Clear(0);
-    BlankPanels.DrawTo(aDst, aDst.BoundsRect, SrcRect);
-    if aDigitArea then
-      fSkillCountErase.DrawTo(aDst);
-    Inc(PanelIndex);
-    if PanelIndex * 16 >= BlankPanels.Width then
-      PanelIndex := 0;
-  end;
-
-  procedure MakePanel(aDst: TBitmap32; aImageFile: String; aDigitArea: Boolean);
-  begin
-    DrawBlankPanel(aDst, aDigitArea);
-    GetGraphic(aImageFile, TempBmp2);
-    TempBmp2.DrawTo(aDst);
-  end;
-
-  procedure ExpandMinimap(aBmp: TBitmap32);
-  var
-    TempBmp: TBitmap32;
-  begin
-    if (aBmp.Height = 38) or GameParams.CompactSkillPanel then Exit;
-    TempBmp := TBitmap32.Create;
-    TempBmp.Assign(aBmp);
-    aBmp.SetSize(111, 38);
-    aBmp.Clear($FF000000);
-    TempBmp.DrawTo(aBmp, 0, 14);
-    TempBmp.DrawTo(aBmp, 0, 0, Rect(0, 0, 112, 16));
-    TempBmp.Free;
-  end;
-
-  procedure ShrinkMinimap(aBmp: TBitmap32);
-  var
-    TempBmp: TBitmap32;
-  begin
-    if (aBmp.Height = 24) or not GameParams.CompactSkillPanel then Exit;
-    TempBmp := TBitmap32.Create;
-    TempBmp.Assign(aBmp);
-    aBmp.SetSize(111, 24);
-    aBmp.Clear($FF000000);
-    TempBmp.DrawTo(aBmp, 0, 0, Rect(0, 0, 112, 12));
-    TempBmp.DrawTo(aBmp, 0, 12, Rect(0, 26, 112, 38));
-    TempBmp.Free;
-  end;
-
-begin
-
-
-  if not (fStyle is TBaseDosLemmingStyle) then
-    Exit;
-
-  MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
-
-  SetButtonRects;
-
-    PanelIndex := 0;
-
-    TempBmp := TBitmap32.Create;
-    TempBmp.DrawMode := dmBlend;
-    TempBmp.CombineMode := cmMerge;
-    TempBmp2 := TBitmap32.Create;
-    TempBmp2.DrawMode := dmBlend;
-    TempBmp2.CombineMode := cmMerge;
-
-    BlankPanels := TBitmap32.Create;
-    BlankPanels.DrawMode := dmBlend;
-
-    GetGraphic('skill_count_erase.png', fSkillCountErase);
-    fSkillCountErase.DrawMode := dmBlend;
-    fSkillCountErase.CombineMode := cmMerge;
-
-    GetGraphic('skill_panels.png', BlankPanels);
-
-    // Panel graphic
-    fOriginal.SetSize(PanelWidth, 40);
-    fOriginal.Clear($FF000000);
-
-    MakePanel(TempBmp, 'icon_rr_minus.png', true);
-    TempBmp.DrawTo(fOriginal, 1, 16);
-    MakePanel(TempBmp, 'icon_rr_plus.png', true);
-    TempBmp.DrawTo(fOriginal, 17, 16);
-
-    GetGraphic('minimap_region.png', fMinimapRegion);
-    ExpandMinimap(fMinimapRegion);
-    ShrinkMinimap(fMinimapRegion); // these two functions exit immediately if they're not needed, so no "if" statements needed here
-    if GameParams.CompactSkillPanel then
-      fMinimapRegion.DrawTo(fOriginal, 209, 16)
-    else
-      fMinimapRegion.DrawTo(fOriginal, 305, 1);
-
-    MakePanel(TempBmp, 'icon_ff.png', false);
-    TempBmp.DrawTo(fOriginal, 193, 16);
-
-    if not GameParams.CompactSkillPanel then
-    begin
-      MakePanel(TempBmp, 'icon_restart.png', false);
-      TempBmp.DrawTo(fOriginal, 209, 16);
-      MakePanel(TempBmp, 'icon_1fb.png', false);
-      TempBmp.DrawTo(fOriginal, 225, 16);
-      MakePanel(TempBmp, 'icon_1ff.png', false);
-      TempBmp.DrawTo(fOriginal, 241, 16);
-      MakePanel(TempBmp, 'icon_clearphysics.png', false);
-      TempBmp.DrawTo(fOriginal, 257, 16);
-      MakePanel(TempBmp, 'icon_directional.png', false);
-      TempBmp.DrawTo(fOriginal, 273, 16);
-      MakePanel(TempBmp, 'icon_load_replay.png', false);
-      TempBmp.DrawTo(fOriginal, 289, 16);
-    end;
-
-    GetGraphic('empty_slot.png', TempBmp);
-    for i := 0 to 7 do
-      TempBmp.DrawTo(fOriginal, (i * 16) + 33, 16);
-
-    MakePanel(TempBmp, 'icon_pause.png', false);
-    TempBmp.DrawTo(fOriginal, 161, 16);
-    MakePanel(TempBmp, 'icon_nuke.png', false);
-    TempBmp.DrawTo(fOriginal, 177, 16);
-
-    fImage.Bitmap.Assign(fOriginal);
-    fImage.Bitmap.Changed;
-
-    // Panel font
-    GetGraphic('panel_font.png', TempBmp);
-    SrcRect := Rect(0, 0, 8, 16);
-    for i := 0 to 44 do
-    begin
-      if i = 38 then
-      begin
-        // switch to panel_icons.png file at this point
-        GetGraphic('panel_icons.png', TempBmp);
-        SrcRect := Rect(0, 0, 8, 16);
-      end;
-      fInfoFont[i].SetSize(8, 16);
-      fInfoFont[i].Clear;
-      TempBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-      SrcRect.Right := SrcRect.Right + 8;
-      SrcRect.Left := SrcRect.Left + 8;
-    end;
-
-    // Skill icons
-    for i := 0 to 16 do
-      MakePanel(fSkillIcons[i], 'icon_' + SKILL_NAMES[i] + '.png', true);
-
-    // Skill counts
-    GetGraphic('skill_count_digits.png', TempBmp);
-    SrcRect := Rect(0, 0, 4, 8);
-    for c := '0' to '9' do
-    begin
-      fSkillFont[c, 0].SetSize(8, 8);
-      fSkillFont[c, 0].Clear(0);
-      fSkillFont[c, 1].SetSize(8, 8);
-      fSkillFont[c, 1].Clear(0);
-      TempBmp.DrawTo(fSkillFont[c, 1], 0, 0, SrcRect);
-      TempBmp.DrawTo(fSkillFont[c, 0], 4, 0, SrcRect);
-      fSkillFont[c, 0].DrawMode := dmBlend;
-      fSkillFont[c, 0].CombineMode := cmMerge;
-      fSkillFont[c, 1].DrawMode := dmBlend;
-      fSkillFont[c, 1].CombineMode := cmMerge;
-      SrcRect.Right := SrcRect.Right + 4;
-      SrcRect.Left := SrcRect.Left + 4;
-    end;
-
-    SrcRect.Right := SrcRect.Right + 4; // Position is correct at this point, but Infinite symbol is 8px wide not 4px
-    fSkillInfinite.SetSize(8, 8);
-    fSkillInfinite.Clear(0);
-    TempBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
-
-    SrcRect.Right := SrcRect.Right + 8;
-    SrcRect.Left := SrcRect.Left + 8;
-    fSkillLock.SetSize(8, 8);
-    fSkillLock.Clear(0);
-    TempBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
-
-    fSkillInfinite.DrawMode := dmBlend;
-    fSkillInfinite.CombineMode := cmMerge;
-    fSkillLock.DrawMode := dmBlend;
-    fSkillLock.CombineMode := cmMerge;
-
-    TempBmp.Free;
-    TempBmp2.Free;
-    BlankPanels.Free;
-
-end;
 
 
 procedure TSkillPanelToolbar.SetButtonRects;
@@ -963,14 +729,6 @@ begin
 
 end;
 
-procedure TSkillPanelToolbar.SetButtonRect(btn: TSkillPanelButton; bpos: Integer);
-var
-  R: TRect;
-begin
-  R := Rect(1, 16, 15, 38);
-  OffsetRect(R, 16 * (bpos - 1), 0);
-  fButtonRects[btn] := R;
-end;
 
 procedure TSkillPanelToolbar.SetInfoCursorLemming(const Lem: string; Num: Integer);
 var
@@ -1183,6 +941,76 @@ begin
   end;
 end;
 
+function TSkillPanelToolbar.GetButtonList: TStringArray;
+var
+  ButtonList: TStringArray;
+  i : Integer;
+begin
+  if GameParams.CompactSkillPanel then
+  begin
+    SetLength(ButtonList, 13);
+    ButtonList[0] := 'icon_rr_minus.png';
+    ButtonList[1] := 'icon_rr_plus.png';
+    for i := 2 to 9 do
+      ButtonList[i] := 'empty_slot.png';
+    ButtonList[10] := 'icon_pause.png';
+    ButtonList[11] := 'icon_nuke.png';
+    ButtonList[12] := 'icon_ff.png';
+  end
+  else
+  begin
+    SetLength(ButtonList, 19);
+    ButtonList[0] := 'icon_rr_minus.png';
+    ButtonList[1] := 'icon_rr_plus.png';
+    for i := 2 to 9 do
+      ButtonList[i] := 'empty_slot.png';
+    ButtonList[10] := 'icon_pause.png';
+    ButtonList[11] := 'icon_nuke.png';
+    ButtonList[12] := 'icon_ff.png';
+    ButtonList[13] := 'icon_restart.png';
+    ButtonList[14] := 'icon_1fb.png';
+    ButtonList[15] := 'icon_1ff.png';
+    ButtonList[16] := 'icon_clearphysics.png';
+    ButtonList[17] := 'icon_directional.png';
+    ButtonList[18] := 'icon_load_replay.png';
+  end;
+
+  Result := ButtonList;
+end;
+
+procedure TSkillPanelToolbar.ResizeMinimapRegion(MinimapRegion: TBitmap32);
+var
+  TempBmp: TBitmap32;
+begin
+  TempBmp := TBitmap32.Create;
+  TempBmp.Assign(MinimapRegion);
+
+  if (MinimapRegion.Height <> 38) and not GameParams.CompactSkillPanel then
+  begin
+    MinimapRegion.SetSize(111, 38);
+    MinimapRegion.Clear($FF000000);
+    TempBmp.DrawTo(MinimapRegion, 0, 14);
+    TempBmp.DrawTo(MinimapRegion, 0, 0, Rect(0, 0, 112, 16));
+  end;
+
+  if (MinimapRegion.Height <> 24) and GameParams.CompactSkillPanel then
+  begin
+    MinimapRegion.SetSize(111, 24);
+    MinimapRegion.Clear($FF000000);
+    TempBmp.DrawTo(MinimapRegion, 0, 0, Rect(0, 0, 112, 12));
+    TempBmp.DrawTo(MinimapRegion, 0, 12, Rect(0, 26, 112, 38));
+  end;
+
+  TempBmp.Free;
+end;
+
+function TSkillPanelToolbar.MinimapRect: TRect;
+begin
+  if GameParams.CompactSkillPanel then
+    Result := Rect(212, 18, 316, 38)
+  else
+    Result := Rect(308, 3, 412, 37);
+end;
 
 end.
 

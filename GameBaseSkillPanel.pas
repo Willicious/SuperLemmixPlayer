@@ -3,24 +3,36 @@ unit GameBaseSkillPanel;
 interface
 
 uses
-  Classes, Controls, Types, Math, Windows,
+  Classes, Controls, SysUtils, Types, Math, Windows,
+
   GR32, GR32_Image, GR32_Layers,
+  PngInterface,
   GameControl,
   GameWindowInterface,
-  LemCore, LemGame, LemLevel,
+  LemTypes, LemCore, LemStrings, LemNeoTheme,
+  LemGame, LemLevel,
   LemDosStyle, LemDosStructures;
 
 type
   TMinimapClickEvent = procedure(Sender: TObject; const P: TPoint) of object;
 
 type
+  TStringArray = array of string;
+
+type
   TBaseSkillPanel = class(TCustomControl)
 
   private
     fGame                   : TLemmingGame;
+    fIconBmp                : TBitmap32;   // for temporary storage
+
     function GetLevel       : TLevel;
 
     function CheckFrameSkip : Integer; // Checks the duration since the last click on the panel.
+
+    procedure LoadPanelFont;
+    procedure LoadSkillIcons;
+    procedure LoadSkillFont;
 
   protected
     fGameWindow           : IGameWindow;
@@ -33,7 +45,6 @@ type
     fMinimapImage  : TImage32;
 
     fOriginal      : TBitmap32;
-    fMinimapRegion : TBitmap32;
     fMinimapTemp   : TBitmap32;
     fMinimap       : TBitmap32;
 
@@ -55,7 +66,7 @@ type
 
     fHighlitSkill: TSkillPanelButton;
     fLastHighlitSkill: TSkillPanelButton; // to avoid sounds when shouldn't be played
-    fSkillCounts: Array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
+    fSkillCounts: array[TSkillPanelButton] of Integer; // includes "non-skill" buttons as error-protection, but also for the release rate
 
     fDoHorizontalScroll: Boolean;
     fDisplayWidth: Integer;
@@ -64,21 +75,31 @@ type
     fLastDrawnStr: string[38];
     fNewDrawStr: string[38];
 
-    function RectFirstButton: TRect; virtual;
+    function FirstButtonRect: TRect; virtual;
+    function ButtonRect(Index: Integer): TRect;
+    function MinimapRect: TRect; virtual; abstract;
+    function MinimapWidth: Integer;
+    function MinimapHeight: Integer;
 
+    function FirstSkillButtonIndex: Integer; virtual;
 
-
-    function GetZoom: Integer; virtual; abstract;
-    function GetMaxZoom: Integer;
-    procedure SetZoom(aZoom: Integer); virtual; abstract;
-    procedure SetMinimapScrollFreeze(aValue: Boolean);
-
+    procedure ReadBitmapFromStyle;
+    function GetButtonList: TStringArray; virtual; abstract;
+    procedure DrawBlankPanel(NumButtons: Integer);
+    procedure AddButtonImage(ButtonName: string; Index: Integer);
+    procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
 
     function PanelWidth: Integer; virtual; abstract;
     function PanelHeight: Integer; virtual; abstract;
 
     property Level : TLevel read GetLevel;
     property Game  : TLemmingGame read fGame;
+
+
+    function GetZoom: Integer; virtual; abstract;
+    function GetMaxZoom: Integer;
+    procedure SetZoom(aZoom: Integer); virtual; abstract;
+    procedure SetMinimapScrollFreeze(aValue: Boolean);
 
     procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual; abstract;
@@ -96,6 +117,7 @@ type
 
     procedure SetTimeLimit(Status: Boolean); virtual; abstract;
 
+    procedure SetButtonRects; virtual; abstract;
   public
     constructor Create(aOwner: TComponent); overload; override;
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
@@ -135,6 +157,13 @@ const
 
   TEXT_TEMPLATE = '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' ' + #94 + '_...' + ' ' + #95 +  '_.-..';
 
+const
+  SKILL_NAMES: array[0..NUM_SKILL_ICONS - 1] of string = (
+      'walker', 'climber', 'swimmer', 'floater', 'glider',
+      'disarmer', 'bomber', 'stoner', 'blocker', 'platformer',
+      'builder', 'stacker', 'basher', 'fencer', 'miner',
+      'digger', 'cloner' );
+
 implementation
 
 constructor TBaseSkillPanel.Create(aOwner: TComponent; aGameWindow: IGameWindow);
@@ -166,7 +195,10 @@ begin
   fMinimapImage.Parent := Self;
   fMinimapImage.RepaintMode := rmOptimizer;
 
-  fMinimapRegion := TBitmap32.Create;
+  fIconBmp := TBitmap32.Create;
+  fIconBmp.DrawMode := dmBlend;
+  fIconBmp.CombineMode := cmMerge;
+
   fMinimapTemp := TBitmap32.Create;
   fMinimap := TBitmap32.Create;
 
@@ -184,20 +216,39 @@ begin
   // Create font and skill panel images (but do not yet load them)
   SetLength(fInfoFont, NUM_FONT_CHARS);
   for i := 0 to NUM_FONT_CHARS - 1 do
+  begin
     fInfoFont[i] := TBitmap32.Create;
+
+  end;
 
   SetLength(fSkillIcons, NUM_SKILL_ICONS);
   for i := 0 to NUM_SKILL_ICONS - 1 do
+  begin
     fSkillIcons[i] := TBitmap32.Create;
+    fSkillIcons[i].DrawMode := dmBlend;
+    fSkillIcons[i].CombineMode := cmMerge;
+
+  end;
 
   for c := '0' to '9' do
     for i := 0 to 1 do
+    begin
       fSkillFont[c, i] := TBitmap32.Create;
+      fSkillFont[c, i].DrawMode := dmBlend;
+      fSkillFont[c, i].CombineMode := cmMerge;
+    end;
 
   fSkillInfinite := TBitmap32.Create;
-  fSkillCountErase := TBitmap32.Create;
-  fSkillLock := TBitmap32.Create;
+  fSkillInfinite.DrawMode := dmBlend;
+  fSkillInfinite.CombineMode := cmMerge;
 
+  fSkillCountErase := TBitmap32.Create;
+  fSkillCountErase.DrawMode := dmBlend;
+  fSkillCountErase.CombineMode := cmMerge;
+
+  fSkillLock := TBitmap32.Create;
+  fSkillLock.DrawMode := dmBlend;
+  fSkillLock.CombineMode := cmMerge;
   // WARNING:
   // THE FOLLOWING INFO NEED NO LONGER TO BE TRUE!!!
 
@@ -237,7 +288,6 @@ begin
   fSkillCountErase.Free;
   fSkillLock.Free;
 
-  fMinimapRegion.Free;
   fMinimapTemp.Free;
   fMinimap.Free;
 
@@ -245,37 +295,229 @@ begin
 
   fImage.Free;
   fMinimapImage.Free;
+  fIconBmp.Free;
   inherited;
 end;
 
 {-----------------------------------------
     Positions of buttons, ...
 -----------------------------------------}
-function TBaseSkillPanel.RectFirstButton: TRect;
+function TBaseSkillPanel.FirstButtonRect: TRect;
 begin
-  Result := Rect(33, 16, 47, 38);
+  Result := Rect(1, 16, 15, 38);
+end;
+
+function TBaseSkillPanel.ButtonRect(Index: Integer): TRect;
+begin
+  Result := FirstButtonRect;
+  OffsetRect(Result, Index * 16, 0);
+end;
+
+function TBaseSkillPanel.FirstSkillButtonIndex: Integer;
+begin
+  Result := 2;
+end;
+
+function TBaseSkillPanel.MinimapWidth: Integer;
+begin
+  Result := MinimapRect.Right - MinimapRect.Left;
+end;
+
+function TBaseSkillPanel.MinimapHeight: Integer;
+begin
+  Result := MinimapRect.Bottom - MinimapRect.Top;
 end;
 
 
 {-----------------------------------------
     Draw the initial skill panel
 -----------------------------------------}
+procedure GetGraphic(aName: String; aDst: TBitmap32);
+var
+  MaskColor: TColor32;
+begin
+  aName := AppPath + SFGraphicsPanel + aName;
+  MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
+
+  TPngInterface.LoadPngFile(aName, aDst);
+  TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(aName, '_mask.png'), MaskColor);
+end;
+
+// Pave the area of NumButtons buttons with the blank panel
+procedure TBaseSkillPanel.DrawBlankPanel(NumButtons: Integer);
+var
+  i: Integer;
+  BlankPanel: TBitmap32;
+  SrcRect, DstRect: TRect;
+  SrcWidth: Integer;
+begin
+  BlankPanel := TBitmap32.Create;
+  BlankPanel.DrawMode := dmBlend;
+  GetGraphic('skill_panels.png', BlankPanel);
+
+  SrcRect := BlankPanel.BoundsRect;
+  SrcWidth := SrcRect.Right - SrcRect.Left;
+  DstRect := BlankPanel.BoundsRect;
+  OffsetRect(DstRect, FirstButtonRect.Left, FirstButtonRect.Top);
+
+  // Draw full panels
+  for i := 1 to (NumButtons * 16 - 1) div SrcWidth do
+  begin
+    BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
+    OffsetRect(DstRect, SrcWidth, 0);
+  end;
+  // Draw partial panel at the end
+  DstRect.Right := ButtonRect(NumButtons - 1).Right + 1;
+  DstRect.Bottom := ButtonRect(NumButtons - 1).Bottom + 1;
+  SrcRect.Right := SrcRect.Left - DstRect.Left + DstRect.Right;
+  SrcRect.Bottom := SrcRect.Top - DstRect.Top + DstRect.Bottom;
+  BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
+
+  BlankPanel.Free;
+end;
+
+procedure TBaseSkillPanel.AddButtonImage(ButtonName: string; Index: Integer);
+begin
+  (*
+  // This was originally there, but it seems we don't need it.
+  if   (ButtonName = 'icon_rr_minus.png')
+    or (ButtonName = 'icon_rr_plus.png')
+    or (ButtonName = 'empty_slot.png') then
+    fSkillCountErase.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
+  *)
+
+  GetGraphic(ButtonName, fIconBmp);
+  fIconBmp.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
+end;
+
+procedure TBaseSkillPanel.LoadPanelFont;
+var
+  SrcRect: TRect;
+  i: Integer;
+begin
+  // Load first the characters
+  GetGraphic('panel_font.png', fIconBmp);
+  SrcRect := Rect(0, 0, 8, 16);
+  for i := 0 to 37 do
+  begin
+    fInfoFont[i].SetSize(8, 16);
+    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+    OffsetRect(SrcRect, 8, 0);
+  end;
+
+  // Load now the icons for the text panel
+  GetGraphic('panel_icons.png', fIconBmp);
+  SrcRect := Rect(0, 0, 8, 16);
+  for i := 38 to NUM_FONT_CHARS - 1 do
+  begin
+    fInfoFont[i].SetSize(8, 16);
+    fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
+    OffsetRect(SrcRect, 8, 0);
+  end;
+end;
+
+procedure TBaseSkillPanel.LoadSkillIcons;
+var
+  i: Integer;
+begin
+  // Load the erasing icon first
+  fSkillCountErase.SetSize(16, 23);
+  GetGraphic('skill_count_erase.png', fSkillCountErase);
+
+  for i := 0 to NUM_SKILL_ICONS - 1 do
+  begin
+    fSkillIcons[i].SetSize(16, 23);
+    GetGraphic('icon_' + SKILL_NAMES[i] + '.png', fSkillIcons[i]);
+  end;
+end;
+
+procedure TBaseSkillPanel.LoadSkillFont;
+var
+  c: Char;
+  i: Integer;
+  SrcRect: TRect;
+begin
+  GetGraphic('skill_count_digits.png', fIconBmp);
+  SrcRect := Rect(0, 0, 4, 8);
+  for c := '0' to '9' do
+  begin
+    for i := 0 to 1 do
+    begin
+      fSkillFont[c, i].SetSize(8, 8);
+      fIconBmp.DrawTo(fSkillFont[c, i], 4 - 4 * i, 0, SrcRect);
+    end;
+    OffsetRect(SrcRect, 4, 0);
+  end;
+
+  Inc(SrcRect.Right, 4); // Position is correct at this point, but Infinite symbol is 8px wide not 4px
+  fSkillInfinite.SetSize(8, 8);
+  fIconBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
+
+  OffsetRect(SrcRect, 8, 0);
+  fSkillLock.SetSize(8, 8);
+  fIconBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
+end;
+
+
+procedure TBaseSkillPanel.ReadBitmapFromStyle;
+var
+  ButtonList: TStringArray;
+  MinimapRegion : TBitmap32;
+  i: Integer;
+begin
+  if not (fStyle is TBaseDosLemmingStyle) then Exit;
+
+  SetButtonRects;
+
+  fOriginal.SetSize(PanelWidth, PanelHeight);
+  fOriginal.Clear($FF000000);
+
+  // Get array of buttons to draw
+  ButtonList := GetButtonList;
+  Assert(Assigned(ButtonList), 'SkillPanel: List of Buttons was nil');
+
+  // Draw empty panel
+  DrawBlankPanel(Length(ButtonList));
+
+  // Draw single buttons icons
+  for i := 0 to Length(ButtonList) - 1 do
+    AddButtonImage(ButtonList[i], i);
+
+  // Draw minimap region
+  MinimapRegion := TBitmap32.Create;
+  GetGraphic('minimap_region.png', MinimapRegion);
+  ResizeMinimapRegion(MinimapRegion);
+  MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - 3, MinimapRect.Top - 2);
+  MinimapRegion.Free;
+
+  // Copy the created bitmap
+  fImage.Bitmap.Assign(fOriginal);
+  fImage.Bitmap.Changed;
+
+  // Load the remaining graphics for icons, ...
+  LoadPanelFont;
+  LoadSkillIcons;
+  LoadSkillFont;
+end;
+
+
 procedure TBaseSkillPanel.SetSkillIcons;
 var
-  ButtonRect: TRect;
+  ButtonIndex: Integer;
+  ButRect: TRect;
   Skill: TSkillPanelButton;
 begin
-  ButtonRect := RectFirstButton;
+  ButtonIndex := FirstSkillButtonIndex;
   for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
   begin
     if Skill in Level.Info.Skillset then
     begin
-      fButtonRects[Skill] := ButtonRect;
+      ButRect := ButtonRect(ButtonIndex);
+      Inc(ButtonIndex);
 
-      fSkillIcons[Integer(Skill)].DrawTo(fImage.Bitmap, ButtonRect.Left, ButtonRect.Top);
-      fSkillIcons[Integer(Skill)].DrawTo(fOriginal, ButtonRect.Left, ButtonRect.Top);
-
-      OffsetRect(ButtonRect, 16, 0);
+      fButtonRects[Skill] := ButRect;
+      fSkillIcons[Integer(Skill)].DrawTo(fImage.Bitmap, ButRect.Left, ButRect.Top);
+      fSkillIcons[Integer(Skill)].DrawTo(fOriginal, ButRect.Left, ButRect.Top);
     end;
   end;
 end;
