@@ -37,8 +37,13 @@ type
   protected
     function GetButtonList: TPanelButtonArray; override;
 
+    function PanelWidth: Integer; override;
+    function PanelHeight: Integer; override;
+
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
+
+    // The following stuff still needs to be updated
 
     procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
@@ -68,9 +73,6 @@ type
 
     property DoHorizontalScroll: Boolean read fDoHorizontalScroll write fDoHorizontalScroll;
 
-    function PanelWidth: Integer; override;
-    function PanelHeight: Integer; override;
-
   public
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -81,10 +83,6 @@ type
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer); override;
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); override;
     procedure DrawMinimap; override;
-
-    procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer); override;
-
-
   end;
 
 const
@@ -812,26 +810,6 @@ begin
   Move(S[1], fNewDrawStr[37], 2);
 end;
 
-
-procedure TSkillPanelToolbar.SetStyleAndGraph(const Value: TBaseDosLemmingStyle;
-      aScale: Integer);
-begin
-  fImage.BeginUpdate;
-  fStyle := Value;
-  if fStyle <> nil then
-  begin
-    ReadBitmapFromStyle;
-  end;
-
-  fImage.ScaleMode := smScale;
-
-  fMinimapImage.ScaleMode := smScale;
-  fMinimapImage.BitmapAlign := baCustom;
-
-  fImage.EndUpdate;
-  fImage.Changed;
-  Invalidate;
-end;
 
 
 procedure TSkillPanelToolbar.DrawMinimap;

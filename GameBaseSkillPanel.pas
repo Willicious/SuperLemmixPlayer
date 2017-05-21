@@ -148,7 +148,6 @@ type
 
     property FrameSkip: Integer read CheckFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
-    procedure SetStyleAndGraph(const Value: TBaseDosLemmingStyle; aScale: Integer); virtual; abstract;
 
     procedure SetGame(const Value: TLemmingGame);
   end;
@@ -209,10 +208,13 @@ begin
   fImage := TImage32.Create(Self);
   fImage.Parent := Self;
   fImage.RepaintMode := rmOptimizer;
+  fImage.ScaleMode := smScale;
 
   fMinimapImage := TImage32.Create(Self);
   fMinimapImage.Parent := Self;
   fMinimapImage.RepaintMode := rmOptimizer;
+  fMinimapImage.ScaleMode := smScale;
+  fMinimapImage.BitmapAlign := baCustom;
 
   fIconBmp := TBitmap32.Create;
   fIconBmp.DrawMode := dmBlend;
@@ -521,10 +523,17 @@ procedure TBaseSkillPanel.PrepareForGame(ScaleFactor: Integer);
 begin
   // Sets game-dependant properties of the skill panel:
   // Size of the minimap, style, scaling factor, skills on the panel, ...
+  fImage.BeginUpdate;
+
   Minimap.SetSize(Level.Info.Width div 8, Level.Info.Height div 8);
-  SetStyleAndGraph(GameParams.Style, ScaleFactor);
+  fStyle := GameParams.Style;
+  if fStyle <> nil then ReadBitmapFromStyle;
   SetButtonRects;
   SetSkillIcons;
+
+  fImage.EndUpdate;
+  fImage.Changed;
+  Invalidate;
 end;
 
 procedure TBaseSkillPanel.SetSkillIcons;
