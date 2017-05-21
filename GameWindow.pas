@@ -269,10 +269,7 @@ begin
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
 
-  if SkillPanel.Zoom > SkillPanel.MaxZoom then
-    SkillPanel.Zoom := SkillPanel.MaxZoom
-  else if (SkillPanel.Zoom < fInternalZoom) and (SkillPanel.Zoom < SkillPanel.MaxZoom) then
-    SkillPanel.Zoom := fInternalZoom;
+  SkillPanel.Zoom := Max(SkillPanel.Zoom, fInternalZoom); // this checks for MaxZoom automatically.
 
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
   Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40), GameParams.Level.Info.Height * fInternalZoom);
