@@ -34,6 +34,9 @@ type
     procedure LoadSkillIcons;
     procedure LoadSkillFont;
 
+    function GetZoom: Integer;
+    procedure SetZoom(NewZoom: Integer);
+    function GetMaxZoom: Integer;
   protected
     fGameWindow           : IGameWindow;
     fImage                : TImage32;
@@ -88,6 +91,8 @@ type
     procedure DrawBlankPanel(NumButtons: Integer);
     procedure AddButtonImage(ButtonName: string; Index: Integer);
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
+    procedure SetButtonRects;
+    procedure SetSkillIcons;
 
     function PanelWidth: Integer; virtual; abstract;
     function PanelHeight: Integer; virtual; abstract;
@@ -96,9 +101,8 @@ type
     property Game  : TLemmingGame read fGame;
 
 
-    function GetZoom: Integer; virtual; abstract;
-    function GetMaxZoom: Integer;
-    procedure SetZoom(aZoom: Integer); virtual; abstract;
+
+
     procedure SetMinimapScrollFreeze(aValue: Boolean);
 
     procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
@@ -117,15 +121,15 @@ type
 
     procedure SetTimeLimit(Status: Boolean); virtual; abstract;
 
-    procedure SetButtonRects;
+
   public
     constructor Create(aOwner: TComponent); overload; override;
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
     destructor Destroy; override;
 
-    procedure PrepareForGame(ScaleFactor: Integer);
+    procedure PrepareForGame;
 
-    procedure SetSkillIcons;
+
     procedure RefreshInfo; virtual; abstract;
     procedure SetCursor(aCursor: TCursor); virtual; abstract;
 
@@ -519,7 +523,7 @@ begin
   LoadSkillFont;
 end;
 
-procedure TBaseSkillPanel.PrepareForGame(ScaleFactor: Integer);
+procedure TBaseSkillPanel.PrepareForGame;
 begin
   // Sets game-dependant properties of the skill panel:
   // Size of the minimap, style, scaling factor, skills on the panel, ...
@@ -608,6 +612,31 @@ end;
 function TBaseSkillPanel.GetLevel: TLevel;
 begin
   Result := GameParams.Level;
+end;
+
+procedure TBaseSkillPanel.SetZoom(NewZoom: Integer);
+begin
+  NewZoom := Max(Min(MaxZoom, NewZoom), 1);
+  if NewZoom = Trunc(fImage.Scale) then Exit;
+
+  Width := fGameWindow.GetWidth;    // for the whole skill panel
+  Height := fGameWindow.GetHeight;  // for the whole skill panel
+
+  fImage.Width := PanelWidth * NewZoom;
+  fImage.Height := PanelHeight * NewZoom;
+  fImage.Left := (Width - Image.Width) div 2;
+  fImage.Scale := NewZoom;
+
+  fMinimapImage.Width := MinimapWidth * NewZoom;
+  fMinimapImage.Height := MinimapHeight * NewZoom;
+  fMinimapImage.Left := MinimapRect.Left * NewZoom + Image.Left;
+  fMinimapImage.Top := MinimapRect.Top * NewZoom;
+  fMinimapImage.Scale := NewZoom;
+end;
+
+function TBaseSkillPanel.GetZoom: Integer;
+begin
+  Result := Trunc(fImage.Scale);
 end;
 
 function TBaseSkillPanel.GetMaxZoom: Integer;

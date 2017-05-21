@@ -1589,7 +1589,7 @@ begin
 
   Img.Scale := Sca;
 
-  SkillPanel.PrepareForGame(Sca);
+  SkillPanel.PrepareForGame;
 
   fMinimapBuffer.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
 

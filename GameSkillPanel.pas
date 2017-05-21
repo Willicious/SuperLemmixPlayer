@@ -57,9 +57,6 @@ type
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
 
-    procedure SetZoom(aZoom: Integer); override;
-    function GetZoom: Integer; override;
-
     procedure DrawNewStr;
 
     procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
@@ -157,37 +154,6 @@ begin
   inherited;
 end;
 
-procedure TSkillPanelToolbar.SetZoom(aZoom: Integer);
-begin
-  aZoom := Max(Min(MaxZoom, aZoom), 1);
-
-  Width := fGameWindow.GetWidth;
-  Height := fGameWindow.GetHeight;
-
-  if aZoom = Trunc(Image.Scale) then Exit;
-  Image.Width := PanelWidth * aZoom;
-  Image.Height := 40 * aZoom;
-  Image.Left := (Width - Image.Width) div 2;
-  Image.Scale := aZoom;
-  if GameParams.CompactSkillPanel then
-  begin
-    fMinimapImage.Width := COMPACT_MINIMAP_WIDTH * aZoom;
-    fMinimapImage.Height := COMPACT_MINIMAP_HEIGHT * aZoom;
-    fMinimapImage.Left := (COMPACT_MINIMAP_X * aZoom) + Image.Left;
-    fMinimapImage.Top := COMPACT_MINIMAP_Y * aZoom;
-  end else begin
-    fMinimapImage.Width := MINIMAP_WIDTH * aZoom;
-    fMinimapImage.Height := MINIMAP_HEIGHT * aZoom;
-    fMinimapImage.Left := (MINIMAP_X * aZoom) + Image.Left;
-    fMinimapImage.Top := MINIMAP_Y * aZoom;
-  end;
-  fMinimapImage.Scale := aZoom;
-end;
-
-function TSkillPanelToolbar.GetZoom: Integer;
-begin
-  Result := Trunc(Image.Scale);
-end;
 
 procedure TSkillPanelToolbar.SetCursor(aCursor: TCursor);
 begin
