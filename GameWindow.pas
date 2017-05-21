@@ -1051,7 +1051,7 @@ begin
   Img.OnMouseUp := Img_MouseUp;
 
   SkillPanel.SetGame(fGame);
-  SkillPanel.OnMinimapClick := SkillPanel_MinimapClick;
+  SkillPanel.SetOnMinimapClick(SkillPanel_MinimapClick);
   Application.OnIdle := Application_Idle;
 
   fSaveList := TLemmingGameSavedStateList.Create(true);
@@ -1632,13 +1632,13 @@ procedure TGameWindow.SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
 var
   O: Single;
 begin
-  O := -P.X * fInternalZoom;
+  O := -P.X * 8 * fInternalZoom;
   O :=  O + Img.Width div 2;
   if O < MinScroll then O := MinScroll;
   if O > MaxScroll then O := MaxScroll;
   Img.OffSetHorz := O;
 
-  O := -P.Y * fInternalZoom;
+  O := -P.Y * 8 * fInternalZoom;
   O :=  O + Img.Height div 2;
   if O < MinVScroll then O := MinVScroll;
   if O > MaxVScroll then O := MaxVScroll;

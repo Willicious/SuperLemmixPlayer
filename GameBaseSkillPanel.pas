@@ -107,18 +107,18 @@ type
     function MousePosMinimap(X, Y: Integer): TPoint;
 
     procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
     procedure ImgMouseMove(Sender: TObject;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual; abstract;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
     procedure ImgMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);  virtual; abstract;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
     procedure MinimapMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);  virtual; abstract;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
     procedure MinimapMouseMove(Sender: TObject;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);  virtual; abstract;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);  virtual; abstract;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
     procedure SetTimeLimit(Status: Boolean); virtual; abstract;
 
@@ -135,6 +135,8 @@ type
 
     procedure RefreshInfo; virtual; abstract;
     procedure SetCursor(aCursor: TCursor); virtual; abstract;
+    procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
+    procedure SetGame(const Value: TLemmingGame);
 
     property Image: TImage32 read fImage;
 
@@ -142,7 +144,7 @@ type
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean); virtual; abstract;
     procedure DrawMinimap; virtual; abstract;
 
-    property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
+    //property OnMinimapClick: TMinimapClickEvent read fOnMinimapClick write fOnMinimapClick;
 
     property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
     property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
@@ -156,7 +158,7 @@ type
     property FrameSkip: Integer read CheckFrameSkip;
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
 
-    procedure SetGame(const Value: TLemmingGame);
+
   end;
 
 const
@@ -729,6 +731,63 @@ begin
   end;
 end;
 
+procedure TBaseSkillPanel.ImgMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+begin
+  if fGameWindow.DoSuspendCursor then Exit;
+
+  Game.HitTestAutoFail := true;
+  Game.HitTest;
+  fGameWindow.SetCurrentCursor;
+
+  MinimapScrollFreeze := false;
+end;
+
+procedure TBaseSkillPanel.ImgMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+begin
+  Game.SetSelectedSkill(spbSlower, False);
+  Game.SetSelectedSkill(spbFaster, False);
+end;
+
+procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton;
+    Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+begin
+  fGameWindow.ApplyMouseTrap;
+  fMinimapScrollFreeze := true;
+
+  if Assigned(fOnMinimapClick) then
+    fOnMinimapClick(Self, MousePosMinimap(X, Y));
+end;
+
+procedure TBaseSkillPanel.MinimapMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+var
+  Pos: TPoint;
+begin
+  if fGameWindow.DoSuspendCursor then Exit;
+
+  Game.HitTestAutoFail := true;
+  Game.HitTest;
+  fGameWindow.SetCurrentCursor;
+
+  if not fMinimapScrollFreeze then Exit;
+  if not (ssLeft in Shift) then Exit;
+
+  Pos := MousePosMinimap(X, Y);
+  if PtInRect(fMinimapImage.Bitmap.BoundsRect, Pos) and Assigned(fOnMinimapClick) then
+    fOnMinimapClick(Self, Pos)
+  else
+    MinimapMouseUp(Sender, mbLeft, Shift, X, Y, Layer);
+end;
+
+procedure TBaseSkillPanel.MinimapMouseUp(Sender: TObject; Button: TMouseButton;
+    Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+begin
+  fMinimapScrollFreeze := false;
+  DrawMinimap;
+end;
+
 
 function TBaseSkillPanel.CheckFrameSkip: Integer;
 var
@@ -797,6 +856,11 @@ procedure TBaseSkillPanel.SetGame(const Value: TLemmingGame);
 begin
   fGame := Value;
   SetTimeLimit(Level.Info.HasTimeLimit);
+end;
+
+procedure TBaseSkillPanel.SetOnMinimapClick(const Value: TMinimapClickEvent);
+begin
+  fOnMinimapClick := Value;
 end;
 
 end.

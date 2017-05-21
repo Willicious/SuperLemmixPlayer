@@ -45,16 +45,6 @@ type
 
     // The following stuff still needs to be updated
 
-    procedure ImgMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
-    procedure ImgMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
-
-    procedure MinimapMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
-    procedure MinimapMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
-    procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
-
     procedure DrawNewStr;
 
     procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
@@ -463,84 +453,6 @@ begin
     SetReplayMark(1);
 end;
 
-
-procedure TSkillPanelToolbar.ImgMouseMove(Sender: TObject;
-  Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-begin
-  if fGameWindow.DoSuspendCursor then Exit;
-
-  Game.HitTestAutoFail := true;
-  Game.HitTest;
-  fGameWindow.SetCurrentCursor;
-
-  MinimapScrollFreeze := false;
-end;
-
-procedure TSkillPanelToolbar.ImgMouseUp(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
-  Layer: TCustomLayer);
-begin
-   Game.SetSelectedSkill(spbSlower, False);
-   Game.SetSelectedSkill(spbFaster, False);
-end;
-
-procedure TSkillPanelToolbar.MinimapMouseDown(Sender: TObject; Button: TMouseButton;
-    Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-{-------------------------------------------------------------------------------
-  Mouse behaviour of toolbar.
-  o Minimap scrolling
-  o button clicks
--------------------------------------------------------------------------------}
-var
-  P: TPoint;
-begin
-  P := fMinimapImage.ControlToBitmap(Point(X, Y));
-  P.X := P.X * 8;
-  P.Y := P.Y * 8;
-  fGameWindow.ApplyMouseTrap;
-
-  fMinimapScrollFreeze := true;
-
-  if Assigned(fOnMiniMapClick) then
-    fOnMinimapClick(Self, P);
-end;
-
-procedure TSkillPanelToolbar.MinimapMouseMove(Sender: TObject;
-  Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-var
-  P: TPoint;
-begin
-  if fGameWindow.DoSuspendCursor then Exit;
-
-  Game.HitTestAutoFail := true;
-  Game.HitTest;
-  fGameWindow.SetCurrentCursor;
-
-  if not fMinimapScrollFreeze then Exit;
-
-  if ssLeft in Shift then
-  begin
-    P := fMinimapImage.ControlToBitmap(Point(X, Y));
-    if not PtInRect(fMinimapImage.Bitmap.BoundsRect, P) then
-    begin
-      MinimapMouseUp(Sender, mbLeft, Shift, X, Y, Layer);
-      Exit;
-    end;
-
-    P.X := P.X * 8;
-    P.Y := P.Y * 8;
-    if Assigned(fOnMiniMapClick) then
-      fOnMinimapClick(Self, P);
-  end;
-
-end;
-
-procedure TSkillPanelToolbar.MinimapMouseUp(Sender: TObject; Button: TMouseButton;
-    Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-begin
-  fMinimapScrollFreeze := false;
-  DrawMinimap;
-end;
 
 procedure TSkillPanelToolbar.SetInfoCursorLemming(const Lem: string; Num: Integer);
 var
