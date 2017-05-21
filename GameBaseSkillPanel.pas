@@ -75,6 +75,14 @@ type
     fLastDrawnStr: string[38];
     fNewDrawStr: string[38];
 
+    // Global stuff
+    property Level : TLevel read GetLevel;
+    property Game  : TLemmingGame read fGame;
+
+    function PanelWidth: Integer; virtual; abstract;
+    function PanelHeight: Integer; virtual; abstract;
+
+    // Helper functions for positioning
     function FirstButtonRect: TRect; virtual;
     function ButtonRect(Index: Integer): TRect;
     function HalfButtonRect(Index: Integer; IsUpper: Boolean): TRect;
@@ -84,6 +92,7 @@ type
 
     function FirstSkillButtonIndex: Integer; virtual;
 
+    // Drawing routines for the buttons and minimap
     procedure ReadBitmapFromStyle;
     function GetButtonList: TPanelButtonArray; virtual; abstract;
     procedure DrawBlankPanel(NumButtons: Integer);
@@ -91,18 +100,19 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
     procedure SetButtonRects;
     procedure SetSkillIcons;
+    procedure DrawHightlight(aButton: TSkillPanelButton); virtual;
+    procedure RemoveHightlight(aButton: TSkillPanelButton); virtual;
 
-    function PanelWidth: Integer; virtual; abstract;
-    function PanelHeight: Integer; virtual; abstract;
+    // Drawing routines for the info string at the top
+    function DrawStringLength: Integer; virtual; abstract;
+    function DrawStringTemplate: string; virtual; abstract;
 
-    property Level : TLevel read GetLevel;
-    property Game  : TLemmingGame read fGame;
+    procedure DrawNewStr;
 
-
-    procedure SetMinimapScrollFreeze(aValue: Boolean);
-
+    // Event handlers for user interaction and related routines.
     function MousePos(X, Y: Integer): TPoint;
     function MousePosMinimap(X, Y: Integer): TPoint;
+    procedure SetMinimapScrollFreeze(aValue: Boolean);
 
     procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
@@ -118,10 +128,10 @@ type
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
+    // Not sure where this belongs...
     procedure SetTimeLimit(Status: Boolean); virtual; abstract;
 
-    procedure DrawHightlight(aButton: TSkillPanelButton); virtual;
-    procedure RemoveHightlight(aButton: TSkillPanelButton); virtual;
+
   public
     constructor Create(aOwner: TComponent); overload; override;
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
@@ -158,8 +168,6 @@ type
 const
   NUM_SKILL_ICONS = 17;
   NUM_FONT_CHARS = 45;
-
-  TEXT_TEMPLATE = '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' ' + #94 + '_...' + ' ' + #95 +  '_.-..';
 
 const
   SKILL_NAMES: array[0..NUM_SKILL_ICONS - 1] of string = (
@@ -248,7 +256,6 @@ begin
   for i := 0 to NUM_FONT_CHARS - 1 do
   begin
     fInfoFont[i] := TBitmap32.Create;
-
   end;
 
   SetLength(fSkillIcons, NUM_SKILL_ICONS);
@@ -257,7 +264,6 @@ begin
     fSkillIcons[i] := TBitmap32.Create;
     fSkillIcons[i].DrawMode := dmBlend;
     fSkillIcons[i].CombineMode := cmMerge;
-
   end;
 
   for c := '0' to '9' do
@@ -279,20 +285,11 @@ begin
   fSkillLock := TBitmap32.Create;
   fSkillLock.DrawMode := dmBlend;
   fSkillLock.CombineMode := cmMerge;
-  // WARNING:
-  // THE FOLLOWING INFO NEED NO LONGER TO BE TRUE!!!
 
-  // info positions types:
-  // stringspositions=cursor,out,in,time=1,15,24,32
-  // 1. BUILDER(23)             1/14               0..13      14
-  // 2. OUT 28                  15/23              14..22      9
-  // 3. IN 99%                  24/31              23..30      8
-  // 4. TIME 2-31               32/40              31..39      9
-                                                           //=40
-  fLastDrawnStr := StringOfChar(' ', 38);
-  fNewDrawStr := TEXT_TEMPLATE;
+  fLastDrawnStr := StringOfChar(' ', DrawStringLength);
+  fNewDrawStr := DrawStringTemplate;
 
-  Assert(Length(fNewDrawStr) = 38, 'SkillPanel.Create: InfoString has not length 38 characters.');
+  Assert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
 
   fRectColor := DosVgaColorToColor32(DosInLevelPalette[3]);
   fHighlitSkill := spbNone;
@@ -748,7 +745,37 @@ begin
   end;
 end;
 
+{-----------------------------------------
+    Info string at top
+-----------------------------------------}
+procedure TBaseSkillPanel.DrawNewStr;
+var
+  Old, New: char;
+  i, CharID: integer;
+begin
+  for i := 1 to DrawStringLength do
+  begin
+    Old := fLastDrawnStr[i];
+    New := fNewDrawStr[i];
 
+    if Old <> New then
+    begin
+      case New of
+        '%':        CharID := 0;
+        '0'..'9':   CharID := ord(New) - ord('0') + 1;
+        '-':        CharID := 11;
+        'A'..'Z':   CharID := ord(New) - ord('A') + 12;
+        #91 .. #97: CharID := ord(New) - ord('A') + 12;
+      else CharID := -1;
+      end;
+
+      if CharID >= 0 then
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0)
+      else // draw black rectangle
+        fImage.Bitmap.FillRectS((i - 1) * 8, 0, i * 8, 16, 0);
+    end;
+  end;
+end;
 
 {-----------------------------------------
     User interaction

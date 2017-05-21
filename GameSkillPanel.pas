@@ -43,9 +43,12 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); override;
     function MinimapRect: TRect; override;
 
+    function DrawStringLength: Integer; override;
+    function DrawStringTemplate: string; override;
+
     // The following stuff still needs to be updated
 
-    procedure DrawNewStr;
+    //procedure DrawNewStr;
 
     procedure SetInfoCursorLemming(const Lem: string; Num: Integer);
     procedure SetInfoLemHatch(Num: Integer; Blinking: Boolean = false);
@@ -113,6 +116,11 @@ begin
   inherited Create(aOwner, aGameWindow);
 end;
 
+destructor TSkillPanelToolbar.Destroy;
+begin
+  inherited;
+end;
+
 function TSkillPanelToolbar.PanelWidth: Integer;
 begin
   if GameParams.CompactSkillPanel then
@@ -130,13 +138,23 @@ begin
 end;
 
 
-destructor TSkillPanelToolbar.Destroy;
+function TSkillPanelToolbar.DrawStringLength: Integer;
 begin
-  inherited;
+  Result := 38;
+end;
+
+function TSkillPanelToolbar.DrawStringTemplate: string;
+begin
+  Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
+                           + #94 + '_...' + ' ' + #95 +  '_.-..';
 end;
 
 
 
+
+
+
+           (*
 procedure TSkillPanelToolbar.DrawNewStr;
 var
   O, N: char;
@@ -203,7 +221,7 @@ begin
 
   end;
 end;
-
+      *)
 
 procedure TSkillPanelToolbar.RefreshInfo;
 var
