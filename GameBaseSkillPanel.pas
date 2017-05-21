@@ -146,7 +146,7 @@ type
 
     procedure PrepareForGame;
 
-    procedure RefreshInfo; virtual; abstract;
+    procedure RefreshInfo;
     procedure SetCursor(aCursor: TCursor);
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
     procedure SetGame(const Value: TLemmingGame);
@@ -205,6 +205,7 @@ implementation
 uses
   UMisc,
   GameSound,
+  LemReplay,
   LemmixHotkeys;
 
 
@@ -782,6 +783,34 @@ begin
         fImage.Bitmap.FillRectS((i - 1) * 8, 0, i * 8, 16, 0);
     end;
   end;
+end;
+
+procedure TBaseSkillPanel.RefreshInfo;
+var
+  i : TSkillPanelButton;
+begin
+  fIsBlinkFrame := (GetTickCount mod 1000) > 499;
+
+  // Text info string
+  CreateNewInfoString;
+  DrawNewStr;
+  fLastDrawnStr := fNewDrawStr;
+
+  // Skill and RR numbers
+  for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    DrawSkillCount(i, Game.SkillCount[i]);
+
+  DrawSkillCount(spbSlower, Level.Info.ReleaseRate);
+  DrawSkillCount(spbFaster, Game.CurrentReleaseRate);
+
+  // Highlight selected button
+  if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
+  begin
+    DrawButtonSelector(fHighlitSkill, false);
+    DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
+  end;
+
+  DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
 end;
 
 function TBaseSkillPanel.GetSkillString(L: TLemming): String;

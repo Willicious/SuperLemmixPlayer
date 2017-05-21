@@ -32,8 +32,6 @@ uses
 
 type
   TSkillPanelToolbar = class(TBaseSkillPanel)
-  private
-
   protected
     function GetButtonList: TPanelButtonArray; override;
 
@@ -46,17 +44,9 @@ type
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
-
-    // The following stuff still needs to be updated
-
-    //procedure SetReplayMark(Status: Integer);
-    //procedure SetTimeLimit(Status: Boolean); override;
-
   public
     constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
-
-    procedure RefreshInfo; override;
   end;
 
 const
@@ -153,36 +143,6 @@ begin
   SetInfoTime(34, 37);
 end;
 
-
-
-
-procedure TSkillPanelToolbar.RefreshInfo;
-var
-  i: TSkillPanelButton;
-  TimeRemaining: Integer;
-  DoTimerBlink: Boolean;
-
-begin
-  fIsBlinkFrame := (GetTickCount mod 1000) > 499;
-
-  CreateNewInfoString;
-  DrawNewStr;
-  fLastDrawnStr := fNewDrawStr;
-
-  for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    DrawSkillCount(i, Game.SkillCount[i]);
-
-  DrawSkillCount(spbSlower, Level.Info.ReleaseRate);
-  DrawSkillCount(spbFaster, Game.CurrentReleaseRate);
-
-  if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
-  begin
-    DrawButtonSelector(fHighlitSkill, false);
-    DrawButtonSelector(Game.RenderInterface.SelectedSkill, true);
-  end; // ugly code, but it's temporary
-
-  DrawButtonSelector(spbNuke, (Game.UserSetNuking or (Game.ReplayManager.Assignment[Game.CurrentIteration, 0] is TReplayNuke)));
-end;
 
 
 function TSkillPanelToolbar.GetButtonList: TPanelButtonArray;
