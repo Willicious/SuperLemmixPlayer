@@ -5314,8 +5314,9 @@ end;
 function TLemmingGame.GetIsReplayingNoRR(isPaused: Boolean): Boolean;
 begin
   // Ignore RR changes at the current frame when paused
+  // Moreover ignore changes at the current frame, when not paused
   Result :=     (fCurrentIteration < fReplayManager.LastActionFrame)
-            or  ((fReplayManager.Assignment[fCurrentIteration, 0] <> nil) and not (fReplayManager.Assignment[fCurrentIteration, 0] is TReplayNuke))
+            or  ((fReplayManager.Assignment[fCurrentIteration, 0] <> nil) and isPaused and not (fReplayManager.Assignment[fCurrentIteration, 0] is TReplayNuke))
             or  ((fReplayManager.ReleaseRateChange[fCurrentIteration, 0] <> nil) and not isPaused);
 end;
 
