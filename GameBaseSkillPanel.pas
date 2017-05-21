@@ -101,12 +101,13 @@ type
     property Game  : TLemmingGame read fGame;
 
 
-
-
     procedure SetMinimapScrollFreeze(aValue: Boolean);
 
+    function MousePos(X, Y: Integer): TPoint;
+    function MousePosMinimap(X, Y: Integer): TPoint;
+
     procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual; abstract;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure ImgMouseMove(Sender: TObject;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual; abstract;
     procedure ImgMouseUp(Sender: TObject; Button: TMouseButton;
@@ -120,6 +121,8 @@ type
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);  virtual; abstract;
 
     procedure SetTimeLimit(Status: Boolean); virtual; abstract;
+
+
 
 
   public
@@ -187,6 +190,10 @@ const
 
 
 implementation
+
+uses
+  LemmixHotkeys;
+
 
 constructor TBaseSkillPanel.Create(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
@@ -587,6 +594,127 @@ end;
 {-----------------------------------------
     User interaction
 -----------------------------------------}
+function TBaseSkillPanel.MousePos(X, Y: Integer): TPoint;
+begin
+  Result := fImage.ControlToBitmap(Point(X, Y));
+end;
+
+function TBaseSkillPanel.MousePosMinimap(X, Y: Integer): TPoint;
+begin
+  Result := fMinimapImage.ControlToBitmap(Point(X, Y));
+end;
+
+procedure TBaseSkillPanel.ImgMouseDown(Sender: TObject; Button: TMouseButton;
+    Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+var
+  aButton: TSkillPanelButton;
+  i: TSkillPanelButton;
+begin
+  fGameWindow.ApplyMouseTrap;
+  if fGameWindow.IsHyperSpeed then Exit;
+
+  // Get pressed button
+  aButton := spbNone;
+  for i := Low(TSkillPanelButton) to High(TSkillPanelButton) do
+  begin
+    if PtInRect(fButtonRects[i], MousePos(X, Y)) then
+    begin
+      aButton := i;
+      Break;
+    end;
+  end;
+
+  // Do some global stuff
+  if aButton = spbNone then Exit;
+  if (aButton = spbNuke) and not (ssDouble in Shift) then Exit;
+  if (aButton in [spbSlower, spbFaster, spbNuke]) and GameParams.ExplicitCancel then Exit;
+
+  if Game.Replaying and not Level.Info.ReleaseRateLocked then
+  begin
+    if    ((aButton = spbSlower) and (Game.CurrentReleaseRate > Level.Info.ReleaseRate))
+       or ((aButton = spbFaster) and (Game.CurrentReleaseRate < 99)) then
+      Game.RegainControl;
+  end;
+
+  // Do button-specific actions
+  case aButton of
+    spbSlower: Game.SetSelectedSkill(i, True, (Button = mbRight));
+    spbFaster: Game.SetSelectedSkill(i, True, (Button = mbRight));
+    spbPause:
+      begin
+        if fGameWindow.GameSpeed = gspPause then
+          fGameWindow.GameSpeed := gspNormal
+        else
+          fGameWindow.GameSpeed := gspPause;
+      end;
+    spbNuke:
+      begin
+        Game.RegainControl;
+        Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
+      end;
+    spbFastForward:
+      begin
+        if fGameWindow.GameSpeed = gspFF then
+          fGameWindow.GameSpeed := gspNormal
+        else if fGameWindow.GameSpeed = gspNormal then
+          fGameWindow.GameSpeed := gspFF;
+      end;
+    spbRestart: fGameWindow.GotoSaveState(0, -1);
+    spbBackOneFrame:
+      begin
+        if Button = mbLeft then
+        begin
+          fGameWindow.GotoSaveState(Game.CurrentIteration - 1);
+          fLastClickFrameskip := GetTickCount;
+        end else if Button = mbRight then
+          fGameWindow.GotoSaveState(Game.CurrentIteration - 17)
+        else if Button = mbMiddle then
+          fGameWindow.GotoSaveState(Game.CurrentIteration - 85);
+      end;
+    spbForwardOneFrame:
+      begin
+        if Button = mbLeft then
+        begin
+          fGameWindow.SetForceUpdateOneFrame(True);
+          fLastClickFrameskip := GetTickCount;
+        end else if Button = mbRight then
+          fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 17)
+        else if Button = mbMiddle then
+          fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
+      end;
+    spbClearPhysics: fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
+    spbDirLeft:
+      begin
+        if fSelectDx = -1 then
+        begin
+          fSelectDx := 0;
+          DrawButtonSelector(spbDirLeft, false);
+        end else begin
+          fSelectDx := -1;
+          DrawButtonSelector(spbDirLeft, true);
+          DrawButtonSelector(spbDirRight, false);
+        end;
+      end;
+    spbDirRight:
+      begin
+        if fSelectDx = 1 then
+        begin
+          fSelectDx := 0;
+          DrawButtonSelector(spbDirRight, false);
+        end else begin
+          fSelectDx := 1;
+          DrawButtonSelector(spbDirLeft, false);
+          DrawButtonSelector(spbDirRight, true);
+        end;
+      end;
+    spbLoadReplay: fGameWindow.LoadReplay;
+    spbNone: {nothing};
+  else // usual skill buttons
+    Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
+  end;
+end;
+
+
 function TBaseSkillPanel.CheckFrameSkip: Integer;
 var
   P: TPoint;

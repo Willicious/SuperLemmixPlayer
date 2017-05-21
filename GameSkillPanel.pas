@@ -45,8 +45,6 @@ type
 
     // The following stuff still needs to be updated
 
-    procedure ImgMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
     procedure ImgMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
     procedure ImgMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); override;
@@ -465,114 +463,6 @@ begin
     SetReplayMark(1);
 end;
 
-
-
-procedure TSkillPanelToolbar.ImgMouseDown(Sender: TObject; Button: TMouseButton;
-    Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-{-------------------------------------------------------------------------------
-  Mouse behaviour of toolbar.
-  o Minimap scrolling
-  o button clicks
--------------------------------------------------------------------------------}
-var
-  P: TPoint;
-  i: TSkillPanelButton;
-  R: PRect;
-  Exec: Boolean;
-begin
-  P := Image.ControlToBitmap(Point(X, Y));
-  fGameWindow.ApplyMouseTrap;
-
-  if fGameWindow.IsHyperSpeed then
-    Exit;
-
-  for i := Low(TSkillPanelButton) to High(TSkillPanelButton) do // "ignore" spbNone
-  begin
-    R := @fButtonRects[i];
-    if PtInRectEx(R^, P) then
-    begin
-
-      if GameParams.ExplicitCancel and (i in [spbSlower, spbFaster, spbNuke]) then Exit;
-
-      if (Game.Replaying) and (i in [spbSlower, spbFaster]) and not (Game.Level.Info.ReleaseRateLocked) then
-      begin
-        if ((i = spbSlower) and (Game.CurrentReleaseRate > Level.Info.ReleaseRate))
-        or ((i = spbFaster) and (Game.CurrentReleaseRate < 99)) then
-          Game.RegainControl;
-      end;
-
-      Exec := true;
-      if i = spbNuke then
-        Exec := ssDouble in Shift;
-
-      if Exec then
-        if i < spbFastForward then // handled by TLemmingGame alone
-        begin
-          if i in [spbNuke] then
-            Game.RegainControl;
-
-          if i in [spbSlower, spbFaster] then
-            Game.SetSelectedSkill(i, True, (Button = mbRight))
-          else begin
-            if (i = spbPause) then
-            begin
-              if fGameWindow.GameSpeed = gspPause then
-                fGameWindow.GameSpeed := gspNormal
-              else
-                fGameWindow.GameSpeed := gspPause;
-            end else
-              Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
-          end;
-        end else begin // need special handling
-          case i of
-            spbFastForward: case fGameWindow.GameSpeed of
-                              gspNormal: fGameWindow.GameSpeed := gspFF;
-                              gspFF: fGameWindow.GameSpeed := gspNormal;
-                            end;
-            spbRestart: fGameWindow.GotoSaveState(0, -1);
-            spbBackOneFrame: if Button = mbLeft then
-                             begin
-                               fGameWindow.GotoSaveState(Game.CurrentIteration - 1);
-                               fLastClickFrameskip := GetTickCount;
-                             end else if Button = mbRight then
-                               fGameWindow.GotoSaveState(Game.CurrentIteration - 17)
-                             else if Button = mbMiddle then
-                               fGameWindow.GotoSaveState(Game.CurrentIteration - 85);
-            spbForwardOneFrame: if Button = mbLeft then
-                                begin
-                                  fGameWindow.SetForceUpdateOneFrame(True);
-                                  fLastClickFrameskip := GetTickCount;
-                                end else if Button = mbRight then
-                                  fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 17)
-                                else if Button = mbMiddle then
-                                  fGameWindow.SetHyperSpeedTarget(Game.CurrentIteration + 85);
-            spbClearPhysics: fGameWindow.ClearPhysics := not fGameWindow.ClearPhysics;
-            spbDirLeft: if fSelectDx = -1 then
-                        begin
-                          fSelectDx := 0;
-                          DrawButtonSelector(spbDirLeft, false);
-                        end else begin
-                          fSelectDx := -1;
-                          DrawButtonSelector(spbDirLeft, true);
-                          DrawButtonSelector(spbDirRight, false);
-                        end;
-            spbDirRight: if fSelectDx = 1 then
-                        begin
-                          fSelectDx := 0;
-                          DrawButtonSelector(spbDirRight, false);
-                        end else begin
-                          fSelectDx := 1;
-                          DrawButtonSelector(spbDirLeft, false);
-                          DrawButtonSelector(spbDirRight, true);
-                        end;
-            spbLoadReplay: fGameWindow.LoadReplay;
-          end;
-        end;
-      Exit;
-    end;
-  end;
-
-end;
 
 procedure TSkillPanelToolbar.ImgMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
