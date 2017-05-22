@@ -414,8 +414,10 @@ begin
           if Game.MessageQueue.NextMessage.MessageType = GAMEMSG_FINISH then
           begin
             if Game.GameResultRec.gSuccess then
-              fReplays[i].ReplayResult := CR_PASS
-            else
+            begin
+              fReplays[i].ReplayResult := CR_PASS;
+              GameParams.SaveSystem.CompleteLevel(LR, LL);
+            end else
               fReplays[i].ReplayResult := CR_FAIL;
           end;
         if fReplays[i].ReplayResult <> CR_UNDETERMINED then Break;
