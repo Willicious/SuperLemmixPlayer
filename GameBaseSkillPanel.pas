@@ -80,6 +80,7 @@ type
     function MinimapHeight: Integer;
 
     function FirstSkillButtonIndex: Integer; virtual;
+    function LastSkillButtonIndex: Integer; virtual;
 
     // Drawing routines for the buttons and minimap
     procedure ReadBitmapFromStyle;
@@ -347,6 +348,11 @@ begin
   Result := 2;
 end;
 
+function TBaseSkillPanel.LastSkillButtonIndex: Integer;
+begin
+  Result := (FirstSkillButtonIndex + 8) - 1; // we might want to use a CONST here, in case we later allow more than 8 skills per level
+end;
+
 function TBaseSkillPanel.MinimapWidth: Integer;
 begin
   Result := MinimapRect.Right - MinimapRect.Left;
@@ -395,6 +401,7 @@ begin
     BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
     OffsetRect(DstRect, SrcWidth, 0);
   end;
+
   // Draw partial panel at the end
   DstRect.Right := ButtonRect(NumButtons - 1).Right + 1;
   DstRect.Bottom := ButtonRect(NumButtons - 1).Bottom + 1;
@@ -442,14 +449,10 @@ var
   i: Integer;
 begin
   // Load the erasing icon first
-  fSkillCountErase.SetSize(16, 23);
   GetGraphic('skill_count_erase.png', fSkillCountErase);
 
   for i := 0 to NUM_SKILL_ICONS - 1 do
-  begin
-    fSkillIcons[i].SetSize(16, 23);
     GetGraphic('icon_' + SKILL_NAMES[i] + '.png', fSkillIcons[i]);
-  end;
 end;
 
 procedure TBaseSkillPanel.LoadSkillFont;
@@ -539,6 +542,7 @@ var
   ButtonIndex: Integer;
   ButRect: TRect;
   Skill: TSkillPanelButton;
+  EmptySlot: TBitmap32;
 begin
   ButtonIndex := FirstSkillButtonIndex;
   for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
@@ -551,6 +555,26 @@ begin
       fButtonRects[Skill] := ButRect;
       fSkillIcons[Integer(Skill)].DrawTo(fImage.Bitmap, ButRect.Left, ButRect.Top);
       fSkillIcons[Integer(Skill)].DrawTo(fOriginal, ButRect.Left, ButRect.Top);
+    end;
+  end;
+
+  if ButtonIndex <= LastSkillButtonIndex then
+  begin
+    EmptySlot := TBitmap32.Create;
+    try
+      GetGraphic('empty_slot.png', EmptySlot);
+      EmptySlot.DrawMode := dmBlend;
+      while ButtonIndex <= LastSkillButtonIndex do
+      begin
+        ButRect := ButtonRect(ButtonIndex);
+        Inc(ButtonIndex);
+        fImage.Bitmap.FillRectS(ButRect, $FF000000);
+        fOriginal.FillRectS(ButRect, $FF000000);
+        EmptySlot.DrawTo(fImage.Bitmap, ButRect.Left, ButRect.Top);
+        EmptySlot.DrawTo(fOriginal, ButRect.Left, ButRect.Top);
+      end;
+    finally
+      EmptySlot.Free;
     end;
   end;
 end;
