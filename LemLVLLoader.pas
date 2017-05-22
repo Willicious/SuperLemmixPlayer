@@ -745,7 +745,10 @@ begin
         aLevel.Clear;
         ReleaseRate      := Buf.ReleaseRate;
         ReleaseRateLocked := (Buf.LevelOptions2 and 1) <> 0;
-        Background := IntToStr(Buf.BgIndex);
+        if Buf.BgIndex = $FF then
+          Background := ''
+        else
+          Background := IntToStr(Buf.BgIndex);
 
         LemmingsCount    := Buf.LemmingsCount;
         RescueCount      := Buf.RescueCount;
