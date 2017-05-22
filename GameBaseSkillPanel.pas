@@ -414,6 +414,7 @@ end;
 
 procedure TBaseSkillPanel.AddButtonImage(ButtonName: string; Index: Integer);
 begin
+  if (Index >= FirstSkillButtonIndex) and (Index <= LastSkillButtonIndex) then Exit; // otherwise, "empty_slot.png" placeholder causes some graphical glitches
   GetGraphic(ButtonName, fIconBmp);
   fIconBmp.DrawTo(fOriginal, ButtonRect(Index).Left, ButtonRect(Index).Top);
 end;
