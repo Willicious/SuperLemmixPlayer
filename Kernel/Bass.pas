@@ -854,25 +854,25 @@ begin
   STags := BASS_ChannelGetTags(channel, BASS_TAG_OGG);
   LStart := -1;
   LLength := -1;
-try
-  while STags <> '' do
-  begin
-    if (AnsiUpperCase(AnsiLeftStr(STags, 9)) = 'LOOPSTART') and (LStart = -1) then
+  try
+    while STags <> '' do
     begin
-      Inc(STags, 10);
-      LStart := StrToint(STags);
+      if (AnsiUpperCase(AnsiLeftStr(STags, 9)) = 'LOOPSTART') and (LStart = -1) then
+      begin
+        Inc(STags, 10);
+        LStart := StrToint(STags);
+      end;
+      if (AnsiUpperCase(AnsiLeftStr(STags, 10)) = 'LOOPLENGTH') and (LLength = -1) then
+      begin
+        Inc(STags, 11);
+        LLength := StrToInt(STags);
+      end;
+      Inc(STags, Length(STags) + 1);
     end;
-    if (AnsiUpperCase(AnsiLeftStr(STags, 10)) = 'LOOPLENGTH') and (LLength = -1) then
-    begin
-      Inc(STags, 11);
-      LLength := StrToInt(STags);
-    end;
-    Inc(STags, Length(STags) + 1);
+  except
+    //nothing here. it's just to surpress the error message that comes up when
+    //all tags have been processed
   end;
-except
-  //nothing here. it's just to surpress the error message that comes up when
-  //all tags have been processed
-end;
   if LStart = -1 then LLength := -1;
   if LLength = -1 then LStart := -1;
   if LStart <> -1 then
@@ -894,7 +894,8 @@ end;
 
 procedure BASS_DoLoop(handle: HSYNC; channel, data: DWORD; user: POINTER); stdcall;
 begin
-  BASS_ChannelSetPosition(channel, fLoopStart, BASS_POS_BYTE);
+  if fLoopStart >= 0 then
+    BASS_ChannelSetPosition(channel, fLoopStart, BASS_POS_BYTE);
 end;
 
 procedure BASS_MarkChannelFree(handle: HSYNC; channel, data: DWORD; user: POINTER); stdcall;
