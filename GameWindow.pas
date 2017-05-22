@@ -132,6 +132,7 @@ type
     IdealScrollTimeMS    : Cardinal;          // scroll speed in milliseconds
     PrevCallTime         : Cardinal;          // last time we did something in idle
     PrevScrollTime       : Cardinal;          // last time we scrolled in idle
+    PrevPausedRRTime     : Cardinal;          // last time we updated RR in idle
     MouseClipRect        : TRect;             // we clip the mouse when there is more space
     CanPlay              : Boolean;           // use in idle en set to false whenever we don't want to play
     HCursors             : array of array[1..CURSOR_TYPES] of HCURSOR; // 0 = normal, 1 = on lemming
@@ -433,7 +434,7 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-  Fast, ForceOne, TimeForFrame, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
+  Fast, ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
   PanelFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
@@ -466,6 +467,7 @@ begin
   fForceUpdateOneFrame := (PanelFrameSkip > 0);
   CurrTime := TimeGetTime;
   TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
+  TimeForPausedRR := (Pause) and (CurrTime - PrevPausedRRTime > IdealFrameTimeMS);
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
   Hyper := IsHyperSpeed;
@@ -476,14 +478,16 @@ begin
   if not Hyper or Fast then
     Sleep(1);
 
-  if TimeForFrame or TimeForScroll then
+  if TimeForFrame or TimeForScroll or TimeForPausedRR then
   begin
     fRenderInterface.ForceUpdate := false;
 
     // only in paused mode adjust RR. If not paused it's updated per frame.
-    if fGameSpeed = gspPause then
-      if TimeForScroll or ForceOne then
-        CheckAdjustReleaseRate;
+    if TimeForPausedRR then
+    begin
+      CheckAdjustReleaseRate;
+      PrevPausedRRTime := CurrTime;
+    end;
 
     // set new screen position
     if TimeForScroll then
