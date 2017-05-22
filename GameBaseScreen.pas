@@ -148,6 +148,10 @@ begin
   Self.OnKeyDown := nil;
   Self.OnKeyPress := nil;
   Self.OnClick := nil;
+  Self.OnMouseDown := nil;
+  Self.OnMouseMove := nil;
+  ScreenImg.OnMouseDown := nil;
+  ScreenImg.OnMouseMove := nil;
   Application.OnIdle := nil;
   fScreenIsClosing := True;
   if fCloseDelay > 0 then
