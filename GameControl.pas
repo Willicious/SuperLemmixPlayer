@@ -186,7 +186,7 @@ type
     fTestVgaspecFile : String;
     fTestLevelFile : String;
 
-    SysDat               : TSysDatRec;
+    //SysDat               : TSysDatRec;
     ReplayCheckPath: String;
 
     constructor Create;
@@ -256,6 +256,7 @@ var
 implementation
 
 uses
+  SharedGlobals,
   GameWindow, //for EXTRA_ZOOM_LEVELS const
   GameSound;
 
@@ -574,7 +575,7 @@ begin
   MiscOptions := DEF_MISCOPTIONS;
   PostLevelSoundOptions := [plsVictory, plsFailure];
 
-  BaseLevelPack := TNeoLevelGroup.Create(nil);
+  BaseLevelPack := TNeoLevelGroup.Create(nil, ExtractFilePath(GameFile));
 
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
@@ -592,12 +593,14 @@ begin
   fTalismans := TTalismans.Create;
 
 
+  (*
   TempStream := CreateDataStream('talisman.dat', ldtLemmings);
   if TempStream <> nil then
   begin
     fTalismans.LoadFromStream(TempStream);
     TempStream.Free;
   end;
+  *)
 
   fTalismans.SortTalismans;
 

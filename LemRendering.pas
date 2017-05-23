@@ -1809,6 +1809,8 @@ end;
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
 
+  Inf.Level := aLevel;
+
   if not NoOutput then
   begin
     fTheme.Load(aLevel.Info.GraphicSetName);

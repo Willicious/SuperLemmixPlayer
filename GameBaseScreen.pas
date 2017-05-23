@@ -9,7 +9,6 @@ uses
   FBaseDosForm,
   GameControl,
   LemDosStructures,
-  LemDosMainDat,
   LemSystemMessages,
   LemStrings, PngInterface, LemTypes;
 
@@ -37,7 +36,6 @@ type
   -------------------------------------------------------------------------------}
   TGameBaseScreen = class(TBaseDosForm)
   private
-    fMainDatExtractor    : TMainDatExtractor;
     fScreenImg           : TImage32;
     fBackGround          : TBitmap32;
     fBackBuffer          : TBitmap32; // general purpose buffer
@@ -52,7 +50,6 @@ type
     procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
     property PurpleFont: TPurpleFont read fPurpleFont;
-    property MainDatExtractor: TMainDatExtractor read fMainDatExtractor;
     property ScreenIsClosing: Boolean read fScreenIsClosing;
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
   public
@@ -183,7 +180,6 @@ begin
 
   fBackGround := TBitmap32.Create;
   fBackBuffer := TBitmap32.Create;
-  fMainDatExtractor := TMainDatExtractor.Create;
 
   ScreenImg.Cursor := crNone;
 end;
@@ -191,7 +187,6 @@ end;
 destructor TGameBaseScreen.Destroy;
 begin
   fBackGround.Free;
-  fMainDatExtractor.Free;
   fPurpleFont.Free;
   fBackBuffer.Free;
   inherited Destroy;
@@ -325,42 +320,40 @@ end;
 
 procedure TGameBaseScreen.ExtractBackGround;
 begin
-  fMainDatExtractor.ExtractBrownBackGround(fBackGround);
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', fBackground);
 end;
 
 procedure TGameBaseScreen.ExtractPurpleFont;
 var
-  Pal: TArrayOfColor32;
+  //Pal: TArrayOfColor32;
   i: Integer;
   TempBMP: TBitmap32;
 begin
-  Pal := GetDosMainMenuPaletteColors32;
-  with MainDatExtractor do
+  //Pal := GetDosMainMenuPaletteColors32;
+
+  TempBMP := TBitmap32.Create;
+
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP);
+  for i := 0 to PURPLEFONTCOUNT-7 do
   begin
-    TempBMP := TBitmap32.Create;
-
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP);
-    for i := 0 to PURPLEFONTCOUNT-7 do
-    begin
-      fPurpleFont.fBitmaps[i].SetSize(16, 16);
-      fPurpleFont.fBitmaps[i].Clear(0);
-      TempBMP.DrawTo(fPurpleFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 16));
-      fPurpleFont.fBitmaps[i].DrawMode := dmBlend;
-      fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
-    end;
-
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP);
-    for i := 0 to 5 do
-    begin
-      fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);
-      fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].Clear(0);
-      TempBMP.DrawTo(fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i], 0, 0, Rect(48 * (i mod 2), 48 * (i div 2), 48 * ((i mod 2) + 1), 48 * ((i div 2) + 1)));
-      fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].DrawMode := dmBlend;
-      fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].CombineMode := cmMerge;
-    end;
-
-    TempBMP.Free;
+    fPurpleFont.fBitmaps[i].SetSize(16, 16);
+    fPurpleFont.fBitmaps[i].Clear(0);
+    TempBMP.DrawTo(fPurpleFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 16));
+    fPurpleFont.fBitmaps[i].DrawMode := dmBlend;
+    fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
   end;
+
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP);
+  for i := 0 to 5 do
+  begin
+    fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);
+    fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].Clear(0);
+    TempBMP.DrawTo(fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i], 0, 0, Rect(48 * (i mod 2), 48 * (i div 2), 48 * ((i mod 2) + 1), 48 * ((i div 2) + 1)));
+    fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].DrawMode := dmBlend;
+    fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].CombineMode := cmMerge;
+  end;
+
+  TempBMP.Free;
 end;
 
 procedure TGameBaseScreen.InitializeImageSizeAndPosition(aWidth, aHeight: Integer);
@@ -389,7 +382,6 @@ end;
 procedure TGameBaseScreen.PrepareGameParams;
 begin
   inherited;
-  fMainDatExtractor.FileName := GameParams.MainDatFile;
 end;
 
 procedure TGameBaseScreen.TileBackgroundBitmap(X, Y: Integer; Dst: TBitmap32 = nil);

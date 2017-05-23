@@ -129,8 +129,11 @@ begin
 
   fn := ExtractFilePath(ParamStr(0)) + fn;
 
+  (*
   TextFileStream := CreateDataStream(fn, ldtText);
   if TextFileStream = nil then Exit;
+  *)
+  Exit; // temporary
 
   while (TextFileStream.Read(b, 1) <> 0) and (lfc < 18) do
   begin

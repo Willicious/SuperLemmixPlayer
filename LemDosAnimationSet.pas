@@ -14,7 +14,6 @@ uses
   LemDosStructures,
   LemDosCmp,
   {LemDosBmp,}
-  LemDosMainDat,
   LemMetaAnimation,
   LemAnimationSet,
   LemNeoParser,
@@ -301,12 +300,10 @@ var
   iAnimation, i: Integer;
   MLA: TMetaLemmingAnimation;
   X: Integer;
-  MainExtractor: TMainDatExtractor;
 
 begin
   Fn := MainDataFile;
   TempBitmap := TBitmap32.Create;
-  MainExtractor := TMainDatExtractor.Create;
 
   // MEGA KLUDGY compatibility hack. This must be tidied later!
   if fLemmingPrefix = 'lemming' then fLemmingPrefix := 'default';
@@ -404,7 +401,6 @@ begin
 
   finally
     TempBitmap.Free;
-    MainExtractor.Free;
   end;
 end;
 

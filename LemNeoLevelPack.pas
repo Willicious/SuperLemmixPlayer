@@ -59,7 +59,7 @@ type
       procedure SetFolderName(aValue: String);
       function GetFullPath: String;
 
-      procedure LoadFromMetaInfo;
+      procedure LoadFromMetaInfo(aPath: String = '');
       procedure LoadFromSearchRec;
 
       procedure LoadLevel(aLine: TParserLine; const aIteration: Integer);
@@ -69,7 +69,7 @@ type
 
       function GetRecursiveLevelCount: Integer;
     public
-      constructor Create(aParentGroup: TNeoLevelGroup);
+      constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
 
       procedure EnsureUpdated;
@@ -103,7 +103,7 @@ type
       function GetItem(Index: Integer): TNeoLevelGroup;
     public
       constructor Create(aOwner: TNeoLevelGroup);
-      function Add: TNeoLevelGroup;
+      function Add(aFolder: String): TNeoLevelGroup;
       property Items[Index: Integer]: TNeoLevelGroup read GetItem; default;
       property List;
   end;
@@ -178,7 +178,7 @@ procedure TNeoLevelEntry.EnsureUpdated;
 var
   CRC: Cardinal;
 begin
-  CRC := CalculateCRC32(fFilename);
+  CRC := CalculateCRC32(Path);
   if CRC <> fLastCRC32 then Wipe;
   fLastCRC32 := CRC;
 end;
@@ -202,9 +202,12 @@ end;
 
 { TNeoLevelGroup }
 
-constructor TNeoLevelGroup.Create(aParentGroup: TNeoLevelGroup);
+constructor TNeoLevelGroup.Create(aParentGroup: TNeoLevelGroup; aPath: String);
 begin
   inherited Create;
+
+  fFolder := aPath;
+
   fChildGroups := TNeoLevelGroups.Create(self);
   fLevels := TNeoLevelEntries.Create(self);
   fParentGroup := aParentGroup;
@@ -213,6 +216,8 @@ begin
     fPanelStyle := 'default'
   else
     fPanelStyle := fParentGroup.PanelStyle;
+
+  Load;
 end;
 
 destructor TNeoLevelGroup.Destroy;
@@ -242,9 +247,8 @@ procedure TNeoLevelGroup.LoadSubGroup(aSection: TParserSection; const aIteration
 var
   G: TNeoLevelGroup;
 begin
-  G := fChildGroups.Add;
+  G := fChildGroups.Add(aSection.LineTrimString['folder']);
   G.Name := aSection.LineTrimString['name'];
-  G.Folder := aSection.LineTrimString['folder'];
   G.Load;
 end;
 
@@ -259,6 +263,8 @@ begin
     MainSec := Parser.MainSection;
     MainSec.DoForEachSection('rank', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
+    if MainSec.LineTrimString['name'] <> '' then
+      fName := MainSec.LineTrimString['name'];
     fPanelStyle := MainSec.LineTrimString['panel'];
 
     // we do NOT want to sort alphabetically here, we want them to stay in the order
@@ -277,9 +283,8 @@ begin
   if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
   begin
     repeat
-      G := fChildGroups.Add;
+      G := fChildGroups.Add(SearchRec.Name);
       G.Name := SearchRec.Name;
-      G.Folder := SearchRec.Name;
       G.Load;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
@@ -317,7 +322,9 @@ end;
 
 function TNeoLevelGroup.GetFullPath: String;
 begin
-  if fParentGroup = nil then
+  if Pos(':', fFolder) <> 0 then
+    Result := ''
+  else if fParentGroup = nil then
     Result := AppPath + SFLevels
   else
     Result := fParentGroup.Path;
@@ -371,9 +378,9 @@ begin
   fOwner := aOwner;
 end;
 
-function TNeoLevelGroups.Add: TNeoLevelGroup;
+function TNeoLevelGroups.Add(aFolder: String): TNeoLevelGroup;
 begin
-  Result := TNeoLevelGroup.Create(fOwner);
+  Result := TNeoLevelGroup.Create(fOwner, aFolder);
   inherited Add(Result);
 end;
 

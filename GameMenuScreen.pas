@@ -26,12 +26,10 @@ type
     gmbLogo,
     gmbPlay,         // 1st row, 1st button
     gmbLevelCode,    // 1st row, 2nd button
-    gmbMusic,        // 1st row, 3d button
+    gmbConfig,        // 1st row, 3d button
     gmbSection,      // 1st row, 4th button
     gmbExit,         // 2nd row, 1st button
-    gmbNavigation,   // 2nd row, 2nd button
-    gmbMusicNote,    // drawn in gmbMusic
-    gmbFXSound,      // drawn in gmbMusic
+    gmbTalisman,   // 2nd row, 2nd button
     gmbGameSection1, // mayhem/havoc    drawn in gmbSection
     gmbGameSection2, // taxing/wicked   drawn in gmbSection
     gmbGameSection3, // tricky/wild     drawn in gmbSection
@@ -60,9 +58,7 @@ const
     (X:136;  Y:236),
     (X:392;  Y:140),                  // gmbSection
     (X:392;  Y:236),
-    (X:264;  Y:236),                  // gmbNavigation
-    (X:200 + 27;    Y:236 + 26),      // gmbMusicNote
-    (X:200 + 27;    Y:236 + 26),      // gmbFXSign,
+    (X:264;  Y:236),                  // gmbTalisman
     (X:392 + 32;    Y:140 + 24),      // gmbSection1
     (X:392 + 32;    Y:140 + 24),      // gmbSection2
     (X:392 + 32;    Y:140 + 24),      // gmbSection3
@@ -210,13 +206,13 @@ var
   P: TPoint;
 begin
   P := GameMenuBitmapPositions[aElement];
-  // adjust gmbMusic to right, gmbExit to left, if no talismans
-  // and don't draw gmbNavigation at all
+  // adjust gmbConfig to right, gmbExit to left, if no talismans
+  // and don't draw gmbTalisman at all
   if GameParams.Talismans.Count = 0 then
     case aElement of
-      gmbMusic: P.X := P.X + 64;
+      gmbConfig: P.X := P.X + 64;
       gmbExit: P.X := P.X - 64;
-      gmbNavigation: Exit;
+      gmbTalisman: Exit;
     end;
   BitmapElements[aElement].DrawTo(ScreenImg.Bitmap, P.X, P.Y);
 end;
@@ -260,20 +256,17 @@ begin
     ExtractBackGround;
     ExtractPurpleFont;
 
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbLogo], 3, $134C0, 632, 94, 19, MainPal);
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbPlay], 3, $35BE6, 120, 61, 19, MainPal);
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbLevelCode], 3, $39FCF, 120, 61, 19, MainPal);
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbMusic], 3, $3E3B8, 120, 61, 19, MainPal);
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbSection], 3, $427A1, 120, 61, 19, MainPal);
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbExit], 3, $46B8A, 120, 61, 19, MainPal);
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbNavigation], 3, $4AF73, 120, 61, 19, MainPal);
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbMusicNote], 3, $4F35C, 64, 31, 19, MainPal);
-    MainDatExtractor.ExtractBitmap(BitmapElements[gmbFXSound], 3, $505C4, 64, 31, 19, MainPal);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'logo.png', BitmapElements[gmbLogo]);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_play.png', BitmapElements[gmbPlay]);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_code.png', BitmapElements[gmbLevelCode]);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_config.png', BitmapElements[gmbConfig]);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_rank.png', BitmapElements[gmbSection]);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_quit.png', BitmapElements[gmbExit]);
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_talisman.png', BitmapElements[gmbTalisman]);
 
     //@styledef
-    for i := 1 to 15 do
-        MainDatExtractor.ExtractBitmap(BitmapElements[TGameMenuBitmap(Integer(gmbGameSection1) + i - 1)], 5,
-                                       ($1209 * (i - 1)), 72, 27, 19, MainPal);
+    for i := 0 to 14 do
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'rank_' + LeadZeroStr(i+1, 2) + '.png', BitmapElements[TGameMenuBitmap(Integer(gmbGameSection1) + i)]);
 
     LoadScrollerGraphics;
 
@@ -293,10 +286,10 @@ begin
     DrawBitmapElement(gmbLogo);
     DrawBitmapElement(gmbPlay);
     DrawBitmapElement(gmbLevelCode);
-    DrawBitmapElement(gmbMusic);
+    DrawBitmapElement(gmbConfig);
     DrawBitmapElement(gmbSection);
     DrawBitmapElement(gmbExit);
-    DrawBitmapElement(gmbNavigation);
+    DrawBitmapElement(gmbTalisman);
 
     // re-capture the gmbSection, because we'll probably need to re-draw it later
     // to prevent writing over section graphics with other semitransparent ones
@@ -312,7 +305,7 @@ begin
     // program text
     S := CurrentVersionString;
     {$ifdef exp}if COMMIT_ID <> '' then S := S + ':' + Uppercase(COMMIT_ID);{$endif}
-    DrawPurpleTextCentered(ScreenImg.Bitmap, BuildText(GameParams.SysDat.PackName) + #13 + BuildText(GameParams.SysDat.SecondLine) + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText);
+    DrawPurpleTextCentered(ScreenImg.Bitmap, GameParams.BaseLevelPack.Name + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText);
 
     // credits animation
     DrawWorkerLemmings(0);
@@ -343,7 +336,7 @@ begin
   begin
     Bmp := TBitmap32.Create;
     BitmapElements[E] := Bmp;
-    if not (E in [gmbMusicNote, gmbFXSound, gmbGameSection1, gmbGameSection2, gmbGameSection3, gmbGameSection4,
+    if not (E in [gmbGameSection1, gmbGameSection2, gmbGameSection3, gmbGameSection4,
       gmbGameSection5, gmbGameSection6, gmbGameSection7, gmbGameSection8, gmbGameSection9, gmbGameSection10,
       gmbGameSection11, gmbGameSection12, gmbGameSection13, gmbGameSection14, gmbGameSection15])
     then Bmp.DrawMode := dmTransparent;
@@ -519,14 +512,14 @@ begin
   LastSection := GameParams.BaseLevelPack.Children.Count - 1;
   CurrentSection := GameParams.CurrentLevel.dRank;
 
-  CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} BuildText(GameParams.SysDat.PackName) + #13;
-  for i := 0 to 15 do
+  CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} GameParams.BaseLevelPack.Name + #13;
+  (*for i := 0 to 15 do
   begin
     k := BuildText(GameParams.SysDat.ScrollerTexts[i]);
     if k <> '' then
       CreditList.Text := CreditList.Text + k + #13;
   end;
-  CreditList.Text := CreditList.Text + SCredits;
+  CreditList.Text := CreditList.Text + SCredits;*)
   SetNextCredit;
 
   if Assigned(GlobalGame) then

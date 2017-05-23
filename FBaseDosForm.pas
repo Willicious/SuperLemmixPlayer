@@ -67,7 +67,7 @@ begin
   if GameParams.fTestMode then
     Caption := 'NeoLemmix - Single Level'
   else
-    Caption := Trim(GameParams.SysDat.PackName);
+    Caption := GameParams.BaseLevelPack.Name;
 
   Parent := GameParams.MainForm;
   ClientWidth := GameParams.MainForm.ClientWidth;

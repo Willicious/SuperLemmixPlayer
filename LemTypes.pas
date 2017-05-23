@@ -232,7 +232,7 @@ begin
   aFilename := ExtractFileName(aFilename); // there should never be a call to this with a path;
                                            // but just in case.
 
-  IsSingleLevelMode := LowerCase(ExtractFileExt(GameFile)) <> '.nxp'; // need a tidier way, but this does work
+  IsSingleLevelMode := LowerCase(ExtractFileExt(GameFile)) <> '.nxlp'; // need a tidier way, but this does work
 
   Result := TMemoryStream.Create;
 

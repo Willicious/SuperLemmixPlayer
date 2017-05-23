@@ -12,7 +12,6 @@ uses
   Math,
   LemStrings,
   LemNeoParser,
-  LemDosMainDat,
   LemPiece,
   LemTerrain,
   LemInteractiveObject,

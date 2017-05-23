@@ -7,7 +7,7 @@ uses
   SharedGlobals,
   LemSystemMessages,
   LemTypes, LemRendering, LemLevel,
-  TalisData, LemDosMainDAT, LemStrings, LemNeoParserOld,
+  TalisData, LemStrings, LemNeoParserOld,
   GameControl, LemVersion,
   GameSound,          // initial creation
   LemNeoPieceManager, // initial creation
@@ -35,7 +35,7 @@ type
     fActiveForm: TGameBaseScreen;
     DoneBringToFront: Boolean; // We don't want to steal focus all the time. This is just to fix the
                                // bug where it doesn't initially come to front.
-    function CheckCompatible(var Target: String): TNxCompatibility;
+    //function CheckCompatible(var Target: String): TNxCompatibility;
     procedure BringToFront;
   public
     constructor Create(aOwner: TComponent); override;
@@ -70,6 +70,7 @@ uses
 
 { TAppController }
 
+(*
 function TAppController.CheckCompatible(var Target: String): TNxCompatibility;
 var
   SL: TStringList;
@@ -131,6 +132,7 @@ begin
 
   SL.Free;
 end;
+*)
 
 procedure TAppController.BringToFront;
 var
@@ -151,7 +153,6 @@ constructor TAppController.Create(aOwner: TComponent);
 var
   OpenDlg: TOpenDialog;
   DoSingleLevel: Boolean;
-  fMainDatExtractor : TMainDatExtractor;
   Target: String;
   ShowWarning: Boolean;
 
@@ -190,7 +191,7 @@ begin
       OpenDlg := TOpenDialog.Create(self);
       OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
       OpenDlg.Title := 'Select Level Pack';
-      OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxp, *.lvl, *.nxlv)|*.nxp;*.lvl;*.nxlv|NeoLemmix Level Pack (*.nxp)|*.nxp|NeoLemmix Level (*.lvl, *.nxlv)|*.lvl;*.nxlv';
+      OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxlp, *.lvl, *.nxlv)|*.nxlp;*.lvl;*.nxlv|NeoLemmix Level Pack (*.nxlp)|*.nxlp|NeoLemmix Level (*.lvl, *.nxlv)|*.lvl;*.nxlv';
       OpenDlg.InitialDir := ExtractFilePath(ParamStr(0));
       if not OpenDlg.Execute then
         fLoadSuccess := false;
@@ -198,8 +199,9 @@ begin
       OpenDlg.Free;
     end;
 
-    if LowerCase(ExtractFileExt(GameFile)) = '.nxp' then
+    if LowerCase(ExtractFileExt(GameFile)) = '.nxlp' then
     begin
+      (*
       DoSingleLevel := false;
       Target := '';
       IsHalting := false;
@@ -238,6 +240,9 @@ begin
                      Application.Terminate();
                    end;
       end;
+      *)
+      DoSingleLevel := false;
+      IsHalting := false;
     end else begin
       // If it's not an NXP file, treat it as a LVL file. This may not always be the case (eg. could be an NXP file with a wrong
       // extension, or a non-supported file), but aside from wrong extensions, this would mean an unsupported file anyway. The
@@ -254,19 +259,11 @@ begin
   GameParams := TDosGameParams.Create;
   PieceManager := TNeoPieceManager.Create;
 
-  GameParams.Directory := LemmingsPath;
-  GameParams.MainDatFile := LemmingsPath + 'main.dat';
   GameParams.Renderer := TRenderer.Create;
-  GameParams.Level := Tlevel.Create;
+  GameParams.Level := TLevel.Create;
   GameParams.MainForm := TForm(aOwner);
 
-  // fMainDatExtractor currently has a convenient routine for loading SYSTEM.DAT. This is a relic
-  // from when SYSTEM.DAT was embedded in MAIN.DAT in very early versions of Flexi.
-  fMainDatExtractor := TMainDatExtractor.Create;
-  fMainDatExtractor.FileName := LemmingsPath + 'main.dat';
-  GameParams.SysDat := fMainDatExtractor.GetSysData;
-  Application.Title := Trim(GameParams.SysDat.PackName);
-  fMainDatExtractor.free;
+  Application.Title := GameParams.BaseLevelPack.Name;
 
   GameParams.NextScreen := gstMenu;
 
@@ -342,13 +339,10 @@ begin
   if GameParams.fTestMode then
     GameParams.MainForm.Caption := 'NeoLemmix - Single Level'
   else
-    GameParams.MainForm.Caption := Trim(GameParams.SysDat.PackName);
+    GameParams.MainForm.Caption := GameParams.BaseLevelPack.Name;
 
   Application.Title := GameParams.MainForm.Caption;
 
-  // Background color is not supported as a user option anymore. I intend to support it in the
-  // future as a graphic set option. So let's just make it inaccessible for now rather than fully
-  // removing it.
   GameParams.Renderer.BackgroundColor := $000000;
 
   if not fLoadSuccess then

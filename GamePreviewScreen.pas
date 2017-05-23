@@ -114,7 +114,7 @@ begin
     begin
       Lw := Level.Info.Width;
       Lh := Level.Info.Height;
-      Renderer.PrepareGameRendering(Level, (GameParams.SysDat.Options2 and 2 <> 0));
+      Renderer.PrepareGameRendering(Level);
     end;
 
     Temp := TBitmap32.Create;
@@ -203,7 +203,7 @@ begin
     // prepare the renderer, this is a little bit shaky (wrong place)
     with GameParams do
     begin
-      Renderer.PrepareGameRendering(Level, (SysDat.Options2 and 2 <> 0));
+      Renderer.PrepareGameRendering(Level);
     end;
   finally
     TempBmp.Free;

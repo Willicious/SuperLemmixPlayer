@@ -976,8 +976,6 @@ var
   end;
 
 begin
-  fXmasPal := GameParams.SysDat.Options2 and 2 <> 0;
-
   fRenderer := GameParams.Renderer; // set ref
   Level := GameParams.Level;
 
@@ -1062,7 +1060,7 @@ begin
     fReplayManager.Clear(true);
     fReplayManager.LevelName := Level.Info.Title;
     fReplayManager.LevelAuthor := Level.Info.Author;
-    fReplayManager.LevelGame := Trim(GameParams.SysDat.PackName);
+    fReplayManager.LevelGame := Trim(GameParams.BaseLevelPack.Name);
     fReplayManager.LevelRank := Trim(GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].Name);
     fReplayManager.LevelPosition := GameParams.CurrentLevel.dLevel+1;
     fReplayManager.LevelID := Level.Info.LevelID;
@@ -5244,7 +5242,7 @@ begin
   begin
     LevelName := Trim(fLevel.Info.Title);
     LevelAuthor := Trim(fLevel.Info.Author);
-    LevelGame := Trim(GameParams.SysDat.PackName);
+    LevelGame := Trim(GameParams.BaseLevelPack.Name);
     LevelRank := Trim(GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].Name);
     LevelPosition := GameParams.CurrentLevel.dLevel + 1;
     LevelID := fLevel.Info.LevelID;

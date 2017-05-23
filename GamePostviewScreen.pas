@@ -276,8 +276,9 @@ begin
 
     LF(2);
 
-    i := GetResultIndex;
-    Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]));
+    (*i := GetResultIndex;
+    Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]));*)
+    LF(2); // replace when postview lines support implemented
 
     LF(2);
 

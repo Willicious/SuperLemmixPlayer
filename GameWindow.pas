@@ -333,7 +333,8 @@ begin
     MusicIndex := -1;
 
   SL := TStringList.Create;
-  TempStream := CreateDataStream('music.txt', ldtLemmings); // It's a text file, but should be loaded more similarly to data files.
+  TempStream := nil;
+  //TempStream := CreateDataStream('music.txt', ldtLemmings); // It's a text file, but should be loaded more similarly to data files.
   if TempStream = nil then
     SL.LoadFromFile(AppPath + SFData + 'music.nxmi')
   else begin
@@ -347,9 +348,8 @@ begin
     else begin
       MusicIndex := GameParams.CurrentLevel.dLevel;
 
-      if GameParams.SysDat.Options4 and 4 <> 0 then
-        for i := 0 to GameParams.CurrentLevel.dRank-1 do
-          MusicIndex := MusicIndex + GameParams.BaseLevelPack.Children[i].LevelCount;
+      for i := 0 to GameParams.CurrentLevel.dRank-1 do
+        MusicIndex := MusicIndex + GameParams.BaseLevelPack.Children[i].LevelCount;
     end;
 
   if SL.Count > 0 then
