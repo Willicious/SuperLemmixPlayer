@@ -1814,12 +1814,10 @@ begin
   Game.SetGameResult;
   GameParams.GameResult := Game.GameResultRec;
   with GameParams, GameResult do
-  begin
-    if (gSuccess or gCheated) and (not GameParams.fTestMode) then
-      GameParams.NextLevel;
-      
+  begin      
     if gCheated then
     begin
+      GameParams.NextLevel(true);
       GameParams.ShownText := false;
       aNextScreen := gstPreview;
     end;

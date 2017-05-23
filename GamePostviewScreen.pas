@@ -334,7 +334,7 @@ begin
                    CloseScreen(gstMenu);
                end;
     VK_RETURN: begin
-                 CloseScreen(gstPreview);
+                 NextLevel;
                end;
     VK_F2: CloseScreen(gstLevelSelect);
   end;
@@ -356,7 +356,7 @@ end;
 procedure TGamePostviewScreen.HandleMouseClick(Button: TMouseButton);
 begin
   if Button = mbLeft then
-    CloseScreen(gstPreview)
+    NextLevel
   else if Button = mbMiddle then
     ReplaySameLevel
   else if Button = mbRight then

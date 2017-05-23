@@ -3,7 +3,6 @@ unit GameBaseSkillPanel;
 interface
 
 uses
-  Dialogs,
   Classes, Controls, GR32, GR32_Image, GR32_Layers,
   GameWindowInterface,
   LemCore, LemLemming, LemGame, LemLevel;
