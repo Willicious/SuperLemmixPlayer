@@ -121,7 +121,7 @@ begin
       if (i = MinLv) and (i <> 0) then
         S := '   .....';
 
-      if (i = MaxLv) and (i <> fPack.Children[fSection].LevelCount) then
+      if (i = MaxLv) and (i <> fPack.Children[fSection].LevelCount - 1) then
         S := '   .....';
         
       DrawPurpleText(ScreenImg.Bitmap, S, 10, Y);
