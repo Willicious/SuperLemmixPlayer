@@ -10,6 +10,7 @@ unit GameControl;
 interface
 
 uses
+  LemNeoLevelPack,
   LemmixHotkeys,
   Math,
   Dialogs, SysUtils, StrUtils, Classes, Forms, GR32,
@@ -165,7 +166,8 @@ type
     Style        : TBaseDosLemmingStyle;
     Renderer     : TRenderer;
 
-    LevelString : String;
+    LevelString: String;
+    BaseLevelPack: TNeoLevelGroup;
 
     // this is initialized by the window in which the game will be played
     TargetBitmap : TBitmap32;
@@ -530,6 +532,8 @@ begin
   MiscOptions := DEF_MISCOPTIONS;
   PostLevelSoundOptions := [plsVictory, plsFailure];
 
+  BaseLevelPack := TNeoLevelGroup.Create(nil);
+
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;
@@ -565,6 +569,7 @@ begin
   fSaveSystem.Free;
   fTalismans.Free;
   fHotkeys.Free;
+  BaseLevelPack.Free;
   inherited Destroy;
 end;
 

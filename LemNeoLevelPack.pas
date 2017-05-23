@@ -254,7 +254,7 @@ begin
     MainSec := Parser.MainSection;
     MainSec.DoForEachSection('rank', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
-    fPanelStyle := MainSec.LineTrimString['panel_style'];
+    fPanelStyle := MainSec.LineTrimString['panel'];
 
     // we do NOT want to sort alphabetically here, we want them to stay in the order
     // the metainfo file lists them in!
