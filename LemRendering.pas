@@ -1484,7 +1484,8 @@ begin
   for i := Low(THelperIcon) to High(THelperIcon) do
   begin
     if i = hpi_None then Continue;
-    fHelperImages[i] := TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]);
+    fHelperImages[i] := TBitmap32.Create;
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
     fHelperImages[i].DrawMode := dmBlend;
   end;
 

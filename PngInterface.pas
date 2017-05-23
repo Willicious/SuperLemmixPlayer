@@ -31,12 +31,10 @@ type
     public
       class procedure MaskImageFromFile(Bmp: TBitmap32; fn: String; C: TColor32);
       class procedure MaskImageFromImage(Bmp: TBitmap32; Mask: TBitmap32; C: TColor32);
-      class function LoadPngFile(fn: String): TBitmap32; overload;
-      class procedure LoadPngFile(fn: String; Bmp: TBitmap32); overload;
-      class function LoadPngStream(aStream: TStream): TBitmap32; overload;
-      class procedure LoadPngStream(aStream: TStream; Bmp: TBitmap32); overload;
+      class procedure LoadPngFile(fn: String; Bmp: TBitmap32);
+      class procedure LoadPngStream(aStream: TStream; Bmp: TBitmap32);
       class procedure SavePngFile(fn: String; Bmp: TBitmap32; NoAlpha: Boolean = false);
-      class procedure SavePngStream(aStream: TStream; Bmp: TBitmap32; NoAlpha: Boolean = false); overload;
+      class procedure SavePngStream(aStream: TStream; Bmp: TBitmap32; NoAlpha: Boolean = false);
   end;
 
 implementation
@@ -46,7 +44,8 @@ var
   TempBmp: TBitmap32;
 begin
   if not FileExists(fn) then Exit;
-  TempBmp := LoadPngFile(fn);
+  TempBmp := TBitmap32.Create;
+  LoadPngFile(fn, TempBmp);
   MaskImageFromImage(Bmp, TempBmp, C);
   TempBmp.Free;
 end;
@@ -84,6 +83,7 @@ begin
   MaskBMP.Free;
 end;
 
+(*
 class function TPngInterface.LoadPngFile(fn: String): TBitmap32;
 begin
   Result := TBitmap32.Create;
@@ -95,6 +95,7 @@ begin
   Result := TBitmap32.Create;
   LoadPngStream(aStream, Result);
 end;
+*)
 
 class procedure TPngInterface.LoadPngFile(fn: String; Bmp: TBitmap32);
 var

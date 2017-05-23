@@ -227,6 +227,7 @@ var
   i: Integer;
   GrabRect: TRect;
   S: String;
+  iPanel: TGameMenuBitmap;
 
   procedure LoadScrollerGraphics;
   var
@@ -269,6 +270,9 @@ begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'rank_' + LeadZeroStr(i+1, 2) + '.png', BitmapElements[TGameMenuBitmap(Integer(gmbGameSection1) + i)]);
 
     LoadScrollerGraphics;
+
+    for iPanel := Low(TGameMenuBitmap) to High(TGameMenuBitmap) do
+      BitmapElements[iPanel].DrawMode := dmBlend;
 
     // a little oversize
     Reel.SetSize(ReelLetterBoxCount * 16 + 32, 16);
