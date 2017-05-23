@@ -125,7 +125,7 @@ begin
     fn := 'i';
   end;
 
-  fn := fn + LeadZeroStr(GameParams.Info.dSection + 1, 2) + LeadZeroStr(GameParams.Info.dLevel + 1, 2) + '.txt';
+  fn := fn + LeadZeroStr(GameParams.CurrentLevel.dRank + 1, 2) + LeadZeroStr(GameParams.CurrentLevel.dLevel + 1, 2) + '.txt';
 
   fn := ExtractFilePath(ParamStr(0)) + fn;
 

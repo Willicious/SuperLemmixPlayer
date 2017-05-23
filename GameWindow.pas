@@ -345,10 +345,10 @@ begin
     if GameParams.fTestMode then
       MusicIndex := Random(SL.Count)
     else begin
-      MusicIndex := GameParams.Info.dLevel;
+      MusicIndex := GameParams.CurrentLevel.dLevel;
 
       if GameParams.SysDat.Options4 and 4 <> 0 then
-        for i := 0 to GameParams.Info.dSection-1 do
+        for i := 0 to GameParams.CurrentLevel.dRank-1 do
           MusicIndex := MusicIndex + GameParams.BaseLevelPack.Children[i].LevelCount;
     end;
 
@@ -1729,7 +1729,7 @@ begin
   s:='';
   dlg:=topendialog.create(nil);
   try
-    dlg.Title := 'Select a replay file to load (' + GameParams.Info.dSectionName + ' ' + IntToStr(GameParams.Info.dLevel + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
+    dlg.Title := 'Select a replay file to load (' + GameParams.CurrentRankName + ' ' + IntToStr(GameParams.CurrentLevel.dLevel + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
     dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
     dlg.FilterIndex := 1;
     if Game.LastReplayDir = '' then

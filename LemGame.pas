@@ -1000,8 +1000,8 @@ begin
 
   for i := 0 to GameParams.Talismans.Count-1 do
   begin
-    if (GameParams.Talismans[i].RankNumber = GameParams.Info.dSection)
-    and (GameParams.Talismans[i].LevelNumber = GameParams.Info.dLevel) then
+    if (GameParams.Talismans[i].RankNumber = GameParams.CurrentLevel.dRank)
+    and (GameParams.Talismans[i].LevelNumber = GameParams.CurrentLevel.dLevel) then
       fTalismans.Add.Assign(GameParams.Talismans[i]);
   end;
 
@@ -1063,8 +1063,8 @@ begin
     fReplayManager.LevelName := Level.Info.Title;
     fReplayManager.LevelAuthor := Level.Info.Author;
     fReplayManager.LevelGame := Trim(GameParams.SysDat.PackName);
-    fReplayManager.LevelRank := Trim(GameParams.Info.dSectionName);
-    fReplayManager.LevelPosition := GameParams.Info.dLevel+1;
+    fReplayManager.LevelRank := Trim(GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].Name);
+    fReplayManager.LevelPosition := GameParams.CurrentLevel.dLevel+1;
     fReplayManager.LevelID := Level.Info.LevelID;
   end;
 
@@ -5245,8 +5245,8 @@ begin
     LevelName := Trim(fLevel.Info.Title);
     LevelAuthor := Trim(fLevel.Info.Author);
     LevelGame := Trim(GameParams.SysDat.PackName);
-    LevelRank := Trim(GameParams.Info.dSectionName);
-    LevelPosition := GameParams.Info.dLevel + 1;
+    LevelRank := Trim(GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].Name);
+    LevelPosition := GameParams.CurrentLevel.dLevel + 1;
     LevelID := fLevel.Info.LevelID;
   end;
 end;

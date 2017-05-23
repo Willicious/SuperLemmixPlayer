@@ -74,7 +74,7 @@ begin
     fBasicState.SetSize(ScreenImg.Bitmap.Width, ScreenImg.Bitmap.Height);
     ScreenImg.Bitmap.DrawTo(fBasicState); // save background
 
-    fSelectedLevel := GameParams.Info.dLevel;
+    fSelectedLevel := GameParams.CurrentLevel.dLevel;
 
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'tick.png', fTick);
 

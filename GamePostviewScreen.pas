@@ -224,14 +224,14 @@ begin
     end;
 
     if not gCheated then
-    with SaveSystem, Info do
+    with SaveSystem, CurrentLevel do
     begin
-      SetLemmingRecord(dSection, dLevel, gRescued);
+      SetLemmingRecord(dRank, dLevel, gRescued);
 
       if gSuccess then
       begin
-        CompleteLevel(dSection, dLevel);
-        SetTimeRecord(dSection, dLevel, gLastRescueIteration);
+        CompleteLevel(dRank, dLevel);
+        SetTimeRecord(dRank, dLevel, gLastRescueIteration);
       end;
     end;
 
@@ -264,7 +264,7 @@ begin
     if GameParams.fTestMode then
       LF(1)
     else
-      Add(SYourRecord + PadL(IntToStr(SaveSystem.GetLemmingRecord(Info.dSection, Info.dLevel)), 4));
+      Add(SYourRecord + PadL(IntToStr(SaveSystem.GetLemmingRecord(CurrentLevel.dRank, CurrentLevel.dLevel)), 4));
 
     LF(1);
 
@@ -272,7 +272,7 @@ begin
     if GameParams.fTestMode or not gSuccess then
       LF(1)
     else
-      Add(SYourTimeRecord + PadL(MakeTimeString(SaveSystem.GetTimeRecord(Info.dSection, Info.dLevel)), 8));
+      Add(SYourTimeRecord + PadL(MakeTimeString(SaveSystem.GetTimeRecord(CurrentLevel.dRank, CurrentLevel.dLevel)), 8));
 
     LF(2);
 

@@ -168,7 +168,7 @@ begin
   begin
     SaveName := ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
     if not ForceDirectories(SaveName) then Exit;
-    SaveName := SaveName + LeadZeroStr(GameParams.Info.dSection + 1, 2) + LeadZeroStr(GameParams.Info.dLevel + 1, 2) + '.png'
+    SaveName := SaveName + LeadZeroStr(GameParams.CurrentLevel.dRank + 1, 2) + LeadZeroStr(GameParams.CurrentLevel.dLevel + 1, 2) + '.png'
   end else begin
     Dlg := TSaveDialog.Create(self);
     Dlg.Filter := 'PNG Image (*.png)|*.png';
@@ -287,41 +287,29 @@ begin
   else
     TL := '(Infinite)';
 
-  if GameParams.OneLevelMode then
-  begin
-    GameParams.Info.dSectionName := 'Single Level';
-    GameParams.Info.dLevel := 0;
-  end;
-
-  if GameParams.fTestMode then
-  begin
-    GameParams.Info.dSectionName := 'TEST MODE';
-    GameParams.Info.dLevel := 0;
-  end;
-
   RR := IntToStr(GameParams.Level.Info.ReleaseRate);
   if GameParams.Level.Info.ReleaseRateLocked or (RR = '99') then
     RR := RR + ' (Locked)';
 
   if Trim(GameParams.Level.Info.Author) = '' then
     Result := Format(SPreviewString,
-                [GameParams.Info.dLevel + 1, // humans read 1-based
+                [GameParams.CurrentLevel.dLevel + 1, // humans read 1-based
                  Trim(GameParams.Level.Info.Title),
                  GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
                  Perc,
                  RR,
                  TL,
-                 GameParams.Info.dSectionName
+                 GameParams.CurrentRankName
                 ])
   else
     Result := Format(SPreviewStringAuth,
-                [GameParams.Info.dLevel + 1, // humans read 1-based
+                [GameParams.CurrentLevel.dLevel + 1, // humans read 1-based
                  Trim(GameParams.Level.Info.Title),
                  GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
                  Perc,
                  RR,
                  TL,
-                 GameParams.Info.dSectionName,
+                 GameParams.CurrentRankName,
                  GameParams.Level.Info.Author
                 ]);
 end;
@@ -330,18 +318,14 @@ procedure TGamePreviewScreen.PrepareGameParams;
 begin
   inherited;
 
-  with GameParams, Info do
+  if not GameParams.OneLevelMode then
   begin
-
-    if not GameParams.OneLevelMode then
-    begin
-      GameParams.LoadCurrentLevel;
-    end else begin
-      (*TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := GameParams.LevelString;
-      Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);*)
-    end;
-
+    GameParams.LoadCurrentLevel;
+  end else begin
+    (*TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := GameParams.LevelString;
+    Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);*)
   end;
+
 end;
 
 end.

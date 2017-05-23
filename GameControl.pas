@@ -38,14 +38,6 @@ type
     gGotTalisman        : Boolean;
   end;
 
-  TDosGameplayInfoRec = record
-    dValid: Boolean;
-    dPack: Integer;
-    dSection: Integer;
-    dLevel: Integer;
-    dSectionName: String;
-  end; // temporarily moved here as unit was removed, will be removed entirely eventually (probably)
-
   TCurrentLevel = record
     dRank: Integer;
     dLevel: Integer;
@@ -153,11 +145,10 @@ type
     procedure SaveToIniFile;
 
     procedure ValidateCurrentLevel(aCanCrossRank: Boolean);
+    function GetCurrentRankName: String;
   public
     // this is initialized by appcontroller
     MainDatFile  : string;
-
-    Info: TDosGameplayInfoRec;
 
     SoundOptions : TGameSoundOptions;
 
@@ -253,6 +244,8 @@ type
     property TalismanPage: Integer read fTalismanPage write fTalismanPage;
 
     property Hotkeys: TLemmixHotkeyManager read fHotkeys;
+
+    property CurrentRankName: String read GetCurrentRankName;
   published
   end;
 
@@ -646,6 +639,11 @@ begin
     Include(PostLevelSoundOptions, aFlag)
   else
     Exclude(PostLevelSoundOptions, aFlag);
+end;
+
+function TDosGameParams.GetCurrentRankName: String;
+begin
+  Result := BaseLevelPack.Children[CurrentLevel.dRank].Name;
 end;
 
 end.
