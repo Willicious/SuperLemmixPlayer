@@ -15,7 +15,7 @@ uses
   FNeoLemmixConfig,
   GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs, LemVersion,
-  LemTypes, LemStrings, LemDosStructures, LemDosStyle, LemGame,
+  LemTypes, LemStrings, LemDosStructures, LemGame,
   GameControl, GameBaseScreen;
 
 type
@@ -403,7 +403,6 @@ begin
       VK_F5     : DumpImages;
       VK_F6     : if GameParams.Talismans.Count <> 0 then CloseScreen(gstTalisman);
       VK_F7     : DoMassReplayCheck;
-      VK_F8     : CloseScreen(gstLevelCode);
       VK_F12    : DoTestStuff;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : NextSection(True);
@@ -466,11 +465,11 @@ procedure TGameMenuScreen.DumpImages;
 var
   I: Integer;
 begin
-  if GameParams.SysDat.Options3 and 4 = 0 then Exit;
   I := MessageDlg('Dump all level images? Warning: This is very slow!', mtCustom, [mbYes, mbNo], 0);
   if I = mrYes then
   begin
-    TBaseDosLevelSystem(GameParams.Style.LevelSystem).DumpAllImages;
+    raise Exception.Create('TGameMenuScreen.DumpImages not yet implemented with new level pack code');
+    //TBaseDosLevelSystem(GameParams.Style.LevelSystem).DumpAllImages;
   end;
 end;
 
@@ -478,10 +477,12 @@ procedure TGameMenuScreen.DumpLevels;
 var
   I: Integer;
 begin
-  if not (GameParams.Style.LevelSystem is TBaseDosLevelSystem) then exit;
   I := MessageDlg('Dump all level files? Warning: This may overwrite' + CrLf + 'LVL files currently present!', mtCustom, [mbYes, mbNo], 0);
   if I = mrYes then
-    TBaseDosLevelSystem(GameParams.Style.LevelSystem).DumpAllLevels;
+  begin
+    raise Exception.Create('TGameMenuScreen.DumpLevels not yet implemented with new level pack code');
+    //TBaseDosLevelSystem(GameParams.Style.LevelSystem).DumpAllLevels;
+  end;
 end;
 
 procedure TGameMenuScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -506,14 +507,6 @@ begin
     SetSection(CurrentSection - 1);
 
   GameParams.ShownText := false;
-  with GameParams.Info do
-  begin
-    dValid := True;
-    dPack := 0;
-    dSection := CurrentSection;
-    dLevel := 0;
-    GameParams.WhichLevel := wlLastUnlocked;
-  end;
 end;
 
 procedure TGameMenuScreen.PrepareGameParams;
@@ -522,27 +515,9 @@ var
   k: String;
 begin
   inherited PrepareGameParams;
-  with GameParams do
-  begin
-    OneLevelMode := false;
-    if (WhichLevel = wlFirst) then
-    begin
-      Style.LevelSystem.FindFirstLevel(Info);
-      WhichLevel := wlSame;
-    end;
-    if (WhichLevel = wlLastUnlocked) then
-    begin
-      Style.LevelSystem.FindFirstUnsolvedLevel(Info);
-      WhichLevel := wlSame;
-    end;
-    if (WhichLevel = wlNext) then
-    begin
-      Style.LevelSystem.FindNextLevel(Info);
-      WhichLevel := wlSame;
-    end;
-  end;
-  CurrentSection := GameParams.Info.dSection;
-  LastSection := (GameParams.Style.LevelSystem as TBaseDosLevelSystem).GetSectionCount - 1;
+
+  LastSection := GameParams.BaseLevelPack.Children.Count - 1;
+  CurrentSection := GameParams.CurrentLevel.dRank;
 
   CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} BuildText(GameParams.SysDat.PackName) + #13;
   for i := 0 to 15 do
@@ -596,6 +571,9 @@ begin
     13: DrawBitmapElement(gmbGameSection14);
     14: DrawBitmapElement(gmbGameSection15);
   end;
+
+  GameParams.CurrentLevel.dRank := CurrentSection;
+  GameParams.CurrentLevel.dLevel := 0;
 end;
 
 procedure TGameMenuScreen.DrawWorkerLemmings(aFrame: Integer);

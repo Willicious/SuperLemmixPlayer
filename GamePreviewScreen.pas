@@ -8,14 +8,13 @@ uses
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
-  LemCore, LemStrings, LemDosStructures, LemRendering, LemLevelSystem, LemLevel,
-  LemDosStyle, LemMetaObject, LemObjects,
+  LemCore, LemStrings, LemDosStructures, LemRendering, LemLevel,
+  LemMetaObject, LemObjects,
   GameControl, GameBaseScreen, GameWindow;
 
 type
   TGamePreviewScreen = class(TGameBaseScreen)
   private
-    fCanDump: Boolean;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
@@ -53,58 +52,42 @@ begin
 end;
 
 procedure TGamePreviewScreen.NextLevel;
-var
-  FindInfo: TDosGamePlayInfoRec;
 begin
-  FindInfo := GameParams.Info;
-  GameParams.Style.LevelSystem.FindNextUnsolvedLevel(FindInfo);
-  if FindInfo.dLevel <> GameParams.Info.dLevel then
+  if GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount > 1 then
   begin
     GameParams.ShownText := false;
-    GameParams.WhichLevel := wlNextUnlocked;
+    Inc(GameParams.CurrentLevel.dLevel);
+    if GameParams.CurrentLevel.dLevel >= GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount then
+      GameParams.CurrentLevel.dLevel := 0;
     CloseScreen(gstPreview);
   end;
 end;
 
 procedure TGamePreviewScreen.PreviousLevel;
-var
-  FindInfo: TDosGamePlayInfoRec;
 begin
-  FindInfo := GameParams.Info;
-  GameParams.Style.LevelSystem.FindPreviousUnsolvedLevel(FindInfo);
-  if FindInfo.dLevel <> GameParams.Info.dLevel then
+  if GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount > 1 then
   begin
     GameParams.ShownText := false;
-    GameParams.WhichLevel := wlPreviousUnlocked;
+    Dec(GameParams.CurrentLevel.dLevel);
+    if GameParams.CurrentLevel.dLevel < 0 then
+      GameParams.CurrentLevel.dLevel := GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount - 1;
     CloseScreen(gstPreview);
   end;
 end;
 
 procedure TGamePreviewScreen.NextRank;
-var
-  FindInfo: TDosGamePlayInfoRec;
 begin
-  FindInfo := GameParams.Info;
-  if FindInfo.dSection = TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetSectionCount-1 then Exit;
-  FindInfo.dSection := FindInfo.dSection + 1;
-  GameParams.Style.LevelSystem.FindFirstUnsolvedLevel(FindInfo);
-  GameParams.ShownText := false;
-  GameParams.WhichLevel := wlLastUnlocked;
-  GameParams.Info := FindInfo;
+  if GameParams.CurrentLevel.dRank = GameParams.BaseLevelPack.Children.Count-1 then Exit;
+  Inc(GameParams.CurrentLevel.dRank);
+  GameParams.CurrentLevel.dLevel := 0;
   CloseScreen(gstPreview);
 end;
 
 procedure TGamePreviewScreen.PreviousRank;
-var
-  FindInfo: TDosGamePlayInfoRec;
 begin
-  FindInfo := GameParams.Info;
-  if FindInfo.dSection = 0 then Exit;
-  FindInfo.dSection := FindInfo.dSection - 1;
-  GameParams.Style.LevelSystem.FindFirstUnsolvedLevel(FindInfo);
-  GameParams.ShownText := false;
-  GameParams.WhichLevel := wlLastUnlocked;
-  GameParams.Info := FindInfo;
+  if GameParams.CurrentLevel.dRank = 0 then Exit;
+  Dec(GameParams.CurrentLevel.dRank);
+  GameParams.CurrentLevel.dLevel := 0;
   CloseScreen(gstPreview);
 end;
 
@@ -129,10 +112,9 @@ begin
     // prepare the renderer, this is a little bit shaky (wrong place)
     with GameParams do
     begin
-      Inf.Level:=Level;
       Lw := Level.Info.Width;
       Lh := Level.Info.Height;
-      Renderer.PrepareGameRendering(Inf, (GameParams.SysDat.Options2 and 2 <> 0));
+      Renderer.PrepareGameRendering(Level, (GameParams.SysDat.Options2 and 2 <> 0));
     end;
 
     Temp := TBitmap32.Create;
@@ -221,8 +203,7 @@ begin
     // prepare the renderer, this is a little bit shaky (wrong place)
     with GameParams do
     begin
-      Inf.Level := Level;
-      Renderer.PrepareGameRendering(Inf, (SysDat.Options2 and 2 <> 0));
+      Renderer.PrepareGameRendering(Level, (SysDat.Options2 and 2 <> 0));
     end;
   finally
     TempBmp.Free;
@@ -349,37 +330,17 @@ procedure TGamePreviewScreen.PrepareGameParams;
 begin
   inherited;
 
-  fCanDump := true;
-
   with GameParams, Info do
   begin
 
-    case WhichLevel of
-      wlFirst: Style.LevelSystem.FindFirstLevel(Info);
-      wlFirstSection: Style.LevelSystem.FindFirstLevel(Info);
-      wlLevelCode: Style.LevelSystem.FindLevel(Info);
-      wlNext: Style.LevelSystem.FindNextLevel(Info);
-      wlSame: Style.LevelSystem.FindLevel(Info);
-      wlNextUnlocked: Style.LevelSystem.FindNextUnsolvedLevel(Info);
-      wlPreviousUnlocked: Style.LevelSystem.FindPreviousUnsolvedLevel(Info);
-      wlLastUnlocked: Style.LevelSystem.FindFirstUnsolvedLevel(Info);
-    end;
-
     if not GameParams.OneLevelMode then
     begin
-      TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := '';
-      try
-        Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);
-      except
-        fCanDump := false;
-        Exit;
-      end;
+      GameParams.LoadCurrentLevel;
     end else begin
-      TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := GameParams.LevelString;
-      Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);
+      (*TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := GameParams.LevelString;
+      Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);*)
     end;
 
-    WhichLevel := wlSame;
   end;
 end;
 

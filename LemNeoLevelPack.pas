@@ -66,12 +66,17 @@ type
       procedure LoadSubGroup(aSection: TParserSection; const aIteration: Integer);
 
       procedure Load;
+
+      function GetRecursiveLevelCount: Integer;
     public
       constructor Create(aParentGroup: TNeoLevelGroup);
       destructor Destroy; override;
 
       procedure EnsureUpdated;
 
+      property Children: TNeoLevelGroups read fChildGroups;
+      property Levels: TNeoLevelEntries read fLevels;
+      property LevelCount: Integer read GetRecursiveLevelCount;
       property Name: String read fName write fName;
       property Folder: String read fFolder write SetFolderName;
       property Path: String read GetFullPath;
@@ -318,6 +323,15 @@ begin
     Result := fParentGroup.Path;
 
   Result := Result + fFolder + '\';
+end;
+
+function TNeoLevelGroup.GetRecursiveLevelCount: Integer;
+var
+  i: Integer;
+begin
+  Result := fLevels.Count;
+  for i := 0 to fChildGroups.Count-1 do
+    Result := Result + fChildGroups[i].LevelCount;
 end;
 
 

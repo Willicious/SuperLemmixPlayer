@@ -36,7 +36,7 @@ type
 
 implementation
 
-uses Forms, LemStyle;
+uses Forms;
 
 { TDosGamePreview }
 

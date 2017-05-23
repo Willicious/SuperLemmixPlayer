@@ -10,15 +10,16 @@ unit GameControl;
 interface
 
 uses
+  LemNeoPieceManager,
   LemNeoLevelPack,
   LemmixHotkeys,
   Math,
   Dialogs, SysUtils, StrUtils, Classes, Forms, GR32,
   LemVersion,
-  LemTypes, LemLevel, LemDosStyle,
+  LemTypes, LemLevel,
   LemDosStructures,
   LemNeoSave, TalisData,
-  LemLevelSystem, LemRendering;
+  LemRendering;
 
 var
   IsHalting: Boolean; // ONLY used during AppController's init routines. Don't use this anywhere else.
@@ -37,6 +38,19 @@ type
     gGotTalisman        : Boolean;
   end;
 
+  TDosGameplayInfoRec = record
+    dValid: Boolean;
+    dPack: Integer;
+    dSection: Integer;
+    dLevel: Integer;
+    dSectionName: String;
+  end; // temporarily moved here as unit was removed, will be removed entirely eventually (probably)
+
+  TCurrentLevel = record
+    dRank: Integer;
+    dLevel: Integer;
+  end;
+
 type
   TGameScreenType = (
     gstUnknown,
@@ -45,26 +59,11 @@ type
     gstPlay,
     gstPostview,
     gstLevelSelect,
-    gstLevelCode,
     gstSounds,
     gstExit,
     gstText,
     gstTalisman,
     gstReplayTest
-  );
-
-type
-  // how do we load the level
-  TWhichLevel = (
-    wlFirst,
-    wlFirstSection,
-    wlLevelCode,
-    wlNext,
-    wlSame,
-    wlCongratulations,
-    wlNextUnlocked,
-    wlPreviousUnlocked,
-    wlLastUnlocked
   );
 
 type
@@ -153,21 +152,21 @@ type
     procedure LoadFromIniFile;
     procedure SaveToIniFile;
 
+    procedure ValidateCurrentLevel(aCanCrossRank: Boolean);
   public
     // this is initialized by appcontroller
     MainDatFile  : string;
 
-    Info         : TDosGamePlayInfoRec;
-    WhichLevel   : TWhichLevel;
+    Info: TDosGameplayInfoRec;
 
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;
-    Style        : TBaseDosLemmingStyle;
     Renderer     : TRenderer;
 
     LevelString: String;
     BaseLevelPack: TNeoLevelGroup;
+    CurrentLevel: TCurrentLevel;
 
     // this is initialized by the window in which the game will be played
     TargetBitmap : TBitmap32;
@@ -205,6 +204,10 @@ type
 
     procedure Save;
     procedure Load;
+
+    procedure NextLevel(aCanCrossRank: Boolean = false);
+    procedure PrevLevel(aCanCrossRank: Boolean = false);
+    procedure LoadCurrentLevel(NoOutput: Boolean = false); // loads level specified by CurrentLevel into Level, and prepares renderer
 
     property AutoReplayNames: Boolean Index moAutoReplayNames read GetOptionFlag write SetOptionFlag;
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
@@ -520,6 +523,52 @@ begin
   SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
 
   SL.Free;
+end;
+
+procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = false);
+var
+  LevelEntry: TNeoLevelEntry;
+begin
+  LevelEntry := BaseLevelPack.Children[CurrentLevel.dRank].Levels[CurrentLevel.dLevel];
+  Level.LoadFromFile(LevelEntry.Path);
+  PieceManager.Tidy;
+  Renderer.PrepareGameRendering(Level, NoOutput);
+end;
+
+procedure TDosGameParams.NextLevel(aCanCrossRank: Boolean);
+begin
+  Inc(CurrentLevel.dLevel);
+  ValidateCurrentLevel(aCanCrossRank);
+end;
+
+procedure TDosGameParams.PrevLevel(aCanCrossRank: Boolean);
+begin
+  Dec(CurrentLevel.dLevel);
+  ValidateCurrentLevel(aCanCrossRank);
+end;
+
+procedure TDosGameParams.ValidateCurrentLevel(aCanCrossRank: Boolean);
+  procedure ValidateRank;
+  begin
+    if CurrentLevel.dRank < 0 then
+      CurrentLevel.dRank := BaseLevelPack.Children.Count-1
+    else if CurrentLevel.dRank >= BaseLevelPack.Children.Count then
+      CurrentLevel.dRank := 0;
+  end;
+begin
+  if CurrentLevel.dLevel < 0 then
+  begin
+    if aCanCrossRank then
+      Dec(CurrentLevel.dRank);
+    ValidateRank;
+    CurrentLevel.dLevel := BaseLevelPack.Children[CurrentLevel.dRank].LevelCount - 1;
+  end else if CurrentLevel.dLevel >= BaseLevelPack.Children[CurrentLevel.dRank].LevelCount then
+  begin
+    if aCanCrossRank then
+      Inc(CurrentLevel.dRank);
+    ValidateRank;
+    CurrentLevel.dLevel := 0;
+  end;
 end;
 
 

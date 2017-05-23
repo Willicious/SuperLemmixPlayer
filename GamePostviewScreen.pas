@@ -12,7 +12,6 @@ uses
   LemCore,
   LemTypes,
   LemStrings,
-  LemLevelSystem,
   LemGame,
   GameControl,
   GameSound,
@@ -24,7 +23,7 @@ uses
 type
   TGamePostviewScreen = class(TGameBaseScreen)
   private
-    fSameLevelInfo: TDosGamePlayInfoRec;
+    fAdvanceLevel: Boolean;
     function GetScreenText: string;
     function BuildText(intxt: Array of char): string;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -32,6 +31,7 @@ type
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure HandleMouseClick(Button: TMouseButton);
+    procedure NextLevel;
     procedure ReplaySameLevel;
   protected
     procedure PrepareGameParams; override;
@@ -45,7 +45,7 @@ type
 
 implementation
 
-uses Forms, LemStyle;
+uses Forms;
 
 (*
 const
@@ -73,13 +73,18 @@ end;
 procedure TGamePostviewScreen.PrepareGameParams;
 begin
   inherited;
-  fSameLevelInfo := GameParams.Info;
+  fAdvanceLevel := GameParams.GameResult.gSuccess;
+end;
+
+procedure TGamePostviewScreen.NextLevel;
+begin
+  if fAdvanceLevel then
+    GameParams.NextLevel(true);
+  CloseScreen(gstPreview);
 end;
 
 procedure TGamePostviewScreen.ReplaySameLevel;
 begin
-  GameParams.Info := fSameLevelInfo;
-  GameParams.WhichLevel := wlSame;
   CloseScreen(gstPreview);
 end;
 
@@ -186,15 +191,6 @@ var
       Result := i;
     end;
 
-    function GetNext(var NextInfo: TDosGamePlayInfoRec): Boolean;
-    begin
-      with GameParams do
-      begin
-        NextInfo := Info;
-        Result := Style.LevelSystem.FindNextLevel(NextInfo);
-      end;
-    end;
-
     function MakeTimeString(aFrames: Integer): String;
     const
       CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18',
@@ -207,9 +203,7 @@ var
       Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
       Result := Result + '.' + CENTISECONDS[aFrames mod 17];
     end;
-
-var
-  FinalInfo: TDosGamePlayInfoRec;
+    
 begin
 
   Result := '';
@@ -228,8 +222,6 @@ begin
       gCheated := false;
       fLevelOverride := $0000;
     end;
-
-    Style.LevelSystem.FindFinalLevel(FinalInfo);
 
     if not gCheated then
     with SaveSystem, Info do

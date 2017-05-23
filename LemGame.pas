@@ -20,7 +20,7 @@ uses
   Controls, StrUtils, UMisc,
   GR32, GR32_OrdinalMaps,
   LemCore, LemTypes, LemDosStructures, LemStrings,
-  LemMetaObject, LemLevel, LemStyle,
+  LemMetaObject, LemLevel,
   LemRenderHelpers, LemRendering,
   LemNeoTheme,
   LemObjects, LemLemming, LemRecolorSprites,
@@ -152,7 +152,6 @@ type
   { reference objects, mostly for easy access in the mechanics-code }
     fRenderer                  : TRenderer; // ref to gameparams.renderer
     fLevel                     : TLevel; // ref to gameparams.level
-    Style                      : TBaseLemmingStyle; // ref to gameparams.style
 
   { masks }
     BomberMask                 : TBitmap32;
@@ -981,7 +980,6 @@ begin
 
   fRenderer := GameParams.Renderer; // set ref
   Level := GameParams.Level;
-  Style := GameParams.Style;
 
   fHighlightLemmingID := -1;
 

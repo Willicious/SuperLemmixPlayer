@@ -12,12 +12,9 @@ uses
   LemCore,
   LemTypes,
   LemStrings,
-  LemLevelSystem,
   LemGame,
   GameControl,
   GameBaseScreen;
-//  LemCore, LemGame, LemDosFiles, LemDosStyles, LemControls,
-  //LemDosScreen;
 
 const
   TALISMANS_PER_PAGE = 6;
@@ -45,7 +42,7 @@ type
 
 implementation
 
-uses Forms, LemStyle;
+uses Forms;
 
 function TGameTalismanScreen.ShowScreen: Integer;
 begin

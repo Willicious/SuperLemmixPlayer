@@ -95,7 +95,7 @@ type
     function FindMetaObject(O: TInteractiveObject): TMetaObjectInterface;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
-    procedure PrepareGameRendering(const Info: TRenderInfoRec; NoOutput: Boolean = false);
+    procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 
     // Terrain rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
@@ -1806,14 +1806,12 @@ begin
 end;
 
 
-procedure TRenderer.PrepareGameRendering(const Info: TRenderInfoRec; NoOutput: Boolean = false);
+procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
-
-  Inf := Info;
 
   if not NoOutput then
   begin
-    fTheme.Load(Info.Level.Info.GraphicSetName);
+    fTheme.Load(aLevel.Info.GraphicSetName);
     PieceManager.SetTheme(fTheme);
 
     fAni.ClearData;

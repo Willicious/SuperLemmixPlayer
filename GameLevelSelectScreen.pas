@@ -5,9 +5,10 @@ unit GameLevelSelectScreen;
 interface
 
 uses
+  LemNeoLevelPack,
   Windows, Classes, Controls, Graphics, MMSystem, Forms,
   GR32, GR32_Image, GR32_Layers,
-  LemStrings, LemDosStructures, LemDosStyle,
+  LemStrings, LemDosStructures,
   StrUtils,
   GameControl, GameBaseScreen,
   PngInterface, LemTypes;
@@ -18,9 +19,9 @@ const
 type
   TGameLevelSelectScreen = class(TGameBaseScreen)
   private
+    fPack: TNeoLevelGroup;
     fSection: Integer;
     fSelectedLevel: Integer;
-    fLevelSystem: TDosFlexiLevelSystem;
     fBasicState: TBitmap32;
     fTick: TBitmap32;
     procedure DrawLevelList;
@@ -34,7 +35,7 @@ type
 
 implementation
 
-uses SysUtils, LemLevelSystem;
+uses SysUtils;
 
 { TGameLevelSelectScreen }
 
@@ -64,11 +65,11 @@ begin
     ExtractPurpleFont;
     TileBackgroundBitmap(0, 0);
 
-    fSection := GameParams.Info.dSection;
-    fLevelSystem := TDosFlexiLevelSystem(GameParams.Style.LevelSystem);
+    fPack := GameParams.BaseLevelPack;
+    fSection := GameParams.CurrentLevel.dRank;
 
     DrawPurpleTextCentered(ScreenImg.Bitmap, SLevelSelect, 10);
-    DrawPurpleTextCentered(ScreenImg.Bitmap, Trim(GameParams.SysDat.PackName) + ' - ' + fLevelSystem.GetRankName(fSection), 30);
+    DrawPurpleTextCentered(ScreenImg.Bitmap, fPack.Name + ' - ' + fPack.Children[fSection].Name, 30);
 
     fBasicState.SetSize(ScreenImg.Bitmap.Width, ScreenImg.Bitmap.Height);
     ScreenImg.Bitmap.DrawTo(fBasicState); // save background
@@ -98,11 +99,11 @@ begin
 
     MinLv := fSelectedLevel - (MAX_VIEWABLE_ROWS div 2);
     MaxLv := fSelectedLevel + (MAX_VIEWABLE_ROWS div 2);
-    if MaxLv >= fLevelSystem.GetLevelCount(fSection) then MaxLv := fLevelSystem.GetLevelCount(fSection) - 1;
+    if MaxLv >= fPack.Children[fSection].LevelCount then MaxLv := fPack.Children[fSection].LevelCount - 1;
     if MinLv > MaxLv - MaxViewableRounded then MinLv := MaxLv - MaxViewableRounded;
     if MinLv < 0 then MinLv := 0;
     if MaxLv < MinLv + MaxViewableRounded then MaxLv := MinLv + MaxViewableRounded;
-    if MaxLv >= fLevelSystem.GetLevelCount(fSection) then MaxLv := fLevelSystem.GetLevelCount(fSection) - 1;
+    if MaxLv >= fPack.Children[fSection].LevelCount then MaxLv := fPack.Children[fSection].LevelCount - 1;
 
     Y := 55;
     for i := MinLv to MaxLv do
@@ -115,12 +116,12 @@ begin
         S := S + ' ';
       if i < 99 then
         S := S + '  '; // just in case someone actually makes a rank this big
-      S := S + IntToStr(i + 1) + '.  ' + fLevelSystem.GetLevelName(fSection, i);
+      S := S + IntToStr(i + 1) + '.  ' + fPack.Children[fSection].Levels[i].Title;
 
       if (i = MinLv) and (i <> 0) then
         S := '   .....';
 
-      if (i = MaxLv) and (i <> fLevelSystem.GetLevelCount(fSection)-1) then
+      if (i = MaxLv) and (i <> fPack.Children[fSection].LevelCount) then
         S := '   .....';
         
       DrawPurpleText(ScreenImg.Bitmap, S, 10, Y);
@@ -141,10 +142,8 @@ begin
   case Key of
     VK_ESCAPE: CloseScreen(gstMenu);
     VK_RETURN: begin
-                GameParams.WhichLevel := wlSame;
-                GameParams.Info.dSection := fSection;
-                GameParams.Info.dLevel := fSelectedLevel;
-                fLevelSystem.FindLevel(GameParams.Info);
+                GameParams.CurrentLevel.dRank := fSection;
+                GameParams.CurrentLevel.dLevel := fSelectedLevel;
                 CloseScreen(gstPreview);
               end;
     VK_UP: if fSelectedLevel > 0 then
@@ -152,21 +151,21 @@ begin
              Dec(fSelectedLevel);
              DrawLevelList;
            end;
-    VK_DOWN: if fSelectedLevel < fLevelSystem.GetLevelCount(fSection)-1 then
+    VK_DOWN: if fSelectedLevel < GameParams.BaseLevelPack.Children[fSection].LevelCount-1 then
              begin
                Inc(fSelectedLevel);
                DrawLevelList;
              end;
     VK_LEFT: if fSection > 0 then
              begin
-               Dec(GameParams.Info.dSection);
-               fLevelSystem.FindFirstUnsolvedLevel(GameParams.Info);
+               Dec(GameParams.CurrentLevel.dRank);
+               GameParams.CurrentLevel.dLevel := 0;
                CloseScreen(gstLevelSelect);
              end;
-    VK_RIGHT: if fSection < fLevelSystem.SysDat.RankCount-1 then
+    VK_RIGHT: if fSection < GameParams.BaseLevelPack.Children.Count-1 then
               begin
-                Inc(GameParams.Info.dSection);
-                fLevelSystem.FindFirstUnsolvedLevel(GameParams.Info);
+                Inc(GameParams.CurrentLevel.dRank);
+                GameParams.CurrentLevel.dLevel := 0;
                 CloseScreen(gstLevelSelect);
               end;
   end;

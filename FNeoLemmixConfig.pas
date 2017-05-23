@@ -3,7 +3,7 @@ unit FNeoLemmixConfig;
 interface
 
 uses
-  GameControl, GameSound, FEditHotkeys, LemDosStyle,
+  GameControl, GameSound, FEditHotkeys,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls;
 

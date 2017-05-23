@@ -9,7 +9,7 @@ uses
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
-  LemCore, LemLevel, LemDosStyle, LemRendering, LemRenderHelpers,
+  LemCore, LemLevel, LemRendering, LemRenderHelpers,
   LemGame, LemGameMessageQueue,
   GameSound, LemTypes, LemStrings, LemLemming,
   GameControl, GameBaseSkillPanel, GameSkillPanel, GameBaseScreen,
@@ -349,7 +349,7 @@ begin
 
       if GameParams.SysDat.Options4 and 4 <> 0 then
         for i := 0 to GameParams.Info.dSection-1 do
-          MusicIndex := MusicIndex + TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetLevelCount(i);
+          MusicIndex := MusicIndex + GameParams.BaseLevelPack.Children[i].LevelCount;
     end;
 
   if SL.Count > 0 then
@@ -1816,7 +1816,8 @@ begin
   with GameParams, GameResult do
   begin
     if (gSuccess or gCheated) and (not GameParams.fTestMode) then
-      WhichLevel := wlNext;
+      GameParams.NextLevel;
+      
     if gCheated then
     begin
       GameParams.ShownText := false;

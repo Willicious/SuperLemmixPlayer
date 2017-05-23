@@ -6,7 +6,7 @@ interface
 uses
   SharedGlobals,
   LemSystemMessages,
-  LemTypes, LemRendering, LemLevel, LemDosStyle,
+  LemTypes, LemRendering, LemLevel,
   TalisData, LemDosMainDAT, LemStrings, LemNeoParserOld,
   GameControl, LemVersion,
   GameSound,          // initial creation
@@ -46,7 +46,6 @@ type
     procedure ShowPlayScreen;
     procedure ShowPostviewScreen;
     procedure ShowLevelSelectScreen;
-    procedure ShowLevelCodeScreen;
     procedure ShowTextScreen;
     procedure ShowTalismanScreen;
     procedure ShowReplayCheckScreen;
@@ -62,7 +61,6 @@ uses
   FMain,
   GameMenuScreen,
   GameLevelSelectScreen,
-  GameLevelCodeScreen,
   GamePreviewScreen,
   GamePostviewScreen,
   GameWindow,
@@ -270,7 +268,6 @@ begin
   Application.Title := Trim(GameParams.SysDat.PackName);
   fMainDatExtractor.free;
 
-  GameParams.Style := AutoCreateStyle(GameParams.Directory, GameParams.SysDat);
   GameParams.NextScreen := gstMenu;
 
   if ParamStr(1) = 'testmode' then
@@ -354,20 +351,6 @@ begin
   // removing it.
   GameParams.Renderer.BackgroundColor := $000000;
 
-  GameParams.Style.LevelSystem.SetSaveSystem(@GameParams.SaveSystem);
-
-  if GameParams.Style.LevelSystem is TBaseDosLevelSystem then  // which it should always be
-  begin
-    TBaseDosLevelSystem(GameParams.Style.LevelSystem).fTestMode := GameParams.fTestMode;
-    TBaseDosLevelSystem(GameParams.Style.LevelSystem).fTestLevel := GameParams.fTestLevelFile;
-    TBaseDosLevelSystem(GameParams.Style.LevelSystem).SysDat := GameParams.SysDat;
-    TDosFlexiLevelSystem(GameParams.Style.LevelSystem).SysDat := GameParams.SysDat;
-    TDosFlexiMusicSystem(GameParams.Style.MusicSystem).MusicCount := GameParams.SysDat.TrackCount;
-    TBaseDosLevelSystem(GameParams.Style.LevelSystem).fDefaultSectionCount := TBaseDosLevelSystem(GameParams.Style.LevelSystem).GetSectionCount;
-  end;
-
-  GameParams.WhichLevel := wlLastUnlocked;
-
   if not fLoadSuccess then
     GameParams.NextScreen := gstExit;
 
@@ -391,7 +374,6 @@ begin
 
   GameParams.Renderer.Free;
   GameParams.Level.Free;
-  GameParams.Style.Free;
   GameParams.Free;
 
   SoundManager.Free; // must NOT be moved before GameParams.Save!
@@ -434,7 +416,6 @@ begin
       gstPlay      : ShowPlayScreen;
       gstPostview  : ShowPostviewScreen;
       gstLevelSelect : ShowLevelSelectScreen;
-      gstLevelCode: ShowLevelCodeScreen;
       gstText      : ShowTextScreen;
       gstTalisman  : ShowTalismanScreen;
       gstReplayTest: ShowReplayCheckScreen;
@@ -447,12 +428,6 @@ end;
 procedure TAppController.ShowLevelSelectScreen;
 begin
   fActiveForm := TGameLevelSelectScreen.Create(nil);
-  fActiveForm.ShowScreen;
-end;
-
-procedure TAppController.ShowLevelCodeScreen;
-begin
-  fActiveForm := TGameLevelCodeScreen.Create(nil);
   fActiveForm.ShowScreen;
 end;
 

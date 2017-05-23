@@ -77,7 +77,7 @@ type
 
 implementation
 
-uses Forms, LemStyle, LemDosStyle, LemNeoParserOld, CustomPopup; // old parser used because levels.nxmi is still based on it, no true new-format equivalent exists yet
+uses Forms, LemNeoParserOld, CustomPopup; // old parser used because levels.nxmi is still based on it, no true new-format equivalent exists yet
 
 { TGameReplayCheckScreen }
 
@@ -172,13 +172,12 @@ begin
 end;
 
 procedure TGameReplayCheckScreen.RunTests;
-var
+(*var
   Renderer: TRenderer;
   RenderInfo: TRenderInfoRec;
   Game: TLemmingGame;
   Level: TLevel;
   LevelIDArray: array of array of Cardinal;
-  LevelSys: TBaseDosLevelSystem;
   i: Integer;
   LR, LL: Integer;
 
@@ -204,15 +203,12 @@ var
 
   function TryLevelInfoFile: Boolean;
   var
-    LS: TBaseDosLevelSystem;
     DataStream: TMemoryStream;
     Parser: TNeoLemmixParser;
     Line: TParserLine;
     R, L: Integer;
   begin
     DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
-
-    LS := TBaseDosLevelSystem(GameParams.Style.LevelSystem);
 
     Parser := TNeoLemmixParser.Create;
     try
@@ -330,10 +326,10 @@ var
     Result := IntToStr(m) + ':' + LeadZeroStr(s, 2);
     if f <> 0 then
       Result := Result + ' + ' + IntToStr(f) + ' frames';
-  end;
+  end;*)
 
 begin
-  BuildReplaysList;
+  (*BuildReplaysList;
 
   if fReplays.Count = 0 then
   begin
@@ -464,7 +460,9 @@ begin
       TLinearResampler.Create(ScreenImg.Bitmap);
 
     OutputText;
-  end;
+  end; *)
+  ShowMessage('Replay test is currently not functional.');
+  CloseScreen(gstMenu);
 end;
 
 procedure TGameReplayCheckScreen.BuildScreen;
