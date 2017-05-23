@@ -1,0 +1,2009 @@
+TITLE ...wait, what?
+THEME purple
+ID xC3B8766D
+LEMMINGS 50
+REQUIREMENT 45
+RELEASE_RATE 50
+WIDTH 952
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  GLIDER 1
+  BOMBER 3
+  PLATFORMER 2
+  BUILDER 2
+  BASHER 4
+  CLONER 2
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE window
+  X 57
+  Y 43
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION purple
+  PIECE exit
+  X 857
+  Y 50
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 71
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 89
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 108
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 132
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 123
+  Y 101
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 156
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 196
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 196
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 196
+  Y 97
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 196
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 164
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 156
+  Y 17
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 208
+  Y 18
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 224
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 229
+  Y -6
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 253
+  Y -22
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 297
+  Y -29
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 334
+  Y -37
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 174
+  Y -29
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 137
+  Y -26
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 124
+  Y -34
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 116
+  Y -41
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 104
+  Y -49
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 93
+  Y -54
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 124
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 100
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 76
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 60
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 36
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_02
+  X 16
+  Y 90
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 18
+  Y 111
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 18
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 18
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 102
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 78
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 62
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 52
+  Y -4
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 28
+  Y -4
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 36
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 44
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 12
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X -12
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X -12
+  Y 4
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 6
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 257
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 276
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 292
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 310
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 329
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 345
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 361
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 364
+  Y 79
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 364
+  Y 101
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 364
+  Y 118
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 364
+  Y 135
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 284
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 284
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_03
+  X 386
+  Y 54
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_05
+  X 431
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_08
+  X 477
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_06
+  X 492
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_06
+  X 491
+  Y 123
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_03
+  X 501
+  Y 39
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_03
+  X 462
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_03
+  X 417
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_06
+  X 453
+  Y 7
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_06
+  X 453
+  Y -41
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_10
+  X 546
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_06
+  X 564
+  Y -23
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_02
+  X 524
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_08
+  X 569
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_06
+  X 584
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 567
+  Y 153
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 586
+  Y 153
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_10
+  X 620
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE steel_04
+  X 619
+  Y 72
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_04
+  X 577
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_08
+  X 623
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_07
+  X 606
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_06
+  X 601
+  Y 102
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 707
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 707
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 708
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 708
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 709
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 709
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 710
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 710
+  Y -2
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 710
+  Y -18
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_02
+  X 757
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_03
+  X 754
+  Y 102
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_02
+  X 772
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_03
+  X 774
+  Y 78
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_02
+  X 787
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_03
+  X 788
+  Y 61
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_02
+  X 799
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_03
+  X 798
+  Y 44
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_02
+  X 817
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 816
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 816
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 816
+  Y -8
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 800
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 784
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 764
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 751
+  Y -15
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 727
+  Y -15
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 839
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 863
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 887
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_02
+  X 910
+  Y 17
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 908
+  Y 36
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 908
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 908
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 907
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 907
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 907
+  Y 123
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_01
+  X 907
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 384
+  Y -46
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 425
+  Y -54
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 465
+  Y -54
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 489
+  Y -54
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 513
+  Y -54
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 553
+  Y -56
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 596
+  Y -53
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 630
+  Y -50
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 671
+  Y -42
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 831
+  Y -50
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 866
+  Y -52
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 901
+  Y -50
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_07
+  X 941
+  Y -34
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE rock_01
+  X 484
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE rock_03
+  X 433
+  Y 150
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 812
+  Y 42
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 814
+  Y 37
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 817
+  Y 32
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 154
+  Y 88
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 707
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 707
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 707
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 707
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 707
+  Y 44
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 707
+  Y 28
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 707
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_05
+  X 708
+  Y 109
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_02
+  X 28
+  Y 70
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 45
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 48
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 155
+  Y 76
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 377
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_06
+  X 147
+  Y 89
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE thing_06
+  X 600
+  Y 150
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 858
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION purple
+  PIECE stuff_04
+  X 869
+  Y 73
+  FLIP_HORIZONTAL
+$END
+

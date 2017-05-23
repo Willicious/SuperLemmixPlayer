@@ -1,0 +1,366 @@
+TITLE Midair Magic
+THEME lpv_abstract
+MUSIC lpv_abstract1
+ID x3898F595
+LEMMINGS 50
+REQUIREMENT 20
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+BACKGROUND lpv_abstract:colors
+
+$SKILLSET
+  FLOATER 0
+  GLIDER 0
+  STONER 0
+  PLATFORMER 0
+  BUILDER 0
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE window
+  X 136
+  Y 9
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE exit
+  X 279
+  Y 124
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE exit_top
+  X 279
+  Y 116
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE exit
+  X 16
+  Y 124
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE exit_top
+  X 16
+  Y 116
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 154
+  Y 39
+  NO_OVERWRITE
+  FLOATER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 154
+  Y 103
+  NO_OVERWRITE
+  BUILDER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 154
+  Y 131
+  NO_OVERWRITE
+  PLATFORMER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 182
+  Y 119
+  NO_OVERWRITE
+  STONER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 126
+  Y 119
+  NO_OVERWRITE
+  STONER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 178
+  Y 67
+  NO_OVERWRITE
+  PLATFORMER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 130
+  Y 67
+  NO_OVERWRITE
+  PLATFORMER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 50
+  Y 119
+  NO_OVERWRITE
+  PLATFORMER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 258
+  Y 119
+  NO_OVERWRITE
+  PLATFORMER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 194
+  Y 67
+  NO_OVERWRITE
+  GLIDER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 114
+  Y 67
+  NO_OVERWRITE
+  GLIDER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 234
+  Y 99
+  NO_OVERWRITE
+  PLATFORMER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 74
+  Y 99
+  NO_OVERWRITE
+  PLATFORMER
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE trap
+  X 283
+  Y 57
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE trap
+  X 13
+  Y 57
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 295
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 279
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_corner
+  X 156
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_corner
+  X 152
+  Y 144
+  FLIP_HORIZONTAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_corner
+  X 156
+  Y 144
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE block_red_small
+  X 153
+  Y 132
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_corner
+  X 156
+  Y 144
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 144
+  Y 140
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_blue_corner
+  X 156
+  Y 144
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_purple
+  X 163
+  Y 137
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_purple
+  X 163
+  Y 151
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_purple
+  X 141
+  Y 151
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE semicircle_purple
+  X 271
+  Y 140
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE semicircle_purple
+  X 9
+  Y 140
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 303
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 287
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 271
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 25
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 9
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 33
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 17
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 1
+  Y 87
+$END
+

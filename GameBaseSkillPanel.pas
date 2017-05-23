@@ -3,6 +3,7 @@ unit GameBaseSkillPanel;
 interface
 
 uses
+  Dialogs,
   Classes, Controls, GR32, GR32_Image, GR32_Layers,
   GameWindowInterface,
   LemCore, LemLemming, LemGame, LemLevel;
@@ -370,14 +371,15 @@ end;
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
   MaskColor: TColor32;
+  SrcFile: String;
 begin
-  aName := AppPath + SFStyles + GameParams.BaseLevelPack.PanelStyle + SFPiecesPanel + aName;
-  if not FileExists(aName) then
-    aName := AppPath + SFStyles + SFDefaultStyle + SFPiecesPanel + aName;
+  SrcFile := AppPath + SFStyles + GameParams.BaseLevelPack.PanelStyle + SFPiecesPanel + aName;
+  if not FileExists(SrcFile) then
+    SrcFile := AppPath + SFStyles + SFDefaultStyle + SFPiecesPanel + aName;
   MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
-  TPngInterface.LoadPngFile(aName, aDst);
-  TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(aName, '_mask.png'), MaskColor);
+  TPngInterface.LoadPngFile(SrcFile, aDst);
+  TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
 end;
 
 // Pave the area of NumButtons buttons with the blank panel

@@ -1,0 +1,1491 @@
+TITLE Horizontal Access
+THEME sky
+ID xC5B914A0
+LEMMINGS 50
+REQUIREMENT 50
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  FLOATER 10
+  GLIDER 10
+  PLATFORMER 10
+  BASHER 10
+  MINER 10
+  DIGGER 10
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE window
+  X 40
+  Y 13
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X 273
+  Y 29
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit_text
+  X 273
+  Y 17
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X -11
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 29
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 69
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 101
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 133
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 165
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 197
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 229
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 261
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 293
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 309
+  Y 102
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 309
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 309
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 309
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X 309
+  Y -10
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X -35
+  Y -10
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X -35
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X -35
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X -35
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_03
+  X -35
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X -11
+  Y 51
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 8
+  Y 75
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 29
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 47
+  Y 122
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 23
+  Y 114
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 7
+  Y 114
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X -9
+  Y 114
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X -9
+  Y 98
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 15
+  Y 98
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X -1
+  Y 90
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X -1
+  Y 74
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X -17
+  Y 74
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 142
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 150
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 150
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 142
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 140
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 150
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 142
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 150
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 150
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_07
+  X 139
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 270
+  Y 58
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 230
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 198
+  Y 61
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 166
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 166
+  Y 97
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 198
+  Y 97
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 230
+  Y 97
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 262
+  Y 97
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 171
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 203
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 235
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 275
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 99
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 70
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 50
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 26
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X -1
+  Y -11
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 49
+  Y 102
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 76
+  Y 106
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 29
+  Y 51
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 97
+  Y 118
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 97
+  Y 126
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 65
+  Y 126
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_02
+  X 63
+  Y 118
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_04
+  X 48
+  Y 75
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_05
+  X 7
+  Y 31
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_05
+  X -11
+  Y 15
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_05
+  X -3
+  Y 31
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_05
+  X -3
+  Y 47
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_05
+  X 21
+  Y 55
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_05
+  X 21
+  Y 71
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_05
+  X 38
+  Y 87
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_01
+  X 138
+  Y 57
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_01
+  X 173
+  Y 51
+  FLIP_HORIZONTAL
+  ERASE
+$END
+

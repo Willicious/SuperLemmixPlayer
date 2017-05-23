@@ -7,8 +7,6 @@ bin/*.bmp
 bin/Dump/*
 !bin/gfx/*.png
 !bin/styles/*.png
-bin/packs/*
-!bin/gfx/sprites/imgspander.exe
 instructions.txt
 *.~*
 *.dcu
@@ -23,16 +21,14 @@ instructions.txt
 !LemResourceBuilder.exe
 !OLMaker.exe
 Data/lemdata_Original.RES
-bin/levels/
 NeoLemmixHotkeys.ini
 NeoLemmixSettings.ini
-bin/LemmingsPlusV Replay Results.txt
+NeoLemmix147Settings.ini
 bin/styles/versions.ini
 tools/GSConvert/bin/*
 !tools/GSConvert/bin/*.txt
 !tools/GSConvert/bin/*.dat
 !tools/GSConvert/bin/default/
 *.nxp
-bin/LemmingBytes Replay Results.txt
 bin/* Replay Results.txt
 bin/neolemmix_logging.txt

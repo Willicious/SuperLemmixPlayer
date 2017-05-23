@@ -1,0 +1,1804 @@
+TITLE The Enclosure
+THEME lab
+ID xDCA7CA06
+LEMMINGS 40
+REQUIREMENT 40
+TIME_LIMIT 120
+RELEASE_RATE 99
+WIDTH 320
+HEIGHT 240
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  FLOATER 5
+  STACKER 1
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE window
+  X 196
+  Y 96
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE window
+  X 16
+  Y 16
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X 34
+  Y 192
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION lab
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 304
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 280
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 256
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 232
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 208
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 184
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 160
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 136
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 112
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 88
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 64
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 40
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 16
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 304
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 304
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 304
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 256
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 232
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 208
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 184
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 160
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 136
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 112
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 88
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 64
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 64
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 40
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 280
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 256
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 232
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 208
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 184
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 160
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 136
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 112
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 88
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 16
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE goop_04
+  X 39
+  Y 32
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 256
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 232
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 208
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 184
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 160
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 136
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 112
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 88
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 64
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 40
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 16
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE pipe_07
+  X 80
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 304
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 304
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 280
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 256
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 232
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 208
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 184
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 160
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 160
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 160
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 160
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 160
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 176
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 192
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 208
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 224
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 240
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 256
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 176
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 192
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 208
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 224
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 176
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 192
+  Y 200
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 208
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 240
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 224
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 192
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 176
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 176
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 200
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 224
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 248
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 272
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 296
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 216
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 240
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 264
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 288
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 312
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 232
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 256
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 280
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 304
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 248
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 272
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 296
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 264
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 288
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 312
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 280
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 304
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE bricks_02
+  X 96
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE bricks_02
+  X 96
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 136
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 112
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 88
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 64
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 40
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_02
+  X 16
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_03
+  X 0
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE steel_04
+  X 160
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE bricks_07
+  X 176
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE pipe_07
+  X 56
+  Y 32
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE goop_01
+  X 60
+  Y 34
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE bricks_04
+  X 112
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE bricks_04
+  X 112
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lab
+  PIECE bricks_05
+  X 112
+  Y 160
+$END
+

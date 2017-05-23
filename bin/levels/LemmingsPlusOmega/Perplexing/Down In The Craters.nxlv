@@ -1,0 +1,2370 @@
+TITLE Down In The Craters
+THEME martian
+ID xD3AB1557
+LEMMINGS 100
+REQUIREMENT 99
+TIME_LIMIT 180
+RELEASE_RATE 1
+WIDTH 400
+HEIGHT 480
+START_X 240
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BOMBER 5
+  BLOCKER 5
+  PLATFORMER 5
+  BUILDER 5
+  STACKER 5
+  BASHER 5
+  MINER 5
+  DIGGER 5
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE window
+  X 321
+  Y 44
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE water
+  X 238
+  Y 329
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X 268
+  Y 398
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE water
+  X 102
+  Y 465
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE water
+  X 166
+  Y 465
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$OBJECT
+  COLLECTION martian
+  PIECE exit
+  X -32768
+  Y -32774
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X -9
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 23
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 49
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 364
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 332
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 302
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 56
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 303
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 302
+  Y 169
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 314
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 349
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 350
+  Y 151
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 350
+  Y 165
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 320
+  Y 167
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 357
+  Y 171
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 306
+  Y 203
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 304
+  Y 237
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 337
+  Y 211
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 379
+  Y 203
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 348
+  Y 249
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 368
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 381
+  Y 238
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 82
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 66
+  Y 173
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 52
+  Y 174
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 38
+  Y 130
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 21
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 6
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X -9
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 10
+  Y 174
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X -18
+  Y 167
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X -10
+  Y 183
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 14
+  Y 189
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X -15
+  Y 198
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 10
+  Y 205
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 55
+  Y 210
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 17
+  Y 213
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X -17
+  Y 211
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 53
+  Y 254
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 20
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X -19
+  Y 254
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 298
+  Y 279
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 328
+  Y 283
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 358
+  Y 284
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 361
+  Y 324
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 321
+  Y 324
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 287
+  Y 324
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 293
+  Y 317
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 254
+  Y 339
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 218
+  Y 342
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 58
+  Y 332
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 25
+  Y 334
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X -8
+  Y 336
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 81
+  Y 294
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 63
+  Y 296
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 46
+  Y 294
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 28
+  Y 295
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 9
+  Y 296
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X -7
+  Y 295
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 180
+  Y 343
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 176
+  Y 355
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 93
+  Y 338
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 117
+  Y 335
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 146
+  Y 339
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_01
+  X 22
+  Y 66
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 71
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_04
+  X 22
+  Y 44
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 44
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_04
+  X 22
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_04
+  X 22
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 26
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 17
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X -10
+  Y -1
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_02
+  X 368
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 368
+  Y 44
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_02
+  X 367
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_01
+  X 357
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 391
+  Y 44
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 391
+  Y 20
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_02
+  X 390
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 358
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 334
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 324
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 324
+  Y -12
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_01
+  X 324
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 357
+  Y 366
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 357
+  Y 393
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 320
+  Y 396
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 180
+  Y 347
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 287
+  Y 339
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 48
+  Y 391
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X -11
+  Y 377
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 23
+  Y 377
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_02
+  X 292
+  Y 430
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_02
+  X 260
+  Y 430
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_02
+  X 228
+  Y 430
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_02
+  X 228
+  Y 381
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_02
+  X 260
+  Y 381
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_02
+  X 292
+  Y 381
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 17
+  Y 404
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X -15
+  Y 404
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X -7
+  Y 444
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 28
+  Y 441
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 70
+  Y 443
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 228
+  Y 399
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 244
+  Y 399
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 195
+  Y 445
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 234
+  Y 442
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 260
+  Y 441
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 292
+  Y 441
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 324
+  Y 433
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 364
+  Y 433
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 252
+  Y -4
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 148
+  Y -4
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 148
+  Y 20
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 172
+  Y -4
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 172
+  Y 20
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_09
+  X 148
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_08
+  X 164
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_09
+  X 172
+  Y 5
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_08
+  X 244
+  Y 5
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 189
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 213
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_03
+  X 148
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 158
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 171
+  Y 53
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_04
+  X 171
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_04
+  X 245
+  Y 28
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_03
+  X 301
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 269
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 269
+  Y 155
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 237
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_03
+  X 259
+  Y 154
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 259
+  Y 122
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_04
+  X 248
+  Y 110
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_07
+  X 255
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 205
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 173
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE spike_07
+  X 149
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_03
+  X 301
+  Y 204
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 269
+  Y 227
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_03
+  X 259
+  Y 226
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 259
+  Y 194
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 269
+  Y 204
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_04
+  X 248
+  Y 182
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_07
+  X 255
+  Y 204
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 237
+  Y 204
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_03
+  X 85
+  Y 276
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 205
+  Y 204
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE spike_07
+  X 181
+  Y 196
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 107
+  Y 299
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 107
+  Y 276
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 140
+  Y 266
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_04
+  X 139
+  Y 298
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 140
+  Y 250
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_07
+  X 136
+  Y 276
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 153
+  Y 276
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE spike_04
+  X 159
+  Y 268
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 215
+  Y 331
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_03
+  X 221
+  Y 322
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 80
+  Y 334
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 48
+  Y 334
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 74
+  Y 326
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 42
+  Y 326
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 75
+  Y 342
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 43
+  Y 342
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 48
+  Y 335
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 48
+  Y 359
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 40
+  Y 335
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 40
+  Y 367
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 56
+  Y 342
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 56
+  Y 366
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 48
+  Y 390
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 260
+  Y 399
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_03
+  X 349
+  Y 409
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_03
+  X 313
+  Y 271
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_03
+  X 54
+  Y 206
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 40
+  Y 375
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 38
+  Y 398
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_05
+  X 56
+  Y 382
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_01
+  X 68
+  Y 377
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_01
+  X 46
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_01
+  X 2
+  Y 278
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_01
+  X 68
+  Y 344
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_01
+  X 345
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_04
+  X 332
+  Y 218
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_04
+  X 188
+  Y 364
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_04
+  X 206
+  Y 466
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_05
+  X 20
+  Y 412
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_05
+  X 13
+  Y 170
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE metal_05
+  X 360
+  Y 327
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE rock_04
+  X 320
+  Y 364
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_04
+  X 302
+  Y 408
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE steel_04
+  X 302
+  Y 403
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION martian
+  PIECE supports_06
+  X 315
+  Y 399
+  NO_OVERWRITE
+$END
+

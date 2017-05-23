@@ -1,0 +1,366 @@
+TITLE Just Another Lem In The Wall
+THEME lpiv_clockwork
+MUSIC lpiv_clockwork1
+ID xC7CADCA9
+LEMMINGS 20
+REQUIREMENT 10
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+BACKGROUND lpiv_clockwork:cogs
+
+$SKILLSET
+  CLIMBER 10
+  BOMBER 10
+  PLATFORMER 10
+$END
+
+$OBJECT
+  COLLECTION lpiv_clockwork
+  PIECE window
+  X 39
+  Y 83
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_clockwork
+  PIECE exit
+  X 242
+  Y 104
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_clockwork
+  PIECE exit_flame
+  X 242
+  Y 104
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 0
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 64
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 128
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 192
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 256
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 64
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 128
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 192
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 256
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE pipe_lead_14
+  X 10
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE pipe_lead_14
+  X 290
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE pipe_lead_14
+  X 290
+  Y 111
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE pipe_lead_14
+  X 10
+  Y 111
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE pipe_lead_07
+  X 290
+  Y 49
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE pipe_lead_07
+  X 10
+  Y 49
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE pipe_lead_07
+  X 290
+  Y 81
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE pipe_lead_07
+  X 10
+  Y 81
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 96
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 160
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 96
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 160
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 96
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE wood_02
+  X 160
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE steel_01
+  X 96
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE steel_01
+  X 200
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE steel_01
+  X 128
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE steel_01
+  X 168
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE steel_03
+  X 152
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_01
+  X 174
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_01
+  X 154
+  Y 117
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_01
+  X 120
+  Y 111
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_01
+  X 100
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_02
+  X 75
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_02
+  X 50
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_02
+  X 25
+  Y 149
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_02
+  X 3
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_02
+  X 207
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_02
+  X 233
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_03
+  X -14
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_03
+  X 260
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_03
+  X 277
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_03
+  X 294
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_03
+  X 311
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_clockwork
+  PIECE cog_02
+  X 165
+  Y 92
+$END
+

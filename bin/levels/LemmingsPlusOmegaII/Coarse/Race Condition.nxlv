@@ -1,0 +1,1386 @@
+TITLE Race Condition
+THEME lpv_abstract
+MUSIC lpv_abstract1
+ID xAE2640F8
+LEMMINGS 2
+REQUIREMENT 2
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 360
+START_X 160
+START_Y 80
+AUTOSTEEL on
+BACKGROUND lpv_abstract:colors
+
+$SKILLSET
+  BLOCKER 1
+  BUILDER 1
+  STACKER 3
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE exit
+  X 148
+  Y 328
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpv_abstract
+  PIECE exit_top
+  X 148
+  Y 320
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 92
+  Y 28
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 204
+  Y 28
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_green
+  X 162
+  Y 130
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_green
+  X 170
+  Y 138
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_red
+  X 142
+  Y 130
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_red
+  X 134
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 25
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 47
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 35
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 12
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 292
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 276
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 260
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 244
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 28
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 44
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 60
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 20
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 36
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 52
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 252
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 268
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 284
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 4
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 60
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_red
+  X 29
+  Y 22
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_red
+  X 21
+  Y 30
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_red
+  X 43
+  Y 22
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_red
+  X 51
+  Y 30
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 257
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 279
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 267
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 236
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 292
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_green
+  X 253
+  Y 30
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_green
+  X 275
+  Y 22
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_green
+  X 283
+  Y 30
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 76
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 92
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 108
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 124
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 140
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 164
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 180
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 196
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 212
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 228
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 68
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 84
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 100
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 204
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 220
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 236
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 116
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 132
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 172
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 188
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_green
+  X 261
+  Y 22
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_end
+  X 156
+  Y 40
+  ROTATE
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 48
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 64
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 80
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 96
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_end
+  X 156
+  Y 112
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 164
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 180
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 196
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 140
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 124
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 108
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 100
+  Y 80
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 212
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE semicircle_red
+  X 36
+  Y 80
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE semicircle_green
+  X 244
+  Y 80
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 44
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 252
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 32
+  Y 123
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 56
+  Y 123
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 240
+  Y 123
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 264
+  Y 123
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 76
+  Y 152
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 84
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 100
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 116
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 132
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 140
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 164
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 180
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 196
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 212
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 220
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 236
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_end
+  X 156
+  Y 128
+  ROTATE
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 136
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 152
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 168
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 184
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_end
+  X 156
+  Y 216
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 52
+  Y 191
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 28
+  Y 191
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 16
+  Y 167
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 40
+  Y 167
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 64
+  Y 215
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 40
+  Y 215
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 52
+  Y 191
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 28
+  Y 191
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 268
+  Y 191
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 244
+  Y 191
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 280
+  Y 167
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 256
+  Y 167
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 256
+  Y 215
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 232
+  Y 215
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_end
+  X 156
+  Y 232
+  ROTATE
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 200
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 124
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 132
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 108
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 92
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 84
+  Y 232
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 148
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 204
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 212
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 188
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 172
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 164
+  Y 232
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 228
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 240
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 256
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 188
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 172
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 164
+  Y 248
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 244
+  Y 239
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 52
+  Y 239
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 116
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 132
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 100
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 148
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_end
+  X 156
+  Y 272
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 148
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 132
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 164
+  Y 288
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 172
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_end
+  X 156
+  Y 288
+  ROTATE
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 156
+  Y 292
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow_end
+  X 156
+  Y 304
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_corner
+  X 124
+  Y 288
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_corner
+  X 188
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 188
+  Y 280
+  ROTATE
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 124
+  Y 280
+  ROTATE
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 164
+  Y 296
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 180
+  Y 296
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 172
+  Y 296
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 124
+  Y 296
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 140
+  Y 296
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE steel_02
+  X 132
+  Y 296
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 164
+  Y 344
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 172
+  Y 344
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_corner
+  X 188
+  Y 344
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 188
+  Y 336
+  ROTATE
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 148
+  Y 344
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 132
+  Y 344
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_corner
+  X 124
+  Y 344
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 124
+  Y 336
+  ROTATE
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_yellow
+  X 152
+  Y 344
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_corner
+  X 92
+  Y 248
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_corner
+  X 220
+  Y 248
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 220
+  Y 256
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green_end
+  X 220
+  Y 272
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red
+  X 92
+  Y 256
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_red_end
+  X 92
+  Y 272
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_red
+  X 52
+  Y 263
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE triangle_green
+  X 244
+  Y 263
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE bar_green
+  X 204
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_red
+  X 77
+  Y 243
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_red
+  X 69
+  Y 251
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_green
+  X 227
+  Y 243
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_abstract
+  PIECE diagonal_green
+  X 235
+  Y 251
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$LEMMING
+  X 44
+  Y 16
+  DIRECTION right
+$END
+
+$LEMMING
+  X 275
+  Y 16
+  DIRECTION left
+$END
+

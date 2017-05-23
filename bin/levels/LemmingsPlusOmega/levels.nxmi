@@ -1,0 +1,21 @@
+
+$RANK
+  NAME Breezy
+  FOLDER Breezy
+$END
+
+$RANK
+  NAME Puzzling
+  FOLDER Puzzling
+$END
+
+$RANK
+  NAME Perplexing
+  FOLDER Perplexing
+$END
+
+$RANK
+  NAME Mental
+  FOLDER Mental
+$END
+

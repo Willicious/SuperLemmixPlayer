@@ -1,0 +1,1127 @@
+TITLE Not THAT Simple...
+THEME metal
+ID x83FF0E59
+LEMMINGS 20
+REQUIREMENT 18
+RELEASE_RATE 40
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  PLATFORMER 2
+  BUILDER 1
+  MINER 1
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE window
+  X 224
+  Y 41
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X 17
+  Y 105
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit_flames
+  X 17
+  Y 105
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 0
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 32
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 128
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 160
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 192
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 224
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 256
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 288
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_03
+  X 304
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 160
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 192
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 224
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 256
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_03
+  X 304
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 160
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_01
+  X 288
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_03
+  X 0
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_03
+  X 0
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_03
+  X 0
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_03
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_03
+  X 304
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 16
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 48
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 80
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 112
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 144
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 176
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 208
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 240
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION metal
+  PIECE block_02
+  X 272
+  Y 0
+$END
+

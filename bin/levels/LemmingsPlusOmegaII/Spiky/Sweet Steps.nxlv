@@ -1,0 +1,628 @@
+TITLE Sweet Steps
+THEME lpiv_candy
+MUSIC lpiv_candy2
+ID x5800A830
+LEMMINGS 10
+REQUIREMENT 10
+RELEASE_RATE 70
+WIDTH 368
+HEIGHT 200
+START_X 208
+START_Y 80
+AUTOSTEEL on
+BACKGROUND lpiv_candy:candies
+
+$SKILLSET
+  CLIMBER 1
+  GLIDER 1
+  BUILDER 2
+  MINER 2
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE window
+  X 213
+  Y 3
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE exit
+  X 2
+  Y 155
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE trap
+  X 280
+  Y 132
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_03
+  X 230
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 110
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 100
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 60
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 80
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 350
+  Y 123
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 165
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 68
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_dark_03
+  X 288
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_03
+  X 288
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_dark_03
+  X 288
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_03
+  X 288
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_dark_03
+  X 288
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_01
+  X 257
+  Y 95
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_01
+  X 241
+  Y 95
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 119
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 143
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 207
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 121
+  Y 79
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 128
+  Y 79
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 121
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 128
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 121
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 128
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 121
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 128
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_03
+  X 288
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_dark_02
+  X 264
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_01
+  X 246
+  Y 82
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 216
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 72
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 68
+  Y 113
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 68
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 68
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 68
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 68
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 349
+  Y 165
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 349
+  Y 130
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 349
+  Y 66
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 349
+  Y 101
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 349
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 349
+  Y 45
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 216
+  Y 178
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 72
+  Y 178
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_01
+  X 216
+  Y 186
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_01
+  X 72
+  Y 186
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 37
+  Y 173
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 125
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 45
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -14
+  Y 191
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 10
+  Y 191
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_01
+  X 41
+  Y 170
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 40
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 20
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 0
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y -15
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 68
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 68
+  Y 13
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 36
+  Y 5
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 121
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 128
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 121
+  Y -1
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 128
+  Y -1
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 121
+  Y -9
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_02
+  X 128
+  Y -9
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 349
+  Y -22
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_01
+  X 246
+  Y 66
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_01
+  X 246
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 270
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 270
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 270
+  Y 13
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 270
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_04
+  X 270
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_01
+  X 230
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 176
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 168
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 168
+  Y 178
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_01
+  X 168
+  Y 186
+$END
+

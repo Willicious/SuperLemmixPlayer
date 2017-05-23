@@ -1,0 +1,662 @@
+TITLE King of the castle
+THEME fire
+ID xA8DF00F8
+LEMMINGS 100
+REQUIREMENT 95
+TIME_LIMIT 300
+RELEASE_RATE 40
+WIDTH 420
+HEIGHT 160
+START_X 216
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BUILDER 20
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE exit
+  X 56
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE window
+  X 312
+  Y 112
+  NO_OVERWRITE
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 296
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 232
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 168
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 104
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 40
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 156
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 195
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 234
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 273
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 311
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 120
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 81
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 124
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 163
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 202
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 240
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 276
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 313
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 316
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 118
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 157
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 193
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 317
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 232
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 270
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 279
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 83
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 59
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 102
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 140
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 176
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 211
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 249
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 270
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 141
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 102
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 98
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 178
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 216
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 221
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 59
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 48
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 60
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 60
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 60
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 355
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 355
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 355
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 355
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 355
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 315
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_03
+  X 96
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 58
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 60
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 50
+  Y 39
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 75
+  Y 62
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 307
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 352
+  Y 81
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 62
+  Y 72
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 64
+  Y 136
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 98
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_02
+  X 66
+  Y 132
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_05
+  X 13
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_05
+  X 356
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 60
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 180
+  Y 136
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 210
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 207
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 142
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 173
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 173
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 213
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 213
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 106
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 106
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 286
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_04
+  X 286
+  Y 140
+  ONE_WAY
+$END
+

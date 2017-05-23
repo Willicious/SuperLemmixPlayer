@@ -1,0 +1,573 @@
+TITLE Watchtowers
+THEME lpv_mineshaft
+MUSIC lpv_mine1
+ID x8767E1C8
+LEMMINGS 25
+REQUIREMENT 25
+RELEASE_RATE 1
+WIDTH 480
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+BACKGROUND lpv_mineshaft:rocky
+
+$SKILLSET
+  CLIMBER 2
+  FLOATER 1
+  BLOCKER 2
+  PLATFORMER 6
+  BUILDER 1
+  BASHER 2
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION lpv_mineshaft
+  PIECE window
+  X 52
+  Y 2
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpv_mineshaft
+  PIECE exit
+  X 392
+  Y 24
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 72
+  Y 51
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X -7
+  Y 150
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 23
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 53
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 86
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 118
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 150
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 176
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 146
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 196
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 228
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 254
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 224
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 284
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 317
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 350
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 383
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 414
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rocks_01
+  X 447
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 72
+  Y 128
+  ROTATE
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 72
+  Y 104
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 72
+  Y 80
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 72
+  Y 56
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 200
+  Y 142
+  ROTATE
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 200
+  Y 118
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 200
+  Y 94
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 200
+  Y 70
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 296
+  Y 136
+  ROTATE
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 296
+  Y 112
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 296
+  Y 64
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 296
+  Y 40
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 400
+  Y 128
+  ROTATE
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 400
+  Y 104
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 400
+  Y 80
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 400
+  Y 56
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 296
+  Y 88
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 296
+  Y 24
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 64
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 80
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 48
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 104
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 106
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 40
+  Y 47
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 38
+  Y 47
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 200
+  Y 64
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 192
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 208
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 176
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 232
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 234
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 168
+  Y 60
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 166
+  Y 60
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 296
+  Y 18
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 288
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 304
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 272
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 328
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 330
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 264
+  Y 14
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 262
+  Y 14
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE wood_02
+  X 400
+  Y 50
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 392
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 408
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_01
+  X 376
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 432
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 434
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 368
+  Y 46
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_mineshaft
+  PIECE rails_03
+  X 366
+  Y 46
+  FLIP_HORIZONTAL
+$END
+

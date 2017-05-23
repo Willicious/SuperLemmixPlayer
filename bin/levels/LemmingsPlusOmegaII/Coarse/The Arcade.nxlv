@@ -1,0 +1,555 @@
+TITLE The Arcade
+THEME lpv_machine
+MUSIC lpv_machine2
+ID x2D0E7DA4
+LEMMINGS 40
+REQUIREMENT 10
+RELEASE_RATE 15
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+BACKGROUND lpv_machine:lemco
+
+$SKILLSET
+  GLIDER 1
+  BLOCKER 1
+  BUILDER 3
+  MINER 1
+  CLONER 2
+$END
+
+$OBJECT
+  COLLECTION lpv_machine
+  PIECE window
+  X 11
+  Y 4
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpv_machine
+  PIECE exit
+  X 32
+  Y 103
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_03
+  X 23
+  Y 92
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_block
+  X 8
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_block
+  X 8
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_bar_02
+  X 8
+  Y 47
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_bar_02
+  X 8
+  Y 63
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_bar_02
+  X 8
+  Y 79
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_bar_02
+  X 8
+  Y 95
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_bar_02
+  X 8
+  Y 111
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_bar_02
+  X 8
+  Y 127
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_bar_02
+  X 8
+  Y 129
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE medium_bar_01
+  X 8
+  Y 88
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_03
+  X 23
+  Y 34
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 39
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 55
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 71
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 87
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 103
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 119
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 135
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 151
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 167
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 183
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 199
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 215
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 231
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 247
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_05
+  X 295
+  Y 34
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 39
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 55
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 71
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 87
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 103
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 119
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 135
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 151
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 167
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 183
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 199
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 215
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 231
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 247
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_05
+  X 295
+  Y 92
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_03
+  X 23
+  Y 150
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 39
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 55
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 71
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 87
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 103
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 119
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 135
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 151
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 167
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 183
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 199
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 215
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 231
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 247
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_05
+  X 295
+  Y 150
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 263
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 263
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 263
+  Y 150
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 279
+  Y 34
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 279
+  Y 92
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpv_machine
+  PIECE small_bar_01
+  X 279
+  Y 150
+  ROTATE
+$END
+
