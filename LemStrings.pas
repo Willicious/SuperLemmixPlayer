@@ -28,10 +28,12 @@ const
     SFGraphicsPanel = SFGraphics + 'panel\';
 
   SFStyles = 'styles\';
+      SFDefaultStyle = 'default';
       SFPiecesTerrain = '\terrain\';
       SFPiecesObjects = '\objects\';
       SFPiecesBackgrounds = '\backgrounds\';
       SFPiecesLemmings = '\lemmings\';
+      SFPiecesPanel = '\panel\';
       SFTheme = 'theme.nxtm';
       SFTranslation = 'translation.nxtt';
 

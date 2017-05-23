@@ -370,8 +370,12 @@ end;
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
   MaskColor: TColor32;
+const
+  STYLE_PLACEHOLDER = 'default'; // to be replaced with proper code once new level pack code is integrated
 begin
-  aName := AppPath + SFGraphicsPanel + aName;
+  aName := AppPath + SFStyles + STYLE_PLACEHOLDER + SFPiecesPanel + aName;
+  if not FileExists(aName) then
+    aName := AppPath + SFStyles + SFDefaultStyle + SFPiecesPanel + aName;
   MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
   TPngInterface.LoadPngFile(aName, aDst);

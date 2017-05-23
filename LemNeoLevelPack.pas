@@ -52,10 +52,9 @@ type
       fChildGroups: TNeoLevelGroups;
       fLevels: TNeoLevelEntries;
 
-      fPanelImages: array[0..8] of TBitmap32;
-
       fName: String;
       fFolder: String;
+      fPanelStyle: String;
 
       procedure SetFolderName(aValue: String);
       function GetFullPath: String;
@@ -76,6 +75,7 @@ type
       property Name: String read fName write fName;
       property Folder: String read fFolder write SetFolderName;
       property Path: String read GetFullPath;
+      property PanelStyle: String read fPanelStyle;
   end;
 
 
@@ -203,17 +203,17 @@ begin
   fChildGroups := TNeoLevelGroups.Create(self);
   fLevels := TNeoLevelEntries.Create(self);
   fParentGroup := aParentGroup;
+
+  if fParentGroup = nil then
+    fPanelStyle := 'default'
+  else
+    fPanelStyle := fParentGroup.PanelStyle;
 end;
 
 destructor TNeoLevelGroup.Destroy;
-var
-  i: Integer;
 begin
   fChildGroups.Free;
   fLevels.Free;
-  for i := 0 to Length(fPanelImages)-1 do
-    if fPanelImages[i] <> nil then
-      fPanelImages[i].Free;
   inherited;
 end;
 
@@ -254,6 +254,7 @@ begin
     MainSec := Parser.MainSection;
     MainSec.DoForEachSection('rank', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
+    fPanelStyle := MainSec.LineTrimString['panel_style'];
 
     // we do NOT want to sort alphabetically here, we want them to stay in the order
     // the metainfo file lists them in!
