@@ -32,3 +32,4 @@ tools/GSConvert/bin/*
 *.nxp
 bin/* Replay Results.txt
 bin/neolemmix_logging.txt
+*.nxsv
