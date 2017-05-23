@@ -249,7 +249,6 @@ var
 begin
   G := fChildGroups.Add(aSection.LineTrimString['folder']);
   G.Name := aSection.LineTrimString['name'];
-  G.Load;
 end;
 
 procedure TNeoLevelGroup.LoadFromMetaInfo;
