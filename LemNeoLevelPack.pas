@@ -51,6 +51,8 @@ type
       fTitle: String;
       fFilename: String;
 
+      fLevelID: Cardinal;
+
       fStatus: TNeoLevelStatus;
 
       fLastCRC32: Cardinal;
@@ -59,6 +61,7 @@ type
       procedure SetFilename(aValue: String);
       function GetFullPath: String;
       function GetTitle: String;
+      function GetLevelID: Cardinal;
     public
       constructor Create(aGroup: TNeoLevelGroup);
       destructor Destroy; override;
@@ -68,6 +71,7 @@ type
       property Group: TNeoLevelGroup read fGroup;
       property Title: String read GetTitle;
       property Filename: String read fFilename write SetFilename;
+      property LevelID: Cardinal read GetLevelID;
       property Path: String read GetFullPath;
       property Status: TNeoLevelStatus read fStatus write fStatus;
   end;
@@ -262,6 +266,24 @@ begin
   end;
 
   Result := fTitle;
+end;
+
+function TNeoLevelEntry.GetLevelID: Cardinal;
+var
+  Parser: TParser;
+begin
+  if fLevelID = 0 then
+  begin
+    Parser := TParser.Create;
+    try
+      Parser.LoadFromFile(Path);
+      fLevelID := Parser.MainSection.LineNumeric['id'];
+    finally
+      Parser.Free;
+    end;
+  end;
+
+  Result := fLevelID;
 end;
 
 procedure TNeoLevelEntry.EnsureUpdated;
