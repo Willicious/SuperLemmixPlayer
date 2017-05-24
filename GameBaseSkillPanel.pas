@@ -55,7 +55,7 @@ type
     fSkillCountErase      : TBitmap32;
     fSkillLock            : TBitmap32;
     fSkillInfinite        : TBitmap32;
-    fSkillIcons           : array of TBitmap32;
+    fSkillIcons           : array[spbWalker..spbCloner] of TBitmap32;
     fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
     fHighlitSkill         : TSkillPanelButton;
@@ -162,7 +162,7 @@ const
   NUM_FONT_CHARS = 45;
 
 const
-  SKILL_NAMES: array[0..NUM_SKILL_ICONS - 1] of string = (
+  SKILL_NAMES: array[spbWalker..spbCloner] of string = (
       'walker', 'climber', 'swimmer', 'floater', 'glider',
       'disarmer', 'bomber', 'stoner', 'blocker', 'platformer',
       'builder', 'stacker', 'basher', 'fencer', 'miner',
@@ -204,6 +204,7 @@ constructor TBaseSkillPanel.Create(aOwner: TComponent);
 var
   c: Char;
   i: Integer;
+  Button: TSkillPanelButton;
 begin
   inherited Create(aOwner);
 
@@ -251,12 +252,11 @@ begin
     fInfoFont[i] := TBitmap32.Create;
   end;
 
-  SetLength(fSkillIcons, NUM_SKILL_ICONS);
-  for i := 0 to NUM_SKILL_ICONS - 1 do
+  for Button := spbWalker to spbCloner do
   begin
-    fSkillIcons[i] := TBitmap32.Create;
-    fSkillIcons[i].DrawMode := dmBlend;
-    fSkillIcons[i].CombineMode := cmMerge;
+    fSkillIcons[Button] := TBitmap32.Create;
+    fSkillIcons[Button].DrawMode := dmBlend;
+    fSkillIcons[Button].CombineMode := cmMerge;
   end;
 
   for c := '0' to '9' do
@@ -293,6 +293,7 @@ destructor TBaseSkillPanel.Destroy;
 var
   c: Char;
   i: Integer;
+  Button: TSkillPanelButton;
 begin
   for i := 0 to NUM_FONT_CHARS - 1 do
     fInfoFont[i].Free;
@@ -301,8 +302,8 @@ begin
     for i := 0 to 1 do
       fSkillFont[c, i].Free;
 
-  for i := 0 to NUM_SKILL_ICONS - 1 do
-    fSkillIcons[i].Free;
+  for Button := spbWalker to spbCloner do
+    fSkillIcons[Button].Free;
 
   fSkillInfinite.Free;
   fSkillCountErase.Free;
@@ -450,13 +451,13 @@ end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
 var
-  i: Integer;
+  Button: TSkillPanelButton;
 begin
   // Load the erasing icon first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
 
-  for i := 0 to NUM_SKILL_ICONS - 1 do
-    GetGraphic('icon_' + SKILL_NAMES[i] + '.png', fSkillIcons[i]);
+  for Button := spbWalker to spbCloner do
+    GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
 end;
 
 procedure TBaseSkillPanel.LoadSkillFont;
@@ -557,8 +558,8 @@ begin
       Inc(ButtonIndex);
 
       fButtonRects[Skill] := ButRect;
-      fSkillIcons[Integer(Skill)].DrawTo(fImage.Bitmap, ButRect.Left, ButRect.Top);
-      fSkillIcons[Integer(Skill)].DrawTo(fOriginal, ButRect.Left, ButRect.Top);
+      fSkillIcons[Skill].DrawTo(fImage.Bitmap, ButRect.Left, ButRect.Top);
+      fSkillIcons[Skill].DrawTo(fOriginal, ButRect.Left, ButRect.Top);
     end;
   end;
 
