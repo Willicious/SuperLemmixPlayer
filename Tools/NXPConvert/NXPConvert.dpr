@@ -14,6 +14,9 @@ uses
   LemNeoParser,
   LemStrings;
 
+var
+  SrcFile: String;
+
   function DoesFileExist(aName: String; aZip: TArchive = nil): Boolean;
   var
     Zip: TArchive;
@@ -25,7 +28,7 @@ uses
 
     try
       if aZip = nil then
-        Zip.OpenArchive(ParamStr(1), amOpen);
+        Zip.OpenArchive(SrcFile, amOpen);
       Result := Zip.CheckIfFileExists(aName);
     finally
       if aZip = nil then
@@ -41,7 +44,7 @@ uses
     Result := nil;
     Zip := TArchive.Create;
     try
-      Zip.OpenArchive(ParamStr(1), amOpen);
+      Zip.OpenArchive(SrcFile, amOpen);
       if not DoesFileExist(aName, Zip) then Exit;
       try
         if aStream = nil then
@@ -105,18 +108,20 @@ begin
     Exit;
   end;
 
-  GameFile := ExtractFilePath(ParamStr(0));
+  SrcFile := ParamStr(1);
+  if Pos(':', SrcFile) = 0 then
+    SrcFile := ExtractFilePath(ParamStr(0)) + SrcFile;
+  GameFile := ExtractFilePath(ParamStr(0)) + 'data\';
 
-  DstBasePath := GameFile + ExtractFileName(ChangeFileExt(ParamStr(1), '')) + '\';
-  ForceDirectories(DstBasePath);
-  ForceDirectories(DstBasePath + 'leveldata\'); // others are created as needed
+  DstBasePath := ExtractFilePath(ParamStr(0)) + ExtractFileName(ChangeFileExt(SrcFile, '')) + '\';
+  ForceDirectories(DstBasePath); // others are created as needed
 
   WriteLn('Please note that this tool only converts the level data,');
   WriteLn('talisman data and system texts. Custom music and images');
   WriteLn('must be added manually, and graphic sets converted with');
   WriteLn('a seperate tool.');
   WriteLn('');
-  WriteLn('Press enter to continue with conversion of ' + ExtractFileName(ParamStr(1)) + '.');
+  WriteLn('Press enter to continue with conversion of ' + ExtractFileName(SrcFile) + '.');
   ReadLn(Dummy);
 
   SoundManager := TSoundManager.Create;
@@ -136,38 +141,36 @@ begin
   for Rank := 0 to SysDat.RankCount-1 do
   begin
     WriteLn('Rank ' + IntToStr(Rank+1));
-    ForceDirectories(DstBasePath + 'leveldata\' + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\');
-    SetCurrentDir(DstBasePath + 'leveldata\' + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\');
+    ForceDirectories(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\');
     MainSec := Parser.MainSection;
     for Level := 0 to 255 do
     begin
-      WriteLn('  Level ' + IntToStr(Level+1));
       if not DoesFileExist(LeadZeroStr(Rank, 2) + LeadZeroStr(Level, 2) + '.lvl') then
-      begin
-        WriteLn('    NOT FOUND');
         Break;
-      end;
+      WriteLn('  Level ' + IntToStr(Level+1));
       CreateDataStream(LeadZeroStr(Rank, 2) + LeadZeroStr(Level, 2) + '.lvl', MS);
       TLvlLoader.LoadLevelFromStream(MS, GameParams.Level);
-      GameParams.Level.SaveToFile(MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
+      GameParams.Level.SaveToFile(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\' + MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
       MainSec.AddLine('level', MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
       PieceManager.Tidy;
     end;
-    Parser.SaveToFile('levels.nxmi');
+    Parser.SaveToFile(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\levels.nxmi');
     Parser.Clear;
   end;
 
   { Ranks }
+  WriteLn('Rank metainfo');
   for Rank := 0 to SysDat.RankCount-1 do
   begin
     MainSec := Parser.MainSection.SectionList.Add('rank');
     MainSec.AddLine('name', Trim(SysDat.RankNames[Rank]));
     MainSec.AddLine('folder', MakeSafeForFilename(Trim(SysDat.RankNames[Rank])));
   end;
-  Parser.SaveToFile(DstBasePath + 'leveldata\levels.nxmi');
+  Parser.SaveToFile(DstBasePath + 'levels.nxmi');
   Parser.Clear;
 
   { Music Tracks }
+  WriteLn('Music rotation');
   CreateDataStream('music.txt', MS);
   SL.LoadFromStream(MS);
 
@@ -176,10 +179,13 @@ begin
   for i := 0 to SL.Count-1 do
     MainSec.AddLine('TRACK', SL[i]);
 
-  Parser.SaveToFile(DstBasePath + 'leveldata\music.nxmi');
+  Parser.SaveToFile(DstBasePath + 'music.nxmi');
+
+  SL.Clear;
   Parser.Clear;
 
   { Postview Texts }
+  WriteLn('Postview texts');
   MainSec := Parser.MainSection;
 
   for i := 0 to 8 do
@@ -190,10 +196,11 @@ begin
     MainSec.SectionList[i].AddLine('line', Trim(SysDat.SResult[i][1]));
   end;
 
-  Parser.SaveToFile(DstBasePath + 'leveldata\postview.nxmi');
+  Parser.SaveToFile(DstBasePath + 'postview.nxmi');
   Parser.Clear;
 
-  { Basic Metainfo. We need to know about custom skill panels first. }
+  { Basic Metainfo }
+  WriteLn('General metainfo');
   MainSec := Parser.MainSection;
 
   MainSec.AddLine('TITLE', Trim(SysDat.PackName));
@@ -206,6 +213,9 @@ begin
   if MainSec.LineList.Count = 0 then
     Parser.MainSection.SectionList.Delete(1);
 
-  Parser.SaveToFile(DstBasePath + 'leveldata\info.nxmi');
+  Parser.SaveToFile(DstBasePath + 'info.nxmi');
   Parser.Clear;
+
+  { Launcher file }
+  SL.SaveToFile(DstBasePath + ChangeFileExt(ExtractFileName(SrcFile), '.nxlp'));
 end.

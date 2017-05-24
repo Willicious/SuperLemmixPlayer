@@ -317,6 +317,7 @@ begin
   inherited Create;
 
   fFolder := aPath;
+  fFolder := ExcludeTrailingBackslash(fFolder);
 
   fChildGroups := TNeoLevelGroups.Create(self);
   fLevels := TNeoLevelEntries.Create(self);
@@ -470,9 +471,12 @@ var
   G: TNeoLevelGroup;
   L: TNeoLevelEntry;
 begin
+  WriteLn('Search from ' + Path);
   if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
   begin
     repeat
+      if SearchRec.Attr and faDirectory <> faDirectory then Continue;
+      if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
       G := fChildGroups.Add(SearchRec.Name);
       G.Name := SearchRec.Name;
       G.Load;
@@ -481,15 +485,18 @@ begin
     fChildGroups.Sort(SortAlphabetical);
   end;
 
+  WriteLn('Nxlv search');
   if FindFirst(Path + '*.nxlv', 0, SearchRec) = 0 then
   begin
     repeat
+      WriteLn('Found ' + SearchRec.Name);
       L := fLevels.Add;
       L.Filename := SearchRec.Name;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
     fLevels.Sort(SortAlphabetical);
   end;
+  WriteLn('Done');
 end;
 
 procedure TNeoLevelGroup.SetFolderName(aValue: String);
