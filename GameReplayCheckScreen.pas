@@ -172,12 +172,10 @@ begin
 end;
 
 procedure TGameReplayCheckScreen.RunTests;
-(*var
+var
   Renderer: TRenderer;
-  RenderInfo: TRenderInfoRec;
   Game: TLemmingGame;
   Level: TLevel;
-  LevelIDArray: array of array of Cardinal;
   i: Integer;
   LR, LL: Integer;
 
@@ -201,67 +199,19 @@ procedure TGameReplayCheckScreen.RunTests;
     Get('lrb');
   end;
 
-  function TryLevelInfoFile: Boolean;
-  var
-    DataStream: TMemoryStream;
-    Parser: TNeoLemmixParser;
-    Line: TParserLine;
-    R, L: Integer;
-  begin
-    DataStream := CreateDataStream('levels.nxmi', ldtLemmings);
-
-    Parser := TNeoLemmixParser.Create;
-    try
-      Parser.LoadFromStream(DataStream);
-
-      SetLength(LevelIDArray, LS.GetSectionCount);
-      for R := 0 to LS.GetSectionCount-1 do
-        SetLength(LevelIDArray[R], LS.GetLevelCount(R));
-
-      R := -1;
-      L := -1;
-      repeat
-        Line := Parser.NextLine;
-        if (Line.Keyword <> 'LEVEL') and (R = -1) then Continue;
-
-        if Line.Keyword = 'LEVEL' then
-        begin
-          if Line.Numeric > 9999 then
-          begin
-            R := Line.Numeric div 1000;
-            L := Line.Numeric mod 1000;
-          end else begin
-            R := Line.Numeric div 100;
-            L := Line.Numeric mod 100;
-          end;
-
-          if (R > LS.GetSectionCount) or (L > LS.GetLevelCount(R)) then
-            R := -1;
-        end;
-
-        if Line.Keyword = 'ID' then
-          LevelIDArray[R][L] := StrToIntDef('x' + Line.Value, 0);
-
-      until (Line.Keyword = '');
-
-      Result := true;
-    finally
-      Parser.Free;
-    end;
-  end;
-
   function LoadLevel(aID: Cardinal): Boolean;
   var
     R, L: Integer;
   begin
     Result := false;
-    for R := 0 to Length(LevelIDArray)-1 do
-      for L := 0 to Length(LevelIDArray[R])-1 do
-        if LevelIDArray[R][L] = aID then
+    for R := 0 to GameParams.BaseLevelPack.Children.Count-1 do
+      for L := 0 to GameParams.BaseLevelPack.Children[R].Levels.Count-1 do
+        if GameParams.BaseLevelPack.Children[R].Levels[L].LevelID = aID then
         begin
           LR := R;
           LL := L;
-          LevelSys.LoadSingleLevel(0, R, L, Level);
+          GameParams.SetLevel(R, L);
+          Level.LoadFromFile(GameParams.CurrentLevel.dLevelEntry.Path);
           Result := true;
           Exit;
         end;
@@ -326,10 +276,10 @@ procedure TGameReplayCheckScreen.RunTests;
     Result := IntToStr(m) + ':' + LeadZeroStr(s, 2);
     if f <> 0 then
       Result := Result + ' + ' + IntToStr(f) + ' frames';
-  end;*)
+  end;
 
 begin
-  (*BuildReplaysList;
+  BuildReplaysList;
 
   if fReplays.Count = 0 then
   begin
@@ -339,9 +289,7 @@ begin
     fScreenText.Add('Click mouse to exit');
   end;
 
-  TryLevelInfoFile;
   GetReplayLevelIDs;
-  LevelSys := TBaseDosLevelSystem(GameParams.Style.LevelSystem);
 
   Game := GlobalGame;        // shortcut
   Level := GameParams.Level; // shortcut
@@ -365,13 +313,11 @@ begin
         Continue;
       end;
 
-      RenderInfo.Level := Level;
-
-      fReplays[i].ReplayLevelText := Trim(LevelSys.SysDat.RankNames[LR]) + ' ' + IntToStr(LL + 1);
+      fReplays[i].ReplayLevelText := Trim(GameParams.BaseLevelPack.Children[LR].Name) + ' ' + IntToStr(LL + 1);
       fReplays[i].ReplayLevelTitle := Trim(Level.Info.Title);
 
       PieceManager.Tidy;
-      Renderer.PrepareGameRendering(RenderInfo, true);
+      Renderer.PrepareGameRendering(GameParams.Level, true);
       Game.PrepareParams;
 
       if LowerCase(ExtractFileExt(fReplays[i].ReplayFile)) = '.lrb' then
@@ -460,9 +406,7 @@ begin
       TLinearResampler.Create(ScreenImg.Bitmap);
 
     OutputText;
-  end; *)
-  ShowMessage('Replay test is currently not functional.');
-  CloseScreen(gstMenu);
+  end;
 end;
 
 procedure TGameReplayCheckScreen.BuildScreen;
@@ -627,7 +571,7 @@ begin
     SaveGroup(CR_PASS, 'PASSED');
     SaveGroup(CR_NOLEVELMATCH, 'LEVEL NOT FOUND');
     SaveGroup(CR_ERROR, 'ERROR');
-    SL.SaveToFile(ChangeFileExt(GameFile, '') + ' Replay Results.txt');
+    SL.SaveToFile(AppPath + ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
   finally
     SL.Free;
   end;
