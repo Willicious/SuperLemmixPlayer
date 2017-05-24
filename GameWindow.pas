@@ -332,15 +332,7 @@ begin
   else
     MusicIndex := -1;
 
-  SL := TStringList.Create;
-  TempStream := nil;
-  //TempStream := CreateDataStream('music.txt', ldtLemmings); // It's a text file, but should be loaded more similarly to data files.
-  if TempStream = nil then
-    SL.LoadFromFile(AppPath + SFData + 'music.nxmi')
-  else begin
-    SL.LoadFromStream(TempStream);
-    TempStream.Free;
-  end;
+  SL := GameParams.CurrentLevel.dLevelEntry.Group.MusicList;
 
   if MusicIndex = -1 then
     if GameParams.fTestMode then
@@ -353,7 +345,7 @@ begin
     end;
 
   if SL.Count > 0 then
-    Result := RightStr(trim(SL[MusicIndex mod SL.Count]), Length(trim(SL[MusicIndex mod SL.Count])) - 6); // kludge, need to use proper parser
+    Result := SL[MusicIndex mod SL.Count];
 end;
 
 procedure TGameWindow.SetClearPhysics(aValue: Boolean);

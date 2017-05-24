@@ -7,6 +7,7 @@ unit LemNeoLevelPack;
 interface
 
 uses
+  Dialogs,
   GR32, CRC32, PngInterface,
   Classes, SysUtils, StrUtils, Contnrs,
   LemStrings, LemTypes, LemNeoParser;
@@ -40,6 +41,7 @@ type
 
       procedure EnsureUpdated;
 
+      property Group: TNeoLevelGroup read fGroup;
       property Title: String read GetTitle;
       property Filename: String read fFilename write SetFilename;
       property Path: String read GetFullPath;
@@ -56,6 +58,9 @@ type
       fFolder: String;
       fPanelStyle: String;
 
+      fMusicList: TStringList;
+      fHasOwnMusicList: Boolean;
+
       procedure SetFolderName(aValue: String);
       function GetFullPath: String;
 
@@ -68,6 +73,8 @@ type
       procedure Load;
 
       procedure SetDefaultData;
+      procedure LoadMusicData;
+      procedure LoadMusicLine(aLine: TParserLine; const aIteration: Integer);
 
       function GetRecursiveLevelCount: Integer;
     public
@@ -83,6 +90,7 @@ type
       property Folder: String read fFolder write SetFolderName;
       property Path: String read GetFullPath;
       property PanelStyle: String read fPanelStyle;
+      property MusicList: TStringList read fMusicList;
   end;
 
 
@@ -226,12 +234,49 @@ begin
   end else begin
     fPanelStyle := fParentGroup.PanelStyle;
   end;
+
+  LoadMusicData;
+end;
+
+procedure TNeoLevelGroup.LoadMusicData;
+var
+  Parser: TParser;
+  MainSec: TParserSection;
+begin
+  if (fParentGroup <> nil) and not FileExists(Path + 'music.nxmi') then
+  begin
+    fMusicList := fParentGroup.MusicList;
+    fHasOwnMusicList := false;
+    Exit;
+  end;
+
+  fMusicList := TStringList.Create;
+  fHasOwnMusicList := true;
+  Parser := TParser.Create;
+  try
+    if FileExists(Path + 'music.nxmi') then
+      Parser.LoadFromFile(Path + 'music.nxmi')
+    else
+      Parser.LoadFromFile(AppPath + SFData + 'music.nxmi');
+
+    MainSec := Parser.MainSection;
+    MainSec.DoForEachLine('track', LoadMusicLine);
+  finally
+    Parser.Free;
+  end;
+end;
+
+procedure TNeoLevelGroup.LoadMusicLine(aLine: TParserLine; const aIteration: Integer);
+begin
+  fMusicList.Add(aLine.ValueTrimmed);
 end;
 
 destructor TNeoLevelGroup.Destroy;
 begin
   fChildGroups.Free;
   fLevels.Free;
+  if fParentGroup = nil then
+    fMusicList.Free;
   inherited;
 end;
 
