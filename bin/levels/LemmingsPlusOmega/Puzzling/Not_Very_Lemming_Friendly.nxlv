@@ -46,28 +46,28 @@ $OBJECT
 $END
 
 $OBJECT
-  COLLECTION metal
+  COLLECTION default
   PIECE button
   X 36
   Y 77
 $END
 
 $OBJECT
-  COLLECTION metal
+  COLLECTION default
   PIECE button
   X 252
   Y 45
 $END
 
 $OBJECT
-  COLLECTION metal
+  COLLECTION default
   PIECE button
   X 380
   Y 45
 $END
 
 $OBJECT
-  COLLECTION metal
+  COLLECTION default
   PIECE button
   X 500
   Y 77
