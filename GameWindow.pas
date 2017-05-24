@@ -120,6 +120,8 @@ type
 
     procedure SetGameSpeed(aValue: TGameSpeed);
     function GetGameSpeed: TGameSpeed;
+    function GetDisplayWidth: Integer;  // to satisfy IGameWindow
+    function GetDisplayHeight: Integer; // to satisfy IGameWindow
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -172,6 +174,8 @@ type
     property IsHyperSpeed: Boolean read GetIsHyperSpeed;
 
     function ScreenImage: TImage32; // to staisfy IGameWindow, should be moved to TGameBaseScreen, but it causes bugs there.
+    property DisplayWidth: Integer read GetDisplayWidth; // to staisfy IGameWindow
+    property DisplayHeight: Integer read GetDisplayHeight; // to staisfy IGameWindow
     procedure SetForceUpdateOneFrame(aValue: Boolean);  // to satisfy IGameWindow
     procedure SetHyperSpeedTarget(aValue: Integer);     // to satisfy IGameWindow
 
@@ -275,9 +279,6 @@ begin
   Img.Left := (ClientWidth - Img.Width) div 2;
   SkillPanel.Left := (ClientWidth - SkillPanel.Width) div 2;
   // tops are calculated later
-
-  SkillPanel.DisplayWidth := Img.Width div fInternalZoom;
-  SkillPanel.DisplayHeight := Img.Height div fInternalZoom;
 
   VertOffset := (ClientHeight - ((SkillPanel.Zoom * 40) + Img.Height)) div 2;
   Img.Top := VertOffset;
@@ -1832,6 +1833,16 @@ end;
 function TGameWindow.ScreenImage: TImage32;
 begin
   Result := ScreenImg;
+end;
+
+function TGameWindow.GetDisplayWidth: Integer;
+begin
+  Result := Img.Width div fInternalZoom;
+end;
+
+function TGameWindow.GetDisplayHeight: Integer;
+begin
+  Result := Img.Height div fInternalZoom;
 end;
 
 procedure TGameWindow.SetForceUpdateOneFrame(aValue: Boolean);

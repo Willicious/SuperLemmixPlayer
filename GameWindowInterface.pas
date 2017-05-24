@@ -18,6 +18,11 @@ type
   IGameWindow = Interface(IInterface)
     function ScreenImage: TImage32; 
 
+    function GetDisplayWidth: Integer;
+    function GetDisplayHeight: Integer;
+    property DisplayWidth: Integer read GetDisplayWidth;
+    property DisplayHeight: Integer read GetDisplayHeight;
+
     procedure SetForceUpdateOneFrame(aValue: Boolean);
     procedure SetHyperSpeedTarget(aValue: Integer);
 

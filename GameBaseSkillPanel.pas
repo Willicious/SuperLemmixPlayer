@@ -20,9 +20,6 @@ type
     fGame                   : TLemmingGame;
     fIconBmp                : TBitmap32;   // for temporary storage
 
-    fDisplayWidth         : Integer;
-    fDisplayHeight        : Integer;
-
     fRectColor            : TColor32;
     fSelectDx             : Integer;
     fIsBlinkFrame         : Boolean;
@@ -143,9 +140,6 @@ type
 
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
     procedure DrawMinimap; virtual;
-
-    property DisplayWidth: Integer read fDisplayWidth write fDisplayWidth;
-    property DisplayHeight: Integer read fDisplayHeight write fDisplayHeight;
 
     property Minimap: TBitmap32 read fMinimap;
     property MinimapScrollFreeze: Boolean read fMinimapScrollFreeze write SetMinimapScrollFreeze;
@@ -629,7 +623,7 @@ begin
   BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
 
   // Draw the visible area frame
-  ViewRect := Rect(0, 0, fDisplayWidth div 8 + 2, fDisplayHeight div 8 + 2);
+  ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
   OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
   fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
