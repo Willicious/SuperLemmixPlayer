@@ -531,7 +531,7 @@ end;
 
 procedure TDosGameParams.NextLevel(aCanCrossRank: Boolean);
 begin
-  ShowMessage(IntToStr(CurrentLevel.dLevel));
+  Inc(CurrentLevel.dLevel);
   ValidateCurrentLevel(aCanCrossRank);
 end;
 

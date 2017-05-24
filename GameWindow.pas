@@ -353,7 +353,7 @@ begin
     end;
 
   if SL.Count > 0 then
-    Result := SL[MusicIndex mod SL.Count];
+    Result := RightStr(trim(SL[MusicIndex mod SL.Count]), Length(trim(SL[MusicIndex mod SL.Count])) - 6); // kludge, need to use proper parser
 end;
 
 procedure TGameWindow.SetClearPhysics(aValue: Boolean);
@@ -1625,9 +1625,8 @@ begin
 
   if FileExists(AppPath + SFMusic + GetLevelMusicName + SoundManager.FindExtension(GetLevelMusicName, true)) then
     SoundManager.LoadMusicFromFile(GetLevelMusicName)
-  else begin
+  else
     SoundManager.FreeMusic; // This is safe to call even if no music is loaded, but ensures we don't just get the previous level's music
-  end;
 
 end;
 
