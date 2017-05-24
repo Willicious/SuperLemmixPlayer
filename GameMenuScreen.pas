@@ -146,6 +146,8 @@ type
     destructor Destroy; override;
   end;
 
+  procedure GetGraphic(aName: String; aDst: TBitmap32);
+
 implementation
 
 uses
@@ -153,6 +155,18 @@ uses
   LemNeoOnline;
 
 { TGameMenuScreen }
+
+procedure GetGraphic(aName: String; aDst: TBitmap32);
+var
+  MaskColor: TColor32;
+  SrcFile: String;
+begin
+  SrcFile := GameParams.BaseLevelPack.Path + aName;
+  if not FileExists(SrcFile) then
+    SrcFile := AppPath + SFGraphicsMenu + aName;
+
+  TPngInterface.LoadPngFile(SrcFile, aDst);
+end;
 
 procedure TGameMenuScreen.DoTestStuff;
 {$ifdef exp}
@@ -234,9 +248,9 @@ var
     TempBMP: TBitmap32;
     SourceRect: TRect;
   begin
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'scroller_segment.png', Tmp);
     TempBMP := TBitmap32.Create;
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'scroller_lemmings.png', TempBMP);
+    GetGraphic('scroller_segment.png', Tmp);
+    GetGraphic('scroller_lemmings.png', TempBMP);
     SourceRect := Rect(0, 0, 48, 256);
     LeftLemmingAnimation.SetSize(48, 256);
     RightLemmingAnimation.SetSize(48, 256);
@@ -257,17 +271,16 @@ begin
     ExtractBackGround;
     ExtractPurpleFont;
 
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'logo.png', BitmapElements[gmbLogo]);
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_play.png', BitmapElements[gmbPlay]);
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_code.png', BitmapElements[gmbLevelCode]);
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_config.png', BitmapElements[gmbConfig]);
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_rank.png', BitmapElements[gmbSection]);
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_quit.png', BitmapElements[gmbExit]);
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'sign_talisman.png', BitmapElements[gmbTalisman]);
+    GetGraphic('logo.png', BitmapElements[gmbLogo]);
+    GetGraphic('sign_play.png', BitmapElements[gmbPlay]);
+    GetGraphic('sign_code.png', BitmapElements[gmbLevelCode]);
+    GetGraphic('sign_config.png', BitmapElements[gmbConfig]);
+    GetGraphic('sign_rank.png', BitmapElements[gmbSection]);
+    GetGraphic('sign_quit.png', BitmapElements[gmbExit]);
+    GetGraphic('sign_talisman.png', BitmapElements[gmbTalisman]);
 
-    //@styledef
     for i := 0 to 14 do
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'rank_' + LeadZeroStr(i+1, 2) + '.png', BitmapElements[TGameMenuBitmap(Integer(gmbGameSection1) + i)]);
+      GetGraphic('rank_' + LeadZeroStr(i+1, 2) + '.png', BitmapElements[TGameMenuBitmap(Integer(gmbGameSection1) + i)]);
 
     LoadScrollerGraphics;
 

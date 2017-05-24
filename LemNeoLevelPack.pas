@@ -2,12 +2,9 @@ unit LemNeoLevelPack;
 
 // Replaces LemDosStyle, LemDosLevelSystem etc. Those are messy. This should be tidier.
 
-// NOTE TO NEPSTER: This is a work-in-progress file that I haven't integrated yet, not an unused one. Do not remove.
-
 interface
 
 uses
-  Dialogs,
   GR32, CRC32, PngInterface,
   Classes, SysUtils, StrUtils, Contnrs,
   LemStrings, LemTypes, LemNeoParser;
@@ -94,6 +91,7 @@ type
 
       procedure SetFolderName(aValue: String);
       function GetFullPath: String;
+      function GetPanelStyle: String;
 
       procedure LoadFromMetaInfo(aPath: String = '');
       procedure LoadFromSearchRec;
@@ -122,7 +120,7 @@ type
       property Name: String read fName write fName;
       property Folder: String read fFolder write SetFolderName;
       property Path: String read GetFullPath;
-      property PanelStyle: String read fPanelStyle;
+      property PanelStyle: String read GetPanelStyle;
       property MusicList: TStringList read fMusicList;
       property PostviewTexts: TPostviewTexts read fPostviewTexts;
   end;
@@ -330,13 +328,6 @@ end;
 
 procedure TNeoLevelGroup.SetDefaultData;
 begin
-  if fParentGroup = nil then
-  begin
-    fPanelStyle := SFDefaultStyle;
-  end else begin
-    fPanelStyle := fParentGroup.PanelStyle;
-  end;
-
   LoadMusicData;
   LoadPostviewData;
 end;
@@ -455,12 +446,19 @@ begin
     MainSec := Parser.MainSection;
     MainSec.DoForEachSection('rank', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
-    if MainSec.LineTrimString['name'] <> '' then
-      fName := MainSec.LineTrimString['name'];
-    fPanelStyle := MainSec.LineTrimString['panel'];
 
     // we do NOT want to sort alphabetically here, we want them to stay in the order
     // the metainfo file lists them in!
+
+    Parser.Clear;
+    MainSec := Parser.MainSection;
+    if not FileExists(Path + 'info.nxmi') then
+      Exit;
+
+    Parser.LoadFromFile(Path + 'info.nxmi');
+    if MainSec.LineTrimString['title'] <> '' then
+      fName := MainSec.LineTrimString['title'];
+    fPanelStyle := MainSec.LineTrimString['panel'];
   finally
     Parser.Free;
   end;
@@ -522,6 +520,17 @@ begin
     Result := fParentGroup.Path;
 
   Result := Result + fFolder + '\';
+end;
+
+function TNeoLevelGroup.GetPanelStyle: String;
+begin
+  if fPanelStyle = '' then
+    if fParentGroup = nil then
+      fPanelStyle := SFDefaultStyle
+    else
+      fPanelStyle := fParentGroup.PanelStyle;
+
+  Result := fPanelStyle;
 end;
 
 function TNeoLevelGroup.GetRecursiveLevelCount: Integer;

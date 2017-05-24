@@ -10,7 +10,8 @@ uses
   GameControl,
   LemDosStructures,
   LemSystemMessages,
-  LemStrings, PngInterface, LemTypes;
+  LemStrings, PngInterface, LemTypes,
+  SysUtils;
 
 const
   PURPLEFONTCOUNT = ord(#132) - ord('!') + 1;
@@ -320,7 +321,10 @@ end;
 
 procedure TGameBaseScreen.ExtractBackGround;
 begin
-  TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', fBackground);
+  if FileExists(GameParams.BaseLevelPack.Path + 'background.png') then
+    TPngInterface.LoadPngFile(GameParams.BaseLevelPack.Path + 'background.png', fBackground)
+  else
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', fBackground);
 end;
 
 procedure TGameBaseScreen.ExtractPurpleFont;
@@ -333,7 +337,11 @@ begin
 
   TempBMP := TBitmap32.Create;
 
-  TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP);
+  if FileExists(GameParams.BaseLevelPack.Path + 'menu_font.png') then
+    TPngInterface.LoadPngFile(GameParams.BaseLevelPack.Path + 'menu_font.png', TempBMP)
+  else
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP);
+
   for i := 0 to PURPLEFONTCOUNT-7 do
   begin
     fPurpleFont.fBitmaps[i].SetSize(16, 16);
@@ -343,7 +351,10 @@ begin
     fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
   end;
 
-  TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP);
+  if FileExists(GameParams.BaseLevelPack.Path + 'talismans.png') then
+    TPngInterface.LoadPngFile(GameParams.BaseLevelPack.Path + 'talismans.png', TempBMP)
+  else
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP);
   for i := 0 to 5 do
   begin
     fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);
