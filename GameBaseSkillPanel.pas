@@ -1203,8 +1203,8 @@ begin
   NewZoom := Max(Min(MaxZoom, NewZoom), 1);
   if NewZoom = Trunc(fImage.Scale) then Exit;
 
-  Width := fGameWindow.GetWidth;    // for the whole skill panel
-  Height := fGameWindow.GetHeight;  // for the whole skill panel
+  Width := GameParams.MainForm.ClientWidth;    // for the whole skill panel
+  Height := GameParams.MainForm.ClientHeight;  // for the whole skill panel
 
   fImage.Width := PanelWidth * NewZoom;
   fImage.Height := PanelHeight * NewZoom;

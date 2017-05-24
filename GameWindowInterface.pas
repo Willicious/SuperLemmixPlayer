@@ -16,8 +16,6 @@ type
   );
 
   IGameWindow = Interface(IInterface)
-    function GetWidth: Integer;
-    function GetHeight: Integer;
     function ScreenImage: TImage32; 
 
     procedure SetForceUpdateOneFrame(aValue: Boolean);

@@ -171,8 +171,6 @@ type
     property HyperSpeedTarget: Integer read fHyperSpeedTarget write fHyperSpeedTarget;
     property IsHyperSpeed: Boolean read GetIsHyperSpeed;
 
-    function GetWidth: Integer;  // to satisfy IGameWindow
-    function GetHeight: Integer; // to satisfy IGameWindow
     function ScreenImage: TImage32; // to staisfy IGameWindow, should be moved to TGameBaseScreen, but it causes bugs there.
     procedure SetForceUpdateOneFrame(aValue: Boolean);  // to satisfy IGameWindow
     procedure SetHyperSpeedTarget(aValue: Integer);     // to satisfy IGameWindow
@@ -1829,16 +1827,6 @@ end;
 procedure TGameWindow.AddSaveState;
 begin
   fGame.CreateSavedState(fSaveList.Add);
-end;
-
-function TGameWindow.GetWidth: Integer;
-begin
-  Result := Width;
-end;
-
-function TGameWindow.GetHeight: Integer;
-begin
-  Result := Height;
 end;
 
 function TGameWindow.ScreenImage: TImage32;
