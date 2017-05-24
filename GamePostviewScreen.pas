@@ -5,6 +5,7 @@ unit GamePostviewScreen;
 interface
 
 uses
+  LemNeoLevelPack,
   LemmixHotkeys,
   Windows, Classes, SysUtils, StrUtils, Controls,
   UMisc,
@@ -140,6 +141,7 @@ end;
 
 function TGamePostviewScreen.GetScreenText: string;
 var
+  WhichText: TPostviewText;
   i: Integer;
   STarget: string;
   SDone: string;
@@ -158,37 +160,36 @@ var
     var
       i: Integer;
       AdjLemCount: Integer;
+      CurrentMin: Integer;
+
+      function ConditionMet(aText: TPostviewText): Boolean;
+      var
+        NewMin: Integer;
+      begin
+        with GameParams.GameResult do
+          case aText.ConditionType of
+            pvc_Absolute: NewMin := aText.ConditionValue;
+            pvc_Percent: NewMin := gCount * aText.ConditionValue div 100;
+            pvc_Relative: NewMin := gToRescue + aText.ConditionValue;
+            pvc_RelativePercent: NewMin := gToRescue + (gToRescue * aText.ConditionValue div 100);
+          end;
+        if (NewMin > CurrentMin) and (GameParams.GameResult.gRescued >= NewMin) then
+        begin
+          Result := true;
+          CurrentMin := NewMin;
+        end;
+      end;
     begin
       AdjLemCount := GameParams.Level.Info.LemmingsCount;
       if spbCloner in GameParams.Level.Info.Skillset then AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
       for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
         if GameParams.Renderer.FindMetaObject(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 14 then
           if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount);
-      with GameParams.GameResult do
-      begin
-        // result text
-        if gRescued >= AdjLemCount then
-          i := 8
-        else if gRescued = 0 then
-          i := 0
-        else if gRescued < gToRescue div 2 then
-          i := 1
-        else if gRescued < gToRescue - gCount div 10 then
-          i := 2
-        else if gRescued <= gToRescue - 2 then
-          i := 3
-        else if gRescued = gToRescue - 1 then
-          i := 4
-        else if gRescued = gToRescue then
-          i := 5
-        else if gRescued < gToRescue + gCount div 5 then
-          i := 6
-        else if gRescued >= gToRescue + gCount div 5 then
-          i := 7
-        else
-          raise exception.Create('leveltext error');
-      end;
-      Result := i;
+      Result := 0;
+      CurrentMin := -1;
+      for i := 0 to GameParams.CurrentLevel.dLevelEntry.Group.PostviewTexts.Count-1 do
+        if ConditionMet(GameParams.CurrentLevel.dLevelEntry.Group.PostviewTexts[i]) then
+          Result := i;
     end;
 
     function MakeTimeString(aFrames: Integer): String;
@@ -276,13 +277,16 @@ begin
 
     LF(2);
 
-    (*i := GetResultIndex;
-    Add(BuildText(SysDat.SResult[i][0]) + #13 + BuildText(SysDat.SResult[i][1]));*)
-    LF(2); // replace when postview lines support implemented
+    WhichText := GameParams.CurrentLevel.dLevelEntry.Group.PostviewTexts[GetResultIndex];
+    for i := 0 to 6 do
+    begin
+      if i >= WhichText.Text.Count then
+        LF(1)
+      else
+        Add(WhichText.Text[i]);
+    end;
 
     LF(2);
-
-    LF(5);
 
     // bottom text
 

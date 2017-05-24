@@ -19,6 +19,30 @@ type
   TNeoLevelGroups = class;
 
   TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);
+  TPostviewCondition = (pvc_Zero, pvc_Absolute, pvc_Relative, pvc_Percent, pvc_RelativePercent);
+
+  TPostviewText = class // class rather than record so it plays nicely with a TObjectList and can create / destroy a TStringList
+    private
+      fText: TStringList;
+      procedure LoadLine(aLine: TParserLine; const aIteration: Integer);
+      procedure InterpretCondition(aConditionString: String);
+    public
+      ConditionType: TPostviewCondition;
+      ConditionValue: Integer;
+      property Text: TStringList read fText;
+      constructor Create;
+      destructor Destroy; override;
+  end;
+
+  TPostviewTexts = class(TObjectList)
+    private
+      function GetItem(Index: Integer): TPostviewText;
+    public
+      constructor Create;
+      function Add: TPostviewText;
+      property Items[Index: Integer]: TPostviewText read GetItem; default;
+      property List;
+  end;
 
   TNeoLevelEntry = class  // This is an entry in a level pack's list, and does NOT contain the level itself
     private
@@ -61,6 +85,9 @@ type
       fMusicList: TStringList;
       fHasOwnMusicList: Boolean;
 
+      fPostviewTexts: TPostviewTexts;
+      fHasOwnPostviewTexts: Boolean;
+
       procedure SetFolderName(aValue: String);
       function GetFullPath: String;
 
@@ -75,6 +102,8 @@ type
       procedure SetDefaultData;
       procedure LoadMusicData;
       procedure LoadMusicLine(aLine: TParserLine; const aIteration: Integer);
+      procedure LoadPostviewData;
+      procedure LoadPostviewSection(aSection: TParserSection; const aIteration: Integer);
 
       function GetRecursiveLevelCount: Integer;
     public
@@ -91,6 +120,7 @@ type
       property Path: String read GetFullPath;
       property PanelStyle: String read fPanelStyle;
       property MusicList: TStringList read fMusicList;
+      property PostviewTexts: TPostviewTexts read fPostviewTexts;
   end;
 
 
@@ -143,6 +173,56 @@ begin
     L1 := TNeoLevelEntry(Item1^);
     L2 := TNeoLevelEntry(Item2^);
     Result := CompareStr(L1.Title, L2.Title);
+  end;
+end;
+
+{ TPostviewText }
+
+constructor TPostviewText.Create;
+begin
+  inherited;
+  fText := TStringList.Create;
+end;
+
+destructor TPostviewText.Destroy;
+begin
+  fText.Free;
+  inherited;
+end;
+
+procedure TPostviewText.LoadLine(aLine: TParserLine; const aIteration: Integer);
+begin
+  Text.Add(aLine.ValueTrimmed);
+end;
+
+procedure TPostviewText.InterpretCondition(aConditionString: String);
+var
+  IsRelative: Boolean;
+  IsPercent: Boolean;
+begin
+  IsRelative := false;
+  IsPercent := false;
+  if (LeftStr(aConditionString, 1) = '+') or (LeftStr(aConditionString, 1) = '-') then
+    IsRelative := true;
+
+  if RightStr(aConditionString, 1) = '%' then
+  begin
+    aConditionString := LeftStr(aConditionString, Length(aConditionString)-1);
+    IsPercent := true;
+  end;
+
+  ConditionValue := StrToIntDef(aConditionString, 0);
+  if IsRelative then
+  begin
+    if IsPercent then
+      ConditionType := pvc_RelativePercent
+    else
+      ConditionType := pvc_Relative;
+  end else begin
+    if IsPercent then
+      ConditionType := pvc_Percent
+    else
+      ConditionType := pvc_Absolute;
   end;
 end;
 
@@ -236,6 +316,7 @@ begin
   end;
 
   LoadMusicData;
+  LoadPostviewData;
 end;
 
 procedure TNeoLevelGroup.LoadMusicData;
@@ -266,9 +347,46 @@ begin
   end;
 end;
 
+procedure TNeoLevelGroup.LoadPostviewData;
+var
+  Parser: TParser;
+  MainSec: TParserSection;
+begin
+  if (fParentGroup <> nil) and not FileExists(Path + 'postview.nxmi') then
+  begin
+    fPostviewTexts := fParentGroup.PostviewTexts;
+    fHasOwnPostviewTexts := false;
+    Exit;
+  end;
+
+  fPostviewTexts := TPostviewTexts.Create;
+  fHasOwnPostviewTexts := true;
+  Parser := TParser.Create;
+  try
+    if FileExists(Path + 'postview.nxmi') then
+      Parser.LoadFromFile(Path + 'postview.nxmi')
+    else
+      Parser.LoadFromFile(AppPath + SFData + 'postview.nxmi');
+
+    MainSec := Parser.MainSection;
+    MainSec.DoForEachSection('result', LoadPostviewSection);
+  finally
+    Parser.Free;
+  end;
+end;
+
 procedure TNeoLevelGroup.LoadMusicLine(aLine: TParserLine; const aIteration: Integer);
 begin
   fMusicList.Add(aLine.ValueTrimmed);
+end;
+
+procedure TNeoLevelGroup.LoadPostviewSection(aSection: TParserSection; const aIteration: Integer);
+var
+  NewText: TPostviewText;
+begin
+  NewText := fPostviewTexts.Add;
+  NewText.InterpretCondition(aSection.LineTrimString['condition']);
+  aSection.DoForEachLine('line', NewText.LoadLine);
 end;
 
 destructor TNeoLevelGroup.Destroy;
@@ -440,5 +558,27 @@ function TNeoLevelGroups.GetItem(Index: Integer): TNeoLevelGroup;
 begin
   Result := inherited Get(Index);
 end;
+
+{ TPostviewTexts }
+
+constructor TPostviewTexts.Create;
+var
+  aOwnsObjects: Boolean;
+begin
+  aOwnsObjects := true;
+  inherited Create(aOwnsObjects);
+end;
+
+function TPostviewTexts.Add: TPostviewText;
+begin
+  Result := TPostviewText.Create;
+  inherited Add(Result);
+end;
+
+function TPostviewTexts.GetItem(Index: Integer): TPostviewText;
+begin
+  Result := inherited Get(Index);
+end;
+
 
 end.
