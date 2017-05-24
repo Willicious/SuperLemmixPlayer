@@ -602,6 +602,13 @@ begin
   PostLevelSoundOptions := [plsVictory, plsFailure];
 
   BaseLevelPack := TNeoLevelGroup.Create(nil, ExtractFilePath(GameFile));
+  if BaseLevelPack.Children.Count = 0 then
+  begin
+    // This workaround is not currently needed for NL itself, but is needed for
+    // some of the conversion apps for old formats content that share code.
+    BaseLevelPack.Children.Add('');
+    BaseLevelPack.Children[0].Levels.Add;
+  end;
   SetLevel(0, -1);
 
   SoundManager.MusicVolume := 50;
