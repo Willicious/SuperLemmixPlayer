@@ -67,6 +67,8 @@ type
 
       procedure Load;
 
+      procedure SetDefaultData;
+
       function GetRecursiveLevelCount: Integer;
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
@@ -212,12 +214,18 @@ begin
   fLevels := TNeoLevelEntries.Create(self);
   fParentGroup := aParentGroup;
 
-  if fParentGroup = nil then
-    fPanelStyle := 'default'
-  else
-    fPanelStyle := fParentGroup.PanelStyle;
-
+  SetDefaultData;
   Load;
+end;
+
+procedure TNeoLevelGroup.SetDefaultData;
+begin
+  if fParentGroup = nil then
+  begin
+    fPanelStyle := SFDefaultStyle;
+  end else begin
+    fPanelStyle := fParentGroup.PanelStyle;
+  end;
 end;
 
 destructor TNeoLevelGroup.Destroy;

@@ -4,6 +4,7 @@ unit LemNeoSave;
 interface
 
 uses
+  LemStrings,
   SharedGlobals, LemVersion,
   Dialogs, StrUtils, UMisc,
   Classes, SysUtils, LemTypes, LemDosStructures,
@@ -216,8 +217,9 @@ begin
 
   // And, save it.
   ClearFinalEmptyLines;
-  SL.SaveToFile(ChangeFileExt(GameFile, '.nxsv'));
-  SL.Free; 
+  ForceDirectories(AppPath + SFSaveData);
+  SL.SaveToFile(AppPath + SFSaveData + ChangeFileExt(ExtractFileName(GameFile), '.nxsv'));
+  SL.Free;
 end;
 
 procedure TNeoSave.LoadFile;
@@ -382,7 +384,7 @@ var
 
 begin
   if fDisableSave then Exit;
-  SaveFileName := ChangeFileExt(GameFile, '.nxsv');
+  SaveFileName := AppPath + SFSaveData + ChangeFileExt(ExtractFileName(GameFile), '.nxsv');
   Clear;
 
   if not FileExists(SaveFileName) then

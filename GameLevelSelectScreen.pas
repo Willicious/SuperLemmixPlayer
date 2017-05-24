@@ -142,8 +142,7 @@ begin
   case Key of
     VK_ESCAPE: CloseScreen(gstMenu);
     VK_RETURN: begin
-                GameParams.CurrentLevel.dRank := fSection;
-                GameParams.CurrentLevel.dLevel := fSelectedLevel;
+                GameParams.SetLevel(fSection, fSelectedLevel);
                 CloseScreen(gstPreview);
               end;
     VK_UP: if fSelectedLevel > 0 then
@@ -158,14 +157,12 @@ begin
              end;
     VK_LEFT: if fSection > 0 then
              begin
-               Dec(GameParams.CurrentLevel.dRank);
-               GameParams.CurrentLevel.dLevel := 0;
+               GameParams.SetLevel(GameParams.CurrentLevel.dRank - 1, -1);
                CloseScreen(gstLevelSelect);
              end;
     VK_RIGHT: if fSection < GameParams.BaseLevelPack.Children.Count-1 then
               begin
-                Inc(GameParams.CurrentLevel.dRank);
-                GameParams.CurrentLevel.dLevel := 0;
+                GameParams.SetLevel(GameParams.CurrentLevel.dRank + 1, -1);
                 CloseScreen(gstLevelSelect);
               end;
   end;

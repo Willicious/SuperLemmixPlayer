@@ -39,6 +39,7 @@ type
   end;
 
   TCurrentLevel = record
+    dLevelEntry: TNeoLevelEntry;
     dRank: Integer;
     dLevel: Integer;
   end;
@@ -125,6 +126,7 @@ type
     fSaveSystem : TNeoSave;
     fOneLevelMode: Boolean;
     fDoneUpdateCheck: Boolean;
+    fCurrentLevel: TCurrentLevel;
 
     fZoomLevel: Integer;
     fWindowWidth: Integer;
@@ -157,7 +159,7 @@ type
 
     LevelString: String;
     BaseLevelPack: TNeoLevelGroup;
-    CurrentLevel: TCurrentLevel;
+
 
     // this is initialized by the window in which the game will be played
     TargetBitmap : TBitmap32;
@@ -196,9 +198,12 @@ type
     procedure Save;
     procedure Load;
 
+    procedure SetLevel(aRank, aLevel: Integer);
     procedure NextLevel(aCanCrossRank: Boolean = false);
     procedure PrevLevel(aCanCrossRank: Boolean = false);
     procedure LoadCurrentLevel(NoOutput: Boolean = false); // loads level specified by CurrentLevel into Level, and prepares renderer
+
+    property CurrentLevel: TCurrentLevel read fCurrentLevel;
 
     property AutoReplayNames: Boolean Index moAutoReplayNames read GetOptionFlag write SetOptionFlag;
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
@@ -529,15 +534,33 @@ begin
   Renderer.PrepareGameRendering(Level, NoOutput);
 end;
 
+procedure TDosGameParams.SetLevel(aRank, aLevel: Integer);
+var
+  i: Integer;
+begin
+  fCurrentLevel.dRank := aRank;
+
+  if aLevel = -1 then
+  begin
+    aLevel := 0;
+    for i := BaseLevelPack.Children[aRank].Levels.Count-1 downto 0 do
+      if BaseLevelPack.Children[aRank].Levels[i].Status <> lst_Completed then
+        aLevel := i;
+  end;
+
+  fCurrentLevel.dLevel := aLevel;
+  ValidateCurrentLevel(false);
+end;
+
 procedure TDosGameParams.NextLevel(aCanCrossRank: Boolean);
 begin
-  Inc(CurrentLevel.dLevel);
+  Inc(fCurrentLevel.dLevel);
   ValidateCurrentLevel(aCanCrossRank);
 end;
 
 procedure TDosGameParams.PrevLevel(aCanCrossRank: Boolean);
 begin
-  Dec(CurrentLevel.dLevel);
+  Dec(fCurrentLevel.dLevel);
   ValidateCurrentLevel(aCanCrossRank);
 end;
 
@@ -545,24 +568,27 @@ procedure TDosGameParams.ValidateCurrentLevel(aCanCrossRank: Boolean);
   procedure ValidateRank;
   begin
     if CurrentLevel.dRank < 0 then
-      CurrentLevel.dRank := BaseLevelPack.Children.Count-1
+      fCurrentLevel.dRank := BaseLevelPack.Children.Count-1
     else if CurrentLevel.dRank >= BaseLevelPack.Children.Count then
-      CurrentLevel.dRank := 0;
+      fCurrentLevel.dRank := 0;
   end;
 begin
   if CurrentLevel.dLevel < 0 then
   begin
     if aCanCrossRank then
-      Dec(CurrentLevel.dRank);
+      Dec(fCurrentLevel.dRank);
     ValidateRank;
-    CurrentLevel.dLevel := BaseLevelPack.Children[CurrentLevel.dRank].LevelCount - 1;
+    fCurrentLevel.dLevel := BaseLevelPack.Children[CurrentLevel.dRank].LevelCount - 1;
   end else if CurrentLevel.dLevel >= BaseLevelPack.Children[CurrentLevel.dRank].LevelCount then
   begin
     if aCanCrossRank then
-      Inc(CurrentLevel.dRank);
+      Inc(fCurrentLevel.dRank);
     ValidateRank;
-    CurrentLevel.dLevel := 0;
+    fCurrentLevel.dLevel := 0;
   end;
+
+  ShownText := false;
+  fCurrentLevel.dLevelEntry := BaseLevelPack.Children[CurrentLevel.dRank].Levels[CurrentLevel.dLevel];
 end;
 
 

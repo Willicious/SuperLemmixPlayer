@@ -44,6 +44,8 @@ const
 
   SFData = 'data\';
 
+  SFSaveData = 'save\';
+
   // Sound effect files
   SFX_BUILDER_WARNING = 'ting';
   SFX_ASSIGN_SKILL = 'mousepre';

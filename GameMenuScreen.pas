@@ -569,8 +569,7 @@ begin
     14: DrawBitmapElement(gmbGameSection15);
   end;
 
-  GameParams.CurrentLevel.dRank := CurrentSection;
-  GameParams.CurrentLevel.dLevel := 0;
+  GameParams.SetLevel(CurrentSection, -1);
 end;
 
 procedure TGameMenuScreen.DrawWorkerLemmings(aFrame: Integer);

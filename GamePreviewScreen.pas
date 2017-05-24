@@ -55,10 +55,7 @@ procedure TGamePreviewScreen.NextLevel;
 begin
   if GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount > 1 then
   begin
-    GameParams.ShownText := false;
-    Inc(GameParams.CurrentLevel.dLevel);
-    if GameParams.CurrentLevel.dLevel >= GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount then
-      GameParams.CurrentLevel.dLevel := 0;
+    GameParams.NextLevel;
     CloseScreen(gstPreview);
   end;
 end;
@@ -67,10 +64,7 @@ procedure TGamePreviewScreen.PreviousLevel;
 begin
   if GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount > 1 then
   begin
-    GameParams.ShownText := false;
-    Dec(GameParams.CurrentLevel.dLevel);
-    if GameParams.CurrentLevel.dLevel < 0 then
-      GameParams.CurrentLevel.dLevel := GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount - 1;
+    GameParams.PrevLevel;
     CloseScreen(gstPreview);
   end;
 end;
@@ -78,16 +72,14 @@ end;
 procedure TGamePreviewScreen.NextRank;
 begin
   if GameParams.CurrentLevel.dRank = GameParams.BaseLevelPack.Children.Count-1 then Exit;
-  Inc(GameParams.CurrentLevel.dRank);
-  GameParams.CurrentLevel.dLevel := 0;
+  GameParams.SetLevel(GameParams.CurrentLevel.dRank + 1, -1);
   CloseScreen(gstPreview);
 end;
 
 procedure TGamePreviewScreen.PreviousRank;
 begin
   if GameParams.CurrentLevel.dRank = 0 then Exit;
-  Dec(GameParams.CurrentLevel.dRank);
-  GameParams.CurrentLevel.dLevel := 0;
+  GameParams.SetLevel(GameParams.CurrentLevel.dRank - 1, -1);
   CloseScreen(gstPreview);
 end;
 
