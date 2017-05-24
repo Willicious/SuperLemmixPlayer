@@ -243,7 +243,7 @@ type
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming);
       function GetObjectCheckPositions(L: TLemming): TArrayArrayInt;
-      function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
+      function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
       function FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
       function HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -296,7 +296,7 @@ type
 
     procedure SetBlockerMap;
       procedure WriteBlockerMap(X, Y: Integer; aValue: Byte);
-      function ReadBlockerMap(X, Y: Integer): Byte;
+      function ReadBlockerMap(X, Y: Integer; L: TLemming = nil): Byte;
 
     procedure SetZombieField(L: TLemming);
       procedure WriteZombieMap(X, Y: Integer; aValue: Byte);
@@ -1563,14 +1563,36 @@ begin
     BlockerMap.Value[X, Y] := aValue;
 end;
 
-function TLemmingGame.ReadBlockerMap(X, Y: Integer): Byte;
+function TLemmingGame.ReadBlockerMap(X, Y: Integer; L: TLemming = nil): Byte;
 var
   LemPosRect: TRect;
   i: Integer;
+  CheckPosX: Integer;
 begin
   if (X >= 0) and (X < Level.Info.Width) and (Y >= 0) and (Y < Level.Info.Height) then
   begin
     Result := BlockerMap.Value[X, Y];
+
+    // For builders, check that this is not the middle part of a newly created blocker area
+    // see http://www.lemmingsforums.net/index.php?topic=3295.0
+    if (Result <> DOM_NONE) and (L <> nil) and (L.LemAction = baBuilding) then
+    begin
+      for i := 0 to LemmingList.Count - 1 do
+      begin
+        if LemmingList[i].LemDX = L.LemDx then
+          CheckPosX := L.LemX + 2 * L.LemDx
+        else
+          CheckPosX := L.LemX + 3 * L.LemDx;
+
+        if     LemmingList[i].LemHasBlockerField
+           and (L.LemY >= LemmingList[i].LemY - 1) and (L.LemY <= LemmingList[i].LemY + 3)
+           and (LemmingList[i].LemX = CheckPosX) then
+        begin
+          Result := DOM_NONE;
+          Exit;
+        end;
+      end;
+    end;
 
     // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
     if IsSimulating and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
@@ -1775,8 +1797,8 @@ begin
 
     // Special treatment if in one-way-field facing the wrong direction
     // see http://www.lemmingsforums.net/index.php?topic=2640.0
-    if    (HasTriggerAt(L.LemX, L.LemY, trForceRight) and (L.LemDx = -1))
-       or (HasTriggerAt(L.LemX, L.LemY, trForceLeft) and (L.LemDx = 1)) then
+    if    (HasTriggerAt(L.LemX, L.LemY, trForceRight, L) and (L.LemDx = -1))
+       or (HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) and (L.LemDx = 1)) then
     begin
       // Go one back to cancel the Inc(L.LemX, L.LemDx) in HandleWalking
       // unless the Lem will fall down (which is handles already in Transition)
@@ -2275,14 +2297,14 @@ begin
   // but not for miners removing terrain, see http://www.lemmingsforums.net/index.php?topic=2710.0
   if (L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2]) then
   begin
-    if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
+    if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
       HandleForceField(L, -1)
-    else if HasTriggerAt(L.LemX, L.LemY, trForceRight) then
+    else if HasTriggerAt(L.LemX, L.LemY, trForceRight, L) then
       HandleForceField(L, 1);
   end;
 end;
 
-function TLemmingGame.HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes): Boolean;
+function TLemmingGame.HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
 // Checks whether the trigger area TriggerType occurs at position (X, Y)
 begin
   Result := False;
@@ -2290,8 +2312,8 @@ begin
   case TriggerType of
     trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
                              or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
-    trForceLeft:  Result :=     (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
-    trForceRight: Result :=     (ReadBlockerMap(X, Y) = DOM_FORCERIGHT);
+    trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT);
+    trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT);
     trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
     trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
@@ -5080,9 +5102,9 @@ begin
     // Check for blocker fields and force-fields at the end of movement
     if Assigned(L) then
     begin
-      if HasTriggerAt(L.LemX, L.LemY, trForceLeft) then
+      if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
         HandleForceField(L, -1)
-      else if HasTriggerAt(L.LemX, L.LemY, trForceRight) then
+      else if HasTriggerAt(L.LemX, L.LemY, trForceRight, L) then
         HandleForceField(L, 1);
     end;
   end else
