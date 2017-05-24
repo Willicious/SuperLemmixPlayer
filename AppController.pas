@@ -440,18 +440,26 @@ end;
 
 procedure TAppController.ShowTextScreen;
 var
-  HasTextToShow: Boolean;
+  IsPreview: Boolean;
 begin
   // This function is always called between gstPreview/gstGame, and
   // between gstGame/gstPostview (if successful). However, if there's
   // no text to show, it does nothing, and proceeds directly to the
   // next screen.
-  fActiveForm := TGameTextScreen.Create(nil);
-  HasTextToShow := TGameTextScreen(fActiveForm).HasScreenText;
-  if HasTextToShow then
-    fActiveForm.ShowScreen
-  else
-    SendMessage(MainFormHandle, LM_NEXT, 0, 0);
+  IsPreview := not (GameParams.NextScreen = gstPostview);
+  if (IsPreview and (GameParams.Level.PreText.Count = 0))
+  or ((not IsPreview) and (GameParams.Level.PostText.Count = 0))
+  or (IsPreview and GameParams.ShownText) then
+  begin
+    if IsPreview then
+      ShowPlayScreen
+    else
+      ShowPostviewScreen;
+  end else begin
+    fActiveForm := TGameTextScreen.Create(nil);
+    TGameTextScreen(fActiveForm).PreviewText := IsPreview;
+    fActiveForm.ShowScreen;
+  end;
 end;
 
 procedure TAppController.ShowPostviewScreen;

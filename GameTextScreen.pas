@@ -18,7 +18,7 @@ uses
 type
   TGameTextScreen = class(TGameBaseScreen)
   private
-    ScreenText: string;
+    fPreviewText: Boolean;
     function GetScreenText: string;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_KeyPress(Sender: TObject; var Key: Char);
@@ -30,7 +30,7 @@ type
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
-    function HasScreenText: Boolean;
+    property PreviewText: Boolean read fPreviewText write fPreviewText;
   published
   end;
 
@@ -39,16 +39,6 @@ implementation
 uses Forms;
 
 { TDosGamePreview }
-
-function TGameTextScreen.HasScreenText: Boolean;
-begin
-  PrepareGameParams;
-  ScreenText := GetScreenText;
-  if ScreenText = '' then
-    Result := false
-  else
-    Result := true;
-end;
 
 procedure TGameTextScreen.BuildScreen;
 var
@@ -64,8 +54,11 @@ begin
     Temp.SetSize(640, 400);
     Temp.Clear(0);
     TileBackgroundBitmap(0, 0, Temp);
-    DrawPurpleTextCentered(Temp, ScreenText, 16);
+    DrawPurpleTextCentered(Temp, GetScreenText, 16);
     ScreenImg.Bitmap.Assign(Temp);
+
+    if PreviewText then
+      GameParams.ShownText := true;
   finally
     ScreenImg.EndUpdate;
     Temp.Free;
@@ -88,69 +81,50 @@ end;
 
 function TGameTextScreen.GetScreenText: string;
 var
-  TextFileStream: TMemoryStream;
-  fn: String;
-  b: byte;
-  lfc: byte;
+  i: Integer;
+  lfc: Integer;
+  SL: TStringList;
 
-    procedure Add(const S: string);
-    begin
-      Result := Result + S + #13;
-      Inc(lfc);
-    end;
+  procedure Add(const S: string);
+  begin
+    Result := Result + S + #13;
+    Inc(lfc);
+  end;
 
-    procedure LF(aCount: Integer);
-    begin
-      Result := Result + StringOfChar(#13, aCount);
-      Inc(lfc, aCount);
-    end;
+  procedure LF(aCount: Integer);
+  begin
+    Result := Result + StringOfChar(#13, aCount);
+    Inc(lfc, aCount);
+  end;
 
-    procedure PreLF(aCount: Integer);
-    begin
-      Result := StringOfChar(#13, aCount) +  Result;
-      Inc(lfc, aCount);
-    end;
+  procedure PreLF(aCount: Integer);
+  begin
+    Result := StringOfChar(#13, aCount) +  Result;
+    Inc(lfc, aCount);
+  end;
 
 begin
   Result := '';
-  lfc := 0;
 
-  if GameParams.NextScreen = gstPostview then
-  begin
-    GameParams.ShownText := false;
-    fn := 'p'
-  end else begin
-    if GameParams.ShownText then Exit;
-    GameParams.ShownText := true;
-    fn := 'i';
-  end;
+  if fPreviewText then
+    SL := GameParams.Level.PreText
+  else
+    SL := GameParams.Level.PostText;
 
-  fn := fn + LeadZeroStr(GameParams.CurrentLevel.dRank + 1, 2) + LeadZeroStr(GameParams.CurrentLevel.dLevel + 1, 2) + '.txt';
-
-  fn := ExtractFilePath(ParamStr(0)) + fn;
-
-  (*
-  TextFileStream := CreateDataStream(fn, ldtText);
-  if TextFileStream = nil then Exit;
-  *)
-  Exit; // temporary
-
-  while (TextFileStream.Read(b, 1) <> 0) and (lfc < 18) do
-  begin
-    if (b = 10) then LF(1);
-    if (b >= 32) and (b <= 126) then Result := Result + Chr(b);
-  end;
+  for i := 0 to SL.Count-1 do
+    if i > 20 then
+      Break
+    else
+      Add(SL[i]);
 
   while lfc < 21 do
-  begin
-    if lfc mod 2 = 1 then LF(1)
-    else PreLF(1);
-  end;
+    if lfc mod 2 = 1 then
+      PreLF(1)
+    else
+      LF(1);
 
   LF(1);
   Add(SPressMouseToContinue);
-
-  TextFileStream.Free;
 end;
 
 procedure TGameTextScreen.Form_KeyDown(Sender: TObject; var Key: Word;

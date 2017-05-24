@@ -88,6 +88,8 @@ type
     fInteractiveObjects : TInteractiveObjects;
     fSteels             : TSteels;
     fPreplacedLemmings  : TPreplacedLemmingList;
+    fPreText: TStringList;
+    fPostText: TStringList;
 
     // Loading routines
     procedure LoadGeneralInfo(aSection: TParserSection);
@@ -96,6 +98,8 @@ type
     procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
+    procedure LoadPretextLine(aLine: TParserLine; const aIteration: Integer);
+    procedure LoadPosttextLine(aLine: TParserLine; const aIteration: Integer);
 
     // Saving routines
     procedure SaveGeneralInfo(aSection: TParserSection);
@@ -104,6 +108,7 @@ type
     procedure SaveTerrainSections(aSection: TParserSection);
     procedure SaveAreaSections(aSection: TParserSection);
     procedure SaveLemmingSections(aSection: TParserSection);
+    procedure SaveTextSections(aSection: TParserSection);
   public
     constructor Create;
     destructor Destroy; override;
@@ -124,6 +129,8 @@ type
     property Terrains: TTerrains read fTerrains;
     property Steels: TSteels read fSteels;
     property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings;
+    property PreText: TStringList read fPreText;
+    property PostText: TStringList read fPostText;
   end;
 
 implementation
@@ -186,6 +193,8 @@ begin
   fTerrains := TTerrains.Create;
   fSteels := TSteels.Create;
   fPreplacedLemmings := TPreplacedLemmingList.Create;
+  fPreText := TStringList.Create;
+  fPostText := TStringList.Create;
 end;
 
 destructor TLevel.Destroy;
@@ -195,6 +204,8 @@ begin
   fTerrains.Free;
   fSteels.Free;
   fPreplacedLemmings.Free;
+  fPreText.Free;
+  fPostText.Free;
   inherited;
 end;
 
@@ -205,6 +216,8 @@ begin
   fTerrains.Clear;
   fSteels.Clear;
   fPreplacedLemmings.Clear;
+  fPreText.Clear;
+  fPostText.Clear;
 end;
 
 procedure TLevel.LoadFromFile(aFile: String);
@@ -261,6 +274,12 @@ begin
     Main.DoForEachSection('terrain', HandleTerrainEntry);
     Main.DoForEachSection('area', HandleAreaEntry);
     Main.DoForEachSection('lemming', HandleLemmingEntry);
+
+    if Main.Section['pretext'] <> nil then
+      Main.Section['pretext'].DoForEachLine('line', LoadPretextLine);
+
+    if Main.Section['posttext'] <> nil then
+      Main.Section['posttext'].DoForEachLine('line', LoadPosttextLine);
 
     Sanitize;
   finally
@@ -522,6 +541,16 @@ begin
   L.IsZombie   := (aSection.Line['zombie']   <> nil);
 end;
 
+procedure TLevel.LoadPretextLine(aLine: TParserLine; const aIteration: Integer);
+begin
+  fPreText.Add(aLine.ValueTrimmed);
+end;
+
+procedure TLevel.LoadPosttextLine(aLine: TParserLine; const aIteration: Integer);
+begin
+  fPostText.Add(aLine.ValueTrimmed);
+end;
+
 procedure TLevel.Sanitize;
 var
   SkillIndex: TSkillPanelButton;
@@ -643,6 +672,7 @@ begin
     SaveTerrainSections(Parser.MainSection);
     SaveAreaSections(Parser.MainSection);
     SaveLemmingSections(Parser.MainSection);
+    SaveTextSections(Parser.MainSection);
     Parser.SaveToStream(aStream);
   finally
     Parser.Free;
@@ -918,6 +948,24 @@ begin
     if L.IsDisarmer then Sec.AddLine('DISARMER');
     if L.IsZombie then Sec.AddLine('ZOMBIE');
   end;
+end;
+
+procedure TLevel.SaveTextSections(aSection: TParserSection);
+
+  procedure WriteTexts(aSL: TStringList; aKeyword: String);
+  var
+    NewSec: TParserSection;
+    i: Integer;
+  begin
+    if aSL.Count = 0 then Exit;
+    NewSec := TParserSection.Create(aKeyword);
+    for i := 0 to aSL.Count-1 do
+      NewSec.AddLine('line', aSL[i]);
+    aSection.SectionList.Add(NewSec);
+  end;
+begin
+  WriteTexts(fPreText, 'pretext');
+  WriteTexts(fPostText, 'posttext');
 end;
 
 end.
