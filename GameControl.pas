@@ -602,6 +602,7 @@ begin
   PostLevelSoundOptions := [plsVictory, plsFailure];
 
   BaseLevelPack := TNeoLevelGroup.Create(nil, ExtractFilePath(GameFile));
+  SetLevel(0, -1);
 
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
