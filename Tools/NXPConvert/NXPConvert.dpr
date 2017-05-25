@@ -84,6 +84,12 @@ var
       Result := '0' + Result;
   end;
 
+  procedure Write(aText: String);
+  begin
+    if ParamStr(2) = 'silent' then Exit; // to allow silent batch conversion via a BAT file cause i'm lazy
+    WriteLn(aText);
+  end;
+
 const
   POSTVIEW_CONDITIONS: array[0..8] of String = ('0', '-50%', '-10%', '-2', '-1', '+0', '+1', '+20%', '100%');
 
@@ -113,16 +119,16 @@ begin
     SrcFile := ExtractFilePath(ParamStr(0)) + SrcFile;
   GameFile := ExtractFilePath(ParamStr(0)) + 'data\';
 
-  DstBasePath := ExtractFilePath(ParamStr(0)) + ExtractFileName(ChangeFileExt(SrcFile, '')) + '\';
+  DstBasePath := ExtractFilePath(ParamStr(0)) + 'levels\' + ExtractFileName(ChangeFileExt(SrcFile, '')) + '\';
   ForceDirectories(DstBasePath); // others are created as needed
 
-  WriteLn('Please note that this tool only converts the level data,');
-  WriteLn('talisman data and system texts. Custom music and images');
-  WriteLn('must be added manually, and graphic sets converted with');
-  WriteLn('a seperate tool.');
-  WriteLn('');
-  WriteLn('Press enter to continue with conversion of ' + ExtractFileName(SrcFile) + '.');
-  ReadLn(Dummy);
+  Write('Please note that this tool only converts the level data,');
+  Write('talisman data and system texts. Custom music and images');
+  Write('must be added manually, and graphic sets converted with');
+  Write('a seperate tool.');
+  Write('');
+  Write('Press enter to continue with conversion of ' + ExtractFileName(SrcFile) + '.');
+  if ParamStr(2) <> 'silent' then ReadLn(Dummy);
 
   SoundManager := TSoundManager.Create;
   GameParams := TDosGameParams.Create;
@@ -140,14 +146,14 @@ begin
   { Level Files }
   for Rank := 0 to SysDat.RankCount-1 do
   begin
-    WriteLn('Rank ' + IntToStr(Rank+1));
+    Write('Rank ' + IntToStr(Rank+1));
     ForceDirectories(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\');
     MainSec := Parser.MainSection;
     for Level := 0 to 255 do
     begin
       if not DoesFileExist(LeadZeroStr(Rank, 2) + LeadZeroStr(Level, 2) + '.lvl') then
         Break;
-      WriteLn('  Level ' + IntToStr(Level+1));
+      Write('  Level ' + IntToStr(Level+1));
       CreateDataStream(LeadZeroStr(Rank, 2) + LeadZeroStr(Level, 2) + '.lvl', MS);
       TLvlLoader.LoadLevelFromStream(MS, GameParams.Level);
       GameParams.Level.SaveToFile(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\' + MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
@@ -159,7 +165,7 @@ begin
   end;
 
   { Ranks }
-  WriteLn('Rank metainfo');
+  Write('Rank metainfo');
   for Rank := 0 to SysDat.RankCount-1 do
   begin
     MainSec := Parser.MainSection.SectionList.Add('rank');
@@ -170,7 +176,7 @@ begin
   Parser.Clear;
 
   { Music Tracks }
-  WriteLn('Music rotation');
+  Write('Music rotation');
   CreateDataStream('music.txt', MS);
   SL.LoadFromStream(MS);
 
@@ -185,7 +191,7 @@ begin
   Parser.Clear;
 
   { Postview Texts }
-  WriteLn('Postview texts');
+  Write('Postview texts');
   MainSec := Parser.MainSection;
 
   for i := 0 to 8 do
@@ -200,7 +206,7 @@ begin
   Parser.Clear;
 
   { Basic Metainfo }
-  WriteLn('General metainfo');
+  Write('General metainfo');
   MainSec := Parser.MainSection;
 
   MainSec.AddLine('TITLE', Trim(SysDat.PackName));

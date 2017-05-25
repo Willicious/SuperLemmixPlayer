@@ -471,7 +471,6 @@ var
   G: TNeoLevelGroup;
   L: TNeoLevelEntry;
 begin
-  WriteLn('Search from ' + Path);
   if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
   begin
     repeat
@@ -485,18 +484,15 @@ begin
     fChildGroups.Sort(SortAlphabetical);
   end;
 
-  WriteLn('Nxlv search');
   if FindFirst(Path + '*.nxlv', 0, SearchRec) = 0 then
   begin
     repeat
-      WriteLn('Found ' + SearchRec.Name);
       L := fLevels.Add;
       L.Filename := SearchRec.Name;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
     fLevels.Sort(SortAlphabetical);
   end;
-  WriteLn('Done');
 end;
 
 procedure TNeoLevelGroup.SetFolderName(aValue: String);

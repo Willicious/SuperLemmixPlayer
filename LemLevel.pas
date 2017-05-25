@@ -804,7 +804,7 @@ var
      spbCloner: s := 'CLONER';
     end;
 
-    Sec.AddLine(S);
+    Sec.AddLine('SKILL', S);
   end;
 
   procedure SetSplitterData;

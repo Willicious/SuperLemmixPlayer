@@ -100,6 +100,7 @@ type
     private
       fCurrentSet: String;
       fCurrentPos: Integer;
+      fThemeChange: TStringList;
       fMatchArray: array of TTranslationItem;
       procedure LoadEntry(aSec: TParserSection; const aIteration: Integer);
     public
@@ -131,16 +132,19 @@ constructor TTranslationTable.Create;
 begin
   inherited;
   SetLength(fMatchArray, 0);
+  fThemeChange := TStringList.Create;
 end;
 
 destructor TTranslationTable.Destroy;
 begin
+  fThemeChange.Free;
   inherited;
 end;
 
 procedure TTranslationTable.Clear;
 begin
   SetLength(fMatchArray, 0);
+  fThemeChange.Clear;
 end;
 
 procedure TTranslationTable.LoadEntry(aSec: TParserSection; const aIteration: Integer);
@@ -186,6 +190,9 @@ begin
   try
     Parser.LoadFromFile(AppPath + SFStyles + aSet + '\' + SFTranslation);
     fCurrentSet := aSet;
+
+    if Parser.MainSection.Line['theme'] <> nil then
+      fThemeChange.Values[aSet] := Parser.MainSection.Line['theme'].ValueTrimmed;
 
     TotalEntries := Length(fMatchArray);
     fCurrentPos := TotalEntries;
@@ -279,6 +286,9 @@ var
   end;
 begin
   LoadTables;
+
+  if fThemeChange.Values[aLevel.Info.GraphicSetName] <> '' then
+    aLevel.Info.GraphicSetName := fThemeChange.Values[aLevel.Info.GraphicSetName];
 
   for i := 0 to aLevel.Terrains.Count-1 do
   begin
