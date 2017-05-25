@@ -852,11 +852,10 @@ begin
     UseSaveState := 0;
 
   // Load save state or restart the level
-  for i := UseSaveState downto -1 do
-  begin
-    if i >= 0 then Game.LoadSavedState(fSaveList[i])
-    else Game.Start(true);
-  end;
+  if UseSaveState >= 0 then
+    Game.LoadSavedState(fSaveList[UseSaveState])
+  else
+    Game.Start(true);
 
   fSaveList.ClearAfterIteration(Game.CurrentIteration);
 
