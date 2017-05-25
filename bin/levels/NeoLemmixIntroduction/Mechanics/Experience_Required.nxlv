@@ -308,3 +308,14 @@ $LEMMING
   CLIMBER
 $END
 
+$PRETEXT
+  LINE It is possible for a lemming to begin
+  LINE with permanent skills in play. This
+  LINE applies to both those that spawn from
+  LINE trapdoors, and pre-placed lemmings.
+  LINE In addition to being able to have a
+  LINE permanent skill, it is also possible
+  LINE for a pre-placed lemming to begin as
+  LINE a blocker.
+$END
+

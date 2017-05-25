@@ -550,3 +550,17 @@ $TERRAIN
   Y 81
 $END
 
+$PRETEXT
+  LINE This level introduces one-way down
+  LINE arrows. These arrows can be destroyed
+  LINE by bombers, miners or diggers, no
+  LINE matter what direction they are facing.
+  LINE They cannot be destroyed by bashers
+  LINE or fencers, regardless of direction.
+  LINE Although one-way down arrows are rare
+  LINE compared to the traditional one-way
+  LINE left or one-way right arrows, they are
+  LINE nonetheless important to be familiar
+  LINE with.
+$END
+

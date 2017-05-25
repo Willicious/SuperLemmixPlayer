@@ -2798,3 +2798,13 @@ $TERRAIN
   ERASE
 $END
 
+$POSTTEXT
+  LINE Congratulations!
+  LINE You have braved the largest entry in
+  LINE the Lemmings Plus series since its
+  LINE very first entry, and completed every
+  LINE challenge thrown at you.
+  LINE Thanks Akseli, DynaLem, mobius, Minim
+  LINE and Nepster for pre-release testing.
+$END
+

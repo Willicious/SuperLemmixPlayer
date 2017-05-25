@@ -815,3 +815,11 @@ $TERRAIN
   ONE_WAY
 $END
 
+$POSTTEXT
+  LINE Congratulations!
+  LINE You are truly an Excellent
+  LINE Lemmings player
+  LINE The Lemmings Saga continues at a
+  LINE later date, watch this space
+$END
+

@@ -772,3 +772,12 @@ $TERRAIN
   Y 134
 $END
 
+$PRETEXT
+  LINE This level introduces the teleporter
+  LINE and the receiver. These two objects
+  LINE go hand-in-hand. A teleporter works
+  LINE similarly to a trap, but instead of
+  LINE killing the lemming, it teleports it
+  LINE to the corresponding receiver.
+$END
+

@@ -565,3 +565,20 @@ $TERRAIN
   Y -26
 $END
 
+$PRETEXT
+  LINE This level introduces radiation. If a
+  LINE lemming walks through radiation, a 9
+  LINE second countdown will appear above its
+  LINE head. When this reaches zero, the
+  LINE lemming becomes a bomber.
+$END
+
+$POSTTEXT
+  LINE When dealing with levels that contain
+  LINE radiation, you should keep in mind that
+  LINE not all such levels require you to make
+  LINE use of the radiation to complete.
+  LINE In some cases, the radiation serves as
+  LINE little more than a fancy trap.
+$END
+

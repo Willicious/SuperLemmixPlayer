@@ -558,3 +558,19 @@ $TERRAIN
   Y 85
 $END
 
+$PRETEXT
+  LINE This level introduces the Platformer.
+  LINE The Platformer is basically just a
+  LINE horizontal builder; when assigned to
+  LINE a lemming, that lemming will build a
+  LINE 12-brick long horizontal bridge.
+  LINE It should be noted that due to the
+  LINE horizontal rather than diagonal
+  LINE nature of a Platformer's bridge, it
+  LINE will extend a bit further than a
+  LINE builder's bridge will. As such, a
+  LINE long gap can be crossed using fewer
+  LINE platformers, than it would take if
+  LINE you were to use builders to cross it.
+$END
+

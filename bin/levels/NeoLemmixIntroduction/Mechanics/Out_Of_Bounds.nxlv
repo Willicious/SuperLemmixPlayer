@@ -569,3 +569,29 @@ $TERRAIN
   Y 30
 $END
 
+$PRETEXT
+  LINE If you've ever made it to the edge of
+  LINE a level, you may have noticed that
+  LINE what happens is inconsistent between
+  LINE engines, and sometimes even within
+  LINE the same engine.
+  LINE In NeoLemmix, the top of the level is
+  LINE treated as solid, while the left and
+  LINE right edge are deadly. As usual, the
+  LINE bottom edge is also deadly.
+$END
+
+$POSTTEXT
+  LINE Notice the buttons with the film strip
+  LINE and the left or right arrows? These
+  LINE useful buttons allow you to quickly
+  LINE jump in time - even backwards.
+  LINE You can click and hold these to rewind
+  LINE or advance gameplay frame by frame. You
+  LINE can also right-click these to jump one
+  LINE second, or middle-click to jump five
+  LINE seconds. This can help with precise
+  LINE actions, or to fix mistakes without
+  LINE having to start again completely.
+$END
+

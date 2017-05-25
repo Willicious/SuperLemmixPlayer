@@ -341,3 +341,9 @@ $TERRAIN
   ONE_WAY
 $END
 
+$PRETEXT
+  LINE These two levels were included in
+  LINE early versions of MazuLems, but were
+  LINE removed at a later time.
+$END
+

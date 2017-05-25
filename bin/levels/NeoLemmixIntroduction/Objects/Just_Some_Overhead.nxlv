@@ -433,3 +433,17 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE This level introduces one-way fields.
+  LINE These objects only allow lemmings to
+  LINE pass in one direction; to a lemming
+  LINE facing the opposite direction they act
+  LINE like a blocker.
+  LINE Because they act like a blocker, and
+  LINE not like a wall, this means that it is
+  LINE possible to, for example, bounce a
+  LINE builder off one.
+  LINE One-way fields can face either left or
+  LINE right. This level contains both types.
+$END
+

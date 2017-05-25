@@ -1690,3 +1690,12 @@ $TERRAIN
   Y 54
 $END
 
+$POSTTEXT
+  LINE Congratulations!
+  LINE Everybody here at DMA Design salutes you
+  LINE as a MASTER Lemmings player. Not many
+  LINE people will complete the Mayhem levels,
+  LINE you are definitely one of the elite
+  LINE Now hold your breath for the data disk
+$END
+

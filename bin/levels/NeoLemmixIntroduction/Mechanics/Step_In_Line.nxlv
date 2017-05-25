@@ -247,3 +247,21 @@ $TERRAIN
   Y 100
 $END
 
+$PRETEXT
+  LINE In most Lemmings clones, unless the
+  LINE level's release rate is 99, you are
+  LINE able to change the release rate to
+  LINE any value between the initial rate
+  LINE and 99.
+  LINE In NeoLemmix too, this is usually
+  LINE true. However, in some levels, it
+  LINE may not be possible to change the
+  LINE release rate, even if it's a value
+  LINE other than 99.
+  LINE Note that a level cannot set a range
+  LINE of valid release rates. The only
+  LINE possibilities are either "all values
+  LINE between initial and 99 are allowed"
+  LINE or "cannot be changed at all".
+$END
+

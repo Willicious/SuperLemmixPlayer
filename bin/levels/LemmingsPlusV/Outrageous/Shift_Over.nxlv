@@ -3899,3 +3899,16 @@ $TERRAIN
   Y 148
 $END
 
+$PRETEXT
+  LINE It's time for all the hard-working
+  LINE lemmings to go home for the night...
+$END
+
+$POSTTEXT
+  LINE And so for most of the residents of
+  LINE Lemmingsville, the day came to an end.
+  LINE But one lemming...
+  LINE One brave lemming...
+  LINE He had other plans.
+$END
+

@@ -156,6 +156,10 @@ begin
       Write('  Level ' + IntToStr(Level+1));
       CreateDataStream(LeadZeroStr(Rank, 2) + LeadZeroStr(Level, 2) + '.lvl', MS);
       TLvlLoader.LoadLevelFromStream(MS, GameParams.Level);
+      if CreateDataStream('i' + LeadZeroStr(Rank+1, 2) + LeadZeroStr(Level+1, 2) + '.txt', MS) <> nil then
+        GameParams.Level.PreText.LoadFromStream(MS);
+      if CreateDataStream('p' + LeadZeroStr(Rank+1, 2) + LeadZeroStr(Level+1, 2) + '.txt', MS) <> nil then
+        GameParams.Level.PostText.LoadFromStream(MS);
       GameParams.Level.SaveToFile(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\' + MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
       MainSec.AddLine('level', MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
       PieceManager.Tidy;

@@ -1176,3 +1176,14 @@ $TERRAIN
   ONE_WAY
 $END
 
+$POSTTEXT
+  LINE Congratulations!
+  LINE You have successfully beaten all of
+  LINE Lemmings Plus I. Go have a beer or
+  LINE something. You deserve it. That was
+  LINE not an easy task.
+  LINE Extra special thanks to
+  LINE EricLang and ccexplore
+  LINE And the rest of Lemmings Forums
+$END
+

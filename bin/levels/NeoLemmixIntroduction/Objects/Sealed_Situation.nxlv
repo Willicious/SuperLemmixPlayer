@@ -550,3 +550,15 @@ $TERRAIN
   Y 22
 $END
 
+$PRETEXT
+  LINE This level introduces the locked exit,
+  LINE and unlock buttons.
+  LINE A locked exit is exactly what it says
+  LINE on the tin - an exit that is locked.
+  LINE To unlock the exit, all buttons in the
+  LINE level must be pushed, by having a
+  LINE lemming walk over them.
+  LINE Unlock buttons cannot be pressed by
+  LINE zombie lemmings.
+$END
+

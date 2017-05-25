@@ -537,3 +537,15 @@ $LEMMING
   ZOMBIE
 $END
 
+$PRETEXT
+  LINE In addition to regular lemmings,
+  LINE NeoLemmix levels may also sometimes
+  LINE contain zombie lemmings.
+  LINE Zombie lemmings cannot be saved.
+  LINE You also cannot assign skills to
+  LINE them. Most of all, they are
+  LINE contagious; any lemming who touches
+  LINE a zombie, becomes a zombie
+  LINE himself too.
+$END
+

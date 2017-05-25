@@ -12580,3 +12580,13 @@ $TERRAIN
   Y 424
 $END
 
+$POSTTEXT
+  LINE Congratulations!
+  LINE You have helped this final lemming
+  LINE home, and thus completed yet another
+  LINE entry in the Lemmings Plus series.
+  LINE I hope you enjoyed playing!
+  LINE Look forwards to a new side project,
+  LINE "Lemmings Plus Twists" coming soon!
+$END
+

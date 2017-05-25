@@ -1266,3 +1266,14 @@ $TERRAIN
   ONE_WAY
 $END
 
+$POSTTEXT
+  LINE Congratulations!
+  LINE You have successfully beaten all of
+  LINE Lemmings Plus II. Give yourself a
+  LINE pat on the back. You deserve it.
+  LINE That was not an easy task.
+  LINE Extra special thanks to the following:
+  LINE EricLang, ccexplore, DragonsLover
+  LINE Akseli, mobius
+$END
+

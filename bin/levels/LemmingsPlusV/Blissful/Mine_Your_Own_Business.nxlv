@@ -1151,3 +1151,10 @@ $TERRAIN
   Y 152
 $END
 
+$PRETEXT
+  LINE Introducing the "Mineshaft" tileset.
+  LINE The lemmings are stuck in the depths
+  LINE of the gold mines. They need your
+  LINE help to reach the escape minecart.
+$END
+

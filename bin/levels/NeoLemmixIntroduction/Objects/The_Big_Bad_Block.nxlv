@@ -682,3 +682,15 @@ $TERRAIN
   Y 112
 $END
 
+$POSTTEXT
+  LINE Well done! You have mastered the new
+  LINE kinds of objects you'll encounter in
+  LINE NeoLemmix.
+  LINE Now it's time to go play some of the
+  LINE many great NeoLemmix level packs made
+  LINE by Lemmings fans just like yourself!
+  LINE If you need to find something to play,
+  LINE visit the Lemmings Forums.
+  LINE http://www.lemmingsforums.net/
+$END
+

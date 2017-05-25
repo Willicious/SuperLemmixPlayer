@@ -4176,3 +4176,14 @@ $TERRAIN
   Y 12
 $END
 
+$POSTTEXT
+  LINE You did it! You've completed yet
+  LINE another entry in the Lemmings Plus
+  LINE series, and brought countless more
+  LINE lemmings home.
+  LINE Thanks to Akseli, IchoTolot, Wafflem
+  LINE and zanzindorf for prerelease testing.
+  LINE The Lemmings Plus saga continues at
+  LINE a later date. Stay tuned.
+$END
+

@@ -509,3 +509,17 @@ $LEMMING
   ZOMBIE
 $END
 
+$PRETEXT
+  LINE Oh no! It's a zombie outbreak in
+  LINE Lemmingland!
+  LINE Can you guide the lemmings home while
+  LINE under threat from zombies?
+  LINE Remember, the zombie virus is highly
+  LINE contagious. Any lemming that comes in
+  LINE contact with a zombie, will also turn
+  LINE into a zombie itself.
+  LINE Zombies mostly behave like normal
+  LINE lemmings, but cannot be saved, or have
+  LINE skills assigned to them.
+$END
+

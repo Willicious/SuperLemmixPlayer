@@ -685,3 +685,16 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE This level introduces the updraft. A
+  LINE lemming falling through an updraft
+  LINE will fall more slowly, which in turn
+  LINE allows it to survive falls of longer
+  LINE distances.
+  LINE A glider who passes through an updraft
+  LINE will not fall at all, but will instead
+  LINE slowly be pushed upwards. This can
+  LINE allow them to cross gaps that they
+  LINE otherwise could not.
+$END
+

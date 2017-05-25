@@ -197,3 +197,11 @@ $TERRAIN
   Y 122
 $END
 
+$PRETEXT
+  LINE This level introduces slowfreeze.
+  LINE Slowfreeze is very similar to
+  LINE radiation, except that instead of a
+  LINE bomber, it turns the lemming into
+  LINE a stoner.
+$END
+

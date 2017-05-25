@@ -675,3 +675,17 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE If you want to keep track of a certain
+  LINE lemming, you can right-click them.
+  LINE This will place an arrow above their
+  LINE head, so you can see where they are.
+  LINE Additionally, when you have a lemming
+  LINE highlit this way, you can right click
+  LINE any skill on the skill panel to assign
+  LINE it to the highlit lemming. To do this
+  LINE with the keyboard, hold Ctrl while
+  LINE pressing the shortcut key for the
+  LINE skill you wish to assign.
+$END
+

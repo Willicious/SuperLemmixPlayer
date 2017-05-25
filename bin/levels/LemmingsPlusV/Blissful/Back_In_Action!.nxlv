@@ -716,3 +716,10 @@ $TERRAIN
   Y 136
 $END
 
+$PRETEXT
+  LINE Introducing the "Abstract" tileset.
+  LINE Colors, colors everywhere. Except the
+  LINE objects. Those tend to be quite free
+  LINE of color.
+$END
+

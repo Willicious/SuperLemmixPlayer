@@ -5307,3 +5307,14 @@ $LEMMING
   ZOMBIE
 $END
 
+$POSTTEXT
+  LINE Congratulations!
+  LINE You have helped the lemmings through
+  LINE the most dangerous scenario known to
+  LINE lemmingkind. Give yourself a pat on
+  LINE the back; the lemmings will be able
+  LINE to rest easily tonight.
+  LINE I hope you enjoyed this special pack
+  LINE of zombie-focused levels!
+$END
+

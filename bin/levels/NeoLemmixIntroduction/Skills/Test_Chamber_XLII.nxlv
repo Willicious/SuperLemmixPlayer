@@ -284,3 +284,17 @@ $TERRAIN
   Y 30
 $END
 
+$PRETEXT
+  LINE This level introduces the Stacker,
+  LINE which is another variation of builder.
+  LINE A stacker builds straight upwards. The
+  LINE stack is placed immediately in front
+  LINE of the lemming, not underneath them.
+  LINE As such, a stacker will generally be
+  LINE turned around by their own stack,
+  LINE unless they are a climber. However, it
+  LINE is very possible for other lemmings to
+  LINE slip past while the stack is being
+  LINE built.
+$END
+

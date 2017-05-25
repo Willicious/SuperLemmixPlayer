@@ -385,3 +385,19 @@ $LEMMING
   DIRECTION left
 $END
 
+$PRETEXT
+  LINE One lemming, need to save 3? How is
+  LINE that even possible?
+  LINE Well, this level has more than one
+  LINE lemming! The Cloner skill will clone
+  LINE a lemming.
+  LINE When a lemming is cloned, the clone
+  LINE will be identical. This includes that
+  LINE it will have any permanent skills the
+  LINE source lemming has, and perform the
+  LINE same action the source lemming is
+  LINE performing at the time.
+  LINE However, there is one difference - the
+  LINE clone will face the other direction.
+$END
+

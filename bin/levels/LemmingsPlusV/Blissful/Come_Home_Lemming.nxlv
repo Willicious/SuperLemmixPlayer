@@ -664,3 +664,11 @@ $TERRAIN
   Y 115
 $END
 
+$PRETEXT
+  LINE Introducing the "Machine" tileset.
+  LINE Almost everything is steel here. But
+  LINE if you look carefully, you might spot
+  LINE some rusted terrain that lemmings can
+  LINE break through.
+$END
+

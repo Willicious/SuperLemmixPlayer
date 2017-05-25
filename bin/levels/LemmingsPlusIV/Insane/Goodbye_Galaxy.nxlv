@@ -4691,3 +4691,16 @@ $TERRAIN
   Y 394
 $END
 
+$POSTTEXT
+  LINE Congratulations!
+  LINE You've finished yet another entry in
+  LINE the Lemmings Plus series! Well done!
+  LINE I hope you enjoyed this surprise
+  LINE addition to the series. Did you
+  LINE remember to collect all the talismans?
+  LINE Special thanks to pre-release testers:
+  LINE DynaLem, exit, IchoTolot, Nepster
+  LINE Look out for future level packs from
+  LINE me... well, in the future!
+$END
+

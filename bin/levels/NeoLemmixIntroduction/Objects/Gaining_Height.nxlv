@@ -987,3 +987,11 @@ $TERRAIN
   Y 66
 $END
 
+$PRETEXT
+  LINE And of course, there's the opposite
+  LINE of one-way down arrows: One-way up.
+  LINE One-way up arrows cannot be destroyed
+  LINE by bashers, miners, or diggers. You'll
+  LINE need a bomber or a fencer for them.
+$END
+

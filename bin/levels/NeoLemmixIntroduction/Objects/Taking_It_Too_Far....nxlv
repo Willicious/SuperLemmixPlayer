@@ -383,3 +383,17 @@ $TERRAIN
   ERASE
 $END
 
+$PRETEXT
+  LINE This level introduces pickup skills.
+  LINE A pickup skill is, like the name
+  LINE suggests, an extra skill which can be
+  LINE added to your available skillset by
+  LINE having a lemming pick them up.
+  LINE A pickup skill does not have to be
+  LINE used on the same lemming that picks it
+  LINE up, nor does it have to be used as
+  LINE soon as it is picked up.
+  LINE Pickup skills cannot be collected by
+  LINE zombie lemmings.
+$END
+

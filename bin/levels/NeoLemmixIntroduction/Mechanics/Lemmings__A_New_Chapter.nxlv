@@ -747,3 +747,37 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE Welcome to the NeoLemmix Introduction
+  LINE Pack! This level pack is designed to
+  LINE teach you about the new features and
+  LINE different gameplay mechanics in
+  LINE NeoLemmix compared to DOS Lemmings or
+  LINE other various Lemmings clones.
+  LINE This first level is designed to show
+  LINE that the basic features remain the
+  LINE same. Although you may notice some
+  LINE minor differences, including the
+  LINE absence of any time limit, or the
+  LINE layout of the info panel, you will
+  LINE notice that the basic features of
+  LINE the game remain the same as always.
+$END
+
+$POSTTEXT
+  LINE Did you notice the difference in the
+  LINE information panel, above the skill bar?
+  LINE The number next to the window icon is
+  LINE to tell you how many lemmings are still
+  LINE waiting to spawn from the window(s).
+  LINE The number next to the lemming icon is
+  LINE the total number of lemmings who have
+  LINE not died or exited. This includes those
+  LINE who have not spawned yet.
+  LINE The final icon shows how many lemmings
+  LINE you have saved compared to the number
+  LINE you need to save. This is why it starts
+  LINE as a negative number, and reaches zero
+  LINE when you've saved enough.
+$END
+

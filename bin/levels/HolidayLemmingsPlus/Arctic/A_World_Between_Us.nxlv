@@ -2252,3 +2252,13 @@ $TERRAIN
   ONE_WAY
 $END
 
+$POSTTEXT
+  LINE Well done!
+  LINE You did a great job and brought the
+  LINE lemmings home for yet another holiday.
+  LINE I hope you enjoyed this special entry
+  LINE in the Lemmings Plus series!
+  LINE Special thanks to DynaLem and minimac
+  LINE for pre-release testing.
+$END
+

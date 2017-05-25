@@ -1814,3 +1814,12 @@ $LEMMING
   DIRECTION left
 $END
 
+$POSTTEXT
+  LINE 16 Timid levels.
+  LINE 16 Dodgy levels.
+  LINE 16 Rough levels.
+  LINE ...and 16 Fierce levels?
+  LINE It's not over yet! One final challenge
+  LINE awaits you...
+$END
+

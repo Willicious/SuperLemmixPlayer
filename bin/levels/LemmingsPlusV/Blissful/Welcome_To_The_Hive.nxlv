@@ -469,3 +469,10 @@ $TERRAIN
   FLIP_HORIZONTAL
 $END
 
+$PRETEXT
+  LINE Introducing the "Honeycomb" tileset.
+  LINE Unusual geometry everywhere. And bees.
+  LINE Most of the bees have no interest in
+  LINE hurting you, though.
+$END
+

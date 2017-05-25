@@ -788,3 +788,17 @@ $AREA
   HEIGHT 14
 $END
 
+$PRETEXT
+  LINE This level introduces the splitter. A
+  LINE splitter causes lemmings that walk
+  LINE into it to possibly change direction.
+  LINE A splitter will have some means of
+  LINE indicating the direction it will send
+  LINE the next lemming. Every time a lemming
+  LINE reaches it, the direction changes.
+  LINE The initial direction may vary between
+  LINE splitters, but the changes upon a
+  LINE lemming encountering it always
+  LINE alternate between left and right.
+$END
+

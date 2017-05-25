@@ -192,3 +192,18 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE This level introduces the Swimmer
+  LINE skill.
+  LINE Like Climber and Floater, the Swimmer
+  LINE skill remains permanently with the
+  LINE lemming it is assigned to.
+  LINE As the name implies, a Swimmer will
+  LINE not drown, but can instead swim across
+  LINE any bodies of water they encounter.
+  LINE It is possible to save a lemming who
+  LINE is drowning by assigning them the
+  LINE swimmer skill; it does not have to
+  LINE be done beforehand.
+$END
+

@@ -649,3 +649,19 @@ $TERRAIN
   Y 58
 $END
 
+$PRETEXT
+  LINE This level introduces splat pads and
+  LINE anti-splat pads. These two objects are
+  LINE closely related, and affect lemmings
+  LINE who land on them - those who merely
+  LINE walk past are unaffected.
+  LINE A splat pad will cause a lemming to
+  LINE splat upon landing, even if the fall
+  LINE is not of a fatal height. A floater
+  LINE or glider will still survive.
+  LINE An anti-splat pad is the opposite. Any
+  LINE lemming that lands on an anti-splat
+  LINE pad will survive the fall, no matter
+  LINE how far it was.
+$END
+

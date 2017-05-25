@@ -1081,3 +1081,19 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE This level introduces the Stoner
+  LINE skill. No, it doesn't turn the lemming
+  LINE into Snoop Dogg. It's kind of like a
+  LINE cross between a Bomber and a Blocker.
+  LINE A lemming assigned the Stoner skill
+  LINE will self-destruct just like a bomber,
+  LINE but the difference is that whereas the
+  LINE bomber destroys terrain, the Stoner
+  LINE creates terrain in the shape of a
+  LINE lemming made of stone.
+  LINE For the avoidance of doubt, a stoner
+  LINE can be used in mid-air just like a
+  LINE bomber can.
+$END
+

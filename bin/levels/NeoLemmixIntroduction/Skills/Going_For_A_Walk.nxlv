@@ -446,3 +446,17 @@ $LEMMING
   DIRECTION left
 $END
 
+$PRETEXT
+  LINE In addition to the classic eight
+  LINE skills, NeoLemmix also features nine
+  LINE all-new skills. This rank will teach
+  LINE you these skills.
+  LINE This level features the Walker skill.
+  LINE This skill will make a lemming that
+  LINE is currently performing an action,
+  LINE stop performing the action and revert
+  LINE to walking. When used on a lemming
+  LINE who is already just walking, it will
+  LINE cause the lemming to turn around.
+$END
+

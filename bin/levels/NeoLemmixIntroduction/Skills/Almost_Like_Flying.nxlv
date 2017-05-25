@@ -289,3 +289,17 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE This level introduces the Glider. This
+  LINE is another permanent skill, just like
+  LINE Climbers, Floaters or Swimmers.
+  LINE A Glider is very similar to a Floater,
+  LINE with the one difference being that the
+  LINE lemming moves forward while falling.
+  LINE A Glider can still survive a fall of
+  LINE any distance, just like a Floater can.
+  LINE It is not possible for one lemming to
+  LINE simultaneously be both a Floater and
+  LINE a Glider.
+$END
+

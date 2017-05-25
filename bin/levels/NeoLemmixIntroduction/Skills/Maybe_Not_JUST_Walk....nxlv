@@ -487,3 +487,17 @@ $AREA
   HEIGHT 5
 $END
 
+$PRETEXT
+  LINE For this rank, each skill will be
+  LINE introduced with a level that only uses
+  LINE the new skill and nothing else.
+  LINE After each such level, the next level
+  LINE will be a fairly simple puzzle which
+  LINE requires use of the new skill, in
+  LINE combination with some of the classic
+  LINE skills.
+  LINE These levels will not require the use
+  LINE of multiple new skills in a single
+  LINE level.
+$END
+

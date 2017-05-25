@@ -440,3 +440,12 @@ $LEMMING
   DIRECTION right
 $END
 
+$PRETEXT
+  LINE As well as dropping from the entrance,
+  LINE some levels may have lemmings already
+  LINE placed throughout the level.
+  LINE It is even possible for a level to
+  LINE have only pre-placed lemmings, without
+  LINE any regular entrances.
+$END
+

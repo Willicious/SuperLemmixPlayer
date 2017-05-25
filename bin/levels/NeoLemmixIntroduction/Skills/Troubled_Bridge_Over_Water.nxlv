@@ -424,3 +424,21 @@ $TERRAIN
   Y -5
 $END
 
+$PRETEXT
+  LINE This level teaches the last permanent
+  LINE skill, the Disarmer. In some earlier
+  LINE versions of NeoLemmix, this skill was
+  LINE known as the "Mechanic".
+  LINE A disarmer will, upon walking into a
+  LINE trap, disarm the trap. This renders
+  LINE the trap permanently harmless to all
+  LINE lemmings.
+  LINE Do note that if a disarmer is doing
+  LINE something other than just walking when
+  LINE they encounter a trap, they will still
+  LINE be affected by it as normal. Disarmers
+  LINE can only disarm a trap while it is
+  LINE inactive; if it is currently killing
+  LINE a lemming, Disarmers will walk past it.
+$END
+

@@ -391,3 +391,15 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE Hidden traps are generally considered
+  LINE bad design in NeoLemmix levels, but
+  LINE they sometimes still show up. Using
+  LINE Clear Physics Mode is a great way to
+  LINE locate such traps, especially if you
+  LINE know one exists but don't know where.
+  LINE Remember, click the button with the
+  LINE half-grey block to activate (or to
+  LINE deactivate) Clear Physics Mode.
+$END
+

@@ -604,3 +604,28 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE You may be wondering why the previous
+  LINE level had no bombers.
+  LINE Unlike the other skills, bombers do
+  LINE have a significant difference in
+  LINE NeoLemmix compared to most other
+  LINE Lemmings clones. In NeoLemmix, bombers
+  LINE do not have a timer. As soon as a
+  LINE bomber is assigned, it explodes.
+$END
+
+$POSTTEXT
+  LINE Have you noticed the extra buttons on
+  LINE your skill panel? The first two are
+  LINE Fast Forward and Restart.
+  LINE The former allows you to speed up
+  LINE gameplay, so you don't have to wait
+  LINE forever for lemmings to walk a long
+  LINE distance, or finish building, etc.
+  LINE The latter allows you to instantly
+  LINE restart the level. Until you interrupt,
+  LINE the actions you previously took will
+  LINE be replayed.
+$END
+

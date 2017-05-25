@@ -867,3 +867,12 @@ $TERRAIN
   ONE_WAY
 $END
 
+$POSTTEXT
+  LINE Well done! You've completed the new
+  LINE skills tutorial levels!
+  LINE The next few levels will be designed
+  LINE so you can put these new skills to
+  LINE the test. They will not be overly
+  LINE difficult.
+$END
+

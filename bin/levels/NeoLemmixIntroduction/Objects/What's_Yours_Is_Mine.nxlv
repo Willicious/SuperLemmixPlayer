@@ -657,3 +657,21 @@ $LEMMING
   CLIMBER
 $END
 
+$PRETEXT
+  LINE This level introduces the single-use
+  LINE trap. This is like a normal trap,
+  LINE except it can only be triggered once.
+  LINE After the first kill, it no longer
+  LINE poses any threat to the lemmings.
+  LINE Like regular traps, single-use traps
+  LINE can be disabled by Disarmers.
+$END
+
+$POSTTEXT
+  LINE Well done! You've covered all the new
+  LINE types of objects in NeoLemmix.
+  LINE The next few levels will be some easy
+  LINE puzzles using the new objects, to let
+  LINE you test your skills.
+$END
+

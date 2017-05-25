@@ -561,3 +561,31 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$PRETEXT
+  LINE One-way arrows in NeoLemmix work
+  LINE almost exactly as you're used to.
+  LINE The one difference is that their
+  LINE edges do not have to be straight.
+  LINE There can be rough overlaps of
+  LINE one-way arrow and non-one-way-arrow
+  LINE regions of terrain. Look closely at
+  LINE the edges in this level.
+$END
+
+$POSTTEXT
+  LINE Wondering about the button with the
+  LINE brick that's half greyed out? This
+  LINE button will activate Clear Physics
+  LINE Mode, which removes most of the fancy
+  LINE graphic detail and shows the level
+  LINE in a purely functional form.
+  LINE Light grey represents destructible
+  LINE terrain, dark grey represents steel.
+  LINE The level's edge will be given a red
+  LINE outline, while the active area of
+  LINE objects will be shown in purple.
+  LINE You can often hold your mouse over
+  LINE lemmings or objects in this mode for
+  LINE even more information.
+$END
+

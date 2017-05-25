@@ -281,3 +281,12 @@ $TERRAIN
   FLIP_HORIZONTAL
 $END
 
+$PRETEXT
+  LINE In NeoLemmix, steel pieces do not have
+  LINE to have a straight edge. Diagonal, or
+  LINE even rough edges, are possible.
+  LINE Unlike in DOS Lemmings or standard
+  LINE Lemmix, steel cannot be destroyed by
+  LINE use of a destructive skill near it.
+$END
+
