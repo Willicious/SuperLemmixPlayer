@@ -1,0 +1,1921 @@
+TITLE Private room available
+THEME crystal
+ID xFE6702F0
+LEMMINGS 20
+REQUIREMENT 20
+TIME_LIMIT 300
+RELEASE_RATE 1
+WIDTH 511
+HEIGHT 160
+START_X 165
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BOMBER 1
+  BUILDER 1
+  BASHER 2
+  DIGGER 40
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE window
+  X 133
+  Y 0
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X 5
+  Y 120
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE trap_03
+  X 213
+  Y 52
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 276
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 340
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 404
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_01
+  X 417
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 417
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_04
+  X 422
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 393
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 336
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 277
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 214
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 164
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 353
+  Y 49
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 290
+  Y 49
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 226
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 163
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 355
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 291
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 227
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 163
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 385
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 353
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 322
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 291
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 259
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 228
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 196
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 168
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 417
+  Y 49
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 417
+  Y 50
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 417
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 442
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 418
+  Y 24
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 355
+  Y 24
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 292
+  Y 24
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 228
+  Y 24
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 167
+  Y 24
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_03
+  X 362
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_03
+  X 312
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_03
+  X 262
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_02
+  X 242
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_02
+  X 222
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 221
+  Y 54
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 233
+  Y 75
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 291
+  Y 75
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 353
+  Y 75
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 374
+  Y 81
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 230
+  Y 62
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 266
+  Y 62
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 305
+  Y 62
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 337
+  Y 62
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 377
+  Y 62
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 377
+  Y 60
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 376
+  Y 59
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 338
+  Y 60
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 338
+  Y 59
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 307
+  Y 60
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 307
+  Y 59
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 267
+  Y 60
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 267
+  Y 58
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 237
+  Y 60
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_03
+  X 237
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_03
+  X 297
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_03
+  X 357
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 298
+  Y 93
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 236
+  Y 109
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 287
+  Y 108
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 342
+  Y 106
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 363
+  Y 106
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 357
+  Y 120
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 310
+  Y 122
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 267
+  Y 122
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 236
+  Y 122
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_01
+  X 212
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 217
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 220
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_04
+  X 215
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_04
+  X 213
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 450
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 450
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 444
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 444
+  Y 76
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 444
+  Y 100
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 443
+  Y 115
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 455
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 455
+  Y 103
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 455
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 466
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 466
+  Y 102
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 455
+  Y 81
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 455
+  Y 108
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE orb
+  X 466
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE orb
+  X 447
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_02
+  X 461
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 422
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE orb
+  X 148
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 178
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 162
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 143
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 177
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 159
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 98
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 188
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 188
+  Y 43
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 197
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 197
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 178
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 206
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 158
+  Y 60
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_04
+  X 164
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 203
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 205
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 207
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 200
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 198
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 197
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 195
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 194
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 191
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 189
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 188
+  Y 55
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 186
+  Y 55
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 184
+  Y 54
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 181
+  Y 54
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 179
+  Y 54
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 177
+  Y 54
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_04
+  X 147
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 166
+  Y 50
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_04
+  X 175
+  Y 55
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_02
+  X 24
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 60
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 21
+  Y -33
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 29
+  Y -22
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 61
+  Y 5
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 71
+  Y -28
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 47
+  Y -24
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 375
+  Y -29
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 358
+  Y -23
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 340
+  Y -22
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 325
+  Y -32
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 267
+  Y -62
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 339
+  Y -59
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 177
+  Y -61
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 44
+  Y 141
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE circle_02
+  X 103
+  Y 137
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE circle_02
+  X 109
+  Y 141
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 271
+  Y 49
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 261
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 289
+  Y 49
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 298
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 244
+  Y 53
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 277
+  Y 54
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 261
+  Y 45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 280
+  Y 45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 298
+  Y 45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 289
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 363
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 355
+  Y 44
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 373
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 382
+  Y 44
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 395
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 321
+  Y 44
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 239
+  Y 45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 230
+  Y 44
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 333
+  Y 43
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 237
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 353
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 368
+  Y 90
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 322
+  Y 90
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 236
+  Y 94
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 241
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 298
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 350
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 210
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 163
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 217
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_04
+  X 217
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 181
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 445
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 436
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 381
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 401
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_01
+  X 451
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 464
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 418
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 433
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 197
+  Y 128
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 240
+  Y 129
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 240
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 231
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_02
+  X 197
+  Y 146
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 500
+  Y 92
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 500
+  Y 120
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 480
+  Y 111
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 478
+  Y 130
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 432
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 474
+  Y -19
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_02
+  X 456
+  Y -45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 438
+  Y -18
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_03
+  X 490
+  Y 118
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 52
+  Y 134
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 63
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_01
+  X 43
+  Y 144
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_01
+  X 18
+  Y 144
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 33
+  Y 149
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 8
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_04
+  X 22
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 16
+  Y -14
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 0
+  Y -34
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 37
+  Y 12
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 2
+  Y 143
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_04
+  X 0
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 0
+  Y 143
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE stars_01
+  X 197
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

@@ -1,0 +1,1275 @@
+TITLE Take Us All Home...
+THEME dirt
+ID x82FB5346
+LEMMINGS 80
+REQUIREMENT 80
+RELEASE_RATE 1
+WIDTH 776
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 6
+  FLOATER 6
+  BOMBER 6
+  BLOCKER 6
+  BUILDER 6
+  BASHER 6
+  MINER 6
+  DIGGER 6
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE window
+  X 112
+  Y 99
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X 608
+  Y 111
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 400
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 464
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 528
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 93
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 138
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 180
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 247
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 283
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 304
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_06
+  X 259
+  Y 69
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_06
+  X 197
+  Y -32
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 153
+  Y -37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 98
+  Y -31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 250
+  Y -29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 190
+  Y -30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 340
+  Y -33
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 287
+  Y -28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 380
+  Y -28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 436
+  Y -23
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 513
+  Y -29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 564
+  Y -31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 589
+  Y -22
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 668
+  Y -14
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_05
+  X 666
+  Y -39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 699
+  Y -13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 741
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 711
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 743
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 776
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 830
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 586
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE steel_03
+  X 610
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE steel_03
+  X 634
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_05
+  X 419
+  Y -21
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 476
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 421
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_02
+  X 426
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE steel_01
+  X 376
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE steel_01
+  X 592
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_02
+  X 476
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_02
+  X 542
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 605
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 19
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 30
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 38
+  Y -13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_06
+  X 19
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_06
+  X 109
+  Y -27
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

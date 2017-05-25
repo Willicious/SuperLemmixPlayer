@@ -1,0 +1,203 @@
+TITLE Luck Of The Draw
+THEME lp4spec
+MUSIC lpiv_space1
+ID xEE8782B5
+LEMMINGS 98
+REQUIREMENT 95
+RELEASE_RATE 1
+WIDTH 640
+HEIGHT 346
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 2
+  CLIMBER 1
+  GLIDER 1
+  BOMBER 1
+  PLATFORMER 3
+  BUILDER 3
+  MINER 4
+  CLONER 2
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE exit
+  X 563
+  Y 77
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE window
+  X 77
+  Y 43
+  INVISIBLE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 253
+  Y 0
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 269
+  Y 0
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 269
+  Y 32
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 253
+  Y 32
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 269
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 253
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 269
+  Y 96
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 253
+  Y 96
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 269
+  Y 128
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 253
+  Y 128
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 269
+  Y 160
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 253
+  Y 160
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 269
+  Y 192
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE owa_left
+  X 253
+  Y 192
+  WIDTH 32
+  HEIGHT 32
+  INVISIBLE
+$END
+
+$TERRAIN
+  COLLECTION lp4spec
+  PIECE drawn
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lp4spec
+  PIECE drawn_steel
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lp4spec
+  PIECE drawn_oneway
+  X 0
+  Y 0
+  ONE_WAY
+$END
+

@@ -1,0 +1,300 @@
+TITLE Four Lemmings and a Funeral
+AUTHOR Martin Zurlinden
+THEME crystal
+ID x7688FC08
+LEMMINGS 4
+REQUIREMENT 3
+RELEASE_RATE 1
+WIDTH 500
+HEIGHT 160
+START_X 208
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 4
+  BOMBER 4
+  BUILDER 8
+  MINER 2
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE trap_02
+  X 184
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE trap_02
+  X 168
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X 432
+  Y 40
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE window
+  X 96
+  Y 2
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE trap_02
+  X 200
+  Y 0
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 116
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 136
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 158
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 168
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 186
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 98
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 98
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 126
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 152
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 170
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 186
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 88
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 120
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 138
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 156
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 171
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 185
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 137
+  Y 102
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 162
+  Y 102
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 187
+  Y 102
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 212
+  Y 102
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 237
+  Y 102
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 251
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 276
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 311
+  Y 111
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 429
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 454
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 121
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 213
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 211
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 214
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 187
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_02
+  X 235
+  Y 28
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE line_03
+  X 78
+  Y 46
+$END
+

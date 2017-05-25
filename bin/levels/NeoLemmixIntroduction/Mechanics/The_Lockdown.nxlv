@@ -1,0 +1,335 @@
+TITLE The Lockdown
+THEME marble
+ID xC80B7992
+LEMMINGS 100
+REQUIREMENT 100
+TIME_LIMIT 50
+RELEASE_RATE 99
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BASHER 3
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X 225
+  Y 96
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X 43
+  Y 96
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE window
+  X 136
+  Y 2
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 0
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 64
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 128
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 192
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 256
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 264
+  Y 46
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 24
+  Y 46
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 0
+  Y 101
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 288
+  Y 101
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 152
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 136
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 88
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 184
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 80
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 32
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 192
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 240
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 32
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 272
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 100
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 172
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 52
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 220
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 112
+  Y 94
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 192
+  Y 94
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 88
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 216
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 216
+  Y -28
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 88
+  Y -28
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 152
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 112
+  Y 136
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 192
+  Y 136
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_03
+  X 172
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_03
+  X 132
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_03
+  X 32
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_03
+  X 272
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_03
+  X 161
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_03
+  X 143
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 0
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 272
+  Y 120
+$END
+

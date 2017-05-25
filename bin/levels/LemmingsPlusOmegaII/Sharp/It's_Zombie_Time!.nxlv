@@ -1,0 +1,804 @@
+TITLE It's Zombie Time!
+THEME lpiv_candy
+MUSIC beastii
+ID x86A6BDF9
+LEMMINGS 31
+REQUIREMENT 30
+RELEASE_RATE 99
+WIDTH 640
+HEIGHT 160
+START_X 123
+START_Y 35
+AUTOSTEEL on
+BACKGROUND lpiv_candy:candies
+
+$SKILLSET
+  CLIMBER 1
+  GLIDER 1
+  BLOCKER 1
+  PLATFORMER 1
+  BUILDER 1
+  BASHER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE window
+  X 99
+  Y 1
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 229
+  Y 83
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE trap
+  X 465
+  Y 76
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE exit
+  X 416
+  Y 104
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 576
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 512
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 384
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 448
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 256
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 320
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 128
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 192
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE water
+  X 64
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 502
+  Y 141
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 502
+  Y 141
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 456
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_01
+  X 407
+  Y 142
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_01
+  X 431
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_03
+  X 360
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_02
+  X 376
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 205
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 221
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 237
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 253
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 269
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 269
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 269
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 269
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 221
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 189
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 173
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 188
+  Y 80
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 180
+  Y 84
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X 171
+  Y 92
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 173
+  Y 115
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 189
+  Y 115
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 205
+  Y 115
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 221
+  Y 115
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 205
+  Y 131
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 189
+  Y 131
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 173
+  Y 131
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 285
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 285
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 285
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 285
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 207
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 187
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 167
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 147
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 127
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 107
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 87
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 67
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 47
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 27
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_03
+  X 8
+  Y 117
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_04
+  X 4
+  Y 107
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 247
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 227
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 287
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 267
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 327
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 307
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 347
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_03
+  X 361
+  Y 117
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_06
+  X 377
+  Y 97
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 421
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 401
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 461
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 441
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_05
+  X 481
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_01
+  X 360
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_02
+  X 385
+  Y 116
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_03
+  X 360
+  Y 141
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_02
+  X 461
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_05
+  X 481
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_04
+  X 455
+  Y 64
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 465
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 465
+  Y 28
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 465
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_01
+  X 396
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_02
+  X 540
+  Y 79
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_02
+  X 540
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_02
+  X 540
+  Y 95
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_02
+  X 540
+  Y 103
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_02
+  X 540
+  Y 111
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_02
+  X 540
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_02
+  X 540
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_02
+  X 540
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_01
+  X 492
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_13
+  X 596
+  Y 36
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 608
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 608
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 608
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 465
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_02
+  X 101
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_02
+  X 133
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_02
+  X 165
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_02
+  X 197
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 221
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_steel
+  X 85
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_01
+  X 182
+  Y 87
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$LEMMING
+  X 424
+  Y 97
+  DIRECTION left
+  ZOMBIE
+$END
+

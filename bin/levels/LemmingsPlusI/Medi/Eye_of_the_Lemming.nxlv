@@ -1,0 +1,1337 @@
+TITLE Eye of the Lemming
+THEME pillar
+ID x9FEC49AA
+LEMMINGS 10
+REQUIREMENT 10
+RELEASE_RATE 99
+WIDTH 576
+HEIGHT 160
+START_X 304
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  FLOATER 5
+  BOMBER 5
+  BLOCKER 1
+  BUILDER 2
+  BASHER 1
+  MINER 2
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE window
+  X 216
+  Y 14
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X 376
+  Y 49
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 384
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 320
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 256
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 192
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 128
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 64
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 448
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 512
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 284
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 284
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 274
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 272
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 260
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 248
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 236
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 224
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 212
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_03
+  X 206
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 318
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 330
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 342
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 354
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 384
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 374
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 224
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 214
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_02
+  X 353
+  Y 74
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_02
+  X 318
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 158
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 148
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 192
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 204
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 216
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 88
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 88
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_03
+  X 39
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 52
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_04
+  X 3
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 16
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 16
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_02
+  X 148
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_01
+  X 166
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_03
+  X 166
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_04
+  X 148
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_01
+  X 129
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 148
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 185
+  Y 37
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_02
+  X 185
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_09
+  X 128
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_09
+  X 185
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_01
+  X 159
+  Y 55
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 448
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 448
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 508
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 508
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_01
+  X 448
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_04
+  X 508
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_04
+  X 357
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE steel_04
+  X 295
+  Y 63
+  ONE_WAY
+$END
+

@@ -1,0 +1,913 @@
+TITLE Climb and fall. Fall and climb.
+THEME marble
+ID xADC5C29B
+LEMMINGS 50
+REQUIREMENT 42
+TIME_LIMIT 120
+RELEASE_RATE 1
+WIDTH 511
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BUILDER 4
+  BASHER 1
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE window
+  X 16
+  Y 80
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X 448
+  Y 104
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE structure_04
+  X 16
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 57
+  Y 103
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 83
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 109
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 135
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 162
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 188
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 214
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 240
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 277
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_11
+  X 306
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 315
+  Y 77
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 332
+  Y 60
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE structure_04
+  X 224
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE structure_04
+  X 120
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 272
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 280
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 345
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 358
+  Y 34
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 152
+  Y 24
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 257
+  Y 24
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 156
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 260
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 392
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 312
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 184
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 120
+  Y 128
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 224
+  Y 128
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_02
+  X 124
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_02
+  X 228
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_11
+  X 360
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_11
+  X 372
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_01
+  X 73
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_01
+  X 177
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_02
+  X 82
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_02
+  X 186
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_17
+  X 95
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_17
+  X 199
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_17
+  X 88
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_17
+  X 192
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_06
+  X 97
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_06
+  X 203
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_13
+  X 79
+  Y 113
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_13
+  X 183
+  Y 113
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_01
+  X 323
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_16
+  X 332
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_17
+  X 339
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_17
+  X 345
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_06
+  X 339
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_13
+  X 304
+  Y 107
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_13
+  X 329
+  Y 95
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE structure_04
+  X 368
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE structure_04
+  X 448
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 408
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 408
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 456
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 456
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 400
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 400
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 408
+  Y 128
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 408
+  Y 144
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 400
+  Y 136
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 448
+  Y 136
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE steps_01
+  X 400
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 400
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 408
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 416
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 424
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 432
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 440
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_04
+  X 448
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 408
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 16
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 16
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 16
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 16
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 16
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 448
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 448
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 448
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 448
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 448
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 400
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 352
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 112
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 160
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 336
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 344
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 328
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 160
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 176
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_08
+  X 64
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_02
+  X 411
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 240
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 288
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 232
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE steel_04
+  X 96
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE steel_04
+  X 200
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE steel_04
+  X 346
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 55
+  Y 44
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 81
+  Y 18
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_14
+  X 107
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_13
+  X 423
+  Y 43
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_13
+  X 397
+  Y 17
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_13
+  X 371
+  Y -9
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

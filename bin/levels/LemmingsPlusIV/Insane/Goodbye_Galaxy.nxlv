@@ -1,0 +1,4693 @@
+TITLE Goodbye Galaxy
+THEME lpiv_space
+MUSIC lpiv_space3
+ID xE9462763
+LEMMINGS 100
+REQUIREMENT 100
+RELEASE_RATE 25
+WIDTH 960
+HEIGHT 480
+START_X 160
+START_Y 400
+AUTOSTEEL on
+BACKGROUND lpiv_space:universe
+
+$SKILLSET
+  WALKER 5
+  CLIMBER 4
+  BLOCKER 2
+  PLATFORMER 15
+  BUILDER 5
+  BASHER 6
+  MINER 4
+  DIGGER 6
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE window
+  X 49
+  Y 376
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE window
+  X 49
+  Y 216
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE window
+  X 49
+  Y 56
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 24
+  Y 144
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 104
+  Y 144
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 24
+  Y 304
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 104
+  Y 304
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 24
+  Y 464
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 104
+  Y 464
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 168
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 192
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 216
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 240
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 296
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 320
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 344
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 368
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 812
+  Y 464
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 836
+  Y 464
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exit
+  X 816
+  Y 406
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 560
+  Y 456
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 440
+  Y 64
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 480
+  Y 64
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 640
+  Y 64
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 680
+  Y 64
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 712
+  Y 320
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 408
+  Y 320
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE teleporter
+  X 461
+  Y 5
+  NO_OVERWRITE
+  PAIRING 1
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE receiver
+  X 660
+  Y 5
+  NO_OVERWRITE
+  PAIRING 1
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 776
+  Y 416
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 872
+  Y 416
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 892
+  Y 416
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 756
+  Y 416
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE receiver
+  X 824
+  Y 357
+  NO_OVERWRITE
+  PAIRING 2
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 752
+  Y 232
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 872
+  Y 232
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exhaust
+  X 812
+  Y 232
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE teleporter
+  X 812
+  Y 149
+  NO_OVERWRITE
+  PAIRING 2
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 416
+  Y 120
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 254
+  Y 267
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 535
+  Y 399
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 851
+  Y 63
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 121
+  Y 47
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 143
+  Y 442
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 11
+  Y 283
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 618
+  Y 249
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 934
+  Y 296
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 11
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 778
+  Y 447
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 535
+  Y 244
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 282
+  Y 350
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 316
+  Y 123
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 222
+  Y 186
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 43
+  Y 100
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 713
+  Y 105
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 530
+  Y 35
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 468
+  Y 465
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 822
+  Y 300
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 13
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 797
+  Y 318
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 17
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 926
+  Y 453
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 17
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 266
+  Y 49
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 17
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 155
+  Y 269
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 17
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 874
+  Y 116
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 17
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE star
+  X 367
+  Y 197
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 17
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE earth
+  X 948
+  Y 443
+  NO_OVERWRITE
+  ANGLE 292
+  SPEED 9
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 32
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 8
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 8
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 8
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 23
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 8
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 8
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 32
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 56
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 72
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 88
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 112
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 112
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 112
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 112
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 113
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 128
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 88
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_04
+  X 56
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_04
+  X 72
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 56
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 24
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 104
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 168
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 168
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 248
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 168
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 176
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 184
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 184
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 32
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 8
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 8
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 8
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 23
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 8
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 8
+  Y 272
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 32
+  Y 272
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 56
+  Y 272
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 72
+  Y 272
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 88
+  Y 272
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 112
+  Y 272
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 112
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 112
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 112
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 113
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 128
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 88
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_04
+  X 56
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_04
+  X 72
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 56
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 24
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 104
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 32
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 8
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 8
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 8
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 23
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 8
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 8
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 32
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 56
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 72
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 88
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 112
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 112
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 112
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 112
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 113
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 128
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 88
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_04
+  X 56
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_04
+  X 72
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 56
+  Y 344
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 24
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 104
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 168
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 200
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 168
+  Y 264
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 320
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 168
+  Y 336
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 192
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 168
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 168
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 176
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 168
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 176
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 320
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 192
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 208
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 344
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 232
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 288
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 360
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 344
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 328
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 208
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 224
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 304
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 248
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 288
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 264
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 304
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 264
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 184
+  Y 200
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 184
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 184
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 184
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 216
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 184
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 208
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 240
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 208
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 232
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 368
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 232
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 252
+  Y 408
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 252
+  Y 416
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 252
+  Y 424
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 296
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 344
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 296
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 320
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 320
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 320
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 344
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 296
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 344
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 284
+  Y 408
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 368
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 368
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 368
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 200
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 368
+  Y 264
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 320
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 368
+  Y 336
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 368
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 368
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 368
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 376
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 376
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 376
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 252
+  Y 432
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 284
+  Y 416
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 284
+  Y 424
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 168
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 284
+  Y 432
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 232
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 312
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 344
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 344
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 192
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 192
+  Y 264
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 192
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 192
+  Y 320
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 192
+  Y 336
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 344
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 344
+  Y 264
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 344
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 344
+  Y 320
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 344
+  Y 336
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 184
+  Y 264
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 184
+  Y 296
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 184
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 360
+  Y 264
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 360
+  Y 296
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 360
+  Y 328
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 232
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 296
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 256
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 280
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 280
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 256
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 252
+  Y 312
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 276
+  Y 312
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 272
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 272
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 272
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 232
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 312
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 232
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 296
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 256
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 280
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 280
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 256
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 252
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 276
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 272
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 272
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_03
+  X 272
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 344
+  Y 200
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 344
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 192
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 192
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 192
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 192
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 192
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 184
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 184
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 184
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 344
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 344
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 344
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 344
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 344
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 360
+  Y 104
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 360
+  Y 136
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 360
+  Y 168
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 236
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 236
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 236
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 236
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 236
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 236
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 236
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 236
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 300
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 300
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 300
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 300
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 300
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 300
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 300
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 300
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 164
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 164
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 180
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 180
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 196
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 196
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 212
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 212
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 228
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 228
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 244
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 244
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 260
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 260
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 276
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 276
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 292
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 292
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 308
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 308
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 252
+  Y 148
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 268
+  Y 148
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_10
+  X 888
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_10
+  X 872
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_10
+  X 856
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 832
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 808
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_11
+  X 856
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_11
+  X 872
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_09
+  X 792
+  Y 432
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_09
+  X 776
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 752
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_09
+  X 736
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_12
+  X 776
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_12
+  X 792
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 812
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 836
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 680
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 656
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 632
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 608
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 504
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 480
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 456
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 432
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_12
+  X 528
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_11
+  X 592
+  Y 464
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 592
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 680
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 520
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_02
+  X 432
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 592
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 624
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 576
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 544
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 544
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 568
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 592
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 616
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 640
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 664
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 520
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 496
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 472
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 448
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 424
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 656
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 512
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 480
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 448
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 456
+  Y 456
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 488
+  Y 456
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 616
+  Y 456
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE girder_01
+  X 648
+  Y 456
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 648
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 616
+  Y 448
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 456
+  Y 448
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 488
+  Y 448
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 560
+  Y 440
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 456
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 456
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 456
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 480
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 472
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 472
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 496
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 496
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 496
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 536
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 520
+  Y 392
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 520
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 536
+  Y 392
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 552
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 552
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 552
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 576
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 576
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 576
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 600
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 600
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 600
+  Y 408
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 624
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 624
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 624
+  Y 376
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 648
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 664
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 640
+  Y 392
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 656
+  Y 392
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 448
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 448
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 472
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 496
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 520
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 592
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 616
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 640
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 664
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 328
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 448
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 448
+  Y 416
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 464
+  Y 416
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 520
+  Y 416
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 520
+  Y 384
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 520
+  Y 352
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 512
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 512
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 512
+  Y 400
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 568
+  Y 400
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 568
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 568
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 616
+  Y 400
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 616
+  Y 352
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 616
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 592
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 592
+  Y 392
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 576
+  Y 352
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 592
+  Y 352
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 656
+  Y 352
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 640
+  Y 352
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 640
+  Y 416
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 656
+  Y 416
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 640
+  Y 360
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 680
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_01
+  X 648
+  Y 384
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 432
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 456
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 496
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 472
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 576
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 512
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 536
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 560
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 624
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 600
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 664
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 640
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 680
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 448
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 472
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 496
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 520
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 592
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 616
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 640
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 664
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 432
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 456
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 496
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 472
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 576
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 512
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 536
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 560
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 624
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 600
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_03
+  X 664
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 640
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 680
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 448
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 472
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 496
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 520
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 592
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 616
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 640
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 664
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 232
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 448
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 472
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 496
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 520
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 592
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 616
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 640
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 664
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 432
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 448
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 472
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 496
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 520
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 592
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 616
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 640
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 664
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 688
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 456
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 472
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 496
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 520
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 432
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 680
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 592
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 616
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 640
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 664
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 480
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 496
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 520
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 592
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 616
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 640
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 456
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 480
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 656
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 632
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 592
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 616
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 504
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 520
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 504
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 608
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 528
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 544
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 568
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 592
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 528
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 584
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 568
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 552
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_09
+  X 552
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_09
+  X 568
+  Y 48
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 432
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_teleporter
+  X 456
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 480
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 632
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_receiver
+  X 656
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 680
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 440
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 480
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 640
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 680
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 408
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 704
+  Y 280
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 712
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 408
+  Y 304
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 796
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 844
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 868
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 772
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 776
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 872
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_09
+  X 756
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_10
+  X 892
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 892
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 756
+  Y 400
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_receiver
+  X 820
+  Y 384
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 736
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 736
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 760
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 784
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 808
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 832
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_01
+  X 856
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 880
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 880
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 880
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 744
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 744
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 880
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 744
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 880
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 880
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 736
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 760
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 784
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 808
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 832
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 856
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 752
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 872
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE thruster_01
+  X 812
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 744
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 744
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_03
+  X 880
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_01
+  X 872
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_05
+  X 796
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_06
+  X 820
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 788
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_02
+  X 828
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 812
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_teleporter
+  X 808
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_10
+  X 848
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_09
+  X 776
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_04
+  X 832
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_04
+  X 792
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_teleport_01
+  X 470
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_teleport_01
+  X 670
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_teleport_02
+  X 822
+  Y 186
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE block_teleport_02
+  X 834
+  Y 394
+$END
+

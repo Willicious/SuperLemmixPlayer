@@ -1,0 +1,393 @@
+TITLE Tree Time
+THEME tree
+ID x9BD75743
+LEMMINGS 40
+REQUIREMENT 38
+RELEASE_RATE 25
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 2
+  SWIMMER 2
+  DISARMER 1
+  BOMBER 2
+  BLOCKER 1
+  PLATFORMER 1
+  BASHER 1
+  MINER 1
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 144
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X 228
+  Y 36
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE window
+  X 39
+  Y 49
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE trap
+  X 234
+  Y 22
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_02
+  X 5
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE dirt_01
+  X -10
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE dirt_01
+  X 38
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE dirt_01
+  X 73
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE dirt_01
+  X 207
+  Y 141
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE dirt_01
+  X 253
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_02
+  X 241
+  Y 106
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_03
+  X 261
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 274
+  Y 71
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 285
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_01
+  X 301
+  Y 62
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 272
+  Y 64
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 282
+  Y 67
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_03
+  X 225
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 140
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_03
+  X 261
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_05
+  X 261
+  Y 2
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_01
+  X 241
+  Y 13
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 235
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 213
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 248
+  Y 50
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_03
+  X 25
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 37
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 53
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 67
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_01
+  X 84
+  Y 73
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 83
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_01
+  X 18
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_01
+  X 6
+  Y 27
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_01
+  X 24
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_01
+  X 10
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_01
+  X 6
+  Y 61
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_01
+  X -3
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 231
+  Y 21
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 237
+  Y 23
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 238
+  Y 17
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 230
+  Y 17
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 102
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 98
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 104
+  Y 73
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE dirt_02
+  X 101
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE arrow_03
+  X 209
+  Y 2
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE nail
+  X 214
+  Y -5
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE web_02
+  X 38
+  Y 92
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE web_01
+  X 12
+  Y 73
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE web_02
+  X 273
+  Y 84
+  NO_OVERWRITE
+$END
+

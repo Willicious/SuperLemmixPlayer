@@ -1,0 +1,2324 @@
+TITLE Cycle Of Undeath
+THEME horror
+ID x90AAF4CD
+LEMMINGS 50
+REQUIREMENT 25
+RELEASE_RATE 1
+WIDTH 512
+HEIGHT 160
+START_X 320
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 10
+  CLIMBER 10
+  BUILDER 10
+  BASHER 10
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE window
+  X 339
+  Y 24
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE window
+  X 304
+  Y 0
+  DIRECTION left
+  ZOMBIE
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE window
+  X 269
+  Y 24
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE exit_01
+  X 23
+  Y 33
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE owa_right
+  X 54
+  Y 19
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE owa_right
+  X 54
+  Y 35
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE water
+  X -37
+  Y 115
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X -11
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 29
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 69
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 109
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 149
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 189
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 229
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 269
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 309
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 341
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 381
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 421
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 453
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X -3
+  Y 125
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 20
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 44
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 36
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 61
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 29
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 79
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 95
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 111
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 130
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 134
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 150
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 167
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 184
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 200
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 208
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 225
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 241
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 249
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 270
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 286
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 302
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 318
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 326
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 345
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 361
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 377
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 393
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 401
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 417
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 433
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 441
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 457
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 473
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 481
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 476
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 460
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 444
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 420
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 404
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 388
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 364
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 348
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 332
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 322
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 306
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 282
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 266
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 250
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 248
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 232
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 208
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 192
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 176
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 160
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 144
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 128
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 112
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 96
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 84
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 68
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 52
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 44
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 28
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 12
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X -4
+  Y 131
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_04
+  X 341
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 484
+  Y 103
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 484
+  Y 71
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 484
+  Y 39
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 484
+  Y 7
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 452
+  Y 71
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 452
+  Y 7
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 453
+  Y 20
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 469
+  Y 36
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 453
+  Y 84
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 469
+  Y 100
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 432
+  Y 71
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 416
+  Y 87
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 400
+  Y 103
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 392
+  Y 111
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 453
+  Y 52
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 437
+  Y 36
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 421
+  Y 20
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 392
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 400
+  Y 35
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 395
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 421
+  Y 25
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 437
+  Y 41
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 453
+  Y 57
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 421
+  Y 19
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 437
+  Y 35
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 453
+  Y 51
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 421
+  Y 13
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 437
+  Y 29
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 453
+  Y 45
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 455
+  Y 47
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 452
+  Y 71
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 392
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_04
+  X 320
+  Y 55
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 387
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 363
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 347
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 331
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 377
+  Y 53
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_04
+  X 272
+  Y 55
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 323
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 307
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 291
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 282
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 264
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 268
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_07
+  X 257
+  Y 54
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 255
+  Y 54
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 257
+  Y 55
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 246
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 238
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 229
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 220
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 220
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 212
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 212
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 220
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 204
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 196
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 204
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 208
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 197
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 189
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 256
+  Y 87
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 249
+  Y 79
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 243
+  Y 73
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 231
+  Y 51
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 209
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 197
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 187
+  Y 52
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 187
+  Y 54
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_04
+  X 113
+  Y 71
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 180
+  Y 83
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 176
+  Y 82
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 168
+  Y 74
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 172
+  Y 76
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 146
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 135
+  Y 71
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 125
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 115
+  Y 75
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 114
+  Y 73
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_05
+  X 129
+  Y 39
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 129
+  Y 36
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 130
+  Y 38
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 139
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 228
+  Y 52
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 155
+  Y 36
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 153
+  Y 38
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE gravestone
+  X 139
+  Y 6
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE gravestone
+  X 139
+  Y 22
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_r
+  X 134
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_i
+  X 139
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_p
+  X 144
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_03
+  X 176
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 198
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 182
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 177
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_02
+  X 174
+  Y 55
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 116
+  Y 52
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 115
+  Y 52
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 92
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 84
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 75
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 67
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 86
+  Y 110
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 70
+  Y 110
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 70
+  Y 94
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 62
+  Y 78
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 54
+  Y 94
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 54
+  Y 110
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 54
+  Y 86
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 54
+  Y 70
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 60
+  Y 59
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 52
+  Y 59
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 44
+  Y 59
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 36
+  Y 59
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 28
+  Y 59
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 44
+  Y 75
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 36
+  Y 91
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 44
+  Y 99
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 36
+  Y 107
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 44
+  Y 115
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 20
+  Y 115
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 26
+  Y 101
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 28
+  Y 92
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 30
+  Y 76
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 20
+  Y 59
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 12
+  Y 59
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 22
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 103
+  Y 99
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 92
+  Y 87
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 82
+  Y 75
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 75
+  Y 66
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 72
+  Y 59
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 67
+  Y 57
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 81
+  Y 70
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 92
+  Y 84
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 84
+  Y 76
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 98
+  Y 92
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 91
+  Y 88
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 79
+  Y 75
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 71
+  Y 67
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 63
+  Y 58
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 62
+  Y 55
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 42
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 34
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 20
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 35
+  Y 56
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 19
+  Y 56
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 10
+  Y 56
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 12
+  Y 58
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 10
+  Y 54
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 9
+  Y 59
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_02
+  X 110
+  Y 109
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE gravestone
+  X 58
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE gravestone
+  X 58
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE gravestone
+  X 58
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 222
+  Y 53
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_01
+  X 222
+  Y 58
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE steel_03
+  X -6
+  Y 65
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 67
+  Y 57
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 68
+  Y 60
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 70
+  Y 63
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 69
+  Y 63
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_03
+  X 66
+  Y 58
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_o
+  X 0
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_w
+  X 11
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 23
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_r
+  X 31
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_i
+  X 38
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_g
+  X 53
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 63
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_k
+  X 81
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_u
+  X 90
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_r
+  X 99
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_u
+  X 108
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_t
+  X 124
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_o
+  X 132
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_d
+  X 150
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_o
+  X 159
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_n
+  X 166
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_n
+  X 175
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 186
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_r
+  X 203
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_e
+  X 211
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_m
+  X 220
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_i
+  X 227
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_n
+  X 233
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_g
+  X 243
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_u
+  X 252
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_m
+  X 268
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_o
+  X 277
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_h
+  X 290
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_i
+  X 297
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_o
+  X 312
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_t
+  X 304
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_t
+  X 321
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_s
+  X 330
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_u
+  X 340
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_z
+  X 355
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_u
+  X 364
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_s
+  X 382
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_t
+  X 373
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_u
+  X 392
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_t
+  X 411
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_i
+  X 404
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 420
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_u
+  X 437
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_k
+  X 428
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_s
+  X 452
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_i
+  X 467
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_h
+  X 460
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_n
+  X 473
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_u
+  X 484
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE clump_02
+  X 477
+  Y 131
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 497
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE grass_01
+  X 500
+  Y 128
+$END
+

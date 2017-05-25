@@ -1,0 +1,286 @@
+TITLE Test Chamber XLII
+THEME fire
+ID xABB5D49F
+LEMMINGS 3
+REQUIREMENT 3
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  STACKER 5
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 22
+  Y 148
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE window
+  X 194
+  Y 19
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower_flip
+  X 230
+  Y 65
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 230
+  Y 148
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE exit
+  X 59
+  Y 100
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower
+  X 92
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 6
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 6
+  Y 36
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 6
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 6
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 6
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X -61
+  Y 142
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE platform
+  X 82
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 72
+  Y 143
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 160
+  Y 143
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 128
+  Y 143
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 280
+  Y 143
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 186
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE platform
+  X 50
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE platform
+  X 130
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE platform
+  X 178
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE platform
+  X 210
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE platform
+  X 162
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE platform
+  X 98
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE platform
+  X 130
+  Y 123
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 286
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 277
+  Y 36
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 264
+  Y -18
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 280
+  Y -18
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 228
+  Y -52
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 130
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 66
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X -30
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 26
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 71
+  Y 6
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_02
+  X 67
+  Y 30
+$END
+

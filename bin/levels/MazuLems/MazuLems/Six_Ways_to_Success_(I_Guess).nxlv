@@ -1,0 +1,416 @@
+TITLE Six Ways to Success (I Guess)
+AUTHOR Martin Zurlinden
+THEME brick
+ID x33FB5B6C
+LEMMINGS 40
+REQUIREMENT 40
+TIME_LIMIT 180
+RELEASE_RATE 1
+WIDTH 450
+HEIGHT 160
+START_X 202
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  BUILDER 11
+  BASHER 1
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X 58
+  Y 11
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE window
+  X 218
+  Y 25
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 167
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 199
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 231
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 263
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 68
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 192
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 224
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 240
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 331
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 363
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE barrel_02
+  X 282
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE barrel_02
+  X 192
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE barrel_02
+  X 382
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 52
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 176
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 194
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 194
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE blocks_01
+  X 159
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE blocks_01
+  X 151
+  Y 61
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 146
+  Y 6
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 128
+  Y -15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 123
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 146
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 128
+  Y 9
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_01
+  X 115
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 185
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 185
+  Y 8
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_02
+  X 138
+  Y 9
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_02
+  X 181
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_02
+  X 110
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 123
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 146
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 185
+  Y -8
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 345
+  Y -6
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 355
+  Y -11
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 355
+  Y 13
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 360
+  Y -5
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 355
+  Y 29
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 345
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 172
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 180
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 192
+  Y -25
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_clip
+  X 193
+  Y 5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_clip
+  X 177
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_clip
+  X 179
+  Y 33
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_clip
+  X 175
+  Y 33
+  ONE_WAY
+$END
+

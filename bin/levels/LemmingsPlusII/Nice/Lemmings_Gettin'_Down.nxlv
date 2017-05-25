@@ -1,0 +1,1538 @@
+TITLE Lemmings Gettin' Down
+THEME desert
+ID xF58885EF
+LEMMINGS 100
+REQUIREMENT 90
+RELEASE_RATE 80
+WIDTH 416
+HEIGHT 160
+START_X 168
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 10
+  BOMBER 10
+  BLOCKER 10
+  BUILDER 10
+  BASHER 10
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE window
+  X 96
+  Y 9
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X 24
+  Y 120
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 8
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 270
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 243
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 208
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 172
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 140
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 107
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 76
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 40
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 27
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 63
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 131
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 187
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 253
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_06
+  X 82
+  Y 55
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_06
+  X 96
+  Y 55
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_06
+  X 110
+  Y 55
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_06
+  X 124
+  Y 55
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_06
+  X 138
+  Y 55
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 112
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 78
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 96
+  Y 41
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 56
+  Y 41
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 40
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_06
+  X 68
+  Y -36
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_06
+  X 54
+  Y -40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_06
+  X 40
+  Y -43
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 172
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 182
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 192
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 204
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 218
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 233
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 238
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 250
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 257
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 170
+  Y 39
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 186
+  Y 50
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 210
+  Y 64
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 233
+  Y 76
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 257
+  Y 85
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 25
+  Y 122
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 307
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 323
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 339
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 335
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 350
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 363
+  Y 147
+  ONE_WAY
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+
+$AREA
+  X -640
+  Y 0
+  WIDTH 7
+  HEIGHT 7
+$END
+

@@ -1,0 +1,1289 @@
+TITLE Be Careful...
+THEME marble
+ID x6363015B
+LEMMINGS 80
+REQUIREMENT 16
+RELEASE_RATE 20
+WIDTH 523
+HEIGHT 160
+START_X 260
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 30
+  FLOATER 30
+  BOMBER 30
+  BLOCKER 30
+  BUILDER 30
+  BASHER 30
+  MINER 30
+  DIGGER 30
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE window
+  X 204
+  Y 29
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X 228
+  Y 94
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 12
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 76
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 140
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 204
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 268
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 332
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 396
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 460
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 286
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 254
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 206
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 206
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 230
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 369
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_01
+  X 348
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 140
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_07
+  X 140
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 75
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 75
+  Y 41
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_07
+  X 75
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 436
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 436
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_01
+  X 415
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_01
+  X 486
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_07
+  X 0
+  Y 123
+  ONE_WAY
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -500
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+

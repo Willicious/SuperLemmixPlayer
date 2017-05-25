@@ -1,0 +1,310 @@
+TITLE Experience Required
+THEME marble
+ID x8C6E2FE7
+LEMMINGS 10
+REQUIREMENT 10
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BUILDER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE window
+  X 32
+  Y 20
+  DIRECTION right
+  FLOATER
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X 240
+  Y 118
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 0
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 240
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 80
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 224
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 96
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 96
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 128
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 128
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 160
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 160
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 192
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 192
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 208
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 176
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 144
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 112
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 80
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 80
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 112
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 144
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 176
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 208
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 288
+  Y 86
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 16
+  Y 86
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 16
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 16
+  Y -10
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 288
+  Y -10
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 288
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 240
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 160
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 80
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 0
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_12
+  X 246
+  Y 142
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_12
+  X 32
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE bar_12
+  X 32
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE steps_02
+  X 280
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE steps_02
+  X 8
+  Y 44
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_01
+  X 196
+  Y 35
+$END
+
+$LEMMING
+  X 281
+  Y 98
+  DIRECTION left
+  CLIMBER
+$END
+

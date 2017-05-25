@@ -1,0 +1,1739 @@
+TITLE Where Lemmings Dare
+THEME rock
+ID xBACB8A48
+LEMMINGS 80
+REQUIREMENT 78
+TIME_LIMIT 120
+RELEASE_RATE 20
+WIDTH 380
+HEIGHT 160
+START_X 204
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  FLOATER 2
+  BOMBER 2
+  BLOCKER 2
+  BUILDER 7
+  BASHER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X 60
+  Y 123
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE window
+  X 236
+  Y 0
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE lizard_trap_01
+  X 252
+  Y 22
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE lizard_trap_02
+  X 109
+  Y 46
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE weed_trap
+  X 25
+  Y 73
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE water
+  X 172
+  Y 136
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE weed_trap
+  X 76
+  Y 138
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE weed_trap
+  X 92
+  Y 138
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE weed_trap
+  X 108
+  Y 138
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE weed_trap
+  X 124
+  Y 138
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE weed_trap
+  X 44
+  Y 138
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE weed_trap
+  X 60
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 250
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 226
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 202
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 202
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 202
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 250
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 274
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 298
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 308
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 308
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 308
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 308
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 298
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 226
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 202
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 63
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 78
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 93
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 108
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 122
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 138
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 154
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 170
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 185
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 298
+  Y 152
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_04
+  X 308
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 201
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 217
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 233
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 249
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 265
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 292
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 278
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 48
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 32
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 18
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 2
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X -8
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 144
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 120
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 106
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 106
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 106
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_04
+  X 106
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 144
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 120
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_04
+  X 106
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_08
+  X 40
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_10
+  X 145
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_10
+  X 122
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_06
+  X 27
+  Y 90
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 37
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 34
+  Y 87
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 38
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 30
+  Y 20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 41
+  Y 31
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 52
+  Y 42
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 62
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 71
+  Y 61
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 80
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 87
+  Y 78
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_06
+  X 59
+  Y 78
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_07
+  X 51
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 32
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 42
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 152
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 118
+  Y 119
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 88
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_12
+  X 104
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_13
+  X 201
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 140
+  Y 82
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 123
+  Y 82
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 107
+  Y 82
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 105
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE platform_02
+  X 106
+  Y 81
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_02
+  X 191
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_01
+  X 216
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_03
+  X 191
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_05
+  X 192
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_03
+  X 220
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 190
+  Y 119
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_04
+  X 221
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_04
+  X 221
+  Y 99
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_01
+  X 169
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_01
+  X 195
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_01
+  X 212
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_09
+  X 151
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_01
+  X 152
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 222
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 233
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_09
+  X 216
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 202
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_08
+  X 143
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 171
+  Y 149
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_03
+  X 322
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 346
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_02
+  X 346
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_04
+  X 346
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_06
+  X 220
+  Y 107
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_06
+  X 167
+  Y 138
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_11
+  X 146
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_14
+  X 235
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_09
+  X 322
+  Y 54
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_08
+  X 289
+  Y 76
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_07
+  X 98
+  Y 20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_06
+  X 96
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_06
+  X 90
+  Y 11
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_06
+  X 77
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_07
+  X 77
+  Y 7
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_09
+  X 89
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_06
+  X 194
+  Y 6
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_10
+  X 181
+  Y -5
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_09
+  X 118
+  Y -12
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_10
+  X 111
+  Y -3
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_10
+  X 125
+  Y -6
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_10
+  X 333
+  Y -9
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_06
+  X 209
+  Y -5
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_06
+  X 314
+  Y 58
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_05
+  X 308
+  Y 91
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_07
+  X 351
+  Y 3
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_12
+  X 324
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_13
+  X 326
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_12
+  X 322
+  Y 110
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_13
+  X 318
+  Y 133
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_13
+  X 356
+  Y 35
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_12
+  X 355
+  Y 7
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_13
+  X 221
+  Y -2
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_13
+  X 218
+  Y 7
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_12
+  X 213
+  Y 19
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_09
+  X 293
+  Y -13
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_10
+  X 106
+  Y 15
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_08
+  X 149
+  Y 4
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_08
+  X 299
+  Y -2
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE steel_04
+  X 154
+  Y 104
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 129
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_08
+  X 130
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_09
+  X 31
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_05
+  X 119
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_05
+  X 59
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_05
+  X 73
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_05
+  X 87
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_01
+  X 95
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_09
+  X -3
+  Y -13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_09
+  X 255
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_09
+  X 263
+  Y 114
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_09
+  X 271
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_04
+  X 285
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_05
+  X 297
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_09
+  X 210
+  Y 67
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_09
+  X 276
+  Y 127
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_09
+  X 283
+  Y 134
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_07
+  X 281
+  Y 113
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_06
+  X 286
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 297
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 297
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 77
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_09
+  X 186
+  Y 18
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_13
+  X 120
+  Y 29
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_14
+  X 235
+  Y 142
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_09
+  X 215
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 251
+  Y 107
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE tree_14
+  X 230
+  Y 139
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 117
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 133
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 100
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_05
+  X 104
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_08
+  X 118
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 61
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 77
+  Y 82
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 81
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 61
+  Y 66
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_08
+  X 71
+  Y 76
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_06
+  X 41
+  Y 65
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 55
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 52
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_05
+  X 54
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_07
+  X 34
+  Y 73
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 37
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 43
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_10
+  X 46
+  Y 82
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_10
+  X 51
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 53
+  Y 91
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_11
+  X 41
+  Y 152
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_13
+  X 202
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_12
+  X 258
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_12
+  X 1
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_13
+  X 50
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_13
+  X 149
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_13
+  X 132
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_12
+  X 97
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE grass_05
+  X 167
+  Y 148
+  ONE_WAY
+$END
+

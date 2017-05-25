@@ -1,0 +1,21 @@
+
+$RANK
+  NAME Timid
+  FOLDER Timid
+$END
+
+$RANK
+  NAME Dodgy
+  FOLDER Dodgy
+$END
+
+$RANK
+  NAME Rough
+  FOLDER Rough
+$END
+
+$RANK
+  NAME Fierce
+  FOLDER Fierce
+$END
+

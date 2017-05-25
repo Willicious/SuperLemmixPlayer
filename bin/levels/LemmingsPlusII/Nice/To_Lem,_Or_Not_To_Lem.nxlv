@@ -1,0 +1,2190 @@
+TITLE To Lem, Or Not To Lem
+THEME psychedelic
+ID x8EFBFBEC
+LEMMINGS 100
+REQUIREMENT 90
+RELEASE_RATE 20
+WIDTH 1579
+HEIGHT 160
+START_X 792
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 30
+  FLOATER 30
+  BOMBER 30
+  BLOCKER 30
+  BUILDER 30
+  BASHER 30
+  MINER 30
+  DIGGER 30
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE window
+  X 776
+  Y 16
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owa_left
+  X 1056
+  Y 48
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owa_left
+  X 1088
+  Y 48
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owa_left
+  X 1120
+  Y 48
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owa_left
+  X 1072
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owa_left
+  X 1040
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owa_left
+  X 1104
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X 1536
+  Y 68
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 880
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 928
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 976
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1024
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1072
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1120
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1168
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1216
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1264
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1312
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1360
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1408
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1456
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1504
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 1552
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 336
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 288
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 240
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 384
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 160
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X 56
+  Y 100
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 680
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 704
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 704
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 752
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_02
+  X 752
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_02
+  X 769
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 752
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 776
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 776
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 824
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_02
+  X 824
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_02
+  X 841
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 824
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 848
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 848
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 896
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 752
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 784
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 816
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 752
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 784
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 816
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 848
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 880
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 880
+  Y 146
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE stairs_03
+  X 950
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE stairs_03
+  X 966
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1025
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1025
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1042
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1049
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1049
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1097
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1097
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1145
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1145
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1162
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1085
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1109
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1061
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1061
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1085
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1109
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 949
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 965
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 985
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 1022
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 965
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 974
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 958
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1137
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1169
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1169
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1201
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1233
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1225
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1265
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1265
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1297
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1329
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1297
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1329
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1201
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1257
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1233
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1257
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 1265
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 1153
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 1161
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_04
+  X 1161
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1353
+  Y 8
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 1353
+  Y 87
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1195
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1195
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1212
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1202
+  Y 143
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1250
+  Y 143
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1298
+  Y 143
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1346
+  Y 143
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1392
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1392
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1409
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1362
+  Y 143
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1305
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 1386
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1402
+  Y 30
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1402
+  Y 39
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 1450
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1450
+  Y 30
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1459
+  Y 30
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 1450
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1466
+  Y 71
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1466
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 1514
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1416
+  Y 99
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1464
+  Y 99
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1416
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1464
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1512
+  Y 99
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 1512
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 1555
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 720
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 696
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 688
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 680
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 648
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 616
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 616
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 616
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 616
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 584
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 608
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 624
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_02
+  X 600
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_02
+  X 648
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 656
+  Y 42
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 600
+  Y 42
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 680
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 648
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 616
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 584
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 576
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 568
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 544
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 512
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 480
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 448
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 416
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 496
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 496
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 496
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 496
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 496
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 496
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE steel_01
+  X 472
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE steel_01
+  X 472
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE steel_01
+  X 472
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 472
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 448
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 448
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 448
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 472
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 448
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 448
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE steel_01
+  X 472
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 557
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 533
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 541
+  Y 33
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 557
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 384
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 384
+  Y 146
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 233
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 265
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 265
+  Y 139
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 201
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 201
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 201
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 201
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 169
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 137
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 137
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 137
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 137
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 105
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 73
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 41
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 17
+  Y 107
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 113
+  Y 11
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_01
+  X 225
+  Y 11
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 169
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 129
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_04
+  X 193
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_04
+  X 233
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 403
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 355
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 307
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 355
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 307
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 264
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_05
+  X 264
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 257
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 330
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X -13
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X 11
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X 36
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X 62
+  Y 5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X 74
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X 45
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X 22
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X -1
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X -11
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X 4
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_07
+  X -12
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 0
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 0
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 0
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 0
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 0
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 16
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 80
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 9
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 112
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 172
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 232
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 292
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 352
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 330
+  Y -11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 347
+  Y -11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 412
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 448
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE steel_01
+  X 472
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 472
+  Y 4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 532
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 592
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 652
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 712
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 772
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 832
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 892
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 949
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 956
+  Y 4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 1016
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1022
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_06
+  X 1031
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE wires_04
+  X 1076
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_04
+  X 1129
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 1129
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE colorblocks_03
+  X 1121
+  Y 0
+  ONE_WAY
+$END
+

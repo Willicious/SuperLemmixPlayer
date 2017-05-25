@@ -1,0 +1,1378 @@
+TITLE Step Up!
+THEME brick
+ID xC9B4A007
+LEMMINGS 80
+REQUIREMENT 80
+RELEASE_RATE 99
+WIDTH 448
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  BUILDER 2
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X 371
+  Y 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE window
+  X 27
+  Y 14
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X -32768
+  Y -32781
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 192
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 176
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 240
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 240
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 144
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 288
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 128
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 192
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 224
+  Y 63
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 193
+  Y 88
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 224
+  Y 88
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 96
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 288
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 145
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 272
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 337
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 272
+  Y 28
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 336
+  Y 28
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 144
+  Y 28
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 80
+  Y 27
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 80
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 128
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 288
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 176
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 240
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 352
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 384
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 64
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_03
+  X 32
+  Y 64
+  ONE_WAY
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -584
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+

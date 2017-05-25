@@ -1,0 +1,1237 @@
+TITLE Fun With Lasers
+THEME psychedelic
+ID xBAC2021F
+LEMMINGS 100
+REQUIREMENT 25
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BUILDER 30
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owf_left
+  X 144
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE window
+  X 88
+  Y 20
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X 160
+  Y 32
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owf_right
+  X 96
+  Y 68
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owf_left
+  X 192
+  Y 100
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owf_right
+  X 168
+  Y 100
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE owf_left
+  X 296
+  Y 37
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 71
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 95
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 119
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 143
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 139
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 123
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 163
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 167
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 191
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 215
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 112
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 136
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 88
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 64
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 40
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 59
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 136
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 16
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 16
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_02
+  X 24
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_02
+  X 24
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_03
+  X 24
+  Y 25
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_03
+  X 35
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_03
+  X 46
+  Y 3
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_03
+  X 57
+  Y -8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_02
+  X 16
+  Y 100
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_02
+  X 33
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 95
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 119
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 143
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 167
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 191
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE steel_02
+  X 120
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE steel_02
+  X 120
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_02
+  X 83
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 160
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE bar_01
+  X 184
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 208
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION psychedelic
+  PIECE block_01
+  X 208
+  Y 150
+  ONE_WAY
+$END
+

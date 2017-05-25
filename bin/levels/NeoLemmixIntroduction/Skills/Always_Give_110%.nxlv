@@ -1,0 +1,869 @@
+TITLE Always Give 110%
+THEME bubble
+ID x6D16F3B5
+LEMMINGS 20
+REQUIREMENT 22
+RELEASE_RATE 20
+WIDTH 680
+HEIGHT 160
+START_X 234
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 20
+  BLOCKER 5
+  CLONER 5
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE water
+  X 76
+  Y 129
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE water
+  X 140
+  Y 129
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE water
+  X 12
+  Y 129
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE window
+  X 127
+  Y 20
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X 438
+  Y -3
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE spinning_arrow
+  X 454
+  Y -3
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE water
+  X 584
+  Y 129
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE water
+  X 520
+  Y 129
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 174
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 198
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 222
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 244
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 268
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 291
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 313
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 335
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 361
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 384
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 408
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 428
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 448
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 469
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 485
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_02
+  X 493
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_02
+  X 501
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_02
+  X 166
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_02
+  X 158
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 222
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 171
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_03
+  X 203
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 139
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_02
+  X 107
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 105
+  Y 98
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 105
+  Y 130
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_01
+  X 19
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_01
+  X -9
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_01
+  X -5
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_01
+  X 10
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_01
+  X 3
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 20
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 12
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X -3
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X -11
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 412
+  Y 101
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 412
+  Y 69
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_02
+  X 414
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 446
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_04
+  X 478
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 497
+  Y -16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 431
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 449
+  Y 107
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 431
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_02
+  X 433
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_02
+  X 451
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 465
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 483
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_04
+  X 497
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_04
+  X 515
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 516
+  Y 3
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 516
+  Y -29
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 534
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 534
+  Y -10
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 623
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 615
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 611
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 643
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 638
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 631
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 657
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 662
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 664
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_blue_02
+  X 648
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_04
+  X 668
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 636
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_01
+  X 604
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 602
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 602
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 687
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 687
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 6
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 23
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 23
+  Y 38
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 6
+  Y 38
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 23
+  Y 6
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 6
+  Y 6
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 23
+  Y -24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 6
+  Y -24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_01
+  X 260
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_01
+  X 292
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_01
+  X 324
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_01
+  X 292
+  Y 32
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 356
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 324
+  Y 32
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 340
+  Y 16
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 364
+  Y -8
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_03
+  X 228
+  Y 0
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_03
+  X 220
+  Y -8
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_03
+  X 244
+  Y 16
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_03
+  X 260
+  Y 32
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_03
+  X 276
+  Y 48
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 308
+  Y 48
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+

@@ -48,7 +48,7 @@ $OBJECT
   PIECE pickup
   X 434
   Y 130
-  STONER
+  SKILL STONER
 $END
 
 $OBJECT

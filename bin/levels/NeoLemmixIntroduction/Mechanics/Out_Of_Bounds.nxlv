@@ -1,0 +1,571 @@
+TITLE Out Of Bounds
+THEME pillar
+ID x54C9FC00
+LEMMINGS 40
+REQUIREMENT 4
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BLOCKER 10
+  BUILDER 20
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE window
+  X 63
+  Y 84
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X 44
+  Y 5
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 308
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 296
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 284
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 272
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 260
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 248
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 236
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 224
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 212
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 200
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 188
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 176
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 164
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 152
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 140
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 128
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 116
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 104
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 92
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 80
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 68
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 56
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 48
+  Y 116
+  FLIP_VERTICAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 49
+  Y 124
+  FLIP_VERTICAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 96
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 216
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 106
+  Y 157
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 284
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 226
+  Y 157
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 291
+  Y 57
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 287
+  Y 68
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 272
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 260
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 248
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 236
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 224
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 212
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 200
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 188
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 176
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 164
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 152
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 140
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 128
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 116
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 104
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 92
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 80
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 68
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 56
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 48
+  Y 60
+  FLIP_VERTICAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 49
+  Y 68
+  FLIP_VERTICAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 228
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 235
+  Y 25
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 231
+  Y 36
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 216
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 204
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 192
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 180
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 168
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 156
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 144
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 132
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 120
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 108
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 96
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 84
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 72
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 60
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 48
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 36
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 24
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 12
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_thin_03
+  X 0
+  Y 30
+$END
+

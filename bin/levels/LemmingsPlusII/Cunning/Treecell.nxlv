@@ -1,0 +1,1541 @@
+TITLE Treecell
+THEME tree
+ID xFF83B105
+LEMMINGS 100
+REQUIREMENT 90
+RELEASE_RATE 60
+WIDTH 1048
+HEIGHT 160
+START_X 300
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BLOCKER 1
+  BUILDER 3
+  BASHER 2
+  MINER 2
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE window
+  X 268
+  Y 57
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X 892
+  Y 113
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 238
+  Y -29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 290
+  Y -21
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 328
+  Y 14
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 328
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 315
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 242
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 173
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 166
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 210
+  Y -19
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 178
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_02
+  X 169
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_02
+  X 172
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_02
+  X 174
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_02
+  X 245
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_02
+  X 384
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_02
+  X 360
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_02
+  X 382
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 309
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 403
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE nest
+  X 435
+  Y 54
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_02
+  X 307
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 303
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 391
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 616
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 618
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 613
+  Y -57
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 643
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 684
+  Y 119
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 746
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 782
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 749
+  Y 5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 694
+  Y -18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 699
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 762
+  Y -16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 781
+  Y 26
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 830
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 862
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 859
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 825
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 908
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 929
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 913
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 887
+  Y -38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_01
+  X 979
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 870
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_03
+  X 868
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_03
+  X 892
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_03
+  X 916
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_03
+  X 940
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_01
+  X 901
+  Y 110
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_04
+  X 2
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_04
+  X 2
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE trunk_04
+  X 2
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 488
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 504
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 519
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_02
+  X 533
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 548
+  Y 33
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 550
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 556
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 554
+  Y 42
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_01
+  X 598
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_01
+  X 585
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE branch_01
+  X 571
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 562
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 566
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 570
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_05
+  X 479
+  Y 70
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_02
+  X 695
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_02
+  X 806
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_02
+  X 695
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_03
+  X 695
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_03
+  X 719
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_02
+  X 743
+  Y 57
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_03
+  X 844
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE steel_03
+  X 820
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 777
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION tree
+  PIECE leaves_04
+  X 614
+  Y 58
+  ONE_WAY
+$END
+

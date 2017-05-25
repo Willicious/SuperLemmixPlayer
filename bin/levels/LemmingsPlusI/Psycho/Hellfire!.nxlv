@@ -1,0 +1,1178 @@
+TITLE Hellfire!
+THEME fire
+ID xECA68510
+LEMMINGS 80
+REQUIREMENT 76
+RELEASE_RATE 1
+WIDTH 840
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 2
+  FLOATER 2
+  BOMBER 2
+  BLOCKER 2
+  BUILDER 2
+  BASHER 2
+  MINER 2
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower_flip
+  X -21
+  Y 140
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower
+  X 161
+  Y 140
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE window
+  X 88
+  Y 35
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 144
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE water
+  X 0
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower_flip
+  X -21
+  Y 2
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower_flip
+  X -21
+  Y 5
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE exit
+  X 312
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower
+  X 573
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower
+  X 573
+  Y 3
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower_flip
+  X 735
+  Y 135
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower
+  X 162
+  Y 77
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE flamethrower
+  X 162
+  Y 80
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 61
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 86
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 111
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 136
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 61
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 61
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 61
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 61
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 74
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 99
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 124
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 149
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 162
+  Y -1
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 137
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 137
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 141
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 148
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 168
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 172
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_05
+  X 177
+  Y -9
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_05
+  X 187
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_05
+  X 208
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_05
+  X 217
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_05
+  X 224
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_04
+  X 244
+  Y 119
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_04
+  X 245
+  Y 90
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_04
+  X 244
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_04
+  X 244
+  Y 38
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_04
+  X 242
+  Y 14
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_04
+  X 241
+  Y -16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_04
+  X 209
+  Y 22
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_04
+  X 213
+  Y -17
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_02
+  X 137
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_02
+  X 137
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_02
+  X 137
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_02
+  X 136
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_03
+  X 112
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_03
+  X 86
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE steel_03
+  X 99
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 294
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 294
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 294
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 294
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 294
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 294
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 294
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_01
+  X 161
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 310
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 335
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 360
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 310
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 335
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 360
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 385
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 410
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 385
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 410
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_06
+  X 414
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_06
+  X 417
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_06
+  X 420
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_06
+  X 499
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_06
+  X 495
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_06
+  X 491
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 573
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 573
+  Y 36
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 573
+  Y 72
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 573
+  Y 108
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 573
+  Y 144
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 562
+  Y 138
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 623
+  Y 140
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 585
+  Y 126
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 591
+  Y 118
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 596
+  Y 109
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 602
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 633
+  Y 132
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 646
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_03
+  X 657
+  Y 113
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 688
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 648
+  Y 104
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 672
+  Y 108
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 691
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 707
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 725
+  Y 137
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 749
+  Y 147
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 770
+  Y 153
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 626
+  Y 103
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 609
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_06
+  X 597
+  Y 103
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE spike
+  X 612
+  Y 67
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE spike
+  X 648
+  Y 75
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE spike
+  X 684
+  Y 87
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE spike
+  X 668
+  Y 67
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE spike
+  X 631
+  Y 61
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_04
+  X 382
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_04
+  X 382
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_01
+  X 815
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 815
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 817
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 819
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 821
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 823
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 825
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 827
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 829
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 831
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 833
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 835
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 837
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_01
+  X 839
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_01
+  X 815
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 840
+  Y 131
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 819
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 819
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 819
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 819
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 819
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE pillar
+  X 819
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_r
+  X 563
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bricks_03
+  X 573
+  Y 82
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_04
+  X 59
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_04
+  X 59
+  Y 39
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_04
+  X 59
+  Y 78
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_04
+  X 59
+  Y 117
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_04
+  X 59
+  Y 126
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

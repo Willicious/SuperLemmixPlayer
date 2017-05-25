@@ -1,0 +1,26 @@
+
+$RANK
+  NAME Mild
+  FOLDER Mild
+$END
+
+$RANK
+  NAME Wimpy
+  FOLDER Wimpy
+$END
+
+$RANK
+  NAME Medi
+  FOLDER Medi
+$END
+
+$RANK
+  NAME Danger
+  FOLDER Danger
+$END
+
+$RANK
+  NAME Psycho
+  FOLDER Psycho
+$END
+

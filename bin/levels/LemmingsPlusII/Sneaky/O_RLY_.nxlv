@@ -1,0 +1,696 @@
+TITLE O RLY?
+THEME desert
+ID x8958E65F
+LEMMINGS 60
+REQUIREMENT 57
+RELEASE_RATE 10
+WIDTH 456
+HEIGHT 160
+START_X 248
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BLOCKER 2
+  BUILDER 3
+  BASHER 1
+  MINER 1
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 152
+  Y 121
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 208
+  Y 121
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE exit
+  X 360
+  Y 96
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE window
+  X 96
+  Y 10
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE owa_right
+  X 276
+  Y 100
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE owa_right
+  X 276
+  Y 132
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE owa_right
+  X 308
+  Y 100
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE owa_right
+  X 308
+  Y 132
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE owa_right
+  X 230
+  Y 94
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE owa_right
+  X 214
+  Y 94
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION desert
+  PIECE owa_right
+  X 316
+  Y 140
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_04
+  X 209
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 273
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 260
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 284
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 294
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 273
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 250
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 239
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 262
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 283
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_08
+  X 306
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_03
+  X 190
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 219
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 231
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 199
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 181
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 157
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 131
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 110
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 83
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 65
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_09
+  X 110
+  Y 93
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_09
+  X 90
+  Y 97
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_09
+  X 123
+  Y 95
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_09
+  X 118
+  Y 54
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_09
+  X 101
+  Y 49
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_09
+  X 92
+  Y 50
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 56
+  Y 149
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 102
+  Y 46
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_05
+  X 130
+  Y 47
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_05
+  X 150
+  Y 47
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_03
+  X 172
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_02
+  X 152
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_03
+  X 166
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_03
+  X 190
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_03
+  X 214
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_03
+  X 238
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_02
+  X 262
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_04
+  X 152
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_04
+  X 262
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_02
+  X 309
+  Y 154
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_03
+  X 369
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_03
+  X 378
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 360
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 353
+  Y 117
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 377
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 391
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 386
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 404
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 409
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 420
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_01
+  X 366
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_02
+  X 324
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_04
+  X 350
+  Y 143
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_05
+  X 55
+  Y 158
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_05
+  X 25
+  Y 145
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_09
+  X 7
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_09
+  X -12
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE cactus_21
+  X 3
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE cactus_20
+  X 28
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_03
+  X 143
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE sand_03
+  X 138
+  Y 58
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE cactus_01
+  X 442
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE cactus_01
+  X 404
+  Y 84
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE cactus_02
+  X 430
+  Y 123
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_03
+  X 140
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_04
+  X 154
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_02
+  X 144
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION desert
+  PIECE steel_02
+  X 147
+  Y 88
+  ONE_WAY
+$END
+

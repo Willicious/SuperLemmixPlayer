@@ -1,0 +1,226 @@
+TITLE flag test map
+THEME dirt
+ID x99EEB4CC
+LEMMINGS 100
+REQUIREMENT 1
+TIME_LIMIT 300
+RELEASE_RATE 10
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 8
+  FLOATER 8
+  BOMBER 8
+  BLOCKER 8
+  BUILDER 8
+  BASHER 8
+  MINER 8
+  DIGGER 8
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X 176
+  Y 92
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE window
+  X 48
+  Y 4
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_green
+  X 176
+  Y 28
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_green
+  X 192
+  Y 28
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_green
+  X 208
+  Y 28
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_blue
+  X 224
+  Y 44
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_blue
+  X 240
+  Y 44
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_blue
+  X 256
+  Y 44
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X -11
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 6
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 17
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 27
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 38
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 50
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 69
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 73
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 92
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 137
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 113
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 163
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 191
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 187
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 218
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 248
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 252
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE bones_01
+  X 207
+  Y 108
+  ONE_WAY
+$END
+

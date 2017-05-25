@@ -1,0 +1,1476 @@
+TITLE Dream Parade
+THEME xmas
+ID x83F2446C
+LEMMINGS 100
+REQUIREMENT 90
+RELEASE_RATE 1
+WIDTH 640
+HEIGHT 160
+START_X 208
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 6
+  FLOATER 1
+  BOMBER 2
+  BLOCKER 1
+  PLATFORMER 4
+  BUILDER 3
+  BASHER 2
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE window
+  X 92
+  Y 52
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE lights
+  X 41
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE lights
+  X -23
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION snow
+  PIECE water
+  X -47
+  Y 114
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE lights
+  X 545
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE lights
+  X 609
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE snowman
+  X 14
+  Y -8
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X 473
+  Y 96
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION snow
+  PIECE trap
+  X 281
+  Y 34
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION snow
+  PIECE water
+  X 327
+  Y 142
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION snow
+  PIECE water
+  X 263
+  Y 142
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION snow
+  PIECE water
+  X 199
+  Y 142
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X -32768
+  Y -32782
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_16
+  X -11
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_16
+  X 37
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_16
+  X 69
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_16
+  X 109
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_16
+  X 153
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 17
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 24
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 31
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 38
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 45
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 52
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 59
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 66
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 73
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 17
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 24
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 31
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 38
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 45
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 52
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 59
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 66
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 73
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 105
+  Y -13
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 169
+  Y -13
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 233
+  Y -13
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 252
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 252
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 324
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 324
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 321
+  Y -13
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 297
+  Y -13
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 377
+  Y -13
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 417
+  Y -13
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 382
+  Y 145
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 486
+  Y 141
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 534
+  Y 141
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 507
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 549
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_01
+  X 553
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snowman
+  X 618
+  Y 41
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_17
+  X 463
+  Y 138
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE steel_01
+  X 282
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE steel_01
+  X 282
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE steel_01
+  X 282
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_05
+  X 105
+  Y -51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_02
+  X 362
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 444
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 444
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 451
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 451
+  Y 40
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_02
+  X 444
+  Y 136
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_21
+  X 57
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_15
+  X 433
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE icicle_02
+  X 280
+  Y 79
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE icicle_02
+  X 301
+  Y 79
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 306
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 270
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_02
+  X 214
+  Y 32
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_02
+  X 219
+  Y 41
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE pillar_01
+  X 264
+  Y 46
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_02
+  X 325
+  Y 34
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION snow
+  PIECE snow_15
+  X 325
+  Y 59
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

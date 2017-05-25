@@ -1,0 +1,435 @@
+TITLE Just Some Overhead
+THEME sky
+ID x36A7EAA0
+LEMMINGS 10
+REQUIREMENT 10
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 1
+  BLOCKER 1
+  BUILDER 20
+  BASHER 5
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit
+  X 50
+  Y 43
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE exit_text
+  X 21
+  Y 49
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE lightning_vertical
+  X 313
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE window
+  X 156
+  Y 83
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE owf_right
+  X 116
+  Y 58
+  HEIGHT 28
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE owf_left
+  X 272
+  Y 66
+  HEIGHT 28
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE owf_left
+  X 272
+  Y 80
+  HEIGHT 28
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE lightning_vertical
+  X 313
+  Y 32
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE lightning_vertical
+  X 313
+  Y 64
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE lightning_vertical
+  X 313
+  Y 96
+$END
+
+$OBJECT
+  COLLECTION sky
+  PIECE lightning_vertical
+  X 313
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 76
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 44
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 4
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 4
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 44
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 76
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 124
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 164
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 204
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 236
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 236
+  Y -8
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 196
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 148
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 116
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 68
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 36
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 4
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE cloud_06
+  X 111
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 103
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 71
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 39
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 15
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 7
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 115
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 136
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X 123
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X 123
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X 118
+  Y 96
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 56
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 40
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 16
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 24
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y -8
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 8
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 104
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 80
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 72
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 96
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 136
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -10
+  Y 120
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_01
+  X -8
+  Y 152
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 262
+  Y 102
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_02
+  X 262
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_04
+  X 257
+  Y 103
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION sky
+  PIECE steel_04
+  X 257
+  Y 55
+  NO_OVERWRITE
+$END
+

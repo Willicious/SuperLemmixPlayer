@@ -1,0 +1,16 @@
+
+$RANK
+  NAME Outbreak
+  FOLDER Outbreak
+$END
+
+$RANK
+  NAME Plague
+  FOLDER Plague
+$END
+
+$RANK
+  NAME Apocalypse
+  FOLDER Apocalypse
+$END
+

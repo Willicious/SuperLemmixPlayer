@@ -1,0 +1,829 @@
+TITLE Lemming Friendly
+THEME brick
+ID x91ED863E
+LEMMINGS 80
+REQUIREMENT 75
+TIME_LIMIT 180
+RELEASE_RATE 1
+WIDTH 536
+HEIGHT 160
+START_X 192
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BOMBER 7
+  BLOCKER 4
+  BUILDER 4
+  BASHER 6
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE window
+  X 112
+  Y 0
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X 448
+  Y 81
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 82
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 82
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 82
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 82
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 82
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 82
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 82
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_06
+  X 110
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_06
+  X 141
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_06
+  X 172
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_06
+  X 203
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_01
+  X 224
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_02
+  X 224
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_02
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_03
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_01
+  X 110
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_01
+  X 142
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_01
+  X 174
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_01
+  X 206
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_02
+  X 110
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_09
+  X 110
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 208
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 240
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 272
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 304
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 191
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_02
+  X 142
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_02
+  X 174
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_02
+  X 206
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_small_02
+  X 106
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_02
+  X 245
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_02
+  X 259
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_02
+  X 245
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_02
+  X 259
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_01
+  X 324
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_02
+  X 324
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_02
+  X 324
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_02
+  X 324
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_03
+  X 324
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 347
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 379
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 416
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 448
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 479
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_01
+  X 399
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_02
+  X 399
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_02
+  X 399
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_02
+  X 399
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE pole_silver_03
+  X 399
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 416
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 440
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 464
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 488
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 272
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 272
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 283
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 283
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 283
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 272
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 289
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 289
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 16
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_clip
+  X 25
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_clip
+  X 17
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_02
+  X 21
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_01
+  X 36
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 38
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 38
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_clip
+  X 49
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 38
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 30
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 58
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 407
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 431
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 455
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 479
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 512
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 512
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 512
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 512
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 512
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 512
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 512
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 488
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 464
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 440
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 416
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE steel_01
+  X 392
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_02
+  X 392
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_01
+  X 424
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_01
+  X 455
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 404
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 497
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 497
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_clip
+  X 498
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE hook_01
+  X 404
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 443
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE chain_03
+  X 442
+  Y 57
+  ONE_WAY
+$END
+

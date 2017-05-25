@@ -1,0 +1,1737 @@
+TITLE What Does This Button Do?
+THEME circuit
+ID xEC95616D
+LEMMINGS 50
+REQUIREMENT 45
+RELEASE_RATE 50
+WIDTH 416
+HEIGHT 160
+START_X 210
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 15
+  FLOATER 15
+  BOMBER 15
+  BLOCKER 15
+  BUILDER 15
+  BASHER 15
+  MINER 15
+  DIGGER 15
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE window
+  X 236
+  Y 19
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit_locked
+  X 120
+  Y 40
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit_light
+  X 120
+  Y 31
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE button
+  X 181
+  Y 37
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE button
+  X 219
+  Y 37
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE button
+  X 332
+  Y 38
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 66
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 66
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 66
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 114
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 162
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 210
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 258
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 306
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 114
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 162
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 66
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 90
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 114
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 138
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 162
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 186
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 196
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 196
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 210
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 234
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 258
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 172
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 330
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 330
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 330
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 306
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 306
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 354
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 354
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 378
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 388
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 388
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 378
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 354
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 354
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 354
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 354
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 378
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_09
+  X 352
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_08
+  X 392
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_08
+  X 392
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 211
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_14
+  X 275
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 186
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 248
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 266
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 66
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 54
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 42
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 30
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 18
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 6
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X -6
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 30
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 42
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 18
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 18
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 6
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X -6
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X -18
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X -30
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_08
+  X 56
+  Y 71
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_08
+  X 56
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_05
+  X 56
+  Y 4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 24
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_13
+  X 12
+  Y 4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_01
+  X 12
+  Y -28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 150
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 174
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 162
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 175
+  Y 75
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 173
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -582
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+

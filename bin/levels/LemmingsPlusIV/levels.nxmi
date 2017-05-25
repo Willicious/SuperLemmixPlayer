@@ -1,0 +1,21 @@
+
+$RANK
+  NAME Smooth
+  FOLDER Smooth
+$END
+
+$RANK
+  NAME Bumpy
+  FOLDER Bumpy
+$END
+
+$RANK
+  NAME Twisted
+  FOLDER Twisted
+$END
+
+$RANK
+  NAME Insane
+  FOLDER Insane
+$END
+

@@ -132,7 +132,7 @@ $OBJECT
   PIECE pickup
   X 107
   Y 2
-  DIGGER
+  SKILL DIGGER
 $END
 
 $OBJECT
@@ -140,7 +140,7 @@ $OBJECT
   PIECE pickup
   X 93
   Y 2
-  MINER
+  SKILL MINER
 $END
 
 $OBJECT
@@ -148,7 +148,7 @@ $OBJECT
   PIECE pickup
   X 79
   Y 2
-  BASHER
+  SKILL BASHER
 $END
 
 $OBJECT
@@ -156,7 +156,7 @@ $OBJECT
   PIECE pickup
   X 288
   Y 130
-  DIGGER
+  SKILL DIGGER
 $END
 
 $OBJECT

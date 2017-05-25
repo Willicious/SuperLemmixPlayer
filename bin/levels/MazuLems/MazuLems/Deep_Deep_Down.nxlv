@@ -1,0 +1,983 @@
+TITLE Deep Deep Down
+AUTHOR Martin Zurlinden
+THEME pillar
+ID x4DDC5F97
+LEMMINGS 40
+REQUIREMENT 36
+RELEASE_RATE 70
+WIDTH 900
+HEIGHT 160
+START_X 506
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  FLOATER 1
+  BOMBER 2
+  BLOCKER 1
+  BUILDER 5
+  BASHER 1
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X 610
+  Y 82
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE window
+  X 442
+  Y 0
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE window
+  X 482
+  Y 97
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_06
+  X 592
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_08
+  X 645
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 612
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_01
+  X 683
+  Y 11
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 683
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 683
+  Y 95
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_12
+  X 615
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_11
+  X 572
+  Y 57
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_11
+  X 572
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 530
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 530
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 448
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 448
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_03
+  X 553
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_11
+  X 572
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 561
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 731
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 721
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_08
+  X 482
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_08
+  X 482
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_02
+  X 448
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_01
+  X 390
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 411
+  Y 77
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 401
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 401
+  Y 119
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_08
+  X 400
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_03
+  X 714
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_03
+  X 541
+  Y 54
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_01
+  X 558
+  Y 54
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_03
+  X 349
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_08
+  X 360
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_09
+  X 428
+  Y 34
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_09
+  X 410
+  Y 34
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 359
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_01
+  X 340
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 780
+  Y 125
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 770
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_03
+  X 327
+  Y -1
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_07
+  X 369
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE block_13
+  X 572
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE steel_04
+  X 572
+  Y 23
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE steel_04
+  X 578
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE steel_04
+  X 578
+  Y 23
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE steel_04
+  X 572
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_02
+  X 379
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 194
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 209
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 47
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 121
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 54
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 113
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 61
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 105
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 68
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 97
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 75
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 89
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 82
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 57
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 109
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 69
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 96
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 89
+  Y 103
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 82
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 61
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 72
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 104
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 93
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 75
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 82
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 72
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 94
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 82
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 82
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 82
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 187
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 180
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 173
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 166
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 159
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 152
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 145
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 217
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 233
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 241
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 249
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 257
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 265
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 193
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 209
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 190
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 239
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 225
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 224
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 229
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 227
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 213
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 214
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 245
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 231
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 254
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 242
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 229
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 213
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 215
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 216
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 215
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 180
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 176
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 167
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 160
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 153
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 177
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 191
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 189
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 190
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 174
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 188
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 164
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 203
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 176
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 189
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE bump_02
+  X 201
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_03
+  X 762
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE stairs_02
+  X 699
+  Y 124
+$END
+

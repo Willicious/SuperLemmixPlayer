@@ -1,0 +1,20 @@
+TITLE MazuLems
+AUTHOR By Martin Zurlinden
+
+$SCROLLER
+  LINE Version 1.04
+  LINE Thanks to...
+  LINE DMA for the original game
+  LINE EricLang & ccexplore for Lemmix
+  LINE namida for NeoLemmix & Flexi Toolkit
+  LINE Alex A. Denisov for Graphics32
+  LINE Erik Turner for ZLibEx
+  LINE Un4seen Development for Bass.dll
+  LINE The Lemmings Forums community at
+  LINE http://www.lemmingsforums.net
+  LINE NeoLemmix conversion done by
+  LINE mobius
+  LINE Title graphic by GigaLem
+  LINE for issues/?s see readme/forum
+$END
+

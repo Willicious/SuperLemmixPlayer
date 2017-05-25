@@ -1,0 +1,489 @@
+TITLE Maybe Not JUST Walk...
+THEME pillar
+ID x2C2294A5
+LEMMINGS 50
+REQUIREMENT 50
+RELEASE_RATE 70
+WIDTH 484
+HEIGHT 160
+START_X 250
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 10
+  BOMBER 10
+  BLOCKER 10
+  BUILDER 10
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE exit
+  X 305
+  Y 49
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION pillar
+  PIECE window
+  X 116
+  Y 28
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 50
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 114
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 178
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 242
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 306
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 370
+  Y 144
+  WIDTH 64
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 108
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_03
+  X 95
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_04
+  X 131
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 180
+  Y 76
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_01
+  X 180
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 179
+  Y 33
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_03
+  X 244
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 314
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_07
+  X 304
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 195
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 263
+  Y -35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 384
+  Y -9
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 384
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 58
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_01
+  X 58
+  Y 64
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_01
+  X 195
+  Y 54
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_01
+  X 263
+  Y 29
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_01
+  X 384
+  Y 111
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 434
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_02
+  X 16
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_01
+  X 16
+  Y 84
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION pillar
+  PIECE pillar_end_01
+  X 434
+  Y 106
+  ONE_WAY
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -558
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+

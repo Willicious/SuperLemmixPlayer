@@ -1,0 +1,958 @@
+TITLE Cursed Affliction
+THEME horror
+ID xBE8ADE3A
+LEMMINGS 20
+REQUIREMENT 16
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 240
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  FLOATER 2
+  BLOCKER 1
+  PLATFORMER 2
+  BASHER 1
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE window
+  X 42
+  Y 52
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION horror
+  PIECE exit_01
+  X 228
+  Y 184
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 32
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 64
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 96
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 128
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 160
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 192
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 224
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 256
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 288
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 304
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 16
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 16
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 48
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 80
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 112
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 144
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 176
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 208
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 240
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 272
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 0
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 0
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 16
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 16
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 0
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 16
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 0
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 16
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 0
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 16
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 0
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 32
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 0
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 288
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 304
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 304
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 288
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 304
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 288
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 304
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 288
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 304
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 288
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 304
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 288
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 64
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 96
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 128
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 160
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 192
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 16
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 48
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 80
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 112
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 144
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 176
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 208
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 224
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 256
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 240
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_01
+  X 272
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_02
+  X 32
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 40
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 72
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 104
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_03
+  X 136
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 128
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 112
+  Y 96
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 128
+  Y 128
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 112
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_07
+  X 112
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 128
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 112
+  Y 144
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_07
+  X 112
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 96
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_06
+  X 96
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_02
+  X 128
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 187
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 216
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 248
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_03
+  X 280
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 160
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 136
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_04
+  X 152
+  Y 64
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_04
+  X 164
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_b
+  X 134
+  Y 61
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_r
+  X 141
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 150
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 158
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 166
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 174
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 182
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 190
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 198
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 206
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 214
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 222
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 230
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_a
+  X 238
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_i
+  X 243
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_n
+  X 249
+  Y 61
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE letter_s
+  X 259
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 144
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 176
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 208
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 240
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 243
+  Y 79
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 227
+  Y 79
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 203
+  Y 79
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 171
+  Y 79
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 147
+  Y 79
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 143
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 167
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 191
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 215
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 239
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_05
+  X 247
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE blood_01
+  X 111
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE blood_01
+  X 102
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_07
+  X 128
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE steel_04
+  X 128
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE steel_04
+  X 128
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 223
+  Y 77
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 239
+  Y 93
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 255
+  Y 109
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION horror
+  PIECE wood_12
+  X 271
+  Y 125
+  NO_OVERWRITE
+$END
+
+$LEMMING
+  X 139
+  Y 63
+  DIRECTION right
+  FLOATER
+  ZOMBIE
+$END
+

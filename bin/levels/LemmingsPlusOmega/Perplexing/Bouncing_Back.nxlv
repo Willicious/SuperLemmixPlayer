@@ -57,7 +57,7 @@ $OBJECT
   PIECE pickup
   X 111
   Y 84
-  BUILDER
+  SKILL BUILDER
 $END
 
 $OBJECT
@@ -65,7 +65,7 @@ $OBJECT
   PIECE pickup
   X 124
   Y 84
-  BUILDER
+  SKILL BUILDER
 $END
 
 $OBJECT

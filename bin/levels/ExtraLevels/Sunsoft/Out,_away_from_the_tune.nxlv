@@ -1,0 +1,893 @@
+TITLE Out, away from the tune
+THEME fire
+ID xF68A426A
+LEMMINGS 50
+REQUIREMENT 49
+TIME_LIMIT 360
+RELEASE_RATE 1
+WIDTH 511
+HEIGHT 160
+START_X 176
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  BOMBER 1
+  BLOCKER 1
+  BUILDER 5
+  BASHER 6
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE exit
+  X 448
+  Y 3
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION fire
+  PIECE window
+  X 16
+  Y 129
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 2
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 41
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 2
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 2
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 2
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 2
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 459
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 459
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 458
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 459
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 458
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 41
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 40
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 41
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 40
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 80
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 79
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 79
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 79
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 79
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 118
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 118
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 118
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 118
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 118
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 157
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 157
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 157
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 157
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 157
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 196
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 196
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 196
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 196
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 196
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 235
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 235
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 235
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 235
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 235
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 273
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 274
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 274
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 274
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 274
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 312
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 312
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 312
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 313
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 313
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 351
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 351
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 351
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 352
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 352
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 390
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 390
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 390
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 390
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 391
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 424
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 424
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 424
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 424
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_06
+  X 426
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 498
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 498
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 498
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 2
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 2
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 2
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 494
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 494
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 494
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 88
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 128
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 168
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 208
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 248
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 288
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 308
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 348
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE bars_05
+  X 408
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 72
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 112
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 152
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 192
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 232
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 273
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 312
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 352
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE rock_01
+  X 392
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_s
+  X 32
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_i
+  X 58
+  Y 14
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_n
+  X 81
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_g
+  X 109
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_!
+  X 138
+  Y 5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_s
+  X 175
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_i
+  X 195
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_n
+  X 219
+  Y 6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_g
+  X 246
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_!
+  X 271
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_s
+  X 317
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_i
+  X 341
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_n
+  X 361
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_g
+  X 387
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION fire
+  PIECE letter_!
+  X 416
+  Y 4
+  ONE_WAY
+$END
+

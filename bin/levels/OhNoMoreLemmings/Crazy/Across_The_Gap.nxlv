@@ -1,0 +1,493 @@
+TITLE Across The Gap
+THEME brick
+ID xEF929C4F
+LEMMINGS 16
+REQUIREMENT 16
+TIME_LIMIT 180
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 3
+  FLOATER 16
+  BOMBER 3
+  BLOCKER 16
+  BUILDER 3
+  BASHER 16
+  MINER 3
+  DIGGER 16
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE window
+  X 24
+  Y 16
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X 264
+  Y 3
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 180
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 180
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 116
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 116
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 116
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 116
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 180
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 180
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 258
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_02
+  X 290
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 226
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 210
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 68
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 36
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_01
+  X 20
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 100
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 116
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 180
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 196
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 132
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE crate
+  X 164
+  Y -5
+  ONE_WAY
+$END
+

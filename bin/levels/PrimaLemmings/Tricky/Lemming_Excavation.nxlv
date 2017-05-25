@@ -1,0 +1,187 @@
+TITLE Lemming Excavation
+THEME brick
+MUSIC orig_06
+ID x8293B52F
+LEMMINGS 80
+REQUIREMENT 70
+TIME_LIMIT 240
+RELEASE_RATE 1
+WIDTH 592
+HEIGHT 160
+START_X 296
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  BOMBER 9
+  BLOCKER 1
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE exit
+  X 278
+  Y 108
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION brick
+  PIECE window
+  X 264
+  Y 0
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 8
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 8
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 72
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 72
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 136
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 136
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 200
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 200
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 264
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 328
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 328
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 392
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 392
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 456
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 456
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 520
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE bricks_large_01
+  X 520
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 264
+  Y 156
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION brick
+  PIECE platform_04
+  X 296
+  Y 156
+  ONE_WAY
+$END
+

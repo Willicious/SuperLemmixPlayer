@@ -1,0 +1,1299 @@
+TITLE Not gonna work.
+THEME rock
+ID xEC909D60
+LEMMINGS 40
+REQUIREMENT 40
+RELEASE_RATE 50
+WIDTH 504
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BUILDER 20
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE lizard_trap_01
+  X 255
+  Y 95
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE window
+  X 56
+  Y 7
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X 400
+  Y 115
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION rock
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_01
+  X 113
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_01
+  X 95
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_01
+  X 95
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_01
+  X 74
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_01
+  X 58
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_08
+  X 48
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_08
+  X 44
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_08
+  X 151
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_01
+  X 274
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_01
+  X 274
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_01
+  X 274
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_01
+  X 274
+  Y 119
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_08
+  X 249
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_08
+  X 338
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE rocks_04
+  X 300
+  Y 104
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_11
+  X 276
+  Y 67
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_11
+  X 290
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_11
+  X 302
+  Y 41
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_11
+  X 314
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION rock
+  PIECE crystal_11
+  X 325
+  Y 18
+  ONE_WAY
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -472
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+

@@ -1,0 +1,509 @@
+TITLE Ruckus in the Rooftops
+THEME circuit
+ID x814D14A0
+LEMMINGS 40
+REQUIREMENT 36
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 200
+START_X 160
+START_Y 120
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  BOMBER 1
+  BLOCKER 1
+  BUILDER 1
+  BASHER 0
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE window
+  X 117
+  Y 119
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X 256
+  Y 135
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit_light
+  X 256
+  Y 135
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE teleporter
+  X 32
+  Y 120
+  PAIRING 0
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE receiver
+  X 256
+  Y 59
+  PAIRING 0
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 28
+  Y 62
+  SKILL BASHER
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 32
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 64
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 64
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 32
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 96
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 128
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 160
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 192
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 192
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 192
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 224
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 256
+  Y 168
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_02
+  X -13
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_02
+  X 29
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_02
+  X 71
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_02
+  X 113
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_02
+  X 155
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_02
+  X 197
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_02
+  X 239
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_02
+  X 281
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 292
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 292
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 292
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 292
+  Y 161
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 12
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 12
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 12
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 12
+  Y 161
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE bolt
+  X 16
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE bolt
+  X 296
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_03
+  X 225
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 12
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE girder_01
+  X 292
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 213
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 201
+  Y 39
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_05
+  X 186
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 189
+  Y 27
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 165
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 141
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 117
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 98
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 122
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 74
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 74
+  Y 23
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 50
+  Y 23
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 50
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 26
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 162
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_05
+  X 173
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_06
+  X 48
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_01
+  X 78
+  Y 158
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_02
+  X 188
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_02
+  X 193
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_03
+  X 241
+  Y 185
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_03
+  X 207
+  Y 177
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_03
+  X 175
+  Y 177
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_03
+  X 96
+  Y 185
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_03
+  X 106
+  Y 185
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_01
+  X 145
+  Y 167
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 96
+  Y 154
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 128
+  Y 154
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 160
+  Y 154
+$END
+

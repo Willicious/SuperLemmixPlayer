@@ -1,0 +1,1894 @@
+TITLE Take A Shortcut!
+THEME bubble
+ID x4B4B3F7B
+LEMMINGS 80
+REQUIREMENT 40
+RELEASE_RATE 50
+WIDTH 544
+HEIGHT 160
+START_X 224
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BOMBER 20
+  BLOCKER 20
+  BUILDER 20
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE window
+  X 192
+  Y 109
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE owa_right
+  X 276
+  Y 69
+  WIDTH 16
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X 86
+  Y 102
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE spinning_arrow
+  X 102
+  Y 102
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION bubble
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_02
+  X 181
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_02
+  X 195
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_02
+  X 219
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 243
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 263
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 284
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 301
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 167
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 172
+  Y 123
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 276
+  Y 114
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 276
+  Y 82
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_02
+  X 278
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 310
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 342
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 374
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 406
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_11
+  X 502
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 281
+  Y 115
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 283
+  Y 87
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 282
+  Y 55
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 308
+  Y 58
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 305
+  Y 90
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 306
+  Y 117
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 327
+  Y 136
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 328
+  Y 105
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 331
+  Y 73
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 319
+  Y 56
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 343
+  Y 51
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 350
+  Y 77
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 350
+  Y 109
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 353
+  Y 127
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 364
+  Y 71
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 386
+  Y 78
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 405
+  Y 94
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 384
+  Y 106
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 370
+  Y 101
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 368
+  Y 128
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 390
+  Y 133
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 412
+  Y 127
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 438
+  Y 134
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 426
+  Y 104
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 425
+  Y 83
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 397
+  Y 58
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 375
+  Y 56
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 358
+  Y 50
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 416
+  Y 59
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 424
+  Y 54
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 447
+  Y 104
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 446
+  Y 85
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 448
+  Y 65
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 450
+  Y 130
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 462
+  Y 18
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 459
+  Y 19
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 460
+  Y 23
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE fence_gold_04
+  X 459
+  Y 30
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 438
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 470
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE bubbles_gold_01
+  X 452
+  Y 54
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 172
+  Y 91
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_05
+  X 164
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 196
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 218
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_11
+  X 243
+  Y 86
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 130
+  Y 53
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_02
+  X 132
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_04
+  X 111
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_01
+  X 79
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 77
+  Y 89
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_05
+  X 69
+  Y 70
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 101
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 133
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_11
+  X 165
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 152
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 184
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 216
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_11
+  X 248
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_01
+  X 120
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_12
+  X 118
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 37
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_10
+  X 21
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_11
+  X 449
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 417
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 385
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 353
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 321
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 289
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_09
+  X 257
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_10
+  X 241
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_12
+  X 209
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_12
+  X 177
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 172
+  Y 149
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 161
+  Y 140
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_12
+  X 285
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_10
+  X 273
+  Y 69
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_10
+  X 273
+  Y 77
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_10
+  X 273
+  Y 84
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 276
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_10
+  X 263
+  Y 43
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION bubble
+  PIECE pipe_large_08
+  X 276
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+
+$AREA
+  X -544
+  Y 0
+  WIDTH 4
+  HEIGHT 4
+$END
+

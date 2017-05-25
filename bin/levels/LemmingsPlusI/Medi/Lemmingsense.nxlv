@@ -1,0 +1,1461 @@
+TITLE Lemmingsense
+THEME crystal
+ID xF8890FFA
+LEMMINGS 80
+REQUIREMENT 72
+RELEASE_RATE 1
+WIDTH 584
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 2
+  BOMBER 2
+  BUILDER 5
+  BASHER 3
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE window
+  X 88
+  Y 65
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X 272
+  Y 72
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE water
+  X 72
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE water
+  X 136
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE water
+  X 200
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE water
+  X 264
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE water
+  X 328
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE water
+  X 392
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE water
+  X 456
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE owa_left
+  X 180
+  Y 63
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE owa_left
+  X 212
+  Y 63
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE owa_left
+  X 341
+  Y 63
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE owa_left
+  X 373
+  Y 63
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION crystal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 71
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_03
+  X 48
+  Y 60
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 92
+  Y 95
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_02
+  X 130
+  Y 77
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 142
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 156
+  Y 96
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 127
+  Y 110
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 126
+  Y 111
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 127
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 125
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 124
+  Y 111
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 71
+  Y 95
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 180
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 205
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 230
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 255
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 280
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 305
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 330
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 355
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 180
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 212
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 180
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 205
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 230
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 255
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 280
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 305
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 330
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 355
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 373
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE block
+  X 341
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 380
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE steel_03
+  X 380
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 429
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_03
+  X 418
+  Y 73
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 429
+  Y 95
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_04
+  X 450
+  Y 95
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_02
+  X 477
+  Y 88
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 500
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 514
+  Y 96
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 483
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 485
+  Y 108
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE bar_01
+  X 482
+  Y 111
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_01
+  X 504
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 515
+  Y 114
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_04
+  X 14
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE crystal_02
+  X 49
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 7
+  Y -49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 54
+  Y -50
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 102
+  Y -50
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 150
+  Y -49
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 201
+  Y -47
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 243
+  Y -56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_02
+  X 306
+  Y -44
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 344
+  Y -47
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 390
+  Y -45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X 439
+  Y -44
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_02
+  X 483
+  Y -40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_01
+  X -41
+  Y -49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_02
+  X 515
+  Y -40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION crystal
+  PIECE clump_02
+  X 555
+  Y -40
+  ONE_WAY
+$END
+

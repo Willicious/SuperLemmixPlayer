@@ -1,0 +1,1272 @@
+TITLE Born a blocker, die a blocker
+THEME marble
+ID xAAB9886D
+LEMMINGS 10
+REQUIREMENT 1
+TIME_LIMIT 240
+RELEASE_RATE 91
+WIDTH 688
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 10
+  BLOCKER 9
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE window
+  X 16
+  Y 32
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 0
+  Y 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE exit
+  X 600
+  Y 120
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 136
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 120
+  Y 56
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 176
+  Y 88
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 272
+  Y 40
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 376
+  Y 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 464
+  Y 24
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 640
+  Y 0
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 600
+  Y 80
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE shredder
+  X 664
+  Y 128
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION marble
+  PIECE water
+  X 0
+  Y 136
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 0
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 48
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 0
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 48
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 80
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 96
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 104
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 96
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 96
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 112
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 112
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_05
+  X 176
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 80
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 80
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 88
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 160
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_05
+  X 176
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 176
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 208
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 208
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 224
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 224
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 240
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 240
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 208
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 224
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 232
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 224
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 224
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 256
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 192
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_05
+  X 256
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 272
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 272
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 272
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 272
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_01
+  X 297
+  Y 19
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 304
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 272
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 336
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 304
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_02
+  X 324
+  Y 99
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_07
+  X 290
+  Y 100
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 304
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 336
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 288
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 296
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 336
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 352
+  Y 56
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 320
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 320
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 192
+  Y 72
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 160
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 160
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 352
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 336
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 368
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 384
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 384
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 384
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 368
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 416
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 400
+  Y 16
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 384
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 368
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_02
+  X 368
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 336
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 368
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 416
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 416
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_02
+  X 416
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 432
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 440
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_02
+  X 436
+  Y 115
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_01
+  X 442
+  Y 116
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 448
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 464
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 472
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 448
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 464
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 464
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 480
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 480
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 496
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 528
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 544
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 552
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 560
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 560
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 568
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 576
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 608
+  Y 8
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 592
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 656
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 656
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 656
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_02
+  X 132
+  Y 35
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_09
+  X 160
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_05
+  X 144
+  Y 16
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_05
+  X 144
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_05
+  X 224
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 608
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 616
+  Y 40
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 576
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 640
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 592
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 600
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 672
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 680
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 576
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 608
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 592
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 496
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_02
+  X 484
+  Y 99
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_04
+  X 528
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_07
+  X 514
+  Y 100
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 496
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_02
+  X 516
+  Y 67
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 512
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 512
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 520
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_07
+  X 482
+  Y 132
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 480
+  Y 144
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 512
+  Y 144
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 520
+  Y 144
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 528
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE pillar_06
+  X 608
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 560
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 576
+  Y 112
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE block_03
+  X 544
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 544
+  Y 112
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_large_01
+  X 552
+  Y 112
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 624
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION marble
+  PIECE brick_05
+  X 640
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+

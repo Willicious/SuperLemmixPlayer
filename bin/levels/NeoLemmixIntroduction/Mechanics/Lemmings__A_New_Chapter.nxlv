@@ -1,0 +1,749 @@
+TITLE Lemmings: A New Chapter
+THEME dirt
+ID x71985894
+LEMMINGS 10
+REQUIREMENT 9
+RELEASE_RATE 50
+WIDTH 512
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  FLOATER 1
+  BLOCKER 1
+  BUILDER 1
+  BASHER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE window
+  X 115
+  Y 24
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 64
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 128
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 192
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 256
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 320
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 384
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE water
+  X 448
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION dirt
+  PIECE exit
+  X 400
+  Y 114
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 40
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 85
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 119
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 129
+  Y 76
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 208
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 196
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 116
+  Y 112
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 42
+  Y 110
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 83
+  Y 129
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 36
+  Y 134
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_02
+  X 219
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_02
+  X 204
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_03
+  X 224
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_03
+  X 207
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 183
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 159
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 143
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 127
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 111
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 95
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 79
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 63
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 64
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 80
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 102
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 96
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 120
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 136
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 168
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 152
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 190
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 39
+  Y 101
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 32
+  Y 136
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_01
+  X 48
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_01
+  X 38
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_03
+  X 37
+  Y 77
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_03
+  X 25
+  Y 88
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_09
+  X 64
+  Y 22
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_08
+  X 156
+  Y 21
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_09
+  X 160
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 245
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_01
+  X 243
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 259
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 282
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_05
+  X 290
+  Y 13
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 261
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 299
+  Y 70
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 293
+  Y 78
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 269
+  Y 86
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 266
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 275
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 327
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 319
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_01
+  X 296
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_01
+  X 304
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_01
+  X 288
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_01
+  X 285
+  Y 103
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_01
+  X 300
+  Y 104
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_03
+  X 288
+  Y 59
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 308
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 312
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 344
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 376
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_07
+  X 384
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 349
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 372
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 388
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 412
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 420
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_02
+  X 436
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 367
+  Y 95
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_01
+  X 359
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 367
+  Y 95
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 378
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_04
+  X 402
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_02
+  X 425
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 368
+  Y 100
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 361
+  Y 99
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 360
+  Y 93
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 377
+  Y 112
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_01
+  X 370
+  Y 122
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_03
+  X 367
+  Y 109
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_02
+  X 407
+  Y 109
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_02
+  X 412
+  Y 109
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE grass_01
+  X 410
+  Y 112
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_04
+  X 238
+  Y 74
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION dirt
+  PIECE clump_02
+  X 361
+  Y 96
+  NO_OVERWRITE
+$END
+

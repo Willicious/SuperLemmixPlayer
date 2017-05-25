@@ -1,0 +1,1721 @@
+TITLE The Final Stand
+THEME circuit
+MUSIC lpiii_final
+ID xB0A0C57F
+LEMMINGS 50
+REQUIREMENT 40
+TIME_LIMIT 165
+RELEASE_RATE 1
+WIDTH 736
+HEIGHT 160
+START_X 186
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 3
+  BOMBER 6
+  BLOCKER 3
+  BUILDER 4
+  BASHER 1
+  MINER 3
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE window
+  X 142
+  Y 62
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 351
+  Y 28
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 375
+  Y 28
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 399
+  Y 28
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 423
+  Y 28
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 351
+  Y 52
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 375
+  Y 52
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 399
+  Y 52
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 423
+  Y 52
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 351
+  Y 76
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 375
+  Y 76
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 399
+  Y 76
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 423
+  Y 76
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 351
+  Y 100
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 375
+  Y 100
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 399
+  Y 100
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 423
+  Y 100
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 351
+  Y 124
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 375
+  Y 124
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 399
+  Y 124
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 423
+  Y 124
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 351
+  Y 148
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 375
+  Y 148
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 399
+  Y 148
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE owa_right
+  X 423
+  Y 148
+  WIDTH 24
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit
+  X 638
+  Y 31
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION circuit
+  PIECE exit_light
+  X 638
+  Y 31
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 638
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 30
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_01
+  X 51
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_02
+  X 94
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_01
+  X 51
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_01
+  X 96
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_01
+  X 96
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_02
+  X 57
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_02
+  X 71
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_02
+  X 83
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_02
+  X 57
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_02
+  X 71
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_02
+  X 83
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_03
+  X 121
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_end_06
+  X 119
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_end_06
+  X 26
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_04
+  X 121
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 133
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 165
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_09
+  X 195
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_end_06
+  X 193
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_03
+  X 195
+  Y 112
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 158
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 182
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 206
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 230
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 240
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 240
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 283
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 336
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 278
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 278
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 335
+  Y 85
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 336
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 336
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_08
+  X 240
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_13
+  X 240
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 252
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 262
+  Y 64
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_05
+  X 261
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_08
+  X 261
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_01
+  X 261
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 254
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 351
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 351
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 351
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 399
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 399
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 399
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 447
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 447
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 447
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 471
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 495
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 505
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 505
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 292
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 292
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_05
+  X 313
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_06
+  X 280
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_09
+  X 280
+  Y -23
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 516
+  Y 146
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 670
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_11
+  X 459
+  Y 90
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_12
+  X 496
+  Y 90
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 520
+  Y 90
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 534
+  Y 90
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 512
+  Y 86
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 538
+  Y 85
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 638
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE board_01
+  X 638
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_07
+  X 638
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_06
+  X 637
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_09
+  X 467
+  Y -28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_06
+  X 467
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 468
+  Y 90
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 479
+  Y 36
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 543
+  Y 36
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_07
+  X 607
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_11
+  X 607
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_07
+  X 619
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_11
+  X 619
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_07
+  X 631
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_11
+  X 631
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_07
+  X 643
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_11
+  X 643
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 568
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 574
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE circuit_premade_06
+  X 122
+  Y 113
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 96
+  Y -24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 12
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 84
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 132
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_01
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_03
+  X 46
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_14
+  X 46
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 14
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 316
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 6
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_04
+  X 28
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 691
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 703
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 715
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 544
+  Y 100
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE blocks_02
+  X 544
+  Y 113
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 544
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 623
+  Y 62
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_end_08
+  X 616
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 670
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 670
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 670
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 670
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_02
+  X 675
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_14
+  X 707
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_end_06
+  X 705
+  Y 26
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 158
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 158
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_05
+  X 313
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 316
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 328
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 316
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 340
+  Y -12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_03
+  X 292
+  Y 48
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 229
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 205
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 346
+  Y 5
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 405
+  Y 5
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 304
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 280
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_02
+  X 292
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 447
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 454
+  Y 63
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_07
+  X 442
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_04
+  X 328
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_04
+  X 328
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_03
+  X 316
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 313
+  Y 86
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_01
+  X 316
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_04
+  X 304
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_05
+  X 334
+  Y 110
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_04
+  X 338
+  Y 97
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 285
+  Y 123
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 285
+  Y 135
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE wire_10
+  X 286
+  Y 147
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 398
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION circuit
+  PIECE steel_06
+  X 374
+  Y 28
+  ONE_WAY
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+
+$AREA
+  X -458
+  Y 0
+  WIDTH 5
+  HEIGHT 5
+$END
+

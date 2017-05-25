@@ -1,0 +1,569 @@
+TITLE Ain't Over Til The Fat Man Sings
+THEME lpiv_wasteland
+MUSIC lpiv_wasteland2
+ID xE8749D7F
+LEMMINGS 30
+REQUIREMENT 26
+RELEASE_RATE 40
+RELEASE_RATE_LOCKED
+WIDTH 512
+HEIGHT 160
+START_X 67
+START_Y 94
+AUTOSTEEL on
+BACKGROUND lpiv_wasteland:mushroom_cloud
+
+$SKILLSET
+  CLIMBER 2
+  BOMBER 2
+  PLATFORMER 1
+  BUILDER 3
+  STACKER 1
+  BASHER 1
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE window
+  X 43
+  Y 67
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE exit
+  X 409
+  Y 18
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 438
+  Y 48
+  NO_OVERWRITE
+  SKILL BUILDER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 451
+  Y 48
+  NO_OVERWRITE
+  SKILL BUILDER
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_05
+  X 435
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE sign_02
+  X 10
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X -8
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 32
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 128
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 88
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 64
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 48
+  Y 113
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X -16
+  Y 97
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 8
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 16
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 24
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X -17
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE goop_04
+  X 157
+  Y 141
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 201
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 217
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 233
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 249
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 265
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 281
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 297
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 313
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_04
+  X 329
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 205
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 205
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_knob
+  X 205
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 338
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 338
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_knob
+  X 338
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_01
+  X 211
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_01
+  X 243
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_01
+  X 275
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE mesh_01
+  X 307
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_04
+  X 190
+  Y 124
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_04
+  X 344
+  Y 124
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 420
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_01
+  X 428
+  Y 117
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_02
+  X 433
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_03
+  X 433
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_03
+  X 429
+  Y 54
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_07
+  X 428
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_05
+  X 418
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_05
+  X 406
+  Y 102
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_05
+  X 394
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_08
+  X 391
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_05
+  X 465
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_05
+  X 453
+  Y 86
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_05
+  X 441
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_08
+  X 479
+  Y 85
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE sign_02
+  X 467
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_08
+  X 453
+  Y 61
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_04
+  X 504
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_04
+  X 504
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_04
+  X 504
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_04
+  X 504
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_04
+  X 504
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_04
+  X 504
+  Y 21
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 478
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE goop_03
+  X 483
+  Y 2
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_04
+  X 431
+  Y 94
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_03
+  X 437
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_03
+  X 434
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE goop_03
+  X 409
+  Y 45
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_04
+  X 435
+  Y 82
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 409
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 425
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 450
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 475
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 467
+  Y 149
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 402
+  Y 149
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE tree_04
+  X 430
+  Y 97
+  FLIP_HORIZONTAL
+$END
+
