@@ -103,7 +103,7 @@ begin
       ReadLn(SrcName);
     end;
 
-    if (SrcName <> '') and (Lowercase(SrcName) <> '*all') and (LeftStr(Lowercase(SrcName), 6) <> '*match') then
+    if (SrcName <> '') and (Lowercase(RightStr(SrcName, 4)) <> '*all') and (LeftStr(Lowercase(SrcName), 6) <> '*match') then
       if not FileExists(SrcName) then
       begin
         WriteLn('ERROR: File "' + SrcName + '" does not exist.');
@@ -112,11 +112,17 @@ begin
 
   until SrcName <> '';
 
-  if Lowercase(SrcName) = '*all' then
+  ForceDirectories(ExtractFilePath(ParamStr(0)) + 'data\translation\');
+
+  if Lowercase(RightStr(SrcName, 4)) = '*all' then
   begin
+    SrcName := LeftStr(SrcName, Length(SrcName) - 4);
+    if Pos(':', SrcName) = 0 then
+      SrcName := ExtractFilePath(ParamStr(0)) + SrcName;
+    SetCurrentDir(SrcName);
     if FindFirst('*.dat', faAnyFile, SearchRec) = 0 then
       repeat
-        SetCurrentDir(ExtractFilePath(ParamStr(0)));
+        SetCurrentDir(SrcName);
         WriteLn('Converting ' + SearchRec.Name + '...');
         ConvertGraphicSet(SearchRec.Name);
       until FindNext(SearchRec) <> 0;

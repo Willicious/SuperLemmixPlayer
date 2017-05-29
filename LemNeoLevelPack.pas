@@ -471,6 +471,8 @@ var
   G: TNeoLevelGroup;
   L: TNeoLevelEntry;
 begin
+  // temporarily disabled due to bugs
+  (*
   if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
   begin
     repeat
@@ -493,6 +495,7 @@ begin
     FindClose(SearchRec);
     fLevels.Sort(SortAlphabetical);
   end;
+  *)
 end;
 
 procedure TNeoLevelGroup.SetFolderName(aValue: String);

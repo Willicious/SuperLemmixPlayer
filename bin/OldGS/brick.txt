@@ -1,0 +1,10 @@
+output_name ohno_brick
+
+$object
+  index 0
+  $merge
+    index 9
+    side top
+    offset_y 29
+  $end
+$end

@@ -1,0 +1,10 @@
+output_name lpii_metal
+
+$object
+  index 0
+  $merge
+    index 4
+    side top
+    keep_piece
+  $end
+$end

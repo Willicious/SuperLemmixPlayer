@@ -1,9 +1,0 @@
-$object
-  index 5
-  no_resize
-$end
-
-$object
-  index 6
-  no_resize
-$end

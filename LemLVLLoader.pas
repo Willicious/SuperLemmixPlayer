@@ -188,7 +188,7 @@ var
 begin
   Parser := TParser.Create;
   try
-    Parser.LoadFromFile(AppPath + SFStyles + aSet + '\' + SFTranslation);
+    Parser.LoadFromFile(AppPath + SFDataTranslation + aSet + '.nxtt');
     fCurrentSet := aSet;
 
     if Parser.MainSection.Line['theme'] <> nil then

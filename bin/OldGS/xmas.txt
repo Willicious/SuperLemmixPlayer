@@ -1,0 +1,42 @@
+output_name xmas
+
+$object
+  index 0
+
+  $merge
+    index 3
+    side top
+  $END
+
+$END
+
+$object
+  index 1
+
+  $merge
+    index 2
+    side top
+  $END
+
+$END
+
+$object
+  index 6
+
+  $merge
+    index 7
+    side top
+  $END
+
+$END
+
+$object
+  index 8
+
+  $merge
+    index 9
+    side top
+    keep_piece
+  $END
+
+$END

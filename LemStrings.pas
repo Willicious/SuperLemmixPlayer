@@ -35,7 +35,6 @@ const
       SFPiecesLemmings = '\lemmings\';
       SFPiecesPanel = '\panel\';
       SFTheme = 'theme.nxtm';
-      SFTranslation = 'translation.nxtt';
 
   SFLevels = 'levels\';
 
@@ -43,6 +42,7 @@ const
   SFMusic = 'music\';
 
   SFData = 'data\';
+      SFDataTranslation = SFData + 'translation\';
 
   SFSaveData = 'save\';
 

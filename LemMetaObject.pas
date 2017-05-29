@@ -261,7 +261,7 @@ begin
     ClearImages;
 
     if not DirectoryExists(AppPath + SFStyles + aCollection + SFPiecesObjects) then
-      raise Exception.Create('TMetaObject.Load: Collection "' + aCollection + '" does not exist or does not have objects.');
+      raise Exception.Create('TMetaObject.Load: Collection "' + aCollection + '" does not exist or does not have objects. (' + aPiece + ')');
     SetCurrentDir(AppPath + SFStyles + aCollection + SFPiecesObjects);
 
     Parser.LoadFromFile(aPiece + '.nxmo');

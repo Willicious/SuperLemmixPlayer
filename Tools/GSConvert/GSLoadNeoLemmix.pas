@@ -239,6 +239,8 @@ begin
   SrcRes := TempHeader.Resolution;
   Result.Resolution := 8;
 
+  Result.Name := ChangeFileExt(ExtractFileName(fn), '');
+
   for i := 0 to 7 do
     Result.KeyColors[i] := TempHeader.KeyColors[i].ARGB;
 

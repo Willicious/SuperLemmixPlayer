@@ -62,19 +62,19 @@ var
   begin
     // Terrains - if there are any, we need a folder
     if GS.MetaTerrains.Count > 0 then
-      ForceDirectories(BasePath + aName + '\terrain\');
+      ForceDirectories(BasePath + GS.Name + '\terrain\');
     // Objects - ignore backgrounds, *lemming, *pickup and *nil
     for i := 0 to GS.MetaObjects.Count-1 do
       if (LeftStr(GS.MetaObjects[i].Name, 1) <> '*') and (LeftStr(GS.MetaObjects[i].Name, 1) <> '&') then
       begin
-        ForceDirectories(BasePath + aName + '\objects\');
+        ForceDirectories(BasePath + GS.Name + '\objects\');
         Break;
       end;
     // Backgrounds - look for an object name starting with &
     for i := 0 to GS.MetaObjects.Count-1 do
       if (LeftStr(GS.MetaObjects[i].Name, 1) = '&') then
       begin
-        ForceDirectories(BasePath + aName + '\backgrounds\');
+        ForceDirectories(BasePath + GS.Name + '\backgrounds\');
         Break;
       end;
   end;
@@ -96,7 +96,7 @@ var
     if LeftStr(T.Name, 1) = '*' then
     begin
       TSrc := GS.MetaTerrains[StrToInt(RightStr(T.Name, Length(T.Name)-1))];
-      Sec.AddLine('COLLECTION', aName);
+      Sec.AddLine('COLLECTION', GS.Name);
       Sec.AddLine('PIECE', TSrc.Name);
     end else if LeftStr(T.Name, 1) = '#' then
     begin
@@ -105,7 +105,7 @@ var
       Sec.AddLine('COLLECTION', LeftStr(S, n-1));
       Sec.AddLine('PIECE', RightStr(S, Length(S)-n));
     end else begin
-      Sec.AddLine('COLLECTION', aName);
+      Sec.AddLine('COLLECTION', GS.Name);
       Sec.AddLine('PIECE', T.Name);
     end;
 
@@ -141,7 +141,7 @@ var
         if LeftStr(GS.MetaObjects[n2].Name, 1) = '&' then
           Inc(n);
       Sec.AddLine('INDEX', n);
-      Sec.AddLine('COLLECTION', aName);
+      Sec.AddLine('COLLECTION', GS.Name);
       Sec.AddLine('PIECE', RightStr(O.Name, Length(O.Name)-1));
       Exit;
     end;
@@ -170,7 +170,7 @@ var
       Sec.AddLine('COLLECTION', LeftStr(S, n-1));
       Sec.AddLine('PIECE', RightStr(S, Length(S)-n));
     end else begin
-      Sec.AddLine('COLLECTION', aName);
+      Sec.AddLine('COLLECTION', GS.Name);
       Sec.AddLine('PIECE', O.Name);
     end;
 
@@ -201,7 +201,7 @@ var
     if LeftStr(T.Name, 1) = '*' then Exit;
     if LeftStr(T.Name, 1) = '#' then Exit;
 
-    SetCurrentDir(BasePath + aName + '\terrain\');
+    SetCurrentDir(BasePath + GS.Name + '\terrain\');
     TPngInterface.SavePngFile(T.Name + '.png', GS.TerrainImages[i]);
 
     if T.Steel then
@@ -244,7 +244,7 @@ var
     if LeftStr(O.Name, 1) = '&' then
     begin
       S := RightStr(O.Name, Length(O.Name)-1);
-      TPngInterface.SavePngFile(BasePath + aName + '\backgrounds\' + S + '.png', GS.ObjectImages[i][0]);
+      TPngInterface.SavePngFile(BasePath + GS.Name + '\backgrounds\' + S + '.png', GS.ObjectImages[i][0]);
       Exit;
     end;
 
@@ -335,7 +335,7 @@ var
     if O.ResizeVertical then
       Sec.AddLine('RESIZE_VERTICAL');
 
-    SetCurrentDir(BasePath + aName + '\objects\');
+    SetCurrentDir(BasePath + GS.Name + '\objects\');
     Parser.SaveToFile(O.Name + '.nxmo');
 
     BMP := TBitmap32.Create;
@@ -355,10 +355,12 @@ var
     Parser.Clear;
     Sec := Parser.MainSection;
 
-    if GS.LemmingSprites = 'xlemming' then
+    if (GS.LemmingSprites = 'xlemming') then
       Sec.AddLine('LEMMINGS', 'xmas')
+    else if (GS.LemmingSprites = 'lemming') then
+      Sec.AddLine('LEMMINGS', 'default')
     else
-      Sec.AddLine('LEMMINGS', 'default');
+      Sec.AddLine('LEMMINGS', GS.LemmingSprites);
 
     Sec := Sec.SectionList.Add('COLORS');
 
@@ -369,18 +371,21 @@ var
     Sec.AddLine('PICKUP_BORDER', GS.KeyColors[4] and $FFFFFF, 6);
     Sec.AddLine('PICKUP_INSIDE', GS.KeyColors[5] and $FFFFFF, 6);
 
-    Parser.SaveToFile(BasePath + aName + '\theme.nxtm'); 
+    Parser.SaveToFile(BasePath + GS.Name + '\theme.nxtm'); 
   end;
 begin
   GS := aGS;
-  BasePath := ExtractFilePath(ParamStr(0));
+  BasePath := ExtractFilePath(ParamStr(0)) + 'styles\';
 
-  ForceDirectories(BasePath + aName + '\');
+  ForceDirectories(BasePath + GS.Name + '\');
 
   MakeFolders;
 
   TranslationTable := TParser.Create;
   Parser := TParser.Create; //general purpose, reused several times
+
+  if aName <> GS.Name then
+    TranslationTable.MainSection.AddLine('THEME', GS.Name);
 
   for i := 0 to GS.MetaTerrains.Count-1 do
   begin
@@ -394,7 +399,7 @@ begin
     SaveObject(i);
   end;
 
-  TranslationTable.SaveToFile(BasePath + aName + '\' + 'translation.nxtt');
+  TranslationTable.SaveToFile(ExtractFilePath(ParamStr(0)) + 'data\translation\' + aName + '.nxtt');
 
   SaveTheme;
 
@@ -473,6 +478,9 @@ begin
       if Sec.Line['pickup_inside'] <> nil then GS.KeyColors[0] := Sec.LineNumeric['pickup_inside'] or $FF000000;
       if Sec.Line['one_ways'] <> nil then GS.KeyColors[0] := Sec.LineNumeric['one_ways'] or $FF000000;
     end;
+
+    if Parser.MainSection.Line['output_name'] <> nil then
+      GS.Name := Parser.MainSection.LineTrimString['output_name'];
   finally
     Parser.Free;
     Funcs.Free;

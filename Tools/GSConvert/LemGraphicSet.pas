@@ -139,6 +139,7 @@ type
   TBaseGraphicSetClass = class of TBaseGraphicSet;
   TBaseGraphicSet = class(TPersistent)
     private
+      fName: String;
       fResolution: Integer; // 8 = standard resolution (320x160 playing area)
       fLemmingSprites: String; // currently only uses "lemming" or "xlemming"
       function GetLemmingSprites: String;
@@ -152,6 +153,7 @@ type
       constructor Create;
       destructor Destroy; override;
       procedure FixResolution;
+      property Name: String read fName write fName;
       property Resolution: Integer read fResolution write fResolution;
       property LemmingSprites: String read GetLemmingSprites write fLemmingSprites;
   end;

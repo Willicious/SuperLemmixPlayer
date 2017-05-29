@@ -1,0 +1,9 @@
+output_name namida_horror
+
+$object
+  index 0
+  $merge
+    index 2
+    side top
+  $end
+$end

@@ -17,6 +17,48 @@ uses
 var
   SrcFile: String;
 
+  procedure Write(aText: String);
+  begin
+    if ParamStr(2) = 'silent' then Exit; // to allow silent batch conversion via a BAT file cause i'm lazy
+    WriteLn(aText);
+  end;
+
+  procedure ClearInvalidPieces(aLevel: TLevel);
+  var
+    i: Integer;
+
+    function IsInsideLevel(X, Y, W, H: Integer): Boolean;
+    var
+      EffectiveSize: Integer;
+    begin
+      if H > W then
+        EffectiveSize := H
+      else
+        EffectiveSize := W;
+
+      Result := (X > 0-EffectiveSize) and (X < aLevel.Info.Width)
+            and (Y > 0-EffectiveSize) and (Y < aLevel.Info.Height);
+    end;
+  begin
+    Write('  Removing invalid pieces');
+
+    for i := aLevel.InteractiveObjects.Count-1 downto 0 do
+      if not IsInsideLevel(aLevel.InteractiveObjects[i].Left, aLevel.InteractiveObjects[i].Top,
+                           PieceManager.Objects[aLevel.InteractiveObjects[i].Identifier].Width[false, false, false],
+                           PieceManager.Objects[aLevel.InteractiveObjects[i].Identifier].Height[false, false, false]) then
+        aLevel.InteractiveObjects.Delete(i);
+
+    for i := aLevel.Terrains.Count-1 downto 0 do
+      if not IsInsideLevel(aLevel.Terrains[i].Left, aLevel.Terrains[i].Top,
+                           PieceManager.Terrains[aLevel.Terrains[i].Identifier].Width,
+                           PieceManager.Terrains[aLevel.Terrains[i].Identifier].Height) then
+        aLevel.Terrains.Delete(i);
+
+    for i := aLevel.Steels.Count-1 downto 0 do
+      if not IsInsideLevel(aLevel.Steels[i].Left, aLevel.Steels[i].Top, aLevel.Steels[i].Width, aLevel.Steels[i].Height) then
+        aLevel.Steels.Delete(i);
+  end;
+
   function DoesFileExist(aName: String; aZip: TArchive = nil): Boolean;
   var
     Zip: TArchive;
@@ -82,12 +124,6 @@ var
     Result := IntToStr(aValue);
     while Length(Result) < aLen do
       Result := '0' + Result;
-  end;
-
-  procedure Write(aText: String);
-  begin
-    if ParamStr(2) = 'silent' then Exit; // to allow silent batch conversion via a BAT file cause i'm lazy
-    WriteLn(aText);
   end;
 
 const
@@ -160,6 +196,7 @@ begin
         GameParams.Level.PreText.LoadFromStream(MS);
       if CreateDataStream('p' + LeadZeroStr(Rank+1, 2) + LeadZeroStr(Level+1, 2) + '.txt', MS) <> nil then
         GameParams.Level.PostText.LoadFromStream(MS);
+      ClearInvalidPieces(GameParams.Level);
       GameParams.Level.SaveToFile(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\' + MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
       MainSec.AddLine('level', MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
       PieceManager.Tidy;
