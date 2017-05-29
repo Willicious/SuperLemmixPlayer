@@ -210,8 +210,8 @@ var
         begin
           LR := R;
           LL := L;
-          GameParams.SetLevel(R, L);
-          Level.LoadFromFile(GameParams.CurrentLevel.dLevelEntry.Path);
+          GameParams.SetLevel(GameParams.BaseLevelPack.Children[R].Levels[L]);
+          Level.LoadFromFile(GameParams.CurrentLevel.Path);
           Result := true;
           Exit;
         end;

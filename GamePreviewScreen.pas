@@ -53,7 +53,7 @@ end;
 
 procedure TGamePreviewScreen.NextLevel;
 begin
-  if GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount > 1 then
+  if GameParams.CurrentLevel.Group.Levels.Count > 1 then
   begin
     GameParams.NextLevel;
     CloseScreen(gstPreview);
@@ -62,7 +62,7 @@ end;
 
 procedure TGamePreviewScreen.PreviousLevel;
 begin
-  if GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].LevelCount > 1 then
+  if GameParams.CurrentLevel.Group.Levels.Count > 1 then
   begin
     GameParams.PrevLevel;
     CloseScreen(gstPreview);
@@ -71,15 +71,13 @@ end;
 
 procedure TGamePreviewScreen.NextRank;
 begin
-  if GameParams.CurrentLevel.dRank = GameParams.BaseLevelPack.Children.Count-1 then Exit;
-  GameParams.SetLevel(GameParams.CurrentLevel.dRank + 1, -1);
+  GameParams.NextGroup;
   CloseScreen(gstPreview);
 end;
 
 procedure TGamePreviewScreen.PreviousRank;
 begin
-  if GameParams.CurrentLevel.dRank = 0 then Exit;
-  GameParams.SetLevel(GameParams.CurrentLevel.dRank - 1, -1);
+  GameParams.PrevGroup;
   CloseScreen(gstPreview);
 end;
 
@@ -160,7 +158,7 @@ begin
   begin
     SaveName := ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
     if not ForceDirectories(SaveName) then Exit;
-    SaveName := SaveName + LeadZeroStr(GameParams.CurrentLevel.dRank + 1, 2) + LeadZeroStr(GameParams.CurrentLevel.dLevel + 1, 2) + '.png'
+    SaveName := SaveName + LeadZeroStr(GameParams.CurrentLevel.Group.ParentGroupIndex + 1, 2) + LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2) + '.png'
   end else begin
     Dlg := TSaveDialog.Create(self);
     Dlg.Filter := 'PNG Image (*.png)|*.png';
@@ -285,23 +283,23 @@ begin
 
   if Trim(GameParams.Level.Info.Author) = '' then
     Result := Format(SPreviewString,
-                [GameParams.CurrentLevel.dLevel + 1, // humans read 1-based
+                [GameParams.CurrentLevel.GroupIndex + 1, // humans read 1-based
                  Trim(GameParams.Level.Info.Title),
                  GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
                  Perc,
                  RR,
                  TL,
-                 GameParams.CurrentRankName
+                 GameParams.CurrentGroupName
                 ])
   else
     Result := Format(SPreviewStringAuth,
-                [GameParams.CurrentLevel.dLevel + 1, // humans read 1-based
+                [GameParams.CurrentLevel.GroupIndex + 1, // humans read 1-based
                  Trim(GameParams.Level.Info.Title),
                  GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
                  Perc,
                  RR,
                  TL,
-                 GameParams.CurrentRankName,
+                 GameParams.CurrentGroupName,
                  GameParams.Level.Info.Author
                 ]);
 end;

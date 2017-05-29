@@ -38,12 +38,6 @@ type
     gGotTalisman        : Boolean;
   end;
 
-  TCurrentLevel = record
-    dLevelEntry: TNeoLevelEntry;
-    dRank: Integer;
-    dLevel: Integer;
-  end;
-
 type
   TGameScreenType = (
     gstUnknown,
@@ -126,7 +120,7 @@ type
     fSaveSystem : TNeoSave;
     fOneLevelMode: Boolean;
     fDoneUpdateCheck: Boolean;
-    fCurrentLevel: TCurrentLevel;
+    fCurrentLevel: TNeoLevelEntry;
 
     fZoomLevel: Integer;
     fWindowWidth: Integer;
@@ -146,8 +140,7 @@ type
     procedure LoadFromIniFile;
     procedure SaveToIniFile;
 
-    procedure ValidateCurrentLevel(aCanCrossRank: Boolean);
-    function GetCurrentRankName: String;
+    function GetCurrentGroupName: String;
   public
     // this is initialized by appcontroller
     MainDatFile  : string;
@@ -198,12 +191,15 @@ type
     procedure Save;
     procedure Load;
 
-    procedure SetLevel(aRank, aLevel: Integer);
+    procedure SetLevel(aLevel: TNeoLevelEntry);
     procedure NextLevel(aCanCrossRank: Boolean = false);
     procedure PrevLevel(aCanCrossRank: Boolean = false);
+    procedure SetGroup(aGroup: TNeoLevelGroup);
+    procedure NextGroup;
+    procedure PrevGroup;
     procedure LoadCurrentLevel(NoOutput: Boolean = false); // loads level specified by CurrentLevel into Level, and prepares renderer
 
-    property CurrentLevel: TCurrentLevel read fCurrentLevel;
+    property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
     property AutoReplayNames: Boolean Index moAutoReplayNames read GetOptionFlag write SetOptionFlag;
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
@@ -250,7 +246,7 @@ type
 
     property Hotkeys: TLemmixHotkeyManager read fHotkeys;
 
-    property CurrentRankName: String read GetCurrentRankName;
+    property CurrentGroupName: String read GetCurrentGroupName;
   published
   end;
 
@@ -525,70 +521,80 @@ begin
 end;
 
 procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = false);
-var
-  LevelEntry: TNeoLevelEntry;
 begin
-  LevelEntry := BaseLevelPack.Children[CurrentLevel.dRank].Levels[CurrentLevel.dLevel];
-  Level.LoadFromFile(LevelEntry.Path);
+  Level.LoadFromFile(CurrentLevel.Path);
   PieceManager.Tidy;
   Renderer.PrepareGameRendering(Level, NoOutput);
 end;
 
-procedure TDosGameParams.SetLevel(aRank, aLevel: Integer);
-var
-  i: Integer;
+procedure TDosGameParams.SetLevel(aLevel: TNeoLevelEntry);
 begin
-  fCurrentLevel.dRank := aRank;
-
-  if aLevel = -1 then
-  begin
-    aLevel := 0;
-    for i := BaseLevelPack.Children[aRank].Levels.Count-1 downto 0 do
-      if BaseLevelPack.Children[aRank].Levels[i].Status <> lst_Completed then
-        aLevel := i;
-  end;
-
-  fCurrentLevel.dLevel := aLevel;
-  ValidateCurrentLevel(false);
+  fCurrentLevel := aLevel;
 end;
 
 procedure TDosGameParams.NextLevel(aCanCrossRank: Boolean);
+var
+  CurLevel: TNeoLevelEntry;
+  CurLevelGroup: TNeoLevelGroup;
+  CurLevelIndex: Integer;
+  CurGroupIndex: Integer;
 begin
-  Inc(fCurrentLevel.dLevel);
-  ValidateCurrentLevel(aCanCrossRank);
-end;
-
-procedure TDosGameParams.PrevLevel(aCanCrossRank: Boolean);
-begin
-  Dec(fCurrentLevel.dLevel);
-  ValidateCurrentLevel(aCanCrossRank);
-end;
-
-procedure TDosGameParams.ValidateCurrentLevel(aCanCrossRank: Boolean);
-  procedure ValidateRank;
-  begin
-    if CurrentLevel.dRank < 0 then
-      fCurrentLevel.dRank := BaseLevelPack.Children.Count-1
-    else if CurrentLevel.dRank >= BaseLevelPack.Children.Count then
-      fCurrentLevel.dRank := 0;
-  end;
-begin
-  if CurrentLevel.dLevel < 0 then
+  CurLevel := fCurrentLevel;
+  CurLevelGroup := CurLevel.Group;
+  CurLevelIndex := CurLevelGroup.LevelIndex[CurLevel];
+  if CurLevelIndex = CurLevelGroup.Levels.Count-1 then
   begin
     if aCanCrossRank then
-      Dec(fCurrentLevel.dRank);
-    ValidateRank;
-    fCurrentLevel.dLevel := BaseLevelPack.Children[CurrentLevel.dRank].LevelCount - 1;
-  end else if CurrentLevel.dLevel >= BaseLevelPack.Children[CurrentLevel.dRank].LevelCount then
-  begin
-    if aCanCrossRank then
-      Inc(fCurrentLevel.dRank);
-    ValidateRank;
-    fCurrentLevel.dLevel := 0;
+    begin
+      NextGroup;
+      CurLevelGroup := fCurrentLevel.Group;
+    end;
+    fCurrentLevel := CurLevelGroup.Levels[0];
+  end else begin
+    fCurrentLevel := CurLevelGroup.Levels[CurLevelIndex + 1];
   end;
 
   ShownText := false;
-  fCurrentLevel.dLevelEntry := BaseLevelPack.Children[CurrentLevel.dRank].Levels[CurrentLevel.dLevel];
+end;
+
+procedure TDosGameParams.PrevLevel(aCanCrossRank: Boolean);
+var
+  CurLevel: TNeoLevelEntry;
+  CurLevelGroup: TNeoLevelGroup;
+  CurLevelIndex: Integer;
+  CurGroupIndex: Integer;
+begin
+  CurLevel := fCurrentLevel;
+  CurLevelGroup := CurLevel.Group;
+  CurLevelIndex := CurLevelGroup.LevelIndex[CurLevel];
+  if CurLevelIndex = 0 then
+  begin
+    if aCanCrossRank then
+    begin
+      PrevGroup;
+      CurLevelGroup := fCurrentLevel.Group;
+    end;
+    fCurrentLevel := CurLevelGroup.Levels[CurLevelGroup.Levels.Count-1];
+  end else begin
+    fCurrentLevel := CurLevelGroup.Levels[CurLevelIndex - 1];
+  end;
+
+  ShownText := false;
+end;
+
+procedure TDosGameParams.SetGroup(aGroup: TNeoLevelGroup);
+begin
+  SetLevel(aGroup.FirstUnbeatenLevel);
+end;
+
+procedure TDosGameParams.NextGroup;
+begin
+  SetLevel(CurrentLevel.Group.NextGroup.FirstUnbeatenLevel);
+end;
+
+procedure TDosGameParams.PrevGroup;
+begin
+  SetLevel(CurrentLevel.Group.PrevGroup.FirstUnbeatenLevel);
 end;
 
 
@@ -611,7 +617,7 @@ begin
     BaseLevelPack.Children[0].Levels.Add;
   // End workaround
 
-  SetLevel(0, -1);
+  SetGroup(BaseLevelPack.Children[0]);
 
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
@@ -680,9 +686,9 @@ begin
     Exclude(PostLevelSoundOptions, aFlag);
 end;
 
-function TDosGameParams.GetCurrentRankName: String;
+function TDosGameParams.GetCurrentGroupName: String;
 begin
-  Result := BaseLevelPack.Children[CurrentLevel.dRank].Name;
+  Result := CurrentLevel.Group.Name;
 end;
 
 end.

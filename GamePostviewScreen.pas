@@ -187,8 +187,8 @@ var
           if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount);
       Result := 0;
       CurrentMin := -1;
-      for i := 0 to GameParams.CurrentLevel.dLevelEntry.Group.PostviewTexts.Count-1 do
-        if ConditionMet(GameParams.CurrentLevel.dLevelEntry.Group.PostviewTexts[i]) then
+      for i := 0 to GameParams.CurrentLevel.Group.PostviewTexts.Count-1 do
+        if ConditionMet(GameParams.CurrentLevel.Group.PostviewTexts[i]) then
           Result := i;
     end;
 
@@ -227,13 +227,15 @@ begin
     if not gCheated then
     with SaveSystem, CurrentLevel do
     begin
-      SetLemmingRecord(dRank, dLevel, gRescued);
+      SetLemmingRecord(Group.ParentGroupIndex, GroupIndex, gRescued);
 
       if gSuccess then
       begin
-        CompleteLevel(dRank, dLevel);
-        SetTimeRecord(dRank, dLevel, gLastRescueIteration);
-      end;
+        CompleteLevel(Group.ParentGroupIndex, GroupIndex);
+        Status := lst_Completed;
+        SetTimeRecord(Group.ParentGroupIndex, GroupIndex, gLastRescueIteration);
+      end else
+        Status := lst_Attempted;
     end;
 
     if gRescued >= Level.Info.RescueCount then
@@ -265,7 +267,7 @@ begin
     if GameParams.fTestMode then
       LF(1)
     else
-      Add(SYourRecord + PadL(IntToStr(SaveSystem.GetLemmingRecord(CurrentLevel.dRank, CurrentLevel.dLevel)), 4));
+      Add(SYourRecord + PadL(IntToStr(SaveSystem.GetLemmingRecord(CurrentLevel.Group.ParentGroupIndex, CurrentLevel.GroupIndex)), 4));
 
     LF(1);
 
@@ -273,11 +275,11 @@ begin
     if GameParams.fTestMode or not gSuccess then
       LF(1)
     else
-      Add(SYourTimeRecord + PadL(MakeTimeString(SaveSystem.GetTimeRecord(CurrentLevel.dRank, CurrentLevel.dLevel)), 8));
+      Add(SYourTimeRecord + PadL(MakeTimeString(SaveSystem.GetTimeRecord(CurrentLevel.Group.ParentGroupIndex, CurrentLevel.GroupIndex)), 8));
 
     LF(2);
 
-    WhichText := GameParams.CurrentLevel.dLevelEntry.Group.PostviewTexts[GetResultIndex];
+    WhichText := GameParams.CurrentLevel.Group.PostviewTexts[GetResultIndex];
     for i := 0 to 6 do
     begin
       if i >= WhichText.Text.Count then

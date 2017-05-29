@@ -59,6 +59,7 @@ type
       function GetFullPath: String;
       function GetTitle: String;
       function GetLevelID: Cardinal;
+      function GetGroupIndex: Integer;
     public
       constructor Create(aGroup: TNeoLevelGroup);
       destructor Destroy; override;
@@ -71,6 +72,7 @@ type
       property LevelID: Cardinal read GetLevelID;
       property Path: String read GetFullPath;
       property Status: TNeoLevelStatus read fStatus write fStatus;
+      property GroupIndex: Integer read GetGroupIndex;
   end;
 
   TNeoLevelGroup = class
@@ -109,12 +111,22 @@ type
       procedure LoadPostviewSection(aSection: TParserSection; const aIteration: Integer);
 
       function GetRecursiveLevelCount: Integer;
+
+      function GetLevelIndex(aLevel: TNeoLevelEntry): Integer;
+      function GetGroupIndex(aGroup: TNeoLevelGroup): Integer;
+      function GetParentGroupIndex: Integer;
+
+      function GetFirstUnbeatenLevel: TNeoLevelEntry;
+
+      function GetNextGroup: TNeoLevelGroup;
+      function GetPrevGroup: TNeoLevelGroup;
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
 
       procedure EnsureUpdated;
 
+      property Parent: TNeoLevelGroup read fParentGroup;
       property Children: TNeoLevelGroups read fChildGroups;
       property Levels: TNeoLevelEntries read fLevels;
       property LevelCount: Integer read GetRecursiveLevelCount;
@@ -125,6 +137,14 @@ type
       property PanelStyle: String read GetPanelStyle;
       property MusicList: TStringList read fMusicList;
       property PostviewTexts: TPostviewTexts read fPostviewTexts;
+
+      property LevelIndex[aLevel: TNeoLevelEntry]: Integer read GetLevelIndex;
+      property GroupIndex[aGroup: TNeoLevelGroup]: Integer read GetGroupIndex;
+      property ParentGroupIndex: Integer read GetParentGroupIndex;
+      property FirstUnbeatenLevel: TNeoLevelEntry read GetFirstUnbeatenLevel;
+
+      property PrevGroup: TNeoLevelGroup read GetPrevGroup;
+      property NextGroup: TNeoLevelGroup read GetNextGroup;
   end;
 
 
@@ -304,12 +324,20 @@ end;
 
 function TNeoLevelEntry.GetFullPath: String;
 begin
-  if fGroup = nil then
+  if (fGroup = nil) or (Pos(':', fFilename) <> 0) then
     Result := ''
   else
     Result := fGroup.Path;
 
   Result := Result + fFilename;
+end;
+
+function TNeoLevelEntry.GetGroupIndex: Integer;
+begin
+  if fGroup = nil then
+    Result := -1
+  else
+    Result := fGroup.LevelIndex[self];
 end;
 
 { TNeoLevelGroup }
@@ -549,6 +577,94 @@ begin
   Result := fLevels.Count;
   for i := 0 to fChildGroups.Count-1 do
     Result := Result + fChildGroups[i].LevelCount;
+end;
+
+function TNeoLevelGroup.GetLevelIndex(aLevel: TNeoLevelEntry): Integer;
+begin
+  for Result := 0 to fLevels.Count-1 do
+    if fLevels[Result] = aLevel then Exit;
+  Result := -1;
+end;
+
+function TNeoLevelGroup.GetGroupIndex(aGroup: TNeoLevelGroup): Integer;
+begin
+  for Result := 0 to fChildGroups.Count-1 do
+    if fChildGroups[Result] = aGroup then Exit;
+  Result := -1;
+end;
+
+function TNeoLevelGroup.GetParentGroupIndex: Integer;
+begin
+  if fParentGroup = nil then
+    Result := -1
+  else
+    Result := fParentGroup.GroupIndex[self];
+end;
+
+function TNeoLevelGroup.GetFirstUnbeatenLevel: TNeoLevelEntry;
+var
+  i: Integer;
+begin
+  Result := fLevels[0];
+  for i := 0 to fLevels.Count-1 do
+    if fLevels[i].Status <> lst_Completed then
+    begin
+      Result := fLevels[i];
+      Exit;
+    end;
+end;
+
+function TNeoLevelGroup.GetNextGroup: TNeoLevelGroup;
+var
+  i: Integer;
+  GiveChildPriority: Boolean;
+begin
+  Result := self; // failsafe
+  GiveChildPriority := IsBasePack;
+  repeat
+    if GiveChildPriority or (Result.Parent = nil) then
+    begin
+      if Result.Children.Count > 0 then
+        Result := Result.Children[0]
+      else
+        GiveChildPriority := false;
+      Continue;
+    end;
+
+    if Result.ParentGroupIndex < Result.Parent.Children.Count-1 then
+    begin
+      Result := Result.Parent.Children[ParentGroupIndex + 1];
+      GiveChildPriority := true;
+      Continue;
+    end;
+
+    Result := Result.Parent;
+  until ((Result.Levels.Count > 0) or (Result = self)) and not GiveChildPriority;
+end;
+
+function TNeoLevelGroup.GetPrevGroup: TNeoLevelGroup;
+var
+  i: Integer;
+  GiveParentPriority: Boolean;
+begin
+  Result := self; // failsafe
+  repeat
+    if GiveParentPriority then
+    begin
+      Result := Result.Parent;
+      GiveParentPriority := Result.ParentGroupIndex = 0;
+      Continue;
+    end;
+
+    if Result.Children.Count > 0 then
+    begin
+      Result := Result.Children[Result.Children.Count-1];
+      Continue;
+    end;
+
+    Result := Result.Parent;
+    GiveParentPriority := true;
+  until ((Result.Levels.Count > 0) or (Result = self)) and not GiveParentPriority;
 end;
 
 

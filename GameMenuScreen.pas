@@ -91,7 +91,6 @@ type
     BitmapElements : array[TGameMenuBitmap] of TBitmap32;
   { section }
     CurrentSection : Integer; // game section
-    LastSection    : Integer; // last game section
   { credits }
     LeftLemmingAnimation   : TBitmap32;
     RightLemmingAnimation  : TBitmap32;
@@ -511,7 +510,7 @@ end;
 
 procedure TGameMenuScreen.NextSection(Forwards: Boolean);
 begin
-  if Forwards and (CurrentSection < LastSection) then
+  if Forwards then
     SetSection(CurrentSection + 1)
   else if (not Forwards) and (CurrentSection > 0) then
     SetSection(CurrentSection - 1);
@@ -526,8 +525,7 @@ var
 begin
   inherited PrepareGameParams;
 
-  LastSection := GameParams.BaseLevelPack.Children.Count - 1;
-  CurrentSection := GameParams.CurrentLevel.dRank;
+  CurrentSection := GameParams.CurrentLevel.Group.ParentGroupIndex;
 
   CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} GameParams.BaseLevelPack.Name + #13;
   (*for i := 0 to 15 do
@@ -561,7 +559,7 @@ end;
 
 procedure TGameMenuScreen.SetSection(aSection: Integer);
 begin
-  CurrentSection := aSection;
+  CurrentSection := GameParams.CurrentLevel.Group.ParentGroupIndex;
   //@styledef
   DrawBitmapElement(gmbSection); // This allows for transparency in the gmbGameSectionN bitmaps
   case CurrentSection of
@@ -582,7 +580,7 @@ begin
     14: DrawBitmapElement(gmbGameSection15);
   end;
 
-  GameParams.SetLevel(CurrentSection, -1);
+  //GameParams.SetLevel(CurrentSection, -1);
 end;
 
 procedure TGameMenuScreen.DrawWorkerLemmings(aFrame: Integer);

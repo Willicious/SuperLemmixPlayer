@@ -66,7 +66,7 @@ begin
     TileBackgroundBitmap(0, 0);
 
     fPack := GameParams.BaseLevelPack;
-    fSection := GameParams.CurrentLevel.dRank;
+    fSection := GameParams.CurrentLevel.Group.ParentGroupIndex;
 
     DrawPurpleTextCentered(ScreenImg.Bitmap, SLevelSelect, 10);
     DrawPurpleTextCentered(ScreenImg.Bitmap, fPack.Name + ' - ' + fPack.Children[fSection].Name, 30);
@@ -74,7 +74,7 @@ begin
     fBasicState.SetSize(ScreenImg.Bitmap.Width, ScreenImg.Bitmap.Height);
     ScreenImg.Bitmap.DrawTo(fBasicState); // save background
 
-    fSelectedLevel := GameParams.CurrentLevel.dLevel;
+    fSelectedLevel := GameParams.CurrentLevel.GroupIndex;
 
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'tick.png', fTick);
 
@@ -142,7 +142,7 @@ begin
   case Key of
     VK_ESCAPE: CloseScreen(gstMenu);
     VK_RETURN: begin
-                GameParams.SetLevel(fSection, fSelectedLevel);
+                GameParams.SetLevel(GameParams.CurrentLevel.Group.Levels[fSelectedLevel]);
                 CloseScreen(gstPreview);
               end;
     VK_UP: if fSelectedLevel > 0 then
@@ -155,14 +155,12 @@ begin
                Inc(fSelectedLevel);
                DrawLevelList;
              end;
-    VK_LEFT: if fSection > 0 then
-             begin
-               GameParams.SetLevel(GameParams.CurrentLevel.dRank - 1, -1);
+    VK_LEFT: begin
+               GameParams.PrevGroup;
                CloseScreen(gstLevelSelect);
              end;
-    VK_RIGHT: if fSection < GameParams.BaseLevelPack.Children.Count-1 then
-              begin
-                GameParams.SetLevel(GameParams.CurrentLevel.dRank + 1, -1);
+    VK_RIGHT: begin
+                GameParams.NextGroup;
                 CloseScreen(gstLevelSelect);
               end;
   end;

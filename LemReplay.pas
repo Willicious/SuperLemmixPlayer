@@ -299,7 +299,7 @@ var
     if GameParams.fTestMode then
       Result := Trim(aLevel.Info.Title)
     else
-      Result := RankName + '_' + LeadZeroStr(GameParams.CurrentLevel.dLevel + 1, 2);
+      Result := RankName + '_' + LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2);
     if TestModeName or GameParams.AlwaysTimestamp then
       Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
     Result := StringReplace(Result, '<', '_', [rfReplaceAll]);
@@ -336,7 +336,7 @@ var
     Dlg : TSaveDialog;
   begin
     Dlg := TSaveDialog.Create(aOwner);
-    Dlg.Title := 'Save replay file (' + RankName + ' ' + IntToStr(GameParams.CurrentLevel.dLevel + 1) + ', ' + Trim(aLevel.Info.Title) + ')';
+    Dlg.Title := 'Save replay file (' + RankName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(aLevel.Info.Title) + ')';
     Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
@@ -368,7 +368,7 @@ var
 begin
   SaveText := false;
 
-  RankName := GameParams.BaseLevelPack.Children[GameParams.CurrentLevel.dRank].Name;
+  RankName := GameParams.CurrentGroupName;
 
   SaveNameLrb := GetReplayFileName(TestModeName);
 
