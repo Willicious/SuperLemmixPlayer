@@ -117,7 +117,7 @@ type
   { internal }
     procedure DrawBitmapElement(aElement: TGameMenuBitmap);
     procedure SetSoundOptions(aOptions: TGameSoundOptions);
-    procedure SetSection(aSection: Integer);
+    procedure SetSection;
     procedure NextSection(Forwards: Boolean);
     procedure DrawWorkerLemmings(aFrame: Integer);
     procedure DrawReel;
@@ -328,7 +328,7 @@ begin
     DrawReel;
 
     // a bit weird place, but here we know the bitmaps are loaded
-    SetSection(CurrentSection);
+    SetSection;
     SetSoundOptions(GameParams.SoundOptions);
 
     CanAnimate := True;
@@ -511,9 +511,11 @@ end;
 procedure TGameMenuScreen.NextSection(Forwards: Boolean);
 begin
   if Forwards then
-    SetSection(CurrentSection + 1)
-  else if (not Forwards) and (CurrentSection > 0) then
-    SetSection(CurrentSection - 1);
+    GameParams.NextGroup
+  else
+    GameParams.PrevGroup;
+
+  SetSection;
 
   GameParams.ShownText := false;
 end;
@@ -557,7 +559,7 @@ begin
   GameParams.SoundOptions := aOptions;
 end;
 
-procedure TGameMenuScreen.SetSection(aSection: Integer);
+procedure TGameMenuScreen.SetSection;
 begin
   CurrentSection := GameParams.CurrentLevel.Group.ParentGroupIndex;
   //@styledef
