@@ -82,6 +82,7 @@ type
       fName: String;
       fFolder: String;
       fPanelStyle: String;
+      fIsBasePack: Boolean;
 
       fMusicList: TStringList;
       fHasOwnMusicList: Boolean;
@@ -118,6 +119,7 @@ type
       property Levels: TNeoLevelEntries read fLevels;
       property LevelCount: Integer read GetRecursiveLevelCount;
       property Name: String read fName write fName;
+      property IsBasePack: Boolean read fIsBasePack write fIsBasePack;
       property Folder: String read fFolder write SetFolderName;
       property Path: String read GetFullPath;
       property PanelStyle: String read GetPanelStyle;
@@ -447,6 +449,7 @@ begin
     MainSec := Parser.MainSection;
     MainSec.DoForEachSection('rank', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
+    fIsBasePack := MainSec.Line['base'] <> nil;
 
     // we do NOT want to sort alphabetically here, we want them to stay in the order
     // the metainfo file lists them in!

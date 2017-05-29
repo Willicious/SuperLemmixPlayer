@@ -238,6 +238,7 @@ begin
     MainSec.AddLine('name', Trim(SysDat.RankNames[Rank]));
     MainSec.AddLine('folder', RankFoldername);
   end;
+  Parser.MainSection.AddLine('base');
   Parser.SaveToFile(DstBasePath + 'levels.nxmi');
   Parser.Clear;
 
