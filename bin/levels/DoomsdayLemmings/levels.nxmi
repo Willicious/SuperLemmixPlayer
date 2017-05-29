@@ -2,12 +2,12 @@ BASE
 
 $RANK
   NAME Outbreak
-  FOLDER Apocalypse
+  FOLDER Outbreak
 $END
 
 $RANK
   NAME Plague
-  FOLDER Apocalypse
+  FOLDER Plague
 $END
 
 $RANK

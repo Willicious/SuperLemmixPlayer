@@ -2,12 +2,12 @@ BASE
 
 $RANK
   NAME Mechanics
-  FOLDER Objects
+  FOLDER Mechanics
 $END
 
 $RANK
   NAME Skills
-  FOLDER Objects
+  FOLDER Skills
 $END
 
 $RANK

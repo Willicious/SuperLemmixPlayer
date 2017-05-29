@@ -150,6 +150,7 @@ var
   DstBasePath: String;
 
   RankFoldername: String;
+  RankFoldernames: array of String;
   LevelFilename: String;
   n: Integer;
 
@@ -191,6 +192,7 @@ begin
   MS.Read(SysDat, SizeOf(TSysDatRec));
 
   { Level Files }
+  SetLength(RankFolderNames, SysDat.RankCount);
   for Rank := 0 to SysDat.RankCount-1 do
   begin
     Write('Rank ' + IntToStr(Rank+1));
@@ -201,6 +203,7 @@ begin
       Inc(n);
       RankFoldername := MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '(' + IntToStr(n) + ')';
     end;
+    RankFoldernames[Rank] := RankFoldername;
     ForceDirectories(DstBasePath + RankFoldername + '\');
     MainSec := Parser.MainSection;
     for Level := 0 to 255 do
@@ -236,7 +239,7 @@ begin
   begin
     MainSec := Parser.MainSection.SectionList.Add('rank');
     MainSec.AddLine('name', Trim(SysDat.RankNames[Rank]));
-    MainSec.AddLine('folder', RankFoldername);
+    MainSec.AddLine('folder', RankFoldernames[Rank]);
   end;
   Parser.MainSection.AddLine('base');
   Parser.SaveToFile(DstBasePath + 'levels.nxmi');

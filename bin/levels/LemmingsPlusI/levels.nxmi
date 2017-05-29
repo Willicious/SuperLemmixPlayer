@@ -2,22 +2,22 @@ BASE
 
 $RANK
   NAME Mild
-  FOLDER Psycho
+  FOLDER Mild
 $END
 
 $RANK
   NAME Wimpy
-  FOLDER Psycho
+  FOLDER Wimpy
 $END
 
 $RANK
   NAME Medi
-  FOLDER Psycho
+  FOLDER Medi
 $END
 
 $RANK
   NAME Danger
-  FOLDER Psycho
+  FOLDER Danger
 $END
 
 $RANK

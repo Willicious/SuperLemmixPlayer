@@ -2,32 +2,32 @@ BASE
 
 $RANK
   NAME Genesis
-  FOLDER Other
+  FOLDER Genesis
 $END
 
 $RANK
   NAME Present
-  FOLDER Other
+  FOLDER Present
 $END
 
 $RANK
   NAME Sunsoft
-  FOLDER Other
+  FOLDER Sunsoft
 $END
 
 $RANK
   NAME 2P
-  FOLDER Other
+  FOLDER 2P
 $END
 
 $RANK
   NAME Sega
-  FOLDER Other
+  FOLDER Sega
 $END
 
 $RANK
   NAME PSP
-  FOLDER Other
+  FOLDER PSP
 $END
 
 $RANK

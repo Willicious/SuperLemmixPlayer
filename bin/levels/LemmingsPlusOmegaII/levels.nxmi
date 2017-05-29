@@ -2,17 +2,17 @@ BASE
 
 $RANK
   NAME Fluffy
-  FOLDER Sharp
+  FOLDER Fluffy
 $END
 
 $RANK
   NAME Coarse
-  FOLDER Sharp
+  FOLDER Coarse
 $END
 
 $RANK
   NAME Spiky
-  FOLDER Sharp
+  FOLDER Spiky
 $END
 
 $RANK

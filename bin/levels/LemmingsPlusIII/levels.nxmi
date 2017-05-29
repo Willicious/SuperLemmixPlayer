@@ -2,17 +2,17 @@ BASE
 
 $RANK
   NAME Timid
-  FOLDER Fierce
+  FOLDER Timid
 $END
 
 $RANK
   NAME Dodgy
-  FOLDER Fierce
+  FOLDER Dodgy
 $END
 
 $RANK
   NAME Rough
-  FOLDER Fierce
+  FOLDER Rough
 $END
 
 $RANK

@@ -2,22 +2,22 @@ BASE
 
 $RANK
   NAME Tame
-  FOLDER Havoc
+  FOLDER Tame
 $END
 
 $RANK
   NAME Crazy
-  FOLDER Havoc
+  FOLDER Crazy
 $END
 
 $RANK
   NAME Wild
-  FOLDER Havoc
+  FOLDER Wild
 $END
 
 $RANK
   NAME Wicked
-  FOLDER Havoc
+  FOLDER Wicked
 $END
 
 $RANK

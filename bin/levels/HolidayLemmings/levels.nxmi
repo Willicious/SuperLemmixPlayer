@@ -2,17 +2,17 @@ BASE
 
 $RANK
   NAME Frost
-  FOLDER Blitz
+  FOLDER Frost
 $END
 
 $RANK
   NAME Hail
-  FOLDER Blitz
+  FOLDER Hail
 $END
 
 $RANK
   NAME Flurry
-  FOLDER Blitz
+  FOLDER Flurry
 $END
 
 $RANK

@@ -2,17 +2,17 @@ BASE
 
 $RANK
   NAME Breezy
-  FOLDER Mental
+  FOLDER Breezy
 $END
 
 $RANK
   NAME Puzzling
-  FOLDER Mental
+  FOLDER Puzzling
 $END
 
 $RANK
   NAME Perplexing
-  FOLDER Mental
+  FOLDER Perplexing
 $END
 
 $RANK

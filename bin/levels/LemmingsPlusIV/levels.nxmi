@@ -2,17 +2,17 @@ BASE
 
 $RANK
   NAME Smooth
-  FOLDER Insane
+  FOLDER Smooth
 $END
 
 $RANK
   NAME Bumpy
-  FOLDER Insane
+  FOLDER Bumpy
 $END
 
 $RANK
   NAME Twisted
-  FOLDER Insane
+  FOLDER Twisted
 $END
 
 $RANK

@@ -2,22 +2,22 @@ BASE
 
 $RANK
   NAME Nice
-  FOLDER Genius
+  FOLDER Nice
 $END
 
 $RANK
   NAME Cheeky
-  FOLDER Genius
+  FOLDER Cheeky
 $END
 
 $RANK
   NAME Sneaky
-  FOLDER Genius
+  FOLDER Sneaky
 $END
 
 $RANK
   NAME Cunning
-  FOLDER Genius
+  FOLDER Cunning
 $END
 
 $RANK

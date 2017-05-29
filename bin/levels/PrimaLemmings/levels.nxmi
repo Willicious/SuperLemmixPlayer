@@ -2,17 +2,17 @@ BASE
 
 $RANK
   NAME Fun
-  FOLDER Mayhem
+  FOLDER Fun
 $END
 
 $RANK
   NAME Tricky
-  FOLDER Mayhem
+  FOLDER Tricky
 $END
 
 $RANK
   NAME Taxing
-  FOLDER Mayhem
+  FOLDER Taxing
 $END
 
 $RANK
