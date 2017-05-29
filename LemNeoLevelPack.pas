@@ -622,7 +622,7 @@ begin
   Result := self; // failsafe
   GiveChildPriority := IsBasePack;
   repeat
-    if GiveChildPriority or (Result.Parent = nil) then
+    if GiveChildPriority or (Result.Parent = nil) or Result.IsBasePack then
     begin
       if Result.Children.Count > 0 then
         Result := Result.Children[0]
@@ -648,17 +648,26 @@ var
   GiveParentPriority: Boolean;
 begin
   Result := self; // failsafe
+  GiveParentPriority := false;
   repeat
-    if GiveParentPriority then
+    if GiveParentPriority and not ((Result.Parent = nil) or Result.IsBasePack) then
     begin
       Result := Result.Parent;
       GiveParentPriority := Result.ParentGroupIndex = 0;
       Continue;
     end;
 
+    GiveParentPriority := false;
+
     if Result.Children.Count > 0 then
     begin
       Result := Result.Children[Result.Children.Count-1];
+      Continue;
+    end;
+
+    if Result.ParentGroupIndex > 0 then
+    begin
+      Result := Parent.Children[Result.ParentGroupIndex - 1];
       Continue;
     end;
 
