@@ -1,0 +1,324 @@
+TITLE Holiday Island
+THEME xmas
+ID x9CEC291F
+LEMMINGS 30
+REQUIREMENT 24
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 10
+  FLOATER 10
+  BOMBER 10
+  STONER 10
+  BLOCKER 10
+  PLATFORMER 10
+  BUILDER 10
+  STACKER 10
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 0
+  Y 142
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 64
+  Y 142
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 128
+  Y 142
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 192
+  Y 142
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 256
+  Y 142
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE window
+  X 214
+  Y 26
+  NO_OVERWRITE
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE window
+  X 62
+  Y 26
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X 143
+  Y 4
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE lights
+  X 256
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE lights
+  X 192
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE lights
+  X 0
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE lights
+  X 64
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 21
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 53
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 85
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 117
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 149
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 181
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 205
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 237
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 221
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 197
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 165
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 133
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 101
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 77
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 37
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 61
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 109
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 149
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 189
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 223
+  Y 119
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snowman
+  X 14
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE icicle_01
+  X 284
+  Y 59
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE icicle_01
+  X 268
+  Y 52
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE icicle_01
+  X 162
+  Y 53
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 135
+  Y 46
+  ONE_WAY
+$END
+

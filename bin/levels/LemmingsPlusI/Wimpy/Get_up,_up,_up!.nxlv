@@ -1,0 +1,317 @@
+TITLE Get up, up, up!
+THEME orig_marble
+ID x5252357D
+LEMMINGS 10
+REQUIREMENT 5
+RELEASE_RATE 77
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 10
+  FLOATER 10
+  BOMBER 10
+  BLOCKER 10
+  BUILDER 20
+  BASHER 10
+  MINER 10
+  DIGGER 10
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE water
+  X 104
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE water
+  X 168
+  Y 135
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE window
+  X 112
+  Y 105
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE exit
+  X 112
+  Y 13
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 102
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 102
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 102
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 102
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 102
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 102
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 102
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 212
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 212
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 212
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 212
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 212
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 212
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 212
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_12
+  X 116
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_12
+  X 164
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_14
+  X 112
+  Y 132
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_13
+  X 184
+  Y 132
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_01
+  X 65
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_07
+  X 226
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_06
+  X 116
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_06
+  X 148
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 172
+  Y 57
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_06
+  X 105
+  Y 87
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_02
+  X 162
+  Y 46
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_06
+  X 173
+  Y 57
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_06
+  X 226
+  Y 57
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 116
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_13
+  X 161
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_02
+  X 141
+  Y 88
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE steel_02
+  X 226
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+

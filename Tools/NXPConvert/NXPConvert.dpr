@@ -38,6 +38,11 @@ var
 
       Result := (X > 0-EffectiveSize) and (X < aLevel.Info.Width)
             and (Y > 0-EffectiveSize) and (Y < aLevel.Info.Height);
+
+      if not Result then
+      begin
+        Write('    Removed piece: ' + IntToStr(X) + ',' + IntToStr(Y) + ' : ' + IntToStr(W) + 'x' + IntToStr(H));
+      end;
     end;
   begin
     Write('  Removing invalid pieces');
@@ -50,8 +55,8 @@ var
 
     for i := aLevel.Terrains.Count-1 downto 0 do
       if not IsInsideLevel(aLevel.Terrains[i].Left, aLevel.Terrains[i].Top,
-                           PieceManager.Terrains[aLevel.Terrains[i].Identifier].Width,
-                           PieceManager.Terrains[aLevel.Terrains[i].Identifier].Height) then
+                           PieceManager.Terrains[aLevel.Terrains[i].Identifier].GraphicImage[false, false, false].Width,
+                           PieceManager.Terrains[aLevel.Terrains[i].Identifier].GraphicImage[false, false, false].Height) then
         aLevel.Terrains.Delete(i);
 
     for i := aLevel.Steels.Count-1 downto 0 do
@@ -117,6 +122,8 @@ var
       for i2 := 1 to Length(FORBIDDEN_CHARS) do
         if Result[i] = FORBIDDEN_CHARS[i2] then
           Result[i] := '_';
+    if Length(Result) = 0 then
+      Result := '_';
   end;
 
   function LeadZeroStr(aValue: Integer; aLen: Integer): String;
@@ -141,6 +148,10 @@ var
   Rank, Level: Integer;
 
   DstBasePath: String;
+
+  RankFoldername: String;
+  LevelFilename: String;
+  n: Integer;
 
 begin
   if ParamStr(1) = '' then
@@ -183,7 +194,14 @@ begin
   for Rank := 0 to SysDat.RankCount-1 do
   begin
     Write('Rank ' + IntToStr(Rank+1));
-    ForceDirectories(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\');
+    n := 0;
+    RankFoldername := MakeSafeForFilename(Trim(SysDat.RankNames[Rank]));
+    while DirectoryExists(DstBasePath + RankFoldername) do
+    begin
+      Inc(n);
+      RankFoldername := MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '(' + IntToStr(n) + ')';
+    end;
+    ForceDirectories(DstBasePath + RankFoldername + '\');
     MainSec := Parser.MainSection;
     for Level := 0 to 255 do
     begin
@@ -197,11 +215,18 @@ begin
       if CreateDataStream('p' + LeadZeroStr(Rank+1, 2) + LeadZeroStr(Level+1, 2) + '.txt', MS) <> nil then
         GameParams.Level.PostText.LoadFromStream(MS);
       ClearInvalidPieces(GameParams.Level);
-      GameParams.Level.SaveToFile(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\' + MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
-      MainSec.AddLine('level', MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '.nxlv');
+      LevelFilename := MakeSafeForFilename(Trim(GameParams.Level.Info.Title));
+      n := 0;
+      while FileExists(DstBasePath + RankFoldername + '\' + LevelFilename + '.nxlv') do
+      begin
+        Inc(n);
+        LevelFilename := MakeSafeForFilename(Trim(GameParams.Level.Info.Title)) + '(' + IntToStr(n) + ')';
+      end;
+      GameParams.Level.SaveToFile(DstBasePath + RankFoldername + '\' + LevelFilename + '.nxlv');
+      MainSec.AddLine('level', LevelFilename + '.nxlv');
       PieceManager.Tidy;
     end;
-    Parser.SaveToFile(DstBasePath + MakeSafeForFilename(Trim(SysDat.RankNames[Rank])) + '\levels.nxmi');
+    Parser.SaveToFile(DstBasePath + RankFoldername + '\levels.nxmi');
     Parser.Clear;
   end;
 
@@ -211,7 +236,7 @@ begin
   begin
     MainSec := Parser.MainSection.SectionList.Add('rank');
     MainSec.AddLine('name', Trim(SysDat.RankNames[Rank]));
-    MainSec.AddLine('folder', MakeSafeForFilename(Trim(SysDat.RankNames[Rank])));
+    MainSec.AddLine('folder', RankFoldername);
   end;
   Parser.SaveToFile(DstBasePath + 'levels.nxmi');
   Parser.Clear;

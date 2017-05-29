@@ -1,0 +1,262 @@
+TITLE and the winner is.....
+THEME orig_pillar
+ID xD0A738A7
+LEMMINGS 80
+REQUIREMENT 80
+TIME_LIMIT 300
+RELEASE_RATE 70
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 10
+  BOMBER 10
+  BLOCKER 10
+  BUILDER 50
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 136
+  Y 0
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 264
+  Y 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_blue
+  X 280
+  Y 8
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 8
+  Y 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_green
+  X 24
+  Y 8
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 136
+  Y 0
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 7
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 17
+  Y 66
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_03
+  X 135
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 133
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_04
+  X 167
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 136
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 160
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_03
+  X 49
+  Y 83
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_03
+  X 49
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_03
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_03
+  X 176
+  Y 83
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_08
+  X 259
+  Y 49
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 269
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_04
+  X 4
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_04
+  X 220
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 51
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 205
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 51
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 115
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 179
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 205
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 143
+  Y 67
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

@@ -1,0 +1,1492 @@
+TITLE Stormy Ascent
+THEME lpiii_sky
+ID xDFC19F48
+LEMMINGS 50
+REQUIREMENT 50
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 320
+START_X 160
+START_Y 220
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 10
+  CLIMBER 20
+  GLIDER 20
+  BLOCKER 5
+  PLATFORMER 5
+  BUILDER 5
+  STACKER 5
+  MINER 5
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 304
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 296
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 304
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 0
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 64
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 32
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 192
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 256
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 224
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 296
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 288
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 288
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE window
+  X 45
+  Y 192
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 288
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 280
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 272
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 264
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 256
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 248
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 240
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 232
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 224
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 216
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 208
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 200
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 192
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 184
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 176
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 168
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 160
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 152
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 144
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 136
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 128
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 120
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 112
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 104
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 96
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 88
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 80
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 72
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 64
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 56
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 48
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 40
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 32
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 24
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 16
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 8
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y 0
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 124
+  Y -8
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 92
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE exit
+  X 269
+  Y 18
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE exit_text
+  X 269
+  Y 5
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 280
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 272
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 264
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 256
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 248
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 240
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 232
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 224
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 216
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 208
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 200
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 192
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 184
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 176
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 168
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 160
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 152
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 144
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 136
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 128
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 120
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 112
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 104
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 96
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 88
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 80
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 72
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 64
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 56
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 48
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 40
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 32
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 24
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 16
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 8
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y 0
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 156
+  Y -8
+  WIDTH 32
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 156
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 124
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 188
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 160
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 128
+  Y 309
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE lightning_horizontal
+  X 96
+  Y 309
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 181
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 181
+  Y 165
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 213
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 253
+  Y 189
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 213
+  Y 189
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 181
+  Y 189
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 253
+  Y 165
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 253
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_06
+  X 194
+  Y 159
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_06
+  X 222
+  Y 159
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 236
+  Y 149
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 195
+  Y 149
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 239
+  Y 201
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 199
+  Y 201
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_07
+  X 184
+  Y 160
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_07
+  X 264
+  Y 160
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 16
+  Y 240
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 46
+  Y 240
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 80
+  Y 240
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE steel_01
+  X 80
+  Y -7
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE steel_01
+  X 214
+  Y -7
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 83
+  Y 157
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 43
+  Y 157
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 11
+  Y 156
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_04
+  X 11
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_04
+  X 32
+  Y 111
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_04
+  X 48
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_04
+  X 91
+  Y 136
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_04
+  X 72
+  Y 112
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_04
+  X 56
+  Y 89
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_01
+  X 8
+  Y 158
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_03
+  X 46
+  Y 122
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 32
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 80
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 72
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 56
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 48
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 183
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 207
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 231
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 223
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 247
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 247
+  Y 58
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 215
+  Y 58
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 183
+  Y 58
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 200
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 224
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 232
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 216
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 204
+  Y 250
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 220
+  Y 250
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 206
+  Y 258
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 222
+  Y 258
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 239
+  Y 250
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 234
+  Y 263
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 217
+  Y 264
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 36
+  Y 18
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 52
+  Y 18
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 38
+  Y 27
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 54
+  Y 26
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 71
+  Y 18
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 66
+  Y 31
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 49
+  Y 32
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 198
+  Y 156
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 198
+  Y 172
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 238
+  Y 172
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 238
+  Y 156
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 217
+  Y 156
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 217
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 91
+  Y 188
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_10
+  X 15
+  Y 188
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 263
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_12
+  X 263
+  Y 58
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_01
+  X 185
+  Y 36
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+

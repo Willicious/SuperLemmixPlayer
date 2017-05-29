@@ -1,0 +1,3017 @@
+TITLE The Martian Lake Beast
+THEME lpiii_martian
+ID x888EC1DC
+LEMMINGS 50
+REQUIREMENT 45
+RELEASE_RATE 50
+WIDTH 864
+HEIGHT 244
+START_X 196
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  FLOATER 10
+  BOMBER 10
+  STONER 10
+  BLOCKER 10
+  PLATFORMER 10
+  BUILDER 10
+  BASHER 10
+  DIGGER 10
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE window
+  X 172
+  Y 40
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE exit
+  X 791
+  Y 50
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 0
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 64
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 128
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 192
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 256
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 320
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 384
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 448
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 512
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 576
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 640
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 704
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 768
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 832
+  Y 236
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X -8
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 56
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 120
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 184
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 248
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 312
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 376
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 440
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 504
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 568
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 632
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 696
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 760
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 824
+  Y 228
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X -16
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 48
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 112
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 176
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 240
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 304
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 368
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 432
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 496
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 560
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 624
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 688
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 752
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 816
+  Y 220
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X -24
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 40
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 104
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 168
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 232
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 296
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 360
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 424
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 488
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 552
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 616
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 680
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 744
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 808
+  Y 212
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X -32
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 32
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 96
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 160
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 224
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 288
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 352
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 416
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 480
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 544
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 608
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 672
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 736
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 800
+  Y 204
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X -40
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 24
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 88
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 152
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 216
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 280
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 344
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 408
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 472
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 536
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 600
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 664
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 728
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 792
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X -48
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 16
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 80
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 144
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 208
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 272
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 336
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 400
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 464
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 528
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 592
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 656
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 720
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 784
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X -56
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 8
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 72
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 136
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 200
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 264
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 328
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 392
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 456
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 520
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 584
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 648
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 712
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 776
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 856
+  Y 196
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 848
+  Y 188
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 840
+  Y 180
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 140
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 148
+  Y 120
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 195
+  Y 120
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 238
+  Y 120
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 254
+  Y 126
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 160
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 211
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 256
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 296
+  Y 106
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 126
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 38
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 38
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 42
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 42
+  Y 10
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 57
+  Y 9
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 92
+  Y 8
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_04
+  X 53
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_04
+  X 53
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_04
+  X 65
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 111
+  Y 19
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_04
+  X 134
+  Y 4
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 110
+  Y 139
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 44
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 71
+  Y 140
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 82
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 218
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 182
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 147
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 258
+  Y 134
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 284
+  Y 138
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 155
+  Y 178
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 202
+  Y 177
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 244
+  Y 180
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 269
+  Y 182
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 187
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 220
+  Y 189
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 254
+  Y 186
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 98
+  Y 151
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 117
+  Y 160
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 168
+  Y 181
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 216
+  Y 170
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 208
+  Y 178
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 200
+  Y 186
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 184
+  Y 186
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 192
+  Y 218
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 176
+  Y 218
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 208
+  Y 173
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 256
+  Y 162
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 248
+  Y 170
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 240
+  Y 178
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 224
+  Y 178
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 232
+  Y 210
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 216
+  Y 210
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 224
+  Y 242
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 229
+  Y 238
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 318
+  Y 144
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 318
+  Y 152
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 310
+  Y 160
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 310
+  Y 168
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 350
+  Y 160
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 350
+  Y 168
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 352
+  Y 141
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 352
+  Y 149
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 392
+  Y 141
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 392
+  Y 149
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 389
+  Y 157
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 389
+  Y 165
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 344
+  Y 114
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 381
+  Y 113
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 419
+  Y 114
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 441
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 481
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 521
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 553
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 453
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 485
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 517
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 541
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 530
+  Y 127
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 504
+  Y 121
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 460
+  Y 127
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 482
+  Y 120
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 466
+  Y 101
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 514
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 562
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 451
+  Y 178
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 498
+  Y 177
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 540
+  Y 180
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 565
+  Y 182
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 483
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 516
+  Y 189
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 550
+  Y 186
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 464
+  Y 181
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 512
+  Y 170
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 504
+  Y 178
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 496
+  Y 186
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 480
+  Y 186
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 488
+  Y 218
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 472
+  Y 218
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 504
+  Y 173
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 552
+  Y 162
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 544
+  Y 170
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 536
+  Y 178
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 520
+  Y 178
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 528
+  Y 210
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 512
+  Y 210
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 520
+  Y 242
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 525
+  Y 238
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 575
+  Y 137
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 621
+  Y 165
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 630
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 615
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 623
+  Y 153
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 638
+  Y 155
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 630
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 622
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 608
+  Y 150
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 616
+  Y 146
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 637
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 629
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 643
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 651
+  Y 130
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 644
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 636
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 642
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 651
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 659
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 656
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 648
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 662
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 670
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 663
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 655
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 661
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 670
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 656
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 768
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 662
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 670
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 663
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 655
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 661
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 670
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 678
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 656
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 648
+  Y 71
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 662
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 670
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 663
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 655
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 661
+  Y 86
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 670
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 678
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 638
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 630
+  Y 57
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 644
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 652
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 645
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 637
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 643
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 652
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 660
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 630
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 622
+  Y 39
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 636
+  Y 28
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 644
+  Y 36
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 637
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 629
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 635
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 644
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 652
+  Y 44
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 638
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 630
+  Y 23
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 644
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 652
+  Y 20
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 645
+  Y 26
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 637
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 643
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 652
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 660
+  Y 28
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 658
+  Y 11
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 650
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 664
+  Y 4
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 672
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 665
+  Y 18
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 657
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 663
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 672
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 680
+  Y 20
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 682
+  Y 11
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 674
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 688
+  Y 4
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 696
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 689
+  Y 18
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 681
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 687
+  Y 30
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 696
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 704
+  Y 20
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 701
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 693
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 707
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 715
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 708
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 700
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 706
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 715
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 723
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 717
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 709
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 723
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 731
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 724
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 716
+  Y 45
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 722
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 731
+  Y 45
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 739
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 722
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 714
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 728
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 736
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 729
+  Y 57
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 721
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 727
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 736
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 744
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 742
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 734
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 748
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 756
+  Y 71
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 749
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 741
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 747
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 756
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 764
+  Y 79
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 735
+  Y 50
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 618
+  Y 46
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 619
+  Y 33
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 642
+  Y 78
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 674
+  Y 86
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 673
+  Y 94
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 665
+  Y 110
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 663
+  Y 124
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 789
+  Y 80
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 752
+  Y 88
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 752
+  Y 97
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 786
+  Y 105
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 611
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_07
+  X 618
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_07
+  X 597
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_07
+  X 601
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 649
+  Y -19
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 693
+  Y -23
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 652
+  Y 4
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_04
+  X 750
+  Y 38
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 757
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 768
+  Y 6
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_01
+  X 775
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_02
+  X 785
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_03
+  X 775
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_04
+  X 785
+  Y 59
+$END
+

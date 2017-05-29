@@ -1,0 +1,448 @@
+TITLE Now Figure This One Out...
+THEME lpii_metal
+ID xA1DD0C54
+LEMMINGS 100
+REQUIREMENT 75
+RELEASE_RATE 25
+WIDTH 438
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BOMBER 20
+  BLOCKER 20
+  BUILDER 30
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE window
+  X 56
+  Y 84
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE exit
+  X 376
+  Y 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE exit_flames
+  X 376
+  Y 24
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 48
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 80
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 32
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 32
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 16
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 112
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 160
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 128
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 64
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 96
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 160
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 48
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 48
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 128
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 176
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 176
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 176
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 216
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 216
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 216
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 216
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 216
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 248
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 280
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 248
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 280
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 312
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 312
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 344
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 344
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 312
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 344
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 312
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 344
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 376
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 392
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 376
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_09
+  X 376
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 376
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_09
+  X 392
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_03
+  X 312
+  Y 31
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_07
+  X 326
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_07
+  X 374
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 422
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_07
+  X 264
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_07
+  X 232
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_07
+  X 128
+  Y 60
+  ONE_WAY
+$END
+

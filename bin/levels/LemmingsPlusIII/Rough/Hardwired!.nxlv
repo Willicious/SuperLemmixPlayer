@@ -1,0 +1,870 @@
+TITLE Hardwired!
+THEME lpiii_circuit
+ID xACD55F6F
+LEMMINGS 20
+REQUIREMENT 18
+RELEASE_RATE 50
+WIDTH 640
+HEIGHT 160
+START_X 203
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  BOMBER 1
+  BUILDER 2
+  MINER 3
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE window
+  X 131
+  Y 75
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE exit
+  X 609
+  Y 95
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE exit_light
+  X 609
+  Y 95
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE teleporter
+  X 7
+  Y 16
+  PAIRING 0
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE receiver
+  X 519
+  Y 15
+  PAIRING 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 138
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_02
+  X 144
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_01
+  X 170
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_10
+  X 186
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_02
+  X 250
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 266
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 264
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 272
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 280
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 288
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 264
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 272
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 280
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 288
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_02
+  X 127
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_clip_03
+  X 143
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_02
+  X 95
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_13
+  X 83
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 83
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_05
+  X 83
+  Y 57
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_01
+  X 67
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_clip_02
+  X 51
+  Y 55
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_02
+  X 0
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_02
+  X 0
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_02
+  X 5
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_02
+  X 18
+  Y 74
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_05
+  X 48
+  Y 78
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_01
+  X 6
+  Y 46
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_06
+  X 31
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_10
+  X 298
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_05
+  X 362
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_02
+  X 353
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_04
+  X 360
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_clip_01
+  X 360
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_04
+  X 332
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_02
+  X 432
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 432
+  Y 65
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_10
+  X 352
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_13
+  X 340
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE steel_01
+  X 463
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_02
+  X 416
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE steel_07
+  X 487
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE steel_07
+  X 487
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_end_01
+  X 496
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_10
+  X 512
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 576
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 608
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_05
+  X 462
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE steel_06
+  X 432
+  Y 65
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE steel_06
+  X 457
+  Y 65
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 340
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 340
+  Y -19
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 331
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE steel_01
+  X 465
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_10
+  X 490
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_14
+  X 554
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_03
+  X 554
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_10
+  X 545
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_14
+  X 609
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 609
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_04
+  X 533
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_06
+  X 533
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_10
+  X 545
+  Y 66
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 621
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_07
+  X 621
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 621
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_10
+  X 557
+  Y 66
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_02
+  X 502
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_02
+  X 514
+  Y 132
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_01
+  X 462
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 240
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 218
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 216
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 178
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 176
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_09
+  X 200
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_04
+  X 196
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 91
+  Y -39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_13
+  X 91
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_05
+  X 103
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_13
+  X 103
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_05
+  X 115
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_13
+  X 115
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_02
+  X 127
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE girder_01
+  X 142
+  Y -2
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE board_01
+  X 134
+  Y 33
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE bolt
+  X 146
+  Y 45
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_01
+  X 266
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_01
+  X 331
+  Y 28
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_04
+  X 420
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_03
+  X 420
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_02
+  X 385
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE steel_01
+  X 417
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_13
+  X 373
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_08
+  X 373
+  Y -35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE circuit_premade_01
+  X 590
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_14
+  X 511
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_12
+  X 511
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_circuit
+  PIECE wire_02
+  X 479
+  Y 124
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

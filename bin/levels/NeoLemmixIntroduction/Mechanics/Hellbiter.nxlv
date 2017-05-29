@@ -1,0 +1,551 @@
+TITLE Hellbiter
+THEME orig_fire
+ID x55F57AB0
+LEMMINGS 40
+REQUIREMENT 32
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BLOCKER 1
+  BUILDER 2
+  BASHER 1
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE window
+  X 250
+  Y 79
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE exit
+  X 213
+  Y 16
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 0
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 64
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 128
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 192
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 256
+  Y 140
+  WIDTH 64
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 295
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 270
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 245
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 220
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 195
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 170
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 199
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 199
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 299
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 299
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 270
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 295
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 245
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 220
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 195
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 170
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 207
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 194
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 70
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 95
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 120
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 145
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 120
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 108
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 57
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 44
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 32
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 19
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 7
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 32
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 14
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 14
+  Y 152
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -38
+  Y 127
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -38
+  Y 103
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -38
+  Y 71
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -38
+  Y 30
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -38
+  Y -9
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 145
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 120
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 95
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 70
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 82
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 58
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_01
+  X 46
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 94
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 144
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_02
+  X 132
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X 301
+  Y 60
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 282
+  Y 44
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X -7
+  Y -13
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 41
+  Y -13
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 89
+  Y -13
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 137
+  Y -13
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 265
+  Y -13
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 201
+  Y -13
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 250
+  Y -7
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 273
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 282
+  Y 20
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X 293
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X 285
+  Y 10
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE spike
+  X 307
+  Y 81
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE spike
+  X 283
+  Y 26
+  NO_OVERWRITE
+$END
+
+$LEMMING
+  X 159
+  Y 122
+  DIRECTION right
+  ZOMBIE
+$END
+
+$LEMMING
+  X 207
+  Y 68
+  DIRECTION right
+  ZOMBIE
+$END
+
+$PRETEXT
+  LINE In addition to regular lemmings,
+  LINE NeoLemmix levels may also sometimes
+  LINE contain zombie lemmings.
+  LINE Zombie lemmings cannot be saved.
+  LINE You also cannot assign skills to
+  LINE them. Most of all, they are
+  LINE contagious; any lemming who touches
+  LINE a zombie, becomes a zombie
+  LINE himself too.
+$END
+

@@ -1,0 +1,524 @@
+TITLE With Lem, From Me
+THEME orig_pillar
+ID x9DFD5649
+LEMMINGS 40
+REQUIREMENT 39
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 1
+  CLIMBER 3
+  STONER 1
+  PLATFORMER 2
+  BUILDER 2
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 146
+  Y 1
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 217
+  Y 107
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 0
+  Y 148
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 64
+  Y 148
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 128
+  Y 148
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 192
+  Y 148
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 256
+  Y 148
+  WIDTH 64
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 269
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 269
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 259
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 265
+  Y 20
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 265
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 250
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 230
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 249
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 230
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 211
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 191
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 210
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 191
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 172
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 152
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 171
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 152
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 133
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 113
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 132
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 113
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 94
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 98
+  Y -26
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 88
+  Y 32
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 142
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 161
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 162
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 181
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 181
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 200
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 201
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 220
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_11
+  X 220
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_13
+  X 234
+  Y 29
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_02
+  X 245
+  Y 18
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 148
+  Y 114
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 158
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 7
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 7
+  Y 0
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 192
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_06
+  X 15
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 216
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 204
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 240
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 228
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 264
+  Y 132
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 252
+  Y 132
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_06
+  X 45
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_06
+  X 45
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_06
+  X 15
+  Y 54
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_06
+  X 45
+  Y 86
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_06
+  X 15
+  Y 86
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_06
+  X 45
+  Y 106
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_06
+  X 15
+  Y 106
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_02
+  X 19
+  Y 102
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_03
+  X 13
+  Y 102
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_03
+  X 13
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_02
+  X 19
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_03
+  X 13
+  Y 30
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_02
+  X 19
+  Y 30
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_03
+  X 13
+  Y -6
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_02
+  X 19
+  Y -6
+  NO_OVERWRITE
+$END
+

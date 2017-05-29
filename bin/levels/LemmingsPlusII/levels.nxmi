@@ -1,0 +1,26 @@
+
+$RANK
+  NAME Nice
+  FOLDER Genius
+$END
+
+$RANK
+  NAME Cheeky
+  FOLDER Genius
+$END
+
+$RANK
+  NAME Sneaky
+  FOLDER Genius
+$END
+
+$RANK
+  NAME Cunning
+  FOLDER Genius
+$END
+
+$RANK
+  NAME Genius
+  FOLDER Genius
+$END
+

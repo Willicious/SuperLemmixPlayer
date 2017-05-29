@@ -1,0 +1,11 @@
+
+$RANK
+  NAME Glimmer
+  FOLDER Arctic
+$END
+
+$RANK
+  NAME Arctic
+  FOLDER Arctic
+$END
+

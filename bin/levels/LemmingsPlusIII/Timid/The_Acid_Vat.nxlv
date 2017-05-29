@@ -1,0 +1,642 @@
+TITLE The Acid Vat
+THEME lpiii_lab
+ID xEA924421
+LEMMINGS 50
+REQUIREMENT 45
+RELEASE_RATE 20
+WIDTH 528
+HEIGHT 160
+START_X 264
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 5
+  FLOATER 5
+  BOMBER 5
+  BLOCKER 5
+  BUILDER 5
+  BASHER 5
+  MINER 5
+  DIGGER 5
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 168
+  Y 111
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 232
+  Y 111
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 296
+  Y 111
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE window
+  X 113
+  Y 57
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE exit
+  X 374
+  Y 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_02
+  X 104
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_02
+  X 360
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 168
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 232
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 296
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_11
+  X 93
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 91
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 91
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 63
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_11
+  X 52
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 50
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_12
+  X 424
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 422
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 422
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 435
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_12
+  X 465
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 463
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_05
+  X 120
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_05
+  X 376
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_04
+  X 248
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 28
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 28
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 28
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 28
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 28
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 28
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 6
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 6
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 6
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 6
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 6
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 6
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_04
+  X 68
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_03
+  X 72
+  Y 148
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 485
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 485
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 485
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 485
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 485
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 485
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 507
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 507
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 507
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 507
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 507
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 507
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_02
+  X 425
+  Y 134
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_02
+  X 411
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 41
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 71
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 101
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 131
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 161
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 191
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 221
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 251
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 281
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 311
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 341
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 371
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 401
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 431
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 457
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_07
+  X 484
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_09
+  X 484
+  Y 26
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_08
+  X 36
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_10
+  X 36
+  Y 26
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 256
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_10
+  X 264
+  Y 26
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_09
+  X 255
+  Y 26
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_05
+  X 256
+  Y 59
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_03
+  X 256
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

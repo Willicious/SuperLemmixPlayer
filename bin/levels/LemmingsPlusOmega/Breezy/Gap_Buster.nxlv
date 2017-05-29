@@ -1,0 +1,130 @@
+TITLE Gap Buster
+THEME lpiii_sky
+ID x8EF218D4
+LEMMINGS 60
+REQUIREMENT 57
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BOMBER 10
+  BLOCKER 10
+  PLATFORMER 10
+  BASHER 10
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE window
+  X 44
+  Y 12
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE exit
+  X 275
+  Y 50
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_sky
+  PIECE exit_text
+  X 275
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 15
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 47
+  Y 60
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_02
+  X 79
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_06
+  X 165
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_06
+  X 208
+  Y 70
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_06
+  X 162
+  Y 103
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_06
+  X 206
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_06
+  X 246
+  Y 68
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_06
+  X 244
+  Y 102
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE balloon_03
+  X 226
+  Y 20
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_01
+  X 94
+  Y 53
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_sky
+  PIECE cloud_01
+  X 32
+  Y 53
+  NO_OVERWRITE
+$END
+

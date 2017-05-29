@@ -1,0 +1,397 @@
+TITLE What Did You Expect?
+THEME orig_pillar
+ID xDFA2C0BC
+LEMMINGS 80
+REQUIREMENT 77
+RELEASE_RATE 1
+WIDTH 392
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  BOMBER 3
+  BLOCKER 5
+  BUILDER 2
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 8
+  Y 0
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 328
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 80
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 122
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 164
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 206
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 248
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 290
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 332
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 101
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 143
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 185
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 227
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 269
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 59
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 80
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 122
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 164
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 206
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 248
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 59
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 101
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 143
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 185
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 227
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 269
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 80
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 122
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 164
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 206
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 248
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 59
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 101
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 143
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 185
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 227
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 269
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 80
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 122
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 164
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 206
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 248
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 46
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 290
+  Y 36
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 290
+  Y 76
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 17
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_02
+  X 47
+  Y 20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

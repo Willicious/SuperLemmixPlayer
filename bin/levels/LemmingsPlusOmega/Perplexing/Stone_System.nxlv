@@ -1,0 +1,472 @@
+TITLE Stone System
+THEME lpii_purple
+ID x99EC24B6
+LEMMINGS 50
+REQUIREMENT 25
+RELEASE_RATE 40
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  SWIMMER 5
+  FLOATER 5
+  BOMBER 2
+  BLOCKER 2
+  PLATFORMER 1
+  BUILDER 1
+  BASHER 1
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE exit
+  X 106
+  Y 78
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE window
+  X 100
+  Y 11
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE water
+  X 256
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE water
+  X 192
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE water
+  X 128
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE water
+  X 64
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE slowfreeze
+  X 163
+  Y 25
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_purple
+  PIECE slowfreeze
+  X 59
+  Y 25
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 56
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 80
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 104
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 128
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 152
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 176
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 136
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 112
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 88
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_03
+  X 67
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 67
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 68
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 37
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_03
+  X 22
+  Y 42
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 22
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 22
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 22
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 22
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 22
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 22
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_02
+  X 157
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 156
+  Y 79
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_01
+  X 157
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_02
+  X 196
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_04
+  X 92
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_04
+  X 113
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_04
+  X 129
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_04
+  X 137
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 276
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE tentacle_01
+  X 298
+  Y 103
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE tentacle_01
+  X 297
+  Y 65
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE tentacle_04
+  X 297
+  Y 26
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 276
+  Y -54
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 260
+  Y -54
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 240
+  Y -52
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 206
+  Y -53
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 179
+  Y -51
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 145
+  Y -52
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 110
+  Y -50
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 82
+  Y -53
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 44
+  Y -54
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X 18
+  Y -52
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_07
+  X -16
+  Y -50
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE thing_03
+  X -3
+  Y 0
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE thing_03
+  X 13
+  Y 0
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE thing_03
+  X -32
+  Y 41
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE thing_04
+  X 175
+  Y 113
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE thing_04
+  X 220
+  Y 153
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_05
+  X 116
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE stuff_05
+  X 115
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE tentacle_01
+  X 271
+  Y -4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_purple
+  PIECE tentacle_03
+  X 273
+  Y 34
+$END
+

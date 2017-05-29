@@ -1,0 +1,36 @@
+
+$RANK
+  NAME Genesis
+  FOLDER Other
+$END
+
+$RANK
+  NAME Present
+  FOLDER Other
+$END
+
+$RANK
+  NAME Sunsoft
+  FOLDER Other
+$END
+
+$RANK
+  NAME 2P
+  FOLDER Other
+$END
+
+$RANK
+  NAME Sega
+  FOLDER Other
+$END
+
+$RANK
+  NAME PSP
+  FOLDER Other
+$END
+
+$RANK
+  NAME Other
+  FOLDER Other
+$END
+

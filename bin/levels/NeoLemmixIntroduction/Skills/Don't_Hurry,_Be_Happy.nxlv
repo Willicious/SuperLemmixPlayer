@@ -1,0 +1,576 @@
+TITLE Don't Hurry, Be Happy
+THEME orig_pillar
+ID x671E425F
+LEMMINGS 10
+REQUIREMENT 10
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  PLATFORMER 10
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 64
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 128
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 192
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 256
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 9
+  Y 8
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 223
+  Y 12
+  DIRECTION left
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 308
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 296
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 284
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 272
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 260
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 248
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 236
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 224
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 212
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 200
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 188
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 176
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 164
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 152
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 140
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 128
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 116
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 104
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 92
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 80
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 68
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 56
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 44
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 32
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 20
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 8
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X -4
+  Y 119
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_03
+  X 49
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 18
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 8
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 61
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 61
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 85
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 85
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_13
+  X 129
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_13
+  X 225
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 245
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 257
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 269
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 281
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 293
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 305
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_02
+  X 247
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_03
+  X 280
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_03
+  X 280
+  Y 21
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_03
+  X 280
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_03
+  X 303
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_03
+  X 303
+  Y 21
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_03
+  X 303
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_01
+  X 288
+  Y 73
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_04
+  X 287
+  Y 61
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_01
+  X 288
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_04
+  X 287
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_01
+  X 288
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_04
+  X 287
+  Y 13
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_01
+  X 288
+  Y 1
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_04
+  X 287
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 207
+  Y 17
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 207
+  Y 15
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_13
+  X 207
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_13
+  X 87
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 75
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 63
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 51
+  Y 51
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE stairs_04
+  X 61
+  Y 39
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_04
+  X 207
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_03
+  X 188
+  Y 101
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_06
+  X 267
+  Y 96
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_03
+  X 313
+  Y 85
+$END
+
+$PRETEXT
+  LINE This level introduces the Platformer.
+  LINE The Platformer is basically just a
+  LINE horizontal builder; when assigned to
+  LINE a lemming, that lemming will build a
+  LINE 12-brick long horizontal bridge.
+  LINE It should be noted that due to the
+  LINE horizontal rather than diagonal
+  LINE nature of a Platformer's bridge, it
+  LINE will extend a bit further than a
+  LINE builder's bridge will. As such, a
+  LINE long gap can be crossed using fewer
+  LINE platformers, than it would take if
+  LINE you were to use builders to cross it.
+$END
+

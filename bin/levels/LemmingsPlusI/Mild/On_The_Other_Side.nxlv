@@ -1,0 +1,445 @@
+TITLE On The Other Side
+THEME orig_pillar
+ID xD8A3488F
+LEMMINGS 40
+REQUIREMENT 24
+RELEASE_RATE 1
+WIDTH 664
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BOMBER 20
+  BLOCKER 20
+  BUILDER 20
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 40
+  Y 29
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 488
+  Y 124
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 576
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 38
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 80
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 122
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 164
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 206
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 248
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 290
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 332
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 374
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 416
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 458
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 500
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 542
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 584
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_04
+  X 626
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_03
+  X 19
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_03
+  X 20
+  Y 141
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 42
+  Y 118
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_06
+  X 52
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 42
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 96
+  Y 118
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 96
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 230
+  Y 118
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 240
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_01
+  X 240
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 294
+  Y 118
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 304
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_01
+  X 304
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 357
+  Y 118
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 367
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_01
+  X 367
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_03
+  X 469
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_04
+  X 552
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 38
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 80
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 122
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 164
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 206
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 248
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 290
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 332
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 374
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 416
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 458
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 500
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 542
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 584
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_02
+  X 626
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_01
+  X 20
+  Y 0
+  ONE_WAY
+$END
+

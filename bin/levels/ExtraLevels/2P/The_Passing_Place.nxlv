@@ -1,0 +1,444 @@
+TITLE The Passing Place
+THEME orig_pillar
+ID xACDB6D3E
+LEMMINGS 75
+REQUIREMENT 75
+TIME_LIMIT 240
+RELEASE_RATE 20
+WIDTH 512
+HEIGHT 160
+START_X 264
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 2
+  FLOATER 1
+  BUILDER 50
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 424
+  Y 48
+  NO_OVERWRITE
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 40
+  Y 48
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 312
+  Y 68
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_blue
+  X 328
+  Y 52
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 152
+  Y 68
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE flag_green
+  X 168
+  Y 52
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_01
+  X 249
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_01
+  X 249
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_01
+  X 249
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_01
+  X 249
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_01
+  X 249
+  Y 21
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_01
+  X 249
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 326
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 350
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 302
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 167
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 143
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 191
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 422
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_07
+  X 39
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_06
+  X 432
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_06
+  X 49
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_09
+  X 476
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_09
+  X 476
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_09
+  X 476
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_09
+  X 19
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_09
+  X 19
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_09
+  X 20
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_04
+  X 486
+  Y 19
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_03
+  X 467
+  Y 20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_03
+  X 10
+  Y 21
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_04
+  X 29
+  Y 20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 83
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 125
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 167
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 209
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 390
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 348
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 306
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 265
+  Y 145
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 273
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 315
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 357
+  Y -7
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 399
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 207
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 165
+  Y -7
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 123
+  Y -8
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 81
+  Y -8
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_01
+  X 62
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_02
+  X 441
+  Y -6
+  ONE_WAY
+$END
+

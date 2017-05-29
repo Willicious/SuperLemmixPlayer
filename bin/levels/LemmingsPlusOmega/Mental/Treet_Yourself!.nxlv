@@ -1,0 +1,1233 @@
+TITLE Treet Yourself!
+THEME lpii_tree
+ID x81F23095
+LEMMINGS 100
+REQUIREMENT 80
+RELEASE_RATE 1
+WIDTH 480
+HEIGHT 320
+START_X 206
+START_Y 140
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  GLIDER 1
+  BOMBER 1
+  PLATFORMER 3
+  DIGGER 3
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE window
+  X 165
+  Y 92
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE owa_left
+  X 339
+  Y 219
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE owa_left
+  X 339
+  Y 251
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE exit
+  X 363
+  Y 236
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE owa_left
+  X 339
+  Y 283
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE owa_left
+  X 307
+  Y 219
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE owa_left
+  X 371
+  Y 219
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE owa_left
+  X 371
+  Y 187
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE owa_left
+  X 339
+  Y 187
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE owa_left
+  X 307
+  Y 187
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 129
+  Y 77
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X 95
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 129
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 83
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 75
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 64
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 80
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 72
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 62
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 64
+  Y 23
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X -12
+  Y -38
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X 64
+  Y -36
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X 136
+  Y -38
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X 211
+  Y -38
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X 283
+  Y -36
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X 349
+  Y -35
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X 420
+  Y -35
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 56
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 25
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 38
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 171
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 166
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 188
+  Y 28
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 176
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 172
+  Y 27
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 109
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 136
+  Y 61
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 155
+  Y 125
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 168
+  Y 122
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 194
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 408
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE hanging_01
+  X 201
+  Y 123
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE hanging_02
+  X 201
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE hanging_02
+  X 201
+  Y 181
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE hanging_03
+  X 201
+  Y 225
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE hanging_04
+  X 201
+  Y 241
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 129
+  Y 197
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 129
+  Y 257
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 129
+  Y 317
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 108
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 68
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 36
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X -12
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 164
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 220
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 276
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 324
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 380
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 436
+  Y 303
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_02
+  X 12
+  Y 266
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_01
+  X 111
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_01
+  X 97
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 89
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_03
+  X 32
+  Y 206
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_03
+  X 32
+  Y 166
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 24
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 14
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 37
+  Y 133
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 7
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 23
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 33
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 16
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_04
+  X 43
+  Y 190
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 72
+  Y 184
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_03
+  X -4
+  Y 205
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE web_02
+  X 45
+  Y 203
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 290
+  Y 255
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_02
+  X 327
+  Y 293
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 329
+  Y 214
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 313
+  Y 214
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 353
+  Y 214
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 345
+  Y 206
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 323
+  Y 206
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 334
+  Y 200
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_01
+  X 328
+  Y 263
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_01
+  X 314
+  Y 260
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 305
+  Y 263
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 297
+  Y 265
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 305
+  Y 268
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 358
+  Y 249
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 365
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 368
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 371
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 374
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 377
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 380
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 383
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 386
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 389
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 392
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 395
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 398
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 401
+  Y 248
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 367
+  Y 246
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 383
+  Y 246
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 407
+  Y 246
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 398
+  Y 257
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 403
+  Y 254
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 289
+  Y 254
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 403
+  Y 259
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 457
+  Y 249
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 457
+  Y 189
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 457
+  Y 129
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_04
+  X 457
+  Y 69
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_05
+  X 428
+  Y 4
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 416
+  Y 45
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 404
+  Y 28
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 391
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 410
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 323
+  Y 15
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 249
+  Y 11
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_11
+  X 407
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE web_01
+  X 444
+  Y 123
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 387
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 379
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 379
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 371
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_03
+  X 347
+  Y 233
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 268
+  Y 258
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 340
+  Y 187
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_01
+  X 252
+  Y 110
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 215
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 289
+  Y 259
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 408
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_01
+  X 309
+  Y 215
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_01
+  X 309
+  Y 228
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 318
+  Y 211
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 291
+  Y 240
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 286
+  Y 253
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 209
+  Y 113
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 180
+  Y 119
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 243
+  Y 260
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 261
+  Y 253
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 253
+  Y 261
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_01
+  X 226
+  Y 115
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 271
+  Y 252
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 251
+  Y 255
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 311
+  Y 199
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 313
+  Y 211
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 316
+  Y 222
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 337
+  Y 207
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 337
+  Y 199
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 333
+  Y 183
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 332
+  Y 194
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 364
+  Y 194
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 308
+  Y 194
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_01
+  X 274
+  Y 189
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_01
+  X 298
+  Y 189
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 308
+  Y 165
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 308
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 308
+  Y 117
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 308
+  Y 93
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_01
+  X 438
+  Y 225
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 430
+  Y 227
+$END
+

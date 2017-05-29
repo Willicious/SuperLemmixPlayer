@@ -1,0 +1,399 @@
+TITLE Take Your Time...
+THEME orig_pillar
+ID x11116543
+LEMMINGS 10
+REQUIREMENT 10
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 10
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE window
+  X 200
+  Y 49
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_pillar
+  PIECE exit
+  X 56
+  Y 62
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE owa_right
+  X 146
+  Y 72
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 280
+  Y 146
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 216
+  Y 146
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 152
+  Y 146
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 88
+  Y 146
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 24
+  Y 146
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X -40
+  Y 146
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 35
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 77
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 203
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 245
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_01
+  X 270
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_01
+  X 35
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_01
+  X 158
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_04
+  X 144
+  Y 42
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_04
+  X 266
+  Y 43
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_04
+  X 19
+  Y 42
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 12
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 54
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 96
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 138
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 180
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 222
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 264
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X 306
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_07
+  X -30
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 60
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_02
+  X 228
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE wood_12
+  X 139
+  Y 79
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_13
+  X 119
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_13
+  X 183
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 128
+  Y 87
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_01
+  X 128
+  Y 107
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 139
+  Y 88
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 141
+  Y 88
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_04
+  X 153
+  Y 65
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_01
+  X 158
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 141
+  Y 88
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE block_12
+  X 141
+  Y 96
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_01
+  X 149
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_01
+  X 149
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_04
+  X 134
+  Y 44
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_04
+  X 128
+  Y 41
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_01
+  X 149
+  Y 88
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE steel_03
+  X 149
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_end_04
+  X 144
+  Y 42
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_pillar
+  PIECE pillar_thin_01
+  X 173
+  Y 49
+  ERASE
+  ONE_WAY
+$END
+

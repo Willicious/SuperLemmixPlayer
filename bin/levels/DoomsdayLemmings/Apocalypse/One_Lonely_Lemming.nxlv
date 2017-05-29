@@ -1,0 +1,1874 @@
+TITLE One Lonely Lemming
+THEME namida_horror
+ID xFA419601
+LEMMINGS 4
+REQUIREMENT 1
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL simple
+
+$SKILLSET
+  WALKER 2
+  PLATFORMER 2
+  BUILDER 2
+  BASHER 2
+  MINER 2
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE trap
+  X 180
+  Y 30
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE exit_02
+  X 240
+  Y 32
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE acid
+  X 70
+  Y 144
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE button
+  X 292
+  Y 138
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE fire
+  X 291
+  Y 55
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE fire
+  X 290
+  Y 56
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE button
+  X 272
+  Y 58
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE fire
+  X 290
+  Y 64
+  FAKE
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE button
+  X 102
+  Y 54
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 288
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 139
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 288
+  Y 147
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 272
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 256
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 272
+  Y 139
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 256
+  Y 147
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 240
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 224
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 240
+  Y 139
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 224
+  Y 147
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 123
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 107
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 91
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 75
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 256
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 272
+  Y 107
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 224
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 240
+  Y 107
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 272
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 288
+  Y 67
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 240
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 256
+  Y 67
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 208
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 224
+  Y 67
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 192
+  Y 67
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 208
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 192
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 208
+  Y 139
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 192
+  Y 147
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE chain_02
+  X 278
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE chain_02
+  X 278
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE chain_02
+  X 222
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE chain_02
+  X 222
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 288
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 256
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 272
+  Y 59
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 224
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 240
+  Y 59
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 192
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 208
+  Y 59
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 59
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 192
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 192
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 192
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 208
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 192
+  Y 3
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 224
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 240
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 208
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 224
+  Y 3
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 256
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 272
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 240
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 256
+  Y 3
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 288
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 272
+  Y 3
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 288
+  Y 3
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 43
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 27
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 19
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 304
+  Y 11
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 288
+  Y 1
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 282
+  Y 1
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 258
+  Y 1
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 234
+  Y 1
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 207
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 223
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 230
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 246
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 253
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 269
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 274
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 265
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 241
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 215
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 289
+  Y 66
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 283
+  Y 66
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 259
+  Y 66
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 235
+  Y 66
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 208
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 224
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 231
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 247
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 254
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 270
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 275
+  Y 69
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 266
+  Y 69
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 242
+  Y 69
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 216
+  Y 69
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 265
+  Y 65
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 259
+  Y 65
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 235
+  Y 65
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 211
+  Y 65
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 184
+  Y 65
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 200
+  Y 65
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 207
+  Y 65
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 223
+  Y 65
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 230
+  Y 65
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_k
+  X 246
+  Y 65
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 251
+  Y 68
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 242
+  Y 68
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 218
+  Y 68
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 192
+  Y 68
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_01
+  X 173
+  Y 140
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_01
+  X 157
+  Y 140
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_01
+  X 133
+  Y 140
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_01
+  X 149
+  Y 140
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_01
+  X 141
+  Y 132
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_01
+  X 165
+  Y 132
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_01
+  X 154
+  Y 132
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE blood_02
+  X 150
+  Y 130
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE blood_02
+  X 162
+  Y 130
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE blood_02
+  X 174
+  Y 138
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE blood_02
+  X 170
+  Y 133
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE blood_02
+  X 142
+  Y 130
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bones_02
+  X 152
+  Y 113
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_01
+  X 122
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE blood_02
+  X 139
+  Y 132
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_01
+  X 64
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 48
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 16
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 32
+  Y 147
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 16
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 16
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 32
+  Y 131
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 147
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 131
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 16
+  Y 139
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 123
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 115
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 48
+  Y 139
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 32
+  Y 139
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 83
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 67
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 51
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 35
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 27
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 19
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 11
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 0
+  Y 3
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 17
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 25
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 33
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 41
+  Y 100
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 49
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 57
+  Y 84
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 65
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_01
+  X 77
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 16
+  Y 67
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 32
+  Y 67
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 61
+  Y 47
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 101
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 45
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 26
+  Y 52
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 18
+  Y 60
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 34
+  Y 44
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 42
+  Y 36
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 50
+  Y 28
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 58
+  Y 20
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 66
+  Y 12
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 74
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 82
+  Y -4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 160
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 176
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 128
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 144
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 96
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 112
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 64
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 80
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 32
+  Y -5
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 48
+  Y -5
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 48
+  Y 131
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 125
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 149
+  Y 60
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_03
+  X 92
+  Y 49
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_03
+  X 114
+  Y 51
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_03
+  X 157
+  Y 46
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 136
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 116
+  Y 41
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 100
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 95
+  Y 43
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_01
+  X 77
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 93
+  Y 46
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_04
+  X 176
+  Y 61
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_04
+  X 173
+  Y 61
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_03
+  X 160
+  Y 50
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 144
+  Y 11
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 106
+  Y 16
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 114
+  Y 24
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 118
+  Y 28
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_04
+  X 130
+  Y 25
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 125
+  Y 28
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 117
+  Y 32
+  FLIP_HORIZONTAL
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 133
+  Y 20
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 141
+  Y 12
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 160
+  Y 11
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_03
+  X 109
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 144
+  Y 3
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 176
+  Y 11
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 99
+  Y 11
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE tiles_07
+  X 91
+  Y 11
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE chain_02
+  X 89
+  Y 0
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 192
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 192
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_x
+  X 94
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bar_01
+  X 125
+  Y 17
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_02
+  X 123
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_04
+  X 304
+  Y 64
+$END
+
+$LEMMING
+  X 256
+  Y 111
+  DIRECTION left
+$END
+
+$LEMMING
+  X 208
+  Y 143
+  DIRECTION right
+  CLIMBER
+  FLOATER
+  ZOMBIE
+$END
+
+$LEMMING
+  X 47
+  Y 71
+  DIRECTION right
+  CLIMBER
+  FLOATER
+  ZOMBIE
+$END
+
+$LEMMING
+  X 129
+  Y 34
+  DIRECTION left
+  ZOMBIE
+$END
+

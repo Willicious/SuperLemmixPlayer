@@ -1,0 +1,441 @@
+TITLE Get Your Lemming On
+THEME lpiii_lab
+ID x2F2F4816
+LEMMINGS 50
+REQUIREMENT 40
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 10
+  CLIMBER 10
+  BLOCKER 10
+  PLATFORMER 10
+  BUILDER 10
+  MINER 10
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE window
+  X 98
+  Y 80
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE exit
+  X 21
+  Y 0
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 0
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 64
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 128
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 192
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 256
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE window
+  X 14
+  Y 80
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE window
+  X 56
+  Y 80
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 16
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 80
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 128
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 144
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 176
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 256
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 192
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 176
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 240
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 272
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 160
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 160
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 160
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 16
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 80
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 128
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 144
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 64
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 0
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 112
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 144
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 176
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 256
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 192
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_05
+  X 304
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_06
+  X 304
+  Y 58
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 304
+  Y 40
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 160
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 160
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_05
+  X 1
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_06
+  X 1
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 1
+  Y 80
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_05
+  X 304
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_06
+  X 1
+  Y 18
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 1
+  Y -5
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -16
+  Y 32
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 304
+  Y 131
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -16
+  Y 112
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -16
+  Y 144
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 48
+  Y 144
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 96
+  Y 128
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 290
+  Y -6
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 260
+  Y -6
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 230
+  Y -6
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 200
+  Y -6
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 170
+  Y -6
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 140
+  Y -6
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_02
+  X 110
+  Y -6
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_13
+  X 99
+  Y -3
+$END
+

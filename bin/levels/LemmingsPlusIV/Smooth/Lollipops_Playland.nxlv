@@ -1,0 +1,403 @@
+TITLE Lollipops Playland
+THEME lpiv_candy
+MUSIC lpiv_candy2
+ID xA3CAD020
+LEMMINGS 50
+REQUIREMENT 50
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 240
+START_X 160
+START_Y 160
+AUTOSTEEL on
+BACKGROUND lpiv_candy:candies
+
+$SKILLSET
+  WALKER 20
+  CLIMBER 20
+  FLOATER 20
+  BLOCKER 20
+  PLATFORMER 20
+  BUILDER 20
+  BASHER 20
+  MINER 20
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE window
+  X 247
+  Y 133
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION lpiv_candy
+  PIECE exit
+  X 258
+  Y 10
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 224
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_01
+  X 224
+  Y 184
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 224
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_01
+  X 224
+  Y 200
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 224
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_milk_01
+  X 224
+  Y 216
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE chocolate_white_01
+  X 224
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 300
+  Y 156
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 300
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_01
+  X 300
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_03
+  X 288
+  Y 92
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_06
+  X 264
+  Y 92
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candycane_04
+  X 260
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 186
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 186
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_05
+  X 174
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 130
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 130
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_01
+  X 118
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 74
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 74
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_09
+  X 62
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_03
+  X 36
+  Y 208
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_03
+  X 36
+  Y 176
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_03
+  X 36
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_03
+  X 36
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_03
+  X 36
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_01
+  X 30
+  Y 64
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE rod_02
+  X -2
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y 14
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y -10
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y 150
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y 182
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE candy_03
+  X -33
+  Y 214
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 202
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 202
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_03
+  X 190
+  Y 64
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 146
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 146
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_11
+  X 134
+  Y 64
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 90
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_stem_01
+  X 90
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE lollipop_07
+  X 78
+  Y 64
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_01
+  X 242
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_01
+  X 258
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_01
+  X 274
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiv_candy
+  PIECE licorice_01
+  X 290
+  Y 50
+$END
+

@@ -1,0 +1,594 @@
+TITLE Cell Network
+THEME lpv_honeycomb
+MUSIC lpv_honey1
+ID x77CFA508
+LEMMINGS 4
+REQUIREMENT 4
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+BACKGROUND lpv_honeycomb:honeydrips
+
+$SKILLSET
+  BASHER 9
+  MINER 7
+  DIGGER 3
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE exit_base
+  X 143
+  Y 71
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE exit_top_02
+  X 143
+  Y 55
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE bee_decoration
+  X 64
+  Y 85
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE bee_decoration
+  X 100
+  Y 25
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE bee_decoration
+  X 208
+  Y 125
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE bee_decoration
+  X 244
+  Y 65
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE bee_decoration
+  X 191
+  Y 75
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE bee_decoration
+  X 119
+  Y 135
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE bee_decoration
+  X 29
+  Y 65
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$OBJECT
+  COLLECTION lpv_honeycomb
+  PIECE bee_decoration
+  X 281
+  Y 105
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X -14
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 22
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 94
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 58
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 166
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 130
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 238
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 202
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 310
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 274
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X -14
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 22
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 94
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 58
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 166
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 130
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 238
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 202
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 310
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 274
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X -14
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 22
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 94
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 58
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 166
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 130
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 238
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 202
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 310
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 274
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X -14
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 22
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 94
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 58
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 166
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 130
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 238
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 202
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 310
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 274
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X -14
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 22
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 94
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 58
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 166
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 130
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 238
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 202
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 310
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 274
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X -14
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 22
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 94
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 58
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 166
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 130
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 238
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 202
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 310
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION lpv_honeycomb
+  PIECE combs_03
+  X 274
+  Y -21
+  FLIP_HORIZONTAL
+$END
+
+$LEMMING
+  X 15
+  Y 27
+  DIRECTION right
+$END
+
+$LEMMING
+  X 15
+  Y 147
+  DIRECTION right
+$END
+
+$LEMMING
+  X 303
+  Y 147
+  DIRECTION left
+$END
+
+$LEMMING
+  X 303
+  Y 27
+  DIRECTION left
+$END
+

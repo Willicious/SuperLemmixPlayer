@@ -1,0 +1,16 @@
+
+$RANK
+  NAME Mechanics
+  FOLDER Objects
+$END
+
+$RANK
+  NAME Skills
+  FOLDER Objects
+$END
+
+$RANK
+  NAME Objects
+  FOLDER Objects
+$END
+

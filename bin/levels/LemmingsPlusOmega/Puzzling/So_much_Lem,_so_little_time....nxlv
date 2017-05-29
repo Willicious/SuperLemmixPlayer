@@ -1,0 +1,816 @@
+TITLE So much Lem, so little time...
+THEME lpii_psychedelic
+ID x6C621F27
+LEMMINGS 55
+REQUIREMENT 33
+RELEASE_RATE 1
+WIDTH 1132
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 10
+  BOMBER 10
+  BLOCKER 10
+  PLATFORMER 10
+  BUILDER 10
+  BASHER 10
+  MINER 10
+  DIGGER 10
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE window
+  X 36
+  Y 75
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 288
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 336
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE teleporter
+  X 257
+  Y 72
+  PAIRING 0
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE receiver
+  X 383
+  Y 72
+  PAIRING 0
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 796
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 748
+  Y 144
+  WIDTH 48
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE teleporter
+  X 717
+  Y 32
+  PAIRING 0
+$END
+
+$OBJECT
+  COLLECTION lpiii_circuit
+  PIECE receiver
+  X 843
+  Y 32
+  PAIRING 0
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE splitter
+  X 992
+  Y 70
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 868
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 1084
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE exit
+  X 981
+  Y 105
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 952
+  Y 95
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE water
+  X 1000
+  Y 95
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 48
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 72
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 120
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 120
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 144
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 192
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 192
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 264
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 192
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 216
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 264
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 264
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 384
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 384
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 401
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 408
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 408
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 456
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 473
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 456
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE stairs_03
+  X 474
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE stairs_03
+  X 486
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 507
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 531
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 531
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 524
+  Y -32
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 507
+  Y -32
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 579
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 579
+  Y -32
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 596
+  Y -32
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 516
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 516
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 533
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 516
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 533
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 540
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 540
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 620
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 572
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 572
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 620
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 637
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 637
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 620
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 620
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 644
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 644
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 676
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 676
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 724
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 741
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 724
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 741
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 724
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 844
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_01
+  X 660
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_01
+  X 676
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_01
+  X 676
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_01
+  X 660
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 861
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 844
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 861
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 844
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 868
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 868
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 916
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 916
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 964
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 1012
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1029
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1012
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 928
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 952
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 952
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 1000
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 1000
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 1048
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 904
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 928
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 976
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 1024
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 1072
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 945
+  Y 88
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1048
+  Y 88
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 1108
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1125
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1108
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1125
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1108
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 1084
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1101
+  Y -8
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 1084
+  Y -8
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_07
+  X 865
+  Y 69
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 1060
+  Y 0
+$END
+

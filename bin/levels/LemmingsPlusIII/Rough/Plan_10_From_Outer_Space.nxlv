@@ -1,0 +1,868 @@
+TITLE Plan 10 From Outer Space
+THEME lpiii_martian
+MUSIC lpiii_rankfinal
+ID xC6B38079
+LEMMINGS 75
+REQUIREMENT 70
+RELEASE_RATE 50
+WIDTH 504
+HEIGHT 160
+START_X 192
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 10
+  FLOATER 5
+  BOMBER 5
+  BLOCKER 4
+  BASHER 3
+  MINER 2
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE window
+  X 148
+  Y 16
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE exit
+  X 43
+  Y 17
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE trap
+  X 272
+  Y 122
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE window
+  X 222
+  Y 114
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X -36
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 28
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 92
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 381
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION lpiii_martian
+  PIECE water
+  X 445
+  Y 144
+  WIDTH 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 122
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 155
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 96
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 110
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 136
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 186
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 171
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 189
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 161
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 165
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 174
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 191
+  Y 119
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 156
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 97
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 90
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 98
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 57
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 35
+  Y 46
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 20
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 19
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 18
+  Y -15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 28
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 28
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 28
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 91
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 91
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 91
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 37
+  Y 103
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 59
+  Y 103
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 100
+  Y 135
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 132
+  Y 135
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 110
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 212
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 244
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_02
+  X 276
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_04
+  X 276
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_03
+  X 266
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 206
+  Y 147
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 250
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 292
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 336
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 353
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 345
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_01
+  X 351
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 266
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 266
+  Y 70
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 293
+  Y 141
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 214
+  Y 140
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 188
+  Y 140
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_02
+  X 112
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_04
+  X 361
+  Y 79
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_01
+  X 169
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_08
+  X 83
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_09
+  X 28
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_09
+  X 91
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 363
+  Y 47
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 363
+  Y 15
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_02
+  X 362
+  Y 5
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 330
+  Y 5
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_01
+  X 320
+  Y 5
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 320
+  Y 15
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_03
+  X 320
+  Y 47
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_04
+  X 330
+  Y 47
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_02
+  X 330
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 298
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 288
+  Y 37
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_09
+  X 363
+  Y 41
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 380
+  Y 45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_02
+  X 412
+  Y 45
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 413
+  Y 55
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_09
+  X 413
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_11
+  X 430
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_09
+  X 413
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_11
+  X 430
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 413
+  Y 121
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 413
+  Y 134
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_01
+  X 438
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_08
+  X 455
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_08
+  X 455
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 448
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_05
+  X 462
+  Y 73
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_02
+  X 462
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 463
+  Y 83
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 463
+  Y 121
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 463
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 438
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE supports_06
+  X 438
+  Y 131
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE rock_03
+  X 357
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 255
+  Y -7
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_martian
+  PIECE spike_01
+  X 197
+  Y -7
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+

@@ -1,0 +1,502 @@
+TITLE Perfectionism
+THEME ohno_brick
+ID xB3CBDA12
+LEMMINGS 5
+REQUIREMENT 5
+TIME_LIMIT 60
+RELEASE_RATE 99
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  FLOATER 2
+  BOMBER 1
+  BLOCKER 2
+  BUILDER 2
+  BASHER 2
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE window
+  X 50
+  Y 37
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE window
+  X 210
+  Y 28
+  NO_OVERWRITE
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE window
+  X 210
+  Y 57
+  NO_OVERWRITE
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE window
+  X 58
+  Y 1
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE exit
+  X 58
+  Y 100
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE exit
+  X 226
+  Y 100
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 96
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 128
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 160
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 192
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 224
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 256
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 277
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 277
+  Y 3
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 277
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 128
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 96
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 64
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 32
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 64
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 31
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 31
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 31
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 144
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 162
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 194
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 226
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 247
+  Y 46
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 247
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 126
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 94
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 62
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 45
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 45
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 162
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 194
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 226
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 247
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 247
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 247
+  Y 48
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 46
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 176
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 208
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 112
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_01
+  X 80
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_02
+  X 128
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_02
+  X 176
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 240
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 48
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 80
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 80
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 208
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 208
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 240
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 48
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 16
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 272
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 80
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 208
+  Y 148
+  ONE_WAY
+$END
+

@@ -1,0 +1,562 @@
+TITLE It's A Thin Line!
+THEME orig_fire
+ID x3C3C551E
+LEMMINGS 60
+REQUIREMENT 54
+RELEASE_RATE 70
+WIDTH 656
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 30
+  FLOATER 30
+  BOMBER 30
+  BLOCKER 30
+  BUILDER 30
+  BASHER 30
+  MINER 30
+  DIGGER 30
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE exit
+  X 544
+  Y 0
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE window
+  X 16
+  Y 17
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 24
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 88
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 152
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 216
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 280
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 344
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 408
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 472
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 536
+  Y 140
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 112
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 137
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 112
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 137
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 112
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 137
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 162
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 210
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 258
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 162
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 210
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 258
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 306
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 376
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 376
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 376
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 376
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 405
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 405
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 405
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 405
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 434
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 434
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 434
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 434
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 463
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 463
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 463
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bars_05
+  X 463
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 544
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 329
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 329
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 329
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 503
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 503
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 503
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 615
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 615
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 615
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 64
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 22
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 16
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 22
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 22
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 22
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 22
+  Y 157
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X 585
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -2
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 503
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 503
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 615
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 615
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 501
+  Y 25
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 613
+  Y 25
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 592
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 496
+  Y 52
+  ONE_WAY
+$END
+

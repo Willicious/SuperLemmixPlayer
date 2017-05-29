@@ -1,0 +1,629 @@
+TITLE The Sacred State
+THEME lpiii_lab
+ID xF3886C55
+LEMMINGS 30
+REQUIREMENT 29
+RELEASE_RATE 1
+WIDTH 480
+HEIGHT 160
+START_X 184
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 4
+  FLOATER 4
+  BLOCKER 1
+  BUILDER 1
+  BASHER 3
+  MINER 3
+  DIGGER 3
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE window
+  X 27
+  Y 101
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE exit
+  X 77
+  Y 32
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE window
+  X 358
+  Y 4
+  DIRECTION left
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 72
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 136
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 56
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_02
+  X 200
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 200
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 184
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 168
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 184
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 152
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 216
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 56
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 40
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 120
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 72
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 120
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 152
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 104
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 120
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 56
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 40
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 56
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 136
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 120
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 120
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 88
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 56
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 248
+  Y 96
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 248
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 264
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 280
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 264
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 248
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 280
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 312
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_02
+  X 328
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 312
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 296
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 312
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_02
+  X 328
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_02
+  X 360
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_02
+  X 280
+  Y -16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 344
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 360
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 376
+  Y 144
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 408
+  Y 112
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 424
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 408
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 392
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 376
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 184
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 232
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 264
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 312
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 312
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 344
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 344
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 328
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 264
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 280
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 264
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 264
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 248
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 184
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_04
+  X 216
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_04
+  X 104
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_04
+  X 344
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_05
+  X 184
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_05
+  X 280
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_05
+  X 136
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 376
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 376
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 408
+  Y 48
+  ONE_WAY
+$END
+

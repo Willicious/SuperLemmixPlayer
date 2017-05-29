@@ -1,0 +1,452 @@
+TITLE So that's the plan...
+THEME orig_fire
+ID xFA8F45B9
+LEMMINGS 50
+REQUIREMENT 40
+RELEASE_RATE 10
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BOMBER 20
+  BLOCKER 20
+  BUILDER 20
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 128
+  Y 140
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 128
+  Y 35
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE water
+  X 128
+  Y 55
+  WIDTH 64
+  FLIP_VERTICAL
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE owa_left
+  X 113
+  Y 70
+  WIDTH 32
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE owa_left
+  X 175
+  Y 70
+  WIDTH 32
+  HEIGHT 24
+  ONLY_ON_TERRAIN
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE flamethrower
+  X 48
+  Y 32
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE flamethrower_flip
+  X 192
+  Y 32
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE window
+  X 56
+  Y 55
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE exit
+  X 224
+  Y 33
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_01
+  X 78
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_01
+  X 217
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_01
+  X 103
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_01
+  X 192
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 113
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 113
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 192
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 192
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 78
+  Y 99
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 103
+  Y 99
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 78
+  Y 87
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 103
+  Y 87
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 217
+  Y 99
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 192
+  Y 99
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 192
+  Y 87
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 217
+  Y 87
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 78
+  Y 85
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 194
+  Y 85
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 192
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 113
+  Y 35
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_04
+  X 114
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_04
+  X 192
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_04
+  X 196
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_04
+  X 193
+  Y 49
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_04
+  X 108
+  Y 49
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_04
+  X 113
+  Y 49
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 103
+  Y -18
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 192
+  Y -18
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 128
+  Y 9
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 128
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 154
+  Y -6
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 144
+  Y 0
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 144
+  Y 9
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE chain_03
+  X 113
+  Y 60
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE chain_03
+  X 200
+  Y 66
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE chain_03
+  X 192
+  Y 54
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE chain_03
+  X 121
+  Y 60
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 30
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 242
+  Y 85
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 23
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 23
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 272
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 272
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 8
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 8
+  Y 25
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 297
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE steel_02
+  X 297
+  Y 25
+$END
+

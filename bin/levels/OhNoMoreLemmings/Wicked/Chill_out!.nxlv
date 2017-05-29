@@ -1,0 +1,711 @@
+TITLE Chill out!
+THEME ohno_snow
+ID xF28E26B1
+LEMMINGS 20
+REQUIREMENT 20
+TIME_LIMIT 180
+RELEASE_RATE 1
+WIDTH 700
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 1
+  FLOATER 1
+  BUILDER 1
+  BASHER 10
+  DIGGER 10
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE exit
+  X 80
+  Y 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE window
+  X 112
+  Y 4
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE exit_flag
+  X 112
+  Y 32
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE pillar_01
+  X 109
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_02
+  X 82
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 111
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 142
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 196
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 239
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 271
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 286
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 323
+  Y 149
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 366
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 406
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 443
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 121
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 299
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 151
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 181
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 214
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 239
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 266
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 137
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 327
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 357
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 386
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 416
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 444
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 474
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 477
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 509
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 539
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 515
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 554
+  Y 147
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 586
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_10
+  X 627
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_10
+  X 636
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_11
+  X 651
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_11
+  X 659
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_02
+  X 73
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 81
+  Y 51
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 99
+  Y 51
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_07
+  X 51
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_07
+  X 63
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_08
+  X 79
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_08
+  X 81
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_08
+  X 73
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 187
+  Y -11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 239
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_16
+  X 296
+  Y -22
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_19
+  X 353
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 389
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_18
+  X 443
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_19
+  X 481
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 453
+  Y -4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_19
+  X 518
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 550
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_18
+  X 605
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_18
+  X 641
+  Y -9
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 360
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 396
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 407
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 486
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 510
+  Y 3
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 530
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 560
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 574
+  Y 8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 536
+  Y -9
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 562
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 575
+  Y -9
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 595
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 615
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 525
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 557
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 573
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 588
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 564
+  Y -11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_10
+  X 6
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_12
+  X 19
+  Y -15
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_11
+  X 38
+  Y -16
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_12
+  X 49
+  Y -17
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_13
+  X 2
+  Y -16
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_13
+  X 63
+  Y -18
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_11
+  X -7
+  Y -19
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 678
+  Y -7
+  ONE_WAY
+$END
+

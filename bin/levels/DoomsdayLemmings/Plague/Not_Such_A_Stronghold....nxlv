@@ -1,0 +1,757 @@
+TITLE Not Such A Stronghold...
+THEME namida_horror
+ID xC1E0B00C
+LEMMINGS 75
+REQUIREMENT 45
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 10
+  BLOCKER 2
+  PLATFORMER 10
+  BUILDER 10
+  BASHER 10
+  DIGGER 10
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE window
+  X 136
+  Y 104
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE owf_left
+  X 218
+  Y 120
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE owf_right
+  X 86
+  Y 120
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE owf_right
+  X 218
+  Y 80
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE owf_left
+  X 86
+  Y 80
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE owf_left
+  X 218
+  Y 40
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE owf_right
+  X 86
+  Y 40
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE exit_02
+  X 144
+  Y 32
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE owf_right
+  X 86
+  Y 16
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_horror
+  PIECE owf_left
+  X 218
+  Y 16
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 88
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 112
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 136
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 160
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 184
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 208
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 208
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 184
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_02
+  X 40
+  Y 141
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_02
+  X 16
+  Y 141
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 112
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 88
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_02
+  X -16
+  Y 141
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_02
+  X 224
+  Y 141
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_02
+  X 251
+  Y 144
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_02
+  X 279
+  Y 139
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 294
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 311
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 279
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 259
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 242
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 231
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 208
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 67
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 55
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 34
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X 18
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE grass_01
+  X -1
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 88
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bones_02
+  X -10
+  Y 120
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bones_01
+  X 308
+  Y 123
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE bones_01
+  X 301
+  Y 123
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 208
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 184
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 160
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 136
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 112
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 88
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 208
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 184
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 160
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 136
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 112
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE steel_02
+  X 88
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_05
+  X 302
+  Y -9
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_05
+  X 308
+  Y 26
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_05
+  X 313
+  Y 57
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_05
+  X -33
+  Y 43
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_05
+  X -25
+  Y 25
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_05
+  X -17
+  Y -2
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_05
+  X -9
+  Y -26
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_04
+  X 243
+  Y -33
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_04
+  X 291
+  Y -17
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_04
+  X 186
+  Y -33
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_04
+  X 34
+  Y -33
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE clump_04
+  X -22
+  Y -33
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 223
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 231
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 255
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 239
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 267
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 280
+  Y 6
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 67
+  Y 3
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 51
+  Y 3
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 57
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 33
+  Y 2
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 26
+  Y 5
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_m
+  X 19
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_g
+  X 248
+  Y 1
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_g
+  X 243
+  Y 2
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_g
+  X 261
+  Y 2
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_g
+  X 275
+  Y 2
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_g
+  X 288
+  Y 11
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_g
+  X 294
+  Y 19
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_g
+  X 63
+  Y 6
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_g
+  X 66
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_i
+  X 62
+  Y 10
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_n
+  X 44
+  Y 2
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_n
+  X 38
+  Y 2
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_r
+  X 73
+  Y 5
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_r
+  X 14
+  Y 10
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_horror
+  PIECE letter_r
+  X 11
+  Y 18
+  NO_OVERWRITE
+$END
+
+$LEMMING
+  X 184
+  Y 103
+  DIRECTION right
+  ZOMBIE
+$END
+
+$LEMMING
+  X 135
+  Y 103
+  DIRECTION left
+  ZOMBIE
+$END
+
+$LEMMING
+  X 135
+  Y 63
+  DIRECTION left
+  ZOMBIE
+$END
+
+$LEMMING
+  X 184
+  Y 63
+  DIRECTION right
+  ZOMBIE
+$END
+

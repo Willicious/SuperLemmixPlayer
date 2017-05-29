@@ -1,0 +1,21 @@
+
+$RANK
+  NAME Frost
+  FOLDER Blitz
+$END
+
+$RANK
+  NAME Hail
+  FOLDER Blitz
+$END
+
+$RANK
+  NAME Flurry
+  FOLDER Blitz
+$END
+
+$RANK
+  NAME Blitz
+  FOLDER Blitz
+$END
+

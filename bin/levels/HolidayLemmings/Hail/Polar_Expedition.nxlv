@@ -1,0 +1,294 @@
+TITLE Polar Expedition
+THEME xmas
+ID x86FD3805
+LEMMINGS 50
+REQUIREMENT 50
+TIME_LIMIT 360
+RELEASE_RATE 25
+WIDTH 816
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  FLOATER 1
+  BOMBER 5
+  BLOCKER 2
+  BUILDER 1
+  BASHER 2
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE exit
+  X 744
+  Y 98
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION xmas
+  PIECE window
+  X 72
+  Y 12
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_05
+  X -13
+  Y 20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_05
+  X -2
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_05
+  X -16
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 18
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 74
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 149
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 229
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 289
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 329
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 367
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 424
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 478
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 524
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 569
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE pillar_01
+  X 234
+  Y 103
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE pillar_02
+  X 234
+  Y 81
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE pillar_01
+  X 333
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE pillar_02
+  X 333
+  Y 37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE pillar_01
+  X 474
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 693
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 737
+  Y 138
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 712
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 761
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 468
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 4
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 713
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 116
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 348
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 228
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 328
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 468
+  Y 148
+  ONE_WAY
+$END
+

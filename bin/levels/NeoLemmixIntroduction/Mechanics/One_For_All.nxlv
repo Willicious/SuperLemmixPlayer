@@ -1,0 +1,691 @@
+TITLE One For All
+THEME ohno_brick
+ID xD04D8C09
+LEMMINGS 100
+REQUIREMENT 100
+RELEASE_RATE 99
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 1
+  BUILDER 2
+  BASHER 4
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE window
+  X 50
+  Y 5
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE water
+  X 167
+  Y 58
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE trap_01
+  X 265
+  Y 114
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE trap_01
+  X 145
+  Y 82
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE trap_01
+  X 73
+  Y 90
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE exit
+  X 25
+  Y 100
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 64
+  Y 36
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X -32
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X -32
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X -32
+  Y -24
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 224
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 256
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 112
+  Y 36
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 128
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 32
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 96
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE steel_02
+  X 160
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE steel_02
+  X 222
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 236
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE steel_03
+  X 174
+  Y 82
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE steel_03
+  X 198
+  Y 82
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 268
+  Y 72
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE steel_02
+  X 222
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE steel_02
+  X 160
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_06
+  X 128
+  Y 46
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_07
+  X 236
+  Y 46
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 288
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 128
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 160
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 192
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 32
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 64
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 96
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 224
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 256
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 288
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 288
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 288
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 224
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 286
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 286
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 286
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 286
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 286
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 286
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 286
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 286
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 307
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 307
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 307
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 307
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 307
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 307
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 307
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 307
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_03
+  X 307
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 307
+  Y 66
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 286
+  Y 18
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_03
+  X 286
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE blocks_01
+  X 169
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE blocks_01
+  X 169
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE blocks_01
+  X 137
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE blocks_01
+  X 153
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE blocks_01
+  X 121
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE blocks_01
+  X 121
+  Y 132
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_04
+  X 64
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 0
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 1
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 1
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 1
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 1
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_03
+  X 1
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_01
+  X 13
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 13
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 13
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_02
+  X 13
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_red_03
+  X 13
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 136
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE stairs_02
+  X 98
+  Y 18
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_03
+  X 48
+  Y 36
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_04
+  X 16
+  Y 48
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 41
+  Y 9
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 41
+  Y -15
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 41
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 22
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 18
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 14
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 10
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 49
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 129
+  Y 48
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 145
+  Y 36
+  NO_OVERWRITE
+$END
+
+$PRETEXT
+  LINE If you want to keep track of a certain
+  LINE lemming, you can right-click them.
+  LINE This will place an arrow above their
+  LINE head, so you can see where they are.
+  LINE Additionally, when you have a lemming
+  LINE highlit this way, you can right click
+  LINE any skill on the skill panel to assign
+  LINE it to the highlit lemming. To do this
+  LINE with the keyboard, hold Ctrl while
+  LINE pressing the shortcut key for the
+  LINE skill you wish to assign.
+$END
+

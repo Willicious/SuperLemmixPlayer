@@ -1,0 +1,469 @@
+TITLE Never Touching Down
+THEME lpiv_space
+MUSIC lpiv_space1
+ID xA6F6C903
+LEMMINGS 40
+REQUIREMENT 32
+RELEASE_RATE 70
+WIDTH 320
+HEIGHT 320
+START_X 160
+START_Y 80
+AUTOSTEEL on
+BACKGROUND lpiv_space:universe
+
+$SKILLSET
+  BOMBER 8
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE window
+  X 9
+  Y 8
+  DIRECTION right
+  GLIDER
+$END
+
+$OBJECT
+  COLLECTION lpiv_space
+  PIECE exit
+  X 272
+  Y 246
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 160
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 192
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 224
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 256
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X -4
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 60
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 124
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 188
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 252
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE platform_03
+  X 316
+  Y 288
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 272
+  Y 272
+$END
+
+$TERRAIN
+  COLLECTION lpiv_space
+  PIECE steel_04
+  X 288
+  Y 272
+$END
+

@@ -1,0 +1,872 @@
+TITLE Be A Tidy Lemming!
+THEME lpii_metal
+ID xD1A7EC52
+LEMMINGS 50
+REQUIREMENT 50
+TIME_LIMIT 210
+RELEASE_RATE 50
+WIDTH 544
+HEIGHT 160
+START_X 384
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 5
+  CLIMBER 2
+  FLOATER 1
+  BOMBER 2
+  PLATFORMER 6
+  BUILDER 3
+  MINER 2
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE window
+  X 448
+  Y 80
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE exit_locked
+  X 48
+  Y 129
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE exit_flames
+  X 48
+  Y 121
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE button
+  X 36
+  Y 77
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE button
+  X 252
+  Y 45
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE button
+  X 380
+  Y 45
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE button
+  X 500
+  Y 77
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_right
+  X 208
+  Y 128
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_left
+  X 256
+  Y 128
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 0
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 32
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 64
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 96
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 128
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 128
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 144
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 144
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 160
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 160
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 176
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 176
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 192
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 192
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 208
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 208
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 224
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 224
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 240
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 240
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 256
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 256
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 272
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 256
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 288
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 208
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 224
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 256
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 288
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 288
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 304
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 304
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 320
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 320
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 336
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 336
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 352
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 384
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 416
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 352
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 352
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 368
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 368
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 384
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 384
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 400
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 320
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 304
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 352
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 320
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 336
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 336
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 384
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 416
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 448
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 480
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 512
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 528
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 496
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_07
+  X 496
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 528
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_05
+  X 496
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 32
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 0
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_07
+  X 0
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 0
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_05
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 48
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 80
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 112
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 144
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 176
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 208
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 240
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 272
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 304
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 336
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 368
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 400
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 432
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_02
+  X 464
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 240
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 336
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 432
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 144
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 48
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 96
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 192
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 288
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 384
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 480
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 512
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 16
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 32
+  Y 32
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 31
+  Y 32
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 16
+  Y 31
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 32
+  Y 31
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 31
+  Y 17
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 16
+  Y 32
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 32
+  Y 17
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 496
+  Y 32
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 497
+  Y 32
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 496
+  Y 31
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 497
+  Y 31
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 512
+  Y 16
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 512
+  Y 32
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 496
+  Y 16
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 208
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 272
+  Y 128
+  ONE_WAY
+$END
+

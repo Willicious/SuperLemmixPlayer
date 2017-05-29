@@ -1,0 +1,470 @@
+TITLE Lemming in a Cone
+AUTHOR Martin Zurlinden
+THEME ohno_snow
+ID x2CA08B84
+LEMMINGS 30
+REQUIREMENT 27
+RELEASE_RATE 60
+WIDTH 870
+HEIGHT 160
+START_X 223
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  FLOATER 10
+  BOMBER 10
+  BLOCKER 2
+  BUILDER 6
+  BASHER 10
+  MINER 10
+  DIGGER 10
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 632
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 696
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 544
+  Y 86
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE iceblower
+  X 616
+  Y 87
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE exit
+  X 728
+  Y 9
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE window
+  X 80
+  Y 35
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 760
+  Y 144
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE iceblower
+  X 480
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_10
+  X 570
+  Y 96
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 364
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 239
+  Y 98
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 285
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_12
+  X 455
+  Y 37
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 365
+  Y 116
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 309
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 333
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 357
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 497
+  Y 108
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 456
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 456
+  Y 57
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_01
+  X 456
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_07
+  X 459
+  Y 62
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_06
+  X 387
+  Y 123
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 396
+  Y 69
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 178
+  Y 118
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 519
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 516
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_02
+  X 570
+  Y 96
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_02
+  X 602
+  Y 106
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_02
+  X 602
+  Y 82
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 542
+  Y 96
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 684
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 725
+  Y 59
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 315
+  Y 88
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 268
+  Y 97
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 298
+  Y 99
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 282
+  Y 94
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 785
+  Y 113
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 436
+  Y 71
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_12
+  X 444
+  Y 35
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 84
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 101
+  Y 109
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE steel_03
+  X 199
+  Y 100
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE rocks_01
+  X 436
+  Y 2
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 36
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 68
+  Y 126
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X -2
+  Y 138
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 39
+  Y 130
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_01
+  X 448
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 634
+  Y 155
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 664
+  Y 158
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 677
+  Y 155
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 722
+  Y 155
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 769
+  Y 152
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 592
+  Y 150
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 650
+  Y 151
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_03
+  X 692
+  Y 150
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 657
+  Y 154
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_04
+  X 731
+  Y 152
+$END
+

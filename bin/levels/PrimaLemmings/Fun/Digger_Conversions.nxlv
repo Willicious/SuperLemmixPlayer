@@ -1,0 +1,149 @@
+TITLE Digger Conversions
+THEME ohno_brick
+MUSIC orig_01
+ID x8E9799FC
+LEMMINGS 80
+REQUIREMENT 70
+TIME_LIMIT 240
+RELEASE_RATE 25
+WIDTH 384
+HEIGHT 160
+START_X 176
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  BASHER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE exit
+  X 336
+  Y 88
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE window
+  X 16
+  Y 0
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 0
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 64
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 64
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 128
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 128
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 192
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 256
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 320
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 128
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 64
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 0
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_10
+  X 188
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_10
+  X 0
+  Y 16
+  ONE_WAY
+$END
+

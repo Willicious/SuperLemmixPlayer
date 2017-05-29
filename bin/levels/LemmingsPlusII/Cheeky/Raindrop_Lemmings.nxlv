@@ -1,0 +1,328 @@
+TITLE Raindrop Lemmings
+THEME lpii_tree
+ID xD8A17C1B
+LEMMINGS 250
+REQUIREMENT 50
+RELEASE_RATE 95
+WIDTH 632
+HEIGHT 160
+START_X 360
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 30
+  FLOATER 30
+  BOMBER 30
+  BLOCKER 30
+  BUILDER 30
+  BASHER 30
+  MINER 30
+  DIGGER 30
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE window
+  X 248
+  Y 40
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE window
+  X 296
+  Y 40
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE window
+  X 344
+  Y 40
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE window
+  X 392
+  Y 40
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE exit
+  X 440
+  Y 120
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 196
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 261
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 326
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 379
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 432
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 450
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_01
+  X 212
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 198
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_01
+  X 488
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_02
+  X 65
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_03
+  X 85
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 68
+  Y 34
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 94
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 110
+  Y 4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 80
+  Y 19
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 54
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 49
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_03
+  X 76
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 105
+  Y 21
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 57
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 91
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_03
+  X 578
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 575
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 560
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 576
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 96
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 113
+  Y 84
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 120
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_04
+  X 113
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_11
+  X 33
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 18
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 28
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 26
+  Y 81
+  ONE_WAY
+$END
+

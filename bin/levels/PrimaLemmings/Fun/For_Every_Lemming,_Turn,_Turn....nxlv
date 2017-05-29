@@ -1,0 +1,112 @@
+TITLE For Every Lemming, Turn, Turn...
+THEME ohno_brick
+MUSIC orig_02
+ID xB0A4B2EA
+LEMMINGS 80
+REQUIREMENT 79
+TIME_LIMIT 240
+RELEASE_RATE 25
+WIDTH 512
+HEIGHT 160
+START_X 352
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 1
+  BOMBER 1
+  BLOCKER 1
+  BUILDER 1
+  MINER 1
+  DIGGER 1
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE exit
+  X 464
+  Y 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE trap_02
+  X 16
+  Y 105
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE window
+  X 192
+  Y 68
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 0
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 64
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 128
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 192
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 256
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 320
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 384
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 448
+  Y 112
+  ONE_WAY
+$END
+

@@ -1,0 +1,550 @@
+TITLE Together We Sand
+THEME lpii_desert
+ID xE7917565
+LEMMINGS 30
+REQUIREMENT 18
+RELEASE_RATE 25
+WIDTH 488
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 15
+  FLOATER 15
+  BOMBER 15
+  BLOCKER 15
+  BUILDER 15
+  BASHER 15
+  MINER 15
+  DIGGER 15
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE window
+  X 40
+  Y 39
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE exit
+  X 368
+  Y 104
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE owa_left
+  X 249
+  Y 77
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE owa_left
+  X 281
+  Y 77
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE owa_left
+  X 249
+  Y 109
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE owa_left
+  X 281
+  Y 109
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE owa_left
+  X 249
+  Y 125
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE owa_left
+  X 281
+  Y 125
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 71
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 95
+  Y 137
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 110
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 117
+  Y 129
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 96
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 140
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 136
+  Y 129
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 160
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 189
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 66
+  Y 86
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 43
+  Y 86
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 23
+  Y 85
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 31
+  Y 77
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 194
+  Y 138
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 224
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 248
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_03
+  X 299
+  Y 148
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 249
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_08
+  X 247
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 264
+  Y 27
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 280
+  Y -4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 280
+  Y -42
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 299
+  Y 67
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_10
+  X 300
+  Y -24
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_10
+  X 327
+  Y -27
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_10
+  X 358
+  Y -23
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_10
+  X 388
+  Y -20
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 313
+  Y -35
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 343
+  Y -34
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 378
+  Y -26
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_04
+  X 254
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_04
+  X 255
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_04
+  X 256
+  Y 114
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_04
+  X 251
+  Y 100
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_04
+  X 257
+  Y 86
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_04
+  X 258
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 313
+  Y 71
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 327
+  Y 71
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 341
+  Y 69
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 299
+  Y 140
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_08
+  X 338
+  Y 129
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 364
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 396
+  Y 123
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 412
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 431
+  Y 149
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 375
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 380
+  Y 145
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 371
+  Y 124
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 355
+  Y 126
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_03
+  X 388
+  Y 127
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_05
+  X 378
+  Y 115
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_05
+  X 377
+  Y 115
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_05
+  X 379
+  Y 115
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 117
+  Y -28
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 142
+  Y -26
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_09
+  X 167
+  Y -27
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_10
+  X 185
+  Y -22
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 342
+  Y 124
+$END
+

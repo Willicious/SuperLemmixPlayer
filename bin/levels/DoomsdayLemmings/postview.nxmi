@@ -1,0 +1,55 @@
+
+$RESULT
+  CONDITION 0
+  LINE Really, not even one puny lemming?
+  LINE Perhaps you're not cut out for this.
+$END
+
+$RESULT
+  CONDITION -50%
+  LINE That wasn't the slightest bit
+  LINE impressive. Come on, try harder!
+$END
+
+$RESULT
+  CONDITION -10%
+  LINE Well that wasn't completely terrible
+  LINE Maybe if you keep trying, you'll win
+$END
+
+$RESULT
+  CONDITION -2
+  LINE You're not far from the goal now!
+  LINE Come on, give it all you've got!
+$END
+
+$RESULT
+  CONDITION -1
+  LINE Wow, that was unbelievably close!
+  LINE Just a little improvement and...
+$END
+
+$RESULT
+  CONDITION +0
+  LINE It seems you know what to do here.
+  LINE Time to try a different level.
+$END
+
+$RESULT
+  CONDITION +1
+  LINE Nicely done! This level is clearly
+  LINE no match for your skills!
+$END
+
+$RESULT
+  CONDITION +20%
+  LINE That was a very impressive play.
+  LINE Can you keep that standard up?
+$END
+
+$RESULT
+  CONDITION 100%
+  LINE WOW, BRILLIANT! That was nothing
+  LINE short of pure excellence!
+$END
+

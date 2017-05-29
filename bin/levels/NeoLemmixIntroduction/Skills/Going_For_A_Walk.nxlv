@@ -1,0 +1,462 @@
+TITLE Going For A Walk
+THEME orig_dirt
+ID xA2B829AA
+LEMMINGS 1
+REQUIREMENT 1
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 10
+$END
+
+$OBJECT
+  COLLECTION orig_dirt
+  PIECE trap_01
+  X 107
+  Y 115
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_dirt
+  PIECE exit
+  X 255
+  Y 125
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_dirt
+  PIECE trap_02
+  X 37
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 67
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 25
+  Y 41
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X -20
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X -40
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 1
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 43
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X -2
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 20
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 40
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 56
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 73
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 91
+  Y 39
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 106
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_02
+  X 151
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_03
+  X 127
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 136
+  Y 51
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_09
+  X -10
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_02
+  X 161
+  Y 95
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_02
+  X 174
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_02
+  X 188
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_02
+  X 196
+  Y 75
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_02
+  X 203
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_02
+  X 209
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_01
+  X 202
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_01
+  X 197
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_04
+  X 162
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_01
+  X 210
+  Y 53
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_01
+  X 205
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 223
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_03
+  X 191
+  Y 73
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_01
+  X 160
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_04
+  X 168
+  Y 89
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE grass_03
+  X 185
+  Y 79
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 259
+  Y -7
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 195
+  Y -23
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 146
+  Y -31
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_06
+  X 302
+  Y 38
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_04
+  X 287
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_04
+  X 231
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_04
+  X 183
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_04
+  X 134
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_04
+  X 92
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_04
+  X 60
+  Y 149
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_06
+  X 68
+  Y 74
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X -10
+  Y 74
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X -20
+  Y 101
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X -19
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_01
+  X 50
+  Y 121
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_02
+  X 53
+  Y 140
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_02
+  X 34
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE steel_01
+  X 103
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_01
+  X 96
+  Y 137
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 70
+  Y -34
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE clump_07
+  X 3
+  Y -32
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE cross
+  X 37
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION orig_dirt
+  PIECE cross
+  X 104
+  Y 128
+$END
+
+$LEMMING
+  X 122
+  Y 41
+  DIRECTION left
+$END
+
+$PRETEXT
+  LINE In addition to the classic eight
+  LINE skills, NeoLemmix also features nine
+  LINE all-new skills. This rank will teach
+  LINE you these skills.
+  LINE This level features the Walker skill.
+  LINE This skill will make a lemming that
+  LINE is currently performing an action,
+  LINE stop performing the action and revert
+  LINE to walking. When used on a lemming
+  LINE who is already just walking, it will
+  LINE cause the lemming to turn around.
+$END
+

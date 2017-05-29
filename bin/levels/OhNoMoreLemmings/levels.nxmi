@@ -1,0 +1,26 @@
+
+$RANK
+  NAME Tame
+  FOLDER Havoc
+$END
+
+$RANK
+  NAME Crazy
+  FOLDER Havoc
+$END
+
+$RANK
+  NAME Wild
+  FOLDER Havoc
+$END
+
+$RANK
+  NAME Wicked
+  FOLDER Havoc
+$END
+
+$RANK
+  NAME Havoc
+  FOLDER Havoc
+$END
+

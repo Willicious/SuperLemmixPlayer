@@ -1,0 +1,21 @@
+
+$RANK
+  NAME Fun
+  FOLDER Mayhem
+$END
+
+$RANK
+  NAME Tricky
+  FOLDER Mayhem
+$END
+
+$RANK
+  NAME Taxing
+  FOLDER Mayhem
+$END
+
+$RANK
+  NAME Mayhem
+  FOLDER Mayhem
+$END
+

@@ -1,0 +1,278 @@
+TITLE Lemmings On Stilts
+THEME orig_marble
+ID x1E1E7232
+LEMMINGS 13
+REQUIREMENT 9
+RELEASE_RATE 1
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL off
+
+$SKILLSET
+  CLIMBER 25
+  FLOATER 25
+  BOMBER 25
+  BLOCKER 25
+  BUILDER 25
+  BASHER 25
+  MINER 25
+  DIGGER 25
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE window
+  X 1
+  Y 76
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE exit
+  X 273
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X -3
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 40
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_09
+  X 2
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 265
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 308
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_09
+  X 270
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 49
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 58
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 67
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 76
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 85
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 94
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 103
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 112
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 121
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 130
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 139
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 148
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 157
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 166
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 175
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 184
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 193
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 202
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 211
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 220
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 229
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 238
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 247
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE bar_01
+  X 256
+  Y 115
+  ONE_WAY
+$END
+

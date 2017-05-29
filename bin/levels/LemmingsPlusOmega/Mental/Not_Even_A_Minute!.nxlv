@@ -1,0 +1,357 @@
+TITLE Not Even A Minute!
+THEME lpiii_lab
+ID xA59CCBFF
+LEMMINGS 20
+REQUIREMENT 19
+TIME_LIMIT 40
+RELEASE_RATE 99
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 1
+  CLIMBER 3
+  FLOATER 1
+  BOMBER 1
+  BUILDER 2
+  BASHER 2
+  MINER 1
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE window
+  X 94
+  Y 1
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE exit
+  X 271
+  Y 32
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 0
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 64
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 128
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 192
+  Y 143
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 256
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 83
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_06
+  X 83
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 83
+  Y 20
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 83
+  Y -10
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_06
+  X 132
+  Y 50
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 134
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 83
+  Y 80
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 83
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 147
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 19
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_06
+  X 19
+  Y 82
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 19
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 19
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 19
+  Y -8
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 32
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -32
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_02
+  X 211
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 275
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 307
+  Y 64
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 291
+  Y 80
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 259
+  Y 112
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 259
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 275
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_05
+  X 292
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 292
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 292
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 292
+  Y 154
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_05
+  X 19
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 19
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 211
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 243
+  Y 32
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_04
+  X 243
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_05
+  X 32
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_04
+  X 7
+  Y 32
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -43
+  Y 32
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_01
+  X 158
+  Y 38
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_02
+  X 128
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE barrel_normal
+  X 149
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 166
+  Y 34
+  ERASE
+$END
+

@@ -1,0 +1,997 @@
+TITLE Gaining Height
+THEME orig_sega
+ID xA0F2C38C
+LEMMINGS 30
+REQUIREMENT 20
+RELEASE_RATE 30
+WIDTH 320
+HEIGHT 160
+START_X 0
+START_Y 0
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 2
+  FLOATER 2
+  BLOCKER 3
+  PLATFORMER 5
+  BUILDER 3
+  BASHER 2
+  FENCER 4
+  DIGGER 3
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 176
+  Y 40
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 192
+  Y 40
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 208
+  Y 40
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 224
+  Y 40
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 224
+  Y 56
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 208
+  Y 56
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 192
+  Y 56
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 176
+  Y 56
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 224
+  Y 72
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 208
+  Y 72
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 192
+  Y 72
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 176
+  Y 72
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 224
+  Y 88
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 208
+  Y 88
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 192
+  Y 88
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 176
+  Y 88
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 224
+  Y 104
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 208
+  Y 104
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 192
+  Y 104
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 176
+  Y 104
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 224
+  Y 120
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 208
+  Y 120
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 192
+  Y 120
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 176
+  Y 120
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 224
+  Y 136
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 208
+  Y 136
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 192
+  Y 136
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 176
+  Y 136
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 224
+  Y 152
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 208
+  Y 152
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 192
+  Y 152
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE owa_down
+  X 176
+  Y 152
+  WIDTH 16
+  HEIGHT 16
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE window
+  X 25
+  Y 43
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE exit
+  X 48
+  Y 2
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_sega
+  PIECE exit_flames
+  X 48
+  Y 2
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 0
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 32
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 64
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 96
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 128
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 160
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 176
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 224
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 256
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 288
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 16
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 48
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 80
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 112
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 144
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 240
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 272
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 304
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X -16
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 304
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X -16
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 304
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X -16
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 304
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X -16
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 304
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 304
+  Y 72
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 304
+  Y 40
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 304
+  Y 8
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 8
+  Y 8
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 8
+  Y 40
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 8
+  Y 72
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 8
+  Y 104
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_05
+  X 8
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_05
+  X 304
+  Y 136
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X -16
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 8
+  Y -16
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 304
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 304
+  Y -16
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 176
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 208
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 208
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 176
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 208
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 176
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 176
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 176
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 232
+  Y 48
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 232
+  Y 64
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 232
+  Y 96
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_04
+  X 232
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_03
+  X 176
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 184
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_01
+  X 200
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE blocks_01
+  X 208
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE edge_07
+  X 232
+  Y 128
+  FLIP_HORIZONTAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_09
+  X 112
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_09
+  X 72
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_13
+  X 144
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_08
+  X 144
+  Y 90
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE tap_body_02
+  X 104
+  Y 26
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE tap_handle
+  X 96
+  Y 17
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_09
+  X 40
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_13
+  X 32
+  Y 34
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_10
+  X 32
+  Y 2
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_10
+  X 32
+  Y -30
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE bathplug
+  X 272
+  Y 105
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_09
+  X 16
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_09
+  X 48
+  Y 69
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_09
+  X 16
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_09
+  X 48
+  Y 104
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_08
+  X 80
+  Y 69
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_08
+  X 80
+  Y 104
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_10
+  X 144
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE pipe_10
+  X 144
+  Y 58
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE steel_04
+  X 128
+  Y 42
+$END
+
+$TERRAIN
+  COLLECTION orig_sega
+  PIECE steel_04
+  X 128
+  Y 66
+$END
+
+$PRETEXT
+  LINE And of course, there's the opposite
+  LINE of one-way down arrows: One-way up.
+  LINE One-way up arrows cannot be destroyed
+  LINE by bashers, miners, or diggers. You'll
+  LINE need a bomber or a fencer for them.
+$END
+

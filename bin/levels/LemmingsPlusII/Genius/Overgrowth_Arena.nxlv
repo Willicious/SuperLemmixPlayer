@@ -1,0 +1,532 @@
+TITLE Overgrowth Arena
+THEME lpii_tree
+ID xDAA07E01
+LEMMINGS 100
+REQUIREMENT 99
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BOMBER 1
+  BLOCKER 1
+  BUILDER 3
+  BASHER 1
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 244
+  Y 130
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE window
+  X 20
+  Y 17
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE trap
+  X 204
+  Y 98
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_tree
+  PIECE exit
+  X 252
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 4
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 28
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 52
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 76
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 100
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 124
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 148
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 172
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 196
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 220
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 244
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 268
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_03
+  X 292
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 4
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 4
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 4
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 4
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 4
+  Y 26
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 4
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 302
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 302
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 302
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 302
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 302
+  Y 26
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE steel_02
+  X 302
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 15
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 71
+  Y 131
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 126
+  Y 131
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_01
+  X 172
+  Y 130
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_02
+  X 222
+  Y 127
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_01
+  X 80
+  Y 120
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_01
+  X 35
+  Y 114
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_01
+  X 35
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 28
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 72
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 16
+  Y 69
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 37
+  Y 61
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 20
+  Y 51
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 9
+  Y 53
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 30
+  Y 53
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_02
+  X 150
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_03
+  X 170
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 165
+  Y 31
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 175
+  Y 41
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 156
+  Y 43
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 146
+  Y 29
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 165
+  Y 16
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 182
+  Y 23
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_02
+  X 150
+  Y 18
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_01
+  X 149
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_01
+  X 132
+  Y 67
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_01
+  X 117
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 98
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE branch_02
+  X 182
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE dirt_02
+  X 191
+  Y 110
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE leaves_01
+  X 192
+  Y 80
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_tree
+  PIECE trunk_10
+  X 245
+  Y 54
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

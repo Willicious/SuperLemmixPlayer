@@ -1,0 +1,311 @@
+TITLE A Lemming's Worst Nightmare...
+THEME lpii_psychedelic
+ID xD1AD7A5C
+LEMMINGS 100
+REQUIREMENT 55
+TIME_LIMIT 120
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLIMBER 2
+  FLOATER 2
+  BOMBER 2
+  BLOCKER 2
+  BUILDER 4
+  BASHER 2
+  MINER 2
+  DIGGER 2
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE window
+  X 48
+  Y 87
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE exit
+  X 0
+  Y 25
+$END
+
+$OBJECT
+  COLLECTION lpii_psychedelic
+  PIECE trap
+  X 88
+  Y 42
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 0
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 24
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_05
+  X 72
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 120
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 0
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 17
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_01
+  X 0
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_02
+  X 32
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_02
+  X 48
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_02
+  X 64
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_03
+  X 32
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_02
+  X 80
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE colorblocks_02
+  X 96
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 168
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 168
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 168
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 192
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 216
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 233
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 192
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_03
+  X 251
+  Y 149
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_03
+  X 262
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_03
+  X 273
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_03
+  X 284
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_03
+  X 295
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 303
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 303
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE bar_06
+  X 303
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 296
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 272
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 248
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE block_01
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_psychedelic
+  PIECE steel_01
+  X 200
+  Y 0
+  ONE_WAY
+$END
+

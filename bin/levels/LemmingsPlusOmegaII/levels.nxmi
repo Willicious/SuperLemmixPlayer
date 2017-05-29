@@ -1,0 +1,21 @@
+
+$RANK
+  NAME Fluffy
+  FOLDER Sharp
+$END
+
+$RANK
+  NAME Coarse
+  FOLDER Sharp
+$END
+
+$RANK
+  NAME Spiky
+  FOLDER Sharp
+$END
+
+$RANK
+  NAME Sharp
+  FOLDER Sharp
+$END
+

@@ -1,0 +1,352 @@
+TITLE Having A Blast
+THEME lpiv_wasteland
+MUSIC lpiv_wasteland2
+ID x53A36FA8
+LEMMINGS 30
+REQUIREMENT 27
+RELEASE_RATE 50
+WIDTH 320
+HEIGHT 160
+START_X 159
+START_Y 30
+AUTOSTEEL on
+BACKGROUND lpiv_wasteland:mushroom_cloud
+
+$SKILLSET
+  FLOATER 1
+  BOMBER 3
+  PLATFORMER 1
+  BUILDER 1
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE window
+  X 134
+  Y 4
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiv_wasteland
+  PIECE exit
+  X 20
+  Y 114
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 159
+  Y 97
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X -16
+  Y -12
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X -16
+  Y 28
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X -16
+  Y 116
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X -16
+  Y 71
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 302
+  Y -12
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 302
+  Y 28
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 302
+  Y 116
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 302
+  Y 71
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_04
+  X 104
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_04
+  X 200
+  Y 22
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 120
+  Y 40
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 168
+  Y 40
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 144
+  Y 40
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_04
+  X 104
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_04
+  X 200
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_03
+  X 100
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_03
+  X 124
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_03
+  X 148
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_03
+  X 172
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_03
+  X 196
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 99
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 214
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 214
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE bar_01
+  X 99
+  Y 126
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 76
+  Y 145
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 204
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 236
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 260
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X -8
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 91
+  Y 143
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_03
+  X 164
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 165
+  Y 125
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 175
+  Y 135
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 186
+  Y 135
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 179
+  Y 125
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 171
+  Y 114
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 164
+  Y 104
+  ROTATE
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_04
+  X 159
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_05
+  X 159
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE steel_04
+  X 159
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION lpiv_wasteland
+  PIECE clump_02
+  X 213
+  Y 126
+  ROTATE
+  FLIP_HORIZONTAL
+$END
+
