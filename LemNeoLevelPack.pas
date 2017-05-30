@@ -350,6 +350,7 @@ begin
 
   fFolder := aPath;
   fFolder := ExcludeTrailingBackslash(fFolder);
+  fName := ExtractFileName(fFolder);
 
   fChildGroups := TNeoLevelGroups.Create(self);
   fLevels := TNeoLevelEntries.Create(self);
@@ -510,7 +511,6 @@ begin
       if SearchRec.Attr and faDirectory <> faDirectory then Continue;
       if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
       G := fChildGroups.Add(SearchRec.Name + '/');
-      G.Name := SearchRec.Name;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
     fChildGroups.Sort(SortAlphabetical);
