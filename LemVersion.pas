@@ -9,10 +9,10 @@ uses
 
 const
   FORMAT_VERSION = 11;
-  CORE_VERSION = 13;
-  FEATURES_VERSION = 17;
+  CORE_VERSION = 14;
+  FEATURES_VERSION = 19;
   HOTFIX_VERSION = 0;
-  COMMIT_ID = '89a1442';  // empty string is handled, and is uppercased when needed so don't need to do manually anymore :D
+  COMMIT_ID = '0f5d7c7';  // empty string is handled, and is uppercased when needed so don't need to do manually anymore :D
 
 function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
 function MakeVersionID(aFormat, aCore, aFeature, aHotfix: Integer): Int64;
