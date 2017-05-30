@@ -6,17 +6,24 @@ uses
   GameControl,
   LemNeoLevelPack,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls;
 
 type
   TFLevelSelect = class(TForm)
     tvLevelSelect: TTreeView;
     btnCancel: TButton;
     btnOK: TButton;
+    lblName: TLabel;
+    pnLevelInfo: TPanel;
+    lblPosition: TLabel;
+    lblAuthor: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
+    procedure tvLevelSelectClick(Sender: TObject);
   private
     procedure InitializeTreeview;
+    procedure SetInfo;
+    procedure WriteToParams;
   public
     { Public declarations }
   end;
@@ -62,6 +69,11 @@ begin
 end;
 
 procedure TFLevelSelect.btnOKClick(Sender: TObject);
+begin
+  WriteToParams;
+end;
+
+procedure TFLevelSelect.WriteToParams;
 var
   Obj: TObject;
   G: TNeoLevelGroup;
@@ -69,6 +81,8 @@ var
   N: TTreeNode;
 begin
   N := tvLevelSelect.Selected;
+  if N = nil then Exit; // safeguard
+
   Obj := TObject(N.Data);
 
   if Obj is TNeoLevelGroup then
@@ -83,6 +97,63 @@ begin
   end;
 
   ModalResult := mrOk;
+end;
+
+procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
+begin
+  SetInfo;
+end;
+
+procedure TFLevelSelect.SetInfo;
+var
+  Obj: TObject;
+  G: TNeoLevelGroup;
+  L: TNeoLevelEntry;
+  N: TTreeNode;
+
+  function GetGroupPositionText: String;
+  begin
+    if (G.Parent = GameParams.BaseLevelPack) or (G.IsBasePack) then
+      Result := ''
+    else
+      Result := 'Group ' + IntToStr(G.ParentGroupIndex + 1) + ' in ' + G.Parent.Name;
+  end;
+
+  function GetLevelPositionText: String;
+  begin
+    if L.Group = GameParams.BaseLevelPack then
+      Result := 'Standalone level'
+    else
+      Result := 'Level ' + IntToStr(L.GroupIndex + 1) + ' of ' + L.Group.Name;
+  end;
+
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit;
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+  begin
+    G := TNeoLevelGroup(Obj);
+    lblName.Caption := G.Name;
+    lblPosition.Caption := GetGroupPositionText;
+    lblAuthor.Caption := G.Author;
+
+    pnLevelInfo.Visible := false;
+
+    btnOk.Enabled := G.LevelCount > 0; // note: Levels.Count is not recursive; LevelCount is
+  end else if Obj is TNeoLevelEntry then
+  begin
+    L := TNeoLevelEntry(Obj);
+    lblName.Caption := L.Title;
+    lblPosition.Caption := GetLevelPositionText;
+    lblAuthor.Caption := L.Author;
+
+    pnLevelInfo.Visible := true;
+
+    btnOk.Enabled := true;
+  end;
 end;
 
 end.

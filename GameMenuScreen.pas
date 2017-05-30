@@ -163,7 +163,7 @@ var
   MaskColor: TColor32;
   SrcFile: String;
 begin
-  SrcFile := GameParams.BaseLevelPack.Path + aName;
+  SrcFile := GameParams.CurrentLevel.Group.FindFile(aName);
   if not FileExists(SrcFile) then
     SrcFile := AppPath + SFGraphicsMenu + aName;
 

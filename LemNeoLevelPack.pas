@@ -45,7 +45,10 @@ type
     private
       fGroup: TNeoLevelGroup;
 
+      fDataLoaded: Boolean;
+
       fTitle: String;
+      fAuthor: String;
       fFilename: String;
 
       fLevelID: Cardinal;
@@ -56,8 +59,11 @@ type
 
       procedure Wipe;
       procedure SetFilename(aValue: String);
+      procedure LoadLevelFileData;
+
       function GetFullPath: String;
       function GetTitle: String;
+      function GetAuthor: String;
       function GetLevelID: Cardinal;
       function GetGroupIndex: Integer;
     public
@@ -68,6 +74,7 @@ type
 
       property Group: TNeoLevelGroup read fGroup;
       property Title: String read GetTitle;
+      property Author: String read GetAuthor;
       property Filename: String read fFilename write SetFilename;
       property LevelID: Cardinal read GetLevelID;
       property Path: String read GetFullPath;
@@ -82,6 +89,7 @@ type
       fLevels: TNeoLevelEntries;
 
       fName: String;
+      fAuthor: String;
       fFolder: String;
       fPanelStyle: String;
       fIsBasePack: Boolean;
@@ -95,6 +103,7 @@ type
       procedure SetFolderName(aValue: String);
       function GetFullPath: String;
       function GetPanelStyle: String;
+      function GetAuthor: String;
 
       procedure LoadFromMetaInfo(aPath: String = '');
       procedure LoadFromSearchRec;
@@ -125,6 +134,8 @@ type
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
 
+      function FindFile(aName: String): String;
+
       procedure EnsureUpdated;
 
       property Parent: TNeoLevelGroup read fParentGroup;
@@ -132,10 +143,11 @@ type
       property Levels: TNeoLevelEntries read fLevels;
       property LevelCount: Integer read GetRecursiveLevelCount;
       property Name: String read fName write fName;
+      property Author: String read GetAuthor write fAuthor;
       property IsBasePack: Boolean read fIsBasePack write fIsBasePack;
       property Folder: String read fFolder write SetFolderName;
       property Path: String read GetFullPath;
-      property PanelStyle: String read GetPanelStyle;
+      property PanelStyle: String read GetPanelStyle write fPanelStyle;
       property MusicList: TStringList read fMusicList;
       property PostviewTexts: TPostviewTexts read fPostviewTexts;
 
@@ -273,39 +285,21 @@ begin
 end;
 
 function TNeoLevelEntry.GetTitle: String;
-var
-  Parser: TParser;
 begin
-  if fTitle = '' then
-  begin
-    Parser := TParser.Create;
-    try
-      Parser.LoadFromFile(Path);
-      fTitle := Parser.MainSection.LineTrimString['title'];
-    finally
-      Parser.Free;
-    end;
-  end;
-
+  LoadLevelFileData;
   Result := fTitle;
 end;
 
 function TNeoLevelEntry.GetLevelID: Cardinal;
-var
-  Parser: TParser;
 begin
-  if fLevelID = 0 then
-  begin
-    Parser := TParser.Create;
-    try
-      Parser.LoadFromFile(Path);
-      fLevelID := Parser.MainSection.LineNumeric['id'];
-    finally
-      Parser.Free;
-    end;
-  end;
-
+  LoadLevelFileData;
   Result := fLevelID;
+end;
+
+function TNeoLevelEntry.GetAuthor: String;
+begin
+  LoadLevelFileData;
+  Result := fAuthor;
 end;
 
 procedure TNeoLevelEntry.EnsureUpdated;
@@ -322,6 +316,22 @@ begin
   if fFilename = aValue then Exit;
   fFilename := aValue;
   EnsureUpdated;
+end;
+
+procedure TNeoLevelEntry.LoadLevelFileData;
+var
+  Parser: TParser;
+begin
+  if fDataLoaded then Exit;
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromFile(Path);
+    fTitle := Parser.MainSection.LineTrimString['title'];
+    fAuthor := Parser.MainSection.LineTrimString['author'];
+    fLevelID := Parser.MainSection.LineNumeric['id'];
+  finally
+    Parser.Free;
+  end;
 end;
 
 function TNeoLevelEntry.GetFullPath: String;
@@ -358,6 +368,14 @@ begin
 
   SetDefaultData;
   Load;
+end;
+
+function TNeoLevelGroup.FindFile(aName: String): String;
+begin
+  if FileExists(Path + aName) then
+    Result := Path + aName
+  else if (not IsBasePack) and (Parent <> nil) then
+    Result := Parent.FindFile(aName);
 end;
 
 procedure TNeoLevelGroup.SetDefaultData;
@@ -493,6 +511,8 @@ begin
     Parser.LoadFromFile(Path + 'info.nxmi');
     if MainSec.LineTrimString['title'] <> '' then
       fName := MainSec.LineTrimString['title'];
+    if MainSec.LineTrimString['author'] <> '' then
+      fAuthor := MainSec.LineTrimString['author'];
     fPanelStyle := MainSec.LineTrimString['panel'];
   finally
     Parser.Free;
@@ -555,6 +575,15 @@ begin
     Result := fParentGroup.Path;
 
   Result := Result + fFolder + '\';
+end;
+
+function TNeoLevelGroup.GetAuthor: String;
+begin
+  if fAuthor = '' then
+    if fParentGroup <> nil then
+      fAuthor := fParentGroup.Author;
+
+  Result := fAuthor;
 end;
 
 function TNeoLevelGroup.GetPanelStyle: String;
