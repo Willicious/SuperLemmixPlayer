@@ -321,8 +321,8 @@ end;
 
 procedure TGameBaseScreen.ExtractBackGround;
 begin
-  if FileExists(GameParams.BaseLevelPack.Path + 'background.png') then
-    TPngInterface.LoadPngFile(GameParams.BaseLevelPack.Path + 'background.png', fBackground)
+  if FileExists(GameParams.CurrentLevel.Group.FindFile('background.png')) then
+    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('background.png'), fBackground)
   else
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', fBackground);
 end;
@@ -337,8 +337,8 @@ begin
 
   TempBMP := TBitmap32.Create;
 
-  if FileExists(GameParams.BaseLevelPack.Path + 'menu_font.png') then
-    TPngInterface.LoadPngFile(GameParams.BaseLevelPack.Path + 'menu_font.png', TempBMP)
+  if FileExists(GameParams.CurrentLevel.Group.FindFile('menu_font.png')) then
+    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('menu_font.png'), TempBMP)
   else
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP);
 
@@ -351,8 +351,8 @@ begin
     fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
   end;
 
-  if FileExists(GameParams.BaseLevelPack.Path + 'talismans.png') then
-    TPngInterface.LoadPngFile(GameParams.BaseLevelPack.Path + 'talismans.png', TempBMP)
+  if FileExists(GameParams.CurrentLevel.Group.FindFile('talismans.png')) then
+    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('talismans.png'), TempBMP)
   else
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP);
   for i := 0 to 5 do

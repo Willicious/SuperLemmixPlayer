@@ -133,6 +133,20 @@ var
       Result := '0' + Result;
   end;
 
+  procedure DirectExtract(aName: String; aOutName: String = '');
+  var
+    TempStream: TMemoryStream;
+  begin
+    if aOutName = '' then aOutName := aName;
+    TempStream := CreateDataStream(aName);
+    try
+      if TempStream <> nil then
+        TempStream.SaveToFile(aOutName);
+    finally
+      TempStream.Free;
+    end;
+  end;
+
 const
   POSTVIEW_CONDITIONS: array[0..8] of String = ('0', '-50%', '-10%', '-2', '-1', '+0', '+1', '+20%', '100%');
 
@@ -171,9 +185,11 @@ begin
   ForceDirectories(DstBasePath); // others are created as needed
 
   Write('Please note that this tool only converts the level data,');
-  Write('talisman data and system texts. Custom music and images');
-  Write('must be added manually, and graphic sets converted with');
-  Write('a seperate tool.');
+  Write('talisman data, system texts, and menu graphics. Custom');
+  Write('skill panels or lemming sprites are not currently handled.');
+  Write('These must be imported manually, and graphic sets must');
+  Write('be converted with GSConvert.exe *before* attempting to');
+  Write('convert the NXP.');
   Write('');
   Write('Press enter to continue with conversion of ' + ExtractFileName(SrcFile) + '.');
   if ParamStr(2) <> 'silent' then ReadLn(Dummy);
@@ -190,6 +206,22 @@ begin
 
   MS := CreateDataStream('system.dat');
   MS.Read(SysDat, SizeOf(TSysDatRec));
+
+  { Logo and Menu Signs}
+  SetCurrentDir(DstBasePath); // just to be safe
+  DirectExtract('logo.png');
+  DirectExtract('background.png');
+  DirectExtract('menu_font.png');
+  DirectExtract('scroller_lemmings.png');
+  DirectExtract('scroller_segment.png');
+  DirectExtract('sign_play.png');
+  DirectExtract('sign_code.png');
+  DirectExtract('sign_rank.png');
+  DirectExtract('sign_config.png');
+  DirectExtract('sign_talisman.png');
+  DirectExtract('sign_quit.png');
+  DirectExtract('talismans.png');
+  DirectExtract('tick.png');
 
   { Level Files }
   SetLength(RankFolderNames, SysDat.RankCount);
@@ -229,6 +261,7 @@ begin
       MainSec.AddLine('level', LevelFilename + '.nxlv');
       PieceManager.Tidy;
     end;
+    DirectExtract('rank_' + LeadZeroStr(Rank+1, 2) + '.png', DstBasePath + RankFolderName + '\rank_graphic.png');
     Parser.SaveToFile(DstBasePath + RankFoldername + '\levels.nxmi');
     Parser.Clear;
   end;
@@ -291,7 +324,4 @@ begin
 
   Parser.SaveToFile(DstBasePath + 'info.nxmi');
   Parser.Clear;
-
-  { Launcher file }
-  SL.SaveToFile(DstBasePath + ChangeFileExt(ExtractFileName(SrcFile), '.nxlp'));
 end.

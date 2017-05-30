@@ -30,21 +30,7 @@ type
     gmbSection,      // 1st row, 4th button
     gmbExit,         // 2nd row, 1st button
     gmbTalisman,   // 2nd row, 2nd button
-    gmbGameSection1, // mayhem/havoc    drawn in gmbSection
-    gmbGameSection2, // taxing/wicked   drawn in gmbSection
-    gmbGameSection3, // tricky/wild     drawn in gmbSection
-    gmbGameSection4, // fun/crazy       drawn in gmbSection
-    gmbGameSection5, // .../tame        drawn in gmbSection
-    gmbGameSection6,
-    gmbGameSection7,
-    gmbGameSection8,
-    gmbGameSection9,
-    gmbGameSection10,
-    gmbGameSection11,
-    gmbGameSection12,
-    gmbGameSection13,
-    gmbGameSection14,
-    gmbGameSection15
+    gmbGameSection
   );
 
 const
@@ -59,20 +45,6 @@ const
     (X:392;  Y:140),                  // gmbSection
     (X:392;  Y:236),
     (X:264;  Y:236),                  // gmbTalisman
-    (X:392 + 32;    Y:140 + 24),      // gmbSection1
-    (X:392 + 32;    Y:140 + 24),      // gmbSection2
-    (X:392 + 32;    Y:140 + 24),      // gmbSection3
-    (X:392 + 32;    Y:140 + 24),      // gmbSection4
-    (X:392 + 32;    Y:140 + 24),      // gmbSection5
-    (X:392 + 32;    Y:140 + 24),       // gmbSection6
-    (X:392 + 32;    Y:140 + 24),
-    (X:392 + 32;    Y:140 + 24),
-    (X:392 + 32;    Y:140 + 24),
-    (X:392 + 32;    Y:140 + 24),
-    (X:392 + 32;    Y:140 + 24),
-    (X:392 + 32;    Y:140 + 24),
-    (X:392 + 32;    Y:140 + 24),
-    (X:392 + 32;    Y:140 + 24),
     (X:392 + 32;    Y:140 + 24)
   );
 
@@ -280,9 +252,7 @@ begin
     GetGraphic('sign_rank.png', BitmapElements[gmbSection]);
     GetGraphic('sign_quit.png', BitmapElements[gmbExit]);
     GetGraphic('sign_talisman.png', BitmapElements[gmbTalisman]);
-
-    for i := 0 to 14 do
-      GetGraphic('rank_' + LeadZeroStr(i+1, 2) + '.png', BitmapElements[TGameMenuBitmap(Integer(gmbGameSection1) + i)]);
+    GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection]);
 
     LoadScrollerGraphics;
 
@@ -355,9 +325,7 @@ begin
   begin
     Bmp := TBitmap32.Create;
     BitmapElements[E] := Bmp;
-    if not (E in [gmbGameSection1, gmbGameSection2, gmbGameSection3, gmbGameSection4,
-      gmbGameSection5, gmbGameSection6, gmbGameSection7, gmbGameSection8, gmbGameSection9, gmbGameSection10,
-      gmbGameSection11, gmbGameSection12, gmbGameSection13, gmbGameSection14, gmbGameSection15])
+    if not (E = gmbGameSection)
     then Bmp.DrawMode := dmTransparent;
   end;
 
@@ -564,28 +532,9 @@ end;
 
 procedure TGameMenuScreen.SetSection;
 begin
-  CurrentSection := GameParams.CurrentLevel.Group.ParentGroupIndex;
-  //@styledef
   DrawBitmapElement(gmbSection); // This allows for transparency in the gmbGameSectionN bitmaps
-  case CurrentSection of
-    0: DrawBitmapElement(gmbGameSection1);
-    1: DrawBitmapElement(gmbGameSection2);
-    2: DrawBitmapElement(gmbGameSection3);
-    3: DrawBitmapElement(gmbGameSection4);
-    4: DrawBitmapElement(gmbGameSection5);
-    5: DrawBitmapElement(gmbGameSection6);
-    6: DrawBitmapElement(gmbGameSection7);
-    7: DrawBitmapElement(gmbGameSection8);
-    8: DrawBitmapElement(gmbGameSection9);
-    9: DrawBitmapElement(gmbGameSection10);
-    10: DrawBitmapElement(gmbGameSection11);
-    11: DrawBitmapElement(gmbGameSection12);
-    12: DrawBitmapElement(gmbGameSection13);
-    13: DrawBitmapElement(gmbGameSection14);
-    14: DrawBitmapElement(gmbGameSection15);
-  end;
-
-  //GameParams.SetLevel(CurrentSection, -1);
+  GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection]);
+  DrawBitmapElement(gmbGameSection);
 end;
 
 procedure TGameMenuScreen.DrawWorkerLemmings(aFrame: Integer);
