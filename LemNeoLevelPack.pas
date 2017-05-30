@@ -117,6 +117,7 @@ type
       function GetParentGroupIndex: Integer;
 
       function GetFirstUnbeatenLevel: TNeoLevelEntry;
+      function GetFirstUnbeatenLevelRecursive: TNeoLevelEntry;
 
       function GetNextGroup: TNeoLevelGroup;
       function GetPrevGroup: TNeoLevelGroup;
@@ -142,6 +143,7 @@ type
       property GroupIndex[aGroup: TNeoLevelGroup]: Integer read GetGroupIndex;
       property ParentGroupIndex: Integer read GetParentGroupIndex;
       property FirstUnbeatenLevel: TNeoLevelEntry read GetFirstUnbeatenLevel;
+      property FirstUnbeatenLevelRecursive: TNeoLevelEntry read GetFirstUnbeatenLevelRecursive;
 
       property PrevGroup: TNeoLevelGroup read GetPrevGroup;
       property NextGroup: TNeoLevelGroup read GetNextGroup;
@@ -185,17 +187,17 @@ var
 begin
   Result := 0;
 
-  if (TObject(Item1^) is TNeoLevelGroup) and (TObject(Item2^) is TNeoLevelGroup) then
+  if (TObject(Item1) is TNeoLevelGroup) and (TObject(Item2) is TNeoLevelGroup) then
   begin
-    G1 := TNeoLevelGroup(Item1^);
-    G2 := TNeoLevelGroup(Item2^);
+    G1 := TNeoLevelGroup(Item1);
+    G2 := TNeoLevelGroup(Item2);
     Result := CompareStr(G1.Name, G2.Name);
   end;
 
-  if (TObject(Item1^) is TNeoLevelEntry) and (TObject(Item2^) is TNeoLevelEntry) then
+  if (TObject(Item1) is TNeoLevelEntry) and (TObject(Item2) is TNeoLevelEntry) then
   begin
-    L1 := TNeoLevelEntry(Item1^);
-    L2 := TNeoLevelEntry(Item2^);
+    L1 := TNeoLevelEntry(Item1);
+    L2 := TNeoLevelEntry(Item2);
     Result := CompareStr(L1.Title, L2.Title);
   end;
 end;
@@ -502,16 +504,13 @@ var
   G: TNeoLevelGroup;
   L: TNeoLevelEntry;
 begin
-  // temporarily disabled due to bugs
-  (*
   if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
   begin
     repeat
       if SearchRec.Attr and faDirectory <> faDirectory then Continue;
       if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
-      G := fChildGroups.Add(SearchRec.Name);
+      G := fChildGroups.Add(SearchRec.Name + '/');
       G.Name := SearchRec.Name;
-      G.Load;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
     fChildGroups.Sort(SortAlphabetical);
@@ -526,7 +525,6 @@ begin
     FindClose(SearchRec);
     fLevels.Sort(SortAlphabetical);
   end;
-  *)
 end;
 
 procedure TNeoLevelGroup.SetFolderName(aValue: String);
@@ -606,6 +604,25 @@ var
   i: Integer;
 begin
   Result := fLevels[0];
+  for i := 0 to fLevels.Count-1 do
+    if fLevels[i].Status <> lst_Completed then
+    begin
+      Result := fLevels[i];
+      Exit;
+    end;
+end;
+
+function TNeoLevelGroup.GetFirstUnbeatenLevelRecursive: TNeoLevelEntry;
+var
+  i: Integer;
+begin
+  Result := nil;
+  for i := 0 to fChildGroups.Count-1 do
+  begin
+    Result := fChildGroups[i].FirstUnbeatenLevelRecursive;
+    if (Result <> nil) and (Result.Status <> lst_Completed) then Exit;
+  end;
+
   for i := 0 to fLevels.Count-1 do
     if fLevels[i].Status <> lst_Completed then
     begin

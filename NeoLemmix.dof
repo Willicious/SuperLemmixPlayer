@@ -96,7 +96,7 @@ PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=kernel;kernel\zlib;kernel\gr32png
 Packages=vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;CLXIB;ibxpress;VCLIB;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP
-Conditionals=exp;
+Conditionals=exp;logging;
 DebugSourceDirs=
 UsePackages=0
 [Parameters]
@@ -138,8 +138,8 @@ Comments=
 c:\program files (x86)\borland\delphi7\Projects\Bpl\dclusr70.bpl=Borland User Components
 [HistoryLists\hlConditionals]
 Count=2
-Item0=exp;
-Item1=exp;logging;
+Item0=exp;logging;
+Item1=exp;
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;

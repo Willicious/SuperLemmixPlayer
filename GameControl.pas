@@ -257,6 +257,7 @@ var
 implementation
 
 uses
+  LemStrings,
   SharedGlobals,
   GameWindow, //for EXTRA_ZOOM_LEVELS const
   GameSound;
@@ -269,7 +270,6 @@ begin
   try
     SaveToIniFile;
     Hotkeys.SaveFile;
-    SaveSystem.SaveFile;
   except
     ShowMessage('An error occured while trying to save data.');
   end;
@@ -278,7 +278,6 @@ end;
 procedure TDosGameParams.Load;
 begin
   if IsHalting then Exit;
-  SaveSystem.LoadFile;
   LoadFromIniFile;
   // Hotkeys automatically load when the hotkey manager is created
 end;
@@ -607,17 +606,9 @@ begin
   MiscOptions := DEF_MISCOPTIONS;
   PostLevelSoundOptions := [plsVictory, plsFailure];
 
-  BaseLevelPack := TNeoLevelGroup.Create(nil, ExtractFilePath(GameFile));
+  BaseLevelPack := TNeoLevelGroup.Create(nil, AppPath + SFLevels);
 
-  // This workaround is not currently needed for NL itself, but is needed for
-  // some of the conversion apps for old formats content that share code.
-  if BaseLevelPack.Children.Count = 0 then
-    BaseLevelPack.Children.Add('');
-  if BaseLevelPack.Children[0].Levels.Count = 0 then
-    BaseLevelPack.Children[0].Levels.Add;
-  // End workaround
-
-  SetGroup(BaseLevelPack.Children[0]);
+  SetLevel(BaseLevelPack.FirstUnbeatenLevelRecursive);
 
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;

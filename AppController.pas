@@ -178,79 +178,6 @@ begin
   // Set to true as default; change to false if any failure.
   fLoadSuccess := true;
 
-  // Unless command line starts with "testmode" (sent by editor when launching test mode),
-  // we need to get which file to run. The command line may have already specified it in which
-  // case we can just get it from that; otherwise, we need to promt the user to select an
-  // NXP or LVL file.
-  DoSingleLevel := false;
-  if ParamStr(1) <> 'testmode' then
-  begin
-    if FileExists(ParamStr(1)) then
-      GameFile := ParamStr(1)
-    else begin
-      OpenDlg := TOpenDialog.Create(self);
-      OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
-      OpenDlg.Title := 'Select Level Pack';
-      OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxlp, *.lvl, *.nxlv)|*.nxlp;*.lvl;*.nxlv|NeoLemmix Level Pack (*.nxlp)|*.nxlp|NeoLemmix Level (*.lvl, *.nxlv)|*.lvl;*.nxlv';
-      OpenDlg.InitialDir := ExtractFilePath(ParamStr(0));
-      if not OpenDlg.Execute then
-        fLoadSuccess := false;
-      GameFile := OpenDlg.FileName;
-      OpenDlg.Free;
-    end;
-
-    if LowerCase(ExtractFileExt(GameFile)) = '.nxlp' then
-    begin
-      (*
-      DoSingleLevel := false;
-      Target := '';
-      IsHalting := false;
-      case CheckCompatible(Target) of
-        nxc_WrongFormat: begin
-                           ShowMessage('This pack''s data is in the wrong format for this version of NeoLemmix.' + #13 +
-                                       'Please use NeoLemmix V' + Target + ' to play this pack.');
-                           IsHalting := true;
-                           Application.Terminate();
-                         end;
-        nxc_OldCore: begin
-                       if FileExists(ChangeFileExt(GameFile, '.nxsv')) then
-                         ShowWarning := CheckIfWarningNeeded
-                       else
-                         ShowWarning := true;
-
-                       if ShowWarning then
-                         ShowMessage('This pack is designed for older versions of NeoLemmix. It should be compatible,' + #13 +
-                                     'but please be aware that it may not have been tested against this version. For' + #13 +
-                                     'optimal results, use NeoLemmix V' + Target + ' to play this pack.');
-                       // don't need to exit the application
-                     end;
-        nxc_NewCore: begin
-                       ShowMessage('This pack is designed for newer versions of NeoLemmix. Please upgrade to' + #13 +
-                                   'NeoLemmix V' + Target + ' to play this pack.');
-                       // only exit if file formats changed, i.e there is a change to FORMAT_VERSION
-                       if LeftStr(Target, 3) <> LeftStr(CurrentVersionString, 3) then
-                       begin
-                         IsHalting := true;
-                         Application.Terminate();
-                       end;
-                     end;
-        nxc_Error: begin
-                     ShowMessage('The NXP file could not be loaded. It may be corrupt or an invalid file.');
-                     IsHalting := true;
-                     Application.Terminate();
-                   end;
-      end;
-      *)
-      DoSingleLevel := false;
-      IsHalting := false;
-    end else begin
-      // If it's not an NXP file, treat it as a LVL file. This may not always be the case (eg. could be an NXP file with a wrong
-      // extension, or a non-supported file), but aside from wrong extensions, this would mean an unsupported file anyway. The
-      // only drawback of not explicitly checking, therefore, is a non-user-friendly crash message, rather than a user-friendly one.
-      DoSingleLevel := true;
-    end;
-  end;
-
   DoneBringToFront := false;
 
   SoundManager := TSoundManager.Create;
@@ -266,35 +193,6 @@ begin
   Application.Title := GameParams.BaseLevelPack.Name;
 
   GameParams.NextScreen := gstMenu;
-
-  if ParamStr(1) = 'testmode' then
-  begin
-    GameParams.fTestMode := true;
-    GameParams.fTestLevelFile := ExtractFilePath(Application.ExeName) + ParamStr(2);
-    GameParams.fTestGroundFile := ExtractFilePath(Application.ExeName) + ParamStr(3);
-    GameParams.fTestVgagrFile := ExtractFilePath(Application.ExeName) + ParamStr(4);
-    GameParams.fTestVgaspecFile := ExtractFilePath(Application.ExeName) + ParamStr(5);
-    if GameParams.fTestVgaspecFile = 'none' then GameParams.fTestVgaspecFile := '';
-    GameParams.NextScreen := gstPreview;
-    GameParams.SaveSystem.DisableSave := true;
-  end;
-
-  if DoSingleLevel then
-  begin
-    // Simply putting the player into testplay mode, with a workaround to use normal methods
-    // to load graphic sets, is a kludgey way of enabling single-level loading. Tidier code
-    // is needed.
-    GameParams.fTestMode := true;
-    GameParams.fTestLevelFile := GameFile;
-    GameParams.fTestGroundFile := '*';
-    GameParams.fTestVgagrFile := '*';
-    GameParams.fTestVgaspecFile := '*';
-
-    GameFile := 'Single Levels';
-
-    GameParams.NextScreen := gstPreview;
-    GameParams.SaveSystem.DisableSave := true;
-  end;
 
   GameParams.SoundOptions := [gsoSound, gsoMusic]; // This was to fix a glitch where an older version disabled them
                                                     // sometimes. Not sure if this still needs to be here but no harm
@@ -347,12 +245,6 @@ begin
 
   if not fLoadSuccess then
     GameParams.NextScreen := gstExit;
-
-  if ParamStr(2) = 'replaytest' then
-  begin
-    GameParams.ReplayCheckPath := ParamStr(3);
-    GameParams.NextScreen := gstReplayTest;
-  end;
 
 end;
 
