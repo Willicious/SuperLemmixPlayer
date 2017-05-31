@@ -212,8 +212,12 @@ var
   G2: TNeoLevelGroup;
   L1: TNeoLevelEntry;
   L2: TNeoLevelEntry;
+  S1: String;
+  S2: String;
 begin
   Result := 0;
+  S1 := '';
+  S2 := '';
 
   if (TObject(Item1) is TNeoLevelGroup) and (TObject(Item2) is TNeoLevelGroup) then
   begin
@@ -723,7 +727,7 @@ begin
     FindClose(SearchRec);
   end;
 
-  if FindFirst(Path + '*.nxlv', 0, SearchRec) = 0 then
+  if FindFirst(Path + '*.lvl', 0, SearchRec) = 0 then
   begin
     repeat
       L := fLevels.Add;

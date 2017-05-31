@@ -1,6 +1,16 @@
 {$include lem_directives.inc}
 unit LemLVLLoader;
 
+(*
+
+NOTE: TLVLLoader.LoadLevelFromStream does not properly sanitize it and prepare it for use!
+
+TLevel.LoadFromStream should be used instead, which will call TLVLLoader.LoadLevelFromStream
+and sanitize it properly. TLVLLoader.LoadLevelFromStream should only be used in cases where
+sanitizing / preparing is not desired.
+
+*)
+
 interface
 
 uses
@@ -600,7 +610,10 @@ begin
     0: LoadTradLevelFromStream(aStream, aLevel);
   1..3: LoadNeoLevelFromStream(aStream, aLevel);
     4: LoadNewNeoLevelFromStream(aStream, aLevel);
-    else aLevel.LoadFromStream(aStream);
+    else begin
+           aLevel.LoadFromStream(aStream);
+           Exit;
+         end;  
   end;
 
   if (b <= 4) then
@@ -667,7 +680,6 @@ begin
     Trans := TTranslationTable.Create;
     Trans.Apply(aLevel);
     Trans.Free;
-    aLevel.Sanitize;
   end;
 end;
 

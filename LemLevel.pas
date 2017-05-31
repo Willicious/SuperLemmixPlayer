@@ -262,32 +262,31 @@ begin
   if b < 5 then
   begin
     TLVLLoader.LoadLevelFromStream(aStream, self);
-    Exit;
+  end else begin
+    Parser := TParser.Create;
+    try
+      Parser.LoadFromStream(aStream);
+      Main := Parser.MainSection;
+
+      LoadGeneralInfo(Main);
+      LoadSkillsetSection(Main.Section['skillset']);
+
+      Main.DoForEachSection('object', HandleObjectEntry);
+      Main.DoForEachSection('terrain', HandleTerrainEntry);
+      Main.DoForEachSection('area', HandleAreaEntry);
+      Main.DoForEachSection('lemming', HandleLemmingEntry);
+
+      if Main.Section['pretext'] <> nil then
+        Main.Section['pretext'].DoForEachLine('line', LoadPretextLine);
+
+      if Main.Section['posttext'] <> nil then
+        Main.Section['posttext'].DoForEachLine('line', LoadPosttextLine);
+    finally
+      Parser.Free;
+    end;
   end;
 
-  Parser := TParser.Create;
-  try
-    Parser.LoadFromStream(aStream);
-    Main := Parser.MainSection;
-
-    LoadGeneralInfo(Main);
-    LoadSkillsetSection(Main.Section['skillset']);
-
-    Main.DoForEachSection('object', HandleObjectEntry);
-    Main.DoForEachSection('terrain', HandleTerrainEntry);
-    Main.DoForEachSection('area', HandleAreaEntry);
-    Main.DoForEachSection('lemming', HandleLemmingEntry);
-
-    if Main.Section['pretext'] <> nil then
-      Main.Section['pretext'].DoForEachLine('line', LoadPretextLine);
-
-    if Main.Section['posttext'] <> nil then
-      Main.Section['posttext'].DoForEachLine('line', LoadPosttextLine);
-
-    Sanitize;
-  finally
-    Parser.Free;
-  end;
+  Sanitize;
 end;
 
 procedure TLevel.LoadGeneralInfo(aSection: TParserSection);
@@ -720,7 +719,7 @@ begin
     aSection.AddLine('START_X', ScreenPosition);
     aSection.AddLine('START_Y', ScreenYPosition);
 
-    MakeAutosteelLine;
+    MakeAutosteelLine;            
 
     aSection.AddLine('BACKGROUND', Background);
   end;
