@@ -28,7 +28,7 @@ type
   TReplayCheckEntry = class
     public
       ReplayFile: String;
-      ReplayLevelID: Cardinal;
+      ReplayLevelID: Int64;
       ReplayResult: Integer;
       ReplayDuration: Int64;
       ReplayLevelText: String;
@@ -44,7 +44,7 @@ type
       property Items[Index: Integer]: TReplayCheckEntry read GetItem; default;
       property List;
 
-      procedure SaveToFile;
+      procedure SaveToFile(aName: String);
   end;
 
   TGameReplayCheckScreen = class(TGameBaseScreen)
@@ -77,7 +77,7 @@ type
 
 implementation
 
-uses Forms, LemNeoParserOld, CustomPopup; // old parser used because levels.nxmi is still based on it, no true new-format equivalent exists yet
+uses Forms, LemNeoLevelPack, CustomPopup;
 
 { TGameReplayCheckScreen }
 
@@ -177,7 +177,6 @@ var
   Game: TLemmingGame;
   Level: TLevel;
   i: Integer;
-  LR, LL: Integer;
 
   procedure BuildReplaysList;
     procedure Get(aExt: String);
@@ -199,22 +198,45 @@ var
     Get('lrb');
   end;
 
-  function LoadLevel(aID: Cardinal): Boolean;
+  function GetPackName: String;
   var
-    R, L: Integer;
+    G: TNeoLevelGroup;
   begin
-    Result := false;
-    for R := 0 to GameParams.BaseLevelPack.Children.Count-1 do
-      for L := 0 to GameParams.BaseLevelPack.Children[R].Levels.Count-1 do
-        if GameParams.BaseLevelPack.Children[R].Levels[L].LevelID = aID then
+    G := GameParams.CurrentLevel.Group;
+    while (not G.IsBasePack) and (G.Parent.Parent <> nil) do
+      G := G.Parent;
+    Result := G.Name;
+  end;
+
+  function LoadLevel(aID: Int64): Boolean;
+  var
+    G: TNeoLevelGroup;
+
+    function SearchGroup(aGroup: TNeoLevelGroup): Boolean;
+    var
+      i: Integer;
+    begin
+      Result := false;
+
+      for i := 0 to aGroup.Children.Count-1 do
+      begin
+        Result := SearchGroup(aGroup.Children[i]);
+        if Result then Exit;
+      end;
+
+      for i := 0 to aGroup.Levels.Count-1 do
+        if aGroup.Levels[i].LevelID = aID then
         begin
-          LR := R;
-          LL := L;
-          GameParams.SetLevel(GameParams.BaseLevelPack.Children[R].Levels[L]);
-          Level.LoadFromFile(GameParams.CurrentLevel.Path);
+          GameParams.SetLevel(aGroup.Levels[i]);
+          GameParams.LoadCurrentLevel(true);
           Result := true;
-          Exit;
         end;
+    end;
+  begin
+    G := GameParams.CurrentLevel.Group;
+    while (G.Parent <> nil) and (not G.IsBasePack) do
+      G := G.Parent;
+    Result := SearchGroup(G);
   end;
 
   procedure GetReplayLevelIDs;
@@ -222,6 +244,7 @@ var
     i, i2: Integer;
     S: TMemoryStream;
     SL: TStringList;
+    TempID: Cardinal;
   begin
     S := TMemoryStream.Create;
     SL := TStringList.Create;
@@ -233,7 +256,9 @@ var
         if LowerCase(ExtractFileExt(fReplays[i].ReplayFile)) = '.lrb' then
         begin
           S.Position := 30;
-          S.Read(fReplays[i].ReplayLevelID, 4);
+          S.Read(TempID, 4);
+          fReplays[i].ReplayLevelID := TempID;
+          fReplays[i].ReplayLevelID := (fReplays[i].ReplayLevelID shl 32) + TempID;
         end else begin
           SL.Clear;
           S.Position := 0;
@@ -241,7 +266,13 @@ var
           for i2 := 0 to SL.Count-1 do
             if UpperCase(LeftStr(Trim(SL[i2]), 2)) = 'ID' then
             begin
-              fReplays[i].ReplayLevelID := StrToIntDef('x' + RightStr(Trim(SL[i2]), 8), 0);
+              if (Pos('x', SL[i2]) = 0) or (Pos('x', SL[i2]) = Length(SL[i2]) - 8) then
+              begin
+                TempID := StrToIntDef('x' + RightStr(Trim(SL[i2]), 8), 0);
+                SL[i2] := 'ID ' + IntToHex(TempID, 8) + IntToHex(TempID, 8);
+              end;
+
+              fReplays[i].ReplayLevelID := StrToInt64Def('x' + RightStr(Trim(SL[i2]), 16), 0);
               Break;
             end;
         end;
@@ -313,11 +344,11 @@ begin
         Continue;
       end;
 
-      fReplays[i].ReplayLevelText := Trim(GameParams.BaseLevelPack.Children[LR].Name) + ' ' + IntToStr(LL + 1);
-      fReplays[i].ReplayLevelTitle := Trim(Level.Info.Title);
+      fReplays[i].ReplayLevelText := GameParams.CurrentLevel.Group.Name + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1);
+      fReplays[i].ReplayLevelTitle := Level.Info.Title;
 
       PieceManager.Tidy;
-      Renderer.PrepareGameRendering(GameParams.Level, true);
+      //Renderer.PrepareGameRendering(GameParams.Level, true);
       Game.PrepareParams;
 
       if LowerCase(ExtractFileExt(fReplays[i].ReplayFile)) = '.lrb' then
@@ -393,9 +424,9 @@ begin
 
     if ParamStr(2) <> 'replaytest' then
     begin
-      fReplays.SaveToFile;
+      fReplays.SaveToFile(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
       fScreenText.Add('Results saved to');
-      fScreenText.Add(ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
+      fScreenText.Add(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
     end;
     
     while fScreenText.Count < 23 do
@@ -539,7 +570,7 @@ begin
   Result := inherited Get(Index);
 end;
 
-procedure TReplayCheckEntries.SaveToFile;
+procedure TReplayCheckEntries.SaveToFile(aName: String);
 var
   SL: TStringList;
 
@@ -571,7 +602,7 @@ begin
     SaveGroup(CR_PASS, 'PASSED');
     SaveGroup(CR_NOLEVELMATCH, 'LEVEL NOT FOUND');
     SaveGroup(CR_ERROR, 'ERROR');
-    SL.SaveToFile(AppPath + ExtractFileName(ChangeFileExt(GameFile, '')) + ' Replay Results.txt');
+    SL.SaveToFile(AppPath + aName);
   finally
     SL.Free;
   end;

@@ -61,7 +61,7 @@ type
       fAuthor: String;
       fFilename: String;
 
-      fLevelID: Cardinal;
+      fLevelID: Int64;
 
       fStatus: TNeoLevelStatus;
 
@@ -71,7 +71,7 @@ type
       function GetRelativePath: String;
       function GetTitle: String;
       function GetAuthor: String;
-      function GetLevelID: Cardinal;
+      function GetLevelID: Int64;
       function GetGroupIndex: Integer;
     public
       Records: TLevelRecords;
@@ -83,7 +83,7 @@ type
       property Title: String read GetTitle;
       property Author: String read GetAuthor;
       property Filename: String read fFilename write fFilename;
-      property LevelID: Cardinal read GetLevelID;
+      property LevelID: Int64 read GetLevelID;
       property Path: String read GetFullPath;
       property RelativePath: String read GetRelativePath;
       property Status: TNeoLevelStatus read fStatus write fStatus;
@@ -305,7 +305,7 @@ begin
   Result := fTitle;
 end;
 
-function TNeoLevelEntry.GetLevelID: Cardinal;
+function TNeoLevelEntry.GetLevelID: Int64;
 begin
   LoadLevelFileData;
   Result := fLevelID;

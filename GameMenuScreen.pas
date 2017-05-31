@@ -686,19 +686,25 @@ var
   F: TFLevelSelect;
   OldLevel: TNeoLevelEntry;
   Success: Boolean;
+  LoadAsPack: Boolean;
 begin
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(self);
   try
     Success := F.ShowModal = mrOk;
+    LoadAsPack := F.LoadAsPack;
   finally
     F.Free;
   end;
 
   if not Success then
     GameParams.SetLevel(OldLevel)
-  else
-    CloseScreen(gstPreview);
+  else begin
+    if LoadAsPack then
+      CloseScreen(gstMenu)
+    else
+      CloseScreen(gstPreview);
+  end;
 end;
 
 end.

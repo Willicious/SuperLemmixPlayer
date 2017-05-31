@@ -121,8 +121,6 @@ type
     fTalismans                 : TTalismans;
     fTalismanReceived          : Boolean;
 
-    fLastReplayDir             : String;
-
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
   { internal objects }
@@ -438,7 +436,6 @@ type
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
-    property LastReplayDir: String read fLastReplayDir write fLastReplayDir;
 
     property RenderInterface: TRenderInterface read fRenderInterface;
     property IsSimulating: Boolean read GetIsSimulating;
@@ -912,7 +909,6 @@ begin
   NewSkillMethods[baFencing]      := MayAssignFencer;
 
   P := AppPath;
-  fLastReplayDir := '';
 
   ButtonsRemain := 0;
   fHitTestAutoFail := false;

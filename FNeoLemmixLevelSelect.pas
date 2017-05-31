@@ -31,11 +31,12 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnAddContentClick(Sender: TObject);
   private
+    fLoadAsPack: Boolean;
     procedure InitializeTreeview;
     procedure SetInfo;
     procedure WriteToParams;
   public
-    { Public declarations }
+    property LoadAsPack: Boolean read fLoadAsPack;
   end;
 
 implementation
@@ -136,6 +137,7 @@ end;
 procedure TFLevelSelect.btnOKClick(Sender: TObject);
 begin
   WriteToParams;
+  ModalResult := mrOk;
 end;
 
 procedure TFLevelSelect.WriteToParams;
@@ -150,18 +152,22 @@ begin
 
   Obj := TObject(N.Data);
 
+  fLoadAsPack := false;
+
   if Obj is TNeoLevelGroup then
   begin
     G := TNeoLevelGroup(Obj);
-    if G.Levels.Count = 0 then Exit;
+    if G.Levels.Count = 0 then
+      if G.LevelCount > 0 then
+        fLoadAsPack := true
+      else
+        Exit;
     GameParams.SetGroup(G);
   end else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
     GameParams.SetLevel(L);
   end;
-
-  ModalResult := mrOk;
 end;
 
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
@@ -226,7 +232,11 @@ begin
   LoadNodeLabels;
 
   N := tvLevelSelect.Selected;
-  if N = nil then Exit;
+  if N = nil then
+  begin
+    btnOk.Enabled := false;
+    Exit;
+  end;
 
   Obj := TObject(N.Data);
 

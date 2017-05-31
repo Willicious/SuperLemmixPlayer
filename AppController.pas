@@ -7,7 +7,7 @@ uses
   SharedGlobals,
   LemSystemMessages,
   LemTypes, LemRendering, LemLevel,
-  TalisData, LemStrings, LemNeoParserOld,
+  TalisData, LemStrings,
   GameControl, LemVersion,
   GameSound,          // initial creation
   LemNeoPieceManager, // initial creation

@@ -532,9 +532,12 @@ begin
     fLevelGame := Sec.LineString['game'];
     fLevelRank := Sec.LineString['rank'];
     fLevelPosition := Sec.LineNumeric['level'];
-    fLevelID := Sec.LineNumeric['id'];
     if Length(Sec.LineTrimString['id']) = 9 then
-      fLevelID := fLevelID or (fLevelID shl 32);
+    begin
+      fLevelID := Cardinal(Sec.LineNumeric['id']);
+      fLevelID := fLevelID or (fLevelID shl 32)
+    end else
+      fLevelID := Sec.LineNumeric['id'];
 
     Sec.DoForEachSection('assignment', HandleLoadSection);
     Sec.DoForEachSection('release_rate', HandleLoadSection);
@@ -744,7 +747,8 @@ begin
     MS.Position := 0;
     MS.Read(Header, SizeOf(TReplayFileHeaderRec));
 
-    fLevelID := Header.ReplayLevelID or (Header.ReplayLevelID shl 32);
+    fLevelID := Header.ReplayLevelID;
+    fLevelID := fLevelID or (fLevelID shl 32);
 
     MS.Position := Header.FirstRecordPos;
     LastReleaseRate := 0;

@@ -670,7 +670,7 @@ begin
 
     NewLevelID := NewLevelID + aLevel.InteractiveObjects.Count + aLevel.Terrains.Count + aLevel.Steels.Count;
 
-    aLevel.Info.LevelID := NewLevelID;
+    aLevel.Info.LevelID := LongWord(NewLevelID);
   end;
 
   aLevel.Info.LevelID := aLevel.Info.LevelID or (aLevel.Info.LevelID shl 32);

@@ -19,6 +19,7 @@ implementation
 procedure Log(aString: String);
 begin
   DebugLog.Add(aString);
+  DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
 end;
 {$endif}
 

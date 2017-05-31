@@ -1758,7 +1758,7 @@ begin
     if dlg.execute then
     begin
       s:=dlg.filename;
-      Game.LastReplayDir := ExtractFilePath(s);
+      LastReplayDir := ExtractFilePath(s);
     end;
   finally
     dlg.free;

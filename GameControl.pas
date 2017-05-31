@@ -579,7 +579,10 @@ end;
 
 procedure TDosGameParams.SetGroup(aGroup: TNeoLevelGroup);
 begin
-  SetLevel(aGroup.FirstUnbeatenLevel);
+  if aGroup.Levels.Count = 0 then
+    SetLevel(aGroup.FirstUnbeatenLevelRecursive)
+  else
+    SetLevel(aGroup.FirstUnbeatenLevel);
 end;
 
 procedure TDosGameParams.NextGroup;
