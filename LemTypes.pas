@@ -68,7 +68,7 @@ procedure MoveRect(var aRect: TRect; const DeltaX, DeltaY: Integer);
 function CreateDataStream(aFileName: string; aType: TLemDataType; aAllowExternal: Boolean = false): TMemoryStream;
 
 function UnderWine: Boolean;
-function MakeSafeForFilename(const aString: String): String;
+function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
 
 implementation
 
@@ -83,7 +83,7 @@ begin
   Result := _AppPath;
 end;
 
-function MakeSafeForFilename(const aString: String): String;
+function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
 var
   i, i2: Integer;
 const
@@ -91,9 +91,13 @@ const
 begin
   Result := aString;
   for i := 1 to Length(aString) do
+  begin
+    if (not DisallowSpaces) and (Result[i] = ' ') then
+      Continue;
     for i2 := 1 to Length(FORBIDDEN_CHARS) do
       if Result[i] = FORBIDDEN_CHARS[i2] then
         Result[i] := '_';
+  end;
   if Length(Result) = 0 then
     Result := '_';
 end;

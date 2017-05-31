@@ -183,7 +183,7 @@ type
 
 implementation
 
-uses FBaseDosForm, FEditReplay;
+uses FBaseDosForm, FEditReplay, LemReplay, LemNeoLevelPack;
 
 { TGameWindow }
 
@@ -1710,6 +1710,32 @@ var
   OldCanPlay: Boolean;
   Dlg : TOpenDialog;
   s: string;
+
+  function GetDefaultLoadPath: String;
+    function GetGroupName: String;
+    var
+      G: TNeoLevelGroup;
+    begin
+      G := GameParams.CurrentLevel.Group;
+      if G.Parent = nil then
+        Result := ''
+      else begin
+        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
+          G := G.Parent;
+        Result := MakeSafeForFilename(G.Name, false) + '\';
+      end;
+    end;
+  begin
+    Result := AppPath + 'Replay\' + GetGroupName;
+  end;
+
+  function GetInitialLoadPath: String;
+  begin
+    if (LastReplayDir <> '') then
+      Result := LastReplayDir
+    else
+      Result := GetDefaultLoadPath;
+  end;
 begin
   OldCanPlay := CanPlay;
   CanPlay := False;
@@ -1719,15 +1745,15 @@ begin
     dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
     dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
     dlg.FilterIndex := 1;
-    if Game.LastReplayDir = '' then
+    if LastReplayDir = '' then
     begin
-      dlg.InitialDir := ExtractFilePath(ParamStr(0)) + 'Replay\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
+      dlg.InitialDir := AppPath + 'Replay\' + GetInitialLoadPath;
       if not DirectoryExists(dlg.InitialDir) then
-        dlg.InitialDir := ExtractFilePath(ParamStr(0)) + 'Replay\';
+        dlg.InitialDir := AppPath + 'Replay\';
       if not DirectoryExists(dlg.InitialDir) then
-        dlg.InitialDir := ExtractFilePath(ParamStr(0));
+        dlg.InitialDir := AppPath;
     end else
-      dlg.InitialDir := Game.LastReplayDir;
+      dlg.InitialDir := LastReplayDir;
     dlg.Options := [ofFileMustExist, ofHideReadOnly];
     if dlg.execute then
     begin

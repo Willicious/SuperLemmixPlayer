@@ -161,10 +161,14 @@ type
   function GetSkillButton(aName: String): TSkillPanelButton;
   function GetSkillAction(aName: String): TBasicLemmingAction;
 
+// Until a more permanent measure is found, LastReplayDir is implemented as a global variable.
+var
+  LastReplayDir: String;
+
 implementation
 
 uses
-  CustomPopup, GameControl, uMisc, SharedGlobals; // in TReplay.GetSaveFileName
+  CustomPopup, LemNeoLevelPack, LemTypes, GameControl, uMisc, SharedGlobals; // in TReplay.GetSaveFileName
 
 // Standalone functions
 
@@ -285,9 +289,6 @@ begin
   inherited;
 end;
 
-// Until a more permanent measure is found, LastReplayDir is implemented as a global variable.
-var
-  LastReplayDir: String;
 class function TReplay.GetSaveFileName(aOwner: TComponent; aLevel: TLevel; TestModeName: Boolean = false): String;
 var
   RankName: String;
@@ -315,11 +316,24 @@ var
   end;
 
   function GetDefaultSavePath: String;
+    function GetGroupName: String;
+    var
+      G: TNeoLevelGroup;
+    begin
+      G := GameParams.CurrentLevel.Group;
+      if G.Parent = nil then
+        Result := ''
+      else begin
+        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
+          G := G.Parent;
+        Result := MakeSafeForFilename(G.Name, false) + '\';
+      end;
+    end;
   begin
     if GameParams.fTestMode then
       Result := ExtractFilePath(ParamStr(0)) + 'Replay\'
     else
-      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
+      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + GetGroupName;
     if TestModeName then Result := Result + 'Auto\';
   end;
 
