@@ -4,6 +4,7 @@ interface
 
 uses
   PngInterface,
+  LemNeoLevelPack,
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers,
@@ -45,6 +46,8 @@ procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
 begin
   if NextScreen = gstPlay then
   begin
+    if GameParams.CurrentLevel.Status = lst_None then
+      GameParams.CurrentLevel.Status := lst_Attempted;
     GameParams.NextScreen2 := gstPlay;
     inherited CloseScreen(gstText);
   end else

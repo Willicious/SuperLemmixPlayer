@@ -5,8 +5,12 @@ interface
 uses
   GameControl,
   LemNeoLevelPack,
+  LemStrings,
+  LemTypes,
+  PngInterface,
+  GR32,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList;
 
 type
   TFLevelSelect = class(TForm)
@@ -17,6 +21,7 @@ type
     pnLevelInfo: TPanel;
     lblPosition: TLabel;
     lblAuthor: TLabel;
+    ilStatuses: TImageList;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -35,8 +40,17 @@ implementation
 procedure TFLevelSelect.InitializeTreeview;
 
   procedure AddLevel(aLevel: TNeoLevelEntry; ParentNode: TTreeNode);
+  var
+    N: TTreeNode;
   begin
-    tvLevelSelect.Items.AddChildObject(ParentNode, '(' + IntToStr(aLevel.GroupIndex + 1) + ') ' + aLevel.Title, aLevel);
+    N := tvLevelSelect.Items.AddChildObject(ParentNode, '(' + IntToStr(aLevel.GroupIndex + 1) + ') ' + aLevel.Title, aLevel);
+    case aLevel.Status of
+      lst_None: N.ImageIndex := 0;
+      lst_Attempted: N.ImageIndex := 1;
+      lst_Completed_Outdated: N.ImageIndex := 2;
+      lst_Completed: N.ImageIndex := 3;
+    end;
+    N.SelectedIndex := N.ImageIndex;
   end;
 
   procedure AddGroup(aGroup: TNeoLevelGroup; ParentNode: TTreeNode);
@@ -52,8 +66,47 @@ procedure TFLevelSelect.InitializeTreeview;
       AddGroup(aGroup.Children[i], GroupNode);
     for i := 0 to aGroup.Levels.Count-1 do
       AddLevel(aGroup.Levels[i], GroupNode);
+
+    if GroupNode <> nil then
+    begin
+      case aGroup.Status of
+        lst_None: GroupNode.ImageIndex := 0;
+        lst_Attempted: GroupNode.ImageIndex := 1;
+        lst_Completed_Outdated: GroupNode.ImageIndex := 2;
+        lst_Completed: GroupNode.ImageIndex := 3;
+      end;
+      GroupNode.SelectedIndex := GroupNode.ImageIndex;
+    end;
+  end;
+
+  procedure MakeImages;
+  var
+    BMP32: TBitmap32;
+    ImgBMP, MaskBMP: TBitmap;
+
+    procedure Load(aName: String);
+    begin
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, BMP32);
+      TPngInterface.SplitBmp32(BMP32, ImgBMP, MaskBMP);
+      tvLevelSelect.Images.Add(ImgBMP, MaskBMP);
+    end;
+  begin
+    BMP32 := TBitmap32.Create;
+    ImgBMP := TBitmap.Create;
+    MaskBMP := TBitmap.Create;
+    try
+      Load('dash.png');
+      Load('cross.png');
+      Load('tick_red.png');
+      Load('tick.png');
+    finally
+      BMP32.Free;
+      ImgBMP.Free;
+      MaskBMP.Free;
+    end;
   end;
 begin
+  MakeImages;
   tvLevelSelect.Items.BeginUpdate;
   try
     AddGroup(GameParams.BaseLevelPack, nil);

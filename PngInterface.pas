@@ -21,7 +21,7 @@ unit PngInterface;
 interface
 
 uses
-  Classes, SysUtils, GR32, GR32_PNG;
+  Classes, SysUtils, Graphics, GR32, GR32_PNG;
 
 type
   TPngInterface = class
@@ -29,6 +29,7 @@ type
       //class procedure PngToBitmap32(Png: TPortableNetworkGraphic32; Bmp: TBitmap32);
       //class function Bitmap32ToPng(Bmp: TBitmap32; NoAlpha: Boolean): TPortableNetworkGraphic32;
     public
+      class procedure SplitBmp32(aSrc: TBitmap32; aDstImage, aDstMask: TBitmap);
       class procedure MaskImageFromFile(Bmp: TBitmap32; fn: String; C: TColor32);
       class procedure MaskImageFromImage(Bmp: TBitmap32; Mask: TBitmap32; C: TColor32);
       class procedure LoadPngFile(fn: String; Bmp: TBitmap32);
@@ -38,6 +39,27 @@ type
   end;
 
 implementation
+
+class procedure TPngInterface.SplitBmp32(aSrc: TBitmap32; aDstImage, aDstMask: TBitmap);
+var
+  x, y: Integer;
+  c: TColor32;
+  a: Byte;
+begin
+  aDstImage.Width := aSrc.Width;
+  aDstMask.Width := aSrc.Width;
+  aDstImage.Height := aSrc.Height;
+  aDstMask.Height := aSrc.Height;
+  for y := 0 to aSrc.Height-1 do
+    for x := 0 to aSrc.Width-1 do
+    begin
+      C := aSrc.Pixel[x, y];
+      a := $FF - AlphaComponent(C);
+      C :=  (BlueComponent(C) shl 16) + (GreenComponent(C) shl 8) + RedComponent(C);
+      aDstImage.Canvas.Pixels[x, y] := C and $FFFFFF;
+      aDstMask.Canvas.Pixels[x, y] := (a shl 16) or (a shl 8) or (a);
+    end;
+end;
 
 class procedure TPngInterface.MaskImageFromFile(Bmp: TBitmap32; fn: String; C: TColor32);
 var

@@ -130,6 +130,8 @@ type
 
       function GetNextGroup: TNeoLevelGroup;
       function GetPrevGroup: TNeoLevelGroup;
+
+      function GetStatus: TNeoLevelStatus;
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
@@ -142,6 +144,7 @@ type
       property Children: TNeoLevelGroups read fChildGroups;
       property Levels: TNeoLevelEntries read fLevels;
       property LevelCount: Integer read GetRecursiveLevelCount;
+      property Status: TNeoLevelStatus read GetStatus;
       property Name: String read fName write fName;
       property Author: String read GetAuthor write fAuthor;
       property IsBasePack: Boolean read fIsBasePack write fIsBasePack;
@@ -720,6 +723,47 @@ begin
     Result := Result.Parent;
     GiveParentPriority := true;
   until ((Result.Levels.Count > 0) or (Result = self)) and not GiveParentPriority;
+end;
+
+function TNeoLevelGroup.GetStatus: TNeoLevelStatus;
+var
+  i: Integer;
+  TempStatus: TNeoLevelStatus;
+  HasAttempted: Boolean;
+begin
+  Result := lst_Completed;
+  HasAttempted := false;
+
+  for i := 0 to fChildGroups.Count-1 do
+  begin
+    TempStatus := fChildGroups[i].Status;
+    if TempStatus > lst_None then
+    begin
+      HasAttempted := true;
+      if (TempStatus < Result) then
+        Result := TempStatus;
+      if Result = lst_Attempted then
+        Exit;
+    end else
+      Result := lst_Attempted;
+  end;
+
+  for i := 0 to fLevels.Count-1 do
+  begin
+    TempStatus := fLevels[i].Status;
+    if TempStatus > lst_None then
+    begin
+      HasAttempted := true;
+      if (TempStatus < Result) then
+        Result := TempStatus;
+      if Result = lst_Attempted then
+        Exit;
+    end else
+      Result := lst_Attempted;
+  end;
+
+  if not HasAttempted then
+    Result := lst_None;
 end;
 
 

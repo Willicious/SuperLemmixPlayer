@@ -66,6 +66,7 @@ object FLevelSelect: TFLevelSelect
     Top = 8
     Width = 273
     Height = 465
+    Images = ilStatuses
     Indent = 19
     MultiSelectStyle = []
     TabOrder = 0
@@ -97,5 +98,7 @@ object FLevelSelect: TFLevelSelect
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
     TabOrder = 3
+  end
+  object ilStatuses: TImageList
   end
 end
