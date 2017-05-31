@@ -89,6 +89,7 @@ var
     Dst: TMemoryStream;
   begin
     Result := nil;
+    Dst := nil;
     Zip := TArchive.Create;
     try
       Zip.OpenArchive(SrcFile, amOpen);
@@ -158,7 +159,6 @@ var
   Parser: TParser;
   MainSec: TParserSection;
   i: Integer;
-  HasCustomPanel: Boolean;
   Rank, Level: Integer;
 
   DstBasePath: String;
@@ -244,7 +244,7 @@ begin
         Break;
       Write('  Level ' + IntToStr(Level+1));
       CreateDataStream(LeadZeroStr(Rank, 2) + LeadZeroStr(Level, 2) + '.lvl', MS);
-      TLvlLoader.LoadLevelFromStream(MS, GameParams.Level);
+      GameParams.Level.LoadFromStream(MS);
       if CreateDataStream('i' + LeadZeroStr(Rank+1, 2) + LeadZeroStr(Level+1, 2) + '.txt', MS) <> nil then
         GameParams.Level.PreText.LoadFromStream(MS);
       if CreateDataStream('p' + LeadZeroStr(Rank+1, 2) + LeadZeroStr(Level+1, 2) + '.txt', MS) <> nil then

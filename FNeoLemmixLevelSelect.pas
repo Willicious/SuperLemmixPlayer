@@ -10,7 +10,8 @@ uses
   PngInterface,
   GR32,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList,
+  LemNeoParser;
 
 type
   TFLevelSelect = class(TForm)
@@ -38,6 +39,9 @@ type
   end;
 
 implementation
+
+uses
+  LemLevel, LemDosCmp; // used to import DAT level packs
 
 {$R *.dfm}
 
@@ -294,18 +298,82 @@ procedure TFLevelSelect.btnAddContentClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
   Ext: String;
+
+  procedure LoadDatFile(aFile: String);
+  var
+    DatFile, LvlFile: TMemoryStream;
+    Cmp: TDosDatDecompressor;
+    n: Integer;
+    Success, AlreadyExists: Boolean;
+    Level: TLevel;
+    Parser: TParser;
+    MainSec: TParserSection;
+    DstPath: String;
+  begin
+    DatFile := TMemoryStream.Create;
+    LvlFile := TMemoryStream.Create;
+    Cmp := TDosDatDecompressor.Create;
+    Level := TLevel.Create;
+    Parser := TParser.Create;
+    try
+      MainSec := Parser.MainSection;
+      MainSec.AddLine('base');
+
+      Success := false;
+      DatFile.LoadFromFile(aFile);
+      DstPath := AppPath + SFLevels + ExtractFileName(aFile) + '\';
+      if DirectoryExists(DstPath) then
+        AlreadyExists := true
+      else begin
+        ForceDirectories(DstPath);
+        AlreadyExists := false;
+      end;
+      SetCurrentDir(DstPath);
+      n := -1;
+      while DatFile.Position < DatFile.Size do
+      begin
+        LvlFile.Clear;
+        try
+          Inc(n);
+          Cmp.DecompressSection(DatFile, LvlFile);
+          LvlFile.Position := 0;
+          Level.LoadFromStream(LvlFile);
+          Level.SaveToFile(DstPath + MakeSafeForFilename(Level.Info.Title) + '.nxlv');
+          MainSec.AddLine('level', MakeSafeForFilename(Level.Info.Title) + '.nxlv');
+          Success := true;
+        except
+          ShowMessage('Section ' + IntToStr(n) + ' of this DAT file is not a valid level, or you are missing required style files.');
+        end;
+      end;
+
+      if Success then
+      begin
+        Parser.SaveToFile(DstPath + 'levels.nxmi');
+        GameParams.BaseLevelPack.Children.Add(DstPath);
+      end else if not AlreadyExists then
+        RemoveDir(DstPath);
+    finally
+      Cmp.Free;
+      Level.Free;
+      DatFile.Free;
+      LvlFile.Free;
+      Parser.Free;
+    end;
+  end;
 begin
   OpenDlg := TOpenDialog.Create(self);
   try
     OpenDlg.Title := 'Select pack or level file';
-    OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxlv, *.lvl, info.nxmi)|*.nxlv;*.lvl;info.nxmi';
+    OpenDlg.Filter := 'All supported files|*.nxlv;*.lvl;*.dat;info.nxmi|Level files (*.nxlv, *.lvl)|*.nxlv;*.lvl|Pack info file (info.nxmi)|info.nxmi|DAT levelpack (*.dat)|*.dat';
+    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
     OpenDlg.InitialDir := AppPath;
     if not OpenDlg.Execute then Exit;
 
     Ext := Lowercase(ExtractFileExt(OpenDlg.FileName));
-    ShowMessage(OpenDlg.Filename);
     if (Ext = '.nxlv') or (Ext = '.lvl') then
       GameParams.BaseLevelPack.Levels.Add.Filename := OpenDlg.Filename
+    else if (Ext = '.dat') then
+      LoadDatFile(OpenDlg.Filename)
     else
       GameParams.BaseLevelPack.Children.Add(ExtractFilePath(OpenDlg.Filename));
 

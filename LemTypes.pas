@@ -68,6 +68,7 @@ procedure MoveRect(var aRect: TRect; const DeltaX, DeltaY: Integer);
 function CreateDataStream(aFileName: string; aType: TLemDataType; aAllowExternal: Boolean = false): TMemoryStream;
 
 function UnderWine: Boolean;
+function MakeSafeForFilename(const aString: String): String;
 
 implementation
 
@@ -80,6 +81,21 @@ begin
   if _AppPath = '' then
     _AppPath := ExtractFilePath(ParamStr(0));
   Result := _AppPath;
+end;
+
+function MakeSafeForFilename(const aString: String): String;
+var
+  i, i2: Integer;
+const
+  FORBIDDEN_CHARS = '<>:"/\|?* ';
+begin
+  Result := aString;
+  for i := 1 to Length(aString) do
+    for i2 := 1 to Length(FORBIDDEN_CHARS) do
+      if Result[i] = FORBIDDEN_CHARS[i2] then
+        Result[i] := '_';
+  if Length(Result) = 0 then
+    Result := '_';
 end;
 
 function UnderWine: Boolean;

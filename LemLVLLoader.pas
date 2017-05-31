@@ -673,14 +673,13 @@ begin
     aLevel.Info.LevelID := NewLevelID;
   end;
 
-  if b < 5 then  // earlier in this procedure, this was used to differentiate between formats. >5 = NXLV format = does not need translation table
-  begin
-    aLevel.Info.LevelID := aLevel.Info.LevelID or (aLevel.Info.LevelID shl 32);
+  aLevel.Info.LevelID := aLevel.Info.LevelID or (aLevel.Info.LevelID shl 32);
+  aLevel.Info.Title := Trim(aLevel.Info.Title);
+  aLevel.Info.Author := Trim(aLevel.Info.Author);
 
-    Trans := TTranslationTable.Create;
-    Trans.Apply(aLevel);
-    Trans.Free;
-  end;
+  Trans := TTranslationTable.Create;
+  Trans.Apply(aLevel);
+  Trans.Free;
 end;
 
 class procedure TLVLLoader.ApplyWindowOrder(aLevel: TLevel; WindowOrder: TWindowOrder);
