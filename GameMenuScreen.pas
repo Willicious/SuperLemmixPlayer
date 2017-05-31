@@ -106,7 +106,6 @@ type
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
-    function BuildText(intxt: Array of char): String;
     procedure ShowSetupMenu;
   protected
   { overrides }
@@ -132,7 +131,6 @@ uses
 
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
-  MaskColor: TColor32;
   SrcFile: String;
 begin
   SrcFile := GameParams.CurrentLevel.Group.FindFile(aName);
@@ -492,9 +490,6 @@ begin
 end;
 
 procedure TGameMenuScreen.PrepareGameParams;
-var
-  i: Integer;
-  k: String;
 begin
   inherited PrepareGameParams;
 
@@ -512,17 +507,6 @@ begin
 
   if Assigned(GlobalGame) then
     GlobalGame.ReplayManager.Clear(true);
-end;
-
-function TGameMenuScreen.BuildText(intxt: Array of char): String;
-begin
-  // Casts the array to a string and trims it.
-  Result := '';
-  if Length(intxt) > 0 then
-  begin
-    SetString(Result, PChar(@intxt[0]), Length(intxt));
-    Result := Trim(Result);
-  end;
 end;
 
 procedure TGameMenuScreen.SetSoundOptions(aOptions: TGameSoundOptions);

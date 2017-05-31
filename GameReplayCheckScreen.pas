@@ -358,7 +358,7 @@ begin
             if Game.GameResultRec.gSuccess then
             begin
               fReplays[i].ReplayResult := CR_PASS;
-              GameParams.SaveSystem.CompleteLevel(LR, LL);
+              //GameParams.SaveSystem.CompleteLevel(LR, LL);
             end else
               fReplays[i].ReplayResult := CR_FAIL;
           end;

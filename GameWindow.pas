@@ -313,7 +313,6 @@ function TGameWindow.GetLevelMusicName: String;
 var
   MusicName: String;
   MusicIndex: Integer;
-  TempStream: TMemoryStream;
   SL: TStringList;
   i: Integer;
 begin
@@ -834,7 +833,6 @@ procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: I
 -------------------------------------------------------------------------------}
 var
   UseSaveState: Integer;
-  i: Integer;
 begin
   CanPlay := False;
   if PauseAfterSkip < 0 then
@@ -1027,9 +1025,9 @@ begin
 
   // create toolbar
   if GameParams.CompactSkillPanel then
-    SkillPanel := TSkillPanelCompact.Create(Self, Self)
+    SkillPanel := TSkillPanelCompact.CreateWithWindow(Self, Self)
   else
-    SkillPanel := TSkillPanelStandard.Create(Self, Self);
+    SkillPanel := TSkillPanelStandard.CreateWithWindow(Self, Self);
 
   SkillPanel.Parent := Self;
 

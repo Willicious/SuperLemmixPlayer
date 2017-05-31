@@ -5,9 +5,15 @@ unit LemNeoLevelPack;
 interface
 
 uses
-  GR32, CRC32, PngInterface,
+  GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
   Classes, SysUtils, StrUtils, Contnrs,
   LemStrings, LemTypes, LemNeoParser;
+
+type
+  TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);
+
+const
+  STATUS_TEXTS: array[TNeoLevelStatus] of String = ('none', 'attempted', 'outdated', 'completed');
 
 type
   TNeoLevelEntry = class;
@@ -15,7 +21,6 @@ type
   TNeoLevelGroup = class;
   TNeoLevelGroups = class;
 
-  TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);
   TPostviewCondition = (pvc_Zero, pvc_Absolute, pvc_Relative, pvc_Percent, pvc_RelativePercent);
 
   TPostviewText = class // class rather than record so it plays nicely with a TObjectList and can create / destroy a TStringList
@@ -41,6 +46,11 @@ type
       property List;
   end;
 
+  TLevelRecords = record
+    LemmingsRescued: Integer;
+    TimeTaken: Integer;
+  end;
+
   TNeoLevelEntry = class  // This is an entry in a level pack's list, and does NOT contain the level itself
     private
       fGroup: TNeoLevelGroup;
@@ -55,29 +65,27 @@ type
 
       fStatus: TNeoLevelStatus;
 
-      fLastCRC32: Cardinal;
-
-      procedure Wipe;
-      procedure SetFilename(aValue: String);
       procedure LoadLevelFileData;
 
       function GetFullPath: String;
+      function GetRelativePath: String;
       function GetTitle: String;
       function GetAuthor: String;
       function GetLevelID: Cardinal;
       function GetGroupIndex: Integer;
     public
+      Records: TLevelRecords;
+
       constructor Create(aGroup: TNeoLevelGroup);
       destructor Destroy; override;
-
-      procedure EnsureUpdated;
 
       property Group: TNeoLevelGroup read fGroup;
       property Title: String read GetTitle;
       property Author: String read GetAuthor;
-      property Filename: String read fFilename write SetFilename;
+      property Filename: String read fFilename write fFilename;
       property LevelID: Cardinal read GetLevelID;
       property Path: String read GetFullPath;
+      property RelativePath: String read GetRelativePath;
       property Status: TNeoLevelStatus read fStatus write fStatus;
       property GroupIndex: Integer read GetGroupIndex;
   end;
@@ -93,6 +101,7 @@ type
       fFolder: String;
       fPanelStyle: String;
       fIsBasePack: Boolean;
+      fIsOrdered: Boolean;
 
       fMusicList: TStringList;
       fHasOwnMusicList: Boolean;
@@ -100,7 +109,6 @@ type
       fPostviewTexts: TPostviewTexts;
       fHasOwnPostviewTexts: Boolean;
 
-      procedure SetFolderName(aValue: String);
       function GetFullPath: String;
       function GetPanelStyle: String;
       function GetAuthor: String;
@@ -132,13 +140,17 @@ type
       function GetPrevGroup: TNeoLevelGroup;
 
       function GetStatus: TNeoLevelStatus;
+
+      procedure LoadSaveGroup(aLine: TParserLine; const aIteration: Integer);
+      procedure LoadSaveLevel(aLine: TParserLine; const aIteration: Integer);
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
 
-      function FindFile(aName: String): String;
+      procedure LoadUserData;
+      procedure SaveUserData;
 
-      procedure EnsureUpdated;
+      function FindFile(aName: String): String;
 
       property Parent: TNeoLevelGroup read fParentGroup;
       property Children: TNeoLevelGroups read fChildGroups;
@@ -148,7 +160,8 @@ type
       property Name: String read fName write fName;
       property Author: String read GetAuthor write fAuthor;
       property IsBasePack: Boolean read fIsBasePack write fIsBasePack;
-      property Folder: String read fFolder write SetFolderName;
+      property IsOrdered: Boolean read fIsOrdered write fIsOrdered;
+      property Folder: String read fFolder write fFolder;
       property Path: String read GetFullPath;
       property PanelStyle: String read GetPanelStyle write fPanelStyle;
       property MusicList: TStringList read fMusicList;
@@ -282,11 +295,6 @@ begin
   inherited;
 end;
 
-procedure TNeoLevelEntry.Wipe;
-begin
-  fTitle := '';
-end;
-
 function TNeoLevelEntry.GetTitle: String;
 begin
   LoadLevelFileData;
@@ -305,34 +313,44 @@ begin
   Result := fAuthor;
 end;
 
-procedure TNeoLevelEntry.EnsureUpdated;
-var
-  CRC: Cardinal;
-begin
-  CRC := CalculateCRC32(Path);
-  if CRC <> fLastCRC32 then Wipe;
-  fLastCRC32 := CRC;
-end;
-
-procedure TNeoLevelEntry.SetFilename(aValue: String);
-begin
-  if fFilename = aValue then Exit;
-  fFilename := aValue;
-  EnsureUpdated;
-end;
-
 procedure TNeoLevelEntry.LoadLevelFileData;
 var
+  MS: TMemoryStream;
+  P: PByte;
   Parser: TParser;
+
+  procedure LoadFromLVL;
+  var
+    L: TLevel;
+  begin
+    L := TLevel.Create;
+    try
+      TLvlLoader.LoadLevelFromStream(MS, L);
+      fTitle := L.Info.Title;
+      fAuthor := L.Info.Author;
+      fLevelID := L.Info.LevelID;
+    finally
+      L.Free;
+    end;
+  end;
 begin
   if fDataLoaded then Exit;
+  MS := TMemoryStream.Create;
   Parser := TParser.Create;
   try
-    Parser.LoadFromFile(Path);
+    MS.LoadFromFile(Path);
+    P := MS.Memory;
+    if P^ <= 4 then
+    begin
+      LoadFromLVL;
+      Exit;
+    end;
+    Parser.LoadFromStream(MS);
     fTitle := Parser.MainSection.LineTrimString['title'];
     fAuthor := Parser.MainSection.LineTrimString['author'];
     fLevelID := Parser.MainSection.LineNumeric['id'];
   finally
+    MS.Free;
     Parser.Free;
   end;
 end;
@@ -345,6 +363,14 @@ begin
     Result := fGroup.Path;
 
   Result := Result + fFilename;
+end;
+
+function TNeoLevelEntry.GetRelativePath: String;
+begin
+  Result := Path;
+
+  if LeftStr(Result, Length(AppPath)) = AppPath then
+    Result := RightStr(Result, Length(Result) - Length(AppPath));
 end;
 
 function TNeoLevelEntry.GetGroupIndex: Integer;
@@ -362,7 +388,8 @@ begin
   inherited Create;
 
   fFolder := aPath;
-  fFolder := ExcludeTrailingBackslash(fFolder);
+  if RightStr(fFolder, 1) = '\' then
+    fFolder := LeftStr(fFolder, Length(fFolder)-1);
   fName := ExtractFileName(fFolder);
 
   fChildGroups := TNeoLevelGroups.Create(self);
@@ -466,12 +493,161 @@ begin
   inherited;
 end;
 
+procedure TNeoLevelGroup.LoadUserData;
+var
+  Parser: TParser;
+  LoadingSec, LevelSec: TParserSection;
+
+  procedure HandleGroup(aGroup: TNeoLevelGroup);
+  var
+    i: Integer;
+
+    procedure HandleLevel(aLevel: TNeoLevelEntry);
+    var
+      Sec: TParserSection;
+      i: TNeoLevelStatus;
+      S: String;
+    begin
+      Sec := LevelSec.Section[aLevel.RelativePath];
+      if Sec = nil then Exit;
+
+      S := Sec.LineTrimString['status'];
+      for i := High(TNeoLevelStatus) downto Low(TNeoLevelStatus) do
+        if Lowercase(S) = STATUS_TEXTS[i] then
+        begin
+          aLevel.Status := i;
+          Break;
+        end;
+
+      if (FileAge(aLevel.Path) > Sec.LineNumeric['modified_date']) and (aLevel.Status = lst_Completed) then
+        aLevel.Status := lst_Completed_Outdated;
+
+      aLevel.Records.LemmingsRescued := Sec.LineNumeric['lemming_record'];
+      aLevel.Records.TimeTaken := Sec.LineNumeric['time_record'];
+    end;
+
+  begin
+    for i := 0 to aGroup.Children.Count-1 do
+      HandleGroup(aGroup.Children[i]);
+
+    for i := 0 to aGroup.Levels.Count-1 do
+      HandleLevel(aGroup.Levels[i]);
+  end;
+begin
+  if Parent <> nil then
+    raise Exception.Create('TNeoLevelGroup.LoadUserData called for group other than base group');
+
+  if not FileExists(AppPath + SFSaveData + 'userdata.nxsv') then
+  begin
+    fChildGroups.Sort(SortAlphabetical);
+    fLevels.Sort(SortAlphabetical);
+    Exit;
+  end;
+
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromFile(AppPath + SFSaveData + 'userdata.nxsv');
+    LevelSec := Parser.MainSection.Section['levels'];
+    LoadingSec := Parser.MainSection.Section['load'];
+
+    if LoadingSec <> nil then
+    begin
+      LoadingSec.DoForEachLine('group', LoadSaveGroup);
+      LoadingSec.DoForEachLine('level', LoadSaveLevel);
+    end;
+
+    fChildGroups.Sort(SortAlphabetical);
+    fLevels.Sort(SortAlphabetical);
+
+    if LevelSec <> nil then
+      HandleGroup(self);
+  finally
+    Parser.Free;
+  end;
+end;
+
+procedure TNeoLevelGroup.LoadSaveGroup(aLine: TParserLine; const aIteration: Integer);
+begin
+  if not DirectoryExists(aLine.ValueTrimmed) then Exit;
+  fChildGroups.Add(aLine.ValueTrimmed);
+end;
+
+procedure TNeoLevelGroup.LoadSaveLevel(aLine: TParserLine; const aIteration: Integer);
+begin
+  if not FileExists(aLine.ValueTrimmed) then Exit;
+  fLevels.Add.Filename := aLine.ValueTrimmed;
+end;
+
+procedure TNeoLevelGroup.SaveUserData;
+var
+  Parser: TParser;
+  LoadingSec, LevelSec: TParserSection;
+  i: Integer;
+
+  procedure HandleGroup(aGroup: TNeoLevelGroup);
+  var
+    i: Integer;
+
+    procedure HandleLevel(aLevel: TNeoLevelEntry);
+    var
+      ActiveLevelSec: TParserSection;
+    begin
+      if aLevel.Status = lst_None then
+        Exit;
+
+      ActiveLevelSec := LevelSec.SectionList.Add(aLevel.RelativePath);
+
+      ActiveLevelSec.AddLine('status', STATUS_TEXTS[aLevel.Status]);
+      ActiveLevelSec.AddLine('modified_date', FileAge(aLevel.Path));
+      ActiveLevelSec.AddLine('lemming_record', aLevel.Records.LemmingsRescued);
+
+      if aLevel.Status >= lst_Completed_Outdated then
+        ActiveLevelSec.AddLine('time_record', aLevel.Records.TimeTaken);
+    end;
+  begin
+    for i := 0 to aGroup.Children.Count-1 do
+      HandleGroup(aGroup.Children[i]);
+
+    for i := 0 to aGroup.Levels.Count-1 do
+    begin
+      HandleLevel(aGroup.Levels[i]);
+    end;
+  end;
+
+begin
+  if Parent <> nil then
+    raise Exception.Create('TNeoLevelGroup.SaveUserData called for group other than base group');
+  Parser := TParser.Create;
+  try
+    LevelSec := Parser.MainSection.SectionList.Add('levels');
+    LoadingSec := Parser.MainSection.SectionList.Add('load');
+
+    HandleGroup(self);
+
+    for i := 0 to fChildGroups.Count-1 do
+      if Pos(':', fChildGroups[i].Folder) <> 0 then
+        LoadingSec.AddLine('group', fChildGroups[i].Folder);
+
+    for i := 0 to fLevels.Count-1 do
+      if Pos(':', fLevels[i].Filename) <> 0 then
+        LoadingSec.AddLine('level', fLevels[i].Filename);
+
+    ForceDirectories(AppPath + SFSaveData);
+    Parser.SaveToFile(AppPath + SFSaveData + 'userdata.nxsv');
+  finally
+    Parser.Free;
+  end;
+end;
+
 procedure TNeoLevelGroup.Load;
 begin
-  if FileExists(Path + 'levels.nxmi') then
+  if FileExists(Path + 'levels.nxmi') and (Parent <> nil) then
     LoadFromMetaInfo
   else
     LoadFromSearchRec;
+
+  if Parent = nil then
+    LoadUserData;
 end;
 
 procedure TNeoLevelGroup.LoadLevel(aLine: TParserLine; const aIteration: Integer);
@@ -502,6 +678,7 @@ begin
     MainSec.DoForEachSection('rank', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
     fIsBasePack := MainSec.Line['base'] <> nil;
+    fIsOrdered := true;
 
     // we do NOT want to sort alphabetically here, we want them to stay in the order
     // the metainfo file lists them in!
@@ -525,7 +702,6 @@ end;
 procedure TNeoLevelGroup.LoadFromSearchRec;
 var
   SearchRec: TSearchRec;
-  G: TNeoLevelGroup;
   L: TNeoLevelEntry;
 begin
   if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
@@ -533,10 +709,9 @@ begin
     repeat
       if SearchRec.Attr and faDirectory <> faDirectory then Continue;
       if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
-      G := fChildGroups.Add(SearchRec.Name + '/');
+      fChildGroups.Add(SearchRec.Name + '\');
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
-    fChildGroups.Sort(SortAlphabetical);
   end;
 
   if FindFirst(Path + '*.nxlv', 0, SearchRec) = 0 then
@@ -546,26 +721,25 @@ begin
       L.Filename := SearchRec.Name;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
+  end;
+
+  if FindFirst(Path + '*.nxlv', 0, SearchRec) = 0 then
+  begin
+    repeat
+      L := fLevels.Add;
+      L.Filename := SearchRec.Name;
+    until FindNext(SearchRec) <> 0;
+    FindClose(SearchRec);
+  end;
+
+  if Parent <> nil then
+  begin
+    // It's done after loading extra groups / levels for the base group
+    fChildGroups.Sort(SortAlphabetical);
     fLevels.Sort(SortAlphabetical);
   end;
-end;
 
-procedure TNeoLevelGroup.SetFolderName(aValue: String);
-begin
-  if fFolder = aValue then Exit;
-  fFolder := aValue;
-  EnsureUpdated;
-end;
-
-procedure TNeoLevelGroup.EnsureUpdated;
-var
-  i: Integer;
-begin
-  for i := 0 to fChildGroups.Count-1 do
-    fChildGroups[i].EnsureUpdated;
-
-  for i := 0 to fLevels.Count-1 do
-    fLevels[i].EnsureUpdated;
+  fIsOrdered := false;
 end;
 
 function TNeoLevelGroup.GetFullPath: String;
@@ -665,7 +839,6 @@ end;
 
 function TNeoLevelGroup.GetNextGroup: TNeoLevelGroup;
 var
-  i: Integer;
   GiveChildPriority: Boolean;
 begin
   Result := self; // failsafe
@@ -693,7 +866,6 @@ end;
 
 function TNeoLevelGroup.GetPrevGroup: TNeoLevelGroup;
 var
-  i: Integer;
   GiveParentPriority: Boolean;
 begin
   Result := self; // failsafe

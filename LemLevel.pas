@@ -41,7 +41,7 @@ type
     fGraphicSetName : string;
     fMusicFile      : string;
 
-    fLevelID        : LongWord;
+    fLevelID        : Int64;
 
     procedure SetSkillCount(aSkill: TSkillPanelButton; aCount: Integer);
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -78,7 +78,7 @@ type
 
     property Background: String read fBackground write fBackground;
 
-    property LevelID: LongWord read fLevelID write fLevelID;
+    property LevelID: Int64 read fLevelID write fLevelID;
   end;
 
   TLevel = class
@@ -260,7 +260,10 @@ begin
   Clear;
 
   if b < 5 then
+  begin
     TLVLLoader.LoadLevelFromStream(aStream, self);
+    Exit;
+  end;
 
   Parser := TParser.Create;
   try
@@ -700,7 +703,7 @@ begin
     aSection.AddLine('AUTHOR', Author);
     aSection.AddLine('THEME', GraphicSetName);
     aSection.AddLine('MUSIC', MusicFile);
-    aSection.AddLine('ID', 'x' + IntToHex(LevelID, 8));
+    aSection.AddLine('ID', 'x' + IntToHex(LevelID, 16));
 
     aSection.AddLine('LEMMINGS', LemmingsCount);
     aSection.AddLine('REQUIREMENT', RescueCount);

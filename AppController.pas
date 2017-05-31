@@ -45,7 +45,6 @@ type
     procedure ShowPreviewScreen;
     procedure ShowPlayScreen;
     procedure ShowPostviewScreen;
-    procedure ShowLevelSelectScreen;
     procedure ShowTextScreen;
     procedure ShowTalismanScreen;
     procedure ShowReplayCheckScreen;
@@ -60,7 +59,6 @@ implementation
 uses
   FMain,
   GameMenuScreen,
-  GameLevelSelectScreen,
   GamePreviewScreen,
   GamePostviewScreen,
   GameWindow,
@@ -150,28 +148,6 @@ begin
 end;
 
 constructor TAppController.Create(aOwner: TComponent);
-var
-  OpenDlg: TOpenDialog;
-  DoSingleLevel: Boolean;
-  Target: String;
-  ShowWarning: Boolean;
-
-  function CheckIfWarningNeeded: Boolean;
-  var
-    SL: TStringList;
-  begin
-    Result := true;
-    SL := TStringList.Create;
-    try
-      SL.LoadFromFile(ChangeFileExt(GameFile, '.nxsv'));
-      if SL.Count < 2 then Exit;
-      if Lowercase(Trim(SL[0])) <> '[version]' then Exit;
-      if (CurrentVersionID div 1000000) <> (StrToInt64Def(Trim(SL[1]), 0) div 1000000) then Exit;
-      Result := false;
-    finally
-      SL.Free;
-    end;
-  end;
 begin
   inherited;
 
@@ -301,7 +277,6 @@ begin
       gstPreview   : ShowPreviewScreen;
       gstPlay      : ShowPlayScreen;
       gstPostview  : ShowPostviewScreen;
-      gstLevelSelect : ShowLevelSelectScreen;
       gstText      : ShowTextScreen;
       gstTalisman  : ShowTalismanScreen;
       gstReplayTest: ShowReplayCheckScreen;
@@ -309,12 +284,6 @@ begin
     end;
 
   //end;
-end;
-
-procedure TAppController.ShowLevelSelectScreen;
-begin
-  fActiveForm := TGameLevelSelectScreen.Create(nil);
-  fActiveForm.ShowScreen;
 end;
 
 procedure TAppController.ShowMenuScreen;

@@ -46,8 +46,6 @@ procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
 begin
   if NextScreen = gstPlay then
   begin
-    if GameParams.CurrentLevel.Status = lst_None then
-      GameParams.CurrentLevel.Status := lst_Attempted;
     GameParams.NextScreen2 := gstPlay;
     inherited CloseScreen(gstText);
   end else
@@ -86,7 +84,6 @@ end;
 
 procedure TGamePreviewScreen.BuildScreen;
 var
-  Inf: TRenderInfoRec;
   Mainpal: TArrayOfColor32;
   Temp, W: TBitmap32;
   DstRect: TRect;
@@ -186,7 +183,6 @@ end;
 
 procedure TGamePreviewScreen.BuildScreenInvis;
 var
-  Inf: TRenderInfoRec;
   TempBmp: TBitmap32;
 begin
   Assert(GameParams <> nil);
@@ -236,7 +232,6 @@ begin
                    CloseScreen(gstMenu);
                end;
     VK_RETURN: begin VGASpecPrep; CloseScreen(gstPlay); end;
-    VK_F2: CloseScreen(gstLevelSelect);
     VK_LEFT: PreviousLevel;
     VK_RIGHT: NextLevel;
     VK_DOWN: PreviousRank;

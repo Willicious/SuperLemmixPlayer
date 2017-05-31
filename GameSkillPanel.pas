@@ -22,7 +22,7 @@ type
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
   public
-    constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
+    constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
   end;
 
@@ -40,7 +40,7 @@ type
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
   public
-    constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); override;
+    constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
   end;
 
@@ -51,9 +51,9 @@ uses
 
 { TSkillPanelStandard }
 
-constructor TSkillPanelStandard.Create(aOwner: TComponent; aGameWindow: IGameWindow);
+constructor TSkillPanelStandard.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
-  inherited Create(aOwner, aGameWindow);
+  inherited;
 end;
 
 destructor TSkillPanelStandard.Destroy;
@@ -139,9 +139,9 @@ end;
 
 { TSkillPanelCompact }
 
-constructor TSkillPanelCompact.Create(aOwner: TComponent; aGameWindow: IGameWindow);
+constructor TSkillPanelCompact.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
-  inherited Create(aOwner, aGameWindow);
+  inherited;
 end;
 
 destructor TSkillPanelCompact.Destroy;

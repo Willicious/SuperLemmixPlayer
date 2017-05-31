@@ -751,7 +751,6 @@ var
 begin
   for i := 0 to fTalismans.Count-1 do
   begin
-    if GameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Continue;
     with fTalismans[i] do
     begin
 
@@ -790,7 +789,7 @@ begin
       if UsedSkillLems > 1 then Continue;
 
       // Award Talisman
-      GameParams.SaveSystem.GetTalisman(Signature);
+      //GameParams.SaveSystem.GetTalisman(Signature);
       if TalismanType <> 0 then fTalismanReceived := True;
 
     end;
@@ -803,14 +802,12 @@ begin
 end;
 
 function TLemmingGame.CheckFinishedTest;
-var
-  i: Integer;
 begin
   Result := false;
   if not Checkpass then Exit;
 
-  for i := 0 to fTalismans.Count-1 do
-    if not GameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Exit;
+  //for i := 0 to fTalismans.Count-1 do
+    //if not GameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Exit;
 
   Result := true;
 end;

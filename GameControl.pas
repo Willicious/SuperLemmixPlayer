@@ -18,7 +18,7 @@ uses
   LemVersion,
   LemTypes, LemLevel,
   LemDosStructures,
-  LemNeoSave, TalisData,
+  TalisData,
   LemRendering;
 
 var
@@ -45,7 +45,6 @@ type
     gstPreview,
     gstPlay,
     gstPostview,
-    gstLevelSelect,
     gstSounds,
     gstExit,
     gstText,
@@ -117,7 +116,6 @@ type
     fDirectory    : string;
     fDumpMode : Boolean;
     fShownText: Boolean;
-    fSaveSystem : TNeoSave;
     fOneLevelMode: Boolean;
     fDoneUpdateCheck: Boolean;
     fCurrentLevel: TNeoLevelEntry;
@@ -186,7 +184,6 @@ type
 
     constructor Create;
     destructor Destroy; override;
-    property SaveSystem: TNeoSave read fSaveSystem;
 
     procedure Save;
     procedure Load;
@@ -269,6 +266,7 @@ begin
   if IsHalting then Exit;
   try
     SaveToIniFile;
+    BaseLevelPack.SaveUserData;
     Hotkeys.SaveFile;
   except
     ShowMessage('An error occured while trying to save data.');
@@ -536,7 +534,6 @@ var
   CurLevel: TNeoLevelEntry;
   CurLevelGroup: TNeoLevelGroup;
   CurLevelIndex: Integer;
-  CurGroupIndex: Integer;
 begin
   CurLevel := fCurrentLevel;
   CurLevelGroup := CurLevel.Group;
@@ -561,7 +558,6 @@ var
   CurLevel: TNeoLevelEntry;
   CurLevelGroup: TNeoLevelGroup;
   CurLevelIndex: Integer;
-  CurGroupIndex: Integer;
 begin
   CurLevel := fCurrentLevel;
   CurLevelGroup := CurLevel.Group;
@@ -598,8 +594,6 @@ end;
 
 
 constructor TDosGameParams.Create;
-var
-  TempStream: TMemoryStream; //for loading talisman data
 begin
   inherited Create;
 
@@ -622,7 +616,6 @@ begin
   LemSoundsInResource := True;
   LemMusicInResource := True;
 
-  fSaveSystem := TNeoSave.Create;
   fTalismans := TTalismans.Create;
 
 
@@ -637,14 +630,11 @@ begin
 
   fTalismans.SortTalismans;
 
-  fSaveSystem.SetTalismans(fTalismans);
-
   fHotkeys := TLemmixHotkeyManager.Create;
 end;
 
 destructor TDosGameParams.Destroy;
 begin
-  fSaveSystem.Free;
   fTalismans.Free;
   fHotkeys.Free;
   BaseLevelPack.Free;

@@ -62,6 +62,20 @@ object FLevelSelect: TFLevelSelect
     Font.Style = []
     ParentFont = False
   end
+  object lblCompletion: TLabel
+    Left = 304
+    Top = 80
+    Width = 321
+    Height = 13
+    AutoSize = False
+    Caption = '<Completion>'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
   object tvLevelSelect: TTreeView
     Left = 8
     Top = 8

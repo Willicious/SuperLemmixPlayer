@@ -123,7 +123,7 @@ type
       fLevelGame: String;
       fLevelRank: String;
       fLevelPosition: Integer;
-      fLevelID: Cardinal;
+      fLevelID: Int64;
       function GetLastActionFrame: Integer;
       function GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; Sec: TParserSection);
@@ -149,7 +149,7 @@ type
       property LevelGame: String read fLevelGame write fLevelGame;
       property LevelRank: String read fLevelRank write fLevelRank;
       property LevelPosition: Integer read fLevelPosition write fLevelPosition;
-      property LevelID: Cardinal read fLevelID write fLevelID;
+      property LevelID: Int64 read fLevelID write fLevelID;
       property Assignment[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
       property ReleaseRateChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
@@ -519,6 +519,8 @@ begin
     fLevelRank := Sec.LineString['rank'];
     fLevelPosition := Sec.LineNumeric['level'];
     fLevelID := Sec.LineNumeric['id'];
+    if Length(Sec.LineTrimString['id']) = 9 then
+      fLevelID := fLevelID or (fLevelID shl 32);
 
     Sec.DoForEachSection('assignment', HandleLoadSection);
     Sec.DoForEachSection('release_rate', HandleLoadSection);
@@ -593,7 +595,7 @@ begin
       Sec.AddLine('RANK', fLevelRank);
       Sec.AddLine('LEVEL', fLevelPosition);
     end;
-    Sec.AddLine('ID', fLevelID, 8);
+    Sec.AddLine('ID', fLevelID, 16);
 
     SaveReplayList(fAssignments, Sec);
     SaveReplayList(fReleaseRateChanges, Sec);
@@ -728,7 +730,7 @@ begin
     MS.Position := 0;
     MS.Read(Header, SizeOf(TReplayFileHeaderRec));
 
-    fLevelID := Header.ReplayLevelID;
+    fLevelID := Header.ReplayLevelID or (Header.ReplayLevelID shl 32);
 
     MS.Position := Header.FirstRecordPos;
     LastReleaseRate := 0;

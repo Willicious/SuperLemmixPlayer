@@ -28,7 +28,6 @@ type
     fPage: Integer;
     ScreenText: string;
     function GetScreenText: string;
-    function BuildText(intxt: String; color: Integer; acheived: Boolean): String;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_KeyPress(Sender: TObject; var Key: Char);
   protected
@@ -70,86 +69,6 @@ begin
     ScreenImg.EndUpdate;
     Temp.Free;
   end;
-end;
-
-function TGameTalismanScreen.BuildText(intxt: String; color: Integer; acheived: Boolean): String;
-var
-  Lines: Array[0..2] of String;
-  TalisChar: String;
-  TempString: String;
-  p, cl: Integer;
-  NumLines: Integer;
-begin
-  Result := '';
-
-  intxt := intxt + ' '; //who needs special handling for end of string when you can just add a space at the end? sah kludge
-
-  for cl := 0 to 2 do
-    Lines[cl] := '';
-
-  cl := 0;
-  TempString := '';
-  for p := 1 to Length(intxt)+1 do
-  begin
-    TempString := TempString + intxt[p];
-    if (intxt[p] = ' ') or (Length(TempString) = 34) then
-    begin
-      if Length(Lines[cl] + Trim(TempString)) <= 34 then
-        Lines[cl] := Lines[cl] + TempString
-      else begin
-        Lines[cl] := Trim(Lines[cl]);
-        cl := cl + 1;
-        if cl > 2 then Break;
-        Lines[cl] := TempString;
-      end;
-      TempString := '';
-    end;
-  end;
-
-  NumLines := 0;
-  for cl := 0 to 2 do
-    if Lines[cl] <> '' then NumLines := NumLines + 1;
-
-  if NumLines = 1 then
-  begin
-    Lines[1] := Lines[0];
-    Lines[0] := '';
-  end else if NumLines = 2 then
-  begin
-    Lines[2] := Lines[1];
-    Lines[1] := Lines[0];
-    Lines[0] := '';
-  end;
-
-  case color of
-    2: TalisChar := #129;
-    3: TalisChar := #131;
-    else TalisChar := #127;
-  end;
-  if acheived then TalisChar := Chr(Ord(TalisChar[1]) + 1);
-  Lines[0] := TalisChar + '   ' + Lines[0];
-  Lines[1] := '    ' + Lines[1];
-  Lines[2] := '    ' + Lines[2];
-
-  for cl := 0 to 2 do
-  begin
-    Lines[cl] := TrimRight(Lines[cl]);
-    while Length(Lines[cl]) < 38 do
-      Lines[cl] := Lines[cl] + ' ';
-  end;
-
-  //Linebreaks
-  if NumLines = 2 then
-  begin
-    Lines[0] := Lines[0] + #12;
-    Lines[1] := Lines[1] + #13;
-    Lines[2] := Lines[2] + #12;
-  end else
-    for cl := 0 to 1 do
-      Lines[cl] := Lines[cl] + #13;
-
-  for cl := 0 to 2 do
-    Result := Result + Lines[cl];
 end;
 
 constructor TGameTalismanScreen.Create(aOwner: TComponent);
@@ -228,7 +147,7 @@ begin
       else curpoints := 0;
     end;
     maxpoints := maxpoints + curpoints;
-    if GameParams.SaveSystem.CheckTalisman(GameParams.Talismans[i].Signature) then playerpoints := playerpoints + curpoints;
+    //if GameParams.SaveSystem.CheckTalisman(GameParams.Talismans[i].Signature) then playerpoints := playerpoints + curpoints;
   end;
   playerpoints := (playerpoints * 100) div maxpoints;
 
@@ -239,7 +158,7 @@ begin
       LF(3);
       Continue;
     end;
-    Add(BuildText(GameParams.Talismans[i].Description, GameParams.Talismans[i].TalismanType, GameParams.SaveSystem.CheckTalisman(GameParams.Talismans[i].Signature))); 
+    //Add(BuildText(GameParams.Talismans[i].Description, GameParams.Talismans[i].TalismanType, GameParams.SaveSystem.CheckTalisman(GameParams.Talismans[i].Signature))); 
   end;
 
   LF(1);

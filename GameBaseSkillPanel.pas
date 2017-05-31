@@ -126,8 +126,8 @@ type
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
   public
-    constructor Create(aOwner: TComponent); overload; override;
-    constructor Create(aOwner: TComponent; aGameWindow: IGameWindow); overload; virtual;
+    constructor Create(aOwner: TComponent); override;
+    constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); virtual;
     destructor Destroy; override;
 
     procedure PrepareForGame;
@@ -188,7 +188,7 @@ uses
   LemmixHotkeys, LemDosStructures;
 
 
-constructor TBaseSkillPanel.Create(aOwner: TComponent; aGameWindow: IGameWindow);
+constructor TBaseSkillPanel.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
 begin
   Create(aOwner);
   fGameWindow := aGameWindow;

@@ -26,7 +26,6 @@ type
   private
     fAdvanceLevel: Boolean;
     function GetScreenText: string;
-    function BuildText(intxt: Array of char): string;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_KeyPress(Sender: TObject; var Key: Char);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -114,17 +113,6 @@ begin
   end;
 end;
 
-function TGamePostviewScreen.BuildText(intxt: Array of char): String;
-begin
-  // Casts the array to a string, trims it and then takes the first 36 characters.
-  Result := '';
-  if Length(intxt) > 0 then
-  begin
-    SetString(Result, PChar(@intxt[0]), Length(intxt));
-    Result := AnsiLeftStr(Trim(Result), 36);
-  end;
-end;
-
 constructor TGamePostviewScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
@@ -166,10 +154,11 @@ var
       var
         NewMin: Integer;
       begin
+        NewMin := $7FFFFFFF; // avoid compiler warning
         with GameParams.GameResult do
           case aText.ConditionType of
             pvc_Absolute: NewMin := aText.ConditionValue;
-            pvc_Percent: NewMin := gCount * aText.ConditionValue div 100;
+            pvc_Percent: NewMin := AdjLemCount * aText.ConditionValue div 100;
             pvc_Relative: NewMin := gToRescue + aText.ConditionValue;
             pvc_RelativePercent: NewMin := gToRescue + (gToRescue * aText.ConditionValue div 100);
           end;
@@ -177,7 +166,8 @@ var
         begin
           Result := true;
           CurrentMin := NewMin;
-        end;
+        end else
+          Result := false;
       end;
     begin
       AdjLemCount := GameParams.Level.Info.LemmingsCount;
@@ -225,16 +215,17 @@ begin
     end;
 
     if not gCheated then
-    with SaveSystem, CurrentLevel do
+    with CurrentLevel do
     begin
-      SetLemmingRecord(Group.ParentGroupIndex, GroupIndex, gRescued);
+      if gRescued > CurrentLevel.Records.LemmingsRescued then
+        CurrentLevel.Records.LemmingsRescued := gRescued;
 
       if gSuccess then
       begin
-        CompleteLevel(Group.ParentGroupIndex, GroupIndex);
         Status := lst_Completed;
-        SetTimeRecord(Group.ParentGroupIndex, GroupIndex, gLastRescueIteration);
-      end else
+        if (CurrentLevel.Records.TimeTaken = 0) or (gLastRescueIteration < CurrentLevel.Records.TimeTaken) then
+          CurrentLevel.Records.TimeTaken := gLastRescueIteration;
+      end else if Status = lst_None then
         Status := lst_Attempted;
     end;
 
@@ -267,7 +258,7 @@ begin
     if GameParams.fTestMode then
       LF(1)
     else
-      Add(SYourRecord + PadL(IntToStr(SaveSystem.GetLemmingRecord(CurrentLevel.Group.ParentGroupIndex, CurrentLevel.GroupIndex)), 4));
+      Add(SYourRecord + PadL(IntToStr(GameParams.CurrentLevel.Records.LemmingsRescued), 4));
 
     LF(1);
 
@@ -275,7 +266,7 @@ begin
     if GameParams.fTestMode or not gSuccess then
       LF(1)
     else
-      Add(SYourTimeRecord + PadL(MakeTimeString(SaveSystem.GetTimeRecord(CurrentLevel.Group.ParentGroupIndex, CurrentLevel.GroupIndex)), 8));
+      Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.Records.TimeTaken), 8));
 
     LF(2);
 
@@ -342,7 +333,6 @@ begin
     VK_RETURN: begin
                  NextLevel;
                end;
-    VK_F2: CloseScreen(gstLevelSelect);
   end;
 end;
 

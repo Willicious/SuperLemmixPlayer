@@ -23,6 +23,7 @@ type
     lblAuthor: TLabel;
     ilStatuses: TImageList;
     btnAddContent: TButton;
+    lblCompletion: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -170,10 +171,13 @@ var
   G: TNeoLevelGroup;
   L: TNeoLevelEntry;
   N: TTreeNode;
+  i: Integer;
+  S: String;
+  CompletedCount: Integer;
 
   function GetGroupPositionText: String;
   begin
-    if (G.Parent = GameParams.BaseLevelPack) or (G.IsBasePack) then
+    if (G = GameParams.BaseLevelPack) or (G.IsBasePack) or not (G.Parent.IsOrdered) then
       Result := ''
     else
       Result := 'Group ' + IntToStr(G.ParentGroupIndex + 1) + ' in ' + G.Parent.Name;
@@ -181,8 +185,8 @@ var
 
   function GetLevelPositionText: String;
   begin
-    if L.Group = GameParams.BaseLevelPack then
-      Result := 'Standalone level'
+    if not L.Group.IsOrdered then
+      Result := ''
     else
       Result := 'Level ' + IntToStr(L.GroupIndex + 1) + ' of ' + L.Group.Name;
   end;
@@ -191,6 +195,7 @@ var
   var
     i: Integer;
     L: TNeoLevelEntry;
+    S: String;
   begin
     tvLevelSelect.Items.BeginUpdate;
     try
@@ -201,7 +206,11 @@ var
         if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
         begin
           L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
-          tvLevelSelect.Items[i].Text := '(' + IntToStr(L.GroupIndex + 1) + ') ' + L.Title;
+          S := '';
+          if L.Group.IsOrdered then
+            S := '(' + IntToStr(L.GroupIndex + 1) + ') ';
+          S := S + L.Title;
+          tvLevelSelect.Items[i].Text := S;
         end;
       end;
     finally
@@ -222,7 +231,37 @@ begin
     G := TNeoLevelGroup(Obj);
     lblName.Caption := G.Name;
     lblPosition.Caption := GetGroupPositionText;
-    lblAuthor.Caption := G.Author;
+
+    if G.Author <> '' then
+      lblAuthor.Caption := 'By ' + G.Author
+    else
+      lblAuthor.Caption := '';
+
+    S := '';
+    CompletedCount := 0;
+    if G.Children.Count > 0 then
+    begin
+      for i := 0 to G.Children.Count-1 do
+        if G.Children[i].Status = lst_Completed then
+          Inc(CompletedCount);
+      S := S + IntToStr(CompletedCount) + ' of ' + IntToStr(G.Children.Count) + ' subgroups ';
+    end;
+
+    CompletedCount := 0;
+    if G.Levels.Count > 0 then
+    begin
+      for i := 0 to G.Levels.Count-1 do
+        if G.Levels[i].Status = lst_Completed then
+          Inc(CompletedCount);
+      if S <> '' then
+        S := S + 'and ';
+      S := S + IntToStr(CompletedCount) + ' of ' + IntToStr(G.Levels.Count) + ' levels ';
+    end;
+
+    if S <> '' then
+      S := S + 'completed';
+
+    lblCompletion.Caption := S;
 
     pnLevelInfo.Visible := false;
 
@@ -232,7 +271,13 @@ begin
     L := TNeoLevelEntry(Obj);
     lblName.Caption := L.Title;
     lblPosition.Caption := GetLevelPositionText;
-    lblAuthor.Caption := L.Author;
+
+    if L.Author <> '' then
+      lblAuthor.Caption := 'By ' + L.Author
+    else
+      lblAuthor.Caption := '';
+
+    lblCompletion.Caption := '';
 
     pnLevelInfo.Visible := true;
 
@@ -248,20 +293,24 @@ end;
 procedure TFLevelSelect.btnAddContentClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
+  Ext: String;
 begin
   OpenDlg := TOpenDialog.Create(self);
   try
     OpenDlg.Title := 'Select pack or level file';
-    OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxlv, info.nxmi)|*.nxlv;info.nxmi';
+    OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxlv, *.lvl, info.nxmi)|*.nxlv;*.lvl;info.nxmi';
     OpenDlg.InitialDir := AppPath;
     if not OpenDlg.Execute then Exit;
 
-    if Lowercase(ExtractFileExt(OpenDlg.FileName)) = '.nxlv' then
+    Ext := Lowercase(ExtractFileExt(OpenDlg.FileName));
+    ShowMessage(OpenDlg.Filename);
+    if (Ext = '.nxlv') or (Ext = '.lvl') then
       GameParams.BaseLevelPack.Levels.Add.Filename := OpenDlg.Filename
     else
       GameParams.BaseLevelPack.Children.Add(ExtractFilePath(OpenDlg.Filename));
 
     InitializeTreeview;
+    SetInfo;
   finally
     OpenDlg.Free;
   end;
