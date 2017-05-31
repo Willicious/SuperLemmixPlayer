@@ -25,6 +25,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     procedure InitializeTreeview;
     procedure SetInfo;
@@ -43,7 +44,7 @@ procedure TFLevelSelect.InitializeTreeview;
   var
     N: TTreeNode;
   begin
-    N := tvLevelSelect.Items.AddChildObject(ParentNode, '(' + IntToStr(aLevel.GroupIndex + 1) + ') ' + aLevel.Title, aLevel);
+    N := tvLevelSelect.Items.AddChildObject(ParentNode, '', aLevel);
     case aLevel.Status of
       lst_None: N.ImageIndex := 0;
       lst_Attempted: N.ImageIndex := 1;
@@ -51,6 +52,9 @@ procedure TFLevelSelect.InitializeTreeview;
       lst_Completed: N.ImageIndex := 3;
     end;
     N.SelectedIndex := N.ImageIndex;
+
+    if GameParams.CurrentLevel = aLevel then
+      tvLevelSelect.Selected := N;
   end;
 
   procedure AddGroup(aGroup: TNeoLevelGroup; ParentNode: TTreeNode);
@@ -180,7 +184,31 @@ var
       Result := 'Level ' + IntToStr(L.GroupIndex + 1) + ' of ' + L.Group.Name;
   end;
 
+  procedure LoadNodeLabels;
+  var
+    i: Integer;
+    L: TNeoLevelEntry;
+  begin
+    tvLevelSelect.Items.BeginUpdate;
+    try
+      for i := 0 to tvLevelSelect.Items.Count-1 do
+      begin
+        if not tvLevelSelect.Items[i].IsVisible then Continue;
+        if tvLevelSelect.Items[i].Text <> '' then Continue;
+        if TObject(tvLevelSelect.Items[i].Data) is TNeoLevelEntry then
+        begin
+          L := TNeoLevelEntry(tvLevelSelect.Items[i].Data);
+          tvLevelSelect.Items[i].Text := '(' + IntToStr(L.GroupIndex + 1) + ') ' + L.Title;
+        end;
+      end;
+    finally
+      tvLevelSelect.Items.EndUpdate;
+    end;
+  end;
+
 begin
+  LoadNodeLabels;
+
   N := tvLevelSelect.Selected;
   if N = nil then Exit;
 
@@ -207,6 +235,11 @@ begin
 
     btnOk.Enabled := true;
   end;
+end;
+
+procedure TFLevelSelect.FormShow(Sender: TObject);
+begin
+  SetInfo;
 end;
 
 end.

@@ -1,6 +1,6 @@
 object FLevelSelect: TFLevelSelect
-  Left = 364
-  Top = 208
+  Left = 366
+  Top = 210
   HorzScrollBar.Visible = False
   VertScrollBar.Visible = False
   BorderIcons = []
@@ -17,6 +17,7 @@ object FLevelSelect: TFLevelSelect
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object lblName: TLabel
@@ -69,6 +70,7 @@ object FLevelSelect: TFLevelSelect
     Images = ilStatuses
     Indent = 19
     MultiSelectStyle = []
+    ReadOnly = True
     TabOrder = 0
     OnClick = tvLevelSelectClick
   end
