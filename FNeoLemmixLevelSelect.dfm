@@ -101,6 +101,15 @@ object FLevelSelect: TFLevelSelect
     Caption = '<placeholder for level info>'
     TabOrder = 3
   end
+  object btnAddContent: TButton
+    Left = 288
+    Top = 448
+    Width = 161
+    Height = 25
+    Caption = 'Add Content To List'
+    TabOrder = 4
+    OnClick = btnAddContentClick
+  end
   object ilStatuses: TImageList
   end
 end

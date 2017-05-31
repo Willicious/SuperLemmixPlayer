@@ -22,10 +22,12 @@ type
     lblPosition: TLabel;
     lblAuthor: TLabel;
     ilStatuses: TImageList;
+    btnAddContent: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnAddContentClick(Sender: TObject);
   private
     procedure InitializeTreeview;
     procedure SetInfo;
@@ -113,6 +115,7 @@ begin
   MakeImages;
   tvLevelSelect.Items.BeginUpdate;
   try
+    tvLevelSelect.Items.Clear;
     AddGroup(GameParams.BaseLevelPack, nil);
   finally
     tvLevelSelect.Items.EndUpdate;
@@ -240,6 +243,28 @@ end;
 procedure TFLevelSelect.FormShow(Sender: TObject);
 begin
   SetInfo;
+end;
+
+procedure TFLevelSelect.btnAddContentClick(Sender: TObject);
+var
+  OpenDlg: TOpenDialog;
+begin
+  OpenDlg := TOpenDialog.Create(self);
+  try
+    OpenDlg.Title := 'Select pack or level file';
+    OpenDlg.Filter := 'NeoLemmix Levels or Packs (*.nxlv, info.nxmi)|*.nxlv;info.nxmi';
+    OpenDlg.InitialDir := AppPath;
+    if not OpenDlg.Execute then Exit;
+
+    if Lowercase(ExtractFileExt(OpenDlg.FileName)) = '.nxlv' then
+      GameParams.BaseLevelPack.Levels.Add.Filename := OpenDlg.Filename
+    else
+      GameParams.BaseLevelPack.Children.Add(ExtractFilePath(OpenDlg.Filename));
+
+    InitializeTreeview;
+  finally
+    OpenDlg.Free;
+  end;
 end;
 
 end.
