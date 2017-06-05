@@ -1,16 +1,15 @@
-// Modified by namida for internal DLL storage
-
 {
-  BASS 2.4 Delphi unit
-  Copyright (c) 1999-2013 Un4seen Developments Ltd.
+  BASS 2.4.7.1 Delphi unit (dynamic)
+  Copyright (c) 1999-2008 Un4seen Developments Ltd.
 
   See the BASS.CHM file for more detailed documentation
 
   How to install
-  --------------
-  Copy BASS.PAS to the \LIB subdirectory of your Delphi path or your project dir
+  ----------------
+  Copy DYNAMIC_BASS.PAS to the \LIB subdirectory of your Delphi path or your project dir
 
-  NOTE: Delphi users should use the BASS_UNICODE flag where possible
+  Call Load_BASSDLL (eg. in FormCreate) to load BASS before using any functions, and
+  Unload_BASSDLL (eg. in FormDestory) to unload it when you're done.
 }
 
 unit Bass;
@@ -18,15 +17,16 @@ unit Bass;
 interface
 
 uses
-  StrUtils, SysUtils,
-  Windows;
+  StrUtils,
+  Windows,
+  SysUtils;
 
 const
   BASSVERSION = $204;             // API version
   BASSVERSIONTEXT = '2.4';
 
   // Use these to test for error from functions that return a DWORD or QWORD
-  DW_ERROR = LongWord(-1); // -1 (DWORD)
+  DW_ERROR = Cardinal(-1); // -1 (DWORD)
   QW_ERROR = Int64(-1);    // -1 (QWORD)
 
   // Error codes returned by BASS_ErrorGetCode()
@@ -54,9 +54,9 @@ const
   BASS_ERROR_EMPTY        = 31;   // the MOD music has no sequence data
   BASS_ERROR_NONET        = 32;   // no internet connection could be opened
   BASS_ERROR_CREATE       = 33;   // couldn't create the file
-  BASS_ERROR_NOFX         = 34;   // effects are not available
+  BASS_ERROR_NOFX         = 34;   // effects are not enabled
   BASS_ERROR_NOTAVAIL     = 37;   // requested data is not available
-  BASS_ERROR_DECODE       = 38;   // the channel is/isn't a "decoding channel"
+  BASS_ERROR_DECODE       = 38;   // the channel is a "decoding channel"
   BASS_ERROR_DX           = 39;   // a sufficient DirectX version is not installed
   BASS_ERROR_TIMEOUT      = 40;   // connection timedout
   BASS_ERROR_FILEFORM     = 41;   // unsupported file format
@@ -88,33 +88,26 @@ const
   BASS_CONFIG_VERIFY        = 23;
   BASS_CONFIG_UPDATETHREADS = 24;
   BASS_CONFIG_DEV_BUFFER    = 27;
-  BASS_CONFIG_VISTA_TRUEPOS = 30;
-  BASS_CONFIG_IOS_MIXAUDIO  = 34;
+  BASS_CONFIG_MP3_ERRORS    = 35;
   BASS_CONFIG_DEV_DEFAULT   = 36;
   BASS_CONFIG_NET_READTIMEOUT = 37;
-  BASS_CONFIG_VISTA_SPEAKERS = 38;
-  BASS_CONFIG_IOS_SPEAKER   = 39;
-  BASS_CONFIG_HANDLES       = 41;
-  BASS_CONFIG_UNICODE       = 42;
-  BASS_CONFIG_SRC           = 43;
-  BASS_CONFIG_SRC_SAMPLE    = 44;
-  BASS_CONFIG_ASYNCFILE_BUFFER = 45;
-  BASS_CONFIG_OGG_PRESCAN   = 47;
+
+  BASS_CONFIG_REC_LOOPBACK  =	28;        // Vista Test
 
   // BASS_SetConfigPtr options
   BASS_CONFIG_NET_AGENT     = 16;
   BASS_CONFIG_NET_PROXY     = 17;
 
-  // BASS_Init flags
-  BASS_DEVICE_8BITS       = 1;    // 8 bit resolution, else 16 bit
-  BASS_DEVICE_MONO        = 2;    // mono, else stereo
+  // Initialization flags
+  BASS_DEVICE_8BITS       = 1;    // use 8 bit resolution, else 16 bit
+  BASS_DEVICE_MONO        = 2;    // use mono, else stereo
   BASS_DEVICE_3D          = 4;    // enable 3D functionality
-  BASS_DEVICE_LATENCY     = $100;  // calculate device latency (BASS_INFO struct)
-  BASS_DEVICE_CPSPEAKERS  = $400; // detect speakers via Windows control panel
-  BASS_DEVICE_SPEAKERS    = $800; // force enabling of speaker assignment
-  BASS_DEVICE_NOSPEAKER   = $1000; // ignore speaker arrangement
-  BASS_DEVICE_DMIX        = $2000; // use ALSA "dmix" plugin
-  BASS_DEVICE_FREQ        = $4000; // set device sample rate
+  BASS_DEVICE_LATENCY     = 256;  // calculate device latency (BASS_INFO struct)
+  BASS_DEVICE_CPSPEAKERS  = 1024; // detect speakers via Windows control panel
+  BASS_DEVICE_SPEAKERS    = 2048; // force enabling of speaker assignment
+  BASS_DEVICE_NOSPEAKER   = 4096; // ignore speaker arrangement
+
+  BASS_DEVICE_LOOPBACK		= 8;    // Vista/win 7 Test                                                     ////////////////////////////
 
   // DirectSound interfaces (for use with BASS_GetDSoundObject)
   BASS_OBJECT_DS          = 1;   // IDirectSound
@@ -211,7 +204,6 @@ const
   BASS_SPEAKER_REAR2LEFT  = BASS_SPEAKER_REAR2 or BASS_SPEAKER_LEFT;
   BASS_SPEAKER_REAR2RIGHT = BASS_SPEAKER_REAR2 or BASS_SPEAKER_RIGHT;
 
-  BASS_ASYNCFILE          = $40000000;
   BASS_UNICODE            = $80000000;
 
   BASS_RECORD_PAUSE       = $8000; // start recording paused
@@ -285,6 +277,7 @@ const
 
   BASS_STREAMPROC_END = $80000000; // end of user stream flag
 
+
   // BASS_StreamCreateFileUser file systems
   STREAMFILE_NOBUFFER     = 0;
   STREAMFILE_BUFFER       = 1;
@@ -330,8 +323,6 @@ const
   BASS_ATTRIB_PAN                   = 3;
   BASS_ATTRIB_EAXMIX                = 4;
   BASS_ATTRIB_NOBUFFER              = 5;
-  BASS_ATTRIB_CPU                   = 7;
-  BASS_ATTRIB_SRC                   = 8;
   BASS_ATTRIB_MUSIC_AMPLIFY         = $100;
   BASS_ATTRIB_MUSIC_PANSEP          = $101;
   BASS_ATTRIB_MUSIC_PSCALER         = $102;
@@ -354,7 +345,6 @@ const
   BASS_DATA_FFT_INDIVIDUAL = $10; // FFT flag: FFT for each channel, else all combined
   BASS_DATA_FFT_NOWINDOW = $20;   // FFT flag: no Hanning window
   BASS_DATA_FFT_REMOVEDC = $40;   // FFT flag: pre-remove DC bias
-  BASS_DATA_FFT_COMPLEX = $80;    // FFT flag: return complex data
 
   // BASS_ChannelGetTags types : what's returned
   BASS_TAG_ID3        = 0; // ID3v1 tags : TAG_ID3 structure
@@ -364,12 +354,8 @@ const
   BASS_TAG_ICY        = 4; // ICY headers : series of null-terminated ANSI strings
   BASS_TAG_META       = 5; // ICY metadata : ANSI string
   BASS_TAG_APE        = 6; // APEv2 tags : series of null-terminated UTF-8 strings
-  BASS_TAG_MP4        = 7; // MP4/iTunes metadata : series of null-terminated UTF-8 strings
   BASS_TAG_VENDOR     = 9; // OGG encoder : UTF-8 string
   BASS_TAG_LYRICS3    = 10; // Lyric3v2 tag : ASCII string
-  BASS_TAG_CA_CODEC   = 11;	// CoreAudio codec info : TAG_CA_CODEC structure
-  BASS_TAG_MF         = 13;	// Media Foundation tags : series of null-terminated UTF-8 strings
-  BASS_TAG_WAVEFORMAT = 14;	// WAVE format : WAVEFORMATEEX structure
   BASS_TAG_RIFF_INFO  = $100; // RIFF "INFO" tags : series of null-terminated ANSI strings
   BASS_TAG_RIFF_BEXT  = $101; // RIFF/BWF "bext" tags : TAG_BEXT structure
   BASS_TAG_RIFF_CART  = $102; // RIFF/BWF "cart" tags : TAG_CART structure
@@ -384,7 +370,6 @@ const
   // BASS_ChannelGetLength/GetPosition/SetPosition modes
   BASS_POS_BYTE           = 0; // byte position
   BASS_POS_MUSIC_ORDER    = 1; // order.row position, MAKELONG(order,row)
-  BASS_POS_OGG            = 3; // OGG bitstream number
   BASS_POS_DECODE         = $10000000; // flag: get the decoding (not playing) position
   BASS_POS_DECODETO       = $20000000; // flag: decode to the position instead of seeking
 
@@ -422,9 +407,10 @@ const
   BASS_DX8_PHASE_180     = 4;
 
 type
-  DWORD = LongWord;
+  DWORD = cardinal;
   BOOL = LongBool;
-  QWORD = Int64;
+  FLOAT = Single;
+  QWORD = int64;        // 64-bit (replace "int64" with "comp" if using Delphi 3)
 
   HMUSIC = DWORD;       // MOD music handle
   HSAMPLE = DWORD;      // sample handle
@@ -457,7 +443,7 @@ type
     latency: DWORD;     // delay (in ms) before start of playback (requires BASS_DEVICE_LATENCY)
     initflags: DWORD;   // BASS_Init "flags" parameter
     speakers: DWORD;    // number of speakers available
-    freq: DWORD;        // current output rate
+    freq: DWORD;        // current output rate (Windows Vista and OSX only)
   end;
 
   // Recording device info structure
@@ -466,14 +452,14 @@ type
     formats: DWORD;     // supported standard formats (WAVE_FORMAT_xxx flags)
     inputs: DWORD;      // number of inputs
     singlein: BOOL;     // only 1 input can be set at a time
-    freq: DWORD;        // current input rate
+    freq: DWORD;        // current input rate (Windows Vista and OSX only)
   end;
 
   // Sample info structure
   BASS_SAMPLE = record
     freq: DWORD;        // default playback rate
-    volume: Single;     // default volume (0-100)
-    pan: Single;        // default pan (-100=left, 0=middle, 100=right)
+    volume: FLOAT;      // default volume (0-100)
+    pan: FLOAT;         // default pan (-100=left, 0=middle, 100=right)
     flags: DWORD;       // BASS_SAMPLE_xxx flags
     length: DWORD;      // length (in samples, not bytes)
     max: DWORD;         // maximum simultaneous playbacks
@@ -481,11 +467,11 @@ type
     chans: DWORD;       // number of channels
     mingap: DWORD;      // minimum gap (ms) between creating channels
     mode3d: DWORD;      // BASS_3DMODE_xxx mode
-    mindist: Single;    // minimum distance
-    maxdist: Single;    // maximum distance
+    mindist: FLOAT;     // minimum distance
+    maxdist: FLOAT;     // maximum distance
     iangle: DWORD;      // angle of inside projection cone
     oangle: DWORD;      // angle of outside projection cone
-    outvol: Single;     // delta-volume outside the projection cone
+    outvol: FLOAT;      // delta-volume outside the projection cone
     vam: DWORD;         // voice allocation/management flags (BASS_VAM_xxx)
     priority: DWORD;    // priority (0=lowest, $ffffffff=highest)
   end;
@@ -499,7 +485,7 @@ type
     origres: DWORD;     // original resolution
     plugin: HPLUGIN;    // plugin
     sample: HSAMPLE;    // sample
-    filename: PChar;    // filename
+    filename: PAnsiChar; // filename
   end;
 
   BASS_PLUGINFORM = record
@@ -519,85 +505,98 @@ type
 
   // 3D vector (for 3D positions/velocities/orientations)
   BASS_3DVECTOR = record
-    x: Single;          // +=right, -=left
-    y: Single;          // +=up, -=down
-    z: Single;          // +=front, -=behind
+    x: FLOAT;           // +=right, -=left
+    y: FLOAT;           // +=up, -=down
+    z: FLOAT;           // +=front, -=behind
+  end;
+
+  // User file stream callback functions
+  FILECLOSEPROC = procedure(user: Pointer); stdcall;
+  FILELENPROC = function(user: Pointer): QWORD; stdcall;
+  FILEREADPROC = function(buffer: Pointer; length: DWORD; user: Pointer): DWORD; stdcall;
+  FILESEEKPROC = function(offset: QWORD; user: Pointer): BOOL; stdcall;
+
+  BASS_FILEPROCS = record
+    close: FILECLOSEPROC;
+    length: FILELENPROC;
+    read: FILEREADPROC;
+    seek: FILESEEKPROC;
   end;
 
   // ID3v1 tag structure
   TAG_ID3 = record
-    id: Array[0..2] of AnsiChar;
-    title: Array[0..29] of AnsiChar;
-    artist: Array[0..29] of AnsiChar;
-    album: Array[0..29] of AnsiChar;
-    year: Array[0..3] of AnsiChar;
-    comment: Array[0..29] of AnsiChar;
+    id: Array[0..2] of Char;
+    title: Array[0..29] of Char;
+    artist: Array[0..29] of Char;
+    album: Array[0..29] of Char;
+    year: Array[0..3] of Char;
+    comment: Array[0..29] of Char;
     genre: Byte;
   end;
 
-  // Binary APEv2 tag structure
+    // Binary APEv2 tag structure
   TAG_APE_BINARY = record
     key: PAnsiChar;
     data: PAnsiChar;
     length: DWORD;
   end;
 
-  // BWF "bext" tag structure
-  TAG_BEXT = packed record
-    Description: Array[0..255] of AnsiChar;     // description
-    Originator: Array[0..31] of AnsiChar;       // name of the originator
-    OriginatorReference: Array[0..31] of AnsiChar; // reference of the originator
-    OriginationDate: Array[0..9] of AnsiChar;   // date of creation (yyyy-mm-dd)
-    OriginationTime: Array[0..7] of AnsiChar;   // time of creation (hh-mm-ss)
-    TimeReference: QWORD;                       // first sample count since midnight (little-endian)
-    Version: Word;                              // BWF version (little-endian)
-    UMID: Array[0..63] of Byte;                 // SMPTE UMID
+  // BWF Broadcast Audio Extension tag structure
+  TAG_BEXT = record
+    Description: Array[0..255] of Char;		    // description
+    Originator: Array[0..31] of Char;		    // name of the originator
+    OriginatorReference: Array[0..31] of Char;  // reference of the originator
+    OriginationDate: Array[0..9] of Char;	    // date of creation (yyyy-mm-dd)
+    OriginationTime: Array[0..7] of Char;	    // time of creation (hh-mm-ss)
+    TimeReference: QWORD;		                // first sample count since midnight (little-endian)
+    Version: Word;			                    // BWF version (little-endian)
+    UMID: Array[0..63] of Byte;			        // SMPTE UMID
     Reserved: Array[0..189] of Byte;
-    CodingHistory: Array of AnsiChar;           // history
+    CodingHistory: Array of Char;		        // history
   end;
 
   BASS_DX8_CHORUS = record
-    fWetDryMix: Single;
-    fDepth: Single;
-    fFeedback: Single;
-    fFrequency: Single;
+    fWetDryMix: FLOAT;
+    fDepth: FLOAT;
+    fFeedback: FLOAT;
+    fFrequency: FLOAT;
     lWaveform: DWORD;   // 0=triangle, 1=sine
-    fDelay: Single;
+    fDelay: FLOAT;
     lPhase: DWORD;      // BASS_DX8_PHASE_xxx
   end;
 
   BASS_DX8_COMPRESSOR = record
-    fGain: Single;
-    fAttack: Single;
-    fRelease: Single;
-    fThreshold: Single;
-    fRatio: Single;
-    fPredelay: Single;
+    fGain: FLOAT;
+    fAttack: FLOAT;
+    fRelease: FLOAT;
+    fThreshold: FLOAT;
+    fRatio: FLOAT;
+    fPredelay: FLOAT;
   end;
 
   BASS_DX8_DISTORTION = record
-    fGain: Single;
-    fEdge: Single;
-    fPostEQCenterFrequency: Single;
-    fPostEQBandwidth: Single;
-    fPreLowpassCutoff: Single;
+    fGain: FLOAT;
+    fEdge: FLOAT;
+    fPostEQCenterFrequency: FLOAT;
+    fPostEQBandwidth: FLOAT;
+    fPreLowpassCutoff: FLOAT;
   end;
 
   BASS_DX8_ECHO = record
-    fWetDryMix: Single;
-    fFeedback: Single;
-    fLeftDelay: Single;
-    fRightDelay: Single;
+    fWetDryMix: FLOAT;
+    fFeedback: FLOAT;
+    fLeftDelay: FLOAT;
+    fRightDelay: FLOAT;
     lPanDelay: BOOL;
   end;
 
   BASS_DX8_FLANGER = record
-    fWetDryMix: Single;
-    fDepth: Single;
-    fFeedback: Single;
-    fFrequency: Single;
+    fWetDryMix: FLOAT;
+    fDepth: FLOAT;
+    fFeedback: FLOAT;
+    fFrequency: FLOAT;
     lWaveform: DWORD;   // 0=triangle, 1=sine
-    fDelay: Single;
+    fDelay: FLOAT;
     lPhase: DWORD;      // BASS_DX8_PHASE_xxx
   end;
 
@@ -607,33 +606,35 @@ type
   end;
 
   BASS_DX8_I3DL2REVERB = record
-    lRoom: LongInt;                // [-10000, 0]      default: -1000 mB
-    lRoomHF: LongInt;              // [-10000, 0]      default: 0 mB
-    flRoomRolloffFactor: Single;   // [0.0, 10.0]      default: 0.0
-    flDecayTime: Single;           // [0.1, 20.0]      default: 1.49s
-    flDecayHFRatio: Single;        // [0.1, 2.0]       default: 0.83
-    lReflections: LongInt;         // [-10000, 1000]   default: -2602 mB
-    flReflectionsDelay: Single;    // [0.0, 0.3]       default: 0.007 s
-    lReverb: LongInt;              // [-10000, 2000]   default: 200 mB
-    flReverbDelay: Single;         // [0.0, 0.1]       default: 0.011 s
-    flDiffusion: Single;           // [0.0, 100.0]     default: 100.0 %
-    flDensity: Single;             // [0.0, 100.0]     default: 100.0 %
-    flHFReference: Single;         // [20.0, 20000.0]  default: 5000.0 Hz
+    lRoom: Longint;                // [-10000, 0]      default: -1000 mB
+    lRoomHF: Longint;              // [-10000, 0]      default: 0 mB
+    flRoomRolloffFactor: FLOAT;    // [0.0, 10.0]      default: 0.0
+    flDecayTime: FLOAT;            // [0.1, 20.0]      default: 1.49s
+    flDecayHFRatio: FLOAT;         // [0.1, 2.0]       default: 0.83
+    lReflections: Longint;         // [-10000, 1000]   default: -2602 mB
+    flReflectionsDelay: FLOAT;     // [0.0, 0.3]       default: 0.007 s
+    lReverb: Longint;              // [-10000, 2000]   default: 200 mB
+    flReverbDelay: FLOAT;          // [0.0, 0.1]       default: 0.011 s
+    flDiffusion: FLOAT;            // [0.0, 100.0]     default: 100.0 %
+    flDensity: FLOAT;              // [0.0, 100.0]     default: 100.0 %
+    flHFReference: FLOAT;          // [20.0, 20000.0]  default: 5000.0 Hz
   end;
 
   BASS_DX8_PARAMEQ = record
-    fCenter: Single;
-    fBandwidth: Single;
-    fGain: Single;
+    fCenter: FLOAT;
+    fBandwidth: FLOAT;
+    fGain: FLOAT;
   end;
 
   BASS_DX8_REVERB = record
-    fInGain: Single;               // [-96.0,0.0]            default: 0.0 dB
-    fReverbMix: Single;            // [-96.0,0.0]            default: 0.0 db
-    fReverbTime: Single;           // [0.001,3000.0]         default: 1000.0 ms
-    fHighFreqRTRatio: Single;      // [0.001,0.999]          default: 0.001
+    fInGain: FLOAT;                // [-96.0,0.0]            default: 0.0 dB
+    fReverbMix: FLOAT;             // [-96.0,0.0]            default: 0.0 db
+    fReverbTime: FLOAT;            // [0.001,3000.0]         default: 1000.0 ms
+    fHighFreqRTRatio: FLOAT;       // [0.001,0.999]          default: 0.001
   end;
 
+  // callback function types
+  STREAMPROC = function(handle: HSTREAM; buffer: Pointer; length: DWORD; user: Pointer): DWORD; stdcall;
   {
     User stream callback function. NOTE: A stream function should obviously be as
     quick as possible, other streams (and MOD musics) can't be mixed until
@@ -648,8 +649,8 @@ type
 
 const
   // special STREAMPROCs
-  STREAMPROC_DUMMY = Pointer(0);   // "dummy" stream
-  STREAMPROC_PUSH = Pointer(-1);   // push stream
+  STREAMPROC_DUMMY : STREAMPROC = STREAMPROC(0);  // "dummy" stream
+  STREAMPROC_PUSH  : STREAMPROC = STREAMPROC(-1); // push stream
 
 type
 
@@ -694,157 +695,488 @@ type
     user   : The 'user' parameter value given when calling BASS_RecordStart
     RETURN : TRUE = continue recording, FALSE = stop
   }
-//{$endif}
 
 
-// Functions
-const
-  bassdll = 'bass.dll';
+// Vars that will hold our dynamically loaded functions...
 
-function BASS_MusicLoad(mem: BOOL; f: Pointer; offset: QWORD; length, flags, freq: DWORD): HMUSIC; overload;
-function BASS_MusicLoad(mem: BOOL; f: String; offset: QWord; length, flags, freq: DWORD): HMUSIC; overload;
-procedure BASS_LoadLoopData(channel: DWORD);
+  var
+    BASS_SetConfig:function(option, value: DWORD): BOOL; stdcall;
+    BASS_GetConfig:function(option: DWORD): DWORD; stdcall;
+    BASS_SetConfigPtr:function(option: DWORD; value: Pointer): BOOL; stdcall;
+    BASS_GetConfigPtr:function(option: DWORD): Pointer; stdcall;
+    BASS_GetVersion:function: DWORD; stdcall;
+    BASS_ErrorGetCode:function: Integer; stdcall;
+    BASS_GetDeviceInfo:function(device: DWORD; var info: BASS_DEVICEINFO): BOOL; stdcall;
+    BASS_Init:function(device: Integer; freq, flags: DWORD; win: HWND; clsid: PGUID): BOOL; stdcall;
+    BASS_SetDevice:function(device: DWORD): BOOL; stdcall;
+    BASS_GetDevice:function: DWORD; stdcall;
+    BASS_Free:function: BOOL; stdcall;
+    BASS_GetDSoundObject:function(obj: DWORD): Pointer; stdcall;
+    BASS_GetInfo:function(var info: BASS_INFO): BOOL; stdcall;
+    BASS_Update:function(length: DWORD): BOOL; stdcall;
+    BASS_GetCPU:function: FLOAT; stdcall;
+    BASS_Start:function: BOOL; stdcall;
+    BASS_Stop:function: BOOL; stdcall;
+    BASS_Pause:function: BOOL; stdcall;
+    BASS_SetVolume:function(volume: FLOAT): BOOL; stdcall;
+    BASS_GetVolume:function: FLOAT; stdcall;
+
+    //BASS_PluginLoad:function(filename: PAnsiChar; flags: DWORD): HPLUGIN; stdcall;
+    BASS_PluginLoad:function(filename: PChar; flags: DWORD): HPLUGIN; stdcall;
+    BASS_PluginFree:function(handle: HPLUGIN): BOOL; stdcall;
+    BASS_PluginGetInfo:function(handle: HPLUGIN): PBASS_PLUGININFO; stdcall;
+
+    BASS_Set3DFactors:function(distf, rollf, doppf: FLOAT): BOOL; stdcall;
+    BASS_Get3DFactors:function(var distf, rollf, doppf: FLOAT): BOOL; stdcall;
+    BASS_Set3DPosition:function(var pos, vel, front, top: BASS_3DVECTOR): BOOL; stdcall;
+    BASS_Get3DPosition:function(var pos, vel, front, top: BASS_3DVECTOR): BOOL; stdcall;
+    BASS_Apply3D:procedure; stdcall;
+    BASS_SetEAXParameters:function(env: Integer; vol, decay, damp: FLOAT): BOOL; stdcall;
+    BASS_GetEAXParameters:function(var env: DWORD; var vol, decay, damp: FLOAT): BOOL; stdcall;
+
+    BASS_MusicLoad:function(mem: BOOL; f: Pointer; offset: QWORD; length, flags, freq: DWORD): HMUSIC; stdcall;
+    BASS_MusicFree:function(handle: HMUSIC): BOOL; stdcall;
+
+    BASS_SampleLoad:function(mem: BOOL; f: Pointer; offset: QWORD; length, max, flags: DWORD): HSAMPLE; stdcall;
+    BASS_SampleCreate:function(length, freq, chans, max, flags: DWORD): HSAMPLE; stdcall;
+    BASS_SampleFree:function(handle: HSAMPLE): BOOL; stdcall;
+    BASS_SampleSetData:function(handle: HSAMPLE; buffer: Pointer): BOOL; stdcall;
+    BASS_SampleGetData:function(handle: HSAMPLE; buffer: Pointer): BOOL; stdcall;
+    BASS_SampleGetInfo:function(handle: HSAMPLE; var info: BASS_SAMPLE): BOOL; stdcall;
+    BASS_SampleSetInfo:function(handle: HSAMPLE; var info: BASS_SAMPLE): BOOL; stdcall;
+    BASS_SampleGetChannel:function(handle: HSAMPLE; onlynew: BOOL): HCHANNEL; stdcall;
+    BASS_SampleGetChannels:function(handle: HSAMPLE; channels: Pointer): DWORD; stdcall;
+    BASS_SampleStop:function(handle: HSAMPLE): BOOL; stdcall;
+
+    BASS_StreamCreate:function(freq, chans, flags: DWORD; proc: STREAMPROC; user: Pointer): HSTREAM; stdcall;
+    BASS_StreamCreateFile:function(mem: BOOL; f: Pointer; offset, length: QWORD; flags: DWORD): HSTREAM; stdcall;
+    BASS_StreamCreateURL:function(url: PAnsiChar; offset: DWORD; flags: DWORD; proc: DOWNLOADPROC; user: Pointer):HSTREAM; stdcall;
+    BASS_StreamCreateFileUser:function(system, flags: DWORD; var procs: BASS_FILEPROCS; user: Pointer): HSTREAM; stdcall;
+    BASS_StreamFree:function(handle: HSTREAM): BOOL; stdcall;
+    BASS_StreamGetFilePosition:function(handle: HSTREAM; mode: DWORD): QWORD; stdcall;
+    BASS_StreamPutData:function(handle: HSTREAM; buffer: Pointer; length: DWORD): DWORD; stdcall;
+    BASS_StreamPutFileData:function(handle: HSTREAM; buffer: Pointer; length: DWORD): DWORD; stdcall;
+
+    BASS_RecordGetDeviceInfo:function(device: DWORD; var info: BASS_DEVICEINFO): BOOL; stdcall;
+    BASS_RecordInit:function(device: Integer): BOOL; stdcall;
+    BASS_RecordSetDevice:function(device: DWORD): BOOL; stdcall;
+    BASS_RecordGetDevice:function: DWORD; stdcall;
+    BASS_RecordFree:function: BOOL; stdcall;
+    BASS_RecordGetInfo:function(var info: BASS_RECORDINFO): BOOL; stdcall;
+    BASS_RecordGetInputName:function(input: Integer): PAnsiChar; stdcall;
+    BASS_RecordSetInput:function(input: Integer; flags: DWORD; volume: FLOAT): BOOL; stdcall;
+    BASS_RecordGetInput:function(input: Integer; var volume: FLOAT): DWORD; stdcall;
+    BASS_RecordStart:function(freq, chans, flags: DWORD; proc: RECORDPROC; user: Pointer): HRECORD; stdcall;
+
+    BASS_ChannelBytes2Seconds:function(handle: DWORD; pos: QWORD): Double; stdcall;
+    BASS_ChannelSeconds2Bytes:function(handle: DWORD; pos: Double): QWORD; stdcall;
+    BASS_ChannelGetDevice:function(handle: DWORD): DWORD; stdcall;
+    BASS_ChannelSetDevice:function(handle, device: DWORD): BOOL; stdcall;
+    BASS_ChannelIsActive:function(handle: DWORD): DWORD; stdcall;
+    BASS_ChannelGetInfo:function(handle: DWORD; var info: BASS_CHANNELINFO):BOOL;stdcall;
+    BASS_ChannelGetTags:function(handle: HSTREAM; tags: DWORD): PAnsiChar; stdcall;
+    BASS_ChannelFlags:function(handle, flags, mask: DWORD): DWORD; stdcall;
+    BASS_ChannelUpdate:function(handle, length: DWORD): BOOL; stdcall;
+    BASS_ChannelLock:function(handle: DWORD; lock: BOOL): BOOL; stdcall;
+    BASS_ChannelPlay:function(handle: DWORD; restart: BOOL): BOOL; stdcall;
+    BASS_ChannelStop:function(handle: DWORD): BOOL; stdcall;
+    BASS_ChannelPause:function(handle: DWORD): BOOL; stdcall;
+    BASS_ChannelSetAttribute:function(handle, attrib: DWORD; value: FLOAT): BOOL; stdcall;
+    BASS_ChannelGetAttribute:function(handle, attrib: DWORD; var value: FLOAT): BOOL; stdcall;
+    BASS_ChannelSlideAttribute:function(handle, attrib: DWORD; value: FLOAT; time: DWORD): BOOL; stdcall;
+    BASS_ChannelIsSliding:function(handle, attrib: DWORD): BOOL; stdcall;
+    BASS_ChannelSet3DAttributes:function(handle: DWORD; mode: Integer; min, max: FLOAT; iangle, oangle, outvol: Integer): BOOL; stdcall;
+    BASS_ChannelGet3DAttributes:function(handle: DWORD; var mode: DWORD; var min, max: FLOAT; var iangle, oangle, outvol: DWORD): BOOL; stdcall;
+    BASS_ChannelSet3DPosition:function(handle: DWORD; var pos, orient, vel: BASS_3DVECTOR): BOOL; stdcall;
+    BASS_ChannelGet3DPosition:function(handle: DWORD; var pos, orient, vel: BASS_3DVECTOR): BOOL; stdcall;
+    BASS_ChannelGetLength:function(handle, mode: DWORD): QWORD; stdcall;
+    BASS_ChannelSetPosition:function(handle: DWORD; pos: QWORD; mode: DWORD): BOOL; stdcall;
+    BASS_ChannelGetPosition:function(handle, mode: DWORD): QWORD; stdcall;
+    BASS_ChannelGetLevel:function(handle: DWORD): DWORD; stdcall;
+    BASS_ChannelGetData:function(handle: DWORD; buffer: Pointer; length: DWORD): DWORD; stdcall;
+    BASS_ChannelSetSync:function(handle: DWORD; type_: DWORD; param: QWORD; proc: SYNCPROC; user: Pointer): HSYNC; stdcall;
+    BASS_ChannelRemoveSync:function(handle: DWORD; sync: HSYNC): BOOL; stdcall;
+    BASS_ChannelSetDSP:function(handle: DWORD; proc: DSPPROC; user: Pointer; priority: Integer): HDSP; stdcall;
+    BASS_ChannelRemoveDSP:function(handle: DWORD; dsp: HDSP): BOOL; stdcall;
+    BASS_ChannelSetLink:function(handle, chan: DWORD): BOOL; stdcall;
+    BASS_ChannelRemoveLink:function(handle, chan: DWORD): BOOL; stdcall;
+    BASS_ChannelSetFX:function(handle, type_: DWORD; priority: Integer): HFX; stdcall;
+    BASS_ChannelRemoveFX:function(handle: DWORD; fx: HFX): BOOL; stdcall;
+
+    BASS_FXSetParameters:function(handle: HFX; par: Pointer): BOOL; stdcall;
+    BASS_FXGetParameters:function(handle: HFX; par: Pointer): BOOL; stdcall;
+    BASS_FXReset:function(handle: HFX): BOOL; stdcall;
+
+{ok, now we need something that loads our DLL and gets rid of it as well...}
+
+ var
+    BASS_Handle:Thandle=0; // this will hold our handle for the dll; it functions nicely as a mutli-dll prevention unit as well...
+
+Function Load_BASSDLL (const dllfilename : String) :boolean;
+Procedure Unload_BASSDLL;
+{
+  This function frees the dynamically linked-in functions from memory...don't forget to call it once you're done !
+  Best place to put this is probably the OnDestroy of your Main-Form;
+  suggested use in OnDestroy :
+  - Call BASS_Free to get rid of everything that's eating memory (automatically called, but just to be on the safe-side !),
+  - Then call this function.
+}
+
+
+function BASS_SPEAKER_N(n: DWORD): DWORD;
+function BASS_SetEAXPreset(env: Integer): BOOL;
+{
+  This function is defined in the implementation part of this unit.
+  It is not part of BASS.DLL but an extra function which makes it easier
+  to set the predefined EAX environments.
+  env    : a EAX_ENVIRONMENT_xxx constant
+}
+
+// These additions by namida, for NeoLemmix
+procedure BASS_LoadLoopData(channel: DWORD); stdcall;
 procedure BASS_DoLoop(handle: HSYNC; channel: DWORD; data: DWORD; user: Pointer); stdcall;
 procedure BASS_MarkChannelFree(handle: HSYNC; channel, data: DWORD; user: POINTER); stdcall;
 procedure BASS_WipeChannel(handle: HSYNC; channel, data: DWORD; user: POINTER); stdcall;
 
-type
-  T_BASS_GetVersion = function: DWORD; stdcall;
-  T_BASS_Init = function(device: LongInt; freq, flags: DWORD; win: HWND; clsid: PGUID): BOOL; stdcall;
-  T_BASS_Free = function: BOOL; stdcall;
-  T_BASS_SetConfig = function(option, value: DWORD): BOOL;
-  T_BASS_MusicLoad1 = function(mem: BOOL; f: Pointer; offset: QWORD; length, flags, freq: DWORD): HMUSIC; stdcall;
-  T_BASS_MusicLoad2 = function(mem: BOOL; f: String; offset: QWORD; length, flags, freq: DWORD): HMUSIC; stdcall; 
-  T_BASS_ChannelPlay = function(handle: DWORD; restart: BOOL): BOOL; stdcall;
-  T_BASS_MusicFree = function(handle: HMUSIC): BOOL; stdcall;
-  T_BASS_ErrorGetCode = function: LongInt; stdcall;
-  T_BASS_StreamFree = function(handle: HSTREAM): BOOL; stdcall;
-  T_BASS_StreamCreateFile = function(mem: BOOL; f: Pointer; offset, length: QWORD; flags: DWORD): HSTREAM; stdcall;
-  T_BASS_ChannelStop = function(handle: DWORD): BOOL; stdcall;
-  T_BASS_ChannelSetAttribute = function(handle, attrib: DWORD; value: Single): BOOL; stdcall;
-  T_BASS_ChannelGetTags = function(handle: HSTREAM; tags: DWORD): PAnsiChar; stdcall;
-  T_BASS_ChannelSetSync = function(handle: DWORD; type_: DWORD; param: QWORD; proc: SYNCPROC; user: Pointer): HSYNC; stdcall;
-  T_BASS_ChannelSetPosition = function(handle: DWORD; pos: QWORD; mode: DWORD): BOOL; stdcall;
-  T_BASS_ChannelGetAttribute = function(handle, attrib: DWORD; var value: Single): BOOL; stdcall;
-  T_BASS_ChannelSeconds2Bytes = function(handle: DWORD; pos: Double): QWORD; stdcall;
-  T_BASS_ChannelGetPosition = function(handle, mode: DWORD): QWORD; stdcall;
-  T_BASS_SampleLoad = function(mem: BOOL; f: Pointer; offset: QWORD; length, max, flags: DWORD): HSAMPLE; stdcall;
-  T_BASS_SampleGetChannel = function(handle: HSAMPLE; onlynew: BOOL): HCHANNEL; stdcall;
-  T_BASS_ChannelIsActive = function(handle: DWORD): DWORD; stdcall;
-  T_BASS_ChannelGetLength = function(handle, mode: DWORD): QWORD; stdcall;
-  T_BASS_SampleFree = function(handle: HSAMPLE): BOOL; stdcall;
-var
-  BASS_GetVersion  : T_BASS_GetVersion;
-  BASS_Init        : T_BASS_Init;
-  BASS_Free        : T_BASS_Free;
-  BASS_SetConfig   : T_BASS_SetConfig;
-  BASS_MusicLoad1  : T_BASS_MusicLoad1;
-  BASS_MusicLoad2  : T_BASS_MusicLoad2;
-  BASS_ChannelPlay : T_BASS_ChannelPlay;
-  BASS_MusicFree   : T_BASS_MusicFree;
-  BASS_ErrorGetCode: T_BASS_ErrorGetCode;
-  BASS_StreamFree  : T_BASS_StreamFree;
-  BASS_StreamCreateFile : T_BASS_StreamCreateFile;
-  BASS_ChannelStop : T_BASS_ChannelStop;
-  BASS_ChannelSetAttribute : T_BASS_ChannelSetAttribute;
-  BASS_ChannelGetTags : T_BASS_ChannelGetTags;
-  BASS_ChannelSetSync : T_BASS_ChannelSetSync;
-  BASS_ChannelSetPosition: T_BASS_ChannelSetPosition;
-  BASS_ChannelGetAttribute: T_BASS_ChannelGetAttribute;
-  BASS_ChannelSeconds2Bytes: T_BASS_ChannelSeconds2Bytes;
-  BASS_ChannelGetPosition: T_BASS_ChannelGetPosition;
-  BASS_SampleLoad: T_BASS_SampleLoad;
-  BASS_SampleGetChannel: T_BASS_SampleGetChannel;
-  BASS_ChannelIsActive: T_BASS_ChannelIsActive;
-  BASS_ChannelGetLength: T_BASS_ChannelGetLength;
-  BASS_SampleFree: T_BASS_SampleFree;
-
-procedure LoadBassLib;
-procedure UnloadBassLib;
-
 implementation
 
-
-uses
-  UZip, DLLUnit;
-
 var
- MyLibrary: TLibInfo;
- fLoopStart: QWord;
- fLoopLength: QWord;
+  fLoopStart: QWord;
+  fLoopLength: QWord;
 
+{
 var
-  MyImports: array [0..23] of TImportItem =(
-   (Name: 'BASS_GetVersion' ;   PProcVar: @@BASS_GetVersion),
-   (Name: 'BASS_Init'       ;   PProcVar: @@BASS_Init),
-   (Name: 'BASS_Free'       ;   PProcVar: @@BASS_Free),
-   (Name: 'BASS_SetConfig'  ;   PProcVar: @@BASS_SetConfig),
-   (Name: 'BASS_MusicLoad'  ;   PProcVar: @@BASS_MusicLoad1),
-   (Name: 'BASS_MusicLoad'  ;   PProcVar: @@BASS_MusicLoad2),
-   (Name: 'BASS_ChannelPlay';   PProcVar: @@BASS_ChannelPlay),
-   (Name: 'BASS_MusicFree'  ;   PProcVar: @@BASS_MusicFree),
-   (Name: 'BASS_ErrorGetCode';  PProcVar: @@BASS_ErrorGetCode),
-   (Name: 'BASS_StreamFree' ;   PProcVar: @@BASS_StreamFree),
-   (Name: 'BASS_StreamCreateFile' ; PProcVar: @@BASS_StreamCreateFile),
-   (Name: 'BASS_ChannelStop';   PProcVar: @@BASS_ChannelStop),
-   (Name: 'BASS_ChannelSetAttribute'; PProcVar: @@BASS_ChannelSetAttribute),
-   (Name: 'BASS_ChannelGetTags'; PProcVar: @@BASS_ChannelGetTags),
-   (Name: 'BASS_ChannelSetSync'; PProcVar: @@BASS_ChannelSetSync),
-   (Name: 'BASS_ChannelSetPosition'; PProcVar: @@BASS_ChannelSetPosition),
-   (Name: 'BASS_ChannelGetAttribute'; PProcVar: @@BASS_ChannelGetAttribute),
-   (Name: 'BASS_ChannelSeconds2Bytes'; PProcVar: @@BASS_ChannelSeconds2Bytes),
-   (Name: 'BASS_ChannelGetPosition'; PProcVar: @@BASS_ChannelGetPosition),
-   (Name: 'BASS_SampleLoad'; PProcVar: @@BASS_SampleLoad),
-   (Name: 'BASS_SampleGetChannel'; PProcVar: @@BASS_SampleGetChannel),
-   (Name: 'BASS_ChannelIsActive'; PProcVar: @@BASS_ChannelIsActive),
-   (Name: 'BASS_ChannelGetLength'; PProcVar: @@BASS_ChannelGetLength),
-   (Name: 'BASS_SampleFree'; PProcVar: @@BASS_SampleFree)
-  );
-
-procedure LoadBassLib;
-var
-  ResourceLocation: HRSRC;
-  ResourceSize: LongWord;
-  ResourceHandle: THandle;
-  ResourcePointer: Pointer;
+   oldmode : integer;
 begin
-  ResourceLocation := FindResource(HInstance, pchar('bass'), 'archive'{RT_RCDATA});
-  if ResourceLocation <> 0 then
+  if BASSCD_Handle <> 0 then // is it already there ?
+     result := true
+   else
+     begin {go & load the dll}
+    {   oldmode := SetErrorMode($8001);
+       BASSCD_Handle := LoadLibrary(pchar(dllfilename));  // obtain the handle we want
+       SetErrorMode(oldmode);
+    if BASSCD_Handle <> 0 then
+     begin
+     {$IFDEF UNICODE}
+
+
+
+Function Load_BASSDLL (const dllfilename : String) :boolean;
+const szBassDll = 'bass.dll' + #0;
+var
+  oldmode:integer;
+begin
+ if BASS_Handle <> 0 then
+  Result:= true {is it already there ?}
+ else
   begin
-    ResourceSize := SizeofResource(HInstance, ResourceLocation);
-    if ResourceSize <> 0 then
-    begin
-      ResourceHandle := LoadResource(HInstance, ResourceLocation);
-      if ResourceHandle <> 0 then
-      begin
-        ResourcePointer := LockResource(ResourceHandle);
-        if ResourcePointer <> nil then
-        begin
-          MyLibrary := xLoadLibrary(ResourcePointer, MyImports);
-        end;
+  (*go & load the dll*)
+    oldmode := SetErrorMode($8001);
+   {$IFDEF UNICODE}
+     BASS_Handle:= LoadLibraryW(PWideChar(dllfilename));
+   {$ELSE}
+     BASS_Handle:= LoadLibrary(PChar(dllfilename));
+   {$ENDIF}
+     SetErrorMode(oldmode);
+    if BASS_Handle <> 0 then
+     begin {now we tie the functions to the VARs from above}
+      @BASS_SetConfig:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SetConfig'));
+      @BASS_GetConfig:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetConfig'));
+      @BASS_SetConfigPtr:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SetConfigPtr'));
+      @BASS_GetConfigPtr:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetConfigPtr'));
+      @BASS_GetVersion:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetVersion'));
+      @BASS_ErrorGetCode:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ErrorGetCode'));
+      @BASS_GetDeviceInfo:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetDeviceInfo'));
+      @BASS_Init:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Init'));
+      @BASS_SetDevice:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SetDevice'));
+      @BASS_GetDevice:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetDevice'));
+      @BASS_Free:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Free'));
+      @BASS_GetDSoundObject:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetDSoundObject'));
+      @BASS_GetInfo:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetInfo'));
+      @BASS_Update:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Update'));
+      @BASS_GetCPU:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetCPU'));
+      @BASS_Start:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Start'));
+      @BASS_Stop:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Stop'));
+      @BASS_Pause:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Pause'));
+      @BASS_SetVolume:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SetVolume'));
+      @BASS_GetVolume:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetVolume'));
+
+      @BASS_PluginLoad:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_PluginLoad'));
+      @BASS_PluginFree:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_PluginFree'));
+      @BASS_PluginGetInfo:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_PluginGetInfo'));
+
+      @BASS_Set3DFactors:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Set3DFactors'));
+      @BASS_Get3DFactors:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Get3DFactors'));
+      @BASS_Set3DPosition:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Set3DPosition'));
+      @BASS_Get3DPosition:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Get3DPosition'));
+      @BASS_Apply3D:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_Apply3D'));
+      @BASS_SetEAXParameters:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SetEAXParameters'));
+      @BASS_GetEAXParameters:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_GetEAXParameters'));
+
+      @BASS_MusicLoad:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_MusicLoad'));
+      @BASS_MusicFree:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_MusicFree'));
+
+      @BASS_SampleLoad:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleLoad'));
+      @BASS_SampleCreate:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleCreate'));
+      @BASS_SampleFree:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleFree'));
+      @BASS_SampleSetData:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleSetData'));
+      @BASS_SampleGetData:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleGetData'));
+      @BASS_SampleGetInfo:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleGetInfo'));
+      @BASS_SampleSetInfo:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleSetInfo'));
+      @BASS_SampleGetChannel:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleGetChannel'));
+      @BASS_SampleGetChannels:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleGetChannels'));
+      @BASS_SampleStop:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_SampleStop'));
+
+      @BASS_StreamCreate:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_StreamCreate'));
+      @BASS_StreamCreateFile:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_StreamCreateFile'));
+      @BASS_StreamCreateURL:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_StreamCreateURL'));
+      @BASS_StreamCreateFileUser:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_StreamCreateFileUser'));
+      @BASS_StreamFree:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_StreamFree'));
+      @BASS_StreamGetFilePosition:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_StreamGetFilePosition'));
+      @BASS_StreamPutData:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_StreamPutData'));
+      @BASS_StreamPutFileData:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_StreamPutFileData'));
+
+      @BASS_RecordGetDeviceInfo:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordGetDeviceInfo'));
+      @BASS_RecordInit:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordInit'));
+      @BASS_RecordSetDevice:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordSetDevice'));
+      @BASS_RecordGetDevice:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordGetDevice'));
+      @BASS_RecordFree:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordFree'));
+      @BASS_RecordGetInfo:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordGetInfo'));
+      @BASS_RecordGetInputName:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordGetInputName'));
+      @BASS_RecordSetInput:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordSetInput'));
+      @BASS_RecordGetInput:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordGetInput'));
+      @BASS_RecordStart:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_RecordStart'));
+
+      @BASS_ChannelBytes2Seconds:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelBytes2Seconds'));
+      @BASS_ChannelSeconds2Bytes:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSeconds2Bytes'));
+      @BASS_ChannelGetDevice:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGetDevice'));
+      @BASS_ChannelSetDevice:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSetDevice'));
+      @BASS_ChannelIsActive:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelIsActive'));
+      @BASS_ChannelGetInfo:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGetInfo'));
+      @BASS_ChannelGetTags:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGetTags'));
+      @BASS_ChannelFlags:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelFlags'));
+      @BASS_ChannelUpdate:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelUpdate'));
+      @BASS_ChannelLock:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelLock'));
+      @BASS_ChannelPlay:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelPlay'));
+      @BASS_ChannelStop:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelStop'));
+      @BASS_ChannelPause:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelPause'));
+      @BASS_ChannelSetAttribute:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSetAttribute'));
+      @BASS_ChannelGetAttribute:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGetAttribute'));
+      @BASS_ChannelSlideAttribute:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSlideAttribute'));
+      @BASS_ChannelIsSliding:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelIsSliding'));
+      @BASS_ChannelSet3DAttributes:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSet3DAttributes'));
+      @BASS_ChannelGet3DAttributes:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGet3DAttributes'));
+      @BASS_ChannelSet3DPosition:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSet3DPosition'));
+      @BASS_ChannelGet3DPosition:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGet3DPosition'));
+      @BASS_ChannelGetLength:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGetLength'));
+      @BASS_ChannelSetPosition:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSetPosition'));
+      @BASS_ChannelGetPosition:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGetPosition'));
+      @BASS_ChannelGetLevel:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGetLevel'));
+      @BASS_ChannelGetData:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelGetData'));
+      @BASS_ChannelSetSync:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSetSync'));
+      @BASS_ChannelRemoveSync:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelRemoveSync'));
+      @BASS_ChannelSetDSP:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSetDSP'));
+      @BASS_ChannelRemoveDSP:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelRemoveDSP'));
+      @BASS_ChannelSetLink:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSetLink'));
+      @BASS_ChannelRemoveLink:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelRemoveLink'));
+      @BASS_ChannelSetFX:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelSetFX'));
+      @BASS_ChannelRemoveFX:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_ChannelRemoveFX'));
+
+      @BASS_FXSetParameters:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_FXSetParameters'));
+      @BASS_FXGetParameters:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_FXGetParameters'));
+      @BASS_FXReset:=GetProcAddress(BASS_Handle, PAnsiChar('BASS_FXReset'));
+
+      {now check if everything is linked in correctly}
+   if (@BASS_SetConfig  = nil) or
+      (@BASS_GetConfig  = nil) or
+      (@BASS_SetConfigPtr  = nil) or
+      (@BASS_GetConfigPtr  = nil) or
+      (@BASS_GetVersion  = nil) or
+      (@BASS_ErrorGetCode  = nil) or
+      (@BASS_GetDeviceInfo = nil) or
+      (@BASS_Init = nil) or
+      (@BASS_SetDevice = nil) or
+      (@BASS_GetDevice = nil) or
+      (@BASS_Free = nil) or
+      (@BASS_GetDSoundObject = nil) or
+      (@BASS_GetInfo = nil) or
+      (@BASS_Update = nil) or
+      (@BASS_GetCPU = nil) or
+      (@BASS_Start = nil) or
+      (@BASS_Stop = nil) or
+      (@BASS_Pause = nil) or
+      (@BASS_SetVolume = nil) or
+      (@BASS_GetVolume = nil) or
+
+      (@BASS_PluginLoad = nil) or
+      (@BASS_PluginFree = nil) or
+      (@BASS_PluginGetInfo = nil) or
+
+      (@BASS_Set3DFactors = nil) or
+      (@BASS_Get3DFactors = nil) or
+      (@BASS_Set3DPosition = nil) or
+      (@BASS_Get3DPosition = nil) or
+      (@BASS_Apply3D = nil) or
+      (@BASS_SetEAXParameters = nil) or
+      (@BASS_GetEAXParameters = nil) or
+
+      (@BASS_MusicLoad = nil) or
+      (@BASS_MusicFree = nil) or
+
+      (@BASS_SampleLoad = nil) or
+      (@BASS_SampleCreate = nil) or
+      (@BASS_SampleFree = nil) or
+      (@BASS_SampleSetData = nil) or
+      (@BASS_SampleGetData = nil) or
+      (@BASS_SampleGetInfo = nil) or
+      (@BASS_SampleSetInfo = nil) or
+      (@BASS_SampleGetChannel = nil) or
+      (@BASS_SampleGetChannels = nil) or
+      (@BASS_SampleStop = nil) or
+
+      (@BASS_StreamCreate = nil) or
+      (@BASS_StreamCreateFile = nil) or
+      (@BASS_StreamCreateURL = nil) or
+      (@BASS_StreamCreateFileUser = nil) or
+      (@BASS_StreamFree = nil) or
+      (@BASS_StreamGetFilePosition = nil) or
+      (@BASS_StreamPutData = nil) or
+      (@BASS_StreamPutFileData = nil) or
+
+      (@BASS_RecordGetDeviceInfo = nil) or
+      (@BASS_RecordInit = nil) or
+      (@BASS_RecordSetDevice = nil) or
+      (@BASS_RecordGetDevice = nil) or
+      (@BASS_RecordFree = nil) or
+      (@BASS_RecordGetInfo = nil) or
+      (@BASS_RecordGetInputName = nil) or
+      (@BASS_RecordSetInput = nil) or
+      (@BASS_RecordGetInput = nil) or
+      (@BASS_RecordStart = nil) or
+
+      (@BASS_ChannelBytes2Seconds = nil) or
+      (@BASS_ChannelSeconds2Bytes = nil) or
+      (@BASS_ChannelGetDevice = nil) or
+      (@BASS_ChannelSetDevice = nil) or
+      (@BASS_ChannelIsActive = nil) or
+      (@BASS_ChannelGetInfo = nil) or
+      (@BASS_ChannelGetTags = nil) or
+      (@BASS_ChannelFlags = nil) or
+      (@BASS_ChannelUpdate = nil) or
+      (@BASS_ChannelLock = nil) or
+      (@BASS_ChannelPlay = nil) or
+      (@BASS_ChannelStop = nil) or
+      (@BASS_ChannelPause = nil) or
+      (@BASS_ChannelSetAttribute = nil) or
+      (@BASS_ChannelGetAttribute = nil) or
+      (@BASS_ChannelSlideAttribute = nil) or
+      (@BASS_ChannelIsSliding = nil) or
+      (@BASS_ChannelSet3DAttributes = nil) or
+      (@BASS_ChannelGet3DAttributes = nil) or
+      (@BASS_ChannelSet3DPosition = nil) or
+      (@BASS_ChannelGet3DPosition = nil) or
+      (@BASS_ChannelGetLength = nil) or
+      (@BASS_ChannelSetPosition = nil) or
+      (@BASS_ChannelGetPosition = nil) or
+      (@BASS_ChannelGetLevel = nil) or
+      (@BASS_ChannelGetData = nil) or
+      (@BASS_ChannelSetSync = nil) or
+      (@BASS_ChannelRemoveSync = nil) or
+      (@BASS_ChannelSetDSP = nil) or
+      (@BASS_ChannelRemoveDSP = nil) or
+      (@BASS_ChannelSetLink = nil) or
+      (@BASS_ChannelRemoveLink = nil) or
+      (@BASS_ChannelSetFX = nil) or
+      (@BASS_ChannelRemoveFX = nil) or
+
+      (@BASS_FXSetParameters = nil) or
+      (@BASS_FXGetParameters = nil) or
+      (@BASS_FXReset=nil) then
+      begin {if something went wrong during linking, free library & reset handle}
+       FreeLibrary(BASS_Handle);
+       BASS_Handle:=0;
       end;
-    end;
+     end;
+    Result:= (BASS_Handle <> 0);
   end;
-
-
 end;
 
-procedure UnloadBassLib;
+Procedure Unload_BASSDLL;
 begin
-  xFreeLibrary(MyLibrary);
+ if BASS_Handle <> 0 then
+  begin
+   BASS_Free; // make sure we release everything
+   FreeLibrary(BASS_Handle);
+  end;
+ BASS_Handle:=0;
 end;
 
-function BASS_MusicLoad(mem: BOOL; f: Pointer; offset: QWORD; length, flags, freq: DWORD): HMUSIC; overload;
+function BASS_SPEAKER_N(n: DWORD): DWORD;
 begin
-  Result := BASS_MusicLoad1(true, f, offset, length, flags, freq);
+  Result := n shl 24;
 end;
 
-function BASS_MusicLoad(mem: BOOL; f: String; offset: QWORD; length, flags, freq: DWORD): HMUSIC; overload;
+function BASS_SetEAXPreset(env: Integer): BOOL;
 begin
-  Result := BASS_MusicLoad2(false, f, offset, length, flags, freq);
+  case (env) of
+    EAX_ENVIRONMENT_GENERIC:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_GENERIC, 0.5, 1.493, 0.5);
+    EAX_ENVIRONMENT_PADDEDCELL:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_PADDEDCELL, 0.25, 0.1, 0);
+    EAX_ENVIRONMENT_ROOM:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_ROOM, 0.417, 0.4, 0.666);
+    EAX_ENVIRONMENT_BATHROOM:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_BATHROOM, 0.653, 1.499, 0.166);
+    EAX_ENVIRONMENT_LIVINGROOM:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_LIVINGROOM, 0.208, 0.478, 0);
+    EAX_ENVIRONMENT_STONEROOM:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_STONEROOM, 0.5, 2.309, 0.888);
+    EAX_ENVIRONMENT_AUDITORIUM:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_AUDITORIUM, 0.403, 4.279, 0.5);
+    EAX_ENVIRONMENT_CONCERTHALL:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_CONCERTHALL, 0.5, 3.961, 0.5);
+    EAX_ENVIRONMENT_CAVE:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_CAVE, 0.5, 2.886, 1.304);
+    EAX_ENVIRONMENT_ARENA:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_ARENA, 0.361, 7.284, 0.332);
+    EAX_ENVIRONMENT_HANGAR:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_HANGAR, 0.5, 10.0, 0.3);
+    EAX_ENVIRONMENT_CARPETEDHALLWAY:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_CARPETEDHALLWAY, 0.153, 0.259, 2.0);
+    EAX_ENVIRONMENT_HALLWAY:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_HALLWAY, 0.361, 1.493, 0);
+    EAX_ENVIRONMENT_STONECORRIDOR:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_STONECORRIDOR, 0.444, 2.697, 0.638);
+    EAX_ENVIRONMENT_ALLEY:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_ALLEY, 0.25, 1.752, 0.776);
+    EAX_ENVIRONMENT_FOREST:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_FOREST, 0.111, 3.145, 0.472);
+    EAX_ENVIRONMENT_CITY:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_CITY, 0.111, 2.767, 0.224);
+    EAX_ENVIRONMENT_MOUNTAINS:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_MOUNTAINS, 0.194, 7.841, 0.472);
+    EAX_ENVIRONMENT_QUARRY:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_QUARRY, 1, 1.499, 0.5);
+    EAX_ENVIRONMENT_PLAIN:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_PLAIN, 0.097, 2.767, 0.224);
+    EAX_ENVIRONMENT_PARKINGLOT:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_PARKINGLOT, 0.208, 1.652, 1.5);
+    EAX_ENVIRONMENT_SEWERPIPE:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_SEWERPIPE, 0.652, 2.886, 0.25);
+    EAX_ENVIRONMENT_UNDERWATER:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_UNDERWATER, 1, 1.499, 0);
+    EAX_ENVIRONMENT_DRUGGED:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_DRUGGED, 0.875, 8.392, 1.388);
+    EAX_ENVIRONMENT_DIZZY:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_DIZZY, 0.139, 17.234, 0.666);
+    EAX_ENVIRONMENT_PSYCHOTIC:
+      Result := BASS_SetEAXParameters(EAX_ENVIRONMENT_PSYCHOTIC, 0.486, 7.563, 0.806);
+    else
+      Result := FALSE;
+  end;
 end;
 
-procedure BASS_LoadLoopData(channel: DWORD);
+procedure BASS_LoadLoopData(channel: DWORD); stdcall;
 var
   STags: PAnsiChar;
   ChFreq: Single;
@@ -914,10 +1246,6 @@ begin
   ac^ := -1;
 end;
 
-initialization
-  LoadBassLib;
-finalization
-  UnloadBassLib;
-
 end.
+
 

@@ -123,6 +123,7 @@ implementation
 constructor TSoundManager.Create;
 begin
   inherited;
+  Load_BASSDLL(AppPath + 'bass.dll');
   BASS_Init(-1, 44100, BASS_DEVICE_NOSPEAKER, 0, nil);
   fSoundEffects := TSoundEffects.Create;
   fMusicStream := TMemoryStream.Create;
@@ -135,6 +136,7 @@ begin
   fMusicStream.Free;
   fSoundEffects.Free;
   BASS_Free;
+  Unload_BASSDLL;
   inherited;
 end;
 
