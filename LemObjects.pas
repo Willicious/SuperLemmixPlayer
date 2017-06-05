@@ -442,14 +442,14 @@ begin
 
   for i := 0 to Count - 1 do
   begin
-    Inf := List^[i];
+    Inf := List[i];
     if Inf.TriggerEffect = DOM_TELEPORT then
     begin
       // Find receiver for this teleporter with index i
       TestID := i;
       repeat
         Inc(TestID);
-        TestInf := List^[TestId mod Count];
+        TestInf := List[TestId mod Count];
       until ((TestInf.TriggerEffect = DOM_RECEIVER) and (TestInf.Obj.Skill = Inf.Obj.Skill))
             or (TestID = i + Count);
 
@@ -473,7 +473,7 @@ begin
 
   for i := 0 to Count-1 do
   begin
-    Inf := List^[i];
+    Inf := List[i];
     if Inf.TriggerEffect = DOM_RECEIVER then
       if not IsReceiverUsed[i] then
         Inf.IsDisabled := true;

@@ -63,7 +63,7 @@ type
     FencerLimit        : Byte;
     Reserved           : Array[0..7] of Byte;
     Signature          : LongWord;
-    Description        : Array[0..63] of Char;
+    Description        : Array[0..63] of AnsiChar;
   end;
 
 
@@ -220,85 +220,8 @@ begin
 end;
 
 procedure TTalismans.SaveToStream(aStream: TStream);
-var
-  HeaderRec: TalismanHeaderRec;
-  DataRec:   TalismanRec;
-  i, i2: Integer;
-  UniqueSig: Boolean;
-
-  procedure StringToCharArray(S: String; var A: Array of Char);
-  var
-    i: Integer;
-  begin
-    FillChar(A, SizeOf(A), $20);
-    for i := 1 to Length(S) do
-    begin
-      if i > SizeOf(A) then Break;
-      A[i-1] := S[i];
-    end;
-  end;
-
-  function GenerateSignature(aRec: TalismanRec): Cardinal;
-  var
-    P: PLongWord;
-    i: Integer;
-  begin
-    P := @aRec;
-    Result := 0;
-    for i := 0 to SizeOf(aRec)-4 do
-    begin
-      Result := Result + P^;
-      if Result = 0 then Result := Result + P^;
-      P := PLongWord(Integer(P) + 1);
-    end;
-    while Result = 0 do
-      Result := Random($FFFFFFFE) + 1;  // just to be extra safe. It doesn't matter what the signature is, as long as it's
-                                        // unique for each talisman, and nonzero
-  end;
-
 begin
-  FillChar(HeaderRec, SizeOf(HeaderRec), 0);
-  HeaderRec.Version := tls_FormatVersion;
-  HeaderRec.Signature := tls_Signature;
-  aStream.Write(HeaderRec, SizeOf(HeaderRec));
-  for i := 0 to Count-1 do
-  begin
-    FillChar(DataRec, SizeOf(DataRec), 0);
-    with Items[i] do
-    begin
-      DataRec.Color := TalismanType;
-      DataRec.RankNumber := RankNumber;
-      DataRec.LevelNumber := LevelNumber;
-      DataRec.SaveRequirement := SaveRequirement;
-      DataRec.TimeLimit := TimeLimit;
-      DataRec.RRMinimum := RRMin;
-      DataRec.RRMaximum := RRMax;
-      for i2 := 0 to 15 do
-        if SkillLimit[i2] >= 0 then
-        begin
-          DataRec.SkillLimits[i2] := SkillLimit[i2];
-          DataRec.AppliedSkillLimits := DataRec.AppliedSkillLimits or (1 shl i2);
-        end;
-      if TotalSkillLimit = -1 then
-        DataRec.TotalSkillLimit := 65535
-      else
-        DataRec.TotalSkillLimit := TotalSkillLimit;
-      DataRec.UnlockRank := UnlockRank;
-      DataRec.UnlockLevel := UnlockLevel;
-      DataRec.MiscOptions := LongWord(MiscOptions);
-      StringToCharArray(Description, DataRec.Description);
-      if Signature = 0 then Signature := GenerateSignature(DataRec);
-      UniqueSig := true;
-      repeat
-        for i2 := 0 to i-1 do
-          if Signature = Items[i2].Signature then UniqueSig := false;
-        if Signature = 0 then UniqueSig := false; // super super safe
-        if not UniqueSig then Signature := Signature + GenerateSignature(DataRec);
-      until UniqueSig;
-      DataRec.Signature := Signature;
-    end;
-    aStream.Write(DataRec, SizeOf(DataRec));
-  end;
+  raise Exception.Create('TTalismans.SaveToStream called');
 end;
 
 procedure TTalismans.LoadFromFile(aFile: String);

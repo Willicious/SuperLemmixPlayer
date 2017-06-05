@@ -988,12 +988,12 @@ end;
 -----------------------------------------}
 function TBaseSkillPanel.MousePos(X, Y: Integer): TPoint;
 begin
-  Result := fImage.ControlToBitmap(Point(X, Y));
+  Result := fImage.ControlToBitmap(TPoint.Create(X, Y));
 end;
 
 function TBaseSkillPanel.MousePosMinimap(X, Y: Integer): TPoint;
 begin
-  Result := fMinimapImage.ControlToBitmap(Point(X, Y));
+  Result := fMinimapImage.ControlToBitmap(TPoint.Create(X, Y));
 end;
 
 procedure TBaseSkillPanel.ImgMouseDown(Sender: TObject; Button: TMouseButton;

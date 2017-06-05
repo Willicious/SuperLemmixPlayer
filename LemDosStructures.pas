@@ -31,8 +31,8 @@ type
     Removed7        : LongWord;
     Removed8        : Longword;
     Reserved        : array[0..6] of Byte;
-    PackName        : array[0..31] of Char;
-    PrefixName      : array[0..15] of Char;
+    PackName        : array[0..31] of AnsiChar;
+    PrefixName      : array[0..15] of AnsiChar;
   end;
 
   TNeoSaveRecord = packed record
@@ -128,7 +128,7 @@ type
     {0020}  Objects                    : TLVLObjects;
     {0120}  Terrain                    : TLVLTerrains;
     {0760}  Steel                      : TLVLSteels;
-    {07E0}  LevelName                  : array[0..31] of Char;
+    {07E0}  LevelName                  : array[0..31] of AnsiChar;
   end;
 
 const
@@ -208,11 +208,11 @@ type
             LevelOptions2              : Byte;
             FencerCount                : Byte;
             Reserved2                  : array[0..1] of Byte;
-    {0040}  LevelAuthor                : array[0..15] of Char;
-    {0050}  LevelName                  : array[0..31] of Char;
-    {0070}  StyleName                  : array[0..15] of Char;
-    {0080}  VgaspecName                : array[0..15] of Char;
-    {0090}  ReservedStr                : array[0..31] of Char;
+    {0040}  LevelAuthor                : array[0..15] of AnsiChar;
+    {0050}  LevelName                  : array[0..31] of AnsiChar;
+    {0070}  StyleName                  : array[0..15] of AnsiChar;
+    {0080}  VgaspecName                : array[0..15] of AnsiChar;
+    {0090}  ReservedStr                : array[0..31] of AnsiChar;
   end;
 
   TNeoLVLSecondHeader = packed record
@@ -220,7 +220,7 @@ type
            ScreenYPosition: LongInt;
            GimmickFlags2: LongWord;
            GimmickFlags3: LongWord;
-    {0010} MusicName: array[0..15] of Char;
+    {0010} MusicName: array[0..15] of AnsiChar;
     {0020} SecRedirectRank: Byte;
            SecRedirectLevel: Byte;
            BnsRedirectRank: Byte;
@@ -321,12 +321,12 @@ type
             HeightAdjust               : SmallInt;
             VgaspecX                   : SmallInt;
             VgaspecY                   : SmallInt;
-    {0030}  LevelAuthor                : array[0..15] of Char;
-    {0040}  LevelName                  : array[0..31] of Char;
-    {0060}  StyleName                  : array[0..15] of Char;
-    {0070}  VgaspecName                : array[0..15] of Char;
+    {0030}  LevelAuthor                : array[0..15] of AnsiChar;
+    {0040}  LevelName                  : array[0..31] of AnsiChar;
+    {0060}  StyleName                  : array[0..15] of AnsiChar;
+    {0070}  VgaspecName                : array[0..15] of AnsiChar;
     {0080}  WindowOrder                : array[0..31] of Byte;
-    {00A0}  ReservedStr                : array[0..31] of Char;
+    {00A0}  ReservedStr                : array[0..31] of AnsiChar;
 
     {00C0}  Objects                    : TNeoLVLObjects;
     {04C0}  Terrain                    : TNeoLVLTerrains;
@@ -342,24 +342,24 @@ type
 {SYSTEM.DAT for Flexi player}
 
 TSysDatRec = packed record
-    {0000}  PackName                   : array[0..31] of Char;
-	          SecondLine                 : array[0..31] of Char;
-            RankNames                  : array[0..14] of array[0..15] of Char;
+    {0000}  PackName                   : array[0..31] of AnsiChar;
+	          SecondLine                 : array[0..31] of AnsiChar;
+            RankNames                  : array[0..14] of array[0..15] of AnsiChar;
             RankCount                  : Byte;
             Removed                    : array[0..14] of Byte;
             TrackCount                 : Byte;
             CodeSeed                   : Byte;
-            CheatCode                  : array[0..9] of Char;
+            CheatCode                  : array[0..9] of AnsiChar;
             Options                    : Byte;
             Options2                   : Byte;
             Options3                   : Byte; //$20 here is highest currently used
             Options4                   : Byte;
-            KResult                    : array[0..2] of array[0..1] of array[0..35] of Char;
-            SResult                    : array[0..8] of array[0..1] of array[0..35] of Char;
-            Congrats                   : array[0..17] of array[0..35] of Char;
-            ScrollerTexts              : array[0..15] of array[0..35] of Char;
-            StyleNames                 : array[0..255] of array[0..15] of Char;
-            VgaspecNames               : array[0..255] of array[0..15] of Char;
+            KResult                    : array[0..2] of array[0..1] of array[0..35] of AnsiChar;
+            SResult                    : array[0..8] of array[0..1] of array[0..35] of AnsiChar;
+            Congrats                   : array[0..17] of array[0..35] of AnsiChar;
+            ScrollerTexts              : array[0..15] of array[0..35] of AnsiChar;
+            StyleNames                 : array[0..255] of array[0..15] of AnsiChar;
+            VgaspecNames               : array[0..255] of array[0..15] of AnsiChar;
   end;
 
 const

@@ -58,7 +58,7 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    function FindNumber(tag: ShortString; spec: Boolean): Integer;
+    function FindNumber(tag: AnsiString; spec: Boolean): Integer;
     function FindName(id: Byte; spec: Boolean): ShortString;
   published
   end;
@@ -68,7 +68,7 @@ type
     fMusicName: ShortString;
     fID: Byte;
   public
-    constructor Create(aTag: ShortString; aID: Byte);
+    constructor Create(aTag: AnsiString; aID: Byte);
   published
     property MusicName: ShortString read fMusicName;
     property ID: Byte read fID;
@@ -435,7 +435,7 @@ end;
 
 { TMusicName }
 
-constructor TMusicName.Create(aTag: ShortString; aID: Byte);
+constructor TMusicName.Create(aTag: AnsiString; aID: Byte);
 begin
   inherited Create;
   fMusicName := trim(lowercase(leftstr(aTag, 16)));
@@ -498,7 +498,7 @@ begin
     Sty('horror',      25);
 end;
 
-function TStyleFinder.FindNumber(tag: ShortString; Spec: Boolean): Integer;
+function TStyleFinder.FindNumber(tag: AnsiString; Spec: Boolean): Integer;
 var
   i: Integer;
   SN: TStyleName;
@@ -724,7 +724,7 @@ var
   Steel: TSteel;
   //SFinder: TStyleFinder;
   GSNames: array of String;
-  GSName: array[0..15] of Char;
+  GSName: array[0..15] of AnsiChar;
 
   WindowOrder: TWindowOrder;
 

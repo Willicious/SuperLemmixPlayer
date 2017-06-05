@@ -204,7 +204,7 @@ end;
 // Stuff for the old LRB format
 type
   TReplayFileHeaderRec = packed record
-    Signature         : array[0..2] of Char;     //  3 bytes -  3
+    Signature         : array[0..2] of AnsiChar;     //  3 bytes -  3
     Version           : Byte;                    //  1 byte  -  4
     FileSize          : Integer;                 //  4 bytes -  8
     HeaderSize        : Word;                    //  2 bytes - 10
@@ -223,7 +223,7 @@ type
 
     ReplayLevelID    : LongWord;
 
-    Reserved        : array[0..29] of Char;
+    Reserved        : array[0..29] of AnsiChar;
   end;
 
   TReplayRec = packed record

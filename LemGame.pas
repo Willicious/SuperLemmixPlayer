@@ -1938,7 +1938,7 @@ begin
 
   for i := (LemmingList.Count - 1) downto 0 do
   begin
-    L := LemmingList.List^[i];
+    L := LemmingList.List[i];
 
     // Check if we only look for highlighted Lems
     if IsHighlight and not (L = GetHighlitLemming) then Continue;
@@ -4547,7 +4547,7 @@ begin
     if (LemmingIndex < 0) or (LemmingIndex >= LemmingList.Count) then
       Exit;
 
-    L := LemmingList.List^[LemmingIndex];
+    L := LemmingList.List[LemmingIndex];
 
     if Skill in AssignableSkills then
     begin
@@ -4938,7 +4938,7 @@ begin
 
   for i := 0 to LemmingList.Count - 1 do
   begin
-    L := LemmingList.List^[i];
+    L := LemmingList.List[i];
 
     if L.LemQueueAction = baNone then Continue;
 
@@ -4982,7 +4982,7 @@ begin
 
   for i := 0 to LemmingList.Count - 1 do
   begin
-    CurrentLemming := LemmingList.List^[i];
+    CurrentLemming := LemmingList.List[i];
 
     with CurrentLemming do
     begin
@@ -5021,7 +5021,7 @@ begin
   // Need to do this in separate loop, because the ZombieMap gets only set during HandleLemming!
   for i := 0 to LemmingList.Count - 1 do
   begin
-    CurrentLemming := LemmingList.List^[i];
+    CurrentLemming := LemmingList.List[i];
     with CurrentLemming do
     begin
       // Zombies
@@ -5207,7 +5207,7 @@ begin
       and (((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.KeyFrame = 0))
         or ((Inf.CurrentFrame = Inf.MetaObj.KeyFrame) and (Inf.MetaObj.KeyFrame <> 0))   ) then
     begin
-      MoveLemToReceivePoint(LemmingList.List^[Inf.TeleLem], i);
+      MoveLemToReceivePoint(LemmingList.List[Inf.TeleLem], i);
       Inf2 := ObjectInfos[Inf.ReceiverId];
       Assert(Inf2.TriggerEffect = DOM_RECEIVER, 'Lemming teleported to non-receiver object.');
       Inf2.TeleLem := Inf.TeleLem;
