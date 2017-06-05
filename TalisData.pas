@@ -3,7 +3,6 @@ unit TalisData;
 interface
 
 uses
-  Dialogs, //debug
   SysUtils, Classes, StrUtils, Contnrs;
 
 const

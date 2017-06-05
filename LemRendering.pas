@@ -35,6 +35,10 @@ type
 
   TRenderer = class
   private
+    fObjectInfos: TInteractiveObjectInfoList;
+    fDrawingHelpers: Boolean;
+    fUsefulOnly: Boolean;
+
     fRenderInterface: TRenderInterface;
 
     fDisableBackground: Boolean;
@@ -81,6 +85,22 @@ type
 
     function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
+
+    // Were sub-procedures, or part, of DrawAllObjects
+    procedure DrawObjectsOnLayer(aLayer: TRenderLayer);
+    procedure ProcessDrawFrame(aInf: TInteractiveObjectInfo; aLayer: TRenderLayer);
+    procedure DrawTriggerArea(aInf: TInteractiveObjectInfo);
+    procedure DrawUserHelper;
+    function IsUseful(aInf: TInteractiveObjectInfo): Boolean;
+
+    // For multithreading
+    procedure DoBackgroundObjectRendering(aPointer: Pointer = nil);
+    procedure DoNoOverwriteObjectRendering(aPointer: Pointer = nil);
+    procedure DoOnTerrainObjectRendering(aPointer: Pointer = nil);
+    procedure DoOneWayObjectRendering(aPointer: Pointer = nil);
+    procedure DoRegularObjectRendering(aPointer: Pointer = nil);
+    procedure DoObjectHelperRendering(aPointer: Pointer = nil);
+    procedure DoTriggerAreaRendering(aPointer: Pointer = nil);
 
   protected
   public
@@ -145,6 +165,10 @@ type
   end;
 
 implementation
+
+uses
+  SharedGlobals,
+  LemThreads;
 
 { TRenderer }
 
@@ -1210,102 +1234,180 @@ begin
   else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY);
 end;
 
+procedure TRenderer.ProcessDrawFrame(aInf: TInteractiveObjectInfo; aLayer: TRenderLayer);
+var
+  CountX, CountY, iX, iY: Integer;
+  MO: TMetaObjectInterface;
+  DrawFrame: Integer;
+  TempBitmapRect, DstRect: TRect;
+begin
+  if aInf.IsInvisible then Exit;
+  if aInf.TriggerEffect in [DOM_LEMMING, DOM_HINT, DOM_BGIMAGE] then Exit;
+
+  DrawFrame := Min(aInf.CurrentFrame, aInf.AnimationFrameCount-1);
+  TempBitmap.Assign(aInf.Frames[DrawFrame]);
+
+  PrepareObjectBitmap(TempBitmap, aInf.Obj.DrawingFlags, aInf.ZombieMode);
+
+  MO := aInf.MetaObj;
+  CountX := (aInf.Width-1) div MO.Width;
+  CountY := (aInf.Height-1) div MO.Height;
+
+  for iY := 0 to CountY do
+  begin
+    // (re)size rectangles correctly
+    TempBitmapRect := TempBitmap.BoundsRect;
+    // Move to leftmost X-coordinate and correct Y-coordinate
+    DstRect := Rect(0, 0, RectWidth(TempBitmapRect), RectHeight(TempBitmapRect));
+    OffsetRect(DstRect, aInf.Left, aInf.Top + (MO.Height * iY));
+    // shrink sizes of rectange to draw on bottom row
+    if (iY = CountY) and (aInf.Height mod MO.Height <> 0) then
+    begin
+      Dec(DstRect.Bottom, MO.Height - (aInf.Height mod MO.Height));
+      Dec(TempBitmapRect.Bottom, MO.Height - (aInf.Height mod MO.Height));
+    end;
+
+    for iX := 0 to CountX do
+    begin
+      // shrink size of rectangle to draw on rightmost column
+      if (iX = CountX) and (aInf.Width mod MO.Width <> 0) then
+      begin
+        Dec(DstRect.Right, MO.Width - (aInf.Width mod MO.Width));
+        Dec(TempBitmapRect.Right, MO.Width - (aInf.Width mod MO.Width));
+      end;
+      // Draw copy of object onto alayer at this place
+      TempBitmap.DrawTo(fLayers[aLayer], DstRect, TempBitmapRect);
+      // Move to next row
+      OffsetRect(DstRect, MO.Width, 0);
+    end;
+  end;
+
+  aInf.Obj.LastDrawX := aInf.Left;  // is this still needed?
+  aInf.Obj.LastDrawY := aInf.Top;
+end;
+
+procedure TRenderer.DrawTriggerArea(aInf: TInteractiveObjectInfo);
+const
+  DO_NOT_DRAW: set of 0..255 =
+        [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
+         DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND, DOM_BGIMAGE, DOM_ONEWAYUP];
+begin
+  if not (aInf.Obj.IsFake or aInf.IsDisabled or (aInf.TriggerEffect in DO_NOT_DRAW)) then
+    DrawTriggerAreaRectOnLayer(aInf.TriggerRect);
+end;
+
+procedure TRenderer.DrawUserHelper;
+var
+  BMP: TBitmap32;
+  DrawPoint: TPoint;
+begin
+  BMP := fHelperImages[fRenderInterface.UserHelper];
+  DrawPoint := fRenderInterface.MousePos;
+  DrawPoint.X := DrawPoint.X - (BMP.Width div 2);
+  DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2);
+  BMP.DrawTo(fLayers[rlObjectHelpers], DrawPoint.X, DrawPoint.Y);
+  fLayers.fIsEmpty[rlObjectHelpers] := false;
+end;
+
+function TRenderer.IsUseful(aInf: TInteractiveObjectInfo): Boolean;
+begin
+  Result := true;
+  if not fUsefulOnly then Exit;
+
+  if aInf.Obj.IsFake
+  or aInf.IsDisabled
+  or (aInf.TriggerEffect in [DOM_NONE, DOM_ANIMATION, DOM_HINT, DOM_BACKGROUND]) then
+    Result := false;
+end;
+
+procedure TRenderer.DrawObjectsOnLayer(aLayer: TRenderLayer);
+  function IsValidForLayer(aInf: TInteractiveObjectInfo): Boolean;
+  begin
+    if aInf.TriggerEffect = DOM_BACKGROUND then
+      Result := aLayer = rlBackgroundObjects
+    else if aInf.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
+      Result := aLayer = rlOneWayArrows
+    else case aLayer of
+           rlObjectsLow: Result := aInf.IsNoOverwrite and not aInf.IsOnlyOnTerrain;
+           rlOnTerrainObjects: Result := aInf.IsOnlyOnTerrain and not aInf.IsNoOverwrite;
+           rlObjectsHigh: Result := not (aInf.IsNoOverwrite xor aInf.IsOnlyOnTerrain);
+           else Result := false;
+         end;
+  end;
+
+  procedure HandleObject(aIndex: Integer);
+  var
+    Inf: TInteractiveObjectInfo;
+  begin
+    Inf := fObjectInfos[aIndex];
+    if not (IsValidForLayer(Inf) and IsUseful(Inf)) then Exit;
+
+    if (aLayer = rlBackgroundObjects) and (Inf.CanDrawToBackground) then
+      ProcessDrawFrame(Inf, rlBackground)
+    else begin
+      ProcessDrawFrame(Inf, aLayer);
+      fLayers.fIsEmpty[aLayer] := false;
+      //DrawTriggerArea(Inf); // commented out due to potential conflicts
+    end;
+  end;
+var
+  i: Integer;
+begin
+  fLayers[aLayer].BeginUpdate;
+  try
+    if not fLayers.fIsEmpty[aLayer] then fLayers[aLayer].Clear(0);
+    // Special conditions
+    if (aLayer = rlBackgroundObjects) and (fUsefulOnly or fDisableBackground) then Exit;
+    if (aLayer = rlObjectsLow) then
+      for i := fObjectInfos.Count-1 downto 0 do
+        HandleObject(i)
+    else
+      for i := 0 to fObjectInfos.Count-1 do
+        HandleObject(i);
+  finally
+    fLayers[aLayer].EndUpdate;
+  end;
+end;
 
 procedure TRenderer.DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
 var
-  TempBitmapRect, DstRect: TRect;
   Inf: TInteractiveObjectInfo;
-  DrawFrame: Integer;
   i, i2: Integer;
 
-  procedure ProcessDrawFrame(aLayer: TRenderLayer);
+  IsDoneArray: array[0..4] of Boolean;
+
+  procedure WaitUntilDone;
   var
-    CountX, CountY, iX, iY: Integer;
-    MO: TMetaObjectInterface;
+    i: Integer;
   begin
-    if Inf.IsInvisible then Exit;
-    if Inf.TriggerEffect in [DOM_LEMMING, DOM_HINT, DOM_BGIMAGE] then Exit;
-
-    DrawFrame := Min(Inf.CurrentFrame, Inf.AnimationFrameCount-1);
-    TempBitmap.Assign(Inf.Frames[DrawFrame]);
-
-    PrepareObjectBitmap(TempBitmap, Inf.Obj.DrawingFlags, Inf.ZombieMode);
-
-    MO := Inf.MetaObj;
-    CountX := (Inf.Width-1) div MO.Width;
-    CountY := (Inf.Height-1) div MO.Height;    
-
-    for iY := 0 to CountY do
+    i := 0;
+    while i < Length(IsDoneArray) do
     begin
-      // (re)size rectangles correctly
-      TempBitmapRect := TempBitmap.BoundsRect;
-      // Move to leftmost X-coordinate and correct Y-coordinate
-      DstRect := Rect(0, 0, RectWidth(TempBitmapRect), RectHeight(TempBitmapRect));
-      OffsetRect(DstRect, Inf.Left, Inf.Top + (MO.Height * iY));
-      // shrink sizes of rectange to draw on bottom row
-      if (iY = CountY) and (Inf.Height mod MO.Height <> 0) then
-      begin
-        Dec(DstRect.Bottom, MO.Height - (Inf.Height mod MO.Height));
-        Dec(TempBitmapRect.Bottom, MO.Height - (Inf.Height mod MO.Height));
-      end;
-
-      for iX := 0 to CountX do
-      begin
-        // shrink size of rectangle to draw on rightmost column
-        if (iX = CountX) and (Inf.Width mod MO.Width <> 0) then
-        begin
-          Dec(DstRect.Right, MO.Width - (Inf.Width mod MO.Width));
-          Dec(TempBitmapRect.Right, MO.Width - (Inf.Width mod MO.Width));
-        end;
-        // Draw copy of object onto alayer at this place
-        TempBitmap.DrawTo(fLayers[aLayer], DstRect, TempBitmapRect);
-        // Move to next row
-        OffsetRect(DstRect, MO.Width, 0);
-      end;
+      if IsDoneArray[i] then
+        Inc(i)
+      else
+        Sleep(1);
     end;
-
-    Inf.Obj.LastDrawX := Inf.Left;
-    Inf.Obj.LastDrawY := Inf.Top;
   end;
-
-  procedure DrawTriggerArea(aInf: TInteractiveObjectInfo);
-  const
-    DO_NOT_DRAW: set of 0..255 =
-          [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
-           DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND, DOM_BGIMAGE, DOM_ONEWAYUP];
-  begin
-    if not (aInf.Obj.IsFake or aInf.IsDisabled or (aInf.TriggerEffect in DO_NOT_DRAW)) then
-      DrawTriggerAreaRectOnLayer(aInf.TriggerRect);
-  end;
-
-  procedure DrawUserHelper;
-  var
-    BMP: TBitmap32;
-    DrawPoint: TPoint;
-  begin
-    BMP := fHelperImages[fRenderInterface.UserHelper];
-    DrawPoint := fRenderInterface.MousePos;
-    DrawPoint.X := DrawPoint.X - (BMP.Width div 2);
-    DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2);
-    BMP.DrawTo(fLayers[rlObjectHelpers], DrawPoint.X, DrawPoint.Y);
-    fLayers.fIsEmpty[rlObjectHelpers] := false;
-  end;
-
-  function IsUseful(aInf: TInteractiveObjectInfo): Boolean;
-  begin
-    Result := true;
-    if not UsefulOnly then Exit;
-
-    if aInf.Obj.IsFake
-    or aInf.IsDisabled
-    or (aInf.TriggerEffect in [DOM_NONE, DOM_ANIMATION, DOM_HINT, DOM_BACKGROUND]) then
-      Result := false;
-  end;
-
 begin
+  for i := 0 to Length(IsDoneArray)-1 do
+    IsDoneArray[i] := false;
+    
+  fObjectInfos := ObjectInfos;
+  fDrawingHelpers := DrawHelper;
+  fUsefulOnly := UsefulOnly;
+
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
 
-  // Draw moving backgrounds
+  CreateThread(DoBackgroundObjectRendering, @IsDoneArray[0]);
+  CreateThread(DoNoOverwriteObjectRendering, @IsDoneArray[1]);
+  CreateThread(DoOnTerrainObjectRendering, @IsDoneArray[2]);
+  CreateThread(DoOneWayObjectRendering, @IsDoneArray[3]);
+  CreateThread(DoRegularObjectRendering, @IsDoneArray[4]);
+
+  WaitUntilDone;
+
+  (*// Draw moving backgrounds
   if not fLayers.fIsEmpty[rlBackgroundObjects] then fLayers[rlBackgroundObjects].Clear(0);
   if not (UsefulOnly or fDisableBackground) then
   begin
@@ -1315,9 +1417,9 @@ begin
       if not (Inf.TriggerEffect = DOM_BACKGROUND) then Continue;
 
       if (not fDoneBackgroundDraw) and Inf.CanDrawToBackground  then
-        ProcessDrawFrame(rlBackground)
+        ProcessDrawFrame(Inf, rlBackground)
       else begin
-        ProcessDrawFrame(rlBackgroundObjects);
+        ProcessDrawFrame(Inf, rlBackgroundObjects);
         fLayers.fIsEmpty[rlBackgroundObjects] := False;
       end;
     end;
@@ -1335,7 +1437,7 @@ begin
     if not Inf.IsNoOverwrite then Continue;
     if not IsUseful(Inf) then Continue;
 
-    ProcessDrawFrame(rlObjectsLow);
+    ProcessDrawFrame(Inf, rlObjectsLow);
     fLayers.fIsEmpty[rlObjectsLow] := False;
 
     DrawTriggerArea(Inf);
@@ -1350,7 +1452,7 @@ begin
     if not Inf.IsOnlyOnTerrain then Continue;
     if not IsUseful(Inf) then Continue;
 
-    ProcessDrawFrame(rlOnTerrainObjects);
+    ProcessDrawFrame(Inf, rlOnTerrainObjects);
     fLayers.fIsEmpty[rlOnTerrainObjects] := False;
 
     DrawTriggerArea(Inf);
@@ -1364,7 +1466,7 @@ begin
     if not (Inf.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP]) then Continue;
     if not IsUseful(Inf) then Continue;
 
-    ProcessDrawFrame(rlOneWayArrows);
+    ProcessDrawFrame(Inf, rlOneWayArrows);
     fLayers.fIsEmpty[rlOneWayArrows] := False;
   end;
 
@@ -1378,11 +1480,11 @@ begin
     if Inf.IsNoOverwrite then Continue;
     if not IsUseful(Inf) then Continue;
 
-    ProcessDrawFrame(rlObjectsHigh);
+    ProcessDrawFrame(Inf, rlObjectsHigh);
     fLayers.fIsEmpty[rlObjectsHigh] := False;
 
     DrawTriggerArea(Inf);
-  end;
+  end;*)
 
   if fRenderInterface = nil then Exit; // otherwise, some of the remaining code may cause an exception on first rendering
 
@@ -1841,6 +1943,96 @@ begin
 
   // Draw the PhysicsMap
   RenderPhysicsMap;
+end;
+
+
+
+
+
+
+
+procedure TRenderer.DoBackgroundObjectRendering(aPointer: Pointer = nil);
+var
+  Flag: ^Boolean;
+begin
+  Flag := aPointer;
+  try
+    DrawObjectsOnLayer(rlBackgroundObjects);
+  finally
+    Flag^ := true;
+  end;
+end;
+
+procedure TRenderer.DoNoOverwriteObjectRendering(aPointer: Pointer = nil);
+var
+  Flag: ^Boolean;
+begin
+  Flag := aPointer;
+  try
+    DrawObjectsOnLayer(rlObjectsLow);
+  finally
+    Flag^ := true;
+  end;
+end;
+
+procedure TRenderer.DoOnTerrainObjectRendering(aPointer: Pointer = nil);
+var
+  Flag: ^Boolean;
+begin
+  Flag := aPointer;
+  try
+    DrawObjectsOnLayer(rlOnTerrainObjects);
+  finally
+    Flag^ := true;
+  end;
+end;
+
+procedure TRenderer.DoOneWayObjectRendering(aPointer: Pointer = nil);
+var
+  Flag: ^Boolean;
+begin
+  Flag := aPointer;
+  try
+    DrawObjectsOnLayer(rlOneWayArrows);
+  finally
+    Flag^ := true;
+  end;
+end;
+
+procedure TRenderer.DoRegularObjectRendering(aPointer: Pointer = nil);
+var
+  Flag: ^Boolean;
+begin
+  Flag := aPointer;
+  try
+    DrawObjectsOnLayer(rlObjectsHigh);
+  finally
+    Flag^ := true;
+  end;
+end;
+
+procedure TRenderer.DoObjectHelperRendering(aPointer: Pointer = nil);
+var
+  Flag: ^Boolean;
+begin
+  Flag := aPointer;
+  try
+    // still using legacy code
+  finally
+    Flag^ := true;
+  end;
+end;
+
+procedure TRenderer.DoTriggerAreaRendering(aPointer: Pointer = nil);
+var
+  Flag: ^Boolean;
+begin
+  Flag := aPointer;
+  try
+    // still using semi-legacy code
+  finally
+    Flag^ := true;
+  end;
 end;
 
 end.

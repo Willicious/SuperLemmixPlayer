@@ -5,7 +5,6 @@ unit GameReplayCheckScreen;
 interface
 
 uses
-  Dialogs, // debug
   LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager, SharedGlobals,
   Windows, Classes, SysUtils, StrUtils, Controls, Contnrs,
   UMisc,

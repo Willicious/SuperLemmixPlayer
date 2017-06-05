@@ -381,7 +381,10 @@ begin
       VK_F5     : DumpImages;
       VK_F6     : if GameParams.Talismans.Count <> 0 then CloseScreen(gstTalisman);
       VK_F7     : DoMassReplayCheck;
-      VK_F12    : DoTestStuff;
+      VK_F12    : begin
+                    GameParams.LoadCurrentLevel;
+                    CloseScreen(gstPlay);
+                  end;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : NextSection(True);
       VK_DOWN   : NextSection(False);

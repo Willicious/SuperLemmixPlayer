@@ -5,13 +5,14 @@ unit SharedGlobals;
 interface
 
 uses
-  Classes, SysUtils;
+  {$ifdef logging}Dialogs,{$endif} Classes, SysUtils;
 
 var
   GameFile: String;
   {$ifdef logging}DebugLog: TStringList;
 
-  procedure Log(aString: String);{$endif}
+  procedure Log(aString: String);
+  procedure DebugMsg(aString: String);{$endif}
 
 implementation
 
@@ -20,6 +21,12 @@ procedure Log(aString: String);
 begin
   DebugLog.Add(aString);
   DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
+end;
+
+procedure DebugMsg(aString: String);
+begin
+  DebugLog.Add('DEBUG POPUP: ' + aString);
+  ShowMessage(aString);
 end;
 {$endif}
 

@@ -31,7 +31,6 @@ type
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure BuildScreen; override;
-    procedure BuildScreenInvis;
     procedure PrepareGameParams; override;
     procedure CloseScreen(NextScreen: TGameScreenType); override;
   end;
@@ -180,25 +179,6 @@ begin
   TempBitmap.Free;
 
 end;
-
-procedure TGamePreviewScreen.BuildScreenInvis;
-var
-  TempBmp: TBitmap32;
-begin
-  Assert(GameParams <> nil);
-  TempBmp := TBitmap32.Create;
-
-  try
-    // prepare the renderer, this is a little bit shaky (wrong place)
-    with GameParams do
-    begin
-      Renderer.PrepareGameRendering(Level);
-    end;
-  finally
-    TempBmp.Free;
-  end;
-end;
-
 
 constructor TGamePreviewScreen.Create(aOwner: TComponent);
 begin
