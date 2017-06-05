@@ -177,10 +177,10 @@ const
 
 type
   TZipHeader = packed record
-    ID       : array[0..1] of Char;
+    ID       : array[0..1] of AnsiChar;
     Version  : byte;
-    NumFiles : integer;
-    FileSize : integer;
+    NumFiles : LongInt;
+    FileSize : LongInt;
     Options  : Byte;
 
     // + reserved 32 bytes : ALTIJD 0 als niet gevuld
@@ -188,12 +188,12 @@ type
   end;
 
   TFileHeader = packed record
-    Check            : Char; { verplichte waarde = 'F'}
-    UnCompressedSize : integer;
-    CompressedSize   : integer;
-    FileTime         : integer;
-    FileAttr         : integer;
-    Delta            : integer; { delta bytes naar volgende filename }
+    Check            : AnsiChar; { verplichte waarde = 'F'}
+    UnCompressedSize : LongInt;
+    CompressedSize   : LongInt;
+    FileTime         : LongInt;
+    FileAttr         : LongInt;
+    Delta            : LongInt; { delta bytes naar volgende filename }
     CreationTime     : TFileTime;
     LastAccessTime   : TFileTime;
     LastWriteTime    : TFileTime;
@@ -202,8 +202,8 @@ type
   end;
 
   TDataHeader = packed record
-    UnCompressedSize : integer;
-    CompressedSize   : integer;
+    UnCompressedSize : LongInt;
+    CompressedSize   : LongInt;
     { COMPRESSEDDATA = UnCompressedSize bytes }
   end;
 

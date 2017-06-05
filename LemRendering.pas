@@ -1592,10 +1592,14 @@ begin
   end;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
-  S := CreateDataStream('explode.dat', ldtParticles);
-  S.Seek(0, soFromBeginning);
-  S.Read(fParticles, S.Size);
-  S.Free;
+  S := TMemoryStream.Create;
+  try
+    S.LoadFromFile(AppPath + SFData + 'particles.dat');
+    S.Seek(0, soFromBeginning);
+    S.Read(fParticles, S.Size);
+  finally
+    S.Free;
+  end;
 end;
 
 destructor TRenderer.Destroy;
