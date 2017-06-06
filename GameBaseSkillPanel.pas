@@ -184,7 +184,7 @@ const
 implementation
 
 uses
-  SysUtils, Types, Math, Windows, UMisc, PngInterface,
+  SysUtils, Math, Windows, UMisc, PngInterface,
   GameControl, GameSound,
   LemTypes, LemReplay, LemStrings, LemNeoTheme,
   LemmixHotkeys, LemDosStructures;
@@ -193,6 +193,7 @@ procedure ModString(var aString: String; const aNew: String; const aStart: Integ
 var
   i: Integer;
 begin
+  {  Classes, Controls, GR32, GR32_Image, GR32_Layers,}
   for i := 1 to Length(aNew) do
     aString[aStart + i - 1] := aNew[i];
 end;
@@ -998,12 +999,12 @@ end;
 -----------------------------------------}
 function TBaseSkillPanel.MousePos(X, Y: Integer): TPoint;
 begin
-  Result := fImage.ControlToBitmap(TPoint.Create(X, Y));
+  Result := fImage.ControlToBitmap(Point(X, Y));
 end;
 
 function TBaseSkillPanel.MousePosMinimap(X, Y: Integer): TPoint;
 begin
-  Result := fMinimapImage.ControlToBitmap(TPoint.Create(X, Y));
+  Result := fMinimapImage.ControlToBitmap(Point(X, Y));
 end;
 
 procedure TBaseSkillPanel.ImgMouseDown(Sender: TObject; Button: TMouseButton;
