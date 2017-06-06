@@ -13,6 +13,7 @@ uses
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
   LemDosStructures,
   LemTypes,
+  LemThreads,
   LemTerrain, LemMetaTerrain,
   LemObjects, LemInteractiveObject, LemMetaObject,
   LemSteel,
@@ -35,6 +36,8 @@ type
 
   TRenderer = class
   private
+    fRenderThreads: TNeoLemmixThreads;
+
     fObjectInfos: TInteractiveObjectInfoList;
     fDrawingHelpers: Boolean;
     fUsefulOnly: Boolean;
@@ -167,8 +170,7 @@ type
 implementation
 
 uses
-  SharedGlobals,
-  LemThreads;
+  SharedGlobals;
 
 { TRenderer }
 
@@ -1381,17 +1383,22 @@ var
     i: Integer;
   begin
     i := 0;
-    while i < Length(IsDoneArray) do
+    while i < fRenderThreads.Count do
     begin
-      if IsDoneArray[i] then
+      if not fRenderThreads[i].Active then
+      begin
+        //Log('Completed ' + IntToStr(i) + ' at ' + IntToStr(GetTickCount));
         Inc(i)
-      else
+      end else
         Sleep(1);
     end;
   end;
 begin
   for i := 0 to Length(IsDoneArray)-1 do
+  begin
     IsDoneArray[i] := false;
+    fRenderThreads[i].Data := @IsDoneArray[i];
+  end;
     
   fObjectInfos := ObjectInfos;
   fDrawingHelpers := DrawHelper;
@@ -1399,11 +1406,13 @@ begin
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
 
-  CreateThread(DoBackgroundObjectRendering, @IsDoneArray[0]);
+  fRenderThreads.ActivateAll;
+
+  (*CreateThread(DoBackgroundObjectRendering, @IsDoneArray[0]);
   CreateThread(DoNoOverwriteObjectRendering, @IsDoneArray[1]);
   CreateThread(DoOnTerrainObjectRendering, @IsDoneArray[2]);
   CreateThread(DoOneWayObjectRendering, @IsDoneArray[3]);
-  CreateThread(DoRegularObjectRendering, @IsDoneArray[4]);
+  CreateThread(DoRegularObjectRendering, @IsDoneArray[4]);*)
 
   WaitUntilDone;
 
@@ -1575,6 +1584,17 @@ var
   S: TMemoryStream;
 begin
   inherited Create;
+
+  fRenderThreads := TNeoLemmixThreads.Create;
+  with fRenderThreads do
+  begin
+    Add(TNeoLemmixThread.Create(DoBackgroundObjectRendering, nil));
+    Add(TNeoLemmixThread.Create(DoNoOverwriteObjectRendering, nil));
+    Add(TNeoLemmixThread.Create(DoOnTerrainObjectRendering, nil));
+    Add(TNeoLemmixThread.Create(DoOneWayObjectRendering, nil));
+    Add(TNeoLemmixThread.Create(DoRegularObjectRendering, nil));
+  end;
+
   TempBitmap := TBitmap32.Create;
   fTheme := TNeoTheme.Create;
   fLayers := TRenderBitmaps.Create;
@@ -1604,7 +1624,8 @@ end;
 
 destructor TRenderer.Destroy;
 var
-  i: THelperIcon;
+  i: Integer;
+  iIcon: THelperIcon;
 begin
   TempBitmap.Free;
   fTheme.Free;
@@ -1613,8 +1634,9 @@ begin
   fRecolorer.Free;
   fAni.Free;
   fObjectInfoList.Free;
-  for i := Low(THelperIcon) to High(THelperIcon) do
-    fHelperImages[i].Free;
+  for iIcon := Low(THelperIcon) to High(THelperIcon) do
+    fHelperImages[iIcon].Free;
+
   inherited Destroy;
 end;
 
