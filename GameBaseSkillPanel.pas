@@ -58,8 +58,8 @@ type
     fHighlitSkill         : TSkillPanelButton;
     fLastHighlitSkill     : TSkillPanelButton; // to avoid sounds when shouldn't be played
 
-    fLastDrawnStr         : string;
-    fNewDrawStr           : string;
+    fLastDrawnStr         : String;
+    fNewDrawStr           : String;
 
     // Global stuff
     property Level: TLevel read GetLevel;
@@ -151,6 +151,8 @@ type
     property SkillPanelSelectDx: Integer read fSelectDx write fSelectDx;
   end;
 
+  procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
+
 const
   NUM_SKILL_ICONS = 17;
   NUM_FONT_CHARS = 45;
@@ -186,6 +188,14 @@ uses
   GameControl, GameSound,
   LemTypes, LemReplay, LemStrings, LemNeoTheme,
   LemmixHotkeys, LemDosStructures;
+
+procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
+var
+  i: Integer;
+begin
+  for i := 1 to Length(aNew) do
+    aString[aStart + i - 1] := aNew[i];
+end;
 
 
 constructor TBaseSkillPanel.CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow);
@@ -874,7 +884,7 @@ begin
   else
     S := PadR(S + ' ' + IntToStr(Game.LastHitCount), LEN);
 
-  Move(S[1], fNewDrawStr[Pos], LEN);
+  ModString(fNewDrawStr, S, Pos);
 end;
 
 procedure TBaseSkillPanel.SetInfoLemHatch(Pos: Integer);
@@ -889,7 +899,7 @@ begin
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
 
-  Move(S[1], fNewDrawStr[Pos], LEN);
+  ModString(fNewDrawStr, S, Pos);
 end;
 
 procedure TBaseSkillPanel.SetInfoLemAlive(Pos: Integer);
@@ -913,7 +923,7 @@ begin
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
 
-  Move(S[1], fNewDrawStr[Pos], Len);
+  ModString(fNewDrawStr, S, Pos);
 end;
 
 procedure TBaseSkillPanel.SetInfoLemIn(Pos: Integer);
@@ -927,7 +937,7 @@ begin
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
 
-  Move(S[1], fNewDrawStr[Pos], LEN);
+  ModString(fNewDrawStr, S, Pos);
 end;
 
 procedure TBaseSkillPanel.SetInfoTime(PosMin, PosSec: Integer);
@@ -954,14 +964,14 @@ begin
     S := StringOfChar(' ', LEN)
   else
     S := PadL(IntToStr(Time div 60), 2);
-  Move(S[1], fNewDrawStr[PosMin], LEN);
+  ModString(fNewDrawStr, S, PosMin);
 
   // Seconds
   if Blinking then
     S := StringOfChar(' ', LEN)
   else
     S := LeadZeroStr(Time mod 60, 2);
-  Move(S[1], fNewDrawStr[PosSec], LEN);
+  ModString(fNewDrawStr, S, PosSec);
 end;
 
 procedure TBaseSkillPanel.SetReplayMark(Pos: Integer);
