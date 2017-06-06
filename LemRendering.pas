@@ -91,7 +91,7 @@ type
 
     // Were sub-procedures, or part, of DrawAllObjects
     procedure DrawObjectsOnLayer(aLayer: TRenderLayer);
-    procedure ProcessDrawFrame(aInf: TInteractiveObjectInfo; aLayer: TRenderLayer);
+    procedure ProcessDrawFrame(aInf: TInteractiveObjectInfo; Dst: TBitmap32);
     procedure DrawTriggerArea(aInf: TInteractiveObjectInfo);
     procedure DrawUserHelper;
     function IsUseful(aInf: TInteractiveObjectInfo): Boolean;
@@ -1236,7 +1236,7 @@ begin
   else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY);
 end;
 
-procedure TRenderer.ProcessDrawFrame(aInf: TInteractiveObjectInfo; aLayer: TRenderLayer);
+procedure TRenderer.ProcessDrawFrame(aInf: TInteractiveObjectInfo; Dst: TBitmap32);
 var
   CountX, CountY, iX, iY: Integer;
   MO: TMetaObjectInterface;
@@ -1278,7 +1278,7 @@ begin
         Dec(TempBitmapRect.Right, MO.Width - (aInf.Width mod MO.Width));
       end;
       // Draw copy of object onto alayer at this place
-      TempBitmap.DrawTo(fLayers[aLayer], DstRect, TempBitmapRect);
+      TempBitmap.DrawTo(Dst, DstRect, TempBitmapRect);
       // Move to next row
       OffsetRect(DstRect, MO.Width, 0);
     end;
@@ -1323,6 +1323,9 @@ begin
 end;
 
 procedure TRenderer.DrawObjectsOnLayer(aLayer: TRenderLayer);
+var
+  Dst: TBitmap32;
+
   function IsValidForLayer(aInf: TInteractiveObjectInfo): Boolean;
   begin
     if aInf.TriggerEffect = DOM_BACKGROUND then
@@ -1345,9 +1348,9 @@ procedure TRenderer.DrawObjectsOnLayer(aLayer: TRenderLayer);
     if not (IsValidForLayer(Inf) and IsUseful(Inf)) then Exit;
 
     if (aLayer = rlBackgroundObjects) and (Inf.CanDrawToBackground) then
-      ProcessDrawFrame(Inf, rlBackground)
+      ProcessDrawFrame(Inf, fLayers[rlBackground])
     else begin
-      ProcessDrawFrame(Inf, aLayer);
+      ProcessDrawFrame(Inf, Dst);
       fLayers.fIsEmpty[aLayer] := false;
       //DrawTriggerArea(Inf); // commented out due to potential conflicts
     end;
@@ -1355,9 +1358,12 @@ procedure TRenderer.DrawObjectsOnLayer(aLayer: TRenderLayer);
 var
   i: Integer;
 begin
+  fLayers[aLayer].Lock;
   fLayers[aLayer].BeginUpdate;
+  Dst := fLayers[aLayer];
   try
-    if not fLayers.fIsEmpty[aLayer] then fLayers[aLayer].Clear(0);
+    //Dst.Assign(fLayers[aLayer]);
+    if not fLayers.fIsEmpty[aLayer] then Dst.Clear(0);
     // Special conditions
     if (aLayer = rlBackgroundObjects) and (fUsefulOnly or fDisableBackground) then Exit;
     if (aLayer = rlObjectsLow) then
@@ -1366,8 +1372,12 @@ begin
     else
       for i := 0 to fObjectInfos.Count-1 do
         HandleObject(i);
+
+    //fLayers[aLayer].Assign(Dst);
   finally
     fLayers[aLayer].EndUpdate;
+    fLayers[aLayer].Unlock;
+    //Dst.Free;
   end;
 end;
 
