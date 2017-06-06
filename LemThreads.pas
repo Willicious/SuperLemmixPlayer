@@ -7,23 +7,27 @@ unit LemThreads;
 interface
 
 uses
-  Contnrs, Classes, SysUtils;
+  Contnrs, Classes, SysUtils, SyncObjs;
 
 type
   TNeoLemmixThreadMethod = procedure(aPointer: Pointer = nil) of object;
 
   TNeoLemmixThread = class(TThread)
     private
-      fActive: Boolean;
+      mTrigger: TEvent;
       fEnding: Boolean;
       fPointer: Pointer;
       fMethod: TNeoLemmixThreadMethod;
+      fIsRunning: Boolean;
       procedure Log(aText: String); // debug
+      function GetIsActive: Boolean;
     protected
       procedure Execute; override;
     public
       constructor Create(aMethod: TNeoLemmixThreadMethod; aPointer: Pointer);
-      property Active: Boolean read fActive write fActive;
+      destructor Destroy; override;
+      procedure Run;
+      property Active: Boolean read fIsRunning;
       property Ending: Boolean read fEnding write fEnding;
       property Method: TNeoLemmixThreadMethod read fMethod write fMethod;
       property Data: Pointer read fPointer write fPointer;
@@ -55,8 +59,8 @@ begin
   if GameParams.MultiThreading then
     with TNeoLemmixThread.Create(aMethod, aPointer) do
     begin
-      Active := true;
       FreeOnTerminate := true;
+      Run;
     end
   else
     aMethod(aPointer); // if multithreading disabled, do it in the main thread
@@ -65,28 +69,42 @@ end;
 constructor TNeoLemmixThread.Create(aMethod: TNeoLemmixThreadMethod; aPointer: Pointer);
 begin
   inherited Create(true);
+  mTrigger := TEvent.Create(nil,true,false,'');
   fMethod := aMethod;
   fPointer := aPointer;
-  fActive := false;
   fEnding := false;
   Priority := tpNormal;
   Resume;
 end;
 
+destructor TNeoLemmixThread.Destroy;
+begin
+  mTrigger.Free;
+  inherited;
+end;
+
 procedure TNeoLemmixThread.Execute;
 begin
   repeat
-    if not fActive then
-    begin
-      Sleep(1);
-      Continue;
-    end;
+    mTrigger.WaitFor(INFINITE);
+    mTrigger.ResetEvent;
     Log('Begin at ' + IntToStr(GetTickCount));
     fMethod(fPointer);
     Log('End at ' + IntToStr(GetTickCount));
-    fActive := false;
+    fIsRunning := false;
   until fEnding or FreeOnTerminate;
   Terminate;
+end;
+
+procedure TNeoLemmixThread.Run;
+begin
+  fIsRunning := true;
+  mTrigger.SetEvent;
+end;
+
+function TNeoLemmixThread.GetIsActive;
+begin
+
 end;
 
 procedure TNeoLemmixThread.Log(aText: string);
@@ -129,7 +147,7 @@ var
 begin
   for i := 0 to Count-1 do
     if GameParams.MultiThreading then
-      Items[i].Active := true
+      Items[i].Run
     else begin
       Items[i].Log('Begin at ' + IntToStr(GetTickCount));
       Items[i].Method(Items[i].Data);
