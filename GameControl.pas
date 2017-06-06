@@ -83,8 +83,7 @@ type
     moIncreaseZoom,
     moLoadedConfig,
     moCompactSkillPanel,
-    moEdgeScroll,
-    moMultiThreading
+    moEdgeScroll
   );
 
   TMiscOptions = set of TMiscOption;
@@ -222,7 +221,6 @@ type
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
-    property MultiThreading: boolean Index moMultiThreading read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -372,11 +370,12 @@ begin
   SaveBoolean('EnableOnline', EnableOnline);
   SaveBoolean('UpdateCheck', CheckUpdates);
 
-  SL.Add('');
-  SL.Add('# Technical Options');
-  SaveBoolean('EnableMultiThreading', MultiThreading);
   if UnderWine then
+  begin
+    SL.Add('');
+    SL.Add('# Technical Options');
     SaveBoolean('DisableWineWarnings', DisableWineWarnings);
+  end;
 
   AddUnknowns;
 
@@ -490,7 +489,6 @@ begin
   EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
   CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 
-  MultiThreading := LoadBoolean('EnableMultiThreading', MultiThreading);
   DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
 
   ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);

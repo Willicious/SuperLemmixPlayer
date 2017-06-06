@@ -24,7 +24,7 @@ type
     protected
       procedure Execute; override;
     public
-      constructor Create(aMethod: TNeoLemmixThreadMethod; aPointer: Pointer);
+      constructor Create(aMethod: TNeoLemmixThreadMethod; aPointer: Pointer; aCore: Integer = 1);
       destructor Destroy; override;
       procedure Run;
       property Active: Boolean read fIsRunning;
@@ -56,17 +56,14 @@ uses
 
 procedure CreateThread(aMethod: TNeoLemmixThreadMethod; aPointer: Pointer = nil);
 begin
-  if GameParams.MultiThreading then
-    with TNeoLemmixThread.Create(aMethod, aPointer) do
-    begin
-      FreeOnTerminate := true;
-      Run;
-    end
-  else
-    aMethod(aPointer); // if multithreading disabled, do it in the main thread
+  with TNeoLemmixThread.Create(aMethod, aPointer) do
+  begin
+    FreeOnTerminate := true;
+    Run;
+  end
 end;
 
-constructor TNeoLemmixThread.Create(aMethod: TNeoLemmixThreadMethod; aPointer: Pointer);
+constructor TNeoLemmixThread.Create(aMethod: TNeoLemmixThreadMethod; aPointer: Pointer; aCore: Integer = 1);
 begin
   inherited Create(true);
   mTrigger := TEvent.Create(nil,true,false,'');
@@ -74,6 +71,7 @@ begin
   fPointer := aPointer;
   fEnding := false;
   Priority := tpNormal;
+
   Resume;
 end;
 
@@ -146,13 +144,7 @@ var
   i: Integer;
 begin
   for i := 0 to Count-1 do
-    if GameParams.MultiThreading then
-      Items[i].Run
-    else begin
-      Items[i].Log('Begin at ' + IntToStr(GetTickCount));
-      Items[i].Method(Items[i].Data);
-      Items[i].Log('End at ' + IntToStr(GetTickCount));
-    end;
+    Items[i].Run;
 end;
 
 procedure TNeoLemmixThreads.TerminateAll;
