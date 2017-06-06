@@ -197,14 +197,10 @@ begin
     GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;
     GameParams.MainForm.Top := (Screen.Height - GameParams.MainForm.Height) div 2;
   end else begin
+    GameParams.MainForm.Left := 0;
+    GameParams.MainForm.Top := 0;
     GameParams.MainForm.BorderStyle := bsNone;
     GameParams.MainForm.WindowState := wsMaximized;
-
-    if UnderWine then
-    begin
-      GameParams.MainForm.Left := 0;
-      GameParams.MainForm.Top := 0;
-    end;
 
     GameParams.MainForm.ClientWidth := Screen.Width;
     GameParams.MainForm.ClientHeight := Screen.Height;

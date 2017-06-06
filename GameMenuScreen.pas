@@ -413,6 +413,8 @@ begin
   begin
     if GameParams.FullScreen then
     begin
+      GameParams.MainForm.Left := 0;
+      GameParams.MainForm.Top := 0;
       GameParams.MainForm.WindowState := wsMaximized;
       GameParams.MainForm.BorderStyle := bsNone;
     end else begin
