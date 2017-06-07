@@ -9,8 +9,7 @@ uses
   SharedGlobals,
   Classes, SysUtils, Contnrs,
   GR32, GR32_LowLevel,
-  Windows,
-  UZip;
+  Windows;
 
 const
   MUSIC_EXT_COUNT = 12;

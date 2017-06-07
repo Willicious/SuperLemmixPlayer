@@ -1,3 +1,4 @@
+{$include lem_directives.inc}
 unit LemObjects;
 
 interface

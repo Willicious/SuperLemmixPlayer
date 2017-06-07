@@ -1352,7 +1352,7 @@ var
     else begin
       ProcessDrawFrame(Inf, Dst);
       fLayers.fIsEmpty[aLayer] := false;
-      //DrawTriggerArea(Inf); // commented out due to potential conflicts
+      DrawTriggerArea(Inf);
     end;
   end;
 var
@@ -1517,7 +1517,6 @@ end;
 
 destructor TRenderer.Destroy;
 var
-  i: Integer;
   iIcon: THelperIcon;
 begin
   TempBitmap.Free;
