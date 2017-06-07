@@ -116,9 +116,9 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 3
     object imgLevel: TImage32
       Left = 0
-      Top = 120
+      Top = 0
       Width = 329
-      Height = 192
+      Height = 312
       Bitmap.ResamplerClassName = 'TNearestResampler'
       BitmapAlign = baCenter
       Scale = 1.000000000000000000
