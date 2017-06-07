@@ -8,10 +8,10 @@ uses
   LemStrings,
   LemTypes,
   PngInterface,
-  GR32,
+  GR32, GR32_Resamplers,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList,
-  LemNeoParser;
+  LemNeoParser, GR32_Image;
 
 type
   TFLevelSelect = class(TForm)
@@ -25,6 +25,7 @@ type
     ilStatuses: TImageList;
     btnAddContent: TButton;
     lblCompletion: TLabel;
+    imgLevel: TImage32;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -35,6 +36,7 @@ type
     procedure InitializeTreeview;
     procedure SetInfo;
     procedure WriteToParams;
+    procedure DisplayLevelInfo;
   public
     property LoadAsPack: Boolean read fLoadAsPack;
   end;
@@ -132,6 +134,7 @@ end;
 procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
   InitializeTreeview;
+  TLinearResampler.Create(imgLevel.Bitmap);
 end;
 
 procedure TFLevelSelect.btnOKClick(Sender: TObject);
@@ -295,6 +298,8 @@ begin
 
     pnLevelInfo.Visible := true;
 
+    DisplayLevelInfo;
+
     btnOk.Enabled := true;
   end;
 end;
@@ -391,6 +396,19 @@ begin
     SetInfo;
   finally
     OpenDlg.Free;
+  end;
+end;
+
+procedure TFLevelSelect.DisplayLevelInfo;
+begin
+  WriteToParams;
+  GameParams.LoadCurrentLevel(false);
+  imgLevel.Bitmap.BeginUpdate;
+  try
+    GameParams.Renderer.RenderWorld(imgLevel.Bitmap, true);
+  finally
+    imgLevel.Bitmap.EndUpdate;
+    imgLevel.Bitmap.Changed;
   end;
 end;
 

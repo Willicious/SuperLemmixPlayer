@@ -114,6 +114,17 @@ object FLevelSelect: TFLevelSelect
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
     TabOrder = 3
+    object imgLevel: TImage32
+      Left = 0
+      Top = 120
+      Width = 329
+      Height = 192
+      Bitmap.ResamplerClassName = 'TNearestResampler'
+      BitmapAlign = baCenter
+      Scale = 1.000000000000000000
+      ScaleMode = smResize
+      TabOrder = 0
+    end
   end
   object btnAddContent: TButton
     Left = 288
