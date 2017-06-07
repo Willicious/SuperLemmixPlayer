@@ -207,7 +207,7 @@ begin
      fLevelOverride := $0000;
     end;
 
-    if fTestMode then
+    if TestModeLevel <> nil then
     begin
       gSuccess := false;
       gCheated := false;
@@ -255,7 +255,7 @@ begin
     Add(SYouRescued + SDone);
     Add(SYouNeeded + STarget);
 
-    if GameParams.fTestMode then
+    if GameParams.TestModeLevel <> nil then
       LF(1)
     else
       Add(SYourRecord + PadL(IntToStr(GameParams.CurrentLevel.Records.LemmingsRescued), 4));
@@ -263,7 +263,7 @@ begin
     LF(1);
 
     Add(SYourTime + PadL(MakeTimeString(gLastRescueIteration), 8));
-    if GameParams.fTestMode or not gSuccess then
+    if (GameParams.TestModeLevel <> nil) or not gSuccess then
       LF(1)
     else
       Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.Records.TimeTaken), 8));
@@ -325,7 +325,7 @@ begin
 
   case Key of
     VK_ESCAPE: begin
-                 if GameParams.fTestMode then
+                 if GameParams.TestModeLevel <> nil then
                    CloseScreen(gstExit)
                  else
                    CloseScreen(gstMenu);
@@ -357,7 +357,7 @@ begin
     ReplaySameLevel
   else if Button = mbRight then
   begin
-    if GameParams.fTestMode then
+    if GameParams.TestModeLevel <> nil then
       CloseScreen(gstExit)
     else
       CloseScreen(gstMenu);

@@ -148,6 +148,8 @@ begin
 end;
 
 constructor TAppController.Create(aOwner: TComponent);
+var
+  IsTestMode: Boolean;
 begin
   inherited;
 
@@ -175,6 +177,8 @@ begin
                                                     // in having it.
 
   GameParams.Load;
+
+  IsTestMode := Lowercase(ParamStr(1)) = 'test';
 
   if UnderWine and not GameParams.DisableWineWarnings then
     if GameParams.FullScreen then
@@ -206,18 +210,27 @@ begin
     GameParams.MainForm.ClientHeight := Screen.Height;
   end;
 
-  if GameParams.fTestMode then
-    GameParams.MainForm.Caption := 'NeoLemmix - Single Level'
-  else
-    GameParams.MainForm.Caption := GameParams.BaseLevelPack.Name;
-
+  GameParams.MainForm.Caption := 'NeoLemmix';
   Application.Title := GameParams.MainForm.Caption;
 
   GameParams.Renderer.BackgroundColor := $000000;
 
+  if IsTestMode then
+  begin
+    GameParams.BaseLevelPack.EnableSave := false;
+    GameParams.BaseLevelPack.Children.Clear;
+    GameParams.BaseLevelPack.Levels.Clear;
+    GameParams.TestModeLevel := GameParams.BaseLevelPack.Levels.Add;
+    GameParams.TestModeLevel.Filename := ParamStr(2);
+    if Pos(':', GameParams.TestModeLevel.Filename) = 0 then
+      GameParams.TestModeLevel.Filename := AppPath + GameParams.TestModeLevel.Filename;
+    GameParams.SetLevel(GameParams.TestModeLevel);
+    GameParams.NextScreen := gstPreview;
+  end else
+    GameParams.TestModeLevel := nil;
+
   if not fLoadSuccess then
     GameParams.NextScreen := gstExit;
-
 end;
 
 destructor TAppController.Destroy;

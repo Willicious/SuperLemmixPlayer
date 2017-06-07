@@ -206,7 +206,7 @@ begin
   end;
   case Key of
     VK_ESCAPE: begin
-                 if GameParams.fTestMode then
+                 if GameParams.TestModeLevel <> nil then
                    CloseScreen(gstExit)
                  else
                    CloseScreen(gstMenu);

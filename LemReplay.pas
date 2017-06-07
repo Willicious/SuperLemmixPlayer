@@ -297,7 +297,7 @@ var
 
   function GetReplayFileName(TestModeName: Boolean): String;
   begin
-    if GameParams.fTestMode then
+    if GameParams.TestModeLevel <> nil then
       Result := Trim(aLevel.Info.Title)
     else
       Result := RankName + '_' + LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2);
@@ -330,7 +330,7 @@ var
       end;
     end;
   begin
-    if GameParams.fTestMode then
+    if GameParams.TestModeLevel <> nil then
       Result := ExtractFilePath(ParamStr(0)) + 'Replay\'
     else
       Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + GetGroupName;

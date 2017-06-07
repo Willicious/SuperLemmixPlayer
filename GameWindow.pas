@@ -333,7 +333,7 @@ begin
   SL := GameParams.CurrentLevel.Group.MusicList;
 
   if MusicIndex = -1 then
-    if GameParams.fTestMode then
+    if GameParams.TestModeLevel <> nil then
       MusicIndex := Random(SL.Count)
     else begin
       MusicIndex := GameParams.CurrentLevel.GroupIndex;

@@ -96,6 +96,8 @@ type
       fChildGroups: TNeoLevelGroups;
       fLevels: TNeoLevelEntries;
 
+      fEnableSave: Boolean;
+
       fName: String;
       fAuthor: String;
       fFolder: String;
@@ -175,6 +177,8 @@ type
 
       property PrevGroup: TNeoLevelGroup read GetPrevGroup;
       property NextGroup: TNeoLevelGroup read GetNextGroup;
+
+      property EnableSave: Boolean read fEnableSave write fEnableSave default true;
   end;
 
 

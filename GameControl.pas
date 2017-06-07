@@ -173,14 +173,10 @@ type
     fZoomFactor          : Integer;
     fLevelOverride       : Integer;
 
-    fTestMode : Boolean;
-    fTestGroundFile : String;
-    fTestVgagrFile : String;
-    fTestVgaspecFile : String;
-    fTestLevelFile : String;
-
     //SysDat               : TSysDatRec;
     ReplayCheckPath: String;
+
+    TestModeLevel: TNeoLevelEntry;
 
     constructor Create;
     destructor Destroy; override;
