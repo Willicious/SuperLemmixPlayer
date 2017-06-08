@@ -3,7 +3,7 @@
         <ProjectGuid>{33A486ED-08D9-4840-B8D3-496ACC059D76}</ProjectGuid>
         <MainSource>GSConvert.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Console</AppType>
         <FrameworkType>None</FrameworkType>
