@@ -37,6 +37,7 @@ type
                                // bug where it doesn't initially come to front.
     //function CheckCompatible(var Target: String): TNxCompatibility;
     procedure BringToFront;
+    procedure DoLevelConvert;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -178,7 +179,7 @@ begin
 
   GameParams.Load;
 
-  IsTestMode := Lowercase(ParamStr(1)) = 'test';
+  IsTestMode := (Lowercase(ParamStr(1)) = 'test') or (Lowercase(ParamStr(1)) = 'convert');
 
   if UnderWine and not GameParams.DisableWineWarnings then
     if GameParams.FullScreen then
@@ -229,8 +230,28 @@ begin
   end else
     GameParams.TestModeLevel := nil;
 
+  if Lowercase(ParamStr(1)) = 'convert' then
+  begin
+    DoLevelConvert;
+    fLoadSuccess := false;
+  end;
+
   if not fLoadSuccess then
     GameParams.NextScreen := gstExit;
+end;
+
+procedure TAppController.DoLevelConvert;
+var
+  DstFile: String;
+begin
+  DstFile := ParamStr(3);
+  if DstFile = '' then
+    DstFile := ChangeFileExt(GameParams.CurrentLevel.Path, '.nxlv')
+  else if Pos(':', DstFile) = 0 then
+    DstFile := AppPath + DstFile;
+
+  GameParams.LoadCurrentLevel(true);
+  GameParams.Level.SaveToFile(DstFile); 
 end;
 
 destructor TAppController.Destroy;

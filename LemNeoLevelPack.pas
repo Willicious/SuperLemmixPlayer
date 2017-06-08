@@ -623,6 +623,9 @@ var
   end;
 
 begin
+  if not fEnableSave then
+    Exit;
+
   if Parent <> nil then
     raise Exception.Create('TNeoLevelGroup.SaveUserData called for group other than base group');
   Parser := TParser.Create;

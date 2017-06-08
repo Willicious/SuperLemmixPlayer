@@ -35,3 +35,6 @@ bin/neolemmix_logging.txt
 *.nxsv
 !bin/styles/styles_extra.zip
 NeoLemmix.identcache
+bin/levels/MobiLems1/
+bin/music/*.ogg
+bin/levels/TESTING/
