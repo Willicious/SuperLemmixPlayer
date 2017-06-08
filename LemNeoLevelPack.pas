@@ -178,7 +178,7 @@ type
       property PrevGroup: TNeoLevelGroup read GetPrevGroup;
       property NextGroup: TNeoLevelGroup read GetNextGroup;
 
-      property EnableSave: Boolean read fEnableSave write fEnableSave default true;
+      property EnableSave: Boolean read fEnableSave write fEnableSave;
   end;
 
 
@@ -403,6 +403,8 @@ begin
   fChildGroups := TNeoLevelGroups.Create(self);
   fLevels := TNeoLevelEntries.Create(self);
   fParentGroup := aParentGroup;
+
+  fEnableSave := fParentGroup = nil;
 
   SetDefaultData;
   Load;
