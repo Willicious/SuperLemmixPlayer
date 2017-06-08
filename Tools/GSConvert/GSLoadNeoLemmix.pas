@@ -159,7 +159,6 @@ var
   MetaInfoStream, GfxStream: TMemoryStream;
   CompressedStream: TMemoryStream;
   TempStream: TMemoryStream;
-  Decompressor: TDosDatDecompressor;
   TempHeader: NeoLemmixHeader;
   TempTerrain: NeoLemmixTerrainData;
   TempObject: NeoLemmixObjectData;
@@ -219,7 +218,6 @@ begin
   MetaInfoStream := TMemoryStream.Create;
   GfxStream := TMemoryStream.Create;
   CompressedStream := TMemoryStream.Create;
-  Decompressor := TDosDatDecompressor.Create;
   TempStream := TMemoryStream.Create;
 
   CompressedStream.LoadFromFile(fn);
@@ -229,10 +227,9 @@ begin
   CompressedStream.Seek(0, soFromBeginning);
   TempStream.Seek(0, soFromBeginning);
 
-  Decompressor.DecompressSection(CompressedStream, MetaInfoStream);
-  Decompressor.DecompressSection(CompressedStream, GfxStream);
+  DecompressDat(CompressedStream, MetaInfoStream);
+  DecompressDat(CompressedStream, GfxStream);
 
-  Decompressor.Free;
   CompressedStream.Free;
 
   TempHeader := LoadHeader(MetaInfoStream);

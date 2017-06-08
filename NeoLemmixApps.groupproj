@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{1AF64FBB-DBAE-41C0-98FE-60E2B62A74DB}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="NeoLemmix.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Tools\GSConvert\GSConvert.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="NeoLemmix">
+        <MSBuild Projects="NeoLemmix.dproj"/>
+    </Target>
+    <Target Name="NeoLemmix:Clean">
+        <MSBuild Projects="NeoLemmix.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="NeoLemmix:Make">
+        <MSBuild Projects="NeoLemmix.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GSConvert">
+        <MSBuild Projects="Tools\GSConvert\GSConvert.dproj"/>
+    </Target>
+    <Target Name="GSConvert:Clean">
+        <MSBuild Projects="Tools\GSConvert\GSConvert.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GSConvert:Make">
+        <MSBuild Projects="Tools\GSConvert\GSConvert.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="NeoLemmix;GSConvert"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="NeoLemmix:Clean;GSConvert:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="NeoLemmix:Make;GSConvert:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

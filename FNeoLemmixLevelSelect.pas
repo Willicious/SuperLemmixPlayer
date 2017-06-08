@@ -317,7 +317,6 @@ var
   procedure LoadDatFile(aFile: String);
   var
     DatFile, LvlFile: TMemoryStream;
-    Cmp: TDosDatDecompressor;
     n: Integer;
     Success, AlreadyExists: Boolean;
     Level: TLevel;
@@ -327,7 +326,6 @@ var
   begin
     DatFile := TMemoryStream.Create;
     LvlFile := TMemoryStream.Create;
-    Cmp := TDosDatDecompressor.Create;
     Level := TLevel.Create;
     Parser := TParser.Create;
     try
@@ -350,7 +348,7 @@ var
         LvlFile.Clear;
         try
           Inc(n);
-          Cmp.DecompressSection(DatFile, LvlFile);
+          DecompressDat(DatFile, LvlFile);
           LvlFile.Position := 0;
           Level.LoadFromStream(LvlFile);
           Level.SaveToFile(DstPath + MakeSafeForFilename(Level.Info.Title) + '.nxlv');
@@ -368,7 +366,6 @@ var
       end else if not AlreadyExists then
         RemoveDir(DstPath);
     finally
-      Cmp.Free;
       Level.Free;
       DatFile.Free;
       LvlFile.Free;

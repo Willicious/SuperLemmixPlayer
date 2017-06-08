@@ -196,7 +196,6 @@ begin
 
   SoundManager := TSoundManager.Create;
   GameParams := TDosGameParams.Create;
-  GameParams.fTestMode := true;
   PieceManager := TNeoPieceManager.Create;
   GameParams.Renderer := TRenderer.Create;
   GameParams.Level := TLevel.Create;
