@@ -1,2 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<BorlandProject/>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2017/06/09 14:52:10.189,C:\Users\Namida\Games\Lemmings\LemmixSource\NeoLemmixSource\GameBaseSkillPanel.pas=</Transaction>
+    <Transaction>2017/06/09 14:52:13.140,C:\Users\Namida\Games\Lemmings\LemmixSource\NeoLemmixSource\GameWindowInterface.pas=</Transaction>
+  </Transactions>
+</BorlandProject>

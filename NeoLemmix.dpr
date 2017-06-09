@@ -5,9 +5,7 @@ program NeoLemmix;
 uses
   LemRes,
   Forms,
-  FMain in 'FMain.pas' {MainForm},
-  GameWindowInterface in 'GameWindowInterface.pas',
-  GameBaseSkillPanel in 'GameBaseSkillPanel.pas';
+  FMain in 'FMain.pas' {MainForm};
 
 {$R *.res}
 
