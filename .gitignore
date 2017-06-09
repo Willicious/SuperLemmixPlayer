@@ -38,3 +38,4 @@ NeoLemmix.identcache
 bin/levels/MobiLems1/
 bin/music/*.ogg
 bin/levels/TESTING/
+*.identcache
