@@ -555,24 +555,28 @@ end;
 function TZipStreamEx.ReadFileName(var Name: ShortString): integer;
 var
   L: byte;
+  S: AnsiString;
 begin
   Result := Read(L, 1);
   CheckRead(ERR_READ_FILENAME, 1, Result);
   Seek(-1, soFromCurrent);
-  Result := Read(Name, L + 1);
+  Result := Read(S, L + 1);
   CheckRead(ERR_READ_FILENAME, L + 1, Result);
+  Name := S;
 end;
 
 function TZipStreamEx.ReadLongFileName(out Name: string): integer;
 var
   L: word;
+  S: AnsiString;
 begin
   Result := Read(L, 2);
   CheckRead(ERR_READ_FILENAME, 2, Result);
-  SetLength(Name, L);
-  Result := Read(Name[1], L);
+  SetLength(S, L);
+  Result := Read(S[1], L);
   CheckRead(ERR_READ_FILENAME, L, Result);
   Result := 2 + L;
+  Name := S;
 end;
 
 function TZipStreamEx.ReadFileHeader(var FileHeader: TFileHeader): integer;

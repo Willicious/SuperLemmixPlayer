@@ -1,8 +1,6 @@
 program NXPConvert;
 
 {$APPTYPE CONSOLE}
-{$R bass.res}
-{$R explode.res}
 
 uses
   UZip,
