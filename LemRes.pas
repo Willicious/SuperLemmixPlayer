@@ -5,6 +5,7 @@ unit LemRes;
 interface
 
   {$resource lemmixresources.res}             // lemmixresources contains the cursor bitmaps
+//  {$resource data\data.res}                   // misc resources; currently only particles
 
 //  {$resource 'data\lemdata.res'}        // music has been integrated into this to simplify code
 //  {$resource 'sounds\lemsounds.res'}    // lemsounds contains the sounds (wav)

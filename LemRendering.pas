@@ -1484,7 +1484,7 @@ end;
 constructor TRenderer.Create;
 var
   i: THelperIcon;
-  S: TMemoryStream;
+  S: TResourceStream;
 begin
   inherited Create;
 
@@ -1505,9 +1505,8 @@ begin
   end;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
-  S := TMemoryStream.Create;
+  S := TResourceStream.Create(HInstance, 'particles', 'lemdata');
   try
-    S.LoadFromFile(AppPath + SFData + 'particles.dat');
     S.Seek(0, soFromBeginning);
     S.Read(fParticles, S.Size);
   finally
