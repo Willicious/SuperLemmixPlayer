@@ -29,3 +29,4 @@ bin/neolemmix_logging.txt
 bin/music/*.ogg
 bin/levels/TESTING/
 *.identcache
+LemVersionCID.pas
