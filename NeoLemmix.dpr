@@ -4,7 +4,7 @@ program NeoLemmix;
 
 
 
-{$R 'data.res' 'data\data.rc'}
+
 
 uses
   LemRes,
