@@ -80,6 +80,8 @@ type
       fMusicChannel: LongWord;
       fMusicPlaying: Boolean;
 
+      fIsBassLoaded: Boolean;
+
       procedure ObtainMusicBassChannel;
 
       procedure SetSoundVolume(aValue: Integer);
@@ -123,11 +125,20 @@ implementation
 constructor TSoundManager.Create;
 begin
   inherited;
-  Load_BASSDLL(AppPath + 'bass.dll');
-  BASS_Init(-1, 44100, BASS_DEVICE_NOSPEAKER, 0, nil);
   fSoundEffects := TSoundEffects.Create;
   fMusicStream := TMemoryStream.Create;
   fMusicChannel := $FFFFFFFF;
+
+  if FileExists(AppPath + 'bass.dll') then
+  begin
+    Load_BASSDLL(AppPath + 'bass.dll');
+    fIsBassLoaded := BASS_Init(-1, 44100, BASS_DEVICE_NOSPEAKER, 0, nil);
+    if not fIsBassLoaded then
+      ShowMessage('BASS.DLL could not initialize. NeoLemmix will run but music and sound will not play.');
+  end else begin
+    ShowMessage('BASS.DLL not found. NeoLemmix will run but music and sound will not play.');
+    fIsBassLoaded := false;
+  end;
 end;
 
 destructor TSoundManager.Destroy;
@@ -135,13 +146,17 @@ begin
   FreeMusic;
   fMusicStream.Free;
   fSoundEffects.Free;
-  BASS_Free;
-  Unload_BASSDLL;
+  if fIsBassLoaded then
+  begin
+    BASS_Free;
+    Unload_BASSDLL;
+  end;
   inherited;
 end;
 
 procedure TSoundManager.FreeMusic;
 begin
+  if not fIsBassLoaded then Exit;
   if fMusicChannel = $FFFFFFFF then Exit;
   BASS_StreamFree(fMusicChannel);
   fMusicPlaying := false;
@@ -150,6 +165,8 @@ end;
 
 procedure TSoundManager.ObtainMusicBassChannel;
 begin
+  if not fIsBassLoaded then Exit;
+
   Assert(fMusicChannel = $FFFFFFFF, 'TSoundManager.ObtainMusicBassChannel: A channel already exists!');
   fMusicChannel := BASS_StreamCreateFile(true, fMusicStream.Memory, 0, fMusicStream.Size, BASS_SAMPLE_LOOP);
   if fMusicChannel = 0 then // this means we have a module-based file
@@ -174,6 +191,7 @@ begin
   if aValue < 0 then aValue := 0;
   if aValue > 100 then aValue := 100;
   fMusicVolume := aValue;
+  if not fIsBassLoaded then Exit;
   if fMusicChannel = $FFFFFFFF then Exit;
   BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_VOL, (fMusicVolume / 100));
   BASS_ChannelSetAttribute(fMusicChannel, BASS_ATTRIB_MUSIC_AMPLIFY, fMusicVolume / 2);
@@ -182,6 +200,7 @@ end;
 procedure TSoundManager.SetMusicMute(aValue: Boolean);
 begin
   fMuteMusic := aValue;
+  if not fIsBassLoaded then Exit;
   if fMuteMusic then
   begin
     if fMusicChannel <> $FFFFFFFF then
@@ -234,6 +253,8 @@ var
   F: TFileStream;
   Ext: String;
 begin
+  if not fIsBassLoaded then Exit;
+
   Result := FindSoundIndex(aName);
 
   if Result <> -1 then
@@ -253,6 +274,8 @@ end;
 
 function TSoundManager.LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false): Integer;
 begin
+  if not fIsBassLoaded then Exit;
+
   Result := FindSoundIndex(aName);
 
   if Result <> -1 then
@@ -273,6 +296,7 @@ procedure TSoundManager.LoadDefaultSounds;
     LoadSoundFromFile(aName, true);
   end;
 begin
+  if not fIsBassLoaded then Exit;
   // Commented-out lines are sound files that existed since Lemmix, but don't appear to be referenced anywhere in the code.
   // Just in case, I haven't deleted these files, but put them in an "unused" subfolder of the sound folder.
 
@@ -313,6 +337,8 @@ end;
 
 function TSoundManager.FindSoundIndex(aName: String): Integer;
 begin
+  Result := -1;
+  if not fIsBassLoaded then Exit;
   aName := Lowercase(aName);
   for Result := 0 to fSoundEffects.Count-1 do
     if fSoundEffects[Result].Name = aName then
@@ -322,13 +348,18 @@ end;
 
 function TSoundManager.DoesSoundExist(const aName: String): Boolean;
 begin
-  Result := FindSoundIndex(aName) <> -1;
+  if not fIsBassLoaded then
+    Result := false
+  else
+    Result := FindSoundIndex(aName) <> -1;
 end;
 
 procedure TSoundManager.PurgeNonDefaultSounds;
 var
   i: Integer;
 begin
+  if not fIsBassLoaded then Exit;
+
   for i := fSoundEffects.Count-1 downto 0 do
     if not fSoundEffects[i].IsDefaultSound then
       fSoundEffects.Delete(i);
@@ -339,6 +370,8 @@ var
   F: TFileStream;
   Ext: String;
 begin
+  if not fIsBassLoaded then Exit;
+
   aName := Lowercase(aName);
   if fMusicName = aName then Exit; // saves some time
 
@@ -359,6 +392,8 @@ end;
 
 procedure TSoundManager.LoadMusicFromStream(aStream: TStream; aName: String);
 begin
+  if not fIsBassLoaded then Exit;
+
   aName := Lowercase(aName);
   if fMusicName = aName then Exit; // saves some time
 
@@ -372,6 +407,8 @@ end;
 
 procedure TSoundManager.PlayMusic;
 begin
+  if not fIsBassLoaded then Exit;
+
   fMusicPlaying := true;
 
   if fMuteMusic then
@@ -385,6 +422,8 @@ end;
 
 procedure TSoundManager.StopMusic;
 begin
+  if not fIsBassLoaded then Exit;
+
   fMusicPlaying := false;
   BASS_ChannelStop(fMusicChannel);
 end;
@@ -394,6 +433,8 @@ var
   SoundIndex: Integer;
   SampleChannel: LongWord;
 begin
+  if not fIsBassLoaded then Exit;
+
   if fMuteSound then Exit;
   SoundIndex := FindSoundIndex(aName);
 
