@@ -169,7 +169,7 @@ begin
   GameParams.Level := TLevel.Create;
   GameParams.MainForm := TForm(aOwner);
 
-  Application.Title := GameParams.BaseLevelPack.Name;
+  Application.Title := 'NeoLemmix';
 
   GameParams.NextScreen := gstMenu;
 

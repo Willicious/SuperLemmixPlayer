@@ -448,10 +448,7 @@ begin
   begin
     SampleChannel := BASS_SampleGetChannel(fSoundEffects[SoundIndex].BassSample, true);
     if aBalance <> 0 then
-    begin
-      if not BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100)) then
-        ShowMessage(IntToStr(BASS_ErrorGetCode));
-    end;
+      BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100));
     BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_VOL, (fSoundVolume / 100));
     BASS_ChannelPlay(SampleChannel, true);
   end;
