@@ -4,7 +4,9 @@ bin/*.ini
 bin/*.nxsv
 bin/*.png
 bin/*.bmp
+bin/*.nxlv
 bin/Dump/*
+!bin/levels/*.nxlv
 !bin/gfx/*.png
 !bin/styles/*.png
 instructions.txt
@@ -16,26 +18,14 @@ instructions.txt
 *.rc
 *.lrb
 *.nxrp
-!lemdata.res
-!lemsounds.res
-!LemResourceBuilder.exe
 !OLMaker.exe
-Data/lemdata_Original.RES
+!GetCommitID.exe
 NeoLemmixHotkeys.ini
-NeoLemmixSettings.ini
 NeoLemmix147Settings.ini
-bin/styles/versions.ini
-tools/GSConvert/bin/*
-!tools/GSConvert/bin/*.txt
-!tools/GSConvert/bin/*.dat
-!tools/GSConvert/bin/default/
-*.nxp
 bin/* Replay Results.txt
 bin/neolemmix_logging.txt
 *.nxsv
 !bin/styles/styles_extra.zip
-NeoLemmix.identcache
-bin/levels/MobiLems1/
 bin/music/*.ogg
 bin/levels/TESTING/
 *.identcache
