@@ -35,58 +35,6 @@ uses
 type
   TWindowOrder = array of Integer;
 
-  TStyleName = class
-  private
-    fStyleName : ShortString;
-    fID : Byte;
-    fSpecial : Boolean;
-  protected
-  public
-    constructor Create(aTag: ShortString; aID: Byte; aSpec: Boolean = false);
-  published
-    property StyleName : ShortString read fStyleName;
-    property ID: Byte read fID;
-    property Special: Boolean read fSpecial;
-  end;
-
-  TStyleFinder = class
-  private
-    fStyleList : TList;
-    //fSysDat: TSysDatRec;
-    procedure InitList;
-  protected
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function FindNumber(tag: AnsiString; spec: Boolean): Integer;
-    function FindName(id: Byte; spec: Boolean): ShortString;
-  published
-  end;
-
-  TMusicName = class
-  private
-    fMusicName: ShortString;
-    fID: Byte;
-  public
-    constructor Create(aTag: AnsiString; aID: Byte);
-  published
-    property MusicName: ShortString read fMusicName;
-    property ID: Byte read fID;
-  end;
-
-  TMusicFinder = class
-  private
-    fMusicList : TList;
-    procedure InitList;
-  protected
-  public
-    constructor Create;
-    destructor Destroy; override;
-    function FindNumber(tag: ShortString): Integer;
-    function FindName(id: Byte): ShortString;
-  published
-  end;
-
   TTranslationItemType = (itTerrain, itObject, itBackground);
   TTranslationItem = record
     ItemType: TTranslationItemType;
@@ -121,20 +69,34 @@ type
       procedure Apply(aLevel: TLevel);
   end;
 
+  TStyleNumbering = (snStandard, snOhNo, snXmas);
+  TLevelFormat = (lfLemmix, lfLemmins, lfLemmini);
+
   TLVLLoader = class
   private
+    class procedure ResolutionPatch(aLevel: TLevel; aSrcRes: Integer);
     class procedure UpgradeFormat(var Buf: TNeoLVLRec);
     class procedure ApplyWindowOrder(aLevel: TLevel; WindowOrder: TWindowOrder);
-  protected
+    class function GetStyleName(aID: Integer): String;
+    class function GetMusicName(aID: Integer): String;
+
+    // Lemmix / NeoLemmix
+    class procedure LoadTradLevelFromStream(aStream: TStream; aLevel: TLevel);
+    class procedure LoadNeoLevelFromStream(aStream: TStream; aLevel: TLevel);
+    class procedure LoadNewNeoLevelFromStream(aStream: TStream; aLevel: TLevel);
+
+    // Other
+    class procedure LoadLemminiLevelFromStream(aStream: TStream; aLevel: TLevel);
+    class procedure LoadLemminsLevelFromStream(aStream: TStream; aLevel: TLevel);
   public
-    class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
-    class procedure LoadTradLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
-    class procedure LoadNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
-    class procedure LoadNewNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
-    class procedure StoreLevelInStream(aLevel: TLevel; aStream: TStream);
+    class var StyleNumbering: TStyleNumbering;
+    class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; aFormat: TLevelFormat = lfLemmix);
   end;
 
 implementation
+
+uses
+  SharedGlobals; // debug
 
 { TTranslationTable }
 
@@ -423,175 +385,110 @@ begin
     aLevel.Info.Background := MatchRec.DstGS + ':' + MatchRec.DstName;
 end;
 
-{ TStyleName }
-
-constructor TStyleName.Create(aTag: ShortString; aID: Byte; aSpec: Boolean = false);
-begin
-  inherited Create;
-  fStyleName := trim(lowercase(leftstr(aTag, 16)));
-  fID := aID;
-  fSpecial := aSpec;
-end;
-
-{ TMusicName }
-
-constructor TMusicName.Create(aTag: AnsiString; aID: Byte);
-begin
-  inherited Create;
-  fMusicName := trim(lowercase(leftstr(aTag, 16)));
-  fID := aID;
-end;
-
-{ TStyleFinder }
-
-constructor TStyleFinder.Create;
-begin
-  InitList;
-end;
-
-destructor TStyleFinder.Destroy;
-begin
-  fStyleList.Free;
-  inherited Destroy;
-end;
-
-procedure TStyleFinder.InitList;
-//var
-  //i: Integer;
-  //fMainDatExtractor : TMainDatExtractor;
-
-  procedure Sty(tag: ShortString; ID: byte; Spec: boolean = false);
-  var
-    SN : TStyleName;
-  begin
-    SN := TStyleName.Create(tag, ID, Spec);
-    fStyleList.Add(SN);
-  end;
-
-begin
-  fStyleList := TList.Create;
-    Sty('dirt',         0);
-    Sty('fire',         1);
-    Sty('marble',       2);
-    Sty('pillar',       3);
-    Sty('crystal',      4);
-    Sty('brick',        5);
-    Sty('rock',         6);
-    Sty('snow',         7);
-    Sty('bubble',       8);
-    Sty('xmas',         9);
-    Sty('tree',        10);
-    Sty('purple',      11);
-    Sty('psychedelic', 12);
-    Sty('metal',       13);
-    Sty('desert',      14);
-    Sty('sky',         15);
-    Sty('circuit',     16);
-    Sty('martian',     17);
-    Sty('lab',         18);
-    Sty('sega',        19);
-    Sty('dirt_md',     20);
-    Sty('fire_md',     21);
-    Sty('marble_md',   22);
-    Sty('pillar_md',   23);
-    Sty('crystal_md',  24);
-    Sty('horror',      25);
-end;
-
-function TStyleFinder.FindNumber(tag: AnsiString; Spec: Boolean): Integer;
-var
-  i: Integer;
-  SN: TStyleName;
-begin
-  tag := trim(lowercase(leftstr(tag, 16)));
-  for i := 0 to fStyleList.Count - 1 do
-  begin
-    SN := TStyleName(fStyleList[i]);
-    if SN.Special <> Spec then Continue;
-    if SN.StyleName <> tag then Continue;
-    Result := SN.ID;
-    Exit;
-  end;
-  Result := -1;
-end;
-
-function TStyleFinder.FindName(ID: byte; Spec: Boolean): ShortString;
-var
-  i: Integer;
-  SN: TStyleName;
-begin
-  for i := 0 to fStyleList.Count - 1 do
-  begin
-    SN := TStyleName(fStyleList[i]);
-    if SN.Special <> Spec then Continue;
-    if SN.ID <> ID then Continue;
-    Result := SN.StyleName;
-    Exit;
-  end;
-  Result := '';
-end;
-
-{ TMusicFinder }
-
-constructor TMusicFinder.Create;
-begin
-  InitList;
-end;
-
-destructor TMusicFinder.Destroy;
-begin
-  fMusicList.Free;
-  inherited Destroy;
-end;
-
-procedure TMusicFinder.InitList;
-
-  procedure Mus(tag: ShortString; ID: byte);
-  var
-    SN : TMusicName;
-  begin
-    SN := TMusicName.Create(tag, ID);
-    fMusicList.Add(SN);
-  end;
-
-begin
-  fMusicList := TList.Create;
-end;
-
-function TMusicFinder.FindNumber(tag: ShortString): Integer;
-var
-  i: Integer;
-  SN: TMusicName;
-begin
-  tag := trim(lowercase(leftstr(tag, 16)));
-  for i := 0 to fMusicList.Count - 1 do
-  begin
-    SN := TMusicName(fMusicList[i]);
-    if SN.MusicName <> tag then Continue;
-    Result := SN.ID;
-    Exit;
-  end;
-  Result := -1;
-end;
-
-function TMusicFinder.FindName(ID: byte): ShortString;
-var
-  i: Integer;
-  SN: TMusicName;
-begin
-  for i := 0 to fMusicList.Count - 1 do
-  begin
-    SN := TMusicName(fMusicList[i]);
-    if SN.ID <> ID then Continue;
-    Result := SN.MusicName;
-    Exit;
-  end;
-  Result := '';
-end;
-
 { TLVLLoader }
 
-class procedure TLVLLoader.LoadLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+class function TLVLLoader.GetStyleName(aID: Integer): String;
+begin
+  Result := '';
+  case StyleNumbering of
+    snStandard: case aID of
+                  0: Result := 'dirt';
+                  1: Result := 'fire';
+                  2: Result := 'marble';
+                  3: Result := 'pillar';
+                  4: Result := 'crystal';
+                  5: Result := 'brick';
+                  6: Result := 'rock';
+                  7: Result := 'snow';
+                  8: Result := 'bubble';
+                  9: Result := 'xmas';
+                  10: Result := 'tree';
+                  11: Result := 'purple';
+                  12: Result := 'psychedelic';
+                  13: Result := 'metal';
+                  14: Result := 'desert';
+                  15: Result := 'sky';
+                  16: Result := 'circuit';
+                  17: Result := 'martian';
+                  18: Result := 'lab';
+                  19: Result := 'sega';
+                  20: Result := 'dirt_md';
+                  21: Result := 'fire_md';
+                  22: Result := 'marble_md';
+                  23: Result := 'pillar_md';
+                  24: Result := 'crystal_md';
+                end;
+    snOhNo: case aID of
+              0: Result := 'brick';
+              1: Result := 'rock';
+              2: Result := 'snow';
+              3: Result := 'bubble';
+            end;
+    snXmas: case aID of
+              0: Result := 'brick';
+              1: Result := 'rock';
+              2: Result := 'xmas';
+            end;
+  end;
+end;
+
+class function TLVLLoader.GetMusicName(aID: Integer): String;
+begin
+  Result := '';
+  case aID of
+    1..17: Result := 'orig_' + LeadZeroStr(aID, 2);
+    18..23: Result := 'ohno_' + LeadZeroStr(aID-17, 2);
+    254: Result := 'frenzy';
+    255: Result := 'gimmick';
+  end;
+end;
+
+class procedure TLVLLoader.ResolutionPatch(aLevel: TLevel; aSrcRes: Integer);
+var
+  i: Integer;
+begin
+  with aLevel.Info do
+  begin
+    ScreenPosition := ScreenPosition div aSrcRes;
+    ScreenYPosition := ScreenYPosition div aSrcRes;
+    Width := Width div aSrcRes;
+    Height := Height div aSrcRes;
+  end;
+
+  for i := 0 to aLevel.InteractiveObjects.Count-1 do
+    with aLevel.InteractiveObjects[i] do
+    begin
+      Width := Width div aSrcRes;
+      Height := Height div aSrcRes;
+      Left := Left div aSrcRes;
+      Top := Top div aSrcRes;
+    end;
+
+  for i := 0 to aLevel.Terrains.Count-1 do
+    with aLevel.Terrains[i] do
+    begin
+      Left := Left div aSrcRes;
+      Top := Top div aSrcRes;
+    end;
+
+  for i := 0 to aLevel.Steels.Count-1 do
+    with aLevel.Steels[i] do
+    begin
+      Width := Width div aSrcRes;
+      Height := Height div aSrcRes;
+      Left := Left div aSrcRes;
+      Top := Top div aSrcRes;
+    end;
+
+  for i := 0 to aLevel.PreplacedLemmings.Count-1 do
+    with aLevel.PreplacedLemmings[i] do
+    begin
+      X := X div aSrcRes;
+      Y := Y div aSrcRes;
+    end;
+end;
+
+class procedure TLVLLoader.LoadLevelFromStream(aStream: TStream; aLevel: TLevel; aFormat: TLevelFormat = lfLemmix);
 var
   b: byte;
   i, i2: integer;
@@ -606,18 +503,24 @@ begin
 
   aLevel.Clear;
 
-  case b of
-    0: LoadTradLevelFromStream(aStream, aLevel);
-  1..3: LoadNeoLevelFromStream(aStream, aLevel);
-    4: LoadNewNeoLevelFromStream(aStream, aLevel);
-    else begin
-           aLevel.LoadFromStream(aStream);
-           Exit;
-         end;  
-  end;
+  case aFormat of
+    lfLemmix: begin
+                case b of
+                  0: LoadTradLevelFromStream(aStream, aLevel);
+                1..3: LoadNeoLevelFromStream(aStream, aLevel);
+                  4: LoadNewNeoLevelFromStream(aStream, aLevel);
+                  else begin
+                         aLevel.LoadFromStream(aStream);
+                         Exit;
+                       end;
+                end;
 
-  if (b <= 4) then
-    aLevel.Info.HasTimeLimit := aLevel.Info.TimeLimit < 6000;
+                if (b <= 4) then
+                  aLevel.Info.HasTimeLimit := aLevel.Info.TimeLimit < 6000;
+              end;
+    lfLemmini: LoadLemminiLevelFromStream(aStream, aLevel);
+    lfLemmins: LoadLemminsLevelFromStream(aStream, aLevel);
+  end;
 
   // if the level has no Level ID, make one.
   // must be pseudo-random to enough extent to generate a different ID for each level,
@@ -707,7 +610,7 @@ begin
 end;
 
 
-class procedure TLVLLoader.LoadNewNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+class procedure TLVLLoader.LoadNewNeoLevelFromStream(aStream: TStream; aLevel: TLevel);
 {-------------------------------------------------------------------------------
   Translate a LVL file and fill the collections.
   For decoding and technical details see documentation or read the code :)
@@ -722,7 +625,6 @@ var
   Obj: TInteractiveObject;
   Ter: TTerrain;
   Steel: TSteel;
-  //SFinder: TStyleFinder;
   GSNames: array of String;
   GSName: array[0..15] of AnsiChar;
 
@@ -756,115 +658,101 @@ begin
   with aLevel do
   begin
     aStream.ReadBuffer(Buf, SizeOf(Buf));
-    //UpgradeFormat(Buf);
     {-------------------------------------------------------------------------------
       Get the statics. This is easy
     -------------------------------------------------------------------------------}
     with Info do
     begin
-      if OddLoad <> 1 then
+      aLevel.Clear;
+      ReleaseRate      := Buf.ReleaseRate;
+      ReleaseRateLocked := (Buf.LevelOptions2 and 1) <> 0;
+      if Buf.BgIndex = $FF then
+        Background := ''
+      else
+        Background := IntToStr(Buf.BgIndex);
+
+      LemmingsCount    := Buf.LemmingsCount;
+      RescueCount      := Buf.RescueCount;
+      TimeLimit        := Buf.TimeLimit; // internal structure now matches NeoLemmix file format structure (just a number of seconds)
+
+      x2 := 0;
+      if Buf.Skillset and $8000 <> 0 then AddSkill(spbWalker);
+      if Buf.Skillset and $4000 <> 0 then AddSkill(spbClimber);
+      if Buf.Skillset and $2000 <> 0 then AddSkill(spbSwimmer);
+      if Buf.Skillset and $1000 <> 0 then AddSkill(spbFloater);
+      if Buf.Skillset and $800 <> 0 then AddSkill(spbGlider);
+      if Buf.Skillset and $400 <> 0 then AddSkill(spbDisarmer);
+      if Buf.Skillset and $200 <> 0 then AddSkill(spbBomber);
+      if Buf.Skillset and $100 <> 0 then AddSkill(spbStoner);
+      if Buf.Skillset and $80 <> 0 then AddSkill(spbBlocker);
+      if Buf.Skillset and $40 <> 0 then AddSkill(spbPlatformer);
+      if Buf.Skillset and $20 <> 0 then AddSkill(spbBuilder);
+      if Buf.Skillset and $10 <> 0 then AddSkill(spbStacker);
+      if Buf.Skillset and $8 <> 0 then AddSkill(spbBasher);
+      if Buf.Skillset and $4 <> 0 then AddSkill(spbMiner);
+      if Buf.Skillset and $2 <> 0 then AddSkill(spbDigger);
+      if Buf.Skillset and $1 <> 0 then AddSkill(spbCloner);
+      if Buf.LevelOptions2 and $2 <> 0 then AddSkill(spbFencer);
+
+      SetSkillCount(spbWalker, Buf.WalkerCount);
+      SetSkillCount(spbClimber, Buf.ClimberCount);
+      SetSkillCount(spbSwimmer, Buf.SwimmerCount);
+      SetSkillCount(spbFloater, Buf.FloaterCount);
+      SetSkillCount(spbGlider, Buf.GliderCount);
+      SetSkillCount(spbDisarmer, Buf.MechanicCount);
+      SetSkillCount(spbBomber, Buf.BomberCount);
+      SetSkillCount(spbStoner, Buf.StonerCount);
+      SetSkillCount(spbBlocker, Buf.BlockerCount);
+      SetSkillCount(spbPlatformer, Buf.PlatformerCount);
+      SetSkillCount(spbBuilder, Buf.BuilderCount);
+      SetSkillCount(spbStacker, Buf.StackerCount);
+      SetSkillCount(spbBasher, Buf.BasherCount);
+      SetSkillCount(spbMiner, Buf.MinerCount);
+      SetSkillCount(spbDigger, Buf.DiggerCount);
+      SetSkillCount(spbCloner, Buf.ClonerCount);
+      SetSkillCount(spbFencer, Buf.FencerCount);
+
+      Title            := Buf.LevelName;
+      Author           := Buf.LevelAuthor;
+      LevelID := Buf.LevelID;
+
+      LRes := Buf.Resolution;
+      if LRes = 0 then LRes := 8;
+
+      Width := (Buf.Width * 8) div LRes;
+      Height := (Buf.Height * 8) div LRes;
+
+
+      if Width < 1 then Width := 1;
+      if Height < 1 then Height := 1;
+
+      // Screen positions are saved as a Word, i.e. unsigned. So we treat anything >32768 as negative
+      if Buf.ScreenPosition > 32768 then ScreenPosition := 160
+      else
       begin
-        aLevel.Clear;
-        ReleaseRate      := Buf.ReleaseRate;
-        ReleaseRateLocked := (Buf.LevelOptions2 and 1) <> 0;
-        if Buf.BgIndex = $FF then
-          Background := ''
-        else
-          Background := IntToStr(Buf.BgIndex);
-
-        LemmingsCount    := Buf.LemmingsCount;
-        RescueCount      := Buf.RescueCount;
-        TimeLimit        := Buf.TimeLimit; // internal structure now matches NeoLemmix file format structure (just a number of seconds)
-
-        x2 := 0;
-        if Buf.Skillset and $8000 <> 0 then AddSkill(spbWalker);
-        if Buf.Skillset and $4000 <> 0 then AddSkill(spbClimber);
-        if Buf.Skillset and $2000 <> 0 then AddSkill(spbSwimmer);
-        if Buf.Skillset and $1000 <> 0 then AddSkill(spbFloater);
-        if Buf.Skillset and $800 <> 0 then AddSkill(spbGlider);
-        if Buf.Skillset and $400 <> 0 then AddSkill(spbDisarmer);
-        if Buf.Skillset and $200 <> 0 then AddSkill(spbBomber);
-        if Buf.Skillset and $100 <> 0 then AddSkill(spbStoner);
-        if Buf.Skillset and $80 <> 0 then AddSkill(spbBlocker);
-        if Buf.Skillset and $40 <> 0 then AddSkill(spbPlatformer);
-        if Buf.Skillset and $20 <> 0 then AddSkill(spbBuilder);
-        if Buf.Skillset and $10 <> 0 then AddSkill(spbStacker);
-        if Buf.Skillset and $8 <> 0 then AddSkill(spbBasher);
-        if Buf.Skillset and $4 <> 0 then AddSkill(spbMiner);
-        if Buf.Skillset and $2 <> 0 then AddSkill(spbDigger);
-        if Buf.Skillset and $1 <> 0 then AddSkill(spbCloner);
-        if Buf.LevelOptions2 and $2 <> 0 then AddSkill(spbFencer);
-
-        SetSkillCount(spbWalker, Buf.WalkerCount);
-        SetSkillCount(spbClimber, Buf.ClimberCount);
-        SetSkillCount(spbSwimmer, Buf.SwimmerCount);
-        SetSkillCount(spbFloater, Buf.FloaterCount);
-        SetSkillCount(spbGlider, Buf.GliderCount);
-        SetSkillCount(spbDisarmer, Buf.MechanicCount);
-        SetSkillCount(spbBomber, Buf.BomberCount);
-        SetSkillCount(spbStoner, Buf.StonerCount);
-        SetSkillCount(spbBlocker, Buf.BlockerCount);
-        SetSkillCount(spbPlatformer, Buf.PlatformerCount);
-        SetSkillCount(spbBuilder, Buf.BuilderCount);
-        SetSkillCount(spbStacker, Buf.StackerCount);
-        SetSkillCount(spbBasher, Buf.BasherCount);
-        SetSkillCount(spbMiner, Buf.MinerCount);
-        SetSkillCount(spbDigger, Buf.DiggerCount);
-        SetSkillCount(spbCloner, Buf.ClonerCount);
-        SetSkillCount(spbFencer, Buf.FencerCount);
-
-        Title            := Buf.LevelName;
-        Author           := Buf.LevelAuthor;
-        LevelID := Buf.LevelID;
+        ScreenPosition   := ((Buf.ScreenPosition * 8) div LRes) + 160;
+        if ScreenPosition > (Width - 160) then ScreenPosition := (Width - 160);
+        if ScreenPosition < 0 then ScreenPosition := 0;
+      end;
+      if Buf.ScreenYPosition > 32768 then ScreenYPosition := 80
+      else
+      begin
+        ScreenYPosition := ((Buf.ScreenYPosition * 8) div LRes) + 80;
+        if ScreenYPosition > (Height - 80) then ScreenYPosition := (Height - 80);
+        if ScreenYPosition < 0 then ScreenYPosition := 0;
       end;
 
-      if (OddLoad = 2) and (Buf.LevelOptions and 16 <> 0) then
-      begin
-        LevelOptions := $71;
-        LRes := 8;
-      end else begin
+      GraphicSetName := trim(Buf.StyleName);
 
-        LRes := Buf.Resolution;
-        if LRes = 0 then LRes := 8;
+      SetLength(GSNames, 1);
+      GSNames[0] := GraphicSetName; // fallback in case lvl file has no graphic set list, as most won't
 
-        Width := (Buf.Width * 8) div LRes;
-        Height := (Buf.Height * 8) div LRes;
+      LevelOptions := Buf.LevelOptions;
 
-
-        if Width < 1 then Width := 1;
-        if Height < 1 then Height := 1;
-
-        // Screen positions are saved as a Word, i.e. unsigned. So we treat anything >32768 as negative
-        if Buf.ScreenPosition > 32768 then ScreenPosition := 160
-        else
-        begin
-          ScreenPosition   := ((Buf.ScreenPosition * 8) div LRes) + 160;
-          if ScreenPosition > (Width - 160) then ScreenPosition := (Width - 160);
-          if ScreenPosition < 0 then ScreenPosition := 0;
-        end;
-        if Buf.ScreenYPosition > 32768 then ScreenYPosition := 80
-        else
-        begin
-          ScreenYPosition := ((Buf.ScreenYPosition * 8) div LRes) + 80;
-          if ScreenYPosition > (Height - 80) then ScreenYPosition := (Height - 80);
-          if ScreenYPosition < 0 then ScreenYPosition := 0;
-        end;
-
-        GraphicSetName := trim(Buf.StyleName);
-
-        SetLength(GSNames, 1);
-        GSNames[0] := GraphicSetName; // fallback in case lvl file has no graphic set list, as most won't
-
-        LevelOptions := Buf.LevelOptions;
-      end;
       if LevelOptions and $2 = 0 then
         LevelOptions := LevelOptions and $F7;
     end;
 
-    //if (OddLoad = 2) and (Info.LevelOptions and 16 <> 0) then Exit;
-
-    //b := 0;
-    //aStream.Read(b, 1);
     while (aStream.Read(b, 1) <> 0) do
     begin
       case b of
@@ -969,10 +857,7 @@ begin
                if ScreenPosition < 0 then ScreenPosition := 0;
                if ScreenYPosition < 0 then ScreenYPosition := 0;
              end;
-             if OddLoad <> 1 then
-             begin
-               Info.MusicFile := Trim(Buf2.MusicName);
-             end;
+             Info.MusicFile := Trim(Buf2.MusicName);
            end;
         6: begin
              aStream.Read(w, 2);
@@ -985,34 +870,14 @@ begin
            end;
         else Break;
       end;
-
-      //b := 0;
-      //aStream.Read(b, 1);
     end;
 
     for i := 0 to Length(SkipObjects)-1 do
       for x := 0 to Length(WindowOrder)-1 do
         if WindowOrder[x] > SkipObjects[i] then Dec(WindowOrder[x]);
 
-    if (not HasSubHeader) and (OddLoad <> 1) then
-    with Info do
-      begin
-        case Buf.MusicNumber of
-          0: MusicFile := '';
-        253: MusicFile := '*';
-        254: MusicFile := 'frenzy';
-        255: MusicFile := 'gimmick';
-          else  MusicFile := 'track_' + LeadZeroStr(Buf.MusicNumber, 2); // best compatibility with existing packs
-        end;
-      end;
-
-    (*if (OddLoad = 2) and (Info.LevelOptions and $10 <> 0) then
-    begin
-      InteractiveObjects.Clear;
-      Terrains.Clear;
-      Steels.Clear;
-      SetLength(Info.WindowOrder, 0);
-    end;*)
+    if (not HasSubHeader) then
+      Info.MusicFile := GetMusicName(Buf.MusicNumber);
 
     if Length(WindowOrder) <> 0 then
       ApplyWindowOrder(aLevel, WindowOrder);
@@ -1029,7 +894,7 @@ begin
 end;
 
 
-class procedure TLVLLoader.LoadTradLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+class procedure TLVLLoader.LoadTradLevelFromStream(aStream: TStream; aLevel: TLevel);
 {-------------------------------------------------------------------------------
   Translate a LVL file and fill the collections.
   For decoding and technical details see documentation or read the code :)
@@ -1044,7 +909,6 @@ var
   Ter: TTerrain;
   Steel: TSteel;
   GraphicSet: Integer;
-  SFinder: TStyleFinder;
 begin
   with aLevel do
   begin
@@ -1087,12 +951,7 @@ begin
       if ScreenPosition > (Width - 160) then ScreenPosition := (Width - 160);
       if ScreenPosition < 160 then ScreenPosition := 160;
 
-      SFinder := TStyleFinder.Create;
-
-      if SFinder.FindName(GraphicSet mod 256, false) <> '' then
-        GraphicSetName := SFinder.FindName(GraphicSet mod 256, false);
-
-      SFinder.Free;
+      GraphicSetName := GetStyleName(GraphicSet mod 256);
     end;
 
     {-------------------------------------------------------------------------------
@@ -1203,7 +1062,7 @@ begin
 end;
 
 
-class procedure TLVLLoader.LoadNeoLevelFromStream(aStream: TStream; aLevel: TLevel; OddLoad: Byte = 0);
+class procedure TLVLLoader.LoadNeoLevelFromStream(aStream: TStream; aLevel: TLevel);
 {-------------------------------------------------------------------------------
   Translate a LVL file and fill the collections.
   For decoding and technical details see documentation or read the code :)
@@ -1217,7 +1076,6 @@ var
   Obj: TInteractiveObject;
   Ter: TTerrain;
   Steel: TSteel;
-  SFinder: TStyleFinder;
   TempWindowOrder: Array[0..31] of Byte;
   WindowOrder: TWindowOrder;
 
@@ -1244,64 +1102,51 @@ begin
     -------------------------------------------------------------------------------}
     with Info do
     begin
-      if OddLoad <> 1 then
-      begin
       aLevel.Clear;
       ReleaseRate      := Buf.ReleaseRate;
       LemmingsCount    := Buf.LemmingsCount;
       RescueCount      := Buf.RescueCount;
       TimeLimit        := Buf.TimeLimit; // internal structure now matches NeoLemmix file format structure (just a number of seconds)
 
-        x2 := 0;
-        if Buf.Skillset and $8000 <> 0 then AddSkill(spbWalker);
-        if Buf.Skillset and $4000 <> 0 then AddSkill(spbClimber);
-        if Buf.Skillset and $2000 <> 0 then AddSkill(spbSwimmer);
-        if Buf.Skillset and $1000 <> 0 then AddSkill(spbFloater);
-        if Buf.Skillset and $800 <> 0 then AddSkill(spbGlider);
-        if Buf.Skillset and $400 <> 0 then AddSkill(spbDisarmer);
-        if Buf.Skillset and $200 <> 0 then AddSkill(spbBomber);
-        if Buf.Skillset and $100 <> 0 then AddSkill(spbStoner);
-        if Buf.Skillset and $80 <> 0 then AddSkill(spbBlocker);
-        if Buf.Skillset and $40 <> 0 then AddSkill(spbPlatformer);
-        if Buf.Skillset and $20 <> 0 then AddSkill(spbBuilder);
-        if Buf.Skillset and $10 <> 0 then AddSkill(spbStacker);
-        if Buf.Skillset and $8 <> 0 then AddSkill(spbBasher);
-        if Buf.Skillset and $4 <> 0 then AddSkill(spbMiner);
-        if Buf.Skillset and $2 <> 0 then AddSkill(spbDigger);
-        if Buf.Skillset and $1 <> 0 then AddSkill(spbCloner);
+      x2 := 0;
+      if Buf.Skillset and $8000 <> 0 then AddSkill(spbWalker);
+      if Buf.Skillset and $4000 <> 0 then AddSkill(spbClimber);
+      if Buf.Skillset and $2000 <> 0 then AddSkill(spbSwimmer);
+      if Buf.Skillset and $1000 <> 0 then AddSkill(spbFloater);
+      if Buf.Skillset and $800 <> 0 then AddSkill(spbGlider);
+      if Buf.Skillset and $400 <> 0 then AddSkill(spbDisarmer);
+      if Buf.Skillset and $200 <> 0 then AddSkill(spbBomber);
+      if Buf.Skillset and $100 <> 0 then AddSkill(spbStoner);
+      if Buf.Skillset and $80 <> 0 then AddSkill(spbBlocker);
+      if Buf.Skillset and $40 <> 0 then AddSkill(spbPlatformer);
+      if Buf.Skillset and $20 <> 0 then AddSkill(spbBuilder);
+      if Buf.Skillset and $10 <> 0 then AddSkill(spbStacker);
+      if Buf.Skillset and $8 <> 0 then AddSkill(spbBasher);
+      if Buf.Skillset and $4 <> 0 then AddSkill(spbMiner);
+      if Buf.Skillset and $2 <> 0 then AddSkill(spbDigger);
+      if Buf.Skillset and $1 <> 0 then AddSkill(spbCloner);
 
-        SetSkillCount(spbWalker, Buf.WalkerCount);
-        SetSkillCount(spbClimber, Buf.ClimberCount);
-        SetSkillCount(spbSwimmer, Buf.SwimmerCount);
-        SetSkillCount(spbFloater, Buf.FloaterCount);
-        SetSkillCount(spbGlider, Buf.GliderCount);
-        SetSkillCount(spbDisarmer, Buf.MechanicCount);
-        SetSkillCount(spbBomber, Buf.BomberCount);
-        SetSkillCount(spbStoner, Buf.StonerCount);
-        SetSkillCount(spbBlocker, Buf.BlockerCount);
-        SetSkillCount(spbPlatformer, Buf.PlatformerCount);
-        SetSkillCount(spbBuilder, Buf.BuilderCount);
-        SetSkillCount(spbStacker, Buf.StackerCount);
-        SetSkillCount(spbBasher, Buf.BasherCount);
-        SetSkillCount(spbMiner, Buf.MinerCount);
-        SetSkillCount(spbDigger, Buf.DiggerCount);
-        SetSkillCount(spbCloner, Buf.ClonerCount);
+      SetSkillCount(spbWalker, Buf.WalkerCount);
+      SetSkillCount(spbClimber, Buf.ClimberCount);
+      SetSkillCount(spbSwimmer, Buf.SwimmerCount);
+      SetSkillCount(spbFloater, Buf.FloaterCount);
+      SetSkillCount(spbGlider, Buf.GliderCount);
+      SetSkillCount(spbDisarmer, Buf.MechanicCount);
+      SetSkillCount(spbBomber, Buf.BomberCount);
+      SetSkillCount(spbStoner, Buf.StonerCount);
+      SetSkillCount(spbBlocker, Buf.BlockerCount);
+      SetSkillCount(spbPlatformer, Buf.PlatformerCount);
+      SetSkillCount(spbBuilder, Buf.BuilderCount);
+      SetSkillCount(spbStacker, Buf.StackerCount);
+      SetSkillCount(spbBasher, Buf.BasherCount);
+      SetSkillCount(spbMiner, Buf.MinerCount);
+      SetSkillCount(spbDigger, Buf.DiggerCount);
+      SetSkillCount(spbCloner, Buf.ClonerCount);
 
       Title            := Buf.LevelName;
       Author           := Buf.LevelAuthor;
-      case Buf.MusicNumber of
-        0: MusicFile := '';
-      253: MusicFile := '*';
-      254: MusicFile := 'frenzy';
-      255: MusicFile := 'gimmick';
-        else MusicFile := '?';
-      end;
-      end;
-      if (OddLoad = 2) and (Buf.LevelOptions and 16 <> 0) then
-      begin
-        LevelOptions := $71;
-        Exit;
-      end else begin
+      MusicFile := GetMusicName(Buf.MusicNumber);
+
       Width := Buf.WidthAdjust + 1584;
       Height := Buf.HeightAdjust + 160;
       if Width < 320 then Width := 320;
@@ -1313,41 +1158,23 @@ begin
       if ScreenYPosition > (Height - 80) then ScreenYPosition := (Height - 80);
       if ScreenYPosition < 80 then ScreenYPosition := 80;
 
-      SFinder := TStyleFinder.Create;
-
-      if (Trim(Buf.StyleName) <> '') or (Trim(Buf.VgaspecName) <> '') then
-      begin
-        x := SFinder.FindNumber(Buf.StyleName, false);
-        if (x <> -1) and (Buf.GraphicSet <> 255) then Buf.GraphicSet := x;
-        x := SFinder.FindNumber(Buf.VgaspecName, true);
-        if (x <> -1) and (Buf.GraphicSetEx <> 255) then Buf.GraphicSetEx := x;
-      end;
-
       if trim(Buf.StyleName) <> '' then
       begin
-        //GraphicSetFile := 'v_' + trim(Buf.StyleName) + '.dat';
-        //GraphicMetaFile := 'g_' + trim(Buf.StyleName) + '.dat';
         if LowerCase(LeftStr(Buf.StyleName, 5)) = 'vgagr' then
-          GraphicSetName := SFinder.FindName(StrToInt(Trim(MidStr(Buf.StyleName, 6, 3))), false)
+          GraphicSetName := GetStyleName(StrToInt(Trim(MidStr(Buf.StyleName, 6, 2))))
         else
           GraphicSetName := trim(Buf.StyleName);
-        Buf.GraphicSet := 255;
       end else begin
-        GraphicSetName := SFinder.FindName(Buf.GraphicSet, false);
+        GraphicSetName := GetStyleName(Buf.GraphicSet);
       end;
-
-      SFinder.Free;
 
       LevelOptions := Buf.LevelOptions;
 
       for x := 0 to 31 do
         TempWindowOrder[x] := Buf.WindowOrder[x];
       end;
-      if LevelOptions and $2 = 0 then
-        LevelOptions := LevelOptions and $F7;
-    end;
-
-    if (OddLoad = 2) and (Info.LevelOptions and 16 <> 0) then Exit;
+      if Info.LevelOptions and $2 = 0 then
+        Info.LevelOptions := Info.LevelOptions and $F7;
 
     {-------------------------------------------------------------------------------
       Get the objects
@@ -1455,11 +1282,242 @@ begin
   ApplyWindowOrder(aLevel, WindowOrder);
 end;
 
+class procedure TLVLLoader.LoadLemminiLevelFromStream(aStream: TStream; aLevel: TLevel);
+// Note: Code is based off SuperLemmini format and may have very slight inaccuracies
+//       when handling Lemmini levels.
+var
+  SL: TStringList;
+  SplitSL: TStringList;
+  i: Integer;
 
+  WindowOrder: TWindowOrder;
 
-class procedure TLVLLoader.StoreLevelInStream(aLevel: TLevel; aStream: TStream);
+  O: TInteractiveObject;
+  T: TTerrain;
+  S: TSteel;
+  // don't need TPreplacedLemming, SuperLemmini doesn't support it
+
+  procedure WipeSpaces(aSL: TStringList; Full: Boolean = false);
+  var
+    TempSL: TStringList;
+    i: Integer;
+    Lines: Integer;
+  begin
+    Lines := aSL.Count;
+
+    if Full then
+    begin
+      TempSL := TStringList.Create;
+      TempSL.Assign(aSL);
+      aSL.Clear;
+    end;
+
+    try
+      for i := 0 to Lines-1 do
+        if Full then
+          aSL.Add(Trim(TempSL.Names[i]) + '=' + Trim(TempSL.ValueFromIndex[i]))
+        else
+          aSL[i] := Trim(aSL[i]);
+    finally
+      if Full then
+        TempSL.Free;
+    end;
+  end;
+
+  function Value(aKeyword: String; aMin: Integer = 0; aMax: Integer = -1): Integer;
+  begin
+    Result := StrToIntDef(SL.Values[aKeyword], aMin);
+
+    if Result < aMin then
+      Result := aMin;
+    if (aMax > aMin) and (Result > aMax) then
+      Result := aMax;
+  end;
+
+  procedure HandleSkill(aKeyword: String; aSkill: TSkillPanelButton);
+  begin
+    if SL.Values[aKeyword] = 'Infinity' then
+      aLevel.Info.SkillCount[aSkill] := 100
+    else
+      aLevel.Info.SkillCount[aSkill] := Value(aKeyword, 0, 99);
+
+    if aLevel.Info.SkillCount[aSkill] > 0 then
+      aLevel.Info.Skillset := aLevel.Info.Skillset + [aSkill];
+  end;
+
+  procedure Split(aKeyword: String);
+  begin
+    SplitSL.CommaText := SL.Values[aKeyword];
+    WipeSpaces(SplitSL);
+  end;
+
+  function GetSplit(aIndex: Integer): Integer;
+  begin
+    if aIndex >= SplitSL.Count then
+      Result := -1
+    else
+      Result := StrToIntDef(SplitSL[aIndex], 0);
+  end;
 begin
-  aLevel.SaveToStream(aStream);
+  Log('Loading Lemmini level');
+  SL := TStringList.Create;
+  SplitSL := TStringList.Create;
+  try
+    SL.LoadFromStream(aStream);
+    WipeSpaces(SL, true);
+    aLevel.Clear;
+
+    with aLevel.Info do
+    begin
+      Log('Loading general stats');
+      ReleaseRate := Value('releaseRate', 1, 99);
+      LemmingsCount := Value('numLemmings', 1);
+      RescueCount := Value('numToRescue', 0, LemmingsCount);
+
+      if SL.Values['timeLimitSeconds'] <> '' then
+        TimeLimit := Value('timeLimitSeconds', 0, 5999)
+      else if SL.Values['timeLimit'] <> '' then
+        TimeLimit := Value('timeLimit', 0, 99) * 60
+      else
+        TimeLimit := 0;
+      HasTimeLimit := TimeLimit > 0;
+
+      HandleSkill('numClimbers', spbClimber);
+      HandleSkill('numFloaters', spbFloater);
+      HandleSkill('numBombers', spbBomber);
+      HandleSkill('numBlockers', spbBlocker);
+      HandleSkill('numBuilders', spbBuilder);
+      HandleSkill('numBashers', spbBasher);
+      HandleSkill('numMiners', spbMiner);
+      HandleSkill('numDiggers', spbDigger);
+
+      Split('entranceOrder');
+      SetLength(WindowOrder, SplitSL.Count);
+      for i := 0 to SplitSL.Count-1 do
+        WindowOrder[i] := StrToIntDef(SplitSL[i], 0);
+
+      Width := Value('width');
+      Height := Value('height');
+      if Width = 0 then Width := 3200;
+      if Height = 0 then Height := 320;
+
+      if SL.Values['xPosCenter'] <> '' then
+        ScreenPosition := Value('xPosCenter')
+      else if SL.Values['xPos'] <> '' then
+        ScreenPosition := Value('xPos') + 400
+      else
+        ScreenPosition := Width div 2;
+
+      if SL.Values['yPosCenter'] <> '' then
+        ScreenYPosition := Value('yPosCenter')
+      else
+        ScreenYPosition := Height div 2;
+
+      GraphicSetName := SL.Values['style'];
+      MusicFile := SL.Values['music'];
+
+      Title := SL.Values['name'];
+      Author := SL.Values['author'];
+
+      case Value('autosteel') of
+        0: LevelOptions := $00;
+        1: LevelOptions := $02;
+        2: LevelOptions := $0A;
+      end;
+    end;
+
+    Log('Loading objects');
+    i := 0;
+    while SL.Values['object_' + IntToStr(i)] <> '' do
+    begin
+      Log('  Object ' + IntToStr(i));
+      Split('object_' + IntToStr(i));
+      Inc(i);
+      if GetSplit(0) < 0 then Continue;
+
+      O := TInteractiveObject.Create;
+      aLevel.InteractiveObjects.Add(O);
+
+      O.GS := aLevel.Info.GraphicSetName;
+      O.Piece := IntToStr(GetSplit(0));
+      O.Left := GetSplit(1);
+      O.Top := GetSplit(2);
+
+      case GetSplit(3) of
+        2: O.DrawingFlags := O.DrawingFlags or odf_Invisible;
+        4: O.DrawingFlags := O.DrawingFlags or odf_NoOverwrite;
+        8: O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
+      end;
+
+      if GetSplit(4) and 1 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_UpsideDown;
+      if GetSplit(4) and 2 <> 0 then O.IsFake := true;
+      if GetSplit(4) and 4 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_UpsideDown;
+      if GetSplit(4) and 8 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_Flip;
+
+      if GetSplit(5) = 1 then O.DrawingFlags := O.DrawingFlags or odf_FlipLem;
+    end;
+
+    Log('Loading terrains');
+    i := 0;
+    while SL.Values['terrain_' + IntToStr(i)] <> '' do
+    begin
+      Log('  Terrain ' + IntToStr(i));
+      Split('terrain_' + IntToStr(i));
+      Inc(i);
+      if GetSplit(0) < 0 then Continue;
+      if GetSplit(3) and 18 = 18 then Continue; // fake + invisible, so just ignore it altogether
+
+
+      T := TTerrain.Create;
+      aLevel.Terrains.Add(T);
+
+      T.GS := aLevel.Info.GraphicSetName;
+      T.Piece := IntToStr(GetSplit(0));
+
+      T.Left := GetSplit(1);
+      T.Top := GetSplit(2);
+
+      //if GetSplit(3) and 1 <> 0 then // NOT SUPPORTED
+      if GetSplit(3) and 2 <> 0 then T.DrawingFlags := T.DrawingFlags or tdf_Erase;
+      if GetSplit(3) and 4 <> 0 then T.DrawingFlags := T.DrawingFlags or tdf_Invert;
+      if GetSplit(3) and 8 <> 0 then T.DrawingFlags := T.DrawingFlags or tdf_NoOverwrite;
+      //if GetSplit(3) and 16 <> 0 then // NOT SUPPORTED
+      if GetSplit(3) and 32 <> 0 then T.DrawingFlags := T.DrawingFlags or tdf_Flip;
+      if GetSplit(3) and 64 = 0 then T.DrawingFlags := T.DrawingFlags or tdf_NoOneWay;
+    end;
+
+    Log('Loading steel');
+    i := 0;
+    while SL.Values['steel_' + IntToStr(i)] <> '' do
+    begin
+      Log('  Steel ' + IntToStr(i));
+      Split('steel_' + IntToStr(i));
+      Inc(i);
+
+      S := TSteel.Create;
+      aLevel.Steels.Add(S);
+
+      S.Left := GetSplit(0);
+      S.Top := GetSplit(1);
+      S.Width := GetSplit(2);
+      S.Height := GetSplit(3);
+
+      if GetSplit(4) = 1 then
+        S.fType := 1;
+    end;
+
+    Log('Resolution patch');
+    ResolutionPatch(aLevel, 2);
+    Log('Complete');
+  finally
+    SL.Free;
+    SplitSL.Free;
+  end;
+end;
+
+class procedure TLVLLoader.LoadLemminsLevelFromStream(aStream: TStream; aLevel: TLevel);
+begin
+  raise Exception.Create('Loading of Lemmins levels not yet functional');
 end;
 
 end.

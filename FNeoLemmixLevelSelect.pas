@@ -314,6 +314,22 @@ var
   OpenDlg: TOpenDialog;
   Ext: String;
 
+  procedure Import(aFile: String);
+  var
+    Level: TLevel;
+    DstFile: String;
+  begin
+    Level := TLevel.Create;
+    try
+      Level.LoadFromFile(aFile);
+      DstFile := AppPath + SFLevels + MakeSafeForFilename(Level.Info.Title) + '.nxlv';
+      Level.SaveToFile(DstFile);
+      GameParams.BaseLevelPack.Levels.Add.Filename := ExtractFileName(DstFile);
+    finally
+      Level.Free;
+    end;
+  end;
+
   procedure LoadDatFile(aFile: String);
   var
     DatFile, LvlFile: TMemoryStream;
@@ -362,7 +378,7 @@ var
       if Success then
       begin
         Parser.SaveToFile(DstPath + 'levels.nxmi');
-        GameParams.BaseLevelPack.Children.Add(DstPath);
+        GameParams.BaseLevelPack.Children.Add(ExtractFileName(aFile) + '\');
       end else if not AlreadyExists then
         RemoveDir(DstPath);
     finally
@@ -376,18 +392,22 @@ begin
   OpenDlg := TOpenDialog.Create(self);
   try
     OpenDlg.Title := 'Select pack or level file';
-    OpenDlg.Filter := 'All supported files|*.nxlv;*.lvl;*.dat;info.nxmi|Level files (*.nxlv, *.lvl)|*.nxlv;*.lvl|Pack info file (info.nxmi)|info.nxmi|DAT levelpack (*.dat)|*.dat';
+    OpenDlg.Filter := 'All supported files|*.nxlv;*.lvl;*.ini;*.lev;*.dat|NeoLemmix Levels (*.nxlv)|*.nxlv|Lemmix or Old NeoLemmix Levels (*.lvl)|*.lvl|Lemmini or SuperLemmini Levels (*.ini)|*.ini|Lemmins Levels|*.lev';
     OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
     OpenDlg.InitialDir := AppPath;
     if not OpenDlg.Execute then Exit;
 
-    Ext := Lowercase(ExtractFileExt(OpenDlg.FileName));
-    if (Ext = '.nxlv') or (Ext = '.lvl') then
-      GameParams.BaseLevelPack.Levels.Add.Filename := OpenDlg.Filename
-    else if (Ext = '.dat') then
-      LoadDatFile(OpenDlg.Filename)
-    else
-      GameParams.BaseLevelPack.Children.Add(ExtractFilePath(OpenDlg.Filename));
+    try
+      Ext := Lowercase(ExtractFileExt(OpenDlg.FileName));
+      if (Ext = '.nxlv') then
+        GameParams.BaseLevelPack.Levels.Add.Filename := OpenDlg.Filename
+      else if (Ext = '.dat') then
+        LoadDatFile(OpenDlg.Filename)
+      else
+        Import(OpenDlg.FileName);
+    except
+      ShowMessage('The selected file could not be imported.');
+    end;
 
     InitializeTreeview;
     SetInfo;

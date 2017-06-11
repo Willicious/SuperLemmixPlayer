@@ -117,7 +117,7 @@ type
     procedure Clear;
 
     procedure LoadFromFile(aFile: String);
-    procedure LoadFromStream(aStream: TStream);
+    procedure LoadFromStream(aStream: TStream; aExt: String = '');
 
     procedure SaveToFile(aFile: String);
     procedure SaveToStream(aStream: TStream);
@@ -228,7 +228,7 @@ begin
   F := TFileStream.Create(aFile, fmOpenRead);
   try
     F.Position := 0;
-    LoadFromStream(F);
+    LoadFromStream(F, ExtractFileExt(aFile));
   finally
     F.Free;
   end;
@@ -249,21 +249,21 @@ end;
 
 // TLevel Loading Routines
 
-procedure TLevel.LoadFromStream(aStream: TStream);
+procedure TLevel.LoadFromStream(aStream: TStream; aExt: String = '');
 var
   Parser: TParser;
   Main: TParserSection;
   b: Byte;
 begin
-  aStream.Read(b, 1);
-  aStream.Position := aStream.Position - 1;
-
   Clear;
 
-  if b < 5 then
-  begin
-    TLVLLoader.LoadLevelFromStream(aStream, self);
-  end else begin
+  if aExt = '.lvl' then
+    TLVLLoader.LoadLevelFromStream(aStream, Self, lfLemmix)
+  else if aExt = '.ini' then
+    TLVLLoader.LoadLevelFromStream(aStream, Self, lfLemmini)
+  else if aExt = '.lev' then
+    TLVLLoader.LoadLevelFromStream(aStream, Self, lfLemmins)
+  else begin
     Parser := TParser.Create;
     try
       Parser.LoadFromStream(aStream);
