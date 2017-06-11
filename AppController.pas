@@ -38,6 +38,7 @@ type
     //function CheckCompatible(var Target: String): TNxCompatibility;
     procedure BringToFront;
     procedure DoLevelConvert;
+    procedure DoVersionInfo;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -236,6 +237,12 @@ begin
     fLoadSuccess := false;
   end;
 
+  if Lowercase(ParamStr(1)) = 'version' then
+  begin
+    DoVersionInfo;
+    fLoadSuccess := false;
+  end;
+
   if not fLoadSuccess then
     GameParams.NextScreen := gstExit;
 end;
@@ -252,6 +259,46 @@ begin
 
   GameParams.LoadCurrentLevel(true);
   GameParams.Level.SaveToFile(DstFile); 
+end;
+
+procedure TAppController.DoVersionInfo;
+var
+  SL: TStringList;
+
+  Formats: String;
+  Exts: String;
+
+  procedure AddFormat(aDesc, aExt: String);
+  begin
+    if Formats <> '' then
+      Formats := Formats + '|';
+    if Exts <> '' then
+      Exts := Exts + ';';
+    Formats := Formats + aDesc + '|' + '*.' + aExt;
+    Exts := Exts + '*.' + aExt;
+  end;
+begin
+  SL := TStringList.Create;
+  try
+    SL.Add('formats=' + IntToStr(FORMAT_VERSION));
+    SL.Add('core=' + IntToStr(CORE_VERSION));
+    SL.Add('features=' + IntToStr(FEATURES_VERSION));
+    SL.Add('hotfix=' + IntToStr(HOTFIX_VERSION));
+    SL.Add('commit=' + COMMIT_ID);
+
+    Formats := '';
+    Exts := '';
+    AddFormat('Lemmix or old NeoLemmix level (*.lvl)', 'lvl');
+    AddFormat('Lemmini or SuperLemmini level (*.ini)', 'ini');
+    AddFormat('Lemmins level (*.lev)', 'lev');
+
+    SL.Add('level_formats=' + Formats);
+    SL.Add('level_format_exts=' + Exts);
+
+    SL.SaveToFile(AppPath + 'NeoLemmixVersion.ini');
+  finally
+    SL.Free;
+  end;
 end;
 
 destructor TAppController.Destroy;
