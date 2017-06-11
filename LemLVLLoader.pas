@@ -95,9 +95,6 @@ type
 
 implementation
 
-uses
-  SharedGlobals; // debug
-
 { TTranslationTable }
 
 constructor TTranslationTable.Create;
@@ -1359,7 +1356,6 @@ var
       Result := StrToIntDef(SplitSL[aIndex], 0);
   end;
 begin
-  Log('Loading Lemmini level');
   SL := TStringList.Create;
   SplitSL := TStringList.Create;
   try
@@ -1369,7 +1365,6 @@ begin
 
     with aLevel.Info do
     begin
-      Log('Loading general stats');
       ReleaseRate := Value('releaseRate', 1, 99);
       LemmingsCount := Value('numLemmings', 1);
       RescueCount := Value('numToRescue', 0, LemmingsCount);
@@ -1426,11 +1421,9 @@ begin
       end;
     end;
 
-    Log('Loading objects');
     i := 0;
     while SL.Values['object_' + IntToStr(i)] <> '' do
     begin
-      Log('  Object ' + IntToStr(i));
       Split('object_' + IntToStr(i));
       Inc(i);
       if GetSplit(0) < 0 then Continue;
@@ -1457,11 +1450,9 @@ begin
       if GetSplit(5) = 1 then O.DrawingFlags := O.DrawingFlags or odf_FlipLem;
     end;
 
-    Log('Loading terrains');
     i := 0;
     while SL.Values['terrain_' + IntToStr(i)] <> '' do
     begin
-      Log('  Terrain ' + IntToStr(i));
       Split('terrain_' + IntToStr(i));
       Inc(i);
       if GetSplit(0) < 0 then Continue;
@@ -1486,11 +1477,9 @@ begin
       if GetSplit(3) and 64 = 0 then T.DrawingFlags := T.DrawingFlags or tdf_NoOneWay;
     end;
 
-    Log('Loading steel');
     i := 0;
     while SL.Values['steel_' + IntToStr(i)] <> '' do
     begin
-      Log('  Steel ' + IntToStr(i));
       Split('steel_' + IntToStr(i));
       Inc(i);
 
@@ -1506,9 +1495,7 @@ begin
         S.fType := 1;
     end;
 
-    Log('Resolution patch');
     ResolutionPatch(aLevel, 2);
-    Log('Complete');
   finally
     SL.Free;
     SplitSL.Free;
@@ -1516,8 +1503,115 @@ begin
 end;
 
 class procedure TLVLLoader.LoadLemminsLevelFromStream(aStream: TStream; aLevel: TLevel);
+var
+  SL: TStringList;
+  n: Integer;
+
+  O: TInteractiveObject;
+  T: TTerrain;
+  S: TSteel;
+
+  function LineVal(aIndex: Integer): Integer;
+  begin
+    Result := Trunc(StrToFloatDef(SL[aIndex], 0));
+  end;
+
+  procedure HandleSkill(aLine: Integer; aSkill: TSkillPanelButton);
+  begin
+    aLevel.Info.SkillCount[aSkill] := LineVal(aLine);
+    if aLevel.Info.SkillCount[aSkill] > 0 then
+      aLevel.Info.Skillset := aLevel.Info.Skillset + [aSkill];
+  end;
 begin
-  raise Exception.Create('Loading of Lemmins levels not yet functional');
+  SL := TStringList.Create;
+  try
+    SL.LoadFromStream(aStream);
+    aLevel.Clear;
+
+    with aLevel.Info do
+    begin
+      ReleaseRate := LineVal(2);
+      LemmingsCount := LineVal(3);
+      RescueCount := LineVal(4);
+      TimeLimit := LineVal(5) * 60;
+      HasTimeLimit := TimeLimit > 0;
+
+      HandleSkill(6, spbClimber);
+      HandleSkill(7, spbFloater);
+      HandleSkill(8, spbBomber);
+      HandleSkill(9, spbBlocker);
+      HandleSkill(10, spbBuilder);
+      HandleSkill(11, spbBasher);
+      HandleSkill(12, spbMiner);
+      HandleSkill(13, spbDigger);
+
+      ScreenPosition := LineVal(14) + 320;
+
+      GraphicSetName := SL[15];
+      // Special case
+      if CompareStr(GraphicSetName, 'Christmas') = 0 then
+        GraphicSetName := 'xmas';
+
+      Title := '<Lemmins-Origin Level>';
+
+      Width := 3200;
+      Height := 320;
+    end;
+
+    n := 17;
+    while SL[n] <> 'End' do
+    begin
+      O := TInteractiveObject.Create;
+      aLevel.InteractiveObjects.Add(O);
+      O.GS := aLevel.Info.GraphicSetName;
+      O.Piece := IntToStr(LineVal(n));
+
+      O.Left := LineVal(n+1);
+      O.Top := LineVal(n+2);
+
+      if LineVal(n+3) and 8 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
+      if LineVal(n+4) and 4 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_NoOverwrite;
+      if LineVal(n+4) and 1 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_UpsideDown;
+
+      Inc(n, 5);
+    end;
+
+    Inc(n, 2);
+    while SL[n] <> 'End' do
+    begin
+      T := TTerrain.Create;
+      aLevel.Terrains.Add(T);
+      T.GS := aLevel.Info.GraphicSetName;
+      T.Piece := IntToStr(LineVal(n));
+
+      T.Left := LineVal(n+1);
+      T.Top := LineVal(n+2);
+
+      if LineVal(n+3) and 8 <> 0 then T.DrawingFlags := T.DrawingFlags or tdf_NoOverwrite;
+      if LineVal(n+3) and 4 <> 0 then T.DrawingFlags := T.DrawingFlags or tdf_Invert;
+      if LineVal(n+3) and 2 <> 0 then T.DrawingFlags := T.DrawingFlags or tdf_Erase;
+
+      Inc(n, 4);
+    end;
+
+    Inc(n, 2);
+    while SL[n] <> 'End' do
+    begin
+      S := TSteel.Create;
+      aLevel.Steels.Add(S);
+
+      S.Left := LineVal(n);
+      S.Top := LineVal(n+1);
+      S.Width := LineVal(n+2);
+      S.Height := LineVal(n+3);
+
+      Inc(n, 4);
+    end;
+
+    ResolutionPatch(aLevel, 2);
+  finally
+    SL.Free;
+  end;
 end;
 
 end.
