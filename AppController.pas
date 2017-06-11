@@ -277,6 +277,14 @@ var
     Formats := Formats + aDesc + '|' + '*.' + aExt;
     Exts := Exts + '*.' + aExt;
   end;
+
+  procedure WriteInfo;
+  var
+    i: Integer;
+  begin
+    for i := 0 to SL.Count-1 do
+      WriteLn(SL[i]);
+  end;
 begin
   SL := TStringList.Create;
   try
@@ -295,7 +303,10 @@ begin
     SL.Add('level_formats=' + Formats);
     SL.Add('level_format_exts=' + Exts);
 
-    SL.SaveToFile(AppPath + 'NeoLemmixVersion.ini');
+    WriteInfo;
+
+    if LowerCase(ParamStr(2)) <> 'silent' then
+      SL.SaveToFile(AppPath + 'NeoLemmixVersion.ini');
   finally
     SL.Free;
   end;
