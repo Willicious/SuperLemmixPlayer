@@ -33,10 +33,6 @@ type
   private
     fLoadSuccess: Boolean;
     fActiveForm: TGameBaseScreen;
-    DoneBringToFront: Boolean; // We don't want to steal focus all the time. This is just to fix the
-                               // bug where it doesn't initially come to front.
-    //function CheckCompatible(var Target: String): TNxCompatibility;
-    procedure BringToFront;
     procedure DoLevelConvert;
     procedure DoVersionInfo;
   public
@@ -70,85 +66,6 @@ uses
 
 { TAppController }
 
-(*
-function TAppController.CheckCompatible(var Target: String): TNxCompatibility;
-var
-  SL: TStringList;
-  TS: TMemoryStream;
-  Format, Core: Integer;
-
-  function TestFor148Compatible: Boolean;
-  var
-    TempStream: TMemoryStream;
-  begin
-    TempStream := CreateDataStream('levels.nxmi', ldtText); // ldtText only checks the NXP, nothing else
-    Result := (TempStream <> nil);
-    TempStream.Free;
-  end;
-begin
-  SL := TStringList.Create;
-
-  try
-    TS := CreateDataStream('version.txt', ldtText);
-    SL.LoadFromStream(TS);
-
-    if SL.Values['format'] = '' then  // Backwards compatibility
-    begin
-      if not TestFor148Compatible then
-      begin
-        Result := nxc_WrongFormat;
-        if SL[1] = '47' then
-          Target := '1.47n-D'
-        else
-          Target := '1.43n-F';
-        Exit;
-      end;
-
-      Format := 10;
-      Core := 10;
-    end else begin
-      Format := StrToIntDef(SL.Values['format'], 0);
-      Core := StrToIntDef(SL.Values['core'], 0);
-    end;
-
-    // if Format doesn't match, treat as incompatible
-    if Format <> FORMAT_VERSION then
-    begin
-      Result := nxc_WrongFormat;
-      Target := IntToStr(Format) + '.xxx.xxx';
-    end else if Core < CORE_VERSION then
-    begin
-      Result := nxc_OldCore;
-      Target := IntToStr(Format) + '.' + LeadZeroStr(Core, 3) + '.xxx';
-    end else if Core > CORE_VERSION then
-    begin
-      Result := nxc_NewCore;
-      Target := IntToStr(Format) + '.' + LeadZeroStr(Core, 3) + '.xxx';
-    end else
-      Result := nxc_Compatible;
-  except
-    Result := nxc_Error;
-  end;
-
-  SL.Free;
-end;
-*)
-
-procedure TAppController.BringToFront;
-var
-  Input: TInput;
-begin
-  // This is borderline-exploit behaviour; it sends an input to this window so that it qualifies
-  // as "last application to receive input", which then allows it to control which window is brought
-  // to front. Reason for this is that for some reason application gets put behind all other windows
-  // after selecting a file in the initial dialog box; so this code is used to bring it to front.
-
-  ZeroMemory(@Input, SizeOf(Input));
-  SendInput(1, Input, SizeOf(Input)); // don't send anyting actually to another app..
-  SetForegroundWindow(Application.Handle);
-  DoneBringToFront := true;
-end;
-
 constructor TAppController.Create(aOwner: TComponent);
 var
   IsTestMode: Boolean;
@@ -157,8 +74,6 @@ begin
 
   // Set to true as default; change to false if any failure.
   fLoadSuccess := true;
-
-  DoneBringToFront := false;
 
   SoundManager := TSoundManager.Create;
   SoundManager.LoadDefaultSounds;  
@@ -375,7 +290,6 @@ end;
 procedure TAppController.ShowMenuScreen;
 begin
   fActiveForm := TGameMenuScreen.Create(nil);
-  if not DoneBringToFront then BringToFront;
   fActiveForm.ShowScreen;
 end;
 
@@ -430,7 +344,6 @@ end;
 procedure TAppController.ShowPreviewScreen;
 begin
   fActiveForm := TGamePreviewScreen.Create(nil);
-  if not DoneBringToFront then BringToFront;
   fActiveForm.ShowScreen;
 end;
 
