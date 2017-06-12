@@ -111,10 +111,10 @@ begin
   begin
     GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;
-    GameParams.MainForm.ClientWidth := GameParams.WindowWidth;
-    GameParams.MainForm.ClientHeight := GameParams.WindowHeight;
-    GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;
-    GameParams.MainForm.Top := (Screen.Height - GameParams.MainForm.Height) div 2;
+    //GameParams.MainForm.ClientWidth := GameParams.WindowWidth;
+    //GameParams.MainForm.ClientHeight := GameParams.WindowHeight;
+    //GameParams.MainForm.Left := (Screen.Width - GameParams.MainForm.Width) div 2;
+    //GameParams.MainForm.Top := (Screen.Height - GameParams.MainForm.Height) div 2;
   end else begin
     GameParams.MainForm.Left := 0;
     GameParams.MainForm.Top := 0;

@@ -50,6 +50,7 @@ var
 implementation
 
 uses
+  SharedGlobals, // debug
   Math,
   GameControl, GameBaseScreen;
 
@@ -107,6 +108,11 @@ procedure TMainForm.FormActivate(Sender: TObject);
 begin
   if Started then
     Exit;
+  if not GameParams.FullScreen then
+    BoundsRect := Rect((Screen.Width - GameParams.WindowWidth) div 2,
+                       (Screen.Height - GameParams.WindowHeight) div 2,
+                       (Screen.Width + GameParams.WindowWidth) div 2,
+                       (Screen.Height + GameParams.WindowHeight) div 2);
   Started := True;
   MainFormHandle := Handle;
   PostMessage(Handle, LM_START, 0, 0);
@@ -171,6 +177,7 @@ var
 begin
   if GameParams.FullScreen then
   begin
+    Log('  exit due to fullscreen');
     NewWidth := Screen.Width;
     NewHeight := Screen.Height;
     Exit;

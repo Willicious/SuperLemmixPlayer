@@ -1,6 +1,7 @@
 object MainForm: TMainForm
   Left = 1101
   Top = 487
+  Anchors = []
   BorderIcons = []
   Caption = 'NeoLemmix'
   ClientHeight = 272
