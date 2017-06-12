@@ -19,6 +19,7 @@ uses
   LemTypes, LemLevel,
   LemDosStructures,
   TalisData,
+  LemStrings,
   LemRendering;
 
 var
@@ -250,7 +251,6 @@ var
 implementation
 
 uses
-  LemStrings,
   SharedGlobals,
   GameWindow, //for EXTRA_ZOOM_LEVELS const
   GameSound;
@@ -319,7 +319,9 @@ begin
   SL := TStringList.Create;
   SL2 := TStringList.Create;
 
-  if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
+  if FileExists(AppPath + SFSaveData + 'settings.ini') then
+    SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini')
+  else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
     SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
 
   SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
@@ -375,7 +377,7 @@ begin
 
   AddUnknowns;
 
-  SL.SaveToFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini');
+  SL.SaveToFile(AppPath + SFSaveData + 'settings.ini');
 
   SL.Free;
 end;
@@ -436,33 +438,26 @@ var
     // Disallow zoom levels that are too high
     if fZoomLevel > Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS then
       fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
-
-    // Finally, we must make sure the window size is an integer multiple of the zoom level
-    WindowWidth := (WindowWidth div ZoomLevel) * ZoomLevel;
-    WindowHeight := (WindowHeight div ZoomLevel) * ZoomLevel;
   end;
 
 begin
-  if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini') then
-    if not FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmixSettings.ini') then
-    begin
-      if UnderWine then
-      begin
-        // When running under WINE without an existing config, let's default to windowed.
-        FullScreen := false;
-        ZoomLevel := Max(Max((Screen.Width - 100) div 416, (Screen.Height - 100) div 200), 1);
-        WindowWidth := 416 * ZoomLevel;
-        WindowHeight := 200 * ZoomLevel;
-      end;
-      Exit;
-    end;
-
   SL := TStringList.Create;
 
-  if FileExists(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini') then
+  if FileExists(AppPath + SFSaveData + 'settings.ini') then
   begin
-    SL.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'NeoLemmix147Settings.ini');
+    SL.LoadFromFile(AppPath + SFSaveData + 'settings.ini');
     LoadedConfig := true;
+  end else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
+  begin
+    SL.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
+    LoadedConfig := true;
+  end else if UnderWine then
+  begin
+    // When running under WINE without an existing config, let's default to windowed.
+    FullScreen := false;
+    ZoomLevel := Max(Max((Screen.Width - 100) div 416, (Screen.Height - 100) div 200), 1);
+    WindowWidth := 416 * ZoomLevel;
+    WindowHeight := 200 * ZoomLevel;
   end;
 
   AutoReplayNames := LoadBoolean('AutoReplayNames', AutoReplayNames);

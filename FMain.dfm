@@ -1,9 +1,9 @@
 object MainForm: TMainForm
   Left = 1101
   Top = 487
-  Width = 444
-  Height = 311
   Caption = 'NeoLemmix'
+  ClientHeight = 272
+  ClientWidth = 428
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

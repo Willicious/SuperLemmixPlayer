@@ -170,8 +170,6 @@ begin
   GameParams.Level := TLevel.Create;
   GameParams.MainForm := TForm(aOwner);
 
-  Application.Title := 'NeoLemmix';
-
   GameParams.NextScreen := gstMenu;
 
   GameParams.SoundOptions := [gsoSound, gsoMusic]; // This was to fix a glitch where an older version disabled them

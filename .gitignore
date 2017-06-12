@@ -31,3 +31,4 @@ bin/levels/TESTING/
 *.identcache
 LemVersionCID.pas
 NeoLemmix.res
+bin/save/
