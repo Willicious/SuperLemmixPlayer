@@ -91,6 +91,7 @@ type
   public
     class var StyleNumbering: TStyleNumbering;
     class procedure LoadLevelFromStream(aStream: TStream; aLevel: TLevel; aFormat: TLevelFormat = lfLemmix);
+    class procedure LoadExtraLemminsInfo(aSrcFile: String; aLevel: TLevel);
   end;
 
 implementation
@@ -1609,6 +1610,47 @@ begin
     end;
 
     ResolutionPatch(aLevel, 2);
+  finally
+    SL.Free;
+  end;
+end;
+
+class procedure TLVLLoader.LoadExtraLemminsInfo(aSrcFile: string; aLevel: TLevel);
+var
+  SL: TStringList;
+  Fn: String;
+  i: Integer;
+
+  function GetNumberOnly(aLine: Integer): Integer;
+  var
+    S: String;
+    i: Integer;
+  begin
+    S := '';
+    for i := 1 to Length(SL[aLine]) do
+      if SL[aLine][i] in ['0'..'9'] then
+        S := S + SL[aLine][i]
+      else
+        Break;
+
+    Result := StrToInt(S);
+  end;
+begin
+  if not FileExists(ExtractFilePath(aSrcFile) + 'levelpack.ini') then
+    Exit;
+
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(ExtractFilePath(aSrcFile) + 'levelpack.ini');
+    Fn := Lowercase(ExtractFileName(aSrcFile));
+
+    for i := 1 to SL.Count-2 do
+      if Lowercase(SL[i]) = Fn then
+      begin
+        aLevel.Info.Title := SL[i-1];
+        aLevel.Info.MusicFile := GetMusicName(GetNumberOnly(i+1) + 1);
+        Exit;
+      end;
   finally
     SL.Free;
   end;

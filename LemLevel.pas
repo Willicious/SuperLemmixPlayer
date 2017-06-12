@@ -239,6 +239,9 @@ begin
   try
     F.Position := 0;
     LoadFromStream(F, ExtractFileExt(aFile));
+
+    if Lowercase(ExtractFileExt(aFile)) = '.lev' then
+      TLVLLoader.LoadExtraLemminsInfo(aFile, Self);
   finally
     F.Free;
   end;
@@ -267,6 +270,7 @@ var
 begin
   Clear;
 
+  aExt := Lowercase(aExt);
   if aExt = '.lvl' then
     TLVLLoader.LoadLevelFromStream(aStream, Self, lfLemmix)
   else if aExt = '.ini' then
