@@ -25,6 +25,7 @@ uses
   LemNeoTheme,
   LemObjects, LemLemming, LemRecolorSprites,
   LemReplay,
+  LemTalisman,
   LemGameMessageQueue,
   GameControl;
 
@@ -733,8 +734,46 @@ begin
 end;
 
 procedure TLemmingGame.DoTalismanCheck;
+var
+  i: Integer;
+
+  function CheckTalisman(aTalisman: TTalisman): Boolean;
+  var
+    TotalSkills: Integer;
+    SaveReq: Integer;
+    i: TSkillPanelButton;
+  begin
+    Result := false;
+
+    if aTalisman.RescueCount >= 0 then
+      SaveReq := aTalisman.RescueCount
+    else
+      SaveReq := Level.Info.RescueCount;
+
+    if LemmingsSaved < SaveReq then Exit;
+    if (CurrentIteration >= aTalisman.TimeLimit) and (aTalisman.TimeLimit >= 0) then Exit;
+
+    TotalSkills := 0;
+    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    begin
+      if (SkillsUsed[i] > aTalisman.SkillLimit[i]) and (aTalisman.SkillLimit[i] >= 0) then Exit;
+      Inc(TotalSkills, SkillsUsed[i]);
+    end;
+
+    if (TotalSkills > aTalisman.TotalSkillLimit) and (aTalisman.TotalSkillLimit >= 0) then Exit;
+
+    Result := true;
+  end;
 begin
-  // NEED TO PUT CODE HERE //
+  for i := 0 to Level.Talismans.Count-1 do
+  begin
+    if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then Continue;
+    if CheckTalisman(Level.Talismans[i]) then
+    begin
+      fTalismanReceived := true;
+      GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
+    end;
+  end;
 end;
 
 function TLemmingGame.Checkpass: Boolean;
@@ -743,12 +782,15 @@ begin
 end;
 
 function TLemmingGame.CheckFinishedTest;
+var
+  i: Integer;
 begin
   Result := false;
   if not Checkpass then Exit;
 
-  //for i := 0 to fTalismans.Count-1 do
-    //if not GameParams.SaveSystem.CheckTalisman(fTalismans[i].Signature) then Exit;
+  for i := 0 to Level.Talismans.Count-1 do
+    if not GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then
+      Exit;
 
   Result := true;
 end;

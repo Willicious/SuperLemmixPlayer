@@ -96,7 +96,8 @@ type
   TParserSectionList = class;
   TParserLineList = class;
 
-  TForEachLineProcedure = procedure(aLine: TParserLine; const aIteration: Integer) of object;
+  TForEachLineProcedure1 = reference to procedure(aLine: TParserLine; const aIteration: Integer);
+  TForEachLineProcedure2 = procedure(aLine: TParserLine; const aIteration: Integer) of object; // 1 & 2 is a kludge until I convert all code of this type to using anon methods
   TForEachSectionProcedure = procedure(aSection: TParserSection; const aIteration: Integer) of object;
   TForEachLinePointerProcedure = procedure(aLine: TParserLine; const aIteration: Integer; aData: Pointer) of object;
   TForEachSectionPointerProcedure = procedure(aSection: TParserSection; const aIteration: Integer; aData: Pointer) of object;
@@ -143,7 +144,8 @@ type
       constructor Create(aKeyword: String);
       destructor Destroy; override;
 
-      function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure): Integer; overload;
+      function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure1): Integer; overload;
+      function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure2): Integer; overload;
       function DoForEachLine(aKeyword: String; aMethod: TForEachLinePointerProcedure; aData: Pointer): Integer; overload;
       function DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure): Integer; overload;
       function DoForEachSection(aKeyword: String; aMethod: TForEachSectionPointerProcedure; aData: Pointer): Integer; overload;
@@ -539,7 +541,20 @@ begin
 
 end;
 
-function TParserSection.DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure): Integer;
+function TParserSection.DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure1): Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+  for i := 0 to fLines.Count-1 do
+    if fLines[i].Keyword = Lowercase(aKeyword) then
+    begin
+      aMethod(fLines[i], Result);
+      Inc(Result);
+    end;
+end;
+
+function TParserSection.DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure2): Integer;
 var
   i: Integer;
 begin

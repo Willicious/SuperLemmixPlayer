@@ -30,8 +30,6 @@ type
     procedure LoadFromSection(aSec: TParserSection);
     procedure SaveToSection(aSec: TParserSection);
 
-    //function CheckIfAchieved(aGame: TLemmingGame): Boolean;
-
     property Title: String read fTitle write fTitle;
     property ID: LongWord read fID write fID;
     property Color: TTalismanColor read fColor write fColor;
@@ -123,31 +121,5 @@ begin
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     AddLine(SKILL_NAMES[i] + '_limit', fSkillLimits[i]);
 end;
-
-(*function TTalisman.CheckIfAchieved(aGame: TLemmingGame): Boolean;
-var
-  SaveReq: Integer;
-  i: TSkillPanelButton;
-  TotalSkills: Integer;
-begin
-  Result := false;
-
-  if fRescueCount >= 0 then
-    SaveReq := fRescueCount
-  else
-    SaveReq := aGame.Level.Info.RescueCount;
-
-  if aGame.LemmingsSaved < SaveReq then Exit;
-  if (aGame.CurrentIteration >= fTimeLimit) and (fTimeLimit >= 0) then Exit;
-
-  TotalSkills := 0;
-  for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-  begin
-    if (aGame.SkillsUsed[i] > fSkillLimits[i]) and (fSkillLimits[i] >= 0) then Exit;
-    Inc(TotalSkills, aGame.SkillsUsed[i]);
-  end;
-
-  if (TotalSkills > fTotalSkillLimit) and (fTotalSkillLimit >= 0) then Exit;
-end;*)
 
 end.

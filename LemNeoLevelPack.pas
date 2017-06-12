@@ -5,6 +5,7 @@ unit LemNeoLevelPack;
 interface
 
 uses
+  System.Generics.Collections,
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
   Classes, SysUtils, StrUtils, Contnrs,
   LemStrings, LemTypes, LemNeoParser;
@@ -64,6 +65,7 @@ type
       fLevelID: Int64;
 
       fStatus: TNeoLevelStatus;
+      fTalismanList: TList<LongWord>;
 
       procedure LoadLevelFileData;
 
@@ -73,6 +75,9 @@ type
       function GetAuthor: String;
       function GetLevelID: Int64;
       function GetGroupIndex: Integer;
+
+      procedure SetTalismanStatus(aIndex: LongWord; aStatus: Boolean);
+      function GetTalismanStatus(aIndex: LongWord): Boolean;
     public
       Records: TLevelRecords;
 
@@ -87,6 +92,7 @@ type
       property Path: String read GetFullPath;
       property RelativePath: String read GetRelativePath;
       property Status: TNeoLevelStatus read fStatus write fStatus;
+      property TalismanStatus[Index: LongWord]: Boolean read GetTalismanStatus write SetTalismanStatus;
       property GroupIndex: Integer read GetGroupIndex;
   end;
 
@@ -294,12 +300,12 @@ constructor TNeoLevelEntry.Create(aGroup: TNeoLevelGroup);
 begin
   inherited Create;
   fGroup := aGroup;
+  fTalismanList := TList<LongWord>.Create;
 end;
 
 destructor TNeoLevelEntry.Destroy;
 begin
-  // Did have stuff here but it's no longer used. But left this here because stuff that needs it
-  // will probably be added later.
+  fTalismanList.Free;
   inherited;
 end;
 
@@ -387,6 +393,35 @@ begin
     Result := -1
   else
     Result := fGroup.LevelIndex[self];
+end;
+
+procedure TNeoLevelEntry.SetTalismanStatus(aIndex: Cardinal; aStatus: Boolean);
+var
+  i: Integer;
+begin
+  if aStatus then
+  begin
+    for i := 0 to fTalismanList.Count-1 do
+      if fTalismanList[i] = aIndex then Exit;
+    fTalismanList.Add(aIndex);
+  end else begin
+    for i := fTalismanList.Count-1 downto 0 do
+      if fTalismanList[i] = aIndex then
+        fTalismanList.Delete(i);
+  end;
+end;
+
+function TNeoLevelEntry.GetTalismanStatus(aIndex: Cardinal): Boolean;
+var
+  i: Integer;
+begin
+  Result := false;
+  for i := 0 to fTalismanList.Count-1 do
+    if fTalismanList[i] = aIndex then
+    begin
+      Result := true;
+      Exit;
+    end;
 end;
 
 { TNeoLevelGroup }
@@ -534,6 +569,12 @@ var
 
       aLevel.Records.LemmingsRescued := Sec.LineNumeric['lemming_record'];
       aLevel.Records.TimeTaken := Sec.LineNumeric['time_record'];
+
+      Sec.DoForEachLine('talisman',
+                        procedure(aLine: TParserLine; const aIteration: Integer)
+                        begin
+                          aLevel.TalismanStatus[aLine.ValueNumeric] := true;
+                        end);
     end;
 
   begin
@@ -601,6 +642,7 @@ var
     procedure HandleLevel(aLevel: TNeoLevelEntry);
     var
       ActiveLevelSec: TParserSection;
+      i: Integer;
     begin
       if aLevel.Status = lst_None then
         Exit;
@@ -610,6 +652,9 @@ var
       ActiveLevelSec.AddLine('status', STATUS_TEXTS[aLevel.Status]);
       ActiveLevelSec.AddLine('modified_date', FileAge(aLevel.Path));
       ActiveLevelSec.AddLine('lemming_record', aLevel.Records.LemmingsRescued);
+
+      for i := 0 to aLevel.fTalismanList.Count-1 do
+        ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fTalismanList[i], 8));
 
       if aLevel.Status >= lst_Completed_Outdated then
         ActiveLevelSec.AddLine('time_record', aLevel.Records.TimeTaken);

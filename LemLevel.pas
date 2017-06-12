@@ -136,6 +136,7 @@ type
     property Terrains: TTerrains read fTerrains;
     property Steels: TSteels read fSteels;
     property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings;
+    property Talismans: TObjectList<TTalisman> read fTalismans;
     property PreText: TStringList read fPreText;
     property PostText: TStringList read fPostText;
   end;
