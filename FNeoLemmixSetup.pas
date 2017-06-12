@@ -57,7 +57,6 @@ begin
     SetKeyFunction($06, lka_ZoomOut);
     SetKeyFunction($08, lka_LoadState);
     SetKeyFunction($0D, lka_SaveState);
-    SetKeyFunction($10, lka_SelectNewLem);
     SetKeyFunction($11, lka_ForceWalker);
     SetKeyFunction($12, lka_ShowAthleteInfo);
     SetKeyFunction($19, lka_ForceWalker);
@@ -158,7 +157,6 @@ begin
     SetKeyFunction($49, lka_FallDistance);
     SetKeyFunction($50, lka_EditReplay);
     SetKeyFunction($4F, lka_ReplayInsert);
-    SetKeyFunction($55, lka_SelectNewLem);
     SetKeyFunction($0D, lka_SaveImage);
     SetKeyFunction($4A, lka_Scroll);
 

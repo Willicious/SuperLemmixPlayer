@@ -797,7 +797,6 @@ var
 begin
   Game.IsSelectWalkerHotkey := GameParams.Hotkeys.CheckForKey(lka_ForceWalker);
   Game.IsHighlightHotkey := GameParams.Hotkeys.CheckForKey(lka_Highlight);
-  Game.IsSelectUnassignedHotkey := GameParams.Hotkeys.CheckForKey(lka_SelectNewLem);
   Game.IsShowAthleteInfo := GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo);
 
   SDir := 0;
@@ -1109,7 +1108,6 @@ var
   AssignToHighlit: Boolean;
 const
   NON_CANCELLING_KEYS = [lka_Null,
-                         lka_SelectNewLem,
                          lka_ShowAthleteInfo,
                          lka_Exit,
                          lka_Pause,

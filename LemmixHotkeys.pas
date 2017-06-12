@@ -18,7 +18,6 @@ const
 type
   TLemmixHotkeyAction = (lka_Null,
                          lka_Skill,
-                         lka_SelectNewLem,
                          lka_ShowAthleteInfo,
                          lka_Exit,
                          lka_ReleaseRateUp,
@@ -109,7 +108,6 @@ begin
   fKeyFunctions[$06].Action := lka_ZoomOut;
   fKeyFunctions[$08].Action := lka_LoadState;
   fKeyFunctions[$0D].Action := lka_SaveState;
-  fKeyFunctions[$10].Action := lka_SelectNewLem;
   fKeyFunctions[$11].Action := lka_ForceWalker;
   fKeyFunctions[$12].Action := lka_ShowAthleteInfo;
   fKeyFunctions[$19].Action := lka_ForceWalker;
@@ -215,7 +213,6 @@ var
     s := LowerCase(s);
     Result := lka_Null;
     if s = 'skill' then Result := lka_Skill;
-    if s = 'force_unused' then Result := lka_SelectNewLem;
     if s = 'athlete_info' then Result := lka_ShowAthleteInfo;
     if s = 'quit' then Result := lka_Exit;
     if s = 'rr_up' then Result := lka_ReleaseRateUp;
@@ -430,7 +427,6 @@ var
   begin
     case aValue of
       lka_Skill:            Result := 'Skill';
-      lka_SelectNewLem:     Result := 'Force_Unused';
       lka_ShowAthleteInfo:  Result := 'Athlete_Info';
       lka_Exit:             Result := 'Quit';
       lka_ReleaseRateUp:    Result := 'RR_Up';

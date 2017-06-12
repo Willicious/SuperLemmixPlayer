@@ -85,13 +85,11 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Height = 21
     Style = csDropDownList
     Enabled = False
-    ItemHeight = 13
     TabOrder = 1
     OnChange = cbFunctionsChange
     Items.Strings = (
       'Nothing'
       'Select Skill'
-      'Select Unused Lemming'
       'Show Athlete Info'
       'Quit'
       'Increase Release Rate'
@@ -142,7 +140,6 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Height = 21
     Style = csDropDownList
     Enabled = False
-    ItemHeight = 13
     TabOrder = 3
     Visible = False
     OnChange = cbSkillChange
@@ -222,7 +219,6 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Height = 21
     Style = csDropDownList
     Enabled = False
-    ItemHeight = 13
     TabOrder = 9
     Visible = False
     OnChange = cbSpecialSkipChange
