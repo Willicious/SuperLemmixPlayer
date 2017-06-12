@@ -397,3 +397,12 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Glimmer 3 without blockers or stackers.
+  ID 0
+  COLOR bronze
+  SAVE 75
+  BLOCKER_LIMIT 0
+  STACKER_LIMIT 0
+$END
+

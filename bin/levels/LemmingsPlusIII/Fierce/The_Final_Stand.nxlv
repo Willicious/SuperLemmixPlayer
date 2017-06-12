@@ -1495,6 +1495,12 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete the final level.
+  ID 0
+  COLOR gold
+$END
+
 $POSTTEXT
   LINE CONGRATU-FREAKIN-LATIONS!!
   LINE Amazing, simply amazing.

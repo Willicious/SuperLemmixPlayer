@@ -2953,3 +2953,10 @@ $TERRAIN
   FLIP_HORIZONTAL
 $END
 
+$TALISMAN
+  TITLE Save more lemmings than required on Outrageous 11.
+  ID 0
+  COLOR bronze
+  SAVE 16
+$END
+

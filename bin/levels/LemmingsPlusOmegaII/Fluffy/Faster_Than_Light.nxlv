@@ -849,3 +849,11 @@ $TERRAIN
   FLIP_HORIZONTAL
 $END
 
+$TALISMAN
+  TITLE Complete Fluffy 14 without blockers or bashers.
+  ID 0
+  COLOR bronze
+  BLOCKER_LIMIT 0
+  BASHER_LIMIT 0
+$END
+

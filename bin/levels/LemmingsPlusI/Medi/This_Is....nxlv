@@ -551,3 +551,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Medi 6 in under 1 minute.
+  ID 0
+  COLOR silver
+  TIME_LIMIT 1020
+$END
+

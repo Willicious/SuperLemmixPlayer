@@ -669,3 +669,12 @@ $TERRAIN
   Y -18
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Smooth 1, no builders, max 2 platformers.
+  ID 0
+  COLOR bronze
+  SAVE 50
+  PLATFORMER_LIMIT 2
+  BUILDER_LIMIT 0
+$END
+

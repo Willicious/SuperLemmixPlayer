@@ -364,3 +364,10 @@ $TERRAIN
   Y 87
 $END
 
+$TALISMAN
+  TITLE Save at least 25 lemmings on Unruly 12.
+  ID 0
+  COLOR bronze
+  SAVE 25
+$END
+

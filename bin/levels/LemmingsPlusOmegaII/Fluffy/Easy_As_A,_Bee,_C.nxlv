@@ -354,3 +354,12 @@ $TERRAIN
   FLIP_HORIZONTAL
 $END
 
+$TALISMAN
+  TITLE Complete Fluffy 1 with max 9 builders and no other skills.
+  ID 0
+  COLOR silver
+  BLOCKER_LIMIT 0
+  BUILDER_LIMIT 9
+  BASHER_LIMIT 0
+$END
+

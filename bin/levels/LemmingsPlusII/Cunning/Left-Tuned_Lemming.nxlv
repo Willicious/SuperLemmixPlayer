@@ -1040,3 +1040,11 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save 17 or more lemmings on Cunning 7 in under 45 seconds.
+  ID 0
+  COLOR silver
+  SAVE 17
+  TIME_LIMIT 765
+$END
+

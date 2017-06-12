@@ -1143,3 +1143,10 @@ $TERRAIN
   Y 48
 $END
 
+$TALISMAN
+  TITLE Save at least 19 lemmings on Spiky 8.
+  ID 0
+  COLOR bronze
+  SAVE 19
+$END
+

@@ -720,3 +720,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Dodgy 1.
+  ID 0
+  COLOR silver
+  SAVE 60
+$END
+

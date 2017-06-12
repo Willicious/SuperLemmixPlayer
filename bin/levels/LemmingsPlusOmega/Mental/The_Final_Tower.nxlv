@@ -1993,6 +1993,13 @@ $TERRAIN
   ERASE
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Mental 30
+  ID 0
+  COLOR gold
+  SAVE 100
+$END
+
 $POSTTEXT
   LINE Congratulations!
   LINE You have braved the largest entry in

@@ -716,6 +716,15 @@ $TERRAIN
   Y 136
 $END
 
+$TALISMAN
+  TITLE Save all on Blissful 1 with max 1 Platformer, 2 Builders.
+  ID 0
+  COLOR bronze
+  SAVE 30
+  PLATFORMER_LIMIT 1
+  BUILDER_LIMIT 2
+$END
+
 $PRETEXT
   LINE Introducing the "Abstract" tileset.
   LINE Colors, colors everywhere. Except the

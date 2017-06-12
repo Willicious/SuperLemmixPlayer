@@ -807,3 +807,11 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Wimpy 30 without any floaters.
+  ID 0
+  COLOR silver
+  SAVE 25
+  FLOATER_LIMIT 0
+$END
+

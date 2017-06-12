@@ -4691,6 +4691,12 @@ $TERRAIN
   Y 394
 $END
 
+$TALISMAN
+  TITLE Beat the final level
+  ID 0
+  COLOR gold
+$END
+
 $POSTTEXT
   LINE Congratulations!
   LINE You've finished yet another entry in

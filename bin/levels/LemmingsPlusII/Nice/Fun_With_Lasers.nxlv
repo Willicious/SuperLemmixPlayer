@@ -388,3 +388,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Nice 11.
+  ID 0
+  COLOR bronze
+  SAVE 50
+$END
+

@@ -2220,3 +2220,10 @@ $TERRAIN
   Y 96
 $END
 
+$TALISMAN
+  TITLE Complete Touchy 4 without climbers.
+  ID 0
+  COLOR bronze
+  CLIMBER_LIMIT 0
+$END
+

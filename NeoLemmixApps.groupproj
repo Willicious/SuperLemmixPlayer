@@ -9,6 +9,9 @@
         <Projects Include="Tools\GSConvert\GSConvert.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="Tools\NXPConvert\NXPConvert.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
     <Target Name="GSConvert:Make">
         <MSBuild Projects="Tools\GSConvert\GSConvert.dproj" Targets="Make"/>
     </Target>
+    <Target Name="NXPConvert">
+        <MSBuild Projects="Tools\NXPConvert\NXPConvert.dproj"/>
+    </Target>
+    <Target Name="NXPConvert:Clean">
+        <MSBuild Projects="Tools\NXPConvert\NXPConvert.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="NXPConvert:Make">
+        <MSBuild Projects="Tools\NXPConvert\NXPConvert.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="NeoLemmix;GSConvert"/>
+        <CallTarget Targets="NeoLemmix;GSConvert;NXPConvert"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="NeoLemmix:Clean;GSConvert:Clean"/>
+        <CallTarget Targets="NeoLemmix:Clean;GSConvert:Clean;NXPConvert:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="NeoLemmix:Make;GSConvert:Make"/>
+        <CallTarget Targets="NeoLemmix:Make;GSConvert:Make;NXPConvert:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

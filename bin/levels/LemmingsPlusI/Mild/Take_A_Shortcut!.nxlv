@@ -800,3 +800,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Mild 13 without any builders.
+  ID 0
+  COLOR bronze
+  BUILDER_LIMIT 0
+$END
+

@@ -743,3 +743,12 @@ $TERRAIN
   FLIP_HORIZONTAL
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Breezy 29 without gliders or miners
+  ID 0
+  COLOR silver
+  SAVE 50
+  GLIDER_LIMIT 0
+  MINER_LIMIT 0
+$END
+

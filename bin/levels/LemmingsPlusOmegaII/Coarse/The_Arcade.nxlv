@@ -553,3 +553,10 @@ $TERRAIN
   ROTATE
 $END
 
+$TALISMAN
+  TITLE Complete Coarse 6 in under 1 minute 30 seconds.
+  ID 0
+  COLOR bronze
+  TIME_LIMIT 1530
+$END
+

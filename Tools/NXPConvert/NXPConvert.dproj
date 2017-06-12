@@ -3,7 +3,7 @@
         <ProjectGuid>{746EBA46-D279-4253-BA3C-C78493AEAA2F}</ProjectGuid>
         <MainSource>NXPConvert.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Release</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Console</AppType>
         <FrameworkType>None</FrameworkType>

@@ -4169,6 +4169,14 @@ $TERRAIN
   Y 12
 $END
 
+$TALISMAN
+  TITLE Complete the final level.
+  ID 0
+  COLOR gold
+  BASHER_LIMIT 6
+  MINER_LIMIT 3
+$END
+
 $POSTTEXT
   LINE You did it! You've completed yet
   LINE another entry in the Lemmings Plus

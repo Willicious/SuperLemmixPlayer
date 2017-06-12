@@ -776,3 +776,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Cheeky 1 without any builders.
+  ID 0
+  COLOR silver
+  BUILDER_LIMIT 0
+$END
+

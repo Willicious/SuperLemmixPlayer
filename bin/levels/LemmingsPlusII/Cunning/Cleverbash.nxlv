@@ -804,3 +804,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save 90 or more lemmings on Cunning 6.
+  ID 0
+  COLOR silver
+  SAVE 90
+$END
+

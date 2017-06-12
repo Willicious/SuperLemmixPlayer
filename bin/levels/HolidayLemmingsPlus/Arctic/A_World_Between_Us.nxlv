@@ -1482,6 +1482,12 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete the final level.
+  ID 0
+  COLOR gold
+$END
+
 $POSTTEXT
   LINE Well done!
   LINE You did a great job and brought the

@@ -1151,6 +1151,13 @@ $TERRAIN
   Y 152
 $END
 
+$TALISMAN
+  TITLE Complete Blissful 2 with max 1 Builder.
+  ID 0
+  COLOR gold
+  BUILDER_LIMIT 1
+$END
+
 $PRETEXT
   LINE Introducing the "Mineshaft" tileset.
   LINE The lemmings are stuck in the depths

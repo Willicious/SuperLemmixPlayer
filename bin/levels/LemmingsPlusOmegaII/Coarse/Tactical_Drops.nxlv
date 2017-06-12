@@ -1437,3 +1437,10 @@ $LEMMING
   GLIDER
 $END
 
+$TALISMAN
+  TITLE Save at least 19 lemmings on Coarse 5.
+  ID 0
+  COLOR silver
+  SAVE 19
+$END
+

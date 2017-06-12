@@ -741,3 +741,12 @@ $TERRAIN
   Y 99
 $END
 
+$TALISMAN
+  TITLE Complete Touchy 13 with at least one of each skill left.
+  ID 0
+  COLOR silver
+  PLATFORMER_LIMIT 6
+  BUILDER_LIMIT 1
+  BASHER_LIMIT 2
+$END
+

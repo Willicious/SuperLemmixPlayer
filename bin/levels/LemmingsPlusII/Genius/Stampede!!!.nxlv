@@ -1157,3 +1157,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Genius 2 without any floaters.
+  ID 0
+  COLOR silver
+  FLOATER_LIMIT 0
+$END
+

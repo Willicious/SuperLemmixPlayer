@@ -471,3 +471,9 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Dodgy 12 without using the pickup skills.
+  ID 0
+  COLOR silver
+$END
+

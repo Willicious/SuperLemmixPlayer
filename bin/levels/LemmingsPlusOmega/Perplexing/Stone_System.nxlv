@@ -470,3 +470,10 @@ $TERRAIN
   Y 34
 $END
 
+$TALISMAN
+  TITLE Save 47 or more lemmings on Perplexing 9
+  ID 0
+  COLOR gold
+  SAVE 47
+$END
+

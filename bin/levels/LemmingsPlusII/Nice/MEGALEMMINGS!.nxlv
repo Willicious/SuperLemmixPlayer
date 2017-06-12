@@ -782,3 +782,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Nice 18 without any bashers.
+  ID 0
+  COLOR gold
+  BASHER_LIMIT 0
+$END
+

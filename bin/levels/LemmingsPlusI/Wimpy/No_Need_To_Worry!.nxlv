@@ -664,3 +664,11 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save 79 lemmings on Wimpy 17 with no more than 1 builder.
+  ID 0
+  COLOR silver
+  SAVE 79
+  BUILDER_LIMIT 1
+$END
+

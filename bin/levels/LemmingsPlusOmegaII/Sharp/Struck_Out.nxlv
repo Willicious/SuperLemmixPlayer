@@ -2766,3 +2766,10 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$TALISMAN
+  TITLE Complete Sharp 19 in under 2 minutes 30 seconds.
+  ID 0
+  COLOR gold
+  TIME_LIMIT 2550
+$END
+

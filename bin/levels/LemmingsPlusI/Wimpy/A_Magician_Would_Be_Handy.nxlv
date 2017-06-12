@@ -411,3 +411,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Wimpy 13 with every lemming saved.
+  ID 0
+  COLOR bronze
+  SAVE 80
+$END
+

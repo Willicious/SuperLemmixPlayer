@@ -12580,6 +12580,26 @@ $TERRAIN
   Y 424
 $END
 
+$TALISMAN
+  TITLE Complete the final level.
+  ID 0
+  COLOR silver
+$END
+
+$TALISMAN
+  TITLE Complete the final level in less than 12:30.
+  ID 1
+  COLOR gold
+  TIME_LIMIT 12750
+$END
+
+$TALISMAN
+  TITLE Complete the final level with 26 skills or less.
+  ID 2
+  COLOR gold
+  SKILL_LIMIT 26
+$END
+
 $POSTTEXT
   LINE Congratulations!
   LINE You have helped this final lemming

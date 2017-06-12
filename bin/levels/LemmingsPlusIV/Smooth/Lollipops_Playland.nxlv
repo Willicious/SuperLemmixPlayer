@@ -401,3 +401,10 @@ $TERRAIN
   Y 50
 $END
 
+$TALISMAN
+  TITLE Complete Smooth 6 without any builders
+  ID 0
+  COLOR gold
+  BUILDER_LIMIT 0
+$END
+

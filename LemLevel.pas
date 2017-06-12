@@ -226,6 +226,7 @@ begin
   fTerrains.Clear;
   fSteels.Clear;
   fPreplacedLemmings.Clear;
+  fTalismans.Clear;
   fPreText.Clear;
   fPostText.Clear;
 end;

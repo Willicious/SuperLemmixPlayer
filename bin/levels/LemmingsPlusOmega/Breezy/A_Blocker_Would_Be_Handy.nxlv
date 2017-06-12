@@ -424,3 +424,10 @@ $TERRAIN
   Y 96
 $END
 
+$TALISMAN
+  TITLE Save 48 lemmings on Breezy 19
+  ID 0
+  COLOR bronze
+  SAVE 48
+$END
+

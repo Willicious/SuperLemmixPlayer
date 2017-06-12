@@ -981,3 +981,10 @@ $TERRAIN
   FLIP_HORIZONTAL
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Edgy 2.
+  ID 0
+  COLOR bronze
+  SAVE 10
+$END
+

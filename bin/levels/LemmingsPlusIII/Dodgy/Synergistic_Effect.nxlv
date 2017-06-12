@@ -657,3 +657,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save 9 or more lemmings on Dodgy 9.
+  ID 0
+  COLOR bronze
+  SAVE 9
+$END
+

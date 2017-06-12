@@ -503,3 +503,10 @@ $TERRAIN
   Y 146
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Smooth 19
+  ID 0
+  COLOR silver
+  SAVE 40
+$END
+

@@ -250,3 +250,10 @@ $TERRAIN
   Y 0
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Puzzling 18
+  ID 0
+  COLOR bronze
+  SAVE 20
+$END
+

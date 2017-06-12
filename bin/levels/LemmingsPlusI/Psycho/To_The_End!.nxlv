@@ -1468,3 +1468,14 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete PSYCHO 28 using only bashers and diggers.
+  ID 0
+  COLOR silver
+  CLIMBER_LIMIT 0
+  FLOATER_LIMIT 0
+  BOMBER_LIMIT 0
+  BLOCKER_LIMIT 0
+  MINER_LIMIT 0
+$END
+

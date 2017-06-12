@@ -1167,6 +1167,12 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Beat the final level.
+  ID 0
+  COLOR gold
+$END
+
 $POSTTEXT
   LINE Congratulations!
   LINE You have successfully beaten all of

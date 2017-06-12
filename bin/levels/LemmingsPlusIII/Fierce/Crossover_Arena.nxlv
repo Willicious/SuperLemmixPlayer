@@ -925,3 +925,11 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Fierce 14 in under 2:30 with max 5 skills.
+  ID 0
+  COLOR gold
+  TIME_LIMIT 2550
+  SKILL_LIMIT 5
+$END
+

@@ -1084,3 +1084,10 @@ $TERRAIN
   Y 157
 $END
 
+$TALISMAN
+  TITLE Save 29 lemmings on Smooth 14
+  ID 0
+  COLOR bronze
+  SAVE 29
+$END
+

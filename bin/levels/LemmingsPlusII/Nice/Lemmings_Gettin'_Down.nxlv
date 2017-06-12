@@ -437,3 +437,14 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Nice 17 with no more than 1 of each skill.
+  ID 0
+  COLOR bronze
+  CLIMBER_LIMIT 1
+  BOMBER_LIMIT 1
+  BLOCKER_LIMIT 1
+  BUILDER_LIMIT 1
+  BASHER_LIMIT 1
+$END
+

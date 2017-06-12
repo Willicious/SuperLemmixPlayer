@@ -2222,3 +2222,11 @@ $TERRAIN
   Y 136
 $END
 
+$TALISMAN
+  TITLE Complete Smooth 9 without blockers and with max 1 stacker
+  ID 0
+  COLOR bronze
+  BLOCKER_LIMIT 0
+  STACKER_LIMIT 1
+$END
+

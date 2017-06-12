@@ -272,3 +272,10 @@ $TERRAIN
   Y 110
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Fluffy 5.
+  ID 0
+  COLOR bronze
+  SAVE 20
+$END
+

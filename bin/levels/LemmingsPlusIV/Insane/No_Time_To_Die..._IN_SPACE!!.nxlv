@@ -746,3 +746,10 @@ $TERRAIN
   NO_OVERWRITE
 $END
 
+$TALISMAN
+  TITLE Complete Insane 12 with no more than 5 builders
+  ID 0
+  COLOR gold
+  BUILDER_LIMIT 5
+$END
+

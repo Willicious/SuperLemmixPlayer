@@ -486,3 +486,10 @@ $LEMMING
   DIRECTION right
 $END
 
+$TALISMAN
+  TITLE Solve Edgy 6 with no more than 7 skills.
+  ID 0
+  COLOR bronze
+  SKILL_LIMIT 7
+$END
+

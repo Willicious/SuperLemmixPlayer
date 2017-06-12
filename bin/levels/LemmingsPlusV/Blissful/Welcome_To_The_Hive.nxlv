@@ -469,6 +469,13 @@ $TERRAIN
   FLIP_HORIZONTAL
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Blissful 3.
+  ID 0
+  COLOR bronze
+  SAVE 30
+$END
+
 $PRETEXT
   LINE Introducing the "Honeycomb" tileset.
   LINE Unusual geometry everywhere. And bees.

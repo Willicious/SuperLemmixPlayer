@@ -561,3 +561,10 @@ $TERRAIN
   Y 112
 $END
 
+$TALISMAN
+  TITLE Complete Smooth 4 with just a single skill
+  ID 0
+  COLOR bronze
+  SKILL_LIMIT 1
+$END
+

@@ -1118,3 +1118,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Timid 4 with no more than 10 climbers.
+  ID 0
+  COLOR gold
+  CLIMBER_LIMIT 10
+$END
+

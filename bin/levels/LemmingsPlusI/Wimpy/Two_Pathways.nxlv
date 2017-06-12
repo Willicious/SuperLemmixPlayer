@@ -539,3 +539,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Wimpy 6 with only two skills.
+  ID 0
+  COLOR silver
+  SKILL_LIMIT 2
+$END
+

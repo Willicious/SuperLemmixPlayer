@@ -2348,3 +2348,10 @@ $TERRAIN
   ROTATE
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Fluffy 15.
+  ID 0
+  COLOR gold
+  SAVE 100
+$END
+

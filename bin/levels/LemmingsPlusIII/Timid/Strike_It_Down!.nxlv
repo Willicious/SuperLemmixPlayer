@@ -911,3 +911,11 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Timid 3 without miners or diggers.
+  ID 0
+  COLOR bronze
+  MINER_LIMIT 0
+  DIGGER_LIMIT 0
+$END
+

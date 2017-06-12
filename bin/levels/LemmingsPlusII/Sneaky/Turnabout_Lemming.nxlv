@@ -798,3 +798,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Sneaky 19 with maximum 8 skills.
+  ID 0
+  COLOR silver
+  SKILL_LIMIT 8
+$END
+

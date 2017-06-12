@@ -439,3 +439,10 @@ $TERRAIN
   Y -3
 $END
 
+$TALISMAN
+  TITLE Complete Breezy 15 without builders
+  ID 0
+  COLOR bronze
+  BUILDER_LIMIT 0
+$END
+

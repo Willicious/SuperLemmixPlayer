@@ -1063,3 +1063,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Wimpy 25 with no more than 3 builders.
+  ID 0
+  COLOR silver
+  BUILDER_LIMIT 3
+$END
+

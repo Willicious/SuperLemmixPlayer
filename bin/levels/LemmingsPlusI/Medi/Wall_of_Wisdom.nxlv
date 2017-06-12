@@ -220,3 +220,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save 64 or more lemmings on Medi 25.
+  ID 0
+  COLOR gold
+  SAVE 64
+$END
+

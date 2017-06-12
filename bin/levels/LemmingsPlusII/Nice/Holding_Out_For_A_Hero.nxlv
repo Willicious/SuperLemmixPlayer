@@ -439,3 +439,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Nice 1 without using floaters.
+  ID 0
+  COLOR bronze
+  FLOATER_LIMIT 0
+$END
+

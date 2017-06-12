@@ -238,3 +238,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Danger 4.
+  ID 0
+  COLOR silver
+  SAVE 80
+$END
+

@@ -497,3 +497,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save 47 lemmings on Nice 3.
+  ID 0
+  COLOR silver
+  SAVE 47
+$END
+

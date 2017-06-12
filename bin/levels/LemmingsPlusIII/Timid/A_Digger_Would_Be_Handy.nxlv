@@ -376,3 +376,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Timid 12 without blockers.
+  ID 0
+  COLOR bronze
+  BLOCKER_LIMIT 0
+$END
+

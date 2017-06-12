@@ -2265,3 +2265,13 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save all lemmings on Breezy 30 without climbers/swimmers/gliders
+  ID 0
+  COLOR silver
+  SAVE 50
+  CLIMBER_LIMIT 0
+  SWIMMER_LIMIT 0
+  GLIDER_LIMIT 0
+$END
+

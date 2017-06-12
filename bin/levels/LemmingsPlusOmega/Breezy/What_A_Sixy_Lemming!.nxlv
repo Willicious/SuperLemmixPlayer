@@ -1021,3 +1021,15 @@ $TERRAIN
   Y 0
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Breezy 14 with 5 diggers, no other skills
+  ID 0
+  COLOR bronze
+  SAVE 6
+  CLIMBER_LIMIT 0
+  FLOATER_LIMIT 0
+  BUILDER_LIMIT 0
+  BASHER_LIMIT 0
+  DIGGER_LIMIT 5
+$END
+

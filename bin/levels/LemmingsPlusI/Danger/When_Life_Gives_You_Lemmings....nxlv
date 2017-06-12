@@ -508,3 +508,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Danger 12.
+  ID 0
+  COLOR bronze
+  SAVE 20
+$END
+

@@ -1213,3 +1213,10 @@ $TERRAIN
   Y 91
 $END
 
+$TALISMAN
+  TITLE Complete Insane 19 in less than 4 minutes
+  ID 0
+  COLOR silver
+  TIME_LIMIT 4080
+$END
+

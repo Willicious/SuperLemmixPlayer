@@ -201,3 +201,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Save every lemming on Bumpy 12
+  ID 0
+  COLOR silver
+  SAVE 100
+$END
+

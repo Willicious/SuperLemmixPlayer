@@ -446,3 +446,10 @@ $TERRAIN
   Y -11
 $END
 
+$TALISMAN
+  TITLE Complete Touchy 5 with only 1 Miner.
+  ID 0
+  COLOR silver
+  MINER_LIMIT 1
+$END
+

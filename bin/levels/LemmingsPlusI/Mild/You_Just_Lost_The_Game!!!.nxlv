@@ -317,3 +317,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Mild 30 without any floaters.
+  ID 0
+  COLOR bronze
+  FLOATER_LIMIT 0
+$END
+

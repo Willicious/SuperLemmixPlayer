@@ -295,3 +295,10 @@ $TERRAIN
   ONE_WAY
 $END
 
+$TALISMAN
+  TITLE Complete Danger 16 in under 3 minutes.
+  ID 0
+  COLOR bronze
+  TIME_LIMIT 3060
+$END
+
