@@ -93,7 +93,6 @@ type
     LemIsStartingAction           : Boolean; // replaces LemIsNewDigger, LemIsNewClimber, and acts as LemIsNewFencer
     LemHighlightReplay            : Boolean;
     LemExploded                   : Boolean; // @particles, set after a Lemming actually exploded, used to control particles-drawing
-    LemUsedSkillCount             : Integer; // number of skills assigned to this lem, used for talisman
     LemTimerToStone               : Boolean;
     LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Stoner
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
@@ -266,7 +265,6 @@ begin
   LemIsStartingAction := Source.LemIsStartingAction;
   LemHighlightReplay := Source.LemHighlightReplay;
   LemExploded := Source.LemExploded;
-  LemUsedSkillCount := Source.LemUsedSkillCount;
   LemTimerToStone := Source.LemTimerToStone;
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;

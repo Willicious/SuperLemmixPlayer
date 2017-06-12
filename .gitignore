@@ -30,3 +30,4 @@ bin/music/*.ogg
 bin/levels/TESTING/
 *.identcache
 LemVersionCID.pas
+NeoLemmix.res

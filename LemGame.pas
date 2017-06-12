@@ -78,8 +78,6 @@ type
       TimePlay: Integer;
       EntriesOpened: Boolean;
       ObjectInfos: TInteractiveObjectInfoList;
-      LowestReleaseRate: Integer;
-      HighestReleaseRate: Integer;
       CurrReleaseRate: Integer;
 
       CurrSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -187,8 +185,6 @@ type
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
-    LowestReleaseRate          : Integer;   // only used for talismans
-    HighestReleaseRate         : Integer;   // only used for talismans
     CurrReleaseRate            : Integer;
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -653,8 +649,6 @@ begin
   aState.DelayEndFrames := DelayEndFrames;
   aState.TimePlay := TimePlay;
   aState.EntriesOpened := EntriesOpened;
-  aState.LowestReleaseRate := LowestReleaseRate;
-  aState.HighestReleaseRate := HighestReleaseRate;
   aState.CurrReleaseRate := CurrReleaseRate;
 
   for i := 0 to 16 do
@@ -705,8 +699,6 @@ begin
   DelayEndFrames := aState.DelayEndFrames;
   TimePlay := aState.TimePlay;
   EntriesOpened := aState.EntriesOpened;
-  LowestReleaseRate := aState.LowestReleaseRate;
-  HighestReleaseRate := aState.HighestReleaseRate;
   CurrReleaseRate := aState.CurrReleaseRate;
 
   for i := 0 to 16 do
@@ -741,58 +733,8 @@ begin
 end;
 
 procedure TLemmingGame.DoTalismanCheck;
-var
-  i, i2, j: Integer;
-  TotalSkillUsed: Integer;
-  FoundIssue: Boolean;
-  UsedSkillLems: Integer;
-  GetTalisman: Boolean;
 begin
-  for i := 0 to fTalismans.Count-1 do
-  begin
-    with fTalismans[i] do
-    begin
-
-      if    (LemmingsIn < SaveRequirement)
-         or ((SaveRequirement = 0) and (LemmingsIn < GameParams.Level.Info.RescueCount)) then Continue;
-
-      if    ((TimeLimit <> 0) and (CurrentIteration > TimeLimit))
-         or ((TimeLimit = 0) and Level.Info.HasTimeLimit and (CurrentIteration > Level.Info.TimeLimit * 17)) then Continue;
-      if LowestReleaseRate < RRMin then Continue;
-      if HighestReleaseRate > RRMax then Continue;
-
-      TotalSkillUsed := 0;
-      GetTalisman := True;
-      for j := 0 to 16 do
-      begin
-        if (UsedSkillCount[ActionListArray[j]] > SkillLimit[j]) and (SkillLimit[j] <> -1) then
-          GetTalisman := False;
-        TotalSkillUsed := TotalSkillUsed + UsedSkillCount[ActionListArray[j]];
-      end;
-      if not GetTalisman then Continue;
-
-      if (TotalSkillUsed > TotalSkillLimit) and (TotalSkillLimit <> -1) then Continue;
-
-      FoundIssue := false;
-      if tmOneSkill in MiscOptions then
-        for i2 := 0 to LemmingList.Count-1 do
-          with LemmingList[i2] do
-           if (LemUsedSkillCount > 1) then FoundIssue := true;
-      if FoundIssue then Continue;
-
-      UsedSkillLems := 0;
-      if tmOneLemming in MiscOptions then
-        for i2 := 0 to LemmingList.Count-1 do
-          with LemmingList[i2] do
-            if (LemUsedSkillCount > 0) then Inc(UsedSkillLems);
-      if UsedSkillLems > 1 then Continue;
-
-      // Award Talisman
-      //GameParams.SaveSystem.GetTalisman(Signature);
-      if TalismanType <> 0 then fTalismanReceived := True;
-
-    end;
-  end;
+  // NEED TO PUT CODE HERE //
 end;
 
 function TLemmingGame.Checkpass: Boolean;
@@ -1073,9 +1015,6 @@ begin
     for i := 0 to 16 do
       UsedSkillCount[ActionListArray[i]] := 0;
   end;
-
-  LowestReleaseRate := CurrReleaseRate;
-  HighestReleaseRate := CurrReleaseRate;
 
   NextLemmingCountDown := 20;
 
@@ -1744,10 +1683,7 @@ begin
   begin
     Result := DoSkillAssignment(L, Skill);
     if Result then
-    begin
       CueSoundEffect(SFX_ASSIGN_SKILL, L.Position);
-      Inc(L.LemUsedSkillCount);
-    end;
   end
 
   // record new skill assignment to be assigned once we call again UpdateLemmings
@@ -1845,7 +1781,6 @@ begin
   NewL.LemIndex := LemmingList.Count;
   LemmingList.Add(NewL);
   TurnAround(NewL);
-  NewL.LemUsedSkillCount := 0;
   Inc(LemmingsOut);
 
   // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
@@ -1952,8 +1887,6 @@ begin
     if (not LemIsInCursor(L, MousePos)) and (not IsHighlight) then Continue;
     // Directional select
     if (fSelectDx <> 0) and (fSelectDx <> L.LemDx) then Continue;
-    // Select unassigned lemming
-    if IsSelectUnassignedHotkey and (L.LemUsedSkillCount > 0) then Continue;
     // Select only walkers
     if IsSelectWalkerHotkey and (L.LemAction <> baWalking) then Continue;
 
@@ -4379,14 +4312,6 @@ begin
 
   CheckAdjustReleaseRate;
 
-  if LemmingsToRelease > 0 then
-  begin
-    if (CurrReleaseRate < LowestReleaseRate) or (CurrentIteration < 20) then
-      LowestReleaseRate := CurrReleaseRate;
-    if (CurrReleaseRate > HighestReleaseRate) or (CurrentIteration < 20) then
-      HighestReleaseRate := CurrReleaseRate;
-  end;
-
   CheckForQueuedAction; // needs to be done before CheckForReplayAction, because it writes an assignment in the replay
   CheckForReplayAction;
 
@@ -4680,8 +4605,6 @@ begin
           LemY := ObjectInfos[ix].TriggerRect.Top;
           LemDX := 1;
           if ObjectInfos[ix].IsFlipPhysics then TurnAround(NewLemming);
-
-          LemUsedSkillCount := 0;
 
           if (ObjectInfos[ix].PreAssignedSkills and 1) <> 0 then LemIsClimber := true;
           if (ObjectInfos[ix].PreAssignedSkills and 2) <> 0 then LemIsSwimmer := true;
