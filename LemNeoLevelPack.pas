@@ -653,11 +653,11 @@ var
       ActiveLevelSec.AddLine('modified_date', FileAge(aLevel.Path));
       ActiveLevelSec.AddLine('lemming_record', aLevel.Records.LemmingsRescued);
 
-      for i := 0 to aLevel.fTalismanList.Count-1 do
-        ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fTalismanList[i], 8));
-
       if aLevel.Status >= lst_Completed_Outdated then
         ActiveLevelSec.AddLine('time_record', aLevel.Records.TimeTaken);
+
+      for i := 0 to aLevel.fTalismanList.Count-1 do
+        ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fTalismanList[i], 8));
     end;
   begin
     for i := 0 to aGroup.Children.Count-1 do
