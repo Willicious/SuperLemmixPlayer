@@ -373,6 +373,7 @@ type
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
+    function GetUsedSkillCount(aSkill: TSkillPanelButton): Integer;
   public
     //GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
@@ -419,6 +420,7 @@ type
     property LemmingsSaved: Integer read LemmingsIn;
     property CurrentReleaseRate: Integer read CurrReleaseRate; // for skill panel's usage
     property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount;
+    property SkillsUsed[Index: TSkillPanelButton]: Integer read GetUsedSkillCount;
     property ClockFrame: Integer read fClockFrame;
     property CursorPoint: TPoint read fCursorPoint write fCursorPoint;
     property GameFinished: Boolean read fGameFinished;
@@ -5343,6 +5345,14 @@ begin
     Result := 0
   else
     Result := CurrSkillCount[SkillPanelButtonToAction[aSkill]];
+end;
+
+function TLemmingGame.GetUsedSkillCount(aSkill: TSkillPanelButton): Integer;
+begin
+  if (aSkill < Low(TSkillPanelButton)) or (aSkill > LAST_SKILL_BUTTON) then
+    Result := 0
+  else
+    Result := UsedSkillCount[SkillPanelButtonToAction[aSkill]];
 end;
 
 end.

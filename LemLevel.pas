@@ -4,8 +4,10 @@ unit LemLevel;
 interface
 
 uses
+  System.Generics.Collections,
   Classes, SysUtils, StrUtils,
   LemCore, LemLemming,
+  LemTalisman,
   LemTerrain, LemInteractiveObject, LemObjects, LemSteel,
   LemNeoPieceManager, LemNeoParser;
 
@@ -89,6 +91,8 @@ type
     fInteractiveObjects : TInteractiveObjects;
     fSteels             : TSteels;
     fPreplacedLemmings  : TPreplacedLemmingList;
+
+    fTalismans: TObjectList<TTalisman>;
     fPreText: TStringList;
     fPostText: TStringList;
 
@@ -99,6 +103,7 @@ type
     procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
+    procedure HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
     procedure LoadPretextLine(aLine: TParserLine; const aIteration: Integer);
     procedure LoadPosttextLine(aLine: TParserLine; const aIteration: Integer);
 
@@ -109,6 +114,7 @@ type
     procedure SaveTerrainSections(aSection: TParserSection);
     procedure SaveAreaSections(aSection: TParserSection);
     procedure SaveLemmingSections(aSection: TParserSection);
+    procedure SaveTalismanSections(aSection: TParserSection);
     procedure SaveTextSections(aSection: TParserSection);
   public
     constructor Create;
@@ -194,6 +200,7 @@ begin
   fTerrains := TTerrains.Create;
   fSteels := TSteels.Create;
   fPreplacedLemmings := TPreplacedLemmingList.Create;
+  fTalismans := TObjectList<TTalisman>.Create(true);
   fPreText := TStringList.Create;
   fPostText := TStringList.Create;
 end;
@@ -205,6 +212,7 @@ begin
   fTerrains.Free;
   fSteels.Free;
   fPreplacedLemmings.Free;
+  fTalismans.Free;
   fPreText.Free;
   fPostText.Free;
   inherited;
@@ -276,6 +284,7 @@ begin
       Main.DoForEachSection('terrain', HandleTerrainEntry);
       Main.DoForEachSection('area', HandleAreaEntry);
       Main.DoForEachSection('lemming', HandleLemmingEntry);
+      Main.DoForEachSection('talisman', HandleTalismanEntry);
 
       if Main.Section['pretext'] <> nil then
         Main.Section['pretext'].DoForEachLine('line', LoadPretextLine);
@@ -544,6 +553,15 @@ begin
   L.IsZombie   := (aSection.Line['zombie']   <> nil);
 end;
 
+procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
+var
+  T: TTalisman;
+begin
+  T := TTalisman.Create;
+  T.LoadFromSection(aSection);
+  fTalismans.Add(T);
+end;
+
 procedure TLevel.LoadPretextLine(aLine: TParserLine; const aIteration: Integer);
 begin
   fPreText.Add(aLine.ValueTrimmed);
@@ -675,6 +693,7 @@ begin
     SaveTerrainSections(Parser.MainSection);
     SaveAreaSections(Parser.MainSection);
     SaveLemmingSections(Parser.MainSection);
+    SaveTalismanSections(Parser.MainSection);
     SaveTextSections(Parser.MainSection);
     Parser.SaveToStream(aStream);
   finally
@@ -950,6 +969,19 @@ begin
     if L.IsGlider then Sec.AddLine('GLIDER');
     if L.IsDisarmer then Sec.AddLine('DISARMER');
     if L.IsZombie then Sec.AddLine('ZOMBIE');
+  end;
+end;
+
+procedure TLevel.SaveTalismanSections(aSection: TParserSection);
+var
+  i: Integer;
+  Sec: TParserSection;
+begin
+  for i := 0 to fTalismans.Count-1 do
+  begin
+    Sec := TParserSection.Create('talisman');
+    aSection.SectionList.Add(Sec);
+    fTalismans[i].SaveToSection(Sec);
   end;
 end;
 

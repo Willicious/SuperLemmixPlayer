@@ -131,6 +131,25 @@ type
 const
   LAST_SKILL_BUTTON = spbCloner;
 
+  SKILL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
+    'walker',
+    'climber',
+    'swimmer',
+    'floater',
+    'glider',
+    'disarmer',
+    'bomber',
+    'stoner',
+    'blocker',
+    'platformer',
+    'builder',
+    'stacker',
+    'basher',
+    'fencer',
+    'miner',
+    'digger',
+    'cloner');
+
 type
   TTriggerTypes = (
     trExit,       // as well for locked exits, once all buttons are pressed

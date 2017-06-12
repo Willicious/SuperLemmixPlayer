@@ -135,6 +135,7 @@ type
       function GetLineString(aKeyword: String): String;
       function GetLineTrimString(aKeyword: String): String;
       function GetLineNumeric(aKeyword: String): Int64;
+      function GetLineNumericDefault(aKeyword: String; aDefault: Int64): Int64;
 
       procedure LoadFromStrings(aStrings: TStrings; var aPos: Integer);
       procedure SaveToStrings(aStrings: TStrings; aIndent: Integer);
@@ -160,6 +161,7 @@ type
       property LineString[Keyword: String]: String read GetLineString;
       property LineTrimString[Keyword: String]: String read GetLineTrimString;
       property LineNumeric[Keyword: String]: Int64 read GetLineNumeric;
+      property LineNumericDefault[Keyword: String; Default: Int64]: Int64 read GetLineNumericDefault;
 
       property SectionList: TParserSectionList read fSections;
       property LineList: TParserLineList read fLines;
@@ -458,13 +460,18 @@ begin
     Result := Line.ValueTrimmed;
 end;
 
-function TParserSection.GetLineNumeric(aKeyword: String): Int64;
+function TParserSection.GetLineNumeric(aKeyword: string): Int64;
+begin
+  Result := GetLineNumericDefault(aKeyword, 0);
+end;
+
+function TParserSection.GetLineNumericDefault(aKeyword: String; aDefault: Int64): Int64;
 var
   Line: TParserLine;
 begin
   Line := GetLine(aKeyword);
   if Line = nil then
-    Result := 0
+    Result := aDefault
   else
     Result := Line.ValueNumeric;
 end;
