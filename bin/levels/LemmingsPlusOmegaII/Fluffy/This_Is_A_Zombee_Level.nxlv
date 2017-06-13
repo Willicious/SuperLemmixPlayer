@@ -94,8 +94,8 @@ $OBJECT
 $END
 
 $OBJECT
-  COLLECTION lpo2_special
-  PIECE object_0
+  COLLECTION lpv_honeycomb
+  PIECE zombee
   X 71
   Y 31
   NO_OVERWRITE
@@ -104,8 +104,8 @@ $OBJECT
 $END
 
 $OBJECT
-  COLLECTION lpo2_special
-  PIECE object_0
+  COLLECTION lpv_honeycomb
+  PIECE zombee
   X 266
   Y 81
   NO_OVERWRITE
@@ -114,8 +114,8 @@ $OBJECT
 $END
 
 $OBJECT
-  COLLECTION lpo2_special
-  PIECE object_0
+  COLLECTION lpv_honeycomb
+  PIECE zombee
   X 202
   Y 73
   FLIP_HORIZONTAL
@@ -125,8 +125,8 @@ $OBJECT
 $END
 
 $OBJECT
-  COLLECTION lpo2_special
-  PIECE object_0
+  COLLECTION lpv_honeycomb
+  PIECE zombee
   X 46
   Y 118
   FLIP_HORIZONTAL
