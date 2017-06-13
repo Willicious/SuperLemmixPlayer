@@ -2,8 +2,8 @@ THEME lpo2_special
 
 $OBJECT
   INDEX 0
-  COLLECTION lpo2_special
-  PIECE object_0
+  COLLECTION lpv_honeycomb
+  PIECE zombee
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
   TOP_OFFSET 0
