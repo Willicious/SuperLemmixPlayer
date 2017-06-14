@@ -6,7 +6,7 @@ interface
 
 const
   MINIMUM_SI = 4;
-  MAXIMUM_SI = 53;
+  MAXIMUM_SI = 102;
 
 (*
   { TODO : find good settings }
@@ -313,12 +313,12 @@ implementation
 
 function ReleaseRateToSpawnInterval(aRR: Integer): Integer;
 begin
-  Result := 53 - (aRR div 2);
+  Result := 103 - aRR;
 end;
 
 function SpawnIntervalToReleaseRate(aSI: Integer): Integer;
 begin
-  Result := ((53 - aSI) * 2) + 1;
+  Result := 103 - aSI;
 end;
 
 end.

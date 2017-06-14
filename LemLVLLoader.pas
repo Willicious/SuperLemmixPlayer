@@ -577,7 +577,7 @@ begin
   aLevel.Info.LevelID := aLevel.Info.LevelID or (aLevel.Info.LevelID shl 32);
   aLevel.Info.Title := Trim(aLevel.Info.Title);
   aLevel.Info.Author := Trim(aLevel.Info.Author);
-  aLevel.Info.SpawnInterval := ReleaseRateToSpawnInterval(aLevel.Info.SpawnInterval);
+  aLevel.Info.SpawnInterval := 53 - (aLevel.Info.SpawnInterval div 2);
 
   Trans := TTranslationTable.Create;
   Trans.Apply(aLevel);
