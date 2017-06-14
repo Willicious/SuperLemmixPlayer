@@ -78,7 +78,7 @@ type
       TimePlay: Integer;
       EntriesOpened: Boolean;
       ObjectInfos: TInteractiveObjectInfoList;
-      CurrReleaseRate: Integer;
+      CurrSpawnInterval: Integer;
 
       CurrSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
       UsedSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -184,7 +184,7 @@ type
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
     ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
-    CurrReleaseRate            : Integer;
+    CurrSpawnInterval            : Integer;
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -277,7 +277,7 @@ type
 
 
     procedure RecordNuke;
-    procedure RecordReleaseRate(aRR: Integer);
+    procedure RecordSpawnInterval(aSI: Integer);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
     procedure RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);
     procedure RemovePixelAt(X, Y: Integer);
@@ -376,7 +376,7 @@ type
     fXmasPal                   : Boolean;
     fActiveSkills              : array[0..7] of TSkillPanelButton;
     LastHitCount               : Integer;
-    ReleaseRateModifier        : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
+    SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     ReplayInsert               : Boolean;
 
     constructor Create(aOwner: TComponent); override;
@@ -388,9 +388,9 @@ type
     procedure UpdateLemmings;
 
   { callable }
-    procedure CheckAdjustReleaseRate;
-    procedure AdjustReleaseRate(aRR: Integer);
-    function CheckIfLegalRR(aRR: Integer): Boolean;
+    procedure CheckAdjustSpawnInterval;
+    procedure AdjustSpawnInterval(aSI: Integer);
+    function CheckIfLegalSI(aSI: Integer): Boolean;
     procedure CreateLemmingAtCursorPoint;
     procedure Finish(aReason: Integer);
     procedure Cheat;
@@ -413,7 +413,7 @@ type
     property SpawnedDead: Integer read fSpawnedDead;
     property LemmingsActive: Integer read LemmingsOut;
     property LemmingsSaved: Integer read LemmingsIn;
-    property CurrentReleaseRate: Integer read CurrReleaseRate; // for skill panel's usage
+    property CurrentSpawnInterval: Integer read CurrSpawnInterval; // for skill panel's usage
     property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount;
     property SkillsUsed[Index: TSkillPanelButton]: Integer read GetUsedSkillCount;
     property ClockFrame: Integer read fClockFrame;
@@ -648,7 +648,7 @@ begin
   aState.DelayEndFrames := DelayEndFrames;
   aState.TimePlay := TimePlay;
   aState.EntriesOpened := EntriesOpened;
-  aState.CurrReleaseRate := CurrReleaseRate;
+  aState.CurrSpawnInterval := CurrSpawnInterval;
 
   for i := 0 to 16 do
   begin
@@ -698,7 +698,7 @@ begin
   DelayEndFrames := aState.DelayEndFrames;
   TimePlay := aState.TimePlay;
   EntriesOpened := aState.EntriesOpened;
-  CurrReleaseRate := aState.CurrReleaseRate;
+  CurrSpawnInterval := aState.CurrSpawnInterval;
 
   for i := 0 to 16 do
   begin
@@ -728,7 +728,7 @@ begin
   // Recreate Blocker map
   SetBlockerMap;
 
-  ReleaseRateModifier := 0; // we don't want to continue changing it if it's currently changing
+  SpawnIntervalModifier := 0; // we don't want to continue changing it if it's currently changing
 end;
 
 procedure TLemmingGame.DoTalismanCheck;
@@ -1015,7 +1015,7 @@ begin
   fClockFrame := 0;
   EntriesOpened := False;
 
-  ReleaseRateModifier := 0;
+  SpawnIntervalModifier := 0;
   UserSetNuking := False;
   ExploderAssignInProgress := False;
   Index_LemmingToBeNuked := 0;
@@ -1034,7 +1034,7 @@ begin
 
   with Level.Info do
   begin
-    CurrReleaseRate := ReleaseRate;
+    CurrSpawnInterval := SpawnInterval;
 
     // Set available skills
     for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
@@ -4339,7 +4339,7 @@ begin
     Exit;
   CheckForGameFinished;
 
-  CheckAdjustReleaseRate;
+  CheckAdjustSpawnInterval;
 
   CheckForQueuedAction; // needs to be done before CheckForReplayAction, because it writes an assignment in the replay
   CheckForReplayAction;
@@ -4550,31 +4550,31 @@ begin
       begin
         if not MakeActive then
         begin
-          ReleaseRateModifier := 0;
+          SpawnIntervalModifier := 0;
           Exit;
         end;
 
-        if Level.Info.ReleaseRateLocked or (CurrReleaseRate = 99) then Exit;
+        if Level.Info.SpawnIntervalLocked or (CurrSpawnInterval = MINIMUM_SI) then Exit;
 
         if RightClick then
-          RecordReleaseRate(99)
+          RecordSpawnInterval(MINIMUM_SI)
         else
-          ReleaseRateModifier := 1;
+          SpawnIntervalModifier := -1;
       end;
     spbSlower:
       begin
         if not MakeActive then
         begin
-          ReleaseRateModifier := 0;
+          SpawnIntervalModifier := 0;
           Exit;
         end;
-        
-        if Level.Info.ReleaseRateLocked or (CurrReleaseRate = Level.Info.ReleaseRate) then Exit;
+
+        if Level.Info.SpawnIntervalLocked or (CurrSpawnInterval = Level.Info.SpawnInterval) then Exit;
 
         if RightClick then
-          RecordReleaseRate(Level.Info.ReleaseRate)
+          RecordSpawnInterval(Level.Info.SpawnInterval)
         else
-          ReleaseRateModifier := -1;
+          SpawnIntervalModifier := 1;
       end;
     spbNuke:
       begin
@@ -4726,10 +4726,7 @@ function TLemmingGame.CalculateNextLemmingCountdown: Integer;
   of the game mechanics is based off of number of frames rather than absolute time.
 *)
 begin
-  Result := 99 - currReleaseRate;
-  if (Result < 0) then
-    Inc(Result, 256);
-  Result := Result div 2 + 4
+  Result := CurrSpawnInterval;
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String);
@@ -4758,20 +4755,20 @@ begin
 end;
 
 
-function TLemmingGame.CheckIfLegalRR(aRR: Integer): Boolean;
+function TLemmingGame.CheckIfLegalSI(aSI: Integer): Boolean;
 begin
-  if Level.Info.ReleaseRateLocked
-  or (aRR > 99)
-  or (aRR < Level.Info.ReleaseRate) then
+  if Level.Info.SpawnIntervalLocked
+  or (aSI < MINIMUM_SI)
+  or (aSI > Level.Info.SpawnInterval) then
     Result := false
   else
     Result := true;
 end;
 
-procedure TLemmingGame.AdjustReleaseRate(aRR: Integer);
+procedure TLemmingGame.AdjustSpawnInterval(aSI: Integer);
 begin
-  if (aRR <> currReleaseRate) and CheckIfLegalRR(aRR) then
-    currReleaseRate := aRR;
+  if (aSI <> currSpawnInterval) and CheckIfLegalSI(aSI) then
+    currSpawnInterval := aSI;
 end;
 
 
@@ -4786,16 +4783,16 @@ begin
   fReplayManager.Add(E);
 end;
 
-procedure TLemmingGame.RecordReleaseRate(aRR: Integer);
+procedure TLemmingGame.RecordSpawnInterval(aSI: Integer);
 var
-  E: TReplayChangeReleaseRate;
+  E: TReplayChangeSpawnInterval;
 begin
   if not fPlaying then
     Exit;
 
-  E := TReplayChangeReleaseRate.Create;
+  E := TReplayChangeSpawnInterval.Create;
   E.Frame := fCurrentIteration;
-  E.NewReleaseRate := aRR;
+  E.NewSpawnInterval := aSI;
   E.SpawnedLemmingCount := LemmingList.Count;
 
   fReplayManager.Add(E);
@@ -4828,11 +4825,11 @@ var
     ReplaySkillAssignment(E);
   end;
 
-  procedure ApplyReleaseRate;
+  procedure ApplySpawnInterval;
   var
-    E: TReplayChangeReleaseRate absolute R;
+    E: TReplayChangeSpawnInterval absolute R;
   begin
-    AdjustReleaseRate(E.NewReleaseRate);
+    AdjustSpawnInterval(E.NewSpawnInterval);
   end;
 
   procedure ApplyNuke;
@@ -4853,8 +4850,8 @@ var
     if R is TReplaySkillAssignment then
       ApplySkillAssign;
 
-    if R is TReplayChangeReleaseRate then
-      ApplyReleaseRate;
+    if R is TReplayChangeSpawnInterval then
+      ApplySpawnInterval;
 
     if R is TReplayNuke then
       ApplyNuke;
@@ -4865,7 +4862,7 @@ begin
     // The "Handle" procedure ensures this does not lead to errors.
     i := 0;
     repeat
-      R := fReplayManager.ReleaseRateChange[fCurrentIteration, i];
+      R := fReplayManager.SpawnIntervalChange[fCurrentIteration, i];
       Inc(i);
     until not Handle;
     if PausedRRCheck then Exit;
@@ -5181,15 +5178,15 @@ begin
   end;
 end;
 
-procedure TLemmingGame.CheckAdjustReleaseRate;
+procedure TLemmingGame.CheckAdjustSpawnInterval;
 var
-  NewRR: Integer;
+  NewSI: Integer;
 begin
-  if ReleaseRateModifier = 0 then Exit;
+  if SpawnIntervalModifier = 0 then Exit;
 
-  NewRR := CurrReleaseRate + ReleaseRateModifier;
-  if CheckIfLegalRR(NewRR) then
-    RecordReleaseRate(NewRR);
+  NewSI := CurrSpawnInterval + SpawnIntervalModifier;
+  if CheckIfLegalSI(NewSI) then
+    RecordSpawnInterval(NewSI);
 end;
 
 procedure TLemmingGame.Finish(aReason: Integer);
@@ -5282,7 +5279,7 @@ begin
   // Moreover ignore changes at the current frame, when not paused
   Result :=     (fCurrentIteration < fReplayManager.LastActionFrame)
             or  ((fReplayManager.Assignment[fCurrentIteration, 0] <> nil) and isPaused and not (fReplayManager.Assignment[fCurrentIteration, 0] is TReplayNuke))
-            or  ((fReplayManager.ReleaseRateChange[fCurrentIteration, 0] <> nil) and not isPaused);
+            or  ((fReplayManager.SpawnIntervalChange[fCurrentIteration, 0] <> nil) and not isPaused);
 end;
 
 

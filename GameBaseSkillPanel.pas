@@ -125,6 +125,8 @@ type
     procedure MinimapMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer); virtual;
 
+    function GetSpawnIntervalValue(aSI: Integer): Integer; // Returns the SI or the equivalent RR, depending on user's settings
+
   public
     constructor Create(aOwner: TComponent); override;
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); virtual;
@@ -750,7 +752,7 @@ begin
   if (aNumber = 0) and GameParams.BlackOutZero then Exit;
 
   // Check for locked release rate icon
-  if (aButton = spbFaster) and (Level.Info.ReleaseRateLocked or (Level.Info.ReleaseRate = 99)) then
+  if (aButton = spbFaster) and (Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = MINIMUM_SI)) then
     fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
   // Check for infinite icon
   else if aNumber > 99 then
@@ -816,8 +818,8 @@ begin
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     DrawSkillCount(i, Game.SkillCount[i]);
 
-  DrawSkillCount(spbSlower, Level.Info.ReleaseRate);
-  DrawSkillCount(spbFaster, Game.CurrentReleaseRate);
+  DrawSkillCount(spbSlower, GetSpawnIntervalValue(Level.Info.SpawnInterval));
+  DrawSkillCount(spbFaster, GetSpawnIntervalValue(Game.CurrentSpawnInterval));
 
   // Highlight selected button
   if fHighlitSkill <> Game.RenderInterface.SelectedSkill then
@@ -1032,10 +1034,10 @@ begin
   if (aButton = spbNuke) and not (ssDouble in Shift) then Exit;
   if (aButton in [spbSlower, spbFaster, spbNuke]) and GameParams.ExplicitCancel then Exit;
 
-  if Game.Replaying and not Level.Info.ReleaseRateLocked then
+  if Game.Replaying and not Level.Info.SpawnIntervalLocked then
   begin
-    if    ((aButton = spbSlower) and (Game.CurrentReleaseRate > Level.Info.ReleaseRate))
-       or ((aButton = spbFaster) and (Game.CurrentReleaseRate < 99)) then
+    if    ((aButton = spbSlower) and (Game.CurrentSpawnInterval < Level.Info.SpawnInterval))
+       or ((aButton = spbFaster) and (Game.CurrentSpawnInterval > MINIMUM_SI)) then
       Game.RegainControl;
   end;
 
@@ -1255,6 +1257,14 @@ begin
   Cursor := aCursor;
   fImage.Cursor := aCursor;
   fMinimapImage.Cursor := aCursor;
+end;
+
+function TBaseSkillPanel.GetSpawnIntervalValue(aSI: Integer): Integer;
+begin
+  if GameParams.SpawnInterval then
+    Result := aSI
+  else
+    Result := SpawnIntervalToReleaseRate(aSI);
 end;
 
 end.

@@ -34,9 +34,6 @@ const
 
 
 type
-  TReplayAction = (ra_None, ra_AssignSkill, ra_ChangeReleaseRate, ra_Nuke,
-                   ra_SelectSkill, ra_HighlightLemming);
-
   TBaseReplayItem = class
     private
       fFrame: Integer;
@@ -82,16 +79,16 @@ type
       property Skill: TBasicLemmingAction read fSkill write fSkill;
   end;
 
-  TReplayChangeReleaseRate = class(TBaseReplayItem)
+  TReplayChangeSpawnInterval = class(TBaseReplayItem)
     private
-      fNewReleaseRate: Integer;
+      fNewSpawnInterval: Integer;
       fSpawnedLemmingCount: Integer;
     protected
       procedure DoLoadSection(Sec: TParserSection); override;
       procedure DoSave(Sec: TParserSection); override;
       procedure InitializeValues(); override;
     public
-      property NewReleaseRate: Integer read fNewReleaseRate write fNewReleaseRate;
+      property NewSpawnInterval: Integer read fNewSpawnInterval write fNewSpawnInterval;
       property SpawnedLemmingCount: Integer read fSpawnedLemmingCount write fSpawnedLemmingCount;
   end;
 
@@ -116,7 +113,7 @@ type
     private
       fIsModified: Boolean;
       fAssignments: TReplayItemList;        // nuking is also included here
-      fReleaseRateChanges: TReplayItemList;
+      fSpawnIntervalChanges: TReplayItemList;
       fPlayerName: String;
       fLevelName: String;
       fLevelAuthor: String;
@@ -151,7 +148,7 @@ type
       property LevelPosition: Integer read fLevelPosition write fLevelPosition;
       property LevelID: Int64 read fLevelID write fLevelID;
       property Assignment[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
-      property ReleaseRateChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
+      property SpawnIntervalChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
       property IsModified: Boolean read fIsModified;
   end;
@@ -278,14 +275,14 @@ constructor TReplay.Create;
 begin
   inherited;
   fAssignments := TReplayItemList.Create;
-  fReleaseRateChanges := TReplayItemList.Create;
+  fSpawnIntervalChanges := TReplayItemList.Create;
   Clear(true);
 end;
 
 destructor TReplay.Destroy;
 begin
   fAssignments.Free;
-  fReleaseRateChanges.Free;
+  fSpawnIntervalChanges.Free;
   inherited;
 end;
 
@@ -410,7 +407,7 @@ begin
   Dst := nil;
 
   if aItem is TReplaySkillAssignment then Dst := fAssignments;
-  if aItem is TReplayChangeReleaseRate then Dst := fReleaseRateChanges;
+  if aItem is TReplayChangeSpawnInterval then Dst := fSpawnIntervalChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
 
   if Dst = nil then
@@ -431,7 +428,7 @@ var
 begin
   Dst := nil;
   if aItem is TReplaySkillAssignment then Dst := fAssignments;
-  if aItem is TReplayChangeReleaseRate then Dst := fReleaseRateChanges;
+  if aItem is TReplayChangeSpawnInterval then Dst := fSpawnIntervalChanges;
   if aItem is TReplayNuke then Dst := fAssignments;
 
   if Dst = nil then Exit;
@@ -446,7 +443,7 @@ end;
 procedure TReplay.Clear(EraseLevelInfo: Boolean = false);
 begin
   fAssignments.Clear;
-  fReleaseRateChanges.Clear;
+  fSpawnIntervalChanges.Clear;
   if not EraseLevelInfo then Exit;
   fPlayerName := '';
   fLevelName := '';
@@ -469,7 +466,7 @@ procedure TReplay.Cut(aLastFrame: Integer);
   end;
 begin
   DoCut(fAssignments);
-  DoCut(fReleaseRateChanges);
+  DoCut(fSpawnIntervalChanges);
   fIsModified := true;
 end;
 
@@ -489,7 +486,7 @@ function TReplay.HasAnyActionAt(aFrame: Integer): Boolean;
   end;
 begin
   Result := CheckForAction(fAssignments)
-         or CheckForAction(fReleaseRateChanges);
+         or CheckForAction(fSpawnIntervalChanges);
 end;
 
 function TReplay.GetLastActionFrame: Integer;
@@ -505,7 +502,7 @@ function TReplay.GetLastActionFrame: Integer;
 begin
   Result := -1;
   CheckForAction(fAssignments);
-  CheckForAction(fReleaseRateChanges);
+  CheckForAction(fSpawnIntervalChanges);
 end;
 
 procedure TReplay.LoadFromStream(aStream: TStream);
@@ -541,6 +538,7 @@ begin
 
     Sec.DoForEachSection('assignment', HandleLoadSection);
     Sec.DoForEachSection('release_rate', HandleLoadSection);
+    Sec.DoForEachSection('spawn_interval', HandleLoadSection);
     Sec.DoForEachSection('nuke', HandleLoadSection);
   finally
     Parser.Free;
@@ -554,15 +552,15 @@ var
 begin
   Item := nil;
   if aSection.Keyword = 'assignment' then Item := TReplaySkillAssignment.Create;
-  if aSection.Keyword = 'release_rate' then Item := TReplayChangeReleaseRate.Create;
+  if aSection.Keyword = 'release_rate' then Item := TReplayChangeSpawnInterval.Create;
   if aSection.Keyword = 'nuke' then Item := TReplayNuke.Create;
 
   if Item = nil then Exit;
 
   Item.Load(aSection);
 
-  if Item is TReplayChangeReleaseRate then
-    fReleaseRateChanges.Add(Item)
+  if Item is TReplayChangeSpawnInterval then
+    fSpawnIntervalChanges.Add(Item)
   else
     fAssignments.Add(Item);
 end;
@@ -615,7 +613,7 @@ begin
     Sec.AddLine('ID', fLevelID, 16);
 
     SaveReplayList(fAssignments, Sec);
-    SaveReplayList(fReleaseRateChanges, Sec);
+    SaveReplayList(fSpawnIntervalChanges, Sec);
 
     Parser.SaveToStream(aStream);
   finally
@@ -728,12 +726,12 @@ var
     Add(E);
   end;
 
-  procedure CreateReleaseRateEntry;
+  procedure CreateSpawnIntervalEntry;
   var
-    E: TReplayChangeReleaseRate;
+    E: TReplayChangeSpawnInterval;
   begin
-    E := TReplayChangeReleaseRate.Create;
-    E.NewReleaseRate := Item.ReleaseRate;
+    E := TReplayChangeSpawnInterval.Create;
+    E.NewSpawnInterval := 53 - (Item.ReleaseRate div 2);
     E.SpawnedLemmingCount := -1; // we don't know
     E.Frame := Item.Iteration;
     Add(E);
@@ -757,7 +755,7 @@ begin
     begin
       if Item.ReleaseRate <> LastReleaseRate then
       begin
-        CreateReleaseRateEntry;
+        CreateSpawnIntervalEntry;
         LastReleaseRate := Item.ReleaseRate;
         if Item.ActionFlags and $38 <> 0 then Continue;
       end;
@@ -782,7 +780,7 @@ begin
   Result := nil;
   case aItemType of
     1: L := fAssignments;
-    2: L := fReleaseRateChanges;
+    2: L := fSpawnIntervalChanges;
     else Exit;
   end;
 
@@ -910,28 +908,30 @@ begin
   Sec.AddLine('ACTION', GetSkillReplayName(Skill));
 end;
 
-{ TReplayReleaseRateChange }
+{ TReplaySpawnIntervalChange }
 
-procedure TReplayChangeReleaseRate.InitializeValues();
+procedure TReplayChangeSpawnInterval.InitializeValues();
 begin
   inherited InitializeValues();
-  NewReleaseRate := 1;
+  NewSpawnInterval := 1;
   SpawnedLemmingCount := 0;
 end;
 
-procedure TReplayChangeReleaseRate.DoLoadSection(Sec: TParserSection);
+procedure TReplayChangeSpawnInterval.DoLoadSection(Sec: TParserSection);
 begin
   inherited DoLoadSection(Sec);
 
-  fNewReleaseRate := Sec.LineNumeric['rate'];
+  fNewSpawnInterval := 53 - (Sec.LineNumeric['rate'] div 2);
+  if Sec.Line['interval'] <> nil then
+    fNewSpawnInterval := Sec.LineNumeric['interval'];
   fSpawnedLemmingCount := Sec.LineNumeric['spawned'];
 end;
 
-procedure TReplayChangeReleaseRate.DoSave(Sec: TParserSection);
+procedure TReplayChangeSpawnInterval.DoSave(Sec: TParserSection);
 begin
-  Sec := Sec.SectionList.Add('RELEASE_RATE');
+  Sec := Sec.SectionList.Add('SPAWN_INTERVAL');
   inherited DoSave(Sec);
-  Sec.AddLine('RATE', fNewReleaseRate);
+  Sec.AddLine('RATE', fNewSpawnInterval);
   Sec.AddLine('SPAWNED', fSpawnedLemmingCount);
 end;
 

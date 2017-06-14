@@ -18,8 +18,8 @@ type
   TLevelInfo = class
   private
   protected
-    fReleaseRateLocked : Boolean;
-    fReleaseRate    : Integer;
+    fSpawnIntervalLocked : Boolean;
+    fSpawnInterval  : Integer;
     fLemmingsCount  : Integer;
     fZombieCount    : Integer;
     fRescueCount    : Integer;
@@ -55,8 +55,8 @@ type
     constructor Create;
     procedure Clear; virtual;
 
-    property ReleaseRate    : Integer read fReleaseRate write fReleaseRate;
-    property ReleaseRateLocked: Boolean read fReleaseRateLocked write fReleaseRateLocked;
+    property SpawnInterval    : Integer read fSpawnInterval write fSpawnInterval;
+    property SpawnIntervalLocked: Boolean read fSpawnIntervalLocked write fSpawnIntervalLocked;
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
     property ZombieCount    : Integer read fZombieCount write fZombieCount;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
@@ -150,8 +150,8 @@ uses
 
 procedure TLevelInfo.Clear;
 begin
-  ReleaseRate     := 1;
-  ReleaseRateLocked := false;
+  SpawnInterval     := 53;
+  SpawnIntervalLocked := false;
   LemmingsCount   := 1;
   ZombieCount     := 0;
   RescueCount     := 1;
@@ -343,8 +343,10 @@ begin
     LemmingsCount := aSection.LineNumeric['lemmings'];
     RescueCount := aSection.LineNumeric['requirement'];
     HandleTimeLimit(aSection.LineTrimString['time_limit']);
-    ReleaseRate := aSection.LineNumeric['release_rate'];
-    ReleaseRateLocked := (aSection.Line['release_rate_locked'] <> nil);
+    SpawnInterval := 53 - (aSection.LineNumeric['release_rate'] div 2);
+    if aSection.Line['spawn_interval'] <> nil then
+      SpawnInterval := aSection.LineNumeric['spawn_interval'];
+    SpawnIntervalLocked := (aSection.Line['spawn_interval_locked'] <> nil) or (aSection.Line['release_rate_locked'] <> nil);
 
     Width := aSection.LineNumeric['width'];
     Height := aSection.LineNumeric['height'];
@@ -603,8 +605,8 @@ begin
     if TimeLimit < 1 then TimeLimit := 1;
     if TimeLimit > 5999 then TimeLimit := 5999;
 
-    if ReleaseRate < 1 then ReleaseRate := 1;
-    if ReleaseRate > 99 then ReleaseRate := 99;
+    if SpawnInterval < ReleaseRateToSpawnInterval(99) then SpawnInterval := ReleaseRateToSpawnInterval(99);
+    if SpawnInterval > ReleaseRateToSpawnInterval(1) then SpawnInterval := ReleaseRateToSpawnInterval(1);
 
     for SkillIndex := Low(TSkillPanelButton) to High(TSkillPanelButton) do
     begin
@@ -736,9 +738,9 @@ begin
     if HasTimeLimit then
       aSection.AddLine('TIME_LIMIT', TimeLimit);
 
-    aSection.AddLine('RELEASE_RATE', ReleaseRate);
-    if ReleaseRateLocked then
-      aSection.AddLine('RELEASE_RATE_LOCKED');
+    aSection.AddLine('SPAWN_INTERVAL', SpawnInterval);
+    if SpawnIntervalLocked then
+      aSection.AddLine('SPAWN_INTERVAL_LOCKED');
 
     aSection.AddLine('WIDTH', Width);
     aSection.AddLine('HEIGHT', Height);

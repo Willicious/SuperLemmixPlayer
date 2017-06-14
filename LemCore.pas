@@ -5,7 +5,8 @@ unit LemCore;
 interface
 
 const
-  GAME_BMPWIDTH = 1584;
+  MINIMUM_SI = 4;
+  MAXIMUM_SI = 53;
 
 (*
   { TODO : find good settings }

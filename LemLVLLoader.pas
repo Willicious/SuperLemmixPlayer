@@ -554,7 +554,7 @@ begin
       NewLevelID := NewLevelID + aLevel.Steels[i].Width * i2;
       NewLevelID := NewLevelID + aLevel.Steels[i].Height * i2;
       NewLevelID := NewLevelID + aLevel.Steels[i].fType;
-      if NewLevelID = 0 then NewLevelID := aLevel.Info.ReleaseRate;
+      if NewLevelID = 0 then NewLevelID := aLevel.Info.SpawnInterval;
     end;
 
     while (NewLevelID > 0) do
@@ -577,6 +577,7 @@ begin
   aLevel.Info.LevelID := aLevel.Info.LevelID or (aLevel.Info.LevelID shl 32);
   aLevel.Info.Title := Trim(aLevel.Info.Title);
   aLevel.Info.Author := Trim(aLevel.Info.Author);
+  aLevel.Info.SpawnInterval := ReleaseRateToSpawnInterval(aLevel.Info.SpawnInterval);
 
   Trans := TTranslationTable.Create;
   Trans.Apply(aLevel);
@@ -662,8 +663,8 @@ begin
     with Info do
     begin
       aLevel.Clear;
-      ReleaseRate      := Buf.ReleaseRate;
-      ReleaseRateLocked := (Buf.LevelOptions2 and 1) <> 0;
+      SpawnInterval      := Buf.ReleaseRate;
+      SpawnIntervalLocked := (Buf.LevelOptions2 and 1) <> 0;
       if Buf.BgIndex = $FF then
         Background := ''
       else
@@ -918,7 +919,7 @@ begin
     with Info do
     begin
       aLevel.Clear;
-      ReleaseRate      := System.Swap(Buf.ReleaseRate) mod 256;
+      SpawnInterval      := System.Swap(Buf.ReleaseRate) mod 256;
       LemmingsCount    := System.Swap(Buf.LemmingsCount);
       RescueCount      := System.Swap(Buf.RescueCount);
       TimeLimit        := (Buf.TimeMinutes * 60){ + Buf.TimeSeconds};
@@ -1101,7 +1102,7 @@ begin
     with Info do
     begin
       aLevel.Clear;
-      ReleaseRate      := Buf.ReleaseRate;
+      SpawnInterval      := Buf.ReleaseRate;
       LemmingsCount    := Buf.LemmingsCount;
       RescueCount      := Buf.RescueCount;
       TimeLimit        := Buf.TimeLimit; // internal structure now matches NeoLemmix file format structure (just a number of seconds)
@@ -1366,7 +1367,7 @@ begin
 
     with aLevel.Info do
     begin
-      ReleaseRate := Value('releaseRate', 1, 99);
+      SpawnInterval := Value('releaseRate', 1, 99);
       LemmingsCount := Value('numLemmings', 1);
       RescueCount := Value('numToRescue', 0, LemmingsCount);
 
@@ -1531,7 +1532,7 @@ begin
 
     with aLevel.Info do
     begin
-      ReleaseRate := LineVal(2);
+      SpawnInterval := LineVal(2);
       LemmingsCount := LineVal(3);
       RescueCount := LineVal(4);
       TimeLimit := LineVal(5) * 60;
