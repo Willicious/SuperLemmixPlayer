@@ -344,8 +344,8 @@ begin
     RescueCount := aSection.LineNumeric['requirement'];
     HandleTimeLimit(aSection.LineTrimString['time_limit']);
     SpawnInterval := 53 - (aSection.LineNumeric['release_rate'] div 2);
-    if aSection.Line['spawn_interval'] <> nil then
-      SpawnInterval := aSection.LineNumeric['spawn_interval'];
+    if aSection.Line['max_spawn_interval'] <> nil then
+      SpawnInterval := aSection.LineNumeric['max_spawn_interval'];
     SpawnIntervalLocked := (aSection.Line['spawn_interval_locked'] <> nil) or (aSection.Line['release_rate_locked'] <> nil);
 
     Width := aSection.LineNumeric['width'];
@@ -738,7 +738,7 @@ begin
     if HasTimeLimit then
       aSection.AddLine('TIME_LIMIT', TimeLimit);
 
-    aSection.AddLine('SPAWN_INTERVAL', SpawnInterval);
+    aSection.AddLine('MAX_SPAWN_INTERVAL', SpawnInterval);
     if SpawnIntervalLocked then
       aSection.AddLine('SPAWN_INTERVAL_LOCKED');
 

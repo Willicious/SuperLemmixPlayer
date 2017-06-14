@@ -177,7 +177,6 @@ var
 begin
   if GameParams.FullScreen then
   begin
-    Log('  exit due to fullscreen');
     NewWidth := Screen.Width;
     NewHeight := Screen.Height;
     Exit;

@@ -287,7 +287,7 @@ begin
 
           if OldTal.SaveRequirement <> GameParams.Level.Info.RescueCount then NewTal.RescueCount := OldTal.SaveRequirement;
           if (OldTal.TimeLimit > 0) and (OldTal.TimeLimit <> GameParams.Level.Info.TimeLimit * 17) then NewTal.TimeLimit := OldTal.TimeLimit;
-          if (OldTal.RRMin > GameParams.Level.Info.ReleaseRate) or ((OldTal.RRMax < 99) and not GameParams.Level.Info.ReleaseRateLocked) then
+          if (OldTal.RRMin > (53 - GameParams.Level.Info.SpawnInterval) * 2) or ((OldTal.RRMax < 99) and not GameParams.Level.Info.SpawnIntervalLocked) then
           begin
             Write('    Removed a talisman due to using no-longer-supported feature: Release rate limits');
             NewTal.Free;
