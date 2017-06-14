@@ -131,7 +131,7 @@ begin
       // draw background
       TileBackgroundBitmap(0, 128, Temp);
       // draw text
-      DrawPurpleText(Temp, GetScreenText, 0, 130);
+      DrawPurpleTextCentered(Temp, GetScreenText, 130);
       ScreenImg.Bitmap.Assign(Temp);
 
       if GameParams.LinearResampleMenu then
@@ -242,44 +242,48 @@ end;
 
 function TGamePreviewScreen.GetScreenText: string;
 var
-  Perc, TL: string;
-  RR: String;
+  ExtraNewLines: Integer;
 begin
   Assert(GameParams <> nil);
+  ExtraNewLines := 1;
 
-  Perc := IntToStr(GameParams.Level.Info.RescueCount) + ' Lemming';
-  if GameParams.Level.Info.RescueCount <> 1 then Perc := Perc + 's';
+  with GameParams.Level.Info do
+  begin
+    Result := Title + #13;
 
-  if GameParams.Level.Info.HasTimeLimit then
-    TL := IntToStr(GameParams.Level.Info.TimeLimit div 60) + ':' + LeadZeroStr(GameParams.Level.Info.TimeLimit mod 60,2)
-  else
-    TL := '(Infinite)';
+    if GameParams.CurrentLevel.Group.Parent <> nil then
+    begin
+      Result := Result + GameParams.CurrentLevel.Group.Name;
+      if GameParams.CurrentLevel.Group.IsOrdered then
+        Result := Result + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1);
+    end;
+    Result := Result + #13#13#13;
 
-  RR := IntToStr(GameParams.Level.Info.ReleaseRate);
-  if GameParams.Level.Info.ReleaseRateLocked or (RR = '99') then
-    RR := RR + ' (Locked)';
+    Result := Result + IntToStr(LemmingsCount - ZombieCount) + SPreviewLemmings + #13#13;
+    Result := Result + IntToStr(RescueCount) + SPreviewSave + #13#13;
 
-  if Trim(GameParams.Level.Info.Author) = '' then
-    Result := Format(SPreviewString,
-                [GameParams.CurrentLevel.GroupIndex + 1, // humans read 1-based
-                 Trim(GameParams.Level.Info.Title),
-                 GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
-                 Perc,
-                 RR,
-                 TL,
-                 GameParams.CurrentGroupName
-                ])
-  else
-    Result := Format(SPreviewStringAuth,
-                [GameParams.CurrentLevel.GroupIndex + 1, // humans read 1-based
-                 Trim(GameParams.Level.Info.Title),
-                 GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount,
-                 Perc,
-                 RR,
-                 TL,
-                 GameParams.CurrentGroupName,
-                 GameParams.Level.Info.Author
-                ]);
+    if GameParams.SpawnInterval then
+      Result := Result + SPreviewSpawnInterval + IntToStr(ReleaseRateToSpawnInterval(ReleaseRate))
+    else
+      Result := Result + SPreviewReleaseRate + IntToStr(ReleaseRate);
+    if ReleaseRateLocked then
+      Result := Result + SPreviewRRLocked;
+    Result := Result + #13#13;
+
+    if HasTimeLimit then
+      Result := Result + SPreviewTimeLimit + IntToStr(TimeLimit div 60) + ':' + LeadZeroStr(TimeLimit mod 60, 2) + #13#13
+    else
+      Inc(ExtraNewLines, 2);
+
+    if Author <> '' then
+      Result := Result + SPreviewAuthor + Author + #13#13
+    else
+      Inc(ExtraNewLines, 2);
+
+    Result := Result + StringOfChar(#13, ExtraNewLines);
+
+    Result := Result + SPressMouseToContinue;
+  end;
 end;
 
 procedure TGamePreviewScreen.PrepareGameParams;

@@ -306,12 +306,18 @@ const
   );
 
   function ReleaseRateToSpawnInterval(aRR: Integer): Integer;
+  function SpawnIntervalToReleaseRate(aSI: Integer): Integer;
 
 implementation
 
 function ReleaseRateToSpawnInterval(aRR: Integer): Integer;
 begin
   Result := 53 - (aRR div 2);
+end;
+
+function SpawnIntervalToReleaseRate(aSI: Integer): Integer;
+begin
+  Result := ((53 - aSI) * 2) + 1;
 end;
 
 end.

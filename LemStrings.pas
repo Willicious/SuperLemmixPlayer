@@ -66,25 +66,14 @@ resourcestring
   {-------------------------------------------------------------------------------
     PreviewScreen
   -------------------------------------------------------------------------------}
-  SPreviewString =
-    'Level %d ' + '%s'                     + #13#13#13 +
-    '          Number of Lemmings %d'      + #13#13 +
-    '          %s To Be Saved'             + #13#13 +
-    '          Release Rate %s'            + #13#13 +
-    '          Time Limit  %s'            + #13#13 +
-    '          Rating: %s'                 + #13#13#13 +
-    '     Press mouse button to continue';
-
-  SPreviewStringAuth =
-    'Level %d ' + '%s'                     + #13#13#13 +
-    '          Number of Lemmings %d'      + #13#13 +
-    '          %s To Be Saved'             + #13#13 +
-    '          Release Rate %s'            + #13#13 +
-    '          Time Limit  %s'            + #13#13 +
-    '          Rating: %s'                 + #13#13 +
-    '          Author: %s'                   + #13#13 +
-    '     Press mouse button to continue';
-
+  SPreviewLemmings = ' Lemmings';
+  SPreviewSave = ' To Be Saved';
+  SPreviewReleaseRate = 'Release Rate ';
+  SPreviewSpawnInterval = 'Spawn Interval ';
+  SPreviewRRLocked = '  (Locked)';
+  SPreviewTimeLimit = 'Time Limit ';
+  SPreviewGroup = 'Group: ';
+  SPreviewAuthor = 'Author: ';
 
   {-------------------------------------------------------------------------------
     Game Screen Info Panel
