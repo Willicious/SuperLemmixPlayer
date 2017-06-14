@@ -52,6 +52,7 @@ type
     cbIncreaseZoom: TCheckBox;
     cbCompactSkillPanel: TCheckBox;
     cbEdgeScrolling: TCheckBox;
+    cbSpawnInterval: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -126,6 +127,7 @@ begin
   cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
   cbDisableShadows.Checked := GameParams.NoShadows;
   cbEdgeScrolling.Checked := GameParams.EdgeScroll;
+  cbSpawnInterval.Checked := GameParams.SpawnInterval;
 
   cbFullScreen.Checked := GameParams.FullScreen;
   cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
@@ -205,6 +207,7 @@ begin
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.NoShadows := cbDisableShadows.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
+  GameParams.SpawnInterval := cbSpawnInterval.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;

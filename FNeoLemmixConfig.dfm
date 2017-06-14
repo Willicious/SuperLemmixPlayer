@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 401
+  ClientHeight = 417
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,11 +22,12 @@ object FormNXConfig: TFormNXConfig
     Left = 0
     Top = 0
     Width = 273
-    Height = 361
+    Height = 378
     ActivePage = TabSheet5
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
+      ExplicitHeight = 333
       object GroupBox4: TGroupBox
         Left = 8
         Top = 8
@@ -56,7 +57,6 @@ object FormNXConfig: TFormNXConfig
           Width = 177
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 1
           Text = 'Auto, Overwrite Old File'
@@ -116,6 +116,7 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
+      ExplicitHeight = 333
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -146,7 +147,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 65
         Width = 249
-        Height = 120
+        Height = 136
         Caption = 'Interface Options'
         TabOrder = 1
         object cbLemmingBlink: TCheckBox
@@ -203,10 +204,19 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 5
           OnClick = OptionChanged
         end
+        object cbSpawnInterval: TCheckBox
+          Left = 12
+          Top = 112
+          Width = 153
+          Height = 17
+          Caption = 'Use Spawn Interval'
+          TabOrder = 6
+          OnClick = OptionChanged
+        end
       end
       object GroupBox6: TGroupBox
         Left = 8
-        Top = 186
+        Top = 201
         Width = 249
         Height = 143
         Caption = 'Graphics Options'
@@ -224,7 +234,6 @@ object FormNXConfig: TFormNXConfig
           Width = 177
           Height = 21
           Style = csDropDownList
-          ItemHeight = 13
           ItemIndex = 0
           TabOrder = 0
           Text = '1x Zoom'
@@ -291,6 +300,7 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
+      ExplicitHeight = 333
       object Label3: TLabel
         Left = 24
         Top = 45
@@ -373,7 +383,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 368
+    Top = 384
     Width = 65
     Height = 25
     Caption = 'OK'
@@ -382,7 +392,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnCancel: TButton
     Left = 104
-    Top = 368
+    Top = 384
     Width = 65
     Height = 25
     Caption = 'Cancel'
@@ -391,7 +401,7 @@ object FormNXConfig: TFormNXConfig
   end
   object btnApply: TButton
     Left = 184
-    Top = 368
+    Top = 384
     Width = 65
     Height = 25
     Caption = 'Apply'
