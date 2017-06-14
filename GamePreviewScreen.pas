@@ -263,10 +263,10 @@ begin
     Result := Result + IntToStr(RescueCount) + SPreviewSave + #13#13;
 
     if GameParams.SpawnInterval then
-      Result := Result + SPreviewSpawnInterval + IntToStr(ReleaseRateToSpawnInterval(ReleaseRate))
+      Result := Result + SPreviewSpawnInterval + IntToStr(SpawnInterval)
     else
-      Result := Result + SPreviewReleaseRate + IntToStr(ReleaseRate);
-    if ReleaseRateLocked then
+      Result := Result + SPreviewReleaseRate + IntToStr(SpawnIntervalToReleaseRate(SpawnInterval));
+    if SpawnIntervalLocked then
       Result := Result + SPreviewRRLocked;
     Result := Result + #13#13;
 

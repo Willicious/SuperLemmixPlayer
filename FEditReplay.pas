@@ -60,7 +60,7 @@ var
   function GetString(aItem: TBaseReplayItem): String;
   var
     A: TReplaySkillAssignment absolute aItem;
-    R: TReplayChangeReleaseRate absolute aItem;
+    R: TReplayChangeSpawnInterval absolute aItem;
     N: TReplayNuke absolute aItem;
 
     function GetSkillString(aSkill: TBasicLemmingAction): String;
@@ -93,9 +93,9 @@ var
     begin
       Result := Result + 'Lemming #' + IntToStr(A.LemmingIndex);
       Result := Result + ', ' + GetSkillString(A.Skill);
-    end else if aItem is TReplayChangeReleaseRate then
+    end else if aItem is TReplayChangeSpawnInterval then
     begin
-      Result := Result + 'Release Rate ' + IntToStr(R.NewReleaseRate);
+      Result := Result + 'Release Rate ' + IntToStr(R.NewSpawnInterval);
     end else if aItem is TReplayNuke then
     begin
       Result := Result + 'Nuke';
@@ -115,7 +115,7 @@ begin
     lbReplayActions.Items.Clear;
     for i := 0 to fReplay.LastActionFrame do
     begin
-      Action := fReplay.ReleaseRateChange[i, 0];
+      Action := fReplay.SpawnIntervalChange[i, 0];
       if Action <> nil then
         lbReplayActions.AddItem(GetString(Action), Action);
       Action := fReplay.Assignment[i, 0];
@@ -171,7 +171,7 @@ procedure TFReplayEditor.lbReplayActionsClick(Sender: TObject);
 var
   I: TBaseReplayItem;
   A: TReplaySkillAssignment absolute I;
-  R: TReplayChangeReleaseRate absolute I;
+  R: TReplayChangeSpawnInterval absolute I;
   N: TReplayNuke absolute I;
 begin
   btnDelete.Enabled := lbReplayActions.ItemIndex <> -1;
@@ -188,13 +188,13 @@ var
   function CheckConsecutiveRR: Boolean;
   var
     I2: TBaseReplayItem;
-    R1: TReplayChangeReleaseRate absolute I;
-    R2: TReplayChangeReleaseRate absolute I2;
+    R1: TReplayChangeSpawnInterval absolute I;
+    R2: TReplayChangeSpawnInterval absolute I2;
   begin
     Result := false;
-    I2 := fReplay.ReleaseRateChange[I.Frame + 1, 0];
+    I2 := fReplay.SpawnIntervalChange[I.Frame + 1, 0];
     if I2 = nil then Exit;
-    if Abs(R1.NewReleaseRate - R2.NewReleaseRate) <= 1 then
+    if Abs(R1.NewSpawnInterval - R2.NewSpawnInterval) <= 1 then
       Result := true;
   end;
 
@@ -207,7 +207,7 @@ var
     begin
       fReplay.Delete(I);
       Inc(Frame);
-      I := fReplay.ReleaseRateChange[Frame, 0];
+      I := fReplay.SpawnIntervalChange[Frame, 0];
     end;
     fReplay.Delete(I);
   end;
@@ -217,7 +217,7 @@ begin
   if lbReplayActions.ItemIndex = -1 then Exit;
   I := TBaseReplayItem(lbReplayActions.Items.Objects[lbReplayActions.ItemIndex]);
   NoteChangeAtFrame(I.Frame);
-  if I is TReplayChangeReleaseRate then
+  if I is TReplayChangeSpawnInterval then
     if CheckConsecutiveRR then
       ApplyRRDelete := MessageDlg('Delete consecutive RR changes as well?', mtCustom, [mbYes, mbNo], 0) = mrYes;
 

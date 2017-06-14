@@ -176,7 +176,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png',                                 {Skills end here}
-    'empty_slot.png', 'icon_rr_minus.png', 'icon_rr_plus.png', 'icon_pause.png',
+    'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
     'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_1fb.png',
     'icon_1ff.png', 'icon_clearphysics.png', 'icon_directional.png', 'icon_load_replay.png',
     'icon_directional.png'
@@ -500,6 +500,30 @@ var
   ButtonList: TPanelButtonArray;
   MinimapRegion : TBitmap32;
   i: Integer;
+
+  procedure SwapSIButtons;
+  var
+    SlowerIndex: Integer;
+    FasterIndex: Integer;
+    i: Integer;
+  begin
+    // We want to swap the order of + and - when displaying release rate
+    if GameParams.SpawnInterval then Exit;
+
+    SlowerIndex := -1;
+    FasterIndex := -1;
+
+    for i := 0 to Length(ButtonList)-1 do
+      if ButtonList[i] = spbSlower then
+        SlowerIndex := i
+      else if ButtonList[i] = spbFaster then
+        FasterIndex := i;
+
+    if (SlowerIndex = -1) or (FasterIndex = -1) then Exit;
+
+    ButtonList[SlowerIndex] := spbFaster;
+    ButtonList[FasterIndex] := spbSlower;
+  end;
 begin
   fOriginal.SetSize(PanelWidth, PanelHeight);
   fOriginal.Clear($FF000000);
@@ -511,7 +535,9 @@ begin
   // Draw empty panel
   DrawBlankPanel(Length(ButtonList));
 
+
   // Draw single buttons icons
+  SwapSIButtons;
   for i := 0 to Length(ButtonList) - 1 do
     AddButtonImage(BUTTON_TO_STRING[ButtonList[i]], i);
 

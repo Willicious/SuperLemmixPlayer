@@ -98,7 +98,7 @@ type
     procedure CheckResetCursor(aForce: Boolean = false);
     function CheckScroll: Boolean;
     procedure AddSaveState;
-    procedure CheckAdjustReleaseRate;
+    procedure CheckAdjustSpawnInterval;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
     procedure StartReplay2(const aFileName: string);
     procedure InitializeCursor;
@@ -415,7 +415,7 @@ procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
 {-------------------------------------------------------------------------------
   • Main heartbeat of the program.
   • This method together with Game.UpdateLemmings() take care of most game-mechanics.
-  • A bit problematic is the releaserate handling:
+  • A bit problematic is the SpawnInterval handling:
     if the game is paused it RR is handled here. if not it is handled by
     Game.UpdateLemmings().
 -------------------------------------------------------------------------------}
@@ -475,7 +475,7 @@ begin
     // only in paused mode adjust RR. If not paused it's updated per frame.
     if TimeForPausedRR then
     begin
-      CheckAdjustReleaseRate;
+      CheckAdjustSpawnInterval;
       PrevPausedRRTime := CurrTime;
     end;
 
@@ -1646,12 +1646,12 @@ begin
   GameScroll := gsNone;
 end;
 
-procedure TGameWindow.CheckAdjustReleaseRate;
+procedure TGameWindow.CheckAdjustSpawnInterval;
 {-------------------------------------------------------------------------------
   In the mainloop the decision is made if we really have to update
 -------------------------------------------------------------------------------}
 begin
-  Game.CheckAdjustReleaseRate;
+  Game.CheckAdjustSpawnInterval;
 end;
 
 procedure TGameWindow.StartReplay2(const aFileName: string);
