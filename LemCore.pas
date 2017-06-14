@@ -305,7 +305,14 @@ const
     trTrap                    // once trap
   );
 
+  function ReleaseRateToSpawnInterval(aRR: Integer): Integer;
+
 implementation
+
+function ReleaseRateToSpawnInterval(aRR: Integer): Integer;
+begin
+  Result := 53 - (aRR div 2);
+end;
 
 end.
 

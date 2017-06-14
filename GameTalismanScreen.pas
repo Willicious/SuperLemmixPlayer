@@ -19,9 +19,6 @@ uses
 const
   TALISMANS_PER_PAGE = 6;
 
-{-------------------------------------------------------------------------------
-   The dos postview screen, which shows you how you've done it.
--------------------------------------------------------------------------------}
 type
   TGameTalismanScreen = class(TGameBaseScreen)
   private
@@ -119,7 +116,7 @@ var
     end;
 
 begin
-
+  (*
   Result := '';
   lfc := 0;
 
@@ -191,7 +188,7 @@ begin
 
   PreLF(1);
   PreAdd('Talisman Record (' + IntToStr(playerpoints) + '%)');
-
+  *)
 end;
 
 procedure TGameTalismanScreen.Form_KeyDown(Sender: TObject; var Key: Word;
@@ -207,11 +204,11 @@ begin
                GameParams.TalismanPage := fPage - 1;
                CloseScreen(gstTalisman);
              end;
-    VK_RIGHT: if fPage < ((GameParams.Talismans.VisibleCount - 1) div TALISMANS_PER_PAGE) then
+    (*VK_RIGHT: if fPage < ((GameParams.Talismans.VisibleCount - 1) div TALISMANS_PER_PAGE) then
               begin
                 GameParams.TalismanPage := fPage + 1;
                 CloseScreen(gstTalisman);
-              end;
+              end;*)
   end;
 end;
 

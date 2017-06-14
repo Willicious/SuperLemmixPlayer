@@ -16,7 +16,6 @@ interface
 uses
   SharedGlobals, PngInterface,
   Windows, Classes, Contnrs, SysUtils, Math, Forms, Dialogs,
-  TalisData,
   Controls, StrUtils, UMisc,
   GR32, GR32_OrdinalMaps,
   LemCore, LemTypes, LemDosStructures, LemStrings,
@@ -117,7 +116,6 @@ type
     fRenderInterface           : TRenderInterface;
     fMessageQueue              : TGameMessageQueue;
 
-    fTalismans                 : TTalismans;
     fTalismanReceived          : Boolean;
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
@@ -826,7 +824,6 @@ begin
   BlockerMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
   fReplayManager := TReplay.Create;
-  fTalismans     := TTalismans.Create;
 
   fRenderInterface.LemmingList := LemmingList;
   fRenderInterface.ObjectList := ObjectInfos;
@@ -933,7 +930,6 @@ begin
   BlockerMap.Free;
   ZombieMap.Free;
   fReplayManager.Free;
-  fTalismans.Free;
   fRenderInterface.Free;
   inherited Destroy;
 end;
@@ -972,15 +968,6 @@ begin
 
   PhysicsMap := Renderer.PhysicsMap;
   RenderInterface.PhysicsMap := PhysicsMap;
-
-  fTalismans.Clear;
-
-  for i := 0 to GameParams.Talismans.Count-1 do
-  begin
-    //if (GameParams.Talismans[i].RankNumber = GameParams.CurrentLevel.dRank)
-    //and (GameParams.Talismans[i].LevelNumber = GameParams.CurrentLevel.dLevel) then
-    //  fTalismans.Add.Assign(GameParams.Talismans[i]);
-  end;
 
 end;
 

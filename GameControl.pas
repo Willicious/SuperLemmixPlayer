@@ -18,7 +18,6 @@ uses
   LemVersion,
   LemTypes, LemLevel,
   LemDosStructures,
-  TalisData,
   LemStrings,
   LemRendering;
 
@@ -84,7 +83,8 @@ type
     moIncreaseZoom,
     moLoadedConfig,
     moCompactSkillPanel,
-    moEdgeScroll
+    moEdgeScroll,
+    moSpawnInterval
   );
 
   TMiscOptions = set of TMiscOption;
@@ -112,7 +112,6 @@ type
   TDosGameParams = class(TPersistent)
   private
     fHotkeys: TLemmixHotkeyManager;
-    fTalismans : TTalismans;
     fTalismanPage: Integer;
     fDirectory    : string;
     fDumpMode : Boolean;
@@ -218,6 +217,7 @@ type
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
+    property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -235,7 +235,6 @@ type
 
     property MainForm: TForm read fMainForm write fMainForm;
 
-    property Talismans: TTalismans read fTalismans;
     property TalismanPage: Integer read fTalismanPage write fTalismanPage;
 
     property Hotkeys: TLemmixHotkeyManager read fHotkeys;
@@ -343,6 +342,7 @@ begin
   SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('EdgeScrolling', EdgeScroll);
+  SaveBoolean('UseSpawnInterval', SpawnInterval);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
   SaveBoolean('IncreaseZoom', IncreaseZoom);
@@ -476,6 +476,7 @@ begin
   MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
   EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
   IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
+  SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
 
   EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
   CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
@@ -610,8 +611,6 @@ begin
   LemSoundsInResource := True;
   LemMusicInResource := True;
 
-  fTalismans := TTalismans.Create;
-
 
   (*
   TempStream := CreateDataStream('talisman.dat', ldtLemmings);
@@ -622,14 +621,11 @@ begin
   end;
   *)
 
-  fTalismans.SortTalismans;
-
   fHotkeys := TLemmixHotkeyManager.Create;
 end;
 
 destructor TDosGameParams.Destroy;
 begin
-  fTalismans.Free;
   fHotkeys.Free;
   BaseLevelPack.Free;
   inherited Destroy;
