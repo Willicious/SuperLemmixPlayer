@@ -249,18 +249,20 @@ var
   function GetTalismanText: String;
   var
     Talisman: TTalisman;
-    Lines: array[0..2] of AnsiString;
+    Lines: array[0..2] of String;
     MaxLen: Integer;
     i: Integer;
-
-    CompletionString: String;
-    HasTimeReq: Boolean;
 
     procedure MakeReqString;
     var
       CurLine: Integer;
       ReqString: String;
       i: TSkillPanelButton;
+
+      CompletionString: String;
+      SkillString: String;
+      HasTimeReq: Boolean;
+      DoneFirstSkillLimit: Boolean;
 
       procedure Add(aText: String);
       // Assumes any one input won't exceed 36 characters
@@ -311,18 +313,39 @@ var
       if CompletionString <> '' then
         Add(CompletionString);
 
-      if (Talisman.TotalSkillLimit >= 0) then
-        Add('max ' + IntToStr(Talisman.TotalSkillLimit) + ' total skills');
-
       for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
         if Talisman.SkillLimit[i] = 0 then
-          Add('no ' + SKILL_NAMES[i] + 's')
-        else if Talisman.SkillLimit[i] = 1 then
-          Add('max 1 ' + SKILL_NAMES[i])
-        else if Talisman.SkillLimit[i] > 1 then
-          Add('max ' + IntToStr(Talisman.SkillLimit[i]) + ' ' + SKILL_NAMES[i] + 's');
+          Add('no ' + SKILL_NAMES[i] + 's');
 
-      //Lines[1][1] := Uppercase(Lines[1][1])[1];
+      DoneFirstSkillLimit := false;
+      for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      begin
+        SkillString := '';
+        if Talisman.SkillLimit[i] = 1 then
+          SkillString := '1 ' + SKILL_NAMES[i]
+        else if Talisman.SkillLimit[i] > 1 then
+          SkillString := IntToStr(Talisman.SkillLimit[i]) + ' ' + SKILL_NAMES[i] + 's';
+
+        if SkillString = '' then Continue;
+
+        if not DoneFirstSkillLimit then
+        begin
+          SkillString := 'max ' + SkillString;
+          DoneFirstSkillLimit := true;
+        end;
+
+        Add(SkillString);
+      end;
+
+      if (Talisman.TotalSkillLimit >= 0) then
+      begin
+        SkillString := IntToStr(Talisman.TotalSkillLimit) + ' total skills';
+        if not DoneFirstSkillLimit then
+          SkillString := 'max ' + SkillString;
+        Add(SkillString);
+      end;
+
+      Lines[1][1] := Uppercase(Lines[1][1])[1];
       if CurLine < Length(Lines) then
         Lines[CurLine] := Lines[CurLine] + Trim(ReqString);
     end;
@@ -338,7 +361,7 @@ var
 
     if Talisman = nil then
     begin
-      Result := '';
+      Result := #13#13;
       Exit;
     end;
 
