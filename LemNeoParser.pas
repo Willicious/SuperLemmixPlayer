@@ -98,7 +98,8 @@ type
 
   TForEachLineProcedure1 = reference to procedure(aLine: TParserLine; const aIteration: Integer);
   TForEachLineProcedure2 = procedure(aLine: TParserLine; const aIteration: Integer) of object; // 1 & 2 is a kludge until I convert all code of this type to using anon methods
-  TForEachSectionProcedure = procedure(aSection: TParserSection; const aIteration: Integer) of object;
+  TForEachSectionProcedure1 = reference to procedure(aSection: TParserSection; const aIteration: Integer);
+  TForEachSectionProcedure2 = procedure(aSection: TParserSection; const aIteration: Integer) of object;
   TForEachLinePointerProcedure = procedure(aLine: TParserLine; const aIteration: Integer; aData: Pointer) of object;
   TForEachSectionPointerProcedure = procedure(aSection: TParserSection; const aIteration: Integer; aData: Pointer) of object;
 
@@ -147,7 +148,8 @@ type
       function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure1): Integer; overload;
       function DoForEachLine(aKeyword: String; aMethod: TForEachLineProcedure2): Integer; overload;
       function DoForEachLine(aKeyword: String; aMethod: TForEachLinePointerProcedure; aData: Pointer): Integer; overload;
-      function DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure): Integer; overload;
+      function DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure1): Integer; overload;
+      function DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure2): Integer; overload;
       function DoForEachSection(aKeyword: String; aMethod: TForEachSectionPointerProcedure; aData: Pointer): Integer; overload;
 
       procedure AddLine(aKeyword: String); overload;
@@ -580,7 +582,20 @@ begin
     end;
 end;
 
-function TParserSection.DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure): Integer;
+function TParserSection.DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure1): Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+  for i := 0 to fSections.Count-1 do
+    if fSections[i].Keyword = Lowercase(aKeyword) then
+    begin
+      aMethod(fSections[i], Result);
+      Inc(Result);
+    end;
+end;
+
+function TParserSection.DoForEachSection(aKeyword: String; aMethod: TForEachSectionProcedure2): Integer;
 var
   i: Integer;
 begin

@@ -8,6 +8,7 @@ uses
   System.Generics.Collections,
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
   Classes, SysUtils, StrUtils, Contnrs,
+  LemTalisman,
   LemStrings, LemTypes, LemNeoParser;
 
 type
@@ -61,6 +62,7 @@ type
       fTitle: String;
       fAuthor: String;
       fFilename: String;
+      fTalismans: TObjectList<TTalisman>;
 
       fLevelID: Int64;
 
@@ -300,12 +302,14 @@ constructor TNeoLevelEntry.Create(aGroup: TNeoLevelGroup);
 begin
   inherited Create;
   fGroup := aGroup;
+  fTalismans := TObjectList<TTalisman>.Create(false);
   fTalismanList := TList<LongWord>.Create;
 end;
 
 destructor TNeoLevelEntry.Destroy;
 begin
   fTalismanList.Free;
+  fTalismans.Free;
   inherited;
 end;
 
@@ -329,42 +333,27 @@ end;
 
 procedure TNeoLevelEntry.LoadLevelFileData;
 var
-  MS: TMemoryStream;
-  P: PByte;
   Parser: TParser;
-
-  procedure LoadFromLVL;
-  var
-    L: TLevel;
-  begin
-    L := TLevel.Create;
-    try
-      TLvlLoader.LoadLevelFromStream(MS, L);
-      fTitle := L.Info.Title;
-      fAuthor := L.Info.Author;
-      fLevelID := L.Info.LevelID;
-    finally
-      L.Free;
-    end;
-  end;
 begin
   if fDataLoaded then Exit;
-  MS := TMemoryStream.Create;
   Parser := TParser.Create;
   try
-    MS.LoadFromFile(Path);
-    P := MS.Memory;
-    if P^ <= 4 then
-    begin
-      LoadFromLVL;
-      Exit;
-    end;
-    Parser.LoadFromStream(MS);
+    Parser.LoadFromFile(Path);
     fTitle := Parser.MainSection.LineTrimString['title'];
     fAuthor := Parser.MainSection.LineTrimString['author'];
     fLevelID := Parser.MainSection.LineNumeric['id'];
+
+    Parser.MainSection.DoForEachSection('talisman',
+      procedure(aSec: TParserSection; const aIteration: Integer = 0)
+      var
+        T: TTalisman;
+      begin
+        T := TTalisman.Create;
+        fTalismans.Add(T);
+        T.LoadFromSection(aSec);
+      end
+    );
   finally
-    MS.Free;
     Parser.Free;
   end;
 end;
