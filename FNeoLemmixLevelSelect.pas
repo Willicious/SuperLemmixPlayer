@@ -278,6 +278,14 @@ begin
     if S <> '' then
       S := S + 'completed';
 
+    if G.Talismans.Count > 0 then
+    begin
+      if S <> '' then
+        S := S + '; ';
+
+      S := S + IntToStr(G.TalismansUnlocked) + ' of ' + IntToStr(G.Talismans.Count) + ' talismans unlocked';
+    end;
+
     lblCompletion.Caption := S;
 
     pnLevelInfo.Visible := false;

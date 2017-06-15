@@ -118,6 +118,8 @@ type
       fIsBasePack: Boolean;
       fIsOrdered: Boolean;
 
+      fTalismans: TObjectList<TTalisman>;
+
       fMusicList: TStringList;
       fHasOwnMusicList: Boolean;
 
@@ -158,6 +160,9 @@ type
 
       procedure LoadSaveGroup(aLine: TParserLine; const aIteration: Integer);
       procedure LoadSaveLevel(aLine: TParserLine; const aIteration: Integer);
+
+      function GetTalismans: TObjectList<TTalisman>;
+      function GetCompleteTalismanCount: Integer;
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
@@ -181,6 +186,9 @@ type
       property PanelStyle: String read GetPanelStyle write fPanelStyle;
       property MusicList: TStringList read fMusicList;
       property PostviewTexts: TPostviewTexts read fPostviewTexts;
+
+      property Talismans: TObjectList<TTalisman> read GetTalismans;
+      property TalismansUnlocked: Integer read GetCompleteTalismanCount;
 
       property LevelIndex[aLevel: TNeoLevelEntry]: Integer read GetLevelIndex;
       property GroupIndex[aGroup: TNeoLevelGroup]: Integer read GetGroupIndex;
@@ -562,6 +570,8 @@ begin
   fLevels.Free;
   if fParentGroup = nil then
     fMusicList.Free;
+  if fTalismans <> nil then
+    fTalismans.Free;
   inherited;
 end;
 
@@ -1025,7 +1035,39 @@ begin
     Result := lst_None;
 end;
 
+function TNeoLevelGroup.GetTalismans: TObjectList<TTalisman>;
+var
+  i: Integer;
 
+  procedure AddList(aList: TObjectList<TTalisman>);
+  var
+    i: Integer;
+  begin
+    for i := 0 to aList.Count-1 do
+      fTalismans.Add(aList[i]);
+  end;
+begin
+  if fTalismans = nil then
+  begin
+    fTalismans := TObjectList<TTalisman>.Create(false);
+    for i := 0 to Children.Count-1 do
+      AddList(Children[i].Talismans);
+    for i := 0 to Levels.Count-1 do
+      AddList(Levels[i].Talismans);
+  end;
+  Result := fTalismans;
+end;
+
+function TNeoLevelGroup.GetCompleteTalismanCount: Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+  for i := 0 to Children.Count-1 do
+    Result := Result + Children[i].TalismansUnlocked;
+  for i := 0 to Levels.Count-1 do
+    Result := Result + Levels[i].UnlockedTalismanList.Count;
+end;
 
 // --------- LISTS --------- //
 
