@@ -5,7 +5,7 @@ unit LemNeoLevelPack;
 interface
 
 uses
-  System.Generics.Collections,
+  System.Generics.Collections, System.Generics.Defaults,
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
   Classes, SysUtils, StrUtils, Contnrs,
   LemTalisman,
@@ -358,6 +358,18 @@ begin
         T.LoadFromSection(aSec);
       end
     );
+
+    fTalismans.Sort(TComparer<TTalisman>.Construct(
+     function(const L, R: TTalisman): Integer
+     begin
+       if L.Color < R.Color then
+         Result := -1
+       else if L.Color > R.Color then
+         Result := 1
+       else
+         Result := CompareStr(L.Title, R.Title);
+     end
+    ));
 
     fDataLoaded := true;
   finally

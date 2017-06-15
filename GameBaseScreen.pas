@@ -15,7 +15,7 @@ uses
 
 const
   PURPLEFONTCOUNT = ord(#132) - ord('!') + 1;
-  PurpleFontCharSet = ['!'..#132];
+  PurpleFontCharSet = [#26..#126] - [#32];
 
 type
   TPurpleFont = class(TComponent)
@@ -112,9 +112,15 @@ end;
 function TPurpleFont.GetBitmapOfChar(Ch: Char): TBitmap32;
 var
   Idx: Integer;
+  ACh: AnsiChar;
 begin
-  Assert(Ch in ['!'..#132]);
-  Idx := Ord(Ch) - ord('!');
+  ACh := AnsiChar(Ch);
+  Assert((ACh in [#26..#126]) and (ACh <> ' '), 'Assertion failure on GetBitmapOfChar, character 0x' + IntToHex(Ord(ACh), 2));
+
+  if Ord(ACh) > 32 then
+    Idx := Ord(ACh) - 33
+  else
+    Idx := 94 + Ord(ACh) - 26;
   Result := fBitmaps[Idx];
 end;
 
@@ -220,7 +226,7 @@ begin
           Inc(Result.Bottom, 16);
           CX := 0;
         end;
-      '!'..#132, ' ':
+      #26..#126:
         begin
           Inc(CX, 16);
           if CX > Result.Right then
@@ -270,7 +276,7 @@ begin
         begin
           Inc(CX, 16);
         end;
-      '!'..#132:
+      #26..#31, #33..#132:
         begin
           fPurpleFont.BitmapOfChar[C].DrawTo(Dst, CX, CY);
           Inc(CX, 16);
