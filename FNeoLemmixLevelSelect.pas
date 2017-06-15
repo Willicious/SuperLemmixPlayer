@@ -95,25 +95,38 @@ procedure TFLevelSelect.InitializeTreeview;
 
   procedure MakeImages;
   var
-    BMP32: TBitmap32;
+    BMP32, TempBMP: TBitmap32;
     ImgBMP, MaskBMP: TBitmap;
 
-    procedure Load(aName: String);
+    procedure Load(aName: String; aName2: String = '');
     begin
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, BMP32);
+      if aName2 <> '' then
+      begin
+        TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName2, TempBMP);
+        TempBMP.DrawMode := dmBlend;
+        TempBMP.DrawTo(BMP32);
+      end;
       TPngInterface.SplitBmp32(BMP32, ImgBMP, MaskBMP);
       tvLevelSelect.Images.Add(ImgBMP, MaskBMP);
     end;
   begin
     BMP32 := TBitmap32.Create;
+    TempBMP := TBitmap32.Create;
     ImgBMP := TBitmap.Create;
     MaskBMP := TBitmap.Create;
     try
-      Load('dash.png');
-      Load('cross.png');
-      Load('tick_red.png');
-      Load('tick.png');
+      Load('level_not_attempted.png');
+      Load('level_attempted.png');
+      Load('level_completed_outdated.png');
+      Load('level_completed.png');
+
+      Load('level_not_attempted.png', 'level_talisman.png');
+      Load('level_attempted.png', 'level_talisman.png');
+      Load('level_completed_outdated.png', 'level_talisman.png');
+      Load('level_completed.png', 'level_talisman.png');
     finally
+      TempBMP.Free;
       BMP32.Free;
       ImgBMP.Free;
       MaskBMP.Free;
@@ -224,6 +237,13 @@ var
             S := '(' + IntToStr(L.GroupIndex + 1) + ') ';
           S := S + L.Title;
           tvLevelSelect.Items[i].Text := S;
+
+          if (L.UnlockedTalismanList.Count < L.Talismans.Count) and (tvLevelSelect.Items[i].ImageIndex < 4 {just in case}) then
+            with tvLevelSelect.Items[i] do
+            begin
+              ImageIndex := ImageIndex + 4;
+              SelectedIndex := ImageIndex;
+            end;
         end;
       end;
     finally
