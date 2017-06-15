@@ -4,6 +4,7 @@ unit GameBaseScreen;
 interface
 
 uses
+  System.Types,
   Windows, Messages, Classes, Controls, Graphics, MMSystem, Forms, Dialogs,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   FBaseDosForm,

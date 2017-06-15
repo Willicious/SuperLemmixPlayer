@@ -5,6 +5,7 @@ unit LemRendering;
 interface
 
 uses
+  System.Types,
   Classes, Math, Windows,
   GR32, GR32_Blend,
   UMisc, SysUtils, StrUtils,

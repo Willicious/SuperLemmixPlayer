@@ -253,8 +253,6 @@ var
   F: TFileStream;
   Ext: String;
 begin
-  if not fIsBassLoaded then Exit;
-
   Result := FindSoundIndex(aName);
 
   if Result <> -1 then
@@ -274,7 +272,11 @@ end;
 
 function TSoundManager.LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false): Integer;
 begin
-  if not fIsBassLoaded then Exit;
+  if not fIsBassLoaded then
+  begin
+    Result := -1;
+    Exit;
+  end;
 
   Result := FindSoundIndex(aName);
 

@@ -14,6 +14,7 @@ unit LemGame;
 interface
 
 uses
+  System.Types,
   SharedGlobals, PngInterface,
   Windows, Classes, Contnrs, SysUtils, Math, Forms, Dialogs,
   Controls, StrUtils, UMisc,

@@ -9,6 +9,7 @@ unit GameMenuScreen;
 interface
 
 uses
+  System.Types,
   Math,
   PngInterface, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, ShellApi,

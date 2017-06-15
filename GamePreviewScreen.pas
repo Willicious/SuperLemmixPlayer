@@ -3,6 +3,7 @@ unit GamePreviewScreen;
 interface
 
 uses
+  System.Types,
   StrUtils,
   PngInterface,
   LemNeoLevelPack,
