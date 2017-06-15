@@ -77,9 +77,12 @@ type
       function GetAuthor: String;
       function GetLevelID: Int64;
       function GetGroupIndex: Integer;
+      function GetTalismans: TObjectList<TTalisman>;
 
       procedure SetTalismanStatus(aIndex: LongWord; aStatus: Boolean);
       function GetTalismanStatus(aIndex: LongWord): Boolean;
+
+      procedure ValidateTalismans;
     public
       Records: TLevelRecords;
 
@@ -94,6 +97,8 @@ type
       property Path: String read GetFullPath;
       property RelativePath: String read GetRelativePath;
       property Status: TNeoLevelStatus read fStatus write fStatus;
+      property UnlockedTalismanList: TList<LongWord> read fTalismanList;
+      property Talismans: TObjectList<TTalisman> read GetTalismans;
       property TalismanStatus[Index: LongWord]: Boolean read GetTalismanStatus write SetTalismanStatus;
       property GroupIndex: Integer read GetGroupIndex;
   end;
@@ -302,7 +307,7 @@ constructor TNeoLevelEntry.Create(aGroup: TNeoLevelGroup);
 begin
   inherited Create;
   fGroup := aGroup;
-  fTalismans := TObjectList<TTalisman>.Create(false);
+  fTalismans := TObjectList<TTalisman>.Create(true);
   fTalismanList := TList<LongWord>.Create;
 end;
 
@@ -353,6 +358,8 @@ begin
         T.LoadFromSection(aSec);
       end
     );
+
+    fDataLoaded := true;
   finally
     Parser.Free;
   end;
@@ -384,6 +391,12 @@ begin
     Result := fGroup.LevelIndex[self];
 end;
 
+function TNeoLevelEntry.GetTalismans: TObjectList<TTalisman>;
+begin
+  LoadLevelFileData;
+  Result := fTalismans;
+end;
+
 procedure TNeoLevelEntry.SetTalismanStatus(aIndex: Cardinal; aStatus: Boolean);
 var
   i: Integer;
@@ -411,6 +424,19 @@ begin
       Result := true;
       Exit;
     end;
+end;
+
+procedure TNeoLevelEntry.ValidateTalismans;
+var
+  i, i2: Integer;
+begin
+  LoadLevelFileData;
+  for i := fTalismanList.Count-1 downto 0 do
+    for i2 := 0 to fTalismans.Count do
+      if i2 = fTalismans.Count then
+        fTalismanList.Delete(i)
+      else if fTalismans[i2].ID = fTalismanList[i] then
+        Break;
 end;
 
 { TNeoLevelGroup }
@@ -564,6 +590,8 @@ var
                         begin
                           aLevel.TalismanStatus[aLine.ValueNumeric] := true;
                         end);
+
+      aLevel.ValidateTalismans;
     end;
 
   begin

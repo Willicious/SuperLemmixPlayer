@@ -294,7 +294,10 @@ begin
     else
       lblAuthor.Caption := '';
 
-    lblCompletion.Caption := '';
+    if L.Talismans.Count = 0 then
+      lblCompletion.Caption := ''
+    else
+      lblCompletion.Caption := IntToStr(L.UnlockedTalismanList.Count) + ' of ' + IntToStr(L.Talismans.Count) + ' talismans unlocked';
 
     pnLevelInfo.Visible := true;
 
