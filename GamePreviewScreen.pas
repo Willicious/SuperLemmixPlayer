@@ -256,98 +256,27 @@ var
     procedure MakeReqString;
     var
       CurLine: Integer;
-      ReqString: String;
-      i: TSkillPanelButton;
-
-      CompletionString: String;
-      SkillString: String;
-      HasTimeReq: Boolean;
-      DoneFirstSkillLimit: Boolean;
-
-      procedure Add(aText: String);
-      // Assumes any one input won't exceed 36 characters
-      var
-        n: Integer;
-        S: String;
-      begin
-        if CurLine >= Length(Lines) then Exit;
-
-        if not((CurLine = 1) and (ReqString = '')) then
-          aText := ', ' + aText;
-
-        S := Trim(ReqString + aText);
-        if Length(S) <= 36 then
-        begin
-          ReqString := ReqString + aText;
-          Exit;
-        end;
-
-        for n := 36 downto 0 do
-          if n = 0 then
-          begin
-            Lines[CurLine] := Lines[CurLine] + Trim(ReqString);
-            Inc(CurLine);
-          end else if S[n] = ' ' then
-          begin
-            ReqString := LeftStr(S, n);
-            Lines[CurLine] := Lines[CurLine] + ReqString;
-            Inc(CurLine);
-            ReqString := RightStr(S, Length(S)-n);
-            Break;
-          end;
-      end;
+      S: String;
+      i: Integer;
     begin
+      S := Trim(Talisman.RequirementText);
       CurLine := 1;
-      ReqString := '';
-      HasTimeReq := Talisman.TimeLimit >= 0;
-
-      CompletionString := '';
-      if (Talisman.RescueCount >= 0) then
-        CompletionString := 'Save ' + IntToStr(Talisman.RescueCount)
-      else if HasTimeReq then
-        CompletionString := 'Complete ';
-
-      if HasTimeReq then
-        CompletionString := CompletionString + 'in under ' + IntToStr(Talisman.TimeLimit div 1020 {17 * 60}) + ':' + LeadZeroStr(Talisman.TimeLimit mod 60, 2);
-
-      if CompletionString <> '' then
-        Add(CompletionString);
-
-      for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-        if Talisman.SkillLimit[i] = 0 then
-          Add('no ' + SKILL_NAMES[i] + 's');
-
-      DoneFirstSkillLimit := false;
-      for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      while (S <> '') and (CurLine < Length(Lines)) do
       begin
-        SkillString := '';
-        if Talisman.SkillLimit[i] = 1 then
-          SkillString := '1 ' + SKILL_NAMES[i]
-        else if Talisman.SkillLimit[i] > 1 then
-          SkillString := IntToStr(Talisman.SkillLimit[i]) + ' ' + SKILL_NAMES[i] + 's';
-
-        if SkillString = '' then Continue;
-
-        if not DoneFirstSkillLimit then
+        if Length(S) > 36 then
         begin
-          SkillString := 'max ' + SkillString;
-          DoneFirstSkillLimit := true;
-        end;
+          for i := 37 downto 1 do
+            if S[i] = ' ' then
+              Break;
 
-        Add(SkillString);
+          if i <= 1 then i := 37;
+        end else
+          i := Length(S) + 1;
+
+        Lines[CurLine] := Lines[CurLine] + Trim(LeftStr(S, i-1));
+        S := Trim(RightStr(S, Length(S) - i + 1));
+        Inc(CurLine);
       end;
-
-      if (Talisman.TotalSkillLimit >= 0) then
-      begin
-        SkillString := IntToStr(Talisman.TotalSkillLimit) + ' total skills';
-        if not DoneFirstSkillLimit then
-          SkillString := 'max ' + SkillString;
-        Add(SkillString);
-      end;
-
-      Lines[1][1] := Uppercase(Lines[1][1])[1];
-      if CurLine < Length(Lines) then
-        Lines[CurLine] := Lines[CurLine] + Trim(ReqString);
     end;
   begin
     Talisman := nil;
