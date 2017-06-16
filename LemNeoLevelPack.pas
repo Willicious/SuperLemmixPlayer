@@ -163,6 +163,8 @@ type
 
       function GetTalismans: TObjectList<TTalisman>;
       function GetCompleteTalismanCount: Integer;
+
+      function GetParentBasePack: TNeoLevelGroup;
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
@@ -173,6 +175,7 @@ type
       function FindFile(aName: String): String;
 
       property Parent: TNeoLevelGroup read fParentGroup;
+      property ParentBasePack: TNeoLevelGroup read GetParentBasePack;
       property Children: TNeoLevelGroups read fChildGroups;
       property Levels: TNeoLevelEntries read fLevels;
       property LevelCount: Integer read GetRecursiveLevelCount;
@@ -1050,8 +1053,11 @@ begin
   if fTalismans = nil then
   begin
     fTalismans := TObjectList<TTalisman>.Create(false);
-    for i := 0 to Children.Count-1 do
-      AddList(Children[i].Talismans);
+
+    if Parent <> nil then
+      for i := 0 to Children.Count-1 do
+        AddList(Children[i].Talismans);
+
     for i := 0 to Levels.Count-1 do
       AddList(Levels[i].Talismans);
   end;
@@ -1067,6 +1073,14 @@ begin
     Result := Result + Children[i].TalismansUnlocked;
   for i := 0 to Levels.Count-1 do
     Result := Result + Levels[i].UnlockedTalismanList.Count;
+end;
+
+function TNeoLevelGroup.GetParentBasePack: TNeoLevelGroup;
+begin
+  if IsBasePack or (Parent = nil) or (Parent.Parent = nil) then
+    Result := self
+  else
+    Result := Parent.ParentBasePack;
 end;
 
 // --------- LISTS --------- //

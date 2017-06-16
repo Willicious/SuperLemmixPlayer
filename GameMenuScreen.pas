@@ -195,7 +195,7 @@ begin
   P := GameMenuBitmapPositions[aElement];
   // adjust gmbConfig to right, gmbExit to left, if no talismans
   // and don't draw gmbTalisman at all
-  //if GameParams.Talismans.Count = 0 then
+  if GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count = 0 then
     case aElement of
       gmbConfig: P.X := P.X + 64;
       gmbExit: P.X := P.X - 64;
@@ -380,7 +380,7 @@ begin
       VK_F3     : ShowConfigMenu;
       VK_F4     : DumpLevels;
       VK_F5     : DumpImages;
-      //VK_F6     : if GameParams.Talismans.Count <> 0 then CloseScreen(gstTalisman);
+      VK_F6     : if GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count <> 0 then CloseScreen(gstTalisman);
       VK_F7     : DoMassReplayCheck;
       VK_F12    : begin
                     GameParams.LoadCurrentLevel;
