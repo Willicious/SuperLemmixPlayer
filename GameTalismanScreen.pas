@@ -13,17 +13,20 @@ uses
   LemTypes,
   LemStrings,
   LemGame,
+  LemNeoLevelPack,
   GameControl,
+  StrUtils,
+  LemTalisman,
   GameBaseScreen;
 
 const
-  TALISMANS_PER_PAGE = 6;
+  TALISMANS_PER_PAGE = 4;
 
 type
   TGameTalismanScreen = class(TGameBaseScreen)
   private
-    fPage: Integer;
     ScreenText: string;
+    fPack: TNeoLevelGroup;
     function GetScreenText: string;
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_KeyPress(Sender: TObject; var Key: Char);
@@ -81,134 +84,127 @@ begin
 end;
 
 function TGameTalismanScreen.GetScreenText: string;
-const
-   pts_bronze = 3;
-   pts_silver = 4;
-   pts_gold = 5;
 var
-   lfc: byte;
-   i: Integer;
-   S: String;
-   maxpoints, playerpoints, curpoints: Integer;
+  FirstTalismanIndex: Integer;
+  i: Integer;
+  T: TTalisman;
+  TalChar: Char;
+  WA: TWordWrapArray;
+  Level: TNeoLevelEntry;
+  CutTitle: String;
+  ReqText: String;
 
-    procedure Add(const S: string);
-    begin
-      Result := Result + S + #13;
-      Inc(lfc);
-    end;
+  procedure Add(aLine: String = ''; aPad: Integer = -1);
+  begin
+    if Length(aLine) < aPad then aLine := aLine + StringOfChar(' ', aPad - Length(aLine));
+    Result := Result + aLine + #13;
+  end;
 
-    procedure PreAdd(const S: string);
-    begin
-      Result := S + #13 + Result;
-      Inc(lfc);
-    end;
+  procedure AddHalfBreak(aLine: String = ''; aPad: Integer = -1);
+  begin
+    if Length(aLine) < aPad then aLine := aLine + StringOfChar(' ', aPad - Length(aLine));
+    Result := Result + aLine + #12;
+  end;
 
-    procedure LF(aCount: Integer);
-    begin
-      Result := Result + StringOfChar(#13, aCount);
-      Inc(lfc, aCount);
-    end;
-
-    procedure PreLF(aCount: Integer);
-    begin
-      Result := StringOfChar(#13, aCount) +  Result;
-      Inc(lfc, aCount);
-    end;
-
+  procedure LF(aCount: Integer = 1);
+  begin
+    Result := Result + StringOfChar(#13, aCount);
+  end;
 begin
-  (*
+  fPack := GameParams.CurrentLevel.Group.ParentBasePack;
+  FirstTalismanIndex := GameParams.TalismanPage * TALISMANS_PER_PAGE;
   Result := '';
-  lfc := 0;
 
-  fPage := GameParams.TalismanPage;
+  Add(fPack.Name);
+  Add('Talismans (' + IntToStr(fPack.TalismansUnlocked) + ' of ' + IntToStr(fPack.Talismans.Count) + ')');
+  LF;
 
-  if GameParams.Talismans.VisibleCount = 0 then
-  begin
-    Add('This game does not have any talismans.');
-    LF(10);
-    PreLF(7);
+  for i := FirstTalismanIndex to (FirstTalismanIndex + TALISMANS_PER_PAGE - 1) do
+    if i >= fPack.Talismans.Count then
+      LF(6)
+    else begin
+      T := fPack.Talismans[i];
+      Level := TNeoLevelEntry(T.Data);
 
-    PreAdd('Talisman Record');
-    Add('Press Esc for main menu');
-    Exit;
-  end;
+      if Level.Group.IsOrdered then
+      begin
+        if Level.Group.IsBasePack then
+          ReqText := 'Level ' + IntToStr(Level.GroupIndex + 1) + ': '
+        else
+          ReqText := Level.Group.Name + ' ' + IntToStr(Level.GroupIndex + 1) + ': ';
+      end else
+        ReqText := Level.Title + ': ';
 
-  maxpoints := 0;
-  playerpoints := 0;
-  for i := 0 to GameParams.Talismans.Count-1 do
-  begin
-    case GameParams.Talismans[i].TalismanType of
-      1: curpoints := pts_bronze;
-      2: curpoints := pts_silver;
-      3: curpoints := pts_gold;
-      else curpoints := 0;
+      ReqText := ReqText + T.RequirementText;
+
+      WA := WordWrapString(ReqText, 34);
+      CutTitle := LeftStr(T.Title, 34);
+
+      case T.Color of
+        tcBronze: TalChar := #26;
+        tcSilver: TalChar := #28;
+        tcGold: TalChar := #30;
+      end;
+
+      if Level.TalismanStatus[T.ID] then Inc(TalChar);
+
+      case Length(WA) of
+        0: begin // just in case
+             LF(1);
+             Add(TalChar, 38);
+             Add('    ' + CutTitle, 38);
+             LF(2);
+           end;
+        1: begin
+             LF(1);
+             AddHalfBreak(TalChar, 38);
+             Add('    ' + CutTitle, 38);
+             Add('    ' + WA[0], 38);
+             AddHalfBreak;
+             LF(1);
+           end;
+        2: begin
+             LF(1);
+             Add(TalChar + '   ' + CutTitle, 38);
+             Add('    ' + WA[0], 38);
+             Add('    ' + WA[1], 38);
+             LF(1);
+           end;
+        3: begin
+             AddHalfBreak;
+             AddHalfBreak('    ' + CutTitle, 38);
+             AddHalfBreak(TalChar, 38);
+             Add('    ' + WA[0], 38);
+             Add('    ' + WA[1], 38);
+             Add('    ' + WA[2], 38);
+             AddHalfBreak;
+           end;
+        else begin
+               Add('    ' + CutTitle, 38);
+               Add(TalChar + '   ' + WA[0], 38);
+               Add('    ' + WA[1], 38);
+               Add('    ' + WA[2], 38);
+               Add('    ' + WA[3], 38);
+             end;
+      end;
     end;
-    maxpoints := maxpoints + curpoints;
-    //if GameParams.SaveSystem.CheckTalisman(GameParams.Talismans[i].Signature) then playerpoints := playerpoints + curpoints;
-  end;
-  playerpoints := (playerpoints * 100) div maxpoints;
-
-  for i := (fPage * TALISMANS_PER_PAGE) to (((fPage+1) * TALISMANS_PER_PAGE)-1) do
-  begin
-    if i > GameParams.Talismans.VisibleCount-1 then
-    begin
-      LF(3);
-      Continue;
-    end;
-    //Add(BuildText(GameParams.Talismans[i].Description, GameParams.Talismans[i].TalismanType, GameParams.SaveSystem.CheckTalisman(GameParams.Talismans[i].Signature))); 
-  end;
-
-  LF(1);
-
-  if GameParams.Talismans.VisibleCount <= TALISMANS_PER_PAGE then
-    LF(1)
-  else begin
-    if fPage > 0 then
-      S := '<<'
-    else
-      S := '  ';
-
-    S := S + '       ';
-    if fPage < 9 then S := S + ' ';
-    S := S + 'Page ';
-    S := S + IntToStr(fPage+1) + '/';
-    S := S + IntToStr(((GameParams.Talismans.VisibleCount - 1) div TALISMANS_PER_PAGE) + 1);
-    if GameParams.Talismans.VisibleCount < 46 then S := S + ' ';
-    S := S + '       ';
-
-    if fPage < (GameParams.Talismans.VisibleCount-1) div TALISMANS_PER_PAGE then
-      S := S + '>>'
-    else
-      S := S + '  ';
-
-    Add(S);
-  end;
-
-  Add('Press Esc for main menu');
-
-  PreLF(1);
-  PreAdd('Talisman Record (' + IntToStr(playerpoints) + '%)');
-  *)
 end;
 
 procedure TGameTalismanScreen.Form_KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   case Key of
-    VK_ESCAPE: begin
-                 //GameParams.TalismanPage := 0;
-                 CloseScreen(gstMenu);
-               end;
-    VK_LEFT: if fPage > 0 then
+    VK_ESCAPE: CloseScreen(gstMenu);
+    VK_LEFT: if GameParams.TalismanPage > 0 then
              begin
-               GameParams.TalismanPage := fPage - 1;
+               GameParams.TalismanPage := GameParams.TalismanPage - 1;
                CloseScreen(gstTalisman);
              end;
-    (*VK_RIGHT: if fPage < ((GameParams.Talismans.VisibleCount - 1) div TALISMANS_PER_PAGE) then
+    VK_RIGHT: if GameParams.TalismanPage < ((fPack.Talismans.Count - 1) div TALISMANS_PER_PAGE) then
               begin
-                GameParams.TalismanPage := fPage + 1;
+                GameParams.TalismanPage := GameParams.TalismanPage + 1;
                 CloseScreen(gstTalisman);
-              end;*)
+              end;
   end;
 end;
 

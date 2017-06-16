@@ -34,6 +34,11 @@ function RectWidth(const aRect: TRect): integer;
 // Same as AppPath, but callable from UMisc instead from LemTypes
 function GetApplicationPath: string;
 
+// Word-wrap a string
+type
+  TWordWrapArray = array of String;
+function WordWrapString(const aString: String; const LineLen: Integer): TWordWrapArray;
+
 implementation
 
 function CountChars(C: Char; const S: string): integer;
@@ -88,6 +93,46 @@ end;
 function GetApplicationPath: string;
 begin
   Result := ExtractFilePath(ParamStr(0));
+end;
+
+function WordWrapString(const aString: String; const LineLen: Integer): TWordWrapArray;
+var
+  LineCount: Integer;
+  CurrentPos: Integer;
+  SplitPos: Integer;
+
+  function FindSpace: Integer;
+  begin
+    if Length(aString) < CurrentPos + LineLen then
+    begin
+      Result := Length(aString) + 1;
+      Exit;
+    end;
+
+    for Result := CurrentPos + LineLen downto CurrentPos + 1 do
+      if aString[Result] = ' ' then
+        Exit;
+    Result := CurrentPos + LineLen;
+  end;
+
+  procedure CheckResultLength;
+  begin
+    if LineCount = Length(Result) then
+      SetLength(Result, LineCount + 50);
+  end;
+begin
+  LineCount := 0;
+  CurrentPos := 1;
+
+  repeat
+    SplitPos := FindSpace;
+    CheckResultLength;
+    Result[LineCount] := Trim(MidStr(aString, CurrentPos, SplitPos - CurrentPos));
+    CurrentPos := SplitPos + 1;
+    Inc(LineCount);
+  until CurrentPos > Length(aString);
+
+  SetLength(Result, LineCount);
 end;
 
 end.

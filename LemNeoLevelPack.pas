@@ -367,6 +367,7 @@ begin
         T := TTalisman.Create;
         fTalismans.Add(T);
         T.LoadFromSection(aSec);
+        T.Data := Self;
       end
     );
 
