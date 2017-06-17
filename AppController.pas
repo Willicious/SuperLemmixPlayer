@@ -75,6 +75,9 @@ begin
   // Set to true as default; change to false if any failure.
   fLoadSuccess := true;
 
+  if not DirectoryExists(AppPath + 'save') then
+    ForceDirectories(AppPath + 'save');
+
   SoundManager := TSoundManager.Create;
   SoundManager.LoadDefaultSounds;  
 
