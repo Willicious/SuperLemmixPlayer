@@ -4,9 +4,9 @@ ID x5252357D5252357D
 LEMMINGS 10
 REQUIREMENT 5
 MAX_SPAWN_INTERVAL 15
-WIDTH 320
+WIDTH 124
 HEIGHT 160
-START_X 160
+START_X 58
 START_Y 80
 AUTOSTEEL on
 
@@ -24,7 +24,7 @@ $END
 $OBJECT
   COLLECTION orig_marble
   PIECE water
-  X 104
+  X 2
   Y 135
   WIDTH 64
   NO_OVERWRITE
@@ -33,7 +33,7 @@ $END
 $OBJECT
   COLLECTION orig_marble
   PIECE water
-  X 168
+  X 66
   Y 135
   WIDTH 64
   NO_OVERWRITE
@@ -42,7 +42,7 @@ $END
 $OBJECT
   COLLECTION orig_marble
   PIECE window
-  X 112
+  X 10
   Y 105
   NO_OVERWRITE
   DIRECTION right
@@ -51,7 +51,7 @@ $END
 $OBJECT
   COLLECTION orig_marble
   PIECE exit
-  X 112
+  X 10
   Y 13
   NO_OVERWRITE
 $END
@@ -59,7 +59,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 102
+  X 0
   Y 136
   ONE_WAY
 $END
@@ -67,7 +67,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 102
+  X 0
   Y 112
   ONE_WAY
 $END
@@ -75,7 +75,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 102
+  X 0
   Y 88
   ONE_WAY
 $END
@@ -83,7 +83,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 102
+  X 0
   Y 64
   ONE_WAY
 $END
@@ -91,7 +91,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 102
+  X 0
   Y 40
   ONE_WAY
 $END
@@ -99,7 +99,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 102
+  X 0
   Y 16
   ONE_WAY
 $END
@@ -107,7 +107,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 102
+  X 0
   Y -8
   ONE_WAY
 $END
@@ -115,7 +115,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 212
+  X 110
   Y 136
   ONE_WAY
 $END
@@ -123,7 +123,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 212
+  X 110
   Y 112
   ONE_WAY
 $END
@@ -131,7 +131,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 212
+  X 110
   Y 88
   ONE_WAY
 $END
@@ -139,7 +139,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 212
+  X 110
   Y 64
   ONE_WAY
 $END
@@ -147,7 +147,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 212
+  X 110
   Y 40
   ONE_WAY
 $END
@@ -155,7 +155,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 212
+  X 110
   Y 16
   ONE_WAY
 $END
@@ -163,7 +163,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE steel_02
-  X 212
+  X 110
   Y -8
   ONE_WAY
 $END
@@ -171,7 +171,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE bar_12
-  X 116
+  X 14
   Y 131
   ONE_WAY
 $END
@@ -179,7 +179,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE bar_12
-  X 164
+  X 62
   Y 131
   ONE_WAY
 $END
@@ -187,7 +187,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE bar_14
-  X 112
+  X 10
   Y 132
   NO_OVERWRITE
   ONE_WAY
@@ -196,7 +196,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE bar_13
-  X 184
+  X 82
   Y 132
   NO_OVERWRITE
   ONE_WAY
@@ -204,24 +204,8 @@ $END
 
 $TERRAIN
   COLLECTION orig_marble
-  PIECE block_01
-  X 65
-  Y 123
-  ONE_WAY
-$END
-
-$TERRAIN
-  COLLECTION orig_marble
-  PIECE block_07
-  X 226
-  Y 123
-  ONE_WAY
-$END
-
-$TERRAIN
-  COLLECTION orig_marble
   PIECE pillar_06
-  X 116
+  X 14
   Y 0
   NO_OVERWRITE
   ONE_WAY
@@ -230,7 +214,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE pillar_06
-  X 148
+  X 46
   Y 0
   NO_OVERWRITE
   ONE_WAY
@@ -239,7 +223,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE pillar_02
-  X 172
+  X 70
   Y 57
   ONE_WAY
 $END
@@ -247,7 +231,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE pillar_06
-  X 105
+  X 3
   Y 87
   NO_OVERWRITE
   ONE_WAY
@@ -256,7 +240,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE block_02
-  X 162
+  X 60
   Y 46
   ERASE
   ONE_WAY
@@ -265,7 +249,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE pillar_06
-  X 173
+  X 71
   Y 57
   NO_OVERWRITE
   ONE_WAY
@@ -273,17 +257,8 @@ $END
 
 $TERRAIN
   COLLECTION orig_marble
-  PIECE pillar_06
-  X 226
-  Y 57
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  COLLECTION orig_marble
   PIECE block_03
-  X 116
+  X 14
   Y 37
   ONE_WAY
 $END
@@ -291,7 +266,7 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE bar_13
-  X 161
+  X 59
   Y 37
   NO_OVERWRITE
   ONE_WAY
@@ -300,18 +275,9 @@ $END
 $TERRAIN
   COLLECTION orig_marble
   PIECE block_02
-  X 141
+  X 39
   Y 88
   NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  COLLECTION orig_marble
-  PIECE steel_02
-  X 226
-  Y 0
-  ERASE
   ONE_WAY
 $END
 

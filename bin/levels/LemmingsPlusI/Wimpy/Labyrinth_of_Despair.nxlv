@@ -1,12 +1,12 @@
 TITLE Labyrinth of Despair
 THEME orig_pillar
 ID xD1AA90B6D1AA90B6
-LEMMINGS 80
-REQUIREMENT 72
+LEMMINGS 50
+REQUIREMENT 42
 MAX_SPAWN_INTERVAL 53
-WIDTH 320
+WIDTH 314
 HEIGHT 160
-START_X 160
+START_X 157
 START_Y 80
 AUTOSTEEL off
 
@@ -24,7 +24,7 @@ $END
 $OBJECT
   COLLECTION orig_pillar
   PIECE window
-  X 11
+  X 8
   Y 96
   NO_OVERWRITE
   DIRECTION right
@@ -33,7 +33,7 @@ $END
 $OBJECT
   COLLECTION orig_pillar
   PIECE window
-  X 139
+  X 136
   Y 29
   NO_OVERWRITE
   DIRECTION right
@@ -42,7 +42,7 @@ $END
 $OBJECT
   COLLECTION orig_pillar
   PIECE window
-  X 259
+  X 256
   Y 26
   NO_OVERWRITE
   DIRECTION left
@@ -51,7 +51,7 @@ $END
 $OBJECT
   COLLECTION orig_pillar
   PIECE exit
-  X 19
+  X 16
   Y 14
   NO_OVERWRITE
 $END
@@ -59,7 +59,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 3
+  X 0
   Y 132
   ONE_WAY
 $END
@@ -67,7 +67,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 45
+  X 42
   Y 132
   ONE_WAY
 $END
@@ -75,7 +75,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 87
+  X 84
   Y 132
   ONE_WAY
 $END
@@ -83,7 +83,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 129
+  X 126
   Y 132
   ONE_WAY
 $END
@@ -91,7 +91,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 171
+  X 168
   Y 132
   ONE_WAY
 $END
@@ -99,7 +99,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 213
+  X 210
   Y 132
   ONE_WAY
 $END
@@ -107,7 +107,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 255
+  X 252
   Y 132
   ONE_WAY
 $END
@@ -115,7 +115,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 3
+  X 0
   Y 90
   ONE_WAY
 $END
@@ -123,7 +123,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 3
+  X 0
   Y 48
   ONE_WAY
 $END
@@ -131,7 +131,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 3
+  X 0
   Y 6
   ONE_WAY
 $END
@@ -139,7 +139,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 23
+  X 20
   Y 6
   ONE_WAY
 $END
@@ -147,7 +147,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 65
+  X 62
   Y 6
   ONE_WAY
 $END
@@ -155,7 +155,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 107
+  X 104
   Y 6
   ONE_WAY
 $END
@@ -163,7 +163,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 149
+  X 146
   Y 6
   ONE_WAY
 $END
@@ -171,7 +171,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 191
+  X 188
   Y 6
   ONE_WAY
 $END
@@ -179,7 +179,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 233
+  X 230
   Y 6
   ONE_WAY
 $END
@@ -187,7 +187,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 275
+  X 272
   Y 6
   ONE_WAY
 $END
@@ -195,7 +195,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 297
+  X 294
   Y 26
   ONE_WAY
 $END
@@ -203,7 +203,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 297
+  X 294
   Y 68
   ONE_WAY
 $END
@@ -211,7 +211,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 297
+  X 294
   Y 110
   ONE_WAY
 $END
@@ -219,7 +219,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 45
+  X 42
   Y 90
   ONE_WAY
 $END
@@ -227,7 +227,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 45
+  X 42
   Y 70
   ONE_WAY
 $END
@@ -235,7 +235,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 23
+  X 20
   Y 39
   ONE_WAY
 $END
@@ -243,7 +243,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 65
+  X 62
   Y 39
   ONE_WAY
 $END
@@ -251,7 +251,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 107
+  X 104
   Y 39
   ONE_WAY
 $END
@@ -259,7 +259,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 107
+  X 104
   Y 59
   ONE_WAY
 $END
@@ -267,7 +267,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 85
+  X 82
   Y 101
   ONE_WAY
 $END
@@ -275,7 +275,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 151
+  X 148
   Y 90
   ONE_WAY
 $END
@@ -283,7 +283,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 140
+  X 137
   Y 70
   ONE_WAY
 $END
@@ -291,7 +291,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 182
+  X 179
   Y 48
   ONE_WAY
 $END
@@ -299,7 +299,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 202
+  X 199
   Y 48
   ONE_WAY
 $END
@@ -307,7 +307,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 255
+  X 252
   Y 26
   ONE_WAY
 $END
@@ -315,7 +315,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_11
-  X 255
+  X 252
   Y 68
   ONE_WAY
 $END
@@ -323,7 +323,7 @@ $END
 $TERRAIN
   COLLECTION orig_pillar
   PIECE block_12
-  X 213
+  X 210
   Y 90
   ONE_WAY
 $END

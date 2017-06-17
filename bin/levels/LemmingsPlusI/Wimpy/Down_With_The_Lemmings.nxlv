@@ -1,8 +1,8 @@
 TITLE Down With The Lemmings
 THEME orig_fire
 ID x7373176173731761
-LEMMINGS 80
-REQUIREMENT 64
+LEMMINGS 40
+REQUIREMENT 32
 MAX_SPAWN_INTERVAL 43
 WIDTH 776
 HEIGHT 160
@@ -1064,9 +1064,10 @@ $TERRAIN
 $END
 
 $TALISMAN
-  TITLE Complete Wimpy 25 with no more than 3 builders.
+  TITLE Keeping Away From The Edge
   ID 0
   COLOR silver
+  SAVE 64
   BUILDER_LIMIT 3
 $END
 

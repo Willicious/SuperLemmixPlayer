@@ -1,8 +1,8 @@
 TITLE In the life of a Lemming
 THEME orig_marble
 ID x86F3F7F386F3F7F3
-LEMMINGS 80
-REQUIREMENT 64
+LEMMINGS 40
+REQUIREMENT 20
 MAX_SPAWN_INTERVAL 43
 WIDTH 523
 HEIGHT 160
@@ -239,7 +239,7 @@ $TERRAIN
 $END
 
 $TALISMAN
-  TITLE Save every lemming on Danger 4.
+  TITLE With Many Years To Come
   ID 0
   COLOR silver
   SAVE 80

@@ -221,7 +221,7 @@ $TERRAIN
 $END
 
 $TALISMAN
-  TITLE Save 64 or more lemmings on Medi 25.
+  TITLE Wall Of Patience
   ID 0
   COLOR gold
   SAVE 64

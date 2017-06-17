@@ -323,7 +323,7 @@ $TERRAIN
 $END
 
 $TALISMAN
-  TITLE Complete Glimmer 1 with max 3 of each skill.
+  TITLE Holiday Sports
   ID 0
   COLOR bronze
   CLIMBER_LIMIT 3
