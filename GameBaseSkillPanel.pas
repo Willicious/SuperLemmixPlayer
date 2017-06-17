@@ -4,7 +4,7 @@ interface
 
 uses
   System.Types,
-  Classes, Controls, GR32, GR32_Image, GR32_Layers,
+  Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
   LemCore, LemLemming, LemGame, LemLevel;
 
@@ -50,6 +50,7 @@ type
     fLastClickFrameskip   : Cardinal;
 
     fSkillFont            : array['0'..'9', 0..1] of TBitmap32;
+    fSkillOvercount       : array[100..MAXIMUM_SI] of TBitmap32;
     fSkillCountErase      : TBitmap32;
     fSkillLock            : TBitmap32;
     fSkillInfinite        : TBitmap32;
@@ -473,6 +474,19 @@ var
   c: Char;
   i: Integer;
   SrcRect: TRect;
+  TempBmp: TBitmap32;
+
+  procedure MakeOvercountImage(aCount: Integer);
+  var
+    CountStr: String;
+  begin
+    TempBmp.Clear(0);
+    CountStr := LeadZeroStr(aCount, 3); // just in case
+    fSkillFont[CountStr[1], 1].DrawTo(TempBmp, 0, 0, Rect(0, 0, 4, 8));
+    fSkillFont[CountStr[2], 1].DrawTo(TempBmp, 4, 0, Rect(0, 0, 4, 8));
+    fSkillFont[CountStr[3], 1].DrawTo(TempBmp, 8, 0, Rect(0, 0, 4, 8));
+  end;
+
 begin
   GetGraphic('skill_count_digits.png', fIconBmp);
   SrcRect := Rect(0, 0, 4, 8);
@@ -493,6 +507,22 @@ begin
   OffsetRect(SrcRect, 8, 0);
   fSkillLock.SetSize(8, 8);
   fIconBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
+
+  TempBmp := TBitmap32.Create;
+  TKernelResampler.Create(TempBmp);
+  TKernelResampler(TempBmp.Resampler).Kernel := TCubicKernel.Create;
+  try
+    TempBMP.SetSize(12, 8);
+    for i := 100 to MAXIMUM_SI do
+    begin
+      MakeOvercountImage(i);
+      fSkillOvercount[i] := TBitmap32.Create;
+      fSkillOvercount[i].SetSize(9, 8);
+      TempBMP.DrawTo(fSkillOvercount[i], fSkillOvercount[i].BoundsRect, TempBMP.BoundsRect);
+    end;
+  finally
+    TempBMP.Free;
+  end;
 end;
 
 
@@ -778,20 +808,19 @@ begin
   fSkillCountErase.DrawTo(fImage.Bitmap, ButtonLeft, ButtonTop);
   if (aNumber = 0) and GameParams.BlackOutZero then Exit;
 
-  // Check for locked release rate icon
   if (aButton = spbFaster) and (Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = MINIMUM_SI)) then
     fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
-  // Check for infinite icon
-  else if aNumber > 99 then
-    fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
-  // Otherwise draw the digits
-  else if aNumber < 10 then
+  else if (aNumber > 99) then
+  begin
+    if (aButton <= LAST_SKILL_BUTTON) then
+      fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
+    else
+      fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1);
+  end else if aNumber < 10 then
   begin
     NumberStr := LeadZeroStr(aNumber, 2);
     fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 1, ButtonTop + 1);
-  end
-  else
-  begin
+  end else begin
     NumberStr := LeadZeroStr(aNumber, 2);
     fSkillFont[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1);
     fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1);
@@ -878,7 +907,7 @@ begin
 
   Result := LemmingActionStrings[L.LemAction];
 
-  if L.LemIsZombie or GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
+  if L.HasPermanentSkills and (L.LemIsZombie or GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo)) then
   begin
     Result := '-----';
     if L.LemIsClimber then Result[1] := 'C';
