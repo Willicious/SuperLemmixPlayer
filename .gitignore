@@ -10,3 +10,4 @@ bin/
 !old_stuff/styles_extra.zip
 *.identcache
 LemVersionCID.pas
+old_stuff/OldGS/temp/
