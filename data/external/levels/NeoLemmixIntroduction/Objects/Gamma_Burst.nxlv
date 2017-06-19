@@ -1,0 +1,584 @@
+TITLE Gamma Burst
+THEME lpiii_lab
+ID x55092AC855092AC8
+LEMMINGS 50
+REQUIREMENT 25
+MAX_SPAWN_INTERVAL 48
+WIDTH 480
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 10
+  BLOCKER 10
+  PLATFORMER 1
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE window
+  X 36
+  Y 39
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE acid
+  X 240
+  Y 107
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE radiation
+  X 116
+  Y 72
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE exit
+  X 285
+  Y 16
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE radiation
+  X 378
+  Y 24
+$END
+
+$OBJECT
+  COLLECTION lpiii_lab
+  PIECE radiation
+  X 239
+  Y 24
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -32
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 32
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 32
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -32
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -32
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -32
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X -32
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 32
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE shelf_01
+  X 96
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 96
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 160
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 160
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 160
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 160
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 160
+  Y 112
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 192
+  Y 96
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 192
+  Y 64
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 192
+  Y 32
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 192
+  Y 0
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 96
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE shelf_01
+  X 160
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE shelf_01
+  X 160
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 224
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 224
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 256
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 288
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_07
+  X 304
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE shelf_01
+  X 224
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE shelf_01
+  X 288
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 336
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 352
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_02
+  X 313
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_02
+  X 72
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_02
+  X 32
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_04
+  X 56
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_04
+  X 120
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_02
+  X 136
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_02
+  X 96
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_02
+  X 272
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_02
+  X 248
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_02
+  X 224
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE steel_02
+  X 296
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 109
+  Y 99
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 416
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 352
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 368
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 384
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 400
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_06
+  X 416
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 384
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 416
+  Y 64
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 448
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 368
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 400
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 432
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 448
+  Y 32
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_01
+  X 448
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE sign_radioactive
+  X 408
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_04
+  X 32
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_04
+  X 0
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_05
+  X 432
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE goop_03
+  X 440
+  Y 38
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 352
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_09
+  X 384
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 320
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 288
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_03
+  X 256
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE bricks_08
+  X 240
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_06
+  X 344
+  Y 34
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 344
+  Y 4
+$END
+
+$TERRAIN
+  COLLECTION lpiii_lab
+  PIECE pipe_01
+  X 344
+  Y -26
+$END
+
+$PRETEXT
+  LINE This level introduces radiation. If a
+  LINE lemming walks through radiation, a 9
+  LINE second countdown will appear above its
+  LINE head. When this reaches zero, the
+  LINE lemming becomes a bomber.
+$END
+
+$POSTTEXT
+  LINE When dealing with levels that contain
+  LINE radiation, you should keep in mind that
+  LINE not all such levels require you to make
+  LINE use of the radiation to complete.
+  LINE In some cases, the radiation serves as
+  LINE little more than a fancy trap.
+$END
+

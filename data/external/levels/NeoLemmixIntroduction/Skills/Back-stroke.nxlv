@@ -1,0 +1,433 @@
+TITLE Back-stroke
+THEME ohno_brick
+ID x9B40F6659B40F665
+LEMMINGS 40
+REQUIREMENT 40
+MAX_SPAWN_INTERVAL 18
+WIDTH 380
+HEIGHT 160
+START_X 190
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  SWIMMER 20
+  BASHER 5
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE exit
+  X 30
+  Y 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE exit
+  X 313
+  Y 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE window
+  X 158
+  Y 64
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE water
+  X 94
+  Y 136
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 30
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 94
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 158
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 222
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 286
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 206
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 238
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 206
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 238
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 206
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 238
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_01
+  X 94
+  Y 88
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_08
+  X 65
+  Y 104
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_08
+  X 85
+  Y 124
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_08
+  X 95
+  Y 134
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_01
+  X 126
+  Y 115
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_01
+  X 173
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_01
+  X 143
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_01
+  X 113
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_01
+  X 83
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_01
+  X 53
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_01
+  X 23
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_01
+  X -7
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 0
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 0
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 0
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE hook_01
+  X 0
+  Y 89
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_01
+  X 302
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_01
+  X 302
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_01
+  X 334
+  Y 15
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_01
+  X 334
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_03
+  X 281
+  Y 19
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_01
+  X 334
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_small_07
+  X 331
+  Y 29
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_03
+  X 305
+  Y 19
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_04
+  X 330
+  Y 31
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_04
+  X 338
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_04
+  X 346
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_04
+  X 346
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_04
+  X 354
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_diagonal_04
+  X 354
+  Y 46
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE girder_01
+  X 363
+  Y -1
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE girder_01
+  X 359
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE girder_01
+  X 359
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE girder_01
+  X 359
+  Y 127
+  ONE_WAY
+$END
+

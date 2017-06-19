@@ -7,39 +7,39 @@ interface
 uses
   {$ifdef logging}Dialogs,{$endif} Classes, SysUtils;
 
+{$ifdef logging}
 var
-  GameFile: String;
-  {$ifdef logging}DebugLog: TStringList;
+  DebugLog: TStringList;{$endif}
 
-  procedure Log(aString: String);
-  procedure DebugMsg(aString: String);{$endif}
+  procedure DebugMsg(const aString: String);
+  procedure Log(const aString: String);
 
 implementation
 
-{$ifdef logging}
-procedure Log(aString: String);
+procedure Log(const aString: String);
 begin
+  {$ifdef logging}
   DebugLog.Add(aString);
   DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
+  {$endif}
 end;
 
-procedure DebugMsg(aString: String);
+procedure DebugMsg(const aString: String);
 begin
+  {$ifdef logging}
   DebugLog.Add('DEBUG POPUP: ' + aString);
   ShowMessage(aString);
+  {$endif}
 end;
-{$endif}
 
-initialization
 {$ifdef logging}
+initialization
   DebugLog := TStringList.Create;
   if FileExists(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt') then
     DebugLog.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');
   DebugLog.Add('** Begin session at ' + FormatDateTime('yyyy/mm/dd hh:nn:ss', Now()));
-{$endif}
 
 finalization
-{$ifdef logging}
   DebugLog.Add('----------------------------------------');
   DebugLog.Add('');
   DebugLog.SaveToFile(ExtractFilePath(ParamStr(0)) + 'neolemmix_logging.txt');

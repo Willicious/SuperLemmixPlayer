@@ -155,32 +155,23 @@ var
   SaveName: String;
   TempBitmap: TBitmap32;
 begin
+  Dlg := TSaveDialog.Create(self);
+  Dlg.Filter := 'PNG Image (*.png)|*.png';
+  Dlg.FilterIndex := 1;
+  Dlg.DefaultExt := '.png';
+  if Dlg.Execute then
+    SaveName := dlg.FileName
+  else
+    SaveName := '';
+  Dlg.Free;
 
-  if GameParams.DumpMode then
-  begin
-    SaveName := ExtractFilePath(ParamStr(0)) + 'Dump\' + ChangeFileExt(ExtractFileName(GameFile), '') + '\';
-    if not ForceDirectories(SaveName) then Exit;
-    SaveName := SaveName + LeadZeroStr(GameParams.CurrentLevel.Group.ParentGroupIndex + 1, 2) + LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2) + '.png'
-  end else begin
-    Dlg := TSaveDialog.Create(self);
-    Dlg.Filter := 'PNG Image (*.png)|*.png';
-    Dlg.FilterIndex := 1;
-    Dlg.DefaultExt := '.png';
-    if Dlg.Execute then
-      SaveName := dlg.FileName
-    else
-      SaveName := '';
-    Dlg.Free;
-
-    if SaveName = '' then Exit;
-  end;
+  if SaveName = '' then Exit;
 
   TempBitmap := TBitmap32.Create;
   TempBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
   GameParams.Renderer.RenderWorld(TempBitmap, not GameParams.NoBackgrounds);
   TPngInterface.SavePngFile(SaveName, TempBitmap, true);
   TempBitmap.Free;
-
 end;
 
 constructor TGamePreviewScreen.Create(aOwner: TComponent);

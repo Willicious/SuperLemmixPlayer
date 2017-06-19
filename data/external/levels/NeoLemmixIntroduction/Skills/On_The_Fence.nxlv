@@ -1,0 +1,251 @@
+TITLE On The Fence
+THEME lpii_desert
+ID x7329166173291661
+LEMMINGS 10
+REQUIREMENT 10
+MAX_SPAWN_INTERVAL 28
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  FENCER 2
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE window
+  X 38
+  Y 107
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_desert
+  PIECE exit
+  X 211
+  Y 99
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X -15
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 17
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 49
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 81
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 113
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 137
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 161
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 185
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 209
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 233
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 257
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 289
+  Y 141
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE cactus_01
+  X 284
+  Y 104
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE palm_trunk_01
+  X 17
+  Y 91
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE palm_leaves
+  X -5
+  Y 82
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 90
+  Y 75
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_03
+  X 85
+  Y 56
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 138
+  Y 79
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 152
+  Y 79
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 166
+  Y 79
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_06
+  X 180
+  Y 79
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 178
+  Y 111
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 200
+  Y 119
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 208
+  Y 127
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 184
+  Y 127
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 219
+  Y 120
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_01
+  X 230
+  Y 128
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION lpii_desert
+  PIECE sand_02
+  X 134
+  Y 65
+$END
+
+$PRETEXT
+  LINE This level introduces the Fencer skill.
+  LINE The Fencer is similar to a Basher or
+  LINE Miner, but creates a tunnel at an
+  LINE upwards angle.
+  LINE Keep in mind that if a Fencer is unable
+  LINE to move upwards, he may stop even if he
+  LINE has terrain in front of him.
+$END
+

@@ -1,0 +1,10 @@
+output_name l2_egyptian
+
+$object
+  index 0
+  $merge
+    index 9
+    side top
+    offset_x 16
+  $end
+$end

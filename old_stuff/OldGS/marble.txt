@@ -1,0 +1,9 @@
+output_name orig_marble
+
+$object
+  index 0
+  $merge
+    index 6
+    side top
+  $end
+$end

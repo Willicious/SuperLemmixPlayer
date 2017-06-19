@@ -1,0 +1,700 @@
+TITLE Burning Desire
+THEME orig_fire
+ID x6FDDD8F46FDDD8F4
+LEMMINGS 10
+REQUIREMENT 8
+MAX_SPAWN_INTERVAL 43
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 1
+  GLIDER 1
+  PLATFORMER 1
+  BASHER 1
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE window
+  X 31
+  Y 43
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE owa_left
+  X 206
+  Y 76
+  WIDTH 32
+  HEIGHT 24
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE owa_left
+  X 206
+  Y 100
+  WIDTH 32
+  HEIGHT 24
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE owa_left
+  X 206
+  Y 124
+  WIDTH 32
+  HEIGHT 24
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE owa_left
+  X 206
+  Y 148
+  WIDTH 32
+  HEIGHT 24
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 90
+  Y 110
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 114
+  Y 110
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 138
+  Y 110
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 90
+  Y 102
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 114
+  Y 102
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 138
+  Y 102
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 90
+  Y 94
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 114
+  Y 94
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 138
+  Y 94
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 90
+  Y 86
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 114
+  Y 86
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 138
+  Y 86
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 90
+  Y 78
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 114
+  Y 78
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 138
+  Y 78
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 90
+  Y 70
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 114
+  Y 70
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 138
+  Y 70
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 90
+  Y 62
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 114
+  Y 62
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 138
+  Y 62
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 90
+  Y 54
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 114
+  Y 54
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 138
+  Y 54
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 162
+  Y 110
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 162
+  Y 102
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 162
+  Y 94
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 162
+  Y 86
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 162
+  Y 78
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 162
+  Y 70
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 162
+  Y 62
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE updraft
+  X 162
+  Y 54
+  WIDTH 32
+  HEIGHT 16
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE exit
+  X 276
+  Y 87
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE firepit
+  X 70
+  Y 145
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE firepit
+  X 100
+  Y 145
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE firepit
+  X 130
+  Y 145
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE firepit
+  X 160
+  Y 145
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE firepit
+  X 190
+  Y 145
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE firepit
+  X 220
+  Y 145
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_fire
+  PIECE firepit
+  X 250
+  Y 145
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 24
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 49
+  Y 124
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 49
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 24
+  Y 88
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 24
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE bricks_03
+  X 49
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X 17
+  Y -29
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -15
+  Y -13
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -31
+  Y 27
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -26
+  Y 67
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -26
+  Y 99
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -26
+  Y 123
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X -33
+  Y 39
+  FLIP_HORIZONTAL
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X 10
+  Y -29
+  FLIP_HORIZONTAL
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 74
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 122
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 170
+  Y 142
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 213
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 213
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 213
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar_end
+  X 207
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE platform
+  X 226
+  Y 142
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X 260
+  Y 134
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_06
+  X 285
+  Y 135
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 314
+  Y 114
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 314
+  Y 90
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 314
+  Y 66
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 314
+  Y 42
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 314
+  Y 18
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE pillar
+  X 314
+  Y -6
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 65
+  Y -14
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 129
+  Y -14
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 177
+  Y -14
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 225
+  Y -14
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_fire
+  PIECE rock_03
+  X 265
+  Y -14
+  NO_OVERWRITE
+$END
+
+$PRETEXT
+  LINE This level introduces the updraft. A
+  LINE lemming falling through an updraft
+  LINE will fall more slowly, which in turn
+  LINE allows it to survive falls of longer
+  LINE distances.
+  LINE A glider who passes through an updraft
+  LINE will not fall at all, but will instead
+  LINE slowly be pushed upwards. This can
+  LINE allow them to cross gaps that they
+  LINE otherwise could not.
+$END
+

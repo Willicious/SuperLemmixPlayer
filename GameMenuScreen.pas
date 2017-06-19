@@ -663,7 +663,7 @@ begin
   OpenDlg := TOpenDialog.Create(self);
   try
     OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := AppPath + 'Replay\' + ChangeFileExt(ExtractFileName(GameFile), '');
+    OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
     OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp, *.lrb)|*.nxrp;*.lrb';
     OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
     if not OpenDlg.Execute then

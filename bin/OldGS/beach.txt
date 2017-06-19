@@ -1,9 +1,0 @@
-OUTPUT_NAME l2_beach
-
-$object
-  index 1
-  $merge
-    index 2
-    side top
-  $end
-$end

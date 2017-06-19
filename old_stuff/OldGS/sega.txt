@@ -1,0 +1,10 @@
+output_name orig_sega
+
+$object
+  index 0
+  $merge
+    index 3
+    side top
+    keep_piece
+  $end
+$end

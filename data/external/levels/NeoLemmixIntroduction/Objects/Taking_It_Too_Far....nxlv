@@ -1,0 +1,399 @@
+TITLE Taking It Too Far...
+THEME orig_crystal
+ID xA3AE992BA3AE992B
+LEMMINGS 10
+REQUIREMENT 10
+MAX_SPAWN_INTERVAL 43
+WIDTH 368
+HEIGHT 160
+START_X 180
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 0
+  BLOCKER 2
+  BUILDER 2
+$END
+
+$OBJECT
+  COLLECTION orig_crystal
+  PIECE window
+  X 136
+  Y 75
+  NO_OVERWRITE
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 25
+  Y 55
+  SKILL BUILDER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 38
+  Y 55
+  SKILL BUILDER
+$END
+
+$OBJECT
+  COLLECTION orig_crystal
+  PIECE exit
+  X 310
+  Y 53
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_crystal
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_crystal
+  PIECE water
+  X 64
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_crystal
+  PIECE water
+  X 128
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_crystal
+  PIECE water
+  X 192
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_crystal
+  PIECE water
+  X 256
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_crystal
+  PIECE water
+  X 320
+  Y 144
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 288
+  Y 63
+  SKILL WALKER
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE pickup
+  X 301
+  Y 63
+  SKILL WALKER
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_04
+  X 128
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE block
+  X 192
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE block
+  X 96
+  Y 112
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_01
+  X 200
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_01
+  X 104
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE thread_01
+  X 127
+  Y 112
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE thread_01
+  X 161
+  Y 112
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE thread_02
+  X 161
+  Y 112
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE thread_02
+  X 127
+  Y 112
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE block
+  X 144
+  Y 88
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE block
+  X 144
+  Y 136
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_01
+  X 64
+  Y 96
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_02
+  X 48
+  Y 60
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_03
+  X 23
+  Y 52
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_03
+  X 15
+  Y 60
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_03
+  X 20
+  Y 55
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE stars_01
+  X 74
+  Y 86
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_02
+  X 16
+  Y 36
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_02
+  X 8
+  Y 28
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE line_04
+  X 36
+  Y 80
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE steel_04
+  X 32
+  Y 59
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_04
+  X -13
+  Y 68
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_01
+  X 8
+  Y 4
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_02
+  X -12
+  Y -11
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_02
+  X -36
+  Y -10
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE block
+  X 288
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE block
+  X 320
+  Y 76
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_01
+  X 288
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_01
+  X 336
+  Y 108
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE mesh_05
+  X 307
+  Y -35
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE mesh_05
+  X 247
+  Y -35
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE mesh_05
+  X 187
+  Y -35
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE mesh_05
+  X 127
+  Y -35
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE mesh_05
+  X 67
+  Y -35
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE mesh_05
+  X 7
+  Y -35
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_crystal
+  PIECE bar_02
+  X -28
+  Y -18
+  ERASE
+$END
+
+$PRETEXT
+  LINE This level introduces pickup skills.
+  LINE A pickup skill is, like the name
+  LINE suggests, an extra skill which can be
+  LINE added to your available skillset by
+  LINE having a lemming pick them up.
+  LINE A pickup skill does not have to be
+  LINE used on the same lemming that picks it
+  LINE up, nor does it have to be used as
+  LINE soon as it is picked up.
+  LINE Pickup skills cannot be collected by
+  LINE zombie lemmings.
+$END
+

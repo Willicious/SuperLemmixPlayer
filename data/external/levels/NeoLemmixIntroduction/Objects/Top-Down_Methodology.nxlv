@@ -1,0 +1,566 @@
+TITLE Top-Down Methodology
+THEME lpii_metal
+ID x40EEA4D240EEA4D2
+LEMMINGS 50
+REQUIREMENT 35
+MAX_SPAWN_INTERVAL 28
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 5
+  CLIMBER 5
+  BOMBER 5
+  BLOCKER 5
+  BUILDER 5
+  BASHER 5
+  MINER 5
+  DIGGER 5
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE window
+  X 42
+  Y 80
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE exit
+  X 230
+  Y 105
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE exit_flames
+  X 230
+  Y 105
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 96
+  Y 32
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 128
+  Y 32
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 160
+  Y 32
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 192
+  Y 32
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 192
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 160
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 128
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 96
+  Y 64
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 192
+  Y 96
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 160
+  Y 96
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 128
+  Y 96
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$OBJECT
+  COLLECTION lpii_metal
+  PIECE owa_down
+  X 96
+  Y 96
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 32
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 16
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 48
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 80
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 112
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 96
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 176
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 208
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 240
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_09
+  X 272
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_09
+  X 288
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 272
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 32
+  Y 144
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 96
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 128
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 160
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 192
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 128
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 160
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 192
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 96
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 128
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 160
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_01
+  X 192
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE steel_01
+  X 144
+  Y 128
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 0
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 16
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 32
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 16
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 272
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 288
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 304
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_04
+  X 288
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 32
+  Y 17
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 64
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 240
+  Y 17
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 240
+  Y 16
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_08
+  X 64
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_09
+  X 240
+  Y 0
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 192
+  Y 1
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 80
+  Y 1
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 128
+  Y 1
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 144
+  Y 1
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 64
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 240
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 256
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 272
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 16
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 0
+  Y 49
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 16
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_11
+  X 16
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X -32
+  Y 81
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_03
+  X 288
+  Y 48
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE block_10
+  X 288
+  Y 80
+$END
+
+$TERRAIN
+  COLLECTION lpii_metal
+  PIECE bar_05
+  X 304
+  Y 81
+$END
+
+$PRETEXT
+  LINE This level introduces one-way down
+  LINE arrows. These arrows can be destroyed
+  LINE by bombers, miners or diggers, no
+  LINE matter what direction they are facing.
+  LINE They cannot be destroyed by bashers
+  LINE or fencers, regardless of direction.
+  LINE Although one-way down arrows are rare
+  LINE compared to the traditional one-way
+  LINE left or one-way right arrows, they are
+  LINE nonetheless important to be familiar
+  LINE with.
+$END
+

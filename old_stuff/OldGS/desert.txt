@@ -1,0 +1,10 @@
+output_name lpii_desert
+
+$object
+  index 0
+  $merge
+    index 4
+    side top
+    offset_y 2
+  $end
+$end

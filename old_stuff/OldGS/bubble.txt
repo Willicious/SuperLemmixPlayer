@@ -1,0 +1,11 @@
+output_name ohno_bubble
+
+$object
+  index 0
+  $merge
+    index 6
+    side top
+    offset_x 16
+    keep_piece
+  $end
+$end

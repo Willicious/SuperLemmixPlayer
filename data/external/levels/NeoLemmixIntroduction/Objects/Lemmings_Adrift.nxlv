@@ -1,0 +1,207 @@
+TITLE Lemmings Adrift
+THEME ohno_snow
+ID x25FED9C825FED9C8
+LEMMINGS 30
+REQUIREMENT 21
+MAX_SPAWN_INTERVAL 43
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  WALKER 1
+  PLATFORMER 1
+  BASHER 1
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE exit
+  X 181
+  Y 85
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE window
+  X 62
+  Y 12
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE slowfreeze
+  X 105
+  Y 33
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE exit_flag
+  X 209
+  Y 90
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 256
+  Y 148
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 192
+  Y 148
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 128
+  Y 148
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 64
+  Y 148
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION ohno_snow
+  PIECE water
+  X 0
+  Y 148
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 67
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 35
+  Y 55
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 139
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 179
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 211
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_05
+  X 262
+  Y 53
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_17
+  X 267
+  Y 135
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_05
+  X 286
+  Y 37
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_05
+  X 270
+  Y 21
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_05
+  X 294
+  Y 5
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE icicle_02
+  X 57
+  Y 26
+  FLIP_VERTICAL
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_12
+  X 49
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_12
+  X 57
+  Y 110
+$END
+
+$TERRAIN
+  COLLECTION ohno_snow
+  PIECE snow_13
+  X 6
+  Y 122
+$END
+
+$PRETEXT
+  LINE This level introduces slowfreeze.
+  LINE Slowfreeze is very similar to
+  LINE radiation, except that instead of a
+  LINE bomber, it turns the lemming into
+  LINE a stoner.
+$END
+

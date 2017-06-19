@@ -1,0 +1,403 @@
+TITLE Multiple Lemming Disorder
+THEME ohno_brick
+ID x4832BD1C4832BD1C
+LEMMINGS 1
+REQUIREMENT 3
+MAX_SPAWN_INTERVAL 28
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  CLONER 4
+$END
+
+$OBJECT
+  COLLECTION ohno_brick
+  PIECE exit
+  X 46
+  Y 99
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 0
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 64
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 128
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 192
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE bricks_large_02
+  X 256
+  Y -12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 0
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 64
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 96
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 128
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 192
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 256
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 288
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_03
+  X 27
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_03
+  X 91
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_03
+  X 155
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_03
+  X 219
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_03
+  X 283
+  Y 12
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_02
+  X 283
+  Y 19
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_02
+  X 219
+  Y 19
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_02
+  X 155
+  Y 19
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_02
+  X 91
+  Y 19
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE pole_silver_02
+  X 27
+  Y 19
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE hook_02
+  X 248
+  Y 20
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 224
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE hook_02
+  X 184
+  Y 20
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 160
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 184
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 248
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 160
+  Y 79
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 192
+  Y 79
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 256
+  Y 95
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 224
+  Y 95
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 248
+  Y 63
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 200
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 168
+  Y 83
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 200
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 168
+  Y 115
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 160
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 192
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 224
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 128
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 96
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 64
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 32
+  Y 147
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE hook_02
+  X 56
+  Y 20
+  FLIP_VERTICAL
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 32
+  Y 31
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 56
+  Y 47
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 56
+  Y 79
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE chain_03
+  X 56
+  Y 87
+$END
+
+$TERRAIN
+  COLLECTION ohno_brick
+  PIECE platform_04
+  X 128
+  Y 79
+$END
+
+$LEMMING
+  X 221
+  Y 78
+  DIRECTION left
+$END
+
+$PRETEXT
+  LINE One lemming, need to save 3? How is
+  LINE that even possible?
+  LINE Well, this level has more than one
+  LINE lemming! The Cloner skill will clone
+  LINE a lemming.
+  LINE When a lemming is cloned, the clone
+  LINE will be identical. This includes that
+  LINE it will have any permanent skills the
+  LINE source lemming has, and perform the
+  LINE same action the source lemming is
+  LINE performing at the time.
+  LINE However, there is one difference - the
+  LINE clone will face the other direction.
+$END
+

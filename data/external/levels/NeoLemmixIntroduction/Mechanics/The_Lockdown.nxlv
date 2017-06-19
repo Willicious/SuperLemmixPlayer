@@ -1,0 +1,366 @@
+TITLE The Lockdown
+THEME orig_marble
+ID xC80B7992C80B7992
+LEMMINGS 100
+REQUIREMENT 100
+TIME_LIMIT 50
+MAX_SPAWN_INTERVAL 4
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+AUTOSTEEL on
+
+$SKILLSET
+  BASHER 3
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE exit
+  X 225
+  Y 96
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE exit
+  X 43
+  Y 96
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE window
+  X 136
+  Y 2
+  NO_OVERWRITE
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE water
+  X 0
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE water
+  X 64
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE water
+  X 128
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE water
+  X 192
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE water
+  X 256
+  Y 143
+  WIDTH 64
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE shredder
+  X 264
+  Y 46
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE shredder
+  X 24
+  Y 46
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE shredder
+  X 0
+  Y 101
+$END
+
+$OBJECT
+  COLLECTION orig_marble
+  PIECE shredder
+  X 288
+  Y 101
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 152
+  Y 62
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 136
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 88
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 184
+  Y 46
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 80
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 32
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 192
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 240
+  Y 78
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 32
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 272
+  Y 94
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 100
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 172
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 52
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 220
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 112
+  Y 94
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 192
+  Y 94
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 88
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 216
+  Y 4
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 216
+  Y -28
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 88
+  Y -28
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 152
+  Y 136
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 112
+  Y 136
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_02
+  X 192
+  Y 136
+  ERASE
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_03
+  X 172
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_03
+  X 132
+  Y 107
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_03
+  X 32
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_03
+  X 272
+  Y 65
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_03
+  X 161
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE pillar_03
+  X 143
+  Y 33
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 0
+  Y 120
+$END
+
+$TERRAIN
+  COLLECTION orig_marble
+  PIECE block_03
+  X 272
+  Y 120
+$END
+
+$PRETEXT
+  LINE In this level, it is important to use
+  LINE lemmings facing the correct direction.
+  LINE NeoLemmix provides an easy way to do
+  LINE this. You can click the two buttons
+  LINE with a lemming selection cursor and
+  LINE an arrow, to only select lemmings
+  LINE facing in that direction.
+  LINE Via the configuration menu, you can
+  LINE even specify keyboard hotkeys to give
+  LINE this behaviour. By default, the Left
+  LINE and Right keys will do this in the
+  LINE standard hotkey setup, or the S and F
+  LINE keys in the Lix-like hotkey setup.
+$END
+
+$POSTTEXT
+  LINE The last remaining button on the skill
+  LINE panel is the Load Replay button. Using
+  LINE this, you can load a saved replay file
+  LINE and watch it played back. You must be
+  LINE on the correct level for the replay;
+  LINE NeoLemmix will tell you if it thinks
+  LINE you're on the wrong one.
+  LINE Replay files are, by default, saved
+  LINE automatically when you complete a
+  LINE level. You can also configure a
+  LINE keyboard key to save a replay file
+  LINE at any time during gameplay.
+$END
+

@@ -1,0 +1,9 @@
+output_name orig_crystal
+
+$object
+  index 0
+  $merge
+    index 8
+    side top
+  $end
+$end
