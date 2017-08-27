@@ -266,7 +266,6 @@ procedure TLevel.LoadFromStream(aStream: TStream; aExt: String = '');
 var
   Parser: TParser;
   Main: TParserSection;
-  b: Byte;
 begin
   Clear;
 

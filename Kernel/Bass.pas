@@ -1189,17 +1189,17 @@ begin
   try
     while STags <> '' do
     begin
-      if (AnsiUpperCase(AnsiLeftStr(STags, 9)) = 'LOOPSTART') and (LStart = -1) then
+      if (AnsiUpperCase(AnsiLeftStr(String(STags), 9)) = 'LOOPSTART') and (LStart = -1) then
       begin
         Inc(STags, 10);
-        LStart := StrToint(STags);
+        LStart := StrToInt(String(STags));
       end;
-      if (AnsiUpperCase(AnsiLeftStr(STags, 10)) = 'LOOPLENGTH') and (LLength = -1) then
+      if (AnsiUpperCase(AnsiLeftStr(String(STags), 10)) = 'LOOPLENGTH') and (LLength = -1) then
       begin
         Inc(STags, 11);
-        LLength := StrToInt(STags);
+        LLength := StrToInt(String(STags));
       end;
-      Inc(STags, Length(STags) + 1);
+      Inc(STags, Length(String(STags)) + 1);
     end;
   except
     //nothing here. it's just to surpress the error message that comes up when

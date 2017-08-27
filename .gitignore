@@ -11,3 +11,4 @@ bin/
 *.identcache
 LemVersionCID.pas
 old_stuff/OldGS/temp/
+Kernel/gr32png/

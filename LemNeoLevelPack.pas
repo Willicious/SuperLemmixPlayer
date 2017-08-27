@@ -262,6 +262,18 @@ begin
   end;
 end;
 
+
+function GetFileAge(FilePath: String): Integer;
+var
+  FileDate: TDateTime;
+begin
+  if not FileAge(FilePath, FileDate) then
+    FileDate := StrToDate('01/01/1970'); // use default value
+
+  Result := DateTimeToFileDate(FileDate);
+end;
+
+
 { TPostviewText }
 
 constructor TPostviewText.Create;
@@ -605,7 +617,7 @@ var
           Break;
         end;
 
-      if (FileAge(aLevel.Path) > Sec.LineNumeric['modified_date']) and (aLevel.Status = lst_Completed) then
+      if (GetFileAge(aLevel.Path) > Sec.LineNumeric['modified_date']) and (aLevel.Status = lst_Completed) then
         aLevel.Status := lst_Completed_Outdated;
 
       aLevel.Records.LemmingsRescued := Sec.LineNumeric['lemming_record'];
@@ -693,7 +705,7 @@ var
       ActiveLevelSec := LevelSec.SectionList.Add(aLevel.RelativePath);
 
       ActiveLevelSec.AddLine('status', STATUS_TEXTS[aLevel.Status]);
-      ActiveLevelSec.AddLine('modified_date', FileAge(aLevel.Path));
+      ActiveLevelSec.AddLine('modified_date', GetFileAge(aLevel.Path));
       ActiveLevelSec.AddLine('lemming_record', aLevel.Records.LemmingsRescued);
 
       if aLevel.Status >= lst_Completed_Outdated then

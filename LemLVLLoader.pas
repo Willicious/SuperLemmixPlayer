@@ -711,8 +711,8 @@ begin
       SetSkillCount(spbCloner, Buf.ClonerCount);
       SetSkillCount(spbFencer, Buf.FencerCount);
 
-      Title            := Buf.LevelName;
-      Author           := Buf.LevelAuthor;
+      Title            := String(Buf.LevelName);
+      Author           := String(Buf.LevelAuthor);
       LevelID := Buf.LevelID;
 
       LRes := Buf.Resolution;
@@ -741,7 +741,7 @@ begin
         if ScreenYPosition < 0 then ScreenYPosition := 0;
       end;
 
-      GraphicSetName := trim(Buf.StyleName);
+      GraphicSetName := trim(String(Buf.StyleName));
 
       SetLength(GSNames, 1);
       GSNames[0] := GraphicSetName; // fallback in case lvl file has no graphic set list, as most won't
@@ -856,7 +856,7 @@ begin
                if ScreenPosition < 0 then ScreenPosition := 0;
                if ScreenYPosition < 0 then ScreenYPosition := 0;
              end;
-             Info.MusicFile := Trim(Buf2.MusicName);
+             Info.MusicFile := Trim(String(Buf2.MusicName));
            end;
         6: begin
              aStream.Read(w, 2);
@@ -864,7 +864,7 @@ begin
              for i := 0 to w-1 do
              begin
                aStream.Read(GSName, 16);
-               GSNames[i] := Lowercase(Trim(GSName));
+               GSNames[i] := Lowercase(Trim(String(GSName)));
              end;
            end;
         else Break;
@@ -933,7 +933,7 @@ begin
       SkillCount[spbMiner]       := System.Swap(Buf.MinerCount) mod 256;
       SkillCount[spbDigger]      := System.Swap(Buf.DiggerCount) mod 256;
       LevelOptions     := 0;
-      Title            := Buf.LevelName;
+      Title            := String(Buf.LevelName);
       Author           := '';
       GraphicSet := System.Swap(Buf.GraphicSet);
       case (GraphicSet shr 8) and $FF of
@@ -1142,8 +1142,8 @@ begin
       SetSkillCount(spbDigger, Buf.DiggerCount);
       SetSkillCount(spbCloner, Buf.ClonerCount);
 
-      Title            := Buf.LevelName;
-      Author           := Buf.LevelAuthor;
+      Title            := String(Buf.LevelName);
+      Author           := String(Buf.LevelAuthor);
       MusicFile := GetMusicName(Buf.MusicNumber);
 
       Width := Buf.WidthAdjust + 1584;
@@ -1157,12 +1157,12 @@ begin
       if ScreenYPosition > (Height - 80) then ScreenYPosition := (Height - 80);
       if ScreenYPosition < 80 then ScreenYPosition := 80;
 
-      if trim(Buf.StyleName) <> '' then
+      if trim(String(Buf.StyleName)) <> '' then
       begin
-        if LowerCase(LeftStr(Buf.StyleName, 5)) = 'vgagr' then
-          GraphicSetName := GetStyleName(StrToInt(Trim(MidStr(Buf.StyleName, 6, 2))))
+        if LowerCase(LeftStr(String(Buf.StyleName), 5)) = 'vgagr' then
+          GraphicSetName := GetStyleName(StrToInt(Trim(MidStr(String(Buf.StyleName), 6, 2))))
         else
-          GraphicSetName := trim(Buf.StyleName);
+          GraphicSetName := trim(String(Buf.StyleName));
       end else begin
         GraphicSetName := GetStyleName(Buf.GraphicSet);
       end;
@@ -1309,6 +1309,26 @@ var
       TempSL := TStringList.Create;
       TempSL.Assign(aSL);
       aSL.Clear;
+
+      try
+        for i := 0 to Lines - 1 do
+          aSL.Add(Trim(TempSL.Names[i]) + '=' + Trim(TempSL.ValueFromIndex[i]))
+      finally
+        TempSL.Free;
+      end;
+    end
+    else
+    begin
+      for i := 0 to Lines - 1 do
+        aSL[i] := Trim(aSL[i]);
+    end;
+
+    (*
+    if Full then
+    begin
+      TempSL := TStringList.Create;
+      TempSL.Assign(aSL);
+      aSL.Clear;
     end;
 
     try
@@ -1320,7 +1340,7 @@ var
     finally
       if Full then
         TempSL.Free;
-    end;
+    end;  *)
   end;
 
   function Value(aKeyword: String; aMin: Integer = 0; aMax: Integer = -1): Integer;
@@ -1629,7 +1649,7 @@ var
   begin
     S := '';
     for i := 1 to Length(SL[aLine]) do
-      if SL[aLine][i] in ['0'..'9'] then
+      if CharInSet(SL[aLine][i], ['0'..'9']) then
         S := S + SL[aLine][i]
       else
         Break;

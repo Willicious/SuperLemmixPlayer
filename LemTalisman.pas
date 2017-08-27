@@ -136,7 +136,6 @@ var
   HasSkillZeroReq: Boolean;
   HasSkillNonZeroReq: Boolean;
   HasSkillReq: Boolean;
-  DoneFirstSkillLimit: Boolean;
 const
   CENTISECONDS: array[0..16] of String = ('00', '06', '12', '18',
                                           '24', '29', '35', '41',

@@ -941,8 +941,6 @@ begin
 end;
 
 procedure TLemmingGame.PrepareParams;
-var
-  i: Integer;
 
   procedure LoadMask(aDst: TBitmap32; aFilename: String; aCombine: TPixelCombineEvent);
   begin

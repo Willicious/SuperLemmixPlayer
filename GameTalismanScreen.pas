@@ -144,6 +144,7 @@ begin
         tcBronze: TalChar := #26;
         tcSilver: TalChar := #28;
         tcGold: TalChar := #30;
+      else TalChar := #26;
       end;
 
       if Level.TalismanStatus[T.ID] then Inc(TalChar);

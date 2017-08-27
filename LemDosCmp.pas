@@ -121,27 +121,24 @@ begin
 
       CopyCount := 0;
       ReadCount := 0;
+      SrcByte := DstByte;
 
       case Operation of
         0: ReadCount := GetValue(3) + 1;
         1: begin
              CopyCount := 2;
-             SrcByte := DstByte;
              Inc(SrcByte, GetValue(8) + 1);
            end;
         4: begin
              CopyCount := 3;
-             SrcByte := DstByte;
              Inc(SrcByte, GetValue(9) + 1);
            end;
         5: begin
              CopyCount := 4;
-             SrcByte := DstByte;
              Inc(SrcByte, GetValue(10) + 1);
            end;
         6: begin
              CopyCount := GetValue(8) + 1;
-             SrcByte := DstByte;
              Inc(SrcByte, GetValue(12) + 1);
            end;
         7: ReadCount := GetValue(8) + 9;
