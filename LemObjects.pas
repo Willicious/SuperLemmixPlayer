@@ -348,7 +348,7 @@ end;
 function TInteractiveObjectInfo.GetPreassignedSkills: Integer;
 begin
   // Only call this function for hatches and preplaces lemmings
-  Assert(TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
+  Assert(MetaObj.TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
   Result := Obj.TarLev; // Yes, "TargetLevel" stores this info!
 end;
 
@@ -385,7 +385,7 @@ end;
 
 function TInteractiveObjectInfo.GetCanDrawToBackground: Boolean;
 begin
-  Assert(TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
+  Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
   Result := (Frames.Count = 1) and (Obj.TarLev = 0);
 end;
 
