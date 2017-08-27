@@ -3079,7 +3079,10 @@ begin
       Dec(L.LemY, 2);
     end
 
-    else if LemDy <= -1 then
+    // see http://www.lemmingsforums.net/index.php?topic=3380.0
+    // And the swimmer should not yet stop if the water and terrain overlaps
+    else if (LemDy <= -1)
+         or ((LemDy = 0) and not HasTriggerAt(L.LemX, L.LemY, trWater)) then
     begin
       Transition(L, baWalking);
       Inc(L.LemY, LemDy);
