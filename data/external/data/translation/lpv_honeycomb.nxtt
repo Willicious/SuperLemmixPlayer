@@ -1,7 +1,8 @@
+THEME namida_honeycomb
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE combs_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -11,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE combs_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -21,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE combs_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -31,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE combs_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -41,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -51,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -61,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honey_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -71,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honey_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -81,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honey_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -91,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE combs_steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -101,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE combs_steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -111,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honey_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -121,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honey_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -131,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honey_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -141,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honey_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -151,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honey_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -161,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE drips_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -171,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE drips_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -181,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE frame_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -191,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE frame_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -201,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE frame_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -211,7 +212,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE exit_base
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -221,7 +222,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -231,7 +232,7 @@ $END
 
 $OBJECT
   INDEX 2
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE exit_top_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -241,7 +242,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -252,7 +253,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE bee_decoration
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -280,7 +281,7 @@ $END
 
 $OBJECT
   INDEX 8
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -292,7 +293,7 @@ $END
 
 $OBJECT
   INDEX 9
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -304,7 +305,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -316,7 +317,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE exit_top_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -326,7 +327,7 @@ $END
 
 $OBJECT
   INDEX 12
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE bee_trap
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -336,13 +337,13 @@ $END
 
 $BACKGROUND
   INDEX 0
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE honeydrips
 $END
 
 $OBJECT
   INDEX 14
-  COLLECTION lpv_honeycomb
+  COLLECTION namida_honeycomb
   PIECE zombee
   LEFT_OFFSET 0
   RIGHT_OFFSET 0

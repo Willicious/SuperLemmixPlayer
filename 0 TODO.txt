@@ -1,0 +1,9 @@
+- Icon for the Graphics tool.
+- Remove animated decoration objects in NL player in pack converter
+- Remove Fake and Invisible objects in NL player
+- Remove Slowfreeze objects in NL player and pack converter
+- Use better icons in the levle select menu 
+- Look through "What features do you use" thread and remove unused stuff.
+
+- Test graphic set converter
+- Test level pack converter

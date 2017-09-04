@@ -1,7 +1,8 @@
+THEME namida_clockwork
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE wood_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -11,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE wood_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -21,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_gold_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -31,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_gold_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -41,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_gold_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -51,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_gold_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -61,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_gold_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -71,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -81,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -91,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -101,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -111,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -121,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE cog_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -131,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE cog_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -141,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE cog_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -151,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -161,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -171,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE steel_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -181,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE steel_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -191,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE mesh
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -201,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -211,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -221,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -231,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -241,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_10
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -251,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_11
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -261,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_12
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -271,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_13
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -281,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE pipe_lead_14
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -291,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE wood_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -301,7 +302,7 @@ $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE wood_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -311,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE girder_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -321,7 +322,7 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE girder_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -331,7 +332,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -341,7 +342,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -351,7 +352,7 @@ $END
 
 $OBJECT
   INDEX 2
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE exit_flame
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -361,7 +362,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -373,7 +374,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -385,7 +386,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -415,7 +416,7 @@ $END
 
 $OBJECT
   INDEX 8
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -426,7 +427,7 @@ $END
 
 $OBJECT
   INDEX 9
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE steam
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -436,7 +437,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE updraft
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -448,7 +449,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE updraft
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -460,7 +461,7 @@ $END
 
 $OBJECT
   INDEX 12
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE splitter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -470,7 +471,7 @@ $END
 
 $OBJECT
   INDEX 13
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE exit_locked
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -480,7 +481,7 @@ $END
 
 $OBJECT
   INDEX 14
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE button
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -490,7 +491,7 @@ $END
 
 $OBJECT
   INDEX 15
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE trap
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -500,7 +501,7 @@ $END
 
 $BACKGROUND
   INDEX 0
-  COLLECTION lpiv_clockwork
+  COLLECTION namida_clockwork
   PIECE cogs
 $END
 

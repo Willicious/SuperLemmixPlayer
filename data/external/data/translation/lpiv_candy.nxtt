@@ -1,7 +1,8 @@
+THEME namida_candy
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_milk_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -11,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_milk_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -21,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_milk_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -31,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_white_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -41,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_white_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -51,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_white_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -61,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_dark_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -71,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_dark_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -81,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE chocolate_dark_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -91,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candycane_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -101,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candycane_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -111,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candycane_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -121,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candycane_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -131,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candycane_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -141,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candycane_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -151,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candy_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -161,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candy_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -171,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candy_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -181,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE licorice_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -191,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE licorice_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -201,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE licorice_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -211,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE licorice_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -221,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE licorice_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -231,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE licorice_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -241,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_stem_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -251,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_stem_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -261,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -271,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -281,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -291,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -301,7 +302,7 @@ $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -311,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -321,7 +322,7 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -331,7 +332,7 @@ $END
 
 $TERRAIN
   INDEX 33
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -341,7 +342,7 @@ $END
 
 $TERRAIN
   INDEX 34
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -351,7 +352,7 @@ $END
 
 $TERRAIN
   INDEX 35
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_10
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -361,7 +362,7 @@ $END
 
 $TERRAIN
   INDEX 36
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_11
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -371,7 +372,7 @@ $END
 
 $TERRAIN
   INDEX 37
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_12
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -381,7 +382,7 @@ $END
 
 $TERRAIN
   INDEX 38
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_13
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -391,7 +392,7 @@ $END
 
 $TERRAIN
   INDEX 39
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE licorice_steel
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -401,7 +402,7 @@ $END
 
 $TERRAIN
   INDEX 40
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -411,7 +412,7 @@ $END
 
 $TERRAIN
   INDEX 41
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE lollipop_steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -421,7 +422,7 @@ $END
 
 $TERRAIN
   INDEX 42
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE rod_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -431,7 +432,7 @@ $END
 
 $TERRAIN
   INDEX 43
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE rod_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -441,7 +442,7 @@ $END
 
 $TERRAIN
   INDEX 44
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE rod_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -451,7 +452,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -461,7 +462,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -471,7 +472,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -483,7 +484,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -495,7 +496,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -507,7 +508,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -536,7 +537,7 @@ $END
 
 $OBJECT
   INDEX 9
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE trap
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -546,7 +547,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE splitter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -556,7 +557,7 @@ $END
 
 $BACKGROUND
   INDEX 0
-  COLLECTION lpiv_candy
+  COLLECTION namida_candy
   PIECE candies
 $END
 

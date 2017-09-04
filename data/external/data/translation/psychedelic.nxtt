@@ -1,8 +1,8 @@
-THEME lpii_psychedelic
+THEME namida_psychedelic
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE block_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -12,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE block_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -22,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE bar_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -32,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE bar_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -42,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE bar_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -52,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE bar_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -62,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -72,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -82,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE bar_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -92,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE bar_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -102,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE colorblocks_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -112,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE colorblocks_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -122,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE colorblocks_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -132,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE colorblocks_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -142,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE stairs_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -152,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE stairs_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -162,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE stairs_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -172,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE stairs_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -182,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE stairs_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -192,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE stairs_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -202,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -212,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -222,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -232,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -242,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -252,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -262,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -272,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -282,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -292,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_10
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -302,7 +302,7 @@ $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_11
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -312,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE color_12
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -322,27 +322,27 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE wires_01
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -8
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 33
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE wires_02
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -8
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 34
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE wires_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -352,7 +352,7 @@ $END
 
 $TERRAIN
   INDEX 35
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE wires_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -362,7 +362,7 @@ $END
 
 $TERRAIN
   INDEX 36
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE bar_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -372,7 +372,7 @@ $END
 
 $TERRAIN
   INDEX 37
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE bar_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -382,7 +382,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -392,7 +392,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -402,7 +402,7 @@ $END
 
 $OBJECT
   INDEX 2
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -414,7 +414,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -426,7 +426,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -437,7 +437,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE owf_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -447,7 +447,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE owf_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -457,7 +457,7 @@ $END
 
 $OBJECT
   INDEX 7
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE trap
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -485,7 +485,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -497,7 +497,7 @@ $END
 
 $OBJECT
   INDEX 12
-  COLLECTION lpiii_circuit
+  COLLECTION namidai_circuit
   PIECE teleporter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -507,7 +507,7 @@ $END
 
 $OBJECT
   INDEX 13
-  COLLECTION lpiii_circuit
+  COLLECTION namidai_circuit
   PIECE receiver
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -517,7 +517,7 @@ $END
 
 $OBJECT
   INDEX 14
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE radiation
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -527,7 +527,7 @@ $END
 
 $OBJECT
   INDEX 15
-  COLLECTION lpii_psychedelic
+  COLLECTION namida_psychedelic
   PIECE splitter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0

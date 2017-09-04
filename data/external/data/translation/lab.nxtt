@@ -1,8 +1,8 @@
-THEME lpiii_lab
+THEME namida_lab
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -12,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -22,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -32,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -42,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -52,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -62,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -72,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -82,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE bricks_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -92,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -102,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -112,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -122,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -132,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -142,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -152,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -162,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -172,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -182,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_10
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -192,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_11
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -202,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_12
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -212,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_13
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -222,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE pipe_14
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -232,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -242,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -252,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE steel_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -262,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE steel_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -272,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE goop_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -282,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE goop_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -292,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE goop_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -302,7 +302,7 @@ $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE goop_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -312,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE sign_radioactive
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -322,7 +322,7 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE sign_biological
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -332,7 +332,7 @@ $END
 
 $TERRAIN
   INDEX 33
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE sign_death
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -342,7 +342,7 @@ $END
 
 $TERRAIN
   INDEX 34
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE shelf_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -352,7 +352,7 @@ $END
 
 $TERRAIN
   INDEX 35
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE shelf_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -362,7 +362,7 @@ $END
 
 $TERRAIN
   INDEX 36
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE barrel_steel
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -372,7 +372,7 @@ $END
 
 $TERRAIN
   INDEX 37
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE barrel_normal
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -382,7 +382,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -392,7 +392,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -402,7 +402,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE acid
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -412,7 +412,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -424,7 +424,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -436,7 +436,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -448,7 +448,7 @@ $END
 
 $OBJECT
   INDEX 7
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE radiation
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -458,7 +458,7 @@ $END
 
 $OBJECT
   INDEX 8
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE owf_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -469,7 +469,7 @@ $END
 
 $OBJECT
   INDEX 9
-  COLLECTION lpiii_lab
+  COLLECTION namida_lab
   PIECE owf_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0

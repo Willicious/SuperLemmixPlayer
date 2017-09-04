@@ -186,7 +186,7 @@ begin
   SrcFile := ParamStr(1);
   if Pos(':', SrcFile) = 0 then
     SrcFile := ExtractFilePath(ParamStr(0)) + SrcFile;
-  GameFile := ExtractFilePath(ParamStr(0)) + 'data\';
+  // GameFile := ExtractFilePath(ParamStr(0)) + 'data\';
 
   DstBasePath := ExtractFilePath(ParamStr(0)) + 'levels\' + ExtractFileName(ChangeFileExt(SrcFile, '')) + '\';
   ForceDirectories(DstBasePath); // others are created as needed

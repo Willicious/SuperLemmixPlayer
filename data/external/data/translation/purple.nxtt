@@ -1,8 +1,8 @@
-THEME lpii_purple
+THEME namida_purple
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE stuff_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -12,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE stuff_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -22,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE stuff_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -32,27 +32,27 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE stuff_04
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -4
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE stuff_05
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
+  RIGHT_OFFSET -5
+  TOP_OFFSET 2
+  BOTTOM_OFFSET -2
 $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE stuff_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -62,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE stuff_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -72,17 +72,17 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE stuff_08
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -5
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -92,67 +92,67 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE steel_02
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -10
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE steel_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
   TOP_OFFSET 0
-  BOTTOM_OFFSET 0
+  BOTTOM_OFFSET -10
 $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE steel_04
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -10
   TOP_OFFSET 0
-  BOTTOM_OFFSET 0
+  BOTTOM_OFFSET -10
 $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE rock_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
   TOP_OFFSET 0
-  BOTTOM_OFFSET 0
+  BOTTOM_OFFSET -5
 $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE rock_02
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -4
   TOP_OFFSET 0
-  BOTTOM_OFFSET 0
+  BOTTOM_OFFSET -2
 $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE rock_03
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
+  LEFT_OFFSET 1
+  RIGHT_OFFSET -3
+  TOP_OFFSET 1
+  BOTTOM_OFFSET -4
 $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE tentacle_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -162,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE tentacle_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -172,17 +172,17 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE tentacle_03
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  LEFT_OFFSET 2
+  RIGHT_OFFSET -6
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE tentacle_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -192,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -202,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -212,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -222,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -232,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -242,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -252,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -262,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -272,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -282,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE thing_10
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -292,7 +292,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -302,7 +302,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -312,7 +312,7 @@ $END
 
 $OBJECT
   INDEX 2
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -324,7 +324,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -336,7 +336,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -347,7 +347,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE trap
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -375,7 +375,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -387,7 +387,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE teleporter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -397,7 +397,7 @@ $END
 
 $OBJECT
   INDEX 12
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE receiver
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -407,7 +407,7 @@ $END
 
 $OBJECT
   INDEX 13
-  COLLECTION lpii_purple
+  COLLECTION namida_purple
   PIECE slowfreeze
   LEFT_OFFSET 0
   RIGHT_OFFSET 0

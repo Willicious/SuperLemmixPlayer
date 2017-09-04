@@ -1,8 +1,8 @@
-THEME lpiii_martian
+THEME namida_martian
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE rock_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -12,37 +12,37 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE rock_02
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE rock_03
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -6
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE rock_04
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -5
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -52,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -62,67 +62,67 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE steel_03
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -2
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE steel_04
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -2
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_01
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -6
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_02
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -6
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_03
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -6
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_04
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -6
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -132,67 +132,67 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_06
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_07
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_08
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_09
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_10
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE supports_11
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE metal_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -202,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE metal_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -212,27 +212,27 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE metal_03
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -5
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE metal_04
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -5
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE metal_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -242,47 +242,47 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_01
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_02
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_03
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -7
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_04
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -6
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -292,19 +292,19 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_06
   LEFT_OFFSET 0
-  RIGHT_OFFSET 0
+  RIGHT_OFFSET -3
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
 $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_07
-  LEFT_OFFSET 0
+  LEFT_OFFSET 6
   RIGHT_OFFSET 0
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
@@ -312,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -322,9 +322,9 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE spike_09
-  LEFT_OFFSET 0
+  LEFT_OFFSET 3
   RIGHT_OFFSET 0
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
@@ -332,7 +332,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -342,7 +342,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -352,7 +352,7 @@ $END
 
 $OBJECT
   INDEX 2
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -364,7 +364,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -376,7 +376,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -387,7 +387,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE teleporter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -397,7 +397,7 @@ $END
 
 $OBJECT
   INDEX 7
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE receiver
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -425,7 +425,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -437,7 +437,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpiii_martian
+  COLLECTION namida_martian
   PIECE trap
   LEFT_OFFSET 0
   RIGHT_OFFSET 0

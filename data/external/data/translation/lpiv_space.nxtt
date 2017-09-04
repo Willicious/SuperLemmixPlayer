@@ -1,7 +1,8 @@
+THEME namida_space
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -11,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -21,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -31,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -41,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_joiner_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -51,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_joiner_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -61,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -71,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -81,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE steel_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -91,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE steel_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -101,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE platform_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -111,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE platform_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -121,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE platform_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -131,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE platform_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -141,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE girder_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -151,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE girder_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -161,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE girder_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -171,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE girder_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -181,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -191,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -201,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -211,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -221,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -231,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_10
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -241,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_11
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -251,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_12
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -261,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_teleporter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -271,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_receiver
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -281,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE thruster_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -291,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE thruster_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -301,7 +302,7 @@ $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_teleport_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -311,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_teleport_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -321,7 +322,7 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_teleport_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -331,7 +332,7 @@ $END
 
 $TERRAIN
   INDEX 33
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_teleport_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -341,7 +342,7 @@ $END
 
 $TERRAIN
   INDEX 34
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE block_teleport_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -351,7 +352,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -361,7 +362,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -371,7 +372,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -383,7 +384,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -395,7 +396,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -407,7 +408,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE teleporter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -417,7 +418,7 @@ $END
 
 $OBJECT
   INDEX 7
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE receiver
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -427,7 +428,7 @@ $END
 
 $OBJECT
   INDEX 8
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE exhaust
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -437,7 +438,7 @@ $END
 
 $OBJECT
   INDEX 9
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE exhaust_r
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -447,7 +448,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE star
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -457,7 +458,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE earth
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -485,7 +486,7 @@ $END
 
 $OBJECT
   INDEX 14
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE owf_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -496,7 +497,7 @@ $END
 
 $OBJECT
   INDEX 15
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE owf_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -507,7 +508,7 @@ $END
 
 $OBJECT
   INDEX 16
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE radiation
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -517,7 +518,7 @@ $END
 
 $BACKGROUND
   INDEX 0
-  COLLECTION lpiv_space
+  COLLECTION namida_space
   PIECE universe
 $END
 

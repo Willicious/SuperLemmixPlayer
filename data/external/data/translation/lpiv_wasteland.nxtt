@@ -1,7 +1,8 @@
+THEME namida_wasteland
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE clump_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -11,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE clump_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -21,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE clump_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -31,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE goop_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -41,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE goop_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -51,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE goop_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -61,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE goop_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -71,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE sign_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -81,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE sign_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -91,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE sign_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -101,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE rock
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -111,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -121,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -131,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE steel_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -141,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE steel_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -151,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE steel_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -161,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE steel_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -171,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE clump_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -181,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE mesh_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -191,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE mesh_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -201,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE mesh_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -211,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE mesh_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -221,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE bar_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -231,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE bar_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -241,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE bar_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -251,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE bar_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -261,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE bar_knob
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -271,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE missile_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -281,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE missile_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -291,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE missile_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -301,7 +302,7 @@ $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE tree_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -311,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE tree_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -321,7 +322,7 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE tree_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -331,7 +332,7 @@ $END
 
 $TERRAIN
   INDEX 33
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE tree_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -341,7 +342,7 @@ $END
 
 $TERRAIN
   INDEX 34
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE tree_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -351,7 +352,7 @@ $END
 
 $TERRAIN
   INDEX 35
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE tree_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -361,7 +362,7 @@ $END
 
 $TERRAIN
   INDEX 36
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE tree_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -371,7 +372,7 @@ $END
 
 $TERRAIN
   INDEX 37
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE tree_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -381,7 +382,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -391,7 +392,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -401,7 +402,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE acid
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -411,7 +412,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -423,7 +424,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -435,7 +436,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -447,7 +448,7 @@ $END
 
 $OBJECT
   INDEX 7
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE mine
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -475,7 +476,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE radiation
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -485,7 +486,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE splat_wire
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -495,7 +496,7 @@ $END
 
 $OBJECT
   INDEX 12
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE antisplat_wire
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -505,13 +506,13 @@ $END
 
 $BACKGROUND
   INDEX 0
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE red_sky
 $END
 
 $BACKGROUND
   INDEX 1
-  COLLECTION lpiv_wasteland
+  COLLECTION namida_wasteland
   PIECE mushroom_cloud
 $END
 

@@ -1,8 +1,8 @@
-THEME orig_special
+THEME special
 
 $TERRAIN
   INDEX 0
-  COLLECTION orig_special
+  COLLECTION special
   PIECE beasti
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -12,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION orig_special
+  COLLECTION special
   PIECE menace
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -22,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION orig_special
+  COLLECTION special
   PIECE awesome
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -32,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION orig_special
+  COLLECTION special
   PIECE beastii
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -42,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION orig_special
+  COLLECTION special
   PIECE beasti_md
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -52,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION orig_special
+  COLLECTION special
   PIECE menace_md
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -62,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION orig_special
+  COLLECTION special
   PIECE awesome_md
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -72,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION orig_special
+  COLLECTION special
   PIECE beastii_md
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -82,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION orig_special
+  COLLECTION special
   PIECE hebereke
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -92,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION orig_special
+  COLLECTION special
   PIECE covox_terrain
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -102,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION orig_special
+  COLLECTION special
   PIECE covox_steel
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -112,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION orig_special
+  COLLECTION special
   PIECE prima
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -122,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION orig_special
+  COLLECTION special
   PIECE apple
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -132,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION orig_special
+  COLLECTION special
   PIECE sixes_not
   LEFT_OFFSET 0
   RIGHT_OFFSET 0

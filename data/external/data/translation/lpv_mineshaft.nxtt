@@ -1,7 +1,8 @@
+THEME namida_mineshaft
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rails_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -11,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rails_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -21,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rails_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -31,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rails_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -41,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rails_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -51,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rails_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -61,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -71,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -81,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -91,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -101,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -111,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -121,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -131,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE crate_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -141,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE crate_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -151,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -161,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -171,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rocks_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -181,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rocks_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -191,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rocks_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -201,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rocks_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -211,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE gold
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -221,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -231,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE wood_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -241,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rope
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -251,7 +252,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -261,7 +262,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -271,7 +272,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -282,7 +283,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -294,7 +295,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -306,7 +307,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -336,7 +337,7 @@ $END
 
 $BACKGROUND
   INDEX 0
-  COLLECTION lpv_mineshaft
+  COLLECTION namida_mineshaft
   PIECE rocky
 $END
 

@@ -1,7 +1,8 @@
+THEME namida_machine
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE large_bar_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -11,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE large_bar_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -21,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE large_bar_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -31,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE large_block
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -41,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE large_bar_rusted_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -51,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE large_bar_rusted_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -61,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE large_block_rusted
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -71,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE medium_bar_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -81,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE medium_bar_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -91,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE medium_bar_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -101,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE medium_block
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -111,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE medium_bar_rusted_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -121,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE medium_bar_rusted_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -131,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE medium_block_rusted
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -141,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -151,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -161,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -171,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -181,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_rusted_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -191,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_rusted_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -201,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_rusted_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -211,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_rusted_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -221,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_join
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -231,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE lemco
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -241,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -251,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE small_bar_rusted_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -261,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE grid_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -271,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE grid_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -281,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE grid_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -291,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE grid_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -301,7 +302,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -311,7 +312,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -321,7 +322,7 @@ $END
 
 $OBJECT
   INDEX 2
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -333,7 +334,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -345,7 +346,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -375,7 +376,7 @@ $END
 
 $OBJECT
   INDEX 7
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE trap
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -385,7 +386,7 @@ $END
 
 $OBJECT
   INDEX 8
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE fire_horizontal
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -395,7 +396,7 @@ $END
 
 $OBJECT
   INDEX 9
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE fire_vertical
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -405,7 +406,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE teleporter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -415,7 +416,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE receiver
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -425,7 +426,7 @@ $END
 
 $OBJECT
   INDEX 12
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE fire_horizontal_mid
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -436,7 +437,7 @@ $END
 
 $OBJECT
   INDEX 13
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE fire_vertical_mid
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -447,7 +448,7 @@ $END
 
 $OBJECT
   INDEX 14
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE updraft_top_edge
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -457,7 +458,7 @@ $END
 
 $OBJECT
   INDEX 15
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE updraft_top_mid
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -468,7 +469,7 @@ $END
 
 $OBJECT
   INDEX 16
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE updraft_mid_edge
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -479,7 +480,7 @@ $END
 
 $OBJECT
   INDEX 17
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE updraft_mid_mid
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -491,7 +492,7 @@ $END
 
 $OBJECT
   INDEX 18
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE updraft_bottom_edge
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -501,7 +502,7 @@ $END
 
 $OBJECT
   INDEX 19
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE updraft_bottom_mid
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -512,7 +513,7 @@ $END
 
 $OBJECT
   INDEX 20
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE locked_exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -522,7 +523,7 @@ $END
 
 $OBJECT
   INDEX 21
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE button
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -532,7 +533,7 @@ $END
 
 $OBJECT
   INDEX 22
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE flamethrower
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -542,7 +543,7 @@ $END
 
 $BACKGROUND
   INDEX 0
-  COLLECTION lpv_machine
+  COLLECTION namida_machine
   PIECE lemco
 $END
 

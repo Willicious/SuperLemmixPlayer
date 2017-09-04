@@ -1,7 +1,8 @@
+THEME namida_abstract
 
 $TERRAIN
   INDEX 0
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_red_big
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -11,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_yellow_big
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -21,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_green_big
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -31,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_blue_big
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -41,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_purple_big
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -51,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE triangle_red
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -61,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE triangle_yellow
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -71,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE triangle_green
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -81,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE triangle_blue
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -91,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE triangle_purple
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -101,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE semicircle_red
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -111,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE semicircle_yellow
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -121,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE semicircle_green
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -131,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE semicircle_blue
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -141,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE semicircle_purple
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -151,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_red
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -161,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_yellow
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -171,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_green
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -181,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_blue
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -191,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_purple
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -201,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_red_arrows
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -211,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_yellow_arrows
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -221,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_green_arrows
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -231,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_blue_arrows
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -241,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_purple_arrows
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -251,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_red_small
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -261,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_yellow_small
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -271,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_green_small
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -281,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_blue_small
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -291,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE block_purple_small
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -301,7 +302,7 @@ $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -311,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -321,7 +322,7 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_red_corner
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -331,7 +332,7 @@ $END
 
 $TERRAIN
   INDEX 33
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_yellow_corner
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -341,7 +342,7 @@ $END
 
 $TERRAIN
   INDEX 34
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_green_corner
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -351,7 +352,7 @@ $END
 
 $TERRAIN
   INDEX 35
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_blue_corner
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -361,7 +362,7 @@ $END
 
 $TERRAIN
   INDEX 36
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_purple_corner
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -371,7 +372,7 @@ $END
 
 $TERRAIN
   INDEX 37
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_red_3way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -381,7 +382,7 @@ $END
 
 $TERRAIN
   INDEX 38
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_yellow_3way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -391,7 +392,7 @@ $END
 
 $TERRAIN
   INDEX 39
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_green_3way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -401,7 +402,7 @@ $END
 
 $TERRAIN
   INDEX 40
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_blue_3way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -411,7 +412,7 @@ $END
 
 $TERRAIN
   INDEX 41
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_purple_3way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -421,7 +422,7 @@ $END
 
 $TERRAIN
   INDEX 42
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_red_4way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -431,7 +432,7 @@ $END
 
 $TERRAIN
   INDEX 43
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_yellow_4way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -441,7 +442,7 @@ $END
 
 $TERRAIN
   INDEX 44
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_green_4way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -451,7 +452,7 @@ $END
 
 $TERRAIN
   INDEX 45
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_blue_4way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -461,7 +462,7 @@ $END
 
 $TERRAIN
   INDEX 46
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_purple_4way
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -471,7 +472,7 @@ $END
 
 $TERRAIN
   INDEX 47
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_red_end
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -481,7 +482,7 @@ $END
 
 $TERRAIN
   INDEX 48
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_yellow_end
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -491,7 +492,7 @@ $END
 
 $TERRAIN
   INDEX 49
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_green_end
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -501,7 +502,7 @@ $END
 
 $TERRAIN
   INDEX 50
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_blue_end
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -511,7 +512,7 @@ $END
 
 $TERRAIN
   INDEX 51
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE bar_purple_end
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -521,7 +522,7 @@ $END
 
 $TERRAIN
   INDEX 52
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE diagonal_red
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -531,7 +532,7 @@ $END
 
 $TERRAIN
   INDEX 53
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE diagonal_yellow
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -541,7 +542,7 @@ $END
 
 $TERRAIN
   INDEX 54
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE diagonal_green
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -551,7 +552,7 @@ $END
 
 $TERRAIN
   INDEX 55
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE diagonal_blue
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -561,7 +562,7 @@ $END
 
 $TERRAIN
   INDEX 56
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE diagonal_purple
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -571,7 +572,7 @@ $END
 
 $TERRAIN
   INDEX 57
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -581,7 +582,7 @@ $END
 
 $TERRAIN
   INDEX 58
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -591,7 +592,7 @@ $END
 
 $TERRAIN
   INDEX 59
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -601,7 +602,7 @@ $END
 
 $TERRAIN
   INDEX 60
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_04
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -611,7 +612,7 @@ $END
 
 $TERRAIN
   INDEX 61
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_05
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -621,7 +622,7 @@ $END
 
 $TERRAIN
   INDEX 62
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_06
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -631,7 +632,7 @@ $END
 
 $TERRAIN
   INDEX 63
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_07
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -641,7 +642,7 @@ $END
 
 $TERRAIN
   INDEX 64
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_08
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -651,7 +652,7 @@ $END
 
 $TERRAIN
   INDEX 65
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE fuzzy_09
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -661,7 +662,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -671,7 +672,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -681,7 +682,7 @@ $END
 
 $OBJECT
   INDEX 2
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE exit_top
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -691,7 +692,7 @@ $END
 
 $OBJECT
   INDEX 3
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -702,7 +703,7 @@ $END
 
 $OBJECT
   INDEX 4
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE owa_left
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -714,7 +715,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE owa_right
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -726,7 +727,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE owa_down
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -756,7 +757,7 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE trap
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -766,7 +767,7 @@ $END
 
 $OBJECT
   INDEX 11
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE teleporter
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -776,7 +777,7 @@ $END
 
 $OBJECT
   INDEX 12
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE receiver
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -786,7 +787,7 @@ $END
 
 $OBJECT
   INDEX 13
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE locked_exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -796,7 +797,7 @@ $END
 
 $OBJECT
   INDEX 14
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE button
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -806,7 +807,7 @@ $END
 
 $BACKGROUND
   INDEX 0
-  COLLECTION lpv_abstract
+  COLLECTION namida_abstract
   PIECE colors
 $END
 
