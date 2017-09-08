@@ -35,8 +35,7 @@ const
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_RADIATION,
-        DOM_ONEWAYDOWN, DOM_UPDRAFT, DOM_SLOWFREEZE, DOM_HINT, DOM_NOSPLAT,
-        DOM_SPLAT, DOM_BACKGROUND];
+        DOM_ONEWAYDOWN, DOM_UPDRAFT, DOM_HINT, DOM_SPLAT, DOM_BACKGROUND];
 
 const
   // never change, do NOT trust the bits are the same as the enumerated type.
@@ -137,11 +136,7 @@ type
     ButtonMap                  : TArrayArrayBoolean;
     FlipperMap                 : TArrayArrayBoolean;
     RadiationMap               : TArrayArrayBoolean;
-    SlowfreezeMap              : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
-    AntiSplatMap               : TArrayArrayBoolean;
-    AnimationMap               : TArrayArrayBoolean;
-
 
     fReplayManager             : TReplay;
 
@@ -241,7 +236,6 @@ type
       function FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
       function HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
-      function HandleObjAnimation(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -488,17 +482,17 @@ const
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
   DOM_FLIPPER          = 21;
-  DOM_SLOWFREEZE       = 22;
+  DOM_SLOWFREEZE       = 22; // no longer used!!
   DOM_WINDOW           = 23;
-  DOM_ANIMATION        = 24;
+  DOM_ANIMATION        = 24; // no longer used!!
   DOM_HINT             = 25;
-  DOM_NOSPLAT          = 26;
+  DOM_NOSPLAT          = 26; // no longer used!!
   DOM_SPLAT            = 27;
   DOM_TWOWAYTELE       = 28; // no longer used!!
   DOM_SINGLETELE       = 29; // no longer used!!
   DOM_BACKGROUND       = 30;
   DOM_TRAPONCE         = 31;
-  DOM_BGIMAGE          = 32;
+  DOM_BGIMAGE          = 32; // no longer used!!
   DOM_ONEWAYUP         = 33; *)
 
   // removal modes
@@ -912,10 +906,7 @@ begin
   SetLength(PickupMap, 0, 0);
   SetLength(FlipperMap, 0, 0);
   SetLength(RadiationMap, 0, 0);
-  SetLength(SlowfreezeMap, 0, 0);
   SetLength(SplatMap, 0, 0);
-  SetLength(AntiSplatMap, 0, 0);
-  SetLength(AnimationMap, 0, 0);
   SetLength(ExitMap, 0, 0);
   SetLength(LockedExitMap, 0, 0);
   SetLength(TrapMap, 0, 0);
@@ -1494,14 +1485,8 @@ begin
   SetLength(FlipperMap, Level.Info.Width, Level.Info.Height);
   SetLength(RadiationMap, 0, 0);
   SetLength(RadiationMap, Level.Info.Width, Level.Info.Height);
-  SetLength(SlowfreezeMap, 0, 0);
-  SetLength(SlowfreezeMap, Level.Info.Width, Level.Info.Height);
   SetLength(SplatMap, 0, 0);
   SetLength(SplatMap, Level.Info.Width, Level.Info.Height);
-  SetLength(AntiSplatMap, 0, 0);
-  SetLength(AntiSplatMap, Level.Info.Width, Level.Info.Height);
-  SetLength(AnimationMap, 0, 0);
-  SetLength(AnimationMap, Level.Info.Width, Level.Info.Height);
   SetLength(ExitMap, 0, 0);
   SetLength(ExitMap, Level.Info.Width, Level.Info.Height);
   SetLength(LockedExitMap, 0, 0);
@@ -1669,10 +1654,7 @@ begin
       DOM_BUTTON:     WriteTriggerMap(ButtonMap, ObjectInfos[i].TriggerRect);
       DOM_FLIPPER:    WriteTriggerMap(FlipperMap, ObjectInfos[i].TriggerRect);
       DOM_RADIATION:  WriteTriggerMap(RadiationMap, ObjectInfos[i].TriggerRect);
-      DOM_SLOWFREEZE: WriteTriggerMap(SlowfreezeMap, ObjectInfos[i].TriggerRect);
       DOM_SPLAT:      WriteTriggerMap(SplatMap, ObjectInfos[i].TriggerRect);
-      DOM_NOSPLAT:    WriteTriggerMap(AntiSplatMap, ObjectInfos[i].TriggerRect);
-      DOM_ANIMATION:  WriteTriggerMap(AnimationMap, ObjectInfos[i].TriggerRect);
     end;
   end;
 end;
@@ -2184,10 +2166,6 @@ begin
       fLemNextAction := baNone;
     end;
 
-    // Animations - the most useless of objects...
-    if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trAnimation) then
-      HandleObjAnimation(L, CheckPos[0, i], CheckPos[1, i]);
-
     // Pickup Skills
     if HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trPickup) then
       HandlePickup(L, CheckPos[0, i], CheckPos[1, i]);
@@ -2215,10 +2193,6 @@ begin
     // Radiation
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
       HandleRadiation(L, False);
-
-    // Slowfreeze
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trSlowfreeze) then
-      HandleRadiation(L, True);
 
     // Teleporter
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
@@ -2274,8 +2248,9 @@ begin
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
     trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
     trOWLeft:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0);
-    trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);    // are these ever used? (the one-way wall ones)
+    trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);
     trOWDown:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYDOWN <> 0);
+    trOWUp:       Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYUP <> 0);
     trSteel:      Result :=     (PhysicsMap.Pixel[X, Y] and PM_STEEL <> 0);
     trBlocker:    Result :=     (ReadBlockerMap(X, Y) = DOM_BLOCKER)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
@@ -2284,13 +2259,10 @@ begin
     trPickup:     Result :=     ReadTriggerMap(X, Y, PickupMap);
     trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
     trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap);
-    trSlowfreeze: Result :=     ReadTriggerMap(X, Y, SlowfreezeMap);
     trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
     trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap);
     trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
-    trNoSplat:    Result :=     ReadTriggerMap(X, Y, AntiSplatMap);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
-    trAnimation:  Result :=     ReadTriggerMap(X, Y, AnimationMap);
   end;
 end;
 
@@ -2384,22 +2356,6 @@ begin
     // Check for one-shot trap and possibly disable it
     if Inf.TriggerEffect = DOM_TRAPONCE then Inf.IsDisabled := True;
   end;
-end;
-
-
-function TLemmingGame.HandleObjAnimation(L: TLemming; PosX, PosY: Integer): Boolean;
-var
-  Inf: TInteractiveObjectInfo;
-  ObjectID: Word;
-begin
-  Result := False;
-  ObjectID := FindObjectID(PosX, PosY, trAnimation);
-  // Exit if there is no Object
-  if ObjectID = 65535 then Exit;
-
-  Inf := ObjectInfos[ObjectID];
-  Inf.Triggered := True;
-  CueSoundEffect(Inf.SoundEffect, L.Position);
 end;
 
 
@@ -3915,11 +3871,11 @@ function TLemmingGame.HasIndestructibleAt(x, y, Direction: Integer;
                                           Skill: TBasicLemmingAction): Boolean;
 begin
   // check for indestructible terrain at position (x, y), depending on skill.
-  Result := (    ( PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0)
-              or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYUP <> 0) and (Skill in [baBashing, baMining, baDigging]))
-              or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYDOWN <> 0) and (Skill in [baBashing, baFencing]))
-              or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYLEFT <> 0) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining]))
-              or ((PhysicsMap.PixelS[X, Y] and PM_ONEWAYRIGHT <> 0) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining]))
+  Result := (    ( HasTriggerAt(X, Y, trSteel) )
+              or ( HasTriggerAt(X, Y, trOWUp) and (Skill in [baBashing, baMining, baDigging]))
+              or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing]))
+              or ( HasTriggerAt(X, Y, trOWLeft) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining]))
+              or ( HasTriggerAt(X, Y, trOWRight) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining]))
               or ((Y < -1) and (Skill = baFencing))
             );
 end;
@@ -4010,8 +3966,7 @@ var
   function IsFallFatal: Boolean;
   begin
     Result := (not (L.LemIsFloater or L.LemIsGlider))
-          and (((L.LemFallen > MAX_FALLDISTANCE) and not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
-            or HasTriggerAt(L.LemX, L.LemY, trSplat));
+          and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
 begin
   Result := True;

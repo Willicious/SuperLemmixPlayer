@@ -290,15 +290,15 @@ begin
     if Sec.Line['one_way_down'] <> nil then fTriggerEffect := 19;
     if Sec.Line['updraft'] <> nil then fTriggerEffect := 20;
     if Sec.Line['splitter'] <> nil then fTriggerEffect := 21;
-    if Sec.Line['slowfreeze'] <> nil then fTriggerEffect := 22;
+    // 22 is unused
     if Sec.Line['window'] <> nil then fTriggerEffect := 23;
-    if Sec.Line['animation'] <> nil then fTriggerEffect := 24;
-    // 25 is unused
-    if Sec.Line['anti_splatpad'] <> nil then fTriggerEffect := 26;
+    // 24, 25, 26 are unused
     if Sec.Line['splatpad'] <> nil then fTriggerEffect := 27;
     // 28, 29 are unused
     if Sec.Line['moving_background'] <> nil then fTriggerEffect := 30;
     if Sec.Line['single_use_trap'] <> nil then fTriggerEffect := 31;
+    // 32 is unused
+    if Sec.Line['one_way_up'] <> nil then fTriggerEffect := 33;
 
     fFrameCount := Sec.LineNumeric['frames'];
 

@@ -1153,11 +1153,6 @@ begin
         fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 4, DrawY);
       end;
 
-    DOM_SLOWFREEZE:
-      begin
-        fHelperImages[hpi_Slowfreeze].DrawTo(Dst, DrawX - 4, DrawY);
-      end;
-
     DOM_FLIPPER:
       begin
         fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13, DrawY);
@@ -1183,11 +1178,6 @@ begin
     DOM_SPLAT:
       begin
         fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16, DrawY);
-      end;
-
-    DOM_NOSPLAT:
-      begin
-        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16, DrawY);
       end;
 
     DOM_WATER:
@@ -1221,7 +1211,7 @@ var
   IsOwnBitmap: Boolean;
 begin
   if aInf.IsInvisible then Exit;
-  if aInf.TriggerEffect in [DOM_LEMMING, DOM_HINT, DOM_BGIMAGE] then Exit;
+  if aInf.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
   if TempBitmap = nil then
   begin
@@ -1231,8 +1221,6 @@ begin
     IsOwnBitmap := false;
 
   try
-
-
     DrawFrame := Min(aInf.CurrentFrame, aInf.AnimationFrameCount-1);
     TempBitmap.Assign(aInf.Frames[DrawFrame]);
 
@@ -1283,7 +1271,7 @@ procedure TRenderer.DrawTriggerArea(aInf: TInteractiveObjectInfo);
 const
   DO_NOT_DRAW: set of 0..255 =
         [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
-         DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND, DOM_BGIMAGE, DOM_ONEWAYUP];
+         DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND, DOM_ONEWAYUP];
 begin
   if not (aInf.Obj.IsFake or aInf.IsDisabled or (aInf.TriggerEffect in DO_NOT_DRAW)) then
     DrawTriggerAreaRectOnLayer(aInf.TriggerRect);
@@ -1309,7 +1297,7 @@ begin
 
   if aInf.Obj.IsFake
   or aInf.IsDisabled
-  or (aInf.TriggerEffect in [DOM_NONE, DOM_ANIMATION, DOM_HINT, DOM_BACKGROUND]) then
+  or (aInf.TriggerEffect in [DOM_NONE, DOM_HINT, DOM_BACKGROUND]) then
     Result := false;
 end;
 

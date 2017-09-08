@@ -162,19 +162,17 @@ type
     trOWLeft,
     trOWRight,
     trOWDown,
+    trOWUp,
     trSteel,
     trBlocker,    // total blocker area!
     trTeleport,
     trPickup,
     trButton,
     trRadiation,
-    trSlowfreeze,
     trUpdraft,
     trFlipper,
     trSplat,
-    trNoSplat,
-    trZombie,
-    trAnimation
+    trZombie
   );
 
 
@@ -270,7 +268,7 @@ const
 const
   // All objects that don't have trigger areas got mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..31] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..33] of TTriggerTypes = (
     trZombie,                 // no-object
     trZombie,                 // no trigger area
     trExit,                   // exit
@@ -288,22 +286,24 @@ const
     trZombie,                 // preplaced lemming
     trPickup,                 // pickup skill
     trExit,                   // locked exit
-    trZombie,                 // secret level trigger
+    trZombie,                 // sketch item
     trButton,                 // button
     trRadiation,              // radiation
     trOWDown,                 // OWW down
     trUpdraft,                // updraft
     trFlipper,                // flipper
-    trSlowfreeze,             // slowfreeze
+    trZombie,                 // slowfreeze - unused
     trZombie,                 // hatch
-    trAnimation,              // triggered animation
+    trZombie,                 // triggered animation - unused
     trZombie,                 // hint
-    trNoSplat,                // no-splat
+    trZombie,                 // no-splat -unused
     trSplat,                  // splat
-    trTeleport,               // 2-way teleporter
-    trTeleport,               // single teleporter
+    trTeleport,               // 2-way teleporter - unused
+    trTeleport,               // single teleporter - unused
     trZombie,                 // background
-    trTrap                    // once trap
+    trTrap,                   // once trap
+    trZombie,                 // background image - unused
+    trOWUp                    // OWW up
   );
 
   function ReleaseRateToSpawnInterval(aRR: Integer): Integer;

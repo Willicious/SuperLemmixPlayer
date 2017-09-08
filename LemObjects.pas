@@ -124,18 +124,18 @@ const
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
   DOM_FLIPPER          = 21;
-  DOM_SLOWFREEZE       = 22;
+  //DOM_SLOWFREEZE       = 22;
   DOM_WINDOW           = 23;
-  DOM_ANIMATION        = 24;
+  //DOM_ANIMATION        = 24;
   DOM_HINT             = 25;
-  DOM_NOSPLAT          = 26;
+  //DOM_NOSPLAT          = 26;
   DOM_SPLAT            = 27;
   //DOM_TWOWAYTELE       = 28;
   //DOM_SINGLETELE       = 29;
   DOM_BACKGROUND       = 30;
   DOM_TRAPONCE         = 31;
-  DOM_BGIMAGE          = 32;
-  DOM_ONEWAYUP         = 33; // let's NOT make this apparent to end-users; just use it internally
+  //DOM_BGIMAGE          = 32;
+  DOM_ONEWAYUP         = 33;
 
 implementation
 
