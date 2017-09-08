@@ -34,7 +34,7 @@ type
 
     fBackground: String;
 
-    fLevelOptions   : Cardinal;
+    fIsSimpleAutoSteel: Boolean;
 
     fScreenPosition : Integer;
     fScreenYPosition: Integer;
@@ -70,7 +70,7 @@ type
     property Title          : string read fTitle write fTitle;
     property Author         : string read fAuthor write fAuthor;
 
-    property LevelOptions   : Cardinal read fLevelOptions write fLevelOptions;
+    property IsSimpleAutoSteel: Boolean read fIsSimpleAutoSteel write fIsSimpleAutoSteel;
 
     property Width          : Integer read fWidth write fWidth;
     property Height         : Integer read fHeight write fHeight;
@@ -156,7 +156,7 @@ begin
   fSkillset       := [];
   FillChar(fSkillCounts, SizeOf(TSkillCounts), 0);
 
-  LevelOptions    := 2;
+  IsSimpleAutoSteel := false;
   ScreenPosition  := 0;
   ScreenYPosition := 0;
   Width           := 320;
@@ -297,17 +297,6 @@ end;
 
 procedure TLevel.LoadGeneralInfo(aSection: TParserSection);
 
-  function GetLevelOptionsValue(aString: String): Byte;
-  begin
-    aString := Lowercase(aString);
-    if aString = 'simple' then
-      Result := $0A
-    else if aString = 'off' then
-      Result := $00
-    else
-      Result := $02;
-  end;
-
   procedure HandleTimeLimit(aString: String);
   begin
     aString := Lowercase(aString);
@@ -343,7 +332,8 @@ begin
     ScreenPosition := aSection.LineNumeric['start_x'];
     ScreenYPosition := aSection.LineNumeric['start_y'];
 
-    LevelOptions := GetLevelOptionsValue(aSection.LineTrimString['autosteel']);
+    if Lowercase(aSection.LineTrimString['autosteel']) = 'simple' then
+      isSimpleAutoSteel := true;
 
     Background := aSection.LineTrimString['background'];
   end;
@@ -681,19 +671,6 @@ begin
 end;
 
 procedure TLevel.SaveGeneralInfo(aSection: TParserSection);
-  procedure MakeAutoSteelLine;
-  var
-    S: String;
-  begin
-    if (Info.LevelOptions and $0A) = $0A then
-      S := 'simple'
-    else if (Info.LevelOptions and $02) = 0 then
-      S := 'off'
-    else
-      S := 'on'; // not strictly needed as "On" is default value
-
-    aSection.AddLine('AUTOSTEEL', S);
-  end;
 begin
   with Info do
   begin
@@ -718,7 +695,8 @@ begin
     aSection.AddLine('START_X', ScreenPosition);
     aSection.AddLine('START_Y', ScreenYPosition);
 
-    MakeAutosteelLine;            
+    if Info.IsSimpleAutoSteel then
+      aSection.AddLine('AUTOSTEEL', 'simple');
 
     aSection.AddLine('BACKGROUND', Background);
   end;

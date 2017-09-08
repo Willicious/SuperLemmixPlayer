@@ -73,7 +73,7 @@ type
 
     // Functional combines
     procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
-    procedure TerrainBitmapAutosteelMod(aBmp: TBitmap32; AutoSteel, SimpleSteel: Boolean);
+    procedure ApplySimpleAutosteel(aBmp: TBitmap32);
     procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
@@ -918,23 +918,14 @@ end;
 
 // Functional combines
 
-procedure TRenderer.TerrainBitmapAutosteelMod(aBmp: TBitmap32; AutoSteel, SimpleSteel: Boolean);
+procedure TRenderer.ApplySimpleAutosteel(aBmp: TBitmap32);
 var
   x, y: Integer;
 begin
-  if AutoSteel and not SimpleSteel then Exit; //no modifications needed
-  if not AutoSteel then
-  begin
-    for y := 0 to aBmp.Height-1 do
-      for x := 0 to aBmp.Width-1 do
-        if aBmp.Pixel[x, y] and PM_STEEL <> 0 then
-          aBmp.Pixel[x, y] := aBmp.Pixel[x, y] and not PM_STEEL;
-  end else begin
-    for y := 0 to aBmp.Height-1 do
-      for x := 0 to aBmp.Width-1 do
-        if aBmp.Pixel[x, y] and PM_SOLID <> 0 then
-          aBmp.Pixel[x, y] := aBmp.Pixel[x, y] or PM_NOCANCELSTEEL;
-  end;
+  for y := 0 to aBmp.Height-1 do
+    for x := 0 to aBmp.Width-1 do
+      if aBmp.Pixel[x, y] and PM_SOLID <> 0 then
+        aBmp.Pixel[x, y] := aBmp.Pixel[x, y] or PM_NOCANCELSTEEL;
 end;
 
 procedure TRenderer.PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
@@ -1643,7 +1634,7 @@ begin
       T := Terrains[i];
       MT := FindMetaTerrain(T);
       PrepareTerrainFunctionBitmap(T, Bmp, MT);
-      TerrainBitmapAutosteelMod(Bmp, Info.LevelOptions and $02 <> 0, Info.LevelOptions and $08 <> 0);
+      if (Info.IsSimpleAutoSteel) then ApplySimpleAutosteel(Bmp);
       Bmp.DrawTo(Dst, T.Left, T.Top);
     end;
 

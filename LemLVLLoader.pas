@@ -601,6 +601,7 @@ var
   w: Word;
 
   LRes: Byte;
+  OldLevelOptions: Cardinal;
 
   HasSubHeader: Boolean;
 
@@ -714,10 +715,13 @@ begin
       SetLength(GSNames, 1);
       GSNames[0] := GraphicSetName; // fallback in case lvl file has no graphic set list, as most won't
 
-      LevelOptions := Buf.LevelOptions;
+      if (Buf.LevelOptions and $0A) = $0A then
+        IsSimpleAutoSteel := true;
 
-      if LevelOptions and $2 = 0 then
-        LevelOptions := LevelOptions and $F7;
+      // Needed to apply some terrain properties
+      OldLevelOptions := Buf.LevelOptions;
+      if OldLevelOptions and $2 = 0 then
+        OldLevelOptions := OldLevelOptions and $F7;
     end;
 
     while (aStream.Read(b, 1) <> 0) do
@@ -778,7 +782,7 @@ begin
                Ter.DrawingFlags := Ter.DrawingFlags or tdf_Flip;
              if T.TerrainFlags and $20 <> 0 then
                Ter.DrawingFlags := Ter.DrawingFlags or tdf_Rotate;
-             if Info.LevelOptions and $80 = 0 then
+             if OldLevelOptions and $80 = 0 then
              begin
                if T.TerrainFlags and $10 <> 0 then
                  Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOneWay;
@@ -906,7 +910,7 @@ begin
       SkillCount[spbBasher]      := System.Swap(Buf.BasherCount) mod 256;
       SkillCount[spbMiner]       := System.Swap(Buf.MinerCount) mod 256;
       SkillCount[spbDigger]      := System.Swap(Buf.DiggerCount) mod 256;
-      LevelOptions     := 0;
+      IsSimpleAutoSteel := false;
       Title            := String(Buf.LevelName);
       Author           := '';
       GraphicSet := System.Swap(Buf.GraphicSet);
@@ -1031,6 +1035,7 @@ var
   Ter: TTerrain;
   TempWindowOrder: Array[0..31] of Byte;
   WindowOrder: TWindowOrder;
+  OldLevelOptions: Cardinal;
 
   procedure AddSkill(aSkill: TSkillPanelButton);
   begin
@@ -1121,13 +1126,17 @@ begin
         GraphicSetName := GetStyleName(Buf.GraphicSet);
       end;
 
-      LevelOptions := Buf.LevelOptions;
+      if (Buf.LevelOptions and $0A) = $0A then
+        IsSimpleAutoSteel := true;
+
+      // Needed to apply some terrain properties
+      OldLevelOptions := Buf.LevelOptions;
+      if OldLevelOptions and $2 = 0 then
+        OldLevelOptions := OldLevelOptions and $F7;
 
       for x := 0 to 31 do
         TempWindowOrder[x] := Buf.WindowOrder[x];
-      end;
-      if Info.LevelOptions and $2 = 0 then
-        Info.LevelOptions := Info.LevelOptions and $F7;
+    end;
 
     {-------------------------------------------------------------------------------
       Get the objects
@@ -1191,7 +1200,7 @@ begin
         Ter.DrawingFlags := Ter.DrawingFlags or tdf_Invert;
       if T.TerrainFlags and $8 <> 0 then
         Ter.DrawingFlags := Ter.DrawingFlags or tdf_Flip;
-      if Info.LevelOptions and $80 = 0 then
+      if OldLevelOptions and $80 = 0 then
       begin
         if T.TerrainFlags and $10 <> 0 then
           Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOneWay;
@@ -1395,9 +1404,9 @@ begin
       Author := SL.Values['author'];
 
       case Value('autosteel') of
-        0: LevelOptions := $00;
-        1: LevelOptions := $02;
-        2: LevelOptions := $0A;
+        0: IsSimpleAutoSteel := false; // was originally manual steel, but we removed this option
+        1: IsSimpleAutoSteel := false;
+        2: IsSimpleAutoSteel := true;
       end;
     end;
 
