@@ -60,10 +60,6 @@ var
                            PieceManager.Terrains[aLevel.Terrains[i].Identifier].GraphicImage[false, false, false].Width,
                            PieceManager.Terrains[aLevel.Terrains[i].Identifier].GraphicImage[false, false, false].Height) then
         aLevel.Terrains.Delete(i);
-
-    for i := aLevel.Steels.Count-1 downto 0 do
-      if not IsInsideLevel(aLevel.Steels[i].Left, aLevel.Steels[i].Top, aLevel.Steels[i].Width, aLevel.Steels[i].Height) then
-        aLevel.Steels.Delete(i);
   end;
 
   function DoesFileExist(aName: String; aZip: TArchive = nil): Boolean;
