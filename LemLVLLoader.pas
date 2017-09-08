@@ -15,22 +15,11 @@ interface
 
 uses
   Classes, SysUtils, StrUtils,
-  //Dialogs, Controls,
-  //LemNeoLevelLoader,
-  Dialogs,
-  UMisc,
-  Math,
-  LemStrings,
-  LemNeoParser,
-  LemPiece,
-  LemTerrain,
-  LemInteractiveObject,
-  LemSteel,
-  LemDosStructures,
-  LemLevel,
-  LemLemming,
-  LemTypes,
-  LemCore;
+  Dialogs, UMisc, Math,
+  LemLevel, LemStrings, LemNeoParser,
+  LemPiece, LemTerrain, LemInteractiveObject,
+  LemSteel, LemLemming,
+  LemDosStructures, LemTypes, LemCore;
 
 type
   TWindowOrder = array of Integer;
@@ -469,15 +458,6 @@ begin
       Top := Top div aSrcRes;
     end;
 
-  for i := 0 to aLevel.Steels.Count-1 do
-    with aLevel.Steels[i] do
-    begin
-      Width := Width div aSrcRes;
-      Height := Height div aSrcRes;
-      Left := Left div aSrcRes;
-      Top := Top div aSrcRes;
-    end;
-
   for i := 0 to aLevel.PreplacedLemmings.Count-1 do
     with aLevel.PreplacedLemmings[i] do
     begin
@@ -491,8 +471,6 @@ var
   b: byte;
   i, i2: integer;
   NewLevelID: Integer;
-  //TempStream: TMemoryStream;
-  //TempLevel: TLevel;
   Trans: TTranslationTable;
 begin
   aStream.Seek(0, soFromBeginning);
@@ -523,6 +501,7 @@ begin
   // if the level has no Level ID, make one.
   // must be pseudo-random to enough extent to generate a different ID for each level,
   // but the same ID for the same level if unmodified
+  // Note: This only holds for levels without steel areas!
 
   i2 := 0;
   while aLevel.Info.LevelID = 0 do
@@ -547,16 +526,6 @@ begin
       if NewLevelID = 0 then NewLevelID := aLevel.Info.LemmingsCount;
     end;
 
-    for i := 0 to aLevel.Steels.Count-1 do
-    begin
-      NewLevelID := NewLevelID + aLevel.Steels[i].Left * i2;
-      NewLevelID := NewLevelID + aLevel.Steels[i].Top * i2;
-      NewLevelID := NewLevelID + aLevel.Steels[i].Width * i2;
-      NewLevelID := NewLevelID + aLevel.Steels[i].Height * i2;
-      NewLevelID := NewLevelID + aLevel.Steels[i].fType;
-      if NewLevelID = 0 then NewLevelID := aLevel.Info.SpawnInterval;
-    end;
-
     while (NewLevelID > 0) do
       NewLevelID := NewLevelID xor (NewLevelID shl 1);
 
@@ -569,7 +538,7 @@ begin
                                     (Ord(aLevel.Info.Title[i+3])));
     end;
 
-    NewLevelID := NewLevelID + aLevel.InteractiveObjects.Count + aLevel.Terrains.Count + aLevel.Steels.Count;
+    NewLevelID := NewLevelID + aLevel.InteractiveObjects.Count + aLevel.Terrains.Count;
 
     aLevel.Info.LevelID := LongWord(NewLevelID);
   end;
@@ -623,7 +592,6 @@ var
   S: TNewNeoLVLSteel;
   Obj: TInteractiveObject;
   Ter: TTerrain;
-  Steel: TSteel;
   GSNames: array of String;
   GSName: array[0..15] of AnsiChar;
 
@@ -822,14 +790,22 @@ begin
            end;
         3: begin
              aStream.Read(S, SizeOf(S));
-             if (S.SteelFlags and 128) <> 0 then
+             if (S.SteelFlags and 128) = 0 then continue;
+             // Add one-way-walls as objects
+             if (S.SteelFlags and not $80) in [2, 3, 4] then
              begin
-             Steel := Steels.Add;
-             Steel.Left := (S.XPos * 8) div LRes;
-             Steel.Top := (S.YPos * 8) div LRes;
-             Steel.Width := ((S.SteelWidth + 1) * 8) div LRes;
-             Steel.Height := ((S.SteelHeight + 1) * 8) div LRes;
-             Steel.fType := S.SteelFlags and not $80;
+               Obj := InteractiveObjects.Add;
+               Obj.Left := (S.XPos * 8) div LRes;
+               Obj.Top := (S.YPos * 8) div LRes;
+               Obj.Width := ((S.SteelWidth + 1) * 8) div LRes;
+               Obj.Height := ((S.SteelHeight + 1) * 8) div LRes;
+               Obj.GS := '0'; // refer to dirt style
+               if (S.SteelFlags and not $80) = 2 then Obj.Piece := '3'
+               else if (S.SteelFlags and not $80) = 3 then Obj.Piece := '4'
+               else if (S.SteelFlags and not $80) = 4 then Obj.Piece := '14';
+               Obj.DrawingFlags := odf_OnlyOnTerrain;
+               Obj.LastDrawX := Obj.Left;
+               Obj.LastDrawY := Obj.Top;
              end;
            end;
         4: begin
@@ -903,10 +879,8 @@ var
   H, i: Integer;
   O: TLVLObject;
   T: TLVLTerrain;
-  S: TLVLSteel;
   Obj: TInteractiveObject;
   Ter: TTerrain;
-  Steel: TSteel;
   GraphicSet: Integer;
 begin
   with aLevel do
@@ -1008,26 +982,7 @@ begin
         Ter.Piece := IntToStr(T.B3 and 63);
     end;
 
-    {-------------------------------------------------------------------------------
-      Get the steel.
-    -------------------------------------------------------------------------------}
-    for i := 0 to LVL_MAXSTEELCOUNT - 1 do
-    begin
-      S := Buf.Steel[i];
-      //if S.D0 = 0 then
-      //  Continue;
-      Steel := Steels.Add;  
-      Steel.Left := ((Integer(S.B0) shl 1) + (Integer(S.B1 and (1 shl 7)) shr 7)) * 4 - 16;  // 9 bits
-      Steel.Top := Integer(S.B1 and not (1 shl 7)) * 4;  // bit 7 belongs to steelx
-      Steel.Width := Integer(S.B2 shr 4) * 4 + 4;  // first nibble bits 4..7 is width in units of 4 pixels (and then add 4)
-      Steel.Height := Integer(S.B2 and $F) * 4 + 4;  // second nibble bits 0..3 is height in units of 4 pixels (and then add 4)
-      {Steel.Left := Steel.Left - (Integer(S.B3 shr 6) mod 4);
-      Steel.Top := Steel.Top - (Integer(S.B3 shr 4) mod 4);
-      Steel.Width := Steel.Width - (Integer(S.B3 shr 2) mod 4);
-      Steel.Height := Steel.Height - (Integer(S.B3) mod 4);
-      if (i >= 16) and (aLevel.Info.LevelOptions and 1 <> 0) then Steel.fType := 1 else} Steel.fType := 0;
-    end;
-
+    // The steel part does apparently only encoude actual steel, not OWWs. So we ignore it.
   end; // with aLevel
 end;
 
@@ -1074,7 +1029,6 @@ var
   S: TNeoLVLSteel;
   Obj: TInteractiveObject;
   Ter: TTerrain;
-  Steel: TSteel;
   TempWindowOrder: Array[0..31] of Byte;
   WindowOrder: TWindowOrder;
 
@@ -1183,10 +1137,6 @@ begin
       O := Buf.Objects[i];
       if O.ObjectFlags and 128 = 0 then
       begin
-        {Obj := InteractiveObjects.Add;
-        Obj.Left := -32768;
-        Obj.Top := -32768;
-        Obj.Identifier := 0;}
         for x := i to 127 do
           for x2 := 0 to 31 do
             if ((Buf.WindowOrder[x2] and $80) <> 0) and ((Buf.WindowOrder[x2] and $7F) = x) then
@@ -1257,14 +1207,23 @@ begin
     for i := 0 to 127 do
     begin
       S := Buf.Steel[i];
-      if S.SteelFlags and 128 = 0 then
-        Continue;
-      Steel := Steels.Add;
-      Steel.Left := S.XPos;
-      Steel.Top := S.YPos;
-      Steel.Width := S.SteelWidth + 1;
-      Steel.Height := S.SteelHeight + 1;
-      Steel.fType := S.SteelFlags and not $80;
+      if S.SteelFlags and 128 = 0 then Continue;
+      // Add one-way-walls as objects
+      if (S.SteelFlags and not $80) in [2, 3, 4] then
+      begin
+        Obj := InteractiveObjects.Add;
+        Obj.Left := S.XPos;
+        Obj.Top := S.YPos;
+        Obj.Width := S.SteelWidth + 1;
+        Obj.Height := S.SteelHeight + 1;
+        Obj.GS := '0'; // refer to dirt style
+        if (S.SteelFlags and not $80) = 2 then Obj.Piece := '3'
+        else if (S.SteelFlags and not $80) = 3 then Obj.Piece := '4'
+        else if (S.SteelFlags and not $80) = 4 then Obj.Piece := '14';
+        Obj.DrawingFlags := odf_OnlyOnTerrain;
+        Obj.LastDrawX := Obj.Left;
+        Obj.LastDrawY := Obj.Top;
+      end;
     end;
 
     SetLength(WindowOrder, 0);
@@ -1293,7 +1252,6 @@ var
 
   O: TInteractiveObject;
   T: TTerrain;
-  S: TSteel;
   // don't need TPreplacedLemming, SuperLemmini doesn't support it
 
   procedure WipeSpaces(aSL: TStringList; Full: Boolean = false);
@@ -1499,23 +1457,7 @@ begin
       if GetSplit(3) and 64 = 0 then T.DrawingFlags := T.DrawingFlags or tdf_NoOneWay;
     end;
 
-    i := 0;
-    while SL.Values['steel_' + IntToStr(i)] <> '' do
-    begin
-      Split('steel_' + IntToStr(i));
-      Inc(i);
-
-      S := TSteel.Create;
-      aLevel.Steels.Add(S);
-
-      S.Left := GetSplit(0);
-      S.Top := GetSplit(1);
-      S.Width := GetSplit(2);
-      S.Height := GetSplit(3);
-
-      if GetSplit(4) = 1 then
-        S.fType := 1;
-    end;
+    // Ignore steel areas, i.e. lines beginning with 'steel'
 
     ResolutionPatch(aLevel, 2);
   finally
@@ -1531,7 +1473,6 @@ var
 
   O: TInteractiveObject;
   T: TTerrain;
-  S: TSteel;
 
   function LineVal(aIndex: Integer): Integer;
   begin
@@ -1616,19 +1557,7 @@ begin
       Inc(n, 4);
     end;
 
-    Inc(n, 2);
-    while SL[n] <> 'End' do
-    begin
-      S := TSteel.Create;
-      aLevel.Steels.Add(S);
-
-      S.Left := LineVal(n);
-      S.Top := LineVal(n+1);
-      S.Width := LineVal(n+2);
-      S.Height := LineVal(n+3);
-
-      Inc(n, 4);
-    end;
+    // Ignore all steel areas, that would come now.
 
     ResolutionPatch(aLevel, 2);
   finally

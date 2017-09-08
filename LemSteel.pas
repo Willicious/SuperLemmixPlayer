@@ -1,6 +1,12 @@
 {$include lem_directives.inc}
 unit LemSteel;
 
+(*--------------------------------------------------
+    Steel areas only exist for loading old levels!
+    This is ONLY for use in LemLVLLoader!
+    DO NOT USE IT ANYWHERE ELSE!!!
+  --------------------------------------------------*)
+
 interface
 
 uses

@@ -16,7 +16,6 @@ uses
   LemTypes,
   LemTerrain, LemMetaTerrain,
   LemObjects, LemInteractiveObject, LemMetaObject,
-  LemSteel,
   LemLemming,
   LemDosAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
@@ -1538,7 +1537,6 @@ var
   T: TTerrain;
   MT: TMetaTerrain;
   O: TInteractiveObjectInfo;
-  S: TSteel;
   Bmp: TBitmap32;
 
   procedure SetRegion(aRegion: TRect; C, AntiC: TColor32);
@@ -1607,25 +1605,6 @@ var
     SetRegion( Inf.TriggerRect, C, 0);
   end;
 
-  procedure ApplyArea(S: TSteel);
-  var
-    C, AntiC: TColor32;
-  begin
-    C := 0;
-    AntiC := 0;
-    case S.fType of
-      0: C := PM_STEEL;
-      1: AntiC := PM_STEEL;
-      2: C := PM_ONEWAYLEFT;
-      3: C := PM_ONEWAYRIGHT;
-      4: C := PM_ONEWAYDOWN;
-      else Exit;
-    end;
-
-    SetRegion( Rect(S.Left, S.Top, S.Left + S.Width, S.Top + S.Height),
-               C, AntiC);
-  end;
-
   procedure Validate;
   var
     X, Y: Integer;
@@ -1672,12 +1651,6 @@ begin
     begin
       O := fObjectInfoList[i];
       ApplyOWW(O); // ApplyOWW takes care of ignoring non-OWW objects, no sense duplicating the check
-    end;
-
-    for i := 0 to Steels.Count-1 do
-    begin
-      S := Steels[i];
-      ApplyArea(S);
     end;
   end;
 

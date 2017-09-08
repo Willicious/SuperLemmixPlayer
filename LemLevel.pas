@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, StrUtils,
   LemCore, LemLemming,
   LemTalisman,
-  LemTerrain, LemInteractiveObject, LemObjects, LemSteel,
+  LemTerrain, LemInteractiveObject, LemObjects,
   LemNeoPieceManager, LemNeoParser;
 
 type
@@ -50,7 +50,6 @@ type
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
   protected
   public
-    //WindowOrder      : array of Integer;
     SpawnOrder       : array of Integer;
     constructor Create;
     procedure Clear; virtual;
@@ -89,7 +88,6 @@ type
     fLevelInfo       : TLevelInfo;
     fTerrains           : TTerrains;
     fInteractiveObjects : TInteractiveObjects;
-    fSteels             : TSteels;
     fPreplacedLemmings  : TPreplacedLemmingList;
 
     fTalismans: TObjectList<TTalisman>;
@@ -101,7 +99,6 @@ type
     procedure LoadSkillsetSection(aSection: TParserSection);
     procedure HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
-    procedure HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
     procedure LoadPretextLine(aLine: TParserLine; const aIteration: Integer);
@@ -112,7 +109,6 @@ type
     procedure SaveSkillsetSection(aSection: TParserSection);
     procedure SaveObjectSections(aSection: TParserSection);
     procedure SaveTerrainSections(aSection: TParserSection);
-    procedure SaveAreaSections(aSection: TParserSection);
     procedure SaveLemmingSections(aSection: TParserSection);
     procedure SaveTalismanSections(aSection: TParserSection);
     procedure SaveTextSections(aSection: TParserSection);
@@ -134,7 +130,6 @@ type
     property Info: TLevelInfo read fLevelInfo;
     property InteractiveObjects: TInteractiveObjects read fInteractiveObjects;
     property Terrains: TTerrains read fTerrains;
-    property Steels: TSteels read fSteels;
     property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings;
     property Talismans: TObjectList<TTalisman> read fTalismans;
     property PreText: TStringList read fPreText;
@@ -199,7 +194,6 @@ begin
   fLevelInfo := TLevelInfo.Create;
   fInteractiveObjects := TInteractiveObjects.Create;
   fTerrains := TTerrains.Create;
-  fSteels := TSteels.Create;
   fPreplacedLemmings := TPreplacedLemmingList.Create;
   fTalismans := TObjectList<TTalisman>.Create(true);
   fPreText := TStringList.Create;
@@ -211,7 +205,6 @@ begin
   fLevelInfo.Free;
   fInteractiveObjects.Free;
   fTerrains.Free;
-  fSteels.Free;
   fPreplacedLemmings.Free;
   fTalismans.Free;
   fPreText.Free;
@@ -224,7 +217,6 @@ begin
   fLevelInfo.Clear;
   fInteractiveObjects.Clear;
   fTerrains.Clear;
-  fSteels.Clear;
   fPreplacedLemmings.Clear;
   fTalismans.Clear;
   fPreText.Clear;
@@ -287,7 +279,6 @@ begin
 
       Main.DoForEachSection('object', HandleObjectEntry);
       Main.DoForEachSection('terrain', HandleTerrainEntry);
-      Main.DoForEachSection('area', HandleAreaEntry);
       Main.DoForEachSection('lemming', HandleLemmingEntry);
       Main.DoForEachSection('talisman', HandleTalismanEntry);
 
@@ -520,23 +511,6 @@ begin
   if (aSection.Line['erase'] <> nil) then Flag(tdf_Erase);
 end;
 
-procedure TLevel.HandleAreaEntry(aSection: TParserSection; const aIteration: Integer);
-var
-  S: TSteel;
-begin
-  S := fSteels.Add;
-
-  S.Left := aSection.LineNumeric['x'];
-  S.Top := aSection.LineNumeric['y'];
-  S.Width := aSection.LineNumeric['width'];
-  S.Height := aSection.LineNumeric['height'];
-
-  if (aSection.Line['erase'] <> nil) then
-    S.fType := 1
-  else
-    S.fType := 0;
-end;
-
 procedure TLevel.HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
 var
   L: TPreplacedLemming;
@@ -583,7 +557,6 @@ procedure TLevel.Sanitize;
 var
   SkillIndex: TSkillPanelButton;
 begin
-  // Nepster - I have removed certain parts of this as they are not needed in regards to longer-term plans
   with Info do
   begin
     Title := Trim(Title);
@@ -698,7 +671,6 @@ begin
     SaveSkillsetSection(Parser.MainSection);
     SaveObjectSections(Parser.MainSection);
     SaveTerrainSections(Parser.MainSection);
-    SaveAreaSections(Parser.MainSection);
     SaveLemmingSections(Parser.MainSection);
     SaveTalismanSections(Parser.MainSection);
     SaveTextSections(Parser.MainSection);
@@ -927,27 +899,6 @@ begin
     if Flag(tdf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
     if Flag(tdf_Erase) then Sec.AddLine('ERASE');
     if not Flag(tdf_NoOneWay) then Sec.AddLine('ONE_WAY');
-  end;
-end;
-
-procedure TLevel.SaveAreaSections(aSection: TParserSection);
-var
-  i: Integer;
-  S: TSteel;
-  Sec: TParserSection;
-begin
-  for i := 0 to fSteels.Count-1 do
-  begin
-    S := fSteels[i];
-    Sec := aSection.SectionList.Add('AREA');
-
-    Sec.AddLine('X', S.Left);
-    Sec.AddLine('Y', S.Top);
-    Sec.AddLine('WIDTH', S.Width);
-    Sec.AddLine('HEIGHT', S.Height);
-
-    if S.fType = 1 then
-      Sec.AddLine('ERASE');
   end;
 end;
 
