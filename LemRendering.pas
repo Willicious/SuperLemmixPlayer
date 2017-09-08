@@ -1132,20 +1132,14 @@ begin
 
     DOM_TRAP:
       begin
-        if not Obj.IsDisabled then
-        begin
-          fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17, DrawY);
-          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
-        end;
+        fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17, DrawY);
+        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
       end;
 
     DOM_TRAPONCE:
       begin
-        if not Obj.IsDisabled then
-        begin
-          fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17, DrawY);
-          fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
-        end;
+        fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17, DrawY);
+        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
       end;
 
     DOM_RADIATION:
@@ -1272,7 +1266,7 @@ const
         [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
          DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND, DOM_ONEWAYUP];
 begin
-  if not (aInf.Obj.IsFake or aInf.IsDisabled or (aInf.TriggerEffect in DO_NOT_DRAW)) then
+  if not (aInf.TriggerEffect in DO_NOT_DRAW) then
     DrawTriggerAreaRectOnLayer(aInf.TriggerRect);
 end;
 
@@ -1294,9 +1288,7 @@ begin
   Result := true;
   if not fUsefulOnly then Exit;
 
-  if aInf.Obj.IsFake
-  or aInf.IsDisabled
-  or (aInf.TriggerEffect in [DOM_NONE, DOM_HINT, DOM_BACKGROUND]) then
+  if aInf.TriggerEffect in [DOM_NONE, DOM_HINT, DOM_BACKGROUND] then
     Result := false;
 end;
 
@@ -1385,9 +1377,6 @@ begin
     for i := 0 to ObjectInfos.Count-1 do
     begin
       Inf := ObjectInfos[i];
-
-      // Check if this object is relevant
-      if Inf.IsDisabled then Continue;
 
       // Magic numbers are needed due to some offset of MousePos wrt. the center of the cursor.
       if not PtInRect(Rect(Inf.Left - 4, Inf.Top + 1, Inf.Left + Inf.Width - 2, Inf.Top + Inf.Height + 3),
@@ -1767,7 +1756,8 @@ begin
        or (ObjInf.TriggerRect.Right < 0)
        or (ObjInf.TriggerRect.Left > Inf.Level.Info.Width) then
     begin
-      if ObjInf.TriggerEffect <> DOM_BACKGROUND then ObjInf.IsDisabled := True;
+      if ObjInf.TriggerEffect <> DOM_BACKGROUND then
+        ObjInf.TriggerEffect := DOM_NONE; // effectively disables the object
     end;
 
     ObjInfList.Add(ObjInf);

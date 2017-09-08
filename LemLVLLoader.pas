@@ -733,61 +733,68 @@ begin
              begin
                SetLength(SkipObjects, Length(SkipObjects) + 1);
                SkipObjects[Length(SkipObjects)-1] := InteractiveObjects.Count + Length(SkipObjects) - 1;
-             end else begin
-             Obj := InteractiveObjects.Add;
-             Obj.Left := (O.XPos * 8) div LRes;
-             Obj.Top := (O.YPos * 8) div LRes;
-             Obj.GS := IntToStr(O.GSIndex);
-             Obj.Piece := IntToStr(O.ObjectID);
-             Obj.TarLev := O.LValue;
-             if O.ObjectFlags and $1 <> 0 then
-               Obj.DrawingFlags := Obj.DrawingFlags or odf_NoOverwrite;
-             if O.ObjectFlags and $2 <> 0 then
-               Obj.DrawingFlags := Obj.DrawingFlags or odf_OnlyOnTerrain;
-             if O.ObjectFlags and $4 <> 0 then
-               Obj.DrawingFlags := Obj.DrawingFlags or odf_UpsideDown;
-             if O.ObjectFlags and $8 <> 0 then
-               Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
-             if O.ObjectFlags and $10 <> 0 then
-               Obj.IsFake := true;
-             if O.ObjectFlags and $40 <> 0 then
-               Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
-             if O.ObjectFlags and $100 <> 0 then
-               Obj.DrawingFlags := Obj.DrawingFlags or odf_Rotate;
-             Obj.Skill := O.SValue mod 16;
+             end
+             else
+             begin
+               Obj := TInteractiveObject.Create;
+               Obj.Left := (O.XPos * 8) div LRes;
+               Obj.Top := (O.YPos * 8) div LRes;
+               Obj.GS := IntToStr(O.GSIndex);
+               Obj.Piece := IntToStr(O.ObjectID);
+               Obj.TarLev := O.LValue;
+               if O.ObjectFlags and $1 <> 0 then
+                 Obj.DrawingFlags := Obj.DrawingFlags or odf_NoOverwrite;
+               if O.ObjectFlags and $2 <> 0 then
+                 Obj.DrawingFlags := Obj.DrawingFlags or odf_OnlyOnTerrain;
+               if O.ObjectFlags and $4 <> 0 then
+                 Obj.DrawingFlags := Obj.DrawingFlags or odf_UpsideDown;
+               if O.ObjectFlags and $8 <> 0 then
+                 Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
+               if O.ObjectFlags and $10 <> 0 then // object is fake
+               begin
+                 Obj.Free;
+                 Continue;
+               end;
+               if O.ObjectFlags and $40 <> 0 then
+                 Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
+               if O.ObjectFlags and $100 <> 0 then
+                 Obj.DrawingFlags := Obj.DrawingFlags or odf_Rotate;
+               Obj.Skill := O.SValue mod 16;
 
-             Obj.LastDrawX := Obj.Left;
-             Obj.LastDrawY := Obj.Top;
-             Obj.DrawAsZombie := false;
+               Obj.LastDrawX := Obj.Left;
+               Obj.LastDrawY := Obj.Top;
+               Obj.DrawAsZombie := false;
+
+               InteractiveObjects.Add(Obj);
              end;
            end;
         2: begin
              aStream.Read(T, SizeOf(T));
              if (T.TerrainFlags and 128) <> 0 then
              begin
-             Ter := Terrains.Add;
-             Ter.Left := (T.XPos * 8) div LRes;
-             Ter.Top := (T.YPos * 8) div LRes;
-             Ter.GS := IntToStr(T.GSIndex);
-             Ter.Piece := IntToStr(T.TerrainID);
-             if T.TerrainFlags and $1 <> 0 then
-               Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOverwrite;
-             if T.TerrainFlags and $2 <> 0 then
-               Ter.DrawingFlags := Ter.DrawingFlags or tdf_Erase;
-             if T.TerrainFlags and $4 <> 0 then
-               Ter.DrawingFlags := Ter.DrawingFlags or tdf_Invert;
-             if T.TerrainFlags and $8 <> 0 then
-               Ter.DrawingFlags := Ter.DrawingFlags or tdf_Flip;
-             if T.TerrainFlags and $20 <> 0 then
-               Ter.DrawingFlags := Ter.DrawingFlags or tdf_Rotate;
-             if OldLevelOptions and $80 = 0 then
-             begin
-               if T.TerrainFlags and $10 <> 0 then
-                 Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOneWay;
-             end else begin
-               if T.TerrainFlags and $10 = 0 then
-                 Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOneWay;
-             end;
+               Ter := Terrains.Add;
+               Ter.Left := (T.XPos * 8) div LRes;
+               Ter.Top := (T.YPos * 8) div LRes;
+               Ter.GS := IntToStr(T.GSIndex);
+               Ter.Piece := IntToStr(T.TerrainID);
+               if T.TerrainFlags and $1 <> 0 then
+                 Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOverwrite;
+               if T.TerrainFlags and $2 <> 0 then
+                 Ter.DrawingFlags := Ter.DrawingFlags or tdf_Erase;
+               if T.TerrainFlags and $4 <> 0 then
+                 Ter.DrawingFlags := Ter.DrawingFlags or tdf_Invert;
+               if T.TerrainFlags and $8 <> 0 then
+                 Ter.DrawingFlags := Ter.DrawingFlags or tdf_Flip;
+               if T.TerrainFlags and $20 <> 0 then
+                 Ter.DrawingFlags := Ter.DrawingFlags or tdf_Rotate;
+               if OldLevelOptions and $80 = 0 then
+               begin
+                 if T.TerrainFlags and $10 <> 0 then
+                   Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOneWay;
+               end else begin
+                 if T.TerrainFlags and $10 = 0 then
+                   Ter.DrawingFlags := Ter.DrawingFlags or tdf_NoOneWay;
+               end;
              end;
            end;
         3: begin
@@ -937,28 +944,28 @@ begin
       O := Buf.Objects[i];
       if O.AsInt64 = 0 then
         Continue;
-      Obj := InteractiveObjects.Add;
+      Obj := TInteractiveObject.Create;
       Obj.Left := (Integer(O.B0) shl 8 + Integer(O.B1) - 16) and not 7;
       Obj.Top := Integer(O.B2) shl 8 + Integer(O.B3);
       If Obj.Top > 32767 then Obj.Top := Obj.Top - 65536;
       Obj.GS := Info.GraphicSetName;
       Obj.Piece := IntToStr(Integer(O.B5 and 31));
-      //Obj.TarLev := (O.B4);
       if O.Modifier and $80 <> 0 then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_NoOverwrite;
       if O.Modifier and $40 <> 0 then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_OnlyOnTerrain;
-      {if O.Modifier and $20 <> 0 then
-        Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;}
       if O.DisplayMode = $8F then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_UpsideDown;
-      //Obj.Skill := O.Modifier and $0F;
-      {if (O.Modifier and $10) <> 0 then Obj.IsFake := true;}
-      if (O.ObjectID <> 1) and (i >= 16) then Obj.IsFake := true;
-
+      if (O.ObjectID <> 1) and (i >= 16) then // object is fake
+      begin
+        Obj.Free;
+        Continue;
+      end;
       Obj.LastDrawX := Obj.Left;
       Obj.LastDrawY := Obj.Top;
       Obj.DrawAsZombie := false;
+
+      InteractiveObjects.Add(Obj);
     end;
 
     {-------------------------------------------------------------------------------
@@ -1150,7 +1157,7 @@ begin
               Buf.WindowOrder[x2] := Buf.WindowOrder[x2] - 1;
         Continue;
       end;
-      Obj := InteractiveObjects.Add;
+      Obj := TInteractiveObject.Create;
       Obj.Left := O.XPos;
       Obj.Top := O.YPos;
       Obj.GS := Info.GraphicSetName;
@@ -1164,8 +1171,11 @@ begin
         Obj.DrawingFlags := Obj.DrawingFlags or odf_UpsideDown;
       if O.ObjectFlags and $8 <> 0 then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
-      if O.ObjectFlags and $10 <> 0 then
-        Obj.IsFake := true;
+      if O.ObjectFlags and $10 <> 0 then // object is fake
+      begin
+        Obj.Free;
+        Continue;
+      end;
       if O.ObjectFlags and $40 <> 0 then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
       Obj.Skill := O.SValue mod 16;
@@ -1173,6 +1183,8 @@ begin
       Obj.LastDrawX := Obj.Left;
       Obj.LastDrawY := Obj.Top;
       Obj.DrawAsZombie := false;
+
+      InteractiveObjects.Add(Obj);
     end;
 
     {-------------------------------------------------------------------------------
@@ -1414,8 +1426,6 @@ begin
       if GetSplit(0) < 0 then Continue;
 
       O := TInteractiveObject.Create;
-      aLevel.InteractiveObjects.Add(O);
-
       O.GS := aLevel.Info.GraphicSetName;
       O.Piece := IntToStr(GetSplit(0));
       O.Left := GetSplit(1);
@@ -1427,11 +1437,13 @@ begin
       end;
 
       if GetSplit(4) and 1 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_UpsideDown;
-      if GetSplit(4) and 2 <> 0 then O.IsFake := true;
+      if GetSplit(4) and 2 <> 0 then Continue; // object is fake
       if GetSplit(4) and 4 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_UpsideDown;
       if GetSplit(4) and 8 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_Flip;
 
       if GetSplit(5) = 1 then O.DrawingFlags := O.DrawingFlags or odf_FlipLem;
+
+      aLevel.InteractiveObjects.Add(O);
     end;
 
     i := 0;

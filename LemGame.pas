@@ -2282,8 +2282,7 @@ begin
     Dec(ObjectID);
     Inf := ObjectInfos[ObjectID];
     // Check correct TriggerType
-    if (ObjectTypeToTrigger[Inf.TriggerEffect] = TriggerType)
-       and not Inf.IsDisabled then   // shouldn't be necessary, but to be sure, it stays here
+    if ObjectTypeToTrigger[Inf.TriggerEffect] = TriggerType then
     begin
       // Check trigger areas for this object
       if PtInRect(Inf.TriggerRect, Point(X, Y)) then
@@ -2339,7 +2338,7 @@ begin
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baJumping
     else L.LemActionNew := baWalking;
 
-    Inf.IsDisabled := True;
+    Inf.TriggerEffect := DOM_NONE; // effectively disables the object
     Transition(L, baFixing);
   end
   else
@@ -2354,7 +2353,7 @@ begin
     CueSoundEffect(Inf.SoundEffect, L.Position);
     DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
     // Check for one-shot trap and possibly disable it
-    if Inf.TriggerEffect = DOM_TRAPONCE then Inf.IsDisabled := True;
+    if Inf.TriggerEffect = DOM_TRAPONCE then Inf.TriggerEffect := DOM_NONE;
   end;
 end;
 
@@ -4337,9 +4336,8 @@ var
   begin
     Result := false;
     for i := 0 to ObjectInfos.Count-1 do
-      if (ObjectInfos[i].TriggerEffect = 23)
-      and not (ObjectInfos[i].IsDisabled)
-      and (ObjectInfos[i].PreassignedSkills and 64 <> 0) then
+      if (ObjectInfos[i].TriggerEffect = DOM_WINDOW)
+        and (ObjectInfos[i].PreassignedSkills and 64 <> 0) then
       begin
         Result := true;
         Exit;

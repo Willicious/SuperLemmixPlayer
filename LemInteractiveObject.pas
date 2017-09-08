@@ -27,7 +27,6 @@ type
     fWidth: Integer;
     fHeight: Integer;
     fDrawingFlags: Byte; // odf_xxxx
-    fFake: Boolean;
     fSkill: Integer;
     fTarLev: Integer;
     fLastDrawX: Integer;
@@ -44,7 +43,6 @@ type
     property Width: Integer read fWidth write fWidth;
     property Height: Integer read fHeight write fHeight;
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
-    property IsFake: Boolean read fFake write fFake;
     property Skill : Integer read fSkill write fSkill;
     property TarLev : Integer read fTarLev write fTarLev;
     property LastDrawX: Integer read fLastDrawX write fLastDrawX;
@@ -137,13 +135,11 @@ begin
     DrawingFlags := O.DrawingFlags;
     Width := O.Width;
     Height := O.Height;
-    IsFake := O.IsFake;
     Skill := O.Skill;
     TarLev := O.TarLev;
     LastDrawX := O.LastDrawX;
     LastDrawY := O.LastDrawY;
     DrawAsZombie := O.DrawAsZombie;
-    // some of these probably don't need to be copied really
   end;
 end;
 

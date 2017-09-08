@@ -18,13 +18,11 @@ type
     sWidth          : Integer;
     sTriggerRect    : TRect;  // We assume that trigger areas will never move!!!
     sTriggerEffect  : Integer;
-    sIsDisabled     : Boolean;
     sReceiverId     : Integer;
     sPairingId      : Integer;
     sZombieMode     : Boolean;
 
     function GetTriggerRect: TRect;
-    procedure SetIsDisabled(Value: Boolean);
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
     procedure SetZombieMode(Value: Boolean);
@@ -60,8 +58,7 @@ type
     property Width: Integer read sWidth;
     property Height: Integer read sHeight;
     property Center: TPoint read GetCenterPoint;
-    property TriggerEffect: Integer read sTriggerEffect;
-    property IsDisabled: Boolean read sIsDisabled write SetIsDisabled;
+    property TriggerEffect: Integer read sTriggerEffect write sTriggerEffect;
     property ReceiverId: Integer read sReceiverId;
     property PairingId: Integer read sPairingId;  // Teleporters and receivers that are matched have same value; used for helper icons only (otherwise use ReceiverID)
     property SkillType: TSkillPanelButton read GetSkillType;
@@ -183,7 +180,6 @@ begin
   sTriggerEffect := MetaObj.TriggerEffect;
   AdjustOWWDirection; // adjusts eg. flipped OWL becomes OWR
   sTriggerRect := GetTriggerRect;
-  sIsDisabled := Obj.IsFake;
   sReceiverId := 65535;
 
   // Set CurrentFrame
@@ -216,12 +212,6 @@ begin
 
   HoldActive := False;
   ZombieMode := False;
-
-  // Remove TriggerEffect if object disabled
-  // If it is a preplaced lemming, we unfortunately have to keep it (or this lemming will be drawn)
-  if sIsDisabled and not (TriggerEffect = DOM_LEMMING) then
-    sTriggerEffect := DOM_NONE;
-
 end;
 
 
@@ -263,14 +253,6 @@ begin
   Result.Bottom := Y + H;
   Result.Left := X;
   Result.Right := X + W;
-end;
-
-procedure TInteractiveObjectInfo.SetIsDisabled(Value: Boolean);
-begin
-  Assert(Value = True, 'Changing object from Disabled to Enabled impossible'); // do we really want this? we might want this to be possible in the future...
-
-  sIsDisabled := Value;
-  sTriggerEffect := DOM_NONE;
 end;
 
 procedure TInteractiveObjectInfo.SetLeft(Value: Integer);
@@ -389,7 +371,6 @@ begin
   NewObj.sWidth := sWidth;
   NewObj.sTriggerRect := sTriggerRect;
   NewObj.sTriggerEffect := sTriggerEffect;
-  NewObj.sIsDisabled := sIsDisabled;
   NewObj.MetaObj := MetaObj;
   NewObj.Obj := Obj;
   NewObj.CurrentFrame := CurrentFrame;
@@ -449,7 +430,7 @@ begin
       TestID := TestID mod Count;
       // If TestID = i then there is no receiver and we disable the teleporter
       if i = TestID then
-        Inf.IsDisabled := True
+        Inf.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
       else begin
         Inf.sReceiverId := TestID;
         if IsReceiverUsed[TestID] then
@@ -469,7 +450,7 @@ begin
     Inf := List[i];
     if Inf.TriggerEffect = DOM_RECEIVER then
       if not IsReceiverUsed[i] then
-        Inf.IsDisabled := true;
+        Inf.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
   end;
 end;
 
