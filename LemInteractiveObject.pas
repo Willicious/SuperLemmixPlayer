@@ -15,7 +15,7 @@ const
   odf_UpsideDown    = 2; // bit 1
   odf_NoOverwrite   = 4; // bit 2
   odf_FlipLem       = 8;
-  odf_Invisible     = 32;
+  //odf_Invisible     = 32;  // removed
   odf_Flip          = 64;            // Better name: odf_FlipImage
   odf_Rotate        = 128;
 

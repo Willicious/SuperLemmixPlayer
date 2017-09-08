@@ -1210,7 +1210,6 @@ var
   TempBitmapRect, DstRect: TRect;
   IsOwnBitmap: Boolean;
 begin
-  if aInf.IsInvisible then Exit;
   if aInf.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
   if TempBitmap = nil then

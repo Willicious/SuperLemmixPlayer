@@ -750,8 +750,6 @@ begin
                Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
              if O.ObjectFlags and $10 <> 0 then
                Obj.IsFake := true;
-             if O.ObjectFlags and $20 <> 0 then
-               Obj.DrawingFlags := Obj.DrawingFlags or odf_Invisible;
              if O.ObjectFlags and $40 <> 0 then
                Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
              if O.ObjectFlags and $100 <> 0 then
@@ -1168,8 +1166,6 @@ begin
         Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
       if O.ObjectFlags and $10 <> 0 then
         Obj.IsFake := true;
-      if O.ObjectFlags and $20 <> 0 then
-        Obj.DrawingFlags := Obj.DrawingFlags or odf_Invisible;
       if O.ObjectFlags and $40 <> 0 then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
       Obj.Skill := O.SValue mod 16;
@@ -1426,7 +1422,6 @@ begin
       O.Top := GetSplit(2);
 
       case GetSplit(3) of
-        2: O.DrawingFlags := O.DrawingFlags or odf_Invisible;
         4: O.DrawingFlags := O.DrawingFlags or odf_NoOverwrite;
         8: O.DrawingFlags := O.DrawingFlags or odf_OnlyOnTerrain;
       end;

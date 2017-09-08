@@ -459,7 +459,6 @@ begin
 
   O.IsFake := (aSection.Line['fake'] <> nil);
   O.DrawingFlags := 0;
-  if (aSection.Line['invisible'] <> nil) then Flag(odf_Invisible);
   if (aSection.Line['rotate'] <> nil) then Flag(odf_Rotate);
   if (aSection.Line['flip_horizontal'] <> nil) then Flag(odf_Flip);
   if (aSection.Line['flip_vertical'] <> nil) then Flag(odf_UpsideDown);
@@ -832,7 +831,6 @@ begin
     if O.Height > 0 then Sec.AddLine('HEIGHT', O.Height);
 
     if O.IsFake then Sec.AddLine('FAKE');
-    if Flag(odf_Invisible) then Sec.AddLine('INVISIBLE');
     if Flag(odf_Rotate) then Sec.AddLine('ROTATE');
     if Flag(odf_Flip) then Sec.AddLine('FLIP_HORIZONTAL');
     if Flag(odf_UpsideDown) then Sec.AddLine('FLIP_VERTICAL');

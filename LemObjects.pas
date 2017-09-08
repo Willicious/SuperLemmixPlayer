@@ -34,7 +34,6 @@ type
     function GetIsUpsideDown: Boolean;
     function GetIsNoOverwrite: Boolean;
     function GetIsFlipPhysics: Boolean;
-    function GetIsInvisible: Boolean;
     function GetIsFlipImage: Boolean;
     function GetIsRotate: Boolean;
     function GetAnimationFrameCount: Integer;
@@ -70,7 +69,6 @@ type
     property IsUpsideDown: Boolean read GetIsUpsideDown;        // ... and 2
     property IsNoOverwrite: Boolean read GetIsNoOverwrite;      // ... and 4
     property IsFlipPhysics: Boolean read GetIsFlipPhysics;      // ... and 8
-    property IsInvisible: Boolean read GetIsInvisible;          // ... and 32
     property IsFlipImage: Boolean read GetIsFlipImage;          // ... and 64
     property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
@@ -221,7 +219,6 @@ begin
 
   // Remove TriggerEffect if object disabled
   // If it is a preplaced lemming, we unfortunately have to keep it (or this lemming will be drawn)
-  //    from namida: Woudln't it be safer to apply the change, but set the Invisible flag?
   if sIsDisabled and not (TriggerEffect = DOM_LEMMING) then
     sTriggerEffect := DOM_NONE;
 
@@ -323,11 +320,6 @@ end;
 function TInteractiveObjectInfo.GetIsFlipPhysics: Boolean;
 begin
   Result := ((Obj.DrawingFlags and odf_FlipLem) <> 0);
-end;
-
-function TInteractiveObjectInfo.GetIsInvisible: Boolean;
-begin
-  Result := ((Obj.DrawingFlags and odf_Invisible) <> 0) or (MetaObj.TriggerEffect = DOM_SKETCH);
 end;
 
 function TInteractiveObjectInfo.GetIsFlipImage: Boolean;
