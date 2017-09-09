@@ -494,14 +494,17 @@ $OBJECT
   BOTTOM_OFFSET 0
 $END
 
+# replacement for the anti-splat pad
 $OBJECT
   INDEX 12
-  COLLECTION namida_wasteland
-  PIECE antisplat_wire
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
+  COLLECTION default
+  PIECE updraft
+  LEFT_OFFSET 5
+  RIGHT_OFFSET -5
+  TOP_OFFSET -5
+  BOTTOM_OFFSET -3
+  WIDTH 14
+  HEIGHT 7
 $END
 
 $BACKGROUND
