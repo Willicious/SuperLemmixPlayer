@@ -505,6 +505,7 @@ begin
     StringList.Add(IntToHex(i, MAX_KEY_LEN) + '=' + s);
   end;
   try
+    ForceDirectories(AppPath + SFSaveData);
     StringList.SaveToFile(AppPath + SFSaveData + 'hotkeys.ini')
   finally
     StringList.Free;

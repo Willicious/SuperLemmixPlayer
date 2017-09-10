@@ -1467,7 +1467,8 @@ begin
   begin
     if i = hpi_None then Continue;
     fHelperImages[i] := TBitmap32.Create;
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
+    if FileExists(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]) then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
     fHelperImages[i].DrawMode := dmBlend;
   end;
 

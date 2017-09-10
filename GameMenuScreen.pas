@@ -132,13 +132,19 @@ uses
 
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
-  SrcFile: String;
+  buttonSelected: Integer;
 begin
-  SrcFile := GameParams.CurrentLevel.Group.FindFile(aName);
-  if not FileExists(SrcFile) then
-    SrcFile := AppPath + SFGraphicsMenu + aName;
-
-  TPngInterface.LoadPngFile(SrcFile, aDst);
+  if (not (GameParams.CurrentLevel = nil))
+     and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
+    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
+  else if FileExists(AppPath + SFGraphicsMenu + aName) then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
+  else
+  begin
+    buttonSelected := MessageDlg('Could not find gfx\menu\' + aName + '. Try to continue?',
+                                 mtWarning, mbOKCancel, 0);
+    if buttonSelected = mrCancel then Application.Terminate();
+  end;
 end;
 
 procedure TGameMenuScreen.DoTestStuff;
@@ -195,7 +201,8 @@ begin
   P := GameMenuBitmapPositions[aElement];
   // adjust gmbConfig to right, gmbExit to left, if no talismans
   // and don't draw gmbTalisman at all
-  if GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count = 0 then
+  if   (GameParams.CurrentLevel = nil)
+    or (GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count = 0) then
     case aElement of
       gmbConfig: P.X := P.X + 64;
       gmbExit: P.X := P.X - 64;
@@ -499,7 +506,10 @@ procedure TGameMenuScreen.PrepareGameParams;
 begin
   inherited PrepareGameParams;
 
-  CurrentSection := GameParams.CurrentLevel.Group.ParentGroupIndex;
+  if not (GameParams.CurrentLevel = nil) then
+    CurrentSection := GameParams.CurrentLevel.Group.ParentGroupIndex
+  else
+    CurrentSection := 0;
 
   CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} GameParams.BaseLevelPack.Name + #13;
   (*for i := 0 to 15 do

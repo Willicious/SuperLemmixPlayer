@@ -133,16 +133,20 @@ begin
   try
     if not FileExists(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi') then
       aName := 'default';
-    Parser.LoadFromFile(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi');
 
-    Mode := rcl_Athlete;
-    Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
+    if FileExists(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi') then
+    begin
+      Parser.LoadFromFile(AppPath + SFStyles + 'default' + SFPiecesLemmings + 'scheme.nxmi');
 
-    Mode := rcl_Zombie;
-    Parser.MainSection.Section['recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
+      Mode := rcl_Athlete;
+      Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
 
-    Mode := rcl_Selected;
-    Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+      Mode := rcl_Zombie;
+      Parser.MainSection.Section['recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
+
+      Mode := rcl_Selected;
+      Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+    end;
   finally
     Parser.Free;
   end;

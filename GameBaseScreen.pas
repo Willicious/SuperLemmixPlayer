@@ -326,28 +326,34 @@ begin
   List.Free;
 end;
 
-procedure TGameBaseScreen.ExtractBackGround;
+procedure TGameBaseScreen.ExtractBackground;
 begin
-  if FileExists(GameParams.CurrentLevel.Group.FindFile('background.png')) then
+  if (not (GameParams.CurrentLevel = nil))
+     and FileExists(GameParams.CurrentLevel.Group.FindFile('background.png')) then
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('background.png'), fBackground)
-  else
+  else if FileExists(AppPath + SFGraphicsMenu + 'background.png') then
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', fBackground);
 end;
 
 procedure TGameBaseScreen.ExtractPurpleFont;
 var
-  //Pal: TArrayOfColor32;
   i: Integer;
   TempBMP: TBitmap32;
+  buttonSelected: Integer;
 begin
-  //Pal := GetDosMainMenuPaletteColors32;
-
   TempBMP := TBitmap32.Create;
 
-  if FileExists(GameParams.CurrentLevel.Group.FindFile('menu_font.png')) then
+  if (not (GameParams.CurrentLevel = nil))
+     and FileExists(GameParams.CurrentLevel.Group.FindFile('menu_font.png')) then
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('menu_font.png'), TempBMP)
+  else if FileExists(AppPath + SFGraphicsMenu + 'menu_font.png') then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP)
   else
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP);
+  begin
+    buttonSelected := MessageDlg('Could not find the menu font gfx\menu\menu_font.png. Try to continue?',
+                                 mtWarning, mbOKCancel, 0);
+    if buttonSelected = mrCancel then Application.Terminate();
+  end;
 
   for i := 0 to PURPLEFONTCOUNT-7 do
   begin
@@ -358,10 +364,18 @@ begin
     fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
   end;
 
-  if FileExists(GameParams.CurrentLevel.Group.FindFile('talismans.png')) then
+  if (not (GameParams.CurrentLevel = nil))
+     and FileExists(GameParams.CurrentLevel.Group.FindFile('talismans.png')) then
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('talismans.png'), TempBMP)
+  else if FileExists(AppPath + SFGraphicsMenu + 'talismans.png') then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP)
   else
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP);
+  begin
+    buttonSelected := MessageDlg('Could not find the talisman graphics gfx\menu\talismans.png. Try to continue?',
+                                 mtWarning, mbOKCancel, 0);
+    if buttonSelected = mrCancel then Application.Terminate();
+  end;
+
   for i := 0 to 5 do
   begin
     fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);
@@ -406,12 +420,8 @@ procedure TGameBaseScreen.TileBackgroundBitmap(X, Y: Integer; Dst: TBitmap32 = n
 var
   aX, aY: Integer;
 begin
-
-  Assert(fBackground.Width > 0);
-  Assert(fBackground.Height > 0);
-
-  if Dst = nil then
-    Dst := fScreenImg.Bitmap;
+  if Dst = nil then Dst := fScreenImg.Bitmap;
+  if (fBackground.Width = 0) or (fBackground.Height = 0) then Exit;
 
   aY := Y;
   aX := X;

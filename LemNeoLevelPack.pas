@@ -7,7 +7,7 @@ interface
 uses
   System.Generics.Collections, System.Generics.Defaults,
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
-  Classes, SysUtils, StrUtils, Contnrs,
+  Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
   LemTalisman,
   LemStrings, LemTypes, LemNeoParser;
 
@@ -528,7 +528,7 @@ begin
   try
     if FileExists(Path + 'music.nxmi') then
       Parser.LoadFromFile(Path + 'music.nxmi')
-    else
+    else if FileExists(AppPath + SFData + 'music.nxmi') then
       Parser.LoadFromFile(AppPath + SFData + 'music.nxmi');
 
     MainSec := Parser.MainSection;
@@ -542,6 +542,7 @@ procedure TNeoLevelGroup.LoadPostviewData;
 var
   Parser: TParser;
   MainSec: TParserSection;
+  buttonSelected: Integer;
 begin
   if (fParentGroup <> nil) and not FileExists(Path + 'postview.nxmi') then
   begin
@@ -556,8 +557,14 @@ begin
   try
     if FileExists(Path + 'postview.nxmi') then
       Parser.LoadFromFile(Path + 'postview.nxmi')
+    else if FileExists(AppPath + SFData + 'postview.nxmi') then
+      Parser.LoadFromFile(AppPath + SFData + 'postview.nxmi')
     else
-      Parser.LoadFromFile(AppPath + SFData + 'postview.nxmi');
+    begin
+      buttonSelected := MessageDlg('Could not find postview.nxmi in the folder data\. Try to continue?',
+                                   mtWarning, mbOKCancel, 0);
+      if buttonSelected = mrCancel then Application.Terminate();
+    end;
 
     MainSec := Parser.MainSection;
     MainSec.DoForEachSection('result', LoadPostviewSection);

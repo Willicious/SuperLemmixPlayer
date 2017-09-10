@@ -250,7 +250,7 @@ var
 implementation
 
 uses
-  SharedGlobals,
+  SharedGlobals, Controls,
   GameWindow, //for EXTRA_ZOOM_LEVELS const
   GameSound;
 
@@ -318,6 +318,7 @@ begin
   SL := TStringList.Create;
   SL2 := TStringList.Create;
 
+  ForceDirectories(AppPath + SFSaveData);
   if FileExists(AppPath + SFSaveData + 'settings.ini') then
     SL2.LoadFromFile(AppPath + SFSaveData + 'settings.ini')
   else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
@@ -511,6 +512,7 @@ end;
 
 procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = false);
 begin
+  if CurrentLevel = nil then Exit;
   Level.LoadFromFile(CurrentLevel.Path);
   PieceManager.Tidy;
   Renderer.PrepareGameRendering(Level, NoOutput);
@@ -589,16 +591,29 @@ end;
 
 
 constructor TDosGameParams.Create;
+var
+  buttonSelected: Integer;
 begin
   inherited Create;
 
   MiscOptions := DEF_MISCOPTIONS;
   PostLevelSoundOptions := [plsVictory, plsFailure];
 
-  BaseLevelPack := TNeoLevelGroup.Create(nil, AppPath + SFLevels);
+  if not DirectoryExists(AppPath + SFLevels) then
+  begin
+    buttonSelected := MessageDlg('Could not find any levels in the folder levels\. Try to continue?',
+                                 mtWarning, mbOKCancel, 0);
+    if buttonSelected = mrCancel then Application.Terminate();
+  end;
 
-  SetLevel(BaseLevelPack.FirstUnbeatenLevelRecursive);
-
+  try
+    BaseLevelPack := TNeoLevelGroup.Create(nil, AppPath + SFLevels);
+    SetLevel(BaseLevelPack.FirstUnbeatenLevelRecursive);
+  except
+    BaseLevelPack := nil;
+    SetLevel(nil);
+  end;
+  
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;
