@@ -116,9 +116,11 @@ var
   ACh: AnsiChar;
 begin
   ACh := AnsiChar(Ch);
-  Assert((ACh in [#26..#126]) and (ACh <> ' '), 'Assertion failure on GetBitmapOfChar, character 0x' + IntToHex(Ord(ACh), 2));
-
-  if Ord(ACh) > 32 then
+  // Ignore any character not supported by the purple font
+  //Assert((ACh in [#26..#126]) and (ACh <> ' '), 'Assertion failure on GetBitmapOfChar, character 0x' + IntToHex(Ord(ACh), 2));
+  if (not (ACh in [#26..#126])) and (ACh <> ' ') then
+    Idx := 0
+  else if Ord(ACh) > 32 then
     Idx := Ord(ACh) - 33
   else
     Idx := 94 + Ord(ACh) - 26;
