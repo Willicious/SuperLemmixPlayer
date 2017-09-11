@@ -177,12 +177,12 @@ begin
     WriteLn('Drag and drop an NXP file onto ' + ExtractFileName(ParamStr(0)) + ' to convert it.');
     ReadLn(Dummy);
     Exit;
+    //SrcFile := ExtractFilePath(ParamStr(0)) + 'NepsterLems.nxp';
   end;
 
   SrcFile := ParamStr(1);
   if Pos(':', SrcFile) = 0 then
     SrcFile := ExtractFilePath(ParamStr(0)) + SrcFile;
-  // GameFile := ExtractFilePath(ParamStr(0)) + 'data\';
 
   DstBasePath := ExtractFilePath(ParamStr(0)) + 'levels\' + ExtractFileName(ChangeFileExt(SrcFile, '')) + '\';
   ForceDirectories(DstBasePath); // others are created as needed
@@ -259,7 +259,7 @@ begin
         GameParams.Level.PreText.LoadFromStream(MS);
       if CreateDataStream('p' + LeadZeroStr(Rank+1, 2) + LeadZeroStr(Level+1, 2) + '.txt', MS) <> nil then
         GameParams.Level.PostText.LoadFromStream(MS);
-      ClearInvalidPieces(GameParams.Level);
+      //ClearInvalidPieces(GameParams.Level);
 
       n := 0;
       for i := 0 to Talismans.Count-1 do
