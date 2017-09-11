@@ -227,18 +227,18 @@ var
       if Flip then
         PatchL := MatchRec.OffsetT
       else
-        PatchL := MatchRec.OffsetB;
+        PatchL := -MatchRec.OffsetB;
       if Invert then
-        PatchT := MatchRec.OffsetR
+        PatchT := -MatchRec.OffsetR
       else
         PatchT := MatchRec.OffsetL;
     end else begin
       if Flip then
-        PatchL := MatchRec.OffsetR
+        PatchL := -MatchRec.OffsetR
       else
         PatchL := MatchRec.OffsetL;
       if Invert then
-        PatchT := MatchRec.OffsetB
+        PatchT := -MatchRec.OffsetB
       else
         PatchT := MatchRec.OffsetT;
     end;
