@@ -2247,11 +2247,11 @@ begin
     trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
     trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
-    trOWLeft:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYLEFT <> 0);
-    trOWRight:    Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYRIGHT <> 0);
-    trOWDown:     Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYDOWN <> 0);
-    trOWUp:       Result :=     (PhysicsMap.Pixel[X, Y] and PM_ONEWAYUP <> 0);
-    trSteel:      Result :=     (PhysicsMap.Pixel[X, Y] and PM_STEEL <> 0);
+    trOWLeft:     Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYLEFT <> 0);
+    trOWRight:    Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYRIGHT <> 0);
+    trOWDown:     Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYDOWN <> 0);
+    trOWUp:       Result :=     (PhysicsMap.PixelS[X, Y] and PM_ONEWAYUP <> 0);
+    trSteel:      Result :=     (PhysicsMap.PixelS[X, Y] and PM_STEEL <> 0);
     trBlocker:    Result :=     (ReadBlockerMap(X, Y) = DOM_BLOCKER)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCERIGHT)
                             or  (ReadBlockerMap(X, Y) = DOM_FORCELEFT);
@@ -2622,7 +2622,7 @@ begin
 
   Assert(CheckRectCopy(D, S), 'bash rect err');
 
-  BasherMasks.DrawTo(PhysicsMap, D, S);
+   BasherMasks.DrawTo(PhysicsMap, D, S);
 
   // Only change the PhysicsMap if simulating stuff
   if not IsSimulating then
