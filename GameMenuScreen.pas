@@ -94,8 +94,6 @@ type
     procedure DrawWorkerLemmings(aFrame: Integer);
     procedure DrawReel;
     procedure SetNextCredit;
-    procedure DumpLevels;
-    procedure DumpImages;
     procedure DoTestStuff; //what a great name. it's a function I have here for testing things.
     procedure PerformUpdateCheck;
     procedure DoMassReplayCheck;
@@ -379,9 +377,7 @@ begin
       VK_F1     : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);
       VK_F2     : DoLevelSelect;
       VK_F3     : ShowConfigMenu;
-      //VK_F4     : DumpLevels;
-      //VK_F5     : DumpImages;
-      VK_F6     : begin
+      VK_F4     : begin
                     if (GameParams.CurrentLevel <> nil)
                        and (GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count <> 0) then
                       CloseScreen(gstTalisman);
@@ -395,30 +391,6 @@ begin
       VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);
       VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
     end;
-  end;
-end;
-
-procedure TGameMenuScreen.DumpImages;
-var
-  I: Integer;
-begin
-  I := MessageDlg('Dump all level images? Warning: This is very slow!', mtCustom, [mbYes, mbNo], 0);
-  if I = mrYes then
-  begin
-    raise Exception.Create('TGameMenuScreen.DumpImages not yet implemented with new level pack code');
-    //TBaseDosLevelSystem(GameParams.Style.LevelSystem).DumpAllImages;
-  end;
-end;
-
-procedure TGameMenuScreen.DumpLevels;
-var
-  I: Integer;
-begin
-  I := MessageDlg('Dump all level files? Warning: This may overwrite' + CrLf + 'LVL files currently present!', mtCustom, [mbYes, mbNo], 0);
-  if I = mrYes then
-  begin
-    raise Exception.Create('TGameMenuScreen.DumpLevels not yet implemented with new level pack code');
-    //TBaseDosLevelSystem(GameParams.Style.LevelSystem).DumpAllLevels;
   end;
 end;
 
