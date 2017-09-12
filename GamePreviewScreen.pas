@@ -199,18 +199,23 @@ begin
     Exit;
   end;
   case Key of
-    VK_ESCAPE: begin
-                 if GameParams.TestModeLevel <> nil then
-                   CloseScreen(gstExit)
-                 else
-                   CloseScreen(gstMenu);
-               end;
-    VK_RETURN: begin VGASpecPrep; CloseScreen(gstPlay); end;
-    VK_LEFT: PreviousLevel;
-    VK_RIGHT: NextLevel;
-    VK_DOWN: PreviousRank;
-    VK_UP: NextRank;
-  end;
+    VK_ESCAPE : begin
+                  if GameParams.TestModeLevel <> nil then
+                    CloseScreen(gstExit)
+                  else
+                    CloseScreen(gstMenu);
+                end;
+    VK_RETURN : begin
+                  VGASpecPrep;
+                  CloseScreen(gstPlay);
+                end;
+    VK_LEFT   : PreviousLevel;
+    VK_RIGHT  : NextLevel;
+    VK_DOWN   : PreviousRank;
+    VK_UP     : NextRank;
+    VK_F2     : DoLevelSelect;
+    //VK_F3     : ShowConfigMenu;
+    end;
 end;
 
 procedure TGamePreviewScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);

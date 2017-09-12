@@ -101,7 +101,6 @@ type
     procedure DoTestStuff; //what a great name. it's a function I have here for testing things.
     procedure PerformUpdateCheck;
     procedure DoMassReplayCheck;
-    procedure DoLevelSelect;
   { eventhandlers }
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -123,8 +122,6 @@ type
 implementation
 
 uses
-  LemNeoLevelPack,
-  FNeoLemmixLevelSelect,
   FNeoLemmixSetup,
   LemNeoOnline;
 
@@ -698,32 +695,6 @@ begin
     F.ShowModal;
   finally
     F.Free;
-  end;
-end;
-
-procedure TGameMenuScreen.DoLevelSelect;
-var
-  F: TFLevelSelect;
-  OldLevel: TNeoLevelEntry;
-  Success: Boolean;
-  LoadAsPack: Boolean;
-begin
-  OldLevel := GameParams.CurrentLevel;
-  F := TFLevelSelect.Create(self);
-  try
-    Success := F.ShowModal = mrOk;
-    LoadAsPack := F.LoadAsPack;
-  finally
-    F.Free;
-  end;
-
-  if not Success then
-    GameParams.SetLevel(OldLevel)
-  else begin
-    if LoadAsPack then
-      CloseScreen(gstMenu)
-    else
-      CloseScreen(gstPreview);
   end;
 end;
 

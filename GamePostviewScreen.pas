@@ -324,15 +324,15 @@ begin
   end;
 
   case Key of
-    VK_ESCAPE: begin
-                 if GameParams.TestModeLevel <> nil then
-                   CloseScreen(gstExit)
-                 else
-                   CloseScreen(gstMenu);
-               end;
-    VK_RETURN: begin
-                 NextLevel;
-               end;
+    VK_ESCAPE : begin
+                  if GameParams.TestModeLevel <> nil then
+                    CloseScreen(gstExit)
+                  else
+                    CloseScreen(gstMenu);
+                end;
+    VK_RETURN : NextLevel;
+    VK_F2     : DoLevelSelect;
+    //VK_F3     : ShowConfigMenu;
   end;
 end;
 
