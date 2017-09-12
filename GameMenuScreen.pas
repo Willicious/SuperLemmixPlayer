@@ -13,7 +13,6 @@ uses
   Math,
   PngInterface, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, ShellApi,
-  FNeoLemmixConfig,
   GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs, LemVersion,
   LemTypes, LemStrings, LemDosStructures, LemGame,
@@ -97,7 +96,6 @@ type
     procedure SetNextCredit;
     procedure DumpLevels;
     procedure DumpImages;
-    procedure ShowConfigMenu;
     procedure DoTestStuff; //what a great name. it's a function I have here for testing things.
     procedure PerformUpdateCheck;
     procedure DoMassReplayCheck;
@@ -122,8 +120,7 @@ type
 implementation
 
 uses
-  FNeoLemmixSetup,
-  LemNeoOnline;
+  FNeoLemmixSetup, LemNeoOnline;
 
 { TGameMenuScreen }
 
@@ -399,58 +396,6 @@ begin
       VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
     end;
   end;
-end;
-
-procedure TGameMenuScreen.ShowConfigMenu;
-var
-  ConfigDlg: TFormNXConfig;
-  OldFullScreen: Boolean;
-begin
-  OldFullScreen := GameParams.FullScreen;
-  ConfigDlg := TFormNXConfig.Create(self);
-  ConfigDlg.SetGameParams;
-  ConfigDlg.NXConfigPages.TabIndex := 0;
-  ConfigDlg.ShowModal;
-  ConfigDlg.Free;
-
-  // Wise advice from Simon - save these things on exiting the
-  // config dialog, rather than waiting for a quit or a screen
-  // transition to save them.
-  GameParams.Save;
-
-  if (GameParams.FullScreen <> OldFullScreen) then
-  begin
-    if GameParams.FullScreen then
-    begin
-      GameParams.MainForm.Left := 0;
-      GameParams.MainForm.Top := 0;
-      GameParams.MainForm.WindowState := wsMaximized;
-      GameParams.MainForm.BorderStyle := bsNone;
-    end else begin
-      GameParams.MainForm.BorderStyle := bsSizeable;
-      GameParams.MainForm.WindowState := wsNormal;
-      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320, Min(Screen.Width div 320, Screen.Height div 200) * 320);
-      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200, Min(Screen.Width div 320, Screen.Height div 200) * 200);
-      GameParams.MainForm.Left := (Screen.Width div 2) - (GameParams.MainForm.Width div 2);
-      GameParams.MainForm.Top := (Screen.Height div 2) - (GameParams.MainForm.Height div 2);
-    end;
-  end;
-
-  if GameParams.LinearResampleMenu then
-  begin
-    if ScreenImg.Bitmap.Resampler is TNearestResampler then
-    begin
-      TLinearResampler.Create(ScreenImg.Bitmap);
-      ScreenImg.Bitmap.Changed;
-    end;
-  end else begin
-    if ScreenImg.Bitmap.Resampler is TLinearResampler then
-    begin
-      TNearestResampler.Create(ScreenImg.Bitmap);
-      ScreenImg.Bitmap.Changed;
-    end;
-  end;
-
 end;
 
 procedure TGameMenuScreen.DumpImages;

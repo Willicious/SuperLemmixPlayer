@@ -214,7 +214,7 @@ begin
     VK_DOWN   : PreviousRank;
     VK_UP     : NextRank;
     VK_F2     : DoLevelSelect;
-    //VK_F3     : ShowConfigMenu;
+    VK_F3     : ShowConfigMenu;
     end;
 end;
 
