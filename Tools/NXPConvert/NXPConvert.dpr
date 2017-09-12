@@ -265,6 +265,7 @@ begin
       for i := 0 to Talismans.Count-1 do
         if (Talismans[i].RankNumber = Rank) and (Talismans[i].LevelNumber = Level) then
         begin
+          //Write('    Trying to convert talisman...');
           OldTal := Talismans[i];
           NewTal := LemTalisman.TTalisman.Create;
 
@@ -281,9 +282,13 @@ begin
             else NewTal.Color := tcBronze;
           end;
 
-          if OldTal.SaveRequirement <> GameParams.Level.Info.RescueCount then NewTal.RescueCount := OldTal.SaveRequirement;
-          if (OldTal.TimeLimit > 0) and (OldTal.TimeLimit <> GameParams.Level.Info.TimeLimit * 17) then NewTal.TimeLimit := OldTal.TimeLimit;
-          if (OldTal.RRMin > (53 - GameParams.Level.Info.SpawnInterval) * 2) or ((OldTal.RRMax < 99) and not GameParams.Level.Info.SpawnIntervalLocked) then
+          if OldTal.SaveRequirement <> GameParams.Level.Info.RescueCount then
+            NewTal.RescueCount := OldTal.SaveRequirement;
+          if (OldTal.TimeLimit > 0) and (OldTal.TimeLimit <> GameParams.Level.Info.TimeLimit * 17) then
+            NewTal.TimeLimit := OldTal.TimeLimit;
+
+          if    (OldTal.RRMin > (53 - GameParams.Level.Info.SpawnInterval) * 2)
+             or ((OldTal.RRMax < 99) and not GameParams.Level.Info.SpawnIntervalLocked) then
           begin
             Write('    Removed a talisman due to using no-longer-supported feature: Release rate limits');
             NewTal.Free;
@@ -399,4 +404,7 @@ begin
 
   Parser.SaveToFile(DstBasePath + 'info.nxmi');
   Parser.Clear;
+
+  Write('Conversion finished! Press enter to exit.');
+  if ParamStr(2) <> 'silent' then ReadLn(Dummy);
 end.
