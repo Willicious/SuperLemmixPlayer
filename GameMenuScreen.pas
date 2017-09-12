@@ -381,21 +381,25 @@ begin
   if Shift = [] then
   begin
     case Key of
-      VK_RETURN : CloseScreen(gstPreview);
-      VK_F1     : CloseScreen(gstPreview);
+      VK_RETURN : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);
+      VK_F1     : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);
       VK_F2     : DoLevelSelect;
       VK_F3     : ShowConfigMenu;
-      VK_F4     : DumpLevels;
-      VK_F5     : DumpImages;
-      VK_F6     : if GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count <> 0 then CloseScreen(gstTalisman);
+      //VK_F4     : DumpLevels;
+      //VK_F5     : DumpImages;
+      VK_F6     : begin
+                    if (GameParams.CurrentLevel <> nil)
+                       and (GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count <> 0) then
+                      CloseScreen(gstTalisman);
+                  end;
       VK_F7     : DoMassReplayCheck;
       VK_F12    : begin
                     GameParams.LoadCurrentLevel;
                     CloseScreen(gstPlay);
                   end;
       VK_ESCAPE : CloseScreen(gstExit);
-      VK_UP     : NextSection(True);
-      VK_DOWN   : NextSection(False);
+      VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);
+      VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
     end;
   end;
 end;
