@@ -263,16 +263,6 @@ $OBJECT
 $END
 
 $OBJECT
-  INDEX 5
-  COLLECTION namida_sky
-  PIECE radiation
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
-$END
-
-$OBJECT
   INDEX 6
   COLLECTION namida_sky
   PIECE lightning_horizontal

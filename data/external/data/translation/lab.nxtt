@@ -447,16 +447,6 @@ $OBJECT
 $END
 
 $OBJECT
-  INDEX 7
-  COLLECTION namida_lab
-  PIECE radiation
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
-$END
-
-$OBJECT
   INDEX 8
   COLLECTION namida_lab
   PIECE owf_left

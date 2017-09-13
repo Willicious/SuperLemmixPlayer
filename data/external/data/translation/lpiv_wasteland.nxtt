@@ -475,16 +475,6 @@ $OBJECT
 $END
 
 $OBJECT
-  INDEX 10
-  COLLECTION namida_wasteland
-  PIECE radiation
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
-$END
-
-$OBJECT
   INDEX 11
   COLLECTION namida_wasteland
   PIECE splat_wire

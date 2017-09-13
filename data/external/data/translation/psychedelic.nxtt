@@ -516,16 +516,6 @@ $OBJECT
 $END
 
 $OBJECT
-  INDEX 14
-  COLLECTION namida_psychedelic
-  PIECE radiation
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
-$END
-
-$OBJECT
   INDEX 15
   COLLECTION namida_psychedelic
   PIECE splitter
