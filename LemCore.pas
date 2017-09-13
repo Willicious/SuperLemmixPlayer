@@ -168,7 +168,6 @@ type
     trTeleport,
     trPickup,
     trButton,
-    trRadiation,
     trUpdraft,
     trFlipper,
     trSplat,
@@ -288,7 +287,7 @@ const
     trExit,                   // locked exit
     trZombie,                 // sketch item
     trButton,                 // button
-    trRadiation,              // radiation
+    trZombie,                 // radiation - unused
     trOWDown,                 // OWW down
     trUpdraft,                // updraft
     trFlipper,                // flipper

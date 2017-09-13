@@ -109,8 +109,8 @@ type
                  hpi_N, hpi_O, hpi_P, hpi_Q, hpi_R, hpi_S, hpi_T, hpi_U, hpi_V, hpi_W, hpi_X, hpi_Y, hpi_Z,
                  hpi_num_1, hpi_num_inf,
                  hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation,
-                 hpi_Exit, hpi_Fire, hpi_Trap, hpi_Trap_Disabled, hpi_Radiation, hpi_Slowfreeze,
-                 hpi_Flipper, hpi_Button, hpi_Force, hpi_Splat, hpi_NoSplat, hpi_Water,
+                 hpi_Exit, hpi_Fire, hpi_Trap, hpi_Trap_Disabled,
+                 hpi_Flipper, hpi_Button, hpi_Force, hpi_Splat, hpi_Water,
                  hpi_FallDist);
 
   THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
@@ -210,13 +210,10 @@ const
                               'fire.png',
                               'trap.png',
                               'trap_dis.png',
-                              'radiation.png',
-                              'slowfreeze.png',
                               'flipper.png',
                               'button.png',
                               'force.png',
                               'splat.png',
-                              'splat_no.png',
                               'water.png',
                               'fall_distance.png');
 

@@ -115,7 +115,7 @@ const
   DOM_LOCKEXIT         = 15;
   DOM_SKETCH           = 16; // replaces DOM_SECRET, shouldn't be in LVL files, and gets hidden if it is
   DOM_BUTTON           = 17;
-  DOM_RADIATION        = 18;
+  //DOM_RADIATION        = 18;
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
   DOM_FLIPPER          = 21;

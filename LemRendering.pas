@@ -1142,11 +1142,6 @@ begin
         fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
       end;
 
-    DOM_RADIATION:
-      begin
-        fHelperImages[hpi_Radiation].DrawTo(Dst, DrawX - 4, DrawY);
-      end;
-
     DOM_FLIPPER:
       begin
         fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13, DrawY);

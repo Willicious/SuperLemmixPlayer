@@ -286,7 +286,7 @@ begin
     if Sec.Line['locked_exit'] <> nil then fTriggerEffect := 15;
     // 16 is unused
     if Sec.Line['button'] <> nil then fTriggerEffect := 17;
-    if Sec.Line['radiation'] <> nil then fTriggerEffect := 18;
+    // 18 is unused
     if Sec.Line['one_way_down'] <> nil then fTriggerEffect := 19;
     if Sec.Line['updraft'] <> nil then fTriggerEffect := 20;
     if Sec.Line['splitter'] <> nil then fTriggerEffect := 21;

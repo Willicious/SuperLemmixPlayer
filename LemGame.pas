@@ -34,7 +34,7 @@ const
     (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
-        DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_RADIATION,
+        DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT,
         DOM_ONEWAYDOWN, DOM_UPDRAFT, DOM_HINT, DOM_SPLAT, DOM_BACKGROUND];
 
 const
@@ -135,7 +135,6 @@ type
     PickupMap                  : TArrayArrayBoolean;
     ButtonMap                  : TArrayArrayBoolean;
     FlipperMap                 : TArrayArrayBoolean;
-    RadiationMap               : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
 
     fReplayManager             : TReplay;
@@ -240,7 +239,6 @@ type
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleExit(L: TLemming): Boolean;
-      function HandleRadiation(L: TLemming; Stoning: Boolean): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
       function HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -477,8 +475,9 @@ const
   DOM_PICKUP           = 14;
   DOM_LOCKEXIT         = 15;
   DOM_SECRET           = 16; // no longer used!!
+  DOM_SKETCH           = 16;
   DOM_BUTTON           = 17;
-  DOM_RADIATION        = 18;
+  DOM_RADIATION        = 18; // no longer used!!
   DOM_ONEWAYDOWN       = 19;
   DOM_UPDRAFT          = 20;
   DOM_FLIPPER          = 21;
@@ -905,7 +904,6 @@ begin
   SetLength(ButtonMap, 0, 0);
   SetLength(PickupMap, 0, 0);
   SetLength(FlipperMap, 0, 0);
-  SetLength(RadiationMap, 0, 0);
   SetLength(SplatMap, 0, 0);
   SetLength(ExitMap, 0, 0);
   SetLength(LockedExitMap, 0, 0);
@@ -1483,8 +1481,6 @@ begin
   SetLength(PickupMap, Level.Info.Width, Level.Info.Height);
   SetLength(FlipperMap, 0, 0);
   SetLength(FlipperMap, Level.Info.Width, Level.Info.Height);
-  SetLength(RadiationMap, 0, 0);
-  SetLength(RadiationMap, Level.Info.Width, Level.Info.Height);
   SetLength(SplatMap, 0, 0);
   SetLength(SplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(ExitMap, 0, 0);
@@ -1653,7 +1649,6 @@ begin
       DOM_PICKUP:     WriteTriggerMap(PickupMap, ObjectInfos[i].TriggerRect);
       DOM_BUTTON:     WriteTriggerMap(ButtonMap, ObjectInfos[i].TriggerRect);
       DOM_FLIPPER:    WriteTriggerMap(FlipperMap, ObjectInfos[i].TriggerRect);
-      DOM_RADIATION:  WriteTriggerMap(RadiationMap, ObjectInfos[i].TriggerRect);
       DOM_SPLAT:      WriteTriggerMap(SplatMap, ObjectInfos[i].TriggerRect);
     end;
   end;
@@ -2190,10 +2185,6 @@ begin
       if (L.LemAction = baFixing) then CheckPos[0, i] := L.LemX;
     end;
 
-    // Radiation
-    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trRadiation) then
-      HandleRadiation(L, False);
-
     // Teleporter
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trTeleport) then
       AbortChecks := HandleTeleport(L, CheckPos[0, i], CheckPos[1, i]);
@@ -2258,7 +2249,6 @@ begin
     trTeleport:   Result :=     ReadTriggerMap(X, Y, TeleporterMap);
     trPickup:     Result :=     ReadTriggerMap(X, Y, PickupMap);
     trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
-    trRadiation:  Result :=     ReadTriggerMap(X, Y, RadiationMap);
     trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
     trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap);
     trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
@@ -2464,17 +2454,6 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleRadiation(L: TLemming; Stoning: Boolean): Boolean;
-begin
-  Result := False;
-
-  if (L.LemExplosionTimer = 0) and not (L.LemAction in [baOhnoing, baStoning]) then
-  begin
-    L.LemExplosionTimer := 152;
-    L.LemTimerToStone := Stoning;
-  end;
-end;
-
 function TLemmingGame.HandleForceField(L: TLemming; Direction: Integer): Boolean;
 begin
   Result := False;
@@ -2594,7 +2573,7 @@ begin
 
   BomberMask.DrawTo(PhysicsMap, PosX - 8, PosY - 14);
 
-  if not IsSimulating then // could happen as a result of radiation or nuke
+  if not IsSimulating then // could happen as a result of nuking
     fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, BomberMask.Width, BomberMask.Height);
 end;
 
