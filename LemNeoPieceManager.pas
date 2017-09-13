@@ -180,7 +180,7 @@ begin
   if FileExists(BasePath + '.png') then  // .nxtp is optional, but .png is not :)
     T := TMetaTerrain.Create
   else
-    raise Exception.Create('TNeoPieceManager.ObtainTerrain: Could not find terrain piece: ' + Identifier);
+    raise EAbort.Create('Error loading the level: Could not find terrain piece: ' + Identifier);
   fTerrains.Add(T);
   T.Load(TerrainLabel.GS, TerrainLabel.Piece);
 end;
@@ -190,10 +190,15 @@ var
   ObjectLabel: TLabelRecord;
   MO: TMetaObject;
 begin
-  ObjectLabel := SplitIdentifier(Identifier);
-  Result := fObjects.Count;
-  MO := fObjects.Add;
-  MO.Load(ObjectLabel.GS, ObjectLabel.Piece, fTheme);
+  try
+    ObjectLabel := SplitIdentifier(Identifier);
+    Result := fObjects.Count;
+    MO := TMetaObject.Create;
+    MO.Load(ObjectLabel.GS, ObjectLabel.Piece, fTheme);
+    fObjects.Add(MO);
+  except
+    raise EAbort.Create('Error loading the level: Could not find object piece: ' + Identifier);
+  end;
 end;
 
 // Functions to get the metainfo

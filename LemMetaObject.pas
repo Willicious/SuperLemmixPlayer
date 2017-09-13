@@ -159,7 +159,8 @@ type
       function GetItem(Index: Integer): TMetaObject;
     public
       constructor Create;
-      function Add: TMetaObject;
+      function Add: TMetaObject; overload;
+      procedure Add(MO: TMetaObject); overload;
       function Insert(Index: Integer): TMetaObject;
       property Items[Index: Integer]: TMetaObject read GetItem; default;
       property List;
@@ -706,6 +707,11 @@ function TMetaObjects.Add: TMetaObject;
 begin
   Result := TMetaObject.Create;
   inherited Add(Result);
+end;
+
+procedure TMetaObjects.Add(MO: TMetaObject);
+begin
+  inherited Add(MO);
 end;
 
 function TMetaObjects.Insert(Index: Integer): TMetaObject;

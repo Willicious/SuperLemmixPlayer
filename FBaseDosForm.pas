@@ -73,8 +73,12 @@ end;
 
 function TBaseDosForm.ShowScreen: Integer;
 begin
-  PrepareGameParams;
-  BuildScreen;
+  try
+    PrepareGameParams;
+    BuildScreen;
+  except
+    on E : EAbort do Exit; // should only happen if some level piece is missing
+  end;
   TMainForm(GameParams.MainForm).ChildForm := self;
   Cursor := crNone;
   Screen.Cursor := crNone;

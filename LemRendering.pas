@@ -1796,7 +1796,6 @@ begin
     fRenderInterface.DisableDrawing := NoOutput;
   end;
 
-  // Draw the PhysicsMap
   RenderPhysicsMap;
 end;
 

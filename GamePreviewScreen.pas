@@ -102,11 +102,20 @@ begin
     ExtractPurpleFont;
 
     // prepare the renderer, this is a little bit shaky (wrong place)
-    with GameParams do
-    begin
-      Lw := Level.Info.Width;
-      Lh := Level.Info.Height;
-      Renderer.PrepareGameRendering(Level);
+    try
+      with GameParams do
+      begin
+        Lw := Level.Info.Width;
+        Lh := Level.Info.Height;
+        Renderer.PrepareGameRendering(Level);
+      end;
+    except
+      on E : Exception do
+      begin
+        ShowMessage(E.Message);
+        CloseScreen(gstMenu);
+        Exit;
+      end;
     end;
 
     Temp := TBitmap32.Create;
@@ -371,14 +380,17 @@ procedure TGamePreviewScreen.PrepareGameParams;
 begin
   inherited;
 
-  if not GameParams.OneLevelMode then
-  begin
-    GameParams.LoadCurrentLevel;
-  end else begin
-    (*TBaseDosLevelSystem(Style.LevelSystem).fOneLvlString := GameParams.LevelString;
-    Style.LevelSystem.LoadSingleLevel(dPack, dSection, dLevel, Level);*)
+  try
+    if not GameParams.OneLevelMode then
+      GameParams.LoadCurrentLevel;
+  except
+    on E : EAbort do
+    begin
+      ShowMessage(E.Message);
+      CloseScreen(gstMenu);
+      Raise; // yet again, to be caught on TBaseDosForm
+    end;
   end;
-
 end;
 
 end.
