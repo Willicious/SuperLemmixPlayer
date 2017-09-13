@@ -1,0 +1,420 @@
+-------------------------------------
+  1) Generalities
+-------------------------------------
+All NeoLemmix files .nxmt, .nxmi, .nxtp, .nxto are text files.
+
+For all of them the following rules hold:
+- Any line starting with '#' is ignored.
+- Any line that is empty or consists only white-spaces is ignored.
+- Any line group starts with '$[KEY]' and ends with '$END'
+- Any single line starts with a key string, then comes a single white-space and then the value.
+  Leading or trailing white-spaces are ignored.
+- The key string is not case-sensitive, though using upper-case is recommended.
+- The order of the lines is irrelevant in most occasions. Exceptions are:
+  - Any lines of a group must be placed between the '$[KEY]' and the following '$END' line.
+  - In level files, objects and terrain pieces are ordered according to their appearance in the level file. 
+  - When defining preview and postview texts in level files, the lines are displayed in the same order they are contained in the file.
+
+-------------------------------------
+  2) File 'theme.nxtm'
+-------------------------------------
+This file contains all global information for a style.
+Input lines are:
+a) Lemming sprite location
+   Key: 'LEMMINGS'  
+   Value: A string naming the style that contains the lemmings sprites.
+          The default location is 'default'.		
+b) Theme colors
+   Group Key: '$COLORS'
+   ba) ????????
+       Key: 'MASK'
+       Value: A Html-like hex string specifying the RGB-components, but starting with 'x' instead of the usual '#'
+   bb) The background color of the minimap   
+       Key: 'MINIMAP'
+       Value: A Html-like hex string specifying the RGB-components, but starting with 'x' instead of the usual '#'
+   bc) The background color of the level area   
+       Key: 'BACKGROUND'
+       Value: A Html-like hex string specifying the RGB-components, but starting with 'x' instead of the usual '#'
+   bd) The color used for any auto-recoloring one-way arrows 
+       Key: 'ONE-WAYS'
+       Value: A Html-like hex string specifying the RGB-components, but starting with 'x' instead of the usual '#'
+   be) The border color for pick-up skills 
+       Key: 'PICKUP_BORDER'
+       Value: A Html-like hex string specifying the RGB-components, but starting with 'x' instead of the usual '#'
+   bf) The background color inside pick-up skills
+       Key: 'PICKUP_INSIDE'
+       Value: A Html-like hex string specifying the RGB-components, but starting with 'x' instead of the usual '#'
+   The default color for all of them is black.
+
+-------------------------------------
+  2) Terrain piece info '.nxmt'
+-------------------------------------
+This file contains additional information for terrain pieces.
+It has to have the same name as the corresponding terrain image itself, except of course the file extension.
+Input lines are:
+a) The piece is a steel piece.
+   Key: 'STEEL'  
+   Value: none
+
+-------------------------------------
+  3) Object piece info '.nxmo'
+-------------------------------------
+This file contains additional information for interactive objects.
+It has to have the same name as the corresponding terrain image itself, except of course the file extension.
+Input lines are:
+a) Number of frames in the animation
+   Key: 'FRAMES'  
+   Value: The number of frames
+b) The type of the object
+   Key: One of the following, depending on the object type in question:
+        'NO_EFFECT', 'WINDOW', 'EXIT', 'TRAP', 'SINGLE_USE_TRAP',
+        'WATER, 'FIRE', 'ONE_WAY_RIGHT', 'ONE_WAY_LEFT', 'ONE_WAY_DOWN',
+        'PICKUP_SKILL', 'TELEPORTER', 'RECEIVER', 'LOCKED_EXIT', 'BUTTON',
+        'UPDRAFT', 'SPLATPAD', 'FORCE_RIGHT', 'FORCE_LEFT', 'SPLITTER',
+        'MOVING_BACKGROUND'
+   Value: None
+c) The position of the left edge of the trigger area
+   Key: 'TRIGGER_X'
+   Value: The offset of the left edge of the trigger area to the left edge of the object in pixels  
+d) The position of the top edge of the trigger area
+   Key: 'TRIGGER_Y'
+   Value: The offset of the top edge of the trigger area to the top edge of the object in pixels  
+e) The width of the trigger area
+   Key: 'TRIGGER_WIDTH'
+   Value: The width of the trigger area in pixels  
+f) The height of the trigger area
+   Key: 'TRIGGER_HEIGHT'
+   Value: The height of the trigger area in pixels  
+g) Allows the object to be resized horizontally
+   Key: 'RESIZE_HORIZONTAL'
+   Value: none   
+h) Allows the object to be resized vertically
+   Key: 'RESIZE_VERTICAL'
+   Value: none 
+i) The sound effect that is played when triggering the object
+   Key: 'SOUND'
+   Value: The file name (without extension) of a sound file in the folder "sound\"
+j) A special key frame, that triggers physics effects in the middle of the animation. Used for teleporters and receivers.
+   Key: 'KEY_FRAME'
+   Value: The zero-based index of the key frame
+k) Info regarding recoloring with mask sprites, mainly for pick-up skills.
+   Group Key: '$MASK'
+   ka) Mask sprite location
+       Key: 'NAME'
+       Value: I have no clue how to determine them in general. For pick-up skills the two supported values are 'border' and 'inside'.
+   kb) Use the objct sprite as a mask, instead of a separate mask sprite
+       Key: 'SELF'
+       Value: none
+   kc) The color used for recoloring
+       Key: 'COLOR'
+       Value: A key for a color, as used in the theme.nxmi file.
+
+
+
+-------------------------------------
+  4) Level files '.nxlv'
+-------------------------------------
+This file specifies all parts of a level, the general info, the terrain, ...
+Input lines are:
+a) The level title
+   Key: 'TITLE' 
+   Value: A string giving the title of the level
+b) The level author
+   Key: 'AUTHOR' 
+   Value: A string giving the (nick)name of the level designer
+c) The music playing in the level
+   Key: 'MUSIC'
+   Value: The file name (without extension) of the music file contained in the folder "musics\".
+   If this line is missing, then the music will be selected according to the music rotation set for the pack.
+d) The level ID. A randomized number that (hopefully) identifies the level uniquely
+   Key: 'ID'
+   Value: A 15-character hey number, prepended with an 'x'
+e) The Autosteel type used 
+   Key: 'AUTOSTEEL'
+   Value: 'on' or 'off' ???? HOW ABOUT SIMPLE AUTOSTEEL ????
+   As the NeoLemmix player uses autosteel as the default, this line is not necessary.
+f) The width of the level
+   Key: 'WIDTH'
+   Value: The width of the level in pixels
+g) The height of the level
+   Key: 'HEIGHT'
+   Value: The height of the level in pixels   
+h) The horizontal position of the screen start.
+   Key: 'START_X'
+   Value: The x-coordinate of the center of the screen start
+i) The vertcial position of the screen start.
+   Key: 'START_Y'
+   Value: The y-coordinate of the center of the screen start
+j) The main theme used in the level
+   Key: 'THEME'
+   Value: The folder name of the style, that contains the theme info used for the level
+k)The background image for the level
+   Key: 'BACKGROUND'
+   Value: The name of the style folder and then the name of the background image, separated by ':'
+   If this line is missing, then the background color of the theme is used.
+l) The number of lemmings
+   Key: 'LEMMINGS'
+   Value: The number of lemmings
+m) The save requirement
+   Key: 'REQUIREMENT'
+   Value: The number of lemmings that have to be saved
+n) The time limit for the level
+   Key: 'TIME_LIMIT'
+   Value: The time limit of the level in seconds.
+   If no time limit is specified, then 
+o) The maximal spawn interval, i.e. the minimal release rate in the level
+   Key: 'MAX_SPAWN_INTERVAL'
+   Value: The maximal number of frames between two spawning lemmings
+   If this line is missing, then there is no time limit and the player may take as long as they like.
+p) Determines, whether the player may change the spawn interval resp. release rate.
+   Key: 'SPAWN_INTERVAL_LOCKED'
+   Value: none
+   If this line is missing, then the player may change the spawn interval.
+r) The skillset in the level
+   Group Key: '$SKILLSET'
+   ra) Walker skills
+       Key: 'WALKER'
+       Value: The number of walker skills available or 'INFINITE' 
+   rb) Climber skills
+       Key: 'CLIMBER'
+       Value: The number of climber skills available or 'INFINITE'  
+   rc) Swimmer skills
+       Key: 'SWIMMER'
+       Value: The number of swimmer skills available or 'INFINITE'  
+   rd) Floater skills
+       Key: 'FLOATER'
+       Value: The number of floater skills available or 'INFINITE'  
+   re) Glider skills
+       Key: 'GLIDER'
+       Value: The number of glider skills available or 'INFINITE'
+   rf) Disarmer skills
+       Key: 'DISARMER'
+       Value: The number of disarmer skills available or 'INFINITE'
+   rg) Bomber skills
+       Key: 'BOMBER'
+       Value: The number of bomber skills available or 'INFINITE'
+   rh) Stoner skills
+       Key: 'STONER'
+       Value: The number of stoner skills available or 'INFINITE'
+   ri) Blocker skills
+       Key: 'BLOCKER'
+       Value: The number of blocker skills available or 'INFINITE'
+   rj) Builder skills
+       Key: 'BUILDER'
+       Value: The number of builder skills available or 'INFINITE'
+   rk) Platformer skills
+       Key: 'PLATFORMER'
+       Value: The number of platformer skills available or 'INFINITE'
+   rl) Stacker skills
+       Key: 'STACKER'
+       Value: The number of stacker skills available or 'INFINITE'
+   rm) Basher skills
+       Key: 'BASHER'
+       Value: The number of basher skills available or 'INFINITE'
+   rn) Miner skills
+       Key: 'MINER'
+       Value: The number of miner skills available or 'INFINITE'
+   ro) Digger skills
+       Key: 'DIGGER'
+       Value: The number of digger skills available or 'INFINITE'
+   rp) Fencer skills
+       Key: 'FENCER'
+       Value: The number of fencer skills available or 'INFINITE'
+   rq) Cloner skills
+       Key: 'CLONER'
+       Value: The number of cloner skills available or 'INFINITE'
+s) An interactive object in the level
+   Group Key: '$OBJECT'
+   sa) The style which contains the object
+       Key: 'COLLECTION'
+       Value: The folder name of the style that contains the object
+   sb) The name of the object
+       Key: 'PIECE'
+       Value: The file name of the sprite for the object without extension.
+   sc) The horizontal coordinate of the piece
+       Key: 'X'
+       Value: The x-coordinate in pixels of the top left corner of the object. 
+   sd) The vertical coordinate of the piece
+       Key: 'Y'
+       Value: The y-coordinate in pixels of the top left corner of the object. 
+   se) Whether this object is drawn below any terrain.
+       Key: 'NO_OVERWRITE'
+       Value: none
+   sf) Whether this object is only drawn abote solid terrain.
+       Key: 'ONLY_ON_TERRAIN'
+       Value: none
+   sg) Whether the object is rotated in the level
+       Key: 'ROTATE'
+       Value: none
+   sh) Whether the object is mirrored at a horizontal axis
+       Key: 'FLIP_VERTICAL'
+       Value: none
+   si) Whether the object is mirrored at a vertical axis
+       Key: 'FLIP_HORIZONTAL'
+       Value: none
+   sj) The direction the lemmings move.
+       Key: 'DIRECTION'
+       Value: Either 'right' or 'left'
+       This line only has an effect on hatches and splitters.
+   sk) The width of the object.
+       Key: 'WIDTH'
+       Value: The width of the object in pixels.
+       This line only has an effect on horizontally resizable objects. The default value is the width of the sprite.
+   sl) The height of the object.
+       Key: 'HEIGHT'
+       Value: The height of the object in pixels.
+       This line only has an effect on vertically resizable objects. The default value is the height of the sprite.
+   sm) The skill of a pick-up skill.
+       Key: 'SKILL'
+       Value: 'walker', 'climber', 'swimmer', 'floater', 'glider', 'disarmer', 'bomber', 'stoner',
+              'blocker', 'builder', 'platformer', 'stacker', 'basher', 'miner', 'digger', 'fencer', 'cloner'
+       This line only has an effect for pick-up skills
+   sn) Preassigned skills used for a hatch 
+       Key: 'CLIMBER', 'SWIMMER', 'FLOATER', 'GLIDER', 'DISARMER' or 'ZOMBIE' 
+       Value: none
+       This line only has an effect for hatches.
+   so) Whether an object flips a lemming around
+       Key: 'FLIP_LEMMING'
+       Value: none
+       This line only has an effect for teleporters.
+   sp) IDs for pairing objects
+       Key: 'PAIRING'
+       Value: An integer
+       This line only has an effect for teleporters and receivers. Two of them with the same number will be matched in the level.
+t) A terrain piece in the level
+   Group Key: '$TERRAIN'
+   ta) The style which contains the terrain piece
+       Key: 'COLLECTION'
+       Value: The folder name of the style that contains the terrain piece
+   tb) The name of the terrain piece
+       Key: 'PIECE'
+       Value: The file name of the sprite for the terrain piece without extension.
+   tc) The horizontal coordinate of the piece
+       Key: 'X'
+       Value: The x-coordinate in pixels of the top left corner of the terrain piece. 
+   td) The vertical coordinate of the piece
+       Key: 'Y'
+       Value: The y-coordinate in pixels of the top left corner of the terrain piece. 
+   te) Whether this terrain piece is drawn below any terrain.
+       Key: 'NO_OVERWRITE'
+       Value: none
+   tf) Whether this terrain piece erases existing terrain.
+       Key: 'ERASE'
+       Value: none
+   tg) Whether the terrain piece is rotated in the level
+       Key: 'ROTATE'
+       Value: none
+   th) Whether the terrain piece is mirrored at a horizontal axis
+       Key: 'FLIP_VERTICAL'
+       Value: none
+   ti) Whether the terrain piece is mirrored at a vertical axis
+       Key: 'FLIP_HORIZONTAL'
+       Value: none
+   tj) Whether the terrain piece can be turned into a one-way-wall.
+       Key: 'ONE_WAY'
+       Value: none
+u) A preplaced lemming in the level
+   Group Key: '$LEMMING'
+   ua) The horizontal coordinate of the preplaced lemming
+       Key: 'X'
+       Value: The x-coordinate in pixels of the top left corner of the preplaced lemming. 
+   ub) The vertical coordinate of the preplaced lemming
+       Key: 'Y'
+       Value: The y-coordinate in pixels of the top left corner of the preplaced lemming. 
+   uc) The direction the lemming moves at the start of the level.
+       Key: 'DIRECTION'
+       Value: Either 'right' or 'left'
+   ud) Preassigned skills that the preplaced lemmings has
+       Key: 'CLIMBER', 'SWIMMER', 'FLOATER', 'GLIDER', 'DISARMER' or 'ZOMBIE' 
+       Value: none
+v) The preview text displayed directly before starting a level
+   Group Key: '$PRETEXT'
+   va) A line of text to be displayed
+       Key: 'LINE'
+       Value: The text to be displayed in the line
+w) The postview text displayed directly after ending a level
+   Group Key: '$POSTTEXT'
+   wa) A line of text to be displayed
+       Key: 'LINE'
+       Value: The text to be displayed in the line
+x) A talisman that can be achieved of the level
+   Group Key: '$TALISMAN'
+   xa) The special title of the talisman
+       Key: 'TITLE'
+       Value: The title text to be displayed. Note that the requirement text is created automatically.
+   xb) The index of the talisman
+       Key: 'ID'
+       Value: A zero-based index of the talisman.
+   xc) The medal color for the talisman
+       Key: 'COLOR'
+       Value: Either 'bronze', 'silver' or 'gold'
+   xd) The save requirement to achieve the talisman
+       Key: 'SAVE'
+       Value: The number of lemmings to be saved to achieve the talisman
+   xe) The time limit to keep to achieve the talisman
+       Key: 'TIME_LIMIT'
+       Value: The number of frames the player may take to achieve the talisman. Note that there are 17 frames in one game-second.
+   xf) The maximal number of used skills to achieve the talisman
+       Key: 'SKILL_LIMIT'
+       Value: The maximal number of skills used on lemmings to achieve the talisman.
+   xg) The maximal number of used walkers to achieve the talisman
+       Key: 'WALKER_LIMIT'
+       Value: The maximal number of used walkers to achieve the talisman
+   xh) The maximal number of used climbers to achieve the talisman
+       Key: 'CLIMBER_LIMIT'
+       Value: The maximal number of used climbers to achieve the talisman
+   xi) The maximal number of used swimmers to achieve the talisman
+       Key: 'SWIMMER_LIMIT'
+       Value: The maximal number of used swimmers to achieve the talisman
+   xj) The maximal number of used floaters to achieve the talisman
+       Key: 'FLOATER_LIMIT'
+       Value: The maximal number of used floaters to achieve the talisman
+   xk) The maximal number of used gliders to achieve the talisman
+       Key: 'GLIDER_LIMIT'
+       Value: The maximal number of used gliders to achieve the talisman
+   xl) The maximal number of used disarmers to achieve the talisman
+       Key: 'DISARMER_LIMIT'
+       Value: The maximal number of used disarmers to achieve the talisman
+   xd) The maximal number of used bombers to achieve the talisman
+       Key: 'BOMBER_LIMIT'
+       Value: The maximal number of used bombers to achieve the talisman
+   xd) The maximal number of used stoners to achieve the talisman
+       Key: 'STONER_LIMIT'
+       Value: The maximal number of used stoners to achieve the talisman
+   xd) The maximal number of used blockers to achieve the talisman
+       Key: 'BLOCKER_LIMIT'
+       Value: The maximal number of used blockers to achieve the talisman
+   xd) The maximal number of used builders to achieve the talisman
+       Key: 'BUILDER_LIMIT'
+       Value: The maximal number of used builders to achieve the talisman
+   xd) The maximal number of used platformers to achieve the talisman
+       Key: 'PLATFORMER_LIMIT'
+       Value: The maximal number of used platformers to achieve the talisman
+   xd) The maximal number of used stackers to achieve the talisman
+       Key: 'STACKER_LIMIT'
+       Value: The maximal number of used stackers to achieve the talisman
+   xd) The maximal number of used bashers to achieve the talisman
+       Key: 'BASHER_LIMIT'
+       Value: The maximal number of used bashers to achieve the talisman
+   xd) The maximal number of used miners to achieve the talisman
+       Key: 'MINER_LIMIT'
+       Value: The maximal number of used miners to achieve the talisman
+   xd) The maximal number of used diggers to achieve the talisman
+       Key: 'DIGGER_LIMIT'
+       Value: The maximal number of used diggers to achieve the talisman
+   xd) The maximal number of used fencers to achieve the talisman
+       Key: 'FENCER_LIMIT'
+       Value: The maximal number of used fencers to achieve the talisman
+   xd) The maximal number of used cloners to achieve the talisman
+       Key: 'CLONER_LIMIT'
+       Value: The maximal number of used cloners to achieve the talisman
+
+
+
+
+
+
+
+
+
+
