@@ -54,7 +54,7 @@ type
     property PurpleFont: TPurpleFont read fPurpleFont;
     property ScreenIsClosing: Boolean read fScreenIsClosing;
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
-    procedure DoLevelSelect;
+    procedure DoLevelSelect(isPlaying: Boolean = false);
     procedure ShowConfigMenu;
   public
     constructor Create(aOwner: TComponent); override;
@@ -548,7 +548,7 @@ begin
   ClientHeight := GameParams.MainForm.ClientHeight;
 end;
 
-procedure TGameBaseScreen.DoLevelSelect;
+procedure TGameBaseScreen.DoLevelSelect(isPlaying: Boolean = false);
 var
   F: TFLevelSelect;
   OldLevel: TNeoLevelEntry;
@@ -565,7 +565,9 @@ begin
   end;
 
   if not Success then
-    GameParams.SetLevel(OldLevel)
+  begin
+    if not isPlaying then GameParams.SetLevel(OldLevel);
+  end
   else begin
     if LoadAsPack then
       CloseScreen(gstMenu)

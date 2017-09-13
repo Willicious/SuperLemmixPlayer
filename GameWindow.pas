@@ -1147,6 +1147,21 @@ begin
     Exit;
   end;
 
+  // Allow changing options and selecting new levels, but pause level for that
+  if Key = VK_F2 then
+  begin
+    GameSpeed := gspPause;
+    DoLevelSelect(true);
+    Exit;
+  end
+  else if Key = VK_F3 then
+  begin
+    GameSpeed := gspPause;
+    ShowConfigMenu;
+    Exit;
+  end;
+
+
   if not Game.Playing then
     Exit;
 
@@ -1823,25 +1838,31 @@ begin
   Img.Cursor := crNone;
   SkillPanel.SetCursor(crNone);
 
-  Game.SetGameResult;
-  GameParams.GameResult := Game.GameResultRec;
-  with GameParams, GameResult do
-  begin      
-    if gCheated then
+  // We assume that we close the game for the main menu or the preview screen,
+  // only via the level selection menu, and not in regular game play mode
+  if not (aNextScreen in [gstMenu, gstPreview]) then
+  begin
+    Game.SetGameResult;
+    GameParams.GameResult := Game.GameResultRec;
+    with GameParams, GameResult do
     begin
-      GameParams.NextLevel(true);
-      GameParams.ShownText := false;
-      aNextScreen := gstPreview;
-    end;
+      if gCheated then
+      begin
+        GameParams.NextLevel(true);
+        GameParams.ShownText := false;
+        aNextScreen := gstPreview;
+      end;
 
-    if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
-    begin
-      S := Game.ReplayManager.GetSaveFileName(self, Game.Level, true);
-      ForceDirectories(ExtractFilePath(S));
-      Game.EnsureCorrectReplayDetails;
-      Game.ReplayManager.SaveToFile(S);
+      if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
+      begin
+        S := Game.ReplayManager.GetSaveFileName(self, Game.Level, true);
+        ForceDirectories(ExtractFilePath(S));
+        Game.EnsureCorrectReplayDetails;
+        Game.ReplayManager.SaveToFile(S);
+      end;
     end;
   end;
+
   Img.RepaintMode := rmFull;
 
   inherited CloseScreen(aNextScreen);
