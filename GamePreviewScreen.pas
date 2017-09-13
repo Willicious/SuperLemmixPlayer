@@ -250,14 +250,12 @@ var
     MaxLen: Integer;
     i: Integer;
 
-    procedure MakeReqString;
+    procedure MakeReqString(CurLine: Integer);
     var
-      CurLine: Integer;
       S: String;
       i: Integer;
     begin
       S := Trim(Talisman.RequirementText);
-      CurLine := 1;
       while (S <> '') and (CurLine < Length(Lines)) do
       begin
         if Length(S) > 36 then
@@ -300,9 +298,13 @@ var
     Lines[1] := '    ';
     Lines[2] := '    ';
 
-    Lines[0] := Lines[0] + LeftStr(Talisman.Title, 36);
-
-    MakeReqString;
+    if Trim(Talisman.Title).Length > 0 then
+    begin
+      Lines[0] := Lines[0] + LeftStr(Talisman.Title, 36);
+      MakeReqString(1);
+    end
+    else
+      MakeReqString(0);
 
     MaxLen := 0;
     for i := 0 to 2 do
