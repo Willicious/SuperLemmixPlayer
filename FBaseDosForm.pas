@@ -20,7 +20,7 @@ type
     function IsGameplayScreen: Boolean; virtual;
   public
     constructor Create(aOwner: TComponent); override;
-    function ShowScreen: Integer; virtual;
+    procedure ShowScreen; virtual;
 
   end;
 
@@ -71,7 +71,7 @@ begin
   Top := 0;
 end;
 
-function TBaseDosForm.ShowScreen: Integer;
+procedure TBaseDosForm.ShowScreen;
 begin
   try
     PrepareGameParams;
@@ -83,7 +83,6 @@ begin
   Cursor := crNone;
   Screen.Cursor := crNone;
   Show;
-  Result := 0; // not needed, this can be changed to a procedure
 end;
 
 function TBaseDosForm.IsGameplayScreen: Boolean;

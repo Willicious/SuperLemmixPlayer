@@ -1,9 +1,9 @@
 object BaseDosForm: TBaseDosForm
   Left = 797
   Top = 189
-  Width = 434
-  Height = 312
   Caption = 'BaseDosForm'
+  ClientHeight = 0
+  ClientWidth = 104
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

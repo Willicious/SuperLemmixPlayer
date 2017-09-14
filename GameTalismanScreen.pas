@@ -35,18 +35,12 @@ type
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
-    function ShowScreen: Integer; override;
   published
   end;
 
 implementation
 
 uses Forms;
-
-function TGameTalismanScreen.ShowScreen: Integer;
-begin
-  Result := inherited ShowScreen;
-end;
 
 procedure TGameTalismanScreen.BuildScreen;
 var
