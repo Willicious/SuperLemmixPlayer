@@ -114,6 +114,7 @@ type
     // Object rendering
     procedure DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
     procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
+    procedure DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
     procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming);
 
     // Lemming rendering
@@ -1176,6 +1177,61 @@ begin
   end;
 end;
 
+procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
+var
+  numHelpers, indexHelper: Integer;
+  DrawX, DrawY: Integer;
+begin
+  Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+  Assert(Obj.MetaObj.TriggerEffect = DOM_WINDOW, 'Hatch helper icons called for other object type');
+
+  // Count number of helper icons to be displayed.
+  numHelpers := 0;
+  if (Obj.PreAssignedSkills and 1) <> 0 then Inc(numHelpers); // climber
+  if (Obj.PreAssignedSkills and 2) <> 0 then Inc(numHelpers); // swimmer
+  if (Obj.PreAssignedSkills and 4) <> 0 then Inc(numHelpers); // floater
+  if (Obj.PreAssignedSkills and 8) <> 0 then Inc(numHelpers); // glider
+  if (Obj.PreAssignedSkills and 16) <> 0 then Inc(numHelpers); // disarmer
+  if (Obj.PreAssignedSkills and 64) <> 0 then Inc(numHelpers); // zombie
+
+  // Set base drawing position; helper icons will be drawn 10 pixels apart
+  DrawX := Obj.Left + Obj.Width div 2 - numHelpers * 5;
+  DrawY := Obj.Top;
+
+  // Draw actual helper icons
+  indexHelper := 0;
+  if (Obj.PreAssignedSkills and 64) <> 0 then
+  begin
+    fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if (Obj.PreAssignedSkills and 1) <> 0 then
+  begin
+    fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if (Obj.PreAssignedSkills and 2) <> 0 then
+  begin
+    fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if (Obj.PreAssignedSkills and 4) <> 0 then
+  begin
+    fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if (Obj.PreAssignedSkills and 8) <> 0 then
+  begin
+    fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if (Obj.PreAssignedSkills and 16) <> 0 then
+  begin
+    fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+  end;
+end;
+
+
 procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming);
 var
   DrawX, DrawY: Integer;
@@ -1365,8 +1421,16 @@ begin
 
   if fRenderInterface = nil then Exit; // otherwise, some of the remaining code may cause an exception on first rendering
 
-  // Draw object helpers
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
+  // Draw hatch helpers
+  for i := 0 to ObjectInfos.Count-1 do
+    if (ObjectInfos[i].TriggerEffect = DOM_WINDOW) and not (ObjectInfos[i].PreassignedSkills = 0) then
+    begin
+      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], ObjectInfos[i]);
+      fLayers.fIsEmpty[rlObjectHelpers] := false;
+    end;
+
+  // Draw object helpers
   if DrawHelper and UsefulOnly then
   begin
     for i := 0 to ObjectInfos.Count-1 do
