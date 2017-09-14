@@ -115,7 +115,7 @@ type
     procedure DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
     procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
     procedure DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
-    procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming);
+    procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
@@ -310,7 +310,7 @@ begin
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 
   // Helper for selected blockers
-  if UsefulOnly and Selected and (aLemming.LemAction = baBlocking) then
+  if Selected and (aLemming.LemIsZombie or UsefulOnly) then
   begin
     DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
     fLayers.fIsEmpty[rlObjectHelpers] := false;
@@ -1232,19 +1232,58 @@ begin
 end;
 
 
-procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming);
+procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 var
+  numHelpers, indexHelper: Integer;
   DrawX, DrawY: Integer;
 begin
   Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
+  Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode');
 
-  DrawX := L.LemX;
-  DrawY := L.LemY - 10 - 9; // much simpler
+  // Count number of helper icons to be displayed.
+  numHelpers := 0;
+  if isClearPhysics and (L.LemAction = baBlocking) then Inc(numHelpers);
+  if L.LemIsClimber then Inc(numHelpers);
+  if L.LemIsSwimmer then Inc(numHelpers);
+  if L.LemIsFloater then Inc(numHelpers);
+  if L.LemIsGlider then Inc(numHelpers);
+  if L.LemIsMechanic then Inc(numHelpers);
 
-  Assert(L.LemAction = baBlocking, 'Lemming helper called for non-blocker');
+  DrawX := L.LemX - numHelpers * 5;
+  DrawY := L.LemY - 10 - 9;
 
-  if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4, DrawY)
-  else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY);
+  // Draw actual helper icons
+  indexHelper := 0;
+  if isClearPhysics and (L.LemAction = baBlocking) then
+  begin
+    if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 1, DrawY)
+    else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 1, DrawY);
+    Inc(indexHelper);
+  end;
+  if L.LemIsClimber then
+  begin
+    fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if L.LemIsSwimmer then
+  begin
+    fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if L.LemIsFloater then
+  begin
+    fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if L.LemIsGlider then
+  begin
+    fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
+  if L.LemIsMechanic then
+  begin
+    fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+  end;
 end;
 
 procedure TRenderer.ProcessDrawFrame(aInf: TInteractiveObjectInfo; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
