@@ -342,7 +342,7 @@ x) A talisman that can be achieved of the level
    xa) The special title of the talisman
        Key: 'TITLE'
        Value: The title text to be displayed. Note that the requirement text is created automatically.
-   xb) The index of the talisman
+   xb) The index of the talisman within the pack
        Key: 'ID'
        Value: A zero-based index of the talisman.
    xc) The medal color for the talisman

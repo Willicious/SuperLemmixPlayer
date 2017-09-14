@@ -234,6 +234,9 @@ type
 
 implementation
 
+uses
+  Math;
+
 function SortAlphabetical(Item1, Item2: Pointer): Integer;
 var
   G1: TNeoLevelGroup;
@@ -1089,7 +1092,7 @@ begin
        else if L.Color > R.Color then
          Result := 1
        else
-         Result := CompareStr(L.Title, R.Title);
+         Result := CompareValue(L.ID, R.ID);
      end
     ));
   end;

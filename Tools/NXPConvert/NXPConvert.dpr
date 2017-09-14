@@ -261,7 +261,6 @@ begin
         GameParams.Level.PostText.LoadFromStream(MS);
       //ClearInvalidPieces(GameParams.Level);
 
-      n := 0;
       for i := 0 to Talismans.Count-1 do
         if (Talismans[i].RankNumber = Rank) and (Talismans[i].LevelNumber = Level) then
         begin
@@ -270,7 +269,7 @@ begin
           NewTal := LemTalisman.TTalisman.Create;
 
           NewTal.Title := OldTal.Description;
-          NewTal.ID := n;
+          NewTal.ID := i;
           case OldTal.TalismanType of
             0: begin
                  Write('    Removed a talisman due to being of "Hidden" type');
@@ -327,7 +326,6 @@ begin
           end;
 
           GameParams.Level.Talismans.Add(NewTal);
-          Inc(n);
         end;
 
       LevelFilename := MakeSafeForFilename(Trim(GameParams.Level.Info.Title));
