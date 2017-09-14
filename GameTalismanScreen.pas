@@ -153,26 +153,55 @@ begin
         1: begin
              LF(1);
              AddHalfBreak(TalChar, 38);
-             Add('    ' + CutTitle, 38);
-             Add('    ' + WA[0], 38);
+             if CutTitle.Length > 0 then
+             begin
+               Add('    ' + CutTitle, 38);
+               Add('    ' + WA[0], 38);
+             end
+             else
+             begin
+               Add('    ' + WA[0], 38);
+               LF(1);
+             end;
              AddHalfBreak;
              LF(1);
            end;
         2: begin
              LF(1);
-             Add(TalChar + '   ' + CutTitle, 38);
-             Add('    ' + WA[0], 38);
-             Add('    ' + WA[1], 38);
+             if CutTitle.Length > 0 then
+             begin
+               Add(TalChar + '   ' + CutTitle, 38);
+               Add('    ' + WA[0], 38);
+               Add('    ' + WA[1], 38);
+             end
+             else
+             begin
+               AddHalfBreak(TalChar, 38);
+               Add('    ' + WA[0], 38);
+               Add('    ' + WA[1], 38);
+               AddHalfBreak;
+             end;
              LF(1);
            end;
         3: begin
-             AddHalfBreak;
-             AddHalfBreak('    ' + CutTitle, 38);
-             AddHalfBreak(TalChar, 38);
-             Add('    ' + WA[0], 38);
-             Add('    ' + WA[1], 38);
-             Add('    ' + WA[2], 38);
-             AddHalfBreak;
+             if CutTitle.Length > 0 then
+             begin
+               AddHalfBreak;
+               AddHalfBreak('    ' + CutTitle, 38);
+               AddHalfBreak(TalChar, 38);
+               Add('    ' + WA[0], 38);
+               Add('    ' + WA[1], 38);
+               Add('    ' + WA[2], 38);
+               AddHalfBreak;
+             end
+             else
+             begin
+               LF(1);
+               Add(TalChar + '   ' + WA[0], 38);
+               Add('    ' + WA[1], 38);
+               Add('    ' + WA[2], 38);
+               LF(1);
+             end;
            end;
         else begin
                Add('    ' + CutTitle, 38);
