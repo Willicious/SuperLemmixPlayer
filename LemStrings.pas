@@ -34,7 +34,7 @@ const
   SFData = 'data\';
       SFDataTranslation = SFData + 'translation\';
 
-  SFSaveData = 'save\';
+  SFSaveData = 'settings\';
 
   // Sound effect files
   SFX_BUILDER_WARNING = 'ting';
