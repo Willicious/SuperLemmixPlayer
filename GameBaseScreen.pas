@@ -56,6 +56,7 @@ type
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
     procedure DoLevelSelect(isPlaying: Boolean = false);
     procedure ShowConfigMenu;
+    procedure DoMassReplayCheck;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -576,16 +577,38 @@ begin
   end;
 end;
 
+procedure TGameBaseScreen.DoMassReplayCheck;
+var
+  OpenDlg: TOpenDialog;
+begin
+  if MessageDlg('Mass replay checking can take a very long time. Proceed?', mtcustom, [mbYes, mbNo], 0) = mrNo then Exit;
+  OpenDlg := TOpenDialog.Create(self);
+  try
+    OpenDlg.Title := 'Select any file in the folder containing replays';
+    OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
+    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp, *.lrb)|*.nxrp;*.lrb';
+    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
+    if not OpenDlg.Execute then
+      Exit;
+    GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
+  finally
+    OpenDlg.Free;
+  end;
+  CloseScreen(gstReplayTest);
+end;
+
+
 procedure TGameBaseScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
   OldFullScreen: Boolean;
+  ConfigResult: TModalResult;
 begin
   OldFullScreen := GameParams.FullScreen;
   ConfigDlg := TFormNXConfig.Create(self);
   ConfigDlg.SetGameParams;
   ConfigDlg.NXConfigPages.TabIndex := 0;
-  ConfigDlg.ShowModal;
+  ConfigResult := ConfigDlg.ShowModal;
   ConfigDlg.Free;
 
   // Wise advice from Simon - save these things on exiting the
@@ -625,6 +648,9 @@ begin
       ScreenImg.Bitmap.Changed;
     end;
   end;
+
+  // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
+  if ConfigResult = mrRetry then DoMassReplayCheck;
 
 end;
 

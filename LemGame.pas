@@ -2716,7 +2716,6 @@ const
                     spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
 begin
   if fHyperSpeed then Exit;
-  if GameParams.NoShadows then Exit;
 
   // Get correct skill to draw the shadow
   if Assigned(fLemSelected) and (fSelectedSkill in ShadowSkillSet) then

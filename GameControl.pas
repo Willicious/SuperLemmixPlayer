@@ -68,7 +68,6 @@ type
     moNoAutoReplayMode,
     moPauseAfterBackwards,
     moNoBackgrounds,
-    moNoShadows,
     moDisableWineWarnings,
     moLinearResampleMenu,
     moLinearResampleGame,
@@ -192,7 +191,6 @@ type
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
-    property NoShadows: boolean Index moNoShadows read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
@@ -314,10 +312,10 @@ begin
   SL.Add('');
   SL.Add('# Interface Options');
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
+  SaveBoolean('AutoReplayNames', ReplayAutoName);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
-  SaveBoolean('NoShadows', NoShadows);
   SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('EdgeScrolling', EdgeScroll);
@@ -440,10 +438,10 @@ begin
   end;
 
   AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
+  ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);
   NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
   PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
-  NoShadows := LoadBoolean('NoShadows', NoShadows);
   CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
   MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
   EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);

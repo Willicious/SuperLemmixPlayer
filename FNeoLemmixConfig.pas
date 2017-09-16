@@ -16,7 +16,6 @@ type
     btnApply: TButton;
     GroupBox4: TGroupBox;
     cbAutoSaveReplay: TCheckBox;
-    cbNoAutoReplay: TCheckBox;
     TabSheet4: TTabSheet;
     tbSoundVol: TTrackBar;
     Label3: TLabel;
@@ -28,14 +27,11 @@ type
     cbFailureJingle: TCheckBox;
     TabSheet5: TTabSheet;
     GroupBox2: TGroupBox;
-    btnHotkeys: TButton;
-    cbPauseAfterBackwards: TCheckBox;
     GroupBox3: TGroupBox;
     cbNoBackgrounds: TCheckBox;
     GroupBox1: TGroupBox;
     cbEnableOnline: TCheckBox;
     cbUpdateCheck: TCheckBox;
-    cbDisableShadows: TCheckBox;
     GroupBox6: TGroupBox;
     cbZoom: TComboBox;
     Label1: TLabel;
@@ -48,16 +44,22 @@ type
     cbEdgeScrolling: TCheckBox;
     cbSpawnInterval: TCheckBox;
     cbReplayAutoName: TCheckBox;
+    btnHotkeys: TButton;
+    btnReplayCheck: TButton;
+    cbNoAutoReplay: TCheckBox;
+    cbPauseAfterBackwards: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
     procedure OptionChanged(Sender: TObject);
     procedure cbEnableOnlineClick(Sender: TObject);
     procedure SliderChange(Sender: TObject);
+    procedure btnReplayCheckClick(Sender: TObject);
   private
     procedure SetFromParams;
     procedure SaveToParams;
   public
+    constructor Create(aOwner: TComponent); override;
     procedure SetGameParams;
   end;
 
@@ -67,9 +69,17 @@ var
 implementation
 
 uses
-  GameWindow; // for EXTRA_ZOOM_LEVELS constant
+  GameWindow, // for EXTRA_ZOOM_LEVELS constant
+  GameMenuScreen; // for disabling the MassReplayCheck button if necessary.
 
 {$R *.dfm}
+
+constructor TFormNXConfig.Create(aOwner: TComponent);
+begin
+  inherited Create(aOwner);
+
+  btnReplayCheck.Enabled := (aOwner is TGameMenuScreen);
+end;
 
 procedure TFormNXConfig.SetGameParams;
 begin
@@ -106,7 +116,6 @@ begin
   cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
 
   cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
-  cbDisableShadows.Checked := GameParams.NoShadows;
   cbEdgeScrolling.Checked := GameParams.EdgeScroll;
   cbSpawnInterval.Checked := GameParams.SpawnInterval;
 
@@ -159,7 +168,6 @@ begin
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
-  GameParams.NoShadows := cbDisableShadows.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
 
@@ -195,6 +203,12 @@ begin
   HotkeyForm.HotkeyManager := GameParams.Hotkeys;
   HotkeyForm.ShowModal;
   HotkeyForm.Free;
+end;
+
+procedure TFormNXConfig.btnReplayCheckClick(Sender: TObject);
+begin
+  // We abuse mrRetry here to signal the menu screen that we want to mass replay check
+  ModalResult := mrRetry;
 end;
 
 procedure TFormNXConfig.OptionChanged(Sender: TObject);

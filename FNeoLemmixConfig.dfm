@@ -23,17 +23,17 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 378
-    ActivePage = TabSheet5
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
       object GroupBox4: TGroupBox
         Left = 8
-        Top = 8
+        Top = 183
         Width = 249
-        Height = 113
+        Height = 67
         Caption = 'Replay Options'
-        TabOrder = 0
+        TabOrder = 3
         object cbAutoSaveReplay: TCheckBox
           Left = 12
           Top = 16
@@ -43,50 +43,61 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbNoAutoReplay: TCheckBox
-          Left = 12
-          Top = 48
-          Width = 225
-          Height = 17
-          Caption = 'Don'#39't Replay After Backwards Frameskips'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
         object cbReplayAutoName: TCheckBox
           Left = 12
-          Top = 32
+          Top = 34
           Width = 225
           Height = 17
           Caption = 'Use Timestamped Replay Names'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = OptionChanged
         end
       end
       object GroupBox1: TGroupBox
         Left = 8
-        Top = 128
+        Top = 120
         Width = 249
         Height = 57
         Caption = 'Internet Options'
-        TabOrder = 1
+        TabOrder = 2
         object cbEnableOnline: TCheckBox
           Left = 16
           Top = 16
           Width = 153
           Height = 17
           Caption = 'Enable Online Features'
+          Enabled = False
           TabOrder = 0
           OnClick = cbEnableOnlineClick
         end
         object cbUpdateCheck: TCheckBox
           Left = 16
-          Top = 32
+          Top = 34
           Width = 169
           Height = 17
           Caption = 'Enable Update Check'
+          Enabled = False
           TabOrder = 1
           OnClick = OptionChanged
         end
+      end
+      object btnHotkeys: TButton
+        Left = 8
+        Top = 8
+        Width = 249
+        Height = 42
+        Caption = 'Configure Hotkeys'
+        TabOrder = 0
+        OnClick = btnHotkeysClick
+      end
+      object btnReplayCheck: TButton
+        Left = 8
+        Top = 56
+        Width = 249
+        Height = 42
+        Caption = 'Mass Replay Check'
+        TabOrder = 1
+        OnClick = btnReplayCheckClick
       end
     end
     object TabSheet5: TTabSheet
@@ -99,18 +110,18 @@ object FormNXConfig: TFormNXConfig
         Height = 57
         Caption = 'Input Options'
         TabOrder = 0
-        object btnHotkeys: TButton
-          Left = 8
-          Top = 31
-          Width = 97
-          Height = 23
-          Caption = 'Configure Hotkeys'
+        object cbNoAutoReplay: TCheckBox
+          Left = 12
+          Top = 16
+          Width = 225
+          Height = 17
+          Caption = 'Don'#39't Replay After Backwards Frameskips'
           TabOrder = 0
-          OnClick = btnHotkeysClick
+          OnClick = OptionChanged
         end
         object cbPauseAfterBackwards: TCheckBox
           Left = 12
-          Top = 14
+          Top = 34
           Width = 153
           Height = 17
           Caption = 'Pause After Backwards Skip'
@@ -120,51 +131,42 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox3: TGroupBox
         Left = 8
-        Top = 65
+        Top = 68
         Width = 249
-        Height = 136
+        Height = 80
         Caption = 'Interface Options'
         TabOrder = 1
         object cbNoBackgrounds: TCheckBox
           Left = 12
-          Top = 64
+          Top = 16
           Width = 153
           Height = 17
           Caption = 'Disable Background Images'
           TabOrder = 0
           OnClick = OptionChanged
         end
-        object cbDisableShadows: TCheckBox
-          Left = 12
-          Top = 80
-          Width = 153
-          Height = 17
-          Caption = 'Disable Skill Shadows'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
         object cbEdgeScrolling: TCheckBox
           Left = 12
-          Top = 96
+          Top = 34
           Width = 153
           Height = 17
           Caption = 'Enable Edge Scrolling'
-          TabOrder = 2
+          TabOrder = 1
           OnClick = OptionChanged
         end
         object cbSpawnInterval: TCheckBox
           Left = 12
-          Top = 112
+          Top = 52
           Width = 153
           Height = 17
           Caption = 'Use Spawn Interval'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = OptionChanged
         end
       end
       object GroupBox6: TGroupBox
         Left = 8
-        Top = 201
+        Top = 151
         Width = 249
         Height = 143
         Caption = 'Graphics Options'

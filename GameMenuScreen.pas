@@ -96,7 +96,6 @@ type
     procedure SetNextCredit;
     procedure DoTestStuff; //what a great name. it's a function I have here for testing things.
     procedure PerformUpdateCheck;
-    procedure DoMassReplayCheck;
   { eventhandlers }
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -581,26 +580,6 @@ end;
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
   inherited CloseScreen(aNextScreen);
-end;
-
-procedure TGameMenuScreen.DoMassReplayCheck;
-var
-  OpenDlg: TOpenDialog;
-begin
-  if MessageDlg('Mass replay checking can take a very long time. Proceed?', mtcustom, [mbYes, mbNo], 0) = mrNo then Exit;
-  OpenDlg := TOpenDialog.Create(self);
-  try
-    OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
-    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp, *.lrb)|*.nxrp;*.lrb';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
-    if not OpenDlg.Execute then
-      Exit;
-    GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
-  finally
-    OpenDlg.Free;
-  end;
-  CloseScreen(gstReplayTest);
 end;
 
 procedure TGameMenuScreen.ShowSetupMenu;
