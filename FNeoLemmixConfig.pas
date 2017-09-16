@@ -18,7 +18,6 @@ type
     cbAutoSaveReplay: TCheckBox;
     Label2: TLabel;
     cbReplayNaming: TComboBox;
-    cbExplicitCancel: TCheckBox;
     cbNoAutoReplay: TCheckBox;
     TabSheet4: TTabSheet;
     tbSoundVol: TTrackBar;
@@ -100,7 +99,6 @@ begin
   //// Page 1 (Global Options) ////
   // Checkboxes
   cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
-  cbExplicitCancel.Checked := GameParams.ExplicitCancel;
   cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
 
   cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
@@ -170,7 +168,6 @@ begin
   GameParams.EnableOnline := cbEnableOnline.Checked;
   GameParams.CheckUpdates := cbUpdateCheck.Checked;
   GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
-  GameParams.ExplicitCancel := cbExplicitCancel.Checked;
   GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
 
   // Replay Naming Dropdown

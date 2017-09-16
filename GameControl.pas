@@ -67,7 +67,6 @@ type
     moAutoReplaySave,
     moAlwaysTimestamp,
     moConfirmOverwrite,
-    moExplicitCancel,
     moBlackOutZero,
     moEnableOnline,
     moCheckUpdates,
@@ -200,7 +199,6 @@ type
     property TimerBlink: Boolean Index moTimerBlink read GetOptionFlag write SetOptionFlag;
     property AlwaysTimestamp: boolean Index moAlwaysTimestamp read GetOptionFlag write SetOptionFlag;
     property ConfirmOverwrite: boolean Index moConfirmOverwrite read GetOptionFlag write SetOptionFlag;
-    property ExplicitCancel: boolean Index moExplicitCancel read GetOptionFlag write SetOptionFlag;
     property BlackOutZero: boolean Index moBlackOutZero read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
@@ -332,7 +330,6 @@ begin
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
   SaveBoolean('AlwaysTimestampReplays', AlwaysTimestamp);
   SaveBoolean('ConfirmReplayOverwrite', ConfirmOverwrite);
-  SaveBoolean('ExplicitReplayCancel', ExplicitCancel);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('LemmingCountBlink', LemmingBlink);
@@ -467,7 +464,6 @@ begin
   TimerBlink := LoadBoolean('TimerBlink', TimerBlink);
   AlwaysTimestamp := LoadBoolean('AlwaysTimestampReplays', AlwaysTimestamp);
   ConfirmOverwrite := LoadBoolean('ConfirmReplayOverwrite', ConfirmOverwrite);
-  ExplicitCancel := LoadBoolean('ExplicitReplayCancel', ExplicitCancel);
   NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
   PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   BlackOutZero := LoadBoolean('BlackOutZero', BlackOutZero);

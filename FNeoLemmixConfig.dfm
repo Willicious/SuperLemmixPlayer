@@ -23,11 +23,10 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 378
-    ActivePage = TabSheet5
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
-      ExplicitHeight = 333
       object GroupBox4: TGroupBox
         Left = 8
         Top = 8
@@ -67,22 +66,13 @@ object FormNXConfig: TFormNXConfig
             'Auto, Add Timestamp'
             'Ask For Filename')
         end
-        object cbExplicitCancel: TCheckBox
-          Left = 12
-          Top = 32
-          Width = 217
-          Height = 17
-          Caption = 'Only Cancel Replay On Cancel Key'
-          TabOrder = 2
-          OnClick = OptionChanged
-        end
         object cbNoAutoReplay: TCheckBox
           Left = 12
           Top = 48
           Width = 225
           Height = 17
           Caption = 'Don'#39't Replay After Backwards Frameskips'
-          TabOrder = 3
+          TabOrder = 2
           OnClick = OptionChanged
         end
       end
@@ -116,7 +106,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
-      ExplicitHeight = 333
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -300,7 +289,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
-      ExplicitHeight = 333
       object Label3: TLabel
         Left = 24
         Top = 45

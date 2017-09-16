@@ -1088,7 +1088,6 @@ begin
   // Do some global stuff
   if aButton = spbNone then Exit;
   if (aButton = spbNuke) and not (ssDouble in Shift) then Exit;
-  if (aButton in [spbSlower, spbFaster, spbNuke]) and GameParams.ExplicitCancel then Exit;
 
   if Game.Replaying and not Level.Info.SpawnIntervalLocked then
   begin

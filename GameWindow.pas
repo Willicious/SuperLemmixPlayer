@@ -1169,133 +1169,128 @@ begin
   if IsHyperSpeed then
      Exit;
 
-  if (func.Action in NON_CANCELLING_KEYS) or (func.Action in SKILL_KEYS)
-  or ((not Game.Replaying) or Game.ReplayInsert)
-  or (not GameParams.ExplicitCancel) then
-    with Game do
+  with Game do
+  begin
+    if (func.Action = lka_CancelReplay) then
+      Game.RegainControl(true); // force the cancel even if in Replay Insert mode
+
+    if (func.Action in [lka_ReleaseRateDown, lka_ReleaseRateUp]) then
+      Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
+
+    if func.Action = lka_Skill then
     begin
+      AssignToHighlit := GameParams.Hotkeys.CheckForKey(lka_Highlight);
+        case func.Modifier of
+          0: SetSelectedSkill(spbWalker, True, AssignToHighlit);
+          1: SetSelectedSkill(spbClimber, True, AssignToHighlit);
+          2: SetSelectedSkill(spbSwimmer, True, AssignToHighlit);
+          3: SetSelectedSkill(spbFloater, True, AssignToHighlit);
+          4: SetSelectedSkill(spbGlider, True, AssignToHighlit);
+          5: SetSelectedSkill(spbDisarmer, True, AssignToHighlit);
+          6: SetSelectedSkill(spbBomber, True, AssignToHighlit);
+          7: SetSelectedSkill(spbStoner, True, AssignToHighlit);
+          8: SetSelectedSkill(spbBlocker, True, AssignToHighlit);
+          9: SetSelectedSkill(spbPlatformer, True, AssignToHighlit);
+          10: SetSelectedSkill(spbBuilder, True, AssignToHighlit);
+          11: SetSelectedSkill(spbStacker, True, AssignToHighlit);
+          12: SetSelectedSkill(spbBasher, True, AssignToHighlit);
+          13: SetSelectedSkill(spbFencer, True, AssignToHighlit);
+          14: SetSelectedSkill(spbMiner, True, AssignToHighlit);
+          15: SetSelectedSkill(spbDigger, True, AssignToHighlit);
+          16: SetSelectedSkill(spbCloner, True, AssignToHighlit);
+        end
+    end;
 
-        if (func.Action = lka_CancelReplay) then
-          Game.RegainControl(true); // force the cancel even if in Replay Insert mode
-
-        if (func.Action in [lka_ReleaseRateDown, lka_ReleaseRateUp]) then
-          Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
-
-        if func.Action = lka_Skill then
-        begin
-          AssignToHighlit := GameParams.Hotkeys.CheckForKey(lka_Highlight);
-            case func.Modifier of
-              0: SetSelectedSkill(spbWalker, True, AssignToHighlit);
-              1: SetSelectedSkill(spbClimber, True, AssignToHighlit);
-              2: SetSelectedSkill(spbSwimmer, True, AssignToHighlit);
-              3: SetSelectedSkill(spbFloater, True, AssignToHighlit);
-              4: SetSelectedSkill(spbGlider, True, AssignToHighlit);
-              5: SetSelectedSkill(spbDisarmer, True, AssignToHighlit);
-              6: SetSelectedSkill(spbBomber, True, AssignToHighlit);
-              7: SetSelectedSkill(spbStoner, True, AssignToHighlit);
-              8: SetSelectedSkill(spbBlocker, True, AssignToHighlit);
-              9: SetSelectedSkill(spbPlatformer, True, AssignToHighlit);
-              10: SetSelectedSkill(spbBuilder, True, AssignToHighlit);
-              11: SetSelectedSkill(spbStacker, True, AssignToHighlit);
-              12: SetSelectedSkill(spbBasher, True, AssignToHighlit);
-              13: SetSelectedSkill(spbFencer, True, AssignToHighlit);
-              14: SetSelectedSkill(spbMiner, True, AssignToHighlit);
-              15: SetSelectedSkill(spbDigger, True, AssignToHighlit);
-              16: SetSelectedSkill(spbCloner, True, AssignToHighlit);
-            end
-        end;
-
-        case func.Action of
-          lka_ReleaseMouse: if not GameParams.FullScreen then
-                            begin
-                              fMouseTrapped := false;
-                              ClipCursor(nil);
-                            end;
-          lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
-          lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
-          lka_Pause: begin
-                       if fGameSpeed = gspPause then
-                         GameSpeed := gspNormal
-                       else
-                         GameSpeed := gspPause;
-                     end;
-          lka_Nuke: begin
-                      // double keypress needed to prevent accidently nuking
-                      CurrTime := TimeGetTime;
-                      if CurrTime - fLastNukeKeyTime < 250 then
-                      begin
-                        RegainControl;
-                        SetSelectedSkill(spbNuke);
-                      end else
-                        fLastNukeKeyTime := CurrTime;
-                    end;
-          lka_SaveState : begin
-                            fSaveStateFrame := fGame.CurrentIteration;
-                            fSaveStateReplayStream.Clear;
-                            Game.ReplayManager.SaveToStream(fSaveStateReplayStream);
-                          end;
-          lka_LoadState : if fSaveStateFrame <> -1 then
-                          begin
-                            fSaveList.ClearAfterIteration(0);
-                            fSaveStateReplayStream.Position := 0;
-                            Game.ReplayManager.LoadFromStream(fSaveStateReplayStream);
-                            GotoSaveState(fSaveStateFrame, 1);
-                            if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
-                          end;
-          lka_Cheat: Game.Cheat;
-          lka_FastForward: begin
-                             case fGameSpeed of
-                               gspNormal: GameSpeed := gspFF;
-                               gspFF: GameSpeed := gspNormal;
-                             end;
-                           end;
-          lka_SaveImage: SaveShot;
-          lka_LoadReplay: LoadReplay;
-          lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
-          lka_Restart: GotoSaveState(0, -1); // the -1 prevents pausing afterwards
-          lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
-          lka_SaveReplay: SaveReplay;
-          lka_SkillRight: begin
-                            sn := GetSelectedSkill;
-                            if (sn < 7) and (fActiveSkills[sn + 1] <> spbNone) then
-                              SetSelectedSkill(fActiveSkills[sn + 1]);
-                          end;
-          lka_SkillLeft:  begin
-                            sn := GetSelectedSkill;
-                            if (sn > 0) and (fActiveSkills[sn - 1] <> spbNone) and (sn <> 8) then
-                              SetSelectedSkill(fActiveSkills[sn - 1]);
-                          end;
-          lka_Skip: if Game.Playing then
-                      if func.Modifier < 0 then
-                      begin
-                        if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
-                        if CurrentIteration > (func.Modifier * -1) then
-                          GotoSaveState(CurrentIteration + func.Modifier)
-                        else
-                          GotoSaveState(0);
-                      end else if func.Modifier > 1 then
-                      begin
-                        fHyperSpeedTarget := CurrentIteration + func.Modifier;
-                      end else
-                        if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
-          lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
-          lka_ClearPhysics: if func.Modifier = 0 then
-                              ClearPhysics := not ClearPhysics
-                            else
-                              ClearPhysics := true;
-          lka_EditReplay: ExecuteReplayEdit;
-          lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
-          lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
-          lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
-          lka_Scroll: begin
-                        if PtInRect(Img.BoundsRect, Img.ParentToClient(ScreenToClient(Mouse.CursorPos))) and not fHoldScrollData.Active then
+    case func.Action of
+      lka_ReleaseMouse: if not GameParams.FullScreen then
                         begin
-                          fHoldScrollData.Active := true;
-                          fHoldScrollData.StartCursor := Mouse.CursorPos;
+                          fMouseTrapped := false;
+                          ClipCursor(nil);
                         end;
+      lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
+      lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
+      lka_Pause: begin
+                   if fGameSpeed = gspPause then
+                     GameSpeed := gspNormal
+                   else
+                     GameSpeed := gspPause;
+                 end;
+      lka_Nuke: begin
+                  // double keypress needed to prevent accidently nuking
+                  CurrTime := TimeGetTime;
+                  if CurrTime - fLastNukeKeyTime < 250 then
+                  begin
+                    RegainControl;
+                    SetSelectedSkill(spbNuke);
+                  end else
+                    fLastNukeKeyTime := CurrTime;
+                end;
+      lka_SaveState : begin
+                        fSaveStateFrame := fGame.CurrentIteration;
+                        fSaveStateReplayStream.Clear;
+                        Game.ReplayManager.SaveToStream(fSaveStateReplayStream);
                       end;
-        end;
-
+      lka_LoadState : if fSaveStateFrame <> -1 then
+                      begin
+                        fSaveList.ClearAfterIteration(0);
+                        fSaveStateReplayStream.Position := 0;
+                        Game.ReplayManager.LoadFromStream(fSaveStateReplayStream);
+                        GotoSaveState(fSaveStateFrame, 1);
+                        if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+                      end;
+      lka_Cheat: Game.Cheat;
+      lka_FastForward: begin
+                         case fGameSpeed of
+                           gspNormal: GameSpeed := gspFF;
+                           gspFF: GameSpeed := gspNormal;
+                         end;
+                       end;
+      lka_SaveImage: SaveShot;
+      lka_LoadReplay: LoadReplay;
+      lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
+      lka_Restart: GotoSaveState(0, -1); // the -1 prevents pausing afterwards
+      lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
+      lka_SaveReplay: SaveReplay;
+      lka_SkillRight: begin
+                        sn := GetSelectedSkill;
+                        if (sn < 7) and (fActiveSkills[sn + 1] <> spbNone) then
+                          SetSelectedSkill(fActiveSkills[sn + 1]);
+                      end;
+      lka_SkillLeft:  begin
+                        sn := GetSelectedSkill;
+                        if (sn > 0) and (fActiveSkills[sn - 1] <> spbNone) and (sn <> 8) then
+                          SetSelectedSkill(fActiveSkills[sn - 1]);
+                      end;
+      lka_Skip: if Game.Playing then
+                  if func.Modifier < 0 then
+                  begin
+                    if GameParams.NoAutoReplayMode then Game.CancelReplayAfterSkip := true;
+                    if CurrentIteration > (func.Modifier * -1) then
+                      GotoSaveState(CurrentIteration + func.Modifier)
+                    else
+                      GotoSaveState(0);
+                  end else if func.Modifier > 1 then
+                  begin
+                    fHyperSpeedTarget := CurrentIteration + func.Modifier;
+                  end else
+                    if fGameSpeed = gspPause then fForceUpdateOneFrame := true;
+      lka_SpecialSkip: HandleSpecialSkip(func.Modifier);
+      lka_ClearPhysics: if func.Modifier = 0 then
+                          ClearPhysics := not ClearPhysics
+                        else
+                          ClearPhysics := true;
+      lka_EditReplay: ExecuteReplayEdit;
+      lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
+      lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
+      lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
+      lka_Scroll: begin
+                    if PtInRect(Img.BoundsRect, Img.ParentToClient(ScreenToClient(Mouse.CursorPos))) and not fHoldScrollData.Active then
+                    begin
+                      fHoldScrollData.Active := true;
+                      fHoldScrollData.StartCursor := Mouse.CursorPos;
+                    end;
+                  end;
+      end;
     end;
 
   CheckShifts(Shift);
@@ -1412,15 +1407,14 @@ begin
     if PassKey <> 0 then
       Form_KeyDown(Sender, PassKey, Shift);
 
-    if (Button = mbLeft) and (not Game.IsHighlightHotkey)
-       and not (Game.Replaying and GameParams.ExplicitCancel) then
+    if (Button = mbLeft) and not Game.IsHighlightHotkey then
     begin
       Game.RegainControl;
       Game.ProcessSkillAssignment;
       if fGameSpeed = gspPause then fForceUpdateOneFrame := True;
     end;
 
-    if Game.IsHighlightHotkey and not (Game.Replaying and GameParams.ExplicitCancel) then
+    if Game.IsHighlightHotkey then
     begin
       OldHighlightLemming := fRenderInterface.HighlitLemming;
       Game.ProcessHighlightAssignment;
