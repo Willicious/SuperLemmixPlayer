@@ -806,7 +806,7 @@ begin
 
   // Erase previous number
   fSkillCountErase.DrawTo(fImage.Bitmap, ButtonLeft, ButtonTop);
-  if (aNumber = 0) and GameParams.BlackOutZero then Exit;
+  if aNumber = 0 then Exit;
 
   if (aButton = spbFaster) and (Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = MINIMUM_SI)) then
     fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
@@ -963,22 +963,15 @@ end;
 
 procedure TBaseSkillPanel.SetInfoLemAlive(Pos: Integer);
 var
-  LemNum, LemToSave: Integer;
-  Blinking : Boolean;
+  LemNum: Integer;
   S: string;
 const
   LEN = 4;
 begin
   LemNum := Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead;
   Assert(LemNum >= 0, 'Negative number of alive lemmings displayed');
-  LemToSave := Level.Info.RescueCount - Game.LemmingsSaved - Game.SkillCount[spbCloner];
-  Blinking := GameParams.LemmingBlink and fIsBlinkFrame and (LemNum < LemToSave);
 
-  if Blinking then
-    S := StringOfChar(' ', LEN)
-  else
-    S := IntToStr(LemNum);
-
+  S := IntToStr(LemNum);
   if Length(S) < LEN then
     S := PadL(PadR(S, LEN - 1), LEN);
 
@@ -1002,34 +995,21 @@ end;
 procedure TBaseSkillPanel.SetInfoTime(PosMin, PosSec: Integer);
 var
   Time : Integer;
-  Blinking : Boolean;
   S: string;
 const
   LEN = 2;
 begin
   if Level.Info.HasTimeLimit then
-  begin
-    Time := Level.Info.TimeLimit - Game.CurrentIteration div 17;
-    Blinking := GameParams.TimerBlink and fIsBlinkFrame and (Time <= 30);
-  end
+    Time := Level.Info.TimeLimit - Game.CurrentIteration div 17
   else
-  begin
     Time := Game.CurrentIteration div 17;
-    Blinking := false;
-  end;
 
   // Minutes
-  if Blinking then
-    S := StringOfChar(' ', LEN)
-  else
-    S := PadL(IntToStr(Time div 60), 2);
+  S := PadL(IntToStr(Time div 60), 2);
   ModString(fNewDrawStr, S, PosMin);
 
   // Seconds
-  if Blinking then
-    S := StringOfChar(' ', LEN)
-  else
-    S := LeadZeroStr(Time mod 60, 2);
+  S := LeadZeroStr(Time mod 60, 2);
   ModString(fNewDrawStr, S, PosSec);
 end;
 

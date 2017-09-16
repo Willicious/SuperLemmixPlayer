@@ -31,9 +31,6 @@ type
     btnHotkeys: TButton;
     cbPauseAfterBackwards: TCheckBox;
     GroupBox3: TGroupBox;
-    cbLemmingBlink: TCheckBox;
-    cbTimerBlink: TCheckBox;
-    cbBlackOut: TCheckBox;
     cbNoBackgrounds: TCheckBox;
     GroupBox1: TGroupBox;
     cbEnableOnline: TCheckBox;
@@ -108,9 +105,6 @@ begin
   // Checkboxes
   cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
 
-  cbLemmingBlink.Checked := GameParams.LemmingBlink;
-  cbTimerBlink.Checked := GameParams.TimerBlink;
-  cbBlackOut.Checked := GameParams.BlackOutZero;
   cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
   cbDisableShadows.Checked := GameParams.NoShadows;
   cbEdgeScrolling.Checked := GameParams.EdgeScroll;
@@ -164,9 +158,6 @@ begin
   // Checkboxes
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
 
-  GameParams.LemmingBlink := cbLemmingBlink.Checked;
-  GameParams.TimerBlink := cbTimerBlink.Checked;
-  GameParams.BlackOutZero := cbBlackOut.Checked;
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.NoShadows := cbDisableShadows.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;

@@ -61,11 +61,8 @@ type
 
 type
   TMiscOption = (
-    moLemmingBlink,
-    moTimerBlink,
     moAutoReplaySave,
     moReplayAutoName,
-    moBlackOutZero,
     moEnableOnline,
     moCheckUpdates,
     moNoAutoReplayMode,
@@ -91,10 +88,8 @@ type
 
 const
   DEF_MISCOPTIONS = [
-    moTimerBlink,
     moAutoReplaySave,
     moReplayAutoName,
-    moBlackOutZero,
     moPauseAfterBackwards,
     moLinearResampleMenu,
     moFullScreen,
@@ -192,9 +187,6 @@ type
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
     property ReplayAutoName: Boolean Index moReplayAutoName read GetOptionFlag write SetOptionFlag;
-    property LemmingBlink: Boolean Index moLemmingBlink read GetOptionFlag write SetOptionFlag;
-    property TimerBlink: Boolean Index moTimerBlink read GetOptionFlag write SetOptionFlag;
-    property BlackOutZero: boolean Index moBlackOutZero read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
@@ -324,9 +316,6 @@ begin
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
-  SaveBoolean('LemmingCountBlink', LemmingBlink);
-  SaveBoolean('TimerBlink', TimerBlink);
-  SaveBoolean('BlackOutZero', BlackOutZero);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('NoShadows', NoShadows);
   SaveBoolean('CompactSkillPanel', CompactSkillPanel);
@@ -451,11 +440,8 @@ begin
   end;
 
   AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
-  LemmingBlink := LoadBoolean('LemmingCountBlink', LemmingBlink);
-  TimerBlink := LoadBoolean('TimerBlink', TimerBlink);
   NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
   PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
-  BlackOutZero := LoadBoolean('BlackOutZero', BlackOutZero);
   NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
   NoShadows := LoadBoolean('NoShadows', NoShadows);
   CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);

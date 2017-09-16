@@ -23,7 +23,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 378
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
@@ -125,40 +125,13 @@ object FormNXConfig: TFormNXConfig
         Height = 136
         Caption = 'Interface Options'
         TabOrder = 1
-        object cbLemmingBlink: TCheckBox
-          Left = 12
-          Top = 16
-          Width = 129
-          Height = 17
-          Caption = 'Lemming Count Blink'
-          TabOrder = 0
-          OnClick = OptionChanged
-        end
-        object cbTimerBlink: TCheckBox
-          Left = 12
-          Top = 32
-          Width = 129
-          Height = 17
-          Caption = 'Timer Blink'
-          TabOrder = 1
-          OnClick = OptionChanged
-        end
-        object cbBlackOut: TCheckBox
-          Left = 12
-          Top = 48
-          Width = 153
-          Height = 17
-          Caption = 'Black-Out Zero Skill Count'
-          TabOrder = 2
-          OnClick = OptionChanged
-        end
         object cbNoBackgrounds: TCheckBox
           Left = 12
           Top = 64
           Width = 153
           Height = 17
           Caption = 'Disable Background Images'
-          TabOrder = 3
+          TabOrder = 0
           OnClick = OptionChanged
         end
         object cbDisableShadows: TCheckBox
@@ -167,7 +140,7 @@ object FormNXConfig: TFormNXConfig
           Width = 153
           Height = 17
           Caption = 'Disable Skill Shadows'
-          TabOrder = 4
+          TabOrder = 1
           OnClick = OptionChanged
         end
         object cbEdgeScrolling: TCheckBox
@@ -176,7 +149,7 @@ object FormNXConfig: TFormNXConfig
           Width = 153
           Height = 17
           Caption = 'Enable Edge Scrolling'
-          TabOrder = 5
+          TabOrder = 2
           OnClick = OptionChanged
         end
         object cbSpawnInterval: TCheckBox
@@ -185,7 +158,7 @@ object FormNXConfig: TFormNXConfig
           Width = 153
           Height = 17
           Caption = 'Use Spawn Interval'
-          TabOrder = 6
+          TabOrder = 3
           OnClick = OptionChanged
         end
       end
