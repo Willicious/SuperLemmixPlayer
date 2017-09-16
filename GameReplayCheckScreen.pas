@@ -396,6 +396,11 @@ begin
       until false;
 
       fReplays[i].ReplayDuration := Game.CurrentIteration;
+
+      // If appropriate, remember level as solved
+      if fReplays[i].ReplayResult = CR_PASS then
+        GameParams.CurrentLevel.Status := lst_Completed;
+
     except
       fReplays[i].ReplayResult := CR_ERROR;
     end;
