@@ -23,7 +23,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 378
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
@@ -148,9 +148,9 @@ object FormNXConfig: TFormNXConfig
         object cbEdgeScrolling: TCheckBox
           Left = 12
           Top = 34
-          Width = 153
+          Width = 221
           Height = 17
-          Caption = 'Enable Edge Scrolling'
+          Caption = 'Enable Edge Scrolling and Trap Cursor'
           TabOrder = 1
           OnClick = OptionChanged
         end

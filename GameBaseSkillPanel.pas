@@ -1051,7 +1051,7 @@ var
   aButton: TSkillPanelButton;
   i: TSkillPanelButton;
 begin
-  fGameWindow.ApplyMouseTrap;
+  if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
   if fGameWindow.IsHyperSpeed then Exit;
 
   // Get pressed button
@@ -1176,7 +1176,7 @@ end;
 procedure TBaseSkillPanel.MinimapMouseDown(Sender: TObject; Button: TMouseButton;
     Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
-  fGameWindow.ApplyMouseTrap;
+  if GameParams.EdgeScroll then fGameWindow.ApplyMouseTrap;
   fMinimapScrollFreeze := true;
 
   if Assigned(fOnMinimapClick) then

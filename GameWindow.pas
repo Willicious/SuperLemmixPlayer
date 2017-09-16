@@ -885,7 +885,7 @@ begin
 
   SetCurrentCursor;
 
-  if (fNeedResetMouseTrap or aForce) and fMouseTrapped then
+  if (fNeedResetMouseTrap or aForce) and fMouseTrapped and GameParams.EdgeScroll then
   begin
     ApplyMouseTrap;
     fNeedResetMouseTrap := false;
@@ -1386,7 +1386,7 @@ var
   PassKey: Word;
   OldHighlightLemming: TLemming;
 begin
-  if not fMouseTrapped then
+  if (not fMouseTrapped) and GameParams.EdgeScroll then
     ApplyMouseTrap;
   // interrupting hyperspeed can break the handling of savestates
   // so we're not allowing it
@@ -1613,7 +1613,7 @@ begin
   InitializeCursor;
   CenterPoint := ClientToScreen(Point(ClientWidth div 2, ClientHeight div 2));
   SetCursorPos(CenterPoint.X, CenterPoint.Y);
-  ApplyMouseTrap;
+  if GameParams.EdgeScroll then ApplyMouseTrap;
 
   fRenderer := GameParams.Renderer;
   fRenderInterface := Game.RenderInterface;
