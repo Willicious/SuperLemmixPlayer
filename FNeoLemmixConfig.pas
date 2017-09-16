@@ -16,8 +16,6 @@ type
     btnApply: TButton;
     GroupBox4: TGroupBox;
     cbAutoSaveReplay: TCheckBox;
-    Label2: TLabel;
-    cbReplayNaming: TComboBox;
     cbNoAutoReplay: TCheckBox;
     TabSheet4: TTabSheet;
     tbSoundVol: TTrackBar;
@@ -52,6 +50,7 @@ type
     cbCompactSkillPanel: TCheckBox;
     cbEdgeScrolling: TCheckBox;
     cbSpawnInterval: TCheckBox;
+    cbReplayAutoName: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -99,21 +98,11 @@ begin
   //// Page 1 (Global Options) ////
   // Checkboxes
   cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
-  cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
+  cbReplayAutoName.Checked := GameParams.ReplayAutoName;
 
+  cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
   cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
   cbEnableOnline.Checked := GameParams.EnableOnline;
-
-  // Replay Naming Dropdown
-  if GameParams.AutoReplayNames = false then
-    i := 3 // Manual naming
-  else if GameParams.AlwaysTimestamp then
-    i := 2
-  else if GameParams.ConfirmOverwrite then
-    i := 1
-  else
-    i := 0;
-  cbReplayNaming.ItemIndex := i;
 
   //// Page 2 (Interface Options) ////
   // Checkboxes
@@ -168,31 +157,8 @@ begin
   GameParams.EnableOnline := cbEnableOnline.Checked;
   GameParams.CheckUpdates := cbUpdateCheck.Checked;
   GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
+  GameParams.ReplayAutoName := cbReplayAutoName.Checked;
   GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
-
-  // Replay Naming Dropdown
-  case cbReplayNaming.ItemIndex of
-    0: begin
-         GameParams.AutoReplayNames := true;
-         GameParams.AlwaysTimestamp := false;
-         GameParams.ConfirmOverwrite := false;
-       end;
-    1: begin
-         GameParams.AutoReplayNames := true;
-         GameParams.AlwaysTimestamp := false;
-         GameParams.ConfirmOverwrite := true;
-       end;
-    2: begin
-         GameParams.AutoReplayNames := true;
-         GameParams.AlwaysTimestamp := true;
-         GameParams.ConfirmOverwrite := false;
-       end;
-    3: begin
-         GameParams.AutoReplayNames := false;
-         GameParams.AlwaysTimestamp := false;
-         GameParams.ConfirmOverwrite := false;
-       end;
-  end;
 
   //// Page 2 (Interface Options) ////
   // Checkboxes

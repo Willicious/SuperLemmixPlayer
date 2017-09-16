@@ -61,12 +61,10 @@ type
 
 type
   TMiscOption = (
-    moAutoReplayNames,
     moLemmingBlink,
     moTimerBlink,
     moAutoReplaySave,
-    moAlwaysTimestamp,
-    moConfirmOverwrite,
+    moReplayAutoName,
     moBlackOutZero,
     moEnableOnline,
     moCheckUpdates,
@@ -93,10 +91,9 @@ type
 
 const
   DEF_MISCOPTIONS = [
-    moAutoReplayNames,
     moTimerBlink,
-    moAlwaysTimestamp,
     moAutoReplaySave,
+    moReplayAutoName,
     moBlackOutZero,
     moPauseAfterBackwards,
     moLinearResampleMenu,
@@ -193,12 +190,10 @@ type
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
-    property AutoReplayNames: Boolean Index moAutoReplayNames read GetOptionFlag write SetOptionFlag;
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
+    property ReplayAutoName: Boolean Index moReplayAutoName read GetOptionFlag write SetOptionFlag;
     property LemmingBlink: Boolean Index moLemmingBlink read GetOptionFlag write SetOptionFlag;
     property TimerBlink: Boolean Index moTimerBlink read GetOptionFlag write SetOptionFlag;
-    property AlwaysTimestamp: boolean Index moAlwaysTimestamp read GetOptionFlag write SetOptionFlag;
-    property ConfirmOverwrite: boolean Index moConfirmOverwrite read GetOptionFlag write SetOptionFlag;
     property BlackOutZero: boolean Index moBlackOutZero read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
@@ -326,10 +321,7 @@ begin
 
   SL.Add('');
   SL.Add('# Interface Options');
-  SaveBoolean('AutoReplayNames', AutoReplayNames);
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
-  SaveBoolean('AlwaysTimestampReplays', AlwaysTimestamp);
-  SaveBoolean('ConfirmReplayOverwrite', ConfirmOverwrite);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('LemmingCountBlink', LemmingBlink);
@@ -458,12 +450,9 @@ begin
     WindowHeight := 200 * ZoomLevel;
   end;
 
-  AutoReplayNames := LoadBoolean('AutoReplayNames', AutoReplayNames);
   AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
   LemmingBlink := LoadBoolean('LemmingCountBlink', LemmingBlink);
   TimerBlink := LoadBoolean('TimerBlink', TimerBlink);
-  AlwaysTimestamp := LoadBoolean('AlwaysTimestampReplays', AlwaysTimestamp);
-  ConfirmOverwrite := LoadBoolean('ConfirmReplayOverwrite', ConfirmOverwrite);
   NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
   PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   BlackOutZero := LoadBoolean('BlackOutZero', BlackOutZero);

@@ -298,7 +298,7 @@ var
       Result := Trim(aLevel.Info.Title)
     else
       Result := RankName + '_' + LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2);
-    if TestModeName or GameParams.AlwaysTimestamp then
+    if TestModeName or GameParams.ReplayAutoName then
       Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
     Result := StringReplace(Result, '<', '_', [rfReplaceAll]);
     Result := StringReplace(Result, '>', '_', [rfReplaceAll]);
@@ -363,19 +363,6 @@ var
       Result := '';
     Dlg.Free;
   end;
-
-  function GetReplayTypeCase: Integer;
-  begin
-    // Wouldn't need this if I bothered to merge the boolean options into a single
-    // integer value... xD
-    Result := 0;
-    if TestModeName then Exit;
-    if not GameParams.AutoReplayNames then
-      Result := 2
-    else if GameParams.ConfirmOverwrite and FileExists(GetInitialSavePath + SaveNameLrb) then
-      Result := 1;
-    // Don't need to handle AlwaysTimestamp here; it's handled in GetReplayFileName above.
-  end;
 begin
   SaveText := false;
 
@@ -383,20 +370,10 @@ begin
 
   SaveNameLrb := GetReplayFileName(TestModeName);
 
-  case GetReplayTypeCase of
-    0: SaveNameLrb := GetDefaultSavePath + SaveNameLrb;
-    1: begin
-         case RunCustomPopup(aOwner, 'File Already Exists', 'A file with the default filename "' + SaveNameLrb + '" already exists. ' + #13 + 'What would you like to do?', 'Overwrite|Add Timestamp|Pick Filename|Cancel') of
-           1: SaveNameLrb := GetInitialSavePath + SaveNameLrb;
-           2: SaveNameLrb := GetInitialSavePath + GetReplayFilename(true);
-           3: SaveNameLrb := GetSavePath(SaveNameLrb);
-           4: SaveNameLrb := '';
-         end;
-       end;
-    2:  SaveNameLrb := GetSavePath(SaveNameLrb);
-  end;
-
-  Result := SaveNameLrb;
+  if GameParams.ReplayAutoName or TestModeName then
+    Result := GetDefaultSavePath + SaveNameLrb
+  else
+    Result := GetSavePath(SaveNameLrb);
 end;
 
 procedure TReplay.Add(aItem: TBaseReplayItem);

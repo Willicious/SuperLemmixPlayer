@@ -34,37 +34,14 @@ object FormNXConfig: TFormNXConfig
         Height = 113
         Caption = 'Replay Options'
         TabOrder = 0
-        object Label2: TLabel
-          Left = 16
-          Top = 64
-          Width = 154
-          Height = 13
-          Caption = 'Manually-Saved Replay Naming:'
-        end
         object cbAutoSaveReplay: TCheckBox
           Left = 12
           Top = 16
           Width = 217
           Height = 17
-          Caption = 'Save Successful Replays Automatically'
+          Caption = 'Automatically Save Successful Replays'
           TabOrder = 0
           OnClick = OptionChanged
-        end
-        object cbReplayNaming: TComboBox
-          Left = 32
-          Top = 80
-          Width = 177
-          Height = 21
-          Style = csDropDownList
-          ItemIndex = 0
-          TabOrder = 1
-          Text = 'Auto, Overwrite Old File'
-          OnChange = OptionChanged
-          Items.Strings = (
-            'Auto, Overwrite Old File'
-            'Auto, Confirm Overwrite'
-            'Auto, Add Timestamp'
-            'Ask For Filename')
         end
         object cbNoAutoReplay: TCheckBox
           Left = 12
@@ -72,6 +49,15 @@ object FormNXConfig: TFormNXConfig
           Width = 225
           Height = 17
           Caption = 'Don'#39't Replay After Backwards Frameskips'
+          TabOrder = 1
+          OnClick = OptionChanged
+        end
+        object cbReplayAutoName: TCheckBox
+          Left = 12
+          Top = 32
+          Width = 225
+          Height = 17
+          Caption = 'Use Timestamped Replay Names'
           TabOrder = 2
           OnClick = OptionChanged
         end

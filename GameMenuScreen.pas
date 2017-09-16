@@ -118,7 +118,7 @@ type
 implementation
 
 uses
-  FNeoLemmixSetup, LemNeoOnline;
+  FNeoLemmixSetup, LemNeoOnline, UITypes;
 
 { TGameMenuScreen }
 

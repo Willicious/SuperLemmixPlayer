@@ -79,7 +79,7 @@ type
 implementation
 
 uses
-  FNeoLemmixConfig, LemNeoLevelPack, FNeoLemmixLevelSelect;
+  FNeoLemmixConfig, LemNeoLevelPack, FNeoLemmixLevelSelect, UITypes;
 
 { TPurpleFont }
 
