@@ -250,7 +250,7 @@ var
 implementation
 
 uses
-  SharedGlobals, Controls,
+  SharedGlobals, Controls, UITypes,
   GameWindow, //for EXTRA_ZOOM_LEVELS const
   GameSound;
 
