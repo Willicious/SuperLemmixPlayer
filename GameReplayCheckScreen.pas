@@ -50,7 +50,6 @@ type
   private
     fScreenText: TStringList;
     fReplays: TReplayCheckEntries;
-
     fProcessing: Boolean;
 
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -58,11 +57,8 @@ type
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure HandleMouseClick(Button: TMouseButton);
-
     procedure OutputText;
-
     procedure RunTests;
-    procedure ApplyToReplayINIFile;
 
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
   protected
@@ -96,78 +92,6 @@ begin
   end;
 
   if Terminated then CloseScreen(gstMenu);
-end;
-
-procedure TGameReplayCheckScreen.ApplyToReplayINIFile;
-var
-  SL: TStringList;
-  n: Integer;
-
-  CurBaseName: String;
-  CurFullName: String;
-  CurIndex: Integer;
-
-  function GetFilenameIndex(aName: String): Integer;
-  var
-    i: Integer;
-  begin
-    Result := -1;
-    for i := 0 to fReplays.Count-1 do
-      if CompareText(aName, ExtractFileName(fReplays[i].ReplayFile)) = 0 then
-      begin
-        Result := i;
-        Exit;
-      end;
-  end;
-begin
-  if not FileExists(GameParams.ReplayCheckPath + 'replays.ini') then Exit;
-
-  fScreenText.Add('Updating Flexi replays data');
-  fScreenText.Add('');
-  OutputText;
-
-  SL := TStringList.Create;
-  try
-    SL.LoadFromFile(GameParams.ReplayCheckPath + 'replays.ini');
-    n := 0;
-
-    while n < SL.Count do
-    begin
-      if SL[n] = '' then Break;
-      Inc(n);
-    end;
-
-    Inc(n);
-
-    while n < SL.Count do
-    begin
-      CurBaseName := SL[n];
-      Inc(n);
-      if n > SL.Count then Break;
-
-      while (n < SL.Count) and (SL[n] <> '') do
-      begin
-        CurFullName := CurBaseName + '_' + SL[n];
-        CurIndex := GetFilenameIndex(CurFullName);
-
-        Inc(n, 4);
-
-        if CurIndex <> -1 then
-          if fReplays[CurIndex].ReplayResult = CR_PASS then
-            SL[n] := 'PASS'
-          else
-            SL[n] := 'FAIL';
-
-      Inc(n, 1);
-      end;
-
-      Inc(n);
-    end;
-
-    SL.SaveToFile(GameParams.ReplayCheckPath + 'replays.ini');
-  finally
-    SL.Free;
-  end;
 end;
 
 procedure TGameReplayCheckScreen.RunTests;
@@ -347,7 +271,6 @@ begin
       fReplays[i].ReplayLevelTitle := Level.Info.Title;
 
       PieceManager.Tidy;
-      //Renderer.PrepareGameRendering(GameParams.Level, true);
       Game.PrepareParams;
 
       if LowerCase(ExtractFileExt(fReplays[i].ReplayFile)) = '.lrb' then
@@ -358,8 +281,6 @@ begin
       fReplays[i].ReplayResult := CR_UNDETERMINED;
 
       Game.Start;
-      //Game.HyperSpeedBegin;
-      //Game.TargetIteration := 170;
       repeat
         if Game.CurrentIteration mod 170 = 0 then
         begin
@@ -386,10 +307,8 @@ begin
           if Game.MessageQueue.NextMessage.MessageType = GAMEMSG_FINISH then
           begin
             if Game.GameResultRec.gSuccess then
-            begin
-              fReplays[i].ReplayResult := CR_PASS;
-              //GameParams.SaveSystem.CompleteLevel(LR, LL);
-            end else
+              fReplays[i].ReplayResult := CR_PASS
+            else
               fReplays[i].ReplayResult := CR_FAIL;
           end;
         if fReplays[i].ReplayResult <> CR_UNDETERMINED then Break;
@@ -424,15 +343,13 @@ begin
 
   if fProcessing then
   begin
-    ApplyToReplayINIFile; // fuck yeah, Flexi integration (sort of)
-
     if ParamStr(2) <> 'replaytest' then
     begin
       fReplays.SaveToFile(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
       fScreenText.Add('Results saved to');
       fScreenText.Add(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
     end;
-    
+
     while fScreenText.Count < 23 do
       fScreenText.Add('');
     fScreenText.Add('Click mouse to exit');
