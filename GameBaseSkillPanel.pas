@@ -18,8 +18,8 @@ type
   TBaseSkillPanel = class(TCustomControl)
 
   private
-    fGame                   : TLemmingGame;
-    fIconBmp                : TBitmap32;   // for temporary storage
+    fGame                 : TLemmingGame;
+    fIconBmp              : TBitmap32;   // for temporary storage
 
     fRectColor            : TColor32;
     fSelectDx             : Integer;
@@ -36,6 +36,8 @@ type
     function GetZoom: Integer;
     procedure SetZoom(NewZoom: Integer);
     function GetMaxZoom: Integer;
+
+    procedure CombineToRed(F: TColor32; var B: TColor32; M: TColor32);
   protected
     fGameWindow           : IGameWindow;
     fButtonRects          : array[TSkillPanelButton] of TRect;
@@ -98,6 +100,7 @@ type
     function DrawStringTemplate: string; virtual; abstract;
 
     procedure DrawNewStr;
+      function TimeLimitStartIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
     procedure SetInfoCursorLemming(Pos: Integer);
       function GetSkillString(L: TLemming): String;
@@ -830,10 +833,18 @@ end;
 {-----------------------------------------
     Info string at top
 -----------------------------------------}
+procedure TBaseSkillPanel.CombineToRed(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if AlphaComponent(F) = 0 then Exit;
+  // Swap red and green component
+  B := Color32(GreenComponent(F), RedComponent(F), BlueComponent(F), AlphaComponent(F));
+end;
+
 procedure TBaseSkillPanel.DrawNewStr;
 var
   Old, New: char;
   i, CharID: integer;
+  DoRecolor: Boolean;
 begin
   for i := 1 to DrawStringLength do
   begin
@@ -851,10 +862,19 @@ begin
       else CharID := -1;
       end;
 
-      if CharID >= 0 then
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0)
-      else // draw black rectangle
-        fImage.Bitmap.FillRectS((i - 1) * 8, 0, i * 8, 16, 0);
+      // Erase previous text there
+      fImage.Bitmap.FillRectS((i - 1) * 8, 0, i * 8, 16, 0);
+
+      DoRecolor := Level.Info.HasTimeLimit and (i >= TimeLimitStartIndex) and (CharID >= 0);
+      if DoRecolor then
+      begin
+        fInfoFont[CharID].DrawMode := dmCustom;
+        fInfoFont[CharID].OnPixelCombine := CombineToRed;
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+        fInfoFont[CharID].DrawMode := dmBlend;
+      end
+      else if CharID >= 0 then
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
     end;
   end;
 end;

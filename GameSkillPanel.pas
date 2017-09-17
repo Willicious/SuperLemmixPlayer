@@ -21,6 +21,7 @@ type
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
+    function TimeLimitStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -39,6 +40,7 @@ type
     procedure CreateNewInfoString; override;
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
+    function TimeLimitStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -80,6 +82,11 @@ function TSkillPanelStandard.DrawStringTemplate: string;
 begin
   Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
+end;
+
+function TSkillPanelStandard.TimeLimitStartIndex: Integer;
+begin
+  Result := 33;
 end;
 
 function TSkillPanelStandard.MinimapRect: TRect;
@@ -168,6 +175,11 @@ function TSkillPanelCompact.DrawStringTemplate: string;
 begin
   Result := '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' '
                            + #94 + '_...' + ' ' + #95 +  '_.-..';
+end;
+
+function TSkillPanelCompact.TimeLimitStartIndex: Integer;
+begin
+  Result := 33;
 end;
 
 function TSkillPanelCompact.MinimapRect: TRect;
