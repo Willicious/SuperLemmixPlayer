@@ -566,7 +566,7 @@ begin
   inherited Create;
 
   MiscOptions := DEF_MISCOPTIONS;
-  PostLevelSoundOptions := [plsVictory, plsFailure];
+  PostLevelSoundOptions := [];
 
   if not DirectoryExists(AppPath + SFLevels) then
   begin
