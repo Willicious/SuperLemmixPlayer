@@ -357,14 +357,6 @@ var
   i: Integer;
   TextValue: Integer;
 begin
-  (*
-  if (ebSkipDuration.Text <> '') and (ebSkipDuration.Text <> '-') then
-    try
-      StrToInt(ebSkipDuration.Text);
-    except
-      ebSkipDuration.Text := '0';
-    end; // Is there a tidier way to detect if something can be StrToInt'd, without relying on StrToIntDef and an unlikely value?
-  *)
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; //safety; should never happen
   if fHotkeys.CheckKeyEffect(i).Action <> lka_Skip then Exit;
