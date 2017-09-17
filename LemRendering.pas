@@ -35,28 +35,28 @@ type
 
   TRenderer = class
   private
-    fObjectInfos: TInteractiveObjectInfoList;
-    fDrawingHelpers: Boolean;
-    fUsefulOnly: Boolean;
+    fObjectInfos        : TInteractiveObjectInfoList;
+    fDrawingHelpers     : Boolean;
+    fUsefulOnly         : Boolean;
 
-    fRenderInterface: TRenderInterface;
+    fRenderInterface    : TRenderInterface;
 
-    fDisableBackground: Boolean;
+    fDisableBackground  : Boolean;
 
-    fRecolorer: TRecolorImage;
+    fRecolorer          : TRecolorImage;
 
-    fPhysicsMap: TBitmap32;
-    fLayers: TRenderBitmaps;
+    fPhysicsMap         : TBitmap32;
+    fLayers             : TRenderBitmaps;
 
-    TempBitmap         : TBitmap32;
-    Inf                : TRenderInfoRec;
-    fTheme: TNeoTheme;
-    fHelperImages: THelperImages;
-    fAni: TBaseDosAnimationSet;
-    fBgColor : TColor32;
-    fParticles                 : TParticleTable; // all particle offsets
-    fObjectInfoList: TInteractiveObjectInfoList; // For rendering from Preview screen
-    fDoneBackgroundDraw: Boolean;
+    TempBitmap          : TBitmap32;
+    Inf                 : TRenderInfoRec;
+    fTheme              : TNeoTheme;
+    fHelperImages       : THelperImages;
+    fAni                : TBaseDosAnimationSet;
+    fBgColor            : TColor32;
+    fParticles          : TParticleTable; // all particle offsets
+    fObjectInfoList     : TInteractiveObjectInfoList; // For rendering from Preview screen
+    fDoneBackgroundDraw : Boolean;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
@@ -86,7 +86,7 @@ type
     function GetTerrainLayer: TBitmap32;
     function GetParticleLayer: TBitmap32;
 
-    // Were sub-procedures, or part, of DrawAllObjects
+    // Were sub-procedures or part of DrawAllObjects
     procedure DrawObjectsOnLayer(aLayer: TRenderLayer);
     procedure ProcessDrawFrame(aInf: TInteractiveObjectInfo; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
     procedure DrawTriggerArea(aInf: TInteractiveObjectInfo);

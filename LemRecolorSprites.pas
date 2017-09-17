@@ -7,7 +7,7 @@ uses
   Classes, SysUtils,
   LemNeoParser,
   LemDosStructures, LemLemming, LemTypes, LemStrings,
-  GR32, GR32_Blend{, GR32_OrdinalMaps, GR32_Layers};
+  GR32, GR32_Blend;
 
 type
   TColorSwapType = (rcl_Selected,
@@ -34,14 +34,6 @@ type
       procedure SwapColors(F: TColor32; var B: TColor32);
       procedure RegisterSwap(aSec: TParserSection; const aIteration: Integer; aData: Pointer);
 
-      (*procedure CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
-      procedure CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
-      procedure CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
-      procedure CombineLemmingPixelsSelected(F: TColor32; var B: TColor32; M: TColor32);
-      procedure CombineLemmingPixelsSelectedZombie(F: TColor32; var B: TColor32; M: TColor32);
-      procedure CombineLemmingPixelsSelectedAthlete(F: TColor32; var B: TColor32; M: TColor32);
-      procedure CombineLemmingPixelsSelectedZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
-      procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);*)
     public
       constructor Create;
 
@@ -52,11 +44,8 @@ type
       property Lemming: TLemming write fLemming;
       property DrawAsSelected: Boolean write fDrawAsSelected;
 
-      (*class function GetLemColorScheme(IsZombie, IsPermenent, IsSelected, IsHighlight: Boolean): TPixelCombineEvent;*)
       class procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
   end;
-
-
 
 implementation
 
@@ -151,106 +140,6 @@ begin
     Parser.Free;
   end;
 end;
-
-(*class function TRecolorImage.GetLemColorScheme(IsZombie, IsPermenent, IsSelected, IsHighlight: Boolean): TPixelCombineEvent;
-begin
-  if IsHighlight then
-    Result := TRecolorImage.CombineLemmingHighlight
-  else if IsSelected and IsPermenent and IsZombie then
-    Result := TRecolorImage.CombineLemmingPixelsSelectedZombieAthlete
-  else if IsSelected and IsPermenent then
-    Result := TRecolorImage.CombineLemmingPixelsSelectedAthlete
-  else if IsSelected and IsZombie then
-    Result := TRecolorImage.CombineLemmingPixelsSelectedZombie
-  else if IsSelected then
-    Result := TRecolorImage.CombineLemmingPixelsSelected
-  else if IsPermenent and IsZombie then
-    Result := TRecolorImage.CombineLemmingPixelsZombieAthlete
-  else if IsPermenent then
-    Result := TRecolorImage.CombineLemmingPixelsAthlete
-  else if IsZombie then
-    Result := TRecolorImage.CombineLemmingPixelsZombie
-  else
-    Result := TRecolorImage.CombineDefaultPixels;
-end;
-
-procedure ChangeSkinColor(out F: TColor32);
-begin
-  // color white skin gray
-  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[6]);
-end;
-
-procedure ChangeSelected(out F: TColor32);
-begin
-  // recolor body red
-  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[5]);
-end;
-
-procedure SwapHairBody(out F: TColor32);
-begin
-  // interchange blue and green
-  if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[2]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[1])
-  else if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[1]) and $FFFFFF) then
-    F := DosVgaColorToColor32(DosInLevelPalette[2]);
-end;
-
-class procedure TRecolorImage.CombineLemmingPixelsZombie(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  ChangeSkinColor(F);
-  if F <> 0 then B := F;
-end;
-
-class procedure TRecolorImage.CombineLemmingPixelsAthlete(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  SwapHairBody(F);
-  if F <> 0 then B := F;
-end;
-
-class procedure TRecolorImage.CombineLemmingPixelsZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  ChangeSkinColor(F);
-  SwapHairBody(F);
-  if F <> 0 then B := F;
-end;
-
-class procedure TRecolorImage.CombineLemmingPixelsSelected(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  ChangeSelected(F);
-  if F <> 0 then B := F;
-end;
-
-
-class procedure TRecolorImage.CombineLemmingPixelsSelectedZombie(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  ChangeSelected(F);
-  ChangeSkinColor(F);
-  if F <> 0 then B := F;
-end;
-
-class procedure TRecolorImage.CombineLemmingPixelsSelectedAthlete(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  ChangeSelected(F);
-  SwapHairBody(F);
-  if F <> 0 then B := F;
-end;
-
-class procedure TRecolorImage.CombineLemmingPixelsSelectedZombieAthlete(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  ChangeSelected(F);
-  SwapHairBody(F);
-  ChangeSkinColor(F);
-  if F <> 0 then B := F;
-end;
-
-class procedure TRecolorImage.CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  // photoflash
-  if F <> 0 then B := clBlack32 else B := clWhite32;
-end;*)
-
 
 class procedure TRecolorImage.CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
 begin
