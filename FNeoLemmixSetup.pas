@@ -58,12 +58,10 @@ begin
     SetKeyFunction($08, lka_LoadState);
     SetKeyFunction($0D, lka_SaveState);
     SetKeyFunction($11, lka_ForceWalker);
-    SetKeyFunction($12, lka_ShowAthleteInfo);
     SetKeyFunction($19, lka_ForceWalker);
     SetKeyFunction($1B, lka_Exit);
     SetKeyFunction($25, lka_DirLeft);
     SetKeyFunction($27, lka_DirRight);
-    SetKeyFunction($31, lka_Cheat);
     SetKeyFunction($41, lka_Scroll);
     SetKeyFunction($43, lka_CancelReplay);
     SetKeyFunction($44, lka_FallDistance);
@@ -77,13 +75,9 @@ begin
     SetKeyFunction($53, lka_Sound);
     SetKeyFunction($55, lka_SaveReplay);
     SetKeyFunction($57, lka_ReplayInsert);
-    SetKeyFunction($58, lka_SkillRight);
-    SetKeyFunction($5A, lka_SkillLeft);
     SetKeyFunction($70, lka_ReleaseRateDown);
     SetKeyFunction($71, lka_ReleaseRateUp);
     SetKeyFunction($7A, lka_Pause);
-    SetKeyFunction($7B, lka_Nuke);
-    SetKeyFunction($C0, lka_ReleaseMouse);
 
     // Misc ones that need other details set
     SetKeyFunction($54, lka_ClearPhysics, 1);
@@ -141,17 +135,12 @@ begin
     SetKeyFunction($05, lka_ZoomIn);
     SetKeyFunction($06, lka_ZoomOut);
     SetKeyFunction($1B, lka_Exit);
-    SetKeyFunction($7B, lka_Nuke);
     SetKeyFunction($02, lka_ForceWalker);
     SetKeyFunction($75, lka_SaveReplay);
     SetKeyFunction($76, lka_LoadReplay);
-    SetKeyFunction($C0, lka_ReleaseMouse);
     SetKeyFunction($11, lka_Highlight);
-    SetKeyFunction($12, lka_ShowAthleteInfo);
     SetKeyFunction($4D, lka_Music);
     SetKeyFunction($4E, lka_Sound);
-    SetKeyFunction($BC, lka_SkillRight);
-    SetKeyFunction($BE, lka_SkillLeft);
     SetKeyFunction($73, lka_ReleaseRateDown);
     SetKeyFunction($74, lka_ReleaseRateUp);
     SetKeyFunction($49, lka_FallDistance);
