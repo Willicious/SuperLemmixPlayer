@@ -56,6 +56,7 @@ type
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
     procedure DoLevelSelect(isPlaying: Boolean = false);
     procedure ShowConfigMenu;
+    procedure ApplyConfigChanges(OldFullScreen: Boolean);
     procedure DoMassReplayCheck;
   public
     constructor Create(aOwner: TComponent); override;
@@ -616,6 +617,15 @@ begin
   // transition to save them.
   GameParams.Save;
 
+  ApplyConfigChanges(OldFullScreen);
+
+  // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
+  if ConfigResult = mrRetry then DoMassReplayCheck;
+
+end;
+
+procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen: Boolean);
+begin
   if (GameParams.FullScreen <> OldFullScreen) then
   begin
     if GameParams.FullScreen then
@@ -649,10 +659,8 @@ begin
     end;
   end;
 
-  // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
-  if ConfigResult = mrRetry then DoMassReplayCheck;
-
 end;
+
 
 
 end.

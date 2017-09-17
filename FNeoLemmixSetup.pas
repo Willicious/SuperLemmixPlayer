@@ -14,15 +14,14 @@ type
     Label2: TLabel;
     Label3: TLabel;
     btnNext: TButton;
-    btnBack: TButton;
-    rbConfigDefault: TRadioButton;
-    rbConfigDefaultLix: TRadioButton;
-    rbConfigCustom: TRadioButton;
-    rbConfigCustomLix: TRadioButton;
+    btnExit: TButton;
+    Label4: TLabel;
+    cbHotkey: TComboBox;
+    Label5: TLabel;
+    cbGraphics: TComboBox;
     procedure FormCreate(Sender: TObject);
-    procedure btnBackClick(Sender: TObject);
-    procedure btnNextClick(Sender: TObject);
-    procedure rbConfigDefaultClick(Sender: TObject);
+    procedure btnOKClick(Sender: TObject);
+    procedure btnExitClick(Sender: TObject);
   private
     procedure SetClassicHotkeys;
     procedure SetLixHotkeys;
@@ -183,27 +182,38 @@ end;
 
 { Page Control }
 
-procedure TFNLSetup.btnBackClick(Sender: TObject);
+procedure TFNLSetup.btnExitClick(Sender: TObject);
 begin
-  SetupPages.TabIndex := SetupPages.TabIndex - 1;
-  if SetupPages.ActivePageIndex = 0 then btnBack.Enabled := false;
+  Application.Terminate;
 end;
 
-procedure TFNLSetup.btnNextClick(Sender: TObject);
+procedure TFNLSetup.btnOKClick(Sender: TObject);
 begin
-  btnBack.Enabled := true;
-  if SetupPages.ActivePageIndex = SetupPages.PageCount-1 then
-    Close
-  else
-    SetupPages.ActivePageIndex := SetupPages.ActivePageIndex + 1;
-end;
-
-procedure TFNLSetup.rbConfigDefaultClick(Sender: TObject);
-begin
-  case TComponent(Sender).Tag of
-    0, 2: SetClassicHotkeys;
-    1, 3: SetLixHotkeys;
+  // Set desired default settings
+  case cbHotkey.ItemIndex of
+    0: SetLixHotkeys;
+    1: SetClassicHotkeys;
   end;
+
+  case cbGraphics.ItemIndex of
+    0: begin
+         GameParams.MinimapHighQuality := true;
+         GameParams.LinearResampleMenu := true;
+         GameParams.LinearResampleGame := true;
+       end;
+    1: begin
+         GameParams.MinimapHighQuality := false;
+         GameParams.LinearResampleMenu := true;
+         GameParams.LinearResampleGame := true;
+       end;
+    2: begin
+         GameParams.MinimapHighQuality := false;
+         GameParams.LinearResampleMenu := false;
+         GameParams.LinearResampleGame := false;
+       end;
+  end;
+
+  Close;
 end;
 
 end.

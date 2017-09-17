@@ -592,6 +592,9 @@ begin
   finally
     F.Free;
   end;
+
+  // And apply the settings chosen
+  ApplyConfigChanges(true);
 end;
 
 end.

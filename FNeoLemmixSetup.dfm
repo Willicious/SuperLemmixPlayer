@@ -29,6 +29,7 @@ object FNLSetup: TFNLSetup
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
       TabVisible = False
+      ExplicitHeight = 163
       object Label1: TLabel
         Left = 16
         Top = 16
@@ -54,54 +55,52 @@ object FNLSetup: TFNLSetup
       object Label3: TLabel
         Left = 24
         Top = 80
-        Width = 113
+        Width = 342
         Height = 13
-        Caption = 'Please select an option:'
-      end
-      object rbConfigDefault: TRadioButton
-        Left = 56
-        Top = 104
-        Width = 321
-        Height = 17
-        Caption = 'Use Default Configuration'
-        Checked = True
-        TabOrder = 0
-        TabStop = True
-        OnClick = rbConfigDefaultClick
-      end
-      object rbConfigDefaultLix: TRadioButton
-        Tag = 1
-        Left = 56
-        Top = 128
-        Width = 321
-        Height = 17
-        Caption = 'Use Default Configuration With Lix-Like Hotkey Setup'
-        TabOrder = 1
-        OnClick = rbConfigDefaultClick
-      end
-      object rbConfigCustom: TRadioButton
-        Tag = 2
-        Left = 56
-        Top = 152
-        Width = 321
-        Height = 17
-        Caption = 'Custom Configuration (not yet implemented)'
-        Enabled = False
-        TabOrder = 2
-        OnClick = rbConfigDefaultClick
-      end
-      object rbConfigCustomLix: TRadioButton
-        Tag = 3
-        Left = 56
-        Top = 176
-        Width = 385
-        Height = 17
         Caption = 
-          'Custom Configuration With Lix-Like Hotkey Setup (not yet impleme' +
-          'nted)'
-        Enabled = False
-        TabOrder = 3
-        OnClick = rbConfigDefaultClick
+          'Please select the desired options. You can always change them la' +
+          'ter on.'
+      end
+      object Label4: TLabel
+        Left = 24
+        Top = 107
+        Width = 76
+        Height = 13
+        Caption = 'Hotkey settings:'
+      end
+      object Label5: TLabel
+        Left = 24
+        Top = 134
+        Width = 79
+        Height = 13
+        Caption = 'Graphic settings:'
+      end
+      object cbHotkey: TComboBox
+        Left = 128
+        Top = 104
+        Width = 217
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 0
+        TabOrder = 0
+        Text = 'Grouped by function'
+        Items.Strings = (
+          'Grouped by function'
+          'Traditional layout')
+      end
+      object cbGraphics: TComboBox
+        Left = 128
+        Top = 131
+        Width = 217
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 1
+        TabOrder = 1
+        Text = 'Normal quality (for standard computers)'
+        Items.Strings = (
+          'High quality (for fast computers)'
+          'Normal quality (for standard computers)'
+          'Low quality (for slow computers)')
       end
     end
   end
@@ -110,18 +109,17 @@ object FNLSetup: TFNLSetup
     Top = 224
     Width = 75
     Height = 25
-    Caption = 'Next'
+    Caption = 'OK'
     TabOrder = 1
-    OnClick = btnNextClick
+    OnClick = btnOKClick
   end
-  object btnBack: TButton
+  object btnExit: TButton
     Left = 304
     Top = 224
     Width = 75
     Height = 25
-    Caption = 'Back'
-    Enabled = False
+    Caption = 'Exit'
     TabOrder = 2
-    OnClick = btnBackClick
+    OnClick = btnExitClick
   end
 end
