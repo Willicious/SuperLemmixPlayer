@@ -107,13 +107,13 @@ begin
   cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
   cbReplayAutoName.Checked := GameParams.ReplayAutoName;
 
-  cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
   cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
   cbEnableOnline.Checked := GameParams.EnableOnline;
 
   //// Page 2 (Interface Options) ////
   // Checkboxes
   cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
+  cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
 
   cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
   cbEdgeScrolling.Checked := GameParams.EdgeScroll;
@@ -157,15 +157,16 @@ begin
 
   //// Page 1 (Global Options) ////
   // Checkboxes
-  GameParams.EnableOnline := cbEnableOnline.Checked;
-  GameParams.CheckUpdates := cbUpdateCheck.Checked;
   GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
   GameParams.ReplayAutoName := cbReplayAutoName.Checked;
-  GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
+
+  GameParams.EnableOnline := cbEnableOnline.Checked;
+  GameParams.CheckUpdates := cbUpdateCheck.Checked;
 
   //// Page 2 (Interface Options) ////
   // Checkboxes
   GameParams.PauseAfterBackwardsSkip := cbPauseAfterBackwards.Checked;
+  GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
