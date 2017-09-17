@@ -101,7 +101,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Highlight Lemming'
       'Directional Select Left'
       'Directional Select Right'
-      'Select Walker'
+      'Select Walking Lemming'
       'Cheat'
       'Time Skip'
       'Special Skip'
