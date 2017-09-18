@@ -927,7 +927,7 @@ begin
 
   Result := LemmingActionStrings[L.LemAction];
 
-  if L.HasPermanentSkills and (L.LemIsZombie or GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo)) then
+  if L.HasPermanentSkills and GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
   begin
     Result := '-----';
     if L.LemIsClimber then Result[1] := 'C';
