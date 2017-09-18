@@ -10,7 +10,7 @@ uses
 
 type
   // internal object used by game
-  TInteractiveObjectInfo = class
+  TGadget = class
   private
     sTop            : Integer;
     sLeft           : Integer;
@@ -88,7 +88,7 @@ type
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
 
-    procedure AssignTo(NewObj: TInteractiveObjectInfo);
+    procedure AssignTo(NewObj: TGadget);
 
     // true = X-movement, false = Y-movement
     function Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
@@ -96,15 +96,15 @@ type
 
 type
   // internal list, used by game
-  TInteractiveObjectInfoList = class(TObjectList)
+  TGadgetList = class(TObjectList)
   private
-    function GetItem(Index: Integer): TInteractiveObjectInfo;
+    function GetItem(Index: Integer): TGadget;
   protected
   public
-    function Add(Item: TInteractiveObjectInfo): Integer;
-    procedure Insert(Index: Integer; Item: TInteractiveObjectInfo);
+    function Add(Item: TGadget): Integer;
+    procedure Insert(Index: Integer; Item: TGadget);
     procedure FindReceiverID;
-    property Items[Index: Integer]: TInteractiveObjectInfo read GetItem; default;
+    property Items[Index: Integer]: TGadget read GetItem; default;
   published
   end;
 
@@ -149,7 +149,7 @@ implementation
 
 
 { TInteractiveObjectInfo }
-constructor TInteractiveObjectInfo.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObjectInterface);
+constructor TGadget.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObjectInterface);
 
   procedure AdjustOWWDirection;
   var
@@ -220,7 +220,7 @@ begin
 end;
 
 
-function TInteractiveObjectInfo.GetTriggerRect: TRect;
+function TGadget.GetTriggerRect: TRect;
 // Note that the trigger area is only the inside of the TRect,
 // which by definition does not include the right and bottom line!
 var
@@ -260,95 +260,95 @@ begin
   Result.Right := X + W;
 end;
 
-procedure TInteractiveObjectInfo.SetLeft(Value: Integer);
+procedure TGadget.SetLeft(Value: Integer);
 begin
   sLeft := Value;
   Obj.Left := Value;
 end;
 
-procedure TInteractiveObjectInfo.SetTop(Value: Integer);
+procedure TGadget.SetTop(Value: Integer);
 begin
   sTop := Value;
   Obj.Top := Value;
 end;
 
-procedure TInteractiveObjectInfo.SetZombieMode(Value: Boolean);
+procedure TGadget.SetZombieMode(Value: Boolean);
 begin
   sZombieMode := Value;
   Obj.DrawAsZombie := Value;
 end;
 
-function TInteractiveObjectInfo.GetSkillType: TSkillPanelButton;
+function TGadget.GetSkillType: TSkillPanelButton;
 begin
   Assert(TriggerEffect = DOM_PICKUP, 'Object.SkillType called for non-PickUp skill');
   Result := TSkillPanelButton(Obj.Skill);
 end;
 
-function TInteractiveObjectInfo.GetSoundEffect: String;
+function TGadget.GetSoundEffect: String;
 begin
   Result := MetaObj.SoundEffect;
 end;
 
-function TInteractiveObjectInfo.GetIsOnlyOnTerrain: Boolean;
+function TGadget.GetIsOnlyOnTerrain: Boolean;
 begin
   Result := ((Obj.DrawingFlags and odf_OnlyOnTerrain) <> 0);
 end;
 
-function TInteractiveObjectInfo.GetIsUpsideDown: Boolean;
+function TGadget.GetIsUpsideDown: Boolean;
 begin
   Result := ((Obj.DrawingFlags and odf_UpsideDown) <> 0);
 end;
 
-function TInteractiveObjectInfo.GetIsNoOverwrite: Boolean;
+function TGadget.GetIsNoOverwrite: Boolean;
 begin
   Result := ((Obj.DrawingFlags and odf_NoOverwrite) <> 0);
 end;
 
-function TInteractiveObjectInfo.GetIsFlipPhysics: Boolean;
+function TGadget.GetIsFlipPhysics: Boolean;
 begin
   Result := ((Obj.DrawingFlags and odf_FlipLem) <> 0);
 end;
 
-function TInteractiveObjectInfo.GetIsFlipImage: Boolean;
+function TGadget.GetIsFlipImage: Boolean;
 begin
   Result := ((Obj.DrawingFlags and odf_Flip) <> 0);
 end;
 
-function TInteractiveObjectInfo.GetIsRotate: Boolean;
+function TGadget.GetIsRotate: Boolean;
 begin
   Result := ((Obj.DrawingFlags and odf_Rotate) <> 0);
 end;
 
-function TInteractiveObjectInfo.GetAnimationFrameCount: Integer;
+function TGadget.GetAnimationFrameCount: Integer;
 begin
   Result := MetaObj.FrameCount;
 end;
 
-function TInteractiveObjectInfo.GetPreassignedSkill(BitField: Integer): Boolean;
+function TGadget.GetPreassignedSkill(BitField: Integer): Boolean;
 begin
   // Only call this function for hatches and preplaced lemmings
   Assert(MetaObj.TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
   Result := (Obj.TarLev and BitField) <> 0; // Yes, "TargetLevel" stores this info!
 end;
 
-function TInteractiveObjectInfo.GetHasPreassignedSkills: Boolean;
+function TGadget.GetHasPreassignedSkills: Boolean;
 begin
   Assert(MetaObj.TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
   Result := Obj.TarLev <> 0; // Yes, "TargetLevel" stores this info!
 end;
 
-function TInteractiveObjectInfo.GetCenterPoint: TPoint;
+function TGadget.GetCenterPoint: TPoint;
 begin
   Result.X := sLeft + (sWidth div 2);
   Result.Y := sTop + (sHeight div 2);
 end;
 
-function TInteractiveObjectInfo.GetKeyFrame: Integer;
+function TGadget.GetKeyFrame: Integer;
 begin
   Result := MetaObj.KeyFrame;
 end;
 
-function TInteractiveObjectInfo.Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
+function TGadget.Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
 var
   f: Integer;
 const
@@ -368,24 +368,24 @@ begin
     Result := (AnimObjMov[(Obj.Skill + 12) mod 16] * f) div 2;
 end;
 
-function TInteractiveObjectInfo.GetCanDrawToBackground: Boolean;
+function TGadget.GetCanDrawToBackground: Boolean;
 begin
   Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
   Result := (Frames.Count = 1) and (GetSpeed = 0);
 end;
 
-function TInteractiveObjectInfo.GetSpeed: Integer;
+function TGadget.GetSpeed: Integer;
 begin
   Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetSpeed called for an object that isn''t a moving background!');
   Result := Obj.TarLev;
 end;
 
-function TInteractiveObjectInfo.GetTriggerEffectBase: Integer;
+function TGadget.GetTriggerEffectBase: Integer;
 begin
   Result := MetaObj.TriggerEffect;
 end;
 
-procedure TInteractiveObjectInfo.AssignTo(NewObj: TInteractiveObjectInfo);
+procedure TGadget.AssignTo(NewObj: TGadget);
 begin
   NewObj.sTop := sTop;
   NewObj.sLeft := sLeft;
@@ -406,25 +406,25 @@ end;
 
 { TObjectAnimationInfoList }
 
-function TInteractiveObjectInfoList.Add(Item: TInteractiveObjectInfo): Integer;
+function TGadgetList.Add(Item: TGadget): Integer;
 begin
   Result := inherited Add(Item);
 end;
 
-function TInteractiveObjectInfoList.GetItem(Index: Integer): TInteractiveObjectInfo;
+function TGadgetList.GetItem(Index: Integer): TGadget;
 begin
   Result := inherited Get(Index);
 end;
 
-procedure TInteractiveObjectInfoList.Insert(Index: Integer; Item: TInteractiveObjectInfo);
+procedure TGadgetList.Insert(Index: Integer; Item: TGadget);
 begin
   inherited Insert(Index, Item);
 end;
 
-procedure TInteractiveObjectInfoList.FindReceiverID;
+procedure TGadgetList.FindReceiverID;
 var
   i, TestId: Integer;
-  Inf, TestInf: TInteractiveObjectInfo;
+  Inf, TestInf: TGadget;
   PairCount: Integer;
   IsReceiverUsed: array of Boolean;
 begin

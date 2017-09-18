@@ -35,7 +35,7 @@ type
 
   TRenderer = class
   private
-    fObjectInfos        : TInteractiveObjectInfoList;
+    fObjectInfos        : TGadgetList;
     fDrawingHelpers     : Boolean;
     fUsefulOnly         : Boolean;
 
@@ -55,7 +55,7 @@ type
     fAni                : TBaseDosAnimationSet;
     fBgColor            : TColor32;
     fParticles          : TParticleTable; // all particle offsets
-    fObjectInfoList     : TInteractiveObjectInfoList; // For rendering from Preview screen
+    fObjectInfoList     : TGadgetList; // For rendering from Preview screen
     fDoneBackgroundDraw : Boolean;
 
     // Add stuff
@@ -88,10 +88,10 @@ type
 
     // Were sub-procedures or part of DrawAllObjects
     procedure DrawObjectsOnLayer(aLayer: TRenderLayer);
-    procedure ProcessDrawFrame(aInf: TInteractiveObjectInfo; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
-    procedure DrawTriggerArea(aInf: TInteractiveObjectInfo);
+    procedure ProcessDrawFrame(aInf: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
+    procedure DrawTriggerArea(aInf: TGadget);
     procedure DrawUserHelper;
-    function IsUseful(aInf: TInteractiveObjectInfo): Boolean;
+    function IsUseful(aInf: TGadget): Boolean;
 
   protected
   public
@@ -112,9 +112,9 @@ type
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
 
     // Object rendering
-    procedure DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
-    procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
-    procedure DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
+    procedure DrawAllObjects(ObjectInfos: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
+    procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TGadget);
+    procedure DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TGadget);
     procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 
     // Lemming rendering
@@ -141,7 +141,7 @@ type
     procedure RenderWorld(World: TBitmap32; DoBackground: Boolean);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
 
-    procedure CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
+    procedure CreateInteractiveObjectList(var ObjInfList: TGadgetList);
 
     // Minimap
     procedure RenderMinimap(Dst: TBitmap32; LemmingsOnly: Boolean);
@@ -1075,7 +1075,7 @@ begin
 end;
 
 
-procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
+procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TGadget);
 var
   MO: TMetaObjectInterface;
 
@@ -1175,7 +1175,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
+procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TGadget);
 var
   numHelpers, indexHelper: Integer;
   DrawX, DrawY: Integer;
@@ -1284,7 +1284,7 @@ begin
   end;
 end;
 
-procedure TRenderer.ProcessDrawFrame(aInf: TInteractiveObjectInfo; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
+procedure TRenderer.ProcessDrawFrame(aInf: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
 var
   CountX, CountY, iX, iY: Integer;
   MO: TMetaObjectInterface;
@@ -1345,7 +1345,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawTriggerArea(aInf: TInteractiveObjectInfo);
+procedure TRenderer.DrawTriggerArea(aInf: TGadget);
 const
   DO_NOT_DRAW: set of 0..255 =
         [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
@@ -1368,7 +1368,7 @@ begin
   fLayers.fIsEmpty[rlObjectHelpers] := false;
 end;
 
-function TRenderer.IsUseful(aInf: TInteractiveObjectInfo): Boolean;
+function TRenderer.IsUseful(aInf: TGadget): Boolean;
 begin
   Result := true;
   if not fUsefulOnly then Exit;
@@ -1381,7 +1381,7 @@ procedure TRenderer.DrawObjectsOnLayer(aLayer: TRenderLayer);
 var
   Dst: TBitmap32;
 
-  function IsValidForLayer(aInf: TInteractiveObjectInfo): Boolean;
+  function IsValidForLayer(aInf: TGadget): Boolean;
   begin
     if aInf.TriggerEffect = DOM_BACKGROUND then
       Result := aLayer = rlBackgroundObjects
@@ -1397,7 +1397,7 @@ var
 
   procedure HandleObject(aIndex: Integer);
   var
-    Inf: TInteractiveObjectInfo;
+    Inf: TGadget;
   begin
     Inf := fObjectInfos[aIndex];
     if not (IsValidForLayer(Inf) and IsUseful(Inf)) then Exit;
@@ -1436,9 +1436,9 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawAllObjects(ObjectInfos: TInteractiveObjectInfoList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
+procedure TRenderer.DrawAllObjects(ObjectInfos: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
 var
-  Inf: TInteractiveObjectInfo;
+  Inf: TGadget;
   i, i2: Integer;
 begin
   fObjectInfos := ObjectInfos;
@@ -1555,7 +1555,7 @@ begin
   fBgColor := $00000000;
   fAni := TBaseDosAnimationSet.Create;
   fRecolorer := TRecolorImage.Create;
-  fObjectInfoList := TInteractiveObjectInfoList.Create;
+  fObjectInfoList := TGadgetList.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
   begin
     if i = hpi_None then Continue;
@@ -1597,7 +1597,7 @@ var
   i: Integer;
   T: TTerrain;
   MT: TMetaTerrain;
-  O: TInteractiveObjectInfo;
+  O: TGadget;
   Bmp: TBitmap32;
 
   procedure SetRegion(aRegion: TRect; C, AntiC: TColor32);
@@ -1617,7 +1617,7 @@ var
     end;
   end;
 
-  procedure ApplyOWW(Inf: TInteractiveObjectInfo);
+  procedure ApplyOWW(Inf: TGadget);
   var
     C: TColor32;
 
@@ -1833,16 +1833,16 @@ begin
 end;
 
 
-procedure TRenderer.CreateInteractiveObjectList(var ObjInfList: TInteractiveObjectInfoList);
+procedure TRenderer.CreateInteractiveObjectList(var ObjInfList: TGadgetList);
 var
   i: Integer;
-  ObjInf: TInteractiveObjectInfo;
+  ObjInf: TGadget;
   MO: TMetaObjectInterface;
 begin
   for i := 0 to Inf.Level.InteractiveObjects.Count - 1 do
   begin
     MO := FindMetaObject(Inf.Level.InteractiveObjects[i]);
-    ObjInf := TInteractiveObjectInfo.Create(Inf.Level.InteractiveObjects[i], MO);
+    ObjInf := TGadget.Create(Inf.Level.InteractiveObjects[i], MO);
 
     // Check whether trigger area intersects the level area, except for moving backgrounds
     if    (ObjInf.TriggerRect.Top > Inf.Level.Info.Height)

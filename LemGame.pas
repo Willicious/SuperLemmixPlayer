@@ -77,7 +77,7 @@ type
       DelayEndFrames: Integer;
       TimePlay: Integer;
       EntriesOpened: Boolean;
-      ObjectInfos: TInteractiveObjectInfoList;
+      ObjectInfos: TGadgetList;
       CurrSpawnInterval: Integer;
 
       CurrSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -178,7 +178,7 @@ type
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
-    ObjectInfos                : TInteractiveObjectInfoList; // list of objects excluding entrances
+    ObjectInfos                : TGadgetList; // list of objects excluding entrances
     CurrSpawnInterval            : Integer;
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -530,7 +530,7 @@ constructor TLemmingGameSavedState.Create;
 begin
   inherited;
   LemmingList := TLemmingList.Create(true);
-  ObjectInfos := TInteractiveObjectInfoList.Create(true);
+  ObjectInfos := TGadgetList.Create(true);
   TerrainLayer := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
   ZombieMap := TByteMap.Create;
@@ -666,7 +666,7 @@ begin
   aState.ObjectInfos.Clear;
   for i := 0 to ObjectInfos.Count-1 do
   begin
-    aState.ObjectInfos.Add(TInteractiveObjectInfo.Create);
+    aState.ObjectInfos.Add(TGadget.Create);
     ObjectInfos[i].AssignTo(aState.ObjectInfos[i]);
   end;
 end;
@@ -814,7 +814,7 @@ begin
   FencerMasks    := TBitmap32.Create;
   MinerMasks     := TBitmap32.Create;
 
-  ObjectInfos    := TInteractiveObjectInfoList.Create;
+  ObjectInfos    := TGadgetList.Create;
   BlockerMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
   fReplayManager := TReplay.Create;
@@ -962,7 +962,7 @@ end;
 procedure TLemmingGame.Start(aReplay: Boolean = False);
 var
   i: Integer;
-  Inf: TInteractiveObjectInfo;
+  Inf: TGadget;
 
   Skill: TSkillPanelButton;
   InitialSkill: TSkillPanelButton;
@@ -1227,7 +1227,7 @@ end;
 
 procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; oid: Byte);
 var
-  Inf, Inf2: TInteractiveObjectInfo;
+  Inf, Inf2: TGadget;
 begin
   Inf := ObjectInfos[oid];
   Assert(Inf.ReceiverId <> 65535, 'Telerporter used without receiver'); // note to self or Nepster: change this to use -1 instead?
@@ -2261,7 +2261,7 @@ function TLemmingGame.FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): W
 var
   ObjectID: Word;
   ObjectFound: Boolean;
-  Inf: TInteractiveObjectInfo;
+  Inf: TGadget;
 begin
   // Because ObjectTypeToTrigger defaults to trZombie, looking for this trigger type is nonsense!
   Assert(TriggerType <> trZombie, 'FindObjectId called for trZombie');
@@ -2305,7 +2305,7 @@ end;
 
 function TLemmingGame.HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TInteractiveObjectInfo;
+  Inf: TGadget;
   ObjectID: Word;
 begin
   Result := True;
@@ -2350,7 +2350,7 @@ end;
 
 function TLemmingGame.HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TInteractiveObjectInfo;
+  Inf: TGadget;
   ObjectID: Word;
 begin
   Result := False;
@@ -2386,7 +2386,7 @@ end;
 
 function TLemmingGame.HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TInteractiveObjectInfo;
+  Inf: TGadget;
   ObjectID: Word;
 begin
   Result := False;
@@ -2407,7 +2407,7 @@ end;
 
 function TLemmingGame.HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TInteractiveObjectInfo;
+  Inf: TGadget;
   n: Integer;
   ObjectID: Word;
 begin
@@ -2494,7 +2494,7 @@ end;
 
 function TLemmingGame.HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TInteractiveObjectInfo;
+  Inf: TGadget;
   ObjectID: Word;
 begin
   Result := False;
@@ -2681,7 +2681,7 @@ end;
 procedure TLemmingGame.DrawAnimatedObjects;
 var
   i, f: Integer;
-  Inf : TInteractiveObjectInfo;
+  Inf : TGadget;
 begin
 
   for i := 0 to ObjectInfos.Count-1 do
@@ -5000,7 +5000,7 @@ end;
 function TLemmingGame.CheckLemTeleporting(L: TLemming): Boolean;
 // This function checks, whether a lemming appears out of a receiver
 var
-  ObjInfo: TInteractiveObjectInfo;
+  ObjInfo: TGadget;
   ObjID: Integer;
 begin
   Result := False;
@@ -5078,7 +5078,7 @@ procedure TLemmingGame.UpdateInteractiveObjects;
   NB: It does not handle the drawing
 -------------------------------------------------------------------------------}
 var
-  Inf, Inf2: TInteractiveObjectInfo;
+  Inf, Inf2: TGadget;
   i: Integer;
 begin
   for i := ObjectInfos.Count - 1 downto 0 do
