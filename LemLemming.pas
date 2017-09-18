@@ -65,7 +65,7 @@ type
     LemFallen                     : Integer; // number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // total number of fallen pixels
     LemExplosionTimer             : Integer; // 84 (before 79) downto 0
-    LemMechanicFrames             : Integer;
+    LemDisarmingFrames             : Integer;
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
     LemFrameDiff                  : Integer;
@@ -85,7 +85,7 @@ type
     LemIsSwimmer                  : Boolean;
     LemIsFloater                  : Boolean;
     LemIsGlider                   : Boolean;
-    LemIsMechanic                 : Boolean;
+    LemIsDisarmer                 : Boolean;
     LemIsZombie                   : Boolean;
     LemPlacedBrick                : Boolean; // placed useful brick during this cycle (plaformer and stacker)
     LemInFlipper                  : Integer;
@@ -205,7 +205,7 @@ end;
 
 function TLemming.CheckForPermanentSkills: Boolean;
 begin
-  Result := (LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsMechanic);
+  Result := (LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsDisarmer);
 end;
 
 procedure TLemming.SetFromPreplaced(Source: TPreplacedLemming);
@@ -217,7 +217,7 @@ begin
   LemIsSwimmer := Source.IsSwimmer;
   LemIsFloater := Source.IsFloater;
   LemIsGlider := Source.IsGlider;
-  LemIsMechanic := Source.IsDisarmer;
+  LemIsDisarmer := Source.IsDisarmer;
   // Blocker and Zombie must be handled by the calling routine
 end;
 
@@ -239,7 +239,7 @@ begin
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
   LemExplosionTimer := Source.LemExplosionTimer;
-  LemMechanicFrames := Source.LemMechanicFrames;
+  LemDisarmingFrames := Source.LemDisarmingFrames;
   LemFrame := Source.LemFrame;
   LemMaxFrame := Source.LemMaxFrame;
   LemFrameDiff := Source.LemFrameDiff;
@@ -257,7 +257,7 @@ begin
   LemIsSwimmer := Source.LemIsSwimmer;
   LemIsFloater := Source.LemIsFloater;
   LemIsGlider := Source.LemIsGlider;
-  LemIsMechanic := Source.LemIsMechanic;
+  LemIsDisarmer := Source.LemIsDisarmer;
   LemIsZombie := Source.LemIsZombie;
   LemPlacedBrick := Source.LemPlacedBrick;
   LemInFlipper := Source.LemInFlipper;

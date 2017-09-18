@@ -1247,7 +1247,7 @@ begin
   if L.LemIsSwimmer then Inc(numHelpers);
   if L.LemIsFloater then Inc(numHelpers);
   if L.LemIsGlider then Inc(numHelpers);
-  if L.LemIsMechanic then Inc(numHelpers);
+  if L.LemIsDisarmer then Inc(numHelpers);
 
   DrawX := L.LemX - numHelpers * 5;
   DrawY := L.LemY - 10 - 9;
@@ -1280,7 +1280,7 @@ begin
     fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if L.LemIsMechanic then
+  if L.LemIsDisarmer then
   begin
     fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
   end;

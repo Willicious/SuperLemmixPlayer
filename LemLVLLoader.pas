@@ -667,7 +667,7 @@ begin
       SetSkillCount(spbSwimmer, Buf.SwimmerCount);
       SetSkillCount(spbFloater, Buf.FloaterCount);
       SetSkillCount(spbGlider, Buf.GliderCount);
-      SetSkillCount(spbDisarmer, Buf.MechanicCount);
+      SetSkillCount(spbDisarmer, Buf.DisarmerCount);
       SetSkillCount(spbBomber, Buf.BomberCount);
       SetSkillCount(spbStoner, Buf.StonerCount);
       SetSkillCount(spbBlocker, Buf.BlockerCount);
@@ -1094,7 +1094,7 @@ begin
       SetSkillCount(spbSwimmer, Buf.SwimmerCount);
       SetSkillCount(spbFloater, Buf.FloaterCount);
       SetSkillCount(spbGlider, Buf.GliderCount);
-      SetSkillCount(spbDisarmer, Buf.MechanicCount);
+      SetSkillCount(spbDisarmer, Buf.DisarmerCount);
       SetSkillCount(spbBomber, Buf.BomberCount);
       SetSkillCount(spbStoner, Buf.StonerCount);
       SetSkillCount(spbBlocker, Buf.BlockerCount);

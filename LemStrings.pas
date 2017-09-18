@@ -131,7 +131,7 @@ resourcestring
 
   SGlider = 'Glider';
 
-  SMechanic = 'Disarmer';
+  SDisarmer = 'Disarmer';
 
   SCloner = 'Cloner';
 
@@ -203,7 +203,7 @@ const
     SStoner,
     SSwimmer,
     SGlider,
-    SMechanic,
+    SDisarmer,
     SCloner,
     SFencer
   );

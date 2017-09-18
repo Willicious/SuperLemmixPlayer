@@ -934,7 +934,7 @@ begin
     if L.LemIsSwimmer then Result[2] := 'S';
     if L.LemIsFloater then Result[3] := 'F';
     if L.LemIsGlider then Result[3] := 'G';
-    if L.LemIsMechanic then Result[4] := 'D';
+    if L.LemIsDisarmer then Result[4] := 'D';
     if L.LemIsZombie then Result[5] := 'Z';
   end
   else if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
@@ -944,7 +944,7 @@ begin
     if L.LemIsSwimmer then DoInc(SSwimmer);
     if L.LemIsFloater then DoInc(SFloater);
     if L.LemIsGlider then DoInc(SGlider);
-    if L.LemIsMechanic then DoInc(SMechanic);
+    if L.LemIsDisarmer then DoInc(SDisarmer);
     if L.LemIsZombie then Result := SZombie;
   end;
 end;

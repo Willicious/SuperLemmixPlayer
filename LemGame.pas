@@ -331,7 +331,7 @@ type
     function HandleStacking(L: TLemming): Boolean;
     function HandleSwimming(L: TLemming): Boolean;
     function HandleGliding(L: TLemming): Boolean;
-    function HandleFixing(L: TLemming): Boolean;
+    function HandleDisarming(L: TLemming): Boolean;
     function HandleFencing(L: TLemming): Boolean;
 
   { interaction }
@@ -347,7 +347,7 @@ type
     function MayAssignClimber(L: TLemming): Boolean;
     function MayAssignFloaterGlider(L: TLemming): Boolean;
     function MayAssignSwimmer(L: TLemming): Boolean;
-    function MayAssignMechanic(L: TLemming): Boolean;
+    function MayAssignDisarmer(L: TLemming): Boolean;
     function MayAssignBlocker(L: TLemming): Boolean;
     function MayAssignExploderStoner(L: TLemming): Boolean;
     function MayAssignBuilder(L: TLemming): Boolean;
@@ -853,7 +853,7 @@ begin
   LemmingMethods[baStoneFinish] := HandleExploding; // same behavior, except applied mask!
   LemmingMethods[baSwimming]   := HandleSwimming;
   LemmingMethods[baGliding]    := HandleGliding;
-  LemmingMethods[baFixing]     := HandleFixing;
+  LemmingMethods[baFixing]     := HandleDisarming;
   LemmingMethods[baFencing]    := HandleFencing;
 
   NewSkillMethods[baNone]         := nil;
@@ -881,7 +881,7 @@ begin
   NewSkillMethods[baStoning]      := MayAssignExploderStoner;
   NewSkillMethods[baSwimming]     := MayAssignSwimmer;
   NewSkillMethods[baGliding]      := MayAssignFloaterGlider;
-  NewSkillMethods[baFixing]       := MayAssignMechanic;
+  NewSkillMethods[baFixing]       := MayAssignDisarmer;
   NewSkillMethods[baCloning]      := MayAssignCloner;
   NewSkillMethods[baFencing]      := MayAssignFencer;
 
@@ -1390,7 +1390,7 @@ begin
                        Inc(i);
                      Dec(L.LemY, i);
                    end;
-    baFixing     : L.LemMechanicFrames := 42;
+    baFixing     : L.LemDisarmingFrames := 42;
 
   end;
 end;
@@ -1746,7 +1746,7 @@ begin
   if (NewSkill = baClimbing) then L.LemIsClimber := True
   else if (NewSkill = baFloating) then L.LemIsFloater := True
   else if (NewSkill = baGliding) then L.LemIsGlider := True
-  else if (NewSkill = baFixing) then L.LemIsMechanic := True
+  else if (NewSkill = baFixing) then L.LemIsDisarmer := True
   else if (NewSkill = baSwimming) then
   begin
     L.LemIsSwimmer := True;
@@ -1850,7 +1850,7 @@ var
     Result := True;
     case PriorityBox of
       Perm    : Result :=     (L.LemIsClimber or L.LemIsSwimmer or L.LemIsFloater
-                                    or L.LemIsGlider or L.LemIsMechanic);
+                                    or L.LemIsGlider or L.LemIsDisarmer);
       NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
                                                baPlatforming, baStacking, baBlocking, baShrugging]);
       Walk    : Result :=     (L.LemAction in [baWalking, baJumping]);
@@ -1963,12 +1963,12 @@ begin
   Result := (not (L.LemAction in ActionSet)) and not L.LemIsSwimmer;
 end;
 
-function TLemmingGame.MayAssignMechanic(L: TLemming): Boolean;
+function TLemmingGame.MayAssignDisarmer(L: TLemming): Boolean;
 const
   ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
                baVaporizing, baSplatting, baExiting];
 begin
-  Result := (not (L.LemAction in ActionSet)) and not L.LemIsMechanic;
+  Result := (not (L.LemAction in ActionSet)) and not L.LemIsDisarmer;
 end;
 
 function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
@@ -2321,7 +2321,7 @@ begin
   // Set ObjectInfos
   Inf := ObjectInfos[ObjectID];
 
-  if     L.LemIsMechanic and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
+  if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
   begin
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
@@ -3163,11 +3163,11 @@ begin
 end;
 
 
-function TLemmingGame.HandleFixing(L: TLemming): Boolean;
+function TLemmingGame.HandleDisarming(L: TLemming): Boolean;
 begin
   Result := False;
-  Dec(L.LemMechanicFrames);
-  if L.LemMechanicFrames <= 0 then
+  Dec(L.LemDisarmingFrames);
+  if L.LemDisarmingFrames <= 0 then
   begin
     if L.LemActionNew <> baNone then Transition(L, L.LemActionNew)
     else Transition(L, baWalking);
@@ -4572,7 +4572,7 @@ begin
           if (ObjectInfos[ix].PreAssignedSkills and 2) <> 0 then LemIsSwimmer := true;
           if (ObjectInfos[ix].PreAssignedSkills and 4) <> 0 then LemIsFloater := true
           else if (ObjectInfos[ix].PreAssignedSkills and 8) <> 0 then LemIsGlider := true;
-          if (ObjectInfos[ix].PreAssignedSkills and 16) <> 0 then LemIsMechanic := true;
+          if (ObjectInfos[ix].PreAssignedSkills and 16) <> 0 then LemIsDisarmer := true;
           if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then
           begin
             Dec(fSpawnedDead);

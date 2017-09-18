@@ -185,7 +185,7 @@ type
             SwimmerCount               : Byte;
             FloaterCount               : Byte;
             GliderCount                : Byte;
-            MechanicCount              : Byte;
+            DisarmerCount              : Byte;
             BomberCount                : Byte;
             StonerCount                : Byte;
     {0018}  BlockerCount               : Byte;
@@ -302,7 +302,7 @@ type
             SwimmerCount               : Byte;
             FloaterCount               : Byte;
             GliderCount                : Byte;
-            MechanicCount              : Byte;
+            DisarmerCount              : Byte;
             BomberCount                : Byte;
             StonerCount                : Byte;
     {0018}  BlockerCount               : Byte;
