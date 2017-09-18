@@ -49,7 +49,7 @@ type
     fLayers             : TRenderBitmaps;
 
     TempBitmap          : TBitmap32;
-    Inf                 : TRenderInfoRec;
+    RenderInfoRec       : TRenderInfoRec;
     fTheme              : TNeoTheme;
     fHelperImages       : THelperImages;
     fAni                : TBaseDosAnimationSet;
@@ -1693,7 +1693,7 @@ begin
 
   fPhysicsMap.Clear(0);
 
-  with Inf.Level do
+  with RenderInfoRec.Level do
   begin
     Dst.SetSize(Info.Width, Info.Height);
 
@@ -1755,9 +1755,9 @@ var
     Collection, Piece: String;
     SplitPos: Integer;
   begin
-    SplitPos := pos(':', Inf.Level.Info.Background);
-    Collection := LeftStr(Inf.Level.Info.Background, SplitPos-1);
-    Piece := RightStr(Inf.Level.Info.Background, Length(Inf.Level.Info.Background)-SplitPos);
+    SplitPos := pos(':', RenderInfoRec.Level.Info.Background);
+    Collection := LeftStr(RenderInfoRec.Level.Info.Background, SplitPos-1);
+    Piece := RightStr(RenderInfoRec.Level.Info.Background, Length(RenderInfoRec.Level.Info.Background)-SplitPos);
 
     if FileExists(AppPath + SFStyles + Collection + '\backgrounds\' + Piece + '.png') then
       TPngInterface.LoadPngFile((AppPath + SFStyles + Collection + '\backgrounds\' + Piece + '.png'), BgImg)
@@ -1767,7 +1767,7 @@ var
     end;
   end;
 begin
-  if Inf.Level = nil then Exit;
+  if RenderInfoRec.Level = nil then Exit;
 
   fDisableBackground := not DoBackground;
   fDoneBackgroundDraw := false;
@@ -1776,13 +1776,13 @@ begin
   fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
   fLayers[rlBackground].Clear($FF000000 or fBgColor);
 
-  if DoBackground and (Inf.Level.Info.Background <> '') then
+  if DoBackground and (RenderInfoRec.Level.Info.Background <> '') then
   begin
     BgImg := TBitmap32.Create;
     try
       LoadBackgroundImage;
-      for y := 0 to Inf.Level.Info.Height div BgImg.Height do
-        for x := 0 to Inf.Level.Info.Width div BgImg.Width do
+      for y := 0 to RenderInfoRec.Level.Info.Height div BgImg.Height do
+        for x := 0 to RenderInfoRec.Level.Info.Width div BgImg.Width do
           BgImg.DrawTo(fLayers[rlBackground], x * BgImg.Width, y * BgImg.Height);
     finally
       BgImg.Free;
@@ -1797,9 +1797,9 @@ begin
 
   // Draw preplaced lemmings
   L := TLemming.Create;
-  for i := 0 to Inf.Level.PreplacedLemmings.Count-1 do
+  for i := 0 to RenderInfoRec.Level.PreplacedLemmings.Count-1 do
   begin
-    Lem := Inf.Level.PreplacedLemmings[i];
+    Lem := RenderInfoRec.Level.PreplacedLemmings[i];
 
     L.SetFromPreplaced(Lem);
     L.LemIsZombie := Lem.IsZombie;
@@ -1816,9 +1816,9 @@ begin
   L.Free;
 
   // Draw all terrain pieces
-  for i := 0 to Inf.Level.Terrains.Count-1 do
+  for i := 0 to RenderInfoRec.Level.Terrains.Count-1 do
   begin
-    DrawTerrain(fLayers[rlTerrain], Inf.Level.Terrains[i]);
+    DrawTerrain(fLayers[rlTerrain], RenderInfoRec.Level.Terrains[i]);
   end;
 
   // remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
@@ -1837,16 +1837,16 @@ var
   Gadget: TGadget;
   MO: TGadgetMetaAccessor;
 begin
-  for i := 0 to Inf.Level.InteractiveObjects.Count - 1 do
+  for i := 0 to RenderInfoRec.Level.InteractiveObjects.Count - 1 do
   begin
-    MO := FindGadgetMetaInfo(Inf.Level.InteractiveObjects[i]);
-    Gadget := TGadget.Create(Inf.Level.InteractiveObjects[i], MO);
+    MO := FindGadgetMetaInfo(RenderInfoRec.Level.InteractiveObjects[i]);
+    Gadget := TGadget.Create(RenderInfoRec.Level.InteractiveObjects[i], MO);
 
     // Check whether trigger area intersects the level area, except for moving backgrounds
-    if    (Gadget.TriggerRect.Top > Inf.Level.Info.Height)
+    if    (Gadget.TriggerRect.Top > RenderInfoRec.Level.Info.Height)
        or (Gadget.TriggerRect.Bottom < 0)
        or (Gadget.TriggerRect.Right < 0)
-       or (Gadget.TriggerRect.Left > Inf.Level.Info.Width) then
+       or (Gadget.TriggerRect.Left > RenderInfoRec.Level.Info.Width) then
     begin
       if Gadget.TriggerEffect <> DOM_BACKGROUND then
         Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
@@ -1863,7 +1863,7 @@ end;
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
 
-  Inf.Level := aLevel;
+  RenderInfoRec.Level := aLevel;
 
   if not NoOutput then
   begin
@@ -1879,7 +1879,7 @@ begin
     fRecolorer.LoadSwaps(fTheme.Lemmings);
 
     // Prepare the bitmaps
-    fLayers.Prepare(Inf.Level.Info.Width, Inf.Level.Info.Height);
+    fLayers.Prepare(RenderInfoRec.Level.Info.Width, RenderInfoRec.Level.Info.Height);
   end;
 
   // Creating the list of all interactive objects.
