@@ -1339,9 +1339,6 @@ begin
         OffsetRect(DstRect, MO.Width, 0);
       end;
     end;
-
-    //aInf.Obj.LastDrawX := aInf.Left;  // is this still needed?
-    //aInf.Obj.LastDrawY := aInf.Top;
   finally
     if IsOwnBitmap then
       TempBitmap.Free;

@@ -29,8 +29,6 @@ type
     fDrawingFlags: Byte; // odf_xxxx
     fSkill: Integer;
     fTarLev: Integer;
-    fLastDrawX: Integer;
-    fLastDrawY: Integer;
     fDrawAsZombie: Boolean;
     procedure SetFlip(aValue: Boolean); override;
     procedure SetInvert(aValue: Boolean); override;
@@ -45,8 +43,6 @@ type
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
     property Skill : Integer read fSkill write fSkill;
     property TarLev : Integer read fTarLev write fTarLev;
-    property LastDrawX: Integer read fLastDrawX write fLastDrawX;
-    property LastDrawY: Integer read fLastDrawY write fLastDrawY;
     property DrawAsZombie: Boolean read fDrawAsZombie write fDrawAsZombie;
   end;
 
@@ -137,8 +133,6 @@ begin
     Height := O.Height;
     Skill := O.Skill;
     TarLev := O.TarLev;
-    LastDrawX := O.LastDrawX;
-    LastDrawY := O.LastDrawY;
     DrawAsZombie := O.DrawAsZombie;
   end;
 end;

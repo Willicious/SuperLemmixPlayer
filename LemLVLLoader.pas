@@ -761,8 +761,6 @@ begin
                  Obj.DrawingFlags := Obj.DrawingFlags or odf_Rotate;
                Obj.Skill := O.SValue mod 16;
 
-               Obj.LastDrawX := Obj.Left;
-               Obj.LastDrawY := Obj.Top;
                Obj.DrawAsZombie := false;
 
                InteractiveObjects.Add(Obj);
@@ -813,8 +811,6 @@ begin
                else if (S.SteelFlags and not $80) = 3 then Obj.Piece := '4'
                else if (S.SteelFlags and not $80) = 4 then Obj.Piece := '14';
                Obj.DrawingFlags := odf_OnlyOnTerrain;
-               Obj.LastDrawX := Obj.Left;
-               Obj.LastDrawY := Obj.Top;
              end;
            end;
         4: begin
@@ -961,8 +957,6 @@ begin
         Obj.Free;
         Continue;
       end;
-      Obj.LastDrawX := Obj.Left;
-      Obj.LastDrawY := Obj.Top;
       Obj.DrawAsZombie := false;
 
       InteractiveObjects.Add(Obj);
@@ -1179,9 +1173,6 @@ begin
       if O.ObjectFlags and $40 <> 0 then
         Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
       Obj.Skill := O.SValue mod 16;
-
-      Obj.LastDrawX := Obj.Left;
-      Obj.LastDrawY := Obj.Top;
       Obj.DrawAsZombie := false;
 
       InteractiveObjects.Add(Obj);
@@ -1238,8 +1229,6 @@ begin
         else if (S.SteelFlags and not $80) = 3 then Obj.Piece := '4'
         else if (S.SteelFlags and not $80) = 4 then Obj.Piece := '14';
         Obj.DrawingFlags := odf_OnlyOnTerrain;
-        Obj.LastDrawX := Obj.Left;
-        Obj.LastDrawY := Obj.Top;
       end;
     end;
 
