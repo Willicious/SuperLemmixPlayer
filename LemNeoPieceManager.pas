@@ -9,7 +9,7 @@ interface
 uses
   Dialogs,
   PngInterface, LemNeoTheme,
-  LemMetaTerrain, LemMetaObject, LemTypes, GR32, LemStrings,
+  LemMetaTerrain, LemGadgetsMeta, LemTypes, GR32, LemStrings,
   StrUtils, Classes, SysUtils;
 
 const
@@ -26,7 +26,7 @@ type
     private
       fTheme: TNeoTheme;
       fTerrains: TMetaTerrains;
-      fObjects: TMetaObjects;
+      fObjects: TGadgetMetaInfoList;
 
       fDisableTidy: Boolean;
 
@@ -39,7 +39,7 @@ type
       function ObtainObject(Identifier: String): Integer;
 
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
-      function GetMetaObject(Identifier: String): TMetaObject;
+      function GetMetaObject(Identifier: String): TGadgetMetaInfo;
 
       property TerrainCount: Integer read GetTerrainCount;
       property ObjectCount: Integer read GetObjectCount;
@@ -52,7 +52,7 @@ type
       procedure SetTheme(aTheme: TNeoTheme);
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
-      property Objects[Identifier: String]: TMetaObject read GetMetaObject;
+      property Objects[Identifier: String]: TGadgetMetaInfo read GetMetaObject;
 
       property DisableTidy: Boolean read fDisableTidy write fDisableTidy;
   end;
@@ -96,7 +96,7 @@ constructor TNeoPieceManager.Create;
 begin
   inherited;
   fTerrains := TMetaTerrains.Create;
-  fObjects := TMetaObjects.Create;
+  fObjects := TGadgetMetaInfoList.Create;
   fTheme := nil;
 end;
 
@@ -188,12 +188,12 @@ end;
 function TNeoPieceManager.ObtainObject(Identifier: String): Integer;
 var
   ObjectLabel: TLabelRecord;
-  MO: TMetaObject;
+  MO: TGadgetMetaInfo;
 begin
   try
     ObjectLabel := SplitIdentifier(Identifier);
     Result := fObjects.Count;
-    MO := TMetaObject.Create;
+    MO := TGadgetMetaInfo.Create;
     MO.Load(ObjectLabel.GS, ObjectLabel.Piece, fTheme);
     fObjects.Add(MO);
   except
@@ -212,7 +212,7 @@ begin
   Result.CyclesSinceLastUse := 0;
 end;
 
-function TNeoPieceManager.GetMetaObject(Identifier: String): TMetaObject;
+function TNeoPieceManager.GetMetaObject(Identifier: String): TGadgetMetaInfo;
 var
   i: Integer;
 begin

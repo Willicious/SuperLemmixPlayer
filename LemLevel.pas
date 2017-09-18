@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, StrUtils,
   LemCore, LemLemming,
   LemTalisman,
-  LemTerrain, LemInteractiveObject, LemObjects,
+  LemTerrain, LemGadgetsModel, LemGadgets,
   LemNeoPieceManager, LemNeoParser;
 
 type
@@ -87,7 +87,7 @@ type
   private
     fLevelInfo       : TLevelInfo;
     fTerrains           : TTerrains;
-    fInteractiveObjects : TInteractiveObjects;
+    fInteractiveObjects : TGadgetModelList;
     fPreplacedLemmings  : TPreplacedLemmingList;
 
     fTalismans: TObjectList<TTalisman>;
@@ -128,7 +128,7 @@ type
     procedure PrepareForUse;
   published
     property Info: TLevelInfo read fLevelInfo;
-    property InteractiveObjects: TInteractiveObjects read fInteractiveObjects;
+    property InteractiveObjects: TGadgetModelList read fInteractiveObjects;
     property Terrains: TTerrains read fTerrains;
     property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings;
     property Talismans: TObjectList<TTalisman> read fTalismans;
@@ -192,7 +192,7 @@ constructor TLevel.Create;
 begin
   inherited;
   fLevelInfo := TLevelInfo.Create;
-  fInteractiveObjects := TInteractiveObjects.Create;
+  fInteractiveObjects := TGadgetModelList.Create;
   fTerrains := TTerrains.Create;
   fPreplacedLemmings := TPreplacedLemmingList.Create;
   fTalismans := TObjectList<TTalisman>.Create(true);
@@ -379,7 +379,7 @@ end;
 
 procedure TLevel.HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
 var
-  O: TInteractiveObject;
+  O: TGadgetModel;
 
   procedure Flag(aValue: Integer);
   begin
@@ -737,7 +737,7 @@ end;
 procedure TLevel.SaveObjectSections(aSection: TParserSection);
 var
   i: Integer;
-  O: TInteractiveObject;
+  O: TGadgetModel;
   Sec: TParserSection;
 
   function Flag(aValue: Integer): Boolean;

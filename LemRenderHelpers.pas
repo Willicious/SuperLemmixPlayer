@@ -7,7 +7,7 @@ unit LemRenderHelpers;
 interface
 
 uses
-  LemTypes, LemObjects, LemLemming, LemCore,
+  LemTypes, LemGadgets, LemLemming, LemCore,
   GR32, GR32_Blend,
   Contnrs, Classes;
 
@@ -121,7 +121,7 @@ type
     private
       fDisableDrawing: Boolean;
       fLemmingList: TLemmingList;
-      fObjectList: TInteractiveObjectInfoList;
+      fObjectList: TGadgetList;
       fPSelectedSkill: ^TSkillPanelButton;
       fSelectedLemmingID: Integer;
       fReplayLemmingID: Integer;
@@ -159,7 +159,7 @@ type
       function SimulateLem(L: TLemming): TArrayArrayInt;
       property DisableDrawing: Boolean read fDisableDrawing write fDisableDrawing;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
-      property ObjectList: TInteractiveObjectInfoList read fObjectList write fObjectList;
+      property ObjectList: TGadgetList read fObjectList write fObjectList;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
       property SelectedLemming: TLemming read GetSelectedLemming write SetSelectedLemming;
       property HighlitLemming: TLemming read GetHighlitLemming;

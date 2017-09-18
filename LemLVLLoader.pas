@@ -17,7 +17,7 @@ uses
   Classes, SysUtils, StrUtils,
   Dialogs, UMisc, Math,
   LemLevel, LemStrings, LemNeoParser,
-  LemPiece, LemTerrain, LemInteractiveObject,
+  LemPiece, LemTerrain, LemGadgetsModel,
   LemSteel, LemLemming,
   LemDosStructures, LemTypes, LemCore;
 
@@ -174,7 +174,7 @@ var
   MatchRec: TTranslationItem;
 
   T: TTerrain;
-  O: TInteractiveObject;
+  O: TGadgetModel;
   L: TPreplacedLemming;
 
   PatchL, PatchT: Integer;
@@ -557,7 +557,7 @@ class procedure TLVLLoader.ApplyWindowOrder(aLevel: TLevel; WindowOrder: TWindow
 var
   i, i2: Integer;
   OrigCount: Integer;
-  SrcO, DstO: TInteractiveObject;
+  SrcO, DstO: TGadgetModel;
 begin
   OrigCount := aLevel.InteractiveObjects.Count;
 
@@ -590,7 +590,7 @@ var
   O: TNewNeoLVLObject;
   T: TNewNeoLVLTerrain;
   S: TNewNeoLVLSteel;
-  Obj: TInteractiveObject;
+  Obj: TGadgetModel;
   Ter: TTerrain;
   GSNames: array of String;
   GSName: array[0..15] of AnsiChar;
@@ -736,7 +736,7 @@ begin
              end
              else
              begin
-               Obj := TInteractiveObject.Create;
+               Obj := TGadgetModel.Create;
                Obj.Left := (O.XPos * 8) div LRes;
                Obj.Top := (O.YPos * 8) div LRes;
                Obj.GS := IntToStr(O.GSIndex);
@@ -884,7 +884,7 @@ var
   H, i: Integer;
   O: TLVLObject;
   T: TLVLTerrain;
-  Obj: TInteractiveObject;
+  Obj: TGadgetModel;
   Ter: TTerrain;
   GraphicSet: Integer;
 begin
@@ -940,7 +940,7 @@ begin
       O := Buf.Objects[i];
       if O.AsInt64 = 0 then
         Continue;
-      Obj := TInteractiveObject.Create;
+      Obj := TGadgetModel.Create;
       Obj.Left := (Integer(O.B0) shl 8 + Integer(O.B1) - 16) and not 7;
       Obj.Top := Integer(O.B2) shl 8 + Integer(O.B3);
       If Obj.Top > 32767 then Obj.Top := Obj.Top - 65536;
@@ -1030,7 +1030,7 @@ var
   O: TNeoLVLObject;
   T: TNeoLVLTerrain;
   S: TNeoLVLSteel;
-  Obj: TInteractiveObject;
+  Obj: TGadgetModel;
   Ter: TTerrain;
   TempWindowOrder: Array[0..31] of Byte;
   WindowOrder: TWindowOrder;
@@ -1151,7 +1151,7 @@ begin
               Buf.WindowOrder[x2] := Buf.WindowOrder[x2] - 1;
         Continue;
       end;
-      Obj := TInteractiveObject.Create;
+      Obj := TGadgetModel.Create;
       Obj.Left := O.XPos;
       Obj.Top := O.YPos;
       Obj.GS := Info.GraphicSetName;
@@ -1256,7 +1256,7 @@ var
 
   WindowOrder: TWindowOrder;
 
-  O: TInteractiveObject;
+  O: TGadgetModel;
   T: TTerrain;
   // don't need TPreplacedLemming, SuperLemmini doesn't support it
 
@@ -1414,7 +1414,7 @@ begin
       Inc(i);
       if GetSplit(0) < 0 then Continue;
 
-      O := TInteractiveObject.Create;
+      O := TGadgetModel.Create;
       O.GS := aLevel.Info.GraphicSetName;
       O.Piece := IntToStr(GetSplit(0));
       O.Left := GetSplit(1);
@@ -1476,7 +1476,7 @@ var
   SL: TStringList;
   n: Integer;
 
-  O: TInteractiveObject;
+  O: TGadgetModel;
   T: TTerrain;
 
   function LineVal(aIndex: Integer): Integer;
@@ -1529,7 +1529,7 @@ begin
     n := 17;
     while SL[n] <> 'End' do
     begin
-      O := TInteractiveObject.Create;
+      O := TGadgetModel.Create;
       aLevel.InteractiveObjects.Add(O);
       O.GS := aLevel.Info.GraphicSetName;
       O.Piece := IntToStr(LineVal(n));

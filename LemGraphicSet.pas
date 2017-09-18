@@ -8,7 +8,7 @@ uses
   GR32,
   LemRenderHelpers,
   LemTypes,
-  LemMetaObject,
+  LemGadgetsMeta,
   LemMetaTerrain;
 
 type

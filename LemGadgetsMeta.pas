@@ -1,6 +1,6 @@
 {$include lem_directives.inc}
 
-unit LemMetaObject;
+unit LemGadgetsMeta;
 
 interface
 
@@ -21,11 +21,11 @@ const
 
 type
 
-  TMetaObjectInterface = class;  // predefinition so it can be used in TMetaObject despite being defined later
+  TGadgetMetaAccessor = class;  // predefinition so it can be used in TMetaObject despite being defined later
 
-  TMetaObjectSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
+  TGadgetMetaSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
-  TObjectVariableProperties = record // For properties that vary based on flip / invert
+  TGadgetVariableProperties = record // For properties that vary based on flip / invert
     Image:         TBitmaps;
     Width:         Integer;
     Height:        Integer;
@@ -33,23 +33,23 @@ type
     TriggerTop:    Integer;
     TriggerWidth:  Integer;
     TriggerHeight: Integer;
-    Resizability:  TMetaObjectSizeSetting;
+    Resizability:  TGadgetMetaSizeSetting;
   end;
-  PObjectVariableProperties = ^TObjectVariableProperties;
+  PGadgetVariableProperties = ^TGadgetVariableProperties;
 
-  TMetaObjectProperty = (ov_Frames, ov_Width, ov_Height, ov_TriggerLeft, ov_TriggerTop,
+  TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height, ov_TriggerLeft, ov_TriggerTop,
                          ov_TriggerWidth, ov_TriggerHeight, ov_TriggerEffect,
                          ov_KeyFrame, ov_PreviewFrame);
                          // Integer properties only.
 
-  TMetaObject = class
+  TGadgetMetaInfo = class
   protected
     fGS    : String;
     fPiece  : String;
-    fVariableInfo: array[0..ALIGNMENT_COUNT-1] of TObjectVariableProperties;
+    fVariableInfo: array[0..ALIGNMENT_COUNT-1] of TGadgetVariableProperties;
     fGeneratedVariableInfo: array[0..ALIGNMENT_COUNT-1] of Boolean;
     fGeneratedVariableImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
-    fInterfaces: array[0..ALIGNMENT_COUNT-1] of TMetaObjectInterface;
+    fInterfaces: array[0..ALIGNMENT_COUNT-1] of TGadgetMetaAccessor;
     fFrameCount                   : Integer; // number of animations
     fWidth                        : Integer; // the width of the bitmap
     fHeight                       : Integer; // the height of the bitmap
@@ -62,19 +62,19 @@ type
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : String;  // filename of sound to play
     fRandomStartFrame             : Boolean;
-    fResizability                 : TMetaObjectSizeSetting;
+    fResizability                 : TGadgetMetaSizeSetting;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
     fIsMasked: Boolean;
     function GetIdentifier: String;
-    function GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TMetaObjectSizeSetting): Boolean;
+    function GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TGadgetMetaSizeSetting): Boolean;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
-    function GetVariableInfo(Flip, Invert, Rotate: Boolean): TObjectVariableProperties;
+    function GetVariableInfo(Flip, Invert, Rotate: Boolean): TGadgetVariableProperties;
     procedure EnsureVariationMade(Flip, Invert, Rotate: Boolean);
     procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
-    function GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TMetaObjectProperty): Integer;
-    procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TMetaObjectProperty; aValue: Integer);
-    function GetResizability(Flip, Invert, Rotate: Boolean): TMetaObjectSizeSetting;
-    procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TMetaObjectSizeSetting);
+    function GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty): Integer;
+    procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty; aValue: Integer);
+    function GetResizability(Flip, Invert, Rotate: Boolean): TGadgetMetaSizeSetting;
+    procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TGadgetMetaSizeSetting);
     function GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
     procedure ClearImages;
   public
@@ -83,9 +83,9 @@ type
 
     procedure Load(aCollection, aPiece: String; aTheme: TNeoTheme);
 
-    function GetInterface(Flip, Invert, Rotate: Boolean): TMetaObjectInterface;
+    function GetInterface(Flip, Invert, Rotate: Boolean): TGadgetMetaAccessor;
 
-    procedure Assign(Source: TMetaObject);
+    procedure Assign(Source: TGadgetMetaInfo);
 
     procedure MarkAllUnmade;
     procedure MarkMetaDataUnmade;
@@ -104,7 +104,7 @@ type
     property TriggerHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_TriggerHeight read GetVariableProperty write SetVariableProperty;
     property TriggerEffect: Integer read fTriggerEffect write fTriggerEffect; // used by level loading / saving code
     
-    property Resizability[Flip, Invert, Rotate: Boolean]: TMetaObjectSizeSetting read GetResizability write SetResizability;
+    property Resizability[Flip, Invert, Rotate: Boolean]: TGadgetMetaSizeSetting read GetResizability write SetResizability;
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
 
@@ -112,27 +112,27 @@ type
     property IsMasked: Boolean read fIsMasked; // we don't want to write to this one
   end;
 
-  TMetaObjectInterface = class
+  TGadgetMetaAccessor = class
     // This is basically an abstraction layer for the flip, invert, rotate seperations. Instead of having to
     // specify them every time the TMetaObject is referenced, a TMetaObjectInterface created for that specific
     // combination of TMetaObject and orientation settings can be used, making the code tidier.
     private
-      fMetaObject: TMetaObject;
+      fMetaObject: TGadgetMetaInfo;
       fFlip: Boolean;
       fInvert: Boolean;
       fRotate: Boolean;
-      function GetIntegerProperty(aProp: TMetaObjectProperty): Integer;
-      procedure SetIntegerProperty(aProp: TMetaObjectProperty; aValue: Integer);
+      function GetIntegerProperty(aProp: TGadgetMetaProperty): Integer;
+      procedure SetIntegerProperty(aProp: TGadgetMetaProperty; aValue: Integer);
       function GetRandomStartFrame: Boolean;
       procedure SetRandomStartFrame(aValue: Boolean);
-      function GetResizability: TMetaObjectSizeSetting;
-      procedure SetResizability(aValue: TMetaObjectSizeSetting);
-      function GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
+      function GetResizability: TGadgetMetaSizeSetting;
+      procedure SetResizability(aValue: TGadgetMetaSizeSetting);
+      function GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
       function GetImages: TBitmaps;
       function GetSoundEffect: String;
       procedure SetSoundEffect(aValue: String);
     public
-      constructor Create(aMetaObject: TMetaObject; Flip, Invert, Rotate: Boolean);
+      constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 
       property Images: TBitmaps read GetImages;
 
@@ -149,20 +149,20 @@ type
       property RandomStartFrame: Boolean read GetRandomStartFrame write SetRandomStartFrame;
       property SoundEffect: String read GetSoundEffect write SetSoundEffect;
 
-      property Resizability             : TMetaObjectSizeSetting read GetResizability write SetResizability;
+      property Resizability             : TGadgetMetaSizeSetting read GetResizability write SetResizability;
       property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
       property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
   end;
 
-  TMetaObjects = class(TObjectList)
+  TGadgetMetaInfoList = class(TObjectList)
     private
-      function GetItem(Index: Integer): TMetaObject;
+      function GetItem(Index: Integer): TGadgetMetaInfo;
     public
       constructor Create;
-      function Add: TMetaObject; overload;
-      procedure Add(MO: TMetaObject); overload;
-      function Insert(Index: Integer): TMetaObject;
-      property Items[Index: Integer]: TMetaObject read GetItem; default;
+      function Add: TGadgetMetaInfo; overload;
+      procedure Add(MO: TGadgetMetaInfo); overload;
+      function Insert(Index: Integer): TGadgetMetaInfo;
+      property Items[Index: Integer]: TGadgetMetaInfo read GetItem; default;
       property List;
   end;
 
@@ -176,10 +176,7 @@ type
 
 implementation
 
-{uses
-  LemObjects;} //for the DOM_ constants
-
-constructor TMetaObject.Create;
+constructor TGadgetMetaInfo.Create;
 var
   i: Integer;
 begin
@@ -191,7 +188,7 @@ begin
   end;
 end;
 
-destructor TMetaObject.Destroy;
+destructor TGadgetMetaInfo.Destroy;
 var
   i: Integer;
 begin
@@ -203,16 +200,16 @@ begin
   inherited;
 end;
 
-procedure TMetaObject.Assign(Source: TMetaObject);
+procedure TGadgetMetaInfo.Assign(Source: TGadgetMetaInfo);
 var
-  M: TMetaObject absolute Source;
+  M: TGadgetMetaInfo absolute Source;
 begin
 
   raise exception.Create('TMetaObject.Assign is not implemented!');
 
 end;
 
-procedure TMetaObject.ClearImages;
+procedure TGadgetMetaInfo.ClearImages;
 var
   i: Integer;
 begin
@@ -236,12 +233,12 @@ begin
  
 end;
 
-procedure TMetaObject.Load(aCollection,aPiece: String; aTheme: TNeoTheme);
+procedure TGadgetMetaInfo.Load(aCollection,aPiece: String; aTheme: TNeoTheme);
 var
   Parser: TParser;
   Sec: TParserSection;
 
-  O: TMetaObjectInterface;
+  O: TGadgetMetaAccessor;
   BMP: TBitmap32;
 
   DoHorizontal: Boolean;
@@ -348,12 +345,12 @@ begin
   end;
 end;
 
-function TMetaObject.GetIdentifier: String;
+function TGadgetMetaInfo.GetIdentifier: String;
 begin
   Result := LowerCase(fGS + ':' + fPiece);
 end;
 
-function TMetaObject.GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TMetaObjectSizeSetting): Boolean;
+function TGadgetMetaInfo.GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TGadgetMetaSizeSetting): Boolean;
 var
   i: Integer;
 begin
@@ -365,7 +362,7 @@ begin
     Result := (aDir = fVariableInfo[i].Resizability) or (fVariableInfo[i].Resizability = mos_Both);
 end;
 
-function TMetaObject.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
+function TGadgetMetaInfo.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
 begin
   Result := 0;
   if Flip then Inc(Result, 1);
@@ -373,13 +370,13 @@ begin
   if Rotate then Inc(Result, 4);
 end;
 
-function TMetaObject.GetVariableInfo(Flip, Invert, Rotate: Boolean): TObjectVariableProperties;
+function TGadgetMetaInfo.GetVariableInfo(Flip, Invert, Rotate: Boolean): TGadgetVariableProperties;
 begin
   EnsureVariationMade(Flip, Invert, Rotate);
   Result := fVariableInfo[GetImageIndex(Flip, Invert, Rotate)];
 end;
 
-procedure TMetaObject.MarkAllUnmade;
+procedure TGadgetMetaInfo.MarkAllUnmade;
 var
   i: Integer;
 begin
@@ -390,7 +387,7 @@ begin
   end;
 end;
 
-procedure TMetaObject.MarkMetaDataUnmade;
+procedure TGadgetMetaInfo.MarkMetaDataUnmade;
 var
   i: Integer;
 begin
@@ -399,7 +396,7 @@ begin
     fGeneratedVariableInfo[i] := false;
 end;
 
-procedure TMetaObject.EnsureVariationMade(Flip, Invert, Rotate: Boolean);
+procedure TGadgetMetaInfo.EnsureVariationMade(Flip, Invert, Rotate: Boolean);
 var
   i: Integer;
 begin
@@ -408,21 +405,21 @@ begin
     DeriveVariation(Flip, Invert, Rotate);
 end;
 
-procedure TMetaObject.DeriveVariation(Flip, Invert, Rotate: Boolean);
+procedure TGadgetMetaInfo.DeriveVariation(Flip, Invert, Rotate: Boolean);
 var
   Index: Integer;
   i: Integer;
 
   Src, Dst: TBitmap32;
-  SrcRec: TObjectVariableProperties;
-  DstRec: PObjectVariableProperties;
+  SrcRec: TGadgetVariableProperties;
+  DstRec: PGadgetVariableProperties;
 
   SkipImages: Boolean;
 
 const
   NO_POSITION_ADJUST = [7, 8, 19]; // OWL, OWR, OWD arrows
 
-  procedure CloneInfo(Src, Dst: PObjectVariableProperties);
+  procedure CloneInfo(Src, Dst: PGadgetVariableProperties);
   var
     BitmapRef: TBitmaps;
   begin
@@ -531,17 +528,17 @@ begin
   end;
 end;
 
-function TMetaObject.GetInterface(Flip, Invert, Rotate: Boolean): TMetaObjectInterface;
+function TGadgetMetaInfo.GetInterface(Flip, Invert, Rotate: Boolean): TGadgetMetaAccessor;
 var
   i: Integer;
 begin
   i := GetImageIndex(Flip, Invert, Rotate);
   if fInterfaces[i] = nil then
-    fInterfaces[i] := TMetaObjectInterface.Create(self, Flip, Invert, Rotate);
+    fInterfaces[i] := TGadgetMetaAccessor.Create(self, Flip, Invert, Rotate);
   Result := fInterfaces[i];
 end;
 
-function TMetaObject.GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TMetaObjectProperty): Integer;
+function TGadgetMetaInfo.GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty): Integer;
 var
   i: Integer;
 begin
@@ -559,7 +556,7 @@ begin
     end;
 end;
 
-procedure TMetaObject.SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TMetaObjectProperty; aValue: Integer);
+procedure TGadgetMetaInfo.SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty; aValue: Integer);
 var
   i: Integer;
 begin
@@ -578,7 +575,7 @@ begin
   MarkMetaDataUnmade;
 end;
 
-function TMetaObject.GetResizability(Flip, Invert, Rotate: Boolean): TMetaObjectSizeSetting;
+function TGadgetMetaInfo.GetResizability(Flip, Invert, Rotate: Boolean): TGadgetMetaSizeSetting;
 var
   i: Integer;
 begin
@@ -587,7 +584,7 @@ begin
   Result := fVariableInfo[i].Resizability;
 end;
 
-procedure TMetaObject.SetResizability(Flip, Invert, Rotate: Boolean; aValue: TMetaObjectSizeSetting);
+procedure TGadgetMetaInfo.SetResizability(Flip, Invert, Rotate: Boolean; aValue: TGadgetMetaSizeSetting);
 var
   i: Integer;
 begin
@@ -596,7 +593,7 @@ begin
   fVariableInfo[i].Resizability := aValue;
 end;
 
-function TMetaObject.GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+function TGadgetMetaInfo.GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
 var
   i: Integer;
 begin
@@ -607,7 +604,7 @@ end;
 
 { TMetaObjectInterface }
 
-constructor TMetaObjectInterface.Create(aMetaObject: TMetaObject; Flip, Invert, Rotate: Boolean);
+constructor TGadgetMetaAccessor.Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 begin
   inherited Create;
   fMetaObject := aMetaObject;
@@ -616,7 +613,7 @@ begin
   fRotate := Rotate;
 end;
 
-function TMetaObjectInterface.GetIntegerProperty(aProp: TMetaObjectProperty): Integer;
+function TGadgetMetaAccessor.GetIntegerProperty(aProp: TGadgetMetaProperty): Integer;
 begin
   // Access via properties where these exist to discriminate orientations (after all, that's the whole
   // point of the TMetaObjectInterface abstraction layer :P ). Otherwise, access the fields directly.
@@ -635,7 +632,7 @@ begin
   end;
 end;
 
-procedure TMetaObjectInterface.SetIntegerProperty(aProp: TMetaObjectProperty; aValue: Integer);
+procedure TGadgetMetaAccessor.SetIntegerProperty(aProp: TGadgetMetaProperty; aValue: Integer);
 begin
   case aProp of
     ov_TriggerLeft: fMetaObject.TriggerLeft[fFlip, fInvert, fRotate] := aValue;
@@ -649,37 +646,37 @@ begin
   end;
 end;
 
-function TMetaObjectInterface.GetSoundEffect: String;
+function TGadgetMetaAccessor.GetSoundEffect: String;
 begin
   Result := fMetaObject.fSoundEffect;
 end;
 
-procedure TMetaObjectInterface.SetSoundEffect(aValue: String);
+procedure TGadgetMetaAccessor.SetSoundEffect(aValue: String);
 begin
   fMetaObject.fSoundEffect := aValue;
 end;
 
-function TMetaObjectInterface.GetRandomStartFrame: Boolean;
+function TGadgetMetaAccessor.GetRandomStartFrame: Boolean;
 begin
   Result := fMetaObject.fRandomStartFrame;
 end;
 
-procedure TMetaObjectInterface.SetRandomStartFrame(aValue: Boolean);
+procedure TGadgetMetaAccessor.SetRandomStartFrame(aValue: Boolean);
 begin
   fMetaObject.fRandomStartFrame := aValue;
 end;
 
-function TMetaObjectInterface.GetResizability: TMetaObjectSizeSetting;
+function TGadgetMetaAccessor.GetResizability: TGadgetMetaSizeSetting;
 begin
   Result := fMetaObject.Resizability[fFlip, fInvert, fRotate];
 end;
 
-procedure TMetaObjectInterface.SetResizability(aValue: TMetaObjectSizeSetting);
+procedure TGadgetMetaAccessor.SetResizability(aValue: TGadgetMetaSizeSetting);
 begin
   fMetaObject.Resizability[fFlip, fInvert, fRotate] := aValue;
 end;
 
-function TMetaObjectInterface.GetCanResize(aDir: TMetaObjectSizeSetting): Boolean;
+function TGadgetMetaAccessor.GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
 begin
   Result := false;
   case aDir of
@@ -688,14 +685,14 @@ begin
   end;
 end;
 
-function TMetaObjectInterface.GetImages: TBitmaps;
+function TGadgetMetaAccessor.GetImages: TBitmaps;
 begin
   Result := fMetaObject.Images[fFlip, fInvert, fRotate];
 end;
 
 { TMetaObjects }
 
-constructor TMetaObjects.Create;
+constructor TGadgetMetaInfoList.Create;
 var
   aOwnsObjects: Boolean;
 begin
@@ -703,24 +700,24 @@ begin
   inherited Create(aOwnsObjects);
 end;
 
-function TMetaObjects.Add: TMetaObject;
+function TGadgetMetaInfoList.Add: TGadgetMetaInfo;
 begin
-  Result := TMetaObject.Create;
+  Result := TGadgetMetaInfo.Create;
   inherited Add(Result);
 end;
 
-procedure TMetaObjects.Add(MO: TMetaObject);
+procedure TGadgetMetaInfoList.Add(MO: TGadgetMetaInfo);
 begin
   inherited Add(MO);
 end;
 
-function TMetaObjects.Insert(Index: Integer): TMetaObject;
+function TGadgetMetaInfoList.Insert(Index: Integer): TGadgetMetaInfo;
 begin
-  Result := TMetaObject.Create;
+  Result := TGadgetMetaInfo.Create;
   inherited Insert(Index, Result);
 end;
 
-function TMetaObjects.GetItem(Index: Integer): TMetaObject;
+function TGadgetMetaInfoList.GetItem(Index: Integer): TGadgetMetaInfo;
 begin
   Result := inherited Get(Index);
 end;

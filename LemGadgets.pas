@@ -1,12 +1,12 @@
 {$include lem_directives.inc}
-unit LemObjects;
+unit LemGadgets;
 
 interface
 
 uses
   Math, Classes,
   Windows, Contnrs, LemTypes, LemCore,
-  LemMetaObject, LemInteractiveObject;
+  LemGadgetsMeta, LemGadgetsModel;
 
 type
   // internal object used by game
@@ -22,7 +22,7 @@ type
     sPairingId      : Integer;
     sZombieMode     : Boolean;
 
-    Obj            : TInteractiveObject;
+    Obj            : TGadgetModel;
 
     function GetTriggerRect: TRect;
     procedure SetLeft(Value: Integer);
@@ -46,7 +46,7 @@ type
     function GetTriggerEffectBase: Integer;
 
   public
-    MetaObj        : TMetaObjectInterface;
+    MetaObj        : TGadgetMetaAccessor;
 
     Frames         : TBitmaps;
 
@@ -55,7 +55,7 @@ type
     TeleLem        : Integer; // saves which lemming is currently teleported
     HoldActive     : Boolean;
 
-    constructor Create(ObjParam: TInteractiveObject; MetaParam: TMetaObjectInterface); Overload;
+    constructor Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor); Overload;
 
     property TriggerRect: TRect read sTriggerRect;
     property Top: Integer read sTop write SetTop;
@@ -149,7 +149,7 @@ implementation
 
 
 { TInteractiveObjectInfo }
-constructor TGadget.Create(ObjParam: TInteractiveObject; MetaParam: TMetaObjectInterface);
+constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor);
 
   procedure AdjustOWWDirection;
   var

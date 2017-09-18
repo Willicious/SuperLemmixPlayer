@@ -12,7 +12,7 @@ uses
   GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
   LemCore, LemStrings, LemDosStructures, LemRendering, LemLevel,
-  LemMetaObject, LemObjects,
+  LemGadgetsMeta, LemGadgets,
   LemTalisman,
   GameControl, GameBaseScreen, GameWindow;
 

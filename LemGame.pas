@@ -20,10 +20,10 @@ uses
   Controls, StrUtils, UMisc,
   GR32, GR32_OrdinalMaps,
   LemCore, LemTypes, LemDosStructures, LemStrings,
-  LemMetaObject, LemLevel,
+  LemLevel,
   LemRenderHelpers, LemRendering,
   LemNeoTheme,
-  LemObjects, LemLemming, LemRecolorSprites,
+  LemGadgets, LemLemming, LemRecolorSprites,
   LemReplay,
   LemTalisman,
   LemGameMessageQueue,
@@ -455,7 +455,7 @@ const
   MAX_FALLDISTANCE         = 62;
 
 const
-  // Values for DOM_TRIGGERTYPE are defined in LemObjects.pas!
+  // Values for DOM_TRIGGERTYPE are defined in LemGadgets.pas!
   // Here only for refence.
 (*DOM_NOOBJECT         = 65535;
   DOM_NONE             = 0;

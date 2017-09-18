@@ -14,8 +14,8 @@ uses
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
   LemDosStructures,
   LemTypes,
-  LemTerrain, LemMetaTerrain,
-  LemObjects, LemInteractiveObject, LemMetaObject,
+  LemTerrain, LemGadgetsModel, LemMetaTerrain,
+  LemGadgets, LemGadgetsMeta,
   LemLemming,
   LemDosAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
@@ -103,7 +103,7 @@ type
     procedure DrawLevel(aDst: TBitmap32; aClearPhysics: Boolean = false); overload;
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
 
-    function FindMetaObject(O: TInteractiveObject): TMetaObjectInterface;
+    function FindMetaObject(O: TGadgetModel): TGadgetMetaAccessor;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
@@ -897,10 +897,10 @@ begin
   fAni.LemmingAnimations[STONED].DrawTo(fLayers[rlTerrain], X, Y);
 end;
 
-function TRenderer.FindMetaObject(O: TInteractiveObject): TMetaObjectInterface;
+function TRenderer.FindMetaObject(O: TGadgetModel): TGadgetMetaAccessor;
 var
   FindLabel: String;
-  MO: TMetaObject;
+  MO: TGadgetMetaInfo;
   df: Integer;
 begin
   FindLabel := O.GS + ':' + O.Piece;
@@ -1077,7 +1077,7 @@ end;
 
 procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TGadget);
 var
-  MO: TMetaObjectInterface;
+  MO: TGadgetMetaAccessor;
 
   DrawX, DrawY: Integer;
 begin
@@ -1287,7 +1287,7 @@ end;
 procedure TRenderer.ProcessDrawFrame(aInf: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
 var
   CountX, CountY, iX, iY: Integer;
-  MO: TMetaObjectInterface;
+  MO: TGadgetMetaAccessor;
   DrawFrame: Integer;
   TempBitmapRect, DstRect: TRect;
   IsOwnBitmap: Boolean;
@@ -1837,7 +1837,7 @@ procedure TRenderer.CreateInteractiveObjectList(var ObjInfList: TGadgetList);
 var
   i: Integer;
   ObjInf: TGadget;
-  MO: TMetaObjectInterface;
+  MO: TGadgetMetaAccessor;
 begin
   for i := 0 to Inf.Level.InteractiveObjects.Count - 1 do
   begin

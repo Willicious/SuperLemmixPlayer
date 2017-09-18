@@ -1,5 +1,5 @@
 {$include lem_directives.inc}
-unit LemInteractiveObject;
+unit LemGadgetsModel;
 
 interface
 
@@ -20,8 +20,7 @@ const
   odf_Rotate        = 128;
 
 type
-  TInteractiveObjectClass = class of TInteractiveObject;
-  TInteractiveObject = class(TIdentifiedPiece)
+  TGadgetModel = class(TIdentifiedPiece)
   private
   protected
     fWidth: Integer;
@@ -47,17 +46,17 @@ type
   end;
 
 type
-  TInteractiveObjects = class(TObjectList)
+  TGadgetModelList = class(TObjectList)
     private
-      function GetItem(Index: Integer): TInteractiveObject;
+      function GetItem(Index: Integer): TGadgetModel;
     public
       constructor Create(aOwnsObjects: Boolean = true);
-      function Add(Item: TInteractiveObject): Integer; overload;
-      function Add: TInteractiveObject; overload;
-      procedure Insert(Index: Integer; Item: TInteractiveObject); overload;
-      function Insert(Index: Integer): TInteractiveObject; overload;
-      procedure Assign(aSrc: TInteractiveObjects);
-      property Items[Index: Integer]: TInteractiveObject read GetItem; default;
+      function Add(Item: TGadgetModel): Integer; overload;
+      function Add: TGadgetModel; overload;
+      procedure Insert(Index: Integer; Item: TGadgetModel); overload;
+      function Insert(Index: Integer): TGadgetModel; overload;
+      procedure Assign(aSrc: TGadgetModelList);
+      property Items[Index: Integer]: TGadgetModel read GetItem; default;
       property List;
   end;
 
@@ -66,37 +65,37 @@ implementation
 
 { TInteractiveObjects }
 
-constructor TInteractiveObjects.Create(aOwnsObjects: Boolean = true);
+constructor TGadgetModelList.Create(aOwnsObjects: Boolean = true);
 begin
   inherited Create(aOwnsObjects);
 end;
 
-function TInteractiveObjects.Add(Item: TInteractiveObject): Integer;
+function TGadgetModelList.Add(Item: TGadgetModel): Integer;
 begin
   Result := inherited Add(Item);
 end;
 
-function TInteractiveObjects.Add: TInteractiveObject;
+function TGadgetModelList.Add: TGadgetModel;
 begin
-  Result := TInteractiveObject.Create;
+  Result := TGadgetModel.Create;
   inherited Add(Result);
 end;
 
-procedure TInteractiveObjects.Insert(Index: Integer; Item: TInteractiveObject);
+procedure TGadgetModelList.Insert(Index: Integer; Item: TGadgetModel);
 begin
   inherited Insert(Index, Item);
 end;
 
-function TInteractiveObjects.Insert(Index: Integer): TInteractiveObject;
+function TGadgetModelList.Insert(Index: Integer): TGadgetModel;
 begin
-  Result := TInteractiveObject.Create;
+  Result := TGadgetModel.Create;
   inherited Insert(Index, Result);
 end;
 
-procedure TInteractiveObjects.Assign(aSrc: TInteractiveObjects);
+procedure TGadgetModelList.Assign(aSrc: TGadgetModelList);
 var
   i: Integer;
-  Item: TInteractiveObject;
+  Item: TGadgetModel;
 begin
   Clear;
   for i := 0 to aSrc.Count-1 do
@@ -106,7 +105,7 @@ begin
   end;
 end;
 
-function TInteractiveObjects.GetItem(Index: Integer): TInteractiveObject;
+function TGadgetModelList.GetItem(Index: Integer): TGadgetModel;
 begin
   Result := inherited Get(Index);
 end;
@@ -114,18 +113,18 @@ end;
 
 { TInteractiveObject }
 
-constructor TInteractiveObject.Create;
+constructor TGadgetModel.Create;
 begin
   inherited;
   fWidth := -1;
   fHeight := -1;
 end;
 
-procedure TInteractiveObject.Assign(Source: TPiece);
+procedure TGadgetModel.Assign(Source: TPiece);
 var
-  O: TInteractiveObject absolute Source;
+  O: TGadgetModel absolute Source;
 begin
-  if Source is TInteractiveObject then
+  if Source is TGadgetModel then
   begin
     inherited;
     DrawingFlags := O.DrawingFlags;
@@ -137,7 +136,7 @@ begin
   end;
 end;
 
-procedure TInteractiveObject.SetFlip(aValue: Boolean);
+procedure TGadgetModel.SetFlip(aValue: Boolean);
 begin
   if aValue then
     DrawingFlags := DrawingFlags or odf_Flip
@@ -145,7 +144,7 @@ begin
     DrawingFlags := DrawingFlags and not odf_Flip;
 end;
 
-procedure TInteractiveObject.SetInvert(aValue: Boolean);
+procedure TGadgetModel.SetInvert(aValue: Boolean);
 begin
     if aValue then
     DrawingFlags := DrawingFlags or odf_UpsideDown
@@ -153,12 +152,12 @@ begin
     DrawingFlags := DrawingFlags and not odf_UpsideDown;
 end;
 
-function TInteractiveObject.GetFlip: Boolean;
+function TGadgetModel.GetFlip: Boolean;
 begin
   Result := (DrawingFlags and odf_Flip) <> 0;
 end;
 
-function TInteractiveObject.GetInvert: Boolean;
+function TGadgetModel.GetInvert: Boolean;
 begin
   Result := (DrawingFlags and odf_UpsideDown) <> 0;
 end;
