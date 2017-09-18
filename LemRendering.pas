@@ -1187,12 +1187,12 @@ begin
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
-  if (Obj.PreAssignedSkills and 1) <> 0 then Inc(numHelpers); // climber
-  if (Obj.PreAssignedSkills and 2) <> 0 then Inc(numHelpers); // swimmer
-  if (Obj.PreAssignedSkills and 4) <> 0 then Inc(numHelpers); // floater
-  if (Obj.PreAssignedSkills and 8) <> 0 then Inc(numHelpers); // glider
-  if (Obj.PreAssignedSkills and 16) <> 0 then Inc(numHelpers); // disarmer
-  if (Obj.PreAssignedSkills and 64) <> 0 then Inc(numHelpers); // zombie
+  if Obj.IsPreassignedClimber then Inc(numHelpers);
+  if Obj.IsPreassignedSwimmer then Inc(numHelpers);
+  if Obj.IsPreassignedFloater then Inc(numHelpers);
+  if Obj.IsPreassignedGlider then Inc(numHelpers);
+  if Obj.IsPreassignedDisarmer then Inc(numHelpers);
+  if Obj.IsPreassignedZombie then Inc(numHelpers);
 
   // Set base drawing position; helper icons will be drawn 10 pixels apart
   DrawX := Obj.Left + Obj.Width div 2 - numHelpers * 5;
@@ -1200,32 +1200,32 @@ begin
 
   // Draw actual helper icons
   indexHelper := 0;
-  if (Obj.PreAssignedSkills and 64) <> 0 then
+  if Obj.IsPreassignedZombie then
   begin
     fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if (Obj.PreAssignedSkills and 1) <> 0 then
+  if Obj.IsPreassignedClimber then
   begin
     fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if (Obj.PreAssignedSkills and 2) <> 0 then
+  if Obj.IsPreassignedSwimmer then
   begin
     fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if (Obj.PreAssignedSkills and 4) <> 0 then
+  if Obj.IsPreassignedFloater then
   begin
     fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if (Obj.PreAssignedSkills and 8) <> 0 then
+  if Obj.IsPreassignedGlider then
   begin
     fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if (Obj.PreAssignedSkills and 16) <> 0 then
+  if Obj.IsPreassignedDisarmer then
   begin
     fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
   end;
@@ -1463,7 +1463,7 @@ begin
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
   // Draw hatch helpers
   for i := 0 to ObjectInfos.Count-1 do
-    if (ObjectInfos[i].TriggerEffect = DOM_WINDOW) and not (ObjectInfos[i].PreassignedSkills = 0) then
+    if (ObjectInfos[i].TriggerEffect = DOM_WINDOW) and ObjectInfos[i].HasPreassignedSkills then
     begin
       DrawHatchSkillHelpers(fLayers[rlObjectHelpers], ObjectInfos[i]);
       fLayers.fIsEmpty[rlObjectHelpers] := false;

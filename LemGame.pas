@@ -4314,8 +4314,8 @@ var
   begin
     Result := false;
     for i := 0 to ObjectInfos.Count-1 do
-      if (ObjectInfos[i].TriggerEffect = DOM_WINDOW)
-        and (ObjectInfos[i].PreassignedSkills and 64 <> 0) then
+      if   (ObjectInfos[i].TriggerEffect = DOM_WINDOW)
+        and ObjectInfos[i].IsPreassignedZombie then
       begin
         Result := true;
         Exit;
@@ -4568,12 +4568,14 @@ begin
           LemDX := 1;
           if ObjectInfos[ix].IsFlipPhysics then TurnAround(NewLemming);
 
-          if (ObjectInfos[ix].PreAssignedSkills and 1) <> 0 then LemIsClimber := true;
-          if (ObjectInfos[ix].PreAssignedSkills and 2) <> 0 then LemIsSwimmer := true;
-          if (ObjectInfos[ix].PreAssignedSkills and 4) <> 0 then LemIsFloater := true
-          else if (ObjectInfos[ix].PreAssignedSkills and 8) <> 0 then LemIsGlider := true;
-          if (ObjectInfos[ix].PreAssignedSkills and 16) <> 0 then LemIsDisarmer := true;
-          if (ObjectInfos[ix].PreAssignedSkills and 64) <> 0 then
+          LemIsClimber := ObjectInfos[ix].IsPreassignedClimber;
+          LemIsSwimmer := ObjectInfos[ix].IsPreassignedSwimmer;
+          LemIsDisarmer := ObjectInfos[ix].IsPreassignedDisarmer;
+          LemIsFloater := ObjectInfos[ix].IsPreassignedFloater;
+          if not LemIsFloater then
+            LemIsGlider := ObjectInfos[ix].IsPreassignedGlider;
+
+          if ObjectInfos[ix].IsPreassignedZombie then
           begin
             Dec(fSpawnedDead);
             RemoveLemming(NewLemming, RM_ZOMBIE, true);

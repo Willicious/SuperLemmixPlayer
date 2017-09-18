@@ -35,11 +35,12 @@ type
     function GetIsFlipImage: Boolean;
     function GetIsRotate: Boolean;
     function GetAnimationFrameCount: Integer;
-    function GetPreassignedSkills: Integer;
+    function GetPreassignedSkill(BitField: Integer): Boolean;
+    function GetHasPreassignedSkills: Boolean;
     function GetCenterPoint: TPoint;
     function GetKeyFrame: Integer;
     function GetCanDrawToBackground: Boolean;
-
+    function GetSpeed: Integer;
   public
     MetaObj        : TMetaObjectInterface;
     Obj            : TInteractiveObject;
@@ -70,10 +71,17 @@ type
     property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
     property SoundEffect: String read GetSoundEffect;
-    property PreassignedSkills: Integer read GetPreassignedSkills;
     property ZombieMode: Boolean read sZombieMode write SetZombieMode;
     property KeyFrame: Integer read GetKeyFrame;
     property CanDrawToBackground: Boolean read GetCanDrawToBackground; // moving backgrounds: if only one frame and zero speed, this returns true
+    property Speed: Integer read GetSpeed;
+    property IsPreassignedClimber: Boolean index 1 read GetPreassignedSkill;
+    property IsPreassignedSwimmer: Boolean index 2 read GetPreassignedSkill;
+    property IsPreassignedFloater: Boolean index 4 read GetPreassignedSkill;
+    property IsPreassignedGlider: Boolean index 8 read GetPreassignedSkill;
+    property IsPreassignedDisarmer: Boolean index 16 read GetPreassignedSkill;
+    property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
+    property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
 
     procedure AssignTo(NewObj: TInteractiveObjectInfo);
 
@@ -184,7 +192,7 @@ begin
 
   // Set CurrentFrame
   if MetaObj.RandomStartFrame then
-    CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1){ + i}) mod MetaObj.FrameCount
+    CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1)) mod MetaObj.FrameCount
   else if MetaObj.TriggerEffect = DOM_PICKUP then
     CurrentFrame := Obj.Skill + 1
   else if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
@@ -311,11 +319,17 @@ begin
   Result := MetaObj.FrameCount;
 end;
 
-function TInteractiveObjectInfo.GetPreassignedSkills: Integer;
+function TInteractiveObjectInfo.GetPreassignedSkill(BitField: Integer): Boolean;
 begin
-  // Only call this function for hatches and preplaces lemmings
+  // Only call this function for hatches and preplaced lemmings
   Assert(MetaObj.TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
-  Result := Obj.TarLev; // Yes, "TargetLevel" stores this info!
+  Result := (Obj.TarLev and BitField) <> 0; // Yes, "TargetLevel" stores this info!
+end;
+
+function TInteractiveObjectInfo.GetHasPreassignedSkills: Boolean;
+begin
+  Assert(MetaObj.TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
+  Result := Obj.TarLev <> 0; // Yes, "TargetLevel" stores this info!
 end;
 
 function TInteractiveObjectInfo.GetCenterPoint: TPoint;
@@ -341,7 +355,7 @@ const
     Result := ((2 * Speed * (Iter + 1)) div 17) - ((2 * Speed * Iter) div 17)
   end;
 begin
-  f := GetDistanceFactor(Obj.TarLev, CurrentIteration);
+  f := GetDistanceFactor(GetSpeed, CurrentIteration);
 
   if Direction then
     Result := (AnimObjMov[Obj.Skill] * f) div 2
@@ -352,7 +366,13 @@ end;
 function TInteractiveObjectInfo.GetCanDrawToBackground: Boolean;
 begin
   Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
-  Result := (Frames.Count = 1) and (Obj.TarLev = 0);
+  Result := (Frames.Count = 1) and (GetSpeed = 0);
+end;
+
+function TInteractiveObjectInfo.GetSpeed: Integer;
+begin
+  Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetSpeed called for an object that isn''t a moving background!');
+  Result := Obj.TarLev;
 end;
 
 procedure TInteractiveObjectInfo.AssignTo(NewObj: TInteractiveObjectInfo);
