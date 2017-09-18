@@ -1038,7 +1038,7 @@ begin
 
   // Create the list of interactive objects
   Gadgets.Clear;
-  fRenderer.CreateInteractiveObjectList(Gadgets);
+  fRenderer.CreateGadgetList(Gadgets);
 
   with Level do
   for i := 0 to Gadgets.Count - 1 do

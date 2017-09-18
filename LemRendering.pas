@@ -35,7 +35,7 @@ type
 
   TRenderer = class
   private
-    fObjectInfos        : TGadgetList;
+    fGadgets            : TGadgetList;
     fDrawingHelpers     : Boolean;
     fUsefulOnly         : Boolean;
 
@@ -55,7 +55,7 @@ type
     fAni                : TBaseDosAnimationSet;
     fBgColor            : TColor32;
     fParticles          : TParticleTable; // all particle offsets
-    fObjectInfoList     : TGadgetList; // For rendering from Preview screen
+    fPreviewGadgets     : TGadgetList; // For rendering from Preview screen
     fDoneBackgroundDraw : Boolean;
 
     // Add stuff
@@ -68,8 +68,8 @@ type
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineObjectDefault(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineObjectDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
 
     // Functional combines
     procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
@@ -79,7 +79,7 @@ type
     procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
-    procedure PrepareObjectBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; Zombie: Boolean = false);
+    procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false);
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 
@@ -87,11 +87,11 @@ type
     function GetParticleLayer: TBitmap32;
 
     // Were sub-procedures or part of DrawAllObjects
-    procedure DrawObjectsOnLayer(aLayer: TRenderLayer);
-    procedure ProcessDrawFrame(aInf: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
-    procedure DrawTriggerArea(aInf: TGadget);
+    procedure DrawGadgetsOnLayer(aLayer: TRenderLayer);
+    procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
+    procedure DrawTriggerArea(Gadget: TGadget);
     procedure DrawUserHelper;
-    function IsUseful(aInf: TGadget): Boolean;
+    function IsUseful(Gadget: TGadget): Boolean;
 
   protected
   public
@@ -103,7 +103,7 @@ type
     procedure DrawLevel(aDst: TBitmap32; aClearPhysics: Boolean = false); overload;
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
 
-    function FindMetaObject(O: TGadgetModel): TGadgetMetaAccessor;
+    function FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
@@ -112,9 +112,9 @@ type
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
 
     // Object rendering
-    procedure DrawAllObjects(ObjectInfos: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
-    procedure DrawObjectHelpers(Dst: TBitmap32; Obj: TGadget);
-    procedure DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TGadget);
+    procedure DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
+    procedure DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
+    procedure DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget);
     procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 
     // Lemming rendering
@@ -141,7 +141,7 @@ type
     procedure RenderWorld(World: TBitmap32; DoBackground: Boolean);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
 
-    procedure CreateInteractiveObjectList(var ObjInfList: TGadgetList);
+    procedure CreateGadgetList(var Gadgets: TGadgetList);
 
     // Minimap
     procedure RenderMinimap(Dst: TBitmap32; LemmingsOnly: Boolean);
@@ -897,7 +897,7 @@ begin
   fAni.LemmingAnimations[STONED].DrawTo(fLayers[rlTerrain], X, Y);
 end;
 
-function TRenderer.FindMetaObject(O: TGadgetModel): TGadgetMetaAccessor;
+function TRenderer.FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
 var
   FindLabel: String;
   MO: TGadgetMetaInfo;
@@ -994,9 +994,7 @@ end;
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then
-  begin
     BlendMem(F, B);
-  end;
 end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
@@ -1014,7 +1012,7 @@ begin
     B := 0;
 end;
 
-procedure TRenderer.CombineObjectDefault(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then
   begin
@@ -1022,7 +1020,7 @@ begin
   end;
 end;
 
-procedure TRenderer.CombineObjectDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
+procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if F <> 0 then
   begin
@@ -1033,16 +1031,16 @@ begin
 end;
 
 
-procedure TRenderer.PrepareObjectBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; Zombie: Boolean = false);
+procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false);
 begin
   Bmp.DrawMode := dmCustom;
 
   if IsOnlyOnTerrain then
-    Bmp.OnPixelCombine := CombineObjectDefault
-  else if Zombie then
-    Bmp.OnPixelCombine := CombineObjectDefaultZombie
+    Bmp.OnPixelCombine := CombineGadgetsDefault
+  else if IsZombie then
+    Bmp.OnPixelCombine := CombineGadgetsDefaultZombie
   else
-    Bmp.OnPixelCombine := CombineObjectDefault;
+    Bmp.OnPixelCombine := CombineGadgetsDefault;
 end;
 
 procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain);
@@ -1075,7 +1073,7 @@ begin
 end;
 
 
-procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TGadget);
+procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
 var
   MO: TGadgetMetaAccessor;
 
@@ -1083,39 +1081,39 @@ var
 begin
   Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
 
-  MO := Obj.MetaObj;
+  MO := Gadget.MetaObj;
 
   // We don't question here whether the conditions are met to draw the helper or
   // not. We assume the calling routine has already done this, and we just draw it.
   // We do, however, determine which ones to draw here.
 
-  DrawX := (Obj.TriggerRect.Left + Obj.TriggerRect.Right) div 2; // Obj.Left + Obj.Width div 2 - 4;
-  DrawY := Obj.Top - 9; // much simpler
-  if DrawY < 0 then DrawY := Obj.Top + Obj.Height + 1; // Draw below instead above the level border
+  DrawX := (Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2; // Obj.Left + Obj.Width div 2 - 4;
+  DrawY := Gadget.Top - 9; // much simpler
+  if DrawY < 0 then DrawY := Gadget.Top + Gadget.Height + 1; // Draw below instead above the level border
 
   case MO.TriggerEffect of
     DOM_WINDOW:
       begin
-        if Obj.IsPreassignedZombie then DrawX := DrawX - 4;
+        if Gadget.IsPreassignedZombie then DrawX := DrawX - 4;
 
-        if Obj.IsFlipPhysics then
+        if Gadget.IsFlipPhysics then
           fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY)
         else
           fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4, DrawY);
 
-        if Obj.IsPreassignedZombie then
+        if Gadget.IsPreassignedZombie then
           fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8, DrawY);
       end;
 
     DOM_TELEPORT:
       begin
-        fHelperImages[THelperIcon(Obj.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
         fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1);
       end;
 
     DOM_RECEIVER:
       begin
-        fHelperImages[THelperIcon(Obj.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
         fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
       end;
 
@@ -1175,55 +1173,55 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Obj: TGadget);
+procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget);
 var
   numHelpers, indexHelper: Integer;
   DrawX, DrawY: Integer;
 begin
   Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-  Assert(Obj.TriggerEffectBase = DOM_WINDOW, 'Hatch helper icons called for other object type');
+  Assert(Gadget.TriggerEffectBase = DOM_WINDOW, 'Hatch helper icons called for other object type');
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
-  if Obj.IsPreassignedClimber then Inc(numHelpers);
-  if Obj.IsPreassignedSwimmer then Inc(numHelpers);
-  if Obj.IsPreassignedFloater then Inc(numHelpers);
-  if Obj.IsPreassignedGlider then Inc(numHelpers);
-  if Obj.IsPreassignedDisarmer then Inc(numHelpers);
-  if Obj.IsPreassignedZombie then Inc(numHelpers);
+  if Gadget.IsPreassignedClimber then Inc(numHelpers);
+  if Gadget.IsPreassignedSwimmer then Inc(numHelpers);
+  if Gadget.IsPreassignedFloater then Inc(numHelpers);
+  if Gadget.IsPreassignedGlider then Inc(numHelpers);
+  if Gadget.IsPreassignedDisarmer then Inc(numHelpers);
+  if Gadget.IsPreassignedZombie then Inc(numHelpers);
 
   // Set base drawing position; helper icons will be drawn 10 pixels apart
-  DrawX := Obj.Left + Obj.Width div 2 - numHelpers * 5;
-  DrawY := Obj.Top;
+  DrawX := Gadget.Left + Gadget.Width div 2 - numHelpers * 5;
+  DrawY := Gadget.Top;
 
   // Draw actual helper icons
   indexHelper := 0;
-  if Obj.IsPreassignedZombie then
+  if Gadget.IsPreassignedZombie then
   begin
     fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if Obj.IsPreassignedClimber then
+  if Gadget.IsPreassignedClimber then
   begin
     fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if Obj.IsPreassignedSwimmer then
+  if Gadget.IsPreassignedSwimmer then
   begin
     fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if Obj.IsPreassignedFloater then
+  if Gadget.IsPreassignedFloater then
   begin
     fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if Obj.IsPreassignedGlider then
+  if Gadget.IsPreassignedGlider then
   begin
     fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
     Inc(indexHelper);
   end;
-  if Obj.IsPreassignedDisarmer then
+  if Gadget.IsPreassignedDisarmer then
   begin
     fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
   end;
@@ -1284,7 +1282,7 @@ begin
   end;
 end;
 
-procedure TRenderer.ProcessDrawFrame(aInf: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
+procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
 var
   CountX, CountY, iX, iY: Integer;
   MO: TGadgetMetaAccessor;
@@ -1292,7 +1290,7 @@ var
   TempBitmapRect, DstRect: TRect;
   IsOwnBitmap: Boolean;
 begin
-  if aInf.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
+  if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
   if TempBitmap = nil then
   begin
@@ -1302,14 +1300,14 @@ begin
     IsOwnBitmap := false;
 
   try
-    DrawFrame := Min(aInf.CurrentFrame, aInf.AnimationFrameCount-1);
-    TempBitmap.Assign(aInf.Frames[DrawFrame]);
+    DrawFrame := Min(Gadget.CurrentFrame, Gadget.AnimationFrameCount-1);
+    TempBitmap.Assign(Gadget.Frames[DrawFrame]);
 
-    PrepareObjectBitmap(TempBitmap, aInf.IsOnlyOnTerrain, aInf.ZombieMode);
+    PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
 
-    MO := aInf.MetaObj;
-    CountX := (aInf.Width-1) div MO.Width;
-    CountY := (aInf.Height-1) div MO.Height;
+    MO := Gadget.MetaObj;
+    CountX := (Gadget.Width-1) div MO.Width;
+    CountY := (Gadget.Height-1) div MO.Height;
 
     for iY := 0 to CountY do
     begin
@@ -1317,21 +1315,21 @@ begin
       TempBitmapRect := TempBitmap.BoundsRect;
       // Move to leftmost X-coordinate and correct Y-coordinate
       DstRect := Rect(0, 0, RectWidth(TempBitmapRect), RectHeight(TempBitmapRect));
-      OffsetRect(DstRect, aInf.Left, aInf.Top + (MO.Height * iY));
+      OffsetRect(DstRect, Gadget.Left, Gadget.Top + (MO.Height * iY));
       // shrink sizes of rectange to draw on bottom row
-      if (iY = CountY) and (aInf.Height mod MO.Height <> 0) then
+      if (iY = CountY) and (Gadget.Height mod MO.Height <> 0) then
       begin
-        Dec(DstRect.Bottom, MO.Height - (aInf.Height mod MO.Height));
-        Dec(TempBitmapRect.Bottom, MO.Height - (aInf.Height mod MO.Height));
+        Dec(DstRect.Bottom, MO.Height - (Gadget.Height mod MO.Height));
+        Dec(TempBitmapRect.Bottom, MO.Height - (Gadget.Height mod MO.Height));
       end;
 
       for iX := 0 to CountX do
       begin
         // shrink size of rectangle to draw on rightmost column
-        if (iX = CountX) and (aInf.Width mod MO.Width <> 0) then
+        if (iX = CountX) and (Gadget.Width mod MO.Width <> 0) then
         begin
-          Dec(DstRect.Right, MO.Width - (aInf.Width mod MO.Width));
-          Dec(TempBitmapRect.Right, MO.Width - (aInf.Width mod MO.Width));
+          Dec(DstRect.Right, MO.Width - (Gadget.Width mod MO.Width));
+          Dec(TempBitmapRect.Right, MO.Width - (Gadget.Width mod MO.Width));
         end;
         // Draw copy of object onto alayer at this place
         TempBitmap.DrawTo(Dst, DstRect, TempBitmapRect);
@@ -1345,14 +1343,14 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawTriggerArea(aInf: TGadget);
+procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
 const
   DO_NOT_DRAW: set of 0..255 =
         [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
          DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND, DOM_ONEWAYUP];
 begin
-  if not (aInf.TriggerEffect in DO_NOT_DRAW) then
-    DrawTriggerAreaRectOnLayer(aInf.TriggerRect);
+  if not (Gadget.TriggerEffect in DO_NOT_DRAW) then
+    DrawTriggerAreaRectOnLayer(Gadget.TriggerRect);
 end;
 
 procedure TRenderer.DrawUserHelper;
@@ -1368,46 +1366,46 @@ begin
   fLayers.fIsEmpty[rlObjectHelpers] := false;
 end;
 
-function TRenderer.IsUseful(aInf: TGadget): Boolean;
+function TRenderer.IsUseful(Gadget: TGadget): Boolean;
 begin
   Result := true;
   if not fUsefulOnly then Exit;
 
-  if aInf.TriggerEffect in [DOM_NONE, DOM_HINT, DOM_BACKGROUND] then
+  if Gadget.TriggerEffect in [DOM_NONE, DOM_HINT, DOM_BACKGROUND] then
     Result := false;
 end;
 
-procedure TRenderer.DrawObjectsOnLayer(aLayer: TRenderLayer);
+procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);
 var
   Dst: TBitmap32;
 
-  function IsValidForLayer(aInf: TGadget): Boolean;
+  function IsValidForLayer(Gadget: TGadget): Boolean;
   begin
-    if aInf.TriggerEffect = DOM_BACKGROUND then
+    if Gadget.TriggerEffect = DOM_BACKGROUND then
       Result := aLayer = rlBackgroundObjects
-    else if aInf.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
+    else if Gadget.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
       Result := aLayer = rlOneWayArrows
     else case aLayer of
-           rlGadgetsLow: Result := aInf.IsNoOverwrite and not aInf.IsOnlyOnTerrain;
-           rlOnTerrainGadgets: Result := aInf.IsOnlyOnTerrain and not aInf.IsNoOverwrite;
-           rlGadgetsHigh: Result := not (aInf.IsNoOverwrite xor aInf.IsOnlyOnTerrain);
+           rlGadgetsLow: Result := Gadget.IsNoOverwrite and not Gadget.IsOnlyOnTerrain;
+           rlOnTerrainGadgets: Result := Gadget.IsOnlyOnTerrain and not Gadget.IsNoOverwrite;
+           rlGadgetsHigh: Result := not (Gadget.IsNoOverwrite xor Gadget.IsOnlyOnTerrain);
            else Result := false;
          end;
   end;
 
-  procedure HandleObject(aIndex: Integer);
+  procedure HandleGadget(aIndex: Integer);
   var
-    Inf: TGadget;
+    Gadget: TGadget;
   begin
-    Inf := fObjectInfos[aIndex];
-    if not (IsValidForLayer(Inf) and IsUseful(Inf)) then Exit;
+    Gadget := fGadgets[aIndex];
+    if not (IsValidForLayer(Gadget) and IsUseful(Gadget)) then Exit;
 
-    if (aLayer = rlBackgroundObjects) and (Inf.CanDrawToBackground) then
-      ProcessDrawFrame(Inf, fLayers[rlBackground])
+    if (aLayer = rlBackgroundObjects) and (Gadget.CanDrawToBackground) then
+      ProcessDrawFrame(Gadget, fLayers[rlBackground])
     else begin
-      ProcessDrawFrame(Inf, Dst);
+      ProcessDrawFrame(Gadget, Dst);
       fLayers.fIsEmpty[aLayer] := false;
-      DrawTriggerArea(Inf);
+      DrawTriggerArea(Gadget);
     end;
   end;
 var
@@ -1422,11 +1420,11 @@ begin
     // Special conditions
     if (aLayer = rlBackgroundObjects) and (fUsefulOnly or fDisableBackground) then Exit;
     if (aLayer = rlGadgetsLow) then
-      for i := fObjectInfos.Count-1 downto 0 do
-        HandleObject(i)
+      for i := fGadgets.Count-1 downto 0 do
+        HandleGadget(i)
     else
-      for i := 0 to fObjectInfos.Count-1 do
-        HandleObject(i);
+      for i := 0 to fGadgets.Count-1 do
+        HandleGadget(i);
 
     //fLayers[aLayer].Assign(Dst);
   finally
@@ -1436,57 +1434,57 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawAllObjects(ObjectInfos: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
+procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
 var
-  Inf: TGadget;
+  Gadget: TGadget;
   i, i2: Integer;
 begin
-  fObjectInfos := ObjectInfos;
+  fGadgets := Gadgets;
   fDrawingHelpers := DrawHelper;
   fUsefulOnly := UsefulOnly;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
 
-  DrawObjectsOnLayer(rlBackgroundObjects);
-  DrawObjectsOnLayer(rlGadgetsLow);
-  DrawObjectsOnLayer(rlOnTerrainGadgets);
-  DrawObjectsOnLayer(rlOneWayArrows);
-  DrawObjectsOnLayer(rlGadgetsHigh);
+  DrawGadgetsOnLayer(rlBackgroundObjects);
+  DrawGadgetsOnLayer(rlGadgetsLow);
+  DrawGadgetsOnLayer(rlOnTerrainGadgets);
+  DrawGadgetsOnLayer(rlOneWayArrows);
+  DrawGadgetsOnLayer(rlGadgetsHigh);
 
   if fRenderInterface = nil then Exit; // otherwise, some of the remaining code may cause an exception on first rendering
 
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
   // Draw hatch helpers
-  for i := 0 to ObjectInfos.Count-1 do
-    if (ObjectInfos[i].TriggerEffect = DOM_WINDOW) and ObjectInfos[i].HasPreassignedSkills then
+  for i := 0 to Gadgets.Count-1 do
+    if (Gadgets[i].TriggerEffect = DOM_WINDOW) and Gadgets[i].HasPreassignedSkills then
     begin
-      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], ObjectInfos[i]);
+      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadgets[i]);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
     end;
 
   // Draw object helpers
   if DrawHelper and UsefulOnly then
   begin
-    for i := 0 to ObjectInfos.Count-1 do
+    for i := 0 to Gadgets.Count-1 do
     begin
-      Inf := ObjectInfos[i];
+      Gadget := Gadgets[i];
 
       // Magic numbers are needed due to some offset of MousePos wrt. the center of the cursor.
-      if not PtInRect(Rect(Inf.Left - 4, Inf.Top + 1, Inf.Left + Inf.Width - 2, Inf.Top + Inf.Height + 3),
+      if not PtInRect(Rect(Gadget.Left - 4, Gadget.Top + 1, Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height + 3),
                       fRenderInterface.MousePos) then
         Continue;
 
       // otherwise, draw its helper
-      DrawObjectHelpers(fLayers[rlObjectHelpers], Inf);
+      DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
 
       // if it's a teleporter or receiver, draw all paired helpers too
-      if (Inf.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Inf.PairingId <> -1) then
-        for i2 := 0 to ObjectInfos.Count-1 do
+      if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId <> -1) then
+        for i2 := 0 to Gadgets.Count-1 do
         begin
           if i = i2 then Continue;
-          if (ObjectInfos[i2].PairingId = Inf.PairingId) then
-            DrawObjectHelpers(fLayers[rlObjectHelpers], ObjectInfos[i2]);
+          if (Gadgets[i2].PairingId = Gadget.PairingId) then
+            DrawObjectHelpers(fLayers[rlObjectHelpers], Gadgets[i2]);
         end;
     end;
   end;
@@ -1555,7 +1553,7 @@ begin
   fBgColor := $00000000;
   fAni := TBaseDosAnimationSet.Create;
   fRecolorer := TRecolorImage.Create;
-  fObjectInfoList := TGadgetList.Create;
+  fPreviewGadgets := TGadgetList.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
   begin
     if i = hpi_None then Continue;
@@ -1585,7 +1583,7 @@ begin
   fPhysicsMap.Free;
   fRecolorer.Free;
   fAni.Free;
-  fObjectInfoList.Free;
+  fPreviewGadgets.Free;
   for iIcon := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[iIcon].Free;
 
@@ -1597,7 +1595,7 @@ var
   i: Integer;
   T: TTerrain;
   MT: TMetaTerrain;
-  O: TGadget;
+  Gadget: TGadget;
   Bmp: TBitmap32;
 
   procedure SetRegion(aRegion: TRect; C, AntiC: TColor32);
@@ -1617,7 +1615,7 @@ var
     end;
   end;
 
-  procedure ApplyOWW(Inf: TGadget);
+  procedure ApplyOWW(Gadget: TGadget);
   var
     C: TColor32;
 
@@ -1655,7 +1653,7 @@ var
       end;
     end;
   begin
-    case Inf.TriggerEffect of
+    case Gadget.TriggerEffect of
       DOM_ONEWAYLEFT: C := PM_ONEWAYLEFT;
       DOM_ONEWAYRIGHT: C := PM_ONEWAYRIGHT;
       DOM_ONEWAYDOWN: C := PM_ONEWAYDOWN;
@@ -1663,7 +1661,7 @@ var
       else Exit;
     end;
 
-    SetRegion( Inf.TriggerRect, C, 0);
+    SetRegion( Gadget.TriggerRect, C, 0);
   end;
 
   procedure Validate;
@@ -1708,10 +1706,10 @@ begin
       Bmp.DrawTo(Dst, T.Left, T.Top);
     end;
 
-    for i := 0 to fObjectInfoList.Count-1 do
+    for i := 0 to fPreviewGadgets.Count-1 do
     begin
-      O := fObjectInfoList[i];
-      ApplyOWW(O); // ApplyOWW takes care of ignoring non-OWW objects, no sense duplicating the check
+      Gadget := fPreviewGadgets[i];
+      ApplyOWW(Gadget); // ApplyOWW takes care of ignoring non-OWW objects, no sense duplicating the check
     end;
   end;
 
@@ -1736,18 +1734,18 @@ var
   begin
     HasButtons := False;
     // Check whether buttons exist
-    for i := 0 to fObjectInfoList.Count - 1 do
+    for i := 0 to fPreviewGadgets.Count - 1 do
     begin
-      if fObjectInfoList[i].TriggerEffect = DOM_BUTTON then
+      if fPreviewGadgets[i].TriggerEffect = DOM_BUTTON then
         HasButtons := True;
     end;
     if not HasButtons then
     begin
       // Set all exits to open exits
-      for i := 0 to fObjectInfoList.Count - 1 do
+      for i := 0 to fPreviewGadgets.Count - 1 do
       begin
-        if fObjectInfoList[i].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
-          fObjectInfoList[i].CurrentFrame := 0
+        if fPreviewGadgets[i].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+          fPreviewGadgets[i].CurrentFrame := 0
       end;
     end
   end;
@@ -1795,7 +1793,7 @@ begin
   CheckLockedExits;
 
   // Draw all objects (except ObjectHelpers)
-  DrawAllObjects(fObjectInfoList, False);
+  DrawAllGadgets(fPreviewGadgets, False);
 
   // Draw preplaced lemmings
   L := TLemming.Create;
@@ -1833,32 +1831,32 @@ begin
 end;
 
 
-procedure TRenderer.CreateInteractiveObjectList(var ObjInfList: TGadgetList);
+procedure TRenderer.CreateGadgetList(var Gadgets: TGadgetList);
 var
   i: Integer;
-  ObjInf: TGadget;
+  Gadget: TGadget;
   MO: TGadgetMetaAccessor;
 begin
   for i := 0 to Inf.Level.InteractiveObjects.Count - 1 do
   begin
-    MO := FindMetaObject(Inf.Level.InteractiveObjects[i]);
-    ObjInf := TGadget.Create(Inf.Level.InteractiveObjects[i], MO);
+    MO := FindGadgetMetaInfo(Inf.Level.InteractiveObjects[i]);
+    Gadget := TGadget.Create(Inf.Level.InteractiveObjects[i], MO);
 
     // Check whether trigger area intersects the level area, except for moving backgrounds
-    if    (ObjInf.TriggerRect.Top > Inf.Level.Info.Height)
-       or (ObjInf.TriggerRect.Bottom < 0)
-       or (ObjInf.TriggerRect.Right < 0)
-       or (ObjInf.TriggerRect.Left > Inf.Level.Info.Width) then
+    if    (Gadget.TriggerRect.Top > Inf.Level.Info.Height)
+       or (Gadget.TriggerRect.Bottom < 0)
+       or (Gadget.TriggerRect.Right < 0)
+       or (Gadget.TriggerRect.Left > Inf.Level.Info.Width) then
     begin
-      if ObjInf.TriggerEffect <> DOM_BACKGROUND then
-        ObjInf.TriggerEffect := DOM_NONE; // effectively disables the object
+      if Gadget.TriggerEffect <> DOM_BACKGROUND then
+        Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
     end;
 
-    ObjInfList.Add(ObjInf);
+    Gadgets.Add(Gadget);
   end;
 
   // Get ReceiverID for all Teleporters
-  ObjInfList.FindReceiverID;
+  Gadgets.FindReceiverID;
 end;
 
 
@@ -1885,8 +1883,8 @@ begin
   end;
 
   // Creating the list of all interactive objects.
-  fObjectInfoList.Clear;
-  CreateInteractiveObjectList(fObjectInfoList);
+  fPreviewGadgets.Clear;
+  CreateGadgetList(fPreviewGadgets);
 
   if fRenderInterface <> nil then
   begin

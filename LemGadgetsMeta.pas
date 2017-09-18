@@ -117,7 +117,7 @@ type
     // specify them every time the TMetaObject is referenced, a TMetaObjectInterface created for that specific
     // combination of TMetaObject and orientation settings can be used, making the code tidier.
     private
-      fMetaObject: TGadgetMetaInfo;
+      fGadgetMetaInfo: TGadgetMetaInfo;
       fFlip: Boolean;
       fInvert: Boolean;
       fRotate: Boolean;
@@ -238,7 +238,7 @@ var
   Parser: TParser;
   Sec: TParserSection;
 
-  O: TGadgetMetaAccessor;
+  GadgetAccessor: TGadgetMetaAccessor;
   BMP: TBitmap32;
 
   DoHorizontal: Boolean;
@@ -247,7 +247,7 @@ var
 begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
-  O := GetInterface(false, false, false);
+  GadgetAccessor := GetInterface(false, false, false);
 
   Parser := TParser.Create;
   BMP := TBitmap32.Create;
@@ -302,10 +302,10 @@ begin
 
     DoHorizontal := Sec.Line['horizontal_strip'] <> nil;
 
-    O.TriggerLeft := Sec.LineNumeric['trigger_x'];
-    O.TriggerTop := Sec.LineNumeric['trigger_y'];
-    O.TriggerWidth := Sec.LineNumeric['trigger_width'];
-    O.TriggerHeight := Sec.LineNumeric['trigger_height'];
+    GadgetAccessor.TriggerLeft := Sec.LineNumeric['trigger_x'];
+    GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];
+    GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];
+    GadgetAccessor.TriggerHeight := Sec.LineNumeric['trigger_height'];
 
     fSoundEffect := Sec.LineTrimString['sound'];
 
@@ -322,22 +322,22 @@ begin
     if Sec.Line['resize_horizontal'] <> nil then // This is messy. Should probably take Nepster's advice and split these properly into two Boolean values.
     begin
       if Sec.Line['resize_vertical'] <> nil then
-        O.Resizability := mos_Both
+        GadgetAccessor.Resizability := mos_Both
       else
-        O.Resizability := mos_Horizontal;
+        GadgetAccessor.Resizability := mos_Horizontal;
     end else begin
       if Sec.Line['resize_vertical'] <> nil then
-        O.Resizability := mos_Vertical
+        GadgetAccessor.Resizability := mos_Vertical
       else
-        O.Resizability := mos_None;
+        GadgetAccessor.Resizability := mos_None;
     end;
 
     fIsMasked := Sec.DoForEachSection('mask', Masker.ApplyMask) <> 0;
 
-    O.Images.Generate(BMP, fFrameCount, DoHorizontal);
+    GadgetAccessor.Images.Generate(BMP, fFrameCount, DoHorizontal);
 
-    fVariableInfo[0].Width := O.Images[0].Width;   //TMetaObjectInterface's Width property is read-only
-    fVariableInfo[0].Height := O.Images[0].Height;
+    fVariableInfo[0].Width := GadgetAccessor.Images[0].Width;   //TMetaObjectInterface's Width property is read-only
+    fVariableInfo[0].Height := GadgetAccessor.Images[0].Height;
 
   finally
     Parser.Free;
@@ -607,7 +607,7 @@ end;
 constructor TGadgetMetaAccessor.Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 begin
   inherited Create;
-  fMetaObject := aMetaObject;
+  fGadgetMetaInfo := aMetaObject;
   fFlip := Flip;
   fInvert := Invert;
   fRotate := Rotate;
@@ -618,16 +618,16 @@ begin
   // Access via properties where these exist to discriminate orientations (after all, that's the whole
   // point of the TMetaObjectInterface abstraction layer :P ). Otherwise, access the fields directly.
   case aProp of
-    ov_Frames: Result := fMetaObject.fFrameCount;
-    ov_Width: Result := fMetaObject.Width[fFlip, fInvert, fRotate];
-    ov_Height: Result := fMetaObject.Height[fFlip, fInvert, fRotate];
-    ov_TriggerLeft: Result := fMetaObject.TriggerLeft[fFlip, fInvert, fRotate];
-    ov_TriggerTop: Result := fMetaObject.TriggerTop[fFlip, fInvert, fRotate];
-    ov_TriggerWidth: Result := fMetaObject.TriggerWidth[fFlip, fInvert, fRotate];
-    ov_TriggerHeight: Result := fMetaObject.TriggerHeight[fFlip, fInvert, fRotate];
-    ov_TriggerEffect: Result := fMetaObject.fTriggerEffect;
-    ov_KeyFrame: Result := fMetaObject.fKeyFrame;
-    ov_PreviewFrame: Result := fMetaObject.fPreviewFrameIndex;
+    ov_Frames: Result := fGadgetMetaInfo.fFrameCount;
+    ov_Width: Result := fGadgetMetaInfo.Width[fFlip, fInvert, fRotate];
+    ov_Height: Result := fGadgetMetaInfo.Height[fFlip, fInvert, fRotate];
+    ov_TriggerLeft: Result := fGadgetMetaInfo.TriggerLeft[fFlip, fInvert, fRotate];
+    ov_TriggerTop: Result := fGadgetMetaInfo.TriggerTop[fFlip, fInvert, fRotate];
+    ov_TriggerWidth: Result := fGadgetMetaInfo.TriggerWidth[fFlip, fInvert, fRotate];
+    ov_TriggerHeight: Result := fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate];
+    ov_TriggerEffect: Result := fGadgetMetaInfo.fTriggerEffect;
+    ov_KeyFrame: Result := fGadgetMetaInfo.fKeyFrame;
+    ov_PreviewFrame: Result := fGadgetMetaInfo.fPreviewFrameIndex;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;
@@ -635,59 +635,59 @@ end;
 procedure TGadgetMetaAccessor.SetIntegerProperty(aProp: TGadgetMetaProperty; aValue: Integer);
 begin
   case aProp of
-    ov_TriggerLeft: fMetaObject.TriggerLeft[fFlip, fInvert, fRotate] := aValue;
-    ov_TriggerTop: fMetaObject.TriggerTop[fFlip, fInvert, fRotate] := aValue;
-    ov_TriggerWidth: fMetaObject.TriggerWidth[fFlip, fInvert, fRotate] := aValue;
-    ov_TriggerHeight: fMetaObject.TriggerHeight[fFlip, fInvert, fRotate] := aValue;
-    ov_TriggerEffect: fMetaObject.fTriggerEffect := aValue;
-    ov_KeyFrame: fMetaObject.fKeyFrame := aValue;
-    ov_PreviewFrame: fMetaObject.fPreviewFrameIndex := aValue;
+    ov_TriggerLeft: fGadgetMetaInfo.TriggerLeft[fFlip, fInvert, fRotate] := aValue;
+    ov_TriggerTop: fGadgetMetaInfo.TriggerTop[fFlip, fInvert, fRotate] := aValue;
+    ov_TriggerWidth: fGadgetMetaInfo.TriggerWidth[fFlip, fInvert, fRotate] := aValue;
+    ov_TriggerHeight: fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate] := aValue;
+    ov_TriggerEffect: fGadgetMetaInfo.fTriggerEffect := aValue;
+    ov_KeyFrame: fGadgetMetaInfo.fKeyFrame := aValue;
+    ov_PreviewFrame: fGadgetMetaInfo.fPreviewFrameIndex := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;
 
 function TGadgetMetaAccessor.GetSoundEffect: String;
 begin
-  Result := fMetaObject.fSoundEffect;
+  Result := fGadgetMetaInfo.fSoundEffect;
 end;
 
 procedure TGadgetMetaAccessor.SetSoundEffect(aValue: String);
 begin
-  fMetaObject.fSoundEffect := aValue;
+  fGadgetMetaInfo.fSoundEffect := aValue;
 end;
 
 function TGadgetMetaAccessor.GetRandomStartFrame: Boolean;
 begin
-  Result := fMetaObject.fRandomStartFrame;
+  Result := fGadgetMetaInfo.fRandomStartFrame;
 end;
 
 procedure TGadgetMetaAccessor.SetRandomStartFrame(aValue: Boolean);
 begin
-  fMetaObject.fRandomStartFrame := aValue;
+  fGadgetMetaInfo.fRandomStartFrame := aValue;
 end;
 
 function TGadgetMetaAccessor.GetResizability: TGadgetMetaSizeSetting;
 begin
-  Result := fMetaObject.Resizability[fFlip, fInvert, fRotate];
+  Result := fGadgetMetaInfo.Resizability[fFlip, fInvert, fRotate];
 end;
 
 procedure TGadgetMetaAccessor.SetResizability(aValue: TGadgetMetaSizeSetting);
 begin
-  fMetaObject.Resizability[fFlip, fInvert, fRotate] := aValue;
+  fGadgetMetaInfo.Resizability[fFlip, fInvert, fRotate] := aValue;
 end;
 
 function TGadgetMetaAccessor.GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
 begin
   Result := false;
   case aDir of
-    mos_Horizontal: Result := fMetaObject.CanResizeHorizontal[fFlip, fInvert, fRotate];
-    mos_Vertical: Result := fMetaObject.CanResizeVertical[fFlip, fInvert, fRotate];
+    mos_Horizontal: Result := fGadgetMetaInfo.CanResizeHorizontal[fFlip, fInvert, fRotate];
+    mos_Vertical: Result := fGadgetMetaInfo.CanResizeVertical[fFlip, fInvert, fRotate];
   end;
 end;
 
 function TGadgetMetaAccessor.GetImages: TBitmaps;
 begin
-  Result := fMetaObject.Images[fFlip, fInvert, fRotate];
+  Result := fGadgetMetaInfo.Images[fFlip, fInvert, fRotate];
 end;
 
 { TMetaObjects }

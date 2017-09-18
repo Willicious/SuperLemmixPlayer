@@ -147,7 +147,7 @@ end;
 
 procedure TGadgetModel.SetInvert(aValue: Boolean);
 begin
-    if aValue then
+  if aValue then
     DrawingFlags := DrawingFlags or odf_UpsideDown
   else
     DrawingFlags := DrawingFlags and not odf_UpsideDown;

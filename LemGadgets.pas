@@ -424,7 +424,7 @@ end;
 procedure TGadgetList.FindReceiverID;
 var
   i, TestId: Integer;
-  Inf, TestInf: TGadget;
+  Gadget, TestGadget: TGadget;
   PairCount: Integer;
   IsReceiverUsed: array of Boolean;
 begin
@@ -438,28 +438,28 @@ begin
 
   for i := 0 to Count - 1 do
   begin
-    Inf := List[i];
-    if Inf.TriggerEffect = DOM_TELEPORT then
+    Gadget := List[i];
+    if Gadget.TriggerEffect = DOM_TELEPORT then
     begin
       // Find receiver for this teleporter with index i
       TestID := i;
       repeat
         Inc(TestID);
-        TestInf := List[TestId mod Count];
-      until ((TestInf.TriggerEffect = DOM_RECEIVER) and (TestInf.Obj.Skill = Inf.Obj.Skill))
+        TestGadget := List[TestId mod Count];
+      until ((TestGadget.TriggerEffect = DOM_RECEIVER) and (TestGadget.Obj.Skill = Gadget.Obj.Skill))
             or (TestID = i + Count);
 
       TestID := TestID mod Count;
       // If TestID = i then there is no receiver and we disable the teleporter
       if i = TestID then
-        Inf.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
+        Gadget.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
       else begin
-        Inf.sReceiverId := TestID;
+        Gadget.sReceiverId := TestID;
         if IsReceiverUsed[TestID] then
-          Inf.sPairingId := TestInf.sPairingId
+          Gadget.sPairingId := TestGadget.sPairingId
         else begin
-          Inf.sPairingId := PairCount;
-          TestInf.sPairingId := PairCount;
+          Gadget.sPairingId := PairCount;
+          TestGadget.sPairingId := PairCount;
           IsReceiverUsed[TestID] := true;
           Inc(PairCount);
         end;
@@ -469,10 +469,10 @@ begin
 
   for i := 0 to Count-1 do
   begin
-    Inf := List[i];
-    if Inf.TriggerEffect = DOM_RECEIVER then
+    Gadget := List[i];
+    if Gadget.TriggerEffect = DOM_RECEIVER then
       if not IsReceiverUsed[i] then
-        Inf.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
+        Gadget.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
   end;
 end;
 
