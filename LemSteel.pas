@@ -10,7 +10,7 @@ unit LemSteel;
 interface
 
 uses
-  Contnrs,
+  Contnrs, Classes,
   LemPiece;
 
 type
@@ -36,7 +36,6 @@ type
   end;
 
 implementation
-
 
 { TSteels }
 

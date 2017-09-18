@@ -235,7 +235,7 @@ type
 implementation
 
 uses
-  Math;
+  Math, UITypes;
 
 function SortAlphabetical(Item1, Item2: Pointer): Integer;
 var

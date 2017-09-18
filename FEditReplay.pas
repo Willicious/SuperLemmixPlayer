@@ -45,6 +45,9 @@ implementation
 
 {$R *.dfm}
 
+uses
+  UITypes;
+
 procedure TFReplayEditor.NoteChangeAtFrame(aFrame: Integer);
 begin
   if (fEarliestChange = -1) or (aFrame < fEarliestChange) then

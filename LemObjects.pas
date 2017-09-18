@@ -4,7 +4,7 @@ unit LemObjects;
 interface
 
 uses
-  Math,
+  Math, Classes,
   Windows, Contnrs, LemTypes, LemCore,
   LemMetaObject, LemInteractiveObject;
 
@@ -197,14 +197,6 @@ begin
       CurrentFrame := 1
     else
       CurrentFrame := 0;
-
-  // Set OWW to Only-On-Terrain and remove No-Overwrite
-  // from namida: Don't think this is nessecary anymore, OWWs are handled seperately during rendering so these properties would be ignored
-  (*if MetaObj.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN] then
-  begin
-    Obj.DrawingFlags := Obj.DrawingFlags and not 4; // odf_NoOverwrite
-    Obj.DrawingFlags := Obj.DrawingFlags or 1; // odf_OnlyOnTerrain
-  end;*)
 
   // Set other stuff
   Triggered := False;
