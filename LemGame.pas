@@ -77,7 +77,7 @@ type
       DelayEndFrames: Integer;
       TimePlay: Integer;
       EntriesOpened: Boolean;
-      ObjectInfos: TGadgetList;
+      Gadgets: TGadgetList;
       CurrSpawnInterval: Integer;
 
       CurrSkillCount: array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -155,10 +155,10 @@ type
     fCurrentIteration          : Integer;
     fClockFrame                : Integer; // 17 frames is one game-second
     ButtonsRemain              : Byte;
-    LemmingsToRelease           : Integer; // number of lemmings that were created
+    LemmingsToRelease          : Integer; // number of lemmings that were created
     LemmingsCloned             : Integer; // number of cloned lemmings
     LemmingsOut                : Integer; // number of lemmings currently walking around
-    fSpawnedDead                : Integer; // number of zombies that were created
+    fSpawnedDead               : Integer; // number of zombies that were created
     LemmingsIn                 : integer; // number of lemmings that made it to heaven
     LemmingsRemoved            : Integer; // number of lemmings removed
     DelayEndFrames             : Integer;
@@ -170,7 +170,7 @@ type
     TimePlay                   : Integer; // positive when time limit
                                           // negative when just counting time used
     fPlaying                   : Boolean; // game in active playing mode?
-    EntriesOpened              : Boolean;
+    HatchesOpened              : Boolean;
     LemmingMethods             : TLemmingMethodArray; // a method for each basic lemming state
     NewSkillMethods            : TNewSkillMethodArray; // The replacement of SkillMethods
     fLemSelected               : TLemming; // lem under cursor, who would receive the skill
@@ -178,8 +178,8 @@ type
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
-    ObjectInfos                : TGadgetList; // list of objects excluding entrances
-    CurrSpawnInterval            : Integer;
+    Gadgets                    : TGadgetList; // list of objects excluding entrances
+    CurrSpawnInterval          : Integer;
 
     CurrSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
     UsedSkillCount             : array[TBasicLemmingAction] of Integer;  // should only be called with arguments in AssignableSkills
@@ -230,9 +230,9 @@ type
     procedure CheckForGameFinished;
     // The next few procedures are for checking the behavior of lems in trigger areas!
     procedure CheckTriggerArea(L: TLemming);
-      function GetObjectCheckPositions(L: TLemming): TArrayArrayInt;
+      function GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
       function HasTriggerAt(X, Y: Integer; TriggerType: TTriggerTypes; L: TLemming = nil): Boolean;
-      function FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
+      function FindGadgetID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 
       function HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -255,19 +255,18 @@ type
     procedure CueSoundEffect(aSound: String); overload;
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
     function DigOneRow(PosX, PosY: Integer): Boolean;
-    procedure DrawAnimatedObjects;
+    procedure DrawAnimatedGadgets;
     procedure CheckForNewShadow;
     function HasPixelAt(X, Y: Integer): Boolean;
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
-    procedure InitializeAllObjectMaps;
+    procedure InitializeAllTriggerMaps;
 
     function GetIsSimulating: Boolean;
 
     procedure LayBrick(L: TLemming);
     function LayStackBrick(L: TLemming): Boolean;
-    procedure MoveLemToReceivePoint(L: TLemming; oid: Byte);
-
+    procedure MoveLemToReceivePoint(L: TLemming; GadgetID: Byte);
 
     procedure RecordNuke;
     procedure RecordSpawnInterval(aSI: Integer);
@@ -276,7 +275,7 @@ type
     procedure RemovePixelAt(X, Y: Integer);
     procedure ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
 
-    procedure SetObjectMap;
+    procedure SetGadgetMap;
       procedure WriteTriggerMap(Map: TArrayArrayBoolean; Rect: TRect);
       function ReadTriggerMap(X, Y: Integer; Map: TArrayArrayBoolean): Boolean;
 
@@ -294,7 +293,7 @@ type
     procedure Transition(L: TLemming; NewAction: TBasicLemmingAction; DoTurn: Boolean = False);
     procedure TurnAround(L: TLemming);
     function UpdateExplosionTimer(L: TLemming): Boolean;
-    procedure UpdateInteractiveObjects;
+    procedure UpdateGadgets;
 
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Rev: Boolean = false);
@@ -530,7 +529,7 @@ constructor TLemmingGameSavedState.Create;
 begin
   inherited;
   LemmingList := TLemmingList.Create(true);
-  ObjectInfos := TGadgetList.Create(true);
+  Gadgets := TGadgetList.Create(true);
   TerrainLayer := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
   ZombieMap := TByteMap.Create;
@@ -539,7 +538,7 @@ end;
 destructor TLemmingGameSavedState.Destroy;
 begin
   LemmingList.Free;
-  ObjectInfos.Free;
+  Gadgets.Free;
   TerrainLayer.Free;
   PhysicsMap.Free;
   ZombieMap.Free;
@@ -641,7 +640,7 @@ begin
   aState.NextLemmingCountdown := NextLemmingCountdown;
   aState.DelayEndFrames := DelayEndFrames;
   aState.TimePlay := TimePlay;
-  aState.EntriesOpened := EntriesOpened;
+  aState.EntriesOpened := HatchesOpened;
   aState.CurrSpawnInterval := CurrSpawnInterval;
 
   for i := 0 to 16 do
@@ -663,11 +662,11 @@ begin
   end;
 
   // Objects.
-  aState.ObjectInfos.Clear;
-  for i := 0 to ObjectInfos.Count-1 do
+  aState.Gadgets.Clear;
+  for i := 0 to Gadgets.Count-1 do
   begin
-    aState.ObjectInfos.Add(TGadget.Create);
-    ObjectInfos[i].AssignTo(aState.ObjectInfos[i]);
+    aState.Gadgets.Add(TGadget.Create);
+    Gadgets[i].AssignTo(aState.Gadgets[i]);
   end;
 end;
 
@@ -691,7 +690,7 @@ begin
   NextLemmingCountdown := aState.NextLemmingCountdown;
   DelayEndFrames := aState.DelayEndFrames;
   TimePlay := aState.TimePlay;
-  EntriesOpened := aState.EntriesOpened;
+  HatchesOpened := aState.EntriesOpened;
   CurrSpawnInterval := aState.CurrSpawnInterval;
 
   for i := 0 to 16 do
@@ -714,9 +713,9 @@ begin
   end;
 
   // Objects
-  for i := 0 to ObjectInfos.Count-1 do
+  for i := 0 to Gadgets.Count-1 do
   begin
-    aState.ObjectInfos[i].AssignTo(ObjectInfos[i]);
+    aState.Gadgets[i].AssignTo(Gadgets[i]);
   end;
 
   // Recreate Blocker map
@@ -804,7 +803,7 @@ begin
   inherited Create(aOwner);
 
   fRenderInterface := TRenderInterface.Create;
-  fMessageQueue := TGameMessageQueue.Create;
+  fMessageQueue  := TGameMessageQueue.Create;
 
   LemmingList    := TLemmingList.Create;
 
@@ -814,13 +813,13 @@ begin
   FencerMasks    := TBitmap32.Create;
   MinerMasks     := TBitmap32.Create;
 
-  ObjectInfos    := TGadgetList.Create;
+  Gadgets        := TGadgetList.Create;
   BlockerMap     := TByteMap.Create;
   ZombieMap      := TByteMap.Create;
   fReplayManager := TReplay.Create;
 
   fRenderInterface.LemmingList := LemmingList;
-  fRenderInterface.ObjectList := ObjectInfos;
+  fRenderInterface.Gadgets := Gadgets;
   fRenderInterface.SetSelectedSkillPointer(fSelectedSkill);
   fRenderInterface.SelectedLemming := nil;
   fRenderInterface.ReplayLemming := nil;
@@ -916,7 +915,7 @@ begin
   MinerMasks.Free;
 
   LemmingList.Free;
-  ObjectInfos.Free;
+  Gadgets.Free;
   BlockerMap.Free;
   ZombieMap.Free;
   fReplayManager.Free;
@@ -962,7 +961,7 @@ end;
 procedure TLemmingGame.Start(aReplay: Boolean = False);
 var
   i: Integer;
-  Inf: TGadget;
+  Gadget: TGadget;
 
   Skill: TSkillPanelButton;
   InitialSkill: TSkillPanelButton;
@@ -1001,7 +1000,7 @@ begin
   IsHighlightHotkey := False;
   fCurrentIteration := 0;
   fClockFrame := 0;
-  EntriesOpened := False;
+  HatchesOpened := False;
 
   SpawnIntervalModifier := 0;
   UserSetNuking := False;
@@ -1038,29 +1037,29 @@ begin
   ButtonsRemain := 0;
 
   // Create the list of interactive objects
-  ObjectInfos.Clear;
-  fRenderer.CreateInteractiveObjectList(ObjectInfos);
+  Gadgets.Clear;
+  fRenderer.CreateInteractiveObjectList(Gadgets);
 
   with Level do
-  for i := 0 to ObjectInfos.Count - 1 do
+  for i := 0 to Gadgets.Count - 1 do
   begin
-    Inf := ObjectInfos[i];
+    Gadget := Gadgets[i];
 
     // Update number of buttons
-    if Inf.TriggerEffect = DOM_BUTTON then
+    if Gadget.TriggerEffect = DOM_BUTTON then
       Inc(ButtonsRemain);
   end;
 
   InitializeBrickColors(Renderer.Theme.Colors[MASK_COLOR]);
 
-  InitializeAllObjectMaps;
-  SetObjectMap;
+  InitializeAllTriggerMaps;
+  SetGadgetMap;
 
   AddPreplacedLemming;
 
   SetBlockerMap;
 
-  DrawAnimatedObjects; // first draw needed
+  DrawAnimatedGadgets; // first draw needed
 
   // force update
   fSelectedSkill := spbNone;
@@ -1225,19 +1224,19 @@ begin
   PhysicsMap.PixelS[X, Y] := PhysicsMap.PixelS[X, Y] and not PM_TERRAIN;
 end;
 
-procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; oid: Byte);
+procedure TLemmingGame.MoveLemToReceivePoint(L: TLemming; GadgetID: Byte);
 var
-  Inf, Inf2: TGadget;
+  Gadget, Gadget2: TGadget;
 begin
-  Inf := ObjectInfos[oid];
-  Assert(Inf.ReceiverId <> 65535, 'Telerporter used without receiver'); // note to self or Nepster: change this to use -1 instead?
-  Inf2 := ObjectInfos[Inf.ReceiverId];
+  Gadget := Gadgets[GadgetID];
+  Assert(Gadget.ReceiverId <> 65535, 'Telerporter used without receiver'); // note to self or Nepster: change this to use -1 instead?
+  Gadget2 := Gadgets[Gadget.ReceiverId];
 
-  if Inf.IsFlipPhysics then TurnAround(L);
+  if Gadget.IsFlipPhysics then TurnAround(L);
 
   // Mirror trigger area, if Upside-Down Flag is valid for exactly one object
-  L.LemX := Inf2.TriggerRect.Left;
-  L.LemY := Inf2.TriggerRect.Top;
+  L.LemX := Gadget2.TriggerRect.Left;
+  L.LemY := Gadget2.TriggerRect.Top;
 end;
 
 
@@ -1465,7 +1464,7 @@ end;
 
 //  SETTING SIZE OF OBJECT MAPS
 
-procedure TLemmingGame.InitializeAllObjectMaps;
+procedure TLemmingGame.InitializeAllTriggerMaps;
 begin
   SetLength(WaterMap, 0, 0); // lines like these are required to clear the arrays
   SetLength(WaterMap, Level.Info.Width, Level.Info.Height);
@@ -1594,9 +1593,9 @@ begin
   BlockerMap.Clear(DOM_NONE);
 
   // First add all force fields
-  for i := 0 to ObjectInfos.Count - 1 do
-    if ObjectInfos[i].TriggerEffect in [DOM_FORCELEFT, DOM_FORCERIGHT] then
-      SetForceField(ObjectInfos[i].TriggerRect, ObjectInfos[i].TriggerEffect);
+  for i := 0 to Gadgets.Count - 1 do
+    if Gadgets[i].TriggerEffect in [DOM_FORCELEFT, DOM_FORCERIGHT] then
+      SetForceField(Gadgets[i].TriggerRect, Gadgets[i].TriggerEffect);
 
   // Then add all blocker fields
   for i := 0 to LemmingList.Count-1 do
@@ -1625,31 +1624,31 @@ begin
     Result := False;
 end;
 
-procedure TLemmingGame.SetObjectMap;
+procedure TLemmingGame.SetGadgetMap;
 // WARNING: Only call this after InitializeAllObjectMaps
 // Otherwise the maps might already contain trigger areas
 var
   i: Integer;
 begin
-  for i := 0 to ObjectInfos.Count - 1 do
+  for i := 0 to Gadgets.Count - 1 do
   begin
-    case ObjectInfos[i].TriggerEffect of
-      DOM_EXIT:       WriteTriggerMap(ExitMap, ObjectInfos[i].TriggerRect);
+    case Gadgets[i].TriggerEffect of
+      DOM_EXIT:       WriteTriggerMap(ExitMap, Gadgets[i].TriggerRect);
       DOM_LOCKEXIT:
           begin
-            WriteTriggerMap(LockedExitMap, ObjectInfos[i].TriggerRect);
-            if ButtonsRemain = 0 then ObjectInfos[i].CurrentFrame := 0;
+            WriteTriggerMap(LockedExitMap, Gadgets[i].TriggerRect);
+            if ButtonsRemain = 0 then Gadgets[i].CurrentFrame := 0;
           end;
-      DOM_WATER:      WriteTriggerMap(WaterMap, ObjectInfos[i].TriggerRect);
-      DOM_FIRE:       WriteTriggerMap(FireMap, ObjectInfos[i].TriggerRect);
-      DOM_TRAP:       WriteTriggerMap(TrapMap, ObjectInfos[i].TriggerRect);
-      DOM_TRAPONCE:   WriteTriggerMap(TrapMap, ObjectInfos[i].TriggerRect);
-      DOM_TELEPORT:   WriteTriggerMap(TeleporterMap, ObjectInfos[i].TriggerRect);
-      DOM_UPDRAFT:    WriteTriggerMap(UpdraftMap, ObjectInfos[i].TriggerRect);
-      DOM_PICKUP:     WriteTriggerMap(PickupMap, ObjectInfos[i].TriggerRect);
-      DOM_BUTTON:     WriteTriggerMap(ButtonMap, ObjectInfos[i].TriggerRect);
-      DOM_FLIPPER:    WriteTriggerMap(FlipperMap, ObjectInfos[i].TriggerRect);
-      DOM_SPLAT:      WriteTriggerMap(SplatMap, ObjectInfos[i].TriggerRect);
+      DOM_WATER:      WriteTriggerMap(WaterMap, Gadgets[i].TriggerRect);
+      DOM_FIRE:       WriteTriggerMap(FireMap, Gadgets[i].TriggerRect);
+      DOM_TRAP:       WriteTriggerMap(TrapMap, Gadgets[i].TriggerRect);
+      DOM_TRAPONCE:   WriteTriggerMap(TrapMap, Gadgets[i].TriggerRect);
+      DOM_TELEPORT:   WriteTriggerMap(TeleporterMap, Gadgets[i].TriggerRect);
+      DOM_UPDRAFT:    WriteTriggerMap(UpdraftMap, Gadgets[i].TriggerRect);
+      DOM_PICKUP:     WriteTriggerMap(PickupMap, Gadgets[i].TriggerRect);
+      DOM_BUTTON:     WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
+      DOM_FLIPPER:    WriteTriggerMap(FlipperMap, Gadgets[i].TriggerRect);
+      DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -2063,7 +2062,7 @@ begin
   Result := (L.LemAction in ActionSet);
 end;
 
-function TLemmingGame.GetObjectCheckPositions(L: TLemming): TArrayArrayInt;
+function TLemmingGame.GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
 // The intermediate checks are made according to:
 // http://www.lemmingsforums.net/index.php?topic=2604.7
 var
@@ -2142,7 +2141,7 @@ var
   AbortChecks: Boolean;
 begin
   // Get positions to check for trigger areas
-  CheckPos := GetObjectCheckPositions(L);
+  CheckPos := GetGadgetCheckPositions(L);
 
   // Now move through the values in CheckPosX/Y and check for trigger areas
   i := -1;
@@ -2256,48 +2255,48 @@ begin
   end;
 end;
 
-function TLemmingGame.FindObjectID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
+function TLemmingGame.FindGadgetID(X, Y: Integer; TriggerType: TTriggerTypes): Word;
 // finds a suitable object that has the correct trigger type and is not currently active.
 var
-  ObjectID: Word;
-  ObjectFound: Boolean;
-  Inf: TGadget;
+  GadgetID: Word;
+  GadgetFound: Boolean;
+  Gadget: TGadget;
 begin
   // Because ObjectTypeToTrigger defaults to trZombie, looking for this trigger type is nonsense!
   Assert(TriggerType <> trZombie, 'FindObjectId called for trZombie');
 
-  ObjectID := ObjectInfos.Count;
-  ObjectFound := False;
+  GadgetID := Gadgets.Count;
+  GadgetFound := False;
   repeat
-    Dec(ObjectID);
-    Inf := ObjectInfos[ObjectID];
+    Dec(GadgetID);
+    Gadget := Gadgets[GadgetID];
     // Check correct TriggerType
-    if ObjectTypeToTrigger[Inf.TriggerEffect] = TriggerType then
+    if ObjectTypeToTrigger[Gadget.TriggerEffect] = TriggerType then
     begin
       // Check trigger areas for this object
-      if PtInRect(Inf.TriggerRect, Point(X, Y)) then
-        ObjectFound := True;
+      if PtInRect(Gadget.TriggerRect, Point(X, Y)) then
+        GadgetFound := True;
     end;
 
     // Additional checks for locked exit
-    if (Inf.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
-      ObjectFound := False;
+    if (Gadget.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
+      GadgetFound := False;
     // Additional checks for triggered traps, triggered animations, teleporters
-    if Inf.Triggered then
-      ObjectFound := False;
+    if Gadget.Triggered then
+      GadgetFound := False;
     // ignore already used buttons, one-shot traps and pick-up skills
-    if     (Inf.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
-       and (Inf.CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
-      ObjectFound := False;
+    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
+       and (Gadget.CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
+      GadgetFound := False;
     // Additional check, that the corresponding receiver is inactive
-    if     (Inf.TriggerEffect = DOM_TELEPORT)
-       and (ObjectInfos[Inf.ReceiverId].Triggered or ObjectInfos[Inf.ReceiverId].HoldActive) then
-      ObjectFound := False;
+    if     (Gadget.TriggerEffect = DOM_TELEPORT)
+       and (Gadgets[Gadget.ReceiverId].Triggered or Gadgets[Gadget.ReceiverId].HoldActive) then
+      GadgetFound := False;
 
-  until ObjectFound or (ObjectID = 0);
+  until GadgetFound or (GadgetID = 0);
 
-  if ObjectFound then
-    Result := ObjectID
+  if GadgetFound then
+    Result := GadgetID
   else
     Result := 65535;
 end;
@@ -2305,21 +2304,21 @@ end;
 
 function TLemmingGame.HandleTrap(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TGadget;
-  ObjectID: Word;
+  Gadget: TGadget;
+  GadgetID: Word;
 begin
   Result := True;
 
-  ObjectID := FindObjectID(PosX, PosY, trTrap);
+  GadgetID := FindGadgetID(PosX, PosY, trTrap);
   // Exit if there is no Object
-  if ObjectID = 65535 then
+  if GadgetID = 65535 then
   begin
     Result := False;
     Exit;
   end;
 
   // Set ObjectInfos
-  Inf := ObjectInfos[ObjectID];
+  Gadget := Gadgets[GadgetID];
 
   if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
@@ -2328,30 +2327,30 @@ begin
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baJumping
     else L.LemActionNew := baWalking;
 
-    Inf.TriggerEffect := DOM_NONE; // effectively disables the object
+    Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
     Transition(L, baFixing);
   end
   else
   begin
     // trigger trap
-    Inf.Triggered := True;
-    Inf.ZombieMode := L.LemIsZombie;
+    Gadget.Triggered := True;
+    Gadget.ZombieMode := L.LemIsZombie;
     // Make sure to remove the blocker field!
     L.LemHasBlockerField := False;
     SetBlockerMap;
     RemoveLemming(L, RM_KILL);
-    CueSoundEffect(Inf.SoundEffect, L.Position);
-    DelayEndFrames := MaxIntValue([DelayEndFrames, Inf.AnimationFrameCount]);
+    CueSoundEffect(Gadget.SoundEffect, L.Position);
+    DelayEndFrames := MaxIntValue([DelayEndFrames, Gadget.AnimationFrameCount]);
     // Check for one-shot trap and possibly disable it
-    if Inf.TriggerEffect = DOM_TRAPONCE then Inf.TriggerEffect := DOM_NONE;
+    if Gadget.TriggerEffect = DOM_TRAPONCE then Gadget.TriggerEffect := DOM_NONE;
   end;
 end;
 
 
 function TLemmingGame.HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TGadget;
-  ObjectID: Word;
+  Gadget: TGadget;
+  GadgetID: Word;
 begin
   Result := False;
 
@@ -2360,81 +2359,81 @@ begin
   // Exit if lemming is falling, has ground under his feet and will splat
   if (L.LemAction = baFalling) and HasPixelAt(PosX, PosY) and (L.LemFallen > MAX_FALLDISTANCE) then Exit;
 
-  ObjectID := FindObjectID(PosX, PosY, trTeleport);
+  GadgetID := FindGadgetID(PosX, PosY, trTeleport);
 
   // Exit if there is no Object
-  if ObjectID = 65535 then Exit;
+  if GadgetID = 65535 then Exit;
 
   Result := True;
 
-  Inf := ObjectInfos[ObjectID];
+  Gadget := Gadgets[GadgetID];
 
-  Assert((Inf.ReceiverID >= 0) and (Inf.ReceiverID < ObjectInfos.Count), 'ReceiverID for teleporter out of bounds.');
-  Assert(ObjectInfos[Inf.ReceiverID].TriggerEffect = DOM_RECEIVER, 'Receiving object for teleporter has wrong trigger effect.');
+  Assert((Gadget.ReceiverID >= 0) and (Gadget.ReceiverID < Gadgets.Count), 'ReceiverID for teleporter out of bounds.');
+  Assert(Gadgets[Gadget.ReceiverID].TriggerEffect = DOM_RECEIVER, 'Receiving object for teleporter has wrong trigger effect.');
 
-  Inf.Triggered := True;
-  Inf.ZombieMode := L.LemIsZombie;
-  CueSoundEffect(Inf.SoundEffect, L.Position);
+  Gadget.Triggered := True;
+  Gadget.ZombieMode := L.LemIsZombie;
+  CueSoundEffect(Gadget.SoundEffect, L.Position);
   L.LemTeleporting := True;
-  Inf.TeleLem := L.LemIndex;
+  Gadget.TeleLem := L.LemIndex;
   // Make sure to remove the blocker field!
   L.LemHasBlockerField := False;
   SetBlockerMap;
 
-  ObjectInfos[Inf.ReceiverID].HoldActive := True;
+  Gadgets[Gadget.ReceiverID].HoldActive := True;
 end;
 
 function TLemmingGame.HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TGadget;
-  ObjectID: Word;
+  Gadget: TGadget;
+  GadgetID: Word;
 begin
   Result := False;
 
-  ObjectID := FindObjectID(PosX, PosY, trPickup);
+  GadgetID := FindGadgetID(PosX, PosY, trPickup);
   // Exit if there is no Object
-  if ObjectID = 65535 then Exit;
+  if GadgetID = 65535 then Exit;
 
   if not L.LemIsZombie then
   begin
-    Inf := ObjectInfos[ObjectID];
-    Inf.CurrentFrame := 0;
+    Gadget := Gadgets[GadgetID];
+    Gadget.CurrentFrame := 0;
     CueSoundEffect(SFX_PICKUP, L.Position);
-    UpdateSkillCount(SkillPanelButtonToAction[Inf.SkillType], true);
+    UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], true);
   end;
 end;
 
 
 function TLemmingGame.HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TGadget;
+  Gadget: TGadget;
   n: Integer;
-  ObjectID: Word;
+  GadgetID: Word;
 begin
   Result := False;
 
-  ObjectID := FindObjectID(PosX, PosY, trButton);
+  GadgetID := FindGadgetID(PosX, PosY, trButton);
   // Exit if there is no Object
-  if ObjectID = 65535 then Exit;
+  if GadgetID = 65535 then Exit;
 
   if not L.LemIsZombie then
   begin
-    Inf := ObjectInfos[ObjectID];
-    CueSoundEffect(Inf.SoundEffect, L.Position);
-    Inf.Triggered := True;
+    Gadget := Gadgets[GadgetID];
+    CueSoundEffect(Gadget.SoundEffect, L.Position);
+    Gadget.Triggered := True;
     Dec(ButtonsRemain);
 
     if ButtonsRemain = 0 then
     begin
-      for n := 0 to (ObjectInfos.Count - 1) do
-        if ObjectInfos[n].TriggerEffect = DOM_LOCKEXIT then
+      for n := 0 to (Gadgets.Count - 1) do
+        if Gadgets[n].TriggerEffect = DOM_LOCKEXIT then
         begin
-          Inf := ObjectInfos[n];
-          Inf.Triggered := True;
-          if Inf.SoundEffect = '' then
-            CueSoundEffect(SFX_ENTRANCE, Inf.Center)
+          Gadget := Gadgets[n];
+          Gadget.Triggered := True;
+          if Gadget.SoundEffect = '' then
+            CueSoundEffect(SFX_ENTRANCE, Gadget.Center)
           else
-            CueSoundEffect(Inf.SoundEffect, Inf.Center);
+            CueSoundEffect(Gadget.SoundEffect, Gadget.Center);
         end;
     end;
   end;
@@ -2494,26 +2493,26 @@ end;
 
 function TLemmingGame.HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
 var
-  Inf: TGadget;
-  ObjectID: Word;
+  Gadget: TGadget;
+  GadgetID: Word;
 begin
   Result := False;
 
-  ObjectID := FindObjectID(PosX, PosY, trFlipper);
+  GadgetID := FindGadgetID(PosX, PosY, trFlipper);
   // Exit if there is no Object
-  if ObjectID = 65535 then Exit;
+  if GadgetID = 65535 then Exit;
 
-  Inf := ObjectInfos[ObjectID];
-  if not (L.LemInFlipper = ObjectID) then
+  Gadget := Gadgets[GadgetID];
+  if not (L.LemInFlipper = GadgetID) then
   begin
-    L.LemInFlipper := ObjectID;
-    if (Inf.CurrentFrame = 1) xor (L.LemDX < 0) then
+    L.LemInFlipper := GadgetID;
+    if (Gadget.CurrentFrame = 1) xor (L.LemDX < 0) then
     begin
       TurnAround(L);
       Result := True;
     end;
 
-    Inf.CurrentFrame := 1 - Inf.CurrentFrame // swap the possible values 0 and 1
+    Gadget.CurrentFrame := 1 - Gadget.CurrentFrame // swap the possible values 0 and 1
   end;
 end;
 
@@ -2601,7 +2600,7 @@ begin
 
   Assert(CheckRectCopy(D, S), 'bash rect err');
 
-   BasherMasks.DrawTo(PhysicsMap, D, S);
+  BasherMasks.DrawTo(PhysicsMap, D, S);
 
   // Only change the PhysicsMap if simulating stuff
   if not IsSimulating then
@@ -2678,30 +2677,30 @@ begin
 end;
 
 
-procedure TLemmingGame.DrawAnimatedObjects;
+procedure TLemmingGame.DrawAnimatedGadgets;
 var
   i, f: Integer;
-  Inf : TGadget;
+  Gadget : TGadget;
 begin
 
-  for i := 0 to ObjectInfos.Count-1 do
+  for i := 0 to Gadgets.Count-1 do
   begin
-    Inf := ObjectInfos[i];
-    if Inf.TriggerEffect = DOM_BACKGROUND then
+    Gadget := Gadgets[i];
+    if Gadget.TriggerEffect = DOM_BACKGROUND then
     begin
-      Inf.Left := Inf.Left + Inf.Movement(True, CurrentIteration); // x-movement
-      Inf.Top := Inf.Top + Inf.Movement(False, CurrentIteration); // y-movement
+      Gadget.Left := Gadget.Left + Gadget.Movement(True, CurrentIteration); // x-movement
+      Gadget.Top := Gadget.Top + Gadget.Movement(False, CurrentIteration); // y-movement
 
       // Check level borders:
       // The additional "+f" are necessary! Delphi's definition of mod returns negative numbers when passing negative numbers.
       // The following code works only if the coordinates are not too negative, so Asserts are added
-      f := Level.Info.Width + Inf.Width;
-      Assert(Inf.Left + Inf.Width + f >= 0, 'Animation Object too far left');
-      Inf.Left := ((Inf.Left + Inf.Width + f) mod f) - Inf.Width;
+      f := Level.Info.Width + Gadget.Width;
+      Assert(Gadget.Left + Gadget.Width + f >= 0, 'Animation Object too far left');
+      Gadget.Left := ((Gadget.Left + Gadget.Width + f) mod f) - Gadget.Width;
 
-      f := Level.Info.Height + Inf.Height;
-      Assert(Inf.Top + Inf.Height + f >= 0, 'Animation Object too far above');
-      Inf.Top := ((Inf.Top + Inf.Height + f) mod f) - Inf.Height;
+      f := Level.Info.Height + Gadget.Height;
+      Assert(Gadget.Top + Gadget.Height + f >= 0, 'Animation Object too far above');
+      Gadget.Top := ((Gadget.Top + Gadget.Height + f) mod f) - Gadget.Height;
     end;
   end;
 end;
@@ -4290,12 +4289,12 @@ begin
   CheckReleaseLemming;
   CheckLemmings;
   CheckUpdateNuking;
-  UpdateInteractiveObjects;
+  UpdateGadgets;
 
   // Get highest priority lemming under cursor
   GetPriorityLemming(fLemSelected, SkillPanelButtonToAction[fSelectedSkill], CursorPoint);
 
-  DrawAnimatedObjects;
+  DrawAnimatedGadgets;
 
   // Check lemmings under cursor
   HitTest;
@@ -4306,16 +4305,16 @@ procedure TLemmingGame.IncrementIteration;
 var
   i: Integer;
   AX, AY: Integer; // average position of entrances
-  EntryOpenCount: Integer;
+  HatchOpenCount: Integer;
 
   function UseZombieSound: Boolean;
   var
     i: Integer;
   begin
     Result := false;
-    for i := 0 to ObjectInfos.Count-1 do
-      if   (ObjectInfos[i].TriggerEffect = DOM_WINDOW)
-        and ObjectInfos[i].IsPreassignedZombie then
+    for i := 0 to Gadgets.Count-1 do
+      if   (Gadgets[i].TriggerEffect = DOM_WINDOW)
+        and Gadgets[i].IsPreassignedZombie then
       begin
         Result := true;
         Exit;
@@ -4344,29 +4343,29 @@ begin
         CueSoundEffect(SFX_LETSGO);
     35:
       begin
-        EntriesOpened := False;
-        EntryOpenCount := 0;
+        HatchesOpened := False;
+        HatchOpenCount := 0;
         AX := 0;
         AY := 0;
-        for i := 0 to ObjectInfos.Count - 1 do
-          if ObjectInfos[i].TriggerEffectBase = DOM_WINDOW then // uses TriggerEffectBase so that fake windows still animate
+        for i := 0 to Gadgets.Count - 1 do
+          if Gadgets[i].TriggerEffectBase = DOM_WINDOW then // uses TriggerEffectBase so that fake windows still animate
           begin
-            ObjectInfos[i].Triggered := True;
-            ObjectInfos[i].CurrentFrame := 1;
-            EntriesOpened := true;
-            Inc(EntryOpenCount);
-            AX := AX + ObjectInfos[i].Center.X;
-            AY := AY + ObjectInfos[i].Center.Y;
+            Gadgets[i].Triggered := True;
+            Gadgets[i].CurrentFrame := 1;
+            HatchesOpened := true;
+            Inc(HatchOpenCount);
+            AX := AX + Gadgets[i].Center.X;
+            AY := AY + Gadgets[i].Center.Y;
           end;
-        if EntriesOpened then
+        if HatchesOpened then
         begin
-          AX := AX div EntryOpenCount;
-          AY := AY div EntryOpenCount;
+          AX := AX div HatchOpenCount;
+          AY := AY div HatchOpenCount;
           CueSoundEffect(SFX_ENTRANCE, Point(AX, AY));
         end;
-        if not EntriesOpened then
+        if not HatchesOpened then
           PlayMusic;
-        EntriesOpened := True;
+        HatchesOpened := True;
       end;
     55:
       PlayMusic;
@@ -4541,7 +4540,7 @@ var
   ix: Integer;
 begin
                                             
-  if not EntriesOpened then
+  if not HatchesOpened then
     Exit;
   if UserSetNuking then
     Exit;
@@ -4563,19 +4562,19 @@ begin
           LemIndex := LemmingList.Add(NewLemming);
           Transition(NewLemming, baFalling);
 
-          LemX := ObjectInfos[ix].TriggerRect.Left;
-          LemY := ObjectInfos[ix].TriggerRect.Top;
+          LemX := Gadgets[ix].TriggerRect.Left;
+          LemY := Gadgets[ix].TriggerRect.Top;
           LemDX := 1;
-          if ObjectInfos[ix].IsFlipPhysics then TurnAround(NewLemming);
+          if Gadgets[ix].IsFlipPhysics then TurnAround(NewLemming);
 
-          LemIsClimber := ObjectInfos[ix].IsPreassignedClimber;
-          LemIsSwimmer := ObjectInfos[ix].IsPreassignedSwimmer;
-          LemIsDisarmer := ObjectInfos[ix].IsPreassignedDisarmer;
-          LemIsFloater := ObjectInfos[ix].IsPreassignedFloater;
+          LemIsClimber := Gadgets[ix].IsPreassignedClimber;
+          LemIsSwimmer := Gadgets[ix].IsPreassignedSwimmer;
+          LemIsDisarmer := Gadgets[ix].IsPreassignedDisarmer;
+          LemIsFloater := Gadgets[ix].IsPreassignedFloater;
           if not LemIsFloater then
-            LemIsGlider := ObjectInfos[ix].IsPreassignedGlider;
+            LemIsGlider := Gadgets[ix].IsPreassignedGlider;
 
-          if ObjectInfos[ix].IsPreassignedZombie then
+          if Gadgets[ix].IsPreassignedZombie then
           begin
             Dec(fSpawnedDead);
             RemoveLemming(NewLemming, RM_ZOMBIE, true);
@@ -4626,7 +4625,7 @@ procedure TLemmingGame.CreateLemmingAtCursorPoint;
 var
   NewLemming: TLemming;
 begin
-  if not EntriesOpened then
+  if not HatchesOpened then
     Exit;
   if UserSetNuking then
     Exit;
@@ -4932,7 +4931,7 @@ end;
 
 function TLemmingGame.SimulateLem(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt; // Simulates advancing one frame for the lemming L
 var
-  HandleInteractiveObjects: Boolean;
+  HandleGadgets: Boolean;
   LemPosArray: TArrayArrayInt;
   i: Integer;
 begin
@@ -4940,15 +4939,15 @@ begin
   Inc(fSimulationDepth);
 
   // Advance lemming one frame
-  HandleInteractiveObjects := HandleLemming(L);
+  HandleGadgets := HandleLemming(L);
   // Check whether the lem is still on screen
-  if HandleInteractiveObjects then
-    HandleInteractiveObjects := CheckLevelBoundaries(L);
+  if HandleGadgets then
+    HandleGadgets := CheckLevelBoundaries(L);
   // Check whether the lem has moved over trigger areas
-  if HandleInteractiveObjects and DoCheckObjects then
+  if HandleGadgets and DoCheckObjects then
   begin
     // Get positions to check
-    LemPosArray := GetObjectCheckPositions(L);
+    LemPosArray := GetGadgetCheckPositions(L);
 
     // Check for exit, traps and teleporters (but stop at teleporters!)
     for i := 0 to Length(LemPosArray[0]) do
@@ -4961,12 +4960,12 @@ begin
       end;
 
       if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
-             and (FindObjectID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
+             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
-             and (FindObjectID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
+             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
          then
       begin
         L.LemAction := baExploding; // This always stops the simulation!
@@ -5000,29 +4999,29 @@ end;
 function TLemmingGame.CheckLemTeleporting(L: TLemming): Boolean;
 // This function checks, whether a lemming appears out of a receiver
 var
-  ObjInfo: TGadget;
-  ObjID: Integer;
+  Gadget: TGadget;
+  GadgetID: Integer;
 begin
   Result := False;
 
   Assert(L.LemTeleporting = True, 'CheckLemTeleporting called for non-teleporting lemming');
 
   // Search for Teleporter, the lemming is in
-  ObjID := -1;
+  GadgetID := -1;
   repeat
-    Inc(ObjID);
-  until (ObjID > ObjectInfos.Count - 1) or (L.LemIndex = ObjectInfos[ObjID].TeleLem);
+    Inc(GadgetID);
+  until (GadgetID > Gadgets.Count - 1) or (L.LemIndex = Gadgets[GadgetID].TeleLem);
 
-  Assert(ObjID < ObjectInfos.Count, 'Teleporter associated to teleporting lemming not found');
+  Assert(GadgetID < Gadgets.Count, 'Teleporter associated to teleporting lemming not found');
 
-  ObjInfo := ObjectInfos[ObjID];
-  if ObjInfo.TriggerEffect = DOM_RECEIVER then
+  Gadget := Gadgets[GadgetID];
+  if Gadget.TriggerEffect = DOM_RECEIVER then
   begin
-    if    (ObjInfo.CurrentFrame + 1 >= ObjInfo.AnimationFrameCount)
-       or ((ObjInfo.KeyFrame <> 0) and (ObjInfo.CurrentFrame + 1 >= ObjInfo.KeyFrame)) then
+    if    (Gadget.CurrentFrame + 1 >= Gadget.AnimationFrameCount)
+       or ((Gadget.KeyFrame <> 0) and (Gadget.CurrentFrame + 1 >= Gadget.KeyFrame)) then
     begin
       L.LemTeleporting := False; // Let lemming reappear
-      ObjInfo.TeleLem := -1;
+      Gadget.TeleLem := -1;
       Result := True;
       // Reset blocker map, if lemming is a blocker
       if L.LemAction = baBlocking then
@@ -5069,7 +5068,7 @@ begin
 end;
 
 
-procedure TLemmingGame.UpdateInteractiveObjects;
+procedure TLemmingGame.UpdateGadgets;
 {-------------------------------------------------------------------------------
   This method handles the updating of the moving interactive objects:
   o Entrances moving
@@ -5078,37 +5077,37 @@ procedure TLemmingGame.UpdateInteractiveObjects;
   NB: It does not handle the drawing
 -------------------------------------------------------------------------------}
 var
-  Inf, Inf2: TGadget;
+  Gadget, Gadget2: TGadget;
   i: Integer;
 begin
-  for i := ObjectInfos.Count - 1 downto 0 do
+  for i := Gadgets.Count - 1 downto 0 do
   begin
-    Inf := ObjectInfos[i];
+    Gadget := Gadgets[i];
 
-    if     (Inf.Triggered or (Inf.TriggerEffectBase in AlwaysAnimateObjects))
-       and (Inf.TriggerEffect <> DOM_PICKUP) then
-      Inc(Inf.CurrentFrame);
+    if     (Gadget.Triggered or (Gadget.TriggerEffectBase in AlwaysAnimateObjects))
+       and (Gadget.TriggerEffect <> DOM_PICKUP) then
+      Inc(Gadget.CurrentFrame);
 
-    if (Inf.TriggerEffect = DOM_TELEPORT)
-      and (((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.KeyFrame = 0))
-        or ((Inf.CurrentFrame = Inf.KeyFrame) and (Inf.KeyFrame <> 0))   ) then
+    if (Gadget.TriggerEffect = DOM_TELEPORT)
+      and (((Gadget.CurrentFrame >= Gadget.AnimationFrameCount) and (Gadget.KeyFrame = 0))
+        or ((Gadget.CurrentFrame = Gadget.KeyFrame) and (Gadget.KeyFrame <> 0))   ) then
     begin
-      MoveLemToReceivePoint(LemmingList.List[Inf.TeleLem], i);
-      Inf2 := ObjectInfos[Inf.ReceiverId];
-      Assert(Inf2.TriggerEffect = DOM_RECEIVER, 'Lemming teleported to non-receiver object.');
-      Inf2.TeleLem := Inf.TeleLem;
-      Inf2.Triggered := True;
-      Inf2.ZombieMode := Inf.ZombieMode;
+      MoveLemToReceivePoint(LemmingList.List[Gadget.TeleLem], i);
+      Gadget2 := Gadgets[Gadget.ReceiverId];
+      Assert(Gadget2.TriggerEffect = DOM_RECEIVER, 'Lemming teleported to non-receiver object.');
+      Gadget2.TeleLem := Gadget.TeleLem;
+      Gadget2.Triggered := True;
+      Gadget2.ZombieMode := Gadget.ZombieMode;
       // Reset TeleLem for Teleporter
-      Inf.TeleLem := -1;
+      Gadget.TeleLem := -1;
     end;
 
-    if Inf.CurrentFrame >= Inf.AnimationFrameCount then
+    if Gadget.CurrentFrame >= Gadget.AnimationFrameCount then
     begin
-      Inf.CurrentFrame := 0;
-      Inf.Triggered := False;
-      Inf.HoldActive := False;
-      Inf.ZombieMode := False;
+      Gadget.CurrentFrame := 0;
+      Gadget.Triggered := False;
+      Gadget.HoldActive := False;
+      Gadget.ZombieMode := False;
     end;
   end;
 end;

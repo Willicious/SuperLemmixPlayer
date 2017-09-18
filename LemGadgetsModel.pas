@@ -27,7 +27,8 @@ type
     fHeight: Integer;
     fDrawingFlags: Byte; // odf_xxxx
     fSkill: Integer;
-    fTarLev: Integer;
+    fTarLev: Integer; // This saves the preassigned skills for hatches
+                      //        and the speed of movable backgrounds.
     fDrawAsZombie: Boolean;
     procedure SetFlip(aValue: Boolean); override;
     procedure SetInvert(aValue: Boolean); override;

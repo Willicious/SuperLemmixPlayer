@@ -43,12 +43,12 @@ type
 
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
-                  rlObjectsLow,
+                  rlGadgetsLow,
                   rlLowShadows,
                   rlTerrain,
-                  rlOnTerrainObjects,
+                  rlOnTerrainGadgets,
                   rlOneWayArrows,
-                  rlObjectsHigh,
+                  rlGadgetsHigh,
                   rlTriggers,
                   rlHighShadows,
                   rlObjectHelpers,
@@ -121,7 +121,7 @@ type
     private
       fDisableDrawing: Boolean;
       fLemmingList: TLemmingList;
-      fObjectList: TGadgetList;
+      fGadgets: TGadgetList;
       fPSelectedSkill: ^TSkillPanelButton;
       fSelectedLemmingID: Integer;
       fReplayLemmingID: Integer;
@@ -159,7 +159,7 @@ type
       function SimulateLem(L: TLemming): TArrayArrayInt;
       property DisableDrawing: Boolean read fDisableDrawing write fDisableDrawing;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
-      property ObjectList: TGadgetList read fObjectList write fObjectList;
+      property Gadgets: TGadgetList read fGadgets write fGadgets;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
       property SelectedLemming: TLemming read GetSelectedLemming write SetSelectedLemming;
       property HighlitLemming: TLemming read GetHighlitLemming;
@@ -497,10 +497,10 @@ begin
   begin
     fPhysicsMap.DrawMode := dmCustom;
     // Delete Only-On-Terrain Objects not on terrain
-    if not fIsEmpty[rlOnTerrainObjects] then
+    if not fIsEmpty[rlOnTerrainGadgets] then
     begin
       fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyOnTerrain;
-      fPhysicsMap.DrawTo(Items[rlOnTerrainObjects], aRegion, aRegion);
+      fPhysicsMap.DrawTo(Items[rlOnTerrainGadgets], aRegion, aRegion);
     end;
 
     // Delete One-Way-Arrows not on non-steel terrain
@@ -523,12 +523,12 @@ begin
     if (not aClearPhysics) and (i = rlTriggers) then
       Continue; // we only want to draw triggers when Clear Physics Mode is enabled
 
-    if aClearPhysics and (i in [rlBackground, rlOnTerrainObjects, rlObjectsHigh]) then
+    if aClearPhysics and (i in [rlBackground, rlOnTerrainGadgets, rlGadgetsHigh]) then
       Continue; // we don't want to draw the first two in Clear Physics mode; while the latter has special handling
 
     if aClearPhysics and (i = rlTerrain) then
     begin // we want to draw based on physics map, not graphical map, in this case
-      Items[rlObjectsHigh].DrawTo(aDst, aRegion, aRegion); // we want it behind terrain
+      Items[rlGadgetsHigh].DrawTo(aDst, aRegion, aRegion); // we want it behind terrain
       DrawClearPhysicsTerrain(aDst, aRegion);
       Continue;
     end;

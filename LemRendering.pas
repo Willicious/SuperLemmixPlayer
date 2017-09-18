@@ -1388,9 +1388,9 @@ var
     else if aInf.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
       Result := aLayer = rlOneWayArrows
     else case aLayer of
-           rlObjectsLow: Result := aInf.IsNoOverwrite and not aInf.IsOnlyOnTerrain;
-           rlOnTerrainObjects: Result := aInf.IsOnlyOnTerrain and not aInf.IsNoOverwrite;
-           rlObjectsHigh: Result := not (aInf.IsNoOverwrite xor aInf.IsOnlyOnTerrain);
+           rlGadgetsLow: Result := aInf.IsNoOverwrite and not aInf.IsOnlyOnTerrain;
+           rlOnTerrainGadgets: Result := aInf.IsOnlyOnTerrain and not aInf.IsNoOverwrite;
+           rlGadgetsHigh: Result := not (aInf.IsNoOverwrite xor aInf.IsOnlyOnTerrain);
            else Result := false;
          end;
   end;
@@ -1421,7 +1421,7 @@ begin
     if not fLayers.fIsEmpty[aLayer] then Dst.Clear(0);
     // Special conditions
     if (aLayer = rlBackgroundObjects) and (fUsefulOnly or fDisableBackground) then Exit;
-    if (aLayer = rlObjectsLow) then
+    if (aLayer = rlGadgetsLow) then
       for i := fObjectInfos.Count-1 downto 0 do
         HandleObject(i)
     else
@@ -1448,10 +1448,10 @@ begin
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
 
   DrawObjectsOnLayer(rlBackgroundObjects);
-  DrawObjectsOnLayer(rlObjectsLow);
-  DrawObjectsOnLayer(rlOnTerrainObjects);
+  DrawObjectsOnLayer(rlGadgetsLow);
+  DrawObjectsOnLayer(rlOnTerrainGadgets);
   DrawObjectsOnLayer(rlOneWayArrows);
-  DrawObjectsOnLayer(rlObjectsHigh);
+  DrawObjectsOnLayer(rlGadgetsHigh);
 
   if fRenderInterface = nil then Exit; // otherwise, some of the remaining code may cause an exception on first rendering
 
