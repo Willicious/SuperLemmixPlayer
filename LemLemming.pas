@@ -61,11 +61,11 @@ type
     LemX                          : Integer; // the "main" foot x position
     LemY                          : Integer; // the "main" foot y position
     LemDX                         : Integer; // x speed (1 if left to right, -1 if right to left)
-    LemJumped                     : Integer; // number of pixels the lem jumped
+    LemAscended                   : Integer; // number of pixels the lem ascended while walking
     LemFallen                     : Integer; // number of fallen pixels after last updraft
     LemTrueFallen                 : Integer; // total number of fallen pixels
     LemExplosionTimer             : Integer; // 84 (before 79) downto 0
-    LemDisarmingFrames             : Integer;
+    LemDisarmingFrames            : Integer;
     LemFrame                      : Integer; // current animationframe
     LemMaxFrame                   : Integer; // copy from LMA
     LemFrameDiff                  : Integer;
@@ -235,7 +235,7 @@ begin
   LemX := Source.LemX;
   LemY := Source.LemY;
   LemDX := Source.LemDX;
-  LemJumped := Source.LemJumped;
+  LemAscended := Source.LemAscended;
   LemFallen := Source.LemFallen;
   LemTrueFallen := Source.LemTrueFallen;
   LemExplosionTimer := Source.LemExplosionTimer;

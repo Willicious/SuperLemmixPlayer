@@ -308,7 +308,7 @@ type
     function HandleLemming(L: TLemming): Boolean;
       function CheckLevelBoundaries(L: TLemming) : Boolean;
     function HandleWalking(L: TLemming): Boolean;
-    function HandleJumping(L: TLemming): Boolean;
+    function HandleAscending(L: TLemming): Boolean;
     function HandleDigging(L: TLemming): Boolean;
     function HandleClimbing(L: TLemming): Boolean;
     function HandleDrowning(L: TLemming): Boolean;
@@ -828,7 +828,7 @@ begin
 
   LemmingMethods[baNone]       := nil;
   LemmingMethods[baWalking]    := HandleWalking;
-  LemmingMethods[baJumping]    := HandleJumping;
+  LemmingMethods[baAscending]    := HandleAscending;
   LemmingMethods[baDigging]    := HandleDigging;
   LemmingMethods[baClimbing]   := HandleClimbing;
   LemmingMethods[baDrowning]   := HandleDrowning;
@@ -857,7 +857,7 @@ begin
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
-  NewSkillMethods[baJumping]      := nil;
+  NewSkillMethods[baAscending]      := nil;
   NewSkillMethods[baDigging]      := MayAssignDigger;
   NewSkillMethods[baClimbing]     := MayAssignClimber;
   NewSkillMethods[baDrowning]     := nil;
@@ -1291,7 +1291,7 @@ const
     (
      0, //baNone,
      4, //baWalking,
-     1, //baJumping,
+     1, //baAscending,
     16, //baDigging,
      8, //baClimbing,
     16, //baDrowning,
@@ -1361,7 +1361,7 @@ begin
 
   // some things to do when entering state
   case L.LemAction of
-    baJumping    : L.LemJumped := 0;
+    baAscending  : L.LemAscended := 0;
     baHoisting   : L.LemIsStartingAction := OldIsStartingAction; // it needs to know what the Climber's value was
     baSplatting  : begin
                      L.LemExplosionTimer := 0;
@@ -1852,8 +1852,8 @@ var
                                     or L.LemIsGlider or L.LemIsDisarmer);
       NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
                                                baPlatforming, baStacking, baBlocking, baShrugging]);
-      Walk    : Result :=     (L.LemAction in [baWalking, baJumping]);
-      NonWalk : Result := not (L.LemAction in [baWalking, baJumping]);
+      Walk    : Result :=     (L.LemAction in [baWalking, baAscending]);
+      NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
     end;
   end;
 
@@ -2056,7 +2056,7 @@ end;
 function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining, baDigging, baJumping, baFalling,
+               baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
                baFloating, baSwimming, baGliding, baFixing];
 begin
   Result := (L.LemAction in ActionSet);
@@ -2324,7 +2324,7 @@ begin
      and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
   begin
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
-    if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baJumping
+    if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baAscending
     else L.LemActionNew := baWalking;
 
     Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
@@ -2931,7 +2931,7 @@ begin
   end
   else if (LemDy < -2) then
   begin
-    Transition(L, baJumping);
+    Transition(L, baAscending);
     Inc(L.LemY, -2);
   end
   else if (LemDy < 1) then
@@ -3007,7 +3007,7 @@ begin
 
     else if LemDy <= -3 then
     begin
-      Transition(L, baJumping);
+      Transition(L, baAscending);
       Dec(L.LemY, 2);
     end
 
@@ -3040,7 +3040,7 @@ end;
 
 
 
-function TLemmingGame.HandleJumping(L: TLemming): Boolean;
+function TLemmingGame.HandleAscending(L: TLemming): Boolean;
 var
   dy: Integer;
 begin
@@ -3048,17 +3048,17 @@ begin
   with L do
   begin
     dy := 0;
-    while (dy < 2) and (LemJumped < 5) and (HasPixelAt(LemX, LemY-1)) do
+    while (dy < 2) and (LemAscended < 5) and (HasPixelAt(LemX, LemY-1)) do
     begin
       Inc(dy);
       Dec(LemY);
-      Inc(LemJumped);
+      Inc(LemAscended);
     end;
 
     if (dy < 2) and not HasPixelAt(LemX, LemY-1) then
     begin
       fLemNextAction := baWalking;
-    end else if ((LemJumped = 4) and HasPixelAt(LemX, LemY-1) and HasPixelAt(LemX, LemY-2)) or ((LemJumped >= 5) and HasPixelAt(LemX, LemY-1)) then
+    end else if ((LemAscended = 4) and HasPixelAt(LemX, LemY-1) and HasPixelAt(LemX, LemY-2)) or ((LemAscended >= 5) and HasPixelAt(LemX, LemY-1)) then
     begin
       Dec(LemX, LemDx);
       Transition(L, baFalling, true); // turn around as well

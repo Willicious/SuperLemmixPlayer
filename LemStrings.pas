@@ -87,7 +87,7 @@ resourcestring
 
   SWalker = 'Walker';
 
-  SJumper = 'Jumper';
+  SAscender = 'Ascender';
 
   SDigger = 'Digger';
 
@@ -179,7 +179,7 @@ const
   LemmingActionStrings: array[TBasicLemmingAction] of string = (
     SDummyString,
     SWalker,
-    SJumper,
+    SAscender,
     SDigger,
     SClimber,
     SDrowner,

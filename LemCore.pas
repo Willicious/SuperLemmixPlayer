@@ -46,7 +46,7 @@ type
   TBasicLemmingAction = (
     baNone,
     baWalking,
-    baJumping,
+    baAscending,
     baDigging,
     baClimbing,
     baDrowning,

@@ -30,8 +30,8 @@ const
 -------------------------------------------------------------------------------}
   WALKING             = 0;
   WALKING_RTL         = 1;
-  JUMPING             = 2;
-  JUMPING_RTL         = 3;
+  ASCENDING           = 2;
+  ASCENDING_RTL       = 3;
   DIGGING             = 4;
   DIGGING_RTL         = 5;
   CLIMBING            = 6;
@@ -86,33 +86,33 @@ const
   AnimationIndices : array[TBasicLemmingAction, LTR..RTL] of Integer = (
     (0,0),
     (WALKING, WALKING_RTL),                   // baWalk,
-    (JUMPING, JUMPING_RTL),                   // baJumping,
-    (DIGGING, DIGGING_RTL),                       // baDigging,
+    (ASCENDING, ASCENDING_RTL),               // baAscending,
+    (DIGGING, DIGGING_RTL),                   // baDigging,
     (CLIMBING, CLIMBING_RTL),                 // baClimbing,
-    (DROWNING, DROWNING_RTL),                     // baDrowning,
+    (DROWNING, DROWNING_RTL),                 // baDrowning,
     (HOISTING, HOISTING_RTL),                 // baHoisting,
     (BRICKLAYING, BRICKLAYING_RTL),           // baBricklaying,
     (BASHING, BASHING_RTL),                   // baBashing,
     (MINING, MINING_RTL),                     // baMining,
     (FALLING, FALLING_RTL),                   // baFalling,
     (UMBRELLA, UMBRELLA_RTL),                 // baUmbrella,
-    (SPLATTING, SPLATTING_RTL),                   // baSplatting,
-    (EXITING, EXITING_RTL),                       // baExiting,
-    (FRIED, FRIED_RTL),                           // baFried,
-    (BLOCKING, BLOCKING_RTL),                     // baBlocking,
+    (SPLATTING, SPLATTING_RTL),               // baSplatting,
+    (EXITING, EXITING_RTL),                   // baExiting,
+    (FRIED, FRIED_RTL),                       // baFried,
+    (BLOCKING, BLOCKING_RTL),                 // baBlocking,
     (SHRUGGING, SHRUGGING_RTL),               // baShrugging,
-    (OHNOING, OHNOING_RTL),                       // baOhnoing,
-    (EXPLOSION, EXPLOSION_RTL),                    // baExploding
-    (0,0),                                     // baToWalking. Should never happen.
-    (PLATFORMING, PLATFORMING_RTL),            // baPlatforming
-    (STACKING, STACKING_RTL),                  // baStacking
-    (OHNOING, OHNOING_RTL),                        // baStoneOhNoing <-- might be incorrect name so don't rely on this
-    (STONEEXPLOSION, STONEEXPLOSION_RTL),          // baStoneFinish
-    (SWIMMING, SWIMMING_RTL),                  // baSwimming
-    (GLIDING, GLIDING_RTL),                    // baGliding
-    (FIXING, FIXING_RTL),                          // baFixing
-    (0,0),                                      // baCloning? Another that should never happen
-    (FENCING, FENCING_RTL)                      // baFencing
+    (OHNOING, OHNOING_RTL),                   // baOhnoing,
+    (EXPLOSION, EXPLOSION_RTL),               // baExploding
+    (0,0),                                    // baToWalking. Should never happen.
+    (PLATFORMING, PLATFORMING_RTL),           // baPlatforming
+    (STACKING, STACKING_RTL),                 // baStacking
+    (OHNOING, OHNOING_RTL),                   // baStoneOhNoing <-- might be incorrect name so don't rely on this
+    (STONEEXPLOSION, STONEEXPLOSION_RTL),     // baStoneFinish
+    (SWIMMING, SWIMMING_RTL),                 // baSwimming
+    (GLIDING, GLIDING_RTL),                   // baGliding
+    (FIXING, FIXING_RTL),                     // baFixing
+    (0,0),                                    // baCloning? Another that should never happen
+    (FENCING, FENCING_RTL)                    // baFencing
   );
 
 
@@ -186,7 +186,7 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
   const
     // These match the order these are stored by this class. They do NOT have to be in this
     // order in "scheme.nxmi", they just have to all be there.
-    ANIM_NAMES: array[0..24] of String =  ('WALKER', 'JUMPER', 'DIGGER', 'CLIMBER',
+    ANIM_NAMES: array[0..24] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
                                            'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                            'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                            'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
