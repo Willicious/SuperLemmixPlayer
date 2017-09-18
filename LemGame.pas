@@ -4349,7 +4349,7 @@ begin
         AX := 0;
         AY := 0;
         for i := 0 to ObjectInfos.Count - 1 do
-          if ObjectInfos[i].MetaObj.TriggerEffect = DOM_WINDOW then // uses MetaObj.TriggerEffect so that fake windows still animate
+          if ObjectInfos[i].TriggerEffectBase = DOM_WINDOW then // uses TriggerEffectBase so that fake windows still animate
           begin
             ObjectInfos[i].Triggered := True;
             ObjectInfos[i].CurrentFrame := 1;
@@ -5085,13 +5085,13 @@ begin
   begin
     Inf := ObjectInfos[i];
 
-    if     (Inf.Triggered or (Inf.MetaObj.TriggerEffect in AlwaysAnimateObjects))
+    if     (Inf.Triggered or (Inf.TriggerEffectBase in AlwaysAnimateObjects))
        and (Inf.TriggerEffect <> DOM_PICKUP) then
       Inc(Inf.CurrentFrame);
 
     if (Inf.TriggerEffect = DOM_TELEPORT)
-      and (((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.MetaObj.KeyFrame = 0))
-        or ((Inf.CurrentFrame = Inf.MetaObj.KeyFrame) and (Inf.MetaObj.KeyFrame <> 0))   ) then
+      and (((Inf.CurrentFrame >= Inf.AnimationFrameCount) and (Inf.KeyFrame = 0))
+        or ((Inf.CurrentFrame = Inf.KeyFrame) and (Inf.KeyFrame <> 0))   ) then
     begin
       MoveLemToReceivePoint(LemmingList.List[Inf.TeleLem], i);
       Inf2 := ObjectInfos[Inf.ReceiverId];

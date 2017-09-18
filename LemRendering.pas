@@ -79,7 +79,7 @@ type
     procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
-    procedure PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
+    procedure PrepareObjectBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; Zombie: Boolean = false);
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 
@@ -1033,11 +1033,11 @@ begin
 end;
 
 
-procedure TRenderer.PrepareObjectBitmap(Bmp: TBitmap32; DrawingFlags: Byte; Zombie: Boolean = false);
+procedure TRenderer.PrepareObjectBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; Zombie: Boolean = false);
 begin
   Bmp.DrawMode := dmCustom;
 
-  if DrawingFlags and odf_OnlyOnTerrain <> 0 then
+  if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineObjectDefault
   else if Zombie then
     Bmp.OnPixelCombine := CombineObjectDefaultZombie
@@ -1077,14 +1077,12 @@ end;
 
 procedure TRenderer.DrawObjectHelpers(Dst: TBitmap32; Obj: TInteractiveObjectInfo);
 var
-  O: TInteractiveObject;
   MO: TMetaObjectInterface;
 
   DrawX, DrawY: Integer;
 begin
   Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
 
-  O := Obj.Obj;
   MO := Obj.MetaObj;
 
   // We don't question here whether the conditions are met to draw the helper or
@@ -1098,14 +1096,14 @@ begin
   case MO.TriggerEffect of
     DOM_WINDOW:
       begin
-        if (O.TarLev and $68) <> 0 then DrawX := DrawX - 4;
+        if Obj.IsPreassignedZombie then DrawX := DrawX - 4;
 
-        if (O.DrawingFlags and odf_FlipLem) = 0 then
-          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4, DrawY)
+        if Obj.IsFlipPhysics then
+          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY)
         else
-          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY);
+          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4, DrawY);
 
-        if (O.TarLev and $68) <> 0 then
+        if Obj.IsPreassignedZombie then
           fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8, DrawY);
       end;
 
@@ -1183,7 +1181,7 @@ var
   DrawX, DrawY: Integer;
 begin
   Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-  Assert(Obj.MetaObj.TriggerEffect = DOM_WINDOW, 'Hatch helper icons called for other object type');
+  Assert(Obj.TriggerEffectBase = DOM_WINDOW, 'Hatch helper icons called for other object type');
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
@@ -1307,7 +1305,7 @@ begin
     DrawFrame := Min(aInf.CurrentFrame, aInf.AnimationFrameCount-1);
     TempBitmap.Assign(aInf.Frames[DrawFrame]);
 
-    PrepareObjectBitmap(TempBitmap, aInf.Obj.DrawingFlags, aInf.ZombieMode);
+    PrepareObjectBitmap(TempBitmap, aInf.IsOnlyOnTerrain, aInf.ZombieMode);
 
     MO := aInf.MetaObj;
     CountX := (aInf.Width-1) div MO.Width;
@@ -1342,8 +1340,8 @@ begin
       end;
     end;
 
-    aInf.Obj.LastDrawX := aInf.Left;  // is this still needed?
-    aInf.Obj.LastDrawY := aInf.Top;
+    //aInf.Obj.LastDrawX := aInf.Left;  // is this still needed?
+    //aInf.Obj.LastDrawY := aInf.Top;
   finally
     if IsOwnBitmap then
       TempBitmap.Free;

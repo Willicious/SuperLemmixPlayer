@@ -22,6 +22,8 @@ type
     sPairingId      : Integer;
     sZombieMode     : Boolean;
 
+    Obj            : TInteractiveObject;
+
     function GetTriggerRect: TRect;
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
@@ -41,9 +43,11 @@ type
     function GetKeyFrame: Integer;
     function GetCanDrawToBackground: Boolean;
     function GetSpeed: Integer;
+    function GetTriggerEffectBase: Integer;
+
   public
     MetaObj        : TMetaObjectInterface;
-    Obj            : TInteractiveObject;
+
     Frames         : TBitmaps;
 
     CurrentFrame   : Integer;
@@ -82,6 +86,7 @@ type
     property IsPreassignedDisarmer: Boolean index 16 read GetPreassignedSkill;
     property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
+    property TriggerEffectBase: Integer read GetTriggerEffectBase;
 
     procedure AssignTo(NewObj: TInteractiveObjectInfo);
 
@@ -373,6 +378,11 @@ function TInteractiveObjectInfo.GetSpeed: Integer;
 begin
   Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetSpeed called for an object that isn''t a moving background!');
   Result := Obj.TarLev;
+end;
+
+function TInteractiveObjectInfo.GetTriggerEffectBase: Integer;
+begin
+  Result := MetaObj.TriggerEffect;
 end;
 
 procedure TInteractiveObjectInfo.AssignTo(NewObj: TInteractiveObjectInfo);
