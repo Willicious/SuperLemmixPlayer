@@ -1492,12 +1492,12 @@ $END
 $BACKGROUND
   INDEX 0
   COLLECTION l3_biolab
-  PIECE background_vertical
+  PIECE biolab_vertical
 $END
 
 $BACKGROUND
   INDEX 1
   COLLECTION l3_biolab
-  PIECE background_horizontal
+  PIECE biolab_horizontal
 $END
 
