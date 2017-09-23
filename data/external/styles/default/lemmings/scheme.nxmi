@@ -39,7 +39,7 @@ $ANIMATIONS
 
   $END
 
-  $JUMPER
+  $ASCENDER
     FRAMES 1
 
     $RIGHT
