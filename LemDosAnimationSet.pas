@@ -225,11 +225,14 @@ procedure TBaseDosAnimationSet.DoReadMetaData(XmasPal : Boolean = false);
             Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
           end;
         except
-          raise Exception.Create('TBaseDosAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.')
+          raise EParserError.Create('TBaseDosAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.')
         end;
       end;
     except
-      raise Exception.Create('TBaseDosAnimationSet: Error while opening scheme.nxmi.');
+      on E: EParserError do
+        raise E;
+      else
+        raise Exception.Create('TBaseDosAnimationSet: Error while opening scheme.nxmi.');
     end;
     Parser.Free;
   end;
