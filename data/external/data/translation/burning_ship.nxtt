@@ -1,0 +1,17 @@
+
+$TERRAIN
+  INDEX 0
+  COLLECTION special
+  PIECE IchoTolot_burning_ship
+  LEFT_OFFSET 0
+  RIGHT_OFFSET 0
+  TOP_OFFSET 0
+  BOTTOM_OFFSET 0
+$END
+
+$BACKGROUND
+  INDEX 0
+  COLLECTION special
+  PIECE IchoTolot_burning_ship
+$END
+
