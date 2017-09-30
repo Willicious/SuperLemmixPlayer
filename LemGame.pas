@@ -1200,22 +1200,9 @@ end;
 
 
 function TLemmingGame.HasPixelAt(X, Y: Integer): Boolean;
-{-------------------------------------------------------------------------------
-  Read value from world.
-  The function returns True when the value at (x, y) is terrain
--------------------------------------------------------------------------------}
 begin
-  Result := (Y < 0);
-  If Result = False then
-    Result := (Y < PhysicsMap.Height) and (X >= 0) and (X < PhysicsMap.Width)
-                   and (PhysicsMap.Pixel[X, Y] and PM_SOLID <> 0);
-
-  (*// Code for solid sides!
-  with World do
-  begin
-    Result := not ((X >= 0) and (Y >= 0) and (X < Width));
-    if Result = False then Result := (Y < Height) and (Pixel[X, Y] and ALPHA_TERRAIN <> 0);
-  end;  *)
+  Result := (Y >= 0) and (Y < PhysicsMap.Height) and (X >= 0) and (X < PhysicsMap.Width)
+             and (PhysicsMap.Pixel[X, Y] and PM_SOLID <> 0);
 end;
 
 
@@ -2895,8 +2882,8 @@ function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
 // Check for both sides and the bottom
 begin
   Result := True;
-  // Bottom
-  if L.LemY > LEMMING_MAX_Y + PhysicsMap.Height then
+  // Top and Bottom
+  if (L.LemY <= 0) or (L.LemY > LEMMING_MAX_Y + PhysicsMap.Height) then
   begin
     RemoveLemming(L, RM_NEUTRAL);
     Result := False;
