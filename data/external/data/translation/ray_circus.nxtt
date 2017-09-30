@@ -336,13 +336,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 14
   COLLECTION ray_circus
   PIECE back_circus
 $END
 
 $BACKGROUND
-  INDEX 1
+  INDEX 15
   COLLECTION ray_circus
   PIECE back_repeat_circus
 $END

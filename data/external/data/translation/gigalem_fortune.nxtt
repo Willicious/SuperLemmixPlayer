@@ -3668,13 +3668,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 20
   COLLECTION gigalem_fortune
   PIECE fortune_01
 $END
 
 $BACKGROUND
-  INDEX 1
+  INDEX 21
   COLLECTION gigalem_fortune
   PIECE fortune_02
 $END

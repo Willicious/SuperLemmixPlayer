@@ -935,25 +935,25 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 14
   COLLECTION gigalem_academy
   PIECE academy_window
 $END
 
 $BACKGROUND
-  INDEX 1
+  INDEX 15
   COLLECTION gigalem_academy
   PIECE academy_window_dark
 $END
 
 $BACKGROUND
-  INDEX 2
+  INDEX 16
   COLLECTION gigalem_academy
   PIECE academy_windows
 $END
 
 $BACKGROUND
-  INDEX 3
+  INDEX 17
   COLLECTION gigalem_academy
   PIECE academy_windows_dark
 $END

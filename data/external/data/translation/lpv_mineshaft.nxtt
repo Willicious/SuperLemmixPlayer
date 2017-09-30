@@ -336,7 +336,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 10
   COLLECTION namida_mineshaft
   PIECE rocky
 $END

@@ -500,7 +500,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 16
   COLLECTION namida_clockwork
   PIECE cogs
 $END

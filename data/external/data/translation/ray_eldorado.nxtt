@@ -378,19 +378,19 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 15
   COLLECTION ray_eldorado
   PIECE back_eldorado
 $END
 
 $BACKGROUND
-  INDEX 1
+  INDEX 16
   COLLECTION ray_eldorado
   PIECE back_repeat_eldorado
 $END
 
 $BACKGROUND
-  INDEX 2
+  INDEX 17
   COLLECTION ray_eldorado
   PIECE back_repeat_eldorado2
 $END

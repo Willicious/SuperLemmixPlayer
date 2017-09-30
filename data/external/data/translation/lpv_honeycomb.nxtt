@@ -336,7 +336,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 13
   COLLECTION namida_honeycomb
   PIECE honeydrips
 $END

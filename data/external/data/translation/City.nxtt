@@ -231,7 +231,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 24
+  INDEX 23
   COLLECTION ichotolot_jamie_city
   PIECE ramp_01
   LEFT_OFFSET 0
@@ -241,7 +241,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 25
+  INDEX 24
   COLLECTION ichotolot_jamie_city
   PIECE ramp_02
   LEFT_OFFSET 0
@@ -251,7 +251,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 26
+  INDEX 25
   COLLECTION ichotolot_jamie_city
   PIECE arch_02
   LEFT_OFFSET 0
@@ -261,7 +261,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 27
+  INDEX 26
   COLLECTION ichotolot_jamie_city
   PIECE arch_03
   LEFT_OFFSET 0
@@ -271,7 +271,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 28
+  INDEX 27
   COLLECTION ichotolot_jamie_city
   PIECE arch_04
   LEFT_OFFSET 0
@@ -281,7 +281,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 29
+  INDEX 28
   COLLECTION ichotolot_jamie_city
   PIECE arch_05
   LEFT_OFFSET 0
@@ -291,7 +291,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 30
+  INDEX 29
   COLLECTION ichotolot_jamie_city
   PIECE spiral
   LEFT_OFFSET 0
@@ -301,7 +301,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 31
+  INDEX 30
   COLLECTION ichotolot_jamie_city
   PIECE sign_01
   LEFT_OFFSET 0
@@ -311,7 +311,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 32
+  INDEX 31
   COLLECTION ichotolot_jamie_city
   PIECE sign_02
   LEFT_OFFSET 0
@@ -321,7 +321,7 @@ $TERRAIN
 $END
 
 $TERRAIN
-  INDEX 33
+  INDEX 32
   COLLECTION ichotolot_jamie_city
   PIECE steel_01
   LEFT_OFFSET 0
@@ -351,13 +351,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 2
   COLLECTION ichotolot_jamie_city
   PIECE skyscrapers
 $END
 
 $BACKGROUND
-  INDEX 1
+  INDEX 3
   COLLECTION ichotolot_jamie_city
   PIECE skyline
 $END

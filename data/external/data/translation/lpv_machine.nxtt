@@ -542,7 +542,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 23
   COLLECTION namida_machine
   PIECE lemco
 $END

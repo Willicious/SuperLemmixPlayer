@@ -2386,7 +2386,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 0
+  INDEX 12
   COLLECTION l3_egypt
   PIECE egypt_blue
 $END
@@ -2472,7 +2472,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 1
+  INDEX 21
   COLLECTION l3_egypt
   PIECE egypt_bricks
 $END
