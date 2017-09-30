@@ -12,7 +12,7 @@ uses
   LemNeoPieceManager, LemNeoParser;
 
 type
-  TSkillset = set of TSkillPanelButton;
+  TSkillSet = set of TSkillPanelButton;
   TSkillCounts = array[Low(TSkillPanelButton)..High(TSkillPanelButton)] of Integer; // non-skill buttons are just unused
 
   TLevelInfo = class
@@ -545,6 +545,7 @@ end;
 procedure TLevel.Sanitize;
 var
   SkillIndex: TSkillPanelButton;
+  SkillNumber: Integer;
 begin
   with Info do
   begin
@@ -569,12 +570,20 @@ begin
     if SpawnInterval < ReleaseRateToSpawnInterval(99) then SpawnInterval := ReleaseRateToSpawnInterval(99);
     if SpawnInterval > ReleaseRateToSpawnInterval(1) then SpawnInterval := ReleaseRateToSpawnInterval(1);
 
+    SkillNumber := 0;
     for SkillIndex := Low(TSkillPanelButton) to High(TSkillPanelButton) do
     begin
       if SkillCount[SkillIndex] < 0 then SkillCount[SkillIndex] := 0;
       if SkillCount[SkillIndex] > 100 then SkillCount[SkillIndex] := 100;
-      if not(SkillIndex in Skillset) then SkillCount[SkillIndex] := 0;
+      if SkillIndex in Skillset then Inc(SkillNumber);
+
+      if (SkillNumber > 8) or not (SkillIndex in Skillset) then
+      begin
+        SkillCount[SkillIndex] := 0;
+        Exclude(fSkillset, SkillIndex);
+      end
     end;
+
   end;
 
   PrepareForUse;
