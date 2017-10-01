@@ -448,8 +448,10 @@ begin
   IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
   SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
 
-  EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
-  CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
+  //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
+  //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
+  EnableOnline := false;
+  CheckUpdates := false;
 
   DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
 
