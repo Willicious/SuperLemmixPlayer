@@ -957,16 +957,16 @@ function TGameWindow.CheckScroll: Boolean;
 begin
   Result := false;
 
-  if fNeedResetMouseTrap or not fMouseTrapped then // why are these two seperate variables anyway?
-  begin
-    GameScroll := gsNone;
-    GameVScroll := gsNone;
-  end else if fHoldScrollData.Active then
+  if fHoldScrollData.Active then
   begin
     if GameParams.Hotkeys.CheckForKey(lka_Scroll) then
       HandleHeldScroll
     else
       fHoldScrollData.Active := false;
+  end else if fNeedResetMouseTrap or not fMouseTrapped then // why are these two seperate variables anyway?
+  begin
+    GameScroll := gsNone;
+    GameVScroll := gsNone;
   end else if GameParams.EdgeScroll then begin
     if Mouse.CursorPos.X <= MouseClipRect.Left then
       GameScroll := gsLeft
