@@ -3,7 +3,7 @@
         <ProjectGuid>{EA531DB2-6C15-4E5E-93B1-7AA1776E0F35}</ProjectGuid>
         <MainSource>NeoLemmix.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">Experimental Release</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -28,9 +28,22 @@
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Experimental Release' or '$(Cfg_5)'!=''">
         <Cfg_5>true</Cfg_5>
         <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_5)'=='true') or '$(Cfg_5_Win32)'!=''">
+        <Cfg_5_Win32>true</Cfg_5_Win32>
+        <CfgParent>Cfg_5</CfgParent>
+        <Cfg_5>true</Cfg_5>
         <Cfg_1>true</Cfg_1>
         <Base>true</Base>
     </PropertyGroup>
@@ -46,10 +59,10 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <VerInfo_Release>20</VerInfo_Release>
+        <VerInfo_Release>21</VerInfo_Release>
         <VerInfo_MajorVer>11</VerInfo_MajorVer>
         <VerInfo_MinorVer>15</VerInfo_MinorVer>
-        <VerInfo_Build>470</VerInfo_Build>
+        <VerInfo_Build>499</VerInfo_Build>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <PreBuildEvent><![CDATA[GetCommitID LemVersionCID COMMIT_ID
@@ -63,7 +76,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_MinStackSize>32768</DCC_MinStackSize>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_UsePackage>vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;CLXIB;ibxpress;VCLIB;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP;$(DCC_UsePackage)</DCC_UsePackage>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=11.15.20.470;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=11.15.20.470;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=11.15.21.499;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=11.15.21.499;Comments=</VerInfo_Keys>
         <DCC_Optimize>false</DCC_Optimize>
         <DCC_ExeOutput>bin\</DCC_ExeOutput>
         <DCC_N>true</DCC_N>
@@ -94,8 +107,16 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_DebugInformation>0</DCC_DebugInformation>
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <DCC_Optimize>true</DCC_Optimize>
+        <Icon_MainIcon>NeoLemmix_Icon.ico</Icon_MainIcon>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_5)'!=''">
+        <Icon_MainIcon>NeoLemmix_Icon.ico</Icon_MainIcon>
         <DCC_Define>exp;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_5_Win32)'!=''">
+        <DCC_Optimize>true</DCC_Optimize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;exp;logging;$(DCC_Define)</DCC_Define>
@@ -144,62 +165,46 @@ $(PreBuildEvent)]]></PreBuildEvent>
                 <Platform value="Win32">True</Platform>
                 <Platform value="Win64">False</Platform>
             </Platforms>
+            <ModelSupport>False</ModelSupport>
         </BorlandProject>
         <ProjectFileVersion>12</ProjectFileVersion>
     </ProjectExtensions>
     <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
     <PropertyGroup Condition="'$(Config)'=='Release' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Release' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Experimental Release' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Experimental Release' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -207,8 +212,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
