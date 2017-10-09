@@ -365,11 +365,24 @@ begin
       aLevel.InteractiveObjects.Delete(i);
   end;
 
+  aLevel.Info.Background := '';
   MatchIndex := FindMatchIndex(Lowercase(aLevel.Info.GraphicSetName), aLevel.Info.Background, itBackground);
-  if MatchIndex = -1 then
-    aLevel.Info.Background := ''
+  if MatchIndex <> -1 then
+    aLevel.Info.Background := MatchRec.DstGS + ':' + MatchRec.DstName
   else
-    aLevel.Info.Background := MatchRec.DstGS + ':' + MatchRec.DstName;
+  begin
+    for i := 0 to aLevel.InteractiveObjects.Count-1 do
+    begin
+      O := aLevel.InteractiveObjects[i];
+      MatchIndex := FindMatchIndex(Lowercase(O.GS), O.Piece, itBackground);
+      if MatchIndex <> -1 then
+      begin
+        aLevel.Info.Background := MatchRec.DstGS + ':' + MatchRec.DstName;
+        break;
+      end;
+    end;
+  end;
+
 end;
 
 { TLVLLoader }
