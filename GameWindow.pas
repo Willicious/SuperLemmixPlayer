@@ -1148,13 +1148,13 @@ begin
   end;
 
   // Allow changing options and selecting new levels, but pause level for that
-  if Key = VK_F2 then
+  if (Key = VK_F2) and (func.Action = lka_Null) then
   begin
     GameSpeed := gspPause;
     DoLevelSelect(true);
     Exit;
   end
-  else if Key = VK_F3 then
+  else if (Key = VK_F3) and (func.Action = lka_Null) then
   begin
     GameSpeed := gspPause;
     ShowConfigMenu;
