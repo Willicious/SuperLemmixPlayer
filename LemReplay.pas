@@ -83,7 +83,9 @@ type
     private
       fNewSpawnInterval: Integer;
       fSpawnedLemmingCount: Integer;
+      fIsOldReplay: Boolean;
     protected
+      constructor Create(IsOld: Boolean = false); overload;
       procedure DoLoadSection(Sec: TParserSection); override;
       procedure DoSave(Sec: TParserSection); override;
       procedure InitializeValues(); override;
@@ -529,7 +531,8 @@ var
 begin
   Item := nil;
   if aSection.Keyword = 'assignment' then Item := TReplaySkillAssignment.Create;
-  if aSection.Keyword = 'release_rate' then Item := TReplayChangeSpawnInterval.Create;
+  if aSection.Keyword = 'release_rate' then Item := TReplayChangeSpawnInterval.Create(true);
+  if aSection.Keyword = 'spawn_interval' then Item := TReplayChangeSpawnInterval.Create(false);
   if aSection.Keyword = 'nuke' then Item := TReplayNuke.Create;
 
   if Item = nil then Exit;
@@ -886,6 +889,11 @@ begin
 end;
 
 { TReplaySpawnIntervalChange }
+constructor TReplayChangeSpawnInterval.Create(IsOld: Boolean = false);
+begin
+  inherited Create();
+  fIsOldReplay := IsOld;
+end;
 
 procedure TReplayChangeSpawnInterval.InitializeValues();
 begin
@@ -898,7 +906,11 @@ procedure TReplayChangeSpawnInterval.DoLoadSection(Sec: TParserSection);
 begin
   inherited DoLoadSection(Sec);
 
-  fNewSpawnInterval := 53 - (Sec.LineNumeric['rate'] div 2);
+  if fIsOldReplay then
+    fNewSpawnInterval := 53 - (Sec.LineNumeric['rate'] div 2)
+  else
+    fNewSpawnInterval := Sec.LineNumeric['rate'];
+
   if Sec.Line['interval'] <> nil then
     fNewSpawnInterval := Sec.LineNumeric['interval'];
   fSpawnedLemmingCount := Sec.LineNumeric['spawned'];
