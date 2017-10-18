@@ -5,19 +5,19 @@ $RESULT
 $END
 
 $RESULT
-  CONDITION -50%
+  CONDITION 1
   LINE Better rethink your strategy before
   LINE you try this level again!
 $END
 
 $RESULT
-  CONDITION -10%
+  CONDITION -50%
   LINE A little more practice on the level
   LINE is definitely recommended.
 $END
 
 $RESULT
-  CONDITION -2
+  CONDITION -5
   LINE You got pretty close that time. Now
   LINE try again for those few lemmings extra.
 $END
