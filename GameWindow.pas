@@ -291,7 +291,11 @@ begin
     fInternalZoom := aNewZoom;
 
     // Change the Img size and update everything accordingly.
-    ApplyResize;
+    ApplyResize(true);
+
+    // If scrolling in, we wish to keep the pixel below the cursor constant.
+    // Therefore we have to move the current center back to the cursor position
+    if DoZoomOnCursor then ResetCenterToCursor;
 
     // Move back to center coordinates.
     OSHorz := OSHorz + (Img.Width / 2);
@@ -299,10 +303,6 @@ begin
     // Ensure that the offset doesn't move part of the visible area outside of the level area.
     Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
-
-    // If scrolling in, we wish to keep the pixel below the cursor constant.
-    // Therefore we have to move the current center back to the cursor position
-    if DoZoomOnCursor then ResetCenterToCursor;
 
     fNeedRedraw := rdRedraw;
     CheckResetCursor(true);
