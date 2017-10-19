@@ -1158,6 +1158,7 @@ var
   sn: Integer;
   func: TLemmixHotkey;
   AssignToHighlit: Boolean;
+  CursorPointForm: TPoint; // A point in coordinates relative to the main form
 const
   NON_CANCELLING_KEYS = [lka_Null,
                          lka_ShowAthleteInfo,
@@ -1335,7 +1336,8 @@ begin
       lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
       lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
       lka_Scroll: begin
-                    if PtInRect(Img.BoundsRect, Img.ParentToClient(ScreenToClient(Mouse.CursorPos))) and not fHoldScrollData.Active then
+                    CursorPointForm := ScreenToClient(Mouse.CursorPos);
+                    if PtInRect(Img.BoundsRect, CursorPointForm) and not fHoldScrollData.Active then
                     begin
                       fHoldScrollData.Active := true;
                       fHoldScrollData.StartCursor := Mouse.CursorPos;
