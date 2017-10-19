@@ -147,7 +147,7 @@ var
   end;
 
 const
-  POSTVIEW_CONDITIONS: array[0..8] of String = ('0', '-50%', '-10%', '-2', '-1', '+0', '+1', '+20%', '100%');
+  POSTVIEW_CONDITIONS: array[0..8] of String = ('0', '1', '-50%', '-5', '-1', '+0', '+1', '+20%', '100%');
 
 var
   Dummy: String;
