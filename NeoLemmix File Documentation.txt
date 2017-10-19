@@ -378,41 +378,45 @@ x) A talisman that can be achieved of the level
    xl) The maximal number of used disarmers to achieve the talisman
        Key: 'DISARMER_LIMIT'
        Value: The maximal number of used disarmers to achieve the talisman
-   xd) The maximal number of used bombers to achieve the talisman
+   xm) The maximal number of used bombers to achieve the talisman
        Key: 'BOMBER_LIMIT'
        Value: The maximal number of used bombers to achieve the talisman
-   xd) The maximal number of used stoners to achieve the talisman
+   xn) The maximal number of used stoners to achieve the talisman
        Key: 'STONER_LIMIT'
        Value: The maximal number of used stoners to achieve the talisman
-   xd) The maximal number of used blockers to achieve the talisman
+   xo) The maximal number of used blockers to achieve the talisman
        Key: 'BLOCKER_LIMIT'
        Value: The maximal number of used blockers to achieve the talisman
-   xd) The maximal number of used builders to achieve the talisman
+   xp) The maximal number of used builders to achieve the talisman
        Key: 'BUILDER_LIMIT'
        Value: The maximal number of used builders to achieve the talisman
-   xd) The maximal number of used platformers to achieve the talisman
+   xq) The maximal number of used platformers to achieve the talisman
        Key: 'PLATFORMER_LIMIT'
        Value: The maximal number of used platformers to achieve the talisman
-   xd) The maximal number of used stackers to achieve the talisman
+   xr) The maximal number of used stackers to achieve the talisman
        Key: 'STACKER_LIMIT'
        Value: The maximal number of used stackers to achieve the talisman
-   xd) The maximal number of used bashers to achieve the talisman
+   xs) The maximal number of used bashers to achieve the talisman
        Key: 'BASHER_LIMIT'
        Value: The maximal number of used bashers to achieve the talisman
-   xd) The maximal number of used miners to achieve the talisman
+   xt) The maximal number of used miners to achieve the talisman
        Key: 'MINER_LIMIT'
        Value: The maximal number of used miners to achieve the talisman
-   xd) The maximal number of used diggers to achieve the talisman
+   xu) The maximal number of used diggers to achieve the talisman
        Key: 'DIGGER_LIMIT'
        Value: The maximal number of used diggers to achieve the talisman
-   xd) The maximal number of used fencers to achieve the talisman
+   xv) The maximal number of used fencers to achieve the talisman
        Key: 'FENCER_LIMIT'
        Value: The maximal number of used fencers to achieve the talisman
-   xd) The maximal number of used cloners to achieve the talisman
+   xw) The maximal number of used cloners to achieve the talisman
        Key: 'CLONER_LIMIT'
        Value: The maximal number of used cloners to achieve the talisman
-
-
+   xx) The maximal number of uses to be applied to all skills, to achieve the talisman
+       Key: 'SKILL_EACH_LIMIT'   
+       Value: The maximal number of uses of each skill to achieve the talisman 
+   xy) The single skill that may be used in the level
+       Key: 'USE_ONLY_SKILL'
+       Value: A string with the skill that may be used.
 
 -----------------------------------------------
   5) Pack menu page file 'info.nxmi'

@@ -47,6 +47,9 @@ type
 
 implementation
 
+uses
+  Math;
+
 constructor TTalisman.Create;
 var
   i: TSkillPanelButton;
@@ -80,6 +83,7 @@ end;
 procedure TTalisman.LoadFromSection(aSec: TParserSection);
 var
   i: TSkillPanelButton;
+  NumEachSkillRestr: Integer;
   S: String;
 begin
   fTitle := aSec.LineTrimString['title'];
@@ -97,8 +101,22 @@ begin
   fTimeLimit := aSec.LineNumericDefault['time_limit', -1];
   fTotalSkillLimit := aSec.LineNumericDefault['skill_limit', -1];
 
+  // Apply single skill restrictions
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     fSkillLimits[i] := aSec.LineNumericDefault[SKILL_NAMES[i] + '_limit', -1];
+
+  // Apply skill restrictions to all
+  NumEachSkillRestr := aSec.LineNumericDefault['skill_each_limit', -1];
+  if (NumEachSkillRestr >= 0) then
+    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      fSkillLimits[i] := NumEachSkillRestr;
+
+  // Apply use-only-one skill restriction
+  S := Lowercase(aSec.LineTrimString['use_only_skill']);
+  if S.Length > 1 then
+    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      if SKILL_NAMES[i] <> S then
+        fSkillLimits[i] := 0;
 end;
 
 procedure TTalisman.SaveToSection(aSec: TParserSection);
@@ -131,6 +149,9 @@ end;
 function TTalisman.MakeRequirementText: String;
 var
   i: TSkillPanelButton;
+  NumSkillsTypes, NumNoSkillUsage: Integer;
+  LastSkillRestr: Integer;
+  IsConstantSkillRestr: Boolean;
   HasLemReq: Boolean;
   HasTimeReq: Boolean;
   HasSkillZeroReq: Boolean;
@@ -150,48 +171,98 @@ begin
   HasSkillNonZeroReq := false; // for now
   HasSkillReq := false; // for now
 
+  // Save requirement
   if HasLemReq then
     Result := Result + 'save ' + IntToStr(RescueCount) + ' '
   else
     Result := Result + 'complete ';
 
+  // Time requirement
   if HasTimeReq then
     Result := Result + 'in under ' + IntToStr(TimeLimit div 1020) + ':' +
                                      LeadZeroStr((TimeLimit mod 1020) div 17, 2) + '.' +
                                      CENTISECONDS[TimeLimit mod 17] + ' ';
 
+  // Get stats for skill requirements
+  NumSkillsTypes := 0;
+  NumNoSkillUsage := 0;
+  LastSkillRestr := 200;
+  IsConstantSkillRestr := True;
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+  begin
+    Inc(NumSkillsTypes);
     if SkillLimit[i] = 0 then
+      Inc(NumNoSkillUsage);
+
+    if (SkillLimit[i] < 0) or ((LastSkillRestr < 200) and (SkillLimit[i] <> LastSkillRestr)) then
+      IsConstantSkillRestr := False;
+
+    if (LastSkillRestr = 200) then
+      LastSkillRestr := SkillLimit[i];
+  end;
+
+  // Single skill requirements
+  if IsConstantSkillRestr then
+  begin
+    // Restrict to a constant value for all skills
+    Result := Result + 'with no more than '
+                     + IntToStr(SkillLimit[Low(TSkillPanelButton)])
+                     + ' of each skill';
+
+    HasSkillReq := true;
+    HasSkillNonZeroReq := true;
+  end
+  else if NumNoSkillUsage = NumSkillsTypes - 1 then
+  begin
+    // Only use one skill
+    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      if SkillLimit[i] < 0 then
+        Result := Result + 'using only ' + SKILL_NAMES[i] + 's';
+
+    HasSkillReq := true;
+    HasSkillZeroReq := true;
+  end
+  else
+  begin
+    // General requirements
+    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     begin
-      if not HasSkillZeroReq then
+      if SkillLimit[i] = 0 then
       begin
-        HasSkillZeroReq := true;
-        HasSkillReq := true;
-        Result := Result + 'with no ' + SKILL_NAMES[i] + 's';
-      end else
-        Result := Result + ', ' + SKILL_NAMES[i] + 's';
+        if not HasSkillZeroReq then
+        begin
+          HasSkillZeroReq := true;
+          HasSkillReq := true;
+          Result := Result + 'with no ' + SKILL_NAMES[i] + 's';
+        end else
+          Result := Result + ', ' + SKILL_NAMES[i] + 's';
+      end;
     end;
 
-  for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    if SkillLimit[i] > 0 then
+    for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     begin
-      if not HasSkillReq then
-        Result := Result + 'with ';
-      if HasSkillZeroReq then
-        Result := Result + '; ';
-      if not HasSkillNonZeroReq then
+      if SkillLimit[i] > 0 then
       begin
-        Result := Result + 'max ';
-        HasSkillReq := true;
-        HasSkillNonZeroReq := true;
-      end else
-        Result := Result + ', ';
+        if not HasSkillReq then
+          Result := Result + 'with ';
+        if HasSkillZeroReq then
+          Result := Result + '; ';
+        if not HasSkillNonZeroReq then
+        begin
+          Result := Result + 'max ';
+          HasSkillReq := true;
+          HasSkillNonZeroReq := true;
+        end else
+          Result := Result + ', ';
 
-      Result := Result + IntToStr(SkillLimit[i]) + ' ' + SKILL_NAMES[i];
-      if SkillLimit[i] > 1 then
-        Result := Result + 's';
+        Result := Result + IntToStr(SkillLimit[i]) + ' ' + SKILL_NAMES[i];
+        if SkillLimit[i] > 1 then
+          Result := Result + 's';
+      end;
     end;
+  end;
 
+  // Total skill number requirement
   if TotalSkillLimit > 0 then
   begin
     if not HasSkillReq then
