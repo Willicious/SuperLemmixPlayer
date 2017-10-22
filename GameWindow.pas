@@ -77,6 +77,7 @@ type
     fLastZombieSound: Cardinal;
 
     fHoldScrollData: THoldScrollData;
+
   { game eventhandler}
     procedure Game_Finished;
   { self eventhandlers }
@@ -96,6 +97,7 @@ type
   { skillpanel eventhandlers }
     procedure SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   { internal }
+    procedure ReleaseMouse;
     procedure CheckResetCursor(aForce: Boolean = false);
     function CheckScroll: Boolean;
     procedure AddSaveState;
@@ -113,7 +115,7 @@ type
     procedure ProcessGameMessages;
     procedure ApplyResize(NoRecenter: Boolean = false);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
-    procedure ReleaseCursors;
+    procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
 
     function GetLevelMusicName: String;
@@ -436,6 +438,7 @@ begin
   F := TFReplayEditor.Create(self);
   F.SetReplay(Game.ReplayManager, Game.CurrentIteration);
   fSuspendCursor := true;
+  ReleaseMouse;
   try
     if (F.ShowModal = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
     begin
@@ -455,12 +458,22 @@ procedure TGameWindow.ApplyMouseTrap;
 var
   ClientTopLeft, ClientBottomRight: TPoint;
 begin
+  // For security check trapping the mouse again.
+  if fSuspendCursor or not GameParams.EdgeScroll then Exit;
+
   fMouseTrapped := true;
 
   ClientTopLeft := ClientToScreen(Point(Min(SkillPanel.Image.Left, Img.Left), Img.Top));
   ClientBottomRight := ClientToScreen(Point(Max(Img.Left + Img.Width, SkillPanel.Image.Left + SkillPanel.Image.Width), SkillPanel.Top + SkillPanel.Image.Height));
   MouseClipRect := Rect(ClientTopLeft, ClientBottomRight);
   ClipCursor(@MouseClipRect);
+end;
+
+procedure TGameWindow.ReleaseMouse;
+begin
+  if GameParams.FullScreen then Exit;
+  fMouseTrapped := false;
+  ClipCursor(nil);
 end;
 
 procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
@@ -936,7 +949,7 @@ begin
 
   SetCurrentCursor;
 
-  if (fNeedResetMouseTrap or aForce) and fMouseTrapped and GameParams.EdgeScroll then
+  if (fNeedResetMouseTrap or aForce) and fMouseTrapped and (not fSuspendCursor) and GameParams.EdgeScroll then
   begin
     ApplyMouseTrap;
     fNeedResetMouseTrap := false;
@@ -1123,14 +1136,14 @@ begin
 
   fSaveStateReplayStream.Free;
 
-  ReleaseCursors;
+  FreeCursors;
 
   fMinimapBuffer.Free;
 
   inherited Destroy;
 end;
 
-procedure TGameWindow.ReleaseCursors;
+procedure TGameWindow.FreeCursors;
 var
   i, i2: Integer;
 begin
@@ -1200,19 +1213,19 @@ begin
   end;
 
   // Allow changing options and selecting new levels, but pause level for that
-  if (Key = VK_F2) and (func.Action = lka_Null) then
+  if ((Key = VK_F2) or (Key = VK_F3)) and (func.Action = lka_Null) then
   begin
     GameSpeed := gspPause;
-    DoLevelSelect(true);
-    Exit;
-  end
-  else if (Key = VK_F3) and (func.Action = lka_Null) then
-  begin
-    GameSpeed := gspPause;
-    ShowConfigMenu;
+    fSuspendCursor := true;
+    ReleaseMouse;
+    try
+      if (Key = VK_F2) then DoLevelSelect(true)
+      else if (Key = VK_F3) then ShowConfigMenu;
+    finally
+      fSuspendCursor := false;
+    end;
     Exit;
   end;
-
 
   if not Game.Playing then
     Exit;
@@ -1254,11 +1267,7 @@ begin
     end;
 
     case func.Action of
-      lka_ReleaseMouse: if not GameParams.FullScreen then
-                        begin
-                          fMouseTrapped := false;
-                          ClipCursor(nil);
-                        end;
+      lka_ReleaseMouse: ReleaseMouse;
       lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
       lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
       lka_Pause: begin
@@ -1439,7 +1448,7 @@ var
   PassKey: Word;
   OldHighlightLemming: TLemming;
 begin
-  if (not fMouseTrapped) and GameParams.EdgeScroll then
+  if (not fMouseTrapped) and (not fSuspendCursor) and GameParams.EdgeScroll then
     ApplyMouseTrap;
   // interrupting hyperspeed can break the handling of savestates
   // so we're not allowing it
@@ -1551,7 +1560,7 @@ var
   end;
 
 begin
-  ReleaseCursors;
+  FreeCursors;
 
   bmpMask := TBitmap.Create;
   bmpColor := TBitmap.Create;
