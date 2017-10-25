@@ -380,11 +380,19 @@ begin
       procedure(aSec: TParserSection; const aIteration: Integer = 0)
       var
         T: TTalisman;
+        Success: Boolean;
       begin
+        Success := True;
         T := TTalisman.Create;
-        fTalismans.Add(T);
-        T.LoadFromSection(aSec);
-        T.Data := Self;
+        try
+          T.LoadFromSection(aSec);
+          T.Data := Self;
+        except
+          ShowMessage('Error loading a talisman for ' + fTitle);
+          Success := False;
+          T.Free;
+        end;
+        if Success then fTalismans.Add(T);
       end
     );
 

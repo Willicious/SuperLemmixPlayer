@@ -139,7 +139,7 @@ type
 implementation
 
 uses
-  LemLVLLoader; // for backwards compatibility
+  LemLVLLoader, Dialogs; // for backwards compatibility
 
 { TLevelInfo }
 
@@ -526,10 +526,18 @@ end;
 procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
 var
   T: TTalisman;
+  Success: Boolean;
 begin
+  Success := True;
   T := TTalisman.Create;
-  T.LoadFromSection(aSection);
-  fTalismans.Add(T);
+  try
+    T.LoadFromSection(aSection);
+  except
+    ShowMessage('Error loading a talisman for ' + Info.Title);
+    Success := False;
+    T.Free;
+  end;
+  if Success then fTalismans.Add(T);
 end;
 
 procedure TLevel.LoadPretextLine(aLine: TParserLine; const aIteration: Integer);
