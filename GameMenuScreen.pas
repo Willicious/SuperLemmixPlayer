@@ -112,7 +112,7 @@ type
     destructor Destroy; override;
   end;
 
-  procedure GetGraphic(aName: String; aDst: TBitmap32);
+  procedure GetGraphic(aName: String; aDst: TBitmap32; altName: String = '');
 
 implementation
 
@@ -121,13 +121,15 @@ uses
 
 { TGameMenuScreen }
 
-procedure GetGraphic(aName: String; aDst: TBitmap32);
+procedure GetGraphic(aName: String; aDst: TBitmap32; altName: String = '');
 var
   buttonSelected: Integer;
 begin
   if (not (GameParams.CurrentLevel = nil))
      and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
+  else if (altName <> '') and FileExists(AppPath + SFGraphicsMenu + altName) then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + altName, aDst)
   else if FileExists(AppPath + SFGraphicsMenu + aName) then
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
   else
@@ -137,6 +139,7 @@ begin
     if buttonSelected = mrCancel then Application.Terminate();
   end;
 end;
+
 
 procedure TGameMenuScreen.DoTestStuff;
 {$ifdef exp}
@@ -249,7 +252,7 @@ begin
     GetGraphic('sign_rank.png', BitmapElements[gmbSection]);
     GetGraphic('sign_quit.png', BitmapElements[gmbExit]);
     GetGraphic('sign_talisman.png', BitmapElements[gmbTalisman]);
-    GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection]);
+    // rank graphic will be loaded in SetSection!
 
     LoadScrollerGraphics;
 
@@ -448,9 +451,22 @@ begin
 end;
 
 procedure TGameMenuScreen.SetSection;
+var
+  index: Integer;
+  altName: String;
 begin
   DrawBitmapElement(gmbSection); // This allows for transparency in the gmbGameSectionN bitmaps
-  GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection]);
+
+  if (GameParams.CurrentLevel = nil) or (GameParams.CurrentLevel.Group = nil) or (GameParams.CurrentLevel.Group.Parent = nil) then
+  begin
+    altName := '';
+  end
+  else
+  begin
+      index := GameParams.CurrentLevel.Group.Parent.GroupIndex[GameParams.CurrentLevel.Group] + 1;
+      altName := 'rank_' + Integer.ToString(index).PadLeft(2, '0') + '.png';
+  end;
+  GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection], altName);
   DrawBitmapElement(gmbGameSection);
 end;
 
