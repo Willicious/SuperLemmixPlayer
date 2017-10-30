@@ -398,7 +398,7 @@ end;
 
 procedure TGameMenuScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  if Button = mbLeft then
+  if (Button = mbLeft) and (GameParams.CurrentLevel <> nil) then
     CloseScreen(gstPreview);
 end;
 
@@ -406,7 +406,7 @@ procedure TGameMenuScreen.Img_MouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
   Layer: TCustomLayer);
 begin
-  if Button = mbLeft then
+  if (Button = mbLeft) and (GameParams.CurrentLevel <> nil) then
     CloseScreen(gstPreview);
 end;
 
