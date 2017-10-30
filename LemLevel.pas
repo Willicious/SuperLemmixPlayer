@@ -917,6 +917,7 @@ begin
     if L.IsFloater then Sec.AddLine('FLOATER');
     if L.IsGlider then Sec.AddLine('GLIDER');
     if L.IsDisarmer then Sec.AddLine('DISARMER');
+    if L.IsBlocker then Sec.AddLine('BLOCKER');
     if L.IsZombie then Sec.AddLine('ZOMBIE');
   end;
 end;
