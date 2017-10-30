@@ -184,10 +184,10 @@ begin
   // Set basic stuff
   sTop := Obj.Top;
   sLeft := Obj.Left;
-  if (not MetaObj.CanResizeVertical) or (Obj.Height = -1) then
+  if (not MetaObj.CanResizeVertical) or (Obj.Height < 1) then
     Obj.Height := MetaObj.Height;
   sHeight := Obj.Height;
-  if (not MetaObj.CanResizeHorizontal) or (Obj.Width = -1) then
+  if (not MetaObj.CanResizeHorizontal) or (Obj.Width < 1) then
     Obj.Width := MetaObj.Width;
   sWidth := Obj.Width;
   sTriggerEffect := MetaObj.TriggerEffect;
