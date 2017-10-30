@@ -291,7 +291,10 @@ begin
     // program text
     S := CurrentVersionString;
     {$ifdef exp}if COMMIT_ID <> '' then S := S + ':' + Uppercase(COMMIT_ID);{$endif}
-    DrawPurpleTextCentered(ScreenImg.Bitmap, GameParams.BaseLevelPack.Name + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText);
+    if not (GameParams.BaseLevelPack = nil) then
+      DrawPurpleTextCentered(ScreenImg.Bitmap, GameParams.BaseLevelPack.Name + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText)
+    else
+      DrawPurpleTextCentered(ScreenImg.Bitmap, 'No Pack' + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText);
 
     // credits animation
     DrawWorkerLemmings(0);
@@ -428,14 +431,11 @@ begin
   else
     CurrentSection := 0;
 
-  CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} GameParams.BaseLevelPack.Name + #13;
-  (*for i := 0 to 15 do
-  begin
-    k := BuildText(GameParams.SysDat.ScrollerTexts[i]);
-    if k <> '' then
-      CreditList.Text := CreditList.Text + k + #13;
-  end;
-  CreditList.Text := CreditList.Text + SCredits;*)
+  if not (GameParams.BaseLevelPack = nil) then
+    CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} GameParams.BaseLevelPack.Name + #13
+  else
+    CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} 'No Pack' + #13;
+
   SetNextCredit;
 
   if Assigned(GlobalGame) then

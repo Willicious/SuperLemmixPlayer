@@ -1000,7 +1000,7 @@ begin
     if (Result <> nil) then Exit;
   end;
 
-  // If we get here, then there is no level at all in this pack and wethrow an exception
+  // If we get here, then there is no level at all in this pack and we throw an exception
   raise EAccessViolation.Create('No levels contained in selected pack!');
 end;
 

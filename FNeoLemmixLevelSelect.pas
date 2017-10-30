@@ -181,7 +181,8 @@ begin
         Exit;
     end;
     GameParams.SetGroup(G);
-  end else if Obj is TNeoLevelEntry then
+  end
+  else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
     GameParams.SetLevel(L);
