@@ -375,8 +375,6 @@ begin
     ScreenImg.EndUpdate;
   end;
 
-  PieceManager.DisableTidy := true;
-
   Application.OnIdle := Application_Idle; // this delays processing until the form is visible
 end;
 
@@ -402,8 +400,6 @@ end;
 
 procedure TGameReplayCheckScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
-  PieceManager.DisableTidy := false;
-
   if ParamStr(2) = 'replaytest' then
     inherited CloseScreen(gstExit)
   else
