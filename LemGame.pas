@@ -1342,8 +1342,9 @@ begin
   if (NewAction = baFalling) then
   begin
     L.LemFallen := 1;
-    if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3;
-    if L.LemAction in [baMining, baDigging] then L.LemFallen := 0;
+    if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
+    else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
+    else if L.LemAction in [baBlocking] then L.LemFallen := -1;
     L.LemTrueFallen := L.LemFallen;
   end;
 
