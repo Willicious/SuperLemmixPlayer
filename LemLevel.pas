@@ -139,7 +139,7 @@ type
 implementation
 
 uses
-  LemLVLLoader, Dialogs; // for backwards compatibility
+  LemLVLLoader, Dialogs, Math; // for backwards compatibility
 
 { TLevelInfo }
 
@@ -420,6 +420,8 @@ var
     if S = 'miner' then O.Skill := Integer(spbMiner);
     if S = 'digger' then O.Skill := Integer(spbDigger);
     if S = 'cloner' then O.Skill := Integer(spbCloner);
+
+    O.TarLev := Max(aSection.LineNumeric['skillcount'], 1);
   end;
 
   procedure GetSplitterData;

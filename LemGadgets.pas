@@ -43,6 +43,7 @@ type
     function GetKeyFrame: Integer;
     function GetCanDrawToBackground: Boolean;
     function GetSpeed: Integer;
+    function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
 
   public
@@ -79,6 +80,7 @@ type
     property KeyFrame: Integer read GetKeyFrame;
     property CanDrawToBackground: Boolean read GetCanDrawToBackground; // moving backgrounds: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;
+    property SkillCount: Integer read GetSkillCount;
     property IsPreassignedClimber: Boolean index 1 read GetPreassignedSkill;
     property IsPreassignedSwimmer: Boolean index 2 read GetPreassignedSkill;
     property IsPreassignedFloater: Boolean index 4 read GetPreassignedSkill;
@@ -379,6 +381,13 @@ begin
   Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetSpeed called for an object that isn''t a moving background!');
   Result := Obj.TarLev;
 end;
+
+function TGadget.GetSkillCount: Integer;
+begin
+  Assert(MetaObj.TriggerEffect = DOM_PICKUP, 'GetSkillCount called for an object that isn''t a pick-up skill!');
+  Result := Obj.TarLev;
+end;
+
 
 function TGadget.GetTriggerEffectBase: Integer;
 begin
