@@ -1381,7 +1381,7 @@ var
 
   function IsValidForLayer(Gadget: TGadget): Boolean;
   begin
-    if Gadget.TriggerEffect = DOM_BACKGROUND then
+    if (Gadget.TriggerEffect = DOM_BACKGROUND) and not Gadget.IsOnlyOnTerrain then
       Result := aLayer = rlBackgroundObjects
     else if Gadget.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
       Result := aLayer = rlOneWayArrows
@@ -1415,7 +1415,6 @@ begin
   fLayers[aLayer].BeginUpdate;
   Dst := fLayers[aLayer];
   try
-    //Dst.Assign(fLayers[aLayer]);
     if not fLayers.fIsEmpty[aLayer] then Dst.Clear(0);
     // Special conditions
     if (aLayer = rlBackgroundObjects) and (fUsefulOnly or fDisableBackground) then Exit;
@@ -1425,12 +1424,9 @@ begin
     else
       for i := 0 to fGadgets.Count-1 do
         HandleGadget(i);
-
-    //fLayers[aLayer].Assign(Dst);
   finally
     fLayers[aLayer].EndUpdate;
     fLayers[aLayer].Unlock;
-    //Dst.Free;
   end;
 end;
 
