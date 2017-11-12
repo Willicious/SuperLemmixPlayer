@@ -1289,6 +1289,19 @@ var
   DrawFrame: Integer;
   TempBitmapRect, DstRect: TRect;
   IsOwnBitmap: Boolean;
+
+  procedure AddPickupSkillNumber;
+  var
+    Text: String;
+    TextWidth, TextHeight: Integer;
+  begin
+    Text := IntToStr(Gadget.SkillCount);
+    TempBitmap.Font.Size := 5;
+    TextWidth := TempBitmap.TextWidth(Text);
+    TextHeight := TempBitmap.TextHeight(Text);
+    TempBitmap.RenderText(Gadget.Width - TextWidth, Gadget.Height - TextHeight + 1, Text, 0, $FF101010);
+    TempBitmap.RenderText(Gadget.Width - TextWidth + 1, Gadget.Height - TextHeight + 1, Text, 0, $FFF0F0F0);
+  end;
 begin
   if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
@@ -1304,6 +1317,8 @@ begin
     TempBitmap.Assign(Gadget.Frames[DrawFrame]);
 
     PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
+    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+       AddPickupSkillNumber;
 
     MO := Gadget.MetaObj;
     CountX := (Gadget.Width-1) div MO.Width;

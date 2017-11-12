@@ -45,7 +45,6 @@ type
     function GetSpeed: Integer;
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
-
   public
     MetaObj        : TGadgetMetaAccessor;
 
@@ -149,8 +148,10 @@ const
 
 implementation
 
+uses
+  GR32;
 
-{ TInteractiveObjectInfo }
+{ TGadget }
 constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor);
 
   procedure AdjustOWWDirection;
@@ -220,7 +221,6 @@ begin
   HoldActive := False;
   ZombieMode := False;
 end;
-
 
 function TGadget.GetTriggerRect: TRect;
 // Note that the trigger area is only the inside of the TRect,
@@ -413,7 +413,7 @@ end;
 
 
 
-{ TObjectAnimationInfoList }
+{ TGadgetList }
 
 function TGadgetList.Add(Item: TGadget): Integer;
 begin
