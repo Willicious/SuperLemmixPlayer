@@ -12,7 +12,7 @@ uses
   LemNeoPieceManager, LemNeoParser;
 
 type
-  TSkillset = set of TSkillPanelButton;
+  TSkillSet = set of TSkillPanelButton;
   TSkillCounts = array[Low(TSkillPanelButton)..High(TSkillPanelButton)] of Integer; // non-skill buttons are just unused
 
   TLevelInfo = class
@@ -139,7 +139,7 @@ type
 implementation
 
 uses
-  LemLVLLoader; // for backwards compatibility
+  LemLVLLoader, Dialogs, Math; // for backwards compatibility
 
 { TLevelInfo }
 
@@ -420,6 +420,8 @@ var
     if S = 'miner' then O.Skill := Integer(spbMiner);
     if S = 'digger' then O.Skill := Integer(spbDigger);
     if S = 'cloner' then O.Skill := Integer(spbCloner);
+
+    O.TarLev := Max(aSection.LineNumeric['skillcount'], 1);
   end;
 
   procedure GetSplitterData;
@@ -526,10 +528,18 @@ end;
 procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
 var
   T: TTalisman;
+  Success: Boolean;
 begin
+  Success := True;
   T := TTalisman.Create;
-  T.LoadFromSection(aSection);
-  fTalismans.Add(T);
+  try
+    T.LoadFromSection(aSection);
+  except
+    ShowMessage('Error loading a talisman for ' + Info.Title);
+    Success := False;
+    T.Free;
+  end;
+  if Success then fTalismans.Add(T);
 end;
 
 procedure TLevel.LoadPretextLine(aLine: TParserLine; const aIteration: Integer);
@@ -545,6 +555,7 @@ end;
 procedure TLevel.Sanitize;
 var
   SkillIndex: TSkillPanelButton;
+  SkillNumber: Integer;
 begin
   with Info do
   begin
@@ -569,12 +580,20 @@ begin
     if SpawnInterval < ReleaseRateToSpawnInterval(99) then SpawnInterval := ReleaseRateToSpawnInterval(99);
     if SpawnInterval > ReleaseRateToSpawnInterval(1) then SpawnInterval := ReleaseRateToSpawnInterval(1);
 
+    SkillNumber := 0;
     for SkillIndex := Low(TSkillPanelButton) to High(TSkillPanelButton) do
     begin
       if SkillCount[SkillIndex] < 0 then SkillCount[SkillIndex] := 0;
       if SkillCount[SkillIndex] > 100 then SkillCount[SkillIndex] := 100;
-      if not(SkillIndex in Skillset) then SkillCount[SkillIndex] := 0;
+      if SkillIndex in Skillset then Inc(SkillNumber);
+
+      if (SkillNumber > 8) or not (SkillIndex in Skillset) then
+      begin
+        SkillCount[SkillIndex] := 0;
+        Exclude(fSkillset, SkillIndex);
+      end
     end;
+
   end;
 
   PrepareForUse;
@@ -900,6 +919,7 @@ begin
     if L.IsFloater then Sec.AddLine('FLOATER');
     if L.IsGlider then Sec.AddLine('GLIDER');
     if L.IsDisarmer then Sec.AddLine('DISARMER');
+    if L.IsBlocker then Sec.AddLine('BLOCKER');
     if L.IsZombie then Sec.AddLine('ZOMBIE');
   end;
 end;

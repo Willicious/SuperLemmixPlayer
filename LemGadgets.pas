@@ -43,8 +43,8 @@ type
     function GetKeyFrame: Integer;
     function GetCanDrawToBackground: Boolean;
     function GetSpeed: Integer;
+    function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
-
   public
     MetaObj        : TGadgetMetaAccessor;
 
@@ -79,6 +79,7 @@ type
     property KeyFrame: Integer read GetKeyFrame;
     property CanDrawToBackground: Boolean read GetCanDrawToBackground; // moving backgrounds: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;
+    property SkillCount: Integer read GetSkillCount;
     property IsPreassignedClimber: Boolean index 1 read GetPreassignedSkill;
     property IsPreassignedSwimmer: Boolean index 2 read GetPreassignedSkill;
     property IsPreassignedFloater: Boolean index 4 read GetPreassignedSkill;
@@ -147,8 +148,10 @@ const
 
 implementation
 
+uses
+  GR32;
 
-{ TInteractiveObjectInfo }
+{ TGadget }
 constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor);
 
   procedure AdjustOWWDirection;
@@ -184,10 +187,10 @@ begin
   // Set basic stuff
   sTop := Obj.Top;
   sLeft := Obj.Left;
-  if (not MetaObj.CanResizeVertical) or (Obj.Height = -1) then
+  if (not MetaObj.CanResizeVertical) or (Obj.Height < 1) then
     Obj.Height := MetaObj.Height;
   sHeight := Obj.Height;
-  if (not MetaObj.CanResizeHorizontal) or (Obj.Width = -1) then
+  if (not MetaObj.CanResizeHorizontal) or (Obj.Width < 1) then
     Obj.Width := MetaObj.Width;
   sWidth := Obj.Width;
   sTriggerEffect := MetaObj.TriggerEffect;
@@ -218,7 +221,6 @@ begin
   HoldActive := False;
   ZombieMode := False;
 end;
-
 
 function TGadget.GetTriggerRect: TRect;
 // Note that the trigger area is only the inside of the TRect,
@@ -380,6 +382,13 @@ begin
   Result := Obj.TarLev;
 end;
 
+function TGadget.GetSkillCount: Integer;
+begin
+  Assert(MetaObj.TriggerEffect = DOM_PICKUP, 'GetSkillCount called for an object that isn''t a pick-up skill!');
+  Result := Obj.TarLev;
+end;
+
+
 function TGadget.GetTriggerEffectBase: Integer;
 begin
   Result := MetaObj.TriggerEffect;
@@ -404,7 +413,7 @@ end;
 
 
 
-{ TObjectAnimationInfoList }
+{ TGadgetList }
 
 function TGadgetList.Add(Item: TGadget): Integer;
 begin

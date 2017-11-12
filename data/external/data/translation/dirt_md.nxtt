@@ -1,8 +1,8 @@
-THEME orig_dirt
+THEME orig_dirt_md
 
 $TERRAIN
   INDEX 0
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_01
   LEFT_OFFSET 0
   RIGHT_OFFSET -6
@@ -12,7 +12,7 @@ $END
 
 $TERRAIN
   INDEX 1
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -22,7 +22,7 @@ $END
 
 $TERRAIN
   INDEX 2
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_03
   LEFT_OFFSET 0
   RIGHT_OFFSET -14
@@ -32,7 +32,7 @@ $END
 
 $TERRAIN
   INDEX 3
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_04
   LEFT_OFFSET 0
   RIGHT_OFFSET -8
@@ -42,7 +42,7 @@ $END
 
 $TERRAIN
   INDEX 4
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_05
   LEFT_OFFSET 0
   RIGHT_OFFSET -9
@@ -52,7 +52,7 @@ $END
 
 $TERRAIN
   INDEX 5
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_06
   LEFT_OFFSET 0
   RIGHT_OFFSET -11
@@ -62,7 +62,7 @@ $END
 
 $TERRAIN
   INDEX 6
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE grass_01
   LEFT_OFFSET 0
   RIGHT_OFFSET -11
@@ -72,7 +72,7 @@ $END
 
 $TERRAIN
   INDEX 7
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE grass_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -6
@@ -82,7 +82,7 @@ $END
 
 $TERRAIN
   INDEX 8
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE grass_03
   LEFT_OFFSET 0
   RIGHT_OFFSET -14
@@ -92,7 +92,7 @@ $END
 
 $TERRAIN
   INDEX 9
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE grass_04
   LEFT_OFFSET 0
   RIGHT_OFFSET -6
@@ -102,7 +102,7 @@ $END
 
 $TERRAIN
   INDEX 10
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_07
   LEFT_OFFSET 0
   RIGHT_OFFSET -6
@@ -112,7 +112,7 @@ $END
 
 $TERRAIN
   INDEX 11
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE rocks_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -122,7 +122,7 @@ $END
 
 $TERRAIN
   INDEX 12
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE rocks_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -12
@@ -132,7 +132,7 @@ $END
 
 $TERRAIN
   INDEX 13
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE rocks_03
   LEFT_OFFSET 0
   RIGHT_OFFSET -10
@@ -142,7 +142,7 @@ $END
 
 $TERRAIN
   INDEX 14
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE rocks_04
   LEFT_OFFSET 0
   RIGHT_OFFSET -10
@@ -152,7 +152,7 @@ $END
 
 $TERRAIN
   INDEX 15
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE rocks_05
   LEFT_OFFSET 0
   RIGHT_OFFSET -8
@@ -162,7 +162,7 @@ $END
 
 $TERRAIN
   INDEX 16
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE circle_01
   LEFT_OFFSET 0
   RIGHT_OFFSET -15
@@ -172,7 +172,7 @@ $END
 
 $TERRAIN
   INDEX 17
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE circle_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -7
@@ -182,7 +182,7 @@ $END
 
 $TERRAIN
   INDEX 18
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE bones_01
   LEFT_OFFSET 0
   RIGHT_OFFSET -6
@@ -192,7 +192,7 @@ $END
 
 $TERRAIN
   INDEX 19
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_08
   LEFT_OFFSET 0
   RIGHT_OFFSET -11
@@ -202,7 +202,7 @@ $END
 
 $TERRAIN
   INDEX 20
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_09
   LEFT_OFFSET 0
   RIGHT_OFFSET -7
@@ -212,7 +212,7 @@ $END
 
 $TERRAIN
   INDEX 21
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE bones_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -15
@@ -222,7 +222,7 @@ $END
 
 $TERRAIN
   INDEX 22
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE bones_03
   LEFT_OFFSET 0
   RIGHT_OFFSET -5
@@ -232,7 +232,7 @@ $END
 
 $TERRAIN
   INDEX 23
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE steel_01
   LEFT_OFFSET 0
   RIGHT_OFFSET -8
@@ -242,7 +242,7 @@ $END
 
 $TERRAIN
   INDEX 24
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE steel_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -18
@@ -252,7 +252,7 @@ $END
 
 $TERRAIN
   INDEX 25
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE steel_03
   LEFT_OFFSET 0
   RIGHT_OFFSET -8
@@ -262,7 +262,7 @@ $END
 
 $TERRAIN
   INDEX 26
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE steel_04
   LEFT_OFFSET 0
   RIGHT_OFFSET -18
@@ -272,7 +272,7 @@ $END
 
 $TERRAIN
   INDEX 27
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE clump_10
   LEFT_OFFSET 0
   RIGHT_OFFSET -15
@@ -282,7 +282,7 @@ $END
 
 $TERRAIN
   INDEX 28
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE tree
   LEFT_OFFSET 0
   RIGHT_OFFSET -14
@@ -292,7 +292,7 @@ $END
 
 $TERRAIN
   INDEX 29
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE bridge_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -302,7 +302,7 @@ $END
 
 $TERRAIN
   INDEX 30
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE bridge_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -9
@@ -312,7 +312,7 @@ $END
 
 $TERRAIN
   INDEX 31
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE bridge_03
   LEFT_OFFSET 0
   RIGHT_OFFSET -5
@@ -322,7 +322,7 @@ $END
 
 $TERRAIN
   INDEX 32
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE roots_01
   LEFT_OFFSET 7
   RIGHT_OFFSET -5
@@ -332,7 +332,7 @@ $END
 
 $TERRAIN
   INDEX 33
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE roots_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -2
@@ -342,9 +342,9 @@ $END
 
 $TERRAIN
   INDEX 34
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE roots_03
-  LEFT_OFFSET 2
+  LEFT_OFFSET 0
   RIGHT_OFFSET -2
   TOP_OFFSET 0
   BOTTOM_OFFSET -1
@@ -352,7 +352,7 @@ $END
 
 $TERRAIN
   INDEX 35
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE roots_04
   LEFT_OFFSET 2
   RIGHT_OFFSET -3
@@ -362,7 +362,7 @@ $END
 
 $TERRAIN
   INDEX 36
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE moss_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -372,7 +372,7 @@ $END
 
 $TERRAIN
   INDEX 37
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE moss_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -6
@@ -382,7 +382,7 @@ $END
 
 $TERRAIN
   INDEX 38
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE moss_03
   LEFT_OFFSET 0
   RIGHT_OFFSET -9
@@ -392,7 +392,7 @@ $END
 
 $TERRAIN
   INDEX 39
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE moss_04
   LEFT_OFFSET 0
   RIGHT_OFFSET -12
@@ -402,7 +402,7 @@ $END
 
 $TERRAIN
   INDEX 40
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE moss_05
   LEFT_OFFSET 0
   RIGHT_OFFSET -12
@@ -412,7 +412,7 @@ $END
 
 $TERRAIN
   INDEX 41
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE moss_06
   LEFT_OFFSET 4
   RIGHT_OFFSET -4
@@ -422,7 +422,7 @@ $END
 
 $TERRAIN
   INDEX 42
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE bridge_04
   LEFT_OFFSET 0
   RIGHT_OFFSET -3
@@ -432,7 +432,7 @@ $END
 
 $TERRAIN
   INDEX 43
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE bridge_05
   LEFT_OFFSET 0
   RIGHT_OFFSET -3
@@ -442,7 +442,7 @@ $END
 
 $TERRAIN
   INDEX 44
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE sign_04
   LEFT_OFFSET 0
   RIGHT_OFFSET -2
@@ -452,7 +452,7 @@ $END
 
 $TERRAIN
   INDEX 45
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE sign_01
   LEFT_OFFSET 0
   RIGHT_OFFSET -8
@@ -462,7 +462,7 @@ $END
 
 $TERRAIN
   INDEX 46
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE sign_02
   LEFT_OFFSET 0
   RIGHT_OFFSET -8
@@ -472,7 +472,7 @@ $END
 
 $TERRAIN
   INDEX 47
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE sign_03
   LEFT_OFFSET 0
   RIGHT_OFFSET -10
@@ -482,7 +482,7 @@ $END
 
 $TERRAIN
   INDEX 48
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE sign_05
   LEFT_OFFSET 0
   RIGHT_OFFSET -12
@@ -492,7 +492,7 @@ $END
 
 $TERRAIN
   INDEX 49
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE sign_06
   LEFT_OFFSET 0
   RIGHT_OFFSET -15
@@ -502,7 +502,7 @@ $END
 
 $OBJECT
   INDEX 0
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE exit
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -512,7 +512,7 @@ $END
 
 $OBJECT
   INDEX 1
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE window
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -533,7 +533,7 @@ $END
 $OBJECT
   INDEX 3
   COLLECTION default
-  PIECE owa_left
+  PIECE owa_lef
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
   TOP_OFFSET 0
@@ -556,7 +556,7 @@ $END
 
 $OBJECT
   INDEX 5
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE water
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -567,7 +567,7 @@ $END
 
 $OBJECT
   INDEX 6
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE trap_01
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -577,7 +577,7 @@ $END
 
 $OBJECT
   INDEX 8
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE trap_02
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
@@ -597,41 +597,11 @@ $END
 
 $OBJECT
   INDEX 10
-  COLLECTION orig_dirt
+  COLLECTION orig_dirt_md
   PIECE trap_03
   LEFT_OFFSET 0
   RIGHT_OFFSET 0
   TOP_OFFSET 0
   BOTTOM_OFFSET 0
-$END
-
-$OBJECT
-  INDEX 11
-  SPECIAL lemming
-  LEFT_OFFSET 2
-  TOP_OFFSET 9
-$END
-
-$OBJECT
-  INDEX 12
-  COLLECTION default
-  PIECE pickup
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
-  PICKUP_PATCH
-$END
-
-$OBJECT
-  INDEX 14
-  COLLECTION default
-  PIECE owa_down
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
-  WIDTH 32
-  HEIGHT 32
 $END
 

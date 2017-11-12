@@ -147,7 +147,7 @@ var
   end;
 
 const
-  POSTVIEW_CONDITIONS: array[0..8] of String = ('0', '-50%', '-10%', '-2', '-1', '+0', '+1', '+20%', '100%');
+  POSTVIEW_CONDITIONS: array[0..8] of String = ('0', '1', '-50%', '-5', '-1', '+0', '+1', '+20%', '100%');
 
 var
   Dummy: String;
@@ -345,7 +345,7 @@ begin
               else NewTal.Color := tcBronze;
             end;
 
-            if OldTal.SaveRequirement <> GameParams.Level.Info.RescueCount then
+            if OldTal.SaveRequirement > GameParams.Level.Info.RescueCount then
               NewTal.RescueCount := OldTal.SaveRequirement;
             if (OldTal.TimeLimit > 0) and (OldTal.TimeLimit <> GameParams.Level.Info.TimeLimit * 17) then
               NewTal.TimeLimit := OldTal.TimeLimit;
@@ -353,9 +353,7 @@ begin
             if    (OldTal.RRMin > (53 - GameParams.Level.Info.SpawnInterval) * 2)
                or ((OldTal.RRMax < 99) and not GameParams.Level.Info.SpawnIntervalLocked) then
             begin
-              Write('    Removed a talisman due to using no-longer-supported feature: Release rate limits');
-              NewTal.Free;
-              Continue;
+              Write('    Removed release rate limit requirement from talisman.');
             end;
 
             if OldTal.TotalSkillLimit >= 0 then NewTal.TotalSkillLimit := OldTal.TotalSkillLimit;

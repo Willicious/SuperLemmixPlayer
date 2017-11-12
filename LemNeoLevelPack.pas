@@ -152,6 +152,7 @@ type
 
       function GetFirstUnbeatenLevel: TNeoLevelEntry;
       function GetFirstUnbeatenLevelRecursive: TNeoLevelEntry;
+      function GetFirstLevelRecursive: TNeoLevelEntry;
 
       function GetNextGroup: TNeoLevelGroup;
       function GetPrevGroup: TNeoLevelGroup;
@@ -198,6 +199,7 @@ type
       property ParentGroupIndex: Integer read GetParentGroupIndex;
       property FirstUnbeatenLevel: TNeoLevelEntry read GetFirstUnbeatenLevel;
       property FirstUnbeatenLevelRecursive: TNeoLevelEntry read GetFirstUnbeatenLevelRecursive;
+      property FirstLevelRecursive: TNeoLevelEntry read GetFirstLevelRecursive;
 
       property PrevGroup: TNeoLevelGroup read GetPrevGroup;
       property NextGroup: TNeoLevelGroup read GetNextGroup;
@@ -378,11 +380,19 @@ begin
       procedure(aSec: TParserSection; const aIteration: Integer = 0)
       var
         T: TTalisman;
+        Success: Boolean;
       begin
+        Success := True;
         T := TTalisman.Create;
-        fTalismans.Add(T);
-        T.LoadFromSection(aSec);
-        T.Data := Self;
+        try
+          T.LoadFromSection(aSec);
+          T.Data := Self;
+        except
+          ShowMessage('Error loading a talisman for ' + fTitle);
+          Success := False;
+          T.Free;
+        end;
+        if Success then fTalismans.Add(T);
       end
     );
 
@@ -932,20 +942,27 @@ function TNeoLevelGroup.GetFirstUnbeatenLevel: TNeoLevelEntry;
 var
   i: Integer;
 begin
+  if fLevels.Count = 0 then
+  begin
+    raise EAccessViolation.Create('No levels contained in selected rank!');
+    Exit;
+  end;
+
   Result := fLevels[0];
-  for i := 0 to fLevels.Count-1 do
+  for i := 0 to fLevels.Count - 1 do
+  begin
     if fLevels[i].Status <> lst_Completed then
     begin
       Result := fLevels[i];
       Exit;
     end;
+  end;
 end;
 
 function TNeoLevelGroup.GetFirstUnbeatenLevelRecursive: TNeoLevelEntry;
 var
   i: Integer;
 begin
-  Result := nil;
   for i := 0 to fChildGroups.Count-1 do
   begin
     Result := fChildGroups[i].FirstUnbeatenLevelRecursive;
@@ -953,12 +970,40 @@ begin
   end;
 
   for i := 0 to fLevels.Count-1 do
+  begin
     if fLevels[i].Status <> lst_Completed then
     begin
       Result := fLevels[i];
       Exit;
     end;
+  end;
+
+  // Get first level, if there is no unbeaten one
+  Result := FirstLevelRecursive;
 end;
+
+function TNeoLevelGroup.GetFirstLevelRecursive: TNeoLevelEntry;
+var
+  i: Integer;
+begin
+  // Check for levels directly in this group entry
+  if fLevels.Count > 0 then
+  begin
+    Result := fLevels[0];
+    Exit;
+  end;
+
+  // Check for groups withint this group
+  for i := 0 to fChildGroups.Count-1 do
+  begin
+    Result := fChildGroups[i].FirstLevelRecursive;
+    if (Result <> nil) then Exit;
+  end;
+
+  // If we get here, then there is no level at all in this pack and we throw an exception
+  raise EAccessViolation.Create('No levels contained in selected pack!');
+end;
+
 
 function TNeoLevelGroup.GetNextGroup: TNeoLevelGroup;
 var

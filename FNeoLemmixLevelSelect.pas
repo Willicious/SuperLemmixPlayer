@@ -174,12 +174,15 @@ begin
   begin
     G := TNeoLevelGroup(Obj);
     if G.Levels.Count = 0 then
+    begin
       if G.LevelCount > 0 then
         fLoadAsPack := true
       else
         Exit;
+    end;
     GameParams.SetGroup(G);
-  end else if Obj is TNeoLevelEntry then
+  end
+  else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
     GameParams.SetLevel(L);

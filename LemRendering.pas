@@ -1289,6 +1289,19 @@ var
   DrawFrame: Integer;
   TempBitmapRect, DstRect: TRect;
   IsOwnBitmap: Boolean;
+
+  procedure AddPickupSkillNumber;
+  var
+    Text: String;
+    TextWidth, TextHeight: Integer;
+  begin
+    Text := IntToStr(Gadget.SkillCount);
+    TempBitmap.Font.Size := 5;
+    TextWidth := TempBitmap.TextWidth(Text);
+    TextHeight := TempBitmap.TextHeight(Text);
+    TempBitmap.RenderText(Gadget.Width - TextWidth, Gadget.Height - TextHeight + 1, Text, 0, $FF101010);
+    TempBitmap.RenderText(Gadget.Width - TextWidth + 1, Gadget.Height - TextHeight + 1, Text, 0, $FFF0F0F0);
+  end;
 begin
   if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
@@ -1304,6 +1317,8 @@ begin
     TempBitmap.Assign(Gadget.Frames[DrawFrame]);
 
     PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
+    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+       AddPickupSkillNumber;
 
     MO := Gadget.MetaObj;
     CountX := (Gadget.Width-1) div MO.Width;
@@ -1381,7 +1396,7 @@ var
 
   function IsValidForLayer(Gadget: TGadget): Boolean;
   begin
-    if Gadget.TriggerEffect = DOM_BACKGROUND then
+    if (Gadget.TriggerEffect = DOM_BACKGROUND) and not Gadget.IsOnlyOnTerrain then
       Result := aLayer = rlBackgroundObjects
     else if Gadget.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP] then
       Result := aLayer = rlOneWayArrows
@@ -1415,7 +1430,6 @@ begin
   fLayers[aLayer].BeginUpdate;
   Dst := fLayers[aLayer];
   try
-    //Dst.Assign(fLayers[aLayer]);
     if not fLayers.fIsEmpty[aLayer] then Dst.Clear(0);
     // Special conditions
     if (aLayer = rlBackgroundObjects) and (fUsefulOnly or fDisableBackground) then Exit;
@@ -1425,12 +1439,9 @@ begin
     else
       for i := 0 to fGadgets.Count-1 do
         HandleGadget(i);
-
-    //fLayers[aLayer].Assign(Dst);
   finally
     fLayers[aLayer].EndUpdate;
     fLayers[aLayer].Unlock;
-    //Dst.Free;
   end;
 end;
 

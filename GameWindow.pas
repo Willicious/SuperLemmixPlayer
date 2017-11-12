@@ -77,6 +77,7 @@ type
     fLastZombieSound: Cardinal;
 
     fHoldScrollData: THoldScrollData;
+
   { game eventhandler}
     procedure Game_Finished;
   { self eventhandlers }
@@ -96,6 +97,7 @@ type
   { skillpanel eventhandlers }
     procedure SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   { internal }
+    procedure ReleaseMouse;
     procedure CheckResetCursor(aForce: Boolean = false);
     function CheckScroll: Boolean;
     procedure AddSaveState;
@@ -113,7 +115,7 @@ type
     procedure ProcessGameMessages;
     procedure ApplyResize(NoRecenter: Boolean = false);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
-    procedure ReleaseCursors;
+    procedure FreeCursors;
     procedure HandleSpecialSkip(aSkipType: Integer);
 
     function GetLevelMusicName: String;
@@ -226,14 +228,58 @@ end;
 procedure TGameWindow.ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
 var
   OSHorz, OSVert: Single;
+  DoZoomOnCursor: Boolean;
+
+  procedure SetCursorToCenter();
+  var
+    MousePos, ImgCenter: TPoint;
+    ImgTopLeft, ImgBottomRight: TPoint;
+  begin
+    // Clip the Mouse position to the Image rectangle
+    MousePos := Mouse.CursorPos;
+    ImgTopLeft := Img.ClientToScreen(Point(0, 0));
+    ImgBottomRight := Img.ClientToScreen(Point(Img.Width, Img.Height));
+    MousePos.X := Max(Min(Mouse.CursorPos.X, ImgBottomRight.X), ImgTopLeft.X);
+    MousePos.Y := Max(Min(Mouse.CursorPos.Y, ImgBottomRight.Y), ImgTopLeft.Y);
+    // Get center of the image on the screen
+    ImgCenter := Point(Trunc((ImgTopLeft.X + ImgBottomRight.X) / 2), Trunc((ImgTopLeft.Y + ImgBottomRight.Y) / 2));
+    // Move the image location
+    Img.OffsetHorz := Img.OffsetHorz - (MousePos.X - ImgCenter.X);
+    Img.OffsetVert := Img.OffsetVert - (MousePos.Y - ImgCenter.Y);
+  end;
+
+  procedure ResetCenterToCursor();
+  var
+    MousePos, ImgCenter: TPoint;
+    ImgTopLeft, ImgBottomRight: TPoint;
+  begin
+    // Clip the Mouse position to the Image rectangle
+    MousePos := Mouse.CursorPos;
+    ImgTopLeft := Img.ClientToScreen(Point(0, 0));
+    ImgBottomRight := Img.ClientToScreen(Point(Img.Width, Img.Height));
+    MousePos.X := Max(Min(Mouse.CursorPos.X, ImgBottomRight.X), ImgTopLeft.X);
+    MousePos.Y := Max(Min(Mouse.CursorPos.Y, ImgBottomRight.Y), ImgTopLeft.Y);
+    // Get center of the image on the screen
+    ImgCenter := Point(Trunc((ImgTopLeft.X + ImgBottomRight.X) / 2), Trunc((ImgTopLeft.Y + ImgBottomRight.Y) / 2));
+    // Move the image location
+    Img.OffsetHorz := Img.OffsetHorz + (MousePos.X - ImgCenter.X);
+    Img.OffsetVert := Img.OffsetVert + (MousePos.Y - ImgCenter.Y);
+  end;
+
 begin
   aNewZoom := Max(Min(fMaxZoom, aNewZoom), 1);
   if (aNewZoom = fInternalZoom) and not NoRedraw then
     Exit;
 
+  DoZoomOnCursor := (aNewZoom > fInternalZoom);
   Img.BeginUpdate;
   SkillPanel.Image.BeginUpdate;
   try
+    // If scrolling in, move the image to center on the cursor position.
+    // We will ensure that this is a valid position later on.
+    if DoZoomOnCursor then SetCursorToCenter;
+
+    // Switch to top left coordinates, not the center of the image.
     OSHorz := Img.OffsetHorz - (Img.Width / 2);
     OSVert := Img.OffsetVert - (Img.Height / 2);
     OSHorz := (OSHorz * aNewZoom) / fInternalZoom;
@@ -246,10 +292,17 @@ begin
 
     fInternalZoom := aNewZoom;
 
-    ApplyResize;
+    // Change the Img size and update everything accordingly.
+    ApplyResize(true);
 
+    // If scrolling in, we wish to keep the pixel below the cursor constant.
+    // Therefore we have to move the current center back to the cursor position
+    if DoZoomOnCursor then ResetCenterToCursor;
+
+    // Move back to center coordinates.
     OSHorz := OSHorz + (Img.Width / 2);
     OSVert := OSVert + (Img.Height / 2);
+    // Ensure that the offset doesn't move part of the visible area outside of the level area.
     Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
 
@@ -385,6 +438,7 @@ begin
   F := TFReplayEditor.Create(self);
   F.SetReplay(Game.ReplayManager, Game.CurrentIteration);
   fSuspendCursor := true;
+  ReleaseMouse;
   try
     if (F.ShowModal = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
     begin
@@ -404,12 +458,22 @@ procedure TGameWindow.ApplyMouseTrap;
 var
   ClientTopLeft, ClientBottomRight: TPoint;
 begin
+  // For security check trapping the mouse again.
+  if fSuspendCursor or not GameParams.EdgeScroll then Exit;
+
   fMouseTrapped := true;
 
   ClientTopLeft := ClientToScreen(Point(Min(SkillPanel.Image.Left, Img.Left), Img.Top));
   ClientBottomRight := ClientToScreen(Point(Max(Img.Left + Img.Width, SkillPanel.Image.Left + SkillPanel.Image.Width), SkillPanel.Top + SkillPanel.Image.Height));
   MouseClipRect := Rect(ClientTopLeft, ClientBottomRight);
   ClipCursor(@MouseClipRect);
+end;
+
+procedure TGameWindow.ReleaseMouse;
+begin
+  if GameParams.FullScreen then Exit;
+  fMouseTrapped := false;
+  ClipCursor(nil);
 end;
 
 procedure TGameWindow.Application_Idle(Sender: TObject; var Done: Boolean);
@@ -885,7 +949,7 @@ begin
 
   SetCurrentCursor;
 
-  if (fNeedResetMouseTrap or aForce) and fMouseTrapped and GameParams.EdgeScroll then
+  if (fNeedResetMouseTrap or aForce) and fMouseTrapped and (not fSuspendCursor) and GameParams.EdgeScroll then
   begin
     ApplyMouseTrap;
     fNeedResetMouseTrap := false;
@@ -957,16 +1021,16 @@ function TGameWindow.CheckScroll: Boolean;
 begin
   Result := false;
 
-  if fNeedResetMouseTrap or not fMouseTrapped then // why are these two seperate variables anyway?
-  begin
-    GameScroll := gsNone;
-    GameVScroll := gsNone;
-  end else if fHoldScrollData.Active then
+  if fHoldScrollData.Active then
   begin
     if GameParams.Hotkeys.CheckForKey(lka_Scroll) then
       HandleHeldScroll
     else
       fHoldScrollData.Active := false;
+  end else if fNeedResetMouseTrap or not fMouseTrapped then // why are these two seperate variables anyway?
+  begin
+    GameScroll := gsNone;
+    GameVScroll := gsNone;
   end else if GameParams.EdgeScroll then begin
     if Mouse.CursorPos.X <= MouseClipRect.Left then
       GameScroll := gsLeft
@@ -1072,14 +1136,14 @@ begin
 
   fSaveStateReplayStream.Free;
 
-  ReleaseCursors;
+  FreeCursors;
 
   fMinimapBuffer.Free;
 
   inherited Destroy;
 end;
 
-procedure TGameWindow.ReleaseCursors;
+procedure TGameWindow.FreeCursors;
 var
   i, i2: Integer;
 begin
@@ -1107,6 +1171,7 @@ var
   sn: Integer;
   func: TLemmixHotkey;
   AssignToHighlit: Boolean;
+  CursorPointForm: TPoint; // A point in coordinates relative to the main form
 const
   NON_CANCELLING_KEYS = [lka_Null,
                          lka_ShowAthleteInfo,
@@ -1148,19 +1213,19 @@ begin
   end;
 
   // Allow changing options and selecting new levels, but pause level for that
-  if Key = VK_F2 then
+  if ((Key = VK_F2) or (Key = VK_F3)) and (func.Action = lka_Null) then
   begin
     GameSpeed := gspPause;
-    DoLevelSelect(true);
-    Exit;
-  end
-  else if Key = VK_F3 then
-  begin
-    GameSpeed := gspPause;
-    ShowConfigMenu;
+    fSuspendCursor := true;
+    ReleaseMouse;
+    try
+      if (Key = VK_F2) then DoLevelSelect(true)
+      else if (Key = VK_F3) then ShowConfigMenu;
+    finally
+      fSuspendCursor := false;
+    end;
     Exit;
   end;
-
 
   if not Game.Playing then
     Exit;
@@ -1202,11 +1267,7 @@ begin
     end;
 
     case func.Action of
-      lka_ReleaseMouse: if not GameParams.FullScreen then
-                        begin
-                          fMouseTrapped := false;
-                          ClipCursor(nil);
-                        end;
+      lka_ReleaseMouse: ReleaseMouse;
       lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
       lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
       lka_Pause: begin
@@ -1284,7 +1345,8 @@ begin
       lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
       lka_ZoomOut: ChangeZoom(fInternalZoom - 1);
       lka_Scroll: begin
-                    if PtInRect(Img.BoundsRect, Img.ParentToClient(ScreenToClient(Mouse.CursorPos))) and not fHoldScrollData.Active then
+                    CursorPointForm := ScreenToClient(Mouse.CursorPos);
+                    if PtInRect(Img.BoundsRect, CursorPointForm) and not fHoldScrollData.Active then
                     begin
                       fHoldScrollData.Active := true;
                       fHoldScrollData.StartCursor := Mouse.CursorPos;
@@ -1386,7 +1448,7 @@ var
   PassKey: Word;
   OldHighlightLemming: TLemming;
 begin
-  if (not fMouseTrapped) and GameParams.EdgeScroll then
+  if (not fMouseTrapped) and (not fSuspendCursor) and GameParams.EdgeScroll then
     ApplyMouseTrap;
   // interrupting hyperspeed can break the handling of savestates
   // so we're not allowing it
@@ -1498,7 +1560,7 @@ var
   end;
 
 begin
-  ReleaseCursors;
+  FreeCursors;
 
   bmpMask := TBitmap.Create;
   bmpColor := TBitmap.Create;

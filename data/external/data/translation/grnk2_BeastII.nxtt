@@ -496,16 +496,6 @@ $OBJECT
 $END
 
 $OBJECT
-  INDEX 7
-  COLLECTION gronkling_beast
-  PIECE O7
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
-$END
-
-$OBJECT
   INDEX 8
   COLLECTION gronkling_beast
   PIECE waterfall

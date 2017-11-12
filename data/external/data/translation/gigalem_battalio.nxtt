@@ -1784,44 +1784,56 @@ $OBJECT
   BOTTOM_OFFSET 0
 $END
 
-$BACKGROUND
+$OBJECT
   INDEX 18
-  COLLECTION gigalem_battalio
-  PIECE battalio_01
+  COLLECTION default
+  PIECE updraft
+  LEFT_OFFSET 0
+  RIGHT_OFFSET 0
+  TOP_OFFSET 0
+  BOTTOM_OFFSET 0
+  WIDTH 32
+  HEIGHT 16
 $END
 
 $BACKGROUND
   INDEX 19
   COLLECTION gigalem_battalio
-  PIECE battalio_02
+  PIECE battalio_01
 $END
 
 $BACKGROUND
   INDEX 20
   COLLECTION gigalem_battalio
-  PIECE battalio_03
+  PIECE battalio_02
 $END
 
 $BACKGROUND
   INDEX 21
   COLLECTION gigalem_battalio
-  PIECE battalio_04
+  PIECE battalio_03
 $END
 
 $BACKGROUND
   INDEX 22
   COLLECTION gigalem_battalio
-  PIECE battalio_05
+  PIECE battalio_04
 $END
 
 $BACKGROUND
   INDEX 23
   COLLECTION gigalem_battalio
-  PIECE battalio_06
+  PIECE battalio_05
 $END
 
 $BACKGROUND
   INDEX 24
+  COLLECTION gigalem_battalio
+  PIECE battalio_06
+$END
+
+$BACKGROUND
+  INDEX 25
   COLLECTION gigalem_battalio
   PIECE battalio_07
 $END

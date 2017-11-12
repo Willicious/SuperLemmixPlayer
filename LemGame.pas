@@ -296,7 +296,7 @@ type
     procedure UpdateGadgets;
 
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
-    procedure UpdateSkillCount(aAction: TBasicLemmingAction; Rev: Boolean = false);
+    procedure UpdateSkillCount(aAction: TBasicLemmingAction; Amount: Integer = -1);
 
   { lemming actions }
     function FindGroundPixel(x, y: Integer): Integer;
@@ -1329,8 +1329,9 @@ begin
   if (NewAction = baFalling) then
   begin
     L.LemFallen := 1;
-    if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3;
-    if L.LemAction in [baMining, baDigging] then L.LemFallen := 0;
+    if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
+    else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
+    else if L.LemAction in [baBlocking] then L.LemFallen := -1;
     L.LemTrueFallen := L.LemFallen;
   end;
 
@@ -2386,7 +2387,7 @@ begin
     Gadget := Gadgets[GadgetID];
     Gadget.CurrentFrame := 0;
     CueSoundEffect(SFX_PICKUP, L.Position);
-    UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], true);
+    UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], Gadget.SkillCount);
   end;
 end;
 
@@ -5151,15 +5152,12 @@ begin
 end;
 
 
-procedure TLemmingGame.UpdateSkillCount(aAction: TBasicLemmingAction; Rev : Boolean = false);
+procedure TLemmingGame.UpdateSkillCount(aAction: TBasicLemmingAction; Amount: Integer = -1);
 begin
-  if Rev then
-    CurrSkillCount[aAction] := Min(CurrSkillCount[aAction] + 1, 99)
-  else begin
-    if CurrSkillCount[aAction] < 100 then // need to implement a seperate "infinite" setting
-      CurrSkillCount[aAction] := Max(CurrSkillCount[aAction] - 1, 0);
-    Inc(UsedSkillCount[aAction]);
-  end;
+  if CurrSkillCount[aAction] < 100 then // i.e. not infinite skills
+    CurrSkillCount[aAction] := Max(Min(CurrSkillCount[aAction] + Amount, 99), 0);
+
+  if Amount < 0 then Inc(UsedSkillCount[aAction], Amount);
 end;
 
 procedure TLemmingGame.SaveGameplayImage(Filename: String);

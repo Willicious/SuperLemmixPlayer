@@ -14,6 +14,9 @@ For all of them the following rules hold:
   - Any lines of a group must be placed between the '$[KEY]' and the following '$END' line.
   - In level files, objects and terrain pieces are ordered according to their appearance in the level file. 
   - When defining preview and postview texts in level files, the lines are displayed in the same order they are contained in the file.
+  - In the file "levels.nxmi" the rank and level order is kept.
+  - In the file "postview.nxmi", the conditions have to be sorted from the worst to the best condition.
+  - Anything that has the key "LINE" or "TRACK. They specify various lines of text resp. music tracks and their order is kept.
 
 -------------------------------------
   2) File 'theme.nxtm'
@@ -375,45 +378,110 @@ x) A talisman that can be achieved of the level
    xl) The maximal number of used disarmers to achieve the talisman
        Key: 'DISARMER_LIMIT'
        Value: The maximal number of used disarmers to achieve the talisman
-   xd) The maximal number of used bombers to achieve the talisman
+   xm) The maximal number of used bombers to achieve the talisman
        Key: 'BOMBER_LIMIT'
        Value: The maximal number of used bombers to achieve the talisman
-   xd) The maximal number of used stoners to achieve the talisman
+   xn) The maximal number of used stoners to achieve the talisman
        Key: 'STONER_LIMIT'
        Value: The maximal number of used stoners to achieve the talisman
-   xd) The maximal number of used blockers to achieve the talisman
+   xo) The maximal number of used blockers to achieve the talisman
        Key: 'BLOCKER_LIMIT'
        Value: The maximal number of used blockers to achieve the talisman
-   xd) The maximal number of used builders to achieve the talisman
+   xp) The maximal number of used builders to achieve the talisman
        Key: 'BUILDER_LIMIT'
        Value: The maximal number of used builders to achieve the talisman
-   xd) The maximal number of used platformers to achieve the talisman
+   xq) The maximal number of used platformers to achieve the talisman
        Key: 'PLATFORMER_LIMIT'
        Value: The maximal number of used platformers to achieve the talisman
-   xd) The maximal number of used stackers to achieve the talisman
+   xr) The maximal number of used stackers to achieve the talisman
        Key: 'STACKER_LIMIT'
        Value: The maximal number of used stackers to achieve the talisman
-   xd) The maximal number of used bashers to achieve the talisman
+   xs) The maximal number of used bashers to achieve the talisman
        Key: 'BASHER_LIMIT'
        Value: The maximal number of used bashers to achieve the talisman
-   xd) The maximal number of used miners to achieve the talisman
+   xt) The maximal number of used miners to achieve the talisman
        Key: 'MINER_LIMIT'
        Value: The maximal number of used miners to achieve the talisman
-   xd) The maximal number of used diggers to achieve the talisman
+   xu) The maximal number of used diggers to achieve the talisman
        Key: 'DIGGER_LIMIT'
        Value: The maximal number of used diggers to achieve the talisman
-   xd) The maximal number of used fencers to achieve the talisman
+   xv) The maximal number of used fencers to achieve the talisman
        Key: 'FENCER_LIMIT'
        Value: The maximal number of used fencers to achieve the talisman
-   xd) The maximal number of used cloners to achieve the talisman
+   xw) The maximal number of used cloners to achieve the talisman
        Key: 'CLONER_LIMIT'
        Value: The maximal number of used cloners to achieve the talisman
+   xx) The maximal number of uses to be applied to all skills, to achieve the talisman
+       Key: 'SKILL_EACH_LIMIT'   
+       Value: The maximal number of uses of each skill to achieve the talisman 
+   xy) The single skill that may be used in the level
+       Key: 'USE_ONLY_SKILL'
+       Value: A string with the skill that may be used.
+
+-----------------------------------------------
+  5) Pack menu page file 'info.nxmi'
+-----------------------------------------------
+This file specifies the text displayed on the main menu.
+Input lines are:
+a) The pack title
+   Key: 'TITLE'
+   Value: The title as a string
+b) The pack title (second line)
+   Key: 'AUTHOR'
+   Value: The second title line as a string
+c) The bottom scroller text
+   Group Key: '$SCROLLER'
+   ca) Text that should be displayed in the scroller
+       Key: 'LINE'
+       Value: A string to be displayed.
+
+-----------------------------------------------
+  6) Pack music rotation file 'music.nxmi'
+-----------------------------------------------
+This file defines the music rotation, if levels don't specify their own music.
+The tracks are used in the same order as they appear in the file.
+Input lines are:
+a) A music track to be played
+   Key: 'TRACK'
+   Value: The file name (without extension) of the music file, as included in the "music" folder.
 
 
+-----------------------------------------------
+  7) Pack result message file 'postview.nxmi'
+-----------------------------------------------
+This file determines what result text is displayed depending on the number of lemmings solved in the level.
+IMPORTANT NOTICE: Sort the groups from the worst result to the best!
+Input lines are:
+a) A result type
+   Group Key: '$RESULT'
+   aa) A condition to display the result
+       Key: 'CONDITION'
+       Value: 1) A number like "0" or "100": The game uses this as an absolute number of lemmings
+              2) A relative number like "+5" or "-5": The game uses this as an absolute variation from the save requirement.
+              3) A percentage like "100%: The game uses this as a percentage of the total number of lemmings available.
+              4) A relative percentage line "+10%" or "-10%: The game uses this as the variation from the save requirement
+   ab) The result text to be displayed
+       Key: 'LINE'
+       Value: A string with the result text.
 
-
-
-
+-----------------------------------------------
+  8) Pack rank info file 'levels.nxmi'
+-----------------------------------------------
+This file determines the ranks of the level pack.
+Note that the order of the rank groups determine their order in
+Input lines are:
+a) Whether this is the base directory of the whole pack.
+   If this is set, then the game will look for global pack info to be used in all subdirectories.
+   Key: 'BASE'
+   Value: none
+b) A rank in the pack
+   Group Key: '$RANK'
+   ba) The name of the rank as displayed in the game
+       Key: 'NAME'
+       Value: A string representing the name
+   bb) The folder name containing the levels
+       Key: 'FOLDER'
+       Value: The folder name with the levels. It has to be a direct subfolder of the one that contains the 'levels.nxmi'.  
 
 
 

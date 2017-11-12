@@ -13,7 +13,7 @@ uses
   StrUtils, Classes, SysUtils;
 
 const
-  RETAIN_PIECE_CYCLES = 10; // how many times Tidy can be called without a piece being used before it's discarded
+  RETAIN_PIECE_CYCLES = 20; // how many times Tidy can be called without a piece being used before it's discarded
 
 type
 
@@ -27,8 +27,6 @@ type
       fTheme: TNeoTheme;
       fTerrains: TMetaTerrains;
       fObjects: TGadgetMetaInfoList;
-
-      fDisableTidy: Boolean;
 
       function GetTerrainCount: Integer;
       function GetObjectCount: Integer;
@@ -53,8 +51,6 @@ type
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TGadgetMetaInfo read GetMetaObject;
-
-      property DisableTidy: Boolean read fDisableTidy write fDisableTidy;
   end;
 
   function SplitIdentifier(Identifier: String): TLabelRecord;
@@ -113,8 +109,6 @@ procedure TNeoPieceManager.Tidy;
 var
   i: Integer;
 begin
-  if fDisableTidy then Exit; // speeds up replay testing by not discarding and having to reload tiles
-
   for i := fTerrains.Count-1 downto 0 do
   begin
     fTerrains[i].CyclesSinceLastUse := fTerrains[i].CyclesSinceLastUse + 1;

@@ -112,7 +112,7 @@ type
     destructor Destroy; override;
   end;
 
-  procedure GetGraphic(aName: String; aDst: TBitmap32);
+  procedure GetGraphic(aName: String; aDst: TBitmap32; altName: String = '');
 
 implementation
 
@@ -121,13 +121,15 @@ uses
 
 { TGameMenuScreen }
 
-procedure GetGraphic(aName: String; aDst: TBitmap32);
+procedure GetGraphic(aName: String; aDst: TBitmap32; altName: String = '');
 var
   buttonSelected: Integer;
 begin
   if (not (GameParams.CurrentLevel = nil))
      and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
+  else if (altName <> '') and FileExists(AppPath + SFGraphicsMenu + altName) then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + altName, aDst)
   else if FileExists(AppPath + SFGraphicsMenu + aName) then
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
   else
@@ -137,6 +139,7 @@ begin
     if buttonSelected = mrCancel then Application.Terminate();
   end;
 end;
+
 
 procedure TGameMenuScreen.DoTestStuff;
 {$ifdef exp}
@@ -249,7 +252,7 @@ begin
     GetGraphic('sign_rank.png', BitmapElements[gmbSection]);
     GetGraphic('sign_quit.png', BitmapElements[gmbExit]);
     GetGraphic('sign_talisman.png', BitmapElements[gmbTalisman]);
-    GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection]);
+    // rank graphic will be loaded in SetSection!
 
     LoadScrollerGraphics;
 
@@ -291,7 +294,10 @@ begin
     // program text
     S := CurrentVersionString;
     {$ifdef exp}if COMMIT_ID <> '' then S := S + ':' + Uppercase(COMMIT_ID);{$endif}
-    DrawPurpleTextCentered(ScreenImg.Bitmap, GameParams.BaseLevelPack.Name + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText);
+    if not (GameParams.BaseLevelPack = nil) then
+      DrawPurpleTextCentered(ScreenImg.Bitmap, GameParams.BaseLevelPack.Name + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText)
+    else
+      DrawPurpleTextCentered(ScreenImg.Bitmap, 'No Pack' + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText);
 
     // credits animation
     DrawWorkerLemmings(0);
@@ -395,7 +401,7 @@ end;
 
 procedure TGameMenuScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  if Button = mbLeft then
+  if (Button = mbLeft) and (GameParams.CurrentLevel <> nil) then
     CloseScreen(gstPreview);
 end;
 
@@ -403,7 +409,7 @@ procedure TGameMenuScreen.Img_MouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
   Layer: TCustomLayer);
 begin
-  if Button = mbLeft then
+  if (Button = mbLeft) and (GameParams.CurrentLevel <> nil) then
     CloseScreen(gstPreview);
 end;
 
@@ -428,14 +434,11 @@ begin
   else
     CurrentSection := 0;
 
-  CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} GameParams.BaseLevelPack.Name + #13;
-  (*for i := 0 to 15 do
-  begin
-    k := BuildText(GameParams.SysDat.ScrollerTexts[i]);
-    if k <> '' then
-      CreditList.Text := CreditList.Text + k + #13;
-  end;
-  CreditList.Text := CreditList.Text + SCredits;*)
+  if not (GameParams.BaseLevelPack = nil) then
+    CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} GameParams.BaseLevelPack.Name + #13
+  else
+    CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} 'No Pack' + #13;
+
   SetNextCredit;
 
   if Assigned(GlobalGame) then
@@ -448,9 +451,22 @@ begin
 end;
 
 procedure TGameMenuScreen.SetSection;
+var
+  index: Integer;
+  altName: String;
 begin
   DrawBitmapElement(gmbSection); // This allows for transparency in the gmbGameSectionN bitmaps
-  GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection]);
+
+  if (GameParams.CurrentLevel = nil) or (GameParams.CurrentLevel.Group = nil) or (GameParams.CurrentLevel.Group.Parent = nil) then
+  begin
+    altName := '';
+  end
+  else
+  begin
+      index := GameParams.CurrentLevel.Group.Parent.GroupIndex[GameParams.CurrentLevel.Group] + 1;
+      altName := 'rank_' + Integer.ToString(index).PadLeft(2, '0') + '.png';
+  end;
+  GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection], altName);
   DrawBitmapElement(gmbGameSection);
 end;
 

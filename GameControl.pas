@@ -448,8 +448,10 @@ begin
   IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
   SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
 
-  EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
-  CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
+  //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
+  //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
+  EnableOnline := false;
+  CheckUpdates := false;
 
   DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
 
@@ -542,10 +544,16 @@ end;
 
 procedure TDosGameParams.SetGroup(aGroup: TNeoLevelGroup);
 begin
-  if aGroup.Levels.Count = 0 then
-    SetLevel(aGroup.FirstUnbeatenLevelRecursive)
-  else
-    SetLevel(aGroup.FirstUnbeatenLevel);
+  try
+    if aGroup.Levels.Count = 0 then
+      SetLevel(aGroup.FirstUnbeatenLevelRecursive)
+    else
+      SetLevel(aGroup.FirstUnbeatenLevel);
+  except
+    // We don't have levels in this group
+    On E : EAccessViolation do
+      SetLevel(nil);
+  end;
 end;
 
 procedure TDosGameParams.NextGroup;
@@ -579,8 +587,8 @@ begin
     BaseLevelPack := TNeoLevelGroup.Create(nil, AppPath + SFLevels);
     SetLevel(BaseLevelPack.FirstUnbeatenLevelRecursive);
   except
-    BaseLevelPack := nil;
-    SetLevel(nil);
+    On E : EAccessViolation do
+      SetLevel(nil);
   end;
   
   SoundManager.MusicVolume := 50;
@@ -594,16 +602,6 @@ begin
   LemDataInResource := True;
   LemSoundsInResource := True;
   LemMusicInResource := True;
-
-
-  (*
-  TempStream := CreateDataStream('talisman.dat', ldtLemmings);
-  if TempStream <> nil then
-  begin
-    fTalismans.LoadFromStream(TempStream);
-    TempStream.Free;
-  end;
-  *)
 
   fHotkeys := TLemmixHotkeyManager.Create;
 end;

@@ -29,6 +29,7 @@ type
     fSkill: Integer;
     fTarLev: Integer; // This saves the preassigned skills for hatches
                       //        and the speed of movable backgrounds.
+                      //        and the skill amount for pick-up skills
     fDrawAsZombie: Boolean;
     procedure SetFlip(aValue: Boolean); override;
     procedure SetInvert(aValue: Boolean); override;
@@ -64,7 +65,7 @@ type
 implementation
 
 
-{ TInteractiveObjects }
+{ TGadgetModelList }
 
 constructor TGadgetModelList.Create(aOwnsObjects: Boolean = true);
 begin
@@ -112,7 +113,7 @@ begin
 end;
 
 
-{ TInteractiveObject }
+{ TGadgetModel }
 
 constructor TGadgetModel.Create;
 begin
