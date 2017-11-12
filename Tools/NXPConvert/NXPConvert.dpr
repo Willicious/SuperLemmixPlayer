@@ -353,9 +353,7 @@ begin
             if    (OldTal.RRMin > (53 - GameParams.Level.Info.SpawnInterval) * 2)
                or ((OldTal.RRMax < 99) and not GameParams.Level.Info.SpawnIntervalLocked) then
             begin
-              Write('    Removed a talisman due to using no-longer-supported feature: Release rate limits');
-              NewTal.Free;
-              Continue;
+              Write('    Removed release rate limit requirement from talisman.');
             end;
 
             if OldTal.TotalSkillLimit >= 0 then NewTal.TotalSkillLimit := OldTal.TotalSkillLimit;
