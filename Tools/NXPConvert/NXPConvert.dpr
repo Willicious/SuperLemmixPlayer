@@ -345,7 +345,7 @@ begin
               else NewTal.Color := tcBronze;
             end;
 
-            if OldTal.SaveRequirement <> GameParams.Level.Info.RescueCount then
+            if OldTal.SaveRequirement > GameParams.Level.Info.RescueCount then
               NewTal.RescueCount := OldTal.SaveRequirement;
             if (OldTal.TimeLimit > 0) and (OldTal.TimeLimit <> GameParams.Level.Info.TimeLimit * 17) then
               NewTal.TimeLimit := OldTal.TimeLimit;
