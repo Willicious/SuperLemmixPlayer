@@ -964,7 +964,7 @@ end;
 
 procedure TRenderer.CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if F <> 0 then
+  if (F and $FF000000) <> 0 then
     if F and PM_NOCANCELSTEEL = 0 then
       B := F
     else
@@ -973,7 +973,7 @@ end;
 
 procedure TRenderer.CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if F <> 0 then
+  if (F and $FF000000) <> 0 then
     if B and PM_NOCANCELSTEEL = 0 then
     begin
       if (B and PM_SOLID = 0) then
@@ -985,7 +985,7 @@ end;
 
 procedure TRenderer.CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if F <> 0 then
+  if (F and $FF000000) <> 0 then
     B := 0;
 end;
 
@@ -993,13 +993,13 @@ end;
 
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if F <> 0 then
+  if (F and $FF000000) <> 0 then
     BlendMem(F, B);
 end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F <> 0) and (B and $FF000000 <> $FF000000) then
+  if (F and $FF000000 <> 0) and (B and $FF000000 <> $FF000000) then
   begin
     BlendMem(B, F);
     B := F;
@@ -1008,13 +1008,13 @@ end;
 
 procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if F <> 0 then
+  if (F and $FF000000) <> 0 then
     B := 0;
 end;
 
 procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if F <> 0 then
+  if (F and $FF000000) <> 0 then
   begin
     BlendMem(F, B);
   end;
@@ -1022,7 +1022,7 @@ end;
 
 procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if F <> 0 then
+  if (F and $FF000000) <> 0 then
   begin
     if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
     F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
