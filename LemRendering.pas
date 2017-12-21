@@ -964,7 +964,7 @@ end;
 
 procedure TRenderer.CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000) <> 0 then
+  if F <> 0 then
     if F and PM_NOCANCELSTEEL = 0 then
       B := F
     else
@@ -973,7 +973,7 @@ end;
 
 procedure TRenderer.CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000) <> 0 then
+  if F <> 0 then
     if B and PM_NOCANCELSTEEL = 0 then
     begin
       if (B and PM_SOLID = 0) then
@@ -985,7 +985,7 @@ end;
 
 procedure TRenderer.CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000) <> 0 then
+  if F <> 0 then
     B := 0;
 end;
 
