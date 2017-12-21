@@ -125,7 +125,7 @@ begin
 
     if FileExists(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi') then
     begin
-      Parser.LoadFromFile(AppPath + SFStyles + 'default' + SFPiecesLemmings + 'scheme.nxmi');
+      Parser.LoadFromFile(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi');
 
       Mode := rcl_Athlete;
       Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
