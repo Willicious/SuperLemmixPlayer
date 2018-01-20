@@ -90,6 +90,7 @@ type
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
 
     procedure AssignTo(NewObj: TGadget);
+    procedure SetFlipOfReceiverTo(Teleporter: TGadget);
 
     // true = X-movement, false = Y-movement
     function Movement(Direction: Boolean; CurrentIteration: Integer): Integer;
@@ -411,6 +412,16 @@ begin
   NewObj.ZombieMode := ZombieMode;
 end;
 
+procedure TGadget.SetFlipOfReceiverTo(Teleporter: TGadget);
+begin
+  Assert(Teleporter.MetaObj.TriggerEffect = DOM_TELEPORT, 'SetFlipOfReceiverTo with an argument that isn''t a teleporter!');
+  Assert(MetaObj.TriggerEffect = DOM_RECEIVER, 'SetFlipOfReceiverTo called for an object that isn''t a receiver!');
+  Assert(Teleporter.IsFlipImage = Teleporter.IsFlipPhysics, 'Teleporter in SetFlipOfReceiverTo has diverging flipping image and flipping physics!');
+  if Teleporter.IsFlipImage then
+    Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip
+  else
+    Obj.DrawingFlags := Obj.DrawingFlags and not odf_Flip;
+end;
 
 
 { TGadgetList }
@@ -472,6 +483,8 @@ begin
           IsReceiverUsed[TestID] := true;
           Inc(PairCount);
         end;
+        // Flip receiver according to teleporter
+        TestGadget.SetFlipOfReceiverTo(Gadget);
       end;
     end; // end test whether object is teleporter
   end; // next i
@@ -484,6 +497,5 @@ begin
         Gadget.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
   end;
 end;
-
 
 end.
