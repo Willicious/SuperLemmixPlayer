@@ -307,6 +307,14 @@ begin
     GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];
     GadgetAccessor.TriggerHeight := Sec.LineNumeric['trigger_height'];
 
+    if fTriggerEffect = 12 then // Reveiver
+    begin
+      if GadgetAccessor.TriggerWidth < 1 then
+        GadgetAccessor.TriggerWidth := 1;
+      if GadgetAccessor.TriggerHeight < 1 then
+        GadgetAccessor.TriggerHeight := 1;
+    end;
+
     fSoundEffect := Sec.LineTrimString['sound'];
 
     if Sec.Line['random_start_frame'] <> nil then
