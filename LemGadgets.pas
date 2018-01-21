@@ -90,6 +90,7 @@ type
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
 
     procedure AssignTo(NewObj: TGadget);
+    procedure UnifyFlippingFlagsOfTeleporter();
     procedure SetFlipOfReceiverTo(Teleporter: TGadget);
 
     // true = X-movement, false = Y-movement
@@ -412,15 +413,37 @@ begin
   NewObj.ZombieMode := ZombieMode;
 end;
 
+procedure TGadget.UnifyFlippingFlagsOfTeleporter();
+begin
+  Assert(MetaObj.TriggerEffect = DOM_TELEPORT, 'UnifyFlippingFlagsOfTeleporter called for object that isn''t a teleporter!');
+  if IsFlipPhysics then
+  begin
+    Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
+    Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
+  end
+  else
+  begin
+    Obj.DrawingFlags := Obj.DrawingFlags and not odf_Flip;
+    Obj.DrawingFlags := Obj.DrawingFlags and not odf_FlipLem;
+  end;
+end;
+
+
 procedure TGadget.SetFlipOfReceiverTo(Teleporter: TGadget);
 begin
   Assert(Teleporter.MetaObj.TriggerEffect = DOM_TELEPORT, 'SetFlipOfReceiverTo with an argument that isn''t a teleporter!');
   Assert(MetaObj.TriggerEffect = DOM_RECEIVER, 'SetFlipOfReceiverTo called for an object that isn''t a receiver!');
   Assert(Teleporter.IsFlipImage = Teleporter.IsFlipPhysics, 'Teleporter in SetFlipOfReceiverTo has diverging flipping image and flipping physics!');
   if Teleporter.IsFlipImage then
-    Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip
+  begin
+    Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
+    Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
+  end
   else
+  begin
     Obj.DrawingFlags := Obj.DrawingFlags and not odf_Flip;
+    Obj.DrawingFlags := Obj.DrawingFlags and not odf_FlipLem;
+  end;
 end;
 
 
@@ -484,6 +507,7 @@ begin
           Inc(PairCount);
         end;
         // Flip receiver according to teleporter
+        Gadget.UnifyFlippingFlagsOfTeleporter();
         TestGadget.SetFlipOfReceiverTo(Gadget);
       end;
     end; // end test whether object is teleporter
