@@ -5,9 +5,7 @@ unit LemStrings;
 interface
 
 uses
-  UMisc, SysUtils, LemCore;
-
-  function NumericalVersionToStringVersion(Main, Sub, Minor: Integer): String;
+  LemCore;
 
 const
   // Important paths
@@ -60,8 +58,6 @@ resourcestring
   SDummyString = '';
 
 
-  SProgramText = 'Built on NeoLemmix Engine';
-  SCredits = '';
 
   {-------------------------------------------------------------------------------
     PreviewScreen
@@ -78,68 +74,39 @@ resourcestring
   {-------------------------------------------------------------------------------
     Game Screen Info Panel
   -------------------------------------------------------------------------------}
-  SSkillPanelTemplate =
-    '............' + '.' + ' ' + #92 + '_...' + ' ' + #93 + '_...' + ' ' + #94 + '_...' + ' ' + #95 +  '_.-..';
 
   SAthlete = 'Athlete';
   STriathlete = 'Triathlete';
   SQuadathlete = 'X-Athlete';
 
   SWalker = 'Walker';
-
   SAscender = 'Ascender';
-
   SDigger = 'Digger';
-
   SClimber = 'Climber';
-
   SDrowner = 'Drowner';
-
   SHoister = 'Hoister';
-
   SBuilder = 'Builder';
-
   SBasher = 'Basher';
-
   SMiner = 'Miner';
-
   SFaller = 'Faller';
-
   SFloater = 'Floater';
-
   SSplatter = 'Splatter';
-
   SExiter = 'Exiter';
-
   SVaporizer = 'Frier';
-
   SBlocker = 'Blocker';
-
   SShrugger = 'Shrugger';
-
   SOhnoer = 'Ohnoer';
-
   SExploder = 'Bomber';
-
   SPlatformer = 'Platformer';
-
   SStacker = 'Stacker';
-
   SStoner = 'Stoner';
-
   SSwimmer = 'Swimmer';
-
   SGlider = 'Glider';
-
   SDisarmer = 'Disarmer';
-
   SCloner = 'Cloner';
-
   SFencer = 'Fencer';
-
   SZombie = 'Zombie';
 
-  SGhost = 'Ghost';
 
   {-------------------------------------------------------------------------------
     Postview Screen
@@ -209,13 +176,6 @@ const
   );
 
 implementation
-
-function NumericalVersionToStringVersion(Main, Sub, Minor: Integer): String;
-begin
-  Result := IntToStr(Main) + '.' + LeadZeroStr(Sub, 2) + 'n';
-  if Minor > 1 then
-    Result := Result + '-' + Chr(Minor + 64);
-end;
 
 end.
 
