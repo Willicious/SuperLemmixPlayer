@@ -1018,17 +1018,14 @@ begin
         Result := Result.Children[0]
       else
         GiveChildPriority := false;
-      Continue;
-    end;
-
-    if Result.ParentGroupIndex < Result.Parent.Children.Count-1 then
+    end
+    else if Result.ParentGroupIndex < Result.Parent.Children.Count - 1 then
     begin
-      Result := Result.Parent.Children[ParentGroupIndex + 1];
+      Result := Result.Parent.Children[Result.ParentGroupIndex + 1];
       GiveChildPriority := true;
-      Continue;
-    end;
-
-    Result := Result.Parent;
+    end
+    else
+      Result := Result.Parent;
   until ((Result.Levels.Count > 0) or (Result = self)) and not GiveChildPriority;
 end;
 
@@ -1044,24 +1041,24 @@ begin
       Result := Result.Parent;
       GiveParentPriority := Result.ParentGroupIndex = 0;
       Continue;
-    end;
-
-    GiveParentPriority := false;
-
-    if Result.Children.Count > 0 then
+    end
+    else if Result.Children.Count > 0 then
     begin
-      Result := Result.Children[Result.Children.Count-1];
+      GiveParentPriority := false;
+      Result := Result.Children[Result.Children.Count - 1];
       Continue;
-    end;
-
-    if Result.ParentGroupIndex > 0 then
+    end
+    else if Result.ParentGroupIndex > 0 then
     begin
+      GiveParentPriority := false;
       Result := Parent.Children[Result.ParentGroupIndex - 1];
       Continue;
+    end
+    else
+    begin
+      GiveParentPriority := true;
+      Result := Result.Parent;
     end;
-
-    Result := Result.Parent;
-    GiveParentPriority := true;
   until ((Result.Levels.Count > 0) or (Result = self)) and not GiveParentPriority;
 end;
 
