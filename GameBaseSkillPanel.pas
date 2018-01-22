@@ -385,7 +385,7 @@ var
   MaskColor: TColor32;
   SrcFile: String;
 begin
-  SrcFile := AppPath + SFStyles + GameParams.CurrentLevel.Group.PanelStyle + SFPiecesPanel + aName;
+  SrcFile := GameParams.CurrentLevel.Group.PanelPath + aName;
   if not FileExists(SrcFile) then
     SrcFile := AppPath + SFStyles + SFDefaultStyle + SFPiecesPanel + aName;
   MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];

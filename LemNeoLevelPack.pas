@@ -114,7 +114,7 @@ type
       fName: String;
       fAuthor: String;
       fFolder: String;
-      fPanelStyle: String;
+      fPanelPath: String;
       fIsBasePack: Boolean;
       fIsOrdered: Boolean;
 
@@ -127,7 +127,7 @@ type
       fHasOwnPostviewTexts: Boolean;
 
       function GetFullPath: String;
-      function GetPanelStyle: String;
+      function GetPanelPath: String;
       function GetAuthor: String;
 
       procedure LoadFromMetaInfo(aPath: String = '');
@@ -187,7 +187,7 @@ type
       property IsOrdered: Boolean read fIsOrdered write fIsOrdered;
       property Folder: String read fFolder write fFolder;
       property Path: String read GetFullPath;
-      property PanelStyle: String read GetPanelStyle write fPanelStyle;
+      property PanelPath: String read GetPanelPath write fPanelPath;
       property MusicList: TStringList read fMusicList;
       property PostviewTexts: TPostviewTexts read fPostviewTexts;
 
@@ -826,7 +826,9 @@ begin
       fName := MainSec.LineTrimString['title'];
     if MainSec.LineTrimString['author'] <> '' then
       fAuthor := MainSec.LineTrimString['author'];
-    fPanelStyle := MainSec.LineTrimString['panel'];
+
+    if (MainSec.Line['panel'] <> nil) then
+      fPanelPath := Path;
   finally
     Parser.Free;
   end;
@@ -896,15 +898,12 @@ begin
   Result := fAuthor;
 end;
 
-function TNeoLevelGroup.GetPanelStyle: String;
+function TNeoLevelGroup.GetPanelPath: String;
 begin
-  if fPanelStyle = '' then
-    if fParentGroup = nil then
-      fPanelStyle := SFDefaultStyle
-    else
-      fPanelStyle := fParentGroup.PanelStyle;
+  if (fPanelPath = '') and (fParentGroup <> nil) then
+    fPanelPath := fParentGroup.PanelPath;
 
-  Result := fPanelStyle;
+  Result := fPanelPath;
 end;
 
 function TNeoLevelGroup.GetRecursiveLevelCount: Integer;
