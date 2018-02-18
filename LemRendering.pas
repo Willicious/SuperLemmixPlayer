@@ -114,7 +114,7 @@ type
     // Object rendering
     procedure DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
     procedure DrawObjectHelpers(Dst: TBitmap32; Gadget: TGadget);
-    procedure DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget);
+    procedure DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
     procedure DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 
     // Lemming rendering
@@ -220,6 +220,8 @@ end;
 procedure TRenderer.DrawLemmings(UsefulOnly: Boolean = false);
 var
   i: Integer;
+  IsStartingSeconds: Boolean;
+  SelectedLemming: TLemming;
   LemmingList: TLemmingList;
 begin
   if not fLayers.fIsEmpty[rlParticles] then fLayers[rlParticles].Clear(0);
@@ -228,11 +230,14 @@ begin
   LemmingList := fRenderInterface.LemmingList;
 
   // Draw all lemmings, except the one below the cursor
+  IsStartingSeconds := fRenderInterface.IsStartingSeconds;
+  SelectedLemming := fRenderInterface.SelectedLemming;
   for i := 0 to LemmingList.Count-1 do
-    if LemmingList[i] <> fRenderInterface.SelectedLemming then DrawThisLemming(LemmingList[i]);
+    if LemmingList[i] <> SelectedLemming then
+      DrawThisLemming(LemmingList[i], false, IsStartingSeconds);
 
   // Draw the lemming below the cursor
-  if fRenderInterface.SelectedLemming <> nil then
+  if SelectedLemming <> nil then
     DrawThisLemming(fRenderInterface.SelectedLemming, true, UsefulOnly);
 
   // Draw particles for exploding lemmings
@@ -310,7 +315,7 @@ begin
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 
   // Helper for selected blockers
-  if Selected and (aLemming.LemIsZombie or UsefulOnly) then
+  if (Selected and aLemming.LemIsZombie) or UsefulOnly then
   begin
     DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
     fLayers.fIsEmpty[rlObjectHelpers] := false;
@@ -1173,7 +1178,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget);
+procedure TRenderer.DrawHatchSkillHelpers(Dst: TBitmap32; Gadget: TGadget; DrawOtherHelper: Boolean);
 var
   numHelpers, indexHelper: Integer;
   DrawX, DrawY: Integer;
@@ -1189,6 +1194,7 @@ begin
   if Gadget.IsPreassignedGlider then Inc(numHelpers);
   if Gadget.IsPreassignedDisarmer then Inc(numHelpers);
   if Gadget.IsPreassignedZombie then Inc(numHelpers);
+  if DrawOtherHelper then Inc(numHelpers);
 
   // Set base drawing position; helper icons will be drawn 10 pixels apart
   DrawX := Gadget.Left + Gadget.Width div 2 - numHelpers * 5;
@@ -1196,6 +1202,14 @@ begin
 
   // Draw actual helper icons
   indexHelper := 0;
+  if DrawOtherHelper then
+  begin
+    if Gadget.IsFlipPhysics then
+      fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + indexHelper * 10, DrawY)
+    else
+      fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    Inc(indexHelper);
+  end;
   if Gadget.IsPreassignedZombie then
   begin
     fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
@@ -1446,9 +1460,17 @@ begin
 end;
 
 procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
+  function IsCursorOnGadget(Gadget: TGadget): Boolean;
+  begin
+    // Magic numbers are needed due to some offset of MousePos wrt. the center of the cursor.
+    Result := PtInRect(Rect(Gadget.Left - 4, Gadget.Top + 1, Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height + 3),
+                      fRenderInterface.MousePos)
+  end;
+
 var
   Gadget: TGadget;
   i, i2: Integer;
+  DrawOtherHatchHelper: Boolean;
 begin
   fGadgets := Gadgets;
   fDrawingHelpers := DrawHelper;
@@ -1467,11 +1489,24 @@ begin
   if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
   // Draw hatch helpers
   for i := 0 to Gadgets.Count-1 do
-    if (Gadgets[i].TriggerEffect = DOM_WINDOW) and Gadgets[i].HasPreassignedSkills then
+  begin
+    Gadget := Gadgets[i];
+    if not (Gadget.TriggerEffect = DOM_WINDOW) then
+      Continue;
+
+    DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
+                            (DrawHelper and UsefulOnly and not IsCursorOnGadget(Gadget));
+    if Gadget.HasPreassignedSkills then
     begin
-      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadgets[i]);
+      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, DrawOtherHatchHelper);
+      fLayers.fIsEmpty[rlObjectHelpers] := false;
+    end
+    else if DrawOtherHatchHelper then
+    begin
+      DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
     end;
+  end;
 
   // Draw object helpers
   if DrawHelper and UsefulOnly then
@@ -1480,9 +1515,7 @@ begin
     begin
       Gadget := Gadgets[i];
 
-      // Magic numbers are needed due to some offset of MousePos wrt. the center of the cursor.
-      if not PtInRect(Rect(Gadget.Left - 4, Gadget.Top + 1, Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height + 3),
-                      fRenderInterface.MousePos) then
+      if (Gadget.TriggerEffect = DOM_WINDOW) or (not IsCursorOnGadget(Gadget)) then
         Continue;
 
       // otherwise, draw its helper

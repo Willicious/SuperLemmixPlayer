@@ -261,6 +261,7 @@ type
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
     procedure InitializeAllTriggerMaps;
+    function IsStartingSeconds: Boolean;
 
     function GetIsSimulating: Boolean;
 
@@ -825,6 +826,7 @@ begin
   fRenderInterface.ReplayLemming := nil;
   fRenderInterface.SetSimulateLemRoutine(SimulateLem, SimulateTransition);
   fRenderInterface.SetGetHighlitRoutine(GetHighlitLemming);
+  fRenderInterface.SetIsStartingSecondsRoutine(IsStartingSeconds);
 
   LemmingMethods[baNone]       := nil;
   LemmingMethods[baWalking]    := HandleWalking;
@@ -5221,6 +5223,11 @@ begin
     Result := 0
   else
     Result := UsedSkillCount[SkillPanelButtonToAction[aSkill]];
+end;
+
+function TLemmingGame.IsStartingSeconds: Boolean;
+begin
+  Result := (fCurrentIteration < 35)
 end;
 
 end.

@@ -40,6 +40,7 @@ type
   TSimulateTransitionRoutine = procedure(L: TLemming; NewAction: TBasicLemmingAction) of object;
   TSimulateLemRoutine = function(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt of object;
   TGetLemmingRoutine = function: TLemming of object;
+  TIsStartingSecondsRoutine = function: Boolean of object;
 
   TRenderLayer = (rlBackground,
                   rlBackgroundObjects,
@@ -135,6 +136,7 @@ type
       fSimulateTransitionRoutine: TSimulateTransitionRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
       fGetHighlitLemRoutine: TGetLemmingRoutine;
+      fIsStartingSecondsRoutine: TIsStartingSecondsRoutine;
       fUserHelperIcon: THelperIcon;
       fForceUpdate: Boolean;
       function GetSelectedSkill: TSkillPanelButton;
@@ -151,12 +153,14 @@ type
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
       procedure SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
       procedure SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
+      procedure SetIsStartingSecondsRoutine(aRoutine: TIsStartingSecondsRoutine);
       procedure AddTerrainBrick(X, Y: Integer; Color: TColor32);
       procedure AddTerrainStoner(X, Y: Integer);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
       procedure Null;
       procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
       function SimulateLem(L: TLemming): TArrayArrayInt;
+      function IsStartingSeconds: Boolean;
       property DisableDrawing: Boolean read fDisableDrawing write fDisableDrawing;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
       property Gadgets: TGadgetList read fGadgets write fGadgets;
@@ -265,6 +269,11 @@ begin
   fGetHighlitLemRoutine := aRoutine;
 end;
 
+procedure TRenderInterface.SetIsStartingSecondsRoutine(aRoutine: TIsStartingSecondsRoutine);
+begin
+  fIsStartingSecondsRoutine := aRoutine;
+end;
+
 procedure TRenderInterface.AddTerrainBrick(X, Y: Integer; Color: TColor32);
 begin
   // TLemmingGame is expected to handle modifications to the physics map.
@@ -298,6 +307,11 @@ end;
 function TRenderInterface.SimulateLem(L: TLemming): TArrayArrayInt;
 begin
   Result := fSimulateLemRoutine(L);
+end;
+
+function TRenderInterface.IsStartingSeconds: Boolean;
+begin
+  Result := fIsStartingSecondsRoutine;
 end;
 
 function TRenderInterface.GetHighlitLemming: TLemming;
