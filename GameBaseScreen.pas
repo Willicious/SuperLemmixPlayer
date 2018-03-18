@@ -582,7 +582,6 @@ procedure TGameBaseScreen.DoMassReplayCheck;
 var
   OpenDlg: TOpenDialog;
 begin
-  if MessageDlg('Mass replay checking can take a very long time. Proceed?', mtcustom, [mbYes, mbNo], 0) = mrNo then Exit;
   OpenDlg := TOpenDialog.Create(self);
   try
     OpenDlg.Title := 'Select any file in the folder containing replays';
