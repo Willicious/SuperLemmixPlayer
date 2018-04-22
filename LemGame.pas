@@ -1109,7 +1109,7 @@ begin
 
       if not HasPixelAt(L.LemX, L.LemY) then
         Transition(L, baFalling)
-      else if Lem.IsBlocker then
+      else if Lem.IsBlocker and not CheckForOverlappingField(L) then
         Transition(L, baBlocking)
       else
         Transition(L, baWalking);
