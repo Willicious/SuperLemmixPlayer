@@ -170,13 +170,13 @@ constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccesso
       else Exit;
     end;
 
-    if Obj.Rotate then
+    if IsRotate then
       Inc(UseDir, 1);
 
-    if Obj.Flip and (UseDir mod 2 = 0) then
+    if IsFlipImage and (UseDir mod 2 = 0) then
       Inc(UseDir, 2);
 
-    if Obj.Invert and (UseDir mod 2 = 1) then
+    if IsUpsideDown and (UseDir mod 2 = 1) then
       Inc(UseDir, 2);
 
     sTriggerEffect := DIRS[UseDir mod 4];
