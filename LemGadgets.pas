@@ -417,15 +417,9 @@ procedure TGadget.UnifyFlippingFlagsOfTeleporter();
 begin
   Assert(MetaObj.TriggerEffect = DOM_TELEPORT, 'UnifyFlippingFlagsOfTeleporter called for object that isn''t a teleporter!');
   if IsFlipPhysics then
-  begin
-    Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
-    Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
-  end
+    Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem
   else
-  begin
-    Obj.DrawingFlags := Obj.DrawingFlags and not odf_Flip;
     Obj.DrawingFlags := Obj.DrawingFlags and not odf_FlipLem;
-  end;
 end;
 
 
@@ -435,15 +429,9 @@ begin
   Assert(MetaObj.TriggerEffect = DOM_RECEIVER, 'SetFlipOfReceiverTo called for an object that isn''t a receiver!');
   Assert(Teleporter.IsFlipImage = Teleporter.IsFlipPhysics, 'Teleporter in SetFlipOfReceiverTo has diverging flipping image and flipping physics!');
   if Teleporter.IsFlipImage then
-  begin
-    Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
-    Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem;
-  end
+    Obj.DrawingFlags := Obj.DrawingFlags or odf_FlipLem
   else
-  begin
-    Obj.DrawingFlags := Obj.DrawingFlags and not odf_Flip;
     Obj.DrawingFlags := Obj.DrawingFlags and not odf_FlipLem;
-  end;
 end;
 
 

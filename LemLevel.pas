@@ -461,7 +461,7 @@ begin
 
   O.DrawingFlags := 0;
   if (aSection.Line['rotate'] <> nil) then Flag(odf_Rotate);
-  if (aSection.Line['flip_horizontal'] <> nil) then Flag(odf_Flip);
+  if (aSection.Line['flip_horizontal'] <> nil) then Flag(odf_FlipLem);
   if (aSection.Line['flip_vertical'] <> nil) then Flag(odf_UpsideDown);
   if (aSection.Line['no_overwrite'] <> nil) then Flag(odf_NoOverwrite);
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
@@ -849,7 +849,7 @@ begin
     if O.Height > 0 then Sec.AddLine('HEIGHT', O.Height);
 
     if Flag(odf_Rotate) then Sec.AddLine('ROTATE');
-    if Flag(odf_Flip) then Sec.AddLine('FLIP_HORIZONTAL');
+    if Flag(odf_FlipLem) or Flag(64) then Sec.AddLine('FLIP_HORIZONTAL'); //64 was previously flip image
     if Flag(odf_UpsideDown) then Sec.AddLine('FLIP_VERTICAL');
     if Flag(odf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
     if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');

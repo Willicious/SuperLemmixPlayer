@@ -16,7 +16,7 @@ const
   odf_NoOverwrite   = 4; // bit 2
   odf_FlipLem       = 8;
   //odf_Invisible     = 32;  // removed
-  odf_Flip          = 64;            // Better name: odf_FlipImage
+  //odf_Flip          = 64;            // Better name: odf_FlipImage
   odf_Rotate        = 128;
 
 type
@@ -31,9 +31,7 @@ type
                       //        and the speed of movable backgrounds.
                       //        and the skill amount for pick-up skills
     fDrawAsZombie: Boolean;
-    procedure SetFlip(aValue: Boolean); override;
     procedure SetInvert(aValue: Boolean); override;
-    function GetFlip: Boolean; override;
     function GetInvert: Boolean; override;
   public
     procedure Assign(Source: TPiece); override;
@@ -138,25 +136,12 @@ begin
   end;
 end;
 
-procedure TGadgetModel.SetFlip(aValue: Boolean);
-begin
-  if aValue then
-    DrawingFlags := DrawingFlags or odf_Flip
-  else
-    DrawingFlags := DrawingFlags and not odf_Flip;
-end;
-
 procedure TGadgetModel.SetInvert(aValue: Boolean);
 begin
   if aValue then
     DrawingFlags := DrawingFlags or odf_UpsideDown
   else
     DrawingFlags := DrawingFlags and not odf_UpsideDown;
-end;
-
-function TGadgetModel.GetFlip: Boolean;
-begin
-  Result := (DrawingFlags and odf_Flip) <> 0;
 end;
 
 function TGadgetModel.GetInvert: Boolean;

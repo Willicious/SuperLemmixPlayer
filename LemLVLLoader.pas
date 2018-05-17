@@ -768,8 +768,6 @@ begin
                  Obj.Free;
                  Continue;
                end;
-               if O.ObjectFlags and $40 <> 0 then
-                 Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
                if O.ObjectFlags and $100 <> 0 then
                  Obj.DrawingFlags := Obj.DrawingFlags or odf_Rotate;
                Obj.Skill := O.SValue mod 16;
@@ -1183,8 +1181,6 @@ begin
         Obj.Free;
         Continue;
       end;
-      if O.ObjectFlags and $40 <> 0 then
-        Obj.DrawingFlags := Obj.DrawingFlags or odf_Flip;
       Obj.Skill := O.SValue mod 16;
       Obj.DrawAsZombie := false;
 
@@ -1441,7 +1437,6 @@ begin
       if GetSplit(4) and 1 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_UpsideDown;
       if GetSplit(4) and 2 <> 0 then Continue; // object is fake
       if GetSplit(4) and 4 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_UpsideDown;
-      if GetSplit(4) and 8 <> 0 then O.DrawingFlags := O.DrawingFlags or odf_Flip;
 
       if GetSplit(5) = 1 then O.DrawingFlags := O.DrawingFlags or odf_FlipLem;
 
