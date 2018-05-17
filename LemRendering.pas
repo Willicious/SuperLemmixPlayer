@@ -907,11 +907,14 @@ var
   FindLabel: String;
   MO: TGadgetMetaInfo;
   df: Integer;
+  mayFlip: Boolean;
 begin
   FindLabel := O.GS + ':' + O.Piece;
   MO := PieceManager.Objects[FindLabel];
   df := O.DrawingFlags;
-  Result := MO.GetInterface(df and odf_Flip <> 0, df and odf_UpsideDown <> 0, df and odf_Rotate <> 0);
+  // Don't flip hatches and flippers
+  mayFlip := (df and odf_FlipLem <> 0) and not (MO.TriggerEffect in [DOM_WINDOW, DOM_FLIPPER]);
+  Result := MO.GetInterface(mayFlip, df and odf_UpsideDown <> 0, df and odf_Rotate <> 0);
 end;
 
 function TRenderer.FindMetaTerrain(T: TTerrain): TMetaTerrain;

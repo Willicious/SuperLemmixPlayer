@@ -426,6 +426,8 @@ var
 
   procedure GetSplitterData;
   begin
+    // Ignore previous settings by "flip_horizontal" and the like.
+    O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
     if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then
       Flag(odf_FlipLem);
   end;
