@@ -17,7 +17,7 @@ uses
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
   LemGadgets, LemGadgetsMeta,
   LemLemming,
-  LemDosAnimationSet, LemMetaAnimation, LemCore,
+  LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
 
 type
@@ -52,7 +52,7 @@ type
     RenderInfoRec       : TRenderInfoRec;
     fTheme              : TNeoTheme;
     fHelperImages       : THelperImages;
-    fAni                : TBaseDosAnimationSet;
+    fAni                : TBaseAnimationSet;
     fBgColor            : TColor32;
     fParticles          : TParticleTable; // all particle offsets
     fPreviewGadgets     : TGadgetList; // For rendering from Preview screen
@@ -150,7 +150,7 @@ type
     property PhysicsMap: TBitmap32 read fPhysicsMap;
     property BackgroundColor: TColor32 read fBgColor write fBgColor;
     property Theme: TNeoTheme read fTheme;
-    property LemmingAnimations: TBaseDosAnimationSet read fAni;
+    property LemmingAnimations: TBaseAnimationSet read fAni;
 
     property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
     property ParticleLayer: TBitmap32 read GetParticleLayer; // needs to be replaced with making TRenderer draw them
@@ -1598,7 +1598,7 @@ begin
   fLayers := TRenderBitmaps.Create;
   fPhysicsMap := TBitmap32.Create;
   fBgColor := $00000000;
-  fAni := TBaseDosAnimationSet.Create;
+  fAni := TBaseAnimationSet.Create;
   fRecolorer := TRecolorImage.Create;
   fPreviewGadgets := TGadgetList.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
@@ -1920,7 +1920,6 @@ begin
     fAni.ClearData;
     fAni.LemmingPrefix := fTheme.Lemmings;
     fAni.MaskingColor := fTheme.Colors[MASK_COLOR];
-    fAni.MainDataFile := 'main.dat';
     fAni.ReadData;
 
     fRecolorer.LoadSwaps(fTheme.Lemmings);
