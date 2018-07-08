@@ -316,9 +316,9 @@ end;
 procedure TBaseAnimationSet.ClearData;
 begin
   fLemmingAnimations.Clear;
-  fMetaLemmingAnimations.Clear;
-  fCountDownDigitsBitmap.Clear;
-  fHighlightBitmap.Clear;
+  if Assigned(fMetaLemmingAnimations) then fMetaLemmingAnimations.Clear;
+  if Assigned(fCountDownDigitsBitmap) then fCountDownDigitsBitmap.Clear;
+  if Assigned(fHighlightBitmap) then fHighlightBitmap.Clear;
   fLemmingPrefix := 'default';
 end;
 
