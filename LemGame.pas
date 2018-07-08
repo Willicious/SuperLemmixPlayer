@@ -1311,7 +1311,7 @@ const
 begin
   if DoTurn then TurnAround(L);
 
-  //Swith from baToWalking to baWalking
+  //Switch from baToWalking to baWalking
   if NewAction = baToWalking then NewAction := baWalking;
 
   if L.LemHasBlockerField and not (NewAction in [baOhNoing, baStoning]) then
@@ -5159,7 +5159,7 @@ begin
   if CurrSkillCount[aAction] < 100 then // i.e. not infinite skills
     CurrSkillCount[aAction] := Max(Min(CurrSkillCount[aAction] + Amount, 99), 0);
 
-  if Amount < 0 then Inc(UsedSkillCount[aAction], Amount);
+  if Amount < 0 then Inc(UsedSkillCount[aAction], -Amount);
 end;
 
 procedure TLemmingGame.SaveGameplayImage(Filename: String);
