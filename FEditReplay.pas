@@ -98,7 +98,7 @@ var
       Result := Result + ', ' + GetSkillString(A.Skill);
     end else if aItem is TReplayChangeSpawnInterval then
     begin
-      Result := Result + 'Release Rate ' + IntToStr(R.NewSpawnInterval);
+      Result := Result + 'Spawn Interval ' + IntToStr(R.NewSpawnInterval);
     end else if aItem is TReplayNuke then
     begin
       Result := Result + 'Nuke';
@@ -222,7 +222,7 @@ begin
   NoteChangeAtFrame(I.Frame);
   if I is TReplayChangeSpawnInterval then
     if CheckConsecutiveRR then
-      ApplyRRDelete := MessageDlg('Delete consecutive RR changes as well?', mtCustom, [mbYes, mbNo], 0) = mrYes;
+      ApplyRRDelete := MessageDlg('Delete consecutive Spawn Interval changes as well?', mtCustom, [mbYes, mbNo], 0) = mrYes;
 
   if ApplyRRDelete then
     HandleRRDelete(I.Frame)
