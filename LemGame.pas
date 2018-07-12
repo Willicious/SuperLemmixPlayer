@@ -5005,20 +5005,22 @@ begin
   Assert(GadgetID < Gadgets.Count, 'Teleporter associated to teleporting lemming not found');
 
   Gadget := Gadgets[GadgetID];
-  if Gadget.TriggerEffect = DOM_RECEIVER then
+  if not Gadget.TriggerEffect = DOM_RECEIVER then Exit;
+  if     (Gadget.CurrentFrame < Gadget.AnimationFrameCount)
+     and ((Gadget.KeyFrame = 0) or (Gadget.CurrentFrame < Gadget.KeyFrame)) then Exit;
+
+  L.LemTeleporting := False; // Let lemming reappear
+  Gadget.TeleLem := -1;
+  Result := True;
+  // Reset blocker map, if lemming is a blocker and the target position is free
+  if L.LemAction = baBlocking then
   begin
-    if    (Gadget.CurrentFrame + 1 >= Gadget.AnimationFrameCount)
-       or ((Gadget.KeyFrame <> 0) and (Gadget.CurrentFrame + 1 >= Gadget.KeyFrame)) then
+    if CheckForOverlappingField(L) then
+      Transition(L, baWalking)
+    else
     begin
-      L.LemTeleporting := False; // Let lemming reappear
-      Gadget.TeleLem := -1;
-      Result := True;
-      // Reset blocker map, if lemming is a blocker
-      if L.LemAction = baBlocking then
-      begin
-        L.LemHasBlockerField := True;
-        SetBlockerMap;
-      end;
+      L.LemHasBlockerField := True;
+      SetBlockerMap;
     end;
   end;
 end;
