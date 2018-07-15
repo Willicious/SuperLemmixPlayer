@@ -1,7 +1,7 @@
 NeoLemmix
 
 by Namida Verasche and Stephan Neupert,
-based on Lemmix by EricLang,
+based on Lemmix by Eric Langedijk,
 inspired by Lemmings by DMA.
 
 The main branch is "new-master", which gives users access to most data files 
@@ -42,4 +42,7 @@ Further comments:
 - GSConverter:
   This is a tool to convert old binary graphic styles to the new .png-based file format.
   The project file is "GSConvert.dpr" in "Tools/GSConvert".
-  Again no special build script is needed.  
+  Again no special build script is needed.
+
+
+
