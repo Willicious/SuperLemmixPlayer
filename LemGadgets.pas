@@ -56,6 +56,7 @@ type
     HoldActive     : Boolean;
 
     constructor Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor); Overload;
+    function Clone: TGadget;
 
     property TriggerRect: TRect read sTriggerRect;
     property Top: Integer read sTop write SetTop;
@@ -222,6 +223,11 @@ begin
 
   HoldActive := False;
   ZombieMode := False;
+end;
+
+function TGadget.Clone: TGadget;
+begin
+  Result := TGadget.Create(Obj, MetaObj);
 end;
 
 function TGadget.GetTriggerRect: TRect;
@@ -460,58 +466,58 @@ procedure TGadgetList.FindReceiverID;
 var
   i, TestId: Integer;
   Gadget, TestGadget: TGadget;
-  PairCount: Integer;
+  ItemCount, PairCount: Integer;
   IsReceiverUsed: array of Boolean;
 begin
   PairCount := 0;
-  SetLength(IsReceiverUsed, Count);
-  for i := 0 to Count-1 do
+  ItemCount := Count;
+  SetLength(IsReceiverUsed, ItemCount);
+  for i := 0 to ItemCount - 1 do
   begin
     IsReceiverUsed[i] := false;
     Items[i].sPairingId := -1;
   end;
 
-  for i := 0 to Count - 1 do
+  for i := 0 to ItemCount - 1 do
   begin
-    Gadget := List[i];
+    Gadget := Items[i];
     if Gadget.TriggerEffect = DOM_TELEPORT then
     begin
       // Find receiver for this teleporter with index i
       TestID := i;
       repeat
         Inc(TestID);
-        TestGadget := List[TestId mod Count];
+        TestGadget := List[TestId mod ItemCount];
       until ((TestGadget.TriggerEffect = DOM_RECEIVER) and (TestGadget.Obj.Skill = Gadget.Obj.Skill))
-            or (TestID = i + Count);
+            or (TestID = i + ItemCount);
 
-      TestID := TestID mod Count;
-      // If TestID = i then there is no receiver and we disable the teleporter
+      TestID := TestID mod ItemCount;
       if i = TestID then
-        Gadget.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
+        // If TestID = i then there is no receiver and we disable the teleporter
+        Gadget.TriggerEffect := DOM_NONE
       else begin
         Gadget.sReceiverId := TestID;
         if IsReceiverUsed[TestID] then
-          Gadget.sPairingId := TestGadget.sPairingId
-        else begin
-          Gadget.sPairingId := PairCount;
-          TestGadget.sPairingId := PairCount;
-          IsReceiverUsed[TestID] := true;
-          Inc(PairCount);
+        begin
+          // Clone the receiver, if it is used by more than one teleporter
+          TestGadget := TestGadget.Clone;
+          Add(TestGadget); // to this GadgetList
+          Gadget.sReceiverId := Count - 1; // set to newly added receiver
         end;
+        Gadget.sPairingId := PairCount;
+        TestGadget.sPairingId := PairCount;
+        IsReceiverUsed[TestID] := true; // ignore newly added receivers for this
+        Inc(PairCount);
         // Flip receiver according to teleporter
         Gadget.UnifyFlippingFlagsOfTeleporter();
         TestGadget.SetFlipOfReceiverTo(Gadget);
       end;
     end; // end test whether object is teleporter
-  end; // next i
+  end; // next gadget
 
-  for i := 0 to Count-1 do
-  begin
-    Gadget := List[i];
-    if Gadget.TriggerEffect = DOM_RECEIVER then
-      if not IsReceiverUsed[i] then
-        Gadget.TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
-  end;
+  for i := 0 to ItemCount - 1 do
+    if (Items[i].TriggerEffect = DOM_RECEIVER) and not IsReceiverUsed[i] then
+      Items[i].TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
 end;
 
 end.

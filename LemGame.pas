@@ -5005,9 +5005,9 @@ begin
   Assert(GadgetID < Gadgets.Count, 'Teleporter associated to teleporting lemming not found');
 
   Gadget := Gadgets[GadgetID];
-  if not Gadget.TriggerEffect = DOM_RECEIVER then Exit;
-  if     (Gadget.CurrentFrame < Gadget.AnimationFrameCount)
-     and ((Gadget.KeyFrame = 0) or (Gadget.CurrentFrame < Gadget.KeyFrame)) then Exit;
+  if Gadget.TriggerEffect <> DOM_RECEIVER then Exit;
+  if (Gadget.KeyFrame = 0) and (Gadget.CurrentFrame < Gadget.AnimationFrameCount - 1) then Exit;
+  if (Gadget.KeyFrame > 0) and (Gadget.CurrentFrame < Gadget.KeyFrame) then Exit;
 
   L.LemTeleporting := False; // Let lemming reappear
   Gadget.TeleLem := -1;
