@@ -5007,7 +5007,7 @@ begin
   Gadget := Gadgets[GadgetID];
   if Gadget.TriggerEffect <> DOM_RECEIVER then Exit;
   if (Gadget.KeyFrame = 0) and (Gadget.CurrentFrame < Gadget.AnimationFrameCount - 1) then Exit;
-  if (Gadget.KeyFrame > 0) and (Gadget.CurrentFrame < Gadget.KeyFrame) then Exit;
+  if (Gadget.KeyFrame > 0) and (Gadget.CurrentFrame < Gadget.KeyFrame - 1) then Exit;
 
   L.LemTeleporting := False; // Let lemming reappear
   Gadget.TeleLem := -1;
