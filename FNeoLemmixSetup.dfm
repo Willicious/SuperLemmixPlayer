@@ -99,8 +99,7 @@ object FNLSetup: TFNLSetup
         Text = 'Normal quality (for standard computers)'
         Items.Strings = (
           'High quality (for fast computers)'
-          'Normal quality (for standard computers)'
-          'Low quality (for slow computers)')
+          'Normal quality (for standard computers)')
       end
     end
   end

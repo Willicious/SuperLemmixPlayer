@@ -199,14 +199,9 @@ begin
     0: begin
          GameParams.MinimapHighQuality := true;
          GameParams.LinearResampleMenu := true;
-         GameParams.LinearResampleGame := true;
+         GameParams.LinearResampleGame := false;
        end;
     1: begin
-         GameParams.MinimapHighQuality := false;
-         GameParams.LinearResampleMenu := true;
-         GameParams.LinearResampleGame := true;
-       end;
-    2: begin
          GameParams.MinimapHighQuality := false;
          GameParams.LinearResampleMenu := false;
          GameParams.LinearResampleGame := false;
