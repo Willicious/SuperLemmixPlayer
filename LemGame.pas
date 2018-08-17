@@ -2144,7 +2144,9 @@ begin
     Assert(i <= Length(CheckPos[1]), 'CheckTriggerArea: CheckPos has not enough entries');
 
     // Transition if we are at the end position and need to do one
-    if (fLemNextAction <> baNone) and ([CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY]) then
+    // Except if we try to splat and there is water at the lemming position - then let this take precedence.
+    if (fLemNextAction <> baNone) and ([CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY])
+      and ((fLemNextAction <> baSplatting) or not HasTriggerAt(L.LemX, L.LemY, trWater)) then
     begin
       Transition(L, fLemNextAction);
       fLemNextAction := baNone;
