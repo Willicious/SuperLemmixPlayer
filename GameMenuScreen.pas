@@ -9,14 +9,9 @@ unit GameMenuScreen;
 interface
 
 uses
-  System.Types,
-  Math,
-  PngInterface, SharedGlobals,
-  Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, ShellApi,
-  GR32, GR32_Layers, GR32_Resamplers,
-  UMisc, Dialogs, LemVersion,
-  LemTypes, LemStrings, LemDosStructures, LemGame,
-  GameControl, GameBaseScreen;
+  Classes, Controls,
+  GameBaseScreen, GameControl,
+  GR32, GR32_Layers;
 
 type
   {-------------------------------------------------------------------------------
@@ -79,10 +74,10 @@ type
     PausingDone            : Boolean; // the current text has been paused
     CreditList             : TStringList;
     CreditIndex            : Integer;
-    CreditString          : string;
-    TextX           : Integer;
-    TextPauseX      : Integer; // if -1 then no pause
-    TextGoneX       : Integer;
+    CreditString           : String;
+    TextX                  : Integer;
+    TextPauseX             : Integer; // if -1 then no pause
+    TextGoneX              : Integer;
 
     CurrentFrame           : Integer;
     ReelShift              : Integer;
@@ -117,7 +112,11 @@ type
 implementation
 
 uses
-  FNeoLemmixSetup, LemNeoOnline, UITypes;
+  Forms, Math, Graphics, SysUtils, UMisc, Dialogs, Windows,
+  UITypes, ShellApi, MMSystem,
+  PngInterface, SharedGlobals,
+  FNeoLemmixSetup, LemNeoOnline,
+  LemTypes, LemStrings, LemDosStructures, LemGame, LemVersion;
 
 { TGameMenuScreen }
 
@@ -214,7 +213,7 @@ var
   Tmp: TBitmap32;
   i: Integer;
   GrabRect: TRect;
-  S: String;
+  S, S2: String;
   iPanel: TGameMenuBitmap;
 
   procedure LoadScrollerGraphics;
@@ -294,10 +293,21 @@ begin
     // program text
     S := CurrentVersionString;
     {$ifdef exp}if COMMIT_ID <> '' then S := S + ':' + Uppercase(COMMIT_ID);{$endif}
-    if not (GameParams.BaseLevelPack = nil) then
-      DrawPurpleTextCentered(ScreenImg.Bitmap, GameParams.BaseLevelPack.Name + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText)
+    if GameParams.CurrentLevel <> nil then
+      S2 := GameParams.CurrentLevel.Group.PackTitle + #13 +
+            GameParams.CurrentLevel.Group.PackAuthor + #13 +
+            'NeoLemmix Player V' + S
+    else if GameParams.BaseLevelPack <> nil then
+      S2 := 'No Levels Found' + #13 + 'NeoLemmix Player V' + S
     else
-      DrawPurpleTextCentered(ScreenImg.Bitmap, 'No Pack' + #13 + 'NeoLemmix Player V' + S, YPos_ProgramText);
+      S2 := 'No Pack' + #13 + 'NeoLemmix Player V' + S;
+    DrawPurpleTextCentered(ScreenImg.Bitmap, S2, YPos_ProgramText);
+
+    // scroller text
+    if GameParams.CurrentLevel <> nil then
+      CreditList := GameParams.CurrentLevel.Group.ScrollerList
+    else
+      CreditList.Text := 'No pack' + #13;
 
     // credits animation
     DrawWorkerLemmings(0);
@@ -347,7 +357,6 @@ begin
   CreditList.Text := '';
   CreditIndex := -1;
   ReelLetterBoxCount := 34;
-  SetNextCredit;
   CreditIndex := -1;
 
   // set eventhandlers
@@ -434,13 +443,6 @@ begin
   else
     CurrentSection := 0;
 
-  if not (GameParams.BaseLevelPack = nil) then
-    CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} GameParams.BaseLevelPack.Name + #13
-  else
-    CreditList.Text := {$ifdef exp}'EXPERIMENTAL PLAYER RELEASE' + #13 +{$endif} 'No Pack' + #13;
-
-  SetNextCredit;
-
   if Assigned(GlobalGame) then
     GlobalGame.ReplayManager.Clear(true);
 end;
@@ -458,9 +460,7 @@ begin
   DrawBitmapElement(gmbSection); // This allows for transparency in the gmbGameSectionN bitmaps
 
   if (GameParams.CurrentLevel = nil) or (GameParams.CurrentLevel.Group = nil) or (GameParams.CurrentLevel.Group.Parent = nil) then
-  begin
-    altName := '';
-  end
+    altName := ''
   else
   begin
       index := GameParams.CurrentLevel.Group.Parent.GroupIndex[GameParams.CurrentLevel.Group] + 1;
@@ -576,17 +576,11 @@ begin
 
     Dec(TextX, 4);
     if TextX < TextGoneX then
-    begin
       SetNextCredit;
-    end;
 
-    if not PausingDone then
-    begin
-      // if text can be centered then pause if we are there
-      if TextPauseX >= 0 then
-        if TextX <= TextPauseX then
-          Pausing := True;
-    end;
+    // if text can be centered then pause if we are there
+    if (not PausingDone) and (TextPauseX >= 0) and (TextX <= TextPauseX) then
+      Pausing := True;
 
     DrawWorkerLemmings(CurrentFrame);
     DrawReel;

@@ -120,6 +120,11 @@ type
 
       fTalismans: TObjectList<TTalisman>;
 
+      fPackTitle: String;
+      fPackAuthor: String;
+      fScrollerList: TStringList;
+      fHasOwnScrollerList: Boolean;
+
       fMusicList: TStringList;
       fHasOwnMusicList: Boolean;
 
@@ -139,6 +144,9 @@ type
       procedure Load;
 
       procedure SetDefaultData;
+      procedure LoadScrollerData;
+      procedure LoadScrollerDataDefault;
+      procedure LoadScrollerSection(aSection: TParserSection; const aIteration: Integer);
       procedure LoadMusicData;
       procedure LoadMusicLine(aLine: TParserLine; const aIteration: Integer);
       procedure LoadPostviewData;
@@ -188,6 +196,9 @@ type
       property Folder: String read fFolder write fFolder;
       property Path: String read GetFullPath;
       property PanelPath: String read GetPanelPath write fPanelPath;
+      property PackTitle: String read fPackTitle;
+      property PackAuthor: String read fPackAuthor;
+      property ScrollerList: TStringList read fScrollerList;
       property MusicList: TStringList read fMusicList;
       property PostviewTexts: TPostviewTexts read fPostviewTexts;
 
@@ -509,6 +520,19 @@ begin
   Load;
 end;
 
+destructor TNeoLevelGroup.Destroy;
+begin
+  fChildGroups.Free;
+  fLevels.Free;
+  if fHasOwnMusicList and (fMusicList <> nil) then
+    fMusicList.Free;
+  if fTalismans <> nil then
+    fTalismans.Free;
+  if fHasOwnScrollerList and (fScrollerList <> nil) then
+    fScrollerList.Free;
+  inherited;
+end;
+
 function TNeoLevelGroup.FindFile(aName: String): String;
 begin
   if FileExists(Path + aName) then
@@ -519,8 +543,66 @@ end;
 
 procedure TNeoLevelGroup.SetDefaultData;
 begin
+  LoadScrollerDataDefault;
   LoadMusicData;
   LoadPostviewData;
+end;
+
+procedure TNeoLevelGroup.LoadScrollerDataDefault;
+begin
+  fPackTitle := '';
+  fPackAuthor := '';
+
+  if (fParentGroup <> nil) and not FileExists(Path + 'info.nxmi') then
+  begin
+    if fParentGroup.PackTitle.Length > 0 then
+      fPackTitle := fParentGroup.PackTitle;
+    if fParentGroup.PackAuthor.Length > 0 then
+      fPackAuthor := fParentGroup.PackAuthor;
+    fScrollerList := fParentGroup.ScrollerList;
+    fHasOwnScrollerList := false;
+  end
+  else
+  begin
+    fScrollerList := TStringList.Create;
+    fHasOwnScrollerList := true;
+  end;
+end;
+
+procedure TNeoLevelGroup.LoadScrollerData;
+var
+  Parser: TParser;
+  MainSec: TParserSection;
+begin
+  if not FileExists(Path + 'info.nxmi') then
+    Exit;
+
+  if not fHasOwnScrollerList then
+  begin
+    fScrollerList := TStringList.Create;
+    fHasOwnScrollerList := true;
+  end;
+
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromFile(Path + 'info.nxmi');
+    MainSec := Parser.MainSection;
+    fPackTitle := MainSec.LineTrimString['title'];
+    fPackAuthor := MainSec.LineTrimString['author'];
+    MainSec.DoForEachSection('scroller', LoadScrollerSection);
+  finally
+    Parser.Free;
+  end;
+end;
+
+procedure TNeoLevelGroup.LoadScrollerSection(aSection: TParserSection; const aIteration: Integer);
+begin
+  aSection.DoForEachLine('line',
+    procedure(aLine: TParserLine; const aIteration: Integer)
+    begin
+      fScrollerList.Add(aLine.ValueTrimmed);
+    end
+  );
 end;
 
 procedure TNeoLevelGroup.LoadMusicData;
@@ -598,17 +680,6 @@ begin
   NewText := fPostviewTexts.Add;
   NewText.InterpretCondition(aSection.LineTrimString['condition']);
   aSection.DoForEachLine('line', NewText.LoadLine);
-end;
-
-destructor TNeoLevelGroup.Destroy;
-begin
-  fChildGroups.Free;
-  fLevels.Free;
-  if fParentGroup = nil then
-    fMusicList.Free;
-  if fTalismans <> nil then
-    fTalismans.Free;
-  inherited;
 end;
 
 procedure TNeoLevelGroup.LoadUserData;
@@ -774,6 +845,8 @@ end;
 
 procedure TNeoLevelGroup.Load;
 begin
+  LoadScrollerData; // doesn't do anything if there is no info.nxmo file...
+
   if FileExists(Path + 'levels.nxmi') and (Parent <> nil) then
     LoadFromMetaInfo
   else
@@ -812,23 +885,22 @@ begin
     MainSec.DoForEachLine('level', LoadLevel);
     fIsBasePack := MainSec.Line['base'] <> nil;
     fIsOrdered := true;
-
+    Parser.Clear;
     // we do NOT want to sort alphabetically here, we want them to stay in the order
     // the metainfo file lists them in!
 
-    Parser.Clear;
-    MainSec := Parser.MainSection;
-    if not FileExists(Path + 'info.nxmi') then
-      Exit;
+    if FileExists(Path + 'info.nxmi') then
+    begin
+      Parser.LoadFromFile(Path + 'info.nxmi');
+      MainSec := Parser.MainSection;
+      if MainSec.LineTrimString['title'] <> '' then
+        fName := MainSec.LineTrimString['title'];
+      if MainSec.LineTrimString['author'] <> '' then
+        fAuthor := MainSec.LineTrimString['author'];
 
-    Parser.LoadFromFile(Path + 'info.nxmi');
-    if MainSec.LineTrimString['title'] <> '' then
-      fName := MainSec.LineTrimString['title'];
-    if MainSec.LineTrimString['author'] <> '' then
-      fAuthor := MainSec.LineTrimString['author'];
-
-    if (MainSec.Line['panel'] <> nil) then
-      fPanelPath := Path;
+      if (MainSec.Line['panel'] <> nil) then
+        fPanelPath := Path;
+    end;
   finally
     Parser.Free;
   end;
