@@ -281,12 +281,12 @@ end;
 
 function GetFileAge(FilePath: String): Integer;
 var
-  FileDate: TDateTime;
+  DateTime: TDateTime;
 begin
-  if not FileAge(FilePath, FileDate) then
-    FileDate := StrToDate('01/01/1970'); // use default value
+  if not FileAge(FilePath, DateTime) then
+    DateTime := 32100; // some time in 1987...
 
-  Result := DateTimeToFileDate(FileDate);
+  Result := DateTimeToFileDate(DateTime);
 end;
 
 
@@ -380,6 +380,12 @@ var
   Parser: TParser;
 begin
   if fDataLoaded then Exit;
+  if not FileExists(Path) then
+  begin
+    MessageDlg('No file at location: ' + Path, mtWarning, [mbOK], 0);
+    Exit;
+  end;
+
   Parser := TParser.Create;
   try
     Parser.LoadFromFile(Path);

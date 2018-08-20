@@ -484,6 +484,11 @@ end;
 procedure TDosGameParams.LoadCurrentLevel(NoOutput: Boolean = false);
 begin
   if CurrentLevel = nil then Exit;
+  if not FileExists(CurrentLevel.Path) then
+  begin
+    MessageDlg('Loading failed: No file at location: ' + CurrentLevel.Path, mtWarning, [mbOK], 0);
+    Exit;
+  end;
   Level.LoadFromFile(CurrentLevel.Path);
   PieceManager.Tidy;
   Renderer.PrepareGameRendering(Level, NoOutput);
