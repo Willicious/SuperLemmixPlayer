@@ -250,7 +250,7 @@ end;
 
 function TGamePreviewScreen.GetScreenText: string;
 var
-  ExtraNewLines: Integer;
+  ExtraHalfLines: Integer;
 
   function GetTalismanText: String;
   var
@@ -331,11 +331,11 @@ var
   end;
 begin
   Assert(GameParams <> nil);
-  ExtraNewLines := 1;
+  ExtraHalfLines := 1;
 
   with GameParams.Level.Info do
   begin
-    Result := Title + #13;
+    Result := Title + #13#12;
 
     if GameParams.CurrentLevel.Group.Parent <> nil then
     begin
@@ -343,11 +343,12 @@ begin
       if GameParams.CurrentLevel.Group.IsOrdered then
         Result := Result + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1);
     end;
-    Result := Result + #13#13#13#13;
+    Result := Result + #13#13#13;
 
-    Result := Result + IntToStr(LemmingsCount - ZombieCount) + SPreviewLemmings + #13;
-    Result := Result + IntToStr(RescueCount) + SPreviewSave + #13;
+    Result := Result + IntToStr(LemmingsCount - ZombieCount) + SPreviewLemmings + #13#12;
+    Result := Result + IntToStr(RescueCount) + SPreviewSave + #13#12;
 
+    {
     if GameParams.SpawnInterval then
       Result := Result + SPreviewSpawnInterval + IntToStr(SpawnInterval)
     else
@@ -355,20 +356,21 @@ begin
     if SpawnIntervalLocked then
       Result := Result + SPreviewRRLocked;
     Result := Result + #13;
+    }
 
     if HasTimeLimit then
-      Result := Result + SPreviewTimeLimit + IntToStr(TimeLimit div 60) + ':' + LeadZeroStr(TimeLimit mod 60, 2) + #13
+      Result := Result + SPreviewTimeLimit + IntToStr(TimeLimit div 60) + ':' + LeadZeroStr(TimeLimit mod 60, 2) + #13#12
     else
-      Inc(ExtraNewLines);
+      Inc(ExtraHalfLines, 3);
 
     if Author <> '' then
       Result := Result + SPreviewAuthor + Author + #13
     else
-      Inc(ExtraNewLines);
+      Inc(ExtraHalfLines, 3);
 
     Result := Result + #13 + GetTalismanText + #13;
 
-    Result := Result + StringOfChar(#13, ExtraNewLines);
+    Result := Result + StringOfChar(#12, ExtraHalfLines);
 
     Result := Result + SPressMouseToContinue;
 
