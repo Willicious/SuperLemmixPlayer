@@ -12,7 +12,7 @@ uses
   Contnrs, Classes;
 
 const
-  PARTICLE_FRAMECOUNT = 52;
+  PARTICLE_FRAMECOUNT = 51;
   PARTICLE_COLORS: array[0..7] of TColor32 = ($FF4040E0, $FF00B000, $FFF0D0D0, $FFF02020,
                                               $C04040E0, $C000B000, $C0F0D0D0, $C0F02020);
 

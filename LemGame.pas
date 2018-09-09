@@ -503,9 +503,6 @@ const
   HEAD_MIN_Y = -7;
   LEMMING_MAX_Y = 9;
 
-  PARTICLE_FRAMECOUNT = 52;
-  PARTICLE_FINISH_FRAMECOUNT = 52;
-
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
@@ -4211,7 +4208,7 @@ begin
   RemoveLemming(L, RM_KILL);
   L.LemExploded := True;
   L.LemParticleTimer := PARTICLE_FRAMECOUNT;
-  fParticleFinishTimer := PARTICLE_FINISH_FRAMECOUNT;
+  fParticleFinishTimer := PARTICLE_FRAMECOUNT;
 end;
 
 
