@@ -305,7 +305,7 @@ begin
 
     // scroller text
     if GameParams.CurrentLevel <> nil then
-      CreditList := GameParams.CurrentLevel.Group.ScrollerList
+      CreditList.assign(GameParams.CurrentLevel.Group.ScrollerList)
     else
       CreditList.Text := 'No pack' + #13;
 
