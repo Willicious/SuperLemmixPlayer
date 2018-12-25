@@ -14,7 +14,7 @@ unit LemGame;
 interface
 
 uses
-  System.Types,
+  System.Types, Generics.Collections,
   SharedGlobals, PngInterface,
   Windows, Classes, Contnrs, SysUtils, Math, Forms, Dialogs,
   Controls, StrUtils, UMisc,
@@ -148,7 +148,7 @@ type
     StonerMask                 : TBitmap32;
     BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
-    MinerMasks                  : TBitmap32;
+    MinerMasks                 : TBitmap32;
     fMasksLoaded               : Boolean;
 
   { vars }
@@ -203,7 +203,7 @@ type
   { events }
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
     fSimulationDepth           : Integer; // whether we are in simulation mode for drawing shadows
-
+    fSoundList                 : TList<string>; // List of sounds that have been played already on this frame
   { pixel combine eventhandlers }
     // CombineMaskPixels has variants based on the direction of destruction
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32); // general-purpose
@@ -889,7 +889,7 @@ begin
   fHitTestAutoFail := false;
 
   fSimulationDepth := 0;
-
+  fSoundList := TList<string>.Create();
 end;
 
 destructor TLemmingGame.Destroy;
@@ -919,6 +919,7 @@ begin
   ZombieMap.Free;
   fReplayManager.Free;
   fRenderInterface.Free;
+  fSoundList.Free;
   inherited Destroy;
 end;
 
@@ -4259,6 +4260,7 @@ procedure TLemmingGame.UpdateLemmings;
 begin
   if fGameFinished then
     Exit;
+  fSoundList.Clear(); // Clear list of played sound effects
   CheckForGameFinished;
 
   CheckAdjustSpawnInterval;
@@ -4287,6 +4289,7 @@ begin
 
   // Check lemmings under cursor
   HitTest;
+  fSoundList.Clear(); // Clear list of played sound effects - just to be safe
 end;
 
 
@@ -4654,15 +4657,17 @@ end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String);
 begin
-  if IsSimulating then Exit; // Not play sound in simulation mode
-
-  MessageQueue.Add(GAMEMSG_SOUND, aSound);
+  CueSoundEffect(aSound, Point(0, 0));
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);
 begin
   if IsSimulating then Exit; // Not play sound in simulation mode
 
+  // Check that the sound was not yet played on this frame
+  if fSoundList.Contains(aSound) then Exit;
+
+  fSoundList.Add(aSound);
   MessageQueue.Add(GAMEMSG_SOUND_BAL, aSound, aOrigin.X);
 end;
 
