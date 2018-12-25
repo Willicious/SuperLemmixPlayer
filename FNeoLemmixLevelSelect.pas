@@ -271,11 +271,7 @@ begin
     G := TNeoLevelGroup(Obj);
     lblName.Caption := G.Name;
     lblPosition.Caption := GetGroupPositionText;
-
-    if G.Author <> '' then
-      lblAuthor.Caption := 'By ' + G.Author
-    else
-      lblAuthor.Caption := '';
+    lblAuthor.Caption := G.Author;
 
     S := '';
     CompletedCount := 0;
