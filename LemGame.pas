@@ -4986,8 +4986,8 @@ begin
     else
     begin;
       Inc(L.LemQueueFrame);
-      // Delete queued action after 8 frames
-      if L.LemQueueFrame > 7 then
+      // Delete queued action after 16 frames
+      if L.LemQueueFrame > 15 then
       begin
         L.LemQueueAction := baNone;
         L.LemQueueFrame := 0;
