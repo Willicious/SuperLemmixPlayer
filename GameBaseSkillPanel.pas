@@ -173,7 +173,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png',                                 {Skills end here}
+    'empty_slot.png', 'empty_slot.png',              {Skills end here}
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
     'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_1fb.png',
     'icon_1ff.png', 'icon_clearphysics.png', 'icon_directional.png', 'icon_load_replay.png',

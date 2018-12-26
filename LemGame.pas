@@ -506,10 +506,10 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..16] of TBasicLemmingAction =
+  ActionListArray: array[0..17] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
-             baStacking, baBashing, baMining, baDigging, baCloning, baFencing);
+             baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying);
 
 
 
@@ -641,7 +641,7 @@ begin
   aState.EntriesOpened := HatchesOpened;
   aState.CurrSpawnInterval := CurrSpawnInterval;
 
-  for i := 0 to 16 do
+  for i := 0 to 17 do
   begin
     aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
     aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
@@ -691,7 +691,7 @@ begin
   HatchesOpened := aState.EntriesOpened;
   CurrSpawnInterval := aState.CurrSpawnInterval;
 
-  for i := 0 to 16 do
+  for i := 0 to 17 do
   begin
     CurrSkillCount[ActionListArray[i]] := aState.CurrSkillCount[ActionListArray[i]];
     UsedSkillCount[ActionListArray[i]] := aState.UsedSkillCount[ActionListArray[i]];
@@ -1304,7 +1304,9 @@ const
     17, //baGliding,
     16, //baFixing,
      0, //baCloning,
-    16  //baFencing
+    16, //baFencing,
+     8, //baReaching,
+    20  //baShimmying
     );
 begin
   if DoTurn then TurnAround(L);
