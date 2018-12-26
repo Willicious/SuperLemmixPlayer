@@ -56,7 +56,7 @@ type
     fSkillCountErase      : TBitmap32;
     fSkillLock            : TBitmap32;
     fSkillInfinite        : TBitmap32;
-    fSkillIcons           : array[spbWalker..spbCloner] of TBitmap32;
+    fSkillIcons           : array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of TBitmap32;
     fInfoFont             : array of TBitmap32; {%} { 0..9} {A..Z} // make one of this!
 
     fHighlitSkill         : TSkillPanelButton;
@@ -165,13 +165,6 @@ const
   NUM_FONT_CHARS = 45;
 
 const
-  SKILL_NAMES: array[spbWalker..spbCloner] of string = (
-      'walker', 'climber', 'swimmer', 'floater', 'glider',
-      'disarmer', 'bomber', 'stoner', 'blocker', 'platformer',
-      'builder', 'stacker', 'basher', 'fencer', 'miner',
-      'digger', 'cloner' );
-
-const
   // WARNING: The order of the strings has to correspond to the one
   //          of TSkillPanelButton in LemCore.pas!
   // As skill icons are dealt with separately, we use a placeholder here
@@ -264,7 +257,7 @@ begin
     fInfoFont[i] := TBitmap32.Create;
   end;
 
-  for Button := spbWalker to spbCloner do
+  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
     fSkillIcons[Button] := TBitmap32.Create;
     fSkillIcons[Button].DrawMode := dmBlend;
@@ -314,7 +307,7 @@ begin
     for i := 0 to 1 do
       fSkillFont[c, i].Free;
 
-  for Button := spbWalker to spbCloner do
+  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     fSkillIcons[Button].Free;
 
   fSkillInfinite.Free;
@@ -468,7 +461,7 @@ begin
   // Load the erasing icon first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
 
-  for Button := spbWalker to spbCloner do
+  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
 end;
 
