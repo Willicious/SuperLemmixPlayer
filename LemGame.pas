@@ -3908,13 +3908,27 @@ begin
   if L.LemPhysicsFrame mod 2 = 0 then
   begin
     // Check whether we find terrain to walk onto
-    for i := 0 to 5 do
+    for i := 0 to 2 do
     begin
       if HasPixelAt(L.LemX + L.LemDX, L.LemY - i) and not HasPixelAt(L.LemX + L.LemDX, L.LemY - i - 1) then
       begin
         Inc(L.LemX, L.LemDX);
         Dec(L.LemY, i);
         Transition(L, baWalking);
+        Exit;
+      end;
+    end;
+    // Check whether we find terrain to hoist onto
+    for i := 3 to 5 do
+    begin
+      if HasPixelAt(L.LemX + L.LemDX, L.LemY - i) and not HasPixelAt(L.LemX + L.LemDX, L.LemY - i - 1) then
+      begin
+        Inc(L.LemX, L.LemDX);
+        Dec(L.LemY, i - 4);
+        L.LemIsStartingAction := False;
+        Transition(L, baHoisting);
+        Inc(L.LemFrame, 2);
+        Inc(L.LemPhysicsFrame, 2);
         Exit;
       end;
     end;
@@ -3944,7 +3958,7 @@ begin
     if HasPixelAt(L.LemX, L.LemY - 8) then
     begin
       Inc(L.LemY, 1);
-      if HasPixelAt(L.LemX + L.LemDX, L.LemY) then
+      if HasPixelAt(L.LemX, L.LemY) then
       begin
         Transition(L, baWalking);
         Exit;
@@ -3952,7 +3966,7 @@ begin
     end;
     if not HasPixelAt(L.LemX, L.LemY - 9) then
       Dec(L.LemY, 1);
-      if HasPixelAt(L.LemX + L.LemDX, L.LemY - 5) then
+      if HasPixelAt(L.LemX, L.LemY - 5) then
       begin
         Dec(L.LemY, 5);
         Transition(L, baWalking);
