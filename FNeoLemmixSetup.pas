@@ -134,7 +134,7 @@ begin
     SetKeyFunction($05, lka_ZoomIn);
     SetKeyFunction($06, lka_ZoomOut);
     SetKeyFunction($1B, lka_Exit);
-    SetKeyFunction($02, lka_ForceWalker);
+    SetKeyFunction($02, lka_Scroll);
     SetKeyFunction($75, lka_SaveReplay);
     SetKeyFunction($76, lka_LoadReplay);
     SetKeyFunction($11, lka_Highlight);
