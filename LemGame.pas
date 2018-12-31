@@ -1412,7 +1412,8 @@ begin
   Dec(L.LemExplosionTimer);
   if L.LemExplosionTimer = 0 then
   begin
-    if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding, baFalling, baSwimming] then
+    if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding,
+                       baFalling, baSwimming, baReaching, baShimmying] then
     begin
       if L.LemTimerToStone then
         Transition(L, baStoneFinish)
