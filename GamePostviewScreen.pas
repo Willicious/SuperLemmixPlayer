@@ -154,20 +154,24 @@ var
       var
         NewMin: Integer;
       begin
-        NewMin := $7FFFFFFF; // avoid compiler warning
         with GameParams.GameResult do
+        begin
+          NewMin := $7FFFFFFF; // avoid compiler warning
           case aText.ConditionType of
             pvc_Absolute: NewMin := aText.ConditionValue;
             pvc_Percent: NewMin := AdjLemCount * aText.ConditionValue div 100;
             pvc_Relative: NewMin := gToRescue + aText.ConditionValue;
             pvc_RelativePercent: NewMin := gToRescue + (gToRescue * aText.ConditionValue div 100);
           end;
-        if (NewMin > CurrentMin) and (GameParams.GameResult.gRescued >= NewMin) then
-        begin
-          Result := true;
-          CurrentMin := NewMin;
-        end else
-          Result := false;
+          if     (NewMin > CurrentMin)
+             and (gRescued >= NewMin)
+             and ((aText.ConditionType <> pvc_Absolute) or (gRescued < gToRescue)) then
+          begin
+            Result := true;
+            CurrentMin := NewMin;
+          end else
+            Result := false;
+        end;
       end;
     begin
       AdjLemCount := GameParams.Level.Info.LemmingsCount;
