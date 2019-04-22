@@ -5,6 +5,7 @@ unit LemCursor;
 interface
 
 uses
+  GameControl,
   Windows,
   GR32,
   Graphics;
@@ -51,6 +52,7 @@ var
   TempBitmap32: TBitmap32;
   TempBitmapImage, TempBitmapMask: TBitmap;
   TempInfo: TIconInfo;
+  BaseScale: Double;
 
   i: Integer;
   Zoom: Integer;
@@ -70,6 +72,8 @@ var
       end;
   end;
 begin
+  BaseScale := GameParams.CursorResize;
+
   TempBitmap32 := TBitmap32.Create();
   TempBitmapImage := TBitmap.Create();
   TempBitmapMask := TBitmap.Create();
@@ -77,7 +81,7 @@ begin
     for i := 0 to fMaxZoom-1 do
     begin
       Zoom := i + 1;
-      TempBitmap32.SetSize(aBitmap.Width * Zoom, aBitmap.Height * Zoom);
+      TempBitmap32.SetSize(Round(aBitmap.Width * Zoom * BaseScale), Round(aBitmap.Height * Zoom * BaseScale));
       TempBitmap32.Clear(0);
       TempBitmap32.Draw(TempBitmap32.BoundsRect, aBitmap.BoundsRect, aBitmap);
       TempBitmapImage.Assign(TempBitmap32);
