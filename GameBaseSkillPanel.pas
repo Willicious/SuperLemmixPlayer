@@ -765,7 +765,7 @@ procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
 var
   BorderRect, EraseRect: TRect;
 begin
-  if aButton < spbNone then
+  if aButton <= LAST_SKILL_BUTTON then
   begin
     BorderRect := fButtonRects[fHighlitSkill];
     fLastHighlitSkill := fHighlitSkill;
