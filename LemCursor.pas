@@ -12,12 +12,13 @@ uses
 type
   TNLCursor = class
     private
+      fLoaded: Boolean;
       fMaxZoom: Integer;
       fCursors: array of HCURSOR;
     public
       constructor Create(aMaxZoom: Integer);
       destructor Destroy; override;
-      procedure LoadFromBitmap(aBitmap: TBitmap32);
+      procedure LoadFromBitmap(aBitmap: TBitmap32; aOverlay: TBitmap32 = nil);
 
       function GetCursor(aZoom: Integer): HCURSOR;
   end;
@@ -26,7 +27,7 @@ implementation
 
 constructor TNLCursor.Create(aMaxZoom: Integer);
 begin
-  inherited;
+  inherited Create;
   fMaxZoom := aMaxZoom;
   SetLength(fCursors, aMaxZoom);
 end;
@@ -35,8 +36,8 @@ destructor TNLCursor.Destroy;
 var
   i: Integer;
 begin
-  for i := 0 to fMaxZoom-1 do
-    if fCursors[i] <> nil then
+  if fLoaded then
+    for i := 0 to fMaxZoom-1 do
       DestroyIcon(fCursors[i]);
 end;
 
@@ -45,7 +46,7 @@ begin
   Result := fCursors[aZoom - 1];
 end;
 
-procedure TNLCursor.LoadFromBitmap(aBitmap: TBitmap32);
+procedure TNLCursor.LoadFromBitmap(aBitmap: TBitmap32; aOverlay: TBitmap32 = nil);
 var
   TempBitmap32: TBitmap32;
   TempBitmapImage, TempBitmapMask: TBitmap;
@@ -77,7 +78,10 @@ begin
     begin
       Zoom := i + 1;
       TempBitmap32.SetSize(aBitmap.Width * Zoom, aBitmap.Height * Zoom);
+      TempBitmap32.Clear(0);
       TempBitmap32.Draw(TempBitmap32.BoundsRect, aBitmap.BoundsRect, aBitmap);
+      if aOverlay <> nil then
+        TempBitmap32.Draw(TempBitmap32.BoundsRect, aOverlay.BoundsRect, aOverlay);
       TempBitmapImage.Assign(TempBitmap32);
       MaskTempBitmap;
       TempBitmapMask.Assign(TempBitmap32);
@@ -93,6 +97,8 @@ begin
 
       fCursors[i] := CreateIconIndirect(TempInfo);
     end;
+
+    fLoaded := true;
   finally
     TempBitmap32.Free;
     TempBitmapImage.Free;
