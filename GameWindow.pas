@@ -41,7 +41,7 @@ type
   end;
 
 const
-  CURSOR_TYPES = 2;
+  CURSOR_TYPES = 6;
   EXTRA_ZOOM_LEVELS = 4;
 
   // special hyperspeed ends. usually only needed for forwards ones, backwards can often get the exact frame.
@@ -965,6 +965,11 @@ begin
       NewCursor := 1
     else
       NewCursor := 2;
+
+    if Game.fSelectDx < 0 then
+      NewCursor := NewCursor + 2
+    else if Game.fSelectDx > 0 then
+      NewCursor := NewCursor + 4;
   end else
     NewCursor := aCursor;
   NewCursor := NewCursor + ((fInternalZoom-1) * CURSOR_TYPES);
@@ -1534,7 +1539,11 @@ var
 const
   CURSOR_NAMES: array[1..CURSOR_TYPES] of String = (
     'standard',
-    'focused'
+    'focused',
+    'standard|direction_left',
+    'focused|direction_left',
+    'standard|direction_right',
+    'focused|direction_right'
   );
 begin
   FreeCursors;
@@ -1556,12 +1565,16 @@ begin
       SL.DelimitedText := CURSOR_NAMES[i];
 
       TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[0] + '.png', TempBMP);
-      if (SL.Count = 1) then
-        Cursors[i].LoadFromBitmap(TempBMP)
-      else begin
-        TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[1] + '.png', TempBMP2);
-        Cursors[i].LoadFromBitmap(TempBMP, TempBMP2);
+
+      while SL.Count > 1 do
+      begin
+        SL.Delete(0);
+        TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[0] + '.png', TempBMP2);
+        TempBMP2.DrawMode := dmBlend;
+        TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);
       end;
+
+      Cursors[i].LoadFromBitmap(TempBMP);
 
       for i2 := 0 to LocalMaxZoom-1 do
         Screen.Cursors[(i2 * CURSOR_TYPES) + i] := Cursors[i].GetCursor(i2 + 1);
