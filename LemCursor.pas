@@ -18,7 +18,7 @@ type
     public
       constructor Create(aMaxZoom: Integer);
       destructor Destroy; override;
-      procedure LoadFromBitmap(aBitmap: TBitmap32; aOverlay: TBitmap32 = nil);
+      procedure LoadFromBitmap(aBitmap: TBitmap32);
 
       function GetCursor(aZoom: Integer): HCURSOR;
   end;
@@ -46,7 +46,7 @@ begin
   Result := fCursors[aZoom - 1];
 end;
 
-procedure TNLCursor.LoadFromBitmap(aBitmap: TBitmap32; aOverlay: TBitmap32 = nil);
+procedure TNLCursor.LoadFromBitmap(aBitmap: TBitmap32);
 var
   TempBitmap32: TBitmap32;
   TempBitmapImage, TempBitmapMask: TBitmap;
@@ -80,8 +80,6 @@ begin
       TempBitmap32.SetSize(aBitmap.Width * Zoom, aBitmap.Height * Zoom);
       TempBitmap32.Clear(0);
       TempBitmap32.Draw(TempBitmap32.BoundsRect, aBitmap.BoundsRect, aBitmap);
-      if aOverlay <> nil then
-        TempBitmap32.Draw(TempBitmap32.BoundsRect, aOverlay.BoundsRect, aOverlay);
       TempBitmapImage.Assign(TempBitmap32);
       MaskTempBitmap;
       TempBitmapMask.Assign(TempBitmap32);
