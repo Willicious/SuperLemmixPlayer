@@ -397,10 +397,6 @@ begin
                       CloseScreen(gstTalisman);
                   end;
       VK_F7     : DoMassReplayCheck;
-      VK_F12    : begin
-                    GameParams.LoadCurrentLevel;
-                    CloseScreen(gstPlay);
-                  end;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);
       VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
