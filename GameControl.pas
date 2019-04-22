@@ -110,6 +110,7 @@ type
     fDoneUpdateCheck: Boolean;
     fCurrentLevel: TNeoLevelEntry;
 
+    fCursorResize: Double;
     fZoomLevel: Integer;
     fWindowWidth: Integer;
     fWindowHeight: Integer;
@@ -212,6 +213,7 @@ type
 
     property Directory: string read fDirectory write fDirectory;
 
+    property CursorResize: Double read fCursorResize write fCursorResize;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
     property WindowHeight: Integer read fWindowHeight write fWindowHeight;
@@ -322,6 +324,7 @@ begin
   SaveBoolean('UseSpawnInterval', SpawnInterval);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
+  SL.Add('CursorResize=' + FloatToStr(CursorResize));
   SaveBoolean('IncreaseZoom', IncreaseZoom);
   SaveBoolean('FullScreen', FullScreen);
 
@@ -456,6 +459,9 @@ begin
   DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
 
   ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
+
+  if CursorResize <> 1 then
+    CursorResize := StrToFloatDef(SL.Values['CursorResize'], 1);
 
   if (StrToIntDef(SL.Values['LastVersion'], 0) div 1000) mod 100 < 16 then
     FullScreen := ZoomLevel < 1;
@@ -603,6 +609,7 @@ begin
   fOneLevelMode := false;
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+  fCursorResize := 1;
 
   LemDataInResource := True;
   LemSoundsInResource := True;
