@@ -9,6 +9,12 @@ uses
   LemDosStructures, LemLemming, LemTypes, LemStrings,
   GR32, GR32_Blend;
 
+const
+  CPM_LEMMING_NORMAL = $FF0000FF;  // used for a non-athlete
+  CPM_LEMMING_ATHLETE = $FF00FF00; // used for an athlete
+  CPM_LEMMING_SELECTED = $007F0000; // OR'd to base value for selected lemming
+  CPM_LEMMING_ZOMBIE = $00808080; // AND-NOT'd to base value for zombies
+
 type
   TColorSwapType = (rcl_Selected,
                     rcl_Athlete,
@@ -29,6 +35,7 @@ type
     private
       fLemming: TLemming;
       fDrawAsSelected: Boolean;
+      fClearPhysics: Boolean;
       fSwaps: TColorSwapArray;
 
       procedure SwapColors(F: TColor32; var B: TColor32);
@@ -43,6 +50,7 @@ type
 
       property Lemming: TLemming write fLemming;
       property DrawAsSelected: Boolean write fDrawAsSelected;
+      property ClearPhysics: Boolean write fClearPhysics;
 
       class procedure CombineDefaultPixels(F: TColor32; var B: TColor32; M: TColor32);
   end;
@@ -66,16 +74,29 @@ begin
   if fLemming = nil then Exit;
   if (F and $FF000000) = 0 then Exit;
 
-  for i := 0 to Length(fSwaps)-1 do
+  if fClearPhysics then
   begin
-    case fSwaps[i].Condition of
-      rcl_Selected: if not fDrawAsSelected then Continue;
-      rcl_Zombie: if not fLemming.LemIsZombie then Continue;
-      rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
-      else raise Exception.Create('TRecolorImage.SwapColors encountered an unknown condition' + #13 + IntToStr(Integer(fSwaps[i].Condition)));
+    if fLemming.HasPermanentSkills then
+      B := CPM_LEMMING_ATHLETE
+    else
+      B := CPM_LEMMING_NORMAL;
+
+    if fDrawAsSelected then
+      B := B or CPM_LEMMING_SELECTED;
+
+    if fLemming.LemIsZombie then
+      B := B and not CPM_LEMMING_ZOMBIE;
+  end else
+    for i := 0 to Length(fSwaps)-1 do
+    begin
+      case fSwaps[i].Condition of
+        rcl_Selected: if not fDrawAsSelected then Continue;
+        rcl_Zombie: if not fLemming.LemIsZombie then Continue;
+        rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
+        else raise Exception.Create('TRecolorImage.SwapColors encountered an unknown condition' + #13 + IntToStr(Integer(fSwaps[i].Condition)));
+      end;
+      if (F and $FFFFFF) = fSwaps[i].SrcColor then B := fSwaps[i].DstColor;
     end;
-    if (F and $FFFFFF) = fSwaps[i].SrcColor then B := fSwaps[i].DstColor;
-  end;
 end;
 
 procedure TRecolorImage.CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
