@@ -91,9 +91,9 @@ type
     procedure ResizeMinimapRegion(MinimapRegion: TBitmap32); virtual; abstract;
     procedure SetButtonRects;
     procedure SetSkillIcons;
-    procedure DrawHightlight(aButton: TSkillPanelButton); virtual;
+    procedure DrawHighlight(aButton: TSkillPanelButton); virtual;
     procedure DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
-    procedure RemoveHightlight(aButton: TSkillPanelButton); virtual;
+    procedure RemoveHighlight(aButton: TSkillPanelButton); virtual;
 
     // Drawing routines for the info string at the top
     function DrawStringLength: Integer; virtual; abstract;
@@ -722,21 +722,24 @@ procedure TBaseSkillPanel.DrawButtonSelector(aButton: TSkillPanelButton; Highlig
 begin
   if fGameWindow.IsHyperSpeed then Exit;
   if aButton = spbNone then Exit;
-  if (fHighlitSkill = aButton) and Highlight then Exit;
-  if (fHighlitSkill = spbNone) and not Highlight then Exit;
+  if (aButton <= LAST_SKILL_BUTTON) then
+  begin
+    if (fHighlitSkill = aButton) and Highlight then Exit;
+    if (fHighlitSkill = spbNone) and not Highlight then Exit;
+  end;
   if fButtonRects[aButton].Left <= 0 then Exit;
 
   if Highlight then
-    DrawHightlight(aButton)
+    DrawHighlight(aButton)
   else
-    RemoveHightlight(aButton);
+    RemoveHighlight(aButton);
 end;
 
-procedure TBaseSkillPanel.DrawHightlight(aButton: TSkillPanelButton);
+procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
 var
   BorderRect: TRect;
 begin
-  if aButton < spbNone then // we don't want to memorize this for eg. fast forward
+  if aButton <= LAST_SKILL_BUTTON then // we don't want to memorize this for eg. fast forward
   begin
     BorderRect := fButtonRects[aButton];
     fHighlitSkill := aButton;
@@ -751,11 +754,11 @@ begin
   Image.Bitmap.FrameRectS(BorderRect, fRectColor);
 end;
 
-procedure TBaseSkillPanel.RemoveHightlight(aButton: TSkillPanelButton);
+procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
 var
   BorderRect, EraseRect: TRect;
 begin
-  if aButton < spbNone then
+  if aButton <= LAST_SKILL_BUTTON then
   begin
     BorderRect := fButtonRects[fHighlitSkill];
     fLastHighlitSkill := fHighlitSkill;

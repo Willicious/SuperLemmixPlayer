@@ -7,6 +7,7 @@ program NeoLemmix;
 
 
 uses
+  Windows,
   LemRes,
   Forms,
   FMain in 'FMain.pas' {MainForm};

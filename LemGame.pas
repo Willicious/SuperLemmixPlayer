@@ -4595,8 +4595,8 @@ begin
     if Skill in AssignableSkills then
     begin
       // In order to preserve old replays, we have to check if the skill assignments are still possible
-      // As the priority of lemmings has changed, we have to hightlight this lemming
-      // After having done the assignment, revert the hightlightning.
+      // As the priority of lemmings has changed, we have to Highlight this lemming
+      // After having done the assignment, revert the Highlightning.
       OldHighlightLemID := fHighlightLemmingID;
       fHighlightLemmingID := L.LemIndex;
       AssignNewSkill(Skill, true, true);
@@ -5396,7 +5396,7 @@ end;
 
 function TLemmingGame.IsStartingSeconds: Boolean;
 begin
-  Result := (fCurrentIteration < 35)
+  Result := (fCurrentIteration < 35) and not fGameFinished;
 end;
 
 end.

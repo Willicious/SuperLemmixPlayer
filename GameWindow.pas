@@ -13,6 +13,7 @@ uses
   LemCore, LemLevel, LemRendering, LemRenderHelpers,
   LemGame, LemGameMessageQueue,
   GameSound, LemTypes, LemStrings, LemLemming,
+  LemCursor,
   GameControl, GameBaseSkillPanel, GameSkillPanel, GameBaseScreen,
   GameWindowInterface;
 
@@ -40,7 +41,7 @@ type
   end;
 
 const
-  CURSOR_TYPES = 2;
+  CURSOR_TYPES = 6;
   EXTRA_ZOOM_LEVELS = 4;
 
   // special hyperspeed ends. usually only needed for forwards ones, backwards can often get the exact frame.
@@ -140,9 +141,7 @@ type
     PrevPausedRRTime     : Cardinal;          // last time we updated RR in idle
     MouseClipRect        : TRect;             // we clip the mouse when there is more space
     CanPlay              : Boolean;           // use in idle en set to false whenever we don't want to play
-    HCursors             : array of array[1..CURSOR_TYPES] of HCURSOR; // 0 = normal, 1 = on lemming
-    LemCursorIconInfo    : TIconInfo;         // normal play cursor icon
-    LemSelCursorIconInfo : TIconInfo;         // highlight play cursor icon
+    Cursors              : array[1..CURSOR_TYPES] of TNLCursor;
     MinScroll            : Single;            // scroll boundary for image
     MaxScroll            : Single;            // scroll boundary for image
     MinVScroll           : Single;
@@ -967,6 +966,11 @@ begin
       NewCursor := 1
     else
       NewCursor := 2;
+
+    if Game.fSelectDx < 0 then
+      NewCursor := NewCursor + 2
+    else if Game.fSelectDx > 0 then
+      NewCursor := NewCursor + 4;
   end else
     NewCursor := aCursor;
   NewCursor := NewCursor + ((fInternalZoom-1) * CURSOR_TYPES);
@@ -1146,12 +1150,10 @@ end;
 
 procedure TGameWindow.FreeCursors;
 var
-  i, i2: Integer;
+  i: Integer;
 begin
-  for i := 0 to Length(HCursors)-1 do
-    for i2 := 0 to 1 do
-      if HCursors[i][i2] <> 0 then
-        DestroyIcon(HCursors[i][i2]);
+  for i := 0 to Length(Cursors)-1 do
+    Cursors[i].Free;
 end;
 
 procedure TGameWindow.Form_Activate(Sender: TObject);
@@ -1531,89 +1533,59 @@ begin
 end;
 
 procedure TGameWindow.InitializeCursor;
-const
-  PLAYCURSOR_DEFAULT = 1;
-  PLAYCURSOR_LEMMING = 2;
 var
-  bmpMask : TBitmap;
-  bmpColor : TBitmap;
-  i: Integer;
-  n: Integer;
   LocalMaxZoom: Integer;
-
-  procedure ScaleBmp(Bmp: TBitmap; aScale: Integer);
-  var
-    NewBmp: TBitmap32;
-    src, dst: TRect;
-  begin
-    // Problem: Only a TBitmap32 may scale using the Draw method, not a TBitmap itself!
-    if aScale = 1 then Exit;
-    NewBmp := TBitmap32.Create;
-    NewBmp.SetSize(Bmp.Width * aScale, Bmp.Height * aScale);
-
-    src := Rect(0, 0, Bmp.Width, Bmp.Height);
-    dst := Rect(0, 0, NewBmp.Width, NewBmp.Height);
-    NewBmp.Draw(dst, src, Bmp.Canvas.Handle);
-
-    Bmp.Width := NewBmp.Width;
-    Bmp.Height := NewBmp.Height;
-    NewBmp.DrawTo(Bmp.Canvas.Handle, 0, 0);
-    NewBmp.Free;
-  end;
-
+  i, i2: Integer;
+  TempBMP, TempBMP2: TBitmap32;
+  SL: TStringList;
+const
+  CURSOR_NAMES: array[1..CURSOR_TYPES] of String = (
+    'standard',
+    'focused',
+    'standard|direction_left',
+    'focused|direction_left',
+    'standard|direction_right',
+    'focused|direction_right'
+  );
 begin
   FreeCursors;
 
-  bmpMask := TBitmap.Create;
-  bmpColor := TBitmap.Create;
-
-  n := 0;
-
   LocalMaxZoom := Min(Screen.Width div 320, (Screen.Height - (40 * SkillPanel.MaxZoom)) div 160) + EXTRA_ZOOM_LEVELS;
-  SetLength(HCursors, LocalMaxZoom);
 
-  for i := 0 to Length(HCursors) - 1 do
-  begin
-    bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT_MASK');
-    bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_DEFAULT');
-    ScaleBmp(bmpMask, i + 1);
-    ScaleBmp(bmpColor, i + 1);
+  TempBMP := TBitmap32.Create;
+  TempBMP2 := TBitmap32.Create;
+  SL := TStringList.Create;
+  try
+    SL.Delimiter := '|';
 
-    with LemCursorIconInfo do
+    for i := 1 to CURSOR_TYPES do
     begin
-      fIcon := false;
-      xHotspot := bmpColor.Width div 2;
-      yHotspot := bmpColor.Width div 2;
-      hbmMask := bmpMask.Handle;
-      hbmColor := bmpColor.Handle;
+      Cursors[i].Free;
+
+      Cursors[i] := TNLCursor.Create(LocalMaxZoom);
+
+      SL.DelimitedText := CURSOR_NAMES[i];
+
+      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[0] + '.png', TempBMP);
+
+      while SL.Count > 1 do
+      begin
+        SL.Delete(0);
+        TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[0] + '.png', TempBMP2);
+        TempBMP2.DrawMode := dmBlend;
+        TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);
+      end;
+
+      Cursors[i].LoadFromBitmap(TempBMP);
+
+      for i2 := 0 to LocalMaxZoom-1 do
+        Screen.Cursors[(i2 * CURSOR_TYPES) + i] := Cursors[i].GetCursor(i2 + 1);
     end;
-
-    HCursors[i][1] := CreateIconIndirect(LemCursorIconInfo);
-    Inc(n);
-    Screen.Cursors[n] := HCursors[i][1];
-
-    bmpMask.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT_MASK');
-    bmpColor.LoadFromResourceName(HINSTANCE, 'GAMECURSOR_HIGHLIGHT');
-
-    ScaleBmp(bmpMask, i + 1);
-    ScaleBmp(bmpColor, i + 1);
-
-    with LemSelCursorIconInfo do
-    begin
-      fIcon := false;
-      xHotspot := bmpColor.Width div 2;
-      yHotspot := bmpColor.Width div 2;
-      hbmMask := bmpMask.Handle;
-      hbmColor := bmpColor.Handle;
-    end;
-
-    HCursors[i][2] := CreateIconIndirect(LemSelCursorIconInfo);
-    Inc(n);
-    Screen.Cursors[n] := HCursors[i][2];
+  finally
+    TempBMP.Free;
+    TempBMP2.Free;
+    SL.Free;
   end;
-
-  bmpMask.Free;
-  bmpColor.Free;
 end;
 
 
@@ -1673,7 +1645,6 @@ begin
     TLinearResampler.Create(SkillPanel.Image.Bitmap);
   end;
 
-  SetLength(HCURSORS, fMaxZoom);
   InitializeCursor;
   CenterPoint := ClientToScreen(Point(ClientWidth div 2, ClientHeight div 2));
   SetCursorPos(CenterPoint.X, CenterPoint.Y);

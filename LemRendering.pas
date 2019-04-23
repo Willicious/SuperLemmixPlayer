@@ -58,6 +58,8 @@ type
     fPreviewGadgets     : TGadgetList; // For rendering from Preview screen
     fDoneBackgroundDraw : Boolean;
 
+    fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
+
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
     procedure AddStoner(X, Y: Integer);
@@ -77,6 +79,9 @@ type
     procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
+
+    // Clear Physics combines
+    procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // use with fFixedDrawColor
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false);
@@ -290,6 +295,7 @@ begin
 
   fRecolorer.Lemming := aLemming;
   fRecolorer.DrawAsSelected := Selected;
+  fRecolorer.ClearPhysics := fUsefulOnly;
 
   // Get the animation and meta-animation
   if aLemming.LemDX > 0 then
@@ -341,6 +347,7 @@ begin
     fLayers[rlTriggers].PixelS[aLemming.LemX - 1, aLemming.LemY] := $FFFF4500;
     fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY + 1] := $FFFF4500;
     fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY - 1] := $FFFF4500;
+    fLayers.fIsEmpty[rlTriggers] := false;
   end;
 end;
 
@@ -997,6 +1004,12 @@ begin
     B := 0;
 end;
 
+procedure TRenderer.CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F and $FF000000) <> 0 then
+    B := fFixedDrawColor;
+end;
+
 // Graphical combines
 
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -1307,6 +1320,9 @@ var
   TempBitmapRect, DstRect: TRect;
   IsOwnBitmap: Boolean;
 
+  OldDrawMode: TDrawMode;
+  OldPixelCombine: TPixelCombineEvent;
+
   procedure AddPickupSkillNumber;
   var
     Text: String;
@@ -1329,6 +1345,9 @@ begin
   end else
     IsOwnBitmap := false;
 
+  OldDrawMode := TempBitmap.DrawMode;
+  OldPixelCombine := TempBitmap.OnPixelCombine;
+
   try
     DrawFrame := Min(Gadget.CurrentFrame, Gadget.AnimationFrameCount-1);
     TempBitmap.Assign(Gadget.Frames[DrawFrame]);
@@ -1336,6 +1355,13 @@ begin
     PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
     if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
        AddPickupSkillNumber;
+
+    if fUsefulOnly then
+    begin
+      TempBitmap.DrawMode := dmCustom;
+      fFixedDrawColor := $FFFFFF00;
+      TempBitmap.OnPixelCombine := CombineFixedColor;
+    end;
 
     MO := Gadget.MetaObj;
     CountX := (Gadget.Width-1) div MO.Width;
@@ -1371,7 +1397,11 @@ begin
     end;
   finally
     if IsOwnBitmap then
-      TempBitmap.Free;
+      TempBitmap.Free
+    else begin
+      TempBitmap.DrawMode := OldDrawMode;
+      TempBitmap.OnPixelCombine := OldPixelCombine;
+    end;
   end;
 end;
 
@@ -1404,6 +1434,9 @@ begin
   if not fUsefulOnly then Exit;
 
   if Gadget.TriggerEffect in [DOM_NONE, DOM_HINT, DOM_BACKGROUND] then
+    Result := false;
+
+  if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId < 0) then
     Result := false;
 end;
 
@@ -1498,13 +1531,15 @@ begin
       Continue;
 
     DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
-                            (DrawHelper and UsefulOnly and not IsCursorOnGadget(Gadget));
+                            (DrawHelper and UsefulOnly and IsCursorOnGadget(Gadget));
+
     if Gadget.HasPreassignedSkills then
     begin
-      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, DrawOtherHatchHelper);
+      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, false);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
-    end
-    else if DrawOtherHatchHelper then
+    end;
+
+    if DrawOtherHatchHelper then
     begin
       DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
@@ -1518,7 +1553,7 @@ begin
     begin
       Gadget := Gadgets[i];
 
-      if (Gadget.TriggerEffect = DOM_WINDOW) or (not IsCursorOnGadget(Gadget)) then
+      if (Gadget.TriggerEffect = DOM_WINDOW) or (not IsCursorOnGadget(Gadget)) or (not IsUseful(Gadget)) then
         Continue;
 
       // otherwise, draw its helper
