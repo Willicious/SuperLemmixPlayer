@@ -1359,7 +1359,7 @@ begin
     if fUsefulOnly then
     begin
       TempBitmap.DrawMode := dmCustom;
-      fFixedDrawColor := $FFFF0000;
+      fFixedDrawColor := $FFFFFF00;
       TempBitmap.OnPixelCombine := CombineFixedColor;
     end;
 
@@ -1531,7 +1531,7 @@ begin
       Continue;
 
     DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
-                            (DrawHelper and UsefulOnly and not IsCursorOnGadget(Gadget));
+                            (DrawHelper and UsefulOnly and IsCursorOnGadget(Gadget));
     if Gadget.HasPreassignedSkills then
     begin
       DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, DrawOtherHatchHelper);
