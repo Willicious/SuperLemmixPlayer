@@ -60,18 +60,14 @@ end;
 procedure TRecolorImage.SwapColors(F: TColor32; var B: TColor32);
 var
   i: Integer;
-  Progress: TSwapProgressArray;
 begin
   B := F;
 
   if fLemming = nil then Exit;
   if (F and $FF000000) = 0 then Exit;
 
-  FillChar(Progress, SizeOf(TSwapProgressArray), 0);
-
   for i := 0 to Length(fSwaps)-1 do
   begin
-    if Progress[fSwaps[i].Condition] then Continue;
     case fSwaps[i].Condition of
       rcl_Selected: if not fDrawAsSelected then Continue;
       rcl_Zombie: if not fLemming.LemIsZombie then Continue;
