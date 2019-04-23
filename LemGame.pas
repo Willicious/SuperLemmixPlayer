@@ -5233,7 +5233,7 @@ end;
 
 function TLemmingGame.IsStartingSeconds: Boolean;
 begin
-  Result := (fCurrentIteration < 35)
+  Result := (fCurrentIteration < 35) and not fGameFinished;
 end;
 
 end.
