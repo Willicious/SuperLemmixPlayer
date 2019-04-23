@@ -1435,6 +1435,9 @@ begin
 
   if Gadget.TriggerEffect in [DOM_NONE, DOM_HINT, DOM_BACKGROUND] then
     Result := false;
+
+  if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId < 0) then
+    Result := false;
 end;
 
 procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);
@@ -1548,7 +1551,7 @@ begin
     begin
       Gadget := Gadgets[i];
 
-      if (Gadget.TriggerEffect = DOM_WINDOW) or (not IsCursorOnGadget(Gadget)) then
+      if (Gadget.TriggerEffect = DOM_WINDOW) or (not IsCursorOnGadget(Gadget)) or (not IsUseful(Gadget)) then
         Continue;
 
       // otherwise, draw its helper
