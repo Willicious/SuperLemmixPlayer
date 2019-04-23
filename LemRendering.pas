@@ -1532,12 +1532,14 @@ begin
 
     DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
                             (DrawHelper and UsefulOnly and IsCursorOnGadget(Gadget));
+
     if Gadget.HasPreassignedSkills then
     begin
-      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, DrawOtherHatchHelper);
+      DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, false);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
-    end
-    else if DrawOtherHatchHelper then
+    end;
+
+    if DrawOtherHatchHelper then
     begin
       DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
       fLayers.fIsEmpty[rlObjectHelpers] := false;
