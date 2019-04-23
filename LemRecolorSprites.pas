@@ -11,7 +11,7 @@ uses
 
 const
   CPM_LEMMING_NORMAL = $FF0000FF;  // used for a non-athlete
-  CPM_LEMMING_ATHLETE = $FF00FF00; // used for an athlete
+  CPM_LEMMING_ATHLETE = $FF00FFFF; // used for an athlete
   CPM_LEMMING_SELECTED = $007F0000; // OR'd to base value for selected lemming
   CPM_LEMMING_ZOMBIE = $00808080; // AND-NOT'd to base value for zombies
 
