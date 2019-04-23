@@ -58,6 +58,8 @@ type
     fPreviewGadgets     : TGadgetList; // For rendering from Preview screen
     fDoneBackgroundDraw : Boolean;
 
+    fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
+
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
     procedure AddStoner(X, Y: Integer);
@@ -77,6 +79,9 @@ type
     procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
+
+    // Clear Physics combines
+    procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // use with fFixedDrawColor
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
     procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false);
@@ -290,6 +295,7 @@ begin
 
   fRecolorer.Lemming := aLemming;
   fRecolorer.DrawAsSelected := Selected;
+  fRecolorer.ClearPhysics := fUsefulOnly;
 
   // Get the animation and meta-animation
   if aLemming.LemDX > 0 then
@@ -998,6 +1004,12 @@ begin
     B := 0;
 end;
 
+procedure TRenderer.CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F and $FF000000) <> 0 then
+    B := fFixedDrawColor;
+end;
+
 // Graphical combines
 
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -1308,6 +1320,9 @@ var
   TempBitmapRect, DstRect: TRect;
   IsOwnBitmap: Boolean;
 
+  OldDrawMode: TDrawMode;
+  OldPixelCombine: TPixelCombineEvent;
+
   procedure AddPickupSkillNumber;
   var
     Text: String;
@@ -1330,6 +1345,9 @@ begin
   end else
     IsOwnBitmap := false;
 
+  OldDrawMode := TempBitmap.DrawMode;
+  OldPixelCombine := TempBitmap.OnPixelCombine;
+
   try
     DrawFrame := Min(Gadget.CurrentFrame, Gadget.AnimationFrameCount-1);
     TempBitmap.Assign(Gadget.Frames[DrawFrame]);
@@ -1337,6 +1355,13 @@ begin
     PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
     if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
        AddPickupSkillNumber;
+
+    if fUsefulOnly then
+    begin
+      TempBitmap.DrawMode := dmCustom;
+      fFixedDrawColor := $FFFF0000;
+      TempBitmap.OnPixelCombine := CombineFixedColor;
+    end;
 
     MO := Gadget.MetaObj;
     CountX := (Gadget.Width-1) div MO.Width;
@@ -1372,7 +1397,11 @@ begin
     end;
   finally
     if IsOwnBitmap then
-      TempBitmap.Free;
+      TempBitmap.Free
+    else begin
+      TempBitmap.DrawMode := OldDrawMode;
+      TempBitmap.OnPixelCombine := OldPixelCombine;
+    end;
   end;
 end;
 
