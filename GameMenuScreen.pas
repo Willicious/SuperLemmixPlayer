@@ -11,6 +11,7 @@ interface
 uses
   Classes, Controls,
   GameBaseScreen, GameControl,
+  {$ifdef exp}LemNeoLevelPack, LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
   GR32, GR32_Layers;
 
 type
@@ -143,19 +144,134 @@ end;
 procedure TGameMenuScreen.DoTestStuff;
 {$ifdef exp}
 var
-  Format, Core, Feature, Fix: Integer;
-  S: String;
+  SLInfo, SLTitles, SLStats: TStringList;
+  BasePack: TNeoLevelGroup;
+  ThisRank: TNeoLevelGroup;
+  ThisLevel: TNeoLevelEntry;
+  Level: TLevel;
+
+  TempBitmap: TBitmap32;
+
+  R, L: Integer;
+
+  function LemmingCountString: String;
+  var
+    i: Integer;
+    EntranceCount: Integer;
+    EntranceZombie: array of Boolean;
+
+    ZombieCount: Integer;
+    PreplacedZombieCount: Integer;
+  begin
+    EntranceCount := 0;
+    SetLength(EntranceZombie, 0);
+    ZombieCount := 0;
+    PreplacedZombieCount := 0;
+
+    for i := 0 to Level.InteractiveObjects.Count-1 do
+      if PieceManager.Objects[Level.InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW then
+      begin
+        Inc(EntranceCount);
+        SetLength(EntranceZombie, EntranceCount);
+        EntranceZombie[EntranceCount - 1] := (Level.InteractiveObjects[i].TarLev and $40) <> 0;
+      end;
+
+    for i := 0 to Level.PreplacedLemmings.Count-1 do
+      if Level.PreplacedLemmings[i].IsZombie then
+        Inc(PreplacedZombieCount);
+
+    for i := 1 to Level.Info.LemmingsCount - Level.PreplacedLemmings.Count do
+      if EntranceZombie[(i - 1) mod EntranceCount] then
+        Inc(ZombieCount);
+
+    ZombieCount := ZombieCount + PreplacedZombieCount;
+
+    Result := IntToStr(Level.Info.LemmingsCount) + '|' +
+              IntToStr(ZombieCount) + '|' +
+              IntToStr(Level.PreplacedLemmings.Count) + '|' +
+              IntToStr(PreplacedZombieCount);
+  end;
+
+  function MiscString: String;
+  begin
+    Result := IntToStr(Level.Info.RescueCount) + '|';
+
+    if Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = 4) then
+      Result := Result + '-';
+    Result := Result + IntToStr(103 - Level.Info.SpawnInterval) + '|';
+
+    if Level.Info.HasTimeLimit then
+      Result := Result + IntToStr(Level.Info.TimeLimit)
+    else
+      Result := Result + '0';
+  end;
+
+  function SkillsetString: String;
+  var
+    Skill: TSkillPanelButton;
+  begin
+    Result := '';
+
+    for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    begin
+      if not (Skill in Level.Info.Skillset) then
+        Result := Result + '-1'
+      else
+        Result := Result + IntToStr(Level.Info.SkillCount[Skill]);
+
+      if Skill < LAST_SKILL_BUTTON then
+        Result := Result + '|';
+    end;
+  end;
 {$endif}
 begin
 // Any random test code can go here. Since it's for testing purposes, I've
 // added a conditional define so it doesn't get included in release versions.
 {$ifdef exp}
-  if GetLatestNeoLemmixVersion(NxaPlayer, Format, Core, Feature, Fix) then
-  begin
-    S := 'V' + MakeVersionString(Format, Core, Feature, Fix);
-    ShowMessage('Latest version reported as: ' + S);
-  end else
-    ShowMessage('Version check fail.');
+   SLInfo := TStringList.Create;
+   SLTitles := TStringList.Create;
+   SLStats := TStringList.Create;
+   TempBitmap := TBitmap32.Create;
+   try
+     BasePack := GameParams.CurrentLevel.Group.ParentBasePack;
+     ForceDirectories(AppPath + '\nxdump\');
+
+     for R := 0 to BasePack.Children.Count-1 do
+     begin
+       ThisRank := BasePack.Children[R];
+       SLInfo.Add(ThisRank.Name + '>' + IntToStr(ThisRank.Levels.Count));
+
+       for L := 0 to ThisRank.Levels.Count-1 do
+       begin
+         ThisLevel := ThisRank.Levels[L];
+
+         GameParams.SetLevel(ThisLevel);
+         GameParams.LoadCurrentLevel;
+         Level := GameParams.Level;
+
+         TempBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+         GameParams.Renderer.RenderWorld(TempBitmap, not GameParams.NoBackgrounds);
+         TPngInterface.SavePngFile(AppPath + '\nxdump\' + LeadZeroStr(R + 1, 2) + LeadZeroStr(L + 1, 2) + '.png', TempBitmap, true);
+
+         SLTitles.Add(Level.Info.Title);
+
+         SLStats.Add(LemmingCountString + '|' +
+                     MiscString + '|' +
+                     SkillsetString);
+
+       end;
+     end;
+
+
+     SLInfo.SaveToFile(AppPath + '\nxdump\info.txt');
+     SLTitles.SaveToFile(AppPath + '\nxdump\titles.txt');
+     SLStats.SaveToFile(AppPath + '\nxdump\stats.txt');
+   finally
+     SLInfo.Free;
+     SLTitles.Free;
+     SLStats.Free;
+     TempBitmap.Free;
+   end;
 {$endif}
 end;
 
@@ -397,6 +513,7 @@ begin
                       CloseScreen(gstTalisman);
                   end;
       VK_F7     : DoMassReplayCheck;
+      VK_F12    : DoTestStuff;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);
       VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
