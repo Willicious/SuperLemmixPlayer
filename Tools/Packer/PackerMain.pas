@@ -41,10 +41,7 @@ type
     Button2: TButton;
     btnItemOptions: TButton;
     btnGlobalOptions: TButton;
-    procedure FormCreate(Sender: TObject);
   private
-    AppController: TAppController;
-
     fRecipe: TPackageRecipe;
   public
     { Public declarations }
@@ -56,11 +53,5 @@ var
 implementation
 
 {$R *.dfm}
-
-procedure TFNLContentPacker.FormCreate(Sender: TObject);
-begin
-  GlobalGame := TLemmingGame.Create(nil);
-  AppController := TAppController.Create(TForm.Create(self)); // Dummy form, so this one doesn't get messed with.
-end;
 
 end.

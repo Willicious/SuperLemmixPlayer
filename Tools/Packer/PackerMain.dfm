@@ -12,7 +12,6 @@ object FNLContentPacker: TFNLContentPacker
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
-  OnCreate = FormCreate
   DesignSize = (
     584
     404)
@@ -33,7 +32,6 @@ object FNLContentPacker: TFNLContentPacker
     Anchors = [akLeft, akTop, akRight, akBottom]
     ItemHeight = 13
     TabOrder = 0
-    ExplicitHeight = 309
   end
   object gbLevelPack: TGroupBox
     Left = 317
@@ -163,7 +161,6 @@ object FNLContentPacker: TFNLContentPacker
     Anchors = [akRight, akBottom]
     Caption = 'Delete'
     TabOrder = 4
-    ExplicitTop = 342
   end
   object btnItemOptions: TButton
     Left = 136
