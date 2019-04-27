@@ -1,8 +1,5 @@
 unit PackRecipe;
 
-// TODO:
-// - Sounds used by styles
-
 interface
 
 uses
@@ -10,7 +7,7 @@ uses
   Classes,
   SysUtils, StrUtils, IOUtils,
   LemNeoLevelPack, LemLevel, LemTypes, LemNeoPieceManager, LemNeoTheme,
-  GameSound,
+  GameSound, LemGadgetsMeta,
   Generics.Collections;
 
 type
@@ -576,6 +573,68 @@ var
       else
         UsedStyles.Add(MidStr(Src[i], 1, Pos(':', Src[i])-1) );
   end;
+
+  procedure AddStyleSounds(aStyle: TRecipeStyle);
+  var
+    SoundList: TStringList;
+    Info: TGadgetMetaAccessor;
+    SearchRec: TSearchRec;
+    i, n: Integer;
+    S: String;
+  begin
+    if (aStyle.Include = siNone) then
+      Exit; // Just in case.
+
+    SoundList := TStringList.Create;
+    try
+      SoundList.Sorted := true;
+      SoundList.Duplicates := dupIgnore;
+
+      if aStyle.Include = siPartial then
+      begin
+        for i := 0 to aObjects.Count-1 do
+        begin
+          if LeftStr(aObjects[i], Length(aStyle.StyleName) + 1) <> aStyle.StyleName + ':' then
+            Continue;
+
+          Info := PieceManager.Objects[aObjects[i]].GetInterface(false, false, false);
+          if Info.SoundEffect <> '' then
+            SoundList.Add(Info.SoundEffect);
+        end;
+      end else begin
+        if FindFirst(AppPath + 'styles\' + aStyle.StyleName + '\objects\*.nxmo', faReadOnly, SearchRec) = 0 then
+        begin
+          repeat
+            Info := PieceManager.Objects[aStyle.StyleName + ':' + ChangeFileExt(SearchRec.Name, '')].GetInterface(false, false, false);
+            if Info.SoundEffect <> '' then
+              SoundList.Add(Info.SoundEffect);
+          until FindNext(SearchRec) <> 0;
+          FindClose(SearchRec);
+        end;
+      end;
+
+      for i := 0 to SoundList.Count-1 do
+      begin
+        S := 'sound\' + SoundList[i] + SoundManager.FindExtension(SoundList[i], false);
+
+        SkipThis := false;
+        for n := 0 to fFiles.Count-1 do
+          if fFiles[n].FilePath = S then
+            SkipThis := true;
+
+        if SkipThis then
+          Continue;
+
+        NewFile := TRecipeFile.Create;
+        NewFile.AutoAdded := true;
+        NewFile.FilePath := S;
+
+        fFiles.Add(NewFile);
+      end;
+    finally
+      SoundList.Free;
+    end;
+  end;
 begin
   if (aPack.NewStylesInclude = siNone) and (aPack.NewMusicInclude = false) then
     Exit;
@@ -608,6 +667,8 @@ begin
       NewStyle.Include := aPack.NewStylesInclude;
 
       fStyles.Add(NewStyle);
+
+      AddStyleSounds(NewStyle);
     end;
 
     for i := 0 to aMusic.Count-1 do
