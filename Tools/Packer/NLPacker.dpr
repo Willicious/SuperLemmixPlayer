@@ -3,7 +3,7 @@ program NLPacker;
 uses
   LemGame,
   AppController,
-  SysUtils,
+  SysUtils, IOUtils,
   PackRecipe,
   Vcl.Forms,
   PackerMain in 'PackerMain.pas' {FNLContentPacker};
@@ -11,7 +11,10 @@ uses
 {$R *.res}
 
 var
+  BasePath: String;
+  InputFile: String;
   OutputFile: String;
+  OutputMetaFile: String;
   CmdLineRecipe: TPackageRecipe;
   DecoyAppController: TAppController;
 
@@ -23,12 +26,24 @@ begin
 
     CmdLineRecipe := TPackageRecipe.Create;
     try
+      BasePath := IncludeTrailingPathDelimiter(GetCurrentDir);
+
+      InputFile := ParamStr(1);
+      if not TPath.IsPathRooted(InputFile) then
+        InputFile := BasePath + InputFile;
+
       OutputFile := ParamStr(2);
       if OutputFile = '' then
-        OutputFile := ChangeFileExt(ParamStr(1), '.zip');
+        OutputFile := ChangeFileExt(ParamStr(1), '.zip')
+      else if not TPath.IsPathRooted(OutputFile) then
+        OutputFile := BasePath + OutputFile;
 
-      CmdLineRecipe.LoadFromFile(ParamStr(1));
-      CmdLineRecipe.ExportPackage(OutputFile, ParamStr(3));
+      OutputMetaFile := ParamStr(3);
+      if (OutputMetaFile <> '') and (not TPath.IsPathRooted(OutputMetaFile)) then
+        OutputMetaFile := BasePath + OutputMetaFile;
+
+      CmdLineRecipe.LoadFromFile(InputFile);
+      CmdLineRecipe.ExportPackage(OutputFile, OutputMetaFile);
     finally
       CmdLineRecipe.Free;
       DecoyAppController.Free;

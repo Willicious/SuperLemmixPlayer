@@ -1,6 +1,8 @@
 unit PackRecipe;
 
-// BIG TODO: Detect styles required due to lemming sprites.
+// TODO:
+// - Detecting correct music file
+// - Sounds used by styles
 
 interface
 
@@ -224,8 +226,9 @@ var
 
       if (ThisStyle.Include = siFull) then
         AddFolderRecursive(IncludeTrailingPathDelimiter('styles') + ThisStyle.StyleName)
-      else
+      else if (ThisStyle.Include = siPartial) then
         AddRequiredPiecesOnly(ThisStyle);
+      // else if siNone, do nothing
     end;
   end;
 
