@@ -4,7 +4,7 @@ interface
 
 uses
   Classes,
-  SysUtils,
+  SysUtils, StrUtils,
   LemNeoLevelPack, LemLevel,
   Generics.Collections;
 
@@ -262,8 +262,93 @@ begin
 end;
 
 procedure TPackageRecipe.BuildPackAutoAdds(aPack: TRecipePack);
-begin
+var
+  UsedObjects: TStringList;
+  UsedTerrain: TStringList;
+  UsedBackgrounds: TStringList;
+  UsedThemes: TStringList;
+  UsedMusic: TStringList;
 
+  UsedStyles: TStringList;
+  i: Integer;
+
+  NewStyle: TRecipeStyle;
+  NewFile: TRecipeFile;
+  n: Integer;
+
+  SkipThis: Boolean;
+
+  procedure AddStyleFromList(Src: TStringList);
+  var
+    i: Integer;
+  begin
+    for i := 0 to Src.Count-1 do
+      if Pos(':', Src[i]) = 0 then
+        UsedStyles.Add(Src[i])
+      else
+        UsedStyles.Add(MidStr(Src[i], 1, Pos(':', Src[i])-1) );
+  end;
+begin
+  ClearAutoAdds;
+
+  if (aPack.NewStylesInclude = siNone) and (aPack.NewMusicInclude = false) then
+    Exit;
+
+  UsedObjects := TStringList.Create;
+  UsedTerrain := TStringList.Create;
+  UsedBackgrounds := TStringList.Create;
+  UsedThemes := TStringList.Create;
+  UsedMusic := TStringList.Create;
+  UsedStyles := TStringList.Create;
+  try
+    BuildPackAutoAddLists(aPack, UsedObjects, UsedTerrain, UsedBackgrounds, UsedThemes, UsedMusic);
+
+    UsedStyles.Duplicates := dupIgnore;
+    AddStyleFromList(UsedObjects);
+    AddStyleFromList(UsedTerrain);
+    AddStyleFromList(UsedBackgrounds);
+    AddStyleFromList(UsedThemes);
+
+    for i := 0 to UsedStyles.Count-1 do
+    begin
+      SkipThis := false;
+      for n := 0 to fStyles.Count-1 do
+        if fStyles[n].StyleName = UsedStyles[i] then
+          SkipThis := true;
+        
+      if SkipThis then
+        Continue;
+
+      NewStyle := TRecipeStyle.Create;
+      NewStyle.AutoAdded := true;
+      NewStyle.StyleName := UsedStyles[i];
+      NewStyle.Include := aPack.NewStylesInclude;
+
+      fStyles.Add(NewStyle);
+    end;
+
+    for i := 0 to UsedMusic.Count-1 do
+    begin
+      SkipThis := false;
+      // Need to come up with a detection algorithm here, taking into account extension priorities.
+
+      if SkipThis then
+        Continue;
+
+      NewFile := TRecipeFile.Create;
+      NewFile.AutoAdded := true;
+      NewFile.FilePath := 'music/' + UsedMusic[i]; // And here...
+
+      fFiles.Add(NewFile);
+    end;
+  finally
+    UsedObjects.Free;
+    UsedTerrain.Free;
+    UsedBackgrounds.Free;
+    UsedThemes.Free;
+    UsedMusic.Free;
+    UsedStyles.Free;
+  end;
 end;
 
 procedure TPackageRecipe.BuildPackAutoAddLists(aPack: TRecipePack; var aObjects, aTerrains, aBackgrounds, aThemes, aMusic: TStringList);
@@ -277,36 +362,39 @@ var
   i: Integer;
   FoundPack: Boolean;
 
-  procedure RecursiveIdentify(aPack: TNeoLevelGroup);
+  procedure RecursiveIdentify(aGroup: TNeoLevelGroup);
   var
     i, n: Integer;
     S: String;
 
     Level: TLevel;
   begin
-    for i := 0 to aPack.Children.Count-1 do
-      RecursiveIdentify(aPack.Children[i]);
+    for i := 0 to aGroup.Children.Count-1 do
+      RecursiveIdentify(aGroup.Children[i]);
 
-    for i := 0 to aPack.Levels.Count-1 do
+    for i := 0 to aGroup.Levels.Count-1 do
     begin
-      GameParams.SetLevel(aPack.Levels[i]);
+      GameParams.SetLevel(aGroup.Levels[i]);
       GameParams.LoadCurrentLevel(true);
       Level := GameParams.Level;
       
       S := Trim(Level.Info.MusicFile);
-      if (S <> '') and (S[1] <> '?') then
+      if (S <> '') and (S[1] <> '?') and (aPack.NewMusicInclude) then
         UsedMusic.Add(S);
 
-      UsedThemes.Add(Level.Info.GraphicSetName);
+      if (aPack.NewStylesInclude <> siNone) then
+      begin
+        UsedThemes.Add(Level.Info.GraphicSetName);
 
-      if (Level.Info.Background <> '') then
-        UsedBackgrounds.Add(Level.Info.Background);
+        if (Level.Info.Background <> '') then
+          UsedBackgrounds.Add(Level.Info.Background);
 
-      for n := 0 to Level.InteractiveObjects.Count-1 do
-        UsedObjects.Add(Level.InteractiveObjects[n].Identifier);
+        for n := 0 to Level.InteractiveObjects.Count-1 do
+          UsedObjects.Add(Level.InteractiveObjects[n].Identifier);
 
-      for n := 0 to Level.Terrains.Count-1 do
-        UsedTerrain.Add(Level.Terrains[n].Identifier);
+        for n := 0 to Level.Terrains.Count-1 do
+          UsedTerrain.Add(Level.Terrains[n].Identifier);
+      end;
     end;
   end;
 begin
