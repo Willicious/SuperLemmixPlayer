@@ -73,7 +73,7 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_Define>exp;$(DCC_Define)</DCC_Define>
         <DCC_DcuOutput>dcu</DCC_DcuOutput>
-        <DCC_ExeOutput>bin\</DCC_ExeOutput>
+        <DCC_ExeOutput>..\..\bin\</DCC_ExeOutput>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_UnitSearchPath>..\..\;..\..\kernel\;..\..\kernel\zlib\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
