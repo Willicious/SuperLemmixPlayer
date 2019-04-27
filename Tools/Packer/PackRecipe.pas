@@ -7,7 +7,7 @@ interface
 uses
   Zip,
   Classes,
-  SysUtils, StrUtils,
+  SysUtils, StrUtils, IOUtils,
   LemNeoLevelPack, LemLevel, LemTypes, LemNeoPieceManager, LemNeoTheme,
   Generics.Collections;
 
@@ -207,7 +207,7 @@ var
     end;
 
     if RequiredThemes.IndexOf(aStyle.StyleName) >= 0 then
-      FilesToAdd.Add(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) + 'theme.nxmi');
+      FilesToAdd.Add(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) + 'theme.nxtm');
 
     if RequiredLemmings.IndexOf(aStyle.StyleName) >= 0 then
       AddFolder(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) + 'lemmings');
@@ -253,6 +253,12 @@ var
     end;
   end;
 begin
+  if not TPath.IsPathRooted(aDest) then
+    aDest := AppPath + aDest;
+
+  if not TPath.IsPathRooted(aMetaInfo) then
+    aMetaInfo := AppPath + aMetaInfo;
+
   FilesToAdd := TStringList.Create;
   MetaInfoStream := TMemoryStream.Create;
   try
@@ -361,7 +367,7 @@ begin
           else
             NewPack.NewStylesInclude := siNone;
 
-          NewPack.NewMusicInclude := SubSL.IndexOfName('NEW_MUSIC_INCLUDE') >= 0;
+          NewPack.NewMusicInclude := Uppercase(SubSL.Values['NEW_MUSIC_INCLUDE']) = 'TRUE';
 
           Packs.Add(NewPack);  
         end else if UpperCase(SubSL[0]) = 'STYLE' then
@@ -681,7 +687,7 @@ begin
 
   FoundPack := false;
   for i := 0 to GameParams.BaseLevelPack.Children.Count-1 do
-    if GameParams.BaseLevelPack.Children[i].Path = aPack.PackFolder then
+    if GameParams.BaseLevelPack.Children[i].Folder = aPack.PackFolder then
     begin
       GameParams.SetGroup(GameParams.BaseLevelPack.Children[i]);
       FoundPack := true;
