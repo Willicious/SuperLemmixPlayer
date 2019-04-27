@@ -11,11 +11,11 @@ uses
 
 type
   TFNLContentPacker = class(TForm)
-    ListBox1: TListBox;
+    lbContent: TListBox;
     lblContentList: TLabel;
     gbLevelPack: TGroupBox;
     gbStyle: TGroupBox;
-    GroupBox2: TGroupBox;
+    gbFile: TGroupBox;
     btnDelete: TButton;
     MainMenu1: TMainMenu;
     msFile: TMenuItem;
@@ -37,6 +37,8 @@ type
     btnFileAdd: TButton;
     Button1: TButton;
     Button2: TButton;
+    btnItemOptions: TButton;
+    btnGlobalOptions: TButton;
     procedure FormCreate(Sender: TObject);
   private
     AppController: TAppController;

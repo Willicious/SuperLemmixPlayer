@@ -2,7 +2,7 @@ object FNLContentPacker: TFNLContentPacker
   Left = 0
   Top = 0
   Caption = 'NeoLemmix Content Packer'
-  ClientHeight = 375
+  ClientHeight = 404
   ClientWidth = 584
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,7 +15,7 @@ object FNLContentPacker: TFNLContentPacker
   OnCreate = FormCreate
   DesignSize = (
     584
-    375)
+    404)
   PixelsPerInch = 96
   TextHeight = 13
   object lblContentList: TLabel
@@ -25,14 +25,15 @@ object FNLContentPacker: TFNLContentPacker
     Height = 13
     Caption = 'Content List'
   end
-  object ListBox1: TListBox
+  object lbContent: TListBox
     Left = 8
     Top = 27
     Width = 294
-    Height = 309
+    Height = 338
     Anchors = [akLeft, akTop, akRight, akBottom]
     ItemHeight = 13
     TabOrder = 0
+    ExplicitHeight = 309
   end
   object gbLevelPack: TGroupBox
     Left = 317
@@ -42,7 +43,6 @@ object FNLContentPacker: TFNLContentPacker
     Anchors = [akTop, akRight]
     Caption = 'Add Level Pack'
     TabOrder = 1
-    ExplicitLeft = 232
     object cbLevelPack: TComboBox
       Left = 16
       Top = 24
@@ -90,11 +90,10 @@ object FNLContentPacker: TFNLContentPacker
     Left = 317
     Top = 176
     Width = 257
-    Height = 105
+    Height = 133
     Anchors = [akTop, akRight]
     Caption = 'Add Graphic Set'
     TabOrder = 2
-    ExplicitLeft = 232
     object cbGraphicSet: TComboBox
       Left = 16
       Top = 24
@@ -106,26 +105,27 @@ object FNLContentPacker: TFNLContentPacker
       Left = 16
       Top = 51
       Width = 121
-      Height = 46
+      Height = 70
       Caption = 'Which Pieces?'
       ItemIndex = 0
       Items.Strings = (
         'All'
-        'Used In Packs')
+        'Used In Packs'
+        'Exclude')
       TabOrder = 1
     end
     object Button1: TButton
       Left = 175
-      Top = 75
+      Top = 99
       Width = 62
       Height = 21
       Caption = 'Add'
       TabOrder = 2
     end
   end
-  object GroupBox2: TGroupBox
+  object gbFile: TGroupBox
     Left = 317
-    Top = 287
+    Top = 315
     Width = 257
     Height = 81
     Anchors = [akTop, akRight]
@@ -157,12 +157,31 @@ object FNLContentPacker: TFNLContentPacker
   end
   object btnDelete: TButton
     Left = 227
-    Top = 342
+    Top = 371
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Delete'
     TabOrder = 4
+    ExplicitTop = 342
+  end
+  object btnItemOptions: TButton
+    Left = 136
+    Top = 371
+    Width = 85
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = 'Item Options'
+    TabOrder = 5
+  end
+  object btnGlobalOptions: TButton
+    Left = 45
+    Top = 371
+    Width = 85
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = 'Global Options'
+    TabOrder = 6
   end
   object MainMenu1: TMainMenu
     Left = 176
