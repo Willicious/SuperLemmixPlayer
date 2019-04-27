@@ -52,6 +52,10 @@
         <DCC_K>false</DCC_K>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <DCC_UnitSearchPath>..\..\;..\..\kernel\;..\..\kernel\zlib\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_Define>exp;$(DCC_Define)</DCC_Define>
+        <DCC_ExeOutput>..\..\bin\</DCC_ExeOutput>
+        <DCC_DcuOutput>dcu</DCC_DcuOutput>
         <DCC_UsePackage>bindcompfmx;DBXSqliteDriver;vcldbx;RESTBackendComponents;fmx;rtl;dbrtl;DbxClientDriver;IndySystem;tethering;bindcomp;inetdb;GR32_R;inetdbbde;DBXInterBaseDriver;xmlrtl;svnui;DbxCommonDriver;vclimg;IndyProtocols;dbxcds;DBXMySQLDriver;MetropolisUILiveTile;soaprtl;vclactnband;bindengine;vcldb;bindcompdbx;vcldsnap;bindcompvcl;vclie;vcltouch;CustomIPTransport;vclribbon;VclSmp;dsnap;IndyIPServer;VCLRESTComponents;GR32_D;fmxase;vcl;IndyCore;IndyIPCommon;dsnapcon;inet;fmxobj;soapserver;soapmidas;vclx;inetdbxpress;svn;fmxdae;RESTComponents;bdertl;adortl;dbexpress;IndyIPClient;$(DCC_UsePackage)</DCC_UsePackage>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
@@ -72,11 +76,8 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_Define>exp;$(DCC_Define)</DCC_Define>
-        <DCC_DcuOutput>dcu</DCC_DcuOutput>
-        <DCC_ExeOutput>..\..\bin\</DCC_ExeOutput>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <DCC_UnitSearchPath>..\..\;..\..\kernel\;..\..\kernel\zlib\;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
