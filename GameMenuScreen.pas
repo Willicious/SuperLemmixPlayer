@@ -89,7 +89,7 @@ type
     procedure DrawWorkerLemmings(aFrame: Integer);
     procedure DrawReel;
     procedure SetNextCredit;
-    procedure DoTestStuff; //what a great name. it's a function I have here for testing things.
+    procedure DumpImages; //what a great name. it's a function I have here for testing things.
     procedure PerformUpdateCheck;
   { eventhandlers }
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -140,23 +140,12 @@ begin
 end;
 
 
-procedure TGameMenuScreen.DoTestStuff;
-{$ifdef exp}
+procedure TGameMenuScreen.DumpImages;
 var
-  Format, Core, Feature, Fix: Integer;
-  S: String;
-{$endif}
+  BasePack: TNeoLevelGroup;
 begin
-// Any random test code can go here. Since it's for testing purposes, I've
-// added a conditional define so it doesn't get included in release versions.
-{$ifdef exp}
-  if GetLatestNeoLemmixVersion(NxaPlayer, Format, Core, Feature, Fix) then
-  begin
-    S := 'V' + MakeVersionString(Format, Core, Feature, Fix);
-    ShowMessage('Latest version reported as: ' + S);
-  end else
-    ShowMessage('Version check fail.');
-{$endif}
+  BasePack := GameParams.CurrentLevel.Group.ParentBasePack;
+  BasePack.DumpImages(AppPath + 'Dump\' + MakeSafeForFilename(BasePack.Name) + '\');
 end;
 
 procedure TGameMenuScreen.PerformUpdateCheck;
@@ -396,6 +385,7 @@ begin
                        and (GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count <> 0) then
                       CloseScreen(gstTalisman);
                   end;
+      VK_F6     : DumpImages;
       VK_F7     : DoMassReplayCheck;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);

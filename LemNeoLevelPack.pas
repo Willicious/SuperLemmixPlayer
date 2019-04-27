@@ -9,7 +9,8 @@ uses
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
   Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
   LemTalisman,
-  LemStrings, LemTypes, LemNeoParser;
+  LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemCore,
+  UMisc;
 
 type
   TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);
@@ -174,6 +175,7 @@ type
       function GetCompleteTalismanCount: Integer;
 
       function GetParentBasePack: TNeoLevelGroup;
+
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
@@ -182,6 +184,8 @@ type
       procedure SaveUserData;
 
       function FindFile(aName: String): String;
+
+      procedure DumpImages(aPath: String; aPrefix: String = '');
 
       property Parent: TNeoLevelGroup read fParentGroup;
       property ParentBasePack: TNeoLevelGroup read GetParentBasePack;
@@ -248,7 +252,7 @@ type
 implementation
 
 uses
-  Math, UITypes;
+  GameControl, Math, UITypes;
 
 function SortAlphabetical(Item1, Item2: Pointer): Integer;
 var
@@ -537,6 +541,36 @@ begin
   if fHasOwnScrollerList and (fScrollerList <> nil) then
     fScrollerList.Free;
   inherited;
+end;
+
+procedure TNeoLevelGroup.DumpImages(aPath: String; aPrefix: String = '');
+var
+  i: Integer;
+  Output: TBitmap32;
+begin
+  aPath := IncludeTrailingPathDelimiter(aPath);
+  ForceDirectories(aPath);
+
+  for i := 0 to Children.Count-1 do
+    Children[i].DumpImages(aPath, LeadZeroStr(i+1, 2));
+
+  if (Children.Count > 0) or IsBasePack then
+    aPrefix := '00' + aPrefix;
+
+  Output := TBitmap32.Create;
+  try
+    for i := 0 to Levels.Count-1 do
+    begin
+      GameParams.SetLevel(Levels[i]);
+      GameParams.LoadCurrentLevel;
+
+      Output.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+      GameParams.Renderer.RenderWorld(Output, true);
+      TPngInterface.SavePngFile(aPath + aPrefix + LeadZeroStr(i+1, 2) + '.png', Output);
+    end;
+  finally
+    Output.Free;
+  end;
 end;
 
 function TNeoLevelGroup.FindFile(aName: String): String;
