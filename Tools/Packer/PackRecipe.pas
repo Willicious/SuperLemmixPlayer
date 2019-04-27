@@ -571,6 +571,7 @@ begin
   try
     BuildPackAutoAddLists(aPack, aObjects, aTerrains, aBackgrounds, aThemes, aLemmings, aMusic);
 
+    UsedStyles.Sorted := true;
     UsedStyles.Duplicates := dupIgnore;
     AddStyleFromList(aObjects);
     AddStyleFromList(aTerrains);
@@ -703,6 +704,12 @@ begin
   UsedLemmings := TStringList.Create;
   UsedMusic := TStringList.Create;
   try
+    UsedObjects.Sorted := true;
+    UsedTerrain.Sorted := true;
+    UsedBackgrounds.Sorted := true;
+    UsedThemes.Sorted := true;
+    UsedLemmings.Sorted := true;
+    UsedMusic.Sorted := true;
     UsedObjects.Duplicates := dupIgnore;
     UsedTerrain.Duplicates := dupIgnore;
     UsedBackgrounds.Duplicates := dupIgnore;
