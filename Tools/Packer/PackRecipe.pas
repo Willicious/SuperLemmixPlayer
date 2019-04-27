@@ -21,6 +21,7 @@ type
       PackFolder: String;
       NewStylesInclude: TStyleInclude;
       NewMusicInclude: Boolean;
+      ResourcesOnly: Boolean;
   end;
 
   TRecipeStyle = class
@@ -155,7 +156,8 @@ var
     begin
       ThisPack := fPacks[i];
       BuildPackAutoAdds(ThisPack, RequiredObjects, RequiredTerrain, RequiredBackgrounds, RequiredThemes, RequiredLemmings, RequiredMusic);
-      AddFolderRecursive(IncludeTrailingPathDelimiter('levels') + ThisPack.PackFolder);
+      if not ThisPack.ResourcesOnly then
+        AddFolderRecursive(IncludeTrailingPathDelimiter('levels') + ThisPack.PackFolder);
     end;
   end;
 
@@ -371,6 +373,7 @@ begin
             NewPack.NewStylesInclude := siNone;
 
           NewPack.NewMusicInclude := Uppercase(SubSL.Values['NEW_MUSIC_INCLUDE']) = 'TRUE';
+          NewPack.ResourcesOnly := Uppercase(SubSL.Values['RESOURCES_ONLY']) = 'TRUE';
 
           Packs.Add(NewPack);  
         end else if UpperCase(SubSL[0]) = 'STYLE' then
@@ -452,6 +455,11 @@ begin
         SubSL.Add('NEW_MUSIC_INCLUDE=TRUE')
       else
         SubSL.Add('NEW_MUSIC_INCLUDE=FALSE');
+
+      if ThisPack.ResourcesOnly then
+        SubSL.Add('RESOURCES_ONLY=TRUE')
+      else
+        SubSL.Add('RESOURCES_ONLY=FALSE');
 
       SL.Add(SubSL.DelimitedText);
     end;
