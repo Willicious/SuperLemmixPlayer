@@ -282,6 +282,7 @@ begin
     try
       ZipFile.Open(aDest, zmWrite);
 
+      MetaInfoStream.Position := 0;
       ZipFile.Add(MetaInfoStream, 'package_meta.nxmi');
       for i := 0 to FilesToAdd.Count-1 do
         ZipFile.Add(AppPath + FilesToAdd[i], FilesToAdd[i]);
@@ -337,6 +338,7 @@ begin
   SubSL := TStringList.Create;
   try
     SubSL.Delimiter := '|';
+    SubSL.StrictDelimiter := true;
 
     SL.LoadFromStream(aStream);
 
@@ -413,6 +415,7 @@ begin
   SubSL := TStringList.Create;
   try
     SubSL.Delimiter := '|';
+    SubSL.StrictDelimiter := true;
 
     SubSL.Add('META');
     SubSL.Add('NAME=' + fPackageName);
