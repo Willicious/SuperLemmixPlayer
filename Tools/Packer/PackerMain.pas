@@ -7,7 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
 
 type
-  TForm1 = class(TForm)
+  TFNLContentPacker = class(TForm)
   private
     { Private declarations }
   public
@@ -15,7 +15,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  FNLContentPacker: TFNLContentPacker;
 
 implementation
 
