@@ -30,6 +30,13 @@ type
     cbLevelPack: TComboBox;
     rgPackGraphicSets: TRadioGroup;
     rgPackMusic: TRadioGroup;
+    cbGraphicSet: TComboBox;
+    rgSetFull: TRadioGroup;
+    ebFilePath: TEdit;
+    btnBrowse: TButton;
+    btnFileAdd: TButton;
+    Button1: TButton;
+    Button2: TButton;
     procedure FormCreate(Sender: TObject);
   private
     AppController: TAppController;
