@@ -2,8 +2,8 @@ object FNLContentPacker: TFNLContentPacker
   Left = 0
   Top = 0
   Caption = 'NeoLemmix Content Packer'
-  ClientHeight = 394
-  ClientWidth = 499
+  ClientHeight = 375
+  ClientWidth = 584
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,8 +14,8 @@ object FNLContentPacker: TFNLContentPacker
   OldCreateOrder = False
   OnCreate = FormCreate
   DesignSize = (
-    499
-    394)
+    584
+    375)
   PixelsPerInch = 96
   TextHeight = 13
   object lblContentList: TLabel
@@ -28,20 +28,21 @@ object FNLContentPacker: TFNLContentPacker
   object ListBox1: TListBox
     Left = 8
     Top = 27
-    Width = 209
-    Height = 318
+    Width = 294
+    Height = 309
     Anchors = [akLeft, akTop, akRight, akBottom]
     ItemHeight = 13
     TabOrder = 0
   end
   object gbLevelPack: TGroupBox
-    Left = 232
+    Left = 317
     Top = 16
     Width = 257
     Height = 154
     Anchors = [akTop, akRight]
     Caption = 'Add Level Pack'
     TabOrder = 1
+    ExplicitLeft = 232
     object cbLevelPack: TComboBox
       Left = 16
       Top = 24
@@ -86,13 +87,14 @@ object FNLContentPacker: TFNLContentPacker
     end
   end
   object gbStyle: TGroupBox
-    Left = 232
+    Left = 317
     Top = 176
     Width = 257
-    Height = 122
+    Height = 105
     Anchors = [akTop, akRight]
     Caption = 'Add Graphic Set'
     TabOrder = 2
+    ExplicitLeft = 232
     object cbGraphicSet: TComboBox
       Left = 16
       Top = 24
@@ -104,18 +106,17 @@ object FNLContentPacker: TFNLContentPacker
       Left = 16
       Top = 51
       Width = 121
-      Height = 62
+      Height = 46
       Caption = 'Which Pieces?'
       ItemIndex = 0
       Items.Strings = (
         'All'
-        'Used In Packs'
-        'Custom')
+        'Used In Packs')
       TabOrder = 1
     end
     object Button1: TButton
       Left = 175
-      Top = 91
+      Top = 75
       Width = 62
       Height = 21
       Caption = 'Add'
@@ -123,8 +124,8 @@ object FNLContentPacker: TFNLContentPacker
     end
   end
   object GroupBox2: TGroupBox
-    Left = 232
-    Top = 304
+    Left = 317
+    Top = 287
     Width = 257
     Height = 81
     Anchors = [akTop, akRight]
@@ -155,8 +156,8 @@ object FNLContentPacker: TFNLContentPacker
     end
   end
   object btnDelete: TButton
-    Left = 142
-    Top = 351
+    Left = 227
+    Top = 342
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
