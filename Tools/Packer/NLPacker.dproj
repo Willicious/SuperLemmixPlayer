@@ -75,8 +75,9 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <DCC_Define>exp;$(DCC_Define)</DCC_Define>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DCC_Define>exp;$(DCC_Define)</DCC_Define>
+        <Debugger_RunParams>testpack.nxpr</Debugger_RunParams>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
     </PropertyGroup>
@@ -92,7 +93,6 @@
         </DelphiCompile>
         <DCCReference Include="PackerMain.pas">
             <Form>FNLContentPacker</Form>
-            <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

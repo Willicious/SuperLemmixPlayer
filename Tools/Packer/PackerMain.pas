@@ -6,6 +6,8 @@ uses
   LemRes,
   LemGame, AppController,
 
+  PackRecipe,
+
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Menus, Vcl.ExtCtrls;
 
@@ -42,6 +44,8 @@ type
     procedure FormCreate(Sender: TObject);
   private
     AppController: TAppController;
+
+    fRecipe: TPackageRecipe;
   public
     { Public declarations }
   end;

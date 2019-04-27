@@ -1,11 +1,14 @@
 unit PackRecipe;
 
+// BIG TODO: Detect styles required due to lemming sprites.
+
 interface
 
 uses
+  Zip,
   Classes,
   SysUtils, StrUtils,
-  LemNeoLevelPack, LemLevel,
+  LemNeoLevelPack, LemLevel, LemTypes, LemNeoPieceManager, LemNeoTheme,
   Generics.Collections;
 
 type
@@ -33,27 +36,38 @@ type
 
   TPackageRecipe = class
     private
+      fFilePath: String;
+    
       fPackageName: String;
+      fPackageAuthor: String;
       fPackageType: String;
       fPackageVersion: String;
       
-      fPacks: TList<TRecipePack>;
-      fStyles: TList<TRecipeStyle>;
-      fFiles: TList<TRecipeFile>;
+      fPacks: TObjectList<TRecipePack>;
+      fStyles: TObjectList<TRecipeStyle>;
+      fFiles: TObjectList<TRecipeFile>;
 
-      procedure ClearAutoAdds;
-      procedure BuildAutoAdds;
-
-      procedure BuildPackAutoAdds(aPack: TRecipePack);
-      procedure BuildPackAutoAddLists(aPack: TRecipePack; var aObjects, aTerrains, aBackgrounds, aThemes, aMusic: TStringList);
+      procedure BuildPackAutoAdds(aPack: TRecipePack); overload;
+      procedure BuildPackAutoAdds(aPack: TRecipePack; var aObjects, aTerrains, aBackgrounds, aThemes, aLemmings, aMusic: TStringList); overload;
+      procedure BuildPackAutoAddLists(aPack: TRecipePack; var aObjects, aTerrains, aBackgrounds, aThemes, aLemmings, aMusic: TStringList);
     public
       constructor Create;
       destructor Destroy; override;
 
+      procedure ExportPackage(aDest: TFilename; aMetaInfo: TFilename = '');
+
+      procedure LoadFromFile(aFile: TFilename);
+      procedure SaveToFile(aFile: TFilename);
       procedure LoadFromStream(aStream: TStream);
       procedure SaveToStream(aStream: TStream);
 
+      procedure ClearAutoAdds;
+      procedure BuildAutoAdds;
+
+      property FilePath: String read fFilePath write fFilePath;
+
       property PackageName: String read fPackageName write fPackageName;
+      property PackageAuthor: String read fPackageAuthor write fPackageAuthor;
       property PackageType: String read fPackageType write fPackageType;
       property PackageVersion: String read fPackageVersion write fPackageVersion;
       
@@ -81,6 +95,233 @@ begin
   fFiles.Free;
 end;
 
+procedure TPackageRecipe.ExportPackage(aDest: TFileName; aMetaInfo: TFileName = '');
+var
+  ZipFile: TZipFile;
+
+  FilesToAdd: TStringList;
+  RequiredObjects, RequiredTerrain, RequiredBackgrounds, RequiredMusic, RequiredThemes, RequiredLemmings: TStringList;
+
+  MetaInfoStream: TMemoryStream;
+  i: Integer;
+
+  procedure AddWildcard(aPath: String; aExpression: String);
+  var
+    SearchRec: TSearchRec;
+  begin
+    aPath := IncludeTrailingPathDelimiter(aPath);
+    if FindFirst(AppPath + aPath + aExpression, faReadOnly, SearchRec) = 0 then
+    begin
+      repeat
+        FilesToAdd.Add(aPath + SearchRec.Name);  
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+  end;
+
+  procedure AddFolder(aPath: String);
+  begin
+    AddWildcard(aPath, '*');
+  end;
+
+  procedure AddFolderRecursive(aPath: String);
+  var
+    SearchRec: TSearchRec;
+  begin
+    aPath := IncludeTrailingPathDelimiter(aPath);
+    if FindFirst(AppPath + aPath + '*', faDirectory, SearchRec) = 0 then
+    begin
+      repeat
+        if ((SearchRec.Attr and faDirectory) <> 0) then
+        begin
+          if (SearchRec.Name <> '.') and (SearchRec.Name <> '..') then
+            AddFolderRecursive(aPath + SearchRec.Name);
+        end;
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+
+      AddFolder(aPath);
+    end;
+  end;
+  
+  procedure AddPacks;
+  var
+    ThisPack: TRecipePack;
+    i: Integer;
+  begin
+    for i := 0 to fPacks.Count-1 do
+    begin
+      ThisPack := fPacks[i];
+      BuildPackAutoAdds(ThisPack, RequiredObjects, RequiredTerrain, RequiredBackgrounds, RequiredThemes, RequiredLemmings, RequiredMusic);
+      AddFolderRecursive(IncludeTrailingPathDelimiter('levels') + ThisPack.PackFolder);
+    end;
+  end;
+
+  procedure AddRequiredPiecesOnly(aStyle: TRecipeStyle);
+  var
+    i: Integer;
+
+    function ExtractSet(aIdentifier: String): String;
+    var
+      SplitPos: Integer;
+    begin
+      SplitPos := Pos(':', aIdentifier);
+      Result := LeftStr(aIdentifier, SplitPos-1);
+    end;
+
+    function ExtractPiece(aIdentifier: String): String;
+    var
+      SplitPos: Integer;
+    begin
+      SplitPos := Pos(':', aIdentifier);
+      Result := RightStr(aIdentifier, Length(aIdentifier) - SplitPos);
+    end;
+  begin
+    for i := 0 to RequiredObjects.Count-1 do
+    begin
+      if ExtractSet(RequiredObjects[i]) <> aStyle.StyleName then
+        Continue;
+
+      AddWildcard(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) +
+                  IncludeTrailingPathDelimiter('objects'), ExtractPiece(RequiredObjects[i]) + '.*');
+      AddWildcard(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) +
+                  IncludeTrailingPathDelimiter('objects'), ExtractPiece(RequiredObjects[i]) + '_mask*');
+    end;
+
+    for i := 0 to RequiredTerrain.Count-1 do
+    begin
+      if ExtractSet(RequiredTerrain[i]) <> aStyle.StyleName then
+        Continue;
+
+      AddWildcard(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) +
+                  IncludeTrailingPathDelimiter('terrain'), ExtractPiece(RequiredTerrain[i]) + '.*');
+    end;
+
+    for i := 0 to RequiredBackgrounds.Count-1 do
+    begin
+      if ExtractSet(RequiredBackgrounds[i]) <> aStyle.StyleName then
+        Continue;
+
+      AddWildcard(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) +
+                  IncludeTrailingPathDelimiter('backgrounds'), ExtractPiece(RequiredBackgrounds[i]) + '.*');
+    end;
+
+    if RequiredThemes.IndexOf(aStyle.StyleName) >= 0 then
+      FilesToAdd.Add(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) + 'theme.nxmi');
+
+    if RequiredLemmings.IndexOf(aStyle.StyleName) >= 0 then
+      AddFolder(IncludeTrailingPathDelimiter('styles') + IncludeTrailingPathDelimiter(aStyle.StyleName) + 'lemmings');
+  end;
+
+  procedure AddStyles;
+  var
+    i: Integer;
+    ThisStyle: TRecipeStyle;
+  begin
+    for i := 0 to fStyles.Count-1 do
+    begin
+      ThisStyle := fStyles[i];
+
+      if (ThisStyle.Include = siFull) then
+        AddFolderRecursive(IncludeTrailingPathDelimiter('styles') + ThisStyle.StyleName)
+      else
+        AddRequiredPiecesOnly(ThisStyle);
+    end;
+  end;
+
+  procedure AddFiles;
+  var
+    i: Integer;
+  begin
+    for i := 0 to fFiles.Count-1 do
+      FilesToAdd.Add(fFiles[i].FilePath);
+  end;
+
+  procedure MakeMetaInfo;
+  var
+    SL: TStringList;
+  begin
+    SL := TStringList.Create;
+    try
+      SL.Add('NAME=' + fPackageName);
+      SL.Add('AUTHOR=' + fPackageAuthor);
+      SL.Add('TYPE=' + fPackageType);
+      SL.Add('VERSION=' + fPackageVersion);
+      SL.SaveToStream(MetaInfoStream);
+    finally
+      SL.Free;
+    end;
+  end;
+begin
+  FilesToAdd := TStringList.Create;
+  MetaInfoStream := TMemoryStream.Create;
+  try
+    RequiredObjects := TStringList.Create;
+    RequiredTerrain := TStringList.Create;
+    RequiredBackgrounds := TStringList.Create;
+    RequiredMusic := TStringList.Create;
+    RequiredThemes := TStringList.Create;
+    RequiredLemmings := TStringList.Create;
+    try
+      ClearAutoAdds;
+
+      AddPacks;
+      AddStyles;
+      AddFiles;
+      MakeMetaInfo;
+    finally
+      RequiredObjects.Free;
+      RequiredTerrain.Free;
+      RequiredBackgrounds.Free;
+      RequiredMusic.Free;
+      RequiredThemes.Free;    
+      RequiredLemmings.Free;
+    end;
+
+    ZipFile := TZipFile.Create;
+    try
+      ZipFile.Open(aDest, zmWrite);
+
+      ZipFile.Add(MetaInfoStream, 'package_meta.nxmi');
+      for i := 0 to FilesToAdd.Count-1 do
+        ZipFile.Add(AppPath + FilesToAdd[i], FilesToAdd[i]);
+
+      ZipFile.Close;
+    finally
+      ZipFile.Free;
+    end;
+  finally
+    FilesToAdd.Free;
+    MetaInfoStream.Free;
+  end;
+end;
+
+procedure TPackageRecipe.LoadFromFile(aFile: TFileName);
+var
+  F: TFileStream;
+begin
+  F := TFileStream.Create(aFile, fmOpenRead);
+  try
+    LoadFromStream(F);
+    fFilePath := aFile;
+  finally
+    F.Free;
+  end;
+end;
+
+procedure TPackageRecipe.SaveToFile(aFile: TFileName);
+var
+  F: TFileStream;
+begin
+  F := TFileStream.Create(aFile, fmCreate);
+  try
+    SaveToStream(F);
+    fFilePath := aFile;
+  finally
+    F.Free;
+  end;
+end;
+
 procedure TPackageRecipe.LoadFromStream(aStream: TStream);
 var
   SL, SubSL: TStringList;
@@ -95,7 +336,7 @@ begin
   SL := TStringList.Create;
   SubSL := TStringList.Create;
   try
-    SubSL.Delimiter = '|';
+    SubSL.Delimiter := '|';
 
     SL.LoadFromStream(aStream);
 
@@ -147,10 +388,12 @@ begin
         end else if UpperCase(SubSL[0]) = 'META' then
         begin
           fPackageName := SubSL.Values['NAME'];
+          fPackageAuthor := SubSL.Values['AUTHOR'];
           fPackageType := SubSL.Values['TYPE'];
           fPackageVersion := SubSL.Values['VERSION'];
         end;
       end;
+    BuildAutoAdds;
   finally
     SL.Free;
     SubSL.Free;
@@ -173,6 +416,7 @@ begin
 
     SubSL.Add('META');
     SubSL.Add('NAME=' + fPackageName);
+    SubSL.Add('AUTHOR=' + fPackageAuthor);
     SubSL.Add('TYPE=' + fPackageType);
     SubSL.Add('VERSION=' + fPackageVersion);
     SL.Add(SubSL.DelimitedText);
@@ -200,7 +444,7 @@ begin
 
     for i := 0 to fStyles.Count-1 do
     begin
-      ThisStyle = fStyles[i];
+      ThisStyle := fStyles[i];
       if ThisStyle.AutoAdded then
         Continue;
 
@@ -257,6 +501,7 @@ procedure TPackageRecipe.BuildAutoAdds;
 var
   i: Integer;
 begin
+  ClearAutoAdds;
   for i := 0 to fPacks.Count-1 do
     BuildPackAutoAdds(fPacks[i]);
 end;
@@ -267,8 +512,29 @@ var
   UsedTerrain: TStringList;
   UsedBackgrounds: TStringList;
   UsedThemes: TStringList;
+  UsedLemmings: TStringList;
   UsedMusic: TStringList;
+begin
+  UsedObjects := TStringList.Create;
+  UsedTerrain := TStringList.Create;
+  UsedBackgrounds := TStringList.Create;
+  UsedThemes := TStringList.Create;
+  UsedLemmings := TStringList.Create;
+  UsedMusic := TStringList.Create;
+  try
+    BuildPackAutoAdds(aPack, UsedObjects, UsedTerrain, UsedBackgrounds, UsedThemes, UsedLemmings, UsedMusic);
+  finally
+    UsedObjects.Free;
+    UsedTerrain.Free;
+    UsedBackgrounds.Free;
+    UsedThemes.Free;
+    UsedLemmings.Free;
+    UsedMusic.Free;
+  end;
+end;
 
+procedure TPackageRecipe.BuildPackAutoAdds(aPack: TRecipePack; var aObjects, aTerrains, aBackgrounds, aThemes, aLemmings, aMusic: TStringList);
+var
   UsedStyles: TStringList;
   i: Integer;
 
@@ -289,25 +555,19 @@ var
         UsedStyles.Add(MidStr(Src[i], 1, Pos(':', Src[i])-1) );
   end;
 begin
-  ClearAutoAdds;
-
   if (aPack.NewStylesInclude = siNone) and (aPack.NewMusicInclude = false) then
     Exit;
-
-  UsedObjects := TStringList.Create;
-  UsedTerrain := TStringList.Create;
-  UsedBackgrounds := TStringList.Create;
-  UsedThemes := TStringList.Create;
-  UsedMusic := TStringList.Create;
+    
   UsedStyles := TStringList.Create;
   try
-    BuildPackAutoAddLists(aPack, UsedObjects, UsedTerrain, UsedBackgrounds, UsedThemes, UsedMusic);
+    BuildPackAutoAddLists(aPack, aObjects, aTerrains, aBackgrounds, aThemes, aLemmings, aMusic);
 
     UsedStyles.Duplicates := dupIgnore;
-    AddStyleFromList(UsedObjects);
-    AddStyleFromList(UsedTerrain);
-    AddStyleFromList(UsedBackgrounds);
-    AddStyleFromList(UsedThemes);
+    AddStyleFromList(aObjects);
+    AddStyleFromList(aTerrains);
+    AddStyleFromList(aBackgrounds);
+    AddStyleFromList(aThemes);
+    AddStyleFromList(aLemmings);
 
     for i := 0 to UsedStyles.Count-1 do
     begin
@@ -327,7 +587,7 @@ begin
       fStyles.Add(NewStyle);
     end;
 
-    for i := 0 to UsedMusic.Count-1 do
+    for i := 0 to aMusic.Count-1 do
     begin
       SkipThis := false;
       // Need to come up with a detection algorithm here, taking into account extension priorities.
@@ -337,26 +597,22 @@ begin
 
       NewFile := TRecipeFile.Create;
       NewFile.AutoAdded := true;
-      NewFile.FilePath := 'music/' + UsedMusic[i]; // And here...
+      NewFile.FilePath := 'music/' + aMusic[i]; // And here...
 
       fFiles.Add(NewFile);
     end;
   finally
-    UsedObjects.Free;
-    UsedTerrain.Free;
-    UsedBackgrounds.Free;
-    UsedThemes.Free;
-    UsedMusic.Free;
     UsedStyles.Free;
   end;
 end;
 
-procedure TPackageRecipe.BuildPackAutoAddLists(aPack: TRecipePack; var aObjects, aTerrains, aBackgrounds, aThemes, aMusic: TStringList);
+procedure TPackageRecipe.BuildPackAutoAddLists(aPack: TRecipePack; var aObjects, aTerrains, aBackgrounds, aThemes, aLemmings, aMusic: TStringList);
 var
   UsedObjects: TStringList;
   UsedTerrain: TStringList;
   UsedBackgrounds: TStringList;
   UsedThemes: TStringList;
+  UsedLemmings: TStringList;
   UsedMusic: TStringList;
 
   i: Integer;
@@ -368,34 +624,53 @@ var
     S: String;
 
     Level: TLevel;
+
+    TempTheme: TNeoTheme; 
   begin
     for i := 0 to aGroup.Children.Count-1 do
       RecursiveIdentify(aGroup.Children[i]);
 
-    for i := 0 to aGroup.Levels.Count-1 do
-    begin
-      GameParams.SetLevel(aGroup.Levels[i]);
-      GameParams.LoadCurrentLevel(true);
-      Level := GameParams.Level;
-      
-      S := Trim(Level.Info.MusicFile);
-      if (S <> '') and (S[1] <> '?') and (aPack.NewMusicInclude) then
-        UsedMusic.Add(S);
-
-      if (aPack.NewStylesInclude <> siNone) then
+    TempTheme := TNeoTheme.Create;
+    try
+      for i := 0 to aGroup.Levels.Count-1 do
       begin
-        UsedThemes.Add(Level.Info.GraphicSetName);
+        GameParams.SetLevel(aGroup.Levels[i]);
+        GameParams.LoadCurrentLevel(true);
+        Level := GameParams.Level;
+      
+        S := Trim(Level.Info.MusicFile);
+        if (S <> '') and (S[1] <> '?') and (aPack.NewMusicInclude) then
+          UsedMusic.Add(S);
 
-        if (Level.Info.Background <> '') then
-          UsedBackgrounds.Add(Level.Info.Background);
+        if (aPack.NewStylesInclude <> siNone) then
+        begin
+          UsedThemes.Add(Level.Info.GraphicSetName);
 
-        for n := 0 to Level.InteractiveObjects.Count-1 do
-          UsedObjects.Add(Level.InteractiveObjects[n].Identifier);
+          if (Level.Info.Background <> '') then
+            UsedBackgrounds.Add(Level.Info.Background);
 
-        for n := 0 to Level.Terrains.Count-1 do
-          UsedTerrain.Add(Level.Terrains[n].Identifier);
+          for n := 0 to Level.InteractiveObjects.Count-1 do
+            UsedObjects.Add(Level.InteractiveObjects[n].Identifier);
+
+          for n := 0 to Level.Terrains.Count-1 do
+            UsedTerrain.Add(Level.Terrains[n].Identifier);
+
+          TempTheme.Load(Level.Info.GraphicSetName);
+          if TempTheme.Lemmings <> '' then
+            UsedLemmings.Add(TempTheme.Lemmings);
+        end;
       end;
+    finally
+      TempTheme.Free;
     end;
+  end;
+
+  procedure Append(aDest: TStrings; aSrc: TStrings);
+  var
+    i: Integer;
+  begin
+    for i := 0 to aSrc.Count-1 do
+      aDest.Add(aSrc[i]);
   end;
 begin
   if (aPack.NewStylesInclude = siNone) and not aPack.NewMusicInclude then
@@ -416,26 +691,30 @@ begin
   UsedTerrain := TStringList.Create;
   UsedBackgrounds := TStringList.Create;
   UsedThemes := TStringList.Create;
+  UsedLemmings := TStringList.Create;
   UsedMusic := TStringList.Create;
   try
     UsedObjects.Duplicates := dupIgnore;
     UsedTerrain.Duplicates := dupIgnore;
     UsedBackgrounds.Duplicates := dupIgnore;
     UsedThemes.Duplicates := dupIgnore;
+    UsedLemmings.Duplicates := dupIgnore;
     UsedMusic.Duplicates := dupIgnore;
   
     RecursiveIdentify(GameParams.CurrentLevel.Group.ParentBasePack);
 
-    aObjects.Assign(UsedObjects);
-    aTerrains.Assign(UsedTerrain);
-    aBackgrounds.Assign(UsedBackgrounds);
-    aThemes.Assign(UsedThemes);
-    aMusic.Assign(UsedMusic);
+    Append(aObjects, UsedObjects);
+    Append(aTerrains, UsedTerrain);
+    Append(aBackgrounds, UsedBackgrounds);
+    Append(aThemes, UsedThemes);
+    Append(aLemmings, UsedLemmings);
+    Append(aMusic, UsedMusic);
   finally
     UsedObjects.Free;
     UsedTerrain.Free;
     UsedBackgrounds.Free;
     UsedThemes.Free;
+    UsedLemmings.Free;
     UsedMusic.Free;
   end;
 end;
