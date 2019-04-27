@@ -9,7 +9,8 @@ uses
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
   Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
   LemTalisman,
-  LemStrings, LemTypes, LemNeoParser;
+  LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemCore,
+  UMisc;
 
 type
   TNeoLevelStatus = (lst_None, lst_Attempted, lst_Completed_Outdated, lst_Completed);
@@ -174,6 +175,10 @@ type
       function GetCompleteTalismanCount: Integer;
 
       function GetParentBasePack: TNeoLevelGroup;
+
+      {$ifdef exp}
+      procedure InternalDumpNeoLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
+      {$endif}
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
@@ -182,6 +187,11 @@ type
       procedure SaveUserData;
 
       function FindFile(aName: String): String;
+
+      procedure DumpImages(aPath: String; aPrefix: String = '');
+      {$ifdef exp}
+      procedure DumpNeoLemmixWebsiteMetaInfo(aPath: String);
+      {$endif}
 
       property Parent: TNeoLevelGroup read fParentGroup;
       property ParentBasePack: TNeoLevelGroup read GetParentBasePack;
@@ -248,7 +258,7 @@ type
 implementation
 
 uses
-  Math, UITypes;
+  GameControl, Math, UITypes;
 
 function SortAlphabetical(Item1, Item2: Pointer): Integer;
 var
@@ -538,6 +548,176 @@ begin
     fScrollerList.Free;
   inherited;
 end;
+
+procedure TNeoLevelGroup.DumpImages(aPath: String; aPrefix: String = '');
+var
+  i: Integer;
+  Output: TBitmap32;
+begin
+  aPath := IncludeTrailingPathDelimiter(aPath);
+  ForceDirectories(aPath);
+
+  for i := 0 to Children.Count-1 do
+    Children[i].DumpImages(aPath, LeadZeroStr(i+1, 2));
+
+  if (Children.Count > 0) or IsBasePack then
+    aPrefix := '00' + aPrefix;
+
+  Output := TBitmap32.Create;
+  try
+    for i := 0 to Levels.Count-1 do
+    begin
+      GameParams.SetLevel(Levels[i]);
+      GameParams.LoadCurrentLevel;
+
+      Output.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+      GameParams.Renderer.RenderWorld(Output, true);
+      TPngInterface.SavePngFile(aPath + aPrefix + LeadZeroStr(i+1, 2) + '.png', Output);
+    end;
+  finally
+    Output.Free;
+  end;
+end;
+
+{$ifdef exp}
+procedure TNeoLevelGroup.DumpNeoLemmixWebsiteMetaInfo(aPath: String);
+var
+  Ranks: TStringList;
+  Titles: TStringList;
+  Stats: TStringList;
+
+  procedure AddGroup(Group: TNeoLevelGroup; Prefix: String);
+  var
+    i: Integer;
+  begin
+    if not Group.IsBasePack then
+    begin
+      if Prefix <> '' then
+        Prefix := Prefix + ':';
+      Prefix := Prefix + Group.Name;
+    end;
+
+    for i := 0 to Group.Children.Count-1 do
+      AddGroup(Group.Children[i], Prefix);
+
+    if Group.Levels.Count > 0 then
+      Ranks.Add(Prefix + '>' + IntToStr(Group.Levels.Count));
+  end;
+begin
+  aPath := IncludeTrailingPathDelimiter(aPath);
+  ForceDirectories(aPath);
+
+  Ranks := TStringList.Create;
+  Titles := TStringList.Create;
+  Stats := TStringList.Create;
+  try
+    AddGroup(self, '');
+    InternalDumpNeoLemmixWebsiteMetaInfo(Titles, Stats);
+
+    Ranks.SaveToFile(aPath + 'ranks.txt');
+    Titles.SaveToFile(aPath + 'titles.txt');
+    Stats.SaveToFile(aPath + 'stats.txt');
+  finally
+    Ranks.Free;
+    Titles.Free;
+    Stats.Free;
+  end;
+end;
+
+procedure TNeoLevelGroup.InternalDumpNeoLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
+var
+  i: Integer;
+
+  Level: TLevel;
+
+  function LemmingCountString: String;
+  var
+    i: Integer;
+    EntranceCount: Integer;
+    EntranceZombie: array of Boolean;
+
+    ZombieCount: Integer;
+    PreplacedZombieCount: Integer;
+  begin
+    EntranceCount := 0;
+    SetLength(EntranceZombie, 0);
+    ZombieCount := 0;
+    PreplacedZombieCount := 0;
+
+    for i := 0 to Level.InteractiveObjects.Count-1 do
+      if PieceManager.Objects[Level.InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW then
+      begin
+        Inc(EntranceCount);
+        SetLength(EntranceZombie, EntranceCount);
+        EntranceZombie[EntranceCount - 1] := (Level.InteractiveObjects[i].TarLev and $40) <> 0;
+      end;
+
+    for i := 0 to Level.PreplacedLemmings.Count-1 do
+      if Level.PreplacedLemmings[i].IsZombie then
+        Inc(PreplacedZombieCount);
+
+    for i := 1 to Level.Info.LemmingsCount - Level.PreplacedLemmings.Count do
+      if EntranceZombie[(i - 1) mod EntranceCount] then
+        Inc(ZombieCount);
+
+    ZombieCount := ZombieCount + PreplacedZombieCount;
+
+    Result := IntToStr(Level.Info.LemmingsCount) + '|' +
+              IntToStr(ZombieCount) + '|' +
+              IntToStr(Level.PreplacedLemmings.Count) + '|' +
+              IntToStr(PreplacedZombieCount);
+  end;
+
+  function MiscString: String;
+  begin
+    Result := IntToStr(Level.Info.RescueCount) + '|';
+
+    if Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = 4) then
+      Result := Result + '-';
+    Result := Result + IntToStr(103 - Level.Info.SpawnInterval) + '|';
+
+    if Level.Info.HasTimeLimit then
+      Result := Result + IntToStr(Level.Info.TimeLimit)
+    else
+      Result := Result + '0';
+  end;
+
+  function SkillsetString: String;
+  var
+    Skill: TSkillPanelButton;
+  begin
+    Result := '';
+
+    for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    begin
+      if not (Skill in Level.Info.Skillset) then
+        Result := Result + '-1'
+      else
+        Result := Result + IntToStr(Level.Info.SkillCount[Skill]);
+
+      if Skill < LAST_SKILL_BUTTON then
+        Result := Result + '|';
+    end;
+  end;
+begin
+  for i := 0 to Children.Count-1 do
+    Children[i].InternalDumpNeoLemmixWebsiteMetaInfo(Titles, Stats);
+
+  for i := 0 to Levels.Count-1 do
+  begin
+    GameParams.SetLevel(Levels[i]);
+    GameParams.LoadCurrentLevel;
+
+    Level := GameParams.Level;
+
+    Titles.Add(Level.Info.Title);
+
+    Stats.Add(LemmingCountString + '|' +
+              MiscString + '|' +
+              SkillsetString);
+  end;
+end;
+{$endif}
 
 function TNeoLevelGroup.FindFile(aName: String): String;
 begin
