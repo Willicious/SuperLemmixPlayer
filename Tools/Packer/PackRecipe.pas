@@ -1,7 +1,6 @@
 unit PackRecipe;
 
 // TODO:
-// - Detecting correct music file
 // - Sounds used by styles
 
 interface
@@ -11,6 +10,7 @@ uses
   Classes,
   SysUtils, StrUtils, IOUtils,
   LemNeoLevelPack, LemLevel, LemTypes, LemNeoPieceManager, LemNeoTheme,
+  GameSound,
   Generics.Collections;
 
 type
@@ -449,7 +449,9 @@ begin
         SubSL.Add('NEW_STYLES_INCLUDE=NONE');
 
       if ThisPack.NewMusicInclude then
-        SubSL.Add('NEW_MUSIC_INCLUDE');
+        SubSL.Add('NEW_MUSIC_INCLUDE=TRUE')
+      else
+        SubSL.Add('NEW_MUSIC_INCLUDE=FALSE');
 
       SL.Add(SubSL.DelimitedText);
     end;
@@ -603,14 +605,16 @@ begin
     for i := 0 to aMusic.Count-1 do
     begin
       SkipThis := false;
-      // Need to come up with a detection algorithm here, taking into account extension priorities.
+      for n := 0 to fFiles.Count-1 do
+        if fFiles[n].FilePath = aMusic[i] then
+          SkipThis := true;
 
       if SkipThis then
         Continue;
 
       NewFile := TRecipeFile.Create;
       NewFile.AutoAdded := true;
-      NewFile.FilePath := 'music/' + aMusic[i]; // And here...
+      NewFile.FilePath := 'music/' + aMusic[i];
 
       fFiles.Add(NewFile);
     end;
@@ -643,6 +647,10 @@ var
     for i := 0 to aGroup.Children.Count-1 do
       RecursiveIdentify(aGroup.Children[i]);
 
+    if aPack.NewMusicInclude then
+      for i := 0 to aGroup.MusicList.Count-1 do
+        UsedMusic.Add(aGroup.MusicList[i] + SoundManager.FindExtension(aGroup.MusicList[i], true));
+
     TempTheme := TNeoTheme.Create;
     try
       for i := 0 to aGroup.Levels.Count-1 do
@@ -653,7 +661,10 @@ var
       
         S := Trim(Level.Info.MusicFile);
         if (S <> '') and (S[1] <> '?') and (aPack.NewMusicInclude) then
+        begin
+          S := S + SoundManager.FindExtension(S, true);
           UsedMusic.Add(S);
+        end;
 
         if (aPack.NewStylesInclude <> siNone) then
         begin
