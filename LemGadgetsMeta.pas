@@ -327,7 +327,9 @@ begin
 
     fKeyFrame := Sec.LineNumeric['key_frame'];
 
-    if Sec.Line['resize_horizontal'] <> nil then // This is messy. Should probably take Nepster's advice and split these properly into two Boolean values.
+    if Sec.Line['resize_both'] <> nil then
+      GadgetAccessor.Resizability := mos_Both
+    else if Sec.Line['resize_horizontal'] <> nil then // This is messy. Should probably take Nepster's advice and split these properly into two Boolean values.
     begin
       if Sec.Line['resize_vertical'] <> nil then
         GadgetAccessor.Resizability := mos_Both
