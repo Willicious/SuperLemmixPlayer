@@ -76,13 +76,14 @@ object FNLContentPacker: TFNLContentPacker
         'No')
       TabOrder = 2
     end
-    object Button2: TButton
+    object btnPackAdd: TButton
       Left = 175
       Top = 103
       Width = 62
       Height = 21
       Caption = 'Add'
       TabOrder = 3
+      OnClick = btnPackAddClick
     end
   end
   object gbStyle: TGroupBox
@@ -114,7 +115,7 @@ object FNLContentPacker: TFNLContentPacker
         'Exclude')
       TabOrder = 1
     end
-    object Button1: TButton
+    object btnStyleAdd: TButton
       Left = 175
       Top = 99
       Width = 62
