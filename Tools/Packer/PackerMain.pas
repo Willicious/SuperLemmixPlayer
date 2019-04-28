@@ -6,7 +6,7 @@ uses
   LemRes,
   LemGame, AppController,
 
-  PackRecipe,
+  PackRecipe, PackerDefaultContent,
 
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Menus, Vcl.ExtCtrls;
@@ -41,6 +41,7 @@ type
     Button2: TButton;
     btnItemOptions: TButton;
     btnGlobalOptions: TButton;
+    procedure FormCreate(Sender: TObject);
   private
     fRecipe: TPackageRecipe;
   public
@@ -53,5 +54,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TFNLContentPacker.FormCreate(Sender: TObject);
+begin
+  LoadDefaultContentList;
+end;
 
 end.

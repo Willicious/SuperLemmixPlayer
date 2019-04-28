@@ -12,6 +12,7 @@ object FNLContentPacker: TFNLContentPacker
   Font.Style = []
   Menu = MainMenu1
   OldCreateOrder = False
+  OnCreate = FormCreate
   DesignSize = (
     584
     404)

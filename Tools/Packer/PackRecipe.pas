@@ -8,7 +8,8 @@ uses
   SysUtils, StrUtils, IOUtils,
   LemNeoLevelPack, LemLevel, LemTypes, LemNeoPieceManager, LemNeoTheme,
   GameSound, LemGadgetsMeta,
-  Generics.Collections;
+  Generics.Collections,
+  PackerDefaultContent;
 
 type
   TStyleInclude = (siFull, siPartial, siNone);
@@ -617,6 +618,9 @@ var
       begin
         S := 'sound\' + SoundList[i] + SoundManager.FindExtension(SoundList[i], false);
 
+        if IsFileDefaultContent(s) then
+          Continue;
+
         SkipThis := false;
         for n := 0 to fFiles.Count-1 do
           if fFiles[n].FilePath = S then
@@ -653,6 +657,9 @@ begin
 
     for i := 0 to UsedStyles.Count-1 do
     begin
+      if IsStyleDefaultContent(UsedStyles[i]) then
+        Continue;
+
       SkipThis := false;
       for n := 0 to fStyles.Count-1 do
         if fStyles[n].StyleName = UsedStyles[i] then
@@ -673,6 +680,9 @@ begin
 
     for i := 0 to aMusic.Count-1 do
     begin
+      if IsFileDefaultContent(aMusic[i]) then
+        Continue;
+
       SkipThis := false;
       for n := 0 to fFiles.Count-1 do
         if fFiles[n].FilePath = aMusic[i] then
