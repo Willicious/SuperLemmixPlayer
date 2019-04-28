@@ -118,6 +118,23 @@ type
 var
   SoundManager: TSoundManager;
 
+const
+  VALID_AUDIO_EXTS: array[0..11] of string = (
+                  '.ogg',
+                  '.wav',
+                  '.aiff',
+                  '.aif',
+                  '.mp3',
+                  '.mo3',
+                  '.it',
+                  '.mod',
+                  '.xm',
+                  '.s3m',
+                  '.mtm',
+                  '.umx'
+                  );
+  LAST_SOUND_EXT = '.mp3'; // anything beyond this entry can only be used for music, not sfx
+
 implementation
 
 (* --- TSoundManager --- *)
@@ -210,22 +227,6 @@ begin
 end;
 
 function TSoundManager.FindExtension(const aName: String; aIsMusic: Boolean): String;
-const
-  VALID_EXTS: array[0..11] of string = (
-                  '.ogg',
-                  '.wav',
-                  '.aiff',
-                  '.aif',
-                  '.mp3',
-                  '.mo3',
-                  '.it',
-                  '.mod',
-                  '.xm',
-                  '.s3m',
-                  '.mtm',
-                  '.umx'
-                  );
-  LAST_SOUND_EXT = '.mp3'; // anything beyond this entry can only be used for music, not sfx
 var
   i: Integer;
   LocalName: String;
@@ -239,12 +240,12 @@ begin
   else
     BasePath := AppPath + SFSounds;
 
-  for i := 0 to Length(VALID_EXTS) - 1 do
-    if FileExists(BasePath + LocalName + VALID_EXTS[i]) then
+  for i := 0 to Length(VALID_AUDIO_EXTS) - 1 do
+    if FileExists(BasePath + LocalName + VALID_AUDIO_EXTS[i]) then
     begin
-      Result := VALID_EXTS[i];
+      Result := VALID_AUDIO_EXTS[i];
       Exit;
-    end else if (not aIsMusic) and (VALID_EXTS[i] = LAST_SOUND_EXT) then
+    end else if (not aIsMusic) and (VALID_AUDIO_EXTS[i] = LAST_SOUND_EXT) then
       Exit;
 end;
 
