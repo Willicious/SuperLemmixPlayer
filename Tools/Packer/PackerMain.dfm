@@ -13,6 +13,7 @@ object FNLContentPacker: TFNLContentPacker
   Menu = MainMenu1
   OldCreateOrder = False
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   DesignSize = (
     584
     404)
@@ -47,6 +48,7 @@ object FNLContentPacker: TFNLContentPacker
       Top = 24
       Width = 225
       Height = 21
+      Sorted = True
       TabOrder = 0
     end
     object rgPackGraphicSets: TRadioGroup
@@ -98,6 +100,7 @@ object FNLContentPacker: TFNLContentPacker
       Top = 24
       Width = 225
       Height = 21
+      Sorted = True
       TabOrder = 0
     end
     object rgSetFull: TRadioGroup

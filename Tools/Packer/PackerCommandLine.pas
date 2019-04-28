@@ -4,8 +4,6 @@ interface
 
 uses
   Forms,
-  LemGame,
-  AppController,
   SysUtils, IOUtils, Classes,
   PackRecipe, PackerDefaultContent;
 
@@ -20,11 +18,7 @@ var
   OutputFile: String;
   OutputMetaFile: String;
   CmdLineRecipe: TPackageRecipe;
-  DecoyAppController: TAppController;
 begin
-  GlobalGame := TLemmingGame.Create(nil);
-  DecoyAppController := TAppController.Create(TForm.Create(nil));
-
   CmdLineRecipe := TPackageRecipe.Create;
   try
     BasePath := IncludeTrailingPathDelimiter(GetCurrentDir);
@@ -47,8 +41,6 @@ begin
     CmdLineRecipe.ExportPackage(OutputFile, OutputMetaFile);
   finally
     CmdLineRecipe.Free;
-    DecoyAppController.Free;
-    GlobalGame.Free;
   end;
 end;
 
