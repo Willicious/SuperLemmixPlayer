@@ -488,11 +488,13 @@ const
 
   procedure CloneInfo(Src, Dst: PGadgetVariableProperties);
   var
-    BitmapRef: TBitmaps;
+    BitmapRef, SecondaryBitmapRef: TBitmaps;
   begin
     BitmapRef := Dst.Image;
+    SecondaryBitmapRef := Dst.SecondaryImage;
     Dst^ := Src^;
     Dst.Image := BitmapRef;
+    Dst.SecondaryImage := SecondaryBitmapRef;
   end;
 
   procedure Reset;
