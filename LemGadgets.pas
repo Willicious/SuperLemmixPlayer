@@ -16,6 +16,10 @@ type
     sLeft           : Integer;
     sHeight         : Integer;
     sWidth          : Integer;
+    sSecondaryTop   : Integer;
+    sSecondaryLeft  : Integer;
+    sSecondaryWidth : Integer;
+    sSecondaryHeight: Integer;
     sTriggerRect    : TRect;  // We assume that trigger areas will never move!!!
     sTriggerEffect  : Integer;
     sReceiverId     : Integer;
@@ -68,6 +72,10 @@ type
     property Left: Integer read sLeft write SetLeft;
     property Width: Integer read sWidth;
     property Height: Integer read sHeight;
+    property SecondaryTop: Integer read sSecondaryTop write sSecondaryTop;
+    property SecondaryLeft: Integer read sSecondaryLeft write sSecondaryLeft;
+    property SecondaryWidth: Integer read sSecondaryWidth;
+    property SecondaryHeight: Integer read sSecondaryHeight;
     property Center: TPoint read GetCenterPoint;
     property TriggerEffect: Integer read sTriggerEffect write sTriggerEffect;
     property ReceiverId: Integer read sReceiverId;
@@ -232,6 +240,12 @@ begin
 
   HoldActive := False;
   ZombieMode := False;
+
+  // Set secondary
+  sSecondaryLeft := Obj.Left + MetaObj.SecondaryOffsetX;
+  sSecondaryTop := Obj.Top + MetaObj.SecondaryOffsetY;
+  sSecondaryWidth := MetaObj.SecondaryWidth;
+  sSecondaryHeight := MetaObj.SecondaryHeight;
 end;
 
 function TGadget.Clone: TGadget;

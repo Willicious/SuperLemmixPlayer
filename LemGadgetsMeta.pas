@@ -27,14 +27,18 @@ type
   TGadgetMetaSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
   TGadgetVariableProperties = record // For properties that vary based on flip / invert
-    Image:          TBitmaps;
-    SecondaryImage: TBitmaps;
-    Width:          Integer;
-    Height:         Integer;
-    TriggerLeft:    Integer;
-    TriggerTop:     Integer;
-    TriggerWidth:   Integer;
-    TriggerHeight:  Integer;
+    Image:            TBitmaps;
+    SecondaryImage:   TBitmaps;
+    Width:            Integer;
+    Height:           Integer;
+    TriggerLeft:      Integer;
+    TriggerTop:       Integer;
+    TriggerWidth:     Integer;
+    TriggerHeight:    Integer;
+    SecondaryWidth:   Integer;
+    SecondaryHeight:  Integer;
+    SecondaryOffsetX: Integer;
+    SecondaryOffsetY: Integer;
     Resizability:   TGadgetMetaSizeSetting;
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
@@ -42,7 +46,8 @@ type
   TGadgetMetaProperty = (ov_Frames, ov_SecondaryFrames, ov_Width, ov_Height,
                          ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
                          ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame,
-                         ov_PreviewFrame);
+                         ov_PreviewFrame, ov_SecondaryWidth, ov_SecondaryHeight,
+                         ov_SecondaryOffsetX, ov_SecondaryOffsetY);
                          // Integer properties only.
   TGadgetMetaBooleanProperty = (ovb_RandomStartFrame, ovb_SecondaryAlwaysAnimate,
                                 ovb_SecondaryInFront);
@@ -118,6 +123,10 @@ type
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
 
+    property SecondaryWidth[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryWidth read GetVariableProperty write SetVariableProperty;
+    property SecondaryHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryHeight read GetVariableProperty write SetVariableProperty;
+    property SecondaryOffsetX[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryOffsetX read GetVariableProperty write SetVariableProperty;
+    property SecondaryOffsetY[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryOffsetY read GetVariableProperty write SetVariableProperty;
     property SecondaryAlwaysAnimate: Boolean read fSecondaryAlwaysAnimate write fSecondaryAlwaysAnimate;
     property SecondaryInFront: Boolean read fSecondaryInFront write fSecondaryInFront;
 
@@ -167,6 +176,10 @@ type
 
       property SecondaryAlwaysAnimate: Boolean index ovb_SecondaryAlwaysAnimate read GetBooleanProperty write SetBooleanProperty;
       property SecondaryInFront: Boolean index ovb_SecondaryInFront read GetBooleanProperty write SetBooleanProperty;
+      property SecondaryWidth: Integer index ov_SecondaryWidth read GetIntegerProperty write SetIntegerProperty;
+      property SecondaryHeight: Integer index ov_SecondaryHeight read GetIntegerProperty write SetIntegerProperty;
+      property SecondaryOffsetX: Integer index ov_SecondaryOffsetX read GetIntegerProperty write SetIntegerProperty;
+      property SecondaryOffsetY: Integer index ov_SecondaryOffsetY read GetIntegerProperty write SetIntegerProperty;
 
       property Resizability             : TGadgetMetaSizeSetting read GetResizability write SetResizability;
       property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
@@ -371,6 +384,8 @@ begin
 
     fSecondaryAlwaysAnimate := Sec.Line['secondary_always_animate'] <> nil;
     fSecondaryInFront := Sec.Line['secondary_in_front'] <> nil;
+    fVariableInfo[0].SecondaryOffsetX := Sec.LineNumeric['secondary_offset_x'];
+    fVariableInfo[0].SecondaryOffsetY := Sec.LineNumeric['secondary_offset_y'];
 
     GadgetAccessor.Images.Generate(BMP, fFrameCount, DoHorizontal);
 
@@ -379,6 +394,16 @@ begin
 
     fVariableInfo[0].Width := GadgetAccessor.Images[0].Width;   //TMetaObjectInterface's Width property is read-only
     fVariableInfo[0].Height := GadgetAccessor.Images[0].Height;
+
+    if fSecondaryFrameCount > 0 then
+    begin
+      GadgetAccessor.SecondaryImages.Generate(SecondaryBMP, fSecondaryFrameCount, DoHorizontal);
+      fVariableInfo[0].SecondaryWidth := GadgetAccessor.SecondaryImages[0].Width;
+      fVariableInfo[0].SecondaryHeight := GadgetAccessor.SecondaryImages[0].Height;
+    end else begin
+      fVariableInfo[0].SecondaryWidth := 0;
+      fVariableInfo[0].SecondaryHeight := 0;
+    end;
 
   finally
     Parser.Free;
@@ -580,6 +605,12 @@ begin
       DstRec.Resizability := mos_Vertical
     else if SrcRec.Resizability = mos_Vertical then
       DstRec.Resizability := mos_Horizontal;
+
+    // Swap and adjust secondary animation offset
+    DstRec.SecondaryWidth := SrcRec.SecondaryHeight;
+    DstRec.SecondaryHeight := SrcRec.SecondaryWidth;
+    DstRec.SecondaryOffsetX := SrcRec.Height - SrcRec.SecondaryOffsetY - SrcRec.SecondaryHeight;
+    DstRec.SecondaryOffsetY := SrcRec.SecondaryOffsetX;
   end;
 
   if Flip then
@@ -594,6 +625,9 @@ begin
 
     // Flip trigger area X coordinate
     DstRec.TriggerLeft := DstRec.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
+
+    // Flip secondary animation X offset
+    DstRec.SecondaryOffsetX := DstRec.Width - DstRec.SecondaryOffsetX - DstRec.SecondaryWidth;
   end;
 
   if Invert then
@@ -610,6 +644,9 @@ begin
     DstRec.TriggerTop := DstRec.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
       DstRec.TriggerTop := DstRec.TriggerTop + 10;
+
+    // Flip secondary animation Y offset
+    DstRec.SecondaryOffsetY := DstRec.Height - DstRec.SecondaryOffsetY - DstRec.SecondaryHeight;
   end;
 end;
 
@@ -637,6 +674,10 @@ begin
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
       ov_TriggerHeight: Result := TriggerHeight;
+      ov_SecondaryWidth: Result := SecondaryWidth;
+      ov_SecondaryHeight: Result := SecondaryHeight;
+      ov_SecondaryOffsetX: Result := SecondaryOffsetX;
+      ov_SecondaryOffsetY: Result := SecondaryOffsetY;
       else raise Exception.Create('TMetaObject.GetVariableProperty called for an invalid property!');
     end;
 end;
@@ -723,6 +764,10 @@ begin
     ov_TriggerEffect: Result := fGadgetMetaInfo.fTriggerEffect;
     ov_KeyFrame: Result := fGadgetMetaInfo.fKeyFrame;
     ov_PreviewFrame: Result := fGadgetMetaInfo.fPreviewFrameIndex;
+    ov_SecondaryWidth: Result := fGadgetMetaInfo.SecondaryWidth[fFlip, fInvert, fRotate];
+    ov_SecondaryHeight: Result := fGadgetMetaInfo.SecondaryHeight[fFlip, fInvert, fRotate];
+    ov_SecondaryOffsetX: Result := fGadgetMetaInfo.SecondaryOffsetX[fFlip, fInvert, fRotate];
+    ov_SecondaryOffsetY: Result := fGadgetMetaInfo.SecondaryOffsetY[fFlip, fInvert, fRotate];
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;

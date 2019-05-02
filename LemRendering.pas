@@ -1334,11 +1334,13 @@ var
     TempBitmap.RenderText(Gadget.Width - TextWidth + 1, Gadget.Height - TextHeight + 1, Text, 0, $FFF0F0F0);
   end;
 
-  procedure DoDraw;
+  procedure DoDraw(aSecondary: Boolean);
   var
     CountX, CountY, iX, iY: Integer;
     MO: TGadgetMetaAccessor;
     TempBitmapRect, DstRect: TRect;
+
+    OriginX, OriginY: Integer;
   begin
     if fUsefulOnly then
     begin
@@ -1351,13 +1353,22 @@ var
     CountX := (Gadget.Width-1) div MO.Width;
     CountY := (Gadget.Height-1) div MO.Height;
 
+    OriginX := Gadget.Left;
+    OriginY := Gadget.Top;
+
+    if aSecondary then
+    begin
+      OriginX := OriginX + MO.SecondaryOffsetX;
+      OriginY := OriginY + MO.SecondaryOffsetY;
+    end;
+
     for iY := 0 to CountY do
     begin
       // (re)size rectangles correctly
       TempBitmapRect := TempBitmap.BoundsRect;
       // Move to leftmost X-coordinate and correct Y-coordinate
       DstRect := Rect(0, 0, RectWidth(TempBitmapRect), RectHeight(TempBitmapRect));
-      OffsetRect(DstRect, Gadget.Left, Gadget.Top + (MO.Height * iY));
+      OffsetRect(DstRect, OriginX, OriginY + (MO.Height * iY));
       // shrink sizes of rectange to draw on bottom row
       if (iY = CountY) and (Gadget.Height mod MO.Height <> 0) then
       begin
@@ -1389,8 +1400,6 @@ var
     PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
     if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
        AddPickupSkillNumber;
-
-    DoDraw;
   end;
 
   procedure PrepareSecondaryFrame;
@@ -1399,8 +1408,6 @@ var
     TempBitmap.Assign(Gadget.SecondaryFrames[DrawFrame]);
 
     PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
-
-    DoDraw;
   end;
 begin
   if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
@@ -1419,16 +1426,16 @@ begin
     if Gadget.ShowSecondaryAnimation and not Gadget.MetaObj.SecondaryInFront then
     begin
       PrepareSecondaryFrame;
-      DoDraw;
+      DoDraw(true);
     end;
 
     PrepareMainFrame;
-    DoDraw;
+    DoDraw(false);
 
     if Gadget.ShowSecondaryAnimation and Gadget.MetaObj.SecondaryInFront then
     begin
       PrepareSecondaryFrame;
-      DoDraw;
+      DoDraw(true);
     end;
   finally
     if IsOwnBitmap then
