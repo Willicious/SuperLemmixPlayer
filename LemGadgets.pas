@@ -447,7 +447,9 @@ end;
 
 function TGadget.GetUpdateSecondaryAnimation: Boolean;
 begin
-  if not GetShowSecondaryAnimation then
+  if (CurrentSecondaryFrame > 0) and not MetaObj.SecondaryInstantStop then
+    Result := true
+  else if not GetShowSecondaryAnimation then
     Result := false
   else if (MetaObj.TriggerEffect in [DOM_TRAP, DOM_TRAPONCE]) and (TriggerEffect = DOM_NONE) then
     Result := false // Disarmed traps don't animate regardless of object's settings

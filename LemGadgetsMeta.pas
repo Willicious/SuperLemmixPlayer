@@ -50,7 +50,7 @@ type
                          ov_SecondaryOffsetX, ov_SecondaryOffsetY);
                          // Integer properties only.
   TGadgetMetaBooleanProperty = (ovb_RandomStartFrame, ovb_SecondaryAlwaysAnimate,
-                                ovb_SecondaryInFront);
+                                ovb_SecondaryInFront, ovb_SecondaryInstantStop);
 
   TGadgetMetaInfo = class
   protected
@@ -76,6 +76,7 @@ type
     fResizability                 : TGadgetMetaSizeSetting;
     fSecondaryAlwaysAnimate       : Boolean;
     fSecondaryInFront             : Boolean;
+    fSecondaryInstantStop         : Boolean;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
     fIsMasked: Boolean;
     function GetIdentifier: String;
@@ -129,6 +130,7 @@ type
     property SecondaryOffsetY[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryOffsetY read GetVariableProperty write SetVariableProperty;
     property SecondaryAlwaysAnimate: Boolean read fSecondaryAlwaysAnimate write fSecondaryAlwaysAnimate;
     property SecondaryInFront: Boolean read fSecondaryInFront write fSecondaryInFront;
+    property SecondaryInstantStop: Boolean read fSecondaryInstantStop write fSecondaryInstantStop;
 
     property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
     property IsMasked: Boolean read fIsMasked; // we don't want to write to this one
@@ -176,6 +178,7 @@ type
 
       property SecondaryAlwaysAnimate: Boolean index ovb_SecondaryAlwaysAnimate read GetBooleanProperty write SetBooleanProperty;
       property SecondaryInFront: Boolean index ovb_SecondaryInFront read GetBooleanProperty write SetBooleanProperty;
+      property SecondaryInstantStop: Boolean index ovb_SecondaryInstantStop read GetBooleanProperty write SetBooleanProperty;
       property SecondaryWidth: Integer index ov_SecondaryWidth read GetIntegerProperty write SetIntegerProperty;
       property SecondaryHeight: Integer index ov_SecondaryHeight read GetIntegerProperty write SetIntegerProperty;
       property SecondaryOffsetX: Integer index ov_SecondaryOffsetX read GetIntegerProperty write SetIntegerProperty;
@@ -384,6 +387,7 @@ begin
 
     fSecondaryAlwaysAnimate := Sec.Line['secondary_always_animate'] <> nil;
     fSecondaryInFront := Sec.Line['secondary_in_front'] <> nil;
+    fSecondaryInstantStop := Sec.Line['secondary_instant_stop'] <> nil;
     fVariableInfo[0].SecondaryOffsetX := Sec.LineNumeric['secondary_offset_x'];
     fVariableInfo[0].SecondaryOffsetY := Sec.LineNumeric['secondary_offset_y'];
 
@@ -804,6 +808,7 @@ begin
     ovb_RandomStartFrame: Result := fGadgetMetaInfo.fRandomStartFrame;
     ovb_SecondaryAlwaysAnimate: Result := fGadgetMetaInfo.fSecondaryAlwaysAnimate;
     ovb_SecondaryInFront: Result := fGadgetMetaInfo.fSecondaryInFront;
+    ovb_SecondaryInstantStop: Result := fGadgetMetaInfo.fSecondaryInstantStop;
     else raise Exception.Create('TMetaObjectInterface.GetBooleanProperty called with invalid index!');
   end;
 end;
@@ -814,6 +819,7 @@ begin
     ovb_RandomStartFrame: fGadgetMetaInfo.fRandomStartFrame := aValue;
     ovb_SecondaryAlwaysAnimate: fGadgetMetaInfo.fSecondaryAlwaysAnimate := aValue;
     ovb_SecondaryInFront: fGadgetMetaInfo.fSecondaryInFront := aValue;
+    ovb_SecondaryInstantStop: fGadgetMetaInfo.fSecondaryInstantStop := aValue;
     else raise Exception.Create('TMetaObjectInterface.SetBooleanProperty called with invalid index!');
   end;
 end;
