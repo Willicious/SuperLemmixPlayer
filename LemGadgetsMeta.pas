@@ -38,10 +38,13 @@ type
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
 
-  TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height, ov_TriggerLeft, ov_TriggerTop,
-                         ov_TriggerWidth, ov_TriggerHeight, ov_TriggerEffect,
-                         ov_KeyFrame, ov_PreviewFrame);
+  TGadgetMetaProperty = (ov_Frames, ov_SecondaryFrames, ov_Width, ov_Height,
+                         ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
+                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame,
+                         ov_PreviewFrame);
                          // Integer properties only.
+  TGadgetMetaBooleanProperty = (ovb_RandomStartFrame, ovb_SecondaryAlwaysAnimate,
+                                ovb_SecondaryInFront);
 
   TGadgetMetaInfo = class
   protected
@@ -65,6 +68,7 @@ type
     fSoundEffect                  : String;  // filename of sound to play
     fRandomStartFrame             : Boolean;
     fResizability                 : TGadgetMetaSizeSetting;
+    fSecondaryAlwaysAnimate       : Boolean;
     fSecondaryInFront             : Boolean;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
     fIsMasked: Boolean;
@@ -113,6 +117,7 @@ type
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
 
+    property SecondaryAlwaysAnimate: Boolean read fSecondaryAlwaysAnimate write fSecondaryAlwaysAnimate;
     property SecondaryInFront: Boolean read fSecondaryInFront write fSecondaryInFront;
 
     property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
@@ -130,8 +135,8 @@ type
       fRotate: Boolean;
       function GetIntegerProperty(aProp: TGadgetMetaProperty): Integer;
       procedure SetIntegerProperty(aProp: TGadgetMetaProperty; aValue: Integer);
-      function GetRandomStartFrame: Boolean;
-      procedure SetRandomStartFrame(aValue: Boolean);
+      function GetBooleanProperty(aProp: TGadgetMetaBooleanProperty): Boolean;
+      procedure SetBooleanProperty(aProp: TGadgetMetaBooleanProperty; aValue: Boolean);
       function GetResizability: TGadgetMetaSizeSetting;
       procedure SetResizability(aValue: TGadgetMetaSizeSetting);
       function GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
@@ -146,6 +151,7 @@ type
       property SecondaryImages: TBitmaps read GetSecondaryImages;
 
       property FrameCount: Integer index ov_Frames read GetIntegerProperty write SetIntegerProperty;
+      property SecondaryFrameCount: Integer index ov_SecondaryFrames read GetIntegerProperty write SetIntegerProperty;
       property Width: Integer index ov_Width read GetIntegerProperty;
       property Height: Integer index ov_Height read GetIntegerProperty;
       property TriggerLeft: Integer index ov_TriggerLeft read GetIntegerProperty write SetIntegerProperty;
@@ -155,8 +161,11 @@ type
       property TriggerEffect: Integer index ov_TriggerEffect read GetIntegerProperty write SetIntegerProperty;
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
       property PreviewFrame: Integer index ov_PreviewFrame read GetIntegerProperty write SetIntegerProperty;
-      property RandomStartFrame: Boolean read GetRandomStartFrame write SetRandomStartFrame;
+      property RandomStartFrame: Boolean index ovb_RandomStartFrame read GetBooleanProperty write SetBooleanProperty;
       property SoundEffect: String read GetSoundEffect write SetSoundEffect;
+
+      property SecondaryAlwaysAnimate: Boolean index ovb_SecondaryAlwaysAnimate read GetBooleanProperty write SetBooleanProperty;
+      property SecondaryInFront: Boolean index ovb_SecondaryInFront read GetBooleanProperty write SetBooleanProperty;
 
       property Resizability             : TGadgetMetaSizeSetting read GetResizability write SetResizability;
       property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
@@ -747,6 +756,7 @@ begin
   // point of the TMetaObjectInterface abstraction layer :P ). Otherwise, access the fields directly.
   case aProp of
     ov_Frames: Result := fGadgetMetaInfo.fFrameCount;
+    ov_SecondaryFrames: Result := fGadgetMetaInfo.fSecondaryFrameCount;
     ov_Width: Result := fGadgetMetaInfo.Width[fFlip, fInvert, fRotate];
     ov_Height: Result := fGadgetMetaInfo.Height[fFlip, fInvert, fRotate];
     ov_TriggerLeft: Result := fGadgetMetaInfo.TriggerLeft[fFlip, fInvert, fRotate];
@@ -784,14 +794,24 @@ begin
   fGadgetMetaInfo.fSoundEffect := aValue;
 end;
 
-function TGadgetMetaAccessor.GetRandomStartFrame: Boolean;
+function TGadgetMetaAccessor.GetBooleanProperty(aProp: TGadgetMetaBooleanProperty): Boolean;
 begin
-  Result := fGadgetMetaInfo.fRandomStartFrame;
+  case aProp of
+    ovb_RandomStartFrame: Result := fGadgetMetaInfo.fRandomStartFrame;
+    ovb_SecondaryAlwaysAnimate: Result := fGadgetMetaInfo.fSecondaryAlwaysAnimate;
+    ovb_SecondaryInFront: Result := fGadgetMetaInfo.fSecondaryInFront;
+    else raise Exception.Create('TMetaObjectInterface.GetBooleanProperty called with invalid index!');
+  end;
 end;
 
-procedure TGadgetMetaAccessor.SetRandomStartFrame(aValue: Boolean);
+procedure TGadgetMetaAccessor.SetBooleanProperty(aProp: TGadgetMetaBooleanProperty; aValue: Boolean);
 begin
-  fGadgetMetaInfo.fRandomStartFrame := aValue;
+  case aProp of
+    ovb_RandomStartFrame: fGadgetMetaInfo.fRandomStartFrame := aValue;
+    ovb_SecondaryAlwaysAnimate: fGadgetMetaInfo.fSecondaryAlwaysAnimate := aValue;
+    ovb_SecondaryInFront: fGadgetMetaInfo.fSecondaryInFront := aValue;
+    else raise Exception.Create('TMetaObjectInterface.SetBooleanProperty called with invalid index!');
+  end;
 end;
 
 function TGadgetMetaAccessor.GetResizability: TGadgetMetaSizeSetting;

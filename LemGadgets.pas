@@ -37,6 +37,7 @@ type
     function GetIsFlipImage: Boolean;
     function GetIsRotate: Boolean;
     function GetAnimationFrameCount: Integer;
+    function GetSecondaryAnimationFrameCount: Integer;
     function GetPreassignedSkill(BitField: Integer): Boolean;
     function GetHasPreassignedSkills: Boolean;
     function GetCenterPoint: TPoint;
@@ -45,12 +46,16 @@ type
     function GetSpeed: Integer;
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
+    function GetShowSecondaryAnimation: Boolean;
+    function GetUpdateSecondaryAnimation: Boolean;
   public
     MetaObj        : TGadgetMetaAccessor;
 
     Frames         : TBitmaps;
+    SecondaryFrames: TBitmaps;
 
     CurrentFrame   : Integer;
+    CurrentSecondaryFrame: Integer;
     Triggered      : Boolean;
     TeleLem        : Integer; // saves which lemming is currently teleported
     HoldActive     : Boolean;
@@ -75,6 +80,7 @@ type
     property IsFlipImage: Boolean read GetIsFlipImage;          // ... and 64
     property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
+    property SecondaryAnimationFrameCount: Integer read GetSecondaryAnimationFrameCount;
     property SoundEffect: String read GetSoundEffect;
     property ZombieMode: Boolean read sZombieMode write SetZombieMode;
     property KeyFrame: Integer read GetKeyFrame;
@@ -89,6 +95,8 @@ type
     property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
+    property ShowSecondaryAnimation: Boolean read GetShowSecondaryAnimation;
+    property UpdateSecondaryAnimation: Boolean read GetUpdateSecondaryAnimation;
 
     procedure AssignTo(NewObj: TGadget);
     procedure UnifyFlippingFlagsOfTeleporter();
@@ -186,6 +194,7 @@ begin
   Obj := ObjParam;
   MetaObj := MetaParam;
   Frames := MetaObj.Images;
+  SecondaryFrames := MetaObj.SecondaryImages;
 
   // Set basic stuff
   sTop := Obj.Top;
@@ -338,6 +347,11 @@ begin
   Result := MetaObj.FrameCount;
 end;
 
+function TGadget.GetSecondaryAnimationFrameCount: Integer;
+begin
+  Result := MetaObj.SecondaryFrameCount;
+end;
+
 function TGadget.GetPreassignedSkill(BitField: Integer): Boolean;
 begin
   // Only call this function for hatches and preplaced lemmings
@@ -406,6 +420,34 @@ begin
   Result := MetaObj.TriggerEffect;
 end;
 
+function TGadget.GetShowSecondaryAnimation: Boolean;
+const
+  ELIGIBLE_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT,
+                      DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
+begin
+  Result := MetaObj.TriggerEffect in ELIGIBLE_OBJECTS;
+
+  // Note the use of MetaObj.TriggerEffect, not local TriggerEffect. This is to
+  // allow disarmed traps to continue showing their secondary animation.
+end;
+
+function TGadget.GetUpdateSecondaryAnimation: Boolean;
+begin
+  if not GetShowSecondaryAnimation then
+    Result := false
+  else if (MetaObj.TriggerEffect in [DOM_TRAP, DOM_TRAPONCE]) and (TriggerEffect = DOM_NONE) then
+    Result := false // Disarmed traps don't animate regardless of object's settings
+  else if MetaObj.SecondaryAlwaysAnimate then
+    Result := true
+  else if (TriggerEffect in [DOM_TRAP, DOM_TRAPONCE, DOM_TELEPORT, DOM_RECEIVER])
+           and Triggered then
+    Result := false
+  else if (TriggerEffect = DOM_RECEIVER) and HoldActive then
+    Result := false   
+  else
+    Result := true;
+end;
+
 procedure TGadget.AssignTo(NewObj: TGadget);
 begin
   NewObj.sTop := sTop;
@@ -417,6 +459,7 @@ begin
   NewObj.MetaObj := MetaObj;
   NewObj.Obj := Obj;
   NewObj.CurrentFrame := CurrentFrame;
+  NewObj.CurrentSecondaryFrame := CurrentSecondaryFrame;
   NewObj.Triggered := Triggered;
   NewObj.TeleLem := TeleLem;
   NewObj.HoldActive := HoldActive;

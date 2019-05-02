@@ -5075,6 +5075,18 @@ procedure TLemmingGame.UpdateGadgets;
 var
   Gadget, Gadget2: TGadget;
   i: Integer;
+
+  function TeleporterUpdateSecondaryCheck: Boolean;
+  begin
+    // This is needed because it relies on information LemGadgets doesn't have.
+    Result := true;
+
+    if (Gadget.MetaObj.TriggerEffect <> DOM_TELEPORT) or (Gadget.MetaObj.SecondaryAlwaysAnimate) then
+      Exit;
+
+    if (Gadget.TriggerEffect = DOM_NONE) or (Gadgets[Gadget.ReceiverId].HoldActive) or (Gadgets[Gadget.ReceiverId].Triggered) then
+      Result := false;
+  end;
 begin
   for i := Gadgets.Count - 1 downto 0 do
   begin
@@ -5105,6 +5117,14 @@ begin
       Gadget.HoldActive := False;
       Gadget.ZombieMode := False;
     end;
+
+    if Gadget.UpdateSecondaryAnimation and TeleporterUpdateSecondaryCheck then
+    begin
+      Inc(Gadget.CurrentSecondaryFrame);
+      if Gadget.CurrentSecondaryFrame >= Gadget.SecondaryAnimationFrameCount then
+        Gadget.CurrentSecondaryFrame := 0;
+    end else
+      Gadget.CurrentSecondaryFrame := 0;
   end;
 end;
 
