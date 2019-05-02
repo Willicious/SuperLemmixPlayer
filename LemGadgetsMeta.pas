@@ -264,57 +264,6 @@ var
   DoHorizontal: Boolean;
 
   Masker: TMasker;
-
-  procedure SplitBMP;
-  var
-    TempBMP: TBitmap32;
-    SrcRect: TRect;
-
-    HigherFrameCount: Integer;
-
-    FW, FH: Integer;
-  begin
-    TempBMP := TBitmap32.Create;
-    try
-      TempBMP.Assign(BMP);
-
-      if fFrameCount > fSecondaryFrameCount then
-        HigherFrameCount := fFrameCount
-      else
-        HigherFrameCount := fSecondaryFrameCount;
-
-      if DoHorizontal then
-      begin
-        FW := TempBMP.Width div HigherFrameCount;
-        FH := TempBMP.Height div 2;
-
-        BMP.SetSize(fFrameCount * FW, FH);
-        SecondaryBMP.SetSize(fSecondaryFrameCount * FW, FH);
-
-        SrcRect := BMP.BoundsRect;
-        TempBMP.DrawTo(BMP, 0, 0, SrcRect);
-
-        SrcRect := SecondaryBMP.BoundsRect;
-        SrcRect.Offset(0, FH);
-        TempBMP.DrawTo(SecondaryBMP, 0, 0, SrcRect);
-      end else begin
-        FW := TempBMP.Width div 2;
-        FH := TempBMP.Height div HigherFrameCount;
-
-        BMP.SetSize(FW, fFrameCount * FH);
-        SecondaryBMP.SetSize(FW, fSecondaryFrameCount * FH);
-
-        SrcRect := BMP.BoundsRect;
-        TempBMP.DrawTo(BMP, 0, 0, SrcRect);
-
-        SrcRect := SecondaryBMP.BoundsRect;
-        SrcRect.Offset(FW, 0);
-        TempBMP.DrawTo(SecondaryBMP, 0, 0, SrcRect);
-      end;
-    finally
-      TempBMP.Free;
-    end;
-  end;
 begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
@@ -376,7 +325,7 @@ begin
     DoHorizontal := Sec.Line['horizontal_strip'] <> nil;
 
     if fSecondaryFrameCount > 0 then
-      SplitBMP;
+      TPngInterface.LoadPngFile(aPiece + '_secondary.png', SecondaryBMP);
 
     GadgetAccessor.TriggerLeft := Sec.LineNumeric['trigger_x'];
     GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];
@@ -424,7 +373,9 @@ begin
     fSecondaryInFront := Sec.Line['secondary_in_front'] <> nil;
 
     GadgetAccessor.Images.Generate(BMP, fFrameCount, DoHorizontal);
-    GadgetAccessor.SecondaryImages.Generate(SecondaryBMP, fSecondaryFrameCount, DoHorizontal);
+
+    if fSecondaryFrameCount > 0 then
+      GadgetAccessor.SecondaryImages.Generate(SecondaryBMP, fSecondaryFrameCount, DoHorizontal);
 
     fVariableInfo[0].Width := GadgetAccessor.Images[0].Width;   //TMetaObjectInterface's Width property is read-only
     fVariableInfo[0].Height := GadgetAccessor.Images[0].Height;
