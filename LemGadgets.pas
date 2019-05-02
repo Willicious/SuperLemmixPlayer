@@ -425,7 +425,7 @@ const
   ELIGIBLE_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT,
                       DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
 begin
-  Result := MetaObj.TriggerEffect in ELIGIBLE_OBJECTS;
+  Result := (MetaObj.SecondaryFrameCount > 0) and (MetaObj.TriggerEffect in ELIGIBLE_OBJECTS);
 
   // Note the use of MetaObj.TriggerEffect, not local TriggerEffect. This is to
   // allow disarmed traps to continue showing their secondary animation.

@@ -1314,10 +1314,8 @@ end;
 
 procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
 var
-  CountX, CountY, iX, iY: Integer;
-  MO: TGadgetMetaAccessor;
   DrawFrame: Integer;
-  TempBitmapRect, DstRect: TRect;
+
   IsOwnBitmap: Boolean;
 
   OldDrawMode: TDrawMode;
@@ -1335,27 +1333,13 @@ var
     TempBitmap.RenderText(Gadget.Width - TextWidth, Gadget.Height - TextHeight + 1, Text, 0, $FF101010);
     TempBitmap.RenderText(Gadget.Width - TextWidth + 1, Gadget.Height - TextHeight + 1, Text, 0, $FFF0F0F0);
   end;
-begin
-  if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
-  if TempBitmap = nil then
+  procedure DoDraw;
+  var
+    CountX, CountY, iX, iY: Integer;
+    MO: TGadgetMetaAccessor;
+    TempBitmapRect, DstRect: TRect;
   begin
-    TempBitmap := TBitmap32.Create;
-    IsOwnBitmap := true;
-  end else
-    IsOwnBitmap := false;
-
-  OldDrawMode := TempBitmap.DrawMode;
-  OldPixelCombine := TempBitmap.OnPixelCombine;
-
-  try
-    DrawFrame := Min(Gadget.CurrentFrame, Gadget.AnimationFrameCount-1);
-    TempBitmap.Assign(Gadget.Frames[DrawFrame]);
-
-    PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
-    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
-       AddPickupSkillNumber;
-
     if fUsefulOnly then
     begin
       TempBitmap.DrawMode := dmCustom;
@@ -1394,6 +1378,57 @@ begin
         // Move to next row
         OffsetRect(DstRect, MO.Width, 0);
       end;
+    end;
+  end;
+
+  procedure PrepareMainFrame;
+  begin
+    DrawFrame := Min(Gadget.CurrentFrame, Gadget.AnimationFrameCount-1);
+    TempBitmap.Assign(Gadget.Frames[DrawFrame]);
+
+    PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
+    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+       AddPickupSkillNumber;
+
+    DoDraw;
+  end;
+
+  procedure PrepareSecondaryFrame;
+  begin
+    DrawFrame := Min(Gadget.CurrentSecondaryFrame, Gadget.SecondaryAnimationFrameCount-1);
+    TempBitmap.Assign(Gadget.SecondaryFrames[DrawFrame]);
+
+    PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
+
+    DoDraw;
+  end;
+begin
+  if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
+
+  if TempBitmap = nil then
+  begin
+    TempBitmap := TBitmap32.Create;
+    IsOwnBitmap := true;
+  end else
+    IsOwnBitmap := false;
+
+  OldDrawMode := TempBitmap.DrawMode;
+  OldPixelCombine := TempBitmap.OnPixelCombine;
+
+  try
+    if Gadget.ShowSecondaryAnimation and not Gadget.MetaObj.SecondaryInFront then
+    begin
+      PrepareSecondaryFrame;
+      DoDraw;
+    end;
+
+    PrepareMainFrame;
+    DoDraw;
+
+    if Gadget.ShowSecondaryAnimation and Gadget.MetaObj.SecondaryInFront then
+    begin
+      PrepareSecondaryFrame;
+      DoDraw;
     end;
   finally
     if IsOwnBitmap then
