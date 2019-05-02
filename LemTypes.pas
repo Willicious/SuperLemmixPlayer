@@ -212,6 +212,10 @@ var
   sx, sy: Integer;
 begin
   Clear;
+
+  if (Src.Width = 0) or (Src.Height = 0) or (Frames = 0) then
+    Exit;
+
   w := Src.Width;
   h := Src.Height div Frames;
   sx := 0;

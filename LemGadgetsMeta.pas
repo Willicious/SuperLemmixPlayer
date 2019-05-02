@@ -26,14 +26,15 @@ type
   TGadgetMetaSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
   TGadgetVariableProperties = record // For properties that vary based on flip / invert
-    Image:         TBitmaps;
-    Width:         Integer;
-    Height:        Integer;
-    TriggerLeft:   Integer;
-    TriggerTop:    Integer;
-    TriggerWidth:  Integer;
-    TriggerHeight: Integer;
-    Resizability:  TGadgetMetaSizeSetting;
+    Image:          TBitmaps;
+    SecondaryImage: TBitmaps;
+    Width:          Integer;
+    Height:         Integer;
+    TriggerLeft:    Integer;
+    TriggerTop:     Integer;
+    TriggerWidth:   Integer;
+    TriggerHeight:  Integer;
+    Resizability:   TGadgetMetaSizeSetting;
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
 
@@ -51,6 +52,7 @@ type
     fGeneratedVariableImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
     fInterfaces: array[0..ALIGNMENT_COUNT-1] of TGadgetMetaAccessor;
     fFrameCount                   : Integer; // number of animations
+    fSecondaryFrameCount          : Integer; // number of animations for secondary animation
     fWidth                        : Integer; // the width of the bitmap
     fHeight                       : Integer; // the height of the bitmap
     fTriggerLeft                  : Integer; // x-offset of triggerarea (if triggered)
@@ -63,6 +65,7 @@ type
     fSoundEffect                  : String;  // filename of sound to play
     fRandomStartFrame             : Boolean;
     fResizability                 : TGadgetMetaSizeSetting;
+    fSecondaryInFront             : Boolean;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
     fIsMasked: Boolean;
     function GetIdentifier: String;
@@ -76,6 +79,7 @@ type
     function GetResizability(Flip, Invert, Rotate: Boolean): TGadgetMetaSizeSetting;
     procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TGadgetMetaSizeSetting);
     function GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+    function GetSecondaryImages(Flip, Invert, Rotate: Boolean): TBitmaps;
     procedure ClearImages;
   public
     constructor Create;
@@ -95,6 +99,7 @@ type
     property Piece  : String read fPiece write fPiece;
 
     property Images[Flip, Invert, Rotate: Boolean]: TBitmaps read GetImages;
+    property SecondaryImages[Flip, Invert, Rotate: Boolean]: TBitmaps read GetSecondaryImages;
 
     property Width[Flip, Invert, Rotate: Boolean]        : Integer index ov_Width read GetVariableProperty;
     property Height[Flip, Invert, Rotate: Boolean]       : Integer index ov_Height read GetVariableProperty;
@@ -107,6 +112,8 @@ type
     property Resizability[Flip, Invert, Rotate: Boolean]: TGadgetMetaSizeSetting read GetResizability write SetResizability;
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
+
+    property SecondaryInFront: Boolean read fSecondaryInFront write fSecondaryInFront;
 
     property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
     property IsMasked: Boolean read fIsMasked; // we don't want to write to this one
@@ -129,12 +136,14 @@ type
       procedure SetResizability(aValue: TGadgetMetaSizeSetting);
       function GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
       function GetImages: TBitmaps;
+      function GetSecondaryImages: TBitmaps;
       function GetSoundEffect: String;
       procedure SetSoundEffect(aValue: String);
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 
       property Images: TBitmaps read GetImages;
+      property SecondaryImages: TBitmaps read GetSecondaryImages;
 
       property FrameCount: Integer index ov_Frames read GetIntegerProperty write SetIntegerProperty;
       property Width: Integer index ov_Width read GetIntegerProperty;
@@ -184,6 +193,7 @@ begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
     fVariableInfo[i].Image := TBitmaps.Create(true);
+    fVariableInfo[i].SecondaryImage := TBitmaps.Create(true);
     fInterfaces[i] := nil;
   end;
 end;
@@ -239,11 +249,60 @@ var
   Sec: TParserSection;
 
   GadgetAccessor: TGadgetMetaAccessor;
-  BMP: TBitmap32;
+  BMP, SecondaryBMP: TBitmap32;
 
   DoHorizontal: Boolean;
 
   Masker: TMasker;
+
+  procedure SplitBMP;
+  var
+    TempBMP: TBitmap32;
+    SrcRect: TRect;
+
+    HigherFrameCount: Integer;
+
+    FW, FH: Integer;
+  begin
+    TempBMP := TBitmap32.Create;
+    try
+      TempBMP.Assign(BMP);
+
+      if fFrameCount > fSecondaryFrameCount then
+        HigherFrameCount := fFrameCount
+      else
+        HigherFrameCount := fSecondaryFrameCount;
+
+      if DoHorizontal then
+      begin
+        FW := TempBMP.Width div HigherFrameCount;
+        FH := TempBMP.Height div 2;
+
+        BMP.SetSize(FW * fFrameCount, FH);
+        SecondaryBMP.SetSize(FW * fSecondaryFrameCount, FH);
+
+        SrcRect := BMP.BoundsRect;
+        TempBMP.DrawTo(BMP, 0, 0, SrcRect);
+
+        SrcRect.Offset(0, SrcRect.Height);
+        TempBMP.DrawTo(SecondaryBMP, 0, 0, SrcRect);
+      end else begin
+        FW := TempBMP.Width div 2;
+        FH := TempBMP.Height div HigherFrameCount;
+
+        BMP.SetSize(FW, FH * fFrameCount);
+        SecondaryBMP.SetSize(FW, FH * fSecondaryFrameCount);
+
+        SrcRect := BMP.BoundsRect;
+        TempBMP.DrawTo(BMP, BMP.BoundsRect, SrcRect);
+
+        SrcRect.Offset(SrcRect.Width, 0);
+        TempBMP.DrawTo(SecondaryBMP, 0, 0, SrcRect);
+      end;
+    finally
+      TempBMP.Free;
+    end;
+  end;
 begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
@@ -251,6 +310,7 @@ begin
 
   Parser := TParser.Create;
   BMP := TBitmap32.Create;
+  SecondaryBMP := TBitmap32.Create;
   Masker := TMasker.Create;
   Masker.BMP := BMP;
   Masker.Theme := aTheme;
@@ -299,6 +359,10 @@ begin
     if Sec.Line['one_way_up'] <> nil then fTriggerEffect := 33;
 
     fFrameCount := Sec.LineNumeric['frames'];
+    fSecondaryFrameCount := Sec.LineNumeric['secondary_frames'];
+
+    if fSecondaryFrameCount > 0 then
+      SplitBMP;
 
     DoHorizontal := Sec.Line['horizontal_strip'] <> nil;
 
@@ -345,6 +409,7 @@ begin
     fIsMasked := Sec.DoForEachSection('mask', Masker.ApplyMask) <> 0;
 
     GadgetAccessor.Images.Generate(BMP, fFrameCount, DoHorizontal);
+    GadgetAccessor.SecondaryImages.Generate(SecondaryBMP, fSecondaryFrameCount, DoHorizontal);
 
     fVariableInfo[0].Width := GadgetAccessor.Images[0].Width;   //TMetaObjectInterface's Width property is read-only
     fVariableInfo[0].Height := GadgetAccessor.Images[0].Height;
@@ -352,6 +417,7 @@ begin
   finally
     Parser.Free;
     BMP.Free;
+    SecondaryBMP.Free;
   end;
 end;
 
@@ -469,6 +535,33 @@ const
         fVariableInfo[Index].Image.Delete(n);
     end;
   end;
+
+  function SetSecondaryImages: Boolean;
+  var
+    n: Integer;
+  begin
+    if SkipImages then
+    begin
+      Result := false;
+      Exit;
+    end;
+
+    Result := i < fVariableInfo[0].SecondaryImage.Count;
+    if Result then
+    begin
+      Src := fVariableInfo[0].SecondaryImage[i];
+      if i < fVariableInfo[Index].SecondaryImage.Count then
+        Dst := fVariableInfo[Index].SecondaryImage[i]
+      else begin
+        Dst := TBitmap32.Create;
+        fVariableInfo[Index].SecondaryImage.Add(Dst);
+      end;
+      Inc(i);
+    end else begin
+      for n := fVariableInfo[Index].SecondaryImage.Count-1 downto i do
+        fVariableInfo[Index].SecondaryImage.Delete(n);
+    end;
+  end;
 begin
   Index := GetImageIndex(Flip, Invert, Rotate);
 
@@ -488,10 +581,18 @@ begin
   while SetImages do
     Dst.Assign(Src);
 
+  Reset;
+  while SetSecondaryImages do
+    Dst.Assign(Src);
+
   if Rotate then
   begin
     Reset;
     while SetImages do
+      Dst.Rotate90;
+
+    Reset;
+    while SetSecondaryImages do
       Dst.Rotate90;
 
     // Swap width / height
@@ -521,6 +622,10 @@ begin
     while SetImages do
       Dst.FlipHorz;
 
+    Reset;
+    while SetSecondaryImages do
+      Dst.FlipHorz;
+
     // Flip trigger area X coordinate
     DstRec.TriggerLeft := DstRec.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
   end;
@@ -529,6 +634,10 @@ begin
   begin
     Reset;
     while SetImages do
+      Dst.FlipVert;
+
+    Reset;
+    while SetSecondaryImages do
       Dst.FlipVert;
 
     // Flip and adjust trigger area Y coordinate
@@ -610,6 +719,15 @@ begin
   EnsureVariationMade(Flip, Invert, Rotate);
   i := GetImageIndex(Flip, Invert, Rotate);
   Result := fVariableInfo[i].Image;
+end;
+
+function TGadgetMetaInfo.GetSecondaryImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+var
+  i: Integer;
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  i := GetImageIndex(Flip, Invert, Rotate);
+  Result := fVariableInfo[i].SecondaryImage;
 end;
 
 { TMetaObjectInterface }
@@ -698,6 +816,11 @@ end;
 function TGadgetMetaAccessor.GetImages: TBitmaps;
 begin
   Result := fGadgetMetaInfo.Images[fFlip, fInvert, fRotate];
+end;
+
+function TGadgetMetaAccessor.GetSecondaryImages: TBitmaps;
+begin
+  Result := fGadgetMetaInfo.SecondaryImages[fFlip, fInvert, fRotate];
 end;
 
 { TMetaObjects }
