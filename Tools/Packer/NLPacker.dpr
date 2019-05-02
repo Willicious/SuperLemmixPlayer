@@ -1,7 +1,8 @@
 program NLPacker;
 
 uses
-  AppController, LemGame,
+  AppController,
+  LemGame,
   PackerCommandLine,
   Vcl.Forms,
   PackerMain in 'PackerMain.pas' {FNLContentPacker};

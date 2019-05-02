@@ -47,6 +47,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnPackAddClick(Sender: TObject);
+    procedure btnStyleAddClick(Sender: TObject);
+    procedure btnFileAddClick(Sender: TObject);
   private
     fRecipe: TPackageRecipe;
     //fPackInternalNames: TStringList;
@@ -161,6 +163,14 @@ begin
   end;
 end;
 
+procedure TFNLContentPacker.btnFileAddClick(Sender: TObject);
+var
+  Path: String;
+begin
+  Path := ebFilePath.Text;
+
+end;
+
 procedure TFNLContentPacker.btnPackAddClick(Sender: TObject);
 var
   PackFolder: String;
@@ -186,6 +196,29 @@ begin
 
   fRecipe.Packs.Add(NewPack);
   fRecipe.BuildAutoAdds;
+
+  RebuildContentList;
+end;
+
+procedure TFNLContentPacker.btnStyleAddClick(Sender: TObject);
+var
+  SetFolder: String;
+
+  NewStyle: TRecipeStyle;
+begin
+  SetFolder := cbGraphicSet.Text; // futureproofing, for if I add proper name support
+
+  if not DirectoryExists(AppPath + 'styles/' + SetFolder) then
+  begin
+    ShowMessage('Error - Path not found: ' + AppPath + 'styles/' + SetFolder);
+    Exit;
+  end;
+
+  NewStyle := TRecipeStyle.Create;
+  NewStyle.StyleName := SetFolder;
+  NewStyle.Include := TStyleInclude(rgSetFull.ItemIndex);
+
+  fRecipe.Styles.Add(NewStyle);
 
   RebuildContentList;
 end;

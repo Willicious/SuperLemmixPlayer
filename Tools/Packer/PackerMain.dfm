@@ -122,6 +122,7 @@ object FNLContentPacker: TFNLContentPacker
       Height = 21
       Caption = 'Add'
       TabOrder = 2
+      OnClick = btnStyleAddClick
     end
   end
   object gbFile: TGroupBox
@@ -154,6 +155,7 @@ object FNLContentPacker: TFNLContentPacker
       Height = 21
       Caption = 'Add'
       TabOrder = 2
+      OnClick = btnFileAddClick
     end
   end
   object btnDelete: TButton
