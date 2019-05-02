@@ -5,6 +5,7 @@ unit LemGadgetsMeta;
 interface
 
 uses
+  Dialogs, //debug
   GR32, LemTypes,
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,
@@ -287,25 +288,27 @@ var
         FW := TempBMP.Width div HigherFrameCount;
         FH := TempBMP.Height div 2;
 
-        BMP.SetSize(FW * fFrameCount, FH);
-        SecondaryBMP.SetSize(FW * fSecondaryFrameCount, FH);
+        BMP.SetSize(fFrameCount * FW, FH);
+        SecondaryBMP.SetSize(fSecondaryFrameCount * FW, FH);
 
         SrcRect := BMP.BoundsRect;
         TempBMP.DrawTo(BMP, 0, 0, SrcRect);
 
-        SrcRect.Offset(0, SrcRect.Height);
+        SrcRect := SecondaryBMP.BoundsRect;
+        SrcRect.Offset(0, FH);
         TempBMP.DrawTo(SecondaryBMP, 0, 0, SrcRect);
       end else begin
         FW := TempBMP.Width div 2;
         FH := TempBMP.Height div HigherFrameCount;
 
-        BMP.SetSize(FW, FH * fFrameCount);
-        SecondaryBMP.SetSize(FW, FH * fSecondaryFrameCount);
+        BMP.SetSize(FW, fFrameCount * FH);
+        SecondaryBMP.SetSize(FW, fSecondaryFrameCount * FH);
 
         SrcRect := BMP.BoundsRect;
-        TempBMP.DrawTo(BMP, BMP.BoundsRect, SrcRect);
+        TempBMP.DrawTo(BMP, 0, 0, SrcRect);
 
-        SrcRect.Offset(SrcRect.Width, 0);
+        SrcRect := SecondaryBMP.BoundsRect;
+        SrcRect.Offset(FW, 0);
         TempBMP.DrawTo(SecondaryBMP, 0, 0, SrcRect);
       end;
     finally
@@ -370,10 +373,10 @@ begin
     fFrameCount := Sec.LineNumeric['frames'];
     fSecondaryFrameCount := Sec.LineNumeric['secondary_frames'];
 
+    DoHorizontal := Sec.Line['horizontal_strip'] <> nil;
+
     if fSecondaryFrameCount > 0 then
       SplitBMP;
-
-    DoHorizontal := Sec.Line['horizontal_strip'] <> nil;
 
     GadgetAccessor.TriggerLeft := Sec.LineNumeric['trigger_x'];
     GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];
@@ -416,6 +419,9 @@ begin
     end;
 
     fIsMasked := Sec.DoForEachSection('mask', Masker.ApplyMask) <> 0;
+
+    fSecondaryAlwaysAnimate := Sec.Line['secondary_always_animate'] <> nil;
+    fSecondaryInFront := Sec.Line['secondary_in_front'] <> nil;
 
     GadgetAccessor.Images.Generate(BMP, fFrameCount, DoHorizontal);
     GadgetAccessor.SecondaryImages.Generate(SecondaryBMP, fSecondaryFrameCount, DoHorizontal);
