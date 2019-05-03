@@ -1,0 +1,100 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Marble Secondary Animation Test
+ AUTHOR 
+ ID x70D35A6D7F85103E
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME orig_marble
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+   DISARMER    5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION orig_marble
+   PIECE      exit_locked
+   X        136
+   Y         67
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      button
+   X        115
+   Y         88
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_marble
+   PIECE      window
+   X         22
+   Y         41
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_marble
+   PIECE      trap
+   X         74
+   Y         61
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION orig_marble
+   PIECE      block_01
+   X   122
+   Y    91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_marble
+   PIECE      block_01
+   X    74
+   Y    91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_marble
+   PIECE      block_01
+   X    26
+   Y    91
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_marble
+   PIECE      pillar_01
+   X    82
+   Y   -13
+   ONE_WAY
+ $END
+ 
+ 

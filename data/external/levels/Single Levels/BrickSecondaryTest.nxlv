@@ -1,0 +1,93 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Brick Secondary Animation Test
+ AUTHOR 
+ ID x75855D4D33A052B5
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME ohno_brick
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+   DISARMER    5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION ohno_brick
+   PIECE      window
+   X         20
+   Y         30
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_brick
+   PIECE      trap_01
+   X         69
+   Y         56
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_brick
+   PIECE      trap_02
+   X        116
+   Y         58
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION ohno_brick
+   PIECE      bricks_large_02
+   X    17
+   Y    90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_brick
+   PIECE      bricks_large_02
+   X    81
+   Y    90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_brick
+   PIECE      bricks_large_02
+   X   145
+   Y    90
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_brick
+   PIECE      bricks_large_03
+   X    67
+   Y    44
+   ONE_WAY
+ $END
+ 
+ 

@@ -1,0 +1,127 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Pillar Secondary Animation Test
+ AUTHOR 
+ ID x5622486E499ABF0C
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME orig_pillar
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+   DISARMER    5
+     BOMBER    5
+    BUILDER    5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION orig_pillar
+   PIECE      window
+   X         26
+   Y         16
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_pillar
+   PIECE      rope_trap
+   X        143
+   Y         13
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_pillar
+   PIECE      spike_trap_large_01
+   X        150
+   Y         57
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_pillar
+   PIECE      spike_trap_small_01
+   X        150
+   Y         86
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_pillar
+   PIECE      spike_trap_large_02
+   X        140
+   Y        110
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_pillar
+   PIECE      spike_trap_small_02
+   X        140
+   Y        132
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION orig_pillar
+   PIECE      block_13
+   X    27
+   Y    48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_pillar
+   PIECE      block_13
+   X    69
+   Y    48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_pillar
+   PIECE      block_13
+   X   111
+   Y    48
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_pillar
+   PIECE      block_12
+   X   133
+   Y    68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_pillar
+   PIECE      block_12
+   X   154
+   Y   110
+   ONE_WAY
+ $END
+ 
+ 

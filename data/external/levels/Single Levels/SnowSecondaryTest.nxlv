@@ -1,0 +1,84 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Snow Secondary Animation Test
+ AUTHOR 
+ ID x20826694510FDB0E
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME ohno_snow
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION ohno_snow
+   PIECE      window
+   X         35
+   Y         14
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_snow
+   PIECE      trap
+   X        121
+   Y         15
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION ohno_snow
+   PIECE      snow_17
+   X   128
+   Y    67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_snow
+   PIECE      snow_17
+   X    80
+   Y    67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_snow
+   PIECE      snow_17
+   X    32
+   Y    67
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_snow
+   PIECE      snow_05
+   X   104
+   Y   -52
+   ONE_WAY
+ $END
+ 
+ 

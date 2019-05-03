@@ -1,0 +1,157 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Rock Secondary Animation Test
+ AUTHOR 
+ ID x436AE0612F98C3A
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME ohno_rock
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+   DISARMER    5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION ohno_rock
+   PIECE      window
+   X         45
+   Y         23
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_rock
+   PIECE      weed_trap
+   X         94
+   Y         77
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_rock
+   PIECE      lizard_trap_01
+   X        160
+   Y         71
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_rock
+   PIECE      lizard_trap_02
+   X        128
+   Y        111
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X    54
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X    70
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X    86
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X   102
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X   118
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X   134
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X   150
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X   166
+   Y    92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X   174
+   Y   132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X   190
+   Y   132
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_rock
+   PIECE      platform_02
+   X   206
+   Y   132
+   ONE_WAY
+ $END
+ 
+ 
