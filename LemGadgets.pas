@@ -437,7 +437,8 @@ end;
 function TGadget.GetShowSecondaryAnimation: Boolean;
 const
   ELIGIBLE_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT,
-                      DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
+                      DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE,
+                      DOM_PICKUP];
 begin
   Result := (MetaObj.SecondaryFrameCount > 0) and (MetaObj.TriggerEffect in ELIGIBLE_OBJECTS);
 
