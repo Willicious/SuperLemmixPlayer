@@ -196,6 +196,10 @@ type
       property Resizability             : TGadgetMetaSizeSetting read GetResizability write SetResizability;
       property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
       property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
+      property CutTop                   : Integer index ov_CutTop read GetIntegerProperty write SetIntegerProperty;
+      property CutRight                 : Integer index ov_CutRight read GetIntegerProperty write SetIntegerProperty;
+      property CutBottom                : Integer index ov_CutBottom read GetIntegerProperty write SetIntegerProperty;
+      property CutLeft                  : Integer index ov_CutLeft read GetIntegerProperty write SetIntegerProperty;
   end;
 
   TGadgetMetaInfoList = class(TObjectList)

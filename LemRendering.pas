@@ -5,6 +5,7 @@ unit LemRendering;
 interface
 
 uses
+  SharedGlobals, // Debug
   System.Types,
   Classes, Math, Windows,
   GR32, GR32_Blend,
@@ -1336,11 +1337,39 @@ var
 
   procedure DoDraw(aSecondary: Boolean);
   var
-    CountX, CountY, iX, iY: Integer;
     MO: TGadgetMetaAccessor;
-    TempBitmapRect, DstRect: TRect;
-
     OriginX, OriginY: Integer;
+
+    VariableWidth, VariableHeight: Integer;
+
+    procedure DrawTiled(TotalSrcRect, TotalDstRect: TRect);
+    var
+      CountX, CountY: Integer;
+      iX, iY: Integer;
+      SrcRect, DstRect: TRect;
+    begin
+      CountX := (TotalDstRect.Width - 1) div TotalSrcRect.Width;
+      CountY := (TotalDstRect.Height - 1) div TotalSrcRect.Height;
+
+      for iY := 0 to CountY do
+      begin
+        SrcRect := TotalSrcRect;
+        DstRect := SizedRect(TotalDstRect.Left, TotalDstRect.Top + (iY * TotalSrcRect.Height), TotalSrcRect.Width, TotalSrcRect.Height);
+
+        if iY = CountY then
+          DstRect := SizedRect(DstRect.Left, DstRect.Top, DstRect.Width, ((TotalDstRect.Height - 1) mod TotalSrcRect.Height) + 1);
+
+        for iX := 0 to CountX do
+        begin
+          if iX = CountX then
+            DstRect := SizedRect(DstRect.Left, DstRect.Top, ((TotalDstRect.Width - 1) mod TotalSrcRect.Width) + 1, DstRect.Height);
+
+          TempBitmap.DrawTo(Dst, DstRect, SrcRect);
+
+          DstRect.Offset(TotalSrcRect.Width, 0);
+        end;
+      end;
+    end;
   begin
     if fUsefulOnly then
     begin
@@ -1350,8 +1379,6 @@ var
     end;
 
     MO := Gadget.MetaObj;
-    CountX := (Gadget.Width-1) div MO.Width;
-    CountY := (Gadget.Height-1) div MO.Height;
 
     OriginX := Gadget.Left;
     OriginY := Gadget.Top;
@@ -1362,33 +1389,60 @@ var
       OriginY := OriginY + MO.SecondaryOffsetY;
     end;
 
-    for iY := 0 to CountY do
-    begin
-      // (re)size rectangles correctly
-      TempBitmapRect := TempBitmap.BoundsRect;
-      // Move to leftmost X-coordinate and correct Y-coordinate
-      DstRect := Rect(0, 0, RectWidth(TempBitmapRect), RectHeight(TempBitmapRect));
-      OffsetRect(DstRect, OriginX, OriginY + (MO.Height * iY));
-      // shrink sizes of rectange to draw on bottom row
-      if (iY = CountY) and (Gadget.Height mod MO.Height <> 0) then
-      begin
-        Dec(DstRect.Bottom, MO.Height - (Gadget.Height mod MO.Height));
-        Dec(TempBitmapRect.Bottom, MO.Height - (Gadget.Height mod MO.Height));
-      end;
+    if (MO.Resizability = mos_None) then
+      TempBitmap.DrawTo(Dst, OriginX, OriginY)
+    else begin
+      VariableWidth := Gadget.Width - MO.CutLeft - MO.CutRight;
+      VariableHeight := Gadget.Height - MO.CutTop - MO.CutBottom;
 
-      for iX := 0 to CountX do
-      begin
-        // shrink size of rectangle to draw on rightmost column
-        if (iX = CountX) and (Gadget.Width mod MO.Width <> 0) then
-        begin
-          Dec(DstRect.Right, MO.Width - (Gadget.Width mod MO.Width));
-          Dec(TempBitmapRect.Right, MO.Width - (Gadget.Width mod MO.Width));
-        end;
-        // Draw copy of object onto alayer at this place
-        TempBitmap.DrawTo(Dst, DstRect, TempBitmapRect);
-        // Move to next row
-        OffsetRect(DstRect, MO.Width, 0);
-      end;
+      SharedGlobals.Log(IntToStr(VariableWidth) + ' x ' + IntToStr(VariableHeight));
+      SharedGlobals.Log(IntToStr(MO.CutTop) + ', ' + IntToStr(MO.CutRight));
+
+      // Top left
+      if (MO.CutLeft > 0) and (MO.CutTop > 0) then
+        TempBitmap.DrawTo(Dst, OriginX, OriginY, Rect(0, 0, MO.CutLeft, MO.CutTop));
+
+      // Top right
+      if (MO.CutRight > 0) and (MO.CutTop > 0) then
+        TempBitmap.DrawTo(Dst, OriginX + Gadget.Width - MO.CutRight, OriginY,
+                          Rect(MO.Width - MO.CutRight, 0, MO.Width, MO.CutTop));
+
+      // Bottom left
+      if (MO.CutLeft > 0) and (MO.CutBottom > 0) then
+        TempBitmap.DrawTo(Dst, OriginX, OriginY + Gadget.Height - MO.CutBottom,
+                          Rect(0, MO.Height - MO.CutBottom, MO.CutLeft, MO.Height));
+
+      // Bottom right
+      if (MO.CutRight > 0) and (MO.CutBottom > 0) then
+        TempBitmap.DrawTo(Dst, OriginX + Gadget.Width - MO.CutLeft,
+                          OriginY + Gadget.Height - MO.CutBottom,
+                          Rect(MO.Width - MO.CutRight, MO.Height - MO.CutBottom,
+                               MO.Width, MO.Height));
+
+      // Top edge
+      if (VariableWidth > 0) and (MO.CutTop > 0) then
+        DrawTiled(SizedRect(MO.CutLeft, 0, MO.Width - MO.CutLeft - MO.CutRight, MO.CutTop),
+                  SizedRect(OriginX + MO.CutLeft, OriginY, VariableWidth, MO.CutTop));
+
+      // Left edge
+      if (VariableHeight > 0) and (MO.CutLeft > 0) then
+        DrawTiled(SizedRect(0, MO.CutTop, MO.CutLeft, MO.Height - MO.CutTop - MO.CutBottom),
+                  SizedRect(OriginX, OriginY + MO.CutTop, MO.CutLeft, VariableHeight));
+
+      // Bottom edge
+      if (VariableWidth > 0) and (MO.CutBottom > 0) then
+        DrawTiled(SizedRect(MO.CutLeft, MO.Height - MO.CutBottom, MO.Width - MO.CutLeft - MO.CutRight, MO.CutBottom),
+                  SizedRect(OriginX + MO.CutLeft, OriginY + Gadget.Height - MO.CutBottom, VariableWidth, MO.CutBottom));
+
+      // Right edge
+      if (VariableHeight > 0) and (MO.CutRight > 0) then
+        DrawTiled(SizedRect(MO.Width - MO.CutRight, MO.CutTop, MO.CutRight, MO.Height - MO.CutTop - MO.CutBottom),
+                  SizedRect(OriginX + Gadget.Width - MO.CutRight, OriginY + MO.CutTop, MO.CutRight, VariableHeight));
+
+      // Center
+      if (VariableWidth > 0) and (VariableHeight > 0) then
+        DrawTiled(SizedRect(MO.CutLeft, MO.CutTop, MO.Width - MO.CutLeft - MO.CutRight, MO.Height - MO.CutTop - MO.CutBottom),
+                  SizedRect(OriginX + MO.CutLeft, OriginY + MO.CutTop, VariableWidth, VariableHeight));
     end;
   end;
 
