@@ -39,6 +39,10 @@ type
     SecondaryHeight:  Integer;
     SecondaryOffsetX: Integer;
     SecondaryOffsetY: Integer;
+    CutTop:           Integer;
+    CutRight:          Integer;
+    CutBottom:        Integer;
+    CutLeft:         Integer;
     Resizability:   TGadgetMetaSizeSetting;
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
@@ -47,7 +51,8 @@ type
                          ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
                          ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame,
                          ov_PreviewFrame, ov_SecondaryWidth, ov_SecondaryHeight,
-                         ov_SecondaryOffsetX, ov_SecondaryOffsetY);
+                         ov_SecondaryOffsetX, ov_SecondaryOffsetY, ov_CutTop,
+                         ov_CutRight, ov_CutBottom, ov_CutLeft);
                          // Integer properties only.
   TGadgetMetaBooleanProperty = (ovb_RandomStartFrame, ovb_SecondaryAlwaysAnimate,
                                 ovb_SecondaryInFront, ovb_SecondaryInstantStop);
@@ -123,6 +128,10 @@ type
     property Resizability[Flip, Invert, Rotate: Boolean]: TGadgetMetaSizeSetting read GetResizability write SetResizability;
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
+    property CutTop[Flip, Invert, Rotate: Boolean]: Integer index ov_CutTop read GetVariableProperty write SetVariableProperty;
+    property CutRight[Flip, Invert, Rotate: Boolean]: Integer index ov_CutRight read GetVariableProperty write SetVariableProperty;
+    property CutBottom[Flip, Invert, Rotate: Boolean]: Integer index ov_CutBottom read GetVariableProperty write SetVariableProperty;
+    property CutLeft[Flip, Invert, Rotate: Boolean]: Integer index ov_CutLeft read GetVariableProperty write SetVariableProperty;
 
     property SecondaryWidth[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryWidth read GetVariableProperty write SetVariableProperty;
     property SecondaryHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryHeight read GetVariableProperty write SetVariableProperty;
@@ -383,6 +392,11 @@ begin
         GadgetAccessor.Resizability := mos_None;
     end;
 
+    fVariableInfo[0].CutTop := Sec.LineNumeric['cut_top'];
+    fVariableInfo[0].CutRight := Sec.LineNumeric['cut_right'];
+    fVariableInfo[0].CutBottom := Sec.LineNumeric['cut_bottom'];
+    fVariableInfo[0].CutLeft := Sec.LineNumeric['cut_left'];
+
     fIsMasked := Sec.DoForEachSection('mask', Masker.ApplyMask) <> 0;
 
     fSecondaryAlwaysAnimate := Sec.Line['secondary_always_animate'] <> nil;
@@ -480,6 +494,8 @@ procedure TGadgetMetaInfo.DeriveVariation(Flip, Invert, Rotate: Boolean);
 var
   Index: Integer;
   i: Integer;
+
+  CutTemp: Integer;
 
   Src, Dst: TBitmap32;
   SrcRec: TGadgetVariableProperties;
@@ -617,6 +633,11 @@ begin
     DstRec.SecondaryHeight := SrcRec.SecondaryWidth;
     DstRec.SecondaryOffsetX := SrcRec.Height - SrcRec.SecondaryOffsetY - SrcRec.SecondaryHeight;
     DstRec.SecondaryOffsetY := SrcRec.SecondaryOffsetX;
+
+    DstRec.CutTop := SrcRec.CutLeft;
+    DstRec.CutRight := SrcRec.CutTop;
+    DstRec.CutBottom := SrcRec.CutRight;
+    DstRec.CutLeft := SrcRec.CutBottom;
   end;
 
   if Flip then
@@ -634,6 +655,10 @@ begin
 
     // Flip secondary animation X offset
     DstRec.SecondaryOffsetX := DstRec.Width - DstRec.SecondaryOffsetX - DstRec.SecondaryWidth;
+
+    CutTemp := DstRec.CutRight;
+    DstRec.CutRight := DstRec.CutLeft;
+    DstRec.CutLeft := CutTemp;
   end;
 
   if Invert then
@@ -653,6 +678,10 @@ begin
 
     // Flip secondary animation Y offset
     DstRec.SecondaryOffsetY := DstRec.Height - DstRec.SecondaryOffsetY - DstRec.SecondaryHeight;
+
+    CutTemp := DstRec.CutBottom;
+    DstRec.CutBottom := DstRec.CutTop;
+    DstRec.CutTop := CutTemp;
   end;
 end;
 
@@ -684,6 +713,10 @@ begin
       ov_SecondaryHeight: Result := SecondaryHeight;
       ov_SecondaryOffsetX: Result := SecondaryOffsetX;
       ov_SecondaryOffsetY: Result := SecondaryOffsetY;
+      ov_CutTop: Result := CutLeft;
+      ov_CutRight: Result := CutRight;
+      ov_CutBottom: Result := CutBottom;
+      ov_CutLeft: Result := CutLeft;
       else raise Exception.Create('TMetaObject.GetVariableProperty called for an invalid property!');
     end;
 end;
@@ -774,6 +807,10 @@ begin
     ov_SecondaryHeight: Result := fGadgetMetaInfo.SecondaryHeight[fFlip, fInvert, fRotate];
     ov_SecondaryOffsetX: Result := fGadgetMetaInfo.SecondaryOffsetX[fFlip, fInvert, fRotate];
     ov_SecondaryOffsetY: Result := fGadgetMetaInfo.SecondaryOffsetY[fFlip, fInvert, fRotate];
+    ov_CutTop: Result := fGadgetMetaInfo.CutTop[fFlip, fInvert, fRotate];
+    ov_CutRight: Result := fGadgetMetaInfo.CutRight[fFlip, fInvert, fRotate];
+    ov_CutBottom: Result := fGadgetMetaInfo.CutBottom[fFlip, fInvert, fRotate];
+    ov_CutLeft: Result := fGadgetMetaInfo.CutLeft[fFlip, fInvert, fRotate];
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;
