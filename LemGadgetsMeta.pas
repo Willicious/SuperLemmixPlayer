@@ -717,7 +717,7 @@ begin
       ov_SecondaryHeight: Result := SecondaryHeight;
       ov_SecondaryOffsetX: Result := SecondaryOffsetX;
       ov_SecondaryOffsetY: Result := SecondaryOffsetY;
-      ov_CutTop: Result := CutLeft;
+      ov_CutTop: Result := CutTop;
       ov_CutRight: Result := CutRight;
       ov_CutBottom: Result := CutBottom;
       ov_CutLeft: Result := CutLeft;
