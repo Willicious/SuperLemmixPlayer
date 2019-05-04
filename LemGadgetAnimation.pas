@@ -14,6 +14,62 @@ uses
   SysUtils;
 
 type
+  TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop);
+  TGadgetAnimationVisibility = (gavVisible, gavHidden);
+
+  TGadgetAnimationTrigger = (gatFrameZero, gatFrameOne, gatTriggered, gatDisabled);
+  TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
+
+  {
+  Triggers can be used to define when a secondary animation is visible. Certain
+  objects support certain trigger conditions. All objects can support
+  unconditional secondary animations, so even those with no triggers can still
+  make use of secondaries.
+
+  gatFrameZero - TRUE on frame zero, if this is significant to the object.
+  gatFrameOne - TRUE on frame one, if this is significant to the object.
+  gatTriggered - TRUE when object is in triggered state. For teleporters / receivers, this includes the paired object's state.
+  gatDisabled - Varies by object. Sometimes identical to another trigger.
+
+  The "gatsDontCare" state is not returned by tests (they will return gatFalse
+  where not supported). It is only used when defining conditions, and usually,
+  only internally.
+
+
+  The basic animation states are Play and Pause. Others will eventually change
+  to one of these.
+
+  gasLoopToZero - Changes to gasPause when frame 0 is reached
+  gasStop - Sets frame to 0 then changes to gasPause
+
+  The visibility state sets whether the animation is visible or not. It will
+  be treated as gavVisible any time the animation is playing - it must be paused
+  to hide the animation.
+
+
+  OBJECT TYPE     | gatFrameZero | gatFrameOne | gatTriggered | gatDisabled
+  ----------------|--------------|-------------|--------------|-------------
+  DOM_NONE        | No           | No          | No           | No
+  DOM_EXIT        | No           | No          | No           | No
+  DOM_FORCExxxxx  | No           | No          | No           | No
+  DOM_TRAP        | Yes          | No          | Yes          | Yes (when disarmed)
+  DOM_WATER       | No           | No          | No           | No
+  DOM_FIRE        | No           | No          | No           | No
+  DOM_ONEWAYxxxxx | No           | No          | No           | No
+  DOM_TELEPORT    | Yes          | No          | Yes (pair)   | Yes (when no pair exists)
+  DOM_RECEIVER    | Yes          | No          | Yes (pair)   | Yes (when no pair exists)
+  DOM_PICKUP      | Yes          | Yes*        | No           | equal to gatFrameZero    * gatFrameOne here triggers on frame != 0
+  DOM_LOCKEXIT    | Yes          | Yes         | Yes          | equal to gatFrameOne
+  DOM_BUTTON      | Yes          | Yes         | No           | No
+  DOM_UPDRAFT     | No           | No          | No           | No
+  DOM_FLIPPER     | Yes          | Yes         | No           | No
+  DOM_WINDOW      | Yes          | Yes         | Yes          | No
+  DOM_SPLAT       | No           | No          | No           | No
+  DOM_BACKGROUND  | No           | No          | No           | No
+  DOM_TRAPONCE    | Yes          | Yes         | Yes          | Yes (when disarmed - NOT when used!)
+
+  }
+
   TGadgetAnimation = class
     private
       class var fTempOutBitmap: TBitmap32;
