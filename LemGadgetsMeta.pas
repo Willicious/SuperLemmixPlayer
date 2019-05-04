@@ -67,13 +67,10 @@ type
     fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : String;  // filename of sound to play
-    fRandomStartFrame             : Boolean;
+
     fResizability                 : TGadgetMetaSizeSetting;
-    fSecondaryAlwaysAnimate       : Boolean;
-    fSecondaryInFront             : Boolean;
-    fSecondaryInstantStop         : Boolean;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
-    fIsMasked: Boolean;
+
     function GetIdentifier: String;
     function GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TGadgetMetaSizeSetting): Boolean;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -204,14 +201,6 @@ type
       property List;
   end;
 
-  TMasker = class
-    public
-      BMP: TBitmap32;
-      Theme: TNeoTheme;
-      Piece: String;
-      procedure ApplyMask(aSection: TParserSection; const aIteration: Integer);
-  end;
-
 implementation
 
 constructor TGadgetMetaInfo.Create;
@@ -258,22 +247,6 @@ begin
     fVariableInfo[i].PrimaryAnimation.Clear;
     fVariableInfo[i].SecondaryAnimations.Clear;
   end;
-end;
-
-procedure TMasker.ApplyMask(aSection: TParserSection; const aIteration: Integer);
-var
-  MaskName, MaskColor: String;
-begin
-  if Theme = nil then Exit; // kludge, this situation should never arise in the first place
-
-  MaskColor := aSection.LineTrimString['color'];
-  if (aSection.Line['self'] <> nil) then
-    TPngInterface.MaskImageFromImage(BMP, BMP, Theme.Colors[MaskColor])
-  else begin
-    MaskName := aSection.LineTrimString['name'];
-    TPngInterface.MaskImageFromFile(BMP, Piece + '_mask_' + MaskName + '.png', Theme.Colors[MaskColor]);
-  end;
- 
 end;
 
 procedure TGadgetMetaInfo.Load(aCollection,aPiece: String; aTheme: TNeoTheme);

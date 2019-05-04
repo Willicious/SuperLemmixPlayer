@@ -3,7 +3,9 @@ unit LemGadgetAnimation;
 interface
 
 uses
-  Generics.Collections,
+  LemNeoTheme,
+  LemStrings,
+  Generics.Collections, Generics.Defaults,
   PngInterface,
   UMisc,
   LemTypes,
@@ -14,17 +16,24 @@ uses
 type
   TGadgetAnimation = class
     private
+      class var fTempOutBitmap: TBitmap32;
+      class var fTempBitmapUsageCount: Integer;
+    private
       fMainObjectWidth: Integer;
       fMainObjectHeight: Integer;
 
       fFrameCount: Integer;
       fName: String;
+      fColor: String;
+
+      fPrimary: Boolean;
+      fHorizontalStrip: Boolean;
+
+      fZIndex: Integer;
 
       fAlwaysAnimate: Boolean;
-      fZIndex: Integer;
-      fPrimary: Boolean;
       fInstantStop: Boolean;
-      fHorizontalStrip: Boolean;
+      fPreviewFrameIndex: Integer;
 
       fWidth: Integer;
       fHeight: Integer;
@@ -41,17 +50,22 @@ type
 
       function MakeFrameBitmaps: TBitmaps;
       procedure CombineBitmaps(aBitmaps: TBitmaps);
+
+      function GetRandomStartFrame: Boolean;
     public
       constructor Create(aMainObjectWidth: Integer; aMainObjectHeight: Integer);
       destructor Destroy; override;
 
-      procedure Load(aImageFile: String; aSegment: TParserSection);
+      procedure Load(aCollection, aPiece: String; aSegment: TParserSection; aTheme: TNeoTheme);
       procedure Clone(aSrc: TGadgetAnimation);
       procedure Clear;
 
       procedure Rotate90;
       procedure Flip;
       procedure Invert;
+
+      function GetFrameBitmap(aFrame: Integer; aPersistent: Boolean = false): TBitmap32;
+      procedure GetFrame(aFrame: Integer; aBitmap: TBitmap32);
 
       procedure Draw(Dst: TBitmap32; X, Y: Integer; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil); overload;
       procedure Draw(Dst: TBitmap32; DstRect: TRect; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil); overload;
@@ -83,6 +97,8 @@ type
     public
       procedure AddPrimary(aAnimation: TGadgetAnimation);
 
+      procedure SortByZIndex;
+
       procedure Clone(aSrc: TGadgetAnimations);
       procedure Rotate90;
       procedure Flip;
@@ -102,10 +118,18 @@ begin
 
   fMainObjectWidth := aMainObjectWidth;
   fMainObjectHeight := aMainObjectHeight;
+
+  if (fTempBitmapUsageCount = 0) then
+    fTempOutBitmap := TBitmap32.Create;
+  Inc(fTempBitmapUsageCount);
 end;
 
 destructor TGadgetAnimation.Destroy;
 begin
+  Dec(fTempBitmapUsageCount);
+  if (fTempBitmapUsageCount = 0) then
+    fTempoutBitmap.Free;
+
   fSourceImage.Free;
   inherited;
 end;
@@ -134,25 +158,42 @@ begin
   fSourceImage.DrawTo(Dst, DstRect, SrcRect);
 end;
 
-procedure TGadgetAnimation.Load(aImageFile: String; aSegment: TParserSection);
+function TGadgetAnimation.GetFrameBitmap(aFrame: Integer; aPersistent: Boolean = false): TBitmap32;
 begin
-  TPngInterface.LoadPngFile(aImageFile, fSourceImage);
+  if aPersistent then
+    Result := TBitmap32.Create(fWidth, fHeight)
+  else
+    Result := fTempOutBitmap;
 
-  fName := UpperCase(aSegment.LineTrimString['name']);
+  GetFrame(aFrame, Result);
+end;
+
+procedure TGadgetAnimation.GetFrame(aFrame: Integer; aBitmap: TBitmap32);
+begin
+  aBitmap.SetSize(fWidth, fHeight);
+  aBitmap.Clear(0);
+  Draw(aBitmap, 0, 0, aFrame);
+end;
+
+procedure TGadgetAnimation.Load(aCollection, aPiece: String; aSegment: TParserSection; aTheme: TNeoTheme);
+begin
   fFrameCount := aSegment.LineNumeric['frames'];
+  fName := UpperCase(aSegment.LineTrimString['name']);
+  fColor := UpperCase(aSegment.LineTrimString['color']);
+
+  TPngInterface.LoadPngFile(AppPath + SFStyles + aCollection + '\' + aPiece + '_' + fName + '.png', fSourceImage);
+  if fColor <> '' then
+    TPngInterface.MaskImageFromImage(fSourceImage, fSourceImage, aTheme.Colors[fColor]);
+
+  // fPrimary is only set by TGadgetAnimations
+  fHorizontalStrip := aSegment.Line['horizontal_strip'] <> nil;
+
+  fZIndex := aSegment.LineNumeric['z_index'];
 
   fAlwaysAnimate := aSegment.Line['always_animate'] <> nil;
-  fZIndex := aSegment.LineNumeric['z_index'];
   fInstantStop := aSegment.Line['instant_stop'] <> nil;
-  fHorizontalStrip := aSegment.Line['horizontal'] <> nil;
-
-  fOffsetX := aSegment.LineNumeric['offset_x'];
-  fOffsetY := aSegment.LineNumeric['offset_y'];
-
-  fCutTop := aSegment.LineNumeric['cut_top'];
-  fCutRight := aSegment.LineNumeric['cut_right'];
-  fCutBottom := aSegment.LineNumeric['cut_bottom'];
-  fCutLeft := aSegment.LineNumeric['cut_left'];
+  fPreviewFrameIndex := aSegment.LineNumeric['preview_frame'];
+  // fIsMasked is set when loading masks
 
   if fHorizontalStrip then
   begin
@@ -162,6 +203,14 @@ begin
     fWidth := fSourceImage.Width;
     fHeight := fSourceImage.Height div fFrameCount;
   end;
+
+  fOffsetX := aSegment.LineNumeric['offset_x'];
+  fOffsetY := aSegment.LineNumeric['offset_y'];
+
+  fCutTop := aSegment.LineNumeric['cut_top'];
+  fCutRight := aSegment.LineNumeric['cut_right'];
+  fCutBottom := aSegment.LineNumeric['cut_bottom'];
+  fCutLeft := aSegment.LineNumeric['cut_left'];
 end;
 
 procedure TGadgetAnimation.Clear;
@@ -169,36 +218,51 @@ begin
   fSourceImage.SetSize(1, 1);
   fSourceImage.Clear(0);
 
-  fName := '';
   fFrameCount := 1;
-  fAlwaysAnimate := false;
-  fZIndex := 0;
-  fInstantStop := false;
+  fName := '';
+  fColor := '';
+
+  // leave fPrimary unaffected
   fHorizontalStrip := false;
+
+  fZIndex := 0;
+
+  fAlwaysAnimate := false;
+  fInstantStop := false;
+  fPreviewFrameIndex := 0;
+
+  fWidth := 1;
+  fHeight := 1;
+
   fOffsetX := 0;
   fOffsetY := 0;
+
   fCutTop := 0;
   fCutRight := 0;
   fCutBottom := 0;
   fCutLeft := 0;
-  fWidth := 1;
-  fHeight := 1;
 end;
 
 procedure TGadgetAnimation.Clone(aSrc: TGadgetAnimation);
 begin
   fSourceImage.Assign(aSrc.fSourceImage);
 
-  fName := aSrc.fName;
   fFrameCount := aSrc.fFrameCount;
+  fName := aSrc.fName;
+  fColor := aSrc.fColor;
+
+  fPrimary := aSrc.fPrimary; // This is one case where we DO want to copy it
+  fHorizontalStrip := aSrc.fHorizontalStrip;
+
+  fZIndex := aSrc.fZIndex;
 
   fAlwaysAnimate := aSrc.fAlwaysAnimate;
-  fZIndex := aSrc.fZIndex;
   fInstantStop := aSrc.fInstantStop;
-  fHorizontalStrip := aSrc.fHorizontalStrip;
+  fPreviewFrameIndex := aSrc.fPreviewFrameIndex;
 
   fWidth := aSrc.fWidth;
   fHeight := aSrc.fHeight;
+
   fOffsetX := aSrc.fOffsetX;
   fOffsetY := aSrc.fOffsetY;
 
@@ -206,6 +270,11 @@ begin
   fCutRight := aSrc.fCutRight;
   fCutBottom := aSrc.fCutBottom;
   fCutLeft := aSrc.fCutLeft;
+end;
+
+function TGadgetAnimation.GetRandomStartFrame: Boolean;
+begin
+  Result := fPreviewFrameIndex < 0;
 end;
 
 procedure TGadgetAnimation.Rotate90;
@@ -363,6 +432,16 @@ var
 begin
   for i := 0 to Count-1 do
     Items[i].Invert;
+end;
+
+procedure TGadgetAnimations.SortByZIndex;
+begin
+  Sort(TComparer<TGadgetAnimation>.Construct(
+    function (const L, R: TGadgetAnimation): Integer
+    begin
+      Result := L.fZIndex - R.fZIndex;
+    end
+    ));
 end;
 
 end.
