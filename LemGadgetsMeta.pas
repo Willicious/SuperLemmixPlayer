@@ -9,7 +9,8 @@ uses
   GR32, LemTypes,
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,
-  Contnrs, LemNeoParser;
+  Contnrs, LemNeoParser,
+  LemGadgetAnimation;
 
 const
   // Object Animation Types
