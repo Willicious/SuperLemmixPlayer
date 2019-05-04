@@ -5,7 +5,6 @@ unit LemGadgetsMeta;
 interface
 
 uses
-  Dialogs, //debug
   GR32, LemTypes,
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,

@@ -5,7 +5,6 @@ unit LemRendering;
 interface
 
 uses
-  SharedGlobals, // Debug
   System.Types,
   Classes, Math, Windows,
   GR32, GR32_Blend,
@@ -1424,9 +1423,6 @@ var
     else begin
       VariableWidth := Gadget.Width - MO.CutLeft - MO.CutRight;
       VariableHeight := Gadget.Height - MO.CutTop - MO.CutBottom;
-
-      SharedGlobals.Log(IntToStr(VariableWidth) + ' x ' + IntToStr(VariableHeight));
-      SharedGlobals.Log(IntToStr(MO.CutTop) + ', ' + IntToStr(MO.CutRight));
 
       // Top left
       if (MO.CutLeft > 0) and (MO.CutTop > 0) then
