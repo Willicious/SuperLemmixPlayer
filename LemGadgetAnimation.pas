@@ -253,12 +253,20 @@ end;
 procedure TGadgetAnimation.Load(aCollection, aPiece: String; aSegment: TParserSection; aTheme: TNeoTheme);
 var
   BaseTrigger: TGadgetAnimationTrigger;
+  LoadPath: String;
 begin
+  Clear;
+
   fFrameCount := aSegment.LineNumeric['frames'];
   fName := UpperCase(aSegment.LineTrimString['name']);
   fColor := UpperCase(aSegment.LineTrimString['color']);
 
-  TPngInterface.LoadPngFile(AppPath + SFStyles + aCollection + '\' + aPiece + '_' + fName + '.png', fSourceImage);
+  LoadPath := AppPath + SFStyles + aCollection + '\' + aPiece;
+  if fName <> '' then
+    LoadPath := LoadPath + '_' + fName; // for backwards-compatible or simply unnamed primaries
+  LoadPath := LoadPath + '.png';
+
+  TPngInterface.LoadPngFile(LoadPath, fSourceImage);
   if fColor <> '' then
     TPngInterface.MaskImageFromImage(fSourceImage, fSourceImage, aTheme.Colors[fColor]);
 

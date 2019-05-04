@@ -27,8 +27,7 @@ type
   TGadgetMetaSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
   TGadgetVariableProperties = record // For properties that vary based on flip / invert
-    PrimaryAnimation: TGadgetAnimation;
-    SecondaryAnimations: TGadgetAnimations;
+    Animations: TGadgetAnimations;
     TriggerLeft:      Integer;
     TriggerTop:       Integer;
     TriggerWidth:     Integer;
@@ -120,16 +119,7 @@ type
     property CutBottom[Flip, Invert, Rotate: Boolean]: Integer index ov_CutBottom read GetVariableProperty write SetVariableProperty;
     property CutLeft[Flip, Invert, Rotate: Boolean]: Integer index ov_CutLeft read GetVariableProperty write SetVariableProperty;
 
-    property SecondaryWidth[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryWidth read GetVariableProperty write SetVariableProperty;
-    property SecondaryHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryHeight read GetVariableProperty write SetVariableProperty;
-    property SecondaryOffsetX[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryOffsetX read GetVariableProperty write SetVariableProperty;
-    property SecondaryOffsetY[Flip, Invert, Rotate: Boolean]: Integer index ov_SecondaryOffsetY read GetVariableProperty write SetVariableProperty;
-    property SecondaryAlwaysAnimate: Boolean read fSecondaryAlwaysAnimate write fSecondaryAlwaysAnimate;
-    property SecondaryInFront: Boolean read fSecondaryInFront write fSecondaryInFront;
-    property SecondaryInstantStop: Boolean read fSecondaryInstantStop write fSecondaryInstantStop;
-
     property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
-    property IsMasked: Boolean read fIsMasked; // we don't want to write to this one
   end;
 
   TGadgetMetaAccessor = class
@@ -210,8 +200,7 @@ begin
   inherited;
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    fVariableInfo[i].PrimaryAnimation := TGadgetAnimation.Create(0, 0);
-    fVariableInfo[i].SecondaryAnimations := TGadgetAnimations.Create;
+    fVariableInfo[i].Animations := TGadgetAnimations.Create;
     fInterfaces[i] := nil;
   end;
 end;
@@ -222,8 +211,7 @@ var
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    fVariableInfo[i].PrimaryAnimation.Free;
-    fVariableInfo[i].SecondaryAnimations.Free;
+    fVariableInfo[i].Animations.Free;
     fInterfaces[i].Free;
   end;
   inherited;
@@ -243,35 +231,21 @@ var
   i: Integer;
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
-  begin
-    fVariableInfo[i].PrimaryAnimation.Clear;
-    fVariableInfo[i].SecondaryAnimations.Clear;
-  end;
+    fVariableInfo[i].Animations.Clear;
 end;
 
 procedure TGadgetMetaInfo.Load(aCollection,aPiece: String; aTheme: TNeoTheme);
 var
   Parser: TParser;
-  Sec: TParserSection;
+  Sec, NewSec: TParserSection;
 
   GadgetAccessor: TGadgetMetaAccessor;
-  BMP, SecondaryBMP: TBitmap32;
-
-  DoHorizontal: Boolean;
-
-  Masker: TMasker;
 begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
   GadgetAccessor := GetInterface(false, false, false);
 
   Parser := TParser.Create;
-  BMP := TBitmap32.Create;
-  SecondaryBMP := TBitmap32.Create;
-  Masker := TMasker.Create;
-  Masker.BMP := BMP;
-  Masker.Theme := aTheme;
-  Masker.Piece := fPiece;
   try
     ClearImages;
 
@@ -313,21 +287,35 @@ begin
     // 32 is unused
     if Sec.Line['one_way_up'] <> nil then fTriggerEffect := 33;
 
-    TPngInterface.LoadPngFile(aPiece + '.png', BMP);
-    fFrameCount := Sec.LineNumeric['frames'];
-    fSecondaryFrameCount := Sec.LineNumeric['secondary_frames'];
+    if Sec.Section['PRIMARY_ANIMATION'] = nil then
+    begin
+      // Translate older format, then load it normally.
+      NewSec := Sec.SectionList.Add('PRIMARY_ANIMATION');
 
-    DoHorizontal := Sec.Line['horizontal_strip'] <> nil;
+      NewSec.AddLine('frames', Sec.LineNumeric['frames']);
 
-    if fSecondaryFrameCount > 0 then
-      TPngInterface.LoadPngFile(aPiece + '_secondary.png', SecondaryBMP);
+      if Sec.Line['horizontal_strip'] <> nil then
+        NewSec.AddLine('horizontal_strip');
+
+      if Sec.Line['random_start_frame'] <> nil then
+        NewSec.AddLine('initial_frame', -1)
+      else if Sec.Line['initial_frame'] = nil then
+        NewSec.AddLine('initial_frame', Sec.LineNumeric['preview_frame'])  // backwards-compatible
+      else
+        NewSec.AddLine('initial_frame', Sec.LineNumeric['initial_frame']); // more accurate name, and it's what animations use
+
+      NewSec.AddLine('cut_top', Sec.LineNumeric['cut_top']);
+      NewSec.AddLine('cut_right', Sec.LineNumeric['cut_right']);
+      NewSec.AddLine('cut_bottom', Sec.LineNumeric['cut_bottom']);
+      NewSec.AddLine('cut_left', Sec.LineNumeric['cut_left']);
+    end;
 
     GadgetAccessor.TriggerLeft := Sec.LineNumeric['trigger_x'];
     GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];
     GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];
     GadgetAccessor.TriggerHeight := Sec.LineNumeric['trigger_height'];
 
-    if fTriggerEffect = 12 then // Reveiver
+    if fTriggerEffect = 12 then // Receiver  /// Is the width / height even used anymore?
     begin
       if GadgetAccessor.TriggerWidth < 1 then
         GadgetAccessor.TriggerWidth := 1;
@@ -337,15 +325,7 @@ begin
 
     fSoundEffect := Sec.LineTrimString['sound'];
 
-    if Sec.Line['random_start_frame'] <> nil then
-    begin
-      fPreviewFrameIndex := 0;
-      fRandomStartFrame := true;
-    end else begin
-      fPreviewFrameIndex := Sec.LineNumeric['preview_frame'];
-    end;
-
-    fKeyFrame := Sec.LineNumeric['key_frame'];
+    fKeyFrame := Sec.LineNumeric['key_frame']; // this is almost purely a physics property, so should not go under animations
 
     if Sec.Line['resize_both'] <> nil then
       GadgetAccessor.Resizability := mos_Both
@@ -361,42 +341,8 @@ begin
       else
         GadgetAccessor.Resizability := mos_None;
     end;
-
-    fVariableInfo[0].CutTop := Sec.LineNumeric['cut_top'];
-    fVariableInfo[0].CutRight := Sec.LineNumeric['cut_right'];
-    fVariableInfo[0].CutBottom := Sec.LineNumeric['cut_bottom'];
-    fVariableInfo[0].CutLeft := Sec.LineNumeric['cut_left'];
-
-    fIsMasked := Sec.DoForEachSection('mask', Masker.ApplyMask) <> 0;
-
-    fSecondaryAlwaysAnimate := Sec.Line['secondary_always_animate'] <> nil;
-    fSecondaryInFront := Sec.Line['secondary_in_front'] <> nil;
-    fSecondaryInstantStop := Sec.Line['secondary_instant_stop'] <> nil;
-    fVariableInfo[0].SecondaryOffsetX := Sec.LineNumeric['secondary_offset_x'];
-    fVariableInfo[0].SecondaryOffsetY := Sec.LineNumeric['secondary_offset_y'];
-
-    GadgetAccessor.Images.Generate(BMP, fFrameCount, DoHorizontal);
-
-    if fSecondaryFrameCount > 0 then
-      GadgetAccessor.SecondaryImages.Generate(SecondaryBMP, fSecondaryFrameCount, DoHorizontal);
-
-    fVariableInfo[0].Width := GadgetAccessor.Images[0].Width;   //TMetaObjectInterface's Width property is read-only
-    fVariableInfo[0].Height := GadgetAccessor.Images[0].Height;
-
-    if fSecondaryFrameCount > 0 then
-    begin
-      GadgetAccessor.SecondaryImages.Generate(SecondaryBMP, fSecondaryFrameCount, DoHorizontal);
-      fVariableInfo[0].SecondaryWidth := GadgetAccessor.SecondaryImages[0].Width;
-      fVariableInfo[0].SecondaryHeight := GadgetAccessor.SecondaryImages[0].Height;
-    end else begin
-      fVariableInfo[0].SecondaryWidth := 0;
-      fVariableInfo[0].SecondaryHeight := 0;
-    end;
-
   finally
     Parser.Free;
-    BMP.Free;
-    SecondaryBMP.Free;
   end;
 end;
 
@@ -476,74 +422,15 @@ var
 const
   NO_POSITION_ADJUST = [7, 8, 19]; // OWL, OWR, OWD arrows
 
-  procedure CloneInfo(Src, Dst: PGadgetVariableProperties);
+  procedure Clone(Src, Dst: PGadgetVariableProperties);
   var
-    BitmapRef, SecondaryBitmapRef: TBitmaps;
+    AnimRef: TGadgetAnimations;
   begin
-    BitmapRef := Dst.Image;
-    SecondaryBitmapRef := Dst.SecondaryImage;
+    AnimRef := Dst.Animations;
     Dst^ := Src^;
-    Dst.Image := BitmapRef;
-    Dst.SecondaryImage := SecondaryBitmapRef;
-  end;
+    Dst.Animations := AnimRef;
 
-  procedure Reset;
-  begin
-    i := 0;
-  end;
-
-  function SetImages: Boolean;
-  var
-    n: Integer;
-  begin
-    if SkipImages then
-    begin
-      Result := false;
-      Exit;
-    end;
-
-    Result := i < fVariableInfo[0].Image.Count;
-    if Result then
-    begin
-      Src := fVariableInfo[0].Image[i];
-      if i < fVariableInfo[Index].Image.Count then
-        Dst := fVariableInfo[Index].Image[i]
-      else begin
-        Dst := TBitmap32.Create;
-        fVariableInfo[Index].Image.Add(Dst);
-      end;
-      Inc(i);
-    end else begin
-      for n := fVariableInfo[Index].Image.Count-1 downto i do
-        fVariableInfo[Index].Image.Delete(n);
-    end;
-  end;
-
-  function SetSecondaryImages: Boolean;
-  var
-    n: Integer;
-  begin
-    if SkipImages then
-    begin
-      Result := false;
-      Exit;
-    end;
-
-    Result := i < fVariableInfo[0].SecondaryImage.Count;
-    if Result then
-    begin
-      Src := fVariableInfo[0].SecondaryImage[i];
-      if i < fVariableInfo[Index].SecondaryImage.Count then
-        Dst := fVariableInfo[Index].SecondaryImage[i]
-      else begin
-        Dst := TBitmap32.Create;
-        fVariableInfo[Index].SecondaryImage.Add(Dst);
-      end;
-      Inc(i);
-    end else begin
-      for n := fVariableInfo[Index].SecondaryImage.Count-1 downto i do
-        fVariableInfo[Index].SecondaryImage.Delete(n);
-    end;
+    Dst.Animations.Clone(Src.Animations);
   end;
 begin
   Index := GetImageIndex(Flip, Invert, Rotate);
@@ -558,32 +445,14 @@ begin
   SrcRec := fVariableInfo[0];
   DstRec := @fVariableInfo[Index];
 
-  CloneInfo(@SrcRec, DstRec);
-
-  Reset;
-  while SetImages do
-    Dst.Assign(Src);
-
-  Reset;
-  while SetSecondaryImages do
-    Dst.Assign(Src);
+  Clone(@SrcRec, @DstRec);
 
   if Rotate then
   begin
-    Reset;
-    while SetImages do
-      Dst.Rotate90;
-
-    Reset;
-    while SetSecondaryImages do
-      Dst.Rotate90;
-
-    // Swap width / height
-    DstRec.Width := SrcRec.Height;
-    DstRec.Height := SrcRec.Width;
+    DstRec.Animations.Rotate90;
 
     // Swap and adjust trigger area coordinates / dimensions
-    DstRec.TriggerLeft := SrcRec.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
+    DstRec.TriggerLeft := SrcRec.Animations.PrimaryAnimation.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
     DstRec.TriggerTop := SrcRec.TriggerLeft {- SrcRec.TriggerWidth};
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
     begin
@@ -597,61 +466,24 @@ begin
       DstRec.Resizability := mos_Vertical
     else if SrcRec.Resizability = mos_Vertical then
       DstRec.Resizability := mos_Horizontal;
-
-    // Swap and adjust secondary animation offset
-    DstRec.SecondaryWidth := SrcRec.SecondaryHeight;
-    DstRec.SecondaryHeight := SrcRec.SecondaryWidth;
-    DstRec.SecondaryOffsetX := SrcRec.Height - SrcRec.SecondaryOffsetY - SrcRec.SecondaryHeight;
-    DstRec.SecondaryOffsetY := SrcRec.SecondaryOffsetX;
-
-    DstRec.CutTop := SrcRec.CutLeft;
-    DstRec.CutRight := SrcRec.CutTop;
-    DstRec.CutBottom := SrcRec.CutRight;
-    DstRec.CutLeft := SrcRec.CutBottom;
   end;
 
   if Flip then
   begin
-    Reset;
-    while SetImages do
-      Dst.FlipHorz;
-
-    Reset;
-    while SetSecondaryImages do
-      Dst.FlipHorz;
+    DstRec.Animations.Flip;
 
     // Flip trigger area X coordinate
-    DstRec.TriggerLeft := DstRec.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
-
-    // Flip secondary animation X offset
-    DstRec.SecondaryOffsetX := DstRec.Width - DstRec.SecondaryOffsetX - DstRec.SecondaryWidth;
-
-    CutTemp := DstRec.CutRight;
-    DstRec.CutRight := DstRec.CutLeft;
-    DstRec.CutLeft := CutTemp;
+    DstRec.TriggerLeft := DstRec.Animations.PrimaryAnimation.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
   end;
 
   if Invert then
   begin
-    Reset;
-    while SetImages do
-      Dst.FlipVert;
-
-    Reset;
-    while SetSecondaryImages do
-      Dst.FlipVert;
+    DstRec.Animations.Invert;
 
     // Flip and adjust trigger area Y coordinate
-    DstRec.TriggerTop := DstRec.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
+    DstRec.TriggerTop := DstRec.Animations.PrimaryAnimation.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
       DstRec.TriggerTop := DstRec.TriggerTop + 10;
-
-    // Flip secondary animation Y offset
-    DstRec.SecondaryOffsetY := DstRec.Height - DstRec.SecondaryOffsetY - DstRec.SecondaryHeight;
-
-    CutTemp := DstRec.CutBottom;
-    DstRec.CutBottom := DstRec.CutTop;
-    DstRec.CutTop := CutTemp;
   end;
 end;
 
@@ -673,20 +505,12 @@ begin
   i := GetImageIndex(Flip, Invert, Rotate);
   with fVariableInfo[i] do
     case aProp of
-      ov_Width: Result := Width;
-      ov_Height: Result := Height;
+      ov_Width: Result := Animations.PrimaryAnimation.Width;
+      ov_Height: Result := Animations.PrimaryAnimation.Height;
       ov_TriggerLeft: Result := TriggerLeft;
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
       ov_TriggerHeight: Result := TriggerHeight;
-      ov_SecondaryWidth: Result := SecondaryWidth;
-      ov_SecondaryHeight: Result := SecondaryHeight;
-      ov_SecondaryOffsetX: Result := SecondaryOffsetX;
-      ov_SecondaryOffsetY: Result := SecondaryOffsetY;
-      ov_CutTop: Result := CutTop;
-      ov_CutRight: Result := CutRight;
-      ov_CutBottom: Result := CutBottom;
-      ov_CutLeft: Result := CutLeft;
       else raise Exception.Create('TMetaObject.GetVariableProperty called for an invalid property!');
     end;
 end;
