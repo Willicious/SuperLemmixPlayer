@@ -3,6 +3,7 @@ unit LemGadgetAnimation;
 interface
 
 uses
+  Generics.Collections,
   PngInterface,
   UMisc,
   LemTypes,
@@ -46,6 +47,7 @@ type
 
       procedure Load(aImageFile: String; aSegment: TParserSection);
       procedure Clone(aSrc: TGadgetAnimation);
+      procedure Clear;
 
       procedure Rotate90;
       procedure Flip;
@@ -75,7 +77,23 @@ type
       property CutLeft: Integer read fCutLeft write fCutLeft;
   end;
 
+  TGadgetAnimations = class(TObjectList<TGadgetAnimation>)
+    private
+      fPrimaryAnimation: TGadgetAnimation;
+    public
+      procedure AddPrimary(aAnimation: TGadgetAnimation);
+
+      procedure Clone(aSrc: TGadgetAnimations);
+      procedure Rotate90;
+      procedure Flip;
+      procedure Invert;
+
+      property PrimaryAnimation: TGadgetAnimation read fPrimaryAnimation;
+  end;
+
 implementation
+
+// TGadgetAnimation
 
 constructor TGadgetAnimation.Create(aMainObjectWidth: Integer; aMainObjectHeight: Integer);
 begin
@@ -146,6 +164,27 @@ begin
   end;
 end;
 
+procedure TGadgetAnimation.Clear;
+begin
+  fSourceImage.SetSize(1, 1);
+  fSourceImage.Clear(0);
+
+  fName := '';
+  fFrameCount := 1;
+  fAlwaysAnimate := false;
+  fZIndex := 0;
+  fInstantStop := false;
+  fHorizontalStrip := false;
+  fOffsetX := 0;
+  fOffsetY := 0;
+  fCutTop := 0;
+  fCutRight := 0;
+  fCutBottom := 0;
+  fCutLeft := 0;
+  fWidth := 1;
+  fHeight := 1;
+end;
+
 procedure TGadgetAnimation.Clone(aSrc: TGadgetAnimation);
 begin
   fSourceImage.Assign(aSrc.fSourceImage);
@@ -180,6 +219,11 @@ begin
   for i := 0 to Bitmaps.Count-1 do
     Bitmaps[i].Rotate90;
   CombineBitmaps(Bitmaps);
+
+  // Rotate mainobject dimensions
+  Temp := fMainObjectWidth;
+  fMainObjectWidth := fMainObjectHeight;
+  fMainObjectHeight := Temp;
 
   // Rotate offset
   Temp := fOffsetY;
@@ -268,6 +312,57 @@ begin
     aBitmaps[i].DrawTo(fSourceImage, 0, fHeight * i);
 
   aBitmaps.Free;
+end;
+
+// TGadgetAnimations
+
+procedure TGadgetAnimations.AddPrimary(aAnimation: TGadgetAnimation);
+begin
+  Add(aAnimation);
+  if fPrimaryAnimation <> nil then
+    fPrimaryAnimation.fPrimary := false;
+  fPrimaryAnimation := aAnimation;
+  aAnimation.fPrimary := true;
+end;
+
+procedure TGadgetAnimations.Clone(aSrc: TGadgetAnimations);
+var
+  i: Integer;
+  NewAnim: TGadgetAnimation;
+begin
+  Clear;
+
+  for i := 0 to aSrc.Count-1 do
+  begin
+    NewAnim := TGadgetAnimation.Create(aSrc[i].fMainObjectWidth, aSrc[i].fMainObjectHeight);
+    NewAnim.Clone(aSrc[i]);
+
+    Add(NewAnim);
+  end;
+end;
+
+procedure TGadgetAnimations.Rotate90;
+var
+  i: Integer;
+begin
+  for i := 0 to Count-1 do
+    Items[i].Rotate90;
+end;
+
+procedure TGadgetAnimations.Flip;
+var
+  i: Integer;
+begin
+  for i := 0 to Count-1 do
+    Items[i].Flip;
+end;
+
+procedure TGadgetAnimations.Invert;
+var
+  i: Integer;
+begin
+  for i := 0 to Count-1 do
+    Items[i].Invert;
 end;
 
 end.

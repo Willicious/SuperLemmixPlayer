@@ -27,22 +27,12 @@ type
   TGadgetMetaSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
   TGadgetVariableProperties = record // For properties that vary based on flip / invert
-    Image:            TBitmaps;
-    SecondaryImage:   TBitmaps;
-    Width:            Integer;
-    Height:           Integer;
+    PrimaryAnimation: TGadgetAnimation;
+    SecondaryAnimations: TGadgetAnimations;
     TriggerLeft:      Integer;
     TriggerTop:       Integer;
     TriggerWidth:     Integer;
     TriggerHeight:    Integer;
-    SecondaryWidth:   Integer;
-    SecondaryHeight:  Integer;
-    SecondaryOffsetX: Integer;
-    SecondaryOffsetY: Integer;
-    CutTop:           Integer;
-    CutRight:          Integer;
-    CutBottom:        Integer;
-    CutLeft:         Integer;
     Resizability:   TGadgetMetaSizeSetting;
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
@@ -231,8 +221,8 @@ begin
   inherited;
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    fVariableInfo[i].Image := TBitmaps.Create(true);
-    fVariableInfo[i].SecondaryImage := TBitmaps.Create(true);
+    fVariableInfo[i].PrimaryAnimation := TGadgetAnimation.Create(0, 0);
+    fVariableInfo[i].SecondaryAnimations := TGadgetAnimations.Create;
     fInterfaces[i] := nil;
   end;
 end;
@@ -243,7 +233,8 @@ var
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    fVariableInfo[i].Image.Free;
+    fVariableInfo[i].PrimaryAnimation.Free;
+    fVariableInfo[i].SecondaryAnimations.Free;
     fInterfaces[i].Free;
   end;
   inherited;
@@ -263,7 +254,10 @@ var
   i: Integer;
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
-    fVariableInfo[i].Image.Clear;
+  begin
+    fVariableInfo[i].PrimaryAnimation.Clear;
+    fVariableInfo[i].SecondaryAnimations.Clear;
+  end;
 end;
 
 procedure TMasker.ApplyMask(aSection: TParserSection; const aIteration: Integer);
@@ -315,8 +309,6 @@ begin
     Parser.LoadFromFile(aPiece + '.nxmo');
     Sec := Parser.MainSection;
 
-    TPngInterface.LoadPngFile(aPiece + '.png', BMP);
-
     // Trigger effects
     if Sec.Line['exit'] <> nil then fTriggerEffect := 1;
     if Sec.Line['force_left'] <> nil then fTriggerEffect := 2;
@@ -348,6 +340,7 @@ begin
     // 32 is unused
     if Sec.Line['one_way_up'] <> nil then fTriggerEffect := 33;
 
+    TPngInterface.LoadPngFile(aPiece + '.png', BMP);
     fFrameCount := Sec.LineNumeric['frames'];
     fSecondaryFrameCount := Sec.LineNumeric['secondary_frames'];
 
