@@ -1322,17 +1322,47 @@ var
   OldDrawMode: TDrawMode;
   OldPixelCombine: TPixelCombineEvent;
 
-  procedure AddPickupSkillNumber;
+  procedure AddNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
-    Text: String;
-    TextWidth, TextHeight: Integer;
+    NumberString: String;
+    DigitsWidth: Integer;
+
+    CurX: Integer;
+    n: Integer;
+    Digit: Integer;
+
+    SrcRect: TRect;
   begin
-    Text := IntToStr(Gadget.SkillCount);
-    TempBitmap.Font.Size := 5;
-    TextWidth := TempBitmap.TextWidth(Text);
-    TextHeight := TempBitmap.TextHeight(Text);
-    TempBitmap.RenderText(Gadget.Width - TextWidth, Gadget.Height - TextHeight + 1, Text, 0, $FF101010);
-    TempBitmap.RenderText(Gadget.Width - TextWidth + 1, Gadget.Height - TextHeight + 1, Text, 0, $FFF0F0F0);
+    NumberString := IntToStr(aNumber);
+    DigitsWidth := (Length(NumberString) * 4) + Length(NumberString) - 1;
+    if aAlignment < 0 then
+      CurX := X
+    else if aAlignment > 0 then
+      CurX := X - DigitsWidth + 1
+    else
+      CurX := X - (DigitsWidth div 2);
+
+    for n := 1 to Length(NumberString) do
+    begin
+      Digit := StrToInt(NumberString[n]);
+      SrcRect := SizedRect(Digit * 4, 0, 4, 5);
+
+      fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
+      fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
+      fFixedDrawColor := $FF000000;
+      fAni.CountDownDigitsBitmap.DrawTo(TempBitmap, CurX, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(TempBitmap, CurX + 1, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(TempBitmap, CurX + 1, Y + 1, SrcRect);
+
+      fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
+      fAni.CountDownDigitsBitmap.DrawTo(TempBitmap, CurX, Y, SrcRect);
+      CurX := CurX + 5;
+    end;
+  end;
+
+  procedure AddPickupSkillNumber;
+  begin
+    AddNumber(Gadget.Width - 2, Gadget.Height - 6, Gadget.SkillCount, 1);
   end;
 
   procedure DoDraw(aSecondary: Boolean);
