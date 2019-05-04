@@ -36,15 +36,10 @@ type
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
 
-  TGadgetMetaProperty = (ov_Frames, ov_SecondaryFrames, ov_Width, ov_Height,
+  TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height,
                          ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
-                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame,
-                         ov_PreviewFrame, ov_SecondaryWidth, ov_SecondaryHeight,
-                         ov_SecondaryOffsetX, ov_SecondaryOffsetY, ov_CutTop,
-                         ov_CutRight, ov_CutBottom, ov_CutLeft);
+                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame);
                          // Integer properties only.
-  TGadgetMetaBooleanProperty = (ovb_RandomStartFrame, ovb_SecondaryAlwaysAnimate,
-                                ovb_SecondaryInFront, ovb_SecondaryInstantStop);
 
   TGadgetMetaInfo = class
   protected
@@ -80,7 +75,7 @@ type
     procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty; aValue: Integer);
     function GetResizability(Flip, Invert, Rotate: Boolean): TGadgetMetaSizeSetting;
     procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TGadgetMetaSizeSetting);
-    function GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+    function GetAnimations(Flip, Invert, Rotate: Boolean): TGadgetAnimations;
     function GetSecondaryImages(Flip, Invert, Rotate: Boolean): TBitmaps;
     procedure ClearImages;
   public
@@ -100,8 +95,7 @@ type
     property GS     : String read fGS write fGS;
     property Piece  : String read fPiece write fPiece;
 
-    property Images[Flip, Invert, Rotate: Boolean]: TBitmaps read GetImages;
-    property SecondaryImages[Flip, Invert, Rotate: Boolean]: TBitmaps read GetSecondaryImages;
+    property Animations[Flip, Invert, Rotate: Boolean]: TGadgetAnimations read GetAnimations;
 
     property Width[Flip, Invert, Rotate: Boolean]        : Integer index ov_Width read GetVariableProperty;
     property Height[Flip, Invert, Rotate: Boolean]       : Integer index ov_Height read GetVariableProperty;
@@ -114,10 +108,6 @@ type
     property Resizability[Flip, Invert, Rotate: Boolean]: TGadgetMetaSizeSetting read GetResizability write SetResizability;
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
-    property CutTop[Flip, Invert, Rotate: Boolean]: Integer index ov_CutTop read GetVariableProperty write SetVariableProperty;
-    property CutRight[Flip, Invert, Rotate: Boolean]: Integer index ov_CutRight read GetVariableProperty write SetVariableProperty;
-    property CutBottom[Flip, Invert, Rotate: Boolean]: Integer index ov_CutBottom read GetVariableProperty write SetVariableProperty;
-    property CutLeft[Flip, Invert, Rotate: Boolean]: Integer index ov_CutLeft read GetVariableProperty write SetVariableProperty;
 
     property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
   end;
@@ -133,23 +123,18 @@ type
       fRotate: Boolean;
       function GetIntegerProperty(aProp: TGadgetMetaProperty): Integer;
       procedure SetIntegerProperty(aProp: TGadgetMetaProperty; aValue: Integer);
-      function GetBooleanProperty(aProp: TGadgetMetaBooleanProperty): Boolean;
-      procedure SetBooleanProperty(aProp: TGadgetMetaBooleanProperty; aValue: Boolean);
       function GetResizability: TGadgetMetaSizeSetting;
       procedure SetResizability(aValue: TGadgetMetaSizeSetting);
       function GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
-      function GetImages: TBitmaps;
-      function GetSecondaryImages: TBitmaps;
+      function GetAnimations: TGadgetAnimations;
       function GetSoundEffect: String;
       procedure SetSoundEffect(aValue: String);
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 
-      property Images: TBitmaps read GetImages;
-      property SecondaryImages: TBitmaps read GetSecondaryImages;
+      property Animations: TGadgetAnimations read GetAnimations;
 
       property FrameCount: Integer index ov_Frames read GetIntegerProperty write SetIntegerProperty;
-      property SecondaryFrameCount: Integer index ov_SecondaryFrames read GetIntegerProperty write SetIntegerProperty;
       property Width: Integer index ov_Width read GetIntegerProperty;
       property Height: Integer index ov_Height read GetIntegerProperty;
       property TriggerLeft: Integer index ov_TriggerLeft read GetIntegerProperty write SetIntegerProperty;
@@ -158,25 +143,11 @@ type
       property TriggerHeight: Integer index ov_TriggerHeight read GetIntegerProperty write SetIntegerProperty;
       property TriggerEffect: Integer index ov_TriggerEffect read GetIntegerProperty write SetIntegerProperty;
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
-      property PreviewFrame: Integer index ov_PreviewFrame read GetIntegerProperty write SetIntegerProperty;
-      property RandomStartFrame: Boolean index ovb_RandomStartFrame read GetBooleanProperty write SetBooleanProperty;
       property SoundEffect: String read GetSoundEffect write SetSoundEffect;
-
-      property SecondaryAlwaysAnimate: Boolean index ovb_SecondaryAlwaysAnimate read GetBooleanProperty write SetBooleanProperty;
-      property SecondaryInFront: Boolean index ovb_SecondaryInFront read GetBooleanProperty write SetBooleanProperty;
-      property SecondaryInstantStop: Boolean index ovb_SecondaryInstantStop read GetBooleanProperty write SetBooleanProperty;
-      property SecondaryWidth: Integer index ov_SecondaryWidth read GetIntegerProperty write SetIntegerProperty;
-      property SecondaryHeight: Integer index ov_SecondaryHeight read GetIntegerProperty write SetIntegerProperty;
-      property SecondaryOffsetX: Integer index ov_SecondaryOffsetX read GetIntegerProperty write SetIntegerProperty;
-      property SecondaryOffsetY: Integer index ov_SecondaryOffsetY read GetIntegerProperty write SetIntegerProperty;
 
       property Resizability             : TGadgetMetaSizeSetting read GetResizability write SetResizability;
       property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
       property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
-      property CutTop                   : Integer index ov_CutTop read GetIntegerProperty write SetIntegerProperty;
-      property CutRight                 : Integer index ov_CutRight read GetIntegerProperty write SetIntegerProperty;
-      property CutBottom                : Integer index ov_CutBottom read GetIntegerProperty write SetIntegerProperty;
-      property CutLeft                  : Integer index ov_CutLeft read GetIntegerProperty write SetIntegerProperty;
   end;
 
   TGadgetMetaInfoList = class(TObjectList)
@@ -409,16 +380,9 @@ end;
 procedure TGadgetMetaInfo.DeriveVariation(Flip, Invert, Rotate: Boolean);
 var
   Index: Integer;
-  i: Integer;
 
-  CutTemp: Integer;
-
-  Src, Dst: TBitmap32;
   SrcRec: TGadgetVariableProperties;
   DstRec: PGadgetVariableProperties;
-
-  SkipImages: Boolean;
-
 const
   NO_POSITION_ADJUST = [7, 8, 19]; // OWL, OWR, OWD arrows
 
@@ -434,8 +398,6 @@ const
   end;
 begin
   Index := GetImageIndex(Flip, Invert, Rotate);
-
-  SkipImages := fGeneratedVariableImage[Index];
 
   fGeneratedVariableImage[Index] := true;
   fGeneratedVariableInfo[Index] := true;
@@ -552,22 +514,13 @@ begin
   fVariableInfo[i].Resizability := aValue;
 end;
 
-function TGadgetMetaInfo.GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+function TGadgetMetaInfo.GetAnimations(Flip, Invert, Rotate: Boolean): TGadgetAnimations;
 var
   i: Integer;
 begin
   EnsureVariationMade(Flip, Invert, Rotate);
   i := GetImageIndex(Flip, Invert, Rotate);
-  Result := fVariableInfo[i].Image;
-end;
-
-function TGadgetMetaInfo.GetSecondaryImages(Flip, Invert, Rotate: Boolean): TBitmaps;
-var
-  i: Integer;
-begin
-  EnsureVariationMade(Flip, Invert, Rotate);
-  i := GetImageIndex(Flip, Invert, Rotate);
-  Result := fVariableInfo[i].SecondaryImage;
+  Result := fVariableInfo[i].Animations;
 end;
 
 { TMetaObjectInterface }
@@ -587,7 +540,6 @@ begin
   // point of the TMetaObjectInterface abstraction layer :P ). Otherwise, access the fields directly.
   case aProp of
     ov_Frames: Result := fGadgetMetaInfo.fFrameCount;
-    ov_SecondaryFrames: Result := fGadgetMetaInfo.fSecondaryFrameCount;
     ov_Width: Result := fGadgetMetaInfo.Width[fFlip, fInvert, fRotate];
     ov_Height: Result := fGadgetMetaInfo.Height[fFlip, fInvert, fRotate];
     ov_TriggerLeft: Result := fGadgetMetaInfo.TriggerLeft[fFlip, fInvert, fRotate];
@@ -596,15 +548,6 @@ begin
     ov_TriggerHeight: Result := fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate];
     ov_TriggerEffect: Result := fGadgetMetaInfo.fTriggerEffect;
     ov_KeyFrame: Result := fGadgetMetaInfo.fKeyFrame;
-    ov_PreviewFrame: Result := fGadgetMetaInfo.fPreviewFrameIndex;
-    ov_SecondaryWidth: Result := fGadgetMetaInfo.SecondaryWidth[fFlip, fInvert, fRotate];
-    ov_SecondaryHeight: Result := fGadgetMetaInfo.SecondaryHeight[fFlip, fInvert, fRotate];
-    ov_SecondaryOffsetX: Result := fGadgetMetaInfo.SecondaryOffsetX[fFlip, fInvert, fRotate];
-    ov_SecondaryOffsetY: Result := fGadgetMetaInfo.SecondaryOffsetY[fFlip, fInvert, fRotate];
-    ov_CutTop: Result := fGadgetMetaInfo.CutTop[fFlip, fInvert, fRotate];
-    ov_CutRight: Result := fGadgetMetaInfo.CutRight[fFlip, fInvert, fRotate];
-    ov_CutBottom: Result := fGadgetMetaInfo.CutBottom[fFlip, fInvert, fRotate];
-    ov_CutLeft: Result := fGadgetMetaInfo.CutLeft[fFlip, fInvert, fRotate];
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;
@@ -618,7 +561,6 @@ begin
     ov_TriggerHeight: fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate] := aValue;
     ov_TriggerEffect: fGadgetMetaInfo.fTriggerEffect := aValue;
     ov_KeyFrame: fGadgetMetaInfo.fKeyFrame := aValue;
-    ov_PreviewFrame: fGadgetMetaInfo.fPreviewFrameIndex := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;
@@ -631,28 +573,6 @@ end;
 procedure TGadgetMetaAccessor.SetSoundEffect(aValue: String);
 begin
   fGadgetMetaInfo.fSoundEffect := aValue;
-end;
-
-function TGadgetMetaAccessor.GetBooleanProperty(aProp: TGadgetMetaBooleanProperty): Boolean;
-begin
-  case aProp of
-    ovb_RandomStartFrame: Result := fGadgetMetaInfo.fRandomStartFrame;
-    ovb_SecondaryAlwaysAnimate: Result := fGadgetMetaInfo.fSecondaryAlwaysAnimate;
-    ovb_SecondaryInFront: Result := fGadgetMetaInfo.fSecondaryInFront;
-    ovb_SecondaryInstantStop: Result := fGadgetMetaInfo.fSecondaryInstantStop;
-    else raise Exception.Create('TMetaObjectInterface.GetBooleanProperty called with invalid index!');
-  end;
-end;
-
-procedure TGadgetMetaAccessor.SetBooleanProperty(aProp: TGadgetMetaBooleanProperty; aValue: Boolean);
-begin
-  case aProp of
-    ovb_RandomStartFrame: fGadgetMetaInfo.fRandomStartFrame := aValue;
-    ovb_SecondaryAlwaysAnimate: fGadgetMetaInfo.fSecondaryAlwaysAnimate := aValue;
-    ovb_SecondaryInFront: fGadgetMetaInfo.fSecondaryInFront := aValue;
-    ovb_SecondaryInstantStop: fGadgetMetaInfo.fSecondaryInstantStop := aValue;
-    else raise Exception.Create('TMetaObjectInterface.SetBooleanProperty called with invalid index!');
-  end;
 end;
 
 function TGadgetMetaAccessor.GetResizability: TGadgetMetaSizeSetting;
@@ -674,14 +594,9 @@ begin
   end;
 end;
 
-function TGadgetMetaAccessor.GetImages: TBitmaps;
+function TGadgetMetaAccessor.GetAnimations: TGadgetAnimations;
 begin
-  Result := fGadgetMetaInfo.Images[fFlip, fInvert, fRotate];
-end;
-
-function TGadgetMetaAccessor.GetSecondaryImages: TBitmaps;
-begin
-  Result := fGadgetMetaInfo.SecondaryImages[fFlip, fInvert, fRotate];
+  Result := fGadgetMetaInfo.Animations[fFlip, fInvert, fRotate];
 end;
 
 { TMetaObjects }
