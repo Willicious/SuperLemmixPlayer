@@ -15,10 +15,10 @@ uses
 
 type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop);
-  TGadgetAnimationVisibility = (gavVisible, gavHidden);
 
-  TGadgetAnimationTrigger = (gatFrameZero, gatFrameOne, gatTriggered, gatDisabled);
+  TGadgetAnimationTriggerCondition = (gatcFrameZero, gatcFrameOne, gatcTriggered, gatcDisabled);
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
+  TGadgetAnimationTriggerConditionArray = array[TGadgetAnimationTriggerCondition] of TGadgetAnimationTriggerState;
 
   {
   Triggers can be used to define when a secondary animation is visible. Certain
@@ -26,10 +26,10 @@ type
   unconditional secondary animations, so even those with no triggers can still
   make use of secondaries.
 
-  gatFrameZero - TRUE on frame zero, if this is significant to the object.
-  gatFrameOne - TRUE on frame one, if this is significant to the object.
-  gatTriggered - TRUE when object is in triggered state. For teleporters / receivers, this includes the paired object's state.
-  gatDisabled - Varies by object. Sometimes identical to another trigger.
+  gatcFrameZero - TRUE on frame zero, if this is significant to the object.
+  gatcFrameOne - TRUE on frame one, if this is significant to the object.
+  gatcTriggered - TRUE when object is in triggered state. For teleporters / receivers, this includes the paired object's state.
+  gatcDisabled - Varies by object. Sometimes identical to another trigger.
 
   The "gatsDontCare" state is not returned by tests (they will return gatFalse
   where not supported). It is only used when defining conditions, and usually,
@@ -42,9 +42,10 @@ type
   gasLoopToZero - Changes to gasPause when frame 0 is reached
   gasStop - Sets frame to 0 then changes to gasPause
 
-  The visibility state sets whether the animation is visible or not. It will
-  be treated as gavVisible any time the animation is playing - it must be paused
-  to hide the animation.
+  Animations are visible regardless of the visibility tag while they are
+  animating; they must be stopped to hide them. However, loading code will
+  automatically add a setting of state to gasStop if a trigger defines invisible
+  but doesn't indicate any animation state change.
 
 
   OBJECT TYPE     | gatFrameZero | gatFrameOne | gatTriggered | gatDisabled
@@ -70,10 +71,29 @@ type
 
   }
 
-  TGadgetAnimation = class
+  TGadgetAnimationTrigger = class
     private
-      class var fTempOutBitmap: TBitmap32;
-      class var fTempBitmapUsageCount: Integer;
+      fConditions: TGadgetAnimationTriggerConditionArray;
+      fState: TGadgetAnimationState;
+      fVisible: Boolean;
+
+      function GetCondition(Index: TGadgetAnimationTriggerCondition): TGadgetAnimationTriggerState;
+    public
+      procedure Load(aSegment: TParserSection);
+      procedure Clone(aSrc: TGadgetAnimationTrigger);
+
+      property Condition[Index: TGadgetAnimationTriggerCondition]: TGadgetAnimationTriggerState read GetCondition;
+  end;
+
+  TGadgetAnimationTriggers = class(TObjectList<TGadgetAnimationTrigger>)
+    public
+      procedure Clone(aSrc: TGadgetAnimationTriggers);
+  end;
+
+  TGadgetAnimation = class
+    private class var
+      fTempOutBitmap: TBitmap32;
+      fTempBitmapUsageCount: Integer;
     private
       fMainObjectWidth: Integer;
       fMainObjectHeight: Integer;
@@ -86,10 +106,7 @@ type
       fHorizontalStrip: Boolean;
 
       fZIndex: Integer;
-
-      fAlwaysAnimate: Boolean;
-      fInstantStop: Boolean;
-      fPreviewFrameIndex: Integer;
+      fStartFrameIndex: Integer;
 
       fWidth: Integer;
       fHeight: Integer;
@@ -103,6 +120,7 @@ type
       fCutLeft: Integer;
 
       fSourceImage: TBitmap32;
+      fTriggers: TGadgetAnimationTriggers;
 
       function MakeFrameBitmaps: TBitmaps;
       procedure CombineBitmaps(aBitmaps: TBitmaps);
@@ -136,10 +154,9 @@ type
       property OffsetX: Integer read fOffsetX write fOffsetX;
       property OffsetY: Integer read fOffsetY write fOffsetY;
 
-      property AlwaysAnimate: Boolean read fAlwaysAnimate write fAlwaysAnimate;
+      property StartFrameIndex: Integer read fStartFrameIndex write fStartFrameIndex;
       property ZIndex: Integer read fZIndex write fZIndex;
       property Primary: Boolean read fPrimary write fPrimary;
-      property InstantStop: Boolean read fInstantStop write fInstantStop;
 
       property CutTop: Integer read fCutTop write fCutTop;
       property CutRight: Integer read fCutRight write fCutRight;
@@ -171,6 +188,7 @@ constructor TGadgetAnimation.Create(aMainObjectWidth: Integer; aMainObjectHeight
 begin
   inherited Create;
   fSourceImage := TBitmap32.Create;
+  fTriggers := TGadgetAnimationTriggers.Create;
 
   fMainObjectWidth := aMainObjectWidth;
   fMainObjectHeight := aMainObjectHeight;
@@ -186,6 +204,7 @@ begin
   if (fTempBitmapUsageCount = 0) then
     fTempoutBitmap.Free;
 
+  fTriggers.Free;
   fSourceImage.Free;
   inherited;
 end;
@@ -232,6 +251,8 @@ begin
 end;
 
 procedure TGadgetAnimation.Load(aCollection, aPiece: String; aSegment: TParserSection; aTheme: TNeoTheme);
+var
+  BaseTrigger: TGadgetAnimationTrigger;
 begin
   fFrameCount := aSegment.LineNumeric['frames'];
   fName := UpperCase(aSegment.LineTrimString['name']);
@@ -246,10 +267,7 @@ begin
 
   fZIndex := aSegment.LineNumeric['z_index'];
 
-  fAlwaysAnimate := aSegment.Line['always_animate'] <> nil;
-  fInstantStop := aSegment.Line['instant_stop'] <> nil;
-  fPreviewFrameIndex := aSegment.LineNumeric['preview_frame'];
-  // fIsMasked is set when loading masks
+  fStartFrameIndex := aSegment.LineNumeric['initial_frame'];
 
   if fHorizontalStrip then
   begin
@@ -267,12 +285,39 @@ begin
   fCutRight := aSegment.LineNumeric['cut_right'];
   fCutBottom := aSegment.LineNumeric['cut_bottom'];
   fCutLeft := aSegment.LineNumeric['cut_left'];
+
+  BaseTrigger := TGadgetAnimationTrigger.Create;
+
+  if aSegment.Line['stop'] = nil then
+    BaseTrigger.fState := gasPause
+  else
+    BaseTrigger.fState := gasPlay;
+
+  if aSegment.Line['hide'] = nil then
+    BaseTrigger.fVisible := true
+  else
+    BaseTrigger.fVisible := false;
+
+  fTriggers.Add(BaseTrigger);
+
+  aSegment.DoForEachSection('trigger',
+    procedure(aSec: TParserSection; const aCount: Integer)
+    var
+      NewTrigger: TGadgetAnimationTrigger;
+    begin
+      NewTrigger := TGadgetAnimationTrigger.Create;
+      NewTrigger.Load(aSec);
+      fTriggers.Add(NewTrigger);
+    end
+  );
 end;
 
 procedure TGadgetAnimation.Clear;
 begin
   fSourceImage.SetSize(1, 1);
   fSourceImage.Clear(0);
+
+  fTriggers.Clear;
 
   fFrameCount := 1;
   fName := '';
@@ -282,10 +327,7 @@ begin
   fHorizontalStrip := false;
 
   fZIndex := 0;
-
-  fAlwaysAnimate := false;
-  fInstantStop := false;
-  fPreviewFrameIndex := 0;
+  fStartFrameIndex := 0;
 
   fWidth := 1;
   fHeight := 1;
@@ -302,6 +344,7 @@ end;
 procedure TGadgetAnimation.Clone(aSrc: TGadgetAnimation);
 begin
   fSourceImage.Assign(aSrc.fSourceImage);
+  fTriggers.Clone(aSrc.fTriggers);
 
   fFrameCount := aSrc.fFrameCount;
   fName := aSrc.fName;
@@ -311,10 +354,7 @@ begin
   fHorizontalStrip := aSrc.fHorizontalStrip;
 
   fZIndex := aSrc.fZIndex;
-
-  fAlwaysAnimate := aSrc.fAlwaysAnimate;
-  fInstantStop := aSrc.fInstantStop;
-  fPreviewFrameIndex := aSrc.fPreviewFrameIndex;
+  fStartFrameIndex := aSrc.fStartFrameIndex;
 
   fWidth := aSrc.fWidth;
   fHeight := aSrc.fHeight;
@@ -330,7 +370,7 @@ end;
 
 function TGadgetAnimation.GetRandomStartFrame: Boolean;
 begin
-  Result := fPreviewFrameIndex < 0;
+  Result := fStartFrameIndex < 0;
 end;
 
 procedure TGadgetAnimation.Rotate90;
@@ -498,6 +538,74 @@ begin
       Result := L.fZIndex - R.fZIndex;
     end
     ));
+end;
+
+// TGadgetAnimationTrigger
+
+procedure TGadgetAnimationTrigger.Clone(aSrc: TGadgetAnimationTrigger);
+begin
+  fConditions := aSrc.fConditions;
+  fState := aSrc.fState;
+  fVisible := aSrc.fVisible;
+end;
+
+function TGadgetAnimationTrigger.GetCondition(Index: TGadgetAnimationTriggerCondition): TGadgetAnimationTriggerState;
+begin
+  Result := fConditions[Index];
+end;
+
+procedure TGadgetAnimationTrigger.Load(aSegment: TParserSection);
+var
+  S: String;
+
+  function ParseConditionState(aValue: String): TGadgetAnimationTriggerState;
+  begin
+    S := Uppercase(aSegment.LineTrimString[aValue]);
+    if S = 'TRUE' then
+      Result := gatsTrue
+    else if S = 'FALSE' then
+      Result := gatsFalse
+    else
+      Result := gatsDontCare;
+  end;
+begin
+  fConditions[gatcFrameZero] := ParseConditionState('frame_zero');
+  fConditions[gatcFrameOne] := ParseConditionState('frame_one');
+  fConditions[gatcTriggered] := ParseConditionState('triggered');
+  fConditions[gatcDisabled] := ParseConditionState('disabled');
+
+  fVisible := aSegment.Line['hide'] = nil;
+
+  if (not fVisible) and (aSegment.Line['state'] = nil) then
+    fState := gasStop
+  else begin
+    S := Uppercase(aSegment.LineTrimString['state']);
+
+    if S = 'PAUSE' then
+      fState := gasPause
+    else if S = 'STOP' then
+      fState := gasStop
+    else if S = 'LOOP_TO_ZERO' then
+      fState := gasLoopToZero
+    else
+      fState := gasPlay;
+  end;
+end;
+
+// TGadgetAnimationTriggers
+
+procedure TGadgetAnimationTriggers.Clone(aSrc: TGadgetAnimationTriggers);
+var
+  i: Integer;
+  NewTrigger: TGadgetAnimationTrigger;
+begin
+  Clear;
+  for i := 0 to aSrc.Count-1 do
+  begin
+    NewTrigger := TGadgetAnimationTrigger.Create;
+    NewTrigger.Clone(aSrc[i]);
+    Add(NewTrigger);
+  end;
 end;
 
 end.
