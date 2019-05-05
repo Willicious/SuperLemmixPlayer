@@ -288,6 +288,9 @@ begin
   begin
     NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i].Name);
     Animations.Add(NewInstance);
+
+    if NewInstance.State = gasMatchPrimary then
+      NewInstance.Frame := Animations.PrimaryAnimation.Frame;
   end;
 end;
 
@@ -661,6 +664,9 @@ begin
   inherited Create;
   fGadget := aGadget;
   fAnimation := aGadget.MetaObj.Animations[aAnimation];
+
+  fState := fAnimation.Triggers[0].State;
+  fVisible := fAnimation.Triggers[0].Visible;
 
   if fAnimation.StartFrameIndex < 0 then
     fFrame := Random(fAnimation.FrameCount)
