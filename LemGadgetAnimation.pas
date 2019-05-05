@@ -356,6 +356,8 @@ begin
     BaseTrigger.fState := gasPause
   else if (aSegment.Line['stop'] <> nil) then
     BaseTrigger.fState := gasStop
+  else if (aSegment.Line['loop_to_zero'] <> nil) then
+    BaseTrigger.fState := gasLoopToZero
   else if (aSegment.Line['match_primary_frame'] <> nil) then
     BaseTrigger.fState := gasMatchPrimary
   else
