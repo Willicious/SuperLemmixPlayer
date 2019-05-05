@@ -755,6 +755,8 @@ var
   i: Integer;
   NewInstance: TGadgetAnimationInstance;
 begin
+  Clear;
+
   for i := 0 to aSrc.Count-1 do
   begin
     NewInstance := TGadgetAnimationInstance.Create(newObj, aSrc[i].MetaAnimation.Name);
