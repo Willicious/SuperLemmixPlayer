@@ -33,25 +33,9 @@
 # ----------------------------- 
  $OBJECT
    COLLECTION ohno_bubble
-   PIECE      trap_01_base
-   X        102
-   Y         62
-   NO_OVERWRITE
- $END
- 
- $OBJECT
-   COLLECTION ohno_bubble
    PIECE      trap_01
    X        158
    Y         90
-   NO_OVERWRITE
- $END
- 
- $OBJECT
-   COLLECTION ohno_bubble
-   PIECE      trap_01
-   X        134
-   Y         42
    NO_OVERWRITE
  $END
  
