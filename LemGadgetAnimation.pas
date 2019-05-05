@@ -236,9 +236,6 @@ begin
 
   if aTheme <> nil then
   begin
-    if (fColor = '') then
-      Exit;
-
     if aTheme.Colors[fColor] = fMaskColor then
       Exit;
 
