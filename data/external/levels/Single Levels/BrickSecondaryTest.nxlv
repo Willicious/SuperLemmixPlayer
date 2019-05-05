@@ -55,6 +55,46 @@
    NO_OVERWRITE
  $END
  
+ $OBJECT
+   COLLECTION default
+   PIECE      updraft
+   X        208
+   Y         22
+   WIDTH     32
+   HEIGHT    16
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      updraft
+   X        208
+   Y         52
+   WIDTH     16
+   HEIGHT    16
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      updraft
+   X        242
+   Y         53
+   WIDTH     16
+   HEIGHT    32
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      updraft
+   X        212
+   Y        110
+   WIDTH     48
+   HEIGHT    32
+   NO_OVERWRITE
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 

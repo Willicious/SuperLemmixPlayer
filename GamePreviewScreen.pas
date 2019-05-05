@@ -373,8 +373,6 @@ begin
     Result := Result + StringOfChar(#12, ExtraHalfLines);
 
     Result := Result + SPressMouseToContinue;
-
-    Log(Result);
   end;
 end;
 

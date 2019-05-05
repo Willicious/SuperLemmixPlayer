@@ -262,8 +262,8 @@ begin
     Obj.Width := MetaObj.Width;
   sWidth := Obj.Width;
 
-  sWidthVariance := sWidth - Obj.Width;
-  sHeightVariance := sHeight - Obj.Height;
+  sWidthVariance := sWidth - MetaObj.Width;
+  sHeightVariance := sHeight - MetaObj.Height;
 
   sTriggerEffect := MetaObj.TriggerEffect;
   AdjustOWWDirection; // adjusts eg. flipped OWL becomes OWR

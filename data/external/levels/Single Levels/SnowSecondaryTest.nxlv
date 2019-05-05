@@ -46,6 +46,16 @@
    NO_OVERWRITE
  $END
  
+ $OBJECT
+   COLLECTION default
+   PIECE      owa_left
+   X        231
+   Y         45
+   WIDTH     40
+   HEIGHT    40
+   ONLY_ON_TERRAIN
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
@@ -78,6 +88,14 @@
    PIECE      snow_05
    X   104
    Y   -52
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_snow
+   PIECE      snow_13
+   X   233
+   Y    46
    ONE_WAY
  $END
  

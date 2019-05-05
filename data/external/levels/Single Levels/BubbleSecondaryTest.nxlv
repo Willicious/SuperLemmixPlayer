@@ -25,6 +25,7 @@
  MAX_SPAWN_INTERVAL   53
  
  $SKILLSET 
+    CLIMBER    0
    DISARMER    5
  $END 
  
@@ -85,6 +86,46 @@
    X         89
    Y         64
    NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X         58
+   Y         90
+   NO_OVERWRITE
+   SKILL CLIMBER
+   SKILLCOUNT 3
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X         74
+   Y         93
+   NO_OVERWRITE
+   SKILL DISARMER
+   SKILLCOUNT 2
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        102
+   Y         95
+   NO_OVERWRITE
+   SKILL DISARMER
+   SKILLCOUNT 14
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        126
+   Y         95
+   NO_OVERWRITE
+   SKILL DISARMER
+   SKILLCOUNT 99
  $END
  
  

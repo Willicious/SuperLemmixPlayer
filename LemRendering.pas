@@ -5,6 +5,7 @@ unit LemRendering;
 interface
 
 uses
+  SharedGlobals, // debug
   System.Types,
   Classes, Math, Windows,
   GR32, GR32_Blend,

@@ -26,6 +26,9 @@
  
  $SKILLSET 
    DISARMER    5
+     BOMBER   22
+    BUILDER   22
+     BASHER    5
  $END 
  
 #     Interactive objects       
@@ -62,6 +65,16 @@
    NO_OVERWRITE
  $END
  
+ $OBJECT
+   COLLECTION default
+   PIECE      owa_left
+   X        209
+   Y         66
+   WIDTH     40
+   HEIGHT    40
+   ONLY_ON_TERRAIN
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
@@ -94,6 +107,38 @@
    PIECE      pillar_01
    X    82
    Y   -13
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_marble
+   PIECE      brick_small_06
+   X   209
+   Y    66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_marble
+   PIECE      brick_small_06
+   X   241
+   Y    66
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_marble
+   PIECE      brick_small_06
+   X   241
+   Y    98
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_marble
+   PIECE      brick_small_06
+   X   209
+   Y    98
    ONE_WAY
  $END
  
