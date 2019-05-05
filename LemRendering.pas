@@ -93,7 +93,7 @@ type
 
     // Were sub-procedures or part of DrawAllObjects
     procedure DrawGadgetsOnLayer(aLayer: TRenderLayer);
-    procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
+    procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
     procedure DrawTriggerArea(Gadget: TGadget);
     procedure DrawUserHelper;
     function IsUseful(Gadget: TGadget): Boolean;
@@ -1312,7 +1312,13 @@ begin
   end;
 end;
 
-procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
+procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
+var
+  i: Integer;
+  BMP: TBitmap32;
+
+  ThisAnim: TGadgetAnimationInstance;
+  DstRect: TRect;
 
   procedure AddNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
@@ -1357,139 +1363,6 @@ procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap
     AddNumber(Gadget.Width - 2, Gadget.Height - 6, Gadget.SkillCount, 1);
   end;
 
-  (*
-  procedure DoDraw(aSecondary: Boolean);
-  var
-    MO: TGadgetMetaAccessor;
-    OriginX, OriginY: Integer;
-
-    VariableWidth, VariableHeight: Integer;
-
-    procedure DrawTiled(TotalSrcRect, TotalDstRect: TRect);
-    var
-      CountX, CountY: Integer;
-      iX, iY: Integer;
-      SrcRect, DstRect: TRect;
-    begin
-      CountX := (TotalDstRect.Width - 1) div TotalSrcRect.Width;
-      CountY := (TotalDstRect.Height - 1) div TotalSrcRect.Height;
-
-      for iY := 0 to CountY do
-      begin
-        SrcRect := TotalSrcRect;
-        DstRect := SizedRect(TotalDstRect.Left, TotalDstRect.Top + (iY * TotalSrcRect.Height), TotalSrcRect.Width, TotalSrcRect.Height);
-
-        if iY = CountY then
-          DstRect := SizedRect(DstRect.Left, DstRect.Top, DstRect.Width, ((TotalDstRect.Height - 1) mod TotalSrcRect.Height) + 1);
-
-        for iX := 0 to CountX do
-        begin
-          if iX = CountX then
-            DstRect := SizedRect(DstRect.Left, DstRect.Top, ((TotalDstRect.Width - 1) mod TotalSrcRect.Width) + 1, DstRect.Height);
-
-          TempBitmap.DrawTo(Dst, DstRect, SrcRect);
-
-          DstRect.Offset(TotalSrcRect.Width, 0);
-        end;
-      end;
-    end;
-  begin
-    if fUsefulOnly then
-    begin
-      TempBitmap.DrawMode := dmCustom;
-      fFixedDrawColor := $FFFFFF00;
-      TempBitmap.OnPixelCombine := CombineFixedColor;
-    end;
-
-    MO := Gadget.MetaObj;
-
-    OriginX := Gadget.Left;
-    OriginY := Gadget.Top;
-
-    if aSecondary then
-    begin
-      OriginX := OriginX + MO.SecondaryOffsetX;
-      OriginY := OriginY + MO.SecondaryOffsetY;
-    end;
-
-    if (MO.Resizability = mos_None) then
-      TempBitmap.DrawTo(Dst, OriginX, OriginY)
-    else begin
-      VariableWidth := Gadget.Width - MO.CutLeft - MO.CutRight;
-      VariableHeight := Gadget.Height - MO.CutTop - MO.CutBottom;
-
-      // Top left
-      if (MO.CutLeft > 0) and (MO.CutTop > 0) then
-        TempBitmap.DrawTo(Dst, OriginX, OriginY, Rect(0, 0, MO.CutLeft, MO.CutTop));
-
-      // Top right
-      if (MO.CutRight > 0) and (MO.CutTop > 0) then
-        TempBitmap.DrawTo(Dst, OriginX + Gadget.Width - MO.CutRight, OriginY,
-                          Rect(MO.Width - MO.CutRight, 0, MO.Width, MO.CutTop));
-
-      // Bottom left
-      if (MO.CutLeft > 0) and (MO.CutBottom > 0) then
-        TempBitmap.DrawTo(Dst, OriginX, OriginY + Gadget.Height - MO.CutBottom,
-                          Rect(0, MO.Height - MO.CutBottom, MO.CutLeft, MO.Height));
-
-      // Bottom right
-      if (MO.CutRight > 0) and (MO.CutBottom > 0) then
-        TempBitmap.DrawTo(Dst, OriginX + Gadget.Width - MO.CutLeft,
-                          OriginY + Gadget.Height - MO.CutBottom,
-                          Rect(MO.Width - MO.CutRight, MO.Height - MO.CutBottom,
-                               MO.Width, MO.Height));
-
-      // Top edge
-      if (VariableWidth > 0) and (MO.CutTop > 0) then
-        DrawTiled(SizedRect(MO.CutLeft, 0, MO.Width - MO.CutLeft - MO.CutRight, MO.CutTop),
-                  SizedRect(OriginX + MO.CutLeft, OriginY, VariableWidth, MO.CutTop));
-
-      // Left edge
-      if (VariableHeight > 0) and (MO.CutLeft > 0) then
-        DrawTiled(SizedRect(0, MO.CutTop, MO.CutLeft, MO.Height - MO.CutTop - MO.CutBottom),
-                  SizedRect(OriginX, OriginY + MO.CutTop, MO.CutLeft, VariableHeight));
-
-      // Bottom edge
-      if (VariableWidth > 0) and (MO.CutBottom > 0) then
-        DrawTiled(SizedRect(MO.CutLeft, MO.Height - MO.CutBottom, MO.Width - MO.CutLeft - MO.CutRight, MO.CutBottom),
-                  SizedRect(OriginX + MO.CutLeft, OriginY + Gadget.Height - MO.CutBottom, VariableWidth, MO.CutBottom));
-
-      // Right edge
-      if (VariableHeight > 0) and (MO.CutRight > 0) then
-        DrawTiled(SizedRect(MO.Width - MO.CutRight, MO.CutTop, MO.CutRight, MO.Height - MO.CutTop - MO.CutBottom),
-                  SizedRect(OriginX + Gadget.Width - MO.CutRight, OriginY + MO.CutTop, MO.CutRight, VariableHeight));
-
-      // Center
-      if (VariableWidth > 0) and (VariableHeight > 0) then
-        DrawTiled(SizedRect(MO.CutLeft, MO.CutTop, MO.Width - MO.CutLeft - MO.CutRight, MO.Height - MO.CutTop - MO.CutBottom),
-                  SizedRect(OriginX + MO.CutLeft, OriginY + MO.CutTop, VariableWidth, VariableHeight));
-    end;
-  end;
-
-  procedure PrepareMainFrame;
-  begin
-    DrawFrame := Min(Gadget.CurrentFrame, Gadget.AnimationFrameCount-1);
-    TempBitmap.Assign(Gadget.Frames[DrawFrame]);
-
-    PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
-    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
-       AddPickupSkillNumber;
-  end;
-
-  procedure PrepareSecondaryFrame;
-  begin
-    DrawFrame := Min(Gadget.CurrentSecondaryFrame, Gadget.SecondaryAnimationFrameCount-1);
-    TempBitmap.Assign(Gadget.SecondaryFrames[DrawFrame]);
-
-    PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
-  end;
-  *)
-var
-  i: Integer;
-  BMP: TBitmap32;
-
-  ThisAnim: TGadgetAnimationInstance;
-  DstRect: TRect;
 begin
   if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
@@ -1506,6 +1379,9 @@ begin
                          Gadget.Top + ThisAnim.MetaAnimation.OffsetY,
                          ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,
                          ThisAnim.MetaAnimation.Height + Gadget.HeightVariance);
+
+    if ThisAnim.Primary and (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+      AddPickupSkillNumber;
 
     DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
