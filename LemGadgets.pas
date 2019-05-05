@@ -713,7 +713,7 @@ begin
     fState := gasPause;
   end;
 
-  if fState <> gasPause then
+  if (fState <> gasPause) and ((fState <> gasLoopToZero) or (fFrame > 0)) then
     fFrame := (fFrame + 1) mod fAnimation.FrameCount;
 
   if (fState = gasLoopToZero) and (fFrame = 0) then
