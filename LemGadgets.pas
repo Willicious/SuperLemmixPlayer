@@ -4,7 +4,7 @@ unit LemGadgets;
 interface
 
 uses
-  Math, Classes,
+  Math, Classes, GR32,
   Windows, Contnrs, LemTypes, LemCore,
   LemGadgetsMeta, LemGadgetsModel,
   LemGadgetAnimation,
@@ -21,13 +21,18 @@ type
       fState: TGadgetAnimationState;
       fVisible: Boolean;
       fPrimary: Boolean;
+
+      function GetBitmap: TBitmap32;
     public
       constructor Create(aGadget: TGadget; aAnimation: String);
       function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
 
+      property MetaAnimation: TGadgetAnimation read fAnimation;
+      property Bitmap: TBitmap32 read GetBitmap;
       property Primary: Boolean read fPrimary;
       property Frame: Integer read fFrame;
       property Visible: Boolean read fVisible;
+      property State: TGadgetAnimationState read fState;
   end;
 
   TGadgetAnimationInstances = class(TObjectList<TGadgetAnimationInstance>)
@@ -45,10 +50,10 @@ type
     sLeft           : Integer;
     sHeight         : Integer;
     sWidth          : Integer;
-    sSecondaryTop   : Integer;
-    sSecondaryLeft  : Integer;
-    sSecondaryWidth : Integer;
-    sSecondaryHeight: Integer;
+
+    sWidthVariance  : Integer; // difference from default. used by secondary animations.
+    sHeightVariance : Integer;
+
     sTriggerRect    : TRect;  // We assume that trigger areas will never move!!!
     sTriggerEffect  : Integer;
     sReceiverId     : Integer;
@@ -92,6 +97,7 @@ type
     HoldActive     : Boolean;
 
     constructor Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor); Overload;
+    destructor Destroy; override;
     function Clone: TGadget;
 
     property TriggerRect: TRect read sTriggerRect;
@@ -99,10 +105,8 @@ type
     property Left: Integer read sLeft write SetLeft;
     property Width: Integer read sWidth;
     property Height: Integer read sHeight;
-    property SecondaryTop: Integer read sSecondaryTop write sSecondaryTop;
-    property SecondaryLeft: Integer read sSecondaryLeft write sSecondaryLeft;
-    property SecondaryWidth: Integer read sSecondaryWidth;
-    property SecondaryHeight: Integer read sSecondaryHeight;
+    property WidthVariance: Integer read sWidthVariance;
+    property HeightVariance: Integer read sHeightVariance;
     property Center: TPoint read GetCenterPoint;
     property TriggerEffect: Integer read sTriggerEffect write sTriggerEffect;
     property ReceiverId: Integer read sReceiverId;
@@ -191,9 +195,6 @@ const
 
 implementation
 
-uses
-  GR32;
-
 { TGadget }
 constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor);
 
@@ -226,6 +227,8 @@ begin
   Obj := ObjParam;
   MetaObj := MetaParam;
 
+  Animations := TGadgetAnimationInstances.Create;
+
   CreateAnimationInstances;
 
   // Set basic stuff
@@ -237,6 +240,10 @@ begin
   if (not MetaObj.CanResizeHorizontal) or (Obj.Width < 1) then
     Obj.Width := MetaObj.Width;
   sWidth := Obj.Width;
+
+  sWidthVariance := sWidth - Obj.Width;
+  sHeightVariance := sHeight - Obj.Height;
+
   sTriggerEffect := MetaObj.TriggerEffect;
   AdjustOWWDirection; // adjusts eg. flipped OWL becomes OWR
   sTriggerRect := GetTriggerRect;
@@ -260,6 +267,12 @@ begin
     NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i].Name);
     Animations.Add(NewInstance);
   end;
+end;
+
+destructor TGadget.Destroy;
+begin
+  Animations.Free;
+  inherited;
 end;
 
 function TGadget.Clone: TGadget;
@@ -572,7 +585,7 @@ end;
 constructor TGadgetAnimationInstance.Create(aGadget: TGadget;
   aAnimation: String);
 var
-  MetaObj: TGadgetMetaInfo;
+  MetaObj: TGadgetMetaAccessor;
 begin
   inherited Create;
   fGadget := aGadget;
@@ -587,6 +600,8 @@ begin
 
   if fAnimation.Primary then
   begin
+    MetaObj := aGadget.MetaObj;
+
     if MetaObj.TriggerEffect = DOM_PICKUP then
       fFrame := aGadget.Obj.Skill + 1;
 
@@ -595,9 +610,14 @@ begin
   end;
 end;
 
+function TGadgetAnimationInstance.GetBitmap: TBitmap32;
+begin
+  Result := fAnimation.GetFrameBitmap(fFrame);
+end;
+
 function TGadgetAnimationInstance.UpdateOneFrame: Boolean;
 begin
-
+  Result := true;
 end;
 
 { TGadgetAnimationInstances }

@@ -209,6 +209,7 @@ var
   Sec, NewSec: TParserSection;
 
   GadgetAccessor: TGadgetMetaAccessor;
+  NewAnim: TGadgetAnimation;
 begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
@@ -279,7 +280,18 @@ begin
       NewSec.AddLine('cut_left', Sec.LineNumeric['cut_left']);
     end;
 
+    NewAnim := TGadgetAnimation.Create(0, 0);
+    GadgetAccessor.Animations.AddPrimary(NewAnim);
+    NewAnim.Load(aCollection, aPiece, Sec.Section['PRIMARY_ANIMATION'], aTheme);
 
+    Sec.DoForEachSection('ANIMATION',
+      procedure (aSection: TParserSection; const aIteration: Integer)
+      begin
+        NewAnim := TGadgetAnimation.Create(GadgetAccessor.Animations.PrimaryAnimation.Width, GadgetAccessor.Animations.PrimaryAnimation.Height);
+        GadgetAccessor.Animations.Add(NewAnim);
+        NewAnim.Load(aCollection, aPiece, aSection, aTheme);
+      end
+    );
 
     GadgetAccessor.TriggerLeft := Sec.LineNumeric['trigger_x'];
     GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];

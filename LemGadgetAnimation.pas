@@ -11,6 +11,7 @@ uses
   LemTypes,
   LemNeoParser,
   GR32,
+  Classes,
   SysUtils;
 
 type
@@ -124,6 +125,7 @@ type
 
       function MakeFrameBitmaps: TBitmaps;
       procedure CombineBitmaps(aBitmaps: TBitmaps);
+      function GetCutRect: TRect;
     public
       constructor Create(aMainObjectWidth: Integer; aMainObjectHeight: Integer);
       destructor Destroy; override;
@@ -156,6 +158,7 @@ type
       property ZIndex: Integer read fZIndex write fZIndex;
       property Primary: Boolean read fPrimary write fPrimary;
 
+      property CutRect: TRect read GetCutRect;
       property CutTop: Integer read fCutTop write fCutTop;
       property CutRight: Integer read fCutRight write fCutRight;
       property CutBottom: Integer read fCutBottom write fCutBottom;
@@ -239,10 +242,17 @@ function TGadgetAnimation.GetFrameBitmap(aFrame: Integer; aPersistent: Boolean =
 begin
   if aPersistent then
     Result := TBitmap32.Create(fWidth, fHeight)
-  else
+  else begin
     Result := fTempOutBitmap;
+    Result.DrawMode := dmBlend;
+  end;
 
   GetFrame(aFrame, Result);
+end;
+
+function TGadgetAnimation.GetCutRect: TRect;
+begin
+  Result := Rect(fCutLeft, fCutTop, fCutRight, fCutBottom);
 end;
 
 procedure TGadgetAnimation.GetFrame(aFrame: Integer; aBitmap: TBitmap32);
@@ -263,7 +273,7 @@ begin
   fName := UpperCase(aSegment.LineTrimString['name']);
   fColor := UpperCase(aSegment.LineTrimString['color']);
 
-  LoadPath := AppPath + SFStyles + aCollection + '\' + aPiece;
+  LoadPath := AppPath + SFStyles + aCollection + '\objects\' + aPiece;
   if fName <> '' then
     LoadPath := LoadPath + '_' + fName; // for backwards-compatible or simply unnamed primaries
   LoadPath := LoadPath + '.png';
@@ -288,6 +298,12 @@ begin
     fHeight := fSourceImage.Height div fFrameCount;
   end;
 
+  if fPrimary then
+  begin
+    fMainObjectWidth := fWidth;
+    fMainObjectHeight := fHeight;
+  end;
+
   fOffsetX := aSegment.LineNumeric['offset_x'];
   fOffsetY := aSegment.LineNumeric['offset_y'];
 
@@ -298,28 +314,32 @@ begin
 
   BaseTrigger := TGadgetAnimationTrigger.Create;
 
-  if aSegment.Line['stop'] = nil then
+  if (aSegment.Line['stop'] = nil) or fPrimary then
     BaseTrigger.fState := gasPause
   else
     BaseTrigger.fState := gasPlay;
 
-  if aSegment.Line['hide'] = nil then
+  if (aSegment.Line['hide'] = nil) or fPrimary then
     BaseTrigger.fVisible := true
   else
     BaseTrigger.fVisible := false;
 
   fTriggers.Add(BaseTrigger);
 
-  aSegment.DoForEachSection('trigger',
-    procedure(aSec: TParserSection; const aCount: Integer)
-    var
-      NewTrigger: TGadgetAnimationTrigger;
-    begin
-      NewTrigger := TGadgetAnimationTrigger.Create;
-      NewTrigger.Load(aSec);
-      fTriggers.Add(NewTrigger);
-    end
-  );
+  if not fPrimary then
+  begin
+    // No triggers on primary
+    aSegment.DoForEachSection('trigger',
+      procedure(aSec: TParserSection; const aCount: Integer)
+      var
+        NewTrigger: TGadgetAnimationTrigger;
+      begin
+        NewTrigger := TGadgetAnimationTrigger.Create;
+        NewTrigger.Load(aSec);
+        fTriggers.Add(NewTrigger);
+      end
+    );
+  end;
 end;
 
 procedure TGadgetAnimation.Clear;

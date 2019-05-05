@@ -15,7 +15,7 @@ uses
   LemDosStructures,
   LemTypes,
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
-  LemGadgets, LemGadgetsMeta,
+  LemGadgets, LemGadgetsMeta, LemGadgetAnimation,
   LemLemming,
   LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
@@ -1486,14 +1486,29 @@ procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap
   *)
 var
   i: Integer;
+  BMP: TBitmap32;
 
+  ThisAnim: TGadgetAnimationInstance;
+  DstRect: TRect;
 begin
   if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
   for i := 0 to Gadget.Animations.Count-1 do
   begin
+    ThisAnim := Gadget.Animations[i];
 
+    if (not ThisAnim.Visible) and (ThisAnim.State = gasPause) then
+      Continue;
+
+    BMP := ThisAnim.Bitmap;
+    DstRect := SizedRect(Gadget.Left + ThisAnim.MetaAnimation.OffsetX,
+                         Gadget.Top + ThisAnim.MetaAnimation.OffsetY,
+                         ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,
+                         ThisAnim.MetaAnimation.Height + Gadget.HeightVariance);
+
+    DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
+
 end;
 
 procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
