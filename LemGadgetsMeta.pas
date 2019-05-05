@@ -299,6 +299,8 @@ begin
       end
     );
 
+    GadgetAccessor.Animations.SortByZIndex;
+
     GadgetAccessor.TriggerLeft := Sec.LineNumeric['trigger_x'];
     GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];
     GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];

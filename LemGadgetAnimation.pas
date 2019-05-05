@@ -320,7 +320,10 @@ begin
   // fPrimary is only set by TGadgetAnimations
   fHorizontalStrip := aSegment.Line['horizontal_strip'] <> nil;
 
-  fZIndex := aSegment.LineNumeric['z_index'];
+  if fPrimary and (aSegment.Line['z_index'] = nil) then
+    fZIndex := 1
+  else
+    fZIndex := aSegment.LineNumeric['z_index'];
 
   fStartFrameIndex := aSegment.LineNumeric['initial_frame'];
 

@@ -288,10 +288,11 @@ begin
   begin
     NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i].Name);
     Animations.Add(NewInstance);
-
-    if NewInstance.State = gasMatchPrimary then
-      NewInstance.Frame := Animations.PrimaryAnimation.Frame;
   end;
+
+  for i := 0 to Animations.Count-1 do
+    if Animations[i].State = gasMatchPrimary then
+      Animations[i].Frame := Animations.PrimaryAnimation.Frame;
 end;
 
 destructor TGadget.Destroy;
