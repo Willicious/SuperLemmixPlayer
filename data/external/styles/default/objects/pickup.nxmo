@@ -13,6 +13,7 @@ $ANIMATION
   MATCH_PRIMARY_FRAME
   NAME mask_border
   COLOR pickup_border
+  Z_INDEX 2
 $END
 
 $ANIMATION
@@ -20,4 +21,5 @@ $ANIMATION
   MATCH_PRIMARY_FRAME
   NAME mask_inside
   COLOR pickup_inside
+  Z_INDEX 3
 $END

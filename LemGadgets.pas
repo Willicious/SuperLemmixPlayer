@@ -4,7 +4,6 @@ unit LemGadgets;
 interface
 
 uses
-  SharedGlobals, // debug
   Math, Classes, GR32,
   Windows, Contnrs, LemTypes, LemCore,
   LemGadgetsMeta, LemGadgetsModel,
@@ -291,8 +290,12 @@ begin
   end;
 
   for i := 0 to Animations.Count-1 do
+  begin
+    Animations[i].ProcessTriggers;
+
     if Animations[i].State = gasMatchPrimary then
       Animations[i].Frame := Animations.PrimaryAnimation.Frame;
+  end;
 end;
 
 destructor TGadget.Destroy;
@@ -665,9 +668,6 @@ begin
   inherited Create;
   fGadget := aGadget;
   fAnimation := aGadget.MetaObj.Animations[aAnimation];
-
-  fState := fAnimation.Triggers[0].State;
-  fVisible := fAnimation.Triggers[0].Visible;
 
   if fAnimation.StartFrameIndex < 0 then
     fFrame := Random(fAnimation.FrameCount)
