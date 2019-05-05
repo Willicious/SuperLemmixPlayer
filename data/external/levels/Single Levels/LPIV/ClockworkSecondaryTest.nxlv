@@ -1,0 +1,92 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Clockwork Secondary Animation Test
+ AUTHOR 
+ ID x610538021DEBE063
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_clockwork
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_clockwork
+   PIECE      window
+   X         47
+   Y         15
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_clockwork
+   PIECE      exit_locked
+   X          7
+   Y         28
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_clockwork
+   PIECE      trap
+   X        122
+   Y         16
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_clockwork
+   PIECE      button
+   X        166
+   Y         66
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_clockwork
+   PIECE      wood_02
+   X   128
+   Y    68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_clockwork
+   PIECE      wood_02
+   X    64
+   Y    68
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_clockwork
+   PIECE      wood_02
+   X     0
+   Y    68
+   ONE_WAY
+ $END
+ 
+ 

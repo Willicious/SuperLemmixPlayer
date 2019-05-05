@@ -1,0 +1,83 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Wasteland Secondary Animation Test
+ AUTHOR 
+ ID x50132C5D16B2A245
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_wasteland
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_wasteland
+   PIECE      window
+   X         47
+   Y         31
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_wasteland
+   PIECE      mine
+   X        147
+   Y         55
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_wasteland
+   PIECE      bar_03
+   X   144
+   Y    77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_wasteland
+   PIECE      bar_03
+   X   112
+   Y    77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_wasteland
+   PIECE      bar_03
+   X    80
+   Y    77
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_wasteland
+   PIECE      bar_03
+   X    48
+   Y    77
+   ONE_WAY
+ $END
+ 
+ 

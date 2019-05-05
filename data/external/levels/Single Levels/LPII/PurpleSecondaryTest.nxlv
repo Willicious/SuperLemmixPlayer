@@ -1,0 +1,69 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Purple Secondary Animation Test
+ AUTHOR 
+ ID x1FEFC8241692A222
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_purple
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+   DISARMER    5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_purple
+   PIECE      trap
+   X        144
+   Y         36
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_purple
+   PIECE      window
+   X         93
+   Y         29
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_purple
+   PIECE      rock_02
+   X   133
+   Y    69
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_purple
+   PIECE      rock_02
+   X    93
+   Y    69
+   ONE_WAY
+ $END
+ 
+ 
