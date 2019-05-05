@@ -17,7 +17,7 @@ uses
 type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop);
 
-  TGadgetAnimationTriggerCondition = (gatcFrameZero, gatcFrameOne, gatcTriggered, gatcDisabled);
+  TGadgetAnimationTriggerCondition = (gatcFrameZero, gatcFrameOne, gatcBusy, gatcTriggered, gatcDisabled);
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
   TGadgetAnimationTriggerConditionArray = array[TGadgetAnimationTriggerCondition] of TGadgetAnimationTriggerState;
 
@@ -29,7 +29,8 @@ type
 
   gatcFrameZero - TRUE on frame zero, if this is significant to the object.
   gatcFrameOne - TRUE on frame one, if this is significant to the object.
-  gatcTriggered - TRUE when object is in triggered state. For teleporters / receivers, this includes the paired object's state.
+  gatcBusy - TRUE when object is busy.
+  gatcTriggered - TRUE when object is in triggered state.
   gatcDisabled - Varies by object. Sometimes identical to another trigger.
 
   The "gatsDontCare" state is not returned by tests (they will return gatFalse
@@ -49,26 +50,26 @@ type
   but doesn't indicate any animation state change.
 
 
-  OBJECT TYPE     | gatFrameZero | gatFrameOne | gatTriggered | gatDisabled
-  ----------------|--------------|-------------|--------------|-------------
-  DOM_NONE        | No           | No          | No           | No
-  DOM_EXIT        | No           | No          | No           | No
-  DOM_FORCExxxxx  | No           | No          | No           | No
-  DOM_TRAP        | Yes          | No          | Yes          | Yes (when disarmed)
-  DOM_WATER       | No           | No          | No           | No
-  DOM_FIRE        | No           | No          | No           | No
-  DOM_ONEWAYxxxxx | No           | No          | No           | No
-  DOM_TELEPORT    | Yes          | No          | Yes (pair)   | Yes (when no pair exists)
-  DOM_RECEIVER    | Yes          | No          | Yes (pair)   | Yes (when no pair exists)
-  DOM_PICKUP      | Yes          | Yes*        | No           | equal to gatFrameZero    * gatFrameOne here triggers on frame != 0
-  DOM_LOCKEXIT    | Yes          | Yes         | Yes          | equal to gatFrameOne
-  DOM_BUTTON      | Yes          | Yes         | No           | No
-  DOM_UPDRAFT     | No           | No          | No           | No
-  DOM_FLIPPER     | Yes          | Yes         | No           | No
-  DOM_WINDOW      | Yes          | Yes         | Yes          | No
-  DOM_SPLAT       | No           | No          | No           | No
-  DOM_BACKGROUND  | No           | No          | No           | No
-  DOM_TRAPONCE    | Yes          | Yes         | Yes          | Yes (when disarmed - NOT when used!)
+  OBJECT TYPE     | gatcFrameZero | gatcFrameOne | gatcBusy | gatcTriggered | gatcDisabled
+  ----------------|---------------|--------------|----------|---------------|--------------
+  DOM_NONE        | No            | No           | No       | No            | No
+  DOM_EXIT        | No            | No           | No       | No            | No
+  DOM_FORCExxxxx  | No            | No           | No       | No            | No
+  DOM_TRAP        | Yes           | No           | Yes      | Yes           | Yes (when disarmed)
+  DOM_WATER       | No            | No           | No       | No            | No
+  DOM_FIRE        | No            | No           | No       | No            | No
+  DOM_ONEWAYxxxxx | No            | No           | No       | No            | No
+  DOM_TELEPORT    | Yes           | No           | Yes      | Yes           | Yes (when no pair exists)
+  DOM_RECEIVER    | Yes           | No           | Yes      | Yes           | Yes (when no pair exists)
+  DOM_PICKUP      | Yes           | Yes*         | No       | No            | No    * gatFrameOne here triggers on frame != 0
+  DOM_LOCKEXIT    | Yes           | Yes          | No       | Yes           | No
+  DOM_BUTTON      | Yes           | Yes          | No       | No            | No
+  DOM_UPDRAFT     | No            | No           | No       | No            | No
+  DOM_FLIPPER     | Yes           | Yes          | No       | No            | No
+  DOM_WINDOW      | Yes           | Yes          | No       | Yes           | No
+  DOM_SPLAT       | No            | No           | No       | No            | No
+  DOM_BACKGROUND  | No            | No           | No       | No            | No
+  DOM_TRAPONCE    | Yes           | Yes          | Yes      | Yes           | Yes (when disarmed - NOT when used!)
 
   }
 
@@ -84,6 +85,8 @@ type
       procedure Clone(aSrc: TGadgetAnimationTrigger);
 
       property Condition[Index: TGadgetAnimationTriggerCondition]: TGadgetAnimationTriggerState read GetCondition;
+      property State: TGadgetAnimationState read fState;
+      property Visible: Boolean read fVisible;
   end;
 
   TGadgetAnimationTriggers = class(TObjectList<TGadgetAnimationTrigger>)
@@ -163,6 +166,8 @@ type
       property CutRight: Integer read fCutRight write fCutRight;
       property CutBottom: Integer read fCutBottom write fCutBottom;
       property CutLeft: Integer read fCutLeft write fCutLeft;
+
+      property Triggers: TGadgetAnimationTriggers read fTriggers;
   end;
 
   TGadgetAnimations = class(TObjectList<TGadgetAnimation>)

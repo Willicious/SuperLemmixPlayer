@@ -5074,7 +5074,7 @@ procedure TLemmingGame.UpdateGadgets;
 -------------------------------------------------------------------------------}
 var
   Gadget, Gadget2: TGadget;
-  i: Integer;
+  i, i2: Integer;
 begin
   for i := Gadgets.Count - 1 downto 0 do
   begin
@@ -5104,6 +5104,14 @@ begin
       Gadget.Triggered := False;
       Gadget.HoldActive := False;
       Gadget.ZombieMode := False;
+    end;
+
+    for i2 := Gadget.Animations.Count-1 downto 0 do
+    begin
+      if Gadget.Animations[i2].Primary then
+        Continue
+      else if not Gadget.Animations[i2].UpdateOneFrame then
+        Gadget.Animations.Delete(i2);
     end;
   end;
 end;

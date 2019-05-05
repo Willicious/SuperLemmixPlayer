@@ -1348,12 +1348,12 @@ var
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF000000;
-      fAni.CountDownDigitsBitmap.DrawTo(TempBitmap, CurX, Y + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(TempBitmap, CurX + 1, Y, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(TempBitmap, CurX + 1, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(BMP, CurX, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(BMP, CurX + 1, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(BMP, CurX + 1, Y + 1, SrcRect);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
-      fAni.CountDownDigitsBitmap.DrawTo(TempBitmap, CurX, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(BMP, CurX, Y, SrcRect);
       CurX := CurX + 5;
     end;
   end;

@@ -26,6 +26,7 @@ type
     public
       constructor Create(aGadget: TGadget; aAnimation: String);
       function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
+      procedure ProcessTriggers;
 
       procedure Clone(aSrc: TGadgetAnimationInstance);
 
@@ -62,6 +63,7 @@ type
     sReceiverId     : Integer;
     sPairingId      : Integer;
     sZombieMode     : Boolean;
+    sSecondariesTreatAsBusy: Boolean;
 
     Obj            : TGadgetModel;
 
@@ -91,6 +93,8 @@ type
 
     function GetCurrentFrame: Integer; // Just remaps to primary animation. This allows LemGame to control
     procedure SetCurrentFrame(aValue: Integer); // the primary animation directly, as it always has.
+
+    function GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
   public
     MetaObj        : TGadgetMetaAccessor;
 
@@ -141,6 +145,9 @@ type
     property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
+    property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
+
+    property AnimationFlag[Flag: TGadgetAnimationTriggerCondition]: Boolean read GetAnimFlagState;
 
     procedure AssignTo(NewObj: TGadget);
     procedure UnifyFlippingFlagsOfTeleporter();
@@ -403,6 +410,31 @@ begin
   Result := MetaObj.FrameCount;
 end;
 
+function TGadget.GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
+const
+  FRAME_ZERO_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
+  FRAME_ONE_OBJECTS = [DOM_PICKUP {hardcoded}, DOM_LOCKEXIT, DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
+  BUSY_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_TRAPONCE];
+  TRIGGERED_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
+  DISABLED_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_TRAPONCE];
+begin
+  Result := false;
+  case aFlag of
+    gatcFrameZero: if MetaObj.TriggerEffect in FRAME_ZERO_OBJECTS then
+                     Result := Animations.PrimaryAnimation.Frame = 0;
+    gatcFrameOne: if MetaObj.TriggerEffect = DOM_PICKUP then
+                    Result := Animations.PrimaryAnimation.Frame <> 0
+                  else if MetaObj.TriggerEffect in FRAME_ONE_OBJECTS then
+                    Result := Animations.PrimaryAnimation.Frame = 1;
+    gatcBusy: if MetaObj.TriggerEffect in BUSY_OBJECTS then
+                Result := Triggered or SecondariesTreatAsBusy;
+    gatcTriggered: if MetaObj.TriggerEffect in TRIGGERED_OBJECTS then
+                     Result := Triggered;
+    gatcDisabled: if MetaObj.TriggerEffect in DISABLED_OBJECTS then
+                    Result := TriggerEffect = DOM_NONE;
+  end;
+end;
+
 function TGadget.GetPreassignedSkill(BitField: Integer): Boolean;
 begin
   // Only call this function for hatches and preplaced lemmings
@@ -659,6 +691,47 @@ end;
 function TGadgetAnimationInstance.UpdateOneFrame: Boolean;
 begin
   Result := true;
+
+  ProcessTriggers;
+
+  if fState = gasStop then
+  begin
+    fFrame := 0;
+    fState := gasPause;
+  end;
+
+  if fState <> gasPause then
+    fFrame := (fFrame + 1) mod fAnimation.FrameCount;
+
+  if (fState = gasLoopToZero) and (fFrame = 0) then
+    fState := gasPause;
+end;
+
+procedure TGadgetAnimationInstance.ProcessTriggers;
+var
+  i: Integer;
+  Cond: TGadgetAnimationTriggerCondition;
+  ThisTrigger: TGadgetAnimationTrigger;
+  Pass: Boolean;
+begin
+  for i := fAnimation.Triggers.Count-1 downto 0 do
+  begin
+    ThisTrigger := fAnimation.Triggers[i];
+
+    Pass := true;
+    for Cond := Low(TGadgetAnimationTriggerCondition) to High(TGadgetAnimationTriggerCondition) do
+      case ThisTrigger.Condition[Cond] of
+        gatsTrue: if not fGadget.AnimationFlag[Cond] then Pass := false;
+        gatsFalse: if fGadget.AnimationFlag[Cond] then Pass := false;
+      end;
+
+    if Pass then
+    begin
+      fState := ThisTrigger.State;
+      fVisible := ThisTrigger.Visible;
+      Exit;
+    end;
+  end;
 end;
 
 { TGadgetAnimationInstances }
