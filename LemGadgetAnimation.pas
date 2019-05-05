@@ -352,8 +352,10 @@ begin
 
   BaseTrigger := TGadgetAnimationTrigger.Create;
 
-  if ((aSegment.Line['stop'] <> nil) or (aSegment.Line['pause'] <> nil)) or fPrimary then
+  if (aSegment.Line['pause'] <> nil) or fPrimary then
     BaseTrigger.fState := gasPause
+  else if (aSegment.Line['stop'] <> nil) then
+    BaseTrigger.fState := gasStop
   else if (aSegment.Line['match_primary_frame'] <> nil) then
     BaseTrigger.fState := gasMatchPrimary
   else
