@@ -166,6 +166,7 @@ type
     private
       fPrimaryAnimation: TGadgetAnimation;
       function GetAnimation(aIdentifier: String): TGadgetAnimation;
+      function GetAnyMasked: Boolean;
     public
       procedure AddPrimary(aAnimation: TGadgetAnimation);
 
@@ -178,6 +179,7 @@ type
 
       property PrimaryAnimation: TGadgetAnimation read fPrimaryAnimation;
       property Animations[Identifier: String]: TGadgetAnimation read GetAnimation; default;
+      property AnyMasked: Boolean read GetAnyMasked;
   end;
 
 implementation
@@ -539,6 +541,17 @@ begin
     end;
 
   Result := nil;
+end;
+
+function TGadgetAnimations.GetAnyMasked: Boolean;
+var
+  i: Integer;
+begin
+  Result := true;
+  for i := 0 to Count-1 do
+    if Items[i].fColor <> '' then
+      Exit;
+  Result := false;
 end;
 
 procedure TGadgetAnimations.Invert;

@@ -23,7 +23,7 @@ type
       fPrimary: Boolean;
     public
       constructor Create(aGadget: TGadget; aAnimation: String);
-      procedure UpdateOneFrame;
+      function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
 
       property Primary: Boolean read fPrimary;
       property Frame: Integer read fFrame;
@@ -595,7 +595,7 @@ begin
   end;
 end;
 
-procedure TGadgetAnimationInstance.UpdateOneFrame;
+function TGadgetAnimationInstance.UpdateOneFrame: Boolean;
 begin
 
 end;

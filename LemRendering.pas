@@ -1313,13 +1313,6 @@ begin
 end;
 
 procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
-var
-  DrawFrame: Integer;
-
-  IsOwnBitmap: Boolean;
-
-  OldDrawMode: TDrawMode;
-  OldPixelCombine: TPixelCombineEvent;
 
   procedure AddNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
@@ -1364,6 +1357,7 @@ var
     AddNumber(Gadget.Width - 2, Gadget.Height - 6, Gadget.SkillCount, 1);
   end;
 
+  (*
   procedure DoDraw(aSecondary: Boolean);
   var
     MO: TGadgetMetaAccessor;
@@ -1489,41 +1483,16 @@ var
 
     PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
   end;
+  *)
+var
+  i: Integer;
+
 begin
   if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
-  if TempBitmap = nil then
+  for i := 0 to Gadget.Animations.Count-1 do
   begin
-    TempBitmap := TBitmap32.Create;
-    IsOwnBitmap := true;
-  end else
-    IsOwnBitmap := false;
 
-  OldDrawMode := TempBitmap.DrawMode;
-  OldPixelCombine := TempBitmap.OnPixelCombine;
-
-  try
-    if Gadget.ShowSecondaryAnimation and not Gadget.MetaObj.SecondaryInFront then
-    begin
-      PrepareSecondaryFrame;
-      DoDraw(true);
-    end;
-
-    PrepareMainFrame;
-    DoDraw(false);
-
-    if Gadget.ShowSecondaryAnimation and Gadget.MetaObj.SecondaryInFront then
-    begin
-      PrepareSecondaryFrame;
-      DoDraw(true);
-    end;
-  finally
-    if IsOwnBitmap then
-      TempBitmap.Free
-    else begin
-      TempBitmap.DrawMode := OldDrawMode;
-      TempBitmap.OnPixelCombine := OldPixelCombine;
-    end;
   end;
 end;
 

@@ -4,6 +4,7 @@ unit LemTypes;
 interface
 
 uses
+  UMisc,
   LemNeoOnline,
   Dialogs,
   SharedGlobals,
@@ -57,6 +58,7 @@ type
 
   // lemlowlevel
 procedure ReplaceColor(B: TBitmap32; FromColor, ToColor: TColor32);
+procedure DrawNineSlice(Dst: TBitmap32; DstRect: TRect; SrcRect: TRect; SrcCenterRect: TRect; Src: TBitmap32);
 function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;
 function AppPath: string;
 function MakeSuitableForFilename(const aInput: String): String;
@@ -171,6 +173,98 @@ begin
         P^ := ToColor;
       Inc(P);
     end;
+end;
+
+procedure DrawNineSlice(Dst: TBitmap32; DstRect: TRect; SrcRect: TRect; SrcCenterRect: TRect; Src: TBitmap32);
+var
+  VariableWidth, VariableHeight: Integer;
+
+  procedure DrawTiled(TotalSrcRect, TotalDstRect: TRect);
+    var
+      CountX, CountY: Integer;
+      iX, iY: Integer;
+      SrcRect, DstRect: TRect;
+    begin
+      CountX := (TotalDstRect.Width - 1) div TotalSrcRect.Width;
+      CountY := (TotalDstRect.Height - 1) div TotalSrcRect.Height;
+
+      for iY := 0 to CountY do
+      begin
+        SrcRect := TotalSrcRect;
+        DstRect := SizedRect(TotalDstRect.Left, TotalDstRect.Top + (iY * TotalSrcRect.Height), TotalSrcRect.Width, TotalSrcRect.Height);
+
+        if iY = CountY then
+          DstRect := SizedRect(DstRect.Left, DstRect.Top, DstRect.Width, ((TotalDstRect.Height - 1) mod TotalSrcRect.Height) + 1);
+
+        for iX := 0 to CountX do
+        begin
+          if iX = CountX then
+            DstRect := SizedRect(DstRect.Left, DstRect.Top, ((TotalDstRect.Width - 1) mod TotalSrcRect.Width) + 1, DstRect.Height);
+
+          Src.DrawTo(Dst, DstRect, SrcRect);
+
+          DstRect.Offset(TotalSrcRect.Width, 0);
+        end;
+      end;
+    end;
+
+begin
+
+    if (DstRect.Width = SrcRect.Width) and (DstRect.Height = SrcRect.Height) then
+      Src.DrawTo(Dst, DstRect.Left, DstRect.Top)
+    else begin
+      VariableWidth := DstRect.Width - SrcCenterRect.Left - SrcCenterRect.Right;
+      VariableHeight := DstRect.Height - SrcCenterRect.Top - SrcCenterRect.Bottom;
+
+      // This will need fixing.
+
+      // Top left
+      if (SrcCenterRect.Left > 0) and (SrcCenterRect.Top > 0) then
+        Src.DrawTo(Dst, DstRect.Left, DstRect.Top, Rect(0, 0, SrcCenterRect.Left, SrcCenterRect.Top));
+
+      // Top right
+      if (SrcCenterRect.Right > 0) and (SrcCenterRect.Top > 0) then
+        Src.DrawTo(Dst, DstRect.Left + DstRect.Width - SrcCenterRect.Right, DstRect.Top,
+                   Rect(SrcRect.Width - SrcCenterRect.Right, 0, SrcRect.Width, SrcCenterRect.Top));
+
+      // Bottom left
+      if (SrcCenterRect.Left > 0) and (SrcCenterRect.Bottom > 0) then
+        Src.DrawTo(Dst, DstRect.Left, DstRect.Top + DstRect.Height - SrcCenterRect.Bottom,
+                   Rect(0, SrcRect.Height - SrcCenterRect.Bottom, SrcCenterRect.Left, SrcRect.Height));
+
+      // Bottom right
+      if (SrcCenterRect.Right > 0) and (SrcCenterRect.Bottom > 0) then
+        Src.DrawTo(Dst, DstRect.Left + DstRect.Width - SrcCenterRect.Left,
+                   DstRect.Top + DstRect.Height - SrcCenterRect.Bottom,
+                   Rect(SrcRect.Width - SrcCenterRect.Right, SrcRect.Height - SrcCenterRect.Bottom,
+                        SrcRect.Width, SrcRect.Height));
+
+      // Top edge
+      if (VariableWidth > 0) and (SrcCenterRect.Top > 0) then
+        DrawTiled(SizedRect(SrcCenterRect.Left, 0, SrcRect.Width - SrcCenterRect.Left - SrcCenterRect.Right, SrcCenterRect.Top),
+                  SizedRect(DstRect.Left + SrcCenterRect.Left, DstRect.Top, VariableWidth, SrcCenterRect.Top));
+
+      // Left edge
+      if (VariableHeight > 0) and (SrcCenterRect.Left > 0) then
+        DrawTiled(SizedRect(0, SrcCenterRect.Top, SrcCenterRect.Left, SrcRect.Height - SrcCenterRect.Top - SrcCenterRect.Bottom),
+                  SizedRect(DstRect.Left, DstRect.Top + SrcCenterRect.Top, SrcCenterRect.Left, VariableHeight));
+
+      // Bottom edge
+      if (VariableWidth > 0) and (SrcCenterRect.Bottom > 0) then
+        DrawTiled(SizedRect(SrcCenterRect.Left, SrcRect.Height - SrcCenterRect.Bottom, SrcRect.Width - SrcCenterRect.Left - SrcCenterRect.Right, SrcCenterRect.Bottom),
+                  SizedRect(DstRect.Left + SrcCenterRect.Left, DstRect.Top + DstRect.Height - SrcCenterRect.Bottom, VariableWidth, SrcCenterRect.Bottom));
+
+      // Right edge
+      if (VariableHeight > 0) and (SrcCenterRect.Right > 0) then
+        DrawTiled(SizedRect(SrcRect.Width - SrcCenterRect.Right, SrcCenterRect.Top, SrcCenterRect.Right, SrcRect.Height - SrcCenterRect.Top - SrcCenterRect.Bottom),
+                  SizedRect(DstRect.Left + DstRect.Width - SrcCenterRect.Right, DstRect.Top + SrcCenterRect.Top, SrcCenterRect.Right, VariableHeight));
+
+      // Center
+      if (VariableWidth > 0) and (VariableHeight > 0) then
+        DrawTiled(SizedRect(SrcCenterRect.Left, SrcCenterRect.Top, SrcRect.Width - SrcCenterRect.Left - SrcCenterRect.Right, SrcRect.Height - SrcCenterRect.Top - SrcCenterRect.Bottom),
+                  SizedRect(DstRect.Left + SrcCenterRect.Left, DstRect.Top + SrcCenterRect.Top, VariableWidth, VariableHeight));
+    end;
+
 end;
 
 function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;

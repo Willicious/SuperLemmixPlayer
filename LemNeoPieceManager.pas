@@ -118,7 +118,7 @@ begin
   for i := fObjects.Count-1 downto 0 do
   begin
     fObjects[i].CyclesSinceLastUse := fObjects[i].CyclesSinceLastUse + 1;
-    if (fObjects[i].CyclesSinceLastUse >= RETAIN_PIECE_CYCLES) or (fObjects[i].IsMasked) then
+    if (fObjects[i].CyclesSinceLastUse >= RETAIN_PIECE_CYCLES) or (fObjects[i].Animations[false, false, false].AnyMasked) then
       fObjects.Delete(i);
   end;
 end;
