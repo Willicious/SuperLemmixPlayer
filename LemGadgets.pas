@@ -4,6 +4,7 @@ unit LemGadgets;
 interface
 
 uses
+  SharedGlobals, // debug
   Math, Classes, GR32,
   Windows, Contnrs, LemTypes, LemCore,
   LemGadgetsMeta, LemGadgetsModel,
@@ -693,6 +694,12 @@ begin
   Result := true;
 
   ProcessTriggers;
+
+  if fState = gasMatchPrimary then
+  begin
+    fFrame := fGadget.CurrentFrame;
+    Exit;
+  end;
 
   if fState = gasStop then
   begin

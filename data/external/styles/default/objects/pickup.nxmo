@@ -10,12 +10,14 @@ $END
 
 $ANIMATION
   FRAMES 18
+  MATCH_PRIMARY_FRAME
   NAME mask_border
   COLOR pickup_border
 $END
 
 $ANIMATION
   FRAMES 18
+  MATCH_PRIMARY_FRAME
   NAME mask_inside
   COLOR pickup_inside
 $END

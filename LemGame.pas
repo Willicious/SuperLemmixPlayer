@@ -5084,18 +5084,24 @@ begin
        and (Gadget.TriggerEffect <> DOM_PICKUP) then
       Gadget.CurrentFrame := Gadget.CurrentFrame + 1;
 
-    if (Gadget.TriggerEffect = DOM_TELEPORT)
-      and (((Gadget.CurrentFrame >= Gadget.AnimationFrameCount) and (Gadget.KeyFrame = 0))
-        or ((Gadget.CurrentFrame = Gadget.KeyFrame) and (Gadget.KeyFrame <> 0))   ) then
+    if (Gadget.TriggerEffect = DOM_TELEPORT) then
     begin
-      MoveLemToReceivePoint(LemmingList.List[Gadget.TeleLem], i);
       Gadget2 := Gadgets[Gadget.ReceiverId];
-      Assert(Gadget2.TriggerEffect = DOM_RECEIVER, 'Lemming teleported to non-receiver object.');
-      Gadget2.TeleLem := Gadget.TeleLem;
-      Gadget2.Triggered := True;
-      Gadget2.ZombieMode := Gadget.ZombieMode;
-      // Reset TeleLem for Teleporter
-      Gadget.TeleLem := -1;
+
+      if (((Gadget.CurrentFrame >= Gadget.AnimationFrameCount) and (Gadget.KeyFrame = 0))
+         or ((Gadget.CurrentFrame = Gadget.KeyFrame) and (Gadget.KeyFrame <> 0))   ) then
+      begin
+        MoveLemToReceivePoint(LemmingList.List[Gadget.TeleLem], i);
+
+        Assert(Gadget2.TriggerEffect = DOM_RECEIVER, 'Lemming teleported to non-receiver object.');
+        Gadget2.TeleLem := Gadget.TeleLem;
+        Gadget2.Triggered := True;
+        Gadget2.ZombieMode := Gadget.ZombieMode;
+        // Reset TeleLem for Teleporter
+        Gadget.TeleLem := -1;
+      end;
+
+      Gadget.SecondariesTreatAsBusy := Gadget2.Triggered;
     end;
 
     if Gadget.CurrentFrame >= Gadget.AnimationFrameCount then

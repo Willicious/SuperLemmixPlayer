@@ -15,7 +15,7 @@ uses
   SysUtils;
 
 type
-  TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop);
+  TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
 
   TGadgetAnimationTriggerCondition = (gatcFrameZero, gatcFrameOne, gatcBusy, gatcTriggered, gatcDisabled);
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
@@ -39,7 +39,8 @@ type
 
 
   The basic animation states are Play and Pause. Others will eventually change
-  to one of these.
+  to one of these, except gasMatchPrimary which is a special case where the
+  frame will match the primary animation.
 
   gasLoopToZero - Changes to gasPause when frame 0 is reached
   gasStop - Sets frame to 0 then changes to gasPause
@@ -47,7 +48,8 @@ type
   Animations are visible regardless of the visibility tag while they are
   animating; they must be stopped to hide them. However, loading code will
   automatically add a setting of state to gasStop if a trigger defines invisible
-  but doesn't indicate any animation state change.
+  but doesn't indicate any animation state change. gasMatchPrimary is treated
+  as animating for the purpose of this rule.
 
 
   OBJECT TYPE     | gatcFrameZero | gatcFrameOne | gatcBusy | gatcTriggered | gatcDisabled
@@ -244,7 +246,9 @@ begin
   end;
 
   fSourceImageMasked.Assign(fSourceImage);
-  TPngInterface.MaskImageFromImage(fSourceImageMasked, fSourceImageMasked, fMaskColor);
+
+  if fColor <> '' then
+    TPngInterface.MaskImageFromImage(fSourceImageMasked, fSourceImageMasked, fMaskColor);
 end;
 
 procedure TGadgetAnimation.Draw(Dst: TBitmap32; X, Y, aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil);
@@ -348,8 +352,10 @@ begin
 
   BaseTrigger := TGadgetAnimationTrigger.Create;
 
-  if (aSegment.Line['stop'] = nil) or fPrimary then
+  if ((aSegment.Line['stop'] <> nil) or (aSegment.Line['pause'] <> nil)) or fPrimary then
     BaseTrigger.fState := gasPause
+  else if (aSegment.Line['match_primary_frame'] <> nil) then
+    BaseTrigger.fState := gasMatchPrimary
   else
     BaseTrigger.fState := gasPlay;
 
@@ -685,6 +691,7 @@ var
 begin
   fConditions[gatcFrameZero] := ParseConditionState('frame_zero');
   fConditions[gatcFrameOne] := ParseConditionState('frame_one');
+  fConditions[gatcBusy] := ParseConditionState('busy');
   fConditions[gatcTriggered] := ParseConditionState('triggered');
   fConditions[gatcDisabled] := ParseConditionState('disabled');
 
@@ -701,6 +708,8 @@ begin
       fState := gasStop
     else if S = 'LOOP_TO_ZERO' then
       fState := gasLoopToZero
+    else if S = 'MATCH_PRIMARY_FRAME' then
+      fState := gasMatchPrimary   
     else
       fState := gasPlay;
   end;
