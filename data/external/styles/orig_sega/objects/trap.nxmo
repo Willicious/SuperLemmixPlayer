@@ -8,7 +8,7 @@ SOUND thunk
 
 $ANIMATION
   FRAMES 20
-  NAME secondary
+  NAME constant
   OFFSET_X 4
   OFFSET_Y 8
   
