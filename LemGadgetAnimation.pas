@@ -124,8 +124,6 @@ type
 
       function MakeFrameBitmaps: TBitmaps;
       procedure CombineBitmaps(aBitmaps: TBitmaps);
-
-      function GetRandomStartFrame: Boolean;
     public
       constructor Create(aMainObjectWidth: Integer; aMainObjectHeight: Integer);
       destructor Destroy; override;
@@ -167,6 +165,7 @@ type
   TGadgetAnimations = class(TObjectList<TGadgetAnimation>)
     private
       fPrimaryAnimation: TGadgetAnimation;
+      function GetAnimation(aIdentifier: String): TGadgetAnimation;
     public
       procedure AddPrimary(aAnimation: TGadgetAnimation);
 
@@ -178,6 +177,7 @@ type
       procedure Invert;
 
       property PrimaryAnimation: TGadgetAnimation read fPrimaryAnimation;
+      property Animations[Identifier: String]: TGadgetAnimation read GetAnimation; default;
   end;
 
 implementation
@@ -376,11 +376,6 @@ begin
   fCutLeft := aSrc.fCutLeft;
 end;
 
-function TGadgetAnimation.GetRandomStartFrame: Boolean;
-begin
-  Result := fStartFrameIndex < 0;
-end;
-
 procedure TGadgetAnimation.Rotate90;
 var
   Bitmaps: TBitmaps;
@@ -507,8 +502,8 @@ begin
 
   for i := 0 to aSrc.Count-1 do
   begin
-    NewAnim := TGadgetAnimation.Create(aSrc[i].fMainObjectWidth, aSrc[i].fMainObjectHeight);
-    NewAnim.Clone(aSrc[i]);
+    NewAnim := TGadgetAnimation.Create(aSrc.Items[i].fMainObjectWidth, aSrc.Items[i].fMainObjectHeight);
+    NewAnim.Clone(aSrc.Items[i]);
 
     Add(NewAnim);
   end;
@@ -528,6 +523,22 @@ var
 begin
   for i := 0 to Count-1 do
     Items[i].Flip;
+end;
+
+function TGadgetAnimations.GetAnimation(aIdentifier: String): TGadgetAnimation;
+var
+  i: Integer;
+begin
+  aIdentifier := Uppercase(Trim(aIdentifier));
+
+  for i := 0 to Count-1 do
+    if Items[i].Name = aIdentifier then
+    begin
+      Result := Items[i];
+      Exit;
+    end;
+
+  Result := nil;
 end;
 
 procedure TGadgetAnimations.Invert;

@@ -6,9 +6,38 @@ interface
 uses
   Math, Classes,
   Windows, Contnrs, LemTypes, LemCore,
-  LemGadgetsMeta, LemGadgetsModel;
+  LemGadgetsMeta, LemGadgetsModel,
+  LemGadgetAnimation,
+  Generics.Collections;
 
 type
+  TGadget = class;
+
+  TGadgetAnimationInstance = class
+    private
+      fGadget: TGadget;
+      fAnimation: TGadgetAnimation;
+      fFrame: Integer;
+      fState: TGadgetAnimationState;
+      fVisible: Boolean;
+      fPrimary: Boolean;
+    public
+      constructor Create(aGadget: TGadget; aAnimation: String);
+      procedure UpdateOneFrame;
+
+      property Primary: Boolean read fPrimary;
+      property Frame: Integer read fFrame;
+      property Visible: Boolean read fVisible;
+  end;
+
+  TGadgetAnimationInstances = class(TObjectList<TGadgetAnimationInstance>)
+    private
+      fPrimaryAnimation: TGadgetAnimationInstance;
+      function GetPrimaryAnimation: TGadgetAnimationInstance;
+    public
+      property PrimaryAnimation: TGadgetAnimationInstance read GetPrimaryAnimation;
+  end;
+
   // internal object used by game
   TGadget = class
   private
@@ -28,6 +57,8 @@ type
 
     Obj            : TGadgetModel;
 
+    procedure CreateAnimationInstances;
+
     function GetTriggerRect: TRect;
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
@@ -41,7 +72,6 @@ type
     function GetIsFlipImage: Boolean;
     function GetIsRotate: Boolean;
     function GetAnimationFrameCount: Integer;
-    function GetSecondaryAnimationFrameCount: Integer;
     function GetPreassignedSkill(BitField: Integer): Boolean;
     function GetHasPreassignedSkills: Boolean;
     function GetCenterPoint: TPoint;
@@ -50,13 +80,10 @@ type
     function GetSpeed: Integer;
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
-    function GetShowSecondaryAnimation: Boolean;
-    function GetUpdateSecondaryAnimation: Boolean;
   public
     MetaObj        : TGadgetMetaAccessor;
 
-    Frames         : TBitmaps;
-    SecondaryFrames: TBitmaps;
+    Animations: TGadgetAnimationInstances;
 
     CurrentFrame   : Integer;
     CurrentSecondaryFrame: Integer;
@@ -88,7 +115,6 @@ type
     property IsFlipImage: Boolean read GetIsFlipImage;          // ... and 64
     property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
-    property SecondaryAnimationFrameCount: Integer read GetSecondaryAnimationFrameCount;
     property SoundEffect: String read GetSoundEffect;
     property ZombieMode: Boolean read sZombieMode write SetZombieMode;
     property KeyFrame: Integer read GetKeyFrame;
@@ -103,8 +129,6 @@ type
     property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
-    property ShowSecondaryAnimation: Boolean read GetShowSecondaryAnimation;
-    property UpdateSecondaryAnimation: Boolean read GetUpdateSecondaryAnimation;
 
     procedure AssignTo(NewObj: TGadget);
     procedure UnifyFlippingFlagsOfTeleporter();
@@ -201,8 +225,8 @@ constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccesso
 begin
   Obj := ObjParam;
   MetaObj := MetaParam;
-  Frames := MetaObj.Images;
-  SecondaryFrames := MetaObj.SecondaryImages;
+
+  CreateAnimationInstances;
 
   // Set basic stuff
   sTop := Obj.Top;
@@ -218,39 +242,30 @@ begin
   sTriggerRect := GetTriggerRect;
   sReceiverId := 65535;
 
-  // Set CurrentFrame
-  if MetaObj.RandomStartFrame then
-    CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1)) mod MetaObj.FrameCount
-  else if MetaObj.TriggerEffect = DOM_PICKUP then
-    CurrentFrame := Obj.Skill + 1
-  else if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
-    CurrentFrame := 1
-  else
-    CurrentFrame := MetaObj.PreviewFrame;
-
-  if (MetaObj.TriggerEffect = DOM_FLIPPER) then
-    if ((Obj.DrawingFlags and odf_FlipLem) <> 0) then
-      CurrentFrame := 1
-    else
-      CurrentFrame := 0;
-
   // Set other stuff
   Triggered := False;
   TeleLem := -1; // Set to a value no lemming has (hopefully!)
 
   HoldActive := False;
   ZombieMode := False;
+end;
 
-  // Set secondary
-  sSecondaryLeft := Obj.Left + MetaObj.SecondaryOffsetX;
-  sSecondaryTop := Obj.Top + MetaObj.SecondaryOffsetY;
-  sSecondaryWidth := MetaObj.SecondaryWidth;
-  sSecondaryHeight := MetaObj.SecondaryHeight;
+procedure TGadget.CreateAnimationInstances;
+var
+  NewInstance: TGadgetAnimationInstance;
+  i: Integer;
+begin
+  for i := 0 to MetaObj.Animations.Count-1 do
+  begin
+    NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i].Name);
+    Animations.Add(NewInstance);
+  end;
 end;
 
 function TGadget.Clone: TGadget;
 begin
   Result := TGadget.Create(Obj, MetaObj);
+  // doesn't clone state
 end;
 
 function TGadget.GetTriggerRect: TRect;
@@ -361,11 +376,6 @@ begin
   Result := MetaObj.FrameCount;
 end;
 
-function TGadget.GetSecondaryAnimationFrameCount: Integer;
-begin
-  Result := MetaObj.SecondaryFrameCount;
-end;
-
 function TGadget.GetPreassignedSkill(BitField: Integer): Boolean;
 begin
   // Only call this function for hatches and preplaced lemmings
@@ -411,9 +421,17 @@ begin
 end;
 
 function TGadget.GetCanDrawToBackground: Boolean;
+var
+  i: Integer;
 begin
   Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
-  Result := (Frames.Count = 1) and (GetSpeed = 0);
+  Result := false;
+  if GetSpeed <> 0 then Exit;
+  for i := 0 to MetaObj.Animations.Count-1 do
+    if MetaObj.Animations.Items[i].FrameCount > 1 then
+      Exit;
+
+  Result := true;
 end;
 
 function TGadget.GetSpeed: Integer;
@@ -432,37 +450,6 @@ end;
 function TGadget.GetTriggerEffectBase: Integer;
 begin
   Result := MetaObj.TriggerEffect;
-end;
-
-function TGadget.GetShowSecondaryAnimation: Boolean;
-const
-  ELIGIBLE_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT,
-                      DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE,
-                      DOM_PICKUP];
-begin
-  Result := (MetaObj.SecondaryFrameCount > 0) and (MetaObj.TriggerEffect in ELIGIBLE_OBJECTS);
-
-  // Note the use of MetaObj.TriggerEffect, not local TriggerEffect. This is to
-  // allow disarmed traps to continue showing their secondary animation.
-end;
-
-function TGadget.GetUpdateSecondaryAnimation: Boolean;
-begin
-  if (CurrentSecondaryFrame > 0) and not MetaObj.SecondaryInstantStop then
-    Result := true
-  else if not GetShowSecondaryAnimation then
-    Result := false
-  else if (MetaObj.TriggerEffect in [DOM_TRAP, DOM_TRAPONCE]) and (TriggerEffect = DOM_NONE) then
-    Result := false // Disarmed traps don't animate regardless of object's settings
-  else if MetaObj.SecondaryAlwaysAnimate then
-    Result := true
-  else if (TriggerEffect in [DOM_TRAP, DOM_TRAPONCE, DOM_TELEPORT, DOM_RECEIVER])
-           and Triggered then
-    Result := false
-  else if (TriggerEffect = DOM_RECEIVER) and HoldActive then
-    Result := false   
-  else
-    Result := true;
 end;
 
 procedure TGadget.AssignTo(NewObj: TGadget);
@@ -578,6 +565,56 @@ begin
   for i := 0 to ItemCount - 1 do
     if (Items[i].TriggerEffect = DOM_RECEIVER) and not IsReceiverUsed[i] then
       Items[i].TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
+end;
+
+{ TGadgetAnimationInstance }
+
+constructor TGadgetAnimationInstance.Create(aGadget: TGadget;
+  aAnimation: String);
+var
+  MetaObj: TGadgetMetaInfo;
+begin
+  inherited Create;
+  fGadget := aGadget;
+  fAnimation := aGadget.MetaObj.Animations[aAnimation];
+
+  if fAnimation.StartFrameIndex < 0 then
+    fFrame := Random(fAnimation.FrameCount)
+  else if fAnimation.StartFrameIndex < fAnimation.FrameCount then
+    fFrame := fAnimation.StartFrameIndex
+  else
+    fFrame := 0;
+
+  if fAnimation.Primary then
+  begin
+    if MetaObj.TriggerEffect = DOM_PICKUP then
+      fFrame := aGadget.Obj.Skill + 1;
+
+    if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
+      fFrame := 1;
+  end;
+end;
+
+procedure TGadgetAnimationInstance.UpdateOneFrame;
+begin
+
+end;
+
+{ TGadgetAnimationInstances }
+
+function TGadgetAnimationInstances.GetPrimaryAnimation: TGadgetAnimationInstance;
+var
+  i: Integer;
+begin
+  if fPrimaryAnimation = nil then
+    for i := 0 to Count-1 do
+      if Items[i].Primary then
+      begin
+        fPrimaryAnimation := Items[i];
+        Break;
+      end;
+
+  Result := fPrimaryAnimation;
 end;
 
 end.

@@ -50,7 +50,6 @@ type
     fGeneratedVariableImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
     fInterfaces: array[0..ALIGNMENT_COUNT-1] of TGadgetMetaAccessor;
     fFrameCount                   : Integer; // number of animations
-    fSecondaryFrameCount          : Integer; // number of animations for secondary animation
     fWidth                        : Integer; // the width of the bitmap
     fHeight                       : Integer; // the height of the bitmap
     fTriggerLeft                  : Integer; // x-offset of triggerarea (if triggered)
@@ -76,7 +75,6 @@ type
     function GetResizability(Flip, Invert, Rotate: Boolean): TGadgetMetaSizeSetting;
     procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TGadgetMetaSizeSetting);
     function GetAnimations(Flip, Invert, Rotate: Boolean): TGadgetAnimations;
-    function GetSecondaryImages(Flip, Invert, Rotate: Boolean): TBitmaps;
     procedure ClearImages;
   public
     constructor Create;
@@ -280,6 +278,8 @@ begin
       NewSec.AddLine('cut_bottom', Sec.LineNumeric['cut_bottom']);
       NewSec.AddLine('cut_left', Sec.LineNumeric['cut_left']);
     end;
+
+
 
     GadgetAccessor.TriggerLeft := Sec.LineNumeric['trigger_x'];
     GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];
