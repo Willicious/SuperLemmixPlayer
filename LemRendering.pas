@@ -1058,10 +1058,8 @@ begin
   Bmp.DrawMode := dmCustom;
 
   if fUsefulOnly then
-  begin
-    Bmp.OnPixelCombine := CombineFixedColor;
-    fFixedDrawColor := $FFFFFF00;
-  end else if IsOnlyOnTerrain then
+    Bmp.OnPixelCombine := CombineFixedColor
+  else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
   else if IsZombie then
     Bmp.OnPixelCombine := CombineGadgetsDefaultZombie
@@ -1325,7 +1323,7 @@ var
   ThisAnim: TGadgetAnimationInstance;
   DstRect: TRect;
 
-  procedure AddNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
+  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
     NumberString: String;
     DigitsWidth: Integer;
@@ -1335,7 +1333,11 @@ var
     Digit: Integer;
 
     SrcRect: TRect;
+
+    OldDrawColor: TColor32;
   begin
+    OldDrawColor := fFixedDrawColor;
+
     NumberString := IntToStr(aNumber);
     DigitsWidth := (Length(NumberString) * 4) + Length(NumberString) - 1;
     if aAlignment < 0 then
@@ -1352,20 +1354,22 @@ var
 
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
-      fFixedDrawColor := $FF000000;
-      fAni.CountDownDigitsBitmap.DrawTo(BMP, CurX, Y + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(BMP, CurX + 1, Y, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(BMP, CurX + 1, Y + 1, SrcRect);
+      fFixedDrawColor := $FF202020;
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y + 1, SrcRect);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
-      fAni.CountDownDigitsBitmap.DrawTo(BMP, CurX, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
       CurX := CurX + 5;
     end;
+
+    fFixedDrawColor := OldDrawColor;
   end;
 
   procedure AddPickupSkillNumber;
   begin
-    AddNumber(Gadget.Width - 2, Gadget.Height - 6, Gadget.SkillCount, 1);
+    DrawNumber(Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height - 6, Gadget.SkillCount, 1);
   end;
 
 begin
@@ -1385,11 +1389,11 @@ begin
                          ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,
                          ThisAnim.MetaAnimation.Height + Gadget.HeightVariance);
 
-    if ThisAnim.Primary and (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
-      AddPickupSkillNumber;
-
     DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
+
+  if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+    AddPickupSkillNumber;
 
 end;
 
@@ -1491,6 +1495,14 @@ procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = T
                       fRenderInterface.MousePos)
   end;
 
+  procedure MakeFixedDrawColor;
+  var
+    H: Integer;
+  begin
+    H := GetTickCount mod 5000;
+    fFixedDrawColor := HSVToRGB(H / 4999, 1, 1);
+  end;
+
 var
   Gadget: TGadget;
   i, i2: Integer;
@@ -1499,6 +1511,9 @@ begin
   fGadgets := Gadgets;
   fDrawingHelpers := DrawHelper;
   fUsefulOnly := UsefulOnly;
+
+  if fUsefulOnly then
+    MakeFixedDrawColor;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
 
