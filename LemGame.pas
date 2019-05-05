@@ -5080,7 +5080,7 @@ begin
   begin
     Gadget := Gadgets[i];
 
-    if     (Gadget.Triggered or (Gadget.TriggerEffectBase in AlwaysAnimateObjects))
+    if (Gadget.Triggered or (Gadget.TriggerEffectBase in AlwaysAnimateObjects))
        and (Gadget.TriggerEffect <> DOM_PICKUP) then
       Gadget.CurrentFrame := Gadget.CurrentFrame + 1;
 

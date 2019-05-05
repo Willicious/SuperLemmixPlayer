@@ -4,7 +4,6 @@ unit LemGadgets;
 interface
 
 uses
-  SharedGlobals, SysUtils, // debug
   Math, Classes, GR32,
   Windows, Contnrs, LemTypes, LemCore,
   LemGadgetsMeta, LemGadgetsModel,
@@ -24,7 +23,6 @@ type
       fPrimary: Boolean;
 
       function GetBitmap: TBitmap32;
-      procedure SetFrame(aValue: Integer);
     public
       constructor Create(aGadget: TGadget; aAnimation: String);
       function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
@@ -34,7 +32,7 @@ type
       property MetaAnimation: TGadgetAnimation read fAnimation;
       property Bitmap: TBitmap32 read GetBitmap;
       property Primary: Boolean read fPrimary;
-      property Frame: Integer read fFrame write SetFrame;
+      property Frame: Integer read fFrame write fFrame;
       property Visible: Boolean read fVisible;
       property State: TGadgetAnimationState read fState;
   end;
@@ -656,16 +654,6 @@ end;
 function TGadgetAnimationInstance.GetBitmap: TBitmap32;
 begin
   Result := fAnimation.GetFrameBitmap(fFrame);
-end;
-
-procedure TGadgetAnimationInstance.SetFrame(aValue: Integer);
-begin
-  while aValue < 0 do
-    aValue := aValue + fAnimation.FrameCount;
-
-  fFrame := aValue mod fAnimation.FrameCount;
-
-  Log('Object: ' + fGadget.Obj.Identifier + ' ||| Target: ' + IntToStr(aValue) + ' ||| Actual: ' + IntToStr(fFrame) + ' ||| Frames: ' + IntToStr(fAnimation.FrameCount));
 end;
 
 function TGadgetAnimationInstance.UpdateOneFrame: Boolean;
