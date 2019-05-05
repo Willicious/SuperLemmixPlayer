@@ -1501,6 +1501,7 @@ begin
       Continue;
 
     BMP := ThisAnim.Bitmap;
+    PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
     DstRect := SizedRect(Gadget.Left + ThisAnim.MetaAnimation.OffsetX,
                          Gadget.Top + ThisAnim.MetaAnimation.OffsetY,
                          ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,

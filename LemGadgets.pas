@@ -4,6 +4,7 @@ unit LemGadgets;
 interface
 
 uses
+  SharedGlobals, SysUtils, // debug
   Math, Classes, GR32,
   Windows, Contnrs, LemTypes, LemCore,
   LemGadgetsMeta, LemGadgetsModel,
@@ -23,14 +24,17 @@ type
       fPrimary: Boolean;
 
       function GetBitmap: TBitmap32;
+      procedure SetFrame(aValue: Integer);
     public
       constructor Create(aGadget: TGadget; aAnimation: String);
       function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
 
+      procedure Clone(aSrc: TGadgetAnimationInstance);
+
       property MetaAnimation: TGadgetAnimation read fAnimation;
       property Bitmap: TBitmap32 read GetBitmap;
       property Primary: Boolean read fPrimary;
-      property Frame: Integer read fFrame;
+      property Frame: Integer read fFrame write SetFrame;
       property Visible: Boolean read fVisible;
       property State: TGadgetAnimationState read fState;
   end;
@@ -40,6 +44,7 @@ type
       fPrimaryAnimation: TGadgetAnimationInstance;
       function GetPrimaryAnimation: TGadgetAnimationInstance;
     public
+      procedure Clone(aSrc: TGadgetAnimationInstances; newObj: TGadget);
       property PrimaryAnimation: TGadgetAnimationInstance read GetPrimaryAnimation;
   end;
 
@@ -85,22 +90,27 @@ type
     function GetSpeed: Integer;
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
+
+    function GetCurrentFrame: Integer; // Just remaps to primary animation. This allows LemGame to control
+    procedure SetCurrentFrame(aValue: Integer); // the primary animation directly, as it always has.
   public
     MetaObj        : TGadgetMetaAccessor;
 
     Animations: TGadgetAnimationInstances;
 
-    CurrentFrame   : Integer;
-    CurrentSecondaryFrame: Integer;
     Triggered      : Boolean;
     TeleLem        : Integer; // saves which lemming is currently teleported
     HoldActive     : Boolean;
 
-    constructor Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor); Overload;
+    constructor Create; overload;
+    constructor Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor); overload;
+    constructor Create(Template: TGadget); overload;
+
     destructor Destroy; override;
     function Clone: TGadget;
 
     property TriggerRect: TRect read sTriggerRect;
+    property CurrentFrame: Integer read GetCurrentFrame write SetCurrentFrame;
     property Top: Integer read sTop write SetTop;
     property Left: Integer read sLeft write SetLeft;
     property Width: Integer read sWidth;
@@ -196,6 +206,12 @@ const
 implementation
 
 { TGadget }
+constructor TGadget.Create;
+begin
+  inherited;
+  Animations := TGadgetAnimationInstances.Create;
+end;
+
 constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor);
 
   procedure AdjustOWWDirection;
@@ -224,10 +240,10 @@ constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccesso
     sTriggerEffect := DIRS[UseDir mod 4];
   end;
 begin
+  Create;
+
   Obj := ObjParam;
   MetaObj := MetaParam;
-
-  Animations := TGadgetAnimationInstances.Create;
 
   CreateAnimationInstances;
 
@@ -408,6 +424,11 @@ begin
   Result.Y := sTop + (sHeight div 2);
 end;
 
+function TGadget.GetCurrentFrame: Integer;
+begin
+  Result := Animations.PrimaryAnimation.Frame;
+end;
+
 function TGadget.GetKeyFrame: Integer;
 begin
   Result := MetaObj.KeyFrame;
@@ -467,6 +488,9 @@ end;
 
 procedure TGadget.AssignTo(NewObj: TGadget);
 begin
+  NewObj.MetaObj := MetaObj;
+  NewObj.Animations.Clone(Animations, NewObj);
+
   NewObj.sTop := sTop;
   NewObj.sLeft := sLeft;
   NewObj.sHeight := sHeight;
@@ -475,8 +499,6 @@ begin
   NewObj.sTriggerEffect := sTriggerEffect;
   NewObj.MetaObj := MetaObj;
   NewObj.Obj := Obj;
-  NewObj.CurrentFrame := CurrentFrame;
-  NewObj.CurrentSecondaryFrame := CurrentSecondaryFrame;
   NewObj.Triggered := Triggered;
   NewObj.TeleLem := TeleLem;
   NewObj.HoldActive := HoldActive;
@@ -493,6 +515,11 @@ begin
 end;
 
 
+procedure TGadget.SetCurrentFrame(aValue: Integer);
+begin
+  Animations.PrimaryAnimation.Frame := aValue;
+end;
+
 procedure TGadget.SetFlipOfReceiverTo(Teleporter: TGadget);
 begin
   Assert(Teleporter.MetaObj.TriggerEffect = DOM_TELEPORT, 'SetFlipOfReceiverTo with an argument that isn''t a teleporter!');
@@ -504,6 +531,11 @@ begin
     Obj.DrawingFlags := Obj.DrawingFlags and not odf_FlipLem;
 end;
 
+
+constructor TGadget.Create(Template: TGadget);
+begin
+  Create(Template.Obj, Template.MetaObj);
+end;
 
 { TGadgetList }
 
@@ -582,6 +614,14 @@ end;
 
 { TGadgetAnimationInstance }
 
+procedure TGadgetAnimationInstance.Clone(aSrc: TGadgetAnimationInstance);
+begin
+  fFrame := aSrc.fFrame;
+  fState := aSrc.fState;
+  fVisible := aSrc.fVisible;
+  fPrimary := aSrc.fPrimary;
+end;
+
 constructor TGadgetAnimationInstance.Create(aGadget: TGadget;
   aAnimation: String);
 var
@@ -600,6 +640,8 @@ begin
 
   if fAnimation.Primary then
   begin
+    fPrimary := true;
+
     MetaObj := aGadget.MetaObj;
 
     if MetaObj.TriggerEffect = DOM_PICKUP then
@@ -607,12 +649,23 @@ begin
 
     if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
       fFrame := 1;
-  end;
+  end else
+    fPrimary := false;
 end;
 
 function TGadgetAnimationInstance.GetBitmap: TBitmap32;
 begin
   Result := fAnimation.GetFrameBitmap(fFrame);
+end;
+
+procedure TGadgetAnimationInstance.SetFrame(aValue: Integer);
+begin
+  while aValue < 0 do
+    aValue := aValue + fAnimation.FrameCount;
+
+  fFrame := aValue mod fAnimation.FrameCount;
+
+  Log('Object: ' + fGadget.Obj.Identifier + ' ||| Target: ' + IntToStr(aValue) + ' ||| Actual: ' + IntToStr(fFrame) + ' ||| Frames: ' + IntToStr(fAnimation.FrameCount));
 end;
 
 function TGadgetAnimationInstance.UpdateOneFrame: Boolean;
@@ -621,6 +674,21 @@ begin
 end;
 
 { TGadgetAnimationInstances }
+
+procedure TGadgetAnimationInstances.Clone(aSrc: TGadgetAnimationInstances; newObj: TGadget);
+var
+  i: Integer;
+  NewInstance: TGadgetAnimationInstance;
+begin
+  for i := 0 to aSrc.Count-1 do
+  begin
+    NewInstance := TGadgetAnimationInstance.Create(newObj, aSrc[i].MetaAnimation.Name);
+    NewInstance.Clone(aSrc[i]);
+    Add(NewInstance);
+    if NewInstance.Primary then
+      fPrimaryAnimation := NewInstance;
+  end;
+end;
 
 function TGadgetAnimationInstances.GetPrimaryAnimation: TGadgetAnimationInstance;
 var

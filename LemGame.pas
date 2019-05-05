@@ -663,7 +663,7 @@ begin
   aState.Gadgets.Clear;
   for i := 0 to Gadgets.Count-1 do
   begin
-    aState.Gadgets.Add(TGadget.Create);
+    aState.Gadgets.Add(TGadget.Create(Gadgets[i]));
     Gadgets[i].AssignTo(aState.Gadgets[i]);
   end;
 end;
@@ -5082,7 +5082,7 @@ begin
 
     if     (Gadget.Triggered or (Gadget.TriggerEffectBase in AlwaysAnimateObjects))
        and (Gadget.TriggerEffect <> DOM_PICKUP) then
-      Inc(Gadget.CurrentFrame);
+      Gadget.CurrentFrame := Gadget.CurrentFrame + 1;
 
     if (Gadget.TriggerEffect = DOM_TELEPORT)
       and (((Gadget.CurrentFrame >= Gadget.AnimationFrameCount) and (Gadget.KeyFrame = 0))

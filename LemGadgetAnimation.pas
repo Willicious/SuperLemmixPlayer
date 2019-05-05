@@ -250,16 +250,16 @@ begin
   GetFrame(aFrame, Result);
 end;
 
-function TGadgetAnimation.GetCutRect: TRect;
-begin
-  Result := Rect(fCutLeft, fCutTop, fCutRight, fCutBottom);
-end;
-
 procedure TGadgetAnimation.GetFrame(aFrame: Integer; aBitmap: TBitmap32);
 begin
   aBitmap.SetSize(fWidth, fHeight);
   aBitmap.Clear(0);
   Draw(aBitmap, 0, 0, aFrame);
+end;
+
+function TGadgetAnimation.GetCutRect: TRect;
+begin
+  Result := Rect(fCutLeft, fCutTop, fCutRight, fCutBottom);
 end;
 
 procedure TGadgetAnimation.Load(aCollection, aPiece: String; aSegment: TParserSection; aTheme: TNeoTheme);
@@ -551,6 +551,12 @@ function TGadgetAnimations.GetAnimation(aIdentifier: String): TGadgetAnimation;
 var
   i: Integer;
 begin
+  if aIdentifier = '' then
+  begin
+    Result := fPrimaryAnimation;
+    Exit;
+  end;
+
   aIdentifier := Uppercase(Trim(aIdentifier));
 
   for i := 0 to Count-1 do
