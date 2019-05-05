@@ -1057,7 +1057,11 @@ procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean
 begin
   Bmp.DrawMode := dmCustom;
 
-  if IsOnlyOnTerrain then
+  if fUsefulOnly then
+  begin
+    Bmp.OnPixelCombine := CombineFixedColor;
+    fFixedDrawColor := $FFFFFF00;
+  end else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
   else if IsZombie then
     Bmp.OnPixelCombine := CombineGadgetsDefaultZombie
