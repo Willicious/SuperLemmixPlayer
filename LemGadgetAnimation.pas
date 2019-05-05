@@ -99,6 +99,8 @@ type
       fTempOutBitmap: TBitmap32;
       fTempBitmapUsageCount: Integer;
     private
+      fNeedRemask: Boolean;
+
       fMainObjectWidth: Integer;
       fMainObjectHeight: Integer;
 
@@ -126,6 +128,9 @@ type
       fSourceImage: TBitmap32;
       fTriggers: TGadgetAnimationTriggers;
 
+      fSourceImageMasked: TBitmap32;
+      fMaskColor: TColor32;
+
       function MakeFrameBitmaps: TBitmaps;
       procedure CombineBitmaps(aBitmaps: TBitmaps);
       function GetCutRect: TRect;
@@ -134,6 +139,7 @@ type
       destructor Destroy; override;
 
       procedure Load(aCollection, aPiece: String; aSegment: TParserSection; aTheme: TNeoTheme);
+      procedure Remask(aTheme: TNeoTheme);
       procedure Clone(aSrc: TGadgetAnimation);
       procedure Clear;
 
@@ -180,6 +186,7 @@ type
 
       procedure SortByZIndex;
 
+      procedure Remask(aTheme: TNeoTheme);
       procedure Clone(aSrc: TGadgetAnimations);
       procedure Rotate90;
       procedure Flip;
@@ -198,6 +205,7 @@ constructor TGadgetAnimation.Create(aMainObjectWidth: Integer; aMainObjectHeight
 begin
   inherited Create;
   fSourceImage := TBitmap32.Create;
+  fSourceImageMasked := TBitmap32.Create;
   fTriggers := TGadgetAnimationTriggers.Create;
 
   fMainObjectWidth := aMainObjectWidth;
@@ -216,7 +224,27 @@ begin
 
   fTriggers.Free;
   fSourceImage.Free;
+  fSourceImageMasked.Free;
   inherited;
+end;
+
+procedure TGadgetAnimation.Remask(aTheme: TNeoTheme);
+begin
+  fNeedRemask := false;
+
+  if aTheme <> nil then
+  begin
+    if (fColor = '') then
+      Exit;
+
+    if aTheme.Colors[fColor] = fMaskColor then
+      Exit;
+
+    fMaskColor := aTheme.Colors[fColor];
+  end;
+
+  fSourceImageMasked.Assign(fSourceImage);
+  TPngInterface.MaskImageFromImage(fSourceImageMasked, fSourceImageMasked, fMaskColor);
 end;
 
 procedure TGadgetAnimation.Draw(Dst: TBitmap32; X, Y, aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil);
@@ -228,11 +256,14 @@ procedure TGadgetAnimation.Draw(Dst: TBitmap32; DstRect: TRect; aFrame: Integer;
 var
   SrcRect: TRect;
 begin
+  if fNeedRemask then
+    Remask(nil);
+
   if not Assigned(aPixelCombine) then
-    fSourceImage.DrawMode := dmBlend
+    fSourceImageMasked.DrawMode := dmBlend
   else begin
-    fSourceImage.DrawMode := dmCustom;
-    fSourceImage.OnPixelCombine := aPixelCombine;
+    fSourceImageMasked.DrawMode := dmCustom;
+    fSourceImageMasked.OnPixelCombine := aPixelCombine;
   end;
 
   if fHorizontalStrip then
@@ -240,7 +271,7 @@ begin
   else
     SrcRect := SizedRect(0, aFrame * fHeight, fWidth, fHeight);
 
-  fSourceImage.DrawTo(Dst, DstRect, SrcRect);
+  fSourceImageMasked.DrawTo(Dst, DstRect, SrcRect);
 end;
 
 function TGadgetAnimation.GetFrameBitmap(aFrame: Integer; aPersistent: Boolean = false): TBitmap32;
@@ -284,8 +315,6 @@ begin
   LoadPath := LoadPath + '.png';
 
   TPngInterface.LoadPngFile(LoadPath, fSourceImage);
-  if fColor <> '' then
-    TPngInterface.MaskImageFromImage(fSourceImage, fSourceImage, aTheme.Colors[fColor]);
 
   // fPrimary is only set by TGadgetAnimations
   fHorizontalStrip := aSegment.Line['horizontal_strip'] <> nil;
@@ -345,12 +374,15 @@ begin
       end
     );
   end;
+
+  fNeedRemask := true;
 end;
 
 procedure TGadgetAnimation.Clear;
 begin
   fSourceImage.SetSize(1, 1);
   fSourceImage.Clear(0);
+  fMaskColor := $00000000;
 
   fTriggers.Clear;
 
@@ -380,6 +412,9 @@ procedure TGadgetAnimation.Clone(aSrc: TGadgetAnimation);
 begin
   fSourceImage.Assign(aSrc.fSourceImage);
   fTriggers.Clone(aSrc.fTriggers);
+
+  fSourceImageMasked.Assign(aSrc.fSourceImageMasked);
+  fMaskColor := aSrc.fMaskColor;
 
   fFrameCount := aSrc.fFrameCount;
   fName := aSrc.fName;
@@ -431,6 +466,8 @@ begin
   fCutLeft := fCutBottom;
   fCutBottom := fCutRight;
   fCutRight := Temp;
+
+  fNeedRemask := true;
 end;
 
 procedure TGadgetAnimation.Flip;
@@ -452,6 +489,8 @@ begin
   Temp := fCutLeft;
   fCutLeft := fCutRight;
   fCutRight := Temp;
+
+  fNeedRemask := true;
 end;
 
 procedure TGadgetAnimation.Invert;
@@ -473,6 +512,8 @@ begin
   Temp := fCutBottom;
   fCutBottom := fCutTop;
   fCutTop := Temp;
+
+  fNeedRemask := true;
 end;
 
 function TGadgetAnimation.MakeFrameBitmaps: TBitmaps;
@@ -507,6 +548,8 @@ begin
     aBitmaps[i].DrawTo(fSourceImage, 0, fHeight * i);
 
   aBitmaps.Free;
+
+  fNeedRemask := true;
 end;
 
 // TGadgetAnimations
@@ -534,6 +577,14 @@ begin
 
     Add(NewAnim);
   end;
+end;
+
+procedure TGadgetAnimations.Remask(aTheme: TNeoTheme);
+var
+  i: Integer;
+begin
+  for i := 0 to Count-1 do
+    Items[i].Remask(aTheme);
 end;
 
 procedure TGadgetAnimations.Rotate90;

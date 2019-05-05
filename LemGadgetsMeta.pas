@@ -86,6 +86,8 @@ type
 
     procedure Assign(Source: TGadgetMetaInfo);
 
+    procedure Remask(aTheme: TNeoTheme);
+
     procedure MarkAllUnmade;
     procedure MarkMetaDataUnmade;
 
@@ -382,6 +384,17 @@ begin
   // There may be times where we want to wipe the metadata without wiping the images.
   for i := 0 to ALIGNMENT_COUNT-1 do
     fGeneratedVariableInfo[i] := false;
+end;
+
+procedure TGadgetMetaInfo.Remask(aTheme: TNeoTheme);
+var
+  i: Integer;
+begin
+  if not fVariableInfo[0].Animations.AnyMasked then
+    Exit;
+
+  for i := 0 to ALIGNMENT_COUNT-1 do
+    fVariableInfo[i].Animations.Remask(aTheme);
 end;
 
 procedure TGadgetMetaInfo.EnsureVariationMade(Flip, Invert, Rotate: Boolean);

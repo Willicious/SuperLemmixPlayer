@@ -25,6 +25,8 @@
  MAX_SPAWN_INTERVAL   53
  
  $SKILLSET 
+    SWIMMER    0
+     GLIDER    0
    DISARMER    5
  $END 
  
@@ -93,6 +95,24 @@
    WIDTH     48
    HEIGHT    32
    NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        170
+   Y         38
+   NO_OVERWRITE
+   SKILL SWIMMER
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      pickup
+   X        190
+   Y         38
+   NO_OVERWRITE
+   SKILL GLIDER
  $END
  
  

@@ -118,7 +118,7 @@ begin
   for i := fObjects.Count-1 downto 0 do
   begin
     fObjects[i].CyclesSinceLastUse := fObjects[i].CyclesSinceLastUse + 1;
-    if (fObjects[i].CyclesSinceLastUse >= RETAIN_PIECE_CYCLES) or (fObjects[i].Animations[false, false, false].AnyMasked) then
+    if (fObjects[i].CyclesSinceLastUse >= RETAIN_PIECE_CYCLES) then
       fObjects.Delete(i);
   end;
 end;
@@ -218,9 +218,15 @@ end;
 // And the stuff for communicating with the theme
 
 procedure TNeoPieceManager.SetTheme(aTheme: TNeoTheme);
+var
+  i: Integer;
 begin
   fTheme := aTheme;
   Tidy;
+
+  for i := 0 to fObjects.Count-1 do
+    if fObjects[i].Animations[false, false, false].AnyMasked then
+      fObjects[i].Remask(aTheme);
 end;
 
 end.
