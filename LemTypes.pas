@@ -225,12 +225,18 @@ var
       DstRect := SizedRect(TotalDstRect.Left, TotalDstRect.Top + (iY * TotalSrcRect.Height), TotalSrcRect.Width, TotalSrcRect.Height);
 
       if iY = CountY then
+      begin
         DstRect := SizedRect(DstRect.Left, DstRect.Top, DstRect.Width, ((TotalDstRect.Height - 1) mod TotalSrcRect.Height) + 1);
+        SrcRect := SizedRect(SrcRect.Left, SrcRect.Top, DstRect.Width, DstRect.Height);
+      end;
 
       for iX := 0 to CountX do
       begin
         if iX = CountX then
+        begin
           DstRect := SizedRect(DstRect.Left, DstRect.Top, ((TotalDstRect.Width - 1) mod TotalSrcRect.Width) + 1, DstRect.Height);
+          SrcRect := SizedRect(SrcRect.Left, SrcRect.Top, DstRect.Width, DstRect.Height);
+        end;
 
         Src.DrawTo(Dst, DstRect, SrcRect);
 
