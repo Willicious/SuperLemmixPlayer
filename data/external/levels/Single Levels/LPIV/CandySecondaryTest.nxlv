@@ -34,7 +34,7 @@
    COLLECTION namida_candy
    PIECE      trap
    X         85
-   Y         52
+   Y         53
    NO_OVERWRITE
  $END
  
