@@ -25,6 +25,7 @@
  MAX_SPAWN_INTERVAL   53
  
  $SKILLSET 
+   DISARMER    5
  $END 
  
 #     Interactive objects       
@@ -40,7 +41,7 @@
    COLLECTION namida_desert
    PIECE      trap_02
    X        154
-   Y         29
+   Y         30
    NO_OVERWRITE
  $END
  
