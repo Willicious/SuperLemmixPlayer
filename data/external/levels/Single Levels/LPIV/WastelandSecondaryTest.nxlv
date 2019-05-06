@@ -25,6 +25,7 @@
  MAX_SPAWN_INTERVAL   53
  
  $SKILLSET 
+   DISARMER    5
  $END 
  
 #     Interactive objects       

@@ -1036,10 +1036,10 @@ end;
 
 procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000) <> 0 then
-  begin
-    BlendMem(F, B);
-  end;
+  if (F and $FF000000) = $FF000000 then
+    B := F
+  else if (F and $FF000000) <> 0 then
+    MergeMem(F, B);
 end;
 
 procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
@@ -1047,8 +1047,13 @@ begin
   if (F and $FF000000) <> 0 then
   begin
     if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
+      F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
     BlendMem(F, B);
+
+    if (F and $FF000000) = $FF000000 then
+      B := F
+    else
+      MergeMem(F, B);
   end;
 end;
 
