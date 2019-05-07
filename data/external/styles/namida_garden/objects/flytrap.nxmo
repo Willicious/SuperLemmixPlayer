@@ -5,3 +5,25 @@ TRIGGER_Y 11
 TRIGGER_WIDTH 4
 TRIGGER_HEIGHT 4
 SOUND weedgulp
+
+$ANIMATION
+  FRAMES 14
+  NAME constant
+  OFFSET_X 0
+  OFFSET_Y 11
+  
+  $TRIGGER
+    DISABLED true
+	STATE STOP
+  $END
+  
+  $TRIGGER
+    BUSY true
+	HIDE
+  $END
+  
+  $TRIGGER
+    FRAME_ZERO true
+	HIDE
+  $END
+$END
