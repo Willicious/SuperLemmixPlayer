@@ -438,7 +438,7 @@ begin
   SrcRec := fVariableInfo[0];
   DstRec := @fVariableInfo[Index];
 
-  Clone(@SrcRec, @DstRec);
+  Clone(@SrcRec, DstRec);
 
   if Rotate then
   begin

@@ -59,6 +59,16 @@
    X         56
    Y        107
    NO_OVERWRITE
+   ANGLE 22
+   SPEED 18
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_honeycomb
+   PIECE      zombee
+   X         56
+   Y        117
+   NO_OVERWRITE
    FLIP_HORIZONTAL
  $END
  

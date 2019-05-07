@@ -580,13 +580,22 @@ var
 begin
   Clear;
 
+  NewAnim := TGadgetAnimation.Create(aSrc.PrimaryAnimation.fMainObjectWidth, aSrc.PrimaryAnimation.fMainObjectHeight);
+  NewAnim.Clone(aSrc.PrimaryAnimation);
+  AddPrimary(NewAnim);
+
   for i := 0 to aSrc.Count-1 do
   begin
+    if aSrc.Items[i].Primary then
+      Continue;
+
     NewAnim := TGadgetAnimation.Create(aSrc.Items[i].fMainObjectWidth, aSrc.Items[i].fMainObjectHeight);
     NewAnim.Clone(aSrc.Items[i]);
 
     Add(NewAnim);
   end;
+
+  SortByZIndex;
 end;
 
 procedure TGadgetAnimations.Remask(aTheme: TNeoTheme);
