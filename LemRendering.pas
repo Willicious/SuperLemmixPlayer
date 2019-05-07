@@ -898,7 +898,7 @@ begin
   if P^ and $FF000000 <> $FF000000 then
   begin
     C := Color; //Theme.Colors[MASK_COLOR];
-    BlendMem(P^, C);
+    MergeMem(P^, C);
     P^ := C;
   end;
 end;
@@ -1016,14 +1016,14 @@ end;
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FF000000) <> 0 then
-    BlendMem(F, B);
+    MergeMem(F, B);
 end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FF000000 <> 0) and (B and $FF000000 <> $FF000000) then
   begin
-    BlendMem(B, F);
+    MergeMem(B, F);
     B := F;
   end;
 end;
@@ -1048,7 +1048,6 @@ begin
   begin
     if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
       F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
-    BlendMem(F, B);
 
     if (F and $FF000000) = $FF000000 then
       B := F
