@@ -360,6 +360,8 @@ begin
     BaseTrigger.fState := gasLoopToZero
   else if (aSegment.Line['match_primary_frame'] <> nil) then
     BaseTrigger.fState := gasMatchPrimary
+  else if (aSegment.Line['hide'] <> nil) then
+    BaseTrigger.fState := gasStop
   else
     BaseTrigger.fState := gasPlay;
 
