@@ -64,10 +64,11 @@
  
  $OBJECT
    COLLECTION namida_machine
-   PIECE      updraft_mid_edge
-   X         95
-   Y        103
-   HEIGHT     8
+   PIECE      updraft
+   X        185
+   Y         63
+   WIDTH     32
+   HEIGHT    32
    NO_OVERWRITE
  $END
  
