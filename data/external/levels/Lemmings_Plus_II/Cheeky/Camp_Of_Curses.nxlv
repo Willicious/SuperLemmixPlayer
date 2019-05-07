@@ -1,0 +1,580 @@
+TITLE Camp Of Curses
+THEME namida_purple
+ID xE1E18343E1E18343
+LEMMINGS 50
+REQUIREMENT 30
+MAX_SPAWN_INTERVAL 28
+WIDTH 488
+HEIGHT 160
+START_X 273
+START_Y 80
+
+$SKILLSET
+  CLIMBER 5
+  BOMBER 4
+  BLOCKER 10
+  BUILDER 1
+  BASHER 25
+  MINER 25
+  DIGGER 25
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE window
+  X 153
+  Y 97
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X 206
+  Y 35
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 186
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 205
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 220
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 235
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 251
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 256
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 265
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 276
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 289
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 305
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 245
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 164
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_03
+  X 119
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 216
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 168
+  Y 52
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_03
+  X 123
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_03
+  X 78
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_03
+  X 33
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 252
+  Y 50
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 309
+  Y 61
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 333
+  Y 105
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_04
+  X 354
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_04
+  X 399
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_04
+  X 444
+  Y 149
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_02
+  X 381
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_02
+  X 428
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X -23
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_05
+  X -14
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X -19
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_05
+  X -10
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X -15
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_05
+  X -6
+  Y 33
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X -12
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_05
+  X -3
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 470
+  Y -12
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_05
+  X 477
+  Y 9
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 471
+  Y 28
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_05
+  X 479
+  Y 51
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 473
+  Y 70
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_05
+  X 483
+  Y 92
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 477
+  Y 109
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_05
+  X 485
+  Y 133
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 480
+  Y 149
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 451
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 433
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 414
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 397
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 379
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 358
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 340
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 322
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 300
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 280
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 259
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 239
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 216
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 195
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 172
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 150
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 127
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 106
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 85
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 63
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 42
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 22
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_04
+  X 3
+  Y -5
+  ONE_WAY
+$END
+

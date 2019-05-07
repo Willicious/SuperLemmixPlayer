@@ -1,0 +1,1398 @@
+TITLE The Potplant Level
+THEME namida_tree
+ID xFC87328AFC87328A
+LEMMINGS 50
+REQUIREMENT 35
+MAX_SPAWN_INTERVAL 28
+WIDTH 352
+HEIGHT 160
+START_X 176
+START_Y 80
+
+$SKILLSET
+  CLIMBER 15
+  FLOATER 15
+  BOMBER 15
+  BLOCKER 15
+  BUILDER 15
+  BASHER 15
+  MINER 15
+  DIGGER 15
+$END
+
+$OBJECT
+  COLLECTION default
+  PIECE water
+  X 146
+  Y 130
+  WIDTH 64
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE window
+  X 26
+  Y 93
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X 282
+  Y 122
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 82
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 82
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 82
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 81
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 80
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 104
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 128
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_02
+  X 138
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_02
+  X 80
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 138
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 80
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 139
+  Y 94
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_03
+  X 111
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_01
+  X 95
+  Y 47
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_01
+  X 106
+  Y 43
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_01
+  X 97
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 56
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 32
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 18
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_02
+  X 153
+  Y 122
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 152
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 176
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 200
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_02
+  X 200
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 224
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 248
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 200
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_02
+  X 258
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 258
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 272
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_03
+  X 296
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 320
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 201
+  Y 131
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 200
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 198
+  Y 105
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 272
+  Y 129
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 258
+  Y 94
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 187
+  Y 110
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_03
+  X 228
+  Y 87
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE branch_02
+  X 238
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE branch_02
+  X 236
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE branch_01
+  X 211
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE branch_01
+  X 212
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 204
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 206
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 212
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 207
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 209
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 203
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 212
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 252
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 252
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 259
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 255
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 255
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 260
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_04
+  X 257
+  Y 84
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_04
+  X 152
+  Y 108
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE steel_02
+  X 152
+  Y 122
+  ERASE
+  ONE_WAY
+$END
+

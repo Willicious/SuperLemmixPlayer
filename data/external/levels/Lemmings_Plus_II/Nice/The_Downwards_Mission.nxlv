@@ -1,0 +1,1360 @@
+TITLE The Downwards Mission
+THEME namida_metal
+ID xABD21404ABD21404
+LEMMINGS 50
+REQUIREMENT 40
+MAX_SPAWN_INTERVAL 8
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  BOMBER 10
+  DIGGER 1
+$END
+
+ $TALISMAN 
+   TITLE Minimal Collateral Damage
+   ID 0
+   COLOR Silver
+   SAVE 47
+ $END 
+ 
+$OBJECT
+  COLLECTION namida_metal
+  PIECE window
+  X 32
+  Y 17
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE window
+  X 241
+  Y 17
+  DIRECTION left
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X 98
+  Y 121
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X 178
+  Y 121
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit_flames
+  X 98
+  Y 121
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit_flames
+  X 178
+  Y 121
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$OBJECT
+  COLLECTION namida_metal
+  PIECE exit
+  X -32768
+  Y -32776
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 0
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 32
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 64
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 96
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 128
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 160
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 192
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 224
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 256
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 288
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 0
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 0
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 0
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 0
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 288
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 288
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 288
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 288
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 0
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 32
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 64
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 96
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 128
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 160
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 192
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 224
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 256
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 288
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 32
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 64
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 96
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 192
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 224
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 256
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE bar_01
+  X 158
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_04
+  X 128
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_04
+  X 176
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE steel_02
+  X 144
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 32
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 64
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 96
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_04
+  X 128
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 256
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 224
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_02
+  X 192
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_04
+  X 176
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE bar_07
+  X 134
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 64
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 144
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_01
+  X 224
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE bar_07
+  X 96
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE bar_07
+  X 176
+  Y 112
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_04
+  X 48
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_metal
+  PIECE block_04
+  X 256
+  Y 128
+  ONE_WAY
+$END
+
+

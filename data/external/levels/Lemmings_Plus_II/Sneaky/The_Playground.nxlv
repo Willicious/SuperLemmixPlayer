@@ -1,0 +1,1746 @@
+TITLE The Playground
+THEME namida_psychedelic
+ID x87FF5C8F87FF5C8F
+LEMMINGS 100
+REQUIREMENT 90
+MAX_SPAWN_INTERVAL 38
+WIDTH 1246
+HEIGHT 160
+START_X 200
+START_Y 80
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BOMBER 20
+  BLOCKER 20
+  BUILDER 10
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE window
+  X 64
+  Y 46
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X 1136
+  Y 64
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE water
+  X 0
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE water
+  X 1208
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE water
+  X 1160
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE water
+  X 1112
+  Y 144
+  WIDTH 48
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$OBJECT
+  COLLECTION namida_psychedelic
+  PIECE exit
+  X -32768
+  Y -32768
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE block_01
+  X 43
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 43
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 60
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 67
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 67
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE block_01
+  X 115
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 115
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 132
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 139
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 187
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 235
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 235
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 235
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 235
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 267
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 267
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 315
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 315
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 363
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 363
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 363
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 363
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 267
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 315
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 395
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE block_01
+  X 443
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 443
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 460
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE block_01
+  X 515
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 515
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 532
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 539
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 587
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 635
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 667
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 699
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 731
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 635
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 635
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 667
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 699
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 731
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 731
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 763
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 756
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 635
+  Y -32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 811
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 859
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 859
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 859
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 859
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 859
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 891
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 891
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 891
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 891
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 907
+  Y 128
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 923
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 955
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 971
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 923
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 923
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 955
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 1003
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 955
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 923
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 891
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 907
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 923
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 939
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 955
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 971
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 987
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 1003
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 1019
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 971
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 987
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 987
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 955
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 1003
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 1019
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 1035
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 1051
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_01
+  X 1067
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 1099
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 979
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 963
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_03
+  X 947
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_04
+  X 1083
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_04
+  X 1099
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_04
+  X 1115
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 1051
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 1067
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 1051
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE colorblocks_02
+  X 1051
+  Y 72
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 1115
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_05
+  X 1160
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE block_01
+  X 1185
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 1185
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 1185
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 1202
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_psychedelic
+  PIECE bar_06
+  X 1202
+  Y 119
+  ONE_WAY
+$END
+

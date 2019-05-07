@@ -1,0 +1,1375 @@
+TITLE Heads Up!
+THEME namida_purple
+ID x80FC786080FC7860
+LEMMINGS 50
+REQUIREMENT 50
+MAX_SPAWN_INTERVAL 28
+WIDTH 640
+HEIGHT 160
+START_X 360
+START_Y 80
+
+$SKILLSET
+  BUILDER 10
+$END
+
+ $TALISMAN 
+   TITLE Nothing To Worry About
+   ID 4
+   COLOR Bronze
+   BUILDER_LIMIT 3
+ $END 
+ 
+$OBJECT
+  COLLECTION namida_purple
+  PIECE window
+  X 336
+  Y 90
+  DIRECTION right
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X 336
+  Y 11
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$OBJECT
+  COLLECTION namida_purple
+  PIECE exit
+  X -32768
+  Y -32777
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 348
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 371
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 395
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 329
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 419
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_01
+  X 307
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_02
+  X 441
+  Y 136
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_03
+  X 286
+  Y 135
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_01
+  X 385
+  Y 103
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_01
+  X 432
+  Y 65
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 476
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 514
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 548
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 606
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_08
+  X 652
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_06
+  X 666
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 650
+  Y 134
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_10
+  X 652
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 604
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 556
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 508
+  Y 142
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 460
+  Y 141
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_06
+  X 592
+  Y 32
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_07
+  X 596
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_02
+  X 623
+  Y 10
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_02
+  X 670
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_02
+  X 716
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_02
+  X 763
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_08
+  X 272
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_08
+  X 255
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_08
+  X 237
+  Y 79
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_08
+  X 217
+  Y 61
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 203
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 233
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 187
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 177
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 175
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 172
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 137
+  Y 62
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 89
+  Y 62
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 41
+  Y 62
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_09
+  X 12
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE tentacle_02
+  X 7
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X -19
+  Y -40
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 26
+  Y -36
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 63
+  Y -37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_07
+  X 103
+  Y -35
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_03
+  X 139
+  Y 99
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_05
+  X 91
+  Y 133
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE thing_03
+  X 46
+  Y 139
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE steel_03
+  X 346
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE steel_03
+  X 322
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE steel_03
+  X 370
+  Y 37
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_03
+  X 190
+  Y 34
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_purple
+  PIECE stuff_02
+  X 503
+  Y 25
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+

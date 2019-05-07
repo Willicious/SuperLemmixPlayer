@@ -1,0 +1,390 @@
+TITLE Just Breathe...
+THEME namida_tree
+ID x8077FE4D8077FE4D
+LEMMINGS 50
+REQUIREMENT 40
+MAX_SPAWN_INTERVAL 28
+WIDTH 616
+HEIGHT 160
+START_X 352
+START_Y 80
+
+$SKILLSET
+  CLIMBER 3
+  FLOATER 3
+  BOMBER 3
+  BLOCKER 3
+  BUILDER 4
+  BASHER 3
+  MINER 3
+  DIGGER 3
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE exit
+  X 384
+  Y 44
+  NO_OVERWRITE
+$END
+
+$OBJECT
+  COLLECTION namida_tree
+  PIECE window
+  X 296
+  Y 75
+  DIRECTION right
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_04
+  X 242
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_04
+  X 398
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 233
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 254
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 261
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 226
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 247
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 236
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 255
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 244
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_10
+  X 262
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_08
+  X 336
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_05
+  X 365
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_09
+  X 317
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 223
+  Y 149
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 284
+  Y 150
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 341
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 392
+  Y 154
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 75
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 64
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 59
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 53
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 39
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 29
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 21
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_01
+  X 10
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X 125
+  Y 145
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X 112
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X 102
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X 90
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X 31
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X 16
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X 1
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X -9
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE dirt_02
+  X -16
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_02
+  X 52
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 63
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_04
+  X 560
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE trunk_04
+  X 560
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_05
+  X 526
+  Y -13
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 520
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 515
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 591
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  COLLECTION namida_tree
+  PIECE leaves_02
+  X 599
+  Y -3
+  ONE_WAY
+$END
+

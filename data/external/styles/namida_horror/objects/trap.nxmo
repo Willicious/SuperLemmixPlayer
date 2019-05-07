@@ -11,6 +11,7 @@ $ANIMATION
   NAME constant
   OFFSET_X 0
   OFFSET_Y 0
+  INITIAL_FRAME -1
   
   $TRIGGER
     BUSY true
