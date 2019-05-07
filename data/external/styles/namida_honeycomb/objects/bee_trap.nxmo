@@ -5,3 +5,26 @@ TRIGGER_Y 8
 TRIGGER_WIDTH 2
 TRIGGER_HEIGHT 4
 SOUND bee_sting
+
+$ANIMATION
+  FRAMES 8
+  NAME constant
+  OFFSET_X 9
+  OFFSET_Y 15
+  Z_INDEX 2
+  
+  $TRIGGER
+    DISABLED true
+	STATE PAUSE
+  $END
+  
+  $TRIGGER
+    BUSY true
+	HIDE
+  $END
+  
+  $TRIGGER
+    FRAME_ZERO true
+	HIDE
+  $END
+$END

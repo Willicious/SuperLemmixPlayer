@@ -17,6 +17,7 @@
  START_X  160
  START_Y   80
  THEME namida_honeycomb
+ BACKGROUND namida_honeycomb:honeydrips
  
 #         Level stats           
 # ----------------------------- 
@@ -42,14 +43,23 @@
    COLLECTION namida_honeycomb
    PIECE      bee_trap
    X        120
-   Y         65
+   Y         66
  $END
  
  $OBJECT
    COLLECTION namida_honeycomb
    PIECE      bee_trap
    X        162
-   Y         65
+   Y         66
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_honeycomb
+   PIECE      bee_decoration
+   X         56
+   Y        107
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
  $END
  
  
