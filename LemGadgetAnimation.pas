@@ -530,15 +530,29 @@ function TGadgetAnimation.MakeFrameBitmaps: TBitmaps;
 var
   i: Integer;
   TempBMP: TBitmap32;
-begin
-  Result := TBitmaps.Create;
-  for i := 0 to fFrameCount-1 do
-  begin
-    TempBMP := TBitmap32.Create(fWidth, fHeight);
-    TempBMP.Clear(0);
-    Draw(TempBMP, 0, 0, i);
 
-    Result.Add(TempBMP);
+  OldColor: String;
+  OldMaskColor: TColor32;
+begin
+  OldColor := fColor;
+  OldMaskColor := fMaskColor;
+  try
+    fColor := '';
+    fMaskColor := $FFFFFFFF;
+    Remask(nil);
+
+    Result := TBitmaps.Create;
+    for i := 0 to fFrameCount-1 do
+    begin
+      TempBMP := TBitmap32.Create(fWidth, fHeight);
+      TempBMP.Clear(0);
+      Draw(TempBMP, 0, 0, i);
+
+      Result.Add(TempBMP);
+    end;
+  finally
+    fColor := OldColor;
+    fMaskColor := OldMaskColor;
   end;
 end;
 
