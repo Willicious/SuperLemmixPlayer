@@ -134,6 +134,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_Optimize>true</DCC_Optimize>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_3_Win32)'!=''">
+        <PreBuildEvent><![CDATA[GetCommitID LemVersionCID COMMIT_ID]]></PreBuildEvent>
         <PostBuildEvent><![CDATA[]]></PostBuildEvent>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
@@ -194,58 +195,39 @@ $(PreBuildEvent)]]></PreBuildEvent>
     <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
     <PropertyGroup Condition="'$(Config)'=='Release' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Release' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Experimental Release' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Experimental Release' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Exp Release Without Data' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -253,20 +235,15 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Exp Release Without Data' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>rmdir bin /s /q
-&amp;&amp;mkdir bin
-&amp;&amp;GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>rmdir bin /s /q&amp;&amp;mkdir bin&amp;&amp;GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>xcopy data\external\* bin\ /q /s
-</PostBuildEvent>
+        <PostBuildEvent>xcopy data\external\* bin\ /q /s</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -274,8 +251,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
-</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
