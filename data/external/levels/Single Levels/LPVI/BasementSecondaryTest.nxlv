@@ -32,8 +32,8 @@
  $OBJECT
    COLLECTION namida_basement
    PIECE      window
-   X         34
-   Y         20
+   X         79
+   Y         21
    NO_OVERWRITE
    DIRECTION right
  $END
@@ -41,8 +41,16 @@
  $OBJECT
    COLLECTION namida_basement
    PIECE      flame
-   X        182
-   Y         48
+   X        179
+   Y         58
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_basement
+   PIECE      exit
+   X         31
+   Y         53
+   NO_OVERWRITE
  $END
  
  
