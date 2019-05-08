@@ -5,7 +5,7 @@ interface
 
 uses
   Math, Classes, GR32,
-  Windows, Contnrs, LemTypes, LemCore,
+  Windows, Contnrs, SysUtils, LemTypes, LemCore,
   LemGadgetsMeta, LemGadgetsModel,
   LemGadgetAnimation,
   Generics.Collections;
@@ -24,7 +24,7 @@ type
 
       function GetBitmap: TBitmap32;
     public
-      constructor Create(aGadget: TGadget; aAnimation: String);
+      constructor Create(aGadget: TGadget; aAnimation: TGadgetAnimation);
       function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
       procedure ProcessTriggers;
 
@@ -285,7 +285,7 @@ var
 begin
   for i := 0 to MetaObj.Animations.Count-1 do
   begin
-    NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i].Name);
+    NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i]);
     Animations.Add(NewInstance);
   end;
 
@@ -661,13 +661,17 @@ begin
 end;
 
 constructor TGadgetAnimationInstance.Create(aGadget: TGadget;
-  aAnimation: String);
+  aAnimation: TGadgetAnimation);
 var
   MetaObj: TGadgetMetaAccessor;
 begin
   inherited Create;
+
+  if aGadget.MetaObj.Animations.IndexOf(aAnimation) < 0 then
+    raise Exception.Create('TGadgetAnimationInstance.Create called with an animation from a different gadget!');
+
   fGadget := aGadget;
-  fAnimation := aGadget.MetaObj.Animations[aAnimation];
+  fAnimation := aAnimation;
 
   if fAnimation.StartFrameIndex < 0 then
     fFrame := Random(fAnimation.FrameCount)
@@ -759,7 +763,7 @@ begin
 
   for i := 0 to aSrc.Count-1 do
   begin
-    NewInstance := TGadgetAnimationInstance.Create(newObj, aSrc[i].MetaAnimation.Name);
+    NewInstance := TGadgetAnimationInstance.Create(newObj, aSrc[i].MetaAnimation);
     NewInstance.Clone(aSrc[i]);
     Add(NewInstance);
     if NewInstance.Primary then
