@@ -456,7 +456,7 @@ begin
   ModColor(Green);
   ModColor(Blue);
   C := ($C0000000) or (Red shl 16) or (Green shl 8) or (Blue);
-  BlendMem(C, B);
+  MergeMem(C, B);
 end;
 
 procedure TRenderBitmaps.CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
