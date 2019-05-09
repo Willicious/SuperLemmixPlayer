@@ -10,7 +10,7 @@ uses
   GameControl,
   LemNeoPieceManager,
   LemLevel,
-  LemGadgetsMeta, LemGadgetsModel,
+  LemGadgetsMeta, LemGadgetsModel, LemGadgets,
   LemTypes,
   LemVersion,
   Classes,
@@ -187,6 +187,53 @@ var
     NewGadget.Height := Height;
     Level.InteractiveObjects.Add(NewGadget);
 
+    if Uppercase(Trim(LineValues.Values['CENTER_ONLY'])) = 'TRUE' then
+    begin
+      // I will need to improve this later to account for nine-slicing in secondary animations.
+      NewGadget.Left := NewGadget.Left - Accessor.Animations.Items[0].CutLeft;
+      NewGadget.Top := NewGadget.Top - Accessor.Animations.Items[0].CutTop;
+      NewGadget.Width := NewGadget.Width + Accessor.Animations.Items[0].CutLeft + Accessor.Animations.Items[0].CutRight;
+      NewGadget.Height := NewGadget.Height + Accessor.Animations.Items[0].CutTop + Accessor.Animations.Items[0].CutBottom;
+    end;
+
+    // Get ready for a really epic kludge. We will generally want any teleporter
+    // or receiver to render as non-disabled, and any locked exit to render in
+    // locked state. So how do we do this? By adding a paired teleporter/receiver
+    // or an unlock button respectively, and placing it outside the "level".
+
+    if not (Uppercase(Trim(LineValues.Values['ALLOW_DISABLED'])) = 'TRUE') then
+    begin
+      if Accessor.TriggerEffect = DOM_TELEPORT then
+      begin
+        NewGadget := TGadgetModel.Create;
+        NewGadget.GS := 'orig_marble';
+        NewGadget.Piece := 'receiver';
+        NewGadget.Left := -100;
+        NewGadget.Top := -100;
+        Level.InteractiveObjects.Add(NewGadget);
+      end;
+
+      if Accessor.TriggerEffect = DOM_RECEIVER then
+      begin
+        NewGadget := TGadgetModel.Create;
+        NewGadget.GS := 'orig_marble';
+        NewGadget.Piece := 'teleporter';
+        NewGadget.Left := -100;
+        NewGadget.Top := -100;
+        Level.InteractiveObjects.Add(NewGadget);
+      end;
+
+      if Accessor.TriggerEffect = DOM_TELEPORT then
+      begin
+        NewGadget := TGadgetModel.Create;
+        NewGadget.GS := 'default';
+        NewGadget.Piece := 'button';
+        NewGadget.Left := -100;
+        NewGadget.Top := -100;
+        Level.InteractiveObjects.Add(NewGadget);
+      end;
+    end;
+
     GameParams.ReloadCurrentLevel;
     if DstFile = '' then
       DstFile := RootPath(MakeSafeForFilename(StringReplace(PieceIdentifier, ':', ' ', [rfReplaceAll])) + '.png');
@@ -199,8 +246,10 @@ var
     begin
       SL := TStringList.Create;
       try
-        SL.Add('GRAPHICS_RECT=' + IntToStr(AnimRect.Left) + ',' + IntToStr(AnimRect.Top) + ':' + IntToStr(AnimRect.Width) + 'x' + IntToStr(AnimRect.Height));
-        SL.Add('PHYSICS_RECT=' + IntToStr(PhysRect.Left) + ',' + IntToStr(PhysRect.Top) + ':' + IntToStr(PhysRect.Width) + 'x' + IntToStr(PhysRect.Height));
+        SL.Add('OFFSET_LEFT ' + IntToStr(PhysRect.Left));
+        SL.Add('OFFSET_TOP ' + IntToStr(PhysRect.Top));
+        SL.Add('OFFSET_RIGHT ' + IntToStr(AnimRect.Right - PhysRect.Right));
+        SL.Add('OFFSET_BOTTOM ' + IntToStr(AnimRect.Bottom - PhysRect.Bottom));
         SL.SaveToFile(RootPath(LineValues.Values['INFO_FILE']));
       finally
         SL.Free;
