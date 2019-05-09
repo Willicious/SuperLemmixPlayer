@@ -43,6 +43,7 @@ type
     fRenderInterface    : TRenderInterface;
 
     fDisableBackground  : Boolean;
+    fTransparentBackground: Boolean;
 
     fRecolorer          : TRecolorImage;
 
@@ -160,6 +161,8 @@ type
 
     property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
     property ParticleLayer: TBitmap32 read GetParticleLayer; // needs to be replaced with making TRenderer draw them
+
+    property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
   end;
 
 implementation
@@ -1863,7 +1866,11 @@ begin
 
   // Background layer
   fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
-  fLayers[rlBackground].Clear($FF000000 or fBgColor);
+
+  if fTransparentBackground then
+    fLayers[rlBackground].Clear(0)
+  else
+    fLayers[rlBackground].Clear($FF000000 or fBgColor);
 
   if DoBackground and (RenderInfoRec.Level.Info.Background <> '') then
   begin
@@ -1916,7 +1923,8 @@ begin
   // Combine all layers to the WorldMap
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.PhysicsMap := fPhysicsMap;
-  fLayers.CombineTo(World);
+  fLayers.CombineTo(World, World.BoundsRect, false, fTransparentBackground);
+  World.SaveToFile(AppPath + 'test.bmp');
 end;
 
 

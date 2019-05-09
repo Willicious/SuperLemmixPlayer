@@ -200,38 +200,17 @@ var
       Result := BasePath + Result;
   end;
 
-  procedure DisplayPath(aPath: String);
-  var
-    i: Integer;
-  begin
-    i := 1;
-    while i < Length(aPath) do
-    begin
-      if i mod 20 = 19 then
-         aPath := LeftStr(aPath, i) + ' ' + RightStr(aPath, Length(aPath) - i);
-      Inc(i);
-    end;
-
-    ShowMessage(aPath);
-  end;
-
   procedure DoRenderLevel;
   begin
-    ShowMessage('level rendering');
     GameParams.TestModeLevel.Filename := RootPath(LineValues[1]);
-    ShowMessage('2');
-    DisplayPath(GameParams.TestModeLevel.Path);
     GameParams.LoadCurrentLevel(false);
-    ShowMessage('3');
 
     if DstFile = '' then
       DstFile := RootPath(ChangeFileExt(GameParams.TestModeLevel.Filename, '.png'));
-    ShowMessage('4');
 
+    GameParams.Renderer.TransparentBackground := false;
     GameParams.Renderer.RenderWorld(Dst, true);
-    ShowMessage('5');
     TPngInterface.SavePngFile(DstFile, Dst);
-    ShowMessage('6');
   end;
 
   procedure DoRenderObject;
@@ -303,6 +282,7 @@ var
     if DstFile = '' then
       DstFile := RootPath(MakeSafeForFilename(StringReplace(PieceIdentifier, ':', ' ', [rfReplaceAll])) + '.png');
 
+    GameParams.Renderer.TransparentBackground := true;
     GameParams.Renderer.RenderWorld(Dst, true);
     TPngInterface.SavePngFile(DstFile, Dst);
   end;
@@ -332,16 +312,11 @@ begin
     for i := 0 to SL.Count-1 do
     begin
       SetCurrentDir(BasePath);
-      ShowMessage(BasePath);
       LineValues.DelimitedText := SL[i];
-      ShowMessage(LineValues.DelimitedText);
       if LineValues.Count = 0 then
         Continue;
 
-      ShowMessage('go!');
       DstFile := RootPath(LineValues.Values['OUTPUT']); // fallback must be implemented per-item!
-
-      ShowMessage(DstFile);
 
       if Trim(Uppercase(LineValues[0])) = 'LEVEL' then DoRenderLevel;
       if Trim(Uppercase(LineValues[0])) = 'OBJECT' then DoRenderObject;
