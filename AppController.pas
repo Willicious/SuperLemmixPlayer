@@ -226,6 +226,8 @@ var
 
     Width, Height, ExtraWidth, ExtraHeight: Integer;
     Accessor: TGadgetMetaAccessor;
+
+    SL: TStringList;
   begin
     PieceIdentifier := LineValues[1];
     Theme := LineValues.Values['THEME'];
@@ -285,6 +287,18 @@ var
     GameParams.Renderer.TransparentBackground := true;
     GameParams.Renderer.RenderWorld(Dst, true);
     TPngInterface.SavePngFile(DstFile, Dst);
+
+    if LineValues.Values['INFO_FILE'] <> '' then
+    begin
+      SL := TStringList.Create;
+      try
+        SL.Add('GRAPHICS_RECT=' + IntToStr(AnimRect.Left) + ',' + IntToStr(AnimRect.Top) + ':' + IntToStr(AnimRect.Width) + 'x' + IntToStr(AnimRect.Height));
+        SL.Add('PHYSICS_RECT=' + IntToStr(PhysRect.Left) + ',' + IntToStr(PhysRect.Top) + ':' + IntToStr(PhysRect.Width) + 'x' + IntToStr(PhysRect.Height));
+        SL.SaveToFile(RootPath(LineValues.Values['INFO_FILE']));
+      finally
+        SL.Free;
+      end;
+    end;
   end;
 begin
   InitializeNoGuiMode;
