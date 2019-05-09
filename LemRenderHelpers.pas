@@ -419,7 +419,7 @@ begin
       BMP.OnPixelCombine := CombinePixelsShadow;
     end else begin
       BMP.DrawMode := dmBlend;
-      BMP.CombineMode := cmBlend;
+      BMP.CombineMode := cmMerge;
     end;
     Add(BMP);
 
@@ -506,7 +506,7 @@ begin
   aDst.BeginUpdate;
 
   if aTransparentBackground then
-    aDst.Clear(0)
+    aDst.Clear($00000000)
   else
     aDst.Clear($FF000000);
 

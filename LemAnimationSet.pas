@@ -297,8 +297,11 @@ begin
 
     fCountDownDigitsBitmap := TBitmap32.Create;
     fCountDownDigitsBitmap.DrawMode := dmBlend;
+    fCountDownDigitsBitmap.CombineMode := cmMerge;
+
     fHighlightBitmap := TBitmap32.Create;
     fHighlightBitmap.DrawMode := dmBlend;
+    fHighlightBitmap.CombineMode := cmMerge;
 
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'stoner.png', fLemmingAnimations[STONED]);
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'highlight.png', fHighlightBitmap);
@@ -307,6 +310,7 @@ begin
     fMetaLemmingAnimations[STONED].Width := fLemmingAnimations[STONED].Width;
     fMetaLemmingAnimations[STONED].Height := fLemmingAnimations[STONED].Height;
     fLemmingAnimations[STONED].DrawMode := dmBlend;
+    fLemmingAnimations[STONED].CombineMode := cmMerge;
   finally
     TempBitmap.Free;
   end;

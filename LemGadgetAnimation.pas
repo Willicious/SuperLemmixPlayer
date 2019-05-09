@@ -261,8 +261,10 @@ begin
     Remask(nil);
 
   if not Assigned(aPixelCombine) then
-    fSourceImageMasked.DrawMode := dmBlend
-  else begin
+  begin
+    fSourceImageMasked.DrawMode := dmBlend;
+    fSourceImageMasked.CombineMode := cmMerge;
+  end else begin
     fSourceImageMasked.DrawMode := dmCustom;
     fSourceImageMasked.OnPixelCombine := aPixelCombine;
   end;
@@ -279,10 +281,11 @@ function TGadgetAnimation.GetFrameBitmap(aFrame: Integer; aPersistent: Boolean =
 begin
   if aPersistent then
     Result := TBitmap32.Create(fWidth, fHeight)
-  else begin
+  else
     Result := fTempOutBitmap;
-    Result.DrawMode := dmBlend;
-  end;
+
+  Result.DrawMode := dmBlend;
+  Result.CombineMode := cmMerge;
 
   GetFrame(aFrame, Result);
 end;

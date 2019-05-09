@@ -404,6 +404,7 @@ var
 begin
   BlankPanel := TBitmap32.Create;
   BlankPanel.DrawMode := dmBlend;
+  BlankPanel.CombineMode := cmMerge;
   GetGraphic('skill_panels.png', BlankPanel);
 
   SrcRect := BlankPanel.BoundsRect;
@@ -636,6 +637,7 @@ begin
     try
       GetGraphic('empty_slot.png', EmptySlot);
       EmptySlot.DrawMode := dmBlend;
+      EmptySlot.CombineMode := cmMerge;
       while ButtonIndex <= LastSkillButtonIndex do
       begin
         ButRect := ButtonRect(ButtonIndex);
@@ -875,6 +877,7 @@ begin
         fInfoFont[CharID].OnPixelCombine := CombineToRed;
         fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
         fInfoFont[CharID].DrawMode := dmBlend;
+        fInfoFont[CharID].CombineMode := cmMerge;
       end
       else if CharID >= 0 then
         fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
