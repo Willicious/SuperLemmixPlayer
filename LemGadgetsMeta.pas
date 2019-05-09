@@ -5,7 +5,7 @@ unit LemGadgetsMeta;
 interface
 
 uses
-  GR32, LemTypes,
+  GR32, LemTypes, UMisc,
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,
   Contnrs, LemNeoParser,
@@ -131,6 +131,8 @@ type
       procedure SetSoundEffect(aValue: String);
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
+
+      procedure GetBoundsInfo(var aImageBounds: TRect; var aPhysicsBounds: TRect);
 
       property Animations: TGadgetAnimations read GetAnimations;
 
@@ -628,6 +630,24 @@ end;
 function TGadgetMetaAccessor.GetAnimations: TGadgetAnimations;
 begin
   Result := fGadgetMetaInfo.Animations[fFlip, fInvert, fRotate];
+end;
+
+procedure TGadgetMetaAccessor.GetBoundsInfo(var aImageBounds, aPhysicsBounds: TRect);
+var
+  AnimRect: TRect;
+  i: Integer;
+begin
+  aPhysicsBounds := SizedRect(0, 0, Animations.PrimaryAnimation.Width, Animations.PrimaryAnimation.Height);
+  aImageBounds := aPhysicsBounds;
+
+  for i := 0 to Animations.Count-1 do
+  begin
+    AnimRect := SizedRect(Animations.Items[i].OffsetX, Animations.Items[i].OffsetY, Animations.Items[i].Width, Animations.Items[i].Height);
+    aImageBounds := TRect.Union(aImageBounds, AnimRect);
+  end;
+
+  aPhysicsBounds.SetLocation(-aImageBounds.Left, -aImageBounds.Top);
+  aImageBounds.SetLocation(0, 0);
 end;
 
 { TMetaObjects }

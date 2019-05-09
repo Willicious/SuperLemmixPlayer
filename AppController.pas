@@ -5,15 +5,16 @@ interface
 
 uses
   SharedGlobals,
+  GR32, PngInterface,
   LemSystemMessages,
-  LemTypes, LemRendering, LemLevel,
+  LemTypes, LemRendering, LemLevel, LemGadgetsModel, LemGadgetsMeta,
   LemStrings,
   GameControl, LemVersion,
   GameSound,          // initial creation
   LemNeoPieceManager, // initial creation
   FBaseDosForm, GameBaseScreen,
   CustomPopup,
-  Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs, Messages;
+  Classes, SysUtils, StrUtils, IOUtils, UMisc, Windows, Forms, Dialogs, Messages;
 
 type
   {-------------------------------------------------------------------------------
@@ -35,6 +36,9 @@ type
     fActiveForm: TGameBaseScreen;
     procedure DoLevelConvert;
     procedure DoVersionInfo;
+    procedure DoRender;
+
+    procedure InitializeNoGuiMode;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -93,7 +97,7 @@ begin
 
   GameParams.Load;
 
-  IsTestMode := (Lowercase(ParamStr(1)) = 'test') or (Lowercase(ParamStr(1)) = 'convert');
+  IsTestMode := (Lowercase(ParamStr(1)) = 'test');
 
   if UnderWine and not GameParams.DisableWineWarnings then
     if GameParams.FullScreen then
@@ -128,17 +132,13 @@ begin
 
   if IsTestMode then
   begin
-    GameParams.BaseLevelPack.EnableSave := false;
-    GameParams.BaseLevelPack.Children.Clear;
-    GameParams.BaseLevelPack.Levels.Clear;
-    GameParams.TestModeLevel := GameParams.BaseLevelPack.Levels.Add;
+    InitializeNoGuiMode;
+
     GameParams.TestModeLevel.Filename := ParamStr(2);
     if Pos(':', GameParams.TestModeLevel.Filename) = 0 then
       GameParams.TestModeLevel.Filename := AppPath + GameParams.TestModeLevel.Filename;
-    GameParams.SetLevel(GameParams.TestModeLevel);
     GameParams.NextScreen := gstPreview;
-  end else
-    GameParams.TestModeLevel := nil;
+  end;
 
   if Lowercase(ParamStr(1)) = 'convert' then
   begin
@@ -152,6 +152,12 @@ begin
     fLoadSuccess := false;
   end;
 
+  if Lowercase(ParamStr(1)) = 'render' then
+  begin
+    DoRender;
+    fLoadSuccess := false;
+  end;
+
   if not fLoadSuccess then
     GameParams.NextScreen := gstExit;
 end;
@@ -160,6 +166,9 @@ procedure TAppController.DoLevelConvert;
 var
   DstFile: String;
 begin
+  InitializeNoGuiMode;
+  GameParams.TestModeLevel.Filename := ParamStr(2);
+
   DstFile := ParamStr(3);
   if DstFile = '' then
     DstFile := ChangeFileExt(GameParams.CurrentLevel.Path, '.nxlv')
@@ -168,6 +177,180 @@ begin
 
   GameParams.LoadCurrentLevel(true);
   GameParams.Level.SaveToFile(DstFile); 
+end;
+
+procedure TAppController.DoRender;
+var
+  BasePath: String;
+  SL: TStringList;
+  i: Integer;
+
+  LineValues: TStringList;
+  DstFile: String;
+  Dst: TBitmap32;
+
+  function RootPath(aInput: String): String;
+  begin
+    Result := aInput;
+
+    if Result = '' then
+      Exit;
+
+    if not TPath.IsPathRooted(Result) then
+      Result := BasePath + Result;
+  end;
+
+  procedure DisplayPath(aPath: String);
+  var
+    i: Integer;
+  begin
+    i := 1;
+    while i < Length(aPath) do
+    begin
+      if i mod 20 = 19 then
+         aPath := LeftStr(aPath, i) + ' ' + RightStr(aPath, Length(aPath) - i);
+      Inc(i);
+    end;
+
+    ShowMessage(aPath);
+  end;
+
+  procedure DoRenderLevel;
+  begin
+    ShowMessage('level rendering');
+    GameParams.TestModeLevel.Filename := RootPath(LineValues[1]);
+    ShowMessage('2');
+    DisplayPath(GameParams.TestModeLevel.Path);
+    GameParams.LoadCurrentLevel(false);
+    ShowMessage('3');
+
+    if DstFile = '' then
+      DstFile := RootPath(ChangeFileExt(GameParams.TestModeLevel.Filename, '.png'));
+    ShowMessage('4');
+
+    GameParams.Renderer.RenderWorld(Dst, true);
+    ShowMessage('5');
+    TPngInterface.SavePngFile(DstFile, Dst);
+    ShowMessage('6');
+  end;
+
+  procedure DoRenderObject;
+  var
+    PieceIdentifier: String;
+    Theme: String;
+    Level: TLevel;
+
+    AnimRect, PhysRect: TRect;
+    NewGadget: TGadgetModel;
+
+    Flip, Invert, Rotate: Boolean;
+
+    Width, Height, ExtraWidth, ExtraHeight: Integer;
+    Accessor: TGadgetMetaAccessor;
+  begin
+    PieceIdentifier := LineValues[1];
+    Theme := LineValues.Values['THEME'];
+    if Theme = '' then
+      Theme := LeftStr(PieceIdentifier, Pos(':', PieceIdentifier) - 1);
+
+    Level := GameParams.Level;
+
+    Level.Clear;
+
+    Level.Info.GraphicSetName := Theme;
+    GameParams.ReloadCurrentLevel;
+
+    Flip := Trim(Uppercase(LineValues.Values['FLIP'])) = 'TRUE';
+    Invert := Trim(Uppercase(LineValues.Values['INVERT'])) = 'TRUE';
+    Rotate := Trim(Uppercase(LineValues.Values['ROTATE'])) = 'TRUE';
+
+    Width := StrToIntDef(LineValues.Values['WIDTH'], -1);
+    Height := StrToIntDef(LineValues.Values['HEIGHT'], -1);
+
+    AnimRect := Rect(0, 0, 0, 0); // avoid compiler warning
+    PhysRect := Rect(0, 0, 0, 0);
+    Accessor := PieceManager.Objects[PieceIdentifier].GetInterface(Flip, Invert, Rotate);
+
+    PieceManager.Objects[PieceIdentifier].GetInterface(Flip, Invert, Rotate).GetBoundsInfo(AnimRect, PhysRect);
+
+    if (Width < 0) or (not Accessor.CanResizeHorizontal) then
+      Width := PhysRect.Width;
+
+    if (Height < 0) or (not Accessor.CanResizeVertical) then
+      Height := PhysRect.Height;
+
+    ExtraWidth := Width - PhysRect.Width;
+    ExtraHeight := Height - PhysRect.Height;
+
+    Level.Info.Width := AnimRect.Width + ExtraWidth;
+    Level.Info.Height := AnimRect.Height + ExtraHeight;
+
+    NewGadget := TGadgetModel.Create;
+    NewGadget.GS := LeftStr(PieceIdentifier, Pos(':', PieceIdentifier) - 1);
+    NewGadget.Piece := RightStr(PieceIdentifier, Length(PieceIdentifier) - Pos(':', PieceIdentifier));
+    NewGadget.Left := PhysRect.Left;
+    NewGadget.Top := PhysRect.Top;
+    NewGadget.Flip := Flip;
+    NewGadget.Invert := Invert;
+    NewGadget.Rotate := Rotate;
+    NewGadget.Skill := StrToIntDef(LineValues.Values['S'], 0);
+    NewGadget.TarLev := StrToIntDef(LineValues.Values['L'], 0);
+    NewGadget.Width := Width;
+    NewGadget.Height := Height;
+    Level.InteractiveObjects.Add(NewGadget);
+
+    GameParams.ReloadCurrentLevel;
+    if DstFile = '' then
+      DstFile := RootPath(MakeSafeForFilename(StringReplace(PieceIdentifier, ':', ' ', [rfReplaceAll])) + '.png');
+
+    GameParams.Renderer.RenderWorld(Dst, true);
+    TPngInterface.SavePngFile(DstFile, Dst);
+  end;
+begin
+  InitializeNoGuiMode;
+
+  SL := TStringList.Create;
+  LineValues := TStringList.Create;
+  Dst := TBitmap32.Create;
+  try
+    LineValues.Delimiter := '|';
+    LineValues.StrictDelimiter := true;
+
+    if ParamStr(2) = '-listfile' then
+      SL.LoadFromFile(ParamStr(3))
+    else begin
+      i := 2;
+      while ParamStr(i) <> '' do
+      begin
+        SL.Add(ParamStr(i));
+        Inc(i);
+      end;
+    end;
+
+    BasePath := IncludeTrailingPathDelimiter(GetCurrentDir);
+
+    for i := 0 to SL.Count-1 do
+    begin
+      SetCurrentDir(BasePath);
+      ShowMessage(BasePath);
+      LineValues.DelimitedText := SL[i];
+      ShowMessage(LineValues.DelimitedText);
+      if LineValues.Count = 0 then
+        Continue;
+
+      ShowMessage('go!');
+      DstFile := RootPath(LineValues.Values['OUTPUT']); // fallback must be implemented per-item!
+
+      ShowMessage(DstFile);
+
+      if Trim(Uppercase(LineValues[0])) = 'LEVEL' then DoRenderLevel;
+      if Trim(Uppercase(LineValues[0])) = 'OBJECT' then DoRenderObject;
+    end;
+  finally
+    SL.Free;
+    LineValues.Free;
+    Dst.Free;
+  end;
 end;
 
 procedure TAppController.DoVersionInfo;
@@ -244,6 +427,15 @@ begin
   TMainForm(GameParams.MainForm).ChildForm := nil;
   fActiveForm.Free;
   fActiveForm := nil;
+end;
+
+procedure TAppController.InitializeNoGuiMode;
+begin
+  GameParams.BaseLevelPack.EnableSave := false;
+  GameParams.BaseLevelPack.Children.Clear;
+  GameParams.BaseLevelPack.Levels.Clear;
+  GameParams.TestModeLevel := GameParams.BaseLevelPack.Levels.Add;
+  GameParams.SetLevel(GameParams.TestModeLevel);
 end;
 
 function TAppController.Execute: Boolean;
