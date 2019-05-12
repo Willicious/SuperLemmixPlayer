@@ -746,7 +746,7 @@ procedure TBaseSkillPanel.DrawHighlight(aButton: TSkillPanelButton);
 var
   BorderRect: TRect;
 begin
-  if aButton < spbNone then // we don't want to memorize this for eg. fast forward
+  if aButton <= LAST_SKILL_BUTTON then // we don't want to memorize this for eg. fast forward
   begin
     BorderRect := fButtonRects[aButton];
     fHighlitSkill := aButton;
@@ -765,7 +765,7 @@ procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
 var
   BorderRect, EraseRect: TRect;
 begin
-  if aButton < spbNone then
+  if aButton <= LAST_SKILL_BUTTON then
   begin
     BorderRect := fButtonRects[fHighlitSkill];
     fLastHighlitSkill := fHighlitSkill;
