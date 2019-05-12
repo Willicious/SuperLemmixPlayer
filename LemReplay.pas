@@ -581,7 +581,9 @@ begin
   try
     Sec := Parser.MainSection;
 
-    Sec.AddLine('USER', fPlayerName);
+    if (fPlayerName <> '') and (Uppercase(Trim(fPlayerName)) <> 'ANONYMOUS') then
+      Sec.AddLine('USER', fPlayerName);
+
     Sec.AddLine('TITLE', fLevelName);
     Sec.AddLine('AUTHOR', fLevelAuthor);
     if Trim(fLevelGame) <> '' then

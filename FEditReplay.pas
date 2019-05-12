@@ -46,12 +46,15 @@ implementation
 {$R *.dfm}
 
 uses
+  GameControl,
   UITypes;
 
 procedure TFReplayEditor.NoteChangeAtFrame(aFrame: Integer);
 begin
   if (fEarliestChange = -1) or (aFrame < fEarliestChange) then
     fEarliestChange := aFrame;
+
+  fReplay.PlayerName := GameParams.UserName;
 end;
 
 procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil);
@@ -228,6 +231,7 @@ begin
     HandleRRDelete(I.Frame)
   else
     fReplay.Delete(I);
+
   ListReplayActions;
 end;
 
