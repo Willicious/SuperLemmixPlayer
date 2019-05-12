@@ -280,7 +280,13 @@ var
 
         // Detect if the editor actually needs this object pre-rendered.
         if (Accessor.Animations.Count = 1) and
-           (Accessor.Animations.Items[0].Color = '') then
+           (Accessor.Animations.PrimaryAnimation.Color = '') then
+          Continue;
+
+        // Detect pieces the editor doesn't support pre-rendering of.
+        if (LowerCase(MetaInfo.Identifier) = 'default:pickup') or
+           (MetaInfo.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP]) or
+           (Accessor.Animations.PrimaryAnimation.CutRect <> Rect(0, 0, 0, 0)) then
           Continue;
 
         OutputDst := AppPath + 'editor\render\' + aStyleName + '\objects\' + MetaInfo.Piece;
