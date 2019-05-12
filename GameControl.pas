@@ -76,6 +76,7 @@ type
     moIncreaseZoom,
     moLoadedConfig,
     moNeedRequestUsername,
+    moMatchBlankReplayUsername,
     moCompactSkillPanel,
     moEdgeScroll,
     moSpawnInterval
@@ -206,6 +207,8 @@ type
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
+
+    property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;

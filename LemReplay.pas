@@ -760,7 +760,8 @@ end;
 
 function TReplay.GetIsThisUsersReplay: Boolean;
 begin
-  if (fPlayerName = GameParams.UserName) and (Uppercase(Trim(GameParams.UserName)) <> 'Anonymous') and (fPlayerName <> '') then
+  if ((fPlayerName = GameParams.UserName) and (Uppercase(Trim(GameParams.UserName)) <> 'Anonymous') and (fPlayerName <> ''))
+  or ((Trim(fPlayerName) = '') and GameParams.MatchBlankReplayUsername) then
     Result := true
   else if fIsModified then
   begin
