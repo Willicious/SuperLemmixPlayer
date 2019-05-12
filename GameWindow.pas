@@ -1571,7 +1571,10 @@ begin
         SL.Delete(0);
         TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[0] + '.png', TempBMP2);
         TempBMP2.DrawMode := dmBlend;
+<<<<<<< HEAD
         TempBMP2.CombineMode := cmMerge;
+=======
+>>>>>>> Nepster/new-master
         TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);
       end;
 
