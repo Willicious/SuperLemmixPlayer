@@ -176,12 +176,9 @@ type
 
       function GetParentBasePack: TNeoLevelGroup;
 
-<<<<<<< HEAD
       {$ifdef exp}
       procedure InternalDumpNeoLemmixWebsiteMetaInfo(Titles: TStringList; Stats: TStringList);
       {$endif}
-=======
->>>>>>> Nepster/new-master
     public
       constructor Create(aParentGroup: TNeoLevelGroup; aPath: String);
       destructor Destroy; override;
@@ -192,12 +189,10 @@ type
       function FindFile(aName: String): String;
 
       procedure DumpImages(aPath: String; aPrefix: String = '');
-<<<<<<< HEAD
+
       {$ifdef exp}
       procedure DumpNeoLemmixWebsiteMetaInfo(aPath: String);
       {$endif}
-=======
->>>>>>> Nepster/new-master
 
       property Parent: TNeoLevelGroup read fParentGroup;
       property ParentBasePack: TNeoLevelGroup read GetParentBasePack;
@@ -585,7 +580,6 @@ begin
   end;
 end;
 
-<<<<<<< HEAD
 {$ifdef exp}
 procedure TNeoLevelGroup.DumpNeoLemmixWebsiteMetaInfo(aPath: String);
 var
@@ -726,8 +720,6 @@ begin
 end;
 {$endif}
 
-=======
->>>>>>> Nepster/new-master
 function TNeoLevelGroup.FindFile(aName: String): String;
 begin
   if FileExists(Path + aName) then

@@ -1327,17 +1327,10 @@ var
   i: Integer;
   BMP: TBitmap32;
 
-<<<<<<< HEAD
   ThisAnim: TGadgetAnimationInstance;
   DstRect: TRect;
 
   procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
-=======
-  OldDrawMode: TDrawMode;
-  OldPixelCombine: TPixelCombineEvent;
-
-  procedure AddPickupSkillNumber;
->>>>>>> Nepster/new-master
   var
     NumberString: String;
     DigitsWidth: Integer;
@@ -1394,17 +1387,8 @@ begin
   begin
     ThisAnim := Gadget.Animations[i];
 
-<<<<<<< HEAD
     if (not ThisAnim.Visible) and (ThisAnim.State = gasPause) then
       Continue;
-=======
-  OldDrawMode := TempBitmap.DrawMode;
-  OldPixelCombine := TempBitmap.OnPixelCombine;
-
-  try
-    DrawFrame := Min(Gadget.CurrentFrame, Gadget.AnimationFrameCount-1);
-    TempBitmap.Assign(Gadget.Frames[DrawFrame]);
->>>>>>> Nepster/new-master
 
     BMP := ThisAnim.Bitmap;
     PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
@@ -1413,50 +1397,11 @@ begin
                          ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,
                          ThisAnim.MetaAnimation.Height + Gadget.HeightVariance);
 
-<<<<<<< HEAD
     DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
-=======
-    if fUsefulOnly then
-    begin
-      TempBitmap.DrawMode := dmCustom;
-      fFixedDrawColor := $FFFFFF00;
-      TempBitmap.OnPixelCombine := CombineFixedColor;
-    end;
-
-    MO := Gadget.MetaObj;
-    CountX := (Gadget.Width-1) div MO.Width;
-    CountY := (Gadget.Height-1) div MO.Height;
->>>>>>> Nepster/new-master
 
   if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
     AddPickupSkillNumber;
-
-<<<<<<< HEAD
-=======
-      for iX := 0 to CountX do
-      begin
-        // shrink size of rectangle to draw on rightmost column
-        if (iX = CountX) and (Gadget.Width mod MO.Width <> 0) then
-        begin
-          Dec(DstRect.Right, MO.Width - (Gadget.Width mod MO.Width));
-          Dec(TempBitmapRect.Right, MO.Width - (Gadget.Width mod MO.Width));
-        end;
-        // Draw copy of object onto alayer at this place
-        TempBitmap.DrawTo(Dst, DstRect, TempBitmapRect);
-        // Move to next row
-        OffsetRect(DstRect, MO.Width, 0);
-      end;
-    end;
-  finally
-    if IsOwnBitmap then
-      TempBitmap.Free
-    else begin
-      TempBitmap.DrawMode := OldDrawMode;
-      TempBitmap.OnPixelCombine := OldPixelCombine;
-    end;
-  end;
->>>>>>> Nepster/new-master
 end;
 
 procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
