@@ -116,7 +116,8 @@ uses
   UITypes, ShellApi, MMSystem,
   PngInterface, SharedGlobals,
   FNeoLemmixSetup, LemNeoOnline,
-  LemTypes, LemStrings, LemDosStructures, LemGame, LemVersion;
+  LemTypes, LemStrings, LemDosStructures, LemGame, LemVersion,
+  LemNeoLevelPack;
 
 { TGameMenuScreen }
 
