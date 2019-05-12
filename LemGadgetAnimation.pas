@@ -156,6 +156,7 @@ type
       procedure Draw(Dst: TBitmap32; DstRect: TRect; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil); overload;
 
       property Name: String read fName write fName;
+      property Color: String read fColor write fColor;
 
       property FrameCount: Integer read fFrameCount;
       property HorizontalStrip: Boolean read fHorizontalStrip;

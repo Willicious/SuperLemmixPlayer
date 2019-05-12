@@ -117,6 +117,8 @@ var
 
     GameParams.Renderer.TransparentBackground := false;
     GameParams.Renderer.RenderWorld(Dst, true);
+
+    ForceDirectories(ExtractFilePath(DstFile));
     TPngInterface.SavePngFile(DstFile, Dst);
   end;
 
@@ -240,6 +242,8 @@ var
 
     GameParams.Renderer.TransparentBackground := true;
     GameParams.Renderer.RenderWorld(Dst, true);
+
+    ForceDirectories(ExtractFilePath(DstFile));
     TPngInterface.SavePngFile(DstFile, Dst);
 
     if LineValues.Values['INFO_FILE'] <> '' then
@@ -250,10 +254,71 @@ var
         SL.Add('OFFSET_TOP ' + IntToStr(PhysRect.Top));
         SL.Add('OFFSET_RIGHT ' + IntToStr(AnimRect.Right - PhysRect.Right));
         SL.Add('OFFSET_BOTTOM ' + IntToStr(AnimRect.Bottom - PhysRect.Bottom));
+        ForceDirectories(ExtractFilePath(RootPath(LineValues.Values['INFO_FILE'])));
         SL.SaveToFile(RootPath(LineValues.Values['INFO_FILE']));
       finally
         SL.Free;
       end;
+    end;
+  end;
+
+  procedure AddEditorStyle(aStyleName: String);
+  var
+    SearchRec: TSearchRec;
+    MetaInfo: TGadgetMetaInfo;
+    Accessor: TGadgetMetaAccessor;
+    OutputDst: String;
+  begin
+    if not DirectoryExists(AppPath + 'styles\' + aStyleName) then
+      Exit;
+
+    if FindFirst(AppPath + 'styles\' + aStyleName + '\objects\*.nxmo', 0, SearchRec) = 0 then
+    begin
+      repeat
+        MetaInfo := PieceManager.Objects[aStyleName + ':' + ChangeFileExt(SearchRec.Name, '')];
+        Accessor := MetaInfo.GetInterface(false, false, false);
+
+        // Detect if the editor actually needs this object pre-rendered.
+        if (Accessor.Animations.Count = 1) and
+           (Accessor.Animations.Items[0].Color = '') then
+          Continue;
+
+        OutputDst := AppPath + 'editor\render\' + aStyleName + '\objects\' + MetaInfo.Piece;
+        SL.Add('OBJECT|' + MetaInfo.Identifier + '|OUTPUT=' + OutputDst + '.png|INFO_FILE=' + OutputDst + '.nxmo');
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+  end;
+
+  procedure AddEditorAllStyles;
+  var
+    SearchRec: TSearchRec;
+  begin
+    if FindFirst(AppPath + 'styles\*', faDirectory, SearchRec) = 0 then
+    begin
+      repeat
+        if (SearchRec.Attr and faDirectory = 0) or
+           (SearchRec.Name = '..') or
+           (SearchRec.Name = '.') then
+          Continue;
+
+        AddEditorStyle(SearchRec.Name);
+
+        PieceManager.Tidy;
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+  end;
+
+  procedure AddEditorParamStyles;
+  var
+    i: Integer;
+  begin
+    i := 3;
+    while ParamStr(i) <> '' do
+    begin
+      AddEditorStyle(ParamStr(i));
+      Inc(i);
     end;
   end;
 begin
@@ -268,7 +333,13 @@ begin
 
     if ParamStr(2) = '-listfile' then
       SL.LoadFromFile(ParamStr(3))
-    else begin
+    else if ParamStr(2) = '-editor' then
+    begin
+      if ParamStr(3) = '' then
+        AddEditorAllStyles
+      else
+        AddEditorParamStyles;
+    end else begin
       i := 2;
       while ParamStr(i) <> '' do
       begin
@@ -290,6 +361,8 @@ begin
 
       if Trim(Uppercase(LineValues[0])) = 'LEVEL' then DoRenderLevel;
       if Trim(Uppercase(LineValues[0])) = 'OBJECT' then DoRenderObject;
+
+      PieceManager.Tidy;
     end;
   finally
     SL.Free;
