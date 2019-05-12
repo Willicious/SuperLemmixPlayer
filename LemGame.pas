@@ -754,7 +754,7 @@ var
     Result := true;
   end;
 begin
-  if fReplayManager.PlayerName <> GameParams.UserName then
+  if not fReplayManager.IsThisUsersReplay then
     Exit;
 
   for i := 0 to Level.Talismans.Count-1 do
