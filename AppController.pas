@@ -153,7 +153,10 @@ begin
   end;
 
   if not fLoadSuccess then
+  begin
+    IsHalting := true;
     GameParams.NextScreen := gstExit;
+  end;
 end;
 
 procedure TAppController.DoLevelConvert;
