@@ -75,6 +75,7 @@ type
     moMinimapHighQuality,
     moIncreaseZoom,
     moLoadedConfig,
+    moNeedRequestUsername,
     moCompactSkillPanel,
     moEdgeScroll,
     moSpawnInterval
@@ -134,6 +135,7 @@ type
     // this is initialized by appcontroller
     MainDatFile  : string;
 
+    UserName: string;
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;
@@ -200,6 +202,7 @@ type
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
+    property NeedRequestUsername: boolean Index moNeedRequestUsername read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
@@ -311,6 +314,7 @@ begin
     SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
 
   SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
+  SL.Add('UserName=' + UserName);
 
   SL.Add('');
   SL.Add('# Interface Options');
@@ -440,6 +444,10 @@ begin
     WindowWidth := 416 * ZoomLevel;
     WindowHeight := 200 * ZoomLevel;
   end;
+
+  UserName := SL.Values['UserName'];
+  if StrToInt64Def(SL.Values['LastVersion'], 0) < 12005001000 then
+    NeedRequestUsername := true;
 
   AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
   ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);
@@ -608,7 +616,8 @@ begin
     On E : EAccessViolation do
       SetLevel(nil);
   end;
-  
+
+  UserName := 'Anonymous';
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;
