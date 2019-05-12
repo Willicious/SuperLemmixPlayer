@@ -189,6 +189,7 @@ type
       function FindFile(aName: String): String;
 
       procedure DumpImages(aPath: String; aPrefix: String = '');
+
       {$ifdef exp}
       procedure DumpNeoLemmixWebsiteMetaInfo(aPath: String);
       {$endif}

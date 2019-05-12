@@ -1402,7 +1402,6 @@ begin
 
   if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
     AddPickupSkillNumber;
-
 end;
 
 procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
