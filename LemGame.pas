@@ -754,6 +754,9 @@ var
     Result := true;
   end;
 begin
+  if fReplayManager.PlayerName <> GameParams.UserName then
+    Exit;
+
   for i := 0 to Level.Talismans.Count-1 do
   begin
     if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then Continue;
@@ -1011,7 +1014,6 @@ begin
   if Level.Info.LevelID <> fReplayManager.LevelID then //not aReplay then
   begin
     fReplayManager.Clear(true);
-    fReplayManager.PlayerName := GameParams.UserName;
     fReplayManager.LevelName := Level.Info.Title;
     fReplayManager.LevelAuthor := Level.Info.Author;
     fReplayManager.LevelGame := GameParams.BaseLevelPack.Name;
@@ -4710,7 +4712,6 @@ begin
   E := TReplayNuke.Create;
   E.Frame := fCurrentIteration;
   fReplayManager.Add(E);
-  fReplayManager.PlayerName := GameParams.UserName;
 end;
 
 procedure TLemmingGame.RecordSpawnInterval(aSI: Integer);
@@ -4727,7 +4728,6 @@ begin
 
   fReplayManager.Add(E);
   CheckForReplayAction(true);
-  fReplayManager.PlayerName := GameParams.UserName;
 end;
 
 procedure TLemmingGame.RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
@@ -4742,7 +4742,6 @@ begin
   E.Frame := fCurrentIteration;
 
   fReplayManager.Add(E);
-  fReplayManager.PlayerName := GameParams.UserName;
 end;
 
 procedure TLemmingGame.CheckForReplayAction(PausedRRCheck: Boolean = false);
@@ -5067,7 +5066,6 @@ begin
   if CurrentIteration > fReplayManager.LastActionFrame then Exit;
 
   fReplayManager.Cut(fCurrentIteration);
-  fReplayManager.PlayerName := GameParams.UserName;
 end;
 
 

@@ -53,8 +53,6 @@ procedure TFReplayEditor.NoteChangeAtFrame(aFrame: Integer);
 begin
   if (fEarliestChange = -1) or (aFrame < fEarliestChange) then
     fEarliestChange := aFrame;
-
-  fReplay.PlayerName := GameParams.UserName;
 end;
 
 procedure TFReplayEditor.ListReplayActions(aSelect: TBaseReplayItem = nil);
