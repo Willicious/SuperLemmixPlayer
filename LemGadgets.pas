@@ -26,6 +26,7 @@ type
     public
       constructor Create(aGadget: TGadget; aAnimation: TGadgetAnimation);
       function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
+      procedure UpdateAnimationState; // basically, all frame update logic *except* moving to the next frame
       procedure ProcessTriggers;
 
       procedure Clone(aSrc: TGadgetAnimationInstance);
@@ -292,9 +293,7 @@ begin
   for i := 0 to Animations.Count-1 do
   begin
     Animations[i].ProcessTriggers;
-
-    if Animations[i].State = gasMatchPrimary then
-      Animations[i].Frame := Animations.PrimaryAnimation.Frame;
+    Animations[i].UpdateAnimationState;
   end;
 end;
 
@@ -706,23 +705,21 @@ begin
 
   ProcessTriggers;
 
-  if fState = gasMatchPrimary then
-  begin
-    fFrame := fGadget.CurrentFrame;
-    Exit;
-  end;
-
-  if fState = gasStop then
-  begin
-    fFrame := 0;
-    fState := gasPause;
-  end;
-
   if (fState <> gasPause) and ((fState <> gasLoopToZero) or (fFrame > 0)) then
     fFrame := (fFrame + 1) mod fAnimation.FrameCount;
 
-  if (fState = gasLoopToZero) and (fFrame = 0) then
-    fState := gasPause;
+  UpdateAnimationState;
+end;
+
+procedure TGadgetAnimationInstance.UpdateAnimationState;
+begin
+  case fState of
+    gasPlay: ; // nothing to do
+    gasPause: ; // nothing to do
+    gasLoopToZero: if fFrame = 0 then fState := gasPause;
+    gasStop: begin fFrame := 0; fState := gasPause; end;
+    gasMatchPrimary: fFrame := fGadget.CurrentFrame;
+  end;
 end;
 
 procedure TGadgetAnimationInstance.ProcessTriggers;
