@@ -429,6 +429,9 @@ begin
     SL.Add('level_formats=' + Formats);
     SL.Add('level_format_exts=' + Exts);
 
+    SL.Add('object_render=true');
+    SL.Add('level_render=true');
+
     WriteInfo;
 
     if LowerCase(ParamStr(2)) <> 'silent' then
