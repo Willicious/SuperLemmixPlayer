@@ -23,14 +23,14 @@ uses
   LemNeoParser;
 
 const
-  SKILL_REPLAY_NAME_COUNT = 17;
+  SKILL_REPLAY_NAME_COUNT = 18;
   SKILL_REPLAY_NAMES: array[0..SKILL_REPLAY_NAME_COUNT-1] of String =
                                                ('WALKER', 'CLIMBER', 'SWIMMER',
                                                 'FLOATER', 'GLIDER', 'DISARMER',
                                                 'BOMBER', 'STONER', 'BLOCKER',
                                                 'PLATFORMER', 'BUILDER', 'STACKER',
                                                 'BASHER', 'FENCER', 'MINER',
-                                                'DIGGER', 'CLONER');
+                                                'DIGGER', 'CLONER', 'SHIMMIER');
 
 
 type
@@ -253,7 +253,7 @@ const
 	raf_SkillAssignment   = $0080;
 	raf_Nuke              = $0100;
 
-  BUTTON_TABLE: array[0..20] of TSkillPanelButton =
+  BUTTON_TABLE: array[0..21] of TSkillPanelButton =
                  (spbNone, spbNone, spbNone,
                   spbClimber,
                   spbFloater,
@@ -271,7 +271,8 @@ const
                   spbStoner,
                   spbPlatformer,
                   spbStacker,
-                  spbCloner);
+                  spbCloner,
+                  spbShimmier);
 
 { TReplay }
 

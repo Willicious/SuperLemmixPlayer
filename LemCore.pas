@@ -72,7 +72,9 @@ type
     baGliding,
     baFixing,
     baCloning,
-    baFencing
+    baFencing,
+    baReaching,
+    baShimmying
   );
 
   {TSkillPanelButton = (
@@ -112,6 +114,7 @@ type
     spbMiner,
     spbDigger,
     spbCloner,
+    spbShimmier,
 
     spbNone,
     spbSlower,
@@ -130,7 +133,7 @@ type
   );
 
 const
-  LAST_SKILL_BUTTON = spbCloner;
+  LAST_SKILL_BUTTON = spbShimmier;
 
   SKILL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
     'walker',
@@ -149,7 +152,8 @@ const
     'fencer',
     'miner',
     'digger',
-    'cloner');
+    'cloner',
+    'shimmier');
 
 type
   TTriggerTypes = (
@@ -193,7 +197,8 @@ const
     baGliding,
     baFixing,
     baCloning,
-    baFencing
+    baFencing,
+    baShimmying
   ];
 
 const
@@ -226,7 +231,9 @@ const
     spbGlider,
     spbDisarmer,
     spbCloner,
-    spbFencer
+    spbFencer,
+    spbNone,
+    spbShimmier
   );
 
 const
@@ -249,6 +256,7 @@ const
     baMining,
     baDigging,
     baCloning,
+    baShimmying,
     baNone, //Null
     baNone, //RR-
     baNone, //RR+

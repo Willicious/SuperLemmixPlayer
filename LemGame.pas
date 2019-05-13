@@ -333,6 +333,8 @@ type
     function HandleGliding(L: TLemming): Boolean;
     function HandleDisarming(L: TLemming): Boolean;
     function HandleFencing(L: TLemming): Boolean;
+    function HandleReaching(L: TLemming) : Boolean;
+    function HandleShimmying(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -358,6 +360,7 @@ type
     function MayAssignMiner(L: TLemming): Boolean;
     function MayAssignDigger(L: TLemming): Boolean;
     function MayAssignCloner(L: TLemming): Boolean;
+    function MayAssignShimmier(L: TLemming) : Boolean;
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -506,10 +509,10 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..16] of TBasicLemmingAction =
+  ActionListArray: array[0..17] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
-             baStacking, baBashing, baMining, baDigging, baCloning, baFencing);
+             baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying);
 
 
 
@@ -641,7 +644,7 @@ begin
   aState.EntriesOpened := HatchesOpened;
   aState.CurrSpawnInterval := CurrSpawnInterval;
 
-  for i := 0 to 16 do
+  for i := 0 to 17 do
   begin
     aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
     aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
@@ -691,7 +694,7 @@ begin
   HatchesOpened := aState.EntriesOpened;
   CurrSpawnInterval := aState.CurrSpawnInterval;
 
-  for i := 0 to 16 do
+  for i := 0 to 17 do
   begin
     CurrSkillCount[ActionListArray[i]] := aState.CurrSkillCount[ActionListArray[i]];
     UsedSkillCount[ActionListArray[i]] := aState.UsedSkillCount[ActionListArray[i]];
@@ -856,6 +859,8 @@ begin
   LemmingMethods[baGliding]    := HandleGliding;
   LemmingMethods[baFixing]     := HandleDisarming;
   LemmingMethods[baFencing]    := HandleFencing;
+  LemmingMethods[baReaching]   := HandleReaching;
+  LemmingMethods[baShimmying]  := HandleShimmying;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -885,6 +890,7 @@ begin
   NewSkillMethods[baFixing]       := MayAssignDisarmer;
   NewSkillMethods[baCloning]      := MayAssignCloner;
   NewSkillMethods[baFencing]      := MayAssignFencer;
+  NewSkillMethods[baShimmying]    := MayAssignShimmier;
 
   P := AppPath;
 
@@ -1307,7 +1313,9 @@ const
     17, //baGliding,
     16, //baFixing,
      0, //baCloning,
-    16  //baFencing
+    16, //baFencing,
+     8, //baReaching,
+    20  //baShimmying
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1336,6 +1344,13 @@ begin
     else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
     else if L.LemAction in [baBlocking] then L.LemFallen := -1;
     L.LemTrueFallen := L.LemFallen;
+  end;
+
+  if (NewAction = baShimmying) and (L.LemAction = baClimbing) then
+  begin
+    // turn around and get out of the wall
+    TurnAround(L);
+    Inc(L.LemX, L.LemDx);
   end;
 
   // Change Action
@@ -1400,7 +1415,8 @@ begin
   Dec(L.LemExplosionTimer);
   if L.LemExplosionTimer = 0 then
   begin
-    if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding, baFalling, baSwimming] then
+    if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding,
+                       baFalling, baSwimming, baReaching, baShimmying] then
     begin
       if L.LemTimerToStone then
         Transition(L, baStoneFinish)
@@ -1759,6 +1775,13 @@ begin
     Inc(LemmingsCloned);
     GenerateClonedLem(L);
   end
+  else if (NewSkill = baShimmying) then
+  begin
+    if L.LemAction = baClimbing then
+      Transition(L, baShimmying)
+    else
+      Transition(L, baReaching);
+  end
   else Transition(L, NewSkill);
 
   Result := True;
@@ -1842,7 +1865,8 @@ var
       Perm    : Result :=     (L.LemIsClimber or L.LemIsSwimmer or L.LemIsFloater
                                     or L.LemIsGlider or L.LemIsDisarmer);
       NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
-                                               baPlatforming, baStacking, baBlocking, baShrugging]);
+                                               baPlatforming, baStacking, baBlocking, baShrugging,
+                                               baReaching, baShimmying]);
       Walk    : Result :=     (L.LemAction in [baWalking, baAscending]);
       NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
     end;
@@ -1924,7 +1948,8 @@ end;
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
-               baStacking, baBashing, baFencing, baMining, baDigging];
+               baStacking, baBashing, baFencing, baMining, baDigging,
+               baReaching, baShimmying];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2048,9 +2073,33 @@ function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
-               baFloating, baSwimming, baGliding, baFixing];
+               baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying];
 begin
   Result := (L.LemAction in ActionSet);
+end;
+
+function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baFencing, baMining, baDigging];
+var
+  CopyL: TLemming;
+begin
+  Result := (L.LemAction in ActionSet);
+  if L.LemAction = baClimbing then
+  begin
+    // Check whether the lemming would fall down the next frame
+    CopyL := TLemming.Create;
+    CopyL.Assign(L);
+    CopyL.LemIsPhysicsSimulation := true;
+
+    SimulateLem(CopyL, False);
+
+    if CopyL.LemAction <> baClimbing then
+      Result := True;
+
+    CopyL.Free;
+  end;
 end;
 
 function TLemmingGame.GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
@@ -2858,7 +2907,7 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baVaporizing, baShrugging, baOhnoing, baExploding,
-                      baStoning];
+                      baStoning, baReaching];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -3814,6 +3863,120 @@ begin
         Dec(L.LemX, L.LemDx);
     end;
   end;
+end;
+
+function TLemmingGame.HandleReaching(L: TLemming): Boolean;
+const
+  MovementList: array[0..7] of Byte = (0, 3, 2, 2, 1, 1, 1, 0);
+var
+  emptyPixels: Integer;
+begin
+  Result := True;
+  if HasPixelAt(L.LemX, L.LemY - 10) then
+    emptyPixels := 0
+  else if HasPixelAt(L.LemX, L.LemY - 11) then
+    emptyPixels := 1
+  else if HasPixelAt(L.LemX, L.LemY - 12) then
+    emptyPixels := 2
+  else if HasPixelAt(L.LemX, L.LemY - 13) then
+    emptyPixels := 3
+  else
+    emptyPixels := 4;
+
+  // Check for terrain in the body to trigger falling down
+  if HasPixelAt(L.LemX, L.LemY - 5) or HasPixelAt(L.LemX, L.LemY - 6)
+    or HasPixelAt(L.LemX, L.LemY - 7) or HasPixelAt(L.LemX, L.LemY - 8) then
+  begin
+    Transition(L, baFalling)
+  end
+  // Check whether we can reach the ceiling
+  else if emptyPixels <= MovementList[L.LemPhysicsFrame] then
+  begin
+    Dec(L.LemY, emptyPixels + 1); // Shimmiers are a lot smaller than reachers
+    Transition(L, baShimmying);
+  end
+  // Move upwards
+  else
+  begin
+    Dec(L.LemY, MovementList[L.LemPhysicsFrame]);
+    if L.LemPhysicsFrame = 7 then
+      Transition(L, baFalling);
+  end;
+end;
+
+function TLemmingGame.HandleShimmying(L: TLemming): Boolean;
+var
+  i: Integer;
+begin
+  Result := True;
+  if L.LemPhysicsFrame mod 2 = 0 then
+  begin
+    // Check whether we find terrain to walk onto
+    for i := 0 to 2 do
+    begin
+      if HasPixelAt(L.LemX + L.LemDX, L.LemY - i) and not HasPixelAt(L.LemX + L.LemDX, L.LemY - i - 1) then
+      begin
+        Inc(L.LemX, L.LemDX);
+        Dec(L.LemY, i);
+        Transition(L, baWalking);
+        Exit;
+      end;
+    end;
+    // Check whether we find terrain to hoist onto
+    for i := 3 to 5 do
+    begin
+      if HasPixelAt(L.LemX + L.LemDX, L.LemY - i) and not HasPixelAt(L.LemX + L.LemDX, L.LemY - i - 1) then
+      begin
+        Inc(L.LemX, L.LemDX);
+        Dec(L.LemY, i - 4);
+        L.LemIsStartingAction := False;
+        Transition(L, baHoisting);
+        Inc(L.LemFrame, 2);
+        Inc(L.LemPhysicsFrame, 2);
+        Exit;
+      end;
+    end;
+    // Check whether we fall down due to a wall
+    for i := 6 to 7 do
+    begin
+      if HasPixelAt(L.LemX + L.LemDX, L.LemY - i) then
+      begin
+        Transition(L, baFalling);
+        Exit;
+      end;
+    end;
+    // Check whether we fall down due to not enough ceiling terrain
+    if not (HasPixelAt(L.LemX + L.LemDX, L.LemY - 9) or HasPixelAt(L.LemX + L.LemDX, L.LemY - 10)) then
+    begin
+      Transition(L, baFalling);
+      Exit;
+    end;
+    // Check whether we fall down due a checkerboard ceiling
+    if HasPixelAt(L.LemX + L.LemDX, L.LemY - 8) and (not HasPixelAt(L.LemX + L.LemDX, L.LemY - 9)) then
+    begin
+      Transition(L, baFalling);
+      Exit;
+    end;
+    // Move along
+    Inc(L.LemX, L.LemDX);
+    if HasPixelAt(L.LemX, L.LemY - 8) then
+    begin
+      Inc(L.LemY, 1);
+      if HasPixelAt(L.LemX, L.LemY) then
+      begin
+        Transition(L, baWalking);
+        Exit;
+      end;
+    end;
+    if not HasPixelAt(L.LemX, L.LemY - 9) then
+      Dec(L.LemY, 1);
+      if HasPixelAt(L.LemX, L.LemY - 5) then
+      begin
+        Dec(L.LemY, 5);
+        Transition(L, baWalking);
+        Exit;
+      end;
+  end
 end;
 
 function TLemmingGame.FindGroundPixel(x, y: Integer): Integer;
@@ -4841,8 +5004,8 @@ begin
     else
     begin;
       Inc(L.LemQueueFrame);
-      // Delete queued action after 8 frames
-      if L.LemQueueFrame > 7 then
+      // Delete queued action after 16 frames
+      if L.LemQueueFrame > 15 then
       begin
         L.LemQueueAction := baNone;
         L.LemQueueFrame := 0;

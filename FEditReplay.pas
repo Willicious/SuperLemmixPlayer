@@ -87,6 +87,7 @@ var
             baFixing:      Result := 'Disarmer';
             baCloning:     Result := 'Cloner';
             baFencing:     Result := 'Fencer';
+            baShimmying:   Result := 'Shimmier';
         else Result := '(Invalid skill)';
       end;
     end;
