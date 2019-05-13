@@ -375,6 +375,7 @@ begin
   HandleSkill('miner', spbMiner);
   HandleSkill('digger', spbDigger);
   HandleSkill('cloner', spbCloner);
+  HandleSkill('shimmier', spbShimmier);
 end;
 
 procedure TLevel.HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
@@ -420,6 +421,7 @@ var
     if S = 'miner' then O.Skill := Integer(spbMiner);
     if S = 'digger' then O.Skill := Integer(spbDigger);
     if S = 'cloner' then O.Skill := Integer(spbCloner);
+    if S = 'shimmier' then O.Skill := Integer(spbShimmier);
 
     O.TarLev := Max(aSection.LineNumeric['skillcount'], 1);
   end;
@@ -754,6 +756,7 @@ begin
   HandleSkill('MINER', spbMiner);
   HandleSkill('DIGGER', spbDigger);
   HandleSkill('CLONER', spbCloner);
+  HandleSkill('SHIMMIER', spbShimmier);
 end;
 
 procedure TLevel.SaveObjectSections(aSection: TParserSection);
@@ -800,6 +803,7 @@ var
      spbMiner: s := 'MINER';
      spbDigger: s := 'DIGGER';
      spbCloner: s := 'CLONER';
+     spbShimmier: s := 'SHIMMIER';
     end;
 
     Sec.AddLine('SKILL', S);

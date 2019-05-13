@@ -105,6 +105,8 @@ resourcestring
   SDisarmer = 'Disarmer';
   SCloner = 'Cloner';
   SFencer = 'Fencer';
+  SReacher = 'Reacher';
+  SShimmier = 'Shimmier';
   SZombie = 'Zombie';
 
 
@@ -172,7 +174,9 @@ const
     SGlider,
     SDisarmer,
     SCloner,
-    SFencer
+    SFencer,
+    SReacher,
+    SShimmier
   );
 
 implementation

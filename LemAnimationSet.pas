@@ -22,8 +22,8 @@ const
   dos animations ordered by their appearance in main.dat
   the constants below show the exact order
 -------------------------------------------------------------------------------}
-  NUM_LEM_SPRITES     = 51;
-  NUM_LEM_SPRITE_TYPE = 25;
+  NUM_LEM_SPRITES     = 55;
+  NUM_LEM_SPRITE_TYPE = 27;
   WALKING             = 0;
   WALKING_RTL         = 1;
   ASCENDING           = 2;
@@ -74,7 +74,11 @@ const
   STACKING_RTL        = 47;
   FENCING             = 48;
   FENCING_RTL         = 49;
-  STONED              = 50; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
+  REACHING            = 50;
+  REACHING_RTL        = 51;
+  SHIMMYING           = 52;
+  SHIMMYING_RTL       = 53;
+  STONED              = 54; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
   // and the left-facing on the right. Is this standard practice? Maybe
@@ -108,7 +112,9 @@ const
     (GLIDING, GLIDING_RTL),                   // baGliding
     (FIXING, FIXING_RTL),                     // baFixing
     (0,0),                                    // baCloning? Another that should never happen
-    (FENCING, FENCING_RTL)                    // baFencing
+    (FENCING, FENCING_RTL),                   // baFencing
+    (REACHING, REACHING_RTL),                 // baReaching (for shimmier)
+    (SHIMMYING, SHIMMYING_RTL)                // baShimmying
   );
 
 
@@ -152,13 +158,13 @@ procedure TBaseAnimationSet.LoadPositionData;
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..24] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
+  ANIM_NAMES: array[0..26] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
                                          'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                          'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                          'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
                                          'OHNOER', 'BOMBER', 'PLATFORMER', 'STONER',
                                          'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
-                                         'FENCER');
+                                         'FENCER', 'REACHER', 'SHIMMIER');
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
   Parser: TParser;

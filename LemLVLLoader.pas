@@ -332,6 +332,7 @@ begin
         14: O.Skill := Integer(spbStacker);
         15: O.Skill := Integer(spbCloner);
         16: O.Skill := Integer(spbFencer);
+        17: O.Skill := Integer(spbShimmier);
         // else raise exception?
       end;
     end;
