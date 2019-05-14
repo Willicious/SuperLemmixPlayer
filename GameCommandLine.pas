@@ -10,7 +10,7 @@ uses
   GameControl,
   LemNeoPieceManager,
   LemLevel,
-  LemGadgetsMeta, LemGadgetsModel, LemGadgets,
+  LemGadgetsMeta, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
   LemTypes,
   LemVersion,
   Classes,

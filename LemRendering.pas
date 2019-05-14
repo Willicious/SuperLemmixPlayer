@@ -16,7 +16,7 @@ uses
   LemDosStructures,
   LemTypes,
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
-  LemGadgets, LemGadgetsMeta, LemGadgetAnimation,
+  LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming,
   LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
