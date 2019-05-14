@@ -1955,6 +1955,9 @@ begin
 
   // Get ReceiverID for all Teleporters
   Gadgets.FindReceiverID;
+
+  // Run "PrepareAnimationInstances" for all gadgets. This differs from CreateAnimationInstances which is done earlier.
+  Gadgets.InitializeAnimations;
 end;
 
 

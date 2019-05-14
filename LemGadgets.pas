@@ -69,6 +69,7 @@ type
     Obj            : TGadgetModel;
 
     procedure CreateAnimationInstances;
+    procedure PrepareAnimationInstances;
 
     function GetTriggerRect: TRect;
     procedure SetLeft(Value: Integer);
@@ -168,6 +169,7 @@ type
     function Add(Item: TGadget): Integer;
     procedure Insert(Index: Integer; Item: TGadget);
     procedure FindReceiverID;
+    procedure InitializeAnimations;
     property Items[Index: Integer]: TGadget read GetItem; default;
   published
   end;
@@ -252,7 +254,12 @@ begin
     NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i]);
     Animations.Add(NewInstance);
   end;
+end;
 
+procedure TGadget.PrepareAnimationInstances;
+var
+  i: Integer;
+begin
   for i := 0 to Animations.Count-1 do
   begin
     Animations[i].ProcessTriggers;
@@ -627,6 +634,14 @@ end;
 procedure TGadgetList.Insert(Index: Integer; Item: TGadget);
 begin
   inherited Insert(Index, Item);
+end;
+
+procedure TGadgetList.InitializeAnimations;
+var
+  i: Integer;
+begin
+  for i := 0 to Count-1 do
+    Items[i].PrepareAnimationInstances;
 end;
 
 procedure TGadgetList.FindReceiverID;
