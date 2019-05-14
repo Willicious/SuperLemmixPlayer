@@ -109,6 +109,8 @@ type
   DOM_TRAPONCE    | True if the trap has been disarmed
   All others      | Always false
 
+     ** gatcDisabled and gatcDisarmed will, at present, always be equal for DOM_TRAP
+
 
   OBJECT TYPE     | gatcLeft
   ----------------|-----------------------------------
