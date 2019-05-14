@@ -1345,8 +1345,11 @@ var
   begin
     OldDrawColor := fFixedDrawColor;
 
+    Y := Y - 1; // to center
+
     NumberString := IntToStr(aNumber);
-    DigitsWidth := (Length(NumberString) * 4) + Length(NumberString) - 1;
+    DigitsWidth := (Length(NumberString) * 4) + Length(NumberString);
+
     if aAlignment < 0 then
       CurX := X
     else if aAlignment > 0 then
@@ -1362,13 +1365,13 @@ var
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX - 1, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
       fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y + 1, SrcRect);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
       fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX - 1, Y, SrcRect);
       CurX := CurX + 5;
     end;
 
@@ -1377,7 +1380,7 @@ var
 
   procedure AddPickupSkillNumber;
   begin
-    DrawNumber(Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height - 6, Gadget.SkillCount, 1);
+    DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitAlign);
   end;
 
 begin
