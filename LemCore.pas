@@ -158,6 +158,7 @@ const
 type
   TTriggerTypes = (
     trExit,       // as well for locked exits, once all buttons are pressed
+    trCapExit,
     trForceLeft,  // as well for blockers
     trForceRight, // as well for blockers
     trTrap,       // for triggered and one-time traps
@@ -275,7 +276,7 @@ const
 const
   // All objects that don't have trigger areas got mapped to trZombie
   // This only works as long as there are no object types that create Zombie fields!!!
-  ObjectTypeToTrigger: array[-1..33] of TTriggerTypes = (
+  ObjectTypeToTrigger: array[-1..34] of TTriggerTypes = (
     trZombie,                 // no-object
     trZombie,                 // no trigger area
     trExit,                   // exit
@@ -310,7 +311,8 @@ const
     trZombie,                 // background
     trTrap,                   // once trap
     trZombie,                 // background image - unused
-    trOWUp                    // OWW up
+    trOWUp,                   // OWW up
+    trCapExit                 // capped exit
   );
 
   function ReleaseRateToSpawnInterval(aRR: Integer): Integer;

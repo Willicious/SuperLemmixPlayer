@@ -387,6 +387,11 @@ var
     O.DrawingFlags := O.DrawingFlags or aValue;
   end;
 
+  procedure GetCappedExitData;
+  begin
+    O.LemmingCap := aSection.LineNumeric['lemmings'];
+  end;
+
   procedure GetTeleporterData;
   begin
     if (aSection.Line['flip_lemming'] <> nil) then Flag(odf_FlipLem);
@@ -443,6 +448,8 @@ var
     if (aSection.Line['glider'] <> nil) then O.TarLev := O.TarLev or 8;
     if (aSection.Line['disarmer'] <> nil) then O.TarLev := O.TarLev or 16;
     if (aSection.Line['zombie'] <> nil) then O.TarLev := O.TarLev or 64;
+
+    O.LemmingCap := aSection.LineNumeric['lemmings'];
   end;
 
   procedure GetMovingBackgroundData;
@@ -471,12 +478,13 @@ begin
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
 
   case PieceManager.Objects[O.Identifier].TriggerEffect of
-    11: GetTeleporterData;
-    12: GetReceiverData;
-    14: GetPickupData;
-    21: GetSplitterData;
-    23: GetWindowData;
-    30: GetMovingBackgroundData;
+    DOM_TELEPORT: GetTeleporterData;
+    DOM_RECEIVER: GetReceiverData;
+    DOM_PICKUP: GetPickupData;
+    DOM_FLIPPER: GetSplitterData;
+    DOM_WINDOW: GetWindowData;
+    DOM_BACKGROUND: GetMovingBackgroundData;
+    DOM_LOCKEXIT, DOM_CAPEXIT: GetCappedExitData;
   end;
 end;
 

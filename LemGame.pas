@@ -127,6 +127,7 @@ type
     ZombieMap                  : TByteMap;
     ExitMap                    : TArrayArrayBoolean;
     LockedExitMap              : TArrayArrayBoolean;
+    CapExitMap                 : TArrayArrayBoolean;
     WaterMap                   : TArrayArrayBoolean;
     FireMap                    : TArrayArrayBoolean;
     TrapMap                    : TArrayArrayBoolean;
@@ -239,6 +240,7 @@ type
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleExit(L: TLemming): Boolean;
+      function HandleCapExit(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
       function HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -495,7 +497,8 @@ const
   DOM_BACKGROUND       = 30;
   DOM_TRAPONCE         = 31;
   DOM_BGIMAGE          = 32; // no longer used!!
-  DOM_ONEWAYUP         = 33; *)
+  DOM_ONEWAYUP         = 33;
+  DOM_CAPEXIT          = 34; *)
 
   // removal modes
   RM_NEUTRAL           = 0;
@@ -911,6 +914,7 @@ begin
   SetLength(SplatMap, 0, 0);
   SetLength(ExitMap, 0, 0);
   SetLength(LockedExitMap, 0, 0);
+  SetLength(CapExitMap, 0, 0);
   SetLength(TrapMap, 0, 0);
 
   BomberMask.Free;
@@ -1490,6 +1494,8 @@ begin
   SetLength(ExitMap, Level.Info.Width, Level.Info.Height);
   SetLength(LockedExitMap, 0, 0);
   SetLength(LockedExitMap, Level.Info.Width, Level.Info.Height);
+  SetLength(CapExitMap, 0, 0);
+  SetLength(CapExitMap, Level.Info.Width, Level.Info.Height);
   SetLength(TrapMap, 0, 0);
   SetLength(TrapMap, Level.Info.Width, Level.Info.Height);
 
@@ -1653,6 +1659,7 @@ begin
       DOM_BUTTON:     WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
       DOM_FLIPPER:    WriteTriggerMap(FlipperMap, Gadgets[i].TriggerRect);
       DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
+      DOM_CAPEXIT:    WriteTriggerMap(CapExitMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -2231,6 +2238,10 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
       AbortChecks := HandleExit(L);
 
+    // Capped Exits
+    if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trCapExit) then
+      AbortChecks := HandleCapExit(L, CheckPos[0, i], CheckPos[1, i]);
+
     // Flipper (except for blockers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
                          and not (L.LemAction = baBlocking) then
@@ -2271,6 +2282,7 @@ begin
   case TriggerType of
     trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
                              or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
+    trCapExit:    Result :=     ReadTriggerMap(X, Y, CapExitMap); // need to also implement check: cap not exceeded?
     trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT);
     trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT);
     trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
@@ -2489,6 +2501,34 @@ begin
     Result := True;
     Transition(L, baExiting);
     CueSoundEffect(SFX_YIPPEE, L.Position);
+  end;
+end;
+
+function TLemmingGame.HandleCapExit(L: TLemming; PosX, PosY: Integer): Boolean;
+var
+  Gadget: TGadget;
+  GadgetID: Word;
+begin
+  Result := False;
+
+  GadgetID := FindGadgetID(PosX, PosY, trCapExit);
+
+  if GadgetID = 65535 then Exit;
+  Gadget := Gadgets[GadgetID];
+
+  if (Gadget.RemainingLemmingsCount <> 0) and (HandleExit(L)) then // <>, not >, to allow for "infinite"
+  begin
+    Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount - 1;
+    Result := True;
+
+    if Gadget.RemainingLemmingsCount = 0 then
+    begin
+      Gadget.Triggered := true;
+      if Gadget.SoundEffect = '' then
+        CueSoundEffect(SFX_ENTRANCE, Gadget.Center)
+      else
+        CueSoundEffect(Gadget.SoundEffect, Gadget.Center);
+    end;
   end;
 end;
 
@@ -5119,6 +5159,7 @@ begin
       if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit)
+         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trCapExit) // need finer detection here
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)

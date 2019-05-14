@@ -270,6 +270,8 @@ begin
     if Sec.Line['single_use_trap'] <> nil then fTriggerEffect := 31;
     // 32 is unused
     if Sec.Line['one_way_up'] <> nil then fTriggerEffect := 33;
+    if Sec.Line['capped_exit'] <> nil then fTriggerEffect := 34;
+    
 
     if Sec.Section['PRIMARY_ANIMATION'] = nil then
     begin
