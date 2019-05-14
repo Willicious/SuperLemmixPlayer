@@ -357,6 +357,7 @@ procedure TGadgetAnimation.Load(aCollection, aPiece: String; aSegment: TParserSe
 var
   BaseTrigger: TGadgetAnimationTrigger;
   LoadPath: String;
+  S: String;
 begin
   Clear;
 
@@ -406,15 +407,16 @@ begin
 
   BaseTrigger := TGadgetAnimationTrigger.Create;
 
-  if (aSegment.Line['pause'] <> nil) or fPrimary then
+  S := Lowercase(aSegment.LineTrimString['state']);
+  if (S = 'pause') or fPrimary then
     BaseTrigger.fState := gasPause
-  else if (aSegment.Line['stop'] <> nil) then
+  else if (S = 'stop') then
     BaseTrigger.fState := gasStop
-  else if (aSegment.Line['loop_to_zero'] <> nil) then
+  else if (S = 'loop_to_zero') then
     BaseTrigger.fState := gasLoopToZero
-  else if (aSegment.Line['match_primary_frame'] <> nil) then
+  else if (S = 'match_primary_frame') then
     BaseTrigger.fState := gasMatchPrimary
-  else if (aSegment.Line['hide'] <> nil) then
+  else if (S = 'hide') then
     BaseTrigger.fState := gasStop
   else
     BaseTrigger.fState := gasPlay;
