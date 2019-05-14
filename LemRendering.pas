@@ -16,7 +16,7 @@ uses
   LemDosStructures,
   LemTypes,
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
-  LemGadgets, LemGadgetsMeta, LemGadgetAnimation,
+  LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming,
   LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
@@ -1991,6 +1991,9 @@ begin
 
   // Get ReceiverID for all Teleporters
   Gadgets.FindReceiverID;
+
+  // Run "PrepareAnimationInstances" for all gadgets. This differs from CreateAnimationInstances which is done earlier.
+  Gadgets.InitializeAnimations;
 end;
 
 
