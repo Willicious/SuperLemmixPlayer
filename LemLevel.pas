@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, StrUtils,
   LemCore, LemLemming,
   LemTalisman,
-  LemTerrain, LemGadgetsModel, LemGadgets,
+  LemTerrain, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
   LemNeoPieceManager, LemNeoParser;
 
 type

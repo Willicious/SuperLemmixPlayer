@@ -9,7 +9,7 @@ uses
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,
   Contnrs, LemNeoParser,
-  LemGadgetAnimation;
+  LemGadgetAnimation, LemGadgetsConstants;
 
 const
   // Object Animation Types
@@ -241,35 +241,35 @@ begin
     Sec := Parser.MainSection;
 
     // Trigger effects
-    if Sec.Line['exit'] <> nil then fTriggerEffect := 1;
-    if Sec.Line['force_left'] <> nil then fTriggerEffect := 2;
-    if Sec.Line['force_right'] <> nil then fTriggerEffect := 3;
-    if Sec.Line['trap'] <> nil then fTriggerEffect := 4;
-    if Sec.Line['water'] <> nil then fTriggerEffect := 5;
-    if Sec.Line['fire'] <> nil then fTriggerEffect := 6;
-    if Sec.Line['one_way_left'] <> nil then fTriggerEffect := 7;
-    if Sec.Line['one_way_right'] <> nil then fTriggerEffect := 8;
+    if Sec.Line['exit'] <> nil then fTriggerEffect := DOM_EXIT;
+    if Sec.Line['force_left'] <> nil then fTriggerEffect := DOM_FORCELEFT;
+    if Sec.Line['force_right'] <> nil then fTriggerEffect := DOM_FORCERIGHT;
+    if Sec.Line['trap'] <> nil then fTriggerEffect := DOM_TRAP;
+    if Sec.Line['water'] <> nil then fTriggerEffect := DOM_WATER;
+    if Sec.Line['fire'] <> nil then fTriggerEffect := DOM_FIRE;
+    if Sec.Line['one_way_left'] <> nil then fTriggerEffect := DOM_ONEWAYLEFT;
+    if Sec.Line['one_way_right'] <> nil then fTriggerEffect := DOM_ONEWAYRIGHT;
     // 9, 10 are unused
-    if Sec.Line['teleporter'] <> nil then fTriggerEffect := 11;
-    if Sec.Line['receiver'] <> nil then fTriggerEffect := 12;
+    if Sec.Line['teleporter'] <> nil then fTriggerEffect := DOM_TELEPORT;
+    if Sec.Line['receiver'] <> nil then fTriggerEffect := DOM_RECEIVER;
     // 13 is unused
-    if Sec.Line['pickup_skill'] <> nil then fTriggerEffect := 14;
-    if Sec.Line['locked_exit'] <> nil then fTriggerEffect := 15;
+    if Sec.Line['pickup_skill'] <> nil then fTriggerEffect := DOM_PICKUP;
+    if Sec.Line['locked_exit'] <> nil then fTriggerEffect := DOM_LOCKEXIT;
     // 16 is unused
-    if Sec.Line['button'] <> nil then fTriggerEffect := 17;
+    if Sec.Line['button'] <> nil then fTriggerEffect := DOM_BUTTON;
     // 18 is unused
-    if Sec.Line['one_way_down'] <> nil then fTriggerEffect := 19;
-    if Sec.Line['updraft'] <> nil then fTriggerEffect := 20;
-    if Sec.Line['splitter'] <> nil then fTriggerEffect := 21;
+    if Sec.Line['one_way_down'] <> nil then fTriggerEffect := DOM_ONEWAYDOWN;
+    if Sec.Line['updraft'] <> nil then fTriggerEffect := DOM_UPDRAFT;
+    if Sec.Line['splitter'] <> nil then fTriggerEffect := DOM_FLIPPER;
     // 22 is unused
-    if Sec.Line['window'] <> nil then fTriggerEffect := 23;
+    if Sec.Line['window'] <> nil then fTriggerEffect := DOM_WINDOW;
     // 24, 25, 26 are unused
-    if Sec.Line['splatpad'] <> nil then fTriggerEffect := 27;
+    if Sec.Line['splatpad'] <> nil then fTriggerEffect := DOM_SPLAT;
     // 28, 29 are unused
-    if Sec.Line['moving_background'] <> nil then fTriggerEffect := 30;
-    if Sec.Line['single_use_trap'] <> nil then fTriggerEffect := 31;
+    if Sec.Line['moving_background'] <> nil then fTriggerEffect := DOM_BACKGROUND;
+    if Sec.Line['single_use_trap'] <> nil then fTriggerEffect := DOM_TRAPONCE;
     // 32 is unused
-    if Sec.Line['one_way_up'] <> nil then fTriggerEffect := 33;
+    if Sec.Line['one_way_up'] <> nil then fTriggerEffect := DOM_ONEWAYUP;
 
     if Sec.Section['PRIMARY_ANIMATION'] = nil then
     begin

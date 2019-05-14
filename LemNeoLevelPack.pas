@@ -9,7 +9,7 @@ uses
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
   Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
   LemTalisman,
-  LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemCore,
+  LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
   UMisc;
 
 type
