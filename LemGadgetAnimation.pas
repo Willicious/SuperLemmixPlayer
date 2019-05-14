@@ -17,7 +17,8 @@ uses
 type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
 
-  TGadgetAnimationTriggerCondition = (gatcFrameZero, gatcFrameOne, gatcBusy, gatcTriggered, gatcDisabled);
+  TGadgetAnimationTriggerCondition = (gatcUnconditional, gatcReady, gatcBusy, gatcDisabled,
+                                      gatcDisarmed, gatcLeft, gatcRight);
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
   TGadgetAnimationTriggerConditionArray = array[TGadgetAnimationTriggerCondition] of TGadgetAnimationTriggerState;
 
@@ -27,11 +28,7 @@ type
   unconditional secondary animations, so even those with no triggers can still
   make use of secondaries.
 
-  gatcFrameZero - TRUE on frame zero, if this is significant to the object.
-  gatcFrameOne - TRUE on frame one, if this is significant to the object.
-  gatcBusy - TRUE when object is busy.
-  gatcTriggered - TRUE when object is in triggered state.
-  gatcDisabled - Varies by object. Sometimes identical to another trigger.
+
 
   The "gatsDontCare" state is not returned by tests (they will return gatFalse
   where not supported). It is only used when defining conditions, and usually,
@@ -52,41 +49,94 @@ type
   as animating for the purpose of this rule.
 
 
-  OBJECT TYPE     | gatcFrameZero | gatcFrameOne | gatcBusy | gatcTriggered | gatcDisabled
-  ----------------|---------------|--------------|----------|---------------|--------------
-  DOM_NONE        | No            | No           | No       | No            | No
-  DOM_EXIT        | No            | No           | No       | No            | No
-  DOM_FORCExxxxx  | No            | No           | No       | No            | No
-  DOM_TRAP        | Yes           | No           | Yes      | Yes           | Yes (when disarmed)
-  DOM_WATER       | No            | No           | No       | No            | No
-  DOM_FIRE        | No            | No           | No       | No            | No
-  DOM_ONEWAYxxxxx | No            | No           | No       | No            | No
-  DOM_TELEPORT    | Yes           | No           | Yes      | Yes           | Yes (when no pair exists)
-  DOM_RECEIVER    | Yes           | No           | Yes      | Yes           | Yes (when no pair exists)
-  DOM_PICKUP      | Yes           | Yes*         | No       | No            | No    * gatFrameOne here triggers on frame != 0
-  DOM_LOCKEXIT    | Yes           | Yes          | No       | Yes           | No
-  DOM_BUTTON      | Yes           | Yes          | No       | No            | No
-  DOM_UPDRAFT     | No            | No           | No       | No            | No
-  DOM_FLIPPER     | Yes           | Yes          | No       | No            | No
-  DOM_WINDOW      | Yes           | Yes          | No       | Yes           | No
-  DOM_SPLAT       | No            | No           | No       | No            | No
-  DOM_BACKGROUND  | No            | No           | No       | No            | No
-  DOM_TRAPONCE    | Yes           | Yes          | Yes      | Yes           | Yes (when disarmed - NOT when used!)
+  OBJECT TYPE     | gatcUnconditional
+  ----------------|-----------------------------------
+  GENERAL RULE    | Always true, for all objects
+  Anything        | Always true
+
+
+  OBJECT TYPE     | gatcReady
+  ----------------|-----------------------------------
+  GENERAL RULE    | The condition will be true if the object would able to interact with a lemming at this moment
+  DOM_NONE        | Always false (?)
+  DOM_TRAP        | True when the trap is idle (but not disabled)
+  DOM_TELEPORT    | True when the teleporter and its paired receiver (if any) are idle
+  DOM_RECEIVER    | True when the receiver and its paired teleporter (if any) are idle
+  DOM_PICKUP      | True when the skill has not been picked up
+  DOM_LOCKEXIT    | True when the exit is open (not just opening - must be fully open)
+  DOM_BUTTON      | True when the button has not been pressed
+  DOM_WINDOW      | True when the window is open (not just opening - must be fully open)
+  DOM_BACKGROUND  | Always false (?)
+  DOM_TRAPONCE    | True when the trap has not yet been triggered (or disabled)
+  All others      | Always true
+
+
+  OBJECT TYPE     | gatcBusy
+  ----------------|-----------------------------------
+  GENERAL RULE    | The condition will be true when the object is transitioning between states, or currently in use
+  DOM_TRAP        | True when the trap is mid-kill
+  DOM_TELEPORT    | True when the teleporter, or its paired receiver, are mid-operation
+  DOM_RECEIVER    | True when the receiver, or its paired teleporter, are mid-operation
+  DOM_LOCKEXIT    | True when the exit is in the process of opening
+  DOM_WINDOW      | True when the window is in the process of opening
+  DOM_TRAPONCE    | True when the trap is mid-kill
+  All others      | Always false
+
+
+  OBJECT TYPE     | gatcDisabled
+  ----------------|-----------------------------------
+  GENERAL RULE    | The condition will be true when the object is unable to interact with a lemming, either permanently or
+                  | until some external condition is fulfilled.
+  DOM_NONE        | Always true (?)
+  DOM_TRAP        | True if the trap has been disabled (most likely by a disarmer)
+  DOM_TELEPORT    | True if no receiver exists on the level
+  DOM_RECEIVER    | True if no teleporter exists on the level
+  DOM_PICKUP      | True if the skill has been picked up
+  DOM_LOCKEXIT    | True while the exit is in a locked state
+  DOM_BUTTON      | True when the button has been pressed
+  DOM_WINDOW      | Always false (? - maybe, "true when no more lemmings are to be released")
+  DOM_BACKGROUND  | Always true (?)
+  DOM_TRAPONCE    | True when the trap has been disabled (most likely by a disarmer) or used
+  All others      | Always false
+
+
+  OBJECT TYPE     | gatcDisarmed
+  ----------------|-----------------------------------
+  GENERAL RULE    | The condition will be true if a Disarmer has deactivated the object. Exists as a separate condition
+                  | from Disabled for the purpose of single-use traps, which may want to differentiate between disarmed
+                  | and used.
+  DOM_TRAP        | True if the trap has been disarmed
+  DOM_TRAPONCE    | True if the trap has been disarmed
+  All others      | Always false
+
+
+  OBJECT TYPE     | gatcLeft
+  ----------------|-----------------------------------
+  GENERAL RULE    | True if a direction-sensitive object is currently facing left.
+  DOM_FLIPPER     | True if the splitter will turn the next lemming to the left
+  DOM_WINDOW      | True if the window releases lemmings facing left
+  All others      | Always false
+
+
+  OBJECT TYPE     | gatcRight
+  ----------------|-----------------------------------
+  GENERAL RULE    | True if a direction-sensitive object is currently facing left.
+  DOM_FLIPPER     | True if the splitter will turn the next lemming to the left
+  DOM_WINDOW      | True if the window releases lemmings facing left
+  All others      | Always false
 
   }
 
   TGadgetAnimationTrigger = class
     private
-      fConditions: TGadgetAnimationTriggerConditionArray;
+      fCondition: TGadgetAnimationTriggerCondition;
       fState: TGadgetAnimationState;
       fVisible: Boolean;
-
-      function GetCondition(Index: TGadgetAnimationTriggerCondition): TGadgetAnimationTriggerState;
     public
       procedure Load(aSegment: TParserSection);
       procedure Clone(aSrc: TGadgetAnimationTrigger);
 
-      property Condition[Index: TGadgetAnimationTriggerCondition]: TGadgetAnimationTriggerState read GetCondition;
+      property Condition: TGadgetAnimationTriggerCondition read fCondition;
       property State: TGadgetAnimationState read fState;
       property Visible: Boolean read fVisible;
   end;
@@ -697,14 +747,9 @@ end;
 
 procedure TGadgetAnimationTrigger.Clone(aSrc: TGadgetAnimationTrigger);
 begin
-  fConditions := aSrc.fConditions;
+  fCondition := aSrc.fCondition;
   fState := aSrc.fState;
   fVisible := aSrc.fVisible;
-end;
-
-function TGadgetAnimationTrigger.GetCondition(Index: TGadgetAnimationTriggerCondition): TGadgetAnimationTriggerState;
-begin
-  Result := fConditions[Index];
 end;
 
 procedure TGadgetAnimationTrigger.Load(aSegment: TParserSection);
@@ -722,11 +767,15 @@ var
       Result := gatsDontCare;
   end;
 begin
-  fConditions[gatcFrameZero] := ParseConditionState('frame_zero');
-  fConditions[gatcFrameOne] := ParseConditionState('frame_one');
-  fConditions[gatcBusy] := ParseConditionState('busy');
-  fConditions[gatcTriggered] := ParseConditionState('triggered');
-  fConditions[gatcDisabled] := ParseConditionState('disabled');
+  S := Uppercase(aSegment.LineTrimString['CONDITION']);
+
+  if      S = 'READY' then fCondition := gatcReady
+  else if S = 'BUSY' then fCondition := gatcBusy
+  else if S = 'DISABLED' then fCondition := gatcDisabled
+  else if S = 'DISARMED' then fCondition := gatcDisarmed
+  else if S = 'LEFT' then fCondition := gatcLeft
+  else if S = 'RIGHT' then fCondition := gatcRight
+  else fCondition := gatcUnconditional;
 
   fVisible := aSegment.Line['hide'] = nil;
 

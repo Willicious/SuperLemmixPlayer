@@ -419,26 +419,101 @@ end;
 
 function TGadget.GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
 const
-  FRAME_ZERO_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
-  FRAME_ONE_OBJECTS = [DOM_PICKUP {hardcoded}, DOM_LOCKEXIT, DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
-  BUSY_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_TRAPONCE];
-  TRIGGERED_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
-  DISABLED_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_TRAPONCE];
+  READY_OBJECT_TYPES = // Any object not listed here, always returns *TRUE* (not false like the others)
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+  BUSY_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
+  DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+  DISARMED_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_TRAPONCE];
+  DIRECTION_OBJECT_TYPES = // Any object not listed here, always returns false. This is used for both gatcLeft and gatcRight.
+    [DOM_FLIPPER, DOM_WINDOW];
+
+  function CheckReadyFlag: Boolean;
+  begin
+    Result := true;
+    if TriggerEffectBase in READY_OBJECT_TYPES then
+    begin
+      if sSecondariesTreatAsBusy // for DOM_TELEPORT, "receiver is busy" is marked as this
+      or (TriggerEffect = DOM_NONE) then // local trigger effect is set to DOM_NONE when disarmed / etc
+        Result := false
+      else
+        case TriggerEffectBase of
+          DOM_TRAP, DOM_LOCKEXIT, DOM_TELEPORT: Result := (CurrentFrame = 0);
+          DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 1;
+          DOM_PICKUP: Result := CurrentFrame <> 0;
+          DOM_RECEIVER: Result := (CurrentFrame = 0) and (not HoldActive);
+          DOM_WINDOW: Result := (CurrentFrame = 0); // may make this do more in the future
+        end;
+    end;
+  end;
+
+  function CheckBusyFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in BUSY_OBJECT_TYPES then
+    begin
+      if sSecondariesTreatAsBusy then // for DOM_TELEPORT, "receiver is busy" is marked as this
+        Result := true
+      else
+        case TriggerEffectBase of
+          DOM_TRAP, DOM_TELEPORT: Result := CurrentFrame > 0;
+          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_WINDOW: Result := CurrentFrame > 1;
+          DOM_RECEIVER: Result := (CurrentFrame > 0) or HoldActive;
+        end;
+    end;
+  end;
+
+  function CheckDisabledFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DISABLED_OBJECT_TYPES then
+    begin
+       if TriggerEffect = DOM_NONE then // locla trigger effect is set to DOM_NONE when disarmed trap, unmatched teleport / receiver
+        Result := true
+      else
+        case TriggerEffectBase of
+          // DOM_TRAP: Only condition is handled by the above TriggerEffect check
+          DOM_PICKUP, DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
+          DOM_LOCKEXIT: Result := CurrentFrame = 1;
+          DOM_WINDOW: Result := false; // may make this do more in the future
+        end;
+    end;
+  end;
+
+  function CheckDisarmedFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DISARMED_OBJECT_TYPES then
+      Result := TriggerEffectBase = DOM_NONE;
+  end;
+
+  function CheckDirectionFlag(aRight: Boolean): Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DIRECTION_OBJECT_TYPES then
+    begin
+      // We test for LEFT here. It gets inverted later if aRight = true.
+      case TriggerEffectBase of
+        DOM_FLIPPER: Result := CurrentFrame = 0;
+        DOM_WINDOW: Result := IsFlipPhysics;
+      end;
+
+      if aRight then
+        Result := not Result;
+    end;
+  end;
 begin
-  Result := false;
   case aFlag of
-    gatcFrameZero: if MetaObj.TriggerEffect in FRAME_ZERO_OBJECTS then
-                     Result := Animations.PrimaryAnimation.Frame = 0;
-    gatcFrameOne: if MetaObj.TriggerEffect = DOM_PICKUP then
-                    Result := Animations.PrimaryAnimation.Frame <> 0
-                  else if MetaObj.TriggerEffect in FRAME_ONE_OBJECTS then
-                    Result := Animations.PrimaryAnimation.Frame = 1;
-    gatcBusy: if MetaObj.TriggerEffect in BUSY_OBJECTS then
-                Result := Triggered or SecondariesTreatAsBusy;
-    gatcTriggered: if MetaObj.TriggerEffect in TRIGGERED_OBJECTS then
-                     Result := Triggered;
-    gatcDisabled: if MetaObj.TriggerEffect in DISABLED_OBJECTS then
-                    Result := TriggerEffect = DOM_NONE;
+    gatcUnconditional: Result := true;
+    gatcReady: Result := CheckReadyFlag;
+    gatcBusy: Result := CheckBusyFlag;
+    gatcDisabled: Result := CheckDisabledFlag;
+    gatcDisarmed: Result := CheckDisarmedFlag;
+    gatcLeft: Result := CheckDirectionFlag(false);
+    gatcRight: Result := CheckDirectionFlag(true);
+    else raise Exception.Create('TGadget.GetAnimFlagState passed an invalid param.');
   end;
 end;
 
@@ -725,22 +800,13 @@ end;
 procedure TGadgetAnimationInstance.ProcessTriggers;
 var
   i: Integer;
-  Cond: TGadgetAnimationTriggerCondition;
   ThisTrigger: TGadgetAnimationTrigger;
-  Pass: Boolean;
 begin
   for i := fAnimation.Triggers.Count-1 downto 0 do
   begin
     ThisTrigger := fAnimation.Triggers[i];
 
-    Pass := true;
-    for Cond := Low(TGadgetAnimationTriggerCondition) to High(TGadgetAnimationTriggerCondition) do
-      case ThisTrigger.Condition[Cond] of
-        gatsTrue: if not fGadget.AnimationFlag[Cond] then Pass := false;
-        gatsFalse: if fGadget.AnimationFlag[Cond] then Pass := false;
-      end;
-
-    if Pass then
+    if fGadget.AnimationFlag[ThisTrigger.Condition] then
     begin
       fState := ThisTrigger.State;
       fVisible := ThisTrigger.Visible;
