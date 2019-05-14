@@ -67,7 +67,9 @@ end;
 
 function LeadZeroStr(Int, Len: integer): string;
 begin
-  Result := PadL(IntToStr(Int), Len, '0')
+  Result := IntToStr(Int);
+  if Length(Result) < Len then
+    Result := PadL(Result, Len, '0');
 end;
 
 procedure StringToFile(const aString, aFileName: string);
