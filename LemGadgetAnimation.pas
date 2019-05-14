@@ -411,7 +411,7 @@ begin
 
   S := Lowercase(aSegment.LineTrimString['state']);
 
-  if (S = 'pause') or fPrimary then
+  if (S = 'pause') then
     BaseTrigger.fState := gasPause
   else if (S = 'stop') then
     BaseTrigger.fState := gasStop
@@ -424,16 +424,20 @@ begin
   else
     BaseTrigger.fState := gasPlay;
 
-  if (aSegment.Line['hide'] = nil) or fPrimary then
+  if (aSegment.Line['hide'] = nil) then
     BaseTrigger.fVisible := true
   else
     BaseTrigger.fVisible := false;
 
   fTriggers.Add(BaseTrigger);
 
-  if not fPrimary then
+  if fPrimary then
   begin
-    // No triggers on primary
+    // Some properties are overridden / hardcoded for primary
+    BaseTrigger.fState := gasPause; // physics control the current frame
+    BaseTrigger.fVisible := true;   // never hide the primary - if it's needed as an effect, make the graphic blank
+  end else begin
+    // If NOT primary - load triggers
     aSegment.DoForEachSection('trigger',
       procedure(aSec: TParserSection; const aCount: Integer)
       var
