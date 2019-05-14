@@ -408,6 +408,7 @@ begin
   BaseTrigger := TGadgetAnimationTrigger.Create;
 
   S := Lowercase(aSegment.LineTrimString['state']);
+
   if (S = 'pause') or fPrimary then
     BaseTrigger.fState := gasPause
   else if (S = 'stop') then
@@ -416,7 +417,7 @@ begin
     BaseTrigger.fState := gasLoopToZero
   else if (S = 'match_primary_frame') then
     BaseTrigger.fState := gasMatchPrimary
-  else if (S = 'hide') then
+  else if (aSegment.Line['hide'] <> nil) then
     BaseTrigger.fState := gasStop
   else
     BaseTrigger.fState := gasPlay;
