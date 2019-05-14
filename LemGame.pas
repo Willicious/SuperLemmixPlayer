@@ -23,7 +23,7 @@ uses
   LemLevel,
   LemRenderHelpers, LemRendering,
   LemNeoTheme,
-  LemGadgets, LemLemming, LemRecolorSprites,
+  LemGadgets, LemGadgetsConstants, LemLemming, LemRecolorSprites,
   LemReplay,
   LemTalisman,
   LemGameMessageQueue,
@@ -460,7 +460,7 @@ const
   MAX_FALLDISTANCE         = 62;
 
 const
-  // Values for DOM_TRIGGERTYPE are defined in LemGadgets.pas!
+  // Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
   // Here only for refence.
 (*DOM_NOOBJECT         = 65535;
   DOM_NONE             = 0;
