@@ -10,7 +10,7 @@ uses
   GameControl,
   LemNeoPieceManager,
   LemLevel,
-  LemGadgetsMeta, LemGadgetsModel, LemGadgets,
+  LemGadgetsMeta, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
   LemTypes,
   LemVersion,
   Classes,
@@ -431,6 +431,9 @@ begin
 
     SL.Add('level_formats=' + Formats);
     SL.Add('level_format_exts=' + Exts);
+
+    SL.Add('object_render=true');
+    SL.Add('level_render=true');
 
     WriteInfo;
 

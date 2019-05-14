@@ -6,7 +6,7 @@ interface
 uses
   Math, Classes, GR32,
   Windows, Contnrs, SysUtils, LemTypes, LemCore,
-  LemGadgetsMeta, LemGadgetsModel,
+  LemGadgetsMeta, LemGadgetsModel, LemGadgetsConstants,
   LemGadgetAnimation,
   Generics.Collections;
 
@@ -26,6 +26,7 @@ type
     public
       constructor Create(aGadget: TGadget; aAnimation: TGadgetAnimation);
       function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
+      procedure UpdateAnimationState; // basically, all frame update logic *except* moving to the next frame
       procedure ProcessTriggers;
 
       procedure Clone(aSrc: TGadgetAnimationInstance);
@@ -68,6 +69,7 @@ type
     Obj            : TGadgetModel;
 
     procedure CreateAnimationInstances;
+    procedure PrepareAnimationInstances;
 
     function GetTriggerRect: TRect;
     procedure SetLeft(Value: Integer);
@@ -167,46 +169,10 @@ type
     function Add(Item: TGadget): Integer;
     procedure Insert(Index: Integer; Item: TGadget);
     procedure FindReceiverID;
+    procedure InitializeAnimations;
     property Items[Index: Integer]: TGadget read GetItem; default;
   published
   end;
-
-const
-  DOM_NOOBJECT         = 65535;
-  DOM_NONE             = 0;
-  DOM_EXIT             = 1;
-  DOM_FORCELEFT        = 2; // left arm of blocker
-  DOM_FORCERIGHT       = 3; // right arm of blocker
-  DOM_TRAP             = 4; // triggered trap
-  DOM_WATER            = 5; // causes drowning
-  DOM_FIRE             = 6; // causes vaporizing
-  DOM_ONEWAYLEFT       = 7;
-  DOM_ONEWAYRIGHT      = 8;
-  DOM_STEEL            = 9;
-  DOM_BLOCKER          = 10; // the middle part of blocker
-  DOM_TELEPORT         = 11;
-  DOM_RECEIVER         = 12;
-  DOM_LEMMING          = 13;
-  DOM_PICKUP           = 14;
-  DOM_LOCKEXIT         = 15;
-  DOM_SKETCH           = 16; // replaces DOM_SECRET, shouldn't be in LVL files, and gets hidden if it is
-  DOM_BUTTON           = 17;
-  //DOM_RADIATION        = 18;
-  DOM_ONEWAYDOWN       = 19;
-  DOM_UPDRAFT          = 20;
-  DOM_FLIPPER          = 21;
-  //DOM_SLOWFREEZE       = 22;
-  DOM_WINDOW           = 23;
-  //DOM_ANIMATION        = 24;
-  DOM_HINT             = 25;
-  //DOM_NOSPLAT          = 26;
-  DOM_SPLAT            = 27;
-  //DOM_TWOWAYTELE       = 28;
-  //DOM_SINGLETELE       = 29;
-  DOM_BACKGROUND       = 30;
-  DOM_TRAPONCE         = 31;
-  //DOM_BGIMAGE          = 32;
-  DOM_ONEWAYUP         = 33;
 
 implementation
 
@@ -288,13 +254,16 @@ begin
     NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i]);
     Animations.Add(NewInstance);
   end;
+end;
 
+procedure TGadget.PrepareAnimationInstances;
+var
+  i: Integer;
+begin
   for i := 0 to Animations.Count-1 do
   begin
     Animations[i].ProcessTriggers;
-
-    if Animations[i].State = gasMatchPrimary then
-      Animations[i].Frame := Animations.PrimaryAnimation.Frame;
+    Animations[i].UpdateAnimationState;
   end;
 end;
 
@@ -420,26 +389,101 @@ end;
 
 function TGadget.GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
 const
-  FRAME_ZERO_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
-  FRAME_ONE_OBJECTS = [DOM_PICKUP {hardcoded}, DOM_LOCKEXIT, DOM_BUTTON, DOM_FLIPPER, DOM_WINDOW, DOM_TRAPONCE];
-  BUSY_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_TRAPONCE];
-  TRIGGERED_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
-  DISABLED_OBJECTS = [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_TRAPONCE];
+  READY_OBJECT_TYPES = // Any object not listed here, always returns *TRUE* (not false like the others)
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+  BUSY_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
+  DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+  DISARMED_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_TRAPONCE];
+  DIRECTION_OBJECT_TYPES = // Any object not listed here, always returns false. This is used for both gatcLeft and gatcRight.
+    [DOM_FLIPPER, DOM_WINDOW];
+
+  function CheckReadyFlag: Boolean;
+  begin
+    Result := true;
+    if TriggerEffectBase in READY_OBJECT_TYPES then
+    begin
+      if sSecondariesTreatAsBusy // for DOM_TELEPORT, "receiver is busy" is marked as this
+      or (TriggerEffect = DOM_NONE) then // local trigger effect is set to DOM_NONE when disarmed / etc
+        Result := false
+      else
+        case TriggerEffectBase of
+          DOM_TRAP, DOM_LOCKEXIT, DOM_TELEPORT: Result := (CurrentFrame = 0);
+          DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 1;
+          DOM_PICKUP: Result := CurrentFrame <> 0;
+          DOM_RECEIVER: Result := (CurrentFrame = 0) and (not HoldActive);
+          DOM_WINDOW: Result := (CurrentFrame = 0); // may make this do more in the future
+        end;
+    end;
+  end;
+
+  function CheckBusyFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in BUSY_OBJECT_TYPES then
+    begin
+      if sSecondariesTreatAsBusy then // for DOM_TELEPORT, "receiver is busy" is marked as this
+        Result := true
+      else
+        case TriggerEffectBase of
+          DOM_TRAP, DOM_TELEPORT: Result := CurrentFrame > 0;
+          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_WINDOW: Result := CurrentFrame > 1;
+          DOM_RECEIVER: Result := (CurrentFrame > 0) or HoldActive;
+        end;
+    end;
+  end;
+
+  function CheckDisabledFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DISABLED_OBJECT_TYPES then
+    begin
+       if TriggerEffect = DOM_NONE then // locla trigger effect is set to DOM_NONE when disarmed trap, unmatched teleport / receiver
+        Result := true
+      else
+        case TriggerEffectBase of
+          // DOM_TRAP: Only condition is handled by the above TriggerEffect check
+          DOM_PICKUP, DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
+          DOM_LOCKEXIT: Result := CurrentFrame = 1;
+          DOM_WINDOW: Result := false; // may make this do more in the future
+        end;
+    end;
+  end;
+
+  function CheckDisarmedFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DISARMED_OBJECT_TYPES then
+      Result := TriggerEffectBase = DOM_NONE;
+  end;
+
+  function CheckDirectionFlag(aRight: Boolean): Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DIRECTION_OBJECT_TYPES then
+    begin
+      // We test for LEFT here. It gets inverted later if aRight = true.
+      case TriggerEffectBase of
+        DOM_FLIPPER: Result := CurrentFrame = 0;
+        DOM_WINDOW: Result := IsFlipPhysics;
+      end;
+
+      if aRight then
+        Result := not Result;
+    end;
+  end;
 begin
-  Result := false;
   case aFlag of
-    gatcFrameZero: if MetaObj.TriggerEffect in FRAME_ZERO_OBJECTS then
-                     Result := Animations.PrimaryAnimation.Frame = 0;
-    gatcFrameOne: if MetaObj.TriggerEffect = DOM_PICKUP then
-                    Result := Animations.PrimaryAnimation.Frame <> 0
-                  else if MetaObj.TriggerEffect in FRAME_ONE_OBJECTS then
-                    Result := Animations.PrimaryAnimation.Frame = 1;
-    gatcBusy: if MetaObj.TriggerEffect in BUSY_OBJECTS then
-                Result := Triggered or SecondariesTreatAsBusy;
-    gatcTriggered: if MetaObj.TriggerEffect in TRIGGERED_OBJECTS then
-                     Result := Triggered;
-    gatcDisabled: if MetaObj.TriggerEffect in DISABLED_OBJECTS then
-                    Result := TriggerEffect = DOM_NONE;
+    gatcUnconditional: Result := true;
+    gatcReady: Result := CheckReadyFlag;
+    gatcBusy: Result := CheckBusyFlag;
+    gatcDisabled: Result := CheckDisabledFlag;
+    gatcDisarmed: Result := CheckDisarmedFlag;
+    gatcLeft: Result := CheckDirectionFlag(false);
+    gatcRight: Result := CheckDirectionFlag(true);
+    else raise Exception.Create('TGadget.GetAnimFlagState passed an invalid param.');
   end;
 end;
 
@@ -592,6 +636,14 @@ begin
   inherited Insert(Index, Item);
 end;
 
+procedure TGadgetList.InitializeAnimations;
+var
+  i: Integer;
+begin
+  for i := 0 to Count-1 do
+    Items[i].PrepareAnimationInstances;
+end;
+
 procedure TGadgetList.FindReceiverID;
 var
   i, TestId: Integer;
@@ -706,44 +758,33 @@ begin
 
   ProcessTriggers;
 
-  if fState = gasMatchPrimary then
-  begin
-    fFrame := fGadget.CurrentFrame;
-    Exit;
-  end;
-
-  if fState = gasStop then
-  begin
-    fFrame := 0;
-    fState := gasPause;
-  end;
-
   if (fState <> gasPause) and ((fState <> gasLoopToZero) or (fFrame > 0)) then
     fFrame := (fFrame + 1) mod fAnimation.FrameCount;
 
-  if (fState = gasLoopToZero) and (fFrame = 0) then
-    fState := gasPause;
+  UpdateAnimationState;
+end;
+
+procedure TGadgetAnimationInstance.UpdateAnimationState;
+begin
+  case fState of
+    gasPlay: ; // nothing to do
+    gasPause: ; // nothing to do
+    gasLoopToZero: if fFrame = 0 then fState := gasPause;
+    gasStop: begin fFrame := 0; fState := gasPause; end;
+    gasMatchPrimary: fFrame := fGadget.CurrentFrame;
+  end;
 end;
 
 procedure TGadgetAnimationInstance.ProcessTriggers;
 var
   i: Integer;
-  Cond: TGadgetAnimationTriggerCondition;
   ThisTrigger: TGadgetAnimationTrigger;
-  Pass: Boolean;
 begin
   for i := fAnimation.Triggers.Count-1 downto 0 do
   begin
     ThisTrigger := fAnimation.Triggers[i];
 
-    Pass := true;
-    for Cond := Low(TGadgetAnimationTriggerCondition) to High(TGadgetAnimationTriggerCondition) do
-      case ThisTrigger.Condition[Cond] of
-        gatsTrue: if not fGadget.AnimationFlag[Cond] then Pass := false;
-        gatsFalse: if fGadget.AnimationFlag[Cond] then Pass := false;
-      end;
-
-    if Pass then
+    if fGadget.AnimationFlag[ThisTrigger.Condition] then
     begin
       fState := ThisTrigger.State;
       fVisible := ThisTrigger.Visible;
