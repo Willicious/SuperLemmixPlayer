@@ -108,6 +108,8 @@ resourcestring
   SReacher = 'Reacher';
   SShimmier = 'Shimmier';
   SZombie = 'Zombie';
+  SNeutral = 'Neutral';
+  SNeutralZombie = 'N-Zombie';
 
 
   {-------------------------------------------------------------------------------

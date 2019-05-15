@@ -1906,8 +1906,8 @@ begin
     // Select only walkers
     if IsSelectWalkerHotkey and (L.LemAction <> baWalking) then Continue;
 
-    // Increase number of lemmings in cursor (if not a zombie)
-    if not L.LemIsZombie then Inc(NumLemInCursor);
+    // Increase number of lemmings in cursor (if not a zombie or neutral)
+    if not L.CannotReceiveSkills then Inc(NumLemInCursor);
 
     // Determine priority class of current lemming
     if IsSelectUnassignedHotkey or IsSelectWalkerHotkey then
