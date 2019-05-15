@@ -1348,7 +1348,7 @@ var
     Y := Y - 1; // to center
 
     NumberString := LeadZeroStr(aNumber, aMinLength);
-    DigitsWidth := (Length(NumberString) * 4) + Length(NumberString);
+    DigitsWidth := Length(NumberString) * 5;
 
     if aAlignment < 0 then
       CurX := X
