@@ -18,7 +18,8 @@ const
 type
   TColorSwapType = (rcl_Selected,
                     rcl_Athlete,
-                    rcl_Zombie);
+                    rcl_Zombie,
+                    rcl_Neutral);
 
   TColorSwap = record
     Condition: TColorSwapType;
@@ -84,6 +85,9 @@ begin
     if fDrawAsSelected then
       B := B or CPM_LEMMING_SELECTED;
 
+    if fLemming.LemIsNeutral then
+      B := Gray32(Intensity(B));
+
     if fLemming.LemIsZombie then
       B := B and not CPM_LEMMING_ZOMBIE;
   end else
@@ -93,6 +97,7 @@ begin
         rcl_Selected: if not fDrawAsSelected then Continue;
         rcl_Zombie: if not fLemming.LemIsZombie then Continue;
         rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
+        rcl_Neutral: if not fLemming.LemIsNeutral then Continue;
         else raise Exception.Create('TRecolorImage.SwapColors encountered an unknown condition' + #13 + IntToStr(Integer(fSwaps[i].Condition)));
       end;
       if (F and $FFFFFF) = fSwaps[i].SrcColor then B := fSwaps[i].DstColor;
@@ -152,6 +157,9 @@ begin
 
       Mode := rcl_Selected;
       Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+
+      Mode := rcl_Neutral;
+      Parser.MainSection.Section['recoloring'].DoForEachSection('neutral', RegisterSwap, @Mode);
     end;
   finally
     Parser.Free;

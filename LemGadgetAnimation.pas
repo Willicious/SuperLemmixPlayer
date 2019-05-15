@@ -58,7 +58,6 @@ type
   OBJECT TYPE     | gatcReady
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true if the object would able to interact with a lemming at this moment
-  DOM_NONE        | Always false (?)
   DOM_TRAP        | True when the trap is idle (but not disabled)
   DOM_TELEPORT    | True when the teleporter and its paired receiver (if any) are idle
   DOM_RECEIVER    | True when the receiver and its paired teleporter (if any) are idle
@@ -66,7 +65,6 @@ type
   DOM_LOCKEXIT    | True when the exit is open (not just opening - must be fully open)
   DOM_BUTTON      | True when the button has not been pressed
   DOM_WINDOW      | True when the window is open (not just opening - must be fully open)
-  DOM_BACKGROUND  | Always false (?)
   DOM_TRAPONCE    | True when the trap has not yet been triggered (or disabled)
   All others      | Always true
 
@@ -87,15 +85,13 @@ type
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true when the object is unable to interact with a lemming, either permanently or
                   | until some external condition is fulfilled.
-  DOM_NONE        | Always true (?)
   DOM_TRAP        | True if the trap has been disabled (most likely by a disarmer)
   DOM_TELEPORT    | True if no receiver exists on the level
   DOM_RECEIVER    | True if no teleporter exists on the level
   DOM_PICKUP      | True if the skill has been picked up
   DOM_LOCKEXIT    | True while the exit is in a locked state
   DOM_BUTTON      | True when the button has been pressed
-  DOM_WINDOW      | Always false (? - maybe, "true when no more lemmings are to be released")
-  DOM_BACKGROUND  | Always true (?)
+  DOM_WINDOW      | Always false (? - maybe should change, "true when no more lemmings are to be released")
   DOM_TRAPONCE    | True when the trap has been disabled (most likely by a disarmer) or used
   All others      | Always false
 

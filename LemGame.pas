@@ -1897,8 +1897,8 @@ begin
     if IsHighlight and not (L = GetHighlitLemming) then Continue;
     // Does Lemming exist
     if L.LemRemoved or L.LemTeleporting then Continue;
-    // Is the Lemming a Zombie (remove unless we haven't yet had any lem under the cursor)
-    if L.LemIsZombie and Assigned(PriorityLem) then Continue;
+    // Is the Lemming unable to receive skills, because zombie or neutral? (remove unless we haven't yet had any lem under the cursor)
+    if L.CannotReceiveSkills and Assigned(PriorityLem) then Continue;
     // Is Lemming inside cursor (only check if we are not using Hightlightning!)
     if (not LemIsInCursor(L, MousePos)) and (not IsHighlight) then Continue;
     // Directional select
@@ -1925,7 +1925,7 @@ begin
     if not NewSkillMethods[NewSkill](L) then CurPriorityBox := 8;
 
     // Deprioritize zombie even when just counting lemmings
-    if L.LemIsZombie then CurPriorityBox := 9;
+    if L.CannotReceiveSkills then CurPriorityBox := 9;
 
     if     (CurPriorityBox < CurValue)
        or ((CurPriorityBox = CurValue) and IsCloserToCursorCenter(PriorityLem, L, MousePos)) then
@@ -4984,7 +4984,7 @@ begin
 
     if L.LemQueueAction = baNone then Continue;
 
-    if L.LemRemoved or L.LemIsZombie or L.LemTeleporting then
+    if L.LemRemoved or L.CannotReceiveSkills or L.LemTeleporting then // CannotReceiveSkills covers neutral and zombie
     begin
       // delete queued action first
       L.LemQueueAction := baNone;

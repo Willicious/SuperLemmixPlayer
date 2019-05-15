@@ -152,6 +152,7 @@ type
     property IsPreassignedGlider: Boolean index 8 read GetPreassignedSkill;
     property IsPreassignedDisarmer: Boolean index 16 read GetPreassignedSkill;
     property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
+    property IsPreassignedNeutral: Boolean index 128 read GetPreassignedSkill;
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
     property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
