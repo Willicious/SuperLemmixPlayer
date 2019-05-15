@@ -387,7 +387,7 @@ var
     O.DrawingFlags := O.DrawingFlags or aValue;
   end;
 
-  procedure GetCappedExitData;
+  procedure GetExitData;
   begin
     O.LemmingCap := aSection.LineNumeric['lemmings'];
   end;
@@ -484,7 +484,7 @@ begin
     DOM_FLIPPER: GetSplitterData;
     DOM_WINDOW: GetWindowData;
     DOM_BACKGROUND: GetMovingBackgroundData;
-    DOM_LOCKEXIT, DOM_CAPEXIT: GetCappedExitData;
+    DOM_EXIT, DOM_LOCKEXIT: GetExitData;
   end;
 end;
 
