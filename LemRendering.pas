@@ -1384,6 +1384,13 @@ var
       DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
+  procedure AddLemmingCountNumber;
+  begin
+    if (Gadget.RemainingLemmingsCount >= 0) then
+      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.RemainingLemmingsCount,
+                 Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
+  end;
+
 begin
   if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
@@ -1406,6 +1413,9 @@ begin
 
   if (Gadget.TriggerEffect = DOM_PICKUP) then
     AddPickupSkillNumber;
+
+  if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW]) then
+    AddLemmingCountNumber;
 end;
 
 procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
