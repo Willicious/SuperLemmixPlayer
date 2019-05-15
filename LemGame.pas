@@ -238,7 +238,7 @@ type
       function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
-      function HandleExit(L: TLemming): Boolean;
+      function HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
       function HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -2229,7 +2229,7 @@ begin
 
     // Exits
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
-      AbortChecks := HandleExit(L);
+      AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Flipper (except for blockers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
@@ -2320,6 +2320,10 @@ begin
     // Additional checks for locked exit
     if (Gadget.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
       GadgetFound := False;
+    // Additional check for any exit
+    if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) and (Gadget.RemainingLemmingsCount = 0) then // we specifically must not use <= 0 here, as -1 = no limit
+      GadgetFound := False;
+
     // Additional checks for triggered traps, triggered animations, teleporters
     if Gadget.Triggered then
       GadgetFound := False;
@@ -2478,7 +2482,10 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleExit(L: TLemming): Boolean;
+function TLemmingGame.HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
+var
+  GadgetID: Word;
+  Gadget: TGadget;
 begin
   Result := False; // only see exit trigger area, if it actually used
 
@@ -2486,6 +2493,13 @@ begin
      and (not (L.LemAction in [baFalling, baSplatting]))
      and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
+    GadgetID := FindGadgetID(PosX, PosY, trExit);
+    if GadgetID = 65535 then Exit;
+    Gadget := Gadgets[GadgetID];
+
+    if Gadget.RemainingLemmingsCount > 0 then
+      Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount - 1;
+
     Result := True;
     Transition(L, baExiting);
     CueSoundEffect(SFX_YIPPEE, L.Position);
