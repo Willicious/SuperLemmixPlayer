@@ -18,7 +18,7 @@ type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
 
   TGadgetAnimationTriggerCondition = (gatcUnconditional, gatcReady, gatcBusy, gatcDisabled,
-                                      gatcDisarmed, gatcLeft, gatcRight);
+                                      gatcDisarmed, gatcLeft, gatcRight, gatcExhausted);
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
   TGadgetAnimationTriggerConditionArray = array[TGadgetAnimationTriggerCondition] of TGadgetAnimationTriggerState;
 
@@ -126,6 +126,15 @@ type
   DOM_FLIPPER     | True if the splitter will turn the next lemming to the left
   DOM_WINDOW      | True if the window releases lemmings facing left
   All others      | Always false
+
+
+  OBJECT TYPE     | gatcExhausted
+  ----------------|-----------------------------------
+  GENERAL RULE    | True if an object with a variable use limit (eg. capped exits)
+                  | has been completely used up.
+  DOM_EXIT        | True if the exit is limited-use and has zero remaining uses
+  DOM_LOCKEXIT    | True if the exit is limited-use and has zero remaining uses
+  DOM_WINDOW      | True if the window is limited-use and has released all lemmings
 
   }
 
@@ -784,6 +793,7 @@ begin
   else if S = 'DISARMED' then fCondition := gatcDisarmed
   else if S = 'LEFT' then fCondition := gatcLeft
   else if S = 'RIGHT' then fCondition := gatcRight
+  else if S = 'EXHAUSTED' then fCondition := gatcExhausted
   else fCondition := gatcUnconditional;
 
   fVisible := aSegment.Line['hide'] = nil;

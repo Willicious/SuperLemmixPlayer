@@ -411,6 +411,8 @@ const
     [DOM_TRAP, DOM_TRAPONCE];
   DIRECTION_OBJECT_TYPES = // Any object not listed here, always returns false. This is used for both gatcLeft and gatcRight.
     [DOM_FLIPPER, DOM_WINDOW];
+  EXHAUSTED_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW];
 
   function CheckReadyFlag: Boolean;
   begin
@@ -486,6 +488,13 @@ const
         Result := not Result;
     end;
   end;
+
+  function CheckExhaustedFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in EXHAUSTED_OBJECT_TYPES then
+      Result := RemainingLemmingsCount = 0;
+  end;
 begin
   case aFlag of
     gatcUnconditional: Result := true;
@@ -495,6 +504,7 @@ begin
     gatcDisarmed: Result := CheckDisarmedFlag;
     gatcLeft: Result := CheckDirectionFlag(false);
     gatcRight: Result := CheckDirectionFlag(true);
+    gatcExhausted: Result := CheckExhaustedFlag;
     else raise Exception.Create('TGadget.GetAnimFlagState passed an invalid param.');
   end;
 end;
