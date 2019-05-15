@@ -1330,9 +1330,8 @@ var
   ThisAnim: TGadgetAnimationInstance;
   DstRect: TRect;
 
-  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aMinLength: Integer = 1; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
+  procedure DrawNumberWithCountdownDigits(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
-    NumberString: String;
     DigitsWidth: Integer;
 
     CurX: Integer;
@@ -1345,11 +1344,9 @@ var
   begin
     OldDrawColor := fFixedDrawColor;
 
-    Y := Y - 1; // to center
+    Y := Y - 2; // to center
 
-    NumberString := LeadZeroStr(aNumber, aMinLength);
-    DigitsWidth := Length(NumberString) * 5;
-
+    DigitsWidth := Length(aDigitString) * 5;
     if aAlignment < 0 then
       CurX := X
     else if aAlignment > 0 then
@@ -1357,9 +1354,9 @@ var
     else
       CurX := X - (DigitsWidth div 2) + 1;
 
-    for n := 1 to Length(NumberString) do
+    for n := 1 to Length(aDigitString) do
     begin
-      Digit := StrToInt(NumberString[n]);
+      Digit := StrToInt(aDigitString[n]);
       SrcRect := SizedRect(Digit * 4, 0, 4, 5);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
@@ -1376,6 +1373,42 @@ var
     end;
 
     fFixedDrawColor := OldDrawColor;
+  end;
+
+  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aMinDigits: Integer = 1; aAlignment: Integer = -1);
+  var
+    Digits: TGadgetAnimation;
+    DigitString: String;
+
+    CurX, TargetY: Integer;
+    n: Integer;
+  begin
+    if (aNumber = 0) and (aMinDigits <= 0) then
+      Exit; // Special case - allow for "show nothing on zero"
+
+    Digits := Gadget.MetaObj.DigitAnimation;
+    DigitString := LeadZeroStr(aNumber, aMinDigits);
+
+    if Gadget.MetaObj.DigitAnimation = nil then
+    begin
+      DrawNumberWithCountdownDigits(X, Y, DigitString, aAlignment);
+      Exit;
+    end;
+
+    if aAlignment < 0 then
+      CurX := X
+    else if aAlignment > 0 then
+      CurX := X - (Length(DigitString) * Digits.Width)
+    else
+      CurX := X - ((Length(DigitString) * Digits.Width) div 2);
+
+    TargetY := Y - (Digits.Height div 2);
+
+    for n := 1 to Length(DigitString) do
+    begin
+      Digits.Draw(Dst, CurX, TargetY, StrToInt(DigitString[n]));
+      Inc(CurX, Digits.Width);
+    end;
   end;
 
   procedure AddPickupSkillNumber;

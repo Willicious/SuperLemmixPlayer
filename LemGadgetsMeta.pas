@@ -137,6 +137,7 @@ type
       function GetAnimations: TGadgetAnimations;
       function GetSoundEffect: String;
       procedure SetSoundEffect(aValue: String);
+      function GetDigitAnimation: TGadgetAnimation;
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 
@@ -162,6 +163,8 @@ type
       property Resizability             : TGadgetMetaSizeSetting read GetResizability write SetResizability;
       property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
       property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
+
+      property DigitAnimation: TGadgetAnimation read GetDigitAnimation;
   end;
 
   TGadgetMetaInfoList = class(TObjectList)
@@ -696,6 +699,11 @@ begin
     mos_Horizontal: Result := fGadgetMetaInfo.CanResizeHorizontal[fFlip, fInvert, fRotate];
     mos_Vertical: Result := fGadgetMetaInfo.CanResizeVertical[fFlip, fInvert, fRotate];
   end;
+end;
+
+function TGadgetMetaAccessor.GetDigitAnimation: TGadgetAnimation;
+begin
+  Result := fGadgetMetaInfo.Animations[false, false, false]['DIGITS'];
 end;
 
 function TGadgetMetaAccessor.GetAnimations: TGadgetAnimations;
