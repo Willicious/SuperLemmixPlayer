@@ -1352,7 +1352,7 @@ var
     else if aAlignment > 0 then
       CurX := X - DigitsWidth + 1
     else
-      CurX := X - (DigitsWidth div 2);
+      CurX := X - (DigitsWidth div 2) + 1;
 
     for n := 1 to Length(aDigitString) do
     begin
