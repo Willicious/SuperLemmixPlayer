@@ -42,7 +42,7 @@ type
   TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height,
                          ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
                          ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame,
-                         ov_DigitX, ov_DigitY, ov_DigitAlign);
+                         ov_DigitX, ov_DigitY, ov_DigitAlign, ov_DigitMinLength);
                          // Integer properties only.
 
   TGadgetMetaInfo = class
@@ -64,6 +64,7 @@ type
     fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : String;  // filename of sound to play
+    fDigitMinLength               : Integer;
 
     fResizability                 : TGadgetMetaSizeSetting;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
@@ -154,6 +155,7 @@ type
       property DigitX: Integer index ov_DigitX read GetIntegerProperty write SetIntegerProperty;
       property DigitY: Integer index ov_DigitY read GetIntegerProperty write SetIntegerProperty;
       property DigitAlign: Integer index ov_DigitAlign read GetIntegerProperty write SetIntegerProperty;
+      property DigitMinLength: Integer index ov_DigitMinLength read GetIntegerProperty write SetIntegerProperty;
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
       property SoundEffect: String read GetSoundEffect write SetSoundEffect;
 
@@ -326,19 +328,38 @@ begin
         GadgetAccessor.TriggerHeight := 1;
     end;
 
+    GadgetAccessor.DigitAlign := 0; // due to how fallback values work, we want to assign the last-resort fallback here
+
     GadgetAccessor.DigitX := Sec.LineNumeric['digit_x'];
     GadgetAccessor.DigitY := Sec.LineNumeric['digit_y'];
-    GadgetAccessor.DigitAlign := Sec.LineNumeric['digit_align'];
 
     if Sec.Line['digit_x'] = nil then
     begin
-      GadgetAccessor.DigitX := fWidth - 1;
-      if Sec.Line['digit_align'] = nil then
-        GadgetAccessor.DigitAlign := 1;
+      if fTriggerEffect = DOM_PICKUP then
+      begin
+        GadgetAccessor.DigitX := fWidth - 1;
+        if Sec.Line['digit_align'] = nil then
+          GadgetAccessor.DigitAlign := 1;
+      end else
+        GadgetAccessor.DigitX := fWidth div 2;
     end;
 
     if Sec.Line['digit_y'] = nil then
-      GadgetAccessor.DigitY := GadgetAccessor.Height - 4;
+    begin
+      if fTriggerEffect = DOM_PICKUP then
+        GadgetAccessor.DigitY := GadgetAccessor.Height - 4
+      else
+        GadgetAccessor.DigitY := -6;
+    end;
+
+    GadgetAccessor.DigitAlign := Sec.LineNumericDefault['digit_align', GadgetAccessor.DigitAlign];
+
+    if fTriggerEffect = DOM_PICKUP then
+      fDigitMinLength := 0
+    else
+      fDigitMinLength := 1;
+
+    fDigitMinLength := Sec.LineNumericDefault['digit_length', fDigitMinLength];
 
     fSoundEffect := Sec.LineTrimString['sound'];
 
@@ -625,6 +646,7 @@ begin
     ov_DigitX: Result := fGadgetMetaInfo.DigitX[fFlip, fInvert, fRotate];
     ov_DigitY: Result := fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate];
     ov_DigitAlign: Result := fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate];
+    ov_DigitMinLength: Result := fGadgetMetaInfo.fDigitMinLength;
     ov_KeyFrame: Result := fGadgetMetaInfo.fKeyFrame;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
@@ -641,6 +663,7 @@ begin
     ov_DigitX: fGadgetMetaInfo.DigitX[fFlip, fInvert, fRotate] := aValue;
     ov_DigitY: fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate] := aValue;
     ov_DigitAlign: fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate] := aValue;
+    ov_DigitMinLength: fGadgetMetaInfo.fDigitMinLength := aValue;
     ov_KeyFrame: fGadgetMetaInfo.fKeyFrame := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;

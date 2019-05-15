@@ -1330,7 +1330,7 @@ var
   ThisAnim: TGadgetAnimationInstance;
   DstRect: TRect;
 
-  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
+  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aMinLength: Integer = 1; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
     NumberString: String;
     DigitsWidth: Integer;
@@ -1347,7 +1347,7 @@ var
 
     Y := Y - 1; // to center
 
-    NumberString := IntToStr(aNumber);
+    NumberString := LeadZeroStr(aNumber, aMinLength);
     DigitsWidth := (Length(NumberString) * 4) + Length(NumberString);
 
     if aAlignment < 0 then
@@ -1380,7 +1380,8 @@ var
 
   procedure AddPickupSkillNumber;
   begin
-    DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitAlign);
+    if (Gadget.SkillCount > 1) or (Gadget.MetaObj.DigitMinLength >= 1) then
+      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
 begin
@@ -1403,7 +1404,7 @@ begin
     DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
 
-  if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+  if (Gadget.TriggerEffect = DOM_PICKUP) then
     AddPickupSkillNumber;
 end;
 
