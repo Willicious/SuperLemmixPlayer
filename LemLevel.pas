@@ -617,16 +617,27 @@ var
   S: TSkillPanelButton;
   FoundSkill: Boolean;
 
-  IsWindow: array of Boolean;
+  WindowLemmingCount: array of Integer;
   FoundWindow: Boolean;
   n: Integer;
+  SpawnedCount: Integer;
 
   procedure SetNextWindow;
+  var
+    initial: Integer;
   begin
+    initial := n;
+    if initial = -1 then
+      initial := InteractiveObjects.Count-1;
     repeat
       Inc(n);
       if n >= InteractiveObjects.Count then n := 0;
-    until IsWindow[n];
+      if (n = initial) and (WindowLemmingCount[n] = 0) then
+      begin
+        n := -1;
+        Exit;
+      end;
+    until WindowLemmingCount[n] <> 0;
   end;
 begin
   // 1. Validate skillset - remove skills that don't exist in the level
@@ -647,14 +658,17 @@ begin
 
   // 2. Calculate ZombieCount, precise spawn order, and finalised lemming count
   FoundWindow := false;
-  SetLength(IsWindow, InteractiveObjects.Count);
+  SetLength(WindowLemmingCount, InteractiveObjects.Count);
   for i := 0 to InteractiveObjects.Count-1 do
     if (PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW) then
     begin
       FoundWindow := true;
-      IsWindow[i] := true;
+      if InteractiveObjects[i].LemmingCap > 0 then
+        WindowLemmingCount[i] := InteractiveObjects[i].LemmingCap
+      else
+        WindowLemmingCount[i] := -1;
     end else
-      IsWindow[i] := false;
+      WindowLemmingCount[i] := 0;
 
   Info.ZombieCount := 0;
   for i := 0 to PreplacedLemmings.Count-1 do
@@ -668,13 +682,30 @@ begin
   end else begin
     n := -1;
     SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count);
+
+    SpawnedCount := PreplacedLemmings.Count;
+
     for i := 0 to Length(Info.SpawnOrder)-1 do
     begin
       SetNextWindow;
+
+      if (n = -1) then
+      begin
+        Info.LemmingsCount := SpawnedCount; // remember - this already includes preplaced lemmings
+        Break;
+      end;
+
       if (InteractiveObjects[n].TarLev and 64) <> 0 then
         Info.ZombieCount := Info.ZombieCount + 1;
       Info.SpawnOrder[i] := n;
+
+      if WindowLemmingCount[n] > 0 then
+        Dec(WindowLemmingCount[n]);
+
+      Inc(SpawnedCount);
     end;
+
+    SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count); // in case this got overridden
   end;
 end;
 

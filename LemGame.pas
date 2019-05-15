@@ -4748,6 +4748,11 @@ begin
             Dec(fSpawnedDead);
             RemoveLemming(NewLemming, RM_ZOMBIE, true);
           end;
+
+          if Gadgets[ix].RemainingLemmingsCount > 0 then
+            Gadgets[ix].RemainingLemmingsCount := Gadgets[ix].RemainingLemmingsCount - 1;
+                // TLevel.PrepareForUse handles enforcing the limits. This only needs to be updated
+                // for display purposes.
         end;
         Dec(LemmingsToRelease);
         Inc(LemmingsOut);
