@@ -395,11 +395,11 @@ end;
 function TGadget.GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
 const
   READY_OBJECT_TYPES = // Any object not listed here, always returns *TRUE* (not false like the others)
-    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE, DOM_CAPEXIT];
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
   BUSY_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE, DOM_CAPEXIT];
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
   DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE, DOM_CAPEXIT];
+    [DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
   DISARMED_OBJECT_TYPES = // Any object not listed here, always returns false
     [DOM_TRAP, DOM_TRAPONCE];
   DIRECTION_OBJECT_TYPES = // Any object not listed here, always returns false. This is used for both gatcLeft and gatcRight.
@@ -416,7 +416,7 @@ const
       else
         case TriggerEffectBase of
           DOM_TRAP, DOM_LOCKEXIT, DOM_TELEPORT: Result := (CurrentFrame = 0);
-          DOM_BUTTON, DOM_TRAPONCE, DOM_CAPEXIT: Result := CurrentFrame = 1;
+          DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 1;
           DOM_PICKUP: Result := CurrentFrame <> 0;
           DOM_RECEIVER: Result := (CurrentFrame = 0) and (not HoldActive);
           DOM_WINDOW: Result := (CurrentFrame = 0); // may make this do more in the future
@@ -434,7 +434,7 @@ const
       else
         case TriggerEffectBase of
           DOM_TRAP, DOM_TELEPORT: Result := CurrentFrame > 0;
-          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_WINDOW, DOM_CAPEXIT: Result := CurrentFrame > 1;
+          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_WINDOW: Result := CurrentFrame > 1;
           DOM_RECEIVER: Result := (CurrentFrame > 0) or HoldActive;
         end;
     end;
@@ -450,7 +450,7 @@ const
       else
         case TriggerEffectBase of
           // DOM_TRAP: Only condition is handled by the above TriggerEffect check
-          DOM_PICKUP, DOM_BUTTON, DOM_TRAPONCE, DOM_CAPEXIT: Result := CurrentFrame = 0;
+          DOM_PICKUP, DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
           DOM_LOCKEXIT: Result := CurrentFrame = 1;
           DOM_WINDOW: Result := false; // may make this do more in the future
         end;
@@ -760,7 +760,7 @@ begin
     if MetaObj.TriggerEffect = DOM_PICKUP then
       fFrame := aGadget.Obj.Skill + 1;
 
-    if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE, DOM_CAPEXIT] then
+    if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
       fFrame := 1;
   end else
     fPrimary := false;
