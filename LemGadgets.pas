@@ -21,8 +21,10 @@ type
       fState: TGadgetAnimationState;
       fVisible: Boolean;
       fPrimary: Boolean;
+      fDisableTriggers: Boolean;
 
       function GetBitmap: TBitmap32;
+      function GetDisableTriggers: Boolean;
     public
       constructor Create(aGadget: TGadget; aAnimation: TGadgetAnimation);
       function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
@@ -37,15 +39,20 @@ type
       property Frame: Integer read fFrame write fFrame;
       property Visible: Boolean read fVisible;
       property State: TGadgetAnimationState read fState;
+      property DisableTriggers: Boolean read GetDisableTriggers write fDisableTriggers;
   end;
 
   TGadgetAnimationInstances = class(TObjectList<TGadgetAnimationInstance>)
     private
       fPrimaryAnimation: TGadgetAnimationInstance;
+      fPrimaryAnimationFrameCount: Integer;
       function GetPrimaryAnimation: TGadgetAnimationInstance;
+      procedure SetPrimaryAnimation(const aValue: TGadgetAnimationInstance);
     public
       procedure Clone(aSrc: TGadgetAnimationInstances; newObj: TGadget);
-      property PrimaryAnimation: TGadgetAnimationInstance read GetPrimaryAnimation;
+      procedure ChangePrimaryAnimation(aNewPrimaryName: String; aSetFrame: Integer = -1); // this discards the old primary!
+      property PrimaryAnimation: TGadgetAnimationInstance read GetPrimaryAnimation write SetPrimaryAnimation;
+      property PrimaryAnimationFrameCount: Integer read fPrimaryAnimationFrameCount;
   end;
 
   // internal object used by game
@@ -389,7 +396,7 @@ end;
 
 function TGadget.GetAnimationFrameCount: Integer;
 begin
-  Result := MetaObj.FrameCount;
+  Result := Animations.PrimaryAnimationFrameCount;
 end;
 
 function TGadget.GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
@@ -771,6 +778,11 @@ begin
   Result := fAnimation.GetFrameBitmap(fFrame);
 end;
 
+function TGadgetAnimationInstance.GetDisableTriggers: Boolean;
+begin
+  Result := fDisableTriggers or fPrimary;
+end;
+
 function TGadgetAnimationInstance.UpdateOneFrame: Boolean;
 begin
   Result := true;
@@ -799,6 +811,8 @@ var
   i: Integer;
   ThisTrigger: TGadgetAnimationTrigger;
 begin
+  if DisableTriggers then Exit;
+
   for i := fAnimation.Triggers.Count-1 downto 0 do
   begin
     ThisTrigger := fAnimation.Triggers[i];
@@ -813,6 +827,30 @@ begin
 end;
 
 { TGadgetAnimationInstances }
+
+procedure TGadgetAnimationInstances.ChangePrimaryAnimation(aNewPrimaryName: String; aSetFrame: Integer = -1);
+var
+  i: Integer;
+  NewPrimary: TGadgetAnimationInstance;
+begin
+  aNewPrimaryName := Trim(Uppercase(aNewPrimaryName));
+  for i := 0 to Count-1 do
+    if Items[i].fAnimation.Name = aNewPrimaryName then
+    begin
+      NewPrimary := Items[i];
+      Remove(fPrimaryAnimation);
+
+      PrimaryAnimation := NewPrimary;
+      NewPrimary.fPrimary := true;
+      NewPrimary.fState := gasPause;
+      NewPrimary.fVisible := true;
+
+      if (aSetFrame >= 0) then
+        NewPrimary.fFrame := aSetFrame; // Futureproofing, in case we ever have a situation where we *don't* need
+                                        // to set the frame, but can allow INITIAL_FRAME to take effect.
+      Exit;
+    end;
+end;
 
 procedure TGadgetAnimationInstances.Clone(aSrc: TGadgetAnimationInstances; newObj: TGadget);
 var
@@ -839,11 +877,21 @@ begin
     for i := 0 to Count-1 do
       if Items[i].Primary then
       begin
-        fPrimaryAnimation := Items[i];
+        PrimaryAnimation := Items[i];
         Break;
       end;
 
   Result := fPrimaryAnimation;
+end;
+
+procedure TGadgetAnimationInstances.SetPrimaryAnimation(const aValue: TGadgetAnimationInstance);
+begin
+  fPrimaryAnimation := aValue;
+
+  if aValue = nil then
+    fPrimaryAnimationFrameCount := 0
+  else
+    fPrimaryAnimationFrameCount := aValue.fAnimation.FrameCount;
 end;
 
 end.
