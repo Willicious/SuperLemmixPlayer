@@ -634,37 +634,16 @@ var
   function LemmingCountString: String;
   var
     i: Integer;
-    EntranceCount: Integer;
-    EntranceZombie: array of Boolean;
-
-    ZombieCount: Integer;
     PreplacedZombieCount: Integer;
   begin
-    EntranceCount := 0;
-    SetLength(EntranceZombie, 0);
-    ZombieCount := 0;
     PreplacedZombieCount := 0;
-
-    for i := 0 to Level.InteractiveObjects.Count-1 do
-      if PieceManager.Objects[Level.InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW then
-      begin
-        Inc(EntranceCount);
-        SetLength(EntranceZombie, EntranceCount);
-        EntranceZombie[EntranceCount - 1] := (Level.InteractiveObjects[i].TarLev and $40) <> 0;
-      end;
 
     for i := 0 to Level.PreplacedLemmings.Count-1 do
       if Level.PreplacedLemmings[i].IsZombie then
         Inc(PreplacedZombieCount);
 
-    for i := 1 to Level.Info.LemmingsCount - Level.PreplacedLemmings.Count do
-      if EntranceZombie[(i - 1) mod EntranceCount] then
-        Inc(ZombieCount);
-
-    ZombieCount := ZombieCount + PreplacedZombieCount;
-
     Result := IntToStr(Level.Info.LemmingsCount) + '|' +
-              IntToStr(ZombieCount) + '|' +
+              IntToStr(Level.Info.ZombieCount) + '|' +
               IntToStr(Level.PreplacedLemmings.Count) + '|' +
               IntToStr(PreplacedZombieCount);
   end;
@@ -710,6 +689,7 @@ begin
     GameParams.LoadCurrentLevel;
 
     Level := GameParams.Level;
+    Level.PrepareForUse;
 
     Titles.Add(Level.Info.Title);
 
