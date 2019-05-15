@@ -2374,6 +2374,7 @@ begin
     // trigger trap
     Gadget.Triggered := True;
     Gadget.ZombieMode := L.LemIsZombie;
+    Gadget.NeutralMode := L.LemIsNeutral;
     // Make sure to remove the blocker field!
     L.LemHasBlockerField := False;
     SetBlockerMap;
@@ -2412,6 +2413,7 @@ begin
 
   Gadget.Triggered := True;
   Gadget.ZombieMode := L.LemIsZombie;
+  Gadget.NeutralMode := L.LemIsNeutral;
   CueSoundEffect(Gadget.SoundEffect, L.Position);
   L.LemTeleporting := True;
   Gadget.TeleLem := L.LemIndex;
@@ -5260,6 +5262,7 @@ begin
         Gadget2.TeleLem := Gadget.TeleLem;
         Gadget2.Triggered := True;
         Gadget2.ZombieMode := Gadget.ZombieMode;
+        Gadget2.NeutralMode := Gadget.NeutralMode;
         // Reset TeleLem for Teleporter
         Gadget.TeleLem := -1;
       end;
@@ -5273,6 +5276,7 @@ begin
       Gadget.Triggered := False;
       Gadget.HoldActive := False;
       Gadget.ZombieMode := False;
+      Gadget.NeutralMode := False;
     end;
 
     for i2 := Gadget.Animations.Count-1 downto 0 do

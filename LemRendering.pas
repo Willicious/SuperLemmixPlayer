@@ -1,5 +1,7 @@
 {$include lem_directives.inc}
 
+// TODO: Replace CombineGadgetsDefaultZombie and CombineGadgetsDefaultNeutral with use of the lemming recolorer.
+
 unit LemRendering;
 
 interface
@@ -74,6 +76,7 @@ type
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: TColor32);
 
     // Functional combines
     procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
@@ -86,7 +89,7 @@ type
     procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // use with fFixedDrawColor
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
-    procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false);
+    procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false);
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 
@@ -1049,8 +1052,27 @@ procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M:
 begin
   if (F and $FF000000) <> 0 then
   begin
-    if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-      F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
+    if (F and $FFFFFF) = $F0D0D0 then
+      F := $FF808080;
+
+    if (F and $FF000000) = $FF000000 then
+      B := F
+    else
+      MergeMem(F, B);
+  end;
+end;
+
+procedure TRenderer.CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  if (F and $FF000000) <> 0 then
+  begin
+    // 1 = blue, 2 = green, 5 = red
+
+    case (F and $FFFFFF) of
+      $00B000: F := $FF686868;
+      $4040E0: F := $FF525252;
+      $F02020: F := $FF5E5E5E;
+    end;
 
     if (F and $FF000000) = $FF000000 then
       B := F
@@ -1060,7 +1082,7 @@ begin
 end;
 
 
-procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false);
+procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false);
 begin
   Bmp.DrawMode := dmCustom;
 
@@ -1068,6 +1090,8 @@ begin
     Bmp.OnPixelCombine := CombineFixedColor
   else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
+  else if IsNeutral then
+    Bmp.OnPixelCombine := CombineGadgetsDefaultNeutral
   else if IsZombie then
     Bmp.OnPixelCombine := CombineGadgetsDefaultZombie
   else
@@ -1391,7 +1415,7 @@ begin
       Continue;
 
     BMP := ThisAnim.Bitmap;
-    PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
+    PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode, Gadget.NeutralMode);
     DstRect := SizedRect(Gadget.Left + ThisAnim.MetaAnimation.OffsetX,
                          Gadget.Top + ThisAnim.MetaAnimation.OffsetY,
                          ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,
