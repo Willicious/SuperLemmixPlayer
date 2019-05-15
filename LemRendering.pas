@@ -1413,7 +1413,8 @@ var
 
   procedure AddPickupSkillNumber;
   begin
-    DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, 1, Gadget.MetaObj.DigitAlign);
+    if (Gadget.SkillCount > 1) or (Gadget.MetaObj.DigitMinLength >= 1) then
+      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
 begin
@@ -1436,7 +1437,7 @@ begin
     DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
 
-  if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+  if (Gadget.TriggerEffect = DOM_PICKUP) then
     AddPickupSkillNumber;
 end;
 
