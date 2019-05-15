@@ -4736,6 +4736,9 @@ begin
             Dec(fSpawnedDead);
             RemoveLemming(NewLemming, RM_ZOMBIE, true);
           end;
+
+          if Gadgets[ix].IsPreassignedNeutral then
+            LemIsNeutral := true;
         end;
         Dec(LemmingsToRelease);
         Inc(LemmingsOut);
