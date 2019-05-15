@@ -1346,7 +1346,7 @@ var
 
     Y := Y - 2; // to center
 
-    DigitsWidth := (Length(aDigitString) * 4) + Length(aDigitString);
+    DigitsWidth := Length(aDigitString) * 5;
     if aAlignment < 0 then
       CurX := X
     else if aAlignment > 0 then
