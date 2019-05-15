@@ -31,7 +31,6 @@ type
                       //        and the speed of movable backgrounds.
                       //        and the skill amount for pick-up skills
     fLemmingCap: Integer;
-    fDrawAsZombie: Boolean;
     procedure SetInvert(aValue: Boolean); override;
     function GetInvert: Boolean; override;
   public
@@ -43,7 +42,6 @@ type
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
     property Skill : Integer read fSkill write fSkill;
     property TarLev : Integer read fTarLev write fTarLev;
-    property DrawAsZombie: Boolean read fDrawAsZombie write fDrawAsZombie;
     property LemmingCap: Integer read fLemmingCap write fLemmingCap;
   end;
 
@@ -134,7 +132,6 @@ begin
     Height := O.Height;
     Skill := O.Skill;
     TarLev := O.TarLev;
-    DrawAsZombie := O.DrawAsZombie;
     LemmingCap := O.LemmingCap;
   end;
 end;

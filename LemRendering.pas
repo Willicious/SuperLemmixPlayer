@@ -1,5 +1,7 @@
 {$include lem_directives.inc}
 
+// TODO: Replace CombineGadgetsDefaultZombie with use of the lemming recolorer.
+
 unit LemRendering;
 
 interface
@@ -1049,8 +1051,8 @@ procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M:
 begin
   if (F and $FF000000) <> 0 then
   begin
-    if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-      F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
+    if (F and $FFFFFF) = $F0D0D0 then
+      F := $FF808080;
 
     if (F and $FF000000) = $FF000000 then
       B := F

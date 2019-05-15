@@ -773,8 +773,6 @@ begin
                  Obj.DrawingFlags := Obj.DrawingFlags or odf_Rotate;
                Obj.Skill := O.SValue mod 16;
 
-               Obj.DrawAsZombie := false;
-
                InteractiveObjects.Add(Obj);
              end;
            end;
@@ -969,7 +967,6 @@ begin
         Obj.Free;
         Continue;
       end;
-      Obj.DrawAsZombie := false;
 
       InteractiveObjects.Add(Obj);
     end;
@@ -1183,7 +1180,6 @@ begin
         Continue;
       end;
       Obj.Skill := O.SValue mod 16;
-      Obj.DrawAsZombie := false;
 
       InteractiveObjects.Add(Obj);
     end;

@@ -83,7 +83,6 @@ type
     function GetTriggerRect: TRect;
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
-    procedure SetZombieMode(Value: Boolean);
     function GetSkillType: TSkillPanelButton;
     function GetSoundEffect: String;
     function GetIsOnlyOnTerrain: Boolean;
@@ -144,7 +143,7 @@ type
     property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
     property SoundEffect: String read GetSoundEffect;
-    property ZombieMode: Boolean read sZombieMode write SetZombieMode;
+    property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property KeyFrame: Integer read GetKeyFrame;
     property CanDrawToBackground: Boolean read GetCanDrawToBackground; // moving backgrounds: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;
@@ -341,12 +340,6 @@ procedure TGadget.SetTop(Value: Integer);
 begin
   sTop := Value;
   Obj.Top := Value;
-end;
-
-procedure TGadget.SetZombieMode(Value: Boolean);
-begin
-  sZombieMode := Value;
-  Obj.DrawAsZombie := Value;
 end;
 
 function TGadget.GetSkillType: TSkillPanelButton;
