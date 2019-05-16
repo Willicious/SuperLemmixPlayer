@@ -6,6 +6,11 @@ uses
   URLMon, Windows, Wininet, ActiveX, Axctrls, // Don't ask. It's just where these are.
   Classes, SysUtils;
 
+const
+  BASE_URL = 'http://content.neolemmix.com/';
+  VERSION_FILE = BASE_URL + 'version.php';
+  STYLES_DIRECTORY = BASE_URL + 'styles/';
+
 type
   TInternet = class
     public
@@ -19,35 +24,47 @@ type
       fStream: TStream;
       fStringList: TStringList;
 
-      fCancel: Boolean;
       fComplete: Boolean;
       fSuccess: Boolean;
+
+      fOnComplete: TProc;
     protected
       procedure Execute; override;
     public
       constructor Create(aSourceURL: String; aTargetStream: TStream); overload;
       constructor Create(aSourceURL: String; aTargetStringList: TStringList); overload;
-      destructor Destroy; override;
 
-      procedure Cancel;
+      property OnComplete: TProc read fOnComplete write fOnComplete;
   end;
 
-  // Download methods
-
-
+  function DownloadInThread(aURL: String; aStream: TStream; aOnComplete: TProc = nil): TDownloadThread; overload;
+  function DownloadInThread(aURL: String; aStringList: TStringList; aOnComplete: TProc = nil): TDownloadThread; overload;
 
 implementation
 
-{ TDownloadThread }
-
-procedure TDownloadThread.Cancel;
+procedure SetupDownloadThread(aThread: TDownloadThread; aOnComplete: TProc);
 begin
-  fCancel := true;
+  aThread.OnComplete := aOnComplete;
+  aThread.Start;
 end;
+
+function DownloadInThread(aURL: String; aStream: TStream; aOnComplete: TProc = nil): TDownloadThread;
+begin
+  Result := TDownloadThread.Create(aURL, aStream);
+  SetupDownloadThread(Result, aOnComplete);
+end;
+
+function DownloadInThread(aURL: String; aStringList: TStringList; aOnComplete: TProc = nil): TDownloadThread;
+begin
+  Result := TDownloadThread.Create(aURL, aStringList);
+  SetupDownloadThread(Result, aOnComplete);
+end;
+
+{ TDownloadThread }
 
 constructor TDownloadThread.Create(aSourceURL: String; aTargetStream: TStream);
 begin
-  fCancel := false;
+  FreeOnTerminate := false;
   fSourceURL := aSourceURL;
   fStream := aTargetStream;
 end;
@@ -55,15 +72,9 @@ end;
 constructor TDownloadThread.Create(aSourceURL: String;
   aTargetStringList: TStringList);
 begin
-  fCancel := false;
+  FreeOnTerminate := false;
   fSourceURL := aSourceURL;
   fStringList := aTargetStringList;
-end;
-
-destructor TDownloadThread.Destroy;
-begin
-
-  inherited;
 end;
 
 procedure TDownloadThread.Execute;
@@ -104,9 +115,8 @@ begin
 
   fComplete := true;
 
-  if fCancel then
-    FreeOnTerminate := true; // Actually stopping the download is hard with current code. That's why
-                             // we just let it silently continue, then discard it, instead.
+  if Assigned(fOnComplete) then
+    fOnComplete();
 end;
 
 class function TInternet.DownloadToStream(aURL: String; aStream: TStream): Boolean;
