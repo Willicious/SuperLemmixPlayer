@@ -249,7 +249,7 @@ var
   begin
     Result := false;
     for i := 0 to aGroup.Terrains.Count-1 do
-      if (aGroup.Terrains[i].DrawingFlags and tdf_Erase = 0) then
+      if (aGroup.Terrains[i].DrawingFlags and tdf_Erase) = 0 then
       begin
         Result := Terrains[aGroup.Terrains[i].Identifier].IsSteel;
         Exit;

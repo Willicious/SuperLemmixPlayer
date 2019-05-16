@@ -1117,7 +1117,7 @@ var
     begin
       Terrain := aTerrains[i];
 
-      if (Terrain.DrawingFlags and tdf_Erase <> 0) then
+      if (Terrain.DrawingFlags and tdf_Erase) <> 0 then
         Continue; // We don't need to expand the canvas for erasers.
 
       MetaTerrain := PieceManager.Terrains[Terrain.Identifier];
@@ -1125,7 +1125,7 @@ var
       ThisTerrainRect.Left := Terrain.Left;
       ThisTerrainRect.Top := Terrain.Top;
 
-      if (Terrain.DrawingFlags and tdf_Rotate = 0) then
+      if (Terrain.DrawingFlags and tdf_Rotate) = 0 then
       begin
         ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Width;
         ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Height;
@@ -1177,7 +1177,7 @@ var
     for y := 0 to BMP.Height-1 do
       for x := 0 to BMP.Width-1 do
       begin
-        if (BMP.Pixel[x, y] and $FF000000 <> 0) then
+        if (BMP.Pixel[x, y] and $FF000000) <> 0 then
         begin
           if (x < SrcRect.Left) then srcRect.Left := x;
           if (y < SrcRect.Top) then srcRect.Top := y;
@@ -1190,7 +1190,8 @@ var
     if SrcRect.Height < MIN_HEIGHT then SrcRect.Bottom := SrcRect.Top + MIN_HEIGHT;
 
     aDst.SetSize(SrcRect.Width, SrcRect.Height);
-    BMP.DrawTo(aDst, -SrcRect.Left, -SrcRect.Bottom);
+    aDst.Clear(0);
+    BMP.DrawTo(aDst, -SrcRect.Left, -SrcRect.Top);
   end;
 begin
   if not CheckGroupIsValid then Exit;

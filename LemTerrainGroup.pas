@@ -15,6 +15,9 @@ type
 
       procedure SetName(aValue: String);
     public
+      constructor Create;
+      destructor Destroy; override;
+
       property Name: String read fName write SetName;
       property Terrains: TTerrains read fTerrains;
   end;
@@ -22,6 +25,18 @@ type
   TTerrainGroups = TObjectList<TTerrainGroup>;
 
 implementation
+
+constructor TTerrainGroup.Create;
+begin
+  inherited;
+  fTerrains := TTerrains.Create;
+end;
+
+destructor TTerrainGroup.Destroy;
+begin
+  fTerrains.Free;
+  inherited;
+end;
 
 procedure TTerrainGroup.SetName(aValue: string);
 begin

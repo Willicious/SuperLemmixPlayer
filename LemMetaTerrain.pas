@@ -117,6 +117,9 @@ begin
 
     TPngInterface.LoadPngFile(aPiece + '.png', fGraphicImages[0]);
     fGeneratedGraphicImage[0] := true;
+
+    fWidth := fGraphicImages[0].Width;
+    fHeight := fGraphicImages[0].Height;
 end;
 
 procedure TMetaTerrain.LoadFromImage(aImage: TBitmap32; aCollection, aPiece: String; aSteel: Boolean);
@@ -128,6 +131,9 @@ begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
   fIsSteel := aSteel;
+
+  fWidth := aImage.Width;
+  fHeight := aImage.Height;
 end;
 
 procedure TMetaTerrain.ClearImages;
