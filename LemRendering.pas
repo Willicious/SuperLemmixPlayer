@@ -2138,6 +2138,10 @@ begin
     fRenderInterface.DisableDrawing := NoOutput;
   end;
 
+  // Prepare any composite pieces
+  PieceManager.RemoveCompositePieces;
+  PieceManager.MakePiecesFromGroups(aLevel.TerrainGroups);
+
   RenderPhysicsMap;
 end;
 

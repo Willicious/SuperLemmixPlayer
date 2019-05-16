@@ -9,11 +9,12 @@ interface
 uses
   Dialogs,
   PngInterface, LemNeoTheme,
-  LemMetaTerrain, LemGadgetsMeta, LemTypes, GR32, LemStrings,
+  LemMetaTerrain, LemTerrainGroup, LemGadgetsMeta, LemTypes, GR32, LemStrings,
   StrUtils, Classes, SysUtils;
 
 const
   RETAIN_PIECE_CYCLES = 20; // how many times Tidy can be called without a piece being used before it's discarded
+  COMPOSITE_PIECE_STYLE = '*GROUP'; // what to use for the style name in per-level composite pieces
 
 type
 
@@ -46,8 +47,11 @@ type
       destructor Destroy; override;
 
       procedure Tidy;
+      procedure RemoveCompositePieces;
 
       procedure SetTheme(aTheme: TNeoTheme);
+      procedure MakePiecesFromGroups(aGroups: TTerrainGroups);
+      procedure MakePieceFromGroup(aGroup: TTerrainGroup);
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TGadgetMetaInfo read GetMetaObject;
@@ -60,6 +64,9 @@ var
   PieceManager: TNeoPieceManager; // globalized as this does not need to have seperate instances
 
 implementation
+
+uses
+  GameControl, LemTerrain;
 
 // These two standalone functions are just to help shifting labels around
 
@@ -227,6 +234,53 @@ begin
   for i := 0 to fObjects.Count-1 do
     if fObjects[i].Animations[false, false, false].AnyMasked then
       fObjects[i].Remask(aTheme);
+end;
+
+//  Functions for composite pieces
+
+procedure TNeoPieceManager.MakePieceFromGroup(aGroup: TTerrainGroup);
+var
+  BMP: TBitmap32;
+  T: TMetaTerrain;
+
+  function IsGroupSteel: Boolean;
+  var
+    i: Integer;
+  begin
+    Result := false;
+    for i := 0 to aGroup.Terrains.Count-1 do
+      if (aGroup.Terrains[i].DrawingFlags and tdf_Erase = 0) then
+      begin
+        Result := Terrains[aGroup.Terrains[i].Identifier].IsSteel;
+        Exit;
+      end;
+  end;
+begin
+  BMP := TBitmap32.Create;
+  try
+    GameParams.Renderer.PrepareCompositePieceBitmap(aGroup.Terrains, BMP);
+    T := fTerrains.Add;
+    T.LoadFromImage(BMP, COMPOSITE_PIECE_STYLE, aGroup.Name, IsGroupSteel);
+  finally
+    BMP.Free;
+  end;
+end;
+
+procedure TNeoPieceManager.MakePiecesFromGroups(aGroups: TTerrainGroups);
+var
+  i: Integer;
+begin
+  for i := 0 to aGroups.Count-1 do
+    MakePieceFromGroup(aGroups[i]);
+end;
+
+procedure TNeoPieceManager.RemoveCompositePieces;
+var
+  i: Integer;
+begin
+  for i := fTerrains.Count-1 downto 0 do
+    if fTerrains[i].GS = COMPOSITE_PIECE_STYLE then
+      fTerrains.Delete(i);
 end;
 
 end.

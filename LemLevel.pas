@@ -131,6 +131,7 @@ type
   published
     property Info: TLevelInfo read fLevelInfo;
     property InteractiveObjects: TGadgetModelList read fInteractiveObjects;
+    property TerrainGroups: TTerrainGroups read fTerrainGroups;
     property Terrains: TTerrains read fTerrains;
     property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings;
     property Talismans: TObjectList<TTalisman> read fTalismans;
