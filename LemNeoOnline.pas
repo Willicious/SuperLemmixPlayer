@@ -2,6 +2,10 @@ unit LemNeoOnline;
 
 interface
 
+// If GameParams.EnableOnline is false, TInternet.DownloadToStream refuses to
+// run. All other internet-based functionality eventually runs through that
+// function, so this is a total killswitch.
+
 uses
   URLMon, Windows, Wininet, ActiveX, Axctrls, // Don't ask. It's just where these are.
   Classes, SysUtils;
@@ -42,9 +46,13 @@ type
 
 implementation
 
+uses
+  GameControl;
+
 procedure SetupDownloadThread(aThread: TDownloadThread; aOnComplete: TProc);
 begin
   aThread.OnComplete := aOnComplete;
+  aThread.FreeOnTerminate := true;
   aThread.Start;
 end;
 
@@ -64,6 +72,7 @@ end;
 
 constructor TDownloadThread.Create(aSourceURL: String; aTargetStream: TStream);
 begin
+  inherited Create(true);
   FreeOnTerminate := false;
   fSourceURL := aSourceURL;
   fStream := aTargetStream;
@@ -72,6 +81,7 @@ end;
 constructor TDownloadThread.Create(aSourceURL: String;
   aTargetStringList: TStringList);
 begin
+  inherited Create(true);
   FreeOnTerminate := false;
   fSourceURL := aSourceURL;
   fStringList := aTargetStringList;
@@ -95,9 +105,18 @@ begin
       LoadToStringList := false;
     end;
 
+    if LoadToStringList then
+      fStringList.Clear;
+
     try
       StreamPos := fStream.Position;
-      TInternet.DownloadToStream(fSourceURL, fStream);
+      if not TInternet.DownloadToStream(fSourceURL, fStream) then
+      begin
+        fSuccess := false;
+        fComplete := true;
+        Exit;
+      end;
+
       if LoadToStringList then
       begin
         fStream.Position := StreamPos;
@@ -133,6 +152,9 @@ begin
 
   // Set default result
   result:=False;
+
+  if not GameParams.EnableOnline then
+    Exit;
 
   // Make sure stream is assigned
   if not(Assigned(aStream)) then exit;

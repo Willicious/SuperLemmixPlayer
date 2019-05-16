@@ -11,6 +11,7 @@ interface
 uses
   Classes, Controls,
   GameBaseScreen, GameControl,
+  LemNeoOnline,
   LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
   GR32, GR32_Layers;
 
@@ -55,6 +56,9 @@ const
 type
   TGameMenuScreen = class(TGameBaseScreen)
   private
+    fUpdateCheckThread: TDownloadThread;
+    fVersionInfo: TStringList;
+
   { enumerated menu bitmap elements }
     BitmapElements : array[TGameMenuBitmap] of TBitmap32;
   { section }
@@ -117,7 +121,7 @@ uses
   Forms, Math, Graphics, SysUtils, UMisc, Dialogs, Windows,
   UITypes, ShellApi, MMSystem,
   PngInterface, SharedGlobals,
-  FNeoLemmixSetup, LemNeoOnline,
+  FNeoLemmixSetup,
   LemTypes, LemStrings, LemDosStructures, LemGame, LemVersion;
 
 { TGameMenuScreen }
@@ -166,31 +170,21 @@ begin
 end;
 
 procedure TGameMenuScreen.PerformUpdateCheck;
-//var
-//  Format, Core, Feature, Fix: Integer;
-//  CurVer, AvailVer: Int64;
 begin
   // Checks if the latest version according to NeoLemmix Website is more recent than the
   // one currently running. If running an experimental version, also checks if it's the
   // exact same version (as it would be a stable release).
   GameParams.DoneUpdateCheck := true;
 
-  (*
-  if not (GameParams.EnableOnline and GameParams.CheckUpdates) then Exit;
-  if GetLatestNeoLemmixVersion(NxaPlayer, Format, Core, Feature, Fix) then
-  begin
-    CurVer := CurrentVersionID;
-    AvailVer := MakeVersionID(Format, Core, Feature, Fix);
-    if (AvailVer > CurVer)
-    {$ifdef exp}or (AvailVer = CurVer){$endif} then
-      if MessageDlg('Update available: NeoLemmix V' + MakeVersionString(Format, Core, Feature, Fix) + #13 +
-                    'Go to the NeoLemmix website?', mtCustom, [mbYes, mbNo], 0) = mrYes then
-      begin
-        ShellExecute(handle,'open',PChar('http://www.neolemmix.com/neolemmix.html'), '','',SW_SHOWNORMAL);
-        CloseScreen(gstExit);
-      end;
-  end;
-  *)
+  if not GameParams.CheckUpdates then Exit;
+
+  fUpdateCheckThread := DownloadInThread(VERSION_FILE, fVersionInfo,
+    procedure
+    begin
+      ShowMessage(fVersionInfo[0]);
+      fUpdateCheckThread.Free;
+    end
+  );
 end;
 
 procedure TGameMenuScreen.DrawBitmapElement(aElement: TGameMenuBitmap);
@@ -348,6 +342,8 @@ var
 begin
   inherited Create(aOwner);
 
+  fVersionInfo := TStringList.Create;
+
   CurrentSection := 0;
 
   // create bitmaps
@@ -395,6 +391,7 @@ begin
   Reel.Free;
   ReelBuffer.Free;
   CreditList.Free;
+  fVersionInfo.Free;
 
   inherited Destroy;
 end;
