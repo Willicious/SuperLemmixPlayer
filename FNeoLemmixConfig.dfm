@@ -23,7 +23,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 378
-    ActivePage = TabSheet5
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
@@ -73,7 +73,6 @@ object FormNXConfig: TFormNXConfig
           Width = 153
           Height = 17
           Caption = 'Enable Online Features'
-          Enabled = False
           TabOrder = 0
           OnClick = cbEnableOnlineClick
         end
@@ -83,7 +82,6 @@ object FormNXConfig: TFormNXConfig
           Width = 169
           Height = 17
           Caption = 'Enable Update Check'
-          Enabled = False
           TabOrder = 1
           OnClick = OptionChanged
         end

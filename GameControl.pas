@@ -481,10 +481,8 @@ begin
 
     SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
-    //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
-    //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
-    EnableOnline := false;
-    CheckUpdates := false;
+    EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
+    CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 
     DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
 
