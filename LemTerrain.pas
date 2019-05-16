@@ -4,6 +4,7 @@ unit LemTerrain;
 interface
 
 uses
+  LemNeoParser,
   Dialogs,
   Classes,
   LemPiece,
@@ -35,6 +36,8 @@ type
     function GetRotate: Boolean; override;
   public
     procedure Assign(Source: TPiece); override;
+
+    procedure LoadFromSection(aSection: TParserSection);
   published
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
   end;
@@ -106,6 +109,26 @@ end;
 function TTerrain.GetRotate: Boolean;
 begin
   Result := (DrawingFlags and tdf_Rotate) <> 0;
+end;
+
+procedure TTerrain.LoadFromSection(aSection: TParserSection);
+  procedure Flag(aValue: Integer);
+  begin
+    fDrawingFlags := fDrawingFlags or aValue;
+  end;
+begin
+  GS := aSection.LineTrimString['collection'];
+  Piece := aSection.LineTrimString['piece'];
+  Left := aSection.LineNumeric['x'];
+  Top := aSection.LineNumeric['y'];
+
+  DrawingFlags := tdf_NoOneWay;
+  if (aSection.Line['one_way'] <> nil) then fDrawingFlags := 0;
+  if (aSection.Line['rotate'] <> nil) then Flag(tdf_Rotate);
+  if (aSection.Line['flip_horizontal'] <> nil) then Flag(tdf_Flip);
+  if (aSection.Line['flip_vertical'] <> nil) then Flag(tdf_Invert);
+  if (aSection.Line['no_overwrite'] <> nil) then Flag(tdf_NoOverwrite);
+  if (aSection.Line['erase'] <> nil) then Flag(tdf_Erase);
 end;
 
 { TTerrains }
