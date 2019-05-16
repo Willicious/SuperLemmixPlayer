@@ -55,7 +55,7 @@ type
       constructor Create;
       destructor Destroy; override;
 
-      procedure ExportPackage(aDest: TFilename; aMetaInfo: TFilename = '');
+      procedure ExportPackage(aDest: TFilename; aMetaInfo: TFilename = ''; aPackageInfoText: Boolean = true);
 
       procedure LoadFromFile(aFile: TFilename);
       procedure SaveToFile(aFile: TFilename);
@@ -96,7 +96,7 @@ begin
   fFiles.Free;
 end;
 
-procedure TPackageRecipe.ExportPackage(aDest: TFileName; aMetaInfo: TFileName = '');
+procedure TPackageRecipe.ExportPackage(aDest: TFileName; aMetaInfo: TFileName = ''; aPackageInfoText: Boolean = true);
 var
   ZipFile: TZipFile;
 
@@ -289,10 +289,17 @@ begin
 
     ZipFile := TZipFile.Create;
     try
+      if FileExists(aDest) then
+        DeleteFile(aDest);
+
       ZipFile.Open(aDest, zmWrite);
 
-      MetaInfoStream.Position := 0;
-      ZipFile.Add(MetaInfoStream, 'package_meta.nxmi');
+      if aPackageInfoText then
+      begin
+        MetaInfoStream.Position := 0;
+        ZipFile.Add(MetaInfoStream, 'package_meta.nxmi');
+      end;
+
       for i := 0 to FilesToAdd.Count-1 do
         ZipFile.Add(AppPath + FilesToAdd[i], FilesToAdd[i]);
 

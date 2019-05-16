@@ -71,7 +71,7 @@ begin
         Recipe.PackageVersion := FormatDateTime('yymmdd-hhmmss', Now);
 
         ForceDirectories(BasePath + 'stylezips');
-        Recipe.ExportPackage(BasePath + 'stylezips\' + SearchRec.Name + '.zip');
+        Recipe.ExportPackage(BasePath + 'stylezips\' + SearchRec.Name + '.zip', '', false);
       finally
         Recipe.Free;
       end;
