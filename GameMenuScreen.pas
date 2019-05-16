@@ -166,14 +166,16 @@ begin
 end;
 
 procedure TGameMenuScreen.PerformUpdateCheck;
-var
-  Format, Core, Feature, Fix: Integer;
-  CurVer, AvailVer: Int64;
+//var
+//  Format, Core, Feature, Fix: Integer;
+//  CurVer, AvailVer: Int64;
 begin
   // Checks if the latest version according to NeoLemmix Website is more recent than the
   // one currently running. If running an experimental version, also checks if it's the
   // exact same version (as it would be a stable release).
   GameParams.DoneUpdateCheck := true;
+
+  (*
   if not (GameParams.EnableOnline and GameParams.CheckUpdates) then Exit;
   if GetLatestNeoLemmixVersion(NxaPlayer, Format, Core, Feature, Fix) then
   begin
@@ -188,6 +190,7 @@ begin
         CloseScreen(gstExit);
       end;
   end;
+  *)
 end;
 
 procedure TGameMenuScreen.DrawBitmapElement(aElement: TGameMenuBitmap);
