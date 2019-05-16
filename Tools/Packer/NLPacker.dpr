@@ -3,9 +3,9 @@ program NLPacker;
 uses
   AppController,
   LemGame,
+  LemRes,
   PackerCommandLine,
-  Vcl.Forms,
-  PackerMain in 'PackerMain.pas' {FNLContentPacker};
+  Vcl.Forms;
 
 var
   DecoyAppController: TAppController;
@@ -15,14 +15,8 @@ begin
   GlobalGame := TLemmingGame.Create(nil);
   DecoyAppController := TAppController.Create(TForm.Create(nil));
   try
-    if not RunCommandLine then
-    begin
-      Application.Initialize;
-      Application.MainFormOnTaskbar := True;
-      Application.CreateForm(TFNLContentPacker, FNLContentPacker);
-      Application.Run;
-    end;
+    RunCommandLine;
   finally
-  DecoyAppController.Free;
+    DecoyAppController.Free;
   end;
 end.

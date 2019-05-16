@@ -44,6 +44,42 @@ begin
   end;
 end;
 
+procedure PackEachStyle;
+var
+  BasePath: String;
+  SearchRec: TSearchRec;
+  Recipe: TPackageRecipe;
+  Style: TRecipeStyle;
+begin
+  BasePath := IncludeTrailingPathDelimiter(GetCurrentDir);
+
+  if FindFirst(BasePath + 'styles\*', faDirectory, SearchRec) = 0 then
+  begin
+    repeat
+      if (SearchRec.Attr and faDirectory) = 0 then Continue;
+      if (SearchRec.Name = '.') or (SearchRec.Name = '..') then Continue;
+
+      Recipe := TPackageRecipe.Create;
+      Style := TRecipeStyle.Create;
+      try
+        Style.StyleName := SearchRec.Name;
+        Style.Include := siFull;
+        Recipe.Styles.Add(Style);
+
+        Recipe.PackageName := SearchRec.Name;
+        Recipe.PackageType := 'style';
+        Recipe.PackageVersion := FormatDateTime('yymmdd-hhmmss', Now);
+
+        ForceDirectories(BasePath + 'stylezips');
+        Recipe.ExportPackage(BasePath + 'stylezips\' + SearchRec.Name + '.zip');
+      finally
+        Recipe.Free;
+      end;
+    until FindNext(SearchRec) <> 0;
+    FindClose(SearchRec);
+  end;
+end;
+
 function RunCommandLine: Boolean;
 begin
   Result := false;
@@ -54,6 +90,12 @@ begin
   if ParamStr(1) = '-d' then
   begin
     BuildDefaultContentList;
+    Exit;
+  end;
+
+  if ParamStr(1) = '-all-styles' then
+  begin
+    PackEachStyle;
     Exit;
   end;
 
