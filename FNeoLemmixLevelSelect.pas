@@ -105,6 +105,7 @@ procedure TFLevelSelect.InitializeTreeview;
       begin
         TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName2, TempBMP);
         TempBMP.DrawMode := dmBlend;
+        TempBMP.CombineMode := cmMerge;
         TempBMP.DrawTo(BMP32);
       end;
       TPngInterface.SplitBmp32(BMP32, ImgBMP, MaskBMP);

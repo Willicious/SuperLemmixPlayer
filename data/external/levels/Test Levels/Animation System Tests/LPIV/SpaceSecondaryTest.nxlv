@@ -1,0 +1,110 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE 
+ AUTHOR 
+ ID x5A24CBBC7AF4F737
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_space
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_space
+   PIECE      window
+   X         29
+   Y         27
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_space
+   PIECE      teleporter
+   X         79
+   Y         45
+   NO_OVERWRITE
+   PAIRING    0
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_space
+   PIECE      receiver
+   X        156
+   Y         45
+   NO_OVERWRITE
+   PAIRING    0
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_space
+   PIECE      block_02
+   X   148
+   Y    72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_space
+   PIECE      block_02
+   X   124
+   Y    72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_space
+   PIECE      block_02
+   X   100
+   Y    72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_space
+   PIECE      block_02
+   X    76
+   Y    72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_space
+   PIECE      block_02
+   X    52
+   Y    72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_space
+   PIECE      block_02
+   X    28
+   Y    72
+   ONE_WAY
+ $END
+ 
+ 

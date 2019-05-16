@@ -5,15 +5,17 @@ interface
 
 uses
   SharedGlobals,
+  GameCommandLine,
+  GR32, PngInterface,
   LemSystemMessages,
-  LemTypes, LemRendering, LemLevel,
+  LemTypes, LemRendering, LemLevel, LemGadgetsModel, LemGadgetsMeta,
   LemStrings,
   GameControl, LemVersion,
   GameSound,          // initial creation
   LemNeoPieceManager, // initial creation
   FBaseDosForm, GameBaseScreen,
   CustomPopup,
-  Classes, SysUtils, StrUtils, UMisc, Windows, Forms, Dialogs, Messages;
+  Classes, SysUtils, StrUtils, IOUtils, UMisc, Windows, Forms, Dialogs, Messages;
 
 type
   {-------------------------------------------------------------------------------
@@ -33,8 +35,6 @@ type
   private
     fLoadSuccess: Boolean;
     fActiveForm: TGameBaseScreen;
-    procedure DoLevelConvert;
-    procedure DoVersionInfo;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -67,8 +67,6 @@ uses
 { TAppController }
 
 constructor TAppController.Create(aOwner: TComponent);
-var
-  IsTestMode: Boolean;
 begin
   inherited;
 
@@ -92,8 +90,6 @@ begin
                                                     // in having it.
 
   GameParams.Load;
-
-  IsTestMode := (Lowercase(ParamStr(1)) = 'test') or (Lowercase(ParamStr(1)) = 'convert');
 
   if UnderWine and not GameParams.DisableWineWarnings then
     if GameParams.FullScreen then
@@ -126,98 +122,16 @@ begin
 
   GameParams.Renderer.BackgroundColor := $000000;
 
-  if IsTestMode then
-  begin
-    GameParams.BaseLevelPack.EnableSave := false;
-    GameParams.BaseLevelPack.Children.Clear;
-    GameParams.BaseLevelPack.Levels.Clear;
-    GameParams.TestModeLevel := GameParams.BaseLevelPack.Levels.Add;
-    GameParams.TestModeLevel.Filename := ParamStr(2);
-    if Pos(':', GameParams.TestModeLevel.Filename) = 0 then
-      GameParams.TestModeLevel.Filename := AppPath + GameParams.TestModeLevel.Filename;
-    GameParams.SetLevel(GameParams.TestModeLevel);
-    GameParams.NextScreen := gstPreview;
-  end else
-    GameParams.TestModeLevel := nil;
-
-  if Lowercase(ParamStr(1)) = 'convert' then
-  begin
-    DoLevelConvert;
-    fLoadSuccess := false;
-  end;
-
-  if Lowercase(ParamStr(1)) = 'version' then
-  begin
-    DoVersionInfo;
-    fLoadSuccess := false;
+  case TCommandLineHandler.HandleCommandLine of
+    clrContinue: ; // Don't need to do anything.
+    clrHalt: fLoadSuccess := false;
+    clrToPreview: GameParams.NextScreen := gstPreview;
   end;
 
   if not fLoadSuccess then
+  begin
+    IsHalting := true;
     GameParams.NextScreen := gstExit;
-end;
-
-procedure TAppController.DoLevelConvert;
-var
-  DstFile: String;
-begin
-  DstFile := ParamStr(3);
-  if DstFile = '' then
-    DstFile := ChangeFileExt(GameParams.CurrentLevel.Path, '.nxlv')
-  else if Pos(':', DstFile) = 0 then
-    DstFile := AppPath + DstFile;
-
-  GameParams.LoadCurrentLevel(true);
-  GameParams.Level.SaveToFile(DstFile); 
-end;
-
-procedure TAppController.DoVersionInfo;
-var
-  SL: TStringList;
-
-  Formats: String;
-  Exts: String;
-
-  procedure AddFormat(aDesc, aExt: String);
-  begin
-    if Formats <> '' then
-      Formats := Formats + '|';
-    if Exts <> '' then
-      Exts := Exts + ';';
-    Formats := Formats + aDesc + '|' + '*.' + aExt;
-    Exts := Exts + '*.' + aExt;
-  end;
-
-  procedure WriteInfo;
-  var
-    i: Integer;
-  begin
-    for i := 0 to SL.Count-1 do
-      WriteLn(SL[i]);
-  end;
-begin
-  SL := TStringList.Create;
-  try
-    SL.Add('formats=' + IntToStr(FORMAT_VERSION));
-    SL.Add('core=' + IntToStr(CORE_VERSION));
-    SL.Add('features=' + IntToStr(FEATURES_VERSION));
-    SL.Add('hotfix=' + IntToStr(HOTFIX_VERSION));
-    SL.Add('commit=' + COMMIT_ID);
-
-    Formats := '';
-    Exts := '';
-    AddFormat('Lemmix or old NeoLemmix level (*.lvl)', 'lvl');
-    AddFormat('Lemmini or SuperLemmini level (*.ini)', 'ini');
-    AddFormat('Lemmins level (*.lev)', 'lev');
-
-    SL.Add('level_formats=' + Formats);
-    SL.Add('level_format_exts=' + Exts);
-
-    WriteInfo;
-
-    if LowerCase(ParamStr(2)) <> 'silent' then
-      SL.SaveToFile(AppPath + 'NeoLemmixVersion.ini');
-  finally
-    SL.Free;
   end;
 end;
 

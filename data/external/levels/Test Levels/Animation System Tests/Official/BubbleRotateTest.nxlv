@@ -1,0 +1,223 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Bubble Rotation Test
+ AUTHOR 
+ ID xC027B4E424B1D6A
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   192
+ START_X  160
+ START_Y   80
+ THEME ohno_bubble
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      window
+   X         19
+   Y         23
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      trap_01
+   X        149
+   Y         90
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      trap_01
+   X         25
+   Y         62
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      trap_01
+   X        107
+   Y          8
+   NO_OVERWRITE
+   ROTATE
+   FLIP_VERTICAL
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      trap_01
+   X         79
+   Y        132
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      trap_01
+   X        153
+   Y         98
+   NO_OVERWRITE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      trap_01
+   X        277
+   Y         70
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      trap_01
+   X        207
+   Y         16
+   NO_OVERWRITE
+   ROTATE
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+ $END
+ 
+ $OBJECT
+   COLLECTION ohno_bubble
+   PIECE      trap_01
+   X        235
+   Y        140
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_01
+   X    99
+   Y    82
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_01
+   X   227
+   Y    90
+   FLIP_HORIZONTAL
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X   187
+   Y   101
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X   159
+   Y   109
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X   124
+   Y     7
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X   315
+   Y   100
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X   315
+   Y   100
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X   252
+   Y   183
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X   233
+   Y    15
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X    31
+   Y    92
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_bubble
+   PIECE      steel_04
+   X   105
+   Y   175
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_brick
+   PIECE      steel_04
+   X   240
+   Y   183
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_brick
+   PIECE      steel_04
+   X   233
+   Y    27
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION ohno_brick
+   PIECE      steel_04
+   X   112
+   Y    19
+   ONE_WAY
+ $END
+ 
+ 

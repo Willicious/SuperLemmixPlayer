@@ -1,0 +1,108 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Mineshaft Secondary Animation Test
+ AUTHOR 
+ ID x67ED75B550EBF1E4
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_mineshaft
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_mineshaft
+   PIECE      window
+   X         74
+   Y         26
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_mineshaft
+   PIECE      exit_locked
+   X         33
+   Y         60
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      button
+   X        156
+   Y         73
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_mineshaft
+   PIECE      wood_02
+   X   148
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_mineshaft
+   PIECE      wood_02
+   X   124
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_mineshaft
+   PIECE      wood_02
+   X   100
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_mineshaft
+   PIECE      wood_02
+   X    76
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_mineshaft
+   PIECE      wood_02
+   X    52
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_mineshaft
+   PIECE      wood_02
+   X    28
+   Y    76
+   ONE_WAY
+ $END
+ 
+ 

@@ -21,13 +21,12 @@ unit PngInterface;
 interface
 
 uses
-  Classes, SysUtils, Graphics, GR32, GR32_PNG;
+  Classes, SysUtils, Graphics, GR32, GR32_PNG, GR32_PortableNetworkGraphic;
 
 type
   TPngInterface = class
     private
-      //class procedure PngToBitmap32(Png: TPortableNetworkGraphic32; Bmp: TBitmap32);
-      //class function Bitmap32ToPng(Bmp: TBitmap32; NoAlpha: Boolean): TPortableNetworkGraphic32;
+      class procedure RemoveAlpha(Dst: TBitmap32);
     public
       class procedure SplitBmp32(aSrc: TBitmap32; aDstImage, aDstMask: TBitmap);
       class procedure MaskImageFromFile(Bmp: TBitmap32; fn: String; C: TColor32);
@@ -105,43 +104,26 @@ begin
   MaskBMP.Free;
 end;
 
-(*
-class function TPngInterface.LoadPngFile(fn: String): TBitmap32;
+class procedure TPngInterface.RemoveAlpha(Dst: TBitmap32);
+var
+  x, y: Integer;
 begin
-  Result := TBitmap32.Create;
-  LoadPngFile(fn, Result);
+  for y := 0 to Dst.Height-1 do
+    for x := 0 to Dst.Width-1 do
+      if (Dst[x, y] and $FF000000) = 0 then
+        Dst[x, y] := $FF000000
+      else
+        Dst[x, y] := $FF000000 or Dst[x, y];
 end;
-
-class function TPngInterface.LoadPngStream(aStream: TStream): TBitmap32;
-begin
-  Result := TBitmap32.Create;
-  LoadPngStream(aStream, Result);
-end;
-*)
 
 class procedure TPngInterface.LoadPngFile(fn: String; Bmp: TBitmap32);
-var
-  TempStream: TFileStream;
 begin
-  TempStream := TFileStream.Create(fn, fmOpenRead);
-  try
-    LoadPngStream(TempStream, Bmp);
-  finally
-    TempStream.Free;
-  end;
+  LoadBitmap32FromPng(Bmp, fn);
 end;
 
 class procedure TPngInterface.LoadPngStream(aStream: TStream; Bmp: TBitmap32);
-var
-  TempPng: TPortableNetworkGraphic32;
 begin
-  TempPng := TPortableNetworkGraphic32.Create;
-  try
-    TempPng.LoadFromStream(aStream);
-    Bmp.Assign(TempPng);
-  finally
-    TempPng.Free;
-  end;
+  LoadBitmap32FromPng(Bmp, aStream);
 end;
 
 class procedure TPngInterface.SavePngFile(fn: String; Bmp: TBitmap32; NoAlpha: Boolean = false);
@@ -158,12 +140,20 @@ end;
 
 class procedure TPngInterface.SavePngStream(aStream: TStream; Bmp: TBitmap32; NoAlpha: Boolean = false);
 var
-  TempPng: TPortableNetworkGraphic32;
+  TempBmp: TBitmap32;
 begin
-  TempPng := TPortableNetworkGraphic32.Create;
-  TempPng.Assign(Bmp);
-  TempPng.SaveToStream(aStream);
-  TempPng.Free;
+  if not NoAlpha then
+    SaveBitmap32ToPng(Bmp, aStream)
+  else begin
+    TempBmp := TBitmap32.Create;
+    try
+      TempBmp.Assign(Bmp);
+      RemoveAlpha(Bmp);
+      SaveBitmap32ToPng(TempBmp, aStream);
+    finally
+      TempBmp.Free;
+    end;
+  end;
 end;
 
 (*

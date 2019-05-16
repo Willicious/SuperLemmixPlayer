@@ -1,0 +1,84 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Metal Secondary Animation Test
+ AUTHOR 
+ ID x1B86EBE17B3BB55D
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_metal
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_metal
+   PIECE      exit_locked
+   X         38
+   Y         63
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      button
+   X        162
+   Y         75
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_metal
+   PIECE      window
+   X         92
+   Y         25
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_metal
+   PIECE      bar_07
+   X   136
+   Y    78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_metal
+   PIECE      bar_07
+   X    88
+   Y    78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_metal
+   PIECE      bar_07
+   X    40
+   Y    78
+   ONE_WAY
+ $END
+ 
+ 

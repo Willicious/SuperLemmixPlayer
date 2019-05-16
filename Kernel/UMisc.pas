@@ -27,6 +27,9 @@ function LeadZeroStr(Int, Len: integer): string;
 // Saves a string to a file
 procedure StringToFile(const aString, aFileName: string);
 
+// Create rect from origin / size
+function SizedRect(const Left, Top, Width, Height: Integer): TRect;
+
 // Computes the height resp. width of a rectangle.
 function RectHeight(const aRect: TRect): integer;
 function RectWidth(const aRect: TRect): integer;
@@ -64,7 +67,9 @@ end;
 
 function LeadZeroStr(Int, Len: integer): string;
 begin
-  Result := PadL(IntToStr(Int), Len, '0')
+  Result := IntToStr(Int);
+  if Length(Result) < Len then
+    Result := PadL(Result, Len, '0');
 end;
 
 procedure StringToFile(const aString, aFileName: string);
@@ -78,6 +83,11 @@ begin
   finally
     L.Free;
   end;
+end;
+
+function SizedRect(const Left, Top, Width, Height: Integer): TRect;
+begin
+  Result := Rect(Left, Top, Left+Width, Top+Height);
 end;
 
 function RectHeight(const aRect: TRect): integer;

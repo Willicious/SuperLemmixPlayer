@@ -1,10 +1,13 @@
 {$include lem_directives.inc}
 
+// TODO: Replace CombineGadgetsDefaultZombie with use of the lemming recolorer.
+
 unit LemRendering;
 
 interface
 
 uses
+  SharedGlobals, // debug
   System.Types,
   Classes, Math, Windows,
   GR32, GR32_Blend,
@@ -15,7 +18,7 @@ uses
   LemDosStructures,
   LemTypes,
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
-  LemGadgets, LemGadgetsMeta,
+  LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
   LemLemming,
   LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
@@ -42,6 +45,7 @@ type
     fRenderInterface    : TRenderInterface;
 
     fDisableBackground  : Boolean;
+    fTransparentBackground: Boolean;
 
     fRecolorer          : TRecolorImage;
 
@@ -93,7 +97,7 @@ type
 
     // Were sub-procedures or part of DrawAllObjects
     procedure DrawGadgetsOnLayer(aLayer: TRenderLayer);
-    procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
+    procedure ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
     procedure DrawTriggerArea(Gadget: TGadget);
     procedure DrawUserHelper;
     function IsUseful(Gadget: TGadget): Boolean;
@@ -159,6 +163,8 @@ type
 
     property TerrainLayer: TBitmap32 read GetTerrainLayer; // for save state purposes
     property ParticleLayer: TBitmap32 read GetParticleLayer; // needs to be replaced with making TRenderer draw them
+
+    property TransparentBackground: Boolean read fTransparentBackground write fTransparentBackground;
   end;
 
 implementation
@@ -897,7 +903,7 @@ begin
   if P^ and $FF000000 <> $FF000000 then
   begin
     C := Color; //Theme.Colors[MASK_COLOR];
-    BlendMem(P^, C);
+    MergeMem(P^, C);
     P^ := C;
   end;
 end;
@@ -1015,14 +1021,14 @@ end;
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FF000000) <> 0 then
-    BlendMem(F, B);
+    MergeMem(F, B);
 end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FF000000 <> 0) and (B and $FF000000 <> $FF000000) then
   begin
-    BlendMem(B, F);
+    MergeMem(B, F);
     B := F;
   end;
 end;
@@ -1035,19 +1041,23 @@ end;
 
 procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000) <> 0 then
-  begin
-    BlendMem(F, B);
-  end;
+  if (F and $FF000000) = $FF000000 then
+    B := F
+  else if (F and $FF000000) <> 0 then
+    MergeMem(F, B);
 end;
 
 procedure TRenderer.CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FF000000) <> 0 then
   begin
-    if (F and $FFFFFF) = (DosVgaColorToColor32(DosInLevelPalette[3]) and $FFFFFF) then
-    F := ((((F shr 16) mod 256) div 2) shl 16) + ((((F shr 8) mod 256) div 3 * 2) shl 8) + ((F mod 256) div 2);
-    BlendMem(F, B);
+    if (F and $FFFFFF) = $F0D0D0 then
+      F := $FF808080;
+
+    if (F and $FF000000) = $FF000000 then
+      B := F
+    else
+      MergeMem(F, B);
   end;
 end;
 
@@ -1056,7 +1066,9 @@ procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean
 begin
   Bmp.DrawMode := dmCustom;
 
-  if IsOnlyOnTerrain then
+  if fUsefulOnly then
+    Bmp.OnPixelCombine := CombineFixedColor
+  else if IsOnlyOnTerrain then
     Bmp.OnPixelCombine := CombineGadgetsDefault
   else if IsZombie then
     Bmp.OnPixelCombine := CombineGadgetsDefaultZombie
@@ -1312,97 +1324,86 @@ begin
   end;
 end;
 
-procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32; TempBitmap: TBitmap32 = nil);
+procedure TRenderer.ProcessDrawFrame(Gadget: TGadget; Dst: TBitmap32);
 var
-  CountX, CountY, iX, iY: Integer;
-  MO: TGadgetMetaAccessor;
-  DrawFrame: Integer;
-  TempBitmapRect, DstRect: TRect;
-  IsOwnBitmap: Boolean;
+  i: Integer;
+  BMP: TBitmap32;
 
-  OldDrawMode: TDrawMode;
-  OldPixelCombine: TPixelCombineEvent;
+  ThisAnim: TGadgetAnimationInstance;
+  DstRect: TRect;
+
+  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
+  var
+    NumberString: String;
+    DigitsWidth: Integer;
+
+    CurX: Integer;
+    n: Integer;
+    Digit: Integer;
+
+    SrcRect: TRect;
+
+    OldDrawColor: TColor32;
+  begin
+    OldDrawColor := fFixedDrawColor;
+
+    NumberString := IntToStr(aNumber);
+    DigitsWidth := (Length(NumberString) * 4) + Length(NumberString) - 1;
+    if aAlignment < 0 then
+      CurX := X
+    else if aAlignment > 0 then
+      CurX := X - DigitsWidth + 1
+    else
+      CurX := X - (DigitsWidth div 2);
+
+    for n := 1 to Length(NumberString) do
+    begin
+      Digit := StrToInt(NumberString[n]);
+      SrcRect := SizedRect(Digit * 4, 0, 4, 5);
+
+      fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
+      fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
+      fFixedDrawColor := $FF202020;
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y + 1, SrcRect);
+
+      fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
+      fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
+      CurX := CurX + 5;
+    end;
+
+    fFixedDrawColor := OldDrawColor;
+  end;
 
   procedure AddPickupSkillNumber;
-  var
-    Text: String;
-    TextWidth, TextHeight: Integer;
   begin
-    Text := IntToStr(Gadget.SkillCount);
-    TempBitmap.Font.Size := 5;
-    TextWidth := TempBitmap.TextWidth(Text);
-    TextHeight := TempBitmap.TextHeight(Text);
-    TempBitmap.RenderText(Gadget.Width - TextWidth, Gadget.Height - TextHeight + 1, Text, 0, $FF101010);
-    TempBitmap.RenderText(Gadget.Width - TextWidth + 1, Gadget.Height - TextHeight + 1, Text, 0, $FFF0F0F0);
+    DrawNumber(Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height - 6, Gadget.SkillCount, 1);
   end;
+
 begin
   if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
 
-  if TempBitmap = nil then
+  for i := 0 to Gadget.Animations.Count-1 do
   begin
-    TempBitmap := TBitmap32.Create;
-    IsOwnBitmap := true;
-  end else
-    IsOwnBitmap := false;
+    ThisAnim := Gadget.Animations[i];
 
-  OldDrawMode := TempBitmap.DrawMode;
-  OldPixelCombine := TempBitmap.OnPixelCombine;
+    if (not ThisAnim.Visible) and (ThisAnim.State = gasPause) then
+      Continue;
 
-  try
-    DrawFrame := Min(Gadget.CurrentFrame, Gadget.AnimationFrameCount-1);
-    TempBitmap.Assign(Gadget.Frames[DrawFrame]);
+    BMP := ThisAnim.Bitmap;
+    PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
+    DstRect := SizedRect(Gadget.Left + ThisAnim.MetaAnimation.OffsetX,
+                         Gadget.Top + ThisAnim.MetaAnimation.OffsetY,
+                         ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,
+                         ThisAnim.MetaAnimation.Height + Gadget.HeightVariance);
 
-    PrepareGadgetBitmap(TempBitmap, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode);
-    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
-       AddPickupSkillNumber;
-
-    if fUsefulOnly then
-    begin
-      TempBitmap.DrawMode := dmCustom;
-      fFixedDrawColor := $FFFFFF00;
-      TempBitmap.OnPixelCombine := CombineFixedColor;
-    end;
-
-    MO := Gadget.MetaObj;
-    CountX := (Gadget.Width-1) div MO.Width;
-    CountY := (Gadget.Height-1) div MO.Height;
-
-    for iY := 0 to CountY do
-    begin
-      // (re)size rectangles correctly
-      TempBitmapRect := TempBitmap.BoundsRect;
-      // Move to leftmost X-coordinate and correct Y-coordinate
-      DstRect := Rect(0, 0, RectWidth(TempBitmapRect), RectHeight(TempBitmapRect));
-      OffsetRect(DstRect, Gadget.Left, Gadget.Top + (MO.Height * iY));
-      // shrink sizes of rectange to draw on bottom row
-      if (iY = CountY) and (Gadget.Height mod MO.Height <> 0) then
-      begin
-        Dec(DstRect.Bottom, MO.Height - (Gadget.Height mod MO.Height));
-        Dec(TempBitmapRect.Bottom, MO.Height - (Gadget.Height mod MO.Height));
-      end;
-
-      for iX := 0 to CountX do
-      begin
-        // shrink size of rectangle to draw on rightmost column
-        if (iX = CountX) and (Gadget.Width mod MO.Width <> 0) then
-        begin
-          Dec(DstRect.Right, MO.Width - (Gadget.Width mod MO.Width));
-          Dec(TempBitmapRect.Right, MO.Width - (Gadget.Width mod MO.Width));
-        end;
-        // Draw copy of object onto alayer at this place
-        TempBitmap.DrawTo(Dst, DstRect, TempBitmapRect);
-        // Move to next row
-        OffsetRect(DstRect, MO.Width, 0);
-      end;
-    end;
-  finally
-    if IsOwnBitmap then
-      TempBitmap.Free
-    else begin
-      TempBitmap.DrawMode := OldDrawMode;
-      TempBitmap.OnPixelCombine := OldPixelCombine;
-    end;
+    DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
+
+  if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+    AddPickupSkillNumber;
 end;
 
 procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
@@ -1503,6 +1504,14 @@ procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = T
                       fRenderInterface.MousePos)
   end;
 
+  procedure MakeFixedDrawColor;
+  var
+    H: Integer;
+  begin
+    H := GetTickCount mod 5000;
+    fFixedDrawColor := HSVToRGB(H / 4999, 1, 1);
+  end;
+
 var
   Gadget: TGadget;
   i, i2: Integer;
@@ -1511,6 +1520,9 @@ begin
   fGadgets := Gadgets;
   fDrawingHelpers := DrawHelper;
   fUsefulOnly := UsefulOnly;
+
+  if fUsefulOnly then
+    MakeFixedDrawColor;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
 
@@ -1643,6 +1655,7 @@ begin
     if FileExists(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]) then
       TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
     fHelperImages[i].DrawMode := dmBlend;
+    fHelperImages[i].CombineMode := cmMerge;
   end;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
@@ -1856,7 +1869,11 @@ begin
 
   // Background layer
   fBgColor := Theme.Colors[BACKGROUND_COLOR] and $FFFFFF;
-  fLayers[rlBackground].Clear($FF000000 or fBgColor);
+
+  if fTransparentBackground then
+    fLayers[rlBackground].Clear(0)
+  else
+    fLayers[rlBackground].Clear($FF000000 or fBgColor);
 
   if DoBackground and (RenderInfoRec.Level.Info.Background <> '') then
   begin
@@ -1909,7 +1926,8 @@ begin
   // Combine all layers to the WorldMap
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.PhysicsMap := fPhysicsMap;
-  fLayers.CombineTo(World);
+  fLayers.CombineTo(World, World.BoundsRect, false, fTransparentBackground);
+  World.SaveToFile(AppPath + 'test.bmp');
 end;
 
 
@@ -1939,6 +1957,9 @@ begin
 
   // Get ReceiverID for all Teleporters
   Gadgets.FindReceiverID;
+
+  // Run "PrepareAnimationInstances" for all gadgets. This differs from CreateAnimationInstances which is done earlier.
+  Gadgets.InitializeAnimations;
 end;
 
 

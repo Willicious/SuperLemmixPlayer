@@ -4,11 +4,57 @@ unit LemGadgets;
 interface
 
 uses
-  Math, Classes,
-  Windows, Contnrs, LemTypes, LemCore,
-  LemGadgetsMeta, LemGadgetsModel;
+  Math, Classes, GR32,
+  Windows, Contnrs, SysUtils, LemTypes, LemCore,
+  LemGadgetsMeta, LemGadgetsModel, LemGadgetsConstants,
+  LemGadgetAnimation,
+  Generics.Collections;
 
 type
+  TGadget = class;
+
+  TGadgetAnimationInstance = class
+    private
+      fGadget: TGadget;
+      fAnimation: TGadgetAnimation;
+      fFrame: Integer;
+      fState: TGadgetAnimationState;
+      fVisible: Boolean;
+      fPrimary: Boolean;
+      fDisableTriggers: Boolean;
+
+      function GetBitmap: TBitmap32;
+      function GetDisableTriggers: Boolean;
+    public
+      constructor Create(aGadget: TGadget; aAnimation: TGadgetAnimation);
+      function UpdateOneFrame: Boolean; // if returns false, the object PERMANENTLY removes the animation. Futureproofing.
+      procedure UpdateAnimationState; // basically, all frame update logic *except* moving to the next frame
+      procedure ProcessTriggers;
+
+      procedure Clone(aSrc: TGadgetAnimationInstance);
+
+      property MetaAnimation: TGadgetAnimation read fAnimation;
+      property Bitmap: TBitmap32 read GetBitmap;
+      property Primary: Boolean read fPrimary;
+      property Frame: Integer read fFrame write fFrame;
+      property Visible: Boolean read fVisible;
+      property State: TGadgetAnimationState read fState;
+      property DisableTriggers: Boolean read GetDisableTriggers write fDisableTriggers;
+  end;
+
+  TGadgetAnimationInstances = class(TObjectList<TGadgetAnimationInstance>)
+    private
+      fPrimaryAnimation: TGadgetAnimationInstance;
+      fPrimaryAnimationFrameCount: Integer;
+      function GetPrimaryAnimation: TGadgetAnimationInstance;
+      procedure SetPrimaryAnimation(const aValue: TGadgetAnimationInstance);
+    public
+      procedure Clone(aSrc: TGadgetAnimationInstances; newObj: TGadget);
+      procedure ChangePrimaryAnimation(aNewPrimaryName: String; aSetFrame: Integer = -1); // this discards the old primary!
+      property PrimaryAnimation: TGadgetAnimationInstance read GetPrimaryAnimation write SetPrimaryAnimation;
+      property PrimaryAnimationFrameCount: Integer read fPrimaryAnimationFrameCount;
+  end;
+
   // internal object used by game
   TGadget = class
   private
@@ -16,18 +62,25 @@ type
     sLeft           : Integer;
     sHeight         : Integer;
     sWidth          : Integer;
+
+    sWidthVariance  : Integer; // difference from default. used by secondary animations.
+    sHeightVariance : Integer;
+
     sTriggerRect    : TRect;  // We assume that trigger areas will never move!!!
     sTriggerEffect  : Integer;
     sReceiverId     : Integer;
     sPairingId      : Integer;
     sZombieMode     : Boolean;
+    sSecondariesTreatAsBusy: Boolean;
 
     Obj            : TGadgetModel;
+
+    procedure CreateAnimationInstances;
+    procedure PrepareAnimationInstances;
 
     function GetTriggerRect: TRect;
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
-    procedure SetZombieMode(Value: Boolean);
     function GetSkillType: TSkillPanelButton;
     function GetSoundEffect: String;
     function GetIsOnlyOnTerrain: Boolean;
@@ -45,24 +98,35 @@ type
     function GetSpeed: Integer;
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
+
+    function GetCurrentFrame: Integer; // Just remaps to primary animation. This allows LemGame to control
+    procedure SetCurrentFrame(aValue: Integer); // the primary animation directly, as it always has.
+
+    function GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
   public
     MetaObj        : TGadgetMetaAccessor;
 
-    Frames         : TBitmaps;
+    Animations: TGadgetAnimationInstances;
 
-    CurrentFrame   : Integer;
     Triggered      : Boolean;
     TeleLem        : Integer; // saves which lemming is currently teleported
     HoldActive     : Boolean;
 
-    constructor Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor); Overload;
+    constructor Create; overload;
+    constructor Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor); overload;
+    constructor Create(Template: TGadget); overload;
+
+    destructor Destroy; override;
     function Clone: TGadget;
 
     property TriggerRect: TRect read sTriggerRect;
+    property CurrentFrame: Integer read GetCurrentFrame write SetCurrentFrame;
     property Top: Integer read sTop write SetTop;
     property Left: Integer read sLeft write SetLeft;
     property Width: Integer read sWidth;
     property Height: Integer read sHeight;
+    property WidthVariance: Integer read sWidthVariance;
+    property HeightVariance: Integer read sHeightVariance;
     property Center: TPoint read GetCenterPoint;
     property TriggerEffect: Integer read sTriggerEffect write sTriggerEffect;
     property ReceiverId: Integer read sReceiverId;
@@ -76,7 +140,7 @@ type
     property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
     property SoundEffect: String read GetSoundEffect;
-    property ZombieMode: Boolean read sZombieMode write SetZombieMode;
+    property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property KeyFrame: Integer read GetKeyFrame;
     property CanDrawToBackground: Boolean read GetCanDrawToBackground; // moving backgrounds: if only one frame and zero speed, this returns true
     property Speed: Integer read GetSpeed;
@@ -89,6 +153,9 @@ type
     property IsPreassignedZombie: Boolean index 64 read GetPreassignedSkill;
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
+    property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
+
+    property AnimationFlag[Flag: TGadgetAnimationTriggerCondition]: Boolean read GetAnimFlagState;
 
     procedure AssignTo(NewObj: TGadget);
     procedure UnifyFlippingFlagsOfTeleporter();
@@ -108,53 +175,20 @@ type
     function Add(Item: TGadget): Integer;
     procedure Insert(Index: Integer; Item: TGadget);
     procedure FindReceiverID;
+    procedure InitializeAnimations;
     property Items[Index: Integer]: TGadget read GetItem; default;
   published
   end;
 
-const
-  DOM_NOOBJECT         = 65535;
-  DOM_NONE             = 0;
-  DOM_EXIT             = 1;
-  DOM_FORCELEFT        = 2; // left arm of blocker
-  DOM_FORCERIGHT       = 3; // right arm of blocker
-  DOM_TRAP             = 4; // triggered trap
-  DOM_WATER            = 5; // causes drowning
-  DOM_FIRE             = 6; // causes vaporizing
-  DOM_ONEWAYLEFT       = 7;
-  DOM_ONEWAYRIGHT      = 8;
-  DOM_STEEL            = 9;
-  DOM_BLOCKER          = 10; // the middle part of blocker
-  DOM_TELEPORT         = 11;
-  DOM_RECEIVER         = 12;
-  DOM_LEMMING          = 13;
-  DOM_PICKUP           = 14;
-  DOM_LOCKEXIT         = 15;
-  DOM_SKETCH           = 16; // replaces DOM_SECRET, shouldn't be in LVL files, and gets hidden if it is
-  DOM_BUTTON           = 17;
-  //DOM_RADIATION        = 18;
-  DOM_ONEWAYDOWN       = 19;
-  DOM_UPDRAFT          = 20;
-  DOM_FLIPPER          = 21;
-  //DOM_SLOWFREEZE       = 22;
-  DOM_WINDOW           = 23;
-  //DOM_ANIMATION        = 24;
-  DOM_HINT             = 25;
-  //DOM_NOSPLAT          = 26;
-  DOM_SPLAT            = 27;
-  //DOM_TWOWAYTELE       = 28;
-  //DOM_SINGLETELE       = 29;
-  DOM_BACKGROUND       = 30;
-  DOM_TRAPONCE         = 31;
-  //DOM_BGIMAGE          = 32;
-  DOM_ONEWAYUP         = 33;
-
 implementation
 
-uses
-  GR32;
-
 { TGadget }
+constructor TGadget.Create;
+begin
+  inherited;
+  Animations := TGadgetAnimationInstances.Create;
+end;
+
 constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor);
 
   procedure AdjustOWWDirection;
@@ -183,9 +217,12 @@ constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccesso
     sTriggerEffect := DIRS[UseDir mod 4];
   end;
 begin
+  Create;
+
   Obj := ObjParam;
   MetaObj := MetaParam;
-  Frames := MetaObj.Images;
+
+  CreateAnimationInstances;
 
   // Set basic stuff
   sTop := Obj.Top;
@@ -196,26 +233,14 @@ begin
   if (not MetaObj.CanResizeHorizontal) or (Obj.Width < 1) then
     Obj.Width := MetaObj.Width;
   sWidth := Obj.Width;
+
+  sWidthVariance := sWidth - MetaObj.Width;
+  sHeightVariance := sHeight - MetaObj.Height;
+
   sTriggerEffect := MetaObj.TriggerEffect;
   AdjustOWWDirection; // adjusts eg. flipped OWL becomes OWR
   sTriggerRect := GetTriggerRect;
   sReceiverId := 65535;
-
-  // Set CurrentFrame
-  if MetaObj.RandomStartFrame then
-    CurrentFrame := ((Abs(sLeft) + 1) * (Abs(sTop) + 1) + (Obj.Skill + 1) * (Obj.TarLev + 1)) mod MetaObj.FrameCount
-  else if MetaObj.TriggerEffect = DOM_PICKUP then
-    CurrentFrame := Obj.Skill + 1
-  else if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
-    CurrentFrame := 1
-  else
-    CurrentFrame := MetaObj.PreviewFrame;
-
-  if (MetaObj.TriggerEffect = DOM_FLIPPER) then
-    if ((Obj.DrawingFlags and odf_FlipLem) <> 0) then
-      CurrentFrame := 1
-    else
-      CurrentFrame := 0;
 
   // Set other stuff
   Triggered := False;
@@ -225,9 +250,39 @@ begin
   ZombieMode := False;
 end;
 
+procedure TGadget.CreateAnimationInstances;
+var
+  NewInstance: TGadgetAnimationInstance;
+  i: Integer;
+begin
+  for i := 0 to MetaObj.Animations.Count-1 do
+  begin
+    NewInstance := TGadgetAnimationInstance.Create(self, MetaObj.Animations.Items[i]);
+    Animations.Add(NewInstance);
+  end;
+end;
+
+procedure TGadget.PrepareAnimationInstances;
+var
+  i: Integer;
+begin
+  for i := 0 to Animations.Count-1 do
+  begin
+    Animations[i].ProcessTriggers;
+    Animations[i].UpdateAnimationState;
+  end;
+end;
+
+destructor TGadget.Destroy;
+begin
+  Animations.Free;
+  inherited;
+end;
+
 function TGadget.Clone: TGadget;
 begin
   Result := TGadget.Create(Obj, MetaObj);
+  // doesn't clone state
 end;
 
 function TGadget.GetTriggerRect: TRect;
@@ -282,12 +337,6 @@ begin
   Obj.Top := Value;
 end;
 
-procedure TGadget.SetZombieMode(Value: Boolean);
-begin
-  sZombieMode := Value;
-  Obj.DrawAsZombie := Value;
-end;
-
 function TGadget.GetSkillType: TSkillPanelButton;
 begin
   Assert(TriggerEffect = DOM_PICKUP, 'Object.SkillType called for non-PickUp skill');
@@ -335,7 +384,107 @@ end;
 
 function TGadget.GetAnimationFrameCount: Integer;
 begin
-  Result := MetaObj.FrameCount;
+  Result := Animations.PrimaryAnimationFrameCount;
+end;
+
+function TGadget.GetAnimFlagState(aFlag: TGadgetAnimationTriggerCondition): Boolean;
+const
+  READY_OBJECT_TYPES = // Any object not listed here, always returns *TRUE* (not false like the others)
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+  BUSY_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
+  DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+  DISARMED_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_TRAP, DOM_TRAPONCE];
+  DIRECTION_OBJECT_TYPES = // Any object not listed here, always returns false. This is used for both gatcLeft and gatcRight.
+    [DOM_FLIPPER, DOM_WINDOW];
+
+  function CheckReadyFlag: Boolean;
+  begin
+    Result := true;
+    if TriggerEffectBase in READY_OBJECT_TYPES then
+    begin
+      if sSecondariesTreatAsBusy // for DOM_TELEPORT, "receiver is busy" is marked as this
+      or (TriggerEffect = DOM_NONE) then // local trigger effect is set to DOM_NONE when disarmed / etc
+        Result := false
+      else
+        case TriggerEffectBase of
+          DOM_TRAP, DOM_LOCKEXIT, DOM_TELEPORT: Result := (CurrentFrame = 0);
+          DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 1;
+          DOM_PICKUP: Result := CurrentFrame <> 0;
+          DOM_RECEIVER: Result := (CurrentFrame = 0) and (not HoldActive);
+          DOM_WINDOW: Result := (CurrentFrame = 0); // may make this do more in the future
+        end;
+    end;
+  end;
+
+  function CheckBusyFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in BUSY_OBJECT_TYPES then
+    begin
+      if sSecondariesTreatAsBusy then // for DOM_TELEPORT, "receiver is busy" is marked as this
+        Result := true
+      else
+        case TriggerEffectBase of
+          DOM_TRAP, DOM_TELEPORT: Result := CurrentFrame > 0;
+          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_WINDOW: Result := CurrentFrame > 1;
+          DOM_RECEIVER: Result := (CurrentFrame > 0) or HoldActive;
+        end;
+    end;
+  end;
+
+  function CheckDisabledFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DISABLED_OBJECT_TYPES then
+    begin
+       if TriggerEffect = DOM_NONE then // locla trigger effect is set to DOM_NONE when disarmed trap, unmatched teleport / receiver
+        Result := true
+      else
+        case TriggerEffectBase of
+          // DOM_TRAP: Only condition is handled by the above TriggerEffect check
+          DOM_PICKUP, DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
+          DOM_LOCKEXIT: Result := CurrentFrame = 1;
+          DOM_WINDOW: Result := false; // may make this do more in the future
+        end;
+    end;
+  end;
+
+  function CheckDisarmedFlag: Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DISARMED_OBJECT_TYPES then
+      Result := TriggerEffectBase = DOM_NONE;
+  end;
+
+  function CheckDirectionFlag(aRight: Boolean): Boolean;
+  begin
+    Result := false;
+    if TriggerEffectBase in DIRECTION_OBJECT_TYPES then
+    begin
+      // We test for LEFT here. It gets inverted later if aRight = true.
+      case TriggerEffectBase of
+        DOM_FLIPPER: Result := CurrentFrame = 0;
+        DOM_WINDOW: Result := IsFlipPhysics;
+      end;
+
+      if aRight then
+        Result := not Result;
+    end;
+  end;
+begin
+  case aFlag of
+    gatcUnconditional: Result := true;
+    gatcReady: Result := CheckReadyFlag;
+    gatcBusy: Result := CheckBusyFlag;
+    gatcDisabled: Result := CheckDisabledFlag;
+    gatcDisarmed: Result := CheckDisarmedFlag;
+    gatcLeft: Result := CheckDirectionFlag(false);
+    gatcRight: Result := CheckDirectionFlag(true);
+    else raise Exception.Create('TGadget.GetAnimFlagState passed an invalid param.');
+  end;
 end;
 
 function TGadget.GetPreassignedSkill(BitField: Integer): Boolean;
@@ -355,6 +504,11 @@ function TGadget.GetCenterPoint: TPoint;
 begin
   Result.X := sLeft + (sWidth div 2);
   Result.Y := sTop + (sHeight div 2);
+end;
+
+function TGadget.GetCurrentFrame: Integer;
+begin
+  Result := Animations.PrimaryAnimation.Frame;
 end;
 
 function TGadget.GetKeyFrame: Integer;
@@ -383,9 +537,17 @@ begin
 end;
 
 function TGadget.GetCanDrawToBackground: Boolean;
+var
+  i: Integer;
 begin
   Assert(MetaObj.TriggerEffect = DOM_BACKGROUND, 'GetCanDrawToBackground called for an object that isn''t a moving background!');
-  Result := (Frames.Count = 1) and (GetSpeed = 0);
+  Result := false;
+  if GetSpeed <> 0 then Exit;
+  for i := 0 to MetaObj.Animations.Count-1 do
+    if MetaObj.Animations.Items[i].FrameCount > 1 then
+      Exit;
+
+  Result := true;
 end;
 
 function TGadget.GetSpeed: Integer;
@@ -408,6 +570,9 @@ end;
 
 procedure TGadget.AssignTo(NewObj: TGadget);
 begin
+  NewObj.MetaObj := MetaObj;
+  NewObj.Animations.Clone(Animations, NewObj);
+
   NewObj.sTop := sTop;
   NewObj.sLeft := sLeft;
   NewObj.sHeight := sHeight;
@@ -416,7 +581,6 @@ begin
   NewObj.sTriggerEffect := sTriggerEffect;
   NewObj.MetaObj := MetaObj;
   NewObj.Obj := Obj;
-  NewObj.CurrentFrame := CurrentFrame;
   NewObj.Triggered := Triggered;
   NewObj.TeleLem := TeleLem;
   NewObj.HoldActive := HoldActive;
@@ -433,6 +597,11 @@ begin
 end;
 
 
+procedure TGadget.SetCurrentFrame(aValue: Integer);
+begin
+  Animations.PrimaryAnimation.Frame := aValue;
+end;
+
 procedure TGadget.SetFlipOfReceiverTo(Teleporter: TGadget);
 begin
   Assert(Teleporter.MetaObj.TriggerEffect = DOM_TELEPORT, 'SetFlipOfReceiverTo with an argument that isn''t a teleporter!');
@@ -444,6 +613,11 @@ begin
     Obj.DrawingFlags := Obj.DrawingFlags and not odf_FlipLem;
 end;
 
+
+constructor TGadget.Create(Template: TGadget);
+begin
+  Create(Template.Obj, Template.MetaObj);
+end;
 
 { TGadgetList }
 
@@ -460,6 +634,14 @@ end;
 procedure TGadgetList.Insert(Index: Integer; Item: TGadget);
 begin
   inherited Insert(Index, Item);
+end;
+
+procedure TGadgetList.InitializeAnimations;
+var
+  i: Integer;
+begin
+  for i := 0 to Count-1 do
+    Items[i].PrepareAnimationInstances;
 end;
 
 procedure TGadgetList.FindReceiverID;
@@ -518,6 +700,172 @@ begin
   for i := 0 to ItemCount - 1 do
     if (Items[i].TriggerEffect = DOM_RECEIVER) and not IsReceiverUsed[i] then
       Items[i].TriggerEffect := DOM_NONE // set to no-effect as a means of disabling if
+end;
+
+{ TGadgetAnimationInstance }
+
+procedure TGadgetAnimationInstance.Clone(aSrc: TGadgetAnimationInstance);
+begin
+  fFrame := aSrc.fFrame;
+  fState := aSrc.fState;
+  fVisible := aSrc.fVisible;
+  fPrimary := aSrc.fPrimary;
+end;
+
+constructor TGadgetAnimationInstance.Create(aGadget: TGadget;
+  aAnimation: TGadgetAnimation);
+var
+  MetaObj: TGadgetMetaAccessor;
+begin
+  inherited Create;
+
+  if aGadget.MetaObj.Animations.IndexOf(aAnimation) < 0 then
+    raise Exception.Create('TGadgetAnimationInstance.Create called with an animation from a different gadget!');
+
+  fGadget := aGadget;
+  fAnimation := aAnimation;
+
+  if fAnimation.StartFrameIndex < 0 then
+    fFrame := Random(fAnimation.FrameCount)
+  else if fAnimation.StartFrameIndex < fAnimation.FrameCount then
+    fFrame := fAnimation.StartFrameIndex
+  else
+    fFrame := 0;
+
+  if fAnimation.Primary then
+  begin
+    fPrimary := true;
+
+    MetaObj := aGadget.MetaObj;
+
+    if MetaObj.TriggerEffect = DOM_PICKUP then
+      fFrame := aGadget.Obj.Skill + 1;
+
+    if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
+      fFrame := 1;
+  end else
+    fPrimary := false;
+end;
+
+function TGadgetAnimationInstance.GetBitmap: TBitmap32;
+begin
+  Result := fAnimation.GetFrameBitmap(fFrame);
+end;
+
+function TGadgetAnimationInstance.GetDisableTriggers: Boolean;
+begin
+  Result := fDisableTriggers or fPrimary;
+end;
+
+function TGadgetAnimationInstance.UpdateOneFrame: Boolean;
+begin
+  Result := true;
+
+  ProcessTriggers;
+
+  if (fState <> gasPause) and ((fState <> gasLoopToZero) or (fFrame > 0)) then
+    fFrame := (fFrame + 1) mod fAnimation.FrameCount;
+
+  UpdateAnimationState;
+end;
+
+procedure TGadgetAnimationInstance.UpdateAnimationState;
+begin
+  case fState of
+    gasPlay: ; // nothing to do
+    gasPause: ; // nothing to do
+    gasLoopToZero: if fFrame = 0 then fState := gasPause;
+    gasStop: begin fFrame := 0; fState := gasPause; end;
+    gasMatchPrimary: fFrame := fGadget.CurrentFrame;
+  end;
+end;
+
+procedure TGadgetAnimationInstance.ProcessTriggers;
+var
+  i: Integer;
+  ThisTrigger: TGadgetAnimationTrigger;
+begin
+  if DisableTriggers then Exit;
+
+  for i := fAnimation.Triggers.Count-1 downto 0 do
+  begin
+    ThisTrigger := fAnimation.Triggers[i];
+
+    if fGadget.AnimationFlag[ThisTrigger.Condition] then
+    begin
+      fState := ThisTrigger.State;
+      fVisible := ThisTrigger.Visible;
+      Exit;
+    end;
+  end;
+end;
+
+{ TGadgetAnimationInstances }
+
+procedure TGadgetAnimationInstances.ChangePrimaryAnimation(aNewPrimaryName: String; aSetFrame: Integer = -1);
+var
+  i: Integer;
+  NewPrimary: TGadgetAnimationInstance;
+begin
+  aNewPrimaryName := Trim(Uppercase(aNewPrimaryName));
+  for i := 0 to Count-1 do
+    if Items[i].fAnimation.Name = aNewPrimaryName then
+    begin
+      NewPrimary := Items[i];
+      Remove(fPrimaryAnimation);
+
+      PrimaryAnimation := NewPrimary;
+      NewPrimary.fPrimary := true;
+      NewPrimary.fState := gasPause;
+      NewPrimary.fVisible := true;
+
+      if (aSetFrame >= 0) then
+        NewPrimary.fFrame := aSetFrame; // Futureproofing, in case we ever have a situation where we *don't* need
+                                        // to set the frame, but can allow INITIAL_FRAME to take effect.
+      Exit;
+    end;
+end;
+
+procedure TGadgetAnimationInstances.Clone(aSrc: TGadgetAnimationInstances; newObj: TGadget);
+var
+  i: Integer;
+  NewInstance: TGadgetAnimationInstance;
+begin
+  Clear;
+
+  for i := 0 to aSrc.Count-1 do
+  begin
+    NewInstance := TGadgetAnimationInstance.Create(newObj, aSrc[i].MetaAnimation);
+    NewInstance.Clone(aSrc[i]);
+    Add(NewInstance);
+    if NewInstance.Primary then
+      fPrimaryAnimation := NewInstance;
+  end;
+end;
+
+function TGadgetAnimationInstances.GetPrimaryAnimation: TGadgetAnimationInstance;
+var
+  i: Integer;
+begin
+  if fPrimaryAnimation = nil then
+    for i := 0 to Count-1 do
+      if Items[i].Primary then
+      begin
+        PrimaryAnimation := Items[i];
+        Break;
+      end;
+
+  Result := fPrimaryAnimation;
+end;
+
+procedure TGadgetAnimationInstances.SetPrimaryAnimation(const aValue: TGadgetAnimationInstance);
+begin
+  fPrimaryAnimation := aValue;
+
+  if aValue = nil then
+    fPrimaryAnimationFrameCount := 0
+  else
+    fPrimaryAnimationFrameCount := aValue.fAnimation.FrameCount;
 end;
 
 end.

@@ -108,7 +108,7 @@ begin
   if A = 0 then Exit;
   SwapColors(F, TempColor);
   TempColor := (TempColor and $FFFFFF) or A;
-  BlendMem(TempColor, B);
+  MergeMem(TempColor, B);
 end;
 
 procedure TRecolorImage.CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);

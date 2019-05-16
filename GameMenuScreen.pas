@@ -226,7 +226,9 @@ var
     TempBmp.DrawTo(RightLemmingAnimation, 0, 0, SourceRect);
     TempBmp.Free;
     LeftLemmingAnimation.DrawMode := dmBlend;
+    LeftLemmingAnimation.CombineMode := cmMerge;
     RightLemmingAnimation.DrawMode := dmBlend;
+    RightLemmingAnimation.CombineMode := cmMerge;
   end;
 begin
   Tmp := TBitmap32.Create;
@@ -249,7 +251,10 @@ begin
     LoadScrollerGraphics;
 
     for iPanel := Low(TGameMenuBitmap) to High(TGameMenuBitmap) do
+    begin
       BitmapElements[iPanel].DrawMode := dmBlend;
+      BitmapElements[iPanel].CombineMode := cmMerge;
+    end;
 
     // a little oversize
     Reel.SetSize(ReelLetterBoxCount * 16 + 32, 16);

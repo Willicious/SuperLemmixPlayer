@@ -5,10 +5,11 @@ unit LemGadgetsMeta;
 interface
 
 uses
-  GR32, LemTypes,
+  GR32, LemTypes, UMisc,
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,
-  Contnrs, LemNeoParser;
+  Contnrs, LemNeoParser,
+  LemGadgetAnimation, LemGadgetsConstants;
 
 const
   // Object Animation Types
@@ -26,20 +27,18 @@ type
   TGadgetMetaSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
 
   TGadgetVariableProperties = record // For properties that vary based on flip / invert
-    Image:         TBitmaps;
-    Width:         Integer;
-    Height:        Integer;
-    TriggerLeft:   Integer;
-    TriggerTop:    Integer;
-    TriggerWidth:  Integer;
-    TriggerHeight: Integer;
-    Resizability:  TGadgetMetaSizeSetting;
+    Animations: TGadgetAnimations;
+    TriggerLeft:      Integer;
+    TriggerTop:       Integer;
+    TriggerWidth:     Integer;
+    TriggerHeight:    Integer;
+    Resizability:   TGadgetMetaSizeSetting;
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
 
-  TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height, ov_TriggerLeft, ov_TriggerTop,
-                         ov_TriggerWidth, ov_TriggerHeight, ov_TriggerEffect,
-                         ov_KeyFrame, ov_PreviewFrame);
+  TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height,
+                         ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
+                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame);
                          // Integer properties only.
 
   TGadgetMetaInfo = class
@@ -61,10 +60,10 @@ type
     fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : String;  // filename of sound to play
-    fRandomStartFrame             : Boolean;
+
     fResizability                 : TGadgetMetaSizeSetting;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
-    fIsMasked: Boolean;
+
     function GetIdentifier: String;
     function GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TGadgetMetaSizeSetting): Boolean;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -75,7 +74,7 @@ type
     procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty; aValue: Integer);
     function GetResizability(Flip, Invert, Rotate: Boolean): TGadgetMetaSizeSetting;
     procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TGadgetMetaSizeSetting);
-    function GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+    function GetAnimations(Flip, Invert, Rotate: Boolean): TGadgetAnimations;
     procedure ClearImages;
   public
     constructor Create;
@@ -87,6 +86,8 @@ type
 
     procedure Assign(Source: TGadgetMetaInfo);
 
+    procedure Remask(aTheme: TNeoTheme);
+
     procedure MarkAllUnmade;
     procedure MarkMetaDataUnmade;
 
@@ -94,7 +95,7 @@ type
     property GS     : String read fGS write fGS;
     property Piece  : String read fPiece write fPiece;
 
-    property Images[Flip, Invert, Rotate: Boolean]: TBitmaps read GetImages;
+    property Animations[Flip, Invert, Rotate: Boolean]: TGadgetAnimations read GetAnimations;
 
     property Width[Flip, Invert, Rotate: Boolean]        : Integer index ov_Width read GetVariableProperty;
     property Height[Flip, Invert, Rotate: Boolean]       : Integer index ov_Height read GetVariableProperty;
@@ -109,7 +110,6 @@ type
     property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
 
     property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
-    property IsMasked: Boolean read fIsMasked; // we don't want to write to this one
   end;
 
   TGadgetMetaAccessor = class
@@ -123,18 +123,18 @@ type
       fRotate: Boolean;
       function GetIntegerProperty(aProp: TGadgetMetaProperty): Integer;
       procedure SetIntegerProperty(aProp: TGadgetMetaProperty; aValue: Integer);
-      function GetRandomStartFrame: Boolean;
-      procedure SetRandomStartFrame(aValue: Boolean);
       function GetResizability: TGadgetMetaSizeSetting;
       procedure SetResizability(aValue: TGadgetMetaSizeSetting);
       function GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
-      function GetImages: TBitmaps;
+      function GetAnimations: TGadgetAnimations;
       function GetSoundEffect: String;
       procedure SetSoundEffect(aValue: String);
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 
-      property Images: TBitmaps read GetImages;
+      procedure GetBoundsInfo(var aImageBounds: TRect; var aPhysicsBounds: TRect);
+
+      property Animations: TGadgetAnimations read GetAnimations;
 
       property FrameCount: Integer index ov_Frames read GetIntegerProperty write SetIntegerProperty;
       property Width: Integer index ov_Width read GetIntegerProperty;
@@ -145,8 +145,6 @@ type
       property TriggerHeight: Integer index ov_TriggerHeight read GetIntegerProperty write SetIntegerProperty;
       property TriggerEffect: Integer index ov_TriggerEffect read GetIntegerProperty write SetIntegerProperty;
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
-      property PreviewFrame: Integer index ov_PreviewFrame read GetIntegerProperty write SetIntegerProperty;
-      property RandomStartFrame: Boolean read GetRandomStartFrame write SetRandomStartFrame;
       property SoundEffect: String read GetSoundEffect write SetSoundEffect;
 
       property Resizability             : TGadgetMetaSizeSetting read GetResizability write SetResizability;
@@ -166,14 +164,6 @@ type
       property List;
   end;
 
-  TMasker = class
-    public
-      BMP: TBitmap32;
-      Theme: TNeoTheme;
-      Piece: String;
-      procedure ApplyMask(aSection: TParserSection; const aIteration: Integer);
-  end;
-
 implementation
 
 constructor TGadgetMetaInfo.Create;
@@ -183,7 +173,7 @@ begin
   inherited;
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    fVariableInfo[i].Image := TBitmaps.Create(true);
+    fVariableInfo[i].Animations := TGadgetAnimations.Create;
     fInterfaces[i] := nil;
   end;
 end;
@@ -194,7 +184,7 @@ var
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    fVariableInfo[i].Image.Free;
+    fVariableInfo[i].Animations.Free;
     fInterfaces[i].Free;
   end;
   inherited;
@@ -214,47 +204,22 @@ var
   i: Integer;
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
-    fVariableInfo[i].Image.Clear;
-end;
-
-procedure TMasker.ApplyMask(aSection: TParserSection; const aIteration: Integer);
-var
-  MaskName, MaskColor: String;
-begin
-  if Theme = nil then Exit; // kludge, this situation should never arise in the first place
-
-  MaskColor := aSection.LineTrimString['color'];
-  if (aSection.Line['self'] <> nil) then
-    TPngInterface.MaskImageFromImage(BMP, BMP, Theme.Colors[MaskColor])
-  else begin
-    MaskName := aSection.LineTrimString['name'];
-    TPngInterface.MaskImageFromFile(BMP, Piece + '_mask_' + MaskName + '.png', Theme.Colors[MaskColor]);
-  end;
- 
+    fVariableInfo[i].Animations.Clear;
 end;
 
 procedure TGadgetMetaInfo.Load(aCollection,aPiece: String; aTheme: TNeoTheme);
 var
   Parser: TParser;
-  Sec: TParserSection;
+  Sec, NewSec: TParserSection;
 
   GadgetAccessor: TGadgetMetaAccessor;
-  BMP: TBitmap32;
-
-  DoHorizontal: Boolean;
-
-  Masker: TMasker;
+  NewAnim: TGadgetAnimation;
 begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
   GadgetAccessor := GetInterface(false, false, false);
 
   Parser := TParser.Create;
-  BMP := TBitmap32.Create;
-  Masker := TMasker.Create;
-  Masker.BMP := BMP;
-  Masker.Theme := aTheme;
-  Masker.Piece := fPiece;
   try
     ClearImages;
 
@@ -265,49 +230,85 @@ begin
     Parser.LoadFromFile(aPiece + '.nxmo');
     Sec := Parser.MainSection;
 
-    TPngInterface.LoadPngFile(aPiece + '.png', BMP);
-
     // Trigger effects
-    if Sec.Line['exit'] <> nil then fTriggerEffect := 1;
-    if Sec.Line['force_left'] <> nil then fTriggerEffect := 2;
-    if Sec.Line['force_right'] <> nil then fTriggerEffect := 3;
-    if Sec.Line['trap'] <> nil then fTriggerEffect := 4;
-    if Sec.Line['water'] <> nil then fTriggerEffect := 5;
-    if Sec.Line['fire'] <> nil then fTriggerEffect := 6;
-    if Sec.Line['one_way_left'] <> nil then fTriggerEffect := 7;
-    if Sec.Line['one_way_right'] <> nil then fTriggerEffect := 8;
+    if Sec.Line['exit'] <> nil then fTriggerEffect := DOM_EXIT;
+    if Sec.Line['force_left'] <> nil then fTriggerEffect := DOM_FORCELEFT;
+    if Sec.Line['force_right'] <> nil then fTriggerEffect := DOM_FORCERIGHT;
+    if Sec.Line['trap'] <> nil then fTriggerEffect := DOM_TRAP;
+    if Sec.Line['water'] <> nil then fTriggerEffect := DOM_WATER;
+    if Sec.Line['fire'] <> nil then fTriggerEffect := DOM_FIRE;
+    if Sec.Line['one_way_left'] <> nil then fTriggerEffect := DOM_ONEWAYLEFT;
+    if Sec.Line['one_way_right'] <> nil then fTriggerEffect := DOM_ONEWAYRIGHT;
     // 9, 10 are unused
-    if Sec.Line['teleporter'] <> nil then fTriggerEffect := 11;
-    if Sec.Line['receiver'] <> nil then fTriggerEffect := 12;
+    if Sec.Line['teleporter'] <> nil then fTriggerEffect := DOM_TELEPORT;
+    if Sec.Line['receiver'] <> nil then fTriggerEffect := DOM_RECEIVER;
     // 13 is unused
-    if Sec.Line['pickup_skill'] <> nil then fTriggerEffect := 14;
-    if Sec.Line['locked_exit'] <> nil then fTriggerEffect := 15;
+    if Sec.Line['pickup_skill'] <> nil then fTriggerEffect := DOM_PICKUP;
+    if Sec.Line['locked_exit'] <> nil then fTriggerEffect := DOM_LOCKEXIT;
     // 16 is unused
-    if Sec.Line['button'] <> nil then fTriggerEffect := 17;
+    if Sec.Line['button'] <> nil then fTriggerEffect := DOM_BUTTON;
     // 18 is unused
-    if Sec.Line['one_way_down'] <> nil then fTriggerEffect := 19;
-    if Sec.Line['updraft'] <> nil then fTriggerEffect := 20;
-    if Sec.Line['splitter'] <> nil then fTriggerEffect := 21;
+    if Sec.Line['one_way_down'] <> nil then fTriggerEffect := DOM_ONEWAYDOWN;
+    if Sec.Line['updraft'] <> nil then fTriggerEffect := DOM_UPDRAFT;
+    if Sec.Line['splitter'] <> nil then fTriggerEffect := DOM_FLIPPER;
     // 22 is unused
-    if Sec.Line['window'] <> nil then fTriggerEffect := 23;
+    if Sec.Line['window'] <> nil then fTriggerEffect := DOM_WINDOW;
     // 24, 25, 26 are unused
-    if Sec.Line['splatpad'] <> nil then fTriggerEffect := 27;
+    if Sec.Line['splatpad'] <> nil then fTriggerEffect := DOM_SPLAT;
     // 28, 29 are unused
-    if Sec.Line['moving_background'] <> nil then fTriggerEffect := 30;
-    if Sec.Line['single_use_trap'] <> nil then fTriggerEffect := 31;
+    if Sec.Line['moving_background'] <> nil then fTriggerEffect := DOM_BACKGROUND;
+    if Sec.Line['single_use_trap'] <> nil then fTriggerEffect := DOM_TRAPONCE;
     // 32 is unused
-    if Sec.Line['one_way_up'] <> nil then fTriggerEffect := 33;
+    if Sec.Line['one_way_up'] <> nil then fTriggerEffect := DOM_ONEWAYUP;
 
-    fFrameCount := Sec.LineNumeric['frames'];
+    if Sec.Section['PRIMARY_ANIMATION'] = nil then
+    begin
+      // Translate older format, then load it normally.
+      NewSec := Sec.SectionList.Add('PRIMARY_ANIMATION');
 
-    DoHorizontal := Sec.Line['horizontal_strip'] <> nil;
+      NewSec.AddLine('frames', Sec.LineNumeric['frames']);
+
+      if Sec.Line['horizontal_strip'] <> nil then
+        NewSec.AddLine('horizontal_strip');
+
+      if Sec.Line['random_start_frame'] <> nil then
+        NewSec.AddLine('initial_frame', -1)
+      else if Sec.Line['initial_frame'] = nil then
+        NewSec.AddLine('initial_frame', Sec.LineNumeric['preview_frame'])  // backwards-compatible
+      else
+        NewSec.AddLine('initial_frame', Sec.LineNumeric['initial_frame']); // more accurate name, and it's what animations use
+
+      NewSec.AddLine('cut_top', Sec.LineNumeric['cut_top']);
+      NewSec.AddLine('cut_right', Sec.LineNumeric['cut_right']);
+      NewSec.AddLine('cut_bottom', Sec.LineNumeric['cut_bottom']);
+      NewSec.AddLine('cut_left', Sec.LineNumeric['cut_left']);
+    end;
+
+    NewAnim := TGadgetAnimation.Create(0, 0);
+    GadgetAccessor.Animations.AddPrimary(NewAnim);
+    NewAnim.Load(aCollection, aPiece, Sec.Section['PRIMARY_ANIMATION'], aTheme);
+
+    fWidth := NewAnim.Width;
+    fHeight := NewAnim.Height;
+    fFrameCount := NewAnim.FrameCount;
+
+    Sec.DoForEachSection('ANIMATION',
+      procedure (aSection: TParserSection; const aIteration: Integer)
+      begin
+        NewAnim := TGadgetAnimation.Create(GadgetAccessor.Animations.PrimaryAnimation.Width, GadgetAccessor.Animations.PrimaryAnimation.Height);
+        GadgetAccessor.Animations.Add(NewAnim);
+        NewAnim.Load(aCollection, aPiece, aSection, aTheme);
+      end
+    );
+
+    GadgetAccessor.Animations.SortByZIndex;
 
     GadgetAccessor.TriggerLeft := Sec.LineNumeric['trigger_x'];
     GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];
     GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];
     GadgetAccessor.TriggerHeight := Sec.LineNumeric['trigger_height'];
 
-    if fTriggerEffect = 12 then // Reveiver
+    if fTriggerEffect = 12 then // Receiver  /// Is the width / height even used anymore?
     begin
       if GadgetAccessor.TriggerWidth < 1 then
         GadgetAccessor.TriggerWidth := 1;
@@ -317,15 +318,7 @@ begin
 
     fSoundEffect := Sec.LineTrimString['sound'];
 
-    if Sec.Line['random_start_frame'] <> nil then
-    begin
-      fPreviewFrameIndex := 0;
-      fRandomStartFrame := true;
-    end else begin
-      fPreviewFrameIndex := Sec.LineNumeric['preview_frame'];
-    end;
-
-    fKeyFrame := Sec.LineNumeric['key_frame'];
+    fKeyFrame := Sec.LineNumeric['key_frame']; // this is almost purely a physics property, so should not go under animations
 
     if Sec.Line['resize_both'] <> nil then
       GadgetAccessor.Resizability := mos_Both
@@ -341,17 +334,8 @@ begin
       else
         GadgetAccessor.Resizability := mos_None;
     end;
-
-    fIsMasked := Sec.DoForEachSection('mask', Masker.ApplyMask) <> 0;
-
-    GadgetAccessor.Images.Generate(BMP, fFrameCount, DoHorizontal);
-
-    fVariableInfo[0].Width := GadgetAccessor.Images[0].Width;   //TMetaObjectInterface's Width property is read-only
-    fVariableInfo[0].Height := GadgetAccessor.Images[0].Height;
-
   finally
     Parser.Free;
-    BMP.Free;
   end;
 end;
 
@@ -406,6 +390,17 @@ begin
     fGeneratedVariableInfo[i] := false;
 end;
 
+procedure TGadgetMetaInfo.Remask(aTheme: TNeoTheme);
+var
+  i: Integer;
+begin
+  if not fVariableInfo[0].Animations.AnyMasked then
+    Exit;
+
+  for i := 0 to ALIGNMENT_COUNT-1 do
+    fVariableInfo[i].Animations.Remask(aTheme);
+end;
+
 procedure TGadgetMetaInfo.EnsureVariationMade(Flip, Invert, Rotate: Boolean);
 var
   i: Integer;
@@ -418,61 +413,24 @@ end;
 procedure TGadgetMetaInfo.DeriveVariation(Flip, Invert, Rotate: Boolean);
 var
   Index: Integer;
-  i: Integer;
 
-  Src, Dst: TBitmap32;
   SrcRec: TGadgetVariableProperties;
   DstRec: PGadgetVariableProperties;
-
-  SkipImages: Boolean;
-
 const
   NO_POSITION_ADJUST = [7, 8, 19]; // OWL, OWR, OWD arrows
 
-  procedure CloneInfo(Src, Dst: PGadgetVariableProperties);
+  procedure Clone(Src, Dst: PGadgetVariableProperties);
   var
-    BitmapRef: TBitmaps;
+    AnimRef: TGadgetAnimations;
   begin
-    BitmapRef := Dst.Image;
+    AnimRef := Dst.Animations;
     Dst^ := Src^;
-    Dst.Image := BitmapRef;
-  end;
+    Dst.Animations := AnimRef;
 
-  procedure Reset;
-  begin
-    i := 0;
-  end;
-
-  function SetImages: Boolean;
-  var
-    n: Integer;
-  begin
-    if SkipImages then
-    begin
-      Result := false;
-      Exit;
-    end;
-
-    Result := i < fVariableInfo[0].Image.Count;
-    if Result then
-    begin
-      Src := fVariableInfo[0].Image[i];
-      if i < fVariableInfo[Index].Image.Count then
-        Dst := fVariableInfo[Index].Image[i]
-      else begin
-        Dst := TBitmap32.Create;
-        fVariableInfo[Index].Image.Add(Dst);
-      end;
-      Inc(i);
-    end else begin
-      for n := fVariableInfo[Index].Image.Count-1 downto i do
-        fVariableInfo[Index].Image.Delete(n);
-    end;
+    Dst.Animations.Clone(Src.Animations);
   end;
 begin
   Index := GetImageIndex(Flip, Invert, Rotate);
-
-  SkipImages := fGeneratedVariableImage[Index];
 
   fGeneratedVariableImage[Index] := true;
   fGeneratedVariableInfo[Index] := true;
@@ -482,24 +440,14 @@ begin
   SrcRec := fVariableInfo[0];
   DstRec := @fVariableInfo[Index];
 
-  CloneInfo(@SrcRec, DstRec);
-
-  Reset;
-  while SetImages do
-    Dst.Assign(Src);
+  Clone(@SrcRec, DstRec);
 
   if Rotate then
   begin
-    Reset;
-    while SetImages do
-      Dst.Rotate90;
-
-    // Swap width / height
-    DstRec.Width := SrcRec.Height;
-    DstRec.Height := SrcRec.Width;
+    DstRec.Animations.Rotate90;
 
     // Swap and adjust trigger area coordinates / dimensions
-    DstRec.TriggerLeft := SrcRec.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
+    DstRec.TriggerLeft := SrcRec.Animations.PrimaryAnimation.Height - SrcRec.TriggerTop - SrcRec.TriggerHeight;
     DstRec.TriggerTop := SrcRec.TriggerLeft {- SrcRec.TriggerWidth};
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
     begin
@@ -517,22 +465,18 @@ begin
 
   if Flip then
   begin
-    Reset;
-    while SetImages do
-      Dst.FlipHorz;
+    DstRec.Animations.Flip;
 
     // Flip trigger area X coordinate
-    DstRec.TriggerLeft := DstRec.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
+    DstRec.TriggerLeft := DstRec.Animations.PrimaryAnimation.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
   end;
 
   if Invert then
   begin
-    Reset;
-    while SetImages do
-      Dst.FlipVert;
+    DstRec.Animations.Invert;
 
     // Flip and adjust trigger area Y coordinate
-    DstRec.TriggerTop := DstRec.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
+    DstRec.TriggerTop := DstRec.Animations.PrimaryAnimation.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
       DstRec.TriggerTop := DstRec.TriggerTop + 10;
   end;
@@ -556,8 +500,8 @@ begin
   i := GetImageIndex(Flip, Invert, Rotate);
   with fVariableInfo[i] do
     case aProp of
-      ov_Width: Result := Width;
-      ov_Height: Result := Height;
+      ov_Width: Result := Animations.PrimaryAnimation.Width;
+      ov_Height: Result := Animations.PrimaryAnimation.Height;
       ov_TriggerLeft: Result := TriggerLeft;
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
@@ -603,13 +547,13 @@ begin
   fVariableInfo[i].Resizability := aValue;
 end;
 
-function TGadgetMetaInfo.GetImages(Flip, Invert, Rotate: Boolean): TBitmaps;
+function TGadgetMetaInfo.GetAnimations(Flip, Invert, Rotate: Boolean): TGadgetAnimations;
 var
   i: Integer;
 begin
   EnsureVariationMade(Flip, Invert, Rotate);
   i := GetImageIndex(Flip, Invert, Rotate);
-  Result := fVariableInfo[i].Image;
+  Result := fVariableInfo[i].Animations;
 end;
 
 { TMetaObjectInterface }
@@ -637,7 +581,6 @@ begin
     ov_TriggerHeight: Result := fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate];
     ov_TriggerEffect: Result := fGadgetMetaInfo.fTriggerEffect;
     ov_KeyFrame: Result := fGadgetMetaInfo.fKeyFrame;
-    ov_PreviewFrame: Result := fGadgetMetaInfo.fPreviewFrameIndex;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;
@@ -651,7 +594,6 @@ begin
     ov_TriggerHeight: fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate] := aValue;
     ov_TriggerEffect: fGadgetMetaInfo.fTriggerEffect := aValue;
     ov_KeyFrame: fGadgetMetaInfo.fKeyFrame := aValue;
-    ov_PreviewFrame: fGadgetMetaInfo.fPreviewFrameIndex := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
 end;
@@ -664,16 +606,6 @@ end;
 procedure TGadgetMetaAccessor.SetSoundEffect(aValue: String);
 begin
   fGadgetMetaInfo.fSoundEffect := aValue;
-end;
-
-function TGadgetMetaAccessor.GetRandomStartFrame: Boolean;
-begin
-  Result := fGadgetMetaInfo.fRandomStartFrame;
-end;
-
-procedure TGadgetMetaAccessor.SetRandomStartFrame(aValue: Boolean);
-begin
-  fGadgetMetaInfo.fRandomStartFrame := aValue;
 end;
 
 function TGadgetMetaAccessor.GetResizability: TGadgetMetaSizeSetting;
@@ -695,9 +627,27 @@ begin
   end;
 end;
 
-function TGadgetMetaAccessor.GetImages: TBitmaps;
+function TGadgetMetaAccessor.GetAnimations: TGadgetAnimations;
 begin
-  Result := fGadgetMetaInfo.Images[fFlip, fInvert, fRotate];
+  Result := fGadgetMetaInfo.Animations[fFlip, fInvert, fRotate];
+end;
+
+procedure TGadgetMetaAccessor.GetBoundsInfo(var aImageBounds, aPhysicsBounds: TRect);
+var
+  AnimRect: TRect;
+  i: Integer;
+begin
+  aPhysicsBounds := SizedRect(0, 0, Animations.PrimaryAnimation.Width, Animations.PrimaryAnimation.Height);
+  aImageBounds := aPhysicsBounds;
+
+  for i := 0 to Animations.Count-1 do
+  begin
+    AnimRect := SizedRect(Animations.Items[i].OffsetX, Animations.Items[i].OffsetY, Animations.Items[i].Width, Animations.Items[i].Height);
+    aImageBounds := TRect.Union(aImageBounds, AnimRect);
+  end;
+
+  aPhysicsBounds.SetLocation(-aImageBounds.Left, -aImageBounds.Top);
+  aImageBounds.SetLocation(0, 0);
 end;
 
 { TMetaObjects }

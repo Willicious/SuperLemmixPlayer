@@ -1,0 +1,150 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Honeycomb Secondary Animation Test
+ AUTHOR 
+ ID x30683E14924D5C7
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_honeycomb
+ BACKGROUND namida_honeycomb:honeydrips
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_honeycomb
+   PIECE      window
+   X         32
+   Y         23
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_honeycomb
+   PIECE      bee_trap
+   X        120
+   Y         66
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_honeycomb
+   PIECE      bee_trap
+   X        162
+   Y         66
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_honeycomb
+   PIECE      bee_decoration
+   X         56
+   Y        107
+   NO_OVERWRITE
+   ANGLE 22
+   SPEED 18
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_honeycomb
+   PIECE      zombee
+   X         56
+   Y        117
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      frame_02
+   X   152
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      frame_02
+   X   136
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      frame_02
+   X   120
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      frame_02
+   X   104
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      frame_02
+   X    88
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      frame_02
+   X    72
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      frame_02
+   X    56
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      frame_02
+   X    40
+   Y    76
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_honeycomb
+   PIECE      combs_02
+   X   162
+   Y    76
+   ONE_WAY
+ $END
+ 
+ 

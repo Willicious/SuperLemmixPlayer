@@ -182,6 +182,7 @@ type
     procedure NextGroup;
     procedure PrevGroup;
     procedure LoadCurrentLevel(NoOutput: Boolean = false); // loads level specified by CurrentLevel into Level, and prepares renderer
+    procedure ReloadCurrentLevel(NoOutput: Boolean = false); // re-prepares using the existing TLevel in memory
 
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
@@ -496,6 +497,12 @@ begin
     Exit;
   end;
   Level.LoadFromFile(CurrentLevel.Path);
+  PieceManager.Tidy;
+  Renderer.PrepareGameRendering(Level, NoOutput);
+end;
+
+procedure TDosGameParams.ReloadCurrentLevel(NoOutput: Boolean = false);
+begin
   PieceManager.Tidy;
   Renderer.PrepareGameRendering(Level, NoOutput);
 end;

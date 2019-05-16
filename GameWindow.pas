@@ -761,6 +761,7 @@ begin
       spbMiner: SL.Add('  fRenderInterface.SelectedSkill: Miner');
       spbDigger: SL.Add('  fRenderInterface.SelectedSkill: Digger');
       spbCloner: SL.Add('  fRenderInterface.SelectedSkill: Cloner');
+      spbShimmier: SL.Add('  fRenderInterface.SelectedSkill: Shimmier');
       else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
     end;
   end;
@@ -1265,6 +1266,7 @@ begin
           14: SetSelectedSkill(spbMiner, True, AssignToHighlit);
           15: SetSelectedSkill(spbDigger, True, AssignToHighlit);
           16: SetSelectedSkill(spbCloner, True, AssignToHighlit);
+          17: SetSelectedSkill(spbShimmier, True, AssignToHighlit);
         end
     end;
 
@@ -1571,6 +1573,7 @@ begin
         SL.Delete(0);
         TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[0] + '.png', TempBMP2);
         TempBMP2.DrawMode := dmBlend;
+        TempBMP2.CombineMode := cmMerge;
         TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);
       end;
 

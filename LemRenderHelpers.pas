@@ -75,7 +75,7 @@ type
 
     constructor Create;
     procedure Prepare(aWidth, aHeight: Integer);
-    procedure CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
+    procedure CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false; aTransparentBackground: Boolean = false); overload;
     procedure CombineTo(aDst: TBitmap32; aClearPhysics: Boolean = false); overload;
     property Items[Index: TRenderLayer]: TBitmap32 read GetItem; default;
     property Width: Integer read fWidth;
@@ -419,7 +419,7 @@ begin
       BMP.OnPixelCombine := CombinePixelsShadow;
     end else begin
       BMP.DrawMode := dmBlend;
-      BMP.CombineMode := cmBlend;
+      BMP.CombineMode := cmMerge;
     end;
     Add(BMP);
 
@@ -456,7 +456,7 @@ begin
   ModColor(Green);
   ModColor(Blue);
   C := ($C0000000) or (Red shl 16) or (Green shl 8) or (Blue);
-  BlendMem(C, B);
+  MergeMem(C, B);
 end;
 
 procedure TRenderBitmaps.CombinePhysicsMapOnlyOnTerrain(F: TColor32; var B: TColor32; M: TColor32);
@@ -499,12 +499,16 @@ begin
   CombineTo(aDst, fPhysicsMap.BoundsRect, aClearPhysics);
 end;
 
-procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false);
+procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false; aTransparentBackground: Boolean = false);
 var
   i: TRenderLayer;
 begin
   aDst.BeginUpdate;
-  aDst.Clear($FF000000);
+
+  if aTransparentBackground then
+    aDst.Clear($00000000)
+  else
+    aDst.Clear($FF000000);
 
   // Tidy up the Only On Terrain and One Way Walls layers
   if fPhysicsMap <> nil then

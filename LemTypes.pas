@@ -4,6 +4,7 @@ unit LemTypes;
 interface
 
 uses
+  UMisc,
   LemNeoOnline,
   Dialogs,
   SharedGlobals,
@@ -57,6 +58,7 @@ type
 
   // lemlowlevel
 procedure ReplaceColor(B: TBitmap32; FromColor, ToColor: TColor32);
+procedure DrawNineSlice(Dst: TBitmap32; DstRect: TRect; SrcRect: TRect; Margins: TRect; Src: TBitmap32);
 function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;
 function AppPath: string;
 function MakeSuitableForFilename(const aInput: String): String;
@@ -173,6 +175,88 @@ begin
     end;
 end;
 
+procedure DrawNineSlice(Dst: TBitmap32; DstRect: TRect; SrcRect: TRect; Margins: TRect; Src: TBitmap32);
+type
+  TNineSliceRects = array[0..8] of TRect;
+var
+  SrcRects, DstRects: TNineSliceRects;
+  i: Integer;
+
+  function MakeNineSliceRects(aInput: TRect): TNineSliceRects;
+  var
+    VarWidth, VarHeight: Integer; // stores the non-margin width and height
+    i: Integer;
+  begin
+    VarWidth := aInput.Width - (Margins.Left + Margins.Right);
+    VarHeight := aInput.Height - (Margins.Top + Margins.Bottom);
+
+    Result[0] := SizedRect(0, 0, Margins.Left, Margins.Top);
+    Result[1] := SizedRect(Margins.Left, 0, VarWidth, Margins.Top);
+    Result[2] := SizedRect(Margins.Left + VarWidth, 0, Margins.Right, Margins.Top);
+
+    Result[3] := SizedRect(0, Margins.Top, Margins.Left, VarHeight);
+    Result[4] := SizedRect(Margins.Left, Margins.Top, VarWidth, VarHeight);
+    Result[5] := SizedRect(Margins.Left + VarWidth, Margins.Top, Margins.Right, VarHeight);
+
+    Result[6] := SizedRect(0, Margins.Top + VarHeight, Margins.Left, Margins.Bottom);
+    Result[7] := SizedRect(Margins.Left, Margins.Top + VarHeight, VarWidth, Margins.Bottom);
+    Result[8] := SizedRect(Margins.Left + VarWidth, Margins.Top + VarHeight, Margins.Right, Margins.Bottom);
+
+    for i := 0 to 8 do
+      Result[i].Offset(aInput.Left, aInput.Top);
+  end;
+
+  procedure DrawTiled(TotalSrcRect, TotalDstRect: TRect);
+  var
+    CountX, CountY: Integer;
+    iX, iY: Integer;
+    SrcRect, DstRect: TRect;
+  begin
+    if (TotalSrcRect.Width <= 0) or (TotalSrcRect.Height <= 0) or
+       (TotalDstRect.Width <= 0) or (TotalDstRect.Height <= 0) then
+      Exit;
+
+    CountX := (TotalDstRect.Width - 1) div TotalSrcRect.Width;
+    CountY := (TotalDstRect.Height - 1) div TotalSrcRect.Height;
+
+    for iY := 0 to CountY do
+    begin
+      SrcRect := TotalSrcRect;
+      DstRect := SizedRect(TotalDstRect.Left, TotalDstRect.Top + (iY * TotalSrcRect.Height), TotalSrcRect.Width, TotalSrcRect.Height);
+
+      if iY = CountY then
+      begin
+        DstRect := SizedRect(DstRect.Left, DstRect.Top, DstRect.Width, ((TotalDstRect.Height - 1) mod TotalSrcRect.Height) + 1);
+        SrcRect := SizedRect(SrcRect.Left, SrcRect.Top, DstRect.Width, DstRect.Height);
+      end;
+
+      for iX := 0 to CountX do
+      begin
+        if iX = CountX then
+        begin
+          DstRect := SizedRect(DstRect.Left, DstRect.Top, ((TotalDstRect.Width - 1) mod TotalSrcRect.Width) + 1, DstRect.Height);
+          SrcRect := SizedRect(SrcRect.Left, SrcRect.Top, DstRect.Width, DstRect.Height);
+        end;
+
+        Src.DrawTo(Dst, DstRect, SrcRect);
+
+        DstRect.Offset(TotalSrcRect.Width, 0);
+      end;
+    end;
+  end;
+
+begin
+  if (DstRect.Width = SrcRect.Width) and (DstRect.Height = SrcRect.Height) then
+    Src.DrawTo(Dst, DstRect.Left, DstRect.Top) // save processing time
+  else begin
+    SrcRects := MakeNineSliceRects(SrcRect);
+    DstRects := MakeNineSliceRects(DstRect);
+
+    for i := 0 to 8 do
+      DrawTiled(SrcRects[i], DstRects[i]);
+  end;
+end;
+
 function CalcFrameRect(Bmp: TBitmap32; FrameCount, FrameIndex: Integer): TRect;
 var
   Y, H, W: Integer;
@@ -212,6 +296,10 @@ var
   sx, sy: Integer;
 begin
   Clear;
+
+  if (Src.Width = 0) or (Src.Height = 0) or (Frames = 0) then
+    Exit;
+
   w := Src.Width;
   h := Src.Height div Frames;
   sx := 0;

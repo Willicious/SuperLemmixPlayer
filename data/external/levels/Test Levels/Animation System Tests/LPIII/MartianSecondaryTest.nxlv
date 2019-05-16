@@ -1,0 +1,117 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Martian Secondary Animation Test
+ AUTHOR 
+ ID x4513286D1C638F3B
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_martian
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+   DISARMER    5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_martian
+   PIECE      exit_locked
+   X         24
+   Y         67
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_martian
+   PIECE      trap
+   X        124
+   Y         70
+   NO_OVERWRITE
+ $END
+ 
+ $OBJECT
+   COLLECTION namida_martian
+   PIECE      window
+   X         72
+   Y         44
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      button
+   X        180
+   Y         90
+   NO_OVERWRITE
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_martian
+   PIECE      supports_05
+   X   117
+   Y    93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_martian
+   PIECE      supports_05
+   X   157
+   Y    93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_martian
+   PIECE      supports_05
+   X   149
+   Y    93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_martian
+   PIECE      supports_05
+   X    85
+   Y    93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_martian
+   PIECE      supports_05
+   X    53
+   Y    93
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_martian
+   PIECE      supports_05
+   X    29
+   Y    93
+   ONE_WAY
+ $END
+ 
+ 

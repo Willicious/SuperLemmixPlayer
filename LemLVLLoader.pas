@@ -332,6 +332,7 @@ begin
         14: O.Skill := Integer(spbStacker);
         15: O.Skill := Integer(spbCloner);
         16: O.Skill := Integer(spbFencer);
+        17: O.Skill := Integer(spbShimmier);
         // else raise exception?
       end;
     end;
@@ -772,8 +773,6 @@ begin
                  Obj.DrawingFlags := Obj.DrawingFlags or odf_Rotate;
                Obj.Skill := O.SValue mod 16;
 
-               Obj.DrawAsZombie := false;
-
                InteractiveObjects.Add(Obj);
              end;
            end;
@@ -968,7 +967,6 @@ begin
         Obj.Free;
         Continue;
       end;
-      Obj.DrawAsZombie := false;
 
       InteractiveObjects.Add(Obj);
     end;
@@ -1182,7 +1180,6 @@ begin
         Continue;
       end;
       Obj.Skill := O.SValue mod 16;
-      Obj.DrawAsZombie := false;
 
       InteractiveObjects.Add(Obj);
     end;
