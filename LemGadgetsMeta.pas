@@ -278,10 +278,10 @@ begin
       else
         NewSec.AddLine('initial_frame', Sec.LineNumeric['initial_frame']); // more accurate name, and it's what animations use
 
-      NewSec.AddLine('cut_top', Sec.LineNumeric['cut_top']);
-      NewSec.AddLine('cut_right', Sec.LineNumeric['cut_right']);
-      NewSec.AddLine('cut_bottom', Sec.LineNumeric['cut_bottom']);
-      NewSec.AddLine('cut_left', Sec.LineNumeric['cut_left']);
+      NewSec.AddLine('nine_slice_top', Sec.LineNumeric['nine_slice_top']);
+      NewSec.AddLine('nine_slice_right', Sec.LineNumeric['nine_slice_right']);
+      NewSec.AddLine('nine_slice_bottom', Sec.LineNumeric['nine_slice_bottom']);
+      NewSec.AddLine('nine_slice_left', Sec.LineNumeric['nine_slice_left']);
     end;
 
     NewAnim := TGadgetAnimation.Create(0, 0);
