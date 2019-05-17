@@ -1066,8 +1066,8 @@ end;
 
 procedure TRenderer.PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32);
 const
-  MIN_WIDTH = 8;
-  MIN_HEIGHT = 8;
+  MIN_WIDTH = 1;
+  MIN_HEIGHT = 1;
 var
   DataBoundsRect: TRect;
   BMP: TBitmap32;
