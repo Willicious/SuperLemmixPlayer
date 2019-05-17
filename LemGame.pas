@@ -3888,6 +3888,11 @@ begin
   begin
     Transition(L, baFalling)
   end
+  // On the first frame, check as well for height 9, as the shimmier may not continue in that case
+  else if (L.LemPhysicsFrame = 1) and HasPixelAt(L.LemX, L.LemY - 9) then
+  begin
+    Transition(L, baFalling)
+  end
   // Check whether we can reach the ceiling
   else if emptyPixels <= MovementList[L.LemPhysicsFrame] then
   begin
