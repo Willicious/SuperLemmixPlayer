@@ -461,22 +461,6 @@ const
     if TriggerEffectBase in DISARMED_OBJECT_TYPES then
       Result := TriggerEffectBase = DOM_NONE;
   end;
-
-  function CheckDirectionFlag(aRight: Boolean): Boolean;
-  begin
-    Result := false;
-    if TriggerEffectBase in DIRECTION_OBJECT_TYPES then
-    begin
-      // We test for LEFT here. It gets inverted later if aRight = true.
-      case TriggerEffectBase of
-        DOM_FLIPPER: Result := CurrentFrame = 0;
-        DOM_WINDOW: Result := IsFlipPhysics;
-      end;
-
-      if aRight then
-        Result := not Result;
-    end;
-  end;
 begin
   case aFlag of
     gatcUnconditional: Result := true;
@@ -484,8 +468,6 @@ begin
     gatcBusy: Result := CheckBusyFlag;
     gatcDisabled: Result := CheckDisabledFlag;
     gatcDisarmed: Result := CheckDisarmedFlag;
-    gatcLeft: Result := CheckDirectionFlag(false);
-    gatcRight: Result := CheckDirectionFlag(true);
     else raise Exception.Create('TGadget.GetAnimFlagState passed an invalid param.');
   end;
 end;
