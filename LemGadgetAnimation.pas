@@ -18,7 +18,7 @@ type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
 
   TGadgetAnimationTriggerCondition = (gatcUnconditional, gatcReady, gatcBusy, gatcDisabled,
-                                      gatcDisarmed, gatcLeft, gatcRight, gatcExhausted);
+                                      gatcDisarmed, gatcExhausted);
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
   TGadgetAnimationTriggerConditionArray = array[TGadgetAnimationTriggerCondition] of TGadgetAnimationTriggerState;
 
@@ -411,10 +411,10 @@ begin
   fOffsetX := aSegment.LineNumeric['offset_x'];
   fOffsetY := aSegment.LineNumeric['offset_y'];
 
-  fCutTop := aSegment.LineNumeric['cut_top'];
-  fCutRight := aSegment.LineNumeric['cut_right'];
-  fCutBottom := aSegment.LineNumeric['cut_bottom'];
-  fCutLeft := aSegment.LineNumeric['cut_left'];
+  fCutTop := aSegment.LineNumeric['nine_slice_top'];
+  fCutRight := aSegment.LineNumeric['nine_slice_right'];
+  fCutBottom := aSegment.LineNumeric['nine_slice_bottom'];
+  fCutLeft := aSegment.LineNumeric['nine_slice_left'];
 
   BaseTrigger := TGadgetAnimationTrigger.Create;
 
@@ -791,8 +791,6 @@ begin
   else if S = 'BUSY' then fCondition := gatcBusy
   else if S = 'DISABLED' then fCondition := gatcDisabled
   else if S = 'DISARMED' then fCondition := gatcDisarmed
-  else if S = 'LEFT' then fCondition := gatcLeft
-  else if S = 'RIGHT' then fCondition := gatcRight
   else if S = 'EXHAUSTED' then fCondition := gatcExhausted
   else fCondition := gatcUnconditional;
 
