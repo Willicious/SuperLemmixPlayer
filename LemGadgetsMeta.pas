@@ -271,12 +271,7 @@ begin
       if Sec.Line['horizontal_strip'] <> nil then
         NewSec.AddLine('horizontal_strip');
 
-      if Sec.Line['random_start_frame'] <> nil then
-        NewSec.AddLine('initial_frame', -1)
-      else if Sec.Line['initial_frame'] = nil then
-        NewSec.AddLine('initial_frame', Sec.LineNumeric['preview_frame'])  // backwards-compatible
-      else
-        NewSec.AddLine('initial_frame', Sec.LineNumeric['initial_frame']); // more accurate name, and it's what animations use
+      NewSec.AddLine('initial_frame', Sec.LineTrimString['initial_frame']); // using LineTrimString in case it's "RANDOM"
 
       NewSec.AddLine('nine_slice_top', Sec.LineNumeric['nine_slice_top']);
       NewSec.AddLine('nine_slice_right', Sec.LineNumeric['nine_slice_right']);

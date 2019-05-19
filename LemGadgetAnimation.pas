@@ -382,7 +382,10 @@ begin
   else
     fZIndex := aSegment.LineNumeric['z_index'];
 
-  fStartFrameIndex := aSegment.LineNumeric['initial_frame'];
+  if Uppercase(aSegment.LineTrimString['initial_frame']) = 'RANDOM' then
+    fStartFrameIndex := -1
+  else
+    fStartFrameIndex := aSegment.LineNumeric['initial_frame'];
 
   if fHorizontalStrip then
   begin
