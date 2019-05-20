@@ -125,7 +125,6 @@ type
 
     function GetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption): Boolean;
     procedure SetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption; aValue: Boolean);
-    procedure SetCurrentLevelToBestMatch(aPattern: String);
 
     procedure LoadFromIniFile;
     procedure SaveToIniFile;
@@ -172,6 +171,8 @@ type
 
     procedure Save;
     procedure Load;
+
+    procedure SetCurrentLevelToBestMatch(aPattern: String);
 
     procedure SetLevel(aLevel: TNeoLevelEntry);
     procedure NextLevel(aCanCrossRank: Boolean = false);
@@ -614,7 +615,8 @@ begin
   // Tries to set the exact level. If the level is missing, try to set to
   // the rank it's supposedly in; or if that fails, the pack the rank is in,
   // etc. If there's no sane result whatsoever, do nothing.
-  // This is used for the LastActiveLevel setting in settings.ini only.
+  // This is used for the LastActiveLevel setting in settings.ini, and the
+  // -shortcut command line parameter.
 
   if not TPath.IsPathRooted(aPattern) then
     aPattern := AppPath + SFLevels + aPattern;

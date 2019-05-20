@@ -44,6 +44,12 @@ begin
   Param := Lowercase(ParamStr(1));
   Result := clrContinue;
 
+  if Param = 'shortcut' then
+  begin
+    GameParams.SetCurrentLevelToBestMatch(ParamStr(2));
+    Result := clrContinue;
+  end;
+
   if Param = 'test' then
   begin
     HandleTestMode;
