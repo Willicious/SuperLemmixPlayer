@@ -7,7 +7,7 @@ unit LemRendering;
 interface
 
 uses
-  SharedGlobals, // debug
+  Dialogs,
   System.Types,
   Classes, Math, Windows,
   GR32, GR32_Blend,
@@ -1962,6 +1962,8 @@ begin
   Gadgets.InitializeAnimations;
 end;
 
+var
+  LastErrorLemmingSprites: String;
 
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
@@ -1976,9 +1978,27 @@ begin
     fAni.ClearData;
     fAni.LemmingPrefix := fTheme.Lemmings;
     fAni.MaskingColor := fTheme.Colors[MASK_COLOR];
-    fAni.ReadData;
 
-    fRecolorer.LoadSwaps(fTheme.Lemmings);
+    try
+      fAni.ReadData;
+      fRecolorer.LoadSwaps(fTheme.Lemmings);
+    except
+      on E: Exception do
+      begin
+        fAni.ClearData;
+        fAni.LemmingPrefix := 'default';
+        fAni.ReadData;
+        fRecolorer.LoadSwaps('default');
+
+        if fTheme.Lemmings <> LastErrorLemmingSprites then
+        begin
+          LastErrorLemmingSprites := fTheme.Lemmings;
+          ShowMessage(E.Message + #13 + #13 + 'Falling back to default lemming sprites.');
+        end;
+      end;
+    end;
+
+
 
     // Prepare the bitmaps
     fLayers.Prepare(RenderInfoRec.Level.Info.Width, RenderInfoRec.Level.Info.Height);
