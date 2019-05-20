@@ -573,6 +573,7 @@ procedure TDosGameParams.SetCurrentLevelToBestMatch(aPattern: String);
 type
   TMatchType = (mtNone, mtPartial, mtFull);
 var
+  DeepestMatchGroup: TNeoLevelGroup;
   MatchGroup: TNeoLevelGroup;
   MatchLevel: TNeoLevelEntry;
 
@@ -604,6 +605,8 @@ var
   function RecursiveSearch(aPack: TNeoLevelGroup): TNeoLevelEntry;
   begin
     Result := nil;
+    DeepestMatchGroup := aPack;
+
     case GetLongestMatchIn(aPack) of
       //mtNone: Result of "nil" sticks
       mtPartial: Result := RecursiveSearch(MatchGroup);
@@ -622,7 +625,9 @@ begin
   MatchLevel := RecursiveSearch(BaseLevelPack);
 
   if (MatchLevel <> nil) then
-    SetLevel(MatchLevel);
+    SetLevel(MatchLevel)
+  else if (DeepestMatchGroup <> nil) then
+    SetLevel(DeepestMatchGroup.FirstUnbeatenLevelRecursive);
 end;
 
 procedure TDosGameParams.SetGroup(aGroup: TNeoLevelGroup);
