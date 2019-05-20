@@ -412,7 +412,7 @@ var
   SrcRec: TGadgetVariableProperties;
   DstRec: PGadgetVariableProperties;
 const
-  NO_POSITION_ADJUST = [7, 8, 19]; // OWL, OWR, OWD arrows
+  NO_POSITION_ADJUST = [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP];
 
   procedure Clone(Src, Dst: PGadgetVariableProperties);
   var
