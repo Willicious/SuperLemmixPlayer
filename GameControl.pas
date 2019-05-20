@@ -132,9 +132,6 @@ type
 
     function GetCurrentGroupName: String;
   public
-    // this is initialized by appcontroller
-    MainDatFile  : string;
-
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;
