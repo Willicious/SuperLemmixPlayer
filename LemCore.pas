@@ -112,11 +112,13 @@ type
     spbFastForward,
     spbRestart,
     spbBackOneFrame,
-    spbForwardOneFrame,
-    spbClearPhysics,
     spbDirLeft,
-    spbLoadReplay,
-    spbDirRight  // because of special handling to draw it, it's not immediately after spbDirLeft in the list
+    spbClearPhysics,
+
+    // These three are the bottom part of a vertical split
+    spbForwardOneFrame,
+    spbDirRight,
+    spbLoadReplay
   );
 
 const

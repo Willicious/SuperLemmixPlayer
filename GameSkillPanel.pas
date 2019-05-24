@@ -119,11 +119,9 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbForwardOneFrame;
-  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics;
-  //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 7] := spbDirLeft; // includes spbDirRight
-  //Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 8] := spbLoadReplay;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
 end;
 
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
