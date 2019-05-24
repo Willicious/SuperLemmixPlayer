@@ -591,7 +591,7 @@ begin
       if SkillCount[SkillIndex] > 100 then SkillCount[SkillIndex] := 100;
       if SkillIndex in Skillset then Inc(SkillNumber);
 
-      if (SkillNumber > 8) or not (SkillIndex in Skillset) then
+      if (SkillNumber > MAX_SKILL_TYPES_PER_LEVEL) or not (SkillIndex in Skillset) then
       begin
         SkillCount[SkillIndex] := 0;
         Exclude(fSkillset, SkillIndex);

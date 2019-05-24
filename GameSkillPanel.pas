@@ -112,17 +112,17 @@ begin
   SetLength(Result, 19);
   Result[0] := spbSlower;
   Result[1] := spbFaster;
-  for i := 2 to 9 do
+  for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL -1) do
     Result[i] := spbWalker; // placeholder for any skill
-  Result[10] := spbPause;
-  Result[11] := spbNuke;
-  Result[12] := spbFastForward;
-  Result[13] := spbRestart;
-  Result[14] := spbBackOneFrame;
-  Result[15] := spbForwardOneFrame;
-  Result[16] := spbClearPhysics;
-  Result[17] := spbDirLeft; // includes spbDirRight
-  Result[18] := spbLoadReplay;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbForwardOneFrame;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 7] := spbDirLeft; // includes spbDirRight
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 8] := spbLoadReplay;
 end;
 
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
@@ -205,11 +205,11 @@ begin
   SetLength(Result, 13);
   Result[0] := spbSlower;
   Result[1] := spbFaster;
-  for i := 2 to 9 do
+  for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL - 1) do
     Result[i] := spbWalker; // placeholder for any skill
-  Result[10] := spbPause;
-  Result[11] := spbNuke;
-  Result[12] := spbFastForward;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
 end;
 
 procedure TSkillPanelCompact.ResizeMinimapRegion(MinimapRegion: TBitmap32);

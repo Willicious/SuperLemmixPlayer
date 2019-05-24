@@ -77,23 +77,10 @@ type
     baShimmying
   );
 
-  {TSkillPanelButton = (
-    spbNone,
-    spbSlower,
-    spbFaster,
-    spbClimber,
-    spbFloater,
-    spbBomber,
-    spbBlocker,
-    spbBuilder,
-    spbBasher,
-    spbMiner,
-    spbDigger,
-    spbPause,
-    spbNuke,
-    spbWalker
-  );}
+const
+  MAX_SKILL_TYPES_PER_LEVEL = 8;
 
+type
   TSkillPanelButton = (
 
 

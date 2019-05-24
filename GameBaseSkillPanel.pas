@@ -161,7 +161,6 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_SKILL_ICONS = 17;
   NUM_FONT_CHARS = 45;
 
 const
@@ -356,7 +355,7 @@ end;
 
 function TBaseSkillPanel.LastSkillButtonIndex: Integer;
 begin
-  Result := (FirstSkillButtonIndex + 8) - 1; // we might want to use a CONST here, in case we later allow more than 8 skills per level
+  Result := (FirstSkillButtonIndex + MAX_SKILL_TYPES_PER_LEVEL) - 1;
 end;
 
 function TBaseSkillPanel.MinimapWidth: Integer;
