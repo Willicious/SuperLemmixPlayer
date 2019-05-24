@@ -370,7 +370,7 @@ type
     GameResultRec              : TGameResultsRec;
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
-    fActiveSkills              : array[0..7] of TSkillPanelButton;
+    fActiveSkills              : array[0..MAX_SKILL_TYPES_PER_LEVEL-1] of TSkillPanelButton;
     LastHitCount               : Integer;
     SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     ReplayInsert               : Boolean;
@@ -1071,7 +1071,7 @@ begin
   fSelectedSkill := spbNone;
   InitialSkill := spbNone;
 
-  for i := 0 to 7 do
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL-1 do
     fActiveSkills[i] := spbNone;
   i := 0;
   for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
@@ -1082,7 +1082,7 @@ begin
       fActiveSkills[i] := Skill;
       Inc(i);
 
-      if i = 8 then Break; // remove this if we ever allow more than 8 skill types per level
+      if i = MAX_SKILL_TYPES_PER_LEVEL then Break;
     end;
   end;
   if InitialSkill <> spbNone then
@@ -4616,8 +4616,8 @@ function TLemmingGame.GetSelectedSkill: Integer;
 var
   i: Integer;
 begin
-  Result := 8;
-  for i := 0 to 7 do
+  Result := -1;
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL do
     if fSelectedSkill = fActiveSkills[i] then
     begin
       Result := i;
@@ -4632,7 +4632,7 @@ procedure TLemmingGame.SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Bo
     i: Integer;
   begin
     Result := false;
-    for i := 0 to 7 do
+    for i := 0 to MAX_SKILL_TYPES_PER_LEVEL - 1 do
       if fActiveSkills[i] = Value then Result := true;
   end;
 begin
@@ -5335,7 +5335,7 @@ begin
   Assert(aAction in AssignableSkills, 'CheckSkillAvailable for not assignable skill');
 
   HasSkillButton := false;
-  for i := 0 to Length(fActiveSkills) - 1 do
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL - 1 do
     HasSkillButton := HasSkillButton or (fActiveSkills[i] = ActionToSkillPanelButton[aAction]);
 
   Result := HasSkillButton and (CurrSkillCount[aAction] > 0);

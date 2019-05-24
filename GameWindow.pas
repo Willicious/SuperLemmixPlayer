@@ -1318,12 +1318,12 @@ begin
       lka_SaveReplay: SaveReplay;
       lka_SkillRight: begin
                         sn := GetSelectedSkill;
-                        if (sn < 7) and (fActiveSkills[sn + 1] <> spbNone) then
+                        if (sn >= 0) and (sn < MAX_SKILL_TYPES_PER_LEVEL - 1) and (fActiveSkills[sn + 1] <> spbNone) then
                           SetSelectedSkill(fActiveSkills[sn + 1]);
                       end;
       lka_SkillLeft:  begin
                         sn := GetSelectedSkill;
-                        if (sn > 0) and (fActiveSkills[sn - 1] <> spbNone) and (sn <> 8) then
+                        if (sn > 0) and (fActiveSkills[sn - 1] <> spbNone) then
                           SetSelectedSkill(fActiveSkills[sn - 1]);
                       end;
       lka_Skip: if Game.Playing then
