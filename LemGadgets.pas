@@ -413,11 +413,13 @@ const
         Result := false
       else
         case TriggerEffectBase of
-          DOM_TRAP, DOM_LOCKEXIT, DOM_TELEPORT: Result := (CurrentFrame = 0);
+          DOM_EXIT: Result := RemainingLemmingsCount <> 0;
+          DOM_TRAP, DOM_TELEPORT: Result := (CurrentFrame = 0);
+          DOM_LOCKEXIT: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
           DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 1;
           DOM_PICKUP: Result := CurrentFrame <> 0;
           DOM_RECEIVER: Result := (CurrentFrame = 0) and (not HoldActive);
-          DOM_WINDOW: Result := (CurrentFrame = 0); // may make this do more in the future
+          DOM_WINDOW: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
         end;
     end;
   end;
