@@ -18,7 +18,7 @@ type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
 
   TGadgetAnimationTriggerCondition = (gatcUnconditional, gatcReady, gatcBusy, gatcDisabled,
-                                      gatcDisarmed);
+                                      gatcExhausted);
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
   TGadgetAnimationTriggerConditionArray = array[TGadgetAnimationTriggerCondition] of TGadgetAnimationTriggerState;
 
@@ -784,7 +784,7 @@ begin
   if      S = 'READY' then fCondition := gatcReady
   else if S = 'BUSY' then fCondition := gatcBusy
   else if S = 'DISABLED' then fCondition := gatcDisabled
-  else if S = 'DISARMED' then fCondition := gatcDisarmed
+  else if S = 'EXHAUSTED' then fCondition := gatcExhausted
   else fCondition := gatcUnconditional;
 
   fVisible := aSegment.Line['hide'] = nil;
