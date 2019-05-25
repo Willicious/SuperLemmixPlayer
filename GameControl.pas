@@ -14,7 +14,7 @@ uses
   LemNeoLevelPack,
   LemmixHotkeys,
   Math,
-  Dialogs, SysUtils, StrUtils, Classes, Forms, GR32,
+  Dialogs, SysUtils, StrUtils, IOUtils, Classes, Forms, GR32,
   LemVersion,
   LemTypes, LemLevel,
   LemDosStructures,
@@ -131,9 +131,6 @@ type
 
     function GetCurrentGroupName: String;
   public
-    // this is initialized by appcontroller
-    MainDatFile  : string;
-
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;
@@ -174,6 +171,8 @@ type
 
     procedure Save;
     procedure Load;
+
+    procedure SetCurrentLevelToBestMatch(aPattern: String);
 
     procedure SetLevel(aLevel: TNeoLevelEntry);
     procedure NextLevel(aCanCrossRank: Boolean = false);
@@ -264,6 +263,7 @@ end;
 procedure TDosGameParams.SaveToIniFile;
 var
   SL, SL2: TStringList;
+  LevelSavePath: String;
 
   procedure SaveBoolean(aLabel: String; aValue: Boolean; aValue2: Boolean = false);
   var
@@ -334,6 +334,11 @@ begin
 
   SaveBoolean('LinearResampleMenu', LinearResampleMenu);
   SaveBoolean('LinearResampleGame', LinearResampleGame);
+
+  LevelSavePath := CurrentLevel.Path;
+  if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
+    LevelSavePath := RightStr(LevelSavePath, Length(LevelSavePath) - Length(AppPath + SFLevels));
+  SL.Add('LastActiveLevel=' + LevelSavePath);
 
   SL.Add('');
   SL.Add('# Sound Options');
@@ -452,6 +457,8 @@ begin
   IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
   SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
 
+  SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
+
   //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
   //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
   EnableOnline := false;
@@ -558,6 +565,68 @@ begin
   end;
 
   ShownText := false;
+end;
+
+procedure TDosGameParams.SetCurrentLevelToBestMatch(aPattern: String);
+type
+  TMatchType = (mtNone, mtPartial, mtFull);
+var
+  DeepestMatchGroup: TNeoLevelGroup;
+  MatchGroup: TNeoLevelGroup;
+  MatchLevel: TNeoLevelEntry;
+
+  function GetLongestMatchIn(aPack: TNeoLevelGroup): TMatchType;
+  var
+    i: Integer;
+  begin
+    Result := mtNone;
+    MatchGroup := nil;
+    MatchLevel := nil;
+
+    for i := 0 to aPack.Children.Count-1 do
+      if ((MatchGroup = nil) or (Length(aPack.Children[i].Path) > Length(MatchGroup.Path))) and
+         (LeftStr(aPattern, Length(aPack.Children[i].Path)) = aPack.Children[i].Path) then
+      begin
+        Result := mtPartial;
+        MatchGroup := aPack.Children[i];
+      end;
+
+    for i := 0 to aPack.Levels.Count-1 do
+      if aPack.Levels[i].Path = aPattern then
+      begin
+        Result := mtFull;
+        MatchLevel := aPack.Levels[i];
+        Exit;
+      end;
+  end;
+
+  function RecursiveSearch(aPack: TNeoLevelGroup): TNeoLevelEntry;
+  begin
+    Result := nil;
+    DeepestMatchGroup := aPack;
+
+    case GetLongestMatchIn(aPack) of
+      //mtNone: Result of "nil" sticks
+      mtPartial: Result := RecursiveSearch(MatchGroup);
+      mtFull: Result := MatchLevel;
+    end;
+  end;
+begin
+  // Tries to set the exact level. If the level is missing, try to set to
+  // the rank it's supposedly in; or if that fails, the pack the rank is in,
+  // etc. If there's no sane result whatsoever, do nothing.
+  // This is used for the LastActiveLevel setting in settings.ini, and the
+  // -shortcut command line parameter.
+
+  if not TPath.IsPathRooted(aPattern) then
+    aPattern := AppPath + SFLevels + aPattern;
+
+  MatchLevel := RecursiveSearch(BaseLevelPack);
+
+  if (MatchLevel <> nil) then
+    SetLevel(MatchLevel)
+  else if (DeepestMatchGroup <> nil) then
+    SetLevel(DeepestMatchGroup.FirstUnbeatenLevelRecursive);
 end;
 
 procedure TDosGameParams.SetGroup(aGroup: TNeoLevelGroup);
