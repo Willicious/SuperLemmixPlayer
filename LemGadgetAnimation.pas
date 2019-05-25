@@ -765,10 +765,6 @@ begin
   if      S = 'READY' then fCondition := gatcReady
   else if S = 'BUSY' then fCondition := gatcBusy
   else if S = 'DISABLED' then fCondition := gatcDisabled
-<<<<<<< HEAD
-  else if S = 'DISARMED' then fCondition := gatcDisarmed
-=======
->>>>>>> master
   else if S = 'EXHAUSTED' then fCondition := gatcExhausted
   else fCondition := gatcUnconditional;
 
