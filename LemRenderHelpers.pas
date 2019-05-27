@@ -113,8 +113,8 @@ type
                  hpi_Exit, hpi_Fire, hpi_Trap, hpi_Trap_Disabled,
                  hpi_Flipper, hpi_Button, hpi_Force, hpi_Splat, hpi_Water,
                  hpi_FallDist,
-                 hpi_Skill_Zombie, hpi_Skill_Climber, hpi_Skill_Floater, hpi_Skill_Glider,
-                 hpi_Skill_Swimmer, hpi_Skill_Disarmer);
+                 hpi_Skill_Zombie, hpi_Skill_Neutral, hpi_Skill_Climber, hpi_Skill_Floater,
+                 hpi_Skill_Glider, hpi_Skill_Swimmer, hpi_Skill_Disarmer);
 
   THelperImages = array[Low(THelperIcon)..High(THelperIcon)] of TBitmap32;
 
@@ -223,6 +223,7 @@ const
                               'water.png',
                               'fall_distance.png',
                               'skill_zombie.png',
+                              'skill_neutral.png',
                               'skill_climber.png',
                               'skill_floater.png',
                               'skill_glider.png',
