@@ -7,7 +7,7 @@ object FLevelSelect: TFLevelSelect
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Level Select'
   ClientHeight = 480
-  ClientWidth = 640
+  ClientWidth = 690
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -89,8 +89,8 @@ object FLevelSelect: TFLevelSelect
     OnClick = tvLevelSelectClick
   end
   object btnCancel: TButton
-    Left = 560
-    Top = 448
+    Left = 598
+    Top = 446
     Width = 75
     Height = 25
     Caption = 'Cancel'
@@ -98,9 +98,9 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 1
   end
   object btnOK: TButton
-    Left = 477
-    Top = 447
-    Width = 75
+    Left = 544
+    Top = 446
+    Width = 48
     Height = 25
     Caption = 'OK'
     TabOrder = 2
@@ -109,7 +109,7 @@ object FLevelSelect: TFLevelSelect
   object pnLevelInfo: TPanel
     Left = 296
     Top = 128
-    Width = 329
+    Width = 377
     Height = 313
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
@@ -117,7 +117,7 @@ object FLevelSelect: TFLevelSelect
     object imgLevel: TImage32
       Left = 0
       Top = 0
-      Width = 329
+      Width = 377
       Height = 312
       Bitmap.ResamplerClassName = 'TNearestResampler'
       BitmapAlign = baCenter
@@ -127,13 +127,22 @@ object FLevelSelect: TFLevelSelect
     end
   end
   object btnAddContent: TButton
-    Left = 288
-    Top = 448
-    Width = 161
+    Left = 296
+    Top = 446
+    Width = 121
     Height = 25
     Caption = 'Add Content To List'
     TabOrder = 4
     OnClick = btnAddContentClick
+  end
+  object btnMakeShortcut: TButton
+    Left = 436
+    Top = 446
+    Width = 85
+    Height = 25
+    Caption = 'Create Shortcut'
+    TabOrder = 5
+    OnClick = btnMakeShortcutClick
   end
   object ilStatuses: TImageList
   end

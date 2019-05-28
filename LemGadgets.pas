@@ -395,10 +395,8 @@ const
     [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
   DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
     [DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
-  DISARMED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_TRAP, DOM_TRAPONCE];
-  DIRECTION_OBJECT_TYPES = // Any object not listed here, always returns false. This is used for both gatcLeft and gatcRight.
-    [DOM_FLIPPER, DOM_WINDOW];
+  EXHAUSTED_OBJECT_TYPES = // Any object not listed here, always returns false
+    [DOM_BUTTON, DOM_PICKUP, DOM_TRAPONCE];
 
   function CheckReadyFlag: Boolean;
   begin
@@ -452,11 +450,13 @@ const
     end;
   end;
 
-  function CheckDisarmedFlag: Boolean;
+  function CheckExhaustedFlag: Boolean;
   begin
     Result := false;
-    if TriggerEffectBase in DISARMED_OBJECT_TYPES then
-      Result := TriggerEffectBase = DOM_NONE;
+    if TriggerEffectBase in EXHAUSTED_OBJECT_TYPES then
+      case TriggerEffectBase of
+        DOM_BUTTON, DOM_PICKUP, DOM_TRAPONCE: Result := CurrentFrame = 0;
+      end;
   end;
 begin
   case aFlag of
@@ -464,7 +464,7 @@ begin
     gatcReady: Result := CheckReadyFlag;
     gatcBusy: Result := CheckBusyFlag;
     gatcDisabled: Result := CheckDisabledFlag;
-    gatcDisarmed: Result := CheckDisarmedFlag;
+    gatcExhausted: Result := CheckExhaustedFlag;
     else raise Exception.Create('TGadget.GetAnimFlagState passed an invalid param.');
   end;
 end;

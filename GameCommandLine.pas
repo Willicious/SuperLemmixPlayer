@@ -44,6 +44,12 @@ begin
   Param := Lowercase(ParamStr(1));
   Result := clrContinue;
 
+  if Param = 'shortcut' then
+  begin
+    GameParams.SetCurrentLevelToBestMatch(ParamStr(2));
+    Result := clrContinue;
+  end;
+
   if Param = 'test' then
   begin
     HandleTestMode;
@@ -135,8 +141,6 @@ var
 
     Width, Height, ExtraWidth, ExtraHeight: Integer;
     Accessor: TGadgetMetaAccessor;
-
-    SL: TStringList;
   begin
     PieceIdentifier := LineValues[1];
     Theme := LineValues.Values['THEME'];
@@ -245,88 +249,8 @@ var
 
     ForceDirectories(ExtractFilePath(DstFile));
     TPngInterface.SavePngFile(DstFile, Dst);
-
-    if LineValues.Values['INFO_FILE'] <> '' then
-    begin
-      SL := TStringList.Create;
-      try
-        SL.Add('OFFSET_LEFT ' + IntToStr(PhysRect.Left));
-        SL.Add('OFFSET_TOP ' + IntToStr(PhysRect.Top));
-        SL.Add('OFFSET_RIGHT ' + IntToStr(AnimRect.Right - PhysRect.Right));
-        SL.Add('OFFSET_BOTTOM ' + IntToStr(AnimRect.Bottom - PhysRect.Bottom));
-        ForceDirectories(ExtractFilePath(RootPath(LineValues.Values['INFO_FILE'])));
-        SL.SaveToFile(RootPath(LineValues.Values['INFO_FILE']));
-      finally
-        SL.Free;
-      end;
-    end;
   end;
 
-  procedure AddEditorStyle(aStyleName: String);
-  var
-    SearchRec: TSearchRec;
-    MetaInfo: TGadgetMetaInfo;
-    Accessor: TGadgetMetaAccessor;
-    OutputDst: String;
-  begin
-    if not DirectoryExists(AppPath + 'styles\' + aStyleName) then
-      Exit;
-
-    if FindFirst(AppPath + 'styles\' + aStyleName + '\objects\*.nxmo', 0, SearchRec) = 0 then
-    begin
-      repeat
-        MetaInfo := PieceManager.Objects[aStyleName + ':' + ChangeFileExt(SearchRec.Name, '')];
-        Accessor := MetaInfo.GetInterface(false, false, false);
-
-        // Detect if the editor actually needs this object pre-rendered.
-        if (Accessor.Animations.Count = 1) and
-           (Accessor.Animations.PrimaryAnimation.Color = '') then
-          Continue;
-
-        // Detect pieces the editor doesn't support pre-rendering of.
-        if (LowerCase(MetaInfo.Identifier) = 'default:pickup') or
-           (MetaInfo.TriggerEffect in [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP]) or
-           (Accessor.Animations.PrimaryAnimation.CutRect <> Rect(0, 0, 0, 0)) then
-          Continue;
-
-        OutputDst := AppPath + 'editor\render\' + aStyleName + '\objects\' + MetaInfo.Piece;
-        SL.Add('OBJECT|' + MetaInfo.Identifier + '|OUTPUT=' + OutputDst + '.png|INFO_FILE=' + OutputDst + '.nxmo');
-      until FindNext(SearchRec) <> 0;
-      FindClose(SearchRec);
-    end;
-  end;
-
-  procedure AddEditorAllStyles;
-  var
-    SearchRec: TSearchRec;
-  begin
-    if FindFirst(AppPath + 'styles\*', faDirectory, SearchRec) = 0 then
-    begin
-      repeat
-        if (SearchRec.Attr and faDirectory = 0) or
-           (SearchRec.Name = '..') or
-           (SearchRec.Name = '.') then
-          Continue;
-
-        AddEditorStyle(SearchRec.Name);
-
-        PieceManager.Tidy;
-      until FindNext(SearchRec) <> 0;
-      FindClose(SearchRec);
-    end;
-  end;
-
-  procedure AddEditorParamStyles;
-  var
-    i: Integer;
-  begin
-    i := 3;
-    while ParamStr(i) <> '' do
-    begin
-      AddEditorStyle(ParamStr(i));
-      Inc(i);
-    end;
-  end;
 begin
   InitializeNoGuiMode;
 
@@ -339,13 +263,7 @@ begin
 
     if ParamStr(2) = '-listfile' then
       SL.LoadFromFile(ParamStr(3))
-    else if ParamStr(2) = '-editor' then
-    begin
-      if ParamStr(3) = '' then
-        AddEditorAllStyles
-      else
-        AddEditorParamStyles;
-    end else begin
+    else begin
       i := 2;
       while ParamStr(i) <> '' do
       begin
