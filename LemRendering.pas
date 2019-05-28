@@ -1127,11 +1127,11 @@ var
 
       if (Terrain.DrawingFlags and tdf_Rotate) = 0 then
       begin
-        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Width;
-        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Height;
+        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Width[false, false, false];
+        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Height[false, false, false];
       end else begin
-        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Height;
-        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Width;
+        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Height[false, false, false];
+        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Width[false, false, false];
       end;
 
       if HasFoundNonEraserTerrain then
