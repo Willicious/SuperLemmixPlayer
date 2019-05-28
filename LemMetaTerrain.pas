@@ -227,8 +227,20 @@ procedure TMetaTerrain.DeriveVariation(Flip, Invert, Rotate: Boolean);
 var
   i: Integer;
   BMP: TBitmap32;
+
+  procedure CloneFromStandard;
+  var
+    GfxBmp, PhysBmp: TBitmap32;
+  begin
+    GfxBmp := fVariableInfo[i].GraphicImage;
+    PhysBmp := fVariableInfo[i].PhysicsImage;
+    fVariableInfo[i] := fVariableInfo[0];
+    fVariableInfo[i].GraphicImage := GfxBmp;
+    fVariableInfo[i].PhysicsImage := PhysBmp;
+  end;
 begin
   i := GetImageIndex(Flip, Invert, Rotate);
+  CloneFromStandard;
 
   if fVariableInfo[i].GraphicImage = nil then fVariableInfo[i].GraphicImage := TBitmap32.Create;
   BMP := fVariableInfo[i].GraphicImage;
