@@ -101,30 +101,29 @@ procedure TMetaTerrain.Load(aCollection, aPiece: String);
 var
   Parser: TParser;
 begin
+  ClearImages;
 
-    ClearImages;
+  if not DirectoryExists(AppPath + SFStyles + aCollection + SFPiecesTerrain) then
+    raise Exception.Create('TMetaTerrain.Load: Collection "' + aCollection + '" does not exist or lacks terrain.');
+  SetCurrentDir(AppPath + SFStyles + aCollection + SFPiecesTerrain);
 
-    if not DirectoryExists(AppPath + SFStyles + aCollection + SFPiecesTerrain) then
-      raise Exception.Create('TMetaTerrain.Load: Collection "' + aCollection + '" does not exist or lacks terrain.');
-    SetCurrentDir(AppPath + SFStyles + aCollection + SFPiecesTerrain);
+  fGS := Lowercase(aCollection);
+  fPiece := Lowercase(aPiece);
 
-    fGS := Lowercase(aCollection);
-    fPiece := Lowercase(aPiece);
-
-    if FileExists(aPiece + '.nxmt') then
-    begin
-      Parser := TParser.Create;
-      try
-        Parser.LoadFromFile(aPiece + '.nxmt');
-        fIsSteel := Parser.MainSection.Line['steel'] <> nil;
-      finally
-        Parser.Free;
-      end;
+  if FileExists(aPiece + '.nxmt') then
+  begin
+    Parser := TParser.Create;
+    try
+      Parser.LoadFromFile(aPiece + '.nxmt');
+      fIsSteel := Parser.MainSection.Line['steel'] <> nil;
+    finally
+      Parser.Free;
     end;
+  end;
 
-    TPngInterface.LoadPngFile(aPiece + '.png', fVariableInfo[0].GraphicImage);
-    GenerateStandardPhysicsImage;
-    fGeneratedVariableInfo[0] := true;
+  TPngInterface.LoadPngFile(aPiece + '.png', fVariableInfo[0].GraphicImage);
+  GenerateStandardPhysicsImage;
+  fGeneratedVariableInfo[0] := true;
 end;
 
 procedure TMetaTerrain.ClearImages;
