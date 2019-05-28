@@ -13,46 +13,54 @@ const
   ALIGNMENT_COUNT = 8; // 8 possible combinations of Flip + Invert + Rotate
 
 type
+  TTerrainVariableProperties = record // For properties that vary based on flip / invert
+    GraphicImage:     TBitmap32;
+    PhysicsImage:     TBitmap32;
+  end;
+  PTerrainVariableProperties = ^TTerrainVariableProperties;
 
- TMetaTerrain = class
-  private
-    fGS    : String;
-    fPiece  : String;
-    fWidth          : Integer;
-    fHeight         : Integer;
-    fIsSteel        : Boolean;
-    fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
-    function GetIdentifier: String;
-    function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
-    function GetGraphicImage(Flip, Invert, Rotate: Boolean): TBitmap32;
-    function GetPhysicsImage(Flip, Invert, Rotate: Boolean): TBitmap32;
-    procedure EnsureImageMade(Flip, Invert, Rotate: Boolean);
-    procedure DeriveGraphicImage(Flip, Invert, Rotate: Boolean);
-    procedure DerivePhysicsImage(Flip, Invert, Rotate: Boolean);
-  protected
-    fGraphicImages: array[0..ALIGNMENT_COUNT-1] of TBitmap32;
-    fPhysicsImages: array[0..ALIGNMENT_COUNT-1] of TBitmap32;
-    fGeneratedGraphicImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
-    fGeneratedPhysicsImage: array[0..ALIGNMENT_COUNT-1] of Boolean;  
-    procedure GenerateGraphicImage; virtual;
-    procedure GeneratePhysicsImage; virtual;
-  public
-    constructor Create;
-    destructor Destroy; override;
-    procedure SetGraphic(aImage: TBitmap32);
-    procedure ClearImages;
+  TTerrainMetaProperty = (tv_Width, tv_Height);
+                         // Integer properties only.
 
-    procedure Load(aCollection, aPiece: String); virtual;
+   TMetaTerrain = class
+    private
+      fGS    : String;
+      fPiece  : String;
 
-    property Identifier : String read GetIdentifier;
-    property GraphicImage[Flip, Invert, Rotate: Boolean]: TBitmap32 read GetGraphicImage;
-    property PhysicsImage[Flip, Invert, Rotate: Boolean]: TBitmap32 read GetPhysicsImage;
-    property GS     : String read fGS write fGS;
-    property Piece  : String read fPiece write fPiece;
-    property Width         : Integer read fWidth write fWidth;
-    property Height        : Integer read fHeight write fHeight;
-    property IsSteel       : Boolean read fIsSteel write fIsSteel;
-    property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
+      fVariableInfo: array[0..ALIGNMENT_COUNT-1] of TTerrainVariableProperties;
+      fGeneratedVariableInfo: array[0..ALIGNMENT_COUNT-1] of Boolean;
+
+      fIsSteel        : Boolean;
+      fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
+
+      function GetIdentifier: String;
+      function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
+      function GetGraphicImage(Flip, Invert, Rotate: Boolean): TBitmap32;
+      function GetPhysicsImage(Flip, Invert, Rotate: Boolean): TBitmap32;
+      procedure EnsureVariationMade(Flip, Invert, Rotate: Boolean);
+      procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
+
+      function GetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty): Integer;
+      procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty; const aValue: Integer);
+
+      procedure GenerateStandardPhysicsImage;
+    public
+      constructor Create;
+      destructor Destroy; override;
+      procedure SetGraphic(aImage: TBitmap32);
+      procedure ClearImages;
+
+      procedure Load(aCollection, aPiece: String);
+
+      property Identifier : String read GetIdentifier;
+      property GraphicImage[Flip, Invert, Rotate: Boolean]: TBitmap32 read GetGraphicImage;
+      property PhysicsImage[Flip, Invert, Rotate: Boolean]: TBitmap32 read GetPhysicsImage;
+      property GS     : String read fGS write fGS;
+      property Piece  : String read fPiece write fPiece;
+      property Width[Flip, Invert, Rotate: Boolean] : Integer index tv_Width read GetVariableProperty;
+      property Height[Flip, Invert, Rotate: Boolean]: Integer index tv_Height read GetVariableProperty;
+      property IsSteel       : Boolean read fIsSteel write fIsSteel;
+      property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
   end;
 
   TMetaTerrains = class(TObjectList)
@@ -73,8 +81,8 @@ implementation
 constructor TMetaTerrain.Create;
 begin
   inherited;
-  fGraphicImages[0] := TBitmap32.Create;
-  fPhysicsImages[0] := TBitmap32.Create;
+  fVariableInfo[0].GraphicImage := TBitmap32.Create;
+  fVariableInfo[0].PhysicsImage := TBitmap32.Create;
 end;
 
 destructor TMetaTerrain.Destroy;
@@ -83,8 +91,8 @@ var
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    fGraphicImages[i].Free;
-    fPhysicsImages[i].Free;
+    fVariableInfo[i].GraphicImage.Free;
+    fVariableInfo[i].PhysicsImage.Free;
   end;
   inherited;
 end;
@@ -114,8 +122,9 @@ begin
       end;
     end;
 
-    TPngInterface.LoadPngFile(aPiece + '.png', fGraphicImages[0]);
-    fGeneratedGraphicImage[0] := true;
+    TPngInterface.LoadPngFile(aPiece + '.png', fVariableInfo[0].GraphicImage);
+    GenerateStandardPhysicsImage;
+    fGeneratedVariableInfo[0] := true;
 end;
 
 procedure TMetaTerrain.ClearImages;
@@ -124,18 +133,31 @@ var
 begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
-    if fGraphicImages[i] <> nil then fGraphicImages[i].Clear;
-    if fPhysicsImages[i] <> nil then fPhysicsImages[i].Clear;
-    fGeneratedGraphicImage[i] := false;
-    fGeneratedPhysicsImage[i] := false;
+    if fVariableInfo[i].GraphicImage <> nil then fVariableInfo[i].GraphicImage.Clear;
+    if fVariableInfo[i].PhysicsImage <> nil then fVariableInfo[i].PhysicsImage.Clear;
+    fGeneratedVariableInfo[i] := false;
   end;
 end;
 
 procedure TMetaTerrain.SetGraphic(aImage: TBitmap32);
 begin
   ClearImages;
-  fGraphicImages[0].Assign(aImage);
-  fGeneratedGraphicImage[0] := true;
+  fVariableInfo[0].GraphicImage.Assign(aImage);
+  GenerateStandardPhysicsImage;
+  fGeneratedVariableInfo[0] := true;
+end;
+
+procedure TMetaTerrain.SetVariableProperty(Flip, Invert, Rotate: Boolean;
+  Index: TTerrainMetaProperty; const aValue: Integer);
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  with fVariableInfo[GetImageIndex(Flip, Invert, Rotate)] do
+  begin
+    case Index of
+      tv_Width: ; // remove this later, it's just here so the "else" doesn't give a syntax error
+      else raise Exception.Create('TMetaTerrain.SetVariableProperty given invalid value.');
+    end;
+  end;
 end;
 
 function TMetaTerrain.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -150,82 +172,79 @@ function TMetaTerrain.GetGraphicImage(Flip, Invert, Rotate: Boolean): TBitmap32;
 var
   i: Integer;
 begin
-  EnsureImageMade(Flip, Invert, Rotate);
+  EnsureVariationMade(Flip, Invert, Rotate);
   i := GetImageIndex(Flip, Invert, Rotate);
-  Result := fGraphicImages[i];
+  Result := fVariableInfo[i].GraphicImage;
 end;
 
 function TMetaTerrain.GetPhysicsImage(Flip, Invert, Rotate: Boolean): TBitmap32;
 var
   i: Integer;
 begin
-  EnsureImageMade(Flip, Invert, Rotate);
+  EnsureVariationMade(Flip, Invert, Rotate);
   i := GetImageIndex(Flip, Invert, Rotate);
-  Result := fPhysicsImages[i];
+  Result := fVariableInfo[i].PhysicsImage;
 end;
 
-procedure TMetaTerrain.GenerateGraphicImage;
+function TMetaTerrain.GetVariableProperty(Flip, Invert, Rotate: Boolean;
+  Index: TTerrainMetaProperty): Integer;
 begin
-  raise Exception.Create('Basic TMetaTerrain cannot interally generate the graphical image!');
+  EnsureVariationMade(Flip, Invert, Rotate);
+  with fVariableInfo[GetImageIndex(Flip, Invert, Rotate)] do
+  begin
+    case Index of
+      tv_Width: Result := GraphicImage.Width;
+      tv_Height: Result := GraphicImage.Height;
+      else raise Exception.Create('TMetaTerrain.GetVariableProperty given invalid value.');
+    end;
+  end;
 end;
 
-procedure TMetaTerrain.GeneratePhysicsImage;
+procedure TMetaTerrain.GenerateStandardPhysicsImage;
 var
   x, y: Integer;
 begin
-  fPhysicsImages[0].SetSizeFrom(fGraphicImages[0]);
-  for y := 0 to fGraphicImages[0].Height-1 do
-    for x := 0 to fGraphicImages[0].Width-1 do
-      if (fGraphicImages[0][x, y] and ALPHA_CUTOFF) <> 0 then
+  fVariableInfo[0].PhysicsImage.SetSizeFrom(fVariableInfo[0].GraphicImage);
+  for y := 0 to fVariableInfo[0].GraphicImage.Height-1 do
+    for x := 0 to fVariableInfo[0].GraphicImage.Width-1 do
+      if (fVariableInfo[0].GraphicImage[x, y] and ALPHA_CUTOFF) <> 0 then
         if fIsSteel then
-          fPhysicsImages[0][x, y] := PM_SOLID or PM_STEEL
+          fVariableInfo[0].PhysicsImage[x, y] := PM_SOLID or PM_STEEL
         else
-          fPhysicsImages[0][x, y] := PM_SOLID;
-  fGeneratedPhysicsImage[0] := true;
+          fVariableInfo[0].PhysicsImage[x, y] := PM_SOLID;
 end;
 
-procedure TMetaTerrain.EnsureImageMade(Flip, Invert, Rotate: Boolean);
+procedure TMetaTerrain.EnsureVariationMade(Flip, Invert, Rotate: Boolean);
 var
   i: Integer;
 begin
-  if not fGeneratedGraphicImage[0] then GenerateGraphicImage;
-  if not fGeneratedPhysicsImage[0] then GeneratePhysicsImage;
-
   i := GetImageIndex(Flip, Invert, Rotate);
-  if not fGeneratedGraphicImage[i] then
-    DeriveGraphicImage(Flip, Invert, Rotate);
-  if not fGeneratedPhysicsImage[i] then
-    DerivePhysicsImage(Flip, Invert, Rotate);
+  if not fGeneratedVariableInfo[i] then
+    DeriveVariation(Flip, Invert, Rotate);
 end;
 
-procedure TMetaTerrain.DeriveGraphicImage(Flip, Invert, Rotate: Boolean);
+procedure TMetaTerrain.DeriveVariation(Flip, Invert, Rotate: Boolean);
 var
   i: Integer;
   BMP: TBitmap32;
 begin
   i := GetImageIndex(Flip, Invert, Rotate);
-  if fGraphicImages[i] = nil then fGraphicImages[i] := TBitmap32.Create;
-  BMP := fGraphicImages[i];
-  BMP.Assign(fGraphicImages[0]);
-  if Rotate then BMP.Rotate90;
-  if Flip then BMP.FlipHorz;
-  if Invert then BMP.FlipVert;
-  fGeneratedGraphicImage[i] := true;
-end;
 
-procedure TMetaTerrain.DerivePhysicsImage(Flip, Invert, Rotate: Boolean);
-var
-  i: Integer;
-  BMP: TBitmap32;
-begin
-  i := GetImageIndex(Flip, Invert, Rotate);
-  if fPhysicsImages[i] = nil then fPhysicsImages[i] := TBitmap32.Create;
-  BMP := fPhysicsImages[i];
-  BMP.Assign(fPhysicsImages[0]);
+  if fVariableInfo[i].GraphicImage = nil then fVariableInfo[i].GraphicImage := TBitmap32.Create;
+  BMP := fVariableInfo[i].GraphicImage;
+  BMP.Assign(fVariableInfo[0].GraphicImage);
   if Rotate then BMP.Rotate90;
   if Flip then BMP.FlipHorz;
   if Invert then BMP.FlipVert;
-  fGeneratedPhysicsImage[i] := true;
+
+  if fVariableInfo[i].PhysicsImage = nil then fVariableInfo[i].PhysicsImage := TBitmap32.Create;
+  BMP := fVariableInfo[i].PhysicsImage;
+  BMP.Assign(fVariableInfo[0].PhysicsImage);
+  if Rotate then BMP.Rotate90;
+  if Flip then BMP.FlipHorz;
+  if Invert then BMP.FlipVert;
+
+  fGeneratedVariableInfo[i] := true;
 end;
 
 function TMetaTerrain.GetIdentifier: String;
