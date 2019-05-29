@@ -58,6 +58,26 @@
    ONLY_ON_TERRAIN
  $END
  
+ $OBJECT
+   COLLECTION default
+   PIECE      owa_down
+   X        278
+   Y         67
+   WIDTH     32
+   HEIGHT   160
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      owa_down
+   X        139
+   Y         16
+   WIDTH     32
+   HEIGHT   160
+   ONLY_ON_TERRAIN
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
@@ -175,8 +195,66 @@
    PIECE      alpha_block
    X   229
    Y    34
+   NO_OVERWRITE
    FLIP_HORIZONTAL
    ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   286
+   Y    72
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   146
+   Y    20
+   FLIP_VERTICAL
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   158
+   Y     8
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   158
+   Y    32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   134
+   Y    32
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   134
+   Y     8
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   158
+   Y     8
  $END
  
  

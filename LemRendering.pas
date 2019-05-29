@@ -74,13 +74,17 @@ type
     // Remove stuff
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
 
-    // Graphical combines
-    function CombineTerrainAlpha(F: Byte; B: Byte): Byte;
-    function CombineTerrainAlphaErase(F: Byte; B: Byte): Byte;
+
+    // Physics map preparation combines and helpers
+    function CombineTerrainSolidity(F: Byte; B: Byte): Byte;
+    function CombineTerrainSolidityErase(F: Byte; B: Byte): Byte;
+    function CombineTerrainProperty(F: Byte; B: Byte; FIntensity: Byte): Byte;
 
     procedure CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainPhysicsPrepNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32; M: TColor32);
 
+    // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
@@ -951,10 +955,10 @@ begin
     B := fFixedDrawColor;
 end;
 
-function TRenderer.CombineTerrainAlpha(F, B: Byte): Byte;
+function TRenderer.CombineTerrainSolidity(F, B: Byte): Byte;
 begin
   // Custom alpha blend functions, to 100% ensure consistency.
-  // This is not order-sensitive, ie: CombineTerrainAlpha(X, Y) = CombineTerrainAlpha(Y, X).
+  // This is not order-sensitive, ie: CombineTerrainSolidity(X, Y) = CombineTerrainSolidity(Y, X).
   // Thus, it can be used for No Overwrite draws too.
   if (F = 0) then
     Result := B
@@ -966,7 +970,7 @@ begin
     Result := Round((1 - ((1 - (F / 255)) * (1 - (B / 255)))) * 255);
 end;
 
-function TRenderer.CombineTerrainAlphaErase(F, B: Byte): Byte;
+function TRenderer.CombineTerrainSolidityErase(F, B: Byte): Byte;
 begin
   // This one, on the other hand, very much is order-sensitive.
   if (F = 0) then
@@ -980,115 +984,101 @@ end;
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FF000000) <> 0 then
-    B := (MergeReg(F, B) and $FFFFFF) or (CombineTerrainAlpha(F shr 24, B shr 24) shl 24);
+    B := (MergeReg(F, B) and $FFFFFF) or (CombineTerrainSolidity(F shr 24, B shr 24) shl 24);
 end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if ((F and $FF000000) <> $00000000) and
      ((B and $FF000000) <> $FF000000) then
-    B := (MergeReg(B, F) and $FFFFFF) or (CombineTerrainAlpha(B shr 24, F shr 24) shl 24);
+    B := (MergeReg(B, F) and $FFFFFF) or (CombineTerrainSolidity(B shr 24, F shr 24) shl 24);
+end;
+
+procedure TRenderer.CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32;
+  M: TColor32);
+var
+  srcSolidity, srcSteel, srcOneWay, srcErase: Byte;
+  dstSolidity, dstSteel, dstOneWay, dstErase: Byte;
+begin
+  // A = solidity
+  // R = steel
+  // G = oneway
+  // B = erase (src only,
+  srcSolidity := (F and $FF000000) shr 24;
+  srcSteel    := (F and $00FF0000) shr 16;
+  srcOneWay   := (F and $0000FF00) shr 8;
+  srcErase    := (F and $000000FF) shr 0;
+
+  dstSolidity := (B and $FF000000) shr 24;
+  dstSteel    := (B and $00FF0000) shr 16;
+  dstOneWay   := (B and $0000FF00) shr 8;
+  dstErase    := (B and $000000FF) shr 0;
+
+  if (srcErase > 0) then
+  begin
+    dstSolidity := CombineTerrainSolidityErase(srcErase, dstSolidity);
+    if (dstSolidity = 0) then
+    begin
+      dstSteel := 0;
+      dstErase := 0;
+    end;
+  end else begin
+    dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
+    dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
+    dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
+  end;
+
+  B := (dstSolidity shl 24) or (dstSteel shl 16) or (dstOneWay shl 8) or (dstErase shl 0);
 end;
 
 procedure TRenderer.CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32;
   M: TColor32);
 var
-  srcIntensity: Byte;
-  dstSolidity, dstSteel, dstOneWay, dstUnused: Byte;
+  Intensity: Byte;
 begin
-  // A = solidity
-  // R = steel
-  // G = oneway
-  // B = unused
-  srcIntensity := (F and $FF000000) shr 24;
-
-  dstSolidity := (B and $FF000000) shr 24;
-  dstSteel    := (B and $00FF0000) shr 16;
-  dstOneWay   := (B and $0000FF00) shr 8;
-  dstUnused   := (B and $000000FF) shr 0;
-
+  Intensity := (F and $FF000000) shr 24;
   case fPhysicsRenderingType of
-    prtStandard:
-      begin
-        dstSolidity := CombineTerrainAlpha(srcIntensity, dstSolidity);
-        if not fPhysicsRenderSimpleAutosteel then
-          dstSteel := CombineTerrainAlphaErase(srcIntensity, dstSteel);
-        dstOneWay := CombineTerrainAlphaErase(srcIntensity, dstOneWay);
-      end;
-    prtSteel:
-      begin
-        dstSolidity := CombineTerrainAlpha(srcIntensity, dstSolidity);
-        dstSteel := CombineTerrainAlpha(srcIntensity, dstSteel);
-        dstOneWay := CombineTerrainAlphaErase(srcIntensity, dstOneWay);
-      end;
-    prtOneWay:
-      begin
-        dstSolidity := CombineTerrainAlpha(srcIntensity, dstSolidity);
-        if not fPhysicsRenderSimpleAutosteel then
-          dstSteel := CombineTerrainAlphaErase(srcIntensity, dstSteel);
-        dstOneWay := CombineTerrainAlpha(srcIntensity, dstOneWay);
-      end;
-    prtErase:
-      begin
-        dstSolidity := CombineTerrainAlphaErase(srcIntensity, dstSolidity);
-        dstSteel := CombineTerrainAlphaErase(srcIntensity, dstSteel);
-        dstOneWay := CombineTerrainAlphaErase(srcIntensity, dstOneWay);
-      end;
+    prtStandard: F := (Intensity shl 24);
+    prtSteel: F := (Intensity shl 24) or ($FF0000);
+    prtOneWay: F := (Intensity shl 24) or ($00FF00);
+    prtErase: F := (Intensity shl 0);
   end;
 
-  B := (dstSolidity shl 24) or (dstSteel shl 16) or (dstOneWay shl 8) or (dstUnused shl 0);
+  CombineTerrainPhysicsPrepInternal(F, B, M);
 end;
 
 procedure TRenderer.CombineTerrainPhysicsPrepNoOverwrite(F: TColor32;
   var B: TColor32; M: TColor32);
 var
-  srcIntensity: Byte;
-  dstSolidity, dstSteel, dstOneWay, dstUnused: Byte;
+  Intensity: Byte;
 begin
-  // A = solidity
-  // R = steel
-  // G = oneway
-  // B = unused
-  srcIntensity := (F and $FF000000) shr 24;
-
-  dstSolidity := (B and $FF000000) shr 24;
-  dstSteel    := (B and $00FF0000) shr 16;
-  dstOneWay   := (B and $0000FF00) shr 8;
-  dstUnused   := (B and $000000FF) shr 0;
-
+  Intensity := (F and $FF000000) shr 24;
   case fPhysicsRenderingType of
-    prtStandard:
-      begin
-        dstSolidity := CombineTerrainAlpha(dstSolidity, srcIntensity);
-      end;
-    prtSteel:
-      begin
-        dstSolidity := CombineTerrainAlpha(dstSolidity, srcIntensity);
-        dstSteel := CombineTerrainAlpha(dstSteel, srcIntensity);
-        // need to factor in the above Solidity too...
-      end;
-    prtOneWay:
-      begin
-        dstSolidity := CombineTerrainAlpha(dstSolidity, srcIntensity);
-        dstOneWay := CombineTerrainAlpha(dstOneWay, srcIntensity);
-        // ditto
-      end;
+    prtStandard: F := (Intensity shl 24);
+    prtSteel: F := (Intensity shl 24) or ($FF0000);
+    prtOneWay: F := (Intensity shl 24) or ($00FF00);
     prtErase:
       begin
-        // This is technically an invalid combination. But we'll treat it the
-        // same way anywhere else does: Ignore the No Overwrite flag.
-        dstSolidity := CombineTerrainAlphaErase(srcIntensity, dstSolidity);
-        dstSteel := CombineTerrainAlphaErase(srcIntensity, dstSteel);
-        dstOneWay := CombineTerrainAlphaErase(srcIntensity, dstOneWay);
+        CombineTerrainPhysicsPrep(F, B, M);
+        Exit;
       end;
   end;
 
-  B := (dstSolidity shl 24) or (dstSteel shl 16) or (dstOneWay shl 8) or (dstUnused shl 0);
+  CombineTerrainPhysicsPrepInternal(B, F, M);
+  B := F;
+end;
+
+function TRenderer.CombineTerrainProperty(F, B, FIntensity: Byte): Byte;
+var
+  Diff: Byte;
+begin
+  Diff := F - B;
+  Result := B + Round(Diff * (FIntensity / 255));
 end;
 
 procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  B := (B and $FFFFFF) or (CombineTerrainAlphaErase(F shr 24, B shr 24) shl 24);
+  B := (B and $FFFFFF) or (CombineTerrainSolidityErase(F shr 24, B shr 24) shl 24);
 end;
 
 procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -1866,6 +1856,8 @@ var
     x, y: Integer;
     thisSolidity, thisSteel, thisOneWay, thisUnused: Byte;
     C: TColor32;
+    SolidityMod: Single;
+    Cutoff: Single;
   begin
     for y := 0 to TempWorld.Height-1 do
       for x := 0 to TempWorld.Width-1 do
@@ -1875,17 +1867,21 @@ var
         thisOneWay   := (TempWorld[x, y] and $0000FF00) shr 8;
         thisUnused   := (TempWorld[x, y] and $000000FF) shr 0;
 
-        C := 0;
-
-        if thisSteel >= ALPHA_CUTOFF then
-          C := C or PM_STEEL
-        else if thisOneWay >= ALPHA_CUTOFF then
-          C := C or PM_ONEWAY;
-
         if thisSolidity >= ALPHA_CUTOFF then
-          C := C or PM_SOLID;
+        begin
+          C := PM_SOLID;
 
-        Dst[x, y] := C;
+          SolidityMod := thisSolidity / 255;
+          Cutoff := ALPHA_CUTOFF / 255;
+
+          if thisSteel * SolidityMod >= Cutoff then
+            C := C or PM_STEEL
+          else if thisOneWay * SolidityMod >= Cutoff then
+            C := C or PM_ONEWAY;
+
+          Dst[x, y] := C;
+        end else
+          Dst[x, y] := 0;
       end;
   end;
 
