@@ -1,0 +1,163 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE 
+ AUTHOR 
+ ID x6ED0141A6DA752CF
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME namida_systemtest
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION namida_systemtest
+   PIECE      entrance
+   X         25
+   Y         46
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      block_01
+   X   132
+   Y    86
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   120
+   Y    74
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   144
+   Y    74
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   120
+   Y    98
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   144
+   Y    98
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   186
+   Y    84
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   198
+   Y    72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   198
+   Y    96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   174
+   Y    96
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   174
+   Y    72
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   237
+   Y    34
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      block_01
+   X   237
+   Y    26
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   237
+   Y    42
+   FLIP_VERTICAL
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION namida_systemtest
+   PIECE      alpha_block
+   X   229
+   Y    34
+   FLIP_HORIZONTAL
+   ONE_WAY
+ $END
+ 
+ 

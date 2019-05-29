@@ -71,6 +71,9 @@ type
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
 
     // Graphical combines
+    function CombineTerrainAlpha(F: Byte; B: Byte): Byte;
+    function CombineTerrainAlphaErase(F: Byte; B: Byte): Byte;
+
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
@@ -1018,25 +1021,48 @@ end;
 
 // Graphical combines
 
+function TRenderer.CombineTerrainAlpha(F, B: Byte): Byte;
+begin
+  // Custom alpha blend functions, to 100% ensure consistency.
+  // This is not order-sensitive, ie: CombineTerrainAlpha(X, Y) = CombineTerrainAlpha(Y, X).
+  // Thus, it can be used for No Overwrite draws too.
+  if (F = 0) then
+    Result := B
+  else if (B = 0) then
+    Result := F
+  else if (F = 255) or (B = 255) then
+    Result := 255
+  else
+    Result := Round((1 - ((1 - (F / 255)) * (1 - (B / 255)))) * 255);
+end;
+
+function TRenderer.CombineTerrainAlphaErase(F, B: Byte): Byte;
+begin
+  // This one, on the other hand, very much is order-sensitive.
+  if (F = 0) then
+    Result := B
+  else if (F = 255) or (B = 0) then
+    Result := 0
+  else
+    Result := Round(((1 - (F / 255)) * (B / 255)) * 255);
+end;
+
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FF000000) <> 0 then
-    MergeMem(F, B);
+    B := (MergeReg(F, B) and $FFFFFF) or (CombineTerrainAlpha(F shr 24, B shr 24) shl 24);
 end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000 <> 0) and (B and $FF000000 <> $FF000000) then
-  begin
-    MergeMem(B, F);
-    B := F;
-  end;
+  if ((F and $FF000000) <> $00000000) and
+     ((B and $FF000000) <> $FF000000) then
+    B := (MergeReg(B, F) and $FFFFFF) or (CombineTerrainAlpha(B shr 24, F shr 24) shl 24);
 end;
 
 procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000) <> 0 then
-    B := 0;
+  B := (B and $FFFFFF) or (CombineTerrainAlphaErase(F shr 24, B shr 24) shl 24);
 end;
 
 procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
