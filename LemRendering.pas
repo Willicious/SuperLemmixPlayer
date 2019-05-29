@@ -1024,7 +1024,13 @@ begin
     end;
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
-    dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
+
+    if not fPhysicsRenderSimpleAutoSteel then
+      dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity)
+    else if (dstSteel < 255) and (srcSteel > 0) then
+      dstSteel := 255;
+
+
     dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
   end;
 
