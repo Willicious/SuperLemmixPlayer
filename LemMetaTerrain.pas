@@ -15,7 +15,6 @@ const
 type
   TTerrainVariableProperties = record // For properties that vary based on flip / invert
     GraphicImage:     TBitmap32;
-    PhysicsImage:     TBitmap32;
   end;
   PTerrainVariableProperties = ^TTerrainVariableProperties;
 
@@ -36,14 +35,11 @@ type
       function GetIdentifier: String;
       function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
       function GetGraphicImage(Flip, Invert, Rotate: Boolean): TBitmap32;
-      function GetPhysicsImage(Flip, Invert, Rotate: Boolean): TBitmap32;
       procedure EnsureVariationMade(Flip, Invert, Rotate: Boolean);
       procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
 
       function GetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty): Integer;
       procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty; const aValue: Integer);
-
-      procedure GenerateStandardPhysicsImage;
     public
       constructor Create;
       destructor Destroy; override;
@@ -54,7 +50,6 @@ type
 
       property Identifier : String read GetIdentifier;
       property GraphicImage[Flip, Invert, Rotate: Boolean]: TBitmap32 read GetGraphicImage;
-      property PhysicsImage[Flip, Invert, Rotate: Boolean]: TBitmap32 read GetPhysicsImage;
       property GS     : String read fGS write fGS;
       property Piece  : String read fPiece write fPiece;
       property Width[Flip, Invert, Rotate: Boolean] : Integer index tv_Width read GetVariableProperty;
@@ -82,7 +77,6 @@ constructor TMetaTerrain.Create;
 begin
   inherited;
   fVariableInfo[0].GraphicImage := TBitmap32.Create;
-  fVariableInfo[0].PhysicsImage := TBitmap32.Create;
 end;
 
 destructor TMetaTerrain.Destroy;
@@ -92,7 +86,6 @@ begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
     fVariableInfo[i].GraphicImage.Free;
-    fVariableInfo[i].PhysicsImage.Free;
   end;
   inherited;
 end;
@@ -122,7 +115,6 @@ begin
   end;
 
   TPngInterface.LoadPngFile(aPiece + '.png', fVariableInfo[0].GraphicImage);
-  GenerateStandardPhysicsImage;
   fGeneratedVariableInfo[0] := true;
 end;
 
@@ -133,7 +125,6 @@ begin
   for i := 0 to ALIGNMENT_COUNT-1 do
   begin
     if fVariableInfo[i].GraphicImage <> nil then fVariableInfo[i].GraphicImage.Clear;
-    if fVariableInfo[i].PhysicsImage <> nil then fVariableInfo[i].PhysicsImage.Clear;
     fGeneratedVariableInfo[i] := false;
   end;
 end;
@@ -142,7 +133,6 @@ procedure TMetaTerrain.SetGraphic(aImage: TBitmap32);
 begin
   ClearImages;
   fVariableInfo[0].GraphicImage.Assign(aImage);
-  GenerateStandardPhysicsImage;
   fGeneratedVariableInfo[0] := true;
 end;
 
@@ -176,15 +166,6 @@ begin
   Result := fVariableInfo[i].GraphicImage;
 end;
 
-function TMetaTerrain.GetPhysicsImage(Flip, Invert, Rotate: Boolean): TBitmap32;
-var
-  i: Integer;
-begin
-  EnsureVariationMade(Flip, Invert, Rotate);
-  i := GetImageIndex(Flip, Invert, Rotate);
-  Result := fVariableInfo[i].PhysicsImage;
-end;
-
 function TMetaTerrain.GetVariableProperty(Flip, Invert, Rotate: Boolean;
   Index: TTerrainMetaProperty): Integer;
 begin
@@ -197,20 +178,6 @@ begin
       else raise Exception.Create('TMetaTerrain.GetVariableProperty given invalid value.');
     end;
   end;
-end;
-
-procedure TMetaTerrain.GenerateStandardPhysicsImage;
-var
-  x, y: Integer;
-begin
-  fVariableInfo[0].PhysicsImage.SetSizeFrom(fVariableInfo[0].GraphicImage);
-  for y := 0 to fVariableInfo[0].GraphicImage.Height-1 do
-    for x := 0 to fVariableInfo[0].GraphicImage.Width-1 do
-      if (fVariableInfo[0].GraphicImage[x, y] and ALPHA_CUTOFF) <> 0 then
-        if fIsSteel then
-          fVariableInfo[0].PhysicsImage[x, y] := PM_SOLID or PM_STEEL
-        else
-          fVariableInfo[0].PhysicsImage[x, y] := PM_SOLID;
 end;
 
 procedure TMetaTerrain.EnsureVariationMade(Flip, Invert, Rotate: Boolean);
@@ -229,13 +196,11 @@ var
 
   procedure CloneFromStandard;
   var
-    GfxBmp, PhysBmp: TBitmap32;
+    GfxBmp: TBitmap32;
   begin
     GfxBmp := fVariableInfo[i].GraphicImage;
-    PhysBmp := fVariableInfo[i].PhysicsImage;
     fVariableInfo[i] := fVariableInfo[0];
     fVariableInfo[i].GraphicImage := GfxBmp;
-    fVariableInfo[i].PhysicsImage := PhysBmp;
   end;
 begin
   i := GetImageIndex(Flip, Invert, Rotate);
@@ -244,13 +209,6 @@ begin
   if fVariableInfo[i].GraphicImage = nil then fVariableInfo[i].GraphicImage := TBitmap32.Create;
   BMP := fVariableInfo[i].GraphicImage;
   BMP.Assign(fVariableInfo[0].GraphicImage);
-  if Rotate then BMP.Rotate90;
-  if Flip then BMP.FlipHorz;
-  if Invert then BMP.FlipVert;
-
-  if fVariableInfo[i].PhysicsImage = nil then fVariableInfo[i].PhysicsImage := TBitmap32.Create;
-  BMP := fVariableInfo[i].PhysicsImage;
-  BMP.Assign(fVariableInfo[0].PhysicsImage);
   if Rotate then BMP.Rotate90;
   if Flip then BMP.FlipHorz;
   if Invert then BMP.FlipVert;
