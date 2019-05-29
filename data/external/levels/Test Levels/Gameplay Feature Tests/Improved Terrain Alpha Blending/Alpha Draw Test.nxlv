@@ -38,6 +38,26 @@
    DIRECTION right
  $END
  
+ $OBJECT
+   COLLECTION default
+   PIECE      owa_down
+   X        178
+   Y         74
+   WIDTH     32
+   HEIGHT   160
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $OBJECT
+   COLLECTION default
+   PIECE      owa_down
+   X        223
+   Y         37
+   WIDTH     32
+   HEIGHT   160
+   ONLY_ON_TERRAIN
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
@@ -98,7 +118,6 @@
    PIECE      alpha_block
    X   198
    Y    72
-   ONE_WAY
  $END
  
  $TERRAIN

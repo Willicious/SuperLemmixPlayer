@@ -1911,7 +1911,7 @@ begin
         InternalDrawTerrain(TempWorld, T, true);
       end;
 
-      // don't forget simple autosteel!
+      GeneratePhysicsMapFromInfoMap;
 
       for i := 0 to fPreviewGadgets.Count-1 do
       begin
@@ -2040,7 +2040,6 @@ begin
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(World, World.BoundsRect, false, fTransparentBackground);
-  World.SaveToFile(AppPath + 'test.bmp');
 end;
 
 
