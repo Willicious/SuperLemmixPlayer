@@ -182,6 +182,53 @@ var
   SrcRects, DstRects: TNineSliceRects;
   i: Integer;
 
+  function VerifyInput: Boolean;
+  var
+    CenterRect: TRect;
+  begin
+    // We need to ensure:
+    // - Horizontal size is <= the margin sizes, if Left Margin + Right Margin = Total Source Width
+    // - Equivalent for height
+
+    CenterRect := Rect(Margins.Left, Margins.Top, SrcRect.Width - Margins.Right, SrcRect.Height - Margins.Bottom);
+    Result := false;
+
+    if (CenterRect.Width <= 0) and (DstRect.Width > Margins.Left + Margins.Right) then Exit;
+    if (CenterRect.Height <= 0) and (DstRect.Height > Margins.Top + Margins.Bottom) then Exit;
+
+    Result := true;
+  end;
+
+  procedure TrimMargins(var LeftMargin, RightMargin: Integer; dstSize: Integer);
+  var
+    Overlap: Integer;
+  begin
+    Overlap := (LeftMargin + RightMargin) - dstSize;
+    if Overlap <= 0 then Exit;
+    LeftMargin := LeftMargin - (Overlap div 2);
+    RightMargin := RightMargin - (Overlap div 2);
+
+    if Overlap mod 2 = 1 then
+    begin
+      if LeftMargin >= RightMargin then
+        LeftMargin := LeftMargin - 1
+      else
+        RightMargin := RightMargin - 1;
+    end;
+
+    if LeftMargin < 0 then
+    begin
+      RightMargin := RightMargin + LeftMargin;
+      LeftMargin := 0;
+    end;
+
+    if RightMargin < 0 then
+    begin
+      LeftMargin := LeftMargin + RightMargin;
+      RightMargin := 0;
+    end;
+  end;
+
   function MakeNineSliceRects(aInput: TRect): TNineSliceRects;
   var
     VarWidth, VarHeight: Integer; // stores the non-margin width and height
@@ -249,6 +296,11 @@ begin
   if (DstRect.Width = SrcRect.Width) and (DstRect.Height = SrcRect.Height) then
     Src.DrawTo(Dst, DstRect.Left, DstRect.Top) // save processing time
   else begin
+    Assert(VerifyInput, 'Invalid input passed to LemTypes.DrawNineSlice');
+
+    TrimMargins(Margins.Left, Margins.Right, DstRect.Width);
+    TrimMargins(Margins.Top, Margins.Bottom, DstRect.Height);
+
     SrcRects := MakeNineSliceRects(SrcRect);
     DstRects := MakeNineSliceRects(DstRect);
 
