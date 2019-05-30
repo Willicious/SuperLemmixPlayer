@@ -984,14 +984,21 @@ end;
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (F and $FF000000) <> 0 then
-    B := (MergeReg(F, B) and $FFFFFF) or (CombineTerrainSolidity(F shr 24, B shr 24) shl 24);
+    MergeMem(F, B);
 end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if ((F and $FF000000) <> $00000000) and
-     ((B and $FF000000) <> $FF000000) then
-    B := (MergeReg(B, F) and $FFFFFF) or (CombineTerrainSolidity(B shr 24, F shr 24) shl 24);
+  if ((F and $FF000000) <> $00000000) then
+  begin
+    MergeMem(B, F);
+    B := F;
+  end;
+end;
+
+procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  B := (B and $FFFFFF) or (CombineTerrainSolidityErase(F shr 24, B shr 24) shl 24);
 end;
 
 procedure TRenderer.CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32;
@@ -1080,11 +1087,6 @@ var
 begin
   Diff := F - B;
   Result := B + Round(Diff * (FIntensity / 255));
-end;
-
-procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  B := (B and $FFFFFF) or (CombineTerrainSolidityErase(F shr 24, B shr 24) shl 24);
 end;
 
 procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
