@@ -527,6 +527,7 @@ begin
   L.IsDisarmer := (aSection.Line['disarmer'] <> nil);
   L.IsZombie   := (aSection.Line['zombie']   <> nil);
   L.IsBlocker  := (aSection.Line['blocker']  <> nil);
+  L.IsShimmier := (aSection.Line['shimmier'] <> nil);
 end;
 
 procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
