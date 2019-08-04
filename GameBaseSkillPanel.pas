@@ -163,7 +163,6 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_SKILL_ICONS = 17;
   NUM_FONT_CHARS = 45;
 
 const
@@ -177,9 +176,11 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png',              {Skills end here}
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
-    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_1fb.png',
-    'icon_1ff.png', 'icon_clearphysics.png', 'icon_directional.png', 'icon_load_replay.png',
-    'icon_directional.png'
+    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_frameskip.png',
+    'icon_directional.png', 'icon_cpm_and_replay.png',
+
+    // These ones are placeholders - they're the bottom half of splits
+    'icon_frameskip.png', 'icon_directional.png', 'icon_cpm_and_replay.png'
     );
 
 
@@ -358,7 +359,7 @@ end;
 
 function TBaseSkillPanel.LastSkillButtonIndex: Integer;
 begin
-  Result := (FirstSkillButtonIndex + 8) - 1; // we might want to use a CONST here, in case we later allow more than 8 skills per level
+  Result := (FirstSkillButtonIndex + MAX_SKILL_TYPES_PER_LEVEL) - 1;
 end;
 
 function TBaseSkillPanel.MinimapWidth: Integer;
@@ -669,8 +670,15 @@ begin
     begin
       fButtonRects[spbDirLeft] := HalfButtonRect(i, true);
       fButtonRects[spbDirRight] := HalfButtonRect(i, false);
-    end
-    else if ButtonList[i] > spbNone then
+    end else if ButtonList[i] in [spbBackOneFrame, spbForwardOneFrame] then
+    begin
+      fButtonRects[spbBackOneFrame] := HalfButtonRect(i, true);
+      fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, false);
+    end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
+    begin
+      fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
+      fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
+    end else if ButtonList[i] > spbNone then
       fButtonRects[ButtonList[i]] := ButtonRect(i);
   end;
 end;
