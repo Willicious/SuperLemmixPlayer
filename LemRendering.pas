@@ -36,6 +36,8 @@ type
     Level        : TLevel;
   end;
 
+  TPhysicsRenderingType = (prtStandard, prtSteel, prtOneWay, prtErase);
+
   TRenderer = class
   private
     fGadgets            : TGadgetList;
@@ -63,12 +65,24 @@ type
     fDoneBackgroundDraw : Boolean;
 
     fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
+    fPhysicsRenderingType: TPhysicsRenderingType;
+    fPhysicsRenderSimpleAutosteel: Boolean;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
     procedure AddStoner(X, Y: Integer);
     // Remove stuff
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
+
+
+    // Physics map preparation combines and helpers
+    function CombineTerrainSolidity(F: Byte; B: Byte): Byte;
+    function CombineTerrainSolidityErase(F: Byte; B: Byte): Byte;
+    function CombineTerrainProperty(F: Byte; B: Byte; FIntensity: Byte): Byte;
+
+    procedure CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainPhysicsPrepNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32; M: TColor32);
 
     // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -77,17 +91,11 @@ type
     procedure CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
 
-    // Functional combines
-    procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
-    procedure ApplySimpleAutosteel(aBmp: TBitmap32);
-    procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
-
     // Clear Physics combines
     procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // use with fFixedDrawColor
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
+    procedure PrepareTerrainBitmapForPhysics(Bmp: TBitmap32; DrawingFlags: Byte; IsSteel: Boolean);
     procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false);
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
@@ -102,6 +110,7 @@ type
     procedure DrawUserHelper;
     function IsUseful(Gadget: TGadget): Boolean;
 
+    procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean);
   protected
   public
     constructor Create;
@@ -938,77 +947,7 @@ begin
   Result := PieceManager.Terrains[FindLabel];
 end;
 
-// Functional combines
-
-procedure TRenderer.ApplySimpleAutosteel(aBmp: TBitmap32);
-var
-  x, y: Integer;
-begin
-  for y := 0 to aBmp.Height-1 do
-    for x := 0 to aBmp.Width-1 do
-      if aBmp.Pixel[x, y] and PM_SOLID <> 0 then
-        aBmp.Pixel[x, y] := aBmp.Pixel[x, y] or PM_NOCANCELSTEEL;
-end;
-
-procedure TRenderer.PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
-var
-  x, y: Integer;
-  PDst: PColor32;
-  Flip, Invert, Rotate: Boolean;
-begin
-  Rotate := T.DrawingFlags and tdf_Rotate <> 0;
-  Invert := T.DrawingFlags and tdf_Invert <> 0;
-  Flip := T.DrawingFlags and tdf_Flip <> 0;
-
-  Dst.Assign(Src.PhysicsImage[Flip, Invert, Rotate]);
-
-  for y := 0 to Dst.Height-1 do
-  for x := 0 to Dst.Width-1 do
-  begin
-    PDst := Dst.PixelPtr[x, y];
-    // Set One-way-arrow flag
-    if (not Src.IsSteel) and (T.DrawingFlags and tdf_NoOneWay = 0) then
-      PDst^ := PDst^ or PM_ONEWAY;
-    // Remove non-sold pixels
-    if (PDst^ and PM_SOLID) = 0 then
-      PDst^ := 0;
-  end;
-
-  Dst.DrawMode := dmCustom;
-  if T.DrawingFlags and tdf_NoOverwrite <> 0 then
-    Dst.OnPixelCombine := CombineTerrainFunctionNoOverwrite
-  else if T.DrawingFlags and tdf_Erase <> 0 then
-    Dst.OnPixelCombine := CombineTerrainFunctionErase
-  else
-    Dst.OnPixelCombine := CombineTerrainFunctionDefault;
-end;
-
-procedure TRenderer.CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then
-    if F and PM_NOCANCELSTEEL = 0 then
-      B := F
-    else
-      B := (B and PM_STEEL) or F;
-end;
-
-procedure TRenderer.CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then
-    if B and PM_NOCANCELSTEEL = 0 then
-    begin
-      if (B and PM_SOLID = 0) then
-        B := F;
-    end else begin
-      B := B or (F and PM_STEEL);
-    end;
-end;
-
-procedure TRenderer.CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then
-    B := 0;
-end;
+// Graphical combines
 
 procedure TRenderer.CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32);
 begin
@@ -1016,7 +955,31 @@ begin
     B := fFixedDrawColor;
 end;
 
-// Graphical combines
+function TRenderer.CombineTerrainSolidity(F, B: Byte): Byte;
+begin
+  // Custom alpha blend functions, to 100% ensure consistency.
+  // This is not order-sensitive, ie: CombineTerrainSolidity(X, Y) = CombineTerrainSolidity(Y, X).
+  // Thus, it can be used for No Overwrite draws too.
+  if (F = 0) then
+    Result := B
+  else if (B = 0) then
+    Result := F
+  else if (F = 255) or (B = 255) then
+    Result := 255
+  else
+    Result := Round((1 - ((1 - (F / 255)) * (1 - (B / 255)))) * 255);
+end;
+
+function TRenderer.CombineTerrainSolidityErase(F, B: Byte): Byte;
+begin
+  // This one, on the other hand, very much is order-sensitive.
+  if (F = 0) then
+    Result := B
+  else if (F = 255) or (B = 0) then
+    Result := 0
+  else
+    Result := Round(((1 - (F / 255)) * (B / 255)) * 255);
+end;
 
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
@@ -1026,7 +989,7 @@ end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000 <> 0) and (B and $FF000000 <> $FF000000) then
+  if ((F and $FF000000) <> $00000000) then
   begin
     MergeMem(B, F);
     B := F;
@@ -1035,8 +998,95 @@ end;
 
 procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000) <> 0 then
-    B := 0;
+  B := (B and $FFFFFF) or (CombineTerrainSolidityErase(F shr 24, B shr 24) shl 24);
+end;
+
+procedure TRenderer.CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32;
+  M: TColor32);
+var
+  srcSolidity, srcSteel, srcOneWay, srcErase: Byte;
+  dstSolidity, dstSteel, dstOneWay, dstErase: Byte;
+begin
+  // A = solidity
+  // R = steel
+  // G = oneway
+  // B = erase (src only,
+  srcSolidity := (F and $FF000000) shr 24;
+  srcSteel    := (F and $00FF0000) shr 16;
+  srcOneWay   := (F and $0000FF00) shr 8;
+  srcErase    := (F and $000000FF) shr 0;
+
+  dstSolidity := (B and $FF000000) shr 24;
+  dstSteel    := (B and $00FF0000) shr 16;
+  dstOneWay   := (B and $0000FF00) shr 8;
+  dstErase    := (B and $000000FF) shr 0;
+
+  if (srcErase > 0) then
+  begin
+    dstSolidity := CombineTerrainSolidityErase(srcErase, dstSolidity);
+    if (dstSolidity = 0) then
+    begin
+      dstSteel := 0;
+      dstErase := 0;
+    end;
+  end else begin
+    dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
+
+    if not fPhysicsRenderSimpleAutoSteel then
+      dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity)
+    else if (dstSteel < 255) and (srcSteel > 0) then
+      dstSteel := 255;
+
+
+    dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
+  end;
+
+  B := (dstSolidity shl 24) or (dstSteel shl 16) or (dstOneWay shl 8) or (dstErase shl 0);
+end;
+
+procedure TRenderer.CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32;
+  M: TColor32);
+var
+  Intensity: Byte;
+begin
+  Intensity := (F and $FF000000) shr 24;
+  case fPhysicsRenderingType of
+    prtStandard: F := (Intensity shl 24);
+    prtSteel: F := (Intensity shl 24) or ($FF0000);
+    prtOneWay: F := (Intensity shl 24) or ($00FF00);
+    prtErase: F := (Intensity shl 0);
+  end;
+
+  CombineTerrainPhysicsPrepInternal(F, B, M);
+end;
+
+procedure TRenderer.CombineTerrainPhysicsPrepNoOverwrite(F: TColor32;
+  var B: TColor32; M: TColor32);
+var
+  Intensity: Byte;
+begin
+  Intensity := (F and $FF000000) shr 24;
+  case fPhysicsRenderingType of
+    prtStandard: F := (Intensity shl 24);
+    prtSteel: F := (Intensity shl 24) or ($FF0000);
+    prtOneWay: F := (Intensity shl 24) or ($00FF00);
+    prtErase:
+      begin
+        CombineTerrainPhysicsPrep(F, B, M);
+        Exit;
+      end;
+  end;
+
+  CombineTerrainPhysicsPrepInternal(B, F, M);
+  B := F;
+end;
+
+function TRenderer.CombineTerrainProperty(F, B, FIntensity: Byte): Byte;
+var
+  Diff: Byte;
+begin
+  Diff := F - B;
+  Result := B + Round(Diff * (FIntensity / 255));
 end;
 
 procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -1077,6 +1127,11 @@ begin
 end;
 
 procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain);
+begin
+  InternalDrawTerrain(Dst, T, false);
+end;
+
+procedure TRenderer.InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean);
 var
   Src: TBitmap32;
   Flip, Invert, Rotate: Boolean;
@@ -1089,7 +1144,10 @@ begin
   Flip := (T.DrawingFlags and tdf_Flip <> 0);
 
   Src := MT.GraphicImage[Flip, Invert, Rotate];
-  PrepareTerrainBitmap(Src, T.DrawingFlags);
+  if IsPhysicsDraw then
+    PrepareTerrainBitmapForPhysics(Src, T.DrawingFlags, MT.IsSteel)
+  else
+    PrepareTerrainBitmap(Src, T.DrawingFlags);
   Src.DrawTo(Dst, T.Left, T.Top);
 end;
 
@@ -1103,6 +1161,25 @@ begin
     Bmp.OnPixelCombine := CombineTerrainErase
   else
     Bmp.OnPixelCombine := CombineTerrainDefault;
+end;
+
+procedure TRenderer.PrepareTerrainBitmapForPhysics(Bmp: TBitmap32; DrawingFlags: Byte; IsSteel: Boolean);
+begin
+  Bmp.DrawMode := dmCustom;
+
+  if (DrawingFlags and tdf_NoOverwrite <> 0) and (DrawingFlags and tdf_Erase = 0) then
+    Bmp.OnPixelCombine := CombineTerrainPhysicsPrepNoOverwrite
+  else
+    Bmp.OnPixelCombine := CombineTerrainPhysicsPrep;
+
+  if (DrawingFlags and tdf_Erase) <> 0 then
+    fPhysicsRenderingType := prtErase
+  else if IsSteel then
+    fPhysicsRenderingType := prtSteel
+  else if (DrawingFlags and tdf_NoOneWay) = 0 then
+    fPhysicsRenderingType := prtOneWay
+  else
+    fPhysicsRenderingType := prtStandard;
 end;
 
 
@@ -1689,9 +1766,9 @@ procedure TRenderer.RenderPhysicsMap(Dst: TBitmap32 = nil);
 var
   i: Integer;
   T: TTerrain;
-  MT: TMetaTerrain;
   Gadget: TGadget;
-  Bmp: TBitmap32;
+
+  TempWorld: TBitmap32;
 
   procedure SetRegion(aRegion: TRect; C, AntiC: TColor32);
   var
@@ -1782,35 +1859,75 @@ var
       end;
   end;
 
-begin
-  if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
-  Bmp := TBitmap32.Create;
-
-  fPhysicsMap.Clear(0);
-
-  with RenderInfoRec.Level do
+  procedure GeneratePhysicsMapFromInfoMap;
+  var
+    x, y: Integer;
+    thisSolidity, thisSteel, thisOneWay, thisUnused: Byte;
+    C: TColor32;
+    SolidityMod: Single;
+    Cutoff: Single;
   begin
-    Dst.SetSize(Info.Width, Info.Height);
+    for y := 0 to TempWorld.Height-1 do
+      for x := 0 to TempWorld.Width-1 do
+      begin
+        thisSolidity := (TempWorld[x, y] and $FF000000) shr 24;
+        thisSteel    := (TempWorld[x, y] and $00FF0000) shr 16;
+        thisOneWay   := (TempWorld[x, y] and $0000FF00) shr 8;
+        thisUnused   := (TempWorld[x, y] and $000000FF) shr 0;
 
-    for i := 0 to Terrains.Count-1 do
-    begin
-      T := Terrains[i];
-      MT := FindMetaTerrain(T);
-      PrepareTerrainFunctionBitmap(T, Bmp, MT);
-      if (Info.IsSimpleAutoSteel) then ApplySimpleAutosteel(Bmp);
-      Bmp.DrawTo(Dst, T.Left, T.Top);
-    end;
+        if thisSolidity >= ALPHA_CUTOFF then
+        begin
+          C := PM_SOLID;
 
-    for i := 0 to fPreviewGadgets.Count-1 do
-    begin
-      Gadget := fPreviewGadgets[i];
-      ApplyOWW(Gadget); // ApplyOWW takes care of ignoring non-OWW objects, no sense duplicating the check
-    end;
+          SolidityMod := thisSolidity / 255;
+          Cutoff := ALPHA_CUTOFF / 255;
+
+          if thisSteel * SolidityMod >= Cutoff then
+            C := C or PM_STEEL
+          else if thisOneWay * SolidityMod >= Cutoff then
+            C := C or PM_ONEWAY;
+
+          Dst[x, y] := C;
+        end else
+          Dst[x, y] := 0;
+      end;
   end;
 
-  Validate;
+begin
+  if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
+  TempWorld := TBitmap32.Create;
 
-  Bmp.Free;
+  T := TTerrain.Create;
+  try
+    fPhysicsMap.Clear(0);
+
+    with RenderInfoRec.Level do
+    begin
+      Dst.SetSize(Info.Width, Info.Height);
+      TempWorld.SetSize(Info.Width, Info.Height);
+      TempWorld.Clear(0);
+
+      fPhysicsRenderSimpleAutosteel := Info.IsSimpleAutoSteel;
+
+      for i := 0 to Terrains.Count-1 do
+      begin
+        T.Assign(Terrains[i]);
+        InternalDrawTerrain(TempWorld, T, true);
+      end;
+
+      GeneratePhysicsMapFromInfoMap;
+
+      for i := 0 to fPreviewGadgets.Count-1 do
+      begin
+        Gadget := fPreviewGadgets[i];
+        ApplyOWW(Gadget); // ApplyOWW takes care of ignoring non-OWW objects, no sense duplicating the check
+      end;
+    end;
+
+    Validate;
+  finally
+    TempWorld.Free;
+  end;
 end;
 
 procedure TRenderer.RenderWorld(World: TBitmap32; DoBackground: Boolean); // Called only from Preview Screen
@@ -1929,7 +2046,6 @@ begin
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(World, World.BoundsRect, false, fTransparentBackground);
-  World.SaveToFile(AppPath + 'test.bmp');
 end;
 
 
