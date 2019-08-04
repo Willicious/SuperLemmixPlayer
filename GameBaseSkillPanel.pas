@@ -6,6 +6,7 @@ uses
   System.Types,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
+  LemAnimationSet, LemMetaAnimation,
   LemCore, LemLemming, LemGame, LemLevel;
 
 type
@@ -459,14 +460,184 @@ begin
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
+const
+  PANEL_FALLBACK_BRICK_COLOR = $FF00B000;
 var
+  BrickColor: TColor32;
   Button: TSkillPanelButton;
+  TempBmp: TBitmap32;
+
+  procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
+  var
+    Ani: TBaseAnimationSet;
+    Meta: TMetaLemmingAnimation;
+    SrcRect: TRect;
+  begin
+    Ani := GameParams.Renderer.LemmingAnimations;
+    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+
+    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
+    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
+    SrcRect.Offset(0, SrcRect.Height * aFrame);
+
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX - Meta.FootX, footY - Meta.FootY, SrcRect);
+  end;
+
+  procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
+  var
+    Ani: TBaseAnimationSet;
+    Meta: TMetaLemmingAnimation;
+    SrcRect: TRect;
+  begin
+    Ani := GameParams.Renderer.LemmingAnimations;
+    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+
+    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
+    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
+    SrcRect.Offset(0, SrcRect.Height * aFrame);
+
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
+  end;
+
+  procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
+  var
+    oX: Integer;
+  begin
+    for oX := 0 to W-1 do
+      dst.PixelS[X + oX, Y] := BrickColor;
+  end;
+
+  procedure Outline(dst: TBitmap32);
+  var
+    x, y: Integer;
+    oX, oY: Integer;
+    ThisAlpha, MaxAlpha: Byte;
+  begin
+    TempBmp.Assign(dst);
+    dst.Clear(0);
+    TempBmp.WrapMode := wmClamp;
+    TempBmp.OuterColor := $00000000;
+
+    for y := 0 to TempBmp.Height-1 do
+      for x := 0 to TempBmp.Width-1 do
+      begin
+        MaxAlpha := 0;
+        for oY := -1 to 1 do
+          for oX := -1 to 1 do
+          begin
+            if Abs(oY) + Abs(oX) <> 1 then
+              Continue;
+            ThisAlpha := (TempBmp.PixelS[x + oX, y + oY] and $FF000000) shr 24;
+            if ThisAlpha > MaxAlpha then
+              MaxAlpha := ThisAlpha;
+          end;
+        dst[x, y] := MaxAlpha shl 24;
+      end;
+
+    TempBmp.DrawTo(dst);
+  end;
 begin
   // Load the erasing icon first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
 
-  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
+  //for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+  //  GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
+  TempBmp := TBitmap32.Create; // freely useable as long as Outline isn't called while it's being used
+  try
+    // Some preparation
+    TempBmp.DrawMode := dmBlend;
+    TempBmp.CombineMode := cmMerge;
+
+    BrickColor := GameParams.Renderer.Theme.Colors['MASK'];
+    if (BrickColor and $00C0C0C0) = 0 then
+      BrickColor := PANEL_FALLBACK_BRICK_COLOR; // Prevent too-dark colors being used, that won't contrast well with outline
+
+    // Set image sizes
+    for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      fSkillIcons[Button].SetSize(15, 23);
+
+    // Walker, Climber, - both simple
+    DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 21);
+    DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 22);
+
+    // Swimmer - we need to draw the background water
+    DrawAnimationFrame(fSkillIcons[spbSwimmer], SWIMMING, 2, 8, 19);
+    Outline(fSkillIcons[spbSwimmer]);
+    TempBmp.Assign(fSkillIcons[spbSwimmer]);
+    fSkillIcons[spbSwimmer].Clear(0);
+    fSkillIcons[spbSwimmer].FillRect(0, 17, 15, 23, $FF000000);
+    fSkillIcons[spbSwimmer].FillRect(0, 18, 15, 23, $FF0000FF);
+    TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
+
+    // Floater, Glider - both simple
+    DrawAnimationFrame(fSkillIcons[spbFloater], UMBRELLA, 4, 7, 26);
+    DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 26);
+
+    // Disarmer - graphic would be too easily confused with digger, so we fall back to the old graphic for now
+    GetGraphic('icon_disarmer.png', fSkillIcons[spbDisarmer]);
+
+    // Shimmier is straightforward
+    DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 20);
+
+    // Bomber is drawn resized
+    DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 24));
+
+    // Stoner is tricky - the goal is an outlined stoned lemming over a stoner explosion graphic
+    DrawAnimationFrame(fSkillIcons[spbStoner], STONED, 0, 8, 21);
+    Outline(fSkillIcons[spbStoner]);
+    TempBmp.Assign(fSkillIcons[spbStoner]);
+    fSkillIcons[spbStoner].Clear(0);
+    DrawAnimationFrameResized(fSkillIcons[spbStoner], STONEEXPLOSION, 0, Rect(-2, 7, 15, 24));
+    TempBmp.DrawTo(fSkillIcons[spbStoner], 0, 0);
+
+    // Blocker is simple
+    DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 0, 7, 21);
+
+    // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
+    // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
+    DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 20);
+    fSkillIcons[spbPlatformer].FillRect(2, 21, 12, 22, $FF000000);
+    DrawBrick(fSkillIcons[spbPlatformer], 2, 21);
+    DrawBrick(fSkillIcons[spbPlatformer], 5, 21);
+    DrawBrick(fSkillIcons[spbPlatformer], 8, 21);
+    DrawBrick(fSkillIcons[spbPlatformer], 11, 21);
+
+    DrawAnimationFrame(fSkillIcons[spbBuilder], BRICKLAYING, 1, 7, 20);
+    DrawBrick(fSkillIcons[spbBuilder], 4, 22);
+    DrawBrick(fSkillIcons[spbBuilder], 6, 21);
+    DrawBrick(fSkillIcons[spbBuilder], 8, 20);
+    DrawBrick(fSkillIcons[spbBuilder], 10, 19);
+
+    DrawAnimationFrame(fSkillIcons[spbStacker], STACKING, 0, 7, 21);
+    DrawBrick(fSkillIcons[spbStacker], 10, 20);
+    DrawBrick(fSkillIcons[spbStacker], 10, 19);
+    DrawBrick(fSkillIcons[spbStacker], 10, 18);
+    DrawBrick(fSkillIcons[spbStacker], 10, 17);
+
+    // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
+    DrawAnimationFrame(fSkillIcons[spbBasher], BASHING, 0, 8, 21);
+    DrawAnimationFrame(fSkillIcons[spbFencer], FENCING, 1, 7, 21);
+    DrawAnimationFrame(fSkillIcons[spbMiner], MINING, 12, 4, 21);
+
+    // The digger doesn't HAVE any frames without particles. But the Disarmer's similar animation does! ;)
+    DrawAnimationFrame(fSkillIcons[spbDigger], FIXING, 0, 7, 21);
+
+    // And finally, outline everything. We generate the cloner after this, as it makes use of
+    // the post-outlined Walker graphic.
+    for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      if not (Button in [spbSwimmer, spbDisarmer, spbCloner]) then
+        Outline(fSkillIcons[Button]);
+        // Swimmer and Cloner are already outlined during their generation, and Disarmer remains
+        // loaded from a file, and current conventions is that the file already has outlines.
+
+    // Cloner is drawn as two back-to-back walkers, individually outlined.
+    DrawAnimationFrame(fSkillIcons[spbCloner], WALKING_RTL, 1, 6, 21);
+    Outline(fSkillIcons[spbCloner]);
+    TempBmp.Assign(fSkillIcons[spbWalker]);
+    TempBmp.DrawTo(fSkillIcons[spbCloner], 2, 0); // We want it drawn 2px to the right of where it is in the walker icon
+  finally
+    TempBmp.Free;
+  end;
 end;
 
 procedure TBaseSkillPanel.LoadSkillFont;
