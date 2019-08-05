@@ -530,7 +530,7 @@ begin
 
   if (not GameParams.LoadedConfig) or (GameParams.NeedRequestUsername) then
   begin
-    LocalNeedRequestUsername := GameParams.NeedRequestUsername;
+    LocalNeedRequestUsername := GameParams.NeedRequestUsername and GameParams.LoadedConfig;
     GameParams.LoadedConfig := true;
     GameParams.NeedRequestUsername := false;
     ShowSetupMenu(LocalNeedRequestUsername);
