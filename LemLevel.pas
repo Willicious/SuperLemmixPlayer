@@ -394,6 +394,11 @@ var
     O.DrawingFlags := O.DrawingFlags or aValue;
   end;
 
+  procedure GetExitData;
+  begin
+    O.LemmingCap := aSection.LineNumeric['lemmings'];
+  end;
+
   procedure GetTeleporterData;
   begin
     if (aSection.Line['flip_lemming'] <> nil) then Flag(odf_FlipLem);
@@ -450,6 +455,8 @@ var
     if (aSection.Line['glider'] <> nil) then O.TarLev := O.TarLev or 8;
     if (aSection.Line['disarmer'] <> nil) then O.TarLev := O.TarLev or 16;
     if (aSection.Line['zombie'] <> nil) then O.TarLev := O.TarLev or 64;
+
+    O.LemmingCap := aSection.LineNumeric['lemmings'];
   end;
 
   procedure GetMovingBackgroundData;
@@ -478,12 +485,13 @@ begin
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
 
   case PieceManager.Objects[O.Identifier].TriggerEffect of
-    11: GetTeleporterData;
-    12: GetReceiverData;
-    14: GetPickupData;
-    21: GetSplitterData;
-    23: GetWindowData;
-    30: GetMovingBackgroundData;
+    DOM_TELEPORT: GetTeleporterData;
+    DOM_RECEIVER: GetReceiverData;
+    DOM_PICKUP: GetPickupData;
+    DOM_FLIPPER: GetSplitterData;
+    DOM_WINDOW: GetWindowData;
+    DOM_BACKGROUND: GetMovingBackgroundData;
+    DOM_EXIT, DOM_LOCKEXIT: GetExitData;
   end;
 end;
 
@@ -618,19 +626,33 @@ var
   S: TSkillPanelButton;
   FoundSkill: Boolean;
 
-  IsWindow: array of Boolean;
+  WindowLemmingCount: array of Integer;
   FoundWindow: Boolean;
   n: Integer;
+  SpawnedCount: Integer;
+  MaxPossibleSaveCount: Integer;
+  PickupCloners: Integer;
 
   procedure SetNextWindow;
+  var
+    initial: Integer;
   begin
+    initial := n;
+    if initial = -1 then
+      initial := InteractiveObjects.Count-1;
     repeat
       Inc(n);
       if n >= InteractiveObjects.Count then n := 0;
-    until IsWindow[n];
+      if (n = initial) and (WindowLemmingCount[n] = 0) then
+      begin
+        n := -1;
+        Exit;
+      end;
+    until WindowLemmingCount[n] <> 0;
   end;
 begin
   // 1. Validate skillset - remove skills that don't exist in the level
+  PickupCloners := 0;
   for S := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
     if not (S in Info.Skillset) then Continue;
@@ -641,21 +663,27 @@ begin
       if PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect <> DOM_PICKUP then Continue;
       if InteractiveObjects[i].Skill <> Integer(S) then Continue;
       FoundSkill := true;
-      Break;
+      if (S = spbCloner) then
+        Inc(PickupCloners) // used later
+      else
+        Break;
     end;
     if not FoundSkill then Info.Skillset := Info.Skillset - [S];
   end;
 
   // 2. Calculate ZombieCount, precise spawn order, and finalised lemming count
   FoundWindow := false;
-  SetLength(IsWindow, InteractiveObjects.Count);
+  SetLength(WindowLemmingCount, InteractiveObjects.Count);
   for i := 0 to InteractiveObjects.Count-1 do
     if (PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW) then
     begin
       FoundWindow := true;
-      IsWindow[i] := true;
+      if InteractiveObjects[i].LemmingCap > 0 then
+        WindowLemmingCount[i] := InteractiveObjects[i].LemmingCap
+      else
+        WindowLemmingCount[i] := -1;
     end else
-      IsWindow[i] := false;
+      WindowLemmingCount[i] := 0;
 
   Info.ZombieCount := 0;
   for i := 0 to PreplacedLemmings.Count-1 do
@@ -669,14 +697,52 @@ begin
   end else begin
     n := -1;
     SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count);
+
+    SpawnedCount := PreplacedLemmings.Count;
+
     for i := 0 to Length(Info.SpawnOrder)-1 do
     begin
       SetNextWindow;
+
+      if (n = -1) then
+      begin
+        Info.LemmingsCount := SpawnedCount; // remember - this already includes preplaced lemmings
+        Break;
+      end;
+
       if (InteractiveObjects[n].TarLev and 64) <> 0 then
         Info.ZombieCount := Info.ZombieCount + 1;
       Info.SpawnOrder[i] := n;
+
+      if WindowLemmingCount[n] > 0 then
+        Dec(WindowLemmingCount[n]);
+
+      Inc(SpawnedCount);
     end;
+
+    SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count); // in case this got overridden
   end;
+
+  // Validate save requirement and lower it if need be. It must:
+  //  - Not exceed the lemming count + cloner count
+  //  - Not exceed the total number of lemmings permitted to enter the level's exits
+  MaxPossibleSaveCount := 0;
+  for i := 0 to InteractiveObjects.Count-1 do
+  begin
+    if not (PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) then
+      Continue;
+
+    if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleSaveCount >= 0) then
+      MaxPossibleSaveCount := MaxPossibleSaveCount + InteractiveObjects[i].LemmingCap
+    else
+      MaxPossibleSaveCount := -1;
+  end;
+
+  if MaxPossibleSaveCount < 0 then
+    MaxPossibleSaveCount := Info.LemmingsCount + Info.SkillCount[spbCloner] + PickupCloners;
+
+  if Info.RescueCount > MaxPossibleSaveCount then
+    Info.RescueCount := MaxPossibleSaveCount;
 end;
 
 // TLevel Saving Routines

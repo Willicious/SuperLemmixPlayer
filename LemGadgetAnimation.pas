@@ -19,6 +19,7 @@ type
 
   TGadgetAnimationTriggerCondition = (gatcUnconditional, gatcReady, gatcBusy, gatcDisabled,
                                       gatcExhausted);
+
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
   TGadgetAnimationTriggerConditionArray = array[TGadgetAnimationTriggerCondition] of TGadgetAnimationTriggerState;
 
@@ -49,27 +50,28 @@ type
   as animating for the purpose of this rule.
 
 
-  OBJECT TYPE     | gatcUnconditional
+  OBJECT TYPE     | gatcUnconditional (no condition)
   ----------------|-----------------------------------
   GENERAL RULE    | Always true, for all objects
   Anything        | Always true
 
 
-  OBJECT TYPE     | gatcReady
+  OBJECT TYPE     | gatcReady (READY)
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true if the object would able to interact with a lemming at this moment
+  DOM_EXIT        | True when the exit's lemming limit has not been reached, or if the exit has no limit
   DOM_TRAP        | True when the trap is idle (but not disabled)
   DOM_TELEPORT    | True when the teleporter and its paired receiver (if any) are idle
   DOM_RECEIVER    | True when the receiver and its paired teleporter (if any) are idle
   DOM_PICKUP      | True when the skill has not been picked up
-  DOM_LOCKEXIT    | True when the exit is open (not just opening - must be fully open)
+  DOM_LOCKEXIT    | True when the exit is fully open and the lemming limit has not been reached, or it doesn't have one
   DOM_BUTTON      | True when the button has not been pressed
-  DOM_WINDOW      | True when the window is open (not just opening - must be fully open)
+  DOM_WINDOW      | True when the window is fully open, and if it has a lemming limit, hasn't yet reached it
   DOM_TRAPONCE    | True when the trap has not yet been triggered (or disabled)
   All others      | Always true
 
 
-  OBJECT TYPE     | gatcBusy
+  OBJECT TYPE     | gatcBusy (BUSY)
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true when the object is transitioning between states, or currently in use
   DOM_TRAP        | True when the trap is mid-kill
@@ -81,17 +83,18 @@ type
   All others      | Always false
 
 
-  OBJECT TYPE     | gatcDisabled
+  OBJECT TYPE     | gatcDisabled (DISABLED)
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true when the object is unable to interact with a lemming, either permanently or
                   | until some external condition is fulfilled.
+  DOM_EXIT        | True if the exit has a lemming limit and it has been reached
   DOM_TRAP        | True if the trap has been disabled (most likely by a disarmer)
   DOM_TELEPORT    | True if no receiver exists on the level
   DOM_RECEIVER    | True if no teleporter exists on the level
   DOM_PICKUP      | True if the skill has been picked up
-  DOM_LOCKEXIT    | True while the exit is in a locked state
+  DOM_LOCKEXIT    | True while the exit is in a locked state, or if the exit has a lemming limit and it has been reached
   DOM_BUTTON      | True when the button has been pressed
-  DOM_WINDOW      | Always false (? - maybe, "true when no more lemmings are to be released")
+  DOM_WINDOW      | True if the window has a lemming limit and it has been reached
   DOM_TRAPONCE    | True when the trap has been disabled (most likely by a disarmer) or used
   All others      | Always false
 
@@ -99,8 +102,11 @@ type
   OBJECT TYPE     | gatcExhausted
   ----------------|-----------------------------------
   GENERAL RULE    | True if an object with limited uses has been used up.
+  DOM_EXIT        | True if the exit is limited-use and has zero remaining uses
   DOM_PICKUP      | True if the skill has been picked up
+  DOM_LOCKEXIT    | True if the exit is limited-use and has zero remaining uses
   DOM_BUTTON      | True when the button has been pressed
+  DOM_WINDOW      | True if the window is limited-use and has released all lemmings
   DOM_TRAPONCE    | True when the trap has been used
   All others      | Always false
 

@@ -32,12 +32,16 @@ type
     TriggerHeight:    Integer;
     ResizeHorizontal: Boolean;
     ResizeVertical: Boolean;
+    DigitX:           Integer;
+    DigitY:           Integer;
+    DigitAlign:       Integer;
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
 
   TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height,
                          ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
-                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame);
+                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame,
+                         ov_DigitX, ov_DigitY, ov_DigitAlign, ov_DigitMinLength);
                          // Integer properties only.
 
   TGadgetMetaInfo = class
@@ -59,6 +63,7 @@ type
     fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : String;  // filename of sound to play
+    fDigitMinLength               : Integer;
 
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
 
@@ -102,6 +107,9 @@ type
     property TriggerTop[Flip, Invert, Rotate: Boolean]   : Integer index ov_TriggerTop read GetVariableProperty write SetVariableProperty;
     property TriggerWidth[Flip, Invert, Rotate: Boolean] : Integer index ov_TriggerWidth read GetVariableProperty write SetVariableProperty;
     property TriggerHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_TriggerHeight read GetVariableProperty write SetVariableProperty;
+    property DigitX[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitX read GetVariableProperty write SetVariableProperty;
+    property DigitY[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitY read GetVariableProperty write SetVariableProperty;
+    property DigitAlign[Flip, Invert, Rotate: Boolean]   : Integer index ov_DigitAlign read GetVariableProperty write SetVariableProperty;
     property TriggerEffect: Integer read fTriggerEffect write fTriggerEffect; // used by level loading / saving code
 
     property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean read GetCanResizeHorizontal write SetCanResizeHorizontal;
@@ -128,6 +136,7 @@ type
       function GetAnimations: TGadgetAnimations;
       function GetSoundEffect: String;
       procedure SetSoundEffect(aValue: String);
+      function GetDigitAnimation: TGadgetAnimation;
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 
@@ -143,11 +152,17 @@ type
       property TriggerWidth: Integer index ov_TriggerWidth read GetIntegerProperty write SetIntegerProperty;
       property TriggerHeight: Integer index ov_TriggerHeight read GetIntegerProperty write SetIntegerProperty;
       property TriggerEffect: Integer index ov_TriggerEffect read GetIntegerProperty write SetIntegerProperty;
+      property DigitX: Integer index ov_DigitX read GetIntegerProperty write SetIntegerProperty;
+      property DigitY: Integer index ov_DigitY read GetIntegerProperty write SetIntegerProperty;
+      property DigitAlign: Integer index ov_DigitAlign read GetIntegerProperty write SetIntegerProperty;
+      property DigitMinLength: Integer index ov_DigitMinLength read GetIntegerProperty write SetIntegerProperty;
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
       property SoundEffect: String read GetSoundEffect write SetSoundEffect;
 
       property CanResizeHorizontal      : Boolean read GetCanResizeHorizontal write SetCanResizeHorizontal;
       property CanResizeVertical        : Boolean read GetCanResizeVertical write SetCanResizeVertical;
+
+      property DigitAnimation: TGadgetAnimation read GetDigitAnimation;
   end;
 
   TGadgetMetaInfoList = class(TObjectList)
@@ -309,6 +324,39 @@ begin
         GadgetAccessor.TriggerHeight := 1;
     end;
 
+    GadgetAccessor.DigitAlign := 0; // due to how fallback values work, we want to assign the last-resort fallback here
+
+    GadgetAccessor.DigitX := Sec.LineNumeric['digit_x'];
+    GadgetAccessor.DigitY := Sec.LineNumeric['digit_y'];
+
+    if Sec.Line['digit_x'] = nil then
+    begin
+      if fTriggerEffect = DOM_PICKUP then
+      begin
+        GadgetAccessor.DigitX := fWidth - 1;
+        if Sec.Line['digit_align'] = nil then
+          GadgetAccessor.DigitAlign := 1;
+      end else
+        GadgetAccessor.DigitX := fWidth div 2;
+    end;
+
+    if Sec.Line['digit_y'] = nil then
+    begin
+      if fTriggerEffect = DOM_PICKUP then
+        GadgetAccessor.DigitY := GadgetAccessor.Height - 4
+      else
+        GadgetAccessor.DigitY := -6;
+    end;
+
+    GadgetAccessor.DigitAlign := Sec.LineNumericDefault['digit_align', GadgetAccessor.DigitAlign];
+
+    if fTriggerEffect = DOM_PICKUP then
+      fDigitMinLength := 0
+    else
+      fDigitMinLength := 1;
+
+    fDigitMinLength := Sec.LineNumericDefault['digit_length', fDigitMinLength];
+
     fSoundEffect := Sec.LineTrimString['sound'];
 
     fKeyFrame := Sec.LineNumeric['key_frame']; // this is almost purely a physics property, so should not go under animations
@@ -434,6 +482,11 @@ begin
 
     DstRec.ResizeHorizontal := SrcRec.ResizeVertical;
     DstRec.ResizeVertical := SrcRec.ResizeHorizontal;
+
+    // I can't imagine digits will work well rotated (at least without a vertical display option), but better at least try
+    DstRec.DigitAlign := 0; // not that any value really makes sense for this
+    DstRec.DigitX := SrcRec.Animations.PrimaryAnimation.Height - SrcRec.DigitY - 1;
+    DstRec.DigitY := SrcRec.DigitX;
   end;
 
   if Flip then
@@ -442,6 +495,10 @@ begin
 
     // Flip trigger area X coordinate
     DstRec.TriggerLeft := DstRec.Animations.PrimaryAnimation.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
+
+    // Flip digit X coordinate and alignment
+    DstRec.DigitX := DstRec.Animations.PrimaryAnimation.Width - DstRec.DigitX - 1;
+    DstRec.DigitAlign := -DstRec.DigitAlign;
   end;
 
   if Invert then
@@ -452,6 +509,9 @@ begin
     DstRec.TriggerTop := DstRec.Animations.PrimaryAnimation.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
       DstRec.TriggerTop := DstRec.TriggerTop + 10;
+
+    // Flip digit Y coordinate
+    DstRec.DigitY := DstRec.Animations.PrimaryAnimation.Height - DstRec.DigitY - 1;
   end;
 end;
 
@@ -479,6 +539,9 @@ begin
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
       ov_TriggerHeight: Result := TriggerHeight;
+      ov_DigitX: Result := DigitX;
+      ov_DigitY: Result := DigitY;
+      ov_DigitAlign: Result := DigitAlign;
       else raise Exception.Create('TMetaObject.GetVariableProperty called for an invalid property!');
     end;
 end;
@@ -511,6 +574,9 @@ begin
       ov_TriggerTop: TriggerTop := aValue;
       ov_TriggerWidth: TriggerWidth := aValue;
       ov_TriggerHeight: TriggerHeight := aValue;
+      ov_DigitX: DigitX := aValue;
+      ov_DigitY: DigitY := aValue;
+      ov_DigitAlign: DigitAlign := aValue;
       else raise Exception.Create('TMetaObject.SetVariableProperty called for an invalid property!');
     end;
   MarkMetaDataUnmade;
@@ -563,6 +629,10 @@ begin
     ov_TriggerWidth: Result := fGadgetMetaInfo.TriggerWidth[fFlip, fInvert, fRotate];
     ov_TriggerHeight: Result := fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate];
     ov_TriggerEffect: Result := fGadgetMetaInfo.fTriggerEffect;
+    ov_DigitX: Result := fGadgetMetaInfo.DigitX[fFlip, fInvert, fRotate];
+    ov_DigitY: Result := fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate];
+    ov_DigitAlign: Result := fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate];
+    ov_DigitMinLength: Result := fGadgetMetaInfo.fDigitMinLength;
     ov_KeyFrame: Result := fGadgetMetaInfo.fKeyFrame;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
@@ -586,6 +656,10 @@ begin
     ov_TriggerWidth: fGadgetMetaInfo.TriggerWidth[fFlip, fInvert, fRotate] := aValue;
     ov_TriggerHeight: fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate] := aValue;
     ov_TriggerEffect: fGadgetMetaInfo.fTriggerEffect := aValue;
+    ov_DigitX: fGadgetMetaInfo.DigitX[fFlip, fInvert, fRotate] := aValue;
+    ov_DigitY: fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate] := aValue;
+    ov_DigitAlign: fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate] := aValue;
+    ov_DigitMinLength: fGadgetMetaInfo.fDigitMinLength := aValue;
     ov_KeyFrame: fGadgetMetaInfo.fKeyFrame := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
@@ -599,6 +673,11 @@ end;
 procedure TGadgetMetaAccessor.SetSoundEffect(aValue: String);
 begin
   fGadgetMetaInfo.fSoundEffect := aValue;
+end;
+
+function TGadgetMetaAccessor.GetDigitAnimation: TGadgetAnimation;
+begin
+  Result := fGadgetMetaInfo.Animations[false, false, false]['DIGITS'];
 end;
 
 function TGadgetMetaAccessor.GetAnimations: TGadgetAnimations;

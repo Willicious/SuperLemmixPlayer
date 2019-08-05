@@ -30,6 +30,7 @@ type
     fTarLev: Integer; // This saves the preassigned skills for hatches
                       //        and the speed of movable backgrounds.
                       //        and the skill amount for pick-up skills
+    fLemmingCap: Integer;
     procedure SetInvert(aValue: Boolean); override;
     function GetInvert: Boolean; override;
   public
@@ -41,6 +42,7 @@ type
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
     property Skill : Integer read fSkill write fSkill;
     property TarLev : Integer read fTarLev write fTarLev;
+    property LemmingCap: Integer read fLemmingCap write fLemmingCap;
   end;
 
 type
@@ -130,6 +132,7 @@ begin
     Height := O.Height;
     Skill := O.Skill;
     TarLev := O.TarLev;
+    LemmingCap := O.LemmingCap;
   end;
 end;
 

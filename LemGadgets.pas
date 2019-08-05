@@ -73,6 +73,8 @@ type
     sZombieMode     : Boolean;
     sSecondariesTreatAsBusy: Boolean;
 
+    sRemainingLemmingsCount: Integer;
+
     Obj            : TGadgetModel;
 
     procedure CreateAnimationInstances;
@@ -98,6 +100,7 @@ type
     function GetSpeed: Integer;
     function GetSkillCount: Integer;
     function GetTriggerEffectBase: Integer;
+    function GetRemainingLemmingsCount: Integer;
 
     function GetCurrentFrame: Integer; // Just remaps to primary animation. This allows LemGame to control
     procedure SetCurrentFrame(aValue: Integer); // the primary animation directly, as it always has.
@@ -154,6 +157,7 @@ type
     property HasPreassignedSkills: Boolean read GetHasPreassignedSkills;
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
     property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
+    property RemainingLemmingsCount: Integer read GetRemainingLemmingsCount write sRemainingLemmingsCount;
 
     property AnimationFlag[Flag: TGadgetAnimationTriggerCondition]: Boolean read GetAnimFlagState;
 
@@ -187,6 +191,7 @@ constructor TGadget.Create;
 begin
   inherited;
   Animations := TGadgetAnimationInstances.Create;
+  sRemainingLemmingsCount := -2;
 end;
 
 constructor TGadget.Create(ObjParam: TGadgetModel; MetaParam: TGadgetMetaAccessor);
@@ -394,9 +399,9 @@ const
   BUSY_OBJECT_TYPES = // Any object not listed here, always returns false
     [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
   DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
+    [DOM_EXIT, DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
   EXHAUSTED_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_BUTTON, DOM_PICKUP, DOM_TRAPONCE];
+    [DOM_EXIT, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
 
   function CheckReadyFlag: Boolean;
   begin
@@ -408,11 +413,13 @@ const
         Result := false
       else
         case TriggerEffectBase of
-          DOM_TRAP, DOM_LOCKEXIT, DOM_TELEPORT: Result := (CurrentFrame = 0);
+          DOM_EXIT: Result := RemainingLemmingsCount <> 0;
+          DOM_TRAP, DOM_TELEPORT: Result := (CurrentFrame = 0);
+          DOM_LOCKEXIT: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
           DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 1;
           DOM_PICKUP: Result := CurrentFrame <> 0;
           DOM_RECEIVER: Result := (CurrentFrame = 0) and (not HoldActive);
-          DOM_WINDOW: Result := (CurrentFrame = 0); // may make this do more in the future
+          DOM_WINDOW: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
         end;
     end;
   end;
@@ -442,10 +449,11 @@ const
         Result := true
       else
         case TriggerEffectBase of
+          DOM_EXIT: Result := RemainingLemmingsCount = 0;
           // DOM_TRAP: Only condition is handled by the above TriggerEffect check
           DOM_PICKUP, DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
-          DOM_LOCKEXIT: Result := CurrentFrame = 1;
-          DOM_WINDOW: Result := false; // may make this do more in the future
+          DOM_LOCKEXIT: Result := (CurrentFrame = 1) or (RemainingLemmingsCount = 0);
+          DOM_WINDOW: Result := RemainingLemmingsCount = 0; // todo: when all lemmings are released even on infinite windows
         end;
     end;
   end;
@@ -456,6 +464,7 @@ const
     if TriggerEffectBase in EXHAUSTED_OBJECT_TYPES then
       case TriggerEffectBase of
         DOM_BUTTON, DOM_PICKUP, DOM_TRAPONCE: Result := CurrentFrame = 0;
+        DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW: Result := RemainingLemmingsCount = 0;
       end;
   end;
 begin
@@ -474,6 +483,19 @@ begin
   // Only call this function for hatches and preplaced lemmings
   Assert(MetaObj.TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
   Result := (Obj.TarLev and BitField) <> 0; // Yes, "TargetLevel" stores this info!
+end;
+
+function TGadget.GetRemainingLemmingsCount: Integer;
+begin
+  if sRemainingLemmingsCount < -1 then
+  begin
+    if Obj.LemmingCap > 0 then
+      sRemainingLemmingsCount := Obj.LemmingCap
+    else
+      sRemainingLemmingsCount := -1;
+  end;
+
+  Result := sRemainingLemmingsCount;
 end;
 
 function TGadget.GetHasPreassignedSkills: Boolean;
@@ -567,6 +589,7 @@ begin
   NewObj.TeleLem := TeleLem;
   NewObj.HoldActive := HoldActive;
   NewObj.ZombieMode := ZombieMode;
+  NewObj.sRemainingLemmingsCount := sRemainingLemmingsCount;
 end;
 
 procedure TGadget.UnifyFlippingFlagsOfTeleporter();

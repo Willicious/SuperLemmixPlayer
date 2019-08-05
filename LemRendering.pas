@@ -1554,9 +1554,8 @@ var
   ThisAnim: TGadgetAnimationInstance;
   DstRect: TRect;
 
-  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
+  procedure DrawNumberWithCountdownDigits(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
-    NumberString: String;
     DigitsWidth: Integer;
 
     CurX: Integer;
@@ -1569,39 +1568,84 @@ var
   begin
     OldDrawColor := fFixedDrawColor;
 
-    NumberString := IntToStr(aNumber);
-    DigitsWidth := (Length(NumberString) * 4) + Length(NumberString) - 1;
+    Y := Y - 2; // to center
+
+    DigitsWidth := Length(aDigitString) * 5;
     if aAlignment < 0 then
       CurX := X
     else if aAlignment > 0 then
       CurX := X - DigitsWidth + 1
     else
-      CurX := X - (DigitsWidth div 2);
+      CurX := X - (DigitsWidth div 2) + 1;
 
-    for n := 1 to Length(NumberString) do
+    for n := 1 to Length(aDigitString) do
     begin
-      Digit := StrToInt(NumberString[n]);
+      Digit := StrToInt(aDigitString[n]);
       SrcRect := SizedRect(Digit * 4, 0, 4, 5);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX - 1, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
       fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y + 1, SrcRect);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
       fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX - 1, Y, SrcRect);
       CurX := CurX + 5;
     end;
 
     fFixedDrawColor := OldDrawColor;
   end;
 
+  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aMinDigits: Integer = 1; aAlignment: Integer = -1);
+  var
+    Digits: TGadgetAnimation;
+    DigitString: String;
+
+    CurX, TargetY: Integer;
+    n: Integer;
+  begin
+    if (aNumber = 0) and (aMinDigits <= 0) then
+      Exit; // Special case - allow for "show nothing on zero"
+
+    Digits := Gadget.MetaObj.DigitAnimation;
+    DigitString := LeadZeroStr(aNumber, aMinDigits);
+
+    if Gadget.MetaObj.DigitAnimation = nil then
+    begin
+      DrawNumberWithCountdownDigits(X, Y, DigitString, aAlignment);
+      Exit;
+    end;
+
+    if aAlignment < 0 then
+      CurX := X
+    else if aAlignment > 0 then
+      CurX := X - (Length(DigitString) * Digits.Width)
+    else
+      CurX := X - ((Length(DigitString) * Digits.Width) div 2);
+
+    TargetY := Y - (Digits.Height div 2);
+
+    for n := 1 to Length(DigitString) do
+    begin
+      Digits.Draw(Dst, CurX, TargetY, StrToInt(DigitString[n]));
+      Inc(CurX, Digits.Width);
+    end;
+  end;
+
   procedure AddPickupSkillNumber;
   begin
-    DrawNumber(Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height - 6, Gadget.SkillCount, 1);
+    if (Gadget.SkillCount > 1) or (Gadget.MetaObj.DigitMinLength >= 1) then
+      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
+  end;
+
+  procedure AddLemmingCountNumber;
+  begin
+    if (Gadget.RemainingLemmingsCount >= 0) then
+      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.RemainingLemmingsCount,
+                 Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
 begin
@@ -1624,8 +1668,11 @@ begin
     DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
 
-  if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+  if (Gadget.TriggerEffect = DOM_PICKUP) then
     AddPickupSkillNumber;
+
+  if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW]) then
+    AddLemmingCountNumber;
 end;
 
 procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
