@@ -126,6 +126,9 @@ type
 
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 
+    // Composite pieces (terrain grouping)
+    procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32);
+
     // Terrain rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
 
@@ -1111,6 +1114,148 @@ begin
   end;
 end;
 
+procedure TRenderer.PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32);
+const
+  MIN_WIDTH = 1;
+  MIN_HEIGHT = 1;
+var
+  DataBoundsRect: TRect;
+  BMP: TBitmap32;
+
+  function CheckGroupIsValid: Boolean;
+  var
+    i: Integer;
+    IsSteelGroup: Boolean;
+  begin
+    // This function should:
+    //  - If group is valid, return TRUE
+    //  - If group is invalid and some sane way to handle it exists, handle it as such then return FALSE
+    //  - If group is invalid and no sane way to handle it exists, raise an exception
+
+    if aTerrains.Count = 0 then
+    begin
+      aDst.SetSize(MIN_WIDTH, MIN_HEIGHT);
+      aDst.Clear(0);
+      Result := false;
+    end else begin
+      IsSteelGroup := PieceManager.Terrains[aTerrains[0].Identifier].IsSteel;
+      for i := 1 to aTerrains.Count-1 do
+        if (aTerrains[i].DrawingFlags and tdf_Erase = 0) and
+           (PieceManager.Terrains[aTerrains[i].Identifier].IsSteel <> IsSteelGroup) then
+          raise Exception.Create('TRenderer.PrepareCompositePieceBitmap received a group with a mix of steel and nonsteel pieces!');
+
+      Result := true;
+    end;
+  end;
+
+  procedure CalculateDataBoundsRect;
+  var
+    i: Integer;
+    Terrain: TTerrain;
+    MetaTerrain: TMetaTerrain;
+    ThisTerrainRect: TRect;
+    HasFoundNonEraserTerrain: Boolean;
+  begin
+    // Calculates the initial canvas rectangle we draw on to. If shrinking this
+    // is needed later, we do so, but for now we just want a size that's 100%
+    // for sure able to fit the composite piece.
+
+    HasFoundNonEraserTerrain := false;
+    DataBoundsRect := Rect(0, 0, 0, 0); // in case all pieces are erasers
+
+    for i := 0 to aTerrains.Count-1 do
+    begin
+      Terrain := aTerrains[i];
+
+      if (Terrain.DrawingFlags and tdf_Erase) <> 0 then
+        Continue; // We don't need to expand the canvas for erasers.
+
+      MetaTerrain := PieceManager.Terrains[Terrain.Identifier];
+
+      ThisTerrainRect.Left := Terrain.Left;
+      ThisTerrainRect.Top := Terrain.Top;
+
+      if (Terrain.DrawingFlags and tdf_Rotate) = 0 then
+      begin
+        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Width[false, false, false];
+        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Height[false, false, false];
+      end else begin
+        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Height[false, false, false];
+        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Width[false, false, false];
+      end;
+
+      if HasFoundNonEraserTerrain then
+        DataBoundsRect := TRect.Union(DataBoundsRect, ThisTerrainRect)
+      else begin
+        DataBoundsRect := ThisTerrainRect;
+        HasFoundNonEraserTerrain := true;
+      end;
+    end;
+
+    if DataBoundsRect.Width < 1 then
+      DataBoundsRect.Right := DataBoundsRect.Left + 1;
+
+    if DataBoundsRect.Height < 1 then
+      DataBoundsRect.Bottom := DataBoundsRect.Top + 1;
+  end;
+
+  procedure DrawPieces;
+  var
+    i: Integer;
+    LocalTerrain: TTerrain;
+  begin
+    LocalTerrain := TTerrain.Create;
+    try
+      for i := 0 to aTerrains.Count-1 do
+      begin
+        LocalTerrain.Assign(aTerrains[i]);
+        LocalTerrain.Left := LocalTerrain.Left - DataBoundsRect.Left;
+        LocalTerrain.Top := LocalTerrain.Top - DataBoundsRect.Top;
+        DrawTerrain(BMP, LocalTerrain);
+      end;
+    finally
+      LocalTerrain.Free;
+    end;
+  end;
+
+  procedure DrawCroppedToDst;
+  var
+    SrcRect: TRect;
+    x, y: Integer;
+  begin
+    SrcRect := Rect(BMP.Width, BMP.Height, 0, 0);
+    for y := 0 to BMP.Height-1 do
+      for x := 0 to BMP.Width-1 do
+      begin
+        if (BMP.Pixel[x, y] and $FF000000) <> 0 then
+        begin
+          if (x < SrcRect.Left) then srcRect.Left := x;
+          if (y < SrcRect.Top) then srcRect.Top := y;
+          if (x >= SrcRect.Right) then srcRect.Right := x + 1; // careful - remember how TRect.Right / TRect.Bottom work!
+          if (y >= SrcRect.Bottom) then srcRect.Bottom := y + 1;
+        end;
+      end;
+
+    if SrcRect.Width < MIN_WIDTH then SrcRect.Right := SrcRect.Left + MIN_WIDTH;
+    if SrcRect.Height < MIN_HEIGHT then SrcRect.Bottom := SrcRect.Top + MIN_HEIGHT;
+
+    aDst.SetSize(SrcRect.Width, SrcRect.Height);
+    aDst.Clear(0);
+    BMP.DrawTo(aDst, -SrcRect.Left, -SrcRect.Top);
+  end;
+begin
+  if not CheckGroupIsValid then Exit;
+  CalculateDataBoundsRect;
+
+  BMP := TBitmap32.Create(DataBoundsRect.Width, DataBoundsRect.Height);
+  try
+    BMP.Clear(0);
+    DrawPieces;
+    DrawCroppedToDst;
+  finally
+    BMP.Free;
+  end;
+end;
 
 procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false);
 begin
@@ -2131,6 +2276,10 @@ begin
     fRenderInterface.UserHelper := hpi_None;
     fRenderInterface.DisableDrawing := NoOutput;
   end;
+
+  // Prepare any composite pieces
+  PieceManager.RemoveCompositePieces;
+  PieceManager.MakePiecesFromGroups(aLevel.TerrainGroups);
 
   RenderPhysicsMap;
 end;

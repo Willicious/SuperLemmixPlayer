@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, StrUtils,
   LemCore, LemLemming,
   LemTalisman,
-  LemTerrain, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
+  LemTerrain, LemTerrainGroup, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
   LemNeoPieceManager, LemNeoParser;
 
 type
@@ -86,6 +86,7 @@ type
   TLevel = class
   private
     fLevelInfo       : TLevelInfo;
+    fTerrainGroups      : TTerrainGroups;
     fTerrains           : TTerrains;
     fInteractiveObjects : TGadgetModelList;
     fPreplacedLemmings  : TPreplacedLemmingList;
@@ -98,6 +99,7 @@ type
     procedure LoadGeneralInfo(aSection: TParserSection);
     procedure LoadSkillsetSection(aSection: TParserSection);
     procedure HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
+    procedure HandleTerrainGroupEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
@@ -129,6 +131,7 @@ type
   published
     property Info: TLevelInfo read fLevelInfo;
     property InteractiveObjects: TGadgetModelList read fInteractiveObjects;
+    property TerrainGroups: TTerrainGroups read fTerrainGroups;
     property Terrains: TTerrains read fTerrains;
     property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings;
     property Talismans: TObjectList<TTalisman> read fTalismans;
@@ -194,6 +197,7 @@ begin
   fLevelInfo := TLevelInfo.Create;
   fInteractiveObjects := TGadgetModelList.Create;
   fTerrains := TTerrains.Create;
+  fTerrainGroups := TTerrainGroups.Create;
   fPreplacedLemmings := TPreplacedLemmingList.Create;
   fTalismans := TObjectList<TTalisman>.Create(true);
   fPreText := TStringList.Create;
@@ -205,6 +209,7 @@ begin
   fLevelInfo.Free;
   fInteractiveObjects.Free;
   fTerrains.Free;
+  fTerrainGroups.Free;
   fPreplacedLemmings.Free;
   fTalismans.Free;
   fPreText.Free;
@@ -217,6 +222,7 @@ begin
   fLevelInfo.Clear;
   fInteractiveObjects.Clear;
   fTerrains.Clear;
+  fTerrainGroups.Clear;
   fPreplacedLemmings.Clear;
   fTalismans.Clear;
   fPreText.Clear;
@@ -277,6 +283,7 @@ begin
       LoadGeneralInfo(Main);
       LoadSkillsetSection(Main.Section['skillset']);
 
+      Main.DoForEachSection('terraingroup', HandleTerrainGroupEntry);
       Main.DoForEachSection('object', HandleObjectEntry);
       Main.DoForEachSection('terrain', HandleTerrainEntry);
       Main.DoForEachSection('lemming', HandleLemmingEntry);
@@ -480,29 +487,30 @@ begin
   end;
 end;
 
+procedure TLevel.HandleTerrainGroupEntry(aSection: TParserSection; const aIteration: Integer);
+var
+  G: TTerrainGroup;
+begin
+  G := TTerrainGroup.Create;
+  G.Name := aSection.LineString['name'];
+  aSection.DoForEachSection('terrain',
+    procedure (aSec: TParserSection; const aIter: Integer)
+    var
+      T: TTerrain;
+    begin
+      T := G.Terrains.Add;
+      T.LoadFromSection(aSec);
+    end
+  );
+  fTerrainGroups.Add(G);
+end;
+
 procedure TLevel.HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
 var
   T: TTerrain;
-
-  procedure Flag(aValue: Integer);
-  begin
-    T.DrawingFlags := T.DrawingFlags or aValue;
-  end;
 begin
   T := fTerrains.Add;
-
-  T.GS := aSection.LineTrimString['collection'];
-  T.Piece := aSection.LineTrimString['piece'];
-  T.Left := aSection.LineNumeric['x'];
-  T.Top := aSection.LineNumeric['y'];
-
-  T.DrawingFlags := tdf_NoOneWay;
-  if (aSection.Line['one_way'] <> nil) then T.DrawingFlags := 0;
-  if (aSection.Line['rotate'] <> nil) then Flag(tdf_Rotate);
-  if (aSection.Line['flip_horizontal'] <> nil) then Flag(tdf_Flip);
-  if (aSection.Line['flip_vertical'] <> nil) then Flag(tdf_Invert);
-  if (aSection.Line['no_overwrite'] <> nil) then Flag(tdf_NoOverwrite);
-  if (aSection.Line['erase'] <> nil) then Flag(tdf_Erase);
+  T.LoadFromSection(aSection);
 end;
 
 procedure TLevel.HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
