@@ -218,20 +218,20 @@ begin
       fLevelOverride := $0000;
     end;
 
-    if not gCheated then
-    with CurrentLevel do
-    begin
-      if gRescued > CurrentLevel.Records.LemmingsRescued then
-        CurrentLevel.Records.LemmingsRescued := gRescued;
-
-      if gSuccess then
+    if (not gCheated) and (GlobalGame.ReplayManager.IsThisUsersReplay) then
+      with CurrentLevel do
       begin
-        Status := lst_Completed;
-        if (CurrentLevel.Records.TimeTaken = 0) or (gLastRescueIteration < CurrentLevel.Records.TimeTaken) then
-          CurrentLevel.Records.TimeTaken := gLastRescueIteration;
-      end else if Status = lst_None then
-        Status := lst_Attempted;
-    end;
+        if gRescued > CurrentLevel.Records.LemmingsRescued then
+          CurrentLevel.Records.LemmingsRescued := gRescued;
+
+        if gSuccess then
+        begin
+          Status := lst_Completed;
+          if (CurrentLevel.Records.TimeTaken = 0) or (gLastRescueIteration < CurrentLevel.Records.TimeTaken) then
+            CurrentLevel.Records.TimeTaken := gLastRescueIteration;
+        end else if Status = lst_None then
+          Status := lst_Attempted;
+      end;
 
     if gRescued >= Level.Info.RescueCount then
     begin

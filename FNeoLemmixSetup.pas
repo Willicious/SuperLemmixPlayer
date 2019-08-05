@@ -10,23 +10,26 @@ type
   TFNLSetup = class(TForm)
     SetupPages: TPageControl;
     TabSheet1: TTabSheet;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
+    lblWelcome: TLabel;
+    lblOptionsText1: TLabel;
+    lblOptionsText2: TLabel;
     btnNext: TButton;
     btnExit: TButton;
-    Label4: TLabel;
+    lblHotkeys: TLabel;
     cbHotkey: TComboBox;
-    Label5: TLabel;
+    lblGraphics: TLabel;
     cbGraphics: TComboBox;
+    lblUsername: TLabel;
+    ebUserName: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     procedure SetClassicHotkeys;
     procedure SetLixHotkeys;
   public
-    { Public declarations }
+    NameOnly: Boolean;
   end;
 
 implementation
@@ -41,6 +44,19 @@ uses
 procedure TFNLSetup.FormCreate(Sender: TObject);
 begin
   SetupPages.TabIndex := 0;
+end;
+
+procedure TFNLSetup.FormShow(Sender: TObject);
+begin
+  if NameOnly then
+  begin
+    cbHotkey.Visible := false;
+    lblHotkeys.Visible := false;
+    cbGraphics.Visible := false;
+    lblGraphics.Visible := false;
+    lblOptionsText1.Caption := 'This version of NeoLemmix requires a username.';
+    lblOptionsText2.Caption := 'This name will be saved in your replay files. You may enter "Anonymous".';
+  end;
 end;
 
 procedure TFNLSetup.SetClassicHotkeys;
@@ -190,22 +206,28 @@ end;
 procedure TFNLSetup.btnOKClick(Sender: TObject);
 begin
   // Set desired default settings
-  case cbHotkey.ItemIndex of
-    0: SetLixHotkeys;
-    1: SetClassicHotkeys;
-  end;
+  if ebUserName.Text <> '' then
+    GameParams.UserName := ebUserName.Text;
 
-  case cbGraphics.ItemIndex of
-    0: begin
-         GameParams.MinimapHighQuality := true;
-         GameParams.LinearResampleMenu := true;
-         GameParams.LinearResampleGame := false;
-       end;
-    1: begin
-         GameParams.MinimapHighQuality := false;
-         GameParams.LinearResampleMenu := false;
-         GameParams.LinearResampleGame := false;
-       end;
+  if not NameOnly then
+  begin
+    case cbHotkey.ItemIndex of
+      0: SetLixHotkeys;
+      1: SetClassicHotkeys;
+    end;
+
+    case cbGraphics.ItemIndex of
+      0: begin
+           GameParams.MinimapHighQuality := true;
+           GameParams.LinearResampleMenu := true;
+           GameParams.LinearResampleGame := false;
+         end;
+      1: begin
+           GameParams.MinimapHighQuality := false;
+           GameParams.LinearResampleMenu := false;
+           GameParams.LinearResampleGame := false;
+         end;
+    end;
   end;
 
   Close;

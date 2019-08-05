@@ -757,6 +757,9 @@ var
     Result := true;
   end;
 begin
+  if not fReplayManager.IsThisUsersReplay then
+    Exit;
+
   for i := 0 to Level.Talismans.Count-1 do
   begin
     if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then Continue;
@@ -5229,6 +5232,8 @@ end;
 procedure TLemmingGame.RegainControl(Force: Boolean = false);
 begin
   if ReplayInsert and not Force then Exit;
+
+  if CurrentIteration > fReplayManager.LastActionFrame then Exit;
 
   fReplayManager.Cut(fCurrentIteration);
 end;

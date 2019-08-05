@@ -73,6 +73,9 @@ begin
     HandleRender;
     Result := clrHalt;
   end;
+
+  if Param = '-match-blank-replay-username' then
+    GameParams.MatchBlankReplayUsername := true;
 end;
 
 class procedure TCommandLineHandler.HandleConvert;

@@ -23,21 +23,24 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 378
-    ActivePage = TabSheet5
+    ActivePage = TabSheet1
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      object lblUserName: TLabel
+        Left = 7
+        Top = 16
+        Width = 54
+        Height = 13
+        Caption = 'Your name:'
+      end
       object GroupBox4: TGroupBox
-        Left = 8
-        Top = 183
+        Left = 7
+        Top = 223
         Width = 249
         Height = 67
         Caption = 'Replay Options'
-        TabOrder = 3
+        TabOrder = 4
         object cbAutoSaveReplay: TCheckBox
           Left = 12
           Top = 16
@@ -58,12 +61,12 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object GroupBox1: TGroupBox
-        Left = 8
-        Top = 120
+        Left = 7
+        Top = 160
         Width = 249
         Height = 57
         Caption = 'Internet Options'
-        TabOrder = 2
+        TabOrder = 3
         object cbEnableOnline: TCheckBox
           Left = 16
           Top = 16
@@ -86,22 +89,29 @@ object FormNXConfig: TFormNXConfig
         end
       end
       object btnHotkeys: TButton
-        Left = 8
-        Top = 8
+        Left = 7
+        Top = 48
         Width = 249
         Height = 42
         Caption = 'Configure Hotkeys'
-        TabOrder = 0
+        TabOrder = 1
         OnClick = btnHotkeysClick
       end
       object btnReplayCheck: TButton
-        Left = 8
-        Top = 56
+        Left = 7
+        Top = 96
         Width = 249
         Height = 42
         Caption = 'Mass Replay Check'
-        TabOrder = 1
+        TabOrder = 2
         OnClick = btnReplayCheckClick
+      end
+      object ebUserName: TEdit
+        Left = 71
+        Top = 13
+        Width = 185
+        Height = 21
+        TabOrder = 0
       end
     end
     object TabSheet5: TTabSheet
@@ -254,10 +264,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 24
         Top = 45

@@ -48,6 +48,8 @@ type
     btnReplayCheck: TButton;
     cbNoAutoReplay: TCheckBox;
     cbPauseAfterBackwards: TCheckBox;
+    lblUserName: TLabel;
+    ebUserName: TEdit;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -103,6 +105,9 @@ var
 begin
 
   //// Page 1 (Global Options) ////
+
+  ebUserName.Text := GameParams.UserName;
+
   // Checkboxes
   cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
   cbReplayAutoName.Checked := GameParams.ReplayAutoName;
@@ -156,6 +161,12 @@ procedure TFormNXConfig.SaveToParams;
 begin
 
   //// Page 1 (Global Options) ////
+
+  if ebUserName.Text = '' then
+    GameParams.UserName := 'Anonymous'
+  else
+    GameParams.UserName := ebUserName.Text;
+
   // Checkboxes
   GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
   GameParams.ReplayAutoName := cbReplayAutoName.Checked;
