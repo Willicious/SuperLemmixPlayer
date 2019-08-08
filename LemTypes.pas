@@ -296,7 +296,7 @@ begin
   if (DstRect.Width = SrcRect.Width) and (DstRect.Height = SrcRect.Height) then
     Src.DrawTo(Dst, DstRect.Left, DstRect.Top) // save processing time
   else begin
-    Assert(VerifyInput, 'Invalid input passed to LemTypes.DrawNineSlice');
+    //Assert(VerifyInput, 'Invalid input passed to LemTypes.DrawNineSlice');
 
     TrimMargins(Margins.Left, Margins.Right, DstRect.Width);
     TrimMargins(Margins.Top, Margins.Bottom, DstRect.Height);
