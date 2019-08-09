@@ -229,6 +229,7 @@ const
   SkillPanelButtonToAction: array[TSkillPanelButton] of TBasicLemmingAction = (
 
     baToWalking,
+    baShimmying,
     baClimbing,
     baSwimming,
     baFloating,
@@ -245,7 +246,6 @@ const
     baMining,
     baDigging,
     baCloning,
-    baShimmying,
     baNone, //Null
     baNone, //RR-
     baNone, //RR+

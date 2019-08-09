@@ -366,6 +366,7 @@ begin
   if aSection = nil then Exit;
 
   HandleSkill('walker', spbWalker);
+  HandleSkill('shimmier', spbShimmier);
   HandleSkill('climber', spbClimber);
   HandleSkill('swimmer', spbSwimmer);
   HandleSkill('floater', spbFloater);
@@ -382,7 +383,6 @@ begin
   HandleSkill('miner', spbMiner);
   HandleSkill('digger', spbDigger);
   HandleSkill('cloner', spbCloner);
-  HandleSkill('shimmier', spbShimmier);
 end;
 
 procedure TLevel.HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
@@ -417,6 +417,7 @@ var
     S := Lowercase(aSection.LineTrimString['skill']);
 
     if S = 'walker' then O.Skill := Integer(spbWalker);
+    if S = 'shimmier' then O.Skill := Integer(spbShimmier);
     if S = 'climber' then O.Skill := Integer(spbClimber);
     if S = 'swimmer' then O.Skill := Integer(spbSwimmer);
     if S = 'floater' then O.Skill := Integer(spbFloater);
@@ -433,7 +434,6 @@ var
     if S = 'miner' then O.Skill := Integer(spbMiner);
     if S = 'digger' then O.Skill := Integer(spbDigger);
     if S = 'cloner' then O.Skill := Integer(spbCloner);
-    if S = 'shimmier' then O.Skill := Integer(spbShimmier);
 
     O.TarLev := Max(aSection.LineNumeric['skillcount'], 1);
   end;
@@ -536,6 +536,7 @@ begin
     L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
                // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES IS RIGHT".
 
+  L.IsShimmier := (aSection.Line['shimmier'] <> nil);
   L.IsClimber  := (aSection.Line['climber']  <> nil);
   L.IsSwimmer  := (aSection.Line['swimmer']  <> nil);
   L.IsFloater  := (aSection.Line['floater']  <> nil);
@@ -543,7 +544,6 @@ begin
   L.IsDisarmer := (aSection.Line['disarmer'] <> nil);
   L.IsZombie   := (aSection.Line['zombie']   <> nil);
   L.IsBlocker  := (aSection.Line['blocker']  <> nil);
-  L.IsShimmier := (aSection.Line['shimmier'] <> nil);
 end;
 
 procedure TLevel.HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
@@ -815,6 +815,7 @@ begin
   Sec := aSection.SectionList.Add('SKILLSET');
 
   HandleSkill('WALKER', spbWalker);
+  HandleSkill('SHIMMIER', spbShimmier);
   HandleSkill('CLIMBER', spbClimber);
   HandleSkill('SWIMMER', spbSwimmer);
   HandleSkill('FLOATER', spbFloater);
@@ -831,7 +832,6 @@ begin
   HandleSkill('MINER', spbMiner);
   HandleSkill('DIGGER', spbDigger);
   HandleSkill('CLONER', spbCloner);
-  HandleSkill('SHIMMIER', spbShimmier);
 end;
 
 procedure TLevel.SaveObjectSections(aSection: TParserSection);
@@ -862,6 +862,7 @@ var
   begin
     case TSkillPanelButton(O.Skill) of
      spbWalker: s := 'WALKER';
+     spbShimmier: s := 'SHIMMIER';
      spbClimber: s := 'CLIMBER';
      spbSwimmer: s := 'SWIMMER';
      spbFloater: s := 'FLOATER';
@@ -878,7 +879,6 @@ var
      spbMiner: s := 'MINER';
      spbDigger: s := 'DIGGER';
      spbCloner: s := 'CLONER';
-     spbShimmier: s := 'SHIMMIER';
     end;
 
     Sec.AddLine('SKILL', S);
