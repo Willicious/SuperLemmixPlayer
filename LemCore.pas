@@ -85,6 +85,7 @@ type
 
 
     spbWalker,
+    spbShimmier,
     spbClimber,
     spbSwimmer,
     spbFloater,
@@ -101,7 +102,6 @@ type
     spbMiner,
     spbDigger,
     spbCloner,
-    spbShimmier,
 
     spbNone,
     spbSlower,
@@ -122,10 +122,11 @@ type
   );
 
 const
-  LAST_SKILL_BUTTON = spbShimmier;
+  LAST_SKILL_BUTTON = spbCloner;
 
   SKILL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
     'walker',
+    'shimmier',
     'climber',
     'swimmer',
     'floater',
@@ -141,8 +142,7 @@ const
     'fencer',
     'miner',
     'digger',
-    'cloner',
-    'shimmier');
+    'cloner');
 
 type
   TTriggerTypes = (
