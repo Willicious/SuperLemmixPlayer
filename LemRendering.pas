@@ -257,7 +257,7 @@ begin
   SelectedLemming := fRenderInterface.SelectedLemming;
   for i := 0 to LemmingList.Count-1 do
     if LemmingList[i] <> SelectedLemming then
-      DrawThisLemming(LemmingList[i], false, IsStartingSeconds);
+      DrawThisLemming(LemmingList[i], false);
 
   // Draw the lemming below the cursor
   if SelectedLemming <> nil then
