@@ -338,10 +338,11 @@ begin
   SrcAnim.OnPixelCombine := fRecolorer.CombineLemmingPixels;
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 
-  // Helper for selected blockers
-  if (Selected and aLemming.LemIsZombie) or UsefulOnly then
+  // Helper for selected lemming
+  if (Selected and aLemming.LemIsZombie) or UsefulOnly or
+     ((fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds) then
   begin
-    DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
+    DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, UsefulOnly);
     fLayers.fIsEmpty[rlObjectHelpers] := false;
   end;
 
@@ -1495,14 +1496,16 @@ end;
 procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 var
   numHelpers, indexHelper: Integer;
-  DrawX, DrawY: Integer;
+  DrawX, DrawY, DirDrawY: Integer;
+const
+  DRAW_ABOVE_MIN_Y = 19;
+  DRAW_ABOVE_MIN_Y_CPM = 28;
 begin
   Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-  Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode');
+  //Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode'); // why?
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
-  if isClearPhysics and (L.LemAction = baBlocking) then Inc(numHelpers);
   if L.LemIsClimber then Inc(numHelpers);
   if L.LemIsSwimmer then Inc(numHelpers);
   if L.LemIsFloater then Inc(numHelpers);
@@ -1510,16 +1513,30 @@ begin
   if L.LemIsDisarmer then Inc(numHelpers);
 
   DrawX := L.LemX - numHelpers * 5;
-  DrawY := L.LemY - 10 - 9;
+
+  if (L.LemY < DRAW_ABOVE_MIN_Y) or ((L.LemY < DRAW_ABOVE_MIN_Y_CPM) and IsClearPhysics) then
+  begin
+    DrawY := L.LemY + 1;
+    if numHelpers > 0 then
+      DirDrawY := DrawY + 9
+    else
+      DirDrawY := DrawY;
+  end else begin
+    DrawY := L.LemY - 10 - 9;
+    if numHelpers > 0 then
+      DirDrawY := DrawY - 9
+    else
+      DirDrawY := DrawY;
+  end;
 
   // Draw actual helper icons
-  indexHelper := 0;
-  if isClearPhysics and (L.LemAction = baBlocking) then
+  if isClearPhysics then
   begin
-    if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 1, DrawY)
-    else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 1, DrawY);
-    Inc(indexHelper);
+    if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, L.LemX - 4, DirDrawY)
+    else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, L.LemX - 4, DirDrawY);
   end;
+
+  indexHelper := 0;
   if L.LemIsClimber then
   begin
     fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
