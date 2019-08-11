@@ -77,7 +77,7 @@
         <VerInfo_Release>0</VerInfo_Release>
         <VerInfo_MajorVer>12</VerInfo_MajorVer>
         <VerInfo_MinorVer>6</VerInfo_MinorVer>
-        <VerInfo_Build>1337</VerInfo_Build>
+        <VerInfo_Build>1342</VerInfo_Build>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <PreBuildEvent><![CDATA[GetCommitID LemVersionCID COMMIT_ID
@@ -91,7 +91,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_MinStackSize>32768</DCC_MinStackSize>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_UsePackage>vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;CLXIB;ibxpress;VCLIB;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP;$(DCC_UsePackage)</DCC_UsePackage>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=12.6.0.1337;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=12.6.0.1337;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=12.6.0.1342;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=12.6.0.1342;Comments=</VerInfo_Keys>
         <DCC_Optimize>false</DCC_Optimize>
         <DCC_ExeOutput>bin\</DCC_ExeOutput>
         <DCC_N>true</DCC_N>
@@ -151,6 +151,87 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="FMain.pas">
             <Form>MainForm</Form>
         </DCCReference>
+        <DCCReference Include="AppController.pas"/>
+        <DCCReference Include="CustomPopup.pas"/>
+        <DCCReference Include="FBaseDosForm.pas">
+            <Form>BaseDosForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FEditHotkeys.pas">
+            <Form>FLemmixHotkeys</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FEditReplay.pas">
+            <Form>FReplayEditor</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FNeoLemmixConfig.pas">
+            <Form>FormNXConfig</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FNeoLemmixLevelSelect.pas">
+            <Form>FLevelSelect</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="FNeoLemmixSetup.pas">
+            <Form>FNLSetup</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="GameBaseScreen.pas"/>
+        <DCCReference Include="GameBaseSkillPanel.pas"/>
+        <DCCReference Include="GameCommandLine.pas"/>
+        <DCCReference Include="GameControl.pas"/>
+        <DCCReference Include="GameMenuScreen.pas"/>
+        <DCCReference Include="GamePostviewScreen.pas"/>
+        <DCCReference Include="GamePreviewScreen.pas"/>
+        <DCCReference Include="GameReplayCheckScreen.pas"/>
+        <DCCReference Include="GameSkillPanel.pas"/>
+        <DCCReference Include="GameSound.pas"/>
+        <DCCReference Include="GameTalismanScreen.pas"/>
+        <DCCReference Include="GameTextScreen.pas"/>
+        <DCCReference Include="GameWindow.pas"/>
+        <DCCReference Include="GameWindowInterface.pas"/>
+        <DCCReference Include="LemAnimationSet.pas"/>
+        <DCCReference Include="LemCore.pas"/>
+        <DCCReference Include="LemCursor.pas"/>
+        <DCCReference Include="LemDosCmp.pas"/>
+        <DCCReference Include="LemDosStructures.pas"/>
+        <DCCReference Include="LemGadgetAnimation.pas"/>
+        <DCCReference Include="LemGadgets.pas"/>
+        <DCCReference Include="LemGadgetsConstants.pas"/>
+        <DCCReference Include="LemGadgetsMeta.pas"/>
+        <DCCReference Include="LemGadgetsModel.pas"/>
+        <DCCReference Include="LemGame.pas"/>
+        <DCCReference Include="LemGameMessageQueue.pas"/>
+        <DCCReference Include="LemLemming.pas"/>
+        <DCCReference Include="LemLevel.pas"/>
+        <DCCReference Include="LemLVLLoader.pas"/>
+        <DCCReference Include="LemMetaAnimation.pas"/>
+        <DCCReference Include="LemMetaTerrain.pas"/>
+        <DCCReference Include="LemmixHotkeys.pas"/>
+        <DCCReference Include="LemMusicSystem.pas"/>
+        <DCCReference Include="LemNeoLevelPack.pas"/>
+        <DCCReference Include="LemNeoOnline.pas"/>
+        <DCCReference Include="LemNeoParser.pas"/>
+        <DCCReference Include="LemNeoPieceManager.pas"/>
+        <DCCReference Include="LemNeoTheme.pas"/>
+        <DCCReference Include="LemPalette.pas"/>
+        <DCCReference Include="LemPiece.pas"/>
+        <DCCReference Include="LemRecolorSprites.pas"/>
+        <DCCReference Include="LemRenderHelpers.pas"/>
+        <DCCReference Include="LemRendering.pas"/>
+        <DCCReference Include="LemReplay.pas"/>
+        <DCCReference Include="LemSettings.pas"/>
+        <DCCReference Include="LemSteel.pas"/>
+        <DCCReference Include="LemStrings.pas"/>
+        <DCCReference Include="LemSystemMessages.pas"/>
+        <DCCReference Include="LemTalisman.pas"/>
+        <DCCReference Include="LemTerrain.pas"/>
+        <DCCReference Include="LemTerrainGroup.pas"/>
+        <DCCReference Include="LemTypes.pas"/>
+        <DCCReference Include="LemVersion.pas"/>
+        <DCCReference Include="PngInterface.pas"/>
+        <DCCReference Include="SharedGlobals.pas"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
