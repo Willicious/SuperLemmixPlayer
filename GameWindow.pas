@@ -1226,12 +1226,11 @@ begin
   end;
 
   // Allow changing options and selecting new levels, but pause level for that
-  if ((Key = VK_F2) or (Key = VK_F3)) and (func.Action = lka_Null) then
+  if (Key = VK_F3) and (func.Action = lka_Null) then
   begin
     SuspendGameplay;
     try
-      if (Key = VK_F2) then DoLevelSelect(true)
-      else if (Key = VK_F3) then ShowConfigMenu;
+      ShowConfigMenu;
     finally
       ResumeGameplay;
     end;
