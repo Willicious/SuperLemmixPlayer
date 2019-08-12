@@ -120,6 +120,8 @@ type
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
+    fDoneAssignmentThisFrame   : Boolean;
+
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
     PhysicsMap                 : TBitmap32;
@@ -1677,7 +1679,7 @@ begin
   // Just to be safe, though this should always return in fLemSelected
   GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
   // Get lemming to queue the skill assignment
-  GetPriorityLemming(LQueue, baNone, CursorPoint);
+  GetPriorityLemming(LQueue, baNone, CursorPoint, IsHighlight);
 
   HitTestAutoFail := OldHTAF;
 
@@ -1718,6 +1720,13 @@ begin
 
   // We check first, whether the skill is available at all
   if not CheckSkillAvailable(NewSkill) then Exit;
+
+  if fDoneAssignmentThisFrame then
+  begin
+    L.LemQueueAction := NewSkill;
+    L.LemQueueFrame := 0;
+    Exit;
+  end;
 
   UpdateSkillCount(NewSkill);
 
@@ -1787,6 +1796,7 @@ begin
   else Transition(L, NewSkill);
 
   Result := True;
+  fDoneAssignmentThisFrame := true;
 end;
 
 
@@ -4445,6 +4455,8 @@ procedure TLemmingGame.UpdateLemmings;
   The main method: handling a single frame of the game.
 -------------------------------------------------------------------------------}
 begin
+  fDoneAssignmentThisFrame := false;
+
   if fGameFinished then
     Exit;
   fSoundList.Clear(); // Clear list of played sound effects
