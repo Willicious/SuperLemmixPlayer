@@ -80,7 +80,6 @@ type
     fHyperSpeedStopCondition: Integer;
     fHyperSpeedTarget: Integer;
     fForceUpdateOneFrame: Boolean;        // used when paused
-    fLastZombieSound: Cardinal;
 
     fHoldScrollData: THoldScrollData;
 
@@ -654,14 +653,7 @@ begin
 
       // still need to implement sound
       GAMEMSG_SOUND: if not IsHyperSpeed then
-                     begin
-                       if CompareStr(Msg.MessageDataStr, 'zombie') = 0 then
-                         if GetTickCount - fLastZombieSound > 1000 then
-                           fLastZombieSound := GetTickCount
-                         else
-                           Exit;
                        SoundManager.PlaySound(Msg.MessageDataStr);
-                     end;
       GAMEMSG_SOUND_BAL: if not IsHyperSpeed then
                            SoundManager.PlaySound(Msg.MessageDataStr,  (Msg.MessageDataInt - Trunc(((Img.Width / 2) - Img.OffsetHorz) / Img.Scale)) div 2);
       GAMEMSG_MUSIC: SoundManager.PlayMusic;
