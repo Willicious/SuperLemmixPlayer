@@ -179,6 +179,8 @@ var
 
   PatchL, PatchT: Integer;
 
+  OrigThemeName: String;
+
   procedure LoadTables;
   var
     i: Integer;
@@ -246,6 +248,7 @@ var
 begin
   LoadTables;
 
+  OrigThemeName := aLevel.Info.GraphicSetName;
   if fThemeChange.Values[aLevel.Info.GraphicSetName] <> '' then
     aLevel.Info.GraphicSetName := fThemeChange.Values[aLevel.Info.GraphicSetName];
 
@@ -365,12 +368,11 @@ begin
       aLevel.InteractiveObjects.Delete(i);
   end;
 
-  aLevel.Info.Background := '';
-  MatchIndex := FindMatchIndex(Lowercase(aLevel.Info.GraphicSetName), aLevel.Info.Background, itBackground);
+  MatchIndex := FindMatchIndex(Lowercase(OrigThemeName), aLevel.Info.Background, itBackground);
   if MatchIndex <> -1 then
     aLevel.Info.Background := MatchRec.DstGS + ':' + MatchRec.DstName
-  else
-  begin
+  else begin
+    aLevel.Info.Background := '';
     for i := 0 to aLevel.InteractiveObjects.Count-1 do
     begin
       O := aLevel.InteractiveObjects[i];
