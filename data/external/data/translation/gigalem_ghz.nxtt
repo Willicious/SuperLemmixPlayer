@@ -993,7 +993,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 23
+  INDEX 0
   COLLECTION gigalem_ghz
   PIECE ghz_01
 $END

@@ -2328,19 +2328,19 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 16
+  INDEX 0
   COLLECTION gigalem_dragon
   PIECE dragon_01
 $END
 
 $BACKGROUND
-  INDEX 17
+  INDEX 1
   COLLECTION gigalem_dragon
   PIECE dragon_02
 $END
 
 $BACKGROUND
-  INDEX 18
+  INDEX 2
   COLLECTION gigalem_dragon
   PIECE dragon_03
 $END
@@ -2366,13 +2366,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 21
+  INDEX 3
   COLLECTION gigalem_dragon
   PIECE dragon_04
 $END
 
 $BACKGROUND
-  INDEX 22
+  INDEX 4
   COLLECTION gigalem_dragon
   PIECE dragon_05
 $END
@@ -2428,7 +2428,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 28
+  INDEX 5
   COLLECTION gigalem_dragon
   PIECE dragon_06
 $END

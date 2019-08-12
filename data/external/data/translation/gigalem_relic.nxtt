@@ -4277,31 +4277,31 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 23
+  INDEX 0
   COLLECTION gigalem_relic
   PIECE relic_01
 $END
 
 $BACKGROUND
-  INDEX 24
+  INDEX 1
   COLLECTION gigalem_relic
   PIECE relic_02
 $END
 
 $BACKGROUND
-  INDEX 25
+  INDEX 2
   COLLECTION gigalem_relic
   PIECE relic_03
 $END
 
 $BACKGROUND
-  INDEX 26
+  INDEX 3
   COLLECTION gigalem_relic
   PIECE relic_04
 $END
 
 $BACKGROUND
-  INDEX 27
+  INDEX 4
   COLLECTION gigalem_relic
   PIECE relic_05
 $END

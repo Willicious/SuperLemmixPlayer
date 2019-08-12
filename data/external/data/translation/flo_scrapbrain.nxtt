@@ -939,7 +939,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 21
+  INDEX 0
   COLLECTION flopsy_scrapbrain
   PIECE scrapbrown
 $END
@@ -1055,25 +1055,25 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 33
+  INDEX 1
   COLLECTION flopsy_scrapbrain
   PIECE scrapmachine
 $END
 
 $BACKGROUND
-  INDEX 34
+  INDEX 2
   COLLECTION flopsy_scrapbrain
   PIECE scrapmachine2
 $END
 
 $BACKGROUND
-  INDEX 35
+  INDEX 3
   COLLECTION flopsy_scrapbrain
   PIECE scrapmachine3
 $END
 
 $BACKGROUND
-  INDEX 36
+  INDEX 4
   COLLECTION flopsy_scrapbrain
   PIECE scrapmachine4
 $END

@@ -1686,31 +1686,31 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 20
+  INDEX 0
   COLLECTION gigalem_thermal
   PIECE thermal_01
 $END
 
 $BACKGROUND
-  INDEX 21
+  INDEX 1
   COLLECTION gigalem_thermal
   PIECE thermal_02
 $END
 
 $BACKGROUND
-  INDEX 22
+  INDEX 2
   COLLECTION gigalem_thermal
   PIECE thermal_03
 $END
 
 $BACKGROUND
-  INDEX 23
+  INDEX 3
   COLLECTION gigalem_thermal
   PIECE thermal_04
 $END
 
 $BACKGROUND
-  INDEX 24
+  INDEX 4
   COLLECTION gigalem_thermal
   PIECE thermal_05
 $END

@@ -1677,25 +1677,25 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 16
+  INDEX 0
   COLLECTION gigalem_lagoon
   PIECE lagoon_01
 $END
 
 $BACKGROUND
-  INDEX 17
+  INDEX 1
   COLLECTION gigalem_lagoon
   PIECE lagoon_02
 $END
 
 $BACKGROUND
-  INDEX 18
+  INDEX 2
   COLLECTION gigalem_lagoon
   PIECE lagoon_03
 $END
 
 $BACKGROUND
-  INDEX 19
+  INDEX 3
   COLLECTION gigalem_lagoon
   PIECE lagoon_04
 $END

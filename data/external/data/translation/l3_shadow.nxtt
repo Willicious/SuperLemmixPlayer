@@ -1690,19 +1690,19 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 8
+  INDEX 0
   COLLECTION l3_shadow
   PIECE mines_horizontal
 $END
 
 $BACKGROUND
-  INDEX 9
+  INDEX 1
   COLLECTION l3_shadow
   PIECE mines_sky
 $END
 
 $BACKGROUND
-  INDEX 10
+  INDEX 2
   COLLECTION l3_shadow
   PIECE mines_vertical
 $END

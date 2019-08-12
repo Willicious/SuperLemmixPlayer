@@ -305,13 +305,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 9
+  INDEX 0
   COLLECTION ray_snow
   PIECE back_snow
 $END
 
 $BACKGROUND
-  INDEX 10
+  INDEX 1
   COLLECTION ray_snow
   PIECE back_repeat_snow
 $END

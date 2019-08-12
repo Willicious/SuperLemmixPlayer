@@ -351,13 +351,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 2
+  INDEX 0
   COLLECTION ichotolot_jamie_city
   PIECE skyscrapers
 $END
 
 $BACKGROUND
-  INDEX 3
+  INDEX 1
   COLLECTION ichotolot_jamie_city
   PIECE skyline
 $END

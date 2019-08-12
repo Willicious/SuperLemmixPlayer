@@ -1587,19 +1587,19 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 20
+  INDEX 0
   COLLECTION gigalem_jade
   PIECE jade_01
 $END
 
 $BACKGROUND
-  INDEX 21
+  INDEX 1
   COLLECTION gigalem_jade
   PIECE jade_02
 $END
 
 $BACKGROUND
-  INDEX 22
+  INDEX 2
   COLLECTION gigalem_jade
   PIECE jade_03
 $END
