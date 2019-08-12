@@ -4861,7 +4861,13 @@ end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String);
 begin
-  CueSoundEffect(aSound, Point(0, 0));
+  if IsSimulating then Exit; // Not play sound in simulation mode
+
+  // Check that the sound was not yet played on this frame
+  if fSoundList.Contains(aSound) then Exit;
+
+  fSoundList.Add(aSound);
+  MessageQueue.Add(GAMEMSG_SOUND, aSound);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);
