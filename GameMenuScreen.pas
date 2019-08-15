@@ -11,7 +11,7 @@ interface
 uses
   Classes, Controls,
   GameBaseScreen, GameControl,
-  {$ifdef exp}LemNeoLevelPack, LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
+  LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
   GR32, GR32_Layers;
 
 type
