@@ -1679,7 +1679,7 @@ begin
   // Just to be safe, though this should always return in fLemSelected
   GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
   // Get lemming to queue the skill assignment
-  GetPriorityLemming(LQueue, baNone, CursorPoint, IsHighlight);
+  GetPriorityLemming(LQueue, baNone, CursorPoint);
 
   HitTestAutoFail := OldHTAF;
 
@@ -1721,12 +1721,7 @@ begin
   // We check first, whether the skill is available at all
   if not CheckSkillAvailable(NewSkill) then Exit;
 
-  if fDoneAssignmentThisFrame then
-  begin
-    L.LemQueueAction := NewSkill;
-    L.LemQueueFrame := 0;
-    Exit;
-  end;
+  if fDoneAssignmentThisFrame then Exit;
 
   UpdateSkillCount(NewSkill);
 
