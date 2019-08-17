@@ -76,6 +76,7 @@ begin
     Parser.LoadFromFile('theme.nxtm');
 
     fLemmings := Parser.MainSection.LineString['lemmings'];
+    if fLemmings = '' then fLemmings := 'default';
 
     Sec := Parser.MainSection.Section['colors'];
     if Sec = nil then

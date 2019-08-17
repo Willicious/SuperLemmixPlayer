@@ -2303,8 +2303,7 @@ begin
     PieceManager.SetTheme(fTheme);
 
     fAni.ClearData;
-    fAni.LemmingPrefix := fTheme.Lemmings;
-    fAni.MaskingColor := fTheme.Colors[MASK_COLOR];
+    fAni.Theme := fTheme;
 
     try
       fAni.ReadData;
@@ -2313,9 +2312,10 @@ begin
       on E: Exception do
       begin
         fAni.ClearData;
-        fAni.LemmingPrefix := 'default';
+        fTheme.Lemmings := 'default';
+
         fAni.ReadData;
-        fRecolorer.LoadSwaps('default');
+        fRecolorer.LoadSwaps(fTheme.Lemmings);
 
         if fTheme.Lemmings <> LastErrorLemmingSprites then
         begin

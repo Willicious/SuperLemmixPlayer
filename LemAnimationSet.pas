@@ -9,6 +9,7 @@ uses
   PngInterface,
   LemCore,
   LemTypes,
+  LemNeoTheme,
   LemMetaAnimation,
   LemNeoParser,
   LemStrings;
@@ -127,10 +128,9 @@ type
     fMetaLemmingAnimations : TMetaLemmingAnimations; // meta data lemmings
     fLemmingAnimations     : TBitmaps; // the list of lemmings bitmaps
 
-    fLemmingPrefix          : string;
-    fMaskingColor           : TColor32;
     fCountDownDigitsBitmap  : TBitmap32;
     fHighlightBitmap        : TBitmap32;
+    fTheme                  : TNeoTheme;
 
     procedure ReadMetaData;
     procedure LoadPositionData;
@@ -141,8 +141,7 @@ type
     procedure ReadData;
     procedure ClearData;
 
-    property MaskingColor          : TColor32 write fMaskingColor;
-    property LemmingPrefix         : string write fLemmingPrefix;
+    property Theme                 : TNeoTheme read fTheme write fTheme;
 
     property LemmingAnimations     : TBitmaps read fLemmingAnimations;
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
@@ -257,17 +256,18 @@ var
   MLA: TMetaLemmingAnimation;
   X: Integer;
 
+  SrcFolder: String;
 begin
   TempBitmap := TBitmap32.Create;
 
-  // MEGA KLUDGY compatibility hack. This must be tidied later!
-  if fLemmingPrefix = 'lemming' then fLemmingPrefix := 'default'
-  else if fLemmingPrefix = '' then fLemmingPrefix := 'default'
-  else if fLemmingPrefix = 'xlemming' then fLemmingPrefix := 'xmas';
+  if fTheme = nil then
+    SrcFolder := 'default'
+  else
+    SrcFolder := fTheme.Lemmings;
 
-  if not DirectoryExists(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings) then
-    fLemmingPrefix := 'default';
-  SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
+  if not DirectoryExists(AppPath + SFStyles + SrcFolder + SFPiecesLemmings) then
+    SrcFolder := 'default';
+  SetCurrentDir(AppPath + SFStyles + SrcFolder + SFPiecesLemmings);
 
   if fMetaLemmingAnimations.Count = 0 then
     ReadMetaData;
@@ -279,8 +279,10 @@ begin
       Fn := RightStr(MLA.Description, Length(MLA.Description) - 1);
 
       TPngInterface.LoadPngFile(Fn + '.png', TempBitmap);
-      if FileExists(Fn + '_mask.png') then
-        TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fMaskingColor);
+
+      // Backwards compatibility
+      if FileExists(Fn + '_mask.png') and (fTheme <> nil) then
+        TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
 
       MLA.Width := TempBitmap.Width div 2;
       MLA.Height := TempBitmap.height div MLA.FrameCount;
@@ -329,7 +331,7 @@ begin
   if Assigned(fMetaLemmingAnimations) then fMetaLemmingAnimations.Clear;
   if Assigned(fCountDownDigitsBitmap) then fCountDownDigitsBitmap.Clear;
   if Assigned(fHighlightBitmap) then fHighlightBitmap.Clear;
-  fLemmingPrefix := 'default';
+  fTheme := nil;
 end;
 
 constructor TBaseAnimationSet.Create;
