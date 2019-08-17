@@ -2325,8 +2325,6 @@ begin
       end;
     end;
 
-
-
     // Prepare the bitmaps
     fLayers.Prepare(RenderInfoRec.Level.Info.Width, RenderInfoRec.Level.Info.Height);
   end;

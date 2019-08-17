@@ -38,6 +38,8 @@ type
       procedure Clear;
       procedure Load(aSet: String);
 
+      function DoesColorExist(Name: String): Boolean;
+
       property Lemmings: String read fLemmings write fLemmings;
       property Colors[Name: String]: TColor32 read GetColor;
   end;
@@ -53,6 +55,11 @@ end;
 destructor TNeoTheme.Destroy;
 begin
   inherited;
+end;
+
+function TNeoTheme.DoesColorExist(Name: String): Boolean;
+begin
+  Result := FindColorIndex(Name) >= 0;
 end;
 
 procedure TNeoTheme.Clear;
