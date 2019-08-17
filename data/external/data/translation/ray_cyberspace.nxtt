@@ -342,7 +342,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 21
+  INDEX 0
   COLLECTION ray_cyberspace
   PIECE back_cyberspace
 $END

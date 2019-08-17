@@ -297,7 +297,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 12
+  INDEX 0
   COLLECTION ray_gore
   PIECE back_gore
 $END

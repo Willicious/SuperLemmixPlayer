@@ -17,6 +17,7 @@ object FNLSetup: TFNLSetup
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object SetupPages: TPageControl
@@ -29,8 +30,7 @@ object FNLSetup: TFNLSetup
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
       TabVisible = False
-      ExplicitHeight = 163
-      object Label1: TLabel
+      object lblWelcome: TLabel
         Left = 16
         Top = 16
         Width = 197
@@ -43,7 +43,7 @@ object FNLSetup: TFNLSetup
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label2: TLabel
+      object lblOptionsText1: TLabel
         Left = 24
         Top = 48
         Width = 436
@@ -52,7 +52,7 @@ object FNLSetup: TFNLSetup
           'It appears that this is your first time using NeoLemmix, or that' +
           ' your configuration file is missing.'
       end
-      object Label3: TLabel
+      object lblOptionsText2: TLabel
         Left = 24
         Top = 80
         Width = 342
@@ -61,45 +61,61 @@ object FNLSetup: TFNLSetup
           'Please select the desired options. You can always change them la' +
           'ter on.'
       end
-      object Label4: TLabel
+      object lblHotkeys: TLabel
         Left = 24
-        Top = 107
+        Top = 139
         Width = 76
         Height = 13
         Caption = 'Hotkey settings:'
       end
-      object Label5: TLabel
+      object lblGraphics: TLabel
         Left = 24
-        Top = 134
+        Top = 166
         Width = 79
         Height = 13
         Caption = 'Graphic settings:'
       end
+      object lblUsername: TLabel
+        Left = 24
+        Top = 112
+        Width = 54
+        Height = 13
+        Caption = 'Your name:'
+      end
       object cbHotkey: TComboBox
         Left = 128
-        Top = 104
+        Top = 136
         Width = 217
         Height = 21
         Style = csDropDownList
         ItemIndex = 0
-        TabOrder = 0
+        TabOrder = 1
         Text = 'Grouped by function'
         Items.Strings = (
           'Grouped by function'
-          'Traditional layout')
+          'Traditional layout'
+          'Minimalist configuration')
       end
       object cbGraphics: TComboBox
         Left = 128
-        Top = 131
+        Top = 163
         Width = 217
         Height = 21
         Style = csDropDownList
         ItemIndex = 1
-        TabOrder = 1
+        TabOrder = 2
         Text = 'Normal quality (for standard computers)'
         Items.Strings = (
           'High quality (for fast computers)'
           'Normal quality (for standard computers)')
+      end
+      object ebUserName: TEdit
+        Left = 128
+        Top = 109
+        Width = 217
+        Height = 21
+        TabOrder = 0
+        Text = 'Anonymous'
       end
     end
   end
@@ -109,7 +125,8 @@ object FNLSetup: TFNLSetup
     Width = 75
     Height = 25
     Caption = 'OK'
-    TabOrder = 1
+    Default = True
+    TabOrder = 2
     OnClick = btnOKClick
   end
   object btnExit: TButton
@@ -118,7 +135,7 @@ object FNLSetup: TFNLSetup
     Width = 75
     Height = 25
     Caption = 'Exit'
-    TabOrder = 2
+    TabOrder = 1
     OnClick = btnExitClick
   end
 end

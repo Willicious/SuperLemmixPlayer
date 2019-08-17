@@ -806,7 +806,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 15
+  INDEX 0
   COLLECTION namida_abstract
   PIECE colors
 $END

@@ -24,21 +24,24 @@ type
 
   TGadgetMetaAccessor = class;  // predefinition so it can be used in TMetaObject despite being defined later
 
-  TGadgetMetaSizeSetting = (mos_None, mos_Horizontal, mos_Vertical, mos_Both);
-
   TGadgetVariableProperties = record // For properties that vary based on flip / invert
     Animations: TGadgetAnimations;
     TriggerLeft:      Integer;
     TriggerTop:       Integer;
     TriggerWidth:     Integer;
     TriggerHeight:    Integer;
-    Resizability:   TGadgetMetaSizeSetting;
+    ResizeHorizontal: Boolean;
+    ResizeVertical: Boolean;
+    DigitX:           Integer;
+    DigitY:           Integer;
+    DigitAlign:       Integer;
   end;
   PGadgetVariableProperties = ^TGadgetVariableProperties;
 
   TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height,
                          ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
-                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame);
+                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame,
+                         ov_DigitX, ov_DigitY, ov_DigitAlign, ov_DigitMinLength);
                          // Integer properties only.
 
   TGadgetMetaInfo = class
@@ -60,20 +63,21 @@ type
     fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
     fSoundEffect                  : String;  // filename of sound to play
+    fDigitMinLength               : Integer;
 
-    fResizability                 : TGadgetMetaSizeSetting;
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
 
     function GetIdentifier: String;
-    function GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TGadgetMetaSizeSetting): Boolean;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
     function GetVariableInfo(Flip, Invert, Rotate: Boolean): TGadgetVariableProperties;
     procedure EnsureVariationMade(Flip, Invert, Rotate: Boolean);
     procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
     function GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty): Integer;
     procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty; aValue: Integer);
-    function GetResizability(Flip, Invert, Rotate: Boolean): TGadgetMetaSizeSetting;
-    procedure SetResizability(Flip, Invert, Rotate: Boolean; aValue: TGadgetMetaSizeSetting);
+    function GetCanResizeHorizontal(Flip, Invert, Rotate: Boolean): Boolean;
+    procedure SetCanResizeHorizontal(Flip, Invert, Rotate: Boolean; aValue: Boolean);
+    function GetCanResizeVertical(Flip, Invert, Rotate: Boolean): Boolean;
+    procedure SetCanResizeVertical(Flip, Invert, Rotate: Boolean; aValue: Boolean);
     function GetAnimations(Flip, Invert, Rotate: Boolean): TGadgetAnimations;
     procedure ClearImages;
   public
@@ -103,11 +107,13 @@ type
     property TriggerTop[Flip, Invert, Rotate: Boolean]   : Integer index ov_TriggerTop read GetVariableProperty write SetVariableProperty;
     property TriggerWidth[Flip, Invert, Rotate: Boolean] : Integer index ov_TriggerWidth read GetVariableProperty write SetVariableProperty;
     property TriggerHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_TriggerHeight read GetVariableProperty write SetVariableProperty;
+    property DigitX[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitX read GetVariableProperty write SetVariableProperty;
+    property DigitY[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitY read GetVariableProperty write SetVariableProperty;
+    property DigitAlign[Flip, Invert, Rotate: Boolean]   : Integer index ov_DigitAlign read GetVariableProperty write SetVariableProperty;
     property TriggerEffect: Integer read fTriggerEffect write fTriggerEffect; // used by level loading / saving code
-    
-    property Resizability[Flip, Invert, Rotate: Boolean]: TGadgetMetaSizeSetting read GetResizability write SetResizability;
-    property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index mos_Horizontal read GetCanResize;
-    property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index mos_Vertical read GetCanResize;
+
+    property CanResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean read GetCanResizeHorizontal write SetCanResizeHorizontal;
+    property CanResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean read GetCanResizeVertical write SetCanResizeVertical;
 
     property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
   end;
@@ -123,12 +129,14 @@ type
       fRotate: Boolean;
       function GetIntegerProperty(aProp: TGadgetMetaProperty): Integer;
       procedure SetIntegerProperty(aProp: TGadgetMetaProperty; aValue: Integer);
-      function GetResizability: TGadgetMetaSizeSetting;
-      procedure SetResizability(aValue: TGadgetMetaSizeSetting);
-      function GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
+      function GetCanResizeHorizontal: Boolean;
+      procedure SetCanResizeHorizontal(const aValue: Boolean);
+      function GetCanResizeVertical: Boolean;
+      procedure SetCanResizeVertical(const aValue: Boolean);
       function GetAnimations: TGadgetAnimations;
       function GetSoundEffect: String;
       procedure SetSoundEffect(aValue: String);
+      function GetDigitAnimation: TGadgetAnimation;
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
 
@@ -144,12 +152,17 @@ type
       property TriggerWidth: Integer index ov_TriggerWidth read GetIntegerProperty write SetIntegerProperty;
       property TriggerHeight: Integer index ov_TriggerHeight read GetIntegerProperty write SetIntegerProperty;
       property TriggerEffect: Integer index ov_TriggerEffect read GetIntegerProperty write SetIntegerProperty;
+      property DigitX: Integer index ov_DigitX read GetIntegerProperty write SetIntegerProperty;
+      property DigitY: Integer index ov_DigitY read GetIntegerProperty write SetIntegerProperty;
+      property DigitAlign: Integer index ov_DigitAlign read GetIntegerProperty write SetIntegerProperty;
+      property DigitMinLength: Integer index ov_DigitMinLength read GetIntegerProperty write SetIntegerProperty;
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
       property SoundEffect: String read GetSoundEffect write SetSoundEffect;
 
-      property Resizability             : TGadgetMetaSizeSetting read GetResizability write SetResizability;
-      property CanResizeHorizontal      : Boolean index mos_Horizontal read GetCanResize;
-      property CanResizeVertical        : Boolean index mos_Vertical read GetCanResize;
+      property CanResizeHorizontal      : Boolean read GetCanResizeHorizontal write SetCanResizeHorizontal;
+      property CanResizeVertical        : Boolean read GetCanResizeVertical write SetCanResizeVertical;
+
+      property DigitAnimation: TGadgetAnimation read GetDigitAnimation;
   end;
 
   TGadgetMetaInfoList = class(TObjectList)
@@ -271,12 +284,7 @@ begin
       if Sec.Line['horizontal_strip'] <> nil then
         NewSec.AddLine('horizontal_strip');
 
-      if Sec.Line['random_start_frame'] <> nil then
-        NewSec.AddLine('initial_frame', -1)
-      else if Sec.Line['initial_frame'] = nil then
-        NewSec.AddLine('initial_frame', Sec.LineNumeric['preview_frame'])  // backwards-compatible
-      else
-        NewSec.AddLine('initial_frame', Sec.LineNumeric['initial_frame']); // more accurate name, and it's what animations use
+      NewSec.AddLine('initial_frame', Sec.LineTrimString['initial_frame']); // using LineTrimString in case it's "RANDOM"
 
       NewSec.AddLine('nine_slice_top', Sec.LineNumeric['nine_slice_top']);
       NewSec.AddLine('nine_slice_right', Sec.LineNumeric['nine_slice_right']);
@@ -316,23 +324,50 @@ begin
         GadgetAccessor.TriggerHeight := 1;
     end;
 
+    GadgetAccessor.DigitAlign := 0; // due to how fallback values work, we want to assign the last-resort fallback here
+
+    GadgetAccessor.DigitX := Sec.LineNumeric['digit_x'];
+    GadgetAccessor.DigitY := Sec.LineNumeric['digit_y'];
+
+    if Sec.Line['digit_x'] = nil then
+    begin
+      if fTriggerEffect = DOM_PICKUP then
+      begin
+        GadgetAccessor.DigitX := fWidth - 1;
+        if Sec.Line['digit_align'] = nil then
+          GadgetAccessor.DigitAlign := 1;
+      end else
+        GadgetAccessor.DigitX := fWidth div 2;
+    end;
+
+    if Sec.Line['digit_y'] = nil then
+    begin
+      if fTriggerEffect = DOM_PICKUP then
+        GadgetAccessor.DigitY := GadgetAccessor.Height - 4
+      else
+        GadgetAccessor.DigitY := -6;
+    end;
+
+    GadgetAccessor.DigitAlign := Sec.LineNumericDefault['digit_align', GadgetAccessor.DigitAlign];
+
+    if fTriggerEffect = DOM_PICKUP then
+      fDigitMinLength := 0
+    else
+      fDigitMinLength := 1;
+
+    fDigitMinLength := Sec.LineNumericDefault['digit_length', fDigitMinLength];
+
     fSoundEffect := Sec.LineTrimString['sound'];
 
     fKeyFrame := Sec.LineNumeric['key_frame']; // this is almost purely a physics property, so should not go under animations
 
     if Sec.Line['resize_both'] <> nil then
-      GadgetAccessor.Resizability := mos_Both
-    else if Sec.Line['resize_horizontal'] <> nil then // This is messy. Should probably take Nepster's advice and split these properly into two Boolean values.
     begin
-      if Sec.Line['resize_vertical'] <> nil then
-        GadgetAccessor.Resizability := mos_Both
-      else
-        GadgetAccessor.Resizability := mos_Horizontal;
+      GadgetAccessor.CanResizeHorizontal := true;
+      GadgetAccessor.CanResizeVertical := true;
     end else begin
-      if Sec.Line['resize_vertical'] <> nil then
-        GadgetAccessor.Resizability := mos_Vertical
-      else
-        GadgetAccessor.Resizability := mos_None;
+      GadgetAccessor.CanResizeHorizontal := Sec.Line['resize_horizontal'] <> nil;
+      GadgetAccessor.CanResizeVertical := Sec.Line['resize_vertical'] <> nil;
     end;
   finally
     Parser.Free;
@@ -342,18 +377,6 @@ end;
 function TGadgetMetaInfo.GetIdentifier: String;
 begin
   Result := LowerCase(fGS + ':' + fPiece);
-end;
-
-function TGadgetMetaInfo.GetCanResize(Flip, Invert, Rotate: Boolean; aDir: TGadgetMetaSizeSetting): Boolean;
-var
-  i: Integer;
-begin
-  EnsureVariationMade(Flip, Invert, Rotate);
-  i := GetImageIndex(Flip, Invert, Rotate);
-  if fVariableInfo[i].Resizability = mos_none then
-    Result := false
-  else
-    Result := (aDir = fVariableInfo[i].Resizability) or (fVariableInfo[i].Resizability = mos_Both);
 end;
 
 function TGadgetMetaInfo.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
@@ -417,7 +440,7 @@ var
   SrcRec: TGadgetVariableProperties;
   DstRec: PGadgetVariableProperties;
 const
-  NO_POSITION_ADJUST = [7, 8, 19]; // OWL, OWR, OWD arrows
+  NO_POSITION_ADJUST = [DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN, DOM_ONEWAYUP];
 
   procedure Clone(Src, Dst: PGadgetVariableProperties);
   var
@@ -457,10 +480,13 @@ begin
     DstRec.TriggerWidth := SrcRec.TriggerHeight;
     DstRec.TriggerHeight := SrcRec.TriggerWidth;
 
-    if SrcRec.Resizability = mos_Horizontal then
-      DstRec.Resizability := mos_Vertical
-    else if SrcRec.Resizability = mos_Vertical then
-      DstRec.Resizability := mos_Horizontal;
+    DstRec.ResizeHorizontal := SrcRec.ResizeVertical;
+    DstRec.ResizeVertical := SrcRec.ResizeHorizontal;
+
+    // I can't imagine digits will work well rotated (at least without a vertical display option), but better at least try
+    DstRec.DigitAlign := 0; // not that any value really makes sense for this
+    DstRec.DigitX := SrcRec.Animations.PrimaryAnimation.Height - SrcRec.DigitY - 1;
+    DstRec.DigitY := SrcRec.DigitX;
   end;
 
   if Flip then
@@ -469,6 +495,10 @@ begin
 
     // Flip trigger area X coordinate
     DstRec.TriggerLeft := DstRec.Animations.PrimaryAnimation.Width - DstRec.TriggerLeft - DstRec.TriggerWidth;
+
+    // Flip digit X coordinate and alignment
+    DstRec.DigitX := DstRec.Animations.PrimaryAnimation.Width - DstRec.DigitX - 1;
+    DstRec.DigitAlign := -DstRec.DigitAlign;
   end;
 
   if Invert then
@@ -479,6 +509,9 @@ begin
     DstRec.TriggerTop := DstRec.Animations.PrimaryAnimation.Height - DstRec.TriggerTop - DstRec.TriggerHeight;
     if not (fTriggerEffect in NO_POSITION_ADJUST) then
       DstRec.TriggerTop := DstRec.TriggerTop + 10;
+
+    // Flip digit Y coordinate
+    DstRec.DigitY := DstRec.Animations.PrimaryAnimation.Height - DstRec.DigitY - 1;
   end;
 end;
 
@@ -506,8 +539,25 @@ begin
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
       ov_TriggerHeight: Result := TriggerHeight;
+      ov_DigitX: Result := DigitX;
+      ov_DigitY: Result := DigitY;
+      ov_DigitAlign: Result := DigitAlign;
       else raise Exception.Create('TMetaObject.GetVariableProperty called for an invalid property!');
     end;
+end;
+
+procedure TGadgetMetaInfo.SetCanResizeHorizontal(Flip, Invert, Rotate,
+  aValue: Boolean);
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  fVariableInfo[GetImageIndex(Flip, Invert, Rotate)].ResizeHorizontal := aValue;
+end;
+
+procedure TGadgetMetaInfo.SetCanResizeVertical(Flip, Invert, Rotate,
+  aValue: Boolean);
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  fVariableInfo[GetImageIndex(Flip, Invert, Rotate)].ResizeVertical := aValue;
 end;
 
 procedure TGadgetMetaInfo.SetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty; aValue: Integer);
@@ -524,27 +574,12 @@ begin
       ov_TriggerTop: TriggerTop := aValue;
       ov_TriggerWidth: TriggerWidth := aValue;
       ov_TriggerHeight: TriggerHeight := aValue;
+      ov_DigitX: DigitX := aValue;
+      ov_DigitY: DigitY := aValue;
+      ov_DigitAlign: DigitAlign := aValue;
       else raise Exception.Create('TMetaObject.SetVariableProperty called for an invalid property!');
     end;
   MarkMetaDataUnmade;
-end;
-
-function TGadgetMetaInfo.GetResizability(Flip, Invert, Rotate: Boolean): TGadgetMetaSizeSetting;
-var
-  i: Integer;
-begin
-  EnsureVariationMade(Flip, Invert, Rotate);
-  i := GetImageIndex(Flip, Invert, Rotate);
-  Result := fVariableInfo[i].Resizability;
-end;
-
-procedure TGadgetMetaInfo.SetResizability(Flip, Invert, Rotate: Boolean; aValue: TGadgetMetaSizeSetting);
-var
-  i: Integer;
-begin
-  EnsureVariationMade(Flip, Invert, Rotate);
-  i := GetImageIndex(Flip, Invert, Rotate);
-  fVariableInfo[i].Resizability := aValue;
 end;
 
 function TGadgetMetaInfo.GetAnimations(Flip, Invert, Rotate: Boolean): TGadgetAnimations;
@@ -554,6 +589,20 @@ begin
   EnsureVariationMade(Flip, Invert, Rotate);
   i := GetImageIndex(Flip, Invert, Rotate);
   Result := fVariableInfo[i].Animations;
+end;
+
+function TGadgetMetaInfo.GetCanResizeHorizontal(Flip, Invert,
+  Rotate: Boolean): Boolean;
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  Result := fVariableInfo[GetImageIndex(Flip, Invert, Rotate)].ResizeHorizontal;
+end;
+
+function TGadgetMetaInfo.GetCanResizeVertical(Flip, Invert,
+  Rotate: Boolean): Boolean;
+begin
+  EnsureVariationMade(Flip, Invert, Rotate);
+  Result := fVariableInfo[GetImageIndex(Flip, Invert, Rotate)].ResizeVertical;
 end;
 
 { TMetaObjectInterface }
@@ -580,9 +629,23 @@ begin
     ov_TriggerWidth: Result := fGadgetMetaInfo.TriggerWidth[fFlip, fInvert, fRotate];
     ov_TriggerHeight: Result := fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate];
     ov_TriggerEffect: Result := fGadgetMetaInfo.fTriggerEffect;
+    ov_DigitX: Result := fGadgetMetaInfo.DigitX[fFlip, fInvert, fRotate];
+    ov_DigitY: Result := fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate];
+    ov_DigitAlign: Result := fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate];
+    ov_DigitMinLength: Result := fGadgetMetaInfo.fDigitMinLength;
     ov_KeyFrame: Result := fGadgetMetaInfo.fKeyFrame;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
+end;
+
+procedure TGadgetMetaAccessor.SetCanResizeHorizontal(const aValue: Boolean);
+begin
+  fGadgetMetaInfo.CanResizeHorizontal[fFlip, fInvert, fRotate] := aValue;
+end;
+
+procedure TGadgetMetaAccessor.SetCanResizeVertical(const aValue: Boolean);
+begin
+  fGadgetMetaInfo.CanResizeVertical[fFlip, fInvert, fRotate] := aValue;
 end;
 
 procedure TGadgetMetaAccessor.SetIntegerProperty(aProp: TGadgetMetaProperty; aValue: Integer);
@@ -593,6 +656,10 @@ begin
     ov_TriggerWidth: fGadgetMetaInfo.TriggerWidth[fFlip, fInvert, fRotate] := aValue;
     ov_TriggerHeight: fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate] := aValue;
     ov_TriggerEffect: fGadgetMetaInfo.fTriggerEffect := aValue;
+    ov_DigitX: fGadgetMetaInfo.DigitX[fFlip, fInvert, fRotate] := aValue;
+    ov_DigitY: fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate] := aValue;
+    ov_DigitAlign: fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate] := aValue;
+    ov_DigitMinLength: fGadgetMetaInfo.fDigitMinLength := aValue;
     ov_KeyFrame: fGadgetMetaInfo.fKeyFrame := aValue;
     else raise Exception.Create('TMetaObjectInterface.GetIntegerProperty called with invalid index!');
   end;
@@ -608,23 +675,9 @@ begin
   fGadgetMetaInfo.fSoundEffect := aValue;
 end;
 
-function TGadgetMetaAccessor.GetResizability: TGadgetMetaSizeSetting;
+function TGadgetMetaAccessor.GetDigitAnimation: TGadgetAnimation;
 begin
-  Result := fGadgetMetaInfo.Resizability[fFlip, fInvert, fRotate];
-end;
-
-procedure TGadgetMetaAccessor.SetResizability(aValue: TGadgetMetaSizeSetting);
-begin
-  fGadgetMetaInfo.Resizability[fFlip, fInvert, fRotate] := aValue;
-end;
-
-function TGadgetMetaAccessor.GetCanResize(aDir: TGadgetMetaSizeSetting): Boolean;
-begin
-  Result := false;
-  case aDir of
-    mos_Horizontal: Result := fGadgetMetaInfo.CanResizeHorizontal[fFlip, fInvert, fRotate];
-    mos_Vertical: Result := fGadgetMetaInfo.CanResizeVertical[fFlip, fInvert, fRotate];
-  end;
+  Result := fGadgetMetaInfo.Animations[false, false, false]['DIGITS'];
 end;
 
 function TGadgetMetaAccessor.GetAnimations: TGadgetAnimations;
@@ -648,6 +701,16 @@ begin
 
   aPhysicsBounds.SetLocation(-aImageBounds.Left, -aImageBounds.Top);
   aImageBounds.SetLocation(0, 0);
+end;
+
+function TGadgetMetaAccessor.GetCanResizeHorizontal: Boolean;
+begin
+  Result := fGadgetMetaInfo.CanResizeHorizontal[fFlip, fInvert, fRotate];
+end;
+
+function TGadgetMetaAccessor.GetCanResizeVertical: Boolean;
+begin
+  Result := fGadgetMetaInfo.CanResizeVertical[fFlip, fInvert, fRotate];
 end;
 
 { TMetaObjects }

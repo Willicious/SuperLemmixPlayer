@@ -14,7 +14,7 @@ uses
   LemNeoLevelPack,
   LemmixHotkeys,
   Math,
-  Dialogs, SysUtils, StrUtils, Classes, Forms, GR32,
+  Dialogs, SysUtils, StrUtils, IOUtils, Classes, Forms, GR32,
   LemVersion,
   LemTypes, LemLevel,
   LemDosStructures,
@@ -75,6 +75,8 @@ type
     moMinimapHighQuality,
     moIncreaseZoom,
     moLoadedConfig,
+    moNeedRequestUsername,
+    moMatchBlankReplayUsername,
     moCompactSkillPanel,
     moEdgeScroll,
     moSpawnInterval
@@ -131,9 +133,7 @@ type
 
     function GetCurrentGroupName: String;
   public
-    // this is initialized by appcontroller
-    MainDatFile  : string;
-
+    UserName: string;
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;
@@ -175,6 +175,8 @@ type
     procedure Save;
     procedure Load;
 
+    procedure SetCurrentLevelToBestMatch(aPattern: String);
+
     procedure SetLevel(aLevel: TNeoLevelEntry);
     procedure NextLevel(aCanCrossRank: Boolean = false);
     procedure PrevLevel(aCanCrossRank: Boolean = false);
@@ -200,9 +202,12 @@ type
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
+    property NeedRequestUsername: boolean Index moNeedRequestUsername read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
+
+    property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -264,6 +269,7 @@ end;
 procedure TDosGameParams.SaveToIniFile;
 var
   SL, SL2: TStringList;
+  LevelSavePath: String;
 
   procedure SaveBoolean(aLabel: String; aValue: Boolean; aValue2: Boolean = false);
   var
@@ -311,6 +317,7 @@ begin
     SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
 
   SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
+  SL.Add('UserName=' + UserName);
 
   SL.Add('');
   SL.Add('# Interface Options');
@@ -334,6 +341,11 @@ begin
 
   SaveBoolean('LinearResampleMenu', LinearResampleMenu);
   SaveBoolean('LinearResampleGame', LinearResampleGame);
+
+  LevelSavePath := CurrentLevel.Path;
+  if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
+    LevelSavePath := RightStr(LevelSavePath, Length(LevelSavePath) - Length(AppPath + SFLevels));
+  SL.Add('LastActiveLevel=' + LevelSavePath);
 
   SL.Add('');
   SL.Add('# Sound Options');
@@ -441,6 +453,10 @@ begin
     WindowHeight := 200 * ZoomLevel;
   end;
 
+  UserName := SL.Values['UserName'];
+  if StrToInt64Def(SL.Values['LastVersion'], 0) < 12005001000 then
+    NeedRequestUsername := true;
+
   AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
   ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);
   NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
@@ -451,6 +467,8 @@ begin
   EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
   IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
   SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
+
+  SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
 
   //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
   //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
@@ -560,6 +578,68 @@ begin
   ShownText := false;
 end;
 
+procedure TDosGameParams.SetCurrentLevelToBestMatch(aPattern: String);
+type
+  TMatchType = (mtNone, mtPartial, mtFull);
+var
+  DeepestMatchGroup: TNeoLevelGroup;
+  MatchGroup: TNeoLevelGroup;
+  MatchLevel: TNeoLevelEntry;
+
+  function GetLongestMatchIn(aPack: TNeoLevelGroup): TMatchType;
+  var
+    i: Integer;
+  begin
+    Result := mtNone;
+    MatchGroup := nil;
+    MatchLevel := nil;
+
+    for i := 0 to aPack.Children.Count-1 do
+      if ((MatchGroup = nil) or (Length(aPack.Children[i].Path) > Length(MatchGroup.Path))) and
+         (LeftStr(aPattern, Length(aPack.Children[i].Path)) = aPack.Children[i].Path) then
+      begin
+        Result := mtPartial;
+        MatchGroup := aPack.Children[i];
+      end;
+
+    for i := 0 to aPack.Levels.Count-1 do
+      if aPack.Levels[i].Path = aPattern then
+      begin
+        Result := mtFull;
+        MatchLevel := aPack.Levels[i];
+        Exit;
+      end;
+  end;
+
+  function RecursiveSearch(aPack: TNeoLevelGroup): TNeoLevelEntry;
+  begin
+    Result := nil;
+    DeepestMatchGroup := aPack;
+
+    case GetLongestMatchIn(aPack) of
+      //mtNone: Result of "nil" sticks
+      mtPartial: Result := RecursiveSearch(MatchGroup);
+      mtFull: Result := MatchLevel;
+    end;
+  end;
+begin
+  // Tries to set the exact level. If the level is missing, try to set to
+  // the rank it's supposedly in; or if that fails, the pack the rank is in,
+  // etc. If there's no sane result whatsoever, do nothing.
+  // This is used for the LastActiveLevel setting in settings.ini, and the
+  // -shortcut command line parameter.
+
+  if not TPath.IsPathRooted(aPattern) then
+    aPattern := AppPath + SFLevels + aPattern;
+
+  MatchLevel := RecursiveSearch(BaseLevelPack);
+
+  if (MatchLevel <> nil) then
+    SetLevel(MatchLevel)
+  else if (DeepestMatchGroup <> nil) then
+    SetLevel(DeepestMatchGroup.FirstUnbeatenLevelRecursive);
+end;
+
 procedure TDosGameParams.SetGroup(aGroup: TNeoLevelGroup);
 begin
   try
@@ -608,7 +688,8 @@ begin
     On E : EAccessViolation do
       SetLevel(nil);
   end;
-  
+
+  UserName := 'Anonymous';
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;

@@ -11,7 +11,7 @@ interface
 uses
   Classes, Controls,
   GameBaseScreen, GameControl,
-  {$ifdef exp}LemNeoLevelPack, LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
+  LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
   GR32, GR32_Layers;
 
 type
@@ -97,7 +97,7 @@ type
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
-    procedure ShowSetupMenu;
+    procedure ShowSetupMenu(aUsernameOnly: Boolean);
   protected
   { overrides }
     procedure PrepareGameParams; override;
@@ -523,14 +523,17 @@ procedure TGameMenuScreen.Application_Idle(Sender: TObject; var Done: Boolean);
 -------------------------------------------------------------------------------}
 var
   CurrTime: Cardinal;
+  LocalNeedRequestUsername: Boolean;
 begin
   if not GameParams.DoneUpdateCheck then
     PerformUpdateCheck;
 
-  if not GameParams.LoadedConfig then
+  if (not GameParams.LoadedConfig) or (GameParams.NeedRequestUsername) then
   begin
+    LocalNeedRequestUsername := GameParams.NeedRequestUsername and GameParams.LoadedConfig;
     GameParams.LoadedConfig := true;
-    ShowSetupMenu;
+    GameParams.NeedRequestUsername := false;
+    ShowSetupMenu(LocalNeedRequestUsername);
   end;
 
   if not CanAnimate or ScreenIsClosing then
@@ -587,12 +590,13 @@ begin
   inherited CloseScreen(aNextScreen);
 end;
 
-procedure TGameMenuScreen.ShowSetupMenu;
+procedure TGameMenuScreen.ShowSetupMenu(aUsernameOnly: Boolean);
 var
   F: TFNLSetup;
 begin
   F := TFNLSetup.Create(self);
   try
+    F.NameOnly := aUsernameOnly;
     F.ShowModal;
   finally
     F.Free;

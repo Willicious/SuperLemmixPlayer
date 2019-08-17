@@ -1815,13 +1815,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 12
+  INDEX 0
   COLLECTION gigalem_glacier
   PIECE glacier_01
 $END
 
 $BACKGROUND
-  INDEX 13
+  INDEX 1
   COLLECTION gigalem_glacier
   PIECE glacier_02
 $END

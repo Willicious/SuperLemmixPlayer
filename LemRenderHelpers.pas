@@ -29,7 +29,7 @@ const
 
 
   SHADOW_COLOR = $80202020;
-  ALPHA_CUTOFF = $80000000; // if (TColor32) and ALPHA_CUTOFF = 0 then not solid
+  ALPHA_CUTOFF = $80; // below this = nonsolid, based on the COMPOSITE image (not individual pieces)
 
 type
 

@@ -1017,7 +1017,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 21
+  INDEX 0
   COLLECTION gigalem_starport
   PIECE starport
 $END

@@ -1,0 +1,114 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Standard Draw Test
+ AUTHOR 
+ ID x3FFA994C33998405
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    320
+ HEIGHT   160
+ START_X  160
+ START_Y   80
+ THEME orig_dirt
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION orig_dirt
+   PIECE      window
+   X         23
+   Y         46
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      clump_05
+   X   125
+   Y    39
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      clump_02
+   X   163
+   Y    74
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      clump_02
+   X   119
+   Y    88
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      clump_02
+   X   114
+   Y    76
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      clump_02
+   X   110
+   Y    60
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      clump_02
+   X   148
+   Y    33
+   ERASE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      tree
+   X   119
+   Y    77
+   NO_OVERWRITE
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      steel_04
+   X   116
+   Y    79
+   ONE_WAY
+ $END
+ 
+ 

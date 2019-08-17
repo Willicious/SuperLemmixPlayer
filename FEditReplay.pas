@@ -46,6 +46,7 @@ implementation
 {$R *.dfm}
 
 uses
+  GameControl,
   UITypes;
 
 procedure TFReplayEditor.NoteChangeAtFrame(aFrame: Integer);
@@ -229,6 +230,7 @@ begin
     HandleRRDelete(I.Frame)
   else
     fReplay.Delete(I);
+
   ListReplayActions;
 end;
 

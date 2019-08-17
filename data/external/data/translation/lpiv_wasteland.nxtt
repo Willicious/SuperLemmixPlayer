@@ -498,13 +498,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 13
+  INDEX 0
   COLLECTION namida_wasteland
   PIECE red_sky
 $END
 
 $BACKGROUND
-  INDEX 14
+  INDEX 1
   COLLECTION namida_wasteland
   PIECE mushroom_cloud
 $END

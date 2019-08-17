@@ -345,13 +345,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 10
+  INDEX 0
   COLLECTION ray_food
   PIECE back_food
 $END
 
 $BACKGROUND
-  INDEX 11
+  INDEX 1
   COLLECTION ray_food
   PIECE back_repeat_food
 $END

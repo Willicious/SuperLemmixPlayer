@@ -120,6 +120,8 @@ type
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
+    fDoneAssignmentThisFrame   : Boolean;
+
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
     PhysicsMap                 : TBitmap32;
@@ -238,7 +240,7 @@ type
       function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
-      function HandleExit(L: TLemming): Boolean;
+      function HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
       function HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -370,7 +372,7 @@ type
     GameResultRec              : TGameResultsRec;
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
-    fActiveSkills              : array[0..7] of TSkillPanelButton;
+    fActiveSkills              : array[0..MAX_SKILL_TYPES_PER_LEVEL-1] of TSkillPanelButton;
     LastHitCount               : Integer;
     SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     ReplayInsert               : Boolean;
@@ -757,6 +759,9 @@ var
     Result := true;
   end;
 begin
+  if not fReplayManager.IsThisUsersReplay then
+    Exit;
+
   for i := 0 to Level.Talismans.Count-1 do
   begin
     if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then Continue;
@@ -1071,7 +1076,7 @@ begin
   fSelectedSkill := spbNone;
   InitialSkill := spbNone;
 
-  for i := 0 to 7 do
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL-1 do
     fActiveSkills[i] := spbNone;
   i := 0;
   for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
@@ -1082,7 +1087,7 @@ begin
       fActiveSkills[i] := Skill;
       Inc(i);
 
-      if i = 8 then Break; // remove this if we ever allow more than 8 skill types per level
+      if i = MAX_SKILL_TYPES_PER_LEVEL then Break;
     end;
   end;
   if InitialSkill <> spbNone then
@@ -1111,7 +1116,9 @@ begin
       LemIndex := LemmingList.Add(L);
       SetFromPreplaced(Lem);
 
-      if not HasPixelAt(L.LemX, L.LemY) then
+      if Lem.IsShimmier and HasPixelAt(L.LemX, L.LemY - 9) then
+        Transition(L, baShimmying)
+      else if not HasPixelAt(L.LemX, L.LemY) then
         Transition(L, baFalling)
       else if Lem.IsBlocker and not CheckForOverlappingField(L) then
         Transition(L, baBlocking)
@@ -1714,6 +1721,8 @@ begin
   // We check first, whether the skill is available at all
   if not CheckSkillAvailable(NewSkill) then Exit;
 
+  if fDoneAssignmentThisFrame then Exit;
+
   UpdateSkillCount(NewSkill);
 
   // Remove queued skill assignment
@@ -1782,6 +1791,7 @@ begin
   else Transition(L, NewSkill);
 
   Result := True;
+  fDoneAssignmentThisFrame := true;
 end;
 
 
@@ -2229,7 +2239,7 @@ begin
 
     // Exits
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
-      AbortChecks := HandleExit(L);
+      AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Flipper (except for blockers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
@@ -2320,6 +2330,10 @@ begin
     // Additional checks for locked exit
     if (Gadget.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
       GadgetFound := False;
+    // Additional check for any exit
+    if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) and (Gadget.RemainingLemmingsCount = 0) then // we specifically must not use <= 0 here, as -1 = no limit
+      GadgetFound := False;
+
     // Additional checks for triggered traps, triggered animations, teleporters
     if Gadget.Triggered then
       GadgetFound := False;
@@ -2480,7 +2494,10 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleExit(L: TLemming): Boolean;
+function TLemmingGame.HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
+var
+  GadgetID: Word;
+  Gadget: TGadget;
 begin
   Result := False; // only see exit trigger area, if it actually used
 
@@ -2488,6 +2505,13 @@ begin
      and (not (L.LemAction in [baFalling, baSplatting]))
      and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
+    GadgetID := FindGadgetID(PosX, PosY, trExit);
+    if GadgetID = 65535 then Exit;
+    Gadget := Gadgets[GadgetID];
+
+    if Gadget.RemainingLemmingsCount > 0 then
+      Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount - 1;
+
     Result := True;
     Transition(L, baExiting);
     CueSoundEffect(SFX_YIPPEE, L.Position);
@@ -4428,6 +4452,8 @@ procedure TLemmingGame.UpdateLemmings;
   The main method: handling a single frame of the game.
 -------------------------------------------------------------------------------}
 begin
+  fDoneAssignmentThisFrame := false;
+
   if fGameFinished then
     Exit;
   fSoundList.Clear(); // Clear list of played sound effects
@@ -4618,8 +4644,8 @@ function TLemmingGame.GetSelectedSkill: Integer;
 var
   i: Integer;
 begin
-  Result := 8;
-  for i := 0 to 7 do
+  Result := -1;
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL do
     if fSelectedSkill = fActiveSkills[i] then
     begin
       Result := i;
@@ -4634,7 +4660,7 @@ procedure TLemmingGame.SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Bo
     i: Integer;
   begin
     Result := false;
-    for i := 0 to 7 do
+    for i := 0 to MAX_SKILL_TYPES_PER_LEVEL - 1 do
       if fActiveSkills[i] = Value then Result := true;
   end;
 begin
@@ -4744,6 +4770,11 @@ begin
 
           if Gadgets[ix].IsPreassignedNeutral then
             LemIsNeutral := true;
+
+          if Gadgets[ix].RemainingLemmingsCount > 0 then
+            Gadgets[ix].RemainingLemmingsCount := Gadgets[ix].RemainingLemmingsCount - 1;
+                // TLevel.PrepareForUse handles enforcing the limits. This only needs to be updated
+                // for display purposes.
         end;
         Dec(LemmingsToRelease);
         Inc(LemmingsOut);
@@ -4830,7 +4861,13 @@ end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String);
 begin
-  CueSoundEffect(aSound, Point(0, 0));
+  if IsSimulating then Exit; // Not play sound in simulation mode
+
+  // Check that the sound was not yet played on this frame
+  if fSoundList.Contains(aSound) then Exit;
+
+  fSoundList.Add(aSound);
+  MessageQueue.Add(GAMEMSG_SOUND, aSound);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);
@@ -5233,6 +5270,8 @@ procedure TLemmingGame.RegainControl(Force: Boolean = false);
 begin
   if ReplayInsert and not Force then Exit;
 
+  if CurrentIteration > fReplayManager.LastActionFrame then Exit;
+
   fReplayManager.Cut(fCurrentIteration);
 end;
 
@@ -5342,7 +5381,7 @@ begin
   Assert(aAction in AssignableSkills, 'CheckSkillAvailable for not assignable skill');
 
   HasSkillButton := false;
-  for i := 0 to Length(fActiveSkills) - 1 do
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL - 1 do
     HasSkillButton := HasSkillButton or (fActiveSkills[i] = ActionToSkillPanelButton[aAction]);
 
   Result := HasSkillButton and (CurrSkillCount[aAction] > 0);

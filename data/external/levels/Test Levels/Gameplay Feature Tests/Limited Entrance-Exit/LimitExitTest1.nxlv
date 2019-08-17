@@ -1,0 +1,114 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.11
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Limited Exit Test 1
+ AUTHOR 
+ ID x2B888A91DA0ED73
+ AUTOSTEEL on 
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH    144
+ HEIGHT    80
+ START_X  143
+ START_Y   79
+ THEME orig_dirt
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS       40
+ REQUIREMENT    20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+   DISARMER    5
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $OBJECT
+   COLLECTION orig_dirt
+   PIECE      window
+   X          7
+   Y          6
+   NO_OVERWRITE
+   DIRECTION right
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_dirt
+   PIECE      exit
+   X         35
+   Y         24
+   NO_OVERWRITE
+   LEMMINGS 10
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_dirt
+   PIECE      exit
+   X         67
+   Y         24
+   NO_OVERWRITE
+   LEMMINGS 10
+ $END
+ 
+ $OBJECT
+   COLLECTION orig_crystal
+   PIECE      exit_locked
+   X        103
+   Y         34
+   NO_OVERWRITE
+   LEMMINGS 10
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      steel_03
+   X     0
+   Y    49
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      steel_03
+   X    24
+   Y    49
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      steel_03
+   X    48
+   Y    49
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      steel_03
+   X    72
+   Y    49
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      steel_03
+   X    96
+   Y    49
+ $END
+ 
+ $TERRAIN
+   COLLECTION orig_dirt
+   PIECE      steel_03
+   X   120
+   Y    49
+ $END
+ 
+ 

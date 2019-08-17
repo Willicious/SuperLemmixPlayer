@@ -77,27 +77,15 @@ type
     baShimmying
   );
 
-  {TSkillPanelButton = (
-    spbNone,
-    spbSlower,
-    spbFaster,
-    spbClimber,
-    spbFloater,
-    spbBomber,
-    spbBlocker,
-    spbBuilder,
-    spbBasher,
-    spbMiner,
-    spbDigger,
-    spbPause,
-    spbNuke,
-    spbWalker
-  );}
+const
+  MAX_SKILL_TYPES_PER_LEVEL = 10;
 
+type
   TSkillPanelButton = (
 
 
     spbWalker,
+    spbShimmier,
     spbClimber,
     spbSwimmer,
     spbFloater,
@@ -114,7 +102,6 @@ type
     spbMiner,
     spbDigger,
     spbCloner,
-    spbShimmier,
 
     spbNone,
     spbSlower,
@@ -125,18 +112,21 @@ type
     spbFastForward,
     spbRestart,
     spbBackOneFrame,
-    spbForwardOneFrame,
-    spbClearPhysics,
     spbDirLeft,
-    spbLoadReplay,
-    spbDirRight  // because of special handling to draw it, it's not immediately after spbDirLeft in the list
+    spbClearPhysics,
+
+    // These three are the bottom part of a vertical split
+    spbForwardOneFrame,
+    spbDirRight,
+    spbLoadReplay
   );
 
 const
-  LAST_SKILL_BUTTON = spbShimmier;
+  LAST_SKILL_BUTTON = spbCloner;
 
   SKILL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
     'walker',
+    'shimmier',
     'climber',
     'swimmer',
     'floater',
@@ -152,8 +142,7 @@ const
     'fencer',
     'miner',
     'digger',
-    'cloner',
-    'shimmier');
+    'cloner');
 
 type
   TTriggerTypes = (
@@ -240,6 +229,7 @@ const
   SkillPanelButtonToAction: array[TSkillPanelButton] of TBasicLemmingAction = (
 
     baToWalking,
+    baShimmying,
     baClimbing,
     baSwimming,
     baFloating,
@@ -256,7 +246,6 @@ const
     baMining,
     baDigging,
     baCloning,
-    baShimmying,
     baNone, //Null
     baNone, //RR-
     baNone, //RR+

@@ -20,6 +20,7 @@ type
       fIsFloater:  Boolean;
       fIsGlider:   Boolean;
       fIsDisarmer: Boolean;
+      fIsShimmier: Boolean;
       fIsBlocker:  Boolean;
       fIsZombie:   Boolean;
       fIsNeutral:  Boolean;
@@ -34,6 +35,7 @@ type
       property IsFloater: Boolean read fIsFloater write fIsFloater;
       property IsGlider: Boolean read fIsGlider write fIsGlider;
       property IsDisarmer: Boolean read fIsDisarmer write fIsDisarmer;
+      property IsShimmier: Boolean read fIsShimmier write fIsShimmier;
       property IsBlocker: Boolean read fIsBlocker write fIsBlocker;
       property IsZombie: Boolean read fIsZombie write fIsZombie;
       property IsNeutral: Boolean read fIsNeutral write fIsNeutral;
@@ -159,6 +161,7 @@ begin
   IsFloater := aSrc.IsFloater;
   IsGlider := aSrc.IsGlider;
   IsDisarmer := aSrc.IsDisarmer;
+  IsShimmier := aSrc.IsShimmier;
   IsBlocker := aSrc.IsBlocker;
   IsZombie := aSrc.IsZombie;
   IsNeutral := aSrc.IsNeutral;
@@ -226,7 +229,7 @@ begin
   LemIsGlider := Source.IsGlider;
   LemIsDisarmer := Source.IsDisarmer;
   LemIsNeutral := Source.IsNeutral;
-  // Blocker and Zombie must be handled by the calling routine
+  // Shimmier, Blocker and Zombie must be handled by the calling routine
 end;
 
 function TLemming.GetCannotReceiveSkills: Boolean;

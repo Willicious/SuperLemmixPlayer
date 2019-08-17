@@ -25,12 +25,12 @@ uses
 const
   SKILL_REPLAY_NAME_COUNT = 18;
   SKILL_REPLAY_NAMES: array[0..SKILL_REPLAY_NAME_COUNT-1] of String =
-                                               ('WALKER', 'CLIMBER', 'SWIMMER',
-                                                'FLOATER', 'GLIDER', 'DISARMER',
-                                                'BOMBER', 'STONER', 'BLOCKER',
-                                                'PLATFORMER', 'BUILDER', 'STACKER',
-                                                'BASHER', 'FENCER', 'MINER',
-                                                'DIGGER', 'CLONER', 'SHIMMIER');
+                                               ('WALKER', 'SHIMMIER', 'CLIMBER',
+                                                'SWIMMER', 'FLOATER', 'GLIDER',
+                                                'DISARMER', 'BOMBER', 'STONER',
+                                                'BLOCKER', 'PLATFORMER', 'BUILDER',
+                                                'STACKER', 'BASHER', 'FENCER',
+                                                'MINER', 'DIGGER', 'CLONER');
 
 
 type
@@ -123,6 +123,7 @@ type
       fLevelRank: String;
       fLevelPosition: Integer;
       fLevelID: Int64;
+      function GetIsThisUsersReplay: Boolean;
       function GetLastActionFrame: Integer;
       function GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; Sec: TParserSection);
@@ -153,6 +154,7 @@ type
       property SpawnIntervalChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
       property IsModified: Boolean read fIsModified;
+      property IsThisUsersReplay: Boolean read GetIsThisUsersReplay;
   end;
 
   function GetSkillReplayName(aButton: TSkillPanelButton): String; overload;
@@ -251,7 +253,7 @@ const
 	raf_SkillAssignment   = $0080;
 	raf_Nuke              = $0100;
 
-  BUTTON_TABLE: array[0..21] of TSkillPanelButton =
+  BUTTON_TABLE: array[0..20] of TSkillPanelButton =
                  (spbNone, spbNone, spbNone,
                   spbClimber,
                   spbFloater,
@@ -269,8 +271,7 @@ const
                   spbStoner,
                   spbPlatformer,
                   spbStacker,
-                  spbCloner,
-                  spbShimmier);
+                  spbCloner);
 
 { TReplay }
 
@@ -582,7 +583,12 @@ begin
   try
     Sec := Parser.MainSection;
 
-    Sec.AddLine('USER', fPlayerName);
+    if fIsModified then
+      fPlayerName := GameParams.UserName; // If modified, treat it as this user's.
+
+    if (fPlayerName <> '') and (Uppercase(Trim(fPlayerName)) <> 'ANONYMOUS') then
+      Sec.AddLine('USER', fPlayerName);
+
     Sec.AddLine('TITLE', fLevelName);
     Sec.AddLine('AUTHOR', fLevelAuthor);
     if Trim(fLevelGame) <> '' then
@@ -750,6 +756,19 @@ begin
   finally
     MS.Free;
   end;
+end;
+
+function TReplay.GetIsThisUsersReplay: Boolean;
+begin
+  if ((fPlayerName = GameParams.UserName) and (Uppercase(Trim(GameParams.UserName)) <> 'Anonymous') and (fPlayerName <> ''))
+  or ((Trim(fPlayerName) = '') and GameParams.MatchBlankReplayUsername) then
+    Result := true
+  else if fIsModified then
+  begin
+    Result := true;
+    fPlayerName := GameParams.UserName;
+  end else
+    Result := false;
 end;
 
 function TReplay.GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;

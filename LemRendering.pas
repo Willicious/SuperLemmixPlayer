@@ -7,7 +7,7 @@ unit LemRendering;
 interface
 
 uses
-  SharedGlobals, // debug
+  Dialogs,
   System.Types,
   Classes, Math, Windows,
   GR32, GR32_Blend,
@@ -36,6 +36,8 @@ type
     Level        : TLevel;
   end;
 
+  TPhysicsRenderingType = (prtStandard, prtSteel, prtOneWay, prtErase);
+
   TRenderer = class
   private
     fGadgets            : TGadgetList;
@@ -63,12 +65,24 @@ type
     fDoneBackgroundDraw : Boolean;
 
     fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
+    fPhysicsRenderingType: TPhysicsRenderingType;
+    fPhysicsRenderSimpleAutosteel: Boolean;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
     procedure AddStoner(X, Y: Integer);
     // Remove stuff
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
+
+
+    // Physics map preparation combines and helpers
+    function CombineTerrainSolidity(F: Byte; B: Byte): Byte;
+    function CombineTerrainSolidityErase(F: Byte; B: Byte): Byte;
+    function CombineTerrainProperty(F: Byte; B: Byte; FIntensity: Byte): Byte;
+
+    procedure CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainPhysicsPrepNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32; M: TColor32);
 
     // Graphical combines
     procedure CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -78,17 +92,11 @@ type
     procedure CombineGadgetsDefaultZombie(F: TColor32; var B: TColor32; M: TColor32);
     procedure CombineGadgetsDefaultNeutral(F: TColor32; var B: TColor32; M: TColor32);
 
-    // Functional combines
-    procedure PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
-    procedure ApplySimpleAutosteel(aBmp: TBitmap32);
-    procedure CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-    procedure CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
-
     // Clear Physics combines
     procedure CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32); // use with fFixedDrawColor
 
     procedure PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
+    procedure PrepareTerrainBitmapForPhysics(Bmp: TBitmap32; DrawingFlags: Byte; IsSteel: Boolean);
     procedure PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false);
 
     procedure DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
@@ -103,6 +111,7 @@ type
     procedure DrawUserHelper;
     function IsUseful(Gadget: TGadget): Boolean;
 
+    procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean);
   protected
   public
     constructor Create;
@@ -117,6 +126,9 @@ type
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
 
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
+
+    // Composite pieces (terrain grouping)
+    procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32);
 
     // Terrain rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
@@ -246,7 +258,7 @@ begin
   SelectedLemming := fRenderInterface.SelectedLemming;
   for i := 0 to LemmingList.Count-1 do
     if LemmingList[i] <> SelectedLemming then
-      DrawThisLemming(LemmingList[i], false, IsStartingSeconds);
+      DrawThisLemming(LemmingList[i], false);
 
   // Draw the lemming below the cursor
   if SelectedLemming <> nil then
@@ -327,10 +339,11 @@ begin
   SrcAnim.OnPixelCombine := fRecolorer.CombineLemmingPixels;
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 
-  // Helper for selected blockers
-  if (Selected and aLemming.LemIsZombie) or UsefulOnly then
+  // Helper for selected lemming
+  if (Selected and aLemming.LemIsZombie) or UsefulOnly or
+     ((fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds) then
   begin
-    DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming);
+    DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, UsefulOnly);
     fLayers.fIsEmpty[rlObjectHelpers] := false;
   end;
 
@@ -939,77 +952,7 @@ begin
   Result := PieceManager.Terrains[FindLabel];
 end;
 
-// Functional combines
-
-procedure TRenderer.ApplySimpleAutosteel(aBmp: TBitmap32);
-var
-  x, y: Integer;
-begin
-  for y := 0 to aBmp.Height-1 do
-    for x := 0 to aBmp.Width-1 do
-      if aBmp.Pixel[x, y] and PM_SOLID <> 0 then
-        aBmp.Pixel[x, y] := aBmp.Pixel[x, y] or PM_NOCANCELSTEEL;
-end;
-
-procedure TRenderer.PrepareTerrainFunctionBitmap(T: TTerrain; Dst: TBitmap32; Src: TMetaTerrain);
-var
-  x, y: Integer;
-  PDst: PColor32;
-  Flip, Invert, Rotate: Boolean;
-begin
-  Rotate := T.DrawingFlags and tdf_Rotate <> 0;
-  Invert := T.DrawingFlags and tdf_Invert <> 0;
-  Flip := T.DrawingFlags and tdf_Flip <> 0;
-
-  Dst.Assign(Src.PhysicsImage[Flip, Invert, Rotate]);
-
-  for y := 0 to Dst.Height-1 do
-  for x := 0 to Dst.Width-1 do
-  begin
-    PDst := Dst.PixelPtr[x, y];
-    // Set One-way-arrow flag
-    if (not Src.IsSteel) and (T.DrawingFlags and tdf_NoOneWay = 0) then
-      PDst^ := PDst^ or PM_ONEWAY;
-    // Remove non-sold pixels
-    if (PDst^ and PM_SOLID) = 0 then
-      PDst^ := 0;
-  end;
-
-  Dst.DrawMode := dmCustom;
-  if T.DrawingFlags and tdf_NoOverwrite <> 0 then
-    Dst.OnPixelCombine := CombineTerrainFunctionNoOverwrite
-  else if T.DrawingFlags and tdf_Erase <> 0 then
-    Dst.OnPixelCombine := CombineTerrainFunctionErase
-  else
-    Dst.OnPixelCombine := CombineTerrainFunctionDefault;
-end;
-
-procedure TRenderer.CombineTerrainFunctionDefault(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then
-    if F and PM_NOCANCELSTEEL = 0 then
-      B := F
-    else
-      B := (B and PM_STEEL) or F;
-end;
-
-procedure TRenderer.CombineTerrainFunctionNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then
-    if B and PM_NOCANCELSTEEL = 0 then
-    begin
-      if (B and PM_SOLID = 0) then
-        B := F;
-    end else begin
-      B := B or (F and PM_STEEL);
-    end;
-end;
-
-procedure TRenderer.CombineTerrainFunctionErase(F: TColor32; var B: TColor32; M: TColor32);
-begin
-  if F <> 0 then
-    B := 0;
-end;
+// Graphical combines
 
 procedure TRenderer.CombineFixedColor(F: TColor32; var B: TColor32; M: TColor32);
 begin
@@ -1017,7 +960,31 @@ begin
     B := fFixedDrawColor;
 end;
 
-// Graphical combines
+function TRenderer.CombineTerrainSolidity(F, B: Byte): Byte;
+begin
+  // Custom alpha blend functions, to 100% ensure consistency.
+  // This is not order-sensitive, ie: CombineTerrainSolidity(X, Y) = CombineTerrainSolidity(Y, X).
+  // Thus, it can be used for No Overwrite draws too.
+  if (F = 0) then
+    Result := B
+  else if (B = 0) then
+    Result := F
+  else if (F = 255) or (B = 255) then
+    Result := 255
+  else
+    Result := Round((1 - ((1 - (F / 255)) * (1 - (B / 255)))) * 255);
+end;
+
+function TRenderer.CombineTerrainSolidityErase(F, B: Byte): Byte;
+begin
+  // This one, on the other hand, very much is order-sensitive.
+  if (F = 0) then
+    Result := B
+  else if (F = 255) or (B = 0) then
+    Result := 0
+  else
+    Result := Round(((1 - (F / 255)) * (B / 255)) * 255);
+end;
 
 procedure TRenderer.CombineTerrainDefault(F: TColor32; var B: TColor32; M: TColor32);
 begin
@@ -1027,7 +994,7 @@ end;
 
 procedure TRenderer.CombineTerrainNoOverwrite(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000 <> 0) and (B and $FF000000 <> $FF000000) then
+  if ((F and $FF000000) <> $00000000) then
   begin
     MergeMem(B, F);
     B := F;
@@ -1036,8 +1003,95 @@ end;
 
 procedure TRenderer.CombineTerrainErase(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  if (F and $FF000000) <> 0 then
-    B := 0;
+  B := (B and $FFFFFF) or (CombineTerrainSolidityErase(F shr 24, B shr 24) shl 24);
+end;
+
+procedure TRenderer.CombineTerrainPhysicsPrepInternal(F: TColor32; var B: TColor32;
+  M: TColor32);
+var
+  srcSolidity, srcSteel, srcOneWay, srcErase: Byte;
+  dstSolidity, dstSteel, dstOneWay, dstErase: Byte;
+begin
+  // A = solidity
+  // R = steel
+  // G = oneway
+  // B = erase (src only,
+  srcSolidity := (F and $FF000000) shr 24;
+  srcSteel    := (F and $00FF0000) shr 16;
+  srcOneWay   := (F and $0000FF00) shr 8;
+  srcErase    := (F and $000000FF) shr 0;
+
+  dstSolidity := (B and $FF000000) shr 24;
+  dstSteel    := (B and $00FF0000) shr 16;
+  dstOneWay   := (B and $0000FF00) shr 8;
+  dstErase    := (B and $000000FF) shr 0;
+
+  if (srcErase > 0) then
+  begin
+    dstSolidity := CombineTerrainSolidityErase(srcErase, dstSolidity);
+    if (dstSolidity = 0) then
+    begin
+      dstSteel := 0;
+      dstErase := 0;
+    end;
+  end else begin
+    dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
+
+    if not fPhysicsRenderSimpleAutoSteel then
+      dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity)
+    else if (dstSteel < 255) and (srcSteel > 0) then
+      dstSteel := 255;
+
+
+    dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
+  end;
+
+  B := (dstSolidity shl 24) or (dstSteel shl 16) or (dstOneWay shl 8) or (dstErase shl 0);
+end;
+
+procedure TRenderer.CombineTerrainPhysicsPrep(F: TColor32; var B: TColor32;
+  M: TColor32);
+var
+  Intensity: Byte;
+begin
+  Intensity := (F and $FF000000) shr 24;
+  case fPhysicsRenderingType of
+    prtStandard: F := (Intensity shl 24);
+    prtSteel: F := (Intensity shl 24) or ($FF0000);
+    prtOneWay: F := (Intensity shl 24) or ($00FF00);
+    prtErase: F := (Intensity shl 0);
+  end;
+
+  CombineTerrainPhysicsPrepInternal(F, B, M);
+end;
+
+procedure TRenderer.CombineTerrainPhysicsPrepNoOverwrite(F: TColor32;
+  var B: TColor32; M: TColor32);
+var
+  Intensity: Byte;
+begin
+  Intensity := (F and $FF000000) shr 24;
+  case fPhysicsRenderingType of
+    prtStandard: F := (Intensity shl 24);
+    prtSteel: F := (Intensity shl 24) or ($FF0000);
+    prtOneWay: F := (Intensity shl 24) or ($00FF00);
+    prtErase:
+      begin
+        CombineTerrainPhysicsPrep(F, B, M);
+        Exit;
+      end;
+  end;
+
+  CombineTerrainPhysicsPrepInternal(B, F, M);
+  B := F;
+end;
+
+function TRenderer.CombineTerrainProperty(F, B, FIntensity: Byte): Byte;
+var
+  Diff: Byte;
+begin
+  Diff := F - B;
+  Result := B + Round(Diff * (FIntensity / 255));
 end;
 
 procedure TRenderer.CombineGadgetsDefault(F: TColor32; var B: TColor32; M: TColor32);
@@ -1081,6 +1135,148 @@ begin
   end;
 end;
 
+procedure TRenderer.PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32);
+const
+  MIN_WIDTH = 1;
+  MIN_HEIGHT = 1;
+var
+  DataBoundsRect: TRect;
+  BMP: TBitmap32;
+
+  function CheckGroupIsValid: Boolean;
+  var
+    i: Integer;
+    IsSteelGroup: Boolean;
+  begin
+    // This function should:
+    //  - If group is valid, return TRUE
+    //  - If group is invalid and some sane way to handle it exists, handle it as such then return FALSE
+    //  - If group is invalid and no sane way to handle it exists, raise an exception
+
+    if aTerrains.Count = 0 then
+    begin
+      aDst.SetSize(MIN_WIDTH, MIN_HEIGHT);
+      aDst.Clear(0);
+      Result := false;
+    end else begin
+      IsSteelGroup := PieceManager.Terrains[aTerrains[0].Identifier].IsSteel;
+      for i := 1 to aTerrains.Count-1 do
+        if (aTerrains[i].DrawingFlags and tdf_Erase = 0) and
+           (PieceManager.Terrains[aTerrains[i].Identifier].IsSteel <> IsSteelGroup) then
+          raise Exception.Create('TRenderer.PrepareCompositePieceBitmap received a group with a mix of steel and nonsteel pieces!');
+
+      Result := true;
+    end;
+  end;
+
+  procedure CalculateDataBoundsRect;
+  var
+    i: Integer;
+    Terrain: TTerrain;
+    MetaTerrain: TMetaTerrain;
+    ThisTerrainRect: TRect;
+    HasFoundNonEraserTerrain: Boolean;
+  begin
+    // Calculates the initial canvas rectangle we draw on to. If shrinking this
+    // is needed later, we do so, but for now we just want a size that's 100%
+    // for sure able to fit the composite piece.
+
+    HasFoundNonEraserTerrain := false;
+    DataBoundsRect := Rect(0, 0, 0, 0); // in case all pieces are erasers
+
+    for i := 0 to aTerrains.Count-1 do
+    begin
+      Terrain := aTerrains[i];
+
+      if (Terrain.DrawingFlags and tdf_Erase) <> 0 then
+        Continue; // We don't need to expand the canvas for erasers.
+
+      MetaTerrain := PieceManager.Terrains[Terrain.Identifier];
+
+      ThisTerrainRect.Left := Terrain.Left;
+      ThisTerrainRect.Top := Terrain.Top;
+
+      if (Terrain.DrawingFlags and tdf_Rotate) = 0 then
+      begin
+        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Width[false, false, false];
+        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Height[false, false, false];
+      end else begin
+        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Height[false, false, false];
+        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Width[false, false, false];
+      end;
+
+      if HasFoundNonEraserTerrain then
+        DataBoundsRect := TRect.Union(DataBoundsRect, ThisTerrainRect)
+      else begin
+        DataBoundsRect := ThisTerrainRect;
+        HasFoundNonEraserTerrain := true;
+      end;
+    end;
+
+    if DataBoundsRect.Width < 1 then
+      DataBoundsRect.Right := DataBoundsRect.Left + 1;
+
+    if DataBoundsRect.Height < 1 then
+      DataBoundsRect.Bottom := DataBoundsRect.Top + 1;
+  end;
+
+  procedure DrawPieces;
+  var
+    i: Integer;
+    LocalTerrain: TTerrain;
+  begin
+    LocalTerrain := TTerrain.Create;
+    try
+      for i := 0 to aTerrains.Count-1 do
+      begin
+        LocalTerrain.Assign(aTerrains[i]);
+        LocalTerrain.Left := LocalTerrain.Left - DataBoundsRect.Left;
+        LocalTerrain.Top := LocalTerrain.Top - DataBoundsRect.Top;
+        DrawTerrain(BMP, LocalTerrain);
+      end;
+    finally
+      LocalTerrain.Free;
+    end;
+  end;
+
+  procedure DrawCroppedToDst;
+  var
+    SrcRect: TRect;
+    x, y: Integer;
+  begin
+    SrcRect := Rect(BMP.Width, BMP.Height, 0, 0);
+    for y := 0 to BMP.Height-1 do
+      for x := 0 to BMP.Width-1 do
+      begin
+        if (BMP.Pixel[x, y] and $FF000000) <> 0 then
+        begin
+          if (x < SrcRect.Left) then srcRect.Left := x;
+          if (y < SrcRect.Top) then srcRect.Top := y;
+          if (x >= SrcRect.Right) then srcRect.Right := x + 1; // careful - remember how TRect.Right / TRect.Bottom work!
+          if (y >= SrcRect.Bottom) then srcRect.Bottom := y + 1;
+        end;
+      end;
+
+    if SrcRect.Width < MIN_WIDTH then SrcRect.Right := SrcRect.Left + MIN_WIDTH;
+    if SrcRect.Height < MIN_HEIGHT then SrcRect.Bottom := SrcRect.Top + MIN_HEIGHT;
+
+    aDst.SetSize(SrcRect.Width, SrcRect.Height);
+    aDst.Clear(0);
+    BMP.DrawTo(aDst, -SrcRect.Left, -SrcRect.Top);
+  end;
+begin
+  if not CheckGroupIsValid then Exit;
+  CalculateDataBoundsRect;
+
+  BMP := TBitmap32.Create(DataBoundsRect.Width, DataBoundsRect.Height);
+  try
+    BMP.Clear(0);
+    DrawPieces;
+    DrawCroppedToDst;
+  finally
+    BMP.Free;
+  end;
+end;
 
 procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false);
 begin
@@ -1099,6 +1295,11 @@ begin
 end;
 
 procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain);
+begin
+  InternalDrawTerrain(Dst, T, false);
+end;
+
+procedure TRenderer.InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean);
 var
   Src: TBitmap32;
   Flip, Invert, Rotate: Boolean;
@@ -1111,7 +1312,10 @@ begin
   Flip := (T.DrawingFlags and tdf_Flip <> 0);
 
   Src := MT.GraphicImage[Flip, Invert, Rotate];
-  PrepareTerrainBitmap(Src, T.DrawingFlags);
+  if IsPhysicsDraw then
+    PrepareTerrainBitmapForPhysics(Src, T.DrawingFlags, MT.IsSteel)
+  else
+    PrepareTerrainBitmap(Src, T.DrawingFlags);
   Src.DrawTo(Dst, T.Left, T.Top);
 end;
 
@@ -1125,6 +1329,25 @@ begin
     Bmp.OnPixelCombine := CombineTerrainErase
   else
     Bmp.OnPixelCombine := CombineTerrainDefault;
+end;
+
+procedure TRenderer.PrepareTerrainBitmapForPhysics(Bmp: TBitmap32; DrawingFlags: Byte; IsSteel: Boolean);
+begin
+  Bmp.DrawMode := dmCustom;
+
+  if (DrawingFlags and tdf_NoOverwrite <> 0) and (DrawingFlags and tdf_Erase = 0) then
+    Bmp.OnPixelCombine := CombineTerrainPhysicsPrepNoOverwrite
+  else
+    Bmp.OnPixelCombine := CombineTerrainPhysicsPrep;
+
+  if (DrawingFlags and tdf_Erase) <> 0 then
+    fPhysicsRenderingType := prtErase
+  else if IsSteel then
+    fPhysicsRenderingType := prtSteel
+  else if (DrawingFlags and tdf_NoOneWay) = 0 then
+    fPhysicsRenderingType := prtOneWay
+  else
+    fPhysicsRenderingType := prtStandard;
 end;
 
 
@@ -1302,14 +1525,16 @@ end;
 procedure TRenderer.DrawLemmingHelpers(Dst: TBitmap32; L: TLemming; IsClearPhysics: Boolean = true);
 var
   numHelpers, indexHelper: Integer;
-  DrawX, DrawY: Integer;
+  DrawX, DrawY, DirDrawY: Integer;
+const
+  DRAW_ABOVE_MIN_Y = 19;
+  DRAW_ABOVE_MIN_Y_CPM = 28;
 begin
   Assert(Dst = fLayers[rlObjectHelpers], 'Object Helpers not written on their layer');
-  Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode');
+  //Assert(isClearPhysics or L.LemIsZombie, 'Lemmings helpers drawn for non-zombie while not in clear-physics mode'); // why?
 
   // Count number of helper icons to be displayed.
   numHelpers := 0;
-  if isClearPhysics and (L.LemAction = baBlocking) then Inc(numHelpers);
   if L.LemIsClimber then Inc(numHelpers);
   if L.LemIsSwimmer then Inc(numHelpers);
   if L.LemIsFloater then Inc(numHelpers);
@@ -1317,16 +1542,30 @@ begin
   if L.LemIsDisarmer then Inc(numHelpers);
 
   DrawX := L.LemX - numHelpers * 5;
-  DrawY := L.LemY - 10 - 9;
+
+  if (L.LemY < DRAW_ABOVE_MIN_Y) or ((L.LemY < DRAW_ABOVE_MIN_Y_CPM) and IsClearPhysics) then
+  begin
+    DrawY := L.LemY + 1;
+    if numHelpers > 0 then
+      DirDrawY := DrawY + 9
+    else
+      DirDrawY := DrawY;
+  end else begin
+    DrawY := L.LemY - 10 - 9;
+    if numHelpers > 0 then
+      DirDrawY := DrawY - 9
+    else
+      DirDrawY := DrawY;
+  end;
 
   // Draw actual helper icons
-  indexHelper := 0;
-  if isClearPhysics and (L.LemAction = baBlocking) then
+  if isClearPhysics then
   begin
-    if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 1, DrawY)
-    else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 1, DrawY);
-    Inc(indexHelper);
+    if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, L.LemX - 4, DirDrawY)
+    else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, L.LemX - 4, DirDrawY);
   end;
+
+  indexHelper := 0;
   if L.LemIsClimber then
   begin
     fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
@@ -1361,9 +1600,8 @@ var
   ThisAnim: TGadgetAnimationInstance;
   DstRect: TRect;
 
-  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
+  procedure DrawNumberWithCountdownDigits(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
-    NumberString: String;
     DigitsWidth: Integer;
 
     CurX: Integer;
@@ -1376,39 +1614,84 @@ var
   begin
     OldDrawColor := fFixedDrawColor;
 
-    NumberString := IntToStr(aNumber);
-    DigitsWidth := (Length(NumberString) * 4) + Length(NumberString) - 1;
+    Y := Y - 2; // to center
+
+    DigitsWidth := Length(aDigitString) * 5;
     if aAlignment < 0 then
       CurX := X
     else if aAlignment > 0 then
       CurX := X - DigitsWidth + 1
     else
-      CurX := X - (DigitsWidth div 2);
+      CurX := X - (DigitsWidth div 2) + 1;
 
-    for n := 1 to Length(NumberString) do
+    for n := 1 to Length(aDigitString) do
     begin
-      Digit := StrToInt(NumberString[n]);
+      Digit := StrToInt(aDigitString[n]);
       SrcRect := SizedRect(Digit * 4, 0, 4, 5);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX - 1, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
       fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX + 1, Y + 1, SrcRect);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
       fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX - 1, Y, SrcRect);
       CurX := CurX + 5;
     end;
 
     fFixedDrawColor := OldDrawColor;
   end;
 
+  procedure DrawNumber(X, Y: Integer; aNumber: Cardinal; aMinDigits: Integer = 1; aAlignment: Integer = -1);
+  var
+    Digits: TGadgetAnimation;
+    DigitString: String;
+
+    CurX, TargetY: Integer;
+    n: Integer;
+  begin
+    if (aNumber = 0) and (aMinDigits <= 0) then
+      Exit; // Special case - allow for "show nothing on zero"
+
+    Digits := Gadget.MetaObj.DigitAnimation;
+    DigitString := LeadZeroStr(aNumber, aMinDigits);
+
+    if Gadget.MetaObj.DigitAnimation = nil then
+    begin
+      DrawNumberWithCountdownDigits(X, Y, DigitString, aAlignment);
+      Exit;
+    end;
+
+    if aAlignment < 0 then
+      CurX := X
+    else if aAlignment > 0 then
+      CurX := X - (Length(DigitString) * Digits.Width)
+    else
+      CurX := X - ((Length(DigitString) * Digits.Width) div 2);
+
+    TargetY := Y - (Digits.Height div 2);
+
+    for n := 1 to Length(DigitString) do
+    begin
+      Digits.Draw(Dst, CurX, TargetY, StrToInt(DigitString[n]));
+      Inc(CurX, Digits.Width);
+    end;
+  end;
+
   procedure AddPickupSkillNumber;
   begin
-    DrawNumber(Gadget.Left + Gadget.Width - 2, Gadget.Top + Gadget.Height - 6, Gadget.SkillCount, 1);
+    if (Gadget.SkillCount > 1) or (Gadget.MetaObj.DigitMinLength >= 1) then
+      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.SkillCount, Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
+  end;
+
+  procedure AddLemmingCountNumber;
+  begin
+    if (Gadget.RemainingLemmingsCount >= 0) then
+      DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.RemainingLemmingsCount,
+                 Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
 
 begin
@@ -1431,8 +1714,11 @@ begin
     DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
 
-  if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.SkillCount > 1) then
+  if (Gadget.TriggerEffect = DOM_PICKUP) then
     AddPickupSkillNumber;
+
+  if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW]) then
+    AddLemmingCountNumber;
 end;
 
 procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
@@ -1718,9 +2004,9 @@ procedure TRenderer.RenderPhysicsMap(Dst: TBitmap32 = nil);
 var
   i: Integer;
   T: TTerrain;
-  MT: TMetaTerrain;
   Gadget: TGadget;
-  Bmp: TBitmap32;
+
+  TempWorld: TBitmap32;
 
   procedure SetRegion(aRegion: TRect; C, AntiC: TColor32);
   var
@@ -1811,35 +2097,75 @@ var
       end;
   end;
 
-begin
-  if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
-  Bmp := TBitmap32.Create;
-
-  fPhysicsMap.Clear(0);
-
-  with RenderInfoRec.Level do
+  procedure GeneratePhysicsMapFromInfoMap;
+  var
+    x, y: Integer;
+    thisSolidity, thisSteel, thisOneWay, thisUnused: Byte;
+    C: TColor32;
+    SolidityMod: Single;
+    Cutoff: Single;
   begin
-    Dst.SetSize(Info.Width, Info.Height);
+    for y := 0 to TempWorld.Height-1 do
+      for x := 0 to TempWorld.Width-1 do
+      begin
+        thisSolidity := (TempWorld[x, y] and $FF000000) shr 24;
+        thisSteel    := (TempWorld[x, y] and $00FF0000) shr 16;
+        thisOneWay   := (TempWorld[x, y] and $0000FF00) shr 8;
+        thisUnused   := (TempWorld[x, y] and $000000FF) shr 0;
 
-    for i := 0 to Terrains.Count-1 do
-    begin
-      T := Terrains[i];
-      MT := FindMetaTerrain(T);
-      PrepareTerrainFunctionBitmap(T, Bmp, MT);
-      if (Info.IsSimpleAutoSteel) then ApplySimpleAutosteel(Bmp);
-      Bmp.DrawTo(Dst, T.Left, T.Top);
-    end;
+        if thisSolidity >= ALPHA_CUTOFF then
+        begin
+          C := PM_SOLID;
 
-    for i := 0 to fPreviewGadgets.Count-1 do
-    begin
-      Gadget := fPreviewGadgets[i];
-      ApplyOWW(Gadget); // ApplyOWW takes care of ignoring non-OWW objects, no sense duplicating the check
-    end;
+          SolidityMod := thisSolidity / 255;
+          Cutoff := ALPHA_CUTOFF / 255;
+
+          if thisSteel * SolidityMod >= Cutoff then
+            C := C or PM_STEEL
+          else if thisOneWay * SolidityMod >= Cutoff then
+            C := C or PM_ONEWAY;
+
+          Dst[x, y] := C;
+        end else
+          Dst[x, y] := 0;
+      end;
   end;
 
-  Validate;
+begin
+  if Dst = nil then Dst := fPhysicsMap; // should it ever not be to here? Maybe during debugging we need it elsewhere
+  TempWorld := TBitmap32.Create;
 
-  Bmp.Free;
+  T := TTerrain.Create;
+  try
+    fPhysicsMap.Clear(0);
+
+    with RenderInfoRec.Level do
+    begin
+      Dst.SetSize(Info.Width, Info.Height);
+      TempWorld.SetSize(Info.Width, Info.Height);
+      TempWorld.Clear(0);
+
+      fPhysicsRenderSimpleAutosteel := Info.IsSimpleAutoSteel;
+
+      for i := 0 to Terrains.Count-1 do
+      begin
+        T.Assign(Terrains[i]);
+        InternalDrawTerrain(TempWorld, T, true);
+      end;
+
+      GeneratePhysicsMapFromInfoMap;
+
+      for i := 0 to fPreviewGadgets.Count-1 do
+      begin
+        Gadget := fPreviewGadgets[i];
+        ApplyOWW(Gadget); // ApplyOWW takes care of ignoring non-OWW objects, no sense duplicating the check
+      end;
+    end;
+
+    Validate;
+  finally
+    TempWorld.Free;
+  end;
 end;
 
 procedure TRenderer.RenderWorld(World: TBitmap32; DoBackground: Boolean); // Called only from Preview Screen
@@ -1932,7 +2258,9 @@ begin
     L.SetFromPreplaced(Lem);
     L.LemIsZombie := Lem.IsZombie;
 
-    if (fPhysicsMap.PixelS[L.LemX, L.LemY] and PM_SOLID = 0) then
+    if (Lem.IsShimmier and ((fPhysicsMap.PixelS[L.LemX, L.LemY - 9] and PM_SOLID) <> 0)) then
+      L.LemAction := baShimmying
+    else if (fPhysicsMap.PixelS[L.LemX, L.LemY] and PM_SOLID = 0) then
       L.LemAction := baFalling
     else if Lem.IsBlocker then
       L.LemAction := baBlocking
@@ -1956,7 +2284,6 @@ begin
   World.SetSize(fLayers.Width, fLayers.Height);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(World, World.BoundsRect, false, fTransparentBackground);
-  World.SaveToFile(AppPath + 'test.bmp');
 end;
 
 
@@ -1991,6 +2318,8 @@ begin
   Gadgets.InitializeAnimations;
 end;
 
+var
+  LastErrorLemmingSprites: String;
 
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
@@ -2005,9 +2334,27 @@ begin
     fAni.ClearData;
     fAni.LemmingPrefix := fTheme.Lemmings;
     fAni.MaskingColor := fTheme.Colors[MASK_COLOR];
-    fAni.ReadData;
 
-    fRecolorer.LoadSwaps(fTheme.Lemmings);
+    try
+      fAni.ReadData;
+      fRecolorer.LoadSwaps(fTheme.Lemmings);
+    except
+      on E: Exception do
+      begin
+        fAni.ClearData;
+        fAni.LemmingPrefix := 'default';
+        fAni.ReadData;
+        fRecolorer.LoadSwaps('default');
+
+        if fTheme.Lemmings <> LastErrorLemmingSprites then
+        begin
+          LastErrorLemmingSprites := fTheme.Lemmings;
+          ShowMessage(E.Message + #13 + #13 + 'Falling back to default lemming sprites.');
+        end;
+      end;
+    end;
+
+
 
     // Prepare the bitmaps
     fLayers.Prepare(RenderInfoRec.Level.Info.Width, RenderInfoRec.Level.Info.Height);
@@ -2022,6 +2369,10 @@ begin
     fRenderInterface.UserHelper := hpi_None;
     fRenderInterface.DisableDrawing := NoOutput;
   end;
+
+  // Prepare any composite pieces
+  PieceManager.RemoveCompositePieces;
+  PieceManager.MakePiecesFromGroups(aLevel.TerrainGroups);
 
   RenderPhysicsMap;
 end;

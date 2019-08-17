@@ -2599,25 +2599,25 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 31
+  INDEX 0
   COLLECTION gigalem_dread
   PIECE dread_01
 $END
 
 $BACKGROUND
-  INDEX 32
+  INDEX 1
   COLLECTION gigalem_dread
   PIECE dread_02
 $END
 
 $BACKGROUND
-  INDEX 33
+  INDEX 2
   COLLECTION gigalem_dread
   PIECE dread_03
 $END
 
 $BACKGROUND
-  INDEX 34
+  INDEX 3
   COLLECTION gigalem_dread
   PIECE dread_04
 $END
@@ -2633,7 +2633,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 36
+  INDEX 4
   COLLECTION gigalem_dread
   PIECE dread_05
 $END
@@ -2689,13 +2689,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 42
+  INDEX 5
   COLLECTION gigalem_dread
   PIECE dread_06
 $END
 
 $BACKGROUND
-  INDEX 43
+  INDEX 6
   COLLECTION gigalem_dread
   PIECE dread_07
 $END

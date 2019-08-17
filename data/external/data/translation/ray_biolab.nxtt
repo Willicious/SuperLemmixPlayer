@@ -369,13 +369,13 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 16
+  INDEX 0
   COLLECTION ray_biolab
   PIECE back_biolab
 $END
 
 $BACKGROUND
-  INDEX 17
+  INDEX 1
   COLLECTION ray_biolab
   PIECE back_repeat_biolab
 $END

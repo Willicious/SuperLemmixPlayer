@@ -18,7 +18,8 @@ type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
 
   TGadgetAnimationTriggerCondition = (gatcUnconditional, gatcReady, gatcBusy, gatcDisabled,
-                                      gatcDisarmed);
+                                      gatcExhausted);
+
   TGadgetAnimationTriggerState = (gatsDontCare, gatsTrue, gatsFalse);
   TGadgetAnimationTriggerConditionArray = array[TGadgetAnimationTriggerCondition] of TGadgetAnimationTriggerState;
 
@@ -49,27 +50,28 @@ type
   as animating for the purpose of this rule.
 
 
-  OBJECT TYPE     | gatcUnconditional
+  OBJECT TYPE     | gatcUnconditional (no condition)
   ----------------|-----------------------------------
   GENERAL RULE    | Always true, for all objects
   Anything        | Always true
 
 
-  OBJECT TYPE     | gatcReady
+  OBJECT TYPE     | gatcReady (READY)
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true if the object would able to interact with a lemming at this moment
+  DOM_EXIT        | True when the exit's lemming limit has not been reached, or if the exit has no limit
   DOM_TRAP        | True when the trap is idle (but not disabled)
   DOM_TELEPORT    | True when the teleporter and its paired receiver (if any) are idle
   DOM_RECEIVER    | True when the receiver and its paired teleporter (if any) are idle
   DOM_PICKUP      | True when the skill has not been picked up
-  DOM_LOCKEXIT    | True when the exit is open (not just opening - must be fully open)
+  DOM_LOCKEXIT    | True when the exit is fully open and the lemming limit has not been reached, or it doesn't have one
   DOM_BUTTON      | True when the button has not been pressed
-  DOM_WINDOW      | True when the window is open (not just opening - must be fully open)
+  DOM_WINDOW      | True when the window is fully open, and if it has a lemming limit, hasn't yet reached it
   DOM_TRAPONCE    | True when the trap has not yet been triggered (or disabled)
   All others      | Always true
 
 
-  OBJECT TYPE     | gatcBusy
+  OBJECT TYPE     | gatcBusy (BUSY)
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true when the object is transitioning between states, or currently in use
   DOM_TRAP        | True when the trap is mid-kill
@@ -81,46 +83,31 @@ type
   All others      | Always false
 
 
-  OBJECT TYPE     | gatcDisabled
+  OBJECT TYPE     | gatcDisabled (DISABLED)
   ----------------|-----------------------------------
   GENERAL RULE    | The condition will be true when the object is unable to interact with a lemming, either permanently or
                   | until some external condition is fulfilled.
+  DOM_EXIT        | True if the exit has a lemming limit and it has been reached
   DOM_TRAP        | True if the trap has been disabled (most likely by a disarmer)
   DOM_TELEPORT    | True if no receiver exists on the level
   DOM_RECEIVER    | True if no teleporter exists on the level
   DOM_PICKUP      | True if the skill has been picked up
-  DOM_LOCKEXIT    | True while the exit is in a locked state
+  DOM_LOCKEXIT    | True while the exit is in a locked state, or if the exit has a lemming limit and it has been reached
   DOM_BUTTON      | True when the button has been pressed
-  DOM_WINDOW      | Always false (? - maybe should change, "true when no more lemmings are to be released")
+  DOM_WINDOW      | True if the window has a lemming limit and it has been reached
   DOM_TRAPONCE    | True when the trap has been disabled (most likely by a disarmer) or used
   All others      | Always false
 
 
-  OBJECT TYPE     | gatcDisarmed
+  OBJECT TYPE     | gatcExhausted
   ----------------|-----------------------------------
-  GENERAL RULE    | The condition will be true if a Disarmer has deactivated the object. Exists as a separate condition
-                  | from Disabled for the purpose of single-use traps, which may want to differentiate between disarmed
-                  | and used.
-  DOM_TRAP        | True if the trap has been disarmed
-  DOM_TRAPONCE    | True if the trap has been disarmed
-  All others      | Always false
-
-     ** gatcDisabled and gatcDisarmed will, at present, always be equal for DOM_TRAP
-
-
-  OBJECT TYPE     | gatcLeft
-  ----------------|-----------------------------------
-  GENERAL RULE    | True if a direction-sensitive object is currently facing left.
-  DOM_FLIPPER     | True if the splitter will turn the next lemming to the left
-  DOM_WINDOW      | True if the window releases lemmings facing left
-  All others      | Always false
-
-
-  OBJECT TYPE     | gatcRight
-  ----------------|-----------------------------------
-  GENERAL RULE    | True if a direction-sensitive object is currently facing left.
-  DOM_FLIPPER     | True if the splitter will turn the next lemming to the left
-  DOM_WINDOW      | True if the window releases lemmings facing left
+  GENERAL RULE    | True if an object with limited uses has been used up.
+  DOM_EXIT        | True if the exit is limited-use and has zero remaining uses
+  DOM_PICKUP      | True if the skill has been picked up
+  DOM_LOCKEXIT    | True if the exit is limited-use and has zero remaining uses
+  DOM_BUTTON      | True when the button has been pressed
+  DOM_WINDOW      | True if the window is limited-use and has released all lemmings
+  DOM_TRAPONCE    | True when the trap has been used
   All others      | Always false
 
   }
@@ -378,7 +365,10 @@ begin
   else
     fZIndex := aSegment.LineNumeric['z_index'];
 
-  fStartFrameIndex := aSegment.LineNumeric['initial_frame'];
+  if Uppercase(aSegment.LineTrimString['initial_frame']) = 'RANDOM' then
+    fStartFrameIndex := -1
+  else
+    fStartFrameIndex := aSegment.LineNumeric['initial_frame'];
 
   if fHorizontalStrip then
   begin
@@ -416,7 +406,7 @@ begin
   else if (S = 'match_primary_frame') then
     BaseTrigger.fState := gasMatchPrimary
   else if (aSegment.Line['hide'] <> nil) then
-    BaseTrigger.fState := gasStop
+    BaseTrigger.fState := gasPause
   else
     BaseTrigger.fState := gasPlay;
 
@@ -777,13 +767,13 @@ begin
   if      S = 'READY' then fCondition := gatcReady
   else if S = 'BUSY' then fCondition := gatcBusy
   else if S = 'DISABLED' then fCondition := gatcDisabled
-  else if S = 'DISARMED' then fCondition := gatcDisarmed
+  else if S = 'EXHAUSTED' then fCondition := gatcExhausted
   else fCondition := gatcUnconditional;
 
   fVisible := aSegment.Line['hide'] = nil;
 
   if (not fVisible) and (aSegment.Line['state'] = nil) then
-    fState := gasStop
+    fState := gasPause
   else begin
     S := Uppercase(aSegment.LineTrimString['state']);
 

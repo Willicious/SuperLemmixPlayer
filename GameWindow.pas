@@ -5,7 +5,7 @@ unit GameWindow;
 interface
 
 uses
-  System.Types,
+  System.Types, Generics.Collections,
   PngInterface,
   LemmixHotkeys, SharedGlobals,
   Windows, Classes, Controls, Graphics, MMSystem, Forms, SysUtils, Dialogs, Math, ExtCtrls, StrUtils,
@@ -38,6 +38,11 @@ type
     Active: Boolean;
     StartCursor: TPoint;
     //StartImg: TFloatPoint;
+  end;
+
+  TSuspendState = record
+    OldSpeed: TGameSpeed;
+    OldCanPlay: Boolean;
   end;
 
 const
@@ -75,9 +80,10 @@ type
     fHyperSpeedStopCondition: Integer;
     fHyperSpeedTarget: Integer;
     fForceUpdateOneFrame: Boolean;        // used when paused
-    fLastZombieSound: Cardinal;
 
     fHoldScrollData: THoldScrollData;
+
+    fSuspensions: TList<TSuspendState>;
 
   { game eventhandler}
     procedure Game_Finished;
@@ -98,13 +104,13 @@ type
   { skillpanel eventhandlers }
     procedure SkillPanel_MinimapClick(Sender: TObject; const P: TPoint);
   { internal }
-    procedure ReleaseMouse;
+    procedure ReleaseMouse(releaseInFullScreen: Boolean = false);
     procedure CheckResetCursor(aForce: Boolean = false);
     function CheckScroll: Boolean;
     procedure AddSaveState;
     procedure CheckAdjustSpawnInterval;
     procedure SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
-    procedure StartReplay2(const aFileName: string);
+    procedure StartReplay(const aFileName: string);
     procedure InitializeCursor;
     procedure CheckShifts(Shift: TShiftState);
     procedure CheckUserHelpers;
@@ -126,6 +132,9 @@ type
     function GetGameSpeed: TGameSpeed;
     function GetDisplayWidth: Integer;  // to satisfy IGameWindow
     function GetDisplayHeight: Integer; // to satisfy IGameWindow
+
+    procedure SuspendGameplay;
+    procedure ResumeGameplay;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -429,16 +438,13 @@ end;
 procedure TGameWindow.ExecuteReplayEdit;
 var
   F: TFReplayEditor;
-  OldPaused: Boolean;
   OldClearReplay: Boolean;
 begin
-  OldPaused := fGameSpeed = gspPause;
-  GameSpeed := gspPause;
   F := TFReplayEditor.Create(self);
-  F.SetReplay(Game.ReplayManager, Game.CurrentIteration);
-  fSuspendCursor := true;
-  ReleaseMouse;
+  SuspendGameplay;
   try
+    F.SetReplay(Game.ReplayManager, Game.CurrentIteration);
+
     if (F.ShowModal = mrOk) and (F.EarliestChange <= Game.CurrentIteration) then
     begin
       OldClearReplay := GameParams.NoAutoReplayMode;
@@ -447,9 +453,8 @@ begin
       GameParams.NoAutoReplayMode := OldClearReplay;
     end;
   finally
-    fSuspendCursor := false;
-    if not OldPaused then GameSpeed := gspNormal;
     F.Free;
+    ResumeGameplay;
   end;
 end;
 
@@ -468,9 +473,9 @@ begin
   ClipCursor(@MouseClipRect);
 end;
 
-procedure TGameWindow.ReleaseMouse;
+procedure TGameWindow.ReleaseMouse(releaseInFullScreen: Boolean = false);
 begin
-  if GameParams.FullScreen then Exit;
+  if GameParams.FullScreen and not releaseInFullScreen then Exit;
   fMouseTrapped := false;
   ClipCursor(nil);
 end;
@@ -648,14 +653,7 @@ begin
 
       // still need to implement sound
       GAMEMSG_SOUND: if not IsHyperSpeed then
-                     begin
-                       if CompareStr(Msg.MessageDataStr, 'zombie') = 0 then
-                         if GetTickCount - fLastZombieSound > 1000 then
-                           fLastZombieSound := GetTickCount
-                         else
-                           Exit;
                        SoundManager.PlaySound(Msg.MessageDataStr);
-                     end;
       GAMEMSG_SOUND_BAL: if not IsHyperSpeed then
                            SoundManager.PlaySound(Msg.MessageDataStr,  (Msg.MessageDataInt - Trunc(((Img.Width / 2) - Img.OffsetHorz) / Img.Scale)) div 2);
       GAMEMSG_MUSIC: SoundManager.PlayMusic;
@@ -836,9 +834,9 @@ begin
     if GameParams.MinimapHighQuality or (GameSpeed = gspPause) then
       DrawRect := Img.Bitmap.BoundsRect
     else begin
-      DrawWidth := ClientWidth div fInternalZoom;
-      DrawHeight := ClientHeight div fInternalZoom;
-      DrawRect := Rect(fRenderInterface.ScreenPos.X, fRenderInterface.ScreenPos.Y, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
+      DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
+      DrawHeight := (ClientHeight div fInternalZoom) + 2;
+      DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
     end;
     fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
     RenderMinimap;
@@ -1127,6 +1125,8 @@ begin
   TLinearResampler.Create(fMinimapBuffer);
 
   DoubleBuffered := true;
+
+  fSuspensions := TList<TSuspendState>.Create;
 end;
 
 destructor TGameWindow.Destroy;
@@ -1144,6 +1144,8 @@ begin
   FreeCursors;
 
   fMinimapBuffer.Free;
+
+  fSuspensions.Free;
 
   inherited Destroy;
 end;
@@ -1216,16 +1218,13 @@ begin
   end;
 
   // Allow changing options and selecting new levels, but pause level for that
-  if ((Key = VK_F2) or (Key = VK_F3)) and (func.Action = lka_Null) then
+  if (Key = VK_F3) and (func.Action = lka_Null) then
   begin
-    GameSpeed := gspPause;
-    fSuspendCursor := true;
-    ReleaseMouse;
+    SuspendGameplay;
     try
-      if (Key = VK_F2) then DoLevelSelect(true)
-      else if (Key = VK_F3) then ShowConfigMenu;
+      ShowConfigMenu;
     finally
-      fSuspendCursor := false;
+      ResumeGameplay;
     end;
     Exit;
   end;
@@ -1248,26 +1247,7 @@ begin
     if func.Action = lka_Skill then
     begin
       AssignToHighlit := GameParams.Hotkeys.CheckForKey(lka_Highlight);
-        case func.Modifier of
-          0: SetSelectedSkill(spbWalker, True, AssignToHighlit);
-          1: SetSelectedSkill(spbClimber, True, AssignToHighlit);
-          2: SetSelectedSkill(spbSwimmer, True, AssignToHighlit);
-          3: SetSelectedSkill(spbFloater, True, AssignToHighlit);
-          4: SetSelectedSkill(spbGlider, True, AssignToHighlit);
-          5: SetSelectedSkill(spbDisarmer, True, AssignToHighlit);
-          6: SetSelectedSkill(spbBomber, True, AssignToHighlit);
-          7: SetSelectedSkill(spbStoner, True, AssignToHighlit);
-          8: SetSelectedSkill(spbBlocker, True, AssignToHighlit);
-          9: SetSelectedSkill(spbPlatformer, True, AssignToHighlit);
-          10: SetSelectedSkill(spbBuilder, True, AssignToHighlit);
-          11: SetSelectedSkill(spbStacker, True, AssignToHighlit);
-          12: SetSelectedSkill(spbBasher, True, AssignToHighlit);
-          13: SetSelectedSkill(spbFencer, True, AssignToHighlit);
-          14: SetSelectedSkill(spbMiner, True, AssignToHighlit);
-          15: SetSelectedSkill(spbDigger, True, AssignToHighlit);
-          16: SetSelectedSkill(spbCloner, True, AssignToHighlit);
-          17: SetSelectedSkill(spbShimmier, True, AssignToHighlit);
-        end
+      SetSelectedSkill(TSkillPanelButton(func.Modifier), True, AssignToHighlit);
     end;
 
     case func.Action of
@@ -1318,12 +1298,12 @@ begin
       lka_SaveReplay: SaveReplay;
       lka_SkillRight: begin
                         sn := GetSelectedSkill;
-                        if (sn < 7) and (fActiveSkills[sn + 1] <> spbNone) then
+                        if (sn >= 0) and (sn < MAX_SKILL_TYPES_PER_LEVEL - 1) and (fActiveSkills[sn + 1] <> spbNone) then
                           SetSelectedSkill(fActiveSkills[sn + 1]);
                       end;
       lka_SkillLeft:  begin
                         sn := GetSelectedSkill;
-                        if (sn > 0) and (fActiveSkills[sn - 1] <> spbNone) and (sn <> 8) then
+                        if (sn > 0) and (fActiveSkills[sn - 1] <> spbNone) then
                           SetSelectedSkill(fActiveSkills[sn - 1]);
                       end;
       lka_Skip: if Game.Playing then
@@ -1700,7 +1680,7 @@ begin
   Game.CheckAdjustSpawnInterval;
 end;
 
-procedure TGameWindow.StartReplay2(const aFileName: string);
+procedure TGameWindow.StartReplay(const aFileName: string);
 var
   ext: String;
 
@@ -1732,6 +1712,38 @@ begin
   CanPlay := True;
 end;
 
+procedure TGameWindow.SuspendGameplay;
+var
+  NewSuspendState: TSuspendState;
+begin
+  NewSuspendState.OldSpeed := GameSpeed;
+  NewSuspendState.OldCanPlay := CanPlay;
+  fSuspensions.Insert(0, NewSuspendState);
+
+  GameSpeed := gspPause;
+  CanPlay := false;
+  fSuspendCursor := true;
+  ReleaseMouse(true);
+end;
+
+procedure TGameWindow.ResumeGameplay;
+var
+  SuspendState: TSuspendState;
+begin
+  if fSuspensions.Count = 0 then Exit;
+  SuspendState := fSuspensions[0];
+  fSuspensions.Delete(0);
+
+  GameSpeed := SuspendState.OldSpeed;
+  CanPlay := SuspendState.OldCanPlay;
+
+  if fSuspensions.Count = 0 then
+  begin
+    fSuspendCursor := false;
+    ApplyMouseTrap;
+  end;
+end;
+
 procedure TGameWindow.SaveReplay;
 var
   s: String;
@@ -1751,7 +1763,6 @@ end;
 
 procedure TGameWindow.LoadReplay;
 var
-  OldCanPlay: Boolean;
   Dlg : TOpenDialog;
   s: string;
 
@@ -1781,38 +1792,38 @@ var
       Result := GetDefaultLoadPath;
   end;
 begin
-  OldCanPlay := CanPlay;
-  CanPlay := False;
-  s:='';
-  dlg:=topendialog.create(nil);
+  s := '';
+  Dlg := TOpenDialog.Create(self);
+  SuspendGameplay;
   try
-    dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
-    dlg.FilterIndex := 1;
+    Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
+    Dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
+    Dlg.FilterIndex := 1;
     if LastReplayDir = '' then
     begin
-      dlg.InitialDir := AppPath + 'Replay\' + GetInitialLoadPath;
-      if not DirectoryExists(dlg.InitialDir) then
-        dlg.InitialDir := AppPath + 'Replay\';
-      if not DirectoryExists(dlg.InitialDir) then
-        dlg.InitialDir := AppPath;
+      Dlg.InitialDir := AppPath + 'Replay\' + GetInitialLoadPath;
+      if not DirectoryExists(Dlg.InitialDir) then
+        Dlg.InitialDir := AppPath + 'Replay\';
+      if not DirectoryExists(Dlg.InitialDir) then
+        Dlg.InitialDir := AppPath;
     end else
-      dlg.InitialDir := LastReplayDir;
-    dlg.Options := [ofFileMustExist, ofHideReadOnly];
-    if dlg.execute then
+      Dlg.InitialDir := LastReplayDir;
+    Dlg.Options := [ofFileMustExist, ofHideReadOnly];
+    if Dlg.execute then
     begin
-      s:=dlg.filename;
+      s:=Dlg.filename;
       LastReplayDir := ExtractFilePath(s);
     end;
   finally
-    dlg.free;
+    Dlg.Free;
+    ResumeGameplay;
   end;
+
   if s <> '' then
   begin
-    StartReplay2(s);
+    StartReplay(s);
     exit;
   end;
-  CanPlay := OldCanPlay;
 end;
 
 procedure TGameWindow.SaveShot;
@@ -1821,26 +1832,31 @@ var
   SaveName: String;
   BMP: TBitmap32;
 begin
+  SuspendGameplay;
   Dlg := TSaveDialog.Create(self);
-  dlg.Filter := 'PNG Image (*.png)|*.png';
-  dlg.FilterIndex := 1;
-  dlg.InitialDir := '"' + ExtractFilePath(Application.ExeName) + '/"';
-  dlg.DefaultExt := '.png';
-  if dlg.Execute then
-  begin
-    SaveName := dlg.FileName;
-    BMP := TBitmap32.Create;
-    BMP.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+  try
+    Dlg.Filter := 'PNG Image (*.png)|*.png';
+    Dlg.FilterIndex := 1;
+    Dlg.InitialDir := '"' + ExtractFilePath(Application.ExeName) + '/"';
+    Dlg.DefaultExt := '.png';
+    if Dlg.Execute then
+    begin
+      SaveName := Dlg.FileName;
+      BMP := TBitmap32.Create;
+      BMP.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
 
-    fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
-    fRenderer.DrawLemmings(fClearPhysics);
-    fRenderer.DrawLevel(BMP, fClearPhysics);
+      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
+      fRenderer.DrawLemmings(fClearPhysics);
+      fRenderer.DrawLevel(BMP, fClearPhysics);
 
-    TPngInterface.SavePngFile(SaveName, BMP, true);
+      TPngInterface.SavePngFile(SaveName, BMP, true);
 
-    BMP.Free;
+      BMP.Free;
+    end;
+  finally
+    Dlg.Free;
+    ResumeGameplay;
   end;
-  Dlg.Free;
 end;
 
 
@@ -1910,7 +1926,7 @@ end;
 
 function TGameWindow.GetDisplayWidth: Integer;
 begin
-  Result := Img.Width div fInternalZoom;
+  Result := (Img.Width div fInternalZoom);
 end;
 
 function TGameWindow.GetDisplayHeight: Integer;
@@ -1930,5 +1946,6 @@ end;
 
 
 end.
+
 
 

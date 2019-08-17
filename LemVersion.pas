@@ -9,10 +9,9 @@ uses
 
 const
   FORMAT_VERSION = 12;
-  CORE_VERSION = 5;
-  FEATURES_VERSION = 0;
+  CORE_VERSION = 6;
+  FEATURES_VERSION = 1;
   HOTFIX_VERSION = 0;
-  //COMMIT_ID = 'c474af8';  // empty string is handled, and is uppercased when needed so don't need to do manually anymore :D
 
   function COMMIT_ID: String;
 
