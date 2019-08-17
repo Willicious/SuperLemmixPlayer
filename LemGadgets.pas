@@ -748,6 +748,9 @@ begin
 
     if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
       fFrame := 1;
+
+    if (MetaObj.TriggerEffect = DOM_FLIPPER) and (aGadget.IsFlipPhysics) then
+      fFrame := 1;
   end else
     fPrimary := false;
 end;
