@@ -10,6 +10,7 @@ uses
   PngInterface,
   LemCore,
   LemTypes,
+  LemRecolorSprites,
   LemNeoTheme,
   LemMetaAnimation,
   LemNeoParser,
@@ -135,6 +136,8 @@ type
     fHighlightBitmap        : TBitmap32;
     fTheme                  : TNeoTheme;
 
+    fRecolorer              : TRecolorImage;
+
     procedure ReadMetaData(aColorDict: TColorDict = nil);
     procedure LoadMetaData(aColorDict: TColorDict);
 
@@ -152,6 +155,7 @@ type
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
+    property Recolorer             : TRecolorImage read fRecolorer;
   end;
 
 implementation
@@ -316,6 +320,8 @@ begin
       fLemmingAnimations.Add(Bmp);
     end;
 
+    fRecolorer.LoadSwaps(SrcFolder);
+
     HandleRecoloring(ColorDict);
 
     fLemmingAnimations.Add(TBitmap32.Create); // for the Stoner
@@ -361,6 +367,7 @@ begin
   inherited Create;
   fMetaLemmingAnimations := TMetaLemmingAnimations.Create(TMetaLemmingAnimation);
   fLemmingAnimations := TBitmaps.Create;
+  fRecolorer := TRecolorImage.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -369,6 +376,7 @@ begin
   fLemmingAnimations.Free;
   fCountDownDigitsBitmap.Free;
   fHighlightBitmap.Free;
+  fRecolorer.Free;
   inherited Destroy;
 end;
 
