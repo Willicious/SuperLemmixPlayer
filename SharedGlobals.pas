@@ -27,7 +27,7 @@ end;
 procedure DebugMsg(const aString: String);
 begin
   {$ifdef logging}
-  DebugLog.Add('DEBUG POPUP: ' + aString);
+  Log('DEBUG POPUP: ' + aString);
   ShowMessage(aString);
   {$endif}
 end;

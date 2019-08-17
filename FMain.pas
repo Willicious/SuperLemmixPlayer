@@ -162,6 +162,7 @@ end;
 
 procedure TMainForm.FormResize(Sender: TObject);
 begin
+  if GameParams = nil then Exit;
   if not (fChildForm is TGameBaseScreen) then Exit;
   TGameBaseScreen(fChildForm).MainFormResized;
   GameParams.WindowWidth := ClientWidth;
@@ -177,6 +178,8 @@ var
   CWDiff, CHDiff: Integer;
   NewCW, NewCH: Integer;
 begin
+  if GameParams = nil then Exit;
+
   if GameParams.FullScreen then
   begin
     NewWidth := Screen.Width;
