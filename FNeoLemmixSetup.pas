@@ -28,6 +28,7 @@ type
   private
     procedure SetClassicHotkeys;
     procedure SetLixHotkeys;
+    procedure SetMinimalHotkeys;
   public
     NameOnly: Boolean;
   end;
@@ -35,7 +36,7 @@ type
 implementation
 
 uses
-  GameControl, LemmixHotkeys;
+  GameControl, LemmixHotkeys, LemCore;
 
 {$R *.dfm}
 
@@ -61,72 +62,8 @@ end;
 
 procedure TFNLSetup.SetClassicHotkeys;
 begin
-  with GameParams.Hotkeys do
-  begin
-    ClearAllKeys;
-
-    // Here's the simple ones that don't need further settings.
-    SetKeyFunction($02, lka_Highlight);
-    SetKeyFunction($04, lka_Pause);
-    SetKeyFunction($05, lka_ZoomIn);
-    SetKeyFunction($06, lka_ZoomOut);
-    SetKeyFunction($08, lka_LoadState);
-    SetKeyFunction($0D, lka_SaveState);
-    SetKeyFunction($11, lka_ForceWalker);
-    SetKeyFunction($19, lka_ForceWalker);
-    SetKeyFunction($1B, lka_Exit);
-    SetKeyFunction($25, lka_DirLeft);
-    SetKeyFunction($27, lka_DirRight);
-    SetKeyFunction($41, lka_Scroll);
-    SetKeyFunction($43, lka_CancelReplay);
-    SetKeyFunction($44, lka_FallDistance);
-    SetKeyFunction($45, lka_EditReplay);
-    SetKeyFunction($46, lka_FastForward);
-    SetKeyFunction($49, lka_SaveImage);
-    SetKeyFunction($4C, lka_LoadReplay);
-    SetKeyFunction($4D, lka_Music);
-    SetKeyFunction($50, lka_Pause);
-    SetKeyFunction($52, lka_Restart);
-    SetKeyFunction($53, lka_Sound);
-    SetKeyFunction($55, lka_SaveReplay);
-    SetKeyFunction($57, lka_ReplayInsert);
-    SetKeyFunction($70, lka_ReleaseRateDown);
-    SetKeyFunction($71, lka_ReleaseRateUp);
-    SetKeyFunction($7A, lka_Pause);
-
-    // Misc ones that need other details set
-    SetKeyFunction($54, lka_ClearPhysics, 1);
-
-    // Here's the frameskip ones; these need a number of *frames* to skip (forwards or backwards), or other extra details.
-    SetKeyFunction($20, lka_Skip, 17 * 10);
-    SetKeyFunction($42, lka_Skip, -1);
-    SetKeyFunction($4E, lka_Skip, 1);
-    SetKeyFunction($6D, lka_Skip, -17);
-    SetKeyFunction($BC, lka_Skip, -17 * 5);
-    SetKeyFunction($BD, lka_Skip, -17);
-    SetKeyFunction($BE, lka_Skip, 17 * 5);
-    SetKeyFunction($DB, lka_SpecialSkip, 0);
-    SetKeyFunction($DD, lka_SpecialSkip, 1);
-
-    // And here's the skill ones; these ones need the skill specified seperately
-    SetKeyFunction($32, lka_Skill, 0);
-    SetKeyFunction($33, lka_Skill, 2);
-    SetKeyFunction($34, lka_Skill, 4);
-    SetKeyFunction($35, lka_Skill, 5);
-    SetKeyFunction($36, lka_Skill, 7);
-    SetKeyFunction($37, lka_Skill, 9);
-    SetKeyFunction($38, lka_Skill, 11);
-    SetKeyFunction($39, lka_Skill, 13);
-    SetKeyFunction($30, lka_Skill, 16);
-    SetKeyFunction($72, lka_Skill, 1);
-    SetKeyFunction($73, lka_Skill, 3);
-    SetKeyFunction($74, lka_Skill, 6);
-    SetKeyFunction($75, lka_Skill, 8);
-    SetKeyFunction($76, lka_Skill, 10);
-    SetKeyFunction($77, lka_Skill, 12);
-    SetKeyFunction($78, lka_Skill, 14);
-    SetKeyFunction($79, lka_Skill, 15);
-  end;
+  GameParams.Hotkeys.ClearAllKeys;
+  GameParams.Hotkeys.SetDefaults;
 end;
 
 procedure TFNLSetup.SetLixHotkeys;
@@ -176,23 +113,38 @@ begin
     SetKeyFunction($38, lka_SpecialSkip, 1);
 
     // Skills
-    SetKeyFunction($44, lka_Skill, 0);  // walker, D
-    SetKeyFunction($5A, lka_Skill, 1);  // climber, Z
-    SetKeyFunction($10, lka_Skill, 2);  // swimmer, shift
-    SetKeyFunction($51, lka_Skill, 3);  // floater, Q
-    SetKeyFunction($09, lka_Skill, 4);  // glider, tab
-    SetKeyFunction($52, lka_Skill, 5);  // disarmer, R
-    SetKeyFunction($56, lka_Skill, 6);  // bomber, V
-    SetKeyFunction($42, lka_Skill, 7);  // stoner, B
-    SetKeyFunction($58, lka_Skill, 8);  // blocker, X
-    SetKeyFunction($54, lka_Skill, 9);  // platformer, T
-    SetKeyFunction($41, lka_Skill, 10); // builder, A
-    SetKeyFunction($59, lka_Skill, 11); // stacker, Y
-    SetKeyFunction($45, lka_Skill, 12); // basher, E
-    SetKeyFunction($43, lka_Skill, 13); // fencer, C
-    SetKeyFunction($47, lka_Skill, 14); // miner, G
-    SetKeyFunction($57, lka_Skill, 15); // digger, W
-    SetKeyFunction($48, lka_Skill, 16); // cloner, H
+    SetKeyFunction($44, lka_Skill, Integer(spbWalker));  // walker, D
+    SetKeyFunction($12, lka_Skill, Integer(spbShimmier)); // shimmier, alt
+    SetKeyFunction($5A, lka_Skill, Integer(spbClimber));  // climber, Z
+    SetKeyFunction($10, lka_Skill, Integer(spbSwimmer));  // swimmer, shift
+    SetKeyFunction($51, lka_Skill, Integer(spbFloater));  // floater, Q
+    SetKeyFunction($09, lka_Skill, Integer(spbGlider));  // glider, tab
+    SetKeyFunction($52, lka_Skill, Integer(spbDisarmer));  // disarmer, R
+    SetKeyFunction($56, lka_Skill, Integer(spbBomber));  // bomber, V
+    SetKeyFunction($42, lka_Skill, Integer(spbStoner));  // stoner, B
+    SetKeyFunction($58, lka_Skill, Integer(spbBlocker));  // blocker, X
+    SetKeyFunction($54, lka_Skill, Integer(spbPlatformer));  // platformer, T
+    SetKeyFunction($41, lka_Skill, Integer(spbBuilder)); // builder, A
+    SetKeyFunction($59, lka_Skill, Integer(spbStacker)); // stacker, Y
+    SetKeyFunction($45, lka_Skill, Integer(spbBasher)); // basher, E
+    SetKeyFunction($43, lka_Skill, Integer(spbFencer)); // fencer, C
+    SetKeyFunction($47, lka_Skill, Integer(spbMiner)); // miner, G
+    SetKeyFunction($57, lka_Skill, Integer(spbDigger)); // digger, W
+    SetKeyFunction($48, lka_Skill, Integer(spbCloner)); // cloner, H
+  end;
+end;
+
+procedure TFNLSetup.SetMinimalHotkeys;
+begin
+  with GameParams.Hotkeys do
+  begin
+    ClearAllKeys;
+
+    SetKeyFunction($04, lka_Pause);
+    SetKeyFunction($05, lka_ZoomIn);
+    SetKeyFunction($06, lka_ZoomOut);
+    SetKeyFunction($02, lka_Scroll);
+    SetKeyFunction($1B, lka_Exit);
   end;
 end;
 
@@ -214,6 +166,7 @@ begin
     case cbHotkey.ItemIndex of
       0: SetLixHotkeys;
       1: SetClassicHotkeys;
+      2: SetMinimalHotkeys;
     end;
 
     case cbGraphics.ItemIndex of

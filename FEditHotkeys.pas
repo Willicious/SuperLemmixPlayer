@@ -3,7 +3,7 @@ unit FEditHotkeys;
 interface
 
 uses
-  LemmixHotkeys,
+  LemmixHotkeys, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls;
 
@@ -87,23 +87,24 @@ begin
       lka_Skill: begin
                    s := 'Select Skill: ';
                    case Hotkey.Modifier of
-                     0: s := s + 'Walker';
-                     1: s := s + 'Climber';
-                     2: s := s + 'Swimmer';
-                     3: s := s + 'Floater';
-                     4: s := s + 'Glider';
-                     5: s := s + 'Disarmer';
-                     6: s := s + 'Bomber';
-                     7: s := s + 'Stoner';
-                     8: s := s + 'Blocker';
-                     9: s := s + 'Platformer';
-                     10: s := s + 'Builder';
-                     11: s := s + 'Stacker';
-                     12: s := s + 'Basher';
-                     13: s := s + 'Fencer';
-                     14: s := s + 'Miner';
-                     15: s := s + 'Digger';
-                     16: s := s + 'Cloner';
+                     Integer(spbWalker):     s := s + 'Walker';
+                     Integer(spbShimmier):   s := s + 'Shimmier';
+                     Integer(spbClimber):    s := s + 'Climber';
+                     Integer(spbSwimmer):    s := s + 'Swimmer';
+                     Integer(spbFloater):    s := s + 'Floater';
+                     Integer(spbGlider):     s := s + 'Glider';
+                     Integer(spbDisarmer):   s := s + 'Disarmer';
+                     Integer(spbBomber):     s := s + 'Bomber';
+                     Integer(spbStoner):     s := s + 'Stoner';
+                     Integer(spbBlocker):    s := s + 'Blocker';
+                     Integer(spbPlatformer): s := s + 'Platformer';
+                     Integer(spbBuilder):    s := s + 'Builder';
+                     Integer(spbStacker):    s := s + 'Stacker';
+                     Integer(spbBasher):     s := s + 'Basher';
+                     Integer(spbFencer):     s := s + 'Fencer';
+                     Integer(spbMiner):      s := s + 'Miner';
+                     Integer(spbDigger):     s := s + 'Digger';
+                     Integer(spbCloner):     s := s + 'Cloner';
                      else s := s + '???';
                    end;
                  end;

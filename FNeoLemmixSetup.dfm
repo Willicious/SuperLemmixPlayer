@@ -93,7 +93,8 @@ object FNLSetup: TFNLSetup
         Text = 'Grouped by function'
         Items.Strings = (
           'Grouped by function'
-          'Traditional layout')
+          'Traditional layout'
+          'Minimalist configuration')
       end
       object cbGraphics: TComboBox
         Left = 128

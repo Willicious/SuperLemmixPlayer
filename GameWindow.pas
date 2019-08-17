@@ -1247,26 +1247,7 @@ begin
     if func.Action = lka_Skill then
     begin
       AssignToHighlit := GameParams.Hotkeys.CheckForKey(lka_Highlight);
-        case func.Modifier of
-          0: SetSelectedSkill(spbWalker, True, AssignToHighlit);
-          1: SetSelectedSkill(spbClimber, True, AssignToHighlit);
-          2: SetSelectedSkill(spbSwimmer, True, AssignToHighlit);
-          3: SetSelectedSkill(spbFloater, True, AssignToHighlit);
-          4: SetSelectedSkill(spbGlider, True, AssignToHighlit);
-          5: SetSelectedSkill(spbDisarmer, True, AssignToHighlit);
-          6: SetSelectedSkill(spbBomber, True, AssignToHighlit);
-          7: SetSelectedSkill(spbStoner, True, AssignToHighlit);
-          8: SetSelectedSkill(spbBlocker, True, AssignToHighlit);
-          9: SetSelectedSkill(spbPlatformer, True, AssignToHighlit);
-          10: SetSelectedSkill(spbBuilder, True, AssignToHighlit);
-          11: SetSelectedSkill(spbStacker, True, AssignToHighlit);
-          12: SetSelectedSkill(spbBasher, True, AssignToHighlit);
-          13: SetSelectedSkill(spbFencer, True, AssignToHighlit);
-          14: SetSelectedSkill(spbMiner, True, AssignToHighlit);
-          15: SetSelectedSkill(spbDigger, True, AssignToHighlit);
-          16: SetSelectedSkill(spbCloner, True, AssignToHighlit);
-          17: SetSelectedSkill(spbShimmier, True, AssignToHighlit);
-        end
+      SetSelectedSkill(TSkillPanelButton(func.Modifier), True, AssignToHighlit);
     end;
 
     case func.Action of
