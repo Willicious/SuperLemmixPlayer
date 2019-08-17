@@ -5,7 +5,6 @@ interface
 
 uses
   Classes, SysUtils, GR32,
-  Generics.Collections,
   StrUtils,
   PngInterface,
   LemCore,
@@ -119,9 +118,6 @@ const
     (REACHING, REACHING_RTL),                 // baReaching (for shimmier)
     (SHIMMYING, SHIMMYING_RTL)                // baShimmying
   );
-
-type
-  TColorDict = TDictionary<TColor32, String>;
 
 type
   {-------------------------------------------------------------------------------
@@ -412,6 +408,8 @@ begin
   finally
     Template.Free;
   end;
+
+  fRecolorer.ApplyPaletteSwapping(aColorDict, fTheme);
 end;
 
 end.
