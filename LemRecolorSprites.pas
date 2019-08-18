@@ -173,7 +173,7 @@ begin
 
     if aColorDict.ContainsKey(fSwaps[i].DstColor) then
       if aTheme.DoesColorExist(aColorDict[fSwaps[i].DstColor]) then
-        fSwaps[i].SrcColor := aTheme.Colors[aColorDict[fSwaps[i].DstColor]] and $FFFFFF;
+        fSwaps[i].DstColor := aTheme.Colors[aColorDict[fSwaps[i].DstColor]] and $FFFFFF;
   end;
 end;
 
