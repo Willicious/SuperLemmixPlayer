@@ -531,7 +531,7 @@ var
             if ThisAlpha > MaxAlpha then
               MaxAlpha := ThisAlpha;
           end;
-        dst[x, y] := MaxAlpha shl 24;
+        dst[x, y] := (MaxAlpha shl 24) or (GameParams.Renderer.Theme.Colors['PANEL_OUTLINE'] and $FFFFFF);
       end;
 
     TempBmp.DrawTo(dst);
