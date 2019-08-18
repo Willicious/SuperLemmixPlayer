@@ -266,7 +266,8 @@ begin
     if Sec.Line['splitter'] <> nil then fTriggerEffect := DOM_FLIPPER;
     // 22 is unused
     if Sec.Line['window'] <> nil then fTriggerEffect := DOM_WINDOW;
-    // 24, 25, 26 are unused
+    // 24, 25 are unused
+    if Sec.Line['antisplatpad'] <> nil then fTriggerEffect := DOM_NOSPLAT;
     if Sec.Line['splatpad'] <> nil then fTriggerEffect := DOM_SPLAT;
     // 28, 29 are unused
     if Sec.Line['moving_background'] <> nil then fTriggerEffect := DOM_BACKGROUND;
