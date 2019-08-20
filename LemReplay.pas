@@ -356,7 +356,7 @@ var
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
     Dlg.DefaultExt := '.lrb';
-    Dlg.Options := [ofOverwritePrompt];
+    Dlg.Options := [ofOverwritePrompt, ofEnableSizing];
     Dlg.FileName := DefaultFileName;
     if Dlg.Execute then
     begin

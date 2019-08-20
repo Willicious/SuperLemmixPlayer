@@ -168,6 +168,7 @@ begin
   Dlg.Filter := 'PNG Image (*.png)|*.png';
   Dlg.FilterIndex := 1;
   Dlg.DefaultExt := '.png';
+  Dlg.Options := [ofOverwritePrompt, ofEnableSizing];
   if Dlg.Execute then
     SaveName := dlg.FileName
   else

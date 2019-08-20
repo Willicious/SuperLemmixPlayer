@@ -1808,7 +1808,7 @@ begin
         Dlg.InitialDir := AppPath;
     end else
       Dlg.InitialDir := LastReplayDir;
-    Dlg.Options := [ofFileMustExist, ofHideReadOnly];
+    Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
     if Dlg.execute then
     begin
       s:=Dlg.filename;
@@ -1839,6 +1839,7 @@ begin
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := '"' + ExtractFilePath(Application.ExeName) + '/"';
     Dlg.DefaultExt := '.png';
+    Dlg.Options := [ofOverwritePrompt, ofEnableSizing];
     if Dlg.Execute then
     begin
       SaveName := Dlg.FileName;
