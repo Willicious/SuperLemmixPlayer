@@ -1792,6 +1792,8 @@ var
       Result := GetDefaultLoadPath;
   end;
 begin
+  // Todo: Replace this with use of GameBaseScreen's LoadReplay function
+
   s := '';
   Dlg := TOpenDialog.Create(self);
   SuspendGameplay;

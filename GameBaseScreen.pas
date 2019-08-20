@@ -12,6 +12,7 @@ uses
   LemDosStructures,
   LemSystemMessages,
   LemStrings, PngInterface, LemTypes,
+  LemReplay, LemGame,
   SysUtils;
 
 const
@@ -58,6 +59,7 @@ type
     procedure ShowConfigMenu;
     procedure ApplyConfigChanges(OldFullScreen: Boolean);
     procedure DoMassReplayCheck;
+    function LoadReplay: Boolean;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -597,6 +599,72 @@ begin
   CloseScreen(gstReplayTest);
 end;
 
+function TGameBaseScreen.LoadReplay: Boolean;
+var
+  Dlg: TOpenDialog;
+  s: String;
+
+  function GetDefaultLoadPath: String;
+    function GetGroupName: String;
+    var
+      G: TNeoLevelGroup;
+    begin
+      G := GameParams.CurrentLevel.Group;
+      if G.Parent = nil then
+        Result := ''
+      else begin
+        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
+          G := G.Parent;
+        Result := MakeSafeForFilename(G.Name, false) + '\';
+      end;
+    end;
+  begin
+    Result := AppPath + 'Replay\' + GetGroupName;
+  end;
+
+  function GetInitialLoadPath: String;
+  begin
+    if (LastReplayDir <> '') then
+      Result := LastReplayDir
+    else
+      Result := GetDefaultLoadPath;
+  end;
+begin
+  s := '';
+  Dlg := TOpenDialog.Create(self);
+  try
+    Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
+    Dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
+    Dlg.FilterIndex := 1;
+    if LastReplayDir = '' then
+    begin
+      Dlg.InitialDir := AppPath + 'Replay\' + GetInitialLoadPath;
+      if not DirectoryExists(Dlg.InitialDir) then
+        Dlg.InitialDir := AppPath + 'Replay\';
+      if not DirectoryExists(Dlg.InitialDir) then
+        Dlg.InitialDir := AppPath;
+    end else
+      Dlg.InitialDir := LastReplayDir;
+    Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
+    if Dlg.execute then
+    begin
+      s:=Dlg.filename;
+      LastReplayDir := ExtractFilePath(s);
+      Result := true;
+    end else
+      Result := false;
+  finally
+    Dlg.Free;
+  end;
+
+  if s <> '' then
+  begin
+    GlobalGame.ReplayManager.LoadFromFile(s);
+    if GlobalGame.ReplayManager.LevelID <> GlobalGame.Level.Info.LevelID then
+      ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
+                  'will attempt to play the replay anyway.');
+  end;
+end;
 
 procedure TGameBaseScreen.ShowConfigMenu;
 var
