@@ -143,7 +143,10 @@ begin
   else
     case Key of
       VK_RETURN: CloseScreen(GameParams.NextScreen);
-      VK_ESCAPE: CloseScreen(gstMenu);
+      VK_ESCAPE: if GameParams.TestModeLevel <> nil then
+                   CloseScreen(gstExit)
+                 else
+                   CloseScreen(gstMenu);
     end;
 end;
 
