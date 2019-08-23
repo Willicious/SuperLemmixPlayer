@@ -556,6 +556,10 @@ begin
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       fSkillIcons[Button].SetSize(15, 23);
 
+    //////////////////////////////////////////////////////////
+    ///  This code is mostly copied to GameBaseSkillPanel. ///
+    //////////////////////////////////////////////////////////
+
     // Walker, Climber, - both simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 21);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 22);
@@ -625,10 +629,9 @@ begin
     // And finally, outline everything. We generate the cloner after this, as it makes use of
     // the post-outlined Walker graphic.
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      if not (Button in [spbSwimmer, spbDisarmer, spbCloner]) then
+      if not (Button in [spbSwimmer, spbCloner]) then
         Outline(fSkillIcons[Button]);
-        // Swimmer and Cloner are already outlined during their generation, and Disarmer remains
-        // loaded from a file, and current conventions is that the file already has outlines.
+        // Swimmer and Cloner are already outlined during their generation.
 
     // Cloner is drawn as two back-to-back walkers, individually outlined.
     DrawAnimationFrame(fSkillIcons[spbCloner], WALKING_RTL, 1, 6, 21);

@@ -10,6 +10,7 @@ uses
 const
   // Important paths
   SFGraphics = 'gfx\';
+    SFGraphicsGame = SFGraphics + 'game\';
     SFGraphicsHelpers = SFGraphics + 'helpers\';
     SFGraphicsMasks = SFGraphics + 'mask\';
     SFGraphicsMenu = SFGraphics + 'menu\';

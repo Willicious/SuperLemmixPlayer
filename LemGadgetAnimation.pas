@@ -4,6 +4,8 @@ interface
 
 uses
   LemNeoTheme,
+  LemAnimationSet, LemMetaAnimation,
+  LemCore,
   LemStrings,
   Generics.Collections, Generics.Defaults,
   PngInterface,
@@ -133,7 +135,7 @@ type
 
   TGadgetAnimation = class
     private class var
-      fTempOutBitmap: TBitmap32;
+      fTempBitmap: TBitmap32;
       fTempBitmapUsageCount: Integer;
     private
       fNeedRemask: Boolean;
@@ -183,6 +185,8 @@ type
       procedure Rotate90;
       procedure Flip;
       procedure Invert;
+
+      procedure GeneratePickupSkills(aTheme: TNeoTheme; aAni: TBaseAnimationSet; aErase: TBitmap32);
 
       function GetFrameBitmap(aFrame: Integer; aPersistent: Boolean = false): TBitmap32;
       procedure GetFrame(aFrame: Integer; aBitmap: TBitmap32);
@@ -237,6 +241,9 @@ type
 
 implementation
 
+uses
+  GameControl;
+
 // TGadgetAnimation
 
 constructor TGadgetAnimation.Create(aMainObjectWidth: Integer; aMainObjectHeight: Integer);
@@ -250,7 +257,7 @@ begin
   fMainObjectHeight := aMainObjectHeight;
 
   if (fTempBitmapUsageCount = 0) then
-    fTempOutBitmap := TBitmap32.Create;
+    fTempBitmap := TBitmap32.Create;
   Inc(fTempBitmapUsageCount);
 end;
 
@@ -258,7 +265,7 @@ destructor TGadgetAnimation.Destroy;
 begin
   Dec(fTempBitmapUsageCount);
   if (fTempBitmapUsageCount = 0) then
-    fTempoutBitmap.Free;
+    fTempBitmap.Free;
 
   fTriggers.Free;
   fSourceImage.Free;
@@ -324,7 +331,7 @@ begin
   if aPersistent then
     Result := TBitmap32.Create(fWidth, fHeight)
   else
-    Result := fTempOutBitmap;
+    Result := fTempBitmap;
 
   Result.DrawMode := dmBlend;
   Result.CombineMode := cmMerge;
@@ -337,6 +344,150 @@ begin
   aBitmap.SetSize(fWidth, fHeight);
   aBitmap.Clear(0);
   Draw(aBitmap, 0, 0, aFrame);
+end;
+
+procedure TGadgetAnimation.GeneratePickupSkills(aTheme: TNeoTheme; aAni: TBaseAnimationSet; aErase: TBitmap32);
+var
+  BrickColor: TColor32;
+  SkillIcons: TBitmaps;
+  NewBmp: TBitmap32;
+  i: Integer;
+  Button: TSkillPanelButton;
+
+  procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
+  var
+    Ani: TBaseAnimationSet;
+    Meta: TMetaLemmingAnimation;
+    SrcRect: TRect;
+  begin
+    Ani := GameParams.Renderer.LemmingAnimations;
+    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+
+    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
+    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
+    SrcRect.Offset(0, SrcRect.Height * aFrame);
+
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX - Meta.FootX, footY - Meta.FootY, SrcRect);
+  end;
+
+  procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
+  var
+    Ani: TBaseAnimationSet;
+    Meta: TMetaLemmingAnimation;
+    SrcRect: TRect;
+  begin
+    Ani := GameParams.Renderer.LemmingAnimations;
+    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+
+    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
+    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
+    SrcRect.Offset(0, SrcRect.Height * aFrame);
+
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
+  end;
+
+  procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
+  var
+    oX: Integer;
+  begin
+    for oX := 0 to W-1 do
+      dst.PixelS[X + oX, Y] := BrickColor;
+  end;
+begin
+  fFrameCount := Integer(LAST_SKILL_BUTTON) + 2; // +1 for zero based, +1 for blank frame
+  fSourceImage.SetSize(16, fFrameCount * 16);
+
+  BrickColor := aTheme.Colors['MASK'];
+
+  ////////////////////////////////////////////////////////////
+  ///  This code is mostly copied from GameBaseSkillPanel. ///
+  ////////////////////////////////////////////////////////////
+
+  SkillIcons := TBitmaps.Create;
+  for i := 0 to fFrameCount-2 do
+  begin
+    NewBmp := TBitmap32.Create;
+    NewBmp.SetSize(16, 16);
+    NewBmp.Clear(0);
+    SkillIcons.Add(NewBmp);
+  end;
+
+  // Walker, Climber, - both simple
+  DrawAnimationFrame(SkillIcons[Integer(spbWalker)], WALKING, 1, 6, 14);
+  DrawAnimationFrame(SkillIcons[Integer(spbClimber)], CLIMBING, 3, 10, 15);
+
+  // Swimmer - we need to draw the background water
+  DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, 8, 12);
+  fTempBitmap.Assign(SkillIcons[Integer(spbSwimmer)]);
+  SkillIcons[Integer(spbSwimmer)].Clear(0);
+  SkillIcons[Integer(spbSwimmer)].FillRect(0, 10, 15, 16, $FF000000);
+  SkillIcons[Integer(spbSwimmer)].FillRect(0, 11, 15, 16, $FF0000FF);
+  fTempBitmap.DrawTo(SkillIcons[Integer(spbSwimmer)]);
+
+  // Floater, Glider - both simple
+  DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, 7, 19);
+  DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, 7, 19);
+
+  // Disarmer - graphic would be too easily confused with digger, so we have a file for now
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsGame + 'pickup_disarmer.png', SkillIcons[Integer(spbDisarmer)]);
+
+  // Shimmier is straightforward
+  DrawAnimationFrame(SkillIcons[Integer(spbShimmier)], SHIMMYING, 1, 7, 13);
+
+  // Bomber is drawn resized
+  DrawAnimationFrameResized(SkillIcons[Integer(spbBomber)], EXPLOSION, 0, Rect(-2, 0, 15, 17));
+
+  // Stoner is tricky - the goal is an stoned lemming over a stoner explosion graphic
+  DrawAnimationFrame(SkillIcons[Integer(spbStoner)], STONED, 0, 8, 14);
+  fTempBitmap.Assign(SkillIcons[Integer(spbStoner)]);
+  SkillIcons[Integer(spbStoner)].Clear(0);
+  DrawAnimationFrameResized(SkillIcons[Integer(spbStoner)], STONEEXPLOSION, 0, Rect(-2, 0, 15, 17));
+  fTempBitmap.DrawTo(SkillIcons[Integer(spbStoner)], 0, 0);
+
+  // Blocker is simple
+  DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, 7, 14);
+
+  // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
+  // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
+  DrawAnimationFrame(SkillIcons[Integer(spbPlatformer)], PLATFORMING, 1, 7, 13);
+  SkillIcons[Integer(spbPlatformer)].FillRect(2, 13, 12, 16, $FF000000);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], 2, 14);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], 5, 14);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], 8, 14);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], 11, 14);
+
+  DrawAnimationFrame(SkillIcons[Integer(spbBuilder)], BRICKLAYING, 1, 7, 20);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], 4, 15);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], 6, 14);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], 8, 13);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], 10, 12);
+
+  DrawAnimationFrame(SkillIcons[Integer(spbStacker)], STACKING, 0, 7, 21);
+  DrawBrick(SkillIcons[Integer(spbStacker)], 10, 13);
+  DrawBrick(SkillIcons[Integer(spbStacker)], 10, 12);
+  DrawBrick(SkillIcons[Integer(spbStacker)], 10, 11);
+  DrawBrick(SkillIcons[Integer(spbStacker)], 10, 10);
+
+  // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
+  DrawAnimationFrame(SkillIcons[Integer(spbBasher)], BASHING, 0, 8, 14);
+  DrawAnimationFrame(SkillIcons[Integer(spbFencer)], FENCING, 1, 7, 14);
+  DrawAnimationFrame(SkillIcons[Integer(spbMiner)], MINING, 12, 4, 14);
+
+  // The digger doesn't HAVE any frames without particles. But the Disarmer's similar animation does! ;)
+  DrawAnimationFrame(SkillIcons[Integer(spbDigger)], FIXING, 0, 7, 14);
+
+  // Cloner is drawn as two back-to-back walkers, individually outlined.
+  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING_RTL, 1, 6, 14);
+  fTempBitmap.Assign(SkillIcons[Integer(spbWalker)]);
+  fTempBitmap.DrawTo(SkillIcons[Integer(spbCloner)], 2, 0); // We want it drawn 2px to the right of where it is in the walker icon
+
+  // And finally, the blank frame
+  NewBmp := TBitmap32.Create;
+  NewBmp.SetSize(16, 16);
+  NewBmp.Clear(0);
+  SkillIcons.Insert(0, NewBmp);
+
+  CombineBitmaps(SkillIcons);
 end;
 
 function TGadgetAnimation.GetCutRect: TRect;
