@@ -187,8 +187,8 @@ type
       function GetFrameBitmap(aFrame: Integer; aPersistent: Boolean = false): TBitmap32;
       procedure GetFrame(aFrame: Integer; aBitmap: TBitmap32);
 
-      procedure Draw(Dst: TBitmap32; X, Y: Integer; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil); overload;
-      procedure Draw(Dst: TBitmap32; DstRect: TRect; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil); overload;
+      procedure Draw(Dst: TBitmap32; X, Y: Integer; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil; aRaw: Boolean = false); overload;
+      procedure Draw(Dst: TBitmap32; DstRect: TRect; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil; aRaw: Boolean = false); overload;
 
       property Name: String read fName write fName;
       property Color: String read fColor write fColor;
@@ -284,25 +284,31 @@ begin
     TPngInterface.MaskImageFromImage(fSourceImageMasked, fSourceImageMasked, fMaskColor);
 end;
 
-procedure TGadgetAnimation.Draw(Dst: TBitmap32; X, Y, aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil);
+procedure TGadgetAnimation.Draw(Dst: TBitmap32; X, Y, aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil; aRaw: Boolean = false);
 begin
-  Draw(Dst, SizedRect(X, Y, fWidth, fHeight), aFrame, aPixelCombine);
+  Draw(Dst, SizedRect(X, Y, fWidth, fHeight), aFrame, aPixelCombine, aRaw);
 end;
 
-procedure TGadgetAnimation.Draw(Dst: TBitmap32; DstRect: TRect; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil);
+procedure TGadgetAnimation.Draw(Dst: TBitmap32; DstRect: TRect; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil; aRaw: Boolean = false);
 var
   SrcRect: TRect;
+  SrcBmp: TBitmap32;
 begin
-  if fNeedRemask then
+  if fNeedRemask and not aRaw then
     Remask(nil);
+
+  if aRaw then
+    SrcBmp := fSourceImage
+  else
+    SrcBmp := fSourceImageMasked;
 
   if not Assigned(aPixelCombine) then
   begin
-    fSourceImageMasked.DrawMode := dmBlend;
-    fSourceImageMasked.CombineMode := cmMerge;
+    SrcBmp.DrawMode := dmBlend;
+    SrcBmp.CombineMode := cmMerge;
   end else begin
-    fSourceImageMasked.DrawMode := dmCustom;
-    fSourceImageMasked.OnPixelCombine := aPixelCombine;
+    SrcBmp.DrawMode := dmCustom;
+    SrcBmp.OnPixelCombine := aPixelCombine;
   end;
 
   if fHorizontalStrip then
@@ -310,7 +316,7 @@ begin
   else
     SrcRect := SizedRect(0, aFrame * fHeight, fWidth, fHeight);
 
-  fSourceImageMasked.DrawTo(Dst, DstRect, SrcRect);
+  SrcBmp.DrawTo(Dst, DstRect, SrcRect);
 end;
 
 function TGadgetAnimation.GetFrameBitmap(aFrame: Integer; aPersistent: Boolean = false): TBitmap32;
@@ -597,7 +603,7 @@ begin
     begin
       TempBMP := TBitmap32.Create(fWidth, fHeight);
       TempBMP.Clear(0);
-      Draw(TempBMP, 0, 0, i);
+      Draw(TempBMP, 0, 0, i, nil, true);
 
       Result.Add(TempBMP);
     end;
@@ -617,7 +623,7 @@ begin
   fHorizontalStrip := false;
 
   fSourceImage.SetSize(fWidth, fFrameCount * fHeight);
-  fSourceImage.Clear;
+  fSourceImage.Clear(0);
 
   for i := 0 to aBitmaps.Count-1 do
     aBitmaps[i].DrawTo(fSourceImage, 0, fHeight * i);
