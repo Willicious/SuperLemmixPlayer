@@ -108,13 +108,7 @@ procedure TMainForm.FormActivate(Sender: TObject);
 begin
   if Started then
     Exit;
-  if not GameParams.FullScreen then
-  begin
-    GameParams.MainForm.Left := (Screen.Width - GameParams.WindowWidth) div 2;
-    GameParams.MainForm.Top := (Screen.Height - GameParams.WindowHeight) div 2;
-    GameParams.MainForm.ClientWidth := GameParams.WindowWidth;
-    GameParams.MainForm.ClientHeight := GameParams.WindowHeight;
-  end;
+
   Started := True;
   MainFormHandle := Handle;
   PostMessage(Handle, LM_START, 0, 0);

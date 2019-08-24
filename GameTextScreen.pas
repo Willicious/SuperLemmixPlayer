@@ -138,13 +138,16 @@ begin
     if S = '' then Exit;
     GlobalGame.EnsureCorrectReplayDetails;
     GlobalGame.ReplayManager.SaveToFile(S);
-    Exit;
-  end;
-
-  case Key of
-    VK_RETURN: CloseScreen(GameParams.NextScreen);
-    VK_ESCAPE: CloseScreen(gstMenu);
-  end;
+  end else if (GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_LoadReplay) and (GameParams.NextScreen = gstPlay) then
+    LoadReplay
+  else
+    case Key of
+      VK_RETURN: CloseScreen(GameParams.NextScreen);
+      VK_ESCAPE: if GameParams.TestModeLevel <> nil then
+                   CloseScreen(gstExit)
+                 else
+                   CloseScreen(gstMenu);
+    end;
 end;
 
 procedure TGameTextScreen.Form_MouseDown(Sender: TObject;
