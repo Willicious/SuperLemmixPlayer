@@ -399,7 +399,9 @@ const
   PICKUP_BASELINE = (PICKUP_AUTO_GFX_SIZE div 2) + 7;
 begin
   fFrameCount := (Integer(LAST_SKILL_BUTTON) + 1) * 2;
-  BrickColor := aTheme.Colors['PICKUP_BRICKS'];
+  BrickColor := aTheme.Colors['PICKUP_BRICKS'] or $FF000000;
+  if BrickColor = aTheme.Colors['MASK'] or $FF000000 then
+    BrickColor := $FFFFFFFF;
 
   ////////////////////////////////////////////////////////////
   ///  This code is mostly copied from GameBaseSkillPanel. ///
