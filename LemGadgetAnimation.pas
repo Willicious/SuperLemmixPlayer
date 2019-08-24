@@ -17,7 +17,7 @@ uses
   SysUtils;
 
 const
-  PICKUP_AUTO_GFX_SIZE = 16;
+  PICKUP_AUTO_GFX_SIZE = 24;
 
 type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
@@ -469,8 +469,11 @@ begin
   DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING_RTL, 1, PICKUP_MID - 1, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 1);
 
-  aErase.fSourceImage.DrawMode := dmCustom;
-  aErase.fSourceImage.OnPixelCombine := PickupSkillEraseCombine;
+  if aErase <> nil then
+  begin
+    aErase.fSourceImage.DrawMode := dmCustom;
+    aErase.fSourceImage.OnPixelCombine := PickupSkillEraseCombine;
+  end;
 
   // Now we need to duplicate each frame then apply the respective erasers
   for i := 0 to (fFrameCount div 2) - 1 do
@@ -481,9 +484,10 @@ begin
 
     if aErase <> nil then
     begin
-      aErase.fSourceImage.DrawTo(SkillIcons[i * 2], 0, 0, Rect(0, 0, 16, 16));
-      aErase.fSourceImage.DrawTo(SkillIcons[(i * 2) + 1], 0, 0, Rect(0, 16, 16, 32));
-    end;
+      aErase.fSourceImage.DrawTo(SkillIcons[i * 2], 0, 0, Rect(0, 0, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE));
+      aErase.fSourceImage.DrawTo(SkillIcons[(i * 2) + 1], 0, 0, Rect(0, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE * 2));
+    end else
+      SkillIcons[i * 2].Clear(0);
   end;
 
   CombineBitmaps(SkillIcons); // this also frees SkillIcons
