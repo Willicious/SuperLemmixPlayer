@@ -470,7 +470,11 @@ var
 begin
   O := fInteractiveObjects.Add;
 
-  O.GS := aSection.LineTrimString['collection'];
+  if aSection.Line['style'] = nil then
+    O.GS := aSection.LineTrimString['collection']
+  else
+    O.GS := aSection.LineTrimString['style'];
+
   O.Piece := aSection.LineTrimString['piece'];
   O.Left := aSection.LineNumeric['x'];
   O.Top := aSection.LineNumeric['y'];
