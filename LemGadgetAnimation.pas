@@ -16,6 +16,9 @@ uses
   Classes,
   SysUtils;
 
+const
+  PICKUP_AUTO_GFX_SIZE = 16;
+
 type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
 
@@ -174,7 +177,7 @@ type
       procedure CombineBitmaps(aBitmaps: TBitmaps);
       function GetCutRect: TRect;
 
-      procedure PickupSkillEraseCombine(B: TColor32; var F: TColor32; M: TColor32);
+      procedure PickupSkillEraseCombine(F: TColor32; var B: TColor32; M: TColor32);
     public
       constructor Create(aMainObjectWidth: Integer; aMainObjectHeight: Integer);
       destructor Destroy; override;
@@ -348,10 +351,13 @@ begin
   Draw(aBitmap, 0, 0, aFrame);
 end;
 
-procedure TGadgetAnimation.PickupSkillEraseCombine(B: TColor32; var F: TColor32; M: TColor32);
+procedure TGadgetAnimation.PickupSkillEraseCombine(F: TColor32; var B: TColor32; M: TColor32);
 begin
-  F := ((Round(((B shr 24) / 255) * (1 - ((F shr 24) / 255))) and $FF) shl 24) or
-       (F and $00FFFFFF);
+  B := (((Round(
+          ((B shr 24) / 255) *
+          (1 - ((F shr 24) / 255))
+         ) * 255) and $FF) shl 24)
+       or (B and $00FFFFFF);
 end;
 
 procedure TGadgetAnimation.GeneratePickupSkills(aTheme: TNeoTheme; aAni: TBaseAnimationSet; aErase: TGadgetAnimation);
@@ -359,13 +365,14 @@ var
   BrickColor: TColor32;
   SkillIcons: TBitmaps;
   NewBmp: TBitmap32;
-  i: Integer;
+  i, iReal: Integer;
 
   procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
   var
     Ani: TBaseAnimationSet;
     Meta: TMetaLemmingAnimation;
     SrcRect: TRect;
+    OldDrawMode: TDrawMode;
   begin
     Ani := GameParams.Renderer.LemmingAnimations;
     Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
@@ -374,23 +381,10 @@ var
     SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
     SrcRect.Offset(0, SrcRect.Height * aFrame);
 
+    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
     Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX - Meta.FootX, footY - Meta.FootY, SrcRect);
-  end;
-
-  procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
-  var
-    Ani: TBaseAnimationSet;
-    Meta: TMetaLemmingAnimation;
-    SrcRect: TRect;
-  begin
-    Ani := GameParams.Renderer.LemmingAnimations;
-    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
-
-    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
-    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
-    SrcRect.Offset(0, SrcRect.Height * aFrame);
-
-    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
 
   procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
@@ -400,11 +394,12 @@ var
     for oX := 0 to W-1 do
       dst.PixelS[X + oX, Y] := BrickColor;
   end;
+const
+  PICKUP_MID = (PICKUP_AUTO_GFX_SIZE div 2) - 1;
+  PICKUP_BASELINE = (PICKUP_AUTO_GFX_SIZE div 2) + 7;
 begin
   fFrameCount := (Integer(LAST_SKILL_BUTTON) + 1) * 2;
-  fSourceImage.SetSize(16, fFrameCount * 16);
-
-  BrickColor := aTheme.Colors['MASK'];
+  BrickColor := aTheme.Colors['MASK'] xor $FFFFFF;
 
   ////////////////////////////////////////////////////////////
   ///  This code is mostly copied from GameBaseSkillPanel. ///
@@ -412,82 +407,67 @@ begin
 
   SkillIcons := TBitmaps.Create;
 
-  for i := 0 to fFrameCount-1 do
+  for i := 0 to (fFrameCount div 2) - 1 do
   begin
     NewBmp := TBitmap32.Create;
-    NewBmp.SetSize(16, 16);
+    NewBmp.SetSize(PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE);
     NewBmp.Clear(0);
     SkillIcons.Add(NewBmp);
   end;
 
-  // Walker, Climber, - both simple
-  DrawAnimationFrame(SkillIcons[Integer(spbWalker)], WALKING, 1, 6, 14);
-  DrawAnimationFrame(SkillIcons[Integer(spbClimber)], CLIMBING, 3, 10, 15);
+  // Walker, Climber, Swimmer, Floater, Glider - all simple
+  DrawAnimationFrame(SkillIcons[Integer(spbWalker)], WALKING, 1, PICKUP_MID, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbClimber)], CLIMBING, 3, PICKUP_MID + 3, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, PICKUP_MID + 1, PICKUP_BASELINE - 6);
+  DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
+  DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
 
-  // Swimmer - we need to draw the background water
-  DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, 8, 12);
-  fTempBitmap.Assign(SkillIcons[Integer(spbSwimmer)]);
-  SkillIcons[Integer(spbSwimmer)].Clear(0);
-  SkillIcons[Integer(spbSwimmer)].FillRect(0, 10, 15, 16, $FF000000);
-  SkillIcons[Integer(spbSwimmer)].FillRect(0, 11, 15, 16, $FF0000FF);
-  fTempBitmap.DrawTo(SkillIcons[Integer(spbSwimmer)]);
-
-  // Floater, Glider - both simple
-  DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, 7, 19);
-  DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, 7, 19);
-
-  // Disarmer - graphic would be too easily confused with digger, so we have a file for now
-  TPngInterface.LoadPngFile(AppPath + SFGraphicsGame + 'pickup_disarmer.png', SkillIcons[Integer(spbDisarmer)]);
+  // Disarmer - graphic would be too easily confused with digger, so we have a file for now; we then auto-center it
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsGame + 'pickup_disarmer.png', fTempBitmap);
+  fTempBitmap.DrawTo(SkillIcons[Integer(spbDisarmer)], (PICKUP_AUTO_GFX_SIZE - fTempBitmap.Width) div 2, (PICKUP_AUTO_GFX_SIZE - fTempBitmap.Height) div 2);
 
   // Shimmier is straightforward
-  DrawAnimationFrame(SkillIcons[Integer(spbShimmier)], SHIMMYING, 1, 7, 13);
+  DrawAnimationFrame(SkillIcons[Integer(spbShimmier)], SHIMMYING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
 
-  // Bomber is drawn resized
-  DrawAnimationFrameResized(SkillIcons[Integer(spbBomber)], EXPLOSION, 0, Rect(-2, 0, 15, 17));
-
-  // Stoner is tricky - the goal is an stoned lemming over a stoner explosion graphic
-  DrawAnimationFrame(SkillIcons[Integer(spbStoner)], STONED, 0, 8, 14);
-  fTempBitmap.Assign(SkillIcons[Integer(spbStoner)]);
-  SkillIcons[Integer(spbStoner)].Clear(0);
-  DrawAnimationFrameResized(SkillIcons[Integer(spbStoner)], STONEEXPLOSION, 0, Rect(-2, 0, 15, 17));
-  fTempBitmap.DrawTo(SkillIcons[Integer(spbStoner)], 0, 0);
-
-  // Blocker is simple
-  DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, 7, 14);
+  // Bomber, stoner and blocker are simple. Unlike the skill panel, we use the Ohnoer animation for bomber here.
+  DrawAnimationFrame(SkillIcons[Integer(spbBomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);
+  DrawAnimationFrame(SkillIcons[Integer(spbStoner)], STONED, 0, PICKUP_MID + 1, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, PICKUP_MID, PICKUP_BASELINE - 1);
 
   // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
   // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
-  DrawAnimationFrame(SkillIcons[Integer(spbPlatformer)], PLATFORMING, 1, 7, 13);
-  SkillIcons[Integer(spbPlatformer)].FillRect(2, 13, 12, 16, $FF000000);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], 2, 14);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], 5, 14);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], 8, 14);
-  DrawBrick(SkillIcons[Integer(spbPlatformer)], 11, 14);
+  DrawAnimationFrame(SkillIcons[Integer(spbPlatformer)], PLATFORMING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 5, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 3, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 1, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID + 1, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID + 3, PICKUP_BASELINE - 4);
 
-  DrawAnimationFrame(SkillIcons[Integer(spbBuilder)], BRICKLAYING, 1, 7, 20);
-  DrawBrick(SkillIcons[Integer(spbBuilder)], 4, 15);
-  DrawBrick(SkillIcons[Integer(spbBuilder)], 6, 14);
-  DrawBrick(SkillIcons[Integer(spbBuilder)], 8, 13);
-  DrawBrick(SkillIcons[Integer(spbBuilder)], 10, 12);
+  DrawAnimationFrame(SkillIcons[Integer(spbBuilder)], BRICKLAYING, 1, PICKUP_MID, PICKUP_BASELINE - 3);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID - 3, PICKUP_BASELINE - 2);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID - 1, PICKUP_BASELINE - 3);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID + 1, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID + 3, PICKUP_BASELINE - 5);
 
-  DrawAnimationFrame(SkillIcons[Integer(spbStacker)], STACKING, 0, 7, 21);
-  DrawBrick(SkillIcons[Integer(spbStacker)], 10, 13);
-  DrawBrick(SkillIcons[Integer(spbStacker)], 10, 12);
-  DrawBrick(SkillIcons[Integer(spbStacker)], 10, 11);
-  DrawBrick(SkillIcons[Integer(spbStacker)], 10, 10);
+  DrawAnimationFrame(SkillIcons[Integer(spbStacker)], STACKING, 0, PICKUP_MID, PICKUP_BASELINE - 2);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 2);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 3);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 5);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 6);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 7);
 
   // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
-  DrawAnimationFrame(SkillIcons[Integer(spbBasher)], BASHING, 0, 8, 14);
-  DrawAnimationFrame(SkillIcons[Integer(spbFencer)], FENCING, 1, 7, 14);
-  DrawAnimationFrame(SkillIcons[Integer(spbMiner)], MINING, 12, 4, 14);
+  DrawAnimationFrame(SkillIcons[Integer(spbBasher)], BASHING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
+  DrawAnimationFrame(SkillIcons[Integer(spbFencer)], FENCING, 1, PICKUP_MID, PICKUP_BASELINE - 2);
+  DrawAnimationFrame(SkillIcons[Integer(spbMiner)], MINING, 12, PICKUP_MID - 3, PICKUP_BASELINE - 2);
 
   // The digger doesn't HAVE any frames without particles. But the Disarmer's similar animation does! ;)
-  DrawAnimationFrame(SkillIcons[Integer(spbDigger)], FIXING, 0, 7, 14);
+  DrawAnimationFrame(SkillIcons[Integer(spbDigger)], FIXING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 4);
 
-  // Cloner is drawn as two back-to-back walkers, individually outlined.
-  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING_RTL, 1, 6, 14);
-  fTempBitmap.Assign(SkillIcons[Integer(spbWalker)]);
-  fTempBitmap.DrawTo(SkillIcons[Integer(spbCloner)], 2, 0); // We want it drawn 2px to the right of where it is in the walker icon
+  // Cloner is drawn as two back-to-back walkers.
+  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING_RTL, 1, PICKUP_MID - 1, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 1);
 
   aErase.fSourceImage.DrawMode := dmCustom;
   aErase.fSourceImage.OnPixelCombine := PickupSkillEraseCombine;
@@ -495,11 +475,14 @@ begin
   // Now we need to duplicate each frame then apply the respective erasers
   for i := 0 to (fFrameCount div 2) - 1 do
   begin
-    SkillIcons[i + (fFrameCount div 2)].Assign(SkillIcons[i]);
+    NewBmp := TBitmap32.Create;
+    NewBmp.Assign(SkillIcons[i * 2]);
+    SkillIcons.Insert(i * 2, NewBmp);
+
     if aErase <> nil then
     begin
-      aErase.fSourceImage.DrawTo(SkillIcons[i], 0, 0, Rect(0, 0, 16, 16));
-      aErase.fSourceImage.DrawTo(SkillIcons[i + (fFrameCount div 2)], 0, 0, Rect(0, 16, 16, 32));
+      aErase.fSourceImage.DrawTo(SkillIcons[i * 2], 0, 0, Rect(0, 0, 16, 16));
+      aErase.fSourceImage.DrawTo(SkillIcons[(i * 2) + 1], 0, 0, Rect(0, 16, 16, 32));
     end;
   end;
 
