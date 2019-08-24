@@ -252,6 +252,9 @@ begin
   if (fTempBitmapUsageCount = 0) then
     fTempOutBitmap := TBitmap32.Create;
   Inc(fTempBitmapUsageCount);
+
+  fNeedRemask := true;
+  fMaskColor := $FFFFFFFF;
 end;
 
 destructor TGadgetAnimation.Destroy;
@@ -268,11 +271,11 @@ end;
 
 procedure TGadgetAnimation.Remask(aTheme: TNeoTheme);
 begin
-  fNeedRemask := false;
-
   if aTheme <> nil then
   begin
-    if aTheme.Colors[fColor] = fMaskColor then
+    fNeedRemask := false;
+
+    if aTheme.Colors[fColor] and $FFFFFF = fMaskColor and $FFFFFF then
       Exit;
 
     fMaskColor := aTheme.Colors[fColor];
@@ -443,13 +446,14 @@ begin
   end;
 
   fNeedRemask := true;
+  fMaskColor := $FFFFFFFF;
 end;
 
 procedure TGadgetAnimation.Clear;
 begin
   fSourceImage.SetSize(1, 1);
   fSourceImage.Clear(0);
-  fMaskColor := $00000000;
+  fMaskColor := $FFFFFFFF;
 
   fTriggers.Clear;
 
@@ -482,6 +486,7 @@ begin
 
   fSourceImageMasked.Assign(aSrc.fSourceImageMasked);
   fMaskColor := aSrc.fMaskColor;
+  fNeedRemask := aSrc.fNeedRemask;
 
   fFrameCount := aSrc.fFrameCount;
   fName := aSrc.fName;
@@ -533,8 +538,6 @@ begin
   fCutLeft := fCutBottom;
   fCutBottom := fCutRight;
   fCutRight := Temp;
-
-  fNeedRemask := true;
 end;
 
 procedure TGadgetAnimation.Flip;
@@ -556,8 +559,6 @@ begin
   Temp := fCutLeft;
   fCutLeft := fCutRight;
   fCutRight := Temp;
-
-  fNeedRemask := true;
 end;
 
 procedure TGadgetAnimation.Invert;
@@ -579,37 +580,21 @@ begin
   Temp := fCutBottom;
   fCutBottom := fCutTop;
   fCutTop := Temp;
-
-  fNeedRemask := true;
 end;
 
 function TGadgetAnimation.MakeFrameBitmaps: TBitmaps;
 var
   i: Integer;
   TempBMP: TBitmap32;
-
-  OldColor: String;
-  OldMaskColor: TColor32;
 begin
-  OldColor := fColor;
-  OldMaskColor := fMaskColor;
-  try
-    fColor := '';
-    fMaskColor := $FFFFFFFF;
-    Remask(nil);
+  Result := TBitmaps.Create;
+  for i := 0 to fFrameCount-1 do
+  begin
+    TempBMP := TBitmap32.Create(fWidth, fHeight);
+    TempBMP.Clear(0);
+    Draw(TempBMP, 0, 0, i, nil, true);
 
-    Result := TBitmaps.Create;
-    for i := 0 to fFrameCount-1 do
-    begin
-      TempBMP := TBitmap32.Create(fWidth, fHeight);
-      TempBMP.Clear(0);
-      Draw(TempBMP, 0, 0, i, nil, true);
-
-      Result.Add(TempBMP);
-    end;
-  finally
-    fColor := OldColor;
-    fMaskColor := OldMaskColor;
+    Result.Add(TempBMP);
   end;
 end;
 
@@ -631,6 +616,7 @@ begin
   aBitmaps.Free;
 
   fNeedRemask := true;
+  fMaskColor := $FFFFFFFF;
 end;
 
 // TGadgetAnimations

@@ -70,6 +70,7 @@ type
     function GetIdentifier: String;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
     function GetVariableInfo(Flip, Invert, Rotate: Boolean): TGadgetVariableProperties;
+    procedure EnsureAllVariationsMade;
     procedure EnsureVariationMade(Flip, Invert, Rotate: Boolean);
     procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
     function GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty): Integer;
@@ -420,8 +421,20 @@ begin
   if not fVariableInfo[0].Animations.AnyMasked then
     Exit;
 
+  EnsureAllVariationsMade;
+
   for i := 0 to ALIGNMENT_COUNT-1 do
     fVariableInfo[i].Animations.Remask(aTheme);
+end;
+
+procedure TGadgetMetaInfo.EnsureAllVariationsMade;
+var
+  Flip, Invert, Rotate: Boolean;
+begin
+  for Flip in [true, false] do
+    for Invert in [true, false] do
+      for Rotate in [true, false] do
+        EnsureVariationMade(Flip, Invert, Rotate);
 end;
 
 procedure TGadgetMetaInfo.EnsureVariationMade(Flip, Invert, Rotate: Boolean);
