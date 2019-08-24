@@ -117,7 +117,10 @@ procedure TTerrain.LoadFromSection(aSection: TParserSection);
     fDrawingFlags := fDrawingFlags or aValue;
   end;
 begin
-  GS := aSection.LineTrimString['collection'];
+  if aSection.Line['style'] = nil then
+    GS := aSection.LineTrimString['collection']
+  else
+    GS := aSection.LineTrimString['style'];
   Piece := aSection.LineTrimString['piece'];
   Left := aSection.LineNumeric['x'];
   Top := aSection.LineNumeric['y'];

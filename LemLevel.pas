@@ -470,7 +470,11 @@ var
 begin
   O := fInteractiveObjects.Add;
 
-  O.GS := aSection.LineTrimString['collection'];
+  if aSection.Line['style'] = nil then
+    O.GS := aSection.LineTrimString['collection']
+  else
+    O.GS := aSection.LineTrimString['style'];
+
   O.Piece := aSection.LineTrimString['piece'];
   O.Left := aSection.LineNumeric['x'];
   O.Top := aSection.LineNumeric['y'];
@@ -922,7 +926,7 @@ begin
     O := fInteractiveObjects[i];
     Sec := aSection.SectionList.Add('OBJECT');
 
-    Sec.AddLine('COLLECTION', O.GS);
+    Sec.AddLine('STYLE', O.GS);
     Sec.AddLine('PIECE', O.Piece);
     Sec.AddLine('X', O.Left);
     Sec.AddLine('Y', O.Top);
@@ -962,7 +966,7 @@ begin
     T := fTerrains[i];
     Sec := aSection.SectionList.Add('TERRAIN');
 
-    Sec.AddLine('COLLECTION', T.GS);
+    Sec.AddLine('STYLE', T.GS);
     Sec.AddLine('PIECE', T.Piece);
     Sec.AddLine('X', T.Left);
     Sec.AddLine('Y', T.Top);
