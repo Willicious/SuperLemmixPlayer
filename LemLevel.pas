@@ -110,6 +110,7 @@ type
     procedure SaveGeneralInfo(aSection: TParserSection);
     procedure SaveSkillsetSection(aSection: TParserSection);
     procedure SaveObjectSections(aSection: TParserSection);
+    procedure SaveTerrainGroupSections(aSection: TParserSection);
     procedure SaveTerrainSections(aSection: TParserSection);
     procedure SaveLemmingSections(aSection: TParserSection);
     procedure SaveTalismanSections(aSection: TParserSection);
@@ -763,6 +764,7 @@ begin
     SaveGeneralInfo(Parser.MainSection);
     SaveSkillsetSection(Parser.MainSection);
     SaveObjectSections(Parser.MainSection);
+    SaveTerrainGroupSections(Parser.MainSection);
     SaveTerrainSections(Parser.MainSection);
     SaveLemmingSections(Parser.MainSection);
     SaveTalismanSections(Parser.MainSection);
@@ -965,33 +967,39 @@ begin
   end;
 end;
 
+procedure TLevel.SaveTerrainGroupSections(aSection: TParserSection);
+var
+  G: TTerrainGroup;
+  T: TTerrain;
+  i, n: Integer;
+  Sec, SubSec: TParserSection;
+begin
+  for i := 0 to fTerrainGroups.Count-1 do
+  begin
+    G := fTerrainGroups[i];
+    Sec := aSection.SectionList.Add('TERRAINGROUP');
+
+    Sec.AddLine('NAME', G.Name);
+    for n := 0 to G.Terrains.Count-1 do
+    begin
+      T := G.Terrains[n];
+      SubSec := Sec.SectionList.Add('TERRAIN');
+      T.SaveToSection(SubSec);
+    end;
+  end;
+end;
+
 procedure TLevel.SaveTerrainSections(aSection: TParserSection);
 var
   i: Integer;
   T: TTerrain;
   Sec: TParserSection;
-
-  function Flag(aValue: Integer): Boolean;
-  begin
-    Result := T.DrawingFlags and aValue = aValue;
-  end;
 begin
   for i := 0 to fTerrains.Count-1 do
   begin
     T := fTerrains[i];
     Sec := aSection.SectionList.Add('TERRAIN');
-
-    Sec.AddLine('COLLECTION', T.GS);
-    Sec.AddLine('PIECE', T.Piece);
-    Sec.AddLine('X', T.Left);
-    Sec.AddLine('Y', T.Top);
-
-    if Flag(tdf_Rotate) then Sec.AddLine('ROTATE');
-    if Flag(tdf_Flip) then Sec.AddLine('FLIP_HORIZONTAL');
-    if Flag(tdf_Invert) then Sec.AddLine('FLIP_VERTICAL');
-    if Flag(tdf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
-    if Flag(tdf_Erase) then Sec.AddLine('ERASE');
-    if not Flag(tdf_NoOneWay) then Sec.AddLine('ONE_WAY');
+    T.SaveToSection(Sec);
   end;
 end;
 
