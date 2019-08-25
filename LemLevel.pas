@@ -889,6 +889,8 @@ var
     end;
 
     Sec.AddLine('SKILL', S);
+    if O.TarLev > 1 then
+      Sec.AddLine('SKILLCOUNT', O.TarLev);
   end;
 
   procedure SetSplitterData;
@@ -912,6 +914,15 @@ var
     if O.TarLev and 8 <> 0 then Sec.AddLine('GLIDER');
     if O.TarLev and 16 <> 0 then Sec.AddLine('DISARMER');
     if O.TarLev and 64 <> 0 then Sec.AddLine('ZOMBIE');
+
+    if O.LemmingCap > 0 then
+      Sec.AddLine('LEMMINGS', O.LemmingCap);
+  end;
+
+  procedure SetExitData;
+  begin
+    if O.LemmingCap > 0 then
+      Sec.AddLine('LEMMINGS', O.LemmingCap);
   end;
 
   procedure SetMovingBackgroundData;
@@ -943,12 +954,13 @@ begin
     if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');
 
     case PieceManager.Objects[O.Identifier].TriggerEffect of
-      11: SetTeleporterData;
-      12: SetReceiverData;
-      14: SetPickupData;
-      21: SetSplitterData;
-      23: SetWindowData;
-      30: SetMovingBackgroundData;
+      DOM_EXIT, DOM_LOCKEXIT: SetExitData;
+      DOM_TELEPORT: SetTeleporterData;
+      DOM_RECEIVER: SetReceiverData;
+      DOM_PICKUP: SetPickupData;
+      DOM_FLIPPER: SetSplitterData;
+      DOM_WINDOW: SetWindowData;
+      DOM_BACKGROUND: SetMovingBackgroundData;
     end;
   end;
 end;
