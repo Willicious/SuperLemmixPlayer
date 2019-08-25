@@ -90,7 +90,8 @@ type
     procedure DrawWorkerLemmings(aFrame: Integer);
     procedure DrawReel;
     procedure SetNextCredit;
-    procedure DumpImages; //what a great name. it's a function I have here for testing things.
+    procedure DumpImages;
+    procedure CleanseLevels;
     procedure PerformUpdateCheck;
   { eventhandlers }
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -150,6 +151,14 @@ begin
   {$ifdef exp}
   BasePack.DumpNeoLemmixWebsiteMetaInfo(AppPath + 'Dump\' + MakeSafeForFilename(BasePack.Name) + '\');
   {$endif}
+end;
+
+procedure TGameMenuScreen.CleanseLevels;
+var
+  BasePack: TNeoLevelGroup;
+begin
+  BasePack := GameParams.CurrentLevel.Group.ParentBasePack;
+  BasePack.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\');
 end;
 
 procedure TGameMenuScreen.PerformUpdateCheck;
@@ -396,6 +405,7 @@ begin
                   end;
       VK_F6     : DumpImages;
       VK_F7     : DoMassReplayCheck;
+      VK_F8     : CleanseLevels;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);
       VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
