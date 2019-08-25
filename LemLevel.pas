@@ -110,6 +110,7 @@ type
     procedure SaveGeneralInfo(aSection: TParserSection);
     procedure SaveSkillsetSection(aSection: TParserSection);
     procedure SaveObjectSections(aSection: TParserSection);
+    procedure SaveTerrainGroupSections(aSection: TParserSection);
     procedure SaveTerrainSections(aSection: TParserSection);
     procedure SaveLemmingSections(aSection: TParserSection);
     procedure SaveTalismanSections(aSection: TParserSection);
@@ -401,7 +402,8 @@ var
 
   procedure GetTeleporterData;
   begin
-    if (aSection.Line['flip_lemming'] <> nil) then Flag(odf_FlipLem);
+    if (aSection.Line['flip_lemming'] <> nil) then Flag(odf_FlipLem); // Deprecated!
+
     O.Skill := aSection.LineNumeric['pairing'];
   end;
 
@@ -443,15 +445,13 @@ var
 
   procedure GetSplitterData;
   begin
-    // Ignore previous settings by "flip_horizontal" and the like.
-    O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
     if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then
-      Flag(odf_FlipLem);
+      Flag(odf_FlipLem); // Deprecated!!
   end;
 
   procedure GetWindowData;
   begin
-    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem);
+    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem); // Deprecated!!
     if (aSection.Line['climber'] <> nil) then O.TarLev := O.TarLev or 1;
     if (aSection.Line['swimmer'] <> nil) then O.TarLev := O.TarLev or 2;
     if (aSection.Line['floater'] <> nil) then O.TarLev := O.TarLev or 4;
@@ -763,6 +763,7 @@ begin
     SaveGeneralInfo(Parser.MainSection);
     SaveSkillsetSection(Parser.MainSection);
     SaveObjectSections(Parser.MainSection);
+    SaveTerrainGroupSections(Parser.MainSection);
     SaveTerrainSections(Parser.MainSection);
     SaveLemmingSections(Parser.MainSection);
     SaveTalismanSections(Parser.MainSection);
@@ -854,7 +855,6 @@ var
 
   procedure SetTeleporterData;
   begin
-    if Flag(odf_FlipLem) then Sec.AddLine('FLIP_LEMMING');
     Sec.AddLine('PAIRING', O.Skill);
   end;
 
@@ -889,30 +889,27 @@ var
     end;
 
     Sec.AddLine('SKILL', S);
-    Sec.AddLine('SKILL_COUNT', O.TarLev);
-  end;
-
-  procedure SetSplitterData;
-  begin
-    if Flag(odf_FlipLem) then
-      Sec.AddLine('DIRECTION', 'left')
-    else
-      Sec.AddLine('DIRECTION', 'right');
+    if O.TarLev > 1 then
+      Sec.AddLine('SKILL_COUNT', O.TarLev);
   end;
 
   procedure SetWindowData;
   begin
-    if Flag(odf_FlipLem) then
-      Sec.AddLine('DIRECTION', 'left')
-    else
-      Sec.AddLine('DIRECTION', 'right');
-
     if O.TarLev and 1 <> 0 then Sec.AddLine('CLIMBER');
     if O.TarLev and 2 <> 0 then Sec.AddLine('SWIMMER');
     if O.TarLev and 4 <> 0 then Sec.AddLine('FLOATER');
     if O.TarLev and 8 <> 0 then Sec.AddLine('GLIDER');
     if O.TarLev and 16 <> 0 then Sec.AddLine('DISARMER');
     if O.TarLev and 64 <> 0 then Sec.AddLine('ZOMBIE');
+
+    if O.LemmingCap > 0 then
+      Sec.AddLine('LEMMINGS', O.LemmingCap);
+  end;
+
+  procedure SetExitData;
+  begin
+    if O.LemmingCap > 0 then
+      Sec.AddLine('LEMMINGS', O.LemmingCap);
   end;
 
   procedure SetMovingBackgroundData;
@@ -938,18 +935,40 @@ begin
     if O.Height > 0 then Sec.AddLine('HEIGHT', O.Height);
 
     if Flag(odf_Rotate) then Sec.AddLine('ROTATE');
-    if Flag(odf_FlipLem) or Flag(64) then Sec.AddLine('FLIP_HORIZONTAL'); //64 was previously flip image
+    if Flag(odf_FlipLem) then Sec.AddLine('FLIP_HORIZONTAL');
     if Flag(odf_UpsideDown) then Sec.AddLine('FLIP_VERTICAL');
     if Flag(odf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
     if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');
 
     case PieceManager.Objects[O.Identifier].TriggerEffect of
-      11: SetTeleporterData;
-      12: SetReceiverData;
-      14: SetPickupData;
-      21: SetSplitterData;
-      23: SetWindowData;
-      30: SetMovingBackgroundData;
+      DOM_EXIT, DOM_LOCKEXIT: SetExitData;
+      DOM_TELEPORT: SetTeleporterData;
+      DOM_RECEIVER: SetReceiverData;
+      DOM_PICKUP: SetPickupData;
+      DOM_WINDOW: SetWindowData;
+      DOM_BACKGROUND: SetMovingBackgroundData;
+    end;
+  end;
+end;
+
+procedure TLevel.SaveTerrainGroupSections(aSection: TParserSection);
+var
+  G: TTerrainGroup;
+  T: TTerrain;
+  i, n: Integer;
+  Sec, SubSec: TParserSection;
+begin
+  for i := 0 to fTerrainGroups.Count-1 do
+  begin
+    G := fTerrainGroups[i];
+    Sec := aSection.SectionList.Add('TERRAINGROUP');
+
+    Sec.AddLine('NAME', G.Name);
+    for n := 0 to G.Terrains.Count-1 do
+    begin
+      T := G.Terrains[n];
+      SubSec := Sec.SectionList.Add('TERRAIN');
+      T.SaveToSection(SubSec);
     end;
   end;
 end;
@@ -959,28 +978,12 @@ var
   i: Integer;
   T: TTerrain;
   Sec: TParserSection;
-
-  function Flag(aValue: Integer): Boolean;
-  begin
-    Result := T.DrawingFlags and aValue = aValue;
-  end;
 begin
   for i := 0 to fTerrains.Count-1 do
   begin
     T := fTerrains[i];
     Sec := aSection.SectionList.Add('TERRAIN');
-
-    Sec.AddLine('STYLE', T.GS);
-    Sec.AddLine('PIECE', T.Piece);
-    Sec.AddLine('X', T.Left);
-    Sec.AddLine('Y', T.Top);
-
-    if Flag(tdf_Rotate) then Sec.AddLine('ROTATE');
-    if Flag(tdf_Flip) then Sec.AddLine('FLIP_HORIZONTAL');
-    if Flag(tdf_Invert) then Sec.AddLine('FLIP_VERTICAL');
-    if Flag(tdf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
-    if Flag(tdf_Erase) then Sec.AddLine('ERASE');
-    if not Flag(tdf_NoOneWay) then Sec.AddLine('ONE_WAY');
+    T.SaveToSection(Sec);
   end;
 end;
 
@@ -1003,6 +1006,7 @@ begin
     else
       Sec.AddLine('DIRECTION', 'left');
 
+    if L.IsShimmier then Sec.AddLine('SHIMMIER');
     if L.IsClimber then Sec.AddLine('CLIMBER');
     if L.IsSwimmer then Sec.AddLine('SWIMMER');
     if L.IsFloater then Sec.AddLine('FLOATER');
