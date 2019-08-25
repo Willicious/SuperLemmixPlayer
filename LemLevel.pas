@@ -950,7 +950,9 @@ begin
     if O.Height > 0 then Sec.AddLine('HEIGHT', O.Height);
 
     if Flag(odf_Rotate) then Sec.AddLine('ROTATE');
-    if Flag(odf_FlipLem) or Flag(64) then Sec.AddLine('FLIP_HORIZONTAL'); //64 was previously flip image
+    if Flag(odf_FlipLem) and
+       not (PieceManager.Objects[O.Identifier].TriggerEffect in [DOM_WINDOW, DOM_TELEPORT, DOM_FLIPPER]) then
+      Sec.AddLine('FLIP_HORIZONTAL');
     if Flag(odf_UpsideDown) then Sec.AddLine('FLIP_VERTICAL');
     if Flag(odf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
     if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');
@@ -1022,6 +1024,7 @@ begin
     else
       Sec.AddLine('DIRECTION', 'left');
 
+    if L.IsShimmier then Sec.AddLine('SHIMMIER');
     if L.IsClimber then Sec.AddLine('CLIMBER');
     if L.IsSwimmer then Sec.AddLine('SWIMMER');
     if L.IsFloater then Sec.AddLine('FLOATER');
