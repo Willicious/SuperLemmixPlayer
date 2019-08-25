@@ -435,7 +435,10 @@ var
     if S = 'digger' then O.Skill := Integer(spbDigger);
     if S = 'cloner' then O.Skill := Integer(spbCloner);
 
-    O.TarLev := Max(aSection.LineNumeric['skillcount'], 1);
+    if aSection.Line['skill_count'] = nil then
+      O.TarLev := Max(aSection.LineNumeric['skillcount'], 1)
+    else
+      O.TarLev := Max(aSection.LineNumeric['skill_count'], 1);
   end;
 
   procedure GetSplitterData;
@@ -886,6 +889,7 @@ var
     end;
 
     Sec.AddLine('SKILL', S);
+    Sec.AddLine('SKILL_COUNT', O.TarLev);
   end;
 
   procedure SetSplitterData;
