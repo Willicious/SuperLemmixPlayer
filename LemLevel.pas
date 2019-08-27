@@ -544,7 +544,7 @@ begin
   L.Y := aSection.LineNumeric['y'];
 
   if (aSection.Line['flip_horizontal'] <> nil) then
-    L.Dx = -1
+    L.Dx := -1
   else if Lowercase(LeftStr(aSection.LineTrimString['direction'], 1)) = 'l' then
     L.Dx := -1
   else

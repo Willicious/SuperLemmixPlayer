@@ -335,12 +335,12 @@ begin
 
     if (Sec.Line['digit_alignment'] <> nil) then
     begin
-      if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment'], 1)) = 'l' then
-        GadgetAccessor.DigitAlign = -1
-      else if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment'], 1)) = 'r' then
-        GadgetAccessor.DigitAlign = 1
+      if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'l' then
+        GadgetAccessor.DigitAlign := -1
+      else if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'r' then
+        GadgetAccessor.DigitAlign := 1
       else
-        GadgetAccessor.DigitAlign = 0;
+        GadgetAccessor.DigitAlign := 0;
     end else
       GadgetAccessor.DigitAlign := Sec.LineNumericDefault['digit_align', GadgetAccessor.DigitAlign];
 
