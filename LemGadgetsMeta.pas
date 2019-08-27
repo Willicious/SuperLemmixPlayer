@@ -9,6 +9,7 @@ uses
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,
   Contnrs, LemNeoParser,
+  LemAnimationSet,
   LemGadgetAnimation, LemGadgetsConstants;
 
 const
@@ -92,6 +93,7 @@ type
     procedure Assign(Source: TGadgetMetaInfo);
 
     procedure Remask(aTheme: TNeoTheme);
+    procedure RegeneratePickup(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
 
     procedure MarkAllUnmade;
     procedure MarkMetaDataUnmade;
@@ -406,6 +408,20 @@ begin
   // There may be times where we want to wipe the metadata without wiping the images.
   for i := 0 to ALIGNMENT_COUNT-1 do
     fGeneratedVariableInfo[i] := false;
+end;
+
+procedure TGadgetMetaInfo.RegeneratePickup(aTheme: TNeoTheme;
+  aAni: TBaseAnimationSet);
+var
+  EraseAnim: TGadgetAnimation;
+begin
+  if fVariableInfo[0].Animations['erase'] = nil then
+    EraseAnim := nil
+  else
+    EraseAnim := fVariableInfo[0].Animations['erase'];
+
+  fVariableInfo[0].Animations.PrimaryAnimation.GeneratePickupSkills(aTheme, aAni, EraseAnim);
+  MarkAllUnmade;
 end;
 
 procedure TGadgetMetaInfo.Remask(aTheme: TNeoTheme);

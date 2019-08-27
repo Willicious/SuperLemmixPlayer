@@ -4,6 +4,8 @@ interface
 
 uses
   LemNeoTheme,
+  LemAnimationSet, LemMetaAnimation,
+  LemCore,
   LemStrings,
   Generics.Collections, Generics.Defaults,
   PngInterface,
@@ -13,6 +15,9 @@ uses
   GR32,
   Classes,
   SysUtils;
+
+const
+  PICKUP_AUTO_GFX_SIZE = 24;
 
 type
   TGadgetAnimationState = (gasPlay, gasPause, gasLoopToZero, gasStop, gasMatchPrimary);
@@ -133,7 +138,7 @@ type
 
   TGadgetAnimation = class
     private class var
-      fTempOutBitmap: TBitmap32;
+      fTempBitmap: TBitmap32;
       fTempBitmapUsageCount: Integer;
     private
       fNeedRemask: Boolean;
@@ -171,6 +176,8 @@ type
       function MakeFrameBitmaps: TBitmaps;
       procedure CombineBitmaps(aBitmaps: TBitmaps);
       function GetCutRect: TRect;
+
+      procedure PickupSkillEraseCombine(F: TColor32; var B: TColor32; M: TColor32);
     public
       constructor Create(aMainObjectWidth: Integer; aMainObjectHeight: Integer);
       destructor Destroy; override;
@@ -183,6 +190,8 @@ type
       procedure Rotate90;
       procedure Flip;
       procedure Invert;
+
+      procedure GeneratePickupSkills(aTheme: TNeoTheme; aAni: TBaseAnimationSet; aErase: TGadgetAnimation);
 
       function GetFrameBitmap(aFrame: Integer; aPersistent: Boolean = false): TBitmap32;
       procedure GetFrame(aFrame: Integer; aBitmap: TBitmap32);
@@ -237,6 +246,9 @@ type
 
 implementation
 
+uses
+  GameControl;
+
 // TGadgetAnimation
 
 constructor TGadgetAnimation.Create(aMainObjectWidth: Integer; aMainObjectHeight: Integer);
@@ -250,7 +262,7 @@ begin
   fMainObjectHeight := aMainObjectHeight;
 
   if (fTempBitmapUsageCount = 0) then
-    fTempOutBitmap := TBitmap32.Create;
+    fTempBitmap := TBitmap32.Create;
   Inc(fTempBitmapUsageCount);
 
   fNeedRemask := true;
@@ -261,7 +273,7 @@ destructor TGadgetAnimation.Destroy;
 begin
   Dec(fTempBitmapUsageCount);
   if (fTempBitmapUsageCount = 0) then
-    fTempoutBitmap.Free;
+    fTempBitmap.Free;
 
   fTriggers.Free;
   fSourceImage.Free;
@@ -327,7 +339,7 @@ begin
   if aPersistent then
     Result := TBitmap32.Create(fWidth, fHeight)
   else
-    Result := fTempOutBitmap;
+    Result := fTempBitmap;
 
   Result.DrawMode := dmBlend;
   Result.CombineMode := cmMerge;
@@ -340,6 +352,150 @@ begin
   aBitmap.SetSize(fWidth, fHeight);
   aBitmap.Clear(0);
   Draw(aBitmap, 0, 0, aFrame);
+end;
+
+procedure TGadgetAnimation.PickupSkillEraseCombine(F: TColor32; var B: TColor32; M: TColor32);
+begin
+  B := (((Round(
+          ((B shr 24) / 255) *
+          (1 - ((F shr 24) / 255))
+         ) * 255) and $FF) shl 24)
+       or (B and $00FFFFFF);
+end;
+
+procedure TGadgetAnimation.GeneratePickupSkills(aTheme: TNeoTheme; aAni: TBaseAnimationSet; aErase: TGadgetAnimation);
+var
+  BrickColor: TColor32;
+  SkillIcons: TBitmaps;
+  NewBmp: TBitmap32;
+  i, iReal: Integer;
+
+  procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
+  var
+    Ani: TBaseAnimationSet;
+    Meta: TMetaLemmingAnimation;
+    SrcRect: TRect;
+    OldDrawMode: TDrawMode;
+  begin
+    Ani := GameParams.Renderer.LemmingAnimations;
+    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+
+    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
+    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
+    SrcRect.Offset(0, SrcRect.Height * aFrame);
+
+    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX - Meta.FootX, footY - Meta.FootY, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
+  end;
+
+  procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
+  var
+    oX: Integer;
+  begin
+    for oX := 0 to W-1 do
+      dst.PixelS[X + oX, Y] := BrickColor;
+  end;
+const
+  PICKUP_MID = (PICKUP_AUTO_GFX_SIZE div 2) - 1;
+  PICKUP_BASELINE = (PICKUP_AUTO_GFX_SIZE div 2) + 7;
+begin
+  fFrameCount := (Integer(LAST_SKILL_BUTTON) + 1) * 2;
+  BrickColor := aTheme.Colors['PICKUP_BRICKS'] or $FF000000;
+  if BrickColor = aTheme.Colors['MASK'] or $FF000000 then
+    BrickColor := $FFFFFFFF;
+
+  ////////////////////////////////////////////////////////////
+  ///  This code is mostly copied from GameBaseSkillPanel. ///
+  ////////////////////////////////////////////////////////////
+
+  SkillIcons := TBitmaps.Create;
+
+  for i := 0 to (fFrameCount div 2) - 1 do
+  begin
+    NewBmp := TBitmap32.Create;
+    NewBmp.SetSize(PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE);
+    NewBmp.Clear(0);
+    SkillIcons.Add(NewBmp);
+  end;
+
+  // Walker, Climber, Swimmer, Floater, Glider - all simple
+  DrawAnimationFrame(SkillIcons[Integer(spbWalker)], WALKING, 1, PICKUP_MID, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbClimber)], CLIMBING, 3, PICKUP_MID + 3, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, PICKUP_MID + 1, PICKUP_BASELINE - 6);
+  DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
+  DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
+
+  // Disarmer - graphic would be too easily confused with digger, so we have a file for now; we then auto-center it
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsGame + 'pickup_disarmer.png', fTempBitmap);
+  fTempBitmap.DrawTo(SkillIcons[Integer(spbDisarmer)], (PICKUP_AUTO_GFX_SIZE - fTempBitmap.Width) div 2, (PICKUP_AUTO_GFX_SIZE - fTempBitmap.Height) div 2);
+
+  // Shimmier is straightforward
+  DrawAnimationFrame(SkillIcons[Integer(spbShimmier)], SHIMMYING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
+
+  // Bomber, stoner and blocker are simple. Unlike the skill panel, we use the Ohnoer animation for bomber here.
+  DrawAnimationFrame(SkillIcons[Integer(spbBomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);
+  DrawAnimationFrame(SkillIcons[Integer(spbStoner)], STONED, 0, PICKUP_MID + 1, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbBlocker)], BLOCKING, 0, PICKUP_MID, PICKUP_BASELINE - 1);
+
+  // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
+  // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
+  DrawAnimationFrame(SkillIcons[Integer(spbPlatformer)], PLATFORMING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 5, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 3, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID - 1, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID + 1, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbPlatformer)], PICKUP_MID + 3, PICKUP_BASELINE - 4);
+
+  DrawAnimationFrame(SkillIcons[Integer(spbBuilder)], BRICKLAYING, 1, PICKUP_MID, PICKUP_BASELINE - 3);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID - 3, PICKUP_BASELINE - 2);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID - 1, PICKUP_BASELINE - 3);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID + 1, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbBuilder)], PICKUP_MID + 3, PICKUP_BASELINE - 5);
+
+  DrawAnimationFrame(SkillIcons[Integer(spbStacker)], STACKING, 0, PICKUP_MID, PICKUP_BASELINE - 2);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 2);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 3);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 4);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 5);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 6);
+  DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 7);
+
+  // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
+  DrawAnimationFrame(SkillIcons[Integer(spbBasher)], BASHING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
+  DrawAnimationFrame(SkillIcons[Integer(spbFencer)], FENCING, 1, PICKUP_MID, PICKUP_BASELINE - 2);
+  DrawAnimationFrame(SkillIcons[Integer(spbMiner)], MINING, 12, PICKUP_MID - 3, PICKUP_BASELINE - 2);
+
+  // The digger doesn't HAVE any frames without particles. But the Disarmer's similar animation does! ;)
+  DrawAnimationFrame(SkillIcons[Integer(spbDigger)], FIXING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 4);
+
+  // Cloner is drawn as two back-to-back walkers.
+  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING_RTL, 1, PICKUP_MID - 1, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbCloner)], WALKING, 1, PICKUP_MID + 2, PICKUP_BASELINE - 1);
+
+  if aErase <> nil then
+  begin
+    aErase.fSourceImage.DrawMode := dmCustom;
+    aErase.fSourceImage.OnPixelCombine := PickupSkillEraseCombine;
+  end;
+
+  // Now we need to duplicate each frame then apply the respective erasers
+  for i := 0 to (fFrameCount div 2) - 1 do
+  begin
+    NewBmp := TBitmap32.Create;
+    NewBmp.Assign(SkillIcons[i * 2]);
+    SkillIcons.Insert(i * 2, NewBmp);
+
+    if aErase <> nil then
+    begin
+      aErase.fSourceImage.DrawTo(SkillIcons[i * 2], 0, 0, Rect(0, 0, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE));
+      aErase.fSourceImage.DrawTo(SkillIcons[(i * 2) + 1], 0, 0, Rect(0, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE * 2));
+    end else
+      SkillIcons[i * 2].Clear(0);
+  end;
+
+  CombineBitmaps(SkillIcons); // this also frees SkillIcons
 end;
 
 function TGadgetAnimation.GetCutRect: TRect;
@@ -359,12 +515,19 @@ begin
   fName := UpperCase(aSegment.LineTrimString['name']);
   fColor := UpperCase(aSegment.LineTrimString['color']);
 
-  LoadPath := AppPath + SFStyles + aCollection + '\objects\' + aPiece;
-  if fName <> '' then
-    LoadPath := LoadPath + '_' + fName; // for backwards-compatible or simply unnamed primaries
-  LoadPath := LoadPath + '.png';
+  if fName <> '*NULL' then
+  begin
+    LoadPath := AppPath + SFStyles + aCollection + '\objects\' + aPiece;
+    if fName <> '' then
+      LoadPath := LoadPath + '_' + fName; // for backwards-compatible or simply unnamed primaries
+    LoadPath := LoadPath + '.png';
 
-  TPngInterface.LoadPngFile(LoadPath, fSourceImage);
+    TPngInterface.LoadPngFile(LoadPath, fSourceImage);
+  end else begin
+    fSourceImage.SetSize(1, 1);
+    fSourceImage.Clear(0);
+    fFrameCount := 1;
+  end;
 
   // fPrimary is only set by TGadgetAnimations
   fHorizontalStrip := aSegment.Line['horizontal_strip'] <> nil;

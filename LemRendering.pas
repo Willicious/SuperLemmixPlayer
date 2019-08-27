@@ -2369,7 +2369,7 @@ begin
       end;
     end;
 
-
+    PieceManager.RegeneratePickups(fTheme, fAni);
 
     // Prepare the bitmaps
     fLayers.Prepare(RenderInfoRec.Level.Info.Width, RenderInfoRec.Level.Info.Height);

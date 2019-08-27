@@ -2343,9 +2343,12 @@ begin
     // Additional checks for triggered traps, triggered animations, teleporters
     if Gadget.Triggered then
       GadgetFound := False;
-    // ignore already used buttons, one-shot traps and pick-up skills
-    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
+    // ignore already used buttons and one-shot traps
+    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE])
        and (Gadget.CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
+      GadgetFound := False;
+    // ignore already used pickup skills
+    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.CurrentFrame mod 2 = 0) then
       GadgetFound := False;
     // Additional check, that the corresponding receiver is inactive
     if     (Gadget.TriggerEffect = DOM_TELEPORT)
@@ -2456,7 +2459,7 @@ begin
   if not L.LemIsZombie then
   begin
     Gadget := Gadgets[GadgetID];
-    Gadget.CurrentFrame := 0;
+    Gadget.CurrentFrame := Gadget.CurrentFrame and not $01;
     CueSoundEffect(SFX_PICKUP, L.Position);
     UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], Gadget.SkillCount);
   end;
