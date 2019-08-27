@@ -742,17 +742,6 @@ end;
 procedure TGadgetAnimationTrigger.Load(aSegment: TParserSection);
 var
   S: String;
-
-  function ParseConditionState(aValue: String): TGadgetAnimationTriggerState;
-  begin
-    S := Uppercase(aSegment.LineTrimString[aValue]);
-    if S = 'TRUE' then
-      Result := gatsTrue
-    else if S = 'FALSE' then
-      Result := gatsFalse
-    else
-      Result := gatsDontCare;
-  end;
 begin
   S := Uppercase(aSegment.LineTrimString['CONDITION']);
 
@@ -773,9 +762,9 @@ begin
       fState := gasPause
     else if S = 'STOP' then
       fState := gasStop
-    else if S = 'LOOP_TO_ZERO' then
+    else if (S = 'LOOP_TO_ZERO') or (S = 'LOOPTOZERO') then
       fState := gasLoopToZero
-    else if S = 'MATCH_PRIMARY_FRAME' then
+    else if (S = 'MATCH_PRIMARY_FRAME') or (S = 'MATCHPHYSICS') then
       fState := gasMatchPrimary   
     else
       fState := gasPlay;

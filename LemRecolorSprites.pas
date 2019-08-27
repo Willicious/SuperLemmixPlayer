@@ -144,14 +144,26 @@ begin
     begin
       Parser.LoadFromFile(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi');
 
-      Mode := rcl_Athlete;
-      Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
+      if (Parser.MainSection.Section['state_recoloring'] <> nil) then
+      begin
+        Mode := rcl_Athlete;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
 
-      Mode := rcl_Zombie;
-      Parser.MainSection.Section['recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
+        Mode := rcl_Zombie;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
 
-      Mode := rcl_Selected;
-      Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+        Mode := rcl_Selected;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+      end else begin
+        Mode := rcl_Athlete;
+        Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
+
+        Mode := rcl_Zombie;
+        Parser.MainSection.Section['recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
+
+        Mode := rcl_Selected;
+        Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+      end;
     end;
   finally
     Parser.Free;

@@ -285,7 +285,10 @@ begin
       LoadSkillsetSection(Main.Section['skillset']);
 
       Main.DoForEachSection('terraingroup', HandleTerrainGroupEntry);
-      Main.DoForEachSection('object', HandleObjectEntry);
+      if (Main.Section['gadget'] <> nil) then
+        Main.DoForEachSection('gadget', HandleObjectEntry)
+      else
+        Main.DoForEachSection('object', HandleObjectEntry);
       Main.DoForEachSection('terrain', HandleTerrainEntry);
       Main.DoForEachSection('lemming', HandleLemmingEntry);
       Main.DoForEachSection('talisman', HandleTalismanEntry);
@@ -329,6 +332,7 @@ begin
 
     LemmingsCount := aSection.LineNumeric['lemmings'];
     RescueCount := aSection.LineNumeric['requirement'];
+    RescueCount := aSection.LineNumericDefault['save_requirement', RescueCount];
     HandleTimeLimit(aSection.LineTrimString['time_limit']);
     SpawnInterval := 53 - (aSection.LineNumeric['release_rate'] div 2);
     if aSection.Line['max_spawn_interval'] <> nil then
@@ -537,7 +541,9 @@ begin
   L.X := aSection.LineNumeric['x'];
   L.Y := aSection.LineNumeric['y'];
 
-  if Lowercase(LeftStr(aSection.LineTrimString['direction'], 1)) = 'l' then
+  if (aSection.Line['flip_horizontal'] <> nil) then
+    L.Dx = -1
+  else if Lowercase(LeftStr(aSection.LineTrimString['direction'], 1)) = 'l' then
     L.Dx := -1
   else
     L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
