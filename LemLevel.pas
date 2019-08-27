@@ -450,7 +450,9 @@ var
   procedure GetSplitterData;
   begin
     if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then
-      Flag(odf_FlipLem); // Deprecated!!
+      Flag(odf_FlipLem)
+    else if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'r' then
+      O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
   end;
 
   procedure GetWindowData;
@@ -791,7 +793,7 @@ begin
     aSection.AddLine('ID', 'x' + IntToHex(LevelID, 16));
 
     aSection.AddLine('LEMMINGS', LemmingsCount);
-    aSection.AddLine('REQUIREMENT', RescueCount);
+    aSection.AddLine('SAVE_REQUIREMENT', RescueCount);
 
     if HasTimeLimit then
       aSection.AddLine('TIME_LIMIT', TimeLimit);
@@ -931,7 +933,7 @@ begin
   for i := 0 to fInteractiveObjects.Count-1 do
   begin
     O := fInteractiveObjects[i];
-    Sec := aSection.SectionList.Add('OBJECT');
+    Sec := aSection.SectionList.Add('GADGET');
 
     Sec.AddLine('STYLE', O.GS);
     Sec.AddLine('PIECE', O.Piece);
@@ -1007,10 +1009,8 @@ begin
     Sec.AddLine('X', L.X);
     Sec.AddLine('Y', L.Y);
 
-    if L.Dx > 0 then
-      Sec.AddLine('DIRECTION', 'right')
-    else
-      Sec.AddLine('DIRECTION', 'left');
+    if L.Dx < 0 then
+      Sec.AddLine('FLIP_HORIZONTAL');
 
     if L.IsShimmier then Sec.AddLine('SHIMMIER');
     if L.IsClimber then Sec.AddLine('CLIMBER');

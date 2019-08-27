@@ -139,7 +139,7 @@ begin
     tcGold: aSec.AddLine('color', 'gold');
   end;
 
-  AddLine('save', fRescueCount);
+  AddLine('save_requirement', fRescueCount);
   AddLine('time_limit', fTimeLimit);
   AddLine('skill_limit', fTotalSkillLimit);
 
