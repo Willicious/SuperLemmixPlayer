@@ -121,7 +121,6 @@ type
       fLevelRank: String;
       fLevelPosition: Integer;
       fLevelID: Int64;
-      function GetIsThisUsersReplay: Boolean;
       function GetLastActionFrame: Integer;
       function GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; Sec: TParserSection);
@@ -151,7 +150,6 @@ type
       property SpawnIntervalChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
       property IsModified: Boolean read fIsModified;
-      property IsThisUsersReplay: Boolean read GetIsThisUsersReplay;
   end;
 
   function GetSkillReplayName(aButton: TSkillPanelButton): String; overload;
@@ -164,9 +162,6 @@ var
   LastReplayDir: String;
 
 implementation
-
-uses
-  GameControl; // in TReplay.GetSaveFileName
 
 // Standalone functions
 
@@ -490,9 +485,6 @@ begin
   try
     Sec := Parser.MainSection;
 
-    if fIsModified then
-      fPlayerName := GameParams.UserName; // If modified, treat it as this user's.
-
     if (fPlayerName <> '') and (Uppercase(Trim(fPlayerName)) <> 'ANONYMOUS') then
       Sec.AddLine('USER', fPlayerName);
 
@@ -663,19 +655,6 @@ begin
   finally
     MS.Free;
   end;
-end;
-
-function TReplay.GetIsThisUsersReplay: Boolean;
-begin
-  if ((fPlayerName = GameParams.UserName) and (Uppercase(Trim(GameParams.UserName)) <> 'Anonymous') and (fPlayerName <> ''))
-  or ((Trim(fPlayerName) = '') and GameParams.MatchBlankReplayUsername) then
-    Result := true
-  else if fIsModified then
-  begin
-    Result := true;
-    fPlayerName := GameParams.UserName;
-  end else
-    Result := false;
 end;
 
 function TReplay.GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
