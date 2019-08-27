@@ -6,6 +6,7 @@ uses
   Dialogs,
   Classes, SysUtils,
   LemNeoParser,
+  LemNeoTheme,
   LemDosStructures, LemLemming, LemTypes, LemStrings,
   GR32, GR32_Blend;
 
@@ -45,6 +46,7 @@ type
       constructor Create;
 
       procedure LoadSwaps(aName: String);
+      procedure ApplyPaletteSwapping(aColorDict: TColorDict; aTheme: TNeoTheme);
       procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
       procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
 
@@ -167,6 +169,23 @@ begin
     end;
   finally
     Parser.Free;
+  end;
+end;
+
+procedure TRecolorImage.ApplyPaletteSwapping(aColorDict: TColorDict;
+  aTheme: TNeoTheme);
+var
+  i: Integer;
+begin
+  for i := 0 to Length(fSwaps)-1 do
+  begin
+    if aColorDict.ContainsKey(fSwaps[i].SrcColor) then
+      if aTheme.DoesColorExist(aColorDict[fSwaps[i].SrcColor]) then
+        fSwaps[i].SrcColor := aTheme.Colors[aColorDict[fSwaps[i].SrcColor]] and $FFFFFF;
+
+    if aColorDict.ContainsKey(fSwaps[i].DstColor) then
+      if aTheme.DoesColorExist(aColorDict[fSwaps[i].DstColor]) then
+        fSwaps[i].DstColor := aTheme.Colors[aColorDict[fSwaps[i].DstColor]] and $FFFFFF;
   end;
 end;
 

@@ -49,8 +49,6 @@ type
     fDisableBackground  : Boolean;
     fTransparentBackground: Boolean;
 
-    fRecolorer          : TRecolorImage;
-
     fPhysicsMap         : TBitmap32;
     fLayers             : TRenderBitmaps;
 
@@ -111,6 +109,9 @@ type
     function IsUseful(Gadget: TGadget): Boolean;
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean);
+    function GetRecolorer: TRecolorImage;
+
+    property Recolorer: TRecolorImage read GetRecolorer;
   protected
   public
     constructor Create;
@@ -312,9 +313,9 @@ begin
   if aLemming.LemRemoved then Exit;
   if aLemming.LemTeleporting then Exit;
 
-  fRecolorer.Lemming := aLemming;
-  fRecolorer.DrawAsSelected := Selected;
-  fRecolorer.ClearPhysics := fUsefulOnly;
+  Recolorer.Lemming := aLemming;
+  Recolorer.DrawAsSelected := Selected;
+  Recolorer.ClearPhysics := fUsefulOnly;
 
   // Get the animation and meta-animation
   if aLemming.LemDX > 0 then
@@ -336,7 +337,7 @@ begin
   SrcRect := GetFrameBounds;
   DstRect := GetLocationBounds;
   SrcAnim.DrawMode := dmCustom;
-  SrcAnim.OnPixelCombine := fRecolorer.CombineLemmingPixels;
+  SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 
   // Helper for selected lemming
@@ -424,6 +425,11 @@ end;
 function TRenderer.GetParticleLayer: TBitmap32;
 begin
   Result := fLayers[rlParticles];
+end;
+
+function TRenderer.GetRecolorer: TRecolorImage;
+begin
+  Result := fAni.Recolorer;
 end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aClearPhysics: Boolean = false);
@@ -1976,7 +1982,6 @@ begin
   fPhysicsMap := TBitmap32.Create;
   fBgColor := $00000000;
   fAni := TBaseAnimationSet.Create;
-  fRecolorer := TRecolorImage.Create;
   fPreviewGadgets := TGadgetList.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
   begin
@@ -2006,7 +2011,6 @@ begin
   fTheme.Free;
   fLayers.Free;
   fPhysicsMap.Free;
-  fRecolorer.Free;
   fAni.Free;
   fPreviewGadgets.Free;
   for iIcon := Low(THelperIcon) to High(THelperIcon) do
@@ -2347,19 +2351,17 @@ begin
     PieceManager.SetTheme(fTheme);
 
     fAni.ClearData;
-    fAni.LemmingPrefix := fTheme.Lemmings;
-    fAni.MaskingColor := fTheme.Colors[MASK_COLOR];
+    fAni.Theme := fTheme;
 
     try
       fAni.ReadData;
-      fRecolorer.LoadSwaps(fTheme.Lemmings);
     except
       on E: Exception do
       begin
         fAni.ClearData;
-        fAni.LemmingPrefix := 'default';
+        fTheme.Lemmings := 'default';
+
         fAni.ReadData;
-        fRecolorer.LoadSwaps('default');
 
         if fTheme.Lemmings <> LastErrorLemmingSprites then
         begin

@@ -512,11 +512,17 @@ var
     x, y: Integer;
     oX, oY: Integer;
     ThisAlpha, MaxAlpha: Byte;
+    OutlineColor: TColor32;
   begin
     TempBmp.Assign(dst);
     dst.Clear(0);
     TempBmp.WrapMode := wmClamp;
     TempBmp.OuterColor := $00000000;
+
+    if GameParams.Renderer.Theme.DoesColorExist('PANEL_OUTLINE') then
+      OutlineColor := GameParams.Renderer.Theme.Colors['PANEL_OUTLINE'] and $FFFFFF
+    else
+      OutlineColor := $000000;
 
     for y := 0 to TempBmp.Height-1 do
       for x := 0 to TempBmp.Width-1 do
@@ -531,7 +537,7 @@ var
             if ThisAlpha > MaxAlpha then
               MaxAlpha := ThisAlpha;
           end;
-        dst[x, y] := MaxAlpha shl 24;
+        dst[x, y] := (MaxAlpha shl 24) or OutlineColor;
       end;
 
     TempBmp.DrawTo(dst);
