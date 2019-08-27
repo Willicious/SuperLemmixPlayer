@@ -8,8 +8,8 @@ interface
 
 uses
   Dialogs,
-  PngInterface, LemNeoTheme,
-  LemMetaTerrain, LemTerrainGroup, LemGadgetsMeta, LemTypes, GR32, LemStrings,
+  PngInterface, LemNeoTheme, LemAnimationSet,
+  LemMetaTerrain, LemTerrainGroup, LemGadgetsMeta, LemGadgetsConstants, LemTypes, GR32, LemStrings,
   StrUtils, Classes, SysUtils;
 
 const
@@ -50,6 +50,7 @@ type
       procedure RemoveCompositePieces;
 
       procedure SetTheme(aTheme: TNeoTheme);
+      procedure RegeneratePickups(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
       procedure MakePiecesFromGroups(aGroups: TTerrainGroups);
       procedure MakePieceFromGroup(aGroup: TTerrainGroup);
 
@@ -234,6 +235,16 @@ begin
   for i := 0 to fObjects.Count-1 do
     if fObjects[i].Animations[false, false, false].AnyMasked then
       fObjects[i].Remask(aTheme);
+end;
+
+procedure TNeoPieceManager.RegeneratePickups(aTheme: TNeoTheme;
+  aAni: TBaseAnimationSet);
+var
+  i: Integer;
+begin
+  for i := 0 to fObjects.Count-1 do
+    if fObjects[i].TriggerEffect = DOM_PICKUP then
+      fObjects[i].RegeneratePickup(aTheme, aAni);
 end;
 
 //  Functions for composite pieces

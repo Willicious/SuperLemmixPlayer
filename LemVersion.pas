@@ -10,7 +10,7 @@ uses
 const
   FORMAT_VERSION = 12;
   CORE_VERSION = 6;
-  FEATURES_VERSION = 1;
+  FEATURES_VERSION = 3;
   HOTFIX_VERSION = 0;
 
   function COMMIT_ID: String;

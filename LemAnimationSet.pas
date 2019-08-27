@@ -9,6 +9,8 @@ uses
   PngInterface,
   LemCore,
   LemTypes,
+  LemRecolorSprites,
+  LemNeoTheme,
   LemMetaAnimation,
   LemNeoParser,
   LemStrings;
@@ -117,7 +119,6 @@ const
     (SHIMMYING, SHIMMYING_RTL)                // baShimmying
   );
 
-
 type
   {-------------------------------------------------------------------------------
     Basic animationset for dos.
@@ -127,13 +128,16 @@ type
     fMetaLemmingAnimations : TMetaLemmingAnimations; // meta data lemmings
     fLemmingAnimations     : TBitmaps; // the list of lemmings bitmaps
 
-    fLemmingPrefix          : string;
-    fMaskingColor           : TColor32;
     fCountDownDigitsBitmap  : TBitmap32;
     fHighlightBitmap        : TBitmap32;
+    fTheme                  : TNeoTheme;
 
-    procedure ReadMetaData;
-    procedure LoadPositionData;
+    fRecolorer              : TRecolorImage;
+
+    procedure ReadMetaData(aColorDict: TColorDict = nil);
+    procedure LoadMetaData(aColorDict: TColorDict);
+
+    procedure HandleRecoloring(aColorDict: TColorDict);
   public
     constructor Create;
     destructor Destroy; override;
@@ -141,20 +145,20 @@ type
     procedure ReadData;
     procedure ClearData;
 
-    property MaskingColor          : TColor32 write fMaskingColor;
-    property LemmingPrefix         : string write fLemmingPrefix;
+    property Theme                 : TNeoTheme read fTheme write fTheme;
 
     property LemmingAnimations     : TBitmaps read fLemmingAnimations;
     property MetaLemmingAnimations : TMetaLemmingAnimations read fMetaLemmingAnimations;
     property CountDownDigitsBitmap : TBitmap32 read fCountDownDigitsBitmap;
     property HighlightBitmap       : TBitmap32 read fHighlightBitmap;
+    property Recolorer             : TRecolorImage read fRecolorer;
   end;
 
 implementation
 
 { TBaseAnimationSet }
 
-procedure TBaseAnimationSet.LoadPositionData;
+procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict);
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
@@ -170,6 +174,7 @@ var
   Parser: TParser;
   AnimSec: TParserSection;
   ThisAnimSec: TParserSection;
+  ColorSec: TParserSection;
   DirSec: TParserSection;
   i: Integer;
   dx: Integer;
@@ -178,39 +183,49 @@ var
 begin
   Parser := TParser.Create;
   try
-    Parser.LoadFromFile('scheme.nxmi');
-    AnimSec := Parser.MainSection.Section['animations'];
-  except
-    Parser.Free;
-    raise Exception.Create('TBaseAnimationSet: Error while opening scheme.nxmi.');
-  end;
-
-  for i := 0 to NUM_LEM_SPRITE_TYPE - 1 do
-  begin
     try
-      ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
-      for dx := 0 to 1 do
-      begin
-        DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
-        Anim := fMetaLemmingAnimations[i * 2 + dx];
-
-        Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
-        Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe'];
-        Anim.FootX := DirSec.LineNumeric['foot_x'];
-        Anim.FootY := DirSec.LineNumeric['foot_y'];
-        Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
-      end;
+      Parser.LoadFromFile('scheme.nxmi');
+      AnimSec := Parser.MainSection.Section['animations'];
     except
-      Parser.Free;
-      raise EParserError.Create('TBaseAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.')
+      raise Exception.Create('TBaseAnimationSet: Error while opening scheme.nxmi.');
     end;
-  end;
 
-  Parser.Free;
+    for i := 0 to NUM_LEM_SPRITE_TYPE - 1 do
+    begin
+      try
+        ThisAnimSec := AnimSec.Section[ANIM_NAMES[i]];
+        for dx := 0 to 1 do
+        begin
+          DirSec := ThisAnimSec.Section[DIR_NAMES[dx]];
+          Anim := fMetaLemmingAnimations[i * 2 + dx];
+
+          Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
+          Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe'];
+          Anim.FootX := DirSec.LineNumeric['foot_x'];
+          Anim.FootY := DirSec.LineNumeric['foot_y'];
+          Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
+        end;
+      except
+        Parser.Free;
+        raise EParserError.Create('TBaseAnimationSet: Error loading lemming animation metadata for ' + ANIM_NAMES[i] + '.')
+      end;
+    end;
+
+    if aColorDict <> nil then
+    begin
+      ColorSec := Parser.MainSection.Section['color_swaps'];
+      aColorDict.Clear;
+      if ColorSec <> nil then
+        for i := 0 to ColorSec.LineList.Count-1 do
+          aColorDict.Add(ColorSec.LineList[i].ValueNumeric, ColorSec.LineList[i].Keyword);
+    end;
+  finally
+    Parser.Free;
+  end;
 end;
 
 
-procedure TBaseAnimationSet.ReadMetaData();
+procedure TBaseAnimationSet.ReadMetaData(aColorDict: TColorDict = nil);
 {-------------------------------------------------------------------------------
   o make lemming animations
   o make mask animations metadata
@@ -245,7 +260,7 @@ begin
     FootY := 10;
   end;
 
-  LoadPositionData;
+  LoadMetaData(aColorDict);
 end;
 
 procedure TBaseAnimationSet.ReadData;
@@ -257,30 +272,35 @@ var
   MLA: TMetaLemmingAnimation;
   X: Integer;
 
+  SrcFolder: String;
+  ColorDict: TColorDict;
 begin
   TempBitmap := TBitmap32.Create;
-
-  // MEGA KLUDGY compatibility hack. This must be tidied later!
-  if fLemmingPrefix = 'lemming' then fLemmingPrefix := 'default'
-  else if fLemmingPrefix = '' then fLemmingPrefix := 'default'
-  else if fLemmingPrefix = 'xlemming' then fLemmingPrefix := 'xmas';
-
-  if not DirectoryExists(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings) then
-    fLemmingPrefix := 'default';
-  SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
-
-  if fMetaLemmingAnimations.Count = 0 then
-    ReadMetaData;
-
+  ColorDict := TColorDict.Create;
   try
+    if fTheme = nil then
+      SrcFolder := 'default'
+    else
+      SrcFolder := fTheme.Lemmings;
+
+    if SrcFolder = '' then SrcFolder := 'default';
+    if not DirectoryExists(AppPath + SFStyles + SrcFolder + SFPiecesLemmings) then
+      SrcFolder := 'default';
+    SetCurrentDir(AppPath + SFStyles + SrcFolder + SFPiecesLemmings);
+
+    if fMetaLemmingAnimations.Count = 0 then // not entirely sure why it would ever NOT be 0
+      ReadMetaData(ColorDict);
+
     for iAnimation := 0 to NUM_LEM_SPRITES - 2 do // -2 to leave out the stoner placeholder
     begin
       MLA := fMetaLemmingAnimations[iAnimation];
       Fn := RightStr(MLA.Description, Length(MLA.Description) - 1);
 
       TPngInterface.LoadPngFile(Fn + '.png', TempBitmap);
-      if FileExists(Fn + '_mask.png') then
-        TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fMaskingColor);
+
+      // Backwards compatibility
+      if FileExists(Fn + '_mask.png') and (fTheme <> nil) then
+        TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
 
       MLA.Width := TempBitmap.Width div 2;
       MLA.Height := TempBitmap.height div MLA.FrameCount;
@@ -293,8 +313,14 @@ begin
       Bmp := TBitmap32.Create;
       Bmp.SetSize(MLA.Width, MLA.Height * MLA.FrameCount);
       TempBitmap.DrawTo(Bmp, 0, 0, Rect(X, 0, X + MLA.Width, MLA.Height * MLA.FrameCount));
+
       fLemmingAnimations.Add(Bmp);
     end;
+
+    fRecolorer.LoadSwaps(SrcFolder);
+
+    HandleRecoloring(ColorDict);
+
     fLemmingAnimations.Add(TBitmap32.Create); // for the Stoner
 
     // // // // // // // // // // // //
@@ -319,6 +345,7 @@ begin
     fLemmingAnimations[STONED].CombineMode := cmMerge;
   finally
     TempBitmap.Free;
+    ColorDict.Free;
   end;
 end;
 
@@ -329,7 +356,7 @@ begin
   if Assigned(fMetaLemmingAnimations) then fMetaLemmingAnimations.Clear;
   if Assigned(fCountDownDigitsBitmap) then fCountDownDigitsBitmap.Clear;
   if Assigned(fHighlightBitmap) then fHighlightBitmap.Clear;
-  fLemmingPrefix := 'default';
+  fTheme := nil;
 end;
 
 constructor TBaseAnimationSet.Create;
@@ -337,6 +364,7 @@ begin
   inherited Create;
   fMetaLemmingAnimations := TMetaLemmingAnimations.Create(TMetaLemmingAnimation);
   fLemmingAnimations := TBitmaps.Create;
+  fRecolorer := TRecolorImage.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
@@ -345,7 +373,44 @@ begin
   fLemmingAnimations.Free;
   fCountDownDigitsBitmap.Free;
   fHighlightBitmap.Free;
+  fRecolorer.Free;
   inherited Destroy;
+end;
+
+procedure TBaseAnimationSet.HandleRecoloring(aColorDict: TColorDict);
+var
+  Template, ThisAnim: TBitmap32;
+  i, x, y: Integer;
+begin
+  if fTheme = nil then Exit;
+  if aColorDict = nil then Exit; // this one shouldn't happen but just in case
+
+  Template := TBitmap32.Create;
+  try
+    Template.DrawMode := dmTransparent;
+
+    for i := 0 to fLemmingAnimations.Count-1 do
+    begin
+      ThisAnim := fLemmingAnimations[i];
+      Template.SetSize(ThisAnim.Width, ThisAnim.Height);
+      Template.Clear($00000000);
+
+      for y := 0 to ThisAnim.Height-1 do
+        for x := 0 to ThisAnim.Width-1 do
+        begin
+          if not aColorDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then Continue;
+          if not fTheme.DoesColorExist(aColorDict[ThisAnim[x,y] and $FFFFFF]) then Continue; // We do NOT want to fall back to default color here.
+          Template[x, y] := (fTheme.Colors[aColorDict[ThisAnim[x,y] and $FFFFFF]]) or
+                            (ThisAnim[x,y] and $FF000000);
+        end;
+
+      Template.DrawTo(ThisAnim, 0, 0);
+    end;
+  finally
+    Template.Free;
+  end;
+
+  fRecolorer.ApplyPaletteSwapping(aColorDict, fTheme);
 end;
 
 end.

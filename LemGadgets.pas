@@ -420,7 +420,7 @@ const
           DOM_TRAP, DOM_TELEPORT: Result := (CurrentFrame = 0);
           DOM_LOCKEXIT: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
           DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 1;
-          DOM_PICKUP: Result := CurrentFrame <> 0;
+          DOM_PICKUP: Result := CurrentFrame mod 2 <> 0;
           DOM_RECEIVER: Result := (CurrentFrame = 0) and (not HoldActive);
           DOM_WINDOW: Result := (CurrentFrame = 0) and (RemainingLemmingsCount <> 0);
         end;
@@ -454,7 +454,8 @@ const
         case TriggerEffectBase of
           DOM_EXIT: Result := RemainingLemmingsCount = 0;
           // DOM_TRAP: Only condition is handled by the above TriggerEffect check
-          DOM_PICKUP, DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
+          DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
+          DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
           DOM_LOCKEXIT: Result := (CurrentFrame = 1) or (RemainingLemmingsCount = 0);
           DOM_WINDOW: Result := RemainingLemmingsCount = 0; // todo: when all lemmings are released even on infinite windows
         end;
@@ -466,7 +467,8 @@ const
     Result := false;
     if TriggerEffectBase in EXHAUSTED_OBJECT_TYPES then
       case TriggerEffectBase of
-        DOM_BUTTON, DOM_PICKUP, DOM_TRAPONCE: Result := CurrentFrame = 0;
+        DOM_PICKUP: Result := CurrentFrame mod 2 = 0;
+        DOM_BUTTON, DOM_TRAPONCE: Result := CurrentFrame = 0;
         DOM_EXIT, DOM_LOCKEXIT, DOM_WINDOW: Result := RemainingLemmingsCount = 0;
       end;
   end;
@@ -747,7 +749,7 @@ begin
     MetaObj := aGadget.MetaObj;
 
     if MetaObj.TriggerEffect = DOM_PICKUP then
-      fFrame := aGadget.Obj.Skill + 1;
+      fFrame := (aGadget.Obj.Skill * 2) + 1;
 
     if MetaObj.TriggerEffect in [DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE] then
       fFrame := 1;

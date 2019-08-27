@@ -12,7 +12,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils,
   ActiveX, ShlObj, ComObj, // for the shortcut creation
-  LemNeoParser, GR32_Image;
+  LemNeoParser, GR32_Image, System.ImageList;
 
 type
   TFLevelSelect = class(TForm)
@@ -224,6 +224,7 @@ begin
     Dlg.Filter := 'Windows Shortcut (*.lnk)|*.lnk';
     Dlg.FilterIndex := 1;
     Dlg.DefaultExt := '.lnk';
+    Dlg.Options := [ofOverwritePrompt, ofEnableSizing];
     if not Dlg.Execute then Exit;
 
     CreateLink(ParamStr(0), Dlg.FileName, Description, 'shortcut "' + TargetPath + '"');
@@ -501,7 +502,7 @@ begin
   try
     OpenDlg.Title := 'Select pack or level file';
     OpenDlg.Filter := 'All supported files|*.nxlv;*.lvl;*.ini;*.lev;*.dat|NeoLemmix Levels (*.nxlv)|*.nxlv|Lemmix or Old NeoLemmix Levels (*.lvl)|*.lvl|Lemmini or SuperLemmini Levels (*.ini)|*.ini|Lemmins Levels|*.lev';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
+    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
     OpenDlg.InitialDir := AppPath;
     if not OpenDlg.Execute then Exit;
 

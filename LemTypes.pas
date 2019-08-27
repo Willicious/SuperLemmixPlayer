@@ -4,6 +4,7 @@ unit LemTypes;
 interface
 
 uses
+  Generics.Collections,
   UMisc,
   LemNeoOnline,
   Dialogs,
@@ -27,6 +28,9 @@ const
                     '.s3m',
                     '.mtm',
                     '.umx');
+
+type
+  TColorDict = TDictionary<TColor32, String>;
 
 type
   TLemDataType = (

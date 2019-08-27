@@ -49,8 +49,6 @@ type
     fDisableBackground  : Boolean;
     fTransparentBackground: Boolean;
 
-    fRecolorer          : TRecolorImage;
-
     fPhysicsMap         : TBitmap32;
     fLayers             : TRenderBitmaps;
 
@@ -112,6 +110,9 @@ type
     function IsUseful(Gadget: TGadget): Boolean;
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean);
+    function GetRecolorer: TRecolorImage;
+
+    property Recolorer: TRecolorImage read GetRecolorer;
   protected
   public
     constructor Create;
@@ -146,6 +147,7 @@ type
     procedure DrawLemmingParticles(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton);
+    procedure DrawShimmierShadow(L: TLemming);
     procedure DrawGliderShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
     procedure DrawPlatformerShadow(L: TLemming);
@@ -312,9 +314,9 @@ begin
   if aLemming.LemRemoved then Exit;
   if aLemming.LemTeleporting then Exit;
 
-  fRecolorer.Lemming := aLemming;
-  fRecolorer.DrawAsSelected := Selected;
-  fRecolorer.ClearPhysics := fUsefulOnly;
+  Recolorer.Lemming := aLemming;
+  Recolorer.DrawAsSelected := Selected;
+  Recolorer.ClearPhysics := fUsefulOnly;
 
   // Get the animation and meta-animation
   if aLemming.LemDX > 0 then
@@ -336,7 +338,7 @@ begin
   SrcRect := GetFrameBounds;
   DstRect := GetLocationBounds;
   SrcAnim.DrawMode := dmCustom;
-  SrcAnim.OnPixelCombine := fRecolorer.CombineLemmingPixels;
+  SrcAnim.OnPixelCombine := Recolorer.CombineLemmingPixels;
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 
   // Helper for selected lemming
@@ -426,6 +428,11 @@ begin
   Result := fLayers[rlParticles];
 end;
 
+function TRenderer.GetRecolorer: TRecolorImage;
+begin
+  Result := fAni.Recolorer;
+end;
+
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aClearPhysics: Boolean = false);
 begin
   DrawLevel(aDst, fPhysicsMap.BoundsRect, aClearPhysics);
@@ -480,6 +487,12 @@ begin
   CopyL.Assign(L);
 
   case SkillButton of
+  spbShimmier:
+    begin
+      fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
+      DrawShimmierShadow(CopyL);
+    end;
+
   spbBuilder:
     begin
       fRenderInterface.SimulateTransitionLem(CopyL, baBuilding);
@@ -541,6 +554,38 @@ begin
   end;
 
   CopyL.Free;
+end;
+
+procedure TRenderer.DrawShimmierShadow(L: TLemming);
+var
+  FrameCount: Integer;
+  LemPosArray: TArrayArrayInt;
+  i: Integer;
+const
+  MAX_FRAME_COUNt = 2000;
+begin
+  fLayers.fIsEmpty[rlLowShadows] := false;
+  FrameCount := 0;
+  LemPosArray := nil;
+
+  SetLowShadowPixel(L.LemX, L.LemY - 1);
+
+  // We simulate as long as the lemming is either reaching or shimmying
+  while (FrameCount < MAX_FRAME_COUNT)
+    and Assigned(L)
+    and (L.LemAction in [baReaching, baShimmying]) do
+  begin
+    Inc(FrameCount);
+
+    if Assigned(LemPosArray) then
+      for i := 0 to Length(LemPosArray[0]) do
+      begin
+        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
+      end;
+
+    LemPosArray := fRenderInterface.SimulateLem(L);
+  end;
 end;
 
 procedure TRenderer.DrawGliderShadow(L: TLemming);
@@ -1439,6 +1484,11 @@ begin
         fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12, DrawY);
       end;
 
+    DOM_NOSPLAT:
+      begin
+        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16, DrawY);
+      end;
+
     DOM_SPLAT:
       begin
         fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16, DrawY);
@@ -1961,7 +2011,6 @@ begin
   fPhysicsMap := TBitmap32.Create;
   fBgColor := $00000000;
   fAni := TBaseAnimationSet.Create;
-  fRecolorer := TRecolorImage.Create;
   fPreviewGadgets := TGadgetList.Create;
   for i := Low(THelperIcon) to High(THelperIcon) do
   begin
@@ -1991,7 +2040,6 @@ begin
   fTheme.Free;
   fLayers.Free;
   fPhysicsMap.Free;
-  fRecolorer.Free;
   fAni.Free;
   fPreviewGadgets.Free;
   for iIcon := Low(THelperIcon) to High(THelperIcon) do
@@ -2332,19 +2380,17 @@ begin
     PieceManager.SetTheme(fTheme);
 
     fAni.ClearData;
-    fAni.LemmingPrefix := fTheme.Lemmings;
-    fAni.MaskingColor := fTheme.Colors[MASK_COLOR];
+    fAni.Theme := fTheme;
 
     try
       fAni.ReadData;
-      fRecolorer.LoadSwaps(fTheme.Lemmings);
     except
       on E: Exception do
       begin
         fAni.ClearData;
-        fAni.LemmingPrefix := 'default';
+        fTheme.Lemmings := 'default';
+
         fAni.ReadData;
-        fRecolorer.LoadSwaps('default');
 
         if fTheme.Lemmings <> LastErrorLemmingSprites then
         begin
@@ -2354,7 +2400,7 @@ begin
       end;
     end;
 
-
+    PieceManager.RegeneratePickups(fTheme, fAni);
 
     // Prepare the bitmaps
     fLayers.Prepare(RenderInfoRec.Level.Info.Width, RenderInfoRec.Level.Info.Height);

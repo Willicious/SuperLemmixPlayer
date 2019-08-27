@@ -189,6 +189,7 @@ type
       function FindFile(aName: String): String;
 
       procedure DumpImages(aPath: String; aPrefix: String = '');
+      procedure CleanseLevels(aPath: String);
 
       {$ifdef exp}
       procedure DumpNeoLemmixWebsiteMetaInfo(aPath: String);
@@ -548,6 +549,26 @@ begin
   if fHasOwnScrollerList and (fScrollerList <> nil) then
     fScrollerList.Free;
   inherited;
+end;
+
+procedure TNeoLevelGroup.CleanseLevels(aPath: String);
+var
+  i: Integer;
+  L: TNeoLevelEntry;
+begin
+  aPath := IncludeTrailingPathDelimiter(aPath);
+  ForceDirectories(aPath);
+
+  for i := 0 to Children.Count-1 do
+    Children[i].CleanseLevels(aPath + Children[i].Folder);
+
+  for i := 0 to Levels.Count-1 do
+  begin
+    L := Levels[i];
+    GameParams.SetLevel(L);
+    GameParams.LoadCurrentLevel(true);
+    GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
+  end;
 end;
 
 procedure TNeoLevelGroup.DumpImages(aPath: String; aPrefix: String = '');

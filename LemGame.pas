@@ -34,8 +34,8 @@ const
     (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
-        DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT,
-        DOM_ONEWAYDOWN, DOM_UPDRAFT, DOM_HINT, DOM_SPLAT, DOM_BACKGROUND];
+        DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
+        DOM_UPDRAFT, DOM_HINT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND];
 
 const
   // never change, do NOT trust the bits are the same as the enumerated type.
@@ -137,6 +137,7 @@ type
     PickupMap                  : TArrayArrayBoolean;
     ButtonMap                  : TArrayArrayBoolean;
     FlipperMap                 : TArrayArrayBoolean;
+    NoSplatMap                 : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
 
     fReplayManager             : TReplay;
@@ -913,6 +914,7 @@ begin
   SetLength(ButtonMap, 0, 0);
   SetLength(PickupMap, 0, 0);
   SetLength(FlipperMap, 0, 0);
+  SetLength(NoSplatMap, 0, 0);
   SetLength(SplatMap, 0, 0);
   SetLength(ExitMap, 0, 0);
   SetLength(LockedExitMap, 0, 0);
@@ -1491,6 +1493,8 @@ begin
   SetLength(PickupMap, Level.Info.Width, Level.Info.Height);
   SetLength(FlipperMap, 0, 0);
   SetLength(FlipperMap, Level.Info.Width, Level.Info.Height);
+  SetLength(NoSplatMap, 0, 0);
+  SetLength(NoSplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(SplatMap, 0, 0);
   SetLength(SplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(ExitMap, 0, 0);
@@ -1659,6 +1663,7 @@ begin
       DOM_PICKUP:     WriteTriggerMap(PickupMap, Gadgets[i].TriggerRect);
       DOM_BUTTON:     WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
       DOM_FLIPPER:    WriteTriggerMap(FlipperMap, Gadgets[i].TriggerRect);
+      DOM_NOSPLAT:    WriteTriggerMap(NoSplatMap, Gadgets[i].TriggerRect);
       DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
     end;
   end;
@@ -2299,6 +2304,7 @@ begin
     trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
     trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
     trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap);
+    trNoSplat:    Result :=     ReadTriggerMap(X, Y, NoSplatMap);
     trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
   end;
@@ -2337,9 +2343,12 @@ begin
     // Additional checks for triggered traps, triggered animations, teleporters
     if Gadget.Triggered then
       GadgetFound := False;
-    // ignore already used buttons, one-shot traps and pick-up skills
-    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
+    // ignore already used buttons and one-shot traps
+    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE])
        and (Gadget.CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
+      GadgetFound := False;
+    // ignore already used pickup skills
+    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.CurrentFrame mod 2 = 0) then
       GadgetFound := False;
     // Additional check, that the corresponding receiver is inactive
     if     (Gadget.TriggerEffect = DOM_TELEPORT)
@@ -2452,7 +2461,7 @@ begin
   if not L.LemIsZombie then
   begin
     Gadget := Gadgets[GadgetID];
-    Gadget.CurrentFrame := 0;
+    Gadget.CurrentFrame := Gadget.CurrentFrame and not $01;
     CueSoundEffect(SFX_PICKUP, L.Position);
     UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], Gadget.SkillCount);
   end;
@@ -2776,8 +2785,8 @@ var
   ShadowSkillButton: TSkillPanelButton;
   ShadowLem: TLemming;
 const
-  ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker, spbDigger, spbMiner,
-                    spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
+  ShadowSkillSet = [spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
+                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
 begin
   if fHyperSpeed then Exit;
 
@@ -4126,6 +4135,7 @@ var
   function IsFallFatal: Boolean;
   begin
     Result := (not (L.LemIsFloater or L.LemIsGlider))
+          and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
 begin

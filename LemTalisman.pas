@@ -98,6 +98,7 @@ begin
     fColor := tcBronze;
 
   fRescueCount := aSec.LineNumericDefault['save', -1];
+  fRescueCount := aSec.LineNumericDefault['save_requirement', fRescueCount];
   fTimeLimit := aSec.LineNumericDefault['time_limit', -1];
   fTotalSkillLimit := aSec.LineNumericDefault['skill_limit', -1];
 
@@ -138,7 +139,7 @@ begin
     tcGold: aSec.AddLine('color', 'gold');
   end;
 
-  AddLine('save', fRescueCount);
+  AddLine('save_requirement', fRescueCount);
   AddLine('time_limit', fTimeLimit);
   AddLine('skill_limit', fTotalSkillLimit);
 

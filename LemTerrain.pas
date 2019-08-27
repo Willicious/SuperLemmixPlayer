@@ -38,6 +38,7 @@ type
     procedure Assign(Source: TPiece); override;
 
     procedure LoadFromSection(aSection: TParserSection);
+    procedure SaveToSection(aSection: TParserSection);
   published
     property DrawingFlags: Byte read fDrawingFlags write fDrawingFlags;
   end;
@@ -117,7 +118,10 @@ procedure TTerrain.LoadFromSection(aSection: TParserSection);
     fDrawingFlags := fDrawingFlags or aValue;
   end;
 begin
-  GS := aSection.LineTrimString['collection'];
+  if aSection.Line['style'] = nil then
+    GS := aSection.LineTrimString['collection']
+  else
+    GS := aSection.LineTrimString['style'];
   Piece := aSection.LineTrimString['piece'];
   Left := aSection.LineNumeric['x'];
   Top := aSection.LineNumeric['y'];
@@ -129,6 +133,25 @@ begin
   if (aSection.Line['flip_vertical'] <> nil) then Flag(tdf_Invert);
   if (aSection.Line['no_overwrite'] <> nil) then Flag(tdf_NoOverwrite);
   if (aSection.Line['erase'] <> nil) then Flag(tdf_Erase);
+end;
+
+procedure TTerrain.SaveToSection(aSection: TParserSection);
+  function Flag(aValue: Integer): Boolean;
+  begin
+    Result := DrawingFlags and aValue = aValue;
+  end;
+begin
+  aSection.AddLine('STYLE', GS);
+  aSection.AddLine('PIECE', Piece);
+  aSection.AddLine('X', Left);
+  aSection.AddLine('Y', Top);
+
+  if Flag(tdf_Rotate) then aSection.AddLine('ROTATE');
+  if Flag(tdf_Flip) then aSection.AddLine('FLIP_HORIZONTAL');
+  if Flag(tdf_Invert) then aSection.AddLine('FLIP_VERTICAL');
+  if Flag(tdf_NoOverwrite) then aSection.AddLine('NO_OVERWRITE');
+  if Flag(tdf_Erase) then aSection.AddLine('ERASE');
+  if not Flag(tdf_NoOneWay) then aSection.AddLine('ONE_WAY');
 end;
 
 { TTerrains }

@@ -9,6 +9,7 @@ uses
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,
   Contnrs, LemNeoParser,
+  LemAnimationSet,
   LemGadgetAnimation, LemGadgetsConstants;
 
 const
@@ -70,6 +71,7 @@ type
     function GetIdentifier: String;
     function GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
     function GetVariableInfo(Flip, Invert, Rotate: Boolean): TGadgetVariableProperties;
+    procedure EnsureAllVariationsMade;
     procedure EnsureVariationMade(Flip, Invert, Rotate: Boolean);
     procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
     function GetVariableProperty(Flip, Invert, Rotate: Boolean; aProp: TGadgetMetaProperty): Integer;
@@ -91,6 +93,7 @@ type
     procedure Assign(Source: TGadgetMetaInfo);
 
     procedure Remask(aTheme: TNeoTheme);
+    procedure RegeneratePickup(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
 
     procedure MarkAllUnmade;
     procedure MarkMetaDataUnmade;
@@ -244,35 +247,28 @@ begin
     Sec := Parser.MainSection;
 
     // Trigger effects
-    if Sec.Line['exit'] <> nil then fTriggerEffect := DOM_EXIT;
-    if Sec.Line['force_left'] <> nil then fTriggerEffect := DOM_FORCELEFT;
-    if Sec.Line['force_right'] <> nil then fTriggerEffect := DOM_FORCERIGHT;
-    if Sec.Line['trap'] <> nil then fTriggerEffect := DOM_TRAP;
-    if Sec.Line['water'] <> nil then fTriggerEffect := DOM_WATER;
-    if Sec.Line['fire'] <> nil then fTriggerEffect := DOM_FIRE;
-    if Sec.Line['one_way_left'] <> nil then fTriggerEffect := DOM_ONEWAYLEFT;
-    if Sec.Line['one_way_right'] <> nil then fTriggerEffect := DOM_ONEWAYRIGHT;
-    // 9, 10 are unused
-    if Sec.Line['teleporter'] <> nil then fTriggerEffect := DOM_TELEPORT;
-    if Sec.Line['receiver'] <> nil then fTriggerEffect := DOM_RECEIVER;
-    // 13 is unused
-    if Sec.Line['pickup_skill'] <> nil then fTriggerEffect := DOM_PICKUP;
-    if Sec.Line['locked_exit'] <> nil then fTriggerEffect := DOM_LOCKEXIT;
-    // 16 is unused
-    if Sec.Line['button'] <> nil then fTriggerEffect := DOM_BUTTON;
-    // 18 is unused
-    if Sec.Line['one_way_down'] <> nil then fTriggerEffect := DOM_ONEWAYDOWN;
-    if Sec.Line['updraft'] <> nil then fTriggerEffect := DOM_UPDRAFT;
-    if Sec.Line['splitter'] <> nil then fTriggerEffect := DOM_FLIPPER;
-    // 22 is unused
-    if Sec.Line['window'] <> nil then fTriggerEffect := DOM_WINDOW;
-    // 24, 25, 26 are unused
-    if Sec.Line['splatpad'] <> nil then fTriggerEffect := DOM_SPLAT;
-    // 28, 29 are unused
-    if Sec.Line['moving_background'] <> nil then fTriggerEffect := DOM_BACKGROUND;
-    if Sec.Line['single_use_trap'] <> nil then fTriggerEffect := DOM_TRAPONCE;
-    // 32 is unused
-    if Sec.Line['one_way_up'] <> nil then fTriggerEffect := DOM_ONEWAYUP;
+    if (Sec.Line['exit'] <> nil) or (Sec.LineTrimString['effect'] = 'exit') then fTriggerEffect := DOM_EXIT;
+    if (Sec.Line['force_left'] <> nil) or (Sec.LineTrimString['effect'] = 'forceleft') then fTriggerEffect := DOM_FORCELEFT;
+    if (Sec.Line['force_right'] <> nil) or (Sec.LineTrimString['effect'] = 'forceright') then fTriggerEffect := DOM_FORCERIGHT;
+    if (Sec.Line['trap'] <> nil) or (Sec.LineTrimString['effect'] = 'trap') then fTriggerEffect := DOM_TRAP;
+    if (Sec.Line['water'] <> nil) or (Sec.LineTrimString['effect'] = 'water') then fTriggerEffect := DOM_WATER;
+    if (Sec.Line['fire'] <> nil) or (Sec.LineTrimString['effect'] = 'fire') then fTriggerEffect := DOM_FIRE;
+    if (Sec.Line['one_way_left'] <> nil) or (Sec.LineTrimString['effect'] = 'onewayleft') then fTriggerEffect := DOM_ONEWAYLEFT;
+    if (Sec.Line['one_way_right'] <> nil) or (Sec.LineTrimString['effect'] = 'onewayright') then fTriggerEffect := DOM_ONEWAYRIGHT;
+    if (Sec.Line['teleporter'] <> nil) or (Sec.LineTrimString['effect'] = 'teleporter') then fTriggerEffect := DOM_TELEPORT;
+    if (Sec.Line['receiver'] <> nil) or (Sec.LineTrimString['effect'] = 'receiver') then fTriggerEffect := DOM_RECEIVER;
+    if (Sec.Line['pickup_skill'] <> nil) or (Sec.LineTrimString['effect'] = 'pickupskill') then fTriggerEffect := DOM_PICKUP;
+    if (Sec.Line['locked_exit'] <> nil) or (Sec.LineTrimString['effect'] = 'lockedexit') then fTriggerEffect := DOM_LOCKEXIT;
+    if (Sec.Line['button'] <> nil) or (Sec.LineTrimString['effect'] = 'unlockbutton') then fTriggerEffect := DOM_BUTTON;
+    if (Sec.Line['one_way_down'] <> nil) or (Sec.LineTrimString['effect'] = 'onewaydown') then fTriggerEffect := DOM_ONEWAYDOWN;
+    if (Sec.Line['updraft'] <> nil) or (Sec.LineTrimString['effect'] = 'updraft') then fTriggerEffect := DOM_UPDRAFT;
+    if (Sec.Line['splitter'] <> nil) or (Sec.LineTrimString['effect'] = 'splitter') then fTriggerEffect := DOM_FLIPPER;
+    if (Sec.Line['window'] <> nil) or (Sec.LineTrimString['effect'] = 'entrance') then fTriggerEffect := DOM_WINDOW;
+    if (Sec.Line['antisplatpad'] <> nil) or (Sec.LineTrimString['effect'] = 'antisplatpad') then fTriggerEffect := DOM_NOSPLAT;
+    if (Sec.Line['splatpad'] <> nil) or (Sec.LineTrimString['effect'] = 'splatpad') then fTriggerEffect := DOM_SPLAT;
+    if (Sec.Line['moving_background'] <> nil) or (Sec.LineTrimString['effect'] = 'background') then fTriggerEffect := DOM_BACKGROUND;
+    if (Sec.Line['single_use_trap'] <> nil) or (Sec.LineTrimString['effect'] = 'traponce') then fTriggerEffect := DOM_TRAPONCE;
+    if (Sec.Line['one_way_up'] <> nil) or (Sec.LineTrimString['effect'] = 'onewayup') then fTriggerEffect := DOM_ONEWAYUP;
 
     if Sec.Section['PRIMARY_ANIMATION'] = nil then
     begin
@@ -316,14 +312,6 @@ begin
     GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];
     GadgetAccessor.TriggerHeight := Sec.LineNumeric['trigger_height'];
 
-    if fTriggerEffect = 12 then // Receiver  /// Is the width / height even used anymore?
-    begin
-      if GadgetAccessor.TriggerWidth < 1 then
-        GadgetAccessor.TriggerWidth := 1;
-      if GadgetAccessor.TriggerHeight < 1 then
-        GadgetAccessor.TriggerHeight := 1;
-    end;
-
     GadgetAccessor.DigitAlign := 0; // due to how fallback values work, we want to assign the last-resort fallback here
 
     GadgetAccessor.DigitX := Sec.LineNumeric['digit_x'];
@@ -348,7 +336,16 @@ begin
         GadgetAccessor.DigitY := -6;
     end;
 
-    GadgetAccessor.DigitAlign := Sec.LineNumericDefault['digit_align', GadgetAccessor.DigitAlign];
+    if (Sec.Line['digit_alignment'] <> nil) then
+    begin
+      if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'l' then
+        GadgetAccessor.DigitAlign := -1
+      else if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'r' then
+        GadgetAccessor.DigitAlign := 1
+      else
+        GadgetAccessor.DigitAlign := 0;
+    end else
+      GadgetAccessor.DigitAlign := Sec.LineNumericDefault['digit_align', GadgetAccessor.DigitAlign];
 
     if fTriggerEffect = DOM_PICKUP then
       fDigitMinLength := 0
@@ -413,6 +410,20 @@ begin
     fGeneratedVariableInfo[i] := false;
 end;
 
+procedure TGadgetMetaInfo.RegeneratePickup(aTheme: TNeoTheme;
+  aAni: TBaseAnimationSet);
+var
+  EraseAnim: TGadgetAnimation;
+begin
+  if fVariableInfo[0].Animations['erase'] = nil then
+    EraseAnim := nil
+  else
+    EraseAnim := fVariableInfo[0].Animations['erase'];
+
+  fVariableInfo[0].Animations.PrimaryAnimation.GeneratePickupSkills(aTheme, aAni, EraseAnim);
+  MarkAllUnmade;
+end;
+
 procedure TGadgetMetaInfo.Remask(aTheme: TNeoTheme);
 var
   i: Integer;
@@ -420,8 +431,20 @@ begin
   if not fVariableInfo[0].Animations.AnyMasked then
     Exit;
 
+  EnsureAllVariationsMade;
+
   for i := 0 to ALIGNMENT_COUNT-1 do
     fVariableInfo[i].Animations.Remask(aTheme);
+end;
+
+procedure TGadgetMetaInfo.EnsureAllVariationsMade;
+var
+  Flip, Invert, Rotate: Boolean;
+begin
+  for Flip in [true, false] do
+    for Invert in [true, false] do
+      for Rotate in [true, false] do
+        EnsureVariationMade(Flip, Invert, Rotate);
 end;
 
 procedure TGadgetMetaInfo.EnsureVariationMade(Flip, Invert, Rotate: Boolean);

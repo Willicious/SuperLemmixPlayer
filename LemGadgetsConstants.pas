@@ -30,7 +30,7 @@ const
   DOM_WINDOW           = 23;
   //DOM_ANIMATION        = 24;
   DOM_HINT             = 25;
-  //DOM_NOSPLAT          = 26;
+  DOM_NOSPLAT          = 26;
   DOM_SPLAT            = 27;
   //DOM_TWOWAYTELE       = 28;
   //DOM_SINGLETELE       = 29;

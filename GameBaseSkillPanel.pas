@@ -512,11 +512,17 @@ var
     x, y: Integer;
     oX, oY: Integer;
     ThisAlpha, MaxAlpha: Byte;
+    OutlineColor: TColor32;
   begin
     TempBmp.Assign(dst);
     dst.Clear(0);
     TempBmp.WrapMode := wmClamp;
     TempBmp.OuterColor := $00000000;
+
+    if GameParams.Renderer.Theme.DoesColorExist('PANEL_OUTLINE') then
+      OutlineColor := GameParams.Renderer.Theme.Colors['PANEL_OUTLINE'] and $FFFFFF
+    else
+      OutlineColor := $000000;
 
     for y := 0 to TempBmp.Height-1 do
       for x := 0 to TempBmp.Width-1 do
@@ -531,7 +537,7 @@ var
             if ThisAlpha > MaxAlpha then
               MaxAlpha := ThisAlpha;
           end;
-        dst[x, y] := MaxAlpha shl 24;
+        dst[x, y] := (MaxAlpha shl 24) or OutlineColor;
       end;
 
     TempBmp.DrawTo(dst);
@@ -555,6 +561,10 @@ begin
     // Set image sizes
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       fSkillIcons[Button].SetSize(15, 23);
+
+    //////////////////////////////////////////////////////////
+    ///  This code is mostly copied to GameBaseSkillPanel. ///
+    //////////////////////////////////////////////////////////
 
     // Walker, Climber, - both simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 21);
@@ -625,10 +635,9 @@ begin
     // And finally, outline everything. We generate the cloner after this, as it makes use of
     // the post-outlined Walker graphic.
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      if not (Button in [spbSwimmer, spbDisarmer, spbCloner]) then
+      if not (Button in [spbSwimmer, spbCloner]) then
         Outline(fSkillIcons[Button]);
-        // Swimmer and Cloner are already outlined during their generation, and Disarmer remains
-        // loaded from a file, and current conventions is that the file already has outlines.
+        // Swimmer and Cloner are already outlined during their generation.
 
     // Cloner is drawn as two back-to-back walkers, individually outlined.
     DrawAnimationFrame(fSkillIcons[spbCloner], WALKING_RTL, 1, 6, 21);

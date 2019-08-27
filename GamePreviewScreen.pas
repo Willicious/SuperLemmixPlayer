@@ -168,6 +168,7 @@ begin
   Dlg.Filter := 'PNG Image (*.png)|*.png';
   Dlg.FilterIndex := 1;
   Dlg.DefaultExt := '.png';
+  Dlg.Options := [ofOverwritePrompt, ofEnableSizing];
   if Dlg.Execute then
     SaveName := dlg.FileName
   else
@@ -203,27 +204,27 @@ end;
 procedure TGamePreviewScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_SaveImage then
-  begin
-    SaveLevelImage;
-    Exit;
-  end;
-  case Key of
-    VK_ESCAPE : begin
-                  if GameParams.TestModeLevel <> nil then
-                    CloseScreen(gstExit)
-                  else
-                    CloseScreen(gstMenu);
-                end;
-    VK_RETURN : begin
-                  VGASpecPrep;
-                  CloseScreen(gstPlay);
-                end;
-    VK_LEFT   : PreviousLevel;
-    VK_RIGHT  : NextLevel;
-    VK_DOWN   : PreviousRank;
-    VK_UP     : NextRank;
-    VK_F2     : DoLevelSelect;
-    VK_F3     : ShowConfigMenu;
+    SaveLevelImage
+  else if GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_LoadReplay then
+    LoadReplay
+  else
+    case Key of
+      VK_ESCAPE : begin
+                    if GameParams.TestModeLevel <> nil then
+                      CloseScreen(gstExit)
+                    else
+                      CloseScreen(gstMenu);
+                  end;
+      VK_RETURN : begin
+                    VGASpecPrep;
+                    CloseScreen(gstPlay);
+                  end;
+      VK_LEFT   : PreviousLevel;
+      VK_RIGHT  : NextLevel;
+      VK_DOWN   : PreviousRank;
+      VK_UP     : NextRank;
+      VK_F2     : DoLevelSelect;
+      VK_F3     : ShowConfigMenu;
     end;
 end;
 
