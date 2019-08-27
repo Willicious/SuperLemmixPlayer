@@ -260,11 +260,7 @@ var
 begin
   TempBitmap := TBitmap32.Create;
 
-  // MEGA KLUDGY compatibility hack. This must be tidied later!
-  if fLemmingPrefix = 'lemming' then fLemmingPrefix := 'default'
-  else if fLemmingPrefix = '' then fLemmingPrefix := 'default'
-  else if fLemmingPrefix = 'xlemming' then fLemmingPrefix := 'xmas';
-
+  if fLemmingPrefix = '' then fLemmingPrefix := 'default';
   if not DirectoryExists(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings) then
     fLemmingPrefix := 'default';
   SetCurrentDir(AppPath + SFStyles + fLemmingPrefix + SFPiecesLemmings);
