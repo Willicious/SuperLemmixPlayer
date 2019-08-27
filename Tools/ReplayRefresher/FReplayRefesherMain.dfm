@@ -54,7 +54,7 @@ object FNLReplayRefresher: TFNLReplayRefresher
     TabOrder = 0
   end
   object btnAddReplay: TButton
-    Left = 106
+    Left = 43
     Top = 261
     Width = 65
     Height = 25
@@ -62,7 +62,6 @@ object FNLReplayRefresher: TFNLReplayRefresher
     Caption = 'Add'
     TabOrder = 1
     OnClick = btnAddReplayClick
-    ExplicitLeft = 96
   end
   object btnRemoveReplay: TButton
     Left = 177
@@ -71,9 +70,8 @@ object FNLReplayRefresher: TFNLReplayRefresher
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Remove'
-    TabOrder = 2
+    TabOrder = 3
     OnClick = btnRemoveReplayClick
-    ExplicitLeft = 167
   end
   object ebUsername: TEdit
     Left = 82
@@ -81,8 +79,7 @@ object FNLReplayRefresher: TFNLReplayRefresher
     Width = 151
     Height = 21
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 3
-    ExplicitTop = 309
+    TabOrder = 4
   end
   object cbBackup: TCheckBox
     Left = 78
@@ -93,8 +90,7 @@ object FNLReplayRefresher: TFNLReplayRefresher
     Caption = 'Make Backups'
     Checked = True
     State = cbChecked
-    TabOrder = 4
-    ExplicitLeft = 73
+    TabOrder = 5
   end
   object btnOK: TButton
     Left = 82
@@ -103,8 +99,17 @@ object FNLReplayRefresher: TFNLReplayRefresher
     Height = 25
     Anchors = [akBottom]
     Caption = 'OK'
-    TabOrder = 5
+    TabOrder = 6
     OnClick = btnOKClick
-    ExplicitTop = 411
+  end
+  object btnAddFolder: TButton
+    Left = 110
+    Top = 261
+    Width = 65
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = 'Add Folder'
+    TabOrder = 2
+    OnClick = btnAddFolderClick
   end
 end

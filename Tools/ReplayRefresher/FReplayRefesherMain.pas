@@ -4,9 +4,12 @@ interface
 
 uses
   LemReplayStripped,
-  Math,
+  Math, FileCtrl,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+
+const
+  VERSION_STRING = '1.01';
 
 type
   TFNLReplayRefresher = class(TForm)
@@ -18,12 +21,14 @@ type
     lblUsernameInfo: TLabel;
     cbBackup: TCheckBox;
     btnOK: TButton;
+    btnAddFolder: TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormCanResize(Sender: TObject; var NewWidth, NewHeight: Integer;
       var Resize: Boolean);
     procedure btnRemoveReplayClick(Sender: TObject);
     procedure btnAddReplayClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
+    procedure btnAddFolderClick(Sender: TObject);
   private
     fInitialWidth: Integer;
     fInitialHeight: Integer;
@@ -41,6 +46,80 @@ implementation
 function AppPath: String;
 begin
   Result := ExtractFilePath(ParamStr(0));
+end;
+
+function SelectFolder(Owner: TComponent): String;
+var
+  OpenDlg: TFileOpenDialog;
+begin
+  Result := '';
+
+  if Win32MajorVersion >= 6 then
+  begin
+    OpenDlg := TFileOpenDialog.Create(Owner);
+    try
+      OpenDlg.Title := 'Select Directory';
+      OpenDlg.Options := [fdoPickFolders, fdoPathMustExist, fdoForceFileSystem]; // YMMV
+      OpenDlg.OkButtonLabel := 'Select';
+      OpenDlg.DefaultFolder := AppPath;
+      OpenDlg.FileName := AppPath;
+      if OpenDlg.Execute then
+        Result := OpenDlg.Filename;
+    finally
+      OpenDlg.Free;
+    end;
+  end else
+    SelectDirectory('Select Directory', '', Result, [sdNewUI, sdNewFolder], nil);
+end;
+
+procedure TFNLReplayRefresher.btnAddFolderClick(Sender: TObject);
+  procedure AddFolderRecursive(aBase: String);
+  var
+    SearchRec: TSearchRec;
+  begin
+    if aBase = '' then Exit;
+    aBase := IncludeTrailingPathDelimiter(aBase);
+
+    if FindFirst(aBase + '*', faDirectory, SearchRec) = 0 then
+    begin
+      repeat
+        if ((SearchRec.Attr and faDirectory) = 0) or (SearchRec.Name = '..') or (SearchRec.Name = '.') then
+          Continue;
+
+        AddFolderRecursive(aBase + SearchRec.Name);
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+
+    if FindFirst(aBase + '*.nxrp', 0, SearchRec) = 0 then
+    begin
+      repeat
+        lbReplays.Items.Add(aBase + SearchRec.Name);
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+
+    if FindFirst(aBase + '*.lrb', 0, SearchRec) = 0 then
+    begin
+      repeat
+        lbReplays.Items.Add(aBase + SearchRec.Name);
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+  end;
+var
+  BasePath: String;
+begin
+  BasePath := SelectFolder(self);
+  if BasePath <> '' then
+  begin
+    lbReplays.Items.BeginUpdate;
+    try
+      AddFolderRecursive(BasePath);
+    finally
+      lbReplays.Items.EndUpdate;
+    end;
+  end;
 end;
 
 procedure TFNLReplayRefresher.btnAddReplayClick(Sender: TObject);
@@ -128,6 +207,8 @@ procedure TFNLReplayRefresher.FormCreate(Sender: TObject);
 var
   SL: TStringList;
 begin
+  Caption := Caption + ' ' + VERSION_STRING;
+
   if FileExists(AppPath + 'settings\settings.ini') then
   begin
     SL := TStringList.Create;
