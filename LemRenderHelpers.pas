@@ -111,7 +111,7 @@ type
                  hpi_num_1, hpi_num_inf,
                  hpi_ArrowLeft, hpi_ArrowRight, hpi_ArrowUp, hpi_ArrowDown, hpi_Exclamation,
                  hpi_Exit, hpi_Fire, hpi_Trap, hpi_Trap_Disabled,
-                 hpi_Flipper, hpi_Button, hpi_Force, hpi_Splat, hpi_Water,
+                 hpi_Flipper, hpi_Button, hpi_Force, hpi_NoSplat, hpi_Splat, hpi_Water,
                  hpi_FallDist,
                  hpi_Skill_Zombie, hpi_Skill_Climber, hpi_Skill_Floater, hpi_Skill_Glider,
                  hpi_Skill_Swimmer, hpi_Skill_Disarmer);
@@ -219,6 +219,7 @@ const
                               'flipper.png',
                               'button.png',
                               'force.png',
+                              'splat_no.png',
                               'splat.png',
                               'water.png',
                               'fall_distance.png',

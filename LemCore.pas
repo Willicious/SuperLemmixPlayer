@@ -163,6 +163,7 @@ type
     trButton,
     trUpdraft,
     trFlipper,
+    trNoSplat,
     trSplat,
     trZombie
   );
@@ -292,7 +293,7 @@ const
     trZombie,                 // hatch
     trZombie,                 // triggered animation - unused
     trZombie,                 // hint
-    trZombie,                 // no-splat -unused
+    trNoSplat,                // no-splat
     trSplat,                  // splat
     trTeleport,               // 2-way teleporter - unused
     trTeleport,               // single teleporter - unused

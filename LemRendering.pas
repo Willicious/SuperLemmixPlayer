@@ -1456,6 +1456,11 @@ begin
         fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12, DrawY);
       end;
 
+    DOM_NOSPLAT:
+      begin
+        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16, DrawY);
+      end;
+
     DOM_SPLAT:
       begin
         fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16, DrawY);

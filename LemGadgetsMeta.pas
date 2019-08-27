@@ -262,6 +262,7 @@ begin
     if (Sec.Line['updraft'] <> nil) or (Sec.LineTrimString['effect'] = 'updraft') then fTriggerEffect := DOM_UPDRAFT;
     if (Sec.Line['splitter'] <> nil) or (Sec.LineTrimString['effect'] = 'splitter') then fTriggerEffect := DOM_FLIPPER;
     if (Sec.Line['window'] <> nil) or (Sec.LineTrimString['effect'] = 'entrance') then fTriggerEffect := DOM_WINDOW;
+    if (Sec.Line['antisplatpad'] <> nil) or (Sec.LineTrimString['effect'] = 'antisplatpad') then fTriggerEffect := DOM_NOSPLAT;
     if (Sec.Line['splatpad'] <> nil) or (Sec.LineTrimString['effect'] = 'splatpad') then fTriggerEffect := DOM_SPLAT;
     if (Sec.Line['moving_background'] <> nil) or (Sec.LineTrimString['effect'] = 'background') then fTriggerEffect := DOM_BACKGROUND;
     if (Sec.Line['single_use_trap'] <> nil) or (Sec.LineTrimString['effect'] = 'traponce') then fTriggerEffect := DOM_TRAPONCE;
