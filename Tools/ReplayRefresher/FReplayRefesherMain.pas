@@ -3,7 +3,7 @@ unit FReplayRefesherMain;
 interface
 
 uses
-  LemTypes, LemStrings, LemReplay,
+  LemReplayStripped,
   Math,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
@@ -37,6 +37,11 @@ var
 implementation
 
 {$R *.dfm}
+
+function AppPath: String;
+begin
+  Result := ExtractFilePath(ParamStr(0));
+end;
 
 procedure TFNLReplayRefresher.btnAddReplayClick(Sender: TObject);
 var
@@ -123,11 +128,11 @@ procedure TFNLReplayRefresher.FormCreate(Sender: TObject);
 var
   SL: TStringList;
 begin
-  if FileExists(AppPath + SFSaveData + 'settings.ini') then
+  if FileExists(AppPath + 'settings\settings.ini') then
   begin
     SL := TStringList.Create;
     try
-      SL.LoadFromFile(AppPath + SFSaveData + 'settings.ini');
+      SL.LoadFromFile(AppPath + 'settings\settings.ini');
       ebUsername.Text := SL.Values['UserName'];
     finally
       SL.Free;
