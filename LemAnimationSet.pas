@@ -217,7 +217,7 @@ begin
 
     if aColorDict <> nil then
     begin
-      ColorSec := Parser.MainSection.Section['color_swaps'];
+      ColorSec := Parser.MainSection.Section['spriteset_recoloring'];
       aColorDict.Clear;
       if ColorSec <> nil then
         for i := 0 to ColorSec.LineList.Count-1 do
