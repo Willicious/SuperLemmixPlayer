@@ -200,7 +200,11 @@ begin
           Anim := fMetaLemmingAnimations[i * 2 + dx];
 
           Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
-          Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe'];
+
+          if ThisAnimSec.Line['loop_to_frame'] = nil then
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe']
+          else
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame'];
           Anim.FootX := DirSec.LineNumeric['foot_x'];
           Anim.FootY := DirSec.LineNumeric['foot_y'];
           Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
