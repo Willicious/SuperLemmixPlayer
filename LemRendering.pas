@@ -1133,7 +1133,7 @@ end;
 
 function TRenderer.CombineTerrainProperty(F, B, FIntensity: Byte): Byte;
 var
-  Diff: Byte;
+  Diff: Integer;
 begin
   Diff := F - B;
   Result := B + Round(Diff * (FIntensity / 255));
