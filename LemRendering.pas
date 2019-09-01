@@ -1077,7 +1077,10 @@ begin
     if (dstSolidity = 0) then
     begin
       dstSteel := 0;
-      dstErase := 0;
+      dstOneWay := 0;
+    end else begin
+      dstSteel := CombineTerrainProperty(0, dstSteel, srcErase);
+      dstOneWay := CombineTerrainProperty(0, dstOneWay, srcErase);
     end;
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
