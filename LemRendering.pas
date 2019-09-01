@@ -2166,7 +2166,7 @@ var
           C := PM_SOLID;
 
           SolidityMod := thisSolidity / 255;
-          Cutoff := ALPHA_CUTOFF / 255;
+          Cutoff := ALPHA_CUTOFF * SolidityMod;
 
           if thisSteel * SolidityMod >= Cutoff then
             C := C or PM_STEEL
