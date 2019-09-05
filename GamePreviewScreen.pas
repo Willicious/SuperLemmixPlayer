@@ -230,9 +230,11 @@ end;
 
 procedure TGamePreviewScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  if Button = mbLeft then
+  if Button in [mbLeft, mbMiddle] then
   begin
     VGASpecPrep;
+    if Button = mbMiddle then
+      GameParams.ShownText := false;
     CloseScreen(gstPlay);
   end;
 end;
@@ -241,9 +243,11 @@ procedure TGamePreviewScreen.Img_MouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
   Layer: TCustomLayer);
 begin
-  if Button = mbLeft then
+  if Button in [mbLeft, mbMiddle] then
   begin
     VGASpecPrep;
+    if Button = mbMiddle then
+      GameParams.ShownText := false;
     CloseScreen(gstPlay);
   end;
 end;

@@ -329,6 +329,8 @@ begin
     ScreenImg.EndUpdate;
     Tmp.Free;
   end;
+
+  GameParams.ShownText := false;
 end;
 
 constructor TGameMenuScreen.Create(aOwner: TComponent);
@@ -435,8 +437,6 @@ begin
     GameParams.PrevGroup;
 
   SetSection;
-
-  GameParams.ShownText := false;
 end;
 
 procedure TGameMenuScreen.PrepareGameParams;
