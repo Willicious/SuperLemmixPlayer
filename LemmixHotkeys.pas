@@ -54,6 +54,7 @@ type
                          lka_Scroll);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
+  TKeyNameArray = Array [0..MAX_KEY] of String;
 
   TLemmixHotkey = record
     Action: TLemmixHotkeyAction;
@@ -76,6 +77,10 @@ type
       function CheckKeyEffect(aKey: Word): TLemmixHotkey;
       function CheckForKey(aFunc: TLemmixHotkeyAction): Boolean; overload;
       function CheckForKey(aFunc: TLemmixHotkeyAction; aMod: Integer): Boolean; overload;
+
+      class function InterpretMain(s: String): TLemmixHotkeyAction;
+      class function InterpretSecondary(s: String): Integer;
+      class function GetKeyNames(aUseHardcoded: Boolean): TKeyNameArray;
   end;
 
 implementation
@@ -202,56 +207,47 @@ begin
   fKeyFunctions[$79].Modifier := Integer(spbDigger);
 end;
 
-procedure TLemmixHotkeyManager.LoadFile;
-var
-  StringList: TStringList;
-  i, i2: Integer;
-  istr: String;
-  s0, s1: String;
-  FoundSplit: Boolean;
-  FixVersion: Integer;
+class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
+begin
+  s := LowerCase(s);
+  Result := lka_Null;
+  if s = 'skill' then Result := lka_Skill;
+  if s = 'athlete_info' then Result := lka_ShowAthleteInfo;
+  if s = 'quit' then Result := lka_Exit;
+  if s = 'rr_up' then Result := lka_ReleaseRateUp;
+  if s = 'rr_down' then Result := lka_ReleaseRateDown;
+  if s = 'pause' then Result := lka_Pause;
+  if s = 'nuke' then Result := lka_Nuke;
+  if s = 'save_state' then Result := lka_SaveState;
+  if s = 'load_state' then Result := lka_LoadState;
+  if s = 'dir_select_left' then Result := lka_DirLeft;
+  if s = 'dir_select_right' then Result := lka_DirRight;
+  if s = 'force_walker' then Result := lka_ForceWalker;
+  if s = 'cheat' then Result := lka_Cheat;
+  if s = 'skip' then Result := lka_Skip;
+  if s = 'special_skip' then Result := lka_SpecialSkip;
+  if s = 'fastforward' then Result := lka_FastForward;
+  if s = 'save_image' then Result := lka_SaveImage;
+  if s = 'load_replay' then Result := lka_LoadReplay;
+  if s = 'save_replay' then Result := lka_SaveReplay;
+  if s = 'cancel_replay' then Result := lka_CancelReplay;
+  if s = 'toggle_music' then Result := lka_Music;
+  if s = 'toggle_sound' then Result := lka_Sound;
+  if s = 'restart' then Result := lka_Restart;
+  if s = 'previous_skill' then Result := lka_SkillLeft;
+  if s = 'next_skill' then Result := lka_SkillRight;
+  if s = 'release_mouse' then Result := lka_ReleaseMouse;
+  if s = 'highlight' then Result := lka_Highlight;
+  if s = 'clear_physics' then Result := lka_ClearPhysics;
+  if s = 'fall_distance' then Result := lka_FallDistance;
+  if s = 'edit_replay' then Result := lka_EditReplay;
+  if s = 'replay_insert' then Result := lka_ReplayInsert;
+  if s = 'zoom_in' then Result := lka_ZoomIn;
+  if s = 'zoom_out' then Result := lka_ZoomOut;
+  if s = 'scroll' then Result := lka_Scroll;
+end;
 
-  function InterpretMain(s: String): TLemmixHotkeyAction;
-  begin
-    s := LowerCase(s);
-    Result := lka_Null;
-    if s = 'skill' then Result := lka_Skill;
-    if s = 'athlete_info' then Result := lka_ShowAthleteInfo;
-    if s = 'quit' then Result := lka_Exit;
-    if s = 'rr_up' then Result := lka_ReleaseRateUp;
-    if s = 'rr_down' then Result := lka_ReleaseRateDown;
-    if s = 'pause' then Result := lka_Pause;
-    if s = 'nuke' then Result := lka_Nuke;
-    if s = 'save_state' then Result := lka_SaveState;
-    if s = 'load_state' then Result := lka_LoadState;
-    if s = 'dir_select_left' then Result := lka_DirLeft;
-    if s = 'dir_select_right' then Result := lka_DirRight;
-    if s = 'force_walker' then Result := lka_ForceWalker;
-    if s = 'cheat' then Result := lka_Cheat;
-    if s = 'skip' then Result := lka_Skip;
-    if s = 'special_skip' then Result := lka_SpecialSkip;
-    if s = 'fastforward' then Result := lka_FastForward;
-    if s = 'save_image' then Result := lka_SaveImage;
-    if s = 'load_replay' then Result := lka_LoadReplay;
-    if s = 'save_replay' then Result := lka_SaveReplay;
-    if s = 'cancel_replay' then Result := lka_CancelReplay;
-    if s = 'toggle_music' then Result := lka_Music;
-    if s = 'toggle_sound' then Result := lka_Sound;
-    if s = 'restart' then Result := lka_Restart;
-    if s = 'previous_skill' then Result := lka_SkillLeft;
-    if s = 'next_skill' then Result := lka_SkillRight;
-    if s = 'release_mouse' then Result := lka_ReleaseMouse;
-    if s = 'highlight' then Result := lka_Highlight;
-    if s = 'clear_physics' then Result := lka_ClearPhysics;
-    if s = 'fall_distance' then Result := lka_FallDistance;
-    if s = 'edit_replay' then Result := lka_EditReplay;
-    if s = 'replay_insert' then Result := lka_ReplayInsert;
-    if s = 'zoom_in' then Result := lka_ZoomIn;
-    if s = 'zoom_out' then Result := lka_ZoomOut;
-    if s = 'scroll' then Result := lka_Scroll;
-  end;
-
-  function InterpretSecondary(s: String): Integer;
+class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
   begin
     s := LowerCase(s);
 
@@ -286,6 +282,14 @@ var
       end;
     end;
   end;
+
+procedure TLemmixHotkeyManager.LoadFile;
+var
+  StringList: TStringList;
+  i, i2: Integer;
+  istr: String;
+  s0, s1: String;
+  FoundSplit: Boolean;
 begin
   StringList := TStringList.Create;
   try
@@ -461,6 +465,86 @@ begin
       Exit;
     end;
   end;
+end;
+
+class function TLemmixHotkeyManager.GetKeyNames(aUseHardcoded: Boolean): TKeyNameArray;
+var
+  i: Integer;
+  P: PChar;
+  ScanCode: UInt;
+begin
+  for i := 0 to MAX_KEY do
+    Result[i] := '';
+
+  // Too lazy to include them in an interally-included file. So I just
+  // coded them in here. xD
+  if aUseHardcoded then
+  begin
+    Result[$02] := 'Right-Click';
+    Result[$04] := 'Middle-Click';
+    Result[$05] := 'Wheel Up';
+    Result[$06] := 'Wheel Down';
+    Result[$08] := 'Backspace';
+    Result[$09] := 'Tab';
+    Result[$0D] := 'Enter';
+    Result[$10] := 'Shift';
+    Result[$11] := 'Ctrl (Left)';
+    Result[$12] := 'Alt';
+    Result[$13] := 'Pause';
+    Result[$14] := 'Caps Lock';
+    Result[$19] := 'Ctrl (Right)';
+    Result[$1B] := 'Esc';
+    Result[$20] := 'Space';
+    Result[$21] := 'Page Up';
+    Result[$22] := 'Page Down';
+    Result[$23] := 'End';
+    Result[$24] := 'Home';
+    Result[$25] := 'Left Arrow';
+    Result[$26] := 'Up Arrow';
+    Result[$27] := 'Right Arrow';
+    Result[$28] := 'Down Arrow';
+    Result[$2D] := 'Insert';
+    Result[$2E] := 'Delete';
+    // Shortcut time!
+    for i := 0 to 9 do
+      Result[$30 + i] := IntToStr(i);
+    for i := 0 to 25 do
+      Result[$41 + i] := Char(i + 65);
+    Result[$5B] := 'Windows';
+    for i := 0 to 9 do
+      Result[$60 + i] := 'NumPad ' + IntToStr(i);
+    Result[$6A] := 'NumPad *';
+    Result[$6B] := 'NumPad +';
+    Result[$6D] := 'NumPad -';
+    Result[$6E] := 'NumPad .';
+    Result[$6F] := 'NumPad /';
+    for i := 0 to 11 do
+      Result[$70 + i] := 'F' + IntToStr(i+1);
+    Result[$90] := 'NumLock';
+    Result[$91] := 'Scroll Lock';
+    Result[$BA] := ';';
+    Result[$BB] := '+';
+    Result[$BC] := ',';
+    Result[$BD] := '-';
+    Result[$BE] := '.';
+    Result[$BF] := '/';
+    Result[$C0] := '~';
+    Result[$DB] := '[';
+    Result[$DC] := '\';
+    Result[$DD] := ']';
+    Result[$DE] := '''';
+  end;
+
+  P := StrAlloc(20);
+  for i := 0 to MAX_KEY do
+  begin
+    ScanCode := MapVirtualKeyEx(i, 0, GetKeyboardLayout(0)) shl 16;
+    if (GetKeyNameText(ScanCode, P, 20) > 0) and (not aUseHardcoded) then
+      Result[i] := StrPas(P)
+    else if Result[i] = '' then
+      Result[i] := IntToHex(i, 4);
+  end;
+  StrDispose(P);
 end;
 
 procedure TLemmixHotkeyManager.SetKeyFunction(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
