@@ -472,6 +472,7 @@ var
     Ani: TBaseAnimationSet;
     Meta: TMetaLemmingAnimation;
     SrcRect: TRect;
+    OldDrawMode: TDrawMode;
   begin
     Ani := GameParams.Renderer.LemmingAnimations;
     Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
@@ -480,7 +481,10 @@ var
     SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
     SrcRect.Offset(0, SrcRect.Height * aFrame);
 
+    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
     Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX - Meta.FootX, footY - Meta.FootY, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
 
   procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
@@ -488,6 +492,7 @@ var
     Ani: TBaseAnimationSet;
     Meta: TMetaLemmingAnimation;
     SrcRect: TRect;
+    OldDrawMode: TDrawMode;
   begin
     Ani := GameParams.Renderer.LemmingAnimations;
     Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
@@ -496,7 +501,10 @@ var
     SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
     SrcRect.Offset(0, SrcRect.Height * aFrame);
 
+    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
     Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
 
   procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
