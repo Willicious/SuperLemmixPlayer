@@ -50,7 +50,7 @@ type
       procedure RemoveCompositePieces;
 
       procedure SetTheme(aTheme: TNeoTheme);
-      procedure RegeneratePickups(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
+      procedure RegenerateAutoAnims(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
       procedure MakePiecesFromGroups(aGroups: TTerrainGroups);
       procedure MakePieceFromGroup(aGroup: TTerrainGroup);
 
@@ -237,14 +237,13 @@ begin
       fObjects[i].Remask(aTheme);
 end;
 
-procedure TNeoPieceManager.RegeneratePickups(aTheme: TNeoTheme;
+procedure TNeoPieceManager.RegenerateAutoAnims(aTheme: TNeoTheme;
   aAni: TBaseAnimationSet);
 var
   i: Integer;
 begin
   for i := 0 to fObjects.Count-1 do
-    if fObjects[i].TriggerEffect = DOM_PICKUP then
-      fObjects[i].RegeneratePickup(aTheme, aAni);
+    fObjects[i].RegenerateAutoAnims(aTheme, aAni);
 end;
 
 //  Functions for composite pieces

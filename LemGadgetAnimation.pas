@@ -14,6 +14,7 @@ uses
   LemNeoParser,
   GR32,
   Classes,
+  StrUtils,
   SysUtils;
 
 const
@@ -515,7 +516,7 @@ begin
   fName := UpperCase(aSegment.LineTrimString['name']);
   fColor := UpperCase(aSegment.LineTrimString['color']);
 
-  if fName <> '*NULL' then
+  if LeftStr(fName, 1) <> '*' then
   begin
     LoadPath := AppPath + SFStyles + aCollection + '\objects\' + aPiece;
     if fName <> '' then

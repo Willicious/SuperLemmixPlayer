@@ -93,7 +93,7 @@ type
     procedure Assign(Source: TGadgetMetaInfo);
 
     procedure Remask(aTheme: TNeoTheme);
-    procedure RegeneratePickup(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
+    procedure RegenerateAutoAnims(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
 
     procedure MarkAllUnmade;
     procedure MarkMetaDataUnmade;
@@ -410,18 +410,35 @@ begin
     fGeneratedVariableInfo[i] := false;
 end;
 
-procedure TGadgetMetaInfo.RegeneratePickup(aTheme: TNeoTheme;
+procedure TGadgetMetaInfo.RegenerateAutoAnims(aTheme: TNeoTheme;
   aAni: TBaseAnimationSet);
 var
   EraseAnim: TGadgetAnimation;
-begin
-  if fVariableInfo[0].Animations['erase'] = nil then
-    EraseAnim := nil
-  else
-    EraseAnim := fVariableInfo[0].Animations['erase'];
+  SrcAnim: TGadgetAnimation;
+  AnyChanged: Boolean;
+  NameUpper: String;
 
-  fVariableInfo[0].Animations.PrimaryAnimation.GeneratePickupSkills(aTheme, aAni, EraseAnim);
-  MarkAllUnmade;
+  procedure GeneratePickupSkillIcons;
+  var
+    EraseAnim: TGadgetAnimation;
+  begin
+    if fVariableInfo[0].Animations['skill_mask'] = nil then
+      EraseAnim := nil
+    else
+      EraseAnim := fVariableInfo[0].Animations['skill_mask'];
+
+    SrcAnim.GeneratePickupSkills(aTheme, aAni, EraseAnim);
+  end;
+begin
+  AnyChanged := false;
+  for SrcAnim in fVariableInfo[0].Animations do
+  begin
+    NameUpper := Uppercase(Trim(SrcAnim.Name));
+    if NameUpper = '*PICKUP' then GeneratePickupSkillIcons;
+  end;
+
+  if AnyChanged then
+    MarkAllUnmade;
 end;
 
 procedure TGadgetMetaInfo.Remask(aTheme: TNeoTheme);
