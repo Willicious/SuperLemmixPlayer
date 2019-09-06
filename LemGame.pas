@@ -1390,7 +1390,15 @@ begin
     baBuilding   : L.LemNumberOfBricksLeft := 12;
     baPlatforming: L.LemNumberOfBricksLeft := 12;
     baStacking   : L.LemNumberOfBricksLeft := 8;
-    baOhnoing    : CueSoundEffect(SFX_OHNO, L.Position);
+    baOhnoing    : begin
+                     CueSoundEffect(SFX_OHNO, L.Position);
+                     L.LemIsClimber := false;
+                     L.LemIsSwimmer := false;
+                     L.LemIsFloater := false;
+                     L.LemIsGlider := false;
+                     L.LemIsDisarmer := false;
+                     L.LemHasBeenOhnoer := true;
+                   end;
     baStoning    : CueSoundEffect(SFX_OHNO, L.Position);
     baExploding  : CueSoundEffect(SFX_EXPLOSION, L.Position);
     baStoneFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
@@ -1912,7 +1920,7 @@ begin
     if IsHighlight and not (L = GetHighlitLemming) then Continue;
     // Does Lemming exist
     if L.LemRemoved or L.LemTeleporting then Continue;
-    // Is the Lemming unable to receive skills, because zombie or neutral? (remove unless we haven't yet had any lem under the cursor)
+    // Is the Lemming unable to receive skills, because zombie, neutral, or was-ohnoer? (remove unless we haven't yet had any lem under the cursor)
     if L.CannotReceiveSkills and Assigned(PriorityLem) then Continue;
     // Is Lemming inside cursor (only check if we are not using Hightlightning!)
     if (not LemIsInCursor(L, MousePos)) and (not IsHighlight) then Continue;

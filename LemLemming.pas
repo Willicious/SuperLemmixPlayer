@@ -93,6 +93,7 @@ type
     LemIsDisarmer                 : Boolean;
     LemIsZombie                   : Boolean;
     LemIsNeutral                  : Boolean;
+    LemHasBeenOhnoer              : Boolean;
     LemPlacedBrick                : Boolean; // placed useful brick during this cycle (plaformer and stacker)
     LemInFlipper                  : Integer;
     LemHasBlockerField            : Boolean; // for blockers, even during ohno
@@ -234,7 +235,7 @@ end;
 
 function TLemming.GetCannotReceiveSkills: Boolean;
 begin
-  Result := LemIsZombie or LemIsNeutral;
+  Result := LemIsZombie or LemIsNeutral or LemHasBeenOhnoer;
 end;
 
 function TLemming.GetPosition: TPoint;
@@ -275,6 +276,7 @@ begin
   LemIsGlider := Source.LemIsGlider;
   LemIsDisarmer := Source.LemIsDisarmer;
   LemIsZombie := Source.LemIsZombie;
+  LemHasBeenOhnoer := Source.LemHasBeenOhnoer;
   LemIsNeutral := Source.LemIsNeutral;
   LemPlacedBrick := Source.LemPlacedBrick;
   LemInFlipper := Source.LemInFlipper;
