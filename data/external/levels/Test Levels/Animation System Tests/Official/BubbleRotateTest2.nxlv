@@ -1,0 +1,118 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.14
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Bubble Rotate Test 2
+ AUTHOR 
+ ID x76EBD8623D9F39FD
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH  320
+ HEIGHT  160
+ START_X  160
+ START_Y   80
+ THEME orig_dirt
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS   20
+ SAVE_REQUIREMENT   20
+ MAX_SPAWN_INTERVAL   53
+ 
+ $SKILLSET 
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE window
+   X   102
+   Y    41
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X   199
+   Y     6
+   NO_OVERWRITE
+   ROTATE
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X   199
+   Y   107
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X   168
+   Y     6
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X   168
+   Y   107
+   NO_OVERWRITE
+   ROTATE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X    99
+   Y    79
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X    -2
+   Y    79
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X    99
+   Y   110
+   NO_OVERWRITE
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE ohno_bubble
+   PIECE trap_01
+   X    -2
+   Y   110
+   NO_OVERWRITE
+   FLIP_HORIZONTAL
+   FLIP_VERTICAL
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ 
