@@ -99,6 +99,8 @@ var
 
       n: Integer;
     begin
+      Result := '';
+
       if Pos(':', S) = 0 then
       begin
         if Uppercase(S) = 'SKIP+' then
