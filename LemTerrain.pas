@@ -122,6 +122,10 @@ begin
     GS := aSection.LineTrimString['collection']
   else
     GS := aSection.LineTrimString['style'];
+
+  if Uppercase(GS) = 'ORIG_DIRT_MD' then
+    GS := 'orig_dirt';
+
   Piece := aSection.LineTrimString['piece'];
   Left := aSection.LineNumeric['x'];
   Top := aSection.LineNumeric['y'];

@@ -330,6 +330,9 @@ begin
     MusicFile := aSection.LineTrimString['music'];
     LevelID := aSection.LineNumeric['id'];
 
+    if Uppercase(GraphicSetName) = 'ORIG_DIRT_MD' then
+      GraphicSetName := 'orig_dirt';
+
     LemmingsCount := aSection.LineNumeric['lemmings'];
     RescueCount := aSection.LineNumeric['requirement'];
     RescueCount := aSection.LineNumericDefault['save_requirement', RescueCount];
@@ -486,6 +489,9 @@ begin
     O.GS := aSection.LineTrimString['collection']
   else
     O.GS := aSection.LineTrimString['style'];
+
+  if Uppercase(O.GS) = 'ORIG_DIRT_MD' then
+    O.GS := 'orig_dirt';
 
   O.Piece := aSection.LineTrimString['piece'];
   O.Left := aSection.LineNumeric['x'];
