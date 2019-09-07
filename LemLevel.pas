@@ -445,6 +445,8 @@ var
       O.TarLev := Max(aSection.LineNumeric['skillcount'], 1)
     else
       O.TarLev := Max(aSection.LineNumeric['skill_count'], 1);
+
+    O.DrawingFlags := O.DrawingFlags and not (odf_Rotate or odf_FlipLem or odf_UpsideDown);
   end;
 
   procedure GetSplitterData;

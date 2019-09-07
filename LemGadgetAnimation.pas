@@ -496,7 +496,7 @@ begin
       SkillIcons[i * 2].Clear(0);
   end;
 
-  CombineBitmaps(SkillIcons); // this also frees SkillIcons
+  CombineBitmaps(SkillIcons);
 end;
 
 function TGadgetAnimation.GetCutRect: TRect;
