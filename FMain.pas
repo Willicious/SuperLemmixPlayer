@@ -30,6 +30,7 @@ type
       var Resize: Boolean);
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint; var Handled: Boolean);
+    procedure FormShow(Sender: TObject);
   private
     Started: Boolean;
     AppController: TAppController;
@@ -164,6 +165,29 @@ begin
   // Seems pointless? Yes. But apparently, changing between maximized and not maximized
   // causes the handle to change, which was causing the fullscreen-windowed change glitch.
   MainFormHandle := Handle;
+end;
+
+procedure TMainForm.FormShow(Sender: TObject);
+begin
+  inherited;
+  // Unless fullscreen, resize the main window
+  if not GameParams.FullScreen then
+  begin
+    GameParams.MainForm.BorderStyle := bsSizeable;
+    GameParams.MainForm.WindowState := wsNormal;
+    GameParams.MainForm.Left := Screen.WorkAreaLeft + ((Screen.WorkAreaWidth - GameParams.LoadedWindowWidth) div 2);
+    GameParams.MainForm.Top := Screen.WorkAreaTop + ((Screen.WorkAreaHeight - GameParams.LoadedWindowHeight) div 2);
+    GameParams.MainForm.ClientWidth := GameParams.LoadedWindowWidth;
+    GameParams.MainForm.ClientHeight := GameParams.LoadedWindowHeight;
+  end else begin
+    GameParams.MainForm.Left := 0;
+    GameParams.MainForm.Top := 0;
+    GameParams.MainForm.BorderStyle := bsNone;
+    GameParams.MainForm.WindowState := wsMaximized;
+
+    GameParams.MainForm.ClientWidth := Screen.Width;
+    GameParams.MainForm.ClientHeight := Screen.Height;
+  end;
 end;
 
 procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth,

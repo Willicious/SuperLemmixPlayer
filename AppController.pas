@@ -102,21 +102,6 @@ begin
       end;
     end;
 
-  // Unless Zoom level is 0 (fullscreen), resize the main window
-  if not GameParams.FullScreen then
-  begin
-    GameParams.MainForm.BorderStyle := bsSizeable;
-    GameParams.MainForm.WindowState := wsNormal;
-  end else begin
-    GameParams.MainForm.Left := 0;
-    GameParams.MainForm.Top := 0;
-    GameParams.MainForm.BorderStyle := bsNone;
-    GameParams.MainForm.WindowState := wsMaximized;
-
-    GameParams.MainForm.ClientWidth := Screen.Width;
-    GameParams.MainForm.ClientHeight := Screen.Height;
-  end;
-
   GameParams.MainForm.Caption := 'NeoLemmix';
   Application.Title := GameParams.MainForm.Caption;
 

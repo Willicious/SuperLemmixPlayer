@@ -116,6 +116,8 @@ type
     fZoomLevel: Integer;
     fWindowWidth: Integer;
     fWindowHeight: Integer;
+    fLoadedWindowWidth: Integer;
+    fLoadedWindowHeight: Integer;
 
     fMainForm: TForm; // link to the FMain form
 
@@ -223,6 +225,8 @@ type
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
     property WindowHeight: Integer read fWindowHeight write fWindowHeight;
+    property LoadedWindowWidth: Integer read fLoadedWindowWidth;
+    property LoadedWindowHeight: Integer read fLoadedWindowHeight;
 
     property MainForm: TForm read fMainForm write fMainForm;
 
@@ -490,6 +494,9 @@ begin
   WindowHeight := StrToIntDef(SL.Values['WindowHeight'], -1);
 
   EnsureValidWindowSize;
+
+  fLoadedWindowWidth := WindowWidth;
+  fLoadedWindowHeight := WindowHeight;
 
   LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
   LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
