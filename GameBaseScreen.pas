@@ -660,7 +660,7 @@ begin
   if s <> '' then
   begin
     GlobalGame.ReplayManager.LoadFromFile(s);
-    if GlobalGame.ReplayManager.LevelID <> GlobalGame.Level.Info.LevelID then
+    if GlobalGame.ReplayManager.LevelID <> GameParams.Level.Info.LevelID then
       ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
                   'will attempt to play the replay anyway.');
   end;
