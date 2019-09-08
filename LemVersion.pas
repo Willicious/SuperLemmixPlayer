@@ -9,8 +9,8 @@ uses
 
 const
   FORMAT_VERSION = 12;
-  CORE_VERSION = 6;
-  FEATURES_VERSION = 3;
+  CORE_VERSION = 7;
+  FEATURES_VERSION = 0;
   HOTFIX_VERSION = 0;
 
   function COMMIT_ID: String;
