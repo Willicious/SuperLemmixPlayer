@@ -697,17 +697,19 @@ begin
   begin
     if GameParams.FullScreen then
     begin
+      GameParams.MainForm.BorderStyle := bsNone;
+      GameParams.MainForm.WindowState := wsMaximized;
       GameParams.MainForm.Left := 0;
       GameParams.MainForm.Top := 0;
-      GameParams.MainForm.WindowState := wsMaximized;
-      GameParams.MainForm.BorderStyle := bsNone;
+      GameParams.MainForm.Width := Screen.Width;
+      GameParams.MainForm.Height := Screen.Height;
     end else begin
       GameParams.MainForm.BorderStyle := bsSizeable;
       GameParams.MainForm.WindowState := wsNormal;
-      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320, Min(Screen.Width div 320, Screen.Height div 200) * 320);
-      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200, Min(Screen.Width div 320, Screen.Height div 200) * 200);
-      GameParams.MainForm.Left := (Screen.Width div 2) - (GameParams.MainForm.Width div 2);
-      GameParams.MainForm.Top := (Screen.Height div 2) - (GameParams.MainForm.Height div 2);
+      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320, Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) * 320);
+      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200, Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) * 200);
+      GameParams.MainForm.Left := (Screen.WorkAreaWidth div 2) - (GameParams.MainForm.Width div 2);
+      GameParams.MainForm.Top := (Screen.WorkAreaHeight div 2) - (GameParams.MainForm.Height div 2);
     end;
   end;
 
