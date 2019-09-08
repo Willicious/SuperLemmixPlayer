@@ -2377,37 +2377,34 @@ begin
 
   RenderInfoRec.Level := aLevel;
 
-  if not NoOutput then
-  begin
-    fTheme.Load(aLevel.Info.GraphicSetName);
-    PieceManager.SetTheme(fTheme);
+  fTheme.Load(aLevel.Info.GraphicSetName);
+  PieceManager.SetTheme(fTheme);
 
-    fAni.ClearData;
-    fAni.Theme := fTheme;
+  fAni.ClearData;
+  fAni.Theme := fTheme;
 
-    try
+  try
+    fAni.ReadData;
+  except
+    on E: Exception do
+    begin
+      fAni.ClearData;
+      fTheme.Lemmings := 'default';
+
       fAni.ReadData;
-    except
-      on E: Exception do
+
+      if fTheme.Lemmings <> LastErrorLemmingSprites then
       begin
-        fAni.ClearData;
-        fTheme.Lemmings := 'default';
-
-        fAni.ReadData;
-
-        if fTheme.Lemmings <> LastErrorLemmingSprites then
-        begin
-          LastErrorLemmingSprites := fTheme.Lemmings;
-          ShowMessage(E.Message + #13 + #13 + 'Falling back to default lemming sprites.');
-        end;
+        LastErrorLemmingSprites := fTheme.Lemmings;
+        ShowMessage(E.Message + #13 + #13 + 'Falling back to default lemming sprites.');
       end;
     end;
-
-    PieceManager.RegenerateAutoAnims(fTheme, fAni);
-
-    // Prepare the bitmaps
-    fLayers.Prepare(RenderInfoRec.Level.Info.Width, RenderInfoRec.Level.Info.Height);
   end;
+
+  PieceManager.RegenerateAutoAnims(fTheme, fAni);
+
+  // Prepare the bitmaps
+  fLayers.Prepare(RenderInfoRec.Level.Info.Width, RenderInfoRec.Level.Info.Height);
 
   // Creating the list of all interactive objects.
   fPreviewGadgets.Clear;
