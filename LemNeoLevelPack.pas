@@ -106,6 +106,8 @@ type
 
   TNeoLevelGroup = class
     private
+      fDisableSaveProgress: Boolean;
+
       fParentGroup: TNeoLevelGroup;
       fChildGroups: TNeoLevelGroups;
       fLevels: TNeoLevelEntries;
@@ -946,9 +948,15 @@ begin
 
     if LevelSec <> nil then
       HandleGroup(self);
-  finally
-    Parser.Free;
+  except
+    on E: Exception do
+    begin
+      fDisableSaveProgress := true;
+      raise E;
+    end;
   end;
+
+  Parser.Free;
 end;
 
 procedure TNeoLevelGroup.LoadSaveGroup(aLine: TParserLine; const aIteration: Integer);

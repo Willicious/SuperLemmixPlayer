@@ -64,6 +64,7 @@ type
   TLemmixHotkeyManager = class
     private
       fKeyFunctions: Array[0..MAX_KEY] of TLemmixHotkey;
+      fDisableSaving: Boolean;
 
       procedure LoadFile;
       function DoCheckForKey(aFunc: TLemmixHotkeyAction; aMod: Integer; CheckMod: Boolean): Boolean;
@@ -329,7 +330,12 @@ begin
       end;
     end;
   except
-    SetDefaults;
+    on E: Exception do
+    begin
+      fDisableSaving := true;
+      SetDefaults;
+      raise E;
+    end;
   end;
   StringList.Free;
 end;
@@ -412,6 +418,8 @@ var
     end;
   end;
 begin
+  if fDisableSaving then Exit;
+  
   StringList := TStringList.Create;
   StringList.Add('Version=' + IntToStr(KEYSET_VERSION));
   for i := 0 to MAX_KEY do
