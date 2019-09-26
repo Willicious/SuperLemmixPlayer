@@ -162,6 +162,7 @@ begin
   fMusicPlaying := false;
   fMusicChannel := $FFFFFFFF;
   fMusicStream.Clear;
+  fMusicName := '';
 end;
 
 procedure TSoundManager.ObtainMusicBassChannel;
