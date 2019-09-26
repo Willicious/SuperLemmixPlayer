@@ -411,8 +411,6 @@ end;
 procedure TGameWindow.SetClearPhysics(aValue: Boolean);
 begin
   fClearPhysics := aValue;
-  if fGameSpeed = gspPause then
-    fNeedRedraw := rdRedraw;
   SkillPanel.DrawButtonSelector(spbClearPhysics, fClearPhysics);
 end;
 
@@ -815,6 +813,7 @@ begin
   or (fRenderInterface.HighlitLemming <> fLastHighlightLemming)
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill)
   or (fRenderInterface.UserHelper <> fLastHelperIcon)
+  or (fClearPhysics)
   or ((GameSpeed = gspPause) and not fLastDrawPaused) then
     fNeedRedraw := rdRedraw;
 
@@ -826,6 +825,7 @@ begin
   end;
 
   if fNeedRedraw <> rdRedraw then Exit;
+
   try
     fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
     fRenderInterface.MousePos := Game.CursorPoint;
@@ -847,7 +847,7 @@ begin
     fLastHighlightLemming := fRenderInterface.HighlitLemming;
     fLastSelectedSkill := fRenderInterface.SelectedSkill;
     fLastHelperIcon := fRenderInterface.UserHelper;
-    fLastDrawPaused := (GameSpeed = gspPause);
+    fLastDrawPaused := (GameSpeed = gspPause) and not fClearPhysics;
   except
     on E: Exception do
       OnException(E, 'TGameWindow.DoDraw');
