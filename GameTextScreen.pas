@@ -143,7 +143,7 @@ var
       end;
 
       if Length(Result) = 0 then
-        Result := '{No Hotkey Assigned}'
+        Result := '{None}'
       else
         Result := LeftStr(Result, Length(Result) - 2); // remove the double-space at the end
     end;
