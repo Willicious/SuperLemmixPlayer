@@ -2125,6 +2125,34 @@ var
     SetRegion( Gadget.TriggerRect, C, 0);
   end;
 
+  procedure RemoveOverlappingOWWs;
+  var
+    P: PColor32;
+    x, y: Integer;
+    n: Integer;
+    thisCount: Integer;
+  const
+    ONE_WAY_FLAGS: array[0..3] of Cardinal = (PM_ONEWAYLEFT, PM_ONEWAYRIGHT, PM_ONEWAYUP, PM_ONEWAYDOWN);
+    CANCEL_FLAGS = PM_ONEWAY or PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYUP or PM_ONEWAYDOWN;
+  begin
+    for y := 0 to dst.Height-1 do
+    begin
+      P := dst.PixelPtr[0, y];
+      for x := 0 to dst.Width-1 do
+      begin
+        thisCount := 0;
+        for n := 0 to 3 do
+          if P^ and ONE_WAY_FLAGS[n] <> 0 then
+            Inc(thisCount);
+
+        if (thisCount <> 1) then
+          P^ := P^ and not CANCEL_FLAGS;
+
+        Inc(P);
+      end;
+    end;
+  end;
+
   procedure Validate;
   var
     X, Y: Integer;
@@ -2211,6 +2239,8 @@ begin
         Gadget := fPreviewGadgets[i];
         ApplyOWW(Gadget); // ApplyOWW takes care of ignoring non-OWW objects, no sense duplicating the check
       end;
+
+      RemoveOverlappingOWWs;
     end;
 
     Validate;
