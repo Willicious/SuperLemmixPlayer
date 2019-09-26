@@ -312,7 +312,7 @@ var
       SL.Add(SL2[i]);
   end;
 begin
-  //if fTestMode then Exit;
+  if GameParams.TestModeLevel <> nil then Exit;  
   if fDisableSaveOptions then Exit;
 
   SL := TStringList.Create;

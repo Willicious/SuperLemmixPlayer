@@ -559,6 +559,8 @@ var
   Success: Boolean;
   LoadAsPack: Boolean;
 begin
+  if GameParams.TestModeLevel <> nil then Exit;
+
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(self);
   try
