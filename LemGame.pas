@@ -202,6 +202,7 @@ type
     fPauseOnHyperSpeedExit     : Boolean; // to maintain pause state before invoking a savestate
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
+    fTargetLemmingID           : Integer; // for replay skill assignments
     fCancelReplayAfterSkip     : Boolean;
   { events }
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
@@ -345,7 +346,8 @@ type
     function GetPriorityLemming(out PriorityLem: TLemming;
                                   NewSkillOrig: TBasicLemmingAction;
                                   MousePos: TPoint;
-                                  IsHighlight: Boolean = False): Integer;
+                                  IsHighlight: Boolean = False;
+                                  IsReplay: Boolean = False): Integer;
     function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 
     function MayAssignWalker(L: TLemming): Boolean;
@@ -406,6 +408,7 @@ type
     function Checkpass: Boolean;
     function CheckFinishedTest: Boolean;
     function GetHighlitLemming: TLemming;
+    function GetTargetLemming: TLemming;
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -1692,9 +1695,9 @@ begin
   HitTestAutoFail := false;
 
   // Just to be safe, though this should always return in fLemSelected
-  GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
+  GetPriorityLemming(L, Skill, CursorPoint, IsHighlight, IsReplayAssignment);
   // Get lemming to queue the skill assignment
-  GetPriorityLemming(LQueue, baNone, CursorPoint);
+  GetPriorityLemming(LQueue, baNone, CursorPoint, IsHighlight);
 
   HitTestAutoFail := OldHTAF;
 
@@ -1841,7 +1844,8 @@ end;
 function TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
                                           NewSkillOrig: TBasicLemmingAction;
                                           MousePos: TPoint;
-                                          IsHighlight: Boolean = False): Integer;
+                                          IsHighlight: Boolean = False;
+                                          IsReplay: Boolean = False): Integer;
 const
   NonPerm = 0;
   Perm = 1;
@@ -1919,13 +1923,14 @@ begin
     L := LemmingList.List[i];
 
     // Check if we only look for highlighted Lems
-    if IsHighlight and not (L = GetHighlitLemming) then Continue;
+    if (IsHighlight and not (L = GetHighlitLemming))
+    or (IsReplay and not (L = GetTargetLemming)) then Continue;
     // Does Lemming exist
     if L.LemRemoved or L.LemTeleporting then Continue;
     // Is the Lemming unable to receive skills, because zombie, neutral, or was-ohnoer? (remove unless we haven't yet had any lem under the cursor)
     if L.CannotReceiveSkills and Assigned(PriorityLem) then Continue;
     // Is Lemming inside cursor (only check if we are not using Hightlightning!)
-    if (not LemIsInCursor(L, MousePos)) and (not IsHighlight) then Continue;
+    if (not LemIsInCursor(L, MousePos)) and (not (IsHighlight or IsReplay)) then Continue;
     // Directional select
     if (fSelectDx <> 0) and (fSelectDx <> L.LemDx) then Continue;
     // Select only walkers
@@ -4658,13 +4663,8 @@ begin
 
     if Skill in AssignableSkills then
     begin
-      // In order to preserve old replays, we have to check if the skill assignments are still possible
-      // As the priority of lemmings has changed, we have to Highlight this lemming
-      // After having done the assignment, revert the Highlightning.
-      OldHighlightLemID := fHighlightLemmingID;
-      fHighlightLemmingID := L.LemIndex;
-      AssignNewSkill(Skill, true, true);
-      fHighlightLemmingID := OldHighlightLemID;
+      fTargetLemmingID := L.LemIndex;
+      AssignNewSkill(Skill, false, true);
     end;
 
   end;
@@ -4920,6 +4920,16 @@ begin
   if LemmingList[fHighlightLemmingID].LemRemoved then Exit;
   if LemmingList[fHighlightLemmingID].LemTeleporting then Exit;
   Result := LemmingList[fHighlightLemmingID];
+end;
+
+function TLemmingGame.GetTargetLemming: TLemming;
+begin
+  Result := nil;
+  if fTargetLemmingID < 0 then Exit;
+  if fTargetLemmingID >= LemmingList.Count then Exit;
+  if LemmingList[fTargetLemmingID].LemRemoved then Exit;
+  if LemmingList[fTargetLemmingID].LemTeleporting then Exit;
+  Result := LemmingList[fTargetLemmingID];
 end;
 
 
