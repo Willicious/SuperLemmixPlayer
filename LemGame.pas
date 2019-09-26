@@ -4822,8 +4822,7 @@ begin
       with CurrentLemming do
       begin
         if     (LemExplosionTimer = 0)
-           and not (LemAction in [baSplatting, baExploding])
-           and not LemIsZombie then
+           and not (LemAction in [baSplatting, baExploding]) then
           LemExplosionTimer := 84;
       end;
       Inc(Index_LemmingToBeNuked);
