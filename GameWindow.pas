@@ -378,6 +378,8 @@ var
   SL: TStringList;
   i: Integer;
 begin
+  Result := '';
+
   MusicName := ChangeFileExt(GameParams.Level.Info.MusicFile, '');
 
   if (MusicName <> '') and (LeftStr(MusicName, 1) <> '?') then

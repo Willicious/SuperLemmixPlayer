@@ -161,6 +161,7 @@ begin
   BASS_StreamFree(fMusicChannel);
   fMusicPlaying := false;
   fMusicChannel := $FFFFFFFF;
+  fMusicStream.Clear;
 end;
 
 procedure TSoundManager.ObtainMusicBassChannel;
