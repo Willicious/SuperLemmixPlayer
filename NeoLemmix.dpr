@@ -51,7 +51,6 @@ uses
   LemMetaAnimation in 'LemMetaAnimation.pas',
   LemMetaTerrain in 'LemMetaTerrain.pas',
   LemmixHotkeys in 'LemmixHotkeys.pas',
-  LemMusicSystem in 'LemMusicSystem.pas',
   LemNeoLevelPack in 'LemNeoLevelPack.pas',
   LemNeoOnline in 'LemNeoOnline.pas',
   LemNeoParser in 'LemNeoParser.pas',
