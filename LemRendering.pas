@@ -1877,7 +1877,7 @@ procedure TRenderer.DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = T
     H: Integer;
   begin
     H := GetTickCount mod 5000;
-    fFixedDrawColor := HSVToRGB(H / 4999, 1, 1);
+    fFixedDrawColor := HSVToRGB(H / 4999, 1, 0.75);
   end;
 
 var
