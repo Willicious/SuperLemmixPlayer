@@ -29,6 +29,8 @@ type
     fIsBlinkFrame         : Boolean;
     fOnMinimapClick       : TMinimapClickEvent; // event handler for minimap
 
+    fCombineHueShift : Single;
+
     function CheckFrameSkip: Integer; // Checks the duration since the last click on the panel.
 
     procedure LoadPanelFont;
@@ -40,7 +42,7 @@ type
     procedure SetZoom(NewZoom: Integer);
     function GetMaxZoom: Integer;
 
-    procedure CombineToRed(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineShift(F: TColor32; var B: TColor32; M: TColor32);
   protected
     fGameWindow           : IGameWindow;
     fButtonRects          : array[TSkillPanelButton] of TRect;
@@ -103,6 +105,7 @@ type
     function DrawStringTemplate: string; virtual; abstract;
 
     procedure DrawNewStr;
+      function LemmingCountStartIndex: Integer; virtual; abstract;
       function TimeLimitStartIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
     procedure SetInfoCursorLemming(Pos: Integer);
@@ -1029,18 +1032,21 @@ end;
 {-----------------------------------------
     Info string at top
 -----------------------------------------}
-procedure TBaseSkillPanel.CombineToRed(F: TColor32; var B: TColor32; M: TColor32);
+procedure TBaseSkillPanel.CombineShift(F: TColor32; var B: TColor32; M: TColor32);
+var
+  H, S, V: Single;
 begin
   if AlphaComponent(F) = 0 then Exit;
-  // Swap red and green component
-  B := Color32(GreenComponent(F), RedComponent(F), BlueComponent(F), AlphaComponent(F));
+  RGBToHSV(F, H, S, V);
+  H := H + fCombineHueShift;
+  B := HSVToRGB(H, S, V);
 end;
 
 procedure TBaseSkillPanel.DrawNewStr;
 var
   Old, New: char;
   i, CharID: integer;
-  DoRecolor: Boolean;
+  SpecialCombine: Boolean;
 begin
   for i := 1 to DrawStringLength do
   begin
@@ -1061,17 +1067,33 @@ begin
       // Erase previous text there
       fImage.Bitmap.FillRectS((i - 1) * 8, 0, i * 8, 16, 0);
 
-      DoRecolor := Level.Info.HasTimeLimit and (i >= TimeLimitStartIndex) and (CharID >= 0);
-      if DoRecolor then
+      if (CharID >= 0) then
       begin
-        fInfoFont[CharID].DrawMode := dmCustom;
-        fInfoFont[CharID].OnPixelCombine := CombineToRed;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
-        fInfoFont[CharID].DrawMode := dmBlend;
-        fInfoFont[CharID].CombineMode := cmMerge;
-      end
-      else if CharID >= 0 then
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+        if (Game.LemmingsActive <> Game.RegularLemmingsActive) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
+        begin
+          SpecialCombine := true;
+
+          if Game.RegularLemmingsActive = 0 then
+            fCombineHueShift := -1 / 6
+          else
+            fCombineHueShift := 1 / 6;
+        end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
+        begin
+          SpecialCombine := true;
+          fCombineHueShift := -1 / 3;
+        end else
+          SpecialCombine := false;
+
+        if SpecialCombine then
+        begin
+          fInfoFont[CharID].DrawMode := dmCustom;
+          fInfoFont[CharID].OnPixelCombine := CombineShift;
+          fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+          fInfoFont[CharID].DrawMode := dmBlend;
+          fInfoFont[CharID].CombineMode := cmMerge;
+        end else
+          fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+      end;
     end;
   end;
 end;

@@ -23,6 +23,7 @@ type
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
     function TimeLimitStartIndex: Integer; override;
+    function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -42,6 +43,7 @@ type
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
     function TimeLimitStartIndex: Integer; override;
+    function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -124,6 +126,11 @@ begin
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
 end;
 
+function TSkillPanelStandard.LemmingCountStartIndex: Integer;
+begin
+  Result := 21;
+end;
+
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
 var
   TempBmp: TBitmap32;
@@ -179,6 +186,11 @@ end;
 function TSkillPanelCompact.TimeLimitStartIndex: Integer;
 begin
   Result := 33;
+end;
+
+function TSkillPanelCompact.LemmingCountStartIndex: Integer;
+begin
+  Result := 21;
 end;
 
 function TSkillPanelCompact.MinimapRect: TRect;

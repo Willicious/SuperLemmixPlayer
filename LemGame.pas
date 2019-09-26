@@ -368,6 +368,7 @@ type
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
     function GetUsedSkillCount(aSkill: TSkillPanelButton): Integer;
+    function GetRegularLemmingsActive: Integer;
   public
     //GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
@@ -411,6 +412,7 @@ type
     property LemmingsToSpawn: Integer read LemmingsToRelease;
     property SpawnedDead: Integer read fSpawnedDead;
     property LemmingsActive: Integer read LemmingsOut;
+    property RegularLemmingsActive: Integer read GetRegularLemmingsActive;
     property LemmingsSaved: Integer read LemmingsIn;
     property CurrentSpawnInterval: Integer read CurrSpawnInterval; // for skill panel's usage
     property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount;
@@ -1963,6 +1965,17 @@ begin
   if (CurValue > 6) and not (NewSkillOrig = baNone) then PriorityLem := nil;
 
   Result := NumLemInCursor;
+end;
+
+function TLemmingGame.GetRegularLemmingsActive: Integer;
+var
+  i: Integer;
+begin
+  Result := 0;
+  for i := 0 to LemmingList.Count-1 do
+    if not (LemmingList[i].LemIsZombie or LemmingList[i].LemIsNeutral or LemmingList[i].LemRemoved) then
+      Inc(Result);
+  // Ahh, wish Delphi had LINQ...
 end;
 
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
