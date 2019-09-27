@@ -125,7 +125,7 @@ type
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
     PhysicsMap                 : TBitmap32;
-    BlockerMap                 : TByteMap; // for blockers (and force fields)
+    BlockerMap                 : TBitmap32; // for blockers
     ZombieMap                  : TByteMap;
     ExitMap                    : TArrayArrayBoolean;
     LockedExitMap              : TArrayArrayBoolean;
@@ -139,6 +139,8 @@ type
     FlipperMap                 : TArrayArrayBoolean;
     NoSplatMap                 : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
+    ForceLeftMap               : TArrayArrayBoolean;
+    ForceRightMap              : TArrayArrayBoolean;
 
     fReplayManager             : TReplay;
 
@@ -181,6 +183,7 @@ type
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
+    fLastBlockerCheckLem       : TLemming; // blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // list of objects excluding entrances
     CurrSpawnInterval          : Integer;
 
@@ -204,10 +207,12 @@ type
     fHighlightLemmingID        : Integer;
     fTargetLemmingID           : Integer; // for replay skill assignments
     fCancelReplayAfterSkip     : Boolean;
+
   { events }
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
     fSimulationDepth           : Integer; // whether we are in simulation mode for drawing shadows
     fSoundList                 : TList<string>; // List of sounds that have been played already on this frame
+
   { pixel combine eventhandlers }
     // CombineMaskPixels has variants based on the direction of destruction
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32); // general-purpose
@@ -285,7 +290,7 @@ type
       function ReadTriggerMap(X, Y: Integer; Map: TArrayArrayBoolean): Boolean;
 
     procedure SetBlockerMap;
-      procedure WriteBlockerMap(X, Y: Integer; aValue: Byte);
+      procedure WriteBlockerMap(X, Y: Integer; aLemmingIndex: Word; aFieldEffect: Byte);
       function ReadBlockerMap(X, Y: Integer; L: TLemming = nil): Byte;
 
     procedure SetZombieField(L: TLemming);
@@ -826,7 +831,7 @@ begin
   MinerMasks     := TBitmap32.Create;
 
   Gadgets        := TGadgetList.Create;
-  BlockerMap     := TByteMap.Create;
+  BlockerMap     := TBitmap32.Create;
   ZombieMap      := TByteMap.Create;
   fReplayManager := TReplay.Create;
 
@@ -911,20 +916,6 @@ end;
 
 destructor TLemmingGame.Destroy;
 begin
-  // Free memory of trigger area maps
-  SetLength(WaterMap, 0, 0);
-  SetLength(FireMap, 0, 0);
-  SetLength(TeleporterMap, 0, 0);
-  SetLength(UpdraftMap, 0, 0);
-  SetLength(ButtonMap, 0, 0);
-  SetLength(PickupMap, 0, 0);
-  SetLength(FlipperMap, 0, 0);
-  SetLength(NoSplatMap, 0, 0);
-  SetLength(SplatMap, 0, 0);
-  SetLength(ExitMap, 0, 0);
-  SetLength(LockedExitMap, 0, 0);
-  SetLength(TrapMap, 0, 0);
-
   BomberMask.Free;
   StonerMask.Free;
   BasherMasks.Free;
@@ -1516,6 +1507,10 @@ begin
   SetLength(LockedExitMap, Level.Info.Width, Level.Info.Height);
   SetLength(TrapMap, 0, 0);
   SetLength(TrapMap, Level.Info.Width, Level.Info.Height);
+  SetLength(ForceLeftMap, 0, 0);
+  SetLength(ForceLeftMap, Level.Info.Width, Level.Info.Height);
+  SetLength(ForceRightMap, 0, 0);
+  SetLength(ForceRightMap, Level.Info.Width, Level.Info.Height);
 
   BlockerMap.SetSize(Level.Info.Width, Level.Info.Height);
   BlockerMap.Clear(DOM_NONE);
@@ -1527,60 +1522,49 @@ end;
 
 //  BLOCKER MAP TREATMENT
 
-procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aValue: Byte);
+procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aLemmingIndex: Word; aFieldEffect: Byte);
 begin
   if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    BlockerMap.Value[X, Y] := aValue;
+    BlockerMap[X, Y] := (aLemmingIndex shl 8) or aFieldEffect;
 end;
 
 function TLemmingGame.ReadBlockerMap(X, Y: Integer; L: TLemming = nil): Byte;
 var
-  LemPosRect: TRect;
-  i: Integer;
   CheckPosX: Integer;
 begin
   if (X >= 0) and (X < Level.Info.Width) and (Y >= 0) and (Y < Level.Info.Height) then
   begin
-    Result := BlockerMap.Value[X, Y];
+    Result := (BlockerMap[X, Y] and $FF);
+
+    if Result <> DOM_NONE then
+      fLastBlockerCheckLem := LemmingList[(BlockerMap[X, Y] shr 8) and $FFFF]
+    else
+      fLastBlockerCheckLem := nil;
 
     // For builders, check that this is not the middle part of a newly created blocker area
     // see http://www.lemmingsforums.net/index.php?topic=3295.0
     if (Result <> DOM_NONE) and (L <> nil) and (L.LemAction = baBuilding) then
     begin
-      for i := 0 to LemmingList.Count - 1 do
-      begin
-        if LemmingList[i].LemDX = L.LemDx then
-          CheckPosX := L.LemX + 2 * L.LemDx
-        else
-          CheckPosX := L.LemX + 3 * L.LemDx;
+      if fLastBlockerCheckLem.LemDX = L.LemDx then
+        CheckPosX := L.LemX + 2 * L.LemDx
+      else
+        CheckPosX := L.LemX + 3 * L.LemDx;
 
-        if     LemmingList[i].LemHasBlockerField
-           and (L.LemY >= LemmingList[i].LemY - 1) and (L.LemY <= LemmingList[i].LemY + 3)
-           and (LemmingList[i].LemX = CheckPosX) then
-        begin
-          Result := DOM_NONE;
-          Exit;
-        end;
+      if     (L.LemY >= fLastBlockerCheckLem.LemY - 1) and (L.LemY <= fLastBlockerCheckLem.LemY + 3)
+         and (fLastBlockerCheckLem.LemX = CheckPosX) then
+      begin
+        Result := DOM_NONE;
+        Exit;
       end;
     end;
 
     // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
     if IsSimulating and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
     begin
-      if Result = DOM_FORCERIGHT then
-        LemPosRect := Rect(X - 6, Y - 5, X - 1, Y + 6)
-      else
-        LemPosRect := Rect(X + 2, Y - 5, X + 7, Y + 6);
-
-      for i := 0 to LemmingList.Count - 1 do
+      if not HasPixelAt(fLastBlockerCheckLem.LemX, fLastBlockerCheckLem.LemY) then
       begin
-        if     LemmingList[i].LemHasBlockerField
-           and PtInRect(LemPosRect, Point(LemmingList[i].LemX, LemmingList[i].LemY))
-           and not HasPixelAt(LemmingList[i].LemX, LemmingList[i].LemY) then
-        begin
-          Result := DOM_NONE;
-          Exit;
-        end;
+        Result := DOM_NONE;
+        Exit;
       end;
     end;
   end
@@ -1602,30 +1586,15 @@ var
     for Step := 0 to 11 do
       for Y := L.LemY - 6 to L.LemY + 4 do
         case Step of
-          0..3: WriteBlockerMap(X + Step, Y, DOM_FORCELEFT);
-          4..7: WriteBlockerMap(X + Step, Y, DOM_BLOCKER);
-          8..11: WriteBlockerMap(X + Step, Y, DOM_FORCERIGHT);
+          0..3: WriteBlockerMap(X + Step, Y, i, DOM_FORCELEFT);
+          4..7: WriteBlockerMap(X + Step, Y, i, DOM_BLOCKER);
+          8..11: WriteBlockerMap(X + Step, Y, i, DOM_FORCERIGHT);
         end;
-  end;
-
-  procedure SetForceField(Rect: TRect; Direction: Integer);
-  var
-    X, Y: Integer;
-  begin
-    for X := Rect.Left to Rect.Right - 1 do
-    for Y := Rect.Top to Rect.Bottom - 1 do
-      WriteBlockerMap(X, Y, Direction);
   end;
 
 begin
   BlockerMap.Clear(DOM_NONE);
 
-  // First add all force fields
-  for i := 0 to Gadgets.Count - 1 do
-    if Gadgets[i].TriggerEffect in [DOM_FORCELEFT, DOM_FORCERIGHT] then
-      SetForceField(Gadgets[i].TriggerRect, Gadgets[i].TriggerEffect);
-
-  // Then add all blocker fields
   for i := 0 to LemmingList.Count-1 do
     if LemmingList[i].LemHasBlockerField and not LemmingList[i].LemRemoved then
       SetBlockerField(LemmingList[i]);
@@ -1678,6 +1647,8 @@ begin
       DOM_FLIPPER:    WriteTriggerMap(FlipperMap, Gadgets[i].TriggerRect);
       DOM_NOSPLAT:    WriteTriggerMap(NoSplatMap, Gadgets[i].TriggerRect);
       DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
+      DOM_FORCELEFT:  WriteTriggerMap(ForceLeftMap, Gadgets[i].TriggerRect);
+      DOM_FORCERIGHT: WriteTriggerMap(ForceRightMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -2312,8 +2283,8 @@ begin
   case TriggerType of
     trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
                              or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
-    trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT);
-    trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT);
+    trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT) or ReadTriggerMap(X, Y, ForceLeftMap);
+    trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT) or ReadTriggerMap(X, Y, ForceRightMap);
     trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
     trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
@@ -4652,7 +4623,6 @@ end;
 procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
 var
   L: TLemming;
-  OldHighlightLemID: Integer;
 begin
   with aReplayItem do
   begin
