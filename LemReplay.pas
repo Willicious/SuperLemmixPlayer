@@ -438,16 +438,16 @@ end;
 
 procedure TReplay.Cut(aLastFrame: Integer);
 
-  procedure DoCut(aList: TReplayItemList);
+  procedure DoCut(aList: TReplayItemList; aLastFrameLocal: Integer);
   var
     i: Integer;
   begin
     for i := aList.Count-1 downto 0 do
-      if aList[i].Frame > aLastFrame then aList.Delete(i);
+      if aList[i].Frame >= aLastFrameLocal then aList.Delete(i);
   end;
 begin
-  DoCut(fAssignments);
-  DoCut(fSpawnIntervalChanges);
+  DoCut(fAssignments, aLastFrame);
+  DoCut(fSpawnIntervalChanges, aLastFrame);
   fIsModified := true;
 end;
 
