@@ -629,15 +629,22 @@ end;
 procedure TRenderer.DrawBuilderShadow(L: TLemming);
 var
   i: Integer;
+  DoneThisCycle: Boolean;
 begin
   fLayers.fIsEmpty[rlLowShadows] := False;
+  DoneThisCycle := false;
 
   while Assigned(L) and (L.LemAction = baBuilding) do
   begin
     // draw shadow for placed brick
-    if L.LemPhysicsFrame + 1 = 9 then  // why not just "if L.LemPhysicsFrame = 8"?
+    if (L.LemPhysicsFrame >= 8) and not DoneThisCycle then
+    begin
       for i := 0 to 5 do
         SetLowShadowPixel(L.LemX + i*L.LemDx, L.LemY - 1);
+
+      DoneThisCycle := true;
+    end else if L.LemPhysicsFrame = 0 then
+      DoneThisCycle := false;
 
     // Simulate next frame advance for lemming
     fRenderInterface.SimulateLem(L);
