@@ -4980,6 +4980,7 @@ end;
 procedure TLemmingGame.RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
 var
   E: TReplaySkillAssignment;
+  OldE: TBaseReplayItem;
 begin
   if not fPlaying then Exit;
 
@@ -4987,6 +4988,12 @@ begin
   E.Skill := aSkill;
   E.SetInfoFromLemming(L, (L.LemIndex = fHighlightLemmingID));
   E.Frame := fCurrentIteration;
+
+  repeat
+    OldE := fReplayManager.Assignment[fCurrentIteration, 0];
+    if OldE <> nil then
+      fReplayManager.Delete(OldE);
+  until OldE = nil;
 
   fReplayManager.Add(E);
 end;
