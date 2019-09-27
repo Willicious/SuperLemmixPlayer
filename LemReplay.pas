@@ -137,9 +137,9 @@ type
       procedure Clear(EraseLevelInfo: Boolean = false);
       procedure Delete(aItem: TBaseReplayItem);
       procedure LoadFromFile(aFile: String);
-      procedure SaveToFile(aFile: String);
+      procedure SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = false);
       procedure LoadFromStream(aStream: TStream);
-      procedure SaveToStream(aStream: TStream);
+      procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
       procedure LoadOldReplayFile(aFile: String);
       procedure Cut(aLastFrame: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
@@ -547,7 +547,7 @@ begin
     fAssignments.Add(Item);
 end;
 
-procedure TReplay.SaveToFile(aFile: String);
+procedure TReplay.SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = false);
 var
   FS: TFileStream;
 begin
@@ -555,7 +555,7 @@ begin
   FS := TFileStream.Create(aFile, fmCreate);
   try
     FS.Position := 0;
-    SaveToStream(FS);
+    SaveToStream(FS, aMarkAsUnmodified);
   finally
     FS.Free;
   end;
@@ -574,7 +574,7 @@ begin
   end;
 end;
 
-procedure TReplay.SaveToStream(aStream: TStream);
+procedure TReplay.SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
 var
   Parser: TParser;
   Sec: TParserSection;
@@ -603,6 +603,9 @@ begin
     SaveReplayList(fSpawnIntervalChanges, Sec);
 
     Parser.SaveToStream(aStream);
+
+    if aMarkAsUnmodified then
+      fIsModified := false;
   finally
     Parser.Free;
   end;

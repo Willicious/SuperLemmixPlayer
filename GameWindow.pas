@@ -1909,7 +1909,7 @@ begin
         S := Game.ReplayManager.GetSaveFileName(self, Game.Level, true);
         ForceDirectories(ExtractFilePath(S));
         Game.EnsureCorrectReplayDetails;
-        Game.ReplayManager.SaveToFile(S);
+        Game.ReplayManager.SaveToFile(S, true);
       end;
     end;
   end;
