@@ -2533,6 +2533,10 @@ begin
 
     TurnAround(L);
 
+    // Zombies always infect a blocker they bounce off
+    if L.LemIsZombie and (fLastBlockerCheckLem <> nil) and not (fLastBlockerCheckLem.LemIsZombie) then
+      RemoveLemming(fLastBlockerCheckLem, RM_ZOMBIE);
+
     // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
     if L.LemAction = baMining then
     begin
