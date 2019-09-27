@@ -673,6 +673,7 @@ end;
 procedure TRenderer.DrawStackerShadow(L: TLemming);
 var
   BrickPosY, i: Integer;
+  YOffset: Integer;
 begin
   fLayers.fIsEmpty[rlLowShadows] := False;
 
@@ -680,13 +681,18 @@ begin
   BrickPosY := L.LemY - 9 + L.LemNumberOfBricksLeft;
   if L.LemStackLow then Inc(BrickPosY);
 
+  if (L.LemAction = baStacking) and (L.LemPhysicsFrame = 7) then // see TLemmingGame.Transition's const ANIM_FRAMECOUNT
+    YOffset := -1
+  else
+    YOffset := 0;
+
   while Assigned(L) and (L.LemAction = baStacking) do
   begin
     // draw shadow for placed brick
     if L.LemPhysicsFrame + 1 = 7 then
     begin
       for i := 1 to 3 do
-        SetLowShadowPixel(L.LemX + i*L.LemDx, BrickPosY);
+        SetLowShadowPixel(L.LemX + i*L.LemDx, BrickPosY + YOffset);
 
       Dec(BrickPosY); // for the next brick
     end;
