@@ -494,6 +494,10 @@ begin
     O.GS := 'orig_dirt';
 
   O.Piece := aSection.LineTrimString['piece'];
+
+  if (Uppercase(O.GS) = 'PLOM_FESTIVESHANGTU') and (Uppercase(O.Piece) = 'PENDURUM_TRAP') then
+    O.Piece := 'pendulum_trap';
+
   O.Left := aSection.LineNumeric['x'];
   O.Top := aSection.LineNumeric['y'];
   O.Width := aSection.LineNumeric['width'];
