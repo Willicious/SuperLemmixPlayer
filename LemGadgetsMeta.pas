@@ -247,28 +247,28 @@ begin
     Sec := Parser.MainSection;
 
     // Trigger effects
-    if (Sec.Line['exit'] <> nil) or (Sec.LineTrimString['effect'] = 'exit') then fTriggerEffect := DOM_EXIT;
-    if (Sec.Line['force_left'] <> nil) or (Sec.LineTrimString['effect'] = 'forceleft') then fTriggerEffect := DOM_FORCELEFT;
-    if (Sec.Line['force_right'] <> nil) or (Sec.LineTrimString['effect'] = 'forceright') then fTriggerEffect := DOM_FORCERIGHT;
-    if (Sec.Line['trap'] <> nil) or (Sec.LineTrimString['effect'] = 'trap') then fTriggerEffect := DOM_TRAP;
-    if (Sec.Line['water'] <> nil) or (Sec.LineTrimString['effect'] = 'water') then fTriggerEffect := DOM_WATER;
-    if (Sec.Line['fire'] <> nil) or (Sec.LineTrimString['effect'] = 'fire') then fTriggerEffect := DOM_FIRE;
-    if (Sec.Line['one_way_left'] <> nil) or (Sec.LineTrimString['effect'] = 'onewayleft') then fTriggerEffect := DOM_ONEWAYLEFT;
-    if (Sec.Line['one_way_right'] <> nil) or (Sec.LineTrimString['effect'] = 'onewayright') then fTriggerEffect := DOM_ONEWAYRIGHT;
-    if (Sec.Line['teleporter'] <> nil) or (Sec.LineTrimString['effect'] = 'teleporter') then fTriggerEffect := DOM_TELEPORT;
-    if (Sec.Line['receiver'] <> nil) or (Sec.LineTrimString['effect'] = 'receiver') then fTriggerEffect := DOM_RECEIVER;
-    if (Sec.Line['pickup_skill'] <> nil) or (Sec.LineTrimString['effect'] = 'pickupskill') then fTriggerEffect := DOM_PICKUP;
-    if (Sec.Line['locked_exit'] <> nil) or (Sec.LineTrimString['effect'] = 'lockedexit') then fTriggerEffect := DOM_LOCKEXIT;
-    if (Sec.Line['button'] <> nil) or (Sec.LineTrimString['effect'] = 'unlockbutton') then fTriggerEffect := DOM_BUTTON;
-    if (Sec.Line['one_way_down'] <> nil) or (Sec.LineTrimString['effect'] = 'onewaydown') then fTriggerEffect := DOM_ONEWAYDOWN;
-    if (Sec.Line['updraft'] <> nil) or (Sec.LineTrimString['effect'] = 'updraft') then fTriggerEffect := DOM_UPDRAFT;
-    if (Sec.Line['splitter'] <> nil) or (Sec.LineTrimString['effect'] = 'splitter') then fTriggerEffect := DOM_FLIPPER;
-    if (Sec.Line['window'] <> nil) or (Sec.LineTrimString['effect'] = 'entrance') then fTriggerEffect := DOM_WINDOW;
-    if (Sec.Line['antisplatpad'] <> nil) or (Sec.LineTrimString['effect'] = 'antisplatpad') then fTriggerEffect := DOM_NOSPLAT;
-    if (Sec.Line['splatpad'] <> nil) or (Sec.LineTrimString['effect'] = 'splatpad') then fTriggerEffect := DOM_SPLAT;
-    if (Sec.Line['moving_background'] <> nil) or (Sec.LineTrimString['effect'] = 'background') then fTriggerEffect := DOM_BACKGROUND;
-    if (Sec.Line['single_use_trap'] <> nil) or (Sec.LineTrimString['effect'] = 'traponce') then fTriggerEffect := DOM_TRAPONCE;
-    if (Sec.Line['one_way_up'] <> nil) or (Sec.LineTrimString['effect'] = 'onewayup') then fTriggerEffect := DOM_ONEWAYUP;
+    if (Sec.Line['exit'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'exit') then fTriggerEffect := DOM_EXIT;
+    if (Sec.Line['force_left'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'forceleft') then fTriggerEffect := DOM_FORCELEFT;
+    if (Sec.Line['force_right'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'forceright') then fTriggerEffect := DOM_FORCERIGHT;
+    if (Sec.Line['trap'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'trap') then fTriggerEffect := DOM_TRAP;
+    if (Sec.Line['water'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'water') then fTriggerEffect := DOM_WATER;
+    if (Sec.Line['fire'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'fire') then fTriggerEffect := DOM_FIRE;
+    if (Sec.Line['one_way_left'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'onewayleft') then fTriggerEffect := DOM_ONEWAYLEFT;
+    if (Sec.Line['one_way_right'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'onewayright') then fTriggerEffect := DOM_ONEWAYRIGHT;
+    if (Sec.Line['teleporter'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'teleporter') then fTriggerEffect := DOM_TELEPORT;
+    if (Sec.Line['receiver'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'receiver') then fTriggerEffect := DOM_RECEIVER;
+    if (Sec.Line['pickup_skill'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'pickupskill') then fTriggerEffect := DOM_PICKUP;
+    if (Sec.Line['locked_exit'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'lockedexit') then fTriggerEffect := DOM_LOCKEXIT;
+    if (Sec.Line['button'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'unlockbutton') then fTriggerEffect := DOM_BUTTON;
+    if (Sec.Line['one_way_down'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'onewaydown') then fTriggerEffect := DOM_ONEWAYDOWN;
+    if (Sec.Line['updraft'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'updraft') then fTriggerEffect := DOM_UPDRAFT;
+    if (Sec.Line['splitter'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'splitter') then fTriggerEffect := DOM_FLIPPER;
+    if (Sec.Line['window'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'entrance') then fTriggerEffect := DOM_WINDOW;
+    if (Sec.Line['antisplatpad'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'antisplatpad') then fTriggerEffect := DOM_NOSPLAT;
+    if (Sec.Line['splatpad'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'splatpad') then fTriggerEffect := DOM_SPLAT;
+    if (Sec.Line['moving_background'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'background') then fTriggerEffect := DOM_BACKGROUND;
+    if (Sec.Line['single_use_trap'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'traponce') then fTriggerEffect := DOM_TRAPONCE;
+    if (Sec.Line['one_way_up'] <> nil) or (Lowercase(Sec.LineTrimString['effect']) = 'onewayup') then fTriggerEffect := DOM_ONEWAYUP;
 
     if Sec.Section['PRIMARY_ANIMATION'] = nil then
     begin
