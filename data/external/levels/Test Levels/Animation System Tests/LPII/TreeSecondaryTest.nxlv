@@ -1,69 +1,51 @@
-# ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.11
-# ----------------------------- 
- 
-#        Level info             
-# ----------------------------- 
- TITLE Tree Secondary Animation Test
- AUTHOR 
- ID x448E9C922941597E
- AUTOSTEEL on 
- 
-#       Level dimensions        
-# ----------------------------- 
- WIDTH    320
- HEIGHT   160
- START_X  160
- START_Y   80
- THEME namida_tree
- 
-#         Level stats           
-# ----------------------------- 
- LEMMINGS       40
- REQUIREMENT    20
- MAX_SPAWN_INTERVAL   53
- 
- $SKILLSET 
-   DISARMER    5
- $END 
- 
-#     Interactive objects       
-# ----------------------------- 
- $OBJECT
-   COLLECTION namida_tree
-   PIECE      window
-   X         76
-   Y         30
-   NO_OVERWRITE
-   DIRECTION right
- $END
- 
- $OBJECT
-   COLLECTION namida_tree
-   PIECE      trap
-   X        150
-   Y         38
-   NO_OVERWRITE
- $END
- 
- 
-#        Terrain pieces         
-# ----------------------------- 
- $TERRAIN
-   COLLECTION namida_tree
-   PIECE      trunk_07
-   X   128
-   Y    72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION namida_tree
-   PIECE      trunk_07
-   X    68
-   Y    72
-   ONE_WAY
- $END
- 
- 
+TITLE Tree Secondary Animation Test
+THEME namida_tree
+ID x448E9C922941597E
+LEMMINGS 40
+SAVE_REQUIREMENT 0
+MAX_SPAWN_INTERVAL 53
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  DISARMER 5
+$END
+
+$GADGET
+  STYLE namida_tree
+  PIECE window
+  X 76
+  Y 30
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_tree
+  PIECE trap
+  X 150
+  Y 38
+  WIDTH 16
+  HEIGHT 37
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE namida_tree
+  PIECE trunk_07
+  X 128
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_tree
+  PIECE trunk_07
+  X 68
+  Y 72
+  ONE_WAY
+$END
+

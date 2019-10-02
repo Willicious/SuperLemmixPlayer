@@ -1,69 +1,47 @@
-# ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.12
-# ----------------------------- 
- 
-#        Level info             
-# ----------------------------- 
- TITLE Anti-Splat Pad Test
- AUTHOR 
- ID x307AF1F2D160BC
- AUTOSTEEL on 
- 
-#       Level dimensions        
-# ----------------------------- 
- WIDTH    320
- HEIGHT   160
- START_X  160
- START_Y   80
- THEME orig_dirt
- 
-#         Level stats           
-# ----------------------------- 
- LEMMINGS       40
- REQUIREMENT    20
- MAX_SPAWN_INTERVAL   53
- 
- $SKILLSET 
- $END 
- 
-#     Interactive objects       
-# ----------------------------- 
- $OBJECT
-   COLLECTION orig_dirt
-   PIECE      window
-   X         66
-   Y          4
-   NO_OVERWRITE
-   DIRECTION right
- $END
- 
- $OBJECT
-   COLLECTION namida_wasteland
-   PIECE      antisplat_wire
-   X        109
-   Y        135
-   WIDTH     24
-   NO_OVERWRITE
- $END
- 
- 
-#        Terrain pieces         
-# ----------------------------- 
- $TERRAIN
-   COLLECTION orig_dirt
-   PIECE      bridge_01
-   X    69
-   Y    36
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION orig_dirt
-   PIECE      bridge_01
-   X    97
-   Y   139
-   ONE_WAY
- $END
- 
- 
+TITLE Anti-Splat Pad Test
+THEME orig_dirt
+ID x00307AF1F2D160BC
+LEMMINGS 40
+SAVE_REQUIREMENT 0
+MAX_SPAWN_INTERVAL 53
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$GADGET
+  STYLE orig_dirt
+  PIECE window
+  X 66
+  Y 4
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_wasteland
+  PIECE antisplat_wire
+  X 109
+  Y 135
+  WIDTH 24
+  HEIGHT 5
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_01
+  X 69
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_01
+  X 97
+  Y 139
+  ONE_WAY
+$END
+

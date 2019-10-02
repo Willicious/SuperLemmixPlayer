@@ -1,182 +1,178 @@
-# ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.11
-# ----------------------------- 
- 
-#        Level info             
-# ----------------------------- 
- TITLE Bubble Secondary Animation Test
- AUTHOR 
- ID x2B6F6BB61046E97D
- AUTOSTEEL on 
- 
-#       Level dimensions        
-# ----------------------------- 
- WIDTH    320
- HEIGHT   160
- START_X  160
- START_Y   80
- THEME ohno_bubble
- 
-#         Level stats           
-# ----------------------------- 
- LEMMINGS       40
- REQUIREMENT    20
- MAX_SPAWN_INTERVAL   53
- 
- $SKILLSET 
-    CLIMBER    0
-   DISARMER    5
- $END 
- 
-#     Interactive objects       
-# ----------------------------- 
- $OBJECT
-   COLLECTION ohno_bubble
-   PIECE      trap_01
-   X        158
-   Y         90
-   NO_OVERWRITE
- $END
- 
- $OBJECT
-   COLLECTION ohno_bubble
-   PIECE      trap_02
-   X         75
-   Y         44
-   NO_OVERWRITE
- $END
- 
- $OBJECT
-   COLLECTION ohno_bubble
-   PIECE      window
-   X         21
-   Y         23
-   NO_OVERWRITE
-   DIRECTION right
- $END
- 
- $OBJECT
-   COLLECTION ohno_bubble
-   PIECE      exit_locked
-   X        203
-   Y         23
-   NO_OVERWRITE
- $END
- 
- $OBJECT
-   COLLECTION ohno_bubble
-   PIECE      button
-   X         89
-   Y         64
-   NO_OVERWRITE
- $END
- 
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
-   X         58
-   Y         90
-   NO_OVERWRITE
-   SKILL CLIMBER
-   SKILLCOUNT 3
- $END
- 
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
-   X         74
-   Y         93
-   NO_OVERWRITE
-   SKILL DISARMER
-   SKILLCOUNT 2
- $END
- 
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
-   X        102
-   Y         95
-   NO_OVERWRITE
-   SKILL DISARMER
-   SKILLCOUNT 14
- $END
- 
- $OBJECT
-   COLLECTION default
-   PIECE      pickup
-   X        126
-   Y         95
-   NO_OVERWRITE
-   SKILL DISARMER
-   SKILLCOUNT 99
- $END
- 
- 
-#        Terrain pieces         
-# ----------------------------- 
- $TERRAIN
-   COLLECTION ohno_bubble
-   PIECE      pipe_small_01
-   X   144
-   Y    72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION ohno_bubble
-   PIECE      pipe_small_01
-   X   112
-   Y    72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION ohno_bubble
-   PIECE      pipe_small_01
-   X    80
-   Y    72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION ohno_bubble
-   PIECE      pipe_small_01
-   X    48
-   Y    72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION ohno_bubble
-   PIECE      pipe_small_01
-   X    16
-   Y    72
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION ohno_bubble
-   PIECE      pipe_small_01
-   X   168
-   Y   120
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION ohno_bubble
-   PIECE      pipe_small_01
-   X   206
-   Y    51
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION ohno_bubble
-   PIECE      pipe_small_01
-   X   222
-   Y    51
-   ONE_WAY
- $END
- 
- 
+TITLE Bubble Secondary Animation Test
+THEME ohno_bubble
+ID x2B6F6BB61046E97D
+LEMMINGS 40
+SAVE_REQUIREMENT 20
+MAX_SPAWN_INTERVAL 53
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  CLIMBER 0
+  DISARMER 5
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE trap_01
+  X 158
+  Y 90
+  WIDTH 48
+  HEIGHT 36
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE trap_02
+  X 75
+  Y 44
+  WIDTH 16
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE window
+  X 21
+  Y 23
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE exit_locked
+  X 203
+  Y 23
+  WIDTH 48
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_bubble
+  PIECE button
+  X 89
+  Y 64
+  WIDTH 16
+  HEIGHT 16
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 58
+  Y 90
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL CLIMBER
+  SKILL_COUNT 3
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 74
+  Y 93
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL DISARMER
+  SKILL_COUNT 2
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 102
+  Y 95
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL DISARMER
+  SKILL_COUNT 14
+$END
+
+$GADGET
+  STYLE default
+  PIECE pickup
+  X 126
+  Y 95
+  WIDTH 24
+  HEIGHT 24
+  NO_OVERWRITE
+  SKILL DISARMER
+  SKILL_COUNT 99
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 144
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 112
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 80
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 48
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 16
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 168
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 206
+  Y 51
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_bubble
+  PIECE pipe_small_01
+  X 222
+  Y 51
+  ONE_WAY
+$END
+

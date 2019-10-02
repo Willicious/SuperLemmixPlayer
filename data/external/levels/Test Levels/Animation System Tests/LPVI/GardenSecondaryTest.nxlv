@@ -1,75 +1,54 @@
-# ----------------------------- 
-#        NeoLemmix Level        
-#   Created with NLEditor 1.11
-# ----------------------------- 
- 
-#        Level info             
-# ----------------------------- 
- TITLE Garden Secondary Animation Test
- AUTHOR 
- ID x2FF8ED5F4B3EB405
- AUTOSTEEL on 
- 
-#       Level dimensions        
-# ----------------------------- 
- WIDTH    320
- HEIGHT   160
- START_X  160
- START_Y   80
- THEME namida_bridge
- 
-#         Level stats           
-# ----------------------------- 
- LEMMINGS       40
- REQUIREMENT    20
- MAX_SPAWN_INTERVAL   53
- 
- $SKILLSET 
- $END 
- 
-#     Interactive objects       
-# ----------------------------- 
- $OBJECT
-   COLLECTION namida_garden
-   PIECE      window
-   X         69
-   Y         31
-   NO_OVERWRITE
-   DIRECTION right
- $END
- 
- $OBJECT
-   COLLECTION namida_garden
-   PIECE      flytrap
-   X        155
-   Y         61
- $END
- 
- 
-#        Terrain pieces         
-# ----------------------------- 
- $TERRAIN
-   COLLECTION namida_garden
-   PIECE      grass_02
-   X   137
-   Y    74
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION namida_garden
-   PIECE      grass_02
-   X    97
-   Y    74
-   ONE_WAY
- $END
- 
- $TERRAIN
-   COLLECTION namida_garden
-   PIECE      grass_02
-   X    57
-   Y    74
-   ONE_WAY
- $END
- 
- 
+TITLE Garden Secondary Animation Test
+THEME namida_bridge
+ID x2FF8ED5F4B3EB405
+LEMMINGS 40
+SAVE_REQUIREMENT 0
+MAX_SPAWN_INTERVAL 53
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$GADGET
+  STYLE namida_garden
+  PIECE window
+  X 69
+  Y 31
+  WIDTH 41
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE namida_garden
+  PIECE flytrap
+  X 155
+  Y 61
+  WIDTH 20
+  HEIGHT 16
+$END
+
+$TERRAIN
+  STYLE namida_garden
+  PIECE grass_02
+  X 137
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_garden
+  PIECE grass_02
+  X 97
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE namida_garden
+  PIECE grass_02
+  X 57
+  Y 74
+  ONE_WAY
+$END
+
