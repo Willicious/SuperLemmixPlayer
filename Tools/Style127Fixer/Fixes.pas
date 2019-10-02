@@ -31,6 +31,8 @@ begin
   Result.Keyword := '';
   Result.Value := '';
 
+  Line := StringReplace(Line, #9, '  ', [rfReplaceAll]);
+
   for n := 1 to Length(Line) do
     if Line[n] = ' ' then
       Inc(Result.StartSpaces)
@@ -140,6 +142,9 @@ begin
     begin
       if (PrimaryStart < 0) then
       begin
+        if Trim(SL[SL.Count - 1]) <> '' then
+          SL.Add('');
+
         PrimaryStart := SL.Count;
         SL.Add('$PRIMARY_ANIMATION');
         SL.Add('$END');
