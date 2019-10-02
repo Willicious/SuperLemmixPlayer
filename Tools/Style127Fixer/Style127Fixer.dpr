@@ -22,6 +22,15 @@ uses
   begin
     if FileExists(StylePath + 'lemmings\scheme.nxmi') then
       HandleLemmings(StylePath + 'lemmings\');
+
+    if FindFirst(StylePath + 'objects\*.nxmo', 0, SearchRec) = 0 then
+    begin
+      repeat
+        HandleObject(StylePath + 'objects\' + SearchRec.Name);
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+
   end;
 
 var

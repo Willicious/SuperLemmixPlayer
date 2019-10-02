@@ -7,6 +7,7 @@ uses
 
   function AppPath: String;
   procedure HandleLemmings(LemmingsFolder: String);
+  procedure HandleObject(ObjectNXMOFile: String);
 
 implementation
 
@@ -51,6 +52,107 @@ begin
   Result := StringOfChar(' ', Line.StartSpaces) + Line.Keyword;
   if Line.Value <> '' then
     Result := Result + ' ' + Line.Value;
+end;
+
+procedure HandleObject(ObjectNXMOFile: String);
+var
+  SL: TStringList;
+  SLPrimary: TStringList;
+  i: Integer;
+  n: Integer;
+  FoundEffect: Boolean;
+  RemoveLine: Boolean;
+  PrimaryStart: Integer;
+
+  procedure AddToPrimary(LineWithoutIndentation: String);
+  begin
+    if (SLPrimary = nil) then
+      SLPrimary := TStringList.Create;
+
+    SLPrimary.Add('  ' + LineWithoutIndentation);
+    RemoveLine := true;
+  end;
+const
+  NAME_PAIRINGS_COUNT = 22;
+  OLD_NAMES: array[0..NAME_PAIRINGS_COUNT-1] of String =
+    ( 'EXIT', 'FORCE_LEFT', 'FORCE_RIGHT', 'TRAP', 'WATER', 'FIRE', 'ONE_WAY_LEFT', 'ONE_WAY_RIGHT',
+      'TELEPORTER', 'RECEIVER', 'PICKUP_SKILL', 'LOCKED_EXIT', 'BUTTON', 'ONE_WAY_DOWN', 'UPDRAFT',
+      'SPLITTER', 'WINDOW', 'ANTISPLATPAD', 'SPLATPAD', 'MOVING_BACKGROUND', 'SINGLE_USE_TRAP',
+      'ONE_WAY_UP' );
+  NEW_NAMES: array[0..NAME_PAIRINGS_COUNT-1] of String =
+    ( 'EXIT', 'FORCELEFT', 'FORCERIGHT', 'TRAP', 'WATER', 'FIRE', 'ONEWAYLEFT', 'ONEWAYRIGHT',
+      'TELEPORTER', 'RECEIVER', 'PICKUPSKILL', 'LOCKEDEXIT', 'UNLOCKBUTTON', 'ONEWAYDOWN', 'UPDRAFT',
+      'SPLITTER', 'ENTRANCE', 'ANTISPLATPAD', 'SPLATPAD', 'BACKGROUND', 'TRAPONCE', 'ONEWAYUP'
+    );
+var
+  Split: TLineDivided;
+  Level: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    SL.LoadFromFile(ObjectNXMOFile);
+    SLPrimary := nil;
+    FoundEffect := false;
+    PrimaryStart := -1;
+    Level := 0;
+
+    for i := 0 to SL.Count-1 do
+    begin
+      Split := SplitLine(SL[i]);
+      RemoveLine := false;
+
+      if Level = 0 then
+      begin
+        if not FoundEffect then
+          for n := 0 to NAME_PAIRINGS_COUNT-1 do
+            if CompareText(Split.Keyword, OLD_NAMES[n]) = 0 then
+            begin
+              Split.Keyword := 'EFFECT';
+              Split.Value := NEW_NAMES[n];
+              FoundEffect := true;
+              Break;
+            end;
+
+        if CompareText(Split.Keyword, 'frames') = 0 then AddToPrimary('FRAMES ' + Split.Value);
+        if CompareText(Split.Keyword, 'horizontal_strip') = 0 then AddToPrimary('HORIZONTAL_STRIP');
+        if CompareText(Split.Keyword, 'initial_frame') = 0 then AddToPrimary('INITIAL_FRAME');
+        if CompareText(LeftStr(Split.Keyword, 10), 'nine_slice') = 0 then AddToPrimary(Split.Keyword + ' ' + Split.Value);
+
+        if CompareText(Split.Keyword, '$PRIMARY_ANIMATION') = 0 then PrimaryStart := i;
+      end;
+
+      if CompareText(Split.Keyword, '$END') = 0 then Dec(Level)
+      else if LeftStr(Split.Keyword, 1) = '$' then Inc(Level);
+
+      if RemoveLine then
+        SL[i] := '*#'
+      else
+        SL[i] := CombineLine(Split);
+    end;
+
+    if (SLPrimary <> nil) then
+    begin
+      if (PrimaryStart < 0) then
+      begin
+        PrimaryStart := SL.Count;
+        SL.Add('$PRIMARY_ANIMATION');
+        SL.Add('$END');
+      end;
+
+      for i := 0 to SLPrimary.Count-1 do
+        SL.Insert(PrimaryStart + 1 + i, SLPrimary[i]);
+    end;
+
+    for i := SL.Count-1 downto 0 do
+      if SL[i] = '*#' then
+        SL.Delete(i);
+
+    SL.SaveToFile(ObjectNXMOFile);
+  finally
+    SL.Free;
+    if (SLPrimary <> nil) then
+      SLPrimary.Free;
+  end;
 end;
 
 procedure HandleLemmings(LemmingsFolder: String);
