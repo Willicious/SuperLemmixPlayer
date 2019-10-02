@@ -121,6 +121,12 @@ begin
         if CompareText(Split.Keyword, '$PRIMARY_ANIMATION') = 0 then PrimaryStart := i;
       end;
 
+      if CompareText(Split.Keyword, 'STATE') = 0 then
+      begin
+        if CompareText(Split.Value, 'LOOP_TO_ZERO') = 0 then Split.Value := 'LOOPTOZERO';
+        if CompareText(Split.Value, 'MATCH_PRIMARY_FRAME') = 0 then Split.Value := 'MATCHPHYSICS';
+      end;
+
       if CompareText(Split.Keyword, '$END') = 0 then Dec(Level)
       else if LeftStr(Split.Keyword, 1) = '$' then Inc(Level);
 

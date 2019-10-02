@@ -574,9 +574,9 @@ begin
     BaseTrigger.fState := gasPause
   else if (S = 'stop') then
     BaseTrigger.fState := gasStop
-  else if (S = 'loop_to_zero') then
+  else if (S = 'loop_to_zero') or (S = 'looptozero') then
     BaseTrigger.fState := gasLoopToZero
-  else if (S = 'match_primary_frame') then
+  else if (S = 'match_primary_frame') or (S = 'matchphysics') then
     BaseTrigger.fState := gasMatchPrimary
   else if (aSegment.Line['hide'] <> nil) then
     BaseTrigger.fState := gasPause
