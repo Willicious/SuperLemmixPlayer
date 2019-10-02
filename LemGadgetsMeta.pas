@@ -312,47 +312,17 @@ begin
     GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];
     GadgetAccessor.TriggerHeight := Sec.LineNumeric['trigger_height'];
 
-    GadgetAccessor.DigitAlign := 0; // due to how fallback values work, we want to assign the last-resort fallback here
+    GadgetAccessor.DigitX := Sec.LineNumericDefault['digit_x', fWidth div 2];
+    GadgetAccessor.DigitY := Sec.LineNumericDefault['digit_y', -6];
 
-    GadgetAccessor.DigitX := Sec.LineNumeric['digit_x'];
-    GadgetAccessor.DigitY := Sec.LineNumeric['digit_y'];
-
-    if Sec.Line['digit_x'] = nil then
-    begin
-      if fTriggerEffect = DOM_PICKUP then
-      begin
-        GadgetAccessor.DigitX := fWidth - 1;
-        if Sec.Line['digit_align'] = nil then
-          GadgetAccessor.DigitAlign := 1;
-      end else
-        GadgetAccessor.DigitX := fWidth div 2;
-    end;
-
-    if Sec.Line['digit_y'] = nil then
-    begin
-      if fTriggerEffect = DOM_PICKUP then
-        GadgetAccessor.DigitY := GadgetAccessor.Height - 4
-      else
-        GadgetAccessor.DigitY := -6;
-    end;
-
-    if (Sec.Line['digit_alignment'] <> nil) then
-    begin
-      if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'l' then
-        GadgetAccessor.DigitAlign := -1
-      else if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'r' then
-        GadgetAccessor.DigitAlign := 1
-      else
-        GadgetAccessor.DigitAlign := 0;
-    end else
-      GadgetAccessor.DigitAlign := Sec.LineNumericDefault['digit_align', GadgetAccessor.DigitAlign];
-
-    if fTriggerEffect = DOM_PICKUP then
-      fDigitMinLength := 0
+    if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'l' then
+      GadgetAccessor.DigitAlign := -1
+    else if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'r' then
+      GadgetAccessor.DigitAlign := 1
     else
-      fDigitMinLength := 1;
+      GadgetAccessor.DigitAlign := 0;
 
-    fDigitMinLength := Sec.LineNumericDefault['digit_length', fDigitMinLength];
+    fDigitMinLength := Sec.LineNumericDefault['digit_length', 1];
 
     fSoundEffect := Sec.LineTrimString['sound'];
 
