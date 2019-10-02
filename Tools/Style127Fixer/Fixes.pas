@@ -75,7 +75,7 @@ var
       repeat
         if CompareText(RightStr(SearchRec.Name, 9), '_mask.png') = 0 then Continue;
 
-        LoadBitmap32FromPng(BMP, SearchRec.Name);
+        LoadBitmap32FromPng(BMP, LemmingsFolder + SearchRec.Name);
         for y := 0 to BMP.Height-1 do
           for x := 0 to BMP.Width-1 do
             if (BMP[x, y] and $00FFFFFF) = Color then
@@ -126,12 +126,14 @@ var
 var
   i: Integer;
   Split: TLineDivided;
+  StartRecolors: Integer;
 begin
   SL := TStringList.Create;
   BMP := TBitmap32.Create;
   BMP2 := TBitmap32.Create;
   try
     MaskColor := $00000000;
+    StartRecolors := -1;
 
     if FindFirst(LemmingsFolder + '*_mask.png', 0, SearchRec) = 0 then
     begin
@@ -140,8 +142,8 @@ begin
 
       FindFirst(LemmingsFolder + '*_mask.png', 0, SearchRec);
       repeat
-        CopyMask(SearchRec.Name);
-        DeleteFile(SearchRec.Name);
+        CopyMask(LemmingsFolder + SearchRec.Name);
+        DeleteFile(LemmingsFolder + SearchRec.Name);
       until FindNext(SearchRec) <> 0;
       FindClose(SearchRec);
     end;
@@ -152,17 +154,25 @@ begin
     begin
       Split := SplitLine(SL[i]);
       if CompareText(Split.Keyword, 'keyframe') = 0 then Split.Keyword := 'LOOP_TO_FRAME';
-      if CompareText(Split.Keyword, '$recoloring') = 0 then Split.Keyword := 'STATE_RECOLORING';
+      if CompareText(Split.Keyword, '$recoloring') = 0 then Split.Keyword := '$STATE_RECOLORING';
+      if CompareText(Split.Keyword, '$spriteset_recoloring') = 0 then StartRecolors := i;
+
       SL[i] := CombineLine(Split);
     end;
 
     if (MaskColor and $FF000000) <> 0 then
     begin
-      SL.Insert(0, '$SPRITESET_RECOLORING');
-      SL.Insert(1, '  MASK x' + IntToHex((MaskColor and $FFFFFF), 6));
-      SL.Insert(2, '$END');
-      SL.Insert(3, '');
+      if StartRecolors < 0 then
+      begin
+        SL.Insert(0, '$SPRITESET_RECOLORING');
+        SL.Insert(1, '  MASK x' + IntToHex((MaskColor and $FFFFFF), 6));
+        SL.Insert(2, '$END');
+        SL.Insert(3, '');
+      end else
+        SL.Insert(StartRecolors + 1, '  MASK x' + IntToHex((MaskColor and $FFFFFF), 6));
     end;
+
+    SL.SaveToFile(LemmingsFolder + 'scheme.nxmi');
   finally
     SL.Free;
     BMP.Free;
