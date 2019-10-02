@@ -117,7 +117,7 @@ begin
 
         if CompareText(Split.Keyword, 'frames') = 0 then AddToPrimary('FRAMES ' + Split.Value);
         if CompareText(Split.Keyword, 'horizontal_strip') = 0 then AddToPrimary('HORIZONTAL_STRIP');
-        if CompareText(Split.Keyword, 'initial_frame') = 0 then AddToPrimary('INITIAL_FRAME');
+        if CompareText(Split.Keyword, 'initial_frame') = 0 then AddToPrimary('INITIAL_FRAME ' + Split.Value);
         if CompareText(LeftStr(Split.Keyword, 10), 'nine_slice') = 0 then AddToPrimary(Split.Keyword + ' ' + Split.Value);
 
         if CompareText(Split.Keyword, '$PRIMARY_ANIMATION') = 0 then PrimaryStart := i;
