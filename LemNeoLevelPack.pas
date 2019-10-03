@@ -1276,59 +1276,55 @@ end;
 
 function TNeoLevelGroup.GetNextGroup: TNeoLevelGroup;
 var
-  GiveChildPriority: Boolean;
+  NextChildIndex: Integer;
+
+  procedure GoDeepest;
+  begin
+    while Result.Children.Count > 0 do
+      Result := Result.Children[0];
+  end;
 begin
   Result := self; // failsafe
-  GiveChildPriority := IsBasePack;
+  if Result.Parent = nil then Exit;
+
   repeat
-    if GiveChildPriority or (Result.Parent = nil) or Result.IsBasePack then
-    begin
-      if Result.Children.Count > 0 then
-        Result := Result.Children[0]
-      else
-        GiveChildPriority := false;
-    end
-    else if Result.ParentGroupIndex < Result.Parent.Children.Count - 1 then
-    begin
-      Result := Result.Parent.Children[Result.ParentGroupIndex + 1];
-      GiveChildPriority := true;
-    end
-    else
-      Result := Result.Parent;
-  until ((Result.Levels.Count > 0) or (Result = self)) and not GiveChildPriority;
+    if Result.IsBasePack then
+      GoDeepest
+    else begin
+      NextChildIndex := Result.Parent.Children.IndexOf(Result) + 1;
+      if NextChildIndex < Result.Parent.Children.Count then
+      begin
+        Result := Result.Parent.Children[NextChildIndex];
+        GoDeepest;
+      end else
+        Result := Result.Parent;
+    end;
+  until (Result.Levels.Count > 0) or (Result = self);
 end;
 
 function TNeoLevelGroup.GetPrevGroup: TNeoLevelGroup;
 var
-  GiveParentPriority: Boolean;
+  AsChildIndex: Integer;
+  G: TNeoLevelGroup;
 begin
   Result := self; // failsafe
-  GiveParentPriority := false;
+  if Result.Parent = nil then Exit;
+
   repeat
-    if GiveParentPriority and not ((Result.Parent = nil) or Result.IsBasePack) then
-    begin
-      Result := Result.Parent;
-      GiveParentPriority := Result.ParentGroupIndex = 0;
-      Continue;
-    end
-    else if Result.Children.Count > 0 then
-    begin
-      GiveParentPriority := false;
-      Result := Result.Children[Result.Children.Count - 1];
-      Continue;
-    end
-    else if Result.ParentGroupIndex > 0 then
-    begin
-      GiveParentPriority := false;
-      Result := Parent.Children[Result.ParentGroupIndex - 1];
-      Continue;
-    end
-    else
-    begin
-      GiveParentPriority := true;
-      Result := Result.Parent;
+    if Result.Children.Count > 0 then
+      Result := Result.Children[Result.Children.Count-1]
+    else begin
+      AsChildIndex := Result.Parent.Children.IndexOf(Result);
+      while (AsChildIndex = 0) and (not Result.IsBasePack) do
+      begin
+        Result := Result.Parent;
+        AsChildIndex := Result.Parent.Children.IndexOf(Result);
+      end;
+
+      if AsChildIndex > 0 then
+        Result := Result.Parent.Children[AsChildIndex - 1];
     end;
-  until ((Result.Levels.Count > 0) or (Result = self)) and not GiveParentPriority;
+  until (Result.Levels.Count > 0) or (Result = self);
 end;
 
 function TNeoLevelGroup.GetStatus: TNeoLevelStatus;
