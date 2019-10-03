@@ -1106,13 +1106,15 @@ procedure TNeoLevelGroup.LoadFromSearchRec;
 var
   SearchRec: TSearchRec;
   L: TNeoLevelEntry;
+  G: TNeoLevelGroup;
 begin
   if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
   begin
     repeat
       if SearchRec.Attr and faDirectory <> faDirectory then Continue;
       if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
-      fChildGroups.Add(SearchRec.Name + '\');
+      G := fChildGroups.Add(SearchRec.Name + '\');
+      if Parent = nil then G.IsBasePack := true;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
   end;
