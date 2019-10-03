@@ -1305,7 +1305,6 @@ end;
 function TNeoLevelGroup.GetPrevGroup: TNeoLevelGroup;
 var
   AsChildIndex: Integer;
-  G: TNeoLevelGroup;
 begin
   Result := self; // failsafe
   if Result.Parent = nil then Exit;
