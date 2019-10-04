@@ -299,7 +299,10 @@ begin
 
     // program text
     S := CurrentVersionString;
+
+    {$ifdef rc}S := S + '-RC';{$endif}
     {$ifdef exp}if COMMIT_ID <> '' then S := S + ':' + Uppercase(COMMIT_ID);{$endif}
+
     if GameParams.CurrentLevel <> nil then
       S2 := GameParams.CurrentLevel.Group.PackTitle + #13 +
             GameParams.CurrentLevel.Group.PackAuthor + #13 +
