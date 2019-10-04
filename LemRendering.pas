@@ -246,7 +246,6 @@ end;
 procedure TRenderer.DrawLemmings(UsefulOnly: Boolean = false);
 var
   i: Integer;
-  IsStartingSeconds: Boolean;
   SelectedLemming: TLemming;
   LemmingList: TLemmingList;
 begin
@@ -256,7 +255,6 @@ begin
   LemmingList := fRenderInterface.LemmingList;
 
   // Draw all lemmings, except the one below the cursor
-  IsStartingSeconds := fRenderInterface.IsStartingSeconds;
   SelectedLemming := fRenderInterface.SelectedLemming;
   for i := 0 to LemmingList.Count-1 do
     if LemmingList[i] <> SelectedLemming then

@@ -387,7 +387,7 @@ var
 begin
   SrcFile := GameParams.CurrentLevel.Group.PanelPath + aName;
   if not FileExists(SrcFile) then
-    SrcFile := AppPath + SFStyles + SFDefaultStyle + SFPiecesPanel + aName;
+    SrcFile := AppPath + SFGraphicsPanel + aName;
   MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
   TPngInterface.LoadPngFile(SrcFile, aDst);

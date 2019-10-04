@@ -369,7 +369,7 @@ var
   BrickColor: TColor32;
   SkillIcons: TBitmaps;
   NewBmp: TBitmap32;
-  i, iReal: Integer;
+  i: Integer;
 
   procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
   var

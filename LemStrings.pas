@@ -22,7 +22,6 @@ const
       SFPiecesObjects = '\objects\';
       SFPiecesBackgrounds = '\backgrounds\';
       SFPiecesLemmings = '\lemmings\';
-      SFPiecesPanel = '\panel\';
       SFTheme = 'theme.nxtm';
 
   SFLevels = 'levels\';

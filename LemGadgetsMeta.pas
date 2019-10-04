@@ -383,7 +383,6 @@ end;
 procedure TGadgetMetaInfo.RegenerateAutoAnims(aTheme: TNeoTheme;
   aAni: TBaseAnimationSet);
 var
-  EraseAnim: TGadgetAnimation;
   SrcAnim: TGadgetAnimation;
   AnyChanged: Boolean;
   NameUpper: String;
