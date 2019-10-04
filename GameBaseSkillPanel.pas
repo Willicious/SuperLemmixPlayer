@@ -590,14 +590,10 @@ begin
     fSkillIcons[spbSwimmer].FillRect(0, 18, 15, 23, $FF0000FF);
     TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
 
-    // Floater, Glider - both simple
+    // Floater, Glider, Disarmer, Shimmier - all simple
     DrawAnimationFrame(fSkillIcons[spbFloater], UMBRELLA, 4, 7, 26);
     DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 26);
-
-    // Disarmer - graphic would be too easily confused with digger, so we fall back to the old graphic for now
-    GetGraphic('icon_disarmer.png', fSkillIcons[spbDisarmer]);
-
-    // Shimmier is straightforward
+    DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 21);
     DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 20);
 
     // Bomber is drawn resized
@@ -636,12 +632,11 @@ begin
     DrawBrick(fSkillIcons[spbStacker], 10, 17);
 
     // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
+    // For Digger, we just have to accept some particles.
     DrawAnimationFrame(fSkillIcons[spbBasher], BASHING, 0, 8, 21);
     DrawAnimationFrame(fSkillIcons[spbFencer], FENCING, 1, 7, 21);
     DrawAnimationFrame(fSkillIcons[spbMiner], MINING, 12, 4, 21);
-
-    // The digger doesn't HAVE any frames without particles. But the Disarmer's similar animation does! ;)
-    DrawAnimationFrame(fSkillIcons[spbDigger], FIXING, 0, 7, 21);
+    DrawAnimationFrame(fSkillIcons[spbDigger], DIGGING, 4, 7, 21);
 
     // And finally, outline everything. We generate the cloner after this, as it makes use of
     // the post-outlined Walker graphic.
