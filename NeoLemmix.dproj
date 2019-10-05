@@ -65,7 +65,7 @@
         <VerInfo_Release>0</VerInfo_Release>
         <VerInfo_MajorVer>12</VerInfo_MajorVer>
         <VerInfo_MinorVer>7</VerInfo_MinorVer>
-        <VerInfo_Build>1385</VerInfo_Build>
+        <VerInfo_Build>1387</VerInfo_Build>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <PreBuildEvent><![CDATA[GetCommitID LemVersionCID COMMIT_ID
@@ -79,7 +79,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_MinStackSize>32768</DCC_MinStackSize>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_UsePackage>vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;CLXIB;ibxpress;VCLIB;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP;$(DCC_UsePackage)</DCC_UsePackage>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=12.7.0.1385;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=12.7.0.1385;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=12.7.0.1387;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=12.7.0.1387;Comments=</VerInfo_Keys>
         <DCC_Optimize>false</DCC_Optimize>
         <DCC_ExeOutput>bin\</DCC_ExeOutput>
         <DCC_N>true</DCC_N>
@@ -260,7 +260,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
     <Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
     <PropertyGroup Condition="'$(Config)'=='Release' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
+</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -268,7 +269,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Release' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
+</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -276,7 +278,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Experimental Release' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
+</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -284,7 +287,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Experimental Release' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
+</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -292,7 +296,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
+</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -300,7 +305,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
+</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -308,7 +314,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='RC Release' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
+</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
@@ -316,7 +323,8 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='RC Release' And '$(Platform)'=='Win64'">
-        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID</PreBuildEvent>
+        <PreBuildEvent>GetCommitID LemVersionCID COMMIT_ID
+</PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>

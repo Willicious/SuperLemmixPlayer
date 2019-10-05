@@ -567,9 +567,13 @@ begin
   for i := 0 to Levels.Count-1 do
   begin
     L := Levels[i];
-    GameParams.SetLevel(L);
-    GameParams.LoadCurrentLevel(true);
-    GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
+    try
+      GameParams.SetLevel(L);
+      GameParams.LoadCurrentLevel(true);
+      GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
+    except
+      ShowMessage('Error converting "' + L.Title + '". This level will be skipped.');
+    end;
   end;
 end;
 
