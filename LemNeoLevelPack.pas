@@ -572,7 +572,7 @@ begin
       GameParams.LoadCurrentLevel(true);
       GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
     except
-      ShowMessage('Error converting "' + L.Title + '". This level will be skipped.');
+      ShowMessage('Error cleansing "' + L.Title + '". This level will be skipped.');
     end;
   end;
 end;
