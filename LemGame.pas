@@ -35,7 +35,7 @@ const
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
-        DOM_UPDRAFT, DOM_HINT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND];
+        DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND];
 
 const
   // never change, do NOT trust the bits are the same as the enumerated type.

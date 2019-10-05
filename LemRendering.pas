@@ -1759,8 +1759,6 @@ var
   end;
 
 begin
-  if Gadget.TriggerEffect in [DOM_LEMMING, DOM_HINT] then Exit;
-
   for i := 0 to Gadget.Animations.Count-1 do
   begin
     ThisAnim := Gadget.Animations[i];
@@ -1788,8 +1786,8 @@ end;
 procedure TRenderer.DrawTriggerArea(Gadget: TGadget);
 const
   DO_NOT_DRAW: set of 0..255 =
-        [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_STEEL, DOM_BLOCKER,
-         DOM_LEMMING, DOM_ONEWAYDOWN, DOM_WINDOW, DOM_HINT, DOM_BACKGROUND, DOM_ONEWAYUP];
+        [DOM_NONE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_BLOCKER,
+         DOM_ONEWAYDOWN, DOM_WINDOW, DOM_BACKGROUND, DOM_ONEWAYUP];
 begin
   if not (Gadget.TriggerEffect in DO_NOT_DRAW) then
     DrawTriggerAreaRectOnLayer(Gadget.TriggerRect);
@@ -1813,7 +1811,7 @@ begin
   Result := true;
   if not fUsefulOnly then Exit;
 
-  if Gadget.TriggerEffect in [DOM_NONE, DOM_HINT, DOM_BACKGROUND] then
+  if Gadget.TriggerEffect in [DOM_NONE, DOM_BACKGROUND] then
     Result := false;
 
   if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId < 0) then

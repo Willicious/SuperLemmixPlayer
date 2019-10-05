@@ -485,8 +485,8 @@ end;
 
 function TGadget.GetPreassignedSkill(BitField: Integer): Boolean;
 begin
-  // Only call this function for hatches and preplaced lemmings
-  Assert(MetaObj.TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
+  // Only call this function for hatches
+  Assert(MetaObj.TriggerEffect in [DOM_WINDOW], 'Preassigned skill called for object not a hatch or a preplaced lemming');
   Result := (Obj.TarLev and BitField) <> 0; // Yes, "TargetLevel" stores this info!
 end;
 
@@ -505,7 +505,7 @@ end;
 
 function TGadget.GetHasPreassignedSkills: Boolean;
 begin
-  Assert(MetaObj.TriggerEffect in [DOM_WINDOW, DOM_LEMMING], 'Preassigned skill called for object not a hatch or a preplaced lemming');
+  Assert(MetaObj.TriggerEffect in [DOM_WINDOW], 'Preassigned skill called for object not a hatch');
   Result := Obj.TarLev <> 0; // Yes, "TargetLevel" stores this info!
 end;
 
