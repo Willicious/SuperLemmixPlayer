@@ -336,6 +336,18 @@ begin
       GadgetAccessor.CanResizeHorizontal := Sec.Line['resize_horizontal'] <> nil;
       GadgetAccessor.CanResizeVertical := Sec.Line['resize_vertical'] <> nil;
     end;
+
+    if fTriggerEffect in [DOM_NONE, DOM_BACKGROUND] then // No trigger area
+    begin
+      GadgetAccessor.TriggerWidth := 0;
+      GadgetAccessor.TriggerHeight := 0;
+    end;
+
+    if fTriggerEffect in [DOM_RECEIVER, DOM_WINDOW] then // Trigger point only
+    begin
+      GadgetAccessor.TriggerWidth := 1;
+      GadgetAccessor.TriggerHeight := 1;
+    end;
   finally
     Parser.Free;
   end;
