@@ -299,8 +299,6 @@ begin
 
     // program text
     S := CurrentVersionString;
-
-    {$ifdef rc}S := S + '-RC';{$endif}
     {$ifdef exp}if COMMIT_ID <> '' then S := S + ':' + Uppercase(COMMIT_ID);{$endif}
 
     if GameParams.CurrentLevel <> nil then
