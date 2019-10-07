@@ -340,7 +340,7 @@ begin
   SrcAnim.DrawTo(fLayers[rlLemmings], DstRect, SrcRect);
 
   // Helper for selected lemming
-  if (Selected and aLemming.LemIsZombie) or UsefulOnly or
+  if (Selected and aLemming.CannotReceiveSkills) or UsefulOnly or
      ((fRenderInterface <> nil) and fRenderInterface.IsStartingSeconds) then
   begin
     DrawLemmingHelpers(fLayers[rlObjectHelpers], aLemming, UsefulOnly);
