@@ -1042,13 +1042,22 @@ var
   Old, New: char;
   i, CharID: integer;
   SpecialCombine: Boolean;
+
+  LemmingsActive: Integer;
+  RegularLemmingsActive: Integer;
 begin
+  LemmingsActive := Game.LemmingsActive;
+  RegularLemmingsActive := Game.RegularLemmingsActive;
+
+  // Erase previous text there
+  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8, 16, $00000000);
+
   for i := 1 to DrawStringLength do
   begin
     Old := fLastDrawnStr[i];
     New := fNewDrawStr[i];
 
-    if Old <> New then
+    //if Old <> New then
     begin
       case New of
         '%':        CharID := 0;
@@ -1059,16 +1068,13 @@ begin
       else CharID := -1;
       end;
 
-      // Erase previous text there
-      fImage.Bitmap.FillRectS((i - 1) * 8, 0, i * 8, 16, 0);
-
       if (CharID >= 0) then
       begin
-        if (Game.LemmingsActive <> Game.RegularLemmingsActive) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
+        if (LemmingsActive <> RegularLemmingsActive) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
         begin
           SpecialCombine := true;
 
-          if Game.RegularLemmingsActive = 0 then
+          if RegularLemmingsActive = 0 then
             fCombineHueShift := -1 / 6
           else
             fCombineHueShift := 1 / 6;
@@ -1084,10 +1090,10 @@ begin
           fInfoFont[CharID].DrawMode := dmCustom;
           fInfoFont[CharID].OnPixelCombine := CombineShift;
           fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
-          fInfoFont[CharID].DrawMode := dmBlend;
-          fInfoFont[CharID].CombineMode := cmMerge;
-        end else
+        end else begin
+          fInfoFont[CharID].DrawMode := dmOpaque;
           fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+        end;
       end;
     end;
   end;
