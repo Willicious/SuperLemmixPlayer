@@ -1946,11 +1946,20 @@ end;
 function TLemmingGame.GetRegularLemmingsActive: Integer;
 var
   i: Integer;
+  G: TGadget;
 begin
   Result := 0;
   for i := 0 to LemmingList.Count-1 do
     if not (LemmingList[i].LemIsZombie or LemmingList[i].LemIsNeutral or LemmingList[i].LemRemoved) then
       Inc(Result);
+
+  for i := (Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease) to Length(Level.Info.SpawnOrder) - 1 do
+  begin
+    G := Gadgets[Level.Info.SpawnOrder[i]];
+    if not (G.IsPreassignedZombie or G.IsPreassignedNeutral) then
+      Inc(Result);
+  end;
+
   // Ahh, wish Delphi had LINQ...
 end;
 
