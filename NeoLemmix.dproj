@@ -3,7 +3,7 @@
         <ProjectGuid>{EA531DB2-6C15-4E5E-93B1-7AA1776E0F35}</ProjectGuid>
         <MainSource>NeoLemmix.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Debug</Config>
+        <Config Condition="'$(Config)'==''">RC Release</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -65,7 +65,7 @@
         <VerInfo_Release>0</VerInfo_Release>
         <VerInfo_MajorVer>12</VerInfo_MajorVer>
         <VerInfo_MinorVer>7</VerInfo_MinorVer>
-        <VerInfo_Build>1420</VerInfo_Build>
+        <VerInfo_Build>1422</VerInfo_Build>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <PreBuildEvent><![CDATA[GetCommitID LemVersionCID COMMIT_ID
@@ -79,7 +79,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_MinStackSize>32768</DCC_MinStackSize>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_UsePackage>vcl;rtl;vclx;indy;vclie;xmlrtl;inetdbbde;inet;inetdbxpress;dbrtl;soaprtl;dsnap;VclSmp;dbexpress;vcldb;dbxcds;inetdb;bdertl;vcldbx;adortl;teeui;teedb;tee;CLXIB;ibxpress;VCLIB;visualclx;visualdbclx;vclactnband;vclshlctrls;IntrawebDB_50_70;Intraweb_50_70;Rave50CLX;Rave50VCL;dclOfficeXP;$(DCC_UsePackage)</DCC_UsePackage>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=12.7.0.1420;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=12.7.0.1420;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=12.7.0.1422;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=12.7.0.1422;Comments=</VerInfo_Keys>
         <DCC_Optimize>false</DCC_Optimize>
         <DCC_ExeOutput>bin\</DCC_ExeOutput>
         <DCC_N>true</DCC_N>

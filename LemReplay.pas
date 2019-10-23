@@ -508,7 +508,7 @@ begin
     fLevelName := Sec.LineString['title'];
     fLevelAuthor := Sec.LineString['author'];
     fLevelGame := Sec.LineString['game'];
-    fLevelRank := Sec.LineString['rank'];
+    fLevelRank := Sec.LineString['group']; // Not bothering with BC because this isn't used for anything, anyway.
     fLevelPosition := Sec.LineNumeric['level'];
     if Length(Sec.LineTrimString['id']) = 9 then
     begin
@@ -594,7 +594,7 @@ begin
     if Trim(fLevelGame) <> '' then
     begin
       Sec.AddLine('GAME', fLevelGame);
-      Sec.AddLine('RANK', fLevelRank);
+      Sec.AddLine('GROUP', fLevelRank);
       Sec.AddLine('LEVEL', fLevelPosition);
     end;
     Sec.AddLine('ID', fLevelID, 16);

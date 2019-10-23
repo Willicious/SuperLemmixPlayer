@@ -1081,7 +1081,10 @@ begin
   try
     Parser.LoadFromFile(Path + 'levels.nxmi');
     MainSec := Parser.MainSection;
-    MainSec.DoForEachSection('rank', LoadSubGroup);
+    if MainSec.Section['group'] = nil then
+      MainSec.DoForEachSection('rank', LoadSubGroup)
+    else
+      MainSec.DoForEachSection('group', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
     fIsBasePack := MainSec.Line['base'] <> nil;
     fIsOrdered := true;
