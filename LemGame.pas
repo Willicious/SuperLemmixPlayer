@@ -37,22 +37,9 @@ const
         DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
         DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND];
 
-const
-  // never change, do NOT trust the bits are the same as the enumerated type.
-
-  //Recorded Action Flags
-	//raf_StartPause        = Bit0;
-	//raf_EndPause          = Bit1;
-	//raf_Pausing           = Bit2;
-	//raf_StartIncreaseRR   = Bit3;  // only allowed when not pausing
-	//raf_StartDecreaseRR   = Bit4;  // only allowed when not pausing
-	//raf_StopChangingRR    = Bit5;  // only allowed when not pausing
-	//raf_SkillSelection    = Bit6;
-	raf_SkillAssignment   = 1 shl 7; // Bit7;
-	raf_Nuke              = 1 shl 8; // Bit8;  // only allowed when not pausing, as in the game
-  //raf_NewNPLemming      = Bit9;  // related to emulation of right-click bug
-  //raf_RR99              = Bit10;
-  //raf_RRmin             = Bit11;
+type
+  TLemmingKind = (lkNormal, lkNeutral, lkZombie);
+  TLemmingKinds = set of TLemmingKind;
 
 type
   TLemmingGame = class;
@@ -375,7 +362,8 @@ type
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
     function GetUsedSkillCount(aSkill: TSkillPanelButton): Integer;
-    function GetRegularLemmingsActive: Integer;
+
+    function GetActiveLemmingTypes: TLemmingKinds;
   public
     //GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
@@ -420,7 +408,6 @@ type
     property LemmingsToSpawn: Integer read LemmingsToRelease;
     property SpawnedDead: Integer read fSpawnedDead;
     property LemmingsActive: Integer read LemmingsOut;
-    property RegularLemmingsActive: Integer read GetRegularLemmingsActive;
     property LemmingsSaved: Integer read LemmingsIn;
     property CurrentSpawnInterval: Integer read CurrSpawnInterval; // for skill panel's usage
     property SkillCount[Index: TSkillPanelButton]: Integer read GetSkillCount;
@@ -447,6 +434,7 @@ type
     property IsSimulating: Boolean read GetIsSimulating;
 
     property UserSetNuking: Boolean read fUserSetNuking write fUserSetNuking;
+    property ActiveLemmingTypes: TLemmingKinds read GetActiveLemmingTypes;
 
     function GetLevelWidth: Integer;
     function GetLevelHeight: Integer;
@@ -1943,21 +1931,30 @@ begin
   Result := NumLemInCursor;
 end;
 
-function TLemmingGame.GetRegularLemmingsActive: Integer;
+function TLemmingGame.GetActiveLemmingTypes: TLemmingKinds;
 var
   i: Integer;
   G: TGadget;
+  L: TLemming;
 begin
-  Result := 0;
+  Result := [];
+
   for i := 0 to LemmingList.Count-1 do
-    if not (LemmingList[i].LemIsZombie or LemmingList[i].LemIsNeutral or LemmingList[i].LemRemoved) then
-      Inc(Result);
+  begin
+    L := LemmingList[i];
+    if L.LemRemoved then Continue;
+
+    if not (L.LemIsZombie or L.LemIsNeutral) then Include(Result, lkNormal);
+    if L.LemIsZombie then Include(Result, lkZombie);
+    if L.LemIsNeutral then Include(Result, lkNeutral);
+  end;
 
   for i := (Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease) to Length(Level.Info.SpawnOrder) - 1 do
   begin
     G := Gadgets[Level.Info.SpawnOrder[i]];
-    if not (G.IsPreassignedZombie or G.IsPreassignedNeutral) then
-      Inc(Result);
+    if not (G.IsPreassignedZombie or G.IsPreassignedNeutral) then Include(Result, lkNormal);
+    if G.IsPreassignedZombie then Include(Result, lkZombie);
+    if G.IsPreassignedNeutral then Include(Result, lkNeutral);
   end;
 
   // Ahh, wish Delphi had LINQ...

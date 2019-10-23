@@ -1043,11 +1043,9 @@ var
   i, CharID: integer;
   SpecialCombine: Boolean;
 
-  LemmingsActive: Integer;
-  RegularLemmingsActive: Integer;
+  LemmingKinds: TLemmingKinds;
 begin
-  LemmingsActive := Game.LemmingsActive;
-  RegularLemmingsActive := Game.RegularLemmingsActive;
+  LemmingKinds := Game.ActiveLemmingTypes;
 
   // Erase previous text there
   fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8, 16, $00000000);
@@ -1070,11 +1068,11 @@ begin
 
       if (CharID >= 0) then
       begin
-        if (LemmingsActive <> RegularLemmingsActive) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
+        if (lkNeutral in LemmingKinds) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
         begin
           SpecialCombine := true;
 
-          if RegularLemmingsActive = 0 then
+          if lkNormal in LemmingKinds then
             fCombineHueShift := -1 / 6
           else
             fCombineHueShift := 1 / 6;

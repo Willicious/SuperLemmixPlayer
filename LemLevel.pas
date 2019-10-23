@@ -919,6 +919,7 @@ var
     if O.TarLev and 8 <> 0 then Sec.AddLine('GLIDER');
     if O.TarLev and 16 <> 0 then Sec.AddLine('DISARMER');
     if O.TarLev and 64 <> 0 then Sec.AddLine('ZOMBIE');
+    if O.TarLev and 128 <> 0 then Sec.AddLine('NEUTRAL');
 
     if O.LemmingCap > 0 then
       Sec.AddLine('LEMMINGS', O.LemmingCap);
@@ -1030,6 +1031,7 @@ begin
     if L.IsDisarmer then Sec.AddLine('DISARMER');
     if L.IsBlocker then Sec.AddLine('BLOCKER');
     if L.IsZombie then Sec.AddLine('ZOMBIE');
+    if L.IsNeutral then Sec.AddLine('NEUTRAL');
   end;
 end;
 
