@@ -608,8 +608,7 @@ begin
     // Refresh panel if in usual or fast play mode
     if not Hyper then
     begin
-      if TimeForFrame then
-        SkillPanel.RefreshInfo;
+      SkillPanel.RefreshInfo;
       CheckResetCursor;
     end else if (Game.CurrentIteration = fHyperSpeedTarget) then
     begin
