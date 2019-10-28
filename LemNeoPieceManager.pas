@@ -10,7 +10,9 @@ uses
   Dialogs,
   PngInterface, LemNeoTheme, LemAnimationSet,
   LemMetaTerrain, LemTerrainGroup, LemGadgetsMeta, LemGadgetsConstants, LemTypes, GR32, LemStrings,
-  StrUtils, Classes, SysUtils;
+  Generics.Collections,
+  StrUtils, Classes, SysUtils,
+  LemNeoParser;
 
 const
   RETAIN_PIECE_CYCLES = 20; // how many times Tidy can be called without a piece being used before it's discarded
@@ -23,11 +25,21 @@ type
     Piece: String;
   end;
 
+  TAliasKind = (rkStyle, rkGadget, rkTerrain, rkBackground, rkTheme);
+
+  TStyleAlias = record
+    Source: TLabelRecord;
+    Dest: TLabelRecord;
+    Kind: TAliasKind;
+  end;
+
   TNeoPieceManager = class
     private
       fTheme: TNeoTheme;
       fTerrains: TMetaTerrains;
       fObjects: TGadgetMetaInfoList;
+
+      fAliases: TList<TStyleAlias>;
 
       function GetTerrainCount: Integer;
       function GetObjectCount: Integer;
@@ -39,6 +51,9 @@ type
 
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TGadgetMetaInfo;
+
+      procedure LoadAliases;
+      procedure AddAlias(aSection: TParserSection; const aIteration: Integer; aData: Pointer);
 
       property TerrainCount: Integer read GetTerrainCount;
       property ObjectCount: Integer read GetObjectCount;
@@ -102,12 +117,16 @@ begin
   fTerrains := TMetaTerrains.Create;
   fObjects := TGadgetMetaInfoList.Create;
   fTheme := nil;
+  fAliases := TList<TStyleAlias>.Create;
+
+  LoadAliases;
 end;
 
 destructor TNeoPieceManager.Destroy;
 begin
   fTerrains.Free;
   fObjects.Free;
+  fAliases.Free;
   inherited;
 end;
 
@@ -291,6 +310,38 @@ begin
   for i := fTerrains.Count-1 downto 0 do
     if fTerrains[i].GS = COMPOSITE_PIECE_STYLE then
       fTerrains.Delete(i);
+end;
+
+// Aliases
+
+procedure TNeoPieceManager.LoadAliases;
+var
+  Parser: TParser;
+begin
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromFile(SFData + 'alias.nxmi');
+
+    Parser.MainSection.DoForEachSection('STYLE', AddAlias, Pointer(rkStyle));
+    Parser.MainSection.DoForEachSection('GADGET', AddAlias, Pointer(rkGadget));
+    Parser.MainSection.DoForEachSection('TERRAIN', AddAlias, Pointer(rkTerrain));
+    Parser.MainSection.DoForEachSection('BACKGROUND', AddAlias, Pointer(rkBackground));
+    Parser.MainSection.DoForEachSection('THEME', AddAlias, Pointer(rkTheme));
+  finally
+    Parser.Free;
+  end;
+end;
+
+procedure TNeoPieceManager.AddAlias(aSection: TParserSection;
+  const aIteration: Integer; aData: Pointer);
+var
+  Kind: TAliasKind absolute aData;
+  NewRec: TStyleAlias;
+begin
+  NewRec.Source := SplitIdentifier(aSection.LineString['FROM']);
+  NewRec.Dest := SplitIdentifier(aSection.LineString['TO']);
+  NewRec.Kind := Kind;
+  fAliases.Add(NewRec);
 end;
 
 end.
