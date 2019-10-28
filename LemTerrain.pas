@@ -60,6 +60,9 @@ type
 
 implementation
 
+uses
+  LemNeoPieceManager;
+
 { TTerrain }
 
 procedure TTerrain.Assign(Source: TPiece);
@@ -117,14 +120,17 @@ procedure TTerrain.LoadFromSection(aSection: TParserSection);
   begin
     fDrawingFlags := fDrawingFlags or aValue;
   end;
+var
+  Ident: TLabelRecord;
 begin
   if aSection.Line['style'] = nil then
     GS := aSection.LineTrimString['collection']
   else
     GS := aSection.LineTrimString['style'];
 
-  if Uppercase(GS) = 'ORIG_DIRT_MD' then
-    GS := 'orig_dirt';
+  Ident := SplitIdentifier(PieceManager.Dealias(Identifier, rkTerrain));
+  GS := Ident.GS;
+  Piece := Ident.Piece;
 
   Piece := aSection.LineTrimString['piece'];
   Left := aSection.LineNumeric['x'];

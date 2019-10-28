@@ -326,7 +326,7 @@ begin
   begin
     Title := aSection.LineString['title'];
     Author := aSection.LineString['author'];
-    GraphicSetName := aSection.LineTrimString['theme'];
+    GraphicSetName := PieceManager.Dealias(aSection.LineTrimString['theme'], rkStyle);
     MusicFile := aSection.LineTrimString['music'];
     LevelID := aSection.LineNumeric['id'];
 
@@ -350,7 +350,7 @@ begin
     if Lowercase(aSection.LineTrimString['autosteel']) = 'simple' then
       isSimpleAutoSteel := true;
 
-    Background := aSection.LineTrimString['background'];
+    Background := PieceManager.Dealias(aSection.LineTrimString['background'], rkBackground);
   end;
 end;
 
@@ -482,6 +482,9 @@ var
     O.Skill := (Round(Angle / 22.5) mod 16 + 16) mod 16; // Convert angle in degrees to a mod 16 segment
     O.TarLev := aSection.LineNumeric['speed'];
   end;
+
+var
+  Ident: TLabelRecord;
 begin
   O := fInteractiveObjects.Add;
 
@@ -490,10 +493,12 @@ begin
   else
     O.GS := aSection.LineTrimString['style'];
 
-  if Uppercase(O.GS) = 'ORIG_DIRT_MD' then
-    O.GS := 'orig_dirt';
-
   O.Piece := aSection.LineTrimString['piece'];
+
+  Ident := SplitIdentifier(PieceManager.Dealias(O.Identifier, rkGadget));
+  O.GS := Ident.GS;
+  O.Piece := Ident.Piece;
+
   O.Left := aSection.LineNumeric['x'];
   O.Top := aSection.LineNumeric['y'];
   O.Width := aSection.LineNumeric['width'];

@@ -25,7 +25,7 @@ type
     Piece: String;
   end;
 
-  TAliasKind = (rkStyle, rkGadget, rkTerrain, rkBackground, rkTheme);
+  TAliasKind = (rkStyle, rkGadget, rkTerrain, rkBackground);
 
   TStyleAlias = record
     Source: TLabelRecord;
@@ -68,6 +68,8 @@ type
       procedure RegenerateAutoAnims(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
       procedure MakePiecesFromGroups(aGroups: TTerrainGroups);
       procedure MakePieceFromGroup(aGroup: TTerrainGroup);
+
+      function Dealias(aIdentifier: String; aKind: TAliasKind): String;
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TGadgetMetaInfo read GetMetaObject;
@@ -322,11 +324,10 @@ begin
   try
     Parser.LoadFromFile(SFData + 'alias.nxmi');
 
-    Parser.MainSection.DoForEachSection('STYLE', AddAlias, Pointer(rkStyle));
     Parser.MainSection.DoForEachSection('GADGET', AddAlias, Pointer(rkGadget));
     Parser.MainSection.DoForEachSection('TERRAIN', AddAlias, Pointer(rkTerrain));
     Parser.MainSection.DoForEachSection('BACKGROUND', AddAlias, Pointer(rkBackground));
-    Parser.MainSection.DoForEachSection('THEME', AddAlias, Pointer(rkTheme));
+    Parser.MainSection.DoForEachSection('STYLE', AddAlias, Pointer(rkStyle));
   finally
     Parser.Free;
   end;
@@ -342,6 +343,28 @@ begin
   NewRec.Dest := SplitIdentifier(aSection.LineString['TO']);
   NewRec.Kind := Kind;
   fAliases.Add(NewRec);
+end;
+
+function TNeoPieceManager.Dealias(aIdentifier: String; aKind: TAliasKind): String;
+var
+  Ident: TLabelRecord;
+  i: Integer;
+begin
+  Ident := SplitIdentifier(aIdentifier);
+  for i := 0 to fAliases.Count-1 do
+  begin
+    if Ident.GS <> fAliases[i].Source.GS then Continue;
+
+    if fAliases[i].Kind = rkStyle then
+      Ident.GS := fAliases[i].Dest.GS
+    else if (fAliases[i].Kind = aKind) and (Ident.Piece = fAliases[i].Source.Piece) then
+      Ident := fAliases[i].Dest;
+  end;
+
+  if aKind = rkStyle then
+    Result := Ident.GS
+  else
+    Result := CombineIdentifier(Ident);
 end;
 
 end.
