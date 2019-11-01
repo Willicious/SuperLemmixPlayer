@@ -1,9 +1,4 @@
 $STYLE
-  FROM orig_dirt_md
-  TO orig_dirt
-$END
-
-$STYLE
   FROM gigalem_treemdbright
   TO gigalem_treemd
 $END
