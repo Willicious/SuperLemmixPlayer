@@ -54,8 +54,8 @@ function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
   end;
 begin
   Result := IntToStr(aFormat);
-  Result := Result + '.' + LeadZeroStr(aCore, 2);
-  Result := Result + '.' + LeadZeroStr(aFeature, 2);
+  Result := Result + '.' + IntToStr(aCore);
+  Result := Result + '.' + IntToStr(aFeature);
   {$ifdef rc}
   Result := Result + '-RC' + IntToStr(aHotfix);
   {$else}
