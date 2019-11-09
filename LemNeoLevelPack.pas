@@ -7,7 +7,7 @@ interface
 uses
   System.Generics.Collections, System.Generics.Defaults,
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
-  Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
+  Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
   LemTalisman,
   LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
   UMisc;
@@ -557,12 +557,34 @@ procedure TNeoLevelGroup.CleanseLevels(aPath: String);
 var
   i: Integer;
   L: TNeoLevelEntry;
+  SearchRec: TSearchRec;
+  SL: TStringList;
 begin
   aPath := IncludeTrailingPathDelimiter(aPath);
   ForceDirectories(aPath);
 
   for i := 0 to Children.Count-1 do
     Children[i].CleanseLevels(aPath + Children[i].Folder);
+
+  if FindFirst(Path + '*', 0, SearchRec) = 0 then
+  begin
+    repeat
+      if Lowercase(SearchRec.Name) = 'levels.nxmi' then
+      begin
+        SL := TStringList.Create;
+        try
+          SL.LoadFromFile(Path + SearchRec.Name);
+          for i := 0 to SL.Count-1 do
+            SL[i] := StringReplace(SL[i], '$RANK', '$GROUP', [rfIgnoreCase, rfReplaceAll]);
+          SL.SaveToFile(aPath + SearchRec.Name);
+        finally
+          SL.Free;
+        end;
+      end else
+        CopyFile(PWideChar(Path + SearchRec.Name), PWideChar(aPath + SearchRec.Name), false);
+    until FindNext(SearchRec) <> 0;
+    FindClose(SearchRec);
+  end;
 
   for i := 0 to Levels.Count-1 do
   begin
@@ -572,7 +594,7 @@ begin
       GameParams.LoadCurrentLevel(true);
       GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
     except
-      ShowMessage('Error cleansing "' + L.Title + '". This level will be skipped.');
+      ShowMessage('Error cleansing "' + L.Title + '". This level will be copied unmodified.');
     end;
   end;
 end;

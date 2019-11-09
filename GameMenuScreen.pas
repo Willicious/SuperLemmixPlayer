@@ -158,7 +158,11 @@ var
   BasePack: TNeoLevelGroup;
 begin
   BasePack := GameParams.CurrentLevel.Group.ParentBasePack;
-  BasePack.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\');
+
+  if DirectoryExists(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\') then
+    ShowMessage('Output directory "Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\" already exists. Please delete this first.')
+  else
+    BasePack.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\');
 end;
 
 procedure TGameMenuScreen.PerformUpdateCheck;
