@@ -1327,7 +1327,7 @@ begin
         AsChildIndex := Result.Parent.Children.IndexOf(Result);
       end;
 
-      if AsChildIndex > 0 then
+      if (AsChildIndex > 0) and not Result.IsBasePack then
         Result := Result.Parent.Children[AsChildIndex - 1];
     end;
   until (Result.Levels.Count > 0) or (Result = self);
