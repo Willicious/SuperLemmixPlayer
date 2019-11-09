@@ -128,11 +128,12 @@ begin
   else
     GS := aSection.LineTrimString['style'];
 
+  Piece := aSection.LineTrimString['piece'];
+
   Ident := SplitIdentifier(PieceManager.Dealias(Identifier, rkTerrain));
   GS := Ident.GS;
   Piece := Ident.Piece;
 
-  Piece := aSection.LineTrimString['piece'];
   Left := aSection.LineNumeric['x'];
   Top := aSection.LineNumeric['y'];
 
