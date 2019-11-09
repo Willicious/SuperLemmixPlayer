@@ -825,7 +825,8 @@ begin
     if Info.IsSimpleAutoSteel then
       aSection.AddLine('AUTOSTEEL', 'simple');
 
-    aSection.AddLine('BACKGROUND', Background);
+    if not ((Background = '') or (Background = ':')) then
+      aSection.AddLine('BACKGROUND', Background);
   end;
 end;
 
