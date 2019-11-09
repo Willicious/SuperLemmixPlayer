@@ -191,7 +191,7 @@ type
       function FindFile(aName: String): String;
 
       procedure DumpImages(aPath: String; aPrefix: String = '');
-      procedure CleanseLevels(aPath: String);
+      procedure CleanseLevels(aPath: String; aOutput: TStringList = nil);
 
       {$ifdef exp}
       procedure DumpNeoLemmixWebsiteMetaInfo(aPath: String);
@@ -553,38 +553,61 @@ begin
   inherited;
 end;
 
-procedure TNeoLevelGroup.CleanseLevels(aPath: String);
+procedure TNeoLevelGroup.CleanseLevels(aPath: String; aOutput: TStringList = nil);
 var
   i: Integer;
   L: TNeoLevelEntry;
-  SearchRec: TSearchRec;
   SL: TStringList;
+
+  IsStartingPoint: Boolean;
+
+  procedure RecursiveCopy(aSubPath: String);
+  var
+    SearchRec: TSearchRec;
+    i: Integer;
+  begin
+    ForceDirectories(aPath + aSubPath);
+
+    if FindFirst(Path + aSubPath + '*', faDirectory, SearchRec) = 0 then
+    begin
+      repeat
+        if (SearchRec.Name = '.') or (SearchRec.Name = '..') then
+          Continue
+        else if (SearchRec.Attr and faDirectory) <> 0 then
+          RecursiveCopy(aSubPath + IncludeTrailingPathDelimiter(SearchRec.Name))
+        else if Lowercase(SearchRec.Name) = 'levels.nxmi' then
+        begin
+          SL := TStringList.Create;
+          try
+            SL.LoadFromFile(Path + aSubPath + SearchRec.Name);
+            for i := 0 to SL.Count-1 do
+              SL[i] := StringReplace(SL[i], '$RANK', '$GROUP', [rfIgnoreCase, rfReplaceAll]);
+            SL.SaveToFile(aPath + aSubPath + SearchRec.Name);
+          finally
+            SL.Free;
+          end;
+        end else
+          CopyFile(PWideChar(Path + aSubPath + SearchRec.Name), PWideChar(aPath + aSubPath + SearchRec.Name), false);
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+  end;
+
 begin
+  if aOutput = nil then
+  begin
+    IsStartingPoint := true;
+    aOutput := TStringList.Create;
+  end else
+    IsStartingPoint := false;
+
+  if IsStartingPoint then
+    RecursiveCopy('');
+
   aPath := IncludeTrailingPathDelimiter(aPath);
-  ForceDirectories(aPath);
 
   for i := 0 to Children.Count-1 do
-    Children[i].CleanseLevels(aPath + Children[i].Folder);
-
-  if FindFirst(Path + '*', 0, SearchRec) = 0 then
-  begin
-    repeat
-      if Lowercase(SearchRec.Name) = 'levels.nxmi' then
-      begin
-        SL := TStringList.Create;
-        try
-          SL.LoadFromFile(Path + SearchRec.Name);
-          for i := 0 to SL.Count-1 do
-            SL[i] := StringReplace(SL[i], '$RANK', '$GROUP', [rfIgnoreCase, rfReplaceAll]);
-          SL.SaveToFile(aPath + SearchRec.Name);
-        finally
-          SL.Free;
-        end;
-      end else
-        CopyFile(PWideChar(Path + SearchRec.Name), PWideChar(aPath + SearchRec.Name), false);
-    until FindNext(SearchRec) <> 0;
-    FindClose(SearchRec);
-  end;
+    Children[i].CleanseLevels(aPath + Children[i].Folder, aOutput);
 
   for i := 0 to Levels.Count-1 do
   begin
@@ -594,8 +617,19 @@ begin
       GameParams.LoadCurrentLevel(true);
       GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
     except
-      ShowMessage('Error cleansing "' + L.Title + '". This level will be copied unmodified.');
+      aOutput.Add('ERROR cleansing "' + L.Title + '". This level will be copied unmodified.');
     end;
+  end;
+
+  if IsStartingPoint then
+  begin
+    if aOutput.Count > 0 then
+    begin
+      ShowMessage('Cleanse complete. Some warnings or errors occurred during cleansing. See ' + MakeSafeForFilename(Name) + ' Cleanse Report.txt for more information.');
+      aOutput.SaveToFile(AppPath + MakeSafeForFilename(Name) + ' Cleanse Report.txt');
+    end else
+      ShowMessage('Cleanse complete. No errors or warnings reported.');
+    aOutput.Free;
   end;
 end;
 
