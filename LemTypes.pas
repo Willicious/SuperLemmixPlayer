@@ -10,7 +10,7 @@ uses
   Dialogs,
   SharedGlobals,
   Classes, SysUtils, Contnrs,
-  GR32, GR32_LowLevel,
+  GR32, GR32_LowLevel, GR32_Resamplers,
   Windows;
 
 const
@@ -31,6 +31,8 @@ const
 
 type
   TColorDict = TDictionary<TColor32, String>;
+
+  TUpscaleMode = (umNearest, umPixelArt, umFullColor);
 
 type
   TLemDataType = (
@@ -72,6 +74,8 @@ procedure MoveRect(var aRect: TRect; const DeltaX, DeltaY: Integer);
 
 function UnderWine: Boolean;
 function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
+
+procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
 
 implementation
 
@@ -326,6 +330,131 @@ begin
   Result.Right := W;
   Result.Bottom := Y + H;
 end;
+
+procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
+var
+  UsingLocalBitmap: Boolean;
+  OldDrawMode: TDrawMode;
+
+  procedure UpscalePixelArt;
+  var
+    x, y: Integer;
+    dxb, dyb: Integer;
+    c: TColor32;
+
+    function GetSrcColor(x, y: Integer): TColor32;
+    begin
+      if (x < 0) or (y < 0) or (x >= Src.Width) or (y >= Src.Height) then
+        Result := $00000000
+      else
+        Result := Src.Pixel[x, y];
+
+      if (Result and $FF000000) = 0 then
+        Result := $00000000;
+    end;
+  begin
+    for y := 0 to Src.Height-1 do
+      for x := 0 to Src.Width-1 do
+      begin
+        dxb := x * 2;
+        dyb := y * 2;
+
+        C := GetSrcColor(x, y);
+
+        // Attempt 1
+        if (GetSrcColor(x-1, y) = GetSrcColor(x, y-1)) then
+          Dst[dxb, dyb] := GetSrcColor(x-1, y)
+        else
+          Dst[dxb, dyb] := C;
+
+        if (GetSrcColor(x+1, y) = GetSrcColor(x, y-1)) then
+          Dst[dxb+1, dyb] := GetSrcColor(x+1, y)
+        else
+          Dst[dxb+1, dyb] := C;
+
+        if (GetSrcColor(x-1, y) = GetSrcColor(x, y+1)) then
+          Dst[dxb, dyb+1] := GetSrcColor(x-1, y)
+        else
+          Dst[dxb, dyb+1] := C;
+
+        if (GetSrcColor(x+1, y) = GetSrcColor(x, y+1)) then
+          Dst[dxb+1, dyb+1] := GetSrcColor(x+1, y)
+        else
+          Dst[dxb+1, dyb+1] := C;
+
+        // Attempt 2
+        if (Dst[dxb, dyb] <> C) and
+           (Dst[dxb+1, dyb] <> C) and
+           (Dst[dxb, dyb+1] <> C) and
+           (Dst[dxb+1, dyb+1] <> C) then
+        begin
+          if (GetSrcColor(x-1, y) = GetSrcColor(x, y-1)) and (GetSrcColor(x-1, y) = $00000000) then
+            Dst[dxb, dyb] := GetSrcColor(x-1, y)
+          else
+            Dst[dxb, dyb] := C;
+
+          if (GetSrcColor(x+1, y) = GetSrcColor(x, y-1)) and (GetSrcColor(x+1, y) = $00000000) then
+            Dst[dxb+1, dyb] := GetSrcColor(x+1, y)
+          else
+            Dst[dxb+1, dyb] := C;
+
+          if (GetSrcColor(x-1, y) = GetSrcColor(x, y+1)) and (GetSrcColor(x-1, y) = $00000000) then
+            Dst[dxb, dyb+1] := GetSrcColor(x-1, y)
+          else
+            Dst[dxb, dyb+1] := C;
+
+          if (GetSrcColor(x+1, y) = GetSrcColor(x, y+1)) and (GetSrcColor(x+1, y) = $00000000) then
+            Dst[dxb+1, dyb+1] := GetSrcColor(x+1, y)
+          else
+            Dst[dxb+1, dyb+1] := C;
+        end;
+
+        // Attempt 3
+        if (Dst[dxb, dyb] <> C) and
+           (Dst[dxb+1, dyb] <> C) and
+           (Dst[dxb, dyb+1] <> C) and
+           (Dst[dxb+1, dyb+1] <> C) then
+        begin
+          Dst[dxb, dyb] := C;
+          Dst[dxb+1, dyb] := C;
+          Dst[dxb, dyb+1] := C;
+          Dst[dxb+1, dyb+1] := C;
+        end;
+      end;
+  end;
+begin
+  UsingLocalBitmap := false;
+  OldDrawMode := Src.DrawMode;
+  try
+    if Dst = nil then
+    begin
+      Dst := Src;
+      Src := nil; // extra safe
+      UsingLocalBitmap := true;
+      Src := TBitmap32.Create;
+      Src.Assign(Dst);
+    end;
+
+    Dst.SetSize(Src.Width * 2, Src.Height * 2);
+    Dst.Clear;
+    Dst.DrawMode := dmOpaque;
+
+    case Mode of
+      umNearest: Src.DrawTo(Dst, Dst.BoundsRect, Src.BoundsRect);
+      umPixelArt: UpscalePixelArt;
+      umFullColor: begin
+                     TKernelResampler.Create(Src).Kernel := TLanczosKernel.Create;
+                     Src.DrawTo(Dst, Dst.BoundsRect, Src.BoundsRect);
+                   end;
+    end;
+  finally
+    if UsingLocalBitmap then
+      Src.Free
+    else if Src <> nil then
+      Src.DrawMode := OldDrawMode;
+  end;
+end;
+
 
 { TBitmaps }
 
