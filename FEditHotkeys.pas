@@ -3,7 +3,7 @@ unit FEditHotkeys;
 interface
 
 uses
-  LemmixHotkeys,
+  LemmixHotkeys, LemCore,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls;
 
@@ -40,11 +40,10 @@ type
     procedure cbSpecialSkipChange(Sender: TObject);
   private
     fShownFindInfo: Boolean;
-    fKeyNames: Array [0..MAX_KEY] of String; //MAX_KEY defined in unit LemmixHotkeys
+    fKeyNames: TKeyNameArray;
     fHotkeys: TLemmixHotkeyManager;
     procedure SetWindowPosition;
     procedure RefreshList;
-    procedure SetKeyNames;
     procedure SetHotkeys(aValue: TLemmixHotkeyManager);
     function FindKeyFromList(aValue: Integer): Integer;
   public
@@ -62,7 +61,7 @@ procedure TFLemmixHotkeys.FormCreate(Sender: TObject);
 begin
   fShownFindInfo := false;
   SetWindowPosition;
-  SetKeyNames;
+  fKeyNames := TLemmixHotkeyManager.GetKeyNames(true);
 end;
 
 procedure TFLemmixHotkeys.SetWindowPosition;
@@ -87,23 +86,24 @@ begin
       lka_Skill: begin
                    s := 'Select Skill: ';
                    case Hotkey.Modifier of
-                     0: s := s + 'Walker';
-                     1: s := s + 'Climber';
-                     2: s := s + 'Swimmer';
-                     3: s := s + 'Floater';
-                     4: s := s + 'Glider';
-                     5: s := s + 'Disarmer';
-                     6: s := s + 'Bomber';
-                     7: s := s + 'Stoner';
-                     8: s := s + 'Blocker';
-                     9: s := s + 'Platformer';
-                     10: s := s + 'Builder';
-                     11: s := s + 'Stacker';
-                     12: s := s + 'Basher';
-                     13: s := s + 'Fencer';
-                     14: s := s + 'Miner';
-                     15: s := s + 'Digger';
-                     16: s := s + 'Cloner';
+                     Integer(spbWalker):     s := s + 'Walker';
+                     Integer(spbShimmier):   s := s + 'Shimmier';
+                     Integer(spbClimber):    s := s + 'Climber';
+                     Integer(spbSwimmer):    s := s + 'Swimmer';
+                     Integer(spbFloater):    s := s + 'Floater';
+                     Integer(spbGlider):     s := s + 'Glider';
+                     Integer(spbDisarmer):   s := s + 'Disarmer';
+                     Integer(spbBomber):     s := s + 'Bomber';
+                     Integer(spbStoner):     s := s + 'Stoner';
+                     Integer(spbBlocker):    s := s + 'Blocker';
+                     Integer(spbPlatformer): s := s + 'Platformer';
+                     Integer(spbBuilder):    s := s + 'Builder';
+                     Integer(spbStacker):    s := s + 'Stacker';
+                     Integer(spbBasher):     s := s + 'Basher';
+                     Integer(spbFencer):     s := s + 'Fencer';
+                     Integer(spbMiner):      s := s + 'Miner';
+                     Integer(spbDigger):     s := s + 'Digger';
+                     Integer(spbCloner):     s := s + 'Cloner';
                      else s := s + '???';
                    end;
                  end;
@@ -152,86 +152,6 @@ procedure TFLemmixHotkeys.SetHotkeys(aValue: TLemmixHotkeyManager);
 begin
   fHotkeys := aValue;
   RefreshList;
-end;
-
-procedure TFLemmixHotkeys.SetKeyNames;
-var
-  i: Integer;
-  P: PChar;
-  ScanCode: UInt;
-begin
-  for i := 0 to MAX_KEY do
-    fKeyNames[i] := '';
-    
-  // Too lazy to include them in an interally-included file. So I just
-  // coded them in here. xD
-  if cbHardcodedNames.Checked then
-  begin
-    fKeyNames[$02] := 'Right-Click';
-    fKeyNames[$04] := 'Middle-Click';
-    fKeyNames[$05] := 'Wheel Up';
-    fKeyNames[$06] := 'Wheel Down';
-    fKeyNames[$08] := 'Backspace';
-    fKeyNames[$09] := 'Tab';
-    fKeyNames[$0D] := 'Enter';
-    fKeyNames[$10] := 'Shift';
-    fKeyNames[$11] := 'Ctrl (Left)';
-    fKeyNames[$12] := 'Alt';
-    fKeyNames[$13] := 'Pause';
-    fKeyNames[$14] := 'Caps Lock';
-    fKeyNames[$19] := 'Ctrl (Right)';
-    fKeyNames[$1B] := 'Esc';
-    fKeyNames[$20] := 'Space';
-    fKeyNames[$21] := 'Page Up';
-    fKeyNames[$22] := 'Page Down';
-    fKeyNames[$23] := 'End';
-    fKeyNames[$24] := 'Home';
-    fKeyNames[$25] := 'Left Arrow';
-    fKeyNames[$26] := 'Up Arrow';
-    fKeyNames[$27] := 'Right Arrow';
-    fKeyNames[$28] := 'Down Arrow';
-    fKeyNames[$2D] := 'Insert';
-    fKeyNames[$2E] := 'Delete';
-    // Shortcut time!
-    for i := 0 to 9 do
-      fKeyNames[$30 + i] := IntToStr(i);
-    for i := 0 to 25 do
-      fKeyNames[$41 + i] := Char(i + 65);
-    fKeyNames[$5B] := 'Windows';
-    for i := 0 to 9 do
-      fKeyNames[$60 + i] := 'NumPad ' + IntToStr(i);
-    fKeyNames[$6A] := 'NumPad *';
-    fKeyNames[$6B] := 'NumPad +';
-    fKeyNames[$6D] := 'NumPad -';
-    fKeyNames[$6E] := 'NumPad .';
-    fKeyNames[$6F] := 'NumPad /';
-    for i := 0 to 11 do
-      fKeyNames[$70 + i] := 'F' + IntToStr(i+1);
-    fKeyNames[$90] := 'NumLock';
-    fKeyNames[$91] := 'Scroll Lock';
-    fKeyNames[$BA] := ';';
-    fKeyNames[$BB] := '+';
-    fKeyNames[$BC] := ',';
-    fKeyNames[$BD] := '-';
-    fKeyNames[$BE] := '.';
-    fKeyNames[$BF] := '/';
-    fKeyNames[$C0] := '~';
-    fKeyNames[$DB] := '[';
-    fKeyNames[$DC] := '\';
-    fKeyNames[$DD] := ']';
-    fKeyNames[$DE] := '''';
-  end;
-
-  P := StrAlloc(20);
-  for i := 0 to MAX_KEY do
-  begin
-    ScanCode := MapVirtualKeyEx(i, 0, GetKeyboardLayout(0)) shl 16;
-    if (GetKeyNameText(ScanCode, P, 20) > 0) and (not cbHardcodedNames.Checked) then
-      fKeyNames[i] := StrPas(P)
-    else if fKeyNames[i] = '' then
-      fKeyNames[i] := IntToHex(i, 4);
-  end;
-  StrDispose(P);
 end;
 
 procedure TFLemmixHotkeys.cbShowUnassignedClick(Sender: TObject);
@@ -417,7 +337,7 @@ end;
 
 procedure TFLemmixHotkeys.cbHardcodedNamesClick(Sender: TObject);
 begin
-  SetKeyNames;
+  fKeyNames := TLemmixHotkeyManager.GetKeyNames(cbHardcodedNames.Checked);
   RefreshList;
 end;
 

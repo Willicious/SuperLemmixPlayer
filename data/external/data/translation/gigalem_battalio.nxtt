@@ -1797,43 +1797,43 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 19
+  INDEX 0
   COLLECTION gigalem_battalio
   PIECE battalio_01
 $END
 
 $BACKGROUND
-  INDEX 20
+  INDEX 1
   COLLECTION gigalem_battalio
   PIECE battalio_02
 $END
 
 $BACKGROUND
-  INDEX 21
+  INDEX 2
   COLLECTION gigalem_battalio
   PIECE battalio_03
 $END
 
 $BACKGROUND
-  INDEX 22
+  INDEX 3
   COLLECTION gigalem_battalio
   PIECE battalio_04
 $END
 
 $BACKGROUND
-  INDEX 23
+  INDEX 4
   COLLECTION gigalem_battalio
   PIECE battalio_05
 $END
 
 $BACKGROUND
-  INDEX 24
+  INDEX 5
   COLLECTION gigalem_battalio
   PIECE battalio_06
 $END
 
 $BACKGROUND
-  INDEX 25
+  INDEX 6
   COLLECTION gigalem_battalio
   PIECE battalio_07
 $END

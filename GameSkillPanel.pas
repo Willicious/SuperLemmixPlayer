@@ -4,6 +4,7 @@ unit GameSkillPanel;
 interface
 
 uses
+  LemTypes,
   Classes, GR32,
   GameWindowInterface, GameBaseSkillPanel;
 
@@ -22,6 +23,7 @@ type
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
     function TimeLimitStartIndex: Integer; override;
+    function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -41,6 +43,7 @@ type
     function DrawStringLength: Integer; override;
     function DrawStringTemplate: string; override;
     function TimeLimitStartIndex: Integer; override;
+    function LemmingCountStartIndex: Integer; override;
   public
     constructor CreateWithWindow(aOwner: TComponent; aGameWindow: IGameWindow); override;
     destructor Destroy; override;
@@ -112,17 +115,20 @@ begin
   SetLength(Result, 19);
   Result[0] := spbSlower;
   Result[1] := spbFaster;
-  for i := 2 to 9 do
+  for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL -1) do
     Result[i] := spbWalker; // placeholder for any skill
-  Result[10] := spbPause;
-  Result[11] := spbNuke;
-  Result[12] := spbFastForward;
-  Result[13] := spbRestart;
-  Result[14] := spbBackOneFrame;
-  Result[15] := spbForwardOneFrame;
-  Result[16] := spbClearPhysics;
-  Result[17] := spbDirLeft; // includes spbDirRight
-  Result[18] := spbLoadReplay;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 3] := spbRestart;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 4] := spbBackOneFrame; // and below: spbForwardOneFrame
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 5] := spbDirLeft; // and below: spbDirRight
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 6] := spbClearPhysics; // and below: spbLoadReplay
+end;
+
+function TSkillPanelStandard.LemmingCountStartIndex: Integer;
+begin
+  Result := 21;
 end;
 
 procedure TSkillPanelStandard.ResizeMinimapRegion(MinimapRegion: TBitmap32);
@@ -132,12 +138,12 @@ begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  if (MinimapRegion.Height <> 38) then
+  if (MinimapRegion.Width <> 111) or (MinimapRegion.Height <> 38) then
   begin
     MinimapRegion.SetSize(111, 38);
     MinimapRegion.Clear($FF000000);
-    TempBmp.DrawTo(MinimapRegion, 0, 14);
-    TempBmp.DrawTo(MinimapRegion, 0, 0, Rect(0, 0, 112, 16));
+    DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
+                  Rect(8, 8, TempBmp.Width - 8, TempBmp.Height - 8), TempBmp);
   end;
 
   TempBmp.Free;
@@ -182,9 +188,14 @@ begin
   Result := 33;
 end;
 
+function TSkillPanelCompact.LemmingCountStartIndex: Integer;
+begin
+  Result := 21;
+end;
+
 function TSkillPanelCompact.MinimapRect: TRect;
 begin
-  Result := Rect(212, 18, 316, 38)
+  Result := Rect(228, 18, 316, 38)
 end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;
@@ -202,14 +213,13 @@ function TSkillPanelCompact.GetButtonList: TPanelButtonArray;
 var
   i : Integer;
 begin
-  SetLength(Result, 13);
+  SetLength(Result, 14);
   Result[0] := spbSlower;
   Result[1] := spbFaster;
-  for i := 2 to 9 do
+  for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL - 1) do
     Result[i] := spbWalker; // placeholder for any skill
-  Result[10] := spbPause;
-  Result[11] := spbNuke;
-  Result[12] := spbFastForward;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
+  Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
 end;
 
 procedure TSkillPanelCompact.ResizeMinimapRegion(MinimapRegion: TBitmap32);
@@ -219,12 +229,12 @@ begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  if (MinimapRegion.Height <> 24) then
+  if (MinimapRegion.Width <> 95) or (MinimapRegion.Height <> 24) then
   begin
-    MinimapRegion.SetSize(111, 24);
+    MinimapRegion.SetSize(95, 24);
     MinimapRegion.Clear($FF000000);
-    TempBmp.DrawTo(MinimapRegion, 0, 0, Rect(0, 0, 112, 12));
-    TempBmp.DrawTo(MinimapRegion, 0, 12, Rect(0, 26, 112, 38));
+    DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
+                  Rect(8, 8, 8, 8), TempBmp);
   end;
 
   TempBmp.Free;

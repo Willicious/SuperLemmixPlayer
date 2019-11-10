@@ -556,7 +556,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 11
+  INDEX 0
   COLLECTION namida_candy
   PIECE candies
 $END

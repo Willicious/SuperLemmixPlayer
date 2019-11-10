@@ -178,6 +178,8 @@ begin
   BASS_StreamFree(fMusicChannel);
   fMusicPlaying := false;
   fMusicChannel := $FFFFFFFF;
+  fMusicStream.Clear;
+  fMusicName := '';
 end;
 
 procedure TSoundManager.ObtainMusicBassChannel;

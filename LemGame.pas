@@ -34,25 +34,12 @@ const
     (4, 15, 14, 13, 12, 11, 10, 9, 8, 11, 10, 9, 8, 7, 6, 2);
 
   AlwaysAnimateObjects = [DOM_NONE, DOM_EXIT, DOM_FORCELEFT, DOM_FORCERIGHT,
-        DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT,
-        DOM_ONEWAYDOWN, DOM_UPDRAFT, DOM_HINT, DOM_SPLAT, DOM_BACKGROUND];
+        DOM_WATER, DOM_FIRE, DOM_ONEWAYLEFT, DOM_ONEWAYRIGHT, DOM_ONEWAYDOWN,
+        DOM_UPDRAFT, DOM_NOSPLAT, DOM_SPLAT, DOM_BACKGROUND];
 
-const
-  // never change, do NOT trust the bits are the same as the enumerated type.
-
-  //Recorded Action Flags
-	//raf_StartPause        = Bit0;
-	//raf_EndPause          = Bit1;
-	//raf_Pausing           = Bit2;
-	//raf_StartIncreaseRR   = Bit3;  // only allowed when not pausing
-	//raf_StartDecreaseRR   = Bit4;  // only allowed when not pausing
-	//raf_StopChangingRR    = Bit5;  // only allowed when not pausing
-	//raf_SkillSelection    = Bit6;
-	raf_SkillAssignment   = 1 shl 7; // Bit7;
-	raf_Nuke              = 1 shl 8; // Bit8;  // only allowed when not pausing, as in the game
-  //raf_NewNPLemming      = Bit9;  // related to emulation of right-click bug
-  //raf_RR99              = Bit10;
-  //raf_RRmin             = Bit11;
+type
+  TLemmingKind = (lkNormal, lkNeutral, lkZombie);
+  TLemmingKinds = set of TLemmingKind;
 
 type
   TLemmingGame = class;
@@ -120,10 +107,12 @@ type
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
+    fDoneAssignmentThisFrame   : Boolean;
+
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
     PhysicsMap                 : TBitmap32;
-    BlockerMap                 : TByteMap; // for blockers (and force fields)
+    BlockerMap                 : TBitmap32; // for blockers
     ZombieMap                  : TByteMap;
     ExitMap                    : TArrayArrayBoolean;
     LockedExitMap              : TArrayArrayBoolean;
@@ -135,7 +124,10 @@ type
     PickupMap                  : TArrayArrayBoolean;
     ButtonMap                  : TArrayArrayBoolean;
     FlipperMap                 : TArrayArrayBoolean;
+    NoSplatMap                 : TArrayArrayBoolean;
     SplatMap                   : TArrayArrayBoolean;
+    ForceLeftMap               : TArrayArrayBoolean;
+    ForceRightMap              : TArrayArrayBoolean;
 
     fReplayManager             : TReplay;
 
@@ -178,6 +170,7 @@ type
     fLemWithShadowButton       : TSkillPanelButton; // correct skill to be erased
     fExistShadow               : Boolean;  // Whether a shadow is currently drawn somewhere
     fLemNextAction             : TBasicLemmingAction; // action to transition to at the end of lemming movement
+    fLastBlockerCheckLem       : TLemming; // blocker responsible for last blocker field check, or nil if none
     Gadgets                    : TGadgetList; // list of objects excluding entrances
     CurrSpawnInterval          : Integer;
 
@@ -199,11 +192,14 @@ type
     fPauseOnHyperSpeedExit     : Boolean; // to maintain pause state before invoking a savestate
     fHitTestAutoFail           : Boolean;
     fHighlightLemmingID        : Integer;
+    fTargetLemmingID           : Integer; // for replay skill assignments
     fCancelReplayAfterSkip     : Boolean;
+
   { events }
     fParticleFinishTimer       : Integer; // extra frames to enable viewing of explosions
     fSimulationDepth           : Integer; // whether we are in simulation mode for drawing shadows
     fSoundList                 : TList<string>; // List of sounds that have been played already on this frame
+
   { pixel combine eventhandlers }
     // CombineMaskPixels has variants based on the direction of destruction
     procedure CombineMaskPixels(F: TColor32; var B: TColor32; M: TColor32; E: TColor32); // general-purpose
@@ -238,7 +234,7 @@ type
       function HandleTeleport(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandlePickup(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleButton(L: TLemming; PosX, PosY: Integer): Boolean;
-      function HandleExit(L: TLemming): Boolean;
+      function HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
       function HandleForceField(L: TLemming; Direction: Integer): Boolean;
       function HandleFire(L: TLemming): Boolean;
       function HandleFlipper(L: TLemming; PosX, PosY: Integer): Boolean;
@@ -281,7 +277,7 @@ type
       function ReadTriggerMap(X, Y: Integer; Map: TArrayArrayBoolean): Boolean;
 
     procedure SetBlockerMap;
-      procedure WriteBlockerMap(X, Y: Integer; aValue: Byte);
+      procedure WriteBlockerMap(X, Y: Integer; aLemmingIndex: Word; aFieldEffect: Byte);
       function ReadBlockerMap(X, Y: Integer; L: TLemming = nil): Byte;
 
     procedure SetZombieField(L: TLemming);
@@ -342,7 +338,8 @@ type
     function GetPriorityLemming(out PriorityLem: TLemming;
                                   NewSkillOrig: TBasicLemmingAction;
                                   MousePos: TPoint;
-                                  IsHighlight: Boolean = False): Integer;
+                                  IsHighlight: Boolean = False;
+                                  IsReplay: Boolean = False): Integer;
     function DoSkillAssignment(L: TLemming; NewSkill: TBasicLemmingAction): Boolean;
 
     function MayAssignWalker(L: TLemming): Boolean;
@@ -365,12 +362,14 @@ type
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
     function GetUsedSkillCount(aSkill: TSkillPanelButton): Integer;
+
+    function GetActiveLemmingTypes: TLemmingKinds;
   public
     //GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
     fSelectDx                  : Integer;
     fXmasPal                   : Boolean;
-    fActiveSkills              : array[0..7] of TSkillPanelButton;
+    fActiveSkills              : array[0..MAX_SKILL_TYPES_PER_LEVEL-1] of TSkillPanelButton;
     LastHitCount               : Integer;
     SpawnIntervalModifier      : Integer; //negative = decrease each update, positive = increase each update, 0 = no change
     ReplayInsert               : Boolean;
@@ -402,6 +401,7 @@ type
     function Checkpass: Boolean;
     function CheckFinishedTest: Boolean;
     function GetHighlitLemming: TLemming;
+    function GetTargetLemming: TLemming;
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -434,6 +434,7 @@ type
     property IsSimulating: Boolean read GetIsSimulating;
 
     property UserSetNuking: Boolean read fUserSetNuking write fUserSetNuking;
+    property ActiveLemmingTypes: TLemmingKinds read GetActiveLemmingTypes;
 
     function GetLevelWidth: Integer;
     function GetLevelHeight: Integer;
@@ -757,6 +758,9 @@ var
     Result := true;
   end;
 begin
+  if not fReplayManager.IsThisUsersReplay then
+    Exit;
+
   for i := 0 to Level.Talismans.Count-1 do
   begin
     if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then Continue;
@@ -815,7 +819,7 @@ begin
   MinerMasks     := TBitmap32.Create;
 
   Gadgets        := TGadgetList.Create;
-  BlockerMap     := TByteMap.Create;
+  BlockerMap     := TBitmap32.Create;
   ZombieMap      := TByteMap.Create;
   fReplayManager := TReplay.Create;
 
@@ -900,19 +904,6 @@ end;
 
 destructor TLemmingGame.Destroy;
 begin
-  // Free memory of trigger area maps
-  SetLength(WaterMap, 0, 0);
-  SetLength(FireMap, 0, 0);
-  SetLength(TeleporterMap, 0, 0);
-  SetLength(UpdraftMap, 0, 0);
-  SetLength(ButtonMap, 0, 0);
-  SetLength(PickupMap, 0, 0);
-  SetLength(FlipperMap, 0, 0);
-  SetLength(SplatMap, 0, 0);
-  SetLength(ExitMap, 0, 0);
-  SetLength(LockedExitMap, 0, 0);
-  SetLength(TrapMap, 0, 0);
-
   BomberMask.Free;
   StonerMask.Free;
   BasherMasks.Free;
@@ -1071,7 +1062,7 @@ begin
   fSelectedSkill := spbNone;
   InitialSkill := spbNone;
 
-  for i := 0 to 7 do
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL-1 do
     fActiveSkills[i] := spbNone;
   i := 0;
   for Skill := Low(TSkillPanelButton) to High(TSkillPanelButton) do
@@ -1082,7 +1073,7 @@ begin
       fActiveSkills[i] := Skill;
       Inc(i);
 
-      if i = 8 then Break; // remove this if we ever allow more than 8 skill types per level
+      if i = MAX_SKILL_TYPES_PER_LEVEL then Break;
     end;
   end;
   if InitialSkill <> spbNone then
@@ -1111,7 +1102,9 @@ begin
       LemIndex := LemmingList.Add(L);
       SetFromPreplaced(Lem);
 
-      if not HasPixelAt(L.LemX, L.LemY) then
+      if Lem.IsShimmier and HasPixelAt(L.LemX, L.LemY - 9) then
+        Transition(L, baShimmying)
+      else if not HasPixelAt(L.LemX, L.LemY) then
         Transition(L, baFalling)
       else if Lem.IsBlocker and not CheckForOverlappingField(L) then
         Transition(L, baBlocking)
@@ -1381,7 +1374,15 @@ begin
     baBuilding   : L.LemNumberOfBricksLeft := 12;
     baPlatforming: L.LemNumberOfBricksLeft := 12;
     baStacking   : L.LemNumberOfBricksLeft := 8;
-    baOhnoing    : CueSoundEffect(SFX_OHNO, L.Position);
+    baOhnoing    : begin
+                     CueSoundEffect(SFX_OHNO, L.Position);
+                     L.LemIsClimber := false;
+                     L.LemIsSwimmer := false;
+                     L.LemIsFloater := false;
+                     L.LemIsGlider := false;
+                     L.LemIsDisarmer := false;
+                     L.LemHasBeenOhnoer := true;
+                   end;
     baStoning    : CueSoundEffect(SFX_OHNO, L.Position);
     baExploding  : CueSoundEffect(SFX_EXPLOSION, L.Position);
     baStoneFinish: CueSoundEffect(SFX_EXPLOSION, L.Position);
@@ -1484,6 +1485,8 @@ begin
   SetLength(PickupMap, Level.Info.Width, Level.Info.Height);
   SetLength(FlipperMap, 0, 0);
   SetLength(FlipperMap, Level.Info.Width, Level.Info.Height);
+  SetLength(NoSplatMap, 0, 0);
+  SetLength(NoSplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(SplatMap, 0, 0);
   SetLength(SplatMap, Level.Info.Width, Level.Info.Height);
   SetLength(ExitMap, 0, 0);
@@ -1492,6 +1495,10 @@ begin
   SetLength(LockedExitMap, Level.Info.Width, Level.Info.Height);
   SetLength(TrapMap, 0, 0);
   SetLength(TrapMap, Level.Info.Width, Level.Info.Height);
+  SetLength(ForceLeftMap, 0, 0);
+  SetLength(ForceLeftMap, Level.Info.Width, Level.Info.Height);
+  SetLength(ForceRightMap, 0, 0);
+  SetLength(ForceRightMap, Level.Info.Width, Level.Info.Height);
 
   BlockerMap.SetSize(Level.Info.Width, Level.Info.Height);
   BlockerMap.Clear(DOM_NONE);
@@ -1503,60 +1510,49 @@ end;
 
 //  BLOCKER MAP TREATMENT
 
-procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aValue: Byte);
+procedure TLemmingGame.WriteBlockerMap(X, Y: Integer; aLemmingIndex: Word; aFieldEffect: Byte);
 begin
   if (X >= 0) and (X < PhysicsMap.Width) and (Y >= 0) and (Y < PhysicsMap.Height) then
-    BlockerMap.Value[X, Y] := aValue;
+    BlockerMap[X, Y] := (aLemmingIndex shl 8) or aFieldEffect;
 end;
 
 function TLemmingGame.ReadBlockerMap(X, Y: Integer; L: TLemming = nil): Byte;
 var
-  LemPosRect: TRect;
-  i: Integer;
   CheckPosX: Integer;
 begin
   if (X >= 0) and (X < Level.Info.Width) and (Y >= 0) and (Y < Level.Info.Height) then
   begin
-    Result := BlockerMap.Value[X, Y];
+    Result := (BlockerMap[X, Y] and $FF);
+
+    if Result <> DOM_NONE then
+      fLastBlockerCheckLem := LemmingList[(BlockerMap[X, Y] shr 8) and $FFFF]
+    else
+      fLastBlockerCheckLem := nil;
 
     // For builders, check that this is not the middle part of a newly created blocker area
     // see http://www.lemmingsforums.net/index.php?topic=3295.0
     if (Result <> DOM_NONE) and (L <> nil) and (L.LemAction = baBuilding) then
     begin
-      for i := 0 to LemmingList.Count - 1 do
-      begin
-        if LemmingList[i].LemDX = L.LemDx then
-          CheckPosX := L.LemX + 2 * L.LemDx
-        else
-          CheckPosX := L.LemX + 3 * L.LemDx;
+      if fLastBlockerCheckLem.LemDX = L.LemDx then
+        CheckPosX := L.LemX + 2 * L.LemDx
+      else
+        CheckPosX := L.LemX + 3 * L.LemDx;
 
-        if     LemmingList[i].LemHasBlockerField
-           and (L.LemY >= LemmingList[i].LemY - 1) and (L.LemY <= LemmingList[i].LemY + 3)
-           and (LemmingList[i].LemX = CheckPosX) then
-        begin
-          Result := DOM_NONE;
-          Exit;
-        end;
+      if     (L.LemY >= fLastBlockerCheckLem.LemY - 1) and (L.LemY <= fLastBlockerCheckLem.LemY + 3)
+         and (fLastBlockerCheckLem.LemX = CheckPosX) then
+      begin
+        Result := DOM_NONE;
+        Exit;
       end;
     end;
 
     // For simulations check in addition if the trigger area does not come from a blocker with removed terrain under his feet
     if IsSimulating and (Result in [DOM_FORCERIGHT, DOM_FORCELEFT]) then
     begin
-      if Result = DOM_FORCERIGHT then
-        LemPosRect := Rect(X - 6, Y - 5, X - 1, Y + 6)
-      else
-        LemPosRect := Rect(X + 2, Y - 5, X + 7, Y + 6);
-
-      for i := 0 to LemmingList.Count - 1 do
+      if not HasPixelAt(fLastBlockerCheckLem.LemX, fLastBlockerCheckLem.LemY) then
       begin
-        if     LemmingList[i].LemHasBlockerField
-           and PtInRect(LemPosRect, Point(LemmingList[i].LemX, LemmingList[i].LemY))
-           and not HasPixelAt(LemmingList[i].LemX, LemmingList[i].LemY) then
-        begin
-          Result := DOM_NONE;
-          Exit;
-        end;
+        Result := DOM_NONE;
+        Exit;
       end;
     end;
   end
@@ -1578,30 +1574,15 @@ var
     for Step := 0 to 11 do
       for Y := L.LemY - 6 to L.LemY + 4 do
         case Step of
-          0..3: WriteBlockerMap(X + Step, Y, DOM_FORCELEFT);
-          4..7: WriteBlockerMap(X + Step, Y, DOM_BLOCKER);
-          8..11: WriteBlockerMap(X + Step, Y, DOM_FORCERIGHT);
+          0..3: WriteBlockerMap(X + Step, Y, i, DOM_FORCELEFT);
+          4..7: WriteBlockerMap(X + Step, Y, i, DOM_BLOCKER);
+          8..11: WriteBlockerMap(X + Step, Y, i, DOM_FORCERIGHT);
         end;
-  end;
-
-  procedure SetForceField(Rect: TRect; Direction: Integer);
-  var
-    X, Y: Integer;
-  begin
-    for X := Rect.Left to Rect.Right - 1 do
-    for Y := Rect.Top to Rect.Bottom - 1 do
-      WriteBlockerMap(X, Y, Direction);
   end;
 
 begin
   BlockerMap.Clear(DOM_NONE);
 
-  // First add all force fields
-  for i := 0 to Gadgets.Count - 1 do
-    if Gadgets[i].TriggerEffect in [DOM_FORCELEFT, DOM_FORCERIGHT] then
-      SetForceField(Gadgets[i].TriggerRect, Gadgets[i].TriggerEffect);
-
-  // Then add all blocker fields
   for i := 0 to LemmingList.Count-1 do
     if LemmingList[i].LemHasBlockerField and not LemmingList[i].LemRemoved then
       SetBlockerField(LemmingList[i]);
@@ -1652,7 +1633,10 @@ begin
       DOM_PICKUP:     WriteTriggerMap(PickupMap, Gadgets[i].TriggerRect);
       DOM_BUTTON:     WriteTriggerMap(ButtonMap, Gadgets[i].TriggerRect);
       DOM_FLIPPER:    WriteTriggerMap(FlipperMap, Gadgets[i].TriggerRect);
+      DOM_NOSPLAT:    WriteTriggerMap(NoSplatMap, Gadgets[i].TriggerRect);
       DOM_SPLAT:      WriteTriggerMap(SplatMap, Gadgets[i].TriggerRect);
+      DOM_FORCELEFT:  WriteTriggerMap(ForceLeftMap, Gadgets[i].TriggerRect);
+      DOM_FORCERIGHT: WriteTriggerMap(ForceRightMap, Gadgets[i].TriggerRect);
     end;
   end;
 end;
@@ -1670,9 +1654,9 @@ begin
   HitTestAutoFail := false;
 
   // Just to be safe, though this should always return in fLemSelected
-  GetPriorityLemming(L, Skill, CursorPoint, IsHighlight);
+  GetPriorityLemming(L, Skill, CursorPoint, IsHighlight, IsReplayAssignment);
   // Get lemming to queue the skill assignment
-  GetPriorityLemming(LQueue, baNone, CursorPoint);
+  GetPriorityLemming(LQueue, baNone, CursorPoint, IsHighlight);
 
   HitTestAutoFail := OldHTAF;
 
@@ -1713,6 +1697,8 @@ begin
 
   // We check first, whether the skill is available at all
   if not CheckSkillAvailable(NewSkill) then Exit;
+
+  if fDoneAssignmentThisFrame then Exit;
 
   UpdateSkillCount(NewSkill);
 
@@ -1782,6 +1768,7 @@ begin
   else Transition(L, NewSkill);
 
   Result := True;
+  fDoneAssignmentThisFrame := true;
 end;
 
 
@@ -1816,7 +1803,8 @@ end;
 function TLemmingGame.GetPriorityLemming(out PriorityLem: TLemming;
                                           NewSkillOrig: TBasicLemmingAction;
                                           MousePos: TPoint;
-                                          IsHighlight: Boolean = False): Integer;
+                                          IsHighlight: Boolean = False;
+                                          IsReplay: Boolean = False): Integer;
 const
   NonPerm = 0;
   Perm = 1;
@@ -1894,20 +1882,21 @@ begin
     L := LemmingList.List[i];
 
     // Check if we only look for highlighted Lems
-    if IsHighlight and not (L = GetHighlitLemming) then Continue;
+    if (IsHighlight and not (L = GetHighlitLemming))
+    or (IsReplay and not (L = GetTargetLemming)) then Continue;
     // Does Lemming exist
     if L.LemRemoved or L.LemTeleporting then Continue;
-    // Is the Lemming a Zombie (remove unless we haven't yet had any lem under the cursor)
-    if L.LemIsZombie and Assigned(PriorityLem) then Continue;
+    // Is the Lemming unable to receive skills, because zombie, neutral, or was-ohnoer? (remove unless we haven't yet had any lem under the cursor)
+    if L.CannotReceiveSkills and Assigned(PriorityLem) then Continue;
     // Is Lemming inside cursor (only check if we are not using Hightlightning!)
-    if (not LemIsInCursor(L, MousePos)) and (not IsHighlight) then Continue;
+    if (not LemIsInCursor(L, MousePos)) and (not (IsHighlight or IsReplay)) then Continue;
     // Directional select
     if (fSelectDx <> 0) and (fSelectDx <> L.LemDx) then Continue;
     // Select only walkers
     if IsSelectWalkerHotkey and (L.LemAction <> baWalking) then Continue;
 
-    // Increase number of lemmings in cursor (if not a zombie)
-    if not L.LemIsZombie then Inc(NumLemInCursor);
+    // Increase number of lemmings in cursor (if not a zombie or neutral)
+    if not L.CannotReceiveSkills then Inc(NumLemInCursor);
 
     // Determine priority class of current lemming
     if IsSelectUnassignedHotkey or IsSelectWalkerHotkey then
@@ -1925,7 +1914,7 @@ begin
     if not NewSkillMethods[NewSkill](L) then CurPriorityBox := 8;
 
     // Deprioritize zombie even when just counting lemmings
-    if L.LemIsZombie then CurPriorityBox := 9;
+    if L.CannotReceiveSkills then CurPriorityBox := 9;
 
     if     (CurPriorityBox < CurValue)
        or ((CurPriorityBox = CurValue) and IsCloserToCursorCenter(PriorityLem, L, MousePos)) then
@@ -1940,6 +1929,35 @@ begin
   if (CurValue > 6) and not (NewSkillOrig = baNone) then PriorityLem := nil;
 
   Result := NumLemInCursor;
+end;
+
+function TLemmingGame.GetActiveLemmingTypes: TLemmingKinds;
+var
+  i: Integer;
+  G: TGadget;
+  L: TLemming;
+begin
+  Result := [];
+
+  for i := 0 to LemmingList.Count-1 do
+  begin
+    L := LemmingList[i];
+    if L.LemRemoved then Continue;
+
+    if not (L.LemIsZombie or L.LemIsNeutral) then Include(Result, lkNormal);
+    if L.LemIsZombie then Include(Result, lkZombie);
+    if L.LemIsNeutral then Include(Result, lkNeutral);
+  end;
+
+  for i := (Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease) to Length(Level.Info.SpawnOrder) - 1 do
+  begin
+    G := Gadgets[Level.Info.SpawnOrder[i]];
+    if not (G.IsPreassignedZombie or G.IsPreassignedNeutral) then Include(Result, lkNormal);
+    if G.IsPreassignedZombie then Include(Result, lkZombie);
+    if G.IsPreassignedNeutral then Include(Result, lkNeutral);
+  end;
+
+  // Ahh, wish Delphi had LINQ...
 end;
 
 function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
@@ -2229,7 +2247,7 @@ begin
 
     // Exits
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
-      AbortChecks := HandleExit(L);
+      AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
 
     // Flipper (except for blockers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
@@ -2271,8 +2289,8 @@ begin
   case TriggerType of
     trExit:       Result :=     ReadTriggerMap(X, Y, ExitMap)
                              or ((ButtonsRemain = 0) and ReadTriggerMap(X, Y, LockedExitMap));
-    trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT);
-    trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT);
+    trForceLeft:  Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCELEFT) or ReadTriggerMap(X, Y, ForceLeftMap);
+    trForceRight: Result :=     (ReadBlockerMap(X, Y, L) = DOM_FORCERIGHT) or ReadTriggerMap(X, Y, ForceRightMap);
     trTrap:       Result :=     ReadTriggerMap(X, Y, TrapMap);
     trWater:      Result :=     ReadTriggerMap(X, Y, WaterMap);
     trFire:       Result :=     ReadTriggerMap(X, Y, FireMap);
@@ -2289,6 +2307,7 @@ begin
     trButton:     Result :=     ReadTriggerMap(X, Y, ButtonMap);
     trUpdraft:    Result :=     ReadTriggerMap(X, Y, UpdraftMap);
     trFlipper:    Result :=     ReadTriggerMap(X, Y, FlipperMap);
+    trNoSplat:    Result :=     ReadTriggerMap(X, Y, NoSplatMap);
     trSplat:      Result :=     ReadTriggerMap(X, Y, SplatMap);
     trZombie:     Result :=     (ReadZombieMap(X, Y) and 1 <> 0);
   end;
@@ -2320,12 +2339,19 @@ begin
     // Additional checks for locked exit
     if (Gadget.TriggerEffect = DOM_LOCKEXIT) and not (ButtonsRemain = 0) then
       GadgetFound := False;
+    // Additional check for any exit
+    if (Gadget.TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) and (Gadget.RemainingLemmingsCount = 0) then // we specifically must not use <= 0 here, as -1 = no limit
+      GadgetFound := False;
+
     // Additional checks for triggered traps, triggered animations, teleporters
     if Gadget.Triggered then
       GadgetFound := False;
-    // ignore already used buttons, one-shot traps and pick-up skills
-    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE, DOM_PICKUP])
+    // ignore already used buttons and one-shot traps
+    if     (Gadget.TriggerEffect in [DOM_BUTTON, DOM_TRAPONCE])
        and (Gadget.CurrentFrame = 0) then  // other objects have always CurrentFrame = 0, so the first check is needed!
+      GadgetFound := False;
+    // ignore already used pickup skills
+    if (Gadget.TriggerEffect = DOM_PICKUP) and (Gadget.CurrentFrame mod 2 = 0) then
       GadgetFound := False;
     // Additional check, that the corresponding receiver is inactive
     if     (Gadget.TriggerEffect = DOM_TELEPORT)
@@ -2374,6 +2400,7 @@ begin
     // trigger trap
     Gadget.Triggered := True;
     Gadget.ZombieMode := L.LemIsZombie;
+    Gadget.NeutralMode := L.LemIsNeutral;
     // Make sure to remove the blocker field!
     L.LemHasBlockerField := False;
     SetBlockerMap;
@@ -2412,6 +2439,7 @@ begin
 
   Gadget.Triggered := True;
   Gadget.ZombieMode := L.LemIsZombie;
+  Gadget.NeutralMode := L.LemIsNeutral;
   CueSoundEffect(Gadget.SoundEffect, L.Position);
   L.LemTeleporting := True;
   Gadget.TeleLem := L.LemIndex;
@@ -2436,7 +2464,7 @@ begin
   if not L.LemIsZombie then
   begin
     Gadget := Gadgets[GadgetID];
-    Gadget.CurrentFrame := 0;
+    Gadget.CurrentFrame := Gadget.CurrentFrame and not $01;
     CueSoundEffect(SFX_PICKUP, L.Position);
     UpdateSkillCount(SkillPanelButtonToAction[Gadget.SkillType], Gadget.SkillCount);
   end;
@@ -2478,7 +2506,10 @@ begin
   end;
 end;
 
-function TLemmingGame.HandleExit(L: TLemming): Boolean;
+function TLemmingGame.HandleExit(L: TLemming; PosX, PosY: Integer): Boolean;
+var
+  GadgetID: Word;
+  Gadget: TGadget;
 begin
   Result := False; // only see exit trigger area, if it actually used
 
@@ -2486,6 +2517,13 @@ begin
      and (not (L.LemAction in [baFalling, baSplatting]))
      and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
+    GadgetID := FindGadgetID(PosX, PosY, trExit);
+    if GadgetID = 65535 then Exit;
+    Gadget := Gadgets[GadgetID];
+
+    if Gadget.RemainingLemmingsCount > 0 then
+      Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount - 1;
+
     Result := True;
     Transition(L, baExiting);
     CueSoundEffect(SFX_YIPPEE, L.Position);
@@ -2500,6 +2538,10 @@ begin
     Result := True;
 
     TurnAround(L);
+
+    // Zombies always infect a blocker they bounce off
+    if L.LemIsZombie and (fLastBlockerCheckLem <> nil) and not (fLastBlockerCheckLem.LemIsZombie) then
+      RemoveLemming(fLastBlockerCheckLem, RM_ZOMBIE);
 
     // Avoid moving into terrain, see http://www.lemmingsforums.net/index.php?topic=2575.0
     if L.LemAction = baMining then
@@ -2750,8 +2792,8 @@ var
   ShadowSkillButton: TSkillPanelButton;
   ShadowLem: TLemming;
 const
-  ShadowSkillSet = [spbPlatformer, spbBuilder, spbStacker, spbDigger, spbMiner,
-                    spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
+  ShadowSkillSet = [spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
+                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
 begin
   if fHyperSpeed then Exit;
 
@@ -3886,6 +3928,11 @@ begin
   begin
     Transition(L, baFalling)
   end
+  // On the first frame, check as well for height 9, as the shimmier may not continue in that case
+  else if (L.LemPhysicsFrame = 1) and HasPixelAt(L.LemX, L.LemY - 9) then
+  begin
+    Transition(L, baFalling)
+  end
   // Check whether we can reach the ceiling
   else if emptyPixels <= MovementList[L.LemPhysicsFrame] then
   begin
@@ -4095,6 +4142,7 @@ var
   function IsFallFatal: Boolean;
   begin
     Result := (not (L.LemIsFloater or L.LemIsGlider))
+          and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
 begin
@@ -4421,6 +4469,8 @@ procedure TLemmingGame.UpdateLemmings;
   The main method: handling a single frame of the game.
 -------------------------------------------------------------------------------}
 begin
+  fDoneAssignmentThisFrame := false;
+
   if fGameFinished then
     Exit;
   fSoundList.Clear(); // Clear list of played sound effects
@@ -4583,7 +4633,6 @@ end;
 procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
 var
   L: TLemming;
-  OldHighlightLemID: Integer;
 begin
   with aReplayItem do
   begin
@@ -4594,13 +4643,8 @@ begin
 
     if Skill in AssignableSkills then
     begin
-      // In order to preserve old replays, we have to check if the skill assignments are still possible
-      // As the priority of lemmings has changed, we have to Highlight this lemming
-      // After having done the assignment, revert the Highlightning.
-      OldHighlightLemID := fHighlightLemmingID;
-      fHighlightLemmingID := L.LemIndex;
-      AssignNewSkill(Skill, true, true);
-      fHighlightLemmingID := OldHighlightLemID;
+      fTargetLemmingID := L.LemIndex;
+      AssignNewSkill(Skill, false, true);
     end;
 
   end;
@@ -4611,8 +4655,8 @@ function TLemmingGame.GetSelectedSkill: Integer;
 var
   i: Integer;
 begin
-  Result := 8;
-  for i := 0 to 7 do
+  Result := -1;
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL do
     if fSelectedSkill = fActiveSkills[i] then
     begin
       Result := i;
@@ -4627,7 +4671,7 @@ procedure TLemmingGame.SetSelectedSkill(Value: TSkillPanelButton; MakeActive: Bo
     i: Integer;
   begin
     Result := false;
-    for i := 0 to 7 do
+    for i := 0 to MAX_SKILL_TYPES_PER_LEVEL - 1 do
       if fActiveSkills[i] = Value then Result := true;
   end;
 begin
@@ -4734,6 +4778,14 @@ begin
             Dec(fSpawnedDead);
             RemoveLemming(NewLemming, RM_ZOMBIE, true);
           end;
+
+          if Gadgets[ix].IsPreassignedNeutral then
+            LemIsNeutral := true;
+
+          if Gadgets[ix].RemainingLemmingsCount > 0 then
+            Gadgets[ix].RemainingLemmingsCount := Gadgets[ix].RemainingLemmingsCount - 1;
+                // TLevel.PrepareForUse handles enforcing the limits. This only needs to be updated
+                // for display purposes.
         end;
         Dec(LemmingsToRelease);
         Inc(LemmingsOut);
@@ -4763,8 +4815,7 @@ begin
       with CurrentLemming do
       begin
         if     (LemExplosionTimer = 0)
-           and not (LemAction in [baSplatting, baExploding])
-           and not LemIsZombie then
+           and not (LemAction in [baSplatting, baExploding]) then
           LemExplosionTimer := 84;
       end;
       Inc(Index_LemmingToBeNuked);
@@ -4820,7 +4871,13 @@ end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String);
 begin
-  CueSoundEffect(aSound, Point(0, 0));
+  if IsSimulating then Exit; // Not play sound in simulation mode
+
+  // Check that the sound was not yet played on this frame
+  if fSoundList.Contains(aSound) then Exit;
+
+  fSoundList.Add(aSound);
+  MessageQueue.Add(GAMEMSG_SOUND, aSound);
 end;
 
 procedure TLemmingGame.CueSoundEffect(aSound: String; aOrigin: TPoint);
@@ -4843,6 +4900,16 @@ begin
   if LemmingList[fHighlightLemmingID].LemRemoved then Exit;
   if LemmingList[fHighlightLemmingID].LemTeleporting then Exit;
   Result := LemmingList[fHighlightLemmingID];
+end;
+
+function TLemmingGame.GetTargetLemming: TLemming;
+begin
+  Result := nil;
+  if fTargetLemmingID < 0 then Exit;
+  if fTargetLemmingID >= LemmingList.Count then Exit;
+  if LemmingList[fTargetLemmingID].LemRemoved then Exit;
+  if LemmingList[fTargetLemmingID].LemTeleporting then Exit;
+  Result := LemmingList[fTargetLemmingID];
 end;
 
 
@@ -4984,7 +5051,7 @@ begin
 
     if L.LemQueueAction = baNone then Continue;
 
-    if L.LemRemoved or L.LemIsZombie or L.LemTeleporting then
+    if L.LemRemoved or L.CannotReceiveSkills or L.LemTeleporting then // CannotReceiveSkills covers neutral and zombie
     begin
       // delete queued action first
       L.LemQueueAction := baNone;
@@ -5223,6 +5290,8 @@ procedure TLemmingGame.RegainControl(Force: Boolean = false);
 begin
   if ReplayInsert and not Force then Exit;
 
+  if CurrentIteration > fReplayManager.LastActionFrame then Exit;
+
   fReplayManager.Cut(fCurrentIteration);
 end;
 
@@ -5260,6 +5329,7 @@ begin
         Gadget2.TeleLem := Gadget.TeleLem;
         Gadget2.Triggered := True;
         Gadget2.ZombieMode := Gadget.ZombieMode;
+        Gadget2.NeutralMode := Gadget.NeutralMode;
         // Reset TeleLem for Teleporter
         Gadget.TeleLem := -1;
       end;
@@ -5273,6 +5343,7 @@ begin
       Gadget.Triggered := False;
       Gadget.HoldActive := False;
       Gadget.ZombieMode := False;
+      Gadget.NeutralMode := False;
     end;
 
     for i2 := Gadget.Animations.Count-1 downto 0 do
@@ -5330,7 +5401,7 @@ begin
   Assert(aAction in AssignableSkills, 'CheckSkillAvailable for not assignable skill');
 
   HasSkillButton := false;
-  for i := 0 to Length(fActiveSkills) - 1 do
+  for i := 0 to MAX_SKILL_TYPES_PER_LEVEL - 1 do
     HasSkillButton := HasSkillButton or (fActiveSkills[i] = ActionToSkillPanelButton[aAction]);
 
   Result := HasSkillButton and (CurrSkillCount[aAction] > 0);

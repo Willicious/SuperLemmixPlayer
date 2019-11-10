@@ -5,8 +5,9 @@ unit GameTextScreen;
 interface
 
 uses
+  Dialogs, // debug
   LemmixHotkeys,
-  Windows, Classes, SysUtils, Controls,
+  Windows, Classes, SysUtils, Controls, StrUtils,
   UMisc,
   Gr32, Gr32_Layers,
   LemTypes, LemStrings, LemGame,
@@ -85,8 +86,98 @@ var
   lfc: Integer;
   SL: TStringList;
 
-  procedure Add(const S: string);
+  procedure HandleSubstitutions(var S: String);
+  var
+    KeyNames: TKeyNameArray;
+
+    function MakeHotkeyText(const S: String): String;
+    var
+      Key: TLemmixHotkeyAction;
+      Modifier: Integer;
+      CheckMod: Boolean;
+      ThisKey: TLemmixHotkey;
+
+      n: Integer;
+    begin
+      Result := '';
+
+      if Pos(':', S) = 0 then
+      begin
+        if Uppercase(S) = 'SKIP+' then
+        begin
+          Key := lka_Skip;
+          Modifier := 1;
+          CheckMod := false;
+        end else if Uppercase(S) = 'SKIP-' then
+        begin
+          Key := lka_Skip;
+          Modifier := -1;
+          CheckMod := false;
+        end else begin
+          Key := TLemmixHotkeyManager.InterpretMain(S);
+          Modifier := 0;
+          CheckMod := false;
+        end;
+      end else begin
+        Key := TLemmixHotkeyManager.InterpretMain(LeftStr(S, Pos(':', S) - 1));
+        Modifier := TLemmixHotkeyManager.InterpretSecondary(RightStr(S, Length(S) - Pos(':', S)));
+        CheckMod := true;
+      end;
+
+      if Key = lka_Null then
+      begin
+        Result := '## INVALID KEY ##';
+        Exit;
+      end;
+
+      for n := 0 to MAX_KEY do
+      begin
+        ThisKey := GameParams.Hotkeys.CheckKeyEffect(n);
+        if ThisKey.Action <> Key then Continue;
+        if CheckMod and (ThisKey.Modifier <> Modifier) then Continue;
+        if (not CheckMod) and (Key = lka_Skip) and (Modifier <> 0) then
+          if (Modifier < 0) <> (ThisKey.Modifier < 0) then
+            Continue;
+
+        Result := Result + '{' + Keynames[n] + '}  ';
+      end;
+
+      if Length(Result) = 0 then
+        Result := '{None}'
+      else
+        Result := LeftStr(Result, Length(Result) - 2); // remove the double-space at the end
+    end;
+
+  var
+    FoundStartPos, FoundEndPos: Integer;
+    SubSrcText: String;
+
+    procedure Replace(const newText: String);
+    begin
+      S := LeftStr(S, FoundStartPos - 1) +
+           newText +
+           RightStr(S, Length(S) - FoundEndPos);
+    end;
   begin
+    KeyNames := TLemmixHotkeyManager.GetKeyNames(true);
+
+    while Pos('[', S) <> 0 do
+    begin
+      FoundStartPos := Pos('[', S);
+      FoundEndPos := Pos(']', S, FoundStartPos);
+
+      SubSrcText := Uppercase(MidStr(S, FoundStartPos + 1, FoundEndPos - FoundStartPos - 1));
+
+      if LeftStr(SubSrcText, 7) = 'HOTKEY:' then
+        Replace(MakeHotkeyText(RightStr(SubSrcText, Length(SubSrcText) - 7)))
+      else
+        Break;
+    end;
+  end;
+
+  procedure Add(S: string);
+  begin
+    HandleSubstitutions(S);
     Result := Result + S + #13;
     Inc(lfc);
   end;
@@ -138,13 +229,16 @@ begin
     if S = '' then Exit;
     GlobalGame.EnsureCorrectReplayDetails;
     GlobalGame.ReplayManager.SaveToFile(S);
-    Exit;
-  end;
-
-  case Key of
-    VK_RETURN: CloseScreen(GameParams.NextScreen);
-    VK_ESCAPE: CloseScreen(gstMenu);
-  end;
+  end else if (GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_LoadReplay) and (GameParams.NextScreen = gstPlay) then
+    LoadReplay
+  else
+    case Key of
+      VK_RETURN: CloseScreen(GameParams.NextScreen);
+      VK_ESCAPE: if GameParams.TestModeLevel <> nil then
+                   CloseScreen(gstExit)
+                 else
+                   CloseScreen(gstMenu);
+    end;
 end;
 
 procedure TGameTextScreen.Form_MouseDown(Sender: TObject;

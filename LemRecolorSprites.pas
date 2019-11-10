@@ -6,6 +6,7 @@ uses
   Dialogs,
   Classes, SysUtils,
   LemNeoParser,
+  LemNeoTheme,
   LemDosStructures, LemLemming, LemTypes, LemStrings,
   GR32, GR32_Blend;
 
@@ -14,11 +15,13 @@ const
   CPM_LEMMING_ATHLETE = $FF00FFFF; // used for an athlete
   CPM_LEMMING_SELECTED = $007F0000; // OR'd to base value for selected lemming
   CPM_LEMMING_ZOMBIE = $00808080; // AND-NOT'd to base value for zombies
+  CPM_LEMMING_NEUTRAL = $00FFFFFF; // XOR'd to base value for neutrals
 
 type
   TColorSwapType = (rcl_Selected,
                     rcl_Athlete,
-                    rcl_Zombie);
+                    rcl_Zombie,
+                    rcl_Neutral);
 
   TColorSwap = record
     Condition: TColorSwapType;
@@ -45,6 +48,7 @@ type
       constructor Create;
 
       procedure LoadSwaps(aName: String);
+      procedure ApplyPaletteSwapping(aColorDict: TColorDict; aTheme: TNeoTheme);
       procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
       procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
 
@@ -84,6 +88,9 @@ begin
     if fDrawAsSelected then
       B := B or CPM_LEMMING_SELECTED;
 
+    if fLemming.LemIsNeutral then
+      B := B xor CPM_LEMMING_NEUTRAL;
+
     if fLemming.LemIsZombie then
       B := B and not CPM_LEMMING_ZOMBIE;
   end else
@@ -93,6 +100,7 @@ begin
         rcl_Selected: if not fDrawAsSelected then Continue;
         rcl_Zombie: if not fLemming.LemIsZombie then Continue;
         rcl_Athlete: if not fLemming.HasPermanentSkills then Continue;
+        rcl_Neutral: if not fLemming.LemIsNeutral then Continue;
         else raise Exception.Create('TRecolorImage.SwapColors encountered an unknown condition' + #13 + IntToStr(Integer(fSwaps[i].Condition)));
       end;
       if (F and $FFFFFF) = fSwaps[i].SrcColor then B := fSwaps[i].DstColor;
@@ -144,17 +152,53 @@ begin
     begin
       Parser.LoadFromFile(AppPath + SFStyles + aName + SFPiecesLemmings + 'scheme.nxmi');
 
-      Mode := rcl_Athlete;
-      Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
+      if (Parser.MainSection.Section['state_recoloring'] <> nil) then
+      begin
+        Mode := rcl_Athlete;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
 
-      Mode := rcl_Zombie;
-      Parser.MainSection.Section['recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
+        Mode := rcl_Neutral;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('neutral', RegisterSwap, @Mode);
 
-      Mode := rcl_Selected;
-      Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+        Mode := rcl_Zombie;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
+
+        Mode := rcl_Selected;
+        Parser.MainSection.Section['state_recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+      end else if (Parser.MainSection.Section['recoloring'] <> nil) then
+      begin
+        Mode := rcl_Athlete;
+        Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
+
+        Mode := rcl_Neutral;
+        Parser.MainSection.Section['recoloring'].DoForEachSection('neutral', RegisterSwap, @Mode);
+
+        Mode := rcl_Zombie;
+        Parser.MainSection.Section['recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
+
+        Mode := rcl_Selected;
+        Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
+      end;
     end;
   finally
     Parser.Free;
+  end;
+end;
+
+procedure TRecolorImage.ApplyPaletteSwapping(aColorDict: TColorDict;
+  aTheme: TNeoTheme);
+var
+  i: Integer;
+begin
+  for i := 0 to Length(fSwaps)-1 do
+  begin
+    if aColorDict.ContainsKey(fSwaps[i].SrcColor) then
+      if aTheme.DoesColorExist(aColorDict[fSwaps[i].SrcColor]) then
+        fSwaps[i].SrcColor := aTheme.Colors[aColorDict[fSwaps[i].SrcColor]] and $FFFFFF;
+
+    if aColorDict.ContainsKey(fSwaps[i].DstColor) then
+      if aTheme.DoesColorExist(aColorDict[fSwaps[i].DstColor]) then
+        fSwaps[i].DstColor := aTheme.Colors[aColorDict[fSwaps[i].DstColor]] and $FFFFFF;
   end;
 end;
 

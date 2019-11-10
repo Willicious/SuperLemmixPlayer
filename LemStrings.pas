@@ -10,6 +10,7 @@ uses
 const
   // Important paths
   SFGraphics = 'gfx\';
+    SFGraphicsGame = SFGraphics + 'game\';
     SFGraphicsHelpers = SFGraphics + 'helpers\';
     SFGraphicsMasks = SFGraphics + 'mask\';
     SFGraphicsMenu = SFGraphics + 'menu\';
@@ -21,7 +22,6 @@ const
       SFPiecesObjects = '\objects\';
       SFPiecesBackgrounds = '\backgrounds\';
       SFPiecesLemmings = '\lemmings\';
-      SFPiecesPanel = '\panel\';
       SFTheme = 'theme.nxtm';
 
   SFLevels = 'levels\';
@@ -108,6 +108,8 @@ resourcestring
   SReacher = 'Reacher';
   SShimmier = 'Shimmier';
   SZombie = 'Zombie';
+  SNeutral = 'Neutral';
+  SNeutralZombie = 'N-Zombie';
 
 
   {-------------------------------------------------------------------------------

@@ -467,7 +467,7 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 7
+  INDEX 0
   COLLECTION namida_space
   PIECE universe
 $END

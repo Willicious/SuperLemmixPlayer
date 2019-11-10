@@ -25,12 +25,12 @@ uses
 const
   SKILL_REPLAY_NAME_COUNT = 18;
   SKILL_REPLAY_NAMES: array[0..SKILL_REPLAY_NAME_COUNT-1] of String =
-                                               ('WALKER', 'CLIMBER', 'SWIMMER',
-                                                'FLOATER', 'GLIDER', 'DISARMER',
-                                                'BOMBER', 'STONER', 'BLOCKER',
-                                                'PLATFORMER', 'BUILDER', 'STACKER',
-                                                'BASHER', 'FENCER', 'MINER',
-                                                'DIGGER', 'CLONER', 'SHIMMIER');
+                                               ('WALKER', 'SHIMMIER', 'CLIMBER',
+                                                'SWIMMER', 'FLOATER', 'GLIDER',
+                                                'DISARMER', 'BOMBER', 'STONER',
+                                                'BLOCKER', 'PLATFORMER', 'BUILDER',
+                                                'STACKER', 'BASHER', 'FENCER',
+                                                'MINER', 'DIGGER', 'CLONER');
 
 
 type
@@ -123,6 +123,7 @@ type
       fLevelRank: String;
       fLevelPosition: Integer;
       fLevelID: Int64;
+      function GetIsThisUsersReplay: Boolean;
       function GetLastActionFrame: Integer;
       function GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
       procedure SaveReplayList(aList: TReplayItemList; Sec: TParserSection);
@@ -136,9 +137,9 @@ type
       procedure Clear(EraseLevelInfo: Boolean = false);
       procedure Delete(aItem: TBaseReplayItem);
       procedure LoadFromFile(aFile: String);
-      procedure SaveToFile(aFile: String);
+      procedure SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = false);
       procedure LoadFromStream(aStream: TStream);
-      procedure SaveToStream(aStream: TStream);
+      procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
       procedure LoadOldReplayFile(aFile: String);
       procedure Cut(aLastFrame: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
@@ -153,6 +154,7 @@ type
       property SpawnIntervalChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
       property IsModified: Boolean read fIsModified;
+      property IsThisUsersReplay: Boolean read GetIsThisUsersReplay;
   end;
 
   function GetSkillReplayName(aButton: TSkillPanelButton): String; overload;
@@ -251,7 +253,7 @@ const
 	raf_SkillAssignment   = $0080;
 	raf_Nuke              = $0100;
 
-  BUTTON_TABLE: array[0..21] of TSkillPanelButton =
+  BUTTON_TABLE: array[0..20] of TSkillPanelButton =
                  (spbNone, spbNone, spbNone,
                   spbClimber,
                   spbFloater,
@@ -269,8 +271,7 @@ const
                   spbStoner,
                   spbPlatformer,
                   spbStacker,
-                  spbCloner,
-                  spbShimmier);
+                  spbCloner);
 
 { TReplay }
 
@@ -297,7 +298,7 @@ var
 
   function GetReplayFileName(TestModeName: Boolean): String;
   begin
-    if GameParams.TestModeLevel <> nil then
+    if not GameParams.CurrentLevel.Group.IsOrdered then
       Result := Trim(aLevel.Info.Title)
     else
       Result := RankName + '_' + LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2);
@@ -355,7 +356,7 @@ var
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
     Dlg.DefaultExt := '.lrb';
-    Dlg.Options := [ofOverwritePrompt];
+    Dlg.Options := [ofOverwritePrompt, ofEnableSizing];
     Dlg.FileName := DefaultFileName;
     if Dlg.Execute then
     begin
@@ -437,16 +438,16 @@ end;
 
 procedure TReplay.Cut(aLastFrame: Integer);
 
-  procedure DoCut(aList: TReplayItemList);
+  procedure DoCut(aList: TReplayItemList; aLastFrameLocal: Integer);
   var
     i: Integer;
   begin
     for i := aList.Count-1 downto 0 do
-      if aList[i].Frame > aLastFrame then aList.Delete(i);
+      if aList[i].Frame >= aLastFrameLocal then aList.Delete(i);
   end;
 begin
-  DoCut(fAssignments);
-  DoCut(fSpawnIntervalChanges);
+  DoCut(fAssignments, aLastFrame);
+  DoCut(fSpawnIntervalChanges, aLastFrame);
   fIsModified := true;
 end;
 
@@ -507,7 +508,7 @@ begin
     fLevelName := Sec.LineString['title'];
     fLevelAuthor := Sec.LineString['author'];
     fLevelGame := Sec.LineString['game'];
-    fLevelRank := Sec.LineString['rank'];
+    fLevelRank := Sec.LineString['group']; // Not bothering with BC because this isn't used for anything, anyway.
     fLevelPosition := Sec.LineNumeric['level'];
     if Length(Sec.LineTrimString['id']) = 9 then
     begin
@@ -546,7 +547,7 @@ begin
     fAssignments.Add(Item);
 end;
 
-procedure TReplay.SaveToFile(aFile: String);
+procedure TReplay.SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = false);
 var
   FS: TFileStream;
 begin
@@ -554,7 +555,7 @@ begin
   FS := TFileStream.Create(aFile, fmCreate);
   try
     FS.Position := 0;
-    SaveToStream(FS);
+    SaveToStream(FS, aMarkAsUnmodified);
   finally
     FS.Free;
   end;
@@ -573,7 +574,7 @@ begin
   end;
 end;
 
-procedure TReplay.SaveToStream(aStream: TStream);
+procedure TReplay.SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
 var
   Parser: TParser;
   Sec: TParserSection;
@@ -582,13 +583,18 @@ begin
   try
     Sec := Parser.MainSection;
 
-    Sec.AddLine('USER', fPlayerName);
+    if fIsModified then
+      fPlayerName := GameParams.UserName; // If modified, treat it as this user's.
+
+    if (fPlayerName <> '') and (Uppercase(Trim(fPlayerName)) <> 'ANONYMOUS') then
+      Sec.AddLine('USER', fPlayerName);
+
     Sec.AddLine('TITLE', fLevelName);
     Sec.AddLine('AUTHOR', fLevelAuthor);
     if Trim(fLevelGame) <> '' then
     begin
       Sec.AddLine('GAME', fLevelGame);
-      Sec.AddLine('RANK', fLevelRank);
+      Sec.AddLine('GROUP', fLevelRank);
       Sec.AddLine('LEVEL', fLevelPosition);
     end;
     Sec.AddLine('ID', fLevelID, 16);
@@ -597,6 +603,9 @@ begin
     SaveReplayList(fSpawnIntervalChanges, Sec);
 
     Parser.SaveToStream(aStream);
+
+    if aMarkAsUnmodified then
+      fIsModified := false;
   finally
     Parser.Free;
   end;
@@ -750,6 +759,19 @@ begin
   finally
     MS.Free;
   end;
+end;
+
+function TReplay.GetIsThisUsersReplay: Boolean;
+begin
+  if ((fPlayerName = GameParams.UserName) and (Uppercase(Trim(GameParams.UserName)) <> 'Anonymous') and (fPlayerName <> ''))
+  or ((Trim(fPlayerName) = '') and GameParams.MatchBlankReplayUsername) then
+    Result := true
+  else if fIsModified then
+  begin
+    Result := true;
+    fPlayerName := GameParams.UserName;
+  end else
+    Result := false;
 end;
 
 function TReplay.GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;

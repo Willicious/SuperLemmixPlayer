@@ -2289,19 +2289,19 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 15
+  INDEX 0
   COLLECTION gigalem_aqua
   PIECE aqua_1
 $END
 
 $BACKGROUND
-  INDEX 16
+  INDEX 1
   COLLECTION gigalem_aqua
   PIECE aqua_2
 $END
 
 $BACKGROUND
-  INDEX 17
+  INDEX 2
   COLLECTION gigalem_aqua
   PIECE aqua_3
 $END

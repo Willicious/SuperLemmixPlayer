@@ -10,8 +10,9 @@ uses
   PngInterface,
   GR32, GR32_Resamplers,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList,
-  LemNeoParser, GR32_Image;
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils,
+  ActiveX, ShlObj, ComObj, // for the shortcut creation
+  LemNeoParser, GR32_Image, System.ImageList;
 
 type
   TFLevelSelect = class(TForm)
@@ -26,11 +27,13 @@ type
     btnAddContent: TButton;
     lblCompletion: TLabel;
     imgLevel: TImage32;
+    btnMakeShortcut: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnAddContentClick(Sender: TObject);
+    procedure btnMakeShortcutClick(Sender: TObject);
   private
     fLoadAsPack: Boolean;
     procedure InitializeTreeview;
@@ -151,6 +154,85 @@ begin
   TLinearResampler.Create(imgLevel.Bitmap);
 end;
 
+procedure TFLevelSelect.btnMakeShortcutClick(Sender: TObject);
+var
+  N: TTreeNode;
+  Obj: TObject;
+  G: TNeoLevelGroup absolute Obj;
+  L: TNeoLevelEntry absolute Obj;
+
+  TargetPath: String;
+  Description: String;
+
+  Dlg: TSaveDialog;
+
+  // Source: http://delphiexamples.com/others/createlnk.html
+  procedure CreateLink(const PathObj, PathLink, Desc, Param: string);
+  var
+    IObject: IUnknown;
+    SLink: IShellLink;
+    PFile: IPersistFile;
+  begin
+    IObject:=CreateComObject(CLSID_ShellLink);
+    SLink:=IObject as IShellLink;
+    PFile:=IObject as IPersistFile;
+    with SLink do
+    begin
+      SetArguments(PChar(Param));
+      SetDescription(PChar(Desc));
+      SetPath(PChar(PathObj));
+    end;
+    PFile.Save(PWChar(WideString(PathLink)), FALSE);
+  end;
+
+  function MakeNameRecursive(aGroup: TNeoLevelGroup): String;
+  begin
+    if aGroup.Parent = nil then
+      Result := ''
+    else if aGroup.IsBasePack then
+      Result := aGroup.Name
+    else begin
+      Result := MakeNameRecursive(aGroup.Parent);
+      if (Result <> '') then Result := Result + ' :: ';
+      Result := Result + aGroup.Name;
+    end;
+  end;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit;
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+  begin
+    TargetPath := G.Path;
+    Description := 'NeoLemmix - ' + MakeNameRecursive(G);
+  end else if Obj is TNeoLevelEntry then
+  begin
+    TargetPath := L.Path;
+    Description := 'NeoLemmix - ' + MakeNameRecursive(L.Group) + ' :: ' + L.Title;
+  end else
+    Exit;
+
+  if Pos(AppPath + SFLevels, TargetPath) = 1 then
+    TargetPath := RightStr(TargetPath, Length(TargetPath) - Length(AppPath + SFLevels));
+
+
+  Dlg := TSaveDialog.Create(self);
+  try
+    Dlg.Title := 'Select location for shortcut';
+    Dlg.Filter := 'Windows Shortcut (*.lnk)|*.lnk';
+    Dlg.FilterIndex := 1;
+    Dlg.DefaultExt := '.lnk';
+    Dlg.Options := [ofOverwritePrompt, ofEnableSizing];
+    if not Dlg.Execute then Exit;
+
+    CreateLink(ParamStr(0), Dlg.FileName, Description, 'shortcut "' + TargetPath + '"');
+  finally
+    Dlg.Free;
+  end;
+end;
+
 procedure TFLevelSelect.btnOKClick(Sender: TObject);
 begin
   WriteToParams;
@@ -160,8 +242,8 @@ end;
 procedure TFLevelSelect.WriteToParams;
 var
   Obj: TObject;
-  G: TNeoLevelGroup;
-  L: TNeoLevelEntry;
+  G: TNeoLevelGroup absolute Obj;
+  L: TNeoLevelEntry absolute Obj;
   N: TTreeNode;
 begin
   N := tvLevelSelect.Selected;
@@ -173,7 +255,6 @@ begin
 
   if Obj is TNeoLevelGroup then
   begin
-    G := TNeoLevelGroup(Obj);
     if G.Levels.Count = 0 then
     begin
       if G.LevelCount > 0 then
@@ -184,10 +265,7 @@ begin
     GameParams.SetGroup(G);
   end
   else if Obj is TNeoLevelEntry then
-  begin
-    L := TNeoLevelEntry(Obj);
     GameParams.SetLevel(L);
-  end;
 end;
 
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
@@ -424,7 +502,7 @@ begin
   try
     OpenDlg.Title := 'Select pack or level file';
     OpenDlg.Filter := 'All supported files|*.nxlv;*.lvl;*.ini;*.lev;*.dat|NeoLemmix Levels (*.nxlv)|*.nxlv|Lemmix or Old NeoLemmix Levels (*.lvl)|*.lvl|Lemmini or SuperLemmini Levels (*.ini)|*.ini|Lemmins Levels|*.lev';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
+    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
     OpenDlg.InitialDir := AppPath;
     if not OpenDlg.Execute then Exit;
 

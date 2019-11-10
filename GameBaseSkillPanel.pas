@@ -6,6 +6,7 @@ uses
   System.Types,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
+  LemAnimationSet, LemMetaAnimation,
   LemCore, LemLemming, LemGame, LemLevel;
 
 type
@@ -21,10 +22,14 @@ type
     fGame                 : TLemmingGame;
     fIconBmp              : TBitmap32;   // for temporary storage
 
+    fSetInitialZoom       : Boolean;
+
     fRectColor            : TColor32;
     fSelectDx             : Integer;
     fIsBlinkFrame         : Boolean;
     fOnMinimapClick       : TMinimapClickEvent; // event handler for minimap
+
+    fCombineHueShift : Single;
 
     function CheckFrameSkip: Integer; // Checks the duration since the last click on the panel.
 
@@ -37,7 +42,7 @@ type
     procedure SetZoom(NewZoom: Integer);
     function GetMaxZoom: Integer;
 
-    procedure CombineToRed(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineShift(F: TColor32; var B: TColor32; M: TColor32);
   protected
     fGameWindow           : IGameWindow;
     fButtonRects          : array[TSkillPanelButton] of TRect;
@@ -100,6 +105,7 @@ type
     function DrawStringTemplate: string; virtual; abstract;
 
     procedure DrawNewStr;
+      function LemmingCountStartIndex: Integer; virtual; abstract;
       function TimeLimitStartIndex: Integer; virtual; abstract;
     procedure CreateNewInfoString; virtual; abstract;
     procedure SetInfoCursorLemming(Pos: Integer);
@@ -161,7 +167,6 @@ type
   procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 
 const
-  NUM_SKILL_ICONS = 17;
   NUM_FONT_CHARS = 45;
 
 const
@@ -175,9 +180,11 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png',              {Skills end here}
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
-    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_1fb.png',
-    'icon_1ff.png', 'icon_clearphysics.png', 'icon_directional.png', 'icon_load_replay.png',
-    'icon_directional.png'
+    'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_frameskip.png',
+    'icon_directional.png', 'icon_cpm_and_replay.png',
+
+    // These ones are placeholders - they're the bottom half of splits
+    'icon_frameskip.png', 'icon_directional.png', 'icon_cpm_and_replay.png'
     );
 
 
@@ -356,7 +363,7 @@ end;
 
 function TBaseSkillPanel.LastSkillButtonIndex: Integer;
 begin
-  Result := (FirstSkillButtonIndex + 8) - 1; // we might want to use a CONST here, in case we later allow more than 8 skills per level
+  Result := (FirstSkillButtonIndex + MAX_SKILL_TYPES_PER_LEVEL) - 1;
 end;
 
 function TBaseSkillPanel.MinimapWidth: Integer;
@@ -380,7 +387,7 @@ var
 begin
   SrcFile := GameParams.CurrentLevel.Group.PanelPath + aName;
   if not FileExists(SrcFile) then
-    SrcFile := AppPath + SFStyles + SFDefaultStyle + SFPiecesPanel + aName;
+    SrcFile := AppPath + SFGraphicsPanel + aName;
   MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
   TPngInterface.LoadPngFile(SrcFile, aDst);
@@ -456,14 +463,196 @@ begin
 end;
 
 procedure TBaseSkillPanel.LoadSkillIcons;
+const
+  PANEL_FALLBACK_BRICK_COLOR = $FF00B000;
 var
+  BrickColor: TColor32;
   Button: TSkillPanelButton;
+  TempBmp: TBitmap32;
+
+  procedure DrawAnimationFrame(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; footX, footY: Integer);
+  var
+    Ani: TBaseAnimationSet;
+    Meta: TMetaLemmingAnimation;
+    SrcRect: TRect;
+    OldDrawMode: TDrawMode;
+  begin
+    Ani := GameParams.Renderer.LemmingAnimations;
+    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+
+    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
+    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
+    SrcRect.Offset(0, SrcRect.Height * aFrame);
+
+    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX - Meta.FootX, footY - Meta.FootY, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
+  end;
+
+  procedure DrawAnimationFrameResized(dst: TBitmap32; aAnimationIndex: Integer; aFrame: Integer; dstRect: TRect);
+  var
+    Ani: TBaseAnimationSet;
+    Meta: TMetaLemmingAnimation;
+    SrcRect: TRect;
+    OldDrawMode: TDrawMode;
+  begin
+    Ani := GameParams.Renderer.LemmingAnimations;
+    Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
+
+    SrcRect := Ani.LemmingAnimations[aAnimationIndex].BoundsRect;
+    SrcRect.Bottom := SrcRect.Bottom div Meta.FrameCount;
+    SrcRect.Offset(0, SrcRect.Height * aFrame);
+
+    OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
+  end;
+
+  procedure DrawBrick(dst: TBitmap32; X, Y: Integer; W: Integer = 2);
+  var
+    oX: Integer;
+  begin
+    for oX := 0 to W-1 do
+      dst.PixelS[X + oX, Y] := BrickColor;
+  end;
+
+  procedure Outline(dst: TBitmap32);
+  var
+    x, y: Integer;
+    oX, oY: Integer;
+    ThisAlpha, MaxAlpha: Byte;
+    OutlineColor: TColor32;
+  begin
+    TempBmp.Assign(dst);
+    dst.Clear(0);
+    TempBmp.WrapMode := wmClamp;
+    TempBmp.OuterColor := $00000000;
+
+    if GameParams.Renderer.Theme.DoesColorExist('PANEL_OUTLINE') then
+      OutlineColor := GameParams.Renderer.Theme.Colors['PANEL_OUTLINE'] and $FFFFFF
+    else
+      OutlineColor := $000000;
+
+    for y := 0 to TempBmp.Height-1 do
+      for x := 0 to TempBmp.Width-1 do
+      begin
+        MaxAlpha := 0;
+        for oY := -1 to 1 do
+          for oX := -1 to 1 do
+          begin
+            if Abs(oY) + Abs(oX) <> 1 then
+              Continue;
+            ThisAlpha := (TempBmp.PixelS[x + oX, y + oY] and $FF000000) shr 24;
+            if ThisAlpha > MaxAlpha then
+              MaxAlpha := ThisAlpha;
+          end;
+        dst[x, y] := (MaxAlpha shl 24) or OutlineColor;
+      end;
+
+    TempBmp.DrawTo(dst);
+  end;
 begin
   // Load the erasing icon first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
 
-  for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
+  //for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+  //  GetGraphic('icon_' + SKILL_NAMES[Button] + '.png', fSkillIcons[Button]);
+  TempBmp := TBitmap32.Create; // freely useable as long as Outline isn't called while it's being used
+  try
+    // Some preparation
+    TempBmp.DrawMode := dmBlend;
+    TempBmp.CombineMode := cmMerge;
+
+    BrickColor := GameParams.Renderer.Theme.Colors['MASK'];
+    if (BrickColor and $00C0C0C0) = 0 then
+      BrickColor := PANEL_FALLBACK_BRICK_COLOR; // Prevent too-dark colors being used, that won't contrast well with outline
+
+    // Set image sizes
+    for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      fSkillIcons[Button].SetSize(15, 23);
+
+    //////////////////////////////////////////////////////////
+    ///  This code is mostly copied to GameBaseSkillPanel. ///
+    //////////////////////////////////////////////////////////
+
+    // Walker, Climber, - both simple
+    DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 21);
+    DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 22);
+
+    // Swimmer - we need to draw the background water
+    DrawAnimationFrame(fSkillIcons[spbSwimmer], SWIMMING, 2, 8, 19);
+    Outline(fSkillIcons[spbSwimmer]);
+    TempBmp.Assign(fSkillIcons[spbSwimmer]);
+    fSkillIcons[spbSwimmer].Clear(0);
+    fSkillIcons[spbSwimmer].FillRect(0, 17, 15, 23, $FF000000);
+    fSkillIcons[spbSwimmer].FillRect(0, 18, 15, 23, $FF0000FF);
+    TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
+
+    // Floater, Glider, Disarmer, Shimmier - all simple
+    DrawAnimationFrame(fSkillIcons[spbFloater], UMBRELLA, 4, 7, 26);
+    DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 26);
+    DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 21);
+    DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 20);
+
+    // Bomber is drawn resized
+    DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 24));
+
+    // Stoner is tricky - the goal is an outlined stoned lemming over a stoner explosion graphic
+    DrawAnimationFrame(fSkillIcons[spbStoner], STONED, 0, 8, 21);
+    Outline(fSkillIcons[spbStoner]);
+    TempBmp.Assign(fSkillIcons[spbStoner]);
+    fSkillIcons[spbStoner].Clear(0);
+    DrawAnimationFrameResized(fSkillIcons[spbStoner], STONEEXPLOSION, 0, Rect(-2, 7, 15, 24));
+    TempBmp.DrawTo(fSkillIcons[spbStoner], 0, 0);
+
+    // Blocker is simple
+    DrawAnimationFrame(fSkillIcons[spbBlocker], BLOCKING, 0, 7, 21);
+
+    // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
+    // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
+    DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 20);
+    fSkillIcons[spbPlatformer].FillRect(2, 21, 12, 22, $FF000000);
+    DrawBrick(fSkillIcons[spbPlatformer], 2, 21);
+    DrawBrick(fSkillIcons[spbPlatformer], 5, 21);
+    DrawBrick(fSkillIcons[spbPlatformer], 8, 21);
+    DrawBrick(fSkillIcons[spbPlatformer], 11, 21);
+
+    DrawAnimationFrame(fSkillIcons[spbBuilder], BRICKLAYING, 1, 7, 20);
+    DrawBrick(fSkillIcons[spbBuilder], 4, 22);
+    DrawBrick(fSkillIcons[spbBuilder], 6, 21);
+    DrawBrick(fSkillIcons[spbBuilder], 8, 20);
+    DrawBrick(fSkillIcons[spbBuilder], 10, 19);
+
+    DrawAnimationFrame(fSkillIcons[spbStacker], STACKING, 0, 7, 21);
+    DrawBrick(fSkillIcons[spbStacker], 10, 20);
+    DrawBrick(fSkillIcons[spbStacker], 10, 19);
+    DrawBrick(fSkillIcons[spbStacker], 10, 18);
+    DrawBrick(fSkillIcons[spbStacker], 10, 17);
+
+    // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
+    // For Digger, we just have to accept some particles.
+    DrawAnimationFrame(fSkillIcons[spbBasher], BASHING, 0, 8, 21);
+    DrawAnimationFrame(fSkillIcons[spbFencer], FENCING, 1, 7, 21);
+    DrawAnimationFrame(fSkillIcons[spbMiner], MINING, 12, 4, 21);
+    DrawAnimationFrame(fSkillIcons[spbDigger], DIGGING, 4, 7, 21);
+
+    // And finally, outline everything. We generate the cloner after this, as it makes use of
+    // the post-outlined Walker graphic.
+    for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      if not (Button in [spbSwimmer, spbCloner]) then
+        Outline(fSkillIcons[Button]);
+        // Swimmer and Cloner are already outlined during their generation.
+
+    // Cloner is drawn as two back-to-back walkers, individually outlined.
+    DrawAnimationFrame(fSkillIcons[spbCloner], WALKING_RTL, 1, 6, 21);
+    Outline(fSkillIcons[spbCloner]);
+    TempBmp.Assign(fSkillIcons[spbWalker]);
+    TempBmp.DrawTo(fSkillIcons[spbCloner], 2, 0); // We want it drawn 2px to the right of where it is in the walker icon
+  finally
+    TempBmp.Free;
+  end;
 end;
 
 procedure TBaseSkillPanel.LoadSkillFont;
@@ -667,8 +856,15 @@ begin
     begin
       fButtonRects[spbDirLeft] := HalfButtonRect(i, true);
       fButtonRects[spbDirRight] := HalfButtonRect(i, false);
-    end
-    else if ButtonList[i] > spbNone then
+    end else if ButtonList[i] in [spbBackOneFrame, spbForwardOneFrame] then
+    begin
+      fButtonRects[spbBackOneFrame] := HalfButtonRect(i, true);
+      fButtonRects[spbForwardOneFrame] := HalfButtonRect(i, false);
+    end else if ButtonList[i] in [spbClearPhysics, spbLoadReplay] then
+    begin
+      fButtonRects[spbClearPhysics] := HalfButtonRect(i, true);
+      fButtonRects[spbLoadReplay] := HalfButtonRect(i, false);
+    end else if ButtonList[i] > spbNone then
       fButtonRects[ButtonList[i]] := ButtonRect(i);
   end;
 end;
@@ -831,25 +1027,35 @@ end;
 {-----------------------------------------
     Info string at top
 -----------------------------------------}
-procedure TBaseSkillPanel.CombineToRed(F: TColor32; var B: TColor32; M: TColor32);
+procedure TBaseSkillPanel.CombineShift(F: TColor32; var B: TColor32; M: TColor32);
+var
+  H, S, V: Single;
 begin
   if AlphaComponent(F) = 0 then Exit;
-  // Swap red and green component
-  B := Color32(GreenComponent(F), RedComponent(F), BlueComponent(F), AlphaComponent(F));
+  RGBToHSV(F, H, S, V);
+  H := H + fCombineHueShift;
+  B := HSVToRGB(H, S, V);
 end;
 
 procedure TBaseSkillPanel.DrawNewStr;
 var
   Old, New: char;
   i, CharID: integer;
-  DoRecolor: Boolean;
+  SpecialCombine: Boolean;
+
+  LemmingKinds: TLemmingKinds;
 begin
+  LemmingKinds := Game.ActiveLemmingTypes;
+
+  // Erase previous text there
+  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8, 16, $00000000);
+
   for i := 1 to DrawStringLength do
   begin
     Old := fLastDrawnStr[i];
     New := fNewDrawStr[i];
 
-    if Old <> New then
+    //if Old <> New then
     begin
       case New of
         '%':        CharID := 0;
@@ -860,20 +1066,33 @@ begin
       else CharID := -1;
       end;
 
-      // Erase previous text there
-      fImage.Bitmap.FillRectS((i - 1) * 8, 0, i * 8, 16, 0);
-
-      DoRecolor := Level.Info.HasTimeLimit and (i >= TimeLimitStartIndex) and (CharID >= 0);
-      if DoRecolor then
+      if (CharID >= 0) then
       begin
-        fInfoFont[CharID].DrawMode := dmCustom;
-        fInfoFont[CharID].OnPixelCombine := CombineToRed;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
-        fInfoFont[CharID].DrawMode := dmBlend;
-        fInfoFont[CharID].CombineMode := cmMerge;
-      end
-      else if CharID >= 0 then
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+        if (lkNeutral in LemmingKinds) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
+        begin
+          SpecialCombine := true;
+
+          if lkNormal in LemmingKinds then
+            fCombineHueShift := -1 / 6
+          else
+            fCombineHueShift := 1 / 6;
+        end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
+        begin
+          SpecialCombine := true;
+          fCombineHueShift := -1 / 3;
+        end else
+          SpecialCombine := false;
+
+        if SpecialCombine then
+        begin
+          fInfoFont[CharID].DrawMode := dmCustom;
+          fInfoFont[CharID].OnPixelCombine := CombineShift;
+          fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+        end else begin
+          fInfoFont[CharID].DrawMode := dmOpaque;
+          fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+        end;
+      end;
     end;
   end;
 end;
@@ -928,13 +1147,14 @@ begin
 
   if L.HasPermanentSkills and GameParams.Hotkeys.CheckForKey(lka_ShowAthleteInfo) then
   begin
-    Result := '-----';
+    Result := '------';
     if L.LemIsClimber then Result[1] := 'C';
     if L.LemIsSwimmer then Result[2] := 'S';
     if L.LemIsFloater then Result[3] := 'F';
     if L.LemIsGlider then Result[3] := 'G';
     if L.LemIsDisarmer then Result[4] := 'D';
     if L.LemIsZombie then Result[5] := 'Z';
+    if L.LemIsNeutral then Result[6] := 'N';
   end
   else if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
   begin
@@ -945,6 +1165,8 @@ begin
     if L.LemIsGlider then DoInc(SGlider);
     if L.LemIsDisarmer then DoInc(SDisarmer);
     if L.LemIsZombie then Result := SZombie;
+    if L.LemIsNeutral then Result := SNeutral;
+    if L.LemIsZombie and L.LemIsNeutral then Result := SNeutralZombie;
   end;
 end;
 
@@ -1263,7 +1485,7 @@ end;
 procedure TBaseSkillPanel.SetZoom(NewZoom: Integer);
 begin
   NewZoom := Max(Min(MaxZoom, NewZoom), 1);
-  if NewZoom = Trunc(fImage.Scale) then Exit;
+  if (NewZoom = Trunc(fImage.Scale)) and fSetInitialZoom then Exit;
 
   Width := GameParams.MainForm.ClientWidth;    // for the whole skill panel
   Height := GameParams.MainForm.ClientHeight;  // for the whole skill panel
@@ -1278,6 +1500,8 @@ begin
   fMinimapImage.Left := MinimapRect.Left * NewZoom + Image.Left;
   fMinimapImage.Top := MinimapRect.Top * NewZoom;
   fMinimapImage.Scale := NewZoom;
+
+  fSetInitialZoom := true;
 end;
 
 function TBaseSkillPanel.GetZoom: Integer;

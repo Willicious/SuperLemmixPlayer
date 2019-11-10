@@ -7,7 +7,7 @@ interface
 uses
   System.Generics.Collections, System.Generics.Defaults,
   GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
-  Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
+  Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
   LemTalisman,
   LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
   UMisc;
@@ -106,6 +106,8 @@ type
 
   TNeoLevelGroup = class
     private
+      fDisableSaveProgress: Boolean;
+
       fParentGroup: TNeoLevelGroup;
       fChildGroups: TNeoLevelGroups;
       fLevels: TNeoLevelEntries;
@@ -189,6 +191,7 @@ type
       function FindFile(aName: String): String;
 
       procedure DumpImages(aPath: String; aPrefix: String = '');
+      procedure CleanseLevels(aPath: String; aOutput: TStringList = nil);
 
       {$ifdef exp}
       procedure DumpNeoLemmixWebsiteMetaInfo(aPath: String);
@@ -548,6 +551,145 @@ begin
   if fHasOwnScrollerList and (fScrollerList <> nil) then
     fScrollerList.Free;
   inherited;
+end;
+
+procedure TNeoLevelGroup.CleanseLevels(aPath: String; aOutput: TStringList = nil);
+var
+  i: Integer;
+  L: TNeoLevelEntry;
+  SL: TStringList;
+
+  IsStartingPoint: Boolean;
+
+  procedure RecursiveCopy(aSubPath: String);
+  var
+    SearchRec: TSearchRec;
+    i: Integer;
+  begin
+    ForceDirectories(aPath + aSubPath);
+
+    if FindFirst(Path + aSubPath + '*', faDirectory, SearchRec) = 0 then
+    begin
+      repeat
+        if (SearchRec.Name = '.') or (SearchRec.Name = '..') then
+          Continue
+        else if (SearchRec.Attr and faDirectory) <> 0 then
+          RecursiveCopy(aSubPath + IncludeTrailingPathDelimiter(SearchRec.Name))
+        else if Lowercase(SearchRec.Name) = 'levels.nxmi' then
+        begin
+          SL := TStringList.Create;
+          try
+            SL.LoadFromFile(Path + aSubPath + SearchRec.Name);
+            for i := 0 to SL.Count-1 do
+              SL[i] := StringReplace(SL[i], '$RANK', '$GROUP', [rfIgnoreCase, rfReplaceAll]);
+            SL.SaveToFile(aPath + aSubPath + SearchRec.Name);
+          finally
+            SL.Free;
+          end;
+        end else
+          CopyFile(PWideChar(Path + aSubPath + SearchRec.Name), PWideChar(aPath + aSubPath + SearchRec.Name), false);
+      until FindNext(SearchRec) <> 0;
+      FindClose(SearchRec);
+    end;
+  end;
+
+  procedure CheckForWarnings;
+  var
+    Level: TLevel;
+    Ident: TLabelRecord;
+    WrittenAny: Boolean;
+    i, n, Cnt, CntGrp: Integer;
+
+    function IsPlaceholder(aIdent: TLabelRecord): Boolean;
+    begin
+      Result := (Ident.GS = 'default') and (Ident.Piece = 'fallback');
+    end;
+
+    procedure Write(aText: String);
+    begin
+      if not WrittenAny then
+      begin
+        if aOutput.Count > 0 then
+          aOutput.Add('');
+
+        aOutput.Add('WARNINGS for ' + L.Filename);
+        WrittenAny := true;
+      end;
+
+      aOutput.Add('  ' + aText);
+    end;
+  begin
+    WrittenAny := false;
+    Level := GameParams.Level;
+
+    Ident := SplitIdentifier(Level.Info.Background);
+    if IsPlaceholder(Ident) then Write('Background replaced with placeholder');
+
+    Cnt := 0;
+    for i := 0 to Level.InteractiveObjects.Count-1 do
+      if IsPlaceholder(SplitIdentifier(Level.InteractiveObjects[i].Identifier)) then
+        Inc(Cnt);
+    if Cnt > 0 then Write(IntToStr(Cnt) + ' gadgets replaced with placeholder');
+
+    Cnt := 0;
+    CntGrp := 0;
+    for i := 0 to Level.Terrains.Count-1 do
+      if IsPlaceholder(SplitIdentifier(Level.Terrains[i].Identifier)) then
+        Inc(Cnt);
+    for i := 0 to Level.TerrainGroups.Count-1 do
+      for n := 0 to Level.TerrainGroups[i].Terrains.Count-1 do
+        if IsPlaceholder(SplitIdentifier(Level.TerrainGroups[i].Terrains[n].Identifier)) then
+        begin
+          Inc(Cnt);
+          Inc(CntGrp);
+        end;
+    if Cnt > 0 then Write(IntToStr(Cnt) + ' terrains replaced with placeholder (' + IntToStr(CntGrp) + ' in terrain groups)');
+  end;
+
+begin
+  if aOutput = nil then
+  begin
+    IsStartingPoint := true;
+    aOutput := TStringList.Create;
+  end else
+    IsStartingPoint := false;
+
+  if IsStartingPoint then
+    RecursiveCopy('');
+
+  aPath := IncludeTrailingPathDelimiter(aPath);
+
+  for i := 0 to Children.Count-1 do
+    Children[i].CleanseLevels(aPath + Children[i].Folder, aOutput);
+
+  for i := 0 to Levels.Count-1 do
+  begin
+    L := Levels[i];
+    try
+      GameParams.SetLevel(L);
+      GameParams.LoadCurrentLevel(true);
+
+      CheckForWarnings;
+
+      GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
+    except
+      if aOutput.Count > 0 then
+        aOutput.Add('');
+
+      aOutput.Add('ERROR cleansing "' + L.Title + '". This level will be copied unmodified.');
+    end;
+  end;
+
+  if IsStartingPoint then
+  begin
+    if aOutput.Count > 0 then
+    begin
+      ShowMessage('Cleanse complete. Some warnings or errors occurred during cleansing. See ' + MakeSafeForFilename(Name) + ' Cleanse Report.txt for more information.');
+      aOutput.SaveToFile(AppPath + MakeSafeForFilename(Name) + ' Cleanse Report.txt');
+    end else
+      ShowMessage('Cleanse complete. No errors or warnings reported.');
+    aOutput.Free;
+  end;
 end;
 
 procedure TNeoLevelGroup.DumpImages(aPath: String; aPrefix: String = '');
@@ -925,9 +1067,15 @@ begin
 
     if LevelSec <> nil then
       HandleGroup(self);
-  finally
-    Parser.Free;
+  except
+    on E: Exception do
+    begin
+      fDisableSaveProgress := true;
+      raise E;
+    end;
   end;
+
+  Parser.Free;
 end;
 
 procedure TNeoLevelGroup.LoadSaveGroup(aLine: TParserLine; const aIteration: Integer);
@@ -1048,7 +1196,10 @@ begin
   try
     Parser.LoadFromFile(Path + 'levels.nxmi');
     MainSec := Parser.MainSection;
-    MainSec.DoForEachSection('rank', LoadSubGroup);
+    if MainSec.Section['group'] = nil then
+      MainSec.DoForEachSection('rank', LoadSubGroup)
+    else
+      MainSec.DoForEachSection('group', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
     fIsBasePack := MainSec.Line['base'] <> nil;
     fIsOrdered := true;
@@ -1077,13 +1228,15 @@ procedure TNeoLevelGroup.LoadFromSearchRec;
 var
   SearchRec: TSearchRec;
   L: TNeoLevelEntry;
+  G: TNeoLevelGroup;
 begin
   if FindFirst(Path + '*', faDirectory, SearchRec) = 0 then
   begin
     repeat
       if SearchRec.Attr and faDirectory <> faDirectory then Continue;
       if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
-      fChildGroups.Add(SearchRec.Name + '\');
+      G := fChildGroups.Add(SearchRec.Name + '\');
+      if Parent = nil then G.IsBasePack := true;
     until FindNext(SearchRec) <> 0;
     FindClose(SearchRec);
   end;
@@ -1245,59 +1398,54 @@ end;
 
 function TNeoLevelGroup.GetNextGroup: TNeoLevelGroup;
 var
-  GiveChildPriority: Boolean;
+  NextChildIndex: Integer;
+
+  procedure GoDeepest;
+  begin
+    while Result.Children.Count > 0 do
+      Result := Result.Children[0];
+  end;
 begin
   Result := self; // failsafe
-  GiveChildPriority := IsBasePack;
+  if Result.Parent = nil then Exit;
+
   repeat
-    if GiveChildPriority or (Result.Parent = nil) or Result.IsBasePack then
-    begin
-      if Result.Children.Count > 0 then
-        Result := Result.Children[0]
-      else
-        GiveChildPriority := false;
-    end
-    else if Result.ParentGroupIndex < Result.Parent.Children.Count - 1 then
-    begin
-      Result := Result.Parent.Children[Result.ParentGroupIndex + 1];
-      GiveChildPriority := true;
-    end
-    else
-      Result := Result.Parent;
-  until ((Result.Levels.Count > 0) or (Result = self)) and not GiveChildPriority;
+    if Result.IsBasePack then
+      GoDeepest
+    else begin
+      NextChildIndex := Result.Parent.Children.IndexOf(Result) + 1;
+      if NextChildIndex < Result.Parent.Children.Count then
+      begin
+        Result := Result.Parent.Children[NextChildIndex];
+        GoDeepest;
+      end else
+        Result := Result.Parent;
+    end;
+  until (Result.Levels.Count > 0) or (Result = self);
 end;
 
 function TNeoLevelGroup.GetPrevGroup: TNeoLevelGroup;
 var
-  GiveParentPriority: Boolean;
+  AsChildIndex: Integer;
 begin
   Result := self; // failsafe
-  GiveParentPriority := false;
+  if Result.Parent = nil then Exit;
+
   repeat
-    if GiveParentPriority and not ((Result.Parent = nil) or Result.IsBasePack) then
-    begin
-      Result := Result.Parent;
-      GiveParentPriority := Result.ParentGroupIndex = 0;
-      Continue;
-    end
-    else if Result.Children.Count > 0 then
-    begin
-      GiveParentPriority := false;
-      Result := Result.Children[Result.Children.Count - 1];
-      Continue;
-    end
-    else if Result.ParentGroupIndex > 0 then
-    begin
-      GiveParentPriority := false;
-      Result := Parent.Children[Result.ParentGroupIndex - 1];
-      Continue;
-    end
-    else
-    begin
-      GiveParentPriority := true;
-      Result := Result.Parent;
+    if Result.Children.Count > 0 then
+      Result := Result.Children[Result.Children.Count-1]
+    else begin
+      AsChildIndex := Result.Parent.Children.IndexOf(Result);
+      while (AsChildIndex = 0) and (not Result.IsBasePack) do
+      begin
+        Result := Result.Parent;
+        AsChildIndex := Result.Parent.Children.IndexOf(Result);
+      end;
+
+      if (AsChildIndex > 0) and not Result.IsBasePack then
+        Result := Result.Parent.Children[AsChildIndex - 1];
     end;
-  until ((Result.Levels.Count > 0) or (Result = self)) and not GiveParentPriority;
+  until (Result.Levels.Count > 0) or (Result = self);
 end;
 
 function TNeoLevelGroup.GetStatus: TNeoLevelStatus;

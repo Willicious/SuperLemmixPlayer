@@ -9,10 +9,9 @@ uses
 
 const
   FORMAT_VERSION = 12;
-  CORE_VERSION = 5;
-  FEATURES_VERSION = 0;
-  HOTFIX_VERSION = 0;
-  //COMMIT_ID = 'c474af8';  // empty string is handled, and is uppercased when needed so don't need to do manually anymore :D
+  CORE_VERSION = 7;
+  FEATURES_VERSION = 1;
+  HOTFIX_VERSION = 0; // or RC version
 
   function COMMIT_ID: String;
 
@@ -55,10 +54,14 @@ function MakeVersionString(aFormat, aCore, aFeature, aHotfix: Integer): String;
   end;
 begin
   Result := IntToStr(aFormat);
-  Result := Result + '.' + LeadZeroStr(aCore, 2);
-  Result := Result + '.' + LeadZeroStr(aFeature, 2);
+  Result := Result + '.' + IntToStr(aCore);
+  Result := Result + '.' + IntToStr(aFeature);
+  {$ifdef rc}
+  Result := Result + '-RC' + IntToStr(aHotfix);
+  {$else}
   if aHotfix > 0 then
     Result := Result + '-' + NumberToLetters(aHotfix);
+  {$endif}
 end;
 
 function MakeVersionID(aFormat, aCore, aFeature, aHotfix: Integer): Int64;
@@ -66,7 +69,7 @@ begin
   Result := aFormat;
   Result := (Result * 1000) + aCore;
   Result := (Result * 1000) + aFeature;
-  Result := (Result * 1000) + aHotfix;
+  Result := (Result * 1000) {$ifndef rc}+ aHotfix{$endif};
 end;
 
 end.

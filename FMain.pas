@@ -30,6 +30,7 @@ type
       var Resize: Boolean);
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState; WheelDelta: Integer;
       MousePos: TPoint; var Handled: Boolean);
+    procedure FormShow(Sender: TObject);
   private
     Started: Boolean;
     AppController: TAppController;
@@ -108,13 +109,7 @@ procedure TMainForm.FormActivate(Sender: TObject);
 begin
   if Started then
     Exit;
-  if not GameParams.FullScreen then
-  begin
-    GameParams.MainForm.Left := (Screen.Width - GameParams.WindowWidth) div 2;
-    GameParams.MainForm.Top := (Screen.Height - GameParams.WindowHeight) div 2;
-    GameParams.MainForm.ClientWidth := GameParams.WindowWidth;
-    GameParams.MainForm.ClientHeight := GameParams.WindowHeight;
-  end;
+
   Started := True;
   MainFormHandle := Handle;
   PostMessage(Handle, LM_START, 0, 0);
@@ -162,6 +157,7 @@ end;
 
 procedure TMainForm.FormResize(Sender: TObject);
 begin
+  if GameParams = nil then Exit;
   if not (fChildForm is TGameBaseScreen) then Exit;
   TGameBaseScreen(fChildForm).MainFormResized;
   GameParams.WindowWidth := ClientWidth;
@@ -171,12 +167,37 @@ begin
   MainFormHandle := Handle;
 end;
 
+procedure TMainForm.FormShow(Sender: TObject);
+begin
+  inherited;
+  // Unless fullscreen, resize the main window
+  if not GameParams.FullScreen then
+  begin
+    GameParams.MainForm.BorderStyle := bsSizeable;
+    GameParams.MainForm.WindowState := wsNormal;
+    GameParams.MainForm.Left := Screen.WorkAreaLeft + ((Screen.WorkAreaWidth - GameParams.LoadedWindowWidth) div 2);
+    GameParams.MainForm.Top := Screen.WorkAreaTop + ((Screen.WorkAreaHeight - GameParams.LoadedWindowHeight) div 2);
+    GameParams.MainForm.ClientWidth := GameParams.LoadedWindowWidth;
+    GameParams.MainForm.ClientHeight := GameParams.LoadedWindowHeight;
+  end else begin
+    GameParams.MainForm.Left := 0;
+    GameParams.MainForm.Top := 0;
+    GameParams.MainForm.BorderStyle := bsNone;
+    GameParams.MainForm.WindowState := wsMaximized;
+
+    GameParams.MainForm.ClientWidth := Screen.Width;
+    GameParams.MainForm.ClientHeight := Screen.Height;
+  end;
+end;
+
 procedure TMainForm.FormCanResize(Sender: TObject; var NewWidth,
   NewHeight: Integer; var Resize: Boolean);
 var
   CWDiff, CHDiff: Integer;
   NewCW, NewCH: Integer;
 begin
+  if GameParams = nil then Exit;
+
   if GameParams.FullScreen then
   begin
     NewWidth := Screen.Width;

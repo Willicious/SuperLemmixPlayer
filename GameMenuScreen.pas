@@ -11,7 +11,7 @@ interface
 uses
   Classes, Controls,
   GameBaseScreen, GameControl,
-  {$ifdef exp}LemNeoLevelPack, LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
+  LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
   GR32, GR32_Layers;
 
 type
@@ -90,14 +90,15 @@ type
     procedure DrawWorkerLemmings(aFrame: Integer);
     procedure DrawReel;
     procedure SetNextCredit;
-    procedure DumpImages; //what a great name. it's a function I have here for testing things.
+    procedure DumpImages;
+    procedure CleanseLevels;
     procedure PerformUpdateCheck;
   { eventhandlers }
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
-    procedure ShowSetupMenu;
+    procedure ShowSetupMenu(aUsernameOnly: Boolean);
   protected
   { overrides }
     procedure PrepareGameParams; override;
@@ -150,6 +151,18 @@ begin
   {$ifdef exp}
   BasePack.DumpNeoLemmixWebsiteMetaInfo(AppPath + 'Dump\' + MakeSafeForFilename(BasePack.Name) + '\');
   {$endif}
+end;
+
+procedure TGameMenuScreen.CleanseLevels;
+var
+  BasePack: TNeoLevelGroup;
+begin
+  BasePack := GameParams.CurrentLevel.Group.ParentBasePack;
+
+  if DirectoryExists(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\') then
+    ShowMessage('Output directory "Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\" already exists. Please delete this first.')
+  else
+    BasePack.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\');
 end;
 
 procedure TGameMenuScreen.PerformUpdateCheck;
@@ -291,6 +304,7 @@ begin
     // program text
     S := CurrentVersionString;
     {$ifdef exp}if COMMIT_ID <> '' then S := S + ':' + Uppercase(COMMIT_ID);{$endif}
+
     if GameParams.CurrentLevel <> nil then
       S2 := GameParams.CurrentLevel.Group.PackTitle + #13 +
             GameParams.CurrentLevel.Group.PackAuthor + #13 +
@@ -320,6 +334,8 @@ begin
     ScreenImg.EndUpdate;
     Tmp.Free;
   end;
+
+  GameParams.ShownText := false;
 end;
 
 constructor TGameMenuScreen.Create(aOwner: TComponent);
@@ -396,6 +412,7 @@ begin
                   end;
       VK_F6     : DumpImages;
       VK_F7     : DoMassReplayCheck;
+      VK_F8     : CleanseLevels;
       VK_ESCAPE : CloseScreen(gstExit);
       VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);
       VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
@@ -425,8 +442,6 @@ begin
     GameParams.PrevGroup;
 
   SetSection;
-
-  GameParams.ShownText := false;
 end;
 
 procedure TGameMenuScreen.PrepareGameParams;
@@ -523,14 +538,17 @@ procedure TGameMenuScreen.Application_Idle(Sender: TObject; var Done: Boolean);
 -------------------------------------------------------------------------------}
 var
   CurrTime: Cardinal;
+  LocalNeedRequestUsername: Boolean;
 begin
   if not GameParams.DoneUpdateCheck then
     PerformUpdateCheck;
 
-  if not GameParams.LoadedConfig then
+  if (not GameParams.LoadedConfig) or (GameParams.NeedRequestUsername) then
   begin
+    LocalNeedRequestUsername := GameParams.NeedRequestUsername and GameParams.LoadedConfig;
     GameParams.LoadedConfig := true;
-    ShowSetupMenu;
+    GameParams.NeedRequestUsername := false;
+    ShowSetupMenu(LocalNeedRequestUsername);
   end;
 
   if not CanAnimate or ScreenIsClosing then
@@ -587,12 +605,13 @@ begin
   inherited CloseScreen(aNextScreen);
 end;
 
-procedure TGameMenuScreen.ShowSetupMenu;
+procedure TGameMenuScreen.ShowSetupMenu(aUsernameOnly: Boolean);
 var
   F: TFNLSetup;
 begin
   F := TFNLSetup.Create(self);
   try
+    F.NameOnly := aUsernameOnly;
     F.ShowModal;
   finally
     F.Free;

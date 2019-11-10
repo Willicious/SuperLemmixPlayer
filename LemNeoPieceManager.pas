@@ -8,12 +8,15 @@ interface
 
 uses
   Dialogs,
-  PngInterface, LemNeoTheme,
-  LemMetaTerrain, LemGadgetsMeta, LemTypes, GR32, LemStrings,
-  StrUtils, Classes, SysUtils;
+  PngInterface, LemNeoTheme, LemAnimationSet,
+  LemMetaTerrain, LemTerrainGroup, LemGadgetsMeta, LemGadgetsConstants, LemTypes, GR32, LemStrings,
+  Generics.Collections,
+  StrUtils, Classes, SysUtils,
+  LemNeoParser;
 
 const
   RETAIN_PIECE_CYCLES = 20; // how many times Tidy can be called without a piece being used before it's discarded
+  COMPOSITE_PIECE_STYLE = '*GROUP'; // what to use for the style name in per-level composite pieces
 
 type
 
@@ -22,11 +25,21 @@ type
     Piece: String;
   end;
 
+  TAliasKind = (rkStyle, rkGadget, rkTerrain, rkBackground);
+
+  TStyleAlias = record
+    Source: TLabelRecord;
+    Dest: TLabelRecord;
+    Kind: TAliasKind;
+  end;
+
   TNeoPieceManager = class
     private
       fTheme: TNeoTheme;
       fTerrains: TMetaTerrains;
       fObjects: TGadgetMetaInfoList;
+
+      fAliases: TList<TStyleAlias>;
 
       function GetTerrainCount: Integer;
       function GetObjectCount: Integer;
@@ -39,6 +52,9 @@ type
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TGadgetMetaInfo;
 
+      procedure LoadAliases;
+      procedure AddAlias(aSection: TParserSection; const aIteration: Integer; aData: Pointer);
+
       property TerrainCount: Integer read GetTerrainCount;
       property ObjectCount: Integer read GetObjectCount;
     public
@@ -46,8 +62,14 @@ type
       destructor Destroy; override;
 
       procedure Tidy;
+      procedure RemoveCompositePieces;
 
       procedure SetTheme(aTheme: TNeoTheme);
+      procedure RegenerateAutoAnims(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
+      procedure MakePiecesFromGroups(aGroups: TTerrainGroups);
+      procedure MakePieceFromGroup(aGroup: TTerrainGroup);
+
+      function Dealias(aIdentifier: String; aKind: TAliasKind): String;
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TGadgetMetaInfo read GetMetaObject;
@@ -60,6 +82,9 @@ var
   PieceManager: TNeoPieceManager; // globalized as this does not need to have seperate instances
 
 implementation
+
+uses
+  GameControl, LemTerrain;
 
 // These two standalone functions are just to help shifting labels around
 
@@ -94,12 +119,16 @@ begin
   fTerrains := TMetaTerrains.Create;
   fObjects := TGadgetMetaInfoList.Create;
   fTheme := nil;
+  fAliases := TList<TStyleAlias>.Create;
+
+  LoadAliases;
 end;
 
 destructor TNeoPieceManager.Destroy;
 begin
   fTerrains.Free;
   fObjects.Free;
+  fAliases.Free;
   inherited;
 end;
 
@@ -173,8 +202,10 @@ begin
 
   if FileExists(BasePath + '.png') then  // .nxtp is optional, but .png is not :)
     T := TMetaTerrain.Create
-  else
-    raise EAbort.Create('Error loading the level: Could not find terrain piece: ' + Identifier);
+  else begin
+    Result := -1;
+    Exit;
+  end;
   fTerrains.Add(T);
   T.Load(TerrainLabel.GS, TerrainLabel.Piece);
 end;
@@ -191,7 +222,7 @@ begin
     MO.Load(ObjectLabel.GS, ObjectLabel.Piece, fTheme);
     fObjects.Add(MO);
   except
-    raise EAbort.Create('Error loading the level: Could not find object piece: ' + Identifier);
+    Result := -1;
   end;
 end;
 
@@ -202,8 +233,12 @@ var
   i: Integer;
 begin
   i := FindTerrainIndexByIdentifier(Identifier);
-  Result := fTerrains[i];
-  Result.CyclesSinceLastUse := 0;
+  if i >= 0 then
+  begin
+    Result := fTerrains[i];
+    Result.CyclesSinceLastUse := 0;
+  end else
+    Result := nil;
 end;
 
 function TNeoPieceManager.GetMetaObject(Identifier: String): TGadgetMetaInfo;
@@ -211,8 +246,12 @@ var
   i: Integer;
 begin
   i := FindObjectIndexByIdentifier(Identifier);
-  Result := fObjects[i];
-  Result.CyclesSinceLastUse := 0;
+  if i >= 0 then
+  begin
+    Result := fObjects[i];
+    Result.CyclesSinceLastUse := 0;
+  end else
+    Result := nil;
 end;
 
 // And the stuff for communicating with the theme
@@ -227,6 +266,115 @@ begin
   for i := 0 to fObjects.Count-1 do
     if fObjects[i].Animations[false, false, false].AnyMasked then
       fObjects[i].Remask(aTheme);
+end;
+
+procedure TNeoPieceManager.RegenerateAutoAnims(aTheme: TNeoTheme;
+  aAni: TBaseAnimationSet);
+var
+  i: Integer;
+begin
+  for i := 0 to fObjects.Count-1 do
+    fObjects[i].RegenerateAutoAnims(aTheme, aAni);
+end;
+
+//  Functions for composite pieces
+
+procedure TNeoPieceManager.MakePieceFromGroup(aGroup: TTerrainGroup);
+var
+  BMP: TBitmap32;
+  T: TMetaTerrain;
+
+  function IsGroupSteel: Boolean;
+  var
+    i: Integer;
+  begin
+    Result := false;
+    for i := 0 to aGroup.Terrains.Count-1 do
+      if (aGroup.Terrains[i].DrawingFlags and tdf_Erase) = 0 then
+      begin
+        Result := Terrains[aGroup.Terrains[i].Identifier].IsSteel;
+        Exit;
+      end;
+  end;
+begin
+  BMP := TBitmap32.Create;
+  try
+    GameParams.Renderer.PrepareCompositePieceBitmap(aGroup.Terrains, BMP);
+    T := fTerrains.Add;
+    T.LoadFromImage(BMP, COMPOSITE_PIECE_STYLE, aGroup.Name, IsGroupSteel);
+  finally
+    BMP.Free;
+  end;
+end;
+
+procedure TNeoPieceManager.MakePiecesFromGroups(aGroups: TTerrainGroups);
+var
+  i: Integer;
+begin
+  for i := 0 to aGroups.Count-1 do
+    MakePieceFromGroup(aGroups[i]);
+end;
+
+procedure TNeoPieceManager.RemoveCompositePieces;
+var
+  i: Integer;
+begin
+  for i := fTerrains.Count-1 downto 0 do
+    if fTerrains[i].GS = COMPOSITE_PIECE_STYLE then
+      fTerrains.Delete(i);
+end;
+
+// Aliases
+
+procedure TNeoPieceManager.LoadAliases;
+var
+  Parser: TParser;
+begin
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromFile(SFData + 'alias.nxmi');
+
+    Parser.MainSection.DoForEachSection('GADGET', AddAlias, Pointer(rkGadget));
+    Parser.MainSection.DoForEachSection('TERRAIN', AddAlias, Pointer(rkTerrain));
+    Parser.MainSection.DoForEachSection('BACKGROUND', AddAlias, Pointer(rkBackground));
+    Parser.MainSection.DoForEachSection('STYLE', AddAlias, Pointer(rkStyle));
+  finally
+    Parser.Free;
+  end;
+end;
+
+procedure TNeoPieceManager.AddAlias(aSection: TParserSection;
+  const aIteration: Integer; aData: Pointer);
+var
+  Kind: TAliasKind absolute aData;
+  NewRec: TStyleAlias;
+begin
+  NewRec.Source := SplitIdentifier(aSection.LineString['FROM']);
+  NewRec.Dest := SplitIdentifier(aSection.LineString['TO']);
+  NewRec.Kind := Kind;
+  fAliases.Add(NewRec);
+end;
+
+function TNeoPieceManager.Dealias(aIdentifier: String; aKind: TAliasKind): String;
+var
+  Ident: TLabelRecord;
+  i: Integer;
+begin
+  Ident := SplitIdentifier(aIdentifier);
+  for i := 0 to fAliases.Count-1 do
+  begin
+    if Ident.GS <> fAliases[i].Source.GS then Continue;
+
+    if fAliases[i].Kind = rkStyle then
+      Ident.GS := fAliases[i].Dest.GS
+    else if (fAliases[i].Kind = aKind) and (Ident.Piece = fAliases[i].Source.Piece) then
+      Ident := fAliases[i].Dest;
+  end;
+
+  if aKind = rkStyle then
+    Result := Ident.GS
+  else
+    Result := CombineIdentifier(Ident);
 end;
 
 end.

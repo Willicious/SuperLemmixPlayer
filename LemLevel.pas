@@ -8,7 +8,8 @@ uses
   Classes, SysUtils, StrUtils,
   LemCore, LemLemming,
   LemTalisman,
-  LemTerrain, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
+  LemTerrain, LemTerrainGroup, LemGadgetsModel, LemGadgets, LemGadgetsConstants, LemGadgetsMeta,
+  LemStrings, LemTypes,
   LemNeoPieceManager, LemNeoParser;
 
 type
@@ -86,6 +87,7 @@ type
   TLevel = class
   private
     fLevelInfo       : TLevelInfo;
+    fTerrainGroups      : TTerrainGroups;
     fTerrains           : TTerrains;
     fInteractiveObjects : TGadgetModelList;
     fPreplacedLemmings  : TPreplacedLemmingList;
@@ -98,6 +100,7 @@ type
     procedure LoadGeneralInfo(aSection: TParserSection);
     procedure LoadSkillsetSection(aSection: TParserSection);
     procedure HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
+    procedure HandleTerrainGroupEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
     procedure HandleTalismanEntry(aSection: TParserSection; const aIteration: Integer);
@@ -108,6 +111,7 @@ type
     procedure SaveGeneralInfo(aSection: TParserSection);
     procedure SaveSkillsetSection(aSection: TParserSection);
     procedure SaveObjectSections(aSection: TParserSection);
+    procedure SaveTerrainGroupSections(aSection: TParserSection);
     procedure SaveTerrainSections(aSection: TParserSection);
     procedure SaveLemmingSections(aSection: TParserSection);
     procedure SaveTalismanSections(aSection: TParserSection);
@@ -129,6 +133,7 @@ type
   published
     property Info: TLevelInfo read fLevelInfo;
     property InteractiveObjects: TGadgetModelList read fInteractiveObjects;
+    property TerrainGroups: TTerrainGroups read fTerrainGroups;
     property Terrains: TTerrains read fTerrains;
     property PreplacedLemmings: TPreplacedLemmingList read fPreplacedLemmings;
     property Talismans: TObjectList<TTalisman> read fTalismans;
@@ -194,6 +199,7 @@ begin
   fLevelInfo := TLevelInfo.Create;
   fInteractiveObjects := TGadgetModelList.Create;
   fTerrains := TTerrains.Create;
+  fTerrainGroups := TTerrainGroups.Create;
   fPreplacedLemmings := TPreplacedLemmingList.Create;
   fTalismans := TObjectList<TTalisman>.Create(true);
   fPreText := TStringList.Create;
@@ -205,6 +211,7 @@ begin
   fLevelInfo.Free;
   fInteractiveObjects.Free;
   fTerrains.Free;
+  fTerrainGroups.Free;
   fPreplacedLemmings.Free;
   fTalismans.Free;
   fPreText.Free;
@@ -217,6 +224,7 @@ begin
   fLevelInfo.Clear;
   fInteractiveObjects.Clear;
   fTerrains.Clear;
+  fTerrainGroups.Clear;
   fPreplacedLemmings.Clear;
   fTalismans.Clear;
   fPreText.Clear;
@@ -277,7 +285,11 @@ begin
       LoadGeneralInfo(Main);
       LoadSkillsetSection(Main.Section['skillset']);
 
-      Main.DoForEachSection('object', HandleObjectEntry);
+      Main.DoForEachSection('terraingroup', HandleTerrainGroupEntry);
+      if (Main.Section['gadget'] <> nil) then
+        Main.DoForEachSection('gadget', HandleObjectEntry)
+      else
+        Main.DoForEachSection('object', HandleObjectEntry);
       Main.DoForEachSection('terrain', HandleTerrainEntry);
       Main.DoForEachSection('lemming', HandleLemmingEntry);
       Main.DoForEachSection('talisman', HandleTalismanEntry);
@@ -309,18 +321,25 @@ procedure TLevel.LoadGeneralInfo(aSection: TParserSection);
       Info.TimeLimit := StrToIntDef(aString, 1);
     end;
   end;
+
+var
+  Ident: TLabelRecord;
 begin
   // This procedure should receive the Parser's MAIN section
   with Info do
   begin
     Title := aSection.LineString['title'];
     Author := aSection.LineString['author'];
-    GraphicSetName := aSection.LineTrimString['theme'];
+    GraphicSetName := PieceManager.Dealias(aSection.LineTrimString['theme'], rkStyle);
     MusicFile := aSection.LineTrimString['music'];
     LevelID := aSection.LineNumeric['id'];
 
+    if Uppercase(GraphicSetName) = 'ORIG_DIRT_MD' then
+      GraphicSetName := 'orig_dirt';
+
     LemmingsCount := aSection.LineNumeric['lemmings'];
     RescueCount := aSection.LineNumeric['requirement'];
+    RescueCount := aSection.LineNumericDefault['save_requirement', RescueCount];
     HandleTimeLimit(aSection.LineTrimString['time_limit']);
     SpawnInterval := 53 - (aSection.LineNumeric['release_rate'] div 2);
     if aSection.Line['max_spawn_interval'] <> nil then
@@ -335,7 +354,14 @@ begin
     if Lowercase(aSection.LineTrimString['autosteel']) = 'simple' then
       isSimpleAutoSteel := true;
 
-    Background := aSection.LineTrimString['background'];
+    Background := PieceManager.Dealias(aSection.LineTrimString['background'], rkBackground);
+
+    if (Background <> '') and (Background <> ':') then
+    begin
+      Ident := SplitIdentifier(Background);
+      if not FileExists(AppPath + SFStyles + Ident.GS + '\backgrounds\' + Ident.Piece + '.png') then
+        Background := 'default:fallback';
+    end;
   end;
 end;
 
@@ -359,6 +385,7 @@ begin
   if aSection = nil then Exit;
 
   HandleSkill('walker', spbWalker);
+  HandleSkill('shimmier', spbShimmier);
   HandleSkill('climber', spbClimber);
   HandleSkill('swimmer', spbSwimmer);
   HandleSkill('floater', spbFloater);
@@ -375,7 +402,6 @@ begin
   HandleSkill('miner', spbMiner);
   HandleSkill('digger', spbDigger);
   HandleSkill('cloner', spbCloner);
-  HandleSkill('shimmier', spbShimmier);
 end;
 
 procedure TLevel.HandleObjectEntry(aSection: TParserSection; const aIteration: Integer);
@@ -387,9 +413,15 @@ var
     O.DrawingFlags := O.DrawingFlags or aValue;
   end;
 
+  procedure GetExitData;
+  begin
+    O.LemmingCap := aSection.LineNumeric['lemmings'];
+  end;
+
   procedure GetTeleporterData;
   begin
-    if (aSection.Line['flip_lemming'] <> nil) then Flag(odf_FlipLem);
+    if (aSection.Line['flip_lemming'] <> nil) then Flag(odf_FlipLem); // Deprecated!
+
     O.Skill := aSection.LineNumeric['pairing'];
   end;
 
@@ -405,6 +437,7 @@ var
     S := Lowercase(aSection.LineTrimString['skill']);
 
     if S = 'walker' then O.Skill := Integer(spbWalker);
+    if S = 'shimmier' then O.Skill := Integer(spbShimmier);
     if S = 'climber' then O.Skill := Integer(spbClimber);
     if S = 'swimmer' then O.Skill := Integer(spbSwimmer);
     if S = 'floater' then O.Skill := Integer(spbFloater);
@@ -421,28 +454,35 @@ var
     if S = 'miner' then O.Skill := Integer(spbMiner);
     if S = 'digger' then O.Skill := Integer(spbDigger);
     if S = 'cloner' then O.Skill := Integer(spbCloner);
-    if S = 'shimmier' then O.Skill := Integer(spbShimmier);
 
-    O.TarLev := Max(aSection.LineNumeric['skillcount'], 1);
+    if aSection.Line['skill_count'] = nil then
+      O.TarLev := Max(aSection.LineNumeric['skillcount'], 1)
+    else
+      O.TarLev := Max(aSection.LineNumeric['skill_count'], 1);
+
+    O.DrawingFlags := O.DrawingFlags and not (odf_Rotate or odf_FlipLem or odf_UpsideDown);
   end;
 
   procedure GetSplitterData;
   begin
-    // Ignore previous settings by "flip_horizontal" and the like.
-    O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
     if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then
-      Flag(odf_FlipLem);
+      Flag(odf_FlipLem)
+    else if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'r' then
+      O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
   end;
 
   procedure GetWindowData;
   begin
-    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem);
+    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem); // Deprecated!!
     if (aSection.Line['climber'] <> nil) then O.TarLev := O.TarLev or 1;
     if (aSection.Line['swimmer'] <> nil) then O.TarLev := O.TarLev or 2;
     if (aSection.Line['floater'] <> nil) then O.TarLev := O.TarLev or 4;
     if (aSection.Line['glider'] <> nil) then O.TarLev := O.TarLev or 8;
     if (aSection.Line['disarmer'] <> nil) then O.TarLev := O.TarLev or 16;
     if (aSection.Line['zombie'] <> nil) then O.TarLev := O.TarLev or 64;
+    if (aSection.Line['neutral'] <> nil) then O.TarLev := O.TarLev or 128;
+
+    O.LemmingCap := aSection.LineNumeric['lemmings'];
   end;
 
   procedure GetMovingBackgroundData;
@@ -453,11 +493,31 @@ var
     O.Skill := (Round(Angle / 22.5) mod 16 + 16) mod 16; // Convert angle in degrees to a mod 16 segment
     O.TarLev := aSection.LineNumeric['speed'];
   end;
+
+var
+  Ident: TLabelRecord;
+  MO: TGadgetMetaInfo;
 begin
   O := fInteractiveObjects.Add;
 
-  O.GS := aSection.LineTrimString['collection'];
+  if aSection.Line['style'] = nil then
+    O.GS := aSection.LineTrimString['collection']
+  else
+    O.GS := aSection.LineTrimString['style'];
+
   O.Piece := aSection.LineTrimString['piece'];
+
+  Ident := SplitIdentifier(PieceManager.Dealias(O.Identifier, rkGadget));
+  O.GS := Ident.GS;
+  O.Piece := Ident.Piece;
+
+  MO := PieceManager.Objects[O.Identifier];
+  if MO = nil then
+  begin
+    O.GS := 'default';
+    O.Piece := 'fallback';
+  end;
+
   O.Left := aSection.LineNumeric['x'];
   O.Top := aSection.LineNumeric['y'];
   O.Width := aSection.LineNumeric['width'];
@@ -471,38 +531,40 @@ begin
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
 
   case PieceManager.Objects[O.Identifier].TriggerEffect of
-    11: GetTeleporterData;
-    12: GetReceiverData;
-    14: GetPickupData;
-    21: GetSplitterData;
-    23: GetWindowData;
-    30: GetMovingBackgroundData;
+    DOM_TELEPORT: GetTeleporterData;
+    DOM_RECEIVER: GetReceiverData;
+    DOM_PICKUP: GetPickupData;
+    DOM_FLIPPER: GetSplitterData;
+    DOM_WINDOW: GetWindowData;
+    DOM_BACKGROUND: GetMovingBackgroundData;
+    DOM_EXIT, DOM_LOCKEXIT: GetExitData;
   end;
+end;
+
+procedure TLevel.HandleTerrainGroupEntry(aSection: TParserSection; const aIteration: Integer);
+var
+  G: TTerrainGroup;
+begin
+  G := TTerrainGroup.Create;
+  G.Name := aSection.LineString['name'];
+  aSection.DoForEachSection('terrain',
+    procedure (aSec: TParserSection; const aIter: Integer)
+    var
+      T: TTerrain;
+    begin
+      T := G.Terrains.Add;
+      T.LoadFromSection(aSec);
+    end
+  );
+  fTerrainGroups.Add(G);
 end;
 
 procedure TLevel.HandleTerrainEntry(aSection: TParserSection; const aIteration: Integer);
 var
   T: TTerrain;
-
-  procedure Flag(aValue: Integer);
-  begin
-    T.DrawingFlags := T.DrawingFlags or aValue;
-  end;
 begin
   T := fTerrains.Add;
-
-  T.GS := aSection.LineTrimString['collection'];
-  T.Piece := aSection.LineTrimString['piece'];
-  T.Left := aSection.LineNumeric['x'];
-  T.Top := aSection.LineNumeric['y'];
-
-  T.DrawingFlags := tdf_NoOneWay;
-  if (aSection.Line['one_way'] <> nil) then T.DrawingFlags := 0;
-  if (aSection.Line['rotate'] <> nil) then Flag(tdf_Rotate);
-  if (aSection.Line['flip_horizontal'] <> nil) then Flag(tdf_Flip);
-  if (aSection.Line['flip_vertical'] <> nil) then Flag(tdf_Invert);
-  if (aSection.Line['no_overwrite'] <> nil) then Flag(tdf_NoOverwrite);
-  if (aSection.Line['erase'] <> nil) then Flag(tdf_Erase);
+  T.LoadFromSection(aSection);
 end;
 
 procedure TLevel.HandleLemmingEntry(aSection: TParserSection; const aIteration: Integer);
@@ -514,18 +576,22 @@ begin
   L.X := aSection.LineNumeric['x'];
   L.Y := aSection.LineNumeric['y'];
 
-  if Lowercase(LeftStr(aSection.LineTrimString['direction'], 1)) = 'l' then
+  if (aSection.Line['flip_horizontal'] <> nil) then
+    L.Dx := -1
+  else if Lowercase(LeftStr(aSection.LineTrimString['direction'], 1)) = 'l' then
     L.Dx := -1
   else
     L.Dx := 1; // We use right as a "default", but we're also lenient - we accept just an L rather than the full word "left".
                // Side effects may include a left-facing lemming if user manually enters "DIRECTION LEMMING FACES IS RIGHT".
 
+  L.IsShimmier := (aSection.Line['shimmier'] <> nil);
   L.IsClimber  := (aSection.Line['climber']  <> nil);
   L.IsSwimmer  := (aSection.Line['swimmer']  <> nil);
   L.IsFloater  := (aSection.Line['floater']  <> nil);
   L.IsGlider   := (aSection.Line['glider']   <> nil);
   L.IsDisarmer := (aSection.Line['disarmer'] <> nil);
   L.IsZombie   := (aSection.Line['zombie']   <> nil);
+  L.IsNeutral  := (aSection.Line['neutral']  <> nil);
   L.IsBlocker  := (aSection.Line['blocker']  <> nil);
 end;
 
@@ -591,7 +657,7 @@ begin
       if SkillCount[SkillIndex] > 100 then SkillCount[SkillIndex] := 100;
       if SkillIndex in Skillset then Inc(SkillNumber);
 
-      if (SkillNumber > 8) or not (SkillIndex in Skillset) then
+      if (SkillNumber > MAX_SKILL_TYPES_PER_LEVEL) or not (SkillIndex in Skillset) then
       begin
         SkillCount[SkillIndex] := 0;
         Exclude(fSkillset, SkillIndex);
@@ -609,19 +675,33 @@ var
   S: TSkillPanelButton;
   FoundSkill: Boolean;
 
-  IsWindow: array of Boolean;
+  WindowLemmingCount: array of Integer;
   FoundWindow: Boolean;
   n: Integer;
+  SpawnedCount: Integer;
+  MaxPossibleSaveCount: Integer;
+  PickupCloners: Integer;
 
   procedure SetNextWindow;
+  var
+    initial: Integer;
   begin
+    initial := n;
+    if initial = -1 then
+      initial := InteractiveObjects.Count-1;
     repeat
       Inc(n);
       if n >= InteractiveObjects.Count then n := 0;
-    until IsWindow[n];
+      if (n = initial) and (WindowLemmingCount[n] = 0) then
+      begin
+        n := -1;
+        Exit;
+      end;
+    until WindowLemmingCount[n] <> 0;
   end;
 begin
   // 1. Validate skillset - remove skills that don't exist in the level
+  PickupCloners := 0;
   for S := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
     if not (S in Info.Skillset) then Continue;
@@ -632,21 +712,27 @@ begin
       if PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect <> DOM_PICKUP then Continue;
       if InteractiveObjects[i].Skill <> Integer(S) then Continue;
       FoundSkill := true;
-      Break;
+      if (S = spbCloner) then
+        Inc(PickupCloners) // used later
+      else
+        Break;
     end;
     if not FoundSkill then Info.Skillset := Info.Skillset - [S];
   end;
 
   // 2. Calculate ZombieCount, precise spawn order, and finalised lemming count
   FoundWindow := false;
-  SetLength(IsWindow, InteractiveObjects.Count);
+  SetLength(WindowLemmingCount, InteractiveObjects.Count);
   for i := 0 to InteractiveObjects.Count-1 do
     if (PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect = DOM_WINDOW) then
     begin
       FoundWindow := true;
-      IsWindow[i] := true;
+      if InteractiveObjects[i].LemmingCap > 0 then
+        WindowLemmingCount[i] := InteractiveObjects[i].LemmingCap
+      else
+        WindowLemmingCount[i] := -1;
     end else
-      IsWindow[i] := false;
+      WindowLemmingCount[i] := 0;
 
   Info.ZombieCount := 0;
   for i := 0 to PreplacedLemmings.Count-1 do
@@ -660,14 +746,52 @@ begin
   end else begin
     n := -1;
     SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count);
+
+    SpawnedCount := PreplacedLemmings.Count;
+
     for i := 0 to Length(Info.SpawnOrder)-1 do
     begin
       SetNextWindow;
+
+      if (n = -1) then
+      begin
+        Info.LemmingsCount := SpawnedCount; // remember - this already includes preplaced lemmings
+        Break;
+      end;
+
       if (InteractiveObjects[n].TarLev and 64) <> 0 then
         Info.ZombieCount := Info.ZombieCount + 1;
       Info.SpawnOrder[i] := n;
+
+      if WindowLemmingCount[n] > 0 then
+        Dec(WindowLemmingCount[n]);
+
+      Inc(SpawnedCount);
     end;
+
+    SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count); // in case this got overridden
   end;
+
+  // Validate save requirement and lower it if need be. It must:
+  //  - Not exceed the lemming count + cloner count
+  //  - Not exceed the total number of lemmings permitted to enter the level's exits
+  MaxPossibleSaveCount := 0;
+  for i := 0 to InteractiveObjects.Count-1 do
+  begin
+    if not (PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) then
+      Continue;
+
+    if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleSaveCount >= 0) then
+      MaxPossibleSaveCount := MaxPossibleSaveCount + InteractiveObjects[i].LemmingCap
+    else
+      MaxPossibleSaveCount := -1;
+  end;
+
+  if MaxPossibleSaveCount < 0 then
+    MaxPossibleSaveCount := Info.LemmingsCount + Info.SkillCount[spbCloner] + PickupCloners;
+
+  if Info.RescueCount > MaxPossibleSaveCount then
+    Info.RescueCount := MaxPossibleSaveCount;
 end;
 
 // TLevel Saving Routines
@@ -681,6 +805,7 @@ begin
     SaveGeneralInfo(Parser.MainSection);
     SaveSkillsetSection(Parser.MainSection);
     SaveObjectSections(Parser.MainSection);
+    SaveTerrainGroupSections(Parser.MainSection);
     SaveTerrainSections(Parser.MainSection);
     SaveLemmingSections(Parser.MainSection);
     SaveTalismanSections(Parser.MainSection);
@@ -702,7 +827,7 @@ begin
     aSection.AddLine('ID', 'x' + IntToHex(LevelID, 16));
 
     aSection.AddLine('LEMMINGS', LemmingsCount);
-    aSection.AddLine('REQUIREMENT', RescueCount);
+    aSection.AddLine('SAVE_REQUIREMENT', RescueCount);
 
     if HasTimeLimit then
       aSection.AddLine('TIME_LIMIT', TimeLimit);
@@ -719,7 +844,8 @@ begin
     if Info.IsSimpleAutoSteel then
       aSection.AddLine('AUTOSTEEL', 'simple');
 
-    aSection.AddLine('BACKGROUND', Background);
+    if not ((Background = '') or (Background = ':')) then
+      aSection.AddLine('BACKGROUND', Background);
   end;
 end;
 
@@ -740,6 +866,7 @@ begin
   Sec := aSection.SectionList.Add('SKILLSET');
 
   HandleSkill('WALKER', spbWalker);
+  HandleSkill('SHIMMIER', spbShimmier);
   HandleSkill('CLIMBER', spbClimber);
   HandleSkill('SWIMMER', spbSwimmer);
   HandleSkill('FLOATER', spbFloater);
@@ -756,7 +883,6 @@ begin
   HandleSkill('MINER', spbMiner);
   HandleSkill('DIGGER', spbDigger);
   HandleSkill('CLONER', spbCloner);
-  HandleSkill('SHIMMIER', spbShimmier);
 end;
 
 procedure TLevel.SaveObjectSections(aSection: TParserSection);
@@ -772,7 +898,6 @@ var
 
   procedure SetTeleporterData;
   begin
-    if Flag(odf_FlipLem) then Sec.AddLine('FLIP_LEMMING');
     Sec.AddLine('PAIRING', O.Skill);
   end;
 
@@ -787,6 +912,7 @@ var
   begin
     case TSkillPanelButton(O.Skill) of
      spbWalker: s := 'WALKER';
+     spbShimmier: s := 'SHIMMIER';
      spbClimber: s := 'CLIMBER';
      spbSwimmer: s := 'SWIMMER';
      spbFloater: s := 'FLOATER';
@@ -803,33 +929,31 @@ var
      spbMiner: s := 'MINER';
      spbDigger: s := 'DIGGER';
      spbCloner: s := 'CLONER';
-     spbShimmier: s := 'SHIMMIER';
     end;
 
     Sec.AddLine('SKILL', S);
-  end;
-
-  procedure SetSplitterData;
-  begin
-    if Flag(odf_FlipLem) then
-      Sec.AddLine('DIRECTION', 'left')
-    else
-      Sec.AddLine('DIRECTION', 'right');
+    if O.TarLev > 1 then
+      Sec.AddLine('SKILL_COUNT', O.TarLev);
   end;
 
   procedure SetWindowData;
   begin
-    if Flag(odf_FlipLem) then
-      Sec.AddLine('DIRECTION', 'left')
-    else
-      Sec.AddLine('DIRECTION', 'right');
-
     if O.TarLev and 1 <> 0 then Sec.AddLine('CLIMBER');
     if O.TarLev and 2 <> 0 then Sec.AddLine('SWIMMER');
     if O.TarLev and 4 <> 0 then Sec.AddLine('FLOATER');
     if O.TarLev and 8 <> 0 then Sec.AddLine('GLIDER');
     if O.TarLev and 16 <> 0 then Sec.AddLine('DISARMER');
     if O.TarLev and 64 <> 0 then Sec.AddLine('ZOMBIE');
+    if O.TarLev and 128 <> 0 then Sec.AddLine('NEUTRAL');
+
+    if O.LemmingCap > 0 then
+      Sec.AddLine('LEMMINGS', O.LemmingCap);
+  end;
+
+  procedure SetExitData;
+  begin
+    if O.LemmingCap > 0 then
+      Sec.AddLine('LEMMINGS', O.LemmingCap);
   end;
 
   procedure SetMovingBackgroundData;
@@ -845,9 +969,9 @@ begin
   for i := 0 to fInteractiveObjects.Count-1 do
   begin
     O := fInteractiveObjects[i];
-    Sec := aSection.SectionList.Add('OBJECT');
+    Sec := aSection.SectionList.Add('GADGET');
 
-    Sec.AddLine('COLLECTION', O.GS);
+    Sec.AddLine('STYLE', O.GS);
     Sec.AddLine('PIECE', O.Piece);
     Sec.AddLine('X', O.Left);
     Sec.AddLine('Y', O.Top);
@@ -855,18 +979,40 @@ begin
     if O.Height > 0 then Sec.AddLine('HEIGHT', O.Height);
 
     if Flag(odf_Rotate) then Sec.AddLine('ROTATE');
-    if Flag(odf_FlipLem) or Flag(64) then Sec.AddLine('FLIP_HORIZONTAL'); //64 was previously flip image
+    if Flag(odf_FlipLem) then Sec.AddLine('FLIP_HORIZONTAL');
     if Flag(odf_UpsideDown) then Sec.AddLine('FLIP_VERTICAL');
     if Flag(odf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
     if Flag(odf_OnlyOnTerrain) then Sec.AddLine('ONLY_ON_TERRAIN');
 
     case PieceManager.Objects[O.Identifier].TriggerEffect of
-      11: SetTeleporterData;
-      12: SetReceiverData;
-      14: SetPickupData;
-      21: SetSplitterData;
-      23: SetWindowData;
-      30: SetMovingBackgroundData;
+      DOM_EXIT, DOM_LOCKEXIT: SetExitData;
+      DOM_TELEPORT: SetTeleporterData;
+      DOM_RECEIVER: SetReceiverData;
+      DOM_PICKUP: SetPickupData;
+      DOM_WINDOW: SetWindowData;
+      DOM_BACKGROUND: SetMovingBackgroundData;
+    end;
+  end;
+end;
+
+procedure TLevel.SaveTerrainGroupSections(aSection: TParserSection);
+var
+  G: TTerrainGroup;
+  T: TTerrain;
+  i, n: Integer;
+  Sec, SubSec: TParserSection;
+begin
+  for i := 0 to fTerrainGroups.Count-1 do
+  begin
+    G := fTerrainGroups[i];
+    Sec := aSection.SectionList.Add('TERRAINGROUP');
+
+    Sec.AddLine('NAME', G.Name);
+    for n := 0 to G.Terrains.Count-1 do
+    begin
+      T := G.Terrains[n];
+      SubSec := Sec.SectionList.Add('TERRAIN');
+      T.SaveToSection(SubSec);
     end;
   end;
 end;
@@ -876,28 +1022,12 @@ var
   i: Integer;
   T: TTerrain;
   Sec: TParserSection;
-
-  function Flag(aValue: Integer): Boolean;
-  begin
-    Result := T.DrawingFlags and aValue = aValue;
-  end;
 begin
   for i := 0 to fTerrains.Count-1 do
   begin
     T := fTerrains[i];
     Sec := aSection.SectionList.Add('TERRAIN');
-
-    Sec.AddLine('COLLECTION', T.GS);
-    Sec.AddLine('PIECE', T.Piece);
-    Sec.AddLine('X', T.Left);
-    Sec.AddLine('Y', T.Top);
-
-    if Flag(tdf_Rotate) then Sec.AddLine('ROTATE');
-    if Flag(tdf_Flip) then Sec.AddLine('FLIP_HORIZONTAL');
-    if Flag(tdf_Invert) then Sec.AddLine('FLIP_VERTICAL');
-    if Flag(tdf_NoOverwrite) then Sec.AddLine('NO_OVERWRITE');
-    if Flag(tdf_Erase) then Sec.AddLine('ERASE');
-    if not Flag(tdf_NoOneWay) then Sec.AddLine('ONE_WAY');
+    T.SaveToSection(Sec);
   end;
 end;
 
@@ -915,11 +1045,10 @@ begin
     Sec.AddLine('X', L.X);
     Sec.AddLine('Y', L.Y);
 
-    if L.Dx > 0 then
-      Sec.AddLine('DIRECTION', 'right')
-    else
-      Sec.AddLine('DIRECTION', 'left');
+    if L.Dx < 0 then
+      Sec.AddLine('FLIP_HORIZONTAL');
 
+    if L.IsShimmier then Sec.AddLine('SHIMMIER');
     if L.IsClimber then Sec.AddLine('CLIMBER');
     if L.IsSwimmer then Sec.AddLine('SWIMMER');
     if L.IsFloater then Sec.AddLine('FLOATER');
@@ -927,6 +1056,7 @@ begin
     if L.IsDisarmer then Sec.AddLine('DISARMER');
     if L.IsBlocker then Sec.AddLine('BLOCKER');
     if L.IsZombie then Sec.AddLine('ZOMBIE');
+    if L.IsNeutral then Sec.AddLine('NEUTRAL');
   end;
 end;
 

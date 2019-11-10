@@ -12,6 +12,7 @@ uses
   LemDosStructures,
   LemSystemMessages,
   LemStrings, PngInterface, LemTypes,
+  LemReplay, LemGame,
   SysUtils;
 
 const
@@ -58,6 +59,7 @@ type
     procedure ShowConfigMenu;
     procedure ApplyConfigChanges(OldFullScreen: Boolean);
     procedure DoMassReplayCheck;
+    function LoadReplay: Boolean;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -557,6 +559,8 @@ var
   Success: Boolean;
   LoadAsPack: Boolean;
 begin
+  if GameParams.TestModeLevel <> nil then Exit;
+
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(self);
   try
@@ -587,7 +591,7 @@ begin
     OpenDlg.Title := 'Select any file in the folder containing replays';
     OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
     OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp, *.lrb)|*.nxrp;*.lrb';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist];
+    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
     if not OpenDlg.Execute then
       Exit;
     GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
@@ -597,6 +601,72 @@ begin
   CloseScreen(gstReplayTest);
 end;
 
+function TGameBaseScreen.LoadReplay: Boolean;
+var
+  Dlg: TOpenDialog;
+  s: String;
+
+  function GetDefaultLoadPath: String;
+    function GetGroupName: String;
+    var
+      G: TNeoLevelGroup;
+    begin
+      G := GameParams.CurrentLevel.Group;
+      if G.Parent = nil then
+        Result := ''
+      else begin
+        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
+          G := G.Parent;
+        Result := MakeSafeForFilename(G.Name, false) + '\';
+      end;
+    end;
+  begin
+    Result := AppPath + 'Replay\' + GetGroupName;
+  end;
+
+  function GetInitialLoadPath: String;
+  begin
+    if (LastReplayDir <> '') then
+      Result := LastReplayDir
+    else
+      Result := GetDefaultLoadPath;
+  end;
+begin
+  s := '';
+  Dlg := TOpenDialog.Create(self);
+  try
+    Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
+    Dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
+    Dlg.FilterIndex := 1;
+    if LastReplayDir = '' then
+    begin
+      Dlg.InitialDir := AppPath + 'Replay\' + GetInitialLoadPath;
+      if not DirectoryExists(Dlg.InitialDir) then
+        Dlg.InitialDir := AppPath + 'Replay\';
+      if not DirectoryExists(Dlg.InitialDir) then
+        Dlg.InitialDir := AppPath;
+    end else
+      Dlg.InitialDir := LastReplayDir;
+    Dlg.Options := [ofFileMustExist, ofHideReadOnly, ofEnableSizing];
+    if Dlg.execute then
+    begin
+      s:=Dlg.filename;
+      LastReplayDir := ExtractFilePath(s);
+      Result := true;
+    end else
+      Result := false;
+  finally
+    Dlg.Free;
+  end;
+
+  if s <> '' then
+  begin
+    GlobalGame.ReplayManager.LoadFromFile(s);
+    if GlobalGame.ReplayManager.LevelID <> GameParams.Level.Info.LevelID then
+      ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
+                  'will attempt to play the replay anyway.');
+  end;
+end;
 
 procedure TGameBaseScreen.ShowConfigMenu;
 var
@@ -629,17 +699,19 @@ begin
   begin
     if GameParams.FullScreen then
     begin
+      GameParams.MainForm.BorderStyle := bsNone;
+      GameParams.MainForm.WindowState := wsMaximized;
       GameParams.MainForm.Left := 0;
       GameParams.MainForm.Top := 0;
-      GameParams.MainForm.WindowState := wsMaximized;
-      GameParams.MainForm.BorderStyle := bsNone;
+      GameParams.MainForm.Width := Screen.Width;
+      GameParams.MainForm.Height := Screen.Height;
     end else begin
       GameParams.MainForm.BorderStyle := bsSizeable;
       GameParams.MainForm.WindowState := wsNormal;
-      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320, Min(Screen.Width div 320, Screen.Height div 200) * 320);
-      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200, Min(Screen.Width div 320, Screen.Height div 200) * 200);
-      GameParams.MainForm.Left := (Screen.Width div 2) - (GameParams.MainForm.Width div 2);
-      GameParams.MainForm.Top := (Screen.Height div 2) - (GameParams.MainForm.Height div 2);
+      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320, Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) * 320);
+      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200, Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) * 200);
+      GameParams.MainForm.Left := (Screen.WorkAreaWidth div 2) - (GameParams.MainForm.Width div 2);
+      GameParams.MainForm.Top := (Screen.WorkAreaHeight div 2) - (GameParams.MainForm.Height div 2);
     end;
   end;
 

@@ -14,6 +14,7 @@ uses
   LemTypes,
   LemStrings,
   LemGame,
+  LemGadgetsConstants,
   GameControl,
   GameSound,
   GameBaseScreen;
@@ -163,9 +164,14 @@ var
             pvc_Relative: NewMin := gToRescue + aText.ConditionValue;
             pvc_RelativePercent: NewMin := gToRescue + (gToRescue * aText.ConditionValue div 100);
           end;
-          if     (NewMin > CurrentMin)
-             and (gRescued >= NewMin)
-             and ((aText.ConditionType <> pvc_Absolute) or (gRescued < gToRescue)) then
+          if (gRescued >= NewMin)
+             and
+            ((NewMin > CurrentMin)
+             or
+             ((aText.ConditionType in [pvc_Relative, pvc_RelativePercent]) and (aText.ConditionValue = 0))
+             or
+             ((aText.ConditionType = pvc_Percent) and (aText.ConditionValue = 100))
+             ) then
           begin
             Result := true;
             CurrentMin := NewMin;
@@ -174,10 +180,10 @@ var
         end;
       end;
     begin
-      AdjLemCount := GameParams.Level.Info.LemmingsCount;
+      AdjLemCount := GameParams.Level.Info.LemmingsCount - GameParams.Level.Info.ZombieCount;
       if spbCloner in GameParams.Level.Info.Skillset then AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
       for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
-        if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = 14 then
+        if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = DOM_PICKUP then
           if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount);
       Result := 0;
       CurrentMin := -1;
@@ -218,20 +224,20 @@ begin
       fLevelOverride := $0000;
     end;
 
-    if not gCheated then
-    with CurrentLevel do
-    begin
-      if gRescued > CurrentLevel.Records.LemmingsRescued then
-        CurrentLevel.Records.LemmingsRescued := gRescued;
-
-      if gSuccess then
+    if (not gCheated) and (GlobalGame.ReplayManager.IsThisUsersReplay) then
+      with CurrentLevel do
       begin
-        Status := lst_Completed;
-        if (CurrentLevel.Records.TimeTaken = 0) or (gLastRescueIteration < CurrentLevel.Records.TimeTaken) then
-          CurrentLevel.Records.TimeTaken := gLastRescueIteration;
-      end else if Status = lst_None then
-        Status := lst_Attempted;
-    end;
+        if gRescued > CurrentLevel.Records.LemmingsRescued then
+          CurrentLevel.Records.LemmingsRescued := gRescued;
+
+        if gSuccess then
+        begin
+          Status := lst_Completed;
+          if (CurrentLevel.Records.TimeTaken = 0) or (gLastRescueIteration < CurrentLevel.Records.TimeTaken) then
+            CurrentLevel.Records.TimeTaken := gLastRescueIteration;
+        end else if Status = lst_None then
+          Status := lst_Attempted;
+      end;
 
     if gRescued >= Level.Info.RescueCount then
     begin

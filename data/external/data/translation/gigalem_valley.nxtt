@@ -1277,19 +1277,19 @@ $OBJECT
 $END
 
 $BACKGROUND
-  INDEX 12
+  INDEX 0
   COLLECTION gigalem_valley
   PIECE valley_01
 $END
 
 $BACKGROUND
-  INDEX 13
+  INDEX 1
   COLLECTION gigalem_valley
   PIECE valley_03
 $END
 
 $BACKGROUND
-  INDEX 14
+  INDEX 2
   COLLECTION gigalem_valley
   PIECE valley_02
 $END

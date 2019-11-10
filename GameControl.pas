@@ -14,7 +14,7 @@ uses
   LemNeoLevelPack,
   LemmixHotkeys,
   Math,
-  Dialogs, SysUtils, StrUtils, Classes, Forms, GR32,
+  Dialogs, SysUtils, StrUtils, IOUtils, Classes, Forms, GR32,
   LemVersion,
   LemTypes, LemLevel,
   LemDosStructures,
@@ -75,6 +75,8 @@ type
     moMinimapHighQuality,
     moIncreaseZoom,
     moLoadedConfig,
+    moNeedRequestUsername,
+    moMatchBlankReplayUsername,
     moCompactSkillPanel,
     moEdgeScroll,
     moSpawnInterval
@@ -101,6 +103,8 @@ type
 
   TDosGameParams = class(TPersistent)
   private
+    fDisableSaveOptions: Boolean;
+
     fHotkeys: TLemmixHotkeyManager;
     fTalismanPage: Integer;
     fDirectory    : string;
@@ -114,6 +118,8 @@ type
     fZoomLevel: Integer;
     fWindowWidth: Integer;
     fWindowHeight: Integer;
+    fLoadedWindowWidth: Integer;
+    fLoadedWindowHeight: Integer;
 
     fMainForm: TForm; // link to the FMain form
 
@@ -131,9 +137,7 @@ type
 
     function GetCurrentGroupName: String;
   public
-    // this is initialized by appcontroller
-    MainDatFile  : string;
-
+    UserName: string;
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;
@@ -175,6 +179,8 @@ type
     procedure Save;
     procedure Load;
 
+    procedure SetCurrentLevelToBestMatch(aPattern: String);
+
     procedure SetLevel(aLevel: TNeoLevelEntry);
     procedure NextLevel(aCanCrossRank: Boolean = false);
     procedure PrevLevel(aCanCrossRank: Boolean = false);
@@ -200,9 +206,12 @@ type
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
+    property NeedRequestUsername: boolean Index moNeedRequestUsername read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
+
+    property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
     property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -218,6 +227,8 @@ type
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
     property WindowHeight: Integer read fWindowHeight write fWindowHeight;
+    property LoadedWindowWidth: Integer read fLoadedWindowWidth;
+    property LoadedWindowHeight: Integer read fLoadedWindowHeight;
 
     property MainForm: TForm read fMainForm write fMainForm;
 
@@ -264,6 +275,7 @@ end;
 procedure TDosGameParams.SaveToIniFile;
 var
   SL, SL2: TStringList;
+  LevelSavePath: String;
 
   procedure SaveBoolean(aLabel: String; aValue: Boolean; aValue2: Boolean = false);
   var
@@ -300,7 +312,9 @@ var
       SL.Add(SL2[i]);
   end;
 begin
-  //if fTestMode then Exit;
+  if GameParams.TestModeLevel <> nil then Exit;  
+  if fDisableSaveOptions then Exit;
+
   SL := TStringList.Create;
   SL2 := TStringList.Create;
 
@@ -311,6 +325,7 @@ begin
     SL2.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
 
   SL.Add('LastVersion=' + IntToStr(CurrentVersionID));
+  SL.Add('UserName=' + UserName);
 
   SL.Add('');
   SL.Add('# Interface Options');
@@ -334,6 +349,11 @@ begin
 
   SaveBoolean('LinearResampleMenu', LinearResampleMenu);
   SaveBoolean('LinearResampleGame', LinearResampleGame);
+
+  LevelSavePath := CurrentLevel.Path;
+  if Pos(AppPath + SFLevels, LevelSavePath) = 1 then
+    LevelSavePath := RightStr(LevelSavePath, Length(LevelSavePath) - Length(AppPath + SFLevels));
+  SL.Add('LastActiveLevel=' + LevelSavePath);
 
   SL.Add('');
   SL.Add('# Sound Options');
@@ -423,67 +443,85 @@ var
 
 begin
   SL := TStringList.Create;
+  try
+    if FileExists(AppPath + SFSaveData + 'settings.ini') then
+    begin
+      SL.LoadFromFile(AppPath + SFSaveData + 'settings.ini');
+      LoadedConfig := true;
+    end else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
+    begin
+      SL.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
+      LoadedConfig := true;
+    end else if UnderWine then
+    begin
+      // When running under WINE without an existing config, let's default to windowed.
+      FullScreen := false;
+      ZoomLevel := Max(Max((Screen.Width - 100) div 416, (Screen.Height - 100) div 200), 1);
+      WindowWidth := 416 * ZoomLevel;
+      WindowHeight := 200 * ZoomLevel;
+    end;
 
-  if FileExists(AppPath + SFSaveData + 'settings.ini') then
-  begin
-    SL.LoadFromFile(AppPath + SFSaveData + 'settings.ini');
-    LoadedConfig := true;
-  end else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
-  begin
-    SL.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
-    LoadedConfig := true;
-  end else if UnderWine then
-  begin
-    // When running under WINE without an existing config, let's default to windowed.
-    FullScreen := false;
-    ZoomLevel := Max(Max((Screen.Width - 100) div 416, (Screen.Height - 100) div 200), 1);
-    WindowWidth := 416 * ZoomLevel;
-    WindowHeight := 200 * ZoomLevel;
+    UserName := SL.Values['UserName'];
+    if StrToInt64Def(SL.Values['LastVersion'], 0) < 12005001000 then
+      NeedRequestUsername := true;
+
+    AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
+    ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);
+    NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
+    PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
+    NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
+    CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
+    MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
+    EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
+    IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
+    SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
+
+    SetCurrentLevelToBestMatch(SL.Values['LastActiveLevel']);
+
+    //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
+    //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
+    EnableOnline := false;
+    CheckUpdates := false;
+
+    DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
+
+    ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
+
+    if CursorResize <> 1 then
+      CursorResize := StrToFloatDef(SL.Values['CursorResize'], 1);
+
+    if (StrToIntDef(SL.Values['LastVersion'], 0) div 1000) mod 100 < 16 then
+      FullScreen := ZoomLevel < 1;
+    FullScreen := LoadBoolean('FullScreen', FullScreen);
+
+    WindowWidth := StrToIntDef(SL.Values['WindowWidth'], -1);
+    WindowHeight := StrToIntDef(SL.Values['WindowHeight'], -1);
+
+    EnsureValidWindowSize;
+
+    fLoadedWindowWidth := WindowWidth;
+    fLoadedWindowHeight := WindowHeight;
+
+    LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
+    LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
+
+
+    PostLevelVictorySound := LoadBoolean('VictoryJingle', PostLevelVictorySound);
+    PostLevelFailureSound := LoadBoolean('FailureJingle', PostLevelFailureSound);
+
+    SoundManager.MuteSound := not LoadBoolean('SoundEnabled', not SoundManager.MuteSound);
+    SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
+    SoundManager.MuteMusic := not LoadBoolean('MusicEnabled', not SoundManager.MuteMusic);
+    SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
+  except
+    on E: Exception do
+    begin
+      fDisableSaveOptions := true;
+      ShowMessage('Error during settings loading:' + #10 +
+                   E.ClassName + ': ' + E.Message + #10 +
+                   'Default settings have been loaded. Customizations to settings during this session will not be saved.');
+    end;
   end;
-
-  AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
-  ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);
-  NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
-  PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
-  NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
-  CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
-  MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
-  EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
-  IncreaseZoom := LoadBoolean('IncreaseZoom', IncreaseZoom);
-  SpawnInterval := LoadBoolean('UseSpawnInterval', SpawnInterval);
-
-  //EnableOnline := LoadBoolean('EnableOnline', EnableOnline);
-  //CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
-  EnableOnline := false;
-  CheckUpdates := false;
-
-  DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
-
-  ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
-
-  if CursorResize <> 1 then
-    CursorResize := StrToFloatDef(SL.Values['CursorResize'], 1);
-
-  if (StrToIntDef(SL.Values['LastVersion'], 0) div 1000) mod 100 < 16 then
-    FullScreen := ZoomLevel < 1;
-  FullScreen := LoadBoolean('FullScreen', FullScreen);
-
-  WindowWidth := StrToIntDef(SL.Values['WindowWidth'], -1);
-  WindowHeight := StrToIntDef(SL.Values['WindowHeight'], -1);
-
-  EnsureValidWindowSize;
-
-  LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
-  LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
-
-
-  PostLevelVictorySound := LoadBoolean('VictoryJingle', PostLevelVictorySound);
-  PostLevelFailureSound := LoadBoolean('FailureJingle', PostLevelFailureSound);
-
-  SoundManager.MuteSound := not LoadBoolean('SoundEnabled', not SoundManager.MuteSound);
-  SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
-  SoundManager.MuteMusic := not LoadBoolean('MusicEnabled', not SoundManager.MuteMusic);
-  SoundManager.MusicVolume := StrToIntDef(SL.Values['MusicVolume'], 50);
 
   SL.Free;
 end;
@@ -560,6 +598,68 @@ begin
   ShownText := false;
 end;
 
+procedure TDosGameParams.SetCurrentLevelToBestMatch(aPattern: String);
+type
+  TMatchType = (mtNone, mtPartial, mtFull);
+var
+  DeepestMatchGroup: TNeoLevelGroup;
+  MatchGroup: TNeoLevelGroup;
+  MatchLevel: TNeoLevelEntry;
+
+  function GetLongestMatchIn(aPack: TNeoLevelGroup): TMatchType;
+  var
+    i: Integer;
+  begin
+    Result := mtNone;
+    MatchGroup := nil;
+    MatchLevel := nil;
+
+    for i := 0 to aPack.Children.Count-1 do
+      if ((MatchGroup = nil) or (Length(aPack.Children[i].Path) > Length(MatchGroup.Path))) and
+         (LeftStr(aPattern, Length(aPack.Children[i].Path)) = aPack.Children[i].Path) then
+      begin
+        Result := mtPartial;
+        MatchGroup := aPack.Children[i];
+      end;
+
+    for i := 0 to aPack.Levels.Count-1 do
+      if aPack.Levels[i].Path = aPattern then
+      begin
+        Result := mtFull;
+        MatchLevel := aPack.Levels[i];
+        Exit;
+      end;
+  end;
+
+  function RecursiveSearch(aPack: TNeoLevelGroup): TNeoLevelEntry;
+  begin
+    Result := nil;
+    DeepestMatchGroup := aPack;
+
+    case GetLongestMatchIn(aPack) of
+      //mtNone: Result of "nil" sticks
+      mtPartial: Result := RecursiveSearch(MatchGroup);
+      mtFull: Result := MatchLevel;
+    end;
+  end;
+begin
+  // Tries to set the exact level. If the level is missing, try to set to
+  // the rank it's supposedly in; or if that fails, the pack the rank is in,
+  // etc. If there's no sane result whatsoever, do nothing.
+  // This is used for the LastActiveLevel setting in settings.ini, and the
+  // -shortcut command line parameter.
+
+  if not TPath.IsPathRooted(aPattern) then
+    aPattern := AppPath + SFLevels + aPattern;
+
+  MatchLevel := RecursiveSearch(BaseLevelPack);
+
+  if (MatchLevel <> nil) then
+    SetLevel(MatchLevel)
+  else if (DeepestMatchGroup <> nil) then
+    SetLevel(DeepestMatchGroup.FirstUnbeatenLevelRecursive);
+end;
+
 procedure TDosGameParams.SetGroup(aGroup: TNeoLevelGroup);
 begin
   try
@@ -603,12 +703,19 @@ begin
 
   try
     BaseLevelPack := TNeoLevelGroup.Create(nil, AppPath + SFLevels);
+  except
+    on E: Exception do
+      ShowMessage('Error loading level packs and/or progression. Progress will not be saved during this session.');
+  end;
+
+  try
     SetLevel(BaseLevelPack.FirstUnbeatenLevelRecursive);
   except
-    On E : EAccessViolation do
+    on E : EAccessViolation do
       SetLevel(nil);
   end;
-  
+
+  UserName := 'Anonymous';
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;
@@ -622,7 +729,14 @@ begin
   LemSoundsInResource := True;
   LemMusicInResource := True;
 
-  fHotkeys := TLemmixHotkeyManager.Create;
+  try
+    fHotkeys := TLemmixHotkeyManager.Create;
+  except
+    on E: Exception do
+      ShowMessage('Error during hotkey loading:' + #10 +
+                   E.ClassName + ': ' + E.Message + #10 +
+                   'Default hotkeys have been loaded. Customizations to hotkeys during this session will not be saved.');
+  end;
 end;
 
 destructor TDosGameParams.Destroy;
