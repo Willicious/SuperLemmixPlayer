@@ -373,12 +373,12 @@ begin
           S := UpperCase(SubSL.Values['NEW_STYLES_INCLUDE']);
           if (S = 'FULL') then
             NewPack.NewStylesInclude := siFull
-          else if (S = 'PARTIAL') then
-            NewPack.NewStylesInclude := siPartial
+          else if (S = 'NONE') then
+            NewPack.NewStylesInclude := siNone
           else
-            NewPack.NewStylesInclude := siNone;
+            NewPack.NewStylesInclude := siPartial;
 
-          NewPack.NewMusicInclude := Uppercase(SubSL.Values['NEW_MUSIC_INCLUDE']) = 'TRUE';
+          NewPack.NewMusicInclude := not (Uppercase(SubSL.Values['NEW_MUSIC_INCLUDE']) = 'FALSE');
           NewPack.ResourcesOnly := Uppercase(SubSL.Values['RESOURCES_ONLY']) = 'TRUE';
 
           Packs.Add(NewPack);  
@@ -395,6 +395,12 @@ begin
             NewStyle.Include := siNone
           else
             NewStyle.Include := siFull;
+
+          case NewStyle.Include of
+            siFull: WriteLn('Full for ' + NewStyle.StyleName);
+            siPartial: WriteLn('Partial for ' + NewStyle.StyleName);
+            siNone: WriteLn('None for ' + NewStyle.StyleName);
+          end;
 
           Styles.Add(NewStyle);
         end else if UpperCase(SubSL[0]) = 'FILE' then

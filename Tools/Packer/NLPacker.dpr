@@ -1,15 +1,15 @@
 program NLPacker;
+{$AppType CONSOLE}
 
 uses
   AppController,
   LemGame,
   LemRes,
   Vcl.Forms,
-  OptionsPack in 'OptionsPack.pas' {Form1},
   PackerCommandLine in 'PackerCommandLine.pas',
   PackerDefaultContent in 'PackerDefaultContent.pas',
-  PackerMain in 'PackerMain.pas' {FNLContentPacker},
-  PackRecipe in 'PackRecipe.pas';
+  PackRecipe in 'PackRecipe.pas',
+  SysUtils;
 
 var
   DecoyAppController: TAppController;
@@ -19,7 +19,12 @@ begin
   GlobalGame := TLemmingGame.Create(nil);
   DecoyAppController := TAppController.Create(TForm.Create(nil));
   try
-    RunCommandLine;
+    try
+      RunCommandLine;
+    except
+      on E: Exception do
+        WriteLn(E.ClassName + ': ' + E.Message);
+    end;
   finally
     DecoyAppController.Free;
   end;

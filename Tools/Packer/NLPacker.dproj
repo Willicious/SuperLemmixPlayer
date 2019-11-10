@@ -96,16 +96,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="OptionsPack.pas">
-            <Form>Form1</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="PackerCommandLine.pas"/>
         <DCCReference Include="PackerDefaultContent.pas"/>
-        <DCCReference Include="PackerMain.pas">
-            <Form>FNLContentPacker</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <DCCReference Include="PackRecipe.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

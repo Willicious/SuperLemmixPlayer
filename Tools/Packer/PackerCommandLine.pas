@@ -29,8 +29,9 @@ begin
 
     OutputFile := ParamStr(2);
     if OutputFile = '' then
-      OutputFile := ChangeFileExt(ParamStr(1), '.nx.zip')
-    else if not TPath.IsPathRooted(OutputFile) then
+      OutputFile := ChangeFileExt(ParamStr(1), '.nx.zip');
+
+    if not TPath.IsPathRooted(OutputFile) then
       OutputFile := BasePath + OutputFile;
 
     OutputMetaFile := ParamStr(3);
