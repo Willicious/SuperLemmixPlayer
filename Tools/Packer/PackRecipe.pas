@@ -6,6 +6,7 @@ uses
   Zip,
   Classes,
   SysUtils, StrUtils, IOUtils,
+  LemNeoParser,
   LemNeoLevelPack, LemLevel, LemTypes, LemNeoPieceManager, LemNeoTheme,
   GameSound, LemGadgetsMeta,
   Generics.Collections,

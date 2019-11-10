@@ -5,6 +5,7 @@ mklink /J bin\music data\external\music
 mklink /J bin\sound data\external\sound
 mklink /J bin\styles data\external\styles
 mklink /H bin\bass.dll data\external\bass.dll
+mklink /H bin\NLPackerDefaultData.ini data\external\NLPackerDefaultData.ini
 
 if not exist "bin\levels" mkdir "bin\levels"
 mklink /J "bin\levels\Test Levels" "data\external\levels\Test Levels"
