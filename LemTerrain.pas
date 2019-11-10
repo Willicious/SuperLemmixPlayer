@@ -134,6 +134,12 @@ begin
   GS := Ident.GS;
   Piece := Ident.Piece;
 
+  if PieceManager.Terrains[Identifier] = nil then
+  begin
+    GS := 'default';
+    Piece := 'fallback';
+  end;
+
   Left := aSection.LineNumeric['x'];
   Top := aSection.LineNumeric['y'];
 

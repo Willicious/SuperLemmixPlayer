@@ -593,6 +593,59 @@ var
     end;
   end;
 
+  procedure CheckForWarnings;
+  var
+    Level: TLevel;
+    Ident: TLabelRecord;
+    WrittenAny: Boolean;
+    i, n, Cnt, CntGrp: Integer;
+
+    function IsPlaceholder(aIdent: TLabelRecord): Boolean;
+    begin
+      Result := (Ident.GS = 'default') and (Ident.Piece = 'fallback');
+    end;
+
+    procedure Write(aText: String);
+    begin
+      if not WrittenAny then
+      begin
+        if aOutput.Count > 0 then
+          aOutput.Add('');
+
+        aOutput.Add('WARNINGS for ' + L.Filename);
+        WrittenAny := true;
+      end;
+
+      aOutput.Add('  ' + aText);
+    end;
+  begin
+    WrittenAny := false;
+    Level := GameParams.Level;
+
+    Ident := SplitIdentifier(Level.Info.Background);
+    if IsPlaceholder(Ident) then Write('Background replaced with placeholder');
+
+    Cnt := 0;
+    for i := 0 to Level.InteractiveObjects.Count-1 do
+      if IsPlaceholder(SplitIdentifier(Level.InteractiveObjects[i].Identifier)) then
+        Inc(Cnt);
+    if Cnt > 0 then Write(IntToStr(Cnt) + ' gadgets replaced with placeholder');
+
+    Cnt := 0;
+    CntGrp := 0;
+    for i := 0 to Level.Terrains.Count-1 do
+      if IsPlaceholder(SplitIdentifier(Level.Terrains[i].Identifier)) then
+        Inc(Cnt);
+    for i := 0 to Level.TerrainGroups.Count-1 do
+      for n := 0 to Level.TerrainGroups[i].Terrains.Count-1 do
+        if IsPlaceholder(SplitIdentifier(Level.TerrainGroups[i].Terrains[n].Identifier)) then
+        begin
+          Inc(Cnt);
+          Inc(CntGrp);
+        end;
+    if Cnt > 0 then Write(IntToStr(Cnt) + ' terrains replaced with placeholder (' + IntToStr(CntGrp) + ' in terrain groups)');
+  end;
+
 begin
   if aOutput = nil then
   begin
@@ -615,8 +668,14 @@ begin
     try
       GameParams.SetLevel(L);
       GameParams.LoadCurrentLevel(true);
+
+      CheckForWarnings;
+
       GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
     except
+      if aOutput.Count > 0 then
+        aOutput.Add('');
+
       aOutput.Add('ERROR cleansing "' + L.Title + '". This level will be copied unmodified.');
     end;
   end;

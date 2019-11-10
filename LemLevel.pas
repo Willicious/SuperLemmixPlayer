@@ -8,7 +8,8 @@ uses
   Classes, SysUtils, StrUtils,
   LemCore, LemLemming,
   LemTalisman,
-  LemTerrain, LemTerrainGroup, LemGadgetsModel, LemGadgets, LemGadgetsConstants,
+  LemTerrain, LemTerrainGroup, LemGadgetsModel, LemGadgets, LemGadgetsConstants, LemGadgetsMeta,
+  LemStrings, LemTypes,
   LemNeoPieceManager, LemNeoParser;
 
 type
@@ -320,6 +321,9 @@ procedure TLevel.LoadGeneralInfo(aSection: TParserSection);
       Info.TimeLimit := StrToIntDef(aString, 1);
     end;
   end;
+
+var
+  Ident: TLabelRecord;
 begin
   // This procedure should receive the Parser's MAIN section
   with Info do
@@ -351,6 +355,13 @@ begin
       isSimpleAutoSteel := true;
 
     Background := PieceManager.Dealias(aSection.LineTrimString['background'], rkBackground);
+
+    if (Background <> '') and (Background <> ':') then
+    begin
+      Ident := SplitIdentifier(Background);
+      if not FileExists(AppPath + SFStyles + Ident.GS + '\backgrounds\' + Ident.Piece + '.png') then
+        Background := 'default:fallback';
+    end;
   end;
 end;
 
@@ -485,6 +496,7 @@ var
 
 var
   Ident: TLabelRecord;
+  MO: TGadgetMetaInfo;
 begin
   O := fInteractiveObjects.Add;
 
@@ -498,6 +510,13 @@ begin
   Ident := SplitIdentifier(PieceManager.Dealias(O.Identifier, rkGadget));
   O.GS := Ident.GS;
   O.Piece := Ident.Piece;
+
+  MO := PieceManager.Objects[O.Identifier];
+  if MO = nil then
+  begin
+    O.GS := 'default';
+    O.Piece := 'fallback';
+  end;
 
   O.Left := aSection.LineNumeric['x'];
   O.Top := aSection.LineNumeric['y'];

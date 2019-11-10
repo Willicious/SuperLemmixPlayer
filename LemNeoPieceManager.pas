@@ -202,8 +202,10 @@ begin
 
   if FileExists(BasePath + '.png') then  // .nxtp is optional, but .png is not :)
     T := TMetaTerrain.Create
-  else
-    raise EAbort.Create('Error loading the level: Could not find terrain piece: ' + Identifier);
+  else begin
+    Result := -1;
+    Exit;
+  end;
   fTerrains.Add(T);
   T.Load(TerrainLabel.GS, TerrainLabel.Piece);
 end;
@@ -220,7 +222,7 @@ begin
     MO.Load(ObjectLabel.GS, ObjectLabel.Piece, fTheme);
     fObjects.Add(MO);
   except
-    raise EAbort.Create('Error loading the level: Could not find object piece: ' + Identifier);
+    Result := -1;
   end;
 end;
 
@@ -231,8 +233,12 @@ var
   i: Integer;
 begin
   i := FindTerrainIndexByIdentifier(Identifier);
-  Result := fTerrains[i];
-  Result.CyclesSinceLastUse := 0;
+  if i >= 0 then
+  begin
+    Result := fTerrains[i];
+    Result.CyclesSinceLastUse := 0;
+  end else
+    Result := nil;
 end;
 
 function TNeoPieceManager.GetMetaObject(Identifier: String): TGadgetMetaInfo;
@@ -240,8 +246,12 @@ var
   i: Integer;
 begin
   i := FindObjectIndexByIdentifier(Identifier);
-  Result := fObjects[i];
-  Result.CyclesSinceLastUse := 0;
+  if i >= 0 then
+  begin
+    Result := fObjects[i];
+    Result.CyclesSinceLastUse := 0;
+  end else
+    Result := nil;
 end;
 
 // And the stuff for communicating with the theme

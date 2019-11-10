@@ -2301,10 +2301,8 @@ var
 
     if FileExists(AppPath + SFStyles + Collection + '\backgrounds\' + Piece + '.png') then
       TPngInterface.LoadPngFile((AppPath + SFStyles + Collection + '\backgrounds\' + Piece + '.png'), BgImg)
-    else begin
-      BgImg.SetSize(320, 160);
-      BgImg.Clear(fTheme.Colors['background']);
-    end;
+    else
+      TPngInterface.LoadPngFile((AppPath + SFStyles + 'default\backgrounds\fallback.png'), BgImg);
   end;
 begin
   if RenderInfoRec.Level = nil then Exit;
@@ -2320,7 +2318,7 @@ begin
   else
     fLayers[rlBackground].Clear($FF000000 or fBgColor);
 
-  if DoBackground and (RenderInfoRec.Level.Info.Background <> '') then
+  if DoBackground and (RenderInfoRec.Level.Info.Background <> '') and (RenderInfoRec.Level.Info.Background <> ':') then
   begin
     BgImg := TBitmap32.Create;
     try
