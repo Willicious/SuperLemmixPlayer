@@ -117,7 +117,6 @@ type
       fName: String;
       fAuthor: String;
       fFolder: String;
-      fPanelPath: String;
       fIsBasePack: Boolean;
       fIsOrdered: Boolean;
 
@@ -135,7 +134,6 @@ type
       fHasOwnPostviewTexts: Boolean;
 
       function GetFullPath: String;
-      function GetPanelPath: String;
       function GetAuthor: String;
 
       procedure LoadFromMetaInfo(aPath: String = '');
@@ -209,7 +207,6 @@ type
       property IsOrdered: Boolean read fIsOrdered write fIsOrdered;
       property Folder: String read fFolder write fFolder;
       property Path: String read GetFullPath;
-      property PanelPath: String read GetPanelPath write fPanelPath;
       property PackTitle: String read fPackTitle;
       property PackAuthor: String read fPackAuthor;
       property ScrollerList: TStringList read fScrollerList;
@@ -1215,9 +1212,6 @@ begin
         fName := MainSec.LineTrimString['title'];
       if MainSec.LineTrimString['author'] <> '' then
         fAuthor := MainSec.LineTrimString['author'];
-
-      if (MainSec.Line['panel'] <> nil) then
-        fPanelPath := Path;
     end;
   finally
     Parser.Free;
@@ -1288,14 +1282,6 @@ begin
       fAuthor := fParentGroup.Author;
 
   Result := fAuthor;
-end;
-
-function TNeoLevelGroup.GetPanelPath: String;
-begin
-  if (fPanelPath = '') and (fParentGroup <> nil) then
-    fPanelPath := fParentGroup.PanelPath;
-
-  Result := fPanelPath;
 end;
 
 function TNeoLevelGroup.GetRecursiveLevelCount: Integer;

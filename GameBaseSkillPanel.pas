@@ -6,7 +6,7 @@ uses
   System.Types,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
-  LemAnimationSet, LemMetaAnimation,
+  LemAnimationSet, LemMetaAnimation, LemNeoLevelPack,
   LemCore, LemLemming, LemGame, LemLevel;
 
 type
@@ -384,10 +384,20 @@ procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
   MaskColor: TColor32;
   SrcFile: String;
+  Target: TNeoLevelGroup;
 begin
-  SrcFile := GameParams.CurrentLevel.Group.PanelPath + aName;
+  Target := GameParams.CurrentLevel.Group;
+
+  SrcFile := Target.Path + aName;
+  while not (FileExists(SrcFile) or Target.IsBasePack or (Target.Parent = nil)) do
+  begin
+    Target := Target.Parent;
+    SrcFile := Target.Path + aName;
+  end;
+
   if not FileExists(SrcFile) then
     SrcFile := AppPath + SFGraphicsPanel + aName;
+
   MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
   TPngInterface.LoadPngFile(SrcFile, aDst);
