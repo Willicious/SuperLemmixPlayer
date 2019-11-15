@@ -294,7 +294,7 @@ end;
 
 procedure TNeoPieceManager.MakePieceFromGroup(aGroup: TTerrainGroup);
 var
-  BMP: TBitmap32;
+  BMP, HrBMP: TBitmap32;
   T: TMetaTerrain;
 
   function IsGroupSteel: Boolean;
@@ -310,13 +310,23 @@ var
       end;
   end;
 begin
+  if GameParams.HighResolution then
+    HrBMP := TBitmap32.Create
+  else
+    HrBMP := nil;
+
   BMP := TBitmap32.Create;
   try
-    GameParams.Renderer.PrepareCompositePieceBitmap(aGroup.Terrains, BMP);
+    GameParams.Renderer.PrepareCompositePieceBitmap(aGroup.Terrains, BMP, false);
+
+    if GameParams.HighResolution then
+      GameParams.Renderer.PrepareCompositePieceBitmap(aGroup.Terrains, HrBMP, true);
+
     T := fTerrains.Add;
-    T.LoadFromImage(BMP, COMPOSITE_PIECE_STYLE, aGroup.Name, IsGroupSteel);
+    T.LoadFromImage(BMP, HrBMP, COMPOSITE_PIECE_STYLE, aGroup.Name, IsGroupSteel);
   finally
     BMP.Free;
+    HrBMP.Free;
   end;
 end;
 

@@ -131,7 +131,7 @@ type
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 
     // Composite pieces (terrain grouping)
-    procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32);
+    procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
 
     // Terrain rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
@@ -1231,7 +1231,7 @@ begin
   end;
 end;
 
-procedure TRenderer.PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32);
+procedure TRenderer.PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
 const
   MIN_WIDTH = 1;
   MIN_HEIGHT = 1;
@@ -1361,6 +1361,9 @@ var
     BMP.DrawTo(aDst, -SrcRect.Left, -SrcRect.Top);
   end;
 begin
+  if aHighResolution then
+    raise Exception.Create('High resolution composite pieces not yet supported.');
+
   if not CheckGroupIsValid then Exit;
   CalculateDataBoundsRect;
 
