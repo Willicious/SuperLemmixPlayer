@@ -66,6 +66,7 @@ type
 
       procedure Tidy;
       procedure RemoveCompositePieces;
+      procedure Clear;
 
       procedure SetTheme(aTheme: TNeoTheme);
       procedure RegenerateAutoAnims(aTheme: TNeoTheme; aAni: TBaseAnimationSet);
@@ -116,6 +117,12 @@ begin
 end;
 
 // Constructor, destructor, usual boring stuff
+
+procedure TNeoPieceManager.Clear;
+begin
+  fTerrains.Clear;
+  fObjects.Clear;
+end;
 
 constructor TNeoPieceManager.Create;
 begin
