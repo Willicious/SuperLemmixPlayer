@@ -19,9 +19,13 @@ const
   SFStyles = 'styles\';
       SFDefaultStyle = 'default';
       SFPiecesTerrain = '\terrain\';
+      SFPiecesTerrainHighRes = '\terrain-hr\';
       SFPiecesObjects = '\objects\';
+      SFPiecesObjectsHighRes = '\objects-hr\';
       SFPiecesBackgrounds = '\backgrounds\';
+      SFPiecesBackgroundsHighRes = '\backgrounds-hr\';
       SFPiecesLemmings = '\lemmings\';
+      SFPiecesLemmingsHighRes = '\lemmings-hr\';
       SFTheme = 'theme.nxtm';
 
   SFLevels = 'levels\';
