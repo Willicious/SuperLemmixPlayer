@@ -69,6 +69,7 @@ type
     moPauseAfterBackwards,
     moNoBackgrounds,
     moDisableWineWarnings,
+    moHighResolution,
     moLinearResampleMenu,
     moLinearResampleGame,
     moFullScreen,
@@ -200,6 +201,7 @@ type
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
+    property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
     property LinearResampleGame: boolean Index moLinearResampleGame read GetOptionFlag write SetOptionFlag;
     property FullScreen: boolean Index moFullScreen read GetOptionFlag write SetOptionFlag;
@@ -347,6 +349,7 @@ begin
   SL.Add('WindowWidth=' + IntToStr(WindowWidth));
   SL.Add('WindowHeight=' + IntToStr(WindowHeight));
 
+  SaveBoolean('HighResolution', HighResolution);
   SaveBoolean('LinearResampleMenu', LinearResampleMenu);
   SaveBoolean('LinearResampleGame', LinearResampleGame);
 
@@ -502,6 +505,7 @@ begin
     fLoadedWindowWidth := WindowWidth;
     fLoadedWindowHeight := WindowHeight;
 
+    HighResolution := LoadBoolean('HighResolution', HighResolution);
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
     LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
 

@@ -104,10 +104,12 @@ object FNLSetup: TFNLSetup
         Style = csDropDownList
         ItemIndex = 1
         TabOrder = 2
-        Text = 'Normal quality (for standard computers)'
+        Text = 'Low-resolution, enhancements'
         Items.Strings = (
-          'High quality (for fast computers)'
-          'Normal quality (for standard computers)')
+          'Low-resolution, no enhancements'
+          'Low-resolution, enhancements'
+          'High-resolution, no enhancements'
+          'High-resolution, enhancements')
       end
       object ebUserName: TEdit
         Left = 128

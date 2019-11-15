@@ -170,17 +170,19 @@ begin
     end;
 
     case cbGraphics.ItemIndex of
-      0: begin
+      1, 3: begin
            GameParams.MinimapHighQuality := true;
            GameParams.LinearResampleMenu := true;
            GameParams.LinearResampleGame := false;
          end;
-      1: begin
+      0, 2: begin
            GameParams.MinimapHighQuality := false;
            GameParams.LinearResampleMenu := false;
            GameParams.LinearResampleGame := false;
          end;
     end;
+
+    GameParams.HighResolution := cbGraphics.ItemIndex >= 2;
   end;
 
   Close;
