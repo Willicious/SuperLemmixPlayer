@@ -112,6 +112,7 @@ type
     function IsUseful(Gadget: TGadget): Boolean;
 
     procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
+    procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
     function GetRecolorer: TRecolorImage;
 
     property Recolorer: TRecolorImage read GetRecolorer;
@@ -131,7 +132,7 @@ type
     procedure PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 
     // Composite pieces (terrain grouping)
-    procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
+    procedure PrepareCompositePieceBitmaps(aTerrains: TTerrains; aLowRes: TBitmap32; aHighRes: TBitmap32);
 
     // Terrain rendering
     procedure DrawTerrain(Dst: TBitmap32; T: TTerrain); overload;
@@ -1235,13 +1236,13 @@ begin
   end;
 end;
 
-procedure TRenderer.PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
 const
-  MIN_WIDTH = 1;
-  MIN_HEIGHT = 1;
+  MIN_TERRAIN_GROUP_WIDTH = 1;
+  MIN_TERRAIN_GROUP_HEIGHT = 1;
+
+procedure TRenderer.PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
 var
   DataBoundsRect: TRect;
-  BMP: TBitmap32;
 
   Multiplier: Integer;
 
@@ -1257,7 +1258,7 @@ var
 
     if aTerrains.Count = 0 then
     begin
-      aDst.SetSize(MIN_WIDTH, MIN_HEIGHT);
+      aDst.SetSize(MIN_TERRAIN_GROUP_WIDTH, MIN_TERRAIN_GROUP_HEIGHT);
       aDst.Clear(0);
       Result := false;
     end else begin
@@ -1334,57 +1335,11 @@ var
         LocalTerrain.Assign(aTerrains[i]);
         LocalTerrain.Left := LocalTerrain.Left - (DataBoundsRect.Left div Multiplier);
         LocalTerrain.Top := LocalTerrain.Top - (DataBoundsRect.Top div Multiplier);
-        DrawTerrain(BMP, LocalTerrain, aHighResolution);
+        DrawTerrain(aDst, LocalTerrain, aHighResolution);
       end;
     finally
       LocalTerrain.Free;
     end;
-  end;
-
-  procedure DrawCroppedToDst;
-  var
-    SrcRect: TRect;
-    x, y: Integer;
-
-    function IsSolid(lx, ly: Integer): Boolean;
-    var
-      x, y: Integer;
-    begin
-      Result := true;
-      lx := lx * Multiplier;
-      ly := ly * Multiplier;
-
-      for y := ly to (ly+Multiplier-1) do
-        for x := lx to (lx+Multiplier-1) do
-          if (BMP.Pixel[x, y] and $FF000000) <> 0 then
-            Exit;
-      Result := false;
-    end;
-  begin
-    SrcRect := Rect(BMP.Width div Multiplier, BMP.Height div Multiplier, 0, 0);
-    for y := 0 to (BMP.Height div Multiplier)-1 do
-      for x := 0 to (BMP.Width div Multiplier)-1 do
-      begin
-        if IsSolid(x, y) then
-        begin
-          if (x < SrcRect.Left) then srcRect.Left := x;
-          if (y < SrcRect.Top) then srcRect.Top := y;
-          if (x >= SrcRect.Right) then srcRect.Right := x + 1; // careful - remember how TRect.Right / TRect.Bottom work!
-          if (y >= SrcRect.Bottom) then srcRect.Bottom := y + 1;
-        end;
-      end;
-
-    if SrcRect.Width < MIN_WIDTH then SrcRect.Right := SrcRect.Left + MIN_WIDTH;
-    if SrcRect.Height < MIN_HEIGHT then SrcRect.Bottom := SrcRect.Top + MIN_HEIGHT;
-
-    SrcRect.Left := SrcRect.Left * Multiplier;
-    SrcRect.Top := SrcRect.Top * Multiplier;
-    SrcRect.Right := SrcRect.Right * Multiplier;
-    SrcRect.Bottom := SrcRect.Bottom * Multiplier;
-
-    aDst.SetSize(SrcRect.Width, SrcRect.Height);
-    aDst.Clear(0);
-    BMP.DrawTo(aDst, -SrcRect.Left, -SrcRect.Top);
   end;
 begin
   if aHighResolution then
@@ -1395,14 +1350,62 @@ begin
   if not CheckGroupIsValid then Exit;
   CalculateDataBoundsRect;
 
-  BMP := TBitmap32.Create(DataBoundsRect.Width, DataBoundsRect.Height);
-  try
-    BMP.Clear(0);
-    DrawPieces;
-    DrawCroppedToDst;
-  finally
-    BMP.Free;
+  aDst.SetSize(DataBoundsRect.Width, DataBoundsRect.Height);
+  aDst.Clear(0);
+  DrawPieces;
+end;
+
+procedure TRenderer.PrepareCompositePieceBitmaps(aTerrains: TTerrains; aLowRes: TBitmap32; aHighRes: TBitmap32);
+  procedure Crop;
+  var
+    Temp: TBitmap32;
+    SrcRect: TRect;
+    x, y: Integer;
+  begin
+    SrcRect := Rect(aLowRes.Width, aLowRes.Height, 0, 0);
+    for y := 0 to (aLowRes.Height)-1 do
+      for x := 0 to (aLowRes.Width)-1 do
+      begin
+        if (aLowRes[x, y] and $FF000000) <> 0 then
+        begin
+          if (x < SrcRect.Left) then srcRect.Left := x;
+          if (y < SrcRect.Top) then srcRect.Top := y;
+          if (x >= SrcRect.Right) then srcRect.Right := x + 1; // careful - remember how TRect.Right / TRect.Bottom work!
+          if (y >= SrcRect.Bottom) then srcRect.Bottom := y + 1;
+        end;
+      end;
+
+    if SrcRect.Width < MIN_TERRAIN_GROUP_WIDTH then SrcRect.Right := SrcRect.Left + MIN_TERRAIN_GROUP_WIDTH;
+    if SrcRect.Height < MIN_TERRAIN_GROUP_HEIGHT then SrcRect.Bottom := SrcRect.Top + MIN_TERRAIN_GROUP_HEIGHT;
+
+    Temp := TBitmap32.Create;
+    try
+      Temp.Assign(aLowRes);
+      aLowRes.SetSize(SrcRect.Width, SrcRect.Height);
+      Temp.DrawMode := dmOpaque;
+      Temp.DrawTo(aLowRes, 0, 0, SrcRect);
+
+      if aHighRes <> nil then
+      begin
+        SrcRect.Left := SrcRect.Left * 2;
+        SrcRect.Top := SrcRect.Top * 2;
+        SrcRect.Right := SrcRect.Right * 2;
+        SrcRect.Bottom := SrcRect.Bottom * 2;
+
+        Temp.Assign(aHighRes);
+        aHighRes.SetSize(SrcRect.Width, SrcRect.Height);
+        Temp.DrawMode := dmOpaque;
+        Temp.DrawTo(aHighRes, 0, 0, SrcRect);
+      end;
+    finally
+      Temp.Free;
+    end;
   end;
+begin
+  PrepareCompositePieceBitmap(aTerrains, aLowRes, false);
+  if GameParams.HighResolution then
+    PrepareCompositePieceBitmap(aTerrains, aHighRes, false);
+  Crop;
 end;
 
 procedure TRenderer.PrepareGadgetBitmap(Bmp: TBitmap32; IsOnlyOnTerrain: Boolean; IsZombie: Boolean = false; IsNeutral: Boolean = false);

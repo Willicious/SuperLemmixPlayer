@@ -317,10 +317,7 @@ begin
 
   BMP := TBitmap32.Create;
   try
-    GameParams.Renderer.PrepareCompositePieceBitmap(aGroup.Terrains, BMP, false);
-
-    if GameParams.HighResolution then
-      GameParams.Renderer.PrepareCompositePieceBitmap(aGroup.Terrains, HrBMP, true);
+    GameParams.Renderer.PrepareCompositePieceBitmaps(aGroup.Terrains, BMP, HrBMP);
 
     T := fTerrains.Add;
     T.LoadFromImage(BMP, HrBMP, COMPOSITE_PIECE_STYLE, aGroup.Name, IsGroupSteel);
