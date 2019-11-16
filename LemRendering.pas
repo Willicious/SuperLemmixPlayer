@@ -1332,8 +1332,8 @@ var
       for i := 0 to aTerrains.Count-1 do
       begin
         LocalTerrain.Assign(aTerrains[i]);
-        LocalTerrain.Left := (LocalTerrain.Left * Multiplier) - DataBoundsRect.Left;
-        LocalTerrain.Top := (LocalTerrain.Top * Multiplier) - DataBoundsRect.Top;
+        LocalTerrain.Left := LocalTerrain.Left - (DataBoundsRect.Left div Multiplier);
+        LocalTerrain.Top := LocalTerrain.Top - (DataBoundsRect.Top div Multiplier);
         DrawTerrain(BMP, LocalTerrain, aHighResolution);
       end;
     finally
@@ -1351,6 +1351,9 @@ var
       x, y: Integer;
     begin
       Result := true;
+      lx := lx * Multiplier;
+      ly := ly * Multiplier;
+
       for y := ly to (ly+Multiplier-1) do
         for x := lx to (lx+Multiplier-1) do
           if (BMP.Pixel[x, y] and $FF000000) <> 0 then
@@ -1358,7 +1361,7 @@ var
       Result := false;
     end;
   begin
-    SrcRect := Rect(BMP.Width, BMP.Height, 0, 0);
+    SrcRect := Rect(BMP.Width div Multiplier, BMP.Height div Multiplier, 0, 0);
     for y := 0 to (BMP.Height div Multiplier)-1 do
       for x := 0 to (BMP.Width div Multiplier)-1 do
       begin
