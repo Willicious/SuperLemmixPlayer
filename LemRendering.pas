@@ -111,7 +111,7 @@ type
     procedure DrawUserHelper;
     function IsUseful(Gadget: TGadget): Boolean;
 
-    procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean);
+    procedure InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
     function GetRecolorer: TRecolorImage;
 
     property Recolorer: TRecolorImage read GetRecolorer;
@@ -134,7 +134,8 @@ type
     procedure PrepareCompositePieceBitmap(aTerrains: TTerrains; aDst: TBitmap32; aHighResolution: Boolean);
 
     // Terrain rendering
-    procedure DrawTerrain(Dst: TBitmap32; T: TTerrain);
+    procedure DrawTerrain(Dst: TBitmap32; T: TTerrain); overload;
+    procedure DrawTerrain(Dst: TBitmap32; T: TTerrain; HighRes: Boolean); overload;
 
     // Object rendering
     procedure DrawAllGadgets(Gadgets: TGadgetList; DrawHelper: Boolean = True; UsefulOnly: Boolean = false);
@@ -185,6 +186,9 @@ type
   end;
 
 implementation
+
+uses
+  GameControl;
 
 { TRenderer }
 
@@ -1330,7 +1334,7 @@ var
         LocalTerrain.Assign(aTerrains[i]);
         LocalTerrain.Left := (LocalTerrain.Left * Multiplier) - DataBoundsRect.Left;
         LocalTerrain.Top := (LocalTerrain.Top * Multiplier) - DataBoundsRect.Top;
-        DrawTerrain(BMP, LocalTerrain);
+        DrawTerrain(BMP, LocalTerrain, aHighResolution);
       end;
     finally
       LocalTerrain.Free;
@@ -1416,10 +1420,15 @@ end;
 
 procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain);
 begin
-  InternalDrawTerrain(Dst, T, false);
+  DrawTerrain(Dst, T, GameParams.HighResolution);
 end;
 
-procedure TRenderer.InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean);
+procedure TRenderer.DrawTerrain(Dst: TBitmap32; T: TTerrain; HighRes: Boolean);
+begin
+  InternalDrawTerrain(Dst, T, false, HighRes);
+end;
+
+procedure TRenderer.InternalDrawTerrain(Dst: TBitmap32; T: TTerrain; IsPhysicsDraw: Boolean; IsHighRes: Boolean);
 var
   Src: TBitmap32;
   Flip, Invert, Rotate: Boolean;
@@ -1431,12 +1440,20 @@ begin
   Invert := (T.DrawingFlags and tdf_Invert <> 0);
   Flip := (T.DrawingFlags and tdf_Flip <> 0);
 
-  Src := MT.GraphicImage[Flip, Invert, Rotate];
+  if IsHighRes then
+    Src := MT.GraphicImageHighRes[Flip, Invert, Rotate]
+  else
+    Src := MT.GraphicImage[Flip, Invert, Rotate];
+
   if IsPhysicsDraw then
     PrepareTerrainBitmapForPhysics(Src, T.DrawingFlags, MT.IsSteel)
   else
     PrepareTerrainBitmap(Src, T.DrawingFlags);
-  Src.DrawTo(Dst, T.Left, T.Top);
+
+  if IsHighRes then
+    Src.DrawTo(Dst, T.Left * 2, T.Top * 2)
+  else
+    Src.DrawTo(Dst, T.Left, T.Top);
 end;
 
 procedure TRenderer.PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);
@@ -2303,7 +2320,7 @@ begin
       for i := 0 to Terrains.Count-1 do
       begin
         T.Assign(Terrains[i]);
-        InternalDrawTerrain(TempWorld, T, true);
+        InternalDrawTerrain(TempWorld, T, true, false);
       end;
 
       GeneratePhysicsMapFromInfoMap;
@@ -2427,7 +2444,7 @@ begin
   // Draw all terrain pieces
   for i := 0 to RenderInfoRec.Level.Terrains.Count-1 do
   begin
-    DrawTerrain(fLayers[rlTerrain], RenderInfoRec.Level.Terrains[i]);
+    DrawTerrain(fLayers[rlTerrain], RenderInfoRec.Level.Terrains[i], false {for now});
   end;
 
   // remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
