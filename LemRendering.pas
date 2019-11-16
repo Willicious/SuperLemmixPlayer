@@ -1239,6 +1239,8 @@ var
   DataBoundsRect: TRect;
   BMP: TBitmap32;
 
+  Multiplier: Integer;
+
   function CheckGroupIsValid: Boolean;
   var
     i: Integer;
@@ -1289,16 +1291,16 @@ var
 
       MetaTerrain := PieceManager.Terrains[Terrain.Identifier];
 
-      ThisTerrainRect.Left := Terrain.Left;
-      ThisTerrainRect.Top := Terrain.Top;
+      ThisTerrainRect.Left := Terrain.Left * Multiplier;
+      ThisTerrainRect.Top := Terrain.Top * Multiplier;
 
       if (Terrain.DrawingFlags and tdf_Rotate) = 0 then
       begin
-        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Width[false, false, false];
-        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Height[false, false, false];
+        ThisTerrainRect.Right := ThisTerrainRect.Left + (MetaTerrain.Width[false, false, false] * Multiplier);
+        ThisTerrainRect.Bottom := ThisTerrainRect.Top + (MetaTerrain.Height[false, false, false] * Multiplier);
       end else begin
-        ThisTerrainRect.Right := ThisTerrainRect.Left + MetaTerrain.Height[false, false, false];
-        ThisTerrainRect.Bottom := ThisTerrainRect.Top + MetaTerrain.Width[false, false, false];
+        ThisTerrainRect.Right := ThisTerrainRect.Left + (MetaTerrain.Height[false, false, false] * Multiplier);
+        ThisTerrainRect.Bottom := ThisTerrainRect.Top + (MetaTerrain.Width[false, false, false] * Multiplier);
       end;
 
       if HasFoundNonEraserTerrain then
@@ -1309,11 +1311,11 @@ var
       end;
     end;
 
-    if DataBoundsRect.Width < 1 then
-      DataBoundsRect.Right := DataBoundsRect.Left + 1;
+    if DataBoundsRect.Width < Multiplier then
+      DataBoundsRect.Right := DataBoundsRect.Left + Multiplier;
 
-    if DataBoundsRect.Height < 1 then
-      DataBoundsRect.Bottom := DataBoundsRect.Top + 1;
+    if DataBoundsRect.Height < Multiplier then
+      DataBoundsRect.Bottom := DataBoundsRect.Top + Multiplier;
   end;
 
   procedure DrawPieces;
@@ -1326,8 +1328,8 @@ var
       for i := 0 to aTerrains.Count-1 do
       begin
         LocalTerrain.Assign(aTerrains[i]);
-        LocalTerrain.Left := LocalTerrain.Left - DataBoundsRect.Left;
-        LocalTerrain.Top := LocalTerrain.Top - DataBoundsRect.Top;
+        LocalTerrain.Left := (LocalTerrain.Left * Multiplier) - DataBoundsRect.Left;
+        LocalTerrain.Top := (LocalTerrain.Top * Multiplier) - DataBoundsRect.Top;
         DrawTerrain(BMP, LocalTerrain);
       end;
     finally
@@ -1339,12 +1341,24 @@ var
   var
     SrcRect: TRect;
     x, y: Integer;
+
+    function IsSolid(lx, ly: Integer): Boolean;
+    var
+      x, y: Integer;
+    begin
+      Result := true;
+      for y := ly to (ly+Multiplier-1) do
+        for x := lx to (lx+Multiplier-1) do
+          if (BMP.Pixel[x, y] and $FF000000) <> 0 then
+            Exit;
+      Result := false;
+    end;
   begin
     SrcRect := Rect(BMP.Width, BMP.Height, 0, 0);
-    for y := 0 to BMP.Height-1 do
-      for x := 0 to BMP.Width-1 do
+    for y := 0 to (BMP.Height div Multiplier)-1 do
+      for x := 0 to (BMP.Width div Multiplier)-1 do
       begin
-        if (BMP.Pixel[x, y] and $FF000000) <> 0 then
+        if IsSolid(x, y) then
         begin
           if (x < SrcRect.Left) then srcRect.Left := x;
           if (y < SrcRect.Top) then srcRect.Top := y;
@@ -1356,13 +1370,20 @@ var
     if SrcRect.Width < MIN_WIDTH then SrcRect.Right := SrcRect.Left + MIN_WIDTH;
     if SrcRect.Height < MIN_HEIGHT then SrcRect.Bottom := SrcRect.Top + MIN_HEIGHT;
 
+    SrcRect.Left := SrcRect.Left * Multiplier;
+    SrcRect.Top := SrcRect.Top * Multiplier;
+    SrcRect.Right := SrcRect.Right * Multiplier;
+    SrcRect.Bottom := SrcRect.Bottom * Multiplier;
+
     aDst.SetSize(SrcRect.Width, SrcRect.Height);
     aDst.Clear(0);
     BMP.DrawTo(aDst, -SrcRect.Left, -SrcRect.Top);
   end;
 begin
   if aHighResolution then
-    raise Exception.Create('High resolution composite pieces not yet supported.');
+    Multiplier := 2
+  else
+    Multiplier := 1;
 
   if not CheckGroupIsValid then Exit;
   CalculateDataBoundsRect;
