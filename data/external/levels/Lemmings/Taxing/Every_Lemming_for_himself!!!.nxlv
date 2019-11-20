@@ -307,6 +307,848 @@ $END
 
 $TERRAIN
   STYLE orig_dirt
+  PIECE moss_02
+  X 668
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 674
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 681
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 686
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 689
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 694
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 696
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 692
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 666
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 662
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 664
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 660
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 659
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 657
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 656
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 655
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 650
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 646
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 655
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 666
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 654
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 654
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 655
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 647
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 652
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 658
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 643
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 802
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 858
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 677
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 732
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 778
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 841
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 587
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 541
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 588
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 529
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 469
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 447
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 516
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 503
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 598
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 899
+  Y 119
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 877
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 890
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 905
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 902
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 909
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 893
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 883
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 891
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 882
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 880
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 875
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 892
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 825
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 781
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 734
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 788
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_05
+  X 808
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 637
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 199
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 169
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 154
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 241
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 183
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 175
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 169
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 208
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 158
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 185
+  Y 65
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 148
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 176
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 202
+  Y 119
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 227
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 250
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 257
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 186
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 172
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 164
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 134
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 144
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 199
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 144
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 144
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 159
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 137
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 135
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 392
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 402
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_06
+  X 444
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 458
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 447
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 452
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 467
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_03
+  X 493
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 478
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 531
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 521
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 568
+  Y 114
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 711
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 745
+  Y 89
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 759
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 840
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 644
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
   PIECE steel_01
   X 909
   Y 136
@@ -1011,51 +1853,6 @@ $END
 
 $TERRAIN
   STYLE orig_dirt
-  PIECE bridge_04
-  X 907
-  Y 87
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE bridge_04
-  X 880
-  Y 115
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE bridge_04
-  X 853
-  Y 143
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE bridge_03
-  X 927
-  Y 93
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE bridge_03
-  X 920
-  Y 99
-  ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
   PIECE steel_04
   X 916
   Y 107
@@ -1227,6 +2024,436 @@ $END
 
 $TERRAIN
   STYLE orig_dirt
+  PIECE steel_01
+  X 357
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 357
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 357
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 333
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 333
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 333
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 309
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 309
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 309
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 254
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 230
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 206
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 254
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 230
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 206
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 206
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 230
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 182
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 182
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 182
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 158
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 158
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 158
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 381
+  Y 138
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 158
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 158
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 158
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 182
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 182
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_02
+  X 182
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_02
+  X 144
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_02
+  X 144
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_02
+  X 144
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 134
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 134
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 134
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 144
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_02
+  X 222
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_03
+  X 192
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_03
+  X 185
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_03
+  X 148
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_03
+  X 168
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_04
+  X 151
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_04
+  X 247
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_04
+  X 154
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_04
+  X 173
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_04
+  X 468
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_02
+  X 1235
+  Y 89
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_04
+  X 907
+  Y 87
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_04
+  X 880
+  Y 115
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_04
+  X 853
+  Y 143
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_03
+  X 927
+  Y 93
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE bridge_03
+  X 920
+  Y 99
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
   PIECE rocks_02
   X 904
   Y 77
@@ -1346,298 +2573,10 @@ $END
 
 $TERRAIN
   STYLE orig_dirt
-  PIECE moss_02
-  X 668
-  Y 124
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 674
-  Y 132
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 681
-  Y 138
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 686
-  Y 138
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 689
-  Y 134
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 694
-  Y 131
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 696
-  Y 127
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 692
-  Y 132
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 666
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 662
-  Y 103
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 664
-  Y 106
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 660
-  Y 103
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 659
-  Y 102
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 657
-  Y 98
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 656
-  Y 97
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 655
-  Y 96
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 650
-  Y 90
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 646
-  Y 85
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 655
-  Y 96
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 666
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 654
-  Y 102
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 654
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 655
-  Y 113
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 647
-  Y 89
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 652
-  Y 99
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 658
-  Y 105
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 643
-  Y 79
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
   PIECE bridge_03
   X 649
   Y 76
   ERASE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 357
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 357
-  Y 112
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 357
-  Y 136
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 333
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 333
-  Y 112
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 333
-  Y 136
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 309
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 309
-  Y 112
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 309
-  Y 136
   ONE_WAY
 $END
 
@@ -1977,140 +2916,6 @@ $END
 
 $TERRAIN
   STYLE orig_dirt
-  PIECE steel_01
-  X 254
-  Y 88
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 230
-  Y 88
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 206
-  Y 88
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 254
-  Y 112
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 230
-  Y 112
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 206
-  Y 112
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 206
-  Y 136
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 230
-  Y 136
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 182
-  Y 88
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 182
-  Y 112
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 182
-  Y 136
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 158
-  Y 88
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 158
-  Y 112
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 158
-  Y 136
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 381
-  Y 138
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
   PIECE clump_08
   X 351
   Y 121
@@ -2122,190 +2927,6 @@ $TERRAIN
   PIECE clump_08
   X 353
   Y 118
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 158
-  Y 64
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 158
-  Y 40
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 158
-  Y 16
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 182
-  Y 16
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 182
-  Y 40
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_02
-  X 182
-  Y 64
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_02
-  X 144
-  Y 16
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_02
-  X 144
-  Y 40
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_02
-  X 144
-  Y 64
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 134
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 134
-  Y 112
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 134
-  Y 136
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_01
-  X 144
-  Y 102
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_02
-  X 222
-  Y 101
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_03
-  X 192
-  Y 140
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_03
-  X 185
-  Y 94
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_03
-  X 148
-  Y 48
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_03
-  X 168
-  Y 24
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_04
-  X 151
-  Y 131
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_04
-  X 247
-  Y 94
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_04
-  X 154
-  Y 80
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_04
-  X 173
-  Y 59
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_04
-  X 468
-  Y 130
   ONE_WAY
 $END
 
@@ -2653,644 +3274,9 @@ $END
 
 $TERRAIN
   STYLE orig_dirt
-  PIECE moss_01
-  X 802
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 858
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 677
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 732
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 778
-  Y 135
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 841
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 587
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 541
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 588
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 529
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 469
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 447
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 516
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 503
-  Y 126
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 598
-  Y 128
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
   PIECE moss_04
   X 914
   Y 103
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 899
-  Y 119
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 877
-  Y 141
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 890
-  Y 126
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 905
-  Y 110
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 902
-  Y 113
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 909
-  Y 107
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 893
-  Y 122
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 883
-  Y 129
-  NO_OVERWRITE
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 891
-  Y 126
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 882
-  Y 135
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 880
-  Y 138
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 875
-  Y 99
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 892
-  Y 99
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 825
-  Y 101
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 781
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 734
-  Y 89
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 788
-  Y 113
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_05
-  X 808
-  Y 114
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 637
-  Y 110
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 199
-  Y 16
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 169
-  Y 23
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 154
-  Y 17
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 241
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 183
-  Y 87
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 175
-  Y 39
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 169
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 208
-  Y 135
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 158
-  Y 102
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 185
-  Y 65
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 148
-  Y 63
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 176
-  Y 136
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 202
-  Y 119
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 227
-  Y 100
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 250
-  Y 113
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 257
-  Y 100
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 186
-  Y 99
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 172
-  Y 70
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 164
-  Y 81
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 134
-  Y 102
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 144
-  Y 124
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 199
-  Y 61
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 144
-  Y 29
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_04
-  X 144
-  Y 16
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 159
-  Y 16
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 137
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 135
-  Y 136
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 392
-  Y 90
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 402
-  Y 118
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_06
-  X 444
-  Y 99
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 458
-  Y 111
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 447
-  Y 122
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 452
-  Y 136
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 467
-  Y 129
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_03
-  X 493
-  Y 88
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 478
-  Y 89
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 531
-  Y 89
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 521
-  Y 135
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 568
-  Y 114
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 711
-  Y 105
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_01
-  X 745
-  Y 89
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 759
-  Y 92
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 840
-  Y 136
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE moss_02
-  X 644
-  Y 135
-  ONE_WAY
-$END
-
-$TERRAIN
-  STYLE orig_dirt
-  PIECE steel_02
-  X 1235
-  Y 89
-  ERASE
   ONE_WAY
 $END
 
