@@ -1,0 +1,252 @@
+TITLE flag test map
+THEME orig_dirt
+ID x99EEB4CC99EEB4CC
+LEMMINGS 100
+SAVE_REQUIREMENT 1
+TIME_LIMIT 300
+MAX_SPAWN_INTERVAL 48
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  CLIMBER 8
+  FLOATER 8
+  BOMBER 8
+  BLOCKER 8
+  BUILDER 8
+  BASHER 8
+  MINER 8
+  DIGGER 8
+$END
+
+$GADGET
+  STYLE orig_dirt_md
+  PIECE exit
+  X 176
+  Y 92
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_dirt_md
+  PIECE window
+  X 48
+  Y 4
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$GADGET
+  STYLE default
+  PIECE flag_green
+  X 176
+  Y 28
+  WIDTH 13
+  HEIGHT 14
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE default
+  PIECE flag_green
+  X 192
+  Y 28
+  WIDTH 13
+  HEIGHT 14
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE default
+  PIECE flag_green
+  X 208
+  Y 28
+  WIDTH 13
+  HEIGHT 14
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE default
+  PIECE flag_blue
+  X 224
+  Y 44
+  WIDTH 13
+  HEIGHT 14
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE default
+  PIECE flag_blue
+  X 240
+  Y 44
+  WIDTH 13
+  HEIGHT 14
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE default
+  PIECE flag_blue
+  X 256
+  Y 44
+  WIDTH 13
+  HEIGHT 14
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X -11
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 6
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 17
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 27
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 38
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 50
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 69
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 73
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 92
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 137
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 113
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 163
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 191
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 187
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 218
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 248
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE clump_08
+  X 252
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt_md
+  PIECE bones_01
+  X 207
+  Y 108
+  ONE_WAY
+$END
+

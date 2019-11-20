@@ -1,0 +1,2181 @@
+TITLE There can be only one
+THEME orig_dirt
+ID xAADE783CAADE783C
+LEMMINGS 80
+SAVE_REQUIREMENT 65
+TIME_LIMIT 300
+MAX_SPAWN_INTERVAL 28
+WIDTH 1584
+HEIGHT 160
+START_X 768
+START_Y 80
+
+$SKILLSET
+  CLIMBER 5
+  FLOATER 5
+  BOMBER 15
+  BLOCKER 5
+  BUILDER 20
+  BASHER 5
+  MINER 5
+  DIGGER 5
+$END
+
+$GADGET
+  STYLE orig_dirt
+  PIECE window
+  X 736
+  Y 52
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_dirt
+  PIECE exit
+  X 1392
+  Y 40
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_dirt
+  PIECE exit
+  X 64
+  Y 36
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_dirt
+  PIECE window
+  X 736
+  Y 52
+  WIDTH 48
+  HEIGHT 25
+  FLIP_HORIZONTAL
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE default
+  PIECE flag_blue
+  X 1411
+  Y 29
+  WIDTH 13
+  HEIGHT 14
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$GADGET
+  STYLE default
+  PIECE flag_green
+  X 83
+  Y 25
+  WIDTH 13
+  HEIGHT 14
+  NO_OVERWRITE
+  ANGLE 0
+  SPEED 0
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 735
+  Y 93
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 759
+  Y 93
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 790
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 795
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 786
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 799
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 786
+  Y 134
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 794
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 780
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 671
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 678
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 654
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 682
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 660
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 669
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 784
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE tree
+  X 829
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE tree
+  X 616
+  Y 83
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 898
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 902
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 893
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 886
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 594
+  Y 79
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 604
+  Y 125
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 580
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 578
+  Y 119
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 570
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE tree
+  X 925
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE tree
+  X 525
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 978
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 996
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 987
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 969
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 975
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 488
+  Y 81
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 494
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_09
+  X 498
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_08
+  X 479
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE tree
+  X 424
+  Y 107
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE tree
+  X 1018
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_06
+  X 1081
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_06
+  X 402
+  Y 105
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1096
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1191
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1286
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1379
+  Y 137
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 314
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 222
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 138
+  Y 130
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 48
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1094
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1164
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1245
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1336
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1303
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1219
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1148
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1186
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1263
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 264
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 181
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 93
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 140
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 210
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 322
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 315
+  Y 95
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 263
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 222
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 178
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 133
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 124
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 143
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 233
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 188
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 270
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_06
+  X 72
+  Y 53
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_06
+  X 1400
+  Y 57
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 1409
+  Y 39
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 1404
+  Y 39
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 82
+  Y 35
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE steel_01
+  X 70
+  Y 35
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_05
+  X 88
+  Y 90
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_04
+  X 91
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_04
+  X 147
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_03
+  X 122
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_05
+  X 74
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_05
+  X 1364
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_04
+  X 1336
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_04
+  X 1317
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_04
+  X 1338
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1089
+  Y 108
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1101
+  Y 101
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1113
+  Y 95
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 1131
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1137
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1139
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1140
+  Y 93
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1153
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1157
+  Y 87
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1145
+  Y 87
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1156
+  Y 78
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1167
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 1186
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1185
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1211
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1214
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1217
+  Y 69
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1223
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1245
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1229
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1236
+  Y 76
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1261
+  Y 77
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1285
+  Y 75
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1288
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1291
+  Y 72
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1294
+  Y 71
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1295
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1299
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1320
+  Y 68
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1329
+  Y 66
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1344
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1367
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1348
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1340
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1389
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 1376
+  Y 67
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 1366
+  Y 63
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 1380
+  Y 68
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 1373
+  Y 67
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 398
+  Y 108
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 390
+  Y 105
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 381
+  Y 102
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 368
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 356
+  Y 97
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 352
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 348
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 345
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 332
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 327
+  Y 89
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 322
+  Y 87
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 316
+  Y 85
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 309
+  Y 82
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 308
+  Y 80
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 305
+  Y 77
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 299
+  Y 76
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 297
+  Y 77
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 300
+  Y 76
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 305
+  Y 76
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 274
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 289
+  Y 77
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 295
+  Y 76
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 256
+  Y 69
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 247
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_01
+  X 240
+  Y 70
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 101
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 117
+  Y 59
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 135
+  Y 61
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 155
+  Y 61
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 173
+  Y 64
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 194
+  Y 65
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 214
+  Y 66
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 225
+  Y 73
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 218
+  Y 69
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 217
+  Y 68
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_01
+  X 735
+  Y 115
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_02
+  X 765
+  Y 109
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 777
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE moss_04
+  X 773
+  Y 109
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1224
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1214
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1185
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1181
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1127
+  Y 93
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1161
+  Y 74
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1150
+  Y 81
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1172
+  Y 71
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1196
+  Y 70
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1258
+  Y 77
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1293
+  Y 69
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1312
+  Y 69
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1327
+  Y 65
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1341
+  Y 63
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1354
+  Y 61
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1376
+  Y 63
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1279
+  Y 70
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1246
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1259
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1110
+  Y 95
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 1103
+  Y 98
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 1090
+  Y 107
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_02
+  X 369
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 386
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 352
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 333
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 324
+  Y 84
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 312
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 304
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 297
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 290
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 263
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 276
+  Y 84
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 260
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 248
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 217
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 193
+  Y 63
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 168
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 144
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 117
+  Y 59
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 103
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 236
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 198
+  Y 77
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_03
+  X 282
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE grass_04
+  X 298
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 242
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 200
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 708
+  Y -34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 758
+  Y -39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 805
+  Y -39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 855
+  Y -28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 920
+  Y -25
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 995
+  Y -23
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1059
+  Y -31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1128
+  Y -39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1165
+  Y -39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1237
+  Y -39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1296
+  Y -37
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1354
+  Y -38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1439
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1479
+  Y -9
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 1520
+  Y -22
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 647
+  Y -24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 605
+  Y -23
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 560
+  Y -28
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 501
+  Y -24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 462
+  Y -30
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 414
+  Y -37
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 395
+  Y -21
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 359
+  Y -20
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 333
+  Y -28
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 283
+  Y -39
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 244
+  Y -39
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 185
+  Y -33
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 140
+  Y -34
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 79
+  Y -39
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 21
+  Y -39
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X -12
+  Y -28
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_dirt
+  PIECE clump_07
+  X 39
+  Y -39
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

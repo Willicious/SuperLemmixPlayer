@@ -1,0 +1,714 @@
+TITLE Tailor-made for blockers
+THEME orig_pillar
+ID xA4D86871A4D86871
+LEMMINGS 50
+SAVE_REQUIREMENT 5
+TIME_LIMIT 300
+MAX_SPAWN_INTERVAL 28
+WIDTH 468
+HEIGHT 160
+START_X 200
+START_Y 80
+
+$SKILLSET
+  BLOCKER 10
+$END
+
+$GADGET
+  STYLE orig_pillar
+  PIECE window
+  X 152
+  Y 4
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$GADGET
+  STYLE orig_pillar
+  PIECE exit
+  X 136
+  Y 128
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 72
+  Y 87
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 136
+  Y 87
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 72
+  Y 85
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 136
+  Y 85
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 94
+  Y 71
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 158
+  Y 71
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 94
+  Y 69
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 158
+  Y 69
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 54
+  Y 55
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 54
+  Y 53
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 164
+  Y 55
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 228
+  Y 55
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 164
+  Y 53
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 228
+  Y 53
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 83
+  Y 39
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 132
+  Y 39
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 83
+  Y 37
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 132
+  Y 37
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 156
+  Y 23
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 220
+  Y 23
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 269
+  Y 23
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 156
+  Y 21
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 220
+  Y 21
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 282
+  Y 21
+  FLIP_VERTICAL
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 155
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 219
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 269
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 155
+  Y 40
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 218
+  Y 40
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 274
+  Y 40
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 132
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 83
+  Y 58
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 83
+  Y 60
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 139
+  Y 60
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 164
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 228
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 164
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 228
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 54
+  Y 78
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 54
+  Y 80
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 94
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 154
+  Y 98
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 94
+  Y 100
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 156
+  Y 100
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 135
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 71
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 71
+  Y 120
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 135
+  Y 120
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 167
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 212
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 119
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_end_05
+  X 106
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_end_03
+  X 264
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_end_02
+  X 310
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 318
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_02
+  X 352
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_02
+  X 352
+  Y 64
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_02
+  X 352
+  Y 86
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_end_08
+  X 342
+  Y 140
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_01
+  X 369
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_end_06
+  X 433
+  Y 143
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_thin_01
+  X 26
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_thin_01
+  X 26
+  Y 23
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_thin_01
+  X 26
+  Y -13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_thin_01
+  X 26
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_thin_01
+  X 26
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE bump_01
+  X 18
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE block_01
+  X 199
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE block_02
+  X 304
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE block_02
+  X 123
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE block_01
+  X 56
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE wood_10
+  X 75
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE wood_10
+  X 91
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE wood_10
+  X 218
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE wood_10
+  X 249
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE wood_10
+  X 272
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE block_13
+  X 239
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE block_12
+  X 87
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_pillar
+  PIECE pillar_02
+  X 352
+  Y -6
+  ONE_WAY
+$END
+

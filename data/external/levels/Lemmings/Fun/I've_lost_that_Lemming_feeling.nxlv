@@ -1,0 +1,1537 @@
+TITLE I've lost that Lemming feeling
+THEME orig_fire
+ID x7A341A047A341A04
+LEMMINGS 80
+SAVE_REQUIREMENT 20
+TIME_LIMIT 480
+MAX_SPAWN_INTERVAL 28
+WIDTH 1584
+HEIGHT 160
+START_X 736
+START_Y 80
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BOMBER 20
+  BLOCKER 20
+  BUILDER 20
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE exit
+  X 0
+  Y 4
+  WIDTH 48
+  HEIGHT 52
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE exit
+  X 0
+  Y 92
+  WIDTH 48
+  HEIGHT 52
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE water
+  X 752
+  Y 140
+  WIDTH 64
+  HEIGHT 20
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE flamethrower_flip
+  X 144
+  Y 80
+  WIDTH 80
+  HEIGHT 20
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE firepit
+  X 1136
+  Y 60
+  WIDTH 32
+  HEIGHT 17
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE firepit
+  X 1104
+  Y 100
+  WIDTH 32
+  HEIGHT 17
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE firepit
+  X 1184
+  Y 100
+  WIDTH 32
+  HEIGHT 17
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE exit
+  X 1456
+  Y 56
+  WIDTH 48
+  HEIGHT 52
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE window
+  X 624
+  Y 68
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1531
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1535
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1539
+  Y -65
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1457
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1453
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1449
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1377
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1373
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1369
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1297
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1293
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1289
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1210
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1214
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1217
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1137
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1133
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1130
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1057
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1053
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 1049
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 977
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 973
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 969
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 49
+  Y -7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 45
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 43
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 50
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 130
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 126
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 122
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 210
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 206
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 202
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 290
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 286
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 283
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 363
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 367
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 370
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 450
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 446
+  Y 50
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 443
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 524
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 528
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 530
+  Y -26
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 889
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 809
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 602
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 682
+  Y 126
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 953
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 956
+  Y -8
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 957
+  Y -27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 591
+  Y -45
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 651
+  Y -45
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 878
+  Y -46
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 798
+  Y -46
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_06
+  X 671
+  Y -46
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 822
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 882
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 675
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 695
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 802
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 615
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 611
+  Y 29
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 690
+  Y 29
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 797
+  Y 29
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_05
+  X 877
+  Y 29
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_08
+  X 796
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_08
+  X 796
+  Y 40
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_08
+  X 793
+  Y 42
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 750
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 749
+  Y 30
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 752
+  Y 28
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 755
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 758
+  Y 35
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 753
+  Y 40
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 763
+  Y 85
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_08
+  X 809
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_08
+  X 810
+  Y 55
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_08
+  X 807
+  Y 57
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_08
+  X 803
+  Y 52
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_08
+  X 799
+  Y 55
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 761
+  Y 45
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_09
+  X 763
+  Y 45
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 0
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 25
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 50
+  Y 56
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 0
+  Y 144
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 25
+  Y 144
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 50
+  Y 144
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 993
+  Y -3
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 993
+  Y 32
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 993
+  Y 65
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 993
+  Y 95
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 993
+  Y 124
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 978
+  Y 11
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 977
+  Y 30
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 977
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 976
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 974
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 974
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 973
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 972
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 971
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 450
+  Y 31
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 429
+  Y 50
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 408
+  Y 68
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 471
+  Y 12
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 387
+  Y 88
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 366
+  Y 107
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 345
+  Y 126
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 405
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 445
+  Y 126
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 305
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 411
+  Y 11
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 371
+  Y 12
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 331
+  Y 12
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 292
+  Y 12
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 289
+  Y 50
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 287
+  Y 88
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1052
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1073
+  Y 106
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1094
+  Y 87
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1115
+  Y 67
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1136
+  Y 48
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1157
+  Y 29
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1178
+  Y 11
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1199
+  Y -9
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1174
+  Y 87
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1212
+  Y 124
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1098
+  Y 11
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1237
+  Y 30
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1275
+  Y 68
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1313
+  Y 106
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 1351
+  Y 143
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 149
+  Y 50
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 148
+  Y 69
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 147
+  Y 87
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 146
+  Y 106
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 145
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 144
+  Y 144
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 92
+  Y -8
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 89
+  Y -11
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 91
+  Y 11
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 90
+  Y 30
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 89
+  Y 49
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 88
+  Y 68
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 87
+  Y 87
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_04
+  X 86
+  Y 106
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_e
+  X 182
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_x
+  X 203
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_i
+  X 227
+  Y 13
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_t
+  X 249
+  Y 17
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_x
+  X 1468
+  Y 73
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_x
+  X 219
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_x
+  X 517
+  Y 106
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_02
+  X 760
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_02
+  X 809
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 750
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 809
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_e
+  X 1427
+  Y 32
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_x
+  X 1457
+  Y 36
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_i
+  X 1488
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_t
+  X 1516
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_e
+  X 480
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_x
+  X 505
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_i
+  X 530
+  Y 66
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE letter_t
+  X 555
+  Y 70
+  ONE_WAY
+$END
+

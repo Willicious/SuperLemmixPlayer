@@ -1,0 +1,37 @@
+BASE
+
+$GROUP
+  NAME Genesis
+  FOLDER Genesis
+$END
+
+$GROUP
+  NAME Present
+  FOLDER Present
+$END
+
+$GROUP
+  NAME Sunsoft
+  FOLDER Sunsoft
+$END
+
+$GROUP
+  NAME 2P
+  FOLDER 2P
+$END
+
+$GROUP
+  NAME Sega
+  FOLDER Sega
+$END
+
+$GROUP
+  NAME PSP
+  FOLDER PSP
+$END
+
+$GROUP
+  NAME Other
+  FOLDER Other
+$END
+

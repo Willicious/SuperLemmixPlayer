@@ -1,0 +1,450 @@
+TITLE Keep your hair on Mr. Lemming
+THEME orig_marble
+ID x4806410948064109
+LEMMINGS 60
+SAVE_REQUIREMENT 50
+TIME_LIMIT 300
+MAX_SPAWN_INTERVAL 28
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BOMBER 20
+  BLOCKER 20
+  BUILDER 20
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE window
+  X 20
+  Y 72
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE exit
+  X 260
+  Y 112
+  WIDTH 48
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 76
+  Y 56
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 108
+  Y 56
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 140
+  Y 56
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 140
+  Y 88
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 108
+  Y 88
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 76
+  Y 88
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 76
+  Y 104
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 108
+  Y 104
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 140
+  Y 104
+  WIDTH 32
+  HEIGHT 32
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 4
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 28
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 52
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 76
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 100
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 124
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 148
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 172
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 196
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 220
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 244
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 268
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 292
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 76
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 92
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 108
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 124
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 140
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 156
+  Y 88
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_02
+  X 76
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_02
+  X 124
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE structure_01
+  X 76
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 4
+  Y 91
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 4
+  Y 49
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 4
+  Y 7
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 4
+  Y 0
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 311
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 311
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 311
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 311
+  Y 1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_06
+  X 5
+  Y 1
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 9
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 57
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 104
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 152
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 200
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 248
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 266
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_01
+  X 311
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_05
+  X 285
+  Y 1
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

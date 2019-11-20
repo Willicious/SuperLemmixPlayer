@@ -1,0 +1,606 @@
+TITLE The Prison!
+THEME orig_fire
+ID x9EEB34B29EEB34B2
+LEMMINGS 60
+SAVE_REQUIREMENT 45
+TIME_LIMIT 300
+MAX_SPAWN_INTERVAL 28
+WIDTH 376
+HEIGHT 160
+START_X 200
+START_Y 80
+
+$SKILLSET
+  BOMBER 5
+  BLOCKER 4
+  BUILDER 20
+  BASHER 10
+  DIGGER 3
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE exit
+  X 296
+  Y 92
+  WIDTH 48
+  HEIGHT 52
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE exit
+  X 296
+  Y 8
+  WIDTH 48
+  HEIGHT 52
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE flamethrower
+  X 200
+  Y 44
+  WIDTH 80
+  HEIGHT 20
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE flamethrower
+  X 200
+  Y 76
+  WIDTH 80
+  HEIGHT 20
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE water
+  X 200
+  Y 140
+  WIDTH 64
+  HEIGHT 20
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE water
+  X 136
+  Y 140
+  WIDTH 64
+  HEIGHT 20
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE water
+  X 72
+  Y 140
+  WIDTH 64
+  HEIGHT 20
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE window
+  X 72
+  Y 60
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 55
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 80
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 105
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 30
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 290
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 265
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 315
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 269
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 294
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 319
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 269
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 294
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 319
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar_end
+  X 30
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 36
+  Y 92
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 36
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 36
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 36
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_03
+  X 8
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_03
+  X 63
+  Y -2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 175
+  Y 74
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 175
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_06
+  X 132
+  Y -28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_05
+  X 169
+  Y -30
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_04
+  X 270
+  Y 84
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_04
+  X 270
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_04
+  X 270
+  Y 21
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_04
+  X 270
+  Y -6
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_04
+  X 180
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_04
+  X 180
+  Y 123
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_04
+  X 180
+  Y 10
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 196
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 200
+  Y 114
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 204
+  Y 118
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 208
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 196
+  Y 109
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 200
+  Y 113
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 204
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 208
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 203
+  Y 109
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 207
+  Y 113
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 211
+  Y 117
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 215
+  Y 121
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 212
+  Y 125
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 212
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 216
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 216
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 219
+  Y 125
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 223
+  Y 129
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 340
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 343
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 343
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 343
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 343
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 343
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 343
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 343
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 343
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 264
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 105
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 80
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 55
+  Y 136
+  ONE_WAY
+$END
+

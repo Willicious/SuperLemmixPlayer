@@ -1,0 +1,529 @@
+TITLE Lemmings Lemmings everywhere
+THEME orig_crystal
+ID x7530304375303043
+LEMMINGS 100
+SAVE_REQUIREMENT 50
+TIME_LIMIT 300
+MAX_SPAWN_INTERVAL 4
+WIDTH 600
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  CLIMBER 20
+  FLOATER 20
+  BOMBER 20
+  BLOCKER 20
+  BUILDER 20
+  BASHER 20
+  MINER 20
+  DIGGER 20
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE exit
+  X 464
+  Y 132
+  WIDTH 48
+  HEIGHT 23
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE window
+  X 112
+  Y 100
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 187
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 218
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 187
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 218
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 249
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 279
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 310
+  Y 101
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 249
+  Y 131
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 280
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 311
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 239
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 269
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 208
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 238
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 300
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 269
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 300
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 208
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 178
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_08
+  X 331
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 341
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 372
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 342
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 373
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 342
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 373
+  Y 153
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 393
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_07
+  X 393
+  Y 29
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_06
+  X 403
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 125
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE bar_04
+  X 66
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE crystal_04
+  X 40
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE thread_01
+  X 177
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE thread_02
+  X 146
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE thread_02
+  X 218
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE spider_web
+  X 421
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_01
+  X 424
+  Y 7
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_01
+  X 550
+  Y 2
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_01
+  X 562
+  Y -10
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_02
+  X 545
+  Y 39
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_02
+  X 568
+  Y 62
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_01
+  X 555
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 423
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 423
+  Y 71
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 423
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 423
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 404
+  Y 122
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 404
+  Y 132
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 404
+  Y 142
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 394
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_01
+  X 404
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 460
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 492
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 429
+  Y 155
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_04
+  X 424
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_04
+  X 423
+  Y 46
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_04
+  X 423
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_04
+  X 422
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE mesh_03
+  X 410
+  Y 25
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 413
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE thread_03
+  X 413
+  Y -10
+  ONE_WAY
+$END
+

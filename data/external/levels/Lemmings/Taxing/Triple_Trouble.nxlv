@@ -1,0 +1,492 @@
+TITLE Triple Trouble
+THEME orig_fire
+ID x9EEB529F9EEB529F
+LEMMINGS 100
+SAVE_REQUIREMENT 99
+TIME_LIMIT 300
+MAX_SPAWN_INTERVAL 13
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  CLIMBER 10
+  FLOATER 10
+  BOMBER 10
+  BLOCKER 10
+  BUILDER 10
+  BASHER 10
+  MINER 10
+  DIGGER 10
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE window
+  X 16
+  Y 100
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE window
+  X 256
+  Y 100
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE exit
+  X 144
+  Y 44
+  WIDTH 48
+  HEIGHT 52
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE window
+  X 144
+  Y 0
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE water
+  X 144
+  Y 140
+  WIDTH 64
+  HEIGHT 20
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE water
+  X 80
+  Y 140
+  WIDTH 64
+  HEIGHT 20
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE water
+  X 208
+  Y 140
+  WIDTH 64
+  HEIGHT 20
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE firepit
+  X 272
+  Y 24
+  WIDTH 32
+  HEIGHT 17
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE flamethrower
+  X 16
+  Y 20
+  WIDTH 80
+  HEIGHT 20
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 0
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 25
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 50
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 301
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 276
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 251
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE platform
+  X 141
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_02
+  X 117
+  Y 79
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_03
+  X 116
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_02
+  X 113
+  Y 81
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_01
+  X 187
+  Y 83
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_05
+  X 163
+  Y 56
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_05
+  X 162
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_06
+  X 105
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_06
+  X 107
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_04
+  X 132
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_04
+  X 150
+  Y 35
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_05
+  X 139
+  Y 45
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_01
+  X 162
+  Y 96
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 251
+  Y 136
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 59
+  Y 135
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 0
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 0
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 0
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 0
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 0
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar_end
+  X -6
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 309
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 309
+  Y 100
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 309
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 309
+  Y 52
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 309
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar_end
+  X 304
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_03
+  X -9
+  Y -18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_03
+  X 59
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_03
+  X 133
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_03
+  X 207
+  Y -21
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_03
+  X 263
+  Y -19
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_02
+  X 187
+  Y 83
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 274
+  Y 41
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_02
+  X 297
+  Y 48
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 143
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 165
+  Y 0
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 159
+  Y 72
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 274
+  Y 38
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 273
+  Y 36
+  FLIP_VERTICAL
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

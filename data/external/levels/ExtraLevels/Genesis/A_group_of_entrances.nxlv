@@ -1,0 +1,797 @@
+TITLE A group of entrances
+THEME orig_marble
+ID x4040404F4040404F
+LEMMINGS 50
+SAVE_REQUIREMENT 48
+TIME_LIMIT 300
+MAX_SPAWN_INTERVAL 43
+WIDTH 456
+HEIGHT 160
+START_X 176
+START_Y 80
+
+$SKILLSET
+  CLIMBER 1
+  BOMBER 2
+  BLOCKER 2
+  BUILDER 6
+  BASHER 4
+  MINER 1
+  DIGGER 1
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_right
+  X 216
+  Y 0
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_right
+  X 216
+  Y 16
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 264
+  Y 16
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE default
+  PIECE owa_left
+  X 264
+  Y 0
+  WIDTH 32
+  HEIGHT 32
+  ONLY_ON_TERRAIN
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE window
+  X 40
+  Y 0
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE window
+  X 264
+  Y 76
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE exit
+  X 168
+  Y 92
+  WIDTH 48
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE water
+  X 152
+  Y 136
+  WIDTH 64
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE water
+  X 216
+  Y 136
+  WIDTH 64
+  HEIGHT 25
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE window
+  X 40
+  Y 0
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE window
+  X 264
+  Y 76
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X 152
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 152
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 160
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_02
+  X 160
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 184
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_04
+  X 200
+  Y 12
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 216
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 232
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 248
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 232
+  Y 48
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 232
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 232
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_03
+  X 264
+  Y 40
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 328
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 344
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 360
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_03
+  X 184
+  Y -1
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 232
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 168
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 232
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_02
+  X 120
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_02
+  X 320
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_02
+  X 72
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_02
+  X 24
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_01
+  X 32
+  Y 70
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_01
+  X 32
+  Y -4
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 32
+  Y 108
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 32
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 32
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_01
+  X 360
+  Y 74
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_02
+  X 368
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_01
+  X 408
+  Y 54
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_01
+  X 408
+  Y -20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_03
+  X 408
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 408
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 408
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 408
+  Y 28
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 152
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 104
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 56
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 44
+  Y 24
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steel_01
+  X 280
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 304
+  Y 152
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_02
+  X 144
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_03
+  X 304
+  Y 144
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 304
+  Y 158
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE steps_04
+  X 304
+  Y 136
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 32
+  Y 24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 32
+  Y -24
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_03
+  X 32
+  Y 31
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 200
+  Y 63
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 184
+  Y 63
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 168
+  Y 65
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_02
+  X 168
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 164
+  Y 84
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 184
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 172
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE block_05
+  X 216
+  Y 68
+  ERASE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 216
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 224
+  Y 68
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 216
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 216
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_02
+  X 212
+  Y 76
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 212
+  Y 84
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_01
+  X 232
+  Y -34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_01
+  X 264
+  Y -34
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 232
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 264
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_05
+  X 240
+  Y 8
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 248
+  Y 0
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 248
+  Y 20
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_03
+  X 360
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 360
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 408
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 360
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 232
+  Y 5
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE pillar_end_01
+  X 264
+  Y 5
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 408
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 392
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_large_01
+  X 376
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 352
+  Y 80
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE brick_small_01
+  X 376
+  Y 124
+  ONE_WAY
+$END
+

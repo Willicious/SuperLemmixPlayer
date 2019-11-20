@@ -1,0 +1,383 @@
+TITLE Feel the heat!
+THEME orig_fire
+ID xB5CF66E4B5CF66E4
+LEMMINGS 20
+SAVE_REQUIREMENT 20
+TIME_LIMIT 120
+MAX_SPAWN_INTERVAL 18
+WIDTH 360
+HEIGHT 160
+START_X 168
+START_Y 80
+
+$SKILLSET
+  CLIMBER 3
+  FLOATER 3
+  BOMBER 3
+  BLOCKER 3
+  BUILDER 4
+  BASHER 3
+  MINER 3
+  DIGGER 3
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE exit
+  X 200
+  Y 60
+  WIDTH 48
+  HEIGHT 52
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE flamethrower_flip
+  X 216
+  Y 92
+  WIDTH 80
+  HEIGHT 20
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE flamethrower
+  X 152
+  Y 92
+  WIDTH 80
+  HEIGHT 20
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE window
+  X 24
+  Y 72
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_06
+  X 192
+  Y 109
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 127
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 127
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 127
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 296
+  Y 96
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 296
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_01
+  X 296
+  Y 146
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_06
+  X 167
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_05
+  X 142
+  Y 126
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_05
+  X 234
+  Y 129
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE rock_05
+  X 258
+  Y 128
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 212
+  Y 127
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 212
+  Y 139
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 211
+  Y 151
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 102
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 77
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 52
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 27
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_02
+  X 2
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_01
+  X 52
+  Y 136
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar_end
+  X 1
+  Y 136
+  FLIP_VERTICAL
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar_end
+  X 1
+  Y 112
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 7
+  Y 93
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 7
+  Y 141
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 7
+  Y 69
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 7
+  Y 45
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 7
+  Y 21
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE pillar
+  X 7
+  Y -3
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE chain_04
+  X 332
+  Y -15
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE chain_03
+  X 340
+  Y 18
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE chain_04
+  X 332
+  Y 49
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE chain_03
+  X 340
+  Y 82
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE chain_04
+  X 332
+  Y 113
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE chain_03
+  X 341
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE platform
+  X 151
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE platform
+  X 248
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE platform
+  X 199
+  Y 124
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 102
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bricks_03
+  X 77
+  Y 94
+  ONE_WAY
+$END
+

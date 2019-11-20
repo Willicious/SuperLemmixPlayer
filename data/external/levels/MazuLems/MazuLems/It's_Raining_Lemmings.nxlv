@@ -1,0 +1,165 @@
+TITLE It's Raining Lemmings
+AUTHOR Martin Zurlinden
+THEME orig_crystal
+ID x2FB6DDD22FB6DDD2
+LEMMINGS 60
+SAVE_REQUIREMENT 60
+MAX_SPAWN_INTERVAL 53
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  CLIMBER 2
+  FLOATER 2
+  BOMBER 10
+  BLOCKER 10
+  BUILDER 10
+  BASHER 2
+  MINER 2
+  DIGGER 2
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE exit
+  X 229
+  Y 112
+  WIDTH 48
+  HEIGHT 23
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE window
+  X 45
+  Y 60
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE window
+  X 85
+  Y 60
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE window
+  X 125
+  Y 60
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$GADGET
+  STYLE orig_crystal
+  PIECE window
+  X 165
+  Y 60
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 108
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 168
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 195
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 225
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 243
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 139
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 76
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_03
+  X 45
+  Y 135
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_02
+  X 13
+  Y 104
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 13
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_04
+  X 305
+  Y 72
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_crystal
+  PIECE line_01
+  X 275
+  Y 104
+  ONE_WAY
+$END
+

@@ -1,0 +1,148 @@
+TITLE Tightrope City
+THEME orig_marble
+ID x96EA785696EA7856
+LEMMINGS 80
+SAVE_REQUIREMENT 75
+TIME_LIMIT 120
+MAX_SPAWN_INTERVAL 11
+WIDTH 824
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  CLIMBER 5
+  FLOATER 5
+  BOMBER 5
+  BLOCKER 5
+  BUILDER 3
+  BASHER 5
+  MINER 5
+  DIGGER 5
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE window
+  X 112
+  Y 44
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_marble
+  PIECE exit
+  X 640
+  Y 52
+  WIDTH 48
+  HEIGHT 24
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 108
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 156
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 204
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 252
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 300
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 348
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 396
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 444
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 492
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 540
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 588
+  Y 94
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 649
+  Y 75
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE orig_marble
+  PIECE bar_03
+  X 683
+  Y 75
+  ERASE
+  ONE_WAY
+$END
+

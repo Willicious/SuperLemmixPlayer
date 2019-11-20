@@ -1,0 +1,515 @@
+TITLE 24 hour Lemathon
+THEME ohno_rock
+ID xE19FF7C0E19FF7C0
+LEMMINGS 80
+SAVE_REQUIREMENT 80
+TIME_LIMIT 240
+MAX_SPAWN_INTERVAL 53
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$SKILLSET
+  BUILDER 20
+  DIGGER 1
+$END
+
+$GADGET
+  STYLE ohno_rock
+  PIECE window
+  X 8
+  Y 24
+  WIDTH 48
+  HEIGHT 25
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE ohno_rock
+  PIECE exit
+  X 216
+  Y 60
+  WIDTH 32
+  HEIGHT 32
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 212
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 219
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 226
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 233
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 241
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_01
+  X 24
+  Y 57
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_01
+  X 81
+  Y 60
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_01
+  X 149
+  Y 61
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 216
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 223
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 231
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 239
+  Y 92
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 228
+  Y 102
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 245
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 240
+  Y 105
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 223
+  Y 111
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 236
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 247
+  Y 120
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 249
+  Y 128
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 247
+  Y 133
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 253
+  Y 117
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 253
+  Y 99
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 261
+  Y 118
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 259
+  Y 129
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_07
+  X 260
+  Y 141
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE crystal_06
+  X 260
+  Y 148
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_02
+  X 259
+  Y 97
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_03
+  X 268
+  Y 110
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_08
+  X 35
+  Y 133
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_09
+  X 98
+  Y 83
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_10
+  X 91
+  Y 84
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_08
+  X -12
+  Y -24
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_08
+  X 73
+  Y -21
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_08
+  X 158
+  Y -19
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_08
+  X 236
+  Y -5
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_09
+  X 254
+  Y 16
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_10
+  X 290
+  Y 27
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_09
+  X 272
+  Y 49
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_04
+  X 1
+  Y 116
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_09
+  X -30
+  Y 116
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE tree_05
+  X 276
+  Y 47
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE grass_10
+  X 271
+  Y 44
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE grass_10
+  X 277
+  Y 38
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE tree_06
+  X 281
+  Y 42
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE tree_06
+  X 265
+  Y 89
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE tree_06
+  X 279
+  Y 94
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE tree_04
+  X 118
+  Y 122
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE tree_03
+  X 136
+  Y 125
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE grass_08
+  X 112
+  Y 115
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE grass_10
+  X 132
+  Y 121
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE grass_11
+  X 262
+  Y 87
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE grass_10
+  X 275
+  Y 91
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE tree_03
+  X 15
+  Y 107
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE tree_03
+  X 2
+  Y 111
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE grass_10
+  X -1
+  Y 107
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE grass_10
+  X 11
+  Y 103
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_04
+  X -16
+  Y 124
+  NO_OVERWRITE
+  ONE_WAY
+$END
+
+$TERRAIN
+  STYLE ohno_rock
+  PIECE rocks_04
+  X 302
+  Y 4
+  NO_OVERWRITE
+  ONE_WAY
+$END
+

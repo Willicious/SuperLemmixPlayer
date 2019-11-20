@@ -1,0 +1,408 @@
+TITLE Fallout Boys
+AUTHOR Martin Zurlinden
+THEME orig_fire
+ID x0FEF0AE10FEF0AE1
+LEMMINGS 80
+SAVE_REQUIREMENT 3
+TIME_LIMIT 120
+MAX_SPAWN_INTERVAL 33
+WIDTH 320
+HEIGHT 160
+START_X 160
+START_Y 80
+
+$GADGET
+  STYLE orig_fire
+  PIECE exit
+  X 128
+  Y 90
+  WIDTH 48
+  HEIGHT 52
+  NO_OVERWRITE
+$END
+
+$GADGET
+  STYLE orig_fire
+  PIECE window
+  X 128
+  Y 13
+  WIDTH 48
+  HEIGHT 25
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 185
+  Y 59
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 88
+  Y 59
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 80
+  Y 82
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 95
+  Y 82
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 192
+  Y 82
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 177
+  Y 82
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_07
+  X 135
+  Y 68
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 73
+  Y 102
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 101
+  Y 102
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 87
+  Y 102
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 199
+  Y 102
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 170
+  Y 102
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE spike
+  X 184
+  Y 102
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_03
+  X 137
+  Y 142
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_03
+  X 162
+  Y 142
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_03
+  X 187
+  Y 142
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_03
+  X 212
+  Y 142
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_03
+  X 112
+  Y 142
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_03
+  X 87
+  Y 142
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE steel_03
+  X 62
+  Y 142
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 114
+  Y 55
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 185
+  Y 56
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 102
+  Y 52
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 185
+  Y 47
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_07
+  X 106
+  Y 68
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 120
+  Y 76
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 120
+  Y 95
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_07
+  X 158
+  Y 68
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 179
+  Y 76
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 108
+  Y 43
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 108
+  Y 25
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 114
+  Y 47
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 191
+  Y 25
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 191
+  Y 52
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 198
+  Y 52
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 179
+  Y 101
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_07
+  X 111
+  Y 88
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_07
+  X 146
+  Y 88
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_07
+  X 116
+  Y 60
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_07
+  X 146
+  Y 60
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 116
+  Y 64
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 146
+  Y 64
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 220
+  Y 38
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 120
+  Y 69
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_05
+  X 179
+  Y 68
+  NO_OVERWRITE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 109
+  Y 60
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 152
+  Y 60
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 123
+  Y 96
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 140
+  Y 95
+  ERASE
+$END
+
+$TERRAIN
+  STYLE orig_fire
+  PIECE bars_06
+  X 139
+  Y 98
+  ERASE
+$END
+
