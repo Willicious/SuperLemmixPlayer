@@ -9,3 +9,11 @@ mklink /H bin\NLPackerDefaultData.ini data\external\NLPackerDefaultData.ini
 
 if not exist "bin\levels" mkdir "bin\levels"
 mklink /J "bin\levels\Test Levels" "data\external\levels\Test Levels"
+mklink /J "bin\levels\CovoxLemmings" "data\external\levels\CovoxLemmings"
+mklink /J "bin\levels\ExtraLevels" "data\external\levels\ExtraLevels"
+mklink /J "bin\levels\HolidayLemmings" "data\external\levels\HolidayLemmings"
+mklink /J "bin\levels\Lemmings" "data\external\levels\Lemmings"
+mklink /J "bin\levels\MazuLems" "data\external\levels\MazuLems"
+mklink /J "bin\levels\OhNoMoreLemmings" "data\external\levels\OhNoMoreLemmings"
+mklink /J "bin\levels\PrimaLemmings" "data\external\levels\PrimaLemmings"
+mklink /J "bin\levels\XmasLemmings" "data\external\levels\XmasLemmings"
