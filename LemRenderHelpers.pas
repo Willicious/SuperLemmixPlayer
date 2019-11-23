@@ -491,7 +491,7 @@ begin
   fHeight := aHeight;
   for i := Low(TRenderLayer) to High(TRenderLayer) do
   begin
-    Items[i].SetSize(Width, Height);
+    Items[i].SetSize(Width * ResMod, Height * ResMod);
     Items[i].Clear($00000000);
   end;
 end;

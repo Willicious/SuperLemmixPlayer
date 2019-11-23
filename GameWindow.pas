@@ -337,8 +337,8 @@ begin
 
   SkillPanel.Zoom := Max(SkillPanel.Zoom, fInternalZoom); // this checks for MaxZoom automatically.
 
-  Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom);
-  Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40), GameParams.Level.Info.Height * fInternalZoom);
+  Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
+  Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40), GameParams.Level.Info.Height * fInternalZoom * ResMod);
   Img.Left := (ClientWidth - Img.Width) div 2;
   SkillPanel.Left := (ClientWidth - SkillPanel.Width) div 2;
   // tops are calculated later
@@ -350,10 +350,10 @@ begin
   SkillPanel.Image.Left := (ClientWidth - SkillPanel.Image.Width) div 2;
   SkillPanel.Image.Update;
 
-  MinScroll := -((GameParams.Level.Info.Width * fInternalZoom) - Img.Width);
+  MinScroll := -((GameParams.Level.Info.Width * fInternalZoom * ResMod) - Img.Width);
   MaxScroll := 0;
 
-  MinVScroll := -((GameParams.Level.Info.Height * fInternalZoom) - Img.Height);
+  MinVScroll := -((GameParams.Level.Info.Height * fInternalZoom * ResMod) - Img.Height);
   MaxVScroll := 0;
 
   if not NoRecenter then
@@ -1609,9 +1609,9 @@ begin
 
   Sca := Min(Sca, fMaxZoom);
 
-  fInternalZoom := Sca;
+  fInternalZoom := Max(Sca div ResMod, 1);
   GameParams.TargetBitmap := Img.Bitmap;
-  GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+  GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
   fGame.PrepareParams;
 
   // set timers
@@ -1630,8 +1630,8 @@ begin
 
   HorzStart := GameParams.Level.Info.ScreenPosition - ((Img.Width div 2) div Sca);
   VertStart := GameParams.Level.Info.ScreenYPosition - ((Img.Height div 2) div Sca);
-  HorzStart := HorzStart * Sca;
-  VertStart := VertStart * Sca;
+  HorzStart := HorzStart * Sca * ResMod;
+  VertStart := VertStart * Sca * ResMod;
   Img.OffsetHorz := Min(Max(-HorzStart, MinScroll), MaxScroll);
   Img.OffsetVert := Min(Max(-VertStart, MinVScroll), MaxVScroll);
 
@@ -1670,13 +1670,13 @@ begin
   O :=  O + Img.Width div 2;
   if O < MinScroll then O := MinScroll;
   if O > MaxScroll then O := MaxScroll;
-  Img.OffSetHorz := O;
+  Img.OffSetHorz := O * ResMod;
 
   O := -P.Y * 8 * fInternalZoom;
   O :=  O + Img.Height div 2;
   if O < MinVScroll then O := MinVScroll;
   if O > MaxVScroll then O := MaxVScroll;
-  Img.OffsetVert := O;
+  Img.OffsetVert := O * ResMod;
 
   fNeedRedraw := rdRefresh;
 end;

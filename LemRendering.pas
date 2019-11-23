@@ -2457,7 +2457,7 @@ begin
   ApplyRemovedTerrain(0, 0, fPhysicsMap.Width, fPhysicsMap.Height);
 
   // Combine all layers to the WorldMap
-  World.SetSize(fLayers.Width, fLayers.Height);
+  World.SetSize(fLayers.Width * ResMod, fLayers.Height * ResMod);
   fLayers.PhysicsMap := fPhysicsMap;
   fLayers.CombineTo(World, World.BoundsRect, false, fTransparentBackground);
 end;
