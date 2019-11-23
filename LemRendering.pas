@@ -1857,6 +1857,17 @@ begin
                          ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,
                          ThisAnim.MetaAnimation.Height + Gadget.HeightVariance);
 
+    if GameParams.HighResolution then
+    begin
+      DstRect.Right := DstRect.Right + DstRect.Left;
+      DstRect.Bottom := DstRect.Bottom + DstRect.Top;
+
+      DstRect.Left := DstRect.Left * 2;
+      DstRect.Top := DstRect.Top * 2;
+
+      // Yes. This is correct.
+    end;
+
     DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
 
