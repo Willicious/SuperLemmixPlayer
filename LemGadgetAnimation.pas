@@ -208,6 +208,7 @@ type
 
       property Width: Integer read fWidth;
       property Height: Integer read fHeight;
+
       property OffsetX: Integer read fOffsetX write fOffsetX;
       property OffsetY: Integer read fOffsetY write fOffsetY;
 
@@ -503,6 +504,10 @@ var
   BaseTrigger: TGadgetAnimationTrigger;
   LoadPath: String;
   S: String;
+
+  NeedUpscale: Boolean;
+  Bitmaps: TBitmaps;
+  i: Integer;
 begin
   Clear;
 
@@ -512,16 +517,35 @@ begin
 
   if LeftStr(fName, 1) <> '*' then
   begin
-    LoadPath := AppPath + SFStyles + aCollection + '\objects\' + aPiece;
+    if GameParams.HighResolution then
+      LoadPath := AppPath + SFStyles + aCollection + SFPiecesObjectsHighRes + aPiece
+    else
+      LoadPath := AppPath + SFStyles + aCollection + SFPiecesObjects + aPiece;
+
     if fName <> '' then
       LoadPath := LoadPath + '_' + fName; // for backwards-compatible or simply unnamed primaries
     LoadPath := LoadPath + '.png';
+
+    if GameParams.HighResolution and not FileExists(LoadPath) then
+    begin
+      LoadPath := AppPath + SFStyles + aCollection + SFPiecesObjects + aPiece;
+
+      if fName <> '' then
+        LoadPath := LoadPath + '_' + fName; // for backwards-compatible or simply unnamed primaries
+      LoadPath := LoadPath + '.png';
+
+      NeedUpscale := true;
+    end else
+      NeedUpscale := false;
+
+    // We need to know fHorizontalStrip before we can do the upscale.
 
     TPngInterface.LoadPngFile(LoadPath, fSourceImage);
   end else begin
     fSourceImage.SetSize(1, 1);
     fSourceImage.Clear(0);
     fFrameCount := 1;
+    NeedUpscale := false;
   end;
 
   // fPrimary is only set by TGadgetAnimations
@@ -546,19 +570,28 @@ begin
     fHeight := fSourceImage.Height div fFrameCount;
   end;
 
-  if fPrimary then
+  if NeedUpscale then
   begin
-    fMainObjectWidth := fWidth;
-    fMainObjectHeight := fHeight;
+    Bitmaps := MakeFrameBitmaps;
+    for i := 0 to Bitmaps.Count-1 do
+      Upscale(Bitmaps[i], umPixelArt);
+    CombineBitmaps(Bitmaps);
+    fSourceImage.SaveToFile(AppPath + 'test.bmp');
   end;
 
-  fOffsetX := aSegment.LineNumeric['offset_x'];
-  fOffsetY := aSegment.LineNumeric['offset_y'];
+  if fPrimary then
+  begin
+    fMainObjectWidth := fWidth div ResMod;
+    fMainObjectHeight := fHeight div ResMod;
+  end;
 
-  fCutTop := aSegment.LineNumeric['nine_slice_top'];
-  fCutRight := aSegment.LineNumeric['nine_slice_right'];
-  fCutBottom := aSegment.LineNumeric['nine_slice_bottom'];
-  fCutLeft := aSegment.LineNumeric['nine_slice_left'];
+  fOffsetX := aSegment.LineNumeric['offset_x'] * ResMod;
+  fOffsetY := aSegment.LineNumeric['offset_y'] * ResMod;
+
+  fCutTop := aSegment.LineNumeric['nine_slice_top'] * ResMod;
+  fCutRight := aSegment.LineNumeric['nine_slice_right'] * ResMod;
+  fCutBottom := aSegment.LineNumeric['nine_slice_bottom'] * ResMod;
+  fCutLeft := aSegment.LineNumeric['nine_slice_left'] * ResMod;
 
   BaseTrigger := TGadgetAnimationTrigger.Create;
 
@@ -609,7 +642,7 @@ end;
 
 procedure TGadgetAnimation.Clear;
 begin
-  fSourceImage.SetSize(1, 1);
+  fSourceImage.SetSize(ResMod, ResMod);
   fSourceImage.Clear(0);
   fMaskColor := $FFFFFFFF;
 
@@ -625,8 +658,8 @@ begin
   fZIndex := 0;
   fStartFrameIndex := 0;
 
-  fWidth := 1;
-  fHeight := 1;
+  fWidth := ResMod;
+  fHeight := ResMod;
 
   fOffsetX := 0;
   fOffsetY := 0;

@@ -76,8 +76,12 @@ function UnderWine: Boolean;
 function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
 
 procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
+function ResMod: Integer; // Returns 1 when in low-res, 2 when in high-res
 
 implementation
+
+uses
+  GameControl;
 
 var
   _AppPath: string;
@@ -455,6 +459,14 @@ begin
   end;
 end;
 
+
+function ResMod: Integer;
+begin
+  if GameParams.HighResolution then
+    ResMod := 2
+  else
+    ResMod := 1;
+end;
 
 { TBitmaps }
 
