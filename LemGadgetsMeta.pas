@@ -292,8 +292,8 @@ begin
     GadgetAccessor.Animations.AddPrimary(NewAnim);
     NewAnim.Load(aCollection, aPiece, Sec.Section['PRIMARY_ANIMATION'], aTheme);
 
-    fWidth := NewAnim.Width;
-    fHeight := NewAnim.Height;
+    fWidth := NewAnim.Width div ResMod;
+    fHeight := NewAnim.Height div ResMod;
     fFrameCount := NewAnim.FrameCount;
 
     Sec.DoForEachSection('ANIMATION',
@@ -554,8 +554,8 @@ begin
   i := GetImageIndex(Flip, Invert, Rotate);
   with fVariableInfo[i] do
     case aProp of
-      ov_Width: Result := Animations.PrimaryAnimation.Width;
-      ov_Height: Result := Animations.PrimaryAnimation.Height;
+      ov_Width: Result := fWidth;
+      ov_Height: Result := fHeight;
       ov_TriggerLeft: Result := TriggerLeft;
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
