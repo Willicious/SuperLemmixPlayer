@@ -56,6 +56,11 @@ type
                   rlParticles,
                   rlLemmings);
 
+const
+  SCALE_ON_MERGE_LAYERS = [rlBackground, rlLowShadows, rlTerrain, rlTriggers, rlHighShadows, rlObjectHelpers, rlParticles, rlLemmings];
+
+type
+
   TRenderBitmaps = class(TBitmaps)
   private
     fWidth: Integer;
@@ -233,6 +238,7 @@ const
 implementation
 
 uses
+  GameControl,
   Math;
 
 { TRenderInterface }
@@ -504,8 +510,14 @@ end;
 procedure TRenderBitmaps.CombineTo(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false; aTransparentBackground: Boolean = false);
 var
   i: TRenderLayer;
+  LRRegion: TRect;
 begin
   aDst.BeginUpdate;
+
+  LRRegion.Left := aRegion.Left div ResMod;
+  LRRegion.Top := aRegion.Top div ResMod;
+  LRRegion.Right := aRegion.Right div ResMod;
+  LRRegion.Bottom := aRegion.Bottom div ResMod;
 
   if aTransparentBackground then
     aDst.Clear($00000000)
@@ -520,21 +532,21 @@ begin
     if not fIsEmpty[rlOnTerrainGadgets] then
     begin
       fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyOnTerrain;
-      fPhysicsMap.DrawTo(Items[rlOnTerrainGadgets], aRegion, aRegion);
+      fPhysicsMap.DrawTo(Items[rlOnTerrainGadgets], aRegion, LRRegion);
     end;
 
     // Delete One-Way-Arrows not on non-steel terrain
     if not fIsEmpty[rlOneWayArrows] then
     begin
       fPhysicsMap.OnPixelCombine := CombinePhysicsMapOneWays;
-      fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, aRegion);
+      fPhysicsMap.DrawTo(Items[rlOneWayArrows], aRegion, LRRegion);
     end;
 
     // Delete High Shadows not on non-steel terrain
     if not fIsEmpty[rlHighShadows] then
     begin
       fPhysicsMap.OnPixelCombine := CombinePhysicsMapOnlyDestructible;
-      fPhysicsMap.DrawTo(Items[rlHighShadows], aRegion, aRegion);
+      fPhysicsMap.DrawTo(Items[rlHighShadows], LRRegion, LRRegion);
     end;
   end;
 
@@ -554,7 +566,12 @@ begin
     end;
 
     if not fIsEmpty[i] then
-      Items[i].DrawTo(aDst, aRegion, aRegion);
+    begin
+      if i in SCALE_ON_MERGE_LAYERS then
+        Items[i].DrawTo(aDst, aRegion, LRRegion)
+      else
+        Items[i].DrawTo(aDst, aRegion, aRegion);
+    end;
   end;
   aDst.EndUpdate;
   aDst.Changed;
@@ -562,9 +579,10 @@ end;
 
 procedure TRenderBitmaps.DrawClearPhysicsTerrain(aDst: TBitmap32; aRegion: TRect);
 var
-  x, y: Integer;
-  PSrc,PDst: PColor32;
+  x, y, LRy: Integer;
+  PSrc, PDst, PDst2: PColor32;
   C: TColor32;
+  LRRegion: TRect;
 
   function Redify(aColor: TColor32): TColor32;
   var
@@ -582,16 +600,26 @@ begin
   // It's very messy to track position in a custom pixelcombine, hence using an entirely
   // custom procedure instead.
   IntersectRect(aRegion, aRegion, fPhysicsMap.BoundsRect);
+
+  LRRegion.Left := aRegion.Left div ResMod;
+  LRRegion.Top := aRegion.Top div ResMod;
+  LRRegion.Right := aRegion.Right div ResMod;
+  LRRegion.Bottom := aRegion.Bottom div ResMod;
+
   for y := aRegion.Top to aRegion.Bottom-1 do
   begin
-    PSrc := fPhysicsMap.PixelPtr[aRegion.Left, y];
-    PDst := aDst.PixelPtr[aRegion.Left, y];
+    LRy := y div ResMod;
+    PSrc := fPhysicsMap.PixelPtr[aRegion.Left, y div ResMod];
+    PDst := aDst.PixelPtr[LRRegion.Left, y];
+    PDst2 := PDst;
+
     Dec(PSrc); // so we can put Inc(P) at the start of the next loop rather than having to use lots of if statements
     Dec(PDst);
-    for x := aRegion.Left to aRegion.Right-1 do
+    for x := LRRegion.Left to LRRegion.Right-1 do
     begin
       Inc(PSrc);
-      Inc(PDst);
+      Inc(PDst, ResMod);
+      Inc(PDst2, ResMod);
 
       if PSrc^ and PM_SOLID <> 0 then
       begin
@@ -602,15 +630,17 @@ begin
       end else
         C := 0;
 
-      if (x = 0) or (y = 0) or (x = fPhysicsMap.Width-1) or (y = fPhysicsMap.Height-1) then
+      if (x = 0) or (y = 0) or (x = fPhysicsMap.Width-1) or (LRy = fPhysicsMap.Height-1) then
         C := Redify(C);
 
       if C = 0 then Continue;
 
-      if ((x mod 2) <> (y mod 2)) then
+      if ((x mod 2) <> (LRy mod 2)) then
           C := C - $00202020;
 
       PDst^ := C;
+      if GameParams.HighResolution then
+        PDst2^ := C;
     end;
   end;
 end;

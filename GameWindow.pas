@@ -1059,15 +1059,15 @@ begin
     Img.BeginUpdate;
     case GameScroll of
       gsRight:
-        Scroll(8, 0);
+        Scroll(8 * ResMod, 0);
       gsLeft:
-        Scroll(-8, 0);
+        Scroll(-8 * ResMod, 0);
     end;
     case GameVScroll of
       gsUp:
-        Scroll(0, -8);
+        Scroll(0, -8 * ResMod);
       gsDown:
-        Scroll(0, 8);
+        Scroll(0, 8 * ResMod);
     end;
     Img.EndUpdate;
   end;
