@@ -2461,7 +2461,7 @@ begin
   // Draw all terrain pieces
   for i := 0 to RenderInfoRec.Level.Terrains.Count-1 do
   begin
-    DrawTerrain(fLayers[rlTerrain], RenderInfoRec.Level.Terrains[i], false {for now});
+    DrawTerrain(fLayers[rlTerrain], RenderInfoRec.Level.Terrains[i], GameParams.HighResolution);
   end;
 
   // remove non-solid pixels from rlTerrain (possible coming from alpha-blending)
