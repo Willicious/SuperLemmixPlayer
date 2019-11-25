@@ -510,8 +510,14 @@ begin
       
       if PhysicsArrPtr[cy * MapWidth + cx] and PM_SOLID = 0 then
       begin
-        // should we double-check all terrain bits are erased?
-        TerrLayerArrPtr[cy * MapWidth + cx] := 0;
+        if GameParams.HighResolution then
+        begin
+          TerrLayerArrPtr[(cy * MapWidth * 4) + (cx * 2)] := 0;
+          TerrLayerArrPtr[(cy * MapWidth * 4) + (cx * 2) + 1] := 0;
+          TerrLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2)] := 0;
+          TerrLayerArrPtr[((cy * 2) + 1) * (MapWidth * 2) + (cx * 2) + 1] := 0;
+        end else
+          TerrLayerArrPtr[cy * MapWidth + cx] := 0;
       end;
     end;
   end;
