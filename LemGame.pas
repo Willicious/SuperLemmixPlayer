@@ -1891,9 +1891,9 @@ begin
     // Is Lemming inside cursor (only check if we are not using Hightlightning!)
     if (not LemIsInCursor(L, MousePos)) and (not (IsHighlight or IsReplay)) then Continue;
     // Directional select
-    if (fSelectDx <> 0) and (fSelectDx <> L.LemDx) then Continue;
+    if (fSelectDx <> 0) and (fSelectDx <> L.LemDx) and (not (IsHighlight or IsReplay)) then Continue;
     // Select only walkers
-    if IsSelectWalkerHotkey and (L.LemAction <> baWalking) then Continue;
+    if IsSelectWalkerHotkey and (L.LemAction <> baWalking) and (not (IsHighlight or IsReplay)) then Continue;
 
     // Increase number of lemmings in cursor (if not a zombie or neutral)
     if not L.CannotReceiveSkills then Inc(NumLemInCursor);
