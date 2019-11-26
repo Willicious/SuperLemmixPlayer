@@ -1065,43 +1065,40 @@ begin
     Old := fLastDrawnStr[i];
     New := fNewDrawStr[i];
 
-    //if Old <> New then
+    case New of
+      '%':        CharID := 0;
+      '0'..'9':   CharID := ord(New) - ord('0') + 1;
+      '-':        CharID := 11;
+      'A'..'Z':   CharID := ord(New) - ord('A') + 12;
+      #91 .. #97: CharID := ord(New) - ord('A') + 12;
+    else CharID := -1;
+    end;
+
+    if (CharID >= 0) then
     begin
-      case New of
-        '%':        CharID := 0;
-        '0'..'9':   CharID := ord(New) - ord('0') + 1;
-        '-':        CharID := 11;
-        'A'..'Z':   CharID := ord(New) - ord('A') + 12;
-        #91 .. #97: CharID := ord(New) - ord('A') + 12;
-      else CharID := -1;
-      end;
-
-      if (CharID >= 0) then
+      if (lkNeutral in LemmingKinds) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
       begin
-        if (lkNeutral in LemmingKinds) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
-        begin
-          SpecialCombine := true;
+        SpecialCombine := true;
 
-          if lkNormal in LemmingKinds then
-            fCombineHueShift := -1 / 6
-          else
-            fCombineHueShift := 1 / 6;
-        end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
-        begin
-          SpecialCombine := true;
-          fCombineHueShift := -1 / 3;
-        end else
-          SpecialCombine := false;
+        if lkNormal in LemmingKinds then
+          fCombineHueShift := -1 / 6
+        else
+          fCombineHueShift := 1 / 6;
+      end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
+      begin
+        SpecialCombine := true;
+        fCombineHueShift := -1 / 3;
+      end else
+        SpecialCombine := false;
 
-        if SpecialCombine then
-        begin
-          fInfoFont[CharID].DrawMode := dmCustom;
-          fInfoFont[CharID].OnPixelCombine := CombineShift;
-          fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
-        end else begin
-          fInfoFont[CharID].DrawMode := dmOpaque;
-          fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
-        end;
+      if SpecialCombine then
+      begin
+        fInfoFont[CharID].DrawMode := dmCustom;
+        fInfoFont[CharID].OnPixelCombine := CombineShift;
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+      end else begin
+        fInfoFont[CharID].DrawMode := dmOpaque;
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
       end;
     end;
   end;

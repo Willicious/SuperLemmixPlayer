@@ -268,7 +268,6 @@ begin
     var
       A: TLemming absolute rA;
       B: TLemming absolute rB;
-      aVal, bVal: Integer;
     const
       SELECTED_LEMMING = 128;
       HIGHLIT_LEMMING = 64;
