@@ -248,7 +248,7 @@ end;
 procedure TRenderer.DrawLemmings(UsefulOnly: Boolean = false);
 var
   i: Integer;
-  SelectedLemming: TLemming;
+  SelectedLemming, HighlitLemming: TLemming;
   LemmingList: TLemmingList;
 begin
   if not fLayers.fIsEmpty[rlParticles] then fLayers[rlParticles].Clear(0);
@@ -261,6 +261,7 @@ begin
     LemmingList.Add(fRenderInterface.LemmingList[i]);
 
   SelectedLemming := fRenderInterface.SelectedLemming;
+  HighlitLemming := fRenderInterface.HighlitLemming;
 
   LemmingList.SortList(
     function (rA, rB: Pointer): Integer
@@ -270,14 +271,16 @@ begin
       aVal, bVal: Integer;
     const
       SELECTED_LEMMING = 128;
-      NOT_ZOMBIE_LEMMING = 64;
-      NOT_NEUTRAL_LEMMING = 32;
-      PERMANENT_SKILL_LEMMING = 16;
+      HIGHLIT_LEMMING = 64;
+      NOT_ZOMBIE_LEMMING = 32;
+      NOT_NEUTRAL_LEMMING = 16;
+      PERMANENT_SKILL_LEMMING = 8;
 
       function MakePriorityValue(L: TLemming): Integer;
       begin
         Result := 0;
         if L = SelectedLemming then Result := Result + SELECTED_LEMMING;
+        if L = HighlitLemming then Result := Result + HIGHLIT_LEMMING;
         if (not L.LemIsNeutral) or (L.LemIsZombie) then Result := Result + NOT_NEUTRAL_LEMMING;
         if not L.LemIsZombie then Result := Result + NOT_ZOMBIE_LEMMING;
         if L.HasPermanentSkills then Result := Result + PERMANENT_SKILL_LEMMING;
