@@ -599,18 +599,20 @@ var
 begin
   // It's very messy to track position in a custom pixelcombine, hence using an entirely
   // custom procedure instead.
-  IntersectRect(aRegion, aRegion, fPhysicsMap.BoundsRect);
 
   LRRegion.Left := aRegion.Left div ResMod;
   LRRegion.Top := aRegion.Top div ResMod;
   LRRegion.Right := aRegion.Right div ResMod;
   LRRegion.Bottom := aRegion.Bottom div ResMod;
 
+  IntersectRect(LRRegion, LRRegion, fPhysicsMap.BoundsRect);
+  IntersectRect(aRegion, aRegion, aDst.BoundsRect);
+
   for y := aRegion.Top to aRegion.Bottom-1 do
   begin
     LRy := y div ResMod;
-    PSrc := fPhysicsMap.PixelPtr[aRegion.Left, y div ResMod];
-    PDst := aDst.PixelPtr[LRRegion.Left, y];
+    PSrc := fPhysicsMap.PixelPtr[LRRegion.Left, y div ResMod];
+    PDst := aDst.PixelPtr[aRegion.Left, y];
     PDst2 := PDst;
 
     Dec(PSrc); // so we can put Inc(P) at the start of the next loop rather than having to use lots of if statements
