@@ -1,9 +1,0 @@
-output_name orig_dirt
-
-$object
-  index 0
-  $merge
-    index 7
-    side top
-  $end
-$end

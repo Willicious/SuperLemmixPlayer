@@ -1,9 +1,0 @@
-output_name lpii_tree
-
-$object
-  index 0
-  $merge
-    index 4
-    side top
-  $end
-$end
