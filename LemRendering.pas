@@ -1014,16 +1014,28 @@ procedure TRenderer.AddTerrainPixel(X, Y: Integer; Color: TColor32);
 var
   P: PColor32;
   C: TColor32;
-begin
-  if not PtInRect(fLayers[rlTerrain].BoundsRect, Point(X, Y)) then Exit;
-  
-  P := fLayers[rlTerrain].PixelPtr[X, Y];
-  if P^ and $FF000000 <> $FF000000 then
+
+  procedure Apply(X, Y: Integer);
   begin
-    C := Color; //Theme.Colors[MASK_COLOR];
-    MergeMem(P^, C);
-    P^ := C;
+    P := fLayers[rlTerrain].PixelPtr[X, Y];
+    if P^ and $FF000000 <> $FF000000 then
+    begin
+      C := Color; //Theme.Colors[MASK_COLOR];
+      MergeMem(P^, C);
+      P^ := C;
+    end;
   end;
+begin
+  if not PtInRect(fPhysicsMap.BoundsRect, Point(X, Y)) then Exit;
+
+  if GameParams.HighResolution then
+  begin
+    Apply(X * 2, Y * 2);
+    Apply(X * 2 + 1, Y * 2);
+    Apply(X * 2, Y * 2 + 1);
+    Apply(X * 2 + 1, Y * 2 + 1);
+  end else
+    Apply(X, Y);
 end;
 
 procedure TRenderer.AddStoner(X, Y: Integer);
