@@ -106,6 +106,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Time Skip'
       'Special Skip'
       'Fast Forward'
+      'Slow Motion'
       'Save Image'
       'Load Replay'
       'Save Replay'

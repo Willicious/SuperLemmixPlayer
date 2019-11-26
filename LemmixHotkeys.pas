@@ -35,6 +35,7 @@ type
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
+                         lka_SlowMotion,
                          lka_SaveImage,
                          lka_LoadReplay,
                          lka_SaveReplay,
@@ -228,6 +229,7 @@ begin
   if s = 'skip' then Result := lka_Skip;
   if s = 'special_skip' then Result := lka_SpecialSkip;
   if s = 'fastforward' then Result := lka_FastForward;
+  if s = 'slow_motion' then Result := lka_SlowMotion;
   if s = 'save_image' then Result := lka_SaveImage;
   if s = 'load_replay' then Result := lka_LoadReplay;
   if s = 'save_replay' then Result := lka_SaveReplay;
@@ -365,6 +367,7 @@ var
       lka_Skip:             Result := 'Skip';
       lka_SpecialSkip:      Result := 'Special_Skip';
       lka_FastForward:      Result := 'FastForward';
+      lka_SlowMotion:       Result := 'Slow_Motion';
       lka_SaveImage:        Result := 'Save_Image';
       lka_LoadReplay:       Result := 'Load_Replay';
       lka_SaveReplay:       Result := 'Save_Replay';

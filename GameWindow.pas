@@ -144,6 +144,7 @@ type
     GameVScroll          : TGameScroll;
     IdealFrameTimeMS     : Cardinal;          // normal frame speed in milliseconds
     IdealFrameTimeMSFast : Cardinal;          // fast forward framespeed in milliseconds
+    IdealFrameTimeMSSlow : Cardinal;
     IdealScrollTimeMS    : Cardinal;          // scroll speed in milliseconds
     PrevCallTime         : Cardinal;          // last time we did something in idle
     PrevScrollTime       : Cardinal;          // last time we scrolled in idle
@@ -493,7 +494,7 @@ var
   ContinueHyper: Boolean;
 
   CurrTime: Cardinal;
-  Fast, ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
+  Fast, Slow, ForceOne, TimeForFrame, TimeForPausedRR, TimeForFastForwardFrame, TimeForScroll, Hyper, Pause: Boolean;
   PanelFrameSkip: Integer;
 begin
   if fCloseToScreen <> gstUnknown then
@@ -522,10 +523,14 @@ begin
 
   Pause := (fGameSpeed = gspPause);
   Fast := (fGameSpeed = gspFF);
+  Slow := (fGameSpeed = gspSlowMo);
   ForceOne := fForceUpdateOneFrame or fRenderInterface.ForceUpdate;
   fForceUpdateOneFrame := (PanelFrameSkip > 0);
   CurrTime := TimeGetTime;
-  TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
+  if Slow then
+    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMSSlow)
+  else
+    TimeForFrame := (not Pause) and (CurrTime - PrevCallTime > IdealFrameTimeMS); // don't check for frame advancing when paused
   TimeForPausedRR := (Pause) and (CurrTime - PrevPausedRRTime > IdealFrameTimeMS);
   TimeForFastForwardFrame := Fast and (CurrTime - PrevCallTime > IdealFrameTimeMSFast);
   TimeForScroll := CurrTime - PrevScrollTime > IdealScrollTimeMS;
@@ -1194,6 +1199,7 @@ const
                          lka_Skip,
                          lka_SpecialSkip,
                          lka_FastForward,
+                         lka_SlowMotion,
                          lka_SaveImage,
                          lka_LoadReplay,
                          lka_SaveReplay,
@@ -1288,10 +1294,16 @@ begin
       lka_Cheat: Game.Cheat;
       lka_FastForward: begin
                          case fGameSpeed of
-                           gspNormal: GameSpeed := gspFF;
+                           gspNormal, gspSlowMo: GameSpeed := gspFF;
                            gspFF: GameSpeed := gspNormal;
                          end;
                        end;
+      lka_SlowMotion: begin
+                        case fGameSpeed of
+                          gspNormal, gspFF: GameSpeed := gspSlowMo;
+                          gspSlowMo: GameSpeed := gspNormal;
+                        end;
+                      end;
       lka_SaveImage: SaveShot;
       lka_LoadReplay: LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
@@ -1605,7 +1617,8 @@ begin
   // set timers
   IdealFrameTimeMSFast := 10;
   IdealScrollTimeMS := 15;
-  IdealFrameTimeMS := 60; // slow motion
+  IdealFrameTimeMS := 60; // normal
+  IdealFrameTimeMSSlow := 240;
 
   Img.Scale := Sca;
 

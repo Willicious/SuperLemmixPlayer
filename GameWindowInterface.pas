@@ -12,7 +12,8 @@ type
   TGameSpeed = (
     gspNormal,
     gspPause,
-    gspFF
+    gspFF,
+    gspSlowMo
   );
 
   IGameWindow = Interface(IInterface)

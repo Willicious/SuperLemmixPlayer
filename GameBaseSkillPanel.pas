@@ -1347,7 +1347,7 @@ begin
       begin
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed = gspNormal then
+        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo] then
           fGameWindow.GameSpeed := gspFF;
       end;
     spbRestart: fGameWindow.GotoSaveState(0, -1);
