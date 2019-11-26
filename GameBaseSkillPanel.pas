@@ -1491,6 +1491,8 @@ end;
 
 procedure TBaseSkillPanel.SetZoom(NewZoom: Integer);
 begin
+  if GameParams.HighResolution then
+    NewZoom := NewZoom * 2;
   NewZoom := Max(Min(MaxZoom, NewZoom), 1);
   if (NewZoom = Trunc(fImage.Scale)) and fSetInitialZoom then Exit;
 

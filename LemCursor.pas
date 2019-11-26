@@ -81,6 +81,10 @@ begin
     for i := 0 to fMaxZoom-1 do
     begin
       Zoom := i + 1;
+
+      if GameParams.HighResolution then
+        Zoom := Zoom * 2;
+
       TempBitmap32.SetSize(Round(aBitmap.Width * Zoom * BaseScale), Round(aBitmap.Height * Zoom * BaseScale));
       TempBitmap32.Clear(0);
       TempBitmap32.Draw(TempBitmap32.BoundsRect, aBitmap.BoundsRect, aBitmap);

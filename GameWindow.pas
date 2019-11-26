@@ -1431,9 +1431,17 @@ procedure TGameWindow.SetAdjustedGameCursorPoint(BitmapPoint: TPoint);
 {-------------------------------------------------------------------------------
   convert the normal hotspot to the hotspot the game uses (4,9 instead of 7,7)
 -------------------------------------------------------------------------------}
+var
+  NewPoint: TPoint;
 begin
   // todo: work out WHY this change is needed
-  Game.CursorPoint := Point(BitmapPoint.X - 3, BitmapPoint.Y + 2);
+  NewPoint := Point(BitmapPoint.X - 3, BitmapPoint.Y + 2);
+  if GameParams.HighResolution then
+  begin
+    NewPoint.X := NewPoint.X div 2;
+    NewPoint.Y := NewPoint.Y div 2;
+  end;
+  Game.CursorPoint := NewPoint;
 end;
 
 procedure TGameWindow.Img_MouseDown(Sender: TObject; Button: TMouseButton;
@@ -1609,7 +1617,13 @@ begin
 
   Sca := Min(Sca, fMaxZoom);
 
-  fInternalZoom := Max(Sca div ResMod, 1);
+  if GameParams.HighResolution then
+  begin
+    Sca := (Sca + 1) div 2;
+    fMaxZoom := (fMaxZoom + 1) div 2;
+  end;
+
+  fInternalZoom := Max(Sca, 1);
   GameParams.TargetBitmap := Img.Bitmap;
   GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
   fGame.PrepareParams;
