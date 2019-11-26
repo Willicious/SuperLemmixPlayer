@@ -62,6 +62,8 @@ type
     fPreviewGadgets     : TGadgetList; // For rendering from Preview screen
     fDoneBackgroundDraw : Boolean;
 
+    fTempLemmingList: TLemmingList;
+
     fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
     fPhysicsRenderingType: TPhysicsRenderingType;
     fPhysicsRenderSimpleAutosteel: Boolean;
@@ -142,7 +144,7 @@ type
 
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
-    procedure DrawThisLemming(aLemming: TLemming; Selected: Boolean = false; UsefulOnly: Boolean = false);
+    procedure DrawThisLemming(aLemming: TLemming; UsefulOnly: Boolean = false);
     procedure DrawLemmingCountdown(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
 
@@ -252,17 +254,41 @@ begin
   if not fLayers.fIsEmpty[rlParticles] then fLayers[rlParticles].Clear(0);
   fLayers[rlLemmings].Clear(0);
 
-  LemmingList := fRenderInterface.LemmingList;
+  LemmingList := fTempLemmingList;
 
-  // Draw all lemmings, except the one below the cursor
+  LemmingList.Clear;
+  for i := 0 to fRenderInterface.LemmingList.Count-1 do
+    LemmingList.Add(fRenderInterface.LemmingList[i]);
+
   SelectedLemming := fRenderInterface.SelectedLemming;
-  for i := 0 to LemmingList.Count-1 do
-    if LemmingList[i] <> SelectedLemming then
-      DrawThisLemming(LemmingList[i], false);
 
-  // Draw the lemming below the cursor
-  if SelectedLemming <> nil then
-    DrawThisLemming(fRenderInterface.SelectedLemming, true, UsefulOnly);
+  LemmingList.SortList(
+    function (rA, rB: Pointer): Integer
+    var
+      A: TLemming absolute rA;
+      B: TLemming absolute rB;
+      aVal, bVal: Integer;
+    const
+      SELECTED_LEMMING = 128;
+      NOT_ZOMBIE_LEMMING = 64;
+      NOT_NEUTRAL_LEMMING = 32;
+      PERMANENT_SKILL_LEMMING = 16;
+
+      function MakePriorityValue(L: TLemming): Integer;
+      begin
+        Result := 0;
+        if L = SelectedLemming then Result := Result + SELECTED_LEMMING;
+        if (not L.LemIsNeutral) or (L.LemIsZombie) then Result := Result + NOT_NEUTRAL_LEMMING;
+        if not L.LemIsZombie then Result := Result + NOT_ZOMBIE_LEMMING;
+        if L.HasPermanentSkills then Result := Result + PERMANENT_SKILL_LEMMING;
+      end;
+    begin
+      Result := MakePriorityValue(A) - MakePriorityValue(B);
+    end
+  );
+
+  for i := 0 to LemmingList.Count-1 do
+    DrawThisLemming(LemmingList[i], UsefulOnly);
 
   // Draw particles for exploding lemmings
   fLayers.fIsEmpty[rlParticles] := True;
@@ -277,7 +303,7 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawThisLemming(aLemming: TLemming; Selected: Boolean = false; UsefulOnly: Boolean = false);
+procedure TRenderer.DrawThisLemming(aLemming: TLemming; UsefulOnly: Boolean = false);
 var
   SrcRect, DstRect: TRect;
   SrcAnim: TBitmap32;
@@ -285,6 +311,8 @@ var
   TriggerRect: TRect;
   TriggerLeft, TriggerTop: Integer;
   i: Integer;
+
+  Selected: Boolean;
 
   function GetFrameBounds: TRect;
   begin
@@ -311,6 +339,11 @@ var
 begin
   if aLemming.LemRemoved then Exit;
   if aLemming.LemTeleporting then Exit;
+
+  if fRenderInterface <> nil then
+    Selected := aLemming = fRenderInterface.SelectedLemming
+  else
+    Selected := false;
 
   Recolorer.Lemming := aLemming;
   Recolorer.DrawAsSelected := Selected;
@@ -2024,6 +2057,8 @@ begin
   fBgColor := $00000000;
   fAni := TBaseAnimationSet.Create;
   fPreviewGadgets := TGadgetList.Create;
+  fTempLemmingList := TLemmingList.Create(false);
+
   for i := Low(THelperIcon) to High(THelperIcon) do
   begin
     if i = hpi_None then Continue;
@@ -2054,6 +2089,8 @@ begin
   fPhysicsMap.Free;
   fAni.Free;
   fPreviewGadgets.Free;
+  fTempLemmingList.Free;
+
   for iIcon := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[iIcon].Free;
 
