@@ -600,13 +600,25 @@ begin
   // It's very messy to track position in a custom pixelcombine, hence using an entirely
   // custom procedure instead.
 
-  LRRegion.Left := aRegion.Left div ResMod;
-  LRRegion.Top := aRegion.Top div ResMod;
-  LRRegion.Right := aRegion.Right div ResMod;
-  LRRegion.Bottom := aRegion.Bottom div ResMod;
+  if GameParams.HighResolution then
+  begin
+    // This prevents off-by-1 errors.
+    aRegion.Left := (aRegion.Left div ResMod) * ResMod;
+    aRegion.Top := (aRegion.Top div ResMod) * ResMod;
+    aRegion.Right := ((aRegion.Right + 1) div ResMod) * ResMod;
+    aRegion.Top := ((aRegion.Top + 1) div ResMod) * ResMod;
 
-  IntersectRect(LRRegion, LRRegion, fPhysicsMap.BoundsRect);
-  IntersectRect(aRegion, aRegion, aDst.BoundsRect);
+    LRRegion.Left := aRegion.Left div ResMod;
+    LRRegion.Top := aRegion.Top div ResMod;
+    LRRegion.Right := aRegion.Right div ResMod;
+    LRRegion.Bottom := aRegion.Bottom div ResMod;
+
+    IntersectRect(LRRegion, LRRegion, fPhysicsMap.BoundsRect);
+    IntersectRect(aRegion, aRegion, aDst.BoundsRect);
+  end else begin
+    IntersectRect(aRegion, aRegion, fPhysicsMap.BoundsRect);
+    LRRegion := aRegion;
+  end;
 
   for y := aRegion.Top to aRegion.Bottom-1 do
   begin
@@ -616,7 +628,14 @@ begin
     PDst2 := PDst;
 
     Dec(PSrc); // so we can put Inc(P) at the start of the next loop rather than having to use lots of if statements
-    Dec(PDst);
+
+    if GameParams.HighResolution then
+    begin
+      Dec(PDst, 2);
+      Dec(PDst2);
+    end else
+      Dec(PDst);
+
     for x := LRRegion.Left to LRRegion.Right-1 do
     begin
       Inc(PSrc);
