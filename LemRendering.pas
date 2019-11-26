@@ -347,6 +347,8 @@ begin
   else
     Selected := false;
 
+  UsefulOnly := UsefulOnly and Selected; // Not sure why this is needed. Probably "UsefulOnly" is a bad variable name.
+
   Recolorer.Lemming := aLemming;
   Recolorer.DrawAsSelected := Selected;
   Recolorer.ClearPhysics := fUsefulOnly;
