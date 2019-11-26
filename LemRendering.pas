@@ -343,6 +343,25 @@ var
     end;
   end;
 
+  procedure DrawLemmingPoint;
+  var
+    bX, bY: Integer;
+    xo, yo: Integer;
+  begin
+    bX := aLemming.LemX * ResMod;
+    bY := aLemming.LemY * ResMod;
+
+    for yo := 0 to ResMod-1 do
+      for xo := 0 to ResMod-1 do
+      begin
+        fLayers[rlTriggers].PixelS[bX + xo, bY + yo] := $FFFFD700;
+        fLayers[rlTriggers].PixelS[bX + xo + ResMod, bY + yo] := $FFFF4500;
+        fLayers[rlTriggers].PixelS[bX + xo - ResMod, bY + yo] := $FFFF4500;
+        fLayers[rlTriggers].PixelS[bX + xo, bY + yo + ResMod] := $FFFF4500;
+        fLayers[rlTriggers].PixelS[bX + xo, bY + yo - ResMod] := $FFFF4500;
+      end;
+  end;
+
 begin
   if aLemming.LemRemoved then Exit;
   if aLemming.LemTeleporting then Exit;
@@ -404,11 +423,7 @@ begin
   // Draw lemming
   if Selected then
   begin
-    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY] := $FFFFD700;
-    fLayers[rlTriggers].PixelS[aLemming.LemX + 1, aLemming.LemY] := $FFFF4500;
-    fLayers[rlTriggers].PixelS[aLemming.LemX - 1, aLemming.LemY] := $FFFF4500;
-    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY + 1] := $FFFF4500;
-    fLayers[rlTriggers].PixelS[aLemming.LemX, aLemming.LemY - 1] := $FFFF4500;
+    DrawLemmingPoint;
     fLayers.fIsEmpty[rlTriggers] := false;
   end;
 end;
@@ -2081,7 +2096,11 @@ end;
 procedure TRenderer.DrawTriggerAreaRectOnLayer(TriggerRect: TRect);
 var
   x, y: Integer;
-  PPhys, PDst: PColor32;
+  PPhys: PColor32;
+
+  PDst: PColor32;
+  PDstHR0, PDstHR1, PDstHR2, PDstHR3: PColor32;
+
   DrawRect: TRect;
 
   procedure DrawTriggerPixel();
@@ -2105,17 +2124,44 @@ begin
   DrawRect := Rect(Max(TriggerRect.Left, 0), Max(TriggerRect.Top, 0),
                    Min(TriggerRect.Right, fPhysicsMap.Width), Min(TriggerRect.Bottom, fPhysicsMap.Height));
 
-  for y := DrawRect.Top to DrawRect.Bottom - 1 do
+  if not GameParams.HighResolution then
   begin
-    PDst := fLayers[rlTriggers].PixelPtr[DrawRect.Left, y];
-    PPhys := fPhysicsMap.PixelPtr[DrawRect.Left, y];
-
-    for x := DrawRect.Left to DrawRect.Right - 1 do
+    for y := DrawRect.Top to DrawRect.Bottom - 1 do
     begin
-      DrawTriggerPixel();
+      PDst := fLayers[rlTriggers].PixelPtr[DrawRect.Left, y];
+      PPhys := fPhysicsMap.PixelPtr[DrawRect.Left, y];
 
-      Inc(PDst);
-      Inc(PPhys);
+      for x := DrawRect.Left to DrawRect.Right - 1 do
+      begin
+        DrawTriggerPixel();
+
+        Inc(PDst);
+        Inc(PPhys);
+      end;
+    end;
+  end else begin
+    for y := DrawRect.Top to DrawRect.Bottom - 1 do
+    begin
+      PDstHR0 := fLayers[rlTriggers].PixelPtr[DrawRect.Left * 2, y * 2];
+      PDstHR1 := fLayers[rlTriggers].PixelPtr[DrawRect.Left * 2 + 1, y * 2];
+      PDstHR2 := fLayers[rlTriggers].PixelPtr[DrawRect.Left * 2, y * 2 + 1];
+      PDstHR3 := fLayers[rlTriggers].PixelPtr[DrawRect.Left * 2 + 1, y * 2 + 1];
+
+      PPhys := fPhysicsMap.PixelPtr[DrawRect.Left, y];
+
+      for x := DrawRect.Left to DrawRect.Right - 1 do
+      begin
+        PDst := PDstHR0; DrawTriggerPixel();
+        PDst := PDstHR1; DrawTriggerPixel();
+        PDst := PDstHR2; DrawTriggerPixel();
+        PDst := PDstHR3; DrawTriggerPixel();
+
+        Inc(PDstHR0, 2);
+        Inc(PDstHR1, 2);
+        Inc(PDstHR2, 2);
+        Inc(PDstHR3, 2);
+        Inc(PPhys);
+      end;
     end;
   end;
 
