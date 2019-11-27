@@ -585,8 +585,8 @@ begin
     fMainObjectHeight := fHeight div ResMod;
   end;
 
-  fOffsetX := aSegment.LineNumeric['offset_x'] * ResMod;
-  fOffsetY := aSegment.LineNumeric['offset_y'] * ResMod;
+  fOffsetX := aSegment.LineNumeric['offset_x'];
+  fOffsetY := aSegment.LineNumeric['offset_y'];
 
   fCutTop := aSegment.LineNumeric['nine_slice_top'] * ResMod;
   fCutRight := aSegment.LineNumeric['nine_slice_right'] * ResMod;
