@@ -156,6 +156,9 @@ type
 
 implementation
 
+uses
+  GameControl;
+
 { TBaseAnimationSet }
 
 procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict);
@@ -237,17 +240,6 @@ procedure TBaseAnimationSet.ReadMetaData(aColorDict: TColorDict = nil);
 var
   AnimIndex: Integer;
 begin
-  // Due to dynamic loading, only one value is needed here: The frame count.
-  // In situations where the graphic has no impact on physics (e.g. walkers),
-  // the frame count can be zero. In such situations even the animations are
-  // loaded dynamically.
-
-  // Eventually, this should be changed so that even animations that do currently impact
-  // physics can have a different number of frames without impact.
-
-  // Note that currently, floater and glider have a minimum of 10 frames; this is handled
-  // elsewhere.
-
   // Add right- and left-facing version for 25 skills and the one stoner mask
   for AnimIndex := 0 to NUM_LEM_SPRITES - 1 do
   begin
@@ -278,9 +270,13 @@ var
 
   SrcFolder: String;
   ColorDict: TColorDict;
+
+  MetaSrcFolder, ImgSrcFolder: String;
 begin
   TempBitmap := TBitmap32.Create;
   ColorDict := TColorDict.Create;
+
+
   try
     if fTheme = nil then
       SrcFolder := 'default'
@@ -290,21 +286,40 @@ begin
     if SrcFolder = '' then SrcFolder := 'default';
     if not DirectoryExists(AppPath + SFStyles + SrcFolder + SFPiecesLemmings) then
       SrcFolder := 'default';
+
     SetCurrentDir(AppPath + SFStyles + SrcFolder + SFPiecesLemmings);
 
     if fMetaLemmingAnimations.Count = 0 then // not entirely sure why it would ever NOT be 0
       ReadMetaData(ColorDict);
+
+    MetaSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesLemmings;
+
+    if GameParams.HighResolution then
+      ImgSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesLemmingsHighRes
+    else
+      ImgSrcFolder := MetaSrcFolder;
 
     for iAnimation := 0 to NUM_LEM_SPRITES - 2 do // -2 to leave out the stoner placeholder
     begin
       MLA := fMetaLemmingAnimations[iAnimation];
       Fn := RightStr(MLA.Description, Length(MLA.Description) - 1);
 
-      TPngInterface.LoadPngFile(Fn + '.png', TempBitmap);
+      if FileExists(ImgSrcFolder + Fn + '.png') then
+      begin
+        TPngInterface.LoadPngFile(ImgSrcFolder + Fn + '.png', TempBitmap);
 
-      // Backwards compatibility
-      if FileExists(Fn + '_mask.png') and (fTheme <> nil) then
-        TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
+        // Backwards compatibility
+        if FileExists(Fn + '_mask.png') and (fTheme <> nil) and not GameParams.HighResolution then
+          TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
+      end else begin
+        TPngInterface.LoadPngFile(MetaSrcFolder + Fn + '.png', TempBitmap);
+
+        // Backwards compatibility
+        if FileExists(Fn + '_mask.png') and (fTheme <> nil) then
+          TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
+
+        UpscaleFrames(TempBitmap, 2, MLA.FrameCount, umPixelArt);
+      end;
 
       MLA.Width := TempBitmap.Width div 2;
       MLA.Height := TempBitmap.height div MLA.FrameCount;
@@ -319,6 +334,12 @@ begin
       TempBitmap.DrawTo(Bmp, 0, 0, Rect(X, 0, X + MLA.Width, MLA.Height * MLA.FrameCount));
 
       fLemmingAnimations.Add(Bmp);
+
+      if GameParams.HighResolution then
+      begin
+        MLA.FootX := MLA.FootX * 2;
+        MLA.FootY := MLA.FootY * 2;
+      end;
     end;
 
     fRecolorer.LoadSwaps(SrcFolder);

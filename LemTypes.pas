@@ -344,6 +344,11 @@ var
   FW, FH: Integer;
   OldMode: TDrawMode;
 begin
+
+  // DEBUG
+  Upscale(Src, Mode, Dst);
+  Exit;
+
   if Dst = nil then
   begin
     LocalDst := TBitmap32.Create;
@@ -366,9 +371,17 @@ begin
     for iY := 0 to FramesVert-1 do
       for iX := 0 to FramesHorz-1 do
       begin
+        try
         Src.DrawTo(TempBMP, 0, 0, Rect(iX * FW, iY * FH, (iX + 1) * FW, (iX + 1) * FH));
         Upscale(TempBMP, Mode);
         TempBMP.DrawTo(Dst, iX * FW * 2, iY * FH * 2);
+        except
+          on E: Exception do
+          begin
+            Dst.SaveToFile(AppPath + 'blah.bmp');
+            raise E;
+          end;
+        end;
       end;
 
     if LocalDst <> nil then
