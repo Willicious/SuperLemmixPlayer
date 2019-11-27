@@ -322,7 +322,7 @@ begin
       end;
 
       MLA.Width := TempBitmap.Width div 2;
-      MLA.Height := TempBitmap.height div MLA.FrameCount;
+      MLA.Height := TempBitmap.Height div MLA.FrameCount;
 
       if iAnimation mod 2 = 1 then
         X := 0
