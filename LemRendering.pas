@@ -336,8 +336,8 @@ var
   begin
     with Result do
     begin
-      Left := aLemming.LemX - SrcMetaAnim.FootX;
-      Top := aLemming.LemY - SrcMetaAnim.FootY;
+      Left := (aLemming.LemX * ResMod) - SrcMetaAnim.FootX;
+      Top := (aLemming.LemY * ResMod) - SrcMetaAnim.FootY;
       Right := Left + SrcMetaAnim.Width;
       Bottom := Top + SrcMetaAnim.Height;
     end;
