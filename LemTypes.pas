@@ -75,6 +75,7 @@ procedure MoveRect(var aRect: TRect; const DeltaX, DeltaY: Integer);
 function UnderWine: Boolean;
 function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
 
+procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
 procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
 function ResMod: Integer; // Returns 1 when in low-res, 2 when in high-res
 
@@ -333,6 +334,54 @@ begin
   Result.Top := Y;
   Result.Right := W;
   Result.Bottom := Y + H;
+end;
+
+procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
+var
+  Frames: TBitmaps;
+  TempBMP, LocalDst: TBitmap32;
+  iX, iY, n: Integer;
+  FW, FH: Integer;
+  OldMode: TDrawMode;
+begin
+  if Dst = nil then
+  begin
+    LocalDst := TBitmap32.Create;
+    Dst := LocalDst;
+  end else
+    LocalDst := nil;
+
+  TempBMP := TBitmap32.Create;
+  OldMode := Src.DrawMode;
+
+  try
+    FW := Src.Width div FramesHorz;
+    FH := Src.Height div FramesVert;
+
+    TempBMP.SetSize(FW, FH);
+    Src.DrawMode := dmOpaque;
+
+    Dst.SetSize(FramesHorz * FW, FramesVert * FH);
+
+    for iY := 0 to FramesVert-1 do
+      for iX := 0 to FramesHorz-1 do
+      begin
+        Src.DrawTo(TempBMP, 0, 0, Rect(iX * FW, iY * FH, (iX + 1) * FW, (iX + 1) * FH));
+        Upscale(TempBMP, Mode);
+        TempBMP.DrawTo(Dst, iX * FW * 2, iY * FH * 2);
+      end;
+
+    if LocalDst <> nil then
+    begin
+      Src.SetSize(LocalDst.Width, LocalDst.Height);
+      LocalDst.DrawTo(Src);
+    end;
+  finally
+    TempBMP.Free;
+    Src.DrawMode := OldMode;
+    if LocalDst <> nil then
+      LocalDst.Free;
+  end;
 end;
 
 procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
