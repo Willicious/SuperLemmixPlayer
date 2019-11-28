@@ -1905,7 +1905,10 @@ begin
       // Yes. This is correct.
     end;
 
-    DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
+    if GameParams.HighResolution then
+      DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRectHighRes, BMP)
+    else
+      DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRect, BMP);
   end;
 
   if (Gadget.TriggerEffect = DOM_PICKUP) then

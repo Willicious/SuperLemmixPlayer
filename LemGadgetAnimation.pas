@@ -177,6 +177,7 @@ type
       function MakeFrameBitmaps: TBitmaps;
       procedure CombineBitmaps(aBitmaps: TBitmaps);
       function GetCutRect: TRect;
+      function GetCutRectHighRes: TRect;
 
       procedure PickupSkillEraseCombine(F: TColor32; var B: TColor32; M: TColor32);
     public
@@ -217,6 +218,7 @@ type
       property Primary: Boolean read fPrimary write fPrimary;
 
       property CutRect: TRect read GetCutRect;
+      property CutRectHighRes: TRect read GetCutRectHighRes;
       property CutTop: Integer read fCutTop write fCutTop;
       property CutRight: Integer read fCutRight write fCutRight;
       property CutBottom: Integer read fCutBottom write fCutBottom;
@@ -497,6 +499,11 @@ end;
 function TGadgetAnimation.GetCutRect: TRect;
 begin
   Result := Rect(fCutLeft, fCutTop, fCutRight, fCutBottom);
+end;
+
+function TGadgetAnimation.GetCutRectHighRes: TRect;
+begin
+  Result := Rect(fCutLeft * 2, fCutTop * 2, fCutRight * 2, fCutBottom * 2);
 end;
 
 procedure TGadgetAnimation.Load(aCollection, aPiece: String; aSegment: TParserSection; aTheme: TNeoTheme);
