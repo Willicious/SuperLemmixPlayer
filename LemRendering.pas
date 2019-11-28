@@ -68,6 +68,8 @@ type
     fPhysicsRenderingType: TPhysicsRenderingType;
     fPhysicsRenderSimpleAutosteel: Boolean;
 
+    fHelpersAreHighRes: Boolean;
+
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
     procedure AddStoner(X, Y: Integer);
@@ -125,6 +127,8 @@ type
 
     procedure DrawLevel(aDst: TBitmap32; aClearPhysics: Boolean = false); overload;
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
+
+    procedure LoadHelperImages;
 
     function FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
@@ -1541,93 +1545,93 @@ begin
   // not. We assume the calling routine has already done this, and we just draw it.
   // We do, however, determine which ones to draw here.
 
-  DrawX := (Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2; // Obj.Left + Obj.Width div 2 - 4;
-  DrawY := Gadget.Top - 9; // much simpler
-  if DrawY < 0 then DrawY := Gadget.Top + Gadget.Height + 1; // Draw below instead above the level border
+  DrawX := ((Gadget.TriggerRect.Left + Gadget.TriggerRect.Right) div 2) * ResMod; // Obj.Left + Obj.Width div 2 - 4;
+  DrawY := (Gadget.Top - 9) * ResMod; // much simpler
+  if DrawY < 0 then DrawY := (Gadget.Top + Gadget.Height + 1) * ResMod; // Draw below instead above the level border
 
   case MO.TriggerEffect of
     DOM_WINDOW:
       begin
-        if Gadget.IsPreassignedZombie then DrawX := DrawX - 4;
+        if Gadget.IsPreassignedZombie then DrawX := DrawX - 4 * ResMod;
 
         if Gadget.IsFlipPhysics then
-          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4, DrawY)
+          fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX - 4 * ResMod, DrawY)
         else
-          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4, DrawY);
+          fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX - 4 * ResMod, DrawY);
 
         if Gadget.IsPreassignedZombie then
-          fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8, DrawY);
+          fHelperImages[hpi_Exclamation].DrawTo(Dst, DrawX + 8 * ResMod, DrawY);
       end;
 
     DOM_TELEPORT:
       begin
-        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
-        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1);
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowUp].DrawTo(Dst, DrawX, DrawY - 1 * ResMod);
       end;
 
     DOM_RECEIVER:
       begin
-        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8, DrawY);
+        fHelperImages[THelperIcon(Gadget.PairingID + 1)].DrawTo(Dst, DrawX - 8 * ResMod, DrawY);
         fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
       end;
 
     DOM_EXIT, DOM_LOCKEXIT:
       begin
-        fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13, DrawY);
+        fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
       end;
 
     DOM_FIRE:
       begin
-        fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13, DrawY);
+        fHelperImages[hpi_Fire].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
       end;
 
     DOM_TRAP:
       begin
-        fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17, DrawY);
-        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
+        fHelperImages[hpi_Num_Inf].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
+        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
       end;
 
     DOM_TRAPONCE:
       begin
-        fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17, DrawY);
-        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10, DrawY);
+        fHelperImages[hpi_Num_1].DrawTo(Dst, DrawX - 17 * ResMod, DrawY);
+        fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
       end;
 
     DOM_FLIPPER:
       begin
-        fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13, DrawY);
+        fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
       end;
 
     DOM_BUTTON:
       begin
-        fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19, DrawY);
+        fHelperImages[hpi_Button].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
       end;
 
     DOM_FORCELEFT:
       begin
-        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19, DrawY);
-        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13, DrawY);
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
       end;
 
     DOM_FORCERIGHT:
       begin
-        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19, DrawY);
-        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12, DrawY);
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
       end;
 
     DOM_NOSPLAT:
       begin
-        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16, DrawY);
+        fHelperImages[hpi_NoSplat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
       end;
 
     DOM_SPLAT:
       begin
-        fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16, DrawY);
+        fHelperImages[hpi_Splat].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
       end;
 
     DOM_WATER:
       begin
-        fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16, DrawY);
+        fHelperImages[hpi_Water].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
       end;
   end;
 end;
@@ -1653,52 +1657,52 @@ begin
   if DrawOtherHelper then Inc(numHelpers);
 
   // Set base drawing position; helper icons will be drawn 10 pixels apart
-  DrawX := Gadget.Left + Gadget.Width div 2 - numHelpers * 5;
-  DrawY := Gadget.Top;
+  DrawX := (Gadget.Left + Gadget.Width div 2 - numHelpers * 5) * ResMod;
+  DrawY := Gadget.Top * ResMod;
 
   // Draw actual helper icons
   indexHelper := 0;
   if DrawOtherHelper then
   begin
     if Gadget.IsFlipPhysics then
-      fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + indexHelper * 10, DrawY)
+      fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY)
     else
-      fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+      fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedZombie then
   begin
-    fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Zombie].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedNeutral then
   begin
-    fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Neutral].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedClimber then
   begin
-    fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedSwimmer then
   begin
-    fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedFloater then
   begin
-    fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedGlider then
   begin
-    fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if Gadget.IsPreassignedDisarmer then
   begin
-    fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
   end;
 end;
 
@@ -1722,19 +1726,19 @@ begin
   if L.LemIsGlider then Inc(numHelpers);
   if L.LemIsDisarmer then Inc(numHelpers);
 
-  DrawX := L.LemX - numHelpers * 5;
+  DrawX := (L.LemX - numHelpers * 5) * ResMod;
 
   if (L.LemY < DRAW_ABOVE_MIN_Y) or ((L.LemY < DRAW_ABOVE_MIN_Y_CPM) and IsClearPhysics) then
   begin
-    DrawY := L.LemY + 1;
+    DrawY := (L.LemY + 1) * ResMod;
     if numHelpers > 0 then
-      DirDrawY := DrawY + 9
+      DirDrawY := DrawY + 9 * ResMod
     else
       DirDrawY := DrawY;
   end else begin
-    DrawY := L.LemY - 10 - 9;
+    DrawY := (L.LemY - 10 - 9) * ResMod;
     if numHelpers > 0 then
-      DirDrawY := DrawY - 9
+      DirDrawY := DrawY - 9 * ResMod
     else
       DirDrawY := DrawY;
   end;
@@ -1742,34 +1746,34 @@ begin
   // Draw actual helper icons
   if isClearPhysics then
   begin
-    if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, L.LemX - 4, DirDrawY)
-    else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, L.LemX - 4, DirDrawY);
+    if (L.LemDX = 1) then fHelperImages[hpi_ArrowRight].DrawTo(Dst, (L.LemX - 4) * ResMod, DirDrawY)
+    else fHelperImages[hpi_ArrowLeft].DrawTo(Dst, (L.LemX - 4) * ResMod, DirDrawY);
   end;
 
   indexHelper := 0;
   if L.LemIsClimber then
   begin
-    fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Climber].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if L.LemIsSwimmer then
   begin
-    fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Swimmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if L.LemIsFloater then
   begin
-    fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Floater].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if L.LemIsGlider then
   begin
-    fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Glider].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
     Inc(indexHelper);
   end;
   if L.LemIsDisarmer then
   begin
-    fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10, DrawY);
+    fHelperImages[hpi_Skill_Disarmer].DrawTo(Dst, DrawX + indexHelper * 10 * ResMod, DrawY);
   end;
 end;
 
@@ -1928,9 +1932,9 @@ var
 begin
   BMP := fHelperImages[fRenderInterface.UserHelper];
   DrawPoint := fRenderInterface.MousePos;
-  DrawPoint.X := DrawPoint.X - (BMP.Width div 2);
-  DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2);
-  BMP.DrawTo(fLayers[rlObjectHelpers], DrawPoint.X, DrawPoint.Y);
+  DrawPoint.X := DrawPoint.X - (BMP.Width div 2 div ResMod);
+  DrawPoint.Y := DrawPoint.Y - (BMP.Height div 2 div ResMod);
+  BMP.DrawTo(fLayers[rlObjectHelpers], DrawPoint.X * ResMod, DrawPoint.Y * ResMod);
   fLayers.fIsEmpty[rlObjectHelpers] := false;
 end;
 
@@ -1944,6 +1948,30 @@ begin
 
   if (Gadget.TriggerEffect in [DOM_TELEPORT, DOM_RECEIVER]) and (Gadget.PairingId < 0) then
     Result := false;
+end;
+
+procedure TRenderer.LoadHelperImages;
+var
+  i: THelperIcon;
+begin
+  for i := Low(THelperIcon) to High(THelperIcon) do
+  begin
+    if i = hpi_None then Continue;
+    if fHelperImages[i] <> nil then
+      fHelperImages[i].Free;
+
+    fHelperImages[i] := TBitmap32.Create;
+
+    if GameParams.HighResolution and FileExists(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i]) then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpersHighRes + HelperImageFilenames[i], fHelperImages[i])
+    else if FileExists(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]) then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
+
+    fHelperImages[i].DrawMode := dmBlend;
+    fHelperImages[i].CombineMode := cmMerge;
+  end;
+
+  fHelpersAreHighRes := GameParams.HighResolution;
 end;
 
 procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);
@@ -2185,15 +2213,7 @@ begin
   fPreviewGadgets := TGadgetList.Create;
   fTempLemmingList := TLemmingList.Create(false);
 
-  for i := Low(THelperIcon) to High(THelperIcon) do
-  begin
-    if i = hpi_None then Continue;
-    fHelperImages[i] := TBitmap32.Create;
-    if FileExists(AppPath + SFGraphicsHelpers + HelperImageFilenames[i]) then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsHelpers + HelperImageFilenames[i], fHelperImages[i]);
-    fHelperImages[i].DrawMode := dmBlend;
-    fHelperImages[i].CombineMode := cmMerge;
-  end;
+  LoadHelperImages;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
   S := TResourceStream.Create(HInstance, 'particles', 'lemdata');
@@ -2592,6 +2612,9 @@ var
 
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
+
+  if GameParams.HighResolution <> fHelpersAreHighRes then
+    LoadHelperImages;
 
   RenderInfoRec.Level := aLevel;
 
