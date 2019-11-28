@@ -141,7 +141,7 @@ type
       procedure LoadFromStream(aStream: TStream);
       procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
       procedure LoadOldReplayFile(aFile: String);
-      procedure Cut(aLastFrame: Integer);
+      procedure Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
       property PlayerName: String read fPlayerName write fPlayerName;
       property LevelName: String read fLevelName write fLevelName;
@@ -436,7 +436,9 @@ begin
   fIsModified := true;
 end;
 
-procedure TReplay.Cut(aLastFrame: Integer);
+procedure TReplay.Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
+var
+  NextSI: TReplayChangeSpawnInterval;
 
   procedure DoCut(aList: TReplayItemList; aLastFrameLocal: Integer);
   var
@@ -447,7 +449,13 @@ procedure TReplay.Cut(aLastFrame: Integer);
   end;
 begin
   DoCut(fAssignments, aLastFrame);
-  DoCut(fSpawnIntervalChanges, aLastFrame);
+
+  NextSI := TReplayChangeSpawnInterval(SpawnIntervalChange[aLastFrame, 0]);
+  if (NextSI <> nil) and (NextSI.NewSpawnInterval <> aExpectedSpawnInterval) then
+    DoCut(fSpawnIntervalChanges, aLastFrame)
+  else
+    DoCut(fSpawnIntervalChanges, aLastFrame + 1);
+
   fIsModified := true;
 end;
 

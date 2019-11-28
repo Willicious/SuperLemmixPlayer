@@ -5292,7 +5292,7 @@ begin
 
   if CurrentIteration > fReplayManager.LastActionFrame then Exit;
 
-  fReplayManager.Cut(fCurrentIteration);
+  fReplayManager.Cut(fCurrentIteration, CurrSpawnInterval);
 end;
 
 
@@ -5449,12 +5449,30 @@ begin
 end;
 
 function TLemmingGame.GetIsReplayingNoRR(isPaused: Boolean): Boolean;
+var
+  RRItem: TReplayChangeSpawnInterval;
 begin
   // Ignore RR changes at the current frame when paused
   // Moreover ignore changes at the current frame, when not paused
-  Result :=     (fCurrentIteration < fReplayManager.LastActionFrame)
-            or  ((fReplayManager.Assignment[fCurrentIteration, 0] <> nil) and isPaused and not (fReplayManager.Assignment[fCurrentIteration, 0] is TReplayNuke))
-            or  ((fReplayManager.SpawnIntervalChange[fCurrentIteration, 0] <> nil) and not isPaused);
+
+  // If there's action on any future frame
+  Result := fCurrentIteration < fReplayManager.LastActionFrame;
+
+  // If paused, and there's a non-RR action on the current frame or an RR action that
+  // doesn't agree with the current RR
+  if (not Result) and isPaused then
+  begin
+    Result := (fReplayManager.Assignment[fCurrentIteration, 0] <> nil) and
+              not (fReplayManager.Assignment[fCurrentIteration, 0] is TReplayNuke);
+
+    RRItem := TReplayChangeSpawnInterval(fReplayManager.SpawnIntervalChange[fCurrentIteration, 0]);
+    if RRItem <> nil then
+      Result := Result or (RRItem.NewSpawnInterval <> CurrSpawnInterval);
+  end;
+
+  //
+  if (not Result) and (not isPaused) then
+    Result := (fReplayManager.SpawnIntervalChange[fCurrentIteration, 0] <> nil);
 end;
 
 
