@@ -516,8 +516,14 @@ begin
 
   LRRegion.Left := aRegion.Left div ResMod;
   LRRegion.Top := aRegion.Top div ResMod;
-  LRRegion.Right := aRegion.Right div ResMod;
-  LRRegion.Bottom := aRegion.Bottom div ResMod;
+  LRRegion.Right := (aRegion.Right + ResMod - 1) div ResMod;
+  LRRegion.Bottom := (aRegion.Bottom + ResMod - 1) div ResMod;
+
+  // This might seem pointless, but it prevents off-by-1px issues.
+  aRegion.Left := LRRegion.Left * ResMod;
+  aRegion.Top := LRRegion.Top * ResMod;
+  aRegion.Right := LRRegion.Right * ResMod;
+  aRegion.Bottom := LRRegion.Bottom * ResMod;
 
   if aTransparentBackground then
     aDst.Clear($00000000)
