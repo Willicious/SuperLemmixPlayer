@@ -12,6 +12,7 @@ const
   SFGraphics = 'gfx\';
     SFGraphicsGame = SFGraphics + 'game\';
     SFGraphicsHelpers = SFGraphics + 'helpers\';
+    SFGraphicsHelpersHighRes = SFGraphics + 'helpers-hr\';
     SFGraphicsMasks = SFGraphics + 'mask\';
     SFGraphicsMenu = SFGraphics + 'menu\';
     SFGraphicsPanel = SFGraphics + 'panel\';
