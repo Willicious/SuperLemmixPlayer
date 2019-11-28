@@ -588,10 +588,10 @@ begin
   fOffsetX := aSegment.LineNumeric['offset_x'];
   fOffsetY := aSegment.LineNumeric['offset_y'];
 
-  fCutTop := aSegment.LineNumeric['nine_slice_top'] * ResMod;
-  fCutRight := aSegment.LineNumeric['nine_slice_right'] * ResMod;
-  fCutBottom := aSegment.LineNumeric['nine_slice_bottom'] * ResMod;
-  fCutLeft := aSegment.LineNumeric['nine_slice_left'] * ResMod;
+  fCutTop := aSegment.LineNumeric['nine_slice_top'];
+  fCutRight := aSegment.LineNumeric['nine_slice_right'];
+  fCutBottom := aSegment.LineNumeric['nine_slice_bottom'];
+  fCutLeft := aSegment.LineNumeric['nine_slice_left'];
 
   BaseTrigger := TGadgetAnimationTrigger.Create;
 

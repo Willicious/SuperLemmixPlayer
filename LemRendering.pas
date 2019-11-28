@@ -1896,8 +1896,8 @@ begin
 
     if GameParams.HighResolution then
     begin
-      DstRect.Right := DstRect.Right + DstRect.Left;
-      DstRect.Bottom := DstRect.Bottom + DstRect.Top;
+      DstRect.Right := DstRect.Right + DstRect.Left + Gadget.WidthVariance;
+      DstRect.Bottom := DstRect.Bottom + DstRect.Top + Gadget.HeightVariance;
 
       DstRect.Left := DstRect.Left * 2;
       DstRect.Top := DstRect.Top * 2;
