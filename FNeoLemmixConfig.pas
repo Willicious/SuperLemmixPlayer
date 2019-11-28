@@ -50,6 +50,7 @@ type
     cbPauseAfterBackwards: TCheckBox;
     lblUserName: TLabel;
     ebUserName: TEdit;
+    cbHighResolution: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -125,6 +126,7 @@ begin
   cbSpawnInterval.Checked := GameParams.SpawnInterval;
 
   cbFullScreen.Checked := GameParams.FullScreen;
+  cbHighResolution.Checked := GameParams.HighResolution;
   cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
   cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
   cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
@@ -184,6 +186,7 @@ begin
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
+  GameParams.HighResolution := cbHighResolution.Checked;
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
   GameParams.LinearResampleGame := cbLinearResampleGame.Checked;

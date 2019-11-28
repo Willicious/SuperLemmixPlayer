@@ -57,7 +57,7 @@ type
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
     procedure DoLevelSelect(isPlaying: Boolean = false);
     procedure ShowConfigMenu;
-    procedure ApplyConfigChanges(OldFullScreen: Boolean);
+    procedure ApplyConfigChanges(OldFullScreen, OldHighResolution: Boolean);
     procedure DoMassReplayCheck;
     function LoadReplay: Boolean;
   public
@@ -83,6 +83,7 @@ type
 implementation
 
 uses
+  LemNeoPieceManager,
   FNeoLemmixConfig, LemNeoLevelPack, FNeoLemmixLevelSelect, UITypes;
 
 { TPurpleFont }
@@ -671,10 +672,11 @@ end;
 procedure TGameBaseScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
-  OldFullScreen: Boolean;
+  OldFullScreen, OldHighResolution: Boolean;
   ConfigResult: TModalResult;
 begin
   OldFullScreen := GameParams.FullScreen;
+  OldHighResolution := GameParams.HighResolution;
   ConfigDlg := TFormNXConfig.Create(self);
   ConfigDlg.SetGameParams;
   ConfigDlg.NXConfigPages.TabIndex := 0;
@@ -686,14 +688,14 @@ begin
   // transition to save them.
   GameParams.Save;
 
-  ApplyConfigChanges(OldFullScreen);
+  ApplyConfigChanges(OldFullScreen, OldHighResolution);
 
   // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
   if ConfigResult = mrRetry then DoMassReplayCheck;
 
 end;
 
-procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen: Boolean);
+procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution: Boolean);
 begin
   if (GameParams.FullScreen <> OldFullScreen) then
   begin
@@ -714,6 +716,9 @@ begin
       GameParams.MainForm.Top := (Screen.WorkAreaHeight div 2) - (GameParams.MainForm.Height div 2);
     end;
   end;
+
+  if GameParams.HighResolution <> OldHighResolution then
+    PieceManager.Clear;
 
   if GameParams.LinearResampleMenu then
   begin

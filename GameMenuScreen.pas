@@ -618,7 +618,7 @@ begin
   end;
 
   // And apply the settings chosen
-  ApplyConfigChanges(true);
+  ApplyConfigChanges(true, false);
 end;
 
 end.
