@@ -2453,19 +2453,37 @@ var
     end
   end;
 
-  procedure LoadBackgroundImage;
+  procedure LoadBackgroundImage(IsFallback: Boolean = false);
   var
     Collection, Piece: String;
     SplitPos: Integer;
+    NeedUpscale: Boolean;
   begin
-    SplitPos := pos(':', RenderInfoRec.Level.Info.Background);
-    Collection := LeftStr(RenderInfoRec.Level.Info.Background, SplitPos-1);
-    Piece := RightStr(RenderInfoRec.Level.Info.Background, Length(RenderInfoRec.Level.Info.Background)-SplitPos);
+    if IsFallback then
+    begin
+      Collection := 'default';
+      Piece := 'fallback';
+    end else begin
+      SplitPos := pos(':', RenderInfoRec.Level.Info.Background);
+      Collection := LeftStr(RenderInfoRec.Level.Info.Background, SplitPos-1);
+      Piece := RightStr(RenderInfoRec.Level.Info.Background, Length(RenderInfoRec.Level.Info.Background)-SplitPos);
+    end;
 
-    if FileExists(AppPath + SFStyles + Collection + '\backgrounds\' + Piece + '.png') then
-      TPngInterface.LoadPngFile((AppPath + SFStyles + Collection + '\backgrounds\' + Piece + '.png'), BgImg)
-    else
-      TPngInterface.LoadPngFile((AppPath + SFStyles + 'default\backgrounds\fallback.png'), BgImg);
+    NeedUpscale := GameParams.HighResolution;
+    if FileExists(AppPath + SFStyles + Collection + SFPiecesBackgroundsHighRes + Piece + '.png') then
+    begin
+      TPngInterface.LoadPngFile((AppPath + SFStyles + Collection + SFPiecesBackgrounds + Piece + '.png'), BgImg);
+      NeedUpscale := false;
+    end else if FileExists(AppPath + SFStyles + Collection + SFPiecesBackgrounds + Piece + '.png') then
+      TPngInterface.LoadPngFile((AppPath + SFStyles + Collection + SFPiecesBackgrounds + Piece + '.png'), BgImg)
+    else if not IsFallback then
+    begin
+      LoadBackgroundImage(IsFallback);
+      Exit; // don't upscale twice!
+    end;
+
+    if NeedUpscale then
+      Upscale(BgImg, umPixelArt);
   end;
 begin
   if RenderInfoRec.Level = nil then Exit;

@@ -57,7 +57,7 @@ type
                   rlLemmings);
 
 const
-  SCALE_ON_MERGE_LAYERS = [rlBackground, rlLowShadows, rlHighShadows, rlObjectHelpers, rlParticles];
+  SCALE_ON_MERGE_LAYERS = [rlLowShadows, rlHighShadows, rlObjectHelpers, rlParticles];
 
 type
 
