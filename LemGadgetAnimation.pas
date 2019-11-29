@@ -390,7 +390,7 @@ var
 
     OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
-    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX - Meta.FootX, footY - Meta.FootY, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, (footX * ResMod) - Meta.FootX, (footY * ResMod) - Meta.FootY, SrcRect);
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
 
@@ -419,7 +419,7 @@ begin
   for i := 0 to (fFrameCount div 2) - 1 do
   begin
     NewBmp := TBitmap32.Create;
-    NewBmp.SetSize(PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE);
+    NewBmp.SetSize(PICKUP_AUTO_GFX_SIZE * ResMod, PICKUP_AUTO_GFX_SIZE * ResMod);
     NewBmp.Clear(0);
     SkillIcons.Add(NewBmp);
   end;
@@ -487,13 +487,14 @@ begin
 
     if aErase <> nil then
     begin
-      aErase.fSourceImage.DrawTo(SkillIcons[i * 2], 0, 0, Rect(0, 0, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE));
-      aErase.fSourceImage.DrawTo(SkillIcons[(i * 2) + 1], 0, 0, Rect(0, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE, PICKUP_AUTO_GFX_SIZE * 2));
+      aErase.fSourceImage.DrawTo(SkillIcons[i * 2], 0, 0, Rect(0, 0, PICKUP_AUTO_GFX_SIZE * ResMod, PICKUP_AUTO_GFX_SIZE * ResMod));
+      aErase.fSourceImage.DrawTo(SkillIcons[(i * 2) + 1], 0, 0, Rect(0, PICKUP_AUTO_GFX_SIZE * ResMod, PICKUP_AUTO_GFX_SIZE * ResMod, PICKUP_AUTO_GFX_SIZE * ResMod * 2));
     end else
       SkillIcons[i * 2].Clear(0);
   end;
 
   CombineBitmaps(SkillIcons);
+  fSourceImage.SaveToFile(AppPath + 'blah.bmp');
 end;
 
 function TGadgetAnimation.GetCutRect: TRect;
