@@ -449,13 +449,13 @@ begin
   if ShowCountdown then
   begin
     n := (aLemming.LemExplosionTimer div 17) + 1;
-    SrcRect := Rect(n * 4, 0, ((n+1) * 4), 5);
+    SrcRect := SizedRect(n * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
     if aLemming.LemDX < 0 then
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 2, aLemming.LemY - 17, SrcRect)    
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect)
     else
-      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 1, aLemming.LemY - 17, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 1) * ResMod, (aLemming.LemY - 17) * ResMod, SrcRect);
   end else if ShowHighlight then
-    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], aLemming.LemX - 2, aLemming.LemY - 20);
+    fAni.HighlightBitmap.DrawTo(fLayers[rlLemmings], (aLemming.LemX - 2) * ResMod, (aLemming.LemY - 20) * ResMod);
 end;
 
 procedure TRenderer.DrawLemmingParticles(L: TLemming);
@@ -1061,7 +1061,7 @@ procedure TRenderer.AddStoner(X, Y: Integer);
 begin
   fAni.LemmingAnimations[STONED].DrawMode := dmCustom;
   fAni.LemmingAnimations[STONED].OnPixelCombine := CombineTerrainNoOverwrite;
-  fAni.LemmingAnimations[STONED].DrawTo(fLayers[rlTerrain], X, Y);
+  fAni.LemmingAnimations[STONED].DrawTo(fLayers[rlTerrain], X * ResMod, Y * ResMod);
 end;
 
 function TRenderer.FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
