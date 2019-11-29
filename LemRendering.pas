@@ -1441,7 +1441,7 @@ procedure TRenderer.PrepareCompositePieceBitmaps(aTerrains: TTerrains; aLowRes: 
 begin
   PrepareCompositePieceBitmap(aTerrains, aLowRes, false);
   if GameParams.HighResolution then
-    PrepareCompositePieceBitmap(aTerrains, aHighRes, false);
+    PrepareCompositePieceBitmap(aTerrains, aHighRes, true);
   Crop;
 end;
 
