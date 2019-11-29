@@ -351,9 +351,9 @@ begin
   Result := FirstButtonRect;
   OffsetRect(Result, Index * 16 * ResMod, 0);
   if IsUpper then
-    Result.Bottom := (Result.Top + Result.Bottom) div 2 - 1
+    Result.Bottom := (Result.Top + Result.Bottom) div 2 - ResMod
   else
-    Result.Top := (Result.Top + Result.Bottom) div 2 + 1;
+    Result.Top := (Result.Top + Result.Bottom) div 2 + ResMod;
 end;
 
 function TBaseSkillPanel.FirstSkillButtonIndex: Integer;
@@ -433,7 +433,7 @@ begin
   OffsetRect(DstRect, FirstButtonRect.Left, FirstButtonRect.Top);
 
   // Draw full panels
-  for i := 1 to (NumButtons * 16 - 1) div SrcWidth do
+  for i := 1 to (NumButtons * (16 * ResMod) - 1) div SrcWidth do
   begin
     BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
     OffsetRect(DstRect, SrcWidth, 0);
@@ -463,22 +463,22 @@ var
 begin
   // Load first the characters
   GetGraphic('panel_font.png', fIconBmp);
-  SrcRect := Rect(0, 0, 8, 16);
+  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
   for i := 0 to 37 do
   begin
-    fInfoFont[i].SetSize(8, 16);
+    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 8, 0);
+    OffsetRect(SrcRect, 8 * ResMod, 0);
   end;
 
   // Load now the icons for the text panel
   GetGraphic('panel_icons.png', fIconBmp);
-  SrcRect := Rect(0, 0, 8, 16);
+  SrcRect := Rect(0, 0, 8 * ResMod, 16 * ResMod);
   for i := 38 to NUM_FONT_CHARS - 1 do
   begin
-    fInfoFont[i].SetSize(8, 16);
+    fInfoFont[i].SetSize(8 * ResMod, 16 * ResMod);
     fIconBmp.DrawTo(fInfoFont[i], 0, 0, SrcRect);
-    OffsetRect(SrcRect, 8, 0);
+    OffsetRect(SrcRect, 8 * ResMod, 0);
   end;
 end;
 
@@ -984,10 +984,19 @@ begin
   end else
     BorderRect := fButtonRects[aButton];
 
-  Inc(BorderRect.Right);
-  Inc(BorderRect.Bottom, 2);
+  Inc(BorderRect.Right, ResMod);
+  Inc(BorderRect.Bottom, 2 * ResMod);
 
   Image.Bitmap.FrameRectS(BorderRect, fRectColor);
+
+  if GameParams.HighResolution then
+  begin
+    Inc(BorderRect.Left);
+    Inc(BorderRect.Top);
+    Dec(BorderRect.Right);
+    Dec(BorderRect.Bottom);
+    Image.Bitmap.FrameRectS(BorderRect, fRectColor);
+  end;
 end;
 
 procedure TBaseSkillPanel.RemoveHighlight(aButton: TSkillPanelButton);
@@ -1002,27 +1011,27 @@ begin
   end else
     BorderRect := fButtonRects[aButton];
 
-  Inc(BorderRect.Right);
-  Inc(BorderRect.Bottom, 2);
+  Inc(BorderRect.Right, ResMod);
+  Inc(BorderRect.Bottom, 2 * ResMod);
 
   // top
   EraseRect := BorderRect;
-  EraseRect.Bottom := EraseRect.Top + 1;
+  EraseRect.Bottom := EraseRect.Top + 1 * ResMod;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // left
   EraseRect := BorderRect;
-  EraseRect.Right := EraseRect.Left + 1;
+  EraseRect.Right := EraseRect.Left + 1 * ResMod;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // right
   EraseRect := BorderRect;
-  EraseRect.Left := EraseRect.Right - 1;
+  EraseRect.Left := EraseRect.Right - 1 * ResMod;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 
   // bottom
   EraseRect := BorderRect;
-  EraseRect.Top := EraseRect.Bottom - 1;
+  EraseRect.Top := EraseRect.Bottom - 1 * ResMod;
   fOriginal.DrawTo(Image.Bitmap, EraseRect, EraseRect);
 end;
 
@@ -1123,10 +1132,10 @@ begin
       begin
         fInfoFont[CharID].DrawMode := dmCustom;
         fInfoFont[CharID].OnPixelCombine := CombineShift;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8 * ResMod, 0);
       end else begin
         fInfoFont[CharID].DrawMode := dmOpaque;
-        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8, 0);
+        fInfoFont[CharID].DrawTo(fImage.Bitmap, (i - 1) * 8 * ResMod, 0);
       end;
     end;
   end;
