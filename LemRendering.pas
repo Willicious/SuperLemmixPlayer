@@ -1861,7 +1861,7 @@ var
 
     for n := 1 to Length(DigitString) do
     begin
-      Digits.Draw(Dst, CurX, TargetY, StrToInt(DigitString[n]));
+      Digits.Draw(Dst, CurX * ResMod, TargetY * ResMod, StrToInt(DigitString[n]));
       Inc(CurX, Digits.Width);
     end;
   end;
