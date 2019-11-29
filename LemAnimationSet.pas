@@ -252,8 +252,8 @@ begin
   with fMetaLemmingAnimations[STONED] do
   begin
     FrameCount := 1;
-    FootX := 8;
-    FootY := 10;
+    FootX := 8 * ResMod;
+    FootY := 10 * ResMod;
   end;
 
   LoadMetaData(aColorDict);
