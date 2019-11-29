@@ -800,7 +800,7 @@ begin
   MinimapRegion := TBitmap32.Create;
   GetGraphic('minimap_region.png', MinimapRegion);
   ResizeMinimapRegion(MinimapRegion);
-  MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - 3, MinimapRect.Top - 2);
+  MinimapRegion.DrawTo(fOriginal, MinimapRect.Left - (3 * ResMod), MinimapRect.Top - (2 * ResMod));
   MinimapRegion.Free;
 
   // Copy the created bitmap

@@ -138,12 +138,12 @@ begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  if (MinimapRegion.Width <> 111) or (MinimapRegion.Height <> 38) then
+  if (MinimapRegion.Width <> 111 * ResMod) or (MinimapRegion.Height <> 38 * ResMod) then
   begin
-    MinimapRegion.SetSize(111, 38);
+    MinimapRegion.SetSize(111 * ResMod, 38 * ResMod);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
-                  Rect(8, 8, TempBmp.Width - 8, TempBmp.Height - 8), TempBmp);
+                  Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
   end;
 
   TempBmp.Free;
@@ -229,12 +229,12 @@ begin
   TempBmp := TBitmap32.Create;
   TempBmp.Assign(MinimapRegion);
 
-  if (MinimapRegion.Width <> 95) or (MinimapRegion.Height <> 24) then
+  if (MinimapRegion.Width <> 95 * ResMod) or (MinimapRegion.Height <> 24 * ResMod) then
   begin
-    MinimapRegion.SetSize(95, 24);
+    MinimapRegion.SetSize(95 * ResMod, 24 * ResMod);
     MinimapRegion.Clear($FF000000);
     DrawNineSlice(MinimapRegion, MinimapRegion.BoundsRect, TempBmp.BoundsRect,
-                  Rect(8, 8, 8, 8), TempBmp);
+                  Rect(8 * ResMod, 8 * ResMod, 8 * ResMod, 8 * ResMod), TempBmp);
   end;
 
   TempBmp.Free;
