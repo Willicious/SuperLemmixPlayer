@@ -1638,7 +1638,7 @@ begin
 
   SkillPanel.PrepareForGame;
 
-  fMinimapBuffer.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+  fMinimapBuffer.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
 
   ChangeZoom(Sca, true);
 

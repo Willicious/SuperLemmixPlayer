@@ -819,7 +819,7 @@ begin
   // Size of the minimap, style, scaling factor, skills on the panel, ...
   fImage.BeginUpdate;
 
-  Minimap.SetSize(Level.Info.Width div 8, Level.Info.Height div 8);
+  Minimap.SetSize(Level.Info.Width div 8 * ResMod, Level.Info.Height div 8 * ResMod);
 
   ReadBitmapFromStyle;
   SetButtonRects;
@@ -912,22 +912,32 @@ var
   BaseOffsetHoriz, BaseOffsetVert: Double;
   OH, OV: Double;
   ViewRect: TRect;
+  InnerViewRect: TRect;
 begin
   if Parent = nil then Exit;
 
   // Add some space for when the viewport rect lies on the very edges
-  fMinimapTemp.Width := fMinimap.Width + 2;
-  fMinimapTemp.Height := fMinimap.Height + 2;
+  fMinimapTemp.SetSize(fMinimap.Width + 2 * ResMod, fMinimap.Height + 2 * ResMod);
   fMinimapTemp.Clear(0);
-  fMinimap.DrawTo(fMinimapTemp, 1, 1);
+  fMinimap.DrawTo(fMinimapTemp, 1 * ResMod, 1 * ResMod);
 
   BaseOffsetHoriz := fGameWindow.ScreenImage.OffsetHorz / fGameWindow.ScreenImage.Scale / 8;
   BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
 
   // Draw the visible area frame
-  ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div (8 * ResMod) + 2, fGameWindow.DisplayHeight div (8 * ResMod) + 2);
+  ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
   OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
   fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+
+  if GameParams.HighResolution then
+  begin
+    InnerViewRect := ViewRect;
+    Inc(InnerViewRect.Left);
+    Inc(InnerViewRect.Top);
+    Dec(InnerViewRect.Bottom);
+    Dec(InnerViewRect.Right);
+    fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+  end;
 
   fMinimapImage.Bitmap.Assign(fMinimapTemp);
 
