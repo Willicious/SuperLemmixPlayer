@@ -292,8 +292,8 @@ begin
     GadgetAccessor.Animations.AddPrimary(NewAnim);
     NewAnim.Load(aCollection, aPiece, Sec.Section['PRIMARY_ANIMATION'], aTheme);
 
-    fWidth := NewAnim.Width div ResMod;
-    fHeight := NewAnim.Height div ResMod;
+    fWidth := NewAnim.Width;
+    fHeight := NewAnim.Height;
     fFrameCount := NewAnim.FrameCount;
 
     Sec.DoForEachSection('ANIMATION',

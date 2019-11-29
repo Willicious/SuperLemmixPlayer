@@ -830,8 +830,6 @@ begin
   fNeedRemask := true;
   fMaskColor := $FFFFFFFF;
 
-  fSourceImage.SaveToFile(AppPath + 'blah.bmp');
-
   fWidth := fWidth div ResMod;
   fHeight := fHeight div ResMod;
 end;
