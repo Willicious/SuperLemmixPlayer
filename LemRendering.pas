@@ -1889,21 +1889,10 @@ begin
 
     BMP := ThisAnim.Bitmap;
     PrepareGadgetBitmap(BMP, Gadget.IsOnlyOnTerrain, Gadget.ZombieMode, Gadget.NeutralMode);
-    DstRect := SizedRect(Gadget.Left + ThisAnim.MetaAnimation.OffsetX,
-                         Gadget.Top + ThisAnim.MetaAnimation.OffsetY,
-                         ThisAnim.MetaAnimation.Width + Gadget.WidthVariance,
-                         ThisAnim.MetaAnimation.Height + Gadget.HeightVariance);
-
-    if GameParams.HighResolution then
-    begin
-      DstRect.Right := DstRect.Right + DstRect.Left + Gadget.WidthVariance;
-      DstRect.Bottom := DstRect.Bottom + DstRect.Top + Gadget.HeightVariance;
-
-      DstRect.Left := DstRect.Left * 2;
-      DstRect.Top := DstRect.Top * 2;
-
-      // Yes. This is correct.
-    end;
+    DstRect := SizedRect((Gadget.Left + ThisAnim.MetaAnimation.OffsetX) * ResMod,
+                         (Gadget.Top + ThisAnim.MetaAnimation.OffsetY) * ResMod,
+                         (ThisAnim.MetaAnimation.Width + Gadget.WidthVariance) * ResMod,
+                         (ThisAnim.MetaAnimation.Height + Gadget.HeightVariance) * ResMod);
 
     if GameParams.HighResolution then
       DrawNineSlice(Dst, DstRect, BMP.BoundsRect, ThisAnim.MetaAnimation.CutRectHighRes, BMP)

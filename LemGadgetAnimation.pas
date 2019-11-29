@@ -174,7 +174,7 @@ type
       fSourceImageMasked: TBitmap32;
       fMaskColor: TColor32;
 
-      function MakeFrameBitmaps: TBitmaps;
+      function MakeFrameBitmaps(aForceLowRes: Boolean = false): TBitmaps;
       procedure CombineBitmaps(aBitmaps: TBitmaps);
       function GetCutRect: TRect;
       function GetCutRectHighRes: TRect;
@@ -305,7 +305,7 @@ end;
 
 procedure TGadgetAnimation.Draw(Dst: TBitmap32; X, Y, aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil; aRaw: Boolean = false);
 begin
-  Draw(Dst, SizedRect(X, Y, fWidth, fHeight), aFrame, aPixelCombine, aRaw);
+  Draw(Dst, SizedRect(X, Y, fWidth * ResMod, fHeight * ResMod), aFrame, aPixelCombine, aRaw);
 end;
 
 procedure TGadgetAnimation.Draw(Dst: TBitmap32; DstRect: TRect; aFrame: Integer; aPixelCombine: TPixelCombineEvent = nil; aRaw: Boolean = false);
@@ -331,9 +331,9 @@ begin
   end;
 
   if fHorizontalStrip then
-    SrcRect := SizedRect(aFrame * fWidth, 0, fWidth, fHeight)
+    SrcRect := SizedRect(aFrame * fWidth * ResMod, 0, fWidth * ResMod, fHeight * ResMod)
   else
-    SrcRect := SizedRect(0, aFrame * fHeight, fWidth, fHeight);
+    SrcRect := SizedRect(0, aFrame * fHeight * ResMod, fWidth * ResMod, fHeight * ResMod);
 
   SrcBmp.DrawTo(Dst, DstRect, SrcRect);
 end;
@@ -341,7 +341,7 @@ end;
 function TGadgetAnimation.GetFrameBitmap(aFrame: Integer; aPersistent: Boolean = false): TBitmap32;
 begin
   if aPersistent then
-    Result := TBitmap32.Create(fWidth, fHeight)
+    Result := TBitmap32.Create
   else
     Result := fTempBitmap;
 
@@ -353,7 +353,7 @@ end;
 
 procedure TGadgetAnimation.GetFrame(aFrame: Integer; aBitmap: TBitmap32);
 begin
-  aBitmap.SetSize(fWidth, fHeight);
+  aBitmap.SetSize(fWidth * ResMod, fHeight * ResMod);
   aBitmap.Clear(0);
   Draw(aBitmap, 0, 0, aFrame);
 end;
@@ -579,17 +579,20 @@ begin
 
   if NeedUpscale then
   begin
-    Bitmaps := MakeFrameBitmaps;
+    Bitmaps := MakeFrameBitmaps(true);
     for i := 0 to Bitmaps.Count-1 do
       Upscale(Bitmaps[i], umPixelArt);
     CombineBitmaps(Bitmaps);
-    fSourceImage.SaveToFile(AppPath + 'test.bmp');
+  end else if GameParams.HighResolution then
+  begin
+    fWidth := fWidth div 2;
+    fHeight := fHeight div 2;
   end;
 
   if fPrimary then
   begin
-    fMainObjectWidth := fWidth div ResMod;
-    fMainObjectHeight := fHeight div ResMod;
+    fMainObjectWidth := fWidth;
+    fMainObjectHeight := fHeight;
   end;
 
   fOffsetX := aSegment.LineNumeric['offset_x'];
@@ -780,17 +783,28 @@ begin
   fCutTop := Temp;
 end;
 
-function TGadgetAnimation.MakeFrameBitmaps: TBitmaps;
+function TGadgetAnimation.MakeFrameBitmaps(aForceLowRes: Boolean = false): TBitmaps;
 var
   i: Integer;
   TempBMP: TBitmap32;
+  SrcRect: TRect;
 begin
   Result := TBitmaps.Create;
   for i := 0 to fFrameCount-1 do
   begin
-    TempBMP := TBitmap32.Create(fWidth, fHeight);
+    if aForceLowRes then
+      TempBMP := TBitmap32.Create(fWidth, fHeight)
+    else
+      TempBMP := TBitmap32.Create(fWidth * ResMod, fHeight * ResMod);
+
     TempBMP.Clear(0);
-    Draw(TempBMP, 0, 0, i, nil, true);
+
+    if fHorizontalStrip then
+      SrcRect := SizedRect(TempBMP.Width * i, 0, TempBMP.Width, TempBMP.Height)
+    else
+      SrcRect := SizedRect(0, TempBMP.Height * i, TempBMP.Width, TempBMP.Height);
+
+    fSourceImage.DrawTo(TempBMP, 0, 0, SrcRect);
 
     Result.Add(TempBMP);
   end;
@@ -815,6 +829,11 @@ begin
 
   fNeedRemask := true;
   fMaskColor := $FFFFFFFF;
+
+  fSourceImage.SaveToFile(AppPath + 'blah.bmp');
+
+  fWidth := fWidth div ResMod;
+  fHeight := fHeight div ResMod;
 end;
 
 // TGadgetAnimations
