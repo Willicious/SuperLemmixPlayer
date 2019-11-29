@@ -104,6 +104,27 @@
    FLIP_VERTICAL
  $END
  
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 235
+   Y 9
+   WIDTH 64
+   HEIGHT 48
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 251
+   Y 62
+   WIDTH 48
+   HEIGHT 64
+   NO_OVERWRITE
+   ROTATE
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
