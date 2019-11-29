@@ -1095,7 +1095,7 @@ begin
   LemmingKinds := Game.ActiveLemmingTypes;
 
   // Erase previous text there
-  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8, 16, $00000000);
+  fImage.Bitmap.FillRectS(0, 0, DrawStringLength * 8 * ResMod, 16 * ResMod, $00000000);
 
   for i := 1 to DrawStringLength do
   begin
