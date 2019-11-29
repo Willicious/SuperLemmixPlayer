@@ -399,7 +399,14 @@ var
     oX: Integer;
   begin
     for oX := 0 to W-1 do
-      dst.PixelS[X + oX, Y] := BrickColor;
+      if GameParams.HighResolution then
+      begin
+        dst.PixelS[(X + oX) * ResMod, Y * ResMod] := BrickColor;
+        dst.PixelS[(X + oX) * ResMod + 1, Y * ResMod] := BrickColor;
+        dst.PixelS[(X + oX) * ResMod, Y * ResMod + 1] := BrickColor;
+        dst.PixelS[(X + oX) * ResMod + 1, Y * ResMod + 1] := BrickColor;
+      end else
+        dst.PixelS[X + oX, Y] := BrickColor;
   end;
 const
   PICKUP_MID = (PICKUP_AUTO_GFX_SIZE div 2) - 1;
