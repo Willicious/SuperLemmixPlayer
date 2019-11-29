@@ -506,7 +506,7 @@ var
 
     OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
-    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX - Meta.FootX, footY - Meta.FootY, SrcRect);
+    Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX * ResMod - Meta.FootX, footY * ResMod - Meta.FootY, SrcRect);
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
 
@@ -517,6 +517,14 @@ var
     SrcRect: TRect;
     OldDrawMode: TDrawMode;
   begin
+    if GameParams.HighResolution then
+    begin
+      dstRect.Left := dstRect.Left * 2 + 1;
+      dstRect.Top := dstRect.Top * 2;
+      dstRect.Right := dstRect.Right * 2 + 1;
+      dstRect.Bottom := dstRect.Bottom * 2;
+    end;
+
     Ani := GameParams.Renderer.LemmingAnimations;
     Meta := Ani.MetaLemmingAnimations[aAnimationIndex];
 
@@ -535,10 +543,17 @@ var
     oX: Integer;
   begin
     for oX := 0 to W-1 do
-      dst.PixelS[X + oX, Y] := BrickColor;
+      if GameParams.HighResolution then
+      begin
+        dst.PixelS[(X + oX) * ResMod, Y * ResMod] := BrickColor;
+        dst.PixelS[(X + oX) * ResMod + 1, Y * ResMod] := BrickColor;
+        dst.PixelS[(X + oX) * ResMod, Y * ResMod + 1] := BrickColor;
+        dst.PixelS[(X + oX) * ResMod + 1, Y * ResMod + 1] := BrickColor;
+      end else
+        dst.PixelS[X + oX, Y] := BrickColor;
   end;
 
-  procedure Outline(dst: TBitmap32);
+  procedure Outline(dst: TBitmap32; isRecursive: Boolean = false);
   var
     x, y: Integer;
     oX, oY: Integer;
@@ -572,6 +587,9 @@ var
       end;
 
     TempBmp.DrawTo(dst);
+
+    if GameParams.HighResolution and not isRecursive then
+      Outline(dst, true);
   end;
 begin
   // Load the erasing icon first
@@ -591,7 +609,7 @@ begin
 
     // Set image sizes
     for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-      fSkillIcons[Button].SetSize(15, 23);
+      fSkillIcons[Button].SetSize(15 * ResMod, 23 * ResMod);
 
     //////////////////////////////////////////////////////////
     ///  This code is mostly copied to GameBaseSkillPanel. ///
