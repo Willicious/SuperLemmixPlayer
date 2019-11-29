@@ -235,14 +235,35 @@ begin
   if fRenderInterface = nil then Exit;
   if fRenderInterface.LemmingList = nil then Exit;
 
-  for i := 0 to fRenderInterface.LemmingList.Count-1 do
+  if GameParams.HighResolution then
   begin
-    L := fRenderInterface.LemmingList[i];
-    if L.LemRemoved then Continue;
-    if L.LemIsZombie then
-      Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FFFF0000
-    else
-      Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00FF00;
+    for i := 0 to fRenderInterface.LemmingList.Count-1 do
+    begin
+      L := fRenderInterface.LemmingList[i];
+      if L.LemRemoved then Continue;
+      if L.LemIsZombie then
+      begin
+        Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FFFF0000;
+        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FFFF0000;
+        Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FFFF0000;
+        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FFFF0000;
+      end else begin
+        Dst.PixelS[L.LemX div 4, L.LemY div 4] := $FF00FF00;
+        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4] := $FF00FF00;
+        Dst.PixelS[L.LemX div 4, L.LemY div 4 + 1] := $FF00FF00;
+        Dst.PixelS[L.LemX div 4 + 1, L.LemY div 4 + 1] := $FF00FF00;
+      end;
+    end;
+  end else begin
+    for i := 0 to fRenderInterface.LemmingList.Count-1 do
+    begin
+      L := fRenderInterface.LemmingList[i];
+      if L.LemRemoved then Continue;
+      if L.LemIsZombie then
+        Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FFFF0000
+      else
+        Dst.PixelS[L.LemX div 8, L.LemY div 8] := $FF00FF00;
+    end;
   end;
 end;
 
