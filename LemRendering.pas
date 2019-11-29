@@ -1812,18 +1812,18 @@ var
     for n := 1 to Length(aDigitString) do
     begin
       Digit := StrToInt(aDigitString[n]);
-      SrcRect := SizedRect(Digit * 4, 0, 4, 5);
+      SrcRect := SizedRect(Digit * 4 * ResMod, 0, 4 * ResMod, 5 * ResMod);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX - 1, Y + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX, Y + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod, Y * ResMod, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod, Y * ResMod + 1, SrcRect);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
       fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX - 1, Y, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod - 1, Y * ResMod, SrcRect);
       CurX := CurX + 5;
     end;
 
