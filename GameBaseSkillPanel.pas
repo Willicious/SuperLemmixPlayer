@@ -925,7 +925,7 @@ begin
   BaseOffsetVert := fGameWindow.ScreenImage.OffsetVert / fGameWindow.ScreenImage.Scale / 8;
 
   // Draw the visible area frame
-  ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div 8 + 2, fGameWindow.DisplayHeight div 8 + 2);
+  ViewRect := Rect(0, 0, fGameWindow.DisplayWidth div (8 * ResMod) + 2, fGameWindow.DisplayHeight div (8 * ResMod) + 2);
   OffsetRect(ViewRect, -Round(BaseOffsetHoriz), -Round(BaseOffsetVert));
   fMinimapTemp.FrameRectS(ViewRect, fRectColor);
 
