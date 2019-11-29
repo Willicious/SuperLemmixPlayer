@@ -337,19 +337,19 @@ end;
 -----------------------------------------}
 function TBaseSkillPanel.FirstButtonRect: TRect;
 begin
-  Result := Rect(1, 16, 15, 38);
+  Result := Rect(1 * ResMod, 16 * ResMod, 15 * ResMod, 38 * ResMod);
 end;
 
 function TBaseSkillPanel.ButtonRect(Index: Integer): TRect;
 begin
   Result := FirstButtonRect;
-  OffsetRect(Result, Index * 16, 0);
+  OffsetRect(Result, Index * 16 * ResMod, 0);
 end;
 
 function TBaseSkillPanel.HalfButtonRect(Index: Integer; IsUpper: Boolean): TRect;
 begin
   Result := FirstButtonRect;
-  OffsetRect(Result, Index * 16, 0);
+  OffsetRect(Result, Index * 16 * ResMod, 0);
   if IsUpper then
     Result.Bottom := (Result.Top + Result.Bottom) div 2 - 1
   else
@@ -389,14 +389,24 @@ begin
   Target := GameParams.CurrentLevel.Group;
 
   SrcFile := Target.Path + aName;
+  if GameParams.HighResolution then
+    SrcFile := ChangeFileExt(SrcFile, '-hr.png');
+
   while not (FileExists(SrcFile) or Target.IsBasePack or (Target.Parent = nil)) do
   begin
     Target := Target.Parent;
     SrcFile := Target.Path + aName;
+    if GameParams.HighResolution then
+      SrcFile := ChangeFileExt(SrcFile, '-hr.png');
   end;
 
   if not FileExists(SrcFile) then
-    SrcFile := AppPath + SFGraphicsPanel + aName;
+  begin
+    if GameParams.HighResolution then
+      SrcFile := AppPath + SFGraphicsPanelHighRes + aName
+    else
+      SrcFile := AppPath + SFGraphicsPanel + aName;
+  end;
 
   MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
@@ -678,42 +688,42 @@ var
   begin
     TempBmp.Clear(0);
     CountStr := LeadZeroStr(aCount, 3); // just in case
-    fSkillFont[CountStr[1], 1].DrawTo(TempBmp, 0, 0, Rect(0, 0, 4, 8));
-    fSkillFont[CountStr[2], 1].DrawTo(TempBmp, 4, 0, Rect(0, 0, 4, 8));
-    fSkillFont[CountStr[3], 1].DrawTo(TempBmp, 8, 0, Rect(0, 0, 4, 8));
+    fSkillFont[CountStr[1], 1].DrawTo(TempBmp, 0, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
+    fSkillFont[CountStr[2], 1].DrawTo(TempBmp, 4 * ResMod, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
+    fSkillFont[CountStr[3], 1].DrawTo(TempBmp, 8 * ResMod, 0, Rect(0, 0, 4 * ResMod, 8 * ResMod));
   end;
 
 begin
   GetGraphic('skill_count_digits.png', fIconBmp);
-  SrcRect := Rect(0, 0, 4, 8);
+  SrcRect := Rect(0, 0, 4 * ResMod, 8 * ResMod);
   for c := '0' to '9' do
   begin
     for i := 0 to 1 do
     begin
-      fSkillFont[c, i].SetSize(8, 8);
-      fIconBmp.DrawTo(fSkillFont[c, i], 4 - 4 * i, 0, SrcRect);
+      fSkillFont[c, i].SetSize(8 * ResMod, 8 * ResMod);
+      fIconBmp.DrawTo(fSkillFont[c, i], (4 - 4 * i)  * ResMod, 0, SrcRect);
     end;
-    OffsetRect(SrcRect, 4, 0);
+    OffsetRect(SrcRect, 4 * ResMod, 0);
   end;
 
-  Inc(SrcRect.Right, 4); // Position is correct at this point, but Infinite symbol is 8px wide not 4px
-  fSkillInfinite.SetSize(8, 8);
+  Inc(SrcRect.Right, 4 * ResMod); // Position is correct at this point, but Infinite symbol is 8px wide not 4px
+  fSkillInfinite.SetSize(8 * ResMod, 8 * ResMod);
   fIconBmp.DrawTo(fSkillInfinite, 0, 0, SrcRect);
 
-  OffsetRect(SrcRect, 8, 0);
-  fSkillLock.SetSize(8, 8);
+  OffsetRect(SrcRect, 8 * ResMod, 0);
+  fSkillLock.SetSize(8 * ResMod, 8 * ResMod);
   fIconBmp.DrawTo(fSkillLock, 0, 0, SrcRect);
 
   TempBmp := TBitmap32.Create;
   TKernelResampler.Create(TempBmp);
   TKernelResampler(TempBmp.Resampler).Kernel := TCubicKernel.Create;
   try
-    TempBMP.SetSize(12, 8);
+    TempBMP.SetSize(12 * ResMod, 8 * ResMod);
     for i := 100 to MAXIMUM_SI do
     begin
       MakeOvercountImage(i);
       fSkillOvercount[i] := TBitmap32.Create;
-      fSkillOvercount[i].SetSize(9, 8);
+      fSkillOvercount[i].SetSize(9 * ResMod, 8 * ResMod);
       TempBMP.DrawTo(fSkillOvercount[i], fSkillOvercount[i].BoundsRect, TempBMP.BoundsRect);
     end;
   finally
@@ -1016,21 +1026,21 @@ begin
   if aNumber = 0 then Exit;
 
   if (aButton = spbFaster) and (Level.Info.SpawnIntervalLocked or (Level.Info.SpawnInterval = MINIMUM_SI)) then
-    fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
+    fSkillLock.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
   else if (aNumber > 99) then
   begin
     if (aButton <= LAST_SKILL_BUTTON) then
-      fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1)
+      fSkillInfinite.DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod)
     else
-      fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1);
+      fSkillOvercount[aNumber].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
   end else if aNumber < 10 then
   begin
     NumberStr := LeadZeroStr(aNumber, 2);
-    fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 1, ButtonTop + 1);
+    fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 1 * ResMod, ButtonTop + 1 * ResMod);
   end else begin
     NumberStr := LeadZeroStr(aNumber, 2);
-    fSkillFont[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1);
-    fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 3, ButtonTop + 1);
+    fSkillFont[NumberStr[1], 1].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
+    fSkillFont[NumberStr[2], 0].DrawTo(fImage.Bitmap, ButtonLeft + 3 * ResMod, ButtonTop + 1 * ResMod);
   end;
 end;
 

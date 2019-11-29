@@ -68,12 +68,12 @@ end;
 
 function TSkillPanelStandard.PanelWidth: Integer;
 begin
-  Result := 416;
+  Result := 416 * ResMod;
 end;
 
 function TSkillPanelStandard.PanelHeight: Integer;
 begin
-  Result := 40;
+  Result := 40 * ResMod;
 end;
 
 function TSkillPanelStandard.DrawStringLength: Integer;
@@ -94,7 +94,7 @@ end;
 
 function TSkillPanelStandard.MinimapRect: TRect;
 begin
-  Result := Rect(308, 3, 412, 37);
+  Result := Rect(308 * ResMod, 3 * ResMod, 412 * ResMod, 37 * ResMod);
 end;
 
 procedure TSkillPanelStandard.CreateNewInfoString;
@@ -164,12 +164,12 @@ end;
 
 function TSkillPanelCompact.PanelWidth: Integer;
 begin
-  Result := 320
+  Result := 320 * ResMod;
 end;
 
 function TSkillPanelCompact.PanelHeight: Integer;
 begin
-  Result := 40;
+  Result := 40 * ResMod;
 end;
 
 function TSkillPanelCompact.DrawStringLength: Integer;
@@ -195,7 +195,7 @@ end;
 
 function TSkillPanelCompact.MinimapRect: TRect;
 begin
-  Result := Rect(228, 18, 316, 38)
+  Result := Rect(228 * ResMod, 18 * ResMod, 316 * ResMod, 38 * ResMod)
 end;
 
 procedure TSkillPanelCompact.CreateNewInfoString;

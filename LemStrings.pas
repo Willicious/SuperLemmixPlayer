@@ -16,6 +16,7 @@ const
     SFGraphicsMasks = SFGraphics + 'mask\';
     SFGraphicsMenu = SFGraphics + 'menu\';
     SFGraphicsPanel = SFGraphics + 'panel\';
+    SFGraphicsPanelHighRes = SFGraphics + 'panel-hr\';
 
   SFStyles = 'styles\';
       SFDefaultStyle = 'default';

@@ -338,15 +338,15 @@ begin
   SkillPanel.Zoom := Max(SkillPanel.Zoom, fInternalZoom); // this checks for MaxZoom automatically.
 
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
-  Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40), GameParams.Level.Info.Height * fInternalZoom * ResMod);
+  Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40 * ResMod), GameParams.Level.Info.Height * fInternalZoom * ResMod);
   Img.Left := (ClientWidth - Img.Width) div 2;
   SkillPanel.Left := (ClientWidth - SkillPanel.Width) div 2;
   // tops are calculated later
 
-  VertOffset := (ClientHeight - ((SkillPanel.Zoom * 40) + Img.Height)) div 2;
+  VertOffset := (ClientHeight - ((SkillPanel.Zoom * 40 * ResMod) + Img.Height)) div 2;
   Img.Top := VertOffset;
   SkillPanel.Top := Img.Top + Img.Height;
-  SkillPanel.Height := Max(SkillPanel.Zoom * 40, ClientHeight - SkillPanel.Top);
+  SkillPanel.Height := Max(SkillPanel.Zoom * 40 * ResMod, ClientHeight - SkillPanel.Top);
   SkillPanel.Image.Left := (ClientWidth - SkillPanel.Image.Width) div 2;
   SkillPanel.Image.Update;
 
@@ -1552,7 +1552,7 @@ const
 begin
   FreeCursors;
 
-  LocalMaxZoom := Min(Screen.Width div 320, (Screen.Height - (40 * SkillPanel.MaxZoom)) div 160) + EXTRA_ZOOM_LEVELS;
+  LocalMaxZoom := Min(Screen.Width div 320, (Screen.Height - (40 * ResMod * SkillPanel.MaxZoom)) div 160) + EXTRA_ZOOM_LEVELS;
 
   TempBMP := TBitmap32.Create;
   TempBMP2 := TBitmap32.Create;
@@ -1608,7 +1608,7 @@ begin
   if GameParams.IncreaseZoom then
   begin
     Sca := 2;
-    while (Min(Sca, SkillPanel.MaxZoom) * 40) + (Max(GameParams.Level.Info.Height, 160) * Sca) <= ClientHeight do
+    while (Min(Sca, SkillPanel.MaxZoom) * 40 * ResMod) + (Max(GameParams.Level.Info.Height, 160) * Sca) <= ClientHeight do
       Inc(Sca);
     Dec(Sca);
     Sca := Max(Sca, GameParams.ZoomLevel);
