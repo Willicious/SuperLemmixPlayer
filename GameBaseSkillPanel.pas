@@ -936,7 +936,7 @@ begin
     Inc(InnerViewRect.Top);
     Dec(InnerViewRect.Bottom);
     Dec(InnerViewRect.Right);
-    fMinimapTemp.FrameRectS(ViewRect, fRectColor);
+    fMinimapTemp.FrameRectS(InnerViewRect, fRectColor);
   end;
 
   fMinimapImage.Bitmap.Assign(fMinimapTemp);
