@@ -554,8 +554,8 @@ begin
   i := GetImageIndex(Flip, Invert, Rotate);
   with fVariableInfo[i] do
     case aProp of
-      ov_Width: Result := fWidth;
-      ov_Height: Result := fHeight;
+      ov_Width: Result := Animations.PrimaryAnimation.Width;
+      ov_Height: Result := Animations.PrimaryAnimation.Height;
       ov_TriggerLeft: Result := TriggerLeft;
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
