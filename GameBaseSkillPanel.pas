@@ -440,8 +440,8 @@ begin
   end;
 
   // Draw partial panel at the end
-  DstRect.Right := ButtonRect(NumButtons - 1).Right + 1;
-  DstRect.Bottom := ButtonRect(NumButtons - 1).Bottom + 1;
+  DstRect.Right := ButtonRect(NumButtons - 1).Right + ResMod;
+  DstRect.Bottom := ButtonRect(NumButtons - 1).Bottom + ResMod;
   SrcRect.Right := SrcRect.Left - DstRect.Left + DstRect.Right;
   SrcRect.Bottom := SrcRect.Top - DstRect.Top + DstRect.Bottom;
   BlankPanel.DrawTo(fOriginal, DstRect, SrcRect);
