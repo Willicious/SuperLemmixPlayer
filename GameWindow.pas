@@ -1684,13 +1684,13 @@ begin
   O :=  O + Img.Width div 2;
   if O < MinScroll then O := MinScroll;
   if O > MaxScroll then O := MaxScroll;
-  Img.OffSetHorz := O * ResMod;
+  Img.OffSetHorz := O;
 
   O := -P.Y * 8 * fInternalZoom;
   O :=  O + Img.Height div 2;
   if O < MinVScroll then O := MinVScroll;
   if O > MaxVScroll then O := MaxVScroll;
-  Img.OffsetVert := O * ResMod;
+  Img.OffsetVert := O;
 
   fNeedRedraw := rdRefresh;
 end;
