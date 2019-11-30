@@ -29,6 +29,7 @@ type
       class procedure HandleVersionInfo;
       class procedure HandleConvert;
       class procedure HandleTestMode;
+      class procedure HandleUpscale;
     public
       class function HandleCommandLine: TCommandLineResult;
   end;
@@ -71,6 +72,12 @@ begin
   if Param = 'render' then
   begin
     HandleRender;
+    Result := clrHalt;
+  end;
+
+  if Param = 'upscale' then
+  begin
+    HandleUpscale;
     Result := clrHalt;
   end;
 
@@ -306,6 +313,38 @@ begin
   GameParams.TestModeLevel.Filename := ParamStr(2);
   if Pos(':', GameParams.TestModeLevel.Filename) = 0 then
     GameParams.TestModeLevel.Filename := AppPath + GameParams.TestModeLevel.Filename;
+end;
+
+class procedure TCommandLineHandler.HandleUpscale;
+var
+  n: Integer;
+  BMPIn, BMPOut: TBitmap32;
+  Path: String;
+begin
+  n := 2;
+  BMPIn := TBitmap32.Create;
+  BMPOut := TBitmap32.Create;
+  try
+    while ParamStr(n) <> '' do
+    begin
+      Path := ParamStr(n);
+      if not TPath.IsPathRooted(Path) then
+        Path := AppPath + Path;
+
+      TPngInterface.LoadPngFile(Path, BMPIn);
+
+      Upscale(BMPIn, umPixelArt, BMPOut);
+      TPngInterface.SavePngFile(ChangeFileExt(Path, '-pa.png'), BMPOut);
+
+      Upscale(BMPIn, umFullColor, BMPOut);
+      TPngInterface.SavePngFile(ChangeFileExt(Path, '-fc.png'), BMPOut);
+
+      Inc(n);
+    end;
+  finally
+    BMPIn.Free;
+    BMPOut.Free;
+  end;
 end;
 
 class procedure TCommandLineHandler.HandleVersionInfo;
