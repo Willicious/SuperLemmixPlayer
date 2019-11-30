@@ -651,7 +651,7 @@ begin
     // Platformer, Builder and Stacker have bricks drawn to clarify the direction of building.
     // Platformer additionally has some extra black pixels drawn in to make the outline nicer.
     DrawAnimationFrame(fSkillIcons[spbPlatformer], PLATFORMING, 1, 7, 20);
-    fSkillIcons[spbPlatformer].FillRect(2, 21, 12, 22, $FF000000);
+    fSkillIcons[spbPlatformer].FillRect(2 * ResMod, 21 * ResMod, 12 * ResMod, 22 * ResMod, $FF000000);
     DrawBrick(fSkillIcons[spbPlatformer], 2, 21);
     DrawBrick(fSkillIcons[spbPlatformer], 5, 21);
     DrawBrick(fSkillIcons[spbPlatformer], 8, 21);
