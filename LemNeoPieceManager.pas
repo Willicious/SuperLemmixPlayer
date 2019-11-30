@@ -39,6 +39,7 @@ type
       fTerrains: TMetaTerrains;
       fObjects: TGadgetMetaInfoList;
 
+      fLoadedPropertiesStyles: TStringList;
       fAliases: TList<TStyleAlias>;
 
       function GetTerrainCount: Integer;
@@ -52,7 +53,7 @@ type
       function GetMetaTerrain(Identifier: String): TMetaTerrain;
       function GetMetaObject(Identifier: String): TGadgetMetaInfo;
 
-      procedure LoadAliases;
+      procedure LoadAliases(aStyle: String);
       procedure AddAlias(aSection: TParserSection; const aIteration: Integer; aData: Pointer);
 
       property TerrainCount: Integer read GetTerrainCount;
@@ -69,6 +70,7 @@ type
       procedure MakePiecesFromGroups(aGroups: TTerrainGroups);
       procedure MakePieceFromGroup(aGroup: TTerrainGroup);
 
+      procedure LoadProperties(aStyle: String);
       function Dealias(aIdentifier: String; aKind: TAliasKind): String;
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
@@ -119,9 +121,10 @@ begin
   fTerrains := TMetaTerrains.Create;
   fObjects := TGadgetMetaInfoList.Create;
   fTheme := nil;
+  fLoadedPropertiesStyles := TStringList.Create;
   fAliases := TList<TStyleAlias>.Create;
 
-  LoadAliases;
+  LoadProperties('default');
 end;
 
 destructor TNeoPieceManager.Destroy;
@@ -129,6 +132,7 @@ begin
   fTerrains.Free;
   fObjects.Free;
   fAliases.Free;
+  fLoadedPropertiesStyles.Free;
   inherited;
 end;
 
@@ -326,13 +330,16 @@ end;
 
 // Aliases
 
-procedure TNeoPieceManager.LoadAliases;
+procedure TNeoPieceManager.LoadAliases(aStyle: String);
 var
   Parser: TParser;
 begin
+  if not FileExists(SFStyles + aStyle + '\alias.nxmi') then Exit;
+
+
   Parser := TParser.Create;
   try
-    Parser.LoadFromFile(SFData + 'alias.nxmi');
+    Parser.LoadFromFile(SFStyles + aStyle + '\alias.nxmi');
 
     Parser.MainSection.DoForEachSection('GADGET', AddAlias, Pointer(rkGadget));
     Parser.MainSection.DoForEachSection('TERRAIN', AddAlias, Pointer(rkTerrain));
@@ -341,6 +348,14 @@ begin
   finally
     Parser.Free;
   end;
+end;
+
+procedure TNeoPieceManager.LoadProperties(aStyle: String);
+begin
+  if fLoadedPropertiesStyles.IndexOf(aStyle) >= 0 then Exit;
+  fLoadedPropertiesStyles.Add(aStyle);
+
+  LoadAliases(aStyle);
 end;
 
 procedure TNeoPieceManager.AddAlias(aSection: TParserSection;
