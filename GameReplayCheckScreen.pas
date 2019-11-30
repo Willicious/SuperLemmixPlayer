@@ -52,6 +52,7 @@ type
     fScreenText: TStringList;
     fReplays: TReplayCheckEntries;
     fProcessing: Boolean;
+    fOldHighRes: Boolean;
 
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_KeyPress(Sender: TObject; var Key: Char);
@@ -383,6 +384,10 @@ begin
 
     TileBackgroundBitmap(0, 0, ScreenImg.Bitmap);
     DrawPurpleTextCentered(ScreenImg.Bitmap, 'Preparing replay check. Please wait.', 192);
+
+    fOldHighRes := GameParams.HighResolution;
+    GameParams.HighResolution := false;
+    PieceManager.Clear;
   finally
     ScreenImg.EndUpdate;
   end;
@@ -412,6 +417,9 @@ end;
 
 procedure TGameReplayCheckScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
+  GameParams.HighResolution := fOldHighRes;
+  PieceManager.Clear;
+
   if ParamStr(2) = 'replaytest' then
     inherited CloseScreen(gstExit)
   else
