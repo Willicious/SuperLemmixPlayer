@@ -10,6 +10,7 @@ uses
   Dialogs,
   SharedGlobals,
   Classes, SysUtils, Contnrs,
+  Math,
   GR32, GR32_LowLevel, GR32_Resamplers,
   Windows;
 
@@ -394,20 +395,144 @@ var
     dxb, dyb: Integer;
     c: TColor32;
 
+    EffectiveRect: TRect;
+
     function GetSrcColor(x, y: Integer): TColor32;
+      function IsInside(x, y: Integer): Boolean;
+      begin
+        Result := EffectiveRect.Contains(Point(x, y));
+      end;
+
+      procedure BringInside(var x, y: Integer);
+      begin
+        if x < EffectiveRect.Left then x := EffectiveRect.Left;
+        if y < EffectiveRect.Top then y := EffectiveRect.Top;
+        if x >= EffectiveRect.Right then x := EffectiveRect.Right - 1;
+        if y >= EffectiveRect.Bottom then y := EffectiveRect.Bottom - 1;
+      end;
+
+      function IsTransparent(x, y: Integer): Boolean;
+      begin
+        Result := (Src.PixelS[x, y] and $FF000000) = 0;
+      end;
+
+      function MayBeTransparent: Boolean;
+      var
+        sX, sY, oX, oY: Integer;
+        wideDirDX, wideDirDY: Integer;
+        narrowDirDX, narrowDirDY: Integer;
+
+        iWide, iNarrow: Integer;
+        ThisTransparent: Boolean;
+      begin
+        Result := true;
+
+        if IsInside(x, y) then
+          Exit
+        else if ((x < EffectiveRect.Left) or (x >= EffectiveRect.Right)) and
+                ((y < EffectiveRect.Top) or (y >= EffectiveRect.Bottom)) then
+          Exit;
+
+        sX := x;
+        sY := y;
+        BringInside(sX, sY);
+
+        oX := sX;
+        oY := sY;
+
+        wideDirDX := 0;
+        wideDirDY := 0;
+        narrowDirDX := 0;
+        narrowDirDY := 0;
+
+        if x < EffectiveRect.Left then
+        begin
+          wideDirDX := 0;
+          wideDirDY := 1;
+          narrowDirDX := 1;
+          narrowDirDY := 0;
+        end;
+
+        if x >= EffectiveRect.Right then
+        begin
+          wideDirDX := 0;
+          wideDirDY := 1;
+          narrowDirDX := -1;
+          narrowDirDY := 0;
+        end;
+
+        if y < EffectiveRect.Top then
+        begin
+          wideDirDX := 1;
+          wideDirDY := 0;
+          narrowDirDX := 0;
+          narrowDirDY := 1;
+        end;
+
+        if y >= EffectiveRect.Bottom then
+        begin
+          wideDirDX := 1;
+          wideDirDY := 0;
+          narrowDirDX := 0;
+          narrowDirDY := -1;
+        end;
+
+        if IsTransparent(sX - wideDirDX, sY - wideDirDY) then
+          for iNarrow := 0 to 2 do
+            for iWide := Max(-1, (-3 + iNarrow)) to -1 do
+            begin
+              ThisTransparent := IsTransparent(sX + (iNarrow * narrowDirDX) + (iWide * wideDirDX), sY + (iNarrow * narrowDirDY) + (iWide * wideDirDY));
+              if not ThisTransparent then Exit;
+            end;
+
+        if IsTransparent(sX + wideDirDX, sY + wideDirDY) then
+          for iNarrow := 0 to 2 do
+            for iWide := 1 to Min(1, (3 - iNarrow)) do
+            begin
+              ThisTransparent := IsTransparent(sX + (iNarrow * narrowDirDX) + (iWide * wideDirDX), sY + (iNarrow * narrowDirDY) + (iWide * wideDirDY));
+              if not ThisTransparent then Exit;
+            end;
+
+        Result := false;
+      end;
     begin
-      if (x < 0) or (y < 0) or (x >= Src.Width) or (y >= Src.Height) then
-        Result := $00000000
+      if (not IsInside(x, y)) and (not MayBeTransparent) then
+        BringInside(x, y);
+
+      if IsInside(x, y) then
+        Result := Src.Pixel[x, y]
       else
-        Result := Src.Pixel[x, y];
+        Result := $00000000;
 
       if (Result and $FF000000) = 0 then
         Result := $00000000;
     end;
   begin
+    EffectiveRect.Right := 0;
+    EffectiveRect.Bottom := 0;
+    EffectiveRect.Left := Src.Width;
+    EffectiveRect.Top := Src.Height;
+
+    Src.OuterColor := $FF000000;
+
+    for y := 0 to Src.Height-1 do
+      for x := 0 to Src.Width-1 do
+        if (Src[x, y] and $FF000000) <> 0 then
+        begin
+          if x < EffectiveRect.Left then EffectiveRect.Left := x;
+          if y < EffectiveRect.Top then EffectiveRect.Top := y;
+          if x >= EffectiveRect.Right then EffectiveRect.Right := x + 1;
+          if y >= EffectiveRect.Bottom then EffectiveRect.Bottom := y + 1;
+        end;
+
     for y := 0 to Src.Height-1 do
       for x := 0 to Src.Width-1 do
       begin
+        if (x < EffectiveRect.Left) or (y < EffectiveRect.Top) or
+           (x >= EffectiveRect.Right) or (y >= EffectiveRect.Bottom) then
+          Continue;
+
+
         dxb := x * 2;
         dyb := y * 2;
 
@@ -488,7 +613,7 @@ begin
     end;
 
     Dst.SetSize(Src.Width * 2, Src.Height * 2);
-    Dst.Clear;
+    Dst.Clear($00000000);
     Dst.DrawMode := dmOpaque;
 
     case Mode of
