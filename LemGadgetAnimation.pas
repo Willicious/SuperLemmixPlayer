@@ -501,7 +501,6 @@ begin
   end;
 
   CombineBitmaps(SkillIcons);
-  fSourceImage.SaveToFile(AppPath + 'blah.bmp');
 end;
 
 function TGadgetAnimation.GetCutRect: TRect;

@@ -11,7 +11,7 @@ uses
   SharedGlobals,
   Classes, SysUtils, Contnrs,
   Math,
-  GR32, GR32_LowLevel, GR32_Resamplers,
+  GR32, GR32_LowLevel, GR32_Resamplers, PngInterface,
   Windows;
 
 const
@@ -391,205 +391,122 @@ var
 
   procedure UpscalePixelArt;
   var
-    x, y: Integer;
-    dxb, dyb: Integer;
-    c: TColor32;
+    ResBMP: TBitmap32;
 
-    EffectiveRect: TRect;
+    procedure MakeResBMP;
+    var
+      x, y: Integer;
+      cX, cY: Integer;
 
-    function GetSrcColor(x, y: Integer): TColor32;
-      function IsInside(x, y: Integer): Boolean;
+      function IsTransparentInSrc(x, y: Integer): Boolean;
       begin
-        Result := EffectiveRect.Contains(Point(x, y));
+        Result := {Src.BoundsRect.Contains(Point(x, y)) and }((Src.PixelS[x, y] and $FF000000) = 0);
       end;
 
-      procedure BringInside(var x, y: Integer);
+      function MayBeTransparentDiagonal(x, y, dx, dy: Integer): Boolean;
       begin
-        if x < EffectiveRect.Left then x := EffectiveRect.Left;
-        if y < EffectiveRect.Top then y := EffectiveRect.Top;
-        if x >= EffectiveRect.Right then x := EffectiveRect.Right - 1;
-        if y >= EffectiveRect.Bottom then y := EffectiveRect.Bottom - 1;
+        Result := IsTransparentInSrc(x + dx, y) or IsTransparentInSrc(x, y + dy) or IsTransparentInSrc(x + dx, y + dy);
       end;
 
-      function IsTransparent(x, y: Integer): Boolean;
+      function MayBeTransparentAdjacent(x, y, dx, dy: Integer): Boolean;
+      // dx / y are moving along test direction
       begin
-        Result := (Src.PixelS[x, y] and $FF000000) = 0;
-      end;
-
-      function MayBeTransparent: Boolean;
-      var
-        sX, sY, oX, oY: Integer;
-        wideDirDX, wideDirDY: Integer;
-        narrowDirDX, narrowDirDY: Integer;
-
-        iWide, iNarrow: Integer;
-        ThisTransparent: Boolean;
-      begin
-        Result := true;
-
-        if IsInside(x, y) then
-          Exit
-        else if ((x < EffectiveRect.Left) or (x >= EffectiveRect.Right)) and
-                ((y < EffectiveRect.Top) or (y >= EffectiveRect.Bottom)) then
-          Exit;
-
-        sX := x;
-        sY := y;
-        BringInside(sX, sY);
-
-        oX := sX;
-        oY := sY;
-
-        wideDirDX := 0;
-        wideDirDY := 0;
-        narrowDirDX := 0;
-        narrowDirDY := 0;
-
-        if x < EffectiveRect.Left then
-        begin
-          wideDirDX := 0;
-          wideDirDY := 1;
-          narrowDirDX := 1;
-          narrowDirDY := 0;
-        end;
-
-        if x >= EffectiveRect.Right then
-        begin
-          wideDirDX := 0;
-          wideDirDY := 1;
-          narrowDirDX := -1;
-          narrowDirDY := 0;
-        end;
-
-        if y < EffectiveRect.Top then
-        begin
-          wideDirDX := 1;
-          wideDirDY := 0;
-          narrowDirDX := 0;
-          narrowDirDY := 1;
-        end;
-
-        if y >= EffectiveRect.Bottom then
-        begin
-          wideDirDX := 1;
-          wideDirDY := 0;
-          narrowDirDX := 0;
-          narrowDirDY := -1;
-        end;
-
-        if IsTransparent(sX - wideDirDX, sY - wideDirDY) then
-          for iNarrow := 0 to 2 do
-            if not IsTransparent(sX + (iNarrow * narrowDirDX) - wideDirDX, sY + (iNarrow * narrowDirDY) - wideDirDY) then Exit;
-
-        if IsTransparent(sX + wideDirDX, sY + wideDirDY) then
-          for iNarrow := 0 to 2 do
-            if not IsTransparent(sX + (iNarrow * narrowDirDX) + wideDirDX, sY + (iNarrow * narrowDirDY) + wideDirDY) then Exit;
-
         Result := false;
+
+        dx := Min(1, Max(dx, -1));
+        dy := Min(1, Max(dy, -1));
+
+        if IsTransparentInSrc(x + dX, y + dY) then
+          Result := true;
+
+        if (not Result) and IsTransparentInSrc(x + dx + Abs(dy), y + dy + Abs(dx)) then
+          if not (IsTransparentInSrc(x + dx * 2 + Abs(dy), y + dy * 2 + Abs(dx)) and
+                  IsTransparentInSrc(x + dx * 3 + Abs(dy), y + dy * 3 + Abs(dx))) then
+            Result := true;
+
+
+        if (not Result) and IsTransparentInSrc(x - Abs(dy), y - Abs(dx)) then
+          if not (IsTransparentInSrc(x + dx - Abs(dy), y + dy - Abs(dx)) and
+                  IsTransparentInSrc(x + dx + dx - Abs(dy), y + dy + dy - Abs(dx))) then
+            Result := true;
       end;
     begin
-      if (not IsInside(x, y)) and (not MayBeTransparent) then
-        BringInside(x, y);
+      ResBMP.SetSize(Src.Width * 3 + 2, Src.Height * 3 + 2);
+      ResBMP.Clear(0);
+      Src.OuterColor := $00000000;
 
-      if IsInside(x, y) then
-        Result := Src.Pixel[x, y]
-      else
-        Result := $00000000;
-
-      if (Result and $FF000000) = 0 then
-        Result := $00000000;
-    end;
-  begin
-    EffectiveRect.Right := 0;
-    EffectiveRect.Bottom := 0;
-    EffectiveRect.Left := Src.Width;
-    EffectiveRect.Top := Src.Height;
-
-    Src.OuterColor := $FF000000;
-
-    for y := 0 to Src.Height-1 do
-      for x := 0 to Src.Width-1 do
-        if (Src[x, y] and $FF000000) <> 0 then
-        begin
-          if x < EffectiveRect.Left then EffectiveRect.Left := x;
-          if y < EffectiveRect.Top then EffectiveRect.Top := y;
-          if x >= EffectiveRect.Right then EffectiveRect.Right := x + 1;
-          if y >= EffectiveRect.Bottom then EffectiveRect.Bottom := y + 1;
-        end;
-
-    for y := 0 to Src.Height-1 do
-      for x := 0 to Src.Width-1 do
+      for y := -1 to Src.Height do
       begin
-        if (x < EffectiveRect.Left) or (y < EffectiveRect.Top) or
-           (x >= EffectiveRect.Right) or (y >= EffectiveRect.Bottom) then
-          Continue;
+        cY := (y * 3) + 2;
 
-
-        dxb := x * 2;
-        dyb := y * 2;
-
-        C := GetSrcColor(x, y);
-
-        // Attempt 1
-        if (GetSrcColor(x-1, y) = GetSrcColor(x, y-1)) then
-          Dst[dxb, dyb] := GetSrcColor(x-1, y)
-        else
-          Dst[dxb, dyb] := C;
-
-        if (GetSrcColor(x+1, y) = GetSrcColor(x, y-1)) then
-          Dst[dxb+1, dyb] := GetSrcColor(x+1, y)
-        else
-          Dst[dxb+1, dyb] := C;
-
-        if (GetSrcColor(x-1, y) = GetSrcColor(x, y+1)) then
-          Dst[dxb, dyb+1] := GetSrcColor(x-1, y)
-        else
-          Dst[dxb, dyb+1] := C;
-
-        if (GetSrcColor(x+1, y) = GetSrcColor(x, y+1)) then
-          Dst[dxb+1, dyb+1] := GetSrcColor(x+1, y)
-        else
-          Dst[dxb+1, dyb+1] := C;
-
-        // Attempt 2
-        if (Dst[dxb, dyb] <> C) and
-           (Dst[dxb+1, dyb] <> C) and
-           (Dst[dxb, dyb+1] <> C) and
-           (Dst[dxb+1, dyb+1] <> C) then
+        for x := -1 to Src.Width do
         begin
-          if (GetSrcColor(x-1, y) = GetSrcColor(x, y-1)) and (GetSrcColor(x-1, y) = $00000000) then
-            Dst[dxb, dyb] := GetSrcColor(x-1, y)
-          else
-            Dst[dxb, dyb] := C;
+          cX := (x * 3) + 2;
 
-          if (GetSrcColor(x+1, y) = GetSrcColor(x, y-1)) and (GetSrcColor(x+1, y) = $00000000) then
-            Dst[dxb+1, dyb] := GetSrcColor(x+1, y)
-          else
-            Dst[dxb+1, dyb] := C;
+          if not IsTransparentInSrc(x, y) then
+          begin
+            ResBMP.FillRectS(cX - 1, cY - 1, cX + 2, cY + 2, Src.PixelS[x, y]);
+          end else begin
+            ResBMP.PixelS[cX, cY] := Src.PixelS[x, y];
 
-          if (GetSrcColor(x-1, y) = GetSrcColor(x, y+1)) and (GetSrcColor(x-1, y) = $00000000) then
-            Dst[dxb, dyb+1] := GetSrcColor(x-1, y)
-          else
-            Dst[dxb, dyb+1] := C;
+            if not MayBeTransparentAdjacent(x, y, -1,  0) then ResBMP.PixelS[cX - 1, cY] := Src.PixelS[x - 1, y];
+            if not MayBeTransparentAdjacent(x, y,  1,  0) then ResBMP.PixelS[cX + 1, cY] := Src.PixelS[x + 1, y];
+            if not MayBeTransparentAdjacent(x, y,  0, -1) then ResBMP.PixelS[cX, cY - 1] := Src.PixelS[x, y - 1];
+            if not MayBeTransparentAdjacent(x, y,  0,  1) then ResBMP.PixelS[cX, cY + 1] := Src.PixelS[x, y + 1];
 
-          if (GetSrcColor(x+1, y) = GetSrcColor(x, y+1)) and (GetSrcColor(x+1, y) = $00000000) then
-            Dst[dxb+1, dyb+1] := GetSrcColor(x+1, y)
-          else
-            Dst[dxb+1, dyb+1] := C;
-        end;
-
-        // Attempt 3
-        if (Dst[dxb, dyb] <> C) and
-           (Dst[dxb+1, dyb] <> C) and
-           (Dst[dxb, dyb+1] <> C) and
-           (Dst[dxb+1, dyb+1] <> C) then
-        begin
-          Dst[dxb, dyb] := C;
-          Dst[dxb+1, dyb] := C;
-          Dst[dxb, dyb+1] := C;
-          Dst[dxb+1, dyb+1] := C;
+            if not MayBeTransparentDiagonal(x, y, -1, -1) then ResBMP.PixelS[cX - 1, cY - 1] := Src.PixelS[x - 1, y - 1];
+            if not MayBeTransparentDiagonal(x, y,  1, -1) then ResBMP.PixelS[cX + 1, cY - 1] := Src.PixelS[x + 1, y - 1];
+            if not MayBeTransparentDiagonal(x, y, -1,  1) then ResBMP.PixelS[cX - 1, cY + 1] := Src.PixelS[x - 1, y + 1];
+            if not MayBeTransparentDiagonal(x, y,  1,  1) then ResBMP.PixelS[cX + 1, cY + 1] := Src.PixelS[x + 1, y + 1];
+          end;
         end;
       end;
+
+      if (Src.Width = 24) and (Src.Height = 24) then
+        TPngInterface.SavePNGFile(AppPath + 'blah.png', ResBMP);
+    end;
+
+    procedure MakeDstFromRes;
+    var
+      x, y: Integer;
+      rX, rY: Integer;
+
+      procedure HandleStandard(dstX, dstY, aDX, aDY: Integer);
+      begin
+        aDX := Min(1, Max(aDX, -1));
+        aDY := Min(1, Max(aDY, -1));
+        aDX := aDX * 2;
+        aDY := aDY * 2;
+
+        if ResBMP.PixelS[rX + aDX, rY] = ResBMP.PixelS[rX, rY + aDY] then
+          Dst[dstX, dstY] := ResBMP.PixelS[rX + aDX, rY]
+        else
+          Dst[dstX, dstY] := ResBMP.PixelS[rX, rY];
+      end;
+    begin
+      for y := 0 to Src.Height-1 do
+      begin
+        rY := (y * 3) + 2;
+
+        for x := 0 to Src.Width-1 do
+        begin
+          rX := (x * 3) + 2;
+
+          HandleStandard(x * 2, y * 2, -1, -1);
+          HandleStandard(x * 2 + 1, y * 2, 1, -1);
+          HandleStandard(x * 2, y * 2 + 1, -1, 1);
+          HandleStandard(x * 2 + 1, y * 2 + 1, 1, 1);
+        end;
+      end;
+    end;
+  begin
+    ResBMP := TBitmap32.Create;
+    try
+      MakeResBMP;
+      MakeDstFromRes;
+    finally
+      ResBMP.Free;
+    end;
   end;
 begin
   UsingLocalBitmap := false;
