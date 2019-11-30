@@ -282,7 +282,7 @@ begin
     if fTheme = nil then
       SrcFolder := 'default'
     else
-      SrcFolder := fTheme.Lemmings;
+      SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings);
 
     if SrcFolder = '' then SrcFolder := 'default';
     if not DirectoryExists(AppPath + SFStyles + SrcFolder + SFPiecesLemmings) then
