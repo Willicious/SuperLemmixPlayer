@@ -393,23 +393,28 @@ var
   var
     ResBMP: TBitmap32;
 
+    function IsTransparentInSrc(x, y: Integer): Boolean;
+    begin
+      Result := (Src.PixelS[x, y] and $FF000000) = 0;
+    end;
+
     procedure MakeResBMP;
     var
       x, y: Integer;
       cX, cY: Integer;
 
-      function IsTransparentInSrc(x, y: Integer): Boolean;
-      begin
-        Result := {Src.BoundsRect.Contains(Point(x, y)) and }((Src.PixelS[x, y] and $FF000000) = 0);
-      end;
-
       function MayBeTransparentDiagonal(x, y, dx, dy: Integer): Boolean;
+      var
+        TranspAdj: Integer;
       begin
-        Result := IsTransparentInSrc(x + dx, y) or IsTransparentInSrc(x, y + dy) or IsTransparentInSrc(x + dx, y + dy);
+        TranspAdj := 0;
+        if IsTransparentInSrc(x + dx, y) then Inc(TranspAdj);
+        if IsTransparentInSrc(x, y + dy) then Inc(TranspAdj);
+        if IsTransparentInSrc(x + dx, y + dy) then Inc(TranspAdj);
+        Result := TranspAdj >= 2;
       end;
 
       function MayBeTransparentAdjacent(x, y, dx, dy: Integer): Boolean;
-      // dx / y are moving along test direction
       begin
         Result := false;
 
@@ -419,16 +424,23 @@ var
         if IsTransparentInSrc(x + dX, y + dY) then
           Result := true;
 
-        if (not Result) and IsTransparentInSrc(x + dx + Abs(dy), y + dy + Abs(dx)) then
-          if not (IsTransparentInSrc(x + dx * 2 + Abs(dy), y + dy * 2 + Abs(dx)) and
-                  IsTransparentInSrc(x + dx * 3 + Abs(dy), y + dy * 3 + Abs(dx))) then
-            Result := true;
+        if (not Result) then
+          if IsTransparentInSrc(x + dX + dY, y + dY + dX) then
+            if not (IsTransparentInSrc(x + dX * 2 + dY, y + dY * 2 + dX) and IsTransparentInSrc(x + dX * 3 + dY, y + dY * 3 + dX)) then
+              Result := true;
 
+        if (not Result) then
+          if IsTransparentInSrc(x + dX - dY, y + dY - dX) then
+            if not (IsTransparentInSrc(x + dX * 2 - dY, y + dY * 2 - dX) and IsTransparentInSrc(x + dX * 3 - dY, y + dY * 3 - dX)) then
+              Result := true;
+      end;
 
-        if (not Result) and IsTransparentInSrc(x - Abs(dy), y - Abs(dx)) then
-          if not (IsTransparentInSrc(x + dx - Abs(dy), y + dy - Abs(dx)) and
-                  IsTransparentInSrc(x + dx + dx - Abs(dy), y + dy + dy - Abs(dx))) then
-            Result := true;
+      function PickMostCommon(aFallback, aColorAdjA, aColorAdjB, aColorDiag: TColor32): TColor32;
+      begin
+        Result := aFallback;
+        if (aColorAdjA = aFallback) or (aColorAdjB = aFallback) then Exit;
+        if (aColorAdjA = aColorAdjB) or (aColorAdjA = aColorDiag) then Result := aColorAdjA;
+        if (aColorAdjB = aColorDiag) then Result := aColorAdjB;
       end;
     begin
       ResBMP.SetSize(Src.Width * 3 + 2, Src.Height * 3 + 2);
@@ -454,16 +466,21 @@ var
             if not MayBeTransparentAdjacent(x, y,  0, -1) then ResBMP.PixelS[cX, cY - 1] := Src.PixelS[x, y - 1];
             if not MayBeTransparentAdjacent(x, y,  0,  1) then ResBMP.PixelS[cX, cY + 1] := Src.PixelS[x, y + 1];
 
-            if not MayBeTransparentDiagonal(x, y, -1, -1) then ResBMP.PixelS[cX - 1, cY - 1] := Src.PixelS[x - 1, y - 1];
-            if not MayBeTransparentDiagonal(x, y,  1, -1) then ResBMP.PixelS[cX + 1, cY - 1] := Src.PixelS[x + 1, y - 1];
-            if not MayBeTransparentDiagonal(x, y, -1,  1) then ResBMP.PixelS[cX - 1, cY + 1] := Src.PixelS[x - 1, y + 1];
-            if not MayBeTransparentDiagonal(x, y,  1,  1) then ResBMP.PixelS[cX + 1, cY + 1] := Src.PixelS[x + 1, y + 1];
+            if not MayBeTransparentDiagonal(x, y, -1, -1) then ResBMP.PixelS[cX - 1, cY - 1] :=
+              PickMostCommon(Src.PixelS[x, y], Src.PixelS[x-1, y], Src.PixelS[x, y-1], Src.PixelS[x-1, y-1]);
+            if not MayBeTransparentDiagonal(x, y,  1, -1) then ResBMP.PixelS[cX + 1, cY - 1] :=
+              PickMostCommon(Src.PixelS[x, y], Src.PixelS[x+1, y], Src.PixelS[x, y-1], Src.PixelS[x+1, y-1]);
+            if not MayBeTransparentDiagonal(x, y, -1,  1) then ResBMP.PixelS[cX - 1, cY + 1] :=
+              PickMostCommon(Src.PixelS[x, y], Src.PixelS[x-1, y], Src.PixelS[x, y+1], Src.PixelS[x-1, y+1]);
+            if not MayBeTransparentDiagonal(x, y,  1,  1) then ResBMP.PixelS[cX + 1, cY + 1] :=
+              PickMostCommon(Src.PixelS[x, y], Src.PixelS[x+1, y], Src.PixelS[x, y+1], Src.PixelS[x+1, y+1]);
           end;
         end;
       end;
-
-      if (Src.Width = 24) and (Src.Height = 24) then
-        TPngInterface.SavePNGFile(AppPath + 'blah.png', ResBMP);
+      for y := 0 to ResBMP.Height-1 do
+        for x := 0 to ResBMP.Width-1 do
+          if (ResBMP[x, y] and $FF000000) = 0 then
+            ResBMP[x, y] := $00000000;
     end;
 
     procedure MakeDstFromRes;
@@ -475,11 +492,17 @@ var
       begin
         aDX := Min(1, Max(aDX, -1));
         aDY := Min(1, Max(aDY, -1));
-        aDX := aDX * 2;
-        aDY := aDY * 2;
 
-        if ResBMP.PixelS[rX + aDX, rY] = ResBMP.PixelS[rX, rY + aDY] then
-          Dst[dstX, dstY] := ResBMP.PixelS[rX + aDX, rY]
+        if IsTransparentInSrc(dstX div 2 + aDX, dstY div 2) and
+           IsTransparentInSrc(dstX div 2, dstY div 2 + aDY) and
+           IsTransparentInSrc(dstX div 2 + aDX, dstY div 2 + aDY) and
+           (
+             ((ResBMP.PixelS[rX + aDX * 2, rY] and $FF000000) = 0) or
+             ((ResBMP.PixelS[rX, rY + aDY * 2] and $FF000000) = 0)
+           ) then
+          Dst[dstX, dstY] := $00000000
+        else if (ResBMP.PixelS[rX + aDX * 2, rY] = ResBMP.PixelS[rX, rY + aDY * 2]) then
+          Dst[dstX, dstY] := ResBMP.PixelS[rX + aDX * 2, rY]
         else
           Dst[dstX, dstY] := ResBMP.PixelS[rX, rY];
       end;
@@ -496,6 +519,27 @@ var
           HandleStandard(x * 2 + 1, y * 2, 1, -1);
           HandleStandard(x * 2, y * 2 + 1, -1, 1);
           HandleStandard(x * 2 + 1, y * 2 + 1, 1, 1);
+
+          if ((Src[x, y] and $FF000000) <> 0) and
+             ((Dst[x * 2, y * 2] and $FF000000) = 0) and
+             ((Dst[x * 2 + 1, y * 2] and $FF000000) = 0) and
+             ((Dst[x * 2, y * 2 + 1] and $FF000000) = 0) and
+             ((Dst[x * 2 + 1, y * 2 + 1] and $FF000000) = 0) then
+          begin
+            Dst[x * 2, y * 2] := Src[x, y];
+            Dst[x * 2 + 1, y * 2] := Src[x, y];
+            Dst[x * 2, y * 2 + 1] := Src[x, y];
+            Dst[x * 2 + 1, y * 2 + 1] := Src[x, y];
+          end else if (Dst[x * 2, y * 2] <> Src[x, y]) and
+                      (Dst[x * 2 + 1, y * 2] <> Src[x, y]) and
+                      (Dst[x * 2, y * 2 + 1] <> Src[x, y]) and
+                      (Dst[x * 2 + 1, y * 2 + 1] <> Src[x, y]) then
+          begin
+            if (Dst[x * 2, y * 2] and $FF000000) <> 0 then Dst[x * 2, y * 2] := Src[x, y];
+            if (Dst[x * 2 + 1, y * 2] and $FF000000) <> 0 then Dst[x * 2 + 1, y * 2] := Src[x, y];
+            if (Dst[x * 2, y * 2 + 1] and $FF000000) <> 0 then Dst[x * 2, y * 2 + 1] := Src[x, y];
+            if (Dst[x * 2 + 1, y * 2 + 1] and $FF000000) <> 0 then Dst[x * 2 + 1, y * 2 + 1] := Src[x, y];
+          end;
         end;
       end;
     end;
