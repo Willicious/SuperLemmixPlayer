@@ -2516,7 +2516,7 @@ var
     end;
 
     if NeedUpscale then
-      Upscale(BgImg, umPixelArt);
+      Upscale(BgImg, PieceManager.GetUpscaleKind(Collection + ':' + Piece, rkBackground));
   end;
 begin
   if RenderInfoRec.Level = nil then Exit;

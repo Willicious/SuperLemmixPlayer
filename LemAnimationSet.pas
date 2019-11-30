@@ -157,6 +157,7 @@ type
 implementation
 
 uses
+  LemNeoPieceManager,
   GameControl;
 
 { TBaseAnimationSet }
@@ -318,7 +319,7 @@ begin
         if FileExists(Fn + '_mask.png') and (fTheme <> nil) then
           TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
 
-        UpscaleFrames(TempBitmap, 2, MLA.FrameCount, umPixelArt);
+        UpscaleFrames(TempBitmap, 2, MLA.FrameCount, PieceManager.GetUpscaleKind(SrcFolder, rkLemmings));
       end;
 
       MLA.Width := TempBitmap.Width div 2;

@@ -76,6 +76,7 @@ type
 implementation
 
 uses
+  LemNeoPieceManager,
   GameControl;
 
 { TMetaTerrain }
@@ -132,7 +133,7 @@ begin
     if FileExists(AppPath + SFStyles + aCollection + SFPiecesTerrainHighRes + aPiece + '.png') then
       TPngInterface.LoadPngFile(AppPath + SFStyles + aCollection + SFPiecesTerrainHighRes + aPiece + '.png', fVariableInfo[0].GraphicImageHighRes)
     else
-      Upscale(fVariableInfo[0].GraphicImage, umPixelart, fVariableInfo[0].GraphicImageHighRes);
+      Upscale(fVariableInfo[0].GraphicImage, PieceManager.GetUpscaleKind(Identifier, rkTerrain), fVariableInfo[0].GraphicImageHighRes);
   end;
 
   fGeneratedVariableInfo[0] := true;
@@ -144,12 +145,7 @@ begin
   fVariableInfo[0].GraphicImage.Assign(aImage);
 
   if GameParams.HighResolution then
-  begin
-    if aImageHighRes <> nil then
-      fVariableInfo[0].GraphicImageHighRes.Assign(aImageHighRes)
-    else
-      Upscale(aImage, umPixelArt, fVariableInfo[0].GraphicImageHighRes);
-  end;
+    fVariableInfo[0].GraphicImageHighRes.Assign(aImageHighRes);
 
   fGeneratedVariableInfo[0] := true;
 
@@ -177,12 +173,7 @@ begin
   fVariableInfo[0].GraphicImage.Assign(aImage);
 
   if GameParams.HighResolution then
-  begin
-    if aImageHighRes <> nil then
-      fVariableInfo[0].GraphicImageHighRes.Assign(aImageHighRes)
-    else
-      Upscale(aImage, umPixelArt, fVariableInfo[0].GraphicImageHighRes);
-  end;
+    fVariableInfo[0].GraphicImageHighRes.Assign(aImageHighRes);
 
   fGeneratedVariableInfo[0] := true;
 end;

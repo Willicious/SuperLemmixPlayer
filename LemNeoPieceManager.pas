@@ -25,11 +25,17 @@ type
     Piece: String;
   end;
 
-  TAliasKind = (rkStyle, rkGadget, rkTerrain, rkBackground);
+  TAliasKind = (rkStyle, rkGadget, rkTerrain, rkBackground, rkLemmings);
 
   TStyleAlias = record
     Source: TLabelRecord;
     Dest: TLabelRecord;
+    Kind: TAliasKind;
+  end;
+
+  TUpscaleInfo = record
+    Source: TLabelRecord;
+    Upscaler: TUpscaleMode;
     Kind: TAliasKind;
   end;
 
@@ -41,8 +47,9 @@ type
 
       fLoadedPropertiesStyles: TStringList;
       fAliases: TList<TStyleAlias>;
+      fUpscaling: TList<TUpscaleInfo>;
 
-      fAddAliasStyle: String; // Temporary usage only.
+      fLoadPropertiesStyle: String; // Temporary usage only.
 
       function GetTerrainCount: Integer;
       function GetObjectCount: Integer;
@@ -57,6 +64,9 @@ type
 
       procedure LoadAliases(aStyle: String);
       procedure AddAlias(aSection: TParserSection; const aIteration: Integer; aData: Pointer);
+
+      procedure LoadUpscaling(aStyle: String);
+      procedure AddUpscaling(aSection: TParserSection; const aIteration: Integer; aData: Pointer);
 
       property TerrainCount: Integer read GetTerrainCount;
       property ObjectCount: Integer read GetObjectCount;
@@ -75,6 +85,7 @@ type
 
       procedure LoadProperties(aStyle: String);
       function Dealias(aIdentifier: String; aKind: TAliasKind): String;
+      function GetUpscaleKind(aIdentifier: String; aKind: TAliasKind): TUpscaleMode;
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TGadgetMetaInfo read GetMetaObject;
@@ -132,6 +143,7 @@ begin
   fTheme := nil;
   fLoadedPropertiesStyles := TStringList.Create;
   fAliases := TList<TStyleAlias>.Create;
+  fUpscaling := TList<TUpscaleInfo>.Create;
 
   LoadProperties('default');
 end;
@@ -141,6 +153,7 @@ begin
   fTerrains.Free;
   fObjects.Free;
   fAliases.Free;
+  fUpscaling.Free;
   fLoadedPropertiesStyles.Free;
   inherited;
 end;
@@ -344,15 +357,13 @@ begin
       fTerrains.Delete(i);
 end;
 
-// Aliases
+// Aliases and upscaling
 
 procedure TNeoPieceManager.LoadAliases(aStyle: String);
 var
   Parser: TParser;
 begin
   if not FileExists(AppPath + SFStyles + aStyle + '\alias.nxmi') then Exit;
-
-  fAddAliasStyle := aStyle;
 
   Parser := TParser.Create;
   try
@@ -362,6 +373,7 @@ begin
     Parser.MainSection.DoForEachSection('TERRAIN', AddAlias, Pointer(rkTerrain));
     Parser.MainSection.DoForEachSection('BACKGROUND', AddAlias, Pointer(rkBackground));
     Parser.MainSection.DoForEachSection('STYLE', AddAlias, Pointer(rkStyle));
+    Parser.MainSection.DoForEachSection('LEMMINGS', AddAlias, Pointer(rkLemmings));
   finally
     Parser.Free;
   end;
@@ -372,7 +384,33 @@ begin
   if fLoadedPropertiesStyles.IndexOf(aStyle) >= 0 then Exit;
   fLoadedPropertiesStyles.Add(aStyle);
 
+  fLoadPropertiesStyle := aStyle;
+
   LoadAliases(aStyle);
+  LoadUpscaling(aStyle);
+end;
+
+procedure TNeoPieceManager.LoadUpscaling(aStyle: String);
+var
+  Parser: TParser;
+begin
+  if not FileExists(AppPath + SFStyles + aStyle + '\upscaling.nxmi') then
+  begin
+    Exit;
+  end;
+
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromFile(AppPath + SFStyles + aStyle + '\upscaling.nxmi');
+
+    Parser.MainSection.DoForEachSection('GADGET', AddUpscaling, Pointer(rkGadget));
+    Parser.MainSection.DoForEachSection('TERRAIN', AddUpscaling, Pointer(rkTerrain));
+    Parser.MainSection.DoForEachSection('BACKGROUND', AddUpscaling, Pointer(rkBackground));
+    Parser.MainSection.DoForEachSection('STYLE', AddUpscaling, Pointer(rkStyle));
+    Parser.MainSection.DoForEachSection('LEMMINGS', AddUpscaling, Pointer(rkLemmings));
+  finally
+    Parser.Free;
+  end;
 end;
 
 procedure TNeoPieceManager.AddAlias(aSection: TParserSection;
@@ -385,10 +423,27 @@ begin
   NewRec.Dest := SplitIdentifier(aSection.LineString['TO']);
   NewRec.Kind := Kind;
 
-  if NewRec.Source.GS = '' then NewRec.Source.GS := fAddAliasStyle;
-  if NewRec.Dest.GS = '' then NewRec.Dest.GS := fAddAliasStyle;
+  if NewRec.Source.GS = '' then NewRec.Source.GS := fLoadPropertiesStyle;
+  if NewRec.Dest.GS = '' then NewRec.Dest.GS := fLoadPropertiesStyle;
 
   fAliases.Add(NewRec);
+end;
+
+procedure TNeoPieceManager.AddUpscaling(aSection: TParserSection;
+  const aIteration: Integer; aData: Pointer);
+var
+  Kind: TAliasKind absolute aData;
+  NewRec: TUpscaleInfo;
+begin
+  NewRec.Source.GS := fLoadPropertiesStyle;
+  NewRec.Source.Piece := aSection.LineString['PIECE'];
+  NewRec.Kind := Kind;
+
+  NewRec.Upscaler := umPixelArt;
+  if Uppercase(aSection.LineTrimString['UPSCALE']) = 'ZOOM' then NewRec.Upscaler := umNearest;
+  if Uppercase(aSection.LineTrimString['UPSCALE']) = 'RESAMPLE' then NewRec.Upscaler := umFullColor;
+
+  fUpscaling.Add(NewRec);
 end;
 
 function TNeoPieceManager.Dealias(aIdentifier: String; aKind: TAliasKind): String;
@@ -410,10 +465,37 @@ begin
       Ident := fAliases[i].Dest;
   end;
 
-  if aKind = rkStyle then
+  if aKind in [rkStyle, rkLemmings] then
     Result := Ident.GS
   else
     Result := CombineIdentifier(Ident);
+end;
+
+function TNeoPieceManager.GetUpscaleKind(aIdentifier: String;
+  aKind: TAliasKind): TUpscaleMode;
+var
+  Ident: TLabelRecord;
+  i: Integer;
+begin
+  Ident := SplitIdentifier(aIdentifier);
+
+  LoadProperties(Ident.GS);
+
+  Result := umPixelArt; // default
+
+  for i := 0 to fUpscaling.Count-1 do
+  begin
+    if Ident.GS <> fUpscaling[i].Source.GS then Continue;
+
+    if fUpscaling[i].Kind = rkStyle then Result := fUpscaling[i].Upscaler;
+
+    if (fUpscaling[i].Kind = aKind) and
+       ((aKind = rkLemmings) or (Ident.Piece = fUpscaling[i].Source.Piece)) then
+    begin
+      Result := fUpscaling[i].Upscaler;
+      Exit;
+    end;
+  end;
 end;
 
 end.

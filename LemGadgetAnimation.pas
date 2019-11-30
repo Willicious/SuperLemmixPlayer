@@ -251,6 +251,7 @@ type
 implementation
 
 uses
+  LemNeoPieceManager,
   GameControl;
 
 // TGadgetAnimation
@@ -588,7 +589,7 @@ begin
   begin
     Bitmaps := MakeFrameBitmaps(true);
     for i := 0 to Bitmaps.Count-1 do
-      Upscale(Bitmaps[i], umPixelArt);
+      Upscale(Bitmaps[i], PieceManager.GetUpscaleKind(aCollection + ':' + aPiece, rkGadget));
     CombineBitmaps(Bitmaps);
   end else if GameParams.HighResolution then
   begin
