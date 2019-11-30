@@ -3,17 +3,7 @@ $STYLE
   TO gigalem_treemd
 $END
 
-$TERRAIN
-  FROM namida_circuit:wire_end_08
-  TO namida_circuit:wire_end_07
-$END
-
-$GADGET
-  FROM arty_silhouette:pickup
-  TO default:pickup
-$END
-
-# Remaining entries are for testing purposes. They should be removed in stable builds, but 99% chance I'll forget - they're harmless though.
+# Remaining entries are for testing purposes. It is not important to preserve them when using stable builds of NL.
 
 $STYLE
   FROM redirectstyletest

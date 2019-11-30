@@ -1,0 +1,4 @@
+$TERRAIN
+  FROM :wire_end_08
+  TO :wire_end_07
+$END

@@ -42,6 +42,8 @@ type
       fLoadedPropertiesStyles: TStringList;
       fAliases: TList<TStyleAlias>;
 
+      fAddAliasStyle: String; // Temporary usage only.
+
       function GetTerrainCount: Integer;
       function GetObjectCount: Integer;
 
@@ -334,12 +336,13 @@ procedure TNeoPieceManager.LoadAliases(aStyle: String);
 var
   Parser: TParser;
 begin
-  if not FileExists(SFStyles + aStyle + '\alias.nxmi') then Exit;
+  if not FileExists(AppPath + SFStyles + aStyle + '\alias.nxmi') then Exit;
 
+  fAddAliasStyle := aStyle;
 
   Parser := TParser.Create;
   try
-    Parser.LoadFromFile(SFStyles + aStyle + '\alias.nxmi');
+    Parser.LoadFromFile(AppPath + SFStyles + aStyle + '\alias.nxmi');
 
     Parser.MainSection.DoForEachSection('GADGET', AddAlias, Pointer(rkGadget));
     Parser.MainSection.DoForEachSection('TERRAIN', AddAlias, Pointer(rkTerrain));
@@ -367,6 +370,10 @@ begin
   NewRec.Source := SplitIdentifier(aSection.LineString['FROM']);
   NewRec.Dest := SplitIdentifier(aSection.LineString['TO']);
   NewRec.Kind := Kind;
+
+  if NewRec.Source.GS = '' then NewRec.Source.GS := fAddAliasStyle;
+  if NewRec.Dest.GS = '' then NewRec.Dest.GS := fAddAliasStyle;
+
   fAliases.Add(NewRec);
 end;
 
@@ -376,6 +383,9 @@ var
   i: Integer;
 begin
   Ident := SplitIdentifier(aIdentifier);
+
+  LoadProperties(Ident.GS);
+
   for i := 0 to fAliases.Count-1 do
   begin
     if Ident.GS <> fAliases[i].Source.GS then Continue;
