@@ -479,19 +479,11 @@ var
 
         if IsTransparent(sX - wideDirDX, sY - wideDirDY) then
           for iNarrow := 0 to 2 do
-            for iWide := Max(-1, (-3 + iNarrow)) to -1 do
-            begin
-              ThisTransparent := IsTransparent(sX + (iNarrow * narrowDirDX) + (iWide * wideDirDX), sY + (iNarrow * narrowDirDY) + (iWide * wideDirDY));
-              if not ThisTransparent then Exit;
-            end;
+            if not IsTransparent(sX + (iNarrow * narrowDirDX) - wideDirDX, sY + (iNarrow * narrowDirDY) - wideDirDY) then Exit;
 
         if IsTransparent(sX + wideDirDX, sY + wideDirDY) then
           for iNarrow := 0 to 2 do
-            for iWide := 1 to Min(1, (3 - iNarrow)) do
-            begin
-              ThisTransparent := IsTransparent(sX + (iNarrow * narrowDirDX) + (iWide * wideDirDX), sY + (iNarrow * narrowDirDY) + (iWide * wideDirDY));
-              if not ThisTransparent then Exit;
-            end;
+            if not IsTransparent(sX + (iNarrow * narrowDirDX) + wideDirDX, sY + (iNarrow * narrowDirDY) + wideDirDY) then Exit;
 
         Result := false;
       end;
