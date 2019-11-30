@@ -320,30 +320,42 @@ var
   n: Integer;
   BMPIn, BMPOut: TBitmap32;
   Path: String;
+  SL: TStringList;
 begin
   n := 2;
   BMPIn := TBitmap32.Create;
   BMPOut := TBitmap32.Create;
+  SL := TStringList.Create;
   try
+    SL.Delimiter := '*';
+    SL.StrictDelimiter := true;
+
     while ParamStr(n) <> '' do
     begin
-      Path := ParamStr(n);
+      SL.DelimitedText := ParamStr(n);
+      Inc(n);
+
+      if SL.Count = 0 then Continue;
+
+      while SL.Count < 3 do
+        SL.Add('1');
+
+      Path := SL[0];
       if not TPath.IsPathRooted(Path) then
         Path := AppPath + Path;
 
       TPngInterface.LoadPngFile(Path, BMPIn);
 
-      Upscale(BMPIn, umPixelArt, BMPOut);
+      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), umPixelArt, BMPOut);
       TPngInterface.SavePngFile(ChangeFileExt(Path, '-pa.png'), BMPOut);
 
-      Upscale(BMPIn, umFullColor, BMPOut);
+      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), umFullColor, BMPOut);
       TPngInterface.SavePngFile(ChangeFileExt(Path, '-fc.png'), BMPOut);
-
-      Inc(n);
     end;
   finally
     BMPIn.Free;
     BMPOut.Free;
+    SL.Free;
   end;
 end;
 
