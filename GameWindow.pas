@@ -1619,7 +1619,7 @@ begin
 
   if GameParams.HighResolution then
   begin
-    Sca := (Sca + 1) div 2;
+    Sca := Sca div 2;
     fMaxZoom := (fMaxZoom + 1) div 2;
   end;
 
