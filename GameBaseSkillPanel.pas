@@ -624,8 +624,8 @@ begin
     Outline(fSkillIcons[spbSwimmer]);
     TempBmp.Assign(fSkillIcons[spbSwimmer]);
     fSkillIcons[spbSwimmer].Clear(0);
-    fSkillIcons[spbSwimmer].FillRect(0, 17, 15, 23, $FF000000);
-    fSkillIcons[spbSwimmer].FillRect(0, 18, 15, 23, $FF0000FF);
+    fSkillIcons[spbSwimmer].FillRect(0, 17 * ResMod, 15 * ResMod, 23 * ResMod, $FF000000);
+    fSkillIcons[spbSwimmer].FillRect(0, 18 * ResMod, 15 * ResMod, 23 * ResMod, $FF0000FF);
     TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
 
     // Floater, Glider, Disarmer, Shimmier - all simple
