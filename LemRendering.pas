@@ -2537,8 +2537,8 @@ begin
     BgImg := TBitmap32.Create;
     try
       LoadBackgroundImage;
-      for y := 0 to RenderInfoRec.Level.Info.Height div BgImg.Height do
-        for x := 0 to RenderInfoRec.Level.Info.Width div BgImg.Width do
+      for y := 0 to RenderInfoRec.Level.Info.Height * ResMod div BgImg.Height do
+        for x := 0 to RenderInfoRec.Level.Info.Width * ResMod div BgImg.Width do
           BgImg.DrawTo(fLayers[rlBackground], x * BgImg.Width, y * BgImg.Height);
     finally
       BgImg.Free;
