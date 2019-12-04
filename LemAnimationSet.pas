@@ -404,7 +404,7 @@ begin
         begin
           if not aColorDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then Continue;
           if not fTheme.DoesColorExist(aColorDict[ThisAnim[x,y] and $FFFFFF]) then Continue; // We do NOT want to fall back to default color here.
-          Template[x, y] := (fTheme.Colors[aColorDict[ThisAnim[x,y] and $FFFFFF]]) or
+          Template[x, y] := (fTheme.Colors[aColorDict[ThisAnim[x,y] and $FFFFFF]] and $FFFFFF) or
                             (ThisAnim[x,y] and $FF000000);
         end;
 
