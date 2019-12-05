@@ -33,6 +33,7 @@ const
 type
   TColorDict = TDictionary<TColor32, String>;
   TShadeDict = TDictionary<TColor32, TColor32>; { Shade, Base  - NOT the other way around! }
+  TColor32Pair = TPair<TColor32, TColor32>;
 
   TUpscaleMode = (umNearest, umPixelArt, umFullColor);
 

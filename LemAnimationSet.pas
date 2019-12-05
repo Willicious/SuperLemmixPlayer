@@ -478,7 +478,7 @@ begin
       Template.DrawTo(ThisAnim, 0, 0);
     end;
 
-    fRecolorer.ApplyPaletteSwapping(aColorDict, fTheme);
+    fRecolorer.ApplyPaletteSwapping(aColorDict, aShadeDict, fTheme);
   finally
     Template.Free;
   end;

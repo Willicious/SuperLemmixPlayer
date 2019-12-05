@@ -43,12 +43,12 @@ type
 
       procedure SwapColors(F: TColor32; var B: TColor32);
       procedure RegisterSwap(aSec: TParserSection; const aIteration: Integer; aData: Pointer);
-
+      procedure AddSwap(aType: TColorSwapType; aSrc, aDst: TColor32);
     public
       constructor Create;
 
       procedure LoadSwaps(aName: String);
-      procedure ApplyPaletteSwapping(aColorDict: TColorDict; aTheme: TNeoTheme);
+      procedure ApplyPaletteSwapping(aColorDict: TColorDict; aShadeDict: TShadeDict; aTheme: TNeoTheme);
       procedure CombineLemmingPixels(F: TColor32; var B: TColor32; M: TColor32);
       procedure CombineLemmingHighlight(F: TColor32; var B: TColor32; M: TColor32);
 
@@ -128,13 +128,8 @@ end;
 procedure TRecolorImage.RegisterSwap(aSec: TParserSection; const aIteration: Integer; aData: Pointer);
 var
   Mode: ^TColorSwapType absolute aData;
-  i: Integer;
 begin
-  i := Length(fSwaps);
-  SetLength(fSwaps, i+1);
-  fSwaps[i].Condition := Mode^;
-  fSwaps[i].SrcColor := aSec.LineNumeric['from'];
-  fSwaps[i].DstColor := aSec.LineNumeric['to'];
+  AddSwap(Mode^, aSec.LineNumeric['from'], aSec.LineNumeric['to']);
 end;
 
 procedure TRecolorImage.LoadSwaps(aName: String);
@@ -185,13 +180,40 @@ begin
   end;
 end;
 
-procedure TRecolorImage.ApplyPaletteSwapping(aColorDict: TColorDict;
-  aTheme: TNeoTheme);
+procedure TRecolorImage.AddSwap(aType: TColorSwapType; aSrc, aDst: TColor32);
 var
   i: Integer;
 begin
-  for i := 0 to Length(fSwaps)-1 do
+  i := Length(fSwaps);
+  SetLength(fSwaps, i+1);
+  fSwaps[i].Condition := aType;
+  fSwaps[i].SrcColor := aSrc;
+  fSwaps[i].DstColor := aDst;
+end;
+
+procedure TRecolorImage.ApplyPaletteSwapping(aColorDict: TColorDict;
+  aShadeDict: TShadeDict; aTheme: TNeoTheme);
+var
+  i, n: Integer;
+  OrigSrc: TColor32;
+  Pair: TColor32Pair;
+
+  procedure MoveLastTo(aIndex: Integer);
+  var
+    TempSwap: TColorSwap;
+    i: Integer;
   begin
+    TempSwap := fSwaps[Length(fSwaps)-1];
+    for i := Length(fSwaps)-1 downto aIndex+1 do
+      fSwaps[i] := fSwaps[i-1];
+    fSwaps[aIndex] := TempSwap;
+  end;
+begin
+  i := 0;
+  while i < Length(fSwaps) do
+  begin
+    OrigSrc := fSwaps[i].SrcColor;
+
     if aColorDict.ContainsKey(fSwaps[i].SrcColor) then
       if aTheme.DoesColorExist(aColorDict[fSwaps[i].SrcColor]) then
         fSwaps[i].SrcColor := aTheme.Colors[aColorDict[fSwaps[i].SrcColor]] and $FFFFFF;
@@ -199,6 +221,19 @@ begin
     if aColorDict.ContainsKey(fSwaps[i].DstColor) then
       if aTheme.DoesColorExist(aColorDict[fSwaps[i].DstColor]) then
         fSwaps[i].DstColor := aTheme.Colors[aColorDict[fSwaps[i].DstColor]] and $FFFFFF;
+
+    n := i;
+    Inc(i);
+
+    for Pair in aShadeDict do
+      if (Pair.Value and $FFFFFF) = (OrigSrc and $FFFFFF) then
+      begin
+        AddSwap(fSwaps[n].Condition,
+                ApplyColorShift(fSwaps[n].SrcColor, Pair.Value, Pair.Key),
+                ApplyColorShift(fSwaps[n].DstColor, Pair.Value, Pair.Key));
+        MoveLastTo(i);
+        Inc(i);
+      end;
   end;
 end;
 
