@@ -673,6 +673,16 @@ begin
   H := H + aDiff.HShift;
   S := S + aDiff.SShift;
   V := V + aDiff.VShift;
+
+  while H >= 1 do
+    H := H - 1;
+  while H < 0 do
+    H := H + 1;
+
+  S := Max(0, Min(S, 1));
+  V := Max(0, Min(V, 1));
+
+
   Result := (HSVToRGB(H, S, V) and $FFFFFF) or (aBase and $FF000000);
 end;
 
