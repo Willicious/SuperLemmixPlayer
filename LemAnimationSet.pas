@@ -438,6 +438,7 @@ procedure TBaseAnimationSet.HandleRecoloring(aColorDict: TColorDict; aShadeDict:
 var
   Template, ThisAnim: TBitmap32;
   i, x, y: Integer;
+  C, BaseC, NewC: TColor32;
 begin
   if fTheme = nil then Exit;
   if aColorDict = nil then Exit; // this one shouldn't happen but just in case
@@ -455,13 +456,21 @@ begin
       for y := 0 to ThisAnim.Height-1 do
         for x := 0 to ThisAnim.Width-1 do
         begin
-          if aShadeDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then
+          C := ThisAnim[x, y] and $FFFFFF;
+          if aShadeDict.ContainsKey(C) then
           begin
+            BaseC := aShadeDict[C];
+            if not aColorDict.ContainsKey(BaseC) then Continue;
+            if not fTheme.DoesColorExist(aColorDict[BaseC]) then Continue;
 
+            NewC := (fTheme.Colors[aColorDict[BaseC]] and $FFFFFF) or
+                    (ThisAnim[x,y] and $FF000000);
+
+            Template[x, y] := ApplyColorShift(NewC, BaseC, C);
           end else begin
-            if not aColorDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then Continue;
-            if not fTheme.DoesColorExist(aColorDict[ThisAnim[x,y] and $FFFFFF]) then Continue; // We do NOT want to fall back to default color here.
-            Template[x, y] := (fTheme.Colors[aColorDict[ThisAnim[x,y] and $FFFFFF]] and $FFFFFF) or
+            if not aColorDict.ContainsKey(C) then Continue;
+            if not fTheme.DoesColorExist(aColorDict[C]) then Continue; // We do NOT want to fall back to default color here.
+            Template[x, y] := (fTheme.Colors[aColorDict[C]] and $FFFFFF) or
                               (ThisAnim[x,y] and $FF000000);
           end;
         end;

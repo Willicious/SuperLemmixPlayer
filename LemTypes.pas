@@ -88,7 +88,8 @@ procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
 function ResMod: Integer; // Returns 1 when in low-res, 2 when in high-res
 
 function CalculateColorShift(aPrimary, aAlt: TColor32): TColorDiff;
-function ApplyColorShift(aBase: TColor32; aDiff: TColorDiff): TColor32;
+function ApplyColorShift(aBase: TColor32; aDiff: TColorDiff): TColor32; overload;
+function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32; overload;
 
 implementation
 
@@ -349,9 +350,8 @@ end;
 
 procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
 var
-  Frames: TBitmaps;
   TempBMP, LocalDst: TBitmap32;
-  iX, iY, n: Integer;
+  iX, iY: Integer;
   FW, FH: Integer;
   OldMode: TDrawMode;
 begin
@@ -673,7 +673,12 @@ begin
   H := H + aDiff.HShift;
   S := S + aDiff.SShift;
   V := V + aDiff.VShift;
-  Result := HSVToRGB(H, S, V);
+  Result := (HSVToRGB(H, S, V) and $FFFFFF) or (aBase and $FF000000);
+end;
+
+function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32;
+begin
+  Result := ApplyColorShift(aBase, CalculateColorShift(aPrimary, aAlt));
 end;
 
 end.
