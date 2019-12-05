@@ -584,7 +584,7 @@ begin
       umNearest: Src.DrawTo(Dst, Dst.BoundsRect, Src.BoundsRect);
       umPixelArt: UpscalePixelArt;
       umFullColor: begin
-                     TKernelResampler.Create(Src).Kernel := TLanczosKernel.Create;
+                     TKernelResampler.Create(Src).Kernel := TAlbrechtKernel.Create;
                      Src.DrawTo(Dst, Dst.BoundsRect, Src.BoundsRect);
                    end;
     end;
