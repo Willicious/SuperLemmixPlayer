@@ -42,7 +42,6 @@ $STATE_RECOLORING
 $END
 
 $ANIMATIONS
-
   $WALKER
     FRAMES 8
 
@@ -55,7 +54,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 10
     $END
-
   $END
 
   $ASCENDER
@@ -70,7 +68,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 10
     $END
-
   $END
 
   $DIGGER
@@ -85,7 +82,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 12
     $END
-
   $END
 
   $CLIMBER
@@ -97,10 +93,9 @@ $ANIMATIONS
     $END
 
     $LEFT
-      FOOT_X 8
+      FOOT_X 7
       FOOT_Y 12
     $END
-
   $END
 
   $DROWNER
@@ -115,7 +110,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 10
     $END
-
   $END
 
   $HOISTER
@@ -130,7 +124,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 12
     $END
-
   $END
 
   $BUILDER
@@ -145,7 +138,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 13
     $END
-
   $END
 
   $BASHER
@@ -160,7 +152,6 @@ $ANIMATIONS
       FOOT_X 7
       FOOT_Y 10
     $END
-
   $END
 
   $MINER
@@ -175,7 +166,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 13
     $END
-
   $END
 
   $FALLER
@@ -190,7 +180,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 10
     $END
-
   $END
 
   $FLOATER
@@ -206,7 +195,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 16
     $END
-
   $END
 
   $SPLATTER
@@ -221,7 +209,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 10
     $END
-
   $END
 
   $EXITER
@@ -236,7 +223,6 @@ $ANIMATIONS
       FOOT_X 7
       FOOT_Y 13
     $END
-
   $END
 
   $BURNER
@@ -251,7 +237,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 14
     $END
-
   $END
 
   $BLOCKER
@@ -259,14 +244,13 @@ $ANIMATIONS
 
     $RIGHT
       FOOT_X 8
-      FOOT_Y 10
+      FOOT_Y 13
     $END
 
     $LEFT
       FOOT_X 9
-      FOOT_Y 10
+      FOOT_Y 13
     $END
-
   $END
 
   $SHRUGGER
@@ -281,7 +265,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 10
     $END
-
   $END
 
   $OHNOER
@@ -296,7 +279,6 @@ $ANIMATIONS
       FOOT_X 8
       FOOT_Y 10
     $END
-
   $END
 
   $BOMBER
@@ -311,7 +293,6 @@ $ANIMATIONS
       FOOT_X 16
       FOOT_Y 25
     $END
-
   $END
 
   $PLATFORMER
@@ -326,7 +307,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 13
     $END
-
   $END
 
   $STONER
@@ -341,7 +321,6 @@ $ANIMATIONS
       FOOT_X 16
       FOOT_Y 25
     $END
-
   $END
 
   $SWIMMER
@@ -356,7 +335,6 @@ $ANIMATIONS
       FOOT_X 7
       FOOT_Y 8
     $END
-
   $END
 
   $GLIDER
@@ -372,7 +350,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 16
     $END
-
   $END
 
   $DISARMER
@@ -387,7 +364,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 11
     $END
-
   $END
 
   $STACKER
@@ -402,26 +378,24 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 13
     $END
-
   $END
   
   $FENCER
     FRAMES 16
     
     $RIGHT
-      FOOT_X 8
+      FOOT_X 4
       FOOT_Y 10
     $END
 
     $LEFT
-      FOOT_X 7
+      FOOT_X 11
       FOOT_Y 10
     $END
-    
   $END
-  
-    $REACHER
-    FRAMES 8
+
+  $REACHER
+    FRAMES 6
     
     $RIGHT
       FOOT_X 8
@@ -432,7 +406,6 @@ $ANIMATIONS
       FOOT_X 9
       FOOT_Y 10
     $END
-    
   $END
 
   $SHIMMIER
@@ -447,6 +420,5 @@ $ANIMATIONS
       FOOT_X 6
       FOOT_Y 8
     $END
-    
   $END
 $END
