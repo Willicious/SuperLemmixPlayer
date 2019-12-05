@@ -438,13 +438,11 @@ procedure TBaseAnimationSet.HandleRecoloring(aColorDict: TColorDict; aShadeDict:
 var
   Template, ThisAnim: TBitmap32;
   i, x, y: Integer;
-  LocalColorDict: TColorDict;
 begin
   if fTheme = nil then Exit;
   if aColorDict = nil then Exit; // this one shouldn't happen but just in case
 
   Template := TBitmap32.Create;
-  LocalColorDict := TColorDict.Create;
   try
     Template.DrawMode := dmTransparent;
 
@@ -457,19 +455,23 @@ begin
       for y := 0 to ThisAnim.Height-1 do
         for x := 0 to ThisAnim.Width-1 do
         begin
-          if not LocalColorDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then Continue;
-          if not fTheme.DoesColorExist(LocalColorDict[ThisAnim[x,y] and $FFFFFF]) then Continue; // We do NOT want to fall back to default color here.
-          Template[x, y] := (fTheme.Colors[LocalColorDict[ThisAnim[x,y] and $FFFFFF]] and $FFFFFF) or
-                            (ThisAnim[x,y] and $FF000000);
+          if aShadeDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then
+          begin
+
+          end else begin
+            if not aColorDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then Continue;
+            if not fTheme.DoesColorExist(aColorDict[ThisAnim[x,y] and $FFFFFF]) then Continue; // We do NOT want to fall back to default color here.
+            Template[x, y] := (fTheme.Colors[aColorDict[ThisAnim[x,y] and $FFFFFF]] and $FFFFFF) or
+                              (ThisAnim[x,y] and $FF000000);
+          end;
         end;
 
       Template.DrawTo(ThisAnim, 0, 0);
     end;
 
-    fRecolorer.ApplyPaletteSwapping(LocalColorDict, fTheme);
+    fRecolorer.ApplyPaletteSwapping(aColorDict, fTheme);
   finally
     Template.Free;
-    LocalColorDict.Free;
   end;
 end;
 
