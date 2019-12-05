@@ -36,6 +36,12 @@ type
 
   TUpscaleMode = (umNearest, umPixelArt, umFullColor);
 
+  TColorDiff = record
+    HShift: Single;
+    SShift: Single;
+    VShift: Single;
+  end;
+
 type
   TLemDataType = (
     ldtNone,
@@ -80,6 +86,9 @@ function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = tr
 procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
 procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
 function ResMod: Integer; // Returns 1 when in low-res, 2 when in high-res
+
+function CalculateColorShift(aPrimary, aAlt: TColor32): TColorDiff;
+function ApplyColorShift(aBase: TColor32; aDiff: TColorDiff): TColor32;
 
 implementation
 
@@ -642,6 +651,30 @@ begin
   end;
 end;
 
+function CalculateColorShift(aPrimary, aAlt: TColor32): TColorDiff;
+var
+  H1, H2: Single;
+  S1, S2: Single;
+  V1, V2: Single;
+begin
+  RGBToHSV(aPrimary, H1, S1, V1);
+  RGBToHSV(aAlt, H2, S2, V2);
+
+  Result.HShift := H2 - H1;
+  Result.SShift := S2 - S1;
+  Result.VShift := V2 - V1;
+end;
+
+function ApplyColorShift(aBase: TColor32; aDiff: TColorDiff): TColor32;
+var
+  H, S, V: Single;
+begin
+  RGBToHSV(aBase, H, S, V);
+  H := H + aDiff.HShift;
+  S := S + aDiff.SShift;
+  V := V + aDiff.VShift;
+  Result := HSVToRGB(H, S, V);
+end;
 
 end.
 
