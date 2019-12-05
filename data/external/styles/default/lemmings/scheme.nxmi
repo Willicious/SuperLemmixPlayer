@@ -423,7 +423,7 @@ $ANIMATIONS
   $END
 
   $REACHER
-    FRAMES 8
+    FRAMES 6
     
     $RIGHT
       FOOT_X 8
