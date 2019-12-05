@@ -134,10 +134,10 @@ type
 
     fRecolorer              : TRecolorImage;
 
-    procedure ReadMetaData(aColorDict: TColorDict = nil);
-    procedure LoadMetaData(aColorDict: TColorDict);
+    procedure ReadMetaData(aColorDict: TColorDict = nil; aShadeDict: TShadeDict = nil);
+    procedure LoadMetaData(aColorDict: TColorDict; aShadeDict: TShadeDict);
 
-    procedure HandleRecoloring(aColorDict: TColorDict);
+    procedure HandleRecoloring(aColorDict: TColorDict; aShadeDict: TShadeDict);
   public
     constructor Create;
     destructor Destroy; override;
@@ -162,7 +162,7 @@ uses
 
 { TBaseAnimationSet }
 
-procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict);
+procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TShadeDict);
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
@@ -179,6 +179,7 @@ var
   AnimSec: TParserSection;
   ThisAnimSec: TParserSection;
   ColorSec: TParserSection;
+  ShadeSec: TParserSection;
   DirSec: TParserSection;
   i: Integer;
   dx: Integer;
@@ -227,13 +228,34 @@ begin
         for i := 0 to ColorSec.LineList.Count-1 do
           aColorDict.Add(ColorSec.LineList[i].ValueNumeric, ColorSec.LineList[i].Keyword);
     end;
+
+    if aShadeDict <> nil then
+    begin
+      ShadeSec := Parser.MainSection.Section['shades'];
+      aShadeDict.Clear;
+      if ShadeSec <> nil then
+        ShadeSec.DoForEachSection('shade',
+          procedure (aSec: TParserSection; const aIteration: Integer)
+          var
+            BaseColor: TColor32;
+          begin
+            BaseColor := aSec.LineNumeric['PRIMARY'] and $FFFFFF;
+            aSec.DoForEachLine('alt',
+              procedure (aLine: TParserLine; const aIteration: Integer)
+              begin
+                aShadeDict.Add(aLine.ValueNumeric and $FFFFFF, BaseColor);
+              end
+            );
+          end
+        );
+    end;
   finally
     Parser.Free;
   end;
 end;
 
 
-procedure TBaseAnimationSet.ReadMetaData(aColorDict: TColorDict = nil);
+procedure TBaseAnimationSet.ReadMetaData(aColorDict: TColorDict = nil; aShadeDict: TShadeDict = nil);
 {-------------------------------------------------------------------------------
   o make lemming animations
   o make mask animations metadata
@@ -257,7 +279,7 @@ begin
     FootY := 10 * ResMod;
   end;
 
-  LoadMetaData(aColorDict);
+  LoadMetaData(aColorDict, aShadeDict);
 end;
 
 procedure TBaseAnimationSet.ReadData;
@@ -271,12 +293,13 @@ var
 
   SrcFolder: String;
   ColorDict: TColorDict;
+  ShadeDict: TShadeDict;
 
   MetaSrcFolder, ImgSrcFolder: String;
 begin
   TempBitmap := TBitmap32.Create;
   ColorDict := TColorDict.Create;
-
+  ShadeDict := TShadeDict.Create;
 
   try
     if fTheme = nil then
@@ -291,7 +314,7 @@ begin
     SetCurrentDir(AppPath + SFStyles + SrcFolder + SFPiecesLemmings);
 
     if fMetaLemmingAnimations.Count = 0 then // not entirely sure why it would ever NOT be 0
-      ReadMetaData(ColorDict);
+      ReadMetaData(ColorDict, ShadeDict);
 
     MetaSrcFolder := AppPath + SFStyles + SrcFolder + SFPiecesLemmings;
 
@@ -345,7 +368,7 @@ begin
 
     fRecolorer.LoadSwaps(SrcFolder);
 
-    HandleRecoloring(ColorDict);
+    HandleRecoloring(ColorDict, ShadeDict);
 
     fLemmingAnimations.Add(TBitmap32.Create); // for the Stoner
 
@@ -379,6 +402,7 @@ begin
   finally
     TempBitmap.Free;
     ColorDict.Free;
+    ShadeDict.Free;
   end;
 end;
 
@@ -410,15 +434,17 @@ begin
   inherited Destroy;
 end;
 
-procedure TBaseAnimationSet.HandleRecoloring(aColorDict: TColorDict);
+procedure TBaseAnimationSet.HandleRecoloring(aColorDict: TColorDict; aShadeDict: TShadeDict);
 var
   Template, ThisAnim: TBitmap32;
   i, x, y: Integer;
+  LocalColorDict: TColorDict;
 begin
   if fTheme = nil then Exit;
   if aColorDict = nil then Exit; // this one shouldn't happen but just in case
 
   Template := TBitmap32.Create;
+  LocalColorDict := TColorDict.Create;
   try
     Template.DrawMode := dmTransparent;
 
@@ -431,19 +457,20 @@ begin
       for y := 0 to ThisAnim.Height-1 do
         for x := 0 to ThisAnim.Width-1 do
         begin
-          if not aColorDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then Continue;
-          if not fTheme.DoesColorExist(aColorDict[ThisAnim[x,y] and $FFFFFF]) then Continue; // We do NOT want to fall back to default color here.
-          Template[x, y] := (fTheme.Colors[aColorDict[ThisAnim[x,y] and $FFFFFF]] and $FFFFFF) or
+          if not LocalColorDict.ContainsKey(ThisAnim[x, y] and $FFFFFF) then Continue;
+          if not fTheme.DoesColorExist(LocalColorDict[ThisAnim[x,y] and $FFFFFF]) then Continue; // We do NOT want to fall back to default color here.
+          Template[x, y] := (fTheme.Colors[LocalColorDict[ThisAnim[x,y] and $FFFFFF]] and $FFFFFF) or
                             (ThisAnim[x,y] and $FF000000);
         end;
 
       Template.DrawTo(ThisAnim, 0, 0);
     end;
+
+    fRecolorer.ApplyPaletteSwapping(LocalColorDict, fTheme);
   finally
     Template.Free;
+    LocalColorDict.Free;
   end;
-
-  fRecolorer.ApplyPaletteSwapping(aColorDict, fTheme);
 end;
 
 end.
