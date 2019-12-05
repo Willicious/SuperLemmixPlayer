@@ -42,31 +42,30 @@ $END
 $SHADES
   $SHADE
     PRIMARY x00B000
-    ALT x11AF11
-    ALT x107010
+    ALT x007000
   $END
   
   $SHADE
     PRIMARY x4040E0
-    ALT x5858E0
-    ALT x1921A5
-    ALT x00A2E8
+    ALT x3030A0
   $END
   
   $SHADE
     PRIMARY xF0D0D0
-    ALT xFFCFB3
-    ALT xF79C67
+    ALT xE0C0C0
   $END
   
   $SHADE
     PRIMARY xF02020
-    ALT xFF0000
-    ALT xBF0000
-    ALT xFFE45E
-    ALT xDBB600
-    ALT xFF8000
-    ALT xFF4600
+    ALT xD01010
+    
+    # HiRes Platformer
+    ALT xF0D020
+    ALT xD0B010
+    
+    # HiRes Stacker
+    ALT xF08020
+    ALT xC06010
   $END
 $END
 
