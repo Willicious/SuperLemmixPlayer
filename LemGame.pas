@@ -802,7 +802,7 @@ function TLemmingGame.GetOutOfTime: Boolean;
 begin
   Result := Level.Info.HasTimeLimit and
             ((TimePlay < 0) or
-             ((TimePlay = 0) and (fCurrentIteration > 0))
+             ((TimePlay = 0) and (fClockFrame > 0))
             );
 end;
 
@@ -4553,6 +4553,7 @@ begin
   begin
     fClockFrame := 0;
     if TimePlay > -5999 then Dec(TimePlay);
+    if TimePlay = 0 then CueSoundEffect(SFX_TIMEUP);
   end;
 
   // hard coded dos frame numbers

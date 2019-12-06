@@ -302,11 +302,7 @@ procedure TSoundManager.LoadDefaultSounds;
   end;
 begin
   if not fIsBassLoaded then Exit;
-  // Commented-out lines are sound files that existed since Lemmix, but don't appear to be referenced anywhere in the code.
-  // Just in case, I haven't deleted these files, but put them in an "unused" subfolder of the sound folder.
 
-  //Get('bang');
-  //Get('bell');
   Get('chain');
   Get('changeop');
   Get('chink');
@@ -318,13 +314,9 @@ begin
   Get('fire');
   Get('glug');
   Get('letsgo');
-  //Get('mantrap');
   Get('mousepre');
   Get('ohno');
-  //Get('oing');
   Get('oing2');
-  //Get('scrape');
-  //Get('slicer');
   Get('slurp');
   Get('splash');
   Get('splat');
@@ -332,6 +324,7 @@ begin
   Get('tenton');
   Get('thud');
   Get('thunk');
+  Get('timeup');
   Get('ting');
   Get('vacuusux');
   Get('weedgulp');

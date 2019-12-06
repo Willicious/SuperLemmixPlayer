@@ -58,6 +58,7 @@ const
   SFX_FALLOUT = 'die';
   SFX_FIXING = 'wrench';
   SFX_ZOMBIE = 'zombie';
+  SFX_TIMEUP = 'timeup';
 
 resourcestring
   SProgramName = 'NeoLemmix Player';
