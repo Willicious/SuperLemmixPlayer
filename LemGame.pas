@@ -1378,7 +1378,8 @@ begin
                      SetBlockerMap;
                    end;
     baExiting    : begin
-                     L.LemExplosionTimer := 0;
+                     if not IsOutOfTime then
+                       L.LemExplosionTimer := 0;
                      CueSoundEffect(SFX_YIPPEE, L.Position);
                    end;
     baBuilding   : L.LemNumberOfBricksLeft := 12;
@@ -2520,6 +2521,9 @@ begin
      and (not (L.LemAction in [baFalling, baSplatting]))
      and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
+    if IsOutOfTime and UserSetNuking and (L.LemAction = baOhNoing) then
+      Exit;
+
     GadgetID := FindGadgetID(PosX, PosY, trExit);
     if GadgetID = 65535 then Exit;
     Gadget := Gadgets[GadgetID];
@@ -4369,6 +4373,9 @@ begin
   begin
     Dec(L.LemFrame);
     Dec(L.LemPhysicsFrame);
+
+    if UserSetNuking and (L.LemExplosionTimer <= 0) and (Index_LemmingToBeNuked > L.LemIndex) then
+      Transition(L, baOhnoing);
   end else
   if L.LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
 end;
