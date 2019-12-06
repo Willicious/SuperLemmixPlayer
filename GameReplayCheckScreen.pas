@@ -297,7 +297,9 @@ begin
 
         Game.UpdateLemmings;
 
-        if Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17) then
+        if (Game.CurrentIteration > Game.ReplayManager.LastActionFrame + (5 * 60 * 17)) or
+           (Game.Level.Info.HasTimeLimit and (Game.CurrentIteration >= Game.Level.Info.TimeLimit * 17))
+         then
         begin
           Game.Finish(GM_FIN_TERMINATE);
           if Game.GameResultRec.gSuccess then

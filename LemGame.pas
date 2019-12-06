@@ -1437,13 +1437,6 @@ begin
   if fGameFinished then
     Exit;
 
-  if (TimePlay <= 0) and GameParams.Level.Info.HasTimeLimit then
-  begin
-    GameResultRec.gTimeIsUp := True;
-    Finish(GM_FIN_TIME);
-    Exit;
-  end;
-
   if fParticleFinishTimer > 0 then
     Exit;
 
@@ -4361,6 +4354,12 @@ end;
 function TLemmingGame.HandleExiting(L: TLemming): Boolean;
 begin
   Result := False;
+
+  if ((TimePlay < 0) or ((TimePlay = 0) and (fClockFrame > 0))) and GameParams.Level.Info.HasTimeLimit then
+  begin
+    Dec(L.LemFrame);
+    Dec(L.LemPhysicsFrame);
+  end else
   if L.LemEndOfAnimation then RemoveLemming(L, RM_SAVE);
 end;
 
@@ -5276,6 +5275,7 @@ begin
     gGotTalisman        := fTalismanReceived;
     gCheated            := fGameCheated;
     gSuccess            := (gRescued >= gToRescue) or gCheated;
+    gTimeIsUp           := Level.Info.HasTimeLimit and (fCurrentIteration >= Level.Info.TimeLimit * 17);
 
     if fGameCheated then
     begin
