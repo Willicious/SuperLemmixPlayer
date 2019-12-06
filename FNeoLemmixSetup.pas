@@ -111,6 +111,7 @@ begin
     SetKeyFunction($36, lka_Skip, 170);
     SetKeyFunction($37, lka_SpecialSkip, 0);
     SetKeyFunction($38, lka_SpecialSkip, 1);
+    SetKeyFunction($39, lka_SpecialSkip, 2);
 
     // Skills
     SetKeyFunction($44, lka_Skill, Integer(spbWalker));  // walker, D

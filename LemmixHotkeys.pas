@@ -55,6 +55,10 @@ type
                          lka_Scroll);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
+  TSpecialSkipCondition = (ssc_LastAction,
+                           ssc_NextShrugger,
+                           ssc_HighlitStateChange);
+
   TKeyNameArray = Array [0..MAX_KEY] of String;
 
   TLemmixHotkey = record
@@ -169,6 +173,8 @@ begin
   fKeyFunctions[$DB].Modifier := 0;
   fKeyFunctions[$DD].Action := lka_SpecialSkip;
   fKeyFunctions[$DD].Modifier := 1;
+  fKeyFunctions[$DC].Action := lka_SpecialSkip;
+  fKeyFunctions[$DC].Modifier := 2;
 
   // And here's the skill ones; these ones need the skill specified seperately
   fKeyFunctions[$31].Action := lka_Skill;
@@ -274,6 +280,7 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     else if s = 'cloner' then Result := Integer(spbCloner)
     else if s = 'lastskill' then Result := 0
     else if s = 'nextshrug' then Result := 1
+    else if s = 'highlitstate' then Result := 2
     else if s = '' then Result := 0
     else
     begin
@@ -416,6 +423,7 @@ var
       lka_SpecialSkip:  case aValue of
                           0: Result := 'LastSkill';
                           1: Result := 'NextShrug';
+                          2: Result := 'HighlitState';
                         end;
       else Result := IntToStr(aValue);
     end;

@@ -123,9 +123,10 @@ begin
                           s := 'Clear Physics Mode (hold)';
       lka_SpecialSkip: begin
                          s := 'Skip to ';
-                         case Hotkey.Modifier of
-                           0: s := s + 'Previous Assignment';
-                           1: s := s + 'Next Shrugger';
+                         case TSpecialSkipCondition(Hotkey.Modifier) of
+                           ssc_LastAction: s := s + 'Previous Assignment';
+                           ssc_NextShrugger: s := s + 'Next Shrugger';
+                           ssc_HighlitStateChange: s := s + 'Highlit Lemming State Change';
                          end;
                        end;
       else s := cbFunctions.Items[Integer(fHotkeys.CheckKeyEffect(i).Action)];

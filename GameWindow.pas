@@ -51,6 +51,9 @@ const
 
   // special hyperspeed ends. usually only needed for forwards ones, backwards can often get the exact frame.
   SHE_SHRUGGER = 1;
+  SHE_HIGHLIT = 2;
+
+  SPECIAL_SKIP_MAX_DURATION = 17 * 60 * 2; // 2 minutes should be plenty.
 
 type
   TGameWindow = class(TGameBaseScreen, IGameWindow)
@@ -77,7 +80,9 @@ type
     fLastDrawPaused: Boolean;
   { current gameplay }
     fGameSpeed: TGameSpeed;               // do NOT set directly, set via GameSpeed property
+    fSpecialStartIteration: Integer;
     fHyperSpeedStopCondition: Integer;
+    fHighlitStartCopyLemming: TLemming;
     fHyperSpeedTarget: Integer;
     fForceUpdateOneFrame: Boolean;        // used when paused
 
@@ -135,6 +140,8 @@ type
 
     procedure SuspendGameplay;
     procedure ResumeGameplay;
+
+    function CheckHighlitLemmingChange: Boolean;
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -586,21 +593,24 @@ begin
     if Hyper and (fHyperSpeedStopCondition <> 0) then
     begin
       ContinueHyper := false;
-      case fHyperSpeedStopCondition of
-        SHE_SHRUGGER: for i := 0 to fRenderInterface.LemmingList.Count-1 do
-                      begin
-                        if fRenderInterface.LemmingList[i].LemRemoved then Continue;
 
-                        if fRenderInterface.LemmingList[i].LemAction = baShrugging then
+      if Game.CurrentIteration < fSpecialStartIteration + SPECIAL_SKIP_MAX_DURATION then
+        case fHyperSpeedStopCondition of
+          SHE_SHRUGGER: for i := 0 to fRenderInterface.LemmingList.Count-1 do
                         begin
-                          ContinueHyper := false;
-                          Break;
-                        end;
+                          if fRenderInterface.LemmingList[i].LemRemoved then Continue;
 
-                        if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baStacking, baPlatforming] then
-                          ContinueHyper := true;
-                      end;
-      end;
+                          if fRenderInterface.LemmingList[i].LemAction = baShrugging then
+                          begin
+                            ContinueHyper := false;
+                            Break;
+                          end;
+
+                          if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baStacking, baPlatforming] then
+                            ContinueHyper := true;
+                        end;
+          SHE_HIGHLIT: if not CheckHighlitLemmingChange then ContinueHyper := true;
+        end;
 
       if not ContinueHyper then
       begin
@@ -1134,6 +1144,8 @@ begin
   DoubleBuffered := true;
 
   fSuspensions := TList<TSuspendState>.Create;
+
+  fHighlitStartCopyLemming := TLemming.Create;
 end;
 
 destructor TGameWindow.Destroy;
@@ -1153,6 +1165,8 @@ begin
   fMinimapBuffer.Free;
 
   fSuspensions.Free;
+
+  fHighlitStartCopyLemming.Free;
 
   inherited Destroy;
 end;
@@ -1367,35 +1381,43 @@ var
   HasSuitableSkill: Boolean;
 begin
   TargetFrame := 0; // fallback
-  case aSkipType of
-    0: begin
-         if (Game.ReplayManager.LastActionFrame = -1) then Exit;
+  fSpecialStartIteration := Game.CurrentIteration;
 
-         if Game.CurrentIteration > Game.ReplayManager.LastActionFrame then
-           TargetFrame := Game.ReplayManager.LastActionFrame
-         else
-           for i := 0 to Game.CurrentIteration do
-             if Game.ReplayManager.HasAnyActionAt(i) then
-               TargetFrame := i;
-         GotoSaveState(Max(TargetFrame - 1, 0));
-       end;
-    1: begin
-         HasSuitableSkill := false;
-         for i := 0 to fRenderInterface.LemmingList.Count-1 do
-         begin
-           if fRenderInterface.LemmingList[i].LemRemoved then Continue;
+  case TSpecialSkipCondition(aSkipType) of
+    ssc_LastAction: begin
+                      if (Game.ReplayManager.LastActionFrame = -1) then Exit;
 
-           if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baPlatforming, baStacking] then
-           begin
-             HasSuitableSkill := true;
-             Break;
-           end;
-         end;
-         if not HasSuitableSkill then Exit;
+                      if Game.CurrentIteration > Game.ReplayManager.LastActionFrame then
+                        TargetFrame := Game.ReplayManager.LastActionFrame
+                      else
+                        for i := 0 to Game.CurrentIteration do
+                          if Game.ReplayManager.HasAnyActionAt(i) then
+                            TargetFrame := i;
+                      GotoSaveState(Max(TargetFrame - 1, 0));
+                   end;
+    ssc_NextShrugger: begin
+                        HasSuitableSkill := false;
+                        for i := 0 to fRenderInterface.LemmingList.Count-1 do
+                        begin
+                          if fRenderInterface.LemmingList[i].LemRemoved then Continue;
 
-         fHyperSpeedStopCondition := SHE_SHRUGGER;
-         GameSpeed := gspPause;
-       end;
+                          if fRenderInterface.LemmingList[i].LemAction in [baBuilding, baPlatforming, baStacking] then
+                          begin
+                            HasSuitableSkill := true;
+                            Break;
+                          end;
+                        end;
+                        if not HasSuitableSkill then Exit;
+
+                        fHyperSpeedStopCondition := SHE_SHRUGGER;
+                        GameSpeed := gspPause;
+                      end;
+    ssc_HighlitStateChange: begin
+                              if (fRenderInterface = nil) or (fRenderInterface.HighlitLemming = nil) then Exit;
+                              fHighlitStartCopyLemming.Assign(fRenderInterface.HighlitLemming);
+                              fHyperSpeedStopCondition := SHE_HIGHLIT;
+                              GameSpeed := gspPause;
+                            end;
   end;
 end;
 
@@ -1707,6 +1729,58 @@ procedure TGameWindow.CheckAdjustSpawnInterval;
 -------------------------------------------------------------------------------}
 begin
   Game.CheckAdjustSpawnInterval;
+end;
+
+function TGameWindow.CheckHighlitLemmingChange: Boolean;
+var
+  aL, sL: TLemming; // "actual lemming", "start lemming"
+  Act1, Act2: TBasicLemmingAction;
+  n: Integer;
+const
+  COMPATIBLE_ACTIONS: array[0..6] of array[0..1] of TBasicLemmingAction =
+    ((baWalking, baAscending),
+     (baClimbing, baHoisting),
+     (baFalling, baFloating),
+     (baFalling, baGliding),
+     (baOhnoing, baExploding),
+     (baStoning, baStoneFinish),
+     (baReaching, baShimmying)
+    );
+
+  TREAT_AS_WALKING_ACTIONS = [baShrugging, baToWalking, baCloning];
+begin
+  Result := true;
+
+  if fRenderInterface = nil then Exit;
+
+  sL := fHighlitStartCopyLemming;
+  aL := fRenderInterface.HighlitLemming;
+
+  if (sL = nil) or (aL = nil) then Exit; // just in case
+
+  if aL.LemRemoved then Exit;
+
+  if sL.LemIsZombie <> aL.LemIsZombie then Exit;
+
+  if (sL.LemAction <> aL.LemAction) then
+  begin
+    Result := true;
+
+    Act1 := sL.LemAction;
+    Act2 := aL.LemAction;
+
+    if Act1 in TREAT_AS_WALKING_ACTIONS then Act1 := baWalking;
+    if Act2 in TREAT_AS_WALKING_ACTIONS then Act2 := baWalking;
+
+    for n := 0 to Length(COMPATIBLE_ACTIONS)-1 do
+      if ((Act1 = COMPATIBLE_ACTIONS[n][0]) and (Act2 = COMPATIBLE_ACTIONS[n][1])) or
+         ((Act2 = COMPATIBLE_ACTIONS[n][0]) and (Act1 = COMPATIBLE_ACTIONS[n][1])) then
+    begin
+      Result := false;
+      Break;
+    end;
+  end else
+    Result := false;
 end;
 
 procedure TGameWindow.StartReplay(const aFileName: string);

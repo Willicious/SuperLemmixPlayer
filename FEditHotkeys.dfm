@@ -226,6 +226,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnChange = cbSpecialSkipChange
     Items.Strings = (
       'Previous Assignment'
-      'Next Shrugger')
+      'Next Shrugger'
+      'Highlit State Change')
   end
 end
