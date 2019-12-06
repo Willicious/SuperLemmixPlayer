@@ -300,15 +300,17 @@ begin
       B: TLemming absolute rB;
     const
       SELECTED_LEMMING = 128;
-      HIGHLIT_LEMMING = 64;
-      NOT_ZOMBIE_LEMMING = 32;
-      NOT_NEUTRAL_LEMMING = 16;
-      PERMANENT_SKILL_LEMMING = 8;
+      NOT_EXITER_LEMMING = 64;
+      HIGHLIT_LEMMING = 32;
+      NOT_ZOMBIE_LEMMING = 16;
+      NOT_NEUTRAL_LEMMING = 8;
+      PERMANENT_SKILL_LEMMING = 4;
 
       function MakePriorityValue(L: TLemming): Integer;
       begin
         Result := 0;
         if L = SelectedLemming then Result := Result + SELECTED_LEMMING;
+        if not (L.LemAction = baExiting) then Result := Result + NOT_EXITER_LEMMING;
         if L = HighlitLemming then Result := Result + HIGHLIT_LEMMING;
         if (not L.LemIsNeutral) or (L.LemIsZombie) then Result := Result + NOT_NEUTRAL_LEMMING;
         if not L.LemIsZombie then Result := Result + NOT_ZOMBIE_LEMMING;
