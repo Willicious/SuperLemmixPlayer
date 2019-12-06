@@ -1134,7 +1134,13 @@ begin
       end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := true;
-        fCombineHueShift := -1 / 3;
+
+        if Game.IsOutOfTime then
+          fCombineHueShift := 1 / 2
+        else if Level.Info.TimeLimit * 17 < Game.CurrentIteration + 255 {15 * 17} then
+          fCombineHueShift := -1 / 3
+        else
+          fCombineHueShift := -1 / 6;
       end else
         SpecialCombine := false;
 
@@ -1295,8 +1301,11 @@ const
   LEN = 2;
 begin
   if Level.Info.HasTimeLimit then
-    Time := Level.Info.TimeLimit - Game.CurrentIteration div 17
-  else
+  begin
+    Time := Level.Info.TimeLimit - Game.CurrentIteration div 17;
+    if Time < 0 then
+      Time := 0 - Time;
+  end else
     Time := Game.CurrentIteration div 17;
 
   // Minutes

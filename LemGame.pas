@@ -364,6 +364,7 @@ type
     function GetUsedSkillCount(aSkill: TSkillPanelButton): Integer;
 
     function GetActiveLemmingTypes: TLemmingKinds;
+    function GetOutOfTime: Boolean;
   public
     //GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
@@ -429,6 +430,7 @@ type
     property TargetIteration: Integer read fTargetIteration write fTargetIteration;
     property CancelReplayAfterSkip: Boolean read fCancelReplayAfterSkip write fCancelReplayAfterSkip;
     property HitTestAutoFail: Boolean read fHitTestAutoFail write fHitTestAutoFail;
+    property IsOutOfTime: Boolean read GetOutOfTime;
 
     property RenderInterface: TRenderInterface read fRenderInterface;
     property IsSimulating: Boolean read GetIsSimulating;
@@ -794,6 +796,14 @@ end;
 function TLemmingGame.GetLevelWidth: Integer;
 begin
   Result := GameParams.Level.Info.Width;
+end;
+
+function TLemmingGame.GetOutOfTime: Boolean;
+begin
+  Result := Level.Info.HasTimeLimit and
+            ((TimePlay < 0) or
+             ((TimePlay = 0) and (fCurrentIteration > 0))
+            );
 end;
 
 function TLemmingGame.GetLevelHeight: Integer;
@@ -4355,7 +4365,7 @@ function TLemmingGame.HandleExiting(L: TLemming): Boolean;
 begin
   Result := False;
 
-  if ((TimePlay < 0) or ((TimePlay = 0) and (fClockFrame > 0))) and GameParams.Level.Info.HasTimeLimit then
+  if IsOutOfTime then
   begin
     Dec(L.LemFrame);
     Dec(L.LemPhysicsFrame);
@@ -5260,12 +5270,6 @@ end;
 
 
 procedure TLemmingGame.SetGameResult;
-{-------------------------------------------------------------------------------
-  We will not, I repeat *NOT* simulate the original Nuke-error.
-
-  (ccexplore: sorry, code added to implement the nuke error by popular demand)
-  (Nepster: sorry, namida removed the code long ago again by popular demand)
--------------------------------------------------------------------------------}
 begin
   with GameResultRec do
   begin
@@ -5275,7 +5279,7 @@ begin
     gGotTalisman        := fTalismanReceived;
     gCheated            := fGameCheated;
     gSuccess            := (gRescued >= gToRescue) or gCheated;
-    gTimeIsUp           := Level.Info.HasTimeLimit and (fCurrentIteration >= Level.Info.TimeLimit * 17);
+    gTimeIsUp           := IsOutOfTime;
 
     if fGameCheated then
     begin
