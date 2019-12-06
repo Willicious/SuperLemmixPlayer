@@ -11,7 +11,7 @@ uses
   SharedGlobals,
   Classes, SysUtils, Contnrs,
   Math,
-  GR32, GR32_LowLevel, GR32_Resamplers, PngInterface,
+  GR32, GR32_LowLevel, GR32_Blend, GR32_Resamplers, PngInterface,
   Windows;
 
 const
@@ -563,6 +563,68 @@ var
       ResBMP.Free;
     end;
   end;
+
+  procedure UpscaleFullColor;
+  var
+    ShapeBMP, ColorBMP: TBitmap32;
+
+    n: Integer;
+    PBmp, PShape, PColor: PColor32;
+    a: Byte;
+  begin
+    ShapeBMP := TBitmap32.Create;
+    ColorBMP := TBitmap32.Create;
+    try
+      ShapeBMP.SetSize(Src.Width, Src.Height);
+      ColorBMP.SetSize(Src.Width * 2, Src.Height * 2);
+
+      PBmp := Src.PixelPtr[0, 0];
+      PShape := ShapeBMP.PixelPtr[0, 0];
+
+      for n := 0 to (Src.Width * Src.Height)-1 do
+      begin
+        if (PBmp^ and $FF000000) = 0 then
+          PShape^ := $00000000
+        else
+          PShape^ := $FFFFFFFF;
+        Inc(PBmp);
+        Inc(PShape);
+      end;
+
+      Upscale(ShapeBMP, umPixelArt);
+
+      //TKernelResampler.Create(Src).Kernel := TLanczosKernel.Create;
+      TLinearResampler.Create(Src);
+      Src.DrawTo(ColorBMP, Dst.BoundsRect, Src.BoundsRect);
+
+      TNearestResampler.Create(Src);
+      Src.DrawTo(Dst, Dst.BoundsRect, Src.BoundsRect);
+
+      PBmp := Dst.PixelPtr[0, 0];
+      PColor := ColorBMP.PixelPtr[0, 0];
+
+      for n := 0 to (Src.Width * Src.Height * 4)-1 do
+      begin
+        a := (((PBmp^ and $FF000000) shr 24) + ((PColor^ and $FF000000) shr 24)) div 2;
+        PBmp^ := (a shl 24) or (PColor^ and $FFFFFF); //(MergeReg(PColor^, PBmp^) and $FFFFFF);
+        Inc(PBmp);
+        Inc(PColor);
+      end;
+
+      PBmp := Dst.PixelPtr[0, 0];
+      PShape := ShapeBMP.PixelPtr[0, 0];
+
+      for n := 0 to (Src.Width * Src.Height * 4)-1 do
+      begin
+        PBmp^ := PBmp^ and PShape^;
+        Inc(PBmp);
+        Inc(PShape);
+      end;
+    finally
+      ShapeBMP.Free;
+      ColorBMP.Free;
+    end;
+  end;
 begin
   UsingLocalBitmap := false;
   OldDrawMode := Src.DrawMode;
@@ -578,15 +640,14 @@ begin
 
     Dst.SetSize(Src.Width * 2, Src.Height * 2);
     Dst.Clear($00000000);
+
+    Src.DrawMode := dmOpaque;
     Dst.DrawMode := dmOpaque;
 
     case Mode of
       umNearest: Src.DrawTo(Dst, Dst.BoundsRect, Src.BoundsRect);
       umPixelArt: UpscalePixelArt;
-      umFullColor: begin
-                     TKernelResampler.Create(Src).Kernel := TAlbrechtKernel.Create;
-                     Src.DrawTo(Dst, Dst.BoundsRect, Src.BoundsRect);
-                   end;
+      umFullColor: UpscaleFullColor;
     end;
   finally
     if UsingLocalBitmap then
