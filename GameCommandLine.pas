@@ -346,10 +346,10 @@ begin
 
       TPngInterface.LoadPngFile(Path, BMPIn);
 
-      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), umPixelArt, BMPOut);
+      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), umPixelArt, false, false, BMPOut);
       TPngInterface.SavePngFile(ChangeFileExt(Path, '-pa.png'), BMPOut);
 
-      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), umFullColor, BMPOut);
+      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), umFullColor, false, false, BMPOut);
       TPngInterface.SavePngFile(ChangeFileExt(Path, '-fc.png'), BMPOut);
     end;
   finally

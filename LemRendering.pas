@@ -2493,6 +2493,7 @@ var
     Collection, Piece: String;
     SplitPos: Integer;
     NeedUpscale: Boolean;
+    Info: TUpscaleInfo;
   begin
     if IsFallback then
     begin
@@ -2518,7 +2519,10 @@ var
     end;
 
     if NeedUpscale then
-      Upscale(BgImg, PieceManager.GetUpscaleKind(Collection + ':' + Piece, rkBackground));
+    begin
+      Info := PieceManager.GetUpscaleInfo(Collection + ':' + Piece, rkBackground);
+      Upscale(BgImg, Info.Upscaler, Info.TileHorizontal, Info.TileVertical);
+    end;
   end;
 begin
   if RenderInfoRec.Level = nil then Exit;

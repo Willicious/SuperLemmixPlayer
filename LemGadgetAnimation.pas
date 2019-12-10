@@ -523,6 +523,8 @@ var
   NeedUpscale: Boolean;
   Bitmaps: TBitmaps;
   i: Integer;
+
+  Info: TUpscaleInfo;
 begin
   Clear;
 
@@ -588,8 +590,9 @@ begin
   if NeedUpscale then
   begin
     Bitmaps := MakeFrameBitmaps(true);
+    Info := PieceManager.GetUpscaleInfo(aCollection + ':' + aPiece, rkGadget);
     for i := 0 to Bitmaps.Count-1 do
-      Upscale(Bitmaps[i], PieceManager.GetUpscaleKind(aCollection + ':' + aPiece, rkGadget));
+      Upscale(Bitmaps[i], Info.Upscaler, Info.TileHorizontal, Info.TileVertical);
     CombineBitmaps(Bitmaps);
   end else if GameParams.HighResolution then
   begin

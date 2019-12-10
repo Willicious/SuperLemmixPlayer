@@ -105,6 +105,7 @@ end;
 procedure TMetaTerrain.Load(aCollection, aPiece: String);
 var
   Parser: TParser;
+  Info: TUpscaleInfo;
 begin
   ClearImages;
 
@@ -132,8 +133,10 @@ begin
   begin
     if FileExists(AppPath + SFStyles + aCollection + SFPiecesTerrainHighRes + aPiece + '.png') then
       TPngInterface.LoadPngFile(AppPath + SFStyles + aCollection + SFPiecesTerrainHighRes + aPiece + '.png', fVariableInfo[0].GraphicImageHighRes)
-    else
-      Upscale(fVariableInfo[0].GraphicImage, PieceManager.GetUpscaleKind(Identifier, rkTerrain), fVariableInfo[0].GraphicImageHighRes);
+    else begin
+      Info := PieceManager.GetUpscaleInfo(Identifier, rkTerrain);
+      Upscale(fVariableInfo[0].GraphicImage, Info.Upscaler, Info.TileHorizontal, Info.TileVertical, fVariableInfo[0].GraphicImageHighRes);
+    end;
   end;
 
   fGeneratedVariableInfo[0] := true;

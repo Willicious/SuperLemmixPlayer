@@ -37,6 +37,8 @@ type
     Source: TLabelRecord;
     Upscaler: TUpscaleMode;
     Kind: TAliasKind;
+    TileHorizontal: Boolean;
+    TileVertical: Boolean;
   end;
 
   TNeoPieceManager = class
@@ -85,7 +87,7 @@ type
 
       procedure LoadProperties(aStyle: String);
       function Dealias(aIdentifier: String; aKind: TAliasKind): String;
-      function GetUpscaleKind(aIdentifier: String; aKind: TAliasKind): TUpscaleMode;
+      function GetUpscaleInfo(aIdentifier: String; aKind: TAliasKind): TUpscaleInfo;
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TGadgetMetaInfo read GetMetaObject;
@@ -438,6 +440,8 @@ begin
   NewRec.Source.GS := fLoadPropertiesStyle;
   NewRec.Source.Piece := aSection.LineString['PIECE'];
   NewRec.Kind := Kind;
+  NewRec.TileHorizontal := (aSection.Line['TILE_HORIZONTAL'] <> nil) or (aSection.Line['TILE'] <> nil);
+  NewRec.TileVertical := (aSection.Line['TILE_VERTICAL'] <> nil) or (aSection.Line['TILE'] <> nil);
 
   NewRec.Upscaler := umPixelArt;
   if Uppercase(aSection.LineTrimString['UPSCALE']) = 'ZOOM' then NewRec.Upscaler := umNearest;
@@ -471,8 +475,8 @@ begin
     Result := CombineIdentifier(Ident);
 end;
 
-function TNeoPieceManager.GetUpscaleKind(aIdentifier: String;
-  aKind: TAliasKind): TUpscaleMode;
+function TNeoPieceManager.GetUpscaleInfo(aIdentifier: String;
+  aKind: TAliasKind): TUpscaleInfo;
 var
   Ident: TLabelRecord;
   i: Integer;
@@ -481,18 +485,21 @@ begin
 
   LoadProperties(Ident.GS);
 
-  Result := umPixelArt; // default
+  // Fallback settings
+  Result.Upscaler := umPixelArt;
+  Result.TileHorizontal := (aKind in [rkTerrain, rkBackground]);
+  Result.TileVertical := (aKind in [rkTerrain, rkBackground]);
 
   for i := 0 to fUpscaling.Count-1 do
   begin
     if Ident.GS <> fUpscaling[i].Source.GS then Continue;
 
-    if fUpscaling[i].Kind = rkStyle then Result := fUpscaling[i].Upscaler;
+    if fUpscaling[i].Kind = rkStyle then Result := fUpscaling[i];
 
     if (fUpscaling[i].Kind = aKind) and
        ((aKind = rkLemmings) or (Ident.Piece = fUpscaling[i].Source.Piece)) then
     begin
-      Result := fUpscaling[i].Upscaler;
+      Result := fUpscaling[i];
       Exit;
     end;
   end;

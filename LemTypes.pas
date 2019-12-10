@@ -84,8 +84,9 @@ procedure MoveRect(var aRect: TRect; const DeltaX, DeltaY: Integer);
 function UnderWine: Boolean;
 function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
 
-procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
-procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
+procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode;
+                        TileHorz, TileVert: Boolean; Dst: TBitmap32 = nil);
+procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; TileHorz, TileVert: Boolean; Dst: TBitmap32 = nil);
 function ResMod: Integer; // Returns 1 when in low-res, 2 when in high-res
 
 function CalculateColorShift(aPrimary, aAlt: TColor32): TColorDiff;
@@ -349,7 +350,8 @@ begin
   Result.Bottom := Y + H;
 end;
 
-procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
+procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode;
+  TileHorz, TileVert: Boolean; Dst: TBitmap32 = nil);
 var
   TempBMP, LocalDst: TBitmap32;
   iX, iY: Integer;
@@ -378,7 +380,7 @@ begin
       begin
         TempBMP.SetSize(FW, FH);
         Src.DrawTo(TempBMP, 0, 0, Rect(iX * FW, iY * FH, (iX + 1) * FW, (iY + 1) * FH));
-        Upscale(TempBMP, Mode);
+        Upscale(TempBMP, Mode, TileHorz, TileVert);
         TempBMP.DrawTo(Dst, iX * FW * 2, iY * FH * 2);
       end;
 
@@ -395,10 +397,62 @@ begin
   end;
 end;
 
-procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; Dst: TBitmap32 = nil);
+procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode;
+  TileHorz, TileVert: Boolean; Dst: TBitmap32 = nil);
 var
   UsingLocalBitmap: Boolean;
   OldDrawMode: TDrawMode;
+
+  procedure DoTiledUpscale;
+  var
+    TempBMP: TBitmap32;
+    W, H: Integer;
+    x, y: Integer;
+    SrcRect: TRect;
+  begin
+    TempBMP := TBitmap32.Create;
+    try
+      if TileHorz then W := Src.Width * 3 else W := Src.Width;
+      if TileVert then H := Src.Height * 3 else H := Src.Height;
+
+      TempBMP.SetSize(W, H);
+      TempBMP.Clear(0);
+
+      y := 0;
+      Src.DrawMode := dmOpaque;
+
+      while y < H do
+      begin
+        x := 0;
+
+        while x < W do
+        begin
+          Src.DrawTo(TempBMP, x, y);
+          Inc(x, Src.Width);
+        end;
+        Inc(y, Src.Height);
+      end;
+
+      Upscale(TempBMP, Mode, false, false);
+
+      if TileHorz then SrcRect.Left := Src.Width * 2 else SrcRect.Left := 0;
+      if TileVert then SrcRect.Top := Src.Height * 2 else SrcRect.Top := 0;
+
+      SrcRect.Right := SrcRect.Left + Src.Width * 2;
+      SrcRect.Bottom := SrcRect.Top + Src.Height * 2;
+
+      if Dst = nil then Dst := Src;
+
+      Dst.SetSize(SrcRect.Width, SrcRect.Height);
+      Dst.Clear(0);
+
+      TempBMP.DrawTo(Dst, 0, 0, SrcRect);
+
+      TPngInterface.SavePngFile(AppPath + 'blah.png', TempBMP);
+    finally
+      TempBMP.Free;
+    end;
+  end;
 
   procedure UpscalePixelArt;
   var
@@ -591,9 +645,8 @@ var
         Inc(PShape);
       end;
 
-      Upscale(ShapeBMP, umPixelArt);
+      Upscale(ShapeBMP, umPixelArt, false, false);
 
-      //TKernelResampler.Create(Src).Kernel := TLanczosKernel.Create;
       TLinearResampler.Create(Src);
       Src.DrawTo(ColorBMP, Dst.BoundsRect, Src.BoundsRect);
 
@@ -629,6 +682,12 @@ begin
   UsingLocalBitmap := false;
   OldDrawMode := Src.DrawMode;
   try
+    if TileHorz or TileVert then
+    begin
+      DoTiledUpscale;
+      Exit;
+    end;
+
     if Dst = nil then
     begin
       Dst := Src;
