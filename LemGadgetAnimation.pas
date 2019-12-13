@@ -592,7 +592,7 @@ begin
     Bitmaps := MakeFrameBitmaps(true);
     Info := PieceManager.GetUpscaleInfo(aCollection + ':' + aPiece, rkGadget);
     for i := 0 to Bitmaps.Count-1 do
-      Upscale(Bitmaps[i], Info.Upscaler, Info.TileHorizontal, Info.TileVertical);
+      Upscale(Bitmaps[i], Info.Settings);
     CombineBitmaps(Bitmaps);
   end else if GameParams.HighResolution then
   begin

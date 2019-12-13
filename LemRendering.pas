@@ -2521,7 +2521,7 @@ var
     if NeedUpscale then
     begin
       Info := PieceManager.GetUpscaleInfo(Collection + ':' + Piece, rkBackground);
-      Upscale(BgImg, Info.Upscaler, Info.TileHorizontal, Info.TileVertical);
+      Upscale(BgImg, Info.Settings);
     end;
   end;
 begin

@@ -345,7 +345,7 @@ begin
           TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
 
         Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
-        UpscaleFrames(TempBitmap, 2, MLA.FrameCount, Info.Upscaler, Info.TileHorizontal, Info.TileVertical);
+        UpscaleFrames(TempBitmap, 2, MLA.FrameCount, Info.Settings);
 
         // I don't think it would EVER be useful to have the TileHorizontal / TileVertical on lemming sprites, but
         // let's keep support just for consistency.

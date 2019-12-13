@@ -36,6 +36,15 @@ type
   TColor32Pair = TPair<TColor32, TColor32>;
 
   TUpscaleMode = (umNearest, umPixelArt, umFullColor);
+  TUpscaleEdgeBehaviour = (uebRepeat, uebMirror, uebTransparent);
+
+  TUpscaleSettings = record
+    Mode: TUpscaleMode;
+    LeftSide: TUpscaleEdgeBehaviour;
+    TopSide: TUpscaleEdgeBehaviour;
+    RightSide: TUpscaleEdgeBehaviour;
+    BottomSide: TUpscaleEdgeBehaviour;
+  end;
 
   TColorDiff = record
     HShift: Single;
@@ -84,9 +93,8 @@ procedure MoveRect(var aRect: TRect; const DeltaX, DeltaY: Integer);
 function UnderWine: Boolean;
 function MakeSafeForFilename(const aString: String; DisallowSpaces: Boolean = true): String;
 
-procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode;
-                        TileHorz, TileVert: Boolean; Dst: TBitmap32 = nil);
-procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode; TileHorz, TileVert: Boolean; Dst: TBitmap32 = nil);
+procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Settings: TUpscaleSettings; Dst: TBitmap32 = nil);
+procedure Upscale(Src: TBitmap32; Settings: TUpscaleSettings; Dst: TBitmap32 = nil);
 function ResMod: Integer; // Returns 1 when in low-res, 2 when in high-res
 
 function CalculateColorShift(aPrimary, aAlt: TColor32): TColorDiff;
@@ -350,8 +358,7 @@ begin
   Result.Bottom := Y + H;
 end;
 
-procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Mode: TUpscaleMode;
-  TileHorz, TileVert: Boolean; Dst: TBitmap32 = nil);
+procedure UpscaleFrames(Src: TBitmap32; FramesHorz, FramesVert: Integer; Settings: TUpscaleSettings; Dst: TBitmap32 = nil);
 var
   TempBMP, LocalDst: TBitmap32;
   iX, iY: Integer;
@@ -380,7 +387,7 @@ begin
       begin
         TempBMP.SetSize(FW, FH);
         Src.DrawTo(TempBMP, 0, 0, Rect(iX * FW, iY * FH, (iX + 1) * FW, (iY + 1) * FH));
-        Upscale(TempBMP, Mode, TileHorz, TileVert);
+        Upscale(TempBMP, Settings);
         TempBMP.DrawTo(Dst, iX * FW * 2, iY * FH * 2);
       end;
 
@@ -397,62 +404,11 @@ begin
   end;
 end;
 
-procedure Upscale(Src: TBitmap32; Mode: TUpscaleMode;
-  TileHorz, TileVert: Boolean; Dst: TBitmap32 = nil);
+procedure Upscale(Src: TBitmap32; Settings: TUpscaleSettings; Dst: TBitmap32 = nil);
 var
+  OrigSrc: TBitmap32;
   UsingLocalBitmap: Boolean;
   OldDrawMode: TDrawMode;
-
-  procedure DoTiledUpscale;
-  var
-    TempBMP: TBitmap32;
-    W, H: Integer;
-    x, y: Integer;
-    SrcRect: TRect;
-  begin
-    TempBMP := TBitmap32.Create;
-    try
-      if TileHorz then W := Src.Width * 3 else W := Src.Width;
-      if TileVert then H := Src.Height * 3 else H := Src.Height;
-
-      TempBMP.SetSize(W, H);
-      TempBMP.Clear(0);
-
-      y := 0;
-      Src.DrawMode := dmOpaque;
-
-      while y < H do
-      begin
-        x := 0;
-
-        while x < W do
-        begin
-          Src.DrawTo(TempBMP, x, y);
-          Inc(x, Src.Width);
-        end;
-        Inc(y, Src.Height);
-      end;
-
-      Upscale(TempBMP, Mode, false, false);
-
-      if TileHorz then SrcRect.Left := Src.Width * 2 else SrcRect.Left := 0;
-      if TileVert then SrcRect.Top := Src.Height * 2 else SrcRect.Top := 0;
-
-      SrcRect.Right := SrcRect.Left + Src.Width * 2;
-      SrcRect.Bottom := SrcRect.Top + Src.Height * 2;
-
-      if Dst = nil then Dst := Src;
-
-      Dst.SetSize(SrcRect.Width, SrcRect.Height);
-      Dst.Clear(0);
-
-      TempBMP.DrawTo(Dst, 0, 0, SrcRect);
-
-      TPngInterface.SavePngFile(AppPath + 'blah.png', TempBMP);
-    finally
-      TempBMP.Free;
-    end;
-  end;
 
   procedure UpscalePixelArt;
   var
@@ -625,7 +581,12 @@ var
     n: Integer;
     PBmp, PShape, PColor: PColor32;
     a: Byte;
+
+    PixelArtSettings: TUpscaleSettings;
   begin
+    FillChar(PixelArtSettings, SizeOf(TUpscaleSettings), 0);
+    PixelArtSettings.Mode := umPixelArt;
+
     ShapeBMP := TBitmap32.Create;
     ColorBMP := TBitmap32.Create;
     try
@@ -645,7 +606,7 @@ var
         Inc(PShape);
       end;
 
-      Upscale(ShapeBMP, umPixelArt, false, false);
+      Upscale(ShapeBMP, PixelArtSettings);
 
       TLinearResampler.Create(Src);
       Src.DrawTo(ColorBMP, Dst.BoundsRect, Src.BoundsRect);
@@ -678,24 +639,58 @@ var
       ColorBMP.Free;
     end;
   end;
-begin
-  UsingLocalBitmap := false;
-  OldDrawMode := Src.DrawMode;
-  try
-    if TileHorz or TileVert then
+
+  procedure ApplyEdges;
+  var
+    x, y: Integer;
+  begin
+    for y := 1 to Src.Height-2 do
     begin
-      DoTiledUpscale;
-      Exit;
+      case Settings.LeftSide of
+        uebRepeat: Src[0, y] := Src[Src.Width-2, y];
+        uebMirror: Src[0, y] := Src[1, y];
+        uebTransparent: Src[0, y] := $00000000;
+      end;
+      case Settings.RightSide of
+        uebRepeat: Src[Src.Width-1, y] := Src[1, y];
+        uebMirror: Src[Src.Width-1, y] := Src[Src.Width-2, y];
+        uebTransparent: Src[Src.Width-1, y] := $00000000;
+      end;
     end;
 
-    if Dst = nil then
+    for x := 1 to Src.Width-2 do
     begin
-      Dst := Src;
-      Src := nil; // extra safe
-      UsingLocalBitmap := true;
-      Src := TBitmap32.Create;
-      Src.Assign(Dst);
+      case Settings.TopSide of
+        uebRepeat: Src[x, 0] := Src[x, Src.Height-2];
+        uebMirror: Src[x, 0] := Src[x, 1];
+        uebTransparent: Src[x, 0] := $00000000;
+      end;
+      case Settings.BottomSide of
+        uebRepeat: Src[x, Src.Height-1] := Src[x, 1];
+        uebMirror: Src[x, Src.Height-1] := Src[x, Src.Height-2];
+        uebTransparent: Src[x, Src.Height-1] := $00000000;
+      end;
     end;
+
+    if Src[0, 1] = Src[1, 0] then Src[0, 0] := Src[1, 0];
+    if Src[Src.Width-2, 0] = Src[Src.Width-1, 1] then Src[Src.Width-1, 0] := Src[Src.Width-2, 0];
+    if Src[0, Src.Height-2] = Src[1, Src.Height-1] then Src[0, Src.Height-1] := Src[1, Src.Height-1];
+    if Src[Src.Width-2, Src.Height-1] = Src[Src.Width-1, Src.Height-2] then Src[Src.Width-1, Src.Height-1] := Src[Src.Width-2, Src.Height-1];
+  end;
+begin
+  OldDrawMode := Src.DrawMode;
+  try
+    OrigSrc := Src;
+
+    if Dst = nil then
+      Dst := Src;
+
+    Src := TBitmap32.Create;
+    Src.SetSize(OrigSrc.Width + 2, OrigSrc.Height + 2);
+    Src.Clear(0);
+
+    OrigSrc.DrawTo(Src, 1, 1);
+    ApplyEdges;
 
     Dst.SetSize(Src.Width * 2, Src.Height * 2);
     Dst.Clear($00000000);
@@ -703,16 +698,19 @@ begin
     Src.DrawMode := dmOpaque;
     Dst.DrawMode := dmOpaque;
 
-    case Mode of
+    case Settings.Mode of
       umNearest: Src.DrawTo(Dst, Dst.BoundsRect, Src.BoundsRect);
       umPixelArt: UpscalePixelArt;
       umFullColor: UpscaleFullColor;
     end;
+
+    Src.Assign(Dst);
+    Dst.SetSize(Src.Width - 4, Src.Height - 4);
+    Dst.Clear(0);
+    Src.DrawTo(Dst, -2, -2);
   finally
-    if UsingLocalBitmap then
-      Src.Free
-    else if Src <> nil then
-      Src.DrawMode := OldDrawMode;
+    Src.Free;
+    OrigSrc.DrawMode := OldDrawMode;
   end;
 end;
 

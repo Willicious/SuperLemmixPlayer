@@ -321,6 +321,7 @@ var
   BMPIn, BMPOut: TBitmap32;
   Path: String;
   SL: TStringList;
+  Settings: TUpscaleSettings;
 begin
   n := 2;
   BMPIn := TBitmap32.Create;
@@ -346,10 +347,14 @@ begin
 
       TPngInterface.LoadPngFile(Path, BMPIn);
 
-      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), umPixelArt, false, false, BMPOut);
+      FillChar(Settings, SizeOf(Settings), 0);
+      Settings.Mode := umPixelArt;
+      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), Settings, BMPOut);
       TPngInterface.SavePngFile(ChangeFileExt(Path, '-pa.png'), BMPOut);
 
-      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), umFullColor, false, false, BMPOut);
+      FillChar(Settings, SizeOf(Settings), 0);
+      Settings.Mode := umFullColor;
+      UpscaleFrames(BMPIn, StrToIntDef(SL[1], 1), StrToIntDef(SL[2], 1), Settings, BMPOut);
       TPngInterface.SavePngFile(ChangeFileExt(Path, '-fc.png'), BMPOut);
     end;
   finally

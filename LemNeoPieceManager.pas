@@ -35,10 +35,8 @@ type
 
   TUpscaleInfo = record
     Source: TLabelRecord;
-    Upscaler: TUpscaleMode;
     Kind: TAliasKind;
-    TileHorizontal: Boolean;
-    TileVertical: Boolean;
+    Settings: TUpscaleSettings;
   end;
 
   TNeoPieceManager = class
@@ -436,16 +434,25 @@ procedure TNeoPieceManager.AddUpscaling(aSection: TParserSection;
 var
   Kind: TAliasKind absolute aData;
   NewRec: TUpscaleInfo;
+
+  function GetEdgeBehaviour(aLabel: String): TUpscaleEdgeBehaviour;
+  begin
+    Result := uebRepeat;
+    if Uppercase(aSection.LineTrimString[aLabel]) = 'MIRROR' then Result := uebMirror;
+    if Uppercase(aSection.LineTrimString[aLabel]) = 'BLANK' then Result := uebTransparent;
+  end;
 begin
   NewRec.Source.GS := fLoadPropertiesStyle;
   NewRec.Source.Piece := aSection.LineString['PIECE'];
   NewRec.Kind := Kind;
-  NewRec.TileHorizontal := (aSection.Line['TILE_HORIZONTAL'] <> nil) or (aSection.Line['TILE'] <> nil);
-  NewRec.TileVertical := (aSection.Line['TILE_VERTICAL'] <> nil) or (aSection.Line['TILE'] <> nil);
+  NewRec.Settings.LeftSide := GetEdgeBehaviour('LEFT_EDGE');
+  NewRec.Settings.TopSide := GetEdgeBehaviour('TOP_EDGE');
+  NewRec.Settings.RightSide := GetEdgeBehaviour('RIGHT_EDGE');
+  NewRec.Settings.BottomSide := GetEdgeBehaviour('BOTTOM_EDGE');
 
-  NewRec.Upscaler := umPixelArt;
-  if Uppercase(aSection.LineTrimString['UPSCALE']) = 'ZOOM' then NewRec.Upscaler := umNearest;
-  if Uppercase(aSection.LineTrimString['UPSCALE']) = 'RESAMPLE' then NewRec.Upscaler := umFullColor;
+  NewRec.Settings.Mode := umPixelArt;
+  if Uppercase(aSection.LineTrimString['UPSCALE']) = 'ZOOM' then NewRec.Settings.Mode := umNearest;
+  if Uppercase(aSection.LineTrimString['UPSCALE']) = 'RESAMPLE' then NewRec.Settings.Mode := umFullColor;
 
   fUpscaling.Add(NewRec);
 end;
@@ -486,9 +493,20 @@ begin
   LoadProperties(Ident.GS);
 
   // Fallback settings
-  Result.Upscaler := umPixelArt;
-  Result.TileHorizontal := (aKind in [rkTerrain, rkBackground]);
-  Result.TileVertical := (aKind in [rkTerrain, rkBackground]);
+  FillChar(Result, SizeOf(TUpscaleInfo), 0);
+  Result.Settings.Mode := umPixelArt;
+  if aKind in [rkTerrain, rkBackground] then
+  begin
+    Result.Settings.LeftSide := uebRepeat;
+    Result.Settings.TopSide := uebRepeat;
+    Result.Settings.RightSide := uebRepeat;
+    Result.Settings.BottomSide := uebRepeat;
+  end else begin
+    Result.Settings.LeftSide := uebTransparent;
+    Result.Settings.TopSide := uebTransparent;
+    Result.Settings.RightSide := uebTransparent;
+    Result.Settings.BottomSide := uebTransparent;
+  end;
 
   for i := 0 to fUpscaling.Count-1 do
   begin

@@ -135,7 +135,7 @@ begin
       TPngInterface.LoadPngFile(AppPath + SFStyles + aCollection + SFPiecesTerrainHighRes + aPiece + '.png', fVariableInfo[0].GraphicImageHighRes)
     else begin
       Info := PieceManager.GetUpscaleInfo(Identifier, rkTerrain);
-      Upscale(fVariableInfo[0].GraphicImage, Info.Upscaler, Info.TileHorizontal, Info.TileVertical, fVariableInfo[0].GraphicImageHighRes);
+      Upscale(fVariableInfo[0].GraphicImage, Info.Settings, fVariableInfo[0].GraphicImageHighRes);
     end;
   end;
 
