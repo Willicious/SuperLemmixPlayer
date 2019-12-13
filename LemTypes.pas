@@ -407,7 +407,6 @@ end;
 procedure Upscale(Src: TBitmap32; Settings: TUpscaleSettings; Dst: TBitmap32 = nil);
 var
   OrigSrc: TBitmap32;
-  UsingLocalBitmap: Boolean;
   OldDrawMode: TDrawMode;
 
   procedure UpscalePixelArt;
@@ -678,10 +677,9 @@ var
     if Src[Src.Width-2, Src.Height-1] = Src[Src.Width-1, Src.Height-2] then Src[Src.Width-1, Src.Height-1] := Src[Src.Width-2, Src.Height-1];
   end;
 begin
+  OrigSrc := Src;
   OldDrawMode := Src.DrawMode;
   try
-    OrigSrc := Src;
-
     if Dst = nil then
       Dst := Src;
 

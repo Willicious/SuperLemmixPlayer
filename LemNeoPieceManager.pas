@@ -443,7 +443,6 @@ var
   end;
 begin
   NewRec.Source.GS := fLoadPropertiesStyle;
-  NewRec.Source.Piece := aSection.LineString['PIECE'];
   NewRec.Kind := Kind;
   NewRec.Settings.LeftSide := GetEdgeBehaviour('LEFT_EDGE');
   NewRec.Settings.TopSide := GetEdgeBehaviour('TOP_EDGE');
@@ -454,7 +453,11 @@ begin
   if Uppercase(aSection.LineTrimString['UPSCALE']) = 'ZOOM' then NewRec.Settings.Mode := umNearest;
   if Uppercase(aSection.LineTrimString['UPSCALE']) = 'RESAMPLE' then NewRec.Settings.Mode := umFullColor;
 
-  fUpscaling.Add(NewRec);
+  aSection.DoForEachLine('PIECE', procedure(aLine: TParserLine; const aIteration: Integer)
+  begin
+    NewRec.Source.Piece := aLine.ValueTrimmed;
+    fUpscaling.Add(NewRec);
+  end);
 end;
 
 function TNeoPieceManager.Dealias(aIdentifier: String; aKind: TAliasKind): String;
