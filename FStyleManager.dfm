@@ -39,7 +39,7 @@ object FManageStyles: TFManageStyles
     Left = 8
     Top = 8
     Width = 385
-    Height = 257
+    Height = 233
     Anchors = [akLeft, akTop, akRight, akBottom]
     Columns = <
       item
@@ -62,7 +62,6 @@ object FManageStyles: TFManageStyles
     RowSelect = True
     TabOrder = 1
     ViewStyle = vsReport
-    ExplicitWidth = 306
   end
   object btnGetSelected: TButton
     Left = 8
@@ -72,6 +71,7 @@ object FManageStyles: TFManageStyles
     Anchors = [akLeft, akBottom]
     Caption = 'Download Selected'
     TabOrder = 2
+    OnClick = btnGetSelectedClick
   end
   object btnUpdateAll: TButton
     Left = 119
@@ -81,5 +81,23 @@ object FManageStyles: TFManageStyles
     Anchors = [akLeft, akBottom]
     Caption = 'Update All'
     TabOrder = 3
+  end
+  object pbDownload: TProgressBar
+    Left = 8
+    Top = 248
+    Width = 385
+    Height = 17
+    Anchors = [akBottom]
+    Max = 1000
+    MarqueeInterval = 25
+    TabOrder = 4
+    Visible = False
+  end
+  object tmContinueDownload: TTimer
+    Enabled = False
+    Interval = 75
+    OnTimer = tmContinueDownloadTimer
+    Left = 248
+    Top = 272
   end
 end

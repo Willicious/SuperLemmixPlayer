@@ -221,7 +221,7 @@ begin
         SL.Free;
       end;
 
-      fUpdateCheckThread.Free;
+      fUpdateCheckThread := nil;
     end
   );
 end;
@@ -641,6 +641,8 @@ end;
 
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
+  if fUpdateCheckThread <> nil then
+    fUpdateCheckThread.Terminate;
   inherited CloseScreen(aNextScreen);
 end;
 
