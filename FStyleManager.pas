@@ -28,6 +28,7 @@ type
     procedure lvStylesCustomDrawSubItem(Sender: TCustomListView;
       Item: TListItem; SubItem: Integer; State: TCustomDrawState;
       var DefaultDraw: Boolean);
+    procedure btnUpdateAllClick(Sender: TObject);
   private
     fClearedPieceManager: Boolean;
     fLocalList: TStringList;
@@ -53,6 +54,9 @@ type
     { Public declarations }
   end;
 
+  procedure DownloadMissingStyles; // For auto-downloading
+  function CheckStyleUpdates: Boolean;
+
 implementation
 
 uses
@@ -62,6 +66,49 @@ uses
   LemNeoPieceManager;
 
 {$R *.dfm}
+
+procedure DownloadMissingStyles;
+var
+  F: TFManageStyles;
+  i: Integer;
+begin
+  F := TFManageStyles.Create(nil);
+  try
+    F.MakeStyleList;
+    for i := 0 to PieceManager.NeedCheckStyles.Count-1 do
+      F.fDownloadList.Add(PieceManager.NeedCheckStyles[i]);
+    F.BeginDownloads;
+    F.ClearPieceManager;
+    F.SaveLocalList;
+  finally
+    F.Free;
+  end;
+end;
+
+function CheckStyleUpdates: Boolean;
+var
+  F: TFManageStyles;
+  i: Integer;
+  ThisStyle: String;
+begin
+  Result := true;
+
+  F := TFManageStyles.Create(nil);
+  try
+    F.MakeStyleList;
+    for i := 0 to F.fLocalList.Count-1 do
+    begin
+      ThisStyle := F.fLocalList.Names[i];
+      if (F.fLocalList.Values[ThisStyle] <> '-1') and
+         (StrToIntDef(F.fLocalList.Values[ThisStyle], 0) < StrToInt64Def(F.fWebList.Values[ThisStyle], 0)) then
+        Exit;
+    end;
+  finally
+    F.Free;
+  end;
+
+  Result := false;
+end;
 
 procedure TFManageStyles.BeginDownloads;
 begin
@@ -129,6 +176,12 @@ begin
     Exit;
   end;
 
+  if fWebList.IndexOfName(fDownloadList[fDownloadIndex]) < 0 then
+  begin
+    fTimeForNextDownload := true;
+    Exit;
+  end;
+
   fDownloadStream.Clear;
   fDownloadThread := DownloadInThread(STYLES_BASE_DIRECTORY + STYLE_VERSION + fDownloadList[fDownloadIndex] + '.zip',
     fDownloadStream,
@@ -159,6 +212,23 @@ begin
   for i := 0 to lvStyles.Items.Count-1 do
     if lvStyles.Items[i].Selected then
       fDownloadList.Add(lvStyles.Items[i].Caption);
+
+  BeginDownloads;
+end;
+
+procedure TFManageStyles.btnUpdateAllClick(Sender: TObject);
+var
+  i: Integer;
+  ThisStyle: String;
+begin
+  fDownloadList.Clear;
+  for i := 0 to lvStyles.Items.Count-1 do
+  begin
+    ThisStyle := lvStyles.Items[i].Caption;
+    if (fLocalList.Values[ThisStyle] <> '-1') and
+       (StrToInt64Def(fWebList.Values[ThisStyle], 0) > StrToInt64Def(fLocalList.Values[ThisStyle], 0)) then
+      fDownloadList.Add(lvStyles.Items[i].Caption);
+  end;
 
   BeginDownloads;
 end;

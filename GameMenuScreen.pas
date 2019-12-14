@@ -121,7 +121,7 @@ uses
   Forms, Math, Graphics, SysUtils, UMisc, Dialogs, Windows,
   UITypes, ShellApi, MMSystem,
   PngInterface, SharedGlobals,
-  FNeoLemmixSetup,
+  FNeoLemmixSetup, FStyleManager,
   LemTypes, LemStrings, LemDosStructures, LemGame, LemVersion;
 
 { TGameMenuScreen }
@@ -212,7 +212,8 @@ begin
           if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
           begin
             ShowMessage('Update available: NeoLemmix V' + OrigVersionStr + '. Please go to www.neolemmix.com to download.');
-          end;
+          end else if CheckStyleUpdates then
+            ShowMessage('Style updates available. Please use the Style Manager (under settings) to download.');
 
         except
           // Fail silently.

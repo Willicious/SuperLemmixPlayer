@@ -82,6 +82,7 @@ object FManageStyles: TFManageStyles
     Anchors = [akLeft, akBottom]
     Caption = 'Update All'
     TabOrder = 3
+    OnClick = btnUpdateAllClick
   end
   object pbDownload: TProgressBar
     Left = 8
