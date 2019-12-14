@@ -57,7 +57,7 @@ uses
     if FindFirst(AppPath + 'styles\*', faDirectory, SearchRec) = 0 then
     begin
       repeat
-        if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
+        if (SearchRec.Name = '..') or (SearchRec.Name = '.') or ((SearchRec.Attr and faDirectory) = 0) then Continue;
 
         ZipStyle(SearchRec.Name);
       until FindNext(SearchRec) <> 0;
