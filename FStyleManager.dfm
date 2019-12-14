@@ -30,7 +30,6 @@ object FManageStyles: TFManageStyles
     Caption = 'Exit'
     TabOrder = 0
     OnClick = btnExitClick
-    ExplicitLeft = 241
   end
   object lvStyles: TListView
     Left = 8

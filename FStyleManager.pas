@@ -16,8 +16,12 @@ type
     procedure FormShow(Sender: TObject);
   private
     fClearedPieceManager: Boolean;
+    fLocalList: TStringList;
+    fWebList: TStringList;
+
     procedure ClearPieceManager;
     procedure ResizeListColumns;
+    procedure MakeStyleList;
   public
     { Public declarations }
   end;
@@ -25,6 +29,7 @@ type
 implementation
 
 uses
+  LemStrings,
   LemNeoOnline,
   LemVersion,
   LemNeoPieceManager;
@@ -51,18 +56,38 @@ begin
 end;
 
 procedure TFManageStyles.FormShow(Sender: TObject);
-var
-  SL: TStringList;
 begin
   ResizeListColumns;
+  MakeStyleList;
+end;
 
-  SL := TStringList.Create;
-  try
-    TInternet.DownloadToStringList(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, SL);
-    SL.SaveToFile(AppPath + 'blah.txt');
-  finally
-    SL.Free;
+procedure TFManageStyles.MakeStyleList;
+var
+  SearchRec: TSearchRec;
+  ThisStyle: String;
+begin
+  if FileExists(AppPath + SFSaveData + 'styletimes.ini') then
+    fLocalList.LoadFromFile(AppPath + SFSaveData + 'styletimes.ini')
+  else
+    fLocalList.Clear;
+
+  if FindFirst(AppPath + SFStyles + '*', faDirectory, SearchRec) = 0 then
+  begin
+    repeat
+      if (SearchRec.Name = '.') or (SearchRec.Name = '..') or ((SearchRec.Attr and faDirectory) = 0) then Continue;
+
+      if fLocalList.IndexOfName(SearchRec.Name) < 0 then
+        fLocalList.Add(SearchRec.Name + '=-1');
+    until FindNext(SearchRec) <> 0;
+    FindClose(SearchRec);
   end;
+
+  for ThisStyle in PieceManager.NeedCheckStyles do
+    if fLocalList.IndexOfName(ThisStyle) < 0 then
+      fLocalList.Add(ThisStyle + '=-2');
+
+  fWebList.Clear;
+  TInternet.DownloadToStringList(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, fWebList);
 end;
 
 procedure TFManageStyles.ResizeListColumns;
