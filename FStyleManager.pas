@@ -240,7 +240,7 @@ begin
   for i := 0 to lvStyles.Items.Count-1 do
   begin
     ThisStyle := lvStyles.Items[i].Caption;
-    if (fLocalList.Values[ThisStyle] <> '-1') and
+    if (fLocalList.IndexOfName(ThisStyle) >= 0) and (fLocalList.Values[ThisStyle] <> '-1') and
        (StrToInt64Def(fWebList.Values[ThisStyle], 0) > StrToInt64Def(fLocalList.Values[ThisStyle], 0)) then
       fDownloadList.Add(lvStyles.Items[i].Caption);
   end;

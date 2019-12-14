@@ -81,7 +81,8 @@ begin
             end;
         end;
       end else
-        ShowMessage('Some pieces used by this level are missing. You will not be able to play this level.')
+        ShowMessage('Some pieces used by this level are missing. You will not be able to play this level. ' +
+                    'Download the missing styles manually, or enable online features in NeoLemmix config to try to auto-download them.');
     end else begin
       GameParams.NextScreen2 := gstPlay;
       inherited CloseScreen(gstText);
