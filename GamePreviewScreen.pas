@@ -41,12 +41,18 @@ type
 implementation
 
 uses
+  CustomPopup,
   FBaseDosForm,
   FStyleManager;
 
 { TGamePreviewScreen }
 
 procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
+var
+  i: Integer;
+  Styles: String;
+
+  F: TFManageStyles;
 begin
   if NextScreen = gstPlay then
   begin
@@ -54,11 +60,24 @@ begin
     begin
       if GameParams.EnableOnline then
       begin
-        if MessageDlg('Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
-                      mtCustom, [mbYes, mbNo], 0) = mrYes then
-        begin
-          DownloadMissingStyles;
-          inherited CloseScreen(gstPreview);
+        case RunCustomPopup(self, 'Missing styles',
+          'Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
+          'Yes|No|Open Style Manager') of
+          1:
+            begin
+              DownloadMissingStyles;
+              inherited CloseScreen(gstPreview);
+            end;
+          3:
+            begin
+              F := TFManageStyles.Create(self);
+              try
+                F.ShowModal;
+              finally
+                F.Free;
+                inherited CloseScreen(gstPreview);
+              end;
+            end;
         end;
       end else
         ShowMessage('Some pieces used by this level are missing. You will not be able to play this level.')
