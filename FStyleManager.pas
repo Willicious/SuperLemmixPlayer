@@ -106,6 +106,9 @@ begin
         ShowMessage(E.ClassName + ': ' + E.Message);
     end;
     try
+      if PieceManager.NeedCheckStyles.IndexOf(fDownloadList[fDownloadIndex]) >= 0 then
+        PieceManager.NeedCheckStyles.Delete(PieceManager.NeedCheckStyles.IndexOf(fDownloadList[fDownloadIndex]));
+
       fLocalList.Values[fDownloadList[fDownloadIndex]] := fWebList.Values[fDownloadList[fDownloadIndex]];
     except
       // Fail silently here.
