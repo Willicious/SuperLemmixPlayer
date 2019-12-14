@@ -102,7 +102,7 @@ type
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
-    procedure ShowSetupMenu(aUsernameOnly: Boolean);
+    procedure ShowSetupMenu;
   protected
   { overrides }
     procedure PrepareGameParams; override;
@@ -583,12 +583,10 @@ begin
   if not GameParams.DoneUpdateCheck then
     PerformUpdateCheck;
 
-  if (not GameParams.LoadedConfig) or (GameParams.NeedRequestUsername) then
+  if (not GameParams.LoadedConfig) then
   begin
-    LocalNeedRequestUsername := GameParams.NeedRequestUsername and GameParams.LoadedConfig;
     GameParams.LoadedConfig := true;
-    GameParams.NeedRequestUsername := false;
-    ShowSetupMenu(LocalNeedRequestUsername);
+    ShowSetupMenu;
   end;
 
   if not CanAnimate or ScreenIsClosing then
@@ -647,13 +645,12 @@ begin
   inherited CloseScreen(aNextScreen);
 end;
 
-procedure TGameMenuScreen.ShowSetupMenu(aUsernameOnly: Boolean);
+procedure TGameMenuScreen.ShowSetupMenu;
 var
   F: TFNLSetup;
 begin
   F := TFNLSetup.Create(self);
   try
-    F.NameOnly := aUsernameOnly;
     F.ShowModal;
   finally
     F.Free;

@@ -6,7 +6,7 @@ object FNLSetup: TFNLSetup
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Setup'
-  ClientHeight = 257
+  ClientHeight = 283
   ClientWidth = 473
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,23 +17,24 @@ object FNLSetup: TFNLSetup
   OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
-  OnShow = FormShow
+  DesignSize = (
+    473
+    283)
   PixelsPerInch = 96
   TextHeight = 13
   object SetupPages: TPageControl
     Left = 0
     Top = 0
     Width = 473
-    Height = 217
+    Height = 238
     ActivePage = TabSheet1
+    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitHeight = 217
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
       TabVisible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitHeight = 207
       object lblWelcome: TLabel
         Left = 16
         Top = 16
@@ -86,6 +87,13 @@ object FNLSetup: TFNLSetup
         Height = 13
         Caption = 'Your name:'
       end
+      object lblOnline: TLabel
+        Left = 24
+        Top = 193
+        Width = 72
+        Height = 13
+        Caption = 'Online settings:'
+      end
       object cbHotkey: TComboBox
         Left = 128
         Top = 136
@@ -123,25 +131,43 @@ object FNLSetup: TFNLSetup
         TabOrder = 0
         Text = 'Anonymous'
       end
+      object cbOnline: TComboBox
+        Left = 128
+        Top = 190
+        Width = 217
+        Height = 21
+        Style = csDropDownList
+        ItemIndex = 0
+        TabOrder = 3
+        Text = 'Online functions disabled'
+        Items.Strings = (
+          'Online functions disabled'
+          'Online functions enabled'
+          'Online + update check enabled')
+      end
     end
   end
   object btnNext: TButton
     Left = 384
-    Top = 224
+    Top = 245
     Width = 75
     Height = 25
+    Anchors = [akLeft, akBottom]
     Caption = 'OK'
     Default = True
     TabOrder = 2
     OnClick = btnOKClick
+    ExplicitTop = 224
   end
   object btnExit: TButton
     Left = 304
-    Top = 224
+    Top = 245
     Width = 75
     Height = 25
+    Anchors = [akLeft, akBottom]
     Caption = 'Exit'
     TabOrder = 1
     OnClick = btnExitClick
+    ExplicitTop = 224
   end
 end

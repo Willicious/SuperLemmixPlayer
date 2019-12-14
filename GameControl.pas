@@ -76,7 +76,6 @@ type
     moMinimapHighQuality,
     moIncreaseZoom,
     moLoadedConfig,
-    moNeedRequestUsername,
     moMatchBlankReplayUsername,
     moCompactSkillPanel,
     moEdgeScroll,
@@ -208,7 +207,6 @@ type
     property MinimapHighQuality: boolean Index moMinimapHighQuality read GetOptionFlag write SetOptionFlag;
     property IncreaseZoom: boolean Index moIncreaseZoom read GetOptionFlag write SetOptionFlag;
     property LoadedConfig: boolean Index moLoadedConfig read GetOptionFlag write SetOptionFlag;
-    property NeedRequestUsername: boolean Index moNeedRequestUsername read GetOptionFlag write SetOptionFlag;
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
@@ -465,8 +463,6 @@ begin
     end;
 
     UserName := SL.Values['UserName'];
-    if StrToInt64Def(SL.Values['LastVersion'], 0) < 12005001000 then
-      NeedRequestUsername := true;
 
     AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
     ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);

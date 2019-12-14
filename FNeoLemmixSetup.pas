@@ -21,16 +21,15 @@ type
     cbGraphics: TComboBox;
     lblUsername: TLabel;
     ebUserName: TEdit;
+    lblOnline: TLabel;
+    cbOnline: TComboBox;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnExitClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
   private
     procedure SetClassicHotkeys;
     procedure SetLixHotkeys;
     procedure SetMinimalHotkeys;
-  public
-    NameOnly: Boolean;
   end;
 
 implementation
@@ -45,19 +44,6 @@ uses
 procedure TFNLSetup.FormCreate(Sender: TObject);
 begin
   SetupPages.TabIndex := 0;
-end;
-
-procedure TFNLSetup.FormShow(Sender: TObject);
-begin
-  if NameOnly then
-  begin
-    cbHotkey.Visible := false;
-    lblHotkeys.Visible := false;
-    cbGraphics.Visible := false;
-    lblGraphics.Visible := false;
-    lblOptionsText1.Caption := 'This version of NeoLemmix requires a username.';
-    lblOptionsText2.Caption := 'This name will be saved in your replay files. You may enter "Anonymous".';
-  end;
 end;
 
 procedure TFNLSetup.SetClassicHotkeys;
@@ -162,29 +148,29 @@ begin
   if ebUserName.Text <> '' then
     GameParams.UserName := ebUserName.Text;
 
-  if not NameOnly then
-  begin
-    case cbHotkey.ItemIndex of
-      0: SetLixHotkeys;
-      1: SetClassicHotkeys;
-      2: SetMinimalHotkeys;
-    end;
-
-    case cbGraphics.ItemIndex of
-      1, 3: begin
-           GameParams.MinimapHighQuality := true;
-           GameParams.LinearResampleMenu := true;
-           GameParams.LinearResampleGame := false;
-         end;
-      0, 2: begin
-           GameParams.MinimapHighQuality := false;
-           GameParams.LinearResampleMenu := false;
-           GameParams.LinearResampleGame := false;
-         end;
-    end;
-
-    GameParams.HighResolution := cbGraphics.ItemIndex >= 2;
+  case cbHotkey.ItemIndex of
+    0: SetLixHotkeys;
+    1: SetClassicHotkeys;
+    2: SetMinimalHotkeys;
   end;
+
+  case cbGraphics.ItemIndex of
+    1, 3: begin
+         GameParams.MinimapHighQuality := true;
+         GameParams.LinearResampleMenu := true;
+         GameParams.LinearResampleGame := false;
+       end;
+    0, 2: begin
+         GameParams.MinimapHighQuality := false;
+         GameParams.LinearResampleMenu := false;
+         GameParams.LinearResampleGame := false;
+       end;
+  end;
+
+  GameParams.HighResolution := cbGraphics.ItemIndex >= 2;
+
+  GameParams.EnableOnline := cbOnline.ItemIndex >= 1;
+  GameParams.CheckUpdates := cbOnline.ItemIndex >= 2;
 
   Close;
 end;
