@@ -209,7 +209,7 @@ begin
           for n := 0 to 3 do
             NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
 
-          if NewestID > CurrentVersionID then
+          if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
           begin
             ShowMessage('Update available: NeoLemmix V' + OrigVersionStr + '. Please go to www.neolemmix.com to download.');
           end;
