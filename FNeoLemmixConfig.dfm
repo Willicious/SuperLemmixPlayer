@@ -36,7 +36,7 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox4: TGroupBox
         Left = 7
-        Top = 271
+        Top = 263
         Width = 249
         Height = 67
         Caption = 'Replay Options'
@@ -62,7 +62,7 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox1: TGroupBox
         Left = 7
-        Top = 208
+        Top = 200
         Width = 249
         Height = 57
         Caption = 'Internet Options'

@@ -40,7 +40,9 @@ type
 
 implementation
 
-uses FBaseDosForm;
+uses
+  FBaseDosForm,
+  FStyleManager;
 
 { TGamePreviewScreen }
 
@@ -49,8 +51,18 @@ begin
   if NextScreen = gstPlay then
   begin
     if GameParams.Level.HasAnyFallbacks then
-      ShowMessage('Some pieces used by this level are missing. You will not be able to play this level.')
-    else begin
+    begin
+      if GameParams.EnableOnline then
+      begin
+        if MessageDlg('Some pieces used by this level are missing. Do you want to attempt to download missing styles?',
+                      mtCustom, [mbYes, mbNo], 0) = mrYes then
+        begin
+          DownloadMissingStyles;
+          inherited CloseScreen(gstPreview);
+        end;
+      end else
+        ShowMessage('Some pieces used by this level are missing. You will not be able to play this level.')
+    end else begin
       GameParams.NextScreen2 := gstPlay;
       inherited CloseScreen(gstText);
     end;

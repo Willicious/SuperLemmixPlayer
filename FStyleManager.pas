@@ -50,6 +50,7 @@ type
     procedure BeginNextDownload;
     procedure EndDownloads;
     procedure ConcludeDownload;
+    procedure CheckNextDownload;
   public
     { Public declarations }
   end;
@@ -78,6 +79,10 @@ begin
     for i := 0 to PieceManager.NeedCheckStyles.Count-1 do
       F.fDownloadList.Add(PieceManager.NeedCheckStyles[i]);
     F.BeginDownloads;
+    repeat
+      Sleep(75);
+      F.CheckNextDownload;
+    until F.fDownloadIndex < 0;
     F.ClearPieceManager;
     F.SaveLocalList;
   finally
@@ -191,6 +196,16 @@ begin
       fTimeForNextDownload := true;
     end
   );
+end;
+
+procedure TFManageStyles.CheckNextDownload;
+begin
+  if fTimeForNextDownload then
+  begin
+    fTimeForNextDownload := false;
+    ConcludeDownload;
+    BeginNextDownload;
+  end;
 end;
 
 procedure TFManageStyles.btnExitClick(Sender: TObject);
@@ -321,7 +336,7 @@ var
   ThisStyle: String;
 
   StyleList: TStringList;
-  n: Integer;
+  n, i: Integer;
 
   NewItem: TListItem;
   NewString: String;
@@ -367,6 +382,42 @@ begin
         StyleList.Insert(n, ThisStyle)
       else
         StyleList.Move(StyleList.IndexOf(ThisStyle), n);
+    end;
+
+    n := PieceManager.NeedCheckStyles.Count;
+    i := n;
+    while i < StyleList.Count do
+    begin
+      if (fLocalList.IndexOfName(StyleList[i]) >= 0) and (fLocalList.Values[StyleList[i]] <> '-1') and
+         (StrToInt64Def(fWebList.Values[StyleList[i]], 0) > StrToInt64Def(fLocalList.Values[StyleList[i]], 0)) then
+      begin
+        StyleList.Move(i, n);
+        Inc(n);
+      end;
+
+      Inc(i);
+    end;
+
+    i := n;
+    while i < StyleList.Count do
+    begin
+      if (fLocalList.IndexOfName(StyleList[i]) < 0) then
+      begin
+        StyleList.Move(i, n);
+        Inc(n);
+      end;
+      Inc(i);
+    end;
+
+    i := n;
+    while i < StyleList.Count do
+    begin
+      if (fLocalList.IndexOfName(StyleList[i]) >= 0) and (fLocalList.Values[StyleList[i]] <> '-1') then
+      begin
+        StyleList.Move(i, n);
+        Inc(n);
+      end;
+      Inc(i);
     end;
 
     lvStyles.Clear;
@@ -424,12 +475,7 @@ end;
 
 procedure TFManageStyles.tmContinueDownloadTimer(Sender: TObject);
 begin
-  if fTimeForNextDownload then
-  begin
-    fTimeForNextDownload := false;
-    ConcludeDownload;
-    BeginNextDownload;
-  end;
+  CheckNextDownload;
 end;
 
 end.
