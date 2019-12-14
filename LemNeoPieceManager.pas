@@ -45,6 +45,7 @@ type
       fTerrains: TMetaTerrains;
       fObjects: TGadgetMetaInfoList;
 
+      fNeedCheckStyles: TStringList;
       fLoadedPropertiesStyles: TStringList;
       fAliases: TList<TStyleAlias>;
       fUpscaling: TList<TUpscaleInfo>;
@@ -89,6 +90,8 @@ type
 
       property Terrains[Identifier: String]: TMetaTerrain read GetMetaTerrain;
       property Objects[Identifier: String]: TGadgetMetaInfo read GetMetaObject;
+
+      property NeedCheckStyles: TStringList read fNeedCheckStyles;
   end;
 
   function SplitIdentifier(Identifier: String): TLabelRecord;
@@ -145,6 +148,10 @@ begin
   fAliases := TList<TStyleAlias>.Create;
   fUpscaling := TList<TUpscaleInfo>.Create;
 
+  fNeedCheckStyles := TStringList.Create;
+  fNeedCheckStyles.Sorted := true;
+  fNeedCheckStyles.Duplicates := dupIgnore;
+
   LoadProperties('default');
 end;
 
@@ -155,6 +162,7 @@ begin
   fAliases.Free;
   fUpscaling.Free;
   fLoadedPropertiesStyles.Free;
+  fNeedCheckStyles.Free;
   inherited;
 end;
 

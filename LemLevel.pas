@@ -360,7 +360,10 @@ begin
     begin
       Ident := SplitIdentifier(Background);
       if not FileExists(AppPath + SFStyles + Ident.GS + '\backgrounds\' + Ident.Piece + '.png') then
+      begin
+        PieceManager.NeedCheckStyles.Add(Ident.GS);
         Background := 'default:fallback';
+      end;
     end;
   end;
 end;
@@ -514,6 +517,7 @@ begin
   MO := PieceManager.Objects[O.Identifier];
   if MO = nil then
   begin
+    PieceManager.NeedCheckStyles.Add(O.GS);
     O.GS := 'default';
     O.Piece := 'fallback';
   end;

@@ -137,6 +137,7 @@ begin
   if (PieceManager.Terrains[Identifier] = nil) then
     if (CompareText(GS, COMPOSITE_PIECE_STYLE) <> 0) then
     begin
+      PieceManager.NeedCheckStyles.Add(GS);
       GS := 'default';
       Piece := 'fallback';
     end;
