@@ -578,7 +578,6 @@ procedure TGameMenuScreen.Application_Idle(Sender: TObject; var Done: Boolean);
 -------------------------------------------------------------------------------}
 var
   CurrTime: Cardinal;
-  LocalNeedRequestUsername: Boolean;
 begin
   if not GameParams.DoneUpdateCheck then
     PerformUpdateCheck;

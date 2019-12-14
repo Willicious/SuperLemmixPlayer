@@ -41,7 +41,7 @@ type
       procedure DeriveVariation(Flip, Invert, Rotate: Boolean);
 
       function GetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty): Integer;
-      procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty; const aValue: Integer);
+      //procedure SetVariableProperty(Flip, Invert, Rotate: Boolean; Index: TTerrainMetaProperty; const aValue: Integer);
     public
       constructor Create;
       destructor Destroy; override;
@@ -181,7 +181,7 @@ begin
   fGeneratedVariableInfo[0] := true;
 end;
 
-procedure TMetaTerrain.SetVariableProperty(Flip, Invert, Rotate: Boolean;
+{procedure TMetaTerrain.SetVariableProperty(Flip, Invert, Rotate: Boolean;
   Index: TTerrainMetaProperty; const aValue: Integer);
 begin
   EnsureVariationMade(Flip, Invert, Rotate);
@@ -193,6 +193,7 @@ begin
     end;
   end;
 end;
+}
 
 function TMetaTerrain.GetImageIndex(Flip, Invert, Rotate: Boolean): Integer;
 begin

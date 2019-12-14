@@ -2214,7 +2214,6 @@ end;
 
 constructor TRenderer.Create;
 var
-  i: THelperIcon;
   S: TResourceStream;
 begin
   inherited Create;
@@ -2386,7 +2385,7 @@ var
   procedure GeneratePhysicsMapFromInfoMap;
   var
     x, y: Integer;
-    thisSolidity, thisSteel, thisOneWay, thisUnused: Byte;
+    thisSolidity, thisSteel, thisOneWay{, thisUnused}: Byte;
     C: TColor32;
     SolidityMod: Single;
     Cutoff: Single;
@@ -2397,7 +2396,7 @@ var
         thisSolidity := (TempWorld[x, y] and $FF000000) shr 24;
         thisSteel    := (TempWorld[x, y] and $00FF0000) shr 16;
         thisOneWay   := (TempWorld[x, y] and $0000FF00) shr 8;
-        thisUnused   := (TempWorld[x, y] and $000000FF) shr 0;
+        //thisUnused   := (TempWorld[x, y] and $000000FF) shr 0;
 
         if thisSolidity >= ALPHA_CUTOFF then
         begin

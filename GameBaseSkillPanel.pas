@@ -1096,7 +1096,7 @@ end;
 
 procedure TBaseSkillPanel.DrawNewStr;
 var
-  Old, New: char;
+  New: char;
   i, CharID: integer;
   SpecialCombine: Boolean;
 
@@ -1109,7 +1109,6 @@ begin
 
   for i := 1 to DrawStringLength do
   begin
-    Old := fLastDrawnStr[i];
     New := fNewDrawStr[i];
 
     case New of

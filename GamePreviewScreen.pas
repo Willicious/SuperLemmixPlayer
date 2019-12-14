@@ -50,9 +50,6 @@ uses
 
 procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
 var
-  i: Integer;
-  Styles: String;
-
   F: TFManageStyles;
 begin
   if NextScreen = gstPlay then
