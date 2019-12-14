@@ -3,7 +3,7 @@ unit FNeoLemmixConfig;
 interface
 
 uses
-  GameControl, GameSound, FEditHotkeys,
+  GameControl, GameSound, FEditHotkeys, FStyleManager,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls;
 
@@ -51,6 +51,7 @@ type
     lblUserName: TLabel;
     ebUserName: TEdit;
     cbHighResolution: TCheckBox;
+    btnStyles: TButton;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -58,6 +59,7 @@ type
     procedure cbEnableOnlineClick(Sender: TObject);
     procedure SliderChange(Sender: TObject);
     procedure btnReplayCheckClick(Sender: TObject);
+    procedure btnStylesClick(Sender: TObject);
   private
     procedure SetFromParams;
     procedure SaveToParams;
@@ -224,6 +226,18 @@ procedure TFormNXConfig.btnReplayCheckClick(Sender: TObject);
 begin
   // We abuse mrRetry here to signal the menu screen that we want to mass replay check
   ModalResult := mrRetry;
+end;
+
+procedure TFormNXConfig.btnStylesClick(Sender: TObject);
+var
+  F: TFManageStyles;
+begin
+  F := TFManageStyles.Create(self);
+  try
+    F.ShowModal;
+  finally
+    F.Free;
+  end;
 end;
 
 procedure TFormNXConfig.OptionChanged(Sender: TObject);

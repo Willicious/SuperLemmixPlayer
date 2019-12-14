@@ -36,7 +36,7 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox4: TGroupBox
         Left = 7
-        Top = 223
+        Top = 271
         Width = 249
         Height = 67
         Caption = 'Replay Options'
@@ -62,7 +62,7 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox1: TGroupBox
         Left = 7
-        Top = 160
+        Top = 208
         Width = 249
         Height = 57
         Caption = 'Internet Options'
@@ -110,6 +110,15 @@ object FormNXConfig: TFormNXConfig
         Width = 185
         Height = 21
         TabOrder = 0
+      end
+      object btnStyles: TButton
+        Left = 7
+        Top = 144
+        Width = 249
+        Height = 42
+        Caption = 'Style Manager'
+        TabOrder = 5
+        OnClick = btnStylesClick
       end
     end
     object TabSheet5: TTabSheet
