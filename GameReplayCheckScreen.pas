@@ -269,6 +269,12 @@ begin
         Continue;
       end;
 
+      if GameParams.Level.HasAnyFallbacks then
+      begin
+        fReplays[i].ReplayResult := CR_ERROR;
+        Continue;
+      end;
+
       fReplays[i].ReplayLevelText := GameParams.CurrentLevel.Group.Name + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1);
       fReplays[i].ReplayLevelTitle := Level.Info.Title;
 

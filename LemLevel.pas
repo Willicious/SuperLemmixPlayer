@@ -116,6 +116,8 @@ type
     procedure SaveLemmingSections(aSection: TParserSection);
     procedure SaveTalismanSections(aSection: TParserSection);
     procedure SaveTextSections(aSection: TParserSection);
+
+    function GetHasAnyFallbacks: Boolean;
   public
     constructor Create;
     destructor Destroy; override;
@@ -130,6 +132,8 @@ type
 
     procedure Sanitize;
     procedure PrepareForUse;
+
+    property HasAnyFallbacks: Boolean read GetHasAnyFallbacks;
   published
     property Info: TLevelInfo read fLevelInfo;
     property InteractiveObjects: TGadgetModelList read fInteractiveObjects;
@@ -217,6 +221,26 @@ begin
   fPreText.Free;
   fPostText.Free;
   inherited;
+end;
+
+function TLevel.GetHasAnyFallbacks: Boolean;
+var
+  i: Integer;
+begin
+  Result := true;
+
+  if Info.Background = 'default:fallback' then
+    Exit;
+
+  for i := 0 to InteractiveObjects.Count-1 do
+    if InteractiveObjects[i].Identifier = 'default:fallback' then
+      Exit;
+
+  for i := 0 to Terrains.Count-1 do
+    if Terrains[i].Identifier = 'default:fallback' then
+      Exit;
+
+  Result := false;
 end;
 
 procedure TLevel.Clear;

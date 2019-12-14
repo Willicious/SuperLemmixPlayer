@@ -48,8 +48,12 @@ procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
 begin
   if NextScreen = gstPlay then
   begin
-    GameParams.NextScreen2 := gstPlay;
-    inherited CloseScreen(gstText);
+    if GameParams.Level.HasAnyFallbacks then
+      ShowMessage('Some pieces used by this level are missing. You will not be able to play this level.')
+    else begin
+      GameParams.NextScreen2 := gstPlay;
+      inherited CloseScreen(gstText);
+    end;
   end else
     inherited;
 end;
@@ -155,7 +159,6 @@ begin
   finally
     ScreenImg.EndUpdate;
   end;
-
 end;
 
 procedure TGamePreviewScreen.SaveLevelImage;
