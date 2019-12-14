@@ -3,9 +3,9 @@ unit FStyleManager;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  Vcl.StdCtrls, Vcl.ValEdit, Vcl.ComCtrls;
+  LemTypes,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics,
+  Controls, Forms, Dialogs, StdCtrls, ValEdit, ComCtrls;
 
 type
   TFManageStyles = class(TForm)
@@ -25,6 +25,8 @@ type
 implementation
 
 uses
+  LemNeoOnline,
+  LemVersion,
   LemNeoPieceManager;
 
 {$R *.dfm}
@@ -49,8 +51,18 @@ begin
 end;
 
 procedure TFManageStyles.FormShow(Sender: TObject);
+var
+  SL: TStringList;
 begin
   ResizeListColumns;
+
+  SL := TStringList.Create;
+  try
+    TInternet.DownloadToStringList(STYLES_BASE_DIRECTORY + STYLE_VERSION + STYLES_PHP_FILE, SL);
+    SL.SaveToFile(AppPath + 'blah.txt');
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure TFManageStyles.ResizeListColumns;

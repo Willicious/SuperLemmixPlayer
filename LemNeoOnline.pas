@@ -14,6 +14,7 @@ const
   BASE_URL = 'https://www.neolemmix.com/';
   VERSION_FILE = BASE_URL + 'installer/version.php';
   STYLES_BASE_DIRECTORY = BASE_URL + 'styles/';
+  STYLES_PHP_FILE = 'styles.php';
 
 type
   TInternet = class
