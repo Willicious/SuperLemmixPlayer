@@ -1123,14 +1123,21 @@ begin
 
     if (CharID >= 0) then
     begin
-      if (lkNeutral in LemmingKinds) and (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
+      if (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
       begin
-        SpecialCombine := true;
+        if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount then
+        begin
+          SpecialCombine := true;
+          fCombineHueShift := -1 / 3;
+        end else if (lkNeutral in LemmingKinds) then
+        begin
+          SpecialCombine := true;
 
-        if lkNormal in LemmingKinds then
-          fCombineHueShift := -1 / 6
-        else
-          fCombineHueShift := 1 / 6;
+          if lkNormal in LemmingKinds then
+            fCombineHueShift := -1 / 6
+          else
+            fCombineHueShift := 1 / 6;
+        end;
       end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := true;
