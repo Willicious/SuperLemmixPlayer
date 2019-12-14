@@ -4,7 +4,7 @@ interface
 
 uses
   LemNeoOnline,
-  Zip,
+  Zip, IOUtils,
   LemTypes, DateUtils,
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, StdCtrls, ValEdit, ComCtrls, Vcl.ExtCtrls;
@@ -31,6 +31,7 @@ type
     fWebList: TStringList;
 
     fDownloadThread: TDownloadThread;
+    fDownloadStream: TMemoryStream;
     fDownloadList: TStringList;
     fDownloadIndex: Integer;
 
@@ -44,6 +45,7 @@ type
     procedure BeginDownloads;
     procedure BeginNextDownload;
     procedure EndDownloads;
+    procedure ConcludeDownload;
   public
     { Public declarations }
   end;
@@ -83,9 +85,35 @@ begin
   fLocalList.Sorted := true;
 end;
 
-procedure TFManageStyles.BeginNextDownload;
+procedure TFManageStyles.ConcludeDownload;
 var
-  S: TMemoryStream;
+  Zip: TZipFile;
+begin
+  Zip := TZipFile.Create;
+  try
+    try
+      fDownloadStream.Position := 0;
+      Zip.Open(fDownloadStream, zmRead);
+      if DirectoryExists(AppPath + SFStyles + fDownloadList[fDownloadIndex]) then
+        TDirectory.Delete(AppPath + SFStyles + fDownloadList[fDownloadIndex], true);
+      Zip.ExtractAll(AppPath);
+      Zip.Close;
+    except
+      on E: Exception do
+        ShowMessage(E.ClassName + ': ' + E.Message);
+    end;
+    try
+      fLocalList.Values[fDownloadList[fDownloadIndex]] := fWebList.Values[fDownloadList[fDownloadIndex]];
+    except
+      // Fail silently here.
+    end;
+  finally
+    Zip.Free;
+    Inc(fDownloadIndex);
+  end;
+end;
+
+procedure TFManageStyles.BeginNextDownload;
 begin
   pbDownload.Position := fDownloadIndex * pbDownload.Max div fDownloadList.Count;
 
@@ -95,42 +123,15 @@ begin
     Exit;
   end;
 
-  S := TMemoryStream.Create;
-  try
-    fDownloadThread := DownloadInThread(STYLES_BASE_DIRECTORY + STYLE_VERSION + fDownloadList[fDownloadIndex] + '.zip', S,
+  fDownloadStream.Clear;
+  fDownloadThread := DownloadInThread(STYLES_BASE_DIRECTORY + STYLE_VERSION + fDownloadList[fDownloadIndex] + '.zip',
+    fDownloadStream,
     procedure
-    var
-      Zip: TZipFile;
     begin
-      Zip := TZipFile.Create;
-      try
-        try
-          S.Position := 0;
-          Zip.Open(S, zmRead);
-          Zip.ExtractAll(AppPath);
-          Zip.Close;
-        except
-          on E: Exception do
-            ShowMessage(E.ClassName + ': ' + E.Message);
-        end;
-        try
-          fLocalList.Values[fDownloadList[fDownloadIndex]] := fWebList.Values[fDownloadList[fDownloadIndex]];
-        except
-          // Fail silently here.
-        end;
-      finally
-        Zip.Free;
-      end;
-
       fDownloadThread := nil;
-
-      Inc(fDownloadIndex);
       fTimeForNextDownload := true;
     end
-    );
-  finally
-    S.Free;
-  end;
+  );
 end;
 
 procedure TFManageStyles.btnExitClick(Sender: TObject);
@@ -185,6 +186,8 @@ begin
 
   fDownloadIndex := -1;
 
+  fDownloadStream := TMemoryStream.Create;
+
   if not GameParams.EnableOnline then
   begin
     btnGetSelected.Enabled := false;
@@ -197,6 +200,7 @@ begin
   fLocalList.Free;
   fWebList.Free;
   fDownloadList.Free;
+  fDownloadStream.Free;
 end;
 
 procedure TFManageStyles.FormResize(Sender: TObject);
@@ -319,6 +323,7 @@ begin
   if fTimeForNextDownload then
   begin
     fTimeForNextDownload := false;
+    ConcludeDownload;
     BeginNextDownload;
   end;
 end;
