@@ -67,6 +67,9 @@ uses
 
   procedure MakeDirectoryZip(aDirectory: String; aZipFilename: String);
   var
+    SL: TStringList;
+    n: Integer;
+
     Base: String;
     Zip: TZipFile;
 
@@ -80,7 +83,7 @@ uses
           if (SearchRec.Name = '..') or (SearchRec.Name = '.') then Continue;
 
           if (SearchRec.Attr and faDirectory) = 0 then
-            Zip.Add(Base + aRelPath + SearchRec.Name, aDirectory + '\' + aRelPath + SearchRec.Name)
+            Zip.Add(Base + aRelPath + SearchRec.Name, SL[n] + '\' + aRelPath + SearchRec.Name)
           else
             AddRecursive(aRelPath + SearchRec.Name + '\');
         until FindNext(SearchRec) <> 0;
@@ -91,20 +94,31 @@ uses
     ForceDirectories(AppPath + 'style_zips\');
 
     Zip := TZipFile.Create;
+    SL := TStringList.Create;
     try
       Zip.Open(AppPath + 'style_zips\' + aZipFilename, zmWrite);
-      Base := AppPath + aDirectory + '\';
-      AddRecursive('');
+
+      SL.Delimiter := '|';
+      SL.StrictDelimiter := true;
+      SL.DelimitedText := aDirectory;
+
+      for n := 0 to SL.Count-1 do
+      begin
+        Base := AppPath + SL[n] + '\';
+        AddRecursive('');
+      end;
+
       Zip.Close;
     finally
       Zip.Free;
+      SL.Free;
     end;
   end;
 
 begin
   try
     ZipStyles;
-    MakeDirectoryZip('styles', 'nx_all_styles.zip');
+    MakeDirectoryZip('styles|sound', 'nx_all_styles.zip');
     MakeDirectoryZip('sound', 'nx_sounds.zip');
   except
     on E: Exception do
