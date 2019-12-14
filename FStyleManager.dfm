@@ -62,6 +62,7 @@ object FManageStyles: TFManageStyles
     RowSelect = True
     TabOrder = 1
     ViewStyle = vsReport
+    OnCustomDrawSubItem = lvStylesCustomDrawSubItem
   end
   object btnGetSelected: TButton
     Left = 8

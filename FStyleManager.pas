@@ -25,6 +25,9 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnGetSelectedClick(Sender: TObject);
     procedure tmContinueDownloadTimer(Sender: TObject);
+    procedure lvStylesCustomDrawSubItem(Sender: TCustomListView;
+      Item: TListItem; SubItem: Integer; State: TCustomDrawState;
+      var DefaultDraw: Boolean);
   private
     fClearedPieceManager: Boolean;
     fLocalList: TStringList;
@@ -214,6 +217,31 @@ begin
   MakeStyleList;
 end;
 
+procedure TFManageStyles.lvStylesCustomDrawSubItem(Sender: TCustomListView;
+  Item: TListItem; SubItem: Integer; State: TCustomDrawState;
+  var DefaultDraw: Boolean);
+begin
+  // If it's on the "check styles list", display in red
+  // If newer version is available online, display in yellow
+  // If up to date, display in green
+  // If non-online copy, display in purple
+  // If not installed, but not on check list, display normally
+
+  if SubItem > 1 then
+    Sender.Canvas.Brush.Color := $FFFFFF
+  else if PieceManager.NeedCheckStyles.IndexOf(Item.Caption) >= 0 then
+    Sender.Canvas.Brush.Color := $0000C0
+  else if fLocalList.Values[Item.Caption] = '-1' then
+    Sender.Canvas.Brush.Color := $C000C0
+  else if fLocalList.IndexOfName(Item.Caption) >= 0 then
+  begin
+    if StrToInt64Def(fWebList.Values[Item.Caption], 0) > StrToInt64Def(fLocalList.Values[Item.Caption], 0) then
+      Sender.Canvas.Brush.Color := $00C0C0
+    else
+      Sender.Canvas.Brush.Color := $00C000;
+  end;
+end;
+
 procedure TFManageStyles.MakeStyleList;
 var
   SearchRec: TSearchRec;
@@ -277,10 +305,13 @@ begin
 
       NewString := '';
       if fLocalList.IndexOfName(ThisStyle) >= 0 then
+      begin
         if fLocalList.Values[ThisStyle] = '-1' then
           NewString := 'Manual'
         else
           DateTimeToString(NewString, 'yyyy-mm-dd hh:nn', UnixToDateTime(StrToInt64Def(fLocalList.Values[ThisStyle], 0)));
+      end else if PieceManager.NeedCheckStyles.IndexOf(ThisStyle) >= 0 then
+        NewString := 'Missing';
       NewItem.SubItems.Add(NewString);
 
       NewString := '';
