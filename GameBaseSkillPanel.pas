@@ -1137,7 +1137,8 @@ begin
             fCombineHueShift := -1 / 6
           else
             fCombineHueShift := 1 / 6;
-        end;
+        end else
+          SpecialCombine := false;
       end else if Level.Info.HasTimeLimit and (i > TimeLimitStartIndex) and (i <= TimeLimitStartIndex + 5) then
       begin
         SpecialCombine := true;
