@@ -30,6 +30,7 @@ type
     procedure NextRank;
     procedure PreviousRank;
   protected
+    procedure DoAfterConfig; override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -229,6 +230,12 @@ end;
 destructor TGamePreviewScreen.Destroy;
 begin
   inherited;
+end;
+
+procedure TGamePreviewScreen.DoAfterConfig;
+begin
+  inherited;
+  CloseScreen(gstPreview);
 end;
 
 procedure TGamePreviewScreen.VGASpecPrep;

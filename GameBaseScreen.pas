@@ -60,6 +60,8 @@ type
     procedure ApplyConfigChanges(OldFullScreen, OldHighResolution: Boolean);
     procedure DoMassReplayCheck;
     function LoadReplay: Boolean;
+
+    procedure DoAfterConfig; virtual;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -553,6 +555,11 @@ begin
   ClientHeight := GameParams.MainForm.ClientHeight;
 end;
 
+procedure TGameBaseScreen.DoAfterConfig;
+begin
+  // Intentionally blank.
+end;
+
 procedure TGameBaseScreen.DoLevelSelect(isPlaying: Boolean = false);
 var
   F: TFLevelSelect;
@@ -691,8 +698,10 @@ begin
   ApplyConfigChanges(OldFullScreen, OldHighResolution);
 
   // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
-  if ConfigResult = mrRetry then DoMassReplayCheck;
-
+  if ConfigResult = mrRetry then
+    DoMassReplayCheck
+  else
+    DoAfterConfig;
 end;
 
 procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution: Boolean);
