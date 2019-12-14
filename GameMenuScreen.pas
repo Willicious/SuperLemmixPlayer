@@ -11,7 +11,7 @@ interface
 uses
   Classes, Controls,
   GameBaseScreen, GameControl,
-  LemNeoOnline,
+  LemNeoOnline, StrUtils,
   LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
   GR32, GR32_Layers;
 
@@ -180,8 +180,47 @@ begin
 
   fUpdateCheckThread := DownloadInThread(VERSION_FILE, fVersionInfo,
     procedure
+    var
+      NewVersionStr, OrigVersionStr: String;
+      SL: TStringList;
+      n: Integer;
+      NewestID: Int64;
     begin
-      ShowMessage(fVersionInfo[0]);
+      NewVersionStr := fVersionInfo.Values['game'];
+      if LeftStr(NewVersionStr, 1) = 'V' then
+        NewVersionStr := RightStr(NewVersionStr, Length(NewVersionStr)-1);
+
+      OrigVersionStr := NewVersionStr;
+      NewVersionStr := StringReplace(NewVersionStr, '-', '.', [rfReplaceAll]);
+
+      SL := TStringList.Create;
+      try
+        try
+          SL.Delimiter := '.';
+          SL.StrictDelimiter := true;
+          SL.DelimitedText := NewVersionStr;
+
+          if SL.Count < 4 then
+            SL.Add('A');
+
+          SL[3] := Char(Ord(SL[3][1]) - 65);
+
+          NewestID := 0;
+          for n := 0 to 3 do
+            NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
+
+          if NewestID > CurrentVersionID then
+          begin
+            ShowMessage('Update available: NeoLemmix V' + OrigVersionStr + '. Please go to www.neolemmix.com to download.');
+          end;
+
+        except
+          // Fail silently.
+        end;
+      finally
+        SL.Free;
+      end;
+
       fUpdateCheckThread.Free;
     end
   );

@@ -11,8 +11,8 @@ uses
   Classes, SysUtils;
 
 const
-  BASE_URL = 'http://content.neolemmix.com/';
-  VERSION_FILE = BASE_URL + 'version.php';
+  BASE_URL = 'https://www.neolemmix.com/';
+  VERSION_FILE = BASE_URL + 'installer/version.php';
   STYLES_DIRECTORY = BASE_URL + 'styles/';
 
 type
