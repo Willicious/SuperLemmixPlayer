@@ -136,6 +136,11 @@ procedure TNeoPieceManager.Clear;
 begin
   fTerrains.Clear;
   fObjects.Clear;
+  fLoadedPropertiesStyles.Clear;
+  fAliases.Clear;
+  fUpscaling.Clear;
+  fNeedCheckStyles.Clear;
+  LoadProperties('default');
 end;
 
 constructor TNeoPieceManager.Create;
