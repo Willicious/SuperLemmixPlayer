@@ -62,6 +62,7 @@ type
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
     fClearPhysics: Boolean;
+    fProjectionType: Integer;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
     fNeedResetMouseTrap : Boolean;
@@ -186,6 +187,7 @@ type
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
+    property ProjectionType: Integer read fProjectionType write fProjectionType;
     function DoSuspendCursor: Boolean;
 
     property GameSpeed: TGameSpeed read GetGameSpeed write SetGameSpeed;
@@ -831,6 +833,7 @@ begin
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill)
   or (fRenderInterface.UserHelper <> fLastHelperIcon)
   or (fClearPhysics)
+  or (fProjectionType <> 0)
   or ((GameSpeed = gspPause) and not fLastDrawPaused) then
     fNeedRedraw := rdRedraw;
 
@@ -1226,6 +1229,8 @@ const
                          lka_ReleaseMouse,
                          lka_Nuke,          // nuke also cancels, but requires double-press to do so so handled elsewhere
                          lka_ClearPhysics,
+                         lka_Projection,
+                         lka_SkillProjection,
                          lka_ZoomIn,
                          lka_ZoomOut,
                          lka_Scroll];
@@ -1352,6 +1357,14 @@ begin
                           ClearPhysics := not ClearPhysics
                         else
                           ClearPhysics := true;
+      lka_Projection: if ProjectionType <> 1 then
+                        ProjectionType := 1
+                      else if func.Modifier = 0 then
+                        ProjectionType := 0;
+      lka_SkillProjection: if ProjectionType <> 2 then
+                             ProjectionType := 2
+                           else if func.Modifier = 0 then
+                             ProjectionType := 0;
       lka_EditReplay: ExecuteReplayEdit;
       lka_ReplayInsert: Game.ReplayInsert := not Game.ReplayInsert;
       lka_ZoomIn: ChangeZoom(fInternalZoom + 1);
@@ -1442,6 +1455,10 @@ begin
       lka_ReleaseRateUp      : SetSelectedSkill(spbFaster, False);
       lka_ClearPhysics       : if func.Modifier <> 0 then
                                  ClearPhysics := false;
+      lka_Projection         : if (func.Modifier <> 0) and (ProjectionType = 1) then
+                                 ProjectionType := 0;
+      lka_SkillProjection    : if (func.Modifier <> 0) and (ProjectionType = 2) then
+                                 ProjectionType := 0;
     end;
   end;
 
