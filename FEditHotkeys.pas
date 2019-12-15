@@ -11,18 +11,21 @@ type
   TFLemmixHotkeys = class(TForm)
     lvHotkeys: TListView;
     cbFunctions: TComboBox;
-    Button1: TButton;
+    btnClose: TButton;
     cbSkill: TComboBox;
     lblSkill: TLabel;
     cbShowUnassigned: TCheckBox;
     lblDuration: TLabel;
     ebSkipDuration: TEdit;
-    Button2: TButton;
+    btnFindKey: TButton;
     Label3: TLabel;
     cbHardcodedNames: TCheckBox;
     cbHoldKey: TCheckBox;
     cbSpecialSkip: TComboBox;
     lblSkip: TLabel;
+    btnFunctionalLayout: TButton;
+    btnTraditionalLayout: TButton;
+    btnMinimalLayout: TButton;
     procedure FormCreate(Sender: TObject);
     procedure cbShowUnassignedClick(Sender: TObject);
     procedure lvHotkeysClick(Sender: TObject);
@@ -31,13 +34,16 @@ type
     procedure ebSkipDurationChange(Sender: TObject);
     procedure lvHotkeysSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
-    procedure Button2KeyDown(Sender: TObject; var Key: Word;
+    procedure btnFindKeyKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure Button2Click(Sender: TObject);
+    procedure btnFindKeyClick(Sender: TObject);
     procedure cbHardcodedNamesClick(Sender: TObject);
     procedure cbHoldKeyClick(Sender: TObject);
     procedure SetVisibleModifier(aKeyType: TLemmixHotkeyAction);
     procedure cbSpecialSkipChange(Sender: TObject);
+    procedure btnFunctionalLayoutClick(Sender: TObject);
+    procedure btnTraditionalLayoutClick(Sender: TObject);
+    procedure btnMinimalLayoutClick(Sender: TObject);
   private
     fShownFindInfo: Boolean;
     fKeyNames: TKeyNameArray;
@@ -310,7 +316,7 @@ begin
   lvHotkeysClick(Sender);
 end;
 
-procedure TFLemmixHotkeys.Button2KeyDown(Sender: TObject; var Key: Word;
+procedure TFLemmixHotkeys.btnFindKeyKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 var
   i: Integer;
@@ -337,7 +343,28 @@ begin
     ShowMessage('Could not find the key.');
 end;
 
-procedure TFLemmixHotkeys.Button2Click(Sender: TObject);
+procedure TFLemmixHotkeys.btnFunctionalLayoutClick(Sender: TObject);
+begin
+  fHotkeys.ClearAllKeys;
+  fHotkeys.SetDefaultsFunctional;
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.btnMinimalLayoutClick(Sender: TObject);
+begin
+  fHotkeys.ClearAllKeys;
+  fHotkeys.SetDefaultsMinimal;
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.btnTraditionalLayoutClick(Sender: TObject);
+begin
+  fHotkeys.ClearAllKeys;
+  fHotkeys.SetDefaultsTraditional;
+  RefreshList;
+end;
+
+procedure TFLemmixHotkeys.btnFindKeyClick(Sender: TObject);
 begin
   if not fShownFindInfo then
   begin

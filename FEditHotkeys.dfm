@@ -127,7 +127,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Zoom Out'
       'Hold-To-Scroll')
   end
-  object Button1: TButton
+  object btnClose: TButton
     Left = 312
     Top = 408
     Width = 89
@@ -185,15 +185,15 @@ object FLemmixHotkeys: TFLemmixHotkeys
     Visible = False
     OnChange = ebSkipDurationChange
   end
-  object Button2: TButton
+  object btnFindKey: TButton
     Left = 296
     Top = 264
     Width = 121
     Height = 25
     Caption = 'Find Key'
     TabOrder = 6
-    OnClick = Button2Click
-    OnKeyDown = Button2KeyDown
+    OnClick = btnFindKeyClick
+    OnKeyDown = btnFindKeyKeyDown
   end
   object cbHardcodedNames: TCheckBox
     Left = 280
@@ -230,5 +230,32 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Previous Assignment'
       'Next Shrugger'
       'Highlit State Change')
+  end
+  object btnFunctionalLayout: TButton
+    Left = 284
+    Top = 312
+    Width = 141
+    Height = 25
+    Caption = 'Set to Functional Layout'
+    TabOrder = 10
+    OnClick = btnFunctionalLayoutClick
+  end
+  object btnTraditionalLayout: TButton
+    Left = 284
+    Top = 343
+    Width = 141
+    Height = 25
+    Caption = 'Set to Traditional Layout'
+    TabOrder = 11
+    OnClick = btnTraditionalLayoutClick
+  end
+  object btnMinimalLayout: TButton
+    Left = 284
+    Top = 374
+    Width = 141
+    Height = 25
+    Caption = 'Set to Minimal Layout'
+    TabOrder = 12
+    OnClick = btnMinimalLayoutClick
   end
 end
