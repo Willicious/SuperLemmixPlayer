@@ -34,6 +34,9 @@ object FNLSetup: TFNLSetup
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
       TabVisible = False
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
       ExplicitHeight = 207
       object lblWelcome: TLabel
         Left = 16

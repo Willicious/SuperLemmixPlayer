@@ -80,7 +80,11 @@ type
       destructor Destroy; override;
       procedure ClearAllKeys;
       procedure SaveFile;
-      procedure SetDefaults;
+
+      procedure SetDefaultsTraditional;
+      procedure SetDefaultsFunctional;
+      procedure SetDefaultsMinimal;
+
       procedure SetKeyFunction(aKey: Word; aFunc: TLemmixHotkeyAction; aMod: Integer = 0);
       function CheckKeyEffect(aKey: Word): TLemmixHotkey;
       function CheckForKey(aFunc: TLemmixHotkeyAction): Boolean; overload;
@@ -112,109 +116,155 @@ begin
     fKeyFunctions[i].Action := lka_Null;
 end;
 
-procedure TLemmixHotkeyManager.SetDefaults;
+procedure TLemmixHotkeyManager.SetDefaultsFunctional;
 begin
-  // Hardcoded defaults. Used when a custom file can't be loaded (or doesn't exist).
+  ClearAllKeys;
 
   // Here's the simple ones that don't need further settings.
-  fKeyFunctions[$02].Action := lka_Highlight;
-  fKeyFunctions[$04].Action := lka_Pause;
-  fKeyFunctions[$05].Action := lka_ZoomIn;
-  fKeyFunctions[$06].Action := lka_ZoomOut;
-  fKeyFunctions[$08].Action := lka_LoadState;
-  fKeyFunctions[$0D].Action := lka_SaveState;
-  fKeyFunctions[$11].Action := lka_ForceWalker;
-  fKeyFunctions[$12].Action := lka_ShowAthleteInfo;
-  fKeyFunctions[$19].Action := lka_ForceWalker;
-  fKeyFunctions[$1B].Action := lka_Exit;
-  fKeyFunctions[$25].Action := lka_DirLeft;
-  fKeyFunctions[$27].Action := lka_DirRight;
-  fKeyFunctions[$41].Action := lka_Scroll;
-  fKeyFunctions[$43].Action := lka_CancelReplay;
-  fKeyFunctions[$44].Action := lka_FallDistance;
-  fKeyFunctions[$45].Action := lka_EditReplay;
-  fKeyFunctions[$46].Action := lka_FastForward;
-  fKeyFunctions[$49].Action := lka_SaveImage;
-  fKeyFunctions[$4C].Action := lka_LoadReplay;
-  fKeyFunctions[$4D].Action := lka_Music;
-  fKeyFunctions[$50].Action := lka_Pause;
-  fKeyFunctions[$52].Action := lka_Restart;
-  fKeyFunctions[$53].Action := lka_Sound;
-  fKeyFunctions[$55].Action := lka_SaveReplay;
-  fKeyFunctions[$57].Action := lka_ReplayInsert;
-  fKeyFunctions[$58].Action := lka_SkillRight;
-  fKeyFunctions[$5A].Action := lka_SkillLeft;
-  fKeyFunctions[$70].Action := lka_ReleaseRateDown;
-  fKeyFunctions[$71].Action := lka_ReleaseRateUp;
-  fKeyFunctions[$7A].Action := lka_Pause;
-  fKeyFunctions[$7B].Action := lka_Nuke;
-  fKeyFunctions[$C0].Action := lka_ReleaseMouse;
+  SetKeyFunction($53, lka_DirLeft);
+  SetKeyFunction($46, lka_DirRight);
+  SetKeyFunction($25, lka_DirLeft);
+  SetKeyFunction($27, lka_DirRight);
+  SetKeyFunction($20, lka_Pause);
+  SetKeyFunction($70, lka_Restart);
+  SetKeyFunction($71, lka_LoadState);
+  SetKeyFunction($72, lka_SaveState);
+  SetKeyFunction($34, lka_FastForward);
+  SetKeyFunction($35, lka_FastForward);
+  SetKeyFunction($04, lka_Pause);
+  SetKeyFunction($05, lka_ZoomIn);
+  SetKeyFunction($06, lka_ZoomOut);
+  SetKeyFunction($1B, lka_Exit);
+  SetKeyFunction($02, lka_Scroll);
+  SetKeyFunction($75, lka_SaveReplay);
+  SetKeyFunction($76, lka_LoadReplay);
+  SetKeyFunction($11, lka_Highlight);
+  SetKeyFunction($4D, lka_Music);
+  SetKeyFunction($4E, lka_Sound);
+  SetKeyFunction($73, lka_ReleaseRateDown);
+  SetKeyFunction($74, lka_ReleaseRateUp);
+  SetKeyFunction($49, lka_FallDistance);
+  SetKeyFunction($50, lka_EditReplay);
+  SetKeyFunction($4F, lka_ReplayInsert);
+  SetKeyFunction($0D, lka_SaveImage);
+  SetKeyFunction($4A, lka_Scroll);
 
   // Misc ones that need other details set
-  fKeyFunctions[$54].Action := lka_ClearPhysics;
-  fKeyFunctions[$54].Modifier := 1;
+  SetKeyFunction($BF, lka_ClearPhysics, 1);
+
+  // Skips
+  SetKeyFunction($31, lka_Skip, -17);
+  SetKeyFunction($32, lka_Skip, -1);
+  SetKeyFunction($33, lka_Skip, 1);
+  SetKeyFunction($36, lka_Skip, 170);
+  SetKeyFunction($37, lka_SpecialSkip, 0);
+  SetKeyFunction($38, lka_SpecialSkip, 1);
+  SetKeyFunction($39, lka_SpecialSkip, 2);
+
+  // Skills
+  SetKeyFunction($44, lka_Skill, Integer(spbWalker));  // walker, D
+  SetKeyFunction($12, lka_Skill, Integer(spbShimmier)); // shimmier, alt
+  SetKeyFunction($5A, lka_Skill, Integer(spbClimber));  // climber, Z
+  SetKeyFunction($10, lka_Skill, Integer(spbSwimmer));  // swimmer, shift
+  SetKeyFunction($51, lka_Skill, Integer(spbFloater));  // floater, Q
+  SetKeyFunction($09, lka_Skill, Integer(spbGlider));  // glider, tab
+  SetKeyFunction($52, lka_Skill, Integer(spbDisarmer));  // disarmer, R
+  SetKeyFunction($56, lka_Skill, Integer(spbBomber));  // bomber, V
+  SetKeyFunction($42, lka_Skill, Integer(spbStoner));  // stoner, B
+  SetKeyFunction($58, lka_Skill, Integer(spbBlocker));  // blocker, X
+  SetKeyFunction($54, lka_Skill, Integer(spbPlatformer));  // platformer, T
+  SetKeyFunction($41, lka_Skill, Integer(spbBuilder)); // builder, A
+  SetKeyFunction($59, lka_Skill, Integer(spbStacker)); // stacker, Y
+  SetKeyFunction($45, lka_Skill, Integer(spbBasher)); // basher, E
+  SetKeyFunction($43, lka_Skill, Integer(spbFencer)); // fencer, C
+  SetKeyFunction($47, lka_Skill, Integer(spbMiner)); // miner, G
+  SetKeyFunction($57, lka_Skill, Integer(spbDigger)); // digger, W
+  SetKeyFunction($48, lka_Skill, Integer(spbCloner)); // cloner, H
+end;
+
+procedure TLemmixHotkeyManager.SetDefaultsMinimal;
+begin
+  ClearAllKeys;
+
+  SetKeyFunction($04, lka_Pause);
+  SetKeyFunction($05, lka_ZoomIn);
+  SetKeyFunction($06, lka_ZoomOut);
+  SetKeyFunction($02, lka_Scroll);
+  SetKeyFunction($1B, lka_Exit);
+end;
+
+procedure TLemmixHotkeyManager.SetDefaultsTraditional;
+begin
+  ClearAllKeys;
+
+  // Here's the simple ones that don't need further settings.
+  SetKeyFunction($02, lka_Highlight);
+  SetKeyFunction($04, lka_Pause);
+  SetKeyFunction($05, lka_ZoomIn);
+  SetKeyFunction($06, lka_ZoomOut);
+  SetKeyFunction($08, lka_LoadState);
+  SetKeyFunction($0D, lka_SaveState);
+  SetKeyFunction($11, lka_ForceWalker);
+  SetKeyFunction($12, lka_ShowAthleteInfo);
+  SetKeyFunction($19, lka_ForceWalker);
+  SetKeyFunction($1B, lka_Exit);
+  SetKeyFunction($25, lka_DirLeft);
+  SetKeyFunction($27, lka_DirRight);
+  SetKeyFunction($41, lka_Scroll);
+  SetKeyFunction($43, lka_CancelReplay);
+  SetKeyFunction($44, lka_FallDistance);
+  SetKeyFunction($45, lka_EditReplay);
+  SetKeyFunction($46, lka_FastForward);
+  SetKeyFunction($49, lka_SaveImage);
+  SetKeyFunction($4C, lka_LoadReplay);
+  SetKeyFunction($4D, lka_Music);
+  SetKeyFunction($50, lka_Pause);
+  SetKeyFunction($52, lka_Restart);
+  SetKeyFunction($53, lka_Sound);
+  SetKeyFunction($55, lka_SaveReplay);
+  SetKeyFunction($57, lka_ReplayInsert);
+  SetKeyFunction($58, lka_SkillRight);
+  SetKeyFunction($5A, lka_SkillLeft);
+  SetKeyFunction($70, lka_ReleaseRateDown);
+  SetKeyFunction($71, lka_ReleaseRateUp);
+  SetKeyFunction($7A, lka_Pause);
+  SetKeyFunction($7B, lka_Nuke);
+  SetKeyFunction($C0, lka_ReleaseMouse);
+
+  // Misc ones that need other details set
+  SetKeyFunction($54, lka_ClearPhysics, 1);
 
   // Here's the frameskip ones; these need a number of *frames* to skip (forwards or backwards).
-  fKeyFunctions[$20].Action := lka_Skip;
-  fKeyFunctions[$20].Modifier := 17 * 10;
-  fKeyFunctions[$42].Action := lka_Skip;
-  fKeyFunctions[$42].Modifier := -1;
-  fKeyFunctions[$4E].Action := lka_Skip;
-  fKeyFunctions[$4E].Modifier := 1;
-  fKeyFunctions[$54].Action := lka_ClearPhysics;
-  fKeyFunctions[$54].Modifier := 1;
-  fKeyFunctions[$6D].Action := lka_Skip;
-  fKeyFunctions[$6D].Modifier := -17;
-  fKeyFunctions[$BC].Action := lka_Skip;
-  fKeyFunctions[$BC].Modifier := -17 * 5;
-  fKeyFunctions[$BD].Action := lka_Skip;
-  fKeyFunctions[$BD].Modifier := -17;
-  fKeyFunctions[$BE].Action := lka_Skip;
-  fKeyFunctions[$BE].Modifier := 17 * 5;
-  fKeyFunctions[$DB].Action := lka_SpecialSkip;
-  fKeyFunctions[$DB].Modifier := 0;
-  fKeyFunctions[$DD].Action := lka_SpecialSkip;
-  fKeyFunctions[$DD].Modifier := 1;
-  fKeyFunctions[$DC].Action := lka_SpecialSkip;
-  fKeyFunctions[$DC].Modifier := 2;
+  SetKeyFunction($20, lka_Skip, 17 * 10);
+  SetKeyFunction($42, lka_Skip, -1);
+  SetKeyFunction($4E, lka_Skip, 1);
+  SetKeyFunction($6D, lka_Skip, -17);
+  SetKeyFunction($BC, lka_Skip, -17 * 5);
+  SetKeyFunction($BD, lka_Skip, -17);
+  SetKeyFunction($BE, lka_Skip, 17 * 5);
+  SetKeyFunction($DB, lka_SpecialSkip, 0);
+  SetKeyFunction($DD, lka_SpecialSkip, 1);
+  SetKeyFunction($DC, lka_SpecialSkip, 2);
 
   // And here's the skill ones; these ones need the skill specified seperately
-  fKeyFunctions[$31].Action := lka_Skill;
-  fKeyFunctions[$31].Modifier := Integer(spbWalker);
-  fKeyFunctions[$32].Action := lka_Skill;
-  fKeyFunctions[$32].Modifier := Integer(spbShimmier);
-  fKeyFunctions[$33].Action := lka_Skill;
-  fKeyFunctions[$33].Modifier := Integer(spbSwimmer);
-  fKeyFunctions[$34].Action := lka_Skill;
-  fKeyFunctions[$34].Modifier := Integer(spbGlider);
-  fKeyFunctions[$35].Action := lka_Skill;
-  fKeyFunctions[$35].Modifier := Integer(spbDisarmer);
-  fKeyFunctions[$36].Action := lka_Skill;
-  fKeyFunctions[$36].Modifier := Integer(spbStoner);
-  fKeyFunctions[$37].Action := lka_Skill;
-  fKeyFunctions[$37].Modifier := Integer(spbPlatformer);
-  fKeyFunctions[$38].Action := lka_Skill;
-  fKeyFunctions[$38].Modifier := Integer(spbStacker);
-  fKeyFunctions[$39].Action := lka_Skill;
-  fKeyFunctions[$39].Modifier := Integer(spbFencer);
-  fKeyFunctions[$30].Action := lka_Skill;
-  fKeyFunctions[$30].Modifier := Integer(spbCloner);
-  fKeyFunctions[$72].Action := lka_Skill;
-  fKeyFunctions[$72].Modifier := Integer(spbClimber);
-  fKeyFunctions[$73].Action := lka_Skill;
-  fKeyFunctions[$73].Modifier := Integer(spbFloater);
-  fKeyFunctions[$74].Action := lka_Skill;
-  fKeyFunctions[$74].Modifier := Integer(spbBomber);
-  fKeyFunctions[$75].Action := lka_Skill;
-  fKeyFunctions[$75].Modifier := Integer(spbBlocker);
-  fKeyFunctions[$76].Action := lka_Skill;
-  fKeyFunctions[$76].Modifier := Integer(spbBuilder);
-  fKeyFunctions[$77].Action := lka_Skill;
-  fKeyFunctions[$77].Modifier := Integer(spbBasher);
-  fKeyFunctions[$78].Action := lka_Skill;
-  fKeyFunctions[$78].Modifier := Integer(spbMiner);
-  fKeyFunctions[$79].Action := lka_Skill;
-  fKeyFunctions[$79].Modifier := Integer(spbDigger);
+  SetKeyFunction($31, lka_Skill, Integer(spbWalker));
+  SetKeyFunction($32, lka_Skill, Integer(spbShimmier));
+  SetKeyFunction($33, lka_Skill, Integer(spbSwimmer));
+  SetKeyFunction($34, lka_Skill, Integer(spbGlider));
+  SetKeyFunction($35, lka_Skill, Integer(spbDisarmer));
+  SetKeyFunction($36, lka_Skill, Integer(spbStoner));
+  SetKeyFunction($37, lka_Skill, Integer(spbPlatformer));
+  SetKeyFunction($38, lka_Skill, Integer(spbStacker));
+  SetKeyFunction($39, lka_Skill, Integer(spbFencer));
+  SetKeyFunction($30, lka_Skill, Integer(spbCloner));
+  SetKeyFunction($72, lka_Skill, Integer(spbClimber));
+  SetKeyFunction($73, lka_Skill, Integer(spbFloater));
+  SetKeyFunction($74, lka_Skill, Integer(spbBomber));
+  SetKeyFunction($75, lka_Skill, Integer(spbBlocker));
+  SetKeyFunction($76, lka_Skill, Integer(spbBuilder));
+  SetKeyFunction($77, lka_Skill, Integer(spbBasher));
+  SetKeyFunction($78, lka_Skill, Integer(spbMiner));
+  SetKeyFunction($79, lka_Skill, Integer(spbDigger));
 end;
 
 class function TLemmixHotkeyManager.InterpretMain(s: String): TLemmixHotkeyAction;
@@ -312,7 +362,7 @@ begin
     else if FileExists(AppPath + 'NeoLemmixHotkeys.ini') then
       StringList.LoadFromFile(AppPath + 'NeoLemmixHotkeys.ini')
     else begin
-      SetDefaults;
+      SetDefaultsFunctional;
       Exit;
     end;
     for i := 0 to MAX_KEY do
@@ -346,7 +396,7 @@ begin
     on E: Exception do
     begin
       fDisableSaving := true;
-      SetDefaults;
+      SetDefaultsFunctional;
       raise E;
     end;
   end;
