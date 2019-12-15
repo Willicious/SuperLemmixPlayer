@@ -121,6 +121,14 @@ begin
                           s := 'Clear Physics Mode (toggle)'
                         else
                           s := 'Clear Physics Mode (hold)';
+      lka_Projection: if Hotkey.Modifier = 0 then
+                        s := 'Projection (toggle)'
+                      else
+                        s := 'Projection (hold)';
+      lka_SkillProjection: if Hotkey.Modifier = 0 then
+                             s := 'Skill Projection (toggle)'
+                           else
+                             s := 'Skill Projection (hold)';
       lka_SpecialSkip: begin
                          s := 'Skip to ';
                          case TSpecialSkipCondition(Hotkey.Modifier) of
@@ -185,10 +193,12 @@ begin
                 ebSkipDuration.Visible := true;
                 ebSkipDuration.Enabled := true;
               end;
-    lka_ClearPhysics: begin
-                        cbHoldKey.Visible := true;
-                        cbHoldKey.Enabled := true;
-                      end;
+    lka_ClearPhysics,
+    lka_Projection,
+    lka_SkillProjection: begin
+                           cbHoldKey.Visible := true;
+                           cbHoldKey.Enabled := true;
+                         end;
     lka_SpecialSkip: begin
                        lblSkip.Visible := true;
                        cbSpecialSkip.Visible := true;
@@ -349,12 +359,12 @@ begin
   i := FindKeyFromList(lvHotkeys.ItemIndex);
   if i = -1 then Exit; //safety; should never happen
 
-  if fHotkeys.CheckKeyEffect(i).Action <> lka_ClearPhysics then Exit;
+  if not (fHotkeys.CheckKeyEffect(i).Action in [lka_ClearPhysics, lka_Projection, lka_SkillProjection]) then Exit;
 
   if cbHoldKey.Checked then
-    fHotkeys.SetKeyFunction(i, lka_ClearPhysics, 1)
+    fHotkeys.SetKeyFunction(i, fHotkeys.CheckKeyEffect(i).Action, 1)
   else
-    fHotkeys.SetKeyFunction(i, lka_ClearPhysics, 0);
+    fHotkeys.SetKeyFunction(i, fHotkeys.CheckKeyEffect(i).Action, 0);
   RefreshList;
 end;
 
