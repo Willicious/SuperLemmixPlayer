@@ -358,12 +358,8 @@ begin
   end;
 
   for i := fLocalList.Count-1 downto 0 do
-    if (fLocalList.Names[i] <> 'nx_sounds') and
-       (not DirectoryExists(AppPath + SFStyles + fLocalList.Names[i])) then
+    if not DirectoryExists(AppPath + SFStyles + fLocalList.Names[i]) then
       fLocalList.Delete(i);
-
-  if fLocalList.IndexOfName('nx_sounds') < 0 then
-    fLocalList.Add('nx_sounds=-1');
 
   fWebList.Clear;
   if GameParams.EnableOnline then
