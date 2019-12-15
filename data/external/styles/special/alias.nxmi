@@ -1,0 +1,239 @@
+# Everyone used to just put all their specials in here...
+# They've now been moved to separate styles.
+
+# ccexplore
+
+$TERRAIN
+  FROM :ccexplore_1234567
+  TO ccexplore_special:1234567
+$END
+
+# Colorful Arty
+
+$GADGET
+  FROM :arty_rain
+  TO arty_special:rain
+$END
+
+$GADGET
+  FROM :arty_snow
+  TO arty_special:snow
+$END
+
+# Flopsy
+
+$GADGET
+  FROM :flopsy_dark_background
+  TO flopsy_special:dark_background
+$END
+
+$GADGET
+  FROM :flopsy_light_background
+  TO flopsy_special:light_background
+$END
+
+$GADGET
+  FROM :flopsy_rocket_thrust
+  TO flopsy_special:rocket_thrust
+$END
+
+$GADGET
+  FROM :flopsy_sonic_ring
+  TO flopsy_special:sonic_ring
+$END
+
+$GADGET
+  FROM :flopsy_wing_cluck
+  TO flopsy_special:wing_cluck
+$END
+
+$GADGET
+  FROM :flopsy_wing_foyer
+  TO flopsy_special:wing_foyer
+$END
+
+$TERRAIN
+  FROM :flopsy_black_square
+  TO flopsy_special:black_square
+$END
+
+$TERRAIN
+  FROM :flopsy_crystal_dome
+  TO flopsy_special:crystal_dome
+$END
+
+$TERRAIN
+  FROM :flopsy_crystal_maze
+  TO flopsy_special:crystal_maze
+$END
+
+$TERRAIN
+  FROM :flopsy_delorean
+  TO flopsy_special:delorean
+$END
+
+$TERRAIN
+  FROM :flopsy_irnbru
+  TO flopsy_special:irnbru
+$END
+
+$TERRAIN
+  FROM :flopsy_lemmings_3D
+  TO flopsy_special:lemmings_3d
+$END
+
+$TERRAIN
+  FROM :flopsy_pacman
+  TO flopsy_special:pacman
+$END
+
+$TERRAIN
+  FROM :flopsy_pacman_dot
+  TO flopsy_special:pacman_dot
+$END
+
+$TERRAIN
+  FROM :flopsy_pacman_grid
+  TO flopsy_special:pacman_grid
+$END
+
+$TERRAIN
+  FROM :flopsy_poker
+  TO flopsy_special:poker
+$END
+
+$TERRAIN
+  FROM :flopsy_sonic_logo
+  TO flopsy_special:sonic_logo
+$END
+
+$TERRAIN
+  FROM :flopsy_spring_yard
+  TO flopsy_special:spring_yard
+$END
+
+$TERRAIN
+  FROM :flopsy_toilet_roll
+  TO flopsy_special:toilet_roll
+$END
+
+$TERRAIN
+  FROM :flopsy_vga
+  TO flopsy_special:vga
+$END
+
+$TERRAIN
+  FROM :flopsy_wing_fort
+  TO flopsy_special:wing_fort
+$END
+
+$TERRAIN
+  FROM :flopsy_wing_fort_02
+  TO flopsy_special:wing_fort_02
+$END
+
+# geoo
+
+$TERRAIN
+  FROM :geoo_Monolith
+  TO geoo_special:monolith
+$END
+
+$TERRAIN
+  FROM :geoo_Monolith_Steel
+  TO geoo_special:monolith_steel
+$END
+
+# GigaLem
+
+$TERRAIN
+  FROM :gigalem_iceclimbers
+  TO gigalem_special:iceclimbers
+$END
+
+$TERRAIN
+  FROM :gigalem_milladay
+  TO gigalem_special:milladay
+$END
+
+$TERRAIN
+  FROM :gigalem_nintendo
+  TO gigalem_special:nintendo
+$END
+
+$TERRAIN
+  FROM :gigalem_tower
+  TO gigalem_special:tower
+$END
+
+# gui55
+
+$TERRAIN
+  FROM :gui55_agony
+  TO gui55_special:agony
+$END
+
+$TERRAIN
+  FROM :gui55_barbarian
+  TO gui55_special:barbarian
+$END
+
+$TERRAIN
+  FROM :gui55_beastiii
+  TO gui55_special:beastiii
+$END
+
+$TERRAIN
+  FROM :gui55_bloodmoney
+  TO gui55_special:bloodmoney
+$END
+
+# IchoTolot
+
+$TERRAIN
+  FROM :IchoTolot_burning_ship
+  TO ichotolot_special:burning_ship
+$END
+
+$TERRAIN
+  FROM :IchoTolot_Soilwork
+  TO ichotolot_special:soilwork
+$END
+
+$BACKGROUND
+  FROM :IchoTolot_burning_ship
+  TO ichotolot_special:burning_ship
+$END
+
+# JM
+
+$TERRAIN
+  FROM :JM_WhiteSteps
+  TO jm_special:whitesteps
+$END
+
+$TERRAIN
+  FROM :JM_WhiteSteps_Steel
+  TO jm_special:whitesteps_steel
+$END
+
+# Leviathan
+
+$TERRAIN
+  FROM :leviathan_beasti_steel
+  TO leviathan_special:beasti_steel
+$END
+
+# ssam1221
+
+$TERRAIN
+  FROM :ssam1221_persia
+  TO ssam1221_special:persia
+$END
+
+# Timballisto
+
+$TERRAIN
+  FROM :timballisto_pipes
+  TO timballisto_special:pipes
+$END
