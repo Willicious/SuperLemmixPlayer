@@ -145,6 +145,7 @@ const
       repeat
         if (SearchRec.Name = '..') or (SearchRec.Name = '.') or ((SearchRec.Attr and faDirectory) = 0) then Continue;
 
+        WriteLn('Zipping style: ' + SearchRec.Name);
         ZipStyle(SearchRec.Name);
       until FindNext(SearchRec) <> 0;
       FindClose(SearchRec);
@@ -204,7 +205,12 @@ const
 begin
   try
     ZipStyles;
+
+    WriteLn('Making all-styles zip.');
     MakeDirectoryZip('styles|sound', '_all_styles.zip');
+
+    WriteLn('Done.');
+    WriteLn('');
   except
     on E: Exception do
       Writeln(E.ClassName, ': ', E.Message);
