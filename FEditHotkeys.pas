@@ -338,7 +338,7 @@ begin
   if cbShowUnassigned.Checked = false then
   begin
     cbShowUnassigned.Checked := true;
-    Button2KeyDown(Sender, Key, Shift);
+    btnFindKeyKeyDown(Sender, Key, Shift);
   end else
     ShowMessage('Could not find the key.');
 end;

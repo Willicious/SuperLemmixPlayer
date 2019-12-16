@@ -409,6 +409,7 @@ var
       EraseAnim := fVariableInfo[0].Animations['skill_mask'];
 
     SrcAnim.GeneratePickupSkills(aTheme, aAni, EraseAnim);
+    AnyChanged := true;
   end;
 begin
   AnyChanged := false;
