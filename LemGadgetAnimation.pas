@@ -555,18 +555,54 @@ begin
     end else
       NeedUpscale := false;
 
-    // We need to know fHorizontalStrip before we can do the upscale.
+    fHorizontalStrip := aSegment.Line['horizontal_strip'] <> nil;
 
     TPngInterface.LoadPngFile(LoadPath, fSourceImage);
+
+    if fHorizontalStrip then
+    begin
+      fWidth := fSourceImage.Width div fFrameCount;
+      fHeight := fSourceImage.Height;
+    end else begin
+      fWidth := fSourceImage.Width;
+      fHeight := fSourceImage.Height div fFrameCount;
+    end;
+
+    if NeedUpscale then
+    begin
+      Bitmaps := MakeFrameBitmaps(true);
+      Info := PieceManager.GetUpscaleInfo(aCollection + ':' + aPiece, rkGadget);
+      for i := 0 to Bitmaps.Count-1 do
+        Upscale(Bitmaps[i], Info.Settings);
+      CombineBitmaps(Bitmaps);
+    end else if GameParams.HighResolution then
+    begin
+      fWidth := fWidth div 2;
+      fHeight := fHeight div 2;
+    end;
   end else begin
-    fSourceImage.SetSize(1, 1);
-    fSourceImage.Clear(0);
-    fFrameCount := 1;
-    NeedUpscale := false;
+    fHorizontalStrip := false;
+
+    if Lowercase(fName) = '*blank' then
+    begin
+      fWidth := aSegment.LineNumeric['WIDTH'];
+      fHeight := aSegment.LineNumeric['HEIGHT'];
+      // Preserve previously-loaded frame count.
+
+      fSourceImage.SetSize(fWidth * ResMod, fHeight * ResMod * fFrameCount);
+      fSourceImage.Clear(0);
+    end else begin
+      // Fallback behaviour. This may mean it's unrecognized, but it could also just
+      // mean that it's handled elsewhere (eg. "*PICKUP").
+      fSourceImage.SetSize(ResMod, ResMod);
+      fSourceImage.Clear(0);
+      fFrameCount := 1;
+      fWidth := 1;
+      fHeight := 1;
+    end;
   end;
 
   // fPrimary is only set by TGadgetAnimations
-  fHorizontalStrip := aSegment.Line['horizontal_strip'] <> nil;
 
   if fPrimary and (aSegment.Line['z_index'] = nil) then
     fZIndex := 1
@@ -578,27 +614,7 @@ begin
   else
     fStartFrameIndex := aSegment.LineNumeric['initial_frame'];
 
-  if fHorizontalStrip then
-  begin
-    fWidth := fSourceImage.Width div fFrameCount;
-    fHeight := fSourceImage.Height;
-  end else begin
-    fWidth := fSourceImage.Width;
-    fHeight := fSourceImage.Height div fFrameCount;
-  end;
 
-  if NeedUpscale then
-  begin
-    Bitmaps := MakeFrameBitmaps(true);
-    Info := PieceManager.GetUpscaleInfo(aCollection + ':' + aPiece, rkGadget);
-    for i := 0 to Bitmaps.Count-1 do
-      Upscale(Bitmaps[i], Info.Settings);
-    CombineBitmaps(Bitmaps);
-  end else if GameParams.HighResolution then
-  begin
-    fWidth := fWidth div 2;
-    fHeight := fHeight div 2;
-  end;
 
   if fPrimary then
   begin
