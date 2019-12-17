@@ -7,6 +7,9 @@ EFFECT ENTRANCE
 TRIGGER_X 19
 TRIGGER_Y 14
 
+# SOUND_EXHAUST specifies the sound to play when the window is exhausted (runs out of lemmings).
+
+SOUND_EXHAUST ohno
 
 # We don't actually display anything for the primary animation. You can include a blank image of the correct size if you
 # like, but using *BLANK is a useful shortcut. (*BLANK requires NeoLemmix V12.8.0 or higher.)

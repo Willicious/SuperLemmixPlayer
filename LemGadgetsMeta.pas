@@ -63,8 +63,10 @@ type
     fTriggerEffect                : Integer; // ote_xxxx see dos doc
     fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
-    fSoundEffect                  : String;  // filename of sound to play
     fDigitMinLength               : Integer;
+
+    fSoundActivate  : String;
+    fSoundExhaust   : String;
 
     fCyclesSinceLastUse: Integer; // to improve TNeoPieceManager.Tidy
 
@@ -137,8 +139,10 @@ type
       function GetCanResizeVertical: Boolean;
       procedure SetCanResizeVertical(const aValue: Boolean);
       function GetAnimations: TGadgetAnimations;
-      function GetSoundEffect: String;
-      procedure SetSoundEffect(aValue: String);
+      function GetSoundEffectActivate: String;
+      procedure SetSoundEffectActivate(aValue: String);
+      function GetSoundEffectExhaust: String;
+      procedure SetSoundEffectExhaust(aValue: String);
       function GetDigitAnimation: TGadgetAnimation;
     public
       constructor Create(aMetaObject: TGadgetMetaInfo; Flip, Invert, Rotate: Boolean);
@@ -160,7 +164,8 @@ type
       property DigitAlign: Integer index ov_DigitAlign read GetIntegerProperty write SetIntegerProperty;
       property DigitMinLength: Integer index ov_DigitMinLength read GetIntegerProperty write SetIntegerProperty;
       property KeyFrame: Integer index ov_KeyFrame read GetIntegerProperty write SetIntegerProperty;
-      property SoundEffect: String read GetSoundEffect write SetSoundEffect;
+      property SoundEffectActivate: String read GetSoundEffectActivate write SetSoundEffectActivate;
+      property SoundEffectExhaust: String read GetSoundEffectExhaust write SetSoundEffectExhaust;
 
       property CanResizeHorizontal      : Boolean read GetCanResizeHorizontal write SetCanResizeHorizontal;
       property CanResizeVertical        : Boolean read GetCanResizeVertical write SetCanResizeVertical;
@@ -324,7 +329,11 @@ begin
 
     fDigitMinLength := Sec.LineNumericDefault['digit_length', 1];
 
-    fSoundEffect := Sec.LineTrimString['sound'];
+    if Sec.Line['sound_activate'] = nil then
+      fSoundActivate := Sec.LineTrimString['sound']
+    else
+      fSoundActivate := Sec.LineTrimString['sound_activate'];
+    fSoundExhaust := Sec.LineTrimString['sound_exhaust'];
 
     fKeyFrame := Sec.LineNumeric['key_frame']; // this is almost purely a physics property, so should not go under animations
 
@@ -687,14 +696,24 @@ begin
   end;
 end;
 
-function TGadgetMetaAccessor.GetSoundEffect: String;
+function TGadgetMetaAccessor.GetSoundEffectActivate: String;
 begin
-  Result := fGadgetMetaInfo.fSoundEffect;
+  Result := fGadgetMetaInfo.fSoundActivate;
 end;
 
-procedure TGadgetMetaAccessor.SetSoundEffect(aValue: String);
+procedure TGadgetMetaAccessor.SetSoundEffectActivate(aValue: String);
 begin
-  fGadgetMetaInfo.fSoundEffect := aValue;
+  fGadgetMetaInfo.fSoundActivate := aValue;
+end;
+
+function TGadgetMetaAccessor.GetSoundEffectExhaust: String;
+begin
+  Result := fGadgetMetaInfo.fSoundExhaust;
+end;
+
+procedure TGadgetMetaAccessor.SetSoundEffectExhaust(aValue: String);
+begin
+  fGadgetMetaInfo.fSoundExhaust := aValue;
 end;
 
 function TGadgetMetaAccessor.GetDigitAnimation: TGadgetAnimation;

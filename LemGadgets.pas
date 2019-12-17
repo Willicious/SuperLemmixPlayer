@@ -85,7 +85,8 @@ type
     procedure SetLeft(Value: Integer);
     procedure SetTop(Value: Integer);
     function GetSkillType: TSkillPanelButton;
-    function GetSoundEffect: String;
+    function GetSoundEffectActivate: String;
+    function GetSoundEffectExhaust: String;
     function GetIsOnlyOnTerrain: Boolean;
     function GetIsUpsideDown: Boolean;
     function GetIsNoOverwrite: Boolean;
@@ -143,7 +144,8 @@ type
     property IsFlipImage: Boolean read GetIsFlipImage;          // ... and 64
     property IsRotate: Boolean read GetIsRotate;                // ... and 128
     property AnimationFrameCount: Integer read GetAnimationFrameCount;
-    property SoundEffect: String read GetSoundEffect;
+    property SoundEffectActivate: String read GetSoundEffectActivate;
+    property SoundEffectExhaust: String read GetSoundEffectExhaust;
     property ZombieMode: Boolean read sZombieMode write sZombieMode;
     property NeutralMode: Boolean read sNeutralMode write sNeutralMode;
     property KeyFrame: Integer read GetKeyFrame;
@@ -351,9 +353,14 @@ begin
   Result := TSkillPanelButton(Obj.Skill);
 end;
 
-function TGadget.GetSoundEffect: String;
+function TGadget.GetSoundEffectActivate: String;
 begin
-  Result := MetaObj.SoundEffect;
+  Result := MetaObj.SoundEffectActivate;
+end;
+
+function TGadget.GetSoundEffectExhaust: String;
+begin
+  Result := MetaObj.SoundEffectExhaust;
 end;
 
 function TGadget.GetIsOnlyOnTerrain: Boolean;

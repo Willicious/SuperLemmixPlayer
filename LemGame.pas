@@ -2409,7 +2409,7 @@ begin
     L.LemHasBlockerField := False;
     SetBlockerMap;
     RemoveLemming(L, RM_KILL);
-    CueSoundEffect(Gadget.SoundEffect, L.Position);
+    CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
     DelayEndFrames := MaxIntValue([DelayEndFrames, Gadget.AnimationFrameCount]);
     // Check for one-shot trap and possibly disable it
     if Gadget.TriggerEffect = DOM_TRAPONCE then Gadget.TriggerEffect := DOM_NONE;
@@ -2444,7 +2444,7 @@ begin
   Gadget.Triggered := True;
   Gadget.ZombieMode := L.LemIsZombie;
   Gadget.NeutralMode := L.LemIsNeutral;
-  CueSoundEffect(Gadget.SoundEffect, L.Position);
+  CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
   L.LemTeleporting := True;
   Gadget.TeleLem := L.LemIndex;
   // Make sure to remove the blocker field!
@@ -2490,7 +2490,7 @@ begin
   if not L.LemIsZombie then
   begin
     Gadget := Gadgets[GadgetID];
-    CueSoundEffect(Gadget.SoundEffect, L.Position);
+    CueSoundEffect(Gadget.SoundEffectActivate, L.Position);
     Gadget.Triggered := True;
     Dec(ButtonsRemain);
 
@@ -2501,10 +2501,10 @@ begin
         begin
           Gadget := Gadgets[n];
           Gadget.Triggered := True;
-          if Gadget.SoundEffect = '' then
+          if Gadget.SoundEffectActivate = '' then
             CueSoundEffect(SFX_ENTRANCE, Gadget.Center)
           else
-            CueSoundEffect(Gadget.SoundEffect, Gadget.Center);
+            CueSoundEffect(Gadget.SoundEffectActivate, Gadget.Center);
         end;
     end;
   end;
@@ -2529,7 +2529,11 @@ begin
     Gadget := Gadgets[GadgetID];
 
     if Gadget.RemainingLemmingsCount > 0 then
+    begin
       Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount - 1;
+      if Gadget.RemainingLemmingsCount = 0 then
+        CueSoundEffect(Gadget.SoundEffectExhaust, Gadget.Center);
+    end;
 
     Result := True;
     Transition(L, baExiting);
@@ -4800,9 +4804,13 @@ begin
             LemIsNeutral := true;
 
           if Gadgets[ix].RemainingLemmingsCount > 0 then
+          begin
             Gadgets[ix].RemainingLemmingsCount := Gadgets[ix].RemainingLemmingsCount - 1;
-                // TLevel.PrepareForUse handles enforcing the limits. This only needs to be updated
-                // for display purposes.
+            if Gadgets[ix].RemainingLemmingsCount = 0 then
+              CueSoundEffect(Gadgets[ix].SoundEffectExhaust, Gadgets[ix].Center);
+            // TLevel.PrepareForUse handles enforcing the limits. This only needs to be updated
+            // for display purposes.
+          end;
         end;
         Dec(LemmingsToRelease);
         Inc(LemmingsOut);
