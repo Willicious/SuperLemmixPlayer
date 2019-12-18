@@ -41,6 +41,31 @@ $STATE_RECOLORING
   
 $END
 
+$SHADES
+  $SHADE
+    PRIMARY xF0D0D0
+    ALT xE0C0C0
+  $END
+
+  $SHADE
+    PRIMARY xD02020
+    ALT xB01010
+  $END
+
+  $SHADE
+    PRIMARY x4040F0
+    ALT x3030C0
+
+    # HiRes Platformer
+    ALT xF040F0
+    ALT xC030C0
+
+    # HiRes Stacker
+    ALT xA040F0
+    ALT x8030C0
+  $END
+$END
+
 $ANIMATIONS
   $WALKER
     FRAMES 8
