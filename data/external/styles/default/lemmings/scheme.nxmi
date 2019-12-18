@@ -268,7 +268,7 @@ $ANIMATIONS
   $END
 
   $BLOCKER
-    FRAMES 8
+    FRAMES 16
 
     $RIGHT
       FOOT_X 8
