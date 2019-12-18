@@ -158,12 +158,12 @@ $ANIMATIONS
     FRAMES 24
 
     $RIGHT
-      FOOT_X 7
+      FOOT_X 6
       FOOT_Y 13
     $END
 
     $LEFT
-      FOOT_X 8
+      FOOT_X 9
       FOOT_Y 13
     $END
   $END
@@ -240,10 +240,10 @@ $ANIMATIONS
   $END
 
   $BLOCKER
-    FRAMES 16
+    FRAMES 32
 
     $RIGHT
-      FOOT_X 8
+      FOOT_X 7
       FOOT_Y 13
     $END
 
