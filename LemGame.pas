@@ -252,7 +252,6 @@ type
     procedure CueSoundEffect(aSound: String; aOrigin: TPoint); overload;
     function DigOneRow(PosX, PosY: Integer): Boolean;
     procedure DrawAnimatedGadgets;
-    procedure CheckForNewShadow;
     function HasPixelAt(X, Y: Integer): Boolean;
     procedure IncrementIteration;
     procedure InitializeBrickColors(aBrickPixelColor: TColor32);
@@ -403,6 +402,7 @@ type
     function CheckFinishedTest: Boolean;
     function GetHighlitLemming: TLemming;
     function GetTargetLemming: TLemming;
+    procedure CheckForNewShadow(aForceRedraw: Boolean = false);
 
   { properties }
     property CurrentIteration: Integer read fCurrentIteration;
@@ -2798,7 +2798,7 @@ begin
 end;
 
 
-procedure TLemmingGame.CheckForNewShadow;
+procedure TLemmingGame.CheckForNewShadow(aForceRedraw: Boolean = false);
 var
   ShadowSkillButton: TSkillPanelButton;
   ShadowLem: TLemming;
@@ -2813,9 +2813,7 @@ begin
   begin
     ShadowSkillButton := fSelectedSkill;
     ShadowLem := fLemSelected;
-  end
-  else
-  begin
+  end else begin
     // Get next highest lemming under the cursor, even if he cannot receive the skill
     GetPriorityLemming(ShadowLem, baNone, CursorPoint);
 
@@ -2823,17 +2821,26 @@ begin
     if Assigned(ShadowLem) and ShadowLem.LemIsGlider and (ShadowLem.LemAction in [baFalling, baGliding]) then
     begin
       ShadowSkillButton := spbGlider;
-    end
-    else
-    begin
-      ShadowSkillButton := spbNone;
-      ShadowLem := nil;
+    end else begin
+      if fRenderInterface.ProjectionType = 0 then
+      begin
+        ShadowSkillButton := spbNone;
+        ShadowLem := nil;
+      end else begin
+        if Assigned(ShadowLem) then
+          ShadowSkillButton := spbNone
+        else begin
+          ShadowSkillButton := fSelectedSkill;
+          ShadowLem := fRenderInterface.SelectedLemming;
+        end;
+      end;
     end
   end;
 
 
   // Check whether we have to redraw the Shadow (if lem or skill changed)
-  if (not fExistShadow) or (not (fLemWithShadow = ShadowLem))
+  if aForceRedraw or
+     (not fExistShadow) or (not (fLemWithShadow = ShadowLem))
                         or (not (fLemWithShadowButton = ShadowSkillButton)) then
   begin
     if fExistShadow then // false if coming from UpdateLemming
@@ -2846,7 +2853,7 @@ begin
     // Draw the new ShadowBridge
     try
       if not Assigned(ShadowLem) then Exit;
-      if not (ShadowSkillButton in ShadowSkillSet) then Exit; // Should always be the case, but to be sure...
+      if not ((ShadowSkillButton in ShadowSkillSet) or (fRenderInterface.ProjectionType <> 0)) then Exit;
 
       // Draw the shadows
       fRenderer.DrawShadows(ShadowLem, ShadowSkillButton);

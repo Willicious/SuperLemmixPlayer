@@ -2071,9 +2071,14 @@ end;
 
 procedure TGameWindow.SetProjectionType(aValue: Integer);
 begin
-  fProjectionType := aValue;
-  if fRenderInterface <> nil then
-    fRenderInterface.ProjectionType := aValue;
+  if fProjectionType <> aValue then
+  begin
+    fProjectionType := aValue;
+    if fRenderInterface <> nil then
+      fRenderInterface.ProjectionType := aValue;
+
+    Game.CheckForNewShadow(true);
+  end;
 end;
 
 end.

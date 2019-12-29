@@ -577,10 +577,8 @@ begin
 
   if fRenderInterface.ProjectionType <> 0 then
   begin
-    case fRenderInterface.ProjectionType of
-      1: fRenderInterface.SimulateLem(CopyL);
-      2: fRenderInterface.SimulateTransitionLem(CopyL, SkillPanelButtonToAction[SkillButton]);
-    end;
+    if (fRenderInterface.ProjectionType = 2) and (SkillButton <> spbNone) then
+      fRenderInterface.SimulateTransitionLem(CopyL, SkillPanelButtonToAction[SkillButton]);
 
     DrawProjectionShadow(CopyL);
 
