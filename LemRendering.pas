@@ -165,6 +165,7 @@ type
     procedure DrawMinerShadow(L: TLemming);
     procedure DrawDiggerShadow(L: TLemming);
     procedure DrawExploderShadow(L: TLemming);
+    procedure DrawProjectionShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
@@ -574,6 +575,18 @@ begin
   CopyL := TLemming.Create;
   CopyL.Assign(L);
 
+  if fRenderInterface.ProjectionType <> 0 then
+  begin
+    case fRenderInterface.ProjectionType of
+      1: fRenderInterface.SimulateLem(CopyL);
+      2: fRenderInterface.SimulateTransitionLem(CopyL, SkillPanelButtonToAction[SkillButton]);
+    end;
+
+    DrawProjectionShadow(CopyL);
+
+    CopyL.Assign(L); // Reset to initial state
+  end;
+
   case SkillButton of
   spbShimmier:
     begin
@@ -644,13 +657,54 @@ begin
   CopyL.Free;
 end;
 
+procedure TRenderer.DrawProjectionShadow(L: TLemming);
+var
+  FrameCount: Integer;
+  LemPosArray: TArrayArrayInt;
+  i: Integer;
+
+  SavePhysicsMap: TBitmap32;
+const
+  MAX_FRAME_COUNT = 510; // 30 in-game seconds
+begin
+  fLayers.fIsEmpty[rlLowShadows] := false;
+  fLayers.fIsEmpty[rlHighShadows] := false;
+  FrameCount := 0;
+  LemPosArray := nil;
+
+  // Make a deep copy of the PhysicsMap
+  SavePhysicsMap := TBitmap32.Create;
+  SavePhysicsMap.Assign(PhysicsMap);
+
+  // We simulate as long as the lemming exists, unless we time out
+  while (FrameCount < MAX_FRAME_COUNT)
+    and Assigned(L)
+    and (not L.LemRemoved) do
+  begin
+    Inc(FrameCount);
+
+    if Assigned(LemPosArray) then
+      for i := 0 to Length(LemPosArray[0]) do
+      begin
+        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
+      end;
+
+    LemPosArray := fRenderInterface.SimulateLem(L);
+  end;
+
+  PhysicsMap.Assign(SavePhysicsMap);
+  SavePhysicsMap.Free;
+end;
+
 procedure TRenderer.DrawShimmierShadow(L: TLemming);
 var
   FrameCount: Integer;
   LemPosArray: TArrayArrayInt;
   i: Integer;
 const
-  MAX_FRAME_COUNt = 2000;
+  MAX_FRAME_COUNT = 2000;
 begin
   fLayers.fIsEmpty[rlLowShadows] := false;
   FrameCount := 0;

@@ -125,6 +125,7 @@ type
     procedure ExecuteReplayEdit;
     procedure SetClearPhysics(aValue: Boolean);
     function GetClearPhysics: Boolean;
+    procedure SetProjectionType(aValue: Integer);
     procedure ProcessGameMessages;
     procedure ApplyResize(NoRecenter: Boolean = false);
     procedure ChangeZoom(aNewZoom: Integer; NoRedraw: Boolean = false);
@@ -187,7 +188,7 @@ type
     property HScroll: TGameScroll read GameScroll write GameScroll;
     property VScroll: TGameScroll read GameVScroll write GameVScroll;
     property ClearPhysics: Boolean read fClearPhysics write SetClearPhysics;
-    property ProjectionType: Integer read fProjectionType write fProjectionType;
+    property ProjectionType: Integer read fProjectionType write SetProjectionType;
     function DoSuspendCursor: Boolean;
 
     property GameSpeed: TGameSpeed read GetGameSpeed write SetGameSpeed;
@@ -2067,6 +2068,13 @@ begin
   fHyperSpeedTarget := aValue;
 end;
 
+
+procedure TGameWindow.SetProjectionType(aValue: Integer);
+begin
+  fProjectionType := aValue;
+  if fRenderInterface <> nil then
+    fRenderInterface.ProjectionType := aValue;
+end;
 
 end.
 
