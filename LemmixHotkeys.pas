@@ -139,6 +139,7 @@ begin
   SetKeyFunction($75, lka_SaveReplay);
   SetKeyFunction($76, lka_LoadReplay);
   SetKeyFunction($11, lka_Highlight);
+  SetKeyFunction($19, lka_Highlight);
   SetKeyFunction($4D, lka_Music);
   SetKeyFunction($4E, lka_Sound);
   SetKeyFunction($73, lka_ReleaseRateDown);
@@ -151,6 +152,8 @@ begin
 
   // Misc ones that need other details set
   SetKeyFunction($BF, lka_ClearPhysics, 1);
+  SetKeyFunction($DB, lka_SkillProjection, 1);
+  SetKeyFunction($DD, lka_Projection, 1);
 
   // Skips
   SetKeyFunction($31, lka_Skip, -17);
@@ -205,7 +208,6 @@ begin
   SetKeyFunction($08, lka_LoadState);
   SetKeyFunction($0D, lka_SaveState);
   SetKeyFunction($11, lka_ForceWalker);
-  SetKeyFunction($12, lka_ShowAthleteInfo);
   SetKeyFunction($19, lka_ForceWalker);
   SetKeyFunction($1B, lka_Exit);
   SetKeyFunction($25, lka_DirLeft);
@@ -233,6 +235,8 @@ begin
 
   // Misc ones that need other details set
   SetKeyFunction($54, lka_ClearPhysics, 1);
+  SetKeyFunction($10, lka_SkillProjection, 1);
+  SetKeyFunction($12, lka_Projection, 1);
 
   // Here's the frameskip ones; these need a number of *frames* to skip (forwards or backwards).
   SetKeyFunction($20, lka_Skip, 17 * 10);
