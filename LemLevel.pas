@@ -707,8 +707,10 @@ var
   FoundWindow: Boolean;
   n: Integer;
   SpawnedCount: Integer;
-  MaxPossibleSaveCount: Integer;
+  MaxPossibleLemmingCount, MaxPossibleExitCount: Integer;
   PickupCloners: Integer;
+
+  TriggerEffect: Integer;
 
   procedure SetNextWindow;
   var
@@ -729,7 +731,6 @@ var
   end;
 begin
   // 1. Validate skillset - remove skills that don't exist in the level
-  PickupCloners := 0;
   for S := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
     if not (S in Info.Skillset) then Continue;
@@ -740,10 +741,7 @@ begin
       if PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect <> DOM_PICKUP then Continue;
       if InteractiveObjects[i].Skill <> Integer(S) then Continue;
       FoundSkill := true;
-      if (S = spbCloner) then
-        Inc(PickupCloners) // used later
-      else
-        Break;
+      Break;
     end;
     if not FoundSkill then Info.Skillset := Info.Skillset - [S];
   end;
@@ -803,23 +801,30 @@ begin
   // Validate save requirement and lower it if need be. It must:
   //  - Not exceed the lemming count + cloner count
   //  - Not exceed the total number of lemmings permitted to enter the level's exits
-  MaxPossibleSaveCount := 0;
+  MaxPossibleLemmingCount := Info.LemmingsCount + Info.SkillCount[spbCloner] - Info.ZombieCount;
+  MaxPossibleExitCount := 0;
+
   for i := 0 to InteractiveObjects.Count-1 do
   begin
-    if not (PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT]) then
-      Continue;
+    TriggerEffect := PieceManager.Objects[InteractiveObjects[i].Identifier].TriggerEffect;
 
-    if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleSaveCount >= 0) then
-      MaxPossibleSaveCount := MaxPossibleSaveCount + InteractiveObjects[i].LemmingCap
-    else
-      MaxPossibleSaveCount := -1;
+    if TriggerEffect in [DOM_EXIT, DOM_LOCKEXIT] then
+    begin
+      if (InteractiveObjects[i].LemmingCap > 0) and (MaxPossibleExitCount >= 0) then
+        MaxPossibleExitCount := MaxPossibleExitCount + InteractiveObjects[i].LemmingCap
+      else
+        MaxPossibleExitCount := -1;
+    end;
+
+    if (TriggerEffect = DOM_PICKUP) and (InteractiveObjects[i].Skill = Integer(spbCloner)) then
+      Inc(MaxPossibleLemmingCount, InteractiveObjects[i].TarLev);
   end;
 
-  if MaxPossibleSaveCount < 0 then
-    MaxPossibleSaveCount := Info.LemmingsCount + Info.SkillCount[spbCloner] + PickupCloners;
+  if Info.RescueCount > MaxPossibleLemmingCount then
+    Info.RescueCount := MaxPossibleLemmingCount;
 
-  if Info.RescueCount > MaxPossibleSaveCount then
-    Info.RescueCount := MaxPossibleSaveCount;
+  if (MaxPossibleExitCount >= 0) and (Info.RescueCount > MaxPossibleExitCount) then
+    Info.RescueCount := MaxPossibleExitCount;
 end;
 
 // TLevel Saving Routines
