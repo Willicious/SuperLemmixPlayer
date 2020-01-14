@@ -730,7 +730,7 @@ var
     until WindowLemmingCount[n] <> 0;
   end;
 begin
-  // 1. Validate skillset - remove skills that don't exist in the level
+  // 1. Validate skillset - remove skills that don't exist in the level, and forbid infinite cloners
   for S := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
   begin
     if not (S in Info.Skillset) then Continue;
@@ -745,6 +745,9 @@ begin
     end;
     if not FoundSkill then Info.Skillset := Info.Skillset - [S];
   end;
+
+  if Info.SkillCount[spbCloner] > 99 then Info.SkillCount[spbCloner] := 99;
+  
 
   // 2. Calculate ZombieCount, precise spawn order, and finalised lemming count
   FoundWindow := false;
