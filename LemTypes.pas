@@ -50,6 +50,9 @@ type
     HShift: Single;
     SShift: Single;
     VShift: Single;
+    RAdj: Integer;
+    GAdj: Integer;
+    BAdj: Integer;
   end;
 
 type
@@ -773,6 +776,8 @@ var
   H1, H2: Single;
   S1, S2: Single;
   V1, V2: Single;
+
+  C: TColor32;
 begin
   RGBToHSV(aPrimary, H1, S1, V1);
   RGBToHSV(aAlt, H2, S2, V2);
@@ -780,6 +785,14 @@ begin
   Result.HShift := H2 - H1;
   Result.SShift := S2 - S1;
   Result.VShift := V2 - V1;
+  Result.RAdj := 0;
+  Result.GAdj := 0;
+  Result.BAdj := 0;
+
+  C := ApplyColorShift(aPrimary, Result);
+  Result.RAdj := RedComponent(aAlt) - RedComponent(C);
+  Result.GAdj := GreenComponent(aAlt) - GreenComponent(C);
+  Result.BAdj := BlueComponent(aAlt) - BlueComponent(C);
 end;
 
 function ApplyColorShift(aBase: TColor32; aDiff: TColorDiff): TColor32;
@@ -799,8 +812,9 @@ begin
   S := Max(0, Min(S, 1));
   V := Max(0, Min(V, 1));
 
-
   Result := (HSVToRGB(H, S, V) and $FFFFFF) or (aBase and $FF000000);
+
+  Result := Result + (aDiff.RAdj shl 16) + (aDiff.GAdj shl 8) + (aDiff.BAdj);
 end;
 
 function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32;
