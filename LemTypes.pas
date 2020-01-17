@@ -814,7 +814,8 @@ begin
 
   Result := (HSVToRGB(H, S, V) and $FFFFFF) or (aBase and $FF000000);
 
-  Result := Result + (aDiff.RAdj shl 16) + (aDiff.GAdj shl 8) + (aDiff.BAdj);
+  Result := TColor32(Integer(Result) + (aDiff.RAdj * $10000) + (aDiff.GAdj * $100) + (aDiff.BAdj));
+  // The typecasts avoid compiler warnings.
 end;
 
 function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32;
