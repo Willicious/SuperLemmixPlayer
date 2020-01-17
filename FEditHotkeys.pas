@@ -234,6 +234,9 @@ begin
   case fHotkeys.CheckKeyEffect(i).Action of
     lka_Skill: cbSkill.ItemIndex := fHotkeys.CheckKeyEffect(i).Modifier;
     lka_Skip: ebSkipDuration.Text := IntToStr(fHotkeys.CheckKeyEffect(i).Modifier);
+    lka_ClearPhysics,
+    lka_Projection,
+    lka_SkillProjection: cbHoldKey.Checked := fHotkeys.CheckKeyEffect(i).Modifier = 1;
   end;
   Label3.Caption := 'Editing key: ' + fKeyNames[i];
   cbFunctionsChange(self);
@@ -272,6 +275,12 @@ begin
                        if cbSpecialSkip.ItemIndex = -1 then cbSpecialSkip.ItemIndex := 0;
                        fHotkeys.SetKeyFunction(i, lka_SpecialSkip, cbSpecialSkip.ItemIndex);
                      end;
+    lka_ClearPhysics,
+    lka_Projection,
+    lka_SkillProjection: if cbHoldKey.Checked then
+                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 1)
+                         else
+                           fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex), 0);
     else fHotkeys.SetKeyFunction(i, TLemmixHotkeyAction(cbFunctions.ItemIndex));
   end;
   SetVisibleModifier(TLemmixHotkeyAction(cbFunctions.ItemIndex));
