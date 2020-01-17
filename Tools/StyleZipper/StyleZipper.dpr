@@ -8,7 +8,9 @@ uses
   Zip,
   Classes,
   StrUtils,
-  SysUtils;
+  SysUtils,
+  IdHash,
+  IdHashMessageDigest;
 
 const
   DEFAULT_SOUNDS: array[0..27] of string =
@@ -43,9 +45,43 @@ const
 
   SOUND_EXTS: array[0..4] of string = ('.ogg', '.wav', '.aiff', '.aif', '.mp3');
 
+var
+  MD5List, MD5Report: TStringList;
+
   function AppPath: String;
   begin
     Result := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
+  end;
+
+  function CalculateMD5(aFilename: String): String;
+  var
+    IDMD5: TIdHashMessageDigest5;
+    FS: TFileStream;
+  begin
+    IDMD5 := TIdHashMessageDigest5.Create;
+    FS := TFileStream.Create(aFilename, fmOpenRead);
+    try
+      Result := IDMD5.HashStreamAsHex(FS);
+    finally
+      FS.Free;
+      IDMD5.Free;
+    end;
+  end;
+
+  procedure HandleMD5(aZipFilename: String);
+  var
+    MD5: String;
+  begin
+    MD5 := CalculateMD5(AppPath + 'style_zips\' + aZipFilename);
+
+    if MD5List.Values[aZipFilename] = '' then
+      MD5Report.Add('      NEW: ' + aZipFilename)
+    else if MD5List.Values[aZipFilename] = MD5 then
+      MD5Report.Add('UNCHANGED: ' + aZipFilename)
+    else
+      MD5Report.Add('  CHANGED: ' + aZipFilename);
+
+    MD5List.Values[aZipFilename] := MD5;
   end;
 
   function IsDefaultSound(aName: String): Boolean;
@@ -110,8 +146,6 @@ const
         end;
     end;
   begin
-    ForceDirectories(AppPath + 'style_zips\');
-
     Zip := TZipFile.Create;
     Sounds := TStringList.Create;
     ObjSL := TStringList.Create;
@@ -129,6 +163,8 @@ const
           AddSound(DEFAULT_SOUNDS[i]);
 
       Zip.Close;
+
+      HandleMD5(aName + '.zip');
     finally
       Zip.Free;
       Sounds.Free;
@@ -178,7 +214,6 @@ const
       end;
     end;
   begin
-    ForceDirectories(AppPath + 'style_zips\');
 
     Zip := TZipFile.Create;
     SL := TStringList.Create;
@@ -196,6 +231,8 @@ const
       end;
 
       Zip.Close;
+
+      HandleMD5(aZipFilename);
     finally
       Zip.Free;
       SL.Free;
@@ -203,16 +240,33 @@ const
   end;
 
 begin
+  MD5List := TStringList.Create;
+  MD5Report := TStringList.Create;
   try
-    ZipStyles;
+    try
+      ForceDirectories(AppPath + 'style_zips\');
 
-    WriteLn('Making all-styles zip.');
-    MakeDirectoryZip('styles|sound', '_all_styles.zip');
+      if FileExists(AppPath + 'style_zips\styles_md5s.ini') then
+        MD5List.LoadFromFile(AppPath + 'style_zips\styles_md5s.ini');
 
-    WriteLn('Done.');
-    WriteLn('');
-  except
-    on E: Exception do
-      Writeln(E.ClassName, ': ', E.Message);
+      ZipStyles;
+
+      WriteLn('Making all-styles zip.');
+      MakeDirectoryZip('styles|sound', '_all_styles.zip');
+
+      MD5List.SaveToFile(AppPath + 'style_zips\styles_md5s.ini');
+
+      MD5Report.Sort;
+      MD5Report.SaveToFile(AppPath + 'style_zip_report.txt');
+
+      WriteLn('Done.');
+      WriteLn('');
+    except
+      on E: Exception do
+        Writeln(E.ClassName, ': ', E.Message);
+    end;
+  finally
+    MD5List.Free;
+    MD5Report.Free;
   end;
 end.
