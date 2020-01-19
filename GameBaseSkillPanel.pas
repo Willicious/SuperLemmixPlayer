@@ -383,35 +383,65 @@ end;
 procedure GetGraphic(aName: String; aDst: TBitmap32);
 var
   MaskColor: TColor32;
-  SrcFile: String;
+  SrcFile, SrcFileHr, SrcFileHrMask: String;
   Target: TNeoLevelGroup;
+
+  UpscaleSettings: TUpscaleSettings;
 begin
   Target := GameParams.CurrentLevel.Group;
 
   SrcFile := Target.Path + aName;
   if GameParams.HighResolution then
-    SrcFile := ChangeFileExt(SrcFile, '-hr.png');
+  begin
+    SrcFileHr := ChangeFileExt(SrcFile, '-hr.png');
+    SrcFileHrMask := ChangeFileExt(SrcFile, '_mask-hr.png');
+  end;
 
   while not (FileExists(SrcFile) or Target.IsBasePack or (Target.Parent = nil)) do
   begin
     Target := Target.Parent;
     SrcFile := Target.Path + aName;
     if GameParams.HighResolution then
-      SrcFile := ChangeFileExt(SrcFile, '-hr.png');
+    begin
+      SrcFileHr := ChangeFileExt(SrcFile, '-hr.png');
+      SrcFileHrMask := ChangeFileExt(SrcFile, '_mask-hr.png');
+    end;
   end;
 
   if not FileExists(SrcFile) then
   begin
+    SrcFile := AppPath + SFGraphicsPanel + aName;
     if GameParams.HighResolution then
-      SrcFile := AppPath + SFGraphicsPanelHighRes + aName
-    else
-      SrcFile := AppPath + SFGraphicsPanel + aName;
+    begin
+      SrcFileHr := AppPath + SFGraphicsPanelHighRes + aName;
+      SrcFileHrMask := AppPath + SFGraphicsPanelHighRes + ChangeFileExt(aName, '_mask.png');
+    end;
   end;
 
   MaskColor := GameParams.Renderer.Theme.Colors[MASK_COLOR];
 
-  TPngInterface.LoadPngFile(SrcFile, aDst);
-  TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
+  if GameParams.HighResolution then
+  begin
+    if FileExists(SrcFileHr) then
+    begin
+      TPngInterface.LoadPngFile(SrcFileHr, aDst);
+      TPngInterface.MaskImageFromFile(aDst, SrcFileHrMask, MaskColor);
+    end else begin
+      TPngInterface.LoadPngFile(SrcFile, aDst);
+      TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
+
+      UpscaleSettings.Mode := umPixelArt;
+      UpscaleSettings.LeftSide := uebTransparent;
+      UpscaleSettings.TopSide := uebTransparent;
+      UpscaleSettings.RightSide := uebTransparent;
+      UpscaleSettings.BottomSide := uebTransparent;
+
+      Upscale(aDst, UpscaleSettings);
+    end;
+  end else begin
+    TPngInterface.LoadPngFile(SrcFile, aDst);
+    TPngInterface.MaskImageFromFile(aDst, ChangeFileExt(SrcFile, '_mask.png'), MaskColor);
+  end;
 end;
 
 // Pave the area of NumButtons buttons with the blank panel
