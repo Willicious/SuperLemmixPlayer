@@ -1124,7 +1124,7 @@ begin
     begin
       if (i > LemmingCountStartIndex) and (i <= LemmingCountStartIndex + 5) then
       begin
-        if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount then
+        if Game.LemmingsToSpawn + Game.LemmingsActive - Game.SpawnedDead < Level.Info.RescueCount - Game.LemmingsSaved then
         begin
           SpecialCombine := true;
           fCombineHueShift := -1 / 3;
