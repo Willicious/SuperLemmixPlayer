@@ -1580,6 +1580,7 @@ var
   i, i2: Integer;
   TempBMP, TempBMP2: TBitmap32;
   SL: TStringList;
+  CursorDir: String;
 const
   CURSOR_NAMES: array[1..CURSOR_TYPES] of String = (
     'standard',
@@ -1608,12 +1609,17 @@ begin
 
       SL.DelimitedText := CURSOR_NAMES[i];
 
-      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[0] + '.png', TempBMP);
+      if GameParams.HighResolution then
+        CursorDir := 'cursor-hr'
+      else
+        CursorDir := 'cursor';
+
+      TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + '/' + SL[0] + '.png', TempBMP);
 
       while SL.Count > 1 do
       begin
         SL.Delete(0);
-        TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/' + SL[0] + '.png', TempBMP2);
+        TPngInterface.LoadPngFile(AppPath + 'gfx/' + CursorDir + '/' + SL[0] + '.png', TempBMP2);
         TempBMP2.DrawMode := dmBlend;
         TempBMP2.CombineMode := cmMerge;
         TempBMP.Draw(TempBMP.BoundsRect, TempBMP2.BoundsRect, TempBMP2);
