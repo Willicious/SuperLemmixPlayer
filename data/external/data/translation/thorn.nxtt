@@ -480,16 +480,6 @@ $OBJECT
 $END
 
 $OBJECT
-  INDEX 2
-  COLLECTION bulletride_thorn
-  PIECE exit_top
-  LEFT_OFFSET 0
-  RIGHT_OFFSET 0
-  TOP_OFFSET 0
-  BOTTOM_OFFSET 0
-$END
-
-$OBJECT
   INDEX 3
   COLLECTION bulletride_thorn
   PIECE water_orange
