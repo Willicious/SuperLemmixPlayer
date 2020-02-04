@@ -1669,7 +1669,9 @@ begin
     fMaxZoom := (fMaxZoom + 1) div 2;
   end;
 
-  fInternalZoom := Max(Sca, 1);
+  Sca := Max(Sca, 1);
+
+  fInternalZoom := Sca;
   GameParams.TargetBitmap := Img.Bitmap;
   GameParams.TargetBitmap.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
   fGame.PrepareParams;
