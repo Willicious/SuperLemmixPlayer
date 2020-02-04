@@ -7,6 +7,9 @@ mklink /J bin\styles data\external\styles
 mklink /H bin\bass.dll data\external\bass.dll
 mklink /H bin\NLPackerDefaultData.ini data\external\NLPackerDefaultData.ini
 
+if not exist "bin\style_zips" mkdir "bin\style_zips"
+mklink /H "bin\style_zips\styles_md5s.ini" "data\styles_md5s.ini"
+
 if not exist "bin\levels" mkdir "bin\levels"
 mklink /J "bin\levels\Test Levels" "data\external\levels\Test Levels"
 mklink /J "bin\levels\CovoxLemmings" "data\external\levels\CovoxLemmings"
