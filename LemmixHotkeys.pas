@@ -49,12 +49,12 @@ type
                          lka_SkillRight,
                          lka_ReleaseMouse,
                          lka_ClearPhysics,
+                         lka_Projection,
+                         lka_SkillProjection,
                          lka_FallDistance,
                          lka_ZoomIn,
                          lka_ZoomOut,
-                         lka_Scroll,
-                         lka_Projection,
-                         lka_SkillProjection);
+                         lka_Scroll);
   PLemmixHotkeyAction = ^TLemmixHotkeyAction;
 
   TSpecialSkipCondition = (ssc_LastAction,
@@ -304,8 +304,8 @@ begin
   if s = 'release_mouse' then Result := lka_ReleaseMouse;
   if s = 'highlight' then Result := lka_Highlight;
   if s = 'clear_physics' then Result := lka_ClearPhysics;
-  //if s = 'projection' then Result := lka_Projection;
-  //if s = 'skill_projection' then Result := lka_SkillProjection;
+  if s = 'projection' then Result := lka_Projection;
+  if s = 'skill_projection' then Result := lka_SkillProjection;  
   if s = 'fall_distance' then Result := lka_FallDistance;
   if s = 'edit_replay' then Result := lka_EditReplay;
   if s = 'replay_insert' then Result := lka_ReplayInsert;
