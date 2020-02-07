@@ -120,8 +120,6 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Next Skill'
       'Release Mouse'
       'Clear Physics Mode'
-      'Projection'
-      'Skill Projection'
       'Fall Distance Template'
       'Zoom In'
       'Zoom Out'
