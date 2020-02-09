@@ -407,7 +407,7 @@ const
   READY_OBJECT_TYPES = // Any object not listed here, always returns *TRUE* (not false like the others)
     [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
   BUSY_OBJECT_TYPES = // Any object not listed here, always returns false
-    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_WINDOW, DOM_TRAPONCE];
+    [DOM_TRAP, DOM_TELEPORT, DOM_RECEIVER, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
   DISABLED_OBJECT_TYPES = // Any object not listed here, always returns false
     [DOM_EXIT, DOM_TRAP, DOM_PICKUP, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW, DOM_TRAPONCE];
   EXHAUSTED_OBJECT_TYPES = // Any object not listed here, always returns false
@@ -444,7 +444,7 @@ const
       else
         case TriggerEffectBase of
           DOM_TRAP, DOM_TELEPORT: Result := CurrentFrame > 0;
-          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_WINDOW: Result := CurrentFrame > 1;
+          DOM_TRAPONCE, DOM_LOCKEXIT, DOM_BUTTON, DOM_WINDOW: Result := CurrentFrame > 1;
           DOM_RECEIVER: Result := (CurrentFrame > 0) or HoldActive;
         end;
     end;
