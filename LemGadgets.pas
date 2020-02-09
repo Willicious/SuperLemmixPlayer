@@ -455,7 +455,7 @@ const
     Result := false;
     if TriggerEffectBase in DISABLED_OBJECT_TYPES then
     begin
-       if TriggerEffect = DOM_NONE then // locla trigger effect is set to DOM_NONE when disarmed trap, unmatched teleport / receiver
+       if TriggerEffect = DOM_NONE then // local trigger effect is set to DOM_NONE when disarmed trap, unmatched teleport / receiver
         Result := true
       else
         case TriggerEffectBase of
