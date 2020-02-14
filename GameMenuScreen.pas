@@ -640,7 +640,7 @@ end;
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
   if fUpdateCheckThread <> nil then
-    fUpdateCheckThread.Terminate;
+    fUpdateCheckThread.Kill;
   inherited CloseScreen(aNextScreen);
 end;
 
