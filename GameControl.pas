@@ -405,7 +405,7 @@ var
     if ZoomLevel < 1 then
     begin
       FullScreen := true;
-      ZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+      ZoomLevel := Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod);
     end;
 
     if ZoomLevel < 1 then
@@ -425,10 +425,10 @@ var
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
       if CompactSkillPanel then
-        WindowWidth := ZoomLevel * 320
+        WindowWidth := ZoomLevel * 320 * ResMod
       else
-        WindowWidth := ZoomLevel * 416;
-      WindowHeight := ZoomLevel * 200;
+        WindowWidth := ZoomLevel * 416 * ResMod;
+      WindowHeight := ZoomLevel * 200 * ResMod;
     end;
 
     // Once we've got our window size, ensure it can fit on the screen
@@ -438,8 +438,8 @@ var
       fWindowHeight := Screen.Height;
 
     // Disallow zoom levels that are too high
-    if fZoomLevel > Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS then
-      fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+    if fZoomLevel > Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod) + EXTRA_ZOOM_LEVELS then
+      fZoomLevel := Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod);
   end;
 
 begin
@@ -457,9 +457,9 @@ begin
     begin
       // When running under WINE without an existing config, let's default to windowed.
       FullScreen := false;
-      ZoomLevel := Max(Max((Screen.Width - 100) div 416, (Screen.Height - 100) div 200), 1);
-      WindowWidth := 416 * ZoomLevel;
-      WindowHeight := 200 * ZoomLevel;
+      ZoomLevel := Max(Max((Screen.Width - 100) div 416 div ResMod, (Screen.Height - 100) div 200 div ResMod), 1);
+      WindowWidth := 416 * ZoomLevel * ResMod;
+      WindowHeight := 200 * ZoomLevel * ResMod;
     end;
 
     UserName := SL.Values['UserName'];
@@ -494,12 +494,12 @@ begin
     WindowWidth := StrToIntDef(SL.Values['WindowWidth'], -1);
     WindowHeight := StrToIntDef(SL.Values['WindowHeight'], -1);
 
+    HighResolution := LoadBoolean('HighResolution', HighResolution);
+
     EnsureValidWindowSize;
 
     fLoadedWindowWidth := WindowWidth;
     fLoadedWindowHeight := WindowHeight;
-
-    HighResolution := LoadBoolean('HighResolution', HighResolution);
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
     LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
 

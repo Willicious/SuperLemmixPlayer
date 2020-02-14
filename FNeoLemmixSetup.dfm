@@ -30,14 +30,9 @@ object FNLSetup: TFNLSetup
     ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitHeight = 217
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
       TabVisible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 207
       object lblWelcome: TLabel
         Left = 16
         Top = 16
@@ -160,7 +155,6 @@ object FNLSetup: TFNLSetup
     Default = True
     TabOrder = 2
     OnClick = btnOKClick
-    ExplicitTop = 224
   end
   object btnExit: TButton
     Left = 304
@@ -171,6 +165,5 @@ object FNLSetup: TFNLSetup
     Caption = 'Exit'
     TabOrder = 1
     OnClick = btnExitClick
-    ExplicitTop = 224
   end
 end
