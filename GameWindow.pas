@@ -359,6 +359,7 @@ begin
   SkillPanel.Height := Max(SkillPanel.Zoom * 40 * ResMod, ClientHeight - SkillPanel.Top);
   SkillPanel.Image.Left := (ClientWidth - SkillPanel.Image.Width) div 2;
   SkillPanel.Image.Update;
+  SkillPanel.ResetMinimapPosition;
 
   MinScroll := -((GameParams.Level.Info.Width * fInternalZoom * ResMod) - Img.Width);
   MaxScroll := 0;
