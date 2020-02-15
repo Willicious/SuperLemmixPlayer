@@ -149,6 +149,8 @@ type
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
     procedure SetGame(const Value: TLemmingGame);
 
+    procedure ResetMinimapPosition;
+
     property Image: TImage32 read fImage;
 
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -1076,6 +1078,12 @@ begin
 end;
 
 
+
+procedure TBaseSkillPanel.ResetMinimapPosition;
+begin
+  fMinimapImage.Left := MinimapRect.Left * Trunc(fMinimapImage.Scale) + Image.Left;
+  fMinimapImage.Top := MinimapRect.Top * Trunc(fMinimapImage.Scale);
+end;
 
 procedure TBaseSkillPanel.DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
 var
