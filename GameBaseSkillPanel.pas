@@ -537,7 +537,7 @@ var
     SrcRect.Offset(0, SrcRect.Height * aFrame);
 
     OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmBlend;
     Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX * ResMod - Meta.FootX, footY * ResMod - Meta.FootY, SrcRect);
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
@@ -565,7 +565,7 @@ var
     SrcRect.Offset(0, SrcRect.Height * aFrame);
 
     OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmBlend;
     Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
