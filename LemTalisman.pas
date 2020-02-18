@@ -218,7 +218,9 @@ begin
     // Only use one skill
     for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if SkillLimit[i] < 0 then
-        Result := Result + 'using only ' + SKILL_NAMES[i] + 's';
+        Result := Result + 'using only ' + SKILL_NAMES[i] + 's'
+      else if SkillLimit[i] > 0 then
+        Result := Result + 'using ' + IntToStr(SkillLimit[i]) + ' or fewer ' + SKILL_NAMES[i] + 's and no other skills';
 
     HasSkillReq := true;
     HasSkillZeroReq := true;
