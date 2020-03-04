@@ -48,22 +48,6 @@ implementation
 
 uses Forms;
 
-(*
-const
-  // results from worst to best
-  OrigResultStrings: array[0..8] of string = (
-    'ROCK BOTTOM! I hope for your sake'      + #13 + 'that you nuked that level.',
-    'Better rethink your strategy before'    + #13 + 'you try this level again!',
-    'A little more practice on this level'   + #13 + 'is definitely recommended.',
-    'You got pretty close that time.'        + #13 + 'Now try again for that few % extra.',
-    'OH NO, So near and yet so far (teehee)' + #13 + 'Maybe this time.....',
-    'RIGHT ON. You can''t get much closer'   + #13 + 'than that. Let''s try the next...',
-    'That level seemed no problem to you on' + #13 + 'that attempt. Onto the next....',
-    'You totally stormed that level!'        + #13 + 'Let''s see if you can storm the next...',
-    'Superb! You rescued every lemmings on'  + #13 +  'that level. Can you do it again....'
-  );
-*)
-
 { TDosGamePreview }
 
 procedure TGamePostviewScreen.CloseScreen(aNextScreen: TGameScreenType);
