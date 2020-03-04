@@ -74,7 +74,8 @@ type
     baCloning,
     baFencing,
     baReaching,
-    baShimmying
+    baShimmying,
+    baJumping
   );
 
 const
@@ -85,6 +86,7 @@ type
 
 
     spbWalker,
+    spbJumper,
     spbShimmier,
     spbClimber,
     spbSwimmer,
@@ -126,6 +128,7 @@ const
 
   SKILL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
     'walker',
+    'jumper',
     'shimmier',
     'climber',
     'swimmer',
@@ -188,7 +191,8 @@ const
     baFixing,
     baCloning,
     baFencing,
-    baShimmying
+    baShimmying,
+    baJumping
   ];
 
 const
@@ -223,13 +227,15 @@ const
     spbCloner,
     spbFencer,
     spbNone,
-    spbShimmier
+    spbShimmier,
+    spbJumper
   );
 
 const
   SkillPanelButtonToAction: array[TSkillPanelButton] of TBasicLemmingAction = (
 
     baToWalking,
+    baJumping,
     baShimmying,
     baClimbing,
     baSwimming,
