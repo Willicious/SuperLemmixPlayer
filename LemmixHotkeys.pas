@@ -319,6 +319,7 @@ class function TLemmixHotkeyManager.InterpretSecondary(s: String): Integer;
     s := LowerCase(s);
 
     if s = 'walker' then Result := Integer(spbWalker)
+    else if s = 'jumper' then Result := Integer(spbJumper)
     else if s = 'shimmier' then Result := Integer(spbShimmier)
     else if s = 'climber' then Result := Integer(spbClimber)
     else if s = 'swimmer' then Result := Integer(spbSwimmer)
@@ -462,6 +463,7 @@ var
     case aMain of
       lka_Skill:  case aValue of
                     Integer(spbWalker):     Result := 'Walker';
+                    Integer(spbJumper):     Result := 'Jumper';
                     Integer(spbShimmier):   Result := 'Shimmier';
                     Integer(spbClimber):    Result := 'Climber';
                     Integer(spbSwimmer):    Result := 'Swimmer';

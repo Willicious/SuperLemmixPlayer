@@ -88,6 +88,7 @@ var
             baCloning:     Result := 'Cloner';
             baFencing:     Result := 'Fencer';
             baShimmying:   Result := 'Shimmier';
+            baJumping:     Result := 'Jumper';
         else Result := '(Invalid skill)';
       end;
     end;
