@@ -451,7 +451,7 @@ $ANIMATIONS
   $END
   
   $JUMPER
-    FRAMES 8
+    FRAMES 3
 
     $RIGHT
       FOOT_X 8

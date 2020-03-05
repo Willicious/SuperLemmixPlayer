@@ -4057,7 +4057,7 @@ end;
 
 function TLemmingGame.HandleJumping(L: TLemming): Boolean;
 begin
-  if L.LemPhysicsFrame = 7 then Transition(L, baWalking);
+  if L.LemPhysicsFrame = 2 then Transition(L, baWalking);
   Result := true;
 end;
 
