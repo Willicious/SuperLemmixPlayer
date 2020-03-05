@@ -4060,10 +4060,12 @@ function TLemmingGame.HandleJumping(L: TLemming): Boolean;
 const
   JUMPER_ARC_FRAMES = 13;
 
-  procedure MakeJumpMovement;
+  function MakeJumpMovement: Boolean;
   type
     TJumpPattern = array[0..5] of array[0..1] of Integer;
   const
+    // Each entry in a pattern should only move ONE pixel, be it horizontal or vertical. Horizontal
+    // movements here are for right-facing lemmings.
     JUMP_PATTERN_00: TJumpPattern = (( 0, -1), ( 0, -1), ( 1,  0), ( 0, -1), ( 0, -1), ( 1,  0)); // occurs twice
     JUMP_PATTERN_01: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)); // occurs twice
     JUMP_PATTERN_02: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0,  0));
@@ -4076,7 +4078,11 @@ const
   var
     Pattern: TJumpPattern;
     i: Integer;
+
+    CheckX: Integer;
   begin
+    Result := true;
+
     case L.LemJumpProgress of
       0..1: Pattern := JUMP_PATTERN_00;
       2..3: Pattern := JUMP_PATTERN_01;
@@ -4093,16 +4099,26 @@ const
     for i := 0 to 5 do
     begin
       if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then Break;
-      L.LemX := L.LemX + Pattern[i][0];
+
+      L.LemX := L.LemX + (Pattern[i][0] * L.LemDX);
       L.LemY := L.LemY + Pattern[i][1];
+
+      if HasPixelAt(L.LemX, L.LemY) then
+      begin
+        Transition(L, baWalking);
+        Result := false;
+        Break;
+      end;
     end;
   end;
 begin
-  MakeJumpMovement;
 
-  Inc(L.LemJumpProgress);
-  if L.LemJumpProgress = JUMPER_ARC_FRAMES then
-    Transition(L, baWalking);
+  if MakeJumpMovement then
+  begin
+    Inc(L.LemJumpProgress);
+    if L.LemJumpProgress = JUMPER_ARC_FRAMES then
+      Transition(L, baWalking);
+  end;
 
   Result := true;
 end;
