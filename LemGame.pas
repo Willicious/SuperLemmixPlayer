@@ -330,6 +330,7 @@ type
     function HandleFencing(L: TLemming): Boolean;
     function HandleReaching(L: TLemming) : Boolean;
     function HandleShimmying(L: TLemming) : Boolean;
+    function HandleJumping(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -357,6 +358,7 @@ type
     function MayAssignDigger(L: TLemming): Boolean;
     function MayAssignCloner(L: TLemming): Boolean;
     function MayAssignShimmier(L: TLemming) : Boolean;
+    function MayAssignJumper(L: TLemming) : Boolean;
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -872,6 +874,7 @@ begin
   LemmingMethods[baFencing]    := HandleFencing;
   LemmingMethods[baReaching]   := HandleReaching;
   LemmingMethods[baShimmying]  := HandleShimmying;
+  LemmingMethods[baJumping]    := HandleJumping;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -902,6 +905,7 @@ begin
   NewSkillMethods[baCloning]      := MayAssignCloner;
   NewSkillMethods[baFencing]      := MayAssignFencer;
   NewSkillMethods[baShimmying]    := MayAssignShimmier;
+  NewSkillMethods[baJumping]      := MayAssignJumper;
 
   P := AppPath;
 
@@ -2120,6 +2124,15 @@ begin
 
     CopyL.Free;
   end;
+end;
+
+function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
+const
+  ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
+               baShrugging, baPlatforming, baStacking, baFencing];
+  // baClimbing maybe? consider this later
+begin
+  Result := (L.LemAction in ActionSet);
 end;
 
 function TLemmingGame.GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
@@ -4040,6 +4053,12 @@ begin
         Exit;
       end;
   end
+end;
+
+function TLemmingGame.HandleJumping(L: TLemming): Boolean;
+begin
+  if L.LemPhysicsFrame = 7 then Transition(L, baWalking);
+  Result := true;
 end;
 
 function TLemmingGame.FindGroundPixel(x, y: Integer): Integer;
