@@ -514,10 +514,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..17] of TBasicLemmingAction =
+  ActionListArray: array[0..18] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
-             baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying);
+             baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
+             baJumping);
 
 
 
@@ -649,7 +650,7 @@ begin
   aState.EntriesOpened := HatchesOpened;
   aState.CurrSpawnInterval := CurrSpawnInterval;
 
-  for i := 0 to 17 do
+  for i := 0 to Integer(LAST_SKILL_BUTTON) do
   begin
     aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
     aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
@@ -699,7 +700,7 @@ begin
   HatchesOpened := aState.EntriesOpened;
   CurrSpawnInterval := aState.CurrSpawnInterval;
 
-  for i := 0 to 17 do
+  for i := 0 to Integer(LAST_SKILL_BUTTON) do
   begin
     CurrSkillCount[ActionListArray[i]] := aState.CurrSkillCount[ActionListArray[i]];
     UsedSkillCount[ActionListArray[i]] := aState.UsedSkillCount[ActionListArray[i]];
@@ -1039,7 +1040,7 @@ begin
       if SkillPanelButtonToAction[Skill] <> baNone then
         CurrSkillCount[SkillPanelButtonToAction[Skill]] := SkillCount[Skill];
     // Initialize used skills
-    for i := 0 to 16 do
+    for i := 0 to Integer(LAST_SKILL_BUTTON) do
       UsedSkillCount[ActionListArray[i]] := 0;
   end;
 
