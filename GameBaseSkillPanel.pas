@@ -644,11 +644,13 @@ begin
       fSkillIcons[Button].SetSize(15 * ResMod, 23 * ResMod);
 
     //////////////////////////////////////////////////////////
-    ///  This code is mostly copied to GameBaseSkillPanel. ///
+    ///  This code is mostly copied to LemGadgetAnimation. ///
     //////////////////////////////////////////////////////////
 
-    // Walker, Climber, - both simple
+    // Walker, Jumper, Shimmier, Climber, - all simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 21);
+    DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 21);
+    DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 20);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 22);
 
     // Swimmer - we need to draw the background water
@@ -660,11 +662,10 @@ begin
     fSkillIcons[spbSwimmer].FillRect(0, 18 * ResMod, 15 * ResMod, 23 * ResMod, $FF0000FF);
     TempBmp.DrawTo(fSkillIcons[spbSwimmer]);
 
-    // Floater, Glider, Disarmer, Shimmier - all simple
+    // Floater, Glider, Disarmer - all simple
     DrawAnimationFrame(fSkillIcons[spbFloater], UMBRELLA, 4, 7, 26);
     DrawAnimationFrame(fSkillIcons[spbGlider], GLIDING, 4, 7, 26);
     DrawAnimationFrame(fSkillIcons[spbDisarmer], FIXING, 6, 4, 21);
-    DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 20);
 
     // Bomber is drawn resized
     DrawAnimationFrameResized(fSkillIcons[spbBomber], EXPLOSION, 0, Rect(-2, 7, 15, 24));
