@@ -649,7 +649,7 @@ begin
 
     // Walker, Jumper, Shimmier, Climber, - all simple
     DrawAnimationFrame(fSkillIcons[spbWalker], WALKING, 1, 6, 21);
-    DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 21);
+    DrawAnimationFrame(fSkillIcons[spbJumper], JUMPING, 0, 6, 20);
     DrawAnimationFrame(fSkillIcons[spbShimmier], SHIMMYING, 1, 7, 20);
     DrawAnimationFrame(fSkillIcons[spbClimber], CLIMBING, 3, 10, 22);
 
