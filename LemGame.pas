@@ -1359,6 +1359,16 @@ begin
     Inc(L.LemX, L.LemDx);
   end;
 
+  if (NewAction = baShimmying) and (L.LemAction = baJumping) then
+  begin
+    for i := -1 to 3 do
+      if HasPixelAt(L.LemX, L.LemY - 9 - i) and not HasPixelAt(L.LemX, L.LemY - 8 - i) then
+      begin
+        L.LemY := L.LemY - i;
+        Break;
+      end;
+  end;
+
   // Change Action
   L.LemAction := NewAction;
   L.LemFrame := 0;
@@ -1770,7 +1780,7 @@ begin
   end
   else if (NewSkill = baShimmying) then
   begin
-    if L.LemAction = baClimbing then
+    if L.LemAction in [baClimbing, baJumping] then
       Transition(L, baShimmying)
     else
       Transition(L, baReaching);
@@ -2109,6 +2119,7 @@ const
                baBashing, baFencing, baMining, baDigging];
 var
   CopyL: TLemming;
+  i: Integer;
 begin
   Result := (L.LemAction in ActionSet);
   if L.LemAction = baClimbing then
@@ -2124,6 +2135,14 @@ begin
       Result := True;
 
     CopyL.Free;
+  end else if L.LemAction = baJumping then
+  begin
+    for i := -1 to 3 do
+      if HasPixelAt(L.LemX, L.LemY - 9 - i) and not HasPixelAt(L.LemX, L.LemY - 8 - i) then
+      begin
+        Result := true;
+        Break;
+      end;
   end;
 end;
 
@@ -4153,6 +4172,16 @@ const
         end;
       end;
 
+      if (Pattern[i][1] < 0) then // Head check
+      begin
+        for n := 1 to 9 do
+          if HasPixelAt(L.LemX, L.LemY - n) then
+          begin
+            Transition(L, baFalling);
+            Exit;
+          end;
+      end;
+
       L.LemX := L.LemX + (Pattern[i][0] * L.LemDX);
       L.LemY := L.LemY + Pattern[i][1];
 
@@ -4166,7 +4195,6 @@ const
     Result := true;
   end;
 begin
-
   if MakeJumpMovement then
   begin
     Inc(L.LemJumpProgress);
