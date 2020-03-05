@@ -4078,10 +4078,11 @@ const
   var
     Pattern: TJumpPattern;
     i: Integer;
+    n: Integer;
 
     CheckX: Integer;
   begin
-    Result := true;
+    Result := false;
 
     case L.LemJumpProgress of
       0..1: Pattern := JUMP_PATTERN_00;
@@ -4100,16 +4101,54 @@ const
     begin
       if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then Break;
 
+      if (Pattern[i][0] <> 0) then // Wall check
+      begin
+        CheckX := L.LemX + L.LemDX;
+        if HasPixelAt(CheckX, L.LemY) then
+        begin
+          for n := 1 to 8 do
+          begin
+            if not HasPixelAt(CheckX, L.LemY - n) then
+            begin
+              if n <= 2 then
+              begin
+                L.LemX := CheckX;
+                L.LemY := L.LemY - n + 1;
+                Transition(L, baWalking);
+              end else begin
+                L.LemX := CheckX;
+                L.LemY := L.LemY - n + 8;
+                Transition(L, baHoisting);
+              end;
+
+              Exit;
+            end;
+
+            if ((n = 5) and not (L.LemIsClimber)) or (n = 7) then
+            begin
+              if L.LemIsClimber then
+              begin
+                L.LemX := CheckX;
+                Transition(L, baClimbing);
+              end else
+                Transition(L, baFalling);
+              Exit;
+            end;
+          end;
+        end;
+      end;
+
       L.LemX := L.LemX + (Pattern[i][0] * L.LemDX);
       L.LemY := L.LemY + Pattern[i][1];
 
       if HasPixelAt(L.LemX, L.LemY) then
       begin
         Transition(L, baWalking);
-        Result := false;
-        Break;
+        Exit;
       end;
     end;
+
+    Result := true;
   end;
 begin
 
