@@ -4124,6 +4124,12 @@ const
                 L.LemX := CheckX;
                 L.LemY := L.LemY - n + 1;
                 Transition(L, baWalking);
+              end else if n <= 5 then begin
+                L.LemX := CheckX;
+                L.LemY := L.LemY - n + 5;
+                Transition(L, baHoisting);
+                Inc(L.LemFrame, 2);
+                Inc(L.LemPhysicsFrame, 2);
               end else begin
                 L.LemX := CheckX;
                 L.LemY := L.LemY - n + 8;
