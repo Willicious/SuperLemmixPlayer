@@ -4059,30 +4059,46 @@ end;
 function TLemmingGame.HandleJumping(L: TLemming): Boolean;
 const
   JUMPER_ARC_FRAMES = 13;
-  JUMPER_ARC: array[0..JUMPER_ARC_FRAMES-1] of array[0..1] of Integer =
-    ( (2, -4),
-      (2, -4),
-      (3, -3),
-      (3, -3),
-      (3, -2),
-      (3, -2),
-      (4, 0),
-      (3, 2),
-      (3, 2),
-      (3, 3),
-      (3, 3),
-      (2, 4),
-      (2, 4)
-    );
-var
-  XMov: Integer;
-  YMov: Integer;
-begin
-  XMov := JUMPER_ARC[L.LemJumpProgress][0];
-  YMov := JUMPER_ARC[L.LemJumpProgress][1];
 
-  L.LemX := L.LemX + (XMov * L.LemDX);
-  L.LemY := L.LemY + YMov;
+  procedure MakeJumpMovement;
+  type
+    TJumpPattern = array[0..5] of array[0..1] of Integer;
+  const
+    JUMP_PATTERN_00: TJumpPattern = (( 0, -1), ( 0, -1), ( 1,  0), ( 0, -1), ( 0, -1), ( 1,  0)); // occurs twice
+    JUMP_PATTERN_01: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)); // occurs twice
+    JUMP_PATTERN_02: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0,  0));
+    JUMP_PATTERN_03: TJumpPattern = (( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 0,  0));
+    JUMP_PATTERN_04: TJumpPattern = (( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 0,  0), ( 0,  0));
+    JUMP_PATTERN_05: TJumpPattern = (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 0,  0));
+    JUMP_PATTERN_06: TJumpPattern = (( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  0));
+    JUMP_PATTERN_07: TJumpPattern = (( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1)); // occurs twice
+    JUMP_PATTERN_08: TJumpPattern = (( 1,  0), ( 0,  1), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1)); // occurs twice
+  var
+    Pattern: TJumpPattern;
+    i: Integer;
+  begin
+    case L.LemJumpProgress of
+      0..1: Pattern := JUMP_PATTERN_00;
+      2..3: Pattern := JUMP_PATTERN_01;
+      4: Pattern := JUMP_PATTERN_02;
+      5: Pattern := JUMP_PATTERN_03;
+      6: Pattern := JUMP_PATTERN_04;
+      7: Pattern := JUMP_PATTERN_05;
+      8: Pattern := JUMP_PATTERN_06;
+      9..10: Pattern := JUMP_PATTERN_07;
+      11..12: Pattern := JUMP_PATTERN_08;
+      else Exit;
+    end;
+
+    for i := 0 to 5 do
+    begin
+      if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then Break;
+      L.LemX := L.LemX + Pattern[i][0];
+      L.LemY := L.LemY + Pattern[i][1];
+    end;
+  end;
+begin
+  MakeJumpMovement;
 
   Inc(L.LemJumpProgress);
   if L.LemJumpProgress = JUMPER_ARC_FRAMES then
