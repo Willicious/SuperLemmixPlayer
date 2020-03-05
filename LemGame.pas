@@ -1410,7 +1410,7 @@ begin
                      Dec(L.LemY, i);
                    end;
     baFixing     : L.LemDisarmingFrames := 42;
-
+    baJumping    : L.LemJumpProgress := 0;
   end;
 end;
 
@@ -4056,8 +4056,37 @@ begin
 end;
 
 function TLemmingGame.HandleJumping(L: TLemming): Boolean;
+const
+  JUMPER_ARC_FRAMES = 13;
+  JUMPER_ARC: array[0..JUMPER_ARC_FRAMES-1] of array[0..1] of Integer =
+    ( (2, -4),
+      (2, -4),
+      (3, -3),
+      (3, -3),
+      (3, -2),
+      (3, -2),
+      (4, 0),
+      (3, 2),
+      (3, 2),
+      (3, 3),
+      (3, 3),
+      (2, 4),
+      (2, 4)
+    );
+var
+  XMov: Integer;
+  YMov: Integer;
 begin
-  if L.LemPhysicsFrame = 2 then Transition(L, baWalking);
+  XMov := JUMPER_ARC[L.LemJumpProgress][0];
+  YMov := JUMPER_ARC[L.LemJumpProgress][1];
+
+  L.LemX := L.LemX + (XMov * L.LemDX);
+  L.LemY := L.LemY + YMov;
+
+  Inc(L.LemJumpProgress);
+  if L.LemJumpProgress = JUMPER_ARC_FRAMES then
+    Transition(L, baWalking);
+
   Result := true;
 end;
 

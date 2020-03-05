@@ -103,6 +103,8 @@ type
     LemTimerToStone               : Boolean;
     LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Stoner
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
+    LemJumpProgress               : Integer;
+
     // The next three values are only needed to determine intermediate trigger area checks
     // They are set in HandleLemming
     LemXOld                       : Integer; // position of previous frame
@@ -287,6 +289,7 @@ begin
   LemTimerToStone := Source.LemTimerToStone;
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
+  LemJumpProgress := Source.LemJumpProgress;
   LemXOld := Source.LemXOld;
   LemYOld := Source.LemYOld;
   LemActionOld := Source.LemActionOld;
