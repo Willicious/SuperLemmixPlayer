@@ -4273,8 +4273,8 @@ begin
       if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then L.LemFallen := 0;
     end;
 
-    if L.LemFallen > MAX_FALLDISTANCE then L.LemFallen := MAX_FALLDISTANCE;
-    if L.LemTrueFallen > MAX_FALLDISTANCE then L.LemTrueFallen := MAX_FALLDISTANCE;
+    if L.LemFallen > MAX_FALLDISTANCE then L.LemFallen := MAX_FALLDISTANCE + 1;
+    if L.LemTrueFallen > MAX_FALLDISTANCE then L.LemTrueFallen := MAX_FALLDISTANCE + 1;
     
 
     if CurrFallDist < MaxFallDist then
