@@ -4198,7 +4198,9 @@ begin
   if MakeJumpMovement then
   begin
     Inc(L.LemJumpProgress);
-    if L.LemJumpProgress = JUMPER_ARC_FRAMES then
+    if (L.LemJumpProgress >= 8) and (L.LemIsGlider) then
+      Transition(L, baGliding)
+    else if L.LemJumpProgress = JUMPER_ARC_FRAMES then
       Transition(L, baWalking);
   end;
 
