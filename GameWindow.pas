@@ -1328,7 +1328,7 @@ begin
       lka_SaveImage: SaveShot;
       lka_LoadReplay: LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
-      lka_Restart: GotoSaveState(0, -1); // the -1 prevents pausing afterwards
+      lka_Restart: GotoSaveState(0);
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
       lka_SaveReplay: SaveReplay;
       lka_SkillRight: begin
