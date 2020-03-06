@@ -209,10 +209,13 @@ begin
 
           Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
 
-          if ThisAnimSec.Line['loop_to_frame'] = nil then
-            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe']
+          if ThisAnimSec.Line['peak_frame'] <> nil then
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['peak_frame']
+          else if ThisAnimSec.Line['loop_to_frame'] <> nil then
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame']
           else
-            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame'];
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe']; // this one is deprecated, BOTH others are valid
+
           Anim.FootX := DirSec.LineNumeric['foot_x'];
           Anim.FootY := DirSec.LineNumeric['foot_y'];
           Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];

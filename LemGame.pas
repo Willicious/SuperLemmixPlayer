@@ -3007,16 +3007,7 @@ begin
   // No transition to do at the end of lemming movement
   fLemNextAction := baNone;
 
-  if (L.LemAction = baJumping) then
-  begin
-    case L.LemJumpProgress of
-      0..5: L.LemFrame := 0;
-      6: L.LemFrame := 1;
-      7..12: L.LemFrame := 2;
-    end;
-  end else
-    Inc(L.LemFrame);
-
+  Inc(L.LemFrame);
   Inc(L.LemPhysicsFrame);
 
   if L.LemPhysicsFrame > L.LemMaxPhysicsFrame then

@@ -452,15 +452,16 @@ $ANIMATIONS
   
   $JUMPER
     FRAMES 3
+    PEAK_FRAME 1
 
     $RIGHT
       FOOT_X 8
-      FOOT_Y 9
+      FOOT_Y 10
     $END
 
     $LEFT
       FOOT_X 9
-      FOOT_Y 9
+      FOOT_Y 10
     $END
   $END
 $END
