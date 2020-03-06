@@ -1315,13 +1315,13 @@ begin
       lka_Cheat: Game.Cheat;
       lka_FastForward: begin
                          case fGameSpeed of
-                           gspNormal, gspSlowMo: GameSpeed := gspFF;
+                           gspNormal, gspSlowMo, gspPause: GameSpeed := gspFF;
                            gspFF: GameSpeed := gspNormal;
                          end;
                        end;
       lka_SlowMotion: begin
                         case fGameSpeed of
-                          gspNormal, gspFF: GameSpeed := gspSlowMo;
+                          gspNormal, gspFF, gspPause: GameSpeed := gspSlowMo;
                           gspSlowMo: GameSpeed := gspNormal;
                         end;
                       end;
