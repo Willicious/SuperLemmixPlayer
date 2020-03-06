@@ -1270,7 +1270,7 @@ begin
     if (func.Action = lka_CancelReplay) then
       Game.RegainControl(true); // force the cancel even if in Replay Insert mode
 
-    if (func.Action in [lka_ReleaseRateDown, lka_ReleaseRateUp]) then
+    if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
       Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
 
     if func.Action = lka_Skill then
@@ -1281,8 +1281,10 @@ begin
 
     case func.Action of
       lka_ReleaseMouse: ReleaseMouse;
+      lka_ReleaseRateMax: SetSelectedSkill(spbFaster, True, True);
       lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
       lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
+      lka_ReleaseRateMin: SetSelectedSkill(spbSlower, True, True);
       lka_Pause: begin
                    if fGameSpeed = gspPause then
                      GameSpeed := gspNormal

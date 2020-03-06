@@ -21,8 +21,10 @@ type
                          lka_Skill,
                          lka_ShowAthleteInfo,
                          lka_Exit,
+                         lka_ReleaseRateMax,
                          lka_ReleaseRateUp,
                          lka_ReleaseRateDown,
+                         lka_ReleaseRateMin,
                          lka_Pause,
                          lka_Nuke,
                          lka_SaveState,
@@ -278,8 +280,10 @@ begin
   if s = 'skill' then Result := lka_Skill;
   if s = 'athlete_info' then Result := lka_ShowAthleteInfo;
   if s = 'quit' then Result := lka_Exit;
+  if s = 'rr_max' then Result := lka_ReleaseRateMax;
   if s = 'rr_up' then Result := lka_ReleaseRateUp;
   if s = 'rr_down' then Result := lka_ReleaseRateDown;
+  if s = 'rr_min' then Result := lka_ReleaseRateMin;
   if s = 'pause' then Result := lka_Pause;
   if s = 'nuke' then Result := lka_Nuke;
   if s = 'save_state' then Result := lka_SaveState;
@@ -419,8 +423,10 @@ var
       lka_Skill:            Result := 'Skill';
       lka_ShowAthleteInfo:  Result := 'Athlete_Info';
       lka_Exit:             Result := 'Quit';
+      lka_ReleaseRateMax:   Result := 'RR_Max';
       lka_ReleaseRateUp:    Result := 'RR_Up';
       lka_ReleaseRateDown:  Result := 'RR_Down';
+      lka_ReleaseRateMin:   Result := 'RR_Min';
       lka_Pause:            Result := 'Pause';
       lka_Nuke:             Result := 'Nuke';
       lka_SaveState:        Result := 'Save_State';
