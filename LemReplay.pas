@@ -83,9 +83,7 @@ type
     private
       fNewSpawnInterval: Integer;
       fSpawnedLemmingCount: Integer;
-      fIsOldReplay: Boolean;
     protected
-      constructor Create(IsOld: Boolean = false); overload;
       procedure DoLoadSection(Sec: TParserSection); override;
       procedure DoSave(Sec: TParserSection); override;
       procedure InitializeValues(); override;
@@ -140,7 +138,6 @@ type
       procedure SaveToFile(aFile: String; aMarkAsUnmodified: Boolean = false);
       procedure LoadFromStream(aStream: TStream);
       procedure SaveToStream(aStream: TStream; aMarkAsUnmodified: Boolean = false);
-      procedure LoadOldReplayFile(aFile: String);
       procedure Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
       function HasAnyActionAt(aFrame: Integer): Boolean;
       property PlayerName: String read fPlayerName write fPlayerName;
@@ -202,77 +199,6 @@ begin
   Result := SkillPanelButtonToAction[GetSkillButton(aName)];
 end;
 
-// Stuff for the old LRB format
-type
-  TReplayFileHeaderRec = packed record
-    Signature         : array[0..2] of AnsiChar;     //  3 bytes -  3
-    Version           : Byte;                    //  1 byte  -  4
-    FileSize          : Integer;                 //  4 bytes -  8
-    HeaderSize        : Word;                    //  2 bytes - 10
-    Mechanics         : Word;                    //  2 bytes - 12
-    FirstRecordPos    : Integer;                 //  4 bytes - 16
-    ReplayRecordSize  : Word;                    //  2 bytes - 18
-    ReplayRecordCount : Word;                    //  2 bytes - 20
-
-    ReplayGame        : Byte;
-    ReplaySec         : Byte;
-    ReplayLev         : Byte;
-    ReplayOpt         : Byte;
-
-    ReplayTime        : LongWord;
-    ReplaySaved       : Word;
-
-    ReplayLevelID    : LongWord;
-
-    Reserved        : array[0..29] of AnsiChar;
-  end;
-
-  TReplayRec = packed record
-    Check          : Char;         //  1 byte  -  1
-    Iteration      : Integer;      //  4 bytes -  5
-    ActionFlags    : Word;         //  2 bytes -  7
-    AssignedSkill  : Byte;         //  1 byte  -  8
-    SelectedButton : Byte;         //  1 byte  -  9
-    ReleaseRate    : Integer;      //  4 bytes  - 13
-    LemmingIndex   : Integer;      //  4 bytes - 17
-    LemmingX       : Integer;      //  4 bytes - 21
-    LemmingY       : Integer;      //  4 bytes - 25
-    CursorX        : SmallInt;     //  2 bytes - 27
-    CursorY        : SmallInt;     //  2 bytes - 29
-    SelectDir      : ShortInt;
-    Reserved2      : Byte;
-    Reserved3      : Byte;         // 32
-  end;
-
-const
-  //Recorded Action Flags
-	raf_StartIncreaseRR   = $0008;
-	raf_StartDecreaseRR   = $0010;
-	raf_StopChangingRR    = $0020;
-	raf_SkillSelection    = $0040;
-	raf_SkillAssignment   = $0080;
-	raf_Nuke              = $0100;
-
-  BUTTON_TABLE: array[0..20] of TSkillPanelButton =
-                 (spbNone, spbNone, spbNone,
-                  spbClimber,
-                  spbFloater,
-                  spbBomber,
-                  spbBlocker,
-                  spbBuilder,
-                  spbBasher,
-                  spbMiner,
-                  spbDigger,
-                  spbNone, spbNone,
-                  spbWalker,
-                  spbSwimmer,
-                  spbGlider,
-                  spbDisarmer,
-                  spbStoner,
-                  spbPlatformer,
-                  spbStacker,
-                  spbCloner);
-
 { TReplay }
 
 constructor TReplay.Create;
@@ -293,8 +219,7 @@ end;
 class function TReplay.GetSaveFileName(aOwner: TComponent; aLevel: TLevel; TestModeName: Boolean = false): String;
 var
   RankName: String;
-  SaveNameLrb: String;
-  SaveText: Boolean;
+  SaveName: String;
 
   function GetReplayFileName(TestModeName: Boolean): String;
   begin
@@ -355,29 +280,26 @@ var
     Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
-    Dlg.DefaultExt := '.lrb';
+    Dlg.DefaultExt := '.nxrp';
     Dlg.Options := [ofOverwritePrompt, ofEnableSizing];
     Dlg.FileName := DefaultFileName;
     if Dlg.Execute then
     begin
       LastReplayDir := ExtractFilePath(Dlg.FileName);
-      SaveText := (dlg.FilterIndex = 2);
       Result := Dlg.FileName;
     end else
       Result := '';
     Dlg.Free;
   end;
 begin
-  SaveText := false;
-
   RankName := GameParams.CurrentGroupName;
 
-  SaveNameLrb := GetReplayFileName(TestModeName);
+  SaveName := GetReplayFileName(TestModeName);
 
   if GameParams.ReplayAutoName or TestModeName then
-    Result := GetDefaultSavePath + SaveNameLrb
+    Result := GetDefaultSavePath + SaveName
   else
-    Result := GetSavePath(SaveNameLrb);
+    Result := GetSavePath(SaveName);
 end;
 
 procedure TReplay.Add(aItem: TBaseReplayItem);
@@ -514,17 +436,11 @@ begin
     fLevelName := Sec.LineString['title'];
     fLevelAuthor := Sec.LineString['author'];
     fLevelGame := Sec.LineString['game'];
-    fLevelRank := Sec.LineString['group']; // Not bothering with BC because this isn't used for anything, anyway.
+    fLevelRank := Sec.LineString['group'];
     fLevelPosition := Sec.LineNumeric['level'];
-    if Length(Sec.LineTrimString['id']) = 9 then
-    begin
-      fLevelID := Cardinal(Sec.LineNumeric['id']);
-      fLevelID := fLevelID or (fLevelID shl 32)
-    end else
-      fLevelID := Sec.LineNumeric['id'];
+    fLevelID := Sec.LineNumeric['id'];
 
     Sec.DoForEachSection('assignment', HandleLoadSection);
-    Sec.DoForEachSection('release_rate', HandleLoadSection);
     Sec.DoForEachSection('spawn_interval', HandleLoadSection);
     Sec.DoForEachSection('nuke', HandleLoadSection);
 
@@ -541,8 +457,7 @@ var
 begin
   Item := nil;
   if aSection.Keyword = 'assignment' then Item := TReplaySkillAssignment.Create;
-  if aSection.Keyword = 'release_rate' then Item := TReplayChangeSpawnInterval.Create(true);
-  if aSection.Keyword = 'spawn_interval' then Item := TReplayChangeSpawnInterval.Create(false);
+  if aSection.Keyword = 'spawn_interval' then Item := TReplayChangeSpawnInterval.Create;
   if aSection.Keyword = 'nuke' then Item := TReplayNuke.Create;
 
   if Item = nil then Exit;
@@ -691,82 +606,6 @@ begin
       Break;
       // This is to remove the extra $END added before the first action
     end;
-  end;
-end;
-
-procedure TReplay.LoadOldReplayFile(aFile: String);
-var
-  MS: TMemoryStream;
-  Header: TReplayFileHeaderRec;
-  Item: TReplayRec;
-  LastReleaseRate: Integer;
-
-  procedure CreateAssignEntry;
-  var
-    E: TReplaySkillAssignment;
-  begin
-    E := TReplaySkillAssignment.Create;
-    E.Skill := TBasicLemmingAction(Item.AssignedSkill);
-    E.LemmingIndex := Item.LemmingIndex;
-    E.LemmingX := Item.LemmingX;
-    E.LemmingDx := Item.SelectDir; // it's the closest we've got
-    E.LemmingHighlit := false; // we can't tell for old replays
-    E.Frame := Item.Iteration;
-    Add(E);
-  end;
-
-  procedure CreateNukeEntry;
-  var
-    E: TReplayNuke;
-  begin
-    E := TReplayNuke.Create;
-    E.Frame := Item.Iteration;
-    Add(E);
-  end;
-
-  procedure CreateSpawnIntervalEntry;
-  var
-    E: TReplayChangeSpawnInterval;
-  begin
-    E := TReplayChangeSpawnInterval.Create;
-    E.NewSpawnInterval := 53 - (Item.ReleaseRate div 2);
-    E.SpawnedLemmingCount := -1; // we don't know
-    E.Frame := Item.Iteration;
-    Add(E);
-  end;
-
-begin
-  Clear(true);
-  MS := TMemoryStream.Create;
-  try
-    MS.LoadFromFile(aFile);
-    MS.Position := 0;
-    MS.Read(Header, SizeOf(TReplayFileHeaderRec));
-
-    fLevelID := Header.ReplayLevelID;
-    fLevelID := fLevelID or (fLevelID shl 32);
-
-    MS.Position := Header.FirstRecordPos;
-    LastReleaseRate := 0;
-
-    while MS.Read(Item, SizeOf(TReplayRec)) = SizeOf(TReplayRec) do
-    begin
-      if Item.ReleaseRate <> LastReleaseRate then
-      begin
-        CreateSpawnIntervalEntry;
-        LastReleaseRate := Item.ReleaseRate;
-        if Item.ActionFlags and $38 <> 0 then Continue;
-      end;
-
-      if Item.ActionFlags and raf_SkillAssignment <> 0 then
-        CreateAssignEntry;
-
-      if Item.ActionFlags and raf_Nuke <> 0 then
-        CreateNukeEntry;
-    end;
-  finally
-    fIsModified := false;
-    MS.Free;
   end;
 end;
 
@@ -921,12 +760,6 @@ begin
 end;
 
 { TReplaySpawnIntervalChange }
-constructor TReplayChangeSpawnInterval.Create(IsOld: Boolean = false);
-begin
-  inherited Create();
-  fIsOldReplay := IsOld;
-end;
-
 procedure TReplayChangeSpawnInterval.InitializeValues();
 begin
   inherited InitializeValues();
@@ -938,10 +771,7 @@ procedure TReplayChangeSpawnInterval.DoLoadSection(Sec: TParserSection);
 begin
   inherited DoLoadSection(Sec);
 
-  if fIsOldReplay then
-    fNewSpawnInterval := 53 - (Sec.LineNumeric['rate'] div 2)
-  else
-    fNewSpawnInterval := Sec.LineNumeric['rate'];
+  fNewSpawnInterval := Sec.LineNumeric['rate'];
 
   if Sec.Line['interval'] <> nil then
     fNewSpawnInterval := Sec.LineNumeric['interval'];

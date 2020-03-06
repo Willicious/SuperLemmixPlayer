@@ -205,11 +205,7 @@ begin
           Anim := fMetaLemmingAnimations[i * 2 + dx];
 
           Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
-
-          if ThisAnimSec.Line['loop_to_frame'] = nil then
-            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe']
-          else
-            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame'];
+          Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame'];
           Anim.FootX := DirSec.LineNumeric['foot_x'];
           Anim.FootY := DirSec.LineNumeric['foot_y'];
           Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];
@@ -339,10 +335,6 @@ begin
           TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
       end else begin
         TPngInterface.LoadPngFile(MetaSrcFolder + Fn + '.png', TempBitmap);
-
-        // Backwards compatibility
-        if FileExists(Fn + '_mask.png') and (fTheme <> nil) then
-          TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
 
         Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
         UpscaleFrames(TempBitmap, 2, MLA.FrameCount, Info.Settings);

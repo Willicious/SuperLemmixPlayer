@@ -239,7 +239,7 @@ begin
 
   BasePath := AppPath + SFStyles + TerrainLabel.GS + SFPiecesTerrain + TerrainLabel.Piece;
 
-  if FileExists(BasePath + '.png') then  // .nxtp is optional, but .png is not :)
+  if FileExists(BasePath + '.png') then  // .nxmt is optional, but .png is not :)
     T := TMetaTerrain.Create
   else begin
     Result := -1;

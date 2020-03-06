@@ -19,7 +19,7 @@ uses
   Windows, Classes, Contnrs, SysUtils, Math, Forms, Dialogs,
   Controls, StrUtils, UMisc,
   GR32, GR32_OrdinalMaps,
-  LemCore, LemTypes, LemDosStructures, LemStrings,
+  LemCore, LemTypes, LemStrings,
   LemLevel,
   LemRenderHelpers, LemRendering,
   LemNeoTheme,

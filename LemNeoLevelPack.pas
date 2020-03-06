@@ -1,12 +1,10 @@
 unit LemNeoLevelPack;
 
-// Replaces LemDosStyle, LemDosLevelSystem etc. Those are messy. This should be tidier.
-
 interface
 
 uses
   System.Generics.Collections, System.Generics.Defaults,
-  GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
+  GR32, CRC32, PngInterface, LemLevel,
   Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
   LemTalisman,
   LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
@@ -1193,10 +1191,7 @@ begin
   try
     Parser.LoadFromFile(Path + 'levels.nxmi');
     MainSec := Parser.MainSection;
-    if MainSec.Section['group'] = nil then
-      MainSec.DoForEachSection('rank', LoadSubGroup)
-    else
-      MainSec.DoForEachSection('group', LoadSubGroup);
+    MainSec.DoForEachSection('group', LoadSubGroup);
     MainSec.DoForEachLine('level', LoadLevel);
     fIsBasePack := MainSec.Line['base'] <> nil;
     fIsOrdered := true;

@@ -97,7 +97,6 @@ begin
   else
     fColor := tcBronze;
 
-  fRescueCount := aSec.LineNumericDefault['save', -1];
   fRescueCount := aSec.LineNumericDefault['save_requirement', fRescueCount];
   fTimeLimit := aSec.LineNumericDefault['time_limit', -1];
   fTotalSkillLimit := aSec.LineNumericDefault['skill_limit', -1];

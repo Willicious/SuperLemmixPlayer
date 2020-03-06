@@ -196,7 +196,7 @@ uses
   SysUtils, Math, Windows, UMisc, PngInterface,
   GameControl, GameSound,
   LemTypes, LemReplay, LemStrings, LemNeoTheme,
-  LemmixHotkeys, LemDosStructures;
+  LemmixHotkeys;
 
 procedure ModString(var aString: String; const aNew: String; const aStart: Integer);
 var
@@ -298,7 +298,7 @@ begin
 
   Assert(Length(fNewDrawStr) = DrawStringLength, 'SkillPanel.Create: InfoString has not the correct length.');
 
-  fRectColor := DosVgaColorToColor32(DosInLevelPalette[3]);
+  fRectColor := $FFF0D0D0;
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
 end;

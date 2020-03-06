@@ -15,7 +15,6 @@ uses
   PngInterface,
   LemRecolorSprites,
   LemRenderHelpers, LemNeoPieceManager, LemNeoTheme,
-  LemDosStructures,
   LemTypes,
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
@@ -66,7 +65,6 @@ type
 
     fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
     fPhysicsRenderingType: TPhysicsRenderingType;
-    fPhysicsRenderSimpleAutosteel: Boolean;
 
     fHelpersAreHighRes: Boolean;
 
@@ -1249,13 +1247,7 @@ begin
     end;
   end else begin
     dstSolidity := CombineTerrainSolidity(srcSolidity, dstSolidity);
-
-    if not fPhysicsRenderSimpleAutoSteel then
-      dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity)
-    else if (dstSteel < 255) and (srcSteel > 0) then
-      dstSteel := 255;
-
-
+    dstSteel := CombineTerrainProperty(srcSteel, dstSteel, srcSolidity);
     dstOneWay := CombineTerrainProperty(srcOneWay, dstOneWay, srcSolidity);
   end;
 
@@ -2520,8 +2512,6 @@ begin
       Dst.SetSize(Info.Width, Info.Height);
       TempWorld.SetSize(Info.Width, Info.Height);
       TempWorld.Clear(0);
-
-      fPhysicsRenderSimpleAutosteel := Info.IsSimpleAutoSteel;
 
       for i := 0 to Terrains.Count-1 do
       begin

@@ -123,11 +123,7 @@ procedure TTerrain.LoadFromSection(aSection: TParserSection);
 var
   Ident: TLabelRecord;
 begin
-  if aSection.Line['style'] = nil then
-    GS := aSection.LineTrimString['collection']
-  else
-    GS := aSection.LineTrimString['style'];
-
+  GS := aSection.LineTrimString['style'];
   Piece := aSection.LineTrimString['piece'];
 
   Ident := SplitIdentifier(PieceManager.Dealias(Identifier, rkTerrain));

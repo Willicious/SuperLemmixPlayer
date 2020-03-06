@@ -9,7 +9,6 @@ uses
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   FBaseDosForm,
   GameControl,
-  LemDosStructures,
   LemSystemMessages,
   LemStrings, PngInterface, LemTypes,
   LemReplay, LemGame,
@@ -598,7 +597,7 @@ begin
   try
     OpenDlg.Title := 'Select any file in the folder containing replays';
     OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
-    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp, *.lrb)|*.nxrp;*.lrb';
+    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
     if not OpenDlg.Execute then
       Exit;
@@ -644,7 +643,7 @@ begin
   Dlg := TOpenDialog.Create(self);
   try
     Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
+    Dlg.Filter := 'NeoLemmix Replay File (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     if LastReplayDir = '' then
     begin

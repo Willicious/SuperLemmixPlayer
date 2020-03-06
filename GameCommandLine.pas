@@ -27,7 +27,6 @@ type
 
       class procedure HandleRender;
       class procedure HandleVersionInfo;
-      class procedure HandleConvert;
       class procedure HandleTestMode;
       class procedure HandleUpscale;
     public
@@ -57,12 +56,6 @@ begin
     Result := clrToPreview;
   end;
 
-  if Param = 'convert' then
-  begin
-    HandleConvert;
-    Result := clrHalt;
-  end;
-
   if Param = 'version' then
   begin
     HandleVersionInfo;
@@ -83,23 +76,6 @@ begin
 
   if Param = '-match-blank-replay-username' then
     GameParams.MatchBlankReplayUsername := true;
-end;
-
-class procedure TCommandLineHandler.HandleConvert;
-var
-  DstFile: String;
-begin
-  InitializeNoGuiMode;
-  GameParams.TestModeLevel.Filename := ParamStr(2);
-
-  DstFile := ParamStr(3);
-  if DstFile = '' then
-    DstFile := ChangeFileExt(GameParams.CurrentLevel.Path, '.nxlv')
-  else if Pos(':', DstFile) = 0 then
-    DstFile := AppPath + DstFile;
-
-  GameParams.LoadCurrentLevel(true);
-  GameParams.Level.SaveToFile(DstFile);
 end;
 
 class procedure TCommandLineHandler.HandleRender;
@@ -368,19 +344,6 @@ class procedure TCommandLineHandler.HandleVersionInfo;
 var
   SL: TStringList;
 
-  Formats: String;
-  Exts: String;
-
-  procedure AddFormat(aDesc, aExt: String);
-  begin
-    if Formats <> '' then
-      Formats := Formats + '|';
-    if Exts <> '' then
-      Exts := Exts + ';';
-    Formats := Formats + aDesc + '|' + '*.' + aExt;
-    Exts := Exts + '*.' + aExt;
-  end;
-
   procedure WriteInfo;
   var
     i: Integer;
@@ -397,14 +360,8 @@ begin
     SL.Add('hotfix=' + IntToStr(HOTFIX_VERSION));
     SL.Add('commit=' + COMMIT_ID);
 
-    Formats := '';
-    Exts := '';
-    AddFormat('Lemmix or old NeoLemmix level (*.lvl)', 'lvl');
-    AddFormat('Lemmini or SuperLemmini level (*.ini)', 'ini');
-    AddFormat('Lemmins level (*.lev)', 'lev');
-
-    SL.Add('level_formats=' + Formats);
-    SL.Add('level_format_exts=' + Exts);
+    SL.Add('level_formats=');
+    SL.Add('level_format_exts=');
 
     SL.Add('object_render=true');
     SL.Add('level_render=true');
