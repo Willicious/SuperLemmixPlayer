@@ -1093,6 +1093,8 @@ begin
 
   MessageQueue.Clear;
 
+  ReplayInsert := false;
+
   Playing := True;
 end;
 
