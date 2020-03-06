@@ -58,6 +58,8 @@ type
     function CheckForPermanentSkills: Boolean;
     function GetPosition: TPoint;
     function GetCannotReceiveSkills: Boolean;
+
+    function GetJumperDebug(Index: Integer): Boolean;
   public
   { misc sized }
     LemEraseRect                  : TRect; // the rectangle of the last drawaction (can include space for countdown digits)
@@ -121,6 +123,9 @@ type
     property Position          : TPoint read GetPosition;    
     property HasPermanentSkills: Boolean read CheckForPermanentSkills;
     property CannotReceiveSkills: Boolean read GetCannotReceiveSkills;
+
+    property JumperGliderDebug: Boolean Index 1 read GetJumperDebug;
+    property JumperSplatDebug: Boolean Index 2 read GetJumperDebug;
   end;
 
   TLemmingList = class(TObjectList)
@@ -238,6 +243,15 @@ end;
 function TLemming.GetCannotReceiveSkills: Boolean;
 begin
   Result := LemIsZombie or LemIsNeutral or LemHasBeenOhnoer;
+end;
+
+function TLemming.GetJumperDebug(Index: Integer): Boolean;
+begin
+  case Index of
+    1: Result := LemIsSwimmer;
+    2: Result := LemIsDisarmer;
+    else Result := false;
+  end;
 end;
 
 function TLemming.GetPosition: TPoint;
