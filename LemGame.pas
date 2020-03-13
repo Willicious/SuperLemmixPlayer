@@ -2963,13 +2963,6 @@ const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baVaporizing, baShrugging, baOhnoing, baExploding,
                       baStoning, baReaching];
-
-  procedure XLog(aIn: String);
-  begin
-    Exit;
-    if fSimulationDepth > 0 then
-      Log(aIn);
-  end;
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -2989,14 +2982,10 @@ begin
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
 
-  XLog('a: ' + IntToStr(Integer(L.LemAction)));
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
 
-  XLog('b');
   if L.LemIsZombie and not IsSimulating then SetZombieField(L);
-
-  XLog('c wtf');
 end;
 
 function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
