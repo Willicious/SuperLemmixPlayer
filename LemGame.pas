@@ -2858,7 +2858,7 @@ begin
       if not ((ShadowSkillButton in ShadowSkillSet) or (fRenderInterface.ProjectionType <> 0)) then Exit;
 
       // Draw the shadows
-      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton);
+      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, fSelectedSkill);
 
       // remember stats for lemming with shadow
       fLemWithShadow := ShadowLem;
@@ -2883,9 +2883,6 @@ procedure TLemmingGame.LayBrick(L: TLemming);
 var
   BrickPosY, n: Integer;
 begin
-  // Do not change the fPhysicsMap when simulating building (but do so for platformers!)
-  if IsSimulating and (L.LemAction = baBuilding) then Exit;
-
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
 
@@ -2918,8 +2915,7 @@ begin
     PixPosX := L.LemX + n*L.LemDx;
     if not HasPixelAt(PixPosX, BrickPosY) then
     begin
-      // Do not change the fPhysicsMap when simulating stacking
-      if not IsSimulating then AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+      AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
       Result := true;
     end;
   end;
@@ -2967,6 +2963,13 @@ const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baVaporizing, baShrugging, baOhnoing, baExploding,
                       baStoning, baReaching];
+
+  procedure XLog(aIn: String);
+  begin
+    Exit;
+    if fSimulationDepth > 0 then
+      Log(aIn);
+  end;
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -2986,10 +2989,14 @@ begin
     if L.LemAction in OneTimeActionSet then L.LemEndOfAnimation := True;
   end;
 
+  XLog('a: ' + IntToStr(Integer(L.LemAction)));
   // Do Lem action
   Result := LemmingMethods[L.LemAction](L);
 
+  XLog('b');
   if L.LemIsZombie and not IsSimulating then SetZombieField(L);
+
+  XLog('c wtf');
 end;
 
 function TLemmingGame.CheckLevelBoundaries(L: TLemming) : Boolean;
