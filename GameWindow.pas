@@ -1271,7 +1271,7 @@ begin
     if (func.Action = lka_CancelReplay) then
       Game.RegainControl(true); // force the cancel even if in Replay Insert mode
 
-    if (func.Action in [lka_ReleaseRateDown, lka_ReleaseRateUp]) then
+    if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
       Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
 
     if func.Action = lka_Skill then
@@ -1282,8 +1282,10 @@ begin
 
     case func.Action of
       lka_ReleaseMouse: ReleaseMouse;
+      lka_ReleaseRateMax: SetSelectedSkill(spbFaster, True, True);
       lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
       lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
+      lka_ReleaseRateMin: SetSelectedSkill(spbSlower, True, True);
       lka_Pause: begin
                    if fGameSpeed = gspPause then
                      GameSpeed := gspNormal
@@ -1316,20 +1318,20 @@ begin
       lka_Cheat: Game.Cheat;
       lka_FastForward: begin
                          case fGameSpeed of
-                           gspNormal, gspSlowMo: GameSpeed := gspFF;
+                           gspNormal, gspSlowMo, gspPause: GameSpeed := gspFF;
                            gspFF: GameSpeed := gspNormal;
                          end;
                        end;
       lka_SlowMotion: begin
                         case fGameSpeed of
-                          gspNormal, gspFF: GameSpeed := gspSlowMo;
+                          gspNormal, gspFF, gspPause: GameSpeed := gspSlowMo;
                           gspSlowMo: GameSpeed := gspNormal;
                         end;
                       end;
       lka_SaveImage: SaveShot;
       lka_LoadReplay: LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
-      lka_Restart: GotoSaveState(0, -1); // the -1 prevents pausing afterwards
+      lka_Restart: GotoSaveState(0);
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
       lka_SaveReplay: SaveReplay;
       lka_SkillRight: begin
