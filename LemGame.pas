@@ -2858,7 +2858,7 @@ begin
       if not ((ShadowSkillButton in ShadowSkillSet) or (fRenderInterface.ProjectionType <> 0)) then Exit;
 
       // Draw the shadows
-      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, fSelectedSkill);
+      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, fSelectedSkill, false);
 
       // remember stats for lemming with shadow
       fLemWithShadow := ShadowLem;

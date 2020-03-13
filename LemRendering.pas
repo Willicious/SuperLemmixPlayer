@@ -154,7 +154,7 @@ type
     procedure DrawLemmingCountdown(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
 
-    procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton);
+    procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
     procedure DrawShimmierShadow(L: TLemming);
     procedure DrawGliderShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
@@ -567,9 +567,13 @@ begin
   end;
 end;
 
-procedure TRenderer.DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton);
+procedure TRenderer.DrawShadows(L: TLemming; SkillButton: TSkillPanelButton;
+  SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
 var
   CopyL: TLemming;
+
+  DoProjection: Boolean;
+  DoSkillProjection: Boolean;
 begin
   // Copy L to simulate the path
   CopyL := TLemming.Create;
@@ -577,6 +581,11 @@ begin
 
   if fRenderInterface.ProjectionType <> 0 then
   begin
+    DoProjection := true;
+
+    if IsCloneShadow and (fRenderInterface.ProjectionType = 1) then
+      DoProjection := false;
+
     if (fRenderInterface.ProjectionType = 2) and (SelectedSkill <> spbNone) then
     begin
       case SelectedSkill of
@@ -589,15 +598,21 @@ begin
         spbFloater: CopyL.LemIsFloater := true;
         spbGlider: CopyL.LemIsGlider := true;
         spbDisarmer: CopyL.LemIsDisarmer := true;
+        spbBomber: DoProjection := false;
+        spbStoner: DoProjection := false;
+        spbBlocker: DoProjection := false;
         spbCloner: CopyL.LemDX := -CopyL.LemDX;
         spbNone: ; // Do nothing
         else fRenderInterface.SimulateTransitionLem(CopyL, SkillPanelButtonToAction[SkillButton]);
       end;
     end;
 
-    DrawProjectionShadow(CopyL);
+    if DoProjection then
+    begin
+      DrawProjectionShadow(CopyL);
 
-    CopyL.Assign(L); // Reset to initial state
+      CopyL.Assign(L); // Reset to initial state
+    end;
   end;
 
   case SkillButton of
@@ -663,7 +678,7 @@ begin
   spbCloner:
     begin
       CopyL.LemDX := -CopyL.LemDX;
-      DrawShadows(CopyL, ActionToSkillPanelButton[CopyL.LemAction], SelectedSkill);
+      DrawShadows(CopyL, ActionToSkillPanelButton[CopyL.LemAction], SelectedSkill, true);
     end;
   end;
 
