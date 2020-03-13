@@ -1,0 +1,487 @@
+$SPRITESET_RECOLORING
+  MASK xFF00FF
+  LEMMING_HAIR x0094FF
+  LEMMING_HAIR x0026FF
+  LEMMING_CLOTHES xFF9EC4
+  LEMMING_CLOTHES xFF476F
+  LEMMING_SKIN xFFD5B3
+  LEMMING_SKIN xF4B590
+  LEMMING_ZOMBIE_SKIN x97B590
+  LEMMING_ATHLETE_HAIR xFFE97C
+  LEMMING_ATHLETE_CLOTHES x00FF90
+  LEMMING_NEUTRAL_CLOTHES xFBF084
+  LEMMING_SELECTED_CLOTHES xB669FF
+$END
+
+$STATE_RECOLORING
+
+  $ATHLETE
+    FROM xFF9EC4
+    TO x00FF90
+  $END
+
+  $ATHLETE
+    FROM xFF476F
+    TO x00BE88
+  $END
+
+  $ZOMBIE
+    FROM x0094FF
+    TO xA5A580
+  $END
+
+  $ZOMBIE
+    FROM x0026FF
+    TO x404040
+  $END
+  
+  $ZOMBIE
+    FROM xFFD5B3
+    TO x97B590
+  $END
+
+  $ZOMBIE
+    FROM xF4B590
+    TO x74975D
+  $END
+
+  $ZOMBIE
+    FROM xFF9EC4
+    TO x608082
+  $END
+
+  $ZOMBIE
+    FROM xFF476F
+    TO x2D3E5B
+  $END
+  
+  $SELECTED
+    FROM xFF9EC4
+    TO xF9F4C7
+  $END
+
+  $SELECTED
+    FROM xFF476F
+    TO xFBF084
+  $END
+  
+  $NEUTRAL
+    FROM xFF9EC4
+    TO xD8B2FF
+  $END
+
+  $NEUTRAL
+    FROM xFF476F
+    TO xB669FF
+  $END
+$END
+
+$ANIMATIONS
+
+  $WALKER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+
+  $END
+
+  $ASCENDER
+    FRAMES 1
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+
+  $END
+
+  $DIGGER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 12
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 12
+    $END
+
+  $END
+
+  $CLIMBER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 12
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 12
+    $END
+
+  $END
+
+  $DROWNER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+
+  $END
+
+  $HOISTER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 12
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 12
+    $END
+
+  $END
+
+  $BUILDER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 13
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 13
+    $END
+
+  $END
+
+  $BASHER
+    FRAMES 32
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+  $END
+
+  $MINER
+    FRAMES 24
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 13
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 13
+    $END
+
+  $END
+
+  $FALLER
+    FRAMES 4
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+
+  $END
+
+  $FLOATER
+    FRAMES 17
+    LOOP_TO_FRAME 10
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 16
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 16
+    $END
+
+  $END
+
+  $SPLATTER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+  $END
+
+  $EXITER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 6
+      FOOT_Y 13
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 13
+    $END
+
+  $END
+
+  $BURNER
+    FRAMES 14
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 14
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 14
+    $END
+
+  $END
+
+  $BLOCKER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 13
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 13
+    $END
+
+  $END
+
+  $SHRUGGER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+  $END
+
+  $OHNOER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+  $END
+
+  $BOMBER
+    FRAMES 1
+
+    $RIGHT
+      FOOT_X 16
+      FOOT_Y 25
+    $END
+
+    $LEFT
+      FOOT_X 16
+      FOOT_Y 25
+    $END
+
+  $END
+
+  $PLATFORMER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 13
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 13
+    $END
+
+  $END
+
+  $STONER
+    FRAMES 1
+
+    $RIGHT
+      FOOT_X 16
+      FOOT_Y 25
+    $END
+
+    $LEFT
+      FOOT_X 16
+      FOOT_Y 25
+    $END
+
+  $END
+
+  $SWIMMER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 8
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 8
+    $END
+
+  $END
+
+  $GLIDER
+    FRAMES 17
+    LOOP_TO_FRAME 10
+
+    $RIGHT
+      FOOT_X 7
+      FOOT_Y 16
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 16
+    $END
+
+  $END
+
+  $DISARMER
+    FRAMES 16
+
+    $RIGHT
+      FOOT_X 6
+      FOOT_Y 11
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 11
+    $END
+
+  $END
+
+  $STACKER
+    FRAMES 8
+
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 13
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 13
+    $END
+
+  $END
+  
+  $FENCER
+    FRAMES 16
+    
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 7
+      FOOT_Y 10
+    $END
+    
+  $END
+
+  $REACHER
+    FRAMES 6
+    
+    $RIGHT
+      FOOT_X 8
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 9
+      FOOT_Y 10
+    $END
+    
+  $END
+
+  $SHIMMIER
+    FRAMES 20
+    
+    $RIGHT
+      FOOT_X 5
+      FOOT_Y 8
+    $END
+
+    $LEFT
+      FOOT_X 6
+      FOOT_Y 8
+    $END
+    
+  $END
+$END

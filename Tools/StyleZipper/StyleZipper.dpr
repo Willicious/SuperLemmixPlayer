@@ -150,6 +150,9 @@ var
     Sounds := TStringList.Create;
     ObjSL := TStringList.Create;
     try
+      if FileExists(AppPath + 'style_zips\' + aName + '.zip') then
+        DeleteFile(AppPath + 'style_zips\' + aName + '.zip');
+
       Zip.Open(AppPath + 'style_zips\' + aName + '.zip', zmWrite);
       Base := AppPath + 'styles\' + aName + '\';
       AddRecursive('');
@@ -218,6 +221,9 @@ var
     Zip := TZipFile.Create;
     SL := TStringList.Create;
     try
+      if FileExists(AppPath + 'style_zips\' + aZipFilename) then
+        DeleteFile(AppPath + 'style_zips\' + aZipFilename);
+
       Zip.Open(AppPath + 'style_zips\' + aZipFilename, zmWrite);
 
       SL.Delimiter := '|';

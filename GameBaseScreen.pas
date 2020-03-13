@@ -719,8 +719,8 @@ begin
     end else begin
       GameParams.MainForm.BorderStyle := bsSizeable;
       GameParams.MainForm.WindowState := wsNormal;
-      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320, Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) * 320);
-      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200, Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) * 200);
+      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320 * ResMod, Min(Screen.WorkAreaWidth div 320 * ResMod, Screen.WorkAreaHeight div 200 * ResMod) * 320 * ResMod);
+      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200 * ResMod, Min(Screen.WorkAreaWidth div 320 * ResMod, Screen.WorkAreaHeight div 200 * ResMod) * 200 * ResMod);
       GameParams.MainForm.Left := (Screen.WorkAreaWidth div 2) - (GameParams.MainForm.Width div 2);
       GameParams.MainForm.Top := (Screen.WorkAreaHeight div 2) - (GameParams.MainForm.Height div 2);
     end;

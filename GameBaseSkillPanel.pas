@@ -149,6 +149,8 @@ type
     procedure SetOnMinimapClick(const Value: TMinimapClickEvent);
     procedure SetGame(const Value: TLemmingGame);
 
+    procedure ResetMinimapPosition;
+
     property Image: TImage32 read fImage;
 
     procedure DrawButtonSelector(aButton: TSkillPanelButton; Highlight: Boolean);
@@ -535,7 +537,7 @@ var
     SrcRect.Offset(0, SrcRect.Height * aFrame);
 
     OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmBlend;
     Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, footX * ResMod - Meta.FootX, footY * ResMod - Meta.FootY, SrcRect);
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
@@ -563,7 +565,7 @@ var
     SrcRect.Offset(0, SrcRect.Height * aFrame);
 
     OldDrawMode := Ani.LemmingAnimations[aAnimationIndex].DrawMode;
-    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmTransparent;
+    Ani.LemmingAnimations[aAnimationIndex].DrawMode := dmBlend;
     Ani.LemmingAnimations[aAnimationIndex].DrawTo(dst, dstRect, SrcRect);
     Ani.LemmingAnimations[aAnimationIndex].DrawMode := OldDrawMode;
   end;
@@ -1077,6 +1079,12 @@ end;
 
 
 
+procedure TBaseSkillPanel.ResetMinimapPosition;
+begin
+  fMinimapImage.Left := MinimapRect.Left * Trunc(fMinimapImage.Scale) + Image.Left;
+  fMinimapImage.Top := MinimapRect.Top * Trunc(fMinimapImage.Scale);
+end;
+
 procedure TBaseSkillPanel.DrawSkillCount(aButton: TSkillPanelButton; aNumber: Integer);
 var
   ButtonLeft, ButtonTop: Integer;
@@ -1437,10 +1445,10 @@ begin
       begin
         if fGameWindow.GameSpeed = gspFF then
           fGameWindow.GameSpeed := gspNormal
-        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo] then
+        else if fGameWindow.GameSpeed in [gspNormal, gspSlowMo, gspPause] then
           fGameWindow.GameSpeed := gspFF;
       end;
-    spbRestart: fGameWindow.GotoSaveState(0, -1);
+    spbRestart: fGameWindow.GotoSaveState(0);
     spbBackOneFrame:
       begin
         if Button = mbLeft then

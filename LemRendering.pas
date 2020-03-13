@@ -2116,6 +2116,7 @@ var
   Gadget: TGadget;
   i, i2: Integer;
   DrawOtherHatchHelper: Boolean;
+  HatchPoint: TPoint;
 begin
   fGadgets := Gadgets;
   fDrawingHelpers := DrawHelper;
@@ -2145,16 +2146,54 @@ begin
     DrawOtherHatchHelper := fRenderInterface.IsStartingSeconds() or
                             (DrawHelper and UsefulOnly and IsCursorOnGadget(Gadget));
 
+    fLayers.fIsEmpty[rlObjectHelpers] := false;
+
     if Gadget.HasPreassignedSkills then
-    begin
       DrawHatchSkillHelpers(fLayers[rlObjectHelpers], Gadget, false);
-      fLayers.fIsEmpty[rlObjectHelpers] := false;
-    end;
 
     if DrawOtherHatchHelper then
-    begin
       DrawObjectHelpers(fLayers[rlObjectHelpers], Gadget);
-      fLayers.fIsEmpty[rlObjectHelpers] := false;
+
+    if fUsefulOnly then
+    begin
+      HatchPoint := Gadget.TriggerRect.TopLeft;
+
+      if GameParams.HighResolution then
+      begin
+        HatchPoint.X := HatchPoint.X * 2;
+        HatchPoint.Y := HatchPoint.Y * 2;
+
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y] := $FFFFD700;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y] := $FFFFD700;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFFD700;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+1] := $FFFFD700;
+
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2, HatchPoint.Y] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2+1, HatchPoint.Y] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2, HatchPoint.Y+1] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-2+1, HatchPoint.Y+1] := $FFFF4500;
+
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-2] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y-2] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-2+1] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y-2+1] := $FFFF4500;
+
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2, HatchPoint.Y] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2+1, HatchPoint.Y] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2, HatchPoint.Y+1] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+2+1, HatchPoint.Y+1] := $FFFF4500;
+
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+2] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+2] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+2+1] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y+2+1] := $FFFF4500;
+      end else begin
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y] := $FFFFD700;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X-1, HatchPoint.Y] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y-1] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X+1, HatchPoint.Y] := $FFFF4500;
+        fLayers[rlObjectHelpers].PixelS[HatchPoint.X, HatchPoint.Y+1] := $FFFF4500;
+      end;
     end;
   end;
 

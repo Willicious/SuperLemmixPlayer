@@ -425,6 +425,7 @@ procedure TReplay.Clear(EraseLevelInfo: Boolean = false);
 begin
   fAssignments.Clear;
   fSpawnIntervalChanges.Clear;
+  fIsModified := true;
   if not EraseLevelInfo then Exit;
   fPlayerName := '';
   fLevelName := '';
@@ -433,7 +434,6 @@ begin
   fLevelRank := '';
   fLevelPosition := 0;
   fLevelID := 0;
-  fIsModified := true;
 end;
 
 procedure TReplay.Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
@@ -502,8 +502,6 @@ var
 begin
   Clear(true);
 
-  fIsModified := false;
-
   SL := TStringList.Create;
   Parser := TParser.Create;
   try
@@ -529,6 +527,8 @@ begin
     Sec.DoForEachSection('release_rate', HandleLoadSection);
     Sec.DoForEachSection('spawn_interval', HandleLoadSection);
     Sec.DoForEachSection('nuke', HandleLoadSection);
+
+    fIsModified := false;
   finally
     Parser.Free;
     SL.Free
@@ -765,6 +765,7 @@ begin
         CreateNukeEntry;
     end;
   finally
+    fIsModified := false;
     MS.Free;
   end;
 end;

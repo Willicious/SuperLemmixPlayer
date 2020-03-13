@@ -3,7 +3,7 @@ unit FNeoLemmixConfig;
 interface
 
 uses
-  GameControl, GameSound, FEditHotkeys, FStyleManager,
+  GameControl, GameSound, FEditHotkeys, FStyleManager, Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls;
 
@@ -61,8 +61,12 @@ type
     procedure btnReplayCheckClick(Sender: TObject);
     procedure btnStylesClick(Sender: TObject);
   private
+    fIsSetting: Boolean;
+
     procedure SetFromParams;
     procedure SaveToParams;
+
+    procedure SetZoomDropdown(aValue: Integer = -1);
   public
     constructor Create(aOwner: TComponent); override;
     procedure SetGameParams;
@@ -91,6 +95,30 @@ begin
   SetFromParams;
 end;
 
+procedure TFormNXConfig.SetZoomDropdown(aValue: Integer = -1);
+var
+  i: Integer;
+  MaxZoom: Integer;
+begin
+  cbZoom.Items.Clear;
+
+  MaxZoom := Min(
+                   (Screen.Width div 320) + EXTRA_ZOOM_LEVELS,
+                   (Screen.Height div 200) + EXTRA_ZOOM_LEVELS
+                );
+
+  if cbHighResolution.Checked then
+    MaxZoom := Max(1, MaxZoom div 2);
+
+  for i := 1 to MaxZoom do
+    cbZoom.Items.Add(IntToStr(i) + 'x Zoom');
+
+  if aValue < 0 then
+    cbZoom.ItemIndex := Max(GameParams.ZoomLevel-1, 0)
+  else
+    cbZoom.ItemIndex := aValue;
+end;
+
 procedure TFormNXConfig.btnApplyClick(Sender: TObject);
 begin
   SaveToParams;
@@ -103,62 +131,58 @@ begin
 end;
 
 procedure TFormNXConfig.SetFromParams;
-var
-  i: Integer;
 begin
+  fIsSetting := true;
 
-  //// Page 1 (Global Options) ////
+  try
+    //// Page 1 (Global Options) ////
 
-  ebUserName.Text := GameParams.UserName;
+    ebUserName.Text := GameParams.UserName;
 
-  // Checkboxes
-  cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
-  cbReplayAutoName.Checked := GameParams.ReplayAutoName;
+    // Checkboxes
+    cbAutoSaveReplay.Checked := GameParams.AutoSaveReplay;
+    cbReplayAutoName.Checked := GameParams.ReplayAutoName;
 
-  cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
-  cbEnableOnline.Checked := GameParams.EnableOnline;
+    cbUpdateCheck.Checked := GameParams.CheckUpdates; // in reverse order as the next one may override this
+    cbEnableOnline.Checked := GameParams.EnableOnline;
 
-  //// Page 2 (Interface Options) ////
-  // Checkboxes
-  cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
-  cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
+    //// Page 2 (Interface Options) ////
+    // Checkboxes
+    cbPauseAfterBackwards.Checked := GameParams.PauseAfterBackwardsSkip;
+    cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
 
-  cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
-  cbEdgeScrolling.Checked := GameParams.EdgeScroll;
-  cbSpawnInterval.Checked := GameParams.SpawnInterval;
+    cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
+    cbEdgeScrolling.Checked := GameParams.EdgeScroll;
+    cbSpawnInterval.Checked := GameParams.SpawnInterval;
 
-  cbFullScreen.Checked := GameParams.FullScreen;
-  cbHighResolution.Checked := GameParams.HighResolution;
-  cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
-  cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
-  cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
-  cbCompactSkillPanel.Checked := GameParams.CompactSkillPanel;
-  cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
+    cbFullScreen.Checked := GameParams.FullScreen;
+    cbHighResolution.Checked := GameParams.HighResolution; // must be done before SetZoomDropdown
+    cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
+    cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
+    cbLinearResampleGame.Checked := GameParams.LinearResampleGame;
+    cbCompactSkillPanel.Checked := GameParams.CompactSkillPanel;
+    cbMinimapHighQuality.Checked := GameParams.MinimapHighQuality;
 
-  // Zoom Dropdown
-  cbZoom.Items.Clear;
-  i := 1;
-  while ((i - EXTRA_ZOOM_LEVELS) * 320 <= Screen.Width) and ((i - EXTRA_ZOOM_LEVELS) * 200 < Screen.Height) do
-  begin
-    cbZoom.Items.Add(IntToStr(i) + 'x Zoom');
-    Inc(i);
+    // Zoom Dropdown
+    SetZoomDropdown;
+
+    //// Page 3 (Audio Options) ////
+    if SoundManager.MuteSound then
+      tbSoundVol.Position := 0
+    else
+      tbSoundVol.Position := SoundManager.SoundVolume;
+    if SoundManager.MuteMusic then
+      tbMusicVol.Position := 0
+    else
+      tbMusicVol.Position := SoundManager.MusicVolume;
+
+    cbSuccessJingle.Checked := GameParams.PostLevelVictorySound;
+    cbFailureJingle.Checked := GameParams.PostLevelFailureSound;
+
+    btnApply.Enabled := false;
+  finally
+    fIsSetting := false;
   end;
-  cbZoom.ItemIndex := GameParams.ZoomLevel-1;
-
-  //// Page 3 (Audio Options) ////
-  if SoundManager.MuteSound then
-    tbSoundVol.Position := 0
-  else
-    tbSoundVol.Position := SoundManager.SoundVolume;
-  if SoundManager.MuteMusic then
-    tbMusicVol.Position := 0
-  else
-    tbMusicVol.Position := SoundManager.MusicVolume;
-
-  cbSuccessJingle.Checked := GameParams.PostLevelVictorySound;
-  cbFailureJingle.Checked := GameParams.PostLevelFailureSound;
-
-  btnApply.Enabled := false;
 end;
 
 procedure TFormNXConfig.SaveToParams;
@@ -246,7 +270,16 @@ end;
 
 procedure TFormNXConfig.OptionChanged(Sender: TObject);
 begin
-  btnApply.Enabled := true;
+  if not fIsSetting then
+  begin
+    if Sender = cbHighResolution then
+      if cbHighResolution.Checked then
+        SetZoomDropdown(cbZoom.ItemIndex div 2)
+      else
+        SetZoomDropdown(cbZoom.ItemIndex * 2 + 1);
+
+    btnApply.Enabled := true;
+  end;
 end;
 
 procedure TFormNXConfig.cbEnableOnlineClick(Sender: TObject);

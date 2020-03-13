@@ -26,11 +26,13 @@ type
   TDownloadThread = class(TThread)
     private
       fSourceURL: String;
-      fStream: TStream;
+      fStream: TMemoryStream;
+      fTargetStream: TStream;
       fStringList: TStringList;
 
       fComplete: Boolean;
       fSuccess: Boolean;
+      fDead: Boolean;
 
       fOnComplete: TProc;
     protected
@@ -38,6 +40,9 @@ type
     public
       constructor Create(aSourceURL: String; aTargetStream: TStream); overload;
       constructor Create(aSourceURL: String; aTargetStringList: TStringList); overload;
+      destructor Destroy; override;
+
+      procedure Kill;
 
       property OnComplete: TProc read fOnComplete write fOnComplete;
   end;
@@ -75,8 +80,9 @@ constructor TDownloadThread.Create(aSourceURL: String; aTargetStream: TStream);
 begin
   inherited Create(true);
   FreeOnTerminate := false;
+  fStream := TMemoryStream.Create;
   fSourceURL := aSourceURL;
-  fStream := aTargetStream;
+  fTargetStream := aTargetStream;
 end;
 
 constructor TDownloadThread.Create(aSourceURL: String;
@@ -84,49 +90,47 @@ constructor TDownloadThread.Create(aSourceURL: String;
 begin
   inherited Create(true);
   FreeOnTerminate := false;
+  fStream := TMemoryStream.Create;
   fSourceURL := aSourceURL;
   fStringList := aTargetStringList;
 end;
 
+destructor TDownloadThread.Destroy;
+begin
+  fStream.Free;
+  inherited;
+end;
+
 procedure TDownloadThread.Execute;
 var
-  StreamPos: Int64;
-  LocalStream: Boolean;
   LoadToStringList: Boolean;
 begin
   inherited;
   try
-    if fStream = nil then
-    begin
-      LoadToStringList := (fStringList <> nil);
-      LocalStream := true;
-      fStream := TMemoryStream.Create;
-    end else begin
-      LocalStream := false;
+    fDead := false;
+
+    if fTargetStream = nil then
+      LoadToStringList := (fStringList <> nil)
+    else
       LoadToStringList := false;
+
+    if not TInternet.DownloadToStream(fSourceURL, fStream) then
+    begin
+      fSuccess := false;
+      fComplete := true;
+      Exit;
     end;
 
-    if LoadToStringList then
-      fStringList.Clear;
+    fStream.Position := 0;
 
-    try
-      StreamPos := fStream.Position;
-      if not TInternet.DownloadToStream(fSourceURL, fStream) then
-      begin
-        fSuccess := false;
-        fComplete := true;
-        Exit;
-      end;
-
+    if not fDead then
       if LoadToStringList then
       begin
-        fStream.Position := StreamPos;
+        fStringList.Clear;
         fStringList.LoadFromStream(fStream);
+      end else begin
+        fTargetStream.CopyFrom(fStream, fStream.Size);
       end;
-    finally
-      if LocalStream then
-        fStream.Free;
-    end;
 
     fSuccess := true;
   except
@@ -137,6 +141,13 @@ begin
 
   if Assigned(fOnComplete) then
     fOnComplete();
+end;
+
+procedure TDownloadThread.Kill;
+begin
+  fDead := true;
+  Terminate;
+  fOnComplete := nil;
 end;
 
 class function TInternet.DownloadToStream(aURL: String; aStream: TStream): Boolean;

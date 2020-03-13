@@ -359,6 +359,7 @@ begin
   SkillPanel.Height := Max(SkillPanel.Zoom * 40 * ResMod, ClientHeight - SkillPanel.Top);
   SkillPanel.Image.Left := (ClientWidth - SkillPanel.Image.Width) div 2;
   SkillPanel.Image.Update;
+  SkillPanel.ResetMinimapPosition;
 
   MinScroll := -((GameParams.Level.Info.Width * fInternalZoom * ResMod) - Img.Width);
   MaxScroll := 0;
@@ -1269,7 +1270,7 @@ begin
     if (func.Action = lka_CancelReplay) then
       Game.RegainControl(true); // force the cancel even if in Replay Insert mode
 
-    if (func.Action in [lka_ReleaseRateDown, lka_ReleaseRateUp]) then
+    if (func.Action in [lka_ReleaseRateMax, lka_ReleaseRateDown, lka_ReleaseRateUp, lka_ReleaseRateMin]) then
       Game.RegainControl; // we do not want to FORCE it in this case; Replay Insert mode should be respected here
 
     if func.Action = lka_Skill then
@@ -1280,8 +1281,10 @@ begin
 
     case func.Action of
       lka_ReleaseMouse: ReleaseMouse;
+      lka_ReleaseRateMax: SetSelectedSkill(spbFaster, True, True);
       lka_ReleaseRateDown: SetSelectedSkill(spbSlower, True);
       lka_ReleaseRateUp: SetSelectedSkill(spbFaster, True);
+      lka_ReleaseRateMin: SetSelectedSkill(spbSlower, True, True);
       lka_Pause: begin
                    if fGameSpeed = gspPause then
                      GameSpeed := gspNormal
@@ -1314,20 +1317,20 @@ begin
       lka_Cheat: Game.Cheat;
       lka_FastForward: begin
                          case fGameSpeed of
-                           gspNormal, gspSlowMo: GameSpeed := gspFF;
+                           gspNormal, gspSlowMo, gspPause: GameSpeed := gspFF;
                            gspFF: GameSpeed := gspNormal;
                          end;
                        end;
       lka_SlowMotion: begin
                         case fGameSpeed of
-                          gspNormal, gspFF: GameSpeed := gspSlowMo;
+                          gspNormal, gspFF, gspPause: GameSpeed := gspSlowMo;
                           gspSlowMo: GameSpeed := gspNormal;
                         end;
                       end;
       lka_SaveImage: SaveShot;
       lka_LoadReplay: LoadReplay;
       lka_Music: SoundManager.MuteMusic := not SoundManager.MuteMusic;
-      lka_Restart: GotoSaveState(0, -1); // the -1 prevents pausing afterwards
+      lka_Restart: GotoSaveState(0);
       lka_Sound: SoundManager.MuteSound := not SoundManager.MuteSound;
       lka_SaveReplay: SaveReplay;
       lka_SkillRight: begin
@@ -1649,27 +1652,19 @@ var
 begin
   inherited;
 
-  fMaxZoom := Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS;
+  fMaxZoom := Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod) + EXTRA_ZOOM_LEVELS;
 
   if GameParams.IncreaseZoom then
   begin
     Sca := 2;
-    while (Min(Sca, SkillPanel.MaxZoom) * 40 * ResMod) + (Max(GameParams.Level.Info.Height, 160) * Sca) <= ClientHeight do
+    while (Min(Sca, SkillPanel.MaxZoom) * 40 * ResMod) + (Max(GameParams.Level.Info.Height, 160) * Sca * ResMod) <= ClientHeight do
       Inc(Sca);
     Dec(Sca);
     Sca := Max(Sca, GameParams.ZoomLevel);
   end else
     Sca := GameParams.ZoomLevel;
 
-  Sca := Min(Sca, fMaxZoom);
-
-  if GameParams.HighResolution then
-  begin
-    Sca := Sca div 2;
-    fMaxZoom := (fMaxZoom + 1) div 2;
-  end;
-
-  Sca := Max(Sca, 1);
+  Sca := Max(Min(Sca, fMaxZoom), 1);
 
   fInternalZoom := Sca;
   GameParams.TargetBitmap := Img.Bitmap;

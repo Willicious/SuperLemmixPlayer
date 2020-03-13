@@ -3,6 +3,7 @@ unit FNeoLemmixSetup;
 interface
 
 uses
+  Math,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls;
 
@@ -76,6 +77,8 @@ begin
   end;
 
   GameParams.HighResolution := cbGraphics.ItemIndex >= 2;
+  if GameParams.HighResolution then
+    GameParams.ZoomLevel := Max(GameParams.ZoomLevel div 2, 1);
 
   GameParams.EnableOnline := cbOnline.ItemIndex >= 1;
   GameParams.CheckUpdates := cbOnline.ItemIndex >= 2;

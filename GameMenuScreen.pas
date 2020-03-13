@@ -392,14 +392,14 @@ begin
     Bmp := TBitmap32.Create;
     BitmapElements[E] := Bmp;
     if not (E = gmbGameSection)
-    then Bmp.DrawMode := dmTransparent;
+    then Bmp.DrawMode := dmBlend;
   end;
 
   LeftLemmingAnimation := TBitmap32.Create;
-  LeftLemmingAnimation.DrawMode := dmTransparent;
+  LeftLemmingAnimation.DrawMode := dmBlend;
 
   RightLemmingAnimation := TBitmap32.Create;
-  RightLemmingAnimation.DrawMode := dmTransparent;
+  RightLemmingAnimation.DrawMode := dmBlend;
 
   Reel := TBitmap32.Create;
   ReelBuffer := TBitmap32.Create;
@@ -640,7 +640,7 @@ end;
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
   if fUpdateCheckThread <> nil then
-    fUpdateCheckThread.Terminate;
+    fUpdateCheckThread.Kill;
   inherited CloseScreen(aNextScreen);
 end;
 
