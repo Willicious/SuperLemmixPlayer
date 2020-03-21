@@ -1,0 +1,4 @@
+$GADGET
+   FROM :CatTrap
+   TO nin10_misc:trapCat
+$END
