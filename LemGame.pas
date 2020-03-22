@@ -4158,7 +4158,7 @@ const
                 L.LemX := CheckX;
                 Transition(L, baClimbing);
               end else
-                Transition(L, baFalling);
+                Transition(L, baFalling, true);
               Exit;
             end;
           end;
