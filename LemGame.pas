@@ -2426,7 +2426,7 @@ begin
   Gadget := Gadgets[GadgetID];
 
   if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
-     and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
+     and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing, baJumping]) then
   begin
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baAscending
