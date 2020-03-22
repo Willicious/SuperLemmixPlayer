@@ -62,6 +62,7 @@ type
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
     fClearPhysics: Boolean;
+    fLastClearPhysics: Boolean;
     fProjectionType: Integer;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
@@ -835,8 +836,7 @@ begin
   or (fRenderInterface.HighlitLemming <> fLastHighlightLemming)
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill)
   or (fRenderInterface.UserHelper <> fLastHelperIcon)
-  or (fClearPhysics)
-  or (fProjectionType <> 0)
+  or (fClearPhysics <> fLastClearPhysics)
   or ((GameSpeed = gspPause) and not fLastDrawPaused) then
     fNeedRedraw := rdRedraw;
 
@@ -870,7 +870,9 @@ begin
     fLastHighlightLemming := fRenderInterface.HighlitLemming;
     fLastSelectedSkill := fRenderInterface.SelectedSkill;
     fLastHelperIcon := fRenderInterface.UserHelper;
-    fLastDrawPaused := (GameSpeed = gspPause) and not fClearPhysics;
+    fLastDrawPaused := GameSpeed = gspPause;
+
+    fLastClearPhysics := fClearPhysics;
   except
     on E: Exception do
       OnException(E, 'TGameWindow.DoDraw');
