@@ -2110,7 +2110,8 @@ function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
-               baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying];
+               baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
+               baJumping];
 begin
   Result := (L.LemAction in ActionSet);
 end;
