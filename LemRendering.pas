@@ -617,6 +617,7 @@ begin
 
   case SkillButton of
   spbShimmier:
+    if not DoProjection then
     begin
       fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
       DrawShimmierShadow(CopyL);
@@ -670,6 +671,7 @@ begin
     end;
 
   spbGlider:
+    if not DoProjection then
     begin
       CopyL.LemIsGlider := True;
       DrawGliderShadow(CopyL);
