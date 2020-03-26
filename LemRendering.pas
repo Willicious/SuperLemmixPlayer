@@ -613,7 +613,8 @@ begin
 
       CopyL.Assign(L); // Reset to initial state
     end;
-  end;
+  end else
+    DoProjection := false;
 
   case SkillButton of
   spbShimmier:
