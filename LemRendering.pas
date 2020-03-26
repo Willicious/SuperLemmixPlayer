@@ -574,12 +574,24 @@ var
 
   DoProjection: Boolean;
   DoSkillProjection: Boolean;
+const
+  PROJECTION_STATES = [baWalking, baAscending, baDigging, baClimbing, baHoisting,
+                       baBuilding, baBashing, baMining, baFalling, baFloating,
+                       baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
+                       baFixing, baFencing, baReaching, baShimmying];
 begin
   // Copy L to simulate the path
   CopyL := TLemming.Create;
   CopyL.Assign(L);
 
-  if fRenderInterface.ProjectionType <> 0 then
+  if (fRenderInterface.ProjectionType <> 0) and
+     ((L.LemAction in PROJECTION_STATES) or
+        (
+          (L.LemAction = baDrowning) and
+          (fRenderInterface.ProjectionType = 2) and
+          (SelectedSkill = spbSwimmer)
+        )
+      ) then
   begin
     DoProjection := true;
 
