@@ -842,10 +842,10 @@ begin
   // Draw first pixel at lemming position
   SetLowShadowPixel(L.LemX, L.LemY - 1);
 
-  // We simulate as long as the lemming is gliding, but allow for a falling period at the beginning
+  // We simulate as long as the lemming is gliding, but allow for a falling or jumping period at the beginning
   while     (FrameCount < MaxFrameCount)
         and Assigned(L)
-        and ((L.LemAction = baGliding) or ((FrameCount < 10) and (L.LemAction = baFalling))) do
+        and ((L.LemAction = baGliding) or ((FrameCount < 15) and (L.LemAction in [baFalling, baJumping]))) do
   begin
     Inc(FrameCount);
 
