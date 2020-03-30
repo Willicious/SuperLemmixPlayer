@@ -2219,7 +2219,7 @@ var
 
     while ((CurrPosX <> L.LemX) or (CurrPosY <> L.LemY)) and (i < 6) do
     begin
-      Inc(CurrPosX, Pattern[i, 0]);
+      Inc(CurrPosX, Pattern[i, 0] * L.LemDX);
       Inc(CurrPosY, Pattern[i, 1]);
       SaveCheckPos;
       Inc(i);
