@@ -767,6 +767,7 @@ const
   MAX_FRAME_COUNT = 2000;
 begin
   fLayers.fIsEmpty[rlLowShadows] := false;
+  fLayers.fIsEmpty[rlHighShadows] := false;
   FrameCount := 0;
   LemPosArray := nil;
 
@@ -775,18 +776,19 @@ begin
   // We simulate as long as the lemming is either reaching or shimmying
   while (FrameCount < MAX_FRAME_COUNT)
     and Assigned(L)
-    and (L.LemAction in [baJumping, baClimbing, baFalling, baFloating, baGliding]) do
+    and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding]) do
   begin
     Inc(FrameCount);
+
+    LemPosArray := fRenderInterface.SimulateLem(L);
 
     if Assigned(LemPosArray) then
       for i := 0 to Length(LemPosArray[0]) do
       begin
         SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
         if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
       end;
-
-    LemPosArray := fRenderInterface.SimulateLem(L);
   end;
 end;
 
