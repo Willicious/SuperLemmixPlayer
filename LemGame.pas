@@ -2893,7 +2893,7 @@ begin
       if not ((ShadowSkillButton in ShadowSkillSet) or (fRenderInterface.ProjectionType <> 0)) then Exit;
 
       // Draw the shadows
-      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton);
+      fRenderer.DrawShadows(ShadowLem, ShadowSkillButton, fSelectedSkill, false);
 
       // remember stats for lemming with shadow
       fLemWithShadow := ShadowLem;
@@ -2918,9 +2918,6 @@ procedure TLemmingGame.LayBrick(L: TLemming);
 var
   BrickPosY, n: Integer;
 begin
-  // Do not change the fPhysicsMap when simulating building (but do so for platformers!)
-  if IsSimulating and (L.LemAction = baBuilding) then Exit;
-
   Assert((L.LemNumberOfBricksLeft > 0) and (L.LemNumberOfBricksLeft < 13),
             'Number bricks out of bounds');
 
@@ -2953,8 +2950,7 @@ begin
     PixPosX := L.LemX + n*L.LemDx;
     if not HasPixelAt(PixPosX, BrickPosY) then
     begin
-      // Do not change the fPhysicsMap when simulating stacking
-      if not IsSimulating then AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
+      AddConstructivePixel(PixPosX, BrickPosY, BrickPixelColors[12 - L.LemNumberOfBricksLeft]);
       Result := true;
     end;
   end;
@@ -5380,9 +5376,10 @@ begin
       end;
 
       if    (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap)
-             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535))
+             and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTrap) <> 65535)
+             and not L.LemIsDisarmer)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trExit)
-         or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater)
+         or (HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and not L.LemIsSwimmer)
          or HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trFire)
          or (    HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTeleport)
              and (FindGadgetID(LemPosArray[0, i], LemPosArray[1, i], trTeleport) <> 65535))
@@ -5392,6 +5389,15 @@ begin
         L := nil;
         Break;
       end;
+
+      if HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trWater) and L.LemIsSwimmer then
+        fLemNextAction := baSwimming;
+
+      if HasTriggerAt(LemPosArray[0, i], LemPosArray[1, i], trTrap) and
+         HasPixelAt(LemPosArray[0, i], LemPosArray[1, i]) and
+         L.LemIsDisarmer then
+        fLemNextAction := baFixing;
+
 
       // End this loop when we have reached the lemming position
       if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;

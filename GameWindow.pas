@@ -64,6 +64,7 @@ type
     fClearPhysics: Boolean;
     fLastClearPhysics: Boolean;
     fProjectionType: Integer;
+    fLastProjectionType: Integer;
     fRenderInterface: TRenderInterface;
     fRenderer: TRenderer;
     fNeedResetMouseTrap : Boolean;
@@ -837,6 +838,7 @@ begin
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill)
   or (fRenderInterface.UserHelper <> fLastHelperIcon)
   or (fClearPhysics <> fLastClearPhysics)
+  or (fProjectionType <> fLastProjectionType)
   or ((GameSpeed = gspPause) and not fLastDrawPaused) then
     fNeedRedraw := rdRedraw;
 
@@ -873,6 +875,7 @@ begin
     fLastDrawPaused := GameSpeed = gspPause;
 
     fLastClearPhysics := fClearPhysics;
+    fLastProjectionType := fProjectionType;
   except
     on E: Exception do
       OnException(E, 'TGameWindow.DoDraw');
