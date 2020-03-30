@@ -113,6 +113,8 @@ type
     LemYOld                       : Integer;
     LemActionOld                  : TBasicLemmingAction; // action in previous frame
     LemActionNew                  : TBasicLemmingAction; // new action after fixing a trap, see http://www.lemmingsforums.net/index.php?topic=3004.0
+    LemLastJumpPattern            : Integer; // index of most recently-used jumper pattern
+
     LemQueueAction                : TBasicLemmingAction; // queued action to be assigned within the next few frames
     LemQueueFrame                 : Integer; // number of frames the skill is already queued
 

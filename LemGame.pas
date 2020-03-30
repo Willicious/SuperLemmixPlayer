@@ -468,15 +468,18 @@ type
 const
   // Each entry in a pattern should only move ONE pixel, be it horizontal or vertical. Horizontal
   // movements here are for right-facing lemmings.
-  JUMP_PATTERN_00: TJumpPattern = (( 0, -1), ( 0, -1), ( 1,  0), ( 0, -1), ( 0, -1), ( 1,  0)); // occurs twice
-  JUMP_PATTERN_01: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)); // occurs twice
-  JUMP_PATTERN_02: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0,  0));
-  JUMP_PATTERN_03: TJumpPattern = (( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 0,  0));
-  JUMP_PATTERN_04: TJumpPattern = (( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 0,  0), ( 0,  0));
-  JUMP_PATTERN_05: TJumpPattern = (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 0,  0));
-  JUMP_PATTERN_06: TJumpPattern = (( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  0));
-  JUMP_PATTERN_07: TJumpPattern = (( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1)); // occurs twice
-  JUMP_PATTERN_08: TJumpPattern = (( 1,  0), ( 0,  1), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1)); // occurs twice
+  JUMP_PATTERNS: array[0..8] of TJumpPattern =
+  (
+    (( 0, -1), ( 0, -1), ( 1,  0), ( 0, -1), ( 0, -1), ( 1,  0)), // occurs twice
+    (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)), // occurs twice
+    (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0,  0)),
+    (( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 0,  0)),
+    (( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 0,  0), ( 0,  0)),
+    (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 0,  0)),
+    (( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  0)),
+    (( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1)), // occurs twice
+    (( 1,  0), ( 0,  1), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1))  // occurs twice
+  );
 
 const
   // Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
@@ -2206,6 +2209,23 @@ var
     end;
   end;
 
+  procedure HandleJumperMovement;
+  var
+    Pattern: TJumpPattern;
+    i: Integer;
+  begin
+    Pattern := JUMP_PATTERNS[L.LemLastJumpPattern];
+    i := 0;
+
+    while ((CurrPosX <> L.LemX) or (CurrPosY <> L.LemY)) and (i < 6) do
+    begin
+      Inc(CurrPosX, Pattern[i, 0]);
+      Inc(CurrPosY, Pattern[i, 1]);
+      SaveCheckPos;
+      Inc(i);
+    end;
+  end;
+
 begin
   SetLength(Result, 2, 11);
 
@@ -2215,6 +2235,10 @@ begin
   // no movement
   if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
     SaveCheckPos
+
+  // special treatment of jumpers!
+  else if L.LemActionOld = baJumping then
+    HandleJumperMovement
 
   // special treatment of miners!
   else if L.LemActionOld = baMining then
@@ -4097,6 +4121,8 @@ const
   function MakeJumpMovement: Boolean;
   var
     Pattern: TJumpPattern;
+    PatternIndex: Integer;
+
     i: Integer;
     n: Integer;
 
@@ -4105,17 +4131,16 @@ const
     Result := false;
 
     case L.LemJumpProgress of
-      0..1: Pattern := JUMP_PATTERN_00;
-      2..3: Pattern := JUMP_PATTERN_01;
-      4: Pattern := JUMP_PATTERN_02;
-      5: Pattern := JUMP_PATTERN_03;
-      6: Pattern := JUMP_PATTERN_04;
-      7: Pattern := JUMP_PATTERN_05;
-      8: Pattern := JUMP_PATTERN_06;
-      9..10: Pattern := JUMP_PATTERN_07;
-      11..12: Pattern := JUMP_PATTERN_08;
+      0..1: PatternIndex := 0;
+      2..3: PatternIndex := 1;
+      4..8: PatternIndex := L.LemJumpProgress - 2;
+      9..10: PatternIndex := 7;
+      11..12: PatternIndex := 8;
       else Exit;
     end;
+
+    Pattern := JUMP_PATTERNS[PatternIndex];
+    L.LemLastJumpPattern := PatternIndex;
 
     for i := 0 to 5 do
     begin
