@@ -598,7 +598,7 @@ begin
     if IsCloneShadow and (fRenderInterface.ProjectionType = 1) then
       DoProjection := false;
 
-    if (fRenderInterface.ProjectionType = 2) and (SelectedSkill <> spbNone) then
+    if (fRenderInterface.ProjectionType = 2) then
     begin
       case SelectedSkill of
         spbWalker: if CopyL.LemAction = baWalking then
@@ -615,7 +615,7 @@ begin
         spbBlocker: DoProjection := false;
         spbCloner: CopyL.LemDX := -CopyL.LemDX;
         spbNone: ; // Do nothing
-        else fRenderInterface.SimulateTransitionLem(CopyL, SkillPanelButtonToAction[SkillButton]);
+        else fRenderInterface.SimulateTransitionLem(CopyL, SkillPanelButtonToAction[SelectedSkill]);
       end;
     end;
 
