@@ -605,6 +605,7 @@ begin
                      CopyL.LemDX := -CopyL.LemDX
                    else
                      fRenderInterface.SimulateTransitionLem(CopyL, baToWalking);
+        spbShimmier: fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
         spbClimber: CopyL.LemIsClimber := true;
         spbSwimmer: CopyL.LemIsSwimmer := true;
         spbFloater: CopyL.LemIsFloater := true;
