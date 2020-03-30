@@ -462,6 +462,22 @@ const
   LEMMIX_REPLAY_VERSION    = 105;
   MAX_FALLDISTANCE         = 62;
 
+type
+  TJumpPattern = array[0..5] of array[0..1] of Integer;
+
+const
+  // Each entry in a pattern should only move ONE pixel, be it horizontal or vertical. Horizontal
+  // movements here are for right-facing lemmings.
+  JUMP_PATTERN_00: TJumpPattern = (( 0, -1), ( 0, -1), ( 1,  0), ( 0, -1), ( 0, -1), ( 1,  0)); // occurs twice
+  JUMP_PATTERN_01: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)); // occurs twice
+  JUMP_PATTERN_02: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0,  0));
+  JUMP_PATTERN_03: TJumpPattern = (( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 0,  0));
+  JUMP_PATTERN_04: TJumpPattern = (( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 0,  0), ( 0,  0));
+  JUMP_PATTERN_05: TJumpPattern = (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 0,  0));
+  JUMP_PATTERN_06: TJumpPattern = (( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  0));
+  JUMP_PATTERN_07: TJumpPattern = (( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1)); // occurs twice
+  JUMP_PATTERN_08: TJumpPattern = (( 1,  0), ( 0,  1), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1)); // occurs twice
+
 const
   // Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
   // Here only for refence.
@@ -4079,20 +4095,6 @@ const
   JUMPER_ARC_FRAMES = 13;
 
   function MakeJumpMovement: Boolean;
-  type
-    TJumpPattern = array[0..5] of array[0..1] of Integer;
-  const
-    // Each entry in a pattern should only move ONE pixel, be it horizontal or vertical. Horizontal
-    // movements here are for right-facing lemmings.
-    JUMP_PATTERN_00: TJumpPattern = (( 0, -1), ( 0, -1), ( 1,  0), ( 0, -1), ( 0, -1), ( 1,  0)); // occurs twice
-    JUMP_PATTERN_01: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)); // occurs twice
-    JUMP_PATTERN_02: TJumpPattern = (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0,  0));
-    JUMP_PATTERN_03: TJumpPattern = (( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 0,  0));
-    JUMP_PATTERN_04: TJumpPattern = (( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 0,  0), ( 0,  0));
-    JUMP_PATTERN_05: TJumpPattern = (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 0,  0));
-    JUMP_PATTERN_06: TJumpPattern = (( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  0));
-    JUMP_PATTERN_07: TJumpPattern = (( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1)); // occurs twice
-    JUMP_PATTERN_08: TJumpPattern = (( 1,  0), ( 0,  1), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1)); // occurs twice
   var
     Pattern: TJumpPattern;
     i: Integer;
