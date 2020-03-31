@@ -111,6 +111,7 @@ type
     // They are set in HandleLemming
     LemXOld                       : Integer; // position of previous frame
     LemYOld                       : Integer;
+    LemDXOld                      : Integer;
     LemActionOld                  : TBasicLemmingAction; // action in previous frame
     LemActionNew                  : TBasicLemmingAction; // new action after fixing a trap, see http://www.lemmingsforums.net/index.php?topic=3004.0
     LemLastJumpPattern            : Integer; // index of most recently-used jumper pattern
@@ -308,8 +309,10 @@ begin
   LemJumpProgress := Source.LemJumpProgress;
   LemXOld := Source.LemXOld;
   LemYOld := Source.LemYOld;
+  LemDXOld := Source.LemDXOld;
   LemActionOld := Source.LemActionOld;
   LemActionNew := Source.LemActionNew;
+  LemLastJumpPattern := Source.LemLastJumpPattern;
   // does NOT copy LemQueueAction or LemQueueFrame! This is intentional, because we want to cancel queuing on backwards frameskips.
 end;
 

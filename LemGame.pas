@@ -2213,13 +2213,14 @@ var
   var
     Pattern: TJumpPattern;
     i: Integer;
+    LocalDX: Integer;
   begin
     Pattern := JUMP_PATTERNS[L.LemLastJumpPattern];
     i := 0;
 
     while ((CurrPosX <> L.LemX) or (CurrPosY <> L.LemY)) and (i < 6) do
     begin
-      Inc(CurrPosX, Pattern[i, 0] * L.LemDX);
+      Inc(CurrPosX, Pattern[i, 0] * L.LemDXOld);
       Inc(CurrPosY, Pattern[i, 1]);
       SaveCheckPos;
       Inc(i);
@@ -2227,6 +2228,7 @@ var
   end;
 
 begin
+  SetLength(Result, 0, 0); // to ensure clearing
   SetLength(Result, 2, 11);
 
   n := 0;
@@ -3042,6 +3044,7 @@ begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
   L.LemYOld := L.LemY;
+  L.LemDXOld := L.LemDX;
   L.LemActionOld := L.LemAction;
   // No transition to do at the end of lemming movement
   fLemNextAction := baNone;
