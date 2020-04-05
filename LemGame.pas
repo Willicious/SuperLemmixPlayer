@@ -4123,6 +4123,19 @@ function TLemmingGame.HandleJumping(L: TLemming): Boolean;
 const
   JUMPER_ARC_FRAMES = 13;
 
+  procedure DoJumperTriggerChecks;
+  begin
+    if not HasTriggerAt(L.LemX, L.LemY, trFlipper) then
+      L.LemInFlipper := DOM_NOOBJECT
+    else
+      if HandleFlipper(L, L.LemX, L.LemY) then Exit;
+
+    if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
+      HandleForceField(L, -1)
+    else if HasTriggerAt(L.LemX, L.LemY, trForceRight, L) then
+      HandleForceField(L, 1);
+  end;
+
   function MakeJumpMovement: Boolean;
   var
     Pattern: TJumpPattern;
@@ -4209,6 +4222,8 @@ const
 
       L.LemX := L.LemX + (Pattern[i][0] * L.LemDX);
       L.LemY := L.LemY + Pattern[i][1];
+
+      DoJumperTriggerChecks;
 
       if HasPixelAt(L.LemX, L.LemY) then
       begin
