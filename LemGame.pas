@@ -2685,7 +2685,8 @@ begin
       Result := True;
     end;
 
-    Gadget.CurrentFrame := 1 - Gadget.CurrentFrame // swap the possible values 0 and 1
+    if not IsSimulating then
+      Gadget.CurrentFrame := 1 - Gadget.CurrentFrame // swap the possible values 0 and 1
   end;
 end;
 
