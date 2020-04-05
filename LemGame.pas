@@ -2199,7 +2199,7 @@ var
   begin
     while CurrPosX <> L.LemX do
     begin
-      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
+      Inc(CurrPosX, sign(L.LemX - CurrPosX));
       SaveCheckPos;
     end;
   end;
@@ -2208,7 +2208,7 @@ var
   begin
     while CurrPosY <> L.LemY do
     begin
-      Inc(CurrPosY, sign(L.LemY - L.LemYOld));
+      Inc(CurrPosY, sign(L.LemY - CurrPosY));
       SaveCheckPos;
     end;
   end;
