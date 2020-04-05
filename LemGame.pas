@@ -2231,6 +2231,10 @@ var
 begin
   SL := TStringList.Create;
   try
+    SL.Add('Old: ' + IntToStr(L.LemXOld) + ', ' + IntToStr(L.LemYOld));
+    SL.Add('New: ' + IntToStr(L.LemX) + ', ' + IntToStr(L.LemY));
+    SL.Add('');
+
     SetLength(Result, 0, 0); // to ensure clearing
     SetLength(Result, 2, 11);
 
