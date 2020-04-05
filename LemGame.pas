@@ -2332,9 +2332,10 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
       AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Flipper (except for blockers)
+    // Flipper (except for blockers / jumpers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
-                         and not (L.LemAction = baBlocking) then
+                         and not (L.LemAction = baBlocking)
+                         and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
 
     // If the lem was required stop, move him there!
@@ -2345,7 +2346,8 @@ begin
     end;
 
     // Set L.LemInFlipper correctly
-    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper) then
+    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
+       and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       L.LemInFlipper := DOM_NOOBJECT;
   until [CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY] (*or AbortChecks*);
 
@@ -4129,7 +4131,8 @@ const
     if not HasTriggerAt(L.LemX, L.LemY, trFlipper) then
       L.LemInFlipper := DOM_NOOBJECT
     else
-      if HandleFlipper(L, L.LemX, L.LemY) then Exit;
+      if HandleFlipper(L, L.LemX, L.LemY) then
+        Exit;
 
     if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
       HandleForceField(L, -1)
