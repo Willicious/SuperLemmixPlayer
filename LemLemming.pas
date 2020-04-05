@@ -114,7 +114,7 @@ type
     LemDXOld                      : Integer;
     LemActionOld                  : TBasicLemmingAction; // action in previous frame
     LemActionNew                  : TBasicLemmingAction; // new action after fixing a trap, see http://www.lemmingsforums.net/index.php?topic=3004.0
-    LemLastJumpPattern            : Integer; // index of most recently-used jumper pattern
+    LemJumpPositions              : array[0..5, 0..1] of Integer; // tracking exact positions is the only way jumper shadows can be accurate
 
     LemQueueAction                : TBasicLemmingAction; // queued action to be assigned within the next few frames
     LemQueueFrame                 : Integer; // number of frames the skill is already queued
@@ -312,7 +312,7 @@ begin
   LemDXOld := Source.LemDXOld;
   LemActionOld := Source.LemActionOld;
   LemActionNew := Source.LemActionNew;
-  LemLastJumpPattern := Source.LemLastJumpPattern;
+  LemJumpPositions := Source.LemJumpPositions;
   // does NOT copy LemQueueAction or LemQueueFrame! This is intentional, because we want to cancel queuing on backwards frameskips.
 end;
 

@@ -2211,25 +2211,16 @@ var
 
   procedure HandleJumperMovement;
   var
-    Pattern: TJumpPattern;
     i: Integer;
-    LocalDX: Integer;
   begin
-    Pattern := JUMP_PATTERNS[L.LemLastJumpPattern];
-    i := 0;
-
-    while ((CurrPosX <> L.LemX) or (CurrPosY <> L.LemY)) and (i < 6) do
+    for i := 0 to 5 do
     begin
-      if (L.LemAction <> baJumping) and (CurrPosX = L.LemX) then
-      begin
-        MoveVertical;
+      if (L.LemJumpPositions[i, 0] < 0) or (L.LemJumpPositions[i, 1] < 0) then
         Break;
-      end;
 
-      Inc(CurrPosX, Pattern[i, 0] * L.LemDXOld);
-      Inc(CurrPosY, Pattern[i, 1]);
+      CurrPosX := L.LemJumpPositions[i, 0];
+      CurrPosY := L.LemJumpPositions[i, 1];
       SaveCheckPos;
-      Inc(i);
     end;
   end;
 
@@ -2240,13 +2231,16 @@ begin
   n := 0;
   CurrPosX := L.LemXOld;
   CurrPosY := L.LemYOld;
+
+  if L.LemActionOld = baJumping then
+    HandleJumperMovement; // but continue with the rest as normal
+
   // no movement
   if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
-    SaveCheckPos
-
-  // special treatment of jumpers!
-  else if L.LemActionOld = baJumping then
-    HandleJumperMovement
+  begin
+    if (L.LemActionOld <> baJumping) or (n = 0) then
+      SaveCheckPos;
+  end
 
   // special treatment of miners!
   else if L.LemActionOld = baMining then
@@ -2361,7 +2355,9 @@ begin
 
   // Check for blocker fields and force-fields
   // but not for miners removing terrain, see http://www.lemmingsforums.net/index.php?topic=2710.0
-  if (L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2]) then
+  // also not for Jumpers, as this is handled during movement
+  if ((L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2])) and
+     (L.LemAction <> baJumping) then
   begin
     if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
       HandleForceField(L, -1)
@@ -4149,10 +4145,13 @@ const
     end;
 
     Pattern := JUMP_PATTERNS[PatternIndex];
-    L.LemLastJumpPattern := PatternIndex;
+    FillChar(L.LemJumpPositions, SizeOf(L.LemJumpPositions), $FF);
 
     for i := 0 to 5 do
     begin
+      L.LemJumpPositions[i, 0] := L.LemX;
+      L.LemJumpPositions[i, 1] := L.LemY;
+
       if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then Break;
 
       if (Pattern[i][0] <> 0) then // Wall check
