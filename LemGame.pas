@@ -2220,6 +2220,12 @@ var
 
     while ((CurrPosX <> L.LemX) or (CurrPosY <> L.LemY)) and (i < 6) do
     begin
+      if (L.LemAction <> baJumping) and (CurrPosX = L.LemX) then
+      begin
+        MoveVertical;
+        Break;
+      end;
+
       Inc(CurrPosX, Pattern[i, 0] * L.LemDXOld);
       Inc(CurrPosY, Pattern[i, 1]);
       SaveCheckPos;
