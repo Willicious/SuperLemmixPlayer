@@ -2183,9 +2183,13 @@ function TLemmingGame.GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
 var
   CurrPosX, CurrPosY: Integer;
   n: Integer;
+  SL: TStringList;
 
   procedure SaveCheckPos;
   begin
+    SL.Add(IntToStr(CurrPosX) + ',' + IntToStr(CurrPosY));
+    SL.SaveToFile(AppPath + 'shadow' + IntToStr(n mod 2) + '.txt');
+
     Result[0, n] := CurrPosX;
     Result[1, n] := CurrPosY;
     Inc(n);
@@ -2225,48 +2229,53 @@ var
   end;
 
 begin
-  SetLength(Result, 0, 0); // to ensure clearing
-  SetLength(Result, 2, 11);
+  SL := TStringList.Create;
+  try
+    SetLength(Result, 0, 0); // to ensure clearing
+    SetLength(Result, 2, 11);
 
-  n := 0;
-  CurrPosX := L.LemXOld;
-  CurrPosY := L.LemYOld;
+    n := 0;
+    CurrPosX := L.LemXOld;
+    CurrPosY := L.LemYOld;
 
-  if L.LemActionOld = baJumping then
-    HandleJumperMovement; // but continue with the rest as normal
+    if L.LemActionOld = baJumping then
+      HandleJumperMovement; // but continue with the rest as normal
 
-  // no movement
-  if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
-  begin
-    if (L.LemActionOld <> baJumping) or (n = 0) then
-      SaveCheckPos;
-  end
-
-  // special treatment of miners!
-  else if L.LemActionOld = baMining then
-  begin
-    // First move one pixel down, if Y-coordinate changed
-    if L.LemYOld < L.LemY then
+    // no movement
+    if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
     begin
-      Inc(CurrPosY);
-      SaveCheckPos;
+      if (L.LemActionOld <> baJumping) or (n = 0) then
+        SaveCheckPos;
+    end
+
+    // special treatment of miners!
+    else if L.LemActionOld = baMining then
+    begin
+      // First move one pixel down, if Y-coordinate changed
+      if L.LemYOld < L.LemY then
+      begin
+        Inc(CurrPosY);
+        SaveCheckPos;
+      end;
+      MoveHoizontal;
+      MoveVertical;
+    end
+
+    // lem moves up or is faller; exception is made for builders!
+    else if ((L.LemY < L.LemYOld) or (L.LemAction = baFalling)) and not (L.LemActionOld = baBuilding) then
+    begin
+      MoveHoizontal;
+      MoveVertical;
+    end
+
+    // lem moves down (or straight) and is no faller; alternatively lem is a builder!
+    else
+    begin
+      MoveVertical;
+      MoveHoizontal;
     end;
-    MoveHoizontal;
-    MoveVertical;
-  end
-
-  // lem moves up or is faller; exception is made for builders!
-  else if ((L.LemY < L.LemYOld) or (L.LemAction = baFalling)) and not (L.LemActionOld = baBuilding) then
-  begin
-    MoveHoizontal;
-    MoveVertical;
-  end
-
-  // lem moves down (or straight) and is no faller; alternatively lem is a builder!
-  else
-  begin
-    MoveVertical;
-    MoveHoizontal;
+  finally
+    SL.Free;
   end;
 end;
 
