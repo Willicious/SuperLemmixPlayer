@@ -594,8 +594,7 @@ begin
     if fIsModified then
       fPlayerName := GameParams.UserName; // If modified, treat it as this user's.
 
-    if (fPlayerName <> '') and (Uppercase(Trim(fPlayerName)) <> 'ANONYMOUS') then
-      Sec.AddLine('USER', fPlayerName);
+    Sec.AddLine('USER', fPlayerName);
 
     Sec.AddLine('TITLE', fLevelName);
     Sec.AddLine('AUTHOR', fLevelAuthor);
@@ -772,7 +771,7 @@ end;
 
 function TReplay.GetIsThisUsersReplay: Boolean;
 begin
-  if ((fPlayerName = GameParams.UserName) and (Uppercase(Trim(GameParams.UserName)) <> 'Anonymous') and (fPlayerName <> ''))
+  if (fPlayerName = GameParams.UserName)
   or ((Trim(fPlayerName) = '') and GameParams.MatchBlankReplayUsername) then
     Result := true
   else if fIsModified then

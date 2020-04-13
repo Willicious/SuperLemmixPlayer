@@ -121,6 +121,8 @@ type
     fLoadedWindowWidth: Integer;
     fLoadedWindowHeight: Integer;
 
+    fUserName: String;
+
     fMainForm: TForm; // link to the FMain form
 
     MiscOptions           : TMiscOptions;
@@ -136,8 +138,9 @@ type
     procedure SaveToIniFile;
 
     function GetCurrentGroupName: String;
+
+    procedure SetUserName(aValue: String);
   public
-    UserName: string;
     SoundOptions : TGameSoundOptions;
 
     Level        : TLevel;
@@ -237,6 +240,8 @@ type
     property Hotkeys: TLemmixHotkeyManager read fHotkeys;
 
     property CurrentGroupName: String read GetCurrentGroupName;
+
+    property Username: String read fUsername write SetUsername;
   published
   end;
 
@@ -768,6 +773,14 @@ begin
     Include(PostLevelSoundOptions, aFlag)
   else
     Exclude(PostLevelSoundOptions, aFlag);
+end;
+
+procedure TDosGameParams.SetUserName(aValue: String);
+begin
+  if aValue = '' then
+    fUsername = 'Anonymous'
+  else
+    fUsername = aValue;
 end;
 
 function TDosGameParams.GetCurrentGroupName: String;

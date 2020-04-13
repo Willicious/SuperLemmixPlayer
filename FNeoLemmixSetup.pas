@@ -54,8 +54,7 @@ end;
 procedure TFNLSetup.btnOKClick(Sender: TObject);
 begin
   // Set desired default settings
-  if ebUserName.Text <> '' then
-    GameParams.UserName := ebUserName.Text;
+  GameParams.UserName := ebUserName.Text;
 
   case cbHotkey.ItemIndex of
     0: GameParams.Hotkeys.SetDefaultsFunctional;

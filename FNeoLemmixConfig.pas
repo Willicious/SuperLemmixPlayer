@@ -190,10 +190,7 @@ begin
 
   //// Page 1 (Global Options) ////
 
-  if ebUserName.Text = '' then
-    GameParams.UserName := 'Anonymous'
-  else
-    GameParams.UserName := ebUserName.Text;
+  GameParams.UserName := ebUserName.Text;
 
   // Checkboxes
   GameParams.AutoSaveReplay := cbAutoSaveReplay.Checked;
