@@ -5,6 +5,7 @@ interface
 uses
   System.Types,
   StrUtils,
+  LemTypes,
   PngInterface,
   LemNeoLevelPack,
   LemmixHotkeys, SharedGlobals,
@@ -211,7 +212,7 @@ begin
   if SaveName = '' then Exit;
 
   TempBitmap := TBitmap32.Create;
-  TempBitmap.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+  TempBitmap.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
   GameParams.Renderer.RenderWorld(TempBitmap, not GameParams.NoBackgrounds);
   TPngInterface.SavePngFile(SaveName, TempBitmap, true);
   TempBitmap.Free;

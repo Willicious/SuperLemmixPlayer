@@ -518,8 +518,15 @@ begin
 end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aClearPhysics: Boolean = false);
+var
+  aRegionRect: TRect;
 begin
-  DrawLevel(aDst, fPhysicsMap.BoundsRect, aClearPhysics);
+  aRegionRect := fPhysicsMap.BoundsRect;
+
+  aRegionRect := Rect(aRegionRect.Left * ResMod, aRegionRect.Top * ResMod,
+                      aRegionRect.Right * ResMod, aRegionRect.Bottom * ResMod);
+
+  DrawLevel(aDst, aRegionRect, aClearPhysics);
 end;
 
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false);

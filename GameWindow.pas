@@ -1975,7 +1975,7 @@ begin
     begin
       SaveName := Dlg.FileName;
       BMP := TBitmap32.Create;
-      BMP.SetSize(GameParams.Level.Info.Width, GameParams.Level.Info.Height);
+      BMP.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
 
       fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
       fRenderer.DrawLemmings(fClearPhysics);
