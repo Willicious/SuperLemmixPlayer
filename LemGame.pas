@@ -4263,15 +4263,34 @@ var
   procedure CheckOnePixelShaft(L: TLemming);
   var
     LemYDir: Integer;
+
+    function HasConsecutivePixels: Boolean;
+    var
+      i: Integer;
+      OneWayCheckType: TTriggerTypes;
+    begin
+      // Check at LemY +1, +2, +3 for (a) solid terrain, or (b) a one-way field that will turn the lemming around
+      Result := false;
+
+      if L.LemDX > 0 then
+        OneWayCheckType := trForceLeft
+      else
+        OneWayCheckType := trForceRight;
+
+      for i := 1 to 3 do
+        if not (HasPixelAt(L.LemX + L.LemDX, L.LemY + i) or
+                HasTriggerAt(L.LemX + L.LemDX, L.LemY + i, OneWayCheckType)) then
+          Exit;
+
+      Result := true;
+    end;
   begin
     // Move upwards if in updraft
     LemYDir := 1;
     if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then LemYDir := -1;
 
     if    ((FindGroundPixel(L.LemX + L.LemDx, L.LemY) < -4) and DoTurnAround(L, True))
-       or (     HasPixelAt(L.LemX + L.LemDx, L.LemY + 1)
-            and HasPixelAt(L.LemX + L.LemDx, L.LemY + 2)
-            and HasPixelAt(L.LemX + L.LemDx, L.LemY + 3)) then
+       or (HasConsecutivePixels) then
     begin
       if HasPixelAt(L.LemX, L.LemY) and (LemYDir = 1) then
         fLemNextAction := baWalking
