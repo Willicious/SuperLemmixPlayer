@@ -252,6 +252,12 @@ begin
   sTriggerRect := GetTriggerRect;
   sReceiverId := 65535;
 
+  if IsFlipImage then
+  begin
+    if sTriggerEffect = DOM_FORCELEFT then sTriggerEffect := DOM_FORCERIGHT
+    else if sTriggerEffect = DOM_FORCERIGHT then sTriggerEffect := DOM_FORCELEFT;
+  end;
+
   // Set other stuff
   Triggered := False;
   TeleLem := -1; // Set to a value no lemming has (hopefully!)

@@ -486,8 +486,6 @@ var
       O.TarLev := Max(aSection.LineNumeric['skillcount'], 1)
     else
       O.TarLev := Max(aSection.LineNumeric['skill_count'], 1);
-
-    O.DrawingFlags := O.DrawingFlags and not (odf_Rotate or odf_FlipLem or odf_UpsideDown);
   end;
 
   procedure GetSplitterData;
@@ -524,6 +522,10 @@ var
 var
   Ident: TLabelRecord;
   MO: TGadgetMetaInfo;
+const
+  NO_FLIP_HORIZONTAL_TYPES = [DOM_PICKUP];
+  NO_FLIP_VERTICAL_TYPES = [DOM_WINDOW, DOM_PICKUP, DOM_UPDRAFT];
+  NO_ROTATE_TYPES = [DOM_WINDOW, DOM_FORCELEFT, DOM_FORCERIGHT, DOM_PICKUP, DOM_UPDRAFT, DOM_FLIPPER];
 begin
   O := fInteractiveObjects.Add;
 
@@ -558,7 +560,7 @@ begin
   if (aSection.Line['no_overwrite'] <> nil) then Flag(odf_NoOverwrite);
   if (aSection.Line['only_on_terrain'] <> nil) then Flag(odf_OnlyOnTerrain);
 
-  case PieceManager.Objects[O.Identifier].TriggerEffect of
+  case MO.TriggerEffect of
     DOM_TELEPORT: GetTeleporterData;
     DOM_RECEIVER: GetReceiverData;
     DOM_PICKUP: GetPickupData;
@@ -567,6 +569,10 @@ begin
     DOM_BACKGROUND: GetMovingBackgroundData;
     DOM_EXIT, DOM_LOCKEXIT: GetExitData;
   end;
+
+  if MO.TriggerEffect in NO_FLIP_HORIZONTAL_TYPES then O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
+  if MO.TriggerEffect in NO_FLIP_VERTICAL_TYPES then O.DrawingFlags := O.DrawingFlags and not odf_UpsideDown;
+  if MO.TriggerEffect in NO_ROTATE_TYPES then O.DrawingFlags := O.DrawingFlags and not odf_Rotate;
 end;
 
 procedure TLevel.HandleTerrainGroupEntry(aSection: TParserSection; const aIteration: Integer);

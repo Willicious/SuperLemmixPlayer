@@ -1751,13 +1751,21 @@ begin
       end;
 
     DOM_FORCELEFT:
+      if Gadget.IsFlipImage then
       begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
+      end else begin
         fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
         fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
       end;
 
     DOM_FORCERIGHT:
+      if Gadget.IsFlipImage then
       begin
+        fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
+        fHelperImages[hpi_ArrowLeft].DrawTo(Dst, DrawX + 13 * ResMod, DrawY);
+      end else begin
         fHelperImages[hpi_Force].DrawTo(Dst, DrawX - 19 * ResMod, DrawY);
         fHelperImages[hpi_ArrowRight].DrawTo(Dst, DrawX + 12 * ResMod, DrawY);
       end;
