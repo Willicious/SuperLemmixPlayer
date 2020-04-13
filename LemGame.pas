@@ -4172,13 +4172,11 @@ var
       // Depending on updrafts, this happens on the 6th-8th frame
       Transition(L, baFloating);
       Result := true;
-      Log('Floater transition at ' + IntToStr(L.LemTrueFallen));
     end else if L.LemIsGlider and (L.LemTrueFallen > 8) then
     begin
       // This always happens on the 4th frame (?)
       Transition(L, baGliding);
       Result := true;
-      Log('Glider transition at ' + IntToStr(L.LemTrueFallen));
     end;
   end;
 begin
