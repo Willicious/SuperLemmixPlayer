@@ -4161,46 +4161,57 @@ var
           and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
+
+  function CheckFloaterOrGliderTransition: Boolean;
+  begin
+    Result := false;
+    if CurrFallDist > 0 then Exit;    
+
+    if L.LemIsFloater and (L.LemTrueFallen > 17) then
+    begin
+      // Depending on updrafts, this happens on the 6th-8th frame
+      Transition(L, baFloating);
+      Result := true;
+      Log('Floater transition at ' + IntToStr(L.LemTrueFallen));
+    end else if L.LemIsGlider and (L.LemTrueFallen > 8) then
+    begin
+      // This always happens on the 4th frame (?)
+      Transition(L, baGliding);
+      Result := true;
+      Log('Glider transition at ' + IntToStr(L.LemTrueFallen));
+    end;
+  end;
 begin
   Result := True;
 
-  if L.LemIsFloater and (L.LemTrueFallen > 16) then
-    // Depending on updrafts, this happens on the 6th-8th frame
-    Transition(L, baFloating)
+  CurrFallDist := 0;
+  MaxFallDist := 3;
 
-  else if L.LemIsGlider and (L.LemTrueFallen > 6) then
-    // This always happens on the 4th frame
-    Transition(L, baGliding)
+  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then MaxFallDist := 2;
 
-  else
+  // Move lem until hitting ground
+  while (CurrFallDist < MaxFallDist) and not HasPixelAt(L.LemX, L.LemY) do
   begin
-    CurrFallDist := 0;
-    MaxFallDist := 3;
+    if CheckFloaterOrGliderTransition then
+      Exit;
 
-    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then MaxFallDist := 2;
+    Inc(L.LemY);
+    Inc(CurrFallDist);
+    Inc(L.LemFallen);
+    Inc(L.LemTrueFallen);
+    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then L.LemFallen := 0;
+  end;
 
-    // Move lem until hitting ground
-    while (CurrFallDist < MaxFallDist) and not HasPixelAt(L.LemX, L.LemY) do
-    begin
-      Inc(L.LemY);
-      Inc(CurrFallDist);
-      Inc(L.LemFallen);
-      Inc(L.LemTrueFallen);
-      if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then L.LemFallen := 0;
-    end;
+  if L.LemFallen > MAX_FALLDISTANCE then L.LemFallen := MAX_FALLDISTANCE + 1;
+  if L.LemTrueFallen > MAX_FALLDISTANCE then L.LemTrueFallen := MAX_FALLDISTANCE + 1;
 
-    if L.LemFallen > MAX_FALLDISTANCE then L.LemFallen := MAX_FALLDISTANCE + 1;
-    if L.LemTrueFallen > MAX_FALLDISTANCE then L.LemTrueFallen := MAX_FALLDISTANCE + 1;
-    
-
-    if CurrFallDist < MaxFallDist then
-    begin
-      // Object checks at hitting ground
-      if IsFallFatal then
-        fLemNextAction := baSplatting
-      else
-        fLemNextAction := baWalking;
-    end;
+  if CurrFallDist < MaxFallDist then
+  begin
+    // Object checks at hitting ground
+    if IsFallFatal then
+      fLemNextAction := baSplatting
+    else
+      fLemNextAction := baWalking;
   end;
 end;
 
