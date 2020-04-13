@@ -4165,7 +4165,6 @@ var
   function CheckFloaterOrGliderTransition: Boolean;
   begin
     Result := false;
-    if CurrFallDist > 0 then Exit;    
 
     if L.LemIsFloater and (L.LemTrueFallen > 17) then
     begin
