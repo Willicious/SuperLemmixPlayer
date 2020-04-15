@@ -10,6 +10,7 @@ interface
 
 uses
   Classes, Controls,
+  CustomPopup,
   GameBaseScreen, GameControl,
   LemNeoOnline, StrUtils,
   LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
@@ -185,6 +186,8 @@ begin
       SL: TStringList;
       n: Integer;
       NewestID: Int64;
+      URL: String;
+      F: TFManageStyles;
     begin
       NewVersionStr := fVersionInfo.Values['game'];
       if LeftStr(NewVersionStr, 1) = 'V' then
@@ -209,11 +212,30 @@ begin
           for n := 0 to 3 do
             NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
 
-          if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
+          if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} or true then
           begin
-            ShowMessage('Update available: NeoLemmix V' + OrigVersionStr + '. Please go to www.neolemmix.com to download.');
+            case RunCustomPopup(self, 'Update', 'A NeoLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
+              'Go to NeoLemmix website|Remind me later') of
+              1: begin
+                   URL := 'https://www.neolemmix.com/?page=neolemmix';
+                   ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);
+                   CloseScreen(gstExit);
+                 end;
+               // 2: do nothing;
+            end;
           end else if CheckStyleUpdates then
-            ShowMessage('Style updates available. Please use the Style Manager (under settings) to download.');
+            case RunCustomPopup(self, 'Styles Update', 'Styles updates are available. Do you want to download them?',
+              'Open Style Manager|Remind me later') of
+              1: begin
+                   F := TFManageStyles.Create(self);
+                   try
+                     F.ShowModal;
+                   finally
+                     F.Free;
+                   end;
+                 end;
+              // 2: do nothing;
+            end;
 
         except
           // Fail silently.
