@@ -4166,14 +4166,13 @@ var
   begin
     Result := false;
 
-    if L.LemIsFloater and (L.LemTrueFallen > 17) then
+    if L.LemIsFloater and (L.LemTrueFallen > 16) and (CurrFallDist = 0) then
     begin
       // Depending on updrafts, this happens on the 6th-8th frame
       Transition(L, baFloating);
       Result := true;
     end else if L.LemIsGlider and (L.LemTrueFallen > 8) then
     begin
-      // This always happens on the 4th frame (?)
       Transition(L, baGliding);
       Result := true;
     end;
@@ -4186,10 +4185,13 @@ begin
 
   if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then MaxFallDist := 2;
 
+  if CheckFloaterOrGliderTransition then // This check needs to happen even if we don't enter the while loop.
+    Exit;
+
   // Move lem until hitting ground
   while (CurrFallDist < MaxFallDist) and not HasPixelAt(L.LemX, L.LemY) do
   begin
-    if CheckFloaterOrGliderTransition then
+    if (CurrFallDist > 0) and CheckFloaterOrGliderTransition then // Already checked above on first iteration.
       Exit;
 
     Inc(L.LemY);
