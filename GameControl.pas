@@ -778,9 +778,9 @@ end;
 procedure TDosGameParams.SetUserName(aValue: String);
 begin
   if aValue = '' then
-    fUsername = 'Anonymous'
+    fUsername := 'Anonymous'
   else
-    fUsername = aValue;
+    fUsername := aValue;
 end;
 
 function TDosGameParams.GetCurrentGroupName: String;
