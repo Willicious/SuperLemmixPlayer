@@ -1123,6 +1123,9 @@ begin
       else
         Transition(L, baWalking);
 
+      if L.LemAction = baFalling then
+        L.LemInitialFall := true;
+
       if Lem.IsZombie then
       begin
         RemoveLemming(L, RM_ZOMBIE, true);
@@ -1363,6 +1366,7 @@ begin
   L.LemNumberOfBricksLeft := 0;
   OldIsStartingAction := L.LemIsStartingAction; // because for some actions (eg baHoisting) we need to restore previous value
   L.LemIsStartingAction := True;
+  L.LemInitialFall := False;
 
   L.LemMaxFrame := -1;
   L.LemMaxPhysicsFrame := ANIM_FRAMECOUNT[NewAction] - 1;
@@ -4171,7 +4175,9 @@ var
       // Depending on updrafts, this happens on the 6th-8th frame
       Transition(L, baFloating);
       Result := true;
-    end else if L.LemIsGlider and (L.LemTrueFallen > 8) then
+    end else if L.LemIsGlider and
+      ((L.LemTrueFallen > 8) or
+       ((L.LemInitialFall) and (L.LemTrueFallen > 6))) then
     begin
       Transition(L, baGliding);
       Result := true;
@@ -4800,6 +4806,9 @@ begin
         begin
           LemIndex := LemmingList.Add(NewLemming);
           Transition(NewLemming, baFalling);
+
+          if LemAction = baFalling then // could be a walker if eg. spawned inside terrain
+            LemInitialFall := true;
 
           LemX := Gadgets[ix].TriggerRect.Left;
           LemY := Gadgets[ix].TriggerRect.Top;
