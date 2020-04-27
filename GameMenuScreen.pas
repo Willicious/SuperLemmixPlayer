@@ -60,6 +60,8 @@ type
     fUpdateCheckThread: TDownloadThread;
     fVersionInfo: TStringList;
 
+    DoneCleanInstallCheck: Boolean;
+
   { enumerated menu bitmap elements }
     BitmapElements : array[TGameMenuBitmap] of TBitmap32;
   { section }
@@ -98,6 +100,7 @@ type
     procedure DumpImages;
     procedure CleanseLevels;
     procedure PerformUpdateCheck;
+    procedure PerformCleanInstallCheck;
   { eventhandlers }
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -168,6 +171,52 @@ begin
     ShowMessage('Output directory "Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\" already exists. Please delete this first.')
   else
     BasePack.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\');
+end;
+
+procedure TGameMenuScreen.PerformCleanInstallCheck;
+var
+  SL: TStringList;
+  FMVer, CVer: Integer;
+begin
+  DoneCleanInstallCheck := true;
+
+  SL := TStringList.Create;
+  try
+    if FileExists(AppPath + 'styles\version.ini') then
+    begin
+      SL.LoadFromFile(AppPath + 'styles\version.ini');
+      if SL.Count >= 4 then
+      begin
+        FMVer := StrToIntDef(SL[0], -1);
+        CVer := StrToIntDef(SL[1], -1);
+
+        if (FMVer < FORMAT_VERSION) or
+           ((FMVer = FORMAT_VERSION) and (CVer < CORE_VERSION)) then
+        ShowMessage('It appears you have installed this version of NeoLemmix over an older major version. This is not recommended. ' +
+                    'It is recommended that you perform a fresh, clean install of NeoLemmix whenever updating between major versions. ' +
+                    'If you encounter any bugs, especially relating to styles, please test with a fresh install before reporting them.');
+      end;
+    end;
+
+    SL.Clear;
+    SL.Add(IntToStr(FORMAT_VERSION));
+    SL.Add(IntToStr(CORE_VERSION));
+    SL.Add(IntToStr(FEATURES_VERSION));
+    SL.Add(IntToStr(HOTFIX_VERSION));
+    {$ifdef rc}
+      SL.Add('RC');
+    {$else}
+      {$ifdef exp}
+        SL.Add('EXP');
+      {$else}
+        SL.Add('STABLE');
+      {$endif}
+    {$endif}
+
+    SL.SaveToFile(AppPath + 'styles\version.ini');
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure TGameMenuScreen.PerformUpdateCheck;
@@ -603,6 +652,9 @@ var
 begin
   if not GameParams.DoneUpdateCheck then
     PerformUpdateCheck;
+
+  if not DoneCleanInstallCheck then
+    PerformCleanInstallCheck;
 
   if (not GameParams.LoadedConfig) then
   begin
