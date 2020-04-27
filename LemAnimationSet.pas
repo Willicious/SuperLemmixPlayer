@@ -24,8 +24,8 @@ const
   dos animations ordered by their appearance in main.dat
   the constants below show the exact order
 -------------------------------------------------------------------------------}
-  NUM_LEM_SPRITES     = 55;
-  NUM_LEM_SPRITE_TYPE = 27;
+  NUM_LEM_SPRITES     = 57;
+  NUM_LEM_SPRITE_TYPE = 28;
   WALKING             = 0;
   WALKING_RTL         = 1;
   ASCENDING           = 2;
@@ -80,7 +80,9 @@ const
   REACHING_RTL        = 51;
   SHIMMYING           = 52;
   SHIMMYING_RTL       = 53;
-  STONED              = 54; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
+  JUMPING             = 54;
+  JUMPING_RTL         = 55;
+  STONED              = 56; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
   // and the left-facing on the right. Is this standard practice? Maybe
@@ -116,7 +118,8 @@ const
     (0,0),                                    // baCloning? Another that should never happen
     (FENCING, FENCING_RTL),                   // baFencing
     (REACHING, REACHING_RTL),                 // baReaching (for shimmier)
-    (SHIMMYING, SHIMMYING_RTL)                // baShimmying
+    (SHIMMYING, SHIMMYING_RTL),               // baShimmying
+    (JUMPING, JUMPING_RTL)                    // baJumping
   );
 
 type
@@ -166,13 +169,13 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..26] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
+  ANIM_NAMES: array[0..27] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
                                          'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                          'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                          'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
                                          'OHNOER', 'BOMBER', 'PLATFORMER', 'STONER',
                                          'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
-                                         'FENCER', 'REACHER', 'SHIMMIER');
+                                         'FENCER', 'REACHER', 'SHIMMIER', 'JUMPER');
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
   Parser: TParser;
@@ -206,10 +209,13 @@ begin
 
           Anim.FrameCount := ThisAnimSec.LineNumeric['frames'];
 
-          if ThisAnimSec.Line['loop_to_frame'] = nil then
-            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe']
+          if ThisAnimSec.Line['peak_frame'] <> nil then
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['peak_frame']
+          else if ThisAnimSec.Line['loop_to_frame'] <> nil then
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame']
           else
-            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame'];
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe']; // this one is deprecated, BOTH others are valid
+
           Anim.FootX := DirSec.LineNumeric['foot_x'];
           Anim.FootY := DirSec.LineNumeric['foot_y'];
           Anim.Description := LeftStr(DIR_NAMES[dx], 1) + ANIM_NAMES[i];

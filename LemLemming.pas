@@ -58,6 +58,8 @@ type
     function CheckForPermanentSkills: Boolean;
     function GetPosition: TPoint;
     function GetCannotReceiveSkills: Boolean;
+
+    function GetJumperDebug(Index: Integer): Boolean;
   public
   { misc sized }
     LemEraseRect                  : TRect; // the rectangle of the last drawaction (can include space for countdown digits)
@@ -103,12 +105,17 @@ type
     LemTimerToStone               : Boolean;
     LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Stoner
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
+    LemJumpProgress               : Integer;
+
     // The next three values are only needed to determine intermediate trigger area checks
     // They are set in HandleLemming
     LemXOld                       : Integer; // position of previous frame
     LemYOld                       : Integer;
+    LemDXOld                      : Integer;
     LemActionOld                  : TBasicLemmingAction; // action in previous frame
     LemActionNew                  : TBasicLemmingAction; // new action after fixing a trap, see http://www.lemmingsforums.net/index.php?topic=3004.0
+    LemJumpPositions              : array[0..5, 0..1] of Integer; // tracking exact positions is the only way jumper shadows can be accurate
+
     LemQueueAction                : TBasicLemmingAction; // queued action to be assigned within the next few frames
     LemQueueFrame                 : Integer; // number of frames the skill is already queued
 
@@ -119,6 +126,9 @@ type
     property Position          : TPoint read GetPosition;    
     property HasPermanentSkills: Boolean read CheckForPermanentSkills;
     property CannotReceiveSkills: Boolean read GetCannotReceiveSkills;
+
+    property JumperGliderDebug: Boolean Index 1 read GetJumperDebug;
+    property JumperSplatDebug: Boolean Index 2 read GetJumperDebug;
   end;
 
   TLemmingList = class(TObjectList)
@@ -238,6 +248,15 @@ begin
   Result := LemIsZombie or LemIsNeutral or LemHasBeenOhnoer;
 end;
 
+function TLemming.GetJumperDebug(Index: Integer): Boolean;
+begin
+  case Index of
+    1: Result := LemIsSwimmer;
+    2: Result := LemIsDisarmer;
+    else Result := false;
+  end;
+end;
+
 function TLemming.GetPosition: TPoint;
 begin
   Result.X := LemX;
@@ -287,10 +306,13 @@ begin
   LemTimerToStone := Source.LemTimerToStone;
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
+  LemJumpProgress := Source.LemJumpProgress;
   LemXOld := Source.LemXOld;
   LemYOld := Source.LemYOld;
+  LemDXOld := Source.LemDXOld;
   LemActionOld := Source.LemActionOld;
   LemActionNew := Source.LemActionNew;
+  LemJumpPositions := Source.LemJumpPositions;
   // does NOT copy LemQueueAction or LemQueueFrame! This is intentional, because we want to cancel queuing on backwards frameskips.
 end;
 

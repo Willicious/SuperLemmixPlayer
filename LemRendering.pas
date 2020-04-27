@@ -155,6 +155,7 @@ type
     procedure DrawLemmingParticles(L: TLemming);
 
     procedure DrawShadows(L: TLemming; SkillButton: TSkillPanelButton; SelectedSkill: TSkillPanelButton; IsCloneShadow: Boolean);
+    procedure DrawJumperShadow(L: TLemming);
     procedure DrawShimmierShadow(L: TLemming);
     procedure DrawGliderShadow(L: TLemming);
     procedure DrawBuilderShadow(L: TLemming);
@@ -420,8 +421,16 @@ begin
     aLemming.LemFrameDiff := SrcMetaAnim.FrameDiff;
   end;
 
-  while aLemming.LemFrame > aLemming.LemMaxFrame do
-    Dec(aLemming.LemFrame, aLemming.LemFrameDiff);
+  if (aLemming.LemAction = baJumping) then
+  begin
+    case aLemming.LemJumpProgress of
+      0..5: if aLemming.LemFrame >= aLemming.LemMaxFrame - aLemming.LemFrameDiff then aLemming.LemFrame := 0;
+      6: aLemming.LemFrame := aLemming.LemMaxFrame - aLemming.LemFrameDiff + 1;
+      7..12: if aLemming.LemFrame > aLemming.LemMaxFrame then aLemming.LemFrame := aLemming.LemMaxFrame - aLemming.LemFrameDiff + 2;
+    end;
+  end else
+    while aLemming.LemFrame > aLemming.LemMaxFrame do
+      Dec(aLemming.LemFrame, aLemming.LemFrameDiff);
 
   SrcRect := GetFrameBounds;
   DstRect := GetLocationBounds;
@@ -637,6 +646,14 @@ begin
     DoProjection := false;
 
   case SkillButton of
+  spbJumper:
+    if not DoProjection then
+    begin
+      fRenderInterface.SimulateTransitionLem(CopyL, baJumping);
+      DrawJumperShadow(CopyL);
+    end;
+
+
   spbShimmier:
     if not DoProjection then
     begin
@@ -748,6 +765,40 @@ begin
   SavePhysicsMap.Free;
 end;
 
+procedure TRenderer.DrawJumperShadow(L: TLemming);
+var
+  FrameCount: Integer;
+  LemPosArray: TArrayArrayInt;
+  i: Integer;
+const
+  MAX_FRAME_COUNT = 2000;
+begin
+  fLayers.fIsEmpty[rlLowShadows] := false;
+  fLayers.fIsEmpty[rlHighShadows] := false;
+  FrameCount := 0;
+  LemPosArray := nil;
+
+  SetLowShadowPixel(L.LemX, L.LemY - 1);
+
+  // We simulate as long as the lemming is either reaching or shimmying
+  while (FrameCount < MAX_FRAME_COUNT)
+    and Assigned(L)
+    and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding]) do
+  begin
+    Inc(FrameCount);
+
+    LemPosArray := fRenderInterface.SimulateLem(L);
+
+    if Assigned(LemPosArray) then
+      for i := 0 to Length(LemPosArray[0]) do
+      begin
+        SetLowShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        SetHighShadowPixel(LemPosArray[0, i], LemPosArray[1, i] - 1);
+        if (L.LemX = LemPosArray[0, i]) and (L.LemY = LemPosArray[1, i]) then Break;
+      end;
+  end;
+end;
+
 procedure TRenderer.DrawShimmierShadow(L: TLemming);
 var
   FrameCount: Integer;
@@ -798,10 +849,10 @@ begin
   // Draw first pixel at lemming position
   SetLowShadowPixel(L.LemX, L.LemY - 1);
 
-  // We simulate as long as the lemming is gliding, but allow for a falling period at the beginning
+  // We simulate as long as the lemming is gliding, but allow for a falling or jumping period at the beginning
   while     (FrameCount < MaxFrameCount)
         and Assigned(L)
-        and ((L.LemAction = baGliding) or ((FrameCount < 10) and (L.LemAction = baFalling))) do
+        and ((L.LemAction = baGliding) or ((FrameCount < 15) and (L.LemAction in [baFalling, baJumping]))) do
   begin
     Inc(FrameCount);
 

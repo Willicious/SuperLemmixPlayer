@@ -412,6 +412,7 @@ begin
   if aSection = nil then Exit;
 
   HandleSkill('walker', spbWalker);
+  HandleSkill('jumper', spbJumper);
   HandleSkill('shimmier', spbShimmier);
   HandleSkill('climber', spbClimber);
   HandleSkill('swimmer', spbSwimmer);
@@ -464,6 +465,7 @@ var
     S := Lowercase(aSection.LineTrimString['skill']);
 
     if S = 'walker' then O.Skill := Integer(spbWalker);
+    if S = 'jumper' then O.Skill := Integer(spbJumper);    
     if S = 'shimmier' then O.Skill := Integer(spbShimmier);
     if S = 'climber' then O.Skill := Integer(spbClimber);
     if S = 'swimmer' then O.Skill := Integer(spbSwimmer);
@@ -908,6 +910,7 @@ begin
   Sec := aSection.SectionList.Add('SKILLSET');
 
   HandleSkill('WALKER', spbWalker);
+  HandleSkill('JUMPER', spbJumper);
   HandleSkill('SHIMMIER', spbShimmier);
   HandleSkill('CLIMBER', spbClimber);
   HandleSkill('SWIMMER', spbSwimmer);
@@ -954,6 +957,7 @@ var
   begin
     case TSkillPanelButton(O.Skill) of
      spbWalker: s := 'WALKER';
+     spbJumper: s := 'JUMPER';
      spbShimmier: s := 'SHIMMIER';
      spbClimber: s := 'CLIMBER';
      spbSwimmer: s := 'SWIMMER';

@@ -781,6 +781,7 @@ begin
       spbDigger: SL.Add('  fRenderInterface.SelectedSkill: Digger');
       spbCloner: SL.Add('  fRenderInterface.SelectedSkill: Cloner');
       spbShimmier: SL.Add('  fRenderInterface.SelectedSkill: Shimmier');
+      spbJumper: SL.Add('  fRenderInterface.SelectedSkill: Jumper');
       else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
     end;
   end;

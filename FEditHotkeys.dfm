@@ -150,6 +150,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
     OnChange = cbSkillChange
     Items.Strings = (
       'Walker'
+      'Jumper'
       'Shimmier'
       'Climber'
       'Swimmer'

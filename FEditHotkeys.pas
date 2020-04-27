@@ -93,6 +93,7 @@ begin
                    s := 'Select Skill: ';
                    case Hotkey.Modifier of
                      Integer(spbWalker):     s := s + 'Walker';
+                     Integer(spbJumper):     s := s + 'Jumper';
                      Integer(spbShimmier):   s := s + 'Shimmier';
                      Integer(spbClimber):    s := s + 'Climber';
                      Integer(spbSwimmer):    s := s + 'Swimmer';

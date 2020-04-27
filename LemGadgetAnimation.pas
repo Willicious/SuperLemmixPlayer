@@ -432,14 +432,15 @@ begin
     SkillIcons.Add(NewBmp);
   end;
 
-  // Walker, Climber, Swimmer, Floater, Glider, Disarmer, Shimmier - all simple
+  // Walker, Jumper, Shimmier Climber, Swimmer, Floater, Glider, Disarmer - all simple
   DrawAnimationFrame(SkillIcons[Integer(spbWalker)], WALKING, 1, PICKUP_MID, PICKUP_BASELINE - 1);
+  DrawAnimationFrame(SkillIcons[Integer(spbJumper)], JUMPING, 0, PICKUP_MID, PICKUP_BASELINE - 3);
+  DrawAnimationFrame(SkillIcons[Integer(spbShimmier)], SHIMMYING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
   DrawAnimationFrame(SkillIcons[Integer(spbClimber)], CLIMBING, 3, PICKUP_MID + 3, PICKUP_BASELINE - 1);
   DrawAnimationFrame(SkillIcons[Integer(spbSwimmer)], SWIMMING, 2, PICKUP_MID + 1, PICKUP_BASELINE - 6);
   DrawAnimationFrame(SkillIcons[Integer(spbFloater)], UMBRELLA, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
   DrawAnimationFrame(SkillIcons[Integer(spbGlider)], GLIDING, 4, PICKUP_MID - 1, PICKUP_BASELINE + 6);
   DrawAnimationFrame(SkillIcons[Integer(spbDisarmer)], FIXING, 6, PICKUP_MID - 2, PICKUP_BASELINE - 3);
-  DrawAnimationFrame(SkillIcons[Integer(spbShimmier)], SHIMMYING, 1, PICKUP_MID, PICKUP_BASELINE - 4);
 
   // Bomber, stoner and blocker are simple. Unlike the skill panel, we use the Ohnoer animation for bomber here.
   DrawAnimationFrame(SkillIcons[Integer(spbBomber)], OHNOING, 7, PICKUP_MID, PICKUP_BASELINE - 3);

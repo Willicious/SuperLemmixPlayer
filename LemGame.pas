@@ -330,6 +330,7 @@ type
     function HandleFencing(L: TLemming): Boolean;
     function HandleReaching(L: TLemming) : Boolean;
     function HandleShimmying(L: TLemming) : Boolean;
+    function HandleJumping(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -357,6 +358,7 @@ type
     function MayAssignDigger(L: TLemming): Boolean;
     function MayAssignCloner(L: TLemming): Boolean;
     function MayAssignShimmier(L: TLemming) : Boolean;
+    function MayAssignJumper(L: TLemming) : Boolean;
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -460,6 +462,25 @@ const
   LEMMIX_REPLAY_VERSION    = 105;
   MAX_FALLDISTANCE         = 62;
 
+type
+  TJumpPattern = array[0..5] of array[0..1] of Integer;
+
+const
+  // Each entry in a pattern should only move ONE pixel, be it horizontal or vertical. Horizontal
+  // movements here are for right-facing lemmings.
+  JUMP_PATTERNS: array[0..8] of TJumpPattern =
+  (
+    (( 0, -1), ( 0, -1), ( 1,  0), ( 0, -1), ( 0, -1), ( 1,  0)), // occurs twice
+    (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0)), // occurs twice
+    (( 0, -1), ( 1,  0), ( 0, -1), ( 1,  0), ( 1,  0), ( 0,  0)),
+    (( 0, -1), ( 1,  0), ( 1,  0), ( 0, -1), ( 1,  0), ( 0,  0)),
+    (( 1,  0), ( 1,  0), ( 1,  0), ( 1,  0), ( 0,  0), ( 0,  0)),
+    (( 1,  0), ( 0,  1), ( 1,  0), ( 1,  0), ( 0,  1), ( 0,  0)),
+    (( 1,  0), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  0)),
+    (( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1), ( 1,  0), ( 0,  1)), // occurs twice
+    (( 1,  0), ( 0,  1), ( 0,  1), ( 1,  0), ( 0,  1), ( 0,  1))  // occurs twice
+  );
+
 const
   // Values for DOM_TRIGGERTYPE are defined in LemGadgetsConstants.pas!
   // Here only for refence.
@@ -512,10 +533,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..17] of TBasicLemmingAction =
+  ActionListArray: array[0..18] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
-             baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying);
+             baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
+             baJumping);
 
 
 
@@ -647,7 +669,7 @@ begin
   aState.EntriesOpened := HatchesOpened;
   aState.CurrSpawnInterval := CurrSpawnInterval;
 
-  for i := 0 to 17 do
+  for i := 0 to Integer(LAST_SKILL_BUTTON) do
   begin
     aState.CurrSkillCount[ActionListArray[i]] := CurrSkillCount[ActionListArray[i]];
     aState.UsedSkillCount[ActionListArray[i]] := UsedSkillCount[ActionListArray[i]];
@@ -697,7 +719,7 @@ begin
   HatchesOpened := aState.EntriesOpened;
   CurrSpawnInterval := aState.CurrSpawnInterval;
 
-  for i := 0 to 17 do
+  for i := 0 to Integer(LAST_SKILL_BUTTON) do
   begin
     CurrSkillCount[ActionListArray[i]] := aState.CurrSkillCount[ActionListArray[i]];
     UsedSkillCount[ActionListArray[i]] := aState.UsedSkillCount[ActionListArray[i]];
@@ -872,6 +894,7 @@ begin
   LemmingMethods[baFencing]    := HandleFencing;
   LemmingMethods[baReaching]   := HandleReaching;
   LemmingMethods[baShimmying]  := HandleShimmying;
+  LemmingMethods[baJumping]    := HandleJumping;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -902,6 +925,7 @@ begin
   NewSkillMethods[baCloning]      := MayAssignCloner;
   NewSkillMethods[baFencing]      := MayAssignFencer;
   NewSkillMethods[baShimmying]    := MayAssignShimmier;
+  NewSkillMethods[baJumping]      := MayAssignJumper;
 
   P := AppPath;
 
@@ -1035,7 +1059,7 @@ begin
       if SkillPanelButtonToAction[Skill] <> baNone then
         CurrSkillCount[SkillPanelButtonToAction[Skill]] := SkillCount[Skill];
     // Initialize used skills
-    for i := 0 to 16 do
+    for i := 0 to Integer(LAST_SKILL_BUTTON) do
       UsedSkillCount[ActionListArray[i]] := 0;
   end;
 
@@ -1317,7 +1341,8 @@ const
      0, //baCloning,
     16, //baFencing,
      8, //baReaching,
-    20  //baShimmying
+    20, //baShimmying
+    13  //baJumping
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1344,15 +1369,25 @@ begin
     L.LemFallen := 1;
     if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
     else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
-    else if L.LemAction in [baBlocking] then L.LemFallen := -1;
+    else if L.LemAction in [baBlocking, baJumping] then L.LemFallen := -1;
     L.LemTrueFallen := L.LemFallen;
   end;
 
-  if (NewAction = baShimmying) and (L.LemAction = baClimbing) then
+  if (NewAction in [baShimmying, baJumping]) and (L.LemAction = baClimbing) then
   begin
     // turn around and get out of the wall
     TurnAround(L);
     Inc(L.LemX, L.LemDx);
+  end;
+
+  if (NewAction = baShimmying) and (L.LemAction = baJumping) then
+  begin
+    for i := -1 to 3 do
+      if HasPixelAt(L.LemX, L.LemY - 9 - i) and not HasPixelAt(L.LemX, L.LemY - 8 - i) then
+      begin
+        L.LemY := L.LemY - i;
+        Break;
+      end;
   end;
 
   // Change Action
@@ -1407,7 +1442,7 @@ begin
                      Dec(L.LemY, i);
                    end;
     baFixing     : L.LemDisarmingFrames := 42;
-
+    baJumping    : L.LemJumpProgress := 0;
   end;
 end;
 
@@ -1427,7 +1462,7 @@ begin
   if L.LemExplosionTimer = 0 then
   begin
     if L.LemAction in [baVaporizing, baDrowning, baFloating, baGliding,
-                       baFalling, baSwimming, baReaching, baShimmying] then
+                       baFalling, baSwimming, baReaching, baShimmying, baJumping] then
     begin
       if L.LemTimerToStone then
         Transition(L, baStoneFinish)
@@ -1766,7 +1801,7 @@ begin
   end
   else if (NewSkill = baShimmying) then
   begin
-    if L.LemAction = baClimbing then
+    if L.LemAction in [baClimbing, baJumping] then
       Transition(L, baShimmying)
     else
       Transition(L, baReaching);
@@ -2094,7 +2129,8 @@ function TLemmingGame.MayAssignCloner(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
-               baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying];
+               baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
+               baJumping];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2105,6 +2141,7 @@ const
                baBashing, baFencing, baMining, baDigging];
 var
   CopyL: TLemming;
+  i: Integer;
 begin
   Result := (L.LemAction in ActionSet);
   if L.LemAction = baClimbing then
@@ -2120,7 +2157,24 @@ begin
       Result := True;
 
     CopyL.Free;
+  end else if L.LemAction = baJumping then
+  begin
+    for i := -1 to 3 do
+      if HasPixelAt(L.LemX, L.LemY - 9 - i) and not HasPixelAt(L.LemX, L.LemY - 8 - i) then
+      begin
+        Result := true;
+        Break;
+      end;
   end;
+end;
+
+function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
+const
+  ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
+               baShrugging, baPlatforming, baStacking, baFencing,
+               baClimbing];
+begin
+  Result := (L.LemAction in ActionSet);
 end;
 
 function TLemmingGame.GetGadgetCheckPositions(L: TLemming): TArrayArrayInt;
@@ -2141,7 +2195,7 @@ var
   begin
     while CurrPosX <> L.LemX do
     begin
-      Inc(CurrPosX, sign(L.LemX - L.LemXOld));
+      Inc(CurrPosX, sign(L.LemX - CurrPosX));
       SaveCheckPos;
     end;
   end;
@@ -2150,20 +2204,43 @@ var
   begin
     while CurrPosY <> L.LemY do
     begin
-      Inc(CurrPosY, sign(L.LemY - L.LemYOld));
+      Inc(CurrPosY, sign(L.LemY - CurrPosY));
+      SaveCheckPos;
+    end;
+  end;
+
+  procedure HandleJumperMovement;
+  var
+    i: Integer;
+  begin
+    for i := 0 to 5 do
+    begin
+      if (L.LemJumpPositions[i, 0] < 0) or (L.LemJumpPositions[i, 1] < 0) then
+        Break;
+
+      CurrPosX := L.LemJumpPositions[i, 0];
+      CurrPosY := L.LemJumpPositions[i, 1];
       SaveCheckPos;
     end;
   end;
 
 begin
+  SetLength(Result, 0, 0); // to ensure clearing
   SetLength(Result, 2, 11);
 
   n := 0;
   CurrPosX := L.LemXOld;
   CurrPosY := L.LemYOld;
+
+  if L.LemActionOld = baJumping then
+    HandleJumperMovement; // but continue with the rest as normal
+
   // no movement
   if (L.LemX = L.LemXOld) and (L.LemY = L.LemYOld) then
-    SaveCheckPos
+  begin
+    if (L.LemActionOld <> baJumping) or (n = 0) then
+      SaveCheckPos;
+  end
 
   // special treatment of miners!
   else if L.LemActionOld = baMining then
@@ -2255,9 +2332,10 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trExit) then
       AbortChecks := HandleExit(L, CheckPos[0, i], CheckPos[1, i]);
 
-    // Flipper (except for blockers)
+    // Flipper (except for blockers / jumpers)
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
-                         and not (L.LemAction = baBlocking) then
+                         and not (L.LemAction = baBlocking)
+                         and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
 
     // If the lem was required stop, move him there!
@@ -2268,7 +2346,8 @@ begin
     end;
 
     // Set L.LemInFlipper correctly
-    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper) then
+    if not HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
+       and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       L.LemInFlipper := DOM_NOOBJECT;
   until [CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY] (*or AbortChecks*);
 
@@ -2278,7 +2357,9 @@ begin
 
   // Check for blocker fields and force-fields
   // but not for miners removing terrain, see http://www.lemmingsforums.net/index.php?topic=2710.0
-  if (L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2]) then
+  // also not for Jumpers, as this is handled during movement
+  if ((L.LemAction <> baMining) or not (L.LemPhysicsFrame in [1, 2])) and
+     (L.LemAction <> baJumping) then
   begin
     if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
       HandleForceField(L, -1)
@@ -2392,7 +2473,7 @@ begin
   Gadget := Gadgets[GadgetID];
 
   if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
-     and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing]) then
+     and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing, baJumping]) then
   begin
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baAscending
@@ -2520,7 +2601,7 @@ begin
   Result := False; // only see exit trigger area, if it actually used
 
   if     (not L.LemIsZombie)
-     and (not (L.LemAction in [baFalling, baSplatting]))
+     and (not (L.LemAction in [baFalling, baSplatting, baJumping]))
      and (HasPixelAt(L.LemX, L.LemY) or not (L.LemAction = baOhNoing)) then
   begin
     if IsOutOfTime and UserSetNuking and (L.LemAction = baOhNoing) then
@@ -2606,7 +2687,8 @@ begin
       Result := True;
     end;
 
-    Gadget.CurrentFrame := 1 - Gadget.CurrentFrame // swap the possible values 0 and 1
+    if not IsSimulating then
+      Gadget.CurrentFrame := 1 - Gadget.CurrentFrame // swap the possible values 0 and 1
   end;
 end;
 
@@ -2805,7 +2887,7 @@ var
   ShadowSkillButton: TSkillPanelButton;
   ShadowLem: TLemming;
 const
-  ShadowSkillSet = [spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
+  ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
                     spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
 begin
   if fHyperSpeed then Exit;
@@ -2967,6 +3049,7 @@ begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
   L.LemYOld := L.LemY;
+  L.LemDXOld := L.LemDX;
   L.LemActionOld := L.LemAction;
   // No transition to do at the end of lemming movement
   fLemNextAction := baNone;
@@ -4037,6 +4120,135 @@ begin
         Exit;
       end;
   end
+end;
+
+function TLemmingGame.HandleJumping(L: TLemming): Boolean;
+const
+  JUMPER_ARC_FRAMES = 13;
+
+  procedure DoJumperTriggerChecks;
+  begin
+    if not HasTriggerAt(L.LemX, L.LemY, trFlipper) then
+      L.LemInFlipper := DOM_NOOBJECT
+    else
+      if HandleFlipper(L, L.LemX, L.LemY) then
+        Exit;
+
+    if HasTriggerAt(L.LemX, L.LemY, trForceLeft, L) then
+      HandleForceField(L, -1)
+    else if HasTriggerAt(L.LemX, L.LemY, trForceRight, L) then
+      HandleForceField(L, 1);
+  end;
+
+  function MakeJumpMovement: Boolean;
+  var
+    Pattern: TJumpPattern;
+    PatternIndex: Integer;
+
+    i: Integer;
+    n: Integer;
+
+    CheckX: Integer;
+  begin
+    Result := false;
+
+    case L.LemJumpProgress of
+      0..1: PatternIndex := 0;
+      2..3: PatternIndex := 1;
+      4..8: PatternIndex := L.LemJumpProgress - 2;
+      9..10: PatternIndex := 7;
+      11..12: PatternIndex := 8;
+      else Exit;
+    end;
+
+    Pattern := JUMP_PATTERNS[PatternIndex];
+    FillChar(L.LemJumpPositions, SizeOf(L.LemJumpPositions), $FF);
+
+    for i := 0 to 5 do
+    begin
+      L.LemJumpPositions[i, 0] := L.LemX;
+      L.LemJumpPositions[i, 1] := L.LemY;
+
+      if (Pattern[i][0] = 0) and (Pattern[i][1] = 0) then Break;
+
+      if (Pattern[i][0] <> 0) then // Wall check
+      begin
+        CheckX := L.LemX + L.LemDX;
+        if HasPixelAt(CheckX, L.LemY) then
+        begin
+          for n := 1 to 8 do
+          begin
+            if not HasPixelAt(CheckX, L.LemY - n) then
+            begin
+              if n <= 2 then
+              begin
+                L.LemX := CheckX;
+                L.LemY := L.LemY - n + 1;
+                Transition(L, baWalking);
+              end else if n <= 5 then begin
+                L.LemX := CheckX;
+                L.LemY := L.LemY - n + 5;
+                Transition(L, baHoisting);
+                Inc(L.LemFrame, 2);
+                Inc(L.LemPhysicsFrame, 2);
+              end else begin
+                L.LemX := CheckX;
+                L.LemY := L.LemY - n + 8;
+                Transition(L, baHoisting);
+              end;
+
+              Exit;
+            end;
+
+            if ((n = 5) and not (L.LemIsClimber)) or (n = 7) then
+            begin
+              if L.LemIsClimber then
+              begin
+                L.LemX := CheckX;
+                Transition(L, baClimbing);
+              end else
+                Transition(L, baFalling, true);
+              Exit;
+            end;
+          end;
+        end;
+      end;
+
+      if (Pattern[i][1] < 0) then // Head check
+      begin
+        for n := 1 to 9 do
+          if HasPixelAt(L.LemX, L.LemY - n) then
+          begin
+            Transition(L, baFalling);
+            Exit;
+          end;
+      end;
+
+      L.LemX := L.LemX + (Pattern[i][0] * L.LemDX);
+      L.LemY := L.LemY + Pattern[i][1];
+
+      DoJumperTriggerChecks;
+
+      if HasPixelAt(L.LemX, L.LemY) then
+      begin
+        Transition(L, baWalking);
+        Exit;
+      end;
+    end;
+
+    Result := true;
+  end;
+begin
+  if MakeJumpMovement then
+  begin
+    Inc(L.LemJumpProgress);
+    if (L.LemJumpProgress >= 8) and (L.LemIsGlider) then
+      Transition(L, baGliding)
+    else if L.LemJumpProgress = JUMPER_ARC_FRAMES then
+      Transition(L, baWalking);
+  end;
+
+  Result := true;
 end;
 
 function TLemmingGame.FindGroundPixel(x, y: Integer): Integer;
