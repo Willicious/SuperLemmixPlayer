@@ -4145,6 +4145,8 @@ const
     Pattern: TJumpPattern;
     PatternIndex: Integer;
 
+    FirstStepSpecialHandling: Boolean;
+
     i: Integer;
     n: Integer;
 
@@ -4163,6 +4165,8 @@ const
 
     Pattern := JUMP_PATTERNS[PatternIndex];
     FillChar(L.LemJumpPositions, SizeOf(L.LemJumpPositions), $FF);
+
+    FirstStepSpecialHandling := (L.LemJumpProgress = 0);
 
     for i := 0 to 5 do
     begin
@@ -4217,11 +4221,16 @@ const
       if (Pattern[i][1] < 0) then // Head check
       begin
         for n := 1 to 9 do
+        begin
+          if (n = 1) and FirstStepSpecialHandling then
+            Continue;
+        
           if HasPixelAt(L.LemX, L.LemY - n) then
           begin
             Transition(L, baFalling);
             Exit;
           end;
+        end;
       end;
 
       L.LemX := L.LemX + (Pattern[i][0] * L.LemDX);
@@ -4229,7 +4238,9 @@ const
 
       DoJumperTriggerChecks;
 
-      if HasPixelAt(L.LemX, L.LemY) then
+      if FirstStepSpecialHandling then
+        FirstStepSpecialHandling := false
+      else if HasPixelAt(L.LemX, L.LemY) then // Foot check
       begin
         Transition(L, baWalking);
         Exit;
