@@ -273,6 +273,9 @@ begin
                // 2: do nothing;
             end;
           end else if CheckStyleUpdates then
+          begin
+            // Add cursor stuff here
+
             case RunCustomPopup(self, 'Styles Update', 'Styles updates are available. Do you want to download them?',
               'Open Style Manager|Remind me later') of
               1: begin
@@ -285,6 +288,7 @@ begin
                  end;
               // 2: do nothing;
             end;
+          end;
 
         except
           // Fail silently.
