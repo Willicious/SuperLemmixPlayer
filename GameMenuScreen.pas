@@ -261,7 +261,7 @@ begin
           for n := 0 to 3 do
             NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
 
-          if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} or true then
+          if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
           begin
             case RunCustomPopup(self, 'Update', 'A NeoLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
               'Go to NeoLemmix website|Remind me later') of
