@@ -107,6 +107,7 @@ type
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
 
+    LemInitialFall                : Boolean; // Set during the lemming's initial fall at the start of a level for a glider / floater special case
     // The next three values are only needed to determine intermediate trigger area checks
     // They are set in HandleLemming
     LemXOld                       : Integer; // position of previous frame

@@ -1147,6 +1147,9 @@ begin
       else
         Transition(L, baWalking);
 
+      if L.LemAction = baFalling then
+        L.LemInitialFall := true;
+
       if Lem.IsZombie then
       begin
         RemoveLemming(L, RM_ZOMBIE, true);
@@ -1398,6 +1401,7 @@ begin
   L.LemNumberOfBricksLeft := 0;
   OldIsStartingAction := L.LemIsStartingAction; // because for some actions (eg baHoisting) we need to restore previous value
   L.LemIsStartingAction := True;
+  L.LemInitialFall := False;
 
   L.LemMaxFrame := -1;
   L.LemMaxPhysicsFrame := ANIM_FRAMECOUNT[NewAction] - 1;
@@ -4384,46 +4388,58 @@ var
           and (not HasTriggerAt(L.LemX, L.LemY, trNoSplat))
           and ((L.LemFallen > MAX_FALLDISTANCE) or HasTriggerAt(L.LemX, L.LemY, trSplat));
   end;
+
+  function CheckFloaterOrGliderTransition: Boolean;
+  begin
+    Result := false;
+
+    if L.LemIsFloater and (L.LemTrueFallen > 16) and (CurrFallDist = 0) then
+    begin
+      // Depending on updrafts, this happens on the 6th-8th frame
+      Transition(L, baFloating);
+      Result := true;
+    end else if L.LemIsGlider and
+      ((L.LemTrueFallen > 8) or
+       ((L.LemInitialFall) and (L.LemTrueFallen > 6))) then
+    begin
+      Transition(L, baGliding);
+      Result := true;
+    end;
+  end;
 begin
   Result := True;
 
-  if L.LemIsFloater and (L.LemTrueFallen > 16) then
-    // Depending on updrafts, this happens on the 6th-8th frame
-    Transition(L, baFloating)
+  CurrFallDist := 0;
+  MaxFallDist := 3;
 
-  else if L.LemIsGlider and (L.LemTrueFallen > 6) then
-    // This always happens on the 4th frame
-    Transition(L, baGliding)
+  if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then MaxFallDist := 2;
 
-  else
+  if CheckFloaterOrGliderTransition then // This check needs to happen even if we don't enter the while loop.
+    Exit;
+
+  // Move lem until hitting ground
+  while (CurrFallDist < MaxFallDist) and not HasPixelAt(L.LemX, L.LemY) do
   begin
-    CurrFallDist := 0;
-    MaxFallDist := 3;
+    if (CurrFallDist > 0) and CheckFloaterOrGliderTransition then // Already checked above on first iteration.
+      Exit;
 
-    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then MaxFallDist := 2;
+    Inc(L.LemY);
+    Inc(CurrFallDist);
+    Inc(L.LemFallen);
+    Inc(L.LemTrueFallen);
+    if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then L.LemFallen := 0;
+  end;
 
-    // Move lem until hitting ground
-    while (CurrFallDist < MaxFallDist) and not HasPixelAt(L.LemX, L.LemY) do
-    begin
-      Inc(L.LemY);
-      Inc(CurrFallDist);
-      Inc(L.LemFallen);
-      Inc(L.LemTrueFallen);
-      if HasTriggerAt(L.LemX, L.LemY, trUpdraft) then L.LemFallen := 0;
-    end;
+  if L.LemFallen > MAX_FALLDISTANCE then L.LemFallen := MAX_FALLDISTANCE + 1;
+  if L.LemTrueFallen > MAX_FALLDISTANCE then L.LemTrueFallen := MAX_FALLDISTANCE + 1;
 
-    if L.LemFallen > MAX_FALLDISTANCE then L.LemFallen := MAX_FALLDISTANCE + 1;
-    if L.LemTrueFallen > MAX_FALLDISTANCE then L.LemTrueFallen := MAX_FALLDISTANCE + 1;
-    
-
-    if CurrFallDist < MaxFallDist then
-    begin
-      // Object checks at hitting ground
-      if IsFallFatal then
-        fLemNextAction := baSplatting
-      else
-        fLemNextAction := baWalking;
-    end;
+  if CurrFallDist < MaxFallDist then
+  begin
+    // Object checks at hitting ground
+    if IsFallFatal then
+      fLemNextAction := baSplatting
+    else
+      fLemNextAction := baWalking;
   end;
 end;
 
@@ -5032,6 +5048,9 @@ begin
         begin
           LemIndex := LemmingList.Add(NewLemming);
           Transition(NewLemming, baFalling);
+
+          if LemAction = baFalling then // could be a walker if eg. spawned inside terrain
+            LemInitialFall := true;
 
           LemX := Gadgets[ix].TriggerRect.Left;
           LemY := Gadgets[ix].TriggerRect.Top;
