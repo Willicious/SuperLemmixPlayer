@@ -47,6 +47,7 @@ const
   SFX_SPLAT = 'splat';
   SFX_LETSGO = 'letsgo';
   SFX_ENTRANCE = 'door';
+  SFX_EXIT_OPEN = 'exitopen';
   SFX_VAPORIZING = 'fire';
   SFX_DROWNING = 'glug';
   SFX_EXPLOSION = 'explode';

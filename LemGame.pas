@@ -2589,7 +2589,7 @@ begin
           Gadget := Gadgets[n];
           Gadget.Triggered := True;
           if Gadget.SoundEffectActivate = '' then
-            CueSoundEffect(SFX_ENTRANCE, Gadget.Center)
+            CueSoundEffect(SFX_EXIT_OPEN, Gadget.Center)
           else
             CueSoundEffect(Gadget.SoundEffectActivate, Gadget.Center);
         end;
