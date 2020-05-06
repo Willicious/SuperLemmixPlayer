@@ -13,13 +13,14 @@ uses
   IdHashMessageDigest;
 
 const
-  DEFAULT_SOUNDS: array[0..27] of string =
+  DEFAULT_SOUNDS: array[0..28] of string =
    ('chain',
     'changeop',
     'chink',
     'die',
     'door',
     'electric',
+    'exitopen',
     'explode',
     'failure',
     'fire',
@@ -252,15 +253,15 @@ begin
     try
       ForceDirectories(AppPath + 'style_zips\');
 
-      if FileExists(AppPath + 'style_zips\styles_md5s.ini') then
-        MD5List.LoadFromFile(AppPath + 'style_zips\styles_md5s.ini');
+      if FileExists(AppPath + '..\data\styles_md5s.ini') then
+        MD5List.LoadFromFile(AppPath + '..\data\styles_md5s.ini');
 
       ZipStyles;
 
       WriteLn('Making all-styles zip.');
       MakeDirectoryZip('styles|sound', '_all_styles.zip');
 
-      MD5List.SaveToFile(AppPath + 'style_zips\styles_md5s.ini');
+      MD5List.SaveToFile(AppPath + '..\data\styles_md5s.ini');
 
       MD5Report.Sort;
       MD5Report.SaveToFile(AppPath + 'style_zip_report.txt');
