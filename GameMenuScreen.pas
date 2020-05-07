@@ -538,7 +538,11 @@ end;
 procedure TGameMenuScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   if (Button = mbLeft) and (GameParams.CurrentLevel <> nil) then
-    CloseScreen(gstPreview);
+    CloseScreen(gstPreview)
+  else if (Button = mbMiddle) then
+    DoLevelSelect
+  else if (Button = mbRight) then
+    CloseScreen(gstExit);
 end;
 
 procedure TGameMenuScreen.Img_MouseDown(Sender: TObject;
@@ -546,7 +550,11 @@ procedure TGameMenuScreen.Img_MouseDown(Sender: TObject;
   Layer: TCustomLayer);
 begin
   if (Button = mbLeft) and (GameParams.CurrentLevel <> nil) then
-    CloseScreen(gstPreview);
+    CloseScreen(gstPreview)
+  else if (Button = mbMiddle) then
+    DoLevelSelect
+  else if (Button = mbRight) then
+    CloseScreen(gstExit);
 end;
 
 procedure TGameMenuScreen.NextSection(Forwards: Boolean);
