@@ -189,7 +189,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 151
         Width = 249
-        Height = 162
+        Height = 178
         Caption = 'Graphics Options'
         TabOrder = 2
         object Label1: TLabel
@@ -214,7 +214,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbLinearResampleMenu: TCheckBox
           Left = 12
-          Top = 88
+          Top = 104
           Width = 205
           Height = 17
           Caption = 'Use Smooth Resampling In Menus'
@@ -223,7 +223,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbLinearResampleGame: TCheckBox
           Left = 12
-          Top = 104
+          Top = 120
           Width = 205
           Height = 17
           Caption = 'Use Smooth Resampling In Game'
@@ -237,11 +237,11 @@ object FormNXConfig: TFormNXConfig
           Height = 17
           Caption = 'Full Screen'
           TabOrder = 3
-          OnClick = OptionChanged
+          OnClick = cbFullScreenClick
         end
         object cbMinimapHighQuality: TCheckBox
           Left = 12
-          Top = 136
+          Top = 152
           Width = 153
           Height = 17
           Caption = 'High Quality Minimap'
@@ -250,7 +250,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbIncreaseZoom: TCheckBox
           Left = 12
-          Top = 72
+          Top = 88
           Width = 205
           Height = 17
           Caption = 'Increase Zoom On Small Levels'
@@ -259,7 +259,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbCompactSkillPanel: TCheckBox
           Left = 12
-          Top = 119
+          Top = 136
           Width = 153
           Height = 17
           Caption = 'Compact Skill Panel'
@@ -268,11 +268,20 @@ object FormNXConfig: TFormNXConfig
         end
         object cbHighResolution: TCheckBox
           Left = 12
-          Top = 56
+          Top = 72
           Width = 205
           Height = 17
           Caption = 'High Resolution'
           TabOrder = 7
+          OnClick = OptionChanged
+        end
+        object cbResetWindowSize: TCheckBox
+          Left = 12
+          Top = 56
+          Width = 205
+          Height = 17
+          Caption = 'Reset Window Size / Position'
+          TabOrder = 8
           OnClick = OptionChanged
         end
       end

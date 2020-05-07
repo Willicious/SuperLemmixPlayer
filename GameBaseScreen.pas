@@ -57,7 +57,7 @@ type
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
     procedure DoLevelSelect(isPlaying: Boolean = false);
     procedure ShowConfigMenu;
-    procedure ApplyConfigChanges(OldFullScreen, OldHighResolution: Boolean);
+    procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize: Boolean);
     procedure DoMassReplayCheck;
     function LoadReplay: Boolean;
 
@@ -679,23 +679,28 @@ end;
 procedure TGameBaseScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
-  OldFullScreen, OldHighResolution: Boolean;
+  OldFullScreen, OldHighResolution, ResetWindow: Boolean;
   ConfigResult: TModalResult;
 begin
   OldFullScreen := GameParams.FullScreen;
   OldHighResolution := GameParams.HighResolution;
+
   ConfigDlg := TFormNXConfig.Create(self);
-  ConfigDlg.SetGameParams;
-  ConfigDlg.NXConfigPages.TabIndex := 0;
-  ConfigResult := ConfigDlg.ShowModal;
-  ConfigDlg.Free;
+  try
+    ConfigDlg.SetGameParams;
+    ConfigDlg.NXConfigPages.TabIndex := 0;
+    ConfigResult := ConfigDlg.ShowModal;
+    ResetWindow := ConfigDlg.ResetWindowSize;
+  finally
+    ConfigDlg.Free;
+  end;
 
   // Wise advice from Simon - save these things on exiting the
   // config dialog, rather than waiting for a quit or a screen
   // transition to save them.
   GameParams.Save;
 
-  ApplyConfigChanges(OldFullScreen, OldHighResolution);
+  ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindow);
 
   // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
   if ConfigResult = mrRetry then
@@ -704,9 +709,11 @@ begin
     DoAfterConfig;
 end;
 
-procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution: Boolean);
+procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize: Boolean);
+var
+  WindowScale: Integer;
 begin
-  if (GameParams.FullScreen <> OldFullScreen) then
+  if (GameParams.FullScreen <> OldFullScreen) or ResetWindowSize then
   begin
     if GameParams.FullScreen then
     begin
@@ -719,8 +726,20 @@ begin
     end else begin
       GameParams.MainForm.BorderStyle := bsSizeable;
       GameParams.MainForm.WindowState := wsNormal;
-      GameParams.MainForm.ClientWidth := Min(GameParams.ZoomLevel * 320 * ResMod, Min(Screen.WorkAreaWidth div 320 * ResMod, Screen.WorkAreaHeight div 200 * ResMod) * 320 * ResMod);
-      GameParams.MainForm.ClientHeight := Min(GameParams.ZoomLevel * 200 * ResMod, Min(Screen.WorkAreaWidth div 320 * ResMod, Screen.WorkAreaHeight div 200 * ResMod) * 200 * ResMod);
+
+      WindowScale := Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) - 1;
+      WindowScale := Min(WindowScale, GameParams.ZoomLevel * ResMod);
+
+      if WindowScale < ResMod then
+        WindowScale := ResMod;
+
+      if GameParams.CompactSkillPanel then
+        GameParams.MainForm.ClientWidth := Max(WindowScale * 320, 320 * ResMod)
+      else
+        GameParams.MainForm.ClientWidth := Max(WindowScale * 416, 416 * ResMod);
+
+      GameParams.MainForm.ClientHeight := Max(WindowScale * 200, 200 * ResMod);
+
       GameParams.MainForm.Left := (Screen.WorkAreaWidth div 2) - (GameParams.MainForm.Width div 2);
       GameParams.MainForm.Top := (Screen.WorkAreaHeight div 2) - (GameParams.MainForm.Height div 2);
     end;

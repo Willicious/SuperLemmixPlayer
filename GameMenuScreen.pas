@@ -729,12 +729,12 @@ begin
   F := TFNLSetup.Create(self);
   try
     F.ShowModal;
+
+    // And apply the settings chosen
+    ApplyConfigChanges(true, false, false);
   finally
     F.Free;
   end;
-
-  // And apply the settings chosen
-  ApplyConfigChanges(true, false);
 end;
 
 end.

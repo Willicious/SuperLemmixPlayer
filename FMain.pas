@@ -13,8 +13,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs,  StdCtrls,
   FBaseDosForm,
-  LemNeoLevelPack, // compile test
-  LemGame,
+  LemGame, LemTypes,
   AppController;
 
 type
@@ -212,10 +211,10 @@ begin
   NewCH := NewHeight - CHDiff;
 
   if GameParams.CompactSkillPanel then
-    NewCW := Max(320, NewCW)
+    NewCW := Max(320 * ResMod, NewCW)
   else
-    NewCW := Max(416, NewCW);
-  NewCH := Max(200, NewCH);
+    NewCW := Max(416 * ResMod, NewCW);
+  NewCH := Max(200 * ResMod, NewCH);
 
   NewCW := Min(NewCW, Screen.Width - CWDiff);
   NewCH := Min(NewCH, Screen.Height - CHDiff);
@@ -232,4 +231,4 @@ begin
 end;
 
 end.
-//system
+

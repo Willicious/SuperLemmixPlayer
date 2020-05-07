@@ -52,6 +52,7 @@ type
     ebUserName: TEdit;
     cbHighResolution: TCheckBox;
     btnStyles: TButton;
+    cbResetWindowSize: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -60,16 +61,20 @@ type
     procedure SliderChange(Sender: TObject);
     procedure btnReplayCheckClick(Sender: TObject);
     procedure btnStylesClick(Sender: TObject);
+    procedure cbFullScreenClick(Sender: TObject);
   private
     fIsSetting: Boolean;
+    fResetWindow: Boolean;
 
     procedure SetFromParams;
     procedure SaveToParams;
 
     procedure SetZoomDropdown(aValue: Integer = -1);
+    function GetResetWindowSize: Boolean;
   public
     constructor Create(aOwner: TComponent); override;
     procedure SetGameParams;
+    property ResetWindowSize: Boolean read GetResetWindowSize;
   end;
 
 var
@@ -88,6 +93,11 @@ begin
   inherited Create(aOwner);
 
   btnReplayCheck.Enabled := (aOwner is TGameMenuScreen);
+end;
+
+function TFormNXConfig.GetResetWindowSize: Boolean;
+begin
+  Result := fResetWindow and not GameParams.FullScreen;
 end;
 
 procedure TFormNXConfig.SetGameParams;
@@ -156,6 +166,8 @@ begin
     cbSpawnInterval.Checked := GameParams.SpawnInterval;
 
     cbFullScreen.Checked := GameParams.FullScreen;
+    cbResetWindowSize.Enabled := not GameParams.FullScreen;
+    cbResetWindowSize.Checked := false;
     cbHighResolution.Checked := GameParams.HighResolution; // must be done before SetZoomDropdown
     cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
     cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
@@ -209,6 +221,7 @@ begin
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
+  fResetWindow := cbResetWindowSize.Checked;
   GameParams.HighResolution := cbHighResolution.Checked;
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
@@ -284,6 +297,23 @@ begin
   cbUpdateCheck.Enabled := cbEnableOnline.Checked;
   if not cbEnableOnline.Checked then cbUpdateCheck.Checked := false;
   btnApply.Enabled := true;
+end;
+
+procedure TFormNXConfig.cbFullScreenClick(Sender: TObject);
+begin
+  if not fIsSetting then
+  begin
+    OptionChanged(Sender);
+
+    if cbFullScreen.Checked then
+    begin
+      cbResetWindowSize.Checked := false;
+      cbResetWindowSize.Enabled := false;
+    end else begin
+      cbResetWindowSize.Enabled := not GameParams.FullScreen;
+      cbResetWindowSize.Checked := GameParams.FullScreen;
+    end;
+  end;
 end;
 
 procedure TFormNXConfig.SliderChange(Sender: TObject);
