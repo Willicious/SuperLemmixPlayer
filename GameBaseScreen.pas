@@ -734,11 +734,11 @@ begin
         WindowScale := ResMod;
 
       if GameParams.CompactSkillPanel then
-        GameParams.MainForm.ClientWidth := Max(WindowScale * 320, 320 * ResMod)
+        GameParams.MainForm.ClientWidth := WindowScale * 320
       else
-        GameParams.MainForm.ClientWidth := Max(WindowScale * 416, 416 * ResMod);
+        GameParams.MainForm.ClientWidth := WindowScale * 416;
 
-      GameParams.MainForm.ClientHeight := Max(WindowScale * 200, 200 * ResMod);
+      GameParams.MainForm.ClientHeight := WindowScale * 200;
 
       GameParams.MainForm.Left := (Screen.WorkAreaWidth div 2) - (GameParams.MainForm.Width div 2);
       GameParams.MainForm.Top := (Screen.WorkAreaHeight div 2) - (GameParams.MainForm.Height div 2);
