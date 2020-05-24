@@ -53,6 +53,7 @@ type
     cbHighResolution: TCheckBox;
     btnStyles: TButton;
     cbResetWindowSize: TCheckBox;
+    cbResetWindowPosition: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -64,17 +65,20 @@ type
     procedure cbFullScreenClick(Sender: TObject);
   private
     fIsSetting: Boolean;
-    fResetWindow: Boolean;
+    fResetWindowSize: Boolean;
+    fResetWindowPosition: Boolean;
 
     procedure SetFromParams;
     procedure SaveToParams;
 
     procedure SetZoomDropdown(aValue: Integer = -1);
     function GetResetWindowSize: Boolean;
+    function GetResetWindowPosition: Boolean;
   public
     constructor Create(aOwner: TComponent); override;
     procedure SetGameParams;
     property ResetWindowSize: Boolean read GetResetWindowSize;
+    property ResetWindowPosition: Boolean read GetResetWindowPosition;
   end;
 
 var
@@ -97,7 +101,12 @@ end;
 
 function TFormNXConfig.GetResetWindowSize: Boolean;
 begin
-  Result := fResetWindow and not GameParams.FullScreen;
+  Result := fResetWindowSize and not GameParams.FullScreen;
+end;
+
+function TFormNXConfig.GetResetWindowPosition: Boolean;
+begin
+  Result := fResetWindowPosition and not GameParams.FullScreen;
 end;
 
 procedure TFormNXConfig.SetGameParams;
@@ -168,6 +177,8 @@ begin
     cbFullScreen.Checked := GameParams.FullScreen;
     cbResetWindowSize.Enabled := not GameParams.FullScreen;
     cbResetWindowSize.Checked := false;
+    cbResetWindowPosition.Enabled := not GameParams.FullScreen;
+    cbResetWindowPosition.Checked := false;
     cbHighResolution.Checked := GameParams.HighResolution; // must be done before SetZoomDropdown
     cbIncreaseZoom.Checked := GameParams.IncreaseZoom;
     cbLinearResampleMenu.Checked := GameParams.LinearResampleMenu;
@@ -221,7 +232,8 @@ begin
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
-  fResetWindow := cbResetWindowSize.Checked;
+  fResetWindowSize := cbResetWindowSize.Checked;
+  fResetWindowPosition := cbResetWindowPosition.Checked;
   GameParams.HighResolution := cbHighResolution.Checked;
   GameParams.IncreaseZoom := cbIncreaseZoom.Checked;
   GameParams.LinearResampleMenu := cbLinearResampleMenu.Checked;
@@ -309,9 +321,13 @@ begin
     begin
       cbResetWindowSize.Checked := false;
       cbResetWindowSize.Enabled := false;
+      cbResetWindowPosition.Checked := false;
+      cbResetWindowPosition.Enabled := false;
     end else begin
       cbResetWindowSize.Enabled := not GameParams.FullScreen;
       cbResetWindowSize.Checked := GameParams.FullScreen;
+      cbResetWindowPosition.Enabled := not GameParams.FullScreen;
+      cbResetWindowPosition.Checked := GameParams.FullScreen;
     end;
   end;
 end;

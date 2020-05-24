@@ -37,11 +37,15 @@ type
     procedure LMStart(var Msg: TMessage); message LM_START;
     procedure LMNext(var Msg: TMessage); message LM_NEXT;
     procedure LMExit(var Msg: TMessage); message LM_EXIT;
+    procedure OnMove(var Msg: TWMMove); message WM_MOVE;
     procedure PlayGame;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     property ChildForm: TForm read fChildForm write fChildForm;
+
+    procedure RestoreDefaultSize;
+    procedure RestoreDefaultPosition;
   end;
 
 var
@@ -59,6 +63,17 @@ uses
 procedure TMainForm.LMStart(var Msg: TMessage);
 begin
   PlayGame;
+end;
+
+procedure TMainForm.OnMove(var Msg: TWMMove);
+begin
+  inherited;
+
+  if GameParams <> nil then
+  begin
+    GameParams.WindowLeft := Left;
+    GameParams.WindowTop := Top;
+  end;
 end;
 
 procedure TMainForm.LMNext(var Msg: TMessage);
@@ -102,6 +117,30 @@ begin
       Close;
     end;
   end;
+end;
+
+procedure TMainForm.RestoreDefaultPosition;
+begin
+  Left := (Screen.WorkAreaWidth div 2) - (Width div 2);
+  Top := (Screen.WorkAreaHeight div 2) - (Height div 2);
+end;
+
+procedure TMainForm.RestoreDefaultSize;
+var
+  WindowScale: Integer;
+begin
+  WindowScale := Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) - 1;
+  WindowScale := Min(WindowScale, GameParams.ZoomLevel * ResMod);
+
+  if WindowScale < ResMod then
+    WindowScale := ResMod;
+
+  if GameParams.CompactSkillPanel then
+    ClientWidth := WindowScale * 320
+  else
+    ClientWidth := WindowScale * 416;
+
+  ClientHeight := WindowScale * 200;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
@@ -174,8 +213,8 @@ begin
   begin
     GameParams.MainForm.BorderStyle := bsSizeable;
     GameParams.MainForm.WindowState := wsNormal;
-    GameParams.MainForm.Left := Screen.WorkAreaLeft + ((Screen.WorkAreaWidth - GameParams.LoadedWindowWidth) div 2);
-    GameParams.MainForm.Top := Screen.WorkAreaTop + ((Screen.WorkAreaHeight - GameParams.LoadedWindowHeight) div 2);
+    GameParams.MainForm.Left := GameParams.LoadedWindowLeft;
+    GameParams.MainForm.Top := GameParams.LoadedWindowTop;
     GameParams.MainForm.ClientWidth := GameParams.LoadedWindowWidth;
     GameParams.MainForm.ClientHeight := GameParams.LoadedWindowHeight;
   end else begin

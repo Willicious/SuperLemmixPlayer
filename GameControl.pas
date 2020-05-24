@@ -116,8 +116,12 @@ type
 
     fCursorResize: Double;
     fZoomLevel: Integer;
+    fWindowLeft: Integer;
+    fWindowTop: Integer;
     fWindowWidth: Integer;
     fWindowHeight: Integer;
+    fLoadedWindowLeft: Integer;
+    fLoadedWindowTop: Integer;
     fLoadedWindowWidth: Integer;
     fLoadedWindowHeight: Integer;
 
@@ -228,8 +232,14 @@ type
 
     property CursorResize: Double read fCursorResize write fCursorResize;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
+
+    property WindowLeft: Integer read fWindowLeft write fWindowLeft;
+    property WindowTop: Integer read fWindowTop write fWindowTop;
     property WindowWidth: Integer read fWindowWidth write fWindowWidth;
     property WindowHeight: Integer read fWindowHeight write fWindowHeight;
+
+    property LoadedWindowLeft: Integer read fLoadedWindowLeft;
+    property LoadedWindowTop: Integer read fLoadedWindowTop;
     property LoadedWindowWidth: Integer read fLoadedWindowWidth;
     property LoadedWindowHeight: Integer read fLoadedWindowHeight;
 
@@ -252,6 +262,7 @@ var
 implementation
 
 uses
+  FMain,
   SharedGlobals, Controls, UITypes,
   GameWindow, //for EXTRA_ZOOM_LEVELS const
   GameSound;
@@ -349,8 +360,13 @@ begin
   SaveBoolean('IncreaseZoom', IncreaseZoom);
   SaveBoolean('FullScreen', FullScreen);
 
-  SL.Add('WindowWidth=' + IntToStr(WindowWidth));
-  SL.Add('WindowHeight=' + IntToStr(WindowHeight));
+  if not FullScreen then
+  begin
+    SL.Add('WindowLeft=' + IntToStr(WindowLeft));
+    SL.Add('WindowTop=' + IntToStr(WindowTop));
+    SL.Add('WindowWidth=' + IntToStr(WindowWidth));
+    SL.Add('WindowHeight=' + IntToStr(WindowHeight));
+  end;
 
   SaveBoolean('HighResolution', HighResolution);
   SaveBoolean('LinearResampleMenu', LinearResampleMenu);
@@ -421,6 +437,8 @@ var
     // editing INI manually), but it keeps this function tidier.
     if FullScreen then
     begin
+      WindowLeft := 0;
+      WindowTop := 0;
       WindowWidth := Screen.Width;
       WindowHeight := Screen.Height;
     end;
@@ -429,18 +447,18 @@ var
     // match 416x200 x ZoomLevel exactly.
     if (WindowWidth = -1) or (WindowHeight = -1) then
     begin
-      if CompactSkillPanel then
-        WindowWidth := ZoomLevel * 320 * ResMod
-      else
-        WindowWidth := ZoomLevel * 416 * ResMod;
-      WindowHeight := ZoomLevel * 200 * ResMod;
-    end;
+      TMainForm(MainForm).RestoreDefaultSize;
+      TMainForm(MainForm).RestoreDefaultPosition;
+    end else begin
+      if (WindowLeft = -9999) and (WindowTop = -9999) then
+        TMainForm(MainForm).RestoreDefaultPosition;
 
-    // Once we've got our window size, ensure it can fit on the screen
-    if fWindowWidth > Screen.Width then
-      fWindowWidth := Screen.Width;
-    if fWindowHeight > Screen.Height then
-      fWindowHeight := Screen.Height;
+      // Once we've got our window size, ensure it can fit on the screen
+      if fWindowWidth > Screen.Width then
+        fWindowWidth := Screen.Width;
+      if fWindowHeight > Screen.Height then
+        fWindowHeight := Screen.Height;
+    end;
 
     // Disallow zoom levels that are too high
     if fZoomLevel > Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod) + EXTRA_ZOOM_LEVELS then
@@ -463,8 +481,8 @@ begin
       // When running under WINE without an existing config, let's default to windowed.
       FullScreen := false;
       ZoomLevel := Max(Max((Screen.Width - 100) div 416 div ResMod, (Screen.Height - 100) div 200 div ResMod), 1);
-      WindowWidth := 416 * ZoomLevel * ResMod;
-      WindowHeight := 200 * ZoomLevel * ResMod;
+      TMainForm(GameParams.MainForm).RestoreDefaultSize;
+      TMainForm(GameParams.MainForm).RestoreDefaultPosition;
     end;
 
     UserName := SL.Values['UserName'];
@@ -496,6 +514,8 @@ begin
       FullScreen := ZoomLevel < 1;
     FullScreen := LoadBoolean('FullScreen', FullScreen);
 
+    WindowLeft := StrToIntDef(SL.Values['WindowLeft'], -9999);
+    WindowTop := StrToIntDef(SL.Values['WindowTop'], -9999);
     WindowWidth := StrToIntDef(SL.Values['WindowWidth'], -1);
     WindowHeight := StrToIntDef(SL.Values['WindowHeight'], -1);
 
@@ -503,11 +523,13 @@ begin
 
     EnsureValidWindowSize;
 
+    fLoadedWindowLeft := WindowLeft;
+    fLoadedWindowTop := WindowTop;
     fLoadedWindowWidth := WindowWidth;
     fLoadedWindowHeight := WindowHeight;
+
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
     LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
-
 
     PostLevelVictorySound := LoadBoolean('VictoryJingle', PostLevelVictorySound);
     PostLevelFailureSound := LoadBoolean('FailureJingle', PostLevelFailureSound);

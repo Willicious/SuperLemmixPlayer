@@ -739,7 +739,7 @@ begin
     F.ShowModal;
 
     // And apply the settings chosen
-    ApplyConfigChanges(true, false, false);
+    ApplyConfigChanges(true, false, false, false);
   finally
     F.Free;
   end;

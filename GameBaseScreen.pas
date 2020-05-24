@@ -57,7 +57,7 @@ type
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
     procedure DoLevelSelect(isPlaying: Boolean = false);
     procedure ShowConfigMenu;
-    procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize: Boolean);
+    procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
     procedure DoMassReplayCheck;
     function LoadReplay: Boolean;
 
@@ -85,7 +85,7 @@ type
 implementation
 
 uses
-  LemNeoPieceManager,
+  LemNeoPieceManager, FMain,
   FNeoLemmixConfig, LemNeoLevelPack, FNeoLemmixLevelSelect, UITypes;
 
 { TPurpleFont }
@@ -679,7 +679,7 @@ end;
 procedure TGameBaseScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
-  OldFullScreen, OldHighResolution, ResetWindow: Boolean;
+  OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean;
   ConfigResult: TModalResult;
 begin
   OldFullScreen := GameParams.FullScreen;
@@ -690,7 +690,8 @@ begin
     ConfigDlg.SetGameParams;
     ConfigDlg.NXConfigPages.TabIndex := 0;
     ConfigResult := ConfigDlg.ShowModal;
-    ResetWindow := ConfigDlg.ResetWindowSize;
+    ResetWindowSize := ConfigDlg.ResetWindowSize;
+    ResetWindowPos := ConfigDlg.ResetWindowPosition;
   finally
     ConfigDlg.Free;
   end;
@@ -700,7 +701,7 @@ begin
   // transition to save them.
   GameParams.Save;
 
-  ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindow);
+  ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos);
 
   // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
   if ConfigResult = mrRetry then
@@ -709,41 +710,25 @@ begin
     DoAfterConfig;
 end;
 
-procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize: Boolean);
-var
-  WindowScale: Integer;
+procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
 begin
-  if (GameParams.FullScreen <> OldFullScreen) or ResetWindowSize then
+  if GameParams.FullScreen and not OldFullScreen then
   begin
-    if GameParams.FullScreen then
-    begin
-      GameParams.MainForm.BorderStyle := bsNone;
-      GameParams.MainForm.WindowState := wsMaximized;
-      GameParams.MainForm.Left := 0;
-      GameParams.MainForm.Top := 0;
-      GameParams.MainForm.Width := Screen.Width;
-      GameParams.MainForm.Height := Screen.Height;
-    end else begin
-      GameParams.MainForm.BorderStyle := bsSizeable;
-      GameParams.MainForm.WindowState := wsNormal;
+    GameParams.MainForm.BorderStyle := bsNone;
+    GameParams.MainForm.WindowState := wsMaximized;
+    GameParams.MainForm.Left := 0;
+    GameParams.MainForm.Top := 0;
+    GameParams.MainForm.Width := Screen.Width;
+    GameParams.MainForm.Height := Screen.Height;
+  end else if not GameParams.FullScreen then
+  begin
+    GameParams.MainForm.BorderStyle := bsSizeable;
+    GameParams.MainForm.WindowState := wsNormal;
 
-      WindowScale := Min(Screen.WorkAreaWidth div 320, Screen.WorkAreaHeight div 200) - 1;
-      WindowScale := Min(WindowScale, GameParams.ZoomLevel * ResMod);
-
-      if WindowScale < ResMod then
-        WindowScale := ResMod;
-
-      if GameParams.CompactSkillPanel then
-        GameParams.MainForm.ClientWidth := WindowScale * 320
-      else
-        GameParams.MainForm.ClientWidth := WindowScale * 416;
-
-      GameParams.MainForm.ClientHeight := WindowScale * 200;
-
-      GameParams.MainForm.Left := (Screen.WorkAreaWidth div 2) - (GameParams.MainForm.Width div 2);
-      GameParams.MainForm.Top := (Screen.WorkAreaHeight div 2) - (GameParams.MainForm.Height div 2);
-    end;
+    if ResetWindowSize then TMainForm(GameParams.MainForm).RestoreDefaultSize;
+    if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
   end;
+
 
   if GameParams.HighResolution <> OldHighResolution then
     PieceManager.Clear;
