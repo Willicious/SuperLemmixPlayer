@@ -24,7 +24,6 @@ type
     lblPosition: TLabel;
     lblAuthor: TLabel;
     ilStatuses: TImageList;
-    btnAddContent: TButton;
     lblCompletion: TLabel;
     imgLevel: TImage32;
     btnMakeShortcut: TButton;
@@ -32,7 +31,6 @@ type
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure btnAddContentClick(Sender: TObject);
     procedure btnMakeShortcutClick(Sender: TObject);
   private
     fLoadAsPack: Boolean;
@@ -416,113 +414,6 @@ end;
 procedure TFLevelSelect.FormShow(Sender: TObject);
 begin
   SetInfo;
-end;
-
-procedure TFLevelSelect.btnAddContentClick(Sender: TObject);
-var
-  OpenDlg: TOpenDialog;
-  Ext: String;
-
-  procedure Import(aFile: String);
-  var
-    Level: TLevel;
-    DstFile: String;
-  begin
-    Level := TLevel.Create;
-    try
-      Level.LoadFromFile(aFile);
-      DstFile := AppPath + SFLevels + MakeSafeForFilename(Level.Info.Title) + '.nxlv';
-      Level.SaveToFile(DstFile);
-      GameParams.BaseLevelPack.Levels.Add.Filename := ExtractFileName(DstFile);
-    finally
-      Level.Free;
-    end;
-  end;
-
-  procedure LoadDatFile(aFile: String);
-  var
-    DatFile, LvlFile: TMemoryStream;
-    n: Integer;
-    Success, AlreadyExists: Boolean;
-    Level: TLevel;
-    Parser: TParser;
-    MainSec: TParserSection;
-    DstPath: String;
-  begin
-    DatFile := TMemoryStream.Create;
-    LvlFile := TMemoryStream.Create;
-    Level := TLevel.Create;
-    Parser := TParser.Create;
-    try
-      MainSec := Parser.MainSection;
-      MainSec.AddLine('base');
-
-      Success := false;
-      DatFile.LoadFromFile(aFile);
-      DstPath := AppPath + SFLevels + ExtractFileName(aFile) + '\';
-      if DirectoryExists(DstPath) then
-        AlreadyExists := true
-      else begin
-        ForceDirectories(DstPath);
-        AlreadyExists := false;
-      end;
-      SetCurrentDir(DstPath);
-      n := -1;
-      while DatFile.Position < DatFile.Size do
-      begin
-        LvlFile.Clear;
-        try
-          Inc(n);
-          DecompressDat(DatFile, LvlFile);
-          LvlFile.Position := 0;
-          Level.LoadFromStream(LvlFile);
-          Level.SaveToFile(DstPath + MakeSafeForFilename(Level.Info.Title) + '.nxlv');
-          MainSec.AddLine('level', MakeSafeForFilename(Level.Info.Title) + '.nxlv');
-          Success := true;
-        except
-          ShowMessage('Section ' + IntToStr(n) + ' of this DAT file is not a valid level, or you are missing required style files.');
-        end;
-      end;
-
-      if Success then
-      begin
-        Parser.SaveToFile(DstPath + 'levels.nxmi');
-        GameParams.BaseLevelPack.Children.Add(ExtractFileName(aFile) + '\');
-      end else if not AlreadyExists then
-        RemoveDir(DstPath);
-    finally
-      Level.Free;
-      DatFile.Free;
-      LvlFile.Free;
-      Parser.Free;
-    end;
-  end;
-begin
-  OpenDlg := TOpenDialog.Create(self);
-  try
-    OpenDlg.Title := 'Select pack or level file';
-    OpenDlg.Filter := 'All supported files|*.nxlv;*.lvl;*.ini;*.lev;*.dat|NeoLemmix Levels (*.nxlv)|*.nxlv|Lemmix or Old NeoLemmix Levels (*.lvl)|*.lvl|Lemmini or SuperLemmini Levels (*.ini)|*.ini|Lemmins Levels|*.lev';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
-    OpenDlg.InitialDir := AppPath;
-    if not OpenDlg.Execute then Exit;
-
-    try
-      Ext := Lowercase(ExtractFileExt(OpenDlg.FileName));
-      if (Ext = '.nxlv') then
-        GameParams.BaseLevelPack.Levels.Add.Filename := OpenDlg.Filename
-      else if (Ext = '.dat') then
-        LoadDatFile(OpenDlg.Filename)
-      else
-        Import(OpenDlg.FileName);
-    except
-      ShowMessage('The selected file could not be imported.');
-    end;
-
-    InitializeTreeview;
-    SetInfo;
-  finally
-    OpenDlg.Free;
-  end;
 end;
 
 procedure TFLevelSelect.DisplayLevelInfo;

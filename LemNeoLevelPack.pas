@@ -168,9 +168,6 @@ type
 
       function GetStatus: TNeoLevelStatus;
 
-      procedure LoadSaveGroup(aLine: TParserLine; const aIteration: Integer);
-      procedure LoadSaveLevel(aLine: TParserLine; const aIteration: Integer);
-
       function GetTalismans: TObjectList<TTalisman>;
       function GetCompleteTalismanCount: Integer;
 
@@ -991,7 +988,7 @@ end;
 procedure TNeoLevelGroup.LoadUserData;
 var
   Parser: TParser;
-  LoadingSec, LevelSec: TParserSection;
+  LevelSec: TParserSection;
 
   procedure HandleGroup(aGroup: TNeoLevelGroup);
   var
@@ -1051,13 +1048,6 @@ begin
   try
     Parser.LoadFromFile(AppPath + SFSaveData + 'userdata.nxsv');
     LevelSec := Parser.MainSection.Section['levels'];
-    LoadingSec := Parser.MainSection.Section['load'];
-
-    if LoadingSec <> nil then
-    begin
-      LoadingSec.DoForEachLine('group', LoadSaveGroup);
-      LoadingSec.DoForEachLine('level', LoadSaveLevel);
-    end;
 
     fChildGroups.Sort(SortAlphabetical);
     fLevels.Sort(SortAlphabetical);
@@ -1075,23 +1065,10 @@ begin
   Parser.Free;
 end;
 
-procedure TNeoLevelGroup.LoadSaveGroup(aLine: TParserLine; const aIteration: Integer);
-begin
-  if not DirectoryExists(aLine.ValueTrimmed) then Exit;
-  fChildGroups.Add(aLine.ValueTrimmed);
-end;
-
-procedure TNeoLevelGroup.LoadSaveLevel(aLine: TParserLine; const aIteration: Integer);
-begin
-  if not FileExists(aLine.ValueTrimmed) then Exit;
-  fLevels.Add.Filename := aLine.ValueTrimmed;
-end;
-
 procedure TNeoLevelGroup.SaveUserData;
 var
   Parser: TParser;
-  LoadingSec, LevelSec: TParserSection;
-  i: Integer;
+  LevelSec: TParserSection;
 
   procedure HandleGroup(aGroup: TNeoLevelGroup);
   var
@@ -1136,17 +1113,8 @@ begin
   Parser := TParser.Create;
   try
     LevelSec := Parser.MainSection.SectionList.Add('levels');
-    LoadingSec := Parser.MainSection.SectionList.Add('load');
 
     HandleGroup(self);
-
-    for i := 0 to fChildGroups.Count-1 do
-      if Pos(':', fChildGroups[i].Folder) <> 0 then
-        LoadingSec.AddLine('group', fChildGroups[i].Folder);
-
-    for i := 0 to fLevels.Count-1 do
-      if Pos(':', fLevels[i].Filename) <> 0 then
-        LoadingSec.AddLine('level', fLevels[i].Filename);
 
     ForceDirectories(AppPath + SFSaveData);
     Parser.SaveToFile(AppPath + SFSaveData + 'userdata.nxsv');

@@ -716,7 +716,6 @@ var
   n: Integer;
   SpawnedCount: Integer;
   MaxPossibleLemmingCount, MaxPossibleExitCount: Integer;
-  PickupCloners: Integer;
 
   TriggerEffect: Integer;
 

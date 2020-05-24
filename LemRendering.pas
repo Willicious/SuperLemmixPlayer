@@ -589,7 +589,6 @@ var
   CopyL: TLemming;
 
   DoProjection: Boolean;
-  DoSkillProjection: Boolean;
 const
   PROJECTION_STATES = [baWalking, baAscending, baDigging, baClimbing, baHoisting,
                        baBuilding, baBashing, baMining, baFalling, baFloating,

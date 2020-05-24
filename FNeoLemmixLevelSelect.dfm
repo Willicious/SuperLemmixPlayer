@@ -126,22 +126,13 @@ object FLevelSelect: TFLevelSelect
       TabOrder = 0
     end
   end
-  object btnAddContent: TButton
-    Left = 296
-    Top = 446
-    Width = 121
-    Height = 25
-    Caption = 'Add Content To List'
-    TabOrder = 4
-    OnClick = btnAddContentClick
-  end
   object btnMakeShortcut: TButton
     Left = 436
     Top = 446
     Width = 85
     Height = 25
     Caption = 'Create Shortcut'
-    TabOrder = 5
+    TabOrder = 4
     OnClick = btnMakeShortcutClick
   end
   object ilStatuses: TImageList
