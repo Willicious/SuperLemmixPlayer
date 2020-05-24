@@ -548,6 +548,7 @@ begin
     PieceManager.NeedCheckStyles.Add(O.GS);
     O.GS := 'default';
     O.Piece := 'fallback';
+    MO := PieceManager.Objects[O.Identifier];
   end;
 
   O.Left := aSection.LineNumeric['x'];
