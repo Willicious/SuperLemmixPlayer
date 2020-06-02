@@ -1,2 +1,0 @@
-META|NAME=Holiday Lemmings 93 + 94|AUTHOR=DMA Design|TYPE=Level pack|VERSION=12.7-B
-PACK|FOLDER=HolidayLemmings
