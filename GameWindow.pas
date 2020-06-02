@@ -411,14 +411,10 @@ begin
   SL := GameParams.CurrentLevel.Group.MusicList;
 
   if MusicIndex = -1 then
-    if GameParams.TestModeLevel <> nil then
+    if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
       MusicIndex := Random(SL.Count)
-    else begin
-      MusicIndex := GameParams.CurrentLevel.GroupIndex;
-
-      for i := 0 to GameParams.CurrentLevel.Group.ParentGroupIndex-1 do
-        MusicIndex := MusicIndex + GameParams.CurrentLevel.Group.Parent.Children[i].LevelCount;
-    end;
+    else
+      MusicIndex := GameParams.CurrentLevel.MusicRotationIndex;
 
   if SL.Count > 0 then
     Result := SL[MusicIndex mod SL.Count];

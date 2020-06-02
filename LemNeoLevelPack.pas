@@ -78,6 +78,7 @@ type
       function GetAuthor: String;
       function GetLevelID: Int64;
       function GetGroupIndex: Integer;
+      function GetMusicRotationIndex: Integer;
       function GetTalismans: TObjectList<TTalisman>;
 
       procedure SetTalismanStatus(aIndex: LongWord; aStatus: Boolean);
@@ -102,6 +103,7 @@ type
       property Talismans: TObjectList<TTalisman> read GetTalismans;
       property TalismanStatus[Index: LongWord]: Boolean read GetTalismanStatus write SetTalismanStatus;
       property GroupIndex: Integer read GetGroupIndex;
+      property MusicRotationIndex: Integer read GetMusicRotationIndex;
   end;
 
   TNeoLevelGroup = class
@@ -375,6 +377,47 @@ function TNeoLevelEntry.GetLevelID: Int64;
 begin
   LoadLevelFileData;
   Result := fLevelID;
+end;
+
+function TNeoLevelEntry.GetMusicRotationIndex: Integer;
+var
+  Pack: TNeoLevelGroup;
+  MusicIndex: Integer;
+
+  function CountRecursive(aPack: TNeoLevelGroup): Boolean;
+  var
+    P, L, LevelIndex: Integer;
+  begin
+    for P := 0 to aPack.Children.Count-1 do
+      if CountRecursive(aPack.Children[P]) then
+        Break;
+
+    LevelIndex := aPack.Levels.IndexOf(self);
+
+    if LevelIndex < 0 then
+    begin
+      Result := false;
+      Inc(MusicIndex, aPack.Levels.Count)
+    end else begin
+      Result := true;
+      Inc(MusicIndex, LevelIndex);
+    end;
+  end;
+begin
+  Pack := Group;
+  if Pack = nil then
+  begin
+    Result := 0;
+    Exit;
+  end;
+
+  while (not Pack.fHasOwnMusicList) and (Pack.Parent <> nil) and (Pack.Parent <> GameParams.BaseLevelPack) do
+    Pack := Pack.Parent;
+
+  MusicIndex := 0;
+  CountRecursive(Pack);
+
+  Result := MusicIndex;
 end;
 
 function TNeoLevelEntry.GetAuthor: String;
