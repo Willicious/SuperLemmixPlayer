@@ -1381,6 +1381,10 @@ begin
     // turn around and get out of the wall
     TurnAround(L);
     Inc(L.LemX, L.LemDx);
+
+    if NewAction = baShimmying then
+      if HasPixelAt(L.LemX, L.LemY - 8) then
+        Inc(L.LemY);
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
