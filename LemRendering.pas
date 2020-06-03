@@ -656,7 +656,10 @@ begin
   spbShimmier:
     if not DoProjection then
     begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
+      if CopyL.LemAction in [baClimbing, baJumping] then
+        fRenderInterface.SimulateTransitionLem(CopyL, baShimmying)
+      else
+        fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
       DrawShimmierShadow(CopyL);
     end;
 
