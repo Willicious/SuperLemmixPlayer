@@ -231,7 +231,7 @@ end;
 procedure TGadgetMetaInfo.Load(aCollection,aPiece: String; aTheme: TNeoTheme);
 var
   Parser: TParser;
-  Sec, NewSec: TParserSection;
+  Sec: TParserSection;
 
   GadgetAccessor: TGadgetMetaAccessor;
   NewAnim: TGadgetAnimation;

@@ -471,8 +471,16 @@ var
   end;
 
   procedure GetSplitterData;
+  begin
+    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then
+      Flag(odf_FlipLem)
+    else if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'r' then
+      O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
+  end;
+
   procedure GetWindowData;
   begin
+    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem); // Deprecated!!
     if (aSection.Line['climber'] <> nil) then O.TarLev := O.TarLev or 1;
     if (aSection.Line['swimmer'] <> nil) then O.TarLev := O.TarLev or 2;
     if (aSection.Line['floater'] <> nil) then O.TarLev := O.TarLev or 4;

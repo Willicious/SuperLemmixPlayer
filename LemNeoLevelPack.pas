@@ -384,7 +384,7 @@ var
 
   function CountRecursive(aPack: TNeoLevelGroup): Boolean;
   var
-    P, L, LevelIndex: Integer;
+    P, LevelIndex: Integer;
   begin
     for P := 0 to aPack.Children.Count-1 do
       if CountRecursive(aPack.Children[P]) then

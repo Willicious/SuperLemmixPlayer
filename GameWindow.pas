@@ -390,7 +390,6 @@ var
   MusicName: String;
   MusicIndex: Integer;
   SL: TStringList;
-  i: Integer;
 begin
   Result := '';
 
