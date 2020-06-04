@@ -126,7 +126,7 @@ uses
   UITypes, ShellApi, MMSystem,
   PngInterface, SharedGlobals,
   FNeoLemmixSetup, FStyleManager,
-  LemTypes, LemStrings, LemDosStructures, LemGame, LemVersion;
+  LemTypes, LemStrings, LemGame, LemVersion;
 
 { TGameMenuScreen }
 
@@ -327,7 +327,6 @@ procedure TGameMenuScreen.BuildScreen;
   extract bitmaps from the lemmingsdata and draw
 -------------------------------------------------------------------------------}
 var
-  Mainpal: TArrayOfColor32;
   Tmp: TBitmap32;
   i: Integer;
   GrabRect: TRect;
@@ -359,7 +358,6 @@ begin
   Tmp := TBitmap32.Create;
   ScreenImg.BeginUpdate;
   try
-    MainPal := GetDosMainMenuPaletteColors32;
     InitializeImageSizeAndPosition(640, 400);
     ExtractBackGround;
     ExtractPurpleFont;

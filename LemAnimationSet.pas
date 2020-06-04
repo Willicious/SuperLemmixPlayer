@@ -211,10 +211,8 @@ begin
 
           if ThisAnimSec.Line['peak_frame'] <> nil then
             Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['peak_frame']
-          else if ThisAnimSec.Line['loop_to_frame'] <> nil then
-            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame']
           else
-            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['keyframe']; // this one is deprecated, BOTH others are valid
+            Anim.FrameDiff := Anim.FrameCount - ThisAnimSec.LineNumeric['loop_to_frame'];
 
           Anim.FootX := DirSec.LineNumeric['foot_x'];
           Anim.FootY := DirSec.LineNumeric['foot_y'];
@@ -337,18 +335,9 @@ begin
       Fn := RightStr(MLA.Description, Length(MLA.Description) - 1);
 
       if FileExists(ImgSrcFolder + Fn + '.png') then
-      begin
-        TPngInterface.LoadPngFile(ImgSrcFolder + Fn + '.png', TempBitmap);
-
-        // Backwards compatibility
-        if FileExists(Fn + '_mask.png') and (fTheme <> nil) and not GameParams.HighResolution then
-          TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
-      end else begin
+        TPngInterface.LoadPngFile(ImgSrcFolder + Fn + '.png', TempBitmap)
+      else begin
         TPngInterface.LoadPngFile(MetaSrcFolder + Fn + '.png', TempBitmap);
-
-        // Backwards compatibility
-        if FileExists(Fn + '_mask.png') and (fTheme <> nil) then
-          TPngInterface.MaskImageFromFile(TempBitmap, Fn + '_mask.png', fTheme.Colors['MASK']);
 
         Info := PieceManager.GetUpscaleInfo(SrcFolder, rkLemmings);
         UpscaleFrames(TempBitmap, 2, MLA.FrameCount, Info.Settings);

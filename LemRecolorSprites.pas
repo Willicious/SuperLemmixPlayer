@@ -7,7 +7,7 @@ uses
   Classes, SysUtils,
   LemNeoParser,
   LemNeoTheme,
-  LemDosStructures, LemLemming, LemTypes, LemStrings,
+  LemLemming, LemTypes, LemStrings,
   GR32, GR32_Blend;
 
 const
@@ -160,19 +160,6 @@ begin
 
         Mode := rcl_Selected;
         Parser.MainSection.Section['state_recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
-      end else if (Parser.MainSection.Section['recoloring'] <> nil) then
-      begin
-        Mode := rcl_Athlete;
-        Parser.MainSection.Section['recoloring'].DoForEachSection('athlete', RegisterSwap, @Mode);
-
-        Mode := rcl_Neutral;
-        Parser.MainSection.Section['recoloring'].DoForEachSection('neutral', RegisterSwap, @Mode);
-
-        Mode := rcl_Zombie;
-        Parser.MainSection.Section['recoloring'].DoForEachSection('zombie', RegisterSwap, @Mode);
-
-        Mode := rcl_Selected;
-        Parser.MainSection.Section['recoloring'].DoForEachSection('selected', RegisterSwap, @Mode);
       end;
     end;
   finally

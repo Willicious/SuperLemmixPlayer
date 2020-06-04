@@ -368,19 +368,6 @@ class procedure TCommandLineHandler.HandleVersionInfo;
 var
   SL: TStringList;
 
-  Formats: String;
-  Exts: String;
-
-  procedure AddFormat(aDesc, aExt: String);
-  begin
-    if Formats <> '' then
-      Formats := Formats + '|';
-    if Exts <> '' then
-      Exts := Exts + ';';
-    Formats := Formats + aDesc + '|' + '*.' + aExt;
-    Exts := Exts + '*.' + aExt;
-  end;
-
   procedure WriteInfo;
   var
     i: Integer;
@@ -397,14 +384,8 @@ begin
     SL.Add('hotfix=' + IntToStr(HOTFIX_VERSION));
     SL.Add('commit=' + COMMIT_ID);
 
-    Formats := '';
-    Exts := '';
-    AddFormat('Lemmix or old NeoLemmix level (*.lvl)', 'lvl');
-    AddFormat('Lemmini or SuperLemmini level (*.ini)', 'ini');
-    AddFormat('Lemmins level (*.lev)', 'lev');
-
-    SL.Add('level_formats=' + Formats);
-    SL.Add('level_format_exts=' + Exts);
+    SL.Add('level_formats=');
+    SL.Add('level_format_exts=');
 
     SL.Add('object_render=true');
     SL.Add('level_render=true');

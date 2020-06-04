@@ -45,7 +45,7 @@ type
 implementation
 
 uses
-  LemLevel, LemDosCmp; // used to import DAT level packs
+  LemLevel;
 
 {$R *.dfm}
 

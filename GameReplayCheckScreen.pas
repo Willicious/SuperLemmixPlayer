@@ -120,7 +120,6 @@ var
   begin
     SetCurrentDir(GameParams.ReplayCheckPath);
     Get('nxrp');
-    Get('lrb');
   end;
 
   function GetPackName: String;
@@ -169,7 +168,6 @@ var
     i, i2: Integer;
     S: TMemoryStream;
     SL: TStringList;
-    TempID: Cardinal;
   begin
     S := TMemoryStream.Create;
     SL := TStringList.Create;
@@ -178,29 +176,15 @@ var
       begin
         S.Clear;
         S.LoadFromFile(fReplays[i].ReplayFile);
-        if LowerCase(ExtractFileExt(fReplays[i].ReplayFile)) = '.lrb' then
-        begin
-          S.Position := 30;
-          S.Read(TempID, 4);
-          fReplays[i].ReplayLevelID := TempID;
-          fReplays[i].ReplayLevelID := (fReplays[i].ReplayLevelID shl 32) + TempID;
-        end else begin
-          SL.Clear;
-          S.Position := 0;
-          SL.LoadFromStream(S);
-          for i2 := 0 to SL.Count-1 do
-            if UpperCase(LeftStr(Trim(SL[i2]), 2)) = 'ID' then
-            begin
-              if (Pos('x', SL[i2]) = 0) or (Pos('x', SL[i2]) = Length(SL[i2]) - 8) then
-              begin
-                TempID := StrToIntDef('x' + RightStr(Trim(SL[i2]), 8), 0);
-                SL[i2] := 'ID ' + IntToHex(TempID, 8) + IntToHex(TempID, 8);
-              end;
-
-              fReplays[i].ReplayLevelID := StrToInt64Def('x' + RightStr(Trim(SL[i2]), 16), 0);
-              Break;
-            end;
-        end;
+        SL.Clear;
+        S.Position := 0;
+        SL.LoadFromStream(S);
+        for i2 := 0 to SL.Count-1 do
+          if UpperCase(LeftStr(Trim(SL[i2]), 2)) = 'ID' then
+          begin
+            fReplays[i].ReplayLevelID := StrToInt64Def('x' + RightStr(Trim(SL[i2]), 16), 0);
+            Break;
+          end;
       end;
     finally
       S.Free;
@@ -281,10 +265,7 @@ begin
       PieceManager.Tidy;
       Game.PrepareParams;
 
-      if LowerCase(ExtractFileExt(fReplays[i].ReplayFile)) = '.lrb' then
-        Game.ReplayManager.LoadOldReplayFile(fReplays[i].ReplayFile)
-      else
-        Game.ReplayManager.LoadFromFile(fReplays[i].ReplayFile);
+      Game.ReplayManager.LoadFromFile(fReplays[i].ReplayFile);
 
       fReplays[i].ReplayResult := CR_UNDETERMINED;
 

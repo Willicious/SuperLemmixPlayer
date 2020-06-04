@@ -12,7 +12,7 @@ uses
   Windows, Classes, Controls, Graphics, SysUtils,
   GR32, GR32_Layers, GR32_Resamplers,
   UMisc, Dialogs,
-  LemCore, LemStrings, LemDosStructures, LemRendering, LemLevel,
+  LemCore, LemStrings, LemRendering, LemLevel,
   LemGadgetsMeta, LemGadgets,
   LemTalisman,
   GameControl, GameBaseScreen, GameWindow;
@@ -121,7 +121,6 @@ end;
 
 procedure TGamePreviewScreen.BuildScreen;
 var
-  Mainpal: TArrayOfColor32;
   Temp, W: TBitmap32;
   DstRect: TRect;
   Lw, Lh : Integer;
@@ -131,7 +130,6 @@ begin
 
   ScreenImg.BeginUpdate;
   try
-    MainPal := GetDosMainMenuPaletteColors32;
     InitializeImageSizeAndPosition(640, 400);
     ExtractBackGround;
     ExtractPurpleFont;

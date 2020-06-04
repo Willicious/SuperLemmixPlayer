@@ -1807,27 +1807,10 @@ begin
 end;
 
 procedure TGameWindow.StartReplay(const aFileName: string);
-var
-  ext: String;
-
-  procedure LoadOldReplay(aName: String);
-  begin
-    with Game.ReplayManager do
-      LoadOldReplayFile(aName);
-  end;
 begin
   CanPlay := False;
-  ext := Lowercase(ExtractFileExt(aFilename));
-  if ext = '.nxrp' then
-    Game.ReplayManager.LoadFromFile(aFilename)
-  else if ext = '.lrb' then
-    LoadOldReplay(aFilename)
-  else
-    try
-      Game.ReplayManager.LoadFromFile(aFilename);
-    except
-      LoadOldReplay(aFilename);
-    end;
+
+  Game.ReplayManager.LoadFromFile(aFilename);
 
   if Game.ReplayManager.LevelID <> Game.Level.Info.LevelID then
     ShowMessage('Warning: This replay appears to be from a different level. NeoLemmix' + #13 +
@@ -1925,7 +1908,7 @@ begin
   SuspendGameplay;
   try
     Dlg.Title := 'Select a replay file to load (' + GameParams.CurrentGroupName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(GameParams.Level.Info.Title) + ')';
-    Dlg.Filter := 'All Compatible Replays (*.nxrp, *.lrb)|*.nxrp;*.lrb|NeoLemmix Replay (*.nxrp)|*.nxrp|Old NeoLemmix Replay (*.lrb)|*.lrb';
+    Dlg.Filter := 'NeoLemmix Replay File (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     if LastReplayDir = '' then
     begin

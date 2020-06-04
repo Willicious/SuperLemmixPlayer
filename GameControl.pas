@@ -17,7 +17,6 @@ uses
   Dialogs, SysUtils, StrUtils, IOUtils, Classes, Forms, GR32,
   LemVersion,
   LemTypes, LemLevel,
-  LemDosStructures,
   LemStrings,
   LemRendering;
 

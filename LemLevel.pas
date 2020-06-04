@@ -35,8 +35,6 @@ type
 
     fBackground: String;
 
-    fIsSimpleAutoSteel: Boolean;
-
     fScreenPosition : Integer;
     fScreenYPosition: Integer;
     fTitle          : string;
@@ -70,8 +68,6 @@ type
     property ScreenYPosition : Integer read fScreenYPosition write fScreenYPosition;
     property Title          : string read fTitle write fTitle;
     property Author         : string read fAuthor write fAuthor;
-
-    property IsSimpleAutoSteel: Boolean read fIsSimpleAutoSteel write fIsSimpleAutoSteel;
 
     property Width          : Integer read fWidth write fWidth;
     property Height         : Integer read fHeight write fHeight;
@@ -125,7 +121,7 @@ type
     procedure Clear;
 
     procedure LoadFromFile(aFile: String);
-    procedure LoadFromStream(aStream: TStream; aExt: String = '');
+    procedure LoadFromStream(aStream: TStream);
 
     procedure SaveToFile(aFile: String);
     procedure SaveToStream(aStream: TStream);
@@ -148,7 +144,7 @@ type
 implementation
 
 uses
-  LemLVLLoader, Dialogs, Math; // for backwards compatibility
+  Dialogs, Math; // for backwards compatibility
 
 { TLevelInfo }
 
@@ -165,7 +161,6 @@ begin
   fSkillset       := [];
   FillChar(fSkillCounts, SizeOf(TSkillCounts), 0);
 
-  IsSimpleAutoSteel := false;
   ScreenPosition  := 0;
   ScreenYPosition := 0;
   Width           := 320;
@@ -262,10 +257,7 @@ begin
   F := TFileStream.Create(aFile, fmOpenRead);
   try
     F.Position := 0;
-    LoadFromStream(F, ExtractFileExt(aFile));
-
-    if Lowercase(ExtractFileExt(aFile)) = '.lev' then
-      TLVLLoader.LoadExtraLemminsInfo(aFile, Self);
+    LoadFromStream(F);
   finally
     F.Free;
   end;
@@ -286,46 +278,37 @@ end;
 
 // TLevel Loading Routines
 
-procedure TLevel.LoadFromStream(aStream: TStream; aExt: String = '');
+procedure TLevel.LoadFromStream(aStream: TStream);
 var
   Parser: TParser;
   Main: TParserSection;
 begin
   Clear;
 
-  aExt := Lowercase(aExt);
-  if aExt = '.lvl' then
-    TLVLLoader.LoadLevelFromStream(aStream, Self, lfLemmix)
-  else if aExt = '.ini' then
-    TLVLLoader.LoadLevelFromStream(aStream, Self, lfLemmini)
-  else if aExt = '.lev' then
-    TLVLLoader.LoadLevelFromStream(aStream, Self, lfLemmins)
-  else begin
-    Parser := TParser.Create;
-    try
-      Parser.LoadFromStream(aStream);
-      Main := Parser.MainSection;
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromStream(aStream);
+    Main := Parser.MainSection;
 
-      LoadGeneralInfo(Main);
-      LoadSkillsetSection(Main.Section['skillset']);
+    LoadGeneralInfo(Main);
+    LoadSkillsetSection(Main.Section['skillset']);
 
-      Main.DoForEachSection('terraingroup', HandleTerrainGroupEntry);
-      if (Main.Section['gadget'] <> nil) then
-        Main.DoForEachSection('gadget', HandleObjectEntry)
-      else
-        Main.DoForEachSection('object', HandleObjectEntry);
-      Main.DoForEachSection('terrain', HandleTerrainEntry);
-      Main.DoForEachSection('lemming', HandleLemmingEntry);
-      Main.DoForEachSection('talisman', HandleTalismanEntry);
+    Main.DoForEachSection('terraingroup', HandleTerrainGroupEntry);
+    if (Main.Section['gadget'] <> nil) then
+      Main.DoForEachSection('gadget', HandleObjectEntry)
+    else
+      Main.DoForEachSection('object', HandleObjectEntry);
+    Main.DoForEachSection('terrain', HandleTerrainEntry);
+    Main.DoForEachSection('lemming', HandleLemmingEntry);
+    Main.DoForEachSection('talisman', HandleTalismanEntry);
 
-      if Main.Section['pretext'] <> nil then
-        Main.Section['pretext'].DoForEachLine('line', LoadPretextLine);
+    if Main.Section['pretext'] <> nil then
+      Main.Section['pretext'].DoForEachLine('line', LoadPretextLine);
 
-      if Main.Section['posttext'] <> nil then
-        Main.Section['posttext'].DoForEachLine('line', LoadPosttextLine);
-    finally
-      Parser.Free;
-    end;
+    if Main.Section['posttext'] <> nil then
+      Main.Section['posttext'].DoForEachLine('line', LoadPosttextLine);
+  finally
+    Parser.Free;
   end;
 
   Sanitize;
@@ -374,9 +357,6 @@ begin
     Height := aSection.LineNumeric['height'];
     ScreenPosition := aSection.LineNumeric['start_x'];
     ScreenYPosition := aSection.LineNumeric['start_y'];
-
-    if Lowercase(aSection.LineTrimString['autosteel']) = 'simple' then
-      isSimpleAutoSteel := true;
 
     Background := PieceManager.Dealias(aSection.LineTrimString['background'], rkBackground);
 
@@ -491,16 +471,8 @@ var
   end;
 
   procedure GetSplitterData;
-  begin
-    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then
-      Flag(odf_FlipLem)
-    else if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'r' then
-      O.DrawingFlags := O.DrawingFlags and not odf_FlipLem;
-  end;
-
   procedure GetWindowData;
   begin
-    if LeftStr(Lowercase(aSection.LineTrimString['direction']), 1) = 'l' then Flag(odf_FlipLem); // Deprecated!!
     if (aSection.Line['climber'] <> nil) then O.TarLev := O.TarLev or 1;
     if (aSection.Line['swimmer'] <> nil) then O.TarLev := O.TarLev or 2;
     if (aSection.Line['floater'] <> nil) then O.TarLev := O.TarLev or 4;
@@ -884,9 +856,6 @@ begin
     aSection.AddLine('HEIGHT', Height);
     aSection.AddLine('START_X', ScreenPosition);
     aSection.AddLine('START_Y', ScreenYPosition);
-
-    if Info.IsSimpleAutoSteel then
-      aSection.AddLine('AUTOSTEEL', 'simple');
 
     if not ((Background = '') or (Background = ':')) then
       aSection.AddLine('BACKGROUND', Background);

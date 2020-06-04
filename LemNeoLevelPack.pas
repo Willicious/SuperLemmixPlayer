@@ -1,12 +1,10 @@
 unit LemNeoLevelPack;
 
-// Replaces LemDosStyle, LemDosLevelSystem etc. Those are messy. This should be tidier.
-
 interface
 
 uses
   System.Generics.Collections, System.Generics.Defaults,
-  GR32, CRC32, PngInterface, LemLVLLoader, LemLevel,
+  GR32, CRC32, PngInterface, LemLevel,
   Windows, Dialogs, Classes, SysUtils, StrUtils, Contnrs, Controls, Forms,
   LemTalisman,
   LemStrings, LemTypes, LemNeoParser, LemNeoPieceManager, LemGadgets, LemGadgetsConstants, LemCore,
@@ -1247,15 +1245,6 @@ begin
   end;
 
   if FindFirst(Path + '*.nxlv', 0, SearchRec) = 0 then
-  begin
-    repeat
-      L := fLevels.Add;
-      L.Filename := SearchRec.Name;
-    until FindNext(SearchRec) <> 0;
-    FindClose(SearchRec);
-  end;
-
-  if FindFirst(Path + '*.lvl', 0, SearchRec) = 0 then
   begin
     repeat
       L := fLevels.Add;
