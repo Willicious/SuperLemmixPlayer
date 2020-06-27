@@ -135,6 +135,8 @@ type
     procedure HandleSpecialSkip(aSkipType: Integer);
 
     function GetLevelMusicName: String;
+    function ProcessMusicPriorityOrder(aOptions: String; aIsFromRotation: Boolean): String;
+
     function GetIsHyperSpeed: Boolean;
 
     procedure SetGameSpeed(aValue: TGameSpeed);
@@ -387,36 +389,70 @@ end;
 
 function TGameWindow.GetLevelMusicName: String;
 var
-  MusicName: String;
   MusicIndex: Integer;
   SL: TStringList;
 begin
-  Result := '';
+  Result := ProcessMusicPriorityOrder(GameParams.Level.Info.MusicFile, false);
+  if Result = '' then
+  begin
+    SL := GameParams.CurrentLevel.Group.MusicList;
 
-  MusicName := ChangeFileExt(GameParams.Level.Info.MusicFile, '');
-
-  if (MusicName <> '') and (LeftStr(MusicName, 1) <> '?') then
-    if SoundManager.FindExtension(MusicName, true) <> '' then
+    if SL.Count > 0 then
     begin
-      Result := MusicName;
-      Exit;
+      if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
+        MusicIndex := Random(SL.Count)
+      else
+        MusicIndex := GameParams.CurrentLevel.MusicRotationIndex;
+
+      Result := ProcessMusicPriorityOrder(SL[MusicIndex], true);
     end;
+  end;
 
-  if LeftStr(MusicName, 1) = '?' then
-    MusicIndex := StrToIntDef(RightStr(MusicName, Length(MusicName)-1), -1)
-  else
-    MusicIndex := -1;
+  if LeftStr(Result, 1) = '*' then
+    Result := '';
+end;
 
-  SL := GameParams.CurrentLevel.Group.MusicList;
+function TGameWindow.ProcessMusicPriorityOrder(aOptions: String; aIsFromRotation: Boolean): String;
+var
+  SL: TStringList;
+  ThisName: String;
+  MusicIndex: Integer;
+  i: Integer;
+begin
+  Result := '';
+  SL := TStringList.Create;
+  try
+    SL.Delimiter := ';';
+    SL.StrictDelimiter := true;
+    SL.DelimitedText := aOptions;
 
-  if MusicIndex = -1 then
-    if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
-      MusicIndex := Random(SL.Count)
-    else
-      MusicIndex := GameParams.CurrentLevel.MusicRotationIndex;
+    for i := 0 to SL.Count-1 do
+    begin
+      ThisName := ChangeFileExt(Trim(SL[i]), '');
 
-  if SL.Count > 0 then
-    Result := SL[MusicIndex mod SL.Count];
+      if ThisName = '' then Continue;
+
+      if (LeftStr(ThisName, 1) = '?') and not aIsFromRotation then
+      begin
+        MusicIndex := StrToIntDef(RightStr(ThisName, Length(ThisName)-1), -1);
+        if (MusicIndex >= 0) and (MusicIndex < GameParams.CurrentLevel.Group.MusicList.Count) then
+        begin
+          ThisName := ProcessMusicPriorityOrder(GameParams.CurrentLevel.Group.MusicList[MusicIndex], true);
+          if ThisName <> '' then
+          begin
+            Result := ThisName;
+            Exit;
+          end;
+        end;
+      end else if SoundManager.FindExtension(ThisName, true) <> '' then
+      begin
+        Result := ThisName;
+        Exit;
+      end;
+    end;
+  finally
+    SL.Free;
+  end;
 end;
 
 procedure TGameWindow.SetClearPhysics(aValue: Boolean);
