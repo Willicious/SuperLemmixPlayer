@@ -404,7 +404,7 @@ begin
       else
         MusicIndex := GameParams.CurrentLevel.MusicRotationIndex;
 
-      Result := ProcessMusicPriorityOrder(SL[MusicIndex], true);
+      Result := ProcessMusicPriorityOrder(SL[MusicIndex mod SL.Count], true);
     end;
   end;
 
