@@ -642,83 +642,86 @@ begin
   end else
     DoProjection := false;
 
-  case SkillButton of
-  spbJumper:
-    if not DoProjection then
-    begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baJumping);
-      DrawJumperShadow(CopyL);
-    end;
+  if (not GameParams.HideShadows) or fUsefulOnly then
+  begin
+    case SkillButton of
+    spbJumper:
+      if not DoProjection then
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baJumping);
+        DrawJumperShadow(CopyL);
+      end;
 
 
-  spbShimmier:
-    if not DoProjection then
-    begin
-      if CopyL.LemAction in [baClimbing, baJumping] then
-        fRenderInterface.SimulateTransitionLem(CopyL, baShimmying)
-      else
-        fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
-      DrawShimmierShadow(CopyL);
-    end;
+    spbShimmier:
+      if not DoProjection then
+      begin
+        if CopyL.LemAction in [baClimbing, baJumping] then
+          fRenderInterface.SimulateTransitionLem(CopyL, baShimmying)
+        else
+          fRenderInterface.SimulateTransitionLem(CopyL, baReaching);
+        DrawShimmierShadow(CopyL);
+      end;
 
-  spbBuilder:
-    begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baBuilding);
-      DrawBuilderShadow(CopyL);
-    end;
+    spbBuilder:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baBuilding);
+        DrawBuilderShadow(CopyL);
+      end;
 
-  spbPlatformer:
-    begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baPlatforming);
-      DrawPlatformerShadow(CopyL);
-    end;
+    spbPlatformer:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baPlatforming);
+        DrawPlatformerShadow(CopyL);
+      end;
 
-  spbStacker:
-    begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baStacking);
-      DrawStackerShadow(CopyL);
-    end;
+    spbStacker:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baStacking);
+        DrawStackerShadow(CopyL);
+      end;
 
-  spbDigger:
-    begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baDigging);
-      DrawDiggerShadow(CopyL);
-    end;
+    spbDigger:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baDigging);
+        DrawDiggerShadow(CopyL);
+      end;
 
-  spbMiner:
-    begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baMining);
-      DrawMinerShadow(CopyL);
-    end;
+    spbMiner:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baMining);
+        DrawMinerShadow(CopyL);
+      end;
 
-  spbBasher:
-    begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baBashing);
-      DrawBasherShadow(CopyL);
-    end;
+    spbBasher:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baBashing);
+        DrawBasherShadow(CopyL);
+      end;
 
-  spbFencer:
-    begin
-      fRenderInterface.SimulateTransitionLem(CopyL, baFencing);
-      DrawFencerShadow(CopyL);
-    end;
+    spbFencer:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baFencing);
+        DrawFencerShadow(CopyL);
+      end;
 
-  spbBomber:
-    begin
-      DrawExploderShadow(CopyL);
-    end;
+    spbBomber:
+      begin
+        DrawExploderShadow(CopyL);
+      end;
 
-  spbGlider:
-    if not DoProjection then
-    begin
-      CopyL.LemIsGlider := True;
-      DrawGliderShadow(CopyL);
-    end;
+    spbGlider:
+      if not DoProjection then
+      begin
+        CopyL.LemIsGlider := True;
+        DrawGliderShadow(CopyL);
+      end;
 
-  spbCloner:
-    begin
-      CopyL.LemDX := -CopyL.LemDX;
-      DrawShadows(CopyL, ActionToSkillPanelButton[CopyL.LemAction], SelectedSkill, true);
+    spbCloner:
+      begin
+        CopyL.LemDX := -CopyL.LemDX;
+        DrawShadows(CopyL, ActionToSkillPanelButton[CopyL.LemAction], SelectedSkill, true);
+      end;
     end;
   end;
 

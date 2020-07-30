@@ -67,6 +67,7 @@ type
     moNoAutoReplayMode,
     moPauseAfterBackwards,
     moNoBackgrounds,
+    moHideShadows,
     moDisableWineWarnings,
     moHighResolution,
     moLinearResampleMenu,
@@ -205,6 +206,7 @@ type
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
     property PauseAfterBackwardsSkip: boolean Index moPauseAfterBackwards read GetOptionFlag write SetOptionFlag;
     property NoBackgrounds: boolean Index moNoBackgrounds read GetOptionFlag write SetOptionFlag;
+    property HideShadows: boolean Index moHideShadows read GetOptionFlag write SetOptionFlag;
     property DisableWineWarnings: boolean Index moDisableWineWarnings read GetOptionFlag write SetOptionFlag;
     property HighResolution: boolean Index moHighResolution read GetOptionFlag write SetOptionFlag;
     property LinearResampleMenu: boolean Index moLinearResampleMenu read GetOptionFlag write SetOptionFlag;
@@ -349,6 +351,7 @@ begin
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
+  SaveBoolean('HideShadows', HideShadows);
   SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
   SaveBoolean('EdgeScrolling', EdgeScroll);
@@ -471,10 +474,6 @@ begin
     begin
       SL.LoadFromFile(AppPath + SFSaveData + 'settings.ini');
       LoadedConfig := true;
-    end else if FileExists(AppPath + 'NeoLemmix147Settings.ini') then
-    begin
-      SL.LoadFromFile(AppPath + 'NeoLemmix147Settings.ini');
-      LoadedConfig := true;
     end else if UnderWine then
     begin
       // When running under WINE without an existing config, let's default to windowed.
@@ -491,6 +490,7 @@ begin
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
+    HideShadows := LoadBoolean('HideShadows', HideShadows);
     CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);
     EdgeScroll := LoadBoolean('EdgeScrolling', EdgeScroll);
