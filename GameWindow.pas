@@ -1410,6 +1410,7 @@ begin
       lka_ToggleShadows: begin
                            GameParams.HideShadows := not GameParams.HideShadows;
                            SetRedraw(rdRedraw);
+                           Game.CheckForNewShadow(true);
                          end;
       lka_Projection: if ProjectionType <> 1 then
                         ProjectionType := 1
