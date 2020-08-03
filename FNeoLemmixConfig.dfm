@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 417
+  ClientHeight = 433
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,17 +16,23 @@ object FormNXConfig: TFormNXConfig
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  DesignSize = (
+    273
+    433)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 273
-    Height = 378
+    Height = 394
     ActivePage = TabSheet5
+    Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitHeight = 378
     object TabSheet1: TTabSheet
       Caption = 'General'
+      ExplicitHeight = 350
       object lblUserName: TLabel
         Left = 7
         Top = 16
@@ -124,6 +130,7 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
+      ExplicitHeight = 350
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -154,7 +161,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 68
         Width = 249
-        Height = 80
+        Height = 96
         Caption = 'Interface Options'
         TabOrder = 1
         object cbNoBackgrounds: TCheckBox
@@ -168,26 +175,35 @@ object FormNXConfig: TFormNXConfig
         end
         object cbEdgeScrolling: TCheckBox
           Left = 12
-          Top = 34
+          Top = 50
           Width = 221
           Height = 17
           Caption = 'Enable Edge Scrolling and Trap Cursor'
-          TabOrder = 1
+          TabOrder = 2
           OnClick = OptionChanged
         end
         object cbSpawnInterval: TCheckBox
           Left = 12
-          Top = 52
+          Top = 68
           Width = 153
           Height = 17
           Caption = 'Use Spawn Interval'
-          TabOrder = 2
+          TabOrder = 3
+          OnClick = OptionChanged
+        end
+        object cbHideShadows: TCheckBox
+          Left = 12
+          Top = 33
+          Width = 153
+          Height = 17
+          Caption = 'Hide Skill Shadows'
+          TabOrder = 1
           OnClick = OptionChanged
         end
       end
       object GroupBox6: TGroupBox
         Left = 8
-        Top = 151
+        Top = 167
         Width = 249
         Height = 196
         Caption = 'Graphics Options'
@@ -298,6 +314,7 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
+      ExplicitHeight = 350
       object Label3: TLabel
         Left = 24
         Top = 45
@@ -380,29 +397,35 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 384
+    Top = 400
     Width = 65
     Height = 25
+    Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
+    ExplicitTop = 384
   end
   object btnCancel: TButton
     Left = 104
-    Top = 384
+    Top = 400
     Width = 65
     Height = 25
+    Anchors = [akLeft, akBottom]
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
+    ExplicitTop = 384
   end
   object btnApply: TButton
     Left = 184
-    Top = 384
+    Top = 400
     Width = 65
     Height = 25
+    Anchors = [akLeft, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
+    ExplicitTop = 384
   end
 end

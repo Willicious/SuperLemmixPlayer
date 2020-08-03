@@ -54,6 +54,7 @@ type
     btnStyles: TButton;
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
+    cbHideShadows: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -171,6 +172,7 @@ begin
     cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
 
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
+    cbHideShadows.Checked := GameParams.HideShadows;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     cbSpawnInterval.Checked := GameParams.SpawnInterval;
 
@@ -228,6 +230,7 @@ begin
   GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
 
