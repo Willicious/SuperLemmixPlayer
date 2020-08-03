@@ -122,6 +122,7 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Next Skill'
       'Release Mouse'
       'Clear Physics Mode'
+      'Toggle Shadows'
       'Projection Shadow'
       'Skill Projection Shadow'
       'Fall Distance Template'

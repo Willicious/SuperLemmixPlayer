@@ -1268,6 +1268,7 @@ const
                          lka_ReleaseMouse,
                          lka_Nuke,          // nuke also cancels, but requires double-press to do so so handled elsewhere
                          lka_ClearPhysics,
+                         lka_ToggleShadows,
                          lka_Projection,
                          lka_SkillProjection,
                          lka_ZoomIn,
@@ -1398,6 +1399,10 @@ begin
                           ClearPhysics := not ClearPhysics
                         else
                           ClearPhysics := true;
+      lka_ToggleShadows: begin
+                           GameParams.HideShadows := not GameParams.HideShadows;
+                           fNeedRedraw := rdRedraw;
+                         end;
       lka_Projection: if ProjectionType <> 1 then
                         ProjectionType := 1
                       else if func.Modifier = 0 then

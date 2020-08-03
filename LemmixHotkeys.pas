@@ -51,6 +51,7 @@ type
                          lka_SkillRight,
                          lka_ReleaseMouse,
                          lka_ClearPhysics,
+                         lka_ToggleShadows,
                          lka_Projection,
                          lka_SkillProjection,
                          lka_FallDistance,
@@ -308,6 +309,7 @@ begin
   if s = 'release_mouse' then Result := lka_ReleaseMouse;
   if s = 'highlight' then Result := lka_Highlight;
   if s = 'clear_physics' then Result := lka_ClearPhysics;
+  if s = 'toggle_shadows' then Result := lka_ToggleShadows;  
   if s = 'projection' then Result := lka_Projection;
   if s = 'skill_projection' then Result := lka_SkillProjection;  
   if s = 'fall_distance' then Result := lka_FallDistance;
@@ -452,6 +454,7 @@ var
       lka_ReleaseMouse:     Result := 'Release_Mouse';
       lka_Highlight:        Result := 'Highlight';
       lka_ClearPhysics:     Result := 'Clear_Physics';
+      lka_ToggleShadows:    Result := 'Toggle_Shadows';
       lka_Projection:       Result := 'Projection';
       lka_SkillProjection:  Result := 'Skill_Projection';
       lka_FallDistance:     Result := 'Fall_Distance';
