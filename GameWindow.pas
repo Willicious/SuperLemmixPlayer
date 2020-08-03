@@ -148,6 +148,7 @@ type
     procedure ResumeGameplay;
 
     function CheckHighlitLemmingChange: Boolean;
+    procedure SetRedraw(aRedraw: TRedrawOption);
   protected
     fGame                : TLemmingGame;      // reference to globalgame gamemechanics
     Img                  : TImage32;          // the image in which the level is drawn (reference to inherited ScreenImg!)
@@ -329,7 +330,7 @@ begin
     Img.OffsetHorz := Min(Max(OSHorz, MinScroll), MaxScroll);
     Img.OffsetVert := Min(Max(OSVert, MinVScroll), MaxVScroll);
 
-    fNeedRedraw := rdRedraw;
+    SetRedraw(rdRedraw);
     CheckResetCursor(true);
   finally
     Img.EndUpdate;
@@ -457,6 +458,8 @@ end;
 
 procedure TGameWindow.SetClearPhysics(aValue: Boolean);
 begin
+  if fClearPhysics <> aValue then
+    SetRedraw(rdRedraw);
   fClearPhysics := aValue;
   SkillPanel.DrawButtonSelector(spbClearPhysics, fClearPhysics);
 end;
@@ -604,9 +607,9 @@ begin
       if CheckScroll then
       begin
         if GameParams.MinimapHighQuality then
-          fNeedRedraw := rdRefresh
+          SetRedraw(rdRefresh)
         else
-          fNeedRedraw := rdRedraw;
+          SetRedraw(rdRedraw);
       end;
     end;
 
@@ -671,14 +674,14 @@ begin
       end;
       fHyperSpeedTarget := -1;
       SkillPanel.RefreshInfo;
-      fNeedRedraw := rdRedraw;
+      SetRedraw(rdRedraw);
       CheckResetCursor;
     end;
 
   end;
 
   if TimeForFrame then
-    fNeedRedraw := rdRedraw;
+    SetRedraw(rdRedraw);
 
   // Update drawing
   DoDraw;
@@ -868,48 +871,53 @@ begin
   or (fRenderInterface.HighlitLemming <> fLastHighlightLemming)
   or (fRenderInterface.SelectedSkill <> fLastSelectedSkill)
   or (fRenderInterface.UserHelper <> fLastHelperIcon)
-  or (fClearPhysics <> fLastClearPhysics)
+  or (fClearPhysics)
   or (fProjectionType <> fLastProjectionType)
   or ((GameSpeed = gspPause) and not fLastDrawPaused) then
-    fNeedRedraw := rdRedraw;
+    SetRedraw(rdRedraw);
 
   if fNeedRedraw = rdRefresh then
   begin
     Img.Changed;
-    RenderMinimap; //rdRefresh currently always occurs as a result of scrolling without any change otherwise, so minimap needs redrawing
-    Exit;
+    RenderMinimap; // rdRefresh currently always occurs as a result of scrolling without any change otherwise, so minimap needs redrawing
+    fNeedRedraw := rdNone;
   end;
 
-  if fNeedRedraw <> rdRedraw then Exit;
+  if fNeedRedraw = rdRedraw then
+  begin
+    try
+      fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
+      fRenderInterface.MousePos := Game.CursorPoint;
+      fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
+      fRenderer.DrawLemmings(fClearPhysics);
 
-  try
-    fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
-    fRenderInterface.MousePos := Game.CursorPoint;
-    fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
-    fRenderer.DrawLemmings(fClearPhysics);
-    if GameParams.MinimapHighQuality or (GameSpeed = gspPause) then
-      DrawRect := Img.Bitmap.BoundsRect
-    else begin
-      DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
-      DrawHeight := (ClientHeight div fInternalZoom) + 2;
-      DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
+      if GameParams.MinimapHighQuality or (GameSpeed = gspPause) then
+        DrawRect := Img.Bitmap.BoundsRect
+      else begin
+        DrawWidth := (ClientWidth div fInternalZoom) + 2; // a padding pixel on each side
+        DrawHeight := (ClientHeight div fInternalZoom) + 2;
+        DrawRect := Rect(fRenderInterface.ScreenPos.X - 1, fRenderInterface.ScreenPos.Y - 1, fRenderInterface.ScreenPos.X + DrawWidth, fRenderInterface.ScreenPos.Y + DrawHeight);
+      end;
+
+      fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
+
+      Img.Changed;
+      RenderMinimap;
+
+      SkillPanel.RefreshInfo;
+
+      fLastSelectedLemming := fRenderInterface.SelectedLemming;
+      fLastHighlightLemming := fRenderInterface.HighlitLemming;
+      fLastSelectedSkill := fRenderInterface.SelectedSkill;
+      fLastHelperIcon := fRenderInterface.UserHelper;
+      fLastDrawPaused := GameSpeed = gspPause;
+
+      fLastClearPhysics := fClearPhysics;
+      fLastProjectionType := fProjectionType;
+    except
+      on E: Exception do
+        OnException(E, 'TGameWindow.DoDraw');
     end;
-    fRenderer.DrawLevel(GameParams.TargetBitmap, DrawRect, fClearPhysics);
-    RenderMinimap;
-    SkillPanel.RefreshInfo;
-    fNeedRedraw := rdNone;
-
-    fLastSelectedLemming := fRenderInterface.SelectedLemming;
-    fLastHighlightLemming := fRenderInterface.HighlitLemming;
-    fLastSelectedSkill := fRenderInterface.SelectedSkill;
-    fLastHelperIcon := fRenderInterface.UserHelper;
-    fLastDrawPaused := GameSpeed = gspPause;
-
-    fLastClearPhysics := fClearPhysics;
-    fLastProjectionType := fProjectionType;
-  except
-    on E: Exception do
-      OnException(E, 'TGameWindow.DoDraw');
   end;
 end;
 
@@ -980,7 +988,7 @@ begin
 
   if aTargetIteration = Game.CurrentIteration then
   begin
-    fNeedRedraw := rdRedraw;
+    SetRedraw(rdRedraw);
     if Game.CancelReplayAfterSkip then
     begin
       Game.RegainControl(true);
@@ -1401,7 +1409,7 @@ begin
                           ClearPhysics := true;
       lka_ToggleShadows: begin
                            GameParams.HideShadows := not GameParams.HideShadows;
-                           fNeedRedraw := rdRedraw;
+                           SetRedraw(rdRedraw);
                          end;
       lka_Projection: if ProjectionType <> 1 then
                         ProjectionType := 1
@@ -1607,7 +1615,7 @@ begin
     if fGameSpeed = gspPause then
     begin
       if fRenderInterface.UserHelper <> hpi_None then
-        fNeedRedraw := rdRedraw;
+        SetRedraw(rdRedraw);
     end;
   end;
 
@@ -1777,7 +1785,7 @@ begin
   if O > MaxVScroll then O := MaxVScroll;
   Img.OffsetVert := O;
 
-  fNeedRedraw := rdRefresh;
+  SetRedraw(rdRefresh);
 end;
 
 procedure TGameWindow.Form_MouseUp(Sender: TObject; Button: TMouseButton;
@@ -2107,6 +2115,12 @@ begin
 
     Game.CheckForNewShadow(true);
   end;
+end;
+
+procedure TGameWindow.SetRedraw(aRedraw: TRedrawOption);
+begin
+  if (fNeedRedraw = rdNone) or (aRedraw = rdRedraw) then
+    fNeedRedraw := aRedraw;
 end;
 
 end.
