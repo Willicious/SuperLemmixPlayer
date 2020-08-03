@@ -62,7 +62,6 @@ type
     fCloseToScreen: TGameScreenType;
     fSuspendCursor: Boolean;
     fClearPhysics: Boolean;
-    fLastClearPhysics: Boolean;
     fProjectionType: Integer;
     fLastProjectionType: Integer;
     fRenderInterface: TRenderInterface;
@@ -912,8 +911,9 @@ begin
       fLastHelperIcon := fRenderInterface.UserHelper;
       fLastDrawPaused := GameSpeed = gspPause;
 
-      fLastClearPhysics := fClearPhysics;
       fLastProjectionType := fProjectionType;
+
+      fNeedRedraw := rdNone;
     except
       on E: Exception do
         OnException(E, 'TGameWindow.DoDraw');
