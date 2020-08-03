@@ -124,6 +124,7 @@ begin
   ClearAllKeys;
 
   // Here's the simple ones that don't need further settings.
+  SetKeyFunction($08, lka_ToggleShadows);
   SetKeyFunction($53, lka_DirLeft);
   SetKeyFunction($46, lka_DirRight);
   SetKeyFunction($25, lka_DirLeft);
@@ -220,6 +221,7 @@ begin
   SetKeyFunction($44, lka_FallDistance);
   SetKeyFunction($45, lka_EditReplay);
   SetKeyFunction($46, lka_FastForward);
+  SetKeyFunction($48, lka_ToggleShadows);
   SetKeyFunction($49, lka_SaveImage);
   SetKeyFunction($4C, lka_LoadReplay);
   SetKeyFunction($4D, lka_Music);
