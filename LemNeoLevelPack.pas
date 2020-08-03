@@ -133,6 +133,8 @@ type
       fPostviewTexts: TPostviewTexts;
       fHasOwnPostviewTexts: Boolean;
 
+      fRandomMusicTemp: String;
+
       function GetFullPath: String;
       function GetAuthor: String;
 
@@ -149,6 +151,7 @@ type
       procedure LoadScrollerDataDefault;
       procedure LoadScrollerSection(aSection: TParserSection; const aIteration: Integer);
       procedure LoadMusicData;
+      procedure LoadRandomMusicLine(aLine: TParserLine; const aIteration: Integer);
       procedure LoadMusicLine(aLine: TParserLine; const aIteration: Integer);
       procedure LoadPostviewData;
       procedure LoadPostviewSection(aSection: TParserSection; const aIteration: Integer);
@@ -971,7 +974,13 @@ begin
       Parser.LoadFromFile(AppPath + SFData + 'music.nxmi');
 
     MainSec := Parser.MainSection;
-    MainSec.DoForEachLine('track', LoadMusicLine);
+    if (MainSec.Line['random'] <> nil) then
+    begin
+      fRandomMusicTemp := '';
+      MainSec.DoForEachLine('track', LoadRandomMusicLine);
+      fMusicList.Add('!' + fRandomMusicTemp);
+    end else
+      MainSec.DoForEachLine('track', LoadMusicLine);
   finally
     Parser.Free;
   end;
@@ -1015,6 +1024,14 @@ end;
 procedure TNeoLevelGroup.LoadMusicLine(aLine: TParserLine; const aIteration: Integer);
 begin
   fMusicList.Add(aLine.ValueTrimmed);
+end;
+
+procedure TNeoLevelGroup.LoadRandomMusicLine(aLine: TParserLine;
+  const aIteration: Integer);
+begin
+  if fRandomMusicTemp <> '' then
+    fRandomMusicTemp := fRandomMusicTemp + ';';
+  fRandomMusicTemp := fRandomMusicTemp + aLine.ValueTrimmed;
 end;
 
 procedure TNeoLevelGroup.LoadPostviewSection(aSection: TParserSection; const aIteration: Integer);

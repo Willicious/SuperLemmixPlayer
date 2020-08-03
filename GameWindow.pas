@@ -420,11 +420,22 @@ var
   i: Integer;
 begin
   Result := '';
+
+  if aOptions = '' then
+    Exit;
+
   SL := TStringList.Create;
   try
     SL.Delimiter := ';';
     SL.StrictDelimiter := true;
-    SL.DelimitedText := aOptions;
+
+    if aOptions[1] = '!' then
+    begin
+      SL.DelimitedText := RightStr(aOptions, Length(aOptions)-1);
+      for i := 0 to SL.Count-2 do
+        SL.Move(Random(SL.Count - i) + i, i); // This is essentially a single-list Fisher-Yates shuffle
+    end else
+      SL.DelimitedText := aOptions;
 
     for i := 0 to SL.Count-1 do
     begin
@@ -434,7 +445,11 @@ begin
 
       if (LeftStr(ThisName, 1) = '?') and not aIsFromRotation then
       begin
-        MusicIndex := StrToIntDef(RightStr(ThisName, Length(ThisName)-1), -1);
+        if ThisName = '??' then
+          MusicIndex := Random(GameParams.CurrentLevel.Group.MusicList.Count)
+        else
+          MusicIndex := StrToIntDef(RightStr(ThisName, Length(ThisName)-1), -1);
+
         if (MusicIndex >= 0) and (MusicIndex < GameParams.CurrentLevel.Group.MusicList.Count) then
         begin
           ThisName := ProcessMusicPriorityOrder(GameParams.CurrentLevel.Group.MusicList[MusicIndex], true);
