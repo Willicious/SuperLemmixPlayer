@@ -1766,9 +1766,14 @@ begin
         fHelperImages[hpi_ArrowDown].DrawTo(Dst, DrawX, DrawY);
       end;
 
-    DOM_EXIT, DOM_LOCKEXIT:
+    DOM_EXIT:
       begin
         fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+      end;
+
+    DOM_LOCKEXIT:
+      begin
+        fHelperImages[hpi_LockExit].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
       end;
 
     DOM_FIRE:
