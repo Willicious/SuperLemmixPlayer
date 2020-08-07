@@ -506,8 +506,7 @@ begin
 
     ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
 
-    if CursorResize <> 1 then
-      CursorResize := StrToFloatDef(SL.Values['CursorResize'], 1);
+    CursorResize := StrToFloatDef(SL.Values['CursorResize'], CursorResize);
 
     if (StrToIntDef(SL.Values['LastVersion'], 0) div 1000) mod 100 < 16 then
       FullScreen := ZoomLevel < 1;
