@@ -1478,20 +1478,31 @@ var
   var
     i: Integer;
     IsSteelGroup: Boolean;
+
+    FirstNonErase: Integer;
   begin
     // This function should:
     //  - If group is valid, return TRUE
     //  - If group is invalid and some sane way to handle it exists, handle it as such then return FALSE
     //  - If group is invalid and no sane way to handle it exists, raise an exception
 
-    if aTerrains.Count = 0 then
+    FirstNonErase := -1;
+    for i := 0 to aTerrains.Count-1 do
+      if (aTerrains[i].DrawingFlags and tdf_Erase) = 0 then
+      begin
+        FirstNonErase := i;
+        Break;
+      end;
+
+    if FirstNonErase < 0 then
     begin
       aDst.SetSize(MIN_TERRAIN_GROUP_WIDTH, MIN_TERRAIN_GROUP_HEIGHT);
       aDst.Clear(0);
       Result := false;
     end else begin
-      IsSteelGroup := PieceManager.Terrains[aTerrains[0].Identifier].IsSteel;
-      for i := 1 to aTerrains.Count-1 do
+      IsSteelGroup := PieceManager.Terrains[aTerrains[FirstNonErase].Identifier].IsSteel;
+
+      for i := FirstNonErase+1 to aTerrains.Count-1 do
         if (aTerrains[i].DrawingFlags and tdf_Erase = 0) and
            (PieceManager.Terrains[aTerrains[i].Identifier].IsSteel <> IsSteelGroup) then
           raise Exception.Create('TRenderer.PrepareCompositePieceBitmap received a group with a mix of steel and nonsteel pieces!');
