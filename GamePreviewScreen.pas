@@ -165,18 +165,18 @@ begin
       W.DrawMode := dmBlend;
       W.CombineMode := cmMerge;
 
-      // We have a 640x128 area in which to draw the level preview
-      LevelScale := 640 / lw;
-      if LevelScale > 128 / lh then LevelScale := 128 / lh;
+      // We have a 864x160 area in which to draw the level preview
+      LevelScale := 864 / lw;
+      if LevelScale > 160 / lh then LevelScale := 160 / lh;
 
       DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
-      OffsetRect(DstRect, 320 - (DstRect.Right div 2), 64 - (DstRect.Bottom div 2));
+      OffsetRect(DstRect, 432 - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
       W.DrawTo(Temp, DstRect, W.BoundsRect);
       // draw background
-      TileBackgroundBitmap(0, 128, Temp);
+      TileBackgroundBitmap(0, 160, Temp);
       // draw text
-      DrawPurpleTextCentered(Temp, GetScreenText, 130);
+      DrawPurpleTextCentered(Temp, GetScreenText, 164);
       ScreenImg.Bitmap.Assign(Temp);
 
       if GameParams.LinearResampleMenu then
@@ -310,13 +310,13 @@ var
       S := Trim(Talisman.RequirementText);
       while (S <> '') and (CurLine < Length(Lines)) do
       begin
-        if Length(S) > 36 then
+        if Length(S) > 48 then
         begin
-          for i := 37 downto 1 do
+          for i := 49 downto 1 do
             if S[i] = ' ' then
               Break;
 
-          if i <= 1 then i := 37;
+          if i <= 1 then i := 49;
         end else
           i := Length(S) + 1;
 
