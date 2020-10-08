@@ -49,11 +49,11 @@ begin
   ScreenImg.BeginUpdate;
   Temp := TBitmap32.Create;
   try
-    InitializeImageSizeAndPosition(640, 400);
+    InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
     ExtractPurpleFont;
 
-    Temp.SetSize(640, 400);
+    Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     Temp.Clear(0);
     TileBackgroundBitmap(0, 0, Temp);
     ScreenText := GetScreenText;

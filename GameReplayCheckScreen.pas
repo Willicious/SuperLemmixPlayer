@@ -366,7 +366,7 @@ procedure TGameReplayCheckScreen.BuildScreen;
 begin
   ScreenImg.BeginUpdate;
   try
-    InitializeImageSizeAndPosition(640, 400);
+    InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
     ExtractPurpleFont;
 

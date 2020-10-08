@@ -18,6 +18,9 @@ const
   PURPLEFONTCOUNT = ord(#132) - ord('!') + 1;
   PurpleFontCharSet = [#26..#126] - [#32];
 
+  INTERNAL_SCREEN_WIDTH = 864;
+  INTERNAL_SCREEN_HEIGHT = 486;
+
 type
   TPurpleFont = class(TComponent)
   private
