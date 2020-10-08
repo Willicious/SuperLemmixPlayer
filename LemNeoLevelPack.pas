@@ -124,6 +124,7 @@ type
 
       fPackTitle: String;
       fPackAuthor: String;
+      fPackVersion: String;
       fScrollerList: TStringList;
       fHasOwnScrollerList: Boolean;
 
@@ -209,6 +210,7 @@ type
       property Path: String read GetFullPath;
       property PackTitle: String read fPackTitle;
       property PackAuthor: String read fPackAuthor;
+      property PackVersion: String read fPackVersion;
       property ScrollerList: TStringList read fScrollerList;
       property MusicList: TStringList read fMusicList;
       property PostviewTexts: TPostviewTexts read fPostviewTexts;
@@ -899,6 +901,7 @@ procedure TNeoLevelGroup.LoadScrollerDataDefault;
 begin
   fPackTitle := '';
   fPackAuthor := '';
+  fPackVersion := '';
 
   if (fParentGroup <> nil) and not FileExists(Path + 'info.nxmi') then
   begin
@@ -906,11 +909,12 @@ begin
       fPackTitle := fParentGroup.PackTitle;
     if fParentGroup.PackAuthor.Length > 0 then
       fPackAuthor := fParentGroup.PackAuthor;
+    if fParentGroup.PackVersion.Length > 0 then
+      fPackVersion := fParentGroup.PackVersion;
+
     fScrollerList := fParentGroup.ScrollerList;
     fHasOwnScrollerList := false;
-  end
-  else
-  begin
+  end else begin
     fScrollerList := TStringList.Create;
     fHasOwnScrollerList := true;
   end;
@@ -936,6 +940,7 @@ begin
     MainSec := Parser.MainSection;
     fPackTitle := MainSec.LineTrimString['title'];
     fPackAuthor := MainSec.LineTrimString['author'];
+    fPackVersion := MainSec.LineTrimString['version'];
     MainSec.DoForEachSection('scroller', LoadScrollerSection);
   finally
     Parser.Free;
