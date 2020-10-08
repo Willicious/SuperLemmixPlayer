@@ -334,9 +334,9 @@ begin
       if (H <> #13) and (H <> #12) then
         DrawPurpleText(Dst, H, X, Y)
       else if H = #13 then
-        Inc(Y, 16)
+        Inc(Y, 19)
       else
-        Inc(Y, 8);
+        Inc(Y, 10);
     end;
 
   List.Free;
@@ -373,9 +373,9 @@ begin
 
   for i := 0 to PURPLEFONTCOUNT-7 do
   begin
-    fPurpleFont.fBitmaps[i].SetSize(16, 16);
+    fPurpleFont.fBitmaps[i].SetSize(16, 19);
     fPurpleFont.fBitmaps[i].Clear(0);
-    TempBMP.DrawTo(fPurpleFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 16));
+    TempBMP.DrawTo(fPurpleFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 19));
     fPurpleFont.fBitmaps[i].DrawMode := dmBlend;
     fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
   end;

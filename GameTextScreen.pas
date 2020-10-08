@@ -208,7 +208,7 @@ begin
     else
       Add(SL[i]);
 
-  while lfc < 21 do
+  while lfc < 22 do
     if lfc mod 2 = 1 then
       PreLF(1)
     else
