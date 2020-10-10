@@ -24,10 +24,10 @@ type
     gmbLogo,
     gmbPlay,         // 1st row, 1st button
     gmbLevelCode,    // 1st row, 2nd button
-    gmbConfig,        // 1st row, 3d button
-    gmbSection,      // 1st row, 4th button
-    gmbExit,         // 2nd row, 1st button
+    gmbSection,      // 1st row, 3rd button
+    gmbConfig,        // 2nd row, 1st button
     gmbTalisman,   // 2nd row, 2nd button
+    gmbExit,         // 2nd row, 3rd button
     gmbGameSection
   );
 
@@ -36,21 +36,21 @@ const
     Positions at which the images of the menuscreen are drawn
   -------------------------------------------------------------------------------}
   GameMenuBitmapPositions: array[TGameMenuBitmap] of TPoint = (
-    (X:8;    Y:20),                   // gmbLogo
-    (X:136;   Y:140),                  // gmbPlay
-    (X:264;  Y:140),                  // gmbLevelCode
-    (X:136;  Y:236),
-    (X:392;  Y:140),                  // gmbSection
-    (X:392;  Y:236),
-    (X:264;  Y:236),                  // gmbTalisman
-    (X:392 + 32;    Y:140 + 24)
+    (X:432;    Y:72),                   // gmbLogo
+    (X:304;  Y:196),                  // gmbPlay
+    (X:432;  Y:196),                  // gmbLevelCode
+    (X:560;  Y:196),                  // gmbSection
+    (X:304;  Y:300),
+    (X:432;  Y:300),                  // gmbTalisman
+    (X:560;  Y:300),
+    (X:570;  Y:206)
   );
 
-  YPos_ProgramText = 322;
-  YPos_Credits = 400 - 24;
+  YPos_ProgramText = 364;
+  YPos_Credits = 486 - 24;
 
   Reel_Width = 34 * 16;
-  Reel_Height = 16;
+  Reel_Height = 19;
 
   Font_Width = 16;
 
@@ -319,6 +319,10 @@ begin
       gmbExit: P.X := P.X - 64;
       gmbTalisman: Exit;
     end;
+
+  P.X := P.X - (BitmapElements[aElement].Width div 2);
+  P.Y := P.Y - (BitmapElements[aElement].Height div 2);
+
   BitmapElements[aElement].DrawTo(ScreenImg.Bitmap, P.X, P.Y);
 end;
 
@@ -332,6 +336,7 @@ var
   GrabRect: TRect;
   S, S2: String;
   iPanel: TGameMenuBitmap;
+  P: TPoint;
 
   procedure LoadScrollerGraphics;
   var
@@ -341,9 +346,9 @@ var
     TempBMP := TBitmap32.Create;
     GetGraphic('scroller_segment.png', Tmp);
     GetGraphic('scroller_lemmings.png', TempBMP);
-    SourceRect := Rect(0, 0, 48, 256);
-    LeftLemmingAnimation.SetSize(48, 256);
-    RightLemmingAnimation.SetSize(48, 256);
+    SourceRect := Rect(0, 0, 48, 304);
+    LeftLemmingAnimation.SetSize(48, 304);
+    RightLemmingAnimation.SetSize(48, 304);
     TempBmp.DrawTo(LeftLemmingAnimation, 0, 0, SourceRect);
     SourceRect.Right := SourceRect.Right + 48;
     SourceRect.Left := SourceRect.Left + 48;
@@ -365,10 +370,10 @@ begin
     GetGraphic('logo.png', BitmapElements[gmbLogo]);
     GetGraphic('sign_play.png', BitmapElements[gmbPlay]);
     GetGraphic('sign_code.png', BitmapElements[gmbLevelCode]);
-    GetGraphic('sign_config.png', BitmapElements[gmbConfig]);
     GetGraphic('sign_rank.png', BitmapElements[gmbSection]);
-    GetGraphic('sign_quit.png', BitmapElements[gmbExit]);
+    GetGraphic('sign_config.png', BitmapElements[gmbConfig]);
     GetGraphic('sign_talisman.png', BitmapElements[gmbTalisman]);
+    GetGraphic('sign_quit.png', BitmapElements[gmbExit]);
     // rank graphic will be loaded in SetSection!
 
     LoadScrollerGraphics;
@@ -380,12 +385,12 @@ begin
     end;
 
     // a little oversize
-    Reel.SetSize(ReelLetterBoxCount * 16 + 32, 16);
+    Reel.SetSize(ReelLetterBoxCount * 16 + 32, 19);
     for i := 0 to ReelLetterBoxCount - 1 + 4 do
       Tmp.DrawTo(Reel, i * 16, 0);
 
     // make sure the reelbuffer is the right size
-    ReelBuffer.SetSize(ReelLetterBoxCount * 16, 16);
+    ReelBuffer.SetSize(ReelLetterBoxCount * 16, 19);
 
     // background
     TileBackgroundBitmap(0, 0);
@@ -403,11 +408,10 @@ begin
     // re-capture the gmbSection, because we'll probably need to re-draw it later
     // to prevent writing over section graphics with other semitransparent ones
     //    (X:392;  Y:120),                  // gmbSection
+    P := GameMenuBitmapPositions[gmbSection];
+
     GrabRect := BitmapElements[gmbSection].BoundsRect;
-    GrabRect.Right := GrabRect.Right + 392;
-    GrabRect.Left := GrabRect.Left + 392;
-    GrabRect.Bottom := GrabRect.Bottom + 140;
-    GrabRect.Top := GrabRect.Top + 140;
+    GrabRect.Offset(P.X - GrabRect.Width div 2, P.Y - GrabRect.Height div 2);
     ScreenImg.Bitmap.DrawTo(BitmapElements[gmbSection], BitmapElements[gmbSection].BoundsRect, GrabRect);
     BitmapElements[gmbSection].DrawMode := dmOpaque;
 
@@ -417,12 +421,12 @@ begin
 
     if GameParams.CurrentLevel <> nil then
       S2 := GameParams.CurrentLevel.Group.PackTitle + #13 +
-            GameParams.CurrentLevel.Group.PackAuthor + #13 +
+            GameParams.CurrentLevel.Group.PackAuthor + #13 + #13 +
             'NeoLemmix Player V' + S
     else if GameParams.BaseLevelPack <> nil then
-      S2 := 'No Levels Found' + #13 + 'NeoLemmix Player V' + S
+      S2 := 'No Levels Found' + #13 + #13 + 'NeoLemmix Player V' + S
     else
-      S2 := 'No Pack' + #13 + 'NeoLemmix Player V' + S;
+      S2 := 'No Pack' + #13 + #13 + 'NeoLemmix Player V' + S;
     DrawPurpleTextCentered(ScreenImg.Bitmap, S2, YPos_ProgramText);
 
     // scroller text
@@ -607,12 +611,12 @@ var
 begin
   SrcRect := CalcFrameRect(LeftLemmingAnimation, 16, aFrame);
   DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
-  OffsetRect(DstRect, 0, YPos_Credits);
+  OffsetRect(DstRect, (864 - ReelBuffer.Width) div 2 - LeftLemmingAnimation.Width, YPos_Credits);
   BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   LeftLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 
   DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
-  OffsetRect(DstRect, 640 - 48, YPos_Credits);
+  OffsetRect(DstRect, (864 + ReelBuffer.Width) div 2, YPos_Credits);
   BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   RightLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 end;
@@ -647,7 +651,7 @@ begin
   // Drawing of the moving credits.
   Reel.DrawTo(ReelBuffer, ReelShift, 0);
   DrawPurpleText(ReelBuffer, CreditString, TextX, 0);
-  ReelBuffer.DrawTo(ScreenImg.Bitmap, 48, YPos_Credits);
+  ReelBuffer.DrawTo(ScreenImg.Bitmap, (864 - ReelBuffer.Width) div 2, YPos_Credits);
 end;
 
 procedure TGameMenuScreen.Application_Idle(Sender: TObject; var Done: Boolean);
