@@ -224,7 +224,7 @@ begin
   if fReplays.Count = 0 then
   begin
     fScreenText.Add('No valid replay files found.');
-    while fScreenText.Count < 24 do
+    while fScreenText.Count < 29 do
       fScreenText.Add('');
     fScreenText.Add('Click mouse to exit');
   end;
@@ -351,7 +351,7 @@ begin
       fScreenText.Add(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
     end;
 
-    while fScreenText.Count < 23 do
+    while fScreenText.Count < 28 do
       fScreenText.Add('');
     fScreenText.Add('Click mouse to exit');
 
@@ -387,7 +387,7 @@ procedure TGameReplayCheckScreen.OutputText;
 var
   i: Integer;
 begin
-  while fScreenText.Count > 24 do
+  while fScreenText.Count > 29 do
     fScreenText.Delete(0);
 
   ScreenImg.BeginUpdate;
