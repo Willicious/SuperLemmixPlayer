@@ -10,7 +10,7 @@ uses
   UMisc,
   Gr32, Gr32_Layers, GR32_Resamplers,
   LemTypes, LemStrings, LemGame, LemGameMessageQueue,
-  GameControl, GameBaseScreenCommon;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen;
 
 {-------------------------------------------------------------------------------
    New dedicated screen for replay checking. :)
@@ -47,7 +47,7 @@ type
       procedure SaveToFile(aName: String);
   end;
 
-  TGameReplayCheckScreen = class(TGameBaseScreen)
+  TGameReplayCheckScreen = class(TGameBaseMenuScreen)
   private
     fScreenText: TStringList;
     fReplays: TReplayCheckEntries;
@@ -368,10 +368,9 @@ begin
   try
     InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
-    ExtractMenuFont;
 
     TileBackgroundBitmap(0, 0, ScreenImg.Bitmap);
-    DrawPurpleTextCentered(ScreenImg.Bitmap, 'Preparing replay check. Please wait.', 192);
+    MenuFont.DrawTextCentered(ScreenImg.Bitmap, 'Preparing replay check. Please wait.', 192);
 
     fOldHighRes := GameParams.HighResolution;
     GameParams.HighResolution := false;
@@ -394,7 +393,7 @@ begin
   try
     TileBackgroundBitmap(0, 0, ScreenImg.Bitmap);
     for i := 0 to fScreenText.Count-1 do
-      DrawPurpleTextCentered(ScreenImg.Bitmap, fScreenText[i], (i * 16) + 8);
+      MenuFont.DrawTextCentered(ScreenImg.Bitmap, fScreenText[i], (i * 16) + 8);
   finally
     ScreenImg.EndUpdate;
   end;
@@ -424,8 +423,6 @@ begin
 
   fScreenText := TStringList.Create;
   fReplays := TReplayCheckEntries.Create;
-
-  SetBasicCursor;
 end;
 
 destructor TGameReplayCheckScreen.Destroy;

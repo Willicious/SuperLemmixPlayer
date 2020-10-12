@@ -17,13 +17,13 @@ uses
   GameControl,
   StrUtils,
   LemTalisman,
-  GameBaseScreenCommon;
+  GameBaseScreenCommon, GameBaseMenuScreen;
 
 const
   TALISMANS_PER_PAGE = 4;
 
 type
-  TGameTalismanScreen = class(TGameBaseScreen)
+  TGameTalismanScreen = class(TGameBaseMenuScreen)
   private
     ScreenText: string;
     fPack: TNeoLevelGroup;
@@ -51,13 +51,12 @@ begin
   try
     InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
-    ExtractMenuFont;
 
     Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     Temp.Clear(0);
     TileBackgroundBitmap(0, 0, Temp);
     ScreenText := GetScreenText;
-    DrawPurpleTextCentered(Temp, ScreenText, 16);
+    MenuFont.DrawTextCentered(Temp, ScreenText, 16);
     ScreenImg.Bitmap.Assign(Temp);
   finally
     ScreenImg.EndUpdate;
@@ -70,8 +69,6 @@ begin
   inherited Create(aOwner);
   OnKeyDown := Form_KeyDown;
   OnKeyPress := Form_KeyPress;
-
-  SetBasicCursor;
 end;
 
 destructor TGameTalismanScreen.Destroy;

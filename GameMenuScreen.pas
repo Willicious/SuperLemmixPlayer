@@ -11,7 +11,7 @@ interface
 uses
   Classes, Controls,
   CustomPopup,
-  GameBaseScreenCommon, GameControl,
+  GameBaseScreenCommon, GameBaseMenuScreen, GameControl,
   LemNeoOnline, StrUtils,
   LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
   GR32, GR32_Layers;
@@ -55,7 +55,7 @@ const
   Font_Width = 16;
 
 type
-  TGameMenuScreen = class(TGameBaseScreen)
+  TGameMenuScreen = class(TGameBaseMenuScreen)
   private
     fUpdateCheckThread: TDownloadThread;
     fVersionInfo: TStringList;
@@ -364,8 +364,7 @@ begin
   ScreenImg.BeginUpdate;
   try
     InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-    ExtractBackGround;
-    ExtractMenuFont;
+    ExtractBackground;
 
     GetGraphic('logo.png', BitmapElements[gmbLogo]);
     GetGraphic('sign_play.png', BitmapElements[gmbPlay]);
@@ -427,7 +426,7 @@ begin
       S2 := 'No Levels Found' + #13 + #13 + 'NeoLemmix Player V' + S
     else
       S2 := 'No Pack' + #13 + #13 + 'NeoLemmix Player V' + S;
-    DrawPurpleTextCentered(ScreenImg.Bitmap, S2, YPos_ProgramText);
+    MenuFont.DrawTextCentered(ScreenImg.Bitmap, S2, YPos_ProgramText);
 
     // scroller text
     if GameParams.CurrentLevel <> nil then
@@ -494,8 +493,6 @@ begin
   OnMouseDown := Form_MouseDown;
   ScreenImg.OnMouseDown := Img_MouseDown;
   Application.OnIdle := Application_Idle;
-
-  SetBasicCursor;
 end;
 
 destructor TGameMenuScreen.Destroy;
@@ -652,7 +649,7 @@ procedure TGameMenuScreen.DrawReel;
 begin
   // Drawing of the moving credits.
   Reel.DrawTo(ReelBuffer, ReelShift, 0);
-  DrawPurpleText(ReelBuffer, CreditString, TextX, 0);
+  MenuFont.DrawText(ReelBuffer, CreditString, TextX, 0);
   ReelBuffer.DrawTo(ScreenImg.Bitmap, (864 - ReelBuffer.Width) div 2, YPos_Credits);
 end;
 

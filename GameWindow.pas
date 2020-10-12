@@ -1306,18 +1306,6 @@ begin
     Exit;
   end;
 
-  // Allow changing options and selecting new levels, but pause level for that
-  if (Key = VK_F3) and (func.Action = lka_Null) then
-  begin
-    SuspendGameplay;
-    try
-      ShowConfigMenu;
-    finally
-      ResumeGameplay;
-    end;
-    Exit;
-  end;
-
   if not Game.Playing then
     Exit;
 

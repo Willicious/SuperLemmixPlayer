@@ -15,10 +15,10 @@ uses
   LemCore, LemStrings, LemRendering, LemLevel,
   LemGadgetsMeta, LemGadgets,
   LemTalisman,
-  GameControl, GameBaseScreenCommon, GameWindow;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen, GameWindow;
 
 type
-  TGamePreviewScreen = class(TGameBaseScreen)
+  TGamePreviewScreen = class(TGameBaseMenuScreen)
   private
     procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -132,7 +132,6 @@ begin
   try
     InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
-    ExtractMenuFont;
 
     // prepare the renderer, this is a little bit shaky (wrong place)
     try
@@ -176,7 +175,7 @@ begin
       // draw background
       TileBackgroundBitmap(0, 160, Temp);
       // draw text
-      DrawPurpleTextCentered(Temp, GetScreenText, 164);
+      MenuFont.DrawTextCentered(Temp, GetScreenText, 164);
       ScreenImg.Bitmap.Assign(Temp);
 
       if GameParams.LinearResampleMenu then
@@ -222,8 +221,6 @@ begin
   OnKeyDown := Form_KeyDown;
   OnMouseDown := Form_MouseDown;
   ScreenImg.OnMouseDown := Img_MouseDown;
-
-  SetBasicCursor;
 end;
 
 destructor TGamePreviewScreen.Destroy;

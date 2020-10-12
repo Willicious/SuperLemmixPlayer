@@ -70,7 +70,8 @@ uses
   PngInterface in 'PngInterface.pas',
   SharedGlobals in 'SharedGlobals.pas',
   FStyleManager in 'FStyleManager.pas' {FManageStyles},
-  LemMenuFont in 'LemMenuFont.pas';
+  LemMenuFont in 'LemMenuFont.pas',
+  GameBaseMenuScreen in 'GameBaseMenuScreen.pas';
 
 {$R *.res}
 

@@ -32,49 +32,28 @@ type
     fScreenImg           : TImage32;
     fBackGround          : TBitmap32;
     fBackBuffer          : TBitmap32; // general purpose buffer
-    fMenuFont          : TMenuFont;
     fOriginalImageBounds : TRect;
     fScreenIsClosing     : Boolean;
     fCloseDelay          : Integer;
 
-    fBasicCursor: TNLCursor;
-    fBasicCursorActive: Boolean;
-
     procedure AdjustImage;
-    procedure MakeList(const S: string; aList: TStrings);
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
-    procedure LoadBasicCursor;
   protected
     procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
-    property MenuFont: TMenuFont read fMenuFont;
     property ScreenIsClosing: Boolean read fScreenIsClosing;
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
-    procedure DoLevelSelect(isPlaying: Boolean = false);
-    procedure ShowConfigMenu;
-    procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
-    procedure DoMassReplayCheck;
+
     function LoadReplay: Boolean;
-
-    procedure DoAfterConfig; virtual;
-
-    procedure SetBasicCursor;
-
-    property BasicCursor: TNLCursor read fBasicCursor;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure TileBackgroundBitmap(X, Y: Integer; Dst: TBitmap32 = nil);
     procedure ExtractBackGround;
-    procedure ExtractMenuFont;
-    procedure DrawPurpleText(Dst: TBitmap32; const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil);
-    procedure DrawPurpleTextCentered(Dst: TBitmap32; const S: string;
-      Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
-    function CalcPurpleTextSize(const S: string): TRect;
     procedure FadeOut;
     procedure InitializeImageSizeAndPosition(aWidth, aHeight: Integer);
 
-    procedure MainFormResized; virtual;
+    procedure MainFormResized; virtual; abstract;
 
     property ScreenImg: TImage32 read fScreenImg;
     property BackGround: TBitmap32 read fBackGround;
@@ -146,185 +125,17 @@ begin
   fScreenImg := TImage32.Create(Self);
   fScreenImg.Parent := Self;
 
-  fMenuFont := TMenuFont.Create;
-
   fBackGround := TBitmap32.Create;
   fBackBuffer := TBitmap32.Create;
 
   ScreenImg.Cursor := crNone;
-
-  fBasicCursor := TNLCursor.Create(Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS);
-  LoadBasicCursor;
 end;
 
 destructor TGameBaseScreen.Destroy;
 begin
   fBackGround.Free;
-  fMenuFont.Free;
   fBackBuffer.Free;
-  fBasicCursor.Free;
   inherited Destroy;
-end;
-
-procedure TGameBaseScreen.LoadBasicCursor;
-var
-  BMP: TBitmap32;
-  i: Integer;
-begin
-  BMP := TBitmap32.Create;
-  try
-    if GameParams.HighResolution then
-      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor-hr/standard.png', BMP)
-    else
-      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/standard.png', BMP);
-
-    fBasicCursor.LoadFromBitmap(BMP);
-
-    for i := 1 to fBasicCursor.MaxZoom+1 do
-      Screen.Cursors[i] := fBasicCursor.GetCursor(i);
-  finally
-    BMP.Free;
-  end;
-end;
-
-procedure TGameBaseScreen.SetBasicCursor;
-var
-  CursorIndex: Integer;
-begin
-  CursorIndex := Max(1, Min(MainForm.Width div 320, MainForm.Height div 180));
-
-  Cursor := CursorIndex;
-  MainForm.Cursor := CursorIndex;
-  Screen.Cursor := CursorIndex;
-  ScreenImg.Cursor := CursorIndex;
-
-  fBasicCursorActive := true;
-end;
-
-function TGameBaseScreen.CalcPurpleTextSize(const S: string): TRect;
-{-------------------------------------------------------------------------------
-  Linefeeds increment 16 pixels
-  Spaces increment 16 pixels
--------------------------------------------------------------------------------}
-var
-  C: Char;
-  CX, i: Integer;
-begin
-  CX := 0;
-  FillChar(Result, SizeOf(Result), 0);
-  if S <> '' then
-    Result.Bottom := 16;
-  for i := 1 to Length(S) do
-  begin
-    C := S[i];
-    case C of
-      #12:
-        begin
-          Inc(Result.Bottom, 8);
-          CX := 0;
-        end;
-      #13:
-        begin
-          Inc(Result.Bottom, 16);
-          CX := 0;
-        end;
-      #26..#126:
-        begin
-          Inc(CX, 16);
-          if CX > Result.Right then
-            Result.Right := CX;
-        end;
-    end;
-  end;
-end;
-
-procedure TGameBaseScreen.DrawPurpleText(Dst: TBitmap32; const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil);
-{-------------------------------------------------------------------------------
-  Linefeeds increment 16 pixels
-  Spaces increment 16 pixels
--------------------------------------------------------------------------------}
-var
-  C: Char;
-  CX, CY, i: Integer;
-  R: TRect;
-begin
-  Y := Y + 1; // accounts for moving graphic up by 1 pixel
-
-  if aRestoreBuffer <> nil then
-  begin
-    R := CalcPurpleTextSize(S);
-    OffsetRect(R, X, Y);
-    IntersectRect(R, R, aRestoreBuffer.BoundsRect); // oops, again watch out for sourceretangle!
-    aRestoreBuffer.DrawTo(Dst, R, R);
-  end;
-
-  CX := X;
-  CY := Y;
-  for i := 1 to Length(S) do
-  begin
-    C := S[i];
-    case C of
-      #12:
-        begin
-          Inc(CY, 8);
-          CX := X;
-        end;
-      #13:
-        begin
-          Inc(CY, 16);
-          CX := X;
-        end;
-      ' ':
-        begin
-          Inc(CX, 16);
-        end;
-      #26..#31, #33..#132:
-        begin
-          fMenuFont.BitmapOfChar[C].DrawTo(Dst, CX, CY);
-          Inc(CX, 16);
-        end;
-    end;
-  end;
-
-end;
-
-procedure TGameBaseScreen.DrawPurpleTextCentered(Dst: TBitmap32; const S: string; Y: Integer; aRestoreBuffer: TBitmap32 = nil;
-  EraseOnly: Boolean = False);
-{-------------------------------------------------------------------------------
-  Linefeeds increment 16 pixels
-  Spaces increment 16 pixels
--------------------------------------------------------------------------------}
-var
-  X, i: Integer;
-  R: TRect;
-  List: TStringList;
-  H: string;
-begin
-  List := TStringList.Create;
-  MakeList(S, List);
-
-  if aRestoreBuffer <> nil then
-  begin
-    R := CalcPurpleTextSize(S);
-    OffsetRect(R, (Dst.Width - (R.Right - R.Left)) div 2, Y);
-    IntersectRect(R, R, aRestoreBuffer.BoundsRect); // oops, again watch out for sourceretangle!
-    aRestoreBuffer.DrawTo(Dst, R, R);
-  end;
-
-  if not EraseOnly then
-    for i := 0 to List.Count - 1 do
-    begin
-      H := List[i]; // <= 40 characters!!!
-      X := (Dst.Width - 16 * Length(H)) div 2;
-      if (H <> #13) and (H <> #12) then
-        DrawPurpleText(Dst, H, X, Y)
-      else if H = #13 then
-        Inc(Y, 19)
-      else
-        Inc(Y, 10);
-    end;
-
-  List.Free;
 end;
 
 procedure TGameBaseScreen.ExtractBackground;
@@ -334,59 +145,6 @@ begin
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('background.png'), fBackground)
   else if FileExists(AppPath + SFGraphicsMenu + 'background.png') then
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', fBackground);
-end;
-
-procedure TGameBaseScreen.ExtractMenuFont;
-var
-  i: Integer;
-  TempBMP: TBitmap32;
-  buttonSelected: Integer;
-begin
-  TempBMP := TBitmap32.Create;
-
-  if (not (GameParams.CurrentLevel = nil))
-     and FileExists(GameParams.CurrentLevel.Group.FindFile('menu_font.png')) then
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('menu_font.png'), TempBMP)
-  else if FileExists(AppPath + SFGraphicsMenu + 'menu_font.png') then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'menu_font.png', TempBMP)
-  else
-  begin
-    buttonSelected := MessageDlg('Could not find the menu font gfx\menu\menu_font.png. Try to continue?',
-                                 mtWarning, mbOKCancel, 0);
-    if buttonSelected = mrCancel then Application.Terminate();
-  end;
-
-  for i := 0 to MENU_FONT_COUNT-7 do
-  begin
-    fMenuFont.fBitmaps[i].SetSize(16, 19);
-    fMenuFont.fBitmaps[i].Clear(0);
-    TempBMP.DrawTo(fMenuFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 19));
-    fMenuFont.fBitmaps[i].DrawMode := dmBlend;
-    fMenuFont.fBitmaps[i].CombineMode := cmMerge;
-  end;
-
-  if (not (GameParams.CurrentLevel = nil))
-     and FileExists(GameParams.CurrentLevel.Group.FindFile('talismans.png')) then
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('talismans.png'), TempBMP)
-  else if FileExists(AppPath + SFGraphicsMenu + 'talismans.png') then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP)
-  else
-  begin
-    buttonSelected := MessageDlg('Could not find the talisman graphics gfx\menu\talismans.png. Try to continue?',
-                                 mtWarning, mbOKCancel, 0);
-    if buttonSelected = mrCancel then Application.Terminate();
-  end;
-
-  for i := 0 to 5 do
-  begin
-    fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i].SetSize(48, 48);
-    fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i].Clear(0);
-    TempBMP.DrawTo(fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i], 0, 0, Rect(48 * (i mod 2), 48 * (i div 2), 48 * ((i mod 2) + 1), 48 * ((i div 2) + 1)));
-    fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i].DrawMode := dmBlend;
-    fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i].CombineMode := cmMerge;
-  end;
-
-  TempBMP.Free;
 end;
 
 procedure TGameBaseScreen.InitializeImageSizeAndPosition(aWidth, aHeight: Integer);
@@ -439,53 +197,6 @@ begin
 
 end;
 
-
-procedure TGameBaseScreen.MakeList(const S: string; aList: TStrings);
-var
-  StartP, P: PChar;
-  NewS: string;
-begin
-  StartP := PChar(S);
-  P := StartP;
-  repeat
-    case P^ of
-    #12, #13 :
-      begin
-        if P >= StartP then
-        begin
-          SetString(NewS, StartP, P - StartP);
-          aList.Add(NewS);
-
-          while (P^ = #12) or (P^ = #13) do
-          begin
-            aList.Add(P^);
-            Inc(P);
-          end;
-          if P^ = #0 then Break;
-
-          StartP := P;
-        end;
-
-      end;
-
-    #0:
-      begin
-        if P >= StartP then
-        begin
-          SetString(NewS, StartP, P - StartP);
-          aList.Add(NewS);
-          Break;
-        end;
-      end;
-
-    end;
-
-    Inc(P);
-    if P = #0 then Break;
-
-  until False;
-end;
-
 procedure TGameBaseScreen.FadeOut;
 var
   Steps: Cardinal;
@@ -531,72 +242,6 @@ begin
   end;
 
   Application.ProcessMessages;
-end;
-
-procedure TGameBaseScreen.MainFormResized;
-begin
-  // basic procedure. Special handling needed for in-game screen, hence why this procedure can be overridden.
-  fScreenImg.Width := GameParams.MainForm.ClientWidth;
-  fScreenImg.Height := GameParams.MainForm.ClientHeight;
-  ClientWidth := GameParams.MainForm.ClientWidth;
-  ClientHeight := GameParams.MainForm.ClientHeight;
-
-  if fBasicCursorActive then
-    SetBasicCursor;
-end;
-
-procedure TGameBaseScreen.DoAfterConfig;
-begin
-  // Intentionally blank.
-end;
-
-procedure TGameBaseScreen.DoLevelSelect(isPlaying: Boolean = false);
-var
-  F: TFLevelSelect;
-  OldLevel: TNeoLevelEntry;
-  Success: Boolean;
-  LoadAsPack: Boolean;
-begin
-  if GameParams.TestModeLevel <> nil then Exit;
-
-  OldLevel := GameParams.CurrentLevel;
-  F := TFLevelSelect.Create(self);
-  try
-    Success := F.ShowModal = mrOk;
-    LoadAsPack := F.LoadAsPack;
-  finally
-    F.Free;
-  end;
-
-  if not Success then
-  begin
-    if not isPlaying then GameParams.SetLevel(OldLevel);
-  end
-  else begin
-    if LoadAsPack then
-      CloseScreen(gstMenu)
-    else
-      CloseScreen(gstPreview);
-  end;
-end;
-
-procedure TGameBaseScreen.DoMassReplayCheck;
-var
-  OpenDlg: TOpenDialog;
-begin
-  OpenDlg := TOpenDialog.Create(self);
-  try
-    OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
-    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
-    if not OpenDlg.Execute then
-      Exit;
-    GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
-  finally
-    OpenDlg.Free;
-  end;
-  CloseScreen(gstReplayTest);
 end;
 
 function TGameBaseScreen.LoadReplay: Boolean;
@@ -665,82 +310,6 @@ begin
                   'will attempt to play the replay anyway.');
   end;
 end;
-
-procedure TGameBaseScreen.ShowConfigMenu;
-var
-  ConfigDlg: TFormNXConfig;
-  OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean;
-  ConfigResult: TModalResult;
-begin
-  OldFullScreen := GameParams.FullScreen;
-  OldHighResolution := GameParams.HighResolution;
-
-  ConfigDlg := TFormNXConfig.Create(self);
-  try
-    ConfigDlg.SetGameParams;
-    ConfigDlg.NXConfigPages.TabIndex := 0;
-    ConfigResult := ConfigDlg.ShowModal;
-    ResetWindowSize := ConfigDlg.ResetWindowSize;
-    ResetWindowPos := ConfigDlg.ResetWindowPosition;
-  finally
-    ConfigDlg.Free;
-  end;
-
-  // Wise advice from Simon - save these things on exiting the
-  // config dialog, rather than waiting for a quit or a screen
-  // transition to save them.
-  GameParams.Save;
-
-  ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos);
-
-  // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
-  if ConfigResult = mrRetry then
-    DoMassReplayCheck
-  else
-    DoAfterConfig;
-end;
-
-procedure TGameBaseScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
-begin
-  if GameParams.FullScreen and not OldFullScreen then
-  begin
-    GameParams.MainForm.BorderStyle := bsNone;
-    GameParams.MainForm.WindowState := wsMaximized;
-    GameParams.MainForm.Left := 0;
-    GameParams.MainForm.Top := 0;
-    GameParams.MainForm.Width := Screen.Width;
-    GameParams.MainForm.Height := Screen.Height;
-  end else if not GameParams.FullScreen then
-  begin
-    GameParams.MainForm.BorderStyle := bsSizeable;
-    GameParams.MainForm.WindowState := wsNormal;
-
-    if ResetWindowSize then TMainForm(GameParams.MainForm).RestoreDefaultSize;
-    if ResetWindowPos then TMainForm(GameParams.MainForm).RestoreDefaultPosition;
-  end;
-
-
-  if GameParams.HighResolution <> OldHighResolution then
-    PieceManager.Clear;
-
-  if GameParams.LinearResampleMenu then
-  begin
-    if ScreenImg.Bitmap.Resampler is TNearestResampler then
-    begin
-      TLinearResampler.Create(ScreenImg.Bitmap);
-      ScreenImg.Bitmap.Changed;
-    end;
-  end else begin
-    if ScreenImg.Bitmap.Resampler is TLinearResampler then
-    begin
-      TNearestResampler.Create(ScreenImg.Bitmap);
-      ScreenImg.Bitmap.Changed;
-    end;
-  end;
-
-end;
-
-
 
 end.
 

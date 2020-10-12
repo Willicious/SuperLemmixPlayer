@@ -11,13 +11,13 @@ uses
   UMisc,
   Gr32, Gr32_Layers,
   LemTypes, LemStrings, LemGame,
-  GameControl, GameBaseScreenCommon;
+  GameControl, GameBaseScreenCommon, GameBaseMenuScreen;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.
 -------------------------------------------------------------------------------}
 type
-  TGameTextScreen = class(TGameBaseScreen)
+  TGameTextScreen = class(TGameBaseMenuScreen)
   private
     fPreviewText: Boolean;
     function GetScreenText: string;
@@ -50,12 +50,11 @@ begin
   try
     InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
-    ExtractMenuFont;
 
     Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     Temp.Clear(0);
     TileBackgroundBitmap(0, 0, Temp);
-    DrawPurpleTextCentered(Temp, GetScreenText, 16);
+    MenuFont.DrawTextCentered(Temp, GetScreenText, 16);
     ScreenImg.Bitmap.Assign(Temp);
 
     if PreviewText then
@@ -73,8 +72,6 @@ begin
   OnKeyPress := Form_KeyPress;
   OnMouseDown := Form_MouseDown;
   ScreenImg.OnMouseDown := Img_MouseDown;
-
-  SetBasicCursor;
 end;
 
 destructor TGameTextScreen.Destroy;
