@@ -14,7 +14,7 @@ uses
   GameBaseScreenCommon, GameBaseMenuScreen, GameControl,
   LemNeoOnline, StrUtils,
   LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
-  GR32, GR32_Layers;
+  GR32, GR32_Layers, GR32_Resamplers;
 
 type
   {-------------------------------------------------------------------------------
@@ -95,6 +95,7 @@ type
     procedure DrawBitmapElement(aElement: TGameMenuBitmap);
     procedure SetSoundOptions(aOptions: TGameSoundOptions);
     procedure SetSection;
+    procedure MakeAutoSectionGraphic(Dst: TBitmap32);
     procedure NextSection(Forwards: Boolean);
     procedure DrawWorkerLemmings(aFrame: Integer);
     procedure DrawReel;
@@ -119,8 +120,6 @@ type
     destructor Destroy; override;
   end;
 
-  procedure GetGraphic(aName: String; aDst: TBitmap32; altName: String = '');
-
 implementation
 
 uses
@@ -132,22 +131,26 @@ uses
 
 { TGameMenuScreen }
 
-procedure GetGraphic(aName: String; aDst: TBitmap32; altName: String = '');
+function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
 var
   buttonSelected: Integer;
 begin
+  Result := true;
+
   if (not (GameParams.CurrentLevel = nil))
      and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
     TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
-  else if (altName <> '') and FileExists(AppPath + SFGraphicsMenu + altName) then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + altName, aDst)
   else if FileExists(AppPath + SFGraphicsMenu + aName) then
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
-  else
-  begin
-    buttonSelected := MessageDlg('Could not find gfx\menu\' + aName + '. Try to continue?',
-                                 mtWarning, mbOKCancel, 0);
-    if buttonSelected = mrCancel then Application.Terminate();
+  else begin
+    if not aAcceptFailure then
+    begin
+      buttonSelected := MessageDlg('Could not find gfx\menu\' + aName + '. Try to continue?',
+                                   mtWarning, [mbYes, mbNo], 0);
+      if buttonSelected = mrNo then Application.Terminate();
+    end;
+
+    Result := false;
   end;
 end;
 
@@ -570,21 +573,72 @@ begin
   GameParams.SoundOptions := aOptions;
 end;
 
-procedure TGameMenuScreen.SetSection;
+procedure TGameMenuScreen.MakeAutoSectionGraphic(Dst: TBitmap32);
 var
-  index: Integer;
-  altName: String;
+  S: String;
+  n: Integer;
+  BestMatch: Integer;
+  SizeRect: TRect;
+begin
+  S := GameParams.CurrentLevel.Group.Name;
+  if S = '' then
+    S := 'N/A';
+
+  if (Length(S) > 5) and (Pos(' ', S) > 0) then
+  begin
+    BestMatch := -1;
+    for n := 1 to Length(S) do
+      if S[n] = ' ' then
+        if Abs((Length(S) / 2) - n) < Abs((Length(S) / 2) - BestMatch) then
+          BestMatch := n
+        else
+          Break;
+
+    if BestMatch > 0 then
+      S[BestMatch] := #13;
+  end;
+
+  SizeRect := MenuFont.GetTextSize(S);
+  Dst.SetSize(SizeRect.Width, SizeRect.Height);
+  MenuFont.DrawTextCentered(Dst, S, 0);
+end;
+
+procedure TGameMenuScreen.SetSection;
+const
+  MAX_AUTOGEN_WIDTH = 70;
+  MAX_AUTOGEN_HEIGHT = 30;
+var
+  Bmp, TempBmp: TBitmap32;
+  S: String;
+  Sca: Double;
 begin
   DrawBitmapElement(gmbSection); // This allows for transparency in the gmbGameSectionN bitmaps
 
-  if (GameParams.CurrentLevel = nil) or (GameParams.CurrentLevel.Group = nil) or (GameParams.CurrentLevel.Group.Parent = nil) then
-    altName := ''
-  else
+  Bmp := BitmapElements[gmbGameSection];
+
+  if not GetGraphic('rank_graphic.png', Bmp, true) then
   begin
-      index := GameParams.CurrentLevel.Group.Parent.GroupIndex[GameParams.CurrentLevel.Group] + 1;
-      altName := 'rank_' + Integer.ToString(index).PadLeft(2, '0') + '.png';
+    TempBmp := TBitmap32.Create;
+    try
+      MakeAutoSectionGraphic(TempBmp);
+
+      if (TempBmp.Width <= MAX_AUTOGEN_WIDTH) and (TempBmp.Height < MAX_AUTOGEN_HEIGHT) then
+        Sca := 1
+      else
+        Sca := Min(MAX_AUTOGEN_WIDTH / TempBmp.Width, MAX_AUTOGEN_HEIGHT / TempBmp.Height);
+
+      Bmp.SetSize(Round(TempBmp.Width * Sca), Round(TempBmp.Height * Sca));
+      Bmp.Clear(0);
+
+      if Sca <> 1 then
+        TLinearResampler.Create(TempBmp);
+
+      TempBmp.DrawTo(Bmp, Bmp.BoundsRect);
+    finally
+      TempBmp.Free;
+    end;
   end;
-  GetGraphic('rank_graphic.png', BitmapElements[gmbGameSection], altName);
+
   DrawBitmapElement(gmbGameSection);
 end;
 
