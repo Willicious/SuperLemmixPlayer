@@ -20,9 +20,6 @@ uses
 type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
   private
-    procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-    procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure VGASpecPrep;
     procedure SaveLevelImage;
     function GetScreenText: string;
@@ -32,6 +29,9 @@ type
     procedure PreviousRank;
   protected
     procedure DoAfterConfig; override;
+
+    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
+    procedure OnKeyPress(aKey: Integer); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -214,9 +214,6 @@ end;
 constructor TGamePreviewScreen.Create(aOwner: TComponent);
 begin
   inherited;
-  OnKeyDown := Form_KeyDown;
-  OnMouseDown := Form_MouseDown;
-  ScreenImg.OnMouseDown := Img_MouseDown;
 end;
 
 destructor TGamePreviewScreen.Destroy;
@@ -234,14 +231,14 @@ procedure TGamePreviewScreen.VGASpecPrep;
 begin
 end;
 
-procedure TGamePreviewScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TGamePreviewScreen.OnKeyPress(aKey: Integer);
 begin
-  if GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_SaveImage then
+  if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveImage then
     SaveLevelImage
-  else if GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_LoadReplay then
+  else if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_LoadReplay then
     LoadReplay
   else
-    case Key of
+    case aKey of
       VK_ESCAPE : begin
                     if GameParams.TestModeLevel <> nil then
                       CloseScreen(gstExit)
@@ -261,30 +258,18 @@ begin
     end;
 end;
 
-procedure TGamePreviewScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TGamePreviewScreen.OnMouseClick(aPoint: TPoint;
+  aButton: TMouseButton);
 begin
-  if Button in [mbLeft, mbMiddle] then
+  if aButton in [mbLeft, mbMiddle] then
   begin
     VGASpecPrep;
-    if Button = mbMiddle then
+    if aButton = mbMiddle then
       GameParams.ShownText := false;
     CloseScreen(gstPlay);
-  end;
+  end else if aButton = mbRight then
+    CloseScreen(gstMenu);
 end;
-
-procedure TGamePreviewScreen.Img_MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
-  Layer: TCustomLayer);
-begin
-  if Button in [mbLeft, mbMiddle] then
-  begin
-    VGASpecPrep;
-    if Button = mbMiddle then
-      GameParams.ShownText := false;
-    CloseScreen(gstPlay);
-  end;
-end;
-
 
 function TGamePreviewScreen.GetScreenText: string;
 var

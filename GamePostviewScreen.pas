@@ -27,17 +27,15 @@ type
   private
     fAdvanceLevel: Boolean;
     function GetScreenText: string;
-    procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure Form_KeyPress(Sender: TObject; var Key: Char);
-    procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-    procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-    procedure HandleMouseClick(Button: TMouseButton);
     procedure NextLevel;
     procedure ReplaySameLevel;
   protected
     procedure PrepareGameParams; override;
     procedure BuildScreen; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
+
+    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
+    procedure OnKeyPress(aKey: Integer); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -96,10 +94,6 @@ end;
 constructor TGamePostviewScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
-  OnKeyDown := Form_KeyDown;
-  OnKeyPress := Form_KeyPress; 
-  OnMouseDown := Form_MouseDown;
-  ScreenImg.OnMouseDown := Img_MouseDown;
 end;
 
 destructor TGamePostviewScreen.Destroy;
@@ -292,12 +286,11 @@ begin
   end;
 end;
 
-procedure TGamePostviewScreen.Form_KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TGamePostviewScreen.OnKeyPress(aKey: Integer);
 var
   S: String;
 begin
-  if GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_SaveReplay then
+  if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveReplay then
   begin
     S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
     if S = '' then Exit;
@@ -306,13 +299,13 @@ begin
     Exit;
   end;
 
-  if GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_Restart then
+  if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_Restart then
   begin
     ReplaySameLevel;
     Exit;
   end;
 
-  case Key of
+  case aKey of
     VK_ESCAPE : begin
                   if GameParams.TestModeLevel <> nil then
                     CloseScreen(gstExit)
@@ -325,37 +318,20 @@ begin
   end;
 end;
 
-procedure TGamePostviewScreen.Form_MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TGamePostviewScreen.OnMouseClick(aPoint: TPoint;
+  aButton: TMouseButton);
 begin
-  HandleMouseClick(Button);
-end;
-
-procedure TGamePostviewScreen.Img_MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
-  Layer: TCustomLayer);
-begin
-  HandleMouseClick(Button);
-end;
-
-procedure TGamePostviewScreen.HandleMouseClick(Button: TMouseButton);
-begin
-  if Button = mbLeft then
+  if aButton = mbLeft then
     NextLevel
-  else if Button = mbMiddle then
+  else if aButton = mbMiddle then
     ReplaySameLevel
-  else if Button = mbRight then
+  else if aButton = mbRight then
   begin
     if GameParams.TestModeLevel <> nil then
       CloseScreen(gstExit)
     else
       CloseScreen(gstMenu);
   end;
-end;
-
-procedure TGamePostviewScreen.Form_KeyPress(Sender: TObject; var Key: Char);
-begin
-
 end;
 
 end.

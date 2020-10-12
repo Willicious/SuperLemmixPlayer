@@ -3,6 +3,7 @@ unit GameBaseMenuScreen;
 interface
 
 uses
+  Types,
   LemCursor,
   LemMenuFont,
   LemNeoLevelPack,
@@ -10,7 +11,7 @@ uses
   LemStrings,
   LemTypes,
   GameBaseScreenCommon,
-  GR32, GR32_Image, GR32_Resamplers,
+  GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Math, Forms, Controls, Dialogs, Classes, SysUtils;
 
 const
@@ -28,6 +29,10 @@ type
       procedure SetBasicCursor;
 
       procedure InitializeImage;
+
+      procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+      procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+      procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     protected
       procedure DoLevelSelect(isPlaying: Boolean = false);
       procedure DoMassReplayCheck;
@@ -38,6 +43,10 @@ type
 
       procedure DrawBackground; overload;
       procedure DrawBackground(aRegion: TRect); overload;
+
+      procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); virtual;
+      procedure OnMouseMove(aPoint: TPoint); virtual;
+      procedure OnKeyPress(aKey: Integer); virtual;
 
       property MenuFont: TMenuFont read fMenuFont;
     public
@@ -68,6 +77,10 @@ begin
   SetBasicCursor;
 
   InitializeImage;
+
+  OnKeyDown := Form_KeyDown;
+  OnMouseDown := Form_MouseDown;
+  ScreenImg.OnMouseDown := Img_MouseDown;
 end;
 
 destructor TGameBaseMenuScreen.Destroy;
@@ -104,6 +117,7 @@ begin
   with ScreenImg do
   begin
     Bitmap.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+    DrawBackground;
 
     BoundsRect := Rect(0, 0, ClientWidth, ClientHeight);
 
@@ -126,6 +140,21 @@ begin
   SetBasicCursor;
 end;
 
+procedure TGameBaseMenuScreen.OnKeyPress(aKey: Integer);
+begin
+  // Intentionally blank.
+end;
+
+procedure TGameBaseMenuScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
+begin
+  // Intentionally blank.
+end;
+
+procedure TGameBaseMenuScreen.OnMouseMove(aPoint: TPoint);
+begin
+  // Intentionally blank.
+end;
+
 procedure TGameBaseMenuScreen.SetBasicCursor;
 var
   CursorIndex: Integer;
@@ -140,7 +169,7 @@ end;
 
 procedure TGameBaseMenuScreen.DrawBackground;
 begin
-  DrawBackground(BoundsRect);
+  DrawBackground(ScreenImg.Bitmap.BoundsRect);
 end;
 
 procedure TGameBaseMenuScreen.DrawBackground(aRegion: TRect);
@@ -186,6 +215,24 @@ begin
     BgImage.Free;
   end;
 
+end;
+
+procedure TGameBaseMenuScreen.Form_KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  OnKeyPress(Key);
+end;
+
+procedure TGameBaseMenuScreen.Form_MouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  OnMouseClick(ScreenImg.ControlToBitmap(ScreenImg.ParentToClient(Point(X, Y))), Button);
+end;
+
+procedure TGameBaseMenuScreen.Img_MouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+begin
+  OnMouseClick(Point(X, Y), Button);
 end;
 
 procedure TGameBaseMenuScreen.DoAfterConfig;

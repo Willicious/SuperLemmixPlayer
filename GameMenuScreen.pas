@@ -104,9 +104,6 @@ type
     procedure PerformUpdateCheck;
     procedure PerformCleanInstallCheck;
   { eventhandlers }
-    procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-    procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
     procedure ShowSetupMenu;
   protected
@@ -114,6 +111,9 @@ type
     procedure PrepareGameParams; override;
     procedure BuildScreen; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
+
+    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
+    procedure OnKeyPress(aKey: Integer); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -490,9 +490,6 @@ begin
   CreditIndex := -1;
 
   // set eventhandlers
-  OnKeyDown := Form_KeyDown;
-  OnMouseDown := Form_MouseDown;
-  ScreenImg.OnMouseDown := Img_MouseDown;
   Application.OnIdle := Application_Idle;
 end;
 
@@ -514,49 +511,34 @@ begin
   inherited Destroy;
 end;
 
-procedure TGameMenuScreen.Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TGameMenuScreen.OnKeyPress(aKey: Integer);
 begin
-  if Shift = [] then
-  begin
-    case Key of
-      VK_RETURN : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);
-      VK_F1     : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);
-      VK_F2     : DoLevelSelect;
-      VK_F3     : ShowConfigMenu;
-      VK_F4     : begin
-                    if (GameParams.CurrentLevel <> nil)
-                       and (GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count <> 0) then
-                      CloseScreen(gstTalisman);
-                  end;
-      VK_F6     : DumpImages;
-      VK_F7     : DoMassReplayCheck;
-      VK_F8     : CleanseLevels;
-      VK_ESCAPE : CloseScreen(gstExit);
-      VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);
-      VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
+  case aKey of
+    VK_RETURN : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);
+    VK_F1     : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);
+    VK_F2     : DoLevelSelect;
+    VK_F3     : ShowConfigMenu;
+    VK_F4     : begin
+                  if (GameParams.CurrentLevel <> nil)
+                     and (GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count <> 0) then
+                    CloseScreen(gstTalisman);
+                end;
+    VK_F6     : DumpImages;
+    VK_F7     : DoMassReplayCheck;
+    VK_F8     : CleanseLevels;
+    VK_ESCAPE : CloseScreen(gstExit);
+    VK_UP     : if GameParams.CurrentLevel <> nil then NextSection(True);
+    VK_DOWN   : if GameParams.CurrentLevel <> nil then NextSection(False);
     end;
-  end;
 end;
 
-procedure TGameMenuScreen.Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TGameMenuScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
 begin
-  if (Button = mbLeft) and (GameParams.CurrentLevel <> nil) then
+  if (aButton = mbLeft) and (GameParams.CurrentLevel <> nil) then
     CloseScreen(gstPreview)
-  else if (Button = mbMiddle) then
+  else if (aButton = mbMiddle) then
     DoLevelSelect
-  else if (Button = mbRight) then
-    CloseScreen(gstExit);
-end;
-
-procedure TGameMenuScreen.Img_MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
-  Layer: TCustomLayer);
-begin
-  if (Button = mbLeft) and (GameParams.CurrentLevel <> nil) then
-    CloseScreen(gstPreview)
-  else if (Button = mbMiddle) then
-    DoLevelSelect
-  else if (Button = mbRight) then
+  else if (aButton = mbRight) then
     CloseScreen(gstExit);
 end;
 

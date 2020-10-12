@@ -54,11 +54,6 @@ type
     fProcessing: Boolean;
     fOldHighRes: Boolean;
 
-    procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure Form_KeyPress(Sender: TObject; var Key: Char);
-    procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-    procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-    procedure HandleMouseClick(Button: TMouseButton);
     procedure OutputText;
     procedure RunTests;
 
@@ -66,6 +61,9 @@ type
   protected
     procedure BuildScreen; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
+
+    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
+    procedure OnKeyPress(aKey: Integer); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -413,10 +411,6 @@ end;
 constructor TGameReplayCheckScreen.Create(aOwner: TComponent);
 begin
   inherited;
-  OnKeyDown := Form_KeyDown;
-  OnKeyPress := Form_KeyPress;
-  OnMouseDown := Form_MouseDown;
-  ScreenImg.OnMouseDown := Img_MouseDown;
 
   fScreenText := TStringList.Create;
   fReplays := TReplayCheckEntries.Create;
@@ -430,10 +424,9 @@ begin
   inherited;
 end;
 
-procedure TGameReplayCheckScreen.Form_KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TGameReplayCheckScreen.OnKeyPress(aKey: Integer);
 begin
-  case Key of
+  case aKey of
     VK_RETURN: if not fProcessing then CloseScreen(gstMenu);
     VK_ESCAPE: if not fProcessing then
                  CloseScreen(gstMenu)
@@ -446,28 +439,11 @@ begin
   end;
 end;
 
-procedure TGameReplayCheckScreen.Form_MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  HandleMouseClick(Button);
-end;
-
-procedure TGameReplayCheckScreen.Img_MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
-  Layer: TCustomLayer);
-begin
-  HandleMouseClick(Button);
-end;
-
-procedure TGameReplayCheckScreen.HandleMouseClick(Button: TMouseButton);
+procedure TGameReplayCheckScreen.OnMouseClick(aPoint: TPoint;
+  aButton: TMouseButton);
 begin
   if fProcessing then Exit;
   CloseScreen(gstMenu);
-end;
-
-procedure TGameReplayCheckScreen.Form_KeyPress(Sender: TObject; var Key: Char);
-begin
-
 end;
 
 { TReplayCheckEntries }

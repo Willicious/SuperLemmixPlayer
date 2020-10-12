@@ -28,10 +28,11 @@ type
     ScreenText: string;
     fPack: TNeoLevelGroup;
     function GetScreenText: string;
-    procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure Form_KeyPress(Sender: TObject; var Key: Char);
   protected
     procedure BuildScreen; override;
+
+    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
+    procedure OnKeyPress(aKey: Integer); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -63,8 +64,6 @@ end;
 constructor TGameTalismanScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
-  OnKeyDown := Form_KeyDown;
-  OnKeyPress := Form_KeyPress;
 end;
 
 destructor TGameTalismanScreen.Destroy;
@@ -209,10 +208,9 @@ begin
     end;
 end;
 
-procedure TGameTalismanScreen.Form_KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TGameTalismanScreen.OnKeyPress(aKey: Integer);
 begin
-  case Key of
+  case aKey of
     VK_ESCAPE: CloseScreen(gstMenu);
     VK_LEFT: if GameParams.TalismanPage > 0 then
              begin
@@ -227,8 +225,21 @@ begin
   end;
 end;
 
-procedure TGameTalismanScreen.Form_KeyPress(Sender: TObject; var Key: Char);
+procedure TGameTalismanScreen.OnMouseClick(aPoint: TPoint;
+  aButton: TMouseButton);
 begin
+  case aButton of
+    mbLeft: if fPack.Talismans.Count > TALISMANS_PER_PAGE then
+              begin
+                if GameParams.TalismanPage = ((fPack.Talismans.Count - 1) div TALISMANS_PER_PAGE) then
+                  GameParams.TalismanPage := 0
+                else
+                  GameParams.TalismanPage := GameParams.TalismanPage + 1;
+
+                CloseScreen(gstTalisman);
+              end;
+    mbRight: CloseScreen(gstMenu);
+  end;
 end;
 
 end.

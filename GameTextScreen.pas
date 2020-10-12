@@ -21,13 +21,11 @@ type
   private
     fPreviewText: Boolean;
     function GetScreenText: string;
-    procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure Form_KeyPress(Sender: TObject; var Key: Char);
-    procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-    procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
-    procedure HandleMouseClick(Button: TMouseButton);
   protected
     procedure BuildScreen; override;
+
+    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
+    procedure OnKeyPress(aKey: Integer); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -47,12 +45,7 @@ var
 begin
   ScreenImg.BeginUpdate;
   try
-    Temp := ScreenImg.Bitmap;
-
-    Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-    Temp.Clear(0);
-    DrawBackground;
-    MenuFont.DrawTextCentered(Temp, GetScreenText, 16);
+    MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
 
     if PreviewText then
       GameParams.ShownText := true;
@@ -64,10 +57,6 @@ end;
 constructor TGameTextScreen.Create(aOwner: TComponent);
 begin
   inherited Create(aOwner);
-  OnKeyDown := Form_KeyDown;
-  OnKeyPress := Form_KeyPress;
-  OnMouseDown := Form_MouseDown;
-  ScreenImg.OnMouseDown := Img_MouseDown;
 end;
 
 destructor TGameTextScreen.Destroy;
@@ -213,21 +202,20 @@ begin
   Add(SPressMouseToContinue);
 end;
 
-procedure TGameTextScreen.Form_KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TGameTextScreen.OnKeyPress(aKey: Integer);
 var
   S: String;
 begin
-  if (GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_SaveReplay) and (GameParams.NextScreen = gstPostview) then
+  if (GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveReplay) and (GameParams.NextScreen = gstPostview) then
   begin
     S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
     if S = '' then Exit;
     GlobalGame.EnsureCorrectReplayDetails;
     GlobalGame.ReplayManager.SaveToFile(S);
-  end else if (GameParams.Hotkeys.CheckKeyEffect(Key).Action = lka_LoadReplay) and (GameParams.NextScreen = gstPlay) then
+  end else if (GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_LoadReplay) and (GameParams.NextScreen = gstPlay) then
     LoadReplay
   else
-    case Key of
+    case aKey of
       VK_RETURN: CloseScreen(GameParams.NextScreen);
       VK_ESCAPE: if GameParams.TestModeLevel <> nil then
                    CloseScreen(gstExit)
@@ -236,28 +224,10 @@ begin
     end;
 end;
 
-procedure TGameTextScreen.Form_MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TGameTextScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
 begin
-  HandleMouseClick(Button);
-end;
-
-procedure TGameTextScreen.Img_MouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer;
-  Layer: TCustomLayer);
-begin
-  HandleMouseClick(Button);
-end;
-
-procedure TGameTextScreen.HandleMouseClick(Button: TMouseButton);
-begin
-  if Button = mbLeft then
+  if aButton = mbLeft then
     CloseScreen(GameParams.NextScreen);
-end;
-
-procedure TGameTextScreen.Form_KeyPress(Sender: TObject; var Key: Char);
-begin
-
 end;
 
 end.
