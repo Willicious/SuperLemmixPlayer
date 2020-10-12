@@ -494,6 +494,8 @@ begin
   OnMouseDown := Form_MouseDown;
   ScreenImg.OnMouseDown := Img_MouseDown;
   Application.OnIdle := Application_Idle;
+
+  SetBasicCursor;
 end;
 
 destructor TGameMenuScreen.Destroy;

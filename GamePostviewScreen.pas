@@ -105,6 +105,8 @@ begin
   OnKeyPress := Form_KeyPress; 
   OnMouseDown := Form_MouseDown;
   ScreenImg.OnMouseDown := Img_MouseDown;
+
+  SetBasicCursor;
 end;
 
 destructor TGamePostviewScreen.Destroy;

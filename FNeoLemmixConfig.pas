@@ -88,7 +88,7 @@ var
 implementation
 
 uses
-  GameWindow, // for EXTRA_ZOOM_LEVELS constant
+  GameBaseScreen, // for EXTRA_ZOOM_LEVELS constant
   GameMenuScreen; // for disabling the MassReplayCheck button if necessary.
 
 {$R *.dfm}

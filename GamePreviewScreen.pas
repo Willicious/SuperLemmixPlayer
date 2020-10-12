@@ -222,6 +222,8 @@ begin
   OnKeyDown := Form_KeyDown;
   OnMouseDown := Form_MouseDown;
   ScreenImg.OnMouseDown := Img_MouseDown;
+
+  SetBasicCursor;
 end;
 
 destructor TGamePreviewScreen.Destroy;

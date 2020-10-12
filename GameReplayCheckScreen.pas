@@ -424,6 +424,8 @@ begin
 
   fScreenText := TStringList.Create;
   fReplays := TReplayCheckEntries.Create;
+
+  SetBasicCursor;
 end;
 
 destructor TGameReplayCheckScreen.Destroy;

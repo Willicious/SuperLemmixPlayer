@@ -12,6 +12,7 @@ uses
   LemSystemMessages,
   LemStrings, PngInterface, LemTypes,
   LemReplay, LemGame,
+  LemCursor,
   SysUtils;
 
 const
@@ -20,6 +21,9 @@ const
 
   INTERNAL_SCREEN_WIDTH = 864;
   INTERNAL_SCREEN_HEIGHT = 486;
+
+const
+  EXTRA_ZOOM_LEVELS = 4;
 
 type
   TPurpleFont = class(TComponent)
@@ -48,9 +52,14 @@ type
     fOriginalImageBounds : TRect;
     fScreenIsClosing     : Boolean;
     fCloseDelay          : Integer;
+
+    fBasicCursor: TNLCursor;
+    fBasicCursorActive: Boolean;
+
     procedure AdjustImage;
     procedure MakeList(const S: string; aList: TStrings);
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
+    procedure LoadBasicCursor;
   protected
     procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
@@ -64,6 +73,10 @@ type
     function LoadReplay: Boolean;
 
     procedure DoAfterConfig; virtual;
+
+    procedure SetBasicCursor;
+
+    property BasicCursor: TNLCursor read fBasicCursor;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -206,6 +219,9 @@ begin
   fBackBuffer := TBitmap32.Create;
 
   ScreenImg.Cursor := crNone;
+
+  fBasicCursor := TNLCursor.Create(Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS);
+  LoadBasicCursor;
 end;
 
 destructor TGameBaseScreen.Destroy;
@@ -213,7 +229,40 @@ begin
   fBackGround.Free;
   fPurpleFont.Free;
   fBackBuffer.Free;
+  fBasicCursor.Free;
   inherited Destroy;
+end;
+
+procedure TGameBaseScreen.LoadBasicCursor;
+var
+  BMP: TBitmap32;
+begin
+  BMP := TBitmap32.Create;
+  try
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor-hr/standard.png', BMP)
+    else
+      TPngInterface.LoadPngFile(AppPath + 'gfx/cursor/standard.png', BMP);
+
+    fBasicCursor.LoadFromBitmap(BMP);
+
+    Screen.Cursors[1] := fBasicCursor.GetCursor(Max(Min(MainForm.ClientWidth div 320, MainForm.ClientHeight div 200), 1));
+  finally
+    BMP.Free;
+  end;
+end;
+
+procedure TGameBaseScreen.SetBasicCursor;
+var
+  NewCursor: TCursor;
+begin
+  NewCursor := 1;
+
+  Cursor := NewCursor;
+  Screen.Cursor := NewCursor;
+  ScreenImg.Cursor := NewCursor;
+
+  fBasicCursorActive := true;
 end;
 
 function TGameBaseScreen.CalcPurpleTextSize(const S: string): TRect;
@@ -555,6 +604,9 @@ begin
   fScreenImg.Height := GameParams.MainForm.ClientHeight;
   ClientWidth := GameParams.MainForm.ClientWidth;
   ClientHeight := GameParams.MainForm.ClientHeight;
+
+  if fBasicCursorActive then
+    SetBasicCursor;
 end;
 
 procedure TGameBaseScreen.DoAfterConfig;

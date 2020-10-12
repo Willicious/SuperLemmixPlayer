@@ -70,6 +70,8 @@ begin
   inherited Create(aOwner);
   OnKeyDown := Form_KeyDown;
   OnKeyPress := Form_KeyPress;
+
+  SetBasicCursor;
 end;
 
 destructor TGameTalismanScreen.Destroy;

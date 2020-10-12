@@ -47,7 +47,6 @@ type
 
 const
   CURSOR_TYPES = 6;
-  EXTRA_ZOOM_LEVELS = 4;
 
   // special hyperspeed ends. usually only needed for forwards ones, backwards can often get the exact frame.
   SHE_SHRUGGER = 1;
