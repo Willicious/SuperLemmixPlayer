@@ -236,6 +236,7 @@ end;
 procedure TGameBaseScreen.LoadBasicCursor;
 var
   BMP: TBitmap32;
+  i: Integer;
 begin
   BMP := TBitmap32.Create;
   try
@@ -246,7 +247,8 @@ begin
 
     fBasicCursor.LoadFromBitmap(BMP);
 
-    Screen.Cursors[1] := fBasicCursor.GetCursor(Max(Min(MainForm.ClientWidth div 320, MainForm.ClientHeight div 200) div ResMod, 1));
+    for i := 1 to fBasicCursor.MaxZoom+1 do
+      Screen.Cursors[i] := fBasicCursor.GetCursor(i);
   finally
     BMP.Free;
   end;
@@ -254,13 +256,14 @@ end;
 
 procedure TGameBaseScreen.SetBasicCursor;
 var
-  NewCursor: TCursor;
+  CursorIndex: Integer;
 begin
-  NewCursor := 1;
+  CursorIndex := Max(1, Min(MainForm.Width div 320, MainForm.Height div 180));
 
-  Cursor := NewCursor;
-  Screen.Cursor := NewCursor;
-  ScreenImg.Cursor := NewCursor;
+  Cursor := CursorIndex;
+  MainForm.Cursor := CursorIndex;
+  Screen.Cursor := CursorIndex;
+  ScreenImg.Cursor := CursorIndex;
 
   fBasicCursorActive := true;
 end;

@@ -22,6 +22,8 @@ type
       procedure LoadFromBitmap(aBitmap: TBitmap32);
 
       function GetCursor(aZoom: Integer): HCURSOR;
+
+      property MaxZoom: Integer read fMaxZoom;
   end;
 
 implementation
