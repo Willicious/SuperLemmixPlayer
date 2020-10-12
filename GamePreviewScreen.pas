@@ -132,7 +132,7 @@ begin
   try
     InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
-    ExtractPurpleFont;
+    ExtractMenuFont;
 
     // prepare the renderer, this is a little bit shaky (wrong place)
     try

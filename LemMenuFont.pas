@@ -7,16 +7,16 @@ uses
   Classes, SysUtils;
 
 const
-  PURPLEFONTCOUNT = ord(#132) - ord('!') + 1;
-  PurpleFontCharSet = [#26..#126] - [#32];
+  MENU_FONT_COUNT = ord(#132) - ord('!') + 1;
+  MenuFontCharSet = [#26..#126] - [#32];
 
 type
-  TPurpleFont = class
+  TMenuFont = class
     private
       function GetBitmapOfChar(Ch: Char): TBitmap32;
       procedure Combine(F: TColor32; var B: TColor32; M: TColor32);
     public
-      fBitmaps: array[0..PURPLEFONTCOUNT - 1] of TBitmap32;
+      fBitmaps: array[0..MENU_FONT_COUNT - 1] of TBitmap32;
       constructor Create;
       destructor Destroy; override;
       property BitmapOfChar[Ch: Char]: TBitmap32 read GetBitmapOfChar;
@@ -24,13 +24,13 @@ type
 
 implementation
 
-procedure TPurpleFont.Combine(F: TColor32; var B: TColor32; M: TColor32);
+procedure TMenuFont.Combine(F: TColor32; var B: TColor32; M: TColor32);
 // just show transparent
 begin
   if F <> 0 then B := F;
 end;
 
-constructor TPurpleFont.Create;
+constructor TMenuFont.Create;
 var
   i: Integer;
 {-------------------------------------------------------------------------------
@@ -39,7 +39,7 @@ var
 -------------------------------------------------------------------------------}
 begin
   inherited;
-  for i := 0 to PURPLEFONTCOUNT - 1 do
+  for i := 0 to MENU_FONT_COUNT - 1 do
   begin
     fBitmaps[i] := TBitmap32.Create;
     fBitmaps[i].OnPixelCombine := Combine;
@@ -47,16 +47,16 @@ begin
   end;
 end;
 
-destructor TPurpleFont.Destroy;
+destructor TMenuFont.Destroy;
 var
   i: Integer;
 begin
-  for i := 0 to PURPLEFONTCOUNT - 1 do
+  for i := 0 to MENU_FONT_COUNT - 1 do
     fBitmaps[i].Free;
   inherited;
 end;
 
-function TPurpleFont.GetBitmapOfChar(Ch: Char): TBitmap32;
+function TMenuFont.GetBitmapOfChar(Ch: Char): TBitmap32;
 var
   Idx: Integer;
   ACh: AnsiChar;

@@ -368,7 +368,7 @@ begin
   try
     InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
-    ExtractPurpleFont;
+    ExtractMenuFont;
 
     TileBackgroundBitmap(0, 0, ScreenImg.Bitmap);
     DrawPurpleTextCentered(ScreenImg.Bitmap, 'Preparing replay check. Please wait.', 192);

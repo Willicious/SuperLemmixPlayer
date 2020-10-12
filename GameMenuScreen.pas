@@ -365,7 +365,7 @@ begin
   try
     InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     ExtractBackGround;
-    ExtractPurpleFont;
+    ExtractMenuFont;
 
     GetGraphic('logo.png', BitmapElements[gmbLogo]);
     GetGraphic('sign_play.png', BitmapElements[gmbPlay]);

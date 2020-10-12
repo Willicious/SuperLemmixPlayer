@@ -32,7 +32,7 @@ type
     fScreenImg           : TImage32;
     fBackGround          : TBitmap32;
     fBackBuffer          : TBitmap32; // general purpose buffer
-    fPurpleFont          : TPurpleFont;
+    fMenuFont          : TMenuFont;
     fOriginalImageBounds : TRect;
     fScreenIsClosing     : Boolean;
     fCloseDelay          : Integer;
@@ -47,7 +47,7 @@ type
   protected
     procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
-    property PurpleFont: TPurpleFont read fPurpleFont;
+    property MenuFont: TMenuFont read fMenuFont;
     property ScreenIsClosing: Boolean read fScreenIsClosing;
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
     procedure DoLevelSelect(isPlaying: Boolean = false);
@@ -66,7 +66,7 @@ type
     destructor Destroy; override;
     procedure TileBackgroundBitmap(X, Y: Integer; Dst: TBitmap32 = nil);
     procedure ExtractBackGround;
-    procedure ExtractPurpleFont;
+    procedure ExtractMenuFont;
     procedure DrawPurpleText(Dst: TBitmap32; const S: string; X, Y: Integer; aRestoreBuffer: TBitmap32 = nil);
     procedure DrawPurpleTextCentered(Dst: TBitmap32; const S: string;
       Y: Integer; aRestoreBuffer: TBitmap32 = nil; EraseOnly: Boolean = False);
@@ -146,7 +146,7 @@ begin
   fScreenImg := TImage32.Create(Self);
   fScreenImg.Parent := Self;
 
-  fPurpleFont := TPurpleFont.Create;
+  fMenuFont := TMenuFont.Create;
 
   fBackGround := TBitmap32.Create;
   fBackBuffer := TBitmap32.Create;
@@ -160,7 +160,7 @@ end;
 destructor TGameBaseScreen.Destroy;
 begin
   fBackGround.Free;
-  fPurpleFont.Free;
+  fMenuFont.Free;
   fBackBuffer.Free;
   fBasicCursor.Free;
   inherited Destroy;
@@ -280,7 +280,7 @@ begin
         end;
       #26..#31, #33..#132:
         begin
-          fPurpleFont.BitmapOfChar[C].DrawTo(Dst, CX, CY);
+          fMenuFont.BitmapOfChar[C].DrawTo(Dst, CX, CY);
           Inc(CX, 16);
         end;
     end;
@@ -336,7 +336,7 @@ begin
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', fBackground);
 end;
 
-procedure TGameBaseScreen.ExtractPurpleFont;
+procedure TGameBaseScreen.ExtractMenuFont;
 var
   i: Integer;
   TempBMP: TBitmap32;
@@ -356,13 +356,13 @@ begin
     if buttonSelected = mrCancel then Application.Terminate();
   end;
 
-  for i := 0 to PURPLEFONTCOUNT-7 do
+  for i := 0 to MENU_FONT_COUNT-7 do
   begin
-    fPurpleFont.fBitmaps[i].SetSize(16, 19);
-    fPurpleFont.fBitmaps[i].Clear(0);
-    TempBMP.DrawTo(fPurpleFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 19));
-    fPurpleFont.fBitmaps[i].DrawMode := dmBlend;
-    fPurpleFont.fBitmaps[i].CombineMode := cmMerge;
+    fMenuFont.fBitmaps[i].SetSize(16, 19);
+    fMenuFont.fBitmaps[i].Clear(0);
+    TempBMP.DrawTo(fMenuFont.fBitmaps[i], 0, 0, Rect(i*16, 0, (i+1)*16, 19));
+    fMenuFont.fBitmaps[i].DrawMode := dmBlend;
+    fMenuFont.fBitmaps[i].CombineMode := cmMerge;
   end;
 
   if (not (GameParams.CurrentLevel = nil))
@@ -379,11 +379,11 @@ begin
 
   for i := 0 to 5 do
   begin
-    fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].SetSize(48, 48);
-    fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].Clear(0);
-    TempBMP.DrawTo(fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i], 0, 0, Rect(48 * (i mod 2), 48 * (i div 2), 48 * ((i mod 2) + 1), 48 * ((i div 2) + 1)));
-    fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].DrawMode := dmBlend;
-    fPurpleFont.fBitmaps[PURPLEFONTCOUNT-6+i].CombineMode := cmMerge;
+    fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i].SetSize(48, 48);
+    fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i].Clear(0);
+    TempBMP.DrawTo(fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i], 0, 0, Rect(48 * (i mod 2), 48 * (i div 2), 48 * ((i mod 2) + 1), 48 * ((i div 2) + 1)));
+    fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i].DrawMode := dmBlend;
+    fMenuFont.fBitmaps[MENU_FONT_COUNT-6+i].CombineMode := cmMerge;
   end;
 
   TempBMP.Free;
