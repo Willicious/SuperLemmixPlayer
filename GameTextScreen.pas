@@ -21,10 +21,10 @@ type
   private
     fPreviewText: Boolean;
     function GetScreenText: string;
+    procedure ToNextScreen;
   protected
     procedure BuildScreen; override;
 
-    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
@@ -40,10 +40,16 @@ uses Forms;
 { TDosGamePreview }
 
 procedure TGameTextScreen.BuildScreen;
+var
+  NewOption: TClickableRegion;
 begin
   ScreenImg.BeginUpdate;
   try
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
+
+    NewOption := MakeClickableText(Point(432, 462), SPressMouseToContinue, ToNextScreen);
+    NewOption.ShortcutKeys.Add(VK_RETURN);
+    NewOption.ShortcutKeys.Add(VK_SPACE);
 
     if PreviewText then
       GameParams.ShownText := true;
@@ -178,6 +184,7 @@ var
 
 begin
   Result := '';
+  lfc := 0;
 
   if fPreviewText then
     SL := GameParams.Level.PreText
@@ -195,9 +202,6 @@ begin
       PreLF(1)
     else
       LF(1);
-
-  LF(1);
-  Add(SPressMouseToContinue);
 end;
 
 procedure TGameTextScreen.OnKeyPress(var aKey: Word);
@@ -215,7 +219,6 @@ begin
     LoadReplay
   else
     case aKey of
-      VK_RETURN: CloseScreen(GameParams.NextScreen);
       VK_ESCAPE: if GameParams.TestModeLevel <> nil then
                    CloseScreen(gstExit)
                  else
@@ -223,10 +226,9 @@ begin
     end;
 end;
 
-procedure TGameTextScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
+procedure TGameTextScreen.ToNextScreen;
 begin
-  if aButton = mbLeft then
-    CloseScreen(GameParams.NextScreen);
+  CloseScreen(GameParams.NextScreen);
 end;
 
 end.

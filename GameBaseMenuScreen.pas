@@ -11,6 +11,7 @@ uses
   LemStrings,
   LemTypes,
   GameBaseScreenCommon,
+  GameControl,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
   Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils;
@@ -21,6 +22,7 @@ const
 
 type
   TRegionState = (rsNormal, rsHover, rsClick);
+  TRegionAction = procedure of object;
 
   TClickableRegion = class
     private
@@ -29,16 +31,15 @@ type
       fClickArea: TRect;
       fShortcutKeys: TList<Word>;
 
-      fAction: TProcedure;
+      fAction: TRegionAction;
 
       fCurrentState: TRegionState;
       fResetTimer: TTimer;
 
       function GetSrcRect(aState: TRegionState): TRect;
     public
-      constructor Create(aAction: TProcedure; aKey: Word); overload;
-      constructor Create(aCenter: TPoint; aAction: TProcedure; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
-      constructor Create(aCenter: TPoint; aClickRect: TRect; aAction: TProcedure; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
+      constructor Create(aAction: TRegionAction; aKey: Word); overload;
+      constructor Create(aCenter: TPoint; aClickRect: TRect; aAction: TRegionAction; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
       destructor Destroy; override;
 
       property Bounds: TRect read fBounds;
@@ -47,7 +48,7 @@ type
       property SrcRect[State: TRegionState]: TRect read GetSrcRect;
       property ShortcutKeys: TList<Word> read fShortcutKeys;
 
-      property Action: TProcedure read fAction;
+      property Action: TRegionAction read fAction;
       property CurrentState: TRegionState read fCurrentState write fCurrentState;
       property ResetTimer: TTimer read fResetTimer write fResetTimer;
   end;
@@ -67,7 +68,9 @@ type
 
       procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
       procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+      procedure Form_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
       procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+      procedure Img_MouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 
       procedure OnClickTimer(Sender: TObject);
     protected
@@ -81,8 +84,14 @@ type
       procedure DrawBackground; overload;
       procedure DrawBackground(aRegion: TRect); overload;
 
+      function MakeClickableImage(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
+                                   aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
+      function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction): TClickableRegion;
+
+      function GetInternalMouseCoordinates: TPoint;
+
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); virtual;
-      procedure OnMouseMove(aPoint: TPoint); virtual;
+      procedure OnMouseMoved(aPoint: TPoint); virtual;
       procedure OnKeyPress(var aKey: Word); virtual;
 
       property MenuFont: TMenuFont read fMenuFont;
@@ -97,8 +106,7 @@ implementation
 
 uses
   FMain, FNeoLemmixLevelSelect, FNeoLemmixConfig,
-  PngInterface,
-  GameControl;
+  PngInterface;
 
 { TGameBaseMenuScreen }
 
@@ -119,7 +127,9 @@ begin
 
   OnKeyDown := Form_KeyDown;
   OnMouseDown := Form_MouseDown;
+  OnMouseMove := Form_MouseMove;
   ScreenImg.OnMouseDown := Img_MouseDown;
+  ScreenImg.OnMouseMove := Img_MouseMove;
 end;
 
 destructor TGameBaseMenuScreen.Destroy;
@@ -180,14 +190,108 @@ begin
   SetBasicCursor;
 end;
 
+function TGameBaseMenuScreen.MakeClickableImage(aImageCenter: TPoint;
+  aImageClickRect: TRect; aAction: TRegionAction; aNormal, aHover,
+  aClick: TBitmap32): TClickableRegion;
+var
+  tmpNormal, tmpHover, tmpClick: TBitmap32;
+  ScreenRect: TRect;
+begin
+  if aHover = nil then aHover := aNormal;
+  if aClick = nil then aClick := aHover;
+
+  tmpNormal := TBitmap32.Create;
+  tmpHover := TBitmap32.Create;
+  tmpClick := TBitmap32.Create;
+  try
+    tmpNormal.SetSize(aNormal.Width, aNormal.Height);
+    tmpNormal.Clear(0);
+
+    ScreenRect := SizedRect(aImageCenter.X - aNormal.Width div 2, aImageCenter.Y - aNormal.Height div 2, aNormal.Width, aNormal.Height);
+    ScreenImg.Bitmap.DrawTo(tmpNormal, 0, 0, ScreenRect);
+
+    tmpHover.Assign(tmpNormal);
+    tmpClick.Assign(tmpNormal);
+
+    aNormal.DrawTo(tmpNormal, 0, 0);
+    aHover.DrawTo(tmpHover, 0, 0);
+    aClick.DrawTo(tmpClick, 0, 0);
+
+    Result := TClickableRegion.Create(aImageCenter, aImageClickRect, aAction, tmpNormal, tmpHover, tmpClick);
+    fClickableRegions.Add(Result);
+
+    if Types.PtInRect(Result.ClickArea, GetInternalMouseCoordinates) then
+    begin
+      Result.CurrentState := rsHover;
+      Result.Bitmaps.DrawTo(ScreenImg.Bitmap, Result.Bounds, Result.GetSrcRect(rsHover));
+    end else begin
+      Result.CurrentState := rsNormal;
+      Result.Bitmaps.DrawTo(ScreenImg.Bitmap, Result.Bounds, Result.GetSrcRect(rsNormal));
+    end;
+  finally
+    tmpNormal.Free;
+    tmpHover.Free;
+    tmpClick.Free;
+  end;
+end;
+
+function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
+  aText: String; aAction: TRegionAction): TClickableRegion;
+const
+  HUE_SHIFT_HOVER = -0.125;
+  HUE_SHIFT_CLICK = -0.250;
+var
+  tmpNormal, tmpHover, tmpClick: TBitmap32;
+  ScreenRect: TRect;
+  x, y: Integer;
+
+  HoverShift, ClickShift: TColorDiff;
+begin
+  FillChar(HoverShift, SizeOf(TColorDiff), 0);
+  FillChar(ClickShift, SizeOf(TColorDiff), 0);
+
+  HoverShift.HShift := HUE_SHIFT_HOVER;
+  ClickShift.HShift := HUE_SHIFT_CLICK;
+
+  tmpNormal := TBitmap32.Create;
+  tmpHover := TBitmap32.Create;
+  tmpClick := TBitmap32.Create;
+  try
+    ScreenRect := MenuFont.GetTextSize(aText);
+    Types.OffsetRect(ScreenRect, aTextCenter.X - ScreenRect.Width div 2, aTextCenter.Y - ScreenRect.Height div 2);
+
+    tmpNormal.SetSize(ScreenRect.Width, ScreenRect.Height);
+    MenuFont.DrawText(tmpNormal, aText, 0, 0);
+
+    tmpHover.Assign(tmpNormal);
+    tmpClick.Assign(tmpNormal);
+
+    for y := 0 to tmpNormal.Height-1 do
+      for x := 0 to tmpNormal.Width-1 do
+      begin
+        tmpHover[x, y] := ApplyColorShift(tmpHover[x, y], HoverShift);
+        tmpClick[x, y] := ApplyColorShift(tmpClick[x, y], ClickShift);
+      end;
+
+    tmpNormal.DrawMode := dmBlend;
+    tmpHover.DrawMode := dmBlend;
+    tmpClick.DrawMode := dmBlend;
+
+    Result := MakeClickableImage(aTextCenter, tmpNormal.BoundsRect, aAction, tmpNormal, tmpHover, tmpClick);
+  finally
+    tmpNormal.Free;
+    tmpHover.Free;
+    tmpClick.Free;
+  end;
+end;
+
 procedure TGameBaseMenuScreen.OnClickTimer(Sender: TObject);
 var
   Region: TClickableRegion;
   P: TPoint;
 begin
   Region := fClickableRegions[TComponent(Sender).Tag];
-
-  P := ScreenImg.ControlToBitmap(ScreenImg.ScreenToClient(Mouse.CursorPos));
+  P := GetInternalMouseCoordinates;
 
   if Types.PtInRect(Region.ClickArea, P) then
     Region.CurrentState := rsHover
@@ -256,12 +360,14 @@ begin
         fClickableRegions[i].CurrentState := rsClick;
         fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsClick]);
 
+        ScreenImg.Bitmap.Changed;
+
         fClickableRegions[i].Action;
         Exit;
       end;
 end;
 
-procedure TGameBaseMenuScreen.OnMouseMove(aPoint: TPoint);
+procedure TGameBaseMenuScreen.OnMouseMoved(aPoint: TPoint);
 var
   i: Integer;
 begin
@@ -271,10 +377,14 @@ begin
       begin
         fClickableRegions[i].CurrentState := rsHover;
         fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsHover]);
+
+        ScreenImg.Bitmap.Changed;
       end else if (not Types.PtInRect(fClickableRegions[i].ClickArea, aPoint)) and (fClickableRegions[i].CurrentState = rsHover) then
       begin
         fClickableRegions[i].CurrentState := rsNormal;
         fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsNormal]);
+
+        ScreenImg.Bitmap.Changed;
       end
 end;
 
@@ -349,13 +459,30 @@ end;
 procedure TGameBaseMenuScreen.Form_MouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  OnMouseClick(ScreenImg.ControlToBitmap(ScreenImg.ParentToClient(Point(X, Y))), Button);
+  OnMouseClick(GetInternalMouseCoordinates, Button);
+end;
+
+procedure TGameBaseMenuScreen.Form_MouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  OnMouseMoved(GetInternalMouseCoordinates);
 end;
 
 procedure TGameBaseMenuScreen.Img_MouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
 begin
-  OnMouseClick(Point(X, Y), Button);
+  OnMouseClick(GetInternalMouseCoordinates, Button);
+end;
+
+procedure TGameBaseMenuScreen.Img_MouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer; Layer: TCustomLayer);
+begin
+  OnMouseMoved(GetInternalMouseCoordinates);
+end;
+
+function TGameBaseMenuScreen.GetInternalMouseCoordinates: TPoint;
+begin
+  Result := ScreenImg.ControlToBitmap(ScreenImg.ScreenToClient(Mouse.CursorPos));
 end;
 
 procedure TGameBaseMenuScreen.DoAfterConfig;
@@ -488,7 +615,7 @@ end;
 { TClickableRegion }
 
 
-constructor TClickableRegion.Create(aCenter: TPoint; aClickRect: TRect; aAction: TProcedure; aNormal, aHover, aClick: TBitmap32);
+constructor TClickableRegion.Create(aCenter: TPoint; aClickRect: TRect; aAction: TRegionAction; aNormal, aHover, aClick: TBitmap32);
 begin
   inherited Create;
 
@@ -509,13 +636,7 @@ begin
   fAction := aAction;
 end;
 
-constructor TClickableRegion.Create(aCenter: TPoint; aAction: TProcedure; aNormal, aHover,
-  aClick: TBitmap32);
-begin
-  Create(aCenter, aNormal.BoundsRect, aAction, aNormal, aHover, aClick);
-end;
-
-constructor TClickableRegion.Create(aAction: TProcedure; aKey: Word);
+constructor TClickableRegion.Create(aAction: TRegionAction; aKey: Word);
 begin
   inherited Create;
 
