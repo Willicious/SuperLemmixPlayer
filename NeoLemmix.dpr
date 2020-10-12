@@ -69,7 +69,8 @@ uses
   LemVersion in 'LemVersion.pas',
   PngInterface in 'PngInterface.pas',
   SharedGlobals in 'SharedGlobals.pas',
-  FStyleManager in 'FStyleManager.pas' {FManageStyles};
+  FStyleManager in 'FStyleManager.pas' {FManageStyles},
+  LemMenuFont in 'LemMenuFont.pas';
 
 {$R *.res}
 
