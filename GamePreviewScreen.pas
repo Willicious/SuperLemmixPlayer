@@ -20,17 +20,18 @@ uses
 type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
   private
-    procedure VGASpecPrep;
     procedure SaveLevelImage;
     function GetScreenText: string;
     procedure NextLevel;
     procedure PreviousLevel;
     procedure NextRank;
     procedure PreviousRank;
+
+    procedure BeginPlay;
+    procedure ExitToMenu;
   protected
     procedure DoAfterConfig; override;
 
-    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
@@ -119,12 +120,18 @@ begin
   CloseScreen(gstPreview);
 end;
 
+procedure TGamePreviewScreen.BeginPlay;
+begin
+  CloseScreen(gstPlay);
+end;
+
 procedure TGamePreviewScreen.BuildScreen;
 var
   W: TBitmap32;
   DstRect: TRect;
   Lw, Lh : Integer;
   LevelScale: Double;
+  NewRegion: TClickableRegion;
 begin
   Assert(GameParams <> nil);
 
@@ -168,10 +175,15 @@ begin
       OffsetRect(DstRect, 432 - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
       W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
-      // draw background
-      DrawBackground(Rect(0, 160, 864, 486));
       // draw text
       MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 164);
+
+      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionContinue, BeginPlay);
+      NewRegion.ShortcutKeys.Add(VK_RETURN);
+      NewRegion.ShortcutKeys.Add(VK_SPACE);
+
+      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu);
+      NewRegion.ShortcutKeys.Add(VK_ESCAPE);
     finally
       W.Free;
     end;
@@ -222,8 +234,12 @@ begin
   CloseScreen(gstPreview);
 end;
 
-procedure TGamePreviewScreen.VGASpecPrep;
+procedure TGamePreviewScreen.ExitToMenu;
 begin
+  if GameParams.TestModeLevel <> nil then
+    CloseScreen(gstExit)
+  else
+    CloseScreen(gstMenu);
 end;
 
 procedure TGamePreviewScreen.OnKeyPress(var aKey: Word);
@@ -235,16 +251,6 @@ begin
     LoadReplay
   else
     case aKey of
-      VK_ESCAPE : begin
-                    if GameParams.TestModeLevel <> nil then
-                      CloseScreen(gstExit)
-                    else
-                      CloseScreen(gstMenu);
-                  end;
-      VK_RETURN : begin
-                    VGASpecPrep;
-                    CloseScreen(gstPlay);
-                  end;
       VK_LEFT   : PreviousLevel;
       VK_RIGHT  : NextLevel;
       VK_DOWN   : PreviousRank;
@@ -254,23 +260,7 @@ begin
     end;
 end;
 
-procedure TGamePreviewScreen.OnMouseClick(aPoint: TPoint;
-  aButton: TMouseButton);
-begin
-  if aButton in [mbLeft, mbMiddle] then
-  begin
-    VGASpecPrep;
-    if aButton = mbMiddle then
-      GameParams.ShownText := false;
-    CloseScreen(gstPlay);
-  end else if aButton = mbRight then
-    CloseScreen(gstMenu);
-end;
-
 function TGamePreviewScreen.GetScreenText: string;
-var
-  ExtraHalfLines: Integer;
-
   function GetTalismanText: String;
   var
     Talisman: TTalisman;
@@ -350,7 +340,6 @@ var
   end;
 begin
   Assert(GameParams <> nil);
-  ExtraHalfLines := 1;
 
   with GameParams.Level.Info do
   begin
@@ -367,31 +356,13 @@ begin
     Result := Result + IntToStr(LemmingsCount - ZombieCount) + SPreviewLemmings + #13#12;
     Result := Result + IntToStr(RescueCount) + SPreviewSave + #13#12;
 
-    {
-    if GameParams.SpawnInterval then
-      Result := Result + SPreviewSpawnInterval + IntToStr(SpawnInterval)
-    else
-      Result := Result + SPreviewReleaseRate + IntToStr(SpawnIntervalToReleaseRate(SpawnInterval));
-    if SpawnIntervalLocked then
-      Result := Result + SPreviewRRLocked;
-    Result := Result + #13;
-    }
-
     if HasTimeLimit then
-      Result := Result + SPreviewTimeLimit + IntToStr(TimeLimit div 60) + ':' + LeadZeroStr(TimeLimit mod 60, 2) + #13#12
-    else
-      Inc(ExtraHalfLines, 3);
+      Result := Result + SPreviewTimeLimit + IntToStr(TimeLimit div 60) + ':' + LeadZeroStr(TimeLimit mod 60, 2) + #13 + #12;
 
     if Author <> '' then
-      Result := Result + SPreviewAuthor + Author + #13
-    else
-      Inc(ExtraHalfLines, 3);
+      Result := Result + SPreviewAuthor + Author + #13;
 
-    Result := Result + #13 + GetTalismanText + #13;
-
-    Result := Result + StringOfChar(#12, ExtraHalfLines);
-
-    Result := Result + SPressMouseToContinue;
+    Result := Result + #13 + GetTalismanText;
   end;
 end;
 

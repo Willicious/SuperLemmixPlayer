@@ -5,6 +5,7 @@ unit GamePostviewScreen;
 interface
 
 uses
+  Types,
   LemNeoLevelPack,
   LemmixHotkeys,
   Windows, Classes, SysUtils, StrUtils, Controls,
@@ -29,12 +30,12 @@ type
     function GetScreenText: string;
     procedure NextLevel;
     procedure ReplaySameLevel;
+    procedure ExitToMenu;
   protected
     procedure PrepareGameParams; override;
     procedure BuildScreen; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
 
-    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
@@ -61,8 +62,7 @@ end;
 
 procedure TGamePostviewScreen.NextLevel;
 begin
-  if fAdvanceLevel then
-    GameParams.NextLevel(true);
+  GameParams.NextLevel(true);
   CloseScreen(gstPreview);
 end;
 
@@ -72,10 +72,33 @@ begin
 end;
 
 procedure TGamePostviewScreen.BuildScreen;
+var
+  NewRegion: TClickableRegion;
 begin
   ScreenImg.BeginUpdate;
   try
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
+
+    if GameParams.GameResult.gSuccess then
+    begin
+      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu);
+      NewRegion.ShortcutKeys.Add(VK_ESCAPE);
+
+      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionNextLevel, NextLevel);
+      NewRegion.ShortcutKeys.Add(VK_RETURN);
+      NewRegion.ShortcutKeys.Add(VK_SPACE);
+
+      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_ONE_ROW_Y), SOptionRetryLevel, ReplaySameLevel);
+      NewRegion.AddKeysFromFunction(lka_Restart);
+    end else begin
+      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu);
+      NewRegion.ShortcutKeys.Add(VK_ESCAPE);
+
+      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionRetryLevel, ReplaySameLevel);
+      NewRegion.ShortcutKeys.Add(VK_RETURN);
+      NewRegion.ShortcutKeys.Add(VK_SPACE);
+      NewRegion.AddKeysFromFunction(lka_Restart);
+    end;
   finally
     ScreenImg.EndUpdate;
   end;
@@ -89,6 +112,14 @@ end;
 destructor TGamePostviewScreen.Destroy;
 begin
   inherited Destroy;
+end;
+
+procedure TGamePostviewScreen.ExitToMenu;
+begin
+  if GameParams.TestModeLevel <> nil then
+    CloseScreen(gstExit)
+  else
+    CloseScreen(gstMenu);
 end;
 
 function TGamePostviewScreen.GetScreenText: string;
@@ -246,32 +277,8 @@ begin
     WhichText := GameParams.CurrentLevel.Group.PostviewTexts[GetResultIndex];
     for i := 0 to 6 do
     begin
-      if i >= WhichText.Text.Count then
-        LF(1)
-      else
+      if i < WhichText.Text.Count then
         Add(WhichText.Text[i]);
-    end;
-
-    LF(2);
-
-    // bottom text
-
-    // different texts in different situations
-    if (gCheated and not gSuccess) then
-    begin
-      Add(SPressMouseToContinue)
-    end
-    // default bottom text
-    else begin
-      if gSuccess then
-      begin
-        Add(SPressLeftMouseForNextLevel);
-        Add(SPressMiddleMouseToReplayLevel);
-      end else begin
-        LF(1);
-        Add(SPressLeftMouseToRetryLevel);
-      end;
-      Add(SPressRightMouseForMenu);
     end;
   end;
 end;
@@ -290,38 +297,9 @@ begin
     Exit;
   end;
 
-  if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_Restart then
-  begin
-    ReplaySameLevel;
-    Exit;
-  end;
-
   case aKey of
-    VK_ESCAPE : begin
-                  if GameParams.TestModeLevel <> nil then
-                    CloseScreen(gstExit)
-                  else
-                    CloseScreen(gstMenu);
-                end;
-    VK_RETURN : NextLevel;
     VK_F2     : DoLevelSelect;
     VK_F3     : ShowConfigMenu;
-  end;
-end;
-
-procedure TGamePostviewScreen.OnMouseClick(aPoint: TPoint;
-  aButton: TMouseButton);
-begin
-  if aButton = mbLeft then
-    NextLevel
-  else if aButton = mbMiddle then
-    ReplaySameLevel
-  else if aButton = mbRight then
-  begin
-    if GameParams.TestModeLevel <> nil then
-      CloseScreen(gstExit)
-    else
-      CloseScreen(gstMenu);
   end;
 end;
 

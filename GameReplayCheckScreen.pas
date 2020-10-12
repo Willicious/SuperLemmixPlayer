@@ -5,6 +5,7 @@ unit GameReplayCheckScreen;
 interface
 
 uses
+  Types,
   LemRendering, LemLevel, LemRenderHelpers, LemNeoPieceManager, SharedGlobals,
   Windows, Classes, SysUtils, StrUtils, Controls, Contnrs,
   UMisc,
@@ -57,13 +58,12 @@ type
     procedure OutputText;
     procedure RunTests;
 
+    procedure ExitToMenu;
+
     procedure Application_Idle(Sender: TObject; var Done: Boolean);
   protected
     procedure BuildScreen; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
-
-    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
-    procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -349,14 +349,16 @@ begin
       fScreenText.Add(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
     end;
 
-    while fScreenText.Count < 28 do
-      fScreenText.Add('');
-    fScreenText.Add('Click mouse to exit');
-
     if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
       TLinearResampler.Create(ScreenImg.Bitmap);
 
     OutputText;
+
+    with MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu) do
+    begin
+      ShortcutKeys.Add(VK_RETURN);
+      ShortcutKeys.Add(VK_SPACE);
+    end;
   end;
 end;
 
@@ -370,6 +372,8 @@ begin
     fOldHighRes := GameParams.HighResolution;
     GameParams.HighResolution := false;
     PieceManager.Clear;
+
+    MakeHiddenOption(VK_ESCAPE, ExitToMenu);
   finally
     ScreenImg.EndUpdate;
   end;
@@ -424,27 +428,16 @@ begin
   inherited;
 end;
 
-procedure TGameReplayCheckScreen.OnKeyPress(var aKey: Word);
+procedure TGameReplayCheckScreen.ExitToMenu;
 begin
-  inherited;
-  case aKey of
-    VK_RETURN: if not fProcessing then CloseScreen(gstMenu);
-    VK_ESCAPE: if not fProcessing then
-                 CloseScreen(gstMenu)
-               else
-                 if RunCustomPopup(self, 'Terminate replay test?', 'Do you wish to terminate mass replay testing?', 'Yes|No') = 1 then
-                 begin
-                   fProcessing := false;
-                   Exit;
-                 end;
-  end;
-end;
-
-procedure TGameReplayCheckScreen.OnMouseClick(aPoint: TPoint;
-  aButton: TMouseButton);
-begin
-  if fProcessing then Exit;
-  CloseScreen(gstMenu);
+  if not fProcessing then
+   CloseScreen(gstMenu)
+  else
+    if RunCustomPopup(self, 'Terminate replay test?', 'Do you wish to terminate mass replay testing?', 'Yes|No') = 1 then
+    begin
+      fProcessing := false;
+      Exit;
+    end;
 end;
 
 { TReplayCheckEntries }

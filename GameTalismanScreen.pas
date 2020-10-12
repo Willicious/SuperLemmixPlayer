@@ -5,6 +5,7 @@ unit GameTalismanScreen;
 interface
 
 uses
+  Types,
   Dialogs,
   Windows, Classes, SysUtils, Controls,
   UMisc,
@@ -28,11 +29,12 @@ type
     ScreenText: string;
     fPack: TNeoLevelGroup;
     function GetScreenText: string;
+
+    procedure ExitToMenu;
+    procedure NextPage;
+    procedure PrevPage;
   protected
     procedure BuildScreen; override;
-
-    procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
-    procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -44,11 +46,22 @@ implementation
 uses Forms;
 
 procedure TGameTalismanScreen.BuildScreen;
+var
+  NewRegion: TClickableRegion;
 begin
   ScreenImg.BeginUpdate;
   try
     ScreenText := GetScreenText;
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, ScreenText, 16);
+
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu);
+    NewRegion.ShortcutKeys.Add(VK_ESCAPE);
+
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionPrevPage, PrevPage);
+    NewRegion.ShortcutKeys.Add(VK_LEFT);
+
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionNextPage, NextPage);
+    NewRegion.ShortcutKeys.Add(VK_RIGHT);
   finally
     ScreenImg.EndUpdate;
   end;
@@ -201,39 +214,29 @@ begin
     end;
 end;
 
-procedure TGameTalismanScreen.OnKeyPress(var aKey: Word);
+procedure TGameTalismanScreen.NextPage;
 begin
-  inherited;
-  case aKey of
-    VK_ESCAPE: CloseScreen(gstMenu);
-    VK_LEFT: if GameParams.TalismanPage > 0 then
-             begin
-               GameParams.TalismanPage := GameParams.TalismanPage - 1;
-               CloseScreen(gstTalisman);
-             end;
-    VK_RIGHT: if GameParams.TalismanPage < ((fPack.Talismans.Count - 1) div TALISMANS_PER_PAGE) then
-              begin
-                GameParams.TalismanPage := GameParams.TalismanPage + 1;
-                CloseScreen(gstTalisman);
-              end;
-  end;
+  if GameParams.TalismanPage < ((fPack.Talismans.Count - 1) div TALISMANS_PER_PAGE) then
+    GameParams.TalismanPage := GameParams.TalismanPage + 1
+  else
+    GameParams.TalismanPage := 0;
+
+  CloseScreen(gstTalisman);
 end;
 
-procedure TGameTalismanScreen.OnMouseClick(aPoint: TPoint;
-  aButton: TMouseButton);
+procedure TGameTalismanScreen.PrevPage;
 begin
-  case aButton of
-    mbLeft: if fPack.Talismans.Count > TALISMANS_PER_PAGE then
-              begin
-                if GameParams.TalismanPage = ((fPack.Talismans.Count - 1) div TALISMANS_PER_PAGE) then
-                  GameParams.TalismanPage := 0
-                else
-                  GameParams.TalismanPage := GameParams.TalismanPage + 1;
+  if GameParams.TalismanPage > 0 then
+    GameParams.TalismanPage := GameParams.TalismanPage - 1
+  else
+    GameParams.TalismanPage := ((fPack.Talismans.Count - 1) div TALISMANS_PER_PAGE) - 1;
 
-                CloseScreen(gstTalisman);
-              end;
-    mbRight: CloseScreen(gstMenu);
-  end;
+  CloseScreen(gstTalisman);
+end;
+
+procedure TGameTalismanScreen.ExitToMenu;
+begin
+  CloseScreen(gstMenu);
 end;
 
 end.

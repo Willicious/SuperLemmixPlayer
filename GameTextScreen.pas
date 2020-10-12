@@ -5,6 +5,7 @@ unit GameTextScreen;
 interface
 
 uses
+  Types,
   Dialogs, // debug
   LemmixHotkeys,
   Windows, Classes, SysUtils, Controls, StrUtils,
@@ -22,6 +23,9 @@ type
     fPreviewText: Boolean;
     function GetScreenText: string;
     procedure ToNextScreen;
+    procedure ExitToMenu;
+
+    procedure SaveReplay;
   protected
     procedure BuildScreen; override;
 
@@ -47,9 +51,11 @@ begin
   try
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
 
-    NewOption := MakeClickableText(Point(432, 462), SPressMouseToContinue, ToNextScreen);
+    NewOption := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_ONE_ROW_Y), SOptionContinue, ToNextScreen);
     NewOption.ShortcutKeys.Add(VK_RETURN);
     NewOption.ShortcutKeys.Add(VK_SPACE);
+
+    NewOption := MakeHiddenOption(VK_ESCAPE, ExitToMenu);
 
     if PreviewText then
       GameParams.ShownText := true;
@@ -210,20 +216,25 @@ var
 begin
   inherited;
   if (GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveReplay) and (GameParams.NextScreen = gstPostview) then
-  begin
-    S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
-    if S = '' then Exit;
-    GlobalGame.EnsureCorrectReplayDetails;
-    GlobalGame.ReplayManager.SaveToFile(S);
-  end else if (GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_LoadReplay) and (GameParams.NextScreen = gstPlay) then
-    LoadReplay
+    SaveReplay
+  else if (GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_LoadReplay) and (GameParams.NextScreen = gstPlay) then
+    LoadReplay;
+end;
+
+procedure TGameTextScreen.ExitToMenu;
+begin
+  if GameParams.TestModeLevel <> nil then
+    CloseScreen(gstExit)
   else
-    case aKey of
-      VK_ESCAPE: if GameParams.TestModeLevel <> nil then
-                   CloseScreen(gstExit)
-                 else
-                   CloseScreen(gstMenu);
-    end;
+    CloseScreen(gstMenu);
+end;
+
+procedure TGameTextScreen.SaveReplay;
+begin
+  S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
+  if S = '' then Exit;
+  GlobalGame.EnsureCorrectReplayDetails;
+  GlobalGame.ReplayManager.SaveToFile(S);
 end;
 
 procedure TGameTextScreen.ToNextScreen;

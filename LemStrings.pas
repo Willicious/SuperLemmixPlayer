@@ -140,20 +140,12 @@ resourcestring
   SYourTime =       'Your time taken is  ';
   SYourTimeRecord = 'Your record time is ';
 
-  SPressLeftMouseForNextLevel =
-    'Press left mouse button for next level';
-
-  SPressLeftMouseToRetryLevel =
-    'Press left mouse button to retry level';
-
-  SPressMiddleMouseToReplayLevel =
-    'Press middle mouse button to replay';
-
-  SPressRightMouseForMenu =
-    'Press right mouse button for menu';
-
-  SPressMouseToContinue =
-    'Press mouse button to continue';
+  SOptionNextLevel = 'Next level';
+  SOptionRetryLevel = 'Retry level';
+  SOptionToMenu = 'Exit to menu';
+  SOptionContinue = 'Continue';
+  SOptionPrevPage = '< Previous page';
+  SOptionNextPage = 'Next page >';
 
 const
   LemmingActionStrings: array[TBasicLemmingAction] of string = (

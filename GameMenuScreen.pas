@@ -391,7 +391,6 @@ begin
     ReelBuffer.SetSize(ReelLetterBoxCount * 16, 19);
 
     // background
-    DrawBackground;
     fBackBuffer.Assign(ScreenImg.Bitmap); // save it
 
     // menu elements
