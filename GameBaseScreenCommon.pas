@@ -4,21 +4,14 @@ unit GameBaseScreenCommon;
 interface
 
 uses
-  System.Types,
-  Windows, Messages, Classes, Controls, Graphics, MMSystem, Forms, Dialogs, Math,
-  GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
+  Windows, Messages, Classes, Controls, Forms, Dialogs,
+  GR32, GR32_Image,
   FBaseDosForm,
   GameControl,
   LemSystemMessages,
-  LemStrings, PngInterface, LemTypes,
+  PngInterface, LemTypes,
   LemReplay, LemGame,
-  LemCursor,
-  LemMenuFont,
   SysUtils;
-
-const
-  INTERNAL_SCREEN_WIDTH = 864;
-  INTERNAL_SCREEN_HEIGHT = 486;
 
 const
   EXTRA_ZOOM_LEVELS = 4;
@@ -30,16 +23,10 @@ type
   TGameBaseScreen = class(TBaseDosForm)
   private
     fScreenImg           : TImage32;
-    fBackGround          : TBitmap32;
-    fBackBuffer          : TBitmap32; // general purpose buffer
-    fOriginalImageBounds : TRect;
     fScreenIsClosing     : Boolean;
     fCloseDelay          : Integer;
-
-    procedure AdjustImage;
     procedure CNKeyDown(var Message: TWMKeyDown); message CN_KEYDOWN;
   protected
-    procedure PrepareGameParams; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); virtual;
     property ScreenIsClosing: Boolean read fScreenIsClosing;
     property CloseDelay: Integer read fCloseDelay write fCloseDelay;
@@ -48,16 +35,11 @@ type
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
-    procedure TileBackgroundBitmap(X, Y: Integer; Dst: TBitmap32 = nil);
-    procedure ExtractBackGround;
     procedure FadeOut;
-    procedure InitializeImageSizeAndPosition(aWidth, aHeight: Integer);
 
     procedure MainFormResized; virtual; abstract;
 
     property ScreenImg: TImage32 read fScreenImg;
-    property BackGround: TBitmap32 read fBackGround;
-    property BackBuffer: TBitmap32 read fBackBuffer;
   end;
 
 implementation
@@ -77,16 +59,6 @@ begin
     if Assigned(AssignedEventHandler) then
       OnKeyDown(Self, Message.CharCode, KeyDataToShiftState(Message.KeyData));
   inherited;
-end;
-
-procedure TGameBaseScreen.AdjustImage;
-begin
-  fScreenImg.Align := alClient;
-  fScreenImg.ScaleMode := smResize;
-  fScreenImg.BitmapAlign := baCenter;
-
-  Update;
-  Changed;
 end;
 
 procedure TGameBaseScreen.CloseScreen(aNextScreen: TGameScreenType);
@@ -125,76 +97,12 @@ begin
   fScreenImg := TImage32.Create(Self);
   fScreenImg.Parent := Self;
 
-  fBackGround := TBitmap32.Create;
-  fBackBuffer := TBitmap32.Create;
-
   ScreenImg.Cursor := crNone;
 end;
 
 destructor TGameBaseScreen.Destroy;
 begin
-  fBackGround.Free;
-  fBackBuffer.Free;
   inherited Destroy;
-end;
-
-procedure TGameBaseScreen.ExtractBackground;
-begin
-  if (not (GameParams.CurrentLevel = nil))
-     and FileExists(GameParams.CurrentLevel.Group.FindFile('background.png')) then
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('background.png'), fBackground)
-  else if FileExists(AppPath + SFGraphicsMenu + 'background.png') then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', fBackground);
-end;
-
-procedure TGameBaseScreen.InitializeImageSizeAndPosition(aWidth, aHeight: Integer);
-begin
-  with fScreenImg do
-  begin
-    Bitmap.SetSize(aWidth, aHeight);
-
-    with fOriginalImageBounds do
-    begin
-      Left := 0;
-      Height := 0;
-      Right := ClientWidth;
-      Bottom := ClientHeight;
-    end;
-
-    BoundsRect := fOriginalImageBounds;
-
-    AdjustImage;
-
-    if GameParams.LinearResampleMenu and not IsGameplayScreen then
-      TLinearResampler.Create(fScreenImg.Bitmap);
-  end;
-end;
-
-procedure TGameBaseScreen.PrepareGameParams;
-begin
-  inherited;
-end;
-
-procedure TGameBaseScreen.TileBackgroundBitmap(X, Y: Integer; Dst: TBitmap32 = nil);
-var
-  aX, aY: Integer;
-begin
-  if Dst = nil then Dst := fScreenImg.Bitmap;
-  if (fBackground.Width = 0) or (fBackground.Height = 0) then Exit;
-
-  aY := Y;
-  aX := X;
-  while aY <= Dst.Height do
-  begin
-    while aX <= Dst.Width do
-    begin
-      fBackground.DrawTo(Dst, aX, aY);
-      Inc(aX, fBackground.Width);
-    end;
-    Inc(aY, fBackground.Height);
-    aX := X;
-  end;
-
 end;
 
 procedure TGameBaseScreen.FadeOut;

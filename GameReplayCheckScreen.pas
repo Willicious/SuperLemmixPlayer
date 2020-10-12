@@ -366,10 +366,7 @@ procedure TGameReplayCheckScreen.BuildScreen;
 begin
   ScreenImg.BeginUpdate;
   try
-    InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-    ExtractBackGround;
-
-    TileBackgroundBitmap(0, 0, ScreenImg.Bitmap);
+    DrawBackground;
     MenuFont.DrawTextCentered(ScreenImg.Bitmap, 'Preparing replay check. Please wait.', 192);
 
     fOldHighRes := GameParams.HighResolution;
@@ -391,7 +388,7 @@ begin
 
   ScreenImg.BeginUpdate;
   try
-    TileBackgroundBitmap(0, 0, ScreenImg.Bitmap);
+    DrawBackground;
     for i := 0 to fScreenText.Count-1 do
       MenuFont.DrawTextCentered(ScreenImg.Bitmap, fScreenText[i], (i * 16) + 8);
   finally

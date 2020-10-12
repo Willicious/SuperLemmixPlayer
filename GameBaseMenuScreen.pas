@@ -7,10 +7,15 @@ uses
   LemMenuFont,
   LemNeoLevelPack,
   LemNeoPieceManager,
+  LemStrings,
   LemTypes,
   GameBaseScreenCommon,
-  GR32, GR32_Resamplers,
+  GR32, GR32_Image, GR32_Resamplers,
   Math, Forms, Controls, Dialogs, Classes, SysUtils;
+
+const
+  INTERNAL_SCREEN_WIDTH = 864;
+  INTERNAL_SCREEN_HEIGHT = 486;
 
 type
   TGameBaseMenuScreen = class(TGameBaseScreen)
@@ -21,13 +26,19 @@ type
 
       procedure LoadBasicCursor;
       procedure SetBasicCursor;
+
+      procedure InitializeImage;
     protected
       procedure DoLevelSelect(isPlaying: Boolean = false);
-      procedure ShowConfigMenu;
-      procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoMassReplayCheck;
 
+      procedure ShowConfigMenu;
+      procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoAfterConfig; virtual;
+
+      procedure DrawBackground; overload;
+      procedure DrawBackground(aRegion: TRect); overload;
+
       property MenuFont: TMenuFont read fMenuFont;
     public
       constructor Create(aOwner: TComponent); override;
@@ -55,6 +66,8 @@ begin
   fBasicCursor := TNLCursor.Create(Min(Screen.Width div 320, Screen.Height div 200) + EXTRA_ZOOM_LEVELS);
   LoadBasicCursor;
   SetBasicCursor;
+
+  InitializeImage;
 end;
 
 destructor TGameBaseMenuScreen.Destroy;
@@ -86,6 +99,23 @@ begin
   end;
 end;
 
+procedure TGameBaseMenuScreen.InitializeImage;
+begin
+  with ScreenImg do
+  begin
+    Bitmap.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
+
+    BoundsRect := Rect(0, 0, ClientWidth, ClientHeight);
+
+    ScreenImg.Align := alClient;
+    ScreenImg.ScaleMode := smResize;
+    ScreenImg.BitmapAlign := baCenter;
+
+    if GameParams.LinearResampleMenu then
+      TLinearResampler.Create(ScreenImg.Bitmap);
+  end;
+end;
+
 procedure TGameBaseMenuScreen.MainFormResized;
 begin
   ScreenImg.Width := GameParams.MainForm.ClientWidth;
@@ -106,6 +136,56 @@ begin
   MainForm.Cursor := CursorIndex;
   Screen.Cursor := CursorIndex;
   ScreenImg.Cursor := CursorIndex;
+end;
+
+procedure TGameBaseMenuScreen.DrawBackground;
+begin
+  DrawBackground(BoundsRect);
+end;
+
+procedure TGameBaseMenuScreen.DrawBackground(aRegion: TRect);
+var
+  aX, aY: Integer;
+  BgImage, Dst: TBitmap32;
+  SrcRect: TRect;
+begin
+  Dst := ScreenImg.Bitmap;
+  BgImage := TBitmap32.Create;
+
+  try
+    if (not (GameParams.CurrentLevel = nil)) and FileExists(GameParams.CurrentLevel.Group.FindFile('background.png')) then
+      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('background.png'), BgImage)
+    else if FileExists(AppPath + SFGraphicsMenu + 'background.png') then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', BgImage);
+
+    if (BgImage.Width = 0) or (BgImage.Height = 0) then
+    begin
+      Dst.FillRect(aRegion.Left, aRegion.Top, aRegion.Right, aRegion.Bottom, $FF000000);
+      Exit;
+    end;
+
+    aY := aRegion.Top;
+    aX := aRegion.Left;
+    while aY < aRegion.Bottom do
+    begin
+      SrcRect.Left := 0;
+      SrcRect.Top := 0;
+      SrcRect.Bottom := Min(BgImage.Height, aRegion.Bottom - aY);
+
+      while aX < aRegion.Right do
+      begin
+        SrcRect.Right := Min(BgImage.Width, aRegion.Right - aX);
+
+        BgImage.DrawTo(Dst, aX, aY, SrcRect);
+        Inc(aX, BgImage.Width);
+      end;
+      Inc(aY, BgImage.Height);
+      aX := aRegion.Left;
+    end;
+  finally
+    BgImage.Free;
+  end;
+
 end;
 
 procedure TGameBaseMenuScreen.DoAfterConfig;

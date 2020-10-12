@@ -130,9 +130,6 @@ begin
 
   ScreenImg.BeginUpdate;
   try
-    InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-    ExtractBackGround;
-
     // prepare the renderer, this is a little bit shaky (wrong place)
     try
       with GameParams do
@@ -150,9 +147,10 @@ begin
       end;
     end;
 
-    Temp := TBitmap32.Create;
     W := TBitmap32.Create;
     try
+      Temp := ScreenImg.Bitmap;
+
       Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
       Temp.Clear(0);
       // draw level preview
@@ -173,16 +171,14 @@ begin
 
       W.DrawTo(Temp, DstRect, W.BoundsRect);
       // draw background
-      TileBackgroundBitmap(0, 160, Temp);
+      DrawBackground(Rect(0, 160, 864, 486));
       // draw text
       MenuFont.DrawTextCentered(Temp, GetScreenText, 164);
-      ScreenImg.Bitmap.Assign(Temp);
 
       if GameParams.LinearResampleMenu then
         TLinearResampler.Create(ScreenImg.Bitmap);
     finally
       W.Free;
-      Temp.Free;
     end;
   finally
     ScreenImg.EndUpdate;

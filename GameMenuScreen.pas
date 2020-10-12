@@ -62,6 +62,8 @@ type
 
     DoneCleanInstallCheck: Boolean;
 
+    fBackBuffer          : TBitmap32; // general purpose buffer
+
   { enumerated menu bitmap elements }
     BitmapElements : array[TGameMenuBitmap] of TBitmap32;
   { section }
@@ -363,9 +365,6 @@ begin
   Tmp := TBitmap32.Create;
   ScreenImg.BeginUpdate;
   try
-    InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-    ExtractBackground;
-
     GetGraphic('logo.png', BitmapElements[gmbLogo]);
     GetGraphic('sign_play.png', BitmapElements[gmbPlay]);
     GetGraphic('sign_code.png', BitmapElements[gmbLevelCode]);
@@ -392,8 +391,8 @@ begin
     ReelBuffer.SetSize(ReelLetterBoxCount * 16, 19);
 
     // background
-    TileBackgroundBitmap(0, 0);
-    BackBuffer.Assign(ScreenImg.Bitmap); // save it
+    DrawBackground;
+    fBackBuffer.Assign(ScreenImg.Bitmap); // save it
 
     // menu elements
     DrawBitmapElement(gmbLogo);
@@ -458,6 +457,8 @@ var
 begin
   inherited Create(aOwner);
 
+  fBackBuffer := TBitmap32.Create;
+
   fVersionInfo := TStringList.Create;
 
   CurrentSection := 0;
@@ -508,6 +509,7 @@ begin
   ReelBuffer.Free;
   CreditList.Free;
   fVersionInfo.Free;
+  fBackBuffer.Free;
 
   inherited Destroy;
 end;
@@ -611,12 +613,12 @@ begin
   SrcRect := CalcFrameRect(LeftLemmingAnimation, 16, aFrame);
   DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
   OffsetRect(DstRect, (864 - ReelBuffer.Width) div 2 - LeftLemmingAnimation.Width, YPos_Credits);
-  BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
+  fBackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   LeftLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 
   DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
   OffsetRect(DstRect, (864 + ReelBuffer.Width) div 2, YPos_Credits);
-  BackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
+  fBackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
   RightLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 end;
 

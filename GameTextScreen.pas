@@ -46,22 +46,18 @@ var
   Temp: TBitmap32;
 begin
   ScreenImg.BeginUpdate;
-  Temp := TBitmap32.Create;
   try
-    InitializeImageSizeAndPosition(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-    ExtractBackGround;
+    Temp := ScreenImg.Bitmap;
 
     Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
     Temp.Clear(0);
-    TileBackgroundBitmap(0, 0, Temp);
+    DrawBackground;
     MenuFont.DrawTextCentered(Temp, GetScreenText, 16);
-    ScreenImg.Bitmap.Assign(Temp);
 
     if PreviewText then
       GameParams.ShownText := true;
   finally
     ScreenImg.EndUpdate;
-    Temp.Free;
   end;
 end;
 
