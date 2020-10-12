@@ -246,7 +246,7 @@ begin
 
     fBasicCursor.LoadFromBitmap(BMP);
 
-    Screen.Cursors[1] := fBasicCursor.GetCursor(Max(Min(MainForm.ClientWidth div 320, MainForm.ClientHeight div 200), 1));
+    Screen.Cursors[1] := fBasicCursor.GetCursor(Max(Min(MainForm.ClientWidth div 320, MainForm.ClientHeight div 200) div ResMod, 1));
   finally
     BMP.Free;
   end;
