@@ -57,7 +57,7 @@ type
       procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
     protected
-      procedure DoLevelSelect(isPlaying: Boolean = false);
+      procedure DoLevelSelect;
       procedure DoMassReplayCheck;
 
       procedure ShowConfigMenu;
@@ -263,7 +263,7 @@ begin
   // Intentionally blank.
 end;
 
-procedure TGameBaseMenuScreen.DoLevelSelect(isPlaying: Boolean = false);
+procedure TGameBaseMenuScreen.DoLevelSelect;
 var
   F: TFLevelSelect;
   OldLevel: TNeoLevelEntry;
@@ -283,9 +283,8 @@ begin
 
   if not Success then
   begin
-    if not isPlaying then GameParams.SetLevel(OldLevel);
-  end
-  else begin
+    GameParams.SetLevel(OldLevel);
+  end else begin
     if LoadAsPack then
       CloseScreen(gstMenu)
     else

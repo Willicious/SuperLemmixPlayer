@@ -44,18 +44,11 @@ implementation
 uses Forms;
 
 procedure TGameTalismanScreen.BuildScreen;
-var
-  Temp: TBitmap32;
 begin
   ScreenImg.BeginUpdate;
   try
-    Temp := ScreenImg.Bitmap;
-
-    Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-    Temp.Clear(0);
-    DrawBackground;
     ScreenText := GetScreenText;
-    MenuFont.DrawTextCentered(Temp, ScreenText, 16);
+    MenuFont.DrawTextCentered(ScreenImg.Bitmap, ScreenText, 16);
   finally
     ScreenImg.EndUpdate;
   end;

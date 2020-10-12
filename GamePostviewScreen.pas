@@ -72,20 +72,10 @@ begin
 end;
 
 procedure TGamePostviewScreen.BuildScreen;
-var
-  Temp: TBitmap32;
 begin
   ScreenImg.BeginUpdate;
   try
-    Temp := ScreenImg.Bitmap;
-
-    Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-    Temp.Clear(0);
-    DrawBackground;
-    MenuFont.DrawTextCentered(Temp, GetScreenText, 16);
-
-    if GameParams.LinearResampleMenu then
-      TLinearResampler.Create(ScreenImg.Bitmap);
+    MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 16);
   finally
     ScreenImg.EndUpdate;
   end;

@@ -40,8 +40,6 @@ uses Forms;
 { TDosGamePreview }
 
 procedure TGameTextScreen.BuildScreen;
-var
-  Temp: TBitmap32;
 begin
   ScreenImg.BeginUpdate;
   try

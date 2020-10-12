@@ -121,7 +121,7 @@ end;
 
 procedure TGamePreviewScreen.BuildScreen;
 var
-  Temp, W: TBitmap32;
+  W: TBitmap32;
   DstRect: TRect;
   Lw, Lh : Integer;
   LevelScale: Double;
@@ -149,10 +149,8 @@ begin
 
     W := TBitmap32.Create;
     try
-      Temp := ScreenImg.Bitmap;
+      ScreenImg.Bitmap.FillRect(0, 0, 864, 160, $FF000000);
 
-      Temp.SetSize(INTERNAL_SCREEN_WIDTH, INTERNAL_SCREEN_HEIGHT);
-      Temp.Clear(0);
       // draw level preview
       W.SetSize(Lw, Lh);
       W.Clear(0);
@@ -169,14 +167,11 @@ begin
       DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
       OffsetRect(DstRect, 432 - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
-      W.DrawTo(Temp, DstRect, W.BoundsRect);
+      W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
       // draw background
       DrawBackground(Rect(0, 160, 864, 486));
       // draw text
-      MenuFont.DrawTextCentered(Temp, GetScreenText, 164);
-
-      if GameParams.LinearResampleMenu then
-        TLinearResampler.Create(ScreenImg.Bitmap);
+      MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 164);
     finally
       W.Free;
     end;
