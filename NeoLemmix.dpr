@@ -19,7 +19,7 @@ uses
   FNeoLemmixConfig in 'FNeoLemmixConfig.pas' {FormNXConfig},
   FNeoLemmixLevelSelect in 'FNeoLemmixLevelSelect.pas' {FLevelSelect},
   FNeoLemmixSetup in 'FNeoLemmixSetup.pas' {FNLSetup},
-  GameBaseScreen in 'GameBaseScreen.pas',
+  GameBaseScreenCommon in 'GameBaseScreenCommon.pas',
   GameBaseSkillPanel in 'GameBaseSkillPanel.pas',
   GameCommandLine in 'GameCommandLine.pas',
   GameControl in 'GameControl.pas',

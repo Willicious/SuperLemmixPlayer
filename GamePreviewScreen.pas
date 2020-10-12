@@ -15,7 +15,7 @@ uses
   LemCore, LemStrings, LemRendering, LemLevel,
   LemGadgetsMeta, LemGadgets,
   LemTalisman,
-  GameControl, GameBaseScreen, GameWindow;
+  GameControl, GameBaseScreenCommon, GameWindow;
 
 type
   TGamePreviewScreen = class(TGameBaseScreen)

@@ -265,7 +265,7 @@ implementation
 uses
   FMain,
   SharedGlobals, Controls, UITypes,
-  GameBaseScreen, //for EXTRA_ZOOM_LEVELS const
+  GameBaseScreenCommon, //for EXTRA_ZOOM_LEVELS const
   GameSound;
 
 { TDosGameParams }

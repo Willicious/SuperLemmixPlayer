@@ -11,7 +11,7 @@ uses
   UMisc,
   Gr32, Gr32_Layers,
   LemTypes, LemStrings, LemGame,
-  GameControl, GameBaseScreen;
+  GameControl, GameBaseScreenCommon;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.

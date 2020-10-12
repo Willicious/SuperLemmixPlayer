@@ -11,7 +11,7 @@ interface
 uses
   Classes, Controls,
   CustomPopup,
-  GameBaseScreen, GameControl,
+  GameBaseScreenCommon, GameControl,
   LemNeoOnline, StrUtils,
   LemNeoLevelPack, {$ifdef exp}LemLevel, LemNeoPieceManager, LemGadgets, LemCore,{$endif}
   GR32, GR32_Layers;

@@ -17,7 +17,7 @@ uses
   LemGadgetsConstants,
   GameControl,
   GameSound,
-  GameBaseScreen;
+  GameBaseScreenCommon;
 
 {-------------------------------------------------------------------------------
    The dos postview screen, which shows you how you've done it.

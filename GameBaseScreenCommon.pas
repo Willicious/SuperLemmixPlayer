@@ -1,5 +1,5 @@
 {$include lem_directives.inc}
-unit GameBaseScreen;
+unit GameBaseScreenCommon;
 
 interface
 

@@ -10,7 +10,7 @@ uses
   UMisc,
   Gr32, Gr32_Layers, GR32_Resamplers,
   LemTypes, LemStrings, LemGame, LemGameMessageQueue,
-  GameControl, GameBaseScreen;
+  GameControl, GameBaseScreenCommon;
 
 {-------------------------------------------------------------------------------
    New dedicated screen for replay checking. :)

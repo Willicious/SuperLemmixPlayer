@@ -56,7 +56,7 @@ implementation
 uses
   SharedGlobals, // debug
   Math,
-  GameControl, GameBaseScreen;
+  GameControl, GameBaseScreenCommon;
 
 {$R *.dfm}
 

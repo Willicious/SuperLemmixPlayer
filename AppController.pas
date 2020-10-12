@@ -13,7 +13,7 @@ uses
   GameControl, LemVersion,
   GameSound,          // initial creation
   LemNeoPieceManager, // initial creation
-  FBaseDosForm, GameBaseScreen,
+  FBaseDosForm, GameBaseScreenCommon,
   CustomPopup,
   Classes, SysUtils, StrUtils, IOUtils, UMisc, Windows, Forms, Dialogs, Messages;
 

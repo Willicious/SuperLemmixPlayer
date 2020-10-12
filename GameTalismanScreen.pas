@@ -17,7 +17,7 @@ uses
   GameControl,
   StrUtils,
   LemTalisman,
-  GameBaseScreen;
+  GameBaseScreenCommon;
 
 const
   TALISMANS_PER_PAGE = 4;

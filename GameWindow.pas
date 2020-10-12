@@ -14,7 +14,7 @@ uses
   LemGame, LemGameMessageQueue,
   GameSound, LemTypes, LemStrings, LemLemming,
   LemCursor,
-  GameControl, GameBaseSkillPanel, GameSkillPanel, GameBaseScreen,
+  GameControl, GameBaseSkillPanel, GameSkillPanel, GameBaseScreenCommon,
   GameWindowInterface;
 
 type
