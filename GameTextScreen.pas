@@ -24,12 +24,8 @@ type
     function GetScreenText: string;
     procedure ToNextScreen;
     procedure ExitToMenu;
-
-    procedure SaveReplay;
   protected
     procedure BuildScreen; override;
-
-    procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -55,7 +51,8 @@ begin
     NewOption.ShortcutKeys.Add(VK_RETURN);
     NewOption.ShortcutKeys.Add(VK_SPACE);
 
-    NewOption := MakeHiddenOption(VK_ESCAPE, ExitToMenu);
+    MakeHiddenOption(VK_ESCAPE, ExitToMenu);
+    MakeHiddenOption(lka_SaveReplay, SaveReplay);
 
     if PreviewText then
       GameParams.ShownText := true;
@@ -210,31 +207,12 @@ begin
       LF(1);
 end;
 
-procedure TGameTextScreen.OnKeyPress(var aKey: Word);
-var
-  S: String;
-begin
-  inherited;
-  if (GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveReplay) and (GameParams.NextScreen = gstPostview) then
-    SaveReplay
-  else if (GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_LoadReplay) and (GameParams.NextScreen = gstPlay) then
-    LoadReplay;
-end;
-
 procedure TGameTextScreen.ExitToMenu;
 begin
   if GameParams.TestModeLevel <> nil then
     CloseScreen(gstExit)
   else
     CloseScreen(gstMenu);
-end;
-
-procedure TGameTextScreen.SaveReplay;
-begin
-  S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
-  if S = '' then Exit;
-  GlobalGame.EnsureCorrectReplayDetails;
-  GlobalGame.ReplayManager.SaveToFile(S);
 end;
 
 procedure TGameTextScreen.ToNextScreen;

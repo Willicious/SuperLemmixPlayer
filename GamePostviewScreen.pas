@@ -35,8 +35,6 @@ type
     procedure PrepareGameParams; override;
     procedure BuildScreen; override;
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
-
-    procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -99,6 +97,11 @@ begin
       NewRegion.ShortcutKeys.Add(VK_SPACE);
       NewRegion.AddKeysFromFunction(lka_Restart);
     end;
+
+    MakeHiddenOption(VK_F2, DoLevelSelect);
+    MakeHiddenOption(VK_F3, ShowConfigMenu);
+
+    MakeHiddenOption(lka_SaveReplay, SaveReplay);
   finally
     ScreenImg.EndUpdate;
   end;
@@ -280,26 +283,6 @@ begin
       if i < WhichText.Text.Count then
         Add(WhichText.Text[i]);
     end;
-  end;
-end;
-
-procedure TGamePostviewScreen.OnKeyPress(var aKey: Word);
-var
-  S: String;
-begin
-  inherited;
-  if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveReplay then
-  begin
-    S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
-    if S = '' then Exit;
-    GlobalGame.EnsureCorrectReplayDetails;
-    GlobalGame.ReplayManager.SaveToFile(S);
-    Exit;
-  end;
-
-  case aKey of
-    VK_F2     : DoLevelSelect;
-    VK_F3     : ShowConfigMenu;
   end;
 end;
 

@@ -20,8 +20,8 @@ uses
 type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
   private
-    procedure SaveLevelImage;
     function GetScreenText: string;
+
     procedure NextLevel;
     procedure PreviousLevel;
     procedure NextRank;
@@ -29,10 +29,11 @@ type
 
     procedure BeginPlay;
     procedure ExitToMenu;
+
+    procedure SaveLevelImage;
+    procedure TryLoadReplay;
   protected
     procedure DoAfterConfig; override;
-
-    procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -184,6 +185,15 @@ begin
 
       NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu);
       NewRegion.ShortcutKeys.Add(VK_ESCAPE);
+
+      MakeHiddenOption(VK_F2, DoLevelSelect);
+      MakeHiddenOption(VK_F3, ShowConfigMenu);
+      MakeHiddenOption(VK_LEFT, PreviousLevel);
+      MakeHiddenOption(VK_RIGHT, NextLevel);
+      MakeHiddenOption(VK_DOWN, PreviousRank);
+      MakeHiddenOption(VK_UP, NextRank);
+      MakeHiddenOption(lka_LoadReplay, TryLoadReplay);
+      MakeHiddenOption(lka_SaveImage, SaveLevelImage);
     finally
       W.Free;
     end;
@@ -218,6 +228,13 @@ begin
   TempBitmap.Free;
 end;
 
+procedure TGamePreviewScreen.TryLoadReplay;
+begin
+  // Pretty much just because LoadReplay is a function, not a procedure, so this
+  // needs to be here as a wraparound.
+  LoadReplay;
+end;
+
 constructor TGamePreviewScreen.Create(aOwner: TComponent);
 begin
   inherited;
@@ -240,24 +257,6 @@ begin
     CloseScreen(gstExit)
   else
     CloseScreen(gstMenu);
-end;
-
-procedure TGamePreviewScreen.OnKeyPress(var aKey: Word);
-begin
-  inherited;
-  if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveImage then
-    SaveLevelImage
-  else if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_LoadReplay then
-    LoadReplay
-  else
-    case aKey of
-      VK_LEFT   : PreviousLevel;
-      VK_RIGHT  : NextLevel;
-      VK_DOWN   : PreviousRank;
-      VK_UP     : NextRank;
-      VK_F2     : DoLevelSelect;
-      VK_F3     : ShowConfigMenu;
-    end;
 end;
 
 function TGamePreviewScreen.GetScreenText: string;

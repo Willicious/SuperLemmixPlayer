@@ -95,6 +95,7 @@ type
     protected
       procedure DoLevelSelect;
       procedure DoMassReplayCheck;
+      procedure SaveReplay;
 
       procedure ShowConfigMenu;
       procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
@@ -127,6 +128,7 @@ type
 implementation
 
 uses
+  LemGame,
   FMain, FNeoLemmixLevelSelect, FNeoLemmixConfig,
   PngInterface;
 
@@ -455,6 +457,16 @@ end;
 procedure TGameBaseMenuScreen.OnMouseMoved(aPoint: TPoint);
 begin
   // Intentionally blank.
+end;
+
+procedure TGameBaseMenuScreen.SaveReplay;
+var
+  S: String;
+begin
+  S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
+  if S = '' then Exit;
+  GlobalGame.EnsureCorrectReplayDetails;
+  GlobalGame.ReplayManager.SaveToFile(S);
 end;
 
 procedure TGameBaseMenuScreen.SetBasicCursor;
