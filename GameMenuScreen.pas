@@ -113,7 +113,7 @@ type
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
 
     procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
-    procedure OnKeyPress(aKey: Integer); override;
+    procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -511,8 +511,9 @@ begin
   inherited Destroy;
 end;
 
-procedure TGameMenuScreen.OnKeyPress(aKey: Integer);
+procedure TGameMenuScreen.OnKeyPress(var aKey: Word);
 begin
+  inherited;
   case aKey of
     VK_RETURN : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);
     VK_F1     : if GameParams.CurrentLevel <> nil then CloseScreen(gstPreview);

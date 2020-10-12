@@ -35,7 +35,7 @@ type
     procedure CloseScreen(aNextScreen: TGameScreenType); override;
 
     procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
-    procedure OnKeyPress(aKey: Integer); override;
+    procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -276,10 +276,11 @@ begin
   end;
 end;
 
-procedure TGamePostviewScreen.OnKeyPress(aKey: Integer);
+procedure TGamePostviewScreen.OnKeyPress(var aKey: Word);
 var
   S: String;
 begin
+  inherited;
   if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveReplay then
   begin
     S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);

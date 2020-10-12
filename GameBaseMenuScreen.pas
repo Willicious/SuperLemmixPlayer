@@ -13,7 +13,7 @@ uses
   GameBaseScreenCommon,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   Generics.Collections,
-  Math, Forms, Controls, Dialogs, Classes, SysUtils;
+  Math, Forms, Controls, ExtCtrls, Dialogs, Classes, SysUtils;
 
 const
   INTERNAL_SCREEN_WIDTH = 864;
@@ -29,10 +29,16 @@ type
       fClickArea: TRect;
       fShortcutKeys: TList<Word>;
 
+      fAction: TProcedure;
+
+      fCurrentState: TRegionState;
+      fResetTimer: TTimer;
+
       function GetSrcRect(aState: TRegionState): TRect;
     public
-      constructor Create(aCenter: TPoint; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
-      constructor Create(aCenter: TPoint; aClickRect: TRect; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
+      constructor Create(aAction: TProcedure; aKey: Word); overload;
+      constructor Create(aCenter: TPoint; aAction: TProcedure; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
+      constructor Create(aCenter: TPoint; aClickRect: TRect; aAction: TProcedure; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
       destructor Destroy; override;
 
       property Bounds: TRect read fBounds;
@@ -40,6 +46,10 @@ type
       property Bitmaps: TBitmap32 read fBitmaps;
       property SrcRect[State: TRegionState]: TRect read GetSrcRect;
       property ShortcutKeys: TList<Word> read fShortcutKeys;
+
+      property Action: TProcedure read fAction;
+      property CurrentState: TRegionState read fCurrentState write fCurrentState;
+      property ResetTimer: TTimer read fResetTimer write fResetTimer;
   end;
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
@@ -47,6 +57,8 @@ type
       fMenuFont          : TMenuFont;
 
       fBasicCursor: TNLCursor;
+
+      fClickableRegions: TObjectList<TClickableRegion>;
 
       procedure LoadBasicCursor;
       procedure SetBasicCursor;
@@ -56,6 +68,8 @@ type
       procedure Form_KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
       procedure Form_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       procedure Img_MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+
+      procedure OnClickTimer(Sender: TObject);
     protected
       procedure DoLevelSelect;
       procedure DoMassReplayCheck;
@@ -69,7 +83,7 @@ type
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); virtual;
       procedure OnMouseMove(aPoint: TPoint); virtual;
-      procedure OnKeyPress(aKey: Integer); virtual;
+      procedure OnKeyPress(var aKey: Word); virtual;
 
       property MenuFont: TMenuFont read fMenuFont;
     public
@@ -92,6 +106,8 @@ constructor TGameBaseMenuScreen.Create(aOwner: TComponent);
 begin
   inherited;
 
+  fClickableRegions := TObjectList<TClickableRegion>.Create;
+
   fMenuFont := TMenuFont.Create;
   fMenuFont.Load;
 
@@ -110,6 +126,7 @@ destructor TGameBaseMenuScreen.Destroy;
 begin
   fMenuFont.Free;
   fBasicCursor.Free;
+  fClickableRegions.Free;
 
   inherited;
 end;
@@ -163,19 +180,102 @@ begin
   SetBasicCursor;
 end;
 
-procedure TGameBaseMenuScreen.OnKeyPress(aKey: Integer);
+procedure TGameBaseMenuScreen.OnClickTimer(Sender: TObject);
+var
+  Region: TClickableRegion;
+  P: TPoint;
 begin
-  // Intentionally blank.
+  Region := fClickableRegions[TComponent(Sender).Tag];
+
+  P := ScreenImg.ControlToBitmap(ScreenImg.ScreenToClient(Mouse.CursorPos));
+
+  if Types.PtInRect(Region.ClickArea, P) then
+    Region.CurrentState := rsHover
+  else
+    Region.CurrentState := rsNormal;
+
+  Region.ResetTimer := nil;
+  Sender.Free;
+end;
+
+procedure TGameBaseMenuScreen.OnKeyPress(var aKey: Word);
+var
+  i, n: Integer;
+  NewTimer: TTimer;
+begin
+  for i := 0 to fClickableRegions.Count-1 do
+    for n := 0 to fClickableRegions[i].ShortcutKeys.Count-1 do
+      if aKey = fClickableRegions[i].ShortcutKeys[n] then
+      begin
+        if fClickableRegions[i].Bitmaps <> nil then
+        begin
+          if fClickableRegions[i].ResetTimer = nil then
+          begin
+            NewTimer := TTimer.Create(self);
+            NewTimer.Interval := 100;
+            NewTimer.Tag := i;
+            NewTimer.OnTimer := OnClickTimer;
+            fClickableRegions[i].ResetTimer := NewTimer;
+          end else begin
+            fClickableRegions[i].ResetTimer.Enabled := false;
+            fClickableRegions[i].ResetTimer.Enabled := true;
+          end;
+
+          fClickableRegions[i].CurrentState := rsClick;
+          fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsClick]);
+        end;
+
+        fClickableRegions[i].Action;
+
+        aKey := 0;
+        Exit;
+      end;
 end;
 
 procedure TGameBaseMenuScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
+var
+  i: Integer;
+  NewTimer: TTimer;
 begin
-  // Intentionally blank.
+  for i := 0 to fClickableRegions.Count-1 do
+    if fClickableRegions[i].Bitmaps <> nil then
+      if Types.PtInRect(fClickableRegions[i].ClickArea, aPoint) then
+      begin
+        if fClickableRegions[i].ResetTimer = nil then
+        begin
+          NewTimer := TTimer.Create(self);
+          NewTimer.Interval := 100;
+          NewTimer.Tag := i;
+          NewTimer.OnTimer := OnClickTimer;
+          fClickableRegions[i].ResetTimer := NewTimer;
+        end else begin
+          fClickableRegions[i].ResetTimer.Enabled := false;
+          fClickableRegions[i].ResetTimer.Enabled := true;
+        end;
+
+        fClickableRegions[i].CurrentState := rsClick;
+        fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsClick]);
+
+        fClickableRegions[i].Action;
+        Exit;
+      end;
 end;
 
 procedure TGameBaseMenuScreen.OnMouseMove(aPoint: TPoint);
+var
+  i: Integer;
 begin
-  // Intentionally blank.
+  for i := 0 to fClickableRegions.Count-1 do
+    if fClickableRegions[i].Bitmaps <> nil then
+      if Types.PtInRect(fClickableRegions[i].ClickArea, aPoint) and (fClickableRegions[i].CurrentState = rsNormal) then
+      begin
+        fClickableRegions[i].CurrentState := rsHover;
+        fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsHover]);
+      end else if (not Types.PtInRect(fClickableRegions[i].ClickArea, aPoint)) and (fClickableRegions[i].CurrentState = rsHover) then
+      begin
+        fClickableRegions[i].CurrentState := rsNormal;
+        fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsNormal]);
+      end
 end;
 
 procedure TGameBaseMenuScreen.SetBasicCursor;
@@ -388,7 +488,7 @@ end;
 { TClickableRegion }
 
 
-constructor TClickableRegion.Create(aCenter: TPoint; aClickRect: TRect; aNormal, aHover, aClick: TBitmap32);
+constructor TClickableRegion.Create(aCenter: TPoint; aClickRect: TRect; aAction: TProcedure; aNormal, aHover, aClick: TBitmap32);
 begin
   inherited Create;
 
@@ -405,12 +505,24 @@ begin
   aNormal.DrawTo(fBitmaps, 0, 0);
   aHover.DrawTo(fBitmaps, aNormal.Width, 0);
   aClick.DrawTo(fBitmaps, aNormal.Width * 2, 0);
+
+  fAction := aAction;
 end;
 
-constructor TClickableRegion.Create(aCenter: TPoint; aNormal, aHover,
+constructor TClickableRegion.Create(aCenter: TPoint; aAction: TProcedure; aNormal, aHover,
   aClick: TBitmap32);
 begin
-  Create(aCenter, aNormal.BoundsRect, aNormal, aHover, aClick);
+  Create(aCenter, aNormal.BoundsRect, aAction, aNormal, aHover, aClick);
+end;
+
+constructor TClickableRegion.Create(aAction: TProcedure; aKey: Word);
+begin
+  inherited Create;
+
+  fShortcutKeys := TList<Word>.Create;
+  fAction := aAction;
+
+  fShortcutKeys.Add(aKey);
 end;
 
 destructor TClickableRegion.Destroy;

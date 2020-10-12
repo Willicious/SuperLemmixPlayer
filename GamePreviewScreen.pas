@@ -31,7 +31,7 @@ type
     procedure DoAfterConfig; override;
 
     procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
-    procedure OnKeyPress(aKey: Integer); override;
+    procedure OnKeyPress(var aKey: Word); override;
   public
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
@@ -226,8 +226,9 @@ procedure TGamePreviewScreen.VGASpecPrep;
 begin
 end;
 
-procedure TGamePreviewScreen.OnKeyPress(aKey: Integer);
+procedure TGamePreviewScreen.OnKeyPress(var aKey: Word);
 begin
+  inherited;
   if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_SaveImage then
     SaveLevelImage
   else if GameParams.Hotkeys.CheckKeyEffect(aKey).Action = lka_LoadReplay then
