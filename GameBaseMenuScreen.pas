@@ -3,7 +3,7 @@ unit GameBaseMenuScreen;
 interface
 
 uses
-  Types,
+  Types, UMisc,
   LemCursor,
   LemMenuFont,
   LemNeoLevelPack,
@@ -12,6 +12,7 @@ uses
   LemTypes,
   GameBaseScreenCommon,
   GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
+  Generics.Collections,
   Math, Forms, Controls, Dialogs, Classes, SysUtils;
 
 const
@@ -19,6 +20,28 @@ const
   INTERNAL_SCREEN_HEIGHT = 486;
 
 type
+  TRegionState = (rsNormal, rsHover, rsClick);
+
+  TClickableRegion = class
+    private
+      fBitmaps: TBitmap32;
+      fBounds: TRect;
+      fClickArea: TRect;
+      fShortcutKeys: TList<Word>;
+
+      function GetSrcRect(aState: TRegionState): TRect;
+    public
+      constructor Create(aCenter: TPoint; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
+      constructor Create(aCenter: TPoint; aClickRect: TRect; aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil); overload;
+      destructor Destroy; override;
+
+      property Bounds: TRect read fBounds;
+      property ClickArea: TRect read fClickArea;
+      property Bitmaps: TBitmap32 read fBitmaps;
+      property SrcRect[State: TRegionState]: TRect read GetSrcRect;
+      property ShortcutKeys: TList<Word> read fShortcutKeys;
+  end;
+
   TGameBaseMenuScreen = class(TGameBaseScreen)
     private
       fMenuFont          : TMenuFont;
@@ -361,6 +384,51 @@ begin
     end;
   end;
 
+end;
+
+{ TClickableRegion }
+
+
+constructor TClickableRegion.Create(aCenter: TPoint; aClickRect: TRect; aNormal, aHover, aClick: TBitmap32);
+begin
+  inherited Create;
+
+  fShortcutKeys := TList<Word>.Create;
+
+  fBitmaps := TBitmap32.Create(aNormal.Width * 3, aNormal.Height);
+
+  fBounds := SizedRect(aCenter.X - aNormal.Width div 2, aCenter.Y - aNormal.Height div 2, aNormal.Width, aNormal.Height);
+  fClickArea := SizedRect(fBounds.Left + aClickRect.Left, fBounds.Top + aClickRect.Top, aClickRect.Width, aClickRect.Height);
+
+  if aHover = nil then aHover := aNormal;
+  if aClick = nil then aClick := aHover;
+
+  aNormal.DrawTo(fBitmaps, 0, 0);
+  aHover.DrawTo(fBitmaps, aNormal.Width, 0);
+  aClick.DrawTo(fBitmaps, aNormal.Width * 2, 0);
+end;
+
+constructor TClickableRegion.Create(aCenter: TPoint; aNormal, aHover,
+  aClick: TBitmap32);
+begin
+  Create(aCenter, aNormal.BoundsRect, aNormal, aHover, aClick);
+end;
+
+destructor TClickableRegion.Destroy;
+begin
+  fBitmaps.Free;
+  fShortcutKeys.Free;
+  inherited;
+end;
+
+function TClickableRegion.GetSrcRect(aState: TRegionState): TRect;
+begin
+  Result := Rect(0, 0, fBitmaps.Width div 3, fBitmaps.Height);
+
+  case aState of
+    rsHover: Types.OffsetRect(Result, fBitmaps.Width div 3, 0);
+    rsClick: Types.OffsetRect(Result, fBitmaps.Width div 3 * 2, 0);
+  end;
 end;
 
 end.
