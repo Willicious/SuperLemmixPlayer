@@ -17,9 +17,13 @@ type
       ScrollerLemmings: TBitmap32;
       ScrollerReel: TBitmap32;
       ScrollerReelSegmentWidth: Integer;
+      ScrollerText: TBitmap32;
 
       fLastReelUpdateTickCount: UInt64;
       fReelFrame: Integer;
+      fReelTextPos: Integer;
+      fReelTextIndex: Integer;
+      fReelFreezeIterations: Integer;
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
       procedure MakeAutoSectionGraphic(Dst: TBitmap32);
@@ -31,15 +35,18 @@ type
       procedure LoadScrollerGraphics;
       procedure DrawScroller;
       procedure DrawReel;
+      procedure DrawReelText;
       procedure DrawWorkerLemmings;
+
+      procedure UpdateReel;
+      procedure UpdateReelIteration;
+      procedure PrepareNextReelText;
 
       procedure BeginGame;
       procedure ExitGame;
 
       procedure DumpImages;
       procedure CleanseLevels;
-
-      procedure UpdateReel;
 
       procedure ShowTalismanScreen; // Temporary
 
@@ -59,8 +66,8 @@ uses
   GameControl;
 
 const
-  REEL_Y_POSITION = 462;
-  REEL_WIDTH = 34 * 16; // does NOT include the lemmings
+  REEL_Y_POSITION = 456;
+  REEL_WIDTH = 40 * 16; // does NOT include the lemmings
 
 { TGameMenuScreen }
 
@@ -70,6 +77,7 @@ begin
   ScrollerEraseBuffer := TBitmap32.Create;
   ScrollerLemmings := TBitmap32.Create;
   ScrollerReel := TBitmap32.Create;
+  ScrollerText := TBitmap32.Create;
 end;
 
 destructor TGameMenuScreen.Destroy;
@@ -77,6 +85,7 @@ begin
   ScrollerEraseBuffer.Free;
   ScrollerLemmings.Free;
   ScrollerReel.Free;
+  ScrollerText.Free;
   inherited;
 end;
 
@@ -116,8 +125,16 @@ begin
   MakeFooterText;
 
   LoadScrollerGraphics;
+  DrawScroller;
 
-  Application.OnIdle := ApplicationIdle;
+  if (GameParams.CurrentLevel <> nil) and
+     (GameParams.CurrentLevel.Group.ScrollerList.Count > 0) then
+  begin
+    Application.OnIdle := ApplicationIdle;
+
+    fReelTextIndex := -1;
+    PrepareNextReelText;
+  end;
   fLastReelUpdateTickCount := GetTickCount64;
 end;
 
@@ -259,7 +276,7 @@ end;
 
 procedure TGameMenuScreen.UpdateReel;
 const
-  MS_PER_UPDATE = 8;
+  MS_PER_UPDATE = 6;
 var
   Updates: Integer;
   n: Integer;
@@ -271,11 +288,67 @@ begin
     for n := 0 to Updates-1 do
     begin
       Inc(fLastReelUpdateTickCount, MS_PER_UPDATE);
-      Inc(fReelFrame);
+      UpdateReelIteration;
     end;
 
     DrawScroller;
   end;
+end;
+
+procedure TGameMenuScreen.UpdateReelIteration;
+const
+  TEXT_FREEZE_BASE_ITERATIONS = 333;
+  TEXT_FREEZE_WIDTH_DIV = 3;
+begin
+  if fReelFreezeIterations > 0 then
+    Dec(fReelFreezeIterations)
+  else begin
+    Inc(fReelFrame);
+    Dec(fReelTextPos);
+
+    if (ScrollerText.Width <= REEL_WIDTH) and (fReelTextPos = (REEL_WIDTH - ScrollerText.Width) div 2) then
+      fReelFreezeIterations := TEXT_FREEZE_BASE_ITERATIONS + (ScrollerText.Width div TEXT_FREEZE_WIDTH_DIV);
+
+    if fReelTextPos = -ScrollerText.Width then
+      PrepareNextReelText;
+  end;
+end;
+
+procedure TGameMenuScreen.PrepareNextReelText;
+var
+  i, realI: Integer;
+  S: String;
+
+  SizeRect: TRect;
+
+  StartTickCount: UInt64;
+begin
+  for i := 1 to GameParams.CurrentLevel.Group.ScrollerList.Count do
+  begin
+    if i = GameParams.CurrentLevel.Group.ScrollerList.Count then
+    begin
+      Application.OnIdle := nil;
+      Exit;
+    end;
+
+    realI := (fReelTextIndex + i) mod GameParams.CurrentLevel.Group.ScrollerList.Count;
+
+    if Trim(GameParams.CurrentLevel.Group.ScrollerList[realI]) <> '' then
+    begin
+      S := Trim(GameParams.CurrentLevel.Group.ScrollerList[realI]);
+      fReelTextIndex := realI;
+      Break;
+    end;
+  end;
+
+  SizeRect := MenuFont.GetTextSize(S);
+  ScrollerText.SetSize(SizeRect.Width, SizeRect.Height);
+  ScrollerText.Clear(0);
+  ScrollerText.DrawMode := dmBlend;
+  MenuFont.DrawText(ScrollerText, S, 0, 0);
+
+  fReelTextPos := REEL_WIDTH;
+  fLastReelUpdateTickCount := GetTickCount64;
 end;
 
 procedure TGameMenuScreen.DrawScroller;
@@ -283,6 +356,7 @@ begin
   ScrollerEraseBuffer.DrawTo(ScreenImg.Bitmap, 0, REEL_Y_POSITION);
 
   DrawReel;
+  DrawReelText;
   DrawWorkerLemmings;
 end;
 
@@ -292,6 +366,34 @@ var
 begin
   SrcRect := SizedRect(fReelFrame mod ScrollerReelSegmentWidth, 0, REEL_WIDTH, ScrollerReel.Height);
   ScrollerReel.DrawTo(ScreenImg.Bitmap, (ScreenImg.Bitmap.Width - REEL_WIDTH) div 2, REEL_Y_POSITION, SrcRect);
+end;
+
+procedure TGameMenuScreen.DrawReelText;
+var
+  SrcRect, DstRect: TRect;
+  SizeDiff: Integer;
+begin
+  SrcRect := ScrollerText.BoundsRect;
+  DstRect := SrcRect;
+
+  Types.OffsetRect(DstRect, ((ScreenImg.Bitmap.Width - REEL_WIDTH) div 2) + fReelTextPos, REEL_Y_POSITION);
+
+  if DstRect.Left < (ScreenImg.Bitmap.Width - REEL_WIDTH) div 2 then
+  begin
+    SizeDiff := ((ScreenImg.Bitmap.Width - REEL_WIDTH) div 2) - DstRect.Left;
+    DstRect.Left := DstRect.Left + SizeDiff;
+    SrcRect.Left := SrcRect.Left + SizeDiff;
+  end;
+
+  if DstRect.Right >= (ScreenImg.Bitmap.Width + REEL_WIDTH) div 2 then
+  begin
+    SizeDiff := DstRect.Right - ((ScreenImg.Bitmap.Width + REEL_WIDTH) div 2);
+    DstRect.Right := DstRect.Right - SizeDiff;
+    SrcRect.Right := SrcRect.Right - SizeDiff;
+  end;
+
+  if SrcRect.Width > 0 then
+    ScrollerText.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 end;
 
 procedure TGameMenuScreen.DrawWorkerLemmings;
