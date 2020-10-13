@@ -480,6 +480,7 @@ var
 begin
   P := GetInternalMouseCoordinates;
   FoundActive := false;
+  StatusChanged := false;
 
   for i := fClickableRegions.Count-1 downto 0 do
     if fClickableRegions[i].Bitmaps <> nil then
