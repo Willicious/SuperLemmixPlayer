@@ -9,14 +9,13 @@ uses
   LemNeoOnline,
   LemStrings,
   LemTypes,
-  GR32,
+  GR32, GR32_Resamplers,
   Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
-  Types, UMisc, StrUtils;
+  Types, UMisc, StrUtils, Math;
 
 type
   TGameMenuScreen = class(TGameBaseMenuScreen)
     private
-      GroupSignEraseBuffer: TBitmap32;
       ScrollerEraseBuffer: TBitmap32;
 
       ScrollerLemmings: TBitmap32;
@@ -34,6 +33,11 @@ type
       fCleanInstallFail: Boolean;
       fUpdateCheckThread: TDownloadThread;
       fVersionInfo: TStringList;
+
+      fGroupSignCenter: TPoint;
+      fGroupGraphic: TBitmap32;
+
+      fFinishedMakingSigns: Boolean;
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
       procedure MakeAutoSectionGraphic(Dst: TBitmap32);
@@ -59,7 +63,7 @@ type
 
       procedure PrevGroup;
       procedure NextGroup;
-      procedure UpdateGroupSign;
+      procedure UpdateGroupSign(aRedraw: Boolean = true);
       procedure RedrawGroupSign;
 
       procedure DumpImages;
@@ -78,6 +82,7 @@ type
     protected
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
+      procedure AfterRedrawClickables; override;
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
@@ -103,7 +108,6 @@ constructor TGameMenuScreen.Create(aOwner: TComponent);
 begin
   inherited;
 
-  GroupSignEraseBuffer := TBitmap32.Create;
   ScrollerEraseBuffer := TBitmap32.Create;
 
   ScrollerLemmings := TBitmap32.Create;
@@ -111,11 +115,12 @@ begin
   ScrollerText := TBitmap32.Create;
 
   fVersionInfo := TStringList.Create;
+
+  fGroupGraphic := TBitmap32.Create;
 end;
 
 destructor TGameMenuScreen.Destroy;
 begin
-  GroupSignEraseBuffer.Free;
   ScrollerEraseBuffer.Free;
 
   ScrollerLemmings.Free;
@@ -123,6 +128,8 @@ begin
   ScrollerText.Free;
 
   fVersionInfo.Free;
+
+  fGroupGraphic.Free;
 
   inherited;
 end;
@@ -212,6 +219,8 @@ begin
 
   CleanUpIngameStuff;
 
+  UpdateGroupSign(false);
+
   DrawLogo;
   MakePanels;
   MakeFooterText;
@@ -283,7 +292,6 @@ const
 var
   NewRegion: TClickableRegion;
   BMP: TBitmap32;
-  GroupSignPoint: TPoint;
 begin
   BMP := TBitmap32.Create;
   try
@@ -300,22 +308,22 @@ begin
     NewRegion.ShortcutKeys.Add(VK_F2);
 
     // Group sign
-    GroupSignPoint := MakePosition(1, -0.5);
+    fGroupSignCenter := MakePosition(1, -0.5);
     GetGraphic('sign_group.png', BMP);
-    NewRegion := MakeClickableImageAuto(GroupSignPoint, BMP.BoundsRect, NextGroup, BMP);
+    NewRegion := MakeClickableImageAuto(fGroupSignCenter, BMP.BoundsRect, NextGroup, BMP);
     NewRegion.CustomDrawCall := RedrawGroupSign;
 
     DrawAllClickables; // for the next step's sake
 
     // Group sign buttons
     GetGraphic('sign_group_up.png', BMP);
-    NewRegion := MakeClickableImageAuto(Point(GroupSignPoint.X + GROUP_BUTTONS_OFFSET_X, GroupSignPoint.Y + GROUP_BUTTON_UP_OFFSET_Y),
+    NewRegion := MakeClickableImageAuto(Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_UP_OFFSET_Y),
                                         BMP.BoundsRect, NextGroup, BMP, 3);
     NewRegion.ShortcutKeys.Add(VK_UP);
     NewRegion.CustomDrawCall := RedrawGroupSign;
 
     GetGraphic('sign_group_down.png', BMP);
-    NewRegion := MakeClickableImageAuto(Point(GroupSignPoint.X + GROUP_BUTTONS_OFFSET_X, GroupSignPoint.Y + GROUP_BUTTON_DOWN_OFFSET_Y),
+    NewRegion := MakeClickableImageAuto(Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_DOWN_OFFSET_Y),
                                         BMP.BoundsRect, PrevGroup, BMP, 3);
     NewRegion.ShortcutKeys.Add(VK_DOWN);
     NewRegion.CustomDrawCall := RedrawGroupSign;
@@ -335,6 +343,8 @@ begin
     MakeHiddenOption(VK_F6, DumpImages);
     MakeHiddenOption(VK_F7, DoMassReplayCheck);
     MakeHiddenOption(VK_F8, CleanseLevels);
+
+    fFinishedMakingSigns := true;
 
     DrawAllClickables;
   finally
@@ -571,15 +581,57 @@ begin
   UpdateGroupSign;
 end;
 
-procedure TGameMenuScreen.UpdateGroupSign;
+procedure TGameMenuScreen.UpdateGroupSign(aRedraw: Boolean);
+const
+  MAX_AUTOGEN_WIDTH = 70;
+  MAX_AUTOGEN_HEIGHT = 30;
+var
+  TempBmp: TBitmap32;
+  Sca: Double;
 begin
+  if not GetGraphic('rank_graphic.png', fGroupGraphic, true) then
+  begin
+    TempBmp := TBitmap32.Create;
+    try
+      MakeAutoSectionGraphic(TempBmp);
 
-  RedrawGroupSign;
+      if (TempBmp.Width <= MAX_AUTOGEN_WIDTH) and (TempBmp.Height < MAX_AUTOGEN_HEIGHT) then
+        Sca := 1
+      else
+        Sca := Min(MAX_AUTOGEN_WIDTH / TempBmp.Width, MAX_AUTOGEN_HEIGHT / TempBmp.Height);
+
+      fGroupGraphic.SetSize(Round(TempBmp.Width * Sca), Round(TempBmp.Height * Sca));
+      fGroupGraphic.Clear(0);
+
+      if Sca <> 1 then
+        TLinearResampler.Create(TempBmp);
+
+      TempBmp.DrawTo(fGroupGraphic, fGroupGraphic.BoundsRect);
+    finally
+      TempBmp.Free;
+    end;
+  end;
+
+  if aRedraw then
+    DrawAllClickables;
 end;
 
 procedure TGameMenuScreen.RedrawGroupSign;
+const
+  GROUP_GRAPHIC_OFFSET_X = 10;
+  GROUP_GRAPHIC_OFFSET_Y = 10;
 begin
+  fGroupGraphic.DrawTo(ScreenImg.Bitmap,
+                       fGroupSignCenter.X + GROUP_GRAPHIC_OFFSET_X - (fGroupGraphic.Width div 2),
+                       fGroupSignCenter.Y + GROUP_GRAPHIC_OFFSET_Y - (fGroupGraphic.Height div 2));
+end;
 
+procedure TGameMenuScreen.AfterRedrawClickables;
+begin
+  inherited;
+
+  if fFinishedMakingSigns then
+    RedrawGroupSign;
 end;
 
 procedure TGameMenuScreen.ShowTalismanScreen;

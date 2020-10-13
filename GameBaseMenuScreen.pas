@@ -124,6 +124,8 @@ type
       procedure OnMouseMoved(aPoint: TPoint); virtual;
       procedure OnKeyPress(var aKey: Word); virtual;
 
+      procedure AfterRedrawClickables; virtual;
+
       property MenuFont: TMenuFont read fMenuFont;
     public
       constructor Create(aOwner: TComponent); override;
@@ -554,6 +556,11 @@ begin
   // Intentionally blank.
 end;
 
+procedure TGameBaseMenuScreen.AfterRedrawClickables;
+begin
+  // Intentionally blank.
+end;
+
 procedure TGameBaseMenuScreen.SaveReplay;
 var
   S: String;
@@ -593,6 +600,8 @@ begin
     if Region.Bitmaps <> nil then
       Region.Bitmaps.DrawTo(ScreenImg.Bitmap, Region.Bounds, Region.GetSrcRect(Region.CurrentState));
   end;
+
+  AfterRedrawClickables;
 end;
 
 procedure TGameBaseMenuScreen.DrawBackground(aRegion: TRect);
