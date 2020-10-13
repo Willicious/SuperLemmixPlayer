@@ -106,6 +106,8 @@ type
 
       function MakeClickableImage(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
                                    aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
+      function MakeClickableImageAuto(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
+                                   aNormal: TBitmap32): TClickableRegion;
       function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction): TClickableRegion;
 
       function MakeHiddenOption(aKey: Word; aAction: TRegionAction): TClickableRegion; overload;
@@ -257,6 +259,91 @@ begin
     tmpHover.Free;
     tmpClick.Free;
   end;
+end;
+
+function TGameBaseMenuScreen.MakeClickableImageAuto(aImageCenter: TPoint;
+  aImageClickRect: TRect; aAction: TRegionAction;
+  aNormal: TBitmap32): TClickableRegion;
+const
+  MARGIN = 5;
+
+  HOVER_COLOR = $FFA0A0A0;
+  CLICK_COLOR = $FF404040;
+var
+  tmpNormal, tmpHover, tmpClick: TBitmap32;
+  Temp: TBitmap32;
+  x, y, n: Integer;
+  Intensity: Cardinal;
+begin
+  Temp := TBitmap32.Create;
+  tmpNormal := TBitmap32.Create;
+  tmpHover := TBitmap32.Create;
+  tmpClick := TBitmap32.Create;
+  try
+    Temp.SetSize(aNormal.Width + MARGIN * 2, aNormal.Height + MARGIN * 2);
+    Temp.Clear(0);
+    Temp.DrawMode := dmBlend;
+
+    tmpNormal.Assign(Temp);
+    tmpHover.Assign(Temp);
+    tmpClick.Assign(Temp);
+
+    aNormal.DrawTo(Temp, MARGIN, MARGIN);
+
+    // tmpNormal is used as a second temporary image within this loop
+    for n := 1 to MARGIN do
+    begin
+      for y := 0 to Temp.Height-1 do
+        for x := 0 to Temp.Width-1 do
+        begin
+          Intensity := 0;
+
+          // Diagonals
+          Intensity := Intensity + ((Temp.PixelS[x - 1, y - 1] and $FF000000) shr 24);
+          Intensity := Intensity + ((Temp.PixelS[x + 1, y - 1] and $FF000000) shr 24);
+          Intensity := Intensity + ((Temp.PixelS[x - 1, y + 1] and $FF000000) shr 24);
+          Intensity := Intensity + ((Temp.PixelS[x + 1, y + 1] and $FF000000) shr 24);
+
+          // Straights
+          Intensity := Intensity + ((Temp.PixelS[x - 1, y] and $FF000000) shr 24) * 2;
+          Intensity := Intensity + ((Temp.PixelS[x + 1, y] and $FF000000) shr 24) * 2;
+          Intensity := Intensity + ((Temp.PixelS[x, y - 1] and $FF000000) shr 24) * 2;
+          Intensity := Intensity + ((Temp.PixelS[x, y + 1] and $FF000000) shr 24) * 2;
+
+          Intensity := Min(Round(Intensity / 12 * 2), 255);
+          tmpNormal[x, y] := Intensity shl 24;
+        end;
+
+      Temp.Assign(tmpNormal);
+      tmpNormal.Clear(0);
+    end;
+    // end of usage of tmpNormal as a temporary image
+
+    for y := 0 to Temp.Height-1 do
+      for x := 0 to Temp.Width-1 do
+      begin
+        tmpHover[x, y] := (Temp[x, y] and $FF000000) or (HOVER_COLOR and $00FFFFFF);
+        tmpClick[x, y] := (Temp[x, y] and $FF000000) or (CLICK_COLOR and $00FFFFFF);
+      end;
+
+    Temp.Assign(aNormal);
+    Temp.DrawMode := dmBlend;
+
+    Temp.DrawTo(tmpNormal, MARGIN, MARGIN);
+    Temp.DrawTo(tmpHover, MARGIN, MARGIN);
+    Temp.DrawTo(tmpClick, MARGIN, MARGIN);
+
+    Types.OffsetRect(aImageClickRect, MARGIN, MARGIN);
+
+    Result := MakeClickableImage(aImageCenter, aImageClickRect, aAction,
+                                 tmpNormal, tmpHover, tmpClick);
+  finally
+    tmpNormal.Free;
+    tmpHover.Free;
+    tmpClick.Free;
+    Temp.Free;
+  end;
+
 end;
 
 function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
