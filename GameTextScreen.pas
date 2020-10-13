@@ -51,6 +51,8 @@ begin
     MakeHiddenOption(VK_ESCAPE, ExitToMenu);
     MakeHiddenOption(lka_SaveReplay, SaveReplay);
 
+    DrawAllClickables;
+
     if PreviewText then
       GameParams.ShownText := true;
   finally

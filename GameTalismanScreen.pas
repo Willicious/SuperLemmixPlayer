@@ -58,6 +58,8 @@ begin
 
     NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionNextPage, NextPage);
     NewRegion.ShortcutKeys.Add(VK_RIGHT);
+
+    DrawAllClickables;
   finally
     ScreenImg.EndUpdate;
   end;

@@ -358,6 +358,8 @@ begin
       ShortcutKeys.Add(VK_RETURN);
       ShortcutKeys.Add(VK_SPACE);
     end;
+
+    DrawAllClickables;
   end;
 end;
 

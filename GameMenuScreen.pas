@@ -1,15 +1,10 @@
 unit GameMenuScreen;
 
-{
-  Still to do here:
-  - Rank sign - GameParams.PrevGroup / GameParams.NextGroup exist, use them!
-                Rank graphic center is offset from rank sign center by 10, 10.
-}
-
 interface
 
 uses
   GameBaseMenuScreen,
+  GameControl,
   LemNeoLevelPack,
   LemNeoOnline,
   LemStrings,
@@ -21,7 +16,9 @@ uses
 type
   TGameMenuScreen = class(TGameBaseMenuScreen)
     private
+      GroupSignEraseBuffer: TBitmap32;
       ScrollerEraseBuffer: TBitmap32;
+
       ScrollerLemmings: TBitmap32;
       ScrollerReel: TBitmap32;
       ScrollerReelSegmentWidth: Integer;
@@ -60,6 +57,11 @@ type
       procedure BeginGame;
       procedure ExitGame;
 
+      procedure PrevGroup;
+      procedure NextGroup;
+      procedure UpdateGroupSign;
+      procedure RedrawGroupSign;
+
       procedure DumpImages;
       procedure CleanseLevels;
 
@@ -75,6 +77,7 @@ type
       procedure EnableIdle;
     protected
       procedure BuildScreen; override;
+      procedure CloseScreen(aNextScreen: TGameScreenType); override;
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
@@ -88,8 +91,7 @@ uses
   FNeoLemmixSetup,
   LemGame, // to clear replay
   LemVersion,
-  PngInterface,
-  GameControl;
+  PngInterface;
 
 const
   REEL_Y_POSITION = 456;
@@ -100,7 +102,10 @@ const
 constructor TGameMenuScreen.Create(aOwner: TComponent);
 begin
   inherited;
+
+  GroupSignEraseBuffer := TBitmap32.Create;
   ScrollerEraseBuffer := TBitmap32.Create;
+
   ScrollerLemmings := TBitmap32.Create;
   ScrollerReel := TBitmap32.Create;
   ScrollerText := TBitmap32.Create;
@@ -110,12 +115,15 @@ end;
 
 destructor TGameMenuScreen.Destroy;
 begin
+  GroupSignEraseBuffer.Free;
   ScrollerEraseBuffer.Free;
+
   ScrollerLemmings.Free;
   ScrollerReel.Free;
   ScrollerText.Free;
 
   fVersionInfo.Free;
+
   inherited;
 end;
 
@@ -190,6 +198,14 @@ begin
   aDst.DrawMode := dmBlend;
 end;
 
+procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
+begin
+  if fUpdateCheckThread <> nil then
+    FreeAndNil(fUpdateCheckThread);
+
+  inherited;
+end;
+
 procedure TGameMenuScreen.BuildScreen;
 begin
   inherited;
@@ -254,6 +270,10 @@ const
   CARD_AREA_CENTER_X = 432;
   CARD_AREA_CENTER_Y = 248;
 
+  GROUP_BUTTONS_OFFSET_X = -37;
+  GROUP_BUTTON_UP_OFFSET_Y = -4;
+  GROUP_BUTTON_DOWN_OFFSET_Y = 19;
+
   function MakePosition(aHorzOffset: Single; aVertOffset: Single): TPoint;
   begin
     Result.X := CARD_AREA_CENTER_X + Round(aHorzOffset * CARD_SPACING_HORZ);
@@ -263,6 +283,7 @@ const
 var
   NewRegion: TClickableRegion;
   BMP: TBitmap32;
+  GroupSignPoint: TPoint;
 begin
   BMP := TBitmap32.Create;
   try
@@ -278,7 +299,26 @@ begin
     NewRegion := MakeClickableImageAuto(MakePosition(0, -0.5), BMP.BoundsRect, DoLevelSelect, BMP);
     NewRegion.ShortcutKeys.Add(VK_F2);
 
-    // Insert group sign here
+    // Group sign
+    GroupSignPoint := MakePosition(1, -0.5);
+    GetGraphic('sign_group.png', BMP);
+    NewRegion := MakeClickableImageAuto(GroupSignPoint, BMP.BoundsRect, NextGroup, BMP);
+    NewRegion.CustomDrawCall := RedrawGroupSign;
+
+    DrawAllClickables; // for the next step's sake
+
+    // Group sign buttons
+    GetGraphic('sign_group_up.png', BMP);
+    NewRegion := MakeClickableImageAuto(Point(GroupSignPoint.X + GROUP_BUTTONS_OFFSET_X, GroupSignPoint.Y + GROUP_BUTTON_UP_OFFSET_Y),
+                                        BMP.BoundsRect, NextGroup, BMP, 3);
+    NewRegion.ShortcutKeys.Add(VK_UP);
+    NewRegion.CustomDrawCall := RedrawGroupSign;
+
+    GetGraphic('sign_group_down.png', BMP);
+    NewRegion := MakeClickableImageAuto(Point(GroupSignPoint.X + GROUP_BUTTONS_OFFSET_X, GroupSignPoint.Y + GROUP_BUTTON_DOWN_OFFSET_Y),
+                                        BMP.BoundsRect, PrevGroup, BMP, 3);
+    NewRegion.ShortcutKeys.Add(VK_DOWN);
+    NewRegion.CustomDrawCall := RedrawGroupSign;
 
     // Config
     GetGraphic('sign_config.png', BMP);
@@ -295,6 +335,8 @@ begin
     MakeHiddenOption(VK_F6, DumpImages);
     MakeHiddenOption(VK_F7, DoMassReplayCheck);
     MakeHiddenOption(VK_F8, CleanseLevels);
+
+    DrawAllClickables;
   finally
     BMP.Free;
   end;
@@ -515,6 +557,29 @@ end;
 procedure TGameMenuScreen.ExitGame;
 begin
   CloseScreen(gstExit);
+end;
+
+procedure TGameMenuScreen.PrevGroup;
+begin
+  GameParams.PrevGroup;
+  UpdateGroupSign;
+end;
+
+procedure TGameMenuScreen.NextGroup;
+begin
+  GameParams.NextGroup;
+  UpdateGroupSign;
+end;
+
+procedure TGameMenuScreen.UpdateGroupSign;
+begin
+
+  RedrawGroupSign;
+end;
+
+procedure TGameMenuScreen.RedrawGroupSign;
+begin
+
 end;
 
 procedure TGameMenuScreen.ShowTalismanScreen;

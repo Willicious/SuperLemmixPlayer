@@ -98,6 +98,8 @@ begin
     MakeHiddenOption(VK_F3, ShowConfigMenu);
 
     MakeHiddenOption(lka_SaveReplay, SaveReplay);
+
+    DrawAllClickables;
   finally
     ScreenImg.EndUpdate;
   end;

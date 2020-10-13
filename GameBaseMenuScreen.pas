@@ -48,6 +48,8 @@ type
       fCurrentState: TRegionState;
       fResetTimer: TTimer;
 
+      fCustomDrawCall: TRegionAction;
+
       function GetSrcRect(aState: TRegionState): TRect;
     public
       constructor Create(aAction: TRegionAction; aFunc: TLemmixHotkeyAction); overload;
@@ -66,6 +68,8 @@ type
       property Action: TRegionAction read fAction;
       property CurrentState: TRegionState read fCurrentState write fCurrentState;
       property ResetTimer: TTimer read fResetTimer write fResetTimer;
+
+      property CustomDrawCall: TRegionAction read fCustomDrawCall write fCustomDrawCall;
   end;
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
@@ -107,11 +111,12 @@ type
       function MakeClickableImage(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
                                    aNormal: TBitmap32; aHover: TBitmap32 = nil; aClick: TBitmap32 = nil): TClickableRegion;
       function MakeClickableImageAuto(aImageCenter: TPoint; aImageClickRect: TRect; aAction: TRegionAction;
-                                   aNormal: TBitmap32): TClickableRegion;
+                                   aNormal: TBitmap32; aMargin: Integer = -1): TClickableRegion;
       function MakeClickableText(aTextCenter: TPoint; aText: String; aAction: TRegionAction): TClickableRegion;
 
       function MakeHiddenOption(aKey: Word; aAction: TRegionAction): TClickableRegion; overload;
       function MakeHiddenOption(aFunc: TLemmixHotkeyAction; aAction: TRegionAction): TClickableRegion; overload;
+      procedure DrawAllClickables;
 
       function GetInternalMouseCoordinates: TPoint;
 
@@ -245,15 +250,6 @@ begin
 
     Result := TClickableRegion.Create(aImageCenter, aImageClickRect, aAction, tmpNormal, tmpHover, tmpClick);
     fClickableRegions.Add(Result);
-
-    if Types.PtInRect(Result.ClickArea, GetInternalMouseCoordinates) then
-    begin
-      Result.CurrentState := rsHover;
-      Result.Bitmaps.DrawTo(ScreenImg.Bitmap, Result.Bounds, Result.GetSrcRect(rsHover));
-    end else begin
-      Result.CurrentState := rsNormal;
-      Result.Bitmaps.DrawTo(ScreenImg.Bitmap, Result.Bounds, Result.GetSrcRect(rsNormal));
-    end;
   finally
     tmpNormal.Free;
     tmpHover.Free;
@@ -263,9 +259,9 @@ end;
 
 function TGameBaseMenuScreen.MakeClickableImageAuto(aImageCenter: TPoint;
   aImageClickRect: TRect; aAction: TRegionAction;
-  aNormal: TBitmap32): TClickableRegion;
+  aNormal: TBitmap32; aMargin: Integer): TClickableRegion;
 const
-  MARGIN = 5;
+  DEFAULT_MARGIN = 5;
 
   HOVER_COLOR = $FFA0A0A0;
   CLICK_COLOR = $FF404040;
@@ -275,12 +271,15 @@ var
   x, y, n: Integer;
   Intensity: Cardinal;
 begin
+  if aMargin < 0 then
+    aMargin := DEFAULT_MARGIN;
+
   Temp := TBitmap32.Create;
   tmpNormal := TBitmap32.Create;
   tmpHover := TBitmap32.Create;
   tmpClick := TBitmap32.Create;
   try
-    Temp.SetSize(aNormal.Width + MARGIN * 2, aNormal.Height + MARGIN * 2);
+    Temp.SetSize(aNormal.Width + aMargin * 2, aNormal.Height + aMargin * 2);
     Temp.Clear(0);
     Temp.DrawMode := dmBlend;
 
@@ -288,10 +287,10 @@ begin
     tmpHover.Assign(Temp);
     tmpClick.Assign(Temp);
 
-    aNormal.DrawTo(Temp, MARGIN, MARGIN);
+    aNormal.DrawTo(Temp, aMargin, aMargin);
 
     // tmpNormal is used as a second temporary image within this loop
-    for n := 1 to MARGIN do
+    for n := 1 to aMargin do
     begin
       for y := 0 to Temp.Height-1 do
         for x := 0 to Temp.Width-1 do
@@ -329,11 +328,11 @@ begin
     Temp.Assign(aNormal);
     Temp.DrawMode := dmBlend;
 
-    Temp.DrawTo(tmpNormal, MARGIN, MARGIN);
-    Temp.DrawTo(tmpHover, MARGIN, MARGIN);
-    Temp.DrawTo(tmpClick, MARGIN, MARGIN);
+    Temp.DrawTo(tmpNormal, aMargin, aMargin);
+    Temp.DrawTo(tmpHover, aMargin, aMargin);
+    Temp.DrawTo(tmpClick, aMargin, aMargin);
 
-    Types.OffsetRect(aImageClickRect, MARGIN, MARGIN);
+    Types.OffsetRect(aImageClickRect, aMargin, aMargin);
 
     Result := MakeClickableImage(aImageCenter, aImageClickRect, aAction,
                                  tmpNormal, tmpHover, tmpClick);
@@ -427,6 +426,8 @@ begin
   else
     Region.CurrentState := rsNormal;
 
+  DrawAllClickables;
+
   Region.ResetTimer := nil;
   Sender.Free;
 end;
@@ -455,7 +456,7 @@ begin
           end;
 
           fClickableRegions[i].CurrentState := rsClick;
-          fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsClick]);
+          DrawAllClickables;
         end;
 
         fClickableRegions[i].Action;
@@ -471,6 +472,7 @@ procedure TGameBaseMenuScreen.HandleMouseMove;
 var
   i: Integer;
   FoundActive: Boolean;
+  StatusChanged: Boolean;
 
   P: TPoint;
 begin
@@ -479,21 +481,23 @@ begin
 
   for i := fClickableRegions.Count-1 downto 0 do
     if fClickableRegions[i].Bitmaps <> nil then
-      if Types.PtInRect(fClickableRegions[i].ClickArea, P) and (fClickableRegions[i].CurrentState = rsNormal) and not FoundActive then
+      if Types.PtInRect(fClickableRegions[i].ClickArea, P) and not FoundActive then
       begin
-        fClickableRegions[i].CurrentState := rsHover;
-        fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsHover]);
+        if (fClickableRegions[i].CurrentState = rsNormal) then
+        begin
+          fClickableRegions[i].CurrentState := rsHover;
+          StatusChanged := true;
+        end;
 
         FoundActive := true;
-
-        ScreenImg.Bitmap.Changed;
       end else if (FoundActive or not Types.PtInRect(fClickableRegions[i].ClickArea, P)) and (fClickableRegions[i].CurrentState = rsHover) then
       begin
         fClickableRegions[i].CurrentState := rsNormal;
-        fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsNormal]);
-
-        ScreenImg.Bitmap.Changed;
+        StatusChanged := true;
       end;
+
+  if StatusChanged then
+    DrawAllClickables;
 
   OnMouseMoved(P); // This one we want to always call.
 end;
@@ -514,7 +518,7 @@ begin
         if fClickableRegions[i].ResetTimer = nil then
         begin
           NewTimer := TTimer.Create(self);
-          NewTimer.Interval := 100;
+          NewTimer.Interval := 40;
           NewTimer.Tag := i;
           NewTimer.OnTimer := OnClickTimer;
           fClickableRegions[i].ResetTimer := NewTimer;
@@ -575,6 +579,20 @@ end;
 procedure TGameBaseMenuScreen.DrawBackground;
 begin
   DrawBackground(ScreenImg.Bitmap.BoundsRect);
+end;
+
+procedure TGameBaseMenuScreen.DrawAllClickables;
+var
+  i: Integer;
+  Region: TClickableRegion;
+begin
+  HandleMouseMove; // To set statuses
+  for i := 0 to fClickableRegions.Count-1 do
+  begin
+    Region := fClickableRegions[i];
+    if Region.Bitmaps <> nil then
+      Region.Bitmaps.DrawTo(ScreenImg.Bitmap, Region.Bounds, Region.GetSrcRect(Region.CurrentState));
+  end;
 end;
 
 procedure TGameBaseMenuScreen.DrawBackground(aRegion: TRect);

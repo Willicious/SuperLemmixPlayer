@@ -192,6 +192,8 @@ begin
       MakeHiddenOption(VK_UP, NextRank);
       MakeHiddenOption(lka_LoadReplay, TryLoadReplay);
       MakeHiddenOption(lka_SaveImage, SaveLevelImage);
+
+      DrawAllClickables;
     finally
       W.Free;
     end;
