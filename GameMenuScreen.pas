@@ -5,7 +5,6 @@ unit GameMenuScreen;
   - Rank sign - GameParams.PrevGroup / GameParams.NextGroup exist, use them!
                 Rank graphic center is offset from rank sign center by 10, 10.
   - Update check
-  - Clean install check
   - First-time setup
 }
 
@@ -34,6 +33,8 @@ type
       fReelTextIndex: Integer;
       fReelFreezeIterations: Integer;
 
+      fCleanInstallFail: Boolean;
+
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
       procedure MakeAutoSectionGraphic(Dst: TBitmap32);
 
@@ -60,6 +61,8 @@ type
       procedure CleanseLevels;
 
       procedure ShowTalismanScreen; // Temporary
+
+      procedure DoCleanInstallCheck;
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
     protected
@@ -105,6 +108,17 @@ procedure TGameMenuScreen.ApplicationIdle(Sender: TObject; var Done: Boolean);
 begin
   UpdateReel;
 
+  if (fCleanInstallFail) then
+  begin
+    fCleanInstallFail := false;
+    ShowMessage('It appears you have installed this version of NeoLemmix over ' +
+                'an older major version. It is recommended that you perform a ' +
+                'clean install of NeoLemmix whenever updating to a new major ' +
+                'version. If you encounter any bugs, especially relating to ' +
+                'styles, please test with a fresh install before reporting them.');
+    fLastReelUpdateTickCount := GetTickCount64;
+  end;
+
   Done := false;
   Sleep(1);
 end;
@@ -140,6 +154,8 @@ begin
 
   LoadScrollerGraphics;
   DrawScroller;
+
+  DoCleanInstallCheck;
 
   if (GameParams.CurrentLevel <> nil) and
      (GameParams.CurrentLevel.Group.ScrollerList.Count > 0) then
@@ -345,8 +361,6 @@ var
   S: String;
 
   SizeRect: TRect;
-
-  StartTickCount: UInt64;
 begin
   for i := 1 to GameParams.CurrentLevel.Group.ScrollerList.Count do
   begin
@@ -510,6 +524,48 @@ begin
   SizeRect := MenuFont.GetTextSize(S);
   Dst.SetSize(SizeRect.Width, SizeRect.Height);
   MenuFont.DrawTextCentered(Dst, S, 0);
+end;
+
+procedure TGameMenuScreen.DoCleanInstallCheck;
+var
+  SL: TStringList;
+  FMVer, CVer: Integer;
+begin
+  SL := TStringList.Create;
+  try
+    if FileExists(AppPath + 'styles\version.ini') then
+    begin
+      SL.LoadFromFile(AppPath + 'styles\version.ini');
+      if SL.Count >= 4 then
+      begin
+        FMVer := StrToIntDef(SL[0], -1);
+        CVer := StrToIntDef(SL[1], -1);
+
+        if (FMVer < FORMAT_VERSION) or
+           ((FMVer = FORMAT_VERSION) and (CVer < CORE_VERSION)) then
+          fCleanInstallFail := true;
+      end;
+    end;
+
+    SL.Clear;
+    SL.Add(IntToStr(FORMAT_VERSION));
+    SL.Add(IntToStr(CORE_VERSION));
+    SL.Add(IntToStr(FEATURES_VERSION));
+    SL.Add(IntToStr(HOTFIX_VERSION));
+    {$ifdef rc}
+      SL.Add('RC');
+    {$else}
+      {$ifdef exp}
+        SL.Add('EXP');
+      {$else}
+        SL.Add('STABLE');
+      {$endif}
+    {$endif}
+
+    SL.SaveToFile(AppPath + 'styles\version.ini');
+  finally
+    SL.Free;
+  end;
 end;
 
 end.
