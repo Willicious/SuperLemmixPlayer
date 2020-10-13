@@ -32,7 +32,6 @@ type
 
       fComplete: Boolean;
       fSuccess: Boolean;
-      fDead: Boolean;
 
       fOnComplete: TProc;
     protected
@@ -44,6 +43,8 @@ type
 
       procedure Kill;
 
+      property Complete: Boolean read fComplete;
+      property Success: Boolean read fSuccess;
       property OnComplete: TProc read fOnComplete write fOnComplete;
   end;
 
@@ -58,7 +59,7 @@ uses
 procedure SetupDownloadThread(aThread: TDownloadThread; aOnComplete: TProc);
 begin
   aThread.OnComplete := aOnComplete;
-  aThread.FreeOnTerminate := true;
+  aThread.FreeOnTerminate := Assigned(aOnComplete);
   aThread.Start;
 end;
 
@@ -107,8 +108,6 @@ var
 begin
   inherited;
   try
-    fDead := false;
-
     if fTargetStream = nil then
       LoadToStringList := (fStringList <> nil)
     else
@@ -123,14 +122,13 @@ begin
 
     fStream.Position := 0;
 
-    if not fDead then
-      if LoadToStringList then
-      begin
-        fStringList.Clear;
-        fStringList.LoadFromStream(fStream);
-      end else begin
-        fTargetStream.CopyFrom(fStream, fStream.Size);
-      end;
+    if LoadToStringList then
+    begin
+      fStringList.Clear;
+      fStringList.LoadFromStream(fStream);
+    end else begin
+      fTargetStream.CopyFrom(fStream, fStream.Size);
+    end;
 
     fSuccess := true;
   except
@@ -145,7 +143,6 @@ end;
 
 procedure TDownloadThread.Kill;
 begin
-  fDead := true;
   Terminate;
   fOnComplete := nil;
 end;

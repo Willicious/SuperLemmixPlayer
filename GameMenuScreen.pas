@@ -4,7 +4,6 @@ unit GameMenuScreen;
   Still to do here:
   - Rank sign - GameParams.PrevGroup / GameParams.NextGroup exist, use them!
                 Rank graphic center is offset from rank sign center by 10, 10.
-  - Update check
 }
 
 interface
@@ -12,10 +11,12 @@ interface
 uses
   GameBaseMenuScreen,
   LemNeoLevelPack,
+  LemNeoOnline,
   LemStrings,
   LemTypes,
   GR32,
-  Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, Types, UMisc;
+  Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
+  Types, UMisc, StrUtils;
 
 type
   TGameMenuScreen = class(TGameBaseMenuScreen)
@@ -34,6 +35,8 @@ type
       fReelFreezeIterations: Integer;
 
       fCleanInstallFail: Boolean;
+      fUpdateCheckThread: TDownloadThread;
+      fVersionInfo: TStringList;
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
       procedure MakeAutoSectionGraphic(Dst: TBitmap32);
@@ -64,6 +67,8 @@ type
 
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
+      procedure InitiateUpdateCheck;
+      procedure HandleUpdateCheckResult;
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
       procedure DisableIdle;
@@ -78,6 +83,8 @@ type
 implementation
 
 uses
+  CustomPopup,
+  FStyleManager,
   FNeoLemmixSetup,
   LemGame, // to clear replay
   LemVersion,
@@ -97,6 +104,8 @@ begin
   ScrollerLemmings := TBitmap32.Create;
   ScrollerReel := TBitmap32.Create;
   ScrollerText := TBitmap32.Create;
+
+  fVersionInfo := TStringList.Create;
 end;
 
 destructor TGameMenuScreen.Destroy;
@@ -105,6 +114,8 @@ begin
   ScrollerLemmings.Free;
   ScrollerReel.Free;
   ScrollerText.Free;
+
+  fVersionInfo.Free;
   inherited;
 end;
 
@@ -113,6 +124,7 @@ begin
   if fCleanInstallFail then
   begin
     DisableIdle;
+
     fCleanInstallFail := false;
     ShowMessage('It appears you have installed this version of NeoLemmix over ' +
                 'an older major version. It is recommended that you perform a ' +
@@ -120,12 +132,26 @@ begin
                 'version. If you encounter any bugs, especially relating to ' +
                 'styles, please test with a fresh install before reporting them.');
     fLastReelUpdateTickCount := GetTickCount64;
+
     EnableIdle;
   end else if not GameParams.LoadedConfig then
   begin
     DisableIdle;
+
     GameParams.LoadedConfig := true;
     ShowSetupMenu;
+
+    EnableIdle;
+  end else if (fUpdateCheckThread <> nil) and (fUpdateCheckThread.Complete) then
+  begin
+    DisableIdle;
+
+    if fUpdateCheckThread.Success then
+      HandleUpdateCheckResult;
+
+    fUpdateCheckThread.Free;
+    fUpdateCheckThread := nil;
+
     EnableIdle;
   end else if not fDisableScroller then
     UpdateReel;
@@ -178,6 +204,9 @@ begin
   DrawScroller;
 
   DoCleanInstallCheck;
+
+  if not GameParams.DoneUpdateCheck then
+    InitiateUpdateCheck;
 
   if (GameParams.CurrentLevel <> nil) and
      (GameParams.CurrentLevel.Group.ScrollerList.Count > 0) then
@@ -605,6 +634,83 @@ begin
     {$endif}
 
     SL.SaveToFile(AppPath + 'styles\version.ini');
+  finally
+    SL.Free;
+  end;
+end;
+
+procedure TGameMenuScreen.InitiateUpdateCheck;
+begin
+  GameParams.DoneUpdateCheck := true;
+  if not GameParams.CheckUpdates then Exit;
+
+  fUpdateCheckThread := DownloadInThread(VERSION_FILE, fVersionInfo);
+end;
+
+procedure TGameMenuScreen.HandleUpdateCheckResult;
+var
+  NewVersionStr, OrigVersionStr: String;
+  SL: TStringList;
+  n: Integer;
+  NewestID: Int64;
+  URL: String;
+  F: TFManageStyles;
+begin
+  NewVersionStr := fVersionInfo.Values['game'];
+  if LeftStr(NewVersionStr, 1) = 'V' then
+    NewVersionStr := RightStr(NewVersionStr, Length(NewVersionStr)-1);
+
+  OrigVersionStr := NewVersionStr;
+  NewVersionStr := StringReplace(NewVersionStr, '-', '.', [rfReplaceAll]);
+
+  SL := TStringList.Create;
+  try
+    try
+      SL.Delimiter := '.';
+      SL.StrictDelimiter := true;
+      SL.DelimitedText := NewVersionStr;
+
+      if SL.Count < 4 then
+        SL.Add('A');
+
+      SL[3] := Char(Ord(SL[3][1]) - 65);
+
+      NewestID := 0;
+      for n := 0 to 3 do
+        NewestID := (NewestID * 1000) + StrToIntDef(SL[n], 0);
+
+      if (NewestID > CurrentVersionID){$ifdef exp} or (NewestID = CurrentVersionID){$endif} then
+      begin
+        case RunCustomPopup(self, 'Update', 'A NeoLemmix update, V' + OrigVersionStr + ', is available. Do you want to download it?',
+          'Go to NeoLemmix website|Remind me later') of
+          1: begin
+               URL := 'https://www.neolemmix.com/?page=neolemmix';
+               ShellExecute(0, 'open', PChar(URL), nil, nil, SW_SHOWNORMAL);
+               CloseScreen(gstExit);
+             end;
+           // 2: do nothing;
+        end;
+      end else if CheckStyleUpdates then
+      begin
+        // Add cursor stuff here
+
+        case RunCustomPopup(self, 'Styles Update', 'Styles updates are available. Do you want to download them?',
+          'Open Style Manager|Remind me later') of
+          1: begin
+               F := TFManageStyles.Create(self);
+               try
+                 F.ShowModal;
+               finally
+                 F.Free;
+               end;
+             end;
+          // 2: do nothing;
+        end;
+      end;
+
+    except
+      // Fail silently.
+    end;
   finally
     SL.Free;
   end;
