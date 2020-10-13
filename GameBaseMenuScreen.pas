@@ -470,20 +470,24 @@ end;
 procedure TGameBaseMenuScreen.HandleMouseMove;
 var
   i: Integer;
+  FoundActive: Boolean;
 
   P: TPoint;
 begin
   P := GetInternalMouseCoordinates;
+  FoundActive := false;
 
-  for i := 0 to fClickableRegions.Count-1 do
+  for i := fClickableRegions.Count-1 downto 0 do
     if fClickableRegions[i].Bitmaps <> nil then
-      if Types.PtInRect(fClickableRegions[i].ClickArea, P) and (fClickableRegions[i].CurrentState = rsNormal) then
+      if Types.PtInRect(fClickableRegions[i].ClickArea, P) and (fClickableRegions[i].CurrentState = rsNormal) and not FoundActive then
       begin
         fClickableRegions[i].CurrentState := rsHover;
         fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsHover]);
 
+        FoundActive := true;
+
         ScreenImg.Bitmap.Changed;
-      end else if (not Types.PtInRect(fClickableRegions[i].ClickArea, P)) and (fClickableRegions[i].CurrentState = rsHover) then
+      end else if (FoundActive or not Types.PtInRect(fClickableRegions[i].ClickArea, P)) and (fClickableRegions[i].CurrentState = rsHover) then
       begin
         fClickableRegions[i].CurrentState := rsNormal;
         fClickableRegions[i].Bitmaps.DrawTo(ScreenImg.Bitmap, fClickableRegions[i].Bounds, fClickableRegions[i].SrcRect[rsNormal]);
@@ -503,7 +507,7 @@ var
 begin
   P := GetInternalMouseCoordinates;
 
-  for i := 0 to fClickableRegions.Count-1 do
+  for i := fClickableRegions.Count-1 downto 0 do
     if fClickableRegions[i].Bitmaps <> nil then
       if Types.PtInRect(fClickableRegions[i].ClickArea, P) then
       begin
