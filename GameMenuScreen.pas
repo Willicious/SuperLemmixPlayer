@@ -26,7 +26,6 @@ type
     gmbLevelCode,    // 1st row, 2nd button
     gmbSection,      // 1st row, 3rd button
     gmbConfig,        // 2nd row, 1st button
-    gmbTalisman,   // 2nd row, 2nd button
     gmbExit,         // 2nd row, 3rd button
     gmbGameSection
   );
@@ -40,9 +39,8 @@ const
     (X:304;  Y:196),                  // gmbPlay
     (X:432;  Y:196),                  // gmbLevelCode
     (X:560;  Y:196),                  // gmbSection
-    (X:304;  Y:300),
-    (X:432;  Y:300),                  // gmbTalisman
-    (X:560;  Y:300),
+    (X:368;  Y:300),
+    (X:496;  Y:300),
     (X:570;  Y:206)
   );
 
@@ -315,15 +313,6 @@ var
   P: TPoint;
 begin
   P := GameMenuBitmapPositions[aElement];
-  // adjust gmbConfig to right, gmbExit to left, if no talismans
-  // and don't draw gmbTalisman at all
-  if   (GameParams.CurrentLevel = nil)
-    or (GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count = 0) then
-    case aElement of
-      gmbConfig: P.X := P.X + 64;
-      gmbExit: P.X := P.X - 64;
-      gmbTalisman: Exit;
-    end;
 
   P.X := P.X - (BitmapElements[aElement].Width div 2);
   P.Y := P.Y - (BitmapElements[aElement].Height div 2);
@@ -373,7 +362,6 @@ begin
     GetGraphic('sign_code.png', BitmapElements[gmbLevelCode]);
     GetGraphic('sign_rank.png', BitmapElements[gmbSection]);
     GetGraphic('sign_config.png', BitmapElements[gmbConfig]);
-    GetGraphic('sign_talisman.png', BitmapElements[gmbTalisman]);
     GetGraphic('sign_quit.png', BitmapElements[gmbExit]);
     // rank graphic will be loaded in SetSection!
 
@@ -403,7 +391,6 @@ begin
     DrawBitmapElement(gmbConfig);
     DrawBitmapElement(gmbSection);
     DrawBitmapElement(gmbExit);
-    DrawBitmapElement(gmbTalisman);
 
     // re-capture the gmbSection, because we'll probably need to re-draw it later
     // to prevent writing over section graphics with other semitransparent ones
