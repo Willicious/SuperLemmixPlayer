@@ -132,6 +132,8 @@ procedure TGameMenuScreen.BuildScreen;
 begin
   inherited;
 
+  CleanUpIngameStuff;
+
   DrawLogo;
   MakePanels;
   MakeFooterText;
