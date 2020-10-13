@@ -8,11 +8,19 @@ uses
   LemStrings,
   LemTypes,
   GR32,
-  Classes, SysUtils, Dialogs, Controls, Forms, Windows;
+  Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, Types, UMisc;
 
 type
   TGameMenuScreen = class(TGameBaseMenuScreen)
     private
+      ScrollerEraseBuffer: TBitmap32;
+      ScrollerLemmings: TBitmap32;
+      ScrollerReel: TBitmap32;
+      ScrollerReelSegmentWidth: Integer;
+
+      fLastReelUpdateTickCount: UInt64;
+      fReelFrame: Integer;
+
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
       procedure MakeAutoSectionGraphic(Dst: TBitmap32);
 
@@ -20,15 +28,27 @@ type
       procedure MakePanels;
       procedure MakeFooterText;
 
+      procedure LoadScrollerGraphics;
+      procedure DrawScroller;
+      procedure DrawReel;
+      procedure DrawWorkerLemmings;
+
       procedure BeginGame;
       procedure ExitGame;
 
       procedure DumpImages;
       procedure CleanseLevels;
 
+      procedure UpdateReel;
+
       procedure ShowTalismanScreen; // Temporary
+
+      procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
     protected
       procedure BuildScreen; override;
+    public
+      constructor Create(aOwner: TComponent); override;
+      destructor Destroy; override;
   end;
 
 implementation
@@ -38,7 +58,35 @@ uses
   PngInterface,
   GameControl;
 
+const
+  REEL_Y_POSITION = 462;
+  REEL_WIDTH = 34 * 16; // does NOT include the lemmings
+
 { TGameMenuScreen }
+
+constructor TGameMenuScreen.Create(aOwner: TComponent);
+begin
+  inherited;
+  ScrollerEraseBuffer := TBitmap32.Create;
+  ScrollerLemmings := TBitmap32.Create;
+  ScrollerReel := TBitmap32.Create;
+end;
+
+destructor TGameMenuScreen.Destroy;
+begin
+  ScrollerEraseBuffer.Free;
+  ScrollerLemmings.Free;
+  ScrollerReel.Free;
+  inherited;
+end;
+
+procedure TGameMenuScreen.ApplicationIdle(Sender: TObject; var Done: Boolean);
+begin
+  UpdateReel;
+
+  Done := false;
+  Sleep(1);
+end;
 
 function TGameMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
 begin
@@ -66,6 +114,11 @@ begin
   DrawLogo;
   MakePanels;
   MakeFooterText;
+
+  LoadScrollerGraphics;
+
+  Application.OnIdle := ApplicationIdle;
+  fLastReelUpdateTickCount := GetTickCount64;
 end;
 
 procedure TGameMenuScreen.DrawLogo;
@@ -173,6 +226,92 @@ begin
 
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, FOOTER_START_Y_POSITION);
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, NLInfoText, NL_INFO_Y_POSITION);
+end;
+
+procedure TGameMenuScreen.LoadScrollerGraphics;
+var
+  BMP: TBitmap32;
+  x: Integer;
+  EraseSrcRect: TRect;
+begin
+  BMP := TBitmap32.Create;
+  try
+    GetGraphic('scroller_lemmings.png', ScrollerLemmings);
+    GetGraphic('scroller_segment.png', BMP);
+
+    ScrollerReelSegmentWidth := BMP.Width;
+    ScrollerReel.SetSize(REEL_WIDTH + ScrollerReelSegmentWidth, BMP.Height);
+
+    x := 0;
+    while x < ScrollerReel.Width do
+    begin
+      BMP.DrawTo(ScrollerReel, x, 0);
+      x := x + BMP.Width;
+    end;
+
+    EraseSrcRect := Rect(0, REEL_Y_POSITION, ScreenImg.Width, REEL_Y_POSITION + BMP.Height);
+    ScrollerEraseBuffer.SetSize(EraseSrcRect.Width, EraseSrcRect.Height);
+    ScreenImg.Bitmap.DrawTo(ScrollerEraseBuffer, 0, 0, EraseSrcRect);
+  finally
+    BMP.Free;
+  end;
+end;
+
+procedure TGameMenuScreen.UpdateReel;
+const
+  MS_PER_UPDATE = 8;
+var
+  Updates: Integer;
+  n: Integer;
+begin
+  Updates := (GetTickCount64 - fLastReelUpdateTickCount) div MS_PER_UPDATE;
+
+  if Updates > 0 then
+  begin
+    for n := 0 to Updates-1 do
+    begin
+      Inc(fLastReelUpdateTickCount, MS_PER_UPDATE);
+      Inc(fReelFrame);
+    end;
+
+    DrawScroller;
+  end;
+end;
+
+procedure TGameMenuScreen.DrawScroller;
+begin
+  ScrollerEraseBuffer.DrawTo(ScreenImg.Bitmap, 0, REEL_Y_POSITION);
+
+  DrawReel;
+  DrawWorkerLemmings;
+end;
+
+procedure TGameMenuScreen.DrawReel;
+var
+  SrcRect: TRect;
+begin
+  SrcRect := SizedRect(fReelFrame mod ScrollerReelSegmentWidth, 0, REEL_WIDTH, ScrollerReel.Height);
+  ScrollerReel.DrawTo(ScreenImg.Bitmap, (ScreenImg.Bitmap.Width - REEL_WIDTH) div 2, REEL_Y_POSITION, SrcRect);
+end;
+
+procedure TGameMenuScreen.DrawWorkerLemmings;
+var
+  SrcRect, DstRect: TRect;
+  Frame: Integer;
+const
+  SCROLLER_LEMMING_FRAME_COUNT = 16;
+begin
+  Frame := (fReelFrame div 2) mod SCROLLER_LEMMING_FRAME_COUNT;
+
+  SrcRect := Rect(0, 0, ScrollerLemmings.Width div 2, ScrollerLemmings.Height div SCROLLER_LEMMING_FRAME_COUNT);
+  Types.OffsetRect(SrcRect, 0, SrcRect.Height * Frame);
+
+  DstRect := SizedRect((ScreenImg.Bitmap.Width - REEL_WIDTH) div 2 - SrcRect.Width, REEL_Y_POSITION, SrcRect.Width, SrcRect.Height);
+  ScrollerLemmings.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
+
+  Types.OffsetRect(SrcRect, SrcRect.Width, 0);
+  DstRect := SizedRect((ScreenImg.Bitmap.Width + REEL_WIDTH) div 2, REEL_Y_POSITION, SrcRect.Width, SrcRect.Height);
+  ScrollerLemmings.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 end;
 
 procedure TGameMenuScreen.BeginGame;

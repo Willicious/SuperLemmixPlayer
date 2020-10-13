@@ -93,8 +93,6 @@ type
     procedure SetSoundOptions(aOptions: TGameSoundOptions);
     procedure SetSection;
     procedure NextSection(Forwards: Boolean);
-    procedure DrawWorkerLemmings(aFrame: Integer);
-    procedure DrawReel;
     procedure SetNextCredit;
     procedure PerformUpdateCheck;
     procedure PerformCleanInstallCheck;
@@ -355,9 +353,6 @@ begin
     else
       CreditList.Text := 'No pack' + #13;
 
-    // credits animation
-    DrawWorkerLemmings(0);
-    DrawReel;
 
     // a bit weird place, but here we know the bitmaps are loaded
     SetSection;
@@ -508,21 +503,7 @@ begin
   DrawBitmapElement(gmbGameSection);
 end;
 
-procedure TGameOldMenuScreen.DrawWorkerLemmings(aFrame: Integer);
-var
-  SrcRect, DstRect: TRect;
-begin
-  SrcRect := CalcFrameRect(LeftLemmingAnimation, 16, aFrame);
-  DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
-  OffsetRect(DstRect, (864 - ReelBuffer.Width) div 2 - LeftLemmingAnimation.Width, YPos_Credits);
-  fBackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
-  LeftLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 
-  DstRect := Rect(0, 0, RectWidth(SrcRect), RectHeight(SrcRect));
-  OffsetRect(DstRect, (864 + ReelBuffer.Width) div 2, YPos_Credits);
-  fBackBuffer.DrawTo(ScreenImg.Bitmap, DstRect, DstRect);
-  RightLemmingAnimation.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
-end;
 
 procedure TGameOldMenuScreen.SetNextCredit;
 var
@@ -547,14 +528,6 @@ begin
   TextSize := Length(CreditString) * Font_Width;
   TextPauseX := (Reel_Width - TextSize) div 2;
   TextGoneX := -TextSize;// + 10 * Font_Width;
-end;
-
-procedure TGameOldMenuScreen.DrawReel;
-begin
-  // Drawing of the moving credits.
-  Reel.DrawTo(ReelBuffer, ReelShift, 0);
-  MenuFont.DrawText(ReelBuffer, CreditString, TextX, 0);
-  ReelBuffer.DrawTo(ScreenImg.Bitmap, (864 - ReelBuffer.Width) div 2, YPos_Credits);
 end;
 
 procedure TGameOldMenuScreen.Application_Idle(Sender: TObject; var Done: Boolean);
@@ -622,9 +595,6 @@ begin
     // if text can be centered then pause if we are there
     if (not PausingDone) and (TextPauseX >= 0) and (TextX <= TextPauseX) then
       Pausing := True;
-
-    DrawWorkerLemmings(CurrentFrame);
-    DrawReel;
   end;
 end;
 
