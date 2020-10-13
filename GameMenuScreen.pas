@@ -1,5 +1,14 @@
 unit GameMenuScreen;
 
+{
+  Still to do here:
+  - Rank sign - GameParams.PrevGroup / GameParams.NextGroup exist, use them!
+                Rank graphic center is offset from rank sign center by 10, 10.
+  - Update check
+  - Clean install check
+  - First-time setup
+}
+
 interface
 
 uses
@@ -27,6 +36,8 @@ type
 
       function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
       procedure MakeAutoSectionGraphic(Dst: TBitmap32);
+
+      procedure CleanupIngameStuff;
 
       procedure DrawLogo;
       procedure MakePanels;
@@ -61,6 +72,7 @@ type
 implementation
 
 uses
+  LemGame, // to clear replay
   LemVersion,
   PngInterface,
   GameControl;
@@ -136,6 +148,17 @@ begin
     PrepareNextReelText;
   end;
   fLastReelUpdateTickCount := GetTickCount64;
+end;
+
+procedure TGameMenuScreen.CleanupIngameStuff;
+begin
+  if Assigned(GlobalGame) then
+    GlobalGame.ReplayManager.Clear(true);
+
+  GameParams.ShownText := false;
+
+  GameParams.SoundOptions := GameParams.SoundOptions; // Seems pointless, but this was (indirectly) in
+                                                      // the old menu code, probably for a good reason.
 end;
 
 procedure TGameMenuScreen.DrawLogo;
