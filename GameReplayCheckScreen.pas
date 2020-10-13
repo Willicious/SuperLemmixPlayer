@@ -64,6 +64,7 @@ type
     protected
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
+      function GetBackgroundSuffix: String; override;
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
@@ -74,6 +75,22 @@ implementation
 uses Forms, LemNeoLevelPack, CustomPopup;
 
 { TGameReplayCheckScreen }
+
+constructor TGameReplayCheckScreen.Create(aOwner: TComponent);
+begin
+  inherited;
+
+  fScreenText := TStringList.Create;
+  fReplays := TReplayCheckEntries.Create;
+end;
+
+destructor TGameReplayCheckScreen.Destroy;
+begin
+  fScreenText.Free;
+  fReplays.Free;
+
+  inherited;
+end;
 
 procedure TGameReplayCheckScreen.Application_Idle(Sender: TObject; var Done: Boolean);
 var
@@ -413,20 +430,9 @@ begin
     inherited;
 end;
 
-constructor TGameReplayCheckScreen.Create(aOwner: TComponent);
+function TGameReplayCheckScreen.GetBackgroundSuffix: String;
 begin
-  inherited;
-
-  fScreenText := TStringList.Create;
-  fReplays := TReplayCheckEntries.Create;
-end;
-
-destructor TGameReplayCheckScreen.Destroy;
-begin
-  fScreenText.Free;
-  fReplays.Free;
-
-  inherited;
+  Result := 'replay_check';
 end;
 
 procedure TGameReplayCheckScreen.ExitToMenu;

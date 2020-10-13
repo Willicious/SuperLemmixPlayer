@@ -35,6 +35,7 @@ type
       procedure PrevPage;
     protected
       procedure BuildScreen; override;
+      function GetBackgroundSuffix: String; override;
   end;
 
 implementation
@@ -63,6 +64,11 @@ begin
   finally
     ScreenImg.EndUpdate;
   end;
+end;
+
+function TGameTalismanScreen.GetBackgroundSuffix: String;
+begin
+  Result := 'talisman';
 end;
 
 function TGameTalismanScreen.GetScreenText: string;

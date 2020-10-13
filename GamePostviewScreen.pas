@@ -35,6 +35,7 @@ type
       procedure PrepareGameParams; override;
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
+      function GetBackgroundSuffix: String; override;
   end;
 
 implementation
@@ -46,6 +47,11 @@ uses Forms;
 procedure TGamePostviewScreen.CloseScreen(aNextScreen: TGameScreenType);
 begin
   inherited CloseScreen(aNextScreen);
+end;
+
+function TGamePostviewScreen.GetBackgroundSuffix: String;
+begin
+  Result := 'postview';
 end;
 
 procedure TGamePostviewScreen.PrepareGameParams;

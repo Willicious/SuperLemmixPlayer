@@ -39,7 +39,6 @@ type
 
       fFinishedMakingSigns: Boolean;
 
-      function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
       procedure MakeAutoSectionGraphic(Dst: TBitmap32);
 
       procedure CleanupIngameStuff;
@@ -83,6 +82,7 @@ type
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
       procedure AfterRedrawClickables; override;
+      function GetBackgroundSuffix: String; override;
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
@@ -184,25 +184,6 @@ procedure TGameMenuScreen.EnableIdle;
 begin
   Application.OnIdle := ApplicationIdle;
   fLastReelUpdateTickCount := GetTickCount64;
-end;
-
-function TGameMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
-begin
-  Result := true;
-
-  if (not (GameParams.CurrentLevel = nil))
-     and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
-  else if FileExists(AppPath + SFGraphicsMenu + aName) then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
-  else begin
-    if not aAcceptFailure then
-      raise Exception.Create('Could not find gfx\menu\' + aName + '.');
-
-    Result := false;
-  end;
-
-  aDst.DrawMode := dmBlend;
 end;
 
 procedure TGameMenuScreen.CloseScreen(aNextScreen: TGameScreenType);
@@ -632,6 +613,11 @@ begin
 
   if fFinishedMakingSigns then
     RedrawGroupSign;
+end;
+
+function TGameMenuScreen.GetBackgroundSuffix: String;
+begin
+  Result := 'menu';
 end;
 
 procedure TGameMenuScreen.ShowTalismanScreen;

@@ -105,6 +105,8 @@ type
       procedure ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);
       procedure DoAfterConfig; virtual;
 
+      function GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
+
       procedure DrawBackground; overload;
       procedure DrawBackground(aRegion: TRect); overload;
 
@@ -125,6 +127,8 @@ type
       procedure OnKeyPress(var aKey: Word); virtual;
 
       procedure AfterRedrawClickables; virtual;
+
+      function GetBackgroundSuffix: String; virtual; abstract;
 
       property MenuFont: TMenuFont read fMenuFont;
     public
@@ -584,11 +588,6 @@ begin
   ScreenImg.Cursor := CursorIndex;
 end;
 
-procedure TGameBaseMenuScreen.DrawBackground;
-begin
-  DrawBackground(ScreenImg.Bitmap.BoundsRect);
-end;
-
 procedure TGameBaseMenuScreen.DrawAllClickables;
 var
   i: Integer;
@@ -605,6 +604,30 @@ begin
   AfterRedrawClickables;
 end;
 
+function TGameBaseMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
+begin
+  Result := true;
+
+  if (not (GameParams.CurrentLevel = nil))
+     and FileExists(GameParams.CurrentLevel.Group.FindFile(aName)) then
+    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile(aName), aDst)
+  else if FileExists(AppPath + SFGraphicsMenu + aName) then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + aName, aDst)
+  else begin
+    if not aAcceptFailure then
+      raise Exception.Create('Could not find gfx\menu\' + aName + '.');
+
+    Result := false;
+  end;
+
+  aDst.DrawMode := dmBlend;
+end;
+
+procedure TGameBaseMenuScreen.DrawBackground;
+begin
+  DrawBackground(ScreenImg.Bitmap.BoundsRect);
+end;
+
 procedure TGameBaseMenuScreen.DrawBackground(aRegion: TRect);
 var
   aX, aY: Integer;
@@ -615,10 +638,8 @@ begin
   BgImage := TBitmap32.Create;
 
   try
-    if (not (GameParams.CurrentLevel = nil)) and FileExists(GameParams.CurrentLevel.Group.FindFile('background.png')) then
-      TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('background.png'), BgImage)
-    else if FileExists(AppPath + SFGraphicsMenu + 'background.png') then
-      TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'background.png', BgImage);
+    if not GetGraphic('background_' + GetBackgroundSuffix + '.png', BgImage, true) then
+      GetGraphic('background.png', BgImage, true);
 
     if (BgImage.Width = 0) or (BgImage.Height = 0) then
     begin

@@ -34,6 +34,7 @@ type
       procedure TryLoadReplay;
     protected
       procedure DoAfterConfig; override;
+      function GetBackgroundSuffix: String; override;
     public
       procedure BuildScreen; override;
       procedure PrepareGameParams; override;
@@ -239,6 +240,11 @@ procedure TGamePreviewScreen.DoAfterConfig;
 begin
   inherited;
   CloseScreen(gstPreview);
+end;
+
+function TGamePreviewScreen.GetBackgroundSuffix: String;
+begin
+  Result := 'preview';
 end;
 
 procedure TGamePreviewScreen.ExitToMenu;

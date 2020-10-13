@@ -26,6 +26,7 @@ type
       procedure ExitToMenu;
     protected
       procedure BuildScreen; override;
+      function GetBackgroundSuffix: String; override;
     public
       property PreviewText: Boolean read fPreviewText write fPreviewText;
   end;
@@ -58,6 +59,14 @@ begin
   finally
     ScreenImg.EndUpdate;
   end;
+end;
+
+function TGameTextScreen.GetBackgroundSuffix: String;
+begin
+  if PreviewText then
+    Result := 'pretext'
+  else
+    Result := 'posttext';
 end;
 
 function TGameTextScreen.GetScreenText: string;
