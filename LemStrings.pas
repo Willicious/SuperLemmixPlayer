@@ -103,7 +103,6 @@ resourcestring
   SVaporizer = 'Frier';
   SBlocker = 'Blocker';
   SShrugger = 'Shrugger';
-  SOhnoer = 'Ohnoer';
   SExploder = 'Bomber';
   SPlatformer = 'Platformer';
   SStacker = 'Stacker';
@@ -174,7 +173,7 @@ const
     SVaporizer,
     SBlocker,
     SShrugger,
-    SOhnoer,
+    SExploder,
     SExploder,
     SDummyString,
     SPlatformer,
