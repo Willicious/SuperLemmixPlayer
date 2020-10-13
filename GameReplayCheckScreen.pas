@@ -65,6 +65,8 @@ type
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
       function GetBackgroundSuffix: String; override;
+
+      procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
@@ -397,6 +399,14 @@ begin
   end;
 
   Application.OnIdle := Application_Idle; // this delays processing until the form is visible
+end;
+
+procedure TGameReplayCheckScreen.OnMouseClick(aPoint: TPoint;
+  aButton: TMouseButton);
+begin
+  inherited;
+  if not fProcessing then
+    ExitToMenu;
 end;
 
 procedure TGameReplayCheckScreen.OutputText;

@@ -24,9 +24,12 @@ type
       function GetScreenText: string;
       procedure ToNextScreen;
       procedure ExitToMenu;
+      procedure TryLoadReplay;
     protected
       procedure BuildScreen; override;
       function GetBackgroundSuffix: String; override;
+
+      procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
       property PreviewText: Boolean read fPreviewText write fPreviewText;
   end;
@@ -50,7 +53,11 @@ begin
     NewOption.ShortcutKeys.Add(VK_SPACE);
 
     MakeHiddenOption(VK_ESCAPE, ExitToMenu);
-    MakeHiddenOption(lka_SaveReplay, SaveReplay);
+
+    if PreviewText then
+      MakeHiddenOption(lka_LoadReplay, TryLoadReplay)
+    else
+      MakeHiddenOption(lka_SaveReplay, SaveReplay);
 
     DrawAllClickables;
 
@@ -205,6 +212,12 @@ begin
       LF(1);
 end;
 
+procedure TGameTextScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
+begin
+  inherited;
+  ToNextScreen;
+end;
+
 procedure TGameTextScreen.ExitToMenu;
 begin
   if GameParams.TestModeLevel <> nil then
@@ -216,6 +229,12 @@ end;
 procedure TGameTextScreen.ToNextScreen;
 begin
   CloseScreen(GameParams.NextScreen);
+end;
+
+procedure TGameTextScreen.TryLoadReplay;
+begin
+  // See comment on TGamePreviewScreen.TryLoadReplay.
+  LoadReplay;
 end;
 
 end.

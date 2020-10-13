@@ -35,6 +35,8 @@ type
     protected
       procedure DoAfterConfig; override;
       function GetBackgroundSuffix: String; override;
+
+      procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
       procedure BuildScreen; override;
       procedure PrepareGameParams; override;
@@ -123,6 +125,17 @@ end;
 procedure TGamePreviewScreen.BeginPlay;
 begin
   CloseScreen(gstPlay);
+end;
+
+procedure TGamePreviewScreen.OnMouseClick(aPoint: TPoint;
+  aButton: TMouseButton);
+begin
+  inherited;
+  case aButton of
+    mbLeft: BeginPlay;
+    mbRight: ExitToMenu;
+    mbMiddle: begin GameParams.ShownText := false; BeginPlay; end;
+  end;
 end;
 
 procedure TGamePreviewScreen.BuildScreen;

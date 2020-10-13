@@ -36,6 +36,8 @@ type
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
       function GetBackgroundSuffix: String; override;
+
+      procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
   end;
 
 implementation
@@ -64,6 +66,17 @@ procedure TGamePostviewScreen.NextLevel;
 begin
   GameParams.NextLevel(true);
   CloseScreen(gstPreview);
+end;
+
+procedure TGamePostviewScreen.OnMouseClick(aPoint: TPoint;
+  aButton: TMouseButton);
+begin
+  inherited;
+  case aButton of
+    mbLeft: if GameParams.GameResult.gSuccess then NextLevel else ReplaySameLevel;
+    mbRight: ExitToMenu;
+    mbMiddle: ReplaySameLevel;
+  end;
 end;
 
 procedure TGamePostviewScreen.ReplaySameLevel;
