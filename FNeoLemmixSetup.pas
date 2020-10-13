@@ -48,6 +48,7 @@ end;
 
 procedure TFNLSetup.btnExitClick(Sender: TObject);
 begin
+  GameParams.DisableSaveOptions := true;
   Application.Terminate;
 end;
 

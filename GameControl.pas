@@ -253,6 +253,8 @@ type
     property CurrentGroupName: String read GetCurrentGroupName;
 
     property Username: String read fUsername write SetUsername;
+
+    property DisableSaveOptions: Boolean read fDisableSaveOptions write fDisableSaveOptions;
   published
   end;
 
@@ -272,6 +274,11 @@ uses
 
 procedure TDosGameParams.Save;
 begin
+  if TestModeLevel <> nil then Exit;
+  if fDisableSaveOptions then Exit;
+  if not LoadedConfig then Exit;
+  
+
   if IsHalting then Exit;
   try
     SaveToIniFile;
@@ -329,9 +336,6 @@ var
       SL.Add(SL2[i]);
   end;
 begin
-  if GameParams.TestModeLevel <> nil then Exit;  
-  if fDisableSaveOptions then Exit;
-
   SL := TStringList.Create;
   SL2 := TStringList.Create;
 

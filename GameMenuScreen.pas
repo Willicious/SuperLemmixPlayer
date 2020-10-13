@@ -5,7 +5,6 @@ unit GameMenuScreen;
   - Rank sign - GameParams.PrevGroup / GameParams.NextGroup exist, use them!
                 Rank graphic center is offset from rank sign center by 10, 10.
   - Update check
-  - First-time setup
 }
 
 interface
@@ -27,6 +26,7 @@ type
       ScrollerReelSegmentWidth: Integer;
       ScrollerText: TBitmap32;
 
+      fDisableScroller: Boolean;
       fLastReelUpdateTickCount: UInt64;
       fReelFrame: Integer;
       fReelTextPos: Integer;
@@ -62,9 +62,12 @@ type
 
       procedure ShowTalismanScreen; // Temporary
 
+      procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
 
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
+      procedure DisableIdle;
+      procedure EnableIdle;
     protected
       procedure BuildScreen; override;
     public
@@ -75,6 +78,7 @@ type
 implementation
 
 uses
+  FNeoLemmixSetup,
   LemGame, // to clear replay
   LemVersion,
   PngInterface,
@@ -106,10 +110,9 @@ end;
 
 procedure TGameMenuScreen.ApplicationIdle(Sender: TObject; var Done: Boolean);
 begin
-  UpdateReel;
-
-  if (fCleanInstallFail) then
+  if fCleanInstallFail then
   begin
+    DisableIdle;
     fCleanInstallFail := false;
     ShowMessage('It appears you have installed this version of NeoLemmix over ' +
                 'an older major version. It is recommended that you perform a ' +
@@ -117,10 +120,29 @@ begin
                 'version. If you encounter any bugs, especially relating to ' +
                 'styles, please test with a fresh install before reporting them.');
     fLastReelUpdateTickCount := GetTickCount64;
-  end;
+    EnableIdle;
+  end else if not GameParams.LoadedConfig then
+  begin
+    DisableIdle;
+    GameParams.LoadedConfig := true;
+    ShowSetupMenu;
+    EnableIdle;
+  end else if not fDisableScroller then
+    UpdateReel;
 
   Done := false;
   Sleep(1);
+end;
+
+procedure TGameMenuScreen.DisableIdle;
+begin
+  Application.OnIdle := nil;
+end;
+
+procedure TGameMenuScreen.EnableIdle;
+begin
+  Application.OnIdle := ApplicationIdle;
+  fLastReelUpdateTickCount := GetTickCount64;
 end;
 
 function TGameMenuScreen.GetGraphic(aName: String; aDst: TBitmap32; aAcceptFailure: Boolean = false): Boolean;
@@ -160,12 +182,12 @@ begin
   if (GameParams.CurrentLevel <> nil) and
      (GameParams.CurrentLevel.Group.ScrollerList.Count > 0) then
   begin
-    Application.OnIdle := ApplicationIdle;
-
     fReelTextIndex := -1;
     PrepareNextReelText;
-  end;
-  fLastReelUpdateTickCount := GetTickCount64;
+  end else
+    fDisableScroller := true;
+
+  EnableIdle;
 end;
 
 procedure TGameMenuScreen.CleanupIngameStuff;
@@ -366,7 +388,7 @@ begin
   begin
     if i = GameParams.CurrentLevel.Group.ScrollerList.Count then
     begin
-      Application.OnIdle := nil;
+      fDisableScroller := true;
       Exit;
     end;
 
@@ -524,6 +546,26 @@ begin
   SizeRect := MenuFont.GetTextSize(S);
   Dst.SetSize(SizeRect.Width, SizeRect.Height);
   MenuFont.DrawTextCentered(Dst, S, 0);
+end;
+
+procedure TGameMenuScreen.ShowSetupMenu;
+var
+  F: TFNLSetup;
+  OldFullScreen: Boolean;
+  OldHighRes: Boolean;
+begin
+  F := TFNLSetup.Create(self);
+  try
+    OldFullScreen := GameParams.FullScreen;
+    OldHighRes := GameParams.HighResolution;
+
+    F.ShowModal;
+
+    // And apply the settings chosen
+    ApplyConfigChanges(OldFullScreen, OldHighRes, false, false);
+  finally
+    F.Free;
+  end;
 end;
 
 procedure TGameMenuScreen.DoCleanInstallCheck;
