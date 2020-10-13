@@ -23,7 +23,7 @@ uses
   GameBaseSkillPanel in 'GameBaseSkillPanel.pas',
   GameCommandLine in 'GameCommandLine.pas',
   GameControl in 'GameControl.pas',
-  GameMenuScreen in 'GameMenuScreen.pas',
+  GameOldMenuScreen in 'GameOldMenuScreen.pas',
   GamePostviewScreen in 'GamePostviewScreen.pas',
   GamePreviewScreen in 'GamePreviewScreen.pas',
   GameReplayCheckScreen in 'GameReplayCheckScreen.pas',
@@ -71,7 +71,8 @@ uses
   SharedGlobals in 'SharedGlobals.pas',
   FStyleManager in 'FStyleManager.pas' {FManageStyles},
   LemMenuFont in 'LemMenuFont.pas',
-  GameBaseMenuScreen in 'GameBaseMenuScreen.pas';
+  GameBaseMenuScreen in 'GameBaseMenuScreen.pas',
+  GameMenuScreen in 'GameMenuScreen.pas';
 
 {$R *.res}
 

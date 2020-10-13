@@ -25,20 +25,16 @@ const
 
 type
   TGameTalismanScreen = class(TGameBaseMenuScreen)
-  private
-    ScreenText: string;
-    fPack: TNeoLevelGroup;
-    function GetScreenText: string;
+    private
+      ScreenText: string;
+      fPack: TNeoLevelGroup;
+      function GetScreenText: string;
 
-    procedure ExitToMenu;
-    procedure NextPage;
-    procedure PrevPage;
-  protected
-    procedure BuildScreen; override;
-  public
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-  published
+      procedure ExitToMenu;
+      procedure NextPage;
+      procedure PrevPage;
+    protected
+      procedure BuildScreen; override;
   end;
 
 implementation
@@ -65,16 +61,6 @@ begin
   finally
     ScreenImg.EndUpdate;
   end;
-end;
-
-constructor TGameTalismanScreen.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
-end;
-
-destructor TGameTalismanScreen.Destroy;
-begin
-  inherited Destroy;
 end;
 
 function TGameTalismanScreen.GetScreenText: string;

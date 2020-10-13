@@ -19,27 +19,25 @@ uses
 
 type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
-  private
-    function GetScreenText: string;
+    private
+      function GetScreenText: string;
 
-    procedure NextLevel;
-    procedure PreviousLevel;
-    procedure NextRank;
-    procedure PreviousRank;
+      procedure NextLevel;
+      procedure PreviousLevel;
+      procedure NextRank;
+      procedure PreviousRank;
 
-    procedure BeginPlay;
-    procedure ExitToMenu;
+      procedure BeginPlay;
+      procedure ExitToMenu;
 
-    procedure SaveLevelImage;
-    procedure TryLoadReplay;
-  protected
-    procedure DoAfterConfig; override;
-  public
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-    procedure BuildScreen; override;
-    procedure PrepareGameParams; override;
-    procedure CloseScreen(NextScreen: TGameScreenType); override;
+      procedure SaveLevelImage;
+      procedure TryLoadReplay;
+    protected
+      procedure DoAfterConfig; override;
+    public
+      procedure BuildScreen; override;
+      procedure PrepareGameParams; override;
+      procedure CloseScreen(NextScreen: TGameScreenType); override;
   end;
 
 implementation
@@ -233,16 +231,6 @@ begin
   // Pretty much just because LoadReplay is a function, not a procedure, so this
   // needs to be here as a wraparound.
   LoadReplay;
-end;
-
-constructor TGamePreviewScreen.Create(aOwner: TComponent);
-begin
-  inherited;
-end;
-
-destructor TGamePreviewScreen.Destroy;
-begin
-  inherited;
 end;
 
 procedure TGamePreviewScreen.DoAfterConfig;

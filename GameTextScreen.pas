@@ -19,18 +19,15 @@ uses
 -------------------------------------------------------------------------------}
 type
   TGameTextScreen = class(TGameBaseMenuScreen)
-  private
-    fPreviewText: Boolean;
-    function GetScreenText: string;
-    procedure ToNextScreen;
-    procedure ExitToMenu;
-  protected
-    procedure BuildScreen; override;
-  public
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-    property PreviewText: Boolean read fPreviewText write fPreviewText;
-  published
+    private
+      fPreviewText: Boolean;
+      function GetScreenText: string;
+      procedure ToNextScreen;
+      procedure ExitToMenu;
+    protected
+      procedure BuildScreen; override;
+    public
+      property PreviewText: Boolean read fPreviewText write fPreviewText;
   end;
 
 implementation
@@ -59,16 +56,6 @@ begin
   finally
     ScreenImg.EndUpdate;
   end;
-end;
-
-constructor TGameTextScreen.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
-end;
-
-destructor TGameTextScreen.Destroy;
-begin
-  inherited Destroy;
 end;
 
 function TGameTextScreen.GetScreenText: string;

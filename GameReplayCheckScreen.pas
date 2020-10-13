@@ -49,25 +49,24 @@ type
   end;
 
   TGameReplayCheckScreen = class(TGameBaseMenuScreen)
-  private
-    fScreenText: TStringList;
-    fReplays: TReplayCheckEntries;
-    fProcessing: Boolean;
-    fOldHighRes: Boolean;
+    private
+      fScreenText: TStringList;
+      fReplays: TReplayCheckEntries;
+      fProcessing: Boolean;
+      fOldHighRes: Boolean;
 
-    procedure OutputText;
-    procedure RunTests;
+      procedure OutputText;
+      procedure RunTests;
 
-    procedure ExitToMenu;
+      procedure ExitToMenu;
 
-    procedure Application_Idle(Sender: TObject; var Done: Boolean);
-  protected
-    procedure BuildScreen; override;
-    procedure CloseScreen(aNextScreen: TGameScreenType); override;
-  public
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-  published
+      procedure Application_Idle(Sender: TObject; var Done: Boolean);
+    protected
+      procedure BuildScreen; override;
+      procedure CloseScreen(aNextScreen: TGameScreenType); override;
+    public
+      constructor Create(aOwner: TComponent); override;
+      destructor Destroy; override;
   end;
 
 implementation

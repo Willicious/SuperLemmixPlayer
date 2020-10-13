@@ -25,20 +25,16 @@ uses
 -------------------------------------------------------------------------------}
 type
   TGamePostviewScreen = class(TGameBaseMenuScreen)
-  private
-    fAdvanceLevel: Boolean;
-    function GetScreenText: string;
-    procedure NextLevel;
-    procedure ReplaySameLevel;
-    procedure ExitToMenu;
-  protected
-    procedure PrepareGameParams; override;
-    procedure BuildScreen; override;
-    procedure CloseScreen(aNextScreen: TGameScreenType); override;
-  public
-    constructor Create(aOwner: TComponent); override;
-    destructor Destroy; override;
-  published
+    private
+      fAdvanceLevel: Boolean;
+      function GetScreenText: string;
+      procedure NextLevel;
+      procedure ReplaySameLevel;
+      procedure ExitToMenu;
+    protected
+      procedure PrepareGameParams; override;
+      procedure BuildScreen; override;
+      procedure CloseScreen(aNextScreen: TGameScreenType); override;
   end;
 
 implementation
@@ -105,16 +101,6 @@ begin
   finally
     ScreenImg.EndUpdate;
   end;
-end;
-
-constructor TGamePostviewScreen.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
-end;
-
-destructor TGamePostviewScreen.Destroy;
-begin
-  inherited Destroy;
 end;
 
 procedure TGamePostviewScreen.ExitToMenu;
