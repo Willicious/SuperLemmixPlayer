@@ -23,7 +23,6 @@ uses
   GameBaseSkillPanel in 'GameBaseSkillPanel.pas',
   GameCommandLine in 'GameCommandLine.pas',
   GameControl in 'GameControl.pas',
-  GameOldMenuScreen in 'GameOldMenuScreen.pas',
   GamePostviewScreen in 'GamePostviewScreen.pas',
   GamePreviewScreen in 'GamePreviewScreen.pas',
   GameReplayCheckScreen in 'GameReplayCheckScreen.pas',
