@@ -353,14 +353,14 @@ begin
   Img.Width := Min(ClientWidth, GameParams.Level.Info.Width * fInternalZoom * ResMod);
   Img.Height := Min(ClientHeight - (SkillPanel.Zoom * 40 * ResMod), GameParams.Level.Info.Height * fInternalZoom * ResMod);
   Img.Left := (ClientWidth - Img.Width) div 2;
-  SkillPanel.Left := (ClientWidth - SkillPanel.Width) div 2;
+  SkillPanel.ClientWidth := ClientWidth;
   // tops are calculated later
 
   VertOffset := (ClientHeight - ((SkillPanel.Zoom * 40 * ResMod) + Img.Height)) div 2;
   Img.Top := VertOffset;
   SkillPanel.Top := Img.Top + Img.Height;
   SkillPanel.Height := Max(SkillPanel.Zoom * 40 * ResMod, ClientHeight - SkillPanel.Top);
-  SkillPanel.Image.Left := (ClientWidth - SkillPanel.Image.Width) div 2;
+  SkillPanel.Image.Left := (SkillPanel.ClientWidth - SkillPanel.Image.Width) div 2;
   SkillPanel.Image.Update;
   SkillPanel.ResetMinimapPosition;
 
