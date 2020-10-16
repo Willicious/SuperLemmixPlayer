@@ -68,8 +68,6 @@ type
       procedure DumpImages;
       procedure CleanseLevels;
 
-      procedure ShowTalismanScreen; // Temporary
-
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
       procedure InitiateUpdateCheck;
@@ -320,7 +318,6 @@ begin
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
 
     // Hidden options
-    MakeHiddenOption(VK_F4, ShowTalismanScreen);
     MakeHiddenOption(VK_F6, DumpImages);
     MakeHiddenOption(VK_F7, DoMassReplayCheck);
     MakeHiddenOption(VK_F8, CleanseLevels);
@@ -618,13 +615,6 @@ end;
 function TGameMenuScreen.GetBackgroundSuffix: String;
 begin
   Result := 'menu';
-end;
-
-procedure TGameMenuScreen.ShowTalismanScreen;
-begin
-  if (GameParams.CurrentLevel <> nil) and
-     (GameParams.CurrentLevel.Group.ParentBasePack.Talismans.Count <> 0) then
-    CloseScreen(gstTalisman);
 end;
 
 procedure TGameMenuScreen.DumpImages;

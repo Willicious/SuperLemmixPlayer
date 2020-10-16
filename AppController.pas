@@ -44,7 +44,6 @@ type
     procedure ShowPlayScreen;
     procedure ShowPostviewScreen;
     procedure ShowTextScreen;
-    procedure ShowTalismanScreen;
     procedure ShowReplayCheckScreen;
     function Execute: Boolean;
     procedure FreeScreen;
@@ -61,7 +60,6 @@ uses
   GamePostviewScreen,
   GameWindow,
   GameTextScreen,
-  GameTalismanScreen,
   GameReplayCheckScreen;
 
 { TAppController }
@@ -174,7 +172,6 @@ begin
       gstPlay      : ShowPlayScreen;
       gstPostview  : ShowPostviewScreen;
       gstText      : ShowTextScreen;
-      gstTalisman  : ShowTalismanScreen;
       gstReplayTest: ShowReplayCheckScreen;
       else Result := false;
     end;
@@ -221,12 +218,6 @@ end;
 procedure TAppController.ShowPostviewScreen;
 begin
   fActiveForm := TGamePostviewScreen.Create(nil);
-  fActiveForm.ShowScreen;
-end;
-
-procedure TAppController.ShowTalismanScreen;
-begin
-  fActiveForm := TGameTalismanScreen.Create(nil);
   fActiveForm.ShowScreen;
 end;
 

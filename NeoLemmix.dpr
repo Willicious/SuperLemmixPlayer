@@ -28,7 +28,6 @@ uses
   GameReplayCheckScreen in 'GameReplayCheckScreen.pas',
   GameSkillPanel in 'GameSkillPanel.pas',
   GameSound in 'GameSound.pas',
-  GameTalismanScreen in 'GameTalismanScreen.pas',
   GameTextScreen in 'GameTextScreen.pas',
   GameWindow in 'GameWindow.pas',
   GameWindowInterface in 'GameWindowInterface.pas',

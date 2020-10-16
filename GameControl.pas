@@ -47,7 +47,6 @@ type
     gstSounds,
     gstExit,
     gstText,
-    gstTalisman,
     gstReplayTest
   );
 
