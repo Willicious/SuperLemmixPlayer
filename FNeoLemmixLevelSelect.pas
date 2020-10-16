@@ -437,7 +437,11 @@ begin
     G := TNeoLevelGroup(Obj);
     lblName.Caption := G.Name;
     lblPosition.Caption := GetGroupPositionText;
+
     lblAuthor.Caption := G.Author;
+
+    if G.PackVersion <> '' then
+      lblAuthor.Caption := lblAuthor.Caption + ' | Version: ' + G.PackVersion;
 
     S := '';
     CompletedCount := 0;
@@ -541,6 +545,7 @@ procedure TFLevelSelect.DisplayPackTalismanInfo;
 
   function BreakString(S: String; aLabel: TLabel; aMaxWidth: Integer): String;
   var
+    ThisLine: String;
     PrevResult: String;
     SL: TStringList;
     n: Integer;
@@ -556,14 +561,24 @@ procedure TFLevelSelect.DisplayPackTalismanInfo;
       SL.DelimitedText := S;
 
       n := 0;
+      ThisLine := '';
+
       while n < SL.Count do
       begin
         if n > 0 then
+        begin
+          ThisLine := ThisLine + ' ';
           Result := Result + ' ';
+        end;
+
+        ThisLine := ThisLine + SL[n];
         Result := Result + SL[n];
 
-        if aLabel.Canvas.TextWidth(Result) > aMaxWidth then
+        if aLabel.Canvas.TextWidth(ThisLine) > aMaxWidth then
+        begin
           Result := PrevResult + #13 + SL[n];
+          ThisLine := SL[n];
+        end;
 
         PrevResult := Result;
 
