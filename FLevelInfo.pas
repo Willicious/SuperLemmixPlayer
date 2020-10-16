@@ -8,7 +8,7 @@ uses
   LemLevel, LemTalisman,
   LemTypes, LemStrings, LemCore,
   UMisc, Types, Math,
-  GR32, GR32_Image, PngInterface;
+  GR32, GR32_Image, GR32_Resamplers, PngInterface;
 
 const
   AS_PANEL_WIDTH = 377;
@@ -194,6 +194,8 @@ begin
   LevelImg.ScaleMode := smResize;
   LevelImg.BitmapAlign := baCenter;
 
+  TLinearResampler.Create(LevelImg.Bitmap);
+
   LevelImg.Bitmap.BeginUpdate;
   try
     GameParams.Renderer.RenderWorld(LevelImg.Bitmap, true);
@@ -307,8 +309,15 @@ var
 begin
   Wipe;
 
-  Add(ICON_NORMAL_LEMMING, fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount, true, pmNextRowLeft);
-  // To do later: Zombie and neutral counts
+  Add(ICON_NORMAL_LEMMING, fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount - fLevel.Info.NeutralCount, true, pmNextColumnSame);
+
+  if fLevel.Info.NeutralCount > 0 then
+    Add(ICON_NEUTRAL_LEMMING, fLevel.Info.NeutralCount, true, pmNextColumnSame);
+
+  if fLevel.Info.ZombieCount > 0 then
+    Add(ICON_ZOMBIE_LEMMING, fLevel.Info.ZombieCount, true, pmNextColumnSame);
+
+  Reposition(pmNextRowLeft);
 
   Add(ICON_SAVE_REQUIREMENT, fLevel.Info.RescueCount, true, pmNextColumnSame);
 

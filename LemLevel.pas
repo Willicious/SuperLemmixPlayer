@@ -23,6 +23,7 @@ type
     fSpawnInterval  : Integer;
     fLemmingsCount  : Integer;
     fZombieCount    : Integer;
+    fNeutralCount   : Integer;
     fRescueCount    : Integer;
     fHasTimeLimit   : Boolean;
     fTimeLimit      : Integer;
@@ -57,6 +58,7 @@ type
     property SpawnIntervalLocked: Boolean read fSpawnIntervalLocked write fSpawnIntervalLocked;
     property LemmingsCount  : Integer read fLemmingsCount write fLemmingsCount;
     property ZombieCount    : Integer read fZombieCount write fZombieCount;
+    property NeutralCount   : Integer read fNeutralCount write fNeutralCount;
     property RescueCount    : Integer read fRescueCount write fRescueCount;
     property HasTimeLimit   : Boolean read fHasTimeLimit write fHasTimeLimit;
     property TimeLimit      : Integer read fTimeLimit write fTimeLimit;
@@ -154,6 +156,7 @@ begin
   SpawnIntervalLocked := false;
   LemmingsCount   := 1;
   ZombieCount     := 0;
+  NeutralCount    := 0;
   RescueCount     := 1;
   HasTimeLimit    := false;
   TimeLimit       := 0;
@@ -737,7 +740,7 @@ begin
   if Info.SkillCount[spbCloner] > 99 then Info.SkillCount[spbCloner] := 99;
   
 
-  // 2. Calculate ZombieCount, precise spawn order, and finalised lemming count
+  // 2. Calculate ZombieCount and NeutralCount, precise spawn order, and finalised lemming count
   FoundWindow := false;
   SetLength(WindowLemmingCount, InteractiveObjects.Count);
   for i := 0 to InteractiveObjects.Count-1 do
@@ -752,9 +755,13 @@ begin
       WindowLemmingCount[i] := 0;
 
   Info.ZombieCount := 0;
+  Info.NeutralCount := 0;
+
   for i := 0 to PreplacedLemmings.Count-1 do
     if PreplacedLemmings[i].IsZombie then
-      Info.ZombieCount := Info.ZombieCount + 1;
+      Info.ZombieCount := Info.ZombieCount + 1
+    else if PreplacedLemmings[i].IsNeutral then
+      Info.NeutralCount := Info.NeutralCount + 1;
 
   if not FoundWindow then
   begin
@@ -777,7 +784,9 @@ begin
       end;
 
       if (InteractiveObjects[n].TarLev and 64) <> 0 then
-        Info.ZombieCount := Info.ZombieCount + 1;
+        Info.ZombieCount := Info.ZombieCount + 1
+      else if (InteractiveObjects[n].TarLev and 128) <> 0 then
+        Info.NeutralCount := Info.NeutralCount + 1;
       Info.SpawnOrder[i] := n;
 
       if WindowLemmingCount[n] > 0 then
@@ -790,7 +799,7 @@ begin
   end;
 
   // Validate save requirement and lower it if need be. It must:
-  //  - Not exceed the lemming count + cloner count
+  //  - Not exceed the lemming count + cloner count (including neutrals but excluding zombies, of course)
   //  - Not exceed the total number of lemmings permitted to enter the level's exits
   MaxPossibleLemmingCount := Info.LemmingsCount + Info.SkillCount[spbCloner] - Info.ZombieCount;
   MaxPossibleExitCount := 0;
