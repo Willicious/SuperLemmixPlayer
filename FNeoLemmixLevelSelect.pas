@@ -429,6 +429,8 @@ begin
 
   fInfoForm.Visible := true;
   fInfoForm.Level := GameParams.Level;
+  fInfoForm.Talisman := nil;
+
   fInfoForm.PrepareEmbed;
 end;
 

@@ -7,7 +7,7 @@ object FLevelSelect: TFLevelSelect
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Level Select'
   ClientHeight = 480
-  ClientWidth = 690
+  ClientWidth = 721
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -89,7 +89,7 @@ object FLevelSelect: TFLevelSelect
     OnClick = tvLevelSelectClick
   end
   object btnCancel: TButton
-    Left = 598
+    Left = 629
     Top = 446
     Width = 75
     Height = 25
@@ -98,7 +98,7 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 1
   end
   object btnOK: TButton
-    Left = 544
+    Left = 575
     Top = 446
     Width = 48
     Height = 25
@@ -109,14 +109,14 @@ object FLevelSelect: TFLevelSelect
   object pnLevelInfo: TPanel
     Left = 296
     Top = 128
-    Width = 377
+    Width = 408
     Height = 313
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
     TabOrder = 3
   end
   object btnMakeShortcut: TButton
-    Left = 436
+    Left = 467
     Top = 446
     Width = 85
     Height = 25

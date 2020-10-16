@@ -131,6 +131,8 @@ type
     procedure Sanitize;
     procedure PrepareForUse;
 
+    function GetPickupSkillCount(aSkill: TSkillPanelButton): Integer;
+
     property HasAnyFallbacks: Boolean read GetHasAnyFallbacks;
   published
     property Info: TLevelInfo read fLevelInfo;
@@ -239,6 +241,23 @@ begin
       Exit;
 
   Result := false;
+end;
+
+function TLevel.GetPickupSkillCount(aSkill: TSkillPanelButton): Integer;
+var
+  i: Integer;
+  MO: TGadgetMetaInfo;
+  O: TGadgetModel;
+begin
+  Result := 0;
+  for i := 0 to fInteractiveObjects.Count-1 do
+  begin
+    O := fInteractiveObjects[i];
+    MO := PieceManager.Objects[O.Identifier];
+    if (MO.TriggerEffect = DOM_PICKUP) and (O.Skill = Integer(aSkill)) then
+      Result := Result + O.TarLev;
+  end;
+
 end;
 
 procedure TLevel.Clear;

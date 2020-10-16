@@ -11,7 +11,7 @@ uses
   GR32, GR32_Image, GR32_Resamplers, PngInterface;
 
 const
-  AS_PANEL_WIDTH = 377;
+  AS_PANEL_WIDTH = 408;
   AS_PANEL_HEIGHT = 312;
 
   MIN_PREVIEW_HEIGHT = 32;
@@ -29,6 +29,7 @@ type
       fIcons: TBitmap32;
 
       fLevel: TLevel;
+      fTalisman: TTalisman;
 
       procedure Add(aIcon: Integer; aText: Integer; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
       procedure Add(aIcon: Integer; aText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
@@ -50,6 +51,7 @@ type
       procedure Wipe;
 
       property Level: TLevel read fLevel write fLevel;
+      property Talisman: TTalisman read fTalisman write fTalisman;
   end;
 
 var
@@ -61,14 +63,13 @@ uses
   GameControl;
 
 const
-  COLOR_TALISMAN_DIRECT_RESTRICTION = $D00000;
-  COLOR_TALISMAN_INDIRECT_RESTRICTION = $D0D000;
+  COLOR_TALISMAN_RESTRICTION = $0050A0; // BBGGRR, because it's WinForms not GR32
 
   PADDING_SIZE = 8;
 
-  NORMAL_SPACING = 36;
+  NORMAL_SPACING = 40;
 
-  COLUMN_SPACING = 96;
+  COLUMN_SPACING = 92;
 
 
 {$R *.dfm}
@@ -305,7 +306,13 @@ procedure TLevelInfoPanel.PrepareEmbed;
 var
   SIVal: Integer;
   Skill: TSkillPanelButton;
-  S: String;
+
+  TalCount: Integer;
+  BaseCount: Integer;
+  PickupCount: Integer;
+  SkillString: String;
+
+  IsTalismanLimit: Boolean;
 begin
   Wipe;
 
@@ -319,7 +326,10 @@ begin
 
   Reposition(pmNextRowLeft);
 
-  Add(ICON_SAVE_REQUIREMENT, fLevel.Info.RescueCount, true, pmNextColumnSame);
+  if (fTalisman = nil) or (fTalisman.RescueCount <= fLevel.Info.RescueCount) then
+    Add(ICON_SAVE_REQUIREMENT, fLevel.Info.RescueCount, true, pmNextColumnSame)
+  else
+    Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
 
   if GameParams.SpawnInterval then
     SIVal := Level.Info.SpawnInterval
@@ -331,20 +341,56 @@ begin
   else
     Add(ICON_RELEASE_RATE, SIVal, true, pmNextColumnSame);
 
-  if fLevel.Info.HasTimeLimit then
-    Add(ICON_TIME_LIMIT, IntToStr(fLevel.Info.TimeLimit div 60) + ':' + IntToStr(fLevel.Info.TimeLimit mod 60), true, pmNextRowPadLeft)
-  else
-    Reposition(pmNextRowPadLeft);
+  if (Talisman <> nil) and
+     (Talisman.TimeLimit > 0) and
+     ((not fLevel.Info.HasTimeLimit) or (Talisman.TimeLimit < fLevel.Info.TimeLimit * 17)) then
+    Add(ICON_TIME_LIMIT,
+      IntToStr(Talisman.TimeLimit div (60 * 17)) + ':' + LeadZeroStr((Talisman.TimeLimit div 17) mod 60, 2) + '.' +
+        LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2),
+        true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION)
+  else if fLevel.Info.HasTimeLimit then
+    Add(ICON_TIME_LIMIT, IntToStr(fLevel.Info.TimeLimit div 60) + ':' + LeadZeroStr(fLevel.Info.TimeLimit mod 60, 2), true, pmNextColumnSame);
+
+  if (Talisman <> nil) and (Talisman.TotalSkillLimit >= 0) then
+    Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), true, pmNextColumnSame, COLOR_TALISMAN_RESTRICTION);
+
+  Reposition(pmNextRowPadLeft);
 
   for Skill := spbWalker to spbCloner do
     if Skill in fLevel.Info.Skillset then
     begin
-      if fLevel.Info.SkillCount[Skill] < 100 then
-        S := IntToStr(fLevel.Info.SkillCount[Skill])
-      else
-        S := 'Inf';
+      BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
+      PickupCount := fLevel.GetPickupSkillCount(Skill);
 
-      Add(ICON_SKILLS[Skill], S, false, pmMoveHorz);
+      IsTalismanLimit := false;
+
+      if (Talisman <> nil) and (Talisman.SkillLimit[Skill] >= 0) then
+      begin
+        TalCount := Talisman.SkillLimit[Skill];
+
+        if TalCount < BaseCount then
+        begin
+          IsTalismanLimit := true;
+          SkillString := IntToStr(TalCount);
+        end else if TalCount < BaseCount + PickupCount then
+        begin
+          IsTalismanLimit := true;
+          SkillString := IntToStr(TalCount) + ' (' + IntToStr(BaseCount + PickupCount - TalCount) + ')';
+        end;
+
+        if IsTalismanLimit then
+          Add(ICON_SKILLS[Skill], SkillString, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+      end;
+
+      if not IsTalismanLimit then
+      begin
+        SkillString := IntToStr(BaseCount);
+
+        if (PickupCount > 0) then
+          SkillString := SkillString + ' (' + IntToStr(PickupCount) + ')';
+
+        Add(ICON_SKILLS[Skill], SkillString, false, pmMoveHorz);
+      end;
     end;
 
   AddPreview;
