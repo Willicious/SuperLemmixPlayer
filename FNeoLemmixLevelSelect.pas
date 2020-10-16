@@ -8,6 +8,7 @@ uses
   LemStrings,
   LemTypes,
   PngInterface,
+  FLevelInfo,
   GR32, GR32_Resamplers,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils,
@@ -25,8 +26,8 @@ type
     lblAuthor: TLabel;
     ilStatuses: TImageList;
     lblCompletion: TLabel;
-    imgLevel: TImage32;
     btnMakeShortcut: TButton;
+    imgLevel: TImage32;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -34,6 +35,8 @@ type
     procedure btnMakeShortcutClick(Sender: TObject);
   private
     fLoadAsPack: Boolean;
+    fInfoForm: TLevelInfoPanel;
+
     procedure InitializeTreeview;
     procedure SetInfo;
     procedure WriteToParams;
@@ -148,6 +151,11 @@ end;
 
 procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
+  fInfoForm := TLevelInfoPanel.Create(self);
+  fInfoForm.Parent := self;
+  fInfoForm.BoundsRect := pnLevelInfo.BoundsRect;
+  pnLevelInfo.Visible := false;
+
   InitializeTreeview;
   TLinearResampler.Create(imgLevel.Bitmap);
 end;
@@ -384,7 +392,7 @@ begin
 
     lblCompletion.Caption := S;
 
-    pnLevelInfo.Visible := false;
+    fInfoForm.Visible := false;
 
     btnOk.Enabled := G.LevelCount > 0; // note: Levels.Count is not recursive; LevelCount is
   end else if Obj is TNeoLevelEntry then
@@ -403,8 +411,6 @@ begin
     else
       lblCompletion.Caption := IntToStr(L.UnlockedTalismanList.Count) + ' of ' + IntToStr(L.Talismans.Count) + ' talismans unlocked';
 
-    pnLevelInfo.Visible := true;
-
     DisplayLevelInfo;
 
     btnOk.Enabled := true;
@@ -420,13 +426,10 @@ procedure TFLevelSelect.DisplayLevelInfo;
 begin
   WriteToParams;
   GameParams.LoadCurrentLevel(false);
-  imgLevel.Bitmap.BeginUpdate;
-  try
-    GameParams.Renderer.RenderWorld(imgLevel.Bitmap, true);
-  finally
-    imgLevel.Bitmap.EndUpdate;
-    imgLevel.Bitmap.Changed;
-  end;
+
+  fInfoForm.Visible := true;
+  fInfoForm.Level := GameParams.Level;
+  fInfoForm.PrepareEmbed;
 end;
 
 end.

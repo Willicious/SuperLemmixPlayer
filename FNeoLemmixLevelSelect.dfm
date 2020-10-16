@@ -114,17 +114,6 @@ object FLevelSelect: TFLevelSelect
     BevelOuter = bvNone
     Caption = '<placeholder for level info>'
     TabOrder = 3
-    object imgLevel: TImage32
-      Left = 0
-      Top = 0
-      Width = 377
-      Height = 312
-      Bitmap.ResamplerClassName = 'TNearestResampler'
-      BitmapAlign = baCenter
-      Scale = 1.000000000000000000
-      ScaleMode = smResize
-      TabOrder = 0
-    end
   end
   object btnMakeShortcut: TButton
     Left = 436
@@ -134,6 +123,17 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Create Shortcut'
     TabOrder = 4
     OnClick = btnMakeShortcutClick
+  end
+  object imgLevel: TImage32
+    Left = 296
+    Top = 447
+    Width = 97
+    Height = 33
+    Bitmap.ResamplerClassName = 'TNearestResampler'
+    BitmapAlign = baCenter
+    Scale = 1.000000000000000000
+    ScaleMode = smResize
+    TabOrder = 5
   end
   object ilStatuses: TImageList
   end
