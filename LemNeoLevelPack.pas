@@ -50,6 +50,8 @@ type
   TLevelRecords = record
     LemmingsRescued: Integer;
     TimeTaken: Integer;
+    TotalSkills: Integer;
+    SkillCount: array[spbWalker..spbCloner] of Integer;
   end;
 
   TNeoLevelEntry = class  // This is an entry in a level pack's list, and does NOT contain the level itself
@@ -304,7 +306,6 @@ begin
   Result := DateTimeToFileDate(DateTime);
 end;
 
-
 { TPostviewText }
 
 constructor TPostviewText.Create;
@@ -358,11 +359,17 @@ end;
 { TNeoLevelEntry }
 
 constructor TNeoLevelEntry.Create(aGroup: TNeoLevelGroup);
+var
+  Skill: TSkillPanelButton;
 begin
   inherited Create;
   fGroup := aGroup;
   fTalismans := TObjectList<TTalisman>.Create(true);
   fTalismanList := TList<LongWord>.Create;
+
+  Records.TotalSkills := -1;
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    Records.SkillCount[Skill] := -1;
 end;
 
 destructor TNeoLevelEntry.Destroy;
@@ -1064,6 +1071,7 @@ var
       Sec: TParserSection;
       i: TNeoLevelStatus;
       S: String;
+      Skill: TSkillPanelButton;
     begin
       Sec := LevelSec.Section[aLevel.RelativePath];
       if Sec = nil then Exit;
@@ -1081,6 +1089,10 @@ var
 
       aLevel.Records.LemmingsRescued := Sec.LineNumeric['lemming_record'];
       aLevel.Records.TimeTaken := Sec.LineNumeric['time_record'];
+      aLevel.Records.TotalSkills := Sec.LineNumericDefault['fewest_skills', -1];
+
+      for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+        aLevel.Records.SkillCount[Skill] := Sec.LineNumericDefault['fewest_' + SKILL_NAMES[Skill], -1];
 
       Sec.DoForEachLine('talisman',
                         procedure(aLine: TParserLine; const aIteration: Integer)
@@ -1143,6 +1155,7 @@ var
     var
       ActiveLevelSec: TParserSection;
       i: Integer;
+      Skill: TSkillPanelButton;
     begin
       if aLevel.Status = lst_None then
         Exit;
@@ -1154,7 +1167,13 @@ var
       ActiveLevelSec.AddLine('lemming_record', aLevel.Records.LemmingsRescued);
 
       if aLevel.Status >= lst_Completed_Outdated then
+      begin
         ActiveLevelSec.AddLine('time_record', aLevel.Records.TimeTaken);
+        ActiveLevelSec.AddLine('fewest_skills', aLevel.Records.TotalSkills);
+        for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+          if aLevel.Records.SkillCount[Skill] >= 0 then
+            ActiveLevelSec.AddLine('fewest_' + SKILL_NAMES[Skill], aLevel.Records.SkillCount[Skill]);
+      end;
 
       for i := 0 to aLevel.fTalismanList.Count-1 do
         ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fTalismanList[i], 8));

@@ -138,6 +138,8 @@ var
   i: Integer;
   STarget: string;
   SDone: string;
+  Skill: TSkillPanelButton;
+  TotalSkills: Integer;
 
     procedure Add(const S: string);
     begin
@@ -208,6 +210,14 @@ var
       Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
       Result := Result + '.' + CENTISECONDS[aFrames mod 17];
     end;
+
+  function GetSkillRecordValue(aNewValue, aOldValue: Integer): Integer;
+  begin
+    if (aOldValue < 0) or (aNewValue < aOldValue) then
+      Result := aNewValue
+    else
+      Result := aOldValue;
+  end;
     
 begin
 
@@ -239,6 +249,18 @@ begin
           Status := lst_Completed;
           if (CurrentLevel.Records.TimeTaken = 0) or (gLastRescueIteration < CurrentLevel.Records.TimeTaken) then
             CurrentLevel.Records.TimeTaken := gLastRescueIteration;
+
+          TotalSkills := 0;
+          for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+          begin
+            if not (Skill in GameParams.Level.Info.Skillset) then Continue;
+
+            CurrentLevel.Records.SkillCount[Skill] := GetSkillRecordValue(GlobalGame.SkillsUsed[Skill], CurrentLevel.Records.SkillCount[Skill]);
+            TotalSkills := TotalSkills + GlobalGame.SkillsUsed[Skill];
+          end;
+
+          CurrentLevel.Records.TotalSkills := GetSkillRecordValue(TotalSkills, CurrentLevel.Records.TotalSkills);
+
         end else if Status = lst_None then
           Status := lst_Attempted;
       end;

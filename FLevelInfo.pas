@@ -470,7 +470,7 @@ procedure TLevelInfoPanel.PrepareEmbedRecords;
 var
   Records: TLevelRecords;
 
-  //Skill: TSkillPanelButton;
+  Skill: TSkillPanelButton;
 begin
   Wipe;
 
@@ -489,17 +489,19 @@ begin
       LeadZeroStr(Round((Records.TimeTaken mod 17) / 17 * 100), 2),
       true, pmNextColumnSame, COLOR_RECORDS);
 
-  {
-  Add(ICON_MAX_SKILLS, IntToStr(Records.TotalSkills), true, pmNextColumnSame, COLOR_RECORDS);
-  }
+  if Records.TotalSkills < 0 then
+    Add(ICON_MAX_SKILLS, '~', true, pmNextColumnSame)
+  else
+    Add(ICON_MAX_SKILLS, Records.TotalSkills, true, pmNextColumnSame, COLOR_RECORDS);
 
   Reposition(pmNextRowPadLeft);
 
-  {
   for Skill := spbWalker to spbCloner do
     if Skill in fLevel.Info.Skillset then
-      Add(ICON_SKILLS[Skill], Records.SkillCount[Skill], false, pmMoveHorz, COLOR_RECORDS);
-  }
+      if Records.SkillCount[Skill] < 0 then
+        Add(ICON_SKILLS[Skill], '~', false, pmMoveHorz)
+      else
+        Add(ICON_SKILLS[Skill], Records.SkillCount[Skill], false, pmMoveHorz, COLOR_RECORDS);
 
   if fCurrentPos.X = PADDING_SIZE then
     AddDummy(false, pmMoveHorz);
