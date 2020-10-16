@@ -51,7 +51,7 @@ type
     LemmingsRescued: Integer;
     TimeTaken: Integer;
     TotalSkills: Integer;
-    SkillCount: array[spbWalker..spbCloner] of Integer;
+    SkillCount: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
   end;
 
   TNeoLevelEntry = class  // This is an entry in a level pack's list, and does NOT contain the level itself

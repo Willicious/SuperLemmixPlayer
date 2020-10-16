@@ -116,7 +116,7 @@ begin
   Result[0] := spbSlower;
   Result[1] := spbFaster;
   for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL -1) do
-    Result[i] := spbWalker; // placeholder for any skill
+    Result[i] := Low(TSkillPanelButton); // placeholder for any skill
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 2] := spbFastForward;
@@ -217,7 +217,7 @@ begin
   Result[0] := spbSlower;
   Result[1] := spbFaster;
   for i := 2 to (2 + MAX_SKILL_TYPES_PER_LEVEL - 1) do
-    Result[i] := spbWalker; // placeholder for any skill
+    Result[i] := Low(TSkillPanelButton); // placeholder for any skill
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL] := spbPause;
   Result[2 + MAX_SKILL_TYPES_PER_LEVEL + 1] := spbNuke;
 end;

@@ -73,7 +73,7 @@ const // Icon indexes
   ICON_RELEASE_RATE_LOCKED = 33;
   ICON_TIME_LIMIT = 5;
 
-  ICON_SKILLS: array[spbWalker..spbCloner] of Integer = (
+  ICON_SKILLS: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer = (
     6, // Walker
     7, // Jumper
     8, // Shimmier

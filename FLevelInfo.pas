@@ -316,7 +316,7 @@ begin
     if Talisman.TotalSkillLimit >= 0 then
       Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
-    for Skill := spbWalker to spbCloner do
+    for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if Skill in fLevel.Info.Skillset then
       begin
         BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
@@ -421,7 +421,7 @@ begin
 
   Reposition(pmNextRowPadLeft);
 
-  for Skill := spbWalker to spbCloner do
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     if Skill in fLevel.Info.Skillset then
     begin
       BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
@@ -476,13 +476,9 @@ begin
 
   Records := GameParams.CurrentLevel.Records;
 
-  Add(ICON_RECORDS, 'Your records', true, pmNextRowPadLeft);
-
-  AddDummy(true, pmNextRowLeft);
+  Add(ICON_RECORDS, 'Your records', true, pmNextRowLeft);
 
   Add(ICON_SAVE_REQUIREMENT, Records.LemmingsRescued, true, pmNextColumnSame, COLOR_RECORDS);
-
-  AddDummy(true, pmNextColumnSame);
 
   Add(ICON_TIMER,
     IntToStr(Records.TimeTaken div (60 * 17)) + ':' + LeadZeroStr((Records.TimeTaken div 17) mod 60, 2) + '.' +
@@ -496,7 +492,7 @@ begin
 
   Reposition(pmNextRowPadLeft);
 
-  for Skill := spbWalker to spbCloner do
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     if Skill in fLevel.Info.Skillset then
       if Records.SkillCount[Skill] < 0 then
         Add(ICON_SKILLS[Skill], '~', false, pmMoveHorz)
