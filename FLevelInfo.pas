@@ -42,8 +42,7 @@ type
 
       procedure AddPreview;
     public
-      constructor Create(aOwner: TComponent); override;
-      destructor Destroy; override;
+      constructor Create(aOwner: TComponent; aIconBMP: TBitmap32); reintroduce;
 
       procedure ShowPopup;
       procedure PrepareEmbed;
@@ -60,6 +59,7 @@ var
 implementation
 
 uses
+  FNeoLemmixLevelSelect,
   GameControl;
 
 const
@@ -76,27 +76,13 @@ const
 
 { TLevelInfoPanel }
 
-constructor TLevelInfoPanel.Create(aOwner: TComponent);
+constructor TLevelInfoPanel.Create(aOwner: TComponent; aIconBMP: TBitmap32);
 begin
-  inherited;
+  inherited Create(aOwner);
 
-  fIcons := TBitmap32.Create;
-  TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIcons);
-  fIcons.DrawMode := dmBlend;
+  fIcons := aIconBMP;
 
   fCurrentPos := Types.Point(PADDING_SIZE, PADDING_SIZE);
-end;
-
-destructor TLevelInfoPanel.Destroy;
-begin
-  fIcons.Free;
-
-  inherited;
-end;
-
-procedure TLevelInfoPanel.ShowPopup;
-begin
-  BorderStyle := bsToolWindow;
 end;
 
 procedure TLevelInfoPanel.Wipe;
@@ -164,15 +150,23 @@ begin
 end;
 
 procedure TLevelInfoPanel.AddClose;
+var
+  Diff: Integer;
+  i: Integer;
 begin
   btnClose.Top := fMinSize.Y;
 
   if fMinSize.X < btnClose.Width + (PADDING_SIZE * 2) then
   begin
+    Diff := (btnClose.Width + (PADDING_SIZE * 2)) - fMinSize.X;
     btnClose.Left := PADDING_SIZE;
-    fMinSize.X := btnClose.Width + (PADDING_SIZE * 2);
+    fMinSize.X := fMinSize.X + Diff;
+
+    for i := 0 to ControlCount-1 do
+      if Controls[i] <> btnClose then
+        Controls[i].Left := Controls[i].Left + Diff div 2;
   end else
-    btnClose.Left := (ClientWidth - btnClose.Width) div 2;
+    btnClose.Left := (fMinSize.X - btnClose.Width) div 2;
 
   fMinSize.Y := btnClose.Top + btnClose.Height + PADDING_SIZE;
 
@@ -261,46 +255,69 @@ begin
   end;
 end;
 
-const // Icon indexes
-  ICON_NORMAL_LEMMING = 0;
-  ICON_ZOMBIE_LEMMING = 1;
-  ICON_NEUTRAL_LEMMING = 2;
+procedure TLevelInfoPanel.ShowPopup;
+var
+  Skill: TSkillPanelButton;
 
-  ICON_SAVE_REQUIREMENT = 3;
-  ICON_RELEASE_RATE = 4;
-  ICON_RELEASE_RATE_LOCKED = 33;
-  ICON_TIME_LIMIT = 5;
+  TalCount: Integer;
+  BaseCount: Integer;
+  PickupCount: Integer;
 
-  ICON_SKILLS: array[spbWalker..spbCloner] of Integer = (
-    6, // Walker
-    7, // Jumper
-    8, // Shimmier
-    9, // Climber
-    10, // Swimmer
-    11, // Floater
-    12, // Glider
-    13, // Disarmer
-    14, // Bomber
-    15, // Stoner
-    16, // Blocker
-    17, // Platformer
-    18, // Builder
-    19, // Stacker
-    20, // Basher
-    21, // Fencer
-    22, // Miner
-    23, // Digger
-    24 // Cloner
-  );
+  NewLabel: TLabel;
+begin
+  if (fTalisman <> nil) then
+  begin
+    BorderStyle := bsToolWindow;
 
-  ICON_TALISMAN: array[tcBronze..tcGold] of Integer =
-    ( 25, 26, 27 );
+    Wipe;
 
-  ICON_TALISMAN_UNOBTAINED_OFFSET = 3;
+    if (fTalisman.RescueCount > fLevel.Info.RescueCount) then
+      Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
-  ICON_SELECTED_TALISMAN = 31;
+    if (Talisman.TimeLimit > 0) and
+       ((not fLevel.Info.HasTimeLimit) or (Talisman.TimeLimit < fLevel.Info.TimeLimit * 17)) then
+      Add(ICON_TIME_LIMIT,
+        IntToStr(Talisman.TimeLimit div (60 * 17)) + ':' + LeadZeroStr((Talisman.TimeLimit div 17) mod 60, 2) + '.' +
+          LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2),
+          false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
-  ICON_MAX_SKILLS = 32;
+    if Talisman.TotalSkillLimit >= 0 then
+      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+
+    for Skill := spbWalker to spbCloner do
+      if Skill in fLevel.Info.Skillset then
+      begin
+        BaseCount := Min(fLevel.Info.SkillCount[Skill], 100);
+        PickupCount := fLevel.GetPickupSkillCount(Skill);
+
+        if (Talisman <> nil) and (Talisman.SkillLimit[Skill] >= 0) then
+        begin
+          TalCount := Talisman.SkillLimit[Skill];
+
+          if TalCount < BaseCount + PickupCount then
+            Add(ICON_SKILLS[Skill], TalCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+        end;
+      end;
+
+    // Special case
+    if (fCurrentPos.X = PADDING_SIZE) and (fCurrentPos.Y = PADDING_SIZE) then
+    begin
+      NewLabel := TLabel.Create(self);
+      NewLabel.Parent := self;
+      NewLabel.Left := PADDING_SIZE;
+      NewLabel.Top := PADDING_SIZE;
+      NewLabel.Font.Style := [fsBold];
+      NewLabel.Caption := 'Complete the level.';
+
+      fMinSize.X := NewLabel.Width + (PADDING_SIZE * 2);
+      fMinSize.Y := NewLabel.Height + (PADDING_SIZE * 2);
+    end;
+
+    AddClose;
+    ApplySize;
+    ShowModal;
+  end;
+end;
 
 procedure TLevelInfoPanel.PrepareEmbed;
 var

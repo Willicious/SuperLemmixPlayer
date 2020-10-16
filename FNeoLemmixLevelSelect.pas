@@ -7,6 +7,8 @@ uses
   LemNeoLevelPack,
   LemStrings,
   LemTypes,
+  LemCore,
+  LemTalisman,
   PngInterface,
   FLevelInfo,
   GR32, GR32_Resamplers,
@@ -33,9 +35,11 @@ type
     procedure tvLevelSelectClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnMakeShortcutClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     fLoadAsPack: Boolean;
     fInfoForm: TLevelInfoPanel;
+    fIconBMP: TBitmap32;
 
     procedure InitializeTreeview;
     procedure SetInfo;
@@ -44,6 +48,47 @@ type
   public
     property LoadAsPack: Boolean read fLoadAsPack;
   end;
+
+const // Icon indexes
+  ICON_NORMAL_LEMMING = 0;
+  ICON_ZOMBIE_LEMMING = 1;
+  ICON_NEUTRAL_LEMMING = 2;
+
+  ICON_SAVE_REQUIREMENT = 3;
+  ICON_RELEASE_RATE = 4;
+  ICON_RELEASE_RATE_LOCKED = 33;
+  ICON_TIME_LIMIT = 5;
+
+  ICON_SKILLS: array[spbWalker..spbCloner] of Integer = (
+    6, // Walker
+    7, // Jumper
+    8, // Shimmier
+    9, // Climber
+    10, // Swimmer
+    11, // Floater
+    12, // Glider
+    13, // Disarmer
+    14, // Bomber
+    15, // Stoner
+    16, // Blocker
+    17, // Platformer
+    18, // Builder
+    19, // Stacker
+    20, // Basher
+    21, // Fencer
+    22, // Miner
+    23, // Digger
+    24 // Cloner
+  );
+
+  ICON_TALISMAN: array[tcBronze..tcGold] of Integer =
+    ( 25, 26, 27 );
+
+  ICON_TALISMAN_UNOBTAINED_OFFSET = 3;
+
+  ICON_SELECTED_TALISMAN = 31;
+
+  ICON_MAX_SKILLS = 32;
 
 implementation
 
@@ -151,13 +196,22 @@ end;
 
 procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
-  fInfoForm := TLevelInfoPanel.Create(self);
+  fIconBMP := TBitmap32.Create;
+  TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIconBMP);
+  fIconBMP.DrawMode := dmBlend;
+
+  fInfoForm := TLevelInfoPanel.Create(self, fIconBMP);
   fInfoForm.Parent := self;
   fInfoForm.BoundsRect := pnLevelInfo.BoundsRect;
   pnLevelInfo.Visible := false;
 
   InitializeTreeview;
   TLinearResampler.Create(imgLevel.Bitmap);
+end;
+
+procedure TFLevelSelect.FormDestroy(Sender: TObject);
+begin
+  fIconBMP.Free;
 end;
 
 procedure TFLevelSelect.btnMakeShortcutClick(Sender: TObject);
