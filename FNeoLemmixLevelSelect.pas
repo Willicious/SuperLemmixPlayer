@@ -11,9 +11,10 @@ uses
   LemTalisman,
   PngInterface,
   FLevelInfo,
-  GR32, GR32_Resamplers,
+  GR32, GR32_Resamplers, GR32_Layers,
+  Generics.Collections,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc,
   ActiveX, ShlObj, ComObj, // for the shortcut creation
   LemNeoParser, GR32_Image, System.ImageList;
 
@@ -29,7 +30,6 @@ type
     ilStatuses: TImageList;
     lblCompletion: TLabel;
     btnMakeShortcut: TButton;
-    imgLevel: TImage32;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -41,10 +41,19 @@ type
     fInfoForm: TLevelInfoPanel;
     fIconBMP: TBitmap32;
 
+    fTalismanButtons: TObjectList<TImage32>;
+
     procedure InitializeTreeview;
     procedure SetInfo;
     procedure WriteToParams;
+
     procedure DisplayLevelInfo;
+    procedure SetTalismanInfo;
+    procedure DrawTalismanButtons;
+    procedure ClearTalismanButtons;
+    procedure TalButtonClick(Sender: TObject);
+
+    procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
   public
     property LoadAsPack: Boolean read fLoadAsPack;
   end;
@@ -196,6 +205,8 @@ end;
 
 procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
+  fTalismanButtons := TObjectList<TImage32>.Create;
+
   fIconBMP := TBitmap32.Create;
   TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIconBMP);
   fIconBMP.DrawMode := dmBlend;
@@ -206,12 +217,14 @@ begin
   pnLevelInfo.Visible := false;
 
   InitializeTreeview;
-  TLinearResampler.Create(imgLevel.Bitmap);
 end;
 
 procedure TFLevelSelect.FormDestroy(Sender: TObject);
 begin
   fIconBMP.Free;
+
+  fTalismanButtons.OwnsObjects := false; // because TFLevelSelect itself will take care of any that remain
+  fTalismanButtons.Free;
 end;
 
 procedure TFLevelSelect.btnMakeShortcutClick(Sender: TObject);
@@ -445,10 +458,13 @@ begin
     end;
 
     lblCompletion.Caption := S;
+    lblCompletion.Visible := true;
 
     fInfoForm.Visible := false;
 
     btnOk.Enabled := G.LevelCount > 0; // note: Levels.Count is not recursive; LevelCount is
+
+    ClearTalismanButtons;
   end else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
@@ -460,10 +476,8 @@ begin
     else
       lblAuthor.Caption := '';
 
-    if L.Talismans.Count = 0 then
-      lblCompletion.Caption := ''
-    else
-      lblCompletion.Caption := IntToStr(L.UnlockedTalismanList.Count) + ' of ' + IntToStr(L.Talismans.Count) + ' talismans unlocked';
+    lblCompletion.Caption := '';
+    lblCompletion.Visible := false;
 
     DisplayLevelInfo;
 
@@ -486,6 +500,89 @@ begin
   fInfoForm.Talisman := nil;
 
   fInfoForm.PrepareEmbed;
+
+  SetTalismanInfo;
+end;
+
+procedure TFLevelSelect.SetTalismanInfo;
+var
+  i, TalIcon: Integer;
+  Tal: TTalisman;
+  NewImage: TImage32;
+begin
+  ClearTalismanButtons;
+
+  for i := 0 to GameParams.Level.Talismans.Count-1 do
+  begin
+    Tal := GameParams.Level.Talismans[i];
+
+    NewImage := TImage32.Create(self);
+    NewImage.Parent := self;
+    NewImage.Left := lblCompletion.Left + (40 * i);
+    NewImage.Top := lblCompletion.Top;
+    NewImage.Width := 32;
+    NewImage.Height := 32;
+    NewImage.Color := $F0F0F0;
+    NewImage.Tag := i;
+    NewImage.OnClick := TalButtonClick;
+
+    fTalismanButtons.Add(NewImage);
+  end;
+
+  DrawTalismanButtons;
+end;
+
+procedure TFLevelSelect.TalButtonClick(Sender: TObject);
+var
+  TalBtn: TImage32 absolute Sender;
+  Tal: TTalisman;
+begin
+  Tal := GameParams.Level.Talismans[TalBtn.Tag];
+
+  if fInfoForm.Talisman = Tal then
+    fInfoForm.Talisman := nil
+  else
+    fInfoForm.Talisman := Tal;
+
+  DrawTalismanButtons;
+  fInfoForm.PrepareEmbed;
+end;
+
+procedure TFLevelSelect.ClearTalismanButtons;
+begin
+  fTalismanButtons.Clear;
+end;
+
+procedure TFLevelSelect.DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
+begin
+  if aErase then
+  begin
+    aDst.SetSize(32, 32);
+    aDst.Clear($FFF0F0F0);
+  end;
+
+  fIconBMP.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * 32, (aIconIndex div 4) * 32, 32, 32));
+end;
+
+procedure TFLevelSelect.DrawTalismanButtons;
+var
+  i: Integer;
+  TalIcon: Integer;
+  Tal: TTalisman;
+begin
+  for i := 0 to GameParams.Level.Talismans.Count-1 do
+  begin
+    Tal := GameParams.Level.Talismans[i];
+
+    TalIcon := ICON_TALISMAN[Tal.Color];
+    if not GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
+      TalIcon := TalIcon + ICON_TALISMAN_UNOBTAINED_OFFSET;
+
+    DrawIcon(TalIcon, fTalismanButtons[i].Bitmap);
+
+    if Tal = fInfoForm.Talisman then
+      DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
+  end;
 end;
 
 end.

@@ -125,17 +125,6 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 4
     OnClick = btnMakeShortcutClick
   end
-  object imgLevel: TImage32
-    Left = 296
-    Top = 447
-    Width = 97
-    Height = 33
-    Bitmap.ResamplerClassName = 'TNearestResampler'
-    BitmapAlign = baCenter
-    Scale = 1.000000000000000000
-    ScaleMode = smResize
-    TabOrder = 5
-  end
   object ilStatuses: TImageList
   end
 end

@@ -28,6 +28,9 @@ type
       fMinSize: TPoint;
       fIcons: TBitmap32;
 
+      fLevelImage: TBitmap32;
+      fLastRenderLevelID: Int64;
+
       fLevel: TLevel;
       fTalisman: TTalisman;
 
@@ -41,8 +44,11 @@ type
       procedure ApplySize(aForcedMinWidth: Integer; aForcedMinHeight: Integer); overload;
 
       procedure AddPreview;
+
+      procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32);
     public
       constructor Create(aOwner: TComponent; aIconBMP: TBitmap32); reintroduce;
+      destructor Destroy; override;
 
       procedure ShowPopup;
       procedure PrepareEmbed;
@@ -80,9 +86,24 @@ constructor TLevelInfoPanel.Create(aOwner: TComponent; aIconBMP: TBitmap32);
 begin
   inherited Create(aOwner);
 
+  fLevelImage := TBitmap32.Create;
+
   fIcons := aIconBMP;
 
   fCurrentPos := Types.Point(PADDING_SIZE, PADDING_SIZE);
+end;
+
+destructor TLevelInfoPanel.Destroy;
+begin
+  fLevelImage.Free;
+  inherited;
+end;
+
+procedure TLevelInfoPanel.DrawIcon(aIconIndex: Integer; aDst: TBitmap32);
+begin
+  aDst.SetSize(32, 32);
+  aDst.Clear($FFF0F0F0);
+  fIcons.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * 32, (aIconIndex div 4) * 32, 32, 32));
 end;
 
 procedure TLevelInfoPanel.Wipe;
@@ -114,9 +135,7 @@ begin
   NewLabel.Parent := self;
   NewLabel.Font.Style := [fsBold];
 
-  NewImage.Bitmap.SetSize(32, 32);
-  NewImage.Bitmap.Clear($FFF0F0F0);
-  fIcons.DrawTo(NewImage.Bitmap, 0, 0, SizedRect((aIcon mod 4) * 32, (aIcon div 4) * 32, 32, 32));
+  DrawIcon(aIcon, NewImage.Bitmap);
 
   NewLabel.Caption := aText;
   if aColor >= 0 then NewLabel.Font.Color := aColor;
@@ -191,13 +210,13 @@ begin
 
   TLinearResampler.Create(LevelImg.Bitmap);
 
-  LevelImg.Bitmap.BeginUpdate;
-  try
-    GameParams.Renderer.RenderWorld(LevelImg.Bitmap, true);
-  finally
-    LevelImg.Bitmap.EndUpdate;
-    LevelImg.Bitmap.Changed;
+  if fLastRenderLevelID <> fLevel.Info.LevelID then
+  begin
+    fLastRenderLevelID := fLevel.Info.LevelID;
+    GameParams.Renderer.RenderWorld(fLevelImage, true);
   end;
+
+  LevelImg.Bitmap.Assign(fLevelImage);
 
   LevelImg.BoundsRect := Rect(0, 0, AS_PANEL_WIDTH, AvailHeight);
 
@@ -271,6 +290,11 @@ begin
 
     Wipe;
 
+    if (GameParams.CurrentLevel.TalismanStatus[fTalisman.ID]) then
+      Add(ICON_TALISMAN[fTalisman.Color], fTalisman.Title, true, pmNextRowPadLeft)
+    else
+      Add(ICON_TALISMAN[fTalisman.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, fTalisman.Title, true, pmNextRowPadLeft);
+
     if (fTalisman.RescueCount > fLevel.Info.RescueCount) then
       Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
@@ -300,14 +324,21 @@ begin
       end;
 
     // Special case
-    if (fCurrentPos.X = PADDING_SIZE) and (fCurrentPos.Y = PADDING_SIZE) then
+    if fCurrentPos.X = PADDING_SIZE then
     begin
       NewLabel := TLabel.Create(self);
       NewLabel.Parent := self;
-      NewLabel.Left := PADDING_SIZE;
-      NewLabel.Top := PADDING_SIZE;
       NewLabel.Font.Style := [fsBold];
       NewLabel.Caption := 'Complete the level.';
+
+      if NewLabel.Width + (PADDING_SIZE * 2) < fMinSize.X then
+      begin
+        fMinSize.X := NewLabel.Width + (PADDING_SIZE * 2);
+        NewLabel.Left := PADDING_SIZE;
+      end else
+        NewLabel.Left := (fMinSize.X - PADDING_SIZE) div 2;
+
+      NewLabel.Top := fCurrentPos.Y;
 
       fMinSize.X := NewLabel.Width + (PADDING_SIZE * 2);
       fMinSize.Y := NewLabel.Height + (PADDING_SIZE * 2);
@@ -315,6 +346,9 @@ begin
 
     AddClose;
     ApplySize;
+
+    Left := TForm(Owner).Left + ((TForm(Owner).Width - Width) div 2);
+    Top := TForm(Owner).Top + ((TForm(Owner).Height - Height) div 2);
     ShowModal;
   end;
 end;
@@ -332,6 +366,12 @@ var
   IsTalismanLimit: Boolean;
 begin
   Wipe;
+
+  if fTalisman <> nil then
+    if (GameParams.CurrentLevel.TalismanStatus[fTalisman.ID]) then
+      Add(ICON_TALISMAN[fTalisman.Color], fTalisman.Title, true, pmNextRowPadLeft)
+    else
+      Add(ICON_TALISMAN[fTalisman.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, fTalisman.Title, true, pmNextRowPadLeft);
 
   Add(ICON_NORMAL_LEMMING, fLevel.Info.LemmingsCount - fLevel.Info.ZombieCount - fLevel.Info.NeutralCount, true, pmNextColumnSame);
 
