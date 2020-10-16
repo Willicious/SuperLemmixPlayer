@@ -36,14 +36,14 @@ type
 
       procedure Add(aIcon: Integer; aText: Integer; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
       procedure Add(aIcon: Integer; aText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
+      procedure AddDummy(aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove);
+      procedure AddPreview;
       procedure AddClose;
 
       procedure Reposition(aMovement: TLevelInfoPanelMove);
 
       procedure ApplySize; overload;
       procedure ApplySize(aForcedMinWidth: Integer; aForcedMinHeight: Integer); overload;
-
-      procedure AddPreview;
 
       procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32);
     public
@@ -190,6 +190,12 @@ begin
   fMinSize.Y := btnClose.Top + btnClose.Height + PADDING_SIZE;
 
   btnClose.Visible := true;
+end;
+
+procedure TLevelInfoPanel.AddDummy(aTextOnRight: Boolean;
+  aMovement: TLevelInfoPanelMove);
+begin
+  Add(ICON_BLANK, '', aTextOnRight, aMovement);
 end;
 
 procedure TLevelInfoPanel.AddPreview;
@@ -451,7 +457,7 @@ begin
     end;
 
   if fCurrentPos.X = PADDING_SIZE then
-    Add(ICON_BLANK, '', false, pmMoveHorz);
+    AddDummy(false, pmMoveHorz);
 
   AddPreview;
 
