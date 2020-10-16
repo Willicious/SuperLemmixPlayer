@@ -44,6 +44,7 @@ type
     fPackTalBox: TScrollBox;
 
     fTalismanButtons: TObjectList<TImage32>;
+    fDisplayRecords: Boolean;
 
     procedure InitializeTreeview;
     procedure SetInfo;
@@ -102,6 +103,9 @@ const // Icon indexes
   ICON_SELECTED_TALISMAN = 31;
 
   ICON_MAX_SKILLS = 32;
+
+  ICON_RECORDS = 35;
+  ICON_TIMER = 36;
 
   ICON_BLANK = 3;
 
@@ -520,6 +524,7 @@ begin
   fInfoForm.Visible := true;
   fInfoForm.Level := GameParams.Level;
   fInfoForm.Talisman := nil;
+  fDisplayRecords := false;
 
   fInfoForm.PrepareEmbed;
 
@@ -663,16 +668,34 @@ end;
 
 procedure TFLevelSelect.SetTalismanInfo;
 var
-  i: Integer;
+  i, n: Integer;
   NewImage: TImage32;
 begin
   ClearTalismanButtons;
+
+  n := 0;
+
+  if GameParams.CurrentLevel.Status in [lst_Completed_Outdated, lst_Completed] then
+  begin
+    NewImage := TImage32.Create(self);
+    NewImage.Parent := self;
+    NewImage.Left := lblCompletion.Left + (40 * n);
+    NewImage.Top := lblCompletion.Top;
+    NewImage.Width := 32;
+    NewImage.Height := 32;
+    NewImage.Color := $F0F0F0;
+    NewImage.Tag := -1;
+    NewImage.OnClick := TalButtonClick;
+
+    fTalismanButtons.Add(NewImage);
+    Inc(n);
+  end;
 
   for i := 0 to GameParams.Level.Talismans.Count-1 do
   begin
     NewImage := TImage32.Create(self);
     NewImage.Parent := self;
-    NewImage.Left := lblCompletion.Left + (40 * i);
+    NewImage.Left := lblCompletion.Left + (40 * n);
     NewImage.Top := lblCompletion.Top;
     NewImage.Width := 32;
     NewImage.Height := 32;
@@ -681,6 +704,7 @@ begin
     NewImage.OnClick := TalButtonClick;
 
     fTalismanButtons.Add(NewImage);
+    Inc(n);
   end;
 
   DrawTalismanButtons;
@@ -691,15 +715,31 @@ var
   TalBtn: TImage32 absolute Sender;
   Tal: TTalisman;
 begin
-  Tal := GameParams.Level.Talismans[TalBtn.Tag];
+  if TalBtn.Tag < 0 then
+  begin
+    fDisplayRecords := not fDisplayRecords;
+    fInfoForm.Talisman := nil;
 
-  if fInfoForm.Talisman = Tal then
-    fInfoForm.Talisman := nil
-  else
-    fInfoForm.Talisman := Tal;
+    DrawTalismanButtons;
 
-  DrawTalismanButtons;
-  fInfoForm.PrepareEmbed;
+    if fDisplayRecords then
+      fInfoForm.PrepareEmbedRecords
+    else begin
+      fInfoForm.Talisman := nil;
+      fInfoForm.PrepareEmbed;
+    end;
+  end else begin
+    Tal := GameParams.Level.Talismans[TalBtn.Tag];
+    fDisplayRecords := false;
+
+    if fInfoForm.Talisman = Tal then
+      fInfoForm.Talisman := nil
+    else
+      fInfoForm.Talisman := Tal;
+
+    DrawTalismanButtons;
+    fInfoForm.PrepareEmbed;
+  end;
 end;
 
 procedure TFLevelSelect.ClearTalismanButtons;
@@ -724,18 +764,26 @@ var
   TalIcon: Integer;
   Tal: TTalisman;
 begin
-  for i := 0 to GameParams.Level.Talismans.Count-1 do
+  for i := 0 to fTalismanButtons.Count-1 do
   begin
-    Tal := GameParams.Level.Talismans[i];
+    if fTalismanButtons[i].Tag < 0 then
+    begin
+      DrawIcon(ICON_RECORDS, fTalismanButtons[i].Bitmap);
 
-    TalIcon := ICON_TALISMAN[Tal.Color];
-    if not GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
-      TalIcon := TalIcon + ICON_TALISMAN_UNOBTAINED_OFFSET;
+      if fDisplayRecords then
+        DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
+    end else begin
+      Tal := GameParams.Level.Talismans[fTalismanButtons[i].Tag];
 
-    DrawIcon(TalIcon, fTalismanButtons[i].Bitmap);
+      TalIcon := ICON_TALISMAN[Tal.Color];
+      if not GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
+        TalIcon := TalIcon + ICON_TALISMAN_UNOBTAINED_OFFSET;
 
-    if Tal = fInfoForm.Talisman then
-      DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
+      DrawIcon(TalIcon, fTalismanButtons[i].Bitmap);
+
+      if Tal = fInfoForm.Talisman then
+        DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
+    end;
   end;
 end;
 

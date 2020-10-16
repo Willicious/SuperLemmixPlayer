@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Themes,
-  LemLevel, LemTalisman,
+  LemLevel, LemTalisman, LemNeoLevelPack,
   LemTypes, LemStrings, LemCore,
   UMisc, Types, Math,
   GR32, GR32_Image, GR32_Resamplers, PngInterface;
@@ -52,6 +52,7 @@ type
 
       procedure ShowPopup;
       procedure PrepareEmbed;
+      procedure PrepareEmbedRecords;
 
       procedure Wipe;
 
@@ -70,6 +71,7 @@ uses
 
 const
   COLOR_TALISMAN_RESTRICTION = $0050A0; // BBGGRR, because it's WinForms not GR32
+  COLOR_RECORDS = $00A000;
 
   PADDING_SIZE = 8;
 
@@ -214,8 +216,6 @@ begin
   LevelImg.ScaleMode := smResize;
   LevelImg.BitmapAlign := baCenter;
 
-  TLinearResampler.Create(LevelImg.Bitmap);
-
   if fLastRenderLevelID <> fLevel.Info.LevelID then
   begin
     fLastRenderLevelID := fLevel.Info.LevelID;
@@ -223,6 +223,8 @@ begin
   end;
 
   LevelImg.Bitmap.Assign(fLevelImage);
+
+  TLinearResampler.Create(LevelImg.Bitmap);
 
   LevelImg.BoundsRect := Rect(0, 0, AS_PANEL_WIDTH, AvailHeight);
 
@@ -455,6 +457,49 @@ begin
         Add(ICON_SKILLS[Skill], SkillString, false, pmMoveHorz);
       end;
     end;
+
+  if fCurrentPos.X = PADDING_SIZE then
+    AddDummy(false, pmMoveHorz);
+
+  AddPreview;
+
+  ApplySize(AS_PANEL_WIDTH, AS_PANEL_HEIGHT);
+end;
+
+procedure TLevelInfoPanel.PrepareEmbedRecords;
+var
+  Records: TLevelRecords;
+
+  //Skill: TSkillPanelButton;
+begin
+  Wipe;
+
+  Records := GameParams.CurrentLevel.Records;
+
+  Add(ICON_RECORDS, 'Your records', true, pmNextRowPadLeft);
+
+  AddDummy(true, pmNextRowLeft);
+
+  Add(ICON_SAVE_REQUIREMENT, Records.LemmingsRescued, true, pmNextColumnSame, COLOR_RECORDS);
+
+  AddDummy(true, pmNextColumnSame);
+
+  Add(ICON_TIMER,
+    IntToStr(Records.TimeTaken div (60 * 17)) + ':' + LeadZeroStr((Records.TimeTaken div 17) mod 60, 2) + '.' +
+      LeadZeroStr(Round((Records.TimeTaken mod 17) / 17 * 100), 2),
+      true, pmNextColumnSame, COLOR_RECORDS);
+
+  {
+  Add(ICON_MAX_SKILLS, IntToStr(Records.TotalSkills), true, pmNextColumnSame, COLOR_RECORDS);
+  }
+
+  Reposition(pmNextRowPadLeft);
+
+  {
+  for Skill := spbWalker to spbCloner do
+    if Skill in fLevel.Info.Skillset then
+      Add(ICON_SKILLS[Skill], Records.SkillCount[Skill], false, pmMoveHorz, COLOR_RECORDS);
+  }
 
   if fCurrentPos.X = PADDING_SIZE then
     AddDummy(false, pmMoveHorz);
