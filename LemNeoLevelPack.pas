@@ -196,6 +196,8 @@ type
       procedure DumpNeoLemmixWebsiteMetaInfo(aPath: String);
       {$endif}
 
+      function GetLevelForTalisman(aTalisman: TTalisman): TNeoLevelEntry;
+
       property Parent: TNeoLevelGroup read fParentGroup;
       property ParentBasePack: TNeoLevelGroup read GetParentBasePack;
       property Children: TNeoLevelGroups read fChildGroups;
@@ -1313,6 +1315,27 @@ begin
   Result := fLevels.Count;
   for i := 0 to fChildGroups.Count-1 do
     Result := Result + fChildGroups[i].LevelCount;
+end;
+
+function TNeoLevelGroup.GetLevelForTalisman(aTalisman: TTalisman): TNeoLevelEntry;
+var
+  i, n: Integer;
+begin
+  Result := nil;
+
+  for i := 0 to fChildGroups.Count-1 do
+  begin
+    Result := fChildGroups[i].GetLevelForTalisman(aTalisman);
+    if Result <> nil then Exit;
+  end;
+
+  for i := 0 to fLevels.Count-1 do
+    for n := 0 to fLevels[i].Talismans.Count-1 do
+      if fLevels[i].Talismans[n] = aTalisman then
+      begin
+        Result := fLevels[i];
+        Exit;
+      end;
 end;
 
 function TNeoLevelGroup.GetLevelIndex(aLevel: TNeoLevelEntry): Integer;

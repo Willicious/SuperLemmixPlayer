@@ -14,7 +14,7 @@ uses
   GR32, GR32_Resamplers, GR32_Layers,
   Generics.Collections,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math,
   ActiveX, ShlObj, ComObj, // for the shortcut creation
   LemNeoParser, GR32_Image, System.ImageList;
 
@@ -41,6 +41,8 @@ type
     fInfoForm: TLevelInfoPanel;
     fIconBMP: TBitmap32;
 
+    fPackTalBox: TScrollBox;
+
     fTalismanButtons: TObjectList<TImage32>;
 
     procedure InitializeTreeview;
@@ -52,6 +54,8 @@ type
     procedure DrawTalismanButtons;
     procedure ClearTalismanButtons;
     procedure TalButtonClick(Sender: TObject);
+
+    procedure DisplayPackTalismanInfo;
 
     procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
   public
@@ -216,6 +220,14 @@ begin
   fInfoForm := TLevelInfoPanel.Create(self, fIconBMP);
   fInfoForm.Parent := self;
   fInfoForm.BoundsRect := pnLevelInfo.BoundsRect;
+  fInfoForm.Visible := false;
+
+  fPackTalBox := TScrollBox.Create(self);
+  fPackTalBox.Parent := self;
+  fPackTalBox.BoundsRect := pnLevelInfo.BoundsRect;
+  fPackTalBox.VertScrollBar.Tracking := true;
+  fPackTalBox.Visible := false;
+
   pnLevelInfo.Visible := false;
 
   InitializeTreeview;
@@ -462,6 +474,8 @@ begin
     lblCompletion.Caption := S;
     lblCompletion.Visible := true;
 
+    DisplayPackTalismanInfo;
+
     fInfoForm.Visible := false;
 
     btnOk.Enabled := G.LevelCount > 0; // note: Levels.Count is not recursive; LevelCount is
@@ -482,6 +496,8 @@ begin
     lblCompletion.Visible := false;
 
     DisplayLevelInfo;
+
+    fPackTalBox.Visible := false;
 
     btnOk.Enabled := true;
   end;
@@ -506,18 +522,139 @@ begin
   SetTalismanInfo;
 end;
 
+procedure TFLevelSelect.DisplayPackTalismanInfo;
+  function GetGroup: TNeoLevelGroup;
+  var
+    N: TTreeNode;
+    Obj: TObject;
+  begin
+    Result := nil;
+
+    N := tvLevelSelect.Selected;
+    if N <> nil then
+    begin
+      Obj := TObject(N.Data);
+      if Obj is TNeoLevelGroup then
+        Result := TNeoLevelGroup(Obj);
+    end;
+  end;
+
+  function BreakString(S: String; aLabel: TLabel; aMaxWidth: Integer): String;
+  var
+    PrevResult: String;
+    SL: TStringList;
+    n: Integer;
+  begin
+    PrevResult := '';
+    Result := '';
+
+    SL := TStringList.Create;
+    try
+      SL.Delimiter := ' ';
+      SL.StrictDelimiter := true;
+
+      SL.DelimitedText := S;
+
+      n := 0;
+      while n < SL.Count do
+      begin
+        if n > 0 then
+          Result := Result + ' ';
+        Result := Result + SL[n];
+
+        if aLabel.Canvas.TextWidth(Result) > aMaxWidth then
+          Result := PrevResult + #13 + SL[n];
+
+        PrevResult := Result;
+
+        Inc(n);
+      end;
+    finally
+      SL.Free;
+    end;
+  end;
+var
+  Group: TNeoLevelGroup;
+  Level: TNeoLevelEntry;
+  Talismans: TObjectList<TTalisman>;
+  i: Integer;
+  TotalHeight: Integer;
+
+  NewImage: TImage32;
+  TitleLabel, LevLabel, ReqLabel: TLabel;
+  Tal: TTalisman;
+begin
+  Group := GetGroup;
+  TotalHeight := 8;
+  Talismans := Group.Talismans;
+
+  for i := fPackTalBox.ControlCount-1 downto 0 do
+    fPackTalBox.Controls[i].Free;
+
+  for i := 0 to Talismans.Count-1 do
+  begin
+    Tal := Talismans[i];
+    Level := Group.GetLevelForTalisman(Tal);
+
+    TitleLabel := TLabel.Create(self);
+    TitleLabel.Parent := fPackTalBox;
+    TitleLabel.Font.Style := [fsBold];
+    TitleLabel.Caption := Tal.Title;
+
+    LevLabel := TLabel.Create(self);
+    LevLabel.Parent := fPackTalBox;
+    LevLabel.Caption := Level.Group.Name + ' ' + IntToStr(Level.GroupIndex + 1) + ': ' + Level.Title;
+
+    ReqLabel := TLabel.Create(self);
+    ReqLabel.Parent := fPackTalBox;
+    ReqLabel.Caption := BreakString(Tal.RequirementText, ReqLabel, fPackTalBox.ClientWidth - 16 - 40);
+
+    NewImage := TImage32.Create(self);
+    NewImage.Parent := fPackTalBox;
+    NewImage.Width := 32;
+    NewImage.Height := 32;
+
+    if Level.TalismanStatus[Tal.ID] then
+      DrawIcon(ICON_TALISMAN[Tal.Color], NewImage.Bitmap)
+    else
+      DrawIcon(ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, NewImage.Bitmap);
+
+    TitleLabel.Left := 40;
+    LevLabel.Left := 52;
+    ReqLabel.Left := 40;
+    NewImage.Left := 8;
+
+    if (NewImage.Height > TitleLabel.Height + LevLabel.Height + ReqLabel.Height) then
+    begin
+      NewImage.Top := TotalHeight;
+      TitleLabel.Top := TotalHeight + ((NewImage.Height - (TitleLabel.Height + LevLabel.Height + ReqLabel.Height)) div 2);
+
+      TotalHeight := TotalHeight + NewImage.Height + 8;
+    end else begin
+      TitleLabel.Top := TotalHeight;
+      NewImage.Top := TotalHeight + (((TitleLabel.Height + LevLabel.Height + ReqLabel.Height) - NewImage.Height) div 2);
+
+      TotalHeight := TotalHeight + TitleLabel.Height + LevLabel.Height + ReqLabel.Height + 8;
+    end;
+
+    LevLabel.Top := TitleLabel.Top + TitleLabel.Height;
+    ReqLabel.Top := LevLabel.Top + LevLabel.Height;
+  end;
+
+  fPackTalBox.VertScrollBar.Position := 0;
+  fPackTalBox.VertScrollBar.Range := Max(0, TotalHeight);
+  fPackTalBox.Visible := true;
+end;
+
 procedure TFLevelSelect.SetTalismanInfo;
 var
-  i, TalIcon: Integer;
-  Tal: TTalisman;
+  i: Integer;
   NewImage: TImage32;
 begin
   ClearTalismanButtons;
 
   for i := 0 to GameParams.Level.Talismans.Count-1 do
   begin
-    Tal := GameParams.Level.Talismans[i];
-
     NewImage := TImage32.Create(self);
     NewImage.Parent := self;
     NewImage.Left := lblCompletion.Left + (40 * i);
