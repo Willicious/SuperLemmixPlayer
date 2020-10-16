@@ -63,7 +63,7 @@ const // Icon indexes
   ICON_ZOMBIE_LEMMING = 1;
   ICON_NEUTRAL_LEMMING = 2;
 
-  ICON_SAVE_REQUIREMENT = 3;
+  ICON_SAVE_REQUIREMENT = 34;
   ICON_RELEASE_RATE = 4;
   ICON_RELEASE_RATE_LOCKED = 33;
   ICON_TIME_LIMIT = 5;
@@ -98,6 +98,8 @@ const // Icon indexes
   ICON_SELECTED_TALISMAN = 31;
 
   ICON_MAX_SKILLS = 32;
+
+  ICON_BLANK = 3;
 
 implementation
 

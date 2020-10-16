@@ -450,6 +450,9 @@ begin
       end;
     end;
 
+  if fCurrentPos.X = PADDING_SIZE then
+    Add(ICON_BLANK, '', false, pmMoveHorz);
+
   AddPreview;
 
   ApplySize(AS_PANEL_WIDTH, AS_PANEL_HEIGHT);
