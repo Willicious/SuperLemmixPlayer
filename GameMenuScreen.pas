@@ -258,9 +258,9 @@ const
   CARD_AREA_CENTER_X = 432;
   CARD_AREA_CENTER_Y = 248;
 
-  GROUP_BUTTONS_OFFSET_X = -37;
-  GROUP_BUTTON_UP_OFFSET_Y = -4;
-  GROUP_BUTTON_DOWN_OFFSET_Y = 19;
+  GROUP_BUTTONS_OFFSET_X = -38;
+  GROUP_BUTTON_UP_OFFSET_Y = -2;
+  GROUP_BUTTON_DOWN_OFFSET_Y = 16;
 
   function MakePosition(aHorzOffset: Single; aVertOffset: Single): TPoint;
   begin
