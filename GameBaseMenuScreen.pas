@@ -48,6 +48,7 @@ type
       fCurrentState: TRegionState;
       fResetTimer: TTimer;
 
+      fDrawInFrontWhenHighlit: Boolean;
 
       function GetSrcRect(aState: TRegionState): TRect;
     public
@@ -68,6 +69,7 @@ type
       property CurrentState: TRegionState read fCurrentState write fCurrentState;
       property ResetTimer: TTimer read fResetTimer write fResetTimer;
 
+      property DrawInFrontWhenHighlit: Boolean read fDrawInFrontWhenHighlit write fDrawInFrontWhenHighlit;
   end;
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
@@ -590,12 +592,30 @@ procedure TGameBaseMenuScreen.DrawAllClickables;
 var
   i: Integer;
   Region: TClickableRegion;
+
+  function CheckDrawCurrentRegion(aDrawingFront: Boolean): Boolean;
+  begin
+    Result := false;
+
+    if Region.Bitmaps = nil then Exit;
+    if (Region.DrawInFrontWhenHighlit and (Region.CurrentState <> rsNormal)) xor aDrawingFront then Exit;
+
+    Result := true;
+  end;
 begin
   HandleMouseMove; // To set statuses
+
   for i := 0 to fClickableRegions.Count-1 do
   begin
     Region := fClickableRegions[i];
-    if Region.Bitmaps <> nil then
+    if CheckDrawCurrentRegion(false) then
+      Region.Bitmaps.DrawTo(ScreenImg.Bitmap, Region.Bounds, Region.GetSrcRect(Region.CurrentState));
+  end;
+
+  for i := 0 to fClickableRegions.Count-1 do
+  begin
+    Region := fClickableRegions[i];
+    if CheckDrawCurrentRegion(true) then
       Region.Bitmaps.DrawTo(ScreenImg.Bitmap, Region.Bounds, Region.GetSrcRect(Region.CurrentState));
   end;
 
@@ -860,6 +880,8 @@ begin
   aNormal.DrawTo(fBitmaps, 0, 0);
   aHover.DrawTo(fBitmaps, aNormal.Width, 0);
   aClick.DrawTo(fBitmaps, aNormal.Width * 2, 0);
+
+  fDrawInFrontWhenHighlit := true;
 
   fAction := aAction;
 end;

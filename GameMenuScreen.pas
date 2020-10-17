@@ -259,8 +259,8 @@ const
   CARD_AREA_CENTER_Y = 248;
 
   GROUP_BUTTONS_OFFSET_X = -38;
-  GROUP_BUTTON_UP_OFFSET_Y = -2;
-  GROUP_BUTTON_DOWN_OFFSET_Y = 16;
+  GROUP_BUTTON_UP_OFFSET_Y = 0;
+  GROUP_BUTTON_DOWN_OFFSET_Y = 17;
 
   function MakePosition(aHorzOffset: Single; aVertOffset: Single): TPoint;
   begin
@@ -290,6 +290,7 @@ begin
     fGroupSignCenter := MakePosition(1, -0.5);
     GetGraphic('sign_group.png', BMP);
     NewRegion := MakeClickableImageAuto(fGroupSignCenter, BMP.BoundsRect, NextGroup, BMP);
+    NewRegion.DrawInFrontWhenHighlit := false;
 
     DrawAllClickables; // for the next step's sake
 
