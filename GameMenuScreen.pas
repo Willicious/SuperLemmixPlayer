@@ -31,6 +31,9 @@ type
       fReelTextIndex: Integer;
       fReelFreezeIterations: Integer;
 
+      fSwitchedTextSinceForce: Boolean;
+      fReelForceDirection: Integer;
+
       fCleanInstallFail: Boolean;
       fUpdateCheckThread: TDownloadThread;
       fVersionInfo: TStringList;
@@ -56,6 +59,7 @@ type
       procedure DrawReel;
       procedure DrawReelText;
       procedure DrawWorkerLemmings;
+      function GetWorkerLemmingRect(aRightLemming: Boolean): TRect;
 
       procedure UpdateReel;
       procedure UpdateReelIteration;
@@ -84,7 +88,9 @@ type
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
       procedure AfterRedrawClickables; override;
+
       function GetBackgroundSuffix: String; override;
+      procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
       constructor Create(aOwner: TComponent); override;
       destructor Destroy; override;
@@ -103,6 +109,8 @@ uses
 const
   REEL_Y_POSITION = 456;
   REEL_WIDTH = 40 * 16; // does NOT include the lemmings
+
+  SCROLLER_LEMMING_FRAME_COUNT = 16;
 
 { TGameMenuScreen }
 
@@ -138,6 +146,26 @@ begin
   fScrollerTextList.Free;
 
   inherited;
+end;
+
+procedure TGameMenuScreen.OnMouseClick(aPoint: TPoint; aButton: TMouseButton);
+var
+  OldForceDir: Integer;
+begin
+  inherited;
+
+  OldForceDir := fReelForceDirection;
+
+  if Types.PtInRect(GetWorkerLemmingRect(false), aPoint) then
+    fReelForceDirection := 1
+  else if Types.PtInRect(GetWorkerLemmingRect(true), aPoint) then
+    fReelForceDirection := -1;
+
+  if fReelForceDirection <> OldForceDir then
+  begin
+    fReelFreezeIterations := 0;
+    fSwitchedTextSinceForce := false;
+  end;
 end;
 
 procedure TGameMenuScreen.ApplicationIdle(Sender: TObject; var Done: Boolean);
@@ -441,6 +469,8 @@ begin
     begin
       Inc(fLastReelUpdateTickCount, MS_PER_UPDATE);
       UpdateReelIteration;
+      if (fReelForceDirection <> 0) and (fReelFreezeIterations = 0) then
+        UpdateReelIteration;
     end;
 
     DrawScroller;
@@ -451,17 +481,34 @@ procedure TGameMenuScreen.UpdateReelIteration;
 const
   TEXT_FREEZE_BASE_ITERATIONS = 333;
   TEXT_FREEZE_WIDTH_DIV = 3;
+  TEXT_FREEZE_END_FORCE_EXTRA = 222;
 begin
   if fReelFreezeIterations > 0 then
     Dec(fReelFreezeIterations)
   else begin
-    Inc(fReelFrame);
-    Dec(fReelTextPos);
+    if fReelForceDirection < 0 then
+    begin
+      Dec(fReelFrame);
+      Inc(fReelTextPos);
+
+      if fReelFrame < 0 then
+        fReelFrame := fReelFrame + 16;
+    end else begin
+      Inc(fReelFrame);
+      Dec(fReelTextPos);
+    end;
 
     if (ScrollerText.Width <= REEL_WIDTH) and (fReelTextPos = (REEL_WIDTH - ScrollerText.Width) div 2) then
-      fReelFreezeIterations := TEXT_FREEZE_BASE_ITERATIONS + (ScrollerText.Width div TEXT_FREEZE_WIDTH_DIV);
+      if fReelForceDirection = 0 then
+        fReelFreezeIterations := TEXT_FREEZE_BASE_ITERATIONS + (ScrollerText.Width div TEXT_FREEZE_WIDTH_DIV)
+      else if fSwitchedTextSinceForce then
+      begin
+        fReelFreezeIterations := TEXT_FREEZE_BASE_ITERATIONS + TEXT_FREEZE_END_FORCE_EXTRA + (ScrollerText.Width div TEXT_FREEZE_WIDTH_DIV);
+        fReelForceDirection := 0;
+      end;
 
-    if fReelTextPos = -ScrollerText.Width then
+
+    if (fReelTextPos <= -ScrollerText.Width) or (fReelTextPos >= REEL_WIDTH) then
       PrepareNextReelText;
   end;
 end;
@@ -481,7 +528,13 @@ begin
       Exit;
     end;
 
-    realI := (fReelTextIndex + i) mod fScrollerTextList.Count;
+    if fReelForceDirection < 0 then
+    begin
+      realI := (fReelTextIndex - i);
+      if realI < 0 then
+        realI := realI + fScrollerTextList.Count;
+    end else
+      realI := (fReelTextIndex + i) mod fScrollerTextList.Count;
 
     if Trim(fScrollerTextList[realI]) <> '' then
     begin
@@ -497,8 +550,13 @@ begin
   ScrollerText.DrawMode := dmBlend;
   MenuFont.DrawText(ScrollerText, S, 0, 0);
 
-  fReelTextPos := REEL_WIDTH;
+  if (fReelForceDirection < 0) then
+    fReelTextPos := -ScrollerText.Width
+  else
+    fReelTextPos := REEL_WIDTH;
+
   fLastReelUpdateTickCount := GetTickCount64;
+  fSwitchedTextSinceForce := true;
 end;
 
 procedure TGameMenuScreen.DrawScroller;
@@ -550,20 +608,28 @@ procedure TGameMenuScreen.DrawWorkerLemmings;
 var
   SrcRect, DstRect: TRect;
   Frame: Integer;
-const
-  SCROLLER_LEMMING_FRAME_COUNT = 16;
 begin
   Frame := (fReelFrame div 2) mod SCROLLER_LEMMING_FRAME_COUNT;
 
   SrcRect := Rect(0, 0, ScrollerLemmings.Width div 2, ScrollerLemmings.Height div SCROLLER_LEMMING_FRAME_COUNT);
   Types.OffsetRect(SrcRect, 0, SrcRect.Height * Frame);
 
-  DstRect := SizedRect((ScreenImg.Bitmap.Width - REEL_WIDTH) div 2 - SrcRect.Width, REEL_Y_POSITION, SrcRect.Width, SrcRect.Height);
+  DstRect := GetWorkerLemmingRect(false);
   ScrollerLemmings.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
 
   Types.OffsetRect(SrcRect, SrcRect.Width, 0);
-  DstRect := SizedRect((ScreenImg.Bitmap.Width + REEL_WIDTH) div 2, REEL_Y_POSITION, SrcRect.Width, SrcRect.Height);
+  DstRect := GetWorkerLemmingRect(true);
   ScrollerLemmings.DrawTo(ScreenImg.Bitmap, DstRect, SrcRect);
+end;
+
+function TGameMenuScreen.GetWorkerLemmingRect(aRightLemming: Boolean): TRect;
+begin
+  if aRightLemming then
+    Result := SizedRect((ScreenImg.Bitmap.Width + REEL_WIDTH) div 2, REEL_Y_POSITION,
+                        ScrollerLemmings.Width div 2, ScrollerLemmings.Height div SCROLLER_LEMMING_FRAME_COUNT)
+  else
+    Result := SizedRect((ScreenImg.Bitmap.Width - REEL_WIDTH) div 2 - (ScrollerLemmings.Width div 2), REEL_Y_POSITION,
+                        ScrollerLemmings.Width div 2, ScrollerLemmings.Height div SCROLLER_LEMMING_FRAME_COUNT);
 end;
 
 procedure TGameMenuScreen.BeginGame;
