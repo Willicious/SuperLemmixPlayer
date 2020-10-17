@@ -441,6 +441,10 @@ end;
 procedure TNeoLevelEntry.LoadLevelFileData;
 var
   Parser: TParser;
+  LemCount: Integer;
+  i: Integer;
+
+  TalInfoLevel: TLevel;
 begin
   if fDataLoaded then Exit;
   if not FileExists(Path) then
@@ -487,6 +491,20 @@ begin
          Result := CompareStr(L.Title, R.Title);
      end
     ));
+
+    if fTalismans.Count > 0 then
+    begin
+      TalInfoLevel := TLevel.Create;
+
+      try
+        TalInfoLevel.LoadFromFile(Path);
+
+        for i := 0 to fTalismans.Count-1 do
+          fTalismans[i].LevelLemmingCount := TalInfoLevel.Info.LemmingsCount;
+      finally
+        TalInfoLevel.Free;
+      end;
+    end;
 
     fDataLoaded := true;
   finally
@@ -1215,9 +1233,6 @@ begin
     LoadFromMetaInfo
   else
     LoadFromSearchRec;
-
-  if Parent = nil then
-    LoadUserData;
 end;
 
 procedure TNeoLevelGroup.LoadLevel(aLine: TParserLine; const aIteration: Integer);

@@ -817,7 +817,7 @@ begin
     SetLength(Info.SpawnOrder, Info.LemmingsCount - PreplacedLemmings.Count); // in case this got overridden
   end;
 
-  // Validate save requirement and lower it if need be. It must:
+  // 3. Validate save requirement and lower it if need be. It must:
   //  - Not exceed the lemming count + cloner count (including neutrals but excluding zombies, of course)
   //  - Not exceed the total number of lemmings permitted to enter the level's exits
   MaxPossibleLemmingCount := Info.LemmingsCount + Info.SkillCount[spbCloner] - Info.ZombieCount;
@@ -844,6 +844,11 @@ begin
 
   if (MaxPossibleExitCount >= 0) and (Info.RescueCount > MaxPossibleExitCount) then
     Info.RescueCount := MaxPossibleExitCount;
+
+  // 4. Write LemmingsCount to talismans, if any
+
+  for i := 0 to fTalismans.Count-1 do
+    fTalismans[i].LevelLemmingCount := Info.LemmingsCount;
 end;
 
 // TLevel Saving Routines

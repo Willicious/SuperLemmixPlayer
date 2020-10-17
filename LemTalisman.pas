@@ -24,6 +24,8 @@ type
     fTotalSkillLimit: Integer;
     fSkillLimits: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of Integer;
 
+    fLevelLemmingCount: Integer;
+
     function GetSkillLimit(aSkill: TSkillPanelButton): Integer;
     procedure SetSkillLimit(aSkill: TSkillPanelButton; aCount: Integer);
 
@@ -43,6 +45,8 @@ type
     property TotalSkillLimit: Integer read fTotalSkillLimit write fTotalSkillLimit;
     property SkillLimit[Index: TSkillPanelButton]: Integer read GetSkillLimit write SetSkillLimit;
     property RequirementText: String read MakeRequirementText;
+
+    property LevelLemmingCount: Integer read fLevelLemmingCount write fLevelLemmingCount;
   end;
 
 implementation
@@ -61,6 +65,8 @@ begin
   fRescueCount := -1;
   fTimeLimit := -1;
   fTotalSkillLimit := -1;
+
+  fLevelLemmingCount := -1;
 
   for i := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     fSkillLimits[i] := -1;
@@ -174,8 +180,12 @@ begin
 
   // Save requirement
   if HasLemReq then
-    Result := Result + 'save ' + IntToStr(RescueCount) + ' '
-  else
+  begin
+    if fLevelLemmingCount >= 0 then
+      Result := Result + 'save ' + IntToStr(RescueCount) + '/' + IntToStr(fLevelLemmingCount) + ' '
+    else
+      Result := Result + 'save ' + IntToStr(RescueCount) + ' ';
+  end else
     Result := Result + 'complete ';
 
   // Time requirement

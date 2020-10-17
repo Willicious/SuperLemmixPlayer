@@ -88,6 +88,7 @@ begin
                                                     // in having it.
 
   GameParams.Load;
+  GameParams.BaseLevelPack.LoadUserData;
 
   if UnderWine and not GameParams.DisableWineWarnings then
     if GameParams.FullScreen then
