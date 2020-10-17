@@ -3,15 +3,16 @@ unit GameMenuScreen;
 interface
 
 uses
+  StrUtils, Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
+  Types, UMisc, Math,
   GameBaseMenuScreen,
   GameControl,
   LemNeoLevelPack,
   LemNeoOnline,
+  LemNeoParser,
   LemStrings,
   LemTypes,
-  GR32, GR32_Resamplers,
-  Classes, SysUtils, Dialogs, Controls, ExtCtrls, Forms, Windows, ShellApi,
-  Types, UMisc, StrUtils, Math;
+  GR32, GR32_Resamplers;
 
 type
   TGameMenuScreen = class(TGameBaseMenuScreen)
@@ -37,6 +38,8 @@ type
       fGroupSignCenter: TPoint;
       fGroupGraphic: TBitmap32;
 
+      fScrollerTextList: TStringList;
+
       fFinishedMakingSigns: Boolean;
 
       procedure MakeAutoSectionGraphic(Dst: TBitmap32);
@@ -48,6 +51,7 @@ type
       procedure MakeFooterText;
 
       procedure LoadScrollerGraphics;
+      procedure PrepareScrollerTextList;
       procedure DrawScroller;
       procedure DrawReel;
       procedure DrawReelText;
@@ -115,6 +119,8 @@ begin
   fVersionInfo := TStringList.Create;
 
   fGroupGraphic := TBitmap32.Create;
+
+  fScrollerTextList := TStringList.Create;
 end;
 
 destructor TGameMenuScreen.Destroy;
@@ -128,6 +134,8 @@ begin
   fVersionInfo.Free;
 
   fGroupGraphic.Free;
+
+  fScrollerTextList.Free;
 
   inherited;
 end;
@@ -206,6 +214,7 @@ begin
 
   LoadScrollerGraphics;
   DrawScroller;
+  PrepareScrollerTextList;
 
   DoCleanInstallCheck;
 
@@ -213,7 +222,7 @@ begin
     InitiateUpdateCheck;
 
   if (GameParams.CurrentLevel <> nil) and
-     (GameParams.CurrentLevel.Group.ScrollerList.Count > 0) then
+     (fScrollerTextList.Count > 0) then
   begin
     fReelTextIndex := -1;
     PrepareNextReelText;
@@ -296,12 +305,12 @@ begin
 
     // Group sign buttons
     GetGraphic('sign_group_up.png', BMP);
-    NewRegion := MakeClickableImageAuto(Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_UP_OFFSET_Y),
+    NewRegion := MakeClickableImageAuto(Types.Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_UP_OFFSET_Y),
                                         BMP.BoundsRect, NextGroup, BMP, 3);
     NewRegion.ShortcutKeys.Add(VK_UP);
 
     GetGraphic('sign_group_down.png', BMP);
-    NewRegion := MakeClickableImageAuto(Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_DOWN_OFFSET_Y),
+    NewRegion := MakeClickableImageAuto(Types.Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_DOWN_OFFSET_Y),
                                         BMP.BoundsRect, PrevGroup, BMP, 3);
     NewRegion.ShortcutKeys.Add(VK_DOWN);
 
@@ -394,6 +403,29 @@ begin
   end;
 end;
 
+procedure TGameMenuScreen.PrepareScrollerTextList;
+var
+  i: Integer;
+  Parser: TParser;
+begin
+  fScrollerTextList.Clear;
+
+  Parser := TParser.Create;
+  try
+    Parser.LoadFromFile(AppPath + SFData + 'scroller.nxmi');
+    Parser.MainSection.DoForEachLine('LINE', procedure(aLine: TParserLine; const aIteration: Integer)
+    begin
+      fScrollerTextList.Add(aLine.ValueTrimmed);
+    end);
+  finally
+    Parser.Free;
+  end;
+
+  if (GameParams.CurrentLevel <> nil) and (GameParams.CurrentLevel.Group <> nil) then
+    for i := 0 to GameParams.CurrentLevel.Group.ScrollerList.Count-1 do
+      fScrollerTextList.Insert(i, GameParams.CurrentLevel.Group.ScrollerList[i]);
+end;
+
 procedure TGameMenuScreen.UpdateReel;
 const
   MS_PER_UPDATE = 6;
@@ -441,19 +473,19 @@ var
 
   SizeRect: TRect;
 begin
-  for i := 1 to GameParams.CurrentLevel.Group.ScrollerList.Count do
+  for i := 1 to fScrollerTextList.Count do
   begin
-    if i = GameParams.CurrentLevel.Group.ScrollerList.Count then
+    if i = fScrollerTextList.Count then
     begin
       fDisableScroller := true;
       Exit;
     end;
 
-    realI := (fReelTextIndex + i) mod GameParams.CurrentLevel.Group.ScrollerList.Count;
+    realI := (fReelTextIndex + i) mod fScrollerTextList.Count;
 
-    if Trim(GameParams.CurrentLevel.Group.ScrollerList[realI]) <> '' then
+    if Trim(fScrollerTextList[realI]) <> '' then
     begin
-      S := Trim(GameParams.CurrentLevel.Group.ScrollerList[realI]);
+      S := Trim(fScrollerTextList[realI]);
       fReelTextIndex := realI;
       Break;
     end;

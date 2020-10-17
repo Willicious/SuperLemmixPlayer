@@ -1,3 +1,5 @@
+** This file is out of date as hell.
+
 NeoLemmix
 
 by Namida Verasche and Stephan Neupert,

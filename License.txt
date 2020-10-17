@@ -156,7 +156,6 @@ Furthermore the creators of NeoLemmix thank the following persons for their help
 - ccexplore, Mindless and Volker Oth for information regarding Lemmings
 - Un4Seen Developments (https://www.un4seen.com/) for bass.dll
 - Alex A. Denisov (https://graphics32.github.io) for Graphics32
-- base2 technologies (https://www.base2ti.com) for ZLibEx
 
 
 
