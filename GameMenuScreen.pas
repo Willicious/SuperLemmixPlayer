@@ -292,7 +292,7 @@ begin
     NewRegion := MakeClickableImageAuto(fGroupSignCenter, BMP.BoundsRect, NextGroup, BMP);
     NewRegion.DrawInFrontWhenHighlit := false;
 
-    DrawAllClickables; // for the next step's sake
+    DrawAllClickables(true); // for the next step's sake
 
     // Group sign buttons
     GetGraphic('sign_group_up.png', BMP);

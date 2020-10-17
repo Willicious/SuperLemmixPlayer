@@ -118,7 +118,7 @@ type
 
       function MakeHiddenOption(aKey: Word; aAction: TRegionAction): TClickableRegion; overload;
       function MakeHiddenOption(aFunc: TLemmixHotkeyAction; aAction: TRegionAction): TClickableRegion; overload;
-      procedure DrawAllClickables;
+      procedure DrawAllClickables(aForceNormalState: Boolean = false);
 
       function GetInternalMouseCoordinates: TPoint;
 
@@ -588,7 +588,7 @@ begin
   ScreenImg.Cursor := CursorIndex;
 end;
 
-procedure TGameBaseMenuScreen.DrawAllClickables;
+procedure TGameBaseMenuScreen.DrawAllClickables(aForceNormalState: Boolean = false);
 var
   i: Integer;
   Region: TClickableRegion;
@@ -603,7 +603,12 @@ var
     Result := true;
   end;
 begin
-  HandleMouseMove; // To set statuses
+  if aForceNormalState then
+  begin
+    for i := 0 to fClickableRegions.Count-1 do
+      fClickableRegions[i].CurrentState := rsNormal;
+  end else
+    HandleMouseMove; // To set statuses
 
   for i := 0 to fClickableRegions.Count-1 do
   begin
