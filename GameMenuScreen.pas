@@ -290,7 +290,6 @@ begin
     fGroupSignCenter := MakePosition(1, -0.5);
     GetGraphic('sign_group.png', BMP);
     NewRegion := MakeClickableImageAuto(fGroupSignCenter, BMP.BoundsRect, NextGroup, BMP);
-    NewRegion.CustomDrawCall := RedrawGroupSign;
 
     DrawAllClickables; // for the next step's sake
 
@@ -299,13 +298,11 @@ begin
     NewRegion := MakeClickableImageAuto(Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_UP_OFFSET_Y),
                                         BMP.BoundsRect, NextGroup, BMP, 3);
     NewRegion.ShortcutKeys.Add(VK_UP);
-    NewRegion.CustomDrawCall := RedrawGroupSign;
 
     GetGraphic('sign_group_down.png', BMP);
     NewRegion := MakeClickableImageAuto(Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_DOWN_OFFSET_Y),
                                         BMP.BoundsRect, PrevGroup, BMP, 3);
     NewRegion.ShortcutKeys.Add(VK_DOWN);
-    NewRegion.CustomDrawCall := RedrawGroupSign;
 
     // Config
     GetGraphic('sign_config.png', BMP);

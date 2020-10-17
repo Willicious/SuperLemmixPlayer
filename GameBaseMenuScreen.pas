@@ -48,7 +48,6 @@ type
       fCurrentState: TRegionState;
       fResetTimer: TTimer;
 
-      fCustomDrawCall: TRegionAction;
 
       function GetSrcRect(aState: TRegionState): TRect;
     public
@@ -69,7 +68,6 @@ type
       property CurrentState: TRegionState read fCurrentState write fCurrentState;
       property ResetTimer: TTimer read fResetTimer write fResetTimer;
 
-      property CustomDrawCall: TRegionAction read fCustomDrawCall write fCustomDrawCall;
   end;
 
   TGameBaseMenuScreen = class(TGameBaseScreen)
