@@ -7,7 +7,7 @@ object FLevelSelect: TFLevelSelect
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Level Select'
   ClientHeight = 480
-  ClientWidth = 721
+  ClientWidth = 913
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -77,6 +77,13 @@ object FLevelSelect: TFLevelSelect
     Font.Style = []
     ParentFont = False
   end
+  object lblCreatorTools: TLabel
+    Left = 720
+    Top = 8
+    Width = 63
+    Height = 13
+    Caption = 'Creator Tools'
+  end
   object tvLevelSelect: TTreeView
     Left = 8
     Top = 8
@@ -124,6 +131,13 @@ object FLevelSelect: TFLevelSelect
     Caption = 'Create Shortcut'
     TabOrder = 4
     OnClick = btnMakeShortcutClick
+  end
+  object sbCreatorTools: TScrollBox
+    Left = 712
+    Top = 24
+    Width = 193
+    Height = 448
+    TabOrder = 5
   end
   object ilStatuses: TImageList
   end

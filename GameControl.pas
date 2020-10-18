@@ -78,7 +78,8 @@ type
     moMatchBlankReplayUsername,
     moCompactSkillPanel,
     moEdgeScroll,
-    moSpawnInterval
+    moSpawnInterval,
+    moCreatorTools
   );
 
   TMiscOptions = set of TMiscOption;
@@ -220,6 +221,8 @@ type
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
 
+    property ShowCreatorTools: boolean Index moCreatorTools read GetOptionFlag write SetOptionFlag;
+
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
     property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
@@ -351,6 +354,7 @@ begin
 
   SL.Add('');
   SL.Add('# Interface Options');
+  SaveBoolean('ShowCreatorTools', ShowCreatorTools);
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
   SaveBoolean('AutoReplayNames', ReplayAutoName);
   SaveBoolean('NoAutoReplay', NoAutoReplayMode);
@@ -490,6 +494,7 @@ begin
 
     UserName := SL.Values['UserName'];
 
+    ShowCreatorTools := LoadBoolean('ShowCreatorTools', ShowCreatorTools);
     AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
     ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);

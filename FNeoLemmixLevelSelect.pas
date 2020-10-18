@@ -30,6 +30,8 @@ type
     ilStatuses: TImageList;
     lblCompletion: TLabel;
     btnMakeShortcut: TButton;
+    sbCreatorTools: TScrollBox;
+    lblCreatorTools: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -233,6 +235,13 @@ begin
   fPackTalBox.Visible := false;
 
   pnLevelInfo.Visible := false;
+
+  if not GameParams.ShowCreatorTools then
+  begin
+    lblCreatorTools.Visible := false;
+    sbCreatorTools.Visible := false;
+    ClientWidth := sbCreatorTools.Left;
+  end;
 
   InitializeTreeview;
 end;

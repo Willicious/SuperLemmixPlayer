@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 433
+  ClientHeight = 451
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,24 +18,19 @@ object FormNXConfig: TFormNXConfig
   Position = poMainFormCenter
   DesignSize = (
     273
-    433)
+    451)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 273
-    Height = 394
-    ActivePage = TabSheet5
+    Height = 412
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitHeight = 378
     object TabSheet1: TTabSheet
       Caption = 'General'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 350
       object lblUserName: TLabel
         Left = 7
         Top = 16
@@ -45,11 +40,11 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox4: TGroupBox
         Left = 7
-        Top = 263
+        Top = 215
         Width = 249
         Height = 67
         Caption = 'Replay Options'
-        TabOrder = 4
+        TabOrder = 3
         object cbAutoSaveReplay: TCheckBox
           Left = 12
           Top = 16
@@ -71,11 +66,11 @@ object FormNXConfig: TFormNXConfig
       end
       object GroupBox1: TGroupBox
         Left = 7
-        Top = 200
+        Top = 152
         Width = 249
         Height = 57
         Caption = 'Internet Options'
-        TabOrder = 3
+        TabOrder = 2
         object cbEnableOnline: TCheckBox
           Left = 16
           Top = 16
@@ -104,15 +99,6 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 1
         OnClick = btnHotkeysClick
       end
-      object btnReplayCheck: TButton
-        Left = 7
-        Top = 96
-        Width = 249
-        Height = 42
-        Caption = 'Mass Replay Check'
-        TabOrder = 2
-        OnClick = btnReplayCheckClick
-      end
       object ebUserName: TEdit
         Left = 71
         Top = 13
@@ -122,21 +108,17 @@ object FormNXConfig: TFormNXConfig
       end
       object btnStyles: TButton
         Left = 7
-        Top = 144
+        Top = 96
         Width = 249
         Height = 42
         Caption = 'Style Manager'
-        TabOrder = 5
+        TabOrder = 4
         OnClick = btnStylesClick
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 350
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -167,7 +149,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 68
         Width = 249
-        Height = 96
+        Height = 112
         Caption = 'Interface Options'
         TabOrder = 1
         object cbNoBackgrounds: TCheckBox
@@ -190,7 +172,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbSpawnInterval: TCheckBox
           Left = 12
-          Top = 68
+          Top = 67
           Width = 153
           Height = 17
           Caption = 'Use Spawn Interval'
@@ -206,10 +188,19 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 1
           OnClick = OptionChanged
         end
+        object cbCreatorTools: TCheckBox
+          Left = 12
+          Top = 84
+          Width = 153
+          Height = 17
+          Caption = 'Show Creator Tools'
+          TabOrder = 4
+          OnClick = OptionChanged
+        end
       end
       object GroupBox6: TGroupBox
         Left = 8
-        Top = 167
+        Top = 183
         Width = 249
         Height = 196
         Caption = 'Graphics Options'
@@ -320,10 +311,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 350
       object Label3: TLabel
         Left = 24
         Top = 45
@@ -406,35 +393,32 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 400
+    Top = 418
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
-    ExplicitTop = 384
   end
   object btnCancel: TButton
     Left = 104
-    Top = 400
+    Top = 418
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
-    ExplicitTop = 384
   end
   object btnApply: TButton
     Left = 184
-    Top = 400
+    Top = 418
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 384
   end
 end
