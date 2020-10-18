@@ -441,7 +441,6 @@ end;
 procedure TNeoLevelEntry.LoadLevelFileData;
 var
   Parser: TParser;
-  LemCount: Integer;
   i: Integer;
 
   TalInfoLevel: TLevel;
@@ -911,6 +910,7 @@ end;
 
 function TNeoLevelGroup.FindFile(aName: String): String;
 begin
+  Result := '';
   if FileExists(Path + aName) then
     Result := Path + aName
   else if (not IsBasePack) and (Parent <> nil) then

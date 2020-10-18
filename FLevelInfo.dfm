@@ -1,8 +1,8 @@
 object LevelInfoPanel: TLevelInfoPanel
   Left = 0
   Top = 0
+  BorderIcons = []
   BorderStyle = bsNone
-  Caption = 'LevelInfoPanel'
   ClientHeight = 80
   ClientWidth = 94
   Color = clBtnFace

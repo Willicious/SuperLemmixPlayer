@@ -5,6 +5,7 @@ interface
 uses
   System.Types,
   StrUtils,
+  Generics.Collections,
   LemTypes,
   PngInterface,
   LemNeoLevelPack,
@@ -20,6 +21,8 @@ uses
 type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
     private
+      fTalRects: TList<TRect>;
+
       function GetScreenText: string;
 
       procedure NextLevel;
@@ -32,12 +35,18 @@ type
 
       procedure SaveLevelImage;
       procedure TryLoadReplay;
+
+      procedure MakeTalismanOptions;
+      procedure HandleTalismanClick;
     protected
       procedure DoAfterConfig; override;
       function GetBackgroundSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
+      constructor Create(aOwner: TComponent); override;
+      destructor Destroy; override;
+
       procedure BuildScreen; override;
       procedure PrepareGameParams; override;
       procedure CloseScreen(NextScreen: TGameScreenType); override;
@@ -48,9 +57,25 @@ implementation
 uses
   CustomPopup,
   FBaseDosForm,
+  FLevelInfo,
   FStyleManager;
 
+const
+  TALISMAN_PADDING = 8;
+
 { TGamePreviewScreen }
+
+constructor TGamePreviewScreen.Create(aOwner: TComponent);
+begin
+  inherited;
+  fTalRects := TList<TRect>.Create;
+end;
+
+destructor TGamePreviewScreen.Destroy;
+begin
+  fTalRects.Free;
+  inherited;
+end;
 
 procedure TGamePreviewScreen.CloseScreen(NextScreen: TGameScreenType);
 var
@@ -207,6 +232,8 @@ begin
       MakeHiddenOption(lka_LoadReplay, TryLoadReplay);
       MakeHiddenOption(lka_SaveImage, SaveLevelImage);
 
+      MakeTalismanOptions;
+
       DrawAllClickables;
     finally
       W.Free;
@@ -308,6 +335,88 @@ begin
 
     if Author <> '' then
       Result := Result + SPreviewAuthor + Author;
+  end;
+end;
+
+procedure TGamePreviewScreen.HandleTalismanClick;
+var
+  P: TPoint;
+  i: Integer;
+  F: TLevelInfoPanel;
+begin
+  P := GetInternalMouseCoordinates;
+  for i := 0 to fTalRects.Count-1 do
+    if PtInRect(fTalRects[i], P) then
+    begin
+      F := TLevelInfoPanel.Create(self, nil);
+      try
+        F.Level := GameParams.Level;
+        F.Talisman := GameParams.Level.Talismans[i];
+        F.ShowPopup;
+      finally
+        F.Free;
+      end;
+      Break;
+    end;
+end;
+
+procedure TGamePreviewScreen.MakeTalismanOptions;
+var
+  NewRegion: TClickableRegion;
+  TalBMP, Temp: TBitmap32;
+  Tal: TTalisman;
+  i: Integer;
+
+  LoadPath: String;
+  SrcRect: TRect;
+
+  TotalTalWidth: Integer;
+  TalPoint: TPoint;
+begin
+  if GameParams.Level.Talismans.Count = 0 then
+    Exit;
+
+  TalBMP := TBitmap32.Create;
+  Temp := TBitmap32.Create;
+  try
+    LoadPath := GameParams.CurrentLevel.Group.FindFile('talismans.png');
+    if LoadPath = '' then
+      LoadPath := AppPath + SFGraphicsMenu + 'talismans.png';
+
+    TPngInterface.LoadPngFile(LoadPath, TalBMP);
+    TalBMP.DrawMode := dmOpaque;
+
+    Temp.SetSize(TalBMP.Width div 2, TalBMP.Height div 3);
+
+    TotalTalWidth := (GameParams.Level.Talismans.Count * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
+    TalPoint := Point(
+      (ScreenImg.Bitmap.Width - TotalTalWidth + Temp.Width) div 2,
+      400
+      );
+
+    for i := 0 to GameParams.Level.Talismans.Count-1 do
+    begin
+      Tal := GameParams.Level.Talismans[i];
+      case Tal.Color of
+        tcBronze: SrcRect := SizedRect(0, 0, Temp.Width, Temp.Height);
+        tcSilver: SrcRect := SizedRect(0, Temp.Height, Temp.Width, Temp.Height);
+        tcGold: SrcRect := SizedRect(0, Temp.Height * 2, Temp.Width, Temp.Height);
+      end;
+
+      if GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
+        OffsetRect(SrcRect, Temp.Width, 0);
+
+      Temp.Clear(0);
+      TalBMP.DrawTo(Temp, 0, 0, SrcRect);
+
+      NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleTalismanClick, Temp);
+      fTalRects.Add(NewRegion.ClickArea);
+
+      TalPoint.X := TalPoint.X + Temp.Width + TALISMAN_PADDING;
+    end;
+  finally
+    TalBMP.Free;
+    Temp.Free;
   end;
 end;
 

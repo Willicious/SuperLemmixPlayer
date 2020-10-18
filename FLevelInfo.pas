@@ -27,6 +27,7 @@ type
       fCurrentPos: TPoint;
       fMinSize: TPoint;
       fIcons: TBitmap32;
+      fOwnIcons: Boolean;
 
       fLevelImage: TBitmap32;
       fLastRenderLevelID: Int64;
@@ -90,7 +91,16 @@ begin
 
   fLevelImage := TBitmap32.Create;
 
-  fIcons := aIconBMP;
+  if aIconBMP = nil then
+  begin
+    fIcons := TBitmap32.Create;
+    TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIcons);
+    fIcons.DrawMode := dmBlend;
+    fOwnIcons := true;
+  end else begin
+    fIcons := aIconBMP;
+    fOwnIcons := false;
+  end;
 
   fCurrentPos := Types.Point(PADDING_SIZE, PADDING_SIZE);
 end;
@@ -98,6 +108,10 @@ end;
 destructor TLevelInfoPanel.Destroy;
 begin
   fLevelImage.Free;
+
+  if fOwnIcons then
+    fIcons.Free;
+
   inherited;
 end;
 
@@ -294,7 +308,7 @@ var
 begin
   if (fTalisman <> nil) then
   begin
-    BorderStyle := bsToolWindow;
+    BorderStyle := bsDialog;
 
     Wipe;
 
@@ -339,17 +353,11 @@ begin
       NewLabel.Font.Style := [fsBold];
       NewLabel.Caption := 'Complete the level.';
 
-      if NewLabel.Width + (PADDING_SIZE * 2) < fMinSize.X then
-      begin
-        fMinSize.X := NewLabel.Width + (PADDING_SIZE * 2);
-        NewLabel.Left := PADDING_SIZE;
-      end else
-        NewLabel.Left := (fMinSize.X - PADDING_SIZE) div 2;
-
+      NewLabel.Left := Max((fMinSize.X - NewLabel.Width) div 2, PADDING_SIZE);
       NewLabel.Top := fCurrentPos.Y;
 
-      fMinSize.X := NewLabel.Width + (PADDING_SIZE * 2);
-      fMinSize.Y := NewLabel.Height + (PADDING_SIZE * 2);
+      fMinSize.X := Max(NewLabel.Left + NewLabel.Width + PADDING_SIZE, fMinSize.X);
+      fMinSize.Y := Max(NewLabel.Top + NewLabel.Height + PADDING_SIZE, fMinSize.Y);
     end;
 
     AddClose;
