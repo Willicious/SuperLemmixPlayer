@@ -1784,7 +1784,15 @@ begin
 
     DOM_LOCKEXIT:
       begin
-        fHelperImages[hpi_LockExit].DrawTo(Dst, DrawX - 16 * ResMod, DrawY);
+        fHelperImages[hpi_Exit].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
+
+        if (Gadget.CurrentFrame = 1) then
+        begin
+          fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
+          fHelperImages[hpi_Exit_Lock].DrawTo(Dst, DrawX - 3 * ResMod, (Gadget.TriggerRect.Top - 10) * ResMod);
+
+          fFixedDrawColor := fFixedDrawColor xor $FFFFFF;
+        end;
       end;
 
     DOM_FIRE:
@@ -2177,6 +2185,9 @@ begin
     fHelperImages[i].DrawMode := dmBlend;
     fHelperImages[i].CombineMode := cmMerge;
   end;
+
+  fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
+  fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
 
   fHelpersAreHighRes := GameParams.HighResolution;
 end;
