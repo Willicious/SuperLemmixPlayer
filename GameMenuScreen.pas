@@ -663,28 +663,29 @@ var
   TempBmp: TBitmap32;
   Sca: Double;
 begin
-  if not GetGraphic('rank_graphic.png', fGroupGraphic, true) then
-  begin
-    TempBmp := TBitmap32.Create;
-    try
-      MakeAutoSectionGraphic(TempBmp);
+  if not GetGraphic('group_graphic.png', fGroupGraphic, true) then
+    if not GetGraphic('rank_graphic.png', fGroupGraphic, true) then
+    begin
+      TempBmp := TBitmap32.Create;
+      try
+        MakeAutoSectionGraphic(TempBmp);
 
-      if (TempBmp.Width <= MAX_AUTOGEN_WIDTH) and (TempBmp.Height < MAX_AUTOGEN_HEIGHT) then
-        Sca := 1
-      else
-        Sca := Min(MAX_AUTOGEN_WIDTH / TempBmp.Width, MAX_AUTOGEN_HEIGHT / TempBmp.Height);
+        if (TempBmp.Width <= MAX_AUTOGEN_WIDTH) and (TempBmp.Height < MAX_AUTOGEN_HEIGHT) then
+          Sca := 1
+        else
+          Sca := Min(MAX_AUTOGEN_WIDTH / TempBmp.Width, MAX_AUTOGEN_HEIGHT / TempBmp.Height);
 
-      fGroupGraphic.SetSize(Round(TempBmp.Width * Sca), Round(TempBmp.Height * Sca));
-      fGroupGraphic.Clear(0);
+        fGroupGraphic.SetSize(Round(TempBmp.Width * Sca), Round(TempBmp.Height * Sca));
+        fGroupGraphic.Clear(0);
 
-      if Sca <> 1 then
-        TLinearResampler.Create(TempBmp);
+        if Sca <> 1 then
+          TLinearResampler.Create(TempBmp);
 
-      TempBmp.DrawTo(fGroupGraphic, fGroupGraphic.BoundsRect);
-    finally
-      TempBmp.Free;
+        TempBmp.DrawTo(fGroupGraphic, fGroupGraphic.BoundsRect);
+      finally
+        TempBmp.Free;
+      end;
     end;
-  end;
 
   if aRedraw then
     DrawAllClickables;

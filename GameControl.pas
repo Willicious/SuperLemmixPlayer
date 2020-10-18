@@ -187,6 +187,8 @@ type
 
     procedure SetCurrentLevelToBestMatch(aPattern: String);
 
+    procedure CreateBasePack;
+
     procedure SetLevel(aLevel: TNeoLevelEntry);
     procedure NextLevel(aCanCrossRank: Boolean = false);
     procedure PrevLevel(aCanCrossRank: Boolean = false);
@@ -712,34 +714,11 @@ end;
 
 
 constructor TDosGameParams.Create;
-var
-  buttonSelected: Integer;
 begin
   inherited Create;
 
   MiscOptions := DEF_MISCOPTIONS;
   PostLevelSoundOptions := [];
-
-  if not DirectoryExists(AppPath + SFLevels) then
-  begin
-    buttonSelected := MessageDlg('Could not find any levels in the folder levels\. Try to continue?',
-                                 mtWarning, mbOKCancel, 0);
-    if buttonSelected = mrCancel then Application.Terminate();
-  end;
-
-  try
-    BaseLevelPack := TNeoLevelGroup.Create(nil, AppPath + SFLevels);
-  except
-    on E: Exception do
-      ShowMessage('Error loading level packs and/or progression. Progress will not be saved during this session.');
-  end;
-
-  try
-    SetLevel(BaseLevelPack.FirstUnbeatenLevelRecursive);
-  except
-    on E : EAccessViolation do
-      SetLevel(nil);
-  end;
 
   UserName := 'Anonymous';
   SoundManager.MusicVolume := 50;
@@ -762,6 +741,32 @@ begin
       ShowMessage('Error during hotkey loading:' + #10 +
                    E.ClassName + ': ' + E.Message + #10 +
                    'Default hotkeys have been loaded. Customizations to hotkeys during this session will not be saved.');
+  end;
+end;
+
+procedure TDosGameParams.CreateBasePack;
+var
+  buttonSelected: Integer;
+begin
+  if not DirectoryExists(AppPath + SFLevels) then
+  begin
+    buttonSelected := MessageDlg('Could not find any levels in the folder levels\. Try to continue?',
+                                 mtWarning, mbOKCancel, 0);
+    if buttonSelected = mrCancel then Application.Terminate();
+  end;
+
+  try
+    BaseLevelPack := TNeoLevelGroup.Create(nil, AppPath + SFLevels);
+  except
+    on E: Exception do
+      ShowMessage('Error loading level packs and/or progression. Progress will not be saved during this session.');
+  end;
+
+  try
+    SetLevel(BaseLevelPack.FirstUnbeatenLevelRecursive);
+  except
+    on E : EAccessViolation do
+      SetLevel(nil);
   end;
 end;
 

@@ -491,18 +491,22 @@ begin
      end
     ));
 
-    if fTalismans.Count > 0 then
-    begin
-      TalInfoLevel := TLevel.Create;
+    try
+      if fTalismans.Count > 0 then
+      begin
+        TalInfoLevel := TLevel.Create;
 
-      try
-        TalInfoLevel.LoadFromFile(Path);
+        try
+          TalInfoLevel.LoadFromFile(Path);
 
-        for i := 0 to fTalismans.Count-1 do
-          fTalismans[i].LevelLemmingCount := TalInfoLevel.Info.LemmingsCount;
-      finally
-        TalInfoLevel.Free;
+          for i := 0 to fTalismans.Count-1 do
+            fTalismans[i].LevelLemmingCount := TalInfoLevel.Info.LemmingsCount;
+        finally
+          TalInfoLevel.Free;
+        end;
       end;
+    except
+      // Fail silently.
     end;
 
     fDataLoaded := true;

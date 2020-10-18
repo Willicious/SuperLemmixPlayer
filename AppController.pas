@@ -76,6 +76,7 @@ begin
 
   GameParams := TDosGameParams.Create;
   PieceManager := TNeoPieceManager.Create;
+  GameParams.CreateBasePack;
 
   GameParams.Renderer := TRenderer.Create;
   GameParams.Level := TLevel.Create;
