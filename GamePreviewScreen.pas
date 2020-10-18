@@ -269,83 +269,6 @@ begin
 end;
 
 function TGamePreviewScreen.GetScreenText: string;
-  function GetTalismanText: String;
-  var
-    Talisman: TTalisman;
-    Lines: array[0..2] of String;
-    MaxLen: Integer;
-    i: Integer;
-
-    procedure MakeReqString(CurLine: Integer);
-    var
-      S: String;
-      i: Integer;
-    begin
-      S := Trim(Talisman.RequirementText);
-      while (S <> '') and (CurLine < Length(Lines)) do
-      begin
-        if Length(S) > 48 then
-        begin
-          for i := 49 downto 1 do
-            if S[i] = ' ' then
-              Break;
-
-          if i <= 1 then i := 49;
-        end else
-          i := Length(S) + 1;
-
-        Lines[CurLine] := Lines[CurLine] + Trim(LeftStr(S, i-1));
-        S := Trim(RightStr(S, Length(S) - i + 1));
-        Inc(CurLine);
-      end;
-    end;
-  begin
-    Talisman := nil;
-    with GameParams.CurrentLevel do
-      for i := 0 to Talismans.Count-1 do
-        if not TalismanStatus[Talismans[i].ID] then
-        begin
-          Talisman := Talismans[i];
-          Break;
-        end;
-
-    if Talisman = nil then
-    begin
-      Result := #13#13;
-      Exit;
-    end;
-
-    // #127 = bronze non-unlocked
-    case Talisman.Color of
-      tcBronze: Lines[0] := #26 + '   ';
-      tcSilver: Lines[0] := #28 + '   ';
-      tcGold: Lines[0] := #30 + '   ';
-    end;
-    Lines[1] := '    ';
-    Lines[2] := '    ';
-
-    if Trim(Talisman.Title).Length > 0 then
-    begin
-      Lines[0] := Lines[0] + LeftStr(Talisman.Title, 36);
-      MakeReqString(1);
-    end
-    else
-      MakeReqString(0);
-
-    MaxLen := 0;
-    for i := 0 to 2 do
-    begin
-      Lines[i] := TrimRight(Lines[i]);
-      if Length(Lines[i]) > MaxLen then MaxLen := Length(Lines[i]);
-    end;
-    for i := 0 to 2 do
-      if Length(Lines[i]) < MaxLen then
-        Lines[i] := Lines[i] + StringOfChar(' ', MaxLen - Length(Lines[i]));
-
-    Result := Lines[0] + #13 +
-              Lines[1] + #13 +
-              Lines[2];
-  end;
 begin
   Assert(GameParams <> nil);
 
@@ -361,16 +284,30 @@ begin
     end;
     Result := Result + #13#13#13;
 
-    Result := Result + IntToStr(LemmingsCount - ZombieCount) + SPreviewLemmings + #13#12;
+    if (NeutralCount > 0) or (ZombieCount > 0) then
+    begin
+      Result := Result + IntToStr(LemmingsCount - ZombieCount - NeutralCount) + ' Lemmings  + ';
+
+      if NeutralCount > 0 then
+        Result := Result + IntToStr(NeutralCount) + ' Neutrals';
+
+      if (NeutralCount > 0) and (ZombieCount > 0) then
+        Result := Result + ', ';
+
+      if ZombieCount > 0 then
+        Result := Result + IntToStr(ZombieCount) + ' Zombies';
+    end else
+      Result := Result + IntToStr(LemmingsCount) + SPreviewLemmings;
+
+    Result := Result + #13#12;
+
     Result := Result + IntToStr(RescueCount) + SPreviewSave + #13#12;
 
     if HasTimeLimit then
       Result := Result + SPreviewTimeLimit + IntToStr(TimeLimit div 60) + ':' + LeadZeroStr(TimeLimit mod 60, 2) + #13 + #12;
 
     if Author <> '' then
-      Result := Result + SPreviewAuthor + Author + #13;
-
-    Result := Result + #13 + GetTalismanText;
+      Result := Result + SPreviewAuthor + Author;
   end;
 end;
 
