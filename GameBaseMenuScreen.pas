@@ -784,7 +784,6 @@ procedure TGameBaseMenuScreen.ShowConfigMenu;
 var
   ConfigDlg: TFormNXConfig;
   OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean;
-  ConfigResult: TModalResult;
 begin
   OldFullScreen := GameParams.FullScreen;
   OldHighResolution := GameParams.HighResolution;
@@ -793,7 +792,7 @@ begin
   try
     ConfigDlg.SetGameParams;
     ConfigDlg.NXConfigPages.TabIndex := 0;
-    ConfigResult := ConfigDlg.ShowModal;
+    ConfigDlg.ShowModal;
     ResetWindowSize := ConfigDlg.ResetWindowSize;
     ResetWindowPos := ConfigDlg.ResetWindowPosition;
   finally

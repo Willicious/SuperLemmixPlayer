@@ -14,7 +14,7 @@ uses
   GR32, GR32_Resamplers, GR32_Layers,
   Generics.Collections,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math,
+  Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math, UITypes,
   ActiveX, ShlObj, ComObj, // for the shortcut creation
   LemNeoParser, GR32_Image, System.ImageList;
 
@@ -882,23 +882,7 @@ end;
 procedure TFLevelSelect.btnMassReplayClick(Sender: TObject);
 var
   OpenDlg: TOpenDialog;
-  N: TTreeNode;
-  Obj: TObject;
-
-  Group: TNeoLevelGroup;
 begin
-  N := tvLevelSelect.Selected;
-  if N = nil then Exit;
-
-  Obj := TObject(N.Data);
-
-  if Obj is TNeoLevelGroup then
-    Group := TNeoLevelGroup(Obj)
-  else if Obj is TNeoLevelEntry then
-    Group := TNeoLevelEntry(Obj).Group
-  else
-    Exit;
-
   OpenDlg := TOpenDialog.Create(self);
   try
     OpenDlg.Title := 'Select any file in the folder containing replays';
