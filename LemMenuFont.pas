@@ -10,13 +10,12 @@ uses
   Classes, SysUtils;
 
 const
-  MENU_FONT_COUNT = ord(#132) - ord('!') + 1;
-  MenuFontCharSet = [#26..#126] - [#32];
+  MENU_FONT_COUNT = ord(#126) - ord('!') + 1;
+  MenuFontCharSet = [#32..#126] - [#32];
 
   CHARACTER_WIDTH = 16;
   CHARACTER_HEIGHT = 19;
   HALF_LINE_FEED = 10;
-  TALISMAN_SIZE = 48;
 
 type
   TMenuFont = class
@@ -84,13 +83,10 @@ var
 begin
   ACh := AnsiChar(Ch);
   // Ignore any character not supported by the purple font
-  //Assert((ACh in [#26..#126]) and (ACh <> ' '), 'Assertion failure on GetBitmapOfChar, character 0x' + IntToHex(Ord(ACh), 2));
-  if (not (ACh in [#26..#126])) and (ACh <> ' ') then
+  if (not (ACh in [#32..#126])) and (ACh <> ' ') then
     Idx := 0
-  else if Ord(ACh) > 32 then
-    Idx := Ord(ACh) - 33
   else
-    Idx := 94 + Ord(ACh) - 26;
+    Idx := Ord(ACh) - 33;
   Result := fBitmaps[Idx];
 end;
 
@@ -161,7 +157,7 @@ begin
         begin
           Inc(CX, CHARACTER_WIDTH);
         end;
-      #26..#31, #33..#132:
+      #33..#132:
         begin
           BitmapOfChar[C].DrawTo(Dst, CX, CY);
           Inc(CX, CHARACTER_WIDTH);
@@ -271,35 +267,13 @@ begin
     if buttonSelected = mrCancel then Application.Terminate();
   end;
 
-  for i := 0 to MENU_FONT_COUNT-7 do
+  for i := 0 to MENU_FONT_COUNT-1 do
   begin
     fBitmaps[i].SetSize(CHARACTER_WIDTH, CHARACTER_HEIGHT);
     fBitmaps[i].Clear(0);
     TempBMP.DrawTo(fBitmaps[i], 0, 0, Rect(i*CHARACTER_WIDTH, 0, (i+1)*CHARACTER_WIDTH, CHARACTER_HEIGHT));
     fBitmaps[i].DrawMode := dmBlend;
     fBitmaps[i].CombineMode := cmMerge;
-  end;
-
-  if (not (GameParams.CurrentLevel = nil))
-     and FileExists(GameParams.CurrentLevel.Group.FindFile('talismans.png')) then
-    TPngInterface.LoadPngFile(GameParams.CurrentLevel.Group.FindFile('talismans.png'), TempBMP)
-  else if FileExists(AppPath + SFGraphicsMenu + 'talismans.png') then
-    TPngInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'talismans.png', TempBMP)
-  else
-  begin
-    buttonSelected := MessageDlg('Could not find the talisman graphics gfx\menu\talismans.png. Try to continue?',
-                                 mtWarning, mbOKCancel, 0);
-    if buttonSelected = mrCancel then Application.Terminate();
-  end;
-
-  for i := 0 to 5 do
-  begin
-    fBitmaps[MENU_FONT_COUNT-6+i].SetSize(TALISMAN_SIZE, TALISMAN_SIZE);
-    fBitmaps[MENU_FONT_COUNT-6+i].Clear(0);
-    TempBMP.DrawTo(fBitmaps[MENU_FONT_COUNT-6+i], 0, 0, Rect(TALISMAN_SIZE * (i mod 2), TALISMAN_SIZE * (i div 2),
-                                                             TALISMAN_SIZE * ((i mod 2) + 1), TALISMAN_SIZE * ((i div 2) + 1)));
-    fBitmaps[MENU_FONT_COUNT-6+i].DrawMode := dmBlend;
-    fBitmaps[MENU_FONT_COUNT-6+i].CombineMode := cmMerge;
   end;
 
   TempBMP.Free;
