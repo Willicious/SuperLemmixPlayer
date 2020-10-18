@@ -94,29 +94,29 @@ begin
 
     if GameParams.GameResult.gSuccess then
     begin
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu);
-      NewRegion.ShortcutKeys.Add(VK_ESCAPE);
-
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionNextLevel, NextLevel);
+      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionNextLevel, NextLevel);
       NewRegion.ShortcutKeys.Add(VK_RETURN);
       NewRegion.ShortcutKeys.Add(VK_SPACE);
 
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_ONE_ROW_Y), SOptionRetryLevel, ReplaySameLevel);
+      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
       NewRegion.AddKeysFromFunction(lka_Restart);
     end else begin
-      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_RIGHT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionToMenu, ExitToMenu);
-      NewRegion.ShortcutKeys.Add(VK_ESCAPE);
-
-      NewRegion := MakeClickableText(Point(FOOTER_TWO_OPTIONS_X_LEFT, FOOTER_OPTIONS_ONE_ROW_Y), SOptionRetryLevel, ReplaySameLevel);
+      NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionRetryLevel, ReplaySameLevel);
       NewRegion.ShortcutKeys.Add(VK_RETURN);
       NewRegion.ShortcutKeys.Add(VK_SPACE);
       NewRegion.AddKeysFromFunction(lka_Restart);
     end;
 
-    MakeHiddenOption(VK_F2, DoLevelSelect);
-    MakeHiddenOption(VK_F3, ShowConfigMenu);
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
+    NewRegion.ShortcutKeys.Add(VK_ESCAPE);
 
-    MakeHiddenOption(lka_SaveReplay, SaveReplay);
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+    NewRegion.ShortcutKeys.Add(VK_F2);
+
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionSaveReplay, SaveReplay);
+    NewRegion.AddKeysFromFunction(lka_SaveReplay);
+
+    MakeHiddenOption(VK_F3, ShowConfigMenu);
 
     DrawAllClickables;
   finally

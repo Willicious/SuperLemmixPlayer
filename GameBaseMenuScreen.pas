@@ -23,6 +23,9 @@ const
 
   FOOTER_OPTIONS_ONE_ROW_Y = 462;
 
+  FOOTER_OPTIONS_TWO_ROWS_HIGH_Y = 443;
+  FOOTER_OPTIONS_TWO_ROWS_LOW_Y = 468;
+
   FOOTER_ONE_OPTION_X = INTERNAL_SCREEN_WIDTH div 2;
 
   FOOTER_TWO_OPTIONS_X_LEFT = INTERNAL_SCREEN_WIDTH * 5 div 16;
@@ -534,7 +537,7 @@ begin
         if fClickableRegions[i].ResetTimer = nil then
         begin
           NewTimer := TTimer.Create(self);
-          NewTimer.Interval := 40;
+          NewTimer.Interval := 75;
           NewTimer.Tag := i;
           NewTimer.OnTimer := OnClickTimer;
           fClickableRegions[i].ResetTimer := NewTimer;

@@ -143,8 +143,9 @@ resourcestring
   SOptionRetryLevel = 'Retry level';
   SOptionToMenu = 'Exit to menu';
   SOptionContinue = 'Continue';
-  SOptionPrevPage = '< Previous page';
-  SOptionNextPage = 'Next page >';
+  SOptionLevelSelect = 'Select level';
+  SOptionLoadReplay = 'Load replay';
+  SOptionSaveReplay = 'Save replay';
 
 const
   LemmingActionStrings: array[TBasicLemmingAction] of string = (
