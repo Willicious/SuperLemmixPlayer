@@ -443,6 +443,9 @@ var
   i, n: Integer;
   NewTimer: TTimer;
 begin
+  if ScreenIsClosing then
+    Exit;
+
   for i := 0 to fClickableRegions.Count-1 do
     for n := 0 to fClickableRegions[i].ShortcutKeys.Count-1 do
       if Key = fClickableRegions[i].ShortcutKeys[n] then
@@ -482,6 +485,9 @@ var
 
   P: TPoint;
 begin
+  if ScreenIsClosing then
+    Exit;
+
   P := GetInternalMouseCoordinates;
   FoundActive := false;
   StatusChanged := false;
@@ -516,6 +522,9 @@ var
 
   P: TPoint;
 begin
+  if ScreenIsClosing then
+    Exit;
+
   P := GetInternalMouseCoordinates;
 
   for i := fClickableRegions.Count-1 downto 0 do
