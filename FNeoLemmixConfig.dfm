@@ -31,6 +31,10 @@ object FormNXConfig: TFormNXConfig
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object lblUserName: TLabel
         Left = 7
         Top = 16
@@ -119,6 +123,10 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -311,6 +319,10 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Label3: TLabel
         Left = 24
         Top = 45

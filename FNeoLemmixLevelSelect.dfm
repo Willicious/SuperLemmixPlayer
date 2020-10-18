@@ -7,7 +7,7 @@ object FLevelSelect: TFLevelSelect
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Level Select'
   ClientHeight = 480
-  ClientWidth = 913
+  ClientWidth = 849
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -135,9 +135,37 @@ object FLevelSelect: TFLevelSelect
   object sbCreatorTools: TScrollBox
     Left = 712
     Top = 24
-    Width = 193
+    Width = 129
     Height = 448
+    VertScrollBar.Visible = False
     TabOrder = 5
+    object btnSaveImage: TButton
+      Left = 3
+      Top = 3
+      Width = 118
+      Height = 25
+      Caption = 'Save Image'
+      TabOrder = 0
+      OnClick = btnSaveImageClick
+    end
+    object btnMassReplay: TButton
+      Left = 3
+      Top = 30
+      Width = 118
+      Height = 25
+      Caption = 'Mass Replay Check'
+      TabOrder = 1
+      OnClick = btnMassReplayClick
+    end
+    object btnCleanseLevels: TButton
+      Left = 3
+      Top = 57
+      Width = 118
+      Height = 25
+      Caption = 'Cleanse Levels'
+      TabOrder = 2
+      OnClick = btnCleanseLevelsClick
+    end
   end
   object ilStatuses: TImageList
   end

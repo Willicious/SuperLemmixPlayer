@@ -32,12 +32,18 @@ type
     btnMakeShortcut: TButton;
     sbCreatorTools: TScrollBox;
     lblCreatorTools: TLabel;
+    btnSaveImage: TButton;
+    btnMassReplay: TButton;
+    btnCleanseLevels: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnMakeShortcutClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure btnSaveImageClick(Sender: TObject);
+    procedure btnMassReplayClick(Sender: TObject);
+    procedure btnCleanseLevelsClick(Sender: TObject);
   private
     fLoadAsPack: Boolean;
     fInfoForm: TLevelInfoPanel;
@@ -61,6 +67,9 @@ type
     procedure DisplayPackTalismanInfo;
 
     procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
+
+    procedure SetCreatorToolsGroup;
+    procedure SetCreatorToolsLevel;
   public
     property LoadAsPack: Boolean read fLoadAsPack;
   end;
@@ -498,6 +507,7 @@ begin
     btnOk.Enabled := G.LevelCount > 0; // note: Levels.Count is not recursive; LevelCount is
 
     ClearTalismanButtons;
+    SetCreatorToolsGroup;
   end else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
@@ -517,6 +527,8 @@ begin
     fPackTalBox.Visible := false;
 
     btnOk.Enabled := true;
+
+    SetCreatorToolsLevel;
   end;
 end;
 
@@ -794,6 +806,142 @@ begin
         DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
     end;
   end;
+end;
+
+////////////////////
+// Creators tools //
+////////////////////
+
+procedure TFLevelSelect.SetCreatorToolsGroup;
+begin
+  if GameParams.ShowCreatorTools then
+  begin
+    btnSaveImage.Caption := 'Save Level Images';
+    btnMassReplay.Enabled := true;
+    btnCleanseLevels.Enabled := true;
+  end;
+end;
+
+procedure TFLevelSelect.SetCreatorToolsLevel;
+begin
+  if GameParams.ShowCreatorTools then
+  begin
+    btnSaveImage.Caption := 'Save Image';
+    btnMassReplay.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
+    btnCleanseLevels.Enabled := btnMassReplay.Enabled;
+  end;
+end;
+
+procedure TFLevelSelect.btnSaveImageClick(Sender: TObject);
+var
+  N: TTreeNode;
+  Obj: TObject;
+
+  BasePack: TNeoLevelGroup;
+  PathString: String;
+
+  BMP: TBitmap32;
+  SaveDlg: TSaveDialog;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit;
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+  begin
+    BasePack := TNeoLevelGroup(Obj).ParentBasePack;
+
+    PathString := MakeSafeForFilename(BasePack.Name);
+
+    BasePack.DumpImages(AppPath + 'Dump\' + PathString + '\');
+    {$ifdef exp}
+    BasePack.DumpNeoLemmixWebsiteMetaInfo(AppPath + 'Dump\' + PathString + '\');
+    {$endif}
+    ShowMessage('Level images saved to "Dump\' + PathString + '"');
+  end else if Obj is TNeoLevelEntry then
+  begin
+    BMP := TBitmap32.Create;
+    SaveDlg := TSaveDialog.Create(self);
+    try
+      SaveDlg.Options := [ofOverwritePrompt];
+      SaveDlg.Filter := 'PNG File|*.png';
+      SaveDlg.DefaultExt := '.png';
+      if SaveDlg.Execute then
+      begin
+        GameParams.Renderer.RenderWorld(BMP, true);
+        TPngInterface.SavePngFile(SaveDlg.FileName, BMP);
+      end;
+    finally
+      BMP.Free;
+    end;
+  end else
+    Exit;
+end;
+
+procedure TFLevelSelect.btnMassReplayClick(Sender: TObject);
+var
+  OpenDlg: TOpenDialog;
+  N: TTreeNode;
+  Obj: TObject;
+
+  Group: TNeoLevelGroup;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit;
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+    Group := TNeoLevelGroup(Obj)
+  else if Obj is TNeoLevelEntry then
+    Group := TNeoLevelEntry(Obj).Group
+  else
+    Exit;
+
+  OpenDlg := TOpenDialog.Create(self);
+  try
+    OpenDlg.Title := 'Select any file in the folder containing replays';
+    OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
+    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
+    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
+    if not OpenDlg.Execute then
+      Exit;
+    GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
+  finally
+    OpenDlg.Free;
+  end;
+
+  WriteToParams;
+  ModalResult := mrRetry;
+end;
+
+procedure TFLevelSelect.btnCleanseLevelsClick(Sender: TObject);
+var
+  Group: TNeoLevelGroup;
+  N: TTreeNode;
+  Obj: TObject;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit;
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+    Group := TNeoLevelGroup(Obj)
+  else if Obj is TNeoLevelEntry then
+    Group := TNeoLevelEntry(Obj).Group
+  else
+    Exit;
+
+  Group := Group.ParentBasePack;
+
+  if DirectoryExists(AppPath + 'Cleanse\' + MakeSafeForFilename(Group.Name) + '\') then
+    if MessageDlg('Folder "Cleanse\' + MakeSafeForFilename(Group.Name) + '\" already exists. Continuing will erase it. Continue?',
+                  mtCustom, [mbYes, mbNo], 0) = mrNo then
+      Exit;
+
+  Group.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(Group.Name) + '\');
 end;
 
 end.

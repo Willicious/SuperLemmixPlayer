@@ -101,7 +101,6 @@ type
       procedure OnClickTimer(Sender: TObject);
     protected
       procedure DoLevelSelect;
-      procedure DoMassReplayCheck;
       procedure SaveReplay;
 
       procedure ShowConfigMenu;
@@ -752,19 +751,25 @@ var
   OldLevel: TNeoLevelEntry;
   Success: Boolean;
   LoadAsPack: Boolean;
+
+  PopupResult: Integer;
 begin
   if GameParams.TestModeLevel <> nil then Exit;
 
   OldLevel := GameParams.CurrentLevel;
   F := TFLevelSelect.Create(self);
   try
-    Success := F.ShowModal = mrOk;
+    PopupResult := F.ShowModal;
+    Success := PopupResult = mrOk;
     LoadAsPack := F.LoadAsPack;
   finally
     F.Free;
   end;
 
-  if not Success then
+  if PopupResult = mrRetry then
+  begin
+    CloseScreen(gstReplayTest)
+  end else if not Success then
   begin
     GameParams.SetLevel(OldLevel);
   end else begin
@@ -773,25 +778,6 @@ begin
     else
       CloseScreen(gstPreview);
   end;
-end;
-
-procedure TGameBaseMenuScreen.DoMassReplayCheck;
-var
-  OpenDlg: TOpenDialog;
-begin
-  OpenDlg := TOpenDialog.Create(self);
-  try
-    OpenDlg.Title := 'Select any file in the folder containing replays';
-    OpenDlg.InitialDir := AppPath + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name, false);
-    OpenDlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
-    OpenDlg.Options := [ofHideReadOnly, ofFileMustExist, ofEnableSizing];
-    if not OpenDlg.Execute then
-      Exit;
-    GameParams.ReplayCheckPath := ExtractFilePath(OpenDlg.FileName);
-  finally
-    OpenDlg.Free;
-  end;
-  CloseScreen(gstReplayTest);
 end;
 
 procedure TGameBaseMenuScreen.ShowConfigMenu;
@@ -821,11 +807,7 @@ begin
 
   ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos);
 
-  // Apply Mass replay check, if the result was a mrRetry (which we abuse for our purpose here)
-  if ConfigResult = mrRetry then
-    DoMassReplayCheck
-  else
-    DoAfterConfig;
+  DoAfterConfig;
 end;
 
 procedure TGameBaseMenuScreen.ApplyConfigChanges(OldFullScreen, OldHighResolution, ResetWindowSize, ResetWindowPos: Boolean);

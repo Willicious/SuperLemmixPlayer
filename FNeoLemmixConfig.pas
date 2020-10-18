@@ -61,7 +61,6 @@ type
     procedure OptionChanged(Sender: TObject);
     procedure cbEnableOnlineClick(Sender: TObject);
     procedure SliderChange(Sender: TObject);
-    procedure btnReplayCheckClick(Sender: TObject);
     procedure btnStylesClick(Sender: TObject);
     procedure cbFullScreenClick(Sender: TObject);
   private
@@ -76,7 +75,6 @@ type
     function GetResetWindowSize: Boolean;
     function GetResetWindowPosition: Boolean;
   public
-    constructor Create(aOwner: TComponent); override;
     procedure SetGameParams;
     property ResetWindowSize: Boolean read GetResetWindowSize;
     property ResetWindowPosition: Boolean read GetResetWindowPosition;
@@ -92,13 +90,6 @@ uses
   GameMenuScreen; // for disabling the MassReplayCheck button if necessary.
 
 {$R *.dfm}
-
-constructor TFormNXConfig.Create(aOwner: TComponent);
-begin
-  inherited Create(aOwner);
-
-  btnReplayCheck.Enabled := (aOwner is TGameMenuScreen);
-end;
 
 function TFormNXConfig.GetResetWindowSize: Boolean;
 begin
@@ -271,12 +262,6 @@ begin
   HotkeyForm.HotkeyManager := GameParams.Hotkeys;
   HotkeyForm.ShowModal;
   HotkeyForm.Free;
-end;
-
-procedure TFormNXConfig.btnReplayCheckClick(Sender: TObject);
-begin
-  // We abuse mrRetry here to signal the menu screen that we want to mass replay check
-  ModalResult := mrRetry;
 end;
 
 procedure TFormNXConfig.btnStylesClick(Sender: TObject);

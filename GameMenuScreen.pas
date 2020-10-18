@@ -73,9 +73,6 @@ type
       procedure UpdateGroupSign(aRedraw: Boolean = true);
       procedure RedrawGroupSign;
 
-      procedure DumpImages;
-      procedure CleanseLevels;
-
       procedure ShowSetupMenu;
       procedure DoCleanInstallCheck;
       procedure InitiateUpdateCheck;
@@ -351,11 +348,6 @@ begin
     GetGraphic('sign_quit.png', BMP);
     NewRegion := MakeClickableImageAuto(MakePosition(0.5, 0.5), BMP.BoundsRect, ExitGame, BMP);
     NewRegion.ShortcutKeys.Add(VK_ESCAPE);
-
-    // Hidden options
-    MakeHiddenOption(VK_F6, DumpImages);
-    MakeHiddenOption(VK_F7, DoMassReplayCheck);
-    MakeHiddenOption(VK_F8, CleanseLevels);
 
     fFinishedMakingSigns := true;
 
@@ -712,29 +704,6 @@ end;
 function TGameMenuScreen.GetBackgroundSuffix: String;
 begin
   Result := 'menu';
-end;
-
-procedure TGameMenuScreen.DumpImages;
-var
-  BasePack: TNeoLevelGroup;
-begin
-  BasePack := GameParams.CurrentLevel.Group.ParentBasePack;
-  BasePack.DumpImages(AppPath + 'Dump\' + MakeSafeForFilename(BasePack.Name) + '\');
-  {$ifdef exp}
-  BasePack.DumpNeoLemmixWebsiteMetaInfo(AppPath + 'Dump\' + MakeSafeForFilename(BasePack.Name) + '\');
-  {$endif}
-end;
-
-procedure TGameMenuScreen.CleanseLevels;
-var
-  BasePack: TNeoLevelGroup;
-begin
-  BasePack := GameParams.CurrentLevel.Group.ParentBasePack;
-
-  if DirectoryExists(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\') then
-    ShowMessage('Output directory "Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\" already exists. Please delete this first.')
-  else
-    BasePack.CleanseLevels(AppPath + 'Cleanse\' + MakeSafeForFilename(BasePack.Name) + '\');
 end;
 
 procedure TGameMenuScreen.MakeAutoSectionGraphic(Dst: TBitmap32);
