@@ -356,9 +356,9 @@ end;
 function TGameBaseMenuScreen.MakeClickableText(aTextCenter: TPoint;
   aText: String; aAction: TRegionAction): TClickableRegion;
 const
-  HUE_SHIFT_NORMAL = -0.125;
-  HUE_SHIFT_HOVER = -0.250;
-  HUE_SHIFT_CLICK = -0.375;
+  HUE_SHIFT_NORMAL = -0.250;
+  HUE_SHIFT_HOVER = -0.125;
+  VALUE_SHIFT_CLICK = -0.250;
 var
   tmpNormal, tmpHover, tmpClick: TBitmap32;
   ScreenRect: TRect;
@@ -372,7 +372,9 @@ begin
 
   NormalShift.HShift := HUE_SHIFT_NORMAL;
   HoverShift.HShift := HUE_SHIFT_HOVER;
-  ClickShift.HShift := HUE_SHIFT_CLICK;
+
+  ClickShift.HShift := HUE_SHIFT_HOVER;
+  ClickShift.VShift := VALUE_SHIFT_CLICK;
 
   tmpNormal := TBitmap32.Create;
   tmpHover := TBitmap32.Create;
@@ -536,7 +538,7 @@ begin
         if fClickableRegions[i].ResetTimer = nil then
         begin
           NewTimer := TTimer.Create(self);
-          NewTimer.Interval := 75;
+          NewTimer.Interval := 150;
           NewTimer.Tag := i;
           NewTimer.OnTimer := OnClickTimer;
           fClickableRegions[i].ResetTimer := NewTimer;
