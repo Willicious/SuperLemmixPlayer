@@ -132,6 +132,8 @@ type
 
       function GetBackgroundSuffix: String; virtual; abstract;
 
+      procedure ReloadCursor;
+
       property MenuFont: TMenuFont read fMenuFont;
     public
       constructor Create(aOwner: TComponent); override;
@@ -572,6 +574,12 @@ end;
 procedure TGameBaseMenuScreen.OnMouseMoved(aPoint: TPoint);
 begin
   // Intentionally blank.
+end;
+
+procedure TGameBaseMenuScreen.ReloadCursor;
+begin
+  LoadBasicCursor;
+  SetBasicCursor;
 end;
 
 procedure TGameBaseMenuScreen.AfterRedrawClickables;

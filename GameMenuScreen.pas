@@ -86,6 +86,8 @@ type
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
       procedure AfterRedrawClickables; override;
 
+      procedure DoAfterConfig; override;
+
       function GetBackgroundSuffix: String; override;
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
@@ -754,6 +756,12 @@ begin
   finally
     F.Free;
   end;
+end;
+
+procedure TGameMenuScreen.DoAfterConfig;
+begin
+  inherited;
+  ReloadCursor;
 end;
 
 procedure TGameMenuScreen.DoCleanInstallCheck;
