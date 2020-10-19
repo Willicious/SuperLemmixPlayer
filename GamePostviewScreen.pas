@@ -38,6 +38,7 @@ type
       function GetBackgroundSuffix: String; override;
 
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
+      procedure DoAfterConfig; override;
   end;
 
 implementation
@@ -313,6 +314,12 @@ begin
         Add(WhichText.Text[i]);
     end;
   end;
+end;
+
+procedure TGamePostviewScreen.DoAfterConfig;
+begin
+  inherited;
+  ReloadCursor;
 end;
 
 end.
