@@ -106,8 +106,12 @@ const // Icon indexes
     24 // Cloner
   );
 
+  ICON_BRONZE_TALISMAN = 25;
+  ICON_SILVER_TALISMAN = 26;
+  ICON_GOLD_TALISMAN = 27;
+
   ICON_TALISMAN: array[tcBronze..tcGold] of Integer =
-    ( 25, 26, 27 );
+    ( ICON_BRONZE_TALISMAN, ICON_SILVER_TALISMAN, ICON_GOLD_TALISMAN );
 
   ICON_TALISMAN_UNOBTAINED_OFFSET = 3;
 

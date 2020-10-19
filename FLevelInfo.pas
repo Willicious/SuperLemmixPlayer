@@ -47,8 +47,10 @@ type
       procedure ApplySize(aForcedMinWidth: Integer; aForcedMinHeight: Integer); overload;
 
       procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32);
+
+      procedure DoTalismanOverride(aTalismanBMP: TBitmap32);
     public
-      constructor Create(aOwner: TComponent; aIconBMP: TBitmap32); reintroduce;
+      constructor Create(aOwner: TComponent; aIconBMP: TBitmap32; fTalismanOverrideBMP: TBitmap32 = nil); reintroduce;
       destructor Destroy; override;
 
       procedure ShowPopup;
@@ -85,7 +87,7 @@ const
 
 { TLevelInfoPanel }
 
-constructor TLevelInfoPanel.Create(aOwner: TComponent; aIconBMP: TBitmap32);
+constructor TLevelInfoPanel.Create(aOwner: TComponent; aIconBMP: TBitmap32; fTalismanOverrideBMP: TBitmap32 = nil);
 begin
   inherited Create(aOwner);
 
@@ -97,10 +99,19 @@ begin
     TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIcons);
     fIcons.DrawMode := dmBlend;
     fOwnIcons := true;
+  end else if fTalismanOverrideBMP <> nil then
+  begin
+    fIcons := TBitmap32.Create;
+    fIcons.Assign(aIconBMP);
+    fIcons.DrawMode := dmBlend;
+    fOwnIcons := true;
   end else begin
     fIcons := aIconBMP;
     fOwnIcons := false;
   end;
+
+  if fTalismanOverrideBMP <> nil then
+    DoTalismanOverride(fTalismanOverrideBMP);
 
   fCurrentPos := Types.Point(PADDING_SIZE, PADDING_SIZE);
 end;
@@ -113,6 +124,58 @@ begin
     fIcons.Free;
 
   inherited;
+end;
+
+procedure TLevelInfoPanel.DoTalismanOverride(aTalismanBMP: TBitmap32);
+var
+  SrcRect, DstRect: TRect;
+  Diff: Integer;
+  BMP: TBitmap32;
+
+  i: Integer;
+const
+  TALISMAN_TARGETS: array[0..5] of Integer =
+    (ICON_BRONZE_TALISMAN + ICON_TALISMAN_UNOBTAINED_OFFSET, ICON_BRONZE_TALISMAN,
+     ICON_SILVER_TALISMAN + ICON_TALISMAN_UNOBTAINED_OFFSET, ICON_SILVER_TALISMAN,
+     ICON_GOLD_TALISMAN + ICON_TALISMAN_UNOBTAINED_OFFSET, ICON_GOLD_TALISMAN);
+begin
+  BMP := TBitmap32.Create;
+  try
+    BMP.Assign(aTalismanBMP);
+    BMP.DrawMode := dmOpaque;
+    TLinearResampler.Create(BMP);
+
+    SrcRect := SizedRect(0, 0, BMP.Width div 2, BMP.Height div 3);
+
+    Diff := Abs(SrcRect.Width - SrcRect.Height);
+
+    if (SrcRect.Width > SrcRect.Height) then
+    begin
+      SrcRect.Width := SrcRect.Height;
+      SrcRect.Offset(Diff div 2, 0);
+    end;
+
+    if (SrcRect.Height > SrcRect.Width) then
+    begin
+      SrcRect.Height := SrcRect.Width;
+      SrcRect.Offset(0, Diff div 2);
+    end;
+
+    for i := 0 to Length(TALISMAN_TARGETS)-1 do
+    begin
+      DstRect := SizedRect((TALISMAN_TARGETS[i] mod 4) * 32, (TALISMAN_TARGETS[i] div 4) * 32, 32, 32);
+
+      fIcons.FillRect(DstRect.Left, DstRect.Top, DstRect.Right, DstRect.Bottom, $00000000);
+      BMP.DrawTo(fIcons, DstRect, SrcRect);
+
+      if i mod 2 = 0 then
+        Types.OffsetRect(SrcRect, BMP.Width div 2, 0)
+      else
+        Types.OffsetRect(SrcRect, -BMP.Width div 2, BMP.Height div 3);
+    end;
+  finally
+    BMP.Free;
+  end;
 end;
 
 procedure TLevelInfoPanel.DrawIcon(aIconIndex: Integer; aDst: TBitmap32);

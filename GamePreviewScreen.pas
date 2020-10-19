@@ -22,6 +22,7 @@ type
   TGamePreviewScreen = class(TGameBaseMenuScreen)
     private
       fTalRects: TList<TRect>;
+      fTalismanImage: TBitmap32;
 
       function GetScreenText: string;
 
@@ -69,11 +70,16 @@ constructor TGamePreviewScreen.Create(aOwner: TComponent);
 begin
   inherited;
   fTalRects := TList<TRect>.Create;
+  fTalismanImage := nil;
 end;
 
 destructor TGamePreviewScreen.Destroy;
 begin
   fTalRects.Free;
+
+  if fTalismanImage <> nil then
+    fTalismanImage.Free;
+
   inherited;
 end;
 
@@ -352,7 +358,7 @@ begin
   for i := 0 to fTalRects.Count-1 do
     if PtInRect(fTalRects[i], P) then
     begin
-      F := TLevelInfoPanel.Create(self, nil);
+      F := TLevelInfoPanel.Create(self, nil, fTalismanImage);
       try
         F.Level := GameParams.Level;
         F.Talisman := GameParams.Level.Talismans[i];
@@ -367,7 +373,7 @@ end;
 procedure TGamePreviewScreen.MakeTalismanOptions;
 var
   NewRegion: TClickableRegion;
-  TalBMP, Temp: TBitmap32;
+  Temp: TBitmap32;
   Tal: TTalisman;
   i: Integer;
 
@@ -376,21 +382,29 @@ var
 
   TotalTalWidth: Integer;
   TalPoint: TPoint;
+
+  KeepTalismans: Boolean;
 begin
   if GameParams.Level.Talismans.Count = 0 then
     Exit;
 
-  TalBMP := TBitmap32.Create;
+  KeepTalismans := false;
+
+  if fTalismanImage = nil then
+    fTalismanImage := TBitmap32.Create;
+
   Temp := TBitmap32.Create;
   try
     LoadPath := GameParams.CurrentLevel.Group.FindFile('talismans.png');
     if LoadPath = '' then
-      LoadPath := AppPath + SFGraphicsMenu + 'talismans.png';
+      LoadPath := AppPath + SFGraphicsMenu + 'talismans.png'
+    else
+      KeepTalismans := true;
 
-    TPngInterface.LoadPngFile(LoadPath, TalBMP);
-    TalBMP.DrawMode := dmOpaque;
+    TPngInterface.LoadPngFile(LoadPath, fTalismanImage);
+    fTalismanImage.DrawMode := dmOpaque;
 
-    Temp.SetSize(TalBMP.Width div 2, TalBMP.Height div 3);
+    Temp.SetSize(fTalismanImage.Width div 2, fTalismanImage.Height div 3);
 
     TotalTalWidth := (GameParams.Level.Talismans.Count * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
     TalPoint := Point(
@@ -411,7 +425,7 @@ begin
         OffsetRect(SrcRect, Temp.Width, 0);
 
       Temp.Clear(0);
-      TalBMP.DrawTo(Temp, 0, 0, SrcRect);
+      fTalismanImage.DrawTo(Temp, 0, 0, SrcRect);
 
       NewRegion := MakeClickableImageAuto(TalPoint, Temp.BoundsRect, HandleTalismanClick, Temp);
       fTalRects.Add(NewRegion.ClickArea);
@@ -419,8 +433,10 @@ begin
       TalPoint.X := TalPoint.X + Temp.Width + TALISMAN_PADDING;
     end;
   finally
-    TalBMP.Free;
     Temp.Free;
+
+    if not KeepTalismans then
+      fTalismanImage.Free;
   end;
 end;
 
