@@ -601,7 +601,7 @@ procedure TGameBaseMenuScreen.SetBasicCursor;
 var
   CursorIndex: Integer;
 begin
-  CursorIndex := Max(1, Min(MainForm.Width div 320, MainForm.Height div 180));
+  CursorIndex := Max(1, Min(MainForm.Width div 320, MainForm.Height div 180) div ResMod);
 
   Cursor := CursorIndex;
   MainForm.Cursor := CursorIndex;
