@@ -5,6 +5,7 @@ unit LemGadgetsMeta;
 interface
 
 uses
+  Dialogs,
   GR32, LemTypes, UMisc,
   PngInterface, LemStrings, LemNeoTheme,
   Classes, SysUtils, StrUtils,
@@ -187,6 +188,9 @@ type
 
 implementation
 
+var
+  LastWarningStyle: String;
+
 constructor TGadgetMetaInfo.Create;
 var
   i: Integer;
@@ -274,6 +278,16 @@ begin
     if Lowercase(Sec.LineTrimString['effect']) = 'background' then fTriggerEffect := DOM_BACKGROUND;
     if Lowercase(Sec.LineTrimString['effect']) = 'traponce' then fTriggerEffect := DOM_TRAPONCE;
     if Lowercase(Sec.LineTrimString['effect']) = 'onewayup' then fTriggerEffect := DOM_ONEWAYUP;
+
+    if Sec.Section['PRIMARY_ANIMATION'] = nil then
+    begin
+      if LastWarningStyle <> fGS then
+      begin
+        ShowMessage('Gadget ' + fGS + ':' + fPiece + ' is in pre-12.7 format. Please update your copy of this style, or if up to date, ask the style creator to fix.');
+        LastWarningStyle := fGS;
+      end;
+      raise Exception.Create('Gadget ' + fGS + ':' + fPiece + ' is in pre-12.7 format. Please update your copy of this style, or if up to date, ask the style creator to fix.');
+    end;
 
     NewAnim := TGadgetAnimation.Create(0, 0);
     GadgetAccessor.Animations.AddPrimary(NewAnim);
