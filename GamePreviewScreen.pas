@@ -436,7 +436,10 @@ begin
     Temp.Free;
 
     if not KeepTalismans then
+    begin
       fTalismanImage.Free;
+      fTalismanImage := nil;
+    end;
   end;
 end;
 
