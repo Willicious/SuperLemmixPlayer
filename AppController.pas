@@ -91,6 +91,9 @@ begin
   GameParams.Load;
   GameParams.BaseLevelPack.LoadUserData;
 
+  PieceManager.Clear; // This is because some pieces may have been loaded before the user's settings, which would result
+                      // in the high-res graphics for them not being loaded, and this causes errors later.
+
   if UnderWine and not GameParams.DisableWineWarnings then
     if GameParams.FullScreen then
     begin
