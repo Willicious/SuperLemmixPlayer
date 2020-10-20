@@ -77,12 +77,12 @@ object FLevelSelect: TFLevelSelect
     Font.Style = []
     ParentFont = False
   end
-  object lblCreatorTools: TLabel
+  object lblAdvancedOptions: TLabel
     Left = 720
     Top = 8
-    Width = 63
+    Width = 88
     Height = 13
-    Caption = 'Creator Tools'
+    Caption = 'Advanced Options'
   end
   object tvLevelSelect: TTreeView
     Left = 8
@@ -132,7 +132,7 @@ object FLevelSelect: TFLevelSelect
     TabOrder = 4
     OnClick = btnMakeShortcutClick
   end
-  object sbCreatorTools: TScrollBox
+  object sbAdvancedOptions: TScrollBox
     Left = 712
     Top = 24
     Width = 129

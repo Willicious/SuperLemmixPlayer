@@ -30,8 +30,8 @@ type
     ilStatuses: TImageList;
     lblCompletion: TLabel;
     btnMakeShortcut: TButton;
-    sbCreatorTools: TScrollBox;
-    lblCreatorTools: TLabel;
+    sbAdvancedOptions: TScrollBox;
+    lblAdvancedOptions: TLabel;
     btnSaveImage: TButton;
     btnMassReplay: TButton;
     btnCleanseLevels: TButton;
@@ -68,8 +68,8 @@ type
 
     procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
 
-    procedure SetCreatorToolsGroup;
-    procedure SetCreatorToolsLevel;
+    procedure SetAdvancedOptionsGroup;
+    procedure SetAdvancedOptionsLevel;
   public
     property LoadAsPack: Boolean read fLoadAsPack;
   end;
@@ -249,11 +249,11 @@ begin
 
   pnLevelInfo.Visible := false;
 
-  if not GameParams.ShowCreatorTools then
+  if GameParams.HideAdvancedOptions then
   begin
-    lblCreatorTools.Visible := false;
-    sbCreatorTools.Visible := false;
-    ClientWidth := sbCreatorTools.Left;
+    lblAdvancedOptions.Visible := false;
+    sbAdvancedOptions.Visible := false;
+    ClientWidth := sbAdvancedOptions.Left;
   end;
 
   InitializeTreeview;
@@ -511,7 +511,7 @@ begin
     btnOk.Enabled := G.LevelCount > 0; // note: Levels.Count is not recursive; LevelCount is
 
     ClearTalismanButtons;
-    SetCreatorToolsGroup;
+    SetAdvancedOptionsGroup;
   end else if Obj is TNeoLevelEntry then
   begin
     L := TNeoLevelEntry(Obj);
@@ -532,7 +532,7 @@ begin
 
     btnOk.Enabled := true;
 
-    SetCreatorToolsLevel;
+    SetAdvancedOptionsLevel;
   end;
 end;
 
@@ -812,13 +812,13 @@ begin
   end;
 end;
 
-////////////////////
-// Creators tools //
-////////////////////
+//////////////////////
+// Advanced options //
+//////////////////////
 
-procedure TFLevelSelect.SetCreatorToolsGroup;
+procedure TFLevelSelect.SetAdvancedOptionsGroup;
 begin
-  if GameParams.ShowCreatorTools then
+  if not GameParams.HideAdvancedOptions then
   begin
     btnSaveImage.Caption := 'Save Level Images';
     btnMassReplay.Enabled := true;
@@ -826,9 +826,9 @@ begin
   end;
 end;
 
-procedure TFLevelSelect.SetCreatorToolsLevel;
+procedure TFLevelSelect.SetAdvancedOptionsLevel;
 begin
-  if GameParams.ShowCreatorTools then
+  if not GameParams.HideAdvancedOptions then
   begin
     btnSaveImage.Caption := 'Save Image';
     btnMassReplay.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;

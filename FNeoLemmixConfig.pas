@@ -54,7 +54,7 @@ type
     cbResetWindowSize: TCheckBox;
     cbResetWindowPosition: TCheckBox;
     cbHideShadows: TCheckBox;
-    cbCreatorTools: TCheckBox;
+    cbHideAdvanced: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -166,7 +166,7 @@ begin
     cbHideShadows.Checked := GameParams.HideShadows;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     cbSpawnInterval.Checked := GameParams.SpawnInterval;
-    cbCreatorTools.Checked := GameParams.ShowCreatorTools;
+    cbHideAdvanced.Checked := GameParams.HideAdvancedOptions;
 
     cbFullScreen.Checked := GameParams.FullScreen;
     cbResetWindowSize.Enabled := not GameParams.FullScreen;
@@ -225,7 +225,7 @@ begin
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
-  GameParams.ShowCreatorTools := cbCreatorTools.Checked;
+  GameParams.HideAdvancedOptions := cbHideAdvanced.Checked;
 
   GameParams.FullScreen := cbFullScreen.Checked;
   fResetWindowSize := cbResetWindowSize.Checked;

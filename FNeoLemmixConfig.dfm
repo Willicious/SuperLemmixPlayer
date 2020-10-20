@@ -26,15 +26,11 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 412
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'General'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object lblUserName: TLabel
         Left = 7
         Top = 16
@@ -123,10 +119,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -196,12 +188,12 @@ object FormNXConfig: TFormNXConfig
           TabOrder = 1
           OnClick = OptionChanged
         end
-        object cbCreatorTools: TCheckBox
+        object cbHideAdvanced: TCheckBox
           Left = 12
           Top = 84
-          Width = 153
+          Width = 234
           Height = 17
-          Caption = 'Show Creator Tools'
+          Caption = 'Hide Advanced Options in Level Select'
           TabOrder = 4
           OnClick = OptionChanged
         end
@@ -319,10 +311,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label3: TLabel
         Left = 24
         Top = 45
