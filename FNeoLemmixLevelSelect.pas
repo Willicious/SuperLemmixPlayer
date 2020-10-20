@@ -572,52 +572,6 @@ procedure TFLevelSelect.DisplayPackTalismanInfo;
         Result := TNeoLevelGroup(Obj);
     end;
   end;
-
-  function BreakString(S: String; aLabel: TLabel; aMaxWidth: Integer): String;
-  var
-    ThisLine: String;
-    PrevResult: String;
-    SL: TStringList;
-    n: Integer;
-  begin
-    PrevResult := '';
-    Result := '';
-
-    SL := TStringList.Create;
-    try
-      SL.Delimiter := ' ';
-      SL.StrictDelimiter := true;
-
-      SL.DelimitedText := S;
-
-      n := 0;
-      ThisLine := '';
-
-      while n < SL.Count do
-      begin
-        if n > 0 then
-        begin
-          ThisLine := ThisLine + ' ';
-          Result := Result + ' ';
-        end;
-
-        ThisLine := ThisLine + SL[n];
-        Result := Result + SL[n];
-
-        if aLabel.Canvas.TextWidth(ThisLine) > aMaxWidth then
-        begin
-          Result := PrevResult + #13 + SL[n];
-          ThisLine := SL[n];
-        end;
-
-        PrevResult := Result;
-
-        Inc(n);
-      end;
-    finally
-      SL.Free;
-    end;
-  end;
 var
   Group: TNeoLevelGroup;
   Level: TNeoLevelEntry;

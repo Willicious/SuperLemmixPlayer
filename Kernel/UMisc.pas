@@ -8,7 +8,7 @@ unit UMisc;
 interface
 
 uses
-  Windows, Classes, SysUtils, StrUtils;
+  StdCtrls, Windows, Classes, SysUtils, StrUtils;
 
 const
   CrLf = Chr(13) + Chr(10);
@@ -37,12 +37,61 @@ function RectWidth(const aRect: TRect): integer;
 // Same as AppPath, but callable from UMisc instead from LemTypes
 function GetApplicationPath: string;
 
+// Break string to wrap in a TLabel
+function BreakString(S: String; aLabel: TLabel; aMaxWidth: Integer): String;
+
 // Word-wrap a string
 type
   TWordWrapArray = array of String;
 function WordWrapString(const aString: String; const LineLen: Integer): TWordWrapArray;
 
 implementation
+
+function BreakString(S: String; aLabel: TLabel; aMaxWidth: Integer): String;
+var
+  ThisLine: String;
+  PrevResult: String;
+  SL: TStringList;
+  n: Integer;
+begin
+  PrevResult := '';
+  Result := '';
+
+  SL := TStringList.Create;
+  try
+    SL.Delimiter := ' ';
+    SL.StrictDelimiter := true;
+
+    SL.DelimitedText := S;
+
+    n := 0;
+    ThisLine := '';
+
+    while n < SL.Count do
+    begin
+      if n > 0 then
+      begin
+        ThisLine := ThisLine + ' ';
+        Result := Result + ' ';
+      end;
+
+      ThisLine := ThisLine + SL[n];
+      Result := Result + SL[n];
+
+      if aLabel.Canvas.TextWidth(ThisLine) > aMaxWidth then
+      begin
+        Result := PrevResult + #13 + SL[n];
+        ThisLine := SL[n];
+      end;
+
+      PrevResult := Result;
+
+      Inc(n);
+    end;
+  finally
+    SL.Free;
+  end;
+end;
 
 function CountChars(C: Char; const S: string): integer;
 var

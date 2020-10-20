@@ -37,6 +37,7 @@ type
 
       procedure Add(aIcon: Integer; aText: Integer; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
       procedure Add(aIcon: Integer; aText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
+      procedure AddTalisman(aWrapWidth: Integer);
       procedure AddDummy(aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove);
       procedure AddPreview;
       procedure AddClose;
@@ -241,6 +242,96 @@ begin
   Reposition(aMovement);
 end;
 
+procedure TLevelInfoPanel.AddTalisman(aWrapWidth: Integer);
+var
+  Img: TImage32;
+  LblTitle, LblRequirement: TLabel;
+
+  IconIndex: Integer;
+
+  LabelHeight: Integer;
+
+  function MakeWrappedRequirementText: String;
+  var
+    WrapWidth: Integer;
+  begin
+    if LblTitle = nil then
+      WrapWidth := aWrapWidth
+    else
+      WrapWidth := Max(aWrapWidth, LblTitle.Width);
+
+    Result := BreakString(fTalisman.RequirementText, LblRequirement, WrapWidth);
+  end;
+begin
+  // Components' LEFT is set during creation
+  // Components' TOP is set at the end
+
+  Img := TImage32.Create(self);
+  Img.Parent := self;
+  Img.Width := 32;
+  Img.Height := 32;
+  Img.Left := fCurrentPos.X;
+
+  IconIndex := ICON_TALISMAN[fTalisman.Color];
+  if not GameParams.CurrentLevel.TalismanStatus[fTalisman.ID] then
+    IconIndex := IconIndex + ICON_TALISMAN_UNOBTAINED_OFFSET;
+
+  DrawIcon(IconIndex, Img.Bitmap);
+
+  LabelHeight := 0;
+
+  if fTalisman.Title <> '' then
+  begin
+    LblTitle := TLabel.Create(self);
+    LblTitle.Parent := self;
+    LblTitle.Font.Style := [fsBold];
+    LblTitle.Caption := fTalisman.Title;
+    LblTitle.Left := fCurrentPos.X + Img.Width + PADDING_SIZE;
+    LabelHeight := LabelHeight + LblTitle.Height;
+  end else
+    LblTitle := nil;
+
+  LblRequirement := TLabel.Create(self);
+  LblRequirement.Parent := self;
+  LblRequirement.Caption := MakeWrappedRequirementText;
+  LblRequirement.Left := fCurrentPos.X + Img.Width + PADDING_SIZE;
+  LabelHeight := LabelHeight + LblRequirement.Height;
+
+  fCurrentPos.X := PADDING_SIZE;
+  fMinSize.X := LblRequirement.Left + LblRequirement.Width;
+  if LblTitle <> nil then
+    fMinSize.X := Max(fMinSize.X, LblTitle.Left + LblTitle.Width);
+  fMinSize.X := fMinSize.X + PADDING_SIZE;
+
+  if LabelHeight > Img.Height then
+  begin
+    Img.Top := fCurrentPos.Y + ((LabelHeight - Img.Height) div 2);
+
+    if LblTitle = nil then
+      LblRequirement.Top := fCurrentPos.Y
+    else begin
+      LblTitle.Top := fCurrentPos.Y;
+      LblRequirement.Top := LblTitle.Top + LblTitle.Height;
+    end;
+
+    fMinSize.Y := LblRequirement.Top + LblRequirement.Height + PADDING_SIZE;
+    fCurrentPos.Y := fCurrentPos.Y + LabelHeight + PADDING_SIZE;
+  end else begin
+    Img.Top := fCurrentPos.Y;
+
+    if LblTitle = nil then
+      LblRequirement.Top := fCurrentPos.Y + ((Img.Height - LabelHeight) div 2)
+    else begin
+      LblTitle.Top := fCurrentPos.Y + ((Img.Height - LabelHeight) div 2);
+      LblRequirement.Top := LblTitle.Top + LblTitle.Height;
+    end;
+
+    fMinSize.Y := Img.Top + Img.Height + PADDING_SIZE;
+    fCurrentPos.Y := fCurrentPos.Y + Img.Height + PADDING_SIZE;
+  end;
+
+end;
+
 procedure TLevelInfoPanel.Add(aIcon, aText: Integer; aTextOnRight: Boolean;
   aMovement: TLevelInfoPanelMove; aColor: Integer);
 begin
@@ -360,38 +451,43 @@ begin
 end;
 
 procedure TLevelInfoPanel.ShowPopup;
-var
-  Skill: TSkillPanelButton;
 
-  TalCount: Integer;
-  BaseCount: Integer;
-  PickupCount: Integer;
+  function AddRequirements(aDry: Boolean): Integer;
+  var
+    Skill: TSkillPanelButton;
 
-  NewLabel: TLabel;
-begin
-  if (fTalisman <> nil) then
+    TalCount: Integer;
+    BaseCount: Integer;
+    PickupCount: Integer;
+
+    procedure LocalAdd(aIcon: Integer; aText: Integer; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
+    begin
+      Inc(Result);
+      if not aDry then
+        Add(aIcon, aText, aTextOnRight, aMovement, aColor);
+    end;
+
+    procedure LocalAdd(aIcon: Integer; aText: String; aTextOnRight: Boolean; aMovement: TLevelInfoPanelMove; aColor: Integer = -1); overload;
+    begin
+      Inc(Result);
+      if not aDry then
+        Add(aIcon, aText, aTextOnRight, aMovement, aColor);
+    end;
   begin
-    BorderStyle := bsDialog;
-
-    Wipe;
-
-    if (GameParams.CurrentLevel.TalismanStatus[fTalisman.ID]) then
-      Add(ICON_TALISMAN[fTalisman.Color], fTalisman.Title, true, pmNextRowPadLeft)
-    else
-      Add(ICON_TALISMAN[fTalisman.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, fTalisman.Title, true, pmNextRowPadLeft);
+    Result := 0;
 
     if (fTalisman.RescueCount > fLevel.Info.RescueCount) then
-      Add(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+      LocalAdd(ICON_SAVE_REQUIREMENT, fTalisman.RescueCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
     if (Talisman.TimeLimit > 0) and
        ((not fLevel.Info.HasTimeLimit) or (Talisman.TimeLimit < fLevel.Info.TimeLimit * 17)) then
-      Add(ICON_TIME_LIMIT,
+      LocalAdd(ICON_TIME_LIMIT,
         IntToStr(Talisman.TimeLimit div (60 * 17)) + ':' + LeadZeroStr((Talisman.TimeLimit div 17) mod 60, 2) + '.' +
           LeadZeroStr(Round((Talisman.TimeLimit mod 17) / 17 * 100), 2),
           false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
     if Talisman.TotalSkillLimit >= 0 then
-      Add(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+      LocalAdd(ICON_MAX_SKILLS, IntToStr(Talisman.TotalSkillLimit), false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
 
     for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
       if Skill in fLevel.Info.Skillset then
@@ -404,24 +500,30 @@ begin
           TalCount := Talisman.SkillLimit[Skill];
 
           if TalCount < BaseCount + PickupCount then
-            Add(ICON_SKILLS[Skill], TalCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
+            LocalAdd(ICON_SKILLS[Skill], TalCount, false, pmMoveHorz, COLOR_TALISMAN_RESTRICTION);
         end;
       end;
+  end;
 
-    // Special case
-    if fCurrentPos.X = PADDING_SIZE then
-    begin
-      NewLabel := TLabel.Create(self);
-      NewLabel.Parent := self;
-      NewLabel.Font.Style := [fsBold];
-      NewLabel.Caption := 'Complete the level.';
+var
+  ReqCount: Integer;
+const
+  MIN_CENTER_REQ_COUNT = 5;
+begin
+  if (fTalisman <> nil) then
+  begin
+    BorderStyle := bsDialog;
 
-      NewLabel.Left := Max((fMinSize.X - NewLabel.Width) div 2, PADDING_SIZE);
-      NewLabel.Top := fCurrentPos.Y;
+    Wipe;
 
-      fMinSize.X := Max(NewLabel.Left + NewLabel.Width + PADDING_SIZE, fMinSize.X);
-      fMinSize.Y := Max(NewLabel.Top + NewLabel.Height + PADDING_SIZE, fMinSize.Y);
-    end;
+    ReqCount := AddRequirements(true);
+
+    AddTalisman(Max(ReqCount * 40 - 8, MIN_CENTER_REQ_COUNT * 40 - 8));
+
+    if ReqCount < MIN_CENTER_REQ_COUNT then
+      fCurrentPos.X := (fMinSize.X - (40 * ReqCount - 8)) div 2;
+
+    AddRequirements(false);
 
     AddClose;
     ApplySize;
