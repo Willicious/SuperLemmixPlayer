@@ -505,8 +505,37 @@ procedure TLevelInfoPanel.ShowPopup;
       end;
   end;
 
+  procedure RepositionExistingControls(aNewWidth: Integer);
+  var
+    i: Integer;
+    ExistingRect: TRect;
+
+    Target, Offset: Integer;
+  begin
+    if ControlCount = 0 then
+      Exit;
+
+    ExistingRect := Controls[0].BoundsRect;
+    for i := 1 to ControlCount-1 do
+    begin
+      ExistingRect.Left := Min(ExistingRect.Left, Controls[i].Left);
+      ExistingRect.Top := Min(ExistingRect.Top, Controls[i].Top);
+      ExistingRect.Right := Max(ExistingRect.Right, Controls[i].Left + Controls[i].Width);
+      ExistingRect.Bottom := Max(ExistingRect.Bottom, Controls[i].Top + Controls[i].Height);
+    end;
+
+    if ExistingRect.Width >= aNewWidth then
+      Exit;
+
+    Target := (aNewWidth - ExistingRect.Width) div 2;
+    Offset := Target - ExistingRect.Left;
+
+    for i := 0 to ControlCount-1 do
+      Controls[i].Left := Controls[i].Left + Offset;
+  end;
 var
   ReqCount: Integer;
+  ReqWidth: Integer;
 const
   MIN_CENTER_REQ_COUNT = 5;
 begin
@@ -517,11 +546,14 @@ begin
     Wipe;
 
     ReqCount := AddRequirements(true);
+    ReqWidth := 40 * ReqCount - 8;
 
-    AddTalisman(Max(ReqCount * 40 - 8, MIN_CENTER_REQ_COUNT * 40 - 8));
+    AddTalisman(Max(ReqWidth, MIN_CENTER_REQ_COUNT * 40 - 8));
 
-    if ReqCount < MIN_CENTER_REQ_COUNT then
-      fCurrentPos.X := (fMinSize.X - (40 * ReqCount - 8)) div 2;
+    if fMinSize.X > ReqWidth + (PADDING_SIZE * 2) then
+      fCurrentPos.X := (fMinSize.X - ReqWidth) div 2
+    else
+      RepositionExistingControls(ReqWidth + PADDING_SIZE * 2);
 
     AddRequirements(false);
 
