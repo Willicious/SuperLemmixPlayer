@@ -147,6 +147,27 @@ const
     'digger',
     'cloner');
 
+  SKILL_PLURAL_NAMES: array[Low(TSkillPanelButton)..LAST_SKILL_BUTTON] of String = (
+    'walkers',
+    'jumpers',
+    'shimmiers',
+    'climbers',
+    'swimmers',
+    'floaters',
+    'gliders',
+    'disarmers',
+    'bombers',
+    'stoners',
+    'blockers',
+    'platformers',
+    'builders',
+    'stackers',
+    'bashers',
+    'fencers',
+    'miners',
+    'diggers',
+    'cloners');
+
 type
   TTriggerTypes = (
     trExit,       // as well for locked exits, once all buttons are pressed

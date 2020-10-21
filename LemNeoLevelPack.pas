@@ -68,7 +68,7 @@ type
       fLevelID: Int64;
 
       fStatus: TNeoLevelStatus;
-      fTalismanList: TList<LongWord>;
+      fUnlockedTalismanList: TList<LongWord>;
 
       procedure LoadLevelFileData;
 
@@ -99,7 +99,7 @@ type
       property Path: String read GetFullPath;
       property RelativePath: String read GetRelativePath;
       property Status: TNeoLevelStatus read fStatus write fStatus;
-      property UnlockedTalismanList: TList<LongWord> read fTalismanList;
+      property UnlockedTalismanList: TList<LongWord> read fUnlockedTalismanList;
       property Talismans: TObjectList<TTalisman> read GetTalismans;
       property TalismanStatus[Index: LongWord]: Boolean read GetTalismanStatus write SetTalismanStatus;
       property GroupIndex: Integer read GetGroupIndex;
@@ -365,7 +365,7 @@ begin
   inherited Create;
   fGroup := aGroup;
   fTalismans := TObjectList<TTalisman>.Create(true);
-  fTalismanList := TList<LongWord>.Create;
+  fUnlockedTalismanList := TList<LongWord>.Create;
 
   Records.TotalSkills := -1;
   for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
@@ -374,7 +374,7 @@ end;
 
 destructor TNeoLevelEntry.Destroy;
 begin
-  fTalismanList.Free;
+  fUnlockedTalismanList.Free;
   fTalismans.Free;
   inherited;
 end;
@@ -444,6 +444,7 @@ var
   i: Integer;
 
   TalInfoLevel: TLevel;
+  CloneTal: TTalisman;
 begin
   if fDataLoaded then Exit;
   if not FileExists(Path) then
@@ -459,54 +460,25 @@ begin
     fAuthor := Parser.MainSection.LineTrimString['author'];
     fLevelID := Parser.MainSection.LineNumeric['id'];
 
-    Parser.MainSection.DoForEachSection('talisman',
-      procedure(aSec: TParserSection; const aIteration: Integer = 0)
-      var
-        T: TTalisman;
-        Success: Boolean;
-      begin
-        Success := True;
-        T := TTalisman.Create;
-        try
-          T.LoadFromSection(aSec);
-          T.Data := Self;
-        except
-          ShowMessage('Error loading a talisman for ' + fTitle);
-          Success := False;
-          T.Free;
-        end;
-        if Success then fTalismans.Add(T);
-      end
-    );
-
-    fTalismans.Sort(TComparer<TTalisman>.Construct(
-     function(const L, R: TTalisman): Integer
-     begin
-       if L.Color < R.Color then
-         Result := -1
-       else if L.Color > R.Color then
-         Result := 1
-       else
-         Result := CompareStr(L.Title, R.Title);
-     end
-    ));
-
-    try
-      if fTalismans.Count > 0 then
-      begin
-        TalInfoLevel := TLevel.Create;
-
+    if Parser.MainSection.Section['talisman'] <> nil then
+    begin
+      // set talisman.Data to "self"
+      TalInfoLevel := TLevel.Create;
+      try
         try
           TalInfoLevel.LoadFromFile(Path);
-
-          for i := 0 to fTalismans.Count-1 do
-            fTalismans[i].LevelLemmingCount := TalInfoLevel.Info.LemmingsCount;
-        finally
-          TalInfoLevel.Free;
+          for i := 0 to TalInfoLevel.Talismans.Count-1 do
+          begin
+            CloneTal := TTalisman.Create;
+            CloneTal.Clone(TalInfoLevel.Talismans[i]);
+            fTalismans.Add(CloneTal);
+          end;
+        except
+          // Fail silently.
         end;
+      finally
+        TalInfoLevel.Free;
       end;
-    except
-      // Fail silently.
     end;
 
     fDataLoaded := true;
@@ -553,13 +525,13 @@ var
 begin
   if aStatus then
   begin
-    for i := 0 to fTalismanList.Count-1 do
-      if fTalismanList[i] = aIndex then Exit;
-    fTalismanList.Add(aIndex);
+    for i := 0 to fUnlockedTalismanList.Count-1 do
+      if fUnlockedTalismanList[i] = aIndex then Exit;
+    fUnlockedTalismanList.Add(aIndex);
   end else begin
-    for i := fTalismanList.Count-1 downto 0 do
-      if fTalismanList[i] = aIndex then
-        fTalismanList.Delete(i);
+    for i := fUnlockedTalismanList.Count-1 downto 0 do
+      if fUnlockedTalismanList[i] = aIndex then
+        fUnlockedTalismanList.Delete(i);
   end;
 end;
 
@@ -568,8 +540,8 @@ var
   i: Integer;
 begin
   Result := false;
-  for i := 0 to fTalismanList.Count-1 do
-    if fTalismanList[i] = aIndex then
+  for i := 0 to fUnlockedTalismanList.Count-1 do
+    if fUnlockedTalismanList[i] = aIndex then
     begin
       Result := true;
       Exit;
@@ -581,11 +553,11 @@ var
   i, i2: Integer;
 begin
   LoadLevelFileData;
-  for i := fTalismanList.Count-1 downto 0 do
+  for i := fUnlockedTalismanList.Count-1 downto 0 do
     for i2 := 0 to fTalismans.Count do
       if i2 = fTalismans.Count then
-        fTalismanList.Delete(i)
-      else if fTalismans[i2].ID = fTalismanList[i] then
+        fUnlockedTalismanList.Delete(i)
+      else if fTalismans[i2].ID = fUnlockedTalismanList[i] then
         Break;
 end;
 
@@ -1197,8 +1169,8 @@ var
             ActiveLevelSec.AddLine('fewest_' + SKILL_NAMES[Skill], aLevel.Records.SkillCount[Skill]);
       end;
 
-      for i := 0 to aLevel.fTalismanList.Count-1 do
-        ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fTalismanList[i], 8));
+      for i := 0 to aLevel.fUnlockedTalismanList.Count-1 do
+        ActiveLevelSec.AddLine('talisman', 'x' + IntToHex(aLevel.fUnlockedTalismanList[i], 8));
     end;
   begin
     for i := 0 to aGroup.Children.Count-1 do
