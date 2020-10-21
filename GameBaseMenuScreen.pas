@@ -99,6 +99,10 @@ type
       procedure HandleMouseClick(Button: TMouseButton);
 
       procedure OnClickTimer(Sender: TObject);
+
+      {$ifdef exp}{$ifndef rc}
+      procedure SaveScreenImage;
+      {$endif}{$endif}
     protected
       procedure DoLevelSelect;
       procedure SaveReplay;
@@ -171,7 +175,23 @@ begin
   OnMouseMove := Form_MouseMove;
   ScreenImg.OnMouseDown := Img_MouseDown;
   ScreenImg.OnMouseMove := Img_MouseMove;
+
+  {$ifdef exp}{$ifndef rc}
+  MakeHiddenOption(lka_SaveImage, SaveScreenImage);
+  {$endif}{$endif}
 end;
+
+{$ifdef exp}{$ifndef rc}
+procedure TGameBaseMenuScreen.SaveScreenImage;
+var
+  i: Integer;
+begin
+  i := 1;
+  while FileExists(AppPath + 'Screenshot_' + LeadZeroStr(i, 3) + '.png') do
+    Inc(i);
+  TPngInterface.SavePngFile(AppPath + 'Screenshot_' + LeadZeroStr(i, 3) + '.png', ScreenImg.Bitmap);
+end;
+{$endif}{$endif}
 
 destructor TGameBaseMenuScreen.Destroy;
 begin
