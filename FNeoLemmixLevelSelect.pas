@@ -582,7 +582,12 @@ var
   NewImage: TImage32;
   TitleLabel, LevLabel, ReqLabel: TLabel;
   Tal: TTalisman;
+
+  LabelStartY: Integer;
+  LabelTotalHeight: Integer;
 begin
+  fPackTalBox.VertScrollBar.Position := 0;
+
   Group := GetGroup;
   TotalHeight := 8;
   Talismans := Group.Talismans;
@@ -595,10 +600,14 @@ begin
     Tal := Talismans[i];
     Level := Group.GetLevelForTalisman(Tal);
 
-    TitleLabel := TLabel.Create(self);
-    TitleLabel.Parent := fPackTalBox;
-    TitleLabel.Font.Style := [fsBold];
-    TitleLabel.Caption := Tal.Title;
+    if Trim(Tal.Title) <> '' then
+    begin
+      TitleLabel := TLabel.Create(self);
+      TitleLabel.Parent := fPackTalBox;
+      TitleLabel.Font.Style := [fsBold];
+      TitleLabel.Caption := Tal.Title;
+    end else
+      TitleLabel := nil;
 
     LevLabel := TLabel.Create(self);
     LevLabel.Parent := fPackTalBox;
@@ -618,25 +627,38 @@ begin
     else
       DrawIcon(ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, NewImage.Bitmap);
 
-    TitleLabel.Left := 40;
-    LevLabel.Left := 52;
+    if TitleLabel <> nil then
+    begin
+      TitleLabel.Left := 40;
+      LevLabel.Left := 52;
+    end else
+      LevLabel.Left := 40;
     ReqLabel.Left := 40;
     NewImage.Left := 8;
 
-    if (NewImage.Height > TitleLabel.Height + LevLabel.Height + ReqLabel.Height) then
+    LabelTotalHeight := LevLabel.Height + ReqLabel.Height;
+    if TitleLabel <> nil then
+      LabelTotalHeight := LabelTotalHeight + TitleLabel.Height;
+
+    if (NewImage.Height > LabelTotalHeight) then
     begin
       NewImage.Top := TotalHeight;
-      TitleLabel.Top := TotalHeight + ((NewImage.Height - (TitleLabel.Height + LevLabel.Height + ReqLabel.Height)) div 2);
+      LabelStartY := TotalHeight + ((NewImage.Height - LabelTotalHeight) div 2);
 
       TotalHeight := TotalHeight + NewImage.Height + 8;
     end else begin
-      TitleLabel.Top := TotalHeight;
-      NewImage.Top := TotalHeight + (((TitleLabel.Height + LevLabel.Height + ReqLabel.Height) - NewImage.Height) div 2);
+      LabelStartY := TotalHeight;
+      NewImage.Top := TotalHeight + ((LabelTotalHeight - NewImage.Height) div 2);
 
-      TotalHeight := TotalHeight + TitleLabel.Height + LevLabel.Height + ReqLabel.Height + 8;
+      TotalHeight := TotalHeight + LabelTotalHeight + 8;
     end;
 
-    LevLabel.Top := TitleLabel.Top + TitleLabel.Height;
+    if TitleLabel <> nil then
+    begin
+      TitleLabel.Top := LabelStartY;
+      LevLabel.Top := TitleLabel.Top + TitleLabel.Height;
+    end else
+      LevLabel.Top := LabelStartY;
     ReqLabel.Top := LevLabel.Top + LevLabel.Height;
   end;
 
