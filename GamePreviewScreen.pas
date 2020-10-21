@@ -176,6 +176,8 @@ var
   Lw, Lh : Integer;
   LevelScale: Double;
   NewRegion: TClickableRegion;
+const
+  TEXT_Y_POSITION = 170;
 begin
   Assert(GameParams <> nil);
 
@@ -220,7 +222,7 @@ begin
 
       W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
       // draw text
-      MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, 164);
+      MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, TEXT_Y_POSITION);
 
       NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
       NewRegion.ShortcutKeys.Add(VK_RETURN);
@@ -384,6 +386,8 @@ var
   TalPoint: TPoint;
 
   KeepTalismans: Boolean;
+const
+  TALISMANS_Y_POSITION = 400;
 begin
   if GameParams.Level.Talismans.Count = 0 then
     Exit;
@@ -409,7 +413,7 @@ begin
     TotalTalWidth := (GameParams.Level.Talismans.Count * (Temp.Width + TALISMAN_PADDING)) - TALISMAN_PADDING;
     TalPoint := Point(
       (ScreenImg.Bitmap.Width - TotalTalWidth + Temp.Width) div 2,
-      390
+      TALISMANS_Y_POSITION
       );
 
     for i := 0 to GameParams.Level.Talismans.Count-1 do
