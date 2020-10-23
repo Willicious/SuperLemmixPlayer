@@ -486,7 +486,7 @@ begin
       Inc(fReelTextPos);
 
       if fReelFrame < 0 then
-        fReelFrame := fReelFrame + 16;
+        fReelFrame := fReelFrame + (SCROLLER_LEMMING_FRAME_COUNT * 2);
     end else begin
       Inc(fReelFrame);
       Dec(fReelTextPos);
@@ -603,7 +603,7 @@ var
   SrcRect, DstRect: TRect;
   Frame: Integer;
 begin
-  Frame := (fReelFrame div 2) mod SCROLLER_LEMMING_FRAME_COUNT;
+  Frame := (fReelFrame div 4) mod SCROLLER_LEMMING_FRAME_COUNT;
 
   SrcRect := Rect(0, 0, ScrollerLemmings.Width div 2, ScrollerLemmings.Height div SCROLLER_LEMMING_FRAME_COUNT);
   Types.OffsetRect(SrcRect, 0, SrcRect.Height * Frame);
