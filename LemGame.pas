@@ -331,6 +331,8 @@ type
     function HandleReaching(L: TLemming) : Boolean;
     function HandleShimmying(L: TLemming) : Boolean;
     function HandleJumping(L: TLemming) : Boolean;
+    function HandleGrenading(L: TLemming) : Boolean;
+    function HandleSpearing(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -359,6 +361,8 @@ type
     function MayAssignCloner(L: TLemming): Boolean;
     function MayAssignShimmier(L: TLemming) : Boolean;
     function MayAssignJumper(L: TLemming) : Boolean;
+    function MayAssignThrowingSkill(L: TLemming) : Boolean;
+
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -895,6 +899,8 @@ begin
   LemmingMethods[baReaching]   := HandleReaching;
   LemmingMethods[baShimmying]  := HandleShimmying;
   LemmingMethods[baJumping]    := HandleJumping;
+  LemmingMethods[baSpearing]   := HandleSpearing;
+  LemmingMethods[baGrenading]  := HandleGrenading;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -926,6 +932,8 @@ begin
   NewSkillMethods[baFencing]      := MayAssignFencer;
   NewSkillMethods[baShimmying]    := MayAssignShimmier;
   NewSkillMethods[baJumping]      := MayAssignJumper;
+  NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
+  NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
 
   P := AppPath;
 
@@ -1345,7 +1353,9 @@ const
     16, //baFencing,
      8, //baReaching,
     20, //baShimmying
-    13  //baJumping
+    13, //baJumping
+     9, //baSpearing
+     9  //baGrenading
     );
 begin
   if DoTurn then TurnAround(L);
@@ -2100,6 +2110,14 @@ begin
   Result := (L.LemAction in ActionSet);
 end;
 
+function TLemmingGame.MayAssignThrowingSkill(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baFencing, baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet);
+end;
+
 function TLemmingGame.MayAssignBasher(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
@@ -2138,7 +2156,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
                baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
-               baJumping];
+               baJumping, baSpearing, baGrenading];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -4633,6 +4651,16 @@ begin
   end;
 end;
 
+
+function TLemmingGame.HandleGrenading(L: TLemming): Boolean;
+begin
+  Result := true;
+end;
+
+function TLemmingGame.HandleSpearing(L: TLemming): Boolean;
+begin
+  Result := true;
+end;
 
 function TLemmingGame.HandleSplatting(L: TLemming): Boolean;
 begin

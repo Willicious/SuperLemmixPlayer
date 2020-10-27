@@ -829,6 +829,8 @@ begin
       spbCloner: SL.Add('  fRenderInterface.SelectedSkill: Cloner');
       spbShimmier: SL.Add('  fRenderInterface.SelectedSkill: Shimmier');
       spbJumper: SL.Add('  fRenderInterface.SelectedSkill: Jumper');
+      spbSpearer: SL.Add('  fRenderInterface.SelectedSkill: Spearer');
+      spbGrenader: SL.Add('  fRenderInterface.SelectedSkill: Grenader');
       else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
     end;
   end;

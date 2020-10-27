@@ -470,6 +470,9 @@ begin
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 6);
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 7);
 
+  // Projectiles are messy.
+  raise Exception.Create('Pickup skill - need to implement generation of Grenader / Spearer graphic');
+
   // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles.
   // For the Digger, we don't have a choice - we have to accept the presence of some destruction particles.
   DrawAnimationFrame(SkillIcons[Integer(spbBasher)], BASHING, 0, PICKUP_MID + 1, PICKUP_BASELINE - 2);
