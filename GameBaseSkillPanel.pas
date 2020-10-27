@@ -704,7 +704,8 @@ begin
     DrawBrick(fSkillIcons[spbStacker], 10, 17);
 
     // Projectiles are messy.
-    raise Exception.Create('Skill panel - need to implement generation of Grenader / Spearer graphic');
+    DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 1, 7, 21);
+    DrawAnimationFrame(fSkillIcons[spbGrenader], THROWING, 1, 7, 21);
 
     // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
     // For Digger, we just have to accept some particles.
