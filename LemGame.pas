@@ -23,7 +23,7 @@ uses
   LemLevel,
   LemRenderHelpers, LemRendering,
   LemNeoTheme,
-  LemGadgets, LemGadgetsConstants, LemLemming, LemRecolorSprites,
+  LemGadgets, LemGadgetsConstants, LemLemming, LemProjectile, LemRecolorSprites,
   LemReplay,
   LemTalisman,
   LemGameMessageQueue,
@@ -47,6 +47,7 @@ type
   TLemmingGameSavedState = class
     public
       LemmingList: TLemmingList;
+      ProjectileList: TProjectileList;
       SelectedSkill: TSkillPanelButton;
       TerrainLayer: TBitmap32;  // the visual terrain image
       PhysicsMap: TBitmap32;    // the actual physics
@@ -111,6 +112,7 @@ type
 
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
+    ProjectileList             : TProjectileList;
     PhysicsMap                 : TBitmap32;
     BlockerMap                 : TBitmap32; // for blockers
     ZombieMap                  : TByteMap;
@@ -291,6 +293,8 @@ type
     function UpdateExplosionTimer(L: TLemming): Boolean;
     procedure UpdateGadgets;
 
+    procedure UpdateProjectiles;
+
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Amount: Integer = -1);
 
@@ -331,8 +335,7 @@ type
     function HandleReaching(L: TLemming) : Boolean;
     function HandleShimmying(L: TLemming) : Boolean;
     function HandleJumping(L: TLemming) : Boolean;
-    function HandleGrenading(L: TLemming) : Boolean;
-    function HandleSpearing(L: TLemming) : Boolean;
+    function HandleThrowing(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -559,6 +562,7 @@ constructor TLemmingGameSavedState.Create;
 begin
   inherited;
   LemmingList := TLemmingList.Create(true);
+  ProjectileList := TProjectileList.Create(true);
   Gadgets := TGadgetList.Create(true);
   TerrainLayer := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
@@ -568,6 +572,7 @@ end;
 destructor TLemmingGameSavedState.Destroy;
 begin
   LemmingList.Free;
+  ProjectileList.Free;
   Gadgets.Free;
   TerrainLayer.Free;
   PhysicsMap.Free;
@@ -691,6 +696,11 @@ begin
     aState.LemmingList[i].Assign(LemmingList[i]);
   end;
 
+  // Projectiles.
+  aState.ProjectileList.Clear;
+  for i := 0 to ProjectileList.Count-1 do
+    aState.ProjectileList.Add(TProjectile.CreateAssign(ProjectileList[i]));
+
   // Objects.
   aState.Gadgets.Clear;
   for i := 0 to Gadgets.Count-1 do
@@ -740,6 +750,14 @@ begin
     LemmingList.Add(TLemming.Create);
     LemmingList[i].Assign(aState.LemmingList[i]);
     LemmingList[i].LemIndex := i;
+  end;
+
+  // Projectiles.
+  ProjectileList.Clear;
+  for i := 0 to aState.ProjectileList.Count-1 do
+  begin
+    ProjectileList.Add(TProjectile.CreateAssign(aState.ProjectileList[i]));
+    ProjectileList[i].Relink(PhysicsMap, LemmingList);
   end;
 
   // Objects
@@ -847,6 +865,7 @@ begin
   fMessageQueue  := TGameMessageQueue.Create;
 
   LemmingList    := TLemmingList.Create;
+  ProjectileList := TProjectileList.Create;
 
   BomberMask     := TBitmap32.Create;
   StonerMask     := TBitmap32.Create;
@@ -860,6 +879,7 @@ begin
   fReplayManager := TReplay.Create;
 
   fRenderInterface.LemmingList := LemmingList;
+  fRenderInterface.ProjectileList := ProjectileList;
   fRenderInterface.Gadgets := Gadgets;
   fRenderInterface.SetSelectedSkillPointer(fSelectedSkill);
   fRenderInterface.SelectedLemming := nil;
@@ -899,8 +919,8 @@ begin
   LemmingMethods[baReaching]   := HandleReaching;
   LemmingMethods[baShimmying]  := HandleShimmying;
   LemmingMethods[baJumping]    := HandleJumping;
-  LemmingMethods[baSpearing]   := HandleSpearing;
-  LemmingMethods[baGrenading]  := HandleGrenading;
+  LemmingMethods[baSpearing]   := HandleThrowing;
+  LemmingMethods[baGrenading]  := HandleThrowing;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -953,6 +973,7 @@ begin
   MinerMasks.Free;
 
   LemmingList.Free;
+  ProjectileList.Free;
   Gadgets.Free;
   BlockerMap.Free;
   ZombieMap.Free;
@@ -1047,6 +1068,8 @@ begin
   Index_LemmingToBeNuked := 0;
   fParticleFinishTimer := 0;
   LemmingList.Clear;
+  ProjectileList.Clear;
+
   if Level.Info.LevelID <> fReplayManager.LevelID then //not aReplay then
   begin
     fReplayManager.Clear(true);
@@ -4652,24 +4675,26 @@ begin
 end;
 
 
-function TLemmingGame.HandleGrenading(L: TLemming): Boolean;
+function TLemmingGame.HandleThrowing(L: TLemming): Boolean;
+var
+  NewProjectile: TProjectile;
 begin
-  if L.LemPhysicsFrame < 4 then
-    L.LemFrame := 0;
+  case L.LemPhysicsFrame of
+    0..2: L.LemFrame := 0;
 
-  if L.LemPhysicsFrame = 9 then
-    Transition(L, baShrugging);
+    3: begin
+         L.LemFrame := 0;
 
-  Result := true;
-end;
+         if L.LemAction = baGrenading then
+           NewProjectile := TProjectile.CreateGrenade(PhysicsMap, L)
+         else
+           NewProjectile := TProjectile.CreateSpear(PhysicsMap, L);
 
-function TLemmingGame.HandleSpearing(L: TLemming): Boolean;
-begin
-  if L.LemPhysicsFrame < 4 then
-    L.LemFrame := 0;
+         ProjectileList.Add(NewProjectile);
+       end;
 
-  if L.LemPhysicsFrame = 9 then
-    Transition(L, baShrugging);
+    9: Transition(L, baShrugging);
+  end;
 
   Result := true;
 end;
@@ -4823,6 +4848,7 @@ begin
   IncrementIteration;
   CheckReleaseLemming;
   CheckLemmings;
+  UpdateProjectiles;
   CheckUpdateNuking;
   UpdateGadgets;
 
@@ -4836,6 +4862,25 @@ begin
   fSoundList.Clear(); // Clear list of played sound effects - just to be safe
 end;
 
+
+procedure TLemmingGame.UpdateProjectiles;
+var
+  i: Integer;
+  P: TProjectile;
+begin
+  for i := 0 to ProjectileList.Count-1 do
+  begin
+    P := ProjectileList[i];
+    P.Update;
+  end;
+
+  for i := ProjectileList.Count-1 downto 0 do
+  begin
+    P := ProjectileList[i];
+    if P.SilentRemove or P.Hit then
+      ProjectileList.Delete(i);
+  end;
+end;
 
 procedure TLemmingGame.IncrementIteration;
 var

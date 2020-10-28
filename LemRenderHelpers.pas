@@ -7,6 +7,7 @@ unit LemRenderHelpers;
 interface
 
 uses
+  LemProjectile,
   LemTypes, LemGadgets, LemLemming, LemCore,
   GR32, GR32_Blend,
   Contnrs, Classes;
@@ -127,6 +128,7 @@ type
     private
       fDisableDrawing: Boolean;
       fLemmingList: TLemmingList;
+      fProjectileList: TProjectileList;
       fGadgets: TGadgetList;
       fPSelectedSkill: ^TSkillPanelButton;
       fSelectedLemmingID: Integer;
@@ -169,6 +171,7 @@ type
       function IsStartingSeconds: Boolean;
       property DisableDrawing: Boolean read fDisableDrawing write fDisableDrawing;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
+      property ProjectileList: TProjectileList read fProjectileList write fProjectileList;
       property Gadgets: TGadgetList read fGadgets write fGadgets;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
       property SelectedLemming: TLemming read GetSelectedLemming write SetSelectedLemming;

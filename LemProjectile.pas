@@ -3,8 +3,9 @@ unit LemProjectile;
 interface
 
 uses
+  Generics.Collections,
+  LemCore,
   LemLemming,
-  LemRenderHelpers,
   GR32,
   Classes, SysUtils, Math, Types;
 
@@ -62,6 +63,8 @@ type
       fIsSpear: Boolean;
       fIsGrenade: Boolean;
 
+      fSilentRemove: Boolean;
+
       constructor Create(aPhysicsMap: TBitmap32; aLemming: TLemming);
 
       procedure Fire;
@@ -69,6 +72,7 @@ type
       function GetGraphic: TProjectileGraphic;
       function GetGraphicHotspot: TPoint;
     public
+      constructor CreateAssign(aSrc: TProjectile);
       constructor CreateSpear(aPhysicsMap: TBitmap32; aLemming: TLemming);
       constructor CreateGrenade(aPhysicsMap: TBitmap32; aLemming: TLemming);
 
@@ -84,9 +88,16 @@ type
 
       property Hotspot: TPoint read GetGraphicHotspot;
       property Graphic: TProjectileGraphic read GetGraphic;
+
+      property SilentRemove: Boolean read fSilentRemove;
   end;
 
+  TProjectileList = TObjectList<TProjectile>;
+
 implementation
+
+uses
+  LemRenderHelpers;
 
 const
   PROJECTILE_HORIZONTAL_MOMENTUM = 9;
@@ -156,23 +167,6 @@ const
 
 procedure TProjectile.Assign(aSrc: TProjectile);
 begin
-  {fX: Integer;
-      fY: Integer;
-
-      fOffsetX: Integer;
-
-      fDX: Integer;
-
-      fFired: Boolean;
-      fHit: Boolean;
-
-      fPhysicsMap: TBitmap32;
-      fLemming: TLemming;
-      fLemmingIndex: Integer;
-
-      fIsSpear: Boolean;
-      fIsGrenade: Boolean;}
-
   fX := aSrc.fX;
   fY := aSrc.fY;
 
@@ -188,6 +182,8 @@ begin
 
   fIsSpear := aSrc.fIsSpear;
   fIsGrenade := aSrc.fIsGrenade;
+
+  fSilentRemove := aSrc.fSilentRemove;
 end;
 
 constructor TProjectile.Create(aPhysicsMap: TBitmap32; aLemming: TLemming);
@@ -201,6 +197,12 @@ begin
     fDX := fLemming.LemDX;
   end else
     fLemmingIndex := -1;
+end;
+
+constructor TProjectile.CreateAssign(aSrc: TProjectile);
+begin
+  Create(nil, nil);
+  Assign(aSrc);
 end;
 
 constructor TProjectile.CreateGrenade(aPhysicsMap: TBitmap32;
@@ -377,7 +379,9 @@ begin
     end;
 
     SetLength(Result, PosCount);
-  end else begin
+  end else if (fLemming.LemRemoved) or not (fLemming.LemAction in [baSpearing, baGrenading]) then
+    fSilentRemove := true
+  else begin
     // Move with lemming's hand
     SetLength(Result, 0);
     fDX := fLemming.LemDX;
