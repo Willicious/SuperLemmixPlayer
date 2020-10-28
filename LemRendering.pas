@@ -18,7 +18,7 @@ uses
   LemTypes,
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
-  LemLemming,
+  LemLemming, LemProjectile,
   LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
 
@@ -49,6 +49,7 @@ type
     fTransparentBackground: Boolean;
 
     fPhysicsMap         : TBitmap32;
+    fProjectileImage    : TBitmap32;
     fLayers             : TRenderBitmaps;
 
     TempBitmap          : TBitmap32;
@@ -66,7 +67,7 @@ type
     fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
     fPhysicsRenderingType: TPhysicsRenderingType;
 
-    fHelpersAreHighRes: Boolean;
+    fGraphicsAreHighRes: Boolean;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
@@ -127,6 +128,7 @@ type
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
 
     procedure LoadHelperImages;
+    procedure LoadProjectileImages;
 
     function FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
@@ -169,6 +171,8 @@ type
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
 
+    procedure DrawProjectiles;
+    procedure DrawThisProjectile(aProjectile: TProjectile);
 
     procedure RenderWorld(World: TBitmap32; DoBackground: Boolean);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
@@ -726,6 +730,51 @@ begin
   end;
 
   CopyL.Free;
+end;
+
+procedure TRenderer.DrawProjectiles;
+var
+  i: Integer;
+begin
+  if (fRenderInterface = nil) or (fRenderInterface.ProjectileList = nil) or
+     (fRenderInterface.ProjectileList.Count = 0) then
+  begin
+    fLayers.fIsEmpty[rlProjectiles] := true;
+  end else begin
+    fLayers.fIsEmpty[rlProjectiles] := false;
+    fLayers[rlProjectiles].Clear(0);
+
+    for i := 0 to fRenderInterface.ProjectileList.Count-1 do
+      DrawThisProjectile(fRenderInterface.ProjectileList[i]);
+  end;
+    
+end;
+
+procedure TRenderer.DrawThisProjectile(aProjectile: TProjectile);
+var
+  Graphic: TProjectileGraphic;
+  SrcRect: TRect;
+  Hotspot: TPoint;
+  Target: TPoint;
+begin
+  Graphic := aProjectile.Graphic;
+  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  Hotspot := aProjectile.Hotspot;
+  Target := Point(aProjectile.X, aProjectile.Y);
+
+  if GameParams.HighResolution then
+  begin
+    SrcRect.Left := SrcRect.Left * 2;
+    SrcRect.Top := SrcRect.Top * 2;
+    SrcRect.Right := SrcRect.Right * 2;
+    SrcRect.Bottom := SrcRect.Bottom * 2;
+    Hotspot.X := Hotspot.X * 2;
+    Hotspot.Y := Hotspot.Y * 2;
+    Target.X := Target.X * 2;
+    Target.Y := Target.Y * 2;
+  end;
+
+  fProjectileImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
@@ -2189,7 +2238,15 @@ begin
   fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
   fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
 
-  fHelpersAreHighRes := GameParams.HighResolution;
+  fGraphicsAreHighRes := GameParams.HighResolution;
+end;
+
+procedure TRenderer.LoadProjectileImages;
+begin
+  if GameParams.HighResolution then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', fProjectileImage)
+  else
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', fProjectileImage);
 end;
 
 procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);
@@ -2464,12 +2521,14 @@ begin
   fTheme := TNeoTheme.Create;
   fLayers := TRenderBitmaps.Create;
   fPhysicsMap := TBitmap32.Create;
+  fProjectileImage := TBitmap32.Create;
   fBgColor := $00000000;
   fAni := TBaseAnimationSet.Create;
   fPreviewGadgets := TGadgetList.Create;
   fTempLemmingList := TLemmingList.Create(false);
 
   LoadHelperImages;
+  LoadProjectileImages;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
   S := TResourceStream.Create(HInstance, 'particles', 'lemdata');
@@ -2486,6 +2545,7 @@ var
   iIcon: THelperIcon;
 begin
   TempBitmap.Free;
+  fProjectileImage.Free;
   fTheme.Free;
   fLayers.Free;
   fPhysicsMap.Free;
@@ -2870,9 +2930,11 @@ var
 
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
-
-  if GameParams.HighResolution <> fHelpersAreHighRes then
+  if GameParams.HighResolution <> fGraphicsAreHighRes then
+  begin
     LoadHelperImages;
+    LoadProjectileImages;
+  end;
 
   RenderInfoRec.Level := aLevel;
 

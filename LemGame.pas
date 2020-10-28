@@ -1857,6 +1857,10 @@ end;
 procedure TLemmingGame.GenerateClonedLem(L: TLemming);
 var
   NewL: TLemming;
+  NewP: TProjectile;
+
+  MatchProjectile: TProjectile;
+  i: Integer;
 begin
   Assert(not L.LemIsZombie, 'cloner assigned to zombie');
 
@@ -1878,7 +1882,13 @@ begin
   // Required for turned builders not to walk into air
   // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
   else if (NewL.LemAction in [baBuilding, baPlatforming]) and (NewL.LemPhysicsFrame >= 9) then
-    LayBrick(NewL);
+    LayBrick(NewL)
+  // If in an early-enough phase of spearing or grenading, create a clone projectile
+  else if (NewL.LemAction in [baSpearing, baGrenading]) and (NewL.LemPhysicsFrame <= 4) then
+  begin
+    ProjectileList.Add(TProjectile.CreateForCloner(PhysicsMap, NewL, ProjectileList[L.LemHoldingProjectileIndex]));
+    NewL.LemHoldingProjectileIndex := ProjectileList.Count - 1;
+  end;
 end;
 
 
@@ -4680,9 +4690,7 @@ var
   NewProjectile: TProjectile;
 begin
   case L.LemPhysicsFrame of
-    0..2: L.LemFrame := 0;
-
-    3: begin
+    1: begin
          L.LemFrame := 0;
 
          if L.LemAction = baGrenading then
@@ -4691,7 +4699,10 @@ begin
            NewProjectile := TProjectile.CreateSpear(PhysicsMap, L);
 
          ProjectileList.Add(NewProjectile);
+         L.LemHoldingProjectileIndex := ProjectileList.Count - 1;
        end;
+
+    0, 2, 3: L.LemFrame := 0;
 
     9: Transition(L, baShrugging);
   end;

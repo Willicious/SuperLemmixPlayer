@@ -106,6 +106,7 @@ type
     LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Stoner
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
+    LemHoldingProjectileIndex     : Integer;
 
     LemInitialFall                : Boolean; // Set during the lemming's initial fall at the start of a level for a glider / floater special case
     // The next three values are only needed to determine intermediate trigger area checks
@@ -223,6 +224,7 @@ begin
   inherited;
   LemInFlipper := -1;
   LemParticleTimer := -1;
+  LemHoldingProjectileIndex := -1;
 end;
 
 function TLemming.CheckForPermanentSkills: Boolean;
@@ -308,6 +310,8 @@ begin
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
   LemJumpProgress := Source.LemJumpProgress;
+  LemHoldingProjectileIndex := Source.LemHoldingProjectileIndex;
+
   LemXOld := Source.LemXOld;
   LemYOld := Source.LemYOld;
   LemDXOld := Source.LemDXOld;

@@ -68,6 +68,8 @@ type
       constructor Create(aPhysicsMap: TBitmap32; aLemming: TLemming);
 
       procedure Fire;
+      procedure Discard;
+      procedure SetPositionFromLemming;
 
       function GetGraphic: TProjectileGraphic;
       function GetGraphicHotspot: TPoint;
@@ -75,6 +77,7 @@ type
       constructor CreateAssign(aSrc: TProjectile);
       constructor CreateSpear(aPhysicsMap: TBitmap32; aLemming: TLemming);
       constructor CreateGrenade(aPhysicsMap: TBitmap32; aLemming: TLemming);
+      constructor CreateForCloner(aPhysicsMap: TBitmap32; aNewLemming: TLemming; aOldProjectile: TProjectile);
 
       function Update: TProjectilePointArray;
       procedure Relink(aPhysicsMap: TBitmap32; aList: TLemmingList);
@@ -205,12 +208,21 @@ begin
   Assign(aSrc);
 end;
 
+constructor TProjectile.CreateForCloner(aPhysicsMap: TBitmap32; aNewLemming: TLemming; aOldProjectile: TProjectile);
+begin
+  Create(aPhysicsMap, aNewLemming);
+  Assign(aOldProjectile);
+  fLemmingIndex := aNewLemming.LemIndex;
+  SetPositionFromLemming;
+end;
+
 constructor TProjectile.CreateGrenade(aPhysicsMap: TBitmap32;
   aLemming: TLemming);
 begin
   fIsSpear := false;
   fIsGrenade := true;
   Create(aPhysicsMap, aLemming);
+  SetPositionFromLemming;
 end;
 
 constructor TProjectile.CreateSpear(aPhysicsMap: TBitmap32; aLemming: TLemming);
@@ -218,11 +230,19 @@ begin
   fIsSpear := true;
   fIsGrenade := false;
   Create(aPhysicsMap, aLemming);
+  SetPositionFromLemming;
+end;
+
+procedure TProjectile.Discard;
+begin
+  fSilentRemove := true;
+  fLemming.LemHoldingProjectileIndex := -1;
 end;
 
 procedure TProjectile.Fire;
 begin
   fFired := true;
+  fLemming.LemHoldingProjectileIndex := -1;
 end;
 
 function TProjectile.GetGraphic: TProjectileGraphic;
@@ -298,6 +318,45 @@ procedure TProjectile.Relink(aPhysicsMap: TBitmap32; aList: TLemmingList);
 begin
   fLemming := aList[fLemmingIndex];
   fPhysicsMap := aPhysicsMap;
+  SetPositionFromLemming;
+end;
+
+procedure TProjectile.SetPositionFromLemming;
+begin
+  fDX := fLemming.LemDX;
+
+  case fLemming.LemPhysicsFrame of
+    0..3: begin
+            fX := fLemming.LemX - (4 * fLemming.LemDX);
+            fY := fLemming.LemY - 4;
+
+            if fIsSpear then
+            begin
+              fX := fX + (SPEAR_OFFSETS[0].X * fLemming.LemDX);
+              fY := fY + SPEAR_OFFSETS[0].Y;
+            end;
+          end;
+    4: begin
+         fX := fLemming.LemX - (3 * fLemming.LemDX);
+         fY := fLemming.LemY - 7;
+
+         if fIsSpear then
+         begin
+           fX := fX + (SPEAR_OFFSETS[1].X * fLemming.LemDX);
+           fY := fY + SPEAR_OFFSETS[1].Y;
+         end;
+       end;
+    5: begin
+         fX := fLemming.LemX + (1 * fLemming.LemDX);
+         fY := fLemming.LemY - 9;
+
+         if fIsSpear then
+         begin
+           fX := fX + (SPEAR_OFFSETS[2].X * fLemming.LemDX);
+           fY := fY + SPEAR_OFFSETS[2].Y;
+         end;
+       end;
+  end;
 end;
 
 function TProjectile.Update: TProjectilePointArray;
@@ -380,46 +439,14 @@ begin
 
     SetLength(Result, PosCount);
   end else if (fLemming.LemRemoved) or not (fLemming.LemAction in [baSpearing, baGrenading]) then
-    fSilentRemove := true
+    Discard
   else begin
     // Move with lemming's hand
     SetLength(Result, 0);
-    fDX := fLemming.LemDX;
+    SetPositionFromLemming;
 
-    case fLemming.LemPhysicsFrame of
-      0..3: begin
-              fX := fLemming.LemX - (4 * fLemming.LemDX);
-              fY := fLemming.LemY - 4;
-
-              if fIsSpear then
-              begin
-                fX := fX + SPEAR_OFFSETS[0].X;
-                fY := fY + SPEAR_OFFSETS[0].Y;
-              end;
-            end;
-      4: begin
-           fX := fLemming.LemX - (3 * fLemming.LemDX);
-           fY := fLemming.LemY - 7;
-
-           if fIsSpear then
-           begin
-             fX := fX + SPEAR_OFFSETS[1].X;
-             fY := fY + SPEAR_OFFSETS[1].Y;
-           end;
-         end;
-      5: begin
-           fX := fLemming.LemX + (1 * fLemming.LemDX);
-           fY := fLemming.LemY - 9;
-
-           if fIsSpear then
-           begin
-             fX := fX + SPEAR_OFFSETS[2].X;
-             fY := fY + SPEAR_OFFSETS[2].Y;
-           end;
-
-           Fire;
-         end;
-    end;
+    if fLemming.LemPhysicsFrame = 5 then
+      Fire;
   end;
 end;
 

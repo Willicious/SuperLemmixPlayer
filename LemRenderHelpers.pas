@@ -47,6 +47,7 @@ type
                   rlBackgroundObjects,
                   rlGadgetsLow,
                   rlLowShadows,
+                  rlProjectiles,
                   rlTerrain,
                   rlOnTerrainGadgets,
                   rlOneWayArrows,
