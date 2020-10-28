@@ -1541,6 +1541,22 @@ var
     for i := 0 to aList.Count-1 do
       fTalismans.Add(aList[i]);
   end;
+
+  procedure SortTalismans;
+  var
+    i, n: Integer;
+    Color: TTalismanColor;
+  begin
+    for Color := Low(TTalismanColor) to High(TTalismanColor) do
+    begin
+      n := 0;
+      for i := 0 to fTalismans.Count-1 do
+        if fTalismans[n].Color = Color then
+          fTalismans.Move(n, fTalismans.Count-1)
+        else
+          Inc(n);
+    end;
+  end;
 begin
   if fTalismans = nil then
   begin
@@ -1553,17 +1569,7 @@ begin
     for i := 0 to Levels.Count-1 do
       AddList(Levels[i].Talismans);
 
-    fTalismans.Sort(TComparer<TTalisman>.Construct(
-     function(const L, R: TTalisman): Integer
-     begin
-       if L.Color < R.Color then
-         Result := -1
-       else if L.Color > R.Color then
-         Result := 1
-       else
-         Result := CompareValue(L.ID, R.ID);
-     end
-    ));
+    SortTalismans;
   end;
   Result := fTalismans;
 end;
