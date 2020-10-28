@@ -366,6 +366,8 @@ type
 
     function GetActiveLemmingTypes: TLemmingKinds;
     function GetOutOfTime: Boolean;
+
+    procedure UpdateLevelRecords;
   public
     //GameResult                 : Boolean;
     GameResultRec              : TGameResultsRec;
@@ -457,6 +459,9 @@ var
   GlobalGame: TLemmingGame;
 
 implementation
+
+uses
+  LemNeoLevelPack;
 
 const
   LEMMIX_REPLAY_VERSION    = 105;
@@ -4739,6 +4744,7 @@ begin
                 Inc(LemmingsIn);
                 if LemmingsIn = Level.Info.RescueCount then
                   GameResultRec.gLastRescueIteration := fCurrentIteration;
+                UpdateLevelRecords;
               end;
     RM_NEUTRAL: if not Silent then
                   CueSoundEffect(SFX_FALLOUT, L.Position);
@@ -4796,6 +4802,31 @@ begin
   fSoundList.Clear(); // Clear list of played sound effects - just to be safe
 end;
 
+procedure TLemmingGame.UpdateLevelRecords;
+var
+  NewRecs: TLevelRecords;
+  Skill: TSkillPanelButton;
+begin
+  if not fReplayManager.IsThisUsersReplay then Exit;
+  FillChar(NewRecs, SizeOf(TLevelRecords), $FF);
+  NewRecs.LemmingsRescued := LemmingsIn;
+
+  if LemmingsIn = Level.Info.RescueCount then
+  begin
+    // We only want to update the rest when we're at the rescue count EXACTLY.
+    NewRecs.TimeTaken := fCurrentIteration;
+    NewRecs.TotalSkills := 0;
+
+    for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+      if Skill in Level.Info.Skillset then
+      begin
+        NewRecs.SkillCount[Skill] := SkillsUsed[Skill];
+        NewRecs.TotalSkills := NewRecs.TotalSkills + SkillsUsed[Skill];
+      end;
+  end;
+
+  GameParams.CurrentLevel.WriteNewRecords(NewRecs);
+end;
 
 procedure TLemmingGame.IncrementIteration;
 var

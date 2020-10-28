@@ -139,8 +139,6 @@ var
   i: Integer;
   STarget: string;
   SDone: string;
-  Skill: TSkillPanelButton;
-  TotalSkills: Integer;
 
     procedure Add(const S: string);
     begin
@@ -242,27 +240,9 @@ begin
     if (not gCheated) and (GlobalGame.ReplayManager.IsThisUsersReplay) then
       with CurrentLevel do
       begin
-        if gRescued > CurrentLevel.Records.LemmingsRescued then
-          CurrentLevel.Records.LemmingsRescued := gRescued;
-
         if gSuccess then
-        begin
-          Status := lst_Completed;
-          if (CurrentLevel.Records.TimeTaken = 0) or (gLastRescueIteration < CurrentLevel.Records.TimeTaken) then
-            CurrentLevel.Records.TimeTaken := gLastRescueIteration;
-
-          TotalSkills := 0;
-          for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-          begin
-            if not (Skill in GameParams.Level.Info.Skillset) then Continue;
-
-            CurrentLevel.Records.SkillCount[Skill] := GetSkillRecordValue(GlobalGame.SkillsUsed[Skill], CurrentLevel.Records.SkillCount[Skill]);
-            TotalSkills := TotalSkills + GlobalGame.SkillsUsed[Skill];
-          end;
-
-          CurrentLevel.Records.TotalSkills := GetSkillRecordValue(TotalSkills, CurrentLevel.Records.TotalSkills);
-
-        end else if Status = lst_None then
+          Status := lst_Completed
+        else if Status = lst_None then
           Status := lst_Attempted;
       end;
 
