@@ -296,7 +296,7 @@ begin
   end;
 
   case CurGraphic of
-    pgSpearFlat: AtTop := true;
+    pgSpearFlat: AtTop := false; // Counterintuitively (due to small height of this one) it DOES put it at the top pixel
 
     pgSpearSlightTLBR,
     pgSpear45TLBR,
@@ -385,11 +385,15 @@ var
 
       if (fPhysicsMap.PixelS[fX, fY] and PM_SOLID) <> 0 then
         fHit := true;
+
+      if fIsSpear and ((fPhysicsMap.PixelS[fX, fY + 1] and PM_SOLID) <> 0) then
+        fHit := true;
     end;
   end;
 
 var
   i: Integer;
+  YChange: Integer;
 begin
   if fHit then
     raise Exception.Create('TProjectile.Update called for a projectile after it collides with terrain');
@@ -413,7 +417,12 @@ begin
 
       // AddPos does NOT handle trimming length of Result!
 
-      case Y_CHANGE_TO_NEXT_X[fOffsetX] of
+      YChange := Y_CHANGE_TO_NEXT_X[fOffsetX];
+
+      if (fOffsetX < Length(Y_CHANGE_TO_NEXT_X) - 1) then
+        Inc(fOffsetX);
+
+      case YChange of
         -1: begin
               AddPos( 1,  0);
               AddPos( 0, -1);
@@ -437,9 +446,6 @@ begin
               AddPos( 0,  1);
             end;
       end;
-
-      if (fOffsetX < Length(Y_CHANGE_TO_NEXT_X) - 1) then
-        Inc(fOffsetX);
 
       if fHit then
         Break;

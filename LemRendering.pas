@@ -72,6 +72,7 @@ type
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
     procedure AddStoner(X, Y: Integer);
+    procedure AddSpear(P: TProjectile);
     // Remove stuff
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
 
@@ -207,6 +208,7 @@ begin
   fRenderInterface := aInterface;
   fRenderInterface.SetDrawRoutineBrick(AddTerrainPixel);
   fRenderInterface.SetDrawRoutineStoner(AddStoner);
+  fRenderInterface.SetDrawRoutineSpear(AddSpear);
   fRenderInterface.SetRemoveRoutine(ApplyRemovedTerrain);
 end;
 
@@ -1306,6 +1308,33 @@ begin
     Apply(X, Y);
 end;
 
+procedure TRenderer.AddSpear(P: TProjectile);
+var
+  Graphic: TProjectileGraphic;
+  SrcRect: TRect;
+  Hotspot: TPoint;
+  Target: TPoint;
+begin
+  Graphic := P.Graphic;
+  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  Hotspot := P.Hotspot;
+  Target := Point(P.X, P.Y);
+
+  if GameParams.HighResolution then
+  begin
+    SrcRect.Left := SrcRect.Left * 2;
+    SrcRect.Top := SrcRect.Top * 2;
+    SrcRect.Right := SrcRect.Right * 2;
+    SrcRect.Bottom := SrcRect.Bottom * 2;
+    Hotspot.X := Hotspot.X * 2;
+    Hotspot.Y := Hotspot.Y * 2;
+    Target.X := Target.X * 2;
+    Target.Y := Target.Y * 2;
+  end;
+
+  fProjectileImage.DrawTo(fLayers[rlTerrain], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
+end;
+
 procedure TRenderer.AddStoner(X, Y: Integer);
 begin
   fAni.LemmingAnimations[STONED].DrawMode := dmCustom;
@@ -2253,6 +2282,9 @@ begin
 
   if fTheme <> nil then
     DoProjectileRecolor(fProjectileImage, fTheme.Colors['MASK']);
+
+  fProjectileImage.DrawMode := dmCustom;
+  fProjectileImage.OnPixelCombine := CombineTerrainNoOverwrite;
 end;
 
 procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);

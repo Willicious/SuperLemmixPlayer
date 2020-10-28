@@ -140,6 +140,7 @@ type
   { masks }
     BomberMask                 : TBitmap32;
     StonerMask                 : TBitmap32;
+    ProjectileMasks            : TBitmap32;
     GrenadeMask                : TBitmap32;
     BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
@@ -213,7 +214,7 @@ type
     procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);   //left-facing miner
     procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);  //right-facing miner
     procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber
-    procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: TColor32);
 
   { internal methods }
     procedure DoTalismanCheck;
@@ -223,6 +224,7 @@ type
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
     procedure ApplyStoneLemming(L: TLemming);
+    procedure ApplySpear(P: TProjectile);
     procedure ApplyGrenadeMask(P: TProjectile);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
@@ -872,6 +874,7 @@ begin
   BomberMask     := TBitmap32.Create;
   StonerMask     := TBitmap32.Create;
   GrenadeMask    := TBitmap32.Create;
+  ProjectileMasks := TBitmap32.Create;
   BasherMasks    := TBitmap32.Create;
   FencerMasks    := TBitmap32.Create;
   MinerMasks     := TBitmap32.Create;
@@ -972,6 +975,7 @@ begin
   BomberMask.Free;
   StonerMask.Free;
   GrenadeMask.Free;
+  ProjectileMasks.Free;
   BasherMasks.Free;
   FencerMasks.Free;
   MinerMasks.Free;
@@ -1010,7 +1014,8 @@ begin
   if not fMasksLoaded then
   begin
     LoadMask(BomberMask, 'bomber.png', CombineMaskPixelsNeutral);
-    LoadMask(StonerMask, 'stoner.png', CombineNoOverwriteStoner);
+    LoadMask(StonerMask, 'stoner.png', CombineNoOverwriteMask);
+    LoadMask(ProjectileMasks, 'projectiles.png', CombineNoOverwriteMask);
     LoadMask(GrenadeMask, 'grenader.png', CombineMaskPixelsNeutral);
     LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Basher, Fencer and Miner are set when used
     LoadMask(FencerMasks, 'fencer.png', CombineMaskPixelsNeutral);
@@ -1265,8 +1270,7 @@ end;
 
 
 
-procedure TLemmingGame.CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
-// copy Stoner to world
+procedure TLemmingGame.CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (B and PM_SOLID = 0) and (AlphaComponent(F) <> 0) then B := (B or PM_SOLID);
 end;
@@ -2782,8 +2786,6 @@ begin
   end;
 end;
 
-
-
 procedure TLemmingGame.ApplyStoneLemming(L: TLemming);
 var
   X: Integer;
@@ -2797,7 +2799,6 @@ begin
     fRenderInterface.AddTerrainStoner(X - 8, L.LemY -10);
 end;
 
-
 procedure TLemmingGame.ApplyExplosionMask(L: TLemming);
 var
   PosX, PosY: Integer;
@@ -2810,6 +2811,24 @@ begin
 
   if not IsSimulating then // could happen as a result of nuking
     fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, BomberMask.Width, BomberMask.Height);
+end;
+
+procedure TLemmingGame.ApplySpear(P: TProjectile);
+var
+  Graphic: TProjectileGraphic;
+  SrcRect: TRect;
+  Hotspot: TPoint;
+  Target: TPoint;
+begin
+  Graphic := P.Graphic;
+  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  Hotspot := P.Hotspot;
+  Target := Point(P.X, P.Y);
+
+  ProjectileMasks.DrawTo(PhysicsMap, Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
+
+  if not IsSimulating then
+    fRenderInterface.AddTerrainSpear(P);
 end;
 
 procedure TLemmingGame.ApplyGrenadeMask(P: TProjectile);
@@ -4910,7 +4929,7 @@ begin
     begin
       if P.IsSpear then
       begin
-        // Implement spear write
+        ApplySpear(P);
         ProjectileList.Delete(i);
       end else begin
         ApplyGrenadeMask(P);
