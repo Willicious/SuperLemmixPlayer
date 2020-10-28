@@ -2247,6 +2247,9 @@ begin
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', fProjectileImage)
   else
     TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', fProjectileImage);
+
+  if fTheme <> nil then
+    DoProjectileRecolor(fProjectileImage, fTheme.Colors['MASK']);
 end;
 
 procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);
@@ -2528,7 +2531,6 @@ begin
   fTempLemmingList := TLemmingList.Create(false);
 
   LoadHelperImages;
-  LoadProjectileImages;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
   S := TResourceStream.Create(HInstance, 'particles', 'lemdata');
@@ -2931,15 +2933,14 @@ var
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
   if GameParams.HighResolution <> fGraphicsAreHighRes then
-  begin
     LoadHelperImages;
-    LoadProjectileImages;
-  end;
 
   RenderInfoRec.Level := aLevel;
 
   fTheme.Load(aLevel.Info.GraphicSetName);
   PieceManager.SetTheme(fTheme);
+
+  LoadProjectileImages;
 
   fAni.ClearData;
   fAni.Theme := fTheme;

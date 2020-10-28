@@ -1857,10 +1857,6 @@ end;
 procedure TLemmingGame.GenerateClonedLem(L: TLemming);
 var
   NewL: TLemming;
-  NewP: TProjectile;
-
-  MatchProjectile: TProjectile;
-  i: Integer;
 begin
   Assert(not L.LemIsZombie, 'cloner assigned to zombie');
 

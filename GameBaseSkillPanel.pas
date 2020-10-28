@@ -724,8 +724,9 @@ begin
     else
       TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', TempBMP);
 
-    DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], -1, 11, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+    DoProjectileRecolor(TempBMP, BrickColor);
 
+    DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], -1, 11, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
     DrawMiscBmp(TempBMP, fSkillIcons[spbGrenader], 2, 11, PROJECTILE_GRAPHIC_RECTS[pgGrenade]);
 
     DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 1, 9, 21);
