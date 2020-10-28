@@ -335,7 +335,7 @@ begin
 
   if not MadeSkillRestrictionText then
   begin
-    if aTalisman.TotalSkillLimit = 0 then
+    if (aTalisman.TotalSkillLimit = 0) and (SkillTypeCount > 0) then
     begin
       ReqText := ReqText + ' without any skills';
       MadeSkillRestrictionText := true;
