@@ -140,6 +140,7 @@ type
   { masks }
     BomberMask                 : TBitmap32;
     StonerMask                 : TBitmap32;
+    GrenadeMask                : TBitmap32;
     BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
     MinerMasks                 : TBitmap32;
@@ -222,6 +223,7 @@ type
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
     procedure ApplyStoneLemming(L: TLemming);
+    procedure ApplyGrenadeMask(P: TProjectile);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
@@ -869,6 +871,7 @@ begin
 
   BomberMask     := TBitmap32.Create;
   StonerMask     := TBitmap32.Create;
+  GrenadeMask    := TBitmap32.Create;
   BasherMasks    := TBitmap32.Create;
   FencerMasks    := TBitmap32.Create;
   MinerMasks     := TBitmap32.Create;
@@ -968,6 +971,7 @@ destructor TLemmingGame.Destroy;
 begin
   BomberMask.Free;
   StonerMask.Free;
+  GrenadeMask.Free;
   BasherMasks.Free;
   FencerMasks.Free;
   MinerMasks.Free;
@@ -1007,6 +1011,7 @@ begin
   begin
     LoadMask(BomberMask, 'bomber.png', CombineMaskPixelsNeutral);
     LoadMask(StonerMask, 'stoner.png', CombineNoOverwriteStoner);
+    LoadMask(GrenadeMask, 'grenader.png', CombineMaskPixelsNeutral);
     LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Basher, Fencer and Miner are set when used
     LoadMask(FencerMasks, 'fencer.png', CombineMaskPixelsNeutral);
     LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
@@ -2805,6 +2810,14 @@ begin
 
   if not IsSimulating then // could happen as a result of nuking
     fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, BomberMask.Width, BomberMask.Height);
+end;
+
+procedure TLemmingGame.ApplyGrenadeMask(P: TProjectile);
+begin
+  GrenadeMask.DrawTo(PhysicsMap, P.X - 12, P.Y - 21);
+
+  if not IsSimulating then
+    fRenderInterface.RemoveTerrain(P.X - 12, P.Y - 21, GrenadeMask.Width, GrenadeMask.Height);
 end;
 
 procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);
@@ -4875,6 +4888,13 @@ var
   i: Integer;
   P: TProjectile;
 begin
+  for i := ProjectileList.Count-1 downto 0 do
+  begin
+    P := ProjectileList[i];
+    if P.Hit and P.IsGrenade then
+      ProjectileList.Delete(i);
+  end;
+
   for i := 0 to ProjectileList.Count-1 do
   begin
     P := ProjectileList[i];
@@ -4884,8 +4904,19 @@ begin
   for i := ProjectileList.Count-1 downto 0 do
   begin
     P := ProjectileList[i];
-    if P.SilentRemove or P.Hit then
-      ProjectileList.Delete(i);
+    if P.SilentRemove then
+      ProjectileList.Delete(i)
+    else if P.Hit then
+    begin
+      if P.IsSpear then
+      begin
+        // Implement spear write
+        ProjectileList.Delete(i);
+      end else begin
+        ApplyGrenadeMask(P);
+        CueSoundEffect(SFX_EXPLOSION, Point(P.X, P.Y));
+      end;
+    end;
   end;
 end;
 

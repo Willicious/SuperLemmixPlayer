@@ -904,8 +904,8 @@ begin
       fRenderInterface.ScreenPos := Point(Trunc(Img.OffsetHorz / fInternalZoom) * -1, Trunc(Img.OffsetVert / fInternalZoom) * -1);
       fRenderInterface.MousePos := Game.CursorPoint;
       fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
-      fRenderer.DrawProjectiles;
       fRenderer.DrawLemmings(fClearPhysics);
+      fRenderer.DrawProjectiles;
 
       if GameParams.MinimapHighQuality or (GameSpeed = gspPause) then
         DrawRect := Img.Bitmap.BoundsRect
@@ -2012,8 +2012,8 @@ begin
       BMP.SetSize(GameParams.Level.Info.Width * ResMod, GameParams.Level.Info.Height * ResMod);
 
       fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
-      fRenderer.DrawProjectiles;
       fRenderer.DrawLemmings(fClearPhysics);
+      fRenderer.DrawProjectiles;
       fRenderer.DrawLevel(BMP, fClearPhysics);
 
       TPngInterface.SavePngFile(SaveName, BMP, true);

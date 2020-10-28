@@ -16,7 +16,7 @@ type
      pgSpearSlightTLBR, pgSpearSlightBLTR,
      pgSpear45TLBR, pgSpear45BLTR,
      pgSpearSteepTLBR, pgSpearSteepBLTR,
-     pgGrenade
+     pgGrenade, pgGrenadeExplode
    );
 
 const
@@ -26,19 +26,20 @@ const
     pgSpearSlightBLTR, pgSpearSlightTLBR,
     pgSpear45BLTR, pgSpear45TLBR,
     pgSpearSteepBLTR, pgSpearSteepTLBR,
-    pgGrenade
+    pgGrenade, pgGrenadeExplode
   );
 
   PROJECTILE_GRAPHIC_RECTS: array[TProjectileGraphic] of TRect =
   (
-    (Left: 0; Top: 0; Right: 14; Bottom: 2),
-    (Left: 0; Top: 3; Right: 12; Bottom: 9),
-    (Left: 0; Top: 45; Right: 12; Bottom: 51),
-    (Left: 0; Top: 10; Right: 10; Bottom: 20),
-    (Left: 0; Top: 34; Right: 10; Bottom: 44),
-    (Left: 0; Top: 21; Right: 6; Bottom: 33),
-    (Left: 7; Top: 21; Right: 13; Bottom: 33),
-    (Left: 0; Top: 52; Right: 4; Bottom: 57)
+    (Left: 11; Top: 20; Right: 25; Bottom: 22),
+    (Left: 0; Top: 0; Right: 12; Bottom: 6),
+    (Left: 13; Top: 0; Right: 25; Bottom: 6),
+    (Left: 0; Top: 7; Right: 10; Bottom: 17),
+    (Left: 0; Top: 18; Right: 10; Bottom: 28),
+    (Left: 11; Top: 7; Right: 17; Bottom: 19),
+    (Left: 18; Top: 7; Right: 24; Bottom: 19),
+    (Left: 11; Top: 23; Right: 15; Bottom: 28),
+    (Left: 0; Top: 29; Right: 32; Bottom: 61)
   );
 
 type
@@ -91,6 +92,9 @@ type
 
       property Hotspot: TPoint read GetGraphicHotspot;
       property Graphic: TProjectileGraphic read GetGraphic;
+
+      property IsSpear: Boolean read fIsSpear;
+      property IsGrenade: Boolean read fIsGrenade;
 
       property SilentRemove: Boolean read fSilentRemove;
   end;
@@ -248,8 +252,12 @@ end;
 function TProjectile.GetGraphic: TProjectileGraphic;
 begin
   if fIsGrenade then
-    Result := pgGrenade
-  else begin
+  begin
+    if fHit then
+      Result := pgGrenadeExplode
+    else
+      Result := pgGrenade;
+  end else begin
     if not fFired then
       case fLemming.LemPhysicsFrame of
         0..3: Result := pgSpearSteepBLTR;
@@ -281,7 +289,7 @@ begin
   CurGraphic := Graphic;
   ImgRect := PROJECTILE_GRAPHIC_RECTS[CurGraphic];
 
-  if CurGraphic = pgGrenade then
+  if CurGraphic in [pgGrenade, pgGrenadeExplode] then
   begin
     Result := Point(ImgRect.Width div 2, ImgRect.Height div 2);
     Exit;

@@ -774,7 +774,10 @@ begin
     Target.Y := Target.Y * 2;
   end;
 
-  fProjectileImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
+  if Graphic = pgGrenadeExplode then
+    fProjectileImage.DrawTo(fLayers[rlLemmings], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect)
+  else
+    fProjectileImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
