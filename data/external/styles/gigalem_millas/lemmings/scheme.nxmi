@@ -64,7 +64,7 @@ $ANIMATIONS
     FRAMES 16
 
     $RIGHT
-      FOOT_X 8
+      FOOT_X 7
       FOOT_Y 12
     $END
 
