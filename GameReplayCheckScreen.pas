@@ -365,6 +365,8 @@ begin
       fReplays.SaveToFile(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
       fScreenText.Add('Results saved to');
       fScreenText.Add(MakeSafeForFilename(GetPackName, false) + ' Replay Results.txt');
+      fScreenText.Add('');
+      fScreenText.Add(''); // Padding for clickable text.
     end;
 
     if (ScreenImg.Bitmap.Resampler is TNearestResampler) and (GameParams.LinearResampleMenu) then
