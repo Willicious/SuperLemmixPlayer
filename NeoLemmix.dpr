@@ -71,7 +71,8 @@ uses
   LemMenuFont in 'LemMenuFont.pas',
   GameBaseMenuScreen in 'GameBaseMenuScreen.pas',
   GameMenuScreen in 'GameMenuScreen.pas',
-  FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel};
+  FLevelInfo in 'FLevelInfo.pas' {LevelInfoPanel},
+  LemProjectile in 'LemProjectile.pas';
 
 {$R *.res}
 

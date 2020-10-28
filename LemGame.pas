@@ -537,11 +537,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..18] of TBasicLemmingAction =
+  ActionListArray: array[0..20] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping);
+             baJumping, baSpearing, baGrenading);
 
 
 
@@ -1354,8 +1354,8 @@ const
      8, //baReaching,
     20, //baShimmying
     13, //baJumping
-     9, //baSpearing
-     9  //baGrenading
+    10, //baSpearing
+    10  //baGrenading
     );
 begin
   if DoTurn then TurnAround(L);
@@ -4654,11 +4654,23 @@ end;
 
 function TLemmingGame.HandleGrenading(L: TLemming): Boolean;
 begin
+  if L.LemPhysicsFrame < 4 then
+    L.LemFrame := 0;
+
+  if L.LemPhysicsFrame = 9 then
+    Transition(L, baShrugging);
+
   Result := true;
 end;
 
 function TLemmingGame.HandleSpearing(L: TLemming): Boolean;
 begin
+  if L.LemPhysicsFrame < 4 then
+    L.LemFrame := 0;
+
+  if L.LemPhysicsFrame = 9 then
+    Transition(L, baShrugging);
+
   Result := true;
 end;
 
