@@ -591,7 +591,7 @@ const
   PROJECTION_STATES = [baWalking, baAscending, baDigging, baClimbing, baHoisting,
                        baBuilding, baBashing, baMining, baFalling, baFloating,
                        baShrugging, baPlatforming, baStacking, baSwimming, baGliding,
-                       baFixing, baFencing, baReaching, baShimmying];
+                       baFixing, baFencing, baReaching, baShimmying, baJumping];
 begin
   // Copy L to simulate the path
   CopyL := TLemming.Create;
