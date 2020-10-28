@@ -91,6 +91,8 @@ type
       constructor Create(aGroup: TNeoLevelGroup);
       destructor Destroy; override;
 
+      procedure WriteNewRecords(aRecords: TLevelRecords);
+
       property Group: TNeoLevelGroup read fGroup;
       property Title: String read GetTitle;
       property Author: String read GetAuthor;
@@ -359,17 +361,13 @@ end;
 { TNeoLevelEntry }
 
 constructor TNeoLevelEntry.Create(aGroup: TNeoLevelGroup);
-var
-  Skill: TSkillPanelButton;
 begin
   inherited Create;
   fGroup := aGroup;
   fTalismans := TObjectList<TTalisman>.Create(true);
   fUnlockedTalismanList := TList<LongWord>.Create;
 
-  Records.TotalSkills := -1;
-  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
-    Records.SkillCount[Skill] := -1;
+  FillChar(Records, SizeOf(TLevelRecords), $FF);
 end;
 
 destructor TNeoLevelEntry.Destroy;
@@ -559,6 +557,33 @@ begin
         fUnlockedTalismanList.Delete(i)
       else if fTalismans[i2].ID = fUnlockedTalismanList[i] then
         Break;
+end;
+
+procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords);
+  procedure Apply(var Existing: Integer; New: Integer; aHigherIsBetter: Boolean);
+  begin
+    if New >= 0 then
+    begin
+      if Existing < 0 then
+        Existing := New
+      else if aHigherIsBetter xor (New < Existing) then // see note below
+        Existing := New;
+    end;
+
+    // The check noted above returns "false" if New = Existing when lower is better,
+    // but "true" if New = Existing when higher is better. In the context of this
+    // procedure, this inconsistency is harmless, but be aware if copying the code
+    // or turning this into a "detect for the sake of displaying a message" function.
+  end;
+var
+  Skill: TSkillPanelButton;
+begin
+  Apply(Records.LemmingsRescued, aRecords.LemmingsRescued, true);
+  Apply(Records.TimeTaken, aRecords.TimeTaken, false);
+  Apply(Records.TotalSkills, aRecords.TotalSkills, false);
+
+  for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
+    Apply(Records.SkillCount[Skill], aRecords.SkillCount[Skill], false);
 end;
 
 { TNeoLevelGroup }
@@ -1081,8 +1106,8 @@ var
       if (GetFileAge(aLevel.Path) > Sec.LineNumeric['modified_date']) and (aLevel.Status = lst_Completed) then
         aLevel.Status := lst_Completed_Outdated;
 
-      aLevel.Records.LemmingsRescued := Sec.LineNumeric['lemming_record'];
-      aLevel.Records.TimeTaken := Sec.LineNumeric['time_record'];
+      aLevel.Records.LemmingsRescued := Sec.LineNumericDefault['lemming_record', -1];
+      aLevel.Records.TimeTaken := Sec.LineNumericDefault['time_record', -1];
       aLevel.Records.TotalSkills := Sec.LineNumericDefault['fewest_skills', -1];
 
       for Skill := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
@@ -1541,6 +1566,22 @@ var
     for i := 0 to aList.Count-1 do
       fTalismans.Add(aList[i]);
   end;
+
+  procedure SortTalismans;
+  var
+    i, n: Integer;
+    Color: TTalismanColor;
+  begin
+    for Color := Low(TTalismanColor) to High(TTalismanColor) do
+    begin
+      n := 0;
+      for i := 0 to fTalismans.Count-1 do
+        if fTalismans[n].Color = Color then
+          fTalismans.Move(n, fTalismans.Count-1)
+        else
+          Inc(n);
+    end;
+  end;
 begin
   if fTalismans = nil then
   begin
@@ -1553,17 +1594,7 @@ begin
     for i := 0 to Levels.Count-1 do
       AddList(Levels[i].Talismans);
 
-    fTalismans.Sort(TComparer<TTalisman>.Construct(
-     function(const L, R: TTalisman): Integer
-     begin
-       if L.Color < R.Color then
-         Result := -1
-       else if L.Color > R.Color then
-         Result := 1
-       else
-         Result := CompareValue(L.ID, R.ID);
-     end
-    ));
+    SortTalismans;
   end;
   Result := fTalismans;
 end;

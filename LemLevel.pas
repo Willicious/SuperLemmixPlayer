@@ -335,7 +335,7 @@ begin
 
   if not MadeSkillRestrictionText then
   begin
-    if aTalisman.TotalSkillLimit = 0 then
+    if (aTalisman.TotalSkillLimit = 0) and (SkillTypeCount > 0) then
     begin
       ReqText := ReqText + ' without any skills';
       MadeSkillRestrictionText := true;
@@ -1172,8 +1172,10 @@ begin
          Result := -1
        else if L.Color > R.Color then
          Result := 1
+       else if L.Title <> R.Title then
+         Result := CompareStr(L.Title, R.Title)
        else
-         Result := CompareStr(L.Title, R.Title);
+         Result := CompareStr(L.RequirementText, R.RequirementText);
      end
     ));
 end;
