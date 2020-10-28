@@ -149,11 +149,11 @@ const
         2,  1,  1,  1,  1,  2,  1,
         1,  1,  2,  1,  1,  1,  2,
         1,  1,  2,  1,  1,  2,  1,
-        1,  2,  1,  2,  1,  1,  2,
+        1,  2,  1,  2,  1,  1,  2, // 206 - set to strong down angle
         1,  2,  1,  2,  1,  2,  1,
         2,  1,  2,  1,  2,  1,  2,
         2,  1,  2,  1,  2,  2,  1,
-        2,  2,  1,  2,  2,  1,  2, // 231 - set to strong down angle
+        2,  2,  1,  2,  2,  1,  2,
         2,  2,  1,  2,  2,  2,  1,
         2,  2,  2,  2,  1,  2,  2,
         2,  2,  2,  2,  1,  2,  2,
@@ -270,7 +270,7 @@ begin
       case fOffsetX of
         35..104:  Result := pgSpearFlat;
         105..147: Result := pgSpearSlightTLBR;
-        148..230: Result := pgSpear45TLBR;
+        148..205: Result := pgSpear45TLBR;
         else if fOffsetX < 35 then Result := pgSpearSlightBLTR
         else Result := pgSpearSteepTLBR;
       end;

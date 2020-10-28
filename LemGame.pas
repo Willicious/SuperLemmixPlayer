@@ -4906,6 +4906,12 @@ procedure TLemmingGame.UpdateProjectiles;
 var
   i: Integer;
   P: TProjectile;
+
+  function IsOutOfBounds(P: TProjectile): Boolean;
+  begin
+    Result := (P.X < -8) or (P.X >= Level.Info.Width + 8) or
+              (P.Y < -8) or (P.Y >= Level.Info.Height + 8);
+  end;
 begin
   for i := ProjectileList.Count-1 downto 0 do
   begin
@@ -4923,7 +4929,7 @@ begin
   for i := ProjectileList.Count-1 downto 0 do
   begin
     P := ProjectileList[i];
-    if P.SilentRemove then
+    if P.SilentRemove or IsOutOfBounds(P) then
       ProjectileList.Delete(i)
     else if P.Hit then
     begin
