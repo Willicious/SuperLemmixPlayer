@@ -97,6 +97,24 @@
    FLIP_VERTICAL
  $END
  
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 429
+   Y 105
+   NO_OVERWRITE
+   SKILL SPEARER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 443
+   Y 105
+   NO_OVERWRITE
+   SKILL GRENADER
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
@@ -224,7 +242,6 @@
    PIECE steel_01
    X 487
    Y 47
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -232,7 +249,6 @@
    PIECE steel_01
    X 463
    Y 47
-   ONE_WAY
  $END
  
  $TERRAIN

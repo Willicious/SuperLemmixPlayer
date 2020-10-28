@@ -6,7 +6,7 @@ uses
   System.Types,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
-  LemAnimationSet, LemMetaAnimation, LemNeoLevelPack,
+  LemAnimationSet, LemMetaAnimation, LemNeoLevelPack, LemProjectile,
   LemCore, LemLemming, LemGame, LemLevel;
 
 type
@@ -624,6 +624,21 @@ var
     if GameParams.HighResolution and not isRecursive then
       Outline(dst, true);
   end;
+
+  procedure DrawMiscBmp(Src, Dst: TBitmap32; dstX, dstY: Integer; SrcRect: TRect);
+  begin
+    if GameParams.HighResolution then
+    begin
+      dstX := dstX * 2;
+      dstY := dstY * 2;
+      SrcRect.Left := SrcRect.Left * 2;
+      SrcRect.Top := SrcRect.Top * 2;
+      SrcRect.Right := SrcRect.Right * 2;
+      SrcRect.Bottom := SrcRect.Bottom * 2;
+    end;
+
+    Src.DrawTo(Dst, dstX, dstY, SrcRect);
+  end;
 begin
   // Load the erasing icon first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
@@ -704,7 +719,16 @@ begin
     DrawBrick(fSkillIcons[spbStacker], 10, 17);
 
     // Projectiles are messy.
-    DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 1, 7, 21);
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', TempBMP)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', TempBMP);
+
+    DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], -1, 11, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+
+    DrawMiscBmp(TempBMP, fSkillIcons[spbGrenader], 2, 11, PROJECTILE_GRAPHIC_RECTS[pgGrenade]);
+
+    DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 1, 9, 21);
     DrawAnimationFrame(fSkillIcons[spbGrenader], THROWING, 1, 7, 21);
 
     // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
