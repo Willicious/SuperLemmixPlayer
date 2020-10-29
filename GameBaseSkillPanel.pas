@@ -1245,6 +1245,7 @@ var
       2: Result := SAthlete;
       3: Result := STriathlete;
       4: Result := SQuadathlete;
+      5: Result := SQuintathlete
     end;
   end;
 begin

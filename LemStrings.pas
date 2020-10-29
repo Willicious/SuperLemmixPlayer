@@ -86,6 +86,7 @@ resourcestring
   SAthlete = 'Athlete';
   STriathlete = 'Triathlete';
   SQuadathlete = 'X-Athlete';
+  SQuintathlete = 'Jock';
 
   SWalker = 'Walker';
   SAscender = 'Ascender';
