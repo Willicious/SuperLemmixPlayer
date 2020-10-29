@@ -331,6 +331,8 @@ type
     function HandleReaching(L: TLemming) : Boolean;
     function HandleShimmying(L: TLemming) : Boolean;
     function HandleJumping(L: TLemming) : Boolean;
+    function HandleDehoisting(L: TLemming) : Boolean;
+    function HandleSliding(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -359,6 +361,7 @@ type
     function MayAssignCloner(L: TLemming): Boolean;
     function MayAssignShimmier(L: TLemming) : Boolean;
     function MayAssignJumper(L: TLemming) : Boolean;
+    function MayAssignSlider(L: TLemming) : Boolean;
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -538,11 +541,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..18] of TBasicLemmingAction =
+  ActionListArray: array[0..19] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping);
+             baJumping, baSliding);
 
 
 
@@ -900,6 +903,8 @@ begin
   LemmingMethods[baReaching]   := HandleReaching;
   LemmingMethods[baShimmying]  := HandleShimmying;
   LemmingMethods[baJumping]    := HandleJumping;
+  LemmingMethods[baDehoisting] := HandleDehoisting;
+  LemmingMethods[baSliding] := HandleSliding;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -931,6 +936,8 @@ begin
   NewSkillMethods[baFencing]      := MayAssignFencer;
   NewSkillMethods[baShimmying]    := MayAssignShimmier;
   NewSkillMethods[baJumping]      := MayAssignJumper;
+  NewSkillMethods[baDehoisting]   := nil;
+  NewSkillMethods[baSliding]      := MayAssignSlider;
 
   P := AppPath;
 
@@ -1350,7 +1357,9 @@ const
     16, //baFencing,
      8, //baReaching,
     20, //baShimmying
-    13  //baJumping
+    13, //baJumping
+     8, //baDehoisting
+     1  //baSliding
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1437,6 +1446,7 @@ begin
     baStacking   : L.LemNumberOfBricksLeft := 8;
     baOhnoing    : begin
                      CueSoundEffect(SFX_OHNO, L.Position);
+                     L.LemIsSlider := false;
                      L.LemIsClimber := false;
                      L.LemIsSwimmer := false;
                      L.LemIsFloater := false;
@@ -1697,7 +1707,7 @@ end;
 
 function TLemmingGame.AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
 const
-  PermSkillSet = [baClimbing, baFloating, baGliding, baFixing, baSwimming];
+  PermSkillSet = [baSliding, baClimbing, baFloating, baGliding, baFixing, baSwimming];
 var
   L, LQueue: TLemming;
   OldHTAF: Boolean;
@@ -1786,7 +1796,8 @@ begin
   end;
 
   // Special behavior of permament skills.
-  if (NewSkill = baClimbing) then L.LemIsClimber := True
+  if (NewSkill = baSliding) then L.LemIsSlider := True
+  else if (NewSkill = baClimbing) then L.LemIsClimber := True
   else if (NewSkill = baFloating) then L.LemIsFloater := True
   else if (NewSkill = baGliding) then L.LemIsGlider := True
   else if (NewSkill = baFixing) then L.LemIsDisarmer := True
@@ -1901,8 +1912,7 @@ var
   begin
     Result := True;
     case PriorityBox of
-      Perm    : Result :=     (L.LemIsClimber or L.LemIsSwimmer or L.LemIsFloater
-                                    or L.LemIsGlider or L.LemIsDisarmer);
+      Perm    : Result :=     L.HasPermanentSkills;
       NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
                                                baPlatforming, baStacking, baBlocking, baShrugging,
                                                baReaching, baShimmying]);
@@ -2021,6 +2031,14 @@ const
                baReaching, baShimmying];
 begin
   Result := (L.LemAction in ActionSet);
+end;
+
+function TLemmingGame.MayAssignSlider(L: TLemming): Boolean;
+const
+  ActionSet = [baOhnoing, baStoning, baExploding, baStoneFinish, baDrowning,
+               baVaporizing, baSplatting, baExiting];
+begin
+  Result := (not (L.LemAction in ActionSet)) and not L.LemIsSlider;
 end;
 
 function TLemmingGame.MayAssignClimber(L: TLemming): Boolean;
@@ -2155,18 +2173,20 @@ const
 var
   CopyL: TLemming;
   i: Integer;
+  OldAction: TBasicLemmingAction;
 begin
   Result := (L.LemAction in ActionSet);
-  if L.LemAction = baClimbing then
+  if L.LemAction in [baClimbing, baSliding] then
   begin
     // Check whether the lemming would fall down the next frame
     CopyL := TLemming.Create;
     CopyL.Assign(L);
     CopyL.LemIsPhysicsSimulation := true;
+    OldAction := CopyL.LemAction;
 
     SimulateLem(CopyL, False);
 
-    if CopyL.LemAction <> baClimbing then
+    if CopyL.LemAction <> OldAction then
       Result := True;
 
     CopyL.Free;
@@ -2486,7 +2506,7 @@ begin
   Gadget := Gadgets[GadgetID];
 
   if     L.LemIsDisarmer and HasPixelAt(PosX, PosY) // (PosX, PosY) is the correct current lemming position, due to intermediate checks!
-     and not (L.LemAction in [baClimbing, baHoisting, baSwimming, baOhNoing, baJumping]) then
+     and not (L.LemAction in [baDehoisting, baSliding, baClimbing, baHoisting, baSwimming, baOhNoing, baJumping]) then
   begin
     // Set action after fixing, if we are moving upwards and haven't reached the top yet
     if (L.LemYOld > L.LemY) and HasPixelAt(PosX, PosY + 1) then L.LemActionNew := baAscending
@@ -2662,7 +2682,7 @@ begin
     // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
     else if (L.LemAction in [baBuilding, baPlatforming]) and (L.LemPhysicsFrame >= 9) then
       LayBrick(L)
-    else if L.LemAction = baClimbing then
+    else if L.LemAction in [baClimbing, baSliding] then
     begin
       Inc(L.LemX, L.LemDx); // Move out of the wall
       if not L.LemIsStartingAction then Inc(L.LemY); // Don't move below original position
@@ -3290,6 +3310,17 @@ begin
     else if not ContinueWork then
       Transition(L, baFalling);
   end;
+end;
+
+
+function TLemmingGame.HandleDehoisting(L: TLemming): Boolean;
+begin
+  Result := true;
+end;
+
+function TLemmingGame.HandleSliding(L: TLemming): Boolean;
+begin
+  Result := true;
 end;
 
 
@@ -5092,6 +5123,7 @@ begin
           LemDX := 1;
           if Gadgets[ix].IsFlipPhysics then TurnAround(NewLemming);
 
+          LemIsSlider := Gadgets[ix].IsPreassignedSlider;
           LemIsClimber := Gadgets[ix].IsPreassignedClimber;
           LemIsSwimmer := Gadgets[ix].IsPreassignedSwimmer;
           LemIsDisarmer := Gadgets[ix].IsPreassignedDisarmer;
