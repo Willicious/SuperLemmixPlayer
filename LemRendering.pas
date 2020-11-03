@@ -167,6 +167,7 @@ type
     procedure DrawMinerShadow(L: TLemming);
     procedure DrawDiggerShadow(L: TLemming);
     procedure DrawExploderShadow(L: TLemming);
+    procedure DrawProjectileShadow(L: TLemming);
     procedure DrawProjectionShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
@@ -685,6 +686,18 @@ begin
       begin
         fRenderInterface.SimulateTransitionLem(CopyL, baStacking);
         DrawStackerShadow(CopyL);
+      end;
+
+    spbSpearer:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baSpearing);
+        DrawProjectileShadow(CopyL);
+      end;
+
+    spbGrenader:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baGrenading);
+        DrawProjectileShadow(CopyL);
       end;
 
     spbDigger:
@@ -1250,6 +1263,51 @@ begin
     SetHighShadowPixel(PosX + BomberShadow[i, 0], L.LemY + BomberShadow[i, 1]);
     SetHighShadowPixel(PosX - BomberShadow[i, 0] - 1, L.LemY + BomberShadow[i, 1]);
   end;
+end;
+
+procedure TRenderer.DrawProjectileShadow(L: TLemming);
+const
+  ARR_BASE_LEN = 1024;
+var
+  Proj: TProjectile;
+  PosArray: TProjectilePointArray;
+  ActualPosCount: Integer;
+  i: Integer;
+
+  procedure AppendPositions(New: TProjectilePointArray);
+  var
+    i: Integer;
+  begin
+    if ActualPosCount + Length(New) > Length(PosArray) then
+      SetLength(PosArray, Length(PosArray) + ARR_BASE_LEN);
+
+    for i := 0 to Length(New)-1 do
+    begin
+      PosArray[ActualPosCount] := New[i];
+      Inc(ActualPosCount);
+    end;
+  end;
+begin
+  fLayers.fIsEmpty[rlLowShadows] := False;
+
+  case L.LemAction of
+    baSpearing: Proj := TProjectile.CreateSpear(fRenderInterface.PhysicsMap, L);
+    baGrenading: Proj := TProjectile.CreateGrenade(fRenderInterface.PhysicsMap, L);
+    else raise Exception.Create('TRenderer.DrawProjectileShadow passed an invalid lemming');
+  end;
+
+  SetLength(PosArray, ARR_BASE_LEN);
+  ActualPosCount := 0;
+
+  while not (Proj.SilentRemove or Proj.Hit) do
+  begin
+    if not Proj.Fired then // We don't need the lemming anymore once the projectile leaves its hand
+      fRenderInterface.SimulateLem(L);
+    AppendPositions(Proj.Update);
+  end;
+
+  for i := 0 to ActualPosCount-1 do
+    SetLowShadowPixel(PosArray[i].X, PosArray[i].Y);
 end;
 
 

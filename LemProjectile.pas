@@ -88,6 +88,7 @@ type
       property X: Integer read fX;
       property Y: Integer read fY;
 
+      property Fired: Boolean read fFired;
       property Hit: Boolean read fHit;
 
       property Hotspot: TPoint read GetGraphicHotspot;

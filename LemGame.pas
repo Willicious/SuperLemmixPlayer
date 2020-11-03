@@ -2980,7 +2980,8 @@ var
   ShadowLem: TLemming;
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
-                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
+                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner,
+                    spbSpearer, spbGrenader];
 begin
   if fHyperSpeed then Exit;
 
@@ -4726,13 +4727,17 @@ begin
     1: begin
          L.LemFrame := 0;
 
-         if L.LemAction = baGrenading then
-           NewProjectile := TProjectile.CreateGrenade(PhysicsMap, L)
-         else
-           NewProjectile := TProjectile.CreateSpear(PhysicsMap, L);
+         if not IsSimulating then
+         begin
+           if L.LemAction = baGrenading then
+             NewProjectile := TProjectile.CreateGrenade(PhysicsMap, L)
+           else
+             NewProjectile := TProjectile.CreateSpear(PhysicsMap, L);
 
-         ProjectileList.Add(NewProjectile);
-         L.LemHoldingProjectileIndex := ProjectileList.Count - 1;
+           ProjectileList.Add(NewProjectile);
+
+           L.LemHoldingProjectileIndex := ProjectileList.Count - 1;
+         end;
        end;
 
     0, 2, 3: L.LemFrame := 0;
