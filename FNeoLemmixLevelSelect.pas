@@ -66,7 +66,8 @@ type
 
     procedure DisplayPackTalismanInfo;
 
-    procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
+    procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aEraseColor: TColor);
+    procedure OverlayIcon(aIconIndex: Integer; aDst: TBitmap32);
 
     procedure SetAdvancedOptionsGroup;
     procedure SetAdvancedOptionsLevel;
@@ -625,9 +626,9 @@ begin
     NewImage.Height := 32;
 
     if Level.TalismanStatus[Tal.ID] then
-      DrawIcon(ICON_TALISMAN[Tal.Color], NewImage.Bitmap)
+      DrawIcon(ICON_TALISMAN[Tal.Color], NewImage.Bitmap, fPackTalBox.Color)
     else
-      DrawIcon(ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, NewImage.Bitmap);
+      DrawIcon(ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, NewImage.Bitmap, fPackTalBox.Color);
 
     if TitleLabel <> nil then
     begin
@@ -750,14 +751,24 @@ begin
   fTalismanButtons.Clear;
 end;
 
-procedure TFLevelSelect.DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
+procedure TFLevelSelect.DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aEraseColor: TColor);
+var
+  EraseColor32: TColor32;
 begin
-  if aErase then
-  begin
-    aDst.SetSize(32, 32);
-    aDst.Clear($FFF0F0F0);
-  end;
+  EraseColor32 := ColorToRGB(aEraseColor);
+  EraseColor32 := $FF000000 or
+                  ((EraseColor32 and $00FF0000) shr 16) or
+                  (EraseColor32 and $0000FF00) or
+                  ((EraseColor32 and $000000FF) shl 16);
 
+  aDst.SetSize(32, 32);
+  aDst.Clear(EraseColor32);
+
+  OverlayIcon(aIconIndex, aDst);
+end;
+
+procedure TFLevelSelect.OverlayIcon(aIconIndex: Integer; aDst: TBitmap32);
+begin
   fIconBMP.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * 32, (aIconIndex div 4) * 32, 32, 32));
 end;
 
@@ -771,10 +782,10 @@ begin
   begin
     if fTalismanButtons[i].Tag < 0 then
     begin
-      DrawIcon(ICON_RECORDS, fTalismanButtons[i].Bitmap);
+      DrawIcon(ICON_RECORDS, fTalismanButtons[i].Bitmap, self.Color);
 
       if fDisplayRecords then
-        DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
+        OverlayIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap);
     end else begin
       Tal := GameParams.Level.Talismans[fTalismanButtons[i].Tag];
 
@@ -782,10 +793,10 @@ begin
       if not GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
         TalIcon := TalIcon + ICON_TALISMAN_UNOBTAINED_OFFSET;
 
-      DrawIcon(TalIcon, fTalismanButtons[i].Bitmap);
+      DrawIcon(TalIcon, fTalismanButtons[i].Bitmap, self.Color);
 
       if Tal = fInfoForm.Talisman then
-        DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
+        OverlayIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap);
     end;
   end;
 end;

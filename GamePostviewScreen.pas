@@ -9,7 +9,7 @@ uses
   LemNeoLevelPack,
   LemmixHotkeys,
   Windows, Classes, SysUtils, StrUtils, Controls,
-  UMisc,
+  UMisc, Math,
   Gr32, Gr32_Image, Gr32_Layers, GR32_Resamplers,
   LemCore,
   LemTypes,
@@ -145,9 +145,12 @@ var
       Result := Result + S + #13;
     end;
 
-    procedure LF(aCount: Integer);
+    procedure LF(aCount: Double);
     begin
-      Result := Result + StringOfChar(#13, aCount);
+      if aCount >= 1 then
+        Result := Result + StringOfChar(#13, Floor(aCount));
+      if Floor(aCount) <> Ceil(aCount) then
+        Result := Result + #12;
     end;
 
     function GetResultIndex: Integer;
@@ -270,20 +273,16 @@ begin
     LF(2);
 
     Add(SYouRescued + SDone);
+    LF(0.5);
     Add(SYouNeeded + STarget);
+    LF(0.5);
 
     if GameParams.TestModeLevel <> nil then
       LF(1)
+    else if GameParams.CurrentLevel.Records.LemmingsRescued < 0 then
+      Add(SYourRecord + PadL('0', 4))
     else
       Add(SYourRecord + PadL(IntToStr(GameParams.CurrentLevel.Records.LemmingsRescued), 4));
-
-    LF(1);
-
-    Add(SYourTime + PadL(MakeTimeString(gLastRescueIteration), 8));
-    if (GameParams.TestModeLevel <> nil) or not gSuccess then
-      LF(1)
-    else
-      Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.Records.TimeTaken), 8));
 
     LF(2);
 
@@ -292,6 +291,18 @@ begin
     begin
       if i < WhichText.Text.Count then
         Add(WhichText.Text[i]);
+    end;
+
+    if gSuccess then
+    begin
+      LF(2);
+
+      Add(SYourTime + PadL(MakeTimeString(gLastRescueIteration), 8));
+      LF(0.5);
+      if (GameParams.TestModeLevel <> nil) then
+        LF(1)
+      else
+        Add(SYourTimeRecord + PadL(MakeTimeString(GameParams.CurrentLevel.Records.TimeTaken), 8));
     end;
   end;
 end;
