@@ -208,9 +208,13 @@ var
                                               '71', '76', '82', '88',
                                               '94');
     begin
-      Result := IntToStr(aFrames div (17 * 60));
-      Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
-      Result := Result + '.' + CENTISECONDS[aFrames mod 17];
+      if aFrames < 0 then
+        Result := '0:00.00'
+      else begin
+        Result := IntToStr(aFrames div (17 * 60));
+        Result := Result + ':' + LeadZeroStr((aFrames mod (17 * 60)) div 17, 2);
+        Result := Result + '.' + CENTISECONDS[aFrames mod 17];
+      end;
     end;
 
   function GetSkillRecordValue(aNewValue, aOldValue: Integer): Integer;
