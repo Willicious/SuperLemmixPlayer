@@ -63,6 +63,7 @@ type
     procedure DrawTalismanButtons;
     procedure ClearTalismanButtons;
     procedure TalButtonClick(Sender: TObject);
+    procedure PackListTalButtonClick(Sender: TObject);
 
     procedure DisplayPackTalismanInfo;
 
@@ -131,6 +132,9 @@ implementation
 
 uses
   LemLevel;
+
+const
+  SPEEDBUTTON_PADDING_SIZE = 3;
 
 {$R *.dfm}
 
@@ -582,7 +586,7 @@ var
   i: Integer;
   TotalHeight: Integer;
 
-  NewImage: TImage32;
+  NewButton: TSpeedButton;
   TitleLabel, LevLabel, ReqLabel: TLabel;
   Tal: TTalisman;
 
@@ -620,38 +624,47 @@ begin
     ReqLabel.Parent := fPackTalBox;
     ReqLabel.Caption := BreakString(Tal.RequirementText, ReqLabel, fPackTalBox.ClientWidth - 16 - 40);
 
-    NewImage := TImage32.Create(self);
-    NewImage.Parent := fPackTalBox;
-    NewImage.Width := 32;
-    NewImage.Height := 32;
+    NewButton := TSpeedButton.Create(self);
+    NewButton.Parent := fPackTalBox;
+
+    NewButton.Width := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+    NewButton.Height := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+
+    NewButton.Margins.Left := SPEEDBUTTON_PADDING_SIZE - 3;
+    NewButton.Margins.Top := SPEEDBUTTON_PADDING_SIZE - 3;
+    NewButton.Margins.Right := SPEEDBUTTON_PADDING_SIZE - 1;
+    NewButton.Margins.Bottom := SPEEDBUTTON_PADDING_SIZE - 1;
+
+    NewButton.Tag := NativeInt(Level);
+    NewButton.OnClick := PackListTalButtonClick;
 
     if Level.TalismanStatus[Tal.ID] then
-      DrawIcon(ICON_TALISMAN[Tal.Color], NewImage.Bitmap, fPackTalBox.Color)
+      DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color])
     else
-      DrawIcon(ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, NewImage.Bitmap, fPackTalBox.Color);
+      DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET);
 
     if TitleLabel <> nil then
     begin
-      TitleLabel.Left := 40;
-      LevLabel.Left := 52;
+      TitleLabel.Left := 48;
+      LevLabel.Left := 60;
     end else
-      LevLabel.Left := 40;
-    ReqLabel.Left := 40;
-    NewImage.Left := 8;
+      LevLabel.Left := 48;
+    ReqLabel.Left := 48;
+    NewButton.Left := 8 - SPEEDBUTTON_PADDING_SIZE;
 
     LabelTotalHeight := LevLabel.Height + ReqLabel.Height;
     if TitleLabel <> nil then
       LabelTotalHeight := LabelTotalHeight + TitleLabel.Height;
 
-    if (NewImage.Height > LabelTotalHeight) then
+    if (NewButton.Height > LabelTotalHeight) then
     begin
-      NewImage.Top := TotalHeight;
-      LabelStartY := TotalHeight + ((NewImage.Height - LabelTotalHeight) div 2);
+      NewButton.Top := TotalHeight;
+      LabelStartY := TotalHeight + ((NewButton.Height - LabelTotalHeight) div 2);
 
-      TotalHeight := TotalHeight + NewImage.Height + 8;
+      TotalHeight := TotalHeight + NewButton.Height + 8;
     end else begin
       LabelStartY := TotalHeight;
-      NewImage.Top := TotalHeight + ((LabelTotalHeight - NewImage.Height) div 2);
+      NewButton.Top := TotalHeight + ((LabelTotalHeight - NewButton.Height) div 2);
 
       TotalHeight := TotalHeight + LabelTotalHeight + 8;
     end;
@@ -677,21 +690,19 @@ var
   procedure MakeButton(aTag: Integer);
   var
     NewButton: TSpeedButton;
-  const
-    PADDING_SIZE = 3;
   begin
     NewButton := TSpeedButton.Create(self);
     NewButton.Parent := self;
 
-    NewButton.Left := lblCompletion.Left + (40 * n) - PADDING_SIZE;
-    NewButton.Top := lblCompletion.Top - PADDING_SIZE;
-    NewButton.Width := 32 + (PADDING_SIZE * 2);
-    NewButton.Height := 32 + (PADDING_SIZE * 2);
+    NewButton.Left := lblCompletion.Left + (40 * n) - SPEEDBUTTON_PADDING_SIZE;
+    NewButton.Top := lblCompletion.Top - SPEEDBUTTON_PADDING_SIZE;
+    NewButton.Width := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+    NewButton.Height := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
 
-    NewButton.Margins.Left := PADDING_SIZE - 3;
-    NewButton.Margins.Top := PADDING_SIZE - 3;
-    NewButton.Margins.Right := PADDING_SIZE - 1;
-    NewButton.Margins.Bottom := PADDING_SIZE - 1;
+    NewButton.Margins.Left := SPEEDBUTTON_PADDING_SIZE - 3;
+    NewButton.Margins.Top := SPEEDBUTTON_PADDING_SIZE - 3;
+    NewButton.Margins.Right := SPEEDBUTTON_PADDING_SIZE - 1;
+    NewButton.Margins.Bottom := SPEEDBUTTON_PADDING_SIZE - 1;
 
     NewButton.Tag := aTag;
     NewButton.OnClick := TalButtonClick;
@@ -743,6 +754,47 @@ begin
     DrawTalismanButtons;
     fInfoForm.PrepareEmbed;
   end;
+end;
+
+procedure TFLevelSelect.PackListTalButtonClick(Sender: TObject);
+var
+  TalBtn: TSpeedButton absolute Sender;
+  LevelRef: TNeoLevelEntry;
+  NodeRef: TTreeNode;
+
+  function RecursiveSearch(aBase: TTreeNode): TTreeNode;
+  var
+    i: Integer;
+  begin
+    if aBase.Data = LevelRef then
+    begin
+      Result := aBase;
+      Exit;
+    end;
+
+    Result := nil;
+
+    for i := 0 to aBase.Count-1 do
+    begin
+      Result := RecursiveSearch(aBase[i]);
+      if Result <> nil then
+        Exit;
+    end;
+  end;
+var
+  i: Integer;
+begin
+  LevelRef := TNeoLevelEntry(TalBtn.Tag);
+  if not (LevelRef is TNeoLevelEntry) then
+    raise Exception.Create('TFLevelSelect.PackListTalButtonClick received invalid input');
+
+  NodeRef := RecursiveSearch(tvLevelSelect.Selected);
+
+  if NodeRef = nil then
+    raise Exception.Create('TFLevelSelect.PackListTalButtonClick couldn''t match the level.');
+
+  tvLevelSelect.Select(NodeRef);
+  tvLevelSelectClick(tvLevelSelect);
 end;
 
 procedure TFLevelSelect.ClearTalismanButtons;
