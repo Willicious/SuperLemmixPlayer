@@ -781,8 +781,6 @@ var
         Exit;
     end;
   end;
-var
-  i: Integer;
 begin
   LevelRef := TNeoLevelEntry(TalBtn.Tag);
   if not (LevelRef is TNeoLevelEntry) then

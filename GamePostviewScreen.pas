@@ -244,15 +244,6 @@ begin
       fLevelOverride := $0000;
     end;
 
-    if (not gCheated) and (GlobalGame.ReplayManager.IsThisUsersReplay) then
-      with CurrentLevel do
-      begin
-        if gSuccess then
-          Status := lst_Completed
-        else if Status = lst_None then
-          Status := lst_Attempted;
-      end;
-
     if gRescued >= Level.Info.RescueCount then
     begin
       if PostLevelVictorySound then
