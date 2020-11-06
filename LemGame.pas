@@ -1393,7 +1393,8 @@ begin
     L.LemTrueFallen := L.LemFallen;
   end;
 
-  if (NewAction in [baShimmying, baJumping]) and (L.LemAction in [baClimbing, baSliding]) then
+  if ((NewAction in [baShimmying, baJumping]) and (L.LemAction = baClimbing)) or
+     ((NewAction = baJumping) and (L.LemAction = baSliding)) then
   begin
     // turn around and get out of the wall
     TurnAround(L);
@@ -1402,6 +1403,13 @@ begin
     if NewAction = baShimmying then
       if HasPixelAt(L.LemX, L.LemY - 8) then
         Inc(L.LemY);
+  end;
+
+  if (NewAction = baShimmying) and (L.LemAction = baSliding) then
+  begin
+    Inc(L.LemY);
+    if HasPixelAt(L.LemX, L.LemY - 8) then
+      Inc(L.LemY);
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
@@ -1828,7 +1836,7 @@ begin
   end
   else if (NewSkill = baShimmying) then
   begin
-    if L.LemAction in [baClimbing, baJumping] then
+    if L.LemAction in [baClimbing, baSliding, baJumping] then
       Transition(L, baShimmying)
     else
       Transition(L, baReaching);

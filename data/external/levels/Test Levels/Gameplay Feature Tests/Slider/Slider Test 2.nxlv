@@ -29,12 +29,12 @@
    SHIMMIER 20
    SLIDER 1
    CLIMBER 20
+   DISARMER 4
    BUILDER 20
    BASHER 20
    FENCER 20
    MINER 20
    DIGGER 20
-   CLONER 20
  $END 
  
 #     Interactive objects       
@@ -258,7 +258,7 @@
 # ----------------------------- 
  $LEMMING
    X 103
-   Y 62
+   Y 33
  $END
  
  
