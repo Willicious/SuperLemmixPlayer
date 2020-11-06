@@ -3329,13 +3329,26 @@ var
 begin
   Result := True;
   if L.LemEndOfAnimation then
-    Transition(L, baSliding)
-  else if L.LemPhysicsFrame >= 2 then
+  begin
+    if HasPixelAt(L.LemX, L.LemY - 7) then
+      Transition(L, baSliding)
+    else
+      Transition(L, baFalling);
+  end else if L.LemPhysicsFrame >= 2 then
   begin
     for n := 0 to 1 do
     begin
       Inc(L.LemY);
-      if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
+      if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
+      begin
+        Dec(L.LemX, L.LemDX);
+        if L.LemIsSwimmer then
+          Transition(L, baSwimming, true)
+        else begin
+          Result := false;
+          Transition(L, baDrowning, true);
+        end;
+      end else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
       begin
         Dec(L.LemX, L.LemDX);
         Transition(L, baWalking, true);
@@ -3386,6 +3399,15 @@ begin
     begin
       Transition(L, baFalling);
       Exit;
+    end else if HasTriggerAt(L.LemX - L.LemDX, L.LemY, trWater, L) then
+    begin
+      Dec(L.LemX, L.LemDX);
+      if L.LemIsSwimmer then
+        Transition(L, baSwimming, true)
+      else begin
+        Result := false;
+        Transition(L, baDrowning, true);
+      end;
     end else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
     begin
       Dec(L.LemX, L.LemDX);

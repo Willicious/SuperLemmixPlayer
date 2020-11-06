@@ -26,6 +26,8 @@
  
  $SKILLSET 
    SLIDER 40
+   STONER 20
+   BOMBER 20
  $END 
  
 #     Interactive objects       
