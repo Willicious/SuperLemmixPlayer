@@ -1393,7 +1393,7 @@ begin
     L.LemTrueFallen := L.LemFallen;
   end;
 
-  if (NewAction in [baShimmying, baJumping]) and (L.LemAction = baClimbing) then
+  if (NewAction in [baShimmying, baJumping]) and (L.LemAction in [baClimbing, baSliding]) then
   begin
     // turn around and get out of the wall
     TurnAround(L);
@@ -2208,7 +2208,7 @@ function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
                baShrugging, baPlatforming, baStacking, baFencing,
-               baClimbing];
+               baClimbing, baSliding];
 begin
   Result := (L.LemAction in ActionSet);
 end;
