@@ -4338,8 +4338,14 @@ const
               begin
                 L.LemX := CheckX;
                 Transition(L, baClimbing);
-              end else
-                Transition(L, baFalling, true);
+              end else begin
+                if L.LemIsSlider then
+                begin
+                  Inc(L.LemX, L.LemDX);
+                  Transition(L, baSliding);
+                end else
+                  Transition(L, baFalling, true);
+              end;
               Exit;
             end;
           end;
