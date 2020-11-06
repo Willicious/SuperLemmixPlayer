@@ -3814,7 +3814,13 @@ begin
 
     LemDy := FindGroundPixel(L.LemX, L.LemY);
 
-    If LemDy = 4 then
+    if (LemDy > 0) and L.LemIsSlider and LemCanDehoist(L, true) then
+    begin
+      Dec(L.LemX, L.LemDX);
+      Transition(L, baDehoisting, true);
+    end
+
+    else if LemDy = 4 then
     begin
       Inc(L.LemY, LemDy);
       Transition(L, baFalling);
@@ -4064,7 +4070,13 @@ begin
     end else
       NeedUndoMoveUp := false;
 
-    If LemDy = 4 then
+    if (LemDy > 0) and L.LemIsSlider and LemCanDehoist(L, true) then
+    begin
+      Dec(L.LemX, L.LemDX);
+      Transition(L, baDehoisting, true);
+    end
+
+    else if LemDy = 4 then
     begin
       Inc(L.LemY, LemDy);
       Transition(L, baFalling);
@@ -4436,8 +4448,21 @@ begin
 
   else if L.LemPhysicsFrame in [3, 15] then
   begin
+    if L.LemIsSlider and LemCanDehoist(L, false) then
+    begin
+      Transition(L, baDehoisting, true);
+      Exit;
+    end;
+
     Inc(L.LemX, 2*L.LemDx);
     Inc(L.LemY);
+
+    if L.LemIsSlider and LemCanDehoist(L, true) then
+    begin
+      Dec(L.LemX, L.LemDX);
+      Transition(L, baDehoisting, true);
+      Exit;
+    end;
 
     // Note that all if-checks are relative to the end position!
 
