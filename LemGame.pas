@@ -4222,7 +4222,12 @@ begin
     begin
       if HasPixelAt(L.LemX + L.LemDX, L.LemY - i) then
       begin
-        Transition(L, baFalling);
+        if L.LemIsSlider then
+        begin
+          Inc(L.LemX, L.LemDX);
+          Transition(L, baSliding);
+        end else
+          Transition(L, baFalling);
         Exit;
       end;
     end;
