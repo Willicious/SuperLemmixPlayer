@@ -3324,12 +3324,25 @@ end;
 
 
 function TLemmingGame.HandleDehoisting(L: TLemming): Boolean;
+var
+  n: Integer;
 begin
   Result := True;
   if L.LemEndOfAnimation then
     Transition(L, baSliding)
   else if L.LemPhysicsFrame >= 2 then
-    Inc(L.LemY, 2);
+  begin
+    for n := 0 to 1 do
+    begin
+      Inc(L.LemY);
+      if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
+      begin
+        Dec(L.LemX, L.LemDX);
+        Transition(L, baWalking, true);
+        Break;
+      end;
+    end;
+  end;
 end;
 
 function TLemmingGame.LemCanDehoist(L: TLemming; AlreadyMovedX: Boolean): Boolean;
@@ -3362,13 +3375,24 @@ begin
 end;
 
 function TLemmingGame.HandleSliding(L: TLemming): Boolean;
+var
+  n: Integer;
 begin
   Result := true;
-  Inc(L.LemY, 2);
-  if not HasPixelAt(L.LemX, L.LemY - 7) then
-    Transition(L, baFalling)
-  else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
-    Transition(L, baWalking, true);
+  for n := 0 to 1 do
+  begin
+    Inc(L.LemY);
+    if not HasPixelAt(L.LemX, L.LemY - 7) then
+    begin
+      Transition(L, baFalling);
+      Exit;
+    end else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
+    begin
+      Dec(L.LemX, L.LemDX);
+      Transition(L, baWalking, true);
+      Exit;
+    end;
+  end;
 end;
 
 

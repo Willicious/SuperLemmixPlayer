@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.28
+#   Created with NLEditor 1.29
 # ----------------------------- 
  
 #        Level info             
@@ -242,14 +242,124 @@
    ONE_WAY
  $END
  
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 249
+   Y 78
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 254
+   Y 80
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 259
+   Y 83
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 264
+   Y 87
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 269
+   Y 92
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 269
+   Y 108
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE flopsy_rickroll
+   PIECE rick_astley_head
+   X 248
+   Y -16
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 24
+   Y 71
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 24
+   Y 87
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 24
+   Y 103
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 24
+   Y 119
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 24
+   Y 135
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_marble
+   PIECE bar_10
+   X 24
+   Y 151
+   ONE_WAY
+ $END
+ 
  
 #      Preplaced lemmings       
 # ----------------------------- 
  $LEMMING
-   X 227
-   Y 28
+   X 77
+   Y 63
    FLIP_HORIZONTAL
    SLIDER 
+ $END
+ 
+ $LEMMING
+   X 198
+   Y 28
+   SLIDER
  $END
  
  
