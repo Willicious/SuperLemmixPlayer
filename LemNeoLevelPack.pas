@@ -70,6 +70,9 @@ type
       fStatus: TNeoLevelStatus;
       fUnlockedTalismanList: TList<LongWord>;
 
+      fCRC32: Cardinal;
+      fCalculatedCRC: Boolean;
+
       procedure LoadLevelFileData;
 
       function GetFullPath: String;
@@ -80,6 +83,8 @@ type
       function GetGroupIndex: Integer;
       function GetMusicRotationIndex: Integer;
       function GetTalismans: TObjectList<TTalisman>;
+
+      function GetCRC32: Cardinal;
 
       procedure SetTalismanStatus(aIndex: LongWord; aStatus: Boolean);
       function GetTalismanStatus(aIndex: LongWord): Boolean;
@@ -106,6 +111,8 @@ type
       property TalismanStatus[Index: LongWord]: Boolean read GetTalismanStatus write SetTalismanStatus;
       property GroupIndex: Integer read GetGroupIndex;
       property MusicRotationIndex: Integer read GetMusicRotationIndex;
+
+      property CRC32: Cardinal read GetCRC32;
   end;
 
   TNeoLevelGroup = class
@@ -434,6 +441,14 @@ function TNeoLevelEntry.GetAuthor: String;
 begin
   LoadLevelFileData;
   Result := fAuthor;
+end;
+
+function TNeoLevelEntry.GetCRC32: Cardinal;
+begin
+  if not fCalculatedCRC then
+    fCRC32 := CalculateCRC32(Path);
+
+  Result := fCRC32;
 end;
 
 procedure TNeoLevelEntry.LoadLevelFileData;
@@ -1091,6 +1106,18 @@ var
       i: TNeoLevelStatus;
       S: String;
       Skill: TSkillPanelButton;
+
+      procedure CheckIfOutdated;
+      begin
+        // This should check if the level is outdated, and if so, mark as "Completed Outdated".
+        // Currently, it is not totally reliable.
+        if (GetFileAge(aLevel.Path) <> Sec.LineNumeric['modified_date']) then
+        begin
+          if (Sec.Line['crc'] = nil) or
+             (aLevel.CRC32 <> Sec.LineNumeric['crc']) then
+            aLevel.Status := lst_Completed_Outdated;
+        end;
+      end;
     begin
       Sec := LevelSec.Section[aLevel.RelativePath];
       if Sec = nil then Exit;
@@ -1103,8 +1130,8 @@ var
           Break;
         end;
 
-      if (GetFileAge(aLevel.Path) > Sec.LineNumeric['modified_date']) and (aLevel.Status = lst_Completed) then
-        aLevel.Status := lst_Completed_Outdated;
+      if aLevel.Status = lst_Completed then
+        CheckIfOutdated;
 
       aLevel.Records.LemmingsRescued := Sec.LineNumericDefault['lemming_record', -1];
       aLevel.Records.TimeTaken := Sec.LineNumericDefault['time_record', -1];
@@ -1182,7 +1209,13 @@ var
       ActiveLevelSec := LevelSec.SectionList.Add(aLevel.RelativePath);
 
       ActiveLevelSec.AddLine('status', STATUS_TEXTS[aLevel.Status]);
-      ActiveLevelSec.AddLine('modified_date', GetFileAge(aLevel.Path));
+
+      if aLevel.Status >= lst_Completed_Outdated then
+      begin
+        ActiveLevelSec.AddLine('modified_date', GetFileAge(aLevel.Path));
+        ActiveLevelSec.AddLine('crc', aLevel.CRC32);
+      end;
+
       ActiveLevelSec.AddLine('lemming_record', aLevel.Records.LemmingsRescued);
 
       if aLevel.Status >= lst_Completed_Outdated then
