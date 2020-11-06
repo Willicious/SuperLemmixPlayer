@@ -332,6 +332,7 @@ type
     function HandleShimmying(L: TLemming) : Boolean;
     function HandleJumping(L: TLemming) : Boolean;
     function HandleDehoisting(L: TLemming) : Boolean;
+      function LemCanDehoist(L: TLemming; AlreadyMovedX: Boolean): Boolean;
     function HandleSliding(L: TLemming) : Boolean;
 
   { interaction }
@@ -3134,6 +3135,13 @@ begin
   Inc(L.LemX, L.LemDx);
   LemDy := FindGroundPixel(L.LemX, L.LemY);
 
+  if (LemDy > 0) and (L.LemIsSlider) and (LemCanDehoist(L, true)) then
+  begin
+    Dec(L.LemX, L.LemDX);
+    Transition(L, baDehoisting, true);
+    Exit;
+  end;
+
   if (LemDy < -6) then
   begin
     if L.LemIsClimber then
@@ -3317,12 +3325,50 @@ end;
 
 function TLemmingGame.HandleDehoisting(L: TLemming): Boolean;
 begin
-  Result := true;
+  Result := True;
+  if L.LemEndOfAnimation then
+    Transition(L, baSliding)
+  else if L.LemPhysicsFrame >= 2 then
+    Inc(L.LemY, 2);
+end;
+
+function TLemmingGame.LemCanDehoist(L: TLemming; AlreadyMovedX: Boolean): Boolean;
+var
+  CurX, NextX: Integer;
+  n: Integer;
+begin
+  CurX := L.LemX;
+  NextX := L.LemX;
+
+  if AlreadyMovedX then
+    CurX := CurX - L.LemDX
+  else
+    NextX := NextX + L.LemDX;
+
+  if (not HasPixelAt(CurX, L.LemY)) or HasPixelAt(NextX, L.LemY) then
+    Result := false
+  else begin
+    Result := true;
+
+    // Dehoist if cannot step down
+    for n := 1 to 3 do
+      if HasPixelAt(NextX, L.LemY + n) then
+      begin
+        Result := false;
+        Exit;
+      end else if not HasPixelAt(CurX, L.LemY + n) then
+        Break;
+  end;
 end;
 
 function TLemmingGame.HandleSliding(L: TLemming): Boolean;
 begin
   Result := true;
+  Inc(L.LemY, 2);
+  if not HasPixelAt(L.LemX, L.LemY) then
+    Transition(L, baFalling)
+  else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
+    Transition(L, baWalking);
 end;
 
 
