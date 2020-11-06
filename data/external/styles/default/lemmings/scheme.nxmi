@@ -469,7 +469,7 @@ $ANIMATIONS
     FRAMES 7
 
     $RIGHT
-      FOOT_X 8
+      FOOT_X 7
       FOOT_Y 12
     $END
 
@@ -484,12 +484,12 @@ $ANIMATIONS
 
     $RIGHT
       FOOT_X 8
-      FOOT_Y 12
+      FOOT_Y 11
     $END
 
     $LEFT
       FOOT_X 8
-      FOOT_Y 12
+      FOOT_Y 11
     $END
   $END
 $END

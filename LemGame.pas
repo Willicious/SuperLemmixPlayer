@@ -1361,7 +1361,7 @@ const
      8, //baReaching,
     20, //baShimmying
     13, //baJumping
-     8, //baDehoisting
+     7, //baDehoisting
      1  //baSliding
     );
 begin
@@ -3080,7 +3080,7 @@ function TLemmingGame.HandleLemming(L: TLemming): Boolean;
 const
   OneTimeActionSet = [baDrowning, baHoisting, baSplatting, baExiting,
                       baVaporizing, baShrugging, baOhnoing, baExploding,
-                      baStoning, baReaching];
+                      baStoning, baReaching, baDehoisting];
 begin
   // Remember old position and action for CheckTriggerArea
   L.LemXOld := L.LemX;
@@ -3365,10 +3365,10 @@ function TLemmingGame.HandleSliding(L: TLemming): Boolean;
 begin
   Result := true;
   Inc(L.LemY, 2);
-  if not HasPixelAt(L.LemX, L.LemY) then
+  if not HasPixelAt(L.LemX, L.LemY - 7) then
     Transition(L, baFalling)
   else if HasPixelAt(L.LemX - L.LemDX, L.LemY) then
-    Transition(L, baWalking);
+    Transition(L, baWalking, true);
 end;
 
 
