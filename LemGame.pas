@@ -3416,8 +3416,13 @@ begin
     begin
       // Don't fall below original position on hitting terrain in first cycle
       if not L.LemIsStartingAction then L.LemY := L.LemY - L.LemPhysicsFrame + 3;
-      Dec(L.LemX, L.LemDx);
-      Transition(L, baFalling, True); // turn around as well
+
+      if L.LemIsSlider then
+        Transition(L, baSliding)
+      else begin
+        Dec(L.LemX, L.LemDx);
+        Transition(L, baFalling, True); // turn around as well
+      end;
     end
     else if not HasPixelAt(L.LemX, L.LemY - 7 - L.LemPhysicsFrame) then
     begin
@@ -3444,8 +3449,13 @@ begin
     if FoundClip then
     begin
       Inc(L.LemY);
-      Dec(L.LemX, L.LemDx);
-      Transition(L, baFalling, True); // turn around as well
+
+      if L.LemIsSlider then
+        Transition(L, baSliding)
+      else begin
+        Dec(L.LemX, L.LemDx);
+        Transition(L, baFalling, True); // turn around as well
+      end;
     end;
   end;
 end;
