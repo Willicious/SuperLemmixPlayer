@@ -158,7 +158,9 @@ begin
   if Types.PtInRect(GetWorkerLemmingRect(false), aPoint) then
     fReelForceDirection := 1
   else if Types.PtInRect(GetWorkerLemmingRect(true), aPoint) then
-    fReelForceDirection := -1;
+    fReelForceDirection := -1
+  else
+    BeginGame;
 
   if fReelForceDirection <> OldForceDir then
   begin
