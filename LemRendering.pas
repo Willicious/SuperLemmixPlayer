@@ -1274,6 +1274,9 @@ var
   ActualPosCount: Integer;
   i: Integer;
 
+  LevelWidth: Integer;
+  LevelHeight: Integer;
+
   procedure AppendPositions(New: TProjectilePointArray);
   var
     i: Integer;
@@ -1287,8 +1290,17 @@ var
       Inc(ActualPosCount);
     end;
   end;
+
+  function IsOutOfBounds: Boolean;
+  begin
+    Result := (Proj.X < -8) or (Proj.X >= LevelWidth + 8) or
+              (Proj.Y < -8) or (Proj.Y >= LevelHeight + 8);
+  end;
 begin
   fLayers.fIsEmpty[rlLowShadows] := False;
+
+  LevelWidth := GameParams.Level.Info.Width;
+  LevelHeight := GameParams.Level.Info.Height;
 
   case L.LemAction of
     baSpearing: Proj := TProjectile.CreateSpear(fRenderInterface.PhysicsMap, L);
@@ -1299,7 +1311,7 @@ begin
   SetLength(PosArray, ARR_BASE_LEN);
   ActualPosCount := 0;
 
-  while not (Proj.SilentRemove or Proj.Hit) do
+  while not (Proj.SilentRemove or Proj.Hit or IsOutOfBounds) do
   begin
     if not Proj.Fired then // We don't need the lemming anymore once the projectile leaves its hand
       fRenderInterface.SimulateLem(L);
