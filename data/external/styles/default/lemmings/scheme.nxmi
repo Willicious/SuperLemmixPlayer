@@ -464,4 +464,18 @@ $ANIMATIONS
       FOOT_Y 10
     $END
   $END
+  
+  $LASERER
+    FRAMES 1
+    
+    $RIGHT
+      FOOT_X 4
+      FOOT_Y 10
+    $END
+
+    $LEFT
+      FOOT_X 11
+      FOOT_Y 10
+    $END
+  $END
 $END
