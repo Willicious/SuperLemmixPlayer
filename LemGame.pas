@@ -1407,9 +1407,19 @@ begin
 
   if (NewAction = baShimmying) and (L.LemAction = baSliding) then
   begin
-    Inc(L.LemY);
+    Inc(L.LemY, 2);
     if HasPixelAt(L.LemX, L.LemY - 8) then
       Inc(L.LemY);
+  end;
+
+  if (NewAction = baShimmying) and (L.LemAction = baDehoisting) then
+  begin
+    for i := -1 to 3 do
+      if HasPixelAt(L.LemX, L.LemY - 9 - i) then
+      begin
+        Dec(L.LemY, i);
+        Break;
+      end;
   end;
 
   if (NewAction = baShimmying) and (L.LemAction = baJumping) then
@@ -1836,7 +1846,7 @@ begin
   end
   else if (NewSkill = baShimmying) then
   begin
-    if L.LemAction in [baClimbing, baSliding, baJumping] then
+    if L.LemAction in [baClimbing, baSliding, baJumping, baDehoisting] then
       Transition(L, baShimmying)
     else
       Transition(L, baReaching);
@@ -2187,7 +2197,7 @@ var
   OldAction: TBasicLemmingAction;
 begin
   Result := (L.LemAction in ActionSet);
-  if L.LemAction in [baClimbing, baSliding] then
+  if L.LemAction in [baClimbing, baSliding, baDehoisting] then
   begin
     // Check whether the lemming would fall down the next frame
     CopyL := TLemming.Create;
@@ -2197,7 +2207,7 @@ begin
 
     SimulateLem(CopyL, False);
 
-    if CopyL.LemAction <> OldAction then
+    if (CopyL.LemAction <> OldAction) and (CopyL.LemAction <> baSliding) then
       Result := True;
 
     CopyL.Free;
