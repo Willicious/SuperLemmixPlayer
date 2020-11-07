@@ -2394,7 +2394,7 @@ begin
                          and not (L.LemAction = baBlocking)
                          and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
     begin
-      NeedShiftPosition := (L.LemAction = baClimbing);
+      NeedShiftPosition := (L.LemAction in [baClimbing, baSliding]);
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
       NeedShiftPosition := NeedShiftPosition and AbortChecks;
     end;
@@ -2691,7 +2691,7 @@ end;
 function TLemmingGame.HandleForceField(L: TLemming; Direction: Integer): Boolean;
 begin
   Result := False;
-  if (L.LemDx = -Direction) and not (L.LemAction = baHoisting) then
+  if (L.LemDx = -Direction) and not (L.LemAction in [baDehoisting, baHoisting]) then
   begin
     Result := True;
 
