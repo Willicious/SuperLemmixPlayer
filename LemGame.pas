@@ -2292,6 +2292,8 @@ var
   CheckPos: TArrayArrayInt; // Combined list for both X- and Y-coordinates
   i: Integer;
   AbortChecks: Boolean;
+
+  NeedShiftPosition: Boolean;
 begin
   // Get positions to check for trigger areas
   CheckPos := GetGadgetCheckPositions(L);
@@ -2299,6 +2301,7 @@ begin
   // Now move through the values in CheckPosX/Y and check for trigger areas
   i := -1;
   AbortChecks := False;
+  NeedShiftPosition := False;
   repeat
     Inc(i);
 
@@ -2351,7 +2354,11 @@ begin
     if (not AbortChecks) and HasTriggerAt(CheckPos[0, i], CheckPos[1, i], trFlipper)
                          and not (L.LemAction = baBlocking)
                          and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
+    begin
+      NeedShiftPosition := (L.LemAction = baClimbing);
       AbortChecks := HandleFlipper(L, CheckPos[0, i], CheckPos[1, i]);
+      NeedShiftPosition := NeedShiftPosition and AbortChecks;
+    end;
 
     // If the lem was required stop, move him there!
     if AbortChecks then
@@ -2365,6 +2372,9 @@ begin
        and not ((L.LemActionOld = baJumping) or (L.LemAction = baJumping)) then
       L.LemInFlipper := DOM_NOOBJECT;
   until [CheckPos[0, i], CheckPos[1, i]] = [L.LemX, L.LemY] (*or AbortChecks*);
+
+  if NeedShiftPosition then
+    Inc(L.LemX, L.LemDX);
 
   // Check for water to transition to swimmer only at final position
   if HasTriggerAt(L.LemX, L.LemY, trWater) then
@@ -2697,10 +2707,7 @@ begin
   begin
     L.LemInFlipper := GadgetID;
     if (Gadget.CurrentFrame = 1) xor (L.LemDX < 0) then
-    begin
-      TurnAround(L);
-      Result := True;
-    end;
+      Result := HandleForceField(L, -L.LemDX);
 
     if not IsSimulating then
       Gadget.CurrentFrame := 1 - Gadget.CurrentFrame // swap the possible values 0 and 1
