@@ -377,11 +377,9 @@ begin
     // Extract masks / Digits / etc. //
     // // // // // // // // // // // //
 
-    fCountDownDigitsBitmap := TBitmap32.Create;
     fCountDownDigitsBitmap.DrawMode := dmBlend;
     fCountDownDigitsBitmap.CombineMode := cmMerge;
 
-    fHighlightBitmap := TBitmap32.Create;
     fHighlightBitmap.DrawMode := dmBlend;
     fHighlightBitmap.CombineMode := cmMerge;
 
@@ -411,9 +409,9 @@ end;
 procedure TBaseAnimationSet.ClearData;
 begin
   fLemmingAnimations.Clear;
-  if Assigned(fMetaLemmingAnimations) then fMetaLemmingAnimations.Clear;
-  if Assigned(fCountDownDigitsBitmap) then fCountDownDigitsBitmap.Clear;
-  if Assigned(fHighlightBitmap) then fHighlightBitmap.Clear;
+  fMetaLemmingAnimations.Clear;
+  fCountDownDigitsBitmap.Clear;
+  fHighlightBitmap.Clear;
   fTheme := nil;
 end;
 
@@ -423,6 +421,8 @@ begin
   fMetaLemmingAnimations := TMetaLemmingAnimations.Create(TMetaLemmingAnimation);
   fLemmingAnimations := TBitmaps.Create;
   fRecolorer := TRecolorImage.Create;
+  fCountDownDigitsBitmap := TBitmap32.Create;
+  fHighlightBitmap := TBitmap32.Create;
 end;
 
 destructor TBaseAnimationSet.Destroy;
