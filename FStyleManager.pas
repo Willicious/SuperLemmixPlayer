@@ -474,7 +474,10 @@ end;
 procedure TFManageStyles.SaveLocalList;
 begin
   if (fLocalList.Count > 1) or FileExists(AppPath + SFSaveData + 'styletimes.ini') then
+  begin
+    ForceDirectories(AppPath + SFSaveData);
     fLocalList.SaveToFile(AppPath + SFSaveData + 'styletimes.ini');
+  end;
 end;
 
 procedure TFManageStyles.tmContinueDownloadTimer(Sender: TObject);
