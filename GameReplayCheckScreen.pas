@@ -23,7 +23,6 @@ const
   CR_UNDETERMINED = 3;
   CR_NOLEVELMATCH = 4;
   CR_ERROR = 5;
-  CR_PASS_OTHER_USER = 6;
 
 type
   TReplayCheckEntry = class
@@ -213,7 +212,7 @@ var
     Result := '';
     case fReplays[i].ReplayResult of
       CR_UNKNOWN: Result := 'UNKNOWN';
-      CR_PASS, CR_PASS_OTHER_USER: Result := 'PASSED';
+      CR_PASS: Result := 'PASSED';
       CR_FAIL: Result := 'FAILED';
       CR_UNDETERMINED: Result := 'UNDETERMINED';
       CR_NOLEVELMATCH: Result := 'LEVEL NOT FOUND';
@@ -305,12 +304,7 @@ begin
         begin
           Game.Finish(GM_FIN_TERMINATE);
           if Game.GameResultRec.gSuccess then
-          begin
-            if Game.ReplayManager.IsThisUsersReplay then
-              fReplays[i].ReplayResult := CR_PASS
-            else
-              fReplays[i].ReplayResult := CR_PASS_OTHER_USER;
-          end;
+            fReplays[i].ReplayResult := CR_PASS;
           Break;
         end;
 
@@ -318,25 +312,14 @@ begin
           if Game.MessageQueue.NextMessage.MessageType = GAMEMSG_FINISH then
           begin
             if Game.GameResultRec.gSuccess then
-            begin
-              if Game.ReplayManager.IsThisUsersReplay then
-                fReplays[i].ReplayResult := CR_PASS
-              else
-                fReplays[i].ReplayResult := CR_PASS_OTHER_USER;
-            end else
+              fReplays[i].ReplayResult := CR_PASS
+            else
               fReplays[i].ReplayResult := CR_FAIL;
           end;
         if fReplays[i].ReplayResult <> CR_UNDETERMINED then Break;
       until false;
 
       fReplays[i].ReplayDuration := Game.CurrentIteration;
-
-      // If appropriate, remember level as solved
-      if fReplays[i].ReplayResult = CR_PASS then // We specifically do NOT want to do this on CR_PASS_OTHER_USER
-        GameParams.CurrentLevel.Status := lst_Completed
-      else if fReplays[i].ReplayResult = CR_PASS_OTHER_USER then
-        fReplays[i].ReplayResult := CR_PASS; // but we DO want to group it with "Passed" in the report TXT file
-
     except
       fReplays[i].ReplayResult := CR_ERROR;
     end;
@@ -346,7 +329,7 @@ begin
       fScreenText.Delete(fScreenText.Count-1);
 
       fScreenText.Add(fReplays[i].ReplayLevelText + ' ' + fReplays[i].ReplayLevelTitle);
-      if fReplays[i].ReplayResult in [CR_PASS, CR_PASS_OTHER_USER, CR_FAIL, CR_UNDETERMINED] then
+      if fReplays[i].ReplayResult in [CR_PASS, CR_FAIL, CR_UNDETERMINED] then
         fScreenText.Add('Ran for ' + MakeTimeText);
       fScreenText.Add('*** ' + MakeResultText + ' ***');
       fScreenText.Add('');

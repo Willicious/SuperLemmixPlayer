@@ -13,7 +13,7 @@ uses
   FLevelInfo,
   GR32, GR32_Resamplers, GR32_Layers,
   Generics.Collections,
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Buttons,
   Dialogs, ComCtrls, StdCtrls, ExtCtrls, ImgList, StrUtils, UMisc, Math, UITypes,
   ActiveX, ShlObj, ComObj, // for the shortcut creation
   LemNeoParser, GR32_Image, System.ImageList;
@@ -51,7 +51,7 @@ type
 
     fPackTalBox: TScrollBox;
 
-    fTalismanButtons: TObjectList<TImage32>;
+    fTalismanButtons: TObjectList<TSpeedButton>;
     fDisplayRecords: Boolean;
 
     procedure InitializeTreeview;
@@ -63,10 +63,14 @@ type
     procedure DrawTalismanButtons;
     procedure ClearTalismanButtons;
     procedure TalButtonClick(Sender: TObject);
+    procedure PackListTalButtonClick(Sender: TObject);
 
     procedure DisplayPackTalismanInfo;
 
-    procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
+    procedure DrawSpeedButton(aButton: TSpeedButton; aIconIndex: Integer; aOverlayIndex: Integer = -1);
+
+    procedure DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aEraseColor: TColor);
+    procedure OverlayIcon(aIconIndex: Integer; aDst: TBitmap32);
 
     procedure SetAdvancedOptionsGroup;
     procedure SetAdvancedOptionsLevel;
@@ -128,6 +132,9 @@ implementation
 
 uses
   LemLevel;
+
+const
+  SPEEDBUTTON_PADDING_SIZE = 3;
 
 {$R *.dfm}
 
@@ -230,7 +237,7 @@ end;
 
 procedure TFLevelSelect.FormCreate(Sender: TObject);
 begin
-  fTalismanButtons := TObjectList<TImage32>.Create;
+  fTalismanButtons := TObjectList<TSpeedButton>.Create;
 
   fIconBMP := TBitmap32.Create;
   TPNGInterface.LoadPngFile(AppPath + SFGraphicsMenu + 'levelinfo_icons.png', fIconBMP);
@@ -579,7 +586,7 @@ var
   i: Integer;
   TotalHeight: Integer;
 
-  NewImage: TImage32;
+  NewButton: TSpeedButton;
   TitleLabel, LevLabel, ReqLabel: TLabel;
   Tal: TTalisman;
 
@@ -617,38 +624,47 @@ begin
     ReqLabel.Parent := fPackTalBox;
     ReqLabel.Caption := BreakString(Tal.RequirementText, ReqLabel, fPackTalBox.ClientWidth - 16 - 40);
 
-    NewImage := TImage32.Create(self);
-    NewImage.Parent := fPackTalBox;
-    NewImage.Width := 32;
-    NewImage.Height := 32;
+    NewButton := TSpeedButton.Create(self);
+    NewButton.Parent := fPackTalBox;
+
+    NewButton.Width := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+    NewButton.Height := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+
+    NewButton.Margins.Left := SPEEDBUTTON_PADDING_SIZE - 3;
+    NewButton.Margins.Top := SPEEDBUTTON_PADDING_SIZE - 3;
+    NewButton.Margins.Right := SPEEDBUTTON_PADDING_SIZE - 1;
+    NewButton.Margins.Bottom := SPEEDBUTTON_PADDING_SIZE - 1;
+
+    NewButton.Tag := NativeInt(Level);
+    NewButton.OnClick := PackListTalButtonClick;
 
     if Level.TalismanStatus[Tal.ID] then
-      DrawIcon(ICON_TALISMAN[Tal.Color], NewImage.Bitmap)
+      DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color])
     else
-      DrawIcon(ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET, NewImage.Bitmap);
+      DrawSpeedButton(NewButton, ICON_TALISMAN[Tal.Color] + ICON_TALISMAN_UNOBTAINED_OFFSET);
 
     if TitleLabel <> nil then
     begin
-      TitleLabel.Left := 40;
-      LevLabel.Left := 52;
+      TitleLabel.Left := 48;
+      LevLabel.Left := 60;
     end else
-      LevLabel.Left := 40;
-    ReqLabel.Left := 40;
-    NewImage.Left := 8;
+      LevLabel.Left := 48;
+    ReqLabel.Left := 48;
+    NewButton.Left := 8 - SPEEDBUTTON_PADDING_SIZE;
 
     LabelTotalHeight := LevLabel.Height + ReqLabel.Height;
     if TitleLabel <> nil then
       LabelTotalHeight := LabelTotalHeight + TitleLabel.Height;
 
-    if (NewImage.Height > LabelTotalHeight) then
+    if (NewButton.Height > LabelTotalHeight) then
     begin
-      NewImage.Top := TotalHeight;
-      LabelStartY := TotalHeight + ((NewImage.Height - LabelTotalHeight) div 2);
+      NewButton.Top := TotalHeight;
+      LabelStartY := TotalHeight + ((NewButton.Height - LabelTotalHeight) div 2);
 
-      TotalHeight := TotalHeight + NewImage.Height + 8;
+      TotalHeight := TotalHeight + NewButton.Height + 8;
     end else begin
       LabelStartY := TotalHeight;
-      NewImage.Top := TotalHeight + ((LabelTotalHeight - NewImage.Height) div 2);
+      NewButton.Top := TotalHeight + ((LabelTotalHeight - NewButton.Height) div 2);
 
       TotalHeight := TotalHeight + LabelTotalHeight + 8;
     end;
@@ -670,50 +686,47 @@ end;
 procedure TFLevelSelect.SetTalismanInfo;
 var
   i, n: Integer;
-  NewImage: TImage32;
+
+  procedure MakeButton(aTag: Integer);
+  var
+    NewButton: TSpeedButton;
+  begin
+    NewButton := TSpeedButton.Create(self);
+    NewButton.Parent := self;
+
+    NewButton.Left := lblCompletion.Left + (40 * n) - SPEEDBUTTON_PADDING_SIZE;
+    NewButton.Top := lblCompletion.Top - SPEEDBUTTON_PADDING_SIZE;
+    NewButton.Width := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+    NewButton.Height := 32 + (SPEEDBUTTON_PADDING_SIZE * 2);
+
+    NewButton.Margins.Left := SPEEDBUTTON_PADDING_SIZE - 3;
+    NewButton.Margins.Top := SPEEDBUTTON_PADDING_SIZE - 3;
+    NewButton.Margins.Right := SPEEDBUTTON_PADDING_SIZE - 1;
+    NewButton.Margins.Bottom := SPEEDBUTTON_PADDING_SIZE - 1;
+
+    NewButton.Tag := aTag;
+    NewButton.OnClick := TalButtonClick;
+
+    fTalismanButtons.Add(NewButton);
+    Inc(n);
+  end;
 begin
   ClearTalismanButtons;
 
   n := 0;
 
   if GameParams.CurrentLevel.Status in [lst_Completed_Outdated, lst_Completed] then
-  begin
-    NewImage := TImage32.Create(self);
-    NewImage.Parent := self;
-    NewImage.Left := lblCompletion.Left + (40 * n);
-    NewImage.Top := lblCompletion.Top;
-    NewImage.Width := 32;
-    NewImage.Height := 32;
-    NewImage.Color := $F0F0F0;
-    NewImage.Tag := -1;
-    NewImage.OnClick := TalButtonClick;
-
-    fTalismanButtons.Add(NewImage);
-    Inc(n);
-  end;
+    MakeButton(-1);
 
   for i := 0 to GameParams.Level.Talismans.Count-1 do
-  begin
-    NewImage := TImage32.Create(self);
-    NewImage.Parent := self;
-    NewImage.Left := lblCompletion.Left + (40 * n);
-    NewImage.Top := lblCompletion.Top;
-    NewImage.Width := 32;
-    NewImage.Height := 32;
-    NewImage.Color := $F0F0F0;
-    NewImage.Tag := i;
-    NewImage.OnClick := TalButtonClick;
-
-    fTalismanButtons.Add(NewImage);
-    Inc(n);
-  end;
+    MakeButton(i);
 
   DrawTalismanButtons;
 end;
 
 procedure TFLevelSelect.TalButtonClick(Sender: TObject);
 var
-  TalBtn: TImage32 absolute Sender;
+  TalBtn: TSpeedButton absolute Sender;
   Tal: TTalisman;
 begin
   if TalBtn.Tag < 0 then
@@ -743,20 +756,87 @@ begin
   end;
 end;
 
+procedure TFLevelSelect.PackListTalButtonClick(Sender: TObject);
+var
+  TalBtn: TSpeedButton absolute Sender;
+  LevelRef: TNeoLevelEntry;
+  NodeRef: TTreeNode;
+
+  function RecursiveSearch(aBase: TTreeNode): TTreeNode;
+  var
+    i: Integer;
+  begin
+    if aBase.Data = LevelRef then
+    begin
+      Result := aBase;
+      Exit;
+    end;
+
+    Result := nil;
+
+    for i := 0 to aBase.Count-1 do
+    begin
+      Result := RecursiveSearch(aBase[i]);
+      if Result <> nil then
+        Exit;
+    end;
+  end;
+begin
+  LevelRef := TNeoLevelEntry(TalBtn.Tag);
+  if not (LevelRef is TNeoLevelEntry) then
+    raise Exception.Create('TFLevelSelect.PackListTalButtonClick received invalid input');
+
+  NodeRef := RecursiveSearch(tvLevelSelect.Selected);
+
+  if NodeRef = nil then
+    raise Exception.Create('TFLevelSelect.PackListTalButtonClick couldn''t match the level.');
+
+  tvLevelSelect.Select(NodeRef);
+  tvLevelSelectClick(tvLevelSelect);
+end;
+
 procedure TFLevelSelect.ClearTalismanButtons;
 begin
   fTalismanButtons.Clear;
 end;
 
-procedure TFLevelSelect.DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aErase: Boolean = true);
+procedure TFLevelSelect.DrawIcon(aIconIndex: Integer; aDst: TBitmap32; aEraseColor: TColor);
+var
+  EraseColor32: TColor32;
 begin
-  if aErase then
-  begin
-    aDst.SetSize(32, 32);
-    aDst.Clear($FFF0F0F0);
-  end;
+  EraseColor32 := ColorToRGB(aEraseColor);
+  EraseColor32 := $FF000000 or
+                  ((EraseColor32 and $00FF0000) shr 16) or
+                  (EraseColor32 and $0000FF00) or
+                  ((EraseColor32 and $000000FF) shl 16);
 
+  aDst.SetSize(32, 32);
+  aDst.Clear(EraseColor32);
+
+  OverlayIcon(aIconIndex, aDst);
+end;
+
+procedure TFLevelSelect.OverlayIcon(aIconIndex: Integer; aDst: TBitmap32);
+begin
   fIconBMP.DrawTo(aDst, 0, 0, SizedRect((aIconIndex mod 4) * 32, (aIconIndex div 4) * 32, 32, 32));
+end;
+
+procedure TFLevelSelect.DrawSpeedButton(aButton: TSpeedButton; aIconIndex,
+  aOverlayIndex: Integer);
+var
+  BMP: TBitmap32;
+begin
+  BMP := TBitmap32.Create;
+  try
+    DrawIcon(aIconIndex, BMP, clBtnFace);
+    if aOverlayIndex >= 0 then
+      OverlayIcon(aOverlayIndex, BMP);
+
+    aButton.Glyph.SetSize(1, 1); // This seems necessary in order for the glyph to actually re-draw.
+    aButton.Glyph.Assign(BMP);
+  finally
+    BMP.Free;
+  end;
 end;
 
 procedure TFLevelSelect.DrawTalismanButtons;
@@ -769,10 +849,10 @@ begin
   begin
     if fTalismanButtons[i].Tag < 0 then
     begin
-      DrawIcon(ICON_RECORDS, fTalismanButtons[i].Bitmap);
-
       if fDisplayRecords then
-        DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
+        DrawSpeedButton(fTalismanButtons[i], ICON_RECORDS, ICON_SELECTED_TALISMAN)
+      else
+        DrawSpeedButton(fTalismanButtons[i], ICON_RECORDS);
     end else begin
       Tal := GameParams.Level.Talismans[fTalismanButtons[i].Tag];
 
@@ -780,10 +860,10 @@ begin
       if not GameParams.CurrentLevel.TalismanStatus[Tal.ID] then
         TalIcon := TalIcon + ICON_TALISMAN_UNOBTAINED_OFFSET;
 
-      DrawIcon(TalIcon, fTalismanButtons[i].Bitmap);
-
       if Tal = fInfoForm.Talisman then
-        DrawIcon(ICON_SELECTED_TALISMAN, fTalismanButtons[i].Bitmap, false);
+        DrawSpeedButton(fTalismanButtons[i], TalIcon, ICON_SELECTED_TALISMAN)
+      else
+        DrawSpeedButton(fTalismanButtons[i], TalIcon);
     end;
   end;
 end;

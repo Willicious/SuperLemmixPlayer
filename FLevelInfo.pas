@@ -683,11 +683,17 @@ begin
 
   Add(ICON_RECORDS, 'Your records', true, pmNextRowLeft);
 
-  Add(ICON_SAVE_REQUIREMENT, Records.LemmingsRescued, true, pmNextColumnSame, COLOR_RECORDS);
+  if Records.LemmingsRescued < 0 then
+    Add(ICON_SAVE_REQUIREMENT, '~', true, pmNextColumnSame)
+  else
+    Add(ICON_SAVE_REQUIREMENT, Records.LemmingsRescued, true, pmNextColumnSame, COLOR_RECORDS);
 
-  Add(ICON_TIMER,
-    IntToStr(Records.TimeTaken div (60 * 17)) + ':' + LeadZeroStr((Records.TimeTaken div 17) mod 60, 2) + '.' +
-      LeadZeroStr(Round((Records.TimeTaken mod 17) / 17 * 100), 2),
+  if Records.TimeTaken < 0 then
+    Add(ICON_TIMER, '~', true, pmNextColumnSame)
+  else
+    Add(ICON_TIMER,
+      IntToStr(Records.TimeTaken div (60 * 17)) + ':' + LeadZeroStr((Records.TimeTaken div 17) mod 60, 2) + '.' +
+        LeadZeroStr(Round((Records.TimeTaken mod 17) / 17 * 100), 2),
       true, pmNextColumnSame, COLOR_RECORDS);
 
   if Records.TotalSkills < 0 then

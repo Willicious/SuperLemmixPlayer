@@ -547,11 +547,17 @@ var
   NewTimer: TTimer;
 
   P: TPoint;
+  ExpRegion: TRect;
+
+  InvokeCustomHandler: Boolean;
+const
+  DEAD_ZONE_SIZE = 6;
 begin
   if ScreenIsClosing then
     Exit;
 
   P := GetInternalMouseCoordinates;
+  InvokeCustomHandler := true;
 
   for i := fClickableRegions.Count-1 downto 0 do
     if fClickableRegions[i].Bitmaps <> nil then
@@ -575,10 +581,21 @@ begin
         ScreenImg.Bitmap.Changed;
 
         fClickableRegions[i].Action;
-        Exit;
+        InvokeCustomHandler := false;
+        Break;
+      end else begin
+        ExpRegion := fClickableRegions[i].ClickArea;
+        ExpRegion.Left := ExpRegion.Left - DEAD_ZONE_SIZE;
+        ExpRegion.Top := ExpRegion.Top - DEAD_ZONE_SIZE;
+        ExpRegion.Right := ExpRegion.Right + DEAD_ZONE_SIZE;
+        ExpRegion.Bottom := ExpRegion.Bottom + DEAD_ZONE_SIZE;
+
+        if Types.PtInRect(ExpRegion, P) then
+          InvokeCustomHandler := false;
       end;
 
-  OnMouseClick(P, Button); // Only occurs if the above code didn't catch the click.
+  if InvokeCustomHandler then
+    OnMouseClick(P, Button); // Only occurs if the above code didn't catch the click.
 end;
 
 procedure TGameBaseMenuScreen.OnKeyPress(var aKey: Word);

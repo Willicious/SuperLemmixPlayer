@@ -301,6 +301,9 @@ begin
   fRectColor := $FFF0D0D0;
   fHighlitSkill := spbNone;
   fLastHighlitSkill := spbNone;
+
+  for i := 100 to MAXIMUM_SI do                    
+    fSkillOvercount[i] := TBitmap32.Create;
 end;
 
 destructor TBaseSkillPanel.Destroy;
@@ -318,6 +321,9 @@ begin
 
   for Button := Low(TSkillPanelButton) to LAST_SKILL_BUTTON do
     fSkillIcons[Button].Free;
+
+  for i := 100 to MAXIMUM_SI do
+    fSkillOvercount[i].Free;
 
   fSkillInfinite.Free;
   fSkillCountErase.Free;
@@ -773,7 +779,6 @@ begin
     for i := 100 to MAXIMUM_SI do
     begin
       MakeOvercountImage(i);
-      fSkillOvercount[i] := TBitmap32.Create;
       fSkillOvercount[i].SetSize(9 * ResMod, 8 * ResMod);
       TempBMP.DrawTo(fSkillOvercount[i], fSkillOvercount[i].BoundsRect, TempBMP.BoundsRect);
     end;

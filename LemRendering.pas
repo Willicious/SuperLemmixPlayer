@@ -2836,7 +2836,7 @@ end;
 
 procedure TRenderer.CreateGadgetList(var Gadgets: TGadgetList);
 var
-  i: Integer;
+  i, n: Integer;
   Gadget: TGadget;
   MO: TGadgetMetaAccessor;
 begin
@@ -2853,6 +2853,14 @@ begin
     begin
       if Gadget.TriggerEffect <> DOM_BACKGROUND then
         Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
+    end;
+
+    if (MO.TriggerEffect = DOM_WINDOW) and (Gadget.IsPreassignedZombie) then
+    begin
+      Gadget.RemainingLemmingsCount := 0;
+      for n := 0 to Length(RenderInfoRec.Level.Info.SpawnOrder) do
+        if RenderInfoRec.Level.Info.SpawnOrder[n] = i then
+          Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount + 1;
     end;
 
     Gadgets.Add(Gadget);
