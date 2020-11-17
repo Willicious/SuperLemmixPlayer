@@ -181,76 +181,59 @@ const
 begin
   Assert(GameParams <> nil);
 
+  W := TBitmap32.Create;
   ScreenImg.BeginUpdate;
   try
-    // prepare the renderer, this is a little bit shaky (wrong place)
-    try
-      with GameParams do
-      begin
-        Lw := Level.Info.Width;
-        Lh := Level.Info.Height;
-        Renderer.PrepareGameRendering(Level);
-      end;
-    except
-      on E : Exception do
-      begin
-        ShowMessage(E.Message);
-        CloseScreen(gstMenu);
-        Exit;
-      end;
-    end;
+    ScreenImg.Bitmap.FillRect(0, 0, 864, 160, $FF000000);
 
-    W := TBitmap32.Create;
-    try
-      ScreenImg.Bitmap.FillRect(0, 0, 864, 160, $FF000000);
+    Lw := GameParams.Level.Info.Width;
+    Lh := GameParams.Level.Info.Height;
 
-      // draw level preview
-      W.SetSize(Lw, Lh);
-      W.Clear(0);
+    // draw level preview
+    W.SetSize(Lw, Lh);
+    W.Clear(0);
 
-      GameParams.Renderer.RenderWorld(W, not GameParams.NoBackgrounds);
-      TLinearResampler.Create(W);
-      W.DrawMode := dmBlend;
-      W.CombineMode := cmMerge;
+    GameParams.Renderer.RenderWorld(W, not GameParams.NoBackgrounds);
+    TLinearResampler.Create(W);
+    W.DrawMode := dmBlend;
+    W.CombineMode := cmMerge;
 
-      // We have a 864x160 area in which to draw the level preview
-      LevelScale := 864 / lw;
-      if LevelScale > 160 / lh then LevelScale := 160 / lh;
+    // We have a 864x160 area in which to draw the level preview
+    LevelScale := 864 / lw;
+    if LevelScale > 160 / lh then LevelScale := 160 / lh;
 
-      DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
-      OffsetRect(DstRect, 432 - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
+    DstRect := Rect(0, 0, Trunc(lw * LevelScale), Trunc(lh * LevelScale));
+    OffsetRect(DstRect, 432 - (DstRect.Right div 2), 80 - (DstRect.Bottom div 2));
 
-      W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
-      // draw text
-      MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, TEXT_Y_POSITION);
+    W.DrawTo(ScreenImg.Bitmap, DstRect, W.BoundsRect);
+    // draw text
+    MenuFont.DrawTextCentered(ScreenImg.Bitmap, GetScreenText, TEXT_Y_POSITION);
 
-      NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
-      NewRegion.ShortcutKeys.Add(VK_RETURN);
-      NewRegion.ShortcutKeys.Add(VK_SPACE);
+    NewRegion := MakeClickableText(Point(FOOTER_ONE_OPTION_X, FOOTER_OPTIONS_TWO_ROWS_HIGH_Y), SOptionContinue, BeginPlay);
+    NewRegion.ShortcutKeys.Add(VK_RETURN);
+    NewRegion.ShortcutKeys.Add(VK_SPACE);
 
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
-      NewRegion.ShortcutKeys.Add(VK_ESCAPE);
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_RIGHT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionToMenu, ExitToMenu);
+    NewRegion.ShortcutKeys.Add(VK_ESCAPE);
 
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
-      NewRegion.ShortcutKeys.Add(VK_F2);
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_MID, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLevelSelect, DoLevelSelect);
+    NewRegion.ShortcutKeys.Add(VK_F2);
 
-      NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
-      NewRegion.AddKeysFromFunction(lka_LoadReplay);
+    NewRegion := MakeClickableText(Point(FOOTER_THREE_OPTIONS_X_LEFT, FOOTER_OPTIONS_TWO_ROWS_LOW_Y), SOptionLoadReplay, TryLoadReplay);
+    NewRegion.AddKeysFromFunction(lka_LoadReplay);
 
-      MakeHiddenOption(VK_F3, ShowConfigMenu);
-      MakeHiddenOption(VK_LEFT, PreviousLevel);
-      MakeHiddenOption(VK_RIGHT, NextLevel);
-      MakeHiddenOption(VK_DOWN, PreviousRank);
-      MakeHiddenOption(VK_UP, NextRank);
-      MakeHiddenOption(lka_SaveImage, SaveLevelImage);
+    MakeHiddenOption(VK_F3, ShowConfigMenu);
+    MakeHiddenOption(VK_LEFT, PreviousLevel);
+    MakeHiddenOption(VK_RIGHT, NextLevel);
+    MakeHiddenOption(VK_DOWN, PreviousRank);
+    MakeHiddenOption(VK_UP, NextRank);
+    MakeHiddenOption(lka_SaveImage, SaveLevelImage);
 
-      MakeTalismanOptions;
+    MakeTalismanOptions;
 
-      DrawAllClickables;
-    finally
-      W.Free;
-    end;
+    DrawAllClickables;
   finally
+    W.Free;
     ScreenImg.EndUpdate;
   end;
 end;
