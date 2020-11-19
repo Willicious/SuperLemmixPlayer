@@ -173,17 +173,17 @@ procedure TGameMenuScreen.ApplicationIdle(Sender: TObject; var Done: Boolean);
 begin
   if fCleanInstallFail then
   begin
-    DisableIdle;
+    //DisableIdle;
 
     fCleanInstallFail := false;
-    ShowMessage('It appears you have installed this version of NeoLemmix over ' +
+    {ShowMessage('It appears you have installed this version of NeoLemmix over ' +
                 'an older major version. It is recommended that you perform a ' +
                 'clean install of NeoLemmix whenever updating to a new major ' +
                 'version. If you encounter any bugs, especially relating to ' +
                 'styles, please test with a fresh install before reporting them.');
-    fLastReelUpdateTickCount := GetTickCount64;
+    fLastReelUpdateTickCount := GetTickCount64;}
 
-    EnableIdle;
+    //EnableIdle;
   end else if not GameParams.LoadedConfig then
   begin
     DisableIdle;
@@ -391,7 +391,7 @@ begin
   else
     PackInfoText := #13 + 'No Pack';
 
-  NLInfoText := 'NeoLemmix Player V' + CurrentVersionString;
+  NLInfoText := 'NeoLemmix NEW SKILLS EXP - V' + CurrentVersionString;
   {$ifdef exp}if COMMIT_ID <> '' then NLInfoText := NLInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
 
   MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, FOOTER_START_Y_POSITION);

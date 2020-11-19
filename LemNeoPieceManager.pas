@@ -227,6 +227,28 @@ end;
 
 // ... and to load it if not found.
 
+function ExpAllowedStyle(GS: String): Boolean;
+var
+  n: Integer;
+const
+  ALLOWED_STYLES: array[0..14] of String =
+   (
+     'default', 'orig_dirt', 'orig_fire', 'orig_marble', 'orig_pillar', 'orig_crystal',
+     'orig_sega', 'ohno_brick', 'ohno_rock', 'ohno_snow', 'ohno_bubble', 'xmas',
+     'special', '*group', 'orig_dirt_md'
+   );
+begin
+  GS := Lowercase(GS);
+  for n := 0 to Length(ALLOWED_STYLES)-1 do
+    if GS = ALLOWED_STYLES[n] then
+    begin
+      Result := true;
+      Exit;
+    end;
+
+  Result := false;
+end;
+
 function TNeoPieceManager.ObtainTerrain(Identifier: String): Integer;
 var
   BasePath: String;
@@ -234,6 +256,9 @@ var
   T: TMetaTerrain;
 begin
   TerrainLabel := SplitIdentifier(Identifier);
+
+  if not ExpAllowedStyle(TerrainLabel.GS) then
+    raise Exception.Create('Unofficial styles not allowed in this exp build.');
 
   Result := fTerrains.Count;
 
@@ -256,6 +281,8 @@ var
 begin
   try
     ObjectLabel := SplitIdentifier(Identifier);
+    if not ExpAllowedStyle(ObjectLabel.GS) then
+      raise Exception.Create('Unofficial styles not allowed in this exp build.');
     Result := fObjects.Count;
     MO := TGadgetMetaInfo.Create;
     MO.Load(ObjectLabel.GS, ObjectLabel.Piece, fTheme);

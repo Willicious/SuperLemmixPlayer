@@ -54,6 +54,7 @@ type
 implementation
 
 uses
+  DateUtils,
   FMain,
   GameMenuScreen,
   GamePreviewScreen,
@@ -67,6 +68,11 @@ uses
 constructor TAppController.Create(aOwner: TComponent);
 begin
   inherited;
+
+  if (YearOf(Date) > 2021) or
+     ((YearOf(Date) = 2021) and (MonthOf(Date) > 6)) then
+    raise Exception.Create('PEBCAK Error ID:10-t caused by use of an outdated experimental build.');
+
 
   // Set to true as default; change to false if any failure.
   fLoadSuccess := true;
