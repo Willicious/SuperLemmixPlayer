@@ -6,7 +6,7 @@ uses
   System.Types,
   Classes, Controls, GR32, GR32_Image, GR32_Layers, GR32_Resamplers,
   GameWindowInterface,
-  LemAnimationSet, LemMetaAnimation, LemNeoLevelPack,
+  LemAnimationSet, LemMetaAnimation, LemNeoLevelPack, LemProjectile,
   LemCore, LemLemming, LemGame, LemLevel;
 
 type
@@ -180,7 +180,8 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png', {Skills end here}
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
+    'empty_slot.png', 'empty_slot.png', {Skills end here}
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
     'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_frameskip.png',
     'icon_directional.png', 'icon_cpm_and_replay.png',
@@ -629,6 +630,21 @@ var
     if GameParams.HighResolution and not isRecursive then
       Outline(dst, true);
   end;
+
+  procedure DrawMiscBmp(Src, Dst: TBitmap32; dstX, dstY: Integer; SrcRect: TRect);
+  begin
+    if GameParams.HighResolution then
+    begin
+      dstX := dstX * 2;
+      dstY := dstY * 2;
+      SrcRect.Left := SrcRect.Left * 2;
+      SrcRect.Top := SrcRect.Top * 2;
+      SrcRect.Right := SrcRect.Right * 2;
+      SrcRect.Bottom := SrcRect.Bottom * 2;
+    end;
+
+    Src.DrawTo(Dst, dstX, dstY, SrcRect);
+  end;
 begin
   // Load the erasing icon first
   GetGraphic('skill_count_erase.png', fSkillCountErase);
@@ -707,6 +723,20 @@ begin
     DrawBrick(fSkillIcons[spbStacker], 10, 19);
     DrawBrick(fSkillIcons[spbStacker], 10, 18);
     DrawBrick(fSkillIcons[spbStacker], 10, 17);
+
+    // Projectiles are messy.
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', TempBMP)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', TempBMP);
+
+    DoProjectileRecolor(TempBMP, BrickColor);
+
+    DrawMiscBmp(TempBMP, fSkillIcons[spbSpearer], -1, 11, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+    DrawMiscBmp(TempBMP, fSkillIcons[spbGrenader], 2, 11, PROJECTILE_GRAPHIC_RECTS[pgGrenade]);
+
+    DrawAnimationFrame(fSkillIcons[spbSpearer], THROWING, 1, 9, 21);
+    DrawAnimationFrame(fSkillIcons[spbGrenader], THROWING, 1, 7, 21);
 
     // Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
     // For Digger, we just have to accept some particles.

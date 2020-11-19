@@ -7,6 +7,7 @@ unit LemRenderHelpers;
 interface
 
 uses
+  LemProjectile,
   LemTypes, LemGadgets, LemLemming, LemCore,
   GR32, GR32_Blend,
   Contnrs, Classes;
@@ -36,6 +37,7 @@ type
   TDrawableItem = (di_ConstructivePixel, di_Stoner);
   TDrawRoutine = procedure(X, Y: Integer) of object;
   TDrawRoutineWithColor = procedure(X, Y: Integer; Color: TColor32) of object;
+  TProjectileRoutine = procedure(P: TProjectile) of object;
   TRemoveRoutine = procedure(X, Y, Width, Height: Integer) of object;
   TSimulateTransitionRoutine = procedure(L: TLemming; NewAction: TBasicLemmingAction) of object;
   TSimulateLemRoutine = function(L: TLemming; DoCheckObjects: Boolean = True): TArrayArrayInt of object;
@@ -46,6 +48,7 @@ type
                   rlBackgroundObjects,
                   rlGadgetsLow,
                   rlLowShadows,
+                  rlProjectiles,
                   rlTerrain,
                   rlOnTerrainGadgets,
                   rlOneWayArrows,
@@ -127,6 +130,7 @@ type
     private
       fDisableDrawing: Boolean;
       fLemmingList: TLemmingList;
+      fProjectileList: TProjectileList;
       fGadgets: TGadgetList;
       fPSelectedSkill: ^TSkillPanelButton;
       fSelectedLemmingID: Integer;
@@ -137,6 +141,7 @@ type
       fMousePos: TPoint;
       fDrawRoutineBrick: TDrawRoutineWithColor;
       fDrawRoutineStoner: TDrawRoutine;
+      fDrawRoutineSpear: TProjectileRoutine;
       fRemoveRoutine: TRemoveRoutine;
       fSimulateTransitionRoutine: TSimulateTransitionRoutine;
       fSimulateLemRoutine: TSimulateLemRoutine;
@@ -156,12 +161,14 @@ type
       procedure SetSelectedSkillPointer(var aButton: TSkillPanelButton);
       procedure SetDrawRoutineStoner(aRoutine: TDrawRoutine);
       procedure SetDrawRoutineBrick(aRoutine: TDrawRoutineWithColor);
+      procedure SetDrawRoutineSpear(aRoutine: TProjectileRoutine);
       procedure SetRemoveRoutine(aRoutine: TRemoveRoutine);
       procedure SetSimulateLemRoutine(aLemRoutine: TSimulateLemRoutine; aTransRoutine: TSimulateTransitionRoutine);
       procedure SetGetHighlitRoutine(aRoutine: TGetLemmingRoutine);
       procedure SetIsStartingSecondsRoutine(aRoutine: TIsStartingSecondsRoutine);
       procedure AddTerrainBrick(X, Y: Integer; Color: TColor32);
       procedure AddTerrainStoner(X, Y: Integer);
+      procedure AddTerrainSpear(P: TProjectile);
       procedure RemoveTerrain(X, Y, Width, Height: Integer);
       procedure Null;
       procedure SimulateTransitionLem(L: TLemming; NewAction: TBasicLemmingAction);
@@ -169,6 +176,7 @@ type
       function IsStartingSeconds: Boolean;
       property DisableDrawing: Boolean read fDisableDrawing write fDisableDrawing;
       property LemmingList: TLemmingList read fLemmingList write fLemmingList;
+      property ProjectileList: TProjectileList read fProjectileList write fProjectileList;
       property Gadgets: TGadgetList read fGadgets write fGadgets;
       property SelectedSkill: TSkillPanelButton read GetSelectedSkill;
       property SelectedLemming: TLemming read GetSelectedLemming write SetSelectedLemming;
@@ -254,6 +262,11 @@ begin
   fSelectedLemmingID := -1;
 end;
 
+procedure TRenderInterface.SetDrawRoutineSpear(aRoutine: TProjectileRoutine);
+begin
+  fDrawRoutineSpear := aRoutine;
+end;
+
 procedure TRenderInterface.SetDrawRoutineStoner(aRoutine: TDrawRoutine);
 begin
   fDrawRoutineStoner := aRoutine;
@@ -291,6 +304,14 @@ begin
   // This is to pass to TRenderer for on-screen drawing.
   if fDisableDrawing then Exit;
   if Assigned(fDrawRoutineBrick) then fDrawRoutineBrick(X, Y, Color);
+end;
+
+procedure TRenderInterface.AddTerrainSpear(P: TProjectile);
+begin
+  // TLemmingGame is expected to handle modifications to the physics map.
+  // This is to pass to TRenderer for on-screen drawing.
+  if fDisableDrawing then Exit;
+  if Assigned(fDrawRoutineSpear) then fDrawRoutineSpear(P);
 end;
 
 procedure TRenderInterface.AddTerrainStoner(X, Y: Integer);

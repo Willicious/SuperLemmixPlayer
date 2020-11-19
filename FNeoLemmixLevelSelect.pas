@@ -103,12 +103,14 @@ const // Icon indexes
     17, // Platformer
     18, // Builder
     19, // Stacker
-    37, // Laserer
+    37, // Spearer
+    38, // Grenader
+    39, // Laserer
     20, // Basher
     21, // Fencer
     22, // Miner
     23, // Digger
-    24 // Cloner
+    24  // Cloner
   );
 
   ICON_BRONZE_TALISMAN = 25;

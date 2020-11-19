@@ -1,0 +1,379 @@
+# ----------------------------- 
+#        NeoLemmix Level        
+#   Created with NLEditor 1.28
+# ----------------------------- 
+ 
+#        Level info             
+# ----------------------------- 
+ TITLE Throwables Test 1
+ AUTHOR 
+ MUSIC orig_01
+ ID x0A799BE309E10605
+ 
+#       Level dimensions        
+# ----------------------------- 
+ WIDTH 640
+ HEIGHT 160
+ START_X 386
+ START_Y 104
+ THEME orig_dirt
+ 
+#         Level stats           
+# ----------------------------- 
+ LEMMINGS 40
+ SAVE_REQUIREMENT 20
+ MAX_SPAWN_INTERVAL 53
+ 
+ $SKILLSET 
+   JUMPER 20
+   CLIMBER 20
+   BLOCKER 20
+   PLATFORMER 20
+   BUILDER 20
+   SPEARER 20
+   GRENADER 20
+   BASHER 20
+   DIGGER 20
+   CLONER 20
+ $END 
+ 
+#     Interactive objects       
+# ----------------------------- 
+ $GADGET
+   STYLE orig_dirt
+   PIECE window
+   X 372
+   Y 55
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE orig_dirt
+   PIECE window
+   X 156
+   Y 32
+   NO_OVERWRITE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 68
+   Y 106
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 136
+   Y 113
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+   ROTATE
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 270
+   Y 95
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+   FLIP_HORIZONTAL
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE owa_left
+   X 209
+   Y 110
+   WIDTH 32
+   HEIGHT 32
+   ONLY_ON_TERRAIN
+   ROTATE
+   FLIP_VERTICAL
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 429
+   Y 105
+   NO_OVERWRITE
+   SKILL SPEARER
+ $END
+ 
+ $GADGET
+   STYLE default
+   PIECE pickup
+   X 443
+   Y 105
+   NO_OVERWRITE
+   SKILL GRENADER
+ $END
+ 
+ 
+#        Terrain pieces         
+# ----------------------------- 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_04
+   X 199
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 300
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 364
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 436
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 492
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 556
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 593
+   Y 122
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 524
+   Y 128
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 467
+   Y 121
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 393
+   Y 118
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 327
+   Y 119
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_08
+   X 314
+   Y 77
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_08
+   X 314
+   Y 77
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_06
+   X 608
+   Y 27
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_06
+   X 620
+   Y -10
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_06
+   X 598
+   Y 89
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_06
+   X 621
+   Y 86
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 487
+   Y 47
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE steel_01
+   X 463
+   Y 47
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 585
+   Y -4
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 247
+   Y 121
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 206
+   Y 136
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 154
+   Y 137
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 107
+   Y 137
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X 35
+   Y 133
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X -19
+   Y 132
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X -69
+   Y 112
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_07
+   X -67
+   Y 91
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE clump_08
+   X -1
+   Y 80
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 150
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 186
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE bridge_01
+   X 114
+   Y 78
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE rocks_01
+   X 68
+   Y 106
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE rocks_01
+   X 136
+   Y 113
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE rocks_01
+   X 210
+   Y 110
+   ONE_WAY
+ $END
+ 
+ $TERRAIN
+   STYLE orig_dirt
+   PIECE rocks_01
+   X 272
+   Y 95
+   ONE_WAY
+ $END
+ 
+ 

@@ -830,6 +830,8 @@ begin
       spbCloner: SL.Add('  fRenderInterface.SelectedSkill: Cloner');
       spbShimmier: SL.Add('  fRenderInterface.SelectedSkill: Shimmier');
       spbJumper: SL.Add('  fRenderInterface.SelectedSkill: Jumper');
+      spbSpearer: SL.Add('  fRenderInterface.SelectedSkill: Spearer');
+      spbGrenader: SL.Add('  fRenderInterface.SelectedSkill: Grenader');
       else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
     end;
   end;
@@ -904,6 +906,7 @@ begin
       fRenderInterface.MousePos := Game.CursorPoint;
       fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
       fRenderer.DrawLemmings(fClearPhysics);
+      fRenderer.DrawProjectiles;
 
       if GameParams.MinimapHighQuality or (GameSpeed = gspPause) then
         DrawRect := Img.Bitmap.BoundsRect
@@ -2011,6 +2014,7 @@ begin
 
       fRenderer.DrawAllGadgets(fRenderInterface.Gadgets, true, fClearPhysics);
       fRenderer.DrawLemmings(fClearPhysics);
+      fRenderer.DrawProjectiles;
       fRenderer.DrawLevel(BMP, fClearPhysics);
 
       TPngInterface.SavePngFile(SaveName, BMP, true);

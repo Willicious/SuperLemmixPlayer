@@ -104,6 +104,8 @@ function CalculateColorShift(aPrimary, aAlt: TColor32): TColorDiff;
 function ApplyColorShift(aBase: TColor32; aDiff: TColorDiff): TColor32; overload;
 function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32; overload;
 
+procedure DoProjectileRecolor(aProjectileBmp: TBitmap32; aMaskColor: TColor32);
+
 implementation
 
 uses
@@ -821,6 +823,46 @@ end;
 function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32;
 begin
   Result := ApplyColorShift(aBase, CalculateColorShift(aPrimary, aAlt));
+end;
+
+procedure DoProjectileRecolor(aProjectileBmp: TBitmap32; aMaskColor: TColor32);
+const
+  LIGHT_COLOR = $FFFF00FF;
+  DARK_COLOR = $FFC000C0;
+var
+  NewLight, NewDark: TColor32;
+  R, G, B: Cardinal;
+  Multiplier: Double;
+  x, y: Integer;
+begin
+  NewLight := aMaskColor;
+
+  R := RedComponent(NewLight);
+  G := GreenComponent(NewLight);
+  B := BlueComponent(NewLight);
+
+  if (R = 0) and (G = 0) and (B = 0) then
+  begin
+    NewDark := $FF000000;
+    NewLight := $FF404040;
+  end else if (R <= $40) and (G <= $40) and (B < $40) then
+  begin
+    Multiplier := $40;
+    if R > 0 then Multiplier := Min($40 / R, Multiplier);
+    if G > 0 then Multiplier := Min($40 / G, Multiplier);
+    if B > 0 then Multiplier := Min($40 / B, Multiplier);
+
+    NewDark := NewLight;
+    NewLight := $FF000000 or (Round(R * Multiplier) shl 16) or (Round(G * Multiplier) shl 8) or Round(B * Multiplier);
+  end else
+    NewDark := $FF000000 or ((R div 2) shl 16) or ((G div 2) shl 8) or (B div 2);
+
+  for y := 0 to aProjectileBmp.Height-1 do
+    for x := 0 to aProjectileBmp.Width-1 do
+      if aProjectileBmp[x, y] = LIGHT_COLOR then
+        aProjectileBmp[x, y] := NewLight
+      else if aProjectileBmp[x, y] = DARK_COLOR then
+        aProjectileBmp[x, y] := NewDark;
 end;
 
 end.

@@ -164,6 +164,8 @@ object FLemmixHotkeys: TFLemmixHotkeys
       'Platformer'
       'Builder'
       'Stacker'
+      'Spearer'
+      'Grenader'
       'Laserer'
       'Basher'
       'Fencer'

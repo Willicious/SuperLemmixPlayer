@@ -76,7 +76,9 @@ type
     baReaching,
     baShimmying,
     baJumping,
-    baLasering
+    baLasering,
+    baSpearing,
+    baGrenading
   );
 
 const
@@ -100,6 +102,8 @@ type
     spbPlatformer,
     spbBuilder,
     spbStacker,
+    spbSpearer,
+    spbGrenader,
     spbLaserer,
     spbBasher,
     spbFencer,
@@ -143,6 +147,8 @@ const
     'platformer',
     'builder',
     'stacker',
+    'spearer',
+    'grenader',
     'laserer',
     'basher',
     'fencer',
@@ -165,6 +171,8 @@ const
     'platformers',
     'builders',
     'stackers',
+    'spearers',
+    'grenaders',
     'laserers',
     'bashers',
     'fencers',
@@ -218,7 +226,9 @@ const
     baFencing,
     baShimmying,
     baJumping,
-    baLasering
+    baLasering,
+    baSpearing,
+    baGrenading
   ];
 
 const
@@ -255,7 +265,9 @@ const
     spbNone,
     spbShimmier,
     spbJumper,
-    spbLaserer
+    spbLaserer,
+    spbSpearer,
+    spbGrenader
   );
 
 const
@@ -275,6 +287,8 @@ const
     baPlatforming,
     baBuilding,
     baStacking,
+    baSpearing,
+    baGrenading,
     baLasering,
     baBashing,
     baFencing,

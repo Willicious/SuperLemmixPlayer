@@ -90,6 +90,8 @@ var
             baShimmying:   Result := 'Shimmier';
             baJumping:     Result := 'Jumper';
             baLasering:    Result := 'Laserer';
+            baGrenading:   Result := 'Grenader';
+            baSpearing:    Result := 'Spearer';
         else Result := '(Invalid skill)';
       end;
     end;

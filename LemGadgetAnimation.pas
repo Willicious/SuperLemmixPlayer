@@ -251,6 +251,7 @@ type
 implementation
 
 uses
+  LemProjectile,
   LemNeoPieceManager,
   GameControl;
 
@@ -409,6 +410,21 @@ var
       end else
         dst.PixelS[X + oX, Y] := BrickColor;
   end;
+
+  procedure DrawMiscBmp(Src, Dst: TBitmap32; dstX, dstY: Integer; SrcRect: TRect);
+  begin
+    if GameParams.HighResolution then
+    begin
+      dstX := dstX * 2;
+      dstY := dstY * 2;
+      SrcRect.Left := SrcRect.Left * 2;
+      SrcRect.Top := SrcRect.Top * 2;
+      SrcRect.Right := SrcRect.Right * 2;
+      SrcRect.Bottom := SrcRect.Bottom * 2;
+    end;
+
+    Src.DrawTo(Dst, dstX, dstY, SrcRect);
+  end;
 const
   PICKUP_MID = (PICKUP_AUTO_GFX_SIZE div 2) - 1;
   PICKUP_BASELINE = (PICKUP_AUTO_GFX_SIZE div 2) + 7;
@@ -469,6 +485,25 @@ begin
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 5);
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 6);
   DrawBrick(SkillIcons[Integer(spbStacker)], PICKUP_MID + 2, PICKUP_BASELINE - 7);
+
+  // Projectiles are messy.
+  NewBMP := TBitmap32.Create;
+  try
+    if GameParams.HighResolution then
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', NewBMP)
+    else
+      TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', NewBMP);
+
+    DoProjectileRecolor(NewBMP, $FFFFFFFF);
+
+    DrawMiscBmp(NewBMP, SkillIcons[Integer(spbSpearer)], PICKUP_MID - 8, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgSpearSlightBLTR]);
+    DrawMiscBmp(NewBMP, SkillIcons[Integer(spbGrenader)], PICKUP_MID - 3, PICKUP_BASELINE - 10, PROJECTILE_GRAPHIC_RECTS[pgGrenade]);
+  finally
+    NewBMP.Free;
+  end;
+
+  DrawAnimationFrame(SkillIcons[Integer(spbSpearer)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE);
+  DrawAnimationFrame(SkillIcons[Integer(spbGrenader)], THROWING, 1, PICKUP_MID + 2, PICKUP_BASELINE);
 
   // Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles.
   // For the Digger, we don't have a choice - we have to accept the presence of some destruction particles.

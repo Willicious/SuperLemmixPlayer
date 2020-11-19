@@ -23,7 +23,7 @@ uses
   LemLevel,
   LemRenderHelpers, LemRendering,
   LemNeoTheme,
-  LemGadgets, LemGadgetsConstants, LemLemming, LemRecolorSprites,
+  LemGadgets, LemGadgetsConstants, LemLemming, LemProjectile, LemRecolorSprites,
   LemReplay,
   LemTalisman,
   LemGameMessageQueue,
@@ -47,6 +47,7 @@ type
   TLemmingGameSavedState = class
     public
       LemmingList: TLemmingList;
+      ProjectileList: TProjectileList;
       SelectedSkill: TSkillPanelButton;
       TerrainLayer: TBitmap32;  // the visual terrain image
       PhysicsMap: TBitmap32;    // the actual physics
@@ -111,6 +112,7 @@ type
 
   { internal objects }
     LemmingList                : TLemmingList; // the list of lemmings
+    ProjectileList             : TProjectileList;
     PhysicsMap                 : TBitmap32;
     BlockerMap                 : TBitmap32; // for blockers
     ZombieMap                  : TByteMap;
@@ -138,6 +140,8 @@ type
   { masks }
     BomberMask                 : TBitmap32;
     StonerMask                 : TBitmap32;
+    ProjectileMasks            : TBitmap32;
+    GrenadeMask                : TBitmap32;
     BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
     MinerMasks                 : TBitmap32;
@@ -211,7 +215,7 @@ type
     procedure CombineMaskPixelsDownLeft(F: TColor32; var B: TColor32; M: TColor32);   //left-facing miner
     procedure CombineMaskPixelsDownRight(F: TColor32; var B: TColor32; M: TColor32);  //right-facing miner
     procedure CombineMaskPixelsNeutral(F: TColor32; var B: TColor32; M: TColor32);    //bomber
-    procedure CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
+    procedure CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: TColor32);
 
   { internal methods }
     procedure DoTalismanCheck;
@@ -222,6 +226,8 @@ type
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
     procedure ApplyStoneLemming(L: TLemming);
+    procedure ApplySpear(P: TProjectile);
+    procedure ApplyGrenadeMask(P: TProjectile);
     procedure ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
     procedure AddConstructivePixel(X, Y: Integer; Color: TColor32);
     function CalculateNextLemmingCountdown: Integer;
@@ -293,6 +299,8 @@ type
     function UpdateExplosionTimer(L: TLemming): Boolean;
     procedure UpdateGadgets;
 
+    procedure UpdateProjectiles;
+
     function CheckSkillAvailable(aAction: TBasicLemmingAction): Boolean;
     procedure UpdateSkillCount(aAction: TBasicLemmingAction; Amount: Integer = -1);
 
@@ -334,6 +342,7 @@ type
     function HandleShimmying(L: TLemming) : Boolean;
     function HandleJumping(L: TLemming) : Boolean;
     function HandleLasering(L: TLemming) : Boolean;
+    function HandleThrowing(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -363,6 +372,7 @@ type
     function MayAssignShimmier(L: TLemming) : Boolean;
     function MayAssignJumper(L: TLemming) : Boolean;
     function MayAssignLaserer(L: TLemming) : Boolean;
+    function MayAssignThrowingSkill(L: TLemming) : Boolean;
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -542,11 +552,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..19] of TBasicLemmingAction =
+  ActionListArray: array[0..21] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping, baLasering);
+             baJumping, baLasering, baSpearing, baGrenading);
 
 
 
@@ -564,6 +574,7 @@ constructor TLemmingGameSavedState.Create;
 begin
   inherited;
   LemmingList := TLemmingList.Create(true);
+  ProjectileList := TProjectileList.Create(true);
   Gadgets := TGadgetList.Create(true);
   TerrainLayer := TBitmap32.Create;
   PhysicsMap := TBitmap32.Create;
@@ -573,6 +584,7 @@ end;
 destructor TLemmingGameSavedState.Destroy;
 begin
   LemmingList.Free;
+  ProjectileList.Free;
   Gadgets.Free;
   TerrainLayer.Free;
   PhysicsMap.Free;
@@ -696,6 +708,11 @@ begin
     aState.LemmingList[i].Assign(LemmingList[i]);
   end;
 
+  // Projectiles.
+  aState.ProjectileList.Clear;
+  for i := 0 to ProjectileList.Count-1 do
+    aState.ProjectileList.Add(TProjectile.CreateAssign(ProjectileList[i]));
+
   // Objects.
   aState.Gadgets.Clear;
   for i := 0 to Gadgets.Count-1 do
@@ -745,6 +762,14 @@ begin
     LemmingList.Add(TLemming.Create);
     LemmingList[i].Assign(aState.LemmingList[i]);
     LemmingList[i].LemIndex := i;
+  end;
+
+  // Projectiles.
+  ProjectileList.Clear;
+  for i := 0 to aState.ProjectileList.Count-1 do
+  begin
+    ProjectileList.Add(TProjectile.CreateAssign(aState.ProjectileList[i]));
+    ProjectileList[i].Relink(PhysicsMap, LemmingList);
   end;
 
   // Objects
@@ -852,9 +877,12 @@ begin
   fMessageQueue  := TGameMessageQueue.Create;
 
   LemmingList    := TLemmingList.Create;
+  ProjectileList := TProjectileList.Create;
 
   BomberMask     := TBitmap32.Create;
   StonerMask     := TBitmap32.Create;
+  GrenadeMask    := TBitmap32.Create;
+  ProjectileMasks := TBitmap32.Create;
   BasherMasks    := TBitmap32.Create;
   FencerMasks    := TBitmap32.Create;
   MinerMasks     := TBitmap32.Create;
@@ -866,6 +894,7 @@ begin
   fReplayManager := TReplay.Create;
 
   fRenderInterface.LemmingList := LemmingList;
+  fRenderInterface.ProjectileList := ProjectileList;
   fRenderInterface.Gadgets := Gadgets;
   fRenderInterface.SetSelectedSkillPointer(fSelectedSkill);
   fRenderInterface.SelectedLemming := nil;
@@ -906,6 +935,8 @@ begin
   LemmingMethods[baShimmying]  := HandleShimmying;
   LemmingMethods[baJumping]    := HandleJumping;
   LemmingMethods[baLasering]   := HandleLasering;
+  LemmingMethods[baSpearing]   := HandleThrowing;
+  LemmingMethods[baGrenading]  := HandleThrowing;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -938,6 +969,8 @@ begin
   NewSkillMethods[baShimmying]    := MayAssignShimmier;
   NewSkillMethods[baJumping]      := MayAssignJumper;
   NewSkillMethods[baLasering]     := MayAssignLaserer;
+  NewSkillMethods[baSpearing]     := MayAssignThrowingSkill;
+  NewSkillMethods[baGrenading]    := MayAssignThrowingSkill;
 
   P := AppPath;
 
@@ -953,11 +986,14 @@ begin
   BomberMask.Free;
   StonerMask.Free;
   LaserMask.Free;
+  GrenadeMask.Free;
+  ProjectileMasks.Free;
   BasherMasks.Free;
   FencerMasks.Free;
   MinerMasks.Free;
 
   LemmingList.Free;
+  ProjectileList.Free;
   Gadgets.Free;
   BlockerMap.Free;
   ZombieMap.Free;
@@ -990,8 +1026,10 @@ begin
   if not fMasksLoaded then
   begin
     LoadMask(BomberMask, 'bomber.png', CombineMaskPixelsNeutral);
-    LoadMask(StonerMask, 'stoner.png', CombineNoOverwriteStoner);
-    LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Laserer, Basher, Fencer and Miner are set when used
+    LoadMask(StonerMask, 'stoner.png', CombineNoOverwriteMask);
+    LoadMask(ProjectileMasks, 'projectiles.png', CombineNoOverwriteMask);
+    LoadMask(GrenadeMask, 'grenader.png', CombineMaskPixelsNeutral);
+    LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Basher, Fencer and Miner are set when used
     LoadMask(FencerMasks, 'fencer.png', CombineMaskPixelsNeutral);
     LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
     LoadMask(LaserMask, 'laser.png', CombineMaskPixelsNeutral);
@@ -1053,6 +1091,8 @@ begin
   Index_LemmingToBeNuked := 0;
   fParticleFinishTimer := 0;
   LemmingList.Clear;
+  ProjectileList.Clear;
+
   if Level.Info.LevelID <> fReplayManager.LevelID then //not aReplay then
   begin
     fReplayManager.Clear(true);
@@ -1245,8 +1285,7 @@ end;
 
 
 
-procedure TLemmingGame.CombineNoOverwriteStoner(F: TColor32; var B: TColor32; M: TColor32);
-// copy Stoner to world
+procedure TLemmingGame.CombineNoOverwriteMask(F: TColor32; var B: TColor32; M: TColor32);
 begin
   if (B and PM_SOLID = 0) and (AlphaComponent(F) <> 0) then B := (B or PM_SOLID);
 end;
@@ -1362,7 +1401,9 @@ const
      8, //baReaching,
     20, //baShimmying
     13, //baJumping
-    12  //baLasering - it's, ironically, this high for rendering purposes
+    12, //baLasering - it's, ironically, this high for rendering purposes
+    10, //baSpearing
+    10  //baGrenading
     );
 begin
   if DoTurn then TurnAround(L);
@@ -1863,7 +1904,13 @@ begin
   // Required for turned builders not to walk into air
   // For platformers, see http://www.lemmingsforums.net/index.php?topic=2530.0
   else if (NewL.LemAction in [baBuilding, baPlatforming]) and (NewL.LemPhysicsFrame >= 9) then
-    LayBrick(NewL);
+    LayBrick(NewL)
+  // If in an early-enough phase of spearing or grenading, create a clone projectile
+  else if (NewL.LemAction in [baSpearing, baGrenading]) and (NewL.LemPhysicsFrame <= 4) then
+  begin
+    ProjectileList.Add(TProjectile.CreateForCloner(PhysicsMap, NewL, ProjectileList[L.LemHoldingProjectileIndex]));
+    NewL.LemHoldingProjectileIndex := ProjectileList.Count - 1;
+  end;
 end;
 
 
@@ -2118,6 +2165,14 @@ begin
   Result := (L.LemAction in ActionSet);
 end;
 
+function TLemmingGame.MayAssignThrowingSkill(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baFencing, baMining, baDigging];
+begin
+  Result := (L.LemAction in ActionSet);
+end;
+
 function TLemmingGame.MayAssignBasher(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
@@ -2156,7 +2211,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
                baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
-               baJumping, baLasering];
+               baJumping, baLasering, baSpearing, baGrenading];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2756,8 +2811,6 @@ begin
   end;
 end;
 
-
-
 procedure TLemmingGame.ApplyStoneLemming(L: TLemming);
 var
   X: Integer;
@@ -2771,7 +2824,6 @@ begin
     fRenderInterface.AddTerrainStoner(X - 8, L.LemY -10);
 end;
 
-
 procedure TLemmingGame.ApplyExplosionMask(L: TLemming);
 var
   PosX, PosY: Integer;
@@ -2784,6 +2836,32 @@ begin
 
   if not IsSimulating then // could happen as a result of nuking
     fRenderInterface.RemoveTerrain(PosX - 8, PosY - 14, BomberMask.Width, BomberMask.Height);
+end;
+
+procedure TLemmingGame.ApplySpear(P: TProjectile);
+var
+  Graphic: TProjectileGraphic;
+  SrcRect: TRect;
+  Hotspot: TPoint;
+  Target: TPoint;
+begin
+  Graphic := P.Graphic;
+  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  Hotspot := P.Hotspot;
+  Target := Point(P.X, P.Y);
+
+  ProjectileMasks.DrawTo(PhysicsMap, Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
+
+  if not IsSimulating then
+    fRenderInterface.AddTerrainSpear(P);
+end;
+
+procedure TLemmingGame.ApplyGrenadeMask(P: TProjectile);
+begin
+  GrenadeMask.DrawTo(PhysicsMap, P.X - 12, P.Y - 21);
+
+  if not IsSimulating then
+    fRenderInterface.RemoveTerrain(P.X - 12, P.Y - 21, GrenadeMask.Width, GrenadeMask.Height);
 end;
 
 procedure TLemmingGame.ApplyBashingMask(L: TLemming; MaskFrame: Integer);
@@ -2944,7 +3022,8 @@ var
   ShadowLem: TLemming;
 const
   ShadowSkillSet = [spbJumper, spbShimmier, spbPlatformer, spbBuilder, spbStacker, spbDigger,
-                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner];
+                    spbMiner, spbBasher, spbFencer, spbBomber, spbGlider, spbCloner,
+                    spbSpearer, spbGrenader];
 begin
   if fHyperSpeed then Exit;
 
@@ -4764,6 +4843,35 @@ begin
 end;
 
 
+function TLemmingGame.HandleThrowing(L: TLemming): Boolean;
+var
+  NewProjectile: TProjectile;
+begin
+  case L.LemPhysicsFrame of
+    1: begin
+         L.LemFrame := 0;
+
+         if not IsSimulating then
+         begin
+           if L.LemAction = baGrenading then
+             NewProjectile := TProjectile.CreateGrenade(PhysicsMap, L)
+           else
+             NewProjectile := TProjectile.CreateSpear(PhysicsMap, L);
+
+           ProjectileList.Add(NewProjectile);
+
+           L.LemHoldingProjectileIndex := ProjectileList.Count - 1;
+         end;
+       end;
+
+    0, 2, 3: L.LemFrame := 0;
+
+    9: Transition(L, baShrugging);
+  end;
+
+  Result := true;
+end;
+
 function TLemmingGame.HandleSplatting(L: TLemming): Boolean;
 begin
   Result := False;
@@ -4914,6 +5022,7 @@ begin
   IncrementIteration;
   CheckReleaseLemming;
   CheckLemmings;
+  UpdateProjectiles;
   CheckUpdateNuking;
   UpdateGadgets;
 
@@ -4957,6 +5066,49 @@ begin
     GameParams.CurrentLevel.Status := lst_Attempted;
 
   GameParams.CurrentLevel.WriteNewRecords(NewRecs);
+end;
+
+procedure TLemmingGame.UpdateProjectiles;
+var
+  i: Integer;
+  P: TProjectile;
+
+  function IsOutOfBounds(P: TProjectile): Boolean;
+  begin
+    Result := (P.X < -8) or (P.X >= Level.Info.Width + 8) or
+              (P.Y < -8) or (P.Y >= Level.Info.Height + 8);
+  end;
+begin
+  for i := ProjectileList.Count-1 downto 0 do
+  begin
+    P := ProjectileList[i];
+    if P.Hit and P.IsGrenade then
+      ProjectileList.Delete(i);
+  end;
+
+  for i := 0 to ProjectileList.Count-1 do
+  begin
+    P := ProjectileList[i];
+    P.Update;
+  end;
+
+  for i := ProjectileList.Count-1 downto 0 do
+  begin
+    P := ProjectileList[i];
+    if P.SilentRemove or IsOutOfBounds(P) then
+      ProjectileList.Delete(i)
+    else if P.Hit then
+    begin
+      if P.IsSpear then
+      begin
+        ApplySpear(P);
+        ProjectileList.Delete(i);
+      end else begin
+        ApplyGrenadeMask(P);
+        CueSoundEffect(SFX_EXPLOSION, Point(P.X, P.Y));
+      end;
+    end;
+  end;
 end;
 
 procedure TLemmingGame.IncrementIteration;

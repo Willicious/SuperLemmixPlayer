@@ -18,7 +18,7 @@ uses
   LemTypes,
   LemTerrain, LemGadgetsModel, LemMetaTerrain,
   LemGadgets, LemGadgetsMeta, LemGadgetAnimation, LemGadgetsConstants,
-  LemLemming,
+  LemLemming, LemProjectile,
   LemAnimationSet, LemMetaAnimation, LemCore,
   LemLevel, LemStrings;
 
@@ -51,6 +51,7 @@ type
     fLaserGraphic: TBitmap32;
 
     fPhysicsMap         : TBitmap32;
+    fProjectileImage    : TBitmap32;
     fLayers             : TRenderBitmaps;
 
     TempBitmap          : TBitmap32;
@@ -68,11 +69,12 @@ type
     fFixedDrawColor: TColor32; // must use with CombineFixedColor pixel combine
     fPhysicsRenderingType: TPhysicsRenderingType;
 
-    fHelpersAreHighRes: Boolean;
+    fGraphicsAreHighRes: Boolean;
 
     // Add stuff
     procedure AddTerrainPixel(X, Y: Integer; Color: TColor32);
     procedure AddStoner(X, Y: Integer);
+    procedure AddSpear(P: TProjectile);
     // Remove stuff
     procedure ApplyRemovedTerrain(X, Y, W, H: Integer);
 
@@ -129,6 +131,7 @@ type
     procedure DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false); overload;
 
     procedure LoadHelperImages;
+    procedure LoadProjectileImages;
 
     function FindGadgetMetaInfo(O: TGadgetModel): TGadgetMetaAccessor;
     function FindMetaTerrain(T: TTerrain): TMetaTerrain;
@@ -167,11 +170,14 @@ type
     procedure DrawMinerShadow(L: TLemming);
     procedure DrawDiggerShadow(L: TLemming);
     procedure DrawExploderShadow(L: TLemming);
+    procedure DrawProjectileShadow(L: TLemming);
     procedure DrawProjectionShadow(L: TLemming);
     procedure ClearShadows;
     procedure SetLowShadowPixel(X, Y: Integer);
     procedure SetHighShadowPixel(X, Y: Integer);
 
+    procedure DrawProjectiles;
+    procedure DrawThisProjectile(aProjectile: TProjectile);
 
     procedure RenderWorld(World: TBitmap32; DoBackground: Boolean);
     procedure RenderPhysicsMap(Dst: TBitmap32 = nil);
@@ -206,6 +212,7 @@ begin
   fRenderInterface := aInterface;
   fRenderInterface.SetDrawRoutineBrick(AddTerrainPixel);
   fRenderInterface.SetDrawRoutineStoner(AddStoner);
+  fRenderInterface.SetDrawRoutineSpear(AddSpear);
   fRenderInterface.SetRemoveRoutine(ApplyRemovedTerrain);
 end;
 
@@ -797,6 +804,18 @@ begin
         DrawStackerShadow(CopyL);
       end;
 
+    spbSpearer:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baSpearing);
+        DrawProjectileShadow(CopyL);
+      end;
+
+    spbGrenader:
+      begin
+        fRenderInterface.SimulateTransitionLem(CopyL, baGrenading);
+        DrawProjectileShadow(CopyL);
+      end;
+
     spbDigger:
       begin
         fRenderInterface.SimulateTransitionLem(CopyL, baDigging);
@@ -842,6 +861,54 @@ begin
   end;
 
   CopyL.Free;
+end;
+
+procedure TRenderer.DrawProjectiles;
+var
+  i: Integer;
+begin
+  if (fRenderInterface = nil) or (fRenderInterface.ProjectileList = nil) or
+     (fRenderInterface.ProjectileList.Count = 0) then
+  begin
+    fLayers.fIsEmpty[rlProjectiles] := true;
+  end else begin
+    fLayers.fIsEmpty[rlProjectiles] := false;
+    fLayers[rlProjectiles].Clear(0);
+
+    for i := 0 to fRenderInterface.ProjectileList.Count-1 do
+      DrawThisProjectile(fRenderInterface.ProjectileList[i]);
+  end;
+    
+end;
+
+procedure TRenderer.DrawThisProjectile(aProjectile: TProjectile);
+var
+  Graphic: TProjectileGraphic;
+  SrcRect: TRect;
+  Hotspot: TPoint;
+  Target: TPoint;
+begin
+  Graphic := aProjectile.Graphic;
+  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  Hotspot := aProjectile.Hotspot;
+  Target := Point(aProjectile.X, aProjectile.Y);
+
+  if GameParams.HighResolution then
+  begin
+    SrcRect.Left := SrcRect.Left * 2;
+    SrcRect.Top := SrcRect.Top * 2;
+    SrcRect.Right := SrcRect.Right * 2;
+    SrcRect.Bottom := SrcRect.Bottom * 2;
+    Hotspot.X := Hotspot.X * 2;
+    Hotspot.Y := Hotspot.Y * 2;
+    Target.X := Target.X * 2;
+    Target.Y := Target.Y * 2;
+  end;
+
+  if Graphic = pgGrenadeExplode then
+    fProjectileImage.DrawTo(fLayers[rlLemmings], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect)
+  else
+    fProjectileImage.DrawTo(fLayers[rlProjectiles], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
 
 procedure TRenderer.DrawProjectionShadow(L: TLemming);
@@ -1314,6 +1381,63 @@ begin
   end;
 end;
 
+procedure TRenderer.DrawProjectileShadow(L: TLemming);
+const
+  ARR_BASE_LEN = 1024;
+var
+  Proj: TProjectile;
+  PosArray: TProjectilePointArray;
+  ActualPosCount: Integer;
+  i: Integer;
+
+  LevelWidth: Integer;
+  LevelHeight: Integer;
+
+  procedure AppendPositions(New: TProjectilePointArray);
+  var
+    i: Integer;
+  begin
+    if ActualPosCount + Length(New) > Length(PosArray) then
+      SetLength(PosArray, Length(PosArray) + ARR_BASE_LEN);
+
+    for i := 0 to Length(New)-1 do
+    begin
+      PosArray[ActualPosCount] := New[i];
+      Inc(ActualPosCount);
+    end;
+  end;
+
+  function IsOutOfBounds: Boolean;
+  begin
+    Result := (Proj.X < -8) or (Proj.X >= LevelWidth + 8) or
+              (Proj.Y < -8) or (Proj.Y >= LevelHeight + 8);
+  end;
+begin
+  fLayers.fIsEmpty[rlLowShadows] := False;
+
+  LevelWidth := GameParams.Level.Info.Width;
+  LevelHeight := GameParams.Level.Info.Height;
+
+  case L.LemAction of
+    baSpearing: Proj := TProjectile.CreateSpear(fRenderInterface.PhysicsMap, L);
+    baGrenading: Proj := TProjectile.CreateGrenade(fRenderInterface.PhysicsMap, L);
+    else raise Exception.Create('TRenderer.DrawProjectileShadow passed an invalid lemming');
+  end;
+
+  SetLength(PosArray, ARR_BASE_LEN);
+  ActualPosCount := 0;
+
+  while not (Proj.SilentRemove or Proj.Hit or IsOutOfBounds) do
+  begin
+    if not Proj.Fired then // We don't need the lemming anymore once the projectile leaves its hand
+      fRenderInterface.SimulateLem(L);
+    AppendPositions(Proj.Update);
+  end;
+
+  for i := 0 to ActualPosCount-1 do
+    SetLowShadowPixel(PosArray[i].X, PosArray[i].Y);
+end;
+
 
 
 procedure TRenderer.ClearShadows;
@@ -1368,6 +1492,33 @@ begin
     Apply(X * 2 + 1, Y * 2 + 1);
   end else
     Apply(X, Y);
+end;
+
+procedure TRenderer.AddSpear(P: TProjectile);
+var
+  Graphic: TProjectileGraphic;
+  SrcRect: TRect;
+  Hotspot: TPoint;
+  Target: TPoint;
+begin
+  Graphic := P.Graphic;
+  SrcRect := PROJECTILE_GRAPHIC_RECTS[Graphic];
+  Hotspot := P.Hotspot;
+  Target := Point(P.X, P.Y);
+
+  if GameParams.HighResolution then
+  begin
+    SrcRect.Left := SrcRect.Left * 2;
+    SrcRect.Top := SrcRect.Top * 2;
+    SrcRect.Right := SrcRect.Right * 2;
+    SrcRect.Bottom := SrcRect.Bottom * 2;
+    Hotspot.X := Hotspot.X * 2;
+    Hotspot.Y := Hotspot.Y * 2;
+    Target.X := Target.X * 2;
+    Target.Y := Target.Y * 2;
+  end;
+
+  fProjectileImage.DrawTo(fLayers[rlTerrain], Target.X - Hotspot.X, Target.Y - Hotspot.Y, SrcRect);
 end;
 
 procedure TRenderer.AddStoner(X, Y: Integer);
@@ -2305,7 +2456,21 @@ begin
   fHelperImages[hpi_Exit_Lock].DrawMode := dmCustom;
   fHelperImages[hpi_Exit_Lock].OnPixelCombine := CombineFixedColor;
 
-  fHelpersAreHighRes := GameParams.HighResolution;
+  fGraphicsAreHighRes := GameParams.HighResolution;
+end;
+
+procedure TRenderer.LoadProjectileImages;
+begin
+  if GameParams.HighResolution then
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles-hr.png', fProjectileImage)
+  else
+    TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'projectiles.png', fProjectileImage);
+
+  if fTheme <> nil then
+    DoProjectileRecolor(fProjectileImage, fTheme.Colors['MASK']);
+
+  fProjectileImage.DrawMode := dmCustom;
+  fProjectileImage.OnPixelCombine := CombineTerrainNoOverwrite;
 end;
 
 procedure TRenderer.DrawGadgetsOnLayer(aLayer: TRenderLayer);
@@ -2580,6 +2745,7 @@ begin
   fTheme := TNeoTheme.Create;
   fLayers := TRenderBitmaps.Create;
   fPhysicsMap := TBitmap32.Create;
+  fProjectileImage := TBitmap32.Create;
   fBgColor := $00000000;
   fAni := TBaseAnimationSet.Create;
   fPreviewGadgets := TGadgetList.Create;
@@ -2607,6 +2773,7 @@ var
   iIcon: THelperIcon;
 begin
   TempBitmap.Free;
+  fProjectileImage.Free;
   fTheme.Free;
   fLayers.Free;
   fPhysicsMap.Free;
@@ -2992,14 +3159,15 @@ var
 
 procedure TRenderer.PrepareGameRendering(aLevel: TLevel; NoOutput: Boolean = false);
 begin
-
-  if GameParams.HighResolution <> fHelpersAreHighRes then
+  if GameParams.HighResolution <> fGraphicsAreHighRes then
     LoadHelperImages;
 
   RenderInfoRec.Level := aLevel;
 
   fTheme.Load(aLevel.Info.GraphicSetName);
   PieceManager.SetTheme(fTheme);
+
+  LoadProjectileImages;
 
   fAni.ClearData;
   fAni.Theme := fTheme;
