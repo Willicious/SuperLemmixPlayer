@@ -33,6 +33,7 @@
    STACKER 20
    LASERER 20
    BASHER 20
+   CLONER 20
  $END 
  
 #     Interactive objects       
