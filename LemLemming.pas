@@ -106,6 +106,9 @@ type
     LemHideCountdown              : Boolean; // used to ensure countdown is not displayed when assigned Bomber / Stoner
     LemStackLow                   : Boolean; // Is the starting position one pixel below usual??
     LemJumpProgress               : Integer;
+    LemLaserHit                   : Boolean;
+    LemLaserHitPoint              : TPoint;
+    LemLaserRemainTime            : Integer;
 
     LemInitialFall                : Boolean; // Set during the lemming's initial fall at the start of a level for a glider / floater special case
     // The next three values are only needed to determine intermediate trigger area checks
@@ -308,6 +311,9 @@ begin
   LemHideCountdown := Source.LemHideCountdown;
   LemStackLow := Source.LemStackLow;
   LemJumpProgress := Source.LemJumpProgress;
+  LemLaserHit := Source.LemLaserHit;
+  LemLaserHitPoint := Source.LemLaserHitPoint;
+  LemLaserRemainTime := Source.LemLaserRemainTime;
   LemXOld := Source.LemXOld;
   LemYOld := Source.LemYOld;
   LemDXOld := Source.LemDXOld;

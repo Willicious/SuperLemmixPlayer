@@ -1468,6 +1468,7 @@ begin
                    end;
     baFixing     : L.LemDisarmingFrames := 42;
     baJumping    : L.LemJumpProgress := 0;
+    baLasering   : L.LemLaserRemainTime := 85 {17 * 5};
   end;
 end;
 
@@ -2860,7 +2861,7 @@ begin
   D.Left := P.X - 4;
   D.Top := P.Y - 4;
   D.Right := P.X + 4;
-  D.Right := P.Y + 4;
+  D.Bottom := P.Y + 4;
 
   LaserMask.DrawTo(PhysicsMap, D);
 
@@ -3086,10 +3087,83 @@ begin
 end;
 
 function TLemmingGame.HandleLasering(L: TLemming): Boolean;
+type
+  THitType = (htNone, htSolid, htIndestructible, htOutOfBounds);
+var
+  Target: TPoint;
+  i: Integer;
+  Hit: Boolean;
+const
+  DISTANCE_CAP = 720;
+
+  function CheckForHit: THitType;
+  const
+    CHECK_COUNT = 9;
+    OFFSET_CHECKS: array[0..CHECK_COUNT-1] of TPoint =
+     (
+       (X:  1; Y: -1),
+       (X:  0; Y: -1),
+       (X:  1; Y:  0),
+       (X: -1; Y: -1),
+       (X:  0; Y: -2),
+       (X:  1; Y: -2),
+       (X:  2; Y: -1),
+       (X:  2; Y:  0),
+       (X:  1; Y:  1)
+     );
+  var
+    n: Integer;
+    ThisCheckPoint: TPoint;
+  begin
+    if (Target.X < 0) or (Target.Y < 0) or (Target.X >= Level.Info.Width) then
+      Result := htOutOfBounds
+    else begin
+      Result := htNone;
+
+      for n := 0 to CHECK_COUNT-1 do
+      begin
+        ThisCheckPoint := Point(Target.X + (OFFSET_CHECKS[n].X * L.LemDX), Target.Y + OFFSET_CHECKS[n].Y);
+
+        if HasPixelAt(ThisCheckPoint.X, ThisCheckPoint.Y) then
+        begin
+          if HasIndestructibleAt(ThisCheckPoint.X, ThisCheckPoint.Y, L.LemDX, baLasering) then
+            Result := htIndestructible
+          else
+            Result := htSolid;
+        end;
+      end;
+    end;
+  end;
 begin
   Result := true;
   if not HasPixelAt(L.LemX, L.LemY) then
-    Transition(L, baFalling);
+    Transition(L, baFalling)
+  else if L.LemLaserRemainTime <= 0 then
+    Transition(L, baWalking)
+  else begin
+    Dec(L.LemLaserRemainTime);
+    Hit := false;
+
+    Target := Point(L.LemX + (2 * L.LemDX), L.LemY - 4);
+    for i := 0 to DISTANCE_CAP-1 do
+      case CheckForHit of
+        htNone: begin Inc(Target.X, L.LemDX); Dec(Target.Y); end;
+        htSolid: begin Hit := true; Break; end;
+        htIndestructible: begin Hit := true; L.LemLaserRemainTime := Min(L.LemLaserRemainTime, 9); Break; end;
+        htOutOfBounds: Break;
+      end;
+
+    L.LemLaserHitPoint := Target;
+
+    if Hit then
+    begin
+      L.LemLaserHit := true;
+      ApplyLaserMask(Target, L.LemDX);
+    end else begin
+      L.LemLaserHit := false;
+      L.LemLaserRemainTime := Min(L.LemLaserRemainTime, 9);
+    end;
+  end;
 end;
 
 function TLemmingGame.HandleLemming(L: TLemming): Boolean;
