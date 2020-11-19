@@ -141,6 +141,7 @@ type
     BasherMasks                : TBitmap32;
     FencerMasks                : TBitmap32;
     MinerMasks                 : TBitmap32;
+    LaserMask                  : TBitmap32;
     fMasksLoaded               : Boolean;
 
   { vars }
@@ -216,6 +217,7 @@ type
     procedure DoTalismanCheck;
     function GetIsReplaying: Boolean;
     function GetIsReplayingNoRR(isPaused: Boolean): Boolean;
+    procedure ApplyLaserMask(P: TPoint; DX: Integer);
     procedure ApplyBashingMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyFencerMask(L: TLemming; MaskFrame: Integer);
     procedure ApplyExplosionMask(L: TLemming);
@@ -331,6 +333,7 @@ type
     function HandleReaching(L: TLemming) : Boolean;
     function HandleShimmying(L: TLemming) : Boolean;
     function HandleJumping(L: TLemming) : Boolean;
+    function HandleLasering(L: TLemming) : Boolean;
 
   { interaction }
     function AssignNewSkill(Skill: TBasicLemmingAction; IsHighlight: Boolean = False; IsReplayAssignment: Boolean = false): Boolean;
@@ -359,6 +362,7 @@ type
     function MayAssignCloner(L: TLemming): Boolean;
     function MayAssignShimmier(L: TLemming) : Boolean;
     function MayAssignJumper(L: TLemming) : Boolean;
+    function MayAssignLaserer(L: TLemming) : Boolean;
 
     // for properties
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -538,11 +542,11 @@ const
 const
   // Order is important, because fTalismans[i].SkillLimit uses the corresponding integers!!!
   // THIS IS NOT THE ORDER THE PICKUP-SKILLS ARE NUMBERED!!!
-  ActionListArray: array[0..18] of TBasicLemmingAction =
+  ActionListArray: array[0..19] of TBasicLemmingAction =
             (baToWalking, baClimbing, baSwimming, baFloating, baGliding, baFixing,
              baExploding, baStoning, baBlocking, baPlatforming, baBuilding,
              baStacking, baBashing, baMining, baDigging, baCloning, baFencing, baShimmying,
-             baJumping);
+             baJumping, baLasering);
 
 
 
@@ -854,6 +858,7 @@ begin
   BasherMasks    := TBitmap32.Create;
   FencerMasks    := TBitmap32.Create;
   MinerMasks     := TBitmap32.Create;
+  LaserMask      := TBitmap32.Create;
 
   Gadgets        := TGadgetList.Create;
   BlockerMap     := TBitmap32.Create;
@@ -900,6 +905,7 @@ begin
   LemmingMethods[baReaching]   := HandleReaching;
   LemmingMethods[baShimmying]  := HandleShimmying;
   LemmingMethods[baJumping]    := HandleJumping;
+  LemmingMethods[baLasering]   := HandleLasering;
 
   NewSkillMethods[baNone]         := nil;
   NewSkillMethods[baWalking]      := nil;
@@ -931,6 +937,7 @@ begin
   NewSkillMethods[baFencing]      := MayAssignFencer;
   NewSkillMethods[baShimmying]    := MayAssignShimmier;
   NewSkillMethods[baJumping]      := MayAssignJumper;
+  NewSkillMethods[baLasering]     := MayAssignLaserer;
 
   P := AppPath;
 
@@ -945,6 +952,7 @@ destructor TLemmingGame.Destroy;
 begin
   BomberMask.Free;
   StonerMask.Free;
+  LaserMask.Free;
   BasherMasks.Free;
   FencerMasks.Free;
   MinerMasks.Free;
@@ -983,9 +991,10 @@ begin
   begin
     LoadMask(BomberMask, 'bomber.png', CombineMaskPixelsNeutral);
     LoadMask(StonerMask, 'stoner.png', CombineNoOverwriteStoner);
-    LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Basher, Fencer and Miner are set when used
+    LoadMask(BasherMasks, 'basher.png', CombineMaskPixelsNeutral);  // combine routines for Laserer, Basher, Fencer and Miner are set when used
     LoadMask(FencerMasks, 'fencer.png', CombineMaskPixelsNeutral);
     LoadMask(MinerMasks, 'miner.png', CombineMaskPixelsNeutral);
+    LoadMask(LaserMask, 'laser.png', CombineMaskPixelsNeutral);
     fMasksLoaded := true;
   end;
 
@@ -1380,7 +1389,7 @@ begin
     L.LemFallen := 1;
     if L.LemAction in [baWalking, baBashing] then L.LemFallen := 3
     else if L.LemAction in [baMining, baDigging] then L.LemFallen := 0
-    else if L.LemAction in [baBlocking, baJumping] then L.LemFallen := -1;
+    else if L.LemAction in [baBlocking, baJumping, baLasering] then L.LemFallen := -1;
     L.LemTrueFallen := L.LemFallen;
   end;
 
@@ -1908,7 +1917,7 @@ var
                                     or L.LemIsGlider or L.LemIsDisarmer);
       NonPerm : Result :=     (L.LemAction in [baBashing, baFencing, baMining, baDigging, baBuilding,
                                                baPlatforming, baStacking, baBlocking, baShrugging,
-                                               baReaching, baShimmying]);
+                                               baReaching, baShimmying, baLasering]);
       Walk    : Result :=     (L.LemAction in [baWalking, baAscending]);
       NonWalk : Result := not (L.LemAction in [baWalking, baAscending]);
     end;
@@ -2021,7 +2030,7 @@ function TLemmingGame.MayAssignWalker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBlocking, baPlatforming, baBuilding,
                baStacking, baBashing, baFencing, baMining, baDigging,
-               baReaching, baShimmying];
+               baReaching, baShimmying, baLasering];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2061,7 +2070,7 @@ end;
 function TLemmingGame.MayAssignBlocker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining, baDigging];
+               baBashing, baFencing, baMining, baDigging, baLasering];
 begin
   Result := (L.LemAction in ActionSet) and not CheckForOverlappingField(L);
 end;
@@ -2077,7 +2086,7 @@ end;
 
 function TLemmingGame.MayAssignBuilder(L: TLemming): Boolean;
 const
-  ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baBashing,
+  ActionSet = [baWalking, baShrugging, baPlatforming, baStacking, baLasering, baBashing,
                baFencing, baMining, baDigging];
 begin
   Result := (L.LemAction in ActionSet) and not (L.LemY <= 1);
@@ -2086,7 +2095,7 @@ end;
 function TLemmingGame.MayAssignPlatformer(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baBuilding, baStacking, baBashing,
-               baFencing, baMining, baDigging];
+               baFencing, baMining, baDigging, baLasering];
 var
   n: Integer;
 begin
@@ -2103,7 +2112,7 @@ end;
 function TLemmingGame.MayAssignStacker(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baBashing,
-               baFencing, baMining, baDigging];
+               baFencing, baMining, baDigging, baLasering];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2111,7 +2120,7 @@ end;
 function TLemmingGame.MayAssignBasher(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baFencing, baMining, baDigging];
+               baFencing, baMining, baDigging, baLasering];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2119,7 +2128,7 @@ end;
 function TLemmingGame.MayAssignFencer(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baMining, baDigging];
+               baBashing, baMining, baDigging, baLasering];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2127,7 +2136,7 @@ end;
 function TLemmingGame.MayAssignMiner(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baDigging];
+               baBashing, baFencing, baDigging, baLasering];
 begin
   Result := (L.LemAction in ActionSet)
             and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baMining)
@@ -2136,7 +2145,7 @@ end;
 function TLemmingGame.MayAssignDigger(L: TLemming): Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining];
+               baBashing, baFencing, baMining, baLasering];
 begin
   Result := (L.LemAction in ActionSet) and not HasIndestructibleAt(L.LemX, L.LemY, L.LemDx, baDigging);
 end;
@@ -2146,7 +2155,7 @@ const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
                baBashing, baFencing, baMining, baDigging, baAscending, baFalling,
                baFloating, baSwimming, baGliding, baFixing, baReaching, baShimmying,
-               baJumping];
+               baJumping, baLasering];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2154,7 +2163,7 @@ end;
 function TLemmingGame.MayAssignShimmier(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
-               baBashing, baFencing, baMining, baDigging];
+               baBashing, baFencing, baMining, baDigging, baLasering];
 var
   CopyL: TLemming;
   i: Integer;
@@ -2188,7 +2197,15 @@ function TLemmingGame.MayAssignJumper(L: TLemming) : Boolean;
 const
   ActionSet = [baWalking, baDigging, baBuilding, baBashing, baMining,
                baShrugging, baPlatforming, baStacking, baFencing,
-               baClimbing];
+               baClimbing, baLasering];
+begin
+  Result := (L.LemAction in ActionSet);
+end;
+
+function TLemmingGame.MayAssignLaserer(L: TLemming): Boolean;
+const
+  ActionSet = [baWalking, baShrugging, baPlatforming, baBuilding, baStacking,
+               baBashing, baFencing, baMining, baDigging];
 begin
   Result := (L.LemAction in ActionSet);
 end;
@@ -2831,6 +2848,26 @@ begin
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
 end;
 
+procedure TLemmingGame.ApplyLaserMask(P: TPoint; DX: Integer);
+var
+  D: TRect;
+begin
+  if DX = 1 then
+    LaserMask.OnPixelCombine := CombineMaskPixelsUpRight
+  else
+    LaserMask.OnPixelCombine := CombineMaskPixelsUpLeft;
+
+  D.Left := P.X - 4;
+  D.Top := P.Y - 4;
+  D.Right := P.X + 4;
+  D.Right := P.Y + 4;
+
+  LaserMask.DrawTo(PhysicsMap, D);
+
+  if not IsSimulating then
+    fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
+end;
+
 procedure TLemmingGame.ApplyMinerMask(L: TLemming; MaskFrame, AdjustX, AdjustY: Integer);
 // The miner mask is usually centered at the feet of L
 // AdjustX, AdjustY lets one adjust the position of the miner mask relative to this
@@ -3046,6 +3083,13 @@ begin
     // Delete these pixels from the terrain layer
     if not IsSimulating then fRenderInterface.RemoveTerrain(PosX - 4, PosY, 9, 1);
   end;
+end;
+
+function TLemmingGame.HandleLasering(L: TLemming): Boolean;
+begin
+  Result := true;
+  if not HasPixelAt(L.LemX, L.LemY) then
+    Transition(L, baFalling);
 end;
 
 function TLemmingGame.HandleLemming(L: TLemming): Boolean;
@@ -4304,9 +4348,9 @@ begin
   // check for indestructible terrain at position (x, y), depending on skill.
   Result := (    ( HasTriggerAt(X, Y, trSteel) )
               or ( HasTriggerAt(X, Y, trOWUp) and (Skill in [baBashing, baMining, baDigging]))
-              or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing]))
-              or ( HasTriggerAt(X, Y, trOWLeft) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining]))
-              or ( HasTriggerAt(X, Y, trOWRight) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining]))
+              or ( HasTriggerAt(X, Y, trOWDown) and (Skill in [baBashing, baFencing, baLasering]))
+              or ( HasTriggerAt(X, Y, trOWLeft) and (Direction = 1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
+              or ( HasTriggerAt(X, Y, trOWRight) and (Direction = -1) and (Skill in [baBashing, baFencing, baMining, baLasering]))
               or ((Y < -1) and (Skill = baFencing))
             );
 end;
