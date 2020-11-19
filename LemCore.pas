@@ -75,7 +75,8 @@ type
     baFencing,
     baReaching,
     baShimmying,
-    baJumping
+    baJumping,
+    baLasering
   );
 
 const
@@ -99,6 +100,7 @@ type
     spbPlatformer,
     spbBuilder,
     spbStacker,
+    spbLaserer,
     spbBasher,
     spbFencer,
     spbMiner,
@@ -141,6 +143,7 @@ const
     'platformer',
     'builder',
     'stacker',
+    'laserer',
     'basher',
     'fencer',
     'miner',
@@ -162,6 +165,7 @@ const
     'platformers',
     'builders',
     'stackers',
+    'laserers',
     'bashers',
     'fencers',
     'miners',
@@ -213,7 +217,8 @@ const
     baCloning,
     baFencing,
     baShimmying,
-    baJumping
+    baJumping,
+    baLasering
   ];
 
 const
@@ -249,7 +254,8 @@ const
     spbFencer,
     spbNone,
     spbShimmier,
-    spbJumper
+    spbJumper,
+    spbLaserer
   );
 
 const
@@ -269,6 +275,7 @@ const
     baPlatforming,
     baBuilding,
     baStacking,
+    baLasering,
     baBashing,
     baFencing,
     baMining,

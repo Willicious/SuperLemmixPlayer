@@ -180,7 +180,7 @@ const
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
     'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png',
-    'empty_slot.png', 'empty_slot.png', 'empty_slot.png',              {Skills end here}
+    'empty_slot.png', 'empty_slot.png', 'empty_slot.png', 'empty_slot.png', {Skills end here}
     'empty_slot.png', 'icon_rr_plus.png', 'icon_rr_minus.png', 'icon_pause.png',
     'icon_nuke.png', 'icon_ff.png', 'icon_restart.png', 'icon_frameskip.png',
     'icon_directional.png', 'icon_cpm_and_replay.png',
@@ -708,8 +708,9 @@ begin
     DrawBrick(fSkillIcons[spbStacker], 10, 18);
     DrawBrick(fSkillIcons[spbStacker], 10, 17);
 
-    // Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
+    // Laserer, Basher, Fencer, Miner are all simple - we do have to take care to avoid frames with destruction particles
     // For Digger, we just have to accept some particles.
+    DrawAnimationFrame(fSkillIcons[spbLaserer], LASERING, 0, 8, 21);
     DrawAnimationFrame(fSkillIcons[spbBasher], BASHING, 0, 8, 21);
     DrawAnimationFrame(fSkillIcons[spbFencer], FENCING, 1, 7, 21);
     DrawAnimationFrame(fSkillIcons[spbMiner], MINING, 12, 4, 21);
@@ -1267,7 +1268,7 @@ begin
     if L.LemIsZombie then Result[5] := 'Z';
     if L.LemIsNeutral then Result[6] := 'N';
   end
-  else if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baBashing, baMining, baDigging, baBlocking]) then
+  else if not (L.LemAction in [baBuilding, baPlatforming, baStacking, baLasering, baBashing, baMining, baDigging, baBlocking]) then
   begin
     i := 0;
     if L.LemIsClimber then DoInc(SClimber);

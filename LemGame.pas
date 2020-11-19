@@ -1352,7 +1352,8 @@ const
     16, //baFencing,
      8, //baReaching,
     20, //baShimmying
-    13  //baJumping
+    13, //baJumping
+     1  //baLasering
     );
 begin
   if DoTurn then TurnAround(L);

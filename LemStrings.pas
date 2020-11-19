@@ -115,6 +115,7 @@ resourcestring
   SReacher = 'Reacher';
   SShimmier = 'Shimmier';
   SJumper = 'Jumper';
+  SLaserer = 'Laserer';
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
@@ -180,7 +181,8 @@ const
     SFencer,
     SReacher,
     SShimmier,
-    SJumper
+    SJumper,
+    SLaserer
   );
 
 implementation
