@@ -148,6 +148,7 @@ type
 
     // Lemming rendering
     procedure DrawLemmings(UsefulOnly: Boolean = false);
+    procedure DrawLemmingLaser(aLemming: TLemming);
     procedure DrawThisLemming(aLemming: TLemming; UsefulOnly: Boolean = false);
     procedure DrawLemmingCountdown(aLemming: TLemming);
     procedure DrawLemmingParticles(L: TLemming);
@@ -322,10 +323,7 @@ begin
     end
   );
 
-  for i := 0 to LemmingList.Count-1 do
-    DrawThisLemming(LemmingList[i], UsefulOnly);
-
-  // Draw particles for exploding lemmings
+  // Draw particles for exploding lemmings, laser for laserers
   fLayers.fIsEmpty[rlParticles] := True;
   for i := 0 to LemmingList.Count-1 do
   begin
@@ -335,7 +333,13 @@ begin
       fLayers.fIsEmpty[rlParticles] := False;
     end;
     DrawLemmingCountdown(LemmingList[i]);
+
+    if LemmingList[i].LemAction = baLasering then
+      DrawLemmingLaser(LemmingList[i]);
   end;
+
+  for i := 0 to LemmingList.Count-1 do
+    DrawThisLemming(LemmingList[i], UsefulOnly);
 end;
 
 procedure TRenderer.DrawThisLemming(aLemming: TLemming; UsefulOnly: Boolean = false);
@@ -461,6 +465,73 @@ begin
   begin
     DrawLemmingPoint;
     fLayers.fIsEmpty[rlTriggers] := false;
+  end;
+end;
+
+procedure TRenderer.DrawLemmingLaser(aLemming: TLemming);
+var
+  InnerC, OuterC: TColor32;
+  Origin, Target: TPoint;
+const
+  RED_COLOR = $FFF01818;
+  WHITE_COLOR = $FFF0F0F0;
+begin
+  if aLemming.LemPhysicsFrame mod 2 = 0 then
+  begin
+    InnerC := WHITE_COLOR;
+    OuterC := RED_COLOR;
+  end else begin
+    OuterC := WHITE_COLOR;
+    InnerC := RED_COLOR;
+  end;
+
+  Origin := Point(aLemming.LemX + aLemming.LemDX, aLemming.LemY - 4);
+  Target := aLemming.LemLaserHitPoint;
+
+  if GameParams.HighResolution then
+  begin
+    Origin.X := Origin.X * 2;
+    Origin.Y := Origin.Y * 2;
+    Target.X := Target.X * 2;
+    Target.Y := Target.Y * 2;
+
+    if aLemming.LemDX > 0 then
+    begin
+      Origin.X := Origin.X + 1;
+      Target.X := Target.X + 1;
+    end;
+
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
+      Target.X, Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
+      Target.X - aLemming.LemDX, Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
+      Target.X, Target.Y + 1,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 2,
+      Target.X - (aLemming.LemDX * 2), Target.Y,
+      OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 2), Origin.Y,
+      Target.X, Target.Y + 2,
+      OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 3,
+      Target.X - (aLemming.LemDX * 3), Target.Y,
+      OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X + (aLemming.LemDX * 3), Origin.Y,
+      Target.X, Target.Y + 3,
+      OuterC, true);
+  end else begin
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y,
+      Target.X, Target.Y,
+      InnerC, true);
+    fLayers[rlLemmings].LineS(Origin.X, Origin.Y - 1,
+      Target.X - aLemming.LemDX, Target.Y,
+      OuterC, true);
+    fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
+      Target.X, Target.Y + 1,
+      OuterC, true);
   end;
 end;
 

@@ -1362,7 +1362,7 @@ const
      8, //baReaching,
     20, //baShimmying
     13, //baJumping
-     1  //baLasering
+     2  //baLasering
     );
 begin
   if DoTurn then TurnAround(L);
@@ -3098,24 +3098,26 @@ const
 
   function CheckForHit: THitType;
   const
-    CHECK_COUNT = 9;
+    CHECK_COUNT = 11;
     OFFSET_CHECKS: array[0..CHECK_COUNT-1] of TPoint =
      (
        (X:  1; Y: -1),
        (X:  0; Y: -1),
        (X:  1; Y:  0),
        (X: -1; Y: -1),
+       (X: -1; Y: -2),
        (X:  0; Y: -2),
        (X:  1; Y: -2),
        (X:  2; Y: -1),
        (X:  2; Y:  0),
+       (X:  2; Y:  2),
        (X:  1; Y:  1)
      );
   var
     n: Integer;
     ThisCheckPoint: TPoint;
   begin
-    if (Target.X < 0) or (Target.Y < 0) or (Target.X >= Level.Info.Width) then
+    if (Target.X < -4) or (Target.Y < -4) or (Target.X >= Level.Info.Width + 4) then // some allowance for graphical niceties
       Result := htOutOfBounds
     else begin
       Result := htNone;
@@ -3144,7 +3146,7 @@ begin
     Dec(L.LemLaserRemainTime);
     Hit := false;
 
-    Target := Point(L.LemX + (2 * L.LemDX), L.LemY - 4);
+    Target := Point(L.LemX + L.LemDX, L.LemY - 4);
     for i := 0 to DISTANCE_CAP-1 do
       case CheckForHit of
         htNone: begin Inc(Target.X, L.LemDX); Dec(Target.Y); end;
