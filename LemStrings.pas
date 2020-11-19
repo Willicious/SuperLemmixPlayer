@@ -86,6 +86,7 @@ resourcestring
   SAthlete = 'Athlete';
   STriathlete = 'Triathlete';
   SQuadathlete = 'X-Athlete';
+  SQuintathlete = 'Jock';
 
   SWalker = 'Walker';
   SAscender = 'Ascender';
@@ -118,6 +119,8 @@ resourcestring
   SLaserer = 'Laserer';
   SSpearer = 'Spearer';
   SGrenader = 'Grenader';
+  SDehoister = 'Dehoister';
+  SSlider = 'Slider';
   SZombie = 'Zombie';
   SNeutral = 'Neutral';
   SNeutralZombie = 'N-Zombie';
@@ -186,7 +189,9 @@ const
     SJumper,
     SLaserer,
     SSpearer,
-    SGrenader
+    SGrenader,
+    SDehoister,
+    SSlider
   );
 
 implementation

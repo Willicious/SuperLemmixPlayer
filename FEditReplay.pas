@@ -92,6 +92,7 @@ var
             baLasering:    Result := 'Laserer';
             baGrenading:   Result := 'Grenader';
             baSpearing:    Result := 'Spearer';
+            baSliding:     Result := 'Slider';
         else Result := '(Invalid skill)';
       end;
     end;

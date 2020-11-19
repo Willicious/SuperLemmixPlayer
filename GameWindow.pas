@@ -832,6 +832,7 @@ begin
       spbJumper: SL.Add('  fRenderInterface.SelectedSkill: Jumper');
       spbSpearer: SL.Add('  fRenderInterface.SelectedSkill: Spearer');
       spbGrenader: SL.Add('  fRenderInterface.SelectedSkill: Grenader');
+      spbSlider: SL.Add('  fRenderInterface.SelectedSkill: Slider');
       else SL.Add('  fRenderInterface.SelectedSkill: None or invalid');
     end;
   end;
@@ -1815,8 +1816,9 @@ var
   Act1, Act2: TBasicLemmingAction;
   n: Integer;
 const
-  COMPATIBLE_ACTIONS: array[0..6] of array[0..1] of TBasicLemmingAction =
+  COMPATIBLE_ACTIONS: array[0..7] of array[0..1] of TBasicLemmingAction =
     ((baWalking, baAscending),
+     (baDehoisting, baSliding),
      (baClimbing, baHoisting),
      (baFalling, baFloating),
      (baFalling, baGliding),

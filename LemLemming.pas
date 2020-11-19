@@ -15,6 +15,7 @@ type
       fX: Integer;
       fY: Integer;
       fDx: Integer;
+      fIsSlider:   Boolean;
       fIsClimber:  Boolean;
       fIsSwimmer:  Boolean;
       fIsFloater:  Boolean;
@@ -30,6 +31,7 @@ type
       property X: Integer read fX write fX;
       property Y: Integer read fY write fY;
       property Dx: Integer read fDx write fDx;
+      property IsSlider: Boolean read fIsSlider write fIsSlider;
       property IsClimber: Boolean read fIsClimber write fIsClimber;
       property IsSwimmer: Boolean read fIsSwimmer write fIsSwimmer;
       property IsFloater: Boolean read fIsFloater write fIsFloater;
@@ -88,6 +90,7 @@ type
                                              // equal to (LemFrame > LemMaxFrame)
     LemIsPhysicsSimulation        : Boolean; // for simulations that are used for physics (eg. the Basher / Fencer checks) as opposed
                                              // to simulations to determine shadows
+    LemIsSlider                   : Boolean;
     LemIsClimber                  : Boolean;
     LemIsSwimmer                  : Boolean;
     LemIsFloater                  : Boolean;
@@ -157,6 +160,7 @@ begin
   fX := 0;
   fY := 0;
   fDx := 1;
+  fIsSlider := false;
   fIsClimber := false;
   fIsSwimmer := false;
   fIsFloater := false;
@@ -172,6 +176,7 @@ begin
   X := aSrc.X;
   Y := aSrc.Y;
   Dx := aSrc.Dx;
+  IsSlider := aSrc.IsSlider;
   IsClimber := aSrc.IsClimber;
   IsSwimmer := aSrc.IsSwimmer;
   IsFloater := aSrc.IsFloater;
@@ -232,7 +237,7 @@ end;
 
 function TLemming.CheckForPermanentSkills: Boolean;
 begin
-  Result := (LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsDisarmer);
+  Result := (LemIsSlider or LemIsClimber or LemIsSwimmer or LemIsFloater or LemIsGlider or LemIsDisarmer);
 end;
 
 procedure TLemming.SetFromPreplaced(Source: TPreplacedLemming);
@@ -240,6 +245,7 @@ begin
   LemX := Source.X;
   LemY := Source.Y;
   LemDx := Source.Dx;
+  LemIsSlider := Source.IsSlider;
   LemIsClimber := Source.IsClimber;
   LemIsSwimmer := Source.IsSwimmer;
   LemIsFloater := Source.IsFloater;
@@ -295,6 +301,7 @@ begin
   LemTeleporting := Source.LemTeleporting;
   LemEndOfAnimation := Source.LemEndOfAnimation;
   LemIsPhysicsSimulation := Source.LemIsPhysicsSimulation;
+  LemIsSlider := Source.LemIsSlider;
   LemIsClimber := Source.LemIsClimber;
   LemIsSwimmer := Source.LemIsSwimmer;
   LemIsFloater := Source.LemIsFloater;

@@ -78,7 +78,9 @@ type
     baJumping,
     baLasering,
     baSpearing,
-    baGrenading
+    baGrenading,
+    baDehoisting,
+    baSliding
   );
 
 const
@@ -91,6 +93,7 @@ type
     spbWalker,
     spbJumper,
     spbShimmier,
+    spbSlider,
     spbClimber,
     spbSwimmer,
     spbFloater,
@@ -136,6 +139,7 @@ const
     'walker',
     'jumper',
     'shimmier',
+    'slider',
     'climber',
     'swimmer',
     'floater',
@@ -160,6 +164,7 @@ const
     'walkers',
     'jumpers',
     'shimmiers',
+    'sliders',
     'climbers',
     'swimmers',
     'floaters',
@@ -228,7 +233,8 @@ const
     baJumping,
     baLasering,
     baSpearing,
-    baGrenading
+    baGrenading,
+    baSliding
   ];
 
 const
@@ -267,7 +273,9 @@ const
     spbJumper,
     spbLaserer,
     spbSpearer,
-    spbGrenader
+    spbGrenader,
+    spbNone,
+    spbSlider
   );
 
 const
@@ -276,6 +284,7 @@ const
     baToWalking,
     baJumping,
     baShimmying,
+    baSliding,
     baClimbing,
     baSwimming,
     baFloating,

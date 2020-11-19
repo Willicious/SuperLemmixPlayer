@@ -92,6 +92,7 @@ const // Icon indexes
     6, // Walker
     7, // Jumper
     8, // Shimmier
+    37, // Slider
     9, // Climber
     10, // Swimmer
     11, // Floater

@@ -24,8 +24,8 @@ const
   dos animations ordered by their appearance in main.dat
   the constants below show the exact order
 -------------------------------------------------------------------------------}
-  NUM_LEM_SPRITES = 61;
-  NUM_LEM_SPRITE_TYPE = 30;
+  NUM_LEM_SPRITES = 65;
+  NUM_LEM_SPRITE_TYPE = 32;
   WALKING             = 0;
   WALKING_RTL         = 1;
   ASCENDING           = 2;
@@ -86,7 +86,11 @@ const
   LASERING_RTL        = 57;
   THROWING            = 58;
   THROWING_RTL        = 59;
-  STONED              = 60; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
+  DEHOISTING          = 60;
+  DEHOISTING_RTL      = 61;
+  SLIDING             = 62;
+  SLIDING_RTL         = 63;
+  STONED              = 64; // this one does NOT need an RTL form; in fact in needs to be moved to the Masks section
 
   // never made sense to me why it lists the right-facing on the left
   // and the left-facing on the right. Is this standard practice? Maybe
@@ -124,9 +128,11 @@ const
     (REACHING, REACHING_RTL),                 // baReaching (for shimmier)
     (SHIMMYING, SHIMMYING_RTL),               // baShimmying
     (JUMPING, JUMPING_RTL),                   // baJumping
-    (LASERING, LASERING_RTL),                  // baLasering
+    (LASERING, LASERING_RTL),                 // baLasering
     (THROWING, THROWING_RTL),                 // baSpearing
-    (THROWING, THROWING_RTL)                  // baGrenading
+    (THROWING, THROWING_RTL),                 // baGrenading
+    (DEHOISTING, DEHOISTING_RTL),             // baDehoisting
+    (SLIDING, SLIDING_RTL)                    // baSliding
   );
 
 type
@@ -176,15 +182,14 @@ procedure TBaseAnimationSet.LoadMetaData(aColorDict: TColorDict; aShadeDict: TSh
 const
   // These match the order these are stored by this class. They do NOT have to be in this
   // order in "scheme.nxmi", they just have to all be there.
-  ANIM_NAMES: array[0..29] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
+  ANIM_NAMES: array[0..31] of String =  ('WALKER', 'ASCENDER', 'DIGGER', 'CLIMBER',
                                          'DROWNER', 'HOISTER', 'BUILDER', 'BASHER',
                                          'MINER', 'FALLER', 'FLOATER', 'SPLATTER',
                                          'EXITER', 'BURNER', 'BLOCKER', 'SHRUGGER',
                                          'OHNOER', 'BOMBER', 'PLATFORMER', 'STONER',
                                          'SWIMMER', 'GLIDER', 'DISARMER', 'STACKER',
                                          'FENCER', 'REACHER', 'SHIMMIER', 'JUMPER',
-                                         'LASERER', 'THROWER');
-
+                                         'LASERER', 'THROWER', 'DEHOISTER', 'SLIDER');
   DIR_NAMES: array[0..1] of String = ('RIGHT', 'LEFT');
 var
   Parser: TParser;
