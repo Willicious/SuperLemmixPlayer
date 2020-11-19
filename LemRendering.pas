@@ -48,6 +48,8 @@ type
     fDisableBackground  : Boolean;
     fTransparentBackground: Boolean;
 
+    fLaserGraphic: TBitmap32;
+
     fPhysicsMap         : TBitmap32;
     fLayers             : TRenderBitmaps;
 
@@ -472,9 +474,16 @@ procedure TRenderer.DrawLemmingLaser(aLemming: TLemming);
 var
   InnerC, OuterC: TColor32;
   Origin, Target: TPoint;
+
+  Src, Dst: TRect;
+  n, CIndex: Integer;
 const
   RED_COLOR = $FFF01818;
   WHITE_COLOR = $FFF0F0F0;
+  YELLOW_COLOR = $FFF0F018;
+
+  BLAST_COLORS: array[0..2] of TColor32 =
+    ( $00000000, RED_COLOR, YELLOW_COLOR );
 begin
   if aLemming.LemPhysicsFrame mod 2 = 0 then
   begin
@@ -485,7 +494,7 @@ begin
     InnerC := RED_COLOR;
   end;
 
-  Origin := Point(aLemming.LemX + aLemming.LemDX, aLemming.LemY - 4);
+  Origin := Point(aLemming.LemX + (aLemming.LemDX * 2), aLemming.LemY - 5);
   Target := aLemming.LemLaserHitPoint;
 
   if GameParams.HighResolution then
@@ -532,6 +541,41 @@ begin
     fLayers[rlLemmings].LineS(Origin.X + aLemming.LemDX, Origin.Y,
       Target.X, Target.Y + 1,
       OuterC, true);
+  end;
+
+  if aLemming.LemLaserHit then
+  begin
+    Target := aLemming.LemLaserHitPoint; // undo high-res modifications from above, if any
+
+    Src := Rect(48, 0, 61, 13);
+    Dst := Rect(Target.X - 6, Target.Y - 6, Target.X + 6 + 1, Target.Y + 6 + 1);
+
+    if GameParams.HighResolution then
+    begin
+      Dst.Left := Dst.Left * 2;
+      Dst.Top := Dst.Top * 2;
+      Dst.Right := Dst.Right * 2 + 1;
+      Dst.Bottom := Dst.Bottom * 2 + 1;
+    end;
+
+    CIndex := aLemming.LemPhysicsFrame mod 3;
+    for n := 0 to 2 do
+    begin
+      if BLAST_COLORS[CIndex] <> $00000000 then
+      begin
+        fFixedDrawColor := BLAST_COLORS[CIndex];
+        fLaserGraphic.DrawTo(fLayers[rlLemmings], Dst, Src);
+      end;
+
+      MoveRect(Src, -13, 0);
+
+      repeat
+        CIndex := (CIndex + 1) mod 3;
+      until BLAST_COLORS[CIndex] <> $00000000;
+    end;
+
+    fFixedDrawColor := WHITE_COLOR;
+    fLaserGraphic.DrawTo(fLayers[rlLemmings], Dst, Src);
   end;
 end;
 
@@ -2541,6 +2585,11 @@ begin
   fPreviewGadgets := TGadgetList.Create;
   fTempLemmingList := TLemmingList.Create(false);
 
+  fLaserGraphic := TBitmap32.Create;
+  TPngInterface.LoadPngFile(AppPath + SFGraphicsMasks + 'laser.png', fLaserGraphic);
+  fLaserGraphic.DrawMode := dmCustom;
+  fLaserGraphic.OnPixelCombine := CombineFixedColor;
+
   LoadHelperImages;
 
   FillChar(fParticles, SizeOf(TParticleTable), $80);
@@ -2564,6 +2613,7 @@ begin
   fAni.Free;
   fPreviewGadgets.Free;
   fTempLemmingList.Free;
+  fLaserGraphic.Free;
 
   for iIcon := Low(THelperIcon) to High(THelperIcon) do
     fHelperImages[iIcon].Free;

@@ -1362,7 +1362,7 @@ const
      8, //baReaching,
     20, //baShimmying
     13, //baJumping
-     2  //baLasering
+    12  //baLasering - it's, ironically, this high for rendering purposes
     );
 begin
   if DoTurn then TurnAround(L);
@@ -2851,7 +2851,7 @@ end;
 
 procedure TLemmingGame.ApplyLaserMask(P: TPoint; DX: Integer);
 var
-  D: TRect;
+  D, S: TRect;
 begin
   if DX = 1 then
     LaserMask.OnPixelCombine := CombineMaskPixelsUpRight
@@ -2860,10 +2860,12 @@ begin
 
   D.Left := P.X - 4;
   D.Top := P.Y - 4;
-  D.Right := P.X + 4;
-  D.Bottom := P.Y + 4;
+  D.Right := P.X + 4 + 1;
+  D.Bottom := P.Y + 4 + 1;
 
-  LaserMask.DrawTo(PhysicsMap, D);
+  S := Rect(0, 0, 9, 9);
+
+  LaserMask.DrawTo(PhysicsMap, D, S);
 
   if not IsSimulating then
     fRenderInterface.RemoveTerrain(D.Left, D.Top, D.Right - D.Left, D.Bottom - D.Top);
@@ -3146,7 +3148,7 @@ begin
     Dec(L.LemLaserRemainTime);
     Hit := false;
 
-    Target := Point(L.LemX + L.LemDX, L.LemY - 4);
+    Target := Point(L.LemX + (L.LemDX * 2), L.LemY - 5);
     for i := 0 to DISTANCE_CAP-1 do
       case CheckForHit of
         htNone: begin Inc(Target.X, L.LemDX); Dec(Target.Y); end;
