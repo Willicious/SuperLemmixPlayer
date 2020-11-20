@@ -2207,7 +2207,8 @@ begin
 
     SimulateLem(CopyL, False);
 
-    if (CopyL.LemAction <> OldAction) and (CopyL.LemAction <> baSliding) then
+    if (CopyL.LemAction <> OldAction) and
+       ((OldAction <> baDehoisting) or (CopyL.LemAction <> baSliding)) then
       Result := True;
 
     CopyL.Free;
