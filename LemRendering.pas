@@ -788,7 +788,7 @@ begin
   // We simulate as long as the lemming is either reaching or shimmying
   while (FrameCount < MAX_FRAME_COUNT)
     and Assigned(L)
-    and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding]) do
+    and (L.LemAction in [baJumping, baClimbing, baHoisting, baFalling, baFloating, baGliding, baSliding]) do
   begin
     Inc(FrameCount);
 
