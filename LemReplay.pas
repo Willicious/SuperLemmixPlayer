@@ -121,6 +121,7 @@ type
       fLevelRank: String;
       fLevelPosition: Integer;
       fLevelID: Int64;
+      fLevelVersion: Int64;
       function GetIsThisUsersReplay: Boolean;
       function GetLastActionFrame: Integer;
       function GetItemByFrame(aFrame: Integer; aIndex: Integer; aItemType: Integer): TBaseReplayItem;
@@ -147,6 +148,7 @@ type
       property LevelRank: String read fLevelRank write fLevelRank;
       property LevelPosition: Integer read fLevelPosition write fLevelPosition;
       property LevelID: Int64 read fLevelID write fLevelID;
+      property LevelVersion: Int64 read fLevelVersion write fLevelVersion;
       property Assignment[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 1 read GetItemByFrame;
       property SpawnIntervalChange[aFrame: Integer; aIndex: Integer]: TBaseReplayItem Index 2 read GetItemByFrame;
       property LastActionFrame: Integer read GetLastActionFrame;
@@ -356,6 +358,7 @@ begin
   fLevelRank := '';
   fLevelPosition := 0;
   fLevelID := 0;
+  fLevelVersion := 0;
 end;
 
 procedure TReplay.Cut(aLastFrame: Integer; aExpectedSpawnInterval: Integer);
@@ -439,6 +442,7 @@ begin
     fLevelRank := Sec.LineString['group'];
     fLevelPosition := Sec.LineNumeric['level'];
     fLevelID := Sec.LineNumeric['id'];
+    fLevelVersion := Sec.LineNumeric['version'];
 
     Sec.DoForEachSection('assignment', HandleLoadSection);
     Sec.DoForEachSection('spawn_interval', HandleLoadSection);
@@ -520,6 +524,7 @@ begin
       Sec.AddLine('LEVEL', fLevelPosition);
     end;
     Sec.AddLine('ID', fLevelID, 16);
+    Sec.AddLine('VERSION', fLevelVersion);
 
     SaveReplayList(fAssignments, Sec);
     SaveReplayList(fSpawnIntervalChanges, Sec);

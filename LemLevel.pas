@@ -45,6 +45,7 @@ type
     fMusicFile      : string;
 
     fLevelID        : Int64;
+    fLevelVersion   : Int64;
 
     procedure SetSkillCount(aSkill: TSkillPanelButton; aCount: Integer);
     function GetSkillCount(aSkill: TSkillPanelButton): Integer;
@@ -80,6 +81,7 @@ type
     property Background: String read fBackground write fBackground;
 
     property LevelID: Int64 read fLevelID write fLevelID;
+    property LevelVersion: Int64 read fLevelVersion write fLevelVersion;
   end;
 
   TLevel = class
@@ -179,6 +181,7 @@ begin
   GraphicSetName  := '';
   MusicFile       := '';
   LevelID         := 0;
+  LevelVersion    := 0;
 end;
 
 constructor TLevelInfo.Create;
@@ -674,6 +677,7 @@ begin
     GraphicSetName := PieceManager.Dealias(aSection.LineTrimString['theme'], rkStyle);
     MusicFile := aSection.LineTrimString['music'];
     LevelID := aSection.LineNumeric['id'];
+    LevelVersion := aSection.LineNumeric['version'];
 
     if Uppercase(GraphicSetName) = 'ORIG_DIRT_MD' then
       GraphicSetName := 'orig_dirt';
@@ -1207,6 +1211,7 @@ begin
     aSection.AddLine('THEME', GraphicSetName);
     aSection.AddLine('MUSIC', MusicFile);
     aSection.AddLine('ID', 'x' + IntToHex(LevelID, 16));
+    aSection.AddLine('VERSION', LevelVersion);
 
     aSection.AddLine('LEMMINGS', LemmingsCount);
     aSection.AddLine('SAVE_REQUIREMENT', RescueCount);

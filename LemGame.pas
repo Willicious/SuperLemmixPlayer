@@ -1053,6 +1053,7 @@ begin
     fReplayManager.LevelRank := GameParams.CurrentGroupName;
     fReplayManager.LevelPosition := GameParams.CurrentLevel.GroupIndex+1;
     fReplayManager.LevelID := Level.Info.LevelID;
+    fReplayManager.LevelVersion := Level.Info.LevelVersion;
   end;
 
   with Level.Info do
