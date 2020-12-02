@@ -262,7 +262,7 @@ begin
 
   // Save requirement text - straightforward
   if aTalisman.RescueCount >= 0 then
-    ReqText := 'Save ' + IntToStr(aTalisman.RescueCount) + ' / ' + IntToStr(Info.LemmingsCount)
+    ReqText := 'Save ' + IntToStr(aTalisman.RescueCount) + ' / ' + IntToStr(Info.LemmingsCount - Info.ZombieCount)
   else
     ReqText := 'Complete';
 
@@ -534,7 +534,7 @@ begin
   ReqText := ReqText + '.';
 
   // Write values
-  aTalisman.LevelLemmingCount := Info.LemmingsCount;
+  aTalisman.LevelLemmingCount := Info.LemmingsCount - Info.ZombieCount;
   aTalisman.SetRequirementText(ReqText);
 end;
 
