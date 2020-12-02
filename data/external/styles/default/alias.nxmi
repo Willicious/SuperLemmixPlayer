@@ -3,6 +3,21 @@ $STYLE
   TO gigalem_treemd
 $END
 
+$STYLE
+  FROM nin10_cattrap
+  TO nin10_misc
+$END
+
+$STYLE
+  FROM nin10_TADragon
+  TO nin10_ta_dragon
+$END
+
+$STYLE
+  FROM nin10_TALava
+  TO nin10_ta_lava
+$END
+
 # Remaining entries are for testing purposes. It is not important to preserve them when using stable builds of NL.
 
 $STYLE
