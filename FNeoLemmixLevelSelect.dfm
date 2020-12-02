@@ -162,9 +162,18 @@ object FLevelSelect: TFLevelSelect
       Top = 57
       Width = 118
       Height = 25
-      Caption = 'Cleanse Levels'
+      Caption = 'Cleanse All Levels'
       TabOrder = 2
       OnClick = btnCleanseLevelsClick
+    end
+    object btnCleanseOne: TButton
+      Left = 3
+      Top = 84
+      Width = 118
+      Height = 25
+      Caption = 'Cleanse This Level'
+      TabOrder = 3
+      OnClick = btnCleanseOneClick
     end
   end
   object ilStatuses: TImageList

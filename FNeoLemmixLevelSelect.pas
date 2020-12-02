@@ -35,6 +35,7 @@ type
     btnSaveImage: TButton;
     btnMassReplay: TButton;
     btnCleanseLevels: TButton;
+    btnCleanseOne: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -44,6 +45,7 @@ type
     procedure btnSaveImageClick(Sender: TObject);
     procedure btnMassReplayClick(Sender: TObject);
     procedure btnCleanseLevelsClick(Sender: TObject);
+    procedure btnCleanseOneClick(Sender: TObject);
   private
     fLoadAsPack: Boolean;
     fInfoForm: TLevelInfoPanel;
@@ -272,6 +274,24 @@ begin
 
   fTalismanButtons.OwnsObjects := false; // because TFLevelSelect itself will take care of any that remain
   fTalismanButtons.Free;
+end;
+
+procedure TFLevelSelect.btnCleanseOneClick(Sender: TObject);
+var
+  SaveDlg: TSaveDialog;
+begin
+  SaveDlg := TSaveDialog.Create(self);
+  try
+    SaveDlg.Title := 'Select file to save to';
+    SaveDlg.Filter := 'NXLV Level Files|*.nxlv';
+    SaveDlg.InitialDir := AppPath + SFLevels;
+    SaveDlg.FileName := MakeSafeForFilename(GameParams.Level.Info.Title) + '.nxlv';
+    SaveDlg.Options := [ofOverwritePrompt];
+    if SaveDlg.Execute then
+      GameParams.Level.SaveToFile(SaveDlg.FileName);
+  finally
+    SaveDlg.Free;
+  end;
 end;
 
 procedure TFLevelSelect.btnMakeShortcutClick(Sender: TObject);
@@ -879,6 +899,7 @@ begin
     btnSaveImage.Caption := 'Save Level Images';
     btnMassReplay.Enabled := true;
     btnCleanseLevels.Enabled := true;
+    btnCleanseOne.Enabled := false;
   end;
 end;
 
@@ -889,6 +910,7 @@ begin
     btnSaveImage.Caption := 'Save Image';
     btnMassReplay.Enabled := TNeoLevelEntry(tvLevelSelect.Selected.Data).Group.ParentBasePack <> GameParams.BaseLevelPack;
     btnCleanseLevels.Enabled := btnMassReplay.Enabled;
+    btnCleanseOne.Enabled := true;
   end;
 end;
 
