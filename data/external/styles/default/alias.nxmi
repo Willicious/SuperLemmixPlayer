@@ -4,6 +4,11 @@ $STYLE
 $END
 
 $STYLE
+  FROM nin10_cattrap
+  TO nin10_misc
+$END
+
+$STYLE
   FROM nin10_TADragon
   TO nin10_ta_dragon
 $END
