@@ -475,27 +475,30 @@ end;
 
 function TNeoPieceManager.Dealias(aIdentifier: String; aKind: TAliasKind): String;
 var
+  LastIdent: TLabelRecord;
   Ident: TLabelRecord;
   i: Integer;
 begin
   Ident := SplitIdentifier(aIdentifier);
+  repeat
+    LastIdent := Ident;
+    LoadProperties(Ident.GS);
 
-  LoadProperties(Ident.GS);
+    for i := 0 to fAliases.Count-1 do
+    begin
+      if Ident.GS <> fAliases[i].Source.GS then Continue;
 
-  for i := 0 to fAliases.Count-1 do
-  begin
-    if Ident.GS <> fAliases[i].Source.GS then Continue;
+      if fAliases[i].Kind = rkStyle then
+        Ident.GS := fAliases[i].Dest.GS
+      else if (fAliases[i].Kind = aKind) and (Ident.Piece = fAliases[i].Source.Piece) then
+        Ident := fAliases[i].Dest;
+    end;
 
-    if fAliases[i].Kind = rkStyle then
-      Ident.GS := fAliases[i].Dest.GS
-    else if (fAliases[i].Kind = aKind) and (Ident.Piece = fAliases[i].Source.Piece) then
-      Ident := fAliases[i].Dest;
-  end;
-
-  if aKind in [rkStyle, rkLemmings] then
-    Result := Ident.GS
-  else
-    Result := CombineIdentifier(Ident);
+    if aKind in [rkStyle, rkLemmings] then
+      Result := Ident.GS
+    else
+      Result := CombineIdentifier(Ident);
+  until (Ident.GS = LastIdent.GS) and (Ident.Piece = LastIdent.Piece);
 end;
 
 function TNeoPieceManager.GetUpscaleInfo(aIdentifier: String;
