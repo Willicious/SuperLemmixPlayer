@@ -97,6 +97,7 @@ type
       destructor Destroy; override;
 
       procedure WriteNewRecords(aRecords: TLevelRecords);
+      procedure WipeRecords;
 
       property Group: TNeoLevelGroup read fGroup;
       property Title: String read GetTitle;
@@ -208,6 +209,7 @@ type
       {$endif}
 
       function GetLevelForTalisman(aTalisman: TTalisman): TNeoLevelEntry;
+      procedure WipeAllRecords;
 
       property Parent: TNeoLevelGroup read fParentGroup;
       property ParentBasePack: TNeoLevelGroup read GetParentBasePack;
@@ -574,6 +576,11 @@ begin
         Break;
 end;
 
+procedure TNeoLevelEntry.WipeRecords;
+begin
+  FillChar(Records, SizeOf(TLevelRecords), $FF);
+end;
+
 procedure TNeoLevelEntry.WriteNewRecords(aRecords: TLevelRecords);
   procedure Apply(var Existing: Integer; New: Integer; aHigherIsBetter: Boolean);
   begin
@@ -938,6 +945,17 @@ begin
   LoadScrollerDataDefault;
   LoadMusicData;
   LoadPostviewData;
+end;
+
+procedure TNeoLevelGroup.WipeAllRecords;
+var
+  i: Integer;
+begin
+  for i := 0 to fChildGroups.Count-1 do
+    fChildGroups[i].WipeAllRecords;
+
+  for i := 0 to fLevels.Count-1 do
+    fLevels[i].WipeRecords;
 end;
 
 procedure TNeoLevelGroup.LoadScrollerDataDefault;

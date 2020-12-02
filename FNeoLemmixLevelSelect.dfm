@@ -176,6 +176,15 @@ object FLevelSelect: TFLevelSelect
       OnClick = btnCleanseOneClick
     end
   end
+  object btnClearRecords: TButton
+    Left = 296
+    Top = 447
+    Width = 85
+    Height = 25
+    Caption = 'Clear Records'
+    TabOrder = 6
+    OnClick = btnClearRecordsClick
+  end
   object ilStatuses: TImageList
   end
 end

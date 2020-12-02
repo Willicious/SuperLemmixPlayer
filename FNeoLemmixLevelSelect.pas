@@ -36,6 +36,7 @@ type
     btnMassReplay: TButton;
     btnCleanseLevels: TButton;
     btnCleanseOne: TButton;
+    btnClearRecords: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure tvLevelSelectClick(Sender: TObject);
@@ -46,6 +47,7 @@ type
     procedure btnMassReplayClick(Sender: TObject);
     procedure btnCleanseLevelsClick(Sender: TObject);
     procedure btnCleanseOneClick(Sender: TObject);
+    procedure btnClearRecordsClick(Sender: TObject);
   private
     fLoadAsPack: Boolean;
     fInfoForm: TLevelInfoPanel;
@@ -406,6 +408,40 @@ begin
   end
   else if Obj is TNeoLevelEntry then
     GameParams.SetLevel(L);
+end;
+
+procedure TFLevelSelect.btnClearRecordsClick(Sender: TObject);
+var
+  Obj: TObject;
+  G: TNeoLevelGroup absolute Obj;
+  L: TNeoLevelEntry absolute Obj;
+  N: TTreeNode;
+
+  GroupWord: String;
+begin
+  N := tvLevelSelect.Selected;
+  if N = nil then Exit; // safeguard
+
+  Obj := TObject(N.Data);
+
+  if Obj is TNeoLevelGroup then
+  begin
+    if G.IsBasePack then
+      GroupWord := 'pack'
+    else
+      GroupWord := 'group';
+
+    if MessageDlg('Are you sure you want to clear records for all levels in the ' + GroupWord + ' "' + G.Name + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+      G.WipeAllRecords;
+  end else begin
+    if MessageDlg('Are you sure you want to clear records for the level "' + L.Title + '"?',
+                  mtCustom, [mbYes, mbNo], 0, mbNo) = mrYes then
+      L.WipeRecords;
+
+    if fDisplayRecords then
+      fInfoForm.PrepareEmbedRecords;
+  end;
 end;
 
 procedure TFLevelSelect.tvLevelSelectClick(Sender: TObject);
