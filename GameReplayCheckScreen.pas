@@ -31,6 +31,8 @@ type
       ReplayLevelID: Int64;
       ReplayResult: Integer;
       ReplayDuration: Int64;
+      ReplayLevelVersion: Int64;
+      ReplayReplayVersion: Int64;
       ReplayLevelText: String;
       ReplayLevelTitle: String;
   end;
@@ -320,6 +322,9 @@ begin
       until false;
 
       fReplays[i].ReplayDuration := Game.CurrentIteration;
+
+      fReplays[i].ReplayLevelVersion := Level.Info.LevelVersion;
+      fReplays[i].ReplayReplayVersion := Game.ReplayManager.LevelVersion;
     except
       fReplays[i].ReplayResult := CR_ERROR;
     end;
@@ -332,6 +337,10 @@ begin
       if fReplays[i].ReplayResult in [CR_PASS, CR_FAIL, CR_UNDETERMINED] then
         fScreenText.Add('Ran for ' + MakeTimeText);
       fScreenText.Add('*** ' + MakeResultText + ' ***');
+      if fReplays[i].ReplayResult in [CR_FAIL, CR_UNDETERMINED] then
+        if fReplays[i].ReplayLevelVersion <> fReplays[i].ReplayReplayVersion then
+          fScreenText.Add('Ver: ' + IntToHex(fReplays[i].ReplayLevelVersion, 16) + ' (Level File) | ' +
+                          'Ver: ' + IntToHex(fReplays[i].ReplayLevelVersion, 16) + ' (Replay)');
       fScreenText.Add('');
 
       OutputText;
@@ -478,7 +487,8 @@ var
     for i := 0 to Count-1 do
     begin
       if Items[i].ReplayResult <> aGroupIndex then Continue;
-      SL.Add(Items[i].ReplayLevelText + ':  ' + ExtractFileName(Items[i].ReplayFile) + '   (' + IntToStr(Items[i].ReplayDuration) + ' frames)');
+      SL.Add(Items[i].ReplayLevelText + ':  ' + ExtractFileName(Items[i].ReplayFile) + '   (' + IntToStr(Items[i].ReplayDuration) + ' frames) ' +
+             'LvV ' + IntToHex(Items[i].ReplayLevelVersion, 16) + ' / RpV: ' + IntToHex(Items[i].ReplayReplayVersion, 16) );
       FoundAny := true;
     end;
 
