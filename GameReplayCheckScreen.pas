@@ -339,8 +339,8 @@ begin
       fScreenText.Add('*** ' + MakeResultText + ' ***');
       if fReplays[i].ReplayResult in [CR_FAIL, CR_UNDETERMINED] then
         if fReplays[i].ReplayLevelVersion <> fReplays[i].ReplayReplayVersion then
-          fScreenText.Add('Ver: ' + IntToHex(fReplays[i].ReplayLevelVersion, 16) + ' (Level File) | ' +
-                          'Ver: ' + IntToHex(fReplays[i].ReplayLevelVersion, 16) + ' (Replay)');
+          fScreenText.Add('LvV ' + IntToHex(fReplays[i].ReplayLevelVersion, 16) + ' | ' +
+                          'RpV: ' + IntToHex(fReplays[i].ReplayLevelVersion, 16));
       fScreenText.Add('');
 
       OutputText;
@@ -480,6 +480,7 @@ var
   var
     i: Integer;
     FoundAny: Boolean;
+    NewLine: String;
   begin
     SL.Add('--== ' + aGroupName + ' ==--');
     SL.Add('');
@@ -487,8 +488,11 @@ var
     for i := 0 to Count-1 do
     begin
       if Items[i].ReplayResult <> aGroupIndex then Continue;
-      SL.Add(Items[i].ReplayLevelText + ':  ' + ExtractFileName(Items[i].ReplayFile) + '   (' + IntToStr(Items[i].ReplayDuration) + ' frames) ' +
-             'LvV ' + IntToHex(Items[i].ReplayLevelVersion, 16) + ' / RpV: ' + IntToHex(Items[i].ReplayReplayVersion, 16) );
+      NewLine := Items[i].ReplayLevelText + ':  ' + ExtractFileName(Items[i].ReplayFile) + '   (' + IntToStr(Items[i].ReplayDuration) + ' frames)';
+      NewLine := NewLine + ' LvV ' + IntToHex(Items[i].ReplayLevelVersion, 16) + ' / RpV: ' + IntToHex(Items[i].ReplayReplayVersion, 16);
+      if Items[i].ReplayLevelVersion <> Items[i].ReplayReplayVersion then
+        NewLine := NewLine + ' (mismatch!)';
+      SL.Add(NewLine);
       FoundAny := true;
     end;
 
