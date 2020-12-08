@@ -760,7 +760,9 @@ begin
 
       CheckForWarnings;
 
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion + 1;
       GameParams.Level.SaveToFile(aPath + ChangeFileExt(L.Filename, '.nxlv'));
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion - 1; // just in case
     except
       if aOutput.Count > 0 then
         aOutput.Add('');

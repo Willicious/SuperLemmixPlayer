@@ -290,7 +290,11 @@ begin
     SaveDlg.FileName := MakeSafeForFilename(GameParams.Level.Info.Title) + '.nxlv';
     SaveDlg.Options := [ofOverwritePrompt];
     if SaveDlg.Execute then
+    begin
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion + 1;
       GameParams.Level.SaveToFile(SaveDlg.FileName);
+      GameParams.Level.Info.LevelVersion := GameParams.Level.Info.LevelVersion - 1;
+    end;
   finally
     SaveDlg.Free;
   end;
