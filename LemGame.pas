@@ -2170,8 +2170,9 @@ begin
 
     SimulateLem(CopyL, False);
 
-    if CopyL.LemAction <> baClimbing then
-      Result := True;
+    if (CopyL.LemAction = baFalling) and (CopyL.LemDX = -L.LemDX) then
+      if HasPixelAt(CopyL.LemX, CopyL.LemY - 9) or HasPixelAt(CopyL.LemX, CopyL.LemY - 8) then
+        Result := True;
 
     CopyL.Free;
   end else if L.LemAction = baJumping then
