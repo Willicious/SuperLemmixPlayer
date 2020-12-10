@@ -1445,7 +1445,7 @@ begin
     spbNuke:
       begin
         Game.RegainControl;
-        if GameParams.Hotkeys.CheckForKey(lka_Highlight) then
+        if GameParams.Hotkeys.CheckForKey(lka_Highlight) or (Button = mbRight) then
         begin
           Game.SetSelectedSkill(i, True, true);
           fGameWindow.GotoSaveState(Game.CurrentIteration, 0, Game.CurrentIteration - 85);
