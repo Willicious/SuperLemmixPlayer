@@ -1678,6 +1678,8 @@ var
   Src: TBitmap32;
   Flip, Invert, Rotate: Boolean;
   MT: TMetaTerrain;
+
+  SrcRect, DstRect, Margins: TRect;
 begin
 
   MT := FindMetaTerrain(T);
@@ -1690,15 +1692,42 @@ begin
   else
     Src := MT.GraphicImage[Flip, Invert, Rotate];
 
+  SrcRect := Src.BoundsRect;
+
   if IsPhysicsDraw then
     PrepareTerrainBitmapForPhysics(Src, T.DrawingFlags, MT.IsSteel)
   else
     PrepareTerrainBitmap(Src, T.DrawingFlags);
 
+  DstRect.Left := T.Left;
+  DstRect.Top := T.Top;
+  DstRect.Right := DstRect.Left + MT.Width[Flip, Invert, Rotate];
+  DstRect.Bottom := DstRect.Top + MT.Height[Flip, Invert, Rotate];
+
+  if MT.ResizeHorizontal[Flip, Invert, Rotate] and (T.Width > 0) then
+    DstRect.Right := DstRect.Left + T.Width;
+  if MT.ResizeVertical[Flip, Invert, Rotate] and (T.Height > 0) then
+    DstRect.Bottom := DstRect.Top + T.Height;
+
+  Margins.Left := MT.CutLeft[Flip, Invert, Rotate];
+  Margins.Top := MT.CutTop[Flip, Invert, Rotate];
+  Margins.Right := MT.CutRight[Flip, Invert, Rotate];
+  Margins.Bottom := MT.CutBottom[Flip, Invert, Rotate];
+
   if IsHighRes then
-    Src.DrawTo(Dst, T.Left * 2, T.Top * 2)
-  else
-    Src.DrawTo(Dst, T.Left, T.Top);
+  begin
+    DstRect.Left := DstRect.Left * 2;
+    DstRect.Top := DstRect.Top * 2;
+    DstRect.Right := DstRect.Right * 2;
+    DstRect.Bottom := DstRect.Bottom * 2;
+
+    Margins.Left := Margins.Left * 2;
+    Margins.Top := Margins.Top * 2;
+    Margins.Right := Margins.Right * 2;
+    Margins.Bottom := Margins.Bottom * 2;
+  end;
+
+  DrawNineSlice(Dst, DstRect, SrcRect, Margins, Src);
 end;
 
 procedure TRenderer.PrepareTerrainBitmap(Bmp: TBitmap32; DrawingFlags: Byte);

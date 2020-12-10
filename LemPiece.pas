@@ -85,6 +85,8 @@ begin
     inherited;
     GS := IP.GS;
     Piece := IP.Piece;
+    Width := IP.Width;
+    Height := IP.Height;
   end;
 end;
 

@@ -58,4 +58,11 @@
    ONE_WAY
  $END
  
- 
+ $TERRAIN
+   STYLE namida_systemtest
+   PIECE resize_steel
+   X 24
+   Y 32
+   WIDTH 200
+   HEIGHT 35
+ $END

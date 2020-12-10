@@ -72,7 +72,7 @@ type
       property CutLeft[Flip, Invert, Rotate: Boolean]: Integer index tv_CutLeft read GetVariableProperty;
       property CutTop[Flip, Invert, Rotate: Boolean]: Integer index tv_CutTop read GetVariableProperty;
       property CutRight[Flip, Invert, Rotate: Boolean]: Integer index tv_CutRight read GetVariableProperty;
-      property CutBottm[Flip, Invert, Rotate: Boolean]: Integer index tv_CutBottom read GetVariableProperty;
+      property CutBottom[Flip, Invert, Rotate: Boolean]: Integer index tv_CutBottom read GetVariableProperty;
       property IsSteel       : Boolean read fIsSteel write fIsSteel;
       property CyclesSinceLastUse: Integer read fCyclesSinceLastUse write fCyclesSinceLastUse;
   end;
@@ -265,6 +265,10 @@ begin
     case Index of
       tv_Width: Result := GraphicImage.Width;
       tv_Height: Result := GraphicImage.Height;
+      tv_CutLeft: Result := CutLeft;
+      tv_CutTop: Result := CutTop;
+      tv_CutRight: Result := CutRight;
+      tv_CutBottom: Result := CutBottom;
       else raise Exception.Create('TMetaTerrain.GetVariableProperty given invalid value.');
     end;
   end;

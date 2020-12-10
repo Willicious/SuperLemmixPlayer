@@ -124,8 +124,6 @@ begin
   begin
     inherited;
     DrawingFlags := O.DrawingFlags;
-    Width := O.Width;
-    Height := O.Height;
     Skill := O.Skill;
     TarLev := O.TarLev;
     LemmingCap := O.LemmingCap;
