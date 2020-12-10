@@ -29,7 +29,7 @@ type
 
     procedure LoadReplay;
     procedure SaveReplay;
-    procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0);
+    procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
 
     procedure ApplyMouseTrap;
     procedure SetCurrentCursor(aCursor: Integer = 0);

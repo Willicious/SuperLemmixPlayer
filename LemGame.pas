@@ -264,7 +264,7 @@ type
     function LayStackBrick(L: TLemming): Boolean;
     procedure MoveLemToReceivePoint(L: TLemming; GadgetID: Byte);
 
-    procedure RecordNuke;
+    procedure RecordNuke(aInsert: Boolean);
     procedure RecordSpawnInterval(aSI: Integer);
     procedure RecordSkillAssignment(L: TLemming; aSkill: TBasicLemmingAction);
     procedure RemoveLemming(L: TLemming; RemMode: Integer = 0; Silent: Boolean = false);
@@ -5048,7 +5048,7 @@ begin
       end;
     spbNuke:
       begin
-        RecordNuke;
+        RecordNuke(RightClick);
       end;
     spbPause: ; // Do Nothing
     spbNone: ; // Do Nothing
@@ -5276,14 +5276,17 @@ begin
 end;
 
 
-procedure TLemmingGame.RecordNuke;
+procedure TLemmingGame.RecordNuke(aInsert: Boolean);
 var
   E: TReplayNuke;
 begin
-  if not fPlaying then
+  if (aInsert and (fCurrentIteration < 84)) or (not fPlaying) then
     Exit;
   E := TReplayNuke.Create;
-  E.Frame := fCurrentIteration;
+  if aInsert then
+    E.Frame := fCurrentIteration - 84
+  else
+    E.Frame := fCurrentIteration;
   fReplayManager.Add(E);
 end;
 

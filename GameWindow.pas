@@ -182,7 +182,7 @@ type
     constructor Create(aOwner: TComponent); override;
     destructor Destroy; override;
     procedure ApplyMouseTrap;
-    procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0);
+    procedure GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
     procedure LoadReplay;
     procedure SaveReplay;
     procedure RenderMinimap;
@@ -966,7 +966,7 @@ begin
   Game.fSelectDx := SDir;
 end;
 
-procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0);
+procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: Integer = 0; aForceBeforeIteration: Integer = -1);
 {-------------------------------------------------------------------------------
   Go in hyperspeed from the beginning to aTargetIteration
   PauseAfterSkip values:
@@ -977,6 +977,9 @@ procedure TGameWindow.GotoSaveState(aTargetIteration: Integer; PauseAfterSkip: I
 var
   UseSaveState: Integer;
 begin
+  if aForceBeforeIteration < 0 then
+    aForceBeforeIteration := aTargetIteration;
+
   CanPlay := False;
   if PauseAfterSkip < 0 then
     GameSpeed := gspNormal
@@ -986,7 +989,7 @@ begin
 
   // Find correct save state
   if aTargetIteration > 0 then
-    UseSaveState := fSaveList.FindNearestState(aTargetIteration)
+    UseSaveState := fSaveList.FindNearestState(aForceBeforeIteration)
   else if fSaveList.Count = 0 then
     UseSaveState := -1
   else
@@ -1349,6 +1352,17 @@ begin
                   end else
                     fLastNukeKeyTime := CurrTime;
                 end;
+      lka_BypassNuke: begin
+                        // double keypress needed to prevent accidently nuking
+                        CurrTime := TimeGetTime;
+                        if CurrTime - fLastNukeKeyTime < 250 then
+                        begin
+                          RegainControl;
+                          SetSelectedSkill(spbNuke, true, true);
+                          GotoSaveState(Game.CurrentIteration, 0, Game.CurrentIteration - 85);
+                        end else
+                          fLastNukeKeyTime := CurrTime;
+                      end;
       lka_SaveState : begin
                         fSaveStateFrame := fGame.CurrentIteration;
                         fSaveStateReplayStream.Clear;

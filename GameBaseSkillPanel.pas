@@ -1445,7 +1445,12 @@ begin
     spbNuke:
       begin
         Game.RegainControl;
-        Game.SetSelectedSkill(i, True, GameParams.Hotkeys.CheckForKey(lka_Highlight));
+        if GameParams.Hotkeys.CheckForKey(lka_Highlight) then
+        begin
+          Game.SetSelectedSkill(i, True, true);
+          fGameWindow.GotoSaveState(Game.CurrentIteration, 0, Game.CurrentIteration - 85);
+        end else
+          Game.SetSelectedSkill(i, True);
       end;
     spbFastForward:
       begin
