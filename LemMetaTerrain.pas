@@ -137,8 +137,8 @@ begin
     try
       Parser.LoadFromFile(aPiece + '.nxmt');
       fIsSteel := Parser.MainSection.Line['steel'] <> nil;
-      fVariableInfo[0].ResizeHorizontal := Parser.MainSection.Line['resize_horizontal'] <> nil;
-      fVariableInfo[0].ResizeVertical := Parser.MainSection.Line['resize_vertical'] <> nil;
+      fVariableInfo[0].ResizeHorizontal := (Parser.MainSection.Line['resize_horizontal'] <> nil) and (Parser.MainSection.Line['resize_both'] <> nil);
+      fVariableInfo[0].ResizeVertical := (Parser.MainSection.Line['resize_vertical'] <> nil) and (Parser.MainSection.Line['resize_both'] <> nil);
       fVariableInfo[0].CutLeft := Parser.MainSection.LineNumeric['nine_slice_left'];
       fVariableInfo[0].CutTop := Parser.MainSection.LineNumeric['nine_slice_top'];
       fVariableInfo[0].CutRight := Parser.MainSection.LineNumeric['nine_slice_right'];
