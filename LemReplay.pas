@@ -51,6 +51,7 @@ type
   TBaseReplayLemmingItem = class(TBaseReplayItem)
     private
       fLemmingIndex: Integer;
+      fLemmingIdentifier: String;
       fLemmingX: Integer;
       fLemmingDx: Integer;
       fLemmingY: Integer;
@@ -62,6 +63,7 @@ type
     public
       procedure SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
       property LemmingIndex: Integer read fLemmingIndex write fLemmingIndex;
+      property LemmingIdentifier: String read fLemmingIdentifier write fLemmingIdentifier;
       property LemmingX: Integer read fLemmingX write fLemmingX;
       property LemmingDx: Integer read fLemmingDx write fLemmingDx;
       property LemmingY: Integer read fLemmingY write fLemmingY;
@@ -691,6 +693,7 @@ procedure TBaseReplayLemmingItem.InitializeValues();
 begin
   inherited InitializeValues();
   fLemmingIndex := 0;
+  fLemmingIdentifier := '';
   fLemmingX := 0;
   fLemmingDx := 0;
   fLemmingY := 0;
@@ -700,6 +703,7 @@ end;
 procedure TBaseReplayLemmingItem.SetInfoFromLemming(aLemming: TLemming; aHighlit: Boolean);
 begin
   fLemmingIndex := aLemming.LemIndex;
+  fLemmingIdentifier := aLemming.LemIdentifier;
   fLemmingX := aLemming.LemX;
   fLemmingDx := aLemming.LemDX;
   fLemmingY := aLemming.LemY;
@@ -713,6 +717,7 @@ begin
   inherited DoLoadSection(Sec);
 
   fLemmingIndex := Sec.LineNumeric['lem_index'];
+  fLemmingIdentifier := Sec.LineTrimString['lem_identifier'];
   fLemmingX := Sec.LineNumeric['lem_x'];
   fLemmingY := Sec.LineNumeric['lem_y'];
 
@@ -731,6 +736,7 @@ procedure TBaseReplayLemmingItem.DoSave(Sec: TParserSection);
 begin
   inherited;
   Sec.AddLine('LEM_INDEX', fLemmingIndex);
+  Sec.AddLine('LEM_IDENTIFIER', fLemmingIdentifier);
   Sec.AddLine('LEM_X', fLemmingX);
   Sec.AddLine('LEM_Y', fLemmingY);
   if fLemmingDx < 0 then

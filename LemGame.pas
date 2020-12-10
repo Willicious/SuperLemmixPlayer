@@ -390,7 +390,6 @@ type
     procedure CheckAdjustSpawnInterval;
     procedure AdjustSpawnInterval(aSI: Integer);
     function CheckIfLegalSI(aSI: Integer): Boolean;
-    procedure CreateLemmingAtCursorPoint;
     procedure Finish(aReason: Integer);
     procedure Cheat;
     procedure HitTest(Autofail: Boolean = false);
@@ -1144,6 +1143,7 @@ begin
     with L do
     begin
       LemIndex := LemmingList.Add(L);
+      L.LemIdentifier := 'P' + IntToStr(Lem.X) + '.' + IntToStr(Lem.Y);
       SetFromPreplaced(Lem);
 
       if Lem.IsShimmier and HasPixelAt(L.LemX, L.LemY - 9) then
@@ -1838,6 +1838,7 @@ begin
   NewL := TLemming.Create;
   NewL.Assign(L);
   NewL.LemIndex := LemmingList.Count;
+  NewL.LemIdentifier := 'C' + IntToStr(CurrentIteration);
   LemmingList.Add(NewL);
   TurnAround(NewL);
   Inc(LemmingsOut);
@@ -5098,6 +5099,7 @@ begin
         with NewLemming do
         begin
           LemIndex := LemmingList.Add(NewLemming);
+          LemIdentifier := 'N' + IntToStr(Level.Info.LemmingsCount - Level.PreplacedLemmings.Count - LemmingsToRelease);
           Transition(NewLemming, baFalling);
 
           if LemAction = baFalling then // could be a walker if eg. spawned inside terrain
@@ -5168,31 +5170,6 @@ begin
 
     end;
   end;
-end;
-
-procedure TLemmingGame.CreateLemmingAtCursorPoint;
-{-------------------------------------------------------------------------------
-  debugging procedure: click and create lemming
--------------------------------------------------------------------------------}
-var
-  NewLemming: TLemming;
-begin
-  if not HatchesOpened then
-    Exit;
-  if UserSetNuking then
-    Exit;
-
-  NewLemming := TLemming.Create;
-  with NewLemming do
-  begin
-    LemIndex := LemmingList.Add(NewLemming);
-    Transition(NewLemming, baFalling);
-    LemX := CursorPoint.X;
-    LemY := CursorPoint.Y;
-    LemDX := 1;
-  end;
-  Inc(LemmingsOut);
-
 end;
 
 
