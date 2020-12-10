@@ -28,6 +28,8 @@ type
   protected
     fSet: String;
     fPiece: String;
+    fWidth: Integer;
+    fHeight: Integer;
     function GetFlip: Boolean; virtual;
     function GetInvert: Boolean; virtual;
     function GetRotate: Boolean; virtual;
@@ -41,6 +43,8 @@ type
     property GS: String read fSet write fSet; // "Set" is a reserved keyword :(
     property Piece: String read fPiece write fPiece;
     property Identifier: String read GetIdentifier;
+    property Width: Integer read fWidth write fWidth;
+    property Height: Integer read fHeight write fHeight;
     property Flip   : Boolean read GetFlip write SetFlip;
     property Invert : Boolean read GetInvert write SetInvert;
     property Rotate : Boolean read GetRotate write SetRotate;    

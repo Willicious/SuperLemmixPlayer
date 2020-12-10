@@ -61,6 +61,7 @@ type
 implementation
 
 uses
+  LemMetaTerrain,
   LemNeoPieceManager;
 
 { TTerrain }
@@ -144,6 +145,8 @@ begin
 
   Left := aSection.LineNumeric['x'];
   Top := aSection.LineNumeric['y'];
+  Width := aSection.LineNumeric['width'];
+  Height := aSection.LineNumeric['height'];
 
   DrawingFlags := tdf_NoOneWay;
   if (aSection.Line['one_way'] <> nil) then fDrawingFlags := 0;
@@ -159,6 +162,8 @@ procedure TTerrain.SaveToSection(aSection: TParserSection);
   begin
     Result := DrawingFlags and aValue = aValue;
   end;
+var
+  MT: TMetaTerrain;
 begin
   aSection.AddLine('STYLE', GS);
   aSection.AddLine('PIECE', Piece);
@@ -171,6 +176,10 @@ begin
   if Flag(tdf_NoOverwrite) then aSection.AddLine('NO_OVERWRITE');
   if Flag(tdf_Erase) then aSection.AddLine('ERASE');
   if not Flag(tdf_NoOneWay) then aSection.AddLine('ONE_WAY');
+
+  MT := PieceManager.Terrains[Identifier];
+  if (Width > 0) and MT.ResizeHorizontal[Flag(tdf_Rotate), Flag(tdf_Flip), Flag(tdf_Invert)] then aSection.AddLine('WIDTH', Width);
+  if (Height > 0) and MT.ResizeVertical[Flag(tdf_Rotate), Flag(tdf_Flip), Flag(tdf_Invert)] then aSection.AddLine('HEIGHT', Height);
 end;
 
 { TTerrains }
