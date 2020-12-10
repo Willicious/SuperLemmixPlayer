@@ -39,6 +39,26 @@ type
 
 implementation
 
+uses
+  GameControl,
+  Generics.Collections;
+
+type
+  TCacheImageData = class
+    private
+      fWidth: Integer;
+      fHeight: Integer;
+      fData: array of TColor32;
+    public
+      constructor Create(aBitmap: TBitmap32);
+      procedure Restore(aDst: TBitmap32);
+  end;
+
+  TCacheImageDict = TObjectDictionary<String, TCacheImageData>;
+
+var
+  ImgCache: TCacheImageDict;
+
 class procedure TPngInterface.SplitBmp32(aSrc: TBitmap32; aDstImage, aDstMask: TBitmap);
 var
   x, y: Integer;
@@ -118,7 +138,13 @@ end;
 
 class procedure TPngInterface.LoadPngFile(fn: String; Bmp: TBitmap32);
 begin
-  LoadBitmap32FromPng(Bmp, fn);
+  if (not GameParams.FileCaching) or (not ImgCache.ContainsKey(fn)) then
+  begin
+    LoadBitmap32FromPng(Bmp, fn);
+    if GameParams.FileCaching then
+      ImgCache.Add(fn, TCacheImageData.Create(Bmp));
+  end else
+    ImgCache[fn].Restore(Bmp);
 end;
 
 class procedure TPngInterface.LoadPngStream(aStream: TStream; Bmp: TBitmap32);
@@ -263,5 +289,48 @@ begin
     end;
   end;
 end;*)
+
+{ TCacheImageData }
+
+constructor TCacheImageData.Create(aBitmap: TBitmap32);
+var
+  PSrc, PDst: PColor32;
+  i: Integer;
+begin
+  inherited Create;
+  fWidth := aBitmap.Width;
+  fHeight := aBitmap.Height;
+  SetLength(fData, fWidth * fHeight);
+  PSrc := aBitmap.PixelPtr[0, 0];
+  PDst := @fData[0];
+  for i := 0 to fWidth * fHeight - 1 do
+  begin
+    PDst^ := PSrc^;
+    Inc(PSrc);
+    Inc(PDst);
+  end;
+end;
+
+procedure TCacheImageData.Restore(aDst: TBitmap32);
+var
+  PSrc, PDst: PColor32;
+  i: Integer;
+begin
+  aDst.SetSize(fWidth, fHeight);
+  PSrc := @fData[0];
+  PDst := aDst.PixelPtr[0, 0];
+  for i := 0 to fWidth * fHeight - 1 do
+  begin
+    PDst^ := PSrc^;
+    Inc(PSrc);
+    Inc(PDst);
+  end;
+end;
+
+initialization
+  ImgCache := TCacheImageDict.Create([doOwnsValues]);
+
+finalization
+  ImgCache.Free;
 
 end.

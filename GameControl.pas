@@ -79,7 +79,8 @@ type
     moCompactSkillPanel,
     moEdgeScroll,
     moSpawnInterval,
-    moHideAdvanced
+    moHideAdvanced,
+    moFileCaching
   );
 
   TMiscOptions = set of TMiscOption;
@@ -222,6 +223,7 @@ type
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
 
     property HideAdvancedOptions: boolean Index moHideAdvanced read GetOptionFlag write SetOptionFlag;
+    property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
@@ -402,10 +404,12 @@ begin
   SaveBoolean('EnableOnline', EnableOnline);
   SaveBoolean('UpdateCheck', CheckUpdates);
 
+  SL.Add('');
+  SL.Add('# Technical Options');
+  SaveBoolean('FileCaching', FileCaching);
+
   if UnderWine then
   begin
-    SL.Add('');
-    SL.Add('# Technical Options');
     SaveBoolean('DisableWineWarnings', DisableWineWarnings);
   end;
 
@@ -513,6 +517,7 @@ begin
     CheckUpdates := LoadBoolean('UpdateCheck', CheckUpdates);
 
     DisableWineWarnings := LoadBoolean('DisableWineWarnings', DisableWineWarnings);
+    FileCaching := LoadBoolean('FileCaching', FileCaching);
 
     ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
 

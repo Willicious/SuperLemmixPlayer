@@ -106,6 +106,7 @@ type
   TParser = class
     private
       fMainSection: TParserSection;
+      procedure LoadFromStreamInternal(aStream: TStream; aCacheName: String);
     public
       constructor Create;
       destructor Destroy; override;
@@ -218,6 +219,16 @@ type
 
 implementation
 
+uses
+  GameControl,
+  Generics.Collections;
+
+type
+  TStringListCache = TObjectDictionary<string, TStringList>;
+
+var
+  SlCache: TStringListCache;
+
 { --- TParser --- }
 
 constructor TParser.Create;
@@ -242,16 +253,26 @@ procedure TParser.LoadFromFile(aFile: String);
 var
   F: TFileStream;
 begin
-  F := TFileStream.Create(aFile, fmOpenRead);
-  try
-    F.Position := 0;
-    LoadFromStream(F);
-  finally
-    F.Free;
-  end;
+  if (not GameParams.FileCaching) or (not SlCache.ContainsKey(aFile)) then
+  begin
+    F := TFileStream.Create(aFile, fmOpenRead);
+    try
+      F.Position := 0;
+      if not GameParams.FileCaching then aFile := ''; // this prevents caching, see code of LoadFromStreamInternal
+      LoadFromStreamInternal(F, aFile);
+    finally
+      F.Free;
+    end;
+  end else
+    LoadFromStrings(SlCache[aFile]);
 end;
 
 procedure TParser.LoadFromStream(aStream: TStream);
+begin
+  LoadFromStreamInternal(aStream, '');
+end;
+
+procedure TParser.LoadFromStreamInternal(aStream: TStream; aCacheName: String);
 var
   SL: TStringList;
 begin
@@ -260,7 +281,10 @@ begin
     SL.LoadFromStream(aStream);
     LoadFromStrings(SL);
   finally
-    SL.Free;
+    if aCacheName = '' then
+      SL.Free
+    else
+      SlCache.Add(aCacheName, SL);
   end;
 end;
 
@@ -677,5 +701,12 @@ begin
   Result := inherited Get(Index);
 end;
 
+initialization
+
+  SlCache := TStringListCache.Create([doOwnsValues]);
+
+finalization
+
+  SlCache.Free;
 
 end.
