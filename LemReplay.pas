@@ -717,7 +717,7 @@ begin
   inherited DoLoadSection(Sec);
 
   fLemmingIndex := Sec.LineNumeric['lem_index'];
-  fLemmingIdentifier := Sec.LineTrimString['lem_identifier'];
+  fLemmingIdentifier := Uppercase(Sec.LineTrimString['lem_identifier']);
   fLemmingX := Sec.LineNumeric['lem_x'];
   fLemmingY := Sec.LineNumeric['lem_y'];
 

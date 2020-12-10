@@ -4973,15 +4973,30 @@ end;
 procedure TLemmingGame.ReplaySkillAssignment(aReplayItem: TReplaySkillAssignment);
 var
   L: TLemming;
+  i: Integer;
 begin
   with aReplayItem do
   begin
-    if (LemmingIndex < 0) or (LemmingIndex >= LemmingList.Count) then
-      Exit;
+    L := nil;
 
-    L := LemmingList.List[LemmingIndex];
+    if LemmingIdentifier = '' then
+    begin
+      if (LemmingIndex >= 0) and (LemmingIndex < LemmingList.Count) then
+      begin
+        L := LemmingList.List[LemmingIndex];
+        LemmingIdentifier := L.LemIdentifier;
+      end;
+    end else begin
+      for i := 0 to LemmingList.Count-1 do
+        if LemmingList[i].LemIdentifier = LemmingIdentifier then
+        begin
+          L := LemmingList[i];
+          LemmingIndex := L.LemIndex;
+          Break;
+        end;
+    end;
 
-    if Skill in AssignableSkills then
+    if (L <> nil) and (Skill in AssignableSkills) then
     begin
       fTargetLemmingID := L.LemIndex;
       AssignNewSkill(Skill, false, true);
