@@ -26,6 +26,7 @@ const
   PM_NOCANCELSTEEL = $00000080;
 
   PM_TERRAIN   = $000000FF;
+  PM_ONEWAYFLAGS = PM_ONEWAYLEFT or PM_ONEWAYRIGHT or PM_ONEWAYDOWN or PM_ONEWAYUP;
 
 
   SHADOW_COLOR = $80202020;
@@ -66,6 +67,7 @@ type
     fWidth: Integer;
     fHeight: Integer;
     fPhysicsMap: TBitmap32;
+    fOneWayHighlightBit: Cardinal;
 
     function GetItem(Index: TRenderLayer): TBitmap32;
     procedure CombinePixelsShadow(F: TColor32; var B: TColor32; M: TColor32);
@@ -86,6 +88,7 @@ type
     property Width: Integer read fWidth;
     property Height: Integer read fHeight;
     property PhysicsMap: TBitmap32 write fPhysicsMap;
+    property OneWayHighlightBit: Cardinal read fOneWayHighlightBit write fOneWayHighlightBit;
   published
   end;
 
@@ -654,10 +657,12 @@ begin
 
       if PSrc^ and PM_SOLID <> 0 then
       begin
-        if PSrc^ and PM_STEEL = 0 then
-          C := $FFB0B0B0
+        if PSrc^ and PM_STEEL <> 0 then
+          C := $FF606060
+        else if PSrc^ and fOneWayHighlightBit <> 0 then
+          C := $FF6060B0
         else
-          C := $FF606060;
+          C := $FFB0B0B0;
       end else
         C := 0;
 

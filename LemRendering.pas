@@ -539,6 +539,7 @@ end;
 procedure TRenderer.DrawLevel(aDst: TBitmap32; aRegion: TRect; aClearPhysics: Boolean = false);
 begin
   fLayers.PhysicsMap := fPhysicsMap; // can we assign this just once somewhere? very likely.
+  fLayers.OneWayHighlightBit := fPhysicsMap[fRenderInterface.MousePos.X, fRenderInterface.MousePos.Y] and PM_ONEWAYFLAGS;
   fLayers.CombineTo(aDst, aRegion, aClearPhysics);
 end;
 
