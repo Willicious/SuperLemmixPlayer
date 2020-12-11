@@ -1841,6 +1841,11 @@ begin
         fHelperImages[hpi_Trap].DrawTo(Dst, DrawX - 10 * ResMod, DrawY);
       end;
 
+    DOM_UPDRAFT:
+      begin
+        fHelperImages[hpi_Updraft].DrawTo(Dst, DrawX - 22 * ResMod, DrawY);
+      end;
+
     DOM_FLIPPER:
       begin
         fHelperImages[hpi_Flipper].DrawTo(Dst, DrawX - 13 * ResMod, DrawY);
