@@ -246,10 +246,11 @@ begin
 
     if GameParams.PostviewJingles then
     begin
+      SoundManager.PurgePackSounds;
       if gRescued >= Level.Info.RescueCount then
-          SoundManager.PlaySound('success')
+          SoundManager.PlayPackSound('success', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('success.ogg')))
       else
-          SoundManager.PlaySound('failure');
+          SoundManager.PlayPackSound('failure', ExtractFilePath(GameParams.CurrentLevel.Group.FindFile('failure.ogg')));
     end;
 
     // init some local strings

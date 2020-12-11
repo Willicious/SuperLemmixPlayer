@@ -37,12 +37,14 @@ uses
   LemStrings, Contnrs, Classes, SysUtils;
 
 type
+  TSoundEffectOrigin = (seoStyle, seoDefault, seoPack);
+
   TSoundEffect = class
     private
       fName: String;
       fBassSample: LongWord;
       fStream: TMemoryStream;
-      fIsDefaultSound: Boolean;
+      fOrigin: TSoundEffectOrigin;
       procedure FreeBassSample;
       procedure ObtainBassSample;
     public
@@ -53,7 +55,7 @@ type
 
       property Name: String read fName;
       property BassSample: LongWord read fBassSample;
-      property IsDefaultSound: Boolean read fIsDefaultSound write fIsDefaultSound;
+      property Origin: TSoundEffectOrigin read fOrigin write fOrigin;
   end;
 
   TSoundEffects = class(TObjectList)
@@ -89,24 +91,29 @@ type
       procedure SetMusicMute(aValue: Boolean);
 
       function FindSoundIndex(aName: String): Integer;
+
+      procedure InternalPlaySound(aIndex: Integer; aBalance: Integer);
     public
       constructor Create;
       destructor Destroy; override;
 
       procedure LoadDefaultSounds;
-      function LoadSoundFromFile(aName: String; aDefault: Boolean = false): Integer;
-      function LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false): Integer;
+      function LoadSoundFromFile(aName: String; aOrigin: TSoundEffectOrigin; aLoadPath: String = ''): Integer;
+      function LoadSoundFromStream(aStream: TStream; aName: String; aOrigin: TSoundEffectOrigin): Integer;
       procedure PurgeNonDefaultSounds;
+      procedure PurgePackSounds;
 
       procedure LoadMusicFromFile(aName: String);
       procedure LoadMusicFromStream(aStream: TStream; aName: String);
 
       procedure PlaySound(aName: String; aBalance: Integer = 0); // -100 = fully left, +100 = fully right
+      procedure PlayPackSound(aName: String; aLoadPath: String; aBalance: Integer = 0);
       procedure PlayMusic;
       procedure StopMusic;
       procedure FreeMusic;
 
-      function FindExtension(const aName: String; aIsMusic: Boolean): String;
+      function FindExtension(const aName: String; aIsMusic: Boolean): String; overload;
+      function FindExtension(const aName: String; aBasePath: String; aIsMusic: Boolean): String; overload;
       function DoesSoundExist(const aName: String): Boolean;
 
       property SoundVolume: Integer read fSoundVolume write SetSoundVolume;
@@ -230,20 +237,26 @@ end;
 
 function TSoundManager.FindExtension(const aName: String; aIsMusic: Boolean): String;
 var
-  i: Integer;
-  LocalName: String;
   BasePath: String;
 begin
-  Result := '';
-  LocalName := ChangeFileExt(aName, '');
-
   if aIsMusic then
     BasePath := AppPath + SFMusic
   else
     BasePath := AppPath + SFSounds;
 
+  Result := FindExtension(aName, BasePath, aIsMusic);
+end;
+
+function TSoundManager.FindExtension(const aName: String; aBasePath: String; aIsMusic: Boolean): String;
+var
+  i: Integer;
+  LocalName: String;
+begin
+  Result := '';
+  LocalName := ChangeFileExt(aName, '');
+
   for i := 0 to Length(VALID_AUDIO_EXTS) - 1 do
-    if FileExists(BasePath + LocalName + VALID_AUDIO_EXTS[i]) then
+    if FileExists(aBasePath + LocalName + VALID_AUDIO_EXTS[i]) then
     begin
       Result := VALID_AUDIO_EXTS[i];
       Exit;
@@ -251,29 +264,36 @@ begin
       Exit;
 end;
 
-function TSoundManager.LoadSoundFromFile(aName: String; aDefault: Boolean = false): Integer;
+function TSoundManager.LoadSoundFromFile(aName: String; aOrigin: TSoundEffectOrigin; aLoadPath: String = ''): Integer;
 var
   F: TFileStream;
   Ext: String;
+  BasePath: String;
 begin
   Result := FindSoundIndex(aName);
 
   if Result <> -1 then
     Exit;
 
-  Ext := FindExtension(aName, false);
+  if aLoadPath = '' then
+    BasePath := AppPath + SFSounds
+  else
+    BasePath := aLoadPath;
+
+  Ext := FindExtension(aName, BasePath, false);
+
   if Ext = '' then
     Exit;
 
-  F := TFileStream.Create(AppPath + SFSounds + aName + FindExtension(aName, false), fmOpenRead);
+  F := TFileStream.Create(BasePath + aName + Ext, fmOpenRead);
   try
-    Result := LoadSoundFromStream(F, aName, aDefault);
+    Result := LoadSoundFromStream(F, aName, aOrigin);
   finally
     F.Free;
   end;
 end;
 
-function TSoundManager.LoadSoundFromStream(aStream: TStream; aName: String; aDefault: Boolean = false): Integer;
+function TSoundManager.LoadSoundFromStream(aStream: TStream; aName: String; aOrigin: TSoundEffectOrigin): Integer;
 begin
   if not fIsBassLoaded then
   begin
@@ -291,14 +311,14 @@ begin
   with fSoundEffects.Add do
   begin
     LoadFromStream(aStream, aName);
-    IsDefaultSound := aDefault;
+    Origin := aOrigin;
   end;
 end;
 
 procedure TSoundManager.LoadDefaultSounds;
   procedure Get(aName: String);
   begin
-    LoadSoundFromFile(aName, true);
+    LoadSoundFromFile(aName, seoDefault);
   end;
 begin
   if not fIsBassLoaded then Exit;
@@ -310,7 +330,6 @@ begin
   Get('door');
   Get('electric');
   Get('explode');
-  Get('failure');
   Get('fire');
   Get('glug');
   Get('letsgo');
@@ -320,7 +339,6 @@ begin
   Get('slurp');
   Get('splash');
   Get('splat');
-  Get('success');
   Get('tenton');
   Get('thud');
   Get('thunk');
@@ -359,7 +377,18 @@ begin
   if not fIsBassLoaded then Exit;
 
   for i := fSoundEffects.Count-1 downto 0 do
-    if not fSoundEffects[i].IsDefaultSound then
+    if fSoundEffects[i].Origin <> seoDefault then
+      fSoundEffects.Delete(i);
+end;
+
+procedure TSoundManager.PurgePackSounds;
+var
+  i: Integer;
+begin
+  if not fIsBassLoaded then Exit;
+
+  for i := fSoundEffects.Count-1 downto 0 do
+    if fSoundEffects[i].Origin = seoPack then
       fSoundEffects.Delete(i);
 end;
 
@@ -429,7 +458,6 @@ end;
 procedure TSoundManager.PlaySound(aName: String; aBalance: Integer = 0);
 var
   SoundIndex: Integer;
-  SampleChannel: LongWord;
 begin
   if not fIsBassLoaded then Exit;
 
@@ -437,14 +465,36 @@ begin
   SoundIndex := FindSoundIndex(aName);
 
   if SoundIndex = -1 then
-    SoundIndex := LoadSoundFromFile(aName);
+    SoundIndex := LoadSoundFromFile(aName, seoStyle);
 
+  InternalPlaySound(SoundIndex, aBalance);
+end;
+
+procedure TSoundManager.PlayPackSound(aName, aLoadPath: String; aBalance: Integer = 0);
+var
+  SoundIndex: Integer;
+begin
+  if not fIsBassLoaded then Exit;
+
+  if fMuteSound then Exit;
+  SoundIndex := FindSoundIndex(aName);
+
+  if SoundIndex = -1 then
+    SoundIndex := LoadSoundFromFile(aName, seoPack, aLoadPath);
+
+  InternalPlaySound(SoundIndex, aBalance);
+end;
+
+procedure TSoundManager.InternalPlaySound(aIndex: Integer; aBalance: Integer);
+var
+  SampleChannel: LongWord;
+begin
   if aBalance < -100 then aBalance := -100;
   if aBalance > 100 then aBalance := 100;
 
-  if SoundIndex <> -1 then
+  if aIndex <> -1 then
   begin
-    SampleChannel := BASS_SampleGetChannel(fSoundEffects[SoundIndex].BassSample, true);
+    SampleChannel := BASS_SampleGetChannel(fSoundEffects[aIndex].BassSample, true);
     if aBalance <> 0 then
       BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_PAN, (aBalance / 100));
     BASS_ChannelSetAttribute(SampleChannel, BASS_ATTRIB_VOL, (fSoundVolume / 100));
