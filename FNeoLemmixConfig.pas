@@ -22,9 +22,7 @@ type
     Label5: TLabel;
     tbMusicVol: TTrackBar;
     Label6: TLabel;
-    Label7: TLabel;
-    cbSuccessJingle: TCheckBox;
-    cbFailureJingle: TCheckBox;
+    cbPostviewJingles: TCheckBox;
     TabSheet5: TTabSheet;
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
@@ -193,8 +191,7 @@ begin
     else
       tbMusicVol.Position := SoundManager.MusicVolume;
 
-    cbSuccessJingle.Checked := GameParams.PostLevelVictorySound;
-    cbFailureJingle.Checked := GameParams.PostLevelFailureSound;
+    cbPostviewJingles.Checked := GameParams.PostviewJingles;
 
     btnApply.Enabled := false;
   finally
@@ -248,8 +245,7 @@ begin
   if tbMusicVol.Position <> 0 then
     SoundManager.MusicVolume := tbMusicVol.Position;
     
-  GameParams.PostLevelVictorySound := cbSuccessJingle.Checked;
-  GameParams.PostLevelFailureSound := cbFailureJingle.Checked;
+  GameParams.PostviewJingles := cbPostviewJingles.Checked;
 
   btnApply.Enabled := false;
 end;

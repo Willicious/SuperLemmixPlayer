@@ -26,7 +26,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 412
-    ActivePage = TabSheet5
+    ActivePage = TabSheet4
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -338,19 +338,6 @@ object FormNXConfig: TFormNXConfig
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label7: TLabel
-        Left = 16
-        Top = 112
-        Width = 104
-        Height = 13
-        Caption = 'Post-Level Jingles'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
       object tbSoundVol: TTrackBar
         Left = 64
         Top = 40
@@ -371,22 +358,13 @@ object FormNXConfig: TFormNXConfig
         TabOrder = 1
         OnChange = SliderChange
       end
-      object cbSuccessJingle: TCheckBox
-        Left = 28
-        Top = 136
+      object cbPostviewJingles: TCheckBox
+        Left = 24
+        Top = 120
         Width = 129
         Height = 17
-        Caption = 'Success'
+        Caption = 'Post-Level Jingles'
         TabOrder = 2
-        OnClick = OptionChanged
-      end
-      object cbFailureJingle: TCheckBox
-        Left = 28
-        Top = 160
-        Width = 129
-        Height = 17
-        Caption = 'Failure'
-        TabOrder = 3
         OnClick = OptionChanged
       end
     end

@@ -244,13 +244,12 @@ begin
       fLevelOverride := $0000;
     end;
 
-    if gRescued >= Level.Info.RescueCount then
+    if GameParams.PostviewJingles then
     begin
-      if PostLevelVictorySound then
-        SoundManager.PlaySound('success');
-    end else begin
-      if PostLevelFailureSound then
-        SoundManager.PlaySound('failure');
+      if gRescued >= Level.Info.RescueCount then
+          SoundManager.PlaySound('success')
+      else
+          SoundManager.PlaySound('failure');
     end;
 
     // init some local strings

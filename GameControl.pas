@@ -80,13 +80,11 @@ type
     moEdgeScroll,
     moSpawnInterval,
     moHideAdvanced,
-    moFileCaching
+    moFileCaching,
+    moPostviewJingles
   );
 
   TMiscOptions = set of TMiscOption;
-
-  TPostLevelSoundOption = (plsVictory, plsFailure);
-  TPostLevelSoundOptions = set of TPostLevelSoundOption;
 
 const
   DEF_MISCOPTIONS = [
@@ -131,13 +129,9 @@ type
     fMainForm: TForm; // link to the FMain form
 
     MiscOptions           : TMiscOptions;
-    PostLevelSoundOptions : TPostLevelSoundOptions;
 
     function GetOptionFlag(aFlag: TMiscOption): Boolean;
     procedure SetOptionFlag(aFlag: TMiscOption; aValue: Boolean);
-
-    function GetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption): Boolean;
-    procedure SetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption; aValue: Boolean);
 
     procedure LoadFromIniFile;
     procedure SaveToIniFile;
@@ -227,8 +221,7 @@ type
 
     property MatchBlankReplayUsername: boolean Index moMatchBlankReplayUsername read GetOptionFlag write SetOptionFlag;
 
-    property PostLevelVictorySound: Boolean Index plsVictory read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
-    property PostLevelFailureSound: Boolean Index plsFailure read GetPostLevelSoundOptionFlag write SetPostLevelSoundOptionFlag;
+    property PostviewJingles: Boolean Index moPostviewJingles read GetOptionFlag write SetOptionFlag;
 
     property DumpMode: boolean read fDumpMode write fDumpMode;
     property OneLevelMode: boolean read fOneLevelMode write fOneLevelMode;
@@ -396,8 +389,7 @@ begin
   SaveBoolean('SoundEnabled', not SoundManager.MuteSound);
   SL.Add('MusicVolume=' + IntToStr(SoundManager.MusicVolume));
   SL.Add('SoundVolume=' + IntToStr(SoundManager.SoundVolume));
-  SaveBoolean('VictoryJingle', PostLevelVictorySound);
-  SaveBoolean('FailureJingle', PostLevelFailureSound);
+  SaveBoolean('PostviewJingles', PostviewJingles);
 
   SL.Add('');
   SL.Add('# Online Options');
@@ -544,8 +536,10 @@ begin
     LinearResampleMenu := LoadBoolean('LinearResampleMenu', LinearResampleMenu);
     LinearResampleGame := LoadBoolean('LinearResampleGame', LinearResampleGame);
 
-    PostLevelVictorySound := LoadBoolean('VictoryJingle', PostLevelVictorySound);
-    PostLevelFailureSound := LoadBoolean('FailureJingle', PostLevelFailureSound);
+    if LoadBoolean('VictoryJingle', false) or LoadBoolean('FailureJingle', false) then
+      PostviewJingles := true
+    else
+      PostviewJingles := LoadBoolean('PostviewJingles', PostviewJingles);
 
     SoundManager.MuteSound := not LoadBoolean('SoundEnabled', not SoundManager.MuteSound);
     SoundManager.SoundVolume := StrToIntDef(SL.Values['SoundVolume'], 50);
@@ -728,7 +722,6 @@ begin
   inherited Create;
 
   MiscOptions := DEF_MISCOPTIONS;
-  PostLevelSoundOptions := [];
 
   UserName := 'Anonymous';
   SoundManager.MusicVolume := 50;
@@ -798,19 +791,6 @@ begin
     Include(MiscOptions, aFlag)
   else
     Exclude(MiscOptions, aFlag);
-end;
-
-function TDosGameParams.GetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption): Boolean;
-begin
-  Result := aFlag in PostLevelSoundOptions;
-end;
-
-procedure TDosGameParams.SetPostLevelSoundOptionFlag(aFlag: TPostLevelSoundOption; aValue: Boolean);
-begin
-  if aValue then
-    Include(PostLevelSoundOptions, aFlag)
-  else
-    Exclude(PostLevelSoundOptions, aFlag);
 end;
 
 procedure TDosGameParams.SetUserName(aValue: String);
