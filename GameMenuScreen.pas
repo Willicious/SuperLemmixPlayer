@@ -15,8 +15,33 @@ uses
   GR32, GR32_Resamplers;
 
 type
+  TGameMenuPositionData = record
+    LogoY: Integer;
+
+    CardSpacingHorz: Integer;
+    CardSpacingVert: Integer;
+    CardsCenterY: Integer;
+
+    GroupArrowsOffsetX: Integer;
+    GroupArrowUpOffsetY: Integer;
+    GroupArrowDownOffsetY: Integer;
+
+    GroupGraphicOffsetX: Integer;
+    GroupGraphicOffsetY: Integer;
+    GroupGraphicAutoMaxWidth: Integer;
+    GroupGraphicAutoMaxHeight: Integer;
+
+    FooterTextY: Integer;
+
+    ScrollerY: Integer;
+    ScrollerWidth: Integer;
+    ScrollerLemmingFrames: Integer;
+  end;
+
   TGameMenuScreen = class(TGameBaseMenuScreen)
     private
+      LayoutInfo: TGameMenuPositionData;
+
       ScrollerEraseBuffer: TBitmap32;
 
       ScrollerLemmings: TBitmap32;
@@ -81,6 +106,8 @@ type
       procedure ApplicationIdle(Sender: TObject; var Done: Boolean);
       procedure DisableIdle;
       procedure EnableIdle;
+
+      procedure LoadLayoutData;
     protected
       procedure BuildScreen; override;
       procedure CloseScreen(aNextScreen: TGameScreenType); override;
@@ -98,18 +125,13 @@ type
 implementation
 
 uses
+  LemMenuFont, // for size const
   CustomPopup,
   FStyleManager,
   FNeoLemmixSetup,
   LemGame, // to clear replay
   LemVersion,
   PngInterface;
-
-const
-  REEL_Y_POSITION = 456;
-  REEL_WIDTH = 40 * 16; // does NOT include the lemmings
-
-  SCROLLER_LEMMING_FRAME_COUNT = 16;
 
 { TGameMenuScreen }
 
@@ -235,6 +257,8 @@ begin
 
   CleanUpIngameStuff;
 
+  LoadLayoutData;
+
   UpdateGroupSign(false);
 
   DrawLogo;
@@ -275,35 +299,21 @@ end;
 procedure TGameMenuScreen.DrawLogo;
 var
   LogoBMP: TBitmap32;
-const
-  LOGO_CENTER_X = 432;
-  LOGO_CENTER_Y = 72;
 begin
   LogoBMP := TBitmap32.Create;
   try
     GetGraphic('logo.png', LogoBMP);
-    LogoBMP.DrawTo(ScreenImg.Bitmap, LOGO_CENTER_X - LogoBMP.Width div 2, LOGO_CENTER_Y - LogoBMP.Height div 2);
+    LogoBMP.DrawTo(ScreenImg.Bitmap, (ScreenImg.Bitmap.Width - LogoBMP.Width) div 2, LayoutInfo.LogoY - LogoBMP.Height div 2);
   finally
     LogoBMP.Free;
   end;
 end;
 
 procedure TGameMenuScreen.MakePanels;
-const
-  CARD_SPACING_HORZ = 160;
-  CARD_SPACING_VERT = 104;
-
-  CARD_AREA_CENTER_X = 432;
-  CARD_AREA_CENTER_Y = 248;
-
-  GROUP_BUTTONS_OFFSET_X = -38;
-  GROUP_BUTTON_UP_OFFSET_Y = 0;
-  GROUP_BUTTON_DOWN_OFFSET_Y = 17;
-
   function MakePosition(aHorzOffset: Single; aVertOffset: Single): TPoint;
   begin
-    Result.X := CARD_AREA_CENTER_X + Round(aHorzOffset * CARD_SPACING_HORZ);
-    Result.Y := CARD_AREA_CENTER_Y + Round(aVertOffset * CARD_SPACING_VERT);
+    Result.X := (ScreenImg.Bitmap.Width div 2) + Round(aHorzOffset * LayoutInfo.CardSpacingHorz);
+    Result.Y := LayoutInfo.CardsCenterY + Round(aVertOffset * LayoutInfo.CardSpacingVert);
   end;
 
 var
@@ -334,12 +344,12 @@ begin
 
     // Group sign buttons
     GetGraphic('sign_group_up.png', BMP);
-    NewRegion := MakeClickableImageAuto(Types.Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_UP_OFFSET_Y),
+    NewRegion := MakeClickableImageAuto(Types.Point(fGroupSignCenter.X + LayoutInfo.GroupArrowsOffsetX, fGroupSignCenter.Y + LayoutInfo.GroupArrowUpOffsetY),
                                         BMP.BoundsRect, NextGroup, BMP, 3);
     NewRegion.ShortcutKeys.Add(VK_UP);
 
     GetGraphic('sign_group_down.png', BMP);
-    NewRegion := MakeClickableImageAuto(Types.Point(fGroupSignCenter.X + GROUP_BUTTONS_OFFSET_X, fGroupSignCenter.Y + GROUP_BUTTON_DOWN_OFFSET_Y),
+    NewRegion := MakeClickableImageAuto(Types.Point(fGroupSignCenter.X + LayoutInfo.GroupArrowsOffsetX, fGroupSignCenter.Y + LayoutInfo.GroupArrowDownOffsetY),
                                         BMP.BoundsRect, PrevGroup, BMP, 3);
     NewRegion.ShortcutKeys.Add(VK_DOWN);
 
@@ -362,9 +372,6 @@ begin
 end;
 
 procedure TGameMenuScreen.MakeFooterText;
-const
-  FOOTER_START_Y_POSITION = 364;
-  NL_INFO_Y_POSITION = FOOTER_START_Y_POSITION + (3 * 19);
 var
   PackInfoText: String;
   NLInfoText: String;
@@ -394,8 +401,58 @@ begin
   NLInfoText := 'NeoLemmix Player V' + CurrentVersionString;
   {$ifdef exp}if COMMIT_ID <> '' then NLInfoText := NLInfoText + ':' + Uppercase(COMMIT_ID);{$endif}
 
-  MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, FOOTER_START_Y_POSITION);
-  MenuFont.DrawTextCentered(ScreenImg.Bitmap, NLInfoText, NL_INFO_Y_POSITION);
+  MenuFont.DrawTextCentered(ScreenImg.Bitmap, PackInfoText, LayoutInfo.FooterTextY);
+  MenuFont.DrawTextCentered(ScreenImg.Bitmap, NLInfoText, LayoutInfo.FooterTextY + (3 * CHARACTER_HEIGHT));
+end;
+
+procedure TGameMenuScreen.LoadLayoutData;
+var
+  Parser: TParser;
+
+  procedure ReadPositionData;
+  var
+    Sec: TParserSection;
+  begin
+    // May be called twice - first to load defaults from data/title.nxmi, second to load pack settings.
+    Sec := Parser.MainSection;
+
+    LayoutInfo.LogoY := Sec.LineNumericDefault['LOGO_CENTER_Y', LayoutInfo.LogoY];
+
+    LayoutInfo.CardSpacingHorz := Sec.LineNumericDefault['CARDS_SPACING_X', LayoutInfo.CardSpacingHorz];
+    LayoutInfo.CardSpacingVert := Sec.LineNumericDefault['CARDS_SPACING_Y', LayoutInfo.CardSpacingVert];
+    LayoutInfo.CardsCenterY := Sec.LineNumericDefault['CARDS_CENTER_Y', LayoutInfo.CardsCenterY];
+
+    LayoutInfo.GroupArrowsOffsetX := Sec.LineNumericDefault['GROUP_ARROWS_OFFSET_X', LayoutInfo.GroupArrowsOffsetX];
+    LayoutInfo.GroupArrowUpOffsetY := Sec.LineNumericDefault['GROUP_ARROWS_UP_OFFSET_Y', LayoutInfo.GroupArrowUpOffsetY];
+    LayoutInfo.GroupArrowDownOffsetY := Sec.LineNumericDefault['GROUP_ARROWS_DOWN_OFFSET_Y', LayoutInfo.GroupArrowDownOffsetY];
+
+    LayoutInfo.GroupGraphicOffsetX := Sec.LineNumericDefault['GROUP_GRAPHIC_OFFSET_X', LayoutInfo.GroupGraphicOffsetX];
+    LayoutInfo.GroupGraphicOffsetY := Sec.LineNumericDefault['GROUP_GRAPHIC_OFFSET_Y', LayoutInfo.GroupGraphicOffsetY];
+    LayoutInfo.GroupGraphicAutoMaxWidth := Sec.LineNumericDefault['GROUP_GRAPHIC_AUTO_WIDTH_LIMIT', LayoutInfo.GroupGraphicAutoMaxWidth];
+    LayoutInfo.GroupGraphicAutoMaxHeight := Sec.LineNumericDefault['GROUP_GRAPHIC_AUTO_HEIGHT_LIMIT', LayoutInfo.GroupGraphicAutoMaxHeight];
+
+    LayoutInfo.FooterTextY := Sec.LineNumericDefault['FOOTER_TEXT_TOP_Y', LayoutInfo.FooterTextY];
+
+    LayoutInfo.ScrollerY := Sec.LineNumericDefault['SCROLLER_TOP_Y', LayoutInfo.ScrollerY];
+    LayoutInfo.ScrollerWidth := Sec.LineNumericDefault['SCROLLER_LENGTH', LayoutInfo.ScrollerWidth div CHARACTER_WIDTH] * CHARACTER_WIDTH;
+    LayoutInfo.ScrollerLemmingFrames := Sec.LineNumericDefault['SCROLLER_LEMMING_FRAMES', LayoutInfo.ScrollerLemmingFrames];
+  end;
+begin
+  Parser := TParser.Create;
+  try
+    FillChar(LayoutInfo, SizeOf(TGameMenuPositionData), 0);
+
+    Parser.LoadFromFile(AppPath + SFData + 'title.nxmi');
+    ReadPositionData;
+
+    if GameParams.CurrentLevel.Group.FindFile('title.nxmi') <> '' then
+    begin
+      Parser.LoadFromFile(GameParams.CurrentLevel.Group.FindFile('title.nxmi'));
+      ReadPositionData;
+    end;
+  finally
+    Parser.Free;
+  end;
 end;
 
 procedure TGameMenuScreen.LoadScrollerGraphics;
@@ -403,6 +460,7 @@ var
   BMP: TBitmap32;
   x: Integer;
   EraseSrcRect: TRect;
+  MaxHeight: Integer;
 begin
   BMP := TBitmap32.Create;
   try
@@ -410,7 +468,7 @@ begin
     GetGraphic('scroller_segment.png', BMP);
 
     ScrollerReelSegmentWidth := BMP.Width;
-    ScrollerReel.SetSize(REEL_WIDTH + ScrollerReelSegmentWidth, BMP.Height);
+    ScrollerReel.SetSize(LayoutInfo.ScrollerWidth + ScrollerReelSegmentWidth, BMP.Height);
 
     x := 0;
     while x < ScrollerReel.Width do
@@ -419,7 +477,10 @@ begin
       x := x + BMP.Width;
     end;
 
-    EraseSrcRect := Rect(0, REEL_Y_POSITION, ScreenImg.Width, REEL_Y_POSITION + BMP.Height);
+    MaxHeight := Max(BMP.Height, ScrollerLemmings.Height div LayoutInfo.ScrollerLemmingFrames);
+    MaxHeight := Max(MaxHeight, CHARACTER_HEIGHT);
+
+    EraseSrcRect := Rect(0, LayoutInfo.ScrollerY, ScreenImg.Width, LayoutInfo.ScrollerY + MaxHeight);
     ScrollerEraseBuffer.SetSize(EraseSrcRect.Width, EraseSrcRect.Height);
     ScreenImg.Bitmap.DrawTo(ScrollerEraseBuffer, 0, 0, EraseSrcRect);
   finally
@@ -488,13 +549,13 @@ begin
       Inc(fReelTextPos);
 
       if fReelFrame < 0 then
-        fReelFrame := fReelFrame + (SCROLLER_LEMMING_FRAME_COUNT * 2);
+        fReelFrame := fReelFrame + (LayoutInfo.ScrollerLemmingFrames * 2);
     end else begin
       Inc(fReelFrame);
       Dec(fReelTextPos);
     end;
 
-    if (ScrollerText.Width <= REEL_WIDTH) and (fReelTextPos = (REEL_WIDTH - ScrollerText.Width) div 2) then
+    if (ScrollerText.Width <= LayoutInfo.ScrollerWidth) and (fReelTextPos = (LayoutInfo.ScrollerWidth - ScrollerText.Width) div 2) then
       if fReelForceDirection = 0 then
         fReelFreezeIterations := TEXT_FREEZE_BASE_ITERATIONS + (ScrollerText.Width div TEXT_FREEZE_WIDTH_DIV)
       else if fSwitchedTextSinceForce then
@@ -504,7 +565,7 @@ begin
       end;
 
 
-    if (fReelTextPos <= -ScrollerText.Width) or (fReelTextPos >= REEL_WIDTH) then
+    if (fReelTextPos <= -ScrollerText.Width) or (fReelTextPos >= LayoutInfo.ScrollerWidth) then
       PrepareNextReelText;
   end;
 end;
@@ -549,7 +610,7 @@ begin
   if (fReelForceDirection < 0) then
     fReelTextPos := -ScrollerText.Width
   else
-    fReelTextPos := REEL_WIDTH;
+    fReelTextPos := LayoutInfo.ScrollerWidth;
 
   fLastReelUpdateTickCount := GetTickCount64;
   fSwitchedTextSinceForce := true;
@@ -557,7 +618,7 @@ end;
 
 procedure TGameMenuScreen.DrawScroller;
 begin
-  ScrollerEraseBuffer.DrawTo(ScreenImg.Bitmap, 0, REEL_Y_POSITION);
+  ScrollerEraseBuffer.DrawTo(ScreenImg.Bitmap, 0, LayoutInfo.ScrollerY);
 
   DrawReel;
   DrawReelText;
@@ -568,8 +629,8 @@ procedure TGameMenuScreen.DrawReel;
 var
   SrcRect: TRect;
 begin
-  SrcRect := SizedRect(fReelFrame mod ScrollerReelSegmentWidth, 0, REEL_WIDTH, ScrollerReel.Height);
-  ScrollerReel.DrawTo(ScreenImg.Bitmap, (ScreenImg.Bitmap.Width - REEL_WIDTH) div 2, REEL_Y_POSITION, SrcRect);
+  SrcRect := SizedRect(fReelFrame mod ScrollerReelSegmentWidth, 0, LayoutInfo.ScrollerWidth, ScrollerReel.Height);
+  ScrollerReel.DrawTo(ScreenImg.Bitmap, (ScreenImg.Bitmap.Width - LayoutInfo.ScrollerWidth) div 2, LayoutInfo.ScrollerY, SrcRect);
 end;
 
 procedure TGameMenuScreen.DrawReelText;
@@ -580,18 +641,18 @@ begin
   SrcRect := ScrollerText.BoundsRect;
   DstRect := SrcRect;
 
-  Types.OffsetRect(DstRect, ((ScreenImg.Bitmap.Width - REEL_WIDTH) div 2) + fReelTextPos, REEL_Y_POSITION);
+  Types.OffsetRect(DstRect, ((ScreenImg.Bitmap.Width - LayoutInfo.ScrollerWidth) div 2) + fReelTextPos, LayoutInfo.ScrollerY);
 
-  if DstRect.Left < (ScreenImg.Bitmap.Width - REEL_WIDTH) div 2 then
+  if DstRect.Left < (ScreenImg.Bitmap.Width - LayoutInfo.ScrollerWidth) div 2 then
   begin
-    SizeDiff := ((ScreenImg.Bitmap.Width - REEL_WIDTH) div 2) - DstRect.Left;
+    SizeDiff := ((ScreenImg.Bitmap.Width - LayoutInfo.ScrollerWidth) div 2) - DstRect.Left;
     DstRect.Left := DstRect.Left + SizeDiff;
     SrcRect.Left := SrcRect.Left + SizeDiff;
   end;
 
-  if DstRect.Right >= (ScreenImg.Bitmap.Width + REEL_WIDTH) div 2 then
+  if DstRect.Right >= (ScreenImg.Bitmap.Width + LayoutInfo.ScrollerWidth) div 2 then
   begin
-    SizeDiff := DstRect.Right - ((ScreenImg.Bitmap.Width + REEL_WIDTH) div 2);
+    SizeDiff := DstRect.Right - ((ScreenImg.Bitmap.Width + LayoutInfo.ScrollerWidth) div 2);
     DstRect.Right := DstRect.Right - SizeDiff;
     SrcRect.Right := SrcRect.Right - SizeDiff;
   end;
@@ -605,9 +666,9 @@ var
   SrcRect, DstRect: TRect;
   Frame: Integer;
 begin
-  Frame := (fReelFrame div 4) mod SCROLLER_LEMMING_FRAME_COUNT;
+  Frame := (fReelFrame div 4) mod LayoutInfo.ScrollerLemmingFrames;
 
-  SrcRect := Rect(0, 0, ScrollerLemmings.Width div 2, ScrollerLemmings.Height div SCROLLER_LEMMING_FRAME_COUNT);
+  SrcRect := Rect(0, 0, ScrollerLemmings.Width div 2, ScrollerLemmings.Height div LayoutInfo.ScrollerLemmingFrames);
   Types.OffsetRect(SrcRect, 0, SrcRect.Height * Frame);
 
   DstRect := GetWorkerLemmingRect(false);
@@ -621,11 +682,11 @@ end;
 function TGameMenuScreen.GetWorkerLemmingRect(aRightLemming: Boolean): TRect;
 begin
   if aRightLemming then
-    Result := SizedRect((ScreenImg.Bitmap.Width + REEL_WIDTH) div 2, REEL_Y_POSITION,
-                        ScrollerLemmings.Width div 2, ScrollerLemmings.Height div SCROLLER_LEMMING_FRAME_COUNT)
+    Result := SizedRect((ScreenImg.Bitmap.Width + LayoutInfo.ScrollerWidth) div 2, LayoutInfo.ScrollerY,
+                        ScrollerLemmings.Width div 2, ScrollerLemmings.Height div LayoutInfo.ScrollerLemmingFrames)
   else
-    Result := SizedRect((ScreenImg.Bitmap.Width - REEL_WIDTH) div 2 - (ScrollerLemmings.Width div 2), REEL_Y_POSITION,
-                        ScrollerLemmings.Width div 2, ScrollerLemmings.Height div SCROLLER_LEMMING_FRAME_COUNT);
+    Result := SizedRect((ScreenImg.Bitmap.Width - LayoutInfo.ScrollerWidth) div 2 - (ScrollerLemmings.Width div 2), LayoutInfo.ScrollerY,
+                        ScrollerLemmings.Width div 2, ScrollerLemmings.Height div LayoutInfo.ScrollerLemmingFrames);
 end;
 
 procedure TGameMenuScreen.BeginGame;
@@ -652,9 +713,6 @@ begin
 end;
 
 procedure TGameMenuScreen.UpdateGroupSign(aRedraw: Boolean);
-const
-  MAX_AUTOGEN_WIDTH = 70;
-  MAX_AUTOGEN_HEIGHT = 30;
 var
   TempBmp: TBitmap32;
   Sca: Double;
@@ -666,10 +724,10 @@ begin
       try
         MakeAutoSectionGraphic(TempBmp);
 
-        if (TempBmp.Width <= MAX_AUTOGEN_WIDTH) and (TempBmp.Height < MAX_AUTOGEN_HEIGHT) then
+        if (TempBmp.Width <= LayoutInfo.GroupGraphicAutoMaxWidth) and (TempBmp.Height < LayoutInfo.GroupGraphicAutoMaxHeight) then
           Sca := 1
         else
-          Sca := Min(MAX_AUTOGEN_WIDTH / TempBmp.Width, MAX_AUTOGEN_HEIGHT / TempBmp.Height);
+          Sca := Min(LayoutInfo.GroupGraphicAutoMaxWidth / TempBmp.Width, LayoutInfo.GroupGraphicAutoMaxHeight / TempBmp.Height);
 
         fGroupGraphic.SetSize(Round(TempBmp.Width * Sca), Round(TempBmp.Height * Sca));
         fGroupGraphic.Clear(0);
