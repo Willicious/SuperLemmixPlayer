@@ -60,7 +60,6 @@ type
 type
   TMiscOption = (
     moAutoReplaySave,
-    moReplayAutoName,
     moEnableOnline,
     moCheckUpdates,
     moNoAutoReplayMode,
@@ -89,7 +88,6 @@ type
 const
   DEF_MISCOPTIONS = [
     moAutoReplaySave,
-    moReplayAutoName,
     moPauseAfterBackwards,
     moLinearResampleMenu,
     moFullScreen,
@@ -125,6 +123,10 @@ type
     fLoadedWindowHeight: Integer;
 
     fUserName: String;
+
+    fAutoSaveReplayPattern: String;
+    fIngameSaveReplayPattern: String;
+    fPostviewSaveReplayPattern: String;
 
     fMainForm: TForm; // link to the FMain form
 
@@ -197,7 +199,6 @@ type
     property CurrentLevel: TNeoLevelEntry read fCurrentLevel;
 
     property AutoSaveReplay: Boolean Index moAutoReplaySave read GetOptionFlag write SetOptionFlag;
-    property ReplayAutoName: Boolean Index moReplayAutoName read GetOptionFlag write SetOptionFlag;
     property EnableOnline: boolean Index moEnableOnline read GetOptionFlag write SetOptionFlag;
     property CheckUpdates: boolean Index moCheckUpdates read GetOptionFlag write SetOptionFlag;
     property NoAutoReplayMode: boolean Index moNoAutoReplayMode read GetOptionFlag write SetOptionFlag;
@@ -252,6 +253,9 @@ type
     property CurrentGroupName: String read GetCurrentGroupName;
 
     property Username: String read fUsername write SetUsername;
+    property AutoSaveReplayPattern: String read fAutoSaveReplayPattern write fAutoSaveReplayPattern;
+    property IngameSaveReplayPattern: String read fIngameSaveReplayPattern write fIngameSaveReplayPattern;
+    property PostviewSaveReplayPattern: String read fPostviewSaveReplayPattern write fPostviewSaveReplayPattern;
 
     property DisableSaveOptions: Boolean read fDisableSaveOptions write fDisableSaveOptions;
   published
@@ -268,6 +272,11 @@ uses
   SharedGlobals, Controls, UITypes,
   GameBaseScreenCommon, //for EXTRA_ZOOM_LEVELS const
   GameSound;
+
+const
+  DEFAULT_REPLAY_PATTERN_INGAME = '{GROUP}_{GROUPPOS}__{TIMESTAMP}|{TITLE}__{TIMESTAMP}';
+  DEFAULT_REPLAY_PATTERN_AUTO = '{GROUP}_{GROUPPOS}__{TIMESTAMP}|{TITLE}__{TIMESTAMP}';
+  DEFAULT_REPLAY_PATTERN_POSTVIEW = '*{GROUP}_{GROUPPOS}__{TIMESTAMP}|*{TITLE}__{TIMESTAMP}';
 
 { TDosGameParams }
 
@@ -349,10 +358,11 @@ begin
 
   SL.Add('');
   SL.Add('# Interface Options');
-  SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
   SaveBoolean('AutoSaveReplay', AutoSaveReplay);
-  SaveBoolean('AutoReplayNames', ReplayAutoName);
-  SaveBoolean('NoAutoReplay', NoAutoReplayMode);
+  SL.Add('AutoSaveReplayPattern=' + AutoSaveReplayPattern);
+  SL.Add('IngameSaveReplayPattern=' + IngameSaveReplayPattern);
+  SL.Add('PostviewSaveReplayPattern=' + PostviewSaveReplayPattern);
+  SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
   SaveBoolean('HideShadows', HideShadows);
@@ -491,8 +501,16 @@ begin
     UserName := SL.Values['UserName'];
 
     HideAdvancedOptions := LoadBoolean('HideAdvancedOptions', HideAdvancedOptions);
+
     AutoSaveReplay := LoadBoolean('AutoSaveReplay', AutoSaveReplay);
-    ReplayAutoName := LoadBoolean('AutoReplayNames', ReplayAutoName);
+    AutoSaveReplayPattern := SL.Values['AutoSaveReplayPattern'];
+    IngameSaveReplayPattern := SL.Values['IngameSaveReplayPattern'];
+    PostviewSaveReplayPattern := SL.Values['PostviewSaveReplayPattern'];
+
+    if AutoSaveReplayPattern = '' then AutoSaveReplayPattern := DEFAULT_REPLAY_PATTERN_AUTO;
+    if IngameSaveReplayPattern = '' then IngameSaveReplayPattern := DEFAULT_REPLAY_PATTERN_INGAME;
+    if PostviewSaveReplayPattern = '' then PostviewSaveReplayPattern := DEFAULT_REPLAY_PATTERN_POSTVIEW;
+
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
@@ -724,6 +742,8 @@ begin
   MiscOptions := DEF_MISCOPTIONS;
 
   UserName := 'Anonymous';
+
+
   SoundManager.MusicVolume := 50;
   SoundManager.SoundVolume := 50;
   fDumpMode := false;

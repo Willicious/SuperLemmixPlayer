@@ -851,7 +851,7 @@ begin
                 'saved to the "Auto" folder if possible, then you will be returned to the main menu.');
 
   try
-    SL.Insert(0, Game.ReplayManager.GetSaveFileName(self, Game.Level, true));
+    SL.Insert(0, Game.ReplayManager.GetSaveFileName(self, rsoAuto));
     ForceDirectories(ExtractFilePath(SL[0]));
     Game.EnsureCorrectReplayDetails;
     Game.ReplayManager.SaveToFile(SL[0]);
@@ -1926,7 +1926,7 @@ begin
   OldSpeed := fGameSpeed;
   try
     GameSpeed := gspPause;
-    s := Game.ReplayManager.GetSaveFileName(self, Game.Level);
+    s := Game.ReplayManager.GetSaveFileName(self, rsoIngame);
     if s = '' then Exit;
     Game.EnsureCorrectReplayDetails;
     Game.ReplayManager.SaveToFile(s);
@@ -2078,7 +2078,7 @@ begin
 
       if (GameParams.AutoSaveReplay) and (Game.ReplayManager.IsModified) and (GameParams.GameResult.gSuccess) and not (GameParams.GameResult.gCheated) then
       begin
-        S := Game.ReplayManager.GetSaveFileName(self, Game.Level, true);
+        S := Game.ReplayManager.GetSaveFileName(self, rsoAuto);
         ForceDirectories(ExtractFilePath(S));
         Game.EnsureCorrectReplayDetails;
         Game.ReplayManager.SaveToFile(S, true);

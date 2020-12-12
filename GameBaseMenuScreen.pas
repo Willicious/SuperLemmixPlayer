@@ -153,7 +153,7 @@ type
 implementation
 
 uses
-  LemGame,
+  LemGame, LemReplay,
   FMain, FNeoLemmixLevelSelect, FNeoLemmixConfig,
   PngInterface;
 
@@ -649,7 +649,7 @@ procedure TGameBaseMenuScreen.SaveReplay;
 var
   S: String;
 begin
-  S := GlobalGame.ReplayManager.GetSaveFileName(self, GlobalGame.Level);
+  S := GlobalGame.ReplayManager.GetSaveFileName(self, rsoPostview);
   if S = '' then Exit;
   GlobalGame.EnsureCorrectReplayDetails;
   GlobalGame.ReplayManager.SaveToFile(S);

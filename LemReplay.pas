@@ -34,6 +34,8 @@ const
 
 
 type
+  TReplaySaveOccasion = (rsoAuto, rsoIngame, rsoPostview);
+
   TBaseReplayItem = class
     private
       fFrame: Integer;
@@ -133,7 +135,8 @@ type
     public
       constructor Create;
       destructor Destroy; override;
-      class function GetSaveFileName(aOwner: TComponent; aLevel: TLevel; TestModeName: Boolean = false): String;
+      class function EvaluateReplayNamePattern(aPattern: String): String;
+      class function GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion): String;
       procedure Add(aItem: TBaseReplayItem);
       procedure Clear(EraseLevelInfo: Boolean = false);
       procedure Delete(aItem: TBaseReplayItem);
@@ -220,56 +223,58 @@ begin
   inherited;
 end;
 
-class function TReplay.GetSaveFileName(aOwner: TComponent; aLevel: TLevel; TestModeName: Boolean = false): String;
+class function TReplay.EvaluateReplayNamePattern(aPattern: String): String;
 var
-  RankName: String;
-  SaveName: String;
-
-  function GetReplayFileName(TestModeName: Boolean): String;
+  SplitPos: Integer;
+const
+  TAG_TITLE = '{TITLE}';
+  TAG_GROUP = '{GROUP}';
+  TAG_GROUPPOS = '{GROUPPOS}';
+  TAG_TIMESTAMP = '{TIMESTAMP}';
+  TAG_PACK = '{PACK}';
+  TAG_USERNAME = '{USERNAME}';
+begin
+  SplitPos := Pos('|', aPattern);
+  if SplitPos > 0 then
   begin
-    if not GameParams.CurrentLevel.Group.IsOrdered then
-      Result := Trim(aLevel.Info.Title)
+    if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) or
+       (not GameParams.CurrentLevel.Group.IsOrdered) then
+      aPattern := MidStr(aPattern, SplitPos + 1, Length(aPattern) - SplitPos)
     else
-      Result := RankName + '_' + LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2);
-    if TestModeName or GameParams.ReplayAutoName then
-      Result := Result + '__' + FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now);
-    Result := StringReplace(Result, '<', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '>', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, ':', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '"', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '/', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '\', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '|', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '?', '_', [rfReplaceAll]);
-    Result := StringReplace(Result, '*', '_', [rfReplaceAll]);
-    Result := Result + '.nxrp';
+      aPattern := LeftStr(aPattern, SplitPos - 1);
   end;
 
+  if LeftStr(aPattern, 1) = '*' then
+    Result := RightStr(aPattern, Length(aPattern) - 1)
+  else
+    Result := aPattern;
+
+  Result := StringReplace(Result, TAG_TITLE, GameParams.CurrentLevel.Title, [rfReplaceAll]);
+  Result := StringReplace(Result, TAG_GROUP, GameParams.CurrentLevel.Group.Name, [rfReplaceAll]);
+  Result := StringReplace(Result, TAG_GROUPPOS, LeadZeroStr(GameParams.CurrentLevel.GroupIndex + 1, 2), [rfReplaceAll]);
+  Result := StringReplace(Result, TAG_TIMESTAMP, FormatDateTime('yyyy"-"mm"-"dd"_"hh"-"nn"-"ss', Now), [rfReplaceAll]);
+  Result := StringReplace(Result, TAG_PACK, GameParams.CurrentLevel.Group.ParentBasePack.Name, [rfReplaceAll]);
+  Result := StringReplace(Result, TAG_USERNAME, GameParams.Username, [rfReplaceAll]);
+
+  Result := MakeSafeForFilename(Result);
+
+  if LeftStr(aPattern, 1) = '*' then
+    Result := '*' + Result;
+end;
+
+class function TReplay.GetSaveFileName(aOwner: TComponent; aSaveOccasion: TReplaySaveOccasion): String;
   function GetDefaultSavePath: String;
-    function GetGroupName: String;
-    var
-      G: TNeoLevelGroup;
-    begin
-      G := GameParams.CurrentLevel.Group;
-      if G.Parent = nil then
-        Result := ''
-      else begin
-        while not (G.IsBasePack or (G.Parent.Parent = nil)) do
-          G := G.Parent;
-        Result := MakeSafeForFilename(G.Name, false) + '\';
-      end;
-    end;
   begin
-    if GameParams.TestModeLevel <> nil then
+    if (GameParams.TestModeLevel <> nil) or (GameParams.CurrentLevel.Group = GameParams.BaseLevelPack) then
       Result := ExtractFilePath(ParamStr(0)) + 'Replay\'
     else
-      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + GetGroupName;
-    if TestModeName then Result := Result + 'Auto\';
+      Result := ExtractFilePath(ParamStr(0)) + 'Replay\' + MakeSafeForFilename(GameParams.CurrentLevel.Group.ParentBasePack.Name) + '\';
+    if aSaveOccasion = rsoAuto then Result := Result + 'Auto\';
   end;
 
   function GetInitialSavePath: String;
   begin
-    if (LastReplayDir <> '') and not TestModeName then
+    if LastReplayDir <> '' then
       Result := LastReplayDir
     else
       Result := GetDefaultSavePath;
@@ -280,7 +285,7 @@ var
     Dlg : TSaveDialog;
   begin
     Dlg := TSaveDialog.Create(aOwner);
-    Dlg.Title := 'Save replay file (' + RankName + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + Trim(aLevel.Info.Title) + ')';
+    Dlg.Title := 'Save replay file (' + GameParams.CurrentLevel.Group.Name + ' ' + IntToStr(GameParams.CurrentLevel.GroupIndex + 1) + ', ' + GameParams.CurrentLevel.Title + ')';
     Dlg.Filter := 'NeoLemmix Replay (*.nxrp)|*.nxrp';
     Dlg.FilterIndex := 1;
     Dlg.InitialDir := GetInitialSavePath;
@@ -295,15 +300,32 @@ var
       Result := '';
     Dlg.Free;
   end;
+
+var
+  SaveName: String;
+  UseDialog: Boolean;
 begin
-  RankName := GameParams.CurrentGroupName;
+  case aSaveOccasion of
+    rsoAuto: SaveName := EvaluateReplayNamePattern(GameParams.AutoSaveReplayPattern);
+    rsoIngame: SaveName := EvaluateReplayNamePattern(GameParams.IngameSaveReplayPattern);
+    rsoPostview: SaveName := EvaluateReplayNamePattern(GameParams.PostviewSaveReplayPattern);
+    else raise Exception.Create('Invalid replay save occasion');
+  end;
 
-  SaveName := GetReplayFileName(TestModeName);
+  UseDialog := false;
+  if LeftStr(SaveName, 1) = '*' then
+  begin
+    SaveName := RightStr(SaveName, Length(SaveName) - 1);
+    if aSaveOccasion <> rsoAuto then
+      UseDialog := true;
+  end;
 
-  if GameParams.ReplayAutoName or TestModeName then
-    Result := GetDefaultSavePath + SaveName
+  SaveName := SaveName + '.nxrp';
+
+  if UseDialog then
+    Result := GetSavePath(SaveName)
   else
-    Result := GetSavePath(SaveName);
+    Result := GetDefaultSavePath + SaveName;
 end;
 
 procedure TReplay.Add(aItem: TBaseReplayItem);

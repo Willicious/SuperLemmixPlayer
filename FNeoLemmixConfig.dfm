@@ -26,7 +26,7 @@ object FormNXConfig: TFormNXConfig
     Top = 0
     Width = 273
     Height = 412
-    ActivePage = TabSheet4
+    ActivePage = TabSheet1
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -42,26 +42,73 @@ object FormNXConfig: TFormNXConfig
         Left = 7
         Top = 215
         Width = 249
-        Height = 67
+        Height = 106
         Caption = 'Replay Options'
         TabOrder = 3
+        object lblIngameSaveReplay: TLabel
+          Left = 28
+          Top = 48
+          Width = 41
+          Height = 13
+          Caption = 'In-game:'
+        end
+        object lblPostviewSaveReplay: TLabel
+          Left = 28
+          Top = 75
+          Width = 46
+          Height = 13
+          Caption = 'Postview:'
+        end
         object cbAutoSaveReplay: TCheckBox
           Left = 12
-          Top = 16
-          Width = 217
+          Top = 19
+          Width = 72
           Height = 17
-          Caption = 'Automatically Save Successful Replays'
+          Caption = 'Auto-save:'
           TabOrder = 0
-          OnClick = OptionChanged
+          OnClick = cbAutoSaveReplayClick
         end
-        object cbReplayAutoName: TCheckBox
-          Left = 12
-          Top = 34
-          Width = 225
-          Height = 17
-          Caption = 'Use Timestamped Replay Names'
+        object cbAutoSaveReplayPattern: TComboBox
+          Left = 90
+          Top = 16
+          Width = 145
+          Height = 21
+          ItemIndex = 0
           TabOrder = 1
-          OnClick = OptionChanged
+          Text = 'Position + Timestamp'
+          OnChange = OptionChanged
+          Items.Strings = (
+            'Position + Timestamp'
+            'Title + Timestamp'
+            'Position + Title + Timestamp')
+        end
+        object cbIngameSaveReplayPattern: TComboBox
+          Left = 90
+          Top = 43
+          Width = 145
+          Height = 21
+          TabOrder = 2
+          Text = 'Position + Timestamp'
+          OnChange = OptionChanged
+          Items.Strings = (
+            'Position + Timestamp'
+            'Title + Timestamp'
+            'Position + Title + Timestamp'
+            '(Show file selector)')
+        end
+        object cbPostviewSaveReplayPattern: TComboBox
+          Left = 90
+          Top = 70
+          Width = 145
+          Height = 21
+          TabOrder = 3
+          Text = 'Position + Timestamp'
+          OnChange = OptionChanged
+          Items.Strings = (
+            'Position + Timestamp'
+            'Title + Timestamp'
+            'Position + Title + Timestamp'
+            '(Show file selector)')
         end
       end
       object GroupBox1: TGroupBox
