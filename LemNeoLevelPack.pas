@@ -1002,7 +1002,9 @@ begin
     Parser.LoadFromFile(Path + 'info.nxmi');
     MainSec := Parser.MainSection;
     fPackTitle := MainSec.LineTrimString['title'];
+    fName := fPackTitle;
     fPackAuthor := MainSec.LineTrimString['author'];
+    fAuthor := fPackAuthor;
     fPackVersion := MainSec.LineTrimString['version'];
     MainSec.DoForEachSection('scroller', LoadScrollerSection);
   finally
@@ -1321,19 +1323,9 @@ begin
     MainSec.DoForEachLine('level', LoadLevel);
     fIsBasePack := MainSec.Line['base'] <> nil;
     fIsOrdered := true;
-    Parser.Clear;
+
     // we do NOT want to sort alphabetically here, we want them to stay in the order
     // the metainfo file lists them in!
-
-    if FileExists(Path + 'info.nxmi') then
-    begin
-      Parser.LoadFromFile(Path + 'info.nxmi');
-      MainSec := Parser.MainSection;
-      if MainSec.LineTrimString['title'] <> '' then
-        fName := MainSec.LineTrimString['title'];
-      if MainSec.LineTrimString['author'] <> '' then
-        fAuthor := MainSec.LineTrimString['author'];
-    end;
   finally
     Parser.Free;
   end;
