@@ -9,6 +9,7 @@
  AUTHOR 
  MUSIC orig_11
  ID x2A4D25076C3BCA3E
+ VERSION x0000000000000001
  
 #       Level dimensions        
 # ----------------------------- 
@@ -45,6 +46,14 @@
    NO_OVERWRITE
  $END
  
+ $GADGET
+   STYLE default
+   PIECE updraft
+   X 240
+   Y 18
+   NO_OVERWRITE
+ $END
+ 
  
 #        Terrain pieces         
 # ----------------------------- 
@@ -53,9 +62,9 @@
    PIECE resize_block
    X 24
    Y 112
+   ONE_WAY
    WIDTH 200
    HEIGHT 35
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -66,22 +75,22 @@
    WIDTH 200
    HEIGHT 35
  $END
-
+ 
  $TERRAIN
    STYLE namida_systemtest
    PIECE resize_block
    X 24
    Y 1
-   ONE_WAY
    ROTATE
+   ONE_WAY
  $END
  
-
  $TERRAIN
    STYLE namida_systemtest
    PIECE resize_steel
    X 64
    Y 1
-   ONE_WAY
    ROTATE
  $END
+ 
+ 

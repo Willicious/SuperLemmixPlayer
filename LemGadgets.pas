@@ -237,11 +237,9 @@ begin
   // Set basic stuff
   sTop := Obj.Top;
   sLeft := Obj.Left;
-  if (not MetaObj.CanResizeVertical) or (Obj.Height < 1) then
-    Obj.Height := MetaObj.Height;
+  Obj.Width := EvaluateResizable(Obj.Width, MetaObj.DefaultWidth, MetaObj.Width, MetaObj.CanResizeHorizontal);
+  Obj.Height := EvaluateResizable(Obj.Height, MetaObj.DefaultHeight, MetaObj.Height, MetaObj.CanResizeVertical);
   sHeight := Obj.Height;
-  if (not MetaObj.CanResizeHorizontal) or (Obj.Width < 1) then
-    Obj.Width := MetaObj.Width;
   sWidth := Obj.Width;
 
   sWidthVariance := sWidth - MetaObj.Width;
