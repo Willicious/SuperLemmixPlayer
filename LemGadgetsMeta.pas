@@ -610,6 +610,8 @@ begin
       ov_TriggerTop: TriggerTop := aValue;
       ov_TriggerWidth: TriggerWidth := aValue;
       ov_TriggerHeight: TriggerHeight := aValue;
+      ov_DefaultWidth: DefaultWidth := aValue;
+      ov_DefaultHeight: DefaultHeight := aValue;
       ov_DigitX: DigitX := aValue;
       ov_DigitY: DigitY := aValue;
       ov_DigitAlign: DigitAlign := aValue;
