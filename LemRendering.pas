@@ -1519,6 +1519,8 @@ var
     MetaTerrain: TMetaTerrain;
     ThisTerrainRect: TRect;
     HasFoundNonEraserTerrain: Boolean;
+
+    PieceWidth, PieceHeight: Integer;
   begin
     // Calculates the initial canvas rectangle we draw on to. If shrinking this
     // is needed later, we do so, but for now we just want a size that's 100%
@@ -1539,14 +1541,18 @@ var
       ThisTerrainRect.Left := Terrain.Left * Multiplier;
       ThisTerrainRect.Top := Terrain.Top * Multiplier;
 
-      if (Terrain.DrawingFlags and tdf_Rotate) = 0 then
-      begin
-        ThisTerrainRect.Right := ThisTerrainRect.Left + (MetaTerrain.Width[false, false, false] * Multiplier);
-        ThisTerrainRect.Bottom := ThisTerrainRect.Top + (MetaTerrain.Height[false, false, false] * Multiplier);
-      end else begin
-        ThisTerrainRect.Right := ThisTerrainRect.Left + (MetaTerrain.Height[false, false, false] * Multiplier);
-        ThisTerrainRect.Bottom := ThisTerrainRect.Top + (MetaTerrain.Width[false, false, false] * Multiplier);
-      end;
+      if MetaTerrain.ResizeHorizontal[Terrain.Flip, Terrain.Invert, Terrain.Rotate] and (Terrain.Width > 0) then
+        PieceWidth := Terrain.Width
+      else
+        PieceWidth := MetaTerrain.Width[Terrain.Flip, Terrain.Invert, Terrain.Rotate];
+
+      if MetaTerrain.ResizeVertical[Terrain.Flip, Terrain.Invert, Terrain.Rotate] and (Terrain.Height > 0) then
+        PieceHeight := Terrain.Height
+      else
+        PieceHeight := MetaTerrain.Height[Terrain.Flip, Terrain.Invert, Terrain.Rotate];
+
+      ThisTerrainRect.Right := ThisTerrainRect.Left + PieceWidth;
+      ThisTerrainRect.Bottom := ThisTerrainRect.Top + PieceHeight;
 
       if HasFoundNonEraserTerrain then
         DataBoundsRect := TRect.Union(DataBoundsRect, ThisTerrainRect)
