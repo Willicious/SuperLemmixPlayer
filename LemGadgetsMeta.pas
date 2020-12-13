@@ -233,6 +233,7 @@ var
 
   GadgetAccessor: TGadgetMetaAccessor;
   NewAnim: TGadgetAnimation;
+  PrimaryWidth: Integer;
 begin
   fGS := Lowercase(aCollection);
   fPiece := Lowercase(aPiece);
@@ -288,6 +289,7 @@ begin
     NewAnim.Load(aCollection, aPiece, Sec.Section['PRIMARY_ANIMATION'], aTheme);
 
     fFrameCount := NewAnim.FrameCount;
+    PrimaryWidth := NewAnim.Width; // used later
 
     Sec.DoForEachSection('ANIMATION',
       procedure (aSection: TParserSection; const aIteration: Integer)
@@ -305,7 +307,7 @@ begin
     GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];
     GadgetAccessor.TriggerHeight := Sec.LineNumeric['trigger_height'];
 
-    GadgetAccessor.DigitX := Sec.LineNumericDefault['digit_x', fWidth div 2];
+    GadgetAccessor.DigitX := Sec.LineNumericDefault['digit_x', PrimaryWidth div 2];
     GadgetAccessor.DigitY := Sec.LineNumericDefault['digit_y', -6];
 
     if LeftStr(Lowercase(Sec.LineTrimString['digit_alignment']), 1) = 'l' then
