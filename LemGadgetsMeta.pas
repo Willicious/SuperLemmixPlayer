@@ -32,6 +32,8 @@ type
     TriggerTop:       Integer;
     TriggerWidth:     Integer;
     TriggerHeight:    Integer;
+    DefaultWidth:     Integer;
+    DefaultHeight:    Integer;
     ResizeHorizontal: Boolean;
     ResizeVertical:   Boolean;
     DigitX:           Integer;
@@ -42,8 +44,9 @@ type
 
   TGadgetMetaProperty = (ov_Frames, ov_Width, ov_Height,
                          ov_TriggerLeft, ov_TriggerTop, ov_TriggerWidth,
-                         ov_TriggerHeight, ov_TriggerEffect, ov_KeyFrame,
-                         ov_DigitX, ov_DigitY, ov_DigitAlign, ov_DigitMinLength);
+                         ov_TriggerHeight, ov_DefaultWidth, ov_DefaultHeight,
+                         ov_TriggerEffect, ov_KeyFrame, ov_DigitX,
+                         ov_DigitY, ov_DigitAlign, ov_DigitMinLength);
                          // Integer properties only.
 
   TGadgetMetaInfo = class
@@ -107,6 +110,8 @@ type
     property TriggerTop[Flip, Invert, Rotate: Boolean]   : Integer index ov_TriggerTop read GetVariableProperty write SetVariableProperty;
     property TriggerWidth[Flip, Invert, Rotate: Boolean] : Integer index ov_TriggerWidth read GetVariableProperty write SetVariableProperty;
     property TriggerHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_TriggerHeight read GetVariableProperty write SetVariableProperty;
+    property DefaultWidth[Flip, Invert, Rotate: Boolean]: Integer index ov_DefaultWidth read GetVariableProperty write SetVariableProperty;
+    property DefaultHeight[Flip, Invert, Rotate: Boolean]: Integer index ov_DefaultHeight read GetVariableProperty write SetVariableProperty;
     property DigitX[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitX read GetVariableProperty write SetVariableProperty;
     property DigitY[Flip, Invert, Rotate: Boolean]       : Integer index ov_DigitY read GetVariableProperty write SetVariableProperty;
     property DigitAlign[Flip, Invert, Rotate: Boolean]   : Integer index ov_DigitAlign read GetVariableProperty write SetVariableProperty;
@@ -154,6 +159,8 @@ type
       property TriggerWidth: Integer index ov_TriggerWidth read GetIntegerProperty write SetIntegerProperty;
       property TriggerHeight: Integer index ov_TriggerHeight read GetIntegerProperty write SetIntegerProperty;
       property TriggerEffect: Integer index ov_TriggerEffect read GetIntegerProperty write SetIntegerProperty;
+      property DefaultWidth: Integer index ov_DefaultWidth read GetIntegerProperty write SetIntegerProperty;
+      property DefaultHeight: Integer index ov_DefaultHeight read GetIntegerProperty write SetIntegerProperty;
       property DigitX: Integer index ov_DigitX read GetIntegerProperty write SetIntegerProperty;
       property DigitY: Integer index ov_DigitY read GetIntegerProperty write SetIntegerProperty;
       property DigitAlign: Integer index ov_DigitAlign read GetIntegerProperty write SetIntegerProperty;
@@ -306,6 +313,9 @@ begin
     GadgetAccessor.TriggerTop := Sec.LineNumeric['trigger_y'];
     GadgetAccessor.TriggerWidth := Sec.LineNumeric['trigger_width'];
     GadgetAccessor.TriggerHeight := Sec.LineNumeric['trigger_height'];
+
+    GadgetAccessor.DefaultWidth := Sec.LineNumeric['default_width'];
+    GadgetAccessor.DefaultHeight := Sec.LineNumeric['default_height'];
 
     GadgetAccessor.DigitX := Sec.LineNumericDefault['digit_x', PrimaryWidth div 2];
     GadgetAccessor.DigitY := Sec.LineNumericDefault['digit_y', -6];
@@ -501,6 +511,9 @@ begin
     DstRec.TriggerWidth := SrcRec.TriggerHeight;
     DstRec.TriggerHeight := SrcRec.TriggerWidth;
 
+    DstRec.DefaultWidth := SrcRec.DefaultHeight;
+    DstRec.DefaultHeight := SrcRec.DefaultWidth;
+
     DstRec.ResizeHorizontal := SrcRec.ResizeVertical;
     DstRec.ResizeVertical := SrcRec.ResizeHorizontal;
 
@@ -560,6 +573,8 @@ begin
       ov_TriggerTop: Result := TriggerTop;
       ov_TriggerWidth: Result := TriggerWidth;
       ov_TriggerHeight: Result := TriggerHeight;
+      ov_DefaultWidth: Result := DefaultWidth;
+      ov_DefaultHeight: Result := DefaultHeight;
       ov_DigitX: Result := DigitX;
       ov_DigitY: Result := DigitY;
       ov_DigitAlign: Result := DigitAlign;
@@ -650,6 +665,8 @@ begin
     ov_TriggerWidth: Result := fGadgetMetaInfo.TriggerWidth[fFlip, fInvert, fRotate];
     ov_TriggerHeight: Result := fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate];
     ov_TriggerEffect: Result := fGadgetMetaInfo.fTriggerEffect;
+    ov_DefaultWidth: Result := fGadgetMetaInfo.DefaultWidth[fFlip, fInvert, fRotate];
+    ov_DefaultHeight: Result := fGadgetMetaInfo.DefaultHeight[fFlip, fInvert, fRotate];
     ov_DigitX: Result := fGadgetMetaInfo.DigitX[fFlip, fInvert, fRotate];
     ov_DigitY: Result := fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate];
     ov_DigitAlign: Result := fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate];
@@ -677,6 +694,8 @@ begin
     ov_TriggerWidth: fGadgetMetaInfo.TriggerWidth[fFlip, fInvert, fRotate] := aValue;
     ov_TriggerHeight: fGadgetMetaInfo.TriggerHeight[fFlip, fInvert, fRotate] := aValue;
     ov_TriggerEffect: fGadgetMetaInfo.fTriggerEffect := aValue;
+    ov_DefaultWidth: fGadgetMetaInfo.DefaultWidth[fFlip, fInvert, fRotate] := aValue;
+    ov_DefaultHeight: fGadgetMetaInfo.DefaultHeight[fFlip, fInvert, fRotate] := aValue;
     ov_DigitX: fGadgetMetaInfo.DigitX[fFlip, fInvert, fRotate] := aValue;
     ov_DigitY: fGadgetMetaInfo.DigitY[fFlip, fInvert, fRotate] := aValue;
     ov_DigitAlign: fGadgetMetaInfo.DigitAlign[fFlip, fInvert, fRotate] := aValue;

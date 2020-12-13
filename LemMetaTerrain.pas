@@ -18,6 +18,8 @@ type
     GraphicImageHighRes: TBitmap32;
     ResizeHorizontal: Boolean;
     ResizeVertical  : Boolean;
+    DefaultWidth: Integer;
+    DefaultHeight: Integer;
     CutLeft: Integer;
     CutTop: Integer;
     CutRight: Integer;
@@ -25,7 +27,7 @@ type
   end;
   PTerrainVariableProperties = ^TTerrainVariableProperties;
 
-  TTerrainMetaProperty = (tv_Width, tv_Height, tv_CutLeft, tv_CutTop, tv_CutRight, tv_CutBottom);
+  TTerrainMetaProperty = (tv_Width, tv_Height, tv_DefaultHeight, tv_DefaultWidth, tv_CutLeft, tv_CutTop, tv_CutRight, tv_CutBottom);
                          // Integer properties only.
 
    TMetaTerrain = class
@@ -69,6 +71,8 @@ type
       property Height[Flip, Invert, Rotate: Boolean]: Integer index tv_Height read GetVariableProperty;
       property ResizeHorizontal[Flip, Invert, Rotate: Boolean]: Boolean index 0 read GetResizableProperty;
       property ResizeVertical[Flip, Invert, Rotate: Boolean]: Boolean index 1 read GetResizableProperty;
+      property DefaultWidth[Flip, Invert, Rotate: Boolean] : Integer index tv_DefaultWidth read GetVariableProperty;
+      property DefaultHeight[Flip, Invert, Rotate: Boolean]: Integer index tv_DefaultHeight read GetVariableProperty;
       property CutLeft[Flip, Invert, Rotate: Boolean]: Integer index tv_CutLeft read GetVariableProperty;
       property CutTop[Flip, Invert, Rotate: Boolean]: Integer index tv_CutTop read GetVariableProperty;
       property CutRight[Flip, Invert, Rotate: Boolean]: Integer index tv_CutRight read GetVariableProperty;
@@ -139,6 +143,8 @@ begin
       fIsSteel := Parser.MainSection.Line['steel'] <> nil;
       fVariableInfo[0].ResizeHorizontal := (Parser.MainSection.Line['resize_horizontal'] <> nil) or (Parser.MainSection.Line['resize_both'] <> nil);
       fVariableInfo[0].ResizeVertical := (Parser.MainSection.Line['resize_vertical'] <> nil) or (Parser.MainSection.Line['resize_both'] <> nil);
+      fVariableInfo[0].DefaultWidth := Parser.MainSection.LineNumeric['default_width'];
+      fVariableInfo[0].DefaultHeight := Parser.MainSection.LineNumeric['default_height'];
       fVariableInfo[0].CutLeft := Parser.MainSection.LineNumeric['nine_slice_left'];
       fVariableInfo[0].CutTop := Parser.MainSection.LineNumeric['nine_slice_top'];
       fVariableInfo[0].CutRight := Parser.MainSection.LineNumeric['nine_slice_right'];
@@ -265,6 +271,8 @@ begin
     case Index of
       tv_Width: Result := GraphicImage.Width;
       tv_Height: Result := GraphicImage.Height;
+      tv_DefaultWidth: Result := DefaultWidth;
+      tv_DefaultHeight: Result := DefaultHeight;
       tv_CutLeft: Result := CutLeft;
       tv_CutTop: Result := CutTop;
       tv_CutRight: Result := CutRight;
@@ -324,6 +332,8 @@ begin
   begin
     fVariableInfo[i].ResizeHorizontal := fVariableInfo[0].ResizeVertical;
     fVariableInfo[i].ResizeVertical := fVariableInfo[0].ResizeHorizontal;
+    fVariableInfo[i].DefaultWidth := fVariableInfo[0].DefaultHeight;
+    fVariableInfo[i].DefaultHeight := fVariableInfo[0].DefaultWidth;
     fVariableInfo[i].CutLeft := fVariableInfo[0].CutBottom;
     fVariableInfo[i].CutTop := fVariableInfo[0].CutLeft;
     fVariableInfo[i].CutRight := fVariableInfo[0].CutTop;
