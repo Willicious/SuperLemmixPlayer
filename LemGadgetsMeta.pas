@@ -33,7 +33,7 @@ type
     TriggerWidth:     Integer;
     TriggerHeight:    Integer;
     ResizeHorizontal: Boolean;
-    ResizeVertical: Boolean;
+    ResizeVertical:   Boolean;
     DigitX:           Integer;
     DigitY:           Integer;
     DigitAlign:       Integer;
@@ -55,12 +55,6 @@ type
     fGeneratedVariableImage: array[0..ALIGNMENT_COUNT-1] of Boolean;
     fInterfaces: array[0..ALIGNMENT_COUNT-1] of TGadgetMetaAccessor;
     fFrameCount                   : Integer; // number of animations
-    fWidth                        : Integer; // the width of the bitmap
-    fHeight                       : Integer; // the height of the bitmap
-    fTriggerLeft                  : Integer; // x-offset of triggerarea (if triggered)
-    fTriggerTop                   : Integer; // y-offset of triggerarea (if triggered)
-    fTriggerWidth                 : Integer; // width of triggerarea (if triggered)
-    fTriggerHeight                : Integer; // height of triggerarea (if triggered)
     fTriggerEffect                : Integer; // ote_xxxx see dos doc
     fKeyFrame                     : Integer;
     fPreviewFrameIndex            : Integer; // index of preview (previewscreen)
@@ -293,8 +287,6 @@ begin
     GadgetAccessor.Animations.AddPrimary(NewAnim);
     NewAnim.Load(aCollection, aPiece, Sec.Section['PRIMARY_ANIMATION'], aTheme);
 
-    fWidth := NewAnim.Width;
-    fHeight := NewAnim.Height;
     fFrameCount := NewAnim.FrameCount;
 
     Sec.DoForEachSection('ANIMATION',
