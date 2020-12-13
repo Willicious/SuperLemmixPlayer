@@ -104,6 +104,8 @@ function CalculateColorShift(aPrimary, aAlt: TColor32): TColorDiff;
 function ApplyColorShift(aBase: TColor32; aDiff: TColorDiff): TColor32; overload;
 function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32; overload;
 
+function EvaluateResizable(aSpecified: Integer; aDefault: Integer; aBase: Integer; aIsResizable: Boolean): Integer;
+
 implementation
 
 uses
@@ -821,6 +823,18 @@ end;
 function ApplyColorShift(aBase, aPrimary, aAlt: TColor32): TColor32;
 begin
   Result := ApplyColorShift(aBase, CalculateColorShift(aPrimary, aAlt));
+end;
+
+function EvaluateResizable(aSpecified: Integer; aDefault: Integer; aBase: Integer; aIsResizable: Boolean): Integer;
+begin
+  Result := aBase;
+  if aIsResizable then
+  begin
+    if aSpecified > 0 then
+      Result := aSpecified
+    else if aDefault > 0 then
+      Result := aDefault;
+  end;
 end;
 
 end.

@@ -1541,15 +1541,15 @@ var
       ThisTerrainRect.Left := Terrain.Left * Multiplier;
       ThisTerrainRect.Top := Terrain.Top * Multiplier;
 
-      if MetaTerrain.ResizeHorizontal[Terrain.Flip, Terrain.Invert, Terrain.Rotate] and (Terrain.Width > 0) then
-        PieceWidth := Terrain.Width
-      else
-        PieceWidth := MetaTerrain.Width[Terrain.Flip, Terrain.Invert, Terrain.Rotate];
+      PieceWidth := EvaluateResizable(Terrain.Width,
+                                      MetaTerrain.DefaultWidth[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
+                                      MetaTerrain.Width[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
+                                      MetaTerrain.ResizeHorizontal[Terrain.Flip, Terrain.Invert, Terrain.Rotate]);
 
-      if MetaTerrain.ResizeVertical[Terrain.Flip, Terrain.Invert, Terrain.Rotate] and (Terrain.Height > 0) then
-        PieceHeight := Terrain.Height
-      else
-        PieceHeight := MetaTerrain.Height[Terrain.Flip, Terrain.Invert, Terrain.Rotate];
+      PieceHeight := EvaluateResizable(Terrain.Height,
+                                       MetaTerrain.DefaultHeight[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
+                                       MetaTerrain.Height[Terrain.Flip, Terrain.Invert, Terrain.Rotate],
+                                       MetaTerrain.ResizeVertical[Terrain.Flip, Terrain.Invert, Terrain.Rotate]);
 
       ThisTerrainRect.Right := ThisTerrainRect.Left + PieceWidth;
       ThisTerrainRect.Bottom := ThisTerrainRect.Top + PieceHeight;
@@ -1708,13 +1708,14 @@ begin
 
   DstRect.Left := T.Left;
   DstRect.Top := T.Top;
-  DstRect.Right := DstRect.Left + MT.Width[Flip, Invert, Rotate];
-  DstRect.Bottom := DstRect.Top + MT.Height[Flip, Invert, Rotate];
-
-  if MT.ResizeHorizontal[Flip, Invert, Rotate] and (T.Width > 0) then
-    DstRect.Right := DstRect.Left + T.Width;
-  if MT.ResizeVertical[Flip, Invert, Rotate] and (T.Height > 0) then
-    DstRect.Bottom := DstRect.Top + T.Height;
+  DstRect.Right := DstRect.Left + EvaluateResizable(T.Width,
+                                                    MT.DefaultWidth[T.Flip, T.Invert, T.Rotate],
+                                                    MT.Width[T.Flip, T.Invert, T.Rotate],
+                                                    MT.ResizeHorizontal[T.Flip, T.Invert, T.Rotate]);
+  DstRect.Bottom := DstRect.Top + EvaluateResizable(T.Height,
+                                                    MT.DefaultHeight[T.Flip, T.Invert, T.Rotate],
+                                                    MT.Height[T.Flip, T.Invert, T.Rotate],
+                                                    MT.ResizeVertical[T.Flip, T.Invert, T.Rotate]);
 
   Margins.Left := MT.CutLeft[Flip, Invert, Rotate];
   Margins.Top := MT.CutTop[Flip, Invert, Rotate];

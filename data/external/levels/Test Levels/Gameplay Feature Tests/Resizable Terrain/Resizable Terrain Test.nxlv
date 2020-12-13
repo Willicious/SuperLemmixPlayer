@@ -62,7 +62,26 @@
    STYLE namida_systemtest
    PIECE resize_steel
    X 24
-   Y 32
+   Y 48
    WIDTH 200
    HEIGHT 35
+ $END
+
+ $TERRAIN
+   STYLE namida_systemtest
+   PIECE resize_block
+   X 24
+   Y 1
+   ONE_WAY
+   ROTATE
+ $END
+ 
+
+ $TERRAIN
+   STYLE namida_systemtest
+   PIECE resize_steel
+   X 64
+   Y 1
+   ONE_WAY
+   ROTATE
  $END
