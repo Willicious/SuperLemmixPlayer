@@ -192,7 +192,7 @@ var
       if spbCloner in GameParams.Level.Info.Skillset then AdjLemCount := AdjLemCount + GameParams.Level.Info.SkillCount[spbCloner];
       for i := 0 to GameParams.Level.InteractiveObjects.Count-1 do
         if GameParams.Renderer.FindGadgetMetaInfo(GameParams.Level.InteractiveObjects[i]).TriggerEffect = DOM_PICKUP then
-          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount);
+          if GameParams.Level.InteractiveObjects[i].Skill = Integer(spbCloner) then Inc(AdjLemCount, Max(GameParams.Level.InteractiveObjects[i].TarLev, 1));
       Result := 0;
       CurrentMin := -1;
       for i := 0 to GameParams.CurrentLevel.Group.PostviewTexts.Count-1 do
