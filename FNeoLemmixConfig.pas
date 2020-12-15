@@ -170,22 +170,28 @@ begin
     cbZoom.Items.Add(IntToStr(i) + 'x Zoom');
 
   if aValue < 0 then
-    cbZoom.ItemIndex := Max(GameParams.ZoomLevel-1, 0)
-  else
-    cbZoom.ItemIndex := Min(aValue, cbZoom.Items.Count - 1);
+    aValue := GameParams.ZoomLevel - 1;
+
+  cbZoom.ItemIndex := Max(0, Min(aValue, cbZoom.Items.Count - 1));
 end;
 
 procedure TFormNXConfig.SetPanelZoomDropdown(aValue: Integer);
 var
   i: Integer;
+  MaxWidth: Integer;
   MaxZoom: Integer;
 begin
   cbPanelZoom.Items.Clear;
 
-  if cbCompactSkillPanel.Checked then
-    MaxZoom := Max(Screen.Width div 320, 1)
+  if GameParams.FullScreen or cbFullScreen.Checked then
+    MaxWidth := Screen.Width
   else
-    MaxZoom := Max(Screen.Width div 416, 1);
+    MaxWidth := GameParams.MainForm.ClientWidth;
+
+  if cbCompactSkillPanel.Checked then
+    MaxZoom := Max(MaxWidth div 320, 1)
+  else
+    MaxZoom := Max(MaxWidth div 416, 1);
 
   if cbHighResolution.Checked then
     MaxZoom := Max(1, MaxZoom div 2);
@@ -194,9 +200,9 @@ begin
     cbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
 
   if aValue < 0 then
-    cbPanelZoom.ItemIndex := Max(GameParams.PanelZoomLevel - 1, 0)
-  else
-    cbPanelZoom.ItemIndex := Min(aValue, cbPanelZoom.Items.Count - 1);
+    aValue := GameParams.PanelZoomLevel - 1;
+
+  cbPanelZoom.ItemIndex := Max(0, Min(aValue, cbPanelZoom.Items.Count - 1));
 end;
 
 procedure TFormNXConfig.btnApplyClick(Sender: TObject);
@@ -374,6 +380,9 @@ begin
       end;
 
     if Sender = cbCompactSkillPanel then
+      NewPanelZoom := cbPanelZoom.ItemIndex;
+
+    if (Sender = cbFullScreen) and not GameParams.FullScreen then
       NewPanelZoom := cbPanelZoom.ItemIndex;
 
     if NewZoom >= 0 then SetZoomDropdown(NewZoom);
