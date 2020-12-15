@@ -113,6 +113,7 @@ type
 
     fCursorResize: Double;
     fZoomLevel: Integer;
+    fPanelZoomLevel: Integer;
     fWindowLeft: Integer;
     fWindowTop: Integer;
     fWindowWidth: Integer;
@@ -233,6 +234,7 @@ type
 
     property CursorResize: Double read fCursorResize write fCursorResize;
     property ZoomLevel: Integer read fZoomLevel write fZoomLevel;
+    property PanelZoomLevel: Integer read fPanelZoomLevel write fPanelZoomLevel;
 
     property WindowLeft: Integer read fWindowLeft write fWindowLeft;
     property WindowTop: Integer read fWindowTop write fWindowTop;
@@ -372,6 +374,7 @@ begin
   SaveBoolean('UseSpawnInterval', SpawnInterval);
 
   SL.Add('ZoomLevel=' + IntToStr(ZoomLevel));
+  SL.Add('PanelZoomLevel=' + IntToStr(PanelZoomLevel));
   SL.Add('CursorResize=' + FloatToStr(CursorResize));
   SaveBoolean('IncreaseZoom', IncreaseZoom);
   SaveBoolean('FullScreen', FullScreen);
@@ -480,6 +483,18 @@ var
     // Disallow zoom levels that are too high
     if fZoomLevel > Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod) + EXTRA_ZOOM_LEVELS then
       fZoomLevel := Min(Screen.Width div 320 div ResMod, Screen.Height div 200 div ResMod);
+
+    // Now validate the panel zoom
+    if fPanelZoomLevel < 0 then
+      fPanelZoomLevel := fZoomLevel;
+
+    if CompactSkillPanel then
+      fPanelZoomLevel := Min(Screen.Width div 320 div ResMod, fPanelZoomLevel)
+    else
+      fPanelZoomLevel := Min(Screen.Width div 416 div ResMod, fPanelZoomLevel);
+
+    if fPanelZoomLevel < 1 then
+      fPanelZoomLevel := 1;
   end;
 
 begin
@@ -530,6 +545,7 @@ begin
     FileCaching := LoadBoolean('FileCaching', FileCaching);
 
     ZoomLevel := StrToIntDef(SL.Values['ZoomLevel'], -1);
+    PanelZoomLevel := StrToIntDef(SL.Values['PanelZoomLevel'], -1);
 
     CursorResize := StrToFloatDef(SL.Values['CursorResize'], CursorResize);
 
@@ -751,6 +767,7 @@ begin
   fOneLevelMode := false;
   fTalismanPage := 0;
   fZoomLevel := Min(Screen.Width div 320, Screen.Height div 200);
+  fPanelZoomLevel := Min(fZoomLevel, Screen.Width div 416);
   fCursorResize := 1;
 
   LemDataInResource := True;

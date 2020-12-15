@@ -57,6 +57,8 @@ type
     cbIngameSaveReplayPattern: TComboBox;
     cbPostviewSaveReplayPattern: TComboBox;
     lblPostviewSaveReplay: TLabel;
+    cbPanelZoom: TComboBox;
+    Label2: TLabel;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -75,6 +77,7 @@ type
     procedure SaveToParams;
 
     procedure SetZoomDropdown(aValue: Integer = -1);
+    procedure SetPanelZoomDropdown(aValue: Integer = -1);
     function GetResetWindowSize: Boolean;
     function GetResetWindowPosition: Boolean;
 
@@ -169,7 +172,31 @@ begin
   if aValue < 0 then
     cbZoom.ItemIndex := Max(GameParams.ZoomLevel-1, 0)
   else
-    cbZoom.ItemIndex := aValue;
+    cbZoom.ItemIndex := Min(aValue, cbZoom.Items.Count - 1);
+end;
+
+procedure TFormNXConfig.SetPanelZoomDropdown(aValue: Integer);
+var
+  i: Integer;
+  MaxZoom: Integer;
+begin
+  cbPanelZoom.Items.Clear;
+
+  if cbCompactSkillPanel.Checked then
+    MaxZoom := Max(Screen.Width div 320, 1)
+  else
+    MaxZoom := Max(Screen.Width div 416, 1);
+
+  if cbHighResolution.Checked then
+    MaxZoom := Max(1, MaxZoom div 2);
+
+  for i := 1 to MaxZoom do
+    cbPanelZoom.Items.Add(IntToStr(i) + 'x Zoom');
+
+  if aValue < 0 then
+    cbPanelZoom.ItemIndex := Max(GameParams.PanelZoomLevel - 1, 0)
+  else
+    cbPanelZoom.ItemIndex := Min(aValue, cbPanelZoom.Items.Count - 1);
 end;
 
 procedure TFormNXConfig.btnApplyClick(Sender: TObject);
@@ -226,6 +253,7 @@ begin
 
     // Zoom Dropdown
     SetZoomDropdown;
+    SetPanelZoomDropdown;
 
     //// Page 3 (Audio Options) ////
     if SoundManager.MuteSound then
@@ -284,6 +312,7 @@ begin
 
   // Zoom Dropdown
   GameParams.ZoomLevel := cbZoom.ItemIndex + 1;
+  GameParams.PanelZoomLevel := cbPanelZoom.ItemIndex + 1;
 
   //// Page 3 (Audio Options) ////
   SoundManager.MuteSound := tbSoundVol.Position = 0;
@@ -325,14 +354,30 @@ begin
 end;
 
 procedure TFormNXConfig.OptionChanged(Sender: TObject);
+var
+  NewZoom: Integer;
+  NewPanelZoom: Integer;
 begin
   if not fIsSetting then
   begin
+    NewZoom := -1;
+    NewPanelZoom := -1;
+
     if Sender = cbHighResolution then
       if cbHighResolution.Checked then
-        SetZoomDropdown(cbZoom.ItemIndex div 2)
-      else
-        SetZoomDropdown(cbZoom.ItemIndex * 2 + 1);
+      begin
+        NewZoom := cbZoom.ItemIndex div 2;
+        NewPanelZoom := cbPanelZoom.ItemIndex div 2;
+      end else begin
+        NewZoom := cbZoom.ItemIndex * 2 + 1;
+        NewPanelZoom := cbZoom.ItemIndex * 2 + 1;
+      end;
+
+    if Sender = cbCompactSkillPanel then
+      NewPanelZoom := cbPanelZoom.ItemIndex;
+
+    if NewZoom >= 0 then SetZoomDropdown(NewZoom);
+    if NewPanelZoom >= 0 then SetPanelZoomDropdown(NewPanelZoom);
 
     btnApply.Enabled := true;
   end;

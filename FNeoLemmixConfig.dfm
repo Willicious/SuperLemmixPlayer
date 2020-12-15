@@ -6,7 +6,7 @@ object FormNXConfig: TFormNXConfig
   BorderIcons = []
   BorderStyle = bsToolWindow
   Caption = 'NeoLemmix Configuration'
-  ClientHeight = 451
+  ClientHeight = 516
   ClientWidth = 273
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -18,19 +18,21 @@ object FormNXConfig: TFormNXConfig
   Position = poMainFormCenter
   DesignSize = (
     273
-    451)
+    516)
   PixelsPerInch = 96
   TextHeight = 13
   object NXConfigPages: TPageControl
     Left = 0
     Top = 0
     Width = 273
-    Height = 412
-    ActivePage = TabSheet1
+    Height = 477
+    ActivePage = TabSheet5
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
+    ExplicitHeight = 412
     object TabSheet1: TTabSheet
       Caption = 'General'
+      ExplicitHeight = 384
       object lblUserName: TLabel
         Left = 7
         Top = 16
@@ -166,6 +168,7 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
+      ExplicitHeight = 384
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -249,7 +252,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 183
         Width = 249
-        Height = 196
+        Height = 226
         Caption = 'Graphics Options'
         TabOrder = 2
         object Label1: TLabel
@@ -258,6 +261,13 @@ object FormNXConfig: TFormNXConfig
           Width = 30
           Height = 13
           Caption = 'Zoom:'
+        end
+        object Label2: TLabel
+          Left = 11
+          Top = 47
+          Width = 30
+          Height = 13
+          Caption = 'Panel:'
         end
         object cbZoom: TComboBox
           Left = 56
@@ -274,7 +284,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbLinearResampleMenu: TCheckBox
           Left = 12
-          Top = 120
+          Top = 148
           Width = 205
           Height = 17
           Caption = 'Use Smooth Resampling In Menus'
@@ -283,7 +293,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbLinearResampleGame: TCheckBox
           Left = 12
-          Top = 136
+          Top = 164
           Width = 205
           Height = 17
           Caption = 'Use Smooth Resampling In Game'
@@ -292,7 +302,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbFullScreen: TCheckBox
           Left = 12
-          Top = 40
+          Top = 68
           Width = 205
           Height = 17
           Caption = 'Full Screen'
@@ -301,7 +311,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbMinimapHighQuality: TCheckBox
           Left = 12
-          Top = 168
+          Top = 196
           Width = 153
           Height = 17
           Caption = 'High Quality Minimap'
@@ -310,7 +320,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbIncreaseZoom: TCheckBox
           Left = 12
-          Top = 104
+          Top = 132
           Width = 205
           Height = 17
           Caption = 'Increase Zoom On Small Levels'
@@ -319,7 +329,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbCompactSkillPanel: TCheckBox
           Left = 12
-          Top = 152
+          Top = 180
           Width = 153
           Height = 17
           Caption = 'Compact Skill Panel'
@@ -328,7 +338,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbHighResolution: TCheckBox
           Left = 12
-          Top = 88
+          Top = 116
           Width = 205
           Height = 17
           Caption = 'High Resolution'
@@ -337,7 +347,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbResetWindowSize: TCheckBox
           Left = 12
-          Top = 72
+          Top = 100
           Width = 205
           Height = 17
           Caption = 'Reset Window Size'
@@ -346,18 +356,32 @@ object FormNXConfig: TFormNXConfig
         end
         object cbResetWindowPosition: TCheckBox
           Left = 12
-          Top = 56
+          Top = 84
           Width = 205
           Height = 17
           Caption = 'Reset Window Position'
           TabOrder = 9
           OnClick = OptionChanged
         end
+        object cbPanelZoom: TComboBox
+          Left = 56
+          Top = 43
+          Width = 177
+          Height = 21
+          Style = csDropDownList
+          ItemIndex = 0
+          TabOrder = 10
+          Text = '1x Zoom'
+          OnChange = OptionChanged
+          Items.Strings = (
+            '1x Zoom')
+        end
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
+      ExplicitHeight = 384
       object Label3: TLabel
         Left = 24
         Top = 45
@@ -418,32 +442,35 @@ object FormNXConfig: TFormNXConfig
   end
   object btnOK: TButton
     Left = 24
-    Top = 418
+    Top = 483
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
+    ExplicitTop = 418
   end
   object btnCancel: TButton
     Left = 104
-    Top = 418
+    Top = 483
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
+    ExplicitTop = 418
   end
   object btnApply: TButton
     Left = 184
-    Top = 418
+    Top = 483
     Width = 65
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
+    ExplicitTop = 418
   end
 end
