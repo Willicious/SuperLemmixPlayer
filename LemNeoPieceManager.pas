@@ -513,7 +513,12 @@ begin
 
   // Fallback settings
   FillChar(Result, SizeOf(TUpscaleInfo), 0);
-  Result.Settings.Mode := umPixelArt;
+
+  if aKind = rkLemmings then
+    Result.Settings.Mode := umNearest
+  else
+    Result.Settings.Mode := umPixelArt;
+
   if aKind in [rkTerrain, rkBackground] then
   begin
     Result.Settings.LeftSide := uebRepeat;
