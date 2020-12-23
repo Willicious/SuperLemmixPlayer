@@ -1,6 +1,6 @@
 # ----------------------------- 
 #        NeoLemmix Level        
-#   Created with NLEditor 1.29
+#   Created with NLEditor 1.31
 # ----------------------------- 
  
 #        Level info             
@@ -33,6 +33,7 @@
    STACKER 20
    LASERER 20
    BASHER 20
+   DIGGER 20
    CLONER 20
  $END 
  
@@ -558,7 +559,6 @@
    PIECE steel_02
    X 136
    Y 57
-   ONE_WAY
  $END
  
  $TERRAIN
@@ -566,7 +566,6 @@
    PIECE steel_02
    X 242
    Y 35
-   ONE_WAY
  $END
  
  

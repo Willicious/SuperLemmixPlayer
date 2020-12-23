@@ -1468,7 +1468,7 @@ begin
                    end;
     baFixing     : L.LemDisarmingFrames := 42;
     baJumping    : L.LemJumpProgress := 0;
-    baLasering   : L.LemLaserRemainTime := 85 {17 * 5};
+    baLasering   : L.LemLaserRemainTime := 10;
   end;
 end;
 
@@ -3095,8 +3095,9 @@ var
   Target: TPoint;
   i: Integer;
   Hit: Boolean;
+  HitUseful: Boolean;
 const
-  DISTANCE_CAP = 720;
+  DISTANCE_CAP = 112;
 
   function CheckForHit: THitType;
   const
@@ -3130,7 +3131,7 @@ const
 
         if HasPixelAt(ThisCheckPoint.X, ThisCheckPoint.Y) then
         begin
-          if HasIndestructibleAt(ThisCheckPoint.X, ThisCheckPoint.Y, L.LemDX, baLasering) then
+          if HasIndestructibleAt(ThisCheckPoint.X, ThisCheckPoint.Y, L.LemDX, baLasering) and (Result <> htSolid) then
             Result := htIndestructible
           else
             Result := htSolid;
@@ -3142,18 +3143,16 @@ begin
   Result := true;
   if not HasPixelAt(L.LemX, L.LemY) then
     Transition(L, baFalling)
-  else if L.LemLaserRemainTime <= 0 then
-    Transition(L, baWalking)
   else begin
-    Dec(L.LemLaserRemainTime);
     Hit := false;
+    HitUseful := false;
 
     Target := Point(L.LemX + (L.LemDX * 2), L.LemY - 5);
     for i := 0 to DISTANCE_CAP-1 do
       case CheckForHit of
         htNone: begin Inc(Target.X, L.LemDX); Dec(Target.Y); end;
-        htSolid: begin Hit := true; Break; end;
-        htIndestructible: begin Hit := true; L.LemLaserRemainTime := Min(L.LemLaserRemainTime, 9); Break; end;
+        htSolid: begin Hit := true; HitUseful := true; Break; end;
+        htIndestructible: begin Hit := true; Break; end;
         htOutOfBounds: Break;
       end;
 
@@ -3163,9 +3162,15 @@ begin
     begin
       L.LemLaserHit := true;
       ApplyLaserMask(Target, L.LemDX);
-    end else begin
+    end else
       L.LemLaserHit := false;
-      L.LemLaserRemainTime := Min(L.LemLaserRemainTime, 9);
+
+    if HitUseful then
+      L.LemLaserRemainTime := 10
+    else begin
+      Dec(L.LemLaserRemainTime);
+      if L.LemLaserRemainTime <= 0 then
+        Transition(L, baWalking);
     end;
   end;
 end;
