@@ -678,10 +678,6 @@ begin
     MusicFile := aSection.LineTrimString['music'];
     LevelID := aSection.LineNumeric['id'];
     LevelVersion := aSection.LineNumeric['version'];
-
-    if Uppercase(GraphicSetName) = 'ORIG_DIRT_MD' then
-      GraphicSetName := 'orig_dirt';
-
     LemmingsCount := aSection.LineNumeric['lemmings'];
     RescueCount := aSection.LineNumeric['requirement'];
     RescueCount := aSection.LineNumericDefault['save_requirement', RescueCount];
