@@ -2934,6 +2934,13 @@ begin
 
   try
     fAni.ReadData;
+
+    if (aLevel.Info.ZombieCount > 0) and (not fAni.HasZombieColor) then
+      raise Exception.Create('Specified lemming spriteset does not include zombie coloring.');
+
+    if (aLevel.Info.NeutralCount > 0) and (not fAni.HasNeutralColor) then
+      raise Exception.Create('Specified lemming spriteset does not include neutral coloring.');
+
   except
     on E: Exception do
     begin
