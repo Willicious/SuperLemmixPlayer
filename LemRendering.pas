@@ -2050,6 +2050,11 @@ var
   ThisAnim: TGadgetAnimationInstance;
   DstRect: TRect;
 
+  function GetDigitTargetLayer: TBitmap32;
+  begin
+    Result := Dst;
+  end;
+
   procedure DrawNumberWithCountdownDigits(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
   var
     DigitsWidth: Integer;
@@ -2061,8 +2066,12 @@ var
     SrcRect: TRect;
 
     OldDrawColor: TColor32;
+
+    LocalDst: TBitmap32;
   begin
     OldDrawColor := fFixedDrawColor;
+
+    LocalDst := GetDigitTargetLayer;
 
     Y := Y - 2; // to center
 
@@ -2082,13 +2091,13 @@ var
       fAni.CountDownDigitsBitmap.DrawMode := dmCustom;
       fAni.CountDownDigitsBitmap.OnPixelCombine := CombineFixedColor;
       fFixedDrawColor := $FF202020;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod, Y * ResMod, SrcRect);
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod, Y * ResMod + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod + 1, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod, Y * ResMod + 1, SrcRect);
 
       fAni.CountDownDigitsBitmap.DrawMode := dmBlend;
       fAni.CountDownDigitsBitmap.CombineMode := cmMerge;
-      fAni.CountDownDigitsBitmap.DrawTo(Dst, CurX * ResMod - 1, Y * ResMod, SrcRect);
+      fAni.CountDownDigitsBitmap.DrawTo(LocalDst, CurX * ResMod - 1, Y * ResMod, SrcRect);
       CurX := CurX + 5;
     end;
 
@@ -2102,9 +2111,13 @@ var
 
     CurX, TargetY: Integer;
     n: Integer;
+
+    LocalDst: TBitmap32;
   begin
     if (aNumber = 0) and (aMinDigits <= 0) then
       Exit; // Special case - allow for "show nothing on zero"
+
+    LocalDst := GetDigitTargetLayer;
 
     Digits := Gadget.MetaObj.DigitAnimation;
     DigitString := LeadZeroStr(aNumber, aMinDigits);
@@ -2126,7 +2139,7 @@ var
 
     for n := 1 to Length(DigitString) do
     begin
-      Digits.Draw(Dst, CurX * ResMod, TargetY * ResMod, StrToInt(DigitString[n]));
+      Digits.Draw(LocalDst, CurX * ResMod, TargetY * ResMod, StrToInt(DigitString[n]));
       Inc(CurX, Digits.Width);
     end;
   end;
