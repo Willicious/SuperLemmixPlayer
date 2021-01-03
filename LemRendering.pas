@@ -2052,7 +2052,8 @@ var
 
   function GetDigitTargetLayer: TBitmap32;
   begin
-    Result := Dst;
+    Result := fLayers[rlObjectHelpers];
+    fLayers.fIsEmpty[rlObjectHelpers] := false;
   end;
 
   procedure DrawNumberWithCountdownDigits(X, Y: Integer; aDigitString: String; aAlignment: Integer = -1); // negative = left; zero = center; positive = right
@@ -2332,6 +2333,10 @@ begin
     MakeFixedDrawColor;
 
   if not fLayers.fIsEmpty[rlTriggers] then fLayers[rlTriggers].Clear(0);
+  if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
+
+  fLayers.fIsEmpty[rlTriggers] := true;
+  fLayers.fIsEmpty[rlObjectHelpers] := true;
 
   DrawGadgetsOnLayer(rlBackgroundObjects);
   DrawGadgetsOnLayer(rlGadgetsLow);
@@ -2341,7 +2346,6 @@ begin
 
   if fRenderInterface = nil then Exit; // otherwise, some of the remaining code may cause an exception on first rendering
 
-  if not fLayers.fIsEmpty[rlObjectHelpers] then fLayers[rlObjectHelpers].Clear(0);
   // Draw hatch helpers
   for i := 0 to Gadgets.Count-1 do
   begin
