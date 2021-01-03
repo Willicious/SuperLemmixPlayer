@@ -80,7 +80,8 @@ type
     moSpawnInterval,
     moHideAdvanced,
     moFileCaching,
-    moPostviewJingles
+    moPostviewJingles,
+    moForceDefaultLemmings
   );
 
   TMiscOptions = set of TMiscOption;
@@ -217,6 +218,7 @@ type
     property CompactSkillPanel: boolean Index moCompactSkillPanel read GetOptionFlag write SetOptionFlag;
     property EdgeScroll: boolean Index moEdgeScroll read GetOptionFlag write SetOptionFlag;
     property SpawnInterval: boolean Index moSpawnInterval read GetOptionFlag write SetOptionFlag;
+    property ForceDefaultLemmings: boolean Index moForceDefaultLemmings read GetOptionFlag write SetOptionFlag;
 
     property HideAdvancedOptions: boolean Index moHideAdvanced read GetOptionFlag write SetOptionFlag;
     property FileCaching: boolean Index moFileCaching read GetOptionFlag write SetOptionFlag;
@@ -367,6 +369,7 @@ begin
   SaveBoolean('HideAdvancedOptions', HideAdvancedOptions);
   SaveBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
   SaveBoolean('NoBackgrounds', NoBackgrounds);
+  SaveBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
   SaveBoolean('HideShadows', HideShadows);
   SaveBoolean('CompactSkillPanel', CompactSkillPanel);
   SaveBoolean('HighQualityMinimap', MinimapHighQuality);
@@ -529,6 +532,7 @@ begin
     NoAutoReplayMode := LoadBoolean('NoAutoReplay', NoAutoReplayMode);
     PauseAfterBackwardsSkip := LoadBoolean('PauseAfterBackwardsSkip', PauseAfterBackwardsSkip);
     NoBackgrounds := LoadBoolean('NoBackgrounds', NoBackgrounds);
+    ForceDefaultLemmings := LoadBoolean('ForceDefaultLemmings', ForceDefaultLemmings);
     HideShadows := LoadBoolean('HideShadows', HideShadows);
     CompactSkillPanel := LoadBoolean('CompactSkillPanel', CompactSkillPanel);
     MinimapHighQuality := LoadBoolean('HighQualityMinimap', MinimapHighQuality);

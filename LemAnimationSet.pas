@@ -329,7 +329,7 @@ begin
   ShadeDict := TShadeDict.Create;
 
   try
-    if fTheme = nil then
+    if (fTheme = nil) or (GameParams.ForceDefaultLemmings) then
       SrcFolder := 'default'
     else
       SrcFolder := PieceManager.Dealias(fTheme.Lemmings, rkLemmings);

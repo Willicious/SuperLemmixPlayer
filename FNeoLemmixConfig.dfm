@@ -29,10 +29,8 @@ object FormNXConfig: TFormNXConfig
     ActivePage = TabSheet5
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitHeight = 412
     object TabSheet1: TTabSheet
       Caption = 'General'
-      ExplicitHeight = 384
       object lblUserName: TLabel
         Left = 7
         Top = 16
@@ -168,7 +166,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet5: TTabSheet
       Caption = 'Interface'
       ImageIndex = 4
-      ExplicitHeight = 384
       object GroupBox2: TGroupBox
         Left = 8
         Top = 8
@@ -199,7 +196,7 @@ object FormNXConfig: TFormNXConfig
         Left = 8
         Top = 68
         Width = 249
-        Height = 112
+        Height = 129
         Caption = 'Interface Options'
         TabOrder = 1
         object cbNoBackgrounds: TCheckBox
@@ -213,7 +210,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbEdgeScrolling: TCheckBox
           Left = 12
-          Top = 50
+          Top = 67
           Width = 221
           Height = 17
           Caption = 'Enable Edge Scrolling and Trap Cursor'
@@ -222,7 +219,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbSpawnInterval: TCheckBox
           Left = 12
-          Top = 67
+          Top = 84
           Width = 153
           Height = 17
           Caption = 'Use Spawn Interval'
@@ -231,7 +228,7 @@ object FormNXConfig: TFormNXConfig
         end
         object cbHideShadows: TCheckBox
           Left = 12
-          Top = 33
+          Top = 50
           Width = 153
           Height = 17
           Caption = 'Hide Skill Shadows'
@@ -240,17 +237,26 @@ object FormNXConfig: TFormNXConfig
         end
         object cbHideAdvanced: TCheckBox
           Left = 12
-          Top = 84
+          Top = 101
           Width = 234
           Height = 17
           Caption = 'Hide Advanced Options in Level Select'
           TabOrder = 4
           OnClick = OptionChanged
         end
+        object cbForceDefaultLemmings: TCheckBox
+          Left = 12
+          Top = 33
+          Width = 173
+          Height = 17
+          Caption = 'Force Default Lemming Sprites'
+          TabOrder = 5
+          OnClick = OptionChanged
+        end
       end
       object GroupBox6: TGroupBox
         Left = 8
-        Top = 183
+        Top = 200
         Width = 249
         Height = 226
         Caption = 'Graphics Options'
@@ -381,7 +387,6 @@ object FormNXConfig: TFormNXConfig
     object TabSheet4: TTabSheet
       Caption = 'Audio'
       ImageIndex = 3
-      ExplicitHeight = 384
       object Label3: TLabel
         Left = 24
         Top = 45
@@ -449,7 +454,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'OK'
     TabOrder = 1
     OnClick = btnOKClick
-    ExplicitTop = 418
   end
   object btnCancel: TButton
     Left = 104
@@ -460,7 +464,6 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 2
-    ExplicitTop = 418
   end
   object btnApply: TButton
     Left = 184
@@ -471,6 +474,5 @@ object FormNXConfig: TFormNXConfig
     Caption = 'Apply'
     TabOrder = 3
     OnClick = btnApplyClick
-    ExplicitTop = 418
   end
 end

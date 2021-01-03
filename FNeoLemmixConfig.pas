@@ -59,6 +59,7 @@ type
     lblPostviewSaveReplay: TLabel;
     cbPanelZoom: TComboBox;
     Label2: TLabel;
+    cbForceDefaultLemmings: TCheckBox;
     procedure btnApplyClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
     procedure btnHotkeysClick(Sender: TObject);
@@ -240,6 +241,7 @@ begin
     cbNoAutoReplay.Checked := GameParams.NoAutoReplayMode;
 
     cbNoBackgrounds.Checked := GameParams.NoBackgrounds;
+    cbForceDefaultLemmings.Checked := GameParams.ForceDefaultLemmings;
     cbHideShadows.Checked := GameParams.HideShadows;
     cbEdgeScrolling.Checked := GameParams.EdgeScroll;
     cbSpawnInterval.Checked := GameParams.SpawnInterval;
@@ -301,6 +303,7 @@ begin
   GameParams.NoAutoReplayMode := cbNoAutoReplay.Checked;
 
   GameParams.NoBackgrounds := cbNoBackgrounds.Checked;
+  GameParams.ForceDefaultLemmings := cbForceDefaultLemmings.Checked;
   GameParams.HideShadows := cbHideShadows.Checked;
   GameParams.EdgeScroll := cbEdgeScrolling.Checked;
   GameParams.SpawnInterval := cbSpawnInterval.Checked;
