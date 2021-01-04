@@ -104,6 +104,7 @@ type
     fMessageQueue              : TGameMessageQueue;
 
     fTalismanReceived          : Boolean;
+    fNewTalismanReceived       : Boolean;
 
     fSelectedSkill             : TSkillPanelButton; // TUserSelectedSkill; // currently selected skill restricted by F3-F9
 
@@ -791,10 +792,11 @@ begin
 
   for i := 0 to Level.Talismans.Count-1 do
   begin
-    if GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then Continue;
     if CheckTalisman(Level.Talismans[i]) then
     begin
       fTalismanReceived := true;
+      if not GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] then
+        fNewTalismanReceived := true;
       GameParams.CurrentLevel.TalismanStatus[Level.Talismans[i].ID] := true;
     end;
   end;
@@ -1119,6 +1121,7 @@ begin
     SetSelectedSkill(InitialSkill, True); // default
 
   fTalismanReceived := false;
+  fNewTalismanReceived := false;
 
   MessageQueue.Clear;
 
@@ -5620,6 +5623,7 @@ begin
     gToRescue           := Level.Info.RescueCount;
     gRescued            := LemmingsIn;
     gGotTalisman        := fTalismanReceived;
+    gGotNewTalisman     := fNewTalismanReceived;
     gCheated            := fGameCheated;
     gSuccess            := (gRescued >= gToRescue) or gCheated;
     gTimeIsUp           := IsOutOfTime;

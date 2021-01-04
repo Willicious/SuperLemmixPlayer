@@ -258,7 +258,7 @@ begin
     SDone := PadL(IntToStr(gRescued), 4);
 
     // top text
-    if gGotTalisman then
+    if gGotNewTalisman then
         Add(STalismanUnlocked)
     else if gTimeIsUp then
         Add(SYourTimeIsUp)

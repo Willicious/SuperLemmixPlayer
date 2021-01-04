@@ -35,6 +35,7 @@ type
     gTimeIsUp           : Boolean;
     gLastRescueIteration: Integer;
     gGotTalisman        : Boolean;
+    gGotNewTalisman     : Boolean;
   end;
 
 type

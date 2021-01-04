@@ -23,6 +23,7 @@ const
   CR_UNDETERMINED = 3;
   CR_NOLEVELMATCH = 4;
   CR_ERROR = 5;
+  CR_PASS_TALISMAN = 6;
 
 type
   TReplayCheckEntry = class
@@ -215,6 +216,7 @@ var
     case fReplays[i].ReplayResult of
       CR_UNKNOWN: Result := 'UNKNOWN';
       CR_PASS: Result := 'PASSED';
+      CR_PASS_TALISMAN: Result := 'PASSED (TALISMAN)';
       CR_FAIL: Result := 'FAILED';
       CR_UNDETERMINED: Result := 'UNDETERMINED';
       CR_NOLEVELMATCH: Result := 'LEVEL NOT FOUND';
@@ -307,6 +309,8 @@ begin
           Game.Finish(GM_FIN_TERMINATE);
           if Game.GameResultRec.gSuccess then
             fReplays[i].ReplayResult := CR_PASS;
+          if Game.GameResultRec.gGotTalisman then
+            fReplays[i].ReplayResult := CR_PASS_TALISMAN;
           Break;
         end;
 
@@ -314,8 +318,12 @@ begin
           if Game.MessageQueue.NextMessage.MessageType = GAMEMSG_FINISH then
           begin
             if Game.GameResultRec.gSuccess then
-              fReplays[i].ReplayResult := CR_PASS
-            else
+            begin
+              if Game.GameResultRec.gGotTalisman then
+                fReplays[i].ReplayResult := CR_PASS_TALISMAN
+              else
+                fReplays[i].ReplayResult := CR_PASS;
+            end else
               fReplays[i].ReplayResult := CR_FAIL;
           end;
         if fReplays[i].ReplayResult <> CR_UNDETERMINED then Break;
@@ -334,7 +342,7 @@ begin
       fScreenText.Delete(fScreenText.Count-1);
 
       fScreenText.Add(fReplays[i].ReplayLevelText + ' ' + fReplays[i].ReplayLevelTitle);
-      if fReplays[i].ReplayResult in [CR_PASS, CR_FAIL, CR_UNDETERMINED] then
+      if fReplays[i].ReplayResult in [CR_PASS, CR_PASS_TALISMAN, CR_FAIL, CR_UNDETERMINED] then
         fScreenText.Add('Ran for ' + MakeTimeText);
       fScreenText.Add('*** ' + MakeResultText + ' ***');
       if fReplays[i].ReplayResult in [CR_FAIL, CR_UNDETERMINED] then
@@ -506,6 +514,7 @@ begin
   try
     SaveGroup(CR_FAIL, 'FAILED');
     SaveGroup(CR_UNDETERMINED, 'UNDETERMINED');
+    SaveGroup(CR_PASS_TALISMAN, 'PASSED (TALISMAN)');
     SaveGroup(CR_PASS, 'PASSED');
     SaveGroup(CR_NOLEVELMATCH, 'LEVEL NOT FOUND');
     SaveGroup(CR_ERROR, 'ERROR');
