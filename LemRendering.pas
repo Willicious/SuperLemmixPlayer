@@ -2156,7 +2156,7 @@ var
 
   procedure AddLemmingCountNumber;
   begin
-    if (Gadget.RemainingLemmingsCount >= 0) then
+    if (Gadget.RemainingLemmingsCount >= 0) and (Gadget.ShowRemainingLemmings or fUsefulOnly) then
       DrawNumber(Gadget.Left + Gadget.MetaObj.DigitX, Gadget.Top + Gadget.MetaObj.DigitY, Gadget.RemainingLemmingsCount,
                  Gadget.MetaObj.DigitMinLength, Gadget.MetaObj.DigitAlign);
   end;
@@ -2920,10 +2920,11 @@ begin
         Gadget.TriggerEffect := DOM_NONE; // effectively disables the object
     end;
 
-    if (MO.TriggerEffect = DOM_WINDOW) and (Gadget.IsPreassignedZombie) then
+    if (MO.TriggerEffect = DOM_WINDOW) then
     begin
+      Gadget.ShowRemainingLemmings := (Gadget.RemainingLemmingsCount > 0) or (Gadget.IsPreassignedZombie);
       Gadget.RemainingLemmingsCount := 0;
-      for n := 0 to Length(RenderInfoRec.Level.Info.SpawnOrder) do
+      for n := 0 to Length(RenderInfoRec.Level.Info.SpawnOrder)-1 do
         if RenderInfoRec.Level.Info.SpawnOrder[n] = i then
           Gadget.RemainingLemmingsCount := Gadget.RemainingLemmingsCount + 1;
     end;

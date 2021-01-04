@@ -75,6 +75,7 @@ type
     sSecondariesTreatAsBusy: Boolean;
 
     sRemainingLemmingsCount: Integer;
+    sShowRemainingLemmings: Boolean;
 
     Obj            : TGadgetModel;
 
@@ -163,6 +164,7 @@ type
     property TriggerEffectBase: Integer read GetTriggerEffectBase;
     property SecondariesTreatAsBusy: Boolean read sSecondariesTreatAsBusy write sSecondariesTreatAsBusy;
     property RemainingLemmingsCount: Integer read GetRemainingLemmingsCount write sRemainingLemmingsCount;
+    property ShowRemainingLemmings: Boolean read sShowRemainingLemmings write sShowRemainingLemmings;
 
     property AnimationFlag[Flag: TGadgetAnimationTriggerCondition]: Boolean read GetAnimFlagState;
 
@@ -509,6 +511,8 @@ begin
       sRemainingLemmingsCount := Obj.LemmingCap
     else
       sRemainingLemmingsCount := -1;
+
+    sShowRemainingLemmings := true;
   end;
 
   Result := sRemainingLemmingsCount;
