@@ -43,6 +43,8 @@ type
       procedure DoAfterConfig; override;
       function GetBackgroundSuffix: String; override;
 
+      procedure AfterCancelLevelSelect; override;
+
       procedure OnMouseClick(aPoint: TPoint; aButton: TMouseButton); override;
     public
       constructor Create(aOwner: TComponent); override;
@@ -151,6 +153,15 @@ procedure TGamePreviewScreen.PreviousRank;
 begin
   GameParams.PrevGroup;
   CloseScreen(gstPreview);
+end;
+
+procedure TGamePreviewScreen.AfterCancelLevelSelect;
+var
+  TempBmp: TBitmap32;
+begin
+  inherited;
+  GameParams.LoadCurrentLevel;
+  GameParams.Renderer.RenderWorld(nil, not GameParams.NoBackgrounds); // some necessary prep work is done in here
 end;
 
 procedure TGamePreviewScreen.BeginPlay;

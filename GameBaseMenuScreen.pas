@@ -142,6 +142,8 @@ type
 
       procedure ReloadCursor;
 
+      procedure AfterCancelLevelSelect; virtual;
+
       property MenuFont: TMenuFont read fMenuFont;
     public
       constructor Create(aOwner: TComponent); override;
@@ -640,6 +642,11 @@ begin
   SetBasicCursor;
 end;
 
+procedure TGameBaseMenuScreen.AfterCancelLevelSelect;
+begin
+  // Intentionally blank.
+end;
+
 procedure TGameBaseMenuScreen.AfterRedrawClickables;
 begin
   // Intentionally blank.
@@ -855,6 +862,7 @@ begin
   end else if not Success then
   begin
     GameParams.SetLevel(OldLevel);
+    AfterCancelLevelSelect;
   end else begin
     if LoadAsPack then
       CloseScreen(gstMenu)
