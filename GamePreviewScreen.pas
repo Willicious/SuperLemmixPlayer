@@ -156,8 +156,6 @@ begin
 end;
 
 procedure TGamePreviewScreen.AfterCancelLevelSelect;
-var
-  TempBmp: TBitmap32;
 begin
   inherited;
   GameParams.LoadCurrentLevel;
